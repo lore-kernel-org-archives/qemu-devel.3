@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 922BCD37E3B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6589BD37E39
 	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 13:44:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg18e-0007pp-Bq; Wed, 14 Jan 2026 08:42:20 -0500
+	id 1vg190-00081A-BV; Wed, 14 Jan 2026 08:42:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vg18c-0007pA-DP
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:42:18 -0500
-Received: from p-east2-cluster3-host3-snip4-1.eps.apple.com ([57.103.77.152]
+ id 1vg18w-0007zq-2l
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:42:38 -0500
+Received: from p-east2-cluster3-host8-snip4-9.eps.apple.com ([57.103.77.250]
  helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vg18a-0006ZP-BJ
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:42:18 -0500
+ id 1vg18s-00078Z-DO
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:42:37 -0500
 Received: from outbound.st.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-2 (Postfix) with ESMTPS id
- 30B8418004A2; Wed, 14 Jan 2026 13:42:13 +0000 (UTC)
+ E7ADA18004A9; Wed, 14 Jan 2026 13:42:28 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=CDXmA90VChDNF+mgLamehM2Ivt5rkq6oevwq5r0nHLE=;
+ s=sig1; bh=sQ3V08xbcalhtr2aUzzc620bG2/z/ncYXthbkxktV8U=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=RKjGopJAm9+W4uOKJfZ6RGQHlRgziZxwpEuQ6iIJrU53kH8i+Q/lE7QAOF2ftWnnQqIPkyfwyR4nJaGOl71cmsUyeEoippDl4YjCQJXLVh307Wb4tHVReuTQ9Dnc4G/rarY2qttP2LkiaFGEIm1Vrv5sX/SAZg5v8EyDh5NHZ6f6tdqFMEjlvqFh/3xQn5xQ7MdFl8dt3M+SL8+QH2O8UXEFoqT9l/IYkvArYEnrZlHgDTEzY4Ab6jc8Woxwuptjg3OfHi6OBqD98OnD0wOdlUwDUqImlchAXZumM/SoFjK1kG3IWhCojieWYXrBwn/3Me+fjoMFQR5cOTCJTsgHfQ==
+ b=InyKQKOB48gLeF+QJBfPO/4STwv5MdWaLy7Gg0Y9HHQjwIv38lOPNBd2zpJ91ke1q3GLuBWWXewwhHV5maPI17NmGdSqljUpq/sm5A5npT1FF4Vhc+f6aE32aFCM8bKSL1OdzdUs9zzy0wwWaL8IX+l+gjZC+tWt3vkC6ntskeHsanqQ4K0R2Viwu5gXTZ7kcd4hQMxVzp96OdkVITmEFhoXRSXwDBiZKYqvqD9mhGNKgTHPf9cERi/5fz8yIeg/5DfAVYgpOiUgmbaXhlyt44dPAkV7jta/GTOOgMrC/UiVd4CWLFcW2cuCopniWsDvoA5QNCUr2sAH84G+BIyWbQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.42.251.67])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-2 (Postfix) with ESMTPSA id
- 744B518004A6; Wed, 14 Jan 2026 13:42:09 +0000 (UTC)
+ 03B1018004AC; Wed, 14 Jan 2026 13:42:23 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: mohamed@unpredictable.fr,
 	qemu-devel@nongnu.org
@@ -52,37 +52,39 @@ Cc: qemu-arm@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Peter Xu <peterx@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
  Igor Mammedov <imammedo@redhat.com>, Alexander Graf <agraf@csgraf.de>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Cameron Esfahani <dirty@apple.com>
-Subject: [PATCH v14 06/26] hw/arm: virt: cleanly fail on attempt to use the
- platform vGIC together with ITS
-Date: Wed, 14 Jan 2026 14:41:23 +0100
-Message-ID: <20260114134143.26198-7-mohamed@unpredictable.fr>
+ Cameron Esfahani <dirty@apple.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v14 10/26] whpx: reshuffle common code
+Date: Wed, 14 Jan 2026 14:41:27 +0100
+Message-ID: <20260114134143.26198-11-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260114134143.26198-1-mohamed@unpredictable.fr>
 References: <20260114134143.26198-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: -DDL5d9uNq3w8Kgy60D9Sjer7f-UJ0f-
-X-Authority-Info: v=2.4 cv=GdIaXAXL c=1 sm=1 tr=0 ts=69679d37
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDExNCBTYWx0ZWRfX70/wCdFp6rDT
+ LcWr3OW35sjOLRFNNF9vQii5B/qfWYj84wEaE3Ev6q5r0mw95VBn6IxU+Z04k6g/CeTSuQGSus7
+ zE1JLi5EkBaTlPiF9AbvPt3uhsvzGTu87onZwz/ye8HRC3kdAJCZdT7rw6h9AjSBT/mMYq9KjFf
+ 2XeT8Fk8V4t6b5kp2kyQEO2+OiHOQbDvLbrXeXiKWrS7Bu4W8pzxc8syolJp+EyIn9ZK1OswT+e
+ iUqBXlshFG+LVsUPDdbUc80HX5/8SvsKLaH544z3D2JaiEc1p9B/Q3hWPA4j3j+hd7Sk/JZB45f
+ +QuoTI9/d0FusZRVf6o
+X-Authority-Info: v=2.4 cv=PLACOPqC c=1 sm=1 tr=0 ts=69679d46
  cx=c_apl:c_apl_out:c_pps a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=065Y4zqepXN3nrMe:21 a=vUbySO9Y5rIA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=eCCvHKTOcc9AFgEG6kwA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDExNCBTYWx0ZWRfX20sRgrt9Pfdk
- u4MEzThTMCkJvmOMU5yjzDvGU5a8Zco33A0kdnqXuqN+ntEzzvz6d8PjaVaAL3mXRAKKSru+V3Z
- Xi7kci2MOzHjFNvU5iGIADttt7xjBGi0QUzuqZJ3gIQ0p6tIwipJraO3v8vr4UohCLDeR8+bdqd
- DymNLAKaBWIVUzglAfSvpNmHoEAisyYitaC1oSGPBbjqVQmb1xU9UcfQ2Dra8zEg0p4Vbq6fZbJ
- c3mUqVRXZ28QOIe1RS52PBwSboJIRIqs6FJcTXaKQb2+8OIhU+WI5TeXBgmLpkcEzQYtVSN5pkP
- O2A8QFVNsOh4ikwDFs6
-X-Proofpoint-ORIG-GUID: -DDL5d9uNq3w8Kgy60D9Sjer7f-UJ0f-
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=yMhMjlubAAAA:8 a=XtnWhMvHLvoGx0dyWtYA:9
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: 1ncZAsySzY9jabn7rdlKZPYGOeRaFH_t
+X-Proofpoint-ORIG-GUID: 1ncZAsySzY9jabn7rdlKZPYGOeRaFH_t
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-14_04,2026-01-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0 clxscore=1030 mlxlogscore=999 bulkscore=0 malwarescore=0
- mlxscore=0 adultscore=0 phishscore=0 classifier=spam authscore=0 adjust=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ malwarescore=0 mlxscore=0 clxscore=1030
+ adultscore=0 spamscore=0
+ mlxlogscore=999 phishscore=0 bulkscore=0 classifier=spam authscore=0 adjust=0
  reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601140114
-X-JNJ: AAAAAAABU2b57dIHgSbx08SHtJ+xEDfMESc8uWbc9LJdQr2RzmDbckg/yO1zlQL2bl31VZltQ0hCMjP47VDtOzAo3Pp/x9a6sG1YOCCTtH32Q96KLRU7mYufOdl/a7Lf1N5wJRVoWVZZKdRlDSOByRTk9kVceL001IREScs/sF2IWO6zg/FJueJ0wVfySKyujkxJ7/s85oEMTjH6WQU/CLJbD67kEY6v9v0j+U0L8lNq7Zli+pcGNqIW6Zsj8rP03gnkf1yRmbP7iIhLS4VbDyCzEBle0jXy9pblF5w+Oci06jdSwObSqvzYbXZMmT74WCMbGeuioiKtvVaA2i0CavuXNUtERAg/aeP2oovF6rzjWZ7smgKV70o4OrQxASto3ufxg3L1ozI4DNH9LP00iPvFTKTsbKdPS5GU+ViGXaJEAqr1v5+p/sIvO8i374m23ynPMgs1gnL96U7v3u+wFN4ELL1TxfROMJ0ck4W5zi7ZKmA7Iuk3rTvVKqQdGSF9FV3Eu6KUOuXPIO/t5mPgXF9vHtt3ONpwHwT+4bjCS+OMNGuvSc0bWMtLl+xwVTd4L5sd4slkY0vPmttInmGh9HcPrOelWzF28y2zb9I9SDpepWTpE3ncfl8gME6Wvlgw7USeQnzIkhweaarY7fz58C7+ATqJpzxTCg2pTBXtjI73qPskzIlK9YToh0zANqbfNJShVKujYbNxNb3/CZKmTIBGinjnJtD8M8c6lzJnVMeA2QgIj4EcO0VLxENpJYJ7GlLmqABeFmGv6SKyTWxFjPLWVvOoZLFyBflzFx8WkpMmn6i4pfN1/ySOokVlzL0r9iLe6R2xEYICH7oAsqDYPP5YLpaCmzu0X5DQq7YNNsqlR0Vxa8+n6UCx9/YLorwG94B3dvKCREnkZ5NfB/svD9wwKNUmw7FB
-Received-SPF: pass client-ip=57.103.77.152;
+X-JNJ: AAAAAAAB6oN3ov9wUQ59WWD2mYwwaMVurB8e8J4VJkGF0CDdX0yQRFeEz8RaHxRoWCsy2B8+EWI68iTjlo3RBuDNdWTh4uJ3lCodVQ+o59UB/wTUOVS5kw+AVz0yqIxS5VYOLQWXSUMRaqZuhsdJDvA2VGgDwC/RGgWW3YeJhNUcErkRZZFBvl4IgLgqDX7o6ftyQnBdFk33KENlVZjO7idHXcdAONNSH5mch7YhPZMbIMacXGJ+/bU7g/OVAJDqlRjtTsp5mvn91OBTFhxVwcmQeh0Ga0pcXHwQRvZNmso4LGdJyGSNc8Qw7o2Pxv/qfZVGE9VkEdG4FuYFBOz8t7HQ8e1Cwt9V/Fb/smrw7KPV9CprvxQGrp6ogo7OjThsf9oIxGo9Zq+7MmuhfnIRo1tAlUAQ3hIxGCgKkXyrRifMre5g+eitj2oW1XH5BgmQfOM8Rqdwn4oMtupKiHLe2D1tMhAgJ0CSMeQGbY5OrCxijGwmjDwmSQBl+3duLdWTKw0oU+1FNpGxNQT28E7xGsO5oXCGLhVZhpautRyJJMI3qQlxItIqet1AH6500R3vTh5BQQ8Fhk2PuB9z8zj3OODSq+IbYjuBMOvqp6um4rI9lFHxzkP/A4d5UbFmQ6CTsfjWLx5WsvXujTPAFHtd3rykuKmVqHt9CoDWy4yUbYA1uvKBMDBSzhJg1ZG/beqVjG7/XLQ5lg4A03rLSIlWrnkU+6T/uwVPRacTBpmEpwNUnOs+ejP3mjN0YxUmzKLRwRE8NzShYE9GfH40Icqv+KCu5ZaZ3NlF+SsKFlALJXSZ3R2pmN0QUkfXfIpdVQiX+y8XCuDlJHaEFUcLm+22Q7X4PS75cs7GnkMbJSXtEcOLAqzOJpcgvPDf/7vshHqlU13Y4Bs=
+Received-SPF: pass client-ip=57.103.77.250;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -90,7 +92,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,209 +108,1321 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Switch its to a tristate.
-
-Windows Hypervisor Platform's vGIC doesn't support ITS.
-Deal with this by reporting to the user and exiting.
-
-Regular configuration: GICv3 + ITS
-New default configuration with WHPX: GICv3 with GICv2m
-And its=off explicitly for the newest machine version: GICv3 + GICv2m
+Some code can be shared between x86_64 and arm64 WHPX. Do so as much as reasonable.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- hw/arm/virt-acpi-build.c | 14 ++++++------
- hw/arm/virt.c            | 46 +++++++++++++++++++++++++++++++---------
- include/hw/arm/virt.h    |  4 +++-
- 3 files changed, 46 insertions(+), 18 deletions(-)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 40ea6b6dd5..86024a1a73 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -473,7 +473,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         nb_nodes = num_smmus + 1; /* RC and SMMUv3 */
-         rc_mapping_count = rc_smmu_idmaps_len;
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ MAINTAINERS                  |   2 +
+ accel/whpx/meson.build       |   1 +
+ accel/whpx/whpx-common.c     | 558 +++++++++++++++++++++++++++++++++++
+ include/system/whpx-all.h    |  20 ++
+ include/system/whpx-common.h |  21 ++
+ target/i386/whpx/whpx-all.c  | 551 +---------------------------------
+ 6 files changed, 612 insertions(+), 541 deletions(-)
+ create mode 100644 accel/whpx/whpx-common.c
+ create mode 100644 include/system/whpx-all.h
+ create mode 100644 include/system/whpx-common.h
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 561f18c8d2..e66c764167 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -568,6 +568,8 @@ F: target/i386/whpx/
+ F: accel/stubs/whpx-stub.c
+ F: include/system/whpx.h
+ F: include/system/whpx-accel-ops.h
++F: include/system/whpx-common.h
++F: include/system/whpx-internal.h
  
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             /*
-              * Knowing the ID ranges from the RC to the SMMU, it's possible to
-              * determine the ID ranges from RC that go directly to ITS.
-@@ -484,7 +484,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-             rc_mapping_count += rc_its_idmaps->len;
-         }
-     } else {
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             nb_nodes = 2; /* RC and ITS */
-             rc_mapping_count = 1; /* Direct map to ITS */
-         } else {
-@@ -499,7 +499,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
-     build_append_int_noprefix(table_data, 0, 4); /* Reserved */
+ MSHV
+ M: Magnus Kulke <magnus.kulke@linux.microsoft.com>
+diff --git a/accel/whpx/meson.build b/accel/whpx/meson.build
+index 7b3d6f1c1c..fad28dddcb 100644
+--- a/accel/whpx/meson.build
++++ b/accel/whpx/meson.build
+@@ -1,6 +1,7 @@
+ whpx_ss = ss.source_set()
+ whpx_ss.add(files(
+   'whpx-accel-ops.c',
++  'whpx-common.c'
+ ))
  
--    if (vms->its) {
-+    if (virt_is_its_enabled(vms)) {
-         /* Table 12 ITS Group Format */
-         build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* Type */
-         node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS Identifier */;
-@@ -518,7 +518,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         int smmu_mapping_count, offset_to_id_array;
-         int irq = sdev->irq;
- 
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             smmu_mapping_count = 1; /* ITS Group node */
-             offset_to_id_array = SMMU_V3_ENTRY_SIZE; /* Just after the header */
-         } else {
-@@ -611,7 +611,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-             }
-         }
- 
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             /*
-              * Map bypassed (don't go through the SMMU) RIDs (input) to
-              * ITS Group node directly: RC -> ITS.
-@@ -946,7 +946,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-                                           memmap[VIRT_HIGH_GIC_REDIST2].size);
-         }
- 
--        if (vms->its) {
-+        if (virt_is_its_enabled(vms)) {
-             /*
-              * ACPI spec, Revision 6.0 Errata A
-              * (original 6.0 definition has invalid Length)
-@@ -962,7 +962,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         }
-     }
- 
--    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && vms->its)
-+    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms))
-      && !vms->no_gicv3_with_gicv2m) {
-         const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
- 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 4fad34e108..553c7f62cc 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -737,7 +737,7 @@ static void create_its(VirtMachineState *vms)
- {
-     DeviceState *dev;
- 
--    assert(vms->its);
-+    assert(virt_is_its_enabled(vms));
-     if (!kvm_irqchip_in_kernel() && !vms->tcg_its) {
-         /*
-          * Do nothing if ITS is neither supported by the host nor emulated by
-@@ -746,6 +746,15 @@ static void create_its(VirtMachineState *vms)
-         return;
-     }
- 
-+    if (whpx_enabled()) {
-+        /*
-+         * Signal to the user when ITS is neither supported by the host
-+         * nor emulated by the machine.
-+         */
-+        error_report("ITS not supported on WHPX.");
-+        exit(1);
-+    }
+ specific_ss.add_all(when: 'CONFIG_WHPX', if_true: whpx_ss)
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+new file mode 100644
+index 0000000000..0a6068fdde
+--- /dev/null
++++ b/accel/whpx/whpx-common.c
+@@ -0,0 +1,558 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * QEMU Windows Hypervisor Platform accelerator (WHPX)
++ *
++ * Copyright Microsoft Corp. 2017
++ */
 +
-     dev = qdev_new(its_class_name());
- 
-     object_property_set_link(OBJECT(dev), "parent-gicv3", OBJECT(vms->gic),
-@@ -957,7 +966,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
- 
-     fdt_add_gic_node(vms);
- 
--    if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
-+    if (vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms)) {
-         create_its(vms);
-     } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
-         create_v2m(vms);
-@@ -2699,18 +2708,34 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
-     extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
- }
- 
--static bool virt_get_its(Object *obj, Error **errp)
-+bool virt_is_its_enabled(VirtMachineState *vms)
++#include "qemu/osdep.h"
++#include "cpu.h"
++#include "system/address-spaces.h"
++#include "system/ioport.h"
++#include "gdbstub/helpers.h"
++#include "qemu/accel.h"
++#include "accel/accel-ops.h"
++#include "system/whpx.h"
++#include "system/cpus.h"
++#include "system/runstate.h"
++#include "qemu/main-loop.h"
++#include "hw/core/boards.h"
++#include "hw/intc/ioapic.h"
++#include "qemu/error-report.h"
++#include "qapi/error.h"
++#include "qapi/qapi-types-common.h"
++#include "qapi/qapi-visit-common.h"
++#include "migration/blocker.h"
++#include "accel/accel-cpu-target.h"
++#include <winerror.h>
++
++#include "system/whpx-internal.h"
++#include "system/whpx-accel-ops.h"
++#include "system/whpx-common.h"
++#include "system/whpx-all.h"
++
++#include <winhvplatform.h>
++#include <winhvplatformdefs.h>
++
++bool whpx_allowed;
++static bool whp_dispatch_initialized;
++static HMODULE hWinHvPlatform;
++static HMODULE hWinHvEmulation;
++
++struct whpx_state whpx_global;
++struct WHPDispatch whp_dispatch;
++
++/* Tries to find a breakpoint at the specified address. */
++struct whpx_breakpoint *whpx_lookup_breakpoint_by_addr(uint64_t address)
 +{
-+    if (vms->its == ON_OFF_AUTO_OFF) {
-+        return false;
-+    }
-+    if (vms->its == ON_OFF_AUTO_AUTO) {
-+        if (whpx_enabled()) {
-+            return false;
++    struct whpx_state *whpx = &whpx_global;
++    int i;
++
++    if (whpx->breakpoints.breakpoints) {
++        for (i = 0; i < whpx->breakpoints.breakpoints->used; i++) {
++            if (address == whpx->breakpoints.breakpoints->data[i].address) {
++                return &whpx->breakpoints.breakpoints->data[i];
++            }
 +        }
 +    }
-+    return true;
++
++    return NULL;
 +}
 +
-+static void virt_get_its(Object *obj, Visitor *v, const char *name,
-+                          void *opaque, Error **errp)
- {
-     VirtMachineState *vms = VIRT_MACHINE(obj);
-+    OnOffAuto its = vms->its;
- 
--    return vms->its;
-+    visit_type_OnOffAuto(v, name, &its, errp);
- }
- 
--static void virt_set_its(Object *obj, bool value, Error **errp)
-+static void virt_set_its(Object *obj, Visitor *v, const char *name,
-+                          void *opaque, Error **errp)
- {
-     VirtMachineState *vms = VIRT_MACHINE(obj);
- 
--    vms->its = value;
-+    visit_type_OnOffAuto(v, name, &vms->its, errp);
- }
- 
- static bool virt_get_dtb_randomness(Object *obj, Error **errp)
-@@ -3427,8 +3452,9 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-                                           "guest CPU which implements the ARM "
-                                           "Memory Tagging Extension");
- 
--    object_class_property_add_bool(oc, "its", virt_get_its,
--                                   virt_set_its);
-+    object_class_property_add(oc, "its", "OnOffAuto",
-+        virt_get_its, virt_set_its,
-+        NULL, NULL);
-     object_class_property_set_description(oc, "its",
-                                           "Set on/off to enable/disable "
-                                           "ITS instantiation");
-@@ -3488,8 +3514,8 @@ static void virt_instance_init(Object *obj)
-     vms->highmem_mmio = true;
-     vms->highmem_redists = true;
- 
--    /* Default allows ITS instantiation */
--    vms->its = true;
-+    /* Default allows ITS instantiation if available */
-+    vms->its = ON_OFF_AUTO_AUTO;
-     /* Allow ITS emulation if the machine version supports it */
-     vms->tcg_its = !vmc->no_tcg_its;
-     vms->no_gicv3_with_gicv2m = false;
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index c5bc47ee88..394b70c62e 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -147,7 +147,7 @@ struct VirtMachineState {
-     bool highmem_ecam;
-     bool highmem_mmio;
-     bool highmem_redists;
--    bool its;
-+    OnOffAuto its;
-     bool tcg_its;
-     bool virt;
-     bool ras;
-@@ -216,4 +216,6 @@ static inline int virt_gicv3_redist_region_count(VirtMachineState *vms)
-             vms->highmem_redists) ? 2 : 1;
- }
- 
-+bool virt_is_its_enabled(VirtMachineState *vms);
++/*
++ * This function is called when the a VCPU is about to start and no other
++ * VCPUs have been started so far. Since the VCPU start order could be
++ * arbitrary, it doesn't have to be VCPU#0.
++ *
++ * It is used to commit the breakpoints into memory, and configure WHPX
++ * to intercept debug exceptions.
++ *
++ * Note that whpx_set_exception_exit_bitmap() cannot be called if one or
++ * more VCPUs are already running, so this is the best place to do it.
++ */
++int whpx_first_vcpu_starting(CPUState *cpu)
++{
++    struct whpx_state *whpx = &whpx_global;
 +
- #endif /* QEMU_ARM_VIRT_H */
++    g_assert(bql_locked());
++
++    if (!QTAILQ_EMPTY(&cpu->breakpoints) ||
++            (whpx->breakpoints.breakpoints &&
++             whpx->breakpoints.breakpoints->used)) {
++        CPUBreakpoint *bp;
++        int i = 0;
++        bool update_pending = false;
++
++        QTAILQ_FOREACH(bp, &cpu->breakpoints, entry) {
++            if (i >= whpx->breakpoints.original_address_count ||
++                bp->pc != whpx->breakpoints.original_addresses[i]) {
++                update_pending = true;
++            }
++
++            i++;
++        }
++
++        if (i != whpx->breakpoints.original_address_count) {
++            update_pending = true;
++        }
++
++        if (update_pending) {
++            /*
++             * The CPU breakpoints have changed since the last call to
++             * whpx_translate_cpu_breakpoints(). WHPX breakpoints must
++             * now be recomputed.
++             */
++            whpx_translate_cpu_breakpoints(&whpx->breakpoints, cpu, i);
++        }
++        /* Actually insert the breakpoints into the memory. */
++        whpx_apply_breakpoints(whpx->breakpoints.breakpoints, cpu, true);
++    }
++    HRESULT hr;
++    uint64_t exception_mask;
++    if (whpx->step_pending ||
++        (whpx->breakpoints.breakpoints &&
++         whpx->breakpoints.breakpoints->used)) {
++        /*
++         * We are either attempting to single-step one or more CPUs, or
++         * have one or more breakpoints enabled. Both require intercepting
++         * the WHvX64ExceptionTypeBreakpointTrap exception.
++         */
++        exception_mask = 1UL << WHvX64ExceptionTypeDebugTrapOrFault;
++    } else {
++        /* Let the guest handle all exceptions. */
++        exception_mask = 0;
++    }
++    hr = whpx_set_exception_exit_bitmap(exception_mask);
++    if (!SUCCEEDED(hr)) {
++        error_report("WHPX: Failed to update exception exit mask,"
++                     "hr=%08lx.", hr);
++        return 1;
++    }
++    return 0;
++}
++
++/*
++ * This function is called when the last VCPU has finished running.
++ * It is used to remove any previously set breakpoints from memory.
++ */
++int whpx_last_vcpu_stopping(CPUState *cpu)
++{
++    whpx_apply_breakpoints(whpx_global.breakpoints.breakpoints, cpu, false);
++    return 0;
++}
++
++static void do_whpx_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
++{
++    if (!cpu->vcpu_dirty) {
++        whpx_get_registers(cpu);
++        cpu->vcpu_dirty = true;
++    }
++}
++
++static void do_whpx_cpu_synchronize_post_reset(CPUState *cpu,
++                                               run_on_cpu_data arg)
++{
++    whpx_set_registers(cpu, WHPX_SET_RESET_STATE);
++    cpu->vcpu_dirty = false;
++}
++
++static void do_whpx_cpu_synchronize_post_init(CPUState *cpu,
++                                              run_on_cpu_data arg)
++{
++    whpx_set_registers(cpu, WHPX_SET_FULL_STATE);
++    cpu->vcpu_dirty = false;
++}
++
++static void do_whpx_cpu_synchronize_pre_loadvm(CPUState *cpu,
++                                               run_on_cpu_data arg)
++{
++    cpu->vcpu_dirty = true;
++}
++
++/*
++ * CPU support.
++ */
++
++void whpx_cpu_synchronize_state(CPUState *cpu)
++{
++    if (!cpu->vcpu_dirty) {
++        run_on_cpu(cpu, do_whpx_cpu_synchronize_state, RUN_ON_CPU_NULL);
++    }
++}
++
++void whpx_cpu_synchronize_post_reset(CPUState *cpu)
++{
++    run_on_cpu(cpu, do_whpx_cpu_synchronize_post_reset, RUN_ON_CPU_NULL);
++}
++
++void whpx_cpu_synchronize_post_init(CPUState *cpu)
++{
++    run_on_cpu(cpu, do_whpx_cpu_synchronize_post_init, RUN_ON_CPU_NULL);
++}
++
++void whpx_cpu_synchronize_pre_loadvm(CPUState *cpu)
++{
++    run_on_cpu(cpu, do_whpx_cpu_synchronize_pre_loadvm, RUN_ON_CPU_NULL);
++}
++
++static void whpx_pre_resume_vm(AccelState *as, bool step_pending)
++{
++    whpx_global.step_pending = step_pending;
++}
++
++/*
++ * Vcpu support.
++ */
++
++int whpx_vcpu_exec(CPUState *cpu)
++{
++    int ret;
++    int fatal;
++
++    for (;;) {
++        if (cpu->exception_index >= EXCP_INTERRUPT) {
++            ret = cpu->exception_index;
++            cpu->exception_index = -1;
++            break;
++        }
++
++        fatal = whpx_vcpu_run(cpu);
++
++        if (fatal) {
++            error_report("WHPX: Failed to exec a virtual processor");
++            abort();
++        }
++    }
++
++    return ret;
++}
++
++void whpx_destroy_vcpu(CPUState *cpu)
++{
++    struct whpx_state *whpx = &whpx_global;
++
++    whp_dispatch.WHvDeleteVirtualProcessor(whpx->partition, cpu->cpu_index);
++    AccelCPUState *vcpu = cpu->accel;
++    whp_dispatch.WHvEmulatorDestroyEmulator(vcpu->emulator);
++    g_free(cpu->accel);
++}
++
++
++void whpx_vcpu_kick(CPUState *cpu)
++{
++    struct whpx_state *whpx = &whpx_global;
++    whp_dispatch.WHvCancelRunVirtualProcessor(
++        whpx->partition, cpu->cpu_index, 0);
++}
++
++/*
++ * Memory support.
++ */
++
++static void whpx_update_mapping(hwaddr start_pa, ram_addr_t size,
++                                void *host_va, int add, int rom,
++                                const char *name)
++{
++    struct whpx_state *whpx = &whpx_global;
++    HRESULT hr;
++
++    /*
++    if (add) {
++        printf("WHPX: ADD PA:%p Size:%p, Host:%p, %s, '%s'\n",
++               (void*)start_pa, (void*)size, host_va,
++               (rom ? "ROM" : "RAM"), name);
++    } else {
++        printf("WHPX: DEL PA:%p Size:%p, Host:%p,      '%s'\n",
++               (void*)start_pa, (void*)size, host_va, name);
++    }
++    */
++
++    if (add) {
++        hr = whp_dispatch.WHvMapGpaRange(whpx->partition,
++                                         host_va,
++                                         start_pa,
++                                         size,
++                                         (WHvMapGpaRangeFlagRead |
++                                          WHvMapGpaRangeFlagExecute |
++                                          (rom ? 0 : WHvMapGpaRangeFlagWrite)));
++    } else {
++        hr = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
++                                           start_pa,
++                                           size);
++    }
++
++    if (FAILED(hr)) {
++        error_report("WHPX: Failed to %s GPA range '%s' PA:%p, Size:%p bytes,"
++                     " Host:%p, hr=%08lx",
++                     (add ? "MAP" : "UNMAP"), name,
++                     (void *)(uintptr_t)start_pa, (void *)size, host_va, hr);
++    }
++}
++
++static void whpx_process_section(MemoryRegionSection *section, int add)
++{
++    MemoryRegion *mr = section->mr;
++    hwaddr start_pa = section->offset_within_address_space;
++    ram_addr_t size = int128_get64(section->size);
++    unsigned int delta;
++    uint64_t host_va;
++
++    if (!memory_region_is_ram(mr)) {
++        return;
++    }
++
++    delta = qemu_real_host_page_size() - (start_pa & ~qemu_real_host_page_mask());
++    delta &= ~qemu_real_host_page_mask();
++    if (delta > size) {
++        return;
++    }
++    start_pa += delta;
++    size -= delta;
++    size &= qemu_real_host_page_mask();
++    if (!size || (start_pa & ~qemu_real_host_page_mask())) {
++        return;
++    }
++
++    host_va = (uintptr_t)memory_region_get_ram_ptr(mr)
++            + section->offset_within_region + delta;
++
++    whpx_update_mapping(start_pa, size, (void *)(uintptr_t)host_va, add,
++                        memory_region_is_rom(mr), mr->name);
++}
++
++static void whpx_region_add(MemoryListener *listener,
++                           MemoryRegionSection *section)
++{
++    memory_region_ref(section->mr);
++    whpx_process_section(section, 1);
++}
++
++static void whpx_region_del(MemoryListener *listener,
++                           MemoryRegionSection *section)
++{
++    whpx_process_section(section, 0);
++    memory_region_unref(section->mr);
++}
++
++static void whpx_transaction_begin(MemoryListener *listener)
++{
++}
++
++static void whpx_transaction_commit(MemoryListener *listener)
++{
++}
++
++static void whpx_log_sync(MemoryListener *listener,
++                         MemoryRegionSection *section)
++{
++    MemoryRegion *mr = section->mr;
++
++    if (!memory_region_is_ram(mr)) {
++        return;
++    }
++
++    memory_region_set_dirty(mr, 0, int128_get64(section->size));
++}
++
++static MemoryListener whpx_memory_listener = {
++    .name = "whpx",
++    .begin = whpx_transaction_begin,
++    .commit = whpx_transaction_commit,
++    .region_add = whpx_region_add,
++    .region_del = whpx_region_del,
++    .log_sync = whpx_log_sync,
++    .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
++};
++
++void whpx_memory_init(void)
++{
++    memory_listener_register(&whpx_memory_listener, &address_space_memory);
++}
++
++/*
++ * Load the functions from the given library, using the given handle. If a
++ * handle is provided, it is used, otherwise the library is opened. The
++ * handle will be updated on return with the opened one.
++ */
++static bool load_whp_dispatch_fns(HMODULE *handle,
++    WHPFunctionList function_list)
++{
++    HMODULE hLib = *handle;
++
++    #define WINHV_PLATFORM_DLL "WinHvPlatform.dll"
++    #define WINHV_EMULATION_DLL "WinHvEmulation.dll"
++    #define WHP_LOAD_FIELD_OPTIONAL(return_type, function_name, signature) \
++        whp_dispatch.function_name = \
++            (function_name ## _t)GetProcAddress(hLib, #function_name); \
++
++    #define WHP_LOAD_FIELD(return_type, function_name, signature) \
++        whp_dispatch.function_name = \
++            (function_name ## _t)GetProcAddress(hLib, #function_name); \
++        if (!whp_dispatch.function_name) { \
++            error_report("Could not load function %s", #function_name); \
++            goto error; \
++        } \
++
++    #define WHP_LOAD_LIB(lib_name, handle_lib) \
++    if (!handle_lib) { \
++        handle_lib = LoadLibrary(lib_name); \
++        if (!handle_lib) { \
++            error_report("Could not load library %s.", lib_name); \
++            goto error; \
++        } \
++    } \
++
++    switch (function_list) {
++    case WINHV_PLATFORM_FNS_DEFAULT:
++        WHP_LOAD_LIB(WINHV_PLATFORM_DLL, hLib)
++        LIST_WINHVPLATFORM_FUNCTIONS(WHP_LOAD_FIELD)
++        break;
++    case WINHV_EMULATION_FNS_DEFAULT:
++        WHP_LOAD_LIB(WINHV_EMULATION_DLL, hLib)
++        LIST_WINHVEMULATION_FUNCTIONS(WHP_LOAD_FIELD)
++        break;
++    case WINHV_PLATFORM_FNS_SUPPLEMENTAL:
++        WHP_LOAD_LIB(WINHV_PLATFORM_DLL, hLib)
++        LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_LOAD_FIELD_OPTIONAL)
++        break;
++    }
++
++    *handle = hLib;
++    return true;
++
++error:
++    if (hLib) {
++        FreeLibrary(hLib);
++    }
++
++    return false;
++}
++
++static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
++                                   const char *name, void *opaque,
++                                   Error **errp)
++{
++    struct whpx_state *whpx = &whpx_global;
++    OnOffSplit mode;
++
++    if (!visit_type_OnOffSplit(v, name, &mode, errp)) {
++        return;
++    }
++
++    switch (mode) {
++    case ON_OFF_SPLIT_ON:
++        whpx->kernel_irqchip_allowed = true;
++        whpx->kernel_irqchip_required = true;
++        break;
++
++    case ON_OFF_SPLIT_OFF:
++        whpx->kernel_irqchip_allowed = false;
++        whpx->kernel_irqchip_required = false;
++        break;
++
++    case ON_OFF_SPLIT_SPLIT:
++        error_setg(errp, "WHPX: split irqchip currently not supported");
++        error_append_hint(errp,
++            "Try without kernel-irqchip or with kernel-irqchip=on|off");
++        break;
++
++    default:
++        /*
++         * The value was checked in visit_type_OnOffSplit() above. If
++         * we get here, then something is wrong in QEMU.
++         */
++        abort();
++    }
++}
++
++static void whpx_cpu_accel_class_init(ObjectClass *oc, const void *data)
++{
++    AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
++
++    acc->cpu_instance_init = whpx_cpu_instance_init;
++}
++
++static const TypeInfo whpx_cpu_accel_type = {
++    .name = ACCEL_CPU_NAME("whpx"),
++
++    .parent = TYPE_ACCEL_CPU,
++    .class_init = whpx_cpu_accel_class_init,
++    .abstract = true,
++};
++
++/*
++ * Partition support
++ */
++
++bool whpx_apic_in_platform(void)
++{
++    return whpx_global.apic_in_platform;
++}
++
++static void whpx_accel_class_init(ObjectClass *oc, const void *data)
++{
++    AccelClass *ac = ACCEL_CLASS(oc);
++    ac->name = "WHPX";
++    ac->init_machine = whpx_accel_init;
++    ac->pre_resume_vm = whpx_pre_resume_vm;
++    ac->allowed = &whpx_allowed;
++
++    object_class_property_add(oc, "kernel-irqchip", "on|off|split",
++        NULL, whpx_set_kernel_irqchip,
++        NULL, NULL);
++    object_class_property_set_description(oc, "kernel-irqchip",
++        "Configure WHPX in-kernel irqchip");
++}
++
++static void whpx_accel_instance_init(Object *obj)
++{
++    struct whpx_state *whpx = &whpx_global;
++
++    memset(whpx, 0, sizeof(struct whpx_state));
++    /* Turn on kernel-irqchip, by default */
++    whpx->kernel_irqchip_allowed = true;
++}
++
++static const TypeInfo whpx_accel_type = {
++    .name = ACCEL_CLASS_NAME("whpx"),
++    .parent = TYPE_ACCEL,
++    .instance_init = whpx_accel_instance_init,
++    .class_init = whpx_accel_class_init,
++};
++
++static void whpx_type_init(void)
++{
++    type_register_static(&whpx_accel_type);
++    type_register_static(&whpx_cpu_accel_type);
++}
++
++bool init_whp_dispatch(void)
++{
++    if (whp_dispatch_initialized) {
++        return true;
++    }
++
++    if (!load_whp_dispatch_fns(&hWinHvPlatform, WINHV_PLATFORM_FNS_DEFAULT)) {
++        goto error;
++    }
++
++    if (!load_whp_dispatch_fns(&hWinHvEmulation, WINHV_EMULATION_FNS_DEFAULT)) {
++        goto error;
++    }
++
++    assert(load_whp_dispatch_fns(&hWinHvPlatform,
++        WINHV_PLATFORM_FNS_SUPPLEMENTAL));
++    whp_dispatch_initialized = true;
++
++    return true;
++error:
++    if (hWinHvPlatform) {
++        FreeLibrary(hWinHvPlatform);
++    }
++    if (hWinHvEmulation) {
++        FreeLibrary(hWinHvEmulation);
++    }
++    return false;
++}
++
++type_init(whpx_type_init);
+diff --git a/include/system/whpx-all.h b/include/system/whpx-all.h
+new file mode 100644
+index 0000000000..f13cdf7f66
+--- /dev/null
++++ b/include/system/whpx-all.h
+@@ -0,0 +1,20 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef SYSTEM_WHPX_ALL_H
++#define SYSTEM_WHPX_ALL_H
++
++/* Called by whpx-common */
++int whpx_vcpu_run(CPUState *cpu);
++void whpx_get_registers(CPUState *cpu);
++void whpx_set_registers(CPUState *cpu, int level);
++int whpx_accel_init(AccelState *as, MachineState *ms);
++void whpx_cpu_instance_init(CPUState *cs);
++HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions);
++void whpx_apply_breakpoints(
++struct whpx_breakpoint_collection *breakpoints,
++    CPUState *cpu,
++    bool resuming);
++void whpx_translate_cpu_breakpoints(
++    struct whpx_breakpoints *breakpoints,
++    CPUState *cpu,
++    int cpu_breakpoint_count);
++#endif
+diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
+new file mode 100644
+index 0000000000..e549c7539c
+--- /dev/null
++++ b/include/system/whpx-common.h
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef SYSTEM_WHPX_COMMON_H
++#define SYSTEM_WHPX_COMMON_H
++
++struct AccelCPUState {
++    WHV_EMULATOR_HANDLE emulator;
++    bool window_registered;
++    bool interruptable;
++    bool ready_for_pic_interrupt;
++    uint64_t tpr;
++    uint64_t apic_base;
++    bool interruption_pending;
++    /* Must be the last field as it may have a tail */
++    WHV_RUN_VP_EXIT_CONTEXT exit_ctx;
++};
++
++int whpx_first_vcpu_starting(CPUState *cpu);
++int whpx_last_vcpu_stopping(CPUState *cpu);
++void whpx_memory_init(void);
++struct whpx_breakpoint *whpx_lookup_breakpoint_by_addr(uint64_t address);
++#endif
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index cef31fc1a8..052cda42bf 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -33,6 +33,8 @@
+ 
+ #include "system/whpx-internal.h"
+ #include "system/whpx-accel-ops.h"
++#include "system/whpx-all.h"
++#include "system/whpx-common.h"
+ 
+ #include <winhvplatform.h>
+ #include <winhvemulation.h>
+@@ -232,28 +234,9 @@ typedef enum WhpxStepMode {
+     WHPX_STEP_EXCLUSIVE,
+ } WhpxStepMode;
+ 
+-struct AccelCPUState {
+-    WHV_EMULATOR_HANDLE emulator;
+-    bool window_registered;
+-    bool interruptable;
+-    bool ready_for_pic_interrupt;
+-    uint64_t tpr;
+-    uint64_t apic_base;
+-    bool interruption_pending;
+-
+-    /* Must be the last field as it may have a tail */
+-    WHV_RUN_VP_EXIT_CONTEXT exit_ctx;
+-};
+-
+-bool whpx_allowed;
+-static bool whp_dispatch_initialized;
+-static HMODULE hWinHvPlatform, hWinHvEmulation;
+ static uint32_t max_vcpu_index;
+ static WHV_PROCESSOR_XSAVE_FEATURES whpx_xsave_cap;
+ 
+-struct whpx_state whpx_global;
+-struct WHPDispatch whp_dispatch;
+-
+ static bool whpx_has_xsave(void)
+ {
+     return whpx_xsave_cap.XsaveSupport;
+@@ -379,7 +362,7 @@ static uint64_t whpx_cr8_to_apic_tpr(uint64_t cr8)
+     return cr8 << 4;
+ }
+ 
+-static void whpx_set_registers(CPUState *cpu, int level)
++void whpx_set_registers(CPUState *cpu, int level)
+ {
+     struct whpx_state *whpx = &whpx_global;
+     AccelCPUState *vcpu = cpu->accel;
+@@ -594,7 +577,7 @@ static void whpx_get_xcrs(CPUState *cpu)
+     cpu_env(cpu)->xcr0 = xcr0.Reg64;
+ }
+ 
+-static void whpx_get_registers(CPUState *cpu)
++void whpx_get_registers(CPUState *cpu)
+ {
+     struct whpx_state *whpx = &whpx_global;
+     AccelCPUState *vcpu = cpu->accel;
+@@ -934,7 +917,7 @@ static int whpx_handle_portio(CPUState *cpu,
+  * The 'exceptions' argument accepts a bitmask, e.g:
+  * (1 << WHvX64ExceptionTypeDebugTrapOrFault) | (...)
+  */
+-static HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions)
++HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions)
+ {
+     struct whpx_state *whpx = &whpx_global;
+     WHV_PARTITION_PROPERTY prop = { 0, };
+@@ -1084,23 +1067,6 @@ static HRESULT whpx_vcpu_configure_single_stepping(CPUState *cpu,
+     return S_OK;
+ }
+ 
+-/* Tries to find a breakpoint at the specified address. */
+-static struct whpx_breakpoint *whpx_lookup_breakpoint_by_addr(uint64_t address)
+-{
+-    struct whpx_state *whpx = &whpx_global;
+-    int i;
+-
+-    if (whpx->breakpoints.breakpoints) {
+-        for (i = 0; i < whpx->breakpoints.breakpoints->used; i++) {
+-            if (address == whpx->breakpoints.breakpoints->data[i].address) {
+-                return &whpx->breakpoints.breakpoints->data[i];
+-            }
+-        }
+-    }
+-
+-    return NULL;
+-}
+-
+ /*
+  * Linux uses int3 (0xCC) during startup (see int3_selftest()) and for
+  * debugging user-mode applications. Since the WHPX API does not offer
+@@ -1136,7 +1102,7 @@ static const uint8_t whpx_breakpoint_instruction = 0xF1;
+  * memory, but doesn't actually do it. The memory accessing is done in
+  * whpx_apply_breakpoints().
+  */
+-static void whpx_translate_cpu_breakpoints(
++void whpx_translate_cpu_breakpoints(
+     struct whpx_breakpoints *breakpoints,
+     CPUState *cpu,
+     int cpu_breakpoint_count)
+@@ -1230,7 +1196,7 @@ static void whpx_translate_cpu_breakpoints(
+  * Passing resuming=true  will try to set all previously unset breakpoints.
+  * Passing resuming=false will remove all inserted ones.
+  */
+-static void whpx_apply_breakpoints(
++void whpx_apply_breakpoints(
+     struct whpx_breakpoint_collection *breakpoints,
+     CPUState *cpu,
+     bool resuming)
+@@ -1306,93 +1272,6 @@ static void whpx_apply_breakpoints(
+     }
+ }
+ 
+-/*
+- * This function is called when the a VCPU is about to start and no other
+- * VCPUs have been started so far. Since the VCPU start order could be
+- * arbitrary, it doesn't have to be VCPU#0.
+- *
+- * It is used to commit the breakpoints into memory, and configure WHPX
+- * to intercept debug exceptions.
+- *
+- * Note that whpx_set_exception_exit_bitmap() cannot be called if one or
+- * more VCPUs are already running, so this is the best place to do it.
+- */
+-static int whpx_first_vcpu_starting(CPUState *cpu)
+-{
+-    struct whpx_state *whpx = &whpx_global;
+-    HRESULT hr;
+-
+-    g_assert(bql_locked());
+-
+-    if (!QTAILQ_EMPTY(&cpu->breakpoints) ||
+-            (whpx->breakpoints.breakpoints &&
+-             whpx->breakpoints.breakpoints->used)) {
+-        CPUBreakpoint *bp;
+-        int i = 0;
+-        bool update_pending = false;
+-
+-        QTAILQ_FOREACH(bp, &cpu->breakpoints, entry) {
+-            if (i >= whpx->breakpoints.original_address_count ||
+-                bp->pc != whpx->breakpoints.original_addresses[i]) {
+-                update_pending = true;
+-            }
+-
+-            i++;
+-        }
+-
+-        if (i != whpx->breakpoints.original_address_count) {
+-            update_pending = true;
+-        }
+-
+-        if (update_pending) {
+-            /*
+-             * The CPU breakpoints have changed since the last call to
+-             * whpx_translate_cpu_breakpoints(). WHPX breakpoints must
+-             * now be recomputed.
+-             */
+-            whpx_translate_cpu_breakpoints(&whpx->breakpoints, cpu, i);
+-        }
+-
+-        /* Actually insert the breakpoints into the memory. */
+-        whpx_apply_breakpoints(whpx->breakpoints.breakpoints, cpu, true);
+-    }
+-
+-    uint64_t exception_mask;
+-    if (whpx->step_pending ||
+-        (whpx->breakpoints.breakpoints &&
+-         whpx->breakpoints.breakpoints->used)) {
+-        /*
+-         * We are either attempting to single-step one or more CPUs, or
+-         * have one or more breakpoints enabled. Both require intercepting
+-         * the WHvX64ExceptionTypeBreakpointTrap exception.
+-         */
+-
+-        exception_mask = 1UL << WHvX64ExceptionTypeDebugTrapOrFault;
+-    } else {
+-        /* Let the guest handle all exceptions. */
+-        exception_mask = 0;
+-    }
+-
+-    hr = whpx_set_exception_exit_bitmap(exception_mask);
+-    if (!SUCCEEDED(hr)) {
+-        error_report("WHPX: Failed to update exception exit mask,"
+-                     "hr=%08lx.", hr);
+-        return 1;
+-    }
+-
+-    return 0;
+-}
+-
+-/*
+- * This function is called when the last VCPU has finished running.
+- * It is used to remove any previously set breakpoints from memory.
+- */
+-static int whpx_last_vcpu_stopping(CPUState *cpu)
+-{
+-    whpx_apply_breakpoints(whpx_global.breakpoints.breakpoints, cpu, false);
+-    return 0;
+-}
+-
+ /* Returns the address of the next instruction that is about to be executed. */
+ static vaddr whpx_vcpu_get_pc(CPUState *cpu, bool exit_context_valid)
+ {
+@@ -1634,7 +1513,7 @@ static void whpx_vcpu_process_async_events(CPUState *cpu)
+     }
+ }
+ 
+-static int whpx_vcpu_run(CPUState *cpu)
++int whpx_vcpu_run(CPUState *cpu)
+ {
+     HRESULT hr;
+     struct whpx_state *whpx = &whpx_global;
+@@ -2057,65 +1936,6 @@ static int whpx_vcpu_run(CPUState *cpu)
+     return ret < 0;
+ }
+ 
+-static void do_whpx_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
+-{
+-    if (!cpu->vcpu_dirty) {
+-        whpx_get_registers(cpu);
+-        cpu->vcpu_dirty = true;
+-    }
+-}
+-
+-static void do_whpx_cpu_synchronize_post_reset(CPUState *cpu,
+-                                               run_on_cpu_data arg)
+-{
+-    whpx_set_registers(cpu, WHPX_SET_RESET_STATE);
+-    cpu->vcpu_dirty = false;
+-}
+-
+-static void do_whpx_cpu_synchronize_post_init(CPUState *cpu,
+-                                              run_on_cpu_data arg)
+-{
+-    whpx_set_registers(cpu, WHPX_SET_FULL_STATE);
+-    cpu->vcpu_dirty = false;
+-}
+-
+-static void do_whpx_cpu_synchronize_pre_loadvm(CPUState *cpu,
+-                                               run_on_cpu_data arg)
+-{
+-    cpu->vcpu_dirty = true;
+-}
+-
+-/*
+- * CPU support.
+- */
+-
+-void whpx_cpu_synchronize_state(CPUState *cpu)
+-{
+-    if (!cpu->vcpu_dirty) {
+-        run_on_cpu(cpu, do_whpx_cpu_synchronize_state, RUN_ON_CPU_NULL);
+-    }
+-}
+-
+-void whpx_cpu_synchronize_post_reset(CPUState *cpu)
+-{
+-    run_on_cpu(cpu, do_whpx_cpu_synchronize_post_reset, RUN_ON_CPU_NULL);
+-}
+-
+-void whpx_cpu_synchronize_post_init(CPUState *cpu)
+-{
+-    run_on_cpu(cpu, do_whpx_cpu_synchronize_post_init, RUN_ON_CPU_NULL);
+-}
+-
+-void whpx_cpu_synchronize_pre_loadvm(CPUState *cpu)
+-{
+-    run_on_cpu(cpu, do_whpx_cpu_synchronize_pre_loadvm, RUN_ON_CPU_NULL);
+-}
+-
+-static void whpx_pre_resume_vm(AccelState *as, bool step_pending)
+-{
+-    whpx_global.step_pending = step_pending;
+-}
+-
+ /*
+  * Vcpu support.
+  */
+@@ -2244,295 +2064,18 @@ error:
+     return ret;
+ }
+ 
+-int whpx_vcpu_exec(CPUState *cpu)
+-{
+-    int ret;
+-    int fatal;
+-
+-    for (;;) {
+-        if (cpu->exception_index >= EXCP_INTERRUPT) {
+-            ret = cpu->exception_index;
+-            cpu->exception_index = -1;
+-            break;
+-        }
+-
+-        fatal = whpx_vcpu_run(cpu);
+-
+-        if (fatal) {
+-            error_report("WHPX: Failed to exec a virtual processor");
+-            abort();
+-        }
+-    }
+-
+-    return ret;
+-}
+-
+-void whpx_destroy_vcpu(CPUState *cpu)
+-{
+-    struct whpx_state *whpx = &whpx_global;
+-    AccelCPUState *vcpu = cpu->accel;
+-
+-    whp_dispatch.WHvDeleteVirtualProcessor(whpx->partition, cpu->cpu_index);
+-    whp_dispatch.WHvEmulatorDestroyEmulator(vcpu->emulator);
+-    g_free(cpu->accel);
+-}
+-
+-void whpx_vcpu_kick(CPUState *cpu)
+-{
+-    struct whpx_state *whpx = &whpx_global;
+-    whp_dispatch.WHvCancelRunVirtualProcessor(
+-        whpx->partition, cpu->cpu_index, 0);
+-}
+-
+-/*
+- * Memory support.
+- */
+-
+-static void whpx_update_mapping(hwaddr start_pa, ram_addr_t size,
+-                                void *host_va, int add, int rom,
+-                                const char *name)
+-{
+-    struct whpx_state *whpx = &whpx_global;
+-    HRESULT hr;
+-
+-    /*
+-    if (add) {
+-        printf("WHPX: ADD PA:%p Size:%p, Host:%p, %s, '%s'\n",
+-               (void*)start_pa, (void*)size, host_va,
+-               (rom ? "ROM" : "RAM"), name);
+-    } else {
+-        printf("WHPX: DEL PA:%p Size:%p, Host:%p,      '%s'\n",
+-               (void*)start_pa, (void*)size, host_va, name);
+-    }
+-    */
+-
+-    if (add) {
+-        hr = whp_dispatch.WHvMapGpaRange(whpx->partition,
+-                                         host_va,
+-                                         start_pa,
+-                                         size,
+-                                         (WHvMapGpaRangeFlagRead |
+-                                          WHvMapGpaRangeFlagExecute |
+-                                          (rom ? 0 : WHvMapGpaRangeFlagWrite)));
+-    } else {
+-        hr = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
+-                                           start_pa,
+-                                           size);
+-    }
+-
+-    if (FAILED(hr)) {
+-        error_report("WHPX: Failed to %s GPA range '%s' PA:%p, Size:%p bytes,"
+-                     " Host:%p, hr=%08lx",
+-                     (add ? "MAP" : "UNMAP"), name,
+-                     (void *)(uintptr_t)start_pa, (void *)size, host_va, hr);
+-    }
+-}
+-
+-static void whpx_process_section(MemoryRegionSection *section, int add)
+-{
+-    MemoryRegion *mr = section->mr;
+-    hwaddr start_pa = section->offset_within_address_space;
+-    ram_addr_t size = int128_get64(section->size);
+-    unsigned int delta;
+-    uint64_t host_va;
+-
+-    if (!memory_region_is_ram(mr)) {
+-        return;
+-    }
+-
+-    delta = qemu_real_host_page_size() - (start_pa & ~qemu_real_host_page_mask());
+-    delta &= ~qemu_real_host_page_mask();
+-    if (delta > size) {
+-        return;
+-    }
+-    start_pa += delta;
+-    size -= delta;
+-    size &= qemu_real_host_page_mask();
+-    if (!size || (start_pa & ~qemu_real_host_page_mask())) {
+-        return;
+-    }
+-
+-    host_va = (uintptr_t)memory_region_get_ram_ptr(mr)
+-            + section->offset_within_region + delta;
+-
+-    whpx_update_mapping(start_pa, size, (void *)(uintptr_t)host_va, add,
+-                        memory_region_is_rom(mr), mr->name);
+-}
+-
+-static void whpx_region_add(MemoryListener *listener,
+-                           MemoryRegionSection *section)
+-{
+-    memory_region_ref(section->mr);
+-    whpx_process_section(section, 1);
+-}
+-
+-static void whpx_region_del(MemoryListener *listener,
+-                           MemoryRegionSection *section)
+-{
+-    whpx_process_section(section, 0);
+-    memory_region_unref(section->mr);
+-}
+-
+-static void whpx_transaction_begin(MemoryListener *listener)
+-{
+-}
+-
+-static void whpx_transaction_commit(MemoryListener *listener)
+-{
+-}
+-
+-static void whpx_log_sync(MemoryListener *listener,
+-                         MemoryRegionSection *section)
+-{
+-    MemoryRegion *mr = section->mr;
+-
+-    if (!memory_region_is_ram(mr)) {
+-        return;
+-    }
+-
+-    memory_region_set_dirty(mr, 0, int128_get64(section->size));
+-}
+-
+-static MemoryListener whpx_memory_listener = {
+-    .name = "whpx",
+-    .begin = whpx_transaction_begin,
+-    .commit = whpx_transaction_commit,
+-    .region_add = whpx_region_add,
+-    .region_del = whpx_region_del,
+-    .log_sync = whpx_log_sync,
+-    .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
+-};
+-
+-static void whpx_memory_init(void)
+-{
+-    memory_listener_register(&whpx_memory_listener, &address_space_memory);
+-}
+-
+-/*
+- * Load the functions from the given library, using the given handle. If a
+- * handle is provided, it is used, otherwise the library is opened. The
+- * handle will be updated on return with the opened one.
+- */
+-static bool load_whp_dispatch_fns(HMODULE *handle,
+-    WHPFunctionList function_list)
+-{
+-    HMODULE hLib = *handle;
+-
+-    #define WINHV_PLATFORM_DLL "WinHvPlatform.dll"
+-    #define WINHV_EMULATION_DLL "WinHvEmulation.dll"
+-    #define WHP_LOAD_FIELD_OPTIONAL(return_type, function_name, signature) \
+-        whp_dispatch.function_name = \
+-            (function_name ## _t)GetProcAddress(hLib, #function_name); \
+-
+-    #define WHP_LOAD_FIELD(return_type, function_name, signature) \
+-        whp_dispatch.function_name = \
+-            (function_name ## _t)GetProcAddress(hLib, #function_name); \
+-        if (!whp_dispatch.function_name) { \
+-            error_report("Could not load function %s", #function_name); \
+-            goto error; \
+-        } \
+-
+-    #define WHP_LOAD_LIB(lib_name, handle_lib) \
+-    if (!handle_lib) { \
+-        handle_lib = LoadLibrary(lib_name); \
+-        if (!handle_lib) { \
+-            error_report("Could not load library %s.", lib_name); \
+-            goto error; \
+-        } \
+-    } \
+-
+-    switch (function_list) {
+-    case WINHV_PLATFORM_FNS_DEFAULT:
+-        WHP_LOAD_LIB(WINHV_PLATFORM_DLL, hLib)
+-        LIST_WINHVPLATFORM_FUNCTIONS(WHP_LOAD_FIELD)
+-        break;
+-
+-    case WINHV_EMULATION_FNS_DEFAULT:
+-        WHP_LOAD_LIB(WINHV_EMULATION_DLL, hLib)
+-        LIST_WINHVEMULATION_FUNCTIONS(WHP_LOAD_FIELD)
+-        break;
+-
+-    case WINHV_PLATFORM_FNS_SUPPLEMENTAL:
+-        WHP_LOAD_LIB(WINHV_PLATFORM_DLL, hLib)
+-        LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_LOAD_FIELD_OPTIONAL)
+-        break;
+-    }
+-
+-    *handle = hLib;
+-    return true;
+-
+-error:
+-    if (hLib) {
+-        FreeLibrary(hLib);
+-    }
+-
+-    return false;
+-}
+-
+-static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
+-                                   const char *name, void *opaque,
+-                                   Error **errp)
+-{
+-    struct whpx_state *whpx = &whpx_global;
+-    OnOffSplit mode;
+-
+-    if (!visit_type_OnOffSplit(v, name, &mode, errp)) {
+-        return;
+-    }
+-
+-    switch (mode) {
+-    case ON_OFF_SPLIT_ON:
+-        whpx->kernel_irqchip_allowed = true;
+-        whpx->kernel_irqchip_required = true;
+-        break;
+-
+-    case ON_OFF_SPLIT_OFF:
+-        whpx->kernel_irqchip_allowed = false;
+-        whpx->kernel_irqchip_required = false;
+-        break;
+-
+-    case ON_OFF_SPLIT_SPLIT:
+-        error_setg(errp, "WHPX: split irqchip currently not supported");
+-        error_append_hint(errp,
+-            "Try without kernel-irqchip or with kernel-irqchip=on|off");
+-        break;
+-
+-    default:
+-        /*
+-         * The value was checked in visit_type_OnOffSplit() above. If
+-         * we get here, then something is wrong in QEMU.
+-         */
+-        abort();
+-    }
+-}
+-
+-static void whpx_cpu_instance_init(CPUState *cs)
++void whpx_cpu_instance_init(CPUState *cs)
+ {
+     X86CPU *cpu = X86_CPU(cs);
+ 
+     host_cpu_instance_init(cpu);
+ }
+ 
+-static void whpx_cpu_accel_class_init(ObjectClass *oc, const void *data)
+-{
+-    AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
+-
+-    acc->cpu_instance_init = whpx_cpu_instance_init;
+-}
+-
+-static const TypeInfo whpx_cpu_accel_type = {
+-    .name = ACCEL_CPU_NAME("whpx"),
+-
+-    .parent = TYPE_ACCEL_CPU,
+-    .class_init = whpx_cpu_accel_class_init,
+-    .abstract = true,
+-};
+-
+ /*
+  * Partition support
+  */
+ 
+-static int whpx_accel_init(AccelState *as, MachineState *ms)
++int whpx_accel_init(AccelState *as, MachineState *ms)
+ {
+     struct whpx_state *whpx;
+     int ret;
+@@ -2715,77 +2258,3 @@ error:
+ 
+     return ret;
+ }
+-
+-bool whpx_apic_in_platform(void) {
+-    return whpx_global.apic_in_platform;
+-}
+-
+-static void whpx_accel_class_init(ObjectClass *oc, const void *data)
+-{
+-    AccelClass *ac = ACCEL_CLASS(oc);
+-    ac->name = "WHPX";
+-    ac->init_machine = whpx_accel_init;
+-    ac->pre_resume_vm = whpx_pre_resume_vm;
+-    ac->allowed = &whpx_allowed;
+-
+-    object_class_property_add(oc, "kernel-irqchip", "on|off|split",
+-        NULL, whpx_set_kernel_irqchip,
+-        NULL, NULL);
+-    object_class_property_set_description(oc, "kernel-irqchip",
+-        "Configure WHPX in-kernel irqchip");
+-}
+-
+-static void whpx_accel_instance_init(Object *obj)
+-{
+-    struct whpx_state *whpx = &whpx_global;
+-
+-    memset(whpx, 0, sizeof(struct whpx_state));
+-    /* Turn on kernel-irqchip, by default */
+-    whpx->kernel_irqchip_allowed = true;
+-}
+-
+-static const TypeInfo whpx_accel_type = {
+-    .name = ACCEL_CLASS_NAME("whpx"),
+-    .parent = TYPE_ACCEL,
+-    .instance_init = whpx_accel_instance_init,
+-    .class_init = whpx_accel_class_init,
+-};
+-
+-static void whpx_type_init(void)
+-{
+-    type_register_static(&whpx_accel_type);
+-    type_register_static(&whpx_cpu_accel_type);
+-}
+-
+-bool init_whp_dispatch(void)
+-{
+-    if (whp_dispatch_initialized) {
+-        return true;
+-    }
+-
+-    if (!load_whp_dispatch_fns(&hWinHvPlatform, WINHV_PLATFORM_FNS_DEFAULT)) {
+-        goto error;
+-    }
+-
+-    if (!load_whp_dispatch_fns(&hWinHvEmulation, WINHV_EMULATION_FNS_DEFAULT)) {
+-        goto error;
+-    }
+-
+-    assert(load_whp_dispatch_fns(&hWinHvPlatform,
+-        WINHV_PLATFORM_FNS_SUPPLEMENTAL));
+-    whp_dispatch_initialized = true;
+-
+-    return true;
+-error:
+-    if (hWinHvPlatform) {
+-        FreeLibrary(hWinHvPlatform);
+-    }
+-
+-    if (hWinHvEmulation) {
+-        FreeLibrary(hWinHvEmulation);
+-    }
+-
+-    return false;
+-}
+-
+-type_init(whpx_type_init);
 -- 
 2.50.1 (Apple Git-155)
 
