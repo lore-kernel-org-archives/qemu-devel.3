@@ -4,74 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 629C8D29DC6
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 10:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B76D30CF8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 10:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfy0J-0004mu-31; Wed, 14 Jan 2026 05:21:31 -0500
+	id 1vfy4N-00079k-O5; Wed, 14 Jan 2026 05:25:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vfy0C-0004k6-VT
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:21:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vfy0B-0002yj-CX
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:21:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768386082;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N9pa5J9XZPbI5M4YGUH+rJaMzO+3++henYolnToSph8=;
- b=PSgp8y0qh8Li6i4qy929wnbUnqjS8LxatiMX7NTP4hct5yNUEzY0lE2ZXiEFfIcS1ek6dx
- xccdfKZsAJCxUhnnnQ3nQ5qjotxGdspgQCkNPnSY/6ScDJDZy32klCssBh2hmWksa/43uC
- OnB63LqqqYkt4k9o0o0CN2voLpxw5kk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-463-ewO8GFBtN2mYMwSXpuydKg-1; Wed,
- 14 Jan 2026 05:21:19 -0500
-X-MC-Unique: ewO8GFBtN2mYMwSXpuydKg-1
-X-Mimecast-MFC-AGG-ID: ewO8GFBtN2mYMwSXpuydKg_1768386078
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 29CEC19560B1; Wed, 14 Jan 2026 10:21:18 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.41])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F64519560BA; Wed, 14 Jan 2026 10:21:17 +0000 (UTC)
-Date: Wed, 14 Jan 2026 10:21:13 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] docs/devel: fix bash-ism warning for configure
-Message-ID: <aWduGUx0s4MqpiS7@redhat.com>
-References: <20260114101525.4039244-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vfy4E-00078z-5E
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:25:34 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vfy4B-0003lu-TH
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:25:33 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-47d493a9b96so48916565e9.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 02:25:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768386326; x=1768991126; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=w9At/OlE9rIJSMnrDeVIsZXv7vrkN0bUdG7ikLHhNPc=;
+ b=psMP1REcPBP3ADE0ronDM/WTsVd2TVZVyN4KCthLPoEuHndH4lYc6ZI9hOf9QVD84r
+ LX+qXxKTONhYIIRBfuavzNEbtGJWlvlFV0DTd1AApFxpGAJpeflhJA48gCDMGOpq3ret
+ uT6KpJ2zgelXtA4h0MZcRdcLGqGEnnM1WbC9hNB+FjMeoJKnmFT0mMeZSXfRwj/se+el
+ 9oF9HSj/c2xef2Or7V//szJczoS9WIca2DI8HopzUmkCaLFfLflJk6RGZ0ScpQHDsJUe
+ Q8ILWwR3Yf3jdSblYCkYfWpGejBbFRvZtX4wQm5vZt9p+BIF3F7pqc4NlrOh0Y6c/GVv
+ GsgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768386326; x=1768991126;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=w9At/OlE9rIJSMnrDeVIsZXv7vrkN0bUdG7ikLHhNPc=;
+ b=UX3Md5ycdTaqW9puzRZCN4N5AvuwcXfmrUWmkSRTiKnkjyY0jkgqJY7G8aKVfNn1gp
+ BwsAYCJWUWjnAnz/9C2IOJyzq3EpyEB36mjXBgtXkdIFYVa3tUrSQbBk4UO4DS5Y6n9y
+ qlWV8i60ByfPZF0sGTipdS35Tbkz/cOtyzTyWxbdAAETWo1WzN8foGV7+LlMT+kfkh3K
+ eqSEp/LAyM7WhHKNTI8rYODMvKuMLeKH3m2LN1U9mo76aqg7o3CpLybzU7ssep9NE7Q2
+ zaJySO0qS6iXyvX59x28xuaDR28EY8hRnWuMXF8gGhzMmZVyRNY5tFKBRWAjHjJLZ1ku
+ 6doQ==
+X-Gm-Message-State: AOJu0YzASKenX5hKjhT6ApVJbD3qi2nwgmEoQ4T038h2g7OCE8eXEhNO
+ TPSZEFid55XS0OOqgG5zQxlobqhwg/Mhc/pWFH6sTtfzc2HNu4IIhT8bq/cTLgH4xRdjrQ/ziEl
+ /0ijI
+X-Gm-Gg: AY/fxX44ng3eDakU0kfukLY3fL+2atFNdbIPSdcIaFPfcrIl11hBursgLi6SEUab3K7
+ z+VAwmlSS1XjHY1y4GdlTHgJP4lNRPm7Ejxs+80kY0nflENEUhPqX1JotH5bzjQQvMM/2E6QyRW
+ +jZVKVdNRQlTHnr+jXJ4mgJRRWNLrsDI8BNnO9uWFGyup4yvOjsimMAecQ+FOcduTa0voIDUUsY
+ H1IrMOcMY/jx3OwXkNdj/YPMYSJ6BdvdXFDS+Bf50MXtIDjtCNQJ18V4QOykGZQ2VUOtFJW24Yv
+ 9rbDxLx3p5wMlZyBjSey/yP2pwglDyb29RAHZJraR1riwA/xsII51jhmWyJlhiMEg7izJUf4ZTT
+ GhOa0+bmstRO2d0IUiHvXbkgeR2NY9PIIbGflGBUkhk3AMp5I/tmqPatqmTfIsKhWrtvwyRYwA6
+ 4HzU/e3MLy9no=
+X-Received: by 2002:a05:600d:6446:20b0:47e:e71a:e13a with SMTP id
+ 5b1f17b1804b1-47ee71ae39emr8337535e9.32.1768386326076; 
+ Wed, 14 Jan 2026 02:25:26 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47ee563c8bbsm20432495e9.12.2026.01.14.02.25.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Jan 2026 02:25:25 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A3D875F803;
+ Wed, 14 Jan 2026 10:25:24 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] docs/devel: s/most/most recent/ ``probe_target_compiler`` call
+Date: Wed, 14 Jan 2026 10:25:22 +0000
+Message-ID: <20260114102522.4044591-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260114101525.4039244-1-alex.bennee@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,25 +98,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 14, 2026 at 10:15:25AM +0000, Alex Bennée wrote:
-> Hopefully this makes the meaning clearer.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->  docs/devel/build-system.rst | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ docs/devel/build-system.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
-With regards,
-Daniel
+diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
+index 35c77343914..71331e64ac8 100644
+--- a/docs/devel/build-system.rst
++++ b/docs/devel/build-system.rst
+@@ -88,7 +88,7 @@ and operating systems:
+   ``$target_ar``, etc. to non-empty values.
+ 
+ ``write_target_makefile``
+-  Write a Makefile fragment to stdout, exposing the result of the most
++  Write a Makefile fragment to stdout, exposing the result of the most recent
+   ``probe_target_compiler`` call as the usual Make variables (``CC``,
+   ``AR``, ``LD``, etc.).
+ 
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.47.3
 
 
