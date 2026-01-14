@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE73AD29FEF
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 11:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90936D29FF7
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 11:55:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfzPr-0003bC-VP; Wed, 14 Jan 2026 06:52:00 -0500
+	id 1vfzSo-0004dM-6c; Wed, 14 Jan 2026 06:55:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vfzPj-0003Vu-2h
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 06:51:55 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vfzSl-0004cZ-RC
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 06:54:59 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1vfzPg-0002i1-Ib
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 06:51:50 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-b872de50c91so402400166b.2
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 03:51:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vfzSk-00039c-2P
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 06:54:59 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-81f3fba4a11so3761806b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 03:54:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768391506; x=1768996306; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VZW46qC+KjQrZpFG+imn0fOacc1NDIublk+rlApwKI8=;
- b=sbEb6Y8KUZs4bmU8B10tPKvdhwIUAlVnfO0D5DzvkDRzqWLdYntVk/R7MdVEQd4Q2R
- z0jLi4chc/5SH+mwtQgZ2Rvp2jDrQv0lgWdUmKvnhW5haOncr2aFuL7fpqay6KsMpM7e
- BIuoTVqmwIe0Xg4D9h9Mtnofd0Xe2Gt9/+67Q+vVphZzq2OXWt4zmbByoItnYeOQTaJG
- QMmKYysY6KadD3VY++n1AsFg/Fq8x5D1YCoHOumxstE7EDMCxdaoERaaTIakvSbpFqsR
- Tq/uRc9aOs/O4YMdCKiQUPeZawaFRAT6eujgWJfk126TwKXffYXWGFZQKHtTdMsHm3B/
- SmxA==
+ d=sifive.com; s=google; t=1768391696; x=1768996496; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=VGffOxOrw9UyELeIDA7uiw+8Jb3eo6s+wE/VdLml45k=;
+ b=KA8uTOStDwp1SAEEbV6gNrLBA6O+2EkIljxSixYF5H+1rQrQd7EvIkTBQFQ5sYe9ZS
+ bbZjNsjoK8cgdGKADqIuodA97YjLSi/bqGmAJykdXtvcoS1Z7X8oVtC6AyWiiLZs+fVY
+ KhMB9JKMEEUEWX5DgWeWeoye5I8kkYLYkhJ3p9VTTaGUmHi7wAU3Yi1/gAf/9hqHfm+s
+ 0W4zUrnmyHwm1ieYUOmLqBoYALCwy1drDbhw/jYbH/pzfEbek033eWu66UrtQMa6Xg64
+ IXMz6/Q3iQfV3u4nGKwlvDfqrc38LXXC/XBL0MGWPLiOIYANRPkgbCBLZOB9pdAZjuNM
+ NYXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768391507; x=1768996307;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VZW46qC+KjQrZpFG+imn0fOacc1NDIublk+rlApwKI8=;
- b=BNd2IgJIvcYbAQZcgNtIa1w0jy72wMDPGX33EBVv323WPBYGFORhoqd8IM8sXD8ea/
- bneFEegzdtEt0Ow+gDc/6aeJpZw40jemwjqouMnVVipzr2SjvSnqrgPEu3kQcpOrwXPN
- gPpKDiVY5GFaTaU22u+79qI4d/vAGukit9yAccxHEDKHIXjCTMCZiGlgUW0WOX+qjT6B
- 0x/KvV1guSN7gB39+kA+bEuCjBJvvj/GyCGMqqlOCtV0fSicqk0m4Jmx7iAXIOqj3sEz
- Y/7o5q30tsH+UkUO0fAGaAVm+vCmLxPhnKnfe6siVNV4bzIO5zw6esLvw3QWoZpYBBhI
- NeFw==
-X-Gm-Message-State: AOJu0YxGbZJkNcKhF818ZADZXNWMk3UebHH/sG03Hfvxj8rdaFNdXK8M
- Iqj+UZbgRzwGO4Wr4TB9woEIirRHRP/j+26VkN7+rSTb1pMKeS1cC6vEHqAGK0nDgyDm9hncWa/
- Q9B+5t3gIX5KXkcIOWbdFF4LHyzxlwCD4EP8gDlQR8w==
-X-Gm-Gg: AY/fxX7zunKXxUFcDD+KEX+WkhirO2r42KWMZSNvRCQMVHHHVKGojfAfToWF02d+lRi
- Xv1/soDtLtEo1Mw8ABYNwN+17TgVvjUy/RivEx6peUa+97BoL8ehRSrhrPl2Jb8XhHF41lI7qtl
- 6FVLVr2uSruxhDtEitbEoSqGKHhs/XqxgZkvSlF4dQXgUi7YFFbg7AZ+rhPR4AbFUvJng6d9zRj
- ycoRJSYFr72yd36wyC0ekMQ9NVHazhQhRReMM/nsO2CU4+2Y6r/+Jy0OBgGADhoyScxtltxgZM+
- guu4aDeNZDxFvVTcFVh0dyh27S6+fLZNAi6i
-X-Received: by 2002:a17:907:2d13:b0:b87:2f29:206e with SMTP id
- a640c23a62f3a-b8760fe0fd4mr186365666b.16.1768391506500; Wed, 14 Jan 2026
- 03:51:46 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768391696; x=1768996496;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VGffOxOrw9UyELeIDA7uiw+8Jb3eo6s+wE/VdLml45k=;
+ b=RCtDzHNfKG1Lf/cf1J2Y03XGc8BCVexanoSDnX3g0KryP6uBs8tbs3QKoPWfuWFeLB
+ gyGHnYXBhpqqbgYXm1P+tqtUEahOqzplh3YYR1hu2fjcTj61ZGuxovsSGDs42ugPr495
+ /qxQFgithehBJ6T/TiPIlUvCPO5Sw2f2j80Zk3CxiY9DRpkX4n40MEJJXG42VjXmnHYo
+ YMS4vNi1lGmS1rixyoPt8WrjG8+dy3hispSA2Jvov/wYigq73Y0AWg1PVSgMBImVRF5n
+ FRNUijv9k3ERCf0ASWOTGprSfhgn5VA708peAwrQO092IAeAJzHajRbJuBO4Xs0KMmmu
+ lBow==
+X-Gm-Message-State: AOJu0Ywl3Hyu/bj6pvAEHt/A7WPzlzqRW/v1GdEknQmygJSF1+afIUk0
+ 7qhBDlhKYJQoQTkhWSuCg3YT6jmwpVjlQ/HNmLYaM8wGjJnA2SLpeV8IQi0j0l+69fg=
+X-Gm-Gg: AY/fxX5h41dmZSaOr2QAJp4BUzsW+Th2Wzq5dBVoV8ObqNmIuIXH1/iAU+QnTJLcthH
+ 0gNTBH+7rHIx9V+MzYENzR1LwQNX7zrNxS5CRhk5WEqj+XJFQtJJyGbgq2QIDoZoh2OIKl5RayJ
+ pui2/Ai3n+IRRGRZQHSbKEPz1SU1zvT8iFsr8e3PKSRBru31CZDBFhJcgwCeOH1xePK+cnuQU1R
+ 92rmdG7vx5+idoXaah40r+dCk2dYWwRX5Nrlr6smGCiobXB8gBg4AVjrxRtTHPFjbpcqsr+DCtx
+ NJGw41CsERSkJ/n8C+tfWwKtgITDBHSAyXSbMiSujT/SNgFLb/WQ58tVwZJXAqJm9FiMT/odOL4
+ NpecLAz3K/G8Xlf1Gf4cGmBKwMQaUK1q/Qv8r/UFWPZjNGKqoO8kuMiJN9oORHW/6JrLYyB1ev4
+ tjVEdMxmIimH8FIyI3Z2rOJxY0cRe15/zCaY0jfCy8WVDDRqopsW1K
+X-Received: by 2002:a05:6a00:4008:b0:81f:45ff:48ac with SMTP id
+ d2e1a72fcca58-81f8200d5a1mr1992700b3a.62.1768391695608; 
+ Wed, 14 Jan 2026 03:54:55 -0800 (PST)
+Received: from sifive.com ([136.226.240.164]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-81f421174f2sm11527041b3a.1.2026.01.14.03.54.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Jan 2026 03:54:55 -0800 (PST)
+Date: Wed, 14 Jan 2026 19:54:52 +0800
+From: Max Chou <max.chou@sifive.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH 02/18] fpu/softfloat: Add OCP(Open Compute Project) OFP8
+ data type
+Message-ID: <aWeDnxmDpoEIJvan@sifive.com>
+References: <20260108151650.16329-1-max.chou@sifive.com>
+ <20260108151650.16329-3-max.chou@sifive.com>
+ <bfdd6d82-e252-45c0-8eff-a93430691dbb@linaro.org>
 MIME-Version: 1.0
-References: <20260114-sme2-hvf-v1-0-ce9599596736@linaro.org>
- <20260114-sme2-hvf-v1-1-ce9599596736@linaro.org>
- <6edbbdd7-8992-420e-9aee-7596afbcf00d@csgraf.de>
-In-Reply-To: <6edbbdd7-8992-420e-9aee-7596afbcf00d@csgraf.de>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 14 Jan 2026 13:51:20 +0200
-X-Gm-Features: AZwV_QinTEIb0AP_BWEA7DhKGuvKW1Cp2RuUqHsY2fJwbwPTYVs3GiIj_ZDElMA
-Message-ID: <CAAjaMXZehMtdZC+7obmRZgfE+T2Dn64GTY2MqncPq9grKGcSsw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] hvf/arm: handle FEAT_SME2 migration
-To: Alexander Graf <agraf@csgraf.de>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x633.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <bfdd6d82-e252-45c0-8eff-a93430691dbb@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,82 +107,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 14, 2026 at 1:19=E2=80=AFPM Alexander Graf <agraf@csgraf.de> wr=
-ote:
->
-> Hi Manos!
->
-> On 14.01.26 09:35, Manos Pitsidianakis wrote:
-> > SME2 support adds the following state for HVF guests:
-> >
-> > - Vector registers Z0, ... , Z31 (introduced by FEAT_SVE but HVF does
-> >    not support it)
-> > - Predicate registers P0, .., P15 (also FEAT_SVE)
-> > - ZA register
-> > - ZT0 register
-> > - PSTATE.{SM,ZA} bits (SVCR pseudo-register)
-> > - SMPRI_EL1 which handles the PE's priority in the SMCU
-> > - TPIDR2_EL0 the thread local ID register for SME
-> >
-> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->
->
-> Thanks a lot for the patches. I don't have an M4/M5 handy (yet), so I
-> can't test the code works correctly. But it sounds like you did that, so
-> I have no concerns on functionality.
+On 2026-01-10 13:57, Richard Henderson wrote:
+> (0) We really should clean up this code so that there's not so much duplication.
+> FOO_is_quiet_nan and FOO_is_signaling_nan really should share code.
+> That would have caught the above.
+> 
 
-Yes, I tested it on Linaro's M4 machine. Adding a functional test
-using Arm's benchmark is possible, but I couldn't be bothered to
-create vm image assets just for this :)
+Thanks for the suggestion and I think that maybe we can remove the
+FOO_is_[quiet|signaling]_nan functions here.
+These OCP FP8 nan checkings should be different implemntation defined
+behaviors.
 
-Note: testing migration is tricky because the CPU has to be in SME
-mode for the Z/P registers to have meaningful values, so you need to
-savevm while SME instructions are executed to get a useful migration
-state. I modified Arm's benchmark to compare the SME matrix
-calculations against the non-SME calculation to ensure they are the
-same and I savevm/loadvm a bunch of times while it ran with added
-printfs in the get/put methods to print whether SME was active or not.
+> (1) RISC-V always uses default nan mode, the OCP spec declines to define
+> SNaN vs QNaN, leaving the 8 unique NaN encodings unspecified, and RISC-V
+> does not do so either.  You assert later:
+> 
+> +     * RISC-V uses only quiet NaNs in its OCP FP8 implementation.
+> 
+> Is this out-of-band discussion with engineers?
+> Because it's missing from the (remarkably short) document.
+> 
 
->
-> However, I have concerns on a few maintainability aspects. You #ifdef
-> out a lot of code conditionally on the target macOS version. Any of that
-> code that is in ifdef may or may not end up getting compiled in CI or
-> other test builds, which means you are missing out on a lot of
-> compilation test coverage. As a general rule of thumb, please reduce
-> #ifdef to the bare minimum.
+The RISC-V Zvfofp8min extension specification (v0.2.1) explicitly states the
+NaN handling behavior for OFP8 conversions:
 
-I agree completely, the problem is two-fold here: the HVF exposes APIs
-with API_AVAILABLE(...) (clang's availability attribute) and also with
-plain ifdefs (__MAC_OS_X_VERSION_MAX_ALLOWED >=3D 150200), and
-specifically the HV_SME_FOO_REG variants, which cannot be protected
-with the availability attribute. )
+1. Canonical NaN Definition (Section: Zvfofp8min):
+   "The canonical NaN for both E4M3 and E5M2 is 0x7f."
 
-So every time an SME type such as hv_vcpu_sme_state_t is used, it has
-to be guarded :/ __builtin_available(...) check is not sufficient
-because it will not compile due to undefined types.
+2. Widening Conversion Behavior (vfwcvtbf16.f.f.v instruction):
+   "No rounding occurs, and no floating-point exception flags are set."
 
+   The specification's explicit statement that "no floating-point
+   exception flags are set" for vfwcvtbf16.f.f.v provides clear
+   justification for treating all OFP8 NaNs as quiet in this specific
+   context.
 
->
-> One thing I like to do (when possible) is to use the ifdef to define a
-> global const variable or an inline function. That way the compiler's
-> dead code analysis will eliminate the non-active aspects of your code,
-> but all previous compiler phases still run which means you get syntax
-> checks.
->
-> How much of the code down here really does require #ifdefs? And if it's
-> a lot, maybe we just bump the minimum required macOS version instead.
->
+3. Narrowing Conversion Behavior (vfncvtbf16.f.f.w instruction):
+   "Since E4M3 cannot represent infinity, infinite results are converted
+   to the canonical NaN, 0x7f."
 
-The missing type definitions and missing function declarations will
-still raise compiler errors unfortunately. We could add those missing
-type definitions as stubs if they are not defined so that it compiles,
-but I chose to ifdef instead. What would you prefer?
->
-> Alex
->
+   This demonstrates that RISC-V uses quiet NaN propagation semantics
+   throughout the OFP8 conversion pipeline.
 
+> (2) Arm does specify (see FP8Unpack in the ARM pseudocode), doing the usual
+> thing in taking the msb of the mantissa for SNaN.  Which means that E4M3 is
+> *always* SNaN.
+> 
+> Both architectures then immediately convert to FP16 default nan, however Arm
+> *does* raise invalid operand exception for the SNaN, so we can't just ignore
+> it.
+> 
+> Given that there's exactly one RISC-V instruction for which this matters,
+> vfwcvtbf16.f.f.v, it seems like it might be better to simply adjust
+> float_status.no_signaling_nans within the helper rather than introduce
+> ocp_fp8e5m2_no_signal_nan.
+> 
+> > +    /*
+> > +     * When true, OCP FP8 formats use the same canonical NaN representation
+> > +     * (0x7F) for all NaN outputs. RISC-V specifies a single canonical NaN
+> > +     * for both E4M3 and E5M2.
+> > +     */
+> > +    bool ocp_fp8_same_canonical_nan;
+> 
+> Similarly you could adjust the canonical nan around the 4 FP16->FP8 conversion insn helpers:
+> 
+>     /* Default NaN value: sign bit clear, all frac bits set */
+>     set_float_default_nan_pattern(0b01111111, &env->fp_status);
+> 
+> In either case, "bool" doesn't seem appropriate.
+> 
+> FWIW, Arm retains the msb set pattern as for all other fp formats (FP8DefaultNaN).
+> 
+> 
+> r~
 
---
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
+Thank you for the review feedbacks and suggestions.
+The suggestion to handle the canonical nan and quiet nan within the
+helper function rather than adding global state to float_status is the
+cleaner solution.
+I will incorporate this change in v2 of the patchset.
+
+Thanks a lot,
+rnax
+
 
