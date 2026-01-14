@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC334D37E37
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 13:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFFBCD37E3A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 13:45:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg18h-0007s2-Ua; Wed, 14 Jan 2026 08:42:23 -0500
+	id 1vg1A3-0002Xz-IS; Wed, 14 Jan 2026 08:43:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vg18g-0007qv-77
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:42:22 -0500
-Received: from p-east2-cluster3-host11-snip4-4.eps.apple.com ([57.103.77.175]
+ id 1vg19o-0002DV-Uj
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:43:40 -0500
+Received: from p-east2-cluster4-host2-snip4-10.eps.apple.com ([57.103.78.171]
  helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vg18e-0006gA-Ly
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:42:21 -0500
+ id 1vg19l-0000iv-JS
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:43:31 -0500
 Received: from outbound.st.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-2 (Postfix) with ESMTPS id
- 3BD081800095; Wed, 14 Jan 2026 13:42:19 +0000 (UTC)
+ 35F5118004BF; Wed, 14 Jan 2026 13:43:26 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=WIhlnxgxBCyc+dWCY0SbNhn5OBvUHdUcvG79a1EP0Gg=;
+ s=sig1; bh=Rk0URHLzFbQb2J2pqqyT/zI1JsK2Hqgs3DZKJWsJ2S8=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Xiojs3k8JQMHlCLCDA6pxUzdJ1ZluU63oKaoIfsAEo4DIUUo9wNqWv9nlsfffXNPlXOEfUAB3OGEf3seEMRtfrjW2YI8j86Xo+17DvKgLpPn74G5GgNr5CW6rVV9w+OIOjV6/FnCb9JvioGSUHzzXduAfVJsvXfe7MU6FQtqG/e1wARlwHxGO0AHgDrqpmak1pl2g8fGFDKDREoopbDPv3+YXYqi+aCFTsY8q/pX/u3zN7sChHYywNs6ACDI/ylfkhg+C1NYa25E+wBD8x0BJ5TOM5wiP0Pu8RuEwb9ZtzGfC5Aex2AsOFTAu8ABLMlj3zriqgB1ndcUO6jVs9MwTw==
+ b=guzEcW1PpKgCwx0CTeDLFfRO5OI44lzquZKLmmLjBVd4cvAjoC7dvnpOqh8JrI4bQMPtujCp9zRby2cDqBivr7mcrB9KnVI5AkmgLOPLs/F2uu1zntLOkdNrduOA5EklppedNIei2qFmt1Dxarw25zXg1v1XxmkGfHBvXI+Pn9DhzusK46KteayHNRwFTrSFmyFGs5lsgS/xDVDeebGJg+bMXIOk0nUYtvfZXucBsKlafdM/vFv/ZmxKvYVI/6HgUu9l0h/CaTOQF5fJakZg6aW2Lum4TyNPQnNV09wrcsO7ygrRPB6jzszJSsoNAS2zqMNufLRkt0QwXlVNooEi1A==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.42.251.67])
  by p00-icloudmta-asmtp-us-east-1a-100-percent-2 (Postfix) with ESMTPSA id
- 17EED1800160; Wed, 14 Jan 2026 13:42:15 +0000 (UTC)
+ BD6C518004A1; Wed, 14 Jan 2026 13:43:19 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: mohamed@unpredictable.fr,
 	qemu-devel@nongnu.org
@@ -54,42 +54,43 @@ Cc: qemu-arm@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Cameron Esfahani <dirty@apple.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v14 08/26] docs: arm: update virt machine model description
-Date: Wed, 14 Jan 2026 14:41:25 +0100
-Message-ID: <20260114134143.26198-9-mohamed@unpredictable.fr>
+Subject: [PATCH v14 23/26] whpx: enable arm64 builds
+Date: Wed, 14 Jan 2026 14:41:40 +0100
+Message-ID: <20260114134143.26198-24-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260114134143.26198-1-mohamed@unpredictable.fr>
 References: <20260114134143.26198-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info: v=2.4 cv=HdAZjyE8 c=1 sm=1 tr=0 ts=69679d3b
+X-Proofpoint-ORIG-GUID: mxmVC-N0wOf7JgL3opJplJDyGIKnTrlD
+X-Authority-Info: v=2.4 cv=IcSKmGqa c=1 sm=1 tr=0 ts=69679d7f
  cx=c_apl:c_apl_out:c_pps a=YrL12D//S6tul8v/L+6tKg==:117
  a=YrL12D//S6tul8v/L+6tKg==:17 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=UWX6RoDBcPCHCN3xbnsA:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: wRI2fb7AVvun-G6ayGQWsTaOApP5Sd1Q
-X-Proofpoint-GUID: wRI2fb7AVvun-G6ayGQWsTaOApP5Sd1Q
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDExNCBTYWx0ZWRfX1EIp58u+zmPf
- Ct5dhJDegK0QieLq3pNoSOIVbgoDykROXUmFqfMsos1DcEuF9tPMaup4Ioe3bdq7maxDq9QkKeQ
- GF/Ys93DqKGdTR4thU1+Al4UikoW2WPtebRBD3lqxdbB9i/cgsZf5Gaf4ecF/m+Epx7YLoi2pdL
- w1ZBC9Fl1gveSqxFfbWsaj5PiYnEvaGVQ9tTu8YEOPcmC0HSi3cA61qJ7bB6cPS1+lxElIFrLMS
- iMH99ys2pf/HYkHFVhWsnCP4nZV/CjCNgd0dz70BsBQQo2BjtPV7vB84jlzheNun1Q1ggr60nuW
- uUWJxskr21G8ujn8khb
+ a=KKAkSRfTAAAA:8 a=Ck9h3XeVBPDugYI9Na4A:9 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDExNCBTYWx0ZWRfX+odbJu5CEdyw
+ U7OKGVAQx1LS1OHMAWoI7iCiJ+bFA5PHZYbLRN6kAFr3NzJg56uZRZgHrbnaf+JXguMnPQruLDz
+ +dqU7sr8npZwQOj7J5aUwvw6NYa8NtFmf4WMLPaSYHJnez7rbQk+2cNtHWHReHreN9Jen0HFbzC
+ GSGGtsTVWkkHRqm6w2BQ5M09Vt1aMYtfFiysisGkHZiw97qx2jT0o1H8t2BBNMGCgenCyuPgp74
+ yf3SM1cLbzyREs03JNvdGUenvdV8XFc4A//dry3fToA2vv4fxRsOAqr8voeBorCM9qNWu0Yh9Dm
+ IRzCvYNiXzvvQ8VubER
+X-Proofpoint-GUID: mxmVC-N0wOf7JgL3opJplJDyGIKnTrlD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-14_04,2026-01-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- spamscore=0 mlxlogscore=999 phishscore=0
- bulkscore=0 adultscore=0
- clxscore=1030 mlxscore=0 suspectscore=0 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601140114
-X-JNJ: AAAAAAABuRW2xaS+RPXiDaqx9IdH6dbqOCN7FbK1oYlHhVLbnwlkrOD89KNu0IZTA0rJX+tz4UPUuwWoSRX56+y3caEpjqT7fuHFB8rfczopJj2fMasMhrwDuG/Q5sydOqeRV9qhzqcWBafq0RmdQBwAM7Pa0WdoQeNSgJPc+PdbFPZ4ma4S7XZsbNXm9ThV/oVSo61HYlW+dJ4lbcmpLC4jtUt8BNi5eN7OKHpqlVm14OSCVy0B8rYuscbVXRsUtA7/jazDb9bRUcXKw4N5VRMvRdoQzgqTGFvZVcig4ByaqIQLK8sUf+joWv51xGWMisJxMqPAWpgd3hwx5L2KU3nRpOvNyG+ZUtMzgoIGhign11U+hKHuUaW3SNqf7NTwahNxYJWA6iDhXXwSU1O/WPNCPJhuMDG5Nx9TJjLlUM3G6PDwuGsIecbvQ5hofco5lHPojGyG9M8H7M4sTqrcnjkFLKkCJv0rdc3527C1+7E7uG/srhyIZMbXkBNBSkubOjxiUQdXo1Dw4/8fKqa4V+OWk1T4Z/Z1xSArNB4RkpIlasdMDD7lk5XadZmZOobVvuRyz0fCZKEANMW4sSSJ0uJwLJXBWF8+NC9iXyw+Zp0vx9TnJJkCfzg2Ijz6k3ootAQVeUEgaFm1m47amcoHJ+n53Md73yABxTgw4hhbYfQQ1BvbMwSGFMfbfrnST9OM9ynjayFvxC9zu2W8kRp3dMl47JHX6p8EjPQZ3yB6YSvzjxDUbZsXBUVl+i/pLGDY+3ff4X+qtLgKhQydpQ7f3OfGBd4940ZURVfOfkssWm6dFkbmIX1eIQDY9b6r+yLMcyYqULIfkyjHT2pcSIvy5UWMP5ddnUNT6zBpTIS8oRKtelMicLvesOxRVqiJ2Gj5gRPKvz2ooNE12WaFIar3mTIVLtP/esTIFBdettsNrrov8dF4Pw==
-Received-SPF: pass client-ip=57.103.77.175;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxscore=0 malwarescore=0 spamscore=0 adultscore=0 suspectscore=0
+ clxscore=1030 phishscore=0 mlxlogscore=848 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2601140114
+X-JNJ: AAAAAAABmhogIzCyjb3X0AglfJSDfMmA8EFPp+Y+EgNc0T7DoxBBobnUg3kmXMNPCdXsi8+kAlwCnhahyJzIgOC+iaeGPbKqV8s3Bb1i27pvaVIdEVAiWhf5rLgPxazsDlXBDLbOqTOOspnL1V/S7sZV111dn/YsvR0P1BIz89w7OJMr5lP9YV8XkyPSXo6XnB3CyP8wOxrRGFyrG2EvjtGJa7q2TFKmVqW5bEGxv2hjluHHPrLQmeqq/dh5bOnkYYRPNDGI8wSBRN2ylHlnN05byS+McXUuynp4NOdAajEiY3s7yBeBRfx3ExaaiPY6W7PUF5ZfkPWpS2lzkoxOCo5EvTayKKkt9pw4GuKq7QsxR1FfDr7YYPFFZtizJ5T5fgWAJKusIPkTpxBug45WoGl+fkVqxqRygJhFFjhcESejG4ObiqYbTOpmKEJ5Fdz7oZhJiU6lQOkI95EHeGsfa/k/NtNp2RVsFlx6G4Jr8fO/mE4T8DCS0VSEcor4PUH5E/btt+adlPAgmoAMYmLVNpvLgCU/zs7KbRitS4mtJkPQqsfHzTymRUshgADm/RnR22kG3+Gnzf+SSGyk0H7fPrT5oBPbrEPZ55o5i1XWnXCfKGmTq0bHiYb099F1o3ryY0wl0LevW2pncu/PhWUQn+xgi3FDMuAlvZ4Ls0iMGdtw/bP5tE5i4qVM+Xg+aw7u4CIhr6XWwObxBTtsvekf420ZPl7U33DAyrdhTpufwbNu7q9ALOpHDrMz+o5nqKb+wO18qL5JBJnZ1e7HxcG1/vyCLIZElhaVz+EjnJc84AQYjnNvfRDkbnmASbHVRVnMQMbaoHj9+w8iB3TZhxp7lhE17zSW6CJrAUi2vrPCaf2q54YpzG/1i2gtggEIlFioe6E3H+ZoMH7i1pl7OgN4
+Received-SPF: pass client-ip=57.103.78.171;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,49 +108,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the documentation to match current QEMU.
-
-Remove the mention of pre-2.7 machine models as those aren't provided
-anymore.
-
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- docs/system/arm/virt.rst | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ meson.build | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index e5570773ba..b6e88c4f13 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -41,9 +41,10 @@ The virt board supports:
- - User-creatable SMMUv3 devices (see below for example)
- - hotpluggable DIMMs
- - hotpluggable NVDIMMs
--- An MSI controller (GICv2M or ITS). GICv2M is selected by default along
--  with GICv2. ITS is selected by default with GICv3 (>= virt-2.7). Note
--  that ITS is not modeled in TCG mode.
-+- An MSI controller (GICv2m or ITS).
-+  - When using a GICv3, ITS is selected by default when available on the platform.
-+  - If using a GICv2 or when ITS is not available or disabled, a GICv2m is provided by default instead.
-+  - Before virt-11.0, when using a GICv3 without the ITS, a GICv2m is not provided.
- - 32 virtio-mmio transport devices
- - running guests using the KVM accelerator on aarch64 hardware
- - large amounts of RAM (at least 255GB, and more if using highmem)
-@@ -167,9 +168,11 @@ gic-version
-     with TCG this is currently ``3`` if ``virtualization`` is ``off`` and
-     ``4`` if ``virtualization`` is ``on``, but this may change in future)
+diff --git a/meson.build b/meson.build
+index c58007291a..34c799e066 100644
+--- a/meson.build
++++ b/meson.build
+@@ -317,7 +317,8 @@ accelerator_targets += { 'CONFIG_XEN': xen_targets }
  
-+msi
-+  Set ``auto``/``gicv2m``/``its``/``none`` to control MSI controller configuration. The default is ``auto``.
-+
- its
--  Set ``on``/``off`` to enable/disable ITS instantiation. The default is ``on``
--  for machine types later than ``virt-2.7``.
-+  Set ``on``/``off``/``auto`` to control ITS instantiation. The default is ``auto``.
+ if cpu == 'aarch64'
+   accelerator_targets += {
+-    'CONFIG_HVF': ['aarch64-softmmu']
++    'CONFIG_HVF': ['aarch64-softmmu'],
++    'CONFIG_WHPX': ['aarch64-softmmu']
+   }
+ elif cpu == 'x86_64'
+   accelerator_targets += {
+@@ -892,13 +893,18 @@ if get_option('mshv').allowed() and host_os == 'linux'
+ endif
  
- iommu
-   Set the IOMMU type to create for the guest. Valid values are:
+ if get_option('whpx').allowed() and host_os == 'windows'
+-  if get_option('whpx').enabled() and host_machine.cpu() != 'x86_64'
+-    error('WHPX requires 64-bit host')
+-  elif cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
+-       cc.has_header('winhvemulation.h', required: get_option('whpx'))
+-    accelerators += 'CONFIG_WHPX'
++  if cpu == 'i386'
++    if get_option('whpx').enabled()
++     error('WHPX requires 64-bit host')
++    endif
++   # Leave CONFIG_WHPX disabled
++  else
++    if cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
++      cc.has_header('winhvemulation.h', required: get_option('whpx'))
++      accelerators += 'CONFIG_WHPX'
++    endif
+   endif
+-endif
++ endif
+ 
+ hvf = not_found
+ if get_option('hvf').allowed()
 -- 
 2.50.1 (Apple Git-155)
 
