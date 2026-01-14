@@ -4,94 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 661DBD37E3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 13:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A341D37E3A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 13:49:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg19P-00012o-51; Wed, 14 Jan 2026 08:43:07 -0500
+	id 1vg1Fe-0008Fc-7f; Wed, 14 Jan 2026 08:49:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vg19N-0000rG-G8
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:43:05 -0500
-Received: from p-east2-cluster5-host9-snip4-2.eps.apple.com ([57.103.79.105]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vg1Fa-0008CF-5Z
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:49:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vg19L-00085K-78
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:43:04 -0500
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-2 (Postfix) with ESMTPS id
- 510861800499; Wed, 14 Jan 2026 13:42:55 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=F9oLyg/qgYRJ/JZV5dNJO6abkXMsGF/lMhk1P5D4R60=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=O4+uEOaSqJ54hV8Z8Jed76yZLjrm1E5BZzNphkD0dli8kh8wHm2E6y8/7SXKRLeQK/9XqtPx+IpXXzx4tq6KeYTmL+9og3w7whoKfjDYqoUwArwGx5626LIY6KWzB+sIZRYK2HQ3KlKxHV1PrUnEmw54iDYOUJtYVn9UEqXgs+ahh8k0vwTViAbyJGhN2qhNIU4W7leBOQcBmkN2KX3JXjJ4fFTvbgtMDWlgx9R0gNbUKb4JBSrZD2Dg8S4RT/3VBjgewe3nNSUrY4R2R5HKxe9y6EoWOm1ngnLVocHXVeSgF2gpU6smfs9OoUKiaQBwMWUN2f4rrCvK9ufnnB9Fgw==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-2 (Postfix) with ESMTPSA id
- DA92D1800498; Wed, 14 Jan 2026 13:42:49 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: mohamed@unpredictable.fr,
-	qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Igor Mammedov <imammedo@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Cameron Esfahani <dirty@apple.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v14 16/26] whpx: change memory management logic
-Date: Wed, 14 Jan 2026 14:41:33 +0100
-Message-ID: <20260114134143.26198-17-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260114134143.26198-1-mohamed@unpredictable.fr>
-References: <20260114134143.26198-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vg1FW-0002FW-JB
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:49:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768398565;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=qFvkqXPWeaOIwcBw6au0M5/7JA1wjvaARX5VBdGvL3g=;
+ b=L9MKA18Ry4yDAr1si7W+BtWsh8N62TLgZxr+0krvUC+AEUh27ic+nsPvdDWQEgT2639Sik
+ 9ZrcvyFPWZw4pIh+47ZaNPdcJzvsFCvbVKPfcszba9FgmArXmb9sSglTAFigTiZHPvuEqI
+ 9847dlcdAlsb99377FQ24Bin945OxB0=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-218-rThJC1OyMuKyeTB9xiJdvg-1; Wed, 14 Jan 2026 08:49:23 -0500
+X-MC-Unique: rThJC1OyMuKyeTB9xiJdvg-1
+X-Mimecast-MFC-AGG-ID: rThJC1OyMuKyeTB9xiJdvg_1768398563
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-47ee71f0244so3663785e9.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 05:49:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768398562; x=1769003362; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qFvkqXPWeaOIwcBw6au0M5/7JA1wjvaARX5VBdGvL3g=;
+ b=A+kdtVo37ZABC8G4veWF6LY0CieaapI+IuqWvR+y9pK1Q+FjES7G5nZzEsqZxXSr8p
+ CIGjDRAvq4xJFt9TU7nTM2X8S2wgFEg5FSdmeRzgw40w4Cr0SnZ/45UFgptUkxtr2CUQ
+ 0eR8tQtExUqaWB+aT9wdqqF2ZN/l8CRJvzdhjW0gjqejx8GkWblKcgWGWgULsbhBnIoY
+ 2Z7yBLQiONMYJrxHOJCh8Uece4ps3lQGpWm4zu3XAorNut8GLd+9ehBJu9mTFiXleY42
+ Nsgyo57DMjgs8LDyvz6s/8qjSH5QwuSrN1n21C7EXrBW4aQfwANBc+JYXskC+aHyM/9S
+ Lmag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768398562; x=1769003362;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qFvkqXPWeaOIwcBw6au0M5/7JA1wjvaARX5VBdGvL3g=;
+ b=IjmQqMlFeHZXJ+xd6EKvsxKv4o1PgmqtJ5vKAwOvhSTHt/UqdCRxAGOFcehc2i70XF
+ iVp4OSDHJX/0F/3ISwA/R9oiEI9kr+aigYEjAr0raVZthv8wIwBSDgdpDUBYK4YEFnQX
+ lv9X0mrcm+X1p4YNBL8YF0vajj+Ffx3oKanWOOXzpwZhfjBEuB0eR3Co0qODwcHMviNf
+ DucdoBMfWxr5o1UhcxscM8+hKMI5+dF/qlyYdn2dJFsaBFnkvcIY/6sDRsaFdn+Ic/bD
+ PEYh7rbkXHSSjNDPB58e33ZWXVxy2BMiwd9dhJedQhRRJNGgN6aE+D7PmZSiBKc676wX
+ NoEg==
+X-Gm-Message-State: AOJu0YzGj50lqvB5uKGHO1d4LSTYgFheIqC7liLJRb+Z9qRwRYtMRKD2
+ jBlaUiYaFP1ckpOJmyL+HLGKtxVnvuBRd9gkXLxkEXAkk4KtyIrfIh82N+2kugq6wlCI6R3cNNI
+ bejFHNoAE14InYvTOjOp0liYq8ShvAbdjRWaDTXfphz2KK9RznZkfbTaXrkZi8dGMo6M2h60QS+
+ mJSvmjpmpa7iK5/FdIdR7TFbG3l6AgUCkisrvvOD+w
+X-Gm-Gg: AY/fxX5KELWioSvcgTpklsAeJh99l0RrMEh/n+3LQ9v4jNrx4GR2N0+2aHV3Y4iv2eo
+ 9MeEeEXZMUFH3bNhN8I3uCzLQC8eT59Banyp7a9O+e5JsTxxpE5F0PkNDV8xx27KW6rzet8NZcR
+ MVMU7la3dyl/2LaSQfAn4DlI5SJ5Jk9v5EVt+seir166qCYwe0csL1kKgs6q1dWTjjoqXABfWNl
+ b7077PpMylPeS/aXH3pvz7YT+bYp7fKPowwCO7nqKYpEnJX3/+aEjPY2Vr5osBxdPRfFiYO3/n5
+ dPjXuu2nc6SZebDtjYDK1a2MBbJhp9qZKivkUevSelO326yuN6lEgHagqGQGmSDIqGziZwjyG9R
+ Ob+PkBnzPtJrDpY45HdPbJz+fV7hLeoVCzLvIcJUL57FDaOCZOBgyCQn/JR9KVGeztuKihZzMum
+ ij43sDv/N/b5KIZA==
+X-Received: by 2002:a05:600c:811a:b0:477:3e0b:c0e3 with SMTP id
+ 5b1f17b1804b1-47ee4833c16mr21688375e9.32.1768398561854; 
+ Wed, 14 Jan 2026 05:49:21 -0800 (PST)
+X-Received: by 2002:a05:600c:811a:b0:477:3e0b:c0e3 with SMTP id
+ 5b1f17b1804b1-47ee4833c16mr21688115e9.32.1768398561381; 
+ Wed, 14 Jan 2026 05:49:21 -0800 (PST)
+Received: from [192.168.10.48] ([151.61.26.160])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47ee7d58f09sm18225835e9.12.2026.01.14.05.49.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Jan 2026 05:49:20 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: thuth@redhat.com,
+	qemu-rust@nongnu.org,
+	marcandre.lureau@redhat.com
+Subject: [PATCH 0/3] rust: reorganize binding generation, fix msys2 linking
+Date: Wed, 14 Jan 2026 14:49:16 +0100
+Message-ID: <20260114134919.1476518-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDExNCBTYWx0ZWRfX9DkWNfA3NUBL
- dpTwxZZTZih5xOEPtB0PJTNF4D4wpf1lKx8VFpk29NOkOBefvfz+VQKyv6renEofs+0AihsRj2x
- W7Oj6SojaY1k09I9tXQ+sAyxqKXG+YIdpzbIwA+/PiMIFe6yY7PaIbq1Epbm9rW2ZgTLqUQ8WiQ
- HlnI7sLvuvHqhLcXS9ARpZdCKZq/n/ymnDl0dnJl8Qwe1AgsIz5STakUu74owVyIHRww3ebRgr3
- rt0/i083RLYiKahOlMQGsMxESvurKtRZxiCt0zuUoYgZ0LxFuRXLdql1hwEXjNOGjxjuCSxiyeo
- r9vSJuuigJvF+dE9tKW
-X-Authority-Info: v=2.4 cv=XZeEDY55 c=1 sm=1 tr=0 ts=69679d63
- cx=c_apl:c_apl_out:c_pps a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=Warxv3Xc6ASOjn9-k1MA:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: -vxp6_LJlwuT514UZo8GHiD0jc_Dxy-k
-X-Proofpoint-ORIG-GUID: -vxp6_LJlwuT514UZo8GHiD0jc_Dxy-k
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-14_04,2026-01-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxscore=0 clxscore=1030 suspectscore=0 phishscore=0 bulkscore=0
- malwarescore=0 spamscore=0 mlxlogscore=999 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2601140114
-X-JNJ: AAAAAAABua+KEvI1IsVWvgm6kN8ski8KYXpcne0GIpGaUHgvHrnLKPbnl85iIuo5sO1V5fDYoQuAAGRX+Abv7uS2rdg86VQ+0uf0nRGjbQs8PDzmTpPPkMrWcBaE4NZvZI9j+KwFWbKA7iKaHBlgWgjt9oxwPvTVQSpblW4rQYVDRQrIPtbzshrkMyTGcahL4zENV3vxj6dRJnmij1DU8oxr4a+02EzgY+tmpoxPXvomemlQGStZzTIPlK+KVeU7VHQf6Tsz1hA6Mt65/fGDbXAPmmyRcEf0zKgwlT5HJvxX/Na3KwmUwoGuiNTiF7kuPWlA3RtBiGrxgQXfLfP5sLssrZybcW2rBU6h6um2cu0f+RUrcVcTP8odNy3EkGV3loGqvj1tj3CVkKAy4mcn1w2g4qIYzlczXXNzFRN6keXVJtCNddVoImvoM/5yULZZ5OgVO4gwyfiqOUFMGDWJEIqT8bQ9G2QUNmhogyyse11hn9/8g+J4rCQykfqFKyxaJzVsKsDPvr2hymnmjyi3EgsETzYDmF+RRyWoixUVPGosdjAzm9kvUbh9igCilEv5T5JAIhdluqHpHawvIlrN5Eo5RRMvFb+VNn83/hDg0Gbm7sL06CeNQj0XhSAsmQjjEKpRZQPJXyUwqUcQ/L3Vslw3tNTx0C1BhCl89bW7hUz3EIwdFDE3kqPu04QJkui6CzCaQkg6QYC+JTusPfce/FN0cZg1HqV5bpaAa7Opvry6/WdNNhdodDk/Vb2C0P6xlNFxnUKxL2DymzNC+pOrpj95hCBQYo0EQUW4PDG+yITOzj8KMSC8G2Te/H+Z7+hPmp4V2YKJsbJBxCPbfVF1TEVfWcE7dwIMRHPCyCxi7yiQr2+3gCS5g/kONzW+aQe1O+InjDufoWIlpd0cCn3wFUiIsYe67dnPiG026JkczWj6pNcd+w==
-Received-SPF: pass client-ip=57.103.79.105;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,145 +120,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows edk2 to work on Arm, although u-boot is still not functional.
+Yet another joint work between Marc-André and myself, moving raw FFI
+bindings generation to separate crates and finally getting the Rust
+crate organization in a more-or-less definitive shape.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- accel/whpx/whpx-common.c | 97 +++++++++++++++-------------------------
- 1 file changed, 36 insertions(+), 61 deletions(-)
+This makes it possible to reuse bindgen declarations for a header file
+in its dependencies (this was not the case before this change), while
+keeping multiple -sys crates to avoid rebuilding all the code whenever
+something changes.
 
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index 827f50f3e0..f018a8f5c7 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -255,89 +255,64 @@ void whpx_vcpu_kick(CPUState *cpu)
-  * Memory support.
-  */
+Because a script is now needed to handle bindgen command line
+generation, I took the occasion to move the various output tweak
+arguments (--rustified-enum, etc.) to Cargo.toml's metadata section.
+This removes the need to touch meson.build files for this customization.
  
--static void whpx_update_mapping(hwaddr start_pa, ram_addr_t size,
--                                void *host_va, int add, int rom,
--                                const char *name)
-+static void whpx_set_phys_mem(MemoryRegionSection *section, bool add)
- {
-     struct whpx_state *whpx = &whpx_global;
-+    MemoryRegion *area = section->mr;
-+    bool writable = !area->readonly && !area->rom_device;
-+    WHV_MAP_GPA_RANGE_FLAGS flags;
-+    uint64_t page_size = qemu_real_host_page_size();
-+    uint64_t gva = section->offset_within_address_space;
-+    uint64_t size = int128_get64(section->size);
-     HRESULT hr;
-+    void *mem;
- 
--    /*
--    if (add) {
--        printf("WHPX: ADD PA:%p Size:%p, Host:%p, %s, '%s'\n",
--               (void*)start_pa, (void*)size, host_va,
--               (rom ? "ROM" : "RAM"), name);
--    } else {
--        printf("WHPX: DEL PA:%p Size:%p, Host:%p,      '%s'\n",
--               (void*)start_pa, (void*)size, host_va, name);
--    }
--    */
--
--    if (add) {
--        hr = whp_dispatch.WHvMapGpaRange(whpx->partition,
--                                         host_va,
--                                         start_pa,
--                                         size,
--                                         (WHvMapGpaRangeFlagRead |
--                                          WHvMapGpaRangeFlagExecute |
--                                          (rom ? 0 : WHvMapGpaRangeFlagWrite)));
--    } else {
--        hr = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
--                                           start_pa,
--                                           size);
--    }
--
--    if (FAILED(hr)) {
--        error_report("WHPX: Failed to %s GPA range '%s' PA:%p, Size:%p bytes,"
--                     " Host:%p, hr=%08lx",
--                     (add ? "MAP" : "UNMAP"), name,
--                     (void *)(uintptr_t)start_pa, (void *)size, host_va, hr);
-+    if (!memory_region_is_ram(area)) {
-+        if (writable) {
-+            return;
-+        } else if (!memory_region_is_romd(area)) {
-+            add = false;
-+        }
-     }
--}
--
--static void whpx_process_section(MemoryRegionSection *section, int add)
--{
--    MemoryRegion *mr = section->mr;
--    hwaddr start_pa = section->offset_within_address_space;
--    ram_addr_t size = int128_get64(section->size);
--    unsigned int delta;
--    uint64_t host_va;
- 
--    if (!memory_region_is_ram(mr)) {
--        return;
-+    if (!QEMU_IS_ALIGNED(size, page_size) ||
-+        !QEMU_IS_ALIGNED(gva, page_size)) {
-+        /* Not page aligned, so we can not map as RAM */
-+        add = false;
-     }
- 
--    delta = qemu_real_host_page_size() - (start_pa & ~qemu_real_host_page_mask());
--    delta &= ~qemu_real_host_page_mask();
--    if (delta > size) {
--        return;
--    }
--    start_pa += delta;
--    size -= delta;
--    size &= qemu_real_host_page_mask();
--    if (!size || (start_pa & ~qemu_real_host_page_mask())) {
-+    if (!add) {
-+        hr = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
-+                gva, size);
-+        if (FAILED(hr)) {
-+            error_report("WHPX: failed to unmap GPA range");
-+            abort();
-+        }
-         return;
-     }
- 
--    host_va = (uintptr_t)memory_region_get_ram_ptr(mr)
--            + section->offset_within_region + delta;
-+    flags = WHvMapGpaRangeFlagRead | WHvMapGpaRangeFlagExecute
-+     | (writable ? WHvMapGpaRangeFlagWrite : 0);
-+    mem = memory_region_get_ram_ptr(area) + section->offset_within_region;
- 
--    whpx_update_mapping(start_pa, size, (void *)(uintptr_t)host_va, add,
--                        memory_region_is_rom(mr), mr->name);
-+    hr = whp_dispatch.WHvMapGpaRange(whpx->partition,
-+         mem, gva, size, flags);
-+    if (FAILED(hr)) {
-+        error_report("WHPX: failed to map GPA range");
-+        abort();
-+    }
- }
- 
- static void whpx_region_add(MemoryListener *listener,
-                            MemoryRegionSection *section)
- {
--    memory_region_ref(section->mr);
--    whpx_process_section(section, 1);
-+    whpx_set_phys_mem(section, true);
- }
- 
- static void whpx_region_del(MemoryListener *listener,
-                            MemoryRegionSection *section)
- {
--    whpx_process_section(section, 0);
--    memory_region_unref(section->mr);
-+    whpx_set_phys_mem(section, false);
- }
- 
- static void whpx_transaction_begin(MemoryListener *listener)
+Also, because the -sys crates are generated in dependency order, this
+also enforces that the crates are organized in something that resembles
+the dependencies between C headers.  This highlights a mismatch between
+dependency ordering on the C and Rust sides, which also causes a link
+failure on msys2.  The mismatch has to be fixed by the reorganization of
+the -sys crates, and patch 3 applies the same change to the high-level
+bindings.
+
+While the new approach has more source code lines, IMO that's balanced
+by the many advantages (extra checks on dependency orders, more clarity
+from placing bindgen tweaks in Cargo.toml, correctness brought by the
+shared types, and compilation speed improvements).
+
+Paolo
+
+
+Marc-André Lureau (1):
+  rust: move binding generation to bindings/
+
+Paolo Bonzini (2):
+  rust: move class_init to an extension trait
+  rust: move hwcore::sysbus to system crate
+
+ docs/devel/rust.rst                           |  57 ++++++
+ meson.build                                   |   3 +-
+ rust/bindings/chardev-sys/wrapper.h           |  12 ++
+ rust/bindings/hwcore-sys/wrapper.h            |  30 ++++
+ rust/bindings/migration-sys/wrapper.h         |  10 ++
+ rust/bindings/qom-sys/wrapper.h               |  17 ++
+ rust/bindings/system-sys/wrapper.h            |  21 +++
+ rust/bindings/util-sys/wrapper.h              |  39 +++++
+ rust/bql/wrapper.h                            |  27 ---
+ rust/chardev/wrapper.h                        |  28 ---
+ rust/hw/core/wrapper.h                        |  32 ----
+ rust/migration/wrapper.h                      |  51 ------
+ rust/qom/wrapper.h                            |  27 ---
+ rust/system/wrapper.h                         |  29 ----
+ rust/util/wrapper.h                           |  32 ----
+ rust/Cargo.lock                               |  68 ++++++++
+ rust/{util => bindings}/build.rs              |  30 ++--
+ rust/bindings/chardev-sys/Cargo.toml          |  28 +++
+ rust/bindings/chardev-sys/build.rs            |   1 +
+ .../chardev-sys/lib.rs}                       |   7 +-
+ rust/bindings/chardev-sys/meson.build         |  12 ++
+ rust/bindings/generate_bindgen_args.py        | 163 ++++++++++++++++++
+ rust/bindings/hwcore-sys/Cargo.toml           |  32 ++++
+ rust/bindings/hwcore-sys/build.rs             |   1 +
+ .../hwcore-sys/lib.rs}                        |  17 +-
+ rust/bindings/hwcore-sys/meson.build          |  12 ++
+ rust/bindings/meson.build                     |  37 ++++
+ rust/bindings/migration-sys/Cargo.toml        |  28 +++
+ rust/bindings/migration-sys/build.rs          |   1 +
+ rust/bindings/migration-sys/lib.rs            | 125 ++++++++++++++
+ rust/bindings/migration-sys/meson.build       |  12 ++
+ rust/bindings/qom-sys/Cargo.toml              |  25 +++
+ rust/bindings/qom-sys/build.rs                |   1 +
+ .../bindings.rs => bindings/qom-sys/lib.rs}   |   4 +
+ rust/bindings/qom-sys/meson.build             |  12 ++
+ rust/bindings/system-sys/Cargo.toml           |  30 ++++
+ rust/bindings/system-sys/build.rs             |   1 +
+ .../system-sys/lib.rs}                        |   4 +-
+ rust/bindings/system-sys/meson.build          |  12 ++
+ rust/bindings/util-sys/Cargo.toml             |  25 +++
+ rust/bindings/util-sys/build.rs               |   1 +
+ .../bindings.rs => bindings/util-sys/lib.rs}  |   2 +-
+ rust/bindings/util-sys/meson.build            |  12 ++
+ rust/bql/Cargo.toml                           |   1 +
+ rust/bql/build.rs                             |   1 -
+ rust/bql/meson.build                          |  30 +---
+ rust/bql/src/bindings.rs                      |  27 ---
+ rust/bql/src/lib.rs                           |   3 +-
+ rust/chardev/Cargo.toml                       |   1 +
+ rust/chardev/build.rs                         |   1 -
+ rust/chardev/meson.build                      |  37 +---
+ rust/chardev/src/lib.rs                       |   2 +-
+ rust/hw/char/pl011/build.rs                   |   2 +-
+ rust/hw/char/pl011/meson.build                |  21 +--
+ rust/hw/char/pl011/src/bindings.rs            |   7 +-
+ rust/hw/core/Cargo.toml                       |   2 +-
+ rust/hw/core/build.rs                         |   1 -
+ rust/hw/core/meson.build                      |  62 +------
+ rust/hw/core/src/irq.rs                       |   4 +-
+ rust/hw/core/src/lib.rs                       |   6 +-
+ rust/hw/core/src/prelude.rs                   |   6 +-
+ rust/hw/core/src/qdev.rs                      |  31 ++--
+ rust/hw/core/tests/tests.rs                   |   4 +-
+ rust/meson.build                              |   3 +-
+ rust/migration/Cargo.toml                     |   1 +
+ rust/migration/build.rs                       |   1 -
+ rust/migration/meson.build                    |  40 +----
+ rust/migration/src/bindings.rs                |  49 ------
+ rust/migration/src/lib.rs                     |   3 +-
+ rust/migration/src/vmstate.rs                 |  73 --------
+ rust/qom/Cargo.toml                           |   1 +
+ rust/qom/build.rs                             |   1 -
+ rust/qom/meson.build                          |  29 +---
+ rust/qom/src/lib.rs                           |   3 +-
+ rust/qom/src/prelude.rs                       |   1 +
+ rust/qom/src/qom.rs                           |   8 +-
+ rust/system/Cargo.toml                        |   4 +
+ rust/system/build.rs                          |   1 -
+ rust/system/meson.build                       |  39 +----
+ rust/system/src/lib.rs                        |   5 +-
+ rust/system/src/memory.rs                     |   2 +-
+ rust/system/src/prelude.rs                    |   5 +
+ rust/{hw/core => system}/src/sysbus.rs        |  36 ++--
+ rust/util/Cargo.toml                          |   1 +
+ rust/util/meson.build                         |  42 +----
+ rust/util/src/lib.rs                          |   3 +-
+ 86 files changed, 965 insertions(+), 753 deletions(-)
+ create mode 100644 rust/bindings/chardev-sys/wrapper.h
+ create mode 100644 rust/bindings/hwcore-sys/wrapper.h
+ create mode 100644 rust/bindings/migration-sys/wrapper.h
+ create mode 100644 rust/bindings/qom-sys/wrapper.h
+ create mode 100644 rust/bindings/system-sys/wrapper.h
+ create mode 100644 rust/bindings/util-sys/wrapper.h
+ delete mode 100644 rust/bql/wrapper.h
+ delete mode 100644 rust/chardev/wrapper.h
+ delete mode 100644 rust/hw/core/wrapper.h
+ delete mode 100644 rust/migration/wrapper.h
+ delete mode 100644 rust/qom/wrapper.h
+ delete mode 100644 rust/system/wrapper.h
+ delete mode 100644 rust/util/wrapper.h
+ rename rust/{util => bindings}/build.rs (55%)
+ create mode 100644 rust/bindings/chardev-sys/Cargo.toml
+ create mode 120000 rust/bindings/chardev-sys/build.rs
+ rename rust/{chardev/src/bindings.rs => bindings/chardev-sys/lib.rs} (84%)
+ create mode 100644 rust/bindings/chardev-sys/meson.build
+ create mode 100644 rust/bindings/generate_bindgen_args.py
+ create mode 100644 rust/bindings/hwcore-sys/Cargo.toml
+ create mode 120000 rust/bindings/hwcore-sys/build.rs
+ rename rust/{hw/core/src/bindings.rs => bindings/hwcore-sys/lib.rs} (71%)
+ create mode 100644 rust/bindings/hwcore-sys/meson.build
+ create mode 100644 rust/bindings/meson.build
+ create mode 100644 rust/bindings/migration-sys/Cargo.toml
+ create mode 120000 rust/bindings/migration-sys/build.rs
+ create mode 100644 rust/bindings/migration-sys/lib.rs
+ create mode 100644 rust/bindings/migration-sys/meson.build
+ create mode 100644 rust/bindings/qom-sys/Cargo.toml
+ create mode 120000 rust/bindings/qom-sys/build.rs
+ rename rust/{qom/src/bindings.rs => bindings/qom-sys/lib.rs} (85%)
+ create mode 100644 rust/bindings/qom-sys/meson.build
+ create mode 100644 rust/bindings/system-sys/Cargo.toml
+ create mode 120000 rust/bindings/system-sys/build.rs
+ rename rust/{system/src/bindings.rs => bindings/system-sys/lib.rs} (88%)
+ create mode 100644 rust/bindings/system-sys/meson.build
+ create mode 100644 rust/bindings/util-sys/Cargo.toml
+ create mode 120000 rust/bindings/util-sys/build.rs
+ rename rust/{util/src/bindings.rs => bindings/util-sys/lib.rs} (88%)
+ create mode 100644 rust/bindings/util-sys/meson.build
+ delete mode 120000 rust/bql/build.rs
+ delete mode 100644 rust/bql/src/bindings.rs
+ delete mode 120000 rust/chardev/build.rs
+ delete mode 120000 rust/hw/core/build.rs
+ delete mode 120000 rust/migration/build.rs
+ delete mode 100644 rust/migration/src/bindings.rs
+ delete mode 120000 rust/qom/build.rs
+ delete mode 120000 rust/system/build.rs
+ rename rust/{hw/core => system}/src/sysbus.rs (76%)
+
 -- 
-2.50.1 (Apple Git-155)
+2.52.0
 
 
