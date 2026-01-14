@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC20D38FE6
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 16:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09846D38FE4
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 16:21:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg3Yl-00025D-2w; Wed, 14 Jan 2026 11:17:27 -0500
+	id 1vg3ce-0004Vz-3M; Wed, 14 Jan 2026 11:21:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vg3Yi-00024L-Qe
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 11:17:24 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vg3cb-0004VC-Ue
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 11:21:25 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vg3Yh-0001HM-CG
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 11:17:24 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-432dc56951eso16872f8f.0
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 08:17:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vg3ca-0002DZ-Ev
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 11:21:25 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-47ee974e230so60165e9.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 08:21:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768407440; x=1769012240; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1768407682; x=1769012482; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qcnLbp5a4QNe7bcaSOCqcoZcGmpQVNn4MD+3WgY9XpQ=;
- b=RD1i7J3PkWYo1zKWTk6lUogPs2N7AZ3WRaoZkwhdbMnQJpsee0xm3mFCKnVzLgm7sa
- 3y/CPr5rNwyF36zK0zsOIYHXJdk5M+H24pT8XnZEIHrOJnZhhNPgmBoLZOhA2Z2Nzcay
- 4fu33lGbRxcQCHs96p/Y0kP1vNS6rWQDwyz+U/g9LwgIKfRr+2IyttjtNIXMaKgQW/uE
- HjyG0sT/M3qZp+UHKaAiqmpkkKRuCTQ8CF0nSgxm/CN/FxHCV5TUOBMQizWA93NNBxVj
- XXZ7Y7t6VRVAuiX/qgdBoAjLvQjZZclMxK6fy4YOyhxNh/jMm/aN7dZyd2T0r+GrQf+W
- 0ScQ==
+ bh=sXOCjVQvWKTby5rxVEA5VahbwUifLcpXBwJaBo5DfG8=;
+ b=Rcjf4id4QNB4UvTS5qYBC/vcu9iAkyTuAafYPGiUIpQCIVajs6WoZOYtkOBlqu2wSF
+ jNnvQEpaiZrn2iWJbcoE7uOXncUR0WJ5JMmJ/qM28LuJygfpodVr503/MuWPEXoZHcq7
+ dwRnCIZcfctAfoHSgdOuxVxaZygES4FqRDNIuY4kRL9c82o+v3FatdDxs4VWZ3xrrp+j
+ duA+WNWu1efvPnaCsqsiBJNFTl12/zjvYKFgl1yFl5jEoMhrHJVIRjo8uSjgeFpGGbyr
+ 2iL7k0Mk1XG4YspUaUjjrYtPEnedG1edc9QOGOY7iO7Pniv6ES3sfFKEAOB0UTRoO2LF
+ YGog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768407440; x=1769012240;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1768407682; x=1769012482;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qcnLbp5a4QNe7bcaSOCqcoZcGmpQVNn4MD+3WgY9XpQ=;
- b=LcHBM8Z7ZDFcQhwt9arL+UMkMbEX9Q/TZAoncXknyspeuBjEbzvL4ql5hsoDZRHRx5
- +bql4LKplLP6E1IGEruxucAp5r10CV6d9Zu+qmi/OcQa4FwIIzxa5O+jc0KnPNr8P/EE
- 2gQyWuWIuS0X5Es/4PwKpZFR0OJvRkNnmLRGG3j2brTsKHv4ZFlZ5GW9Q64DsHWB/mXL
- jMxtPO7bkbHm7vtk+1MmH0OTUS3TgZfYIciK35SDrk3HcXrNEV5xJ+8H9F64fXJrRcz0
- 2aubCcuXR5pA9HX3LEpHnlMVXy7rp9cKWnf4r+QO8xHEuLKgAQVwSvNQ4oe98gvHyf9g
- Mylg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXn1SSn5p+/hpTu4GVSRGtyq/+HmOpDqmKY1cKY3a8GDD06IWIhUodyuRr5eSh8fcn4VnR0IOqJ6MQu@nongnu.org
-X-Gm-Message-State: AOJu0YzdQ+u5okrBsoBYX/pdt8oN6Is00wdT9yWzvpbWRgnqybfBXrgK
- xwXPWjlBwDxZdCSM26BX2HqX0kNAfcoIBu3vHCexaMDCBZXHWPeQZxpwyaHPHBP/un4=
-X-Gm-Gg: AY/fxX5Lz6r9N0yOGH3xqLxCZgHyGWQmVE+LGOLBJ/e6CyAo1/jhmEwQn8/rGLmhwpw
- 4IabQWDgvgB+3SZeMko6fEoq+LDgGBU3pPUry3tihh1LRgaM9O9voNMjfHA3iDm7LftCqtvQwXt
- j+4gFSmXqPlDQAshonYczhhornmWUPmZvbNpROG8ohbsuN3hVFzvzcX2QkZy49EiSnKZ2zwTR0l
- /jUC6Vele3aNNr6OeIDUqN94Xxbly96x/DZzYU0jrlgowpvQNwSzlGEINWJCB2N65sNWXNksiEv
- q8na9vg+aUvKRXvPSZBXnnQWngVaHvlLvxJywDRHXRlVOJ50XWSaQSQPaP0o8TXO4CMDOaVKOsY
- 5hJlHMRlHr/07cjlFgMfySeEgdSfejHpHLpQR1oLM/xBCIB09LtpM1TBemKmkG7O7zUAW0J78KL
- XMvFxtaXxy6gq8rm0QmXABt3P48GKn9KNML53sOVzsRdhfBMNrK8uvIQ==
-X-Received: by 2002:a05:6000:3103:b0:430:fdc8:8bbf with SMTP id
- ffacd0b85a97d-4342c570dd0mr3247756f8f.59.1768407440318; 
- Wed, 14 Jan 2026 08:17:20 -0800 (PST)
+ bh=sXOCjVQvWKTby5rxVEA5VahbwUifLcpXBwJaBo5DfG8=;
+ b=tLtwtuF3v7wQeqsJWVfnEkrcvQ6Cfo7v51x8z7tokH3zSi2sO+u25650A3+ltWtN4v
+ LqHEmCGo6XWQRzkaQHc3LmYjSjmpCzIYzpiC2m8LHa0KaSYVTaXf5h0E83yTle5VssDH
+ R1K19JniY6Q4VyuIvsMtJquJQd2oDenZS/t8h4lXRPwu0C5zsLnESTDxsbNCTI1y6DTM
+ wRFYW/P/ziYMSTior86pWj+k8KNZID/PiBWsVR6zHLKY2UEBfOTRBFoM9riszOxSa0qQ
+ 5mH6Q+yJ8xowfMU2bnOT/0j8HL0Oa48nrFaCzAfMlvpKbQb+EAJc9aagRTxp8CBS9eCQ
+ X+Pg==
+X-Gm-Message-State: AOJu0YxjCRaC+/FnNtzNKm45rKdru145jPle3k1Ez8tCB6vEkH9LrIE0
+ 8CiScxNFZH3xvmj/QUOIImgY2uYoSGQ/PvZodPnGEBUyWaTG/a5XKdSEsTZyYGWqCp18vo2sM71
+ SAp0H7/Y=
+X-Gm-Gg: AY/fxX6sv6GXdOyFyoJMaem5ydHGjbvQN/kedCdfkL13rAUs+fms3aUqh4MKZ61twaU
+ BqCy4Uwg9TOGMMMQAfUax4znxqsG84U3xgkG64MHCRzQQHLOhM6ZlAqyawjEsUAJOOIV9uyYD7t
+ EwGWFl/A4IEHFKVksXTUkBN5aFqrL8o+uSvb90iXpJYRrkv6hYtul+e1guOsvoXC8W5qJMv4bye
+ q+wA84NtPeSKXsRobG/sWXxzY3JurXIx7yaxl6Wh0rRFatNRlCoDNcS/SUGX5qb8ieGLYv7Hrni
+ YQ496mOckYu7Sz2bE1ccHC4Kl9LvRe3Kw1lxp5otJtr8pK/XqO7NBV0c4r751J9l9F67Lok9xJ/
+ VJUQaK4XY81MAh801m/NPi9AXWOUv2W0geXYRJMz5M8f8LcUhG9LS6gR8JNr4oMxZXhPkeGEQSB
+ KNd1mW4DBNSdqHsrQtCsJtWTKahqA+tL3Doa8w2C2Iml2PBVf1nSfhuA==
+X-Received: by 2002:a05:600c:4e46:b0:477:7925:f7fb with SMTP id
+ 5b1f17b1804b1-47ee32fceffmr31422735e9.10.1768407682283; 
+ Wed, 14 Jan 2026 08:21:22 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-434af653560sm137082f8f.10.2026.01.14.08.17.19
+ 5b1f17b1804b1-47ee591933bsm35046785e9.15.2026.01.14.08.21.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Jan 2026 08:17:19 -0800 (PST)
-Message-ID: <d3e22480-a55b-4dcc-a89c-e5ac0ae60289@linaro.org>
-Date: Wed, 14 Jan 2026 17:17:18 +0100
+ Wed, 14 Jan 2026 08:21:21 -0800 (PST)
+Message-ID: <13ed87c8-da97-430b-b1db-2bf0024cc4f3@linaro.org>
+Date: Wed, 14 Jan 2026 17:21:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/nvmm: Fix 'cpu' typo in nvmm_init_vcpu()
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: Reinoud Zandijk <reinoud@netbsd.org>, qemu-stable@nongnu.org,
- Thomas Huth <thuth@redhat.com>
-References: <20260113203924.81560-1-philmd@linaro.org>
- <1445b33e-59f4-4b73-b591-3babd13ed28b@tls.msk.ru>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 0/7] tests/qtest/migration: Update framework to allow
+ using HVF accelerator
 Content-Language: en-US
-In-Reply-To: <1445b33e-59f4-4b73-b591-3babd13ed28b@tls.msk.ru>
+To: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
+Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Hyman Huang <yong.huang@smartx.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, Peter Xu <peterx@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+References: <20250128135429.8500-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250128135429.8500-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,35 +108,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/1/26 16:11, Michael Tokarev wrote:
-> On 1/13/26 23:39, Philippe Mathieu-Daudé wrote:
->> Fix typo to avoid the following build failure:
->>
->>    target/i386/nvmm/nvmm-all.c: In function 'nvmm_init_vcpu':
->>    target/i386/nvmm/nvmm-all.c:988:9: error: 'AccelCPUState' has no 
->> member named 'vcpu_dirty'
->>      988 |     qcpu->vcpu_dirty = true;
->>          |         ^~
->>
->> Cc: qemu-stable@nongnu.org
->> Reported-by: Thomas Huth <thuth@redhat.com>
->> Fixes: 2098164a6be ("accel/nvmm: Replace @dirty field by generic 
->> CPUState::vcpu_dirty field")
-> 
-> Hmm..  This commit is in 10.1 already, we had another
-> release since that, 10.2.
-> 
-> Is this code being used at all?
+Cc'ing Peter and Alex who asked how HVF is tested.
 
-Apparently yes, in NetBSD. See around this thread:
-
-https://lore.kernel.org/qemu-devel/ea1e0e45-f864-4a43-a40e-48fd82c26c56@redhat.com/
-
+On 28/1/25 14:54, Philippe Mathieu-Daudé wrote:
+> Hi,
 > 
-> Maybe it should have some tests?
+> This series modify few bits of the migration QTest framework
+> to allow running the tests using the HVF framework (also
+> leaving the possibilty for other ones, removing the KVM/TCG
+> restriction).
 > 
-> Thanks,
-> 
-> /mjt
-
+> Philippe Mathieu-Daudé (7):
+>    migration/dirtyrate: Do not unlock cpu_list lock twice
+>    tests/qtest/migration: Make 'has_dirty_ring' generic
+>    tests/qtest/migration: Initialize MigrationTestEnv::arch early
+>    tests/qtest/migration: Pass accelerator arguments as machine option
+>    tests/qtest/migration: Add MigrationTestEnv::has_hvf field
+>    tests/qtest/migration: Run aarch64/HVF tests using GICv2
+>    tests/qtest/migration: Allow using accelerators different of TCG / KVM
 
