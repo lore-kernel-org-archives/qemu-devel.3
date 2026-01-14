@@ -4,106 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8AE7D39000
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 18:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 905FFD39005
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 18:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg5Ce-0001Xf-7N; Wed, 14 Jan 2026 13:02:44 -0500
+	id 1vg5fP-0003Ok-Fy; Wed, 14 Jan 2026 13:32:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vg5Bu-0001Nj-UU
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 13:02:01 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vg5Bs-0003gb-KP
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 13:01:58 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vg5fL-0003O3-Un
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 13:32:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vg5fK-0007DQ-7R
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 13:32:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768415540;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=k7cfbpxHZbbD5cZVcv3GGiHTMaR+UMAKreSL99LFDr4=;
+ b=fOYa8DJygZAqCEjl6kxAI9rz4c16eDFuYKRoilNSPYnel77Q/fhptf2HZf4peIs8R8BgfN
+ 6uVptAanORTV045TnGDQ0ZQmuGgbN+IzTE1USq6i+lV91TQ2b2edwSbs4gz+XhoQW13iSS
+ t0wNy3fGUd6VLkXe1pbZcx+DFWW73Qk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-5o_fqJdMMvSUkPNWTgZ_Rw-1; Wed,
+ 14 Jan 2026 13:32:17 -0500
+X-MC-Unique: 5o_fqJdMMvSUkPNWTgZ_Rw-1
+X-Mimecast-MFC-AGG-ID: 5o_fqJdMMvSUkPNWTgZ_Rw_1768415536
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id ABFB15D07F;
- Wed, 14 Jan 2026 18:01:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768413712; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qb5hAj4AsEOw3icoaelpo43IqaWUhnqq9NuQQ3UYBYc=;
- b=iT/y6GxJK6XGiIoef/Ie9gfJ2thY2YxBHdcLBTZtInBonlCh2R0y5J4PH84g+HR4/tQFUr
- GXi/HMqvRZtPcEnC8bSFlMeiMFGd/OLsefFpTn9YKOtjc3BihpnbGWbjChCmOwkWBWeC7M
- xW9rtifQe1He/TvIQaYLwq+PePk7rng=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768413712;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qb5hAj4AsEOw3icoaelpo43IqaWUhnqq9NuQQ3UYBYc=;
- b=taTtF8FrXHmNBDZWUlkCiXmZ7q2jxcIEtXI6bmE/emwRam/AoorImrJAAFBQXd7WRbSspK
- lsIXU4aL424sCcDQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="iT/y6GxJ";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=taTtF8Fr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768413712; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qb5hAj4AsEOw3icoaelpo43IqaWUhnqq9NuQQ3UYBYc=;
- b=iT/y6GxJK6XGiIoef/Ie9gfJ2thY2YxBHdcLBTZtInBonlCh2R0y5J4PH84g+HR4/tQFUr
- GXi/HMqvRZtPcEnC8bSFlMeiMFGd/OLsefFpTn9YKOtjc3BihpnbGWbjChCmOwkWBWeC7M
- xW9rtifQe1He/TvIQaYLwq+PePk7rng=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768413712;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qb5hAj4AsEOw3icoaelpo43IqaWUhnqq9NuQQ3UYBYc=;
- b=taTtF8FrXHmNBDZWUlkCiXmZ7q2jxcIEtXI6bmE/emwRam/AoorImrJAAFBQXd7WRbSspK
- lsIXU4aL424sCcDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 284B93EA63;
- Wed, 14 Jan 2026 18:01:51 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id gt7nNg/aZ2lzJgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 14 Jan 2026 18:01:51 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com
-Subject: Re: [PATCH 1/5] migration: Use QAPI_CLONE_MEMBERS in
- migrate_params_test_apply
-In-Reply-To: <aWex7yI4jIoYXEjp@x1.local>
-References: <20260114132309.5832-1-farosas@suse.de>
- <20260114132309.5832-2-farosas@suse.de> <aWex7yI4jIoYXEjp@x1.local>
-Date: Wed, 14 Jan 2026 15:01:49 -0300
-Message-ID: <87h5sonkdu.fsf@suse.de>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 251DF1956096; Wed, 14 Jan 2026 18:32:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 60A101956056; Wed, 14 Jan 2026 18:32:15 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C25F321E692D; Wed, 14 Jan 2026 19:32:12 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Michael Tsirkin <mst@redhat.com>,  <qemu-devel@nongnu.org>,
+ <shiju.jose@huawei.com>,  <armbru@redhat.com>,  <linuxarm@huawei.com>,
+ <linux-cxl@vger.kernel.org>,  Ravi Shankar <venkataravis@micron.com>
+Subject: Re: [PATCH qemu v3 3/5] hw/cxl/events: Updates for rev3.2 general
+ media event record
+In-Reply-To: <20260114142713.617806-4-Jonathan.Cameron@huawei.com> (Jonathan
+ Cameron's message of "Wed, 14 Jan 2026 14:27:11 +0000")
+References: <20260114142713.617806-1-Jonathan.Cameron@huawei.com>
+ <20260114142713.617806-4-Jonathan.Cameron@huawei.com>
+Date: Wed, 14 Jan 2026 19:32:12 +0100
+Message-ID: <87wm1kyrir.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
- MISSING_XM_UA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: ABFB15D07F
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,141 +88,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Jonathan Cameron <Jonathan.Cameron@huawei.com> writes:
 
-> On Wed, Jan 14, 2026 at 10:23:05AM -0300, Fabiano Rosas wrote:
->> Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
->> method makes the handling of the TLS strings more intuitive because it
->> clones them as well.
+> From: Shiju Jose <shiju.jose@huawei.com>
 >
-> The cover letter said this patch didn't change, but it has changed at least
-> somewhere.. anyway, I'm re-reviewing every line here.
+> CXL spec rev3.2 section 8.2.10.2.1.1 Table 8-57, general media event
+> table has updated with following new fields.
+> 1. Advanced Programmable Corrected Memory Error Threshold Event Flags
+> 2. Corrected Memory Error Count at Event
+> 3. Memory Event Sub-Type
+> 4. Support for component ID in the PLDM format.
 >
+> Add updates for the above spec changes in the CXL general media event
+> reporting and QMP command to inject general media event.
+>
+> In order to have one consistent source of references, update all to
+> references for this command to CXL r3.2.
+>
+> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+> v3: Update all references to 3.2 for consistency.
+> ---
+>  qapi/cxl.json               | 25 +++++++++++++++++++------
+>  include/hw/cxl/cxl_events.h |  7 +++++--
+>  hw/mem/cxl_type3.c          | 29 +++++++++++++++++++++++++++++
+>  hw/mem/cxl_type3_stubs.c    |  6 ++++++
+>  4 files changed, 59 insertions(+), 8 deletions(-)
+>
+> diff --git a/qapi/cxl.json b/qapi/cxl.json
+> index 82001c0591d8..c159687f849c 100644
+> --- a/qapi/cxl.json
+> +++ b/qapi/cxl.json
+> @@ -64,22 +64,22 @@
+>  ##
+>  # @CXLGeneralMediaEvent:
+>  #
+> -# Event record for a General Media Event (CXL r3.0 8.2.9.2.1.1).
+> +# Event record for a General Media Event (CXL r3.2 8.2.10.2.1.1).
+>  #
+>  # @dpa: Device Physical Address (relative to @path device).  Note
+> -#     lower bits include some flags.  See CXL r3.0 Table 8-43 General
+> +#     lower bits include some flags.  See CXL r3.2 Table 8-57 General
+>  #     Media Event Record, Physical Address.
+>  #
+>  # @descriptor: Memory Event Descriptor with additional memory event
+> -#     information.  See CXL r3.0 Table 8-43 General Media Event
+> +#     information.  See CXL r3.2 Table 8-57 General Media Event
+>  #     Record, Memory Event Descriptor for bit definitions.
+>  #
+> -# @type: Type of memory event that occurred.  See CXL r3.0 Table 8-43
+> +# @type: Type of memory event that occurred.  See CXL r3.2 Table 8-57
+>  #     General Media Event Record, Memory Event Type for possible
+>  #     values.
+>  #
+>  # @transaction-type: Type of first transaction that caused the event
+> -#     to occur.  See CXL r3.0 Table 8-43 General Media Event Record,
+> +#     to occur.  See CXL r3-2 Table 8-57 General Media Event Record,
+>  #     Transaction Type for possible values.
+>  #
+>  # @channel: The channel of the memory event location.  A channel is an
+> @@ -94,6 +94,16 @@
+>  # @component-id: Device specific component identifier for the event.
+>  #     May describe a field replaceable sub-component of the device.
+>  #
+> +# @is-comp-id-pldm: This flag specifies whether the device-specific
+> +#     component identifier format follows PLDM.
+> +#
+> +# @cme-ev-flags: Advanced programmable corrected memory error
+> +#     threshold event flags.
+> +#
+> +# @cme-count: Corrected memory error count at event.
+> +#
+> +# @sub-type: Memory event sub-type.
+> +#
+>  # Since: 8.1
+>  ##
+>  { 'struct': 'CXLGeneralMediaEvent',
+> @@ -101,7 +111,10 @@
+>    'data': { 'dpa': 'uint64', 'descriptor': 'uint8',
+>              'type': 'uint8', 'transaction-type': 'uint8',
+>              '*channel': 'uint8', '*rank': 'uint8',
+> -            '*device': 'uint32', '*component-id': 'str' } }
+> +            '*device': 'uint32', '*component-id': 'str',
+> +            '*is-comp-id-pldm':'bool',
+> +            '*cme-ev-flags':'uint8', '*cme-count':'uint32',
+> +            'sub-type':'uint8' } }
+>  
+>  ##
+>  # @cxl-inject-general-media-event:
+   #
+   # Inject an event record for a General Media Event (CXL r3.0
+   # 8.2.9.2.1.1).  This event type is reported via one of the event
 
-Sorry, I forgot I had already addressed your review comments from the
-other series in this patch.
+Should we update this reference as well?
 
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  migration/options.c | 32 ++++++++++++++++++--------------
->>  1 file changed, 18 insertions(+), 14 deletions(-)
->> 
->> diff --git a/migration/options.c b/migration/options.c
->> index 9a5a39c886..994e1cc5ac 100644
->> --- a/migration/options.c
->> +++ b/migration/options.c
->> @@ -1264,9 +1264,9 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
->>  static void migrate_params_test_apply(MigrationParameters *params,
->>                                        MigrationParameters *dest)
->>  {
->> -    *dest = migrate_get_current()->parameters;
->> +    MigrationState *s = migrate_get_current();
->>  
->> -    /* TODO use QAPI_CLONE() instead of duplicating it inline */
->> +    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
->>  
->>      if (params->has_throttle_trigger_threshold) {
->>          dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
->> @@ -1285,24 +1285,18 @@ static void migrate_params_test_apply(MigrationParameters *params,
->>      }
->>  
->>      if (params->tls_creds) {
->> +        qapi_free_StrOrNull(dest->tls_creds);
->>          dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
->> -    } else {
->> -        /* clear the reference, it's owned by s->parameters */
->> -        dest->tls_creds = NULL;
->>      }
->>  
->>      if (params->tls_hostname) {
->> +        qapi_free_StrOrNull(dest->tls_hostname);
->>          dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
->> -    } else {
->> -        /* clear the reference, it's owned by s->parameters */
->> -        dest->tls_hostname = NULL;
->>      }
->>  
->>      if (params->tls_authz) {
->> +        qapi_free_StrOrNull(dest->tls_authz);
->>          dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
->> -    } else {
->> -        /* clear the reference, it's owned by s->parameters */
->> -        dest->tls_authz = NULL;
->>      }
->>  
->>      if (params->has_max_bandwidth) {
->> @@ -1359,8 +1353,9 @@ static void migrate_params_test_apply(MigrationParameters *params,
->>      }
->>  
->>      if (params->has_block_bitmap_mapping) {
->> -        dest->has_block_bitmap_mapping = true;
->> -        dest->block_bitmap_mapping = params->block_bitmap_mapping;
->> +        qapi_free_BitmapMigrationNodeAliasList(dest->block_bitmap_mapping);
->> +        dest->block_bitmap_mapping = QAPI_CLONE(BitmapMigrationNodeAliasList,
->> +                                                params->block_bitmap_mapping);
->>      }
->>  
->>      if (params->has_x_vcpu_dirty_limit_period) {
->> @@ -1384,7 +1379,8 @@ static void migrate_params_test_apply(MigrationParameters *params,
->>      }
->>  
->>      if (params->has_cpr_exec_command) {
->> -        dest->cpr_exec_command = params->cpr_exec_command;
->> +        qapi_free_strList(dest->cpr_exec_command);
->> +        dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
->>      }
->>  }
->
-> So we have 5 special cases here, (1-3) for tls, (4) for block bitmap, (5)
-> for cpr-exec-cmd.  All good.
->
->>  
->> @@ -1535,6 +1531,14 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
->>      migrate_params_test_apply(params, &tmp);
->>  
->>      if (migrate_params_check(&tmp, errp)) {
->> +        /*
->> +         * Mark block_bitmap_mapping as present now while we have the
->> +         * params structure with the user input around.
->> +         */
->> +        if (params->has_block_bitmap_mapping) {
->> +            migrate_get_current()->has_block_bitmap_mapping = true;
->> +        }
->
-> Now I'm looking at the lastest master branch, we have:
->
-> migrate_params_apply():
->     if (params->has_block_bitmap_mapping) {
->         qapi_free_BitmapMigrationNodeAliasList(
->             s->parameters.block_bitmap_mapping);
->
->         s->has_block_bitmap_mapping = true;
->         s->parameters.block_bitmap_mapping =
->             QAPI_CLONE(BitmapMigrationNodeAliasList,
->                        params->block_bitmap_mapping);
->     }
->
-> Do we really need above change?
->
+   # logs specified via the log parameter.
+   #
+   # Since: 8.1
+   ##
+   { 'command': 'cxl-inject-general-media-event',
+     'data': 'CXLGeneralMediaEvent' }
 
-It should be in the next patch.
+[...]
 
->> +
->>          migrate_params_apply(params);
->>          migrate_post_update_params(params, errp);
->>      }
->
-> The other thing is, when reaching here, after we have all 5 special cases
-> dynamically allocated, do we need to always free it?
->
-> We used to do it for the initial (1-3) for tls (in migrate_tls_opts_free()).
-> I think we should also free (4,5) now from &tmp?
->
-
-Yes!
-
->> -- 
->> 2.51.0
->> 
 
