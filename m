@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 562D0D31A09
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D35D8D31A0D
 	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfsn3-0003RN-QI; Tue, 13 Jan 2026 23:47:29 -0500
+	id 1vfsn5-0003XB-L3; Tue, 13 Jan 2026 23:47:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsmz-0003MD-KO
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:47:27 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsn4-0003TS-3t
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:47:30 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsmy-0003hn-0g
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:47:25 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2a0bb2f093aso55997595ad.3
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:47:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsn2-0003iP-Hq
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:47:29 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2a09757004cso75432035ad.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:47:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768366042; x=1768970842; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=bv6dZAwdx0sMQ8eiUvMYGeMPip/M+vWSOGa7han7+F0=;
- b=eixEJEgO3an5g8sknPhxCnS8udtQDlU/00ZHkXlYD4eStVq9LJRqjtCv/mzwXiflCs
- QbzUSyg2PXnDYgBpEhylKiG98/eGPaHP6BWUOV7egplpn1YWOmTtIIb0DJedvNWQ8eHR
- dNcNt6vaujrWD25s4okkJwSm6MYehk0xYuuNghG4a6RLe/eoJzScepIiFGSw1UYqqEAV
- cLdmEDjwpqehUBqbz+7qZUhYHj5wBytPeziyTMqBzRTP7S9vzBxKfiYEbV2oWEYfm3aG
- fLh7CeVqtfer+SdhZxxQwFZd20mLA2zjZbij+eE7oIVmG8j86CgCtg4WFZ326kiQTFpw
- VMcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768366042; x=1768970842;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1768366047; x=1768970847; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bv6dZAwdx0sMQ8eiUvMYGeMPip/M+vWSOGa7han7+F0=;
- b=URSFhJkxVV0Ih2JAulEkBsu4Dyaw4YhUVlEqGgzlodJ3X1vqTOm7Zhl8aARq0peSK6
- KAI+1326L9x7MYFtf5wa1WrAnYtpKp4cYRnaeAbyPw1wYEkV77Z4VV+l6caTlno7OHyD
- hlGyzdbW0uZH4QV0ltEcavHlKJp8a+NewPulCQqOTtLxSYtwIM1wuW0da/+uM9JvNTR9
- agk7obMNi+J41P43KurRSkuC8TJlBCo1LuRV218F4Rg8AEBIangBCpoPJkRrFttUsmNO
- cgsMWqSn1xl3m0lkIEgqJAcqMpn++PNUSywSpuK/dzEz+RlL14esM9zsGiBGZeKEwm2f
- x5oQ==
+ bh=TEeiGtHI7wQnEBEREwud4A0M1u+cTyhF8Eoqx55wGmE=;
+ b=GKZsEtIQu9hcC1qWsGGH3e2Cvsm4h1A6qN1S+Jn01Xa6cWHCd6yQ3oPtkFJI13TY1C
+ CWYiPxYOWHP9M6feUWt0ULhN05YBBqptLjOHqQPJPfYxaxAoZUhswDfxOWXLavs97nNo
+ x1iPb9sCNfQhlhaSZwHhGzlRWrN5Tf3VcqU0bJOXMJo6tjhHL8uBkT7RjdLAaEFXzS9O
+ /3oiAOZ2izO/L/9hAbsp8ZRjIPa8jxm7FHJ73qQbScuZA6NFQRXOV2tr8H6sWW4+wpv8
+ +aXpDZAZng4I7ecZKjl8z6mc68RZYbq4pGhv7soBaSLxfaN4YCZIt5GkSN2qLowptJ70
+ AYDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768366047; x=1768970847;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=TEeiGtHI7wQnEBEREwud4A0M1u+cTyhF8Eoqx55wGmE=;
+ b=lTWQYwvgUcxIYHCzPJIj5qZO8G1GCYIhWxFWNIHfZ8PWltr5wu7V7TLK6JVu06FL26
+ W5DG1dtm/nJoPG7YNRWdyMAAs5itdoFNxyR2Ik7XbNFRPvpOTgKRzO/JY5eVtusGBODm
+ pRz3j1hruQtiCBfTtUImchb2kXoVagVo2YRV/Z5sl/xXNpK8XTjvGlTtQzN+QgUnIA8Q
+ NQ2lHcNOQoRC8TEvPh+ETLuR8TP1VJ359sbQ2c7PYftN9rojPVNLY+UEsAdcoJ0NuN3I
+ Mewk3U+vZ+EqXMWwQ8mruiPkoFl8hjeV39R2pyjCmzOH0YEf6w9kmHoZEGqh+DETWsKh
+ +j6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWTT6FMC1fU7IImxd6plbYhat2yzm5MoUdhhpB6VfAEx4Um6/6m3zzrlXRNGcaG1skAU4Oc5FqE7omP@nongnu.org
-X-Gm-Message-State: AOJu0Ywjn2tgLyfk+WlFGarlX7IJuIaLKXsgFJbzjSIwK9lzlfOw9T/q
- KDlV+WncacuHHKZsSoTd1C4WKFFamT4C9QPmoegOs5lhePpFFcLbEBUm
-X-Gm-Gg: AY/fxX5kA2EY+nK+vCCAC3QuYXnXxWOROT709EhGCFPHJ/tTyk/uSMVISf42PKpyT4X
- 6aJIsn5aQx2J4qCyIRTaUjQnHjRR7LyYP0mk8CnI+k83rrAGvMPR8F+MuZkdRJxtnasvvFymJod
- Am7GsD5wh2rJfr3eB6d21HMwc74loW2nBi8Z2206W4ZR4Y0UW/j363Dg3mXGz7ovIXODdw/uT0H
- wcTJYk/6uHHiN2WfEEimMO/ZDTfe1Blac/vHO+w67ug1PDZYstKjyqDXVEL4WZ742PHSIyjfXAc
- TOWmMpSucEgBp4yXzbHeTDLDn7/2m1GprMPQqN84KtL2lh9BBN3sTe6pXH0SnL1k35u/t0O//rt
- HiaHEP8PX3kp67l7zebjBqtVmdgc3yeiWGwz3Kltn7+CTRgsXQZ7wpYtiNU2yb5yIJxcWXHzYiM
- 4fMFsaz3lbiBwTZhVrg9ymK5l8M11QHHPc+EheolNSFxc5RQJmKM0JQrFaSlQ=
-X-Received: by 2002:a17:903:234a:b0:2a0:9028:11af with SMTP id
- d9443c01a7336-2a599eac3f9mr15564495ad.59.1768366041937; 
- Tue, 13 Jan 2026 20:47:21 -0800 (PST)
+ AJvYcCVBh0LlxGsS5nKxstx+dODLIt3j8dlaCLE+KMqtRNwuE8+1rl4sYH8sY9UF70BcW266u4jU1x80Iq4W@nongnu.org
+X-Gm-Message-State: AOJu0Yx1hVZgrRF4fXa32gUOi3ITX4rTAUykKkiHkJlN2DH2F3Ok5SDm
+ A0pwncwhMi49LkFqhawR55n881U5fxXSKr3e93Ki/7ipNjgXF7y4odBV
+X-Gm-Gg: AY/fxX4LdgsDC1/bCgJiqFzw2xE7HzRVYNiRRBJTeH8/u4QpKpeNl5RwiuvjKzp0mdc
+ xmgrHEXmBmuUmtNOpWeJCgAdfGTUNkKwZrxYBdkblSHZD25SZ2wsVJHAfxfBYF0RfiSxNEtzSAe
+ eiIqQyUDLNXZFRJR5Fox2I3HJUTCwdZNbgP2F32nAtQD+964J29l/fpaJ/hln7EPvdQUxbq3V+9
+ 4eVth0YT4sdRiJZ2C+L9CKHnm+E8Wiy//+TRHUm9zTRkj6UZN8DxyyGZpvL6z+WiiROO3Tai5BP
+ 2OZoVg3xWFVA6YPkt0+DYPRgFWZO95u3bWGdqeM8ovn9AtLmsWQlwvkAIKq2v974mNQ1lzhASUv
+ P+mFkgqFDQhfJ38iqJL8XV9wLmEuMwYSPGVW07cg4DWBgvxaJWsmET+m3IVa+RDR/k77fQMbcjM
+ r9djxs2aMFSx6viSF/PWvD+XhhWYXDKVUIbBqmU202yV6zl029GOvz3EALkmA=
+X-Received: by 2002:a17:903:b43:b0:2a0:7f87:2347 with SMTP id
+ d9443c01a7336-2a59bc43dadmr7737515ad.46.1768366047122; 
+ Tue, 13 Jan 2026 20:47:27 -0800 (PST)
 Received: from lima-default (123.253.188.110.qld.leaptel.network.
  [123.253.188.110]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c49037sm216111905ad.36.2026.01.13.20.47.16
+ d9443c01a7336-2a3e3c49037sm216111905ad.36.2026.01.13.20.47.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 20:47:21 -0800 (PST)
+ Tue, 13 Jan 2026 20:47:26 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
@@ -73,15 +74,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, bin.meng@windriver.com,
  vivahavey@gmail.com, Alvin Chang <alvinga@andestech.com>,
  Yu-Ming Chang <yumin686@andestech.com>, Joel Stanley <joel@jms.id.au>
-Subject: [RFC PATCH 00/25] target/riscv/debug: Sdtrig fixes and TT Ascalon
- support
-Date: Wed, 14 Jan 2026 14:46:33 +1000
-Message-ID: <20260114044701.1173347-1-npiggin@gmail.com>
+Subject: [RFC PATCH 01/25] target/riscv/debug: Check only mcontrol triggers
+ for break/watchpoint matching
+Date: Wed, 14 Jan 2026 14:46:34 +1000
+Message-ID: <20260114044701.1173347-2-npiggin@gmail.com>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260114044701.1173347-1-npiggin@gmail.com>
+References: <20260114044701.1173347-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,73 +107,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+trigger_common_match() has some warning log messages in it for
+unsupported triggers. Don't call it in BP/WP checking except for
+mcontrol/mcontrol6 triggers applicable to BP/WPs.
 
-Sorry for the big series. The Ascalon CPU implements Sdtrig with 2
-different types of mcontrol6 trigger and the icount trigger, so in
-the course of testing and bringing up OpenSBI and Linux support for
-this, I've accumulated quite a lot.
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ target/riscv/debug.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-My new year resolution is to start being better upstream contributor,
-it's taken me a while with changing jobs and architectures. So I don't
-expect others to drop everything to review this! Joel has been
-prodding me, and noted there is some other Sdtrig work going on
-with the v1.0 support patches.
-
-I think the debug v1.0 patches are somewhat orthogonal to this series,
-but both are addressing aspects of a common problem of Sdtrig
-implementation specifics. I wonder if these should be reconciled or
-left separate. Sdtrig v1.00/v0.13 configuration is a single boolean
-which is feasible as a CPU property. Whereas the entire space of
-Sdtrig implementation seems like too much to make configurable in that
-way.
-
-Any thoughts would be welcome.
-
-Thanks,
-Nick
-
-Nicholas Piggin (25):
-  target/riscv/debug: Check only mcontrol triggers for break/watchpoint
-    matching
-  target/riscv/debug: Handle changing trigger types
-  target/riscv/debug: Implement permissive type unavailable trigger
-  target/riscv/debug: Fix icount trigger privilege check
-  target/riscv/debug: Update itrigger_enabled after changing privilege
-  target/riscv/debug: Implement get_trigger_action for icount type
-    trigger
-  target/riscv/debug: Fix migration post_load icount_enabled() test
-  target/riscv/debug: Fix icount privilege matching icount_enabled()
-    test
-  target/riscv/debug: Implement icount trigger textra matching
-  target/riscv/debug: Maintain itrigger_enabled in
-    helper_itrigger_match()
-  target/riscv/debug: Fix breakpoint matching action
-  target/riscv/debug: Put mcontrol load/store match address into tval
-  target/riscv/debug: Remove breakpoints on reset
-  target/riscv/debug: Move debug CPU post_load details into debug.c
-  target/riscv/debug: Insert breakpoints after migration
-  target/riscv/debug: Remove itrigger icount-enabled mode
-  target/riscv/debug: Advertise icount trigger type in tinfo
-  target/riscv/debug: Reset trigger type to unavailable
-  target/riscv/debug: Add new debug state format
-  target/riscv/debug: Migrate mcontext using new sdtrig vmstate
-  target/riscv/debug: Implementation specific Sdtrig configuration
-  target/riscv/debug: Support heterogeneous trigger types
-  target/riscv/debug: Support heterogeneous mcontrol access types
-  target/riscv/debug: Emulate TT Ascalon Sdtrig
-  target/riscv/debug: Fix minor comment typos
-
- target/riscv/cpu.c         |  65 ++++-
- target/riscv/cpu.h         |  41 ++-
- target/riscv/cpu_helper.c  |  10 +-
- target/riscv/csr.c         |   7 +-
- target/riscv/debug.c       | 571 ++++++++++++++++++++-----------------
- target/riscv/debug.h       |  19 +-
- target/riscv/machine.c     |  96 ++++++-
- target/riscv/tcg/tcg-cpu.c |   5 +-
- 8 files changed, 510 insertions(+), 304 deletions(-)
-
+diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+index 5664466749..4273ab7a8d 100644
+--- a/target/riscv/debug.c
++++ b/target/riscv/debug.c
+@@ -952,6 +952,14 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
+         for (i = 0; i < RV_MAX_TRIGGERS; i++) {
+             trigger_type = get_trigger_type(env, i);
+ 
++            switch (trigger_type) {
++            case TRIGGER_TYPE_AD_MATCH:
++            case TRIGGER_TYPE_AD_MATCH6:
++                break;
++            default:
++                continue; /* No other types match breakpoint */
++            }
++
+             if (!trigger_common_match(env, trigger_type, i)) {
+                 continue;
+             }
+@@ -976,8 +984,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
+                 }
+                 break;
+             default:
+-                /* other trigger types are not supported or irrelevant */
+-                break;
++                g_assert_not_reached();
+             }
+         }
+     }
+@@ -998,6 +1005,14 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+     for (i = 0; i < RV_MAX_TRIGGERS; i++) {
+         trigger_type = get_trigger_type(env, i);
+ 
++        switch (trigger_type) {
++        case TRIGGER_TYPE_AD_MATCH:
++        case TRIGGER_TYPE_AD_MATCH6:
++            break;
++        default:
++            continue; /* No other types match watchpoint */
++        }
++
+         if (!trigger_common_match(env, trigger_type, i)) {
+             continue;
+         }
+@@ -1036,8 +1051,7 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+             }
+             break;
+         default:
+-            /* other trigger types are not supported */
+-            break;
++            g_assert_not_reached();
+         }
+     }
+ 
 -- 
 2.51.0
 
