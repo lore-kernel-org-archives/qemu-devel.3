@@ -4,98 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C0BD31A0E
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE89DD31A0E
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 06:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfsnX-00042y-Ub; Tue, 13 Jan 2026 23:47:59 -0500
+	id 1vfuE3-0008Hw-8z; Wed, 14 Jan 2026 01:19:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsnQ-0003qi-Ek
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:47:54 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsnN-0003lc-BL
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:47:50 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-29f102b013fso75525605ad.2
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:47:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768366067; x=1768970867; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=67A9pmsOmD3VIwoIzZX+CzBTINC+AlN1BFRXkGK7aDA=;
- b=JoeFtqSX3yKGlbS8jfuLpXY3e9/a5ytCRHqOSVrLDeRMaA7pZLRvAl07n2Fx/KxfcH
- 9RTEy9KW+HFqwxmiUM/hEhJXX210094/SSjmjzYGSd1L/cvzMZOPiVnNUOj0/r2f3MEc
- wU3vAOOUowsFeyhKOGSFhZwKH+tmvfeAfiYk70CIsyG7rdjVAuAf2VykhxpvMsUwDXLI
- 2aIPG7tdZwzkSil+Ymj/WECtUTmAUfeaRd+gzzRHQ6YChoAYZt8lhXYMNCUy7IXvmUqp
- LiqUZ4TW45/TAfkSzUaCxUkG48rNQGipduqxe3k9bE6Aqj5+9IckOSYn/ktKXWbwvMLz
- 7HTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768366067; x=1768970867;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=67A9pmsOmD3VIwoIzZX+CzBTINC+AlN1BFRXkGK7aDA=;
- b=eYq49f3wGTASxPNFAZkWkYmf2xovKnXUSnmCc6UNWF/Pa2GlG1X9DCvAJAwXzdKTb5
- h0MhmliFmmALPpqKIh0/R4lLpU/8m4MVsMxcFvrvoAHByHoBhM4U03HHwhk2AY3A7ac8
- a959sFy2ZixVd2ToJXel8IR61yfiLc2SLt7+2TETkEBdg52WlpEpV6ALwwAXTaxIYG41
- 6jVxzhkhcgd3ucwogysBv6KrMM9RWUNoTGh4gD1g+Tq6P/GANTJSJeCZaO2k4gSUVBk7
- KstQF6UgTx4QYFfgV7HYryLkhOB5+2vSc/YdtunfEWOeobGky9Syy6cH9XaEYcGew11X
- 612g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVjeb5Hk2GyZjvQg5W1PhhzRi1GUczAIW3mKOQN95aGEfQ0MZytJU64P23zsIr98Q2Z2PHOnv/kc5lH@nongnu.org
-X-Gm-Message-State: AOJu0YwM+Vj5l8xUHfQ3i8m1b29ATaSaFdpEhQfoYTBpRwWcURvMYx0m
- OmfRkePDcROsx0E08yte7iIeTd3znoXzoaJxXeHh9i1dIruI9r75CQJg6csSEg==
-X-Gm-Gg: AY/fxX6uDNwMTcmrdFOrClTFx7kAxiCVSX9Gw4aXG/PMsf3zfCitW4Fo/CcPfwb46oc
- kY55kneppj1krFYtjx6a0lyq6GCMwn9s5BjR10+dl2CTMd1zUFspiu9TLDDsqD7EPv+GgMKmLYd
- QFDmmxTnZPQWDucDJjin8C+cmcFXR6MxiRZazT3z2FvAgp7YFEeO7Uo2ENiQWeG/3DxuzlUCFo2
- dUSb1dqRTI0eCU/A6nBn2gqkR1o5AXq0ibHVK/mEfwFnvwtGKSKKzdDYycHmOVJh6xk+jD7mnjP
- PjMwiBulN942HAbhKlbaq9Cssz0LWXYnL+8lwNtb5DQJqhfJiYfgrZ90xgCPn77nEM7kdZjhORY
- HEabnTrS3SsO8Vgmr8zzw4EiFf9hhe+cbLRwhEDSr0rJmJ4qQ5Fj5j5x7PjSDeEOZy0IERXdOff
- xIowbdG/dYMrt7SqXd3a1P/uP0YEg9ntiyaLfXhErog7rvzc6o31MiTtLTFWF0wHnMf2/YTQ==
-X-Received: by 2002:a17:903:b84:b0:297:e3c4:b2b0 with SMTP id
- d9443c01a7336-2a599e56a0fmr15606515ad.54.1768366067440; 
- Tue, 13 Jan 2026 20:47:47 -0800 (PST)
-Received: from lima-default (123.253.188.110.qld.leaptel.network.
- [123.253.188.110]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c49037sm216111905ad.36.2026.01.13.20.47.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 20:47:47 -0800 (PST)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, bin.meng@windriver.com,
- vivahavey@gmail.com, Alvin Chang <alvinga@andestech.com>,
- Yu-Ming Chang <yumin686@andestech.com>, Joel Stanley <joel@jms.id.au>
-Subject: [RFC PATCH 05/25] target/riscv/debug: Update itrigger_enabled after
- changing privilege
-Date: Wed, 14 Jan 2026 14:46:38 +1000
-Message-ID: <20260114044701.1173347-6-npiggin@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260114044701.1173347-1-npiggin@gmail.com>
-References: <20260114044701.1173347-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vfuDz-0008GJ-Nr; Wed, 14 Jan 2026 01:19:24 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vfuDx-0000A7-Eg; Wed, 14 Jan 2026 01:19:23 -0500
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 98F78C01AC;
+ Wed, 14 Jan 2026 09:19:13 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c88::1:7] (unknown [2a02:6bf:8080:c88::1:7])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id AJNmZ80AfW20-uK4vFqAX; Wed, 14 Jan 2026 09:19:12 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1768371552;
+ bh=MjZ+p+f9yJQUOy1N1T+uGF94WpII2zAukpQ58wZNqxw=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=VOrv0mKtVxZlOXgrJulmBaeG9rxA5WwV97nRzonAzt642GDyYRZQIZfx+XGVNWC9b
+ 2/vrkkbWZcIYSWKdR5HmcCUJn9xqMSl1LQPfAD5HimnrhIhTxLdEyI8An6TqNVgAEF
+ zuLY/5WaPWGi523oFG+HcGt3BM/5Ls1z/ocIn7Xo=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <2af404d1-5e50-4caa-bee6-f8aab6a30a7e@yandex-team.ru>
+Date: Wed, 14 Jan 2026 09:19:10 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 0/5] support inflight migration
+To: Peter Xu <peterx@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, mzamazal@redhat.com,
+ Fabiano Rosas <farosas@suse.de>, qemu-block@nongnu.org,
+ virtio-fs@lists.linux.dev, "yc-core@yandex-team.ru"
+ <yc-core@yandex-team.ru>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20260113095813.134810-1-dtalexundeer@yandex-team.ru>
+ <20260113181242.GB528940@fedora> <aWaVVJh13ctiW9Ku@x1.local>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aWaVVJh13ctiW9Ku@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -107,75 +85,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The !icount_enabled() path should update itrigger_enabled after changing
-privilege, which can change whether or not an icount trigger is enabled.
+On 13.01.26 21:56, Peter Xu wrote:
+> On Tue, Jan 13, 2026 at 01:12:42PM -0500, Stefan Hajnoczi wrote:
+>> On Tue, Jan 13, 2026 at 02:58:09PM +0500, Alexandr Moshkov wrote:
+>>
+>> Peter: Please review the migration aspects (especially the vmstates).
+>> Thank you!
+> 
+> Looks good from my side as long as it's based on VMSD, I appreciate that
+> change from the old versions where it used to use qemufile APIs.
+> 
+> The major question here is if this series depends on Vladimir's other
+> series
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- target/riscv/cpu_helper.c | 7 +++++++
- target/riscv/debug.c      | 7 +++++++
- target/riscv/debug.h      | 3 +++
- 3 files changed, 17 insertions(+)
+No, it does not. And if we can proceed with merging these series first, I'll
+be happy to rebase on top of it.
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index dd6c861a90..e096da939b 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1030,9 +1030,12 @@ void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
- 
- void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en)
- {
-+    bool change = false;
-+
-     g_assert(newpriv <= PRV_M && newpriv != PRV_RESERVED);
- 
-     if (newpriv != env->priv || env->virt_enabled != virt_en) {
-+        change = true;
-         if (icount_enabled()) {
-             riscv_itrigger_update_priv(env);
-         }
-@@ -1075,6 +1078,10 @@ void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en)
-             riscv_cpu_update_mip(env, 0, 0);
-         }
-     }
-+
-+    if (change) {
-+        riscv_cpu_debug_change_priv(env);
-+    }
- }
- 
- /*
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 2effbb49af..51c5934bfa 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -1090,6 +1090,13 @@ void riscv_trigger_realize(CPURISCVState *env)
-     }
- }
- 
-+void riscv_cpu_debug_change_priv(CPURISCVState *env)
-+{
-+    if (!icount_enabled()) {
-+        env->itrigger_enabled = riscv_itrigger_enabled(env);
-+    }
-+}
-+
- void riscv_trigger_reset_hold(CPURISCVState *env)
- {
-     target_ulong tdata1 = build_tdata1(env, TRIGGER_TYPE_AD_MATCH, 0, 0);
-diff --git a/target/riscv/debug.h b/target/riscv/debug.h
-index f76b8f944a..5a14b7894e 100644
---- a/target/riscv/debug.h
-+++ b/target/riscv/debug.h
-@@ -153,4 +153,7 @@ void riscv_trigger_reset_hold(CPURISCVState *env);
- 
- bool riscv_itrigger_enabled(CPURISCVState *env);
- void riscv_itrigger_update_priv(CPURISCVState *env);
-+
-+void riscv_cpu_debug_change_priv(CPURISCVState *env);
-+
- #endif /* RISCV_DEBUG_H */
+> while there's still one patch that is not-for-merge:
+> 
+> https://lore.kernel.org/all/20251016114104.1384675-24-vsementsov@yandex-team.ru/#t
+> 
+> Does it automatically mark this series RFC as well?
+> 
+> Personally speaking, a new migration cap would work all fine, we should
+> have discussed it somewhere previously.  Said that, "local-vhost-user-blk"
+> capability is likely not the right one.  IMHO it should be either "local"
+> or "fd-passing" / "fd-passthrough" (or something generic) as the name.  If
+> we are not sure if we will leverage more than "passing the FDs around", we
+> can make it as simple as "local" as a new migration capability.
+> 
+> Then migration's misc.h should export a function migrate_is_local() then
+> device code can probe that in its own vmstate handling paths on save/load.
+> 
+> A note to Vladimir: please remember to add a check to enforce UNIX socket
+> when a formal patch 23 will be proposed some day, no matter what is the
+> name of the capability.  It should fail qmp "migrate" or qmp
+> "migrate_incoming" command if the main URI is not a unix socket.
+> 
+
+Thanks! I'll keep that in mind when prepare next version.
+
 -- 
-2.51.0
-
+Best regards,
+Vladimir
 
