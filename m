@@ -4,46 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5FA3D29FEC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 11:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29AE7D29FEC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 11:21:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfyv6-0002VA-H1; Wed, 14 Jan 2026 06:20:14 -0500
+	id 1vfyvA-0002YF-LS; Wed, 14 Jan 2026 06:20:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <agraf@csgraf.de>)
- id 1vfyuO-0002Kl-6d; Wed, 14 Jan 2026 06:19:29 -0500
-Received: from mail.csgraf.de ([85.25.223.15] helo=zulu616.server4you.de)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <agraf@csgraf.de>)
- id 1vfyuM-0004a6-DM; Wed, 14 Jan 2026 06:19:27 -0500
-Received: from [0.0.0.0] (ec2-3-122-114-9.eu-central-1.compute.amazonaws.com
- [3.122.114.9]) by csgraf.de (Postfix) with ESMTPSA id 9042760801BA;
- Wed, 14 Jan 2026 12:19:05 +0100 (CET)
-Message-ID: <6edbbdd7-8992-420e-9aee-7596afbcf00d@csgraf.de>
-Date: Wed, 14 Jan 2026 12:19:04 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vfyuv-0002Sf-1X; Wed, 14 Jan 2026 06:20:09 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vfyus-0004tZ-MA; Wed, 14 Jan 2026 06:20:00 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4drkCq00hKzHnHDS;
+ Wed, 14 Jan 2026 19:19:34 +0800 (CST)
+Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
+ by mail.maildlp.com (Postfix) with ESMTPS id C8F1A40572;
+ Wed, 14 Jan 2026 19:19:54 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
+ (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.36; Wed, 14 Jan
+ 2026 11:19:53 +0000
+Date: Wed, 14 Jan 2026 11:19:52 +0000
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
+ <ddutile@redhat.com>, <berrange@redhat.com>, <clg@redhat.com>,
+ <alex@shazbot.org>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>,
+ <kjaju@nvidia.com>
+Subject: Re: [PATCH v7 30/36] hw/arm/smmuv3-accel: Add property to specify
+ OAS bits
+Message-ID: <20260114111952.0000228a@huawei.com>
+In-Reply-To: <20260111195508.106943-31-skolothumtho@nvidia.com>
+References: <20260111195508.106943-1-skolothumtho@nvidia.com>
+ <20260111195508.106943-31-skolothumtho@nvidia.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hvf/arm: handle FEAT_SME2 migration
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org
-References: <20260114-sme2-hvf-v1-0-ce9599596736@linaro.org>
- <20260114-sme2-hvf-v1-1-ce9599596736@linaro.org>
-Content-Language: en-US
-From: Alexander Graf <agraf@csgraf.de>
-In-Reply-To: <20260114-sme2-hvf-v1-1-ce9599596736@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=85.25.223.15; envelope-from=agraf@csgraf.de;
- helo=zulu616.server4you.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
+ dubpeml100005.china.huawei.com (7.214.146.113)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -58,47 +71,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Manos!
+On Sun, 11 Jan 2026 19:53:16 +0000
+Shameer Kolothum <skolothumtho@nvidia.com> wrote:
 
-On 14.01.26 09:35, Manos Pitsidianakis wrote:
-> SME2 support adds the following state for HVF guests:
->
-> - Vector registers Z0, ... , Z31 (introduced by FEAT_SVE but HVF does
->    not support it)
-> - Predicate registers P0, .., P15 (also FEAT_SVE)
-> - ZA register
-> - ZT0 register
-> - PSTATE.{SM,ZA} bits (SVCR pseudo-register)
-> - SMPRI_EL1 which handles the PE's priority in the SMCU
-> - TPIDR2_EL0 the thread local ID register for SME
->
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> QEMU SMMUv3 currently sets the output address size (OAS) to 44 bits.
+> With accelerator mode enabled, a device may use SVA, where CPU page tables
+> are shared with the SMMU, requiring an OAS at least as large as the
+> CPU=E2=80=99s output address size. A user option is added to configure th=
+is.
+>=20
+> However, the OAS value advertised by the virtual SMMU must remain
+> compatible with the capabilities of the host SMMUv3. In accelerated
+> mode, the host SMMU performs stage-2 translation and must be able to
+> consume the intermediate physical addresses (IPA) produced by stage-1.
+>=20
+> The OAS exposed by the virtual SMMU defines the maximum IPA width that
+> stage-1 translations may generate. For AArch64 implementations, the
+> maximum usable IPA size on the host SMMU is determined by its own OAS.
+> Check that the configured OAS does not exceed what the host SMMU
+> can safely support.
+>=20
+> Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
-
-Thanks a lot for the patches. I don't have an M4/M5 handy (yet), so I 
-can't test the code works correctly. But it sounds like you did that, so 
-I have no concerns on functionality.
-
-However, I have concerns on a few maintainability aspects. You #ifdef 
-out a lot of code conditionally on the target macOS version. Any of that 
-code that is in ifdef may or may not end up getting compiled in CI or 
-other test builds, which means you are missing out on a lot of 
-compilation test coverage. As a general rule of thumb, please reduce 
-#ifdef to the bare minimum.
-
-One thing I like to do (when possible) is to use the ifdef to define a 
-global const variable or an inline function. That way the compiler's 
-dead code analysis will eliminate the non-active aspects of your code, 
-but all previous compiler phases still run which means you get syntax 
-checks.
-
-How much of the code down here really does require #ifdefs? And if it's 
-a lot, maybe we just bump the minimum required macOS version instead.
-
-
-Alex
 
 
