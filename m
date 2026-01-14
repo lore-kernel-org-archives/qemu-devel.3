@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09846D38FE4
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 16:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C33D38FE6
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 16:25:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg3ce-0004Vz-3M; Wed, 14 Jan 2026 11:21:28 -0500
+	id 1vg3fi-00083j-JL; Wed, 14 Jan 2026 11:24:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vg3cb-0004VC-Ue
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 11:21:25 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vg3fg-0007zA-PY
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 11:24:36 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vg3ca-0002DZ-Ev
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 11:21:25 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-47ee974e230so60165e9.2
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 08:21:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vg3ff-0004oD-6b
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 11:24:36 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-477619f8ae5so64885e9.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 08:24:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768407682; x=1769012482; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768407873; x=1769012673; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sXOCjVQvWKTby5rxVEA5VahbwUifLcpXBwJaBo5DfG8=;
- b=Rcjf4id4QNB4UvTS5qYBC/vcu9iAkyTuAafYPGiUIpQCIVajs6WoZOYtkOBlqu2wSF
- jNnvQEpaiZrn2iWJbcoE7uOXncUR0WJ5JMmJ/qM28LuJygfpodVr503/MuWPEXoZHcq7
- dwRnCIZcfctAfoHSgdOuxVxaZygES4FqRDNIuY4kRL9c82o+v3FatdDxs4VWZ3xrrp+j
- duA+WNWu1efvPnaCsqsiBJNFTl12/zjvYKFgl1yFl5jEoMhrHJVIRjo8uSjgeFpGGbyr
- 2iL7k0Mk1XG4YspUaUjjrYtPEnedG1edc9QOGOY7iO7Pniv6ES3sfFKEAOB0UTRoO2LF
- YGog==
+ bh=Xj2EZV7b7Vjm1TY4eOPLGc8OJSYr+bA/U9nRD8P/2jI=;
+ b=ofSkaLNJv6ILRiWMqWvSKsa2MICm6jmmRMnzrH0u5/RiqwY5N0zPP9670rvuoZ1Zeu
+ l3F0JGX6o291kmd6bIU63q0+M+50tDHmFDzDJJz4Rd9CywLqaPkmokYMatRZWIuF13bq
+ YAexgcPe/STUfgzCMxEzumczFqK30XPNfOMFs+181LtzrcSipoS6wMz9aw0boEvLKKxS
+ KXLtwx8x0SEq1erRs9B/lPLGkhU0do292+GDj93LxXhbKka5h1eLygyEmodIXrNMLaoF
+ te1VoPV5hTpNVUea3/3oaSR7MXcWThkQG311Fs9V1Cb0cMIh6WIDQQ993EsQc2+2SEL7
+ xdwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768407682; x=1769012482;
+ d=1e100.net; s=20230601; t=1768407873; x=1769012673;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sXOCjVQvWKTby5rxVEA5VahbwUifLcpXBwJaBo5DfG8=;
- b=tLtwtuF3v7wQeqsJWVfnEkrcvQ6Cfo7v51x8z7tokH3zSi2sO+u25650A3+ltWtN4v
- LqHEmCGo6XWQRzkaQHc3LmYjSjmpCzIYzpiC2m8LHa0KaSYVTaXf5h0E83yTle5VssDH
- R1K19JniY6Q4VyuIvsMtJquJQd2oDenZS/t8h4lXRPwu0C5zsLnESTDxsbNCTI1y6DTM
- wRFYW/P/ziYMSTior86pWj+k8KNZID/PiBWsVR6zHLKY2UEBfOTRBFoM9riszOxSa0qQ
- 5mH6Q+yJ8xowfMU2bnOT/0j8HL0Oa48nrFaCzAfMlvpKbQb+EAJc9aagRTxp8CBS9eCQ
- X+Pg==
-X-Gm-Message-State: AOJu0YxjCRaC+/FnNtzNKm45rKdru145jPle3k1Ez8tCB6vEkH9LrIE0
- 8CiScxNFZH3xvmj/QUOIImgY2uYoSGQ/PvZodPnGEBUyWaTG/a5XKdSEsTZyYGWqCp18vo2sM71
- SAp0H7/Y=
-X-Gm-Gg: AY/fxX6sv6GXdOyFyoJMaem5ydHGjbvQN/kedCdfkL13rAUs+fms3aUqh4MKZ61twaU
- BqCy4Uwg9TOGMMMQAfUax4znxqsG84U3xgkG64MHCRzQQHLOhM6ZlAqyawjEsUAJOOIV9uyYD7t
- EwGWFl/A4IEHFKVksXTUkBN5aFqrL8o+uSvb90iXpJYRrkv6hYtul+e1guOsvoXC8W5qJMv4bye
- q+wA84NtPeSKXsRobG/sWXxzY3JurXIx7yaxl6Wh0rRFatNRlCoDNcS/SUGX5qb8ieGLYv7Hrni
- YQ496mOckYu7Sz2bE1ccHC4Kl9LvRe3Kw1lxp5otJtr8pK/XqO7NBV0c4r751J9l9F67Lok9xJ/
- VJUQaK4XY81MAh801m/NPi9AXWOUv2W0geXYRJMz5M8f8LcUhG9LS6gR8JNr4oMxZXhPkeGEQSB
- KNd1mW4DBNSdqHsrQtCsJtWTKahqA+tL3Doa8w2C2Iml2PBVf1nSfhuA==
-X-Received: by 2002:a05:600c:4e46:b0:477:7925:f7fb with SMTP id
- 5b1f17b1804b1-47ee32fceffmr31422735e9.10.1768407682283; 
- Wed, 14 Jan 2026 08:21:22 -0800 (PST)
+ bh=Xj2EZV7b7Vjm1TY4eOPLGc8OJSYr+bA/U9nRD8P/2jI=;
+ b=VxshHdd2GCv0vwLUcve/zwnau0MIkx41Y9dm3MOZb/8QtgE2qnO30RTH9vhcaTnfzq
+ k4Tito+GhWJuz3i1EYbViT0vmoDZ+32yfJwJfYj2dxgRfFVSuuozSGpyhlLasEr6oUdA
+ ou4KMDYXr2xQfhArInHHLp+1qAbRAvWBzPsFfnRgLyIkXvN0kSrv+XUxFdmKxsPFMKwJ
+ ROGfTUdMspzAz0tnBn6MN2hnKeg1OFvqyibxnsS5QfWniZoqrJIEWZbNws9hx+JqZwXg
+ IvUXoyeMtgRkhKXH2I2RxwzO2hS0sk9qassKIvn0rDCAkiUcZDaFXXPiPEt5sPfrF7ID
+ CNyg==
+X-Gm-Message-State: AOJu0YyMjdTfFEbUwEtELXpo47t9YaYjwveCh7d+smcNDiS+ESPWhkR9
+ CeVX58EENUOGY/emJHdFQmFPTNmLfGH2joRo4RD1EXFuW3J+BpyjIJ2bOBbgk8GBtzA=
+X-Gm-Gg: AY/fxX5MK7nbisqyxR63YlQwlZ8pqWZMing6cH0D2GS/71D3lT16uJbJxj25zNIaTX0
+ iHAkUG8DmmetPEuCHXfY2MgAhY1KcNw4t7Il0+VEmqHkXRMdFHUnoeJgqkijXIIk865sYaOUcmE
+ iJO0usRULNMpf4PGuoJpm9eNDE3y/FhPPeAbRhO4jYfqHw6Y64Fs1qTArs/R2+HvPLK97P9qUEW
+ 08DVY1+H0I7Ca6H7L1VfnvGc7Z83fye/yHUdtBWHBUL3DltcuoqrM8Sx/bsvsVyT97zgP1F7D4u
+ rwnhvzAT8lo5IlqszM2Et66UInyBm1Mnu2h5g27hOW6qblrGAmvZaodgJ7GH1KrmFUZpMoTLMmJ
+ 8hHGHqv4xvvyiqn32CEbGgj2cnoE4cwjZ8n9lELfpmaz17QgtSj/PhuAhfbESMMytBcixo269TP
+ r5m/6DuR7b6tbHS519fLCwOhhANbJ1ZL1BZ6ixVh0k0OAW8RysTZfPH/y7V8u3fGo7
+X-Received: by 2002:a05:600c:4fd6:b0:477:8ba7:fe0a with SMTP id
+ 5b1f17b1804b1-47ee33970f5mr41612265e9.24.1768407873450; 
+ Wed, 14 Jan 2026 08:24:33 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47ee591933bsm35046785e9.15.2026.01.14.08.21.20
+ ffacd0b85a97d-434af6e1b7bsm137074f8f.34.2026.01.14.08.24.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Jan 2026 08:21:21 -0800 (PST)
-Message-ID: <13ed87c8-da97-430b-b1db-2bf0024cc4f3@linaro.org>
-Date: Wed, 14 Jan 2026 17:21:20 +0100
+ Wed, 14 Jan 2026 08:24:32 -0800 (PST)
+Message-ID: <bf015934-2fc7-45dc-bf84-b0d013e45066@linaro.org>
+Date: Wed, 14 Jan 2026 17:24:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] tests/qtest/migration: Update framework to allow
- using HVF accelerator
+Subject: Re: [PATCH] hw/pci: Use correct bus aperture for device container size
 Content-Language: en-US
-To: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Hyman Huang <yong.huang@smartx.com>, Phil Dennis-Jordan
- <phil@philjordan.eu>, Peter Xu <peterx@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-References: <20250128135429.8500-1-philmd@linaro.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Jason Wang <jasowang@redhat.com>, Gustavo Romero
+ <gustavo.romero@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20251124114754.79831-1-philmd@linaro.org>
+ <3d5a30fd-fb49-42a1-ba1e-e2c4bfc58f83@linaro.org>
+ <20251223165236-mutt-send-email-mst@kernel.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250128135429.8500-1-philmd@linaro.org>
+In-Reply-To: <20251223165236-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,22 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing Peter and Alex who asked how HVF is tested.
+On 23/12/25 22:52, Michael S. Tsirkin wrote:
+> On Tue, Dec 23, 2025 at 02:52:20PM +0100, Philippe Mathieu-Daudé wrote:
+>> ping?
+> 
+> 
+> picked it up.
 
-On 28/1/25 14:54, Philippe Mathieu-Daudé wrote:
-> Hi,
+Thank you :)
+
 > 
-> This series modify few bits of the migration QTest framework
-> to allow running the tests using the HVF framework (also
-> leaving the possibilty for other ones, removing the KVM/TCG
-> restriction).
-> 
-> Philippe Mathieu-Daudé (7):
->    migration/dirtyrate: Do not unlock cpu_list lock twice
->    tests/qtest/migration: Make 'has_dirty_ring' generic
->    tests/qtest/migration: Initialize MigrationTestEnv::arch early
->    tests/qtest/migration: Pass accelerator arguments as machine option
->    tests/qtest/migration: Add MigrationTestEnv::has_hvf field
->    tests/qtest/migration: Run aarch64/HVF tests using GICv2
->    tests/qtest/migration: Allow using accelerators different of TCG / KVM
+>> On 24/11/25 12:47, Philippe Mathieu-Daudé wrote:
+>>> Before commit 3716d5902d7 ("pci: introduce a bus master container")
+>>> device view of the bus address space was correctly sized to the
+>>> bus aperture, but then it always used a 64-bit aperture. Restore
+>>> the previous behavior, so devices on 32-bit PCI only see 32-bit
+>>> address space.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>    hw/pci/pci.c | 3 ++-
+>>>    1 file changed, 2 insertions(+), 1 deletion(-)
+
 
