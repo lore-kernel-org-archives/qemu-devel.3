@@ -4,93 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 457E4D37E3B
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 14:41:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 190DDD37E39
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 14:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg23C-0006mp-HG; Wed, 14 Jan 2026 09:40:46 -0500
+	id 1vg2BA-0003jv-FO; Wed, 14 Jan 2026 09:49:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1vg239-0006iW-GS
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 09:40:44 -0500
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg2B6-0003eF-OH
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 09:48:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1vg237-0001hd-NG
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 09:40:43 -0500
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1vg235-000000085Sd-01Mi; Wed, 14 Jan 2026 15:40:39 +0100
-Message-ID: <6cd62ebe-8a2b-4993-a1eb-e1a381d540c6@maciej.szmigiero.name>
-Date: Wed, 14 Jan 2026 15:40:33 +0100
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg2B4-0003lY-0R
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 09:48:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768402131;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MuHWBrIE+N4lpLy6KIiPAgxtjH7yjjBVzntq36vTn/M=;
+ b=ALHJLfEAQQx/19i75tsHLPb8gWx6qIuWMMF45oebc5VtdcwE8p/S7IJ6gfwSzrf8fQbxi7
+ 2myrD1ICvdFzHLPq9mTDhvw5ecfcgMJkVTEeMWfEQnis/aKO4tc8dBNYX1pgTtLiEiBri0
+ cqsyqZnJlbhht8WdXzBFcy58VpGBAUg=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-396-Ifb-0ko3O3-7LFx5K6vxfA-1; Wed, 14 Jan 2026 09:48:50 -0500
+X-MC-Unique: Ifb-0ko3O3-7LFx5K6vxfA-1
+X-Mimecast-MFC-AGG-ID: Ifb-0ko3O3-7LFx5K6vxfA_1768402129
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8887c0d3074so232789696d6.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 06:48:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768402129; x=1769006929; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=MuHWBrIE+N4lpLy6KIiPAgxtjH7yjjBVzntq36vTn/M=;
+ b=NJmM+RL7oe0Mb5/431RD74kuMoLILeTLBMjTWtDacnU/w2l2VjEGPUqyi8rom90shV
+ TjCnMIaenKp37ZbnbaO0jm1jwMyd4ZOGDl2wMnOa5+ax6nSO01KArs1KnCry13t+BKF9
+ U90ikSWfCHZUut1gDG8/pqdNuopqfTcN3FDfJFpF2+ju5ajaZUvM0bTXbGkiCrTBJQoy
+ /uQyFGq1Iodp75q86dhfkjYWLQpb1rh5JDZyVm/f9GHLTomlfeXJJdabKNDsqXy4Lnuw
+ msd3LcQVOFAJMTy8B4vL7lYRQtV20fZIMBaD0Y1PQC2vST2GkhHYgyzmur+zIrBkKsmQ
+ rOnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768402129; x=1769006929;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MuHWBrIE+N4lpLy6KIiPAgxtjH7yjjBVzntq36vTn/M=;
+ b=GwIXJ8zdRkwaGIFNtAnmU/M71+AfziWcVTnsQVugiDJQ9OniS24nhf+rmoCWxZoRgH
+ MeulaX2qoPxyIwy1W+UbyVEj4/n2WLmIOXYYkcFeL0lN7GYdYZ2SxBBGtAqNVHEZLu+T
+ BFocGRU3zyRqGpUYqMWAVlRrsorMqbAtM+eUZ3iBQqg2uMf6rv684vRdq25/Q7KXUYZr
+ Vs+3ND3hH6XMk7u2uaYtZ6SvVs0eZdDgQCE/nJxu2puYO8nJXc+3JFb1XIHgf4/05B4B
+ i5reDL1O9gLDjc4uiRY+md3PkkmDcMsplXsPLf8RLtMny04pXuWk8Gq/3QBZBx2vcBb6
+ ta/g==
+X-Gm-Message-State: AOJu0YyONi/b7qe7OpZJD9bC1turSXVwe/pf6Q082K5vqHyb53arSHWa
+ Iz4BpbBin7SpMSujgnkfBx8KGj9jZUHxdz9SMUzcetBvgfX9fIPg3s7evuVne4POHeX/gyZ5R6y
+ 7r540f3abpXHTFXt+i/vVbXQKlohp6rKaR9J5kCCWxyBosK7XcRfRyEMM
+X-Gm-Gg: AY/fxX5gIxlyLdUDWFpSMnFF2VXNdX2bY4SbQv+HBTdZSxturnL9BOuxomvc3QwCY1N
+ f+8moefGx/HSpMfksYksC9q/CRDcNO+gYRpJbgzY10EVDUJZaUzWv2BJrnc8aIxnEahP4yxeo3h
+ wlYtlNuJZ6A1GA3n/jXfT081kE5JhzYOyqZmt/FyUWFLv8OPCrFawY0VcBDq3GWQl3JmsDQyeNw
+ Z0vu+vXz1Bq6w0vZ1BGwUOxnHGQBc/8N89Rgk6TRy612wvSSTU+8MUY+kVE/GErkMS/ZEGab5L8
+ +kTCUqtaqVsyI8ai4amiEmYa32YmIB2dL69Hi/zDfOT0Hb1hQfYf0pKJU4nN78FvvBnAMbyb+1w
+ LZ+w=
+X-Received: by 2002:a05:6214:508e:b0:880:38ba:a4d9 with SMTP id
+ 6a1803df08f44-8927445deb6mr34549106d6.67.1768402129192; 
+ Wed, 14 Jan 2026 06:48:49 -0800 (PST)
+X-Received: by 2002:a05:6214:508e:b0:880:38ba:a4d9 with SMTP id
+ 6a1803df08f44-8927445deb6mr34548606d6.67.1768402128429; 
+ Wed, 14 Jan 2026 06:48:48 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-890772682besm178620686d6.50.2026.01.14.06.48.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Jan 2026 06:48:48 -0800 (PST)
+Date: Wed, 14 Jan 2026 09:48:47 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Marco Cavenati <Marco.Cavenati@eurecom.fr>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Subject: Re: Call for GSoC internship project ideas
+Message-ID: <aWesz4NEj0gCiU3D@x1.local>
+References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ <aWZk7udMufaXPw-E@x1.local> <3e46b0-69676d00-4d-1a5e27c0@252361837>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 23/32] hw/hyperv/vmbus: add support for confidential
- guest reset
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
-References: <20260112132259.76855-1-anisinha@redhat.com>
- <20260112132259.76855-24-anisinha@redhat.com>
- <cbfdd456-76c9-4280-8d58-b5a2d38b3900@maciej.szmigiero.name>
- <aWedNoIHcSJfTm4Z@redhat.com>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <aWedNoIHcSJfTm4Z@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <3e46b0-69676d00-4d-1a5e27c0@252361837>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,35 +118,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.01.2026 14:42, Daniel P. Berrangé wrote:
-> On Wed, Jan 14, 2026 at 02:38:54PM +0100, Maciej S. Szmigiero wrote:
->> On 12.01.2026 14:22, Ani Sinha wrote:
->>> On confidential guests when the KVM virtual machine file descriptor changes as
->>> a part of the reset process, event file descriptors needs to be reassociated
->>> with the new KVM VM file descriptor. This is achieved with the help of a
->>> callback handler that gets called when KVM VM file descriptor changes during
->>> the confidential guest reset process.
->>>
->>> This patch is untested on confidential guests and only exists for completeness.
->>>
->>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
->>> ---
->>>    hw/hyperv/vmbus.c | 30 ++++++++++++++++++++++++++++++
->>>    1 file changed, 30 insertions(+)
->>>
->>
->> Quick question: is this patch set targeting QEMU 11.0 or which version?
-> 
-> Patches are always assumed to be targetting current git master unless
-> the cover letter / subject line explicity says otherwise.
+On Wed, Jan 14, 2026 at 11:16:52AM +0100, Marco Cavenati wrote:
+> Hi Peter,
 
-I was asking more what QEMU release the submitter thinks this patch set
-will make rather than against which git tree it is based on but thanks anyway.
-  
-> With regards,
-> Daniel
+Hi, Marco,
+
+> 
+> This is great to hear! I’m happy you’re taking the time to propose and
+> mentor this. I’m definitely interested in seeing what comes out of it,
+> thanks for putting me in the loop.
+> 
+> Regarding your proposed Fast Snapshot Load, it’s certainly more widely
+> applicable and doesn’t require new QMP commands or extensive configurations
+> (beyond mapped-ram), compared to what I had in mind. I think it will be
+> beneficial for our use case regardless.
+> 
+> I’d still be interested in trying to improve it further using dirty
+> tracking at some point, to ignore pages that haven’t been written between
+> two loadvm of the same snapshot. This would probably apply only to legacy
+> snapshot though, as file migration expects a clean QEMU process.
+
+Logically, maybe we don't need to forbid migrate_incoming to only work with
+a clean QEMU, because internally it's the same to snapshot load.  We'll
+need some special care on zero pages but I don't see a major blocker yet.
+
+Said that, IMHO for your use case I still wonder if the shmem idea would
+still be worth exploring, or if you have explored but maybe found some high
+overhead on booting QEMU every time?  That's what I mentioned here:
+
+https://lore.kernel.org/all/aB4rhlVGCSk7IwoE@x1.local/
+
+I wished that would work out already, or maybe you've tried it and it was
+too slow for you.
+
+Your use case is indeed special, if the dirtied pages are normally not
+much, the most efficient way to do this is only record the pages changed
+from the snapshot and rollback only those pages, plus all device states.
+
+That's not a traditional "snapshot" concept, more like a "checkpoint" and
+"restore", where now in migration we have CPR taking that term already..
+
+  https://www.qemu.org/docs/master/devel/migration/CPR.html
+
+But your case is slightly different from functionality, so that it will
+happen completely within a single QEMU instance.
+
+So far, it sounds like a new QMP function v.s. snapshot save/load or
+"migrate" / "migrate_incoming" to me, because it shouldn't need to record a
+VM image, but VM diff (for rollback only).  The bitmap you need here will
+also be attached to the VM diff (again, not VM image, because a rollback
+doesn't require a full image).
+
+Not sure if that's what you want, though.  Anyway, IMHO anything like that
+need to be justified first with above shmem idea not performing as well in
+the first place.
+
+> 
+> I’m not sure if I’m still eligible for GSoC; otherwise, I would have
+> applied myself :)
+
+I'm not sure how this will work out yet.. if there'll be a student working
+on it I'll make sure anything to be posted to have you in the loop.
+
+Also, if it will work out, I'd expect we'll set the goal for the student to
+start with the very simple, e.g. no multifd support and maybe starting with
+one type of mem (anonymous?), we'll see.  There might be gaps to what may
+start to help in your use case too.
+
+Anyway, feel free to jump in anytime to share your thoughts.
 
 Thanks,
-Maciej
+
+> 
+> Best,
+> Marco
+> 
+> (removing people from CC to reduce noise)
+> 
+> On Tuesday, January 13, 2026 16:29 CET, Peter Xu <peterx@redhat.com> wrote:
+> 
+> > On Mon, Jan 05, 2026 at 04:47:22PM -0500, Stefan Hajnoczi wrote:
+> > > Dear QEMU and KVM communities,
+> > > QEMU will apply for the Google Summer of Code internship
+> > > program again this year. Regular contributors can submit project
+> > > ideas that they'd like to mentor by replying to this email by
+> > > January 30th.
+> > 
+> > There's one idea from migration side that should be self-contained, please
+> > evaluate if this suites for the application.
+> > 
+> > I copied Marco who might be interested on such project too at least from an
+> > user perspective on fuzzing [1].
+> > 
+> > [1] https://lore.kernel.org/all/193e5a-681dfa80-3af-701c0f80@227192887/
+> > 
+> > Thanks,
+> > 
+> > === Fast Snapshot Load ===
+> > 
+> > '''Summary:''' Fast loadvm process based on postcopy approach
+> > 
+> > We have two common ways to load snapshots: (1) QMP "snapshot-load", or QMP
+> > "migrate_incoming" with a "file:" URI. The idea to be discussed here should
+> > apply to either form of loadvm, however here we will focus on "file:"
+> > migration only, because it should be the modern and suggested way of using
+> > snapshots nowadays.
+> > 
+> > Load snapshot currently requires all VM data (RAM states and the rest
+> > device states) to be loaded into the QEMU instance before VM starts.
+> > 
+> > It is not required, though, to load guest memory to start the VM. For
+> > example, in a postcopy live migration process, QEMU uses userfaultfd to
+> > allow VM run without all of the guest memory migrated. A similar technique
+> > can also be used in a loadvm process to make loadvm very fast, starting the
+> > VM almost immediately right after the loadvm command.
+> > 
+> > The idea is simple: we can start the VM right after loading device states
+> > (but without loading the guest memory), then QEMU can start the VM. In the
+> > background, the loadvm process should keep loading all the VM data in an
+> > atomically way. Meanwhile, the vCPUs may from time to time access a missing
+> > guest page. QEMU needs to trap these accesses with userfaultfd, and resolve
+> > the page faults.
+> > 
+> > After loading all the RAM state, the whole loadvm procedure is completed.
+> > 
+> > This feature needs to depend on mapped-ram feature, which allows offsetting
+> > into the snapshots to find whatever page being asked by the guest vCPUs at
+> > any point in time.
+> > 
+> > This feature may not be very help in VM suspend / resume use cases, because
+> > in those cases the VM was down previously, normally it's fine waiting for
+> > the VM to be fully loaded. However, it might be useful in some other cases
+> > (like, frequently loading snapshots).
+> > 
+> > '''Links:'''
+> > * https://wiki.qemu.org/ToDo/LiveMigration#Fast_load_snapshot
+> > 
+> > '''Details:'''
+> > * Skill level: advanced
+> > * Language: C
+> > * Mentor: Peter Xu <peterx@redhat.com>, peterx (on #qemu IRC)
+> > 
+> > -- 
+> > Peter Xu
+> >
+> 
+
+-- 
+Peter Xu
 
 
