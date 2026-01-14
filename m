@@ -4,105 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD522D37E4E
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 15:35:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94631D37E4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 15:36:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg2tp-0004ri-6Q; Wed, 14 Jan 2026 10:35:09 -0500
+	id 1vg2v3-00064t-CP; Wed, 14 Jan 2026 10:36:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg2ta-0004nY-GM
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 10:34:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg2ur-0005vY-1k
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 10:36:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg2tY-0003RW-3i
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 10:34:53 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg2up-0003pu-Lk
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 10:36:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768404889;
+ s=mimecast20190719; t=1768404969;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=bCWA/9J3Z5uJmhBp/KklsSiDjUCf5DddXLHj49vH0M4=;
- b=fnvNGYHkw8JxN9yZwJt7KlgdvJgjHOj+LwNUe3T6HBHm+CNOe5poEPnZkLR7/obP1752Vv
- 6Uvk8oqzrnrLvchAYECAC8IaRpS6Tz3V5JWq46SHMaYu25Gyoo4uMuofVO0Ewh58Tsd0cl
- vhBivHVM4W9a72yLc9a3MSSlPIWFV0s=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yFREpAotJMpoOXOn0epbHgD3xLWzMM8N9fE0gBuHRFI=;
+ b=M71cZUBNSDiVtZGygFv1xf47biEiQMMGiFx1ZvjsXAoparFsXY+j9jB+Eo491DNoCA6EBO
+ rfiJo/JKOq8Exa9dS+2+2le1mKo2PuY3NSM1rRFdEzHYl9REulysUlY700ZUXF1+XkzS5Y
+ wKe7Vvx0hfslgwDxSFrknr+lwX7Ki1k=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-144-HINRV3QzPBGM8Kt-i389mg-1; Wed, 14 Jan 2026 10:34:48 -0500
-X-MC-Unique: HINRV3QzPBGM8Kt-i389mg-1
-X-Mimecast-MFC-AGG-ID: HINRV3QzPBGM8Kt-i389mg_1768404888
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-88a32bf024cso93728386d6.2
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 07:34:48 -0800 (PST)
+ us-mta-595-1r-z5dzMOPC35N8AZnCCiw-1; Wed, 14 Jan 2026 10:36:07 -0500
+X-MC-Unique: 1r-z5dzMOPC35N8AZnCCiw-1
+X-Mimecast-MFC-AGG-ID: 1r-z5dzMOPC35N8AZnCCiw_1768404967
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8b2e235d4d2so3418576885a.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 07:36:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768404888; x=1769009688; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768404967; x=1769009767; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=bCWA/9J3Z5uJmhBp/KklsSiDjUCf5DddXLHj49vH0M4=;
- b=gLWJ7QSHy9QoEt1PJiSsw7QL7hpR0ag7Jcig/XhXhhN6cs++8MQNsh3oavMVES5PkN
- RsG/BN2EkPPcEFkZoE8NgFXDQuS+7grBNWPbt5wKnvrxYV+4J+pmUP8mrQZGbYo7dHwt
- anAwQZr6cb+iGj1qBu//rf+uAtH8NIK5Ztk3TZ8DsFOuJFph8u2rKIUJ89RhDTVQ581Y
- FpR5NKhgNvwhfK6/s8G4gG4eBSnkp7yik6zAh26haMUrgbSvetP6AycSDeghwyWzuS6P
- U+9tsH2ZeqimuETACk8DVAvQaSeWtvNfEKA8+dtHtHlbezJ1Cx1Ukk7SFX6leAJO915N
- +Ubg==
+ bh=yFREpAotJMpoOXOn0epbHgD3xLWzMM8N9fE0gBuHRFI=;
+ b=qJeGi1uXLb7csY4YaEOu1D7uRd41TKw31A/FGqi3G+CXOyQbntK5XAq5wQednhWmkE
+ 19P+euZ++S+PP/9aLS7G7xg8/3ryFFEltnAPRD9dLBEqHOZAPIpbZC+LB9ffXwmCfzrH
+ dXUO1ARVukIATFcyH64wXqF09pmKN8e8WmmdGFfxF4OEq+xbREs7VlinsfCcFIpOuYhD
+ HTIqIs/YZSSo/d5wtvrwLdHfXSoptdYK1jkxh0c6qpsi8pFZZxCeaUj3f5K5mxfSFdye
+ ddWzdavwOHcVGVygx0SJznOXXy7vcxyYSt9tqJjHw4wqxIsSBekikP1VyQQR0uTPU42F
+ ycng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768404888; x=1769009688;
+ d=1e100.net; s=20230601; t=1768404967; x=1769009767;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bCWA/9J3Z5uJmhBp/KklsSiDjUCf5DddXLHj49vH0M4=;
- b=a/RQVaHOC/vBVvDqCT10fqHaCTbx9fknj+hqyx97eTVODK/NlEa7o4V10y+OnMdGKy
- wPs0PIfhyxSTyTklTVBh6Gz4tceh9LSPFf3tkw4wbKgwgwJ6tPsq8l26eWhABf8T0/1S
- j4JFhf9WSrylFvEtgzYXqJtHPnj1AqiRRJBmYWpVq67Xp0YROy1tLNsqHpIhDoskRRMF
- yvctJyxXj4DD3HrLuy08Kwr2KRGHsYffxcg2tQlWR1OUCPOBmNc07EiT6H/EgNLMkdUm
- oCXnl8tEJ7YwnOYLhGT+dFRCSJ94yn6fkSGiWbDcjjsdQ0ltxT5+cc6ZqhfRp76uveOF
- 61ZA==
-X-Gm-Message-State: AOJu0YxlLHNu8+tQV6vMBxMkvpkHxlwBK/9Pj8kBZB/etMJ40TkwqSvs
- LX3n6sBg0XPD+I7sDy6fQxkXT3MLz1gipbIDHq8tbWHa/m99migbLvHzZ6bCpr7oAuXRhwp1Gvk
- wSq0yiQX/sbOknee16xsEH8z2MGnrfz/6pV2pd4Wws1/OMZNNStBsa7Nm
-X-Gm-Gg: AY/fxX51Ja9Gu91od4CDsy0LBe1Mu87w27aUsWfvucLZG+Tz2MsH5FoHXBLzITCRQz6
- xcn4LBA4H7jhyAcApN41kaR1Lka0+s+ZveyYaJEfkWljayGUJYIgHE2Ty15rydSin/nPZD9tmuB
- jAiK38iSqYU+UGgXLplMUzgIEqYrQuwKQd1FzxxsrClfToEFFd+g+9dpYytfaCMOrqsYaQOpXYq
- EuaSkaVzHs5HXeIzZwGDh3ft3n8bafkj+3NTN2oXQfUdPeYREhfOL8/3ZP4UE7LyQevcXw22VtZ
- iBFAmkLIDKhtmERgTIW+HEqiYTtZZxkZ6hNG/hm/2ZXZVatIF44g1knz2e07BOaU7RYFHqS8UX0
- B13U=
-X-Received: by 2002:ad4:420f:0:b0:87c:1f7c:76ea with SMTP id
- 6a1803df08f44-892743cf98fmr26966696d6.44.1768404887550; 
- Wed, 14 Jan 2026 07:34:47 -0800 (PST)
-X-Received: by 2002:ad4:420f:0:b0:87c:1f7c:76ea with SMTP id
- 6a1803df08f44-892743cf98fmr26966296d6.44.1768404886957; 
- Wed, 14 Jan 2026 07:34:46 -0800 (PST)
+ bh=yFREpAotJMpoOXOn0epbHgD3xLWzMM8N9fE0gBuHRFI=;
+ b=DE4WkpsACN5hySX5J/29Thg7adQIFIt/B3GZy0KT5kRyVU1t1CXEe7PYKr2vd3cnC4
+ V51CDxfXGjIw3SNv6GDm0JQ3pvoVVd9minmGuznesgWayeCtwcJOlmIlDzFfEGtx/Ugk
+ e/h8PFSLbyNYIuRJE6J55yFjbzvGoHCz6AXhs4tf7w/19MV2j7t9xkIT5D9IfPe+8jQJ
+ KmTJHAW58gmKmqqSvsqr8lQlPD2GlgR8vB+EDmzHSK7SfgnExJY5uVr6tKozOSJo9x38
+ z6SAGdYVOXFlGL9LgtHg/m1AIXhL41nYab+xjnZi4jBTSnrNWAluJS2tlEAoILvhwucS
+ 1dFQ==
+X-Gm-Message-State: AOJu0YxFGI6RJyKStNoLjk44DEyPpWq3UDzvYvE246KXABZNm7Lj6uPz
+ sgzo+fyShTiLBUWlrnqi3xFJ3GTmdheaQsuPv61BLO8BM/RXcJUHX5TknguA4CASbJSPhK8bmES
+ Fsp07FNcfj6I34oF+rs7wOfl9FxbLip+wp95IaBSPOQk6HLEhB56CCHZNo5K8JLPJ
+X-Gm-Gg: AY/fxX6RfKZNskhUJuJ9fogNS+nxMLP2oVRGVaAC9wzK9sNjMhg6afYLHxuybuYetSC
+ nu1E11AqaSBmWG5HzOxuPeq+dFjCYoapPQBrwbAR7qTV6R7aXo1qvXL3D6hWiC00g/N5Hz/tgtz
+ 244imYJsw3qBuszJT1D6/sekf1kUV6IsOYqEIgcwhDQtvmFjQG694CEiEx5WgzEHeuqUwditSTc
+ SVYA1sTiKtBthc3qlBC6RioDcZE442Ol1lRUrf3wVwNQPZaXr7OojVlrE9mv8L7DcOX1F32191n
+ C/N5NILtscd2uUqo8jd3IQRTgZWSVCA7YRhyShLmSKU23NxeuiWYJ5lT80/Hx12zIx7eU+BREEE
+ htKk=
+X-Received: by 2002:a05:620a:2902:b0:8b2:1f8d:f115 with SMTP id
+ af79cd13be357-8c52fbfa45emr433983085a.65.1768404966617; 
+ Wed, 14 Jan 2026 07:36:06 -0800 (PST)
+X-Received: by 2002:a05:620a:2902:b0:8b2:1f8d:f115 with SMTP id
+ af79cd13be357-8c52fbfa45emr433977985a.65.1768404966202; 
+ Wed, 14 Jan 2026 07:36:06 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-890770e20c7sm179266336d6.17.2026.01.14.07.34.46
+ af79cd13be357-8c530a6bdbdsm180992085a.10.2026.01.14.07.36.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Jan 2026 07:34:46 -0800 (PST)
-Date: Wed, 14 Jan 2026 10:34:45 -0500
+ Wed, 14 Jan 2026 07:36:05 -0800 (PST)
+Date: Wed, 14 Jan 2026 10:36:04 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Prasad Pandit <ppandit@redhat.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Lukas Straub <lukasstraub2@web.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 1/2] tests/migration-test: Remove postcopy_data from
- MigrateCommon
-Message-ID: <aWe3lXEsr_dsKzVU@x1.local>
+Subject: Re: [PATCH 2/2] tests/migration-test: Remove
+ postcopy_recovery_fail_stage from MigrateCommon
+Message-ID: <aWe35LsGn_68MIUu@x1.local>
 References: <20260106203320.2110372-1-peterx@redhat.com>
- <20260106203320.2110372-2-peterx@redhat.com>
- <CAE8KmOwA-SVy1tQOzAKpa6B4uoVw=veMcn3qzkF0KJ8Cq0C_8w@mail.gmail.com>
- <aV6T-JDXv3wa7tdc@x1.local>
- <CAE8KmOzCYg_55J9J6Dh6Pr2D5wp_YLOXZqa4cm=Vt35ZDkiUXQ@mail.gmail.com>
+ <20260106203320.2110372-3-peterx@redhat.com>
+ <CAE8KmOz9XtaEY+LMD9CCCR_bMXe04chGHdvuwVqsYRNe+AtUJg@mail.gmail.com>
+ <aV6UhNJzQLnDaJvO@x1.local>
+ <CAE8KmOzPHTf6eaufn3dWTJJ2nsifdxZzwENK2hD_LZLGiE-pcQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAE8KmOzCYg_55J9J6Dh6Pr2D5wp_YLOXZqa4cm=Vt35ZDkiUXQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <CAE8KmOzPHTf6eaufn3dWTJJ2nsifdxZzwENK2hD_LZLGiE-pcQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,36 +120,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 08, 2026 at 03:08:04PM +0530, Prasad Pandit wrote:
-> On Wed, 7 Jan 2026 at 22:42, Peter Xu <peterx@redhat.com> wrote:
-> >> * Should 'hook_data' pointer be g_autofree too? Where is it free'd otherwise?
+On Thu, Jan 08, 2026 at 03:11:32PM +0530, Prasad Pandit wrote:
+> On Wed, 7 Jan 2026 at 22:45, Peter Xu <peterx@redhat.com> wrote:
+> > On Wed, Jan 07, 2026 at 05:07:40PM +0530, Prasad Pandit wrote:
+> > > On Wed, 7 Jan 2026 at 02:04, Peter Xu <peterx@redhat.com> wrote:
+> > > > The parameter can be instead passed into the function.
+> > >
+> > > * It'll help to include - why? pass the parameter instead.
 > >
-> > hook_data is freed in end_hook().  This patch doesn't change that fact for
-> > postcopy.  It's the smae to non-postcopy tests.
+> > I want to remove special and unnecessary fields in MigrateCommon struct.
 > >
-> >> * The changes look okay; But if tests define hook_data = NULL; Where
-> >> does it get populated?
+> > I'll add a sentence when repost.
+> ...
+> > > * To keep it consistent, maybe we can call the variable 'stage' as above?
 > >
-> > It's populated in start_hook() conditionally.  When populated, it is always
-> > (and a must) to be released in end_hook().
+> > Personally I prefer fail_stage, e.g. fail_stage=NONE means it never fails.
+> > stage==NONE is less clear.
 > 
-> ===
-> $ grep -Eri 'test_postcopy_common|test_postcopy_recovery_common'
-> tests/qtest/migration/ -l
-> tests/qtest/migration/framework.h
-> tests/qtest/migration/framework.c
-> tests/qtest/migration/tls-tests.c
-> tests/qtest/migration/postcopy-tests.c
-> ===
-> 
-> * Only tls-tests above seem to define and use these hooks properly
-> along with the hook_data. Postcopy-tests and all other users of
-> start_hook/end_hook don't seem to use [postcopy|hook]_data at all. Do
-> we really need this hook_data parameter? Couldn't it be defined as a
-> tls-tests specific object. (just wondering)
+> * Let's make it fail_stage in both places then?
 
-Sorry I don't follow.  We need the hook_data for cleaning up tls objects
-later in end_hook, for either postcopy or other tls tests.
+Could you explain what's the 2nd place to use it besides the parameter in
+test_postcopy_recovery_common()?
 
 > 
 > Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
