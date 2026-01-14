@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DA7D31A0E
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57D2DD31A0D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:51:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfsoE-00055u-JT; Tue, 13 Jan 2026 23:48:42 -0500
+	id 1vfsoK-0005ZV-1Z; Tue, 13 Jan 2026 23:48:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfso2-0004gh-RI
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:48:31 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsoE-0005Cd-IO
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:48:42 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfso1-0003rV-CF
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:48:30 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2a1022dda33so50079665ad.2
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:48:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsoB-0003t9-T1
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:48:41 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2a3e89aa5d0so64211665ad.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:48:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768366108; x=1768970908; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1768366118; x=1768970918; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3xGtMJKc8fbK/RX0Osf7Yr/1w4EJKUbQsbZnj2zQwzQ=;
- b=lJojp72H7poCTQGsEjSJgB4eJD7veMik52sB9fDMst5PSb8H+sDVMVcg6cJua4faBE
- tFHhhvmUXvMG67CLt2eOa0v8RDQTrZQn3/COm7W2iwBczkhguyRNXbTXJOpYAVVaZiP1
- 6OWNanuJv8X7hFxHxQvVbPLEnynpBKbRPcJB2aoL+zQtyYUJyC9WXVLhubVgzVazEiqp
- ywweOG8JLvuMU1wDvvFJ8v6ZBUQ6ZdVi6+PERSzjILqCGTuQsvH00KQFq2SQYak7oEm2
- vblO5KQIOOTKy4fpcnyLY9WRNkx7TBZibJTSQM1Dt0TqLfcPmEzWOkTFU8rgfFSYNHpH
- c4zw==
+ bh=qvCDt1t2ZjnFsrVTwfes5buVqpc80guQM15D2ZP9G30=;
+ b=QWBek8SS5p0/QYICOYYc4mscZtzc58h//UB+Q8wXK8RAO+wjcgsSyB4LQM06Esud1V
+ 6zXQNMW8f+Fn+Mtsl0/9z6VX0Q1WL9Rv08gLJ86rFwwTiFGYWxxB5X2/V160Gdngo5Qx
+ GUq3JTWPfDLLfAcjNfdTEOIq1SyBKJmqQr/3TxHWsLhSQB27Qnf+4WBwVaZ4HdLb42kx
+ MQhg3afRh6xFeV5qHnhew4/WnHtESfskA3lG4i75wlx6DQ10j7Fb1iXWkD9MkaDwxOJ3
+ N1P2rvilAzajO+dHzSihStA2rVSb58qKpsaAVtZD+ADtcy2sek4WJSfGVMYEkkfaKplN
+ 5oIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768366108; x=1768970908;
+ d=1e100.net; s=20230601; t=1768366118; x=1768970918;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3xGtMJKc8fbK/RX0Osf7Yr/1w4EJKUbQsbZnj2zQwzQ=;
- b=CVDeY2U0jERUNRA5qSJcUa7q2GwKlaA42GySOmsBC/91Q4HEfmVIUGkHgwrovnp2bo
- rX7U0TFtNVYbZ4E/2hDOJ2dQrbOq5NS/8bUqSwCR3RurTeCrnH1+YRlASX10AQoOeMdX
- h7gYtdXbQBCCbOq7lfZRNeGCvTXWFJGmYL1NllVDH6DuMci1/ogoeOhKdmRHicDxM2nF
- P8ggM8/8D2ty6oFEa0355BCl6cK+A8d2SsiGFsoJIM8AXQ2mq3zpivJcMRkBSNyiKMLk
- NaP5qQzBeFQQvJbDw5wxm6cjW5JpfIc0F0pEJtyUcirdflG0buXeBpG2+K9zMy02VQq+
- xZ5w==
+ bh=qvCDt1t2ZjnFsrVTwfes5buVqpc80guQM15D2ZP9G30=;
+ b=lY1bFoOxUDi770iw8KYRQqhfVjvgNXnXSF6z8ryT2i2TT+pKafW/MAfWhMxByApe8Z
+ uYbdJiqXCN6mRmkdK7pY6Kz8yVyTBaXMROnmBimCw4rEpCr5Dq0htcgc85qr04nySVk6
+ Ra6ci5qk2057lauuJ78O81/2LRkEvAfVf7ZFp0bizdxtKaxLb6v3KGXheDTt+JGrROVl
+ e89oWDRe2HoPlhVs9EdoHKaSsKXL5+nRk8Xrhx++O2j3XLlvrq6+urY7O0/WtKxGaKEl
+ jaTXV8qgCZzoMo845l12DkvaQttnNhTVpbwPWemjaEfUX99RIdL0R8uNUplRxwkUulOf
+ 1BOw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUN3l9YrTyAvK5zD9utOD6SLneZNq33JeeSL2YmJENv+6uCgT5TPmF5XZX8N99P/DV1kPTHJvU4VyJe@nongnu.org
-X-Gm-Message-State: AOJu0Yz9P2WvfjIBfcjpmLoWB/qAjGQUvmnOUby2wpHXmruP93T76duU
- f8gjAQXcS6eQNjLrDGHgL+iAB8ivrKkuNajnyZXFU3yjFey5bMjpd3bg
-X-Gm-Gg: AY/fxX66D7JxW9a5c2GUdSa3ZgX1no0wwyva7QB7VOBHSHNTXw8DvJFrYNhtogGN5u9
- 0bMDC6yF7aAWMZL+BEmZ+v5vNMziIXAngOjyVl/k+RdOfUpDbqHmPMIFC//WCvb74xzIDQLHqza
- 4Bx4exVlEsrArbqYvJrml/Bx8bGYxV7t9JIF6NUCHn3zf0+VA63Z5IkjhiZLNsUXaG161Rzi1FH
- 2ZH769pMRJJNiDtGro7NnMEQv7ZMBb6JJK71zQvafsMzgK/k6sY+Zrut63fL1a9z8Un1kj4/qqa
- TTsuIOommaE+Zd1zYYwcbaHTHkbe09HjHLVP+GigD2vVo2/lrk+iMYmJ33O7sSWeE6tpEI99vaN
- YvB89H2s7OvFzPghWv8wfwT1HAQFEM/0PHi3MU8aQRxbTu/OrgljXHGpDf9Z1n6nP2yO1b40cPh
- 0NI66bJATCKwkzzNvJm4MdSJLtSNSaxIyjfo9MXg6emxrYZRy1C5JqrC4vI5M=
-X-Received: by 2002:a17:903:2cf:b0:295:99f0:6c66 with SMTP id
- d9443c01a7336-2a599e09e05mr16186025ad.36.1768366108085; 
- Tue, 13 Jan 2026 20:48:28 -0800 (PST)
+ AJvYcCUQ/fIIFsoFX5VHGIZ6W2yOmSx4W/9zLzWkIqOHLlw/nFXK7Xr+QE4sZMrvsVit1mgemcf6KV631/o9@nongnu.org
+X-Gm-Message-State: AOJu0Yy+cvfravjMHbiiKoPiSMRDFDU4/F+1GtzZOmIS3lm1dZ7hmv6W
+ xTMIcj/kjuu9+aXbgbVk2bb5H6jx31sL6+cGBo8CBdyExmW3UvCouzDM
+X-Gm-Gg: AY/fxX4gpw3ECNHOZGKQLons8iMyFabygB1cm359ROFJ/MwZgXXulvHNM1BjF8Yf9GK
+ cebpvzjGm/JtACkZWXmmzgDMz0UVNgDsmVInogMOM5MzRrrZ6DRhATNHtcIGM0Y+MPCy6azuUkF
+ zJKXE8XlHYtGpv66aPttYHM67KN1r4eN8IdOimLv2jPBxGXJpVE4tgrjvq8BpjQvdl7SfeT4X9n
+ r2NgmjOSI/6UI75FDh7zRwkywEYejg/fJi3/jbDr/lq6l/z3EUZPa6Pj+WND81T6gAQQeaV0yFI
+ TducmRERNtQFGx+wDaQ4JHb0OGSJWd1QL1qIV8MsTHXgnsrXcmgnhQci0mLlH5xAeKcueZoap+g
+ eEfL1CK8mLJmdMvZyGSYZRw1IIeZbs2SfBK470s/TkV18pIx1ifiQs99NEviAn9pNFljUFsulFq
+ ttwocBrC1HjkD5faMZLJj9jz0QEjdn+DhYY+QcLyj+UfV7wmnxqceY7gJiCD4=
+X-Received: by 2002:a17:903:2ecb:b0:2a1:3cd9:a734 with SMTP id
+ d9443c01a7336-2a59bc36b61mr7470745ad.43.1768366118364; 
+ Tue, 13 Jan 2026 20:48:38 -0800 (PST)
 Received: from lima-default (123.253.188.110.qld.leaptel.network.
  [123.253.188.110]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c49037sm216111905ad.36.2026.01.13.20.48.23
+ d9443c01a7336-2a3e3c49037sm216111905ad.36.2026.01.13.20.48.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 20:48:27 -0800 (PST)
+ Tue, 13 Jan 2026 20:48:37 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
@@ -74,16 +74,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, bin.meng@windriver.com,
  vivahavey@gmail.com, Alvin Chang <alvinga@andestech.com>,
  Yu-Ming Chang <yumin686@andestech.com>, Joel Stanley <joel@jms.id.au>
-Subject: [RFC PATCH 13/25] target/riscv/debug: Remove breakpoints on reset
-Date: Wed, 14 Jan 2026 14:46:46 +1000
-Message-ID: <20260114044701.1173347-14-npiggin@gmail.com>
+Subject: [RFC PATCH 15/25] target/riscv/debug: Insert breakpoints after
+ migration
+Date: Wed, 14 Jan 2026 14:46:48 +1000
+Message-ID: <20260114044701.1173347-16-npiggin@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260114044701.1173347-1-npiggin@gmail.com>
 References: <20260114044701.1173347-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,47 +107,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove TCG breakpoints/watchpoints when the CPU is reset.
-Currently they get lost.
+After migration, TCG breakpoints should be re-established based
+on debug register state.
+
+icount trigger timer in the icount_enabled() path is also missing,
+but that path will be removed subsequently so don't bother to fix
+it.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/riscv/debug.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ target/riscv/debug.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 19c45fb13c..973de3b2e2 100644
+index 24161fd46b..a30b345b25 100644
 --- a/target/riscv/debug.c
 +++ b/target/riscv/debug.c
-@@ -1131,6 +1131,19 @@ void riscv_trigger_reset_hold(CPURISCVState *env)
+@@ -1126,6 +1126,20 @@ void riscv_cpu_debug_change_priv(CPURISCVState *env)
  
-     /* init to type 2 triggers */
-     for (i = 0; i < RV_MAX_TRIGGERS; i++) {
+ void riscv_cpu_debug_post_load(CPURISCVState *env)
+ {
++    for (int i = 0; i < RV_MAX_TRIGGERS; i++) {
 +        int trigger_type = get_trigger_type(env, i);
 +
 +        switch (trigger_type) {
 +        case TRIGGER_TYPE_AD_MATCH:
-+            type2_breakpoint_remove(env, i);
++            type2_breakpoint_insert(env, i);
 +            break;
 +        case TRIGGER_TYPE_AD_MATCH6:
-+            type6_breakpoint_remove(env, i);
++            type6_breakpoint_insert(env, i);
 +            break;
 +        default:
 +            break;
 +        }
-+
-         /*
-          * type = TRIGGER_TYPE_AD_MATCH
-          * dmode = 0 (both debug and M-mode can write tdata)
-@@ -1147,8 +1160,6 @@ void riscv_trigger_reset_hold(CPURISCVState *env)
-         env->tdata1[i] = tdata1;
-         env->tdata2[i] = 0;
-         env->tdata3[i] = 0;
--        env->cpu_breakpoint[i] = NULL;
--        env->cpu_watchpoint[i] = NULL;
-         timer_del(env->itrigger_timer[i]);
++    }
+     if (!icount_enabled()) {
+         env->itrigger_enabled = riscv_itrigger_enabled(env);
      }
- 
 -- 
 2.51.0
 
