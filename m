@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D35D8D31A0D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91477D31A09
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:48:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfsn5-0003XB-L3; Tue, 13 Jan 2026 23:47:31 -0500
+	id 1vfsnd-0004IR-9U; Tue, 13 Jan 2026 23:48:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsn4-0003TS-3t
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:47:30 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsnY-00045i-87
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:48:00 -0500
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsn2-0003iP-Hq
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:47:29 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2a09757004cso75432035ad.3
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:47:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsnW-0003na-TE
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:48:00 -0500
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-c1e4a9033abso4311825a12.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:47:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768366047; x=1768970847; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1768366077; x=1768970877; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TEeiGtHI7wQnEBEREwud4A0M1u+cTyhF8Eoqx55wGmE=;
- b=GKZsEtIQu9hcC1qWsGGH3e2Cvsm4h1A6qN1S+Jn01Xa6cWHCd6yQ3oPtkFJI13TY1C
- CWYiPxYOWHP9M6feUWt0ULhN05YBBqptLjOHqQPJPfYxaxAoZUhswDfxOWXLavs97nNo
- x1iPb9sCNfQhlhaSZwHhGzlRWrN5Tf3VcqU0bJOXMJo6tjhHL8uBkT7RjdLAaEFXzS9O
- /3oiAOZ2izO/L/9hAbsp8ZRjIPa8jxm7FHJ73qQbScuZA6NFQRXOV2tr8H6sWW4+wpv8
- +aXpDZAZng4I7ecZKjl8z6mc68RZYbq4pGhv7soBaSLxfaN4YCZIt5GkSN2qLowptJ70
- AYDg==
+ bh=VUx02NhdWX1hPv+U0D9qWfOlv5rUxOUAPxBnO2/bP0o=;
+ b=U0jsbf/elWvV4Y8O1WA/qoOCkrCGVlJJE5gXOu4YouGFzKDvDfcfwzobV29bBBUsQl
+ IJplOspgeUR/oZU2MdkIFWKs9Vj74Iem1adYT5qabJNzQy6p3asQdNu/rjMw3WJmwtSE
+ MobMhD/6xTO6IT0DD8jjkBYTkCx5c52tyv0wFNBEisBYzg+4yv7E4bsT17dHz8Sw8pAs
+ KgqBv9F+jDM4aUZbOfjFMpD4hk+52PbPX6yuSRONghHz2/R0X5qMjMqVemC1Sou20stu
+ CLkOqmZXhpyeX7FjcI7aLQHyvzqZLzr4w4GO0iP3ff80XcYdBJ/Yc943X1FU830FvhC7
+ GmXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768366047; x=1768970847;
+ d=1e100.net; s=20230601; t=1768366077; x=1768970877;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TEeiGtHI7wQnEBEREwud4A0M1u+cTyhF8Eoqx55wGmE=;
- b=lTWQYwvgUcxIYHCzPJIj5qZO8G1GCYIhWxFWNIHfZ8PWltr5wu7V7TLK6JVu06FL26
- W5DG1dtm/nJoPG7YNRWdyMAAs5itdoFNxyR2Ik7XbNFRPvpOTgKRzO/JY5eVtusGBODm
- pRz3j1hruQtiCBfTtUImchb2kXoVagVo2YRV/Z5sl/xXNpK8XTjvGlTtQzN+QgUnIA8Q
- NQ2lHcNOQoRC8TEvPh+ETLuR8TP1VJ359sbQ2c7PYftN9rojPVNLY+UEsAdcoJ0NuN3I
- Mewk3U+vZ+EqXMWwQ8mruiPkoFl8hjeV39R2pyjCmzOH0YEf6w9kmHoZEGqh+DETWsKh
- +j6Q==
+ bh=VUx02NhdWX1hPv+U0D9qWfOlv5rUxOUAPxBnO2/bP0o=;
+ b=ljIaX7d5cF0tFoWh+ki5IkwdefG4A+X6dYA+bYEph2wjkSuz/QGCI0wIO5O3DRuTns
+ t+bMs98w+O05oVZX9Nkxo0iZfUhzxaR+f0GqKq6esHQ174iY49FceGEiwGgs3pyPV1Jl
+ yMQovkpxSeNANQ+GF0Ytg93eU1KuWBwsH8/GKp4QNXB9qCYj/bLNg70z+qPT9KsNUgEK
+ WEEjoTQOR7T/+WxvQQl1W6TpWMwhdYpJRbTX+O2rz1JmWb9gJWfgCzLJ98YEnUKu01cO
+ 0MMOvy72I08hx83OHl35iAfk7HyNRF3Cy97CuTcjM/VQ/tf5g8LCGy4mTjMq4BN59nYF
+ PRgQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVBh0LlxGsS5nKxstx+dODLIt3j8dlaCLE+KMqtRNwuE8+1rl4sYH8sY9UF70BcW266u4jU1x80Iq4W@nongnu.org
-X-Gm-Message-State: AOJu0Yx1hVZgrRF4fXa32gUOi3ITX4rTAUykKkiHkJlN2DH2F3Ok5SDm
- A0pwncwhMi49LkFqhawR55n881U5fxXSKr3e93Ki/7ipNjgXF7y4odBV
-X-Gm-Gg: AY/fxX4LdgsDC1/bCgJiqFzw2xE7HzRVYNiRRBJTeH8/u4QpKpeNl5RwiuvjKzp0mdc
- xmgrHEXmBmuUmtNOpWeJCgAdfGTUNkKwZrxYBdkblSHZD25SZ2wsVJHAfxfBYF0RfiSxNEtzSAe
- eiIqQyUDLNXZFRJR5Fox2I3HJUTCwdZNbgP2F32nAtQD+964J29l/fpaJ/hln7EPvdQUxbq3V+9
- 4eVth0YT4sdRiJZ2C+L9CKHnm+E8Wiy//+TRHUm9zTRkj6UZN8DxyyGZpvL6z+WiiROO3Tai5BP
- 2OZoVg3xWFVA6YPkt0+DYPRgFWZO95u3bWGdqeM8ovn9AtLmsWQlwvkAIKq2v974mNQ1lzhASUv
- P+mFkgqFDQhfJ38iqJL8XV9wLmEuMwYSPGVW07cg4DWBgvxaJWsmET+m3IVa+RDR/k77fQMbcjM
- r9djxs2aMFSx6viSF/PWvD+XhhWYXDKVUIbBqmU202yV6zl029GOvz3EALkmA=
-X-Received: by 2002:a17:903:b43:b0:2a0:7f87:2347 with SMTP id
- d9443c01a7336-2a59bc43dadmr7737515ad.46.1768366047122; 
- Tue, 13 Jan 2026 20:47:27 -0800 (PST)
+ AJvYcCXC62zo5XhQDY/cqtWPkR/Mk4jyn4AEPlZn91LrSVvynrvs14jQEDXmkmPqw7NiE8F5UkG6t1190m/K@nongnu.org
+X-Gm-Message-State: AOJu0YxA7oDEHHuuu/JlYjTvr/G2JvA2jTQ12SXydAhUBL9UJzVwz2NE
+ pKLST7OSy3ee8NEfo9FUpcBilDoGX98Q6JolYshPoNVkv6taYeKxpnmH
+X-Gm-Gg: AY/fxX4iYtJsP+3zW901Ou81V5wbO9mTFSzO91Tvk0RMBxFur17Ibih0+bRqKvNwMqL
+ CnHSOHINRSWG+LCKiUlJ5rle3nuVv/Mu5LlDHogV+CdkdRtsei1c8sZhZp3bc7fiXhk27YmmmKW
+ /x9xpcy1rT6cy67cIZ7npB0zR+sYHx6Hm4+mh3WNN7RbvZMZ5TmPiuFQoGoBJ/yp7SK61plsMFv
+ RkgYmgZ/oMrJBC0TxHXBIe8gQmRpA+fnf6qgC+GbVcvJWrUeaSvQ9H4Ky/YSdQSM+vtvwrMgK3Z
+ WlDLQHmVjwupiX4NqCIjkugtOHIDrdPvoq11S3Ie6IrZd0b97KUDuN92FuyUBiPHLhEX9v0Eqa9
+ iQ0bGat+JIagcL0SPooQGVFPuJ2i9PHhJ7PduTA84IOYKYyqbRyoGLpEV2kiJZsf7U3QmCbSmS1
+ V+Zrt1Qwsc+7SQOBrF7oHUwx1vPpG3P+HC2aHMDXCIbaNXGU8kGKCRRUqqA/ydFY1D1apiHw==
+X-Received: by 2002:a05:6a20:748e:b0:366:14b0:1a3f with SMTP id
+ adf61e73a8af0-38bed22cc8bmr1549074637.77.1768366077556; 
+ Tue, 13 Jan 2026 20:47:57 -0800 (PST)
 Received: from lima-default (123.253.188.110.qld.leaptel.network.
  [123.253.188.110]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c49037sm216111905ad.36.2026.01.13.20.47.22
+ d9443c01a7336-2a3e3c49037sm216111905ad.36.2026.01.13.20.47.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 20:47:26 -0800 (PST)
+ Tue, 13 Jan 2026 20:47:57 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
@@ -74,17 +74,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, bin.meng@windriver.com,
  vivahavey@gmail.com, Alvin Chang <alvinga@andestech.com>,
  Yu-Ming Chang <yumin686@andestech.com>, Joel Stanley <joel@jms.id.au>
-Subject: [RFC PATCH 01/25] target/riscv/debug: Check only mcontrol triggers
- for break/watchpoint matching
-Date: Wed, 14 Jan 2026 14:46:34 +1000
-Message-ID: <20260114044701.1173347-2-npiggin@gmail.com>
+Subject: [RFC PATCH 07/25] target/riscv/debug: Fix migration post_load
+ icount_enabled() test
+Date: Wed, 14 Jan 2026 14:46:40 +1000
+Message-ID: <20260114044701.1173347-8-npiggin@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260114044701.1173347-1-npiggin@gmail.com>
 References: <20260114044701.1173347-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,67 +107,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-trigger_common_match() has some warning log messages in it for
-unsupported triggers. Don't call it in BP/WP checking except for
-mcontrol/mcontrol6 triggers applicable to BP/WPs.
+itrigger_enabled is relevant to the !icount_enabled() path, the test in
+debug_post_load() is inverted.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/riscv/debug.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ target/riscv/machine.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 5664466749..4273ab7a8d 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -952,6 +952,14 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
-         for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-             trigger_type = get_trigger_type(env, i);
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 09c032a879..34fd73c920 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -230,7 +230,7 @@ static int debug_post_load(void *opaque, int version_id)
+     RISCVCPU *cpu = opaque;
+     CPURISCVState *env = &cpu->env;
  
-+            switch (trigger_type) {
-+            case TRIGGER_TYPE_AD_MATCH:
-+            case TRIGGER_TYPE_AD_MATCH6:
-+                break;
-+            default:
-+                continue; /* No other types match breakpoint */
-+            }
-+
-             if (!trigger_common_match(env, trigger_type, i)) {
-                 continue;
-             }
-@@ -976,8 +984,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
-                 }
-                 break;
-             default:
--                /* other trigger types are not supported or irrelevant */
--                break;
-+                g_assert_not_reached();
-             }
-         }
-     }
-@@ -998,6 +1005,14 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
-     for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-         trigger_type = get_trigger_type(env, i);
- 
-+        switch (trigger_type) {
-+        case TRIGGER_TYPE_AD_MATCH:
-+        case TRIGGER_TYPE_AD_MATCH6:
-+            break;
-+        default:
-+            continue; /* No other types match watchpoint */
-+        }
-+
-         if (!trigger_common_match(env, trigger_type, i)) {
-             continue;
-         }
-@@ -1036,8 +1051,7 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
-             }
-             break;
-         default:
--            /* other trigger types are not supported */
--            break;
-+            g_assert_not_reached();
-         }
+-    if (icount_enabled()) {
++    if (!icount_enabled()) {
+         env->itrigger_enabled = riscv_itrigger_enabled(env);
      }
  
 -- 
