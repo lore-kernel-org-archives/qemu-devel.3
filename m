@@ -4,79 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92673D37E4C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 15:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD522D37E4E
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 15:35:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg2iA-0000ZD-LF; Wed, 14 Jan 2026 10:23:06 -0500
+	id 1vg2tp-0004ri-6Q; Wed, 14 Jan 2026 10:35:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vg2he-0000Fy-BK
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 10:22:39 -0500
-Received: from p-east2-cluster4-host3-snip4-5.eps.apple.com ([57.103.78.136]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg2ta-0004nY-GM
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 10:34:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vg2hb-00007f-OS
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 10:22:33 -0500
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPS id
- 0C44118000AC; Wed, 14 Jan 2026 15:22:30 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=FNuw/1w+nGWHVOq38C1g66qh9K4tOBSity8k1sxxShU=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=PonSutA99FjgbRlz504SAXOKsBLd2vN5964IWVR2flYWuOIu8kyomKNSzYnbJyRfu6UbnUSvghOVn23TJ0ORKW7bPFIhEjD+2OQ8mXI2KC8PhXMKFWz7oT05YtUwFeDNbh70t8pyLPBSW3Pp18U9oJjweVrYgwQwipS555Cz57tpnWnAplu7s05Ou8uI9geq2pt+XETYNbEzYlmyAzOosQxMQTMGlh/vYytBvzUC284t7yaGTZTEXXpCBIfKd7PaUMZr8iwoySDp0r/TNhDjU8zibRDdDuyliUyAS6/Q4aIYmz/IgXOT8QrUkWgostfVmD2YLfbNy2CPslyVe881Cg==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-20-percent-2 (Postfix) with ESMTPSA id
- 9B91D1800435; Wed, 14 Jan 2026 15:22:28 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Cameron Esfahani <dirty@apple.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v4 3/3] vmapple: apple-gfx: move legacy memory management APIs
- away from inline
-Date: Wed, 14 Jan 2026 16:22:20 +0100
-Message-ID: <20260114152220.89640-4-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260114152220.89640-1-mohamed@unpredictable.fr>
-References: <20260114152220.89640-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg2tY-0003RW-3i
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 10:34:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768404889;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bCWA/9J3Z5uJmhBp/KklsSiDjUCf5DddXLHj49vH0M4=;
+ b=fnvNGYHkw8JxN9yZwJt7KlgdvJgjHOj+LwNUe3T6HBHm+CNOe5poEPnZkLR7/obP1752Vv
+ 6Uvk8oqzrnrLvchAYECAC8IaRpS6Tz3V5JWq46SHMaYu25Gyoo4uMuofVO0Ewh58Tsd0cl
+ vhBivHVM4W9a72yLc9a3MSSlPIWFV0s=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-144-HINRV3QzPBGM8Kt-i389mg-1; Wed, 14 Jan 2026 10:34:48 -0500
+X-MC-Unique: HINRV3QzPBGM8Kt-i389mg-1
+X-Mimecast-MFC-AGG-ID: HINRV3QzPBGM8Kt-i389mg_1768404888
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-88a32bf024cso93728386d6.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 07:34:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768404888; x=1769009688; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=bCWA/9J3Z5uJmhBp/KklsSiDjUCf5DddXLHj49vH0M4=;
+ b=gLWJ7QSHy9QoEt1PJiSsw7QL7hpR0ag7Jcig/XhXhhN6cs++8MQNsh3oavMVES5PkN
+ RsG/BN2EkPPcEFkZoE8NgFXDQuS+7grBNWPbt5wKnvrxYV+4J+pmUP8mrQZGbYo7dHwt
+ anAwQZr6cb+iGj1qBu//rf+uAtH8NIK5Ztk3TZ8DsFOuJFph8u2rKIUJ89RhDTVQ581Y
+ FpR5NKhgNvwhfK6/s8G4gG4eBSnkp7yik6zAh26haMUrgbSvetP6AycSDeghwyWzuS6P
+ U+9tsH2ZeqimuETACk8DVAvQaSeWtvNfEKA8+dtHtHlbezJ1Cx1Ukk7SFX6leAJO915N
+ +Ubg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768404888; x=1769009688;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bCWA/9J3Z5uJmhBp/KklsSiDjUCf5DddXLHj49vH0M4=;
+ b=a/RQVaHOC/vBVvDqCT10fqHaCTbx9fknj+hqyx97eTVODK/NlEa7o4V10y+OnMdGKy
+ wPs0PIfhyxSTyTklTVBh6Gz4tceh9LSPFf3tkw4wbKgwgwJ6tPsq8l26eWhABf8T0/1S
+ j4JFhf9WSrylFvEtgzYXqJtHPnj1AqiRRJBmYWpVq67Xp0YROy1tLNsqHpIhDoskRRMF
+ yvctJyxXj4DD3HrLuy08Kwr2KRGHsYffxcg2tQlWR1OUCPOBmNc07EiT6H/EgNLMkdUm
+ oCXnl8tEJ7YwnOYLhGT+dFRCSJ94yn6fkSGiWbDcjjsdQ0ltxT5+cc6ZqhfRp76uveOF
+ 61ZA==
+X-Gm-Message-State: AOJu0YxlLHNu8+tQV6vMBxMkvpkHxlwBK/9Pj8kBZB/etMJ40TkwqSvs
+ LX3n6sBg0XPD+I7sDy6fQxkXT3MLz1gipbIDHq8tbWHa/m99migbLvHzZ6bCpr7oAuXRhwp1Gvk
+ wSq0yiQX/sbOknee16xsEH8z2MGnrfz/6pV2pd4Wws1/OMZNNStBsa7Nm
+X-Gm-Gg: AY/fxX51Ja9Gu91od4CDsy0LBe1Mu87w27aUsWfvucLZG+Tz2MsH5FoHXBLzITCRQz6
+ xcn4LBA4H7jhyAcApN41kaR1Lka0+s+ZveyYaJEfkWljayGUJYIgHE2Ty15rydSin/nPZD9tmuB
+ jAiK38iSqYU+UGgXLplMUzgIEqYrQuwKQd1FzxxsrClfToEFFd+g+9dpYytfaCMOrqsYaQOpXYq
+ EuaSkaVzHs5HXeIzZwGDh3ft3n8bafkj+3NTN2oXQfUdPeYREhfOL8/3ZP4UE7LyQevcXw22VtZ
+ iBFAmkLIDKhtmERgTIW+HEqiYTtZZxkZ6hNG/hm/2ZXZVatIF44g1knz2e07BOaU7RYFHqS8UX0
+ B13U=
+X-Received: by 2002:ad4:420f:0:b0:87c:1f7c:76ea with SMTP id
+ 6a1803df08f44-892743cf98fmr26966696d6.44.1768404887550; 
+ Wed, 14 Jan 2026 07:34:47 -0800 (PST)
+X-Received: by 2002:ad4:420f:0:b0:87c:1f7c:76ea with SMTP id
+ 6a1803df08f44-892743cf98fmr26966296d6.44.1768404886957; 
+ Wed, 14 Jan 2026 07:34:46 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-890770e20c7sm179266336d6.17.2026.01.14.07.34.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Jan 2026 07:34:46 -0800 (PST)
+Date: Wed, 14 Jan 2026 10:34:45 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Lukas Straub <lukasstraub2@web.de>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 1/2] tests/migration-test: Remove postcopy_data from
+ MigrateCommon
+Message-ID: <aWe3lXEsr_dsKzVU@x1.local>
+References: <20260106203320.2110372-1-peterx@redhat.com>
+ <20260106203320.2110372-2-peterx@redhat.com>
+ <CAE8KmOwA-SVy1tQOzAKpa6B4uoVw=veMcn3qzkF0KJ8Cq0C_8w@mail.gmail.com>
+ <aV6T-JDXv3wa7tdc@x1.local>
+ <CAE8KmOzCYg_55J9J6Dh6Pr2D5wp_YLOXZqa4cm=Vt35ZDkiUXQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Info: v=2.4 cv=YqIChoYX c=1 sm=1 tr=0 ts=6967b4b6
- cx=c_apl:c_apl_out:c_pps a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=FpLd5HJXVXburdsqXX0A:9
-X-Proofpoint-ORIG-GUID: RZUHg3EUkUvVL3DqdYvnVuamffxs9rzq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDEyOSBTYWx0ZWRfX9vuVKW7ds83+
- fNQ5ZvdwyLwcmhTygNgnbKYcQ+kSDj0HBagmwWONkyItOvLq3K4Vea2+NEHmqUgotVbUZzOLoZk
- Q9L0pc7xFLEHrx52lc/3PoNASl4/hj5wGGDLaPN0vNg1Df1/BBXpdMOIsSQ2xMOWL8wV0uVBTi8
- dqHzUr84SwlM/op7wMpqL1HRaeQKw8C/GNUgm1J3fFUsBf45ZRHCTogniZYqOl+LjLv/3xbikLy
- 3Gxu4nG5p+Wft0gzLsC8cUz7sNQYLqivIoauGLVVrJZg2oClAYrypqS5ts0yWZ4zK9sqeBj+kZH
- OMTjIF/d1g44FugJARC
-X-Proofpoint-GUID: RZUHg3EUkUvVL3DqdYvnVuamffxs9rzq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-14_04,2026-01-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- suspectscore=0 mlxlogscore=936 clxscore=1030 malwarescore=0 phishscore=0
- spamscore=0 mlxscore=0 bulkscore=0 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601140129
-X-JNJ: AAAAAAABfabA0tP3S9fOM5ncv1dufd2rbYm1SeAIrZk3z735cmDZRzLcR0y5jOe2MnZajLVDWVvQryaJDuO9F8hTkn+zGzPGErxZeWgojH0T68POcCAZ5pVieIIuSk7+zmE3dI1Ambm7BmwDMoLFI9aEpkxA3R+uggmuD9bxmutkpGpX1JgunzWFcms8vSZPb/BIvm/9am+M/SY0WtS+5nFOsdHWpGRozrB0wfIlDw9t0xYY/ZBLRHkvm11uyDcBuBs0FdtDerBp7QYDTRZ/1ax2Rkba2ZH39nglKzYsjQlKWdwkep0AmlQ09M5IahBr/2y5whIm6OH6JYTYHh6VL4/7zVr9OlVi+/O4LuOdnQQgfJO5YQfPKUFcwSni+QmqN4+TxTTUSPGX885UMhy+Q21C/JUUMZyel33phS7x56Q0/oBhQobevO0nf4ZJx4ie3B8fHfJA/IoOEeXJa9aDkh3mDcESNnmKqxm6zAGLdrH/kqE8IsaG5SP8gcn1TQ3J8PjVwaYp+fsYkWDPdMjq8EeySdRAYV0YRynhz4176XyfOTbstXcoWGQsEeHha1yLsoTu4HS7+oz8ZKr2gdXSW5RULCAcgRZHuHVF60wV4O9aMkeVDKVGTY8LPwmx8SUQXMfICmadkfOhhNqavUdtVcfpSstF/EenWRki/6FObZdlrDuEGX7XtE3aUBqG18EcLdL1FS1kIuHhhDaNwt+r3i21CHcKm2+vI2j7ezfs9A==
-Received-SPF: pass client-ip=57.103.78.136;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOzCYg_55J9J6Dh6Pr2D5wp_YLOXZqa4cm=Vt35ZDkiUXQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,64 +120,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-They're not function pointers but blocks.
-Adding this to address review comments but I don't think it's worthwhile.
+On Thu, Jan 08, 2026 at 03:08:04PM +0530, Prasad Pandit wrote:
+> On Wed, 7 Jan 2026 at 22:42, Peter Xu <peterx@redhat.com> wrote:
+> >> * Should 'hook_data' pointer be g_autofree too? Where is it free'd otherwise?
+> >
+> > hook_data is freed in end_hook().  This patch doesn't change that fact for
+> > postcopy.  It's the smae to non-postcopy tests.
+> >
+> >> * The changes look okay; But if tests define hook_data = NULL; Where
+> >> does it get populated?
+> >
+> > It's populated in start_hook() conditionally.  When populated, it is always
+> > (and a must) to be released in end_hook().
+> 
+> ===
+> $ grep -Eri 'test_postcopy_common|test_postcopy_recovery_common'
+> tests/qtest/migration/ -l
+> tests/qtest/migration/framework.h
+> tests/qtest/migration/framework.c
+> tests/qtest/migration/tls-tests.c
+> tests/qtest/migration/postcopy-tests.c
+> ===
+> 
+> * Only tls-tests above seem to define and use these hooks properly
+> along with the hook_data. Postcopy-tests and all other users of
+> start_hook/end_hook don't seem to use [postcopy|hook]_data at all. Do
+> we really need this hook_data parameter? Couldn't it be defined as a
+> tls-tests specific object. (just wondering)
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- hw/display/apple-gfx-mmio.m | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+Sorry I don't follow.  We need the hook_data for cleaning up tls objects
+later in end_hook, for either postcopy or other tls tests.
 
-diff --git a/hw/display/apple-gfx-mmio.m b/hw/display/apple-gfx-mmio.m
-index 2031baceda..fa4362653b 100644
---- a/hw/display/apple-gfx-mmio.m
-+++ b/hw/display/apple-gfx-mmio.m
-@@ -188,6 +188,22 @@ static bool apple_gfx_mmio_unmap_surface_memory(void *ptr)
-     return true;
- }
- 
-+/* Legacy memory management API: Gone in macOS 15.4 and later. */
-+static bool (^apple_gfx_map_memory)
-+ (uint64_t phys, uint64_t len, bool ro, void **va, void *e, void *f)
-+ = ^bool(uint64_t phys, uint64_t len, bool ro, void **va, void *e, void *f){
-+    *va = apple_gfx_mmio_map_surface_memory(phys, len, ro);
-+
-+    trace_apple_gfx_iosfc_map_memory(phys, len, ro, va, e, f, *va);
-+
-+    return *va != NULL;
-+};
-+
-+static bool (^apple_gfx_unmap_memory)(void *va, void *b, void *c, void *d, void *e, void *f)
-+ = ^bool(void *va, void *b, void *c, void *d, void *e, void *f){
-+    return apple_gfx_mmio_unmap_surface_memory(va);
-+};
-+
- static PGIOSurfaceHostDevice *apple_gfx_prepare_iosurface_host_device(
-     AppleGFXMMIOState *s)
- {
-@@ -207,19 +223,8 @@ static bool apple_gfx_mmio_unmap_surface_memory(void *ptr)
-         iosfc_desc.mmioLength = 0x10000;
-         iosfc_desc.memoryMapDescriptor = memoryMapDescriptor;
-     } else {
--        iosfc_desc.mapMemory =
--            ^bool(uint64_t phys, uint64_t len, bool ro, void **va, void *e, void *f) {
--                *va = apple_gfx_mmio_map_surface_memory(phys, len, ro);
--
--                trace_apple_gfx_iosfc_map_memory(phys, len, ro, va, e, f, *va);
--
--                return *va != NULL;
--            };
--
--        iosfc_desc.unmapMemory =
--            ^bool(void *va, void *b, void *c, void *d, void *e, void *f) {
--                return apple_gfx_mmio_unmap_surface_memory(va);
--            };
-+        iosfc_desc.mapMemory = apple_gfx_map_memory;
-+        iosfc_desc.unmapMemory = apple_gfx_unmap_memory;
-     }
- 
-     iosfc_desc.raiseInterrupt = ^bool(uint32_t vector) {
+> 
+> Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+
+Thanks,
+
+> 
+> Thank you.
+> ---
+>   - Prasad
+> 
+
 -- 
-2.50.1 (Apple Git-155)
+Peter Xu
 
 
