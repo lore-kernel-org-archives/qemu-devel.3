@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9463D31A0D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0B7ED31A09
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:50:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfsp9-0007O6-CN; Tue, 13 Jan 2026 23:49:39 -0500
+	id 1vfsoy-0007Bj-Di; Tue, 13 Jan 2026 23:49:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsoi-00074V-Uc
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:49:13 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsoe-0006z6-Tm
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:49:09 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsoh-0004Ae-4m
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:49:12 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2a0d52768ccso55605905ad.1
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:49:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsoc-00049o-P2
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:49:08 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2a0ac29fca1so52788535ad.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:49:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768366149; x=1768970949; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1768366144; x=1768970944; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZuF6YEIztB5mevIrTN7lKK2Hx7jAvfRwQrJI7h3suow=;
- b=Ij9hNqL1Fp+j7DOpEjhaqCtEtebgGTaBHAjPWdsWFs910vo8NoMEo11Fub7rWkzA6T
- Pok89PFFkACHWaZI164Vyu/8R4CNz9TeXXXChUjKSh4Hz0WoLmfLelxtqLIUa9DwjQOy
- aXe6ysPfdFaL62tih6xW+OqGkc7qrobqdGokn7ZzkGRm2zzLEsWnYdbryOblaKfHEvN8
- tH7Rc6RGDx6wYv1y/TwNw5eeGZV6/tchVNXXtmXitKq4ikK2Ecj3djgeNXBJkUMdRJiu
- Pdqn3oeS14imdijrCkj6QudnkqBd4D6i44o0xeHOBJYOBgZdosfOXmIFH9WHk+GdcvP6
- W5Rg==
+ bh=H0wkxMxuLksSJG2HBXSoSzL8cM026VEw8G4DFyhgQmI=;
+ b=TjCWVlY7dAlCJ39fi7yO4XrV/ndWRP/ewTZeDhFqiE07XXamhtX2546FGbIu1gSDId
+ atwvlckBZ3kkp+BohCrg+Lg5XRGrIZQQWLwf2Cwl44ispATh6S+gh6BpO/Gd0GmfA2Zo
+ LCfDFvc+4n4gW8pH7mneiXYFOj/eJGI3f8in9DavhPyfZxWbtLAfUVAM3UDU3KFZz1RQ
+ 8uO5zqta+/+tjAjSYVd8ACsSVGGCdP1T27IKrcy2KxhC7ZBgXCp3UyKHtwQVPAaz9ewO
+ gjPMKmd9RcTvWTEjKVfCfjSz4lknzXYv7w6CQ5CIxyxFqGipOw7FEzQk7MeOE6J2g+8W
+ sNEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768366149; x=1768970949;
+ d=1e100.net; s=20230601; t=1768366144; x=1768970944;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZuF6YEIztB5mevIrTN7lKK2Hx7jAvfRwQrJI7h3suow=;
- b=gqbXSm7ZdhS06pwaAtD34ssT/IAmMmoXpA1JVAbcgv926CY5SJb39Jcz8Bgfr8hjqw
- uEHVJu5fQoU+FgUnd/KF3SOA0VylHkVnAGunM8OSjQRXfKHfwDv4Il5nTxSiGfNwRSHv
- tpH5TVYpzsrszTBsEXqxkXduvfxVBz/8YQKjQ60zmoSiftno89kofaMsHocJd5EyiBiI
- xWUqYroNMMhtTuZX1OMGaOqiKML0M/GY2/EFwEzfe9DMAxaaiW5Eporq5V55aqmAG0M5
- jAqoW8hIx7WdDoNoOR1FXNTCN9ZZB6eEQ95fVEOWCEqhCR4MW24B33ao6t+cY8X5K5wO
- ww5Q==
+ bh=H0wkxMxuLksSJG2HBXSoSzL8cM026VEw8G4DFyhgQmI=;
+ b=n0YeIljTonuOZJXRtZEQvpNbkNxOSJTbRszaO+o233tI+7OdkNd0vpgtw6h+jrGRYO
+ uO1k2nJMI7tzrsKrQt/6u9inuXeM9qnEgqmEGcbD2VXDJMenJn8KB2tULu2K+EMKBKnA
+ cG7yUQmVf5wKwD/S3fRKIFfQwUxgNOsijDG0Jbm5OZsBGGULVqj+NsIraVt1t0z/Druo
+ kHUEe9nvi57tLv/byhsus4X6eP3a+boTA+dnaChey/R6zYNnvy7fIv2tMVuWsHkk6Tr6
+ dPNKTV9cPKDtawe8aiheDmA2On0UPUiRBPmRL9NWZqSm1rmbjq4Jvgqf/O27rElhU6mK
+ TZNA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7YjOULxAY5wRwxfEMkzLuXd4/KSLRJ24gPCsl1JBptRQUreo51RPFflLQxlQsSGbwEASMzBal2qIw@nongnu.org
-X-Gm-Message-State: AOJu0Yzr8KMR5LUFx4AcI/UC6wYqFOY6UYaL6mRODxkm1cg8+oD90I7q
- Fkwrrp2VKH+EEMrFX1vA5oaVbnP7FsIAG4T+gV4o5dCi8XOXomgKRkzg
-X-Gm-Gg: AY/fxX4n7QNFu4alRSSQB/EKCn5Io3L0T7VwOq8Bt5bAbzTAdUzLEmmCt7r+KwSiGO8
- DetGMjvy4UqmoFB8Te5DAAkJPIDKVTmLHCrBLE+F95n39wK4PRcMSbenFGk6yOMiuMgwzP0CoYG
- 38LV+23gdr6iQVfvboK2g0obRyDwn9ZqcEdEga2c1/jwOQQjNL00sbdG849u9G7brSALrOVPmEn
- wgocbAbSJt52HmbT7mkMY/gVlMf56L8dUJEvu/th0xRgbFv5KuZAthkBZ+9mOwFyYydhONP1rqQ
- yBAJrVLw4z2vJtlllxUlUnvgVaImfe52BzDJbAbHViXfWDIP8QF/l2Zu+/LN56H1nb8txam7fZg
- YbHJeUoiI6Ejd6eRluDxISYNunuYo5i7gwxwPfVTOKh7zLtmjSQCXPXeVwn39nLZAF6WBjULNRv
- 3sccF8NRpCJW3yjmhL382dQCuFCUYAGkKv//EHkhkhiZS0TDmkt6P2w+z+wGo=
-X-Received: by 2002:a17:902:f690:b0:2a0:8df5:2f6f with SMTP id
- d9443c01a7336-2a59bb2a4e8mr8344305ad.15.1768366149111; 
- Tue, 13 Jan 2026 20:49:09 -0800 (PST)
+ AJvYcCU53epFC64CtAnq6abp7fL5W34saSkwNChM/HfrvSSBPISA7PgHDjeNg4O6NR8z/L9MyMg1SHYVRQY5@nongnu.org
+X-Gm-Message-State: AOJu0YzpF7V/j4NmTRwt/5jUQXfJBo3BLJ5WU9z73MULWlPvwjhFfXyY
+ 8BJW2pcVknWrYhWmZLKo3J8fI60aL2W+xIt1n2f1L0Ll4YNCi89uX+zg
+X-Gm-Gg: AY/fxX6VjBFpUbI9pft90qX1hK9Yxf22X/S8n4laMbnm6g0O0VvypQg39Qp/+dy5IPt
+ IVhbb9PxuDyvC1UdM5LAEFqRtcl4rPfukPZEBY7QxbL6/GK6xDCkA1a1IWftNsJUYCTHf6CiQ4q
+ CN6LBDmiHY5JBUCyDVCthk6CUXPERRZD4Lw8D8qENjEkcJ2QOtQZKLbvs6mUMC1+BX5L9zJBMZQ
+ D1+sFG3vFECopTmcV/C9ZzSXpitA9wKXgyDeOvnq3MROrzYQOBGPnu33Qtiuvcuc0md3O4r0H3n
+ BNR2qVMTf68la+4exT/izVzgvgJw8WoLL4e905XQFhd1rB4rVDmpY7ZEMMdAGXlnL4LoxL4hD0T
+ FLIc1eCkbAKXT+PTLva6lldm5yeKSmUou8GmsYDqaRyL+wxoIQanVR+vVucJqZ068CJAjon5pRk
+ hmTuqc4gdCzTIQOjNvqQS24kyTCm6H9OrHBJOpFTWZeTdNmL8kdepj6OjF3R4=
+X-Received: by 2002:a17:903:1b47:b0:2a3:bf5f:926b with SMTP id
+ d9443c01a7336-2a599e8f884mr15538695ad.47.1768366144022; 
+ Tue, 13 Jan 2026 20:49:04 -0800 (PST)
 Received: from lima-default (123.253.188.110.qld.leaptel.network.
  [123.253.188.110]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c49037sm216111905ad.36.2026.01.13.20.49.04
+ d9443c01a7336-2a3e3c49037sm216111905ad.36.2026.01.13.20.48.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 20:49:08 -0800 (PST)
+ Tue, 13 Jan 2026 20:49:03 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
@@ -74,24 +74,24 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, bin.meng@windriver.com,
  vivahavey@gmail.com, Alvin Chang <alvinga@andestech.com>,
  Yu-Ming Chang <yumin686@andestech.com>, Joel Stanley <joel@jms.id.au>
-Subject: [RFC PATCH 21/25] target/riscv/debug: Implementation specific Sdtrig
- configuration
-Date: Wed, 14 Jan 2026 14:46:54 +1000
-Message-ID: <20260114044701.1173347-22-npiggin@gmail.com>
+Subject: [RFC PATCH 20/25] target/riscv/debug: Migrate mcontext using new
+ sdtrig vmstate
+Date: Wed, 14 Jan 2026 14:46:53 +1000
+Message-ID: <20260114044701.1173347-21-npiggin@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260114044701.1173347-1-npiggin@gmail.com>
 References: <20260114044701.1173347-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,180 +107,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement a Sdtrig CPU configuration class that provides
-details about the Sdtrig configuration.
+The debug migration state does not include mcontext. Change to using
+a new sdtrig vmstate format that allows for all architectural state
+if mcontext != 0.
 
-It is stored as a pointer in RISCVCPUClass to avoid issues with
-nested compound literals inside static initialisers with GCC 11.
+This means a machine is sometimes-migratable, which on second
+thoughts is probably bad. Is there a better way to do this, or could
+we just break compat and move to the new vmstate?
 
-For now, the number of supported triggers is configurable. This
-requires some logic
-
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Not yet signed off.
 ---
- target/riscv/cpu.c     | 25 +++++++++++++++++++++++++
- target/riscv/cpu.h     |  4 ++++
- target/riscv/debug.c   |  5 ++++-
- target/riscv/debug.h   |  4 ++++
- target/riscv/machine.c | 11 ++++++++---
- 5 files changed, 45 insertions(+), 4 deletions(-)
+ target/riscv/machine.c | 58 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 57 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 057e221808..6f7a327fc7 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -23,6 +23,7 @@
- #include "qemu/log.h"
- #include "cpu.h"
- #include "cpu_vendorid.h"
-+#include "debug.h"
- #include "internals.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
-@@ -2816,6 +2817,11 @@ static void riscv_cpu_class_base_init(ObjectClass *c, const void *data)
-             mcc->def->vext_spec = def->vext_spec;
-         }
-         mcc->def->misa_ext |= def->misa_ext;
-+#if !defined(CONFIG_USER_ONLY)
-+        if (def->debug_cfg) {
-+            mcc->def->debug_cfg = def->debug_cfg;
-+        }
-+#endif
- 
-         riscv_cpu_cfg_merge(&mcc->def->cfg, &def->cfg);
- 
-@@ -2951,6 +2957,18 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
-     DEFINE_RISCV_CPU(type_name, parent_type_name,             \
-         .profile = &(profile_))
- 
-+#if !defined(CONFIG_USER_ONLY)
-+/* Sdtrig implementation has 2 triggers that support match, match6, icount */
-+static const RISCVSdtrigConfig default_sdtrig_config = {
-+    .nr_triggers = 2,
-+};
-+
-+bool riscv_sdtrig_default_implementation(const RISCVSdtrigConfig *config)
-+{
-+    return config == &default_sdtrig_config;
-+}
-+#endif
-+
- static const TypeInfo riscv_cpu_type_infos[] = {
-     {
-         .name = TYPE_RISCV_CPU,
-@@ -2968,6 +2986,9 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.mmu = true,
-         .cfg.pmp = true,
-         .priv_spec = PRIV_VERSION_LATEST,
-+#if !defined(CONFIG_USER_ONLY)
-+        .debug_cfg = &default_sdtrig_config,
-+#endif
-     ),
- 
-     DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_VENDOR_CPU, TYPE_RISCV_CPU),
-@@ -2995,6 +3016,10 @@ static const TypeInfo riscv_cpu_type_infos[] = {
- #else
-         .cfg.max_satp_mode = VM_1_10_SV57,
- #endif
-+
-+#if !defined(CONFIG_USER_ONLY)
-+        .debug_cfg = &default_sdtrig_config,
-+#endif
-     ),
- 
-     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_MAX, TYPE_RISCV_DYNAMIC_CPU,
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 44ed1665e2..c4f1cb0a9d 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -571,6 +571,9 @@ typedef struct RISCVCSR RISCVCSR;
- typedef struct RISCVCPUDef {
-     RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
-     RISCVCPUProfile *profile;
-+#if !defined(CONFIG_USER_ONLY)
-+    const RISCVSdtrigConfig *debug_cfg;
-+#endif
-     uint32_t misa_ext;
-     int priv_spec;
-     int32_t vext_spec;
-@@ -666,6 +669,7 @@ void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, uint32_t priv,
-                                    void *rmw_fn_arg);
- 
- RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
-+bool riscv_sdtrig_default_implementation(const RISCVSdtrigConfig *config);
- #endif /* !CONFIG_USER_ONLY */
- 
- void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en);
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 22f7958a79..93615b43fb 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -173,7 +173,10 @@ target_ulong tselect_csr_read(CPURISCVState *env)
- 
- void tselect_csr_write(CPURISCVState *env, target_ulong val)
- {
--    if (val < RV_DEFAULT_TRIGGERS) {
-+    CPUState *cs = env_cpu(env);
-+    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cs);
-+
-+    if (val < mcc->def->debug_cfg->nr_triggers) {
-         env->sdtrig_state.trigger_cur = val;
-     }
- }
-diff --git a/target/riscv/debug.h b/target/riscv/debug.h
-index 8a047c8073..3ba12f95cd 100644
---- a/target/riscv/debug.h
-+++ b/target/riscv/debug.h
-@@ -135,6 +135,10 @@ enum {
- #define MHSELECT_IGNORE       0
- #define MHSELECT_MCONTEXT     4
- 
-+typedef struct RISCVSdtrigConfig {
-+    unsigned int nr_triggers;
-+} RISCVSdtrigConfig;
-+
- bool tdata_available(CPURISCVState *env, int tdata_index);
- 
- target_ulong tselect_csr_read(CPURISCVState *env);
 diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 23a5f60d2a..9f65bdca9b 100644
+index fdd5e8b67b..23a5f60d2a 100644
 --- a/target/riscv/machine.c
 +++ b/target/riscv/machine.c
-@@ -221,10 +221,12 @@ static const VMStateDescription vmstate_kvmtimer = {
+@@ -221,8 +221,10 @@ static const VMStateDescription vmstate_kvmtimer = {
  static bool debug_needed(void *opaque)
  {
      RISCVCPU *cpu = opaque;
-+    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cpu);
-     CPURISCVState *env = &cpu->env;
++    CPURISCVState *env = &cpu->env;
  
-     return cpu->cfg.debug &&
--           env->sdtrig_state.mcontext == 0;
-+           (riscv_sdtrig_default_implementation(mcc->def->debug_cfg) &&
-+            env->sdtrig_state.mcontext == 0);
+-    return cpu->cfg.debug;
++    return cpu->cfg.debug &&
++           env->sdtrig_state.mcontext == 0;
  }
  
  static int debug_pre_save(void *opaque)
-@@ -277,15 +279,18 @@ static const VMStateDescription vmstate_debug = {
+@@ -273,6 +275,59 @@ static const VMStateDescription vmstate_debug = {
+     }
+ };
  
- /*
-  * This is a newer version of the debug (sdtrig) state, required
-- * to migrate hcontext/mcontext.
-+ * to migrate hcontext/mcontext, or machines with non-default
-+ * sdtrig implementation.
-  */
- static bool sdtrig_needed(void *opaque)
++/*
++ * This is a newer version of the debug (sdtrig) state, required
++ * to migrate hcontext/mcontext.
++ */
++static bool sdtrig_needed(void *opaque)
++{
++    RISCVCPU *cpu = opaque;
++    CPURISCVState *env = &cpu->env;
++
++    return cpu->cfg.debug &&
++           env->sdtrig_state.mcontext != 0;
++}
++
++static int sdtrig_post_load(void *opaque, int version_id)
++{
++    RISCVCPU *cpu = opaque;
++    CPURISCVState *env = &cpu->env;
++
++    riscv_cpu_debug_post_load(env);
++
++    return 0;
++}
++
++static const VMStateDescription vmstate_sdtrig_trigger = {
++    .name = "cpu/sdtrig/trigger",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINTTL(tdata1, SdtrigTrigger),
++        VMSTATE_UINTTL(tdata2, SdtrigTrigger),
++        VMSTATE_UINTTL(tdata3, SdtrigTrigger),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static const VMStateDescription vmstate_sdtrig = {
++    .name = "cpu/sdtrig",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = sdtrig_needed,
++    .post_load = sdtrig_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINTTL(env.sdtrig_state.trigger_cur, RISCVCPU),
++        VMSTATE_UINTTL(env.sdtrig_state.tcontrol, RISCVCPU),
++        VMSTATE_UINTTL(env.sdtrig_state.mcontext, RISCVCPU),
++        VMSTATE_UINTTL(env.sdtrig_state.scontext, RISCVCPU),
++        VMSTATE_STRUCT_ARRAY(env.sdtrig_state.triggers, RISCVCPU,
++                             RV_MAX_SDTRIG_TRIGGERS,
++                             0, vmstate_sdtrig_trigger, SdtrigTrigger),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static int riscv_cpu_post_load(void *opaque, int version_id)
  {
      RISCVCPU *cpu = opaque;
-+    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cpu);
-     CPURISCVState *env = &cpu->env;
- 
-     return cpu->cfg.debug &&
--           env->sdtrig_state.mcontext != 0;
-+           !(riscv_sdtrig_default_implementation(mcc->def->debug_cfg) &&
-+             env->sdtrig_state.mcontext == 0);
- }
- 
- static int sdtrig_post_load(void *opaque, int version_id)
+@@ -514,6 +569,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+ #endif
+         &vmstate_envcfg,
+         &vmstate_debug,
++        &vmstate_sdtrig,
+         &vmstate_smstateen,
+         &vmstate_jvt,
+         &vmstate_elp,
 -- 
 2.51.0
 
