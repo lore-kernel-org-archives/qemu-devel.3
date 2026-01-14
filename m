@@ -4,109 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71526D29FF9
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 12:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91223D29FF8
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 12:47:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg05k-0000L3-6d; Wed, 14 Jan 2026 07:35:16 -0500
+	id 1vg0H1-0005lj-40; Wed, 14 Jan 2026 07:46:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vg05G-0008PQ-66
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 07:34:57 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vg05E-0004Ed-3M
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 07:34:45 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vg0Gh-0005j5-NM
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 07:46:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vg0Gd-00028C-5D
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 07:46:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768394789;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fmdKhxQO5sJ7ePl8AF/0z76V997rSx7Gzmlf+EId7hg=;
+ b=YBQ7auQvFYvA44XesS36F7MWusa/Ytp18V8X7Dk7aKxPPnF7aBWAcRZ9jbLku7z3MGLOSK
+ A9p+tV6QQN8NpkTCR5WZO62gZeUNfrUmz8OfpvMMCiLqQfplKYK+vDwTmNgQWDxd98mPA1
+ BFNQwyZIYCyFBe7TpqFhg+J0oEWx+w8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-9-MH967anxOui4sJRcFJgMJA-1; Wed,
+ 14 Jan 2026 07:46:26 -0500
+X-MC-Unique: MH967anxOui4sJRcFJgMJA-1
+X-Mimecast-MFC-AGG-ID: MH967anxOui4sJRcFJgMJA_1768394784
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id B09EF33E6F;
- Wed, 14 Jan 2026 12:34:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768394082; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oc+0z2SItivJ6/tz4TdXzse+qSr1SMwBPfwR87Vy2r0=;
- b=Ypwe4+wJyCZ3/Dy4cN5IccrG/u4vndH1cxUveTuWuzy90KdKYeT1zFCGBrvynqBTJFJqS5
- jUI1IqSIjKRRWioiiHjXCXvrkXaqy8hcFy11rp2qjrl1FB7lLqd1NelxmcbpdLsWhm94Qc
- N5vSExK/bIzK+wor9db+elv0JUIprI4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768394082;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oc+0z2SItivJ6/tz4TdXzse+qSr1SMwBPfwR87Vy2r0=;
- b=kUlASj97gFRz37RVQxbVSvYBKdVQ4IfaAcGZmdvtUPwYJ75g9q8jzdURr0pNVIsqYH2upQ
- 6JQosvMpwhHrAcCw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Ypwe4+wJ;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=kUlASj97
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768394082; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oc+0z2SItivJ6/tz4TdXzse+qSr1SMwBPfwR87Vy2r0=;
- b=Ypwe4+wJyCZ3/Dy4cN5IccrG/u4vndH1cxUveTuWuzy90KdKYeT1zFCGBrvynqBTJFJqS5
- jUI1IqSIjKRRWioiiHjXCXvrkXaqy8hcFy11rp2qjrl1FB7lLqd1NelxmcbpdLsWhm94Qc
- N5vSExK/bIzK+wor9db+elv0JUIprI4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768394082;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oc+0z2SItivJ6/tz4TdXzse+qSr1SMwBPfwR87Vy2r0=;
- b=kUlASj97gFRz37RVQxbVSvYBKdVQ4IfaAcGZmdvtUPwYJ75g9q8jzdURr0pNVIsqYH2upQ
- 6JQosvMpwhHrAcCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2D4743EA63;
- Wed, 14 Jan 2026 12:34:41 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 6zG/N2GNZ2l4UgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 14 Jan 2026 12:34:41 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
-Cc: qemu-devel@nongnu.org, dtalexundeer@yandex-team.ru,
- vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru
-Subject: Re: [PATCH 0/5] qemu-file: qemu_file_get_fd() cleanup
-In-Reply-To: <20260114064710.176268-1-vsementsov@yandex-team.ru>
-References: <20260114064710.176268-1-vsementsov@yandex-team.ru>
-Date: Wed, 14 Jan 2026 09:34:39 -0300
-Message-ID: <87jyxknzj4.fsf@suse.de>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ECC3F180057E; Wed, 14 Jan 2026 12:46:23 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.41])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B2471956048; Wed, 14 Jan 2026 12:46:17 +0000 (UTC)
+Date: Wed, 14 Jan 2026 12:46:13 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org, qemu-block@nongnu.org,
+ qemu-rust@nongnu.org, Stefan Weil <sw@weilnetz.de>,
+ Kevin Wolf <kwolf@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v5 15/24] monitor: introduce monitor_cur_is_hmp() helper
+Message-ID: <aWeQFT9r333oCtZT@redhat.com>
+References: <20260108170338.2693853-1-berrange@redhat.com>
+ <20260108170338.2693853-16-berrange@redhat.com>
+ <874iop8ssa.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.98%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[7]; RCVD_TLS_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: B09EF33E6F
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <874iop8ssa.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,27 +97,140 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+On Tue, Jan 13, 2026 at 03:57:09PM +0100, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > Note that this is not simply the inverse of monitor_cur_is_qmp(),
+> > as both helpers require that monitor_cur() is first non-NULL.
+> >
+> > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >  include/monitor/monitor.h      |  1 +
+> >  monitor/monitor.c              | 10 ++++++++++
+> >  stubs/monitor-core.c           |  6 ++++++
+> >  tests/unit/test-util-sockets.c |  1 +
+> >  4 files changed, 18 insertions(+)
+> >
+> > diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+> > index 296690e1f1..9c71e6cf3c 100644
+> > --- a/include/monitor/monitor.h
+> > +++ b/include/monitor/monitor.h
+> > @@ -16,6 +16,7 @@ extern QemuOptsList qemu_mon_opts;
+> >  Monitor *monitor_cur(void);
+> >  Monitor *monitor_set_cur(Coroutine *co, Monitor *mon);
+> >  bool monitor_cur_is_qmp(void);
+> > +bool monitor_cur_is_hmp(void);
+> >  
+> >  void monitor_init_globals(void);
+> >  void monitor_init_globals_core(void);
+> > diff --git a/monitor/monitor.c b/monitor/monitor.c
+> > index 6dc5a7016d..b81cc7d2ed 100644
+> > --- a/monitor/monitor.c
+> > +++ b/monitor/monitor.c
+> > @@ -116,6 +116,16 @@ bool monitor_cur_is_qmp(void)
+> >      return cur_mon && monitor_is_qmp(cur_mon);
+> >  }
+> >  
+> > +/**
+> > + * Is the current monitor, if any, a HMP monitor?
+> 
+> "an HMP"?  Not a native speaker...
 
-> Hi all!
->
-> Here are some generic improvements around qemu_file_get_fd() interface
-> and failure path.
->
-> Vladimir Sementsov-Ogievskiy (5):
->   vmstate-types: get_fd(): handle qemu_file_get_fd() failure
->   qemu-file: qemu_file_get_fd(): fail if no expected fd come
->   qemu-file: qemu_file_get_fd(): get byte in one shot
->   qemu-file: qemu_file_get_fd(): check service byte itself
->   qemu-file: qemu_file_get_fd(): improve interface
->
->  migration/qemu-file.c     | 41 ++++++++++++++++++++++++---------------
->  migration/qemu-file.h     |  2 +-
->  migration/vmstate-types.c |  5 +++--
->  3 files changed, 29 insertions(+), 19 deletions(-)
+Not that I know the rules either really, but I think
+it does sound better as "an" :-)
 
-Queued, thanks
+> > + */
+> > +bool monitor_cur_is_hmp(void)
+> > +{
+> > +    Monitor *cur_mon = monitor_cur();
+> > +
+> > +    return cur_mon && !monitor_is_qmp(cur_mon);
+> > +}
+> > +
+> 
+> The only use at the end of this series looks like this:
+> 
+>     Monitor *cur = NULL;
+> 
+>     if (monitor_cur_is_hmp()) {
+>         cur = monitor_cur();
+>     } else {
+>         // some stderr code
+>     }
+> 
+> Meh.  Could do
+> 
+>     Monitor *cur = monitor_cur();
+> 
+>     if (monitor_cur_is_qmp(cur)) {
+>         cur = NULL;
+>         // some stderr code
+>     }
+> 
+> Or with a helper returning the HMP monitor, we could have something like
+> 
+>     cur = monitor_cur_hmp();
+> 
+>     if (!cur) {
+>         // some stderr code
+>     }
+> 
+> Doesn't mirror monitor_cur_is_qmp() then.  But I just pointed out in
+> reply to PATCH 11 that we don't actually need monitor_cur_is_qmp()>
+
+I'll do the middle option here. It is pointless churn to delete
+monitor_cur_is_qmp and then add monitor_cur_is_hmp or monitor_cur_hmp,
+so i'll just use monitor_cur_is_qmp
+
+> 
+> Ideas, not demands.
+> 
+> >  /**
+> >   * Is @mon is using readline?
+> >   * Note: not all HMP monitors use readline, e.g., gdbserver has a
+> > diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
+> > index a7c32297c9..674211f48f 100644
+> > --- a/stubs/monitor-core.c
+> > +++ b/stubs/monitor-core.c
+> > @@ -7,6 +7,12 @@ Monitor *monitor_cur(void)
+> >      return NULL;
+> >  }
+> >  
+> > +bool monitor_cur_is_hmp(void)
+> > +{
+> > +    /* since monitor_cur() above returns NULL, this can't be true */
+> 
+> Maybe
+> 
+>        /* We can't have a monitor, let alone an HMP monitor */
+
+Sure.
+
+
+> > diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
+> > index ee66d727c3..4b7f408902 100644
+> > --- a/tests/unit/test-util-sockets.c
+> > +++ b/tests/unit/test-util-sockets.c
+> > @@ -74,6 +74,7 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
+> >  Monitor *monitor_cur(void) { return cur_mon; }
+> >  Monitor *monitor_set_cur(Coroutine *co, Monitor *mon) { abort(); }
+> >  int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap) { abort(); }
+> > +bool monitor_cur_is_hmp(void) { return false; }
+> 
+> Fine.  abort() would also be fine.  Matter of taste.
+
+I tested abort is ok here .
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
