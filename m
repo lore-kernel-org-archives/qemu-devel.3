@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFEAAD37E2A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 13:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F4B2D37E33
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 13:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg0zI-0003ho-H2; Wed, 14 Jan 2026 08:32:40 -0500
+	id 1vg11d-00050U-MJ; Wed, 14 Jan 2026 08:35:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vg0zG-0003ed-R3
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:32:38 -0500
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vg0zD-00016I-GE
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:32:38 -0500
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-4ee158187aaso93064841cf.0
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 05:32:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768397554; x=1769002354; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dYC9MECaOeYkArVj/smUxFw7t4bW/pDEQLXuKrDCVeA=;
- b=XQWVvqWQFF5O/NKqCSD0ZNYGDgDCOdb7x133v9vF8vR8A5t2cuWVgf3xXA6Y/Gjmnw
- GRLYu1MR+n0vJ5+FKE3xwTy5o+lLXFknVRCNUuvm/uUhz2bFlsmFrmopm7diBeE6QvKl
- I4gajl3MRmILTs5zXQwi/lWlPb3f8/2nGZwaoyQ3LGlXUOxoAnLn2+ApB0P+tN8Z5k2b
- RlFr14wJm3NPDiirniD0NC1CL2FzOpWLEazaRCNsolxw8PrlMYzX5HCLuVeA9hkN7LTe
- C9/FhU4t5VEcVvBIFke+xfkc5JFiegLt7idl7tSHpeCIZ01kzWGhaER8VetvQS8v48yl
- TutQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768397554; x=1769002354;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=dYC9MECaOeYkArVj/smUxFw7t4bW/pDEQLXuKrDCVeA=;
- b=giRV/YrnnzSFUcPit1QyMX5x9ZKijF4Gdfork/uzTbOh9JcOznw1OJZ02dJter6eXV
- 8TBvPutIhTpSZLVtjvw7b1hHa0CfqY1+NpgBxH0S7xaafXkb4TYi0XD/vEng2yO2nijK
- 0usTSk3AGxgPRnI6BfScKSnIj5jlz7JGe35UNR7ntO7/O00d8MSA6FV4EFRF7hqX8Buj
- A4TpUyUNV71ZxUzIpf6kpNvaw4aeVuIk/jT+el0V3ozADU+jJor9nfAGKv4BTOseac9Z
- ADwlogZ/rHzxziJOABLndCAYIJAer1FInFTr6NxL9mZiS4VJx+tEFD2lm7CtmPbDIJ7y
- kNvw==
-X-Gm-Message-State: AOJu0Yw2vogMP6rO9MZKNBjfV+JMBfH0Zarfi6z5GB8AKSUdk/gb86mk
- +Mcqmp5yGGOP9GvfcGH/nsPUPXHzrlie3U+SOdJGqWc9Zmb1/Lt6ykH1kTVylNHdL+VidozZKxs
- RbASUwpD74DX71Utlf04mSp4tT50gVD8=
-X-Gm-Gg: AY/fxX4onw6r771n15MT6bFH8ObJnxaPDBCCLA+OhOSvhKujzn8nXICcYqFd2lfn7y4
- v8bVXJAPka1rG+qU7IgpwMcjuoEyKKCyu1UJ/t/dhK6DVsp8wu/MlTa75LMY9Yw0Aub80INC82/
- I/GUZxkKlKXW8Skpe5oIn8SzrukCnSL9+CuS36+4DXz9rw+mP0Isr38s8OSbPAhBhedGXq3dCyL
- G+foDBVVVSy68XjfTbIAjihcp7/Ywex6J1paXVrGxatJe4xbkyswVggkuXBidqH1DlAthNIprVn
- n5OoLEx/m4im5k1iUUHwnO540Pc=
-X-Received: by 2002:ac8:4516:0:b0:501:48e9:68f with SMTP id
- d75a77b69052e-50148e90899mr21255751cf.62.1768397554189; Wed, 14 Jan 2026
- 05:32:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ashish.a6@samsung.com>)
+ id 1vg11N-0004we-N1
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:34:50 -0500
+Received: from mailout4.samsung.com ([203.254.224.34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ashish.a6@samsung.com>)
+ id 1vg11K-0001Gy-BK
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:34:49 -0500
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+ by mailout4.samsung.com (KnoxPortal) with ESMTP id
+ 20260114133437epoutp04e18e0279793ec4d6f6ddee7fa4c86717~KnFGEHPSR2088520885epoutp048
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 13:34:37 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
+ 20260114133437epoutp04e18e0279793ec4d6f6ddee7fa4c86717~KnFGEHPSR2088520885epoutp048
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1768397677;
+ bh=etVFenIhIxSsHEzltnL7HAxnnWzjPlQugjOs0XYHjeA=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=E7jdGEtsO7W6IEM8npsZEZnEz3PzhM1RSvkmtRhFUoqCk4QckBTybaVoSQkDvf+Hv
+ dLUTE46HH2Ley+C++u9Q9bh4zfyaV29tT62ifCXaKo2Jf9G8UR53XqRGUS/W01da/q
+ MZpotWDbWI0pwNXjJ26JSQKC629qg98OLmZcCRME=
+Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
+ epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
+ 20260114133437epcas5p18526dbc9e3bb973369e1d82a5ab8025c~KnFFvaxle1496614966epcas5p15;
+ Wed, 14 Jan 2026 13:34:37 +0000 (GMT)
+Received: from epcas5p1.samsung.com (unknown [182.195.38.90]) by
+ epsnrtp04.localdomain (Postfix) with ESMTP id 4drnCc29GPz6B9m6; Wed, 14 Jan
+ 2026 13:34:36 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+ epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+ 20260114133434epcas5p377118eb1a39e8fd591ec44b0bd9e56e0~KnFDam6c80773107731epcas5p3Q;
+ Wed, 14 Jan 2026 13:34:34 +0000 (GMT)
+Received: from test-System-Product-Name (unknown [107.99.41.85]) by
+ epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20260114133433epsmtip21d66f9174c90a385f2b04635fd3daf4a~KnFCLzECD0906409064epsmtip2u;
+ Wed, 14 Jan 2026 13:34:33 +0000 (GMT)
+Date: Wed, 14 Jan 2026 19:01:51 +0530
+From: Ashish Anand <ashish.a6@samsung.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, saurabh@samsung.com,
+ y.kaushal@samsung.com, vishwa.mg@samsung.com, ashish.anand202@gmail.com
+Subject: Re: [PATCH] target/arm: Implement WFE, SEV and SEVONPEND for Cortex-M
+Message-ID: <yytwea73bmlkyi32l47wdkbqe4d2we5qe6edevity5uymntu22@vzzwz7cpgwfv>
 MIME-Version: 1.0
-References: <20260114090523.1315939-1-pbonzini@redhat.com>
-In-Reply-To: <20260114090523.1315939-1-pbonzini@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 14 Jan 2026 17:32:21 +0400
-X-Gm-Features: AZwV_Qjs-Bg2g1g8lHLILJyYJOvCTN8LjXznV6X7Rh9IE_A-58hKvouTjfJxmUI
-Message-ID: <CAJ+F1CJ3n-z6EvRZpCDaezw4ytpyBxPWpos=Ge4CmHZ-uSzhcg@mail.gmail.com>
-Subject: Re: [PATCH] rust: hwcore: add chardev symbols to integration tests
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, thuth@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82a.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <CAFEAcA9Ok=yT_t1kTLSnw8fiG1i5fZXZfKB-Bb=Lw5MeAjA7hQ@mail.gmail.com>
+X-CMS-MailID: 20260114133434epcas5p377118eb1a39e8fd591ec44b0bd9e56e0
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+ boundary="----Rvty6Ov.E7w8fqTiecbGSIlWaDZOz3Joz9WFZpHBwcJNCC2Q=_f8a40_"
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20251223120242epcas5p44b454df5afd0d517a4562a545ad11218
+References: <CGME20251223120242epcas5p44b454df5afd0d517a4562a545ad11218@epcas5p4.samsung.com>
+ <20251223120012.541777-1-ashish.a6@samsung.com>
+ <CAFEAcA9Ok=yT_t1kTLSnw8fiG1i5fZXZfKB-Bb=Lw5MeAjA7hQ@mail.gmail.com>
+Received-SPF: pass client-ip=203.254.224.34;
+ envelope-from=ashish.a6@samsung.com; helo=mailout4.samsung.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,47 +93,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 14, 2026 at 1:06=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> Even though they are not used, rustc does not elide its symbols on msys2.
-> This causes a linker error.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+------Rvty6Ov.E7w8fqTiecbGSIlWaDZOz3Joz9WFZpHBwcJNCC2Q=_f8a40_
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Disposition: inline
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On 13/01/26 03:21PM, Peter Maydell wrote:
+>On Tue, 23 Dec 2025 at 12:02, Ashish Anand <ashish.a6@samsung.com> wrote:
+>>
+>> From: "ashish.a6" <ashish.a6@samsung.com>
+>>
+>>     Currently, QEMU implements the 'Wait For Event' (WFE) instruction as a
+>>     a simple yield. This causes high host CPU usage because Guest
+>>     RTOS idle loops effectively become busy-wait loops.
+>>
+>>     To improve efficiency, this patch transitions WFE to use the architectural
+>>     'Halt' state (EXCP_HLT) for M-profile CPUs. This allows the host thread
+>>     to sleep when the guest is idle.
+>
+>
+>> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+>> index 39f2b2e54d..44433a444c 100644
+>> --- a/target/arm/cpu.h
+>> +++ b/target/arm/cpu.h
+>> @@ -639,6 +639,7 @@ typedef struct CPUArchState {
+>>          uint32_t nsacr;
+>>          uint32_t ltpsize;
+>>          uint32_t vpr;
+>> +        uint32_t event_register;
+>>      } v7m;
+>
+>One more small thing that I thought of -- although we're only
+>implementing WFE support for M-profile here, the concept of the
+>event register is the same for A-profile. So we should put the
+>field in the top level of the CPU state struct, not inside the v7m
+>sub-struct. That way it's available for us to use and share
+>if and when we ever do it for A-profile.
+>
+>> +static bool m_event_needed(void *opaque)
+>> +{
+>> +    ARMCPU *cpu = opaque;
+>> +    /* Only save the state if the event register is set (non-zero) */
+>> +    return cpu->env.v7m.event_register != 0;
+>> +}
+>> +
+>> +static const VMStateDescription vmstate_m_event = {
+>> +    .name = "cpu/m/event",
+>> +    .version_id = 1,
+>> +    .minimum_version_id = 1,
+>> +    .needed = m_event_needed,
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_UINT32(env.v7m.event_register, ARMCPU),
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +};
+>
+>...and so similarly the migration handling should not have
+>anything M-profile specific to it.
+>
+>thanks
+>-- PMM
 
-> ---
->         Yet another tiny bit.  For the remaining issue, which is another
->         linker error in the same test due to missing system/memory.c, I'm
->         posting (after retesting) a patch series from Marc-Andr=C3=A9 tha=
-t is a
->         bit bigger but was going to be submitted anyway.
->
->  rust/hw/core/meson.build | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/rust/hw/core/meson.build b/rust/hw/core/meson.build
-> index fa1765a2302..942ee9cdacf 100644
-> --- a/rust/hw/core/meson.build
-> +++ b/rust/hw/core/meson.build
-> @@ -73,7 +73,7 @@ test('rust-hwcore-rs-integration',
->          override_options: ['rust_std=3D2021', 'build.rust_std=3D2021'],
->          rust_args: ['--test'],
->          install: false,
-> -        dependencies: [common_rs, hwcore_rs, bql_rs, migration_rs, util_=
-rs]),
-> +        dependencies: [chardev_rs, common_rs, hwcore_rs, bql_rs, migrati=
-on_rs, util_rs]),
->      args: [
->          '--test', '--test-threads', '1',
->          '--format', 'pretty',
-> --
-> 2.52.0
->
->
+Hi Peter,
+
+Thanks for the detailed review. I acknowledge the comments and will incorporate the suggested changes and send a v2 shortly.
 
 
---=20
-Marc-Andr=C3=A9 Lureau
+Regards,
+Ashish
+
+>
+
+------Rvty6Ov.E7w8fqTiecbGSIlWaDZOz3Joz9WFZpHBwcJNCC2Q=_f8a40_
+Content-Type: text/plain; charset="utf-8"
+
+
+------Rvty6Ov.E7w8fqTiecbGSIlWaDZOz3Joz9WFZpHBwcJNCC2Q=_f8a40_--
 
