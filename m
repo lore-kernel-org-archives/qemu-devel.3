@@ -4,96 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE58D31A2C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 09:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41687D31A29
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 09:06:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfwoo-0003MJ-L4; Wed, 14 Jan 2026 04:05:34 -0500
+	id 1vfwpP-000484-75; Wed, 14 Jan 2026 04:06:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfwom-0003Jc-Tb
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 04:05:32 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfwpN-00046u-Ll
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 04:06:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfwol-0001ps-5t
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 04:05:32 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vfwpL-0003D3-VD
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 04:06:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768381529;
+ s=mimecast20190719; t=1768381566;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/K6S1A+ISlG2P6HVYW3Zy18bB5bP8aMGEnAL86/rDno=;
- b=ReAx9XaWdRRRCoCRBP/rNDT1SVdGwANua3FT+3aB+BRcyFmGTAuKdVxpVg3kOJrXk3ObNt
- e7ie0ERZ987FDtjtlJY9+Io7KRVm44Z4oT1nqxoRvL4vi2IWu6Eliaa0pSjTMKqHND080G
- quVUA5/XXF43IArSnBy9fLfChNkSi2o=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=CAe4D3z7f7mxwePJesm9oF4QK7ZKBzc7U9Cut8UX22w=;
+ b=b6+WvxiowPSwEKdZxKbjkl+X/EwOMNoakoCvDUwTRidKU+LQnh9Dwm7jyN9HSayNYejKEQ
+ jvXgToOmhYXKecUM5qvXyWWgSrfo5acuUAOTKHQxt2JOo4TeH1L1HG6jVtQxAbJkZjuP93
+ 73H9NxGRb+ltnDs8gkD9eZ2scMqXas4=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-298-TqUZjI6UPDOf50tE-C8Eyw-1; Wed, 14 Jan 2026 04:05:28 -0500
-X-MC-Unique: TqUZjI6UPDOf50tE-C8Eyw-1
-X-Mimecast-MFC-AGG-ID: TqUZjI6UPDOf50tE-C8Eyw_1768381527
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47d5c7a2f54so3363325e9.1
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 01:05:27 -0800 (PST)
+ us-mta-60-2G-iZNAZNBWwA93rkBJgYw-1; Wed, 14 Jan 2026 04:06:04 -0500
+X-MC-Unique: 2G-iZNAZNBWwA93rkBJgYw-1
+X-Mimecast-MFC-AGG-ID: 2G-iZNAZNBWwA93rkBJgYw_1768381563
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-430fb8d41acso5527661f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 01:06:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768381526; x=1768986326; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/K6S1A+ISlG2P6HVYW3Zy18bB5bP8aMGEnAL86/rDno=;
- b=gWEa+fGXG23/a6eJlDyb3jxTdpLO/ud5poorlea2bCaAYM//XmlDm+CWCJg9FBfopt
- pnxVIXMpHkrjDQiK4VGpu0jrLHVyhBf2pIQ66TZMwHjUYmGMNv0k/dAl61rLm3HcYx3q
- v9SIjYtpr073oIeWmWXjfYbH3IovJvZrToKYAZFbYh34s0VqmumAKYaiOE8Tyd3/RkVh
- 2HbptFPTgWr/C2+9dG3gBouZjWmUNxlmgfe7kTh/mxCQ+wW8tfeU/lWtbgqf+C/u0onk
- lqq3veaI/3S1jhL2rKmhtT8ysD6Ee2XNo33UB9kbc2nz2YRWMGo310a3jnZccEOPMRsK
- 7w8A==
+ d=redhat.com; s=google; t=1768381563; x=1768986363; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=CAe4D3z7f7mxwePJesm9oF4QK7ZKBzc7U9Cut8UX22w=;
+ b=W9j+mG2SLwdFVWNGJr/lgm9XgumP8Wf6TW27JZKhzO6J3LS3EV38GlYJAaMJ7nwFK5
+ n6Zc+glm1M5qtDB5DT/0wPI+m8RC/zjcWz9VFkWW7q4TSoI1bH44OVLcQWHzQu0Dxjxe
+ FhcqKKdjB0JU7hu5cGUlFV09r5WzaobxcJ4tCTPDELsEHzuCMGyri7I60AW3IfDNqS8R
+ dDaR6fBoykQEGNqnhABxxYAeGuAVK7sy8uwRPQfTTGiFauOfuOtpxIRoVj+sNuuvj6eP
+ g5SLe4UnPGWXMbSrXwaenIWcnvobNvHk9m84HHI8H7CswAeFfdOJCAz5YgyMweuMI/tT
+ 3pRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768381526; x=1768986326;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1768381563; x=1768986363;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/K6S1A+ISlG2P6HVYW3Zy18bB5bP8aMGEnAL86/rDno=;
- b=Bx3hlySHe+mZz6fNAin1KSjbUbTqWO4qF8o/nk0oBPDjQBvRiGf8E6/Osv6cfttDo/
- 8LfycKw1oWhGUfIO7q31ukFupyK+Oa3laViNCQ408uCh032iGutwXI6oUB+19Sv5F50r
- gmsVMl8X4pmqXJsqrEK0q3wmhBsx/OrLoTyraqNakIRdPknknC9tix225jI1ckP6vvej
- ryRCM1Kk5b6vemm4TH2sJIqCrdS/f+phw1V8At0H3AHiZ7UL1VfUrxfugT7Da27blt4i
- X0R8k6Wz/PW+/aX7OcAM/fpcEAC+IHp7+SyxQMDa4eWvJVP36v9mLC8hY+pmug55xxIs
- xIsw==
-X-Gm-Message-State: AOJu0YyDldtHeR7f8zOaXtqk7CfgGA2usQ2UZTw/TL58YhIMDIhOyuhY
- tgx8M1omfSK8NqbFXF0oSEVUjFlLPVPqQybbvtvjgMyrv8yZVTqnXR6LqniLGdHyVgvV2JKACTe
- 6nZforr8bcqpAViDQNZbtD1nKxZN4+gVLJGZSQ+3bCWmwZYGnpnRod0VwThivhs2W101fJjkgtv
- OlT7Y7oGFD7TfVRcKcelC2OnNIc07RHSkRVC2xAglU
-X-Gm-Gg: AY/fxX4IAMXdZrV+yiULJEjA74dI1bdYE6hDGV/8NngarA1Q+UJ0tYkv4mAFcKftgjb
- 9QcuC1d6SnTrDmL/6a/l753ASn/gkLOX6Xg0jIlLyBv01nyscq80zPSE6yHmNvc8aSrIqArPppn
- PKyvykQ+PhrEOC0u8MBk6P643LBQ4SFrFTP8bQbQV4z9QI6mYVSqcaDhZ1Ops1yAXJctnbfRKKL
- gUKLNZQTacSegxfTaP21TzvIeGSWXScff3RIJJy0fcQj6i9NAu0ZWZRGJEoPB6hMfGkXNUDAhDf
- 3X4nTWl4uxFqCNVG7fvibBLJ30ulVIVTCl6Jv6bbyW9ZAqUFgoGK8F7EefD3KaVdvvZgfL9PadN
- JU3IwvSvj5aVooKcAveb9HVvA/FfG6ti1+hmA54uv7h242GINWfFIVxSv/XYFdWJveefIIVUxBc
- 7nhfrCvzT5Idm/OQ==
-X-Received: by 2002:a05:600c:3ba7:b0:477:a289:d854 with SMTP id
- 5b1f17b1804b1-47ee377babcmr21026355e9.5.1768381525937; 
- Wed, 14 Jan 2026 01:05:25 -0800 (PST)
-X-Received: by 2002:a05:600c:3ba7:b0:477:a289:d854 with SMTP id
- 5b1f17b1804b1-47ee377babcmr21025915e9.5.1768381525428; 
- Wed, 14 Jan 2026 01:05:25 -0800 (PST)
-Received: from [192.168.10.48] ([151.61.26.160])
+ bh=CAe4D3z7f7mxwePJesm9oF4QK7ZKBzc7U9Cut8UX22w=;
+ b=JhHV419vhES+hYd4MocLVEBmQ6SxeGpVBh/o4Qxd/uN2mCN3vBRIu8/sZbeneqCJCk
+ F/90EJKXjARgFeqzrmkElMu9ORzUDbLNY2zEdKWFMmzuMgHYv6nQMi2CO4ZiAc01z11J
+ UFv4p2H/fJQzKs5pXaz9MGVdfa+gkiY1tr1+k5OkGftwOHZO1aFKWUAZg/EEfkV+n0ew
+ eVDXs/8pRRd5C93wEs1/zCD+ywisxZ5VYvrTwYEimlLsqRdiE6jS/6Afse54O+ArMfUn
+ VegGtJKJ9ChDPsnrAskKwyINEYR9IYVbWaZfhjyFkML5QzeYDJFne5MfKEwJVQoRrnbY
+ RqDw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX9n+qOGcuEOVP8cZadyWvorz+ya1OpXcpGadWy9WIUd44PR6Ut6GFrToIJ9Wtk3FhbDK3wlLL1jqYL@nongnu.org
+X-Gm-Message-State: AOJu0YxZ5v8pj5uE7GGYfGlfjSvXk0CXvyNz4SCHQqB6AJnGz2ie98Jd
+ HhPhLBNJQydEwBjKaMk7fVCe+UdLkFvfK1maCv3hDTd6DQ7aezSRjifFyw2gX1atJXrFRtGmEJF
+ P32QmO9OpRe5Smye3B+l0rw5aL1O/sLy1omkaV0ec0VlZ+iuv7kMC3IuB
+X-Gm-Gg: AY/fxX7HaccjEvJwe4ChfnNc4safGR1Fm3Je5ZM22+WYOhdn2lxwvdaqCO45UPsjJRX
+ jticiriuUaKCK0S5b2KBJKPBJHTWr6aLCXhr1KvO5mlaAWtnZ76i/w3dHfxbxeqHtd801T4um7P
+ aWDFyGw3/gHo1D/jy00gTIxNbXJn0Vdh4AB/DrMbd58+qC2GUgibhFpCUGh+VYO10SVf5h1S4tY
+ YDJIv5ge9akQ5mOkR8lbKEmhL0YwikQs2cE7rJ+9jWa21XRwsZr/JQcbXBvSKnETD8kq37XjrgD
+ kMDj9j8hHfFh/NaXfy9qYAcaio8adV4zJ5erFgMuN3sywtHu6uzgqLQsa/uHvS0SgD5nesF8UYe
+ K/wR3WF/pmW6k7S5OI+3h9Aceg/PIG3Yav2z+E8PYyuTC53tz
+X-Received: by 2002:a05:600c:83c3:b0:477:8a2a:1244 with SMTP id
+ 5b1f17b1804b1-47ee32fcf0amr17788425e9.11.1768381563486; 
+ Wed, 14 Jan 2026 01:06:03 -0800 (PST)
+X-Received: by 2002:a05:600c:83c3:b0:477:8a2a:1244 with SMTP id
+ 5b1f17b1804b1-47ee32fcf0amr17788005e9.11.1768381563066; 
+ Wed, 14 Jan 2026 01:06:03 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47ee57fe917sm17526335e9.10.2026.01.14.01.05.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Jan 2026 01:05:24 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com
-Subject: [PATCH] rust: hwcore: add chardev symbols to integration tests
-Date: Wed, 14 Jan 2026 10:04:17 +0100
-Message-ID: <20260114090523.1315939-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.52.0
+ 5b1f17b1804b1-47ee57b11e5sm17973185e9.8.2026.01.14.01.06.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 Jan 2026 01:06:02 -0800 (PST)
+Message-ID: <437f995f-6ae0-469a-b2d3-6ce59b3f49e0@redhat.com>
+Date: Wed, 14 Jan 2026 10:06:01 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/6] hw/riscv: Add the Tenstorrent Atlantis machine
+To: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Michael Ellerman <mpe@oss.tenstorrent.com>,
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Nick Piggin <npiggin@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
+References: <20260114043433.1056021-1-joel@jms.id.au>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260114043433.1056021-1-joel@jms.id.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -102,7 +156,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,33 +172,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Even though they are not used, rustc does not elide its symbols on msys2.
-This causes a linker error.
+Hello Joel,
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
-	Yet another tiny bit.  For the remaining issue, which is another
-	linker error in the same test due to missing system/memory.c, I'm
-	posting (after retesting) a patch series from Marc-André that is a
-	bit bigger but was going to be submitted anyway.
+On 1/14/26 05:34, Joel Stanley wrote:
+> v2 separates out prep patches so the machine can be reviewed
+> independently. It depends on the following two series:
+> 
+>   AIA: https://lore.kernel.org/qemu-devel/20260109133125.397364-1-joel@jms.id.au
+>   Boot: https://lore.kernel.org/qemu-devel/20260109131657.396794-1-joel@jms.id.au
+> 
+> Original cover letter:
+> 
+> Introducing Tenstorrent Atlantis!
+> 
+>   The Tenstorrent Atlantis platform is a collaboration between Tenstorrent
 
- rust/hw/core/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/hw/core/meson.build b/rust/hw/core/meson.build
-index fa1765a2302..942ee9cdacf 100644
---- a/rust/hw/core/meson.build
-+++ b/rust/hw/core/meson.build
-@@ -73,7 +73,7 @@ test('rust-hwcore-rs-integration',
-         override_options: ['rust_std=2021', 'build.rust_std=2021'],
-         rust_args: ['--test'],
-         install: false,
--        dependencies: [common_rs, hwcore_rs, bql_rs, migration_rs, util_rs]),
-+        dependencies: [chardev_rs, common_rs, hwcore_rs, bql_rs, migration_rs, util_rs]),
-     args: [
-         '--test', '--test-threads', '1',
-         '--format', 'pretty',
--- 
-2.52.0
+What kind of board is the "Tenstorrent Atlantis platform" ? Is it an evb ?
+
+>   and CoreLab Technology. It is based on the Atlantis SoC, which includes
+
+Why isn't the SoC modeled independently ?
+
+Thanks,
+
+C.
+
+>   the Ascalon-X CPU and other IP from Tenstorrent and CoreLab Technology.
+> 
+>   The Tenstorrent Ascalon-X is a high performance 64-bit RVA23 compliant
+>   RISC-V CPU.
+> 
+> This initial series adds the base machine support including:
+> 
+>   - AIA (Advanced Interrupt Architecture) support
+>   - PCIe controller and DesignWare I2C integration
+>   - Serial console and device tree generation
+>   - Functional tests for OpenSBI+Linux boot
+> 
+> Based-on: 20260114012846.981884-1-joel@jms.id.au 20260109131657.396794-1-joel@jms.id.au
+> 
+> Joel Stanley (3):
+>    hw/riscv: Add Tenstorrent Atlantis machine
+>    hw/riscv/atlantis: Integrate i2c buses
+>    hw/riscv/atlantis: Add some i2c peripherals
+> 
+> Nicholas Piggin (3):
+>    hw/riscv/atlantis: Add PCIe controller
+>    tests/functional/riscv64: Add tt-atlantis tests
+>    hw/riscv/atlantis: Use halting kernel if there is no payload
+> 
+>   MAINTAINERS                                  |   9 +
+>   docs/system/riscv/tt_atlantis.rst            |  38 +
+>   docs/system/target-riscv.rst                 |   1 +
+>   include/hw/riscv/tt_atlantis.h               |  94 ++
+>   hw/riscv/tt_atlantis.c                       | 916 +++++++++++++++++++
+>   hw/riscv/Kconfig                             |  21 +
+>   hw/riscv/meson.build                         |   1 +
+>   tests/functional/riscv64/meson.build         |   1 +
+>   tests/functional/riscv64/test_opensbi.py     |   4 +
+>   tests/functional/riscv64/test_tt_atlantis.py |  68 ++
+>   10 files changed, 1153 insertions(+)
+>   create mode 100644 docs/system/riscv/tt_atlantis.rst
+>   create mode 100644 include/hw/riscv/tt_atlantis.h
+>   create mode 100644 hw/riscv/tt_atlantis.c
+>   create mode 100755 tests/functional/riscv64/test_tt_atlantis.py
+> 
 
 
