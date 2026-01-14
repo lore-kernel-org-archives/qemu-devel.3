@@ -4,98 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 418DBD29FF8
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 12:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37D9BD29FF7
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 12:32:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfzy3-0003zS-AD; Wed, 14 Jan 2026 07:27:19 -0500
+	id 1vg02S-0006iQ-DO; Wed, 14 Jan 2026 07:31:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vfzy0-0003rU-E9
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 07:27:16 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vg01x-0006We-QZ
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 07:31:23 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vfzxy-0001PG-QV
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 07:27:16 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vg01w-0002pQ-8s
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 07:31:21 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 367DD33F78;
- Wed, 14 Jan 2026 12:27:13 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id BAE4A5C3F9;
+ Wed, 14 Jan 2026 12:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768393633; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1768393878; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=sRMSSYF29uwoE3xWQxZAQM6x+zsNwy9vKE9KXEsjmLM=;
- b=g7k1zgVSQhq855K7ZJFwyk/rZraq/d/Z+7AAl8OEQXNCJyT8b2VLhIRNEy/LxbG1ib0NFH
- V3u047tSDuz8M8Vmfrbj0tJc+PcDF/3tNEZp66U7beCoIimpx1V1DfSXvMODeocmg5WHZt
- FF1ZpcYlhLQupcrJ8KCJ0HLhUub8xk8=
+ bh=Ur64gQc9pvA//VWm344o9jy/CbkQ/T3sUwCJur5Gt1c=;
+ b=LA5WLf8dymWraWd9JJR6XlHbF0YISgwVjfG1dTbqqrLY1gIoSP2NZwW7uKeX060nCuqgTf
+ m+PZy0FdNr5EEWNY93reA0oQHq0tAw71Qp/r5afyDKpHlCSZm/Evw0UXsDB7e0WHKAv4Eq
+ 1qtOHYkVSIKgs5hEKRqHZ+tSg/SzKM8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768393633;
+ s=susede2_ed25519; t=1768393878;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=sRMSSYF29uwoE3xWQxZAQM6x+zsNwy9vKE9KXEsjmLM=;
- b=RZDd0kfkVlyG0/vhQTw/bEeELqKlEXvF1wAU5IRc5zcURC0BQO3kMfYXcntRjEwcHlMLF7
- 40T6a41aHOi69nCA==
-Authentication-Results: smtp-out1.suse.de;
-	none
+ bh=Ur64gQc9pvA//VWm344o9jy/CbkQ/T3sUwCJur5Gt1c=;
+ b=Gytr2VwL0X+pzrpifmPY7kPrUp1/sxf0arESyYzxDy5tSYeZ0J6wPxRoUr/JaWsI/D2UO6
+ 0V/22P+EBzL5kOBQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=LA5WLf8d;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Gytr2VwL
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768393633; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1768393878; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=sRMSSYF29uwoE3xWQxZAQM6x+zsNwy9vKE9KXEsjmLM=;
- b=g7k1zgVSQhq855K7ZJFwyk/rZraq/d/Z+7AAl8OEQXNCJyT8b2VLhIRNEy/LxbG1ib0NFH
- V3u047tSDuz8M8Vmfrbj0tJc+PcDF/3tNEZp66U7beCoIimpx1V1DfSXvMODeocmg5WHZt
- FF1ZpcYlhLQupcrJ8KCJ0HLhUub8xk8=
+ bh=Ur64gQc9pvA//VWm344o9jy/CbkQ/T3sUwCJur5Gt1c=;
+ b=LA5WLf8dymWraWd9JJR6XlHbF0YISgwVjfG1dTbqqrLY1gIoSP2NZwW7uKeX060nCuqgTf
+ m+PZy0FdNr5EEWNY93reA0oQHq0tAw71Qp/r5afyDKpHlCSZm/Evw0UXsDB7e0WHKAv4Eq
+ 1qtOHYkVSIKgs5hEKRqHZ+tSg/SzKM8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768393633;
+ s=susede2_ed25519; t=1768393878;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=sRMSSYF29uwoE3xWQxZAQM6x+zsNwy9vKE9KXEsjmLM=;
- b=RZDd0kfkVlyG0/vhQTw/bEeELqKlEXvF1wAU5IRc5zcURC0BQO3kMfYXcntRjEwcHlMLF7
- 40T6a41aHOi69nCA==
+ bh=Ur64gQc9pvA//VWm344o9jy/CbkQ/T3sUwCJur5Gt1c=;
+ b=Gytr2VwL0X+pzrpifmPY7kPrUp1/sxf0arESyYzxDy5tSYeZ0J6wPxRoUr/JaWsI/D2UO6
+ 0V/22P+EBzL5kOBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A84713EA66;
- Wed, 14 Jan 2026 12:27:12 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 320A83EA63;
+ Wed, 14 Jan 2026 12:31:17 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iLc7GqCLZ2mJSgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 14 Jan 2026 12:27:12 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id jj90OJWMZ2kXTwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 14 Jan 2026 12:31:17 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
 Cc: qemu-devel@nongnu.org, dtalexundeer@yandex-team.ru,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru
-Subject: Re: [PATCH 1/5] vmstate-types: get_fd(): handle qemu_file_get_fd()
- failure
-In-Reply-To: <20260114064710.176268-2-vsementsov@yandex-team.ru>
+Subject: Re: [PATCH 2/5] qemu-file: qemu_file_get_fd(): fail if no expected
+ fd come
+In-Reply-To: <20260114064710.176268-3-vsementsov@yandex-team.ru>
 References: <20260114064710.176268-1-vsementsov@yandex-team.ru>
- <20260114064710.176268-2-vsementsov@yandex-team.ru>
-Date: Wed, 14 Jan 2026 09:27:09 -0300
-Message-ID: <87y0m0nzvm.fsf@suse.de>
+ <20260114064710.176268-3-vsementsov@yandex-team.ru>
+Date: Wed, 14 Jan 2026 09:31:15 -0300
+Message-ID: <87v7h4nzos.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
+X-Spamd-Result: default: False [-1.51 / 50.00]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ MX_GOOD(-0.01)[]; BAYES_HAM(-0.00)[28.78%]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
  FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ RCVD_TLS_ALL(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: BAE4A5C3F9
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,41 +123,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-> qemu_file_get_fd() may fail, and return -1 in this case.
-> We don't support passing "invalid" file descriptors (like -1),
-> so we should not interpret error here like invalid descriptor.
+> In _put() we don't actually allow send a service byte
+> without fd. So on _get() it's unexpected. Let's be strict.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  migration/vmstate-types.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
+>  migration/qemu-file.c | 26 ++++++++++++++++----------
+>  1 file changed, 16 insertions(+), 10 deletions(-)
 >
-> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-> index 4b01dc19c2..e34bf4486e 100644
-> --- a/migration/vmstate-types.c
-> +++ b/migration/vmstate-types.c
-> @@ -321,12 +321,21 @@ const VMStateInfo vmstate_info_uint64 = {
->  static int get_fd(QEMUFile *f, void *pv, size_t size,
->                    const VMStateField *field)
+> diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+> index 4b5a409a80..02f30c1c21 100644
+> --- a/migration/qemu-file.c
+> +++ b/migration/qemu-file.c
+> @@ -389,28 +389,34 @@ int qemu_file_get_fd(QEMUFile *f)
 >  {
-> +    int fd;
->      int32_t *v = pv;
-> +
->      if (migrate_mode() == MIG_MODE_CPR_EXEC) {
->          qemu_get_sbe32s(f, v);
->          return 0;
+>      int fd = -1;
+>      FdEntry *fde;
+> +    Error *err = NULL;
+>  
+>      if (!f->can_pass_fd) {
+> -        Error *err = NULL;
+>          error_setg(&err, "%s does not support fd passing", f->ioc->name);
+> -        error_report_err(error_copy(err));
+> -        qemu_file_set_error_obj(f, -EIO, err);
+> -        goto out;
+> +        goto fail;
 >      }
-> -    *v = qemu_file_get_fd(f);
+>  
+>      /* Force the dummy byte and its fd passenger to appear. */
+>      qemu_peek_byte(f, 0);
+>  
+>      fde = QTAILQ_FIRST(&f->fds);
+> -    if (fde) {
+> -        qemu_get_byte(f);       /* Drop the dummy byte */
+> -        fd = fde->fd;
+> -        QTAILQ_REMOVE(&f->fds, fde, entry);
+> -        g_free(fde);
+> +    if (!fde) {
+> +        error_setg(&err, "%s no FD come with service byte", f->ioc->name);
+> +        goto fail;
+>      }
+> -out:
 > +
-> +    fd = qemu_file_get_fd(f);
-> +    if (fd < 0) {
-> +        return -1;
-> +    }
+> +    qemu_get_byte(f);       /* Drop the dummy byte */
+> +    fd = fde->fd;
+> +    QTAILQ_REMOVE(&f->fds, fde, entry);
+> +    g_free(fde);
 > +
-> +    *v = fd;
+>      trace_qemu_file_get_fd(f->ioc->name, fd);
+>      return fd;
 > +
->      return 0;
+> +fail:
+> +    error_report_err(error_copy(err));
+> +    qemu_file_set_error_obj(f, -EIO, err);
+> +    return -1;
 >  }
+>  
+>  /** Closes the file
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
