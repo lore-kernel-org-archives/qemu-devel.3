@@ -4,58 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32765D31A29
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 10:00:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A99CD31A3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 10:02:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfxex-0003pS-Nw; Wed, 14 Jan 2026 04:59:27 -0500
+	id 1vfxhk-0004q3-Ln; Wed, 14 Jan 2026 05:02:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfxep-0003o0-Vx
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 04:59:23 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vfxhY-0004ne-D4
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:02:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vfxel-0003bU-PZ
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 04:59:18 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vfxhQ-00041H-98
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:02:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768384753;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=3U3CCOLsG9i6TKgeqX5IOgn+kvt6XkYtIQsfgQVFE98=;
- b=HW3ZAEmoWTq8P9ulOrVD4b6aUKnMk5uImbi8jH47CEVligYFursXEP4cmynQlTrW9TQxIl
- OXSLudcRua/7KKwWQ1F1ryTQdMyuZlD0tu3oyZqF5TmsoPm/Kcqc2LzRVPfYZhP5PinSjB
- QAuIvzV+K2vrpnrHhEAPL8OME8DvM7Q=
+ s=mimecast20190719; t=1768384917;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=WJ6sAKRVLpS9eKQcwusGxwYYXh8puyVYtcQMiJpGpCE=;
+ b=ADmZN2Tg3+c64n4yaWO3dCmgU7tciRiGHVA4EQ4qAIzVtoKszVmFN1EGSTLoqxpLIqa4PE
+ DQCf6MPX1czxKoz8vrC3HdmP+e5zN58xNHs+i/LcZIR5Zw3XBMe3AIxctdLMgAXA92cWkJ
+ f6Px0SqGXM2AFcz08Q3Cdr7vnh9560c=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-puS7RUA0NT2A3D_iQ8Go-Q-1; Wed,
- 14 Jan 2026 04:59:10 -0500
-X-MC-Unique: puS7RUA0NT2A3D_iQ8Go-Q-1
-X-Mimecast-MFC-AGG-ID: puS7RUA0NT2A3D_iQ8Go-Q_1768384749
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-I_AQ1s5bNV-VOoa5D9QoLQ-1; Wed,
+ 14 Jan 2026 05:01:54 -0500
+X-MC-Unique: I_AQ1s5bNV-VOoa5D9QoLQ-1
+X-Mimecast-MFC-AGG-ID: I_AQ1s5bNV-VOoa5D9QoLQ_1768384913
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9C9D419560B7; Wed, 14 Jan 2026 09:59:08 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.32.254])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1C8DB180066A; Wed, 14 Jan 2026 09:59:05 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Paolo Bonzini <pbonzini@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>,
+ id 27EC4195606D; Wed, 14 Jan 2026 10:01:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.41])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C66F180066A; Wed, 14 Jan 2026 10:01:51 +0000 (UTC)
+Date: Wed, 14 Jan 2026 10:01:47 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
  Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH] tests/functional/x86_64: Limit the memlock test to Linux hosts
-Date: Wed, 14 Jan 2026 10:59:04 +0100
-Message-ID: <20260114095904.35442-1-thuth@redhat.com>
+Subject: Re: [PATCH] tests/functional/x86_64: Limit the memlock test to Linux
+ hosts
+Message-ID: <aWdpi4ibUm9qNrwa@redhat.com>
+References: <20260114095904.35442-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260114095904.35442-1-thuth@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -77,42 +84,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Wed, Jan 14, 2026 at 10:59:04AM +0100, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> The memlock test analyzes /proc/*/status files and expects the layout
+> from Linux in there. However, these files also exist on NetBSD hosts
+> with a completely different layout, causing this test to fail. Thus
+> limit the test to Linux hosts now.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  tests/functional/x86_64/meson.build | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
+> index f78eec5e6cf..97286d78b8f 100644
+> --- a/tests/functional/x86_64/meson.build
+> +++ b/tests/functional/x86_64/meson.build
+> @@ -9,12 +9,13 @@ test_x86_64_timeouts = {
+>    'virtio_balloon': 120,
+>  }
+>  
+> -tests_x86_64_system_quick = [
+> +tests_x86_64_system_quick = \
+> +  (host_os == 'linux' ? ['memlock'] : []) + \
 
-The memlock test analyzes /proc/*/status files and expects the layout
-from Linux in there. However, these files also exist on NetBSD hosts
-with a completely different layout, causing this test to fail. Thus
-limit the test to Linux hosts now.
+IMHO this should be done with a decorator in the test program, so
+we keep all conditions in the source, not meson.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/functional/x86_64/meson.build | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+> +[
+>    'bad_vmstate',
+>    'cpu_model_versions',
+>    'cpu_queries',
+>    'mem_addr_space',
+> -  'memlock',
+>    'migration',
+>    'pc_cpu_hotplug_props',
+>    'virtio_version',
+> -- 
+> 2.52.0
+> 
+> 
 
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index f78eec5e6cf..97286d78b8f 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -9,12 +9,13 @@ test_x86_64_timeouts = {
-   'virtio_balloon': 120,
- }
- 
--tests_x86_64_system_quick = [
-+tests_x86_64_system_quick = \
-+  (host_os == 'linux' ? ['memlock'] : []) + \
-+[
-   'bad_vmstate',
-   'cpu_model_versions',
-   'cpu_queries',
-   'mem_addr_space',
--  'memlock',
-   'migration',
-   'pc_cpu_hotplug_props',
-   'virtio_version',
+With regards,
+Daniel
 -- 
-2.52.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
