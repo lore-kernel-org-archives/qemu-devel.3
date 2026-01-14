@@ -4,62 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 396CDD3901B
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 21:14:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 799E5D39013
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 21:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg8Bo-0000Sa-IQ; Wed, 14 Jan 2026 16:14:04 -0500
+	id 1vg8UY-0008ME-IJ; Wed, 14 Jan 2026 16:33:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vg8Bm-0000Jn-7w
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 16:14:02 -0500
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vg8Bk-00074d-4U
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 16:14:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=rtGmT3WgCLgg9joCUg6jpgup4t9EbfdfHWaRCyAWx4U=; b=CnU1yISTEQ/wI86O
- H1VdT6vRn67chy6BOGPnib8aFHtHGB7gQPJvhewwHDEFpPOvRrm/AFmsveuNDaR72MySBYj0RVG6F
- XRnJTHLnXwFNH8kpMY1LzVPqXgxeAx8/QlYquoVjXbub8nr4mMx7t6NNsc2hNJr15VIPkhLA8MG4W
- p+yJ+Yfl/mxcDPpAUBIPf5fthlvL4t7yhNwtwduYUzYW+6GTOXlrr9hssdOrNetokPXmu/sQJIJei
- /0vY8t1cY6V2DnI/TR4rQSMJEmtvq/MP+4WzEW8QhkVu6X6zIO0+zYQ5fKjhnDHoBn0GXdLdijqaY
- pb8j54CaFOMLMED5Ew==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1vg8Bf-0000000En5g-2m8g;
- Wed, 14 Jan 2026 21:13:55 +0000
-Date: Wed, 14 Jan 2026 21:13:55 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
- Juan Quintela <quintela@trasno.org>,
- Zhang Chen <zhangckid@gmail.com>, zhanghailiang@xfusion.com,
- Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
-Message-ID: <aWgHE2-UuWKMkUP5@gallifrey>
-References: <20260114195659.2543649-1-peterx@redhat.com>
- <20260114195659.2543649-2-peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vg8Tx-00080J-Rl
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 16:32:55 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vg8Tw-0004d7-3U
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 16:32:49 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-64d0d41404cso386612a12.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 13:32:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1768426366; x=1769031166; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YDTcPZtVYw3MtG62eS7y+SIW0mtoLWrmocC3dD9mQTc=;
+ b=i0MSUwh0LHqEj5gQWx8Xc+QfQNyGxhzCovFbmO1eOQOBDR5x1KDxPVRwvgtgkPeJmT
+ eviSgMR4S4/XS8fl+66otN3io5fg89qMl9KMn7E51QZceyImKS76cTqjOxq/rwaZIw/9
+ 9Cv4yb2qI/fnrjD7ubKzrYmgAnm7IpFn9VF0hiJU1BnEpTORdPWugcX0sXgDQtKl9xuG
+ FkZVy6s/Yp3QmtaurAUVaXnWR0vp7PZAOStU87YFxChn5RcsVaxqFaL+wYc7yzDS2F39
+ Ody3s7qslGfBXKzTct0FYpiugDlBM8aqj/HoP8qy5ag9rTqJlOWrntsnKJgiVKSwCCaG
+ +MZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768426366; x=1769031166;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YDTcPZtVYw3MtG62eS7y+SIW0mtoLWrmocC3dD9mQTc=;
+ b=ibc8BOs3daUdXdATfqCsBnLJAH2ZfEGiQpmFiYzxmL1cF6LQ9Kpz+zv6hJNfzi9n20
+ NrxnQtIxI/tG/iPDFqNpqlQmIZJUZBAjz1UvT185Xt6y+sjS68jlonS6CvIPnKDhz5zE
+ N2g0Re5XNiVIDV01Txa86Y8x4y9jxYCl9puq/jk1w/G4y/S6j6vST610sf0KsoiGgEcy
+ pa7Y2Eb8NMAQaxmeHbyo3q2EFbY2WiTTDdCjKzLdmb9bVMtYvx+wrvGQELL0FzcfBSOU
+ bhtvRG3/KZGW31i8SoueS/1NV+nKENsIQqynAt63hdzIpDKSbPiu1dxhVMi81bb3L2x6
+ oyfA==
+X-Gm-Message-State: AOJu0YwH3ScVFtqjH/Jnbqqzw7Mmfjo+EzJAVMXkYmSucw2GvWgzTz8m
+ /Cef8+OTnDX6y2nvuAtqREeD5xVD3lvIPxlZu8djVSJ7mz+N3YPkpjRIcNNn3Q==
+X-Gm-Gg: AY/fxX4VGiODV1n7zuaX5dWSX3sfAlivLKvhcBAnYnQrfjNx64OZefAFXLj65aK+CDy
+ /UFOFYXreJGwkHC9bpdY40pCfnSNk5uUZaLCAADJNPJv7UzycEaX/M28fzqtbOBobughibcCVNK
+ X2Ml4GXwQ8T2ZTEL6lkYSKRoWmCMwxaYJRYQGyiuMooOfmvnlPEWxPqg4bMr7j3ZyXUG+QdjswL
+ TFqdtoqbqiV8BXdkys4IO6cwKeygGyUk0TVVyXTER7U7iF894cpvSoYpyAXoxyz6vvrAexHP/RC
+ bLO7eebxS48HUeK4WcwH7E/itUorR1PVAyD2NUBv9qx52DqXprMqZ1vA4bjOZIIbVXudbh0EImI
+ oPb2rzKR6P4VMBRjrwfi6Jm8af5LSMInNCbuavrfmEAYQmQgPkEbm6tJZcvQl9HYTFor/BFXm96
+ dHduC55q/ol6Fa9JF98qgbR3PVKMSM4oSBCw/dlqI9I5X7uJ63rNgs6h5lbNl/rZBg32RWIg==
+X-Received: by 2002:a17:906:9f84:b0:b83:972a:6af6 with SMTP id
+ a640c23a62f3a-b87677dfb73mr279483866b.44.1768426365466; 
+ Wed, 14 Jan 2026 13:32:45 -0800 (PST)
+Received: from archlinux (dynamic-089-012-235-150.89.12.pool.telefonica.de.
+ [89.12.235.150]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b87124e1a1esm1081252566b.48.2026.01.14.13.32.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Jan 2026 13:32:44 -0800 (PST)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ qemu-trivial@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH 0/2] imx8mp-evk trivial patches
+Date: Wed, 14 Jan 2026 22:32:25 +0100
+Message-ID: <20260114213227.3812-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.52.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260114195659.2543649-2-peterx@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 21:10:47 up 79 days, 20:47,  3 users,  load average: 0.00, 0.00, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,111 +97,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Xu (peterx@redhat.com) wrote:
-> COLO was broken for QEMU release 10.0/10.1 without anyone noticed.  One
-> reason might be that we don't have an unit test for COLO (which we
-> explicitly require now for any new migration feature).  The other reason
-> should be that there are just no more active COLO users, at least based on
-> the latest development of QEMU.
-> 
-> I don't remember seeing anything really active in the past few years in
-> COLO development.
-> 
-> Meanwhile, COLO migration framework maintainer (Hailiang Zhang)'s last
-> email to qemu-devel is in Dec 2021 where the patch proposed an email
-> change (<20211214075424.6920-1-zhanghailiang@xfusion.com>).
-> 
-> We've discussed this for a while, see latest discussions here (our thoughts
-> of deprecating COLO framework might be earlier than that, but still):
-> 
-> https://lore.kernel.org/r/aQu6bDAA7hnIPg-y@x1.local/
-> https://lore.kernel.org/r/20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de
-> 
-> Let's make it partly official and put COLO into deprecation list.  If
-> anyone cares about COLO and is deploying it, please send an email to
-> qemu-devel to discuss.
-
-A shame, but it probably makes sense; it was always quite tricky to get
-going.
-
-Dave
-
-> Otherwise, let's try to save some energy for either maintainers or
-> developers who is looking after QEMU. Let's save the work if we don't even
-> know what the work is for.
-> 
-> Cc: Lukáš Doktor <ldoktor@redhat.com>
-> Cc: Juan Quintela <quintela@trasno.org>
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Cc: Zhang Chen <zhangckid@gmail.com>
-> Cc: zhanghailiang@xfusion.com
-> Cc: Li Zhijian <lizhijian@fujitsu.com>
-> Cc: Jason Wang <jasowang@redhat.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  docs/about/deprecated.rst | 6 ++++++
->  qapi/migration.json       | 5 ++---
->  migration/options.c       | 4 ++++
->  3 files changed, 12 insertions(+), 3 deletions(-)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 7abb3dab59..b499b2acb0 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -580,3 +580,9 @@ command documentation for details on the ``fdset`` usage.
->  
->  The ``zero-blocks`` capability was part of the block migration which
->  doesn't exist anymore since it was removed in QEMU v9.1.
-> +
-> +COLO migration framework (since 11.0)
-> +'''''''''''''''''''''''''''''''''''''
-> +
-> +To be removed with no replacement, as the COLO migration framework doesn't
-> +seem to have any active user for a while.
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 201dedd982..3c868efe38 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -531,8 +531,7 @@
->  #
->  # @unstable: Members @x-colo and @x-ignore-shared are experimental.
->  #
-> -# @deprecated: Member @zero-blocks is deprecated as being part of
-> -#     block migration which was already removed.
-> +# @deprecated: Member @zero-blocks and @x-colo are deprecated.
->  #
->  # Since: 1.2
->  ##
-> @@ -540,7 +539,7 @@
->    'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
->             { 'name': 'zero-blocks', 'features': [ 'deprecated' ] },
->             'events', 'postcopy-ram',
-> -           { 'name': 'x-colo', 'features': [ 'unstable' ] },
-> +           { 'name': 'x-colo', 'features': [ 'unstable', 'deprecated' ] },
->             'release-ram',
->             'return-path', 'pause-before-switchover', 'multifd',
->             'dirty-bitmaps', 'postcopy-blocktime', 'late-block-activate',
-> diff --git a/migration/options.c b/migration/options.c
-> index 9a5a39c886..318850ba94 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -580,6 +580,10 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
->          warn_report("zero-blocks capability is deprecated");
->      }
->  
-> +    if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
-> +        warn_report("COLO migration framework is deprecated");
-> +    }
-> +
->  #ifndef CONFIG_REPLICATION
->      if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
->          error_setg(errp, "QEMU compiled without replication module"
-> -- 
-> 2.50.1
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+This series contains just some quality of life improvements for imx8mp-evk=
+=0D
+machine's CLI usage. The first patch removes the need to pass "-smp 4 -m 6G=
+"=0D
+and the second one does not suggest passing redundant "-cpu host" when usin=
+g=0D
+KVM.=0D
+=0D
+Bernhard Beschow (2):=0D
+  hw/arm/imx8mp-evk: Provide some defaults matching real hardware=0D
+  docs/system/arm/imx8mp-evk: Avoid suggesting redundant CLI parameters=0D
+=0D
+ docs/system/arm/imx8mp-evk.rst | 4 ++--=0D
+ hw/arm/imx8mp-evk.c            | 2 ++=0D
+ 2 files changed, 4 insertions(+), 2 deletions(-)=0D
+=0D
+-- =0D
+2.52.0=0D
+=0D
 
