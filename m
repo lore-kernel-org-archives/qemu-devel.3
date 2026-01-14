@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB22D31A0E
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:53:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAEFD31A09
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:53:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfsoB-0004tf-T2; Tue, 13 Jan 2026 23:48:39 -0500
+	id 1vfspD-00081y-8Z; Tue, 13 Jan 2026 23:49:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsnx-0004ay-Q9
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:48:28 -0500
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsp2-0007Im-9q
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:49:35 -0500
 Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsnw-0003r4-DN
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:48:25 -0500
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1vfsp0-0004DR-Ls
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:49:31 -0500
 Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2a0a95200e8so47288055ad.0
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:48:23 -0800 (PST)
+ d9443c01a7336-2a3e76d0f64so2558085ad.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:49:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768366103; x=1768970903; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1768366169; x=1768970969; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CotJR1Z3l8Bpy1C6R68fyNJ4Hc80/eynZMelGXfH+B0=;
- b=KXJ15O2pra4lK9wQ5ATVm5imY+IRKyx7IxBUdf/k2efp1VM+97U/oADwlsR22YvPqY
- M+xjutrHnmiImExz0Bn/OYxzRa3U81o/Y/danNBb1M3nTOkVCyqz1nGh+IWs5ZE2dmE8
- RECE0ER34iNz9DO2vCRkCy5d4MUua5vYcHi7t2BJN19wT4Upow2qkLU8ngoglJxkXrHJ
- Nj00dLlvKygK6GSNLRQWSESrZm7jVmNVPih50LfAmms0oW2pFb6NYGXivgP6/18ekzt8
- NNl2qGjX9gga4WrWYkrd1zdvWYkTROPI3UKLx9egarhhPq6umYzJjYa0DFSPv/Qb6lZR
- 6x3w==
+ bh=+kY0TVgsVm0GPorTwNSyfEoAVAqvdoi35N7aeXTAA74=;
+ b=Rb3jc8qAkeUHUYvXd0YidPKFSUVZUG+gXqsc5zdMhl5WjcWtWYVyc6CQ3GSKMYYXY9
+ KAneqoUgywBlbkkK9oFGLR9PrcrxDhGdS9fKeR+DgnARfIJR8mtWCf9rUIymvHIpRu82
+ waV2RMJ2+TDl8Hko0l0JiwhQhznIAnNFq967i3KcExgVLOzOvPifno77NQOgzLo+cVsU
+ l9CuQ6kIRFtyk9LAxnKNQ66MLXK7bgL924rH90/Lu8upOwIuj/3WAu43yL8V60s+8pz0
+ CuseG6qP+OKGNa/DJXiKmEBq5rYBodWU2ZhVk3B+0AWwKPojJhEbhTAIY8D4utHfkcH8
+ gV+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768366103; x=1768970903;
+ d=1e100.net; s=20230601; t=1768366169; x=1768970969;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=CotJR1Z3l8Bpy1C6R68fyNJ4Hc80/eynZMelGXfH+B0=;
- b=AhApnsOonpZoYkVMs73iWtWWKsSHzbha7YJm3YFZkAc6aKFuDXWStSNNhdz9PLcA3H
- 6agAaBvY+QwNWHNBHmuGPdX8kDF0fbsT6ZQUkLQ1LMM3w+pBQe2gXsL//9KQKm07lfMU
- jlaXXqIkICtOLmQPWenzp9ZFgmQy8i2eHEMIJKwKX5oqeVHHm1Jame9866sv6j80zmYZ
- K67W5vZ5omXZKV6UNZN53dprhroUehm7IJYMr9NSp/HY8nmQgU9tLndOWRhd0eZWi3jZ
- 3kpBDy+91LFdE1zVaax1wU82KzRvfKJvZQbbXVZuFYS7FTrxcJ7SvI1T3wLVExpyXQtj
- gz/g==
+ bh=+kY0TVgsVm0GPorTwNSyfEoAVAqvdoi35N7aeXTAA74=;
+ b=JssHwJe+QomPVSnhD3hlV2cL+whomHDFlDHsPtEAPAYt1nDmVBL9bmmCc0FDcx/Oah
+ 5IMIEfcoVIfSh6HbabqxVwHPFNCnQs+cVfLXV9DxC8b+oWjvUND+Tj/G1b+gsaoQhh1k
+ QQZTwAXxWkx7woYa09d0wKiHbc7p2CG1WGMBKOc2DMdIO3GnWIhy5BBi8ZF9SbOxi+4d
+ 18xqicsqeQt+LW2V9wBoajCG1kcxWyBLVzBL4Gjf2vv44MwzlmuxbEyloFmF3A7y/uv9
+ hkTvKJH6BFWKQWZCuxWmvUosf1QtdJKU3UX2RXB21CmtaJaaRV/Xmy8Kponja5zdzjPK
+ bYtg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQvYpDZ/C8R1UBNLZVaUM8wenD4P2QIgvGQqyXcjBjr69JON87iRJvgBWtX/xrzTEilhhf9YPE/OcK@nongnu.org
-X-Gm-Message-State: AOJu0YxfPjZzQIAtpOLc3riS2ubLMNM8t4oogCtNaGUGd8FXR8VHUNzK
- VxfvJTU1E5Xg/Dn59xmNUPvWCIBA22MipeEPVhMpqid5mbZtdC5g4MIE
-X-Gm-Gg: AY/fxX419IkFq7M5cHok+9uetWtIrWHJKkmDA/2Ow7xipL0GyqD+g9JBAwsypb322NE
- wHkzXgiEi9zx8fpv1qA+mKgfLXDl5Stu6CI5JfaNSSvVotuO2cDHosUvMYXKw35VNa27RRJjEzp
- cWMD6pTmAJotCEZ7vQRVNheYs/wtqOGZGJfSuPAxLIuO+EkYlOwQE69cYdhL1RK5klAYf6d+aWN
- oU51c33usDAajAcgs/unc2ht5MRKOukdOicdnp20Uz7xWUfi4c/NcBHxWvWS7zRgcWT1UJ/gM39
- 4iVMSbXfATc3oNYhY5uAISPJLBXTZZLe0TxfifCH40vQKyJ7WnjpxQ9zIEGqK5BkOuUjhPysqlw
- 7EK6KbaRRRqdpigV4ffZn5EaRhDkQ/jJLcoUX7LSY9mWjvcRHViKjTMlmjFFVTO88Oj4fb5KFz2
- RqOybT3Uzxh2w9lg4hW2PadYuGnQuTOiun4XPYDlxh0SNESMUzFL8R0fjQ9udMDu5PbUXqdg==
-X-Received: by 2002:a17:902:d552:b0:2a0:f46a:b842 with SMTP id
- d9443c01a7336-2a599e76f97mr14835745ad.28.1768366103039; 
- Tue, 13 Jan 2026 20:48:23 -0800 (PST)
+ AJvYcCW4mzJ8T75myqywTQPjAGr/hvbhf/qccny6QCVf3k2LF+o4ZlnwTRVBI9ilEVbW0po84LWxvIoPBlvc@nongnu.org
+X-Gm-Message-State: AOJu0YyjIucyc+vCn1M7f6eo9pLLxN27PWyPRVDZPQ28pSa9VUzWQo2R
+ OTowhyxJ2JvdZQRSD5culXDjwuMbIva5rBXxsPqTwKrSx2/+vPT6IsCK
+X-Gm-Gg: AY/fxX7AivFUnSJbiKcJTGz7AyntiCFcgZ9udg5/8ubB5x1O2ygTSciTSwpqGrpjWNL
+ Q7yaZ7Wc6l4xpjd3lYaHfIfTmiwfFmOZAOJwB+epLCyVnHYUkubNZaxxIBfEobgzQhLtVstK9su
+ lOSpHLx5HJ8tW3vihdGTnkkKKUuUjwTUfIKs7mYWX7BIylj1mnCBwLJqXitRgvWQebca3Io5wIW
+ McoRlhHrj0G83AwJ7MkPKasMFggwulFzU0vdY4rRMXGwQqL79E3RHis6XGszqBLlCcbCjtsnfAM
+ ULhhnSFxqSUoXoNC0RTOgUDbOpwmXz66/sqd2F4o+ipIh4N6MmBn2QZParyhfndvLkVFy7dLTyQ
+ LoQ1hH+FpJeswrmsC01oScfOD1zux1HnTLBOODNnN2Eknz9HAgYPWt2yG32/6x4gbL/YM7sr5Dr
+ Q4cykxTcZZnHhPZgYU4r/2X3DR+MMA/iLc1bCpfJ8d0C6bddDiSQe9hjQAG8bzrTU6CkD5mA==
+X-Received: by 2002:a17:903:17c5:b0:299:bda7:ae45 with SMTP id
+ d9443c01a7336-2a58b53655emr44501875ad.25.1768366169350; 
+ Tue, 13 Jan 2026 20:49:29 -0800 (PST)
 Received: from lima-default (123.253.188.110.qld.leaptel.network.
  [123.253.188.110]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c49037sm216111905ad.36.2026.01.13.20.48.18
+ d9443c01a7336-2a3e3c49037sm216111905ad.36.2026.01.13.20.49.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Jan 2026 20:48:22 -0800 (PST)
+ Tue, 13 Jan 2026 20:49:29 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
@@ -74,10 +74,9 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, bin.meng@windriver.com,
  vivahavey@gmail.com, Alvin Chang <alvinga@andestech.com>,
  Yu-Ming Chang <yumin686@andestech.com>, Joel Stanley <joel@jms.id.au>
-Subject: [RFC PATCH 12/25] target/riscv/debug: Put mcontrol load/store match
- address into tval
-Date: Wed, 14 Jan 2026 14:46:45 +1000
-Message-ID: <20260114044701.1173347-13-npiggin@gmail.com>
+Subject: [RFC PATCH 25/25] target/riscv/debug: Fix minor comment typos
+Date: Wed, 14 Jan 2026 14:46:58 +1000
+Message-ID: <20260114044701.1173347-26-npiggin@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260114044701.1173347-1-npiggin@gmail.com>
 References: <20260114044701.1173347-1-npiggin@gmail.com>
@@ -107,38 +106,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When an mc/mc6 trigger triggers on a load/store and raises a breakpoint
-exception, put the matching memory address into tval, as is already
-done for exec addresses matching.
-
-Tval for breakpoint exceptions is optional in the spec, but it seems
-more consistent to implement it for load/store if exec is implemented.
-
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/riscv/debug.c | 2 ++
- 1 file changed, 2 insertions(+)
+ target/riscv/debug.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index bd61b7ff02..19c45fb13c 100644
+index d7c171736f..32aa46262a 100644
 --- a/target/riscv/debug.c
 +++ b/target/riscv/debug.c
-@@ -1075,6 +1075,7 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
- 
-             if ((wp->flags & flags) && (wp->vaddr == addr)) {
-                 if (do_trigger_action(env, i)) {
-+                    env->badaddr = wp->vaddr;
-                     return true;
-                 }
-             }
-@@ -1093,6 +1094,7 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
- 
-             if ((wp->flags & flags) && (wp->vaddr == addr)) {
-                 if (do_trigger_action(env, i)) {
-+                    env->badaddr = wp->vaddr;
-                     return true;
-                 }
-             }
+@@ -120,7 +120,7 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
+         break;
+     case TRIGGER_TYPE_NO_EXIST:
+     case TRIGGER_TYPE_UNAVAIL:
+-        qemu_log_mask(LOG_GUEST_ERROR, "trigger type: %d does not exit\n",
++        qemu_log_mask(LOG_GUEST_ERROR, "trigger type: %d does not exist\n",
+                       trigger_type);
+         break;
+     default:
+@@ -895,7 +895,7 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+                       trigger_type);
+         break;
+     case TRIGGER_TYPE_NO_EXIST:
+-        qemu_log_mask(LOG_GUEST_ERROR, "trigger type: %d does not exit\n",
++        qemu_log_mask(LOG_GUEST_ERROR, "trigger type: %d does not exist\n",
+                       trigger_type);
+         break;
+     default:
 -- 
 2.51.0
 
