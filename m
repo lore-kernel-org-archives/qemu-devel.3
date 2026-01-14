@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A83BCD31A09
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 06:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55318D31A11
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 06:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfufO-0001w3-Q0; Wed, 14 Jan 2026 01:47:44 -0500
+	id 1vfufD-0001sJ-NX; Wed, 14 Jan 2026 01:47:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vfuf4-0001pz-6E
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 01:47:22 -0500
+ id 1vfuf2-0001pm-Uf
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 01:47:21 -0500
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vfuf1-0004AJ-5S
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 01:47:21 -0500
+ id 1vfuf0-0004A0-Q4
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 01:47:20 -0500
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 04A0380676;
- Wed, 14 Jan 2026 09:47:16 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 7FD2C807B9;
+ Wed, 14 Jan 2026 09:47:14 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:c88::1:7])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id ClNQD90AqW20-W6iwykCf; Wed, 14 Jan 2026 09:47:15 +0300
+ ESMTPSA id ClNQD90AqW20-3AvZsROj; Wed, 14 Jan 2026 09:47:14 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1768373235;
- bh=jsy4reI1TzanCtXBfxJ4/w5QjWMW6WCD9Mr70g2ZVgo=;
+ s=default; t=1768373234;
+ bh=A8aHx7NDG7I0eOLZpPn11ukQ0g9iIT0KmhKkmcwKQQA=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=G7hg0wfSlTvbz//H4usF7syB7F1fRjSqDkyUa+0hdcR0JQzGNDBwHN6oHIVUko0jS
- MPJAh25vv69Kx9LOiyNUawq2C7rXKvLPB/DPM9PpSQhpWP4jt9g7Jw4uBz/4OtG4Et
- iuIOXE77DLsYC1DJqha1RCOBPiZ0pVtWD3nOZS+A=
+ b=nWOJWikNpKQQ0UqfdnWhaDDn0NLiJgcDD2r9vRt0yMjsBmDjsaOYyCqhU8Y1jP2er
+ fUtl7lYX15v3SPyedtsgW7DmdBK06mFPqOfINRjXw+HB/W0ejIAkcd4Gi5blxMOiFy
+ yAYgKmBg+1NRj6vB0QepyF6uiTwOCj8Ukxt/7zSc=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,9 +44,9 @@ To: peterx@redhat.com
 Cc: farosas@suse.de, qemu-devel@nongnu.org, dtalexundeer@yandex-team.ru,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru
-Subject: [PATCH 4/5] qemu-file: qemu_file_get_fd(): check service byte itself
-Date: Wed, 14 Jan 2026 09:47:09 +0300
-Message-ID: <20260114064710.176268-5-vsementsov@yandex-team.ru>
+Subject: [PATCH 1/5] vmstate-types: get_fd(): handle qemu_file_get_fd() failure
+Date: Wed, 14 Jan 2026 09:47:06 +0300
+Message-ID: <20260114064710.176268-2-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20260114064710.176268-1-vsementsov@yandex-team.ru>
 References: <20260114064710.176268-1-vsementsov@yandex-team.ru>
@@ -75,38 +75,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We can check it, so, why not.
+qemu_file_get_fd() may fail, and return -1 in this case.
+We don't support passing "invalid" file descriptors (like -1),
+so we should not interpret error here like invalid descriptor.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- migration/qemu-file.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ migration/vmstate-types.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index 3a9a0a49d4..da701d40e4 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -390,13 +390,19 @@ int qemu_file_get_fd(QEMUFile *f)
-     int fd = -1;
-     FdEntry *fde;
-     Error *err = NULL;
-+    int service_byte;
- 
-     if (!f->can_pass_fd) {
-         error_setg(&err, "%s does not support fd passing", f->ioc->name);
-         goto fail;
+diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+index 4b01dc19c2..e34bf4486e 100644
+--- a/migration/vmstate-types.c
++++ b/migration/vmstate-types.c
+@@ -321,12 +321,21 @@ const VMStateInfo vmstate_info_uint64 = {
+ static int get_fd(QEMUFile *f, void *pv, size_t size,
+                   const VMStateField *field)
+ {
++    int fd;
+     int32_t *v = pv;
++
+     if (migrate_mode() == MIG_MODE_CPR_EXEC) {
+         qemu_get_sbe32s(f, v);
+         return 0;
      }
- 
--    qemu_get_byte(f);
-+    service_byte = qemu_get_byte(f);
-+    if (service_byte != ' ') {
-+        error_setg(&err, "%s unexpected service byte: %d(%c)", f->ioc->name,
-+                   service_byte, service_byte);
-+        goto fail;
+-    *v = qemu_file_get_fd(f);
++
++    fd = qemu_file_get_fd(f);
++    if (fd < 0) {
++        return -1;
 +    }
++
++    *v = fd;
++
+     return 0;
+ }
  
-     fde = QTAILQ_FIRST(&f->fds);
-     if (!fde) {
 -- 
 2.48.1
 
