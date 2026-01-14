@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1F93D39013
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 21:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A9CD3901E
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 21:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg8Ua-0008Ud-T4; Wed, 14 Jan 2026 16:33:28 -0500
+	id 1vg8Zx-0006vc-Ow; Wed, 14 Jan 2026 16:39:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vg8U1-000852-0D
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 16:32:58 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vg8Tw-0004hB-VZ
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 16:32:51 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-b7ffbf4284dso40256066b.3
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 13:32:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768426367; x=1769031167; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JzXfkJQP3HTTv/Iz3UDFpE7UMShn1ruzD17zw8BmbSU=;
- b=HQKHvGQmfEbN2SWCtDjWr6mNv+xD4eUuQtJZxz9IB25QHLp+CHq0TLso+SQgNx1za9
- 6PTeP/Bbj04jsqnT3ksNYY0Inwcdt5lnG0gFX7sLMOUDbMh0guFIThwqw+CdspSiCB3X
- VHjXAR5HWr/IfjHyzTisot/Mf1AeMaupfH4FrPiihGdi1RDK7Fc6oclFvjMak0njXN5C
- WvF8QBi5j0LQtucnxC/TMs6TQPFZtSoyIAHT7Rc3QPBq12azxmtV5smm4DVPgruqBzsP
- LIemaxFUF6nFcN0ewnZQNTIgVcH9Ra46t+Y+SZ1qOdLjdlqqE6HjuFXWV7uXQnvTThIt
- q6lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768426367; x=1769031167;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JzXfkJQP3HTTv/Iz3UDFpE7UMShn1ruzD17zw8BmbSU=;
- b=lP/wkQEkJ3E2SRX4VV5iqWZEyo0YoO0m02kGjDyN01wI/Coqt5AtVnLh2lqx6VzbsK
- jF+lTtG7xOxekI/hblwwiMciHCJ9gRZYhklBjhXvCi0qL/+zPvsnT5Y1czjmYu1J0wiS
- +BFl8zpBkU5Cp+89sYmVVJWRz2bO/JniUnRzyL/GmPFRsajKiwc57PXko/AAgg6ZWPVI
- CgKBzUZSCMfStkPaX5UKVGO/FNrVd8ar0hnAguLkJ21ikEfU/+KjHqZEmalHq7dmxOFM
- U8ap9qerau53NTPLoMClES0e6mptyuqed31+sNuyOgf4FI2lNd4MtpECa9qBzB/6uFpG
- +Wtw==
-X-Gm-Message-State: AOJu0YyOmfQoqKx3KdYTc1WgQsysI+/qvsHJczfyIQSVuN65pmAbFyUT
- yO45GzjaUYfQOJD2CmCuWjmYWHNuA8QST0co303odg6MFyjp4hUom9AW6nB5qQ==
-X-Gm-Gg: AY/fxX6YIhxD5ThThaOVjAXkeUkaUjwi4nPtzF21Tu3aLfsuQP+nFY/skNMq4yJO+TT
- 1RxNYGmNWgU9KtTjRR7p23/ycAIx8yzp6fP6whMsBYmdLDRxPf9hwb/Ov/tNKmuIRJprFlgyeJN
- bJCYL7tr58Iz9JDE4hRG5f/DQM+vqdwGGNCt4A0rApj1TrOlHSPzjh/3eozW5WowW0L9PSMUlQy
- XbZhYqWes2zkRRB/l0VyqTkgBQw4CvRORwTrMzaKx47O16aJn1V74Cv0gRPt0jT6LOES5GCp6iG
- asx0LIV+Ug5K4MCo0LJ2M+29DCJGBFg3zhjqU7Brj3Ll0Q0VcMNObyX2yHEDmKKlZrmbYVwsr2K
- 3xecSjk6uvVAtLsaLnksaynZpvBczUwAlkMlN8R0NMfMpWKKPF8MIyJEKz6OpozeBVYF55Xh/MN
- ku9htt6j7eYVF3HNEk4udDcX7bj5BFcZQtsSFfUZXr04a8Doze1qXSWtDV+m+e4CsggPwVfA==
-X-Received: by 2002:a17:906:c110:b0:b76:bcf5:a38a with SMTP id
- a640c23a62f3a-b876743fb85mr282319166b.0.1768426367116; 
- Wed, 14 Jan 2026 13:32:47 -0800 (PST)
-Received: from archlinux (dynamic-089-012-235-150.89.12.pool.telefonica.de.
- [89.12.235.150]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b87124e1a1esm1081252566b.48.2026.01.14.13.32.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Jan 2026 13:32:46 -0800 (PST)
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- qemu-trivial@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 2/2] docs/system/arm/imx8mp-evk: Avoid suggesting redundant
- CLI parameters
-Date: Wed, 14 Jan 2026 22:32:27 +0100
-Message-ID: <20260114213227.3812-3-shentey@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260114213227.3812-1-shentey@gmail.com>
-References: <20260114213227.3812-1-shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vg8ZT-0006qG-7m
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 16:38:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vg8ZR-0005os-Nn
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 16:38:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768426707;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JPx9uJw4wQmF8PUhN2KKTU9qO0xqstrOMTkwEsCbpVM=;
+ b=StazULHcVGMf4BuoUlToZSz0Ooh1Y4utn8m5hUOehiMFKC2Fw0FCapJCieqSioDqaq14d9
+ f1pwUx3+8BYyyjREN5yxCuQeveBq5IZUHClPOgj+swWuroNXPCerf29FS6uAKsFENRHytz
+ bvhBtaLJ3s4yK6D1Tg6IGtfPezD51FM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-569-eLEcRTmEMTGcoXSAktue6Q-1; Wed,
+ 14 Jan 2026 16:38:23 -0500
+X-MC-Unique: eLEcRTmEMTGcoXSAktue6Q-1
+X-Mimecast-MFC-AGG-ID: eLEcRTmEMTGcoXSAktue6Q_1768426702
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BF6911956094; Wed, 14 Jan 2026 21:38:20 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.85])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id ADFA330002D8; Wed, 14 Jan 2026 21:38:18 +0000 (UTC)
+Date: Wed, 14 Jan 2026 16:38:17 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ mzamazal@redhat.com, Fabiano Rosas <farosas@suse.de>,
+ qemu-block@nongnu.org, virtio-fs@lists.linux.dev,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v6 4/5] vhost: add vmstate for inflight region with inner
+ buffer
+Message-ID: <20260114213817.GA622013@fedora>
+References: <20260113095813.134810-1-dtalexundeer@yandex-team.ru>
+ <20260113095813.134810-5-dtalexundeer@yandex-team.ru>
+ <aWfrT6JOMm9MGoIw@x1.local>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x634.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="2bB6VCgR7K7AjZez"
+Content-Disposition: inline
+In-Reply-To: <aWfrT6JOMm9MGoIw@x1.local>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,31 +100,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 094fd7d36f2a ("hw/arm/imx8mp-evk: Add KVM support") introduced KVM
-support for the imx8mp-evk machine. KVM only works with the "host" CPU type
-such that it has been made the default CPU type for KVM. No need to repeat
-that on the command line.
 
-Fixes: 094fd7d36f2a ("hw/arm/imx8mp-evk: Add KVM support")
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- docs/system/arm/imx8mp-evk.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+--2bB6VCgR7K7AjZez
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
-index 79600cf39a..e60a422824 100644
---- a/docs/system/arm/imx8mp-evk.rst
-+++ b/docs/system/arm/imx8mp-evk.rst
-@@ -66,7 +66,7 @@ KVM Acceleration
- ----------------
- 
- To enable hardware-assisted acceleration via KVM, append
--``-accel kvm -cpu host`` to the command line. While this speeds up performance
-+``-accel kvm`` to the command line. While this speeds up performance
- significantly, be aware of the following limitations:
- 
- * The ``imx8mp-evk`` machine is not included under the "virtualization use case"
--- 
-2.52.0
+On Wed, Jan 14, 2026 at 02:15:27PM -0500, Peter Xu wrote:
+> On Tue, Jan 13, 2026 at 02:58:17PM +0500, Alexandr Moshkov wrote:
+> > Prepare for future inflight region migration for vhost-user-blk.
+> > We need to migrate size, queue_size, and inner buffer.
+> >=20
+> > So firstly it migrate size and queue_size fields, then allocate memory =
+for buffer with
+> > migrated size, then migrate inner buffer itself.
+> >=20
+> > Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> > ---
+> >  hw/virtio/vhost.c         | 57 +++++++++++++++++++++++++++++++++++++++
+> >  include/hw/virtio/vhost.h |  6 +++++
+> >  2 files changed, 63 insertions(+)
+> >=20
+> > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> > index c46203eb9c..f655c53b67 100644
+> > --- a/hw/virtio/vhost.c
+> > +++ b/hw/virtio/vhost.c
+> > @@ -2028,6 +2028,63 @@ const VMStateDescription vmstate_backend_transfe=
+r_vhost_inflight =3D {
+> >      }
+> >  };
+> > =20
+> > +static int vhost_inflight_buffer_pre_load(void *opaque, Error **errp)
+> > +{
+> > +    info_report("vhost_inflight_region_buffer_pre_load");
+> > +    struct vhost_inflight *inflight =3D opaque;
+> > +
+> > +    int fd =3D -1;
+> > +    void *addr =3D qemu_memfd_alloc("vhost-inflight", inflight->size,
+> > +                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL=
+_SEAL,
+> > +                                  &fd, errp);
+> > +    if (*errp) {
+> > +        return -ENOMEM;
+> > +    }
+> > +
+> > +    inflight->offset =3D 0;
+> > +    inflight->addr =3D addr;
+> > +    inflight->fd =3D fd;
+> > +
+> > +    return 0;
+> > +}
+> > +
+> > +const VMStateDescription vmstate_vhost_inflight_region_buffer =3D {
+> > +    .name =3D "vhost-inflight-region/buffer",
+> > +    .pre_load_errp =3D vhost_inflight_buffer_pre_load,
+> > +    .fields =3D (const VMStateField[]) {
+> > +        VMSTATE_VBUFFER_UINT64(addr, struct vhost_inflight, 0, NULL, s=
+ize),
+> > +        VMSTATE_END_OF_LIST()
+> > +    }
+> > +};
+> > +
+> > +static int vhost_inflight_region_post_load(void *opaque,
+> > +                                           int version_id,
+> > +                                           Error **errp)
+> > +{
+> > +    struct vhost_inflight *inflight =3D opaque;
+> > +
+> > +    if (inflight->addr =3D=3D NULL) {
+>=20
+> IIUC this can never happen because pre_load() must trigger before
+> post_load(), and when reaching post_load() it means pre_load() must have
+> succeeded..
+>=20
+> So, IIUC we can drop this post_load() completely (or assert addr in
+> pre_load instead).
+
+I asked for this input validation check. If the migration stream is
+inconsistent (e.g. broken or malicious source QEMU), then the subsection
+might be missing but size could be non-zero. The destination QEMU should
+fail cleanly and not run into undefined behavior.
+
+Stefan
+
+--2bB6VCgR7K7AjZez
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmloDMkACgkQnKSrs4Gr
+c8hbPgf+JtCqYyM/8FZOLpH5UQkkWwKV8n+FMsFmGk9Gkvt7330GJrKEK1GMIAET
+gB8d9CJIr1ndEs8iEolaou4YY0yNm8OTFJ0mkv3W+9yDV6ULsY0ydYkAU9eEbFNt
+wJjZMuUQAHL5W4w5+8CpPr37LZCcgrlwlWSUw9dhvY1KhOKeLMfSIrbIxQOO3BAO
+P/QHJXL/dg8b5PQqkiTPH8+hfWWfRGRCUnPFibOEph+2G3gbbkk9SLTkInIbgWR2
+FmMw6SIuaoNEo0yYawA74r0CuJ16x0Z1NLQpAzlyLGNwEuLWub4h8hDcI7OjrtqV
+7ObFpwOGg7FbcWV4dsyaJL9C003jVQ==
+=xwdv
+-----END PGP SIGNATURE-----
+
+--2bB6VCgR7K7AjZez--
 
 
