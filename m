@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4AB3D38FFF
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 17:51:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09A42D39000
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 17:55:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg51I-0001ry-Bp; Wed, 14 Jan 2026 12:51:00 -0500
+	id 1vg55D-0004fP-Je; Wed, 14 Jan 2026 12:55:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1vg51E-0001r8-Br
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 12:50:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vg55B-0004et-C6; Wed, 14 Jan 2026 12:55:01 -0500
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1vg51C-000057-1N
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 12:50:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768413052;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Z97WeNJlMmycR+z4WcgaMcn3WWTu94HVQEJdZml9px0=;
- b=eOmxNGnu3D7Ve773XV+rV4NDG65F7KSfHY0O2cDtwWHJzyw3nnLXYSeJ2F/YpS88a/Irx6
- sRjRCoyIuEo6K428q2aTKWrcIYo8G0UWXTnDTto4zyHrDwGyBkzfjyuivp4hc4L5Fg/Tz0
- /dhlZMv26pMj4k0llDDhX+1xzj3AUKQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-8Z-IX3osPFKhDOfCdHM3tQ-1; Wed,
- 14 Jan 2026 12:50:48 -0500
-X-MC-Unique: 8Z-IX3osPFKhDOfCdHM3tQ-1
-X-Mimecast-MFC-AGG-ID: 8Z-IX3osPFKhDOfCdHM3tQ_1768413047
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0FDE41955DC7; Wed, 14 Jan 2026 17:50:47 +0000 (UTC)
-Received: from osteffen-laptop.redhat.com (unknown [10.45.224.90])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D30B11800665; Wed, 14 Jan 2026 17:50:41 +0000 (UTC)
-From: Oliver Steffen <osteffen@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Marcelo Tosatti <mtosatti@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Joerg Roedel <joerg.roedel@amd.com>,
- Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Luigi Leonardi <leonardi@redhat.com>, Oliver Steffen <osteffen@redhat.com>
-Subject: [PATCH v4 5/5] igvm: Fill MADT IGVM parameter field
-Date: Wed, 14 Jan 2026 18:50:07 +0100
-Message-ID: <20260114175007.90845-6-osteffen@redhat.com>
-In-Reply-To: <20260114175007.90845-1-osteffen@redhat.com>
-References: <20260114175007.90845-1-osteffen@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vg556-0000fM-Pd; Wed, 14 Jan 2026 12:55:00 -0500
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 9D572C02C8;
+ Wed, 14 Jan 2026 20:54:52 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c88::1:7] (unknown [2a02:6bf:8080:c88::1:7])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id osYk8G0AtmI0-f6zcrlHI; Wed, 14 Jan 2026 20:54:52 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1768413292;
+ bh=l2hhGgOopvhCBxO4xytx/xL/4yJaI+IULU+1glcfZ+I=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=0GBc273VanSIBGrWdySnnDcGkuB0uJ+nw4VNN9LdQ8wLIi8Z2UlsLSqNNMz10yuN7
+ rVaLqUqCS3KsASvZ5vpdkfzEn8uFokzksMrZAsxN6uvGtWERrtWo4t21DuzKr+cLpg
+ 8za8zEgtWeP/eZW1G7YAkxo4J05PbWBcjJ3oiKWA=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <d5c106d9-9e37-4f44-b0e9-4321d12f8bf1@yandex-team.ru>
+Date: Wed, 14 Jan 2026 20:54:50 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=osteffen@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 0/5] support inflight migration
+To: Peter Xu <peterx@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, mzamazal@redhat.com,
+ Fabiano Rosas <farosas@suse.de>, qemu-block@nongnu.org,
+ virtio-fs@lists.linux.dev, "yc-core@yandex-team.ru"
+ <yc-core@yandex-team.ru>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20260113095813.134810-1-dtalexundeer@yandex-team.ru>
+ <20260113181242.GB528940@fedora> <aWaVVJh13ctiW9Ku@x1.local>
+ <2af404d1-5e50-4caa-bee6-f8aab6a30a7e@yandex-team.ru>
+ <aWeKn5A7-tWaWv0z@x1.local>
+ <832f4005-2e51-49fd-91e8-9f4cbe9f2adf@yandex-team.ru>
+ <aWezg94AB5a3F0EV@x1.local>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aWezg94AB5a3F0EV@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -91,102 +91,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the new acpi_build_madt_standalone() function to fill the MADT
-parameter field.
+On 14.01.26 18:17, Peter Xu wrote:
+> On Wed, Jan 14, 2026 at 05:35:53PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 14.01.26 15:22, Peter Xu wrote:
+>>> On Wed, Jan 14, 2026 at 09:19:10AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>>> On 13.01.26 21:56, Peter Xu wrote:
+>>>>> On Tue, Jan 13, 2026 at 01:12:42PM -0500, Stefan Hajnoczi wrote:
+>>>>>> On Tue, Jan 13, 2026 at 02:58:09PM +0500, Alexandr Moshkov wrote:
+>>>>>>
+>>>>>> Peter: Please review the migration aspects (especially the vmstates).
+>>>>>> Thank you!
+>>>>>
+>>>>> Looks good from my side as long as it's based on VMSD, I appreciate that
+>>>>> change from the old versions where it used to use qemufile APIs.
+>>>>>
+>>>>> The major question here is if this series depends on Vladimir's other
+>>>>> series
+>>>>
+>>>> No, it does not. And if we can proceed with merging these series first, I'll
+>>>> be happy to rebase on top of it.
+>>>
+>>> I thought it requires migrate_local_vhost_user_blk() be present?  The
+>>> inflight feature should not be enabled only if there's a hint that it's a
+>>> local migration..
+>>
+>> Oh right, I missed it.
+>>
+>> We discussed that Alexandr will rebase the series on master without dependency
+>> on my RFC.
+> 
+> The problem is IIUC the new INFLIGHT feature bit will be declared as
+> supported to vhost-user-block after applying this series.  Then if we start
+> a remote migration (rather than local) it'll be automatically (and wrongly)
+> enabled?
+> 
 
-The IGVM parameter can be consumed by Coconut SVSM [1], instead of
-relying on the fw_cfg interface, which has caused problems before due to
-unexpected access [2,3]. Using IGVM parameters is the default way for
-Coconut SVSM across hypervisors; switching over would allow removing
-specialized code paths for QEMU in Coconut.
+No, not so.
 
-Coconut SVSM needs to know the SMP configuration, but does not look at
-any other ACPI data, nor does it interact with the PCI bus settings.
-Since the MADT is static and not linked with other ACPI tables, it can
-be supplied stand-alone like this.
+We develop inflight-region migraiton (this series) exactly for remote migration,
+not for local.
 
-Generating the MADT twice (during ACPI table building and IGVM processing)
-seems acceptable, since there is no infrastructure to obtain the MADT
-out of the ACPI table memory area.
+My series about backend transfer (fd-migration) will migrate inflight-region the
+other way - by migrating its FD.
 
-In any case OVMF, which runs after SVSM has already been initialized,
-will continue reading all ACPI tables via fw_cfg and provide fixed up
-ACPI data to the OS as before without any changes.
+> AFAIU, the dependency makes sense, at least to the patch to introduce the
+> "local" / ... capability?
+> 
 
-[1] https://github.com/coconut-svsm/svsm/pull/858
-[2] https://gitlab.com/qemu-project/qemu/-/issues/2882
-[3] https://github.com/coconut-svsm/svsm/issues/646
 
-Signed-off-by: Oliver Steffen <osteffen@redhat.com>
----
- backends/igvm.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
-
-diff --git a/backends/igvm.c b/backends/igvm.c
-index cb2f997c87..980068fb58 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -18,6 +18,7 @@
- #include "system/memory.h"
- #include "system/address-spaces.h"
- #include "hw/core/cpu.h"
-+#include "hw/i386/acpi-build.h"
- 
- #include "trace.h"
- 
-@@ -134,6 +135,8 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
- static int qigvm_initialization_guest_policy(QIgvm *ctx,
-                                        const uint8_t *header_data,
-                                        Error **errp);
-+static int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data,
-+                                Error **errp);
- 
- struct QIGVMHandler {
-     uint32_t type;
-@@ -162,6 +165,8 @@ static struct QIGVMHandler handlers[] = {
-       qigvm_directive_snp_id_block },
-     { IGVM_VHT_GUEST_POLICY, IGVM_HEADER_SECTION_INITIALIZATION,
-       qigvm_initialization_guest_policy },
-+    { IGVM_VHT_MADT, IGVM_HEADER_SECTION_DIRECTIVE,
-+      qigvm_directive_madt },
- };
- 
- static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
-@@ -771,6 +776,33 @@ static int qigvm_initialization_guest_policy(QIgvm *ctx,
-     return 0;
- }
- 
-+static int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data,
-+                                Error **errp)
-+{
-+    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
-+    QIgvmParameterData *param_entry;
-+    int result = 0;
-+
-+    /* Find the parameter area that should hold the MADT data */
-+    param_entry = qigvm_find_param_entry(ctx, param);
-+    if (param_entry != NULL) {
-+
-+        GArray *madt = acpi_build_madt_standalone(ctx->machine_state);
-+
-+        if (madt->len <= param_entry->size) {
-+            memcpy(param_entry->data, madt->data, madt->len);
-+        } else {
-+            error_setg(
-+                errp,
-+                "IGVM: MADT size exceeds parameter area defined in IGVM file");
-+            result = -1;
-+        }
-+
-+        g_array_free(madt, true);
-+    }
-+    return result;
-+}
-+
- static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
- {
-     int32_t header_count;
 -- 
-2.52.0
-
+Best regards,
+Vladimir
 
