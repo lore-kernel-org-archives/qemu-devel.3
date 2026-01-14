@@ -4,86 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFDACD31A3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 10:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F8DD31A3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 10:17:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfxul-0001ZS-MW; Wed, 14 Jan 2026 05:15:47 -0500
+	id 1vfxwV-0002H0-7m; Wed, 14 Jan 2026 05:17:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vfxuY-0001X4-Jo
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:15:35 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vfxuW-0001RW-QC
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:15:34 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-432755545fcso4980440f8f.1
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 02:15:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768385730; x=1768990530; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8h4sdiY9JE6rWdEg+rBvzQ9j/JVjXlREFX3wwiQ5gaU=;
- b=f9dG+uwmyu16BiX7UTARTDgqz4NrOnRe1hCJatQThY4PonRnpsr+BMoB3xDkAbodBj
- 4CgUzQl0cklntuMtI25j+OmDkj6ox2p18r0J1ku5EPoSEE58YCsryCJRUtfgBI4QksNI
- aHtFsmioRCZftQhYBA0j0EMJzcicsYLCXZOHLq8f7Xc4XQY8ZG2f/t/ga7dxW5Klp0An
- Xcxa1+gj5iwuFqhI93UYe8VWA1vatr18uQZS91DcqTpj9gSDzgwbXBQznvValzzEu8RF
- K+atPFFhNpN5I7A/0qpAD0JRGzbKExullu9ur+qWQ8UE5GQ6CHknpkQTDMYK9jI5x+Vi
- c6Pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768385730; x=1768990530;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8h4sdiY9JE6rWdEg+rBvzQ9j/JVjXlREFX3wwiQ5gaU=;
- b=Y0dMqlojFusSVRaK+8HTgD0wdZAzy+0w07fHw1arKIwFQMWZQodv/6Ya32haeiGiVi
- O2J0tD73z3M2VTnglJI0sOcKEeo408V1Ez+DBW1SRWJt2bnTk/ydcjVClvBEjKQQPVzU
- 6w79aveNVPkGZ/UzA4wkPoNss1O0HbGpop868+ZVUNDPbz/uR6PUk5CIx0Ce8kHd7S+l
- 3ofy9ULOpknCpWTevc73MSftEwB4cvdrs8r0DWLZCnO43C0lYwPT87TczO6SKvN1AqKH
- X9tGIk5hfYRWWMYzY/oB0JeVhrCWyiNtPQd1FV9w3slHSvpggm7nFq7J3+E2Szoltfbq
- 7aSg==
-X-Gm-Message-State: AOJu0YxGfGYDAhSt3uEtzsj5Vz+jITAfmAjvnHUWxvpABppNgmbrEPhJ
- TMy6Rlkq7z4K9AYGAMkqf2UETSkBLFMV8IoSuAHTkCAPNnc0IQtgwpRw5/ma3U/kYsM=
-X-Gm-Gg: AY/fxX6HgFO9gU+vpOo/1y4+yEe2Ep2toACNBlerEpwF0us2KNz5TtXIEvL7QxYoFxA
- v1EXe59kdUgY36UWcAgeu1xQIoH8Zg6uj7xwRzk7y+BKoAbyA1ma16gsiu/H+VV5QpOQfvoGKZB
- 4vF8fsfzIBaSLzKUvG6JLjQypYc6abi9qP7LmBRuGZnoyl2xva21Vr6FEdc/j0w/7sfWvXejngc
- lj88OtZat1/ine0a88tZ+clwS/rrzy9Bs+JW18ozA/ZZ4xmNyxH/ftTlwalxjt8aLH1724QKxN9
- 60YxV46idH/i+OSdirXUjCqVLqFD6OFgGBYo/RisCD5Z6izfrTPh9iRPdjOnGdPINeJeo7lWEZG
- +fg8PguK2f3tNVJsh+oroOrW7brEUACy93qk3+uqmAfdvqPptxj4g99zS8CU+TKuJOQ8ha+m/ri
- tORF+f+n01DRc=
-X-Received: by 2002:a5d:5d09:0:b0:431:a38:c306 with SMTP id
- ffacd0b85a97d-4342d6092f5mr1598309f8f.43.1768385729686; 
- Wed, 14 Jan 2026 02:15:29 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-432bd5ede7esm50411437f8f.32.2026.01.14.02.15.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Jan 2026 02:15:29 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 563D55F803;
- Wed, 14 Jan 2026 10:15:28 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] docs/devel: fix bash-ism warning for configure
-Date: Wed, 14 Jan 2026 10:15:25 +0000
-Message-ID: <20260114101525.4039244-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
+ id 1vfxvu-0002EE-PP
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:16:58 -0500
+Received: from smtp.eurecom.fr ([193.55.113.210])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
+ id 1vfxvs-0001qD-6O
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 05:16:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=eurecom.fr; i=@eurecom.fr; q=dns/txt; s=default;
+ t=1768385817; x=1799921817;
+ h=from:in-reply-to:references:date:cc:to:mime-version:
+ message-id:subject:content-transfer-encoding;
+ bh=B2F12y4WnovnyaTZS2zX8dli3hLrVex7sUvNaxqpsuY=;
+ b=C2142/UcY8cpJXxSABW0U/izcNajFWLnLKmvuDZC4+9oH8RYbeHWypvi
+ 1JwVuPYg5d8F/0cqhomb3dl2giKw8ozJlyxs7MnM3JN8/+LMLhEcwGpRb
+ dxQ230HTrFUw42fYFv+5OR0uQtgJv3HNlT1sEe1lKkcpdqy1LtjHdl2CF U=;
+X-CSE-ConnectionGUID: Jh81eu2qThyAYzl88/I72A==
+X-CSE-MsgGUID: Msk7Keo7QrKB/9nxvEROdA==
+X-IronPort-AV: E=Sophos;i="6.21,225,1763420400"; 
+   d="scan'208";a="4215494"
+Received: from quovadis.eurecom.fr ([10.3.2.233])
+ by drago1i.eurecom.fr with ESMTP; 14 Jan 2026 11:16:52 +0100
+From: "Marco Cavenati" <Marco.Cavenati@eurecom.fr>
+In-Reply-To: <aWZk7udMufaXPw-E@x1.local>
+Content-Type: text/plain; charset="utf-8"
+X-Forward: 193.55.114.5
+References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ <aWZk7udMufaXPw-E@x1.local>
+Date: Wed, 14 Jan 2026 11:16:52 +0100
+Cc: "qemu-devel" <qemu-devel@nongnu.org>
+To: "Peter Xu" <peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
+Message-ID: <3e46b0-69676d00-4d-1a5e27c0@252361837>
+Subject: =?utf-8?q?Re=3A?= Call for GSoC internship project ideas
+User-Agent: SOGoMail 5.12.1
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=193.55.113.210;
+ envelope-from=Marco.Cavenati@eurecom.fr; helo=smtp.eurecom.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,27 +74,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hopefully this makes the meaning clearer.
+Hi Peter,
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- docs/devel/build-system.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This is great to hear! I=E2=80=99m happy you=E2=80=99re taking the time=
+ to propose and
+mentor this. I=E2=80=99m definitely interested in seeing what comes out=
+ of it,
+thanks for putting me in the loop.
 
-diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-index b9797a374c7..35c77343914 100644
---- a/docs/devel/build-system.rst
-+++ b/docs/devel/build-system.rst
-@@ -66,7 +66,7 @@ Modifying ``configure``
- ``configure`` is a shell script; it uses ``#!/bin/sh`` and therefore
- should be compatible with any POSIX shell. It is important to avoid
- using bash-isms to avoid breaking development platforms where bash is
--the primary host.
-+not the default shell implementation.
- 
- The configure script provides a variety of functions to help writing
- portable shell code and providing consistent behavior across architectures
--- 
-2.47.3
+Regarding your proposed Fast Snapshot Load, it=E2=80=99s certainly more=
+ widely
+applicable and doesn=E2=80=99t require new QMP commands or extensive co=
+nfigurations
+(beyond mapped-ram), compared to what I had in mind. I think it will be
+beneficial for our use case regardless.
+
+I=E2=80=99d still be interested in trying to improve it further using d=
+irty
+tracking at some point, to ignore pages that haven=E2=80=99t been writt=
+en between
+two loadvm of the same snapshot. This would probably apply only to lega=
+cy
+snapshot though, as file migration expects a clean QEMU process.
+
+I=E2=80=99m not sure if I=E2=80=99m still eligible for GSoC; otherwise,=
+ I would have
+applied myself :)
+
+Best,
+Marco
+
+(removing people from CC to reduce noise)
+
+On Tuesday, January 13, 2026 16:29 CET, Peter Xu <peterx@redhat.com> wr=
+ote:
+
+> On Mon, Jan 05, 2026 at 04:47:22PM -0500, Stefan Hajnoczi wrote:
+> > Dear QEMU and KVM communities,
+> > QEMU will apply for the Google Summer of Code internship
+> > program again this year. Regular contributors can submit project
+> > ideas that they'd like to mentor by replying to this email by
+> > January 30th.
+>=20
+> There's one idea from migration side that should be self-contained, p=
+lease
+> evaluate if this suites for the application.
+>=20
+> I copied Marco who might be interested on such project too at least f=
+rom an
+> user perspective on fuzzing [1].
+>=20
+> [1] https://lore.kernel.org/all/193e5a-681dfa80-3af-701c0f80@22719288=
+7/
+>=20
+> Thanks,
+>=20
+> =3D=3D=3D Fast Snapshot Load =3D=3D=3D
+>=20
+> '''Summary:''' Fast loadvm process based on postcopy approach
+>=20
+> We have two common ways to load snapshots: (1) QMP "snapshot-load", o=
+r QMP
+> "migrate=5Fincoming" with a "file:" URI. The idea to be discussed her=
+e should
+> apply to either form of loadvm, however here we will focus on "file:"
+> migration only, because it should be the modern and suggested way of =
+using
+> snapshots nowadays.
+>=20
+> Load snapshot currently requires all VM data (RAM states and the rest
+> device states) to be loaded into the QEMU instance before VM starts.
+>=20
+> It is not required, though, to load guest memory to start the VM. For
+> example, in a postcopy live migration process, QEMU uses userfaultfd =
+to
+> allow VM run without all of the guest memory migrated. A similar tech=
+nique
+> can also be used in a loadvm process to make loadvm very fast, starti=
+ng the
+> VM almost immediately right after the loadvm command.
+>=20
+> The idea is simple: we can start the VM right after loading device st=
+ates
+> (but without loading the guest memory), then QEMU can start the VM. I=
+n the
+> background, the loadvm process should keep loading all the VM data in=
+ an
+> atomically way. Meanwhile, the vCPUs may from time to time access a m=
+issing
+> guest page. QEMU needs to trap these accesses with userfaultfd, and r=
+esolve
+> the page faults.
+>=20
+> After loading all the RAM state, the whole loadvm procedure is comple=
+ted.
+>=20
+> This feature needs to depend on mapped-ram feature, which allows offs=
+etting
+> into the snapshots to find whatever page being asked by the guest vCP=
+Us at
+> any point in time.
+>=20
+> This feature may not be very help in VM suspend / resume use cases, b=
+ecause
+> in those cases the VM was down previously, normally it's fine waiting=
+ for
+> the VM to be fully loaded. However, it might be useful in some other =
+cases
+> (like, frequently loading snapshots).
+>=20
+> '''Links:'''
+> * https://wiki.qemu.org/ToDo/LiveMigration#Fast=5Fload=5Fsnapshot
+>=20
+> '''Details:'''
+> * Skill level: advanced
+> * Language: C
+> * Mentor: Peter Xu <peterx@redhat.com>, peterx (on #qemu IRC)
+>=20
+> --=20
+> Peter Xu
+>
 
 
