@@ -4,79 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0592D37E3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 14:36:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 457E4D37E3B
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 14:41:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg1yq-0002Ou-0a; Wed, 14 Jan 2026 09:36:16 -0500
+	id 1vg23C-0006mp-HG; Wed, 14 Jan 2026 09:40:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vg1ye-0002Ng-2V; Wed, 14 Jan 2026 09:36:05 -0500
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1vg239-0006iW-GS
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 09:40:44 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vg1yb-0008C8-Pj; Wed, 14 Jan 2026 09:36:03 -0500
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 58AD480744;
- Wed, 14 Jan 2026 17:35:56 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:c88::1:7] (unknown [2a02:6bf:8080:c88::1:7])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id sZVeXG0ACiE0-70W21c4x; Wed, 14 Jan 2026 17:35:55 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1768401355;
- bh=CsLibKXtdk/PJxFMJ86jAnlmPnM0VJjqUv8A8vQAnPI=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=euUY1iHCZuLLLUwIWptzkniLjOpJrgZ6CvroB2Y6QXzvKBuqxm0iK+CTPY7G7baZr
- bMz8QTCJG8GcSme6YnqJIpHyyh/qYWQLur1XfUs826jRVpEVg3fcZOFafxwYI1GmVt
- lWQyEX99YZ8gKckFiCQoDFK1BvlI+pRM2b+8bA/U=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <832f4005-2e51-49fd-91e8-9f4cbe9f2adf@yandex-team.ru>
-Date: Wed, 14 Jan 2026 17:35:53 +0300
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1vg237-0001hd-NG
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 09:40:43 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1vg235-000000085Sd-01Mi; Wed, 14 Jan 2026 15:40:39 +0100
+Message-ID: <6cd62ebe-8a2b-4993-a1eb-e1a381d540c6@maciej.szmigiero.name>
+Date: Wed, 14 Jan 2026 15:40:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/5] support inflight migration
-To: Peter Xu <peterx@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Zhenwei Pi <pizhenwei@bytedance.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, mzamazal@redhat.com,
- Fabiano Rosas <farosas@suse.de>, qemu-block@nongnu.org,
- virtio-fs@lists.linux.dev, "yc-core@yandex-team.ru"
- <yc-core@yandex-team.ru>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20260113095813.134810-1-dtalexundeer@yandex-team.ru>
- <20260113181242.GB528940@fedora> <aWaVVJh13ctiW9Ku@x1.local>
- <2af404d1-5e50-4caa-bee6-f8aab6a30a7e@yandex-team.ru>
- <aWeKn5A7-tWaWv0z@x1.local>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aWeKn5A7-tWaWv0z@x1.local>
+Subject: Re: [PATCH v2 23/32] hw/hyperv/vmbus: add support for confidential
+ guest reset
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
+References: <20260112132259.76855-1-anisinha@redhat.com>
+ <20260112132259.76855-24-anisinha@redhat.com>
+ <cbfdd456-76c9-4280-8d58-b5a2d38b3900@maciej.szmigiero.name>
+ <aWedNoIHcSJfTm4Z@redhat.com>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <aWedNoIHcSJfTm4Z@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -88,69 +106,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.01.26 15:22, Peter Xu wrote:
-> On Wed, Jan 14, 2026 at 09:19:10AM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 13.01.26 21:56, Peter Xu wrote:
->>> On Tue, Jan 13, 2026 at 01:12:42PM -0500, Stefan Hajnoczi wrote:
->>>> On Tue, Jan 13, 2026 at 02:58:09PM +0500, Alexandr Moshkov wrote:
->>>>
->>>> Peter: Please review the migration aspects (especially the vmstates).
->>>> Thank you!
+On 14.01.2026 14:42, Daniel P. Berrangé wrote:
+> On Wed, Jan 14, 2026 at 02:38:54PM +0100, Maciej S. Szmigiero wrote:
+>> On 12.01.2026 14:22, Ani Sinha wrote:
+>>> On confidential guests when the KVM virtual machine file descriptor changes as
+>>> a part of the reset process, event file descriptors needs to be reassociated
+>>> with the new KVM VM file descriptor. This is achieved with the help of a
+>>> callback handler that gets called when KVM VM file descriptor changes during
+>>> the confidential guest reset process.
 >>>
->>> Looks good from my side as long as it's based on VMSD, I appreciate that
->>> change from the old versions where it used to use qemufile APIs.
+>>> This patch is untested on confidential guests and only exists for completeness.
 >>>
->>> The major question here is if this series depends on Vladimir's other
->>> series
+>>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+>>> ---
+>>>    hw/hyperv/vmbus.c | 30 ++++++++++++++++++++++++++++++
+>>>    1 file changed, 30 insertions(+)
+>>>
 >>
->> No, it does not. And if we can proceed with merging these series first, I'll
->> be happy to rebase on top of it.
+>> Quick question: is this patch set targeting QEMU 11.0 or which version?
 > 
-> I thought it requires migrate_local_vhost_user_blk() be present?  The
-> inflight feature should not be enabled only if there's a hint that it's a
-> local migration..
+> Patches are always assumed to be targetting current git master unless
+> the cover letter / subject line explicity says otherwise.
 
-Oh right, I missed it.
+I was asking more what QEMU release the submitter thinks this patch set
+will make rather than against which git tree it is based on but thanks anyway.
+  
+> With regards,
+> Daniel
 
-We discussed that Alexandr will rebase the series on master without dependency
-on my RFC.
+Thanks,
+Maciej
 
-> 
-> I'll comment inline on the patch later.
-> 
->>
->>> while there's still one patch that is not-for-merge:
->>>
->>> https://lore.kernel.org/all/20251016114104.1384675-24-vsementsov@yandex-team.ru/#t
->>>
->>> Does it automatically mark this series RFC as well?
->>>
->>> Personally speaking, a new migration cap would work all fine, we should
->>> have discussed it somewhere previously.  Said that, "local-vhost-user-blk"
->>> capability is likely not the right one.  IMHO it should be either "local"
->>> or "fd-passing" / "fd-passthrough" (or something generic) as the name.  If
->>> we are not sure if we will leverage more than "passing the FDs around", we
->>> can make it as simple as "local" as a new migration capability.
->>>
->>> Then migration's misc.h should export a function migrate_is_local() then
->>> device code can probe that in its own vmstate handling paths on save/load.
->>>
->>> A note to Vladimir: please remember to add a check to enforce UNIX socket
->>> when a formal patch 23 will be proposed some day, no matter what is the
->>> name of the capability.  It should fail qmp "migrate" or qmp
->>> "migrate_incoming" command if the main URI is not a unix socket.
->>>
->>
->> Thanks! I'll keep that in mind when prepare next version.
->>
->> -- 
->> Best regards,
->> Vladimir
->>
-> 
-
-
--- 
-Best regards,
-Vladimir
 
