@@ -4,114 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C158D3CC81
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 21:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA55BD3CC82
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 21:59:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg8oh-0001kF-Rl; Wed, 14 Jan 2026 16:54:15 -0500
+	id 1vg8sb-0003aN-Vl; Wed, 14 Jan 2026 16:58:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vg8og-0001k3-NV; Wed, 14 Jan 2026 16:54:14 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg8sa-0003a4-FT
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 16:58:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vg8of-0001fv-4U; Wed, 14 Jan 2026 16:54:14 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60EHtU7J011825;
- Wed, 14 Jan 2026 21:54:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=T0/H9b
- OfcAMcZrjcz0Av1zDWH8rSKVLxu6+w+tkEMFM=; b=tNasg7pexOhNdloBpQe0os
- SQPbQfeApcHmLqKrP8/ifaQvB5wTX8xWNs1LcpqN3ypcaNjTjasGWec/d5OmENxu
- DoNmc6SvyWNfgUD1b3d2yykpY+o+5KauawB3nGseWPWX2tm32f+UkUm8aWTeld+f
- +6BH13hVWRRlSFrlua+afN3s49dYpkH2os3OdYOVxQld8TH5F9zTZwNvMZhe2VHI
- d0tSQnxFiSixcqvSVte68xwZTriyOs4MQKUWbRuqaA7e6p8BBw7nDZKBKuEUJhZD
- zC0rHUlzJTMC+kDx7tp/AxfH48ilrio3IyyEmA65rcZXkLF5w8Sj9NM0lB/8c/lA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bkeeq3pej-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Jan 2026 21:54:10 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60EJlPGQ014303;
- Wed, 14 Jan 2026 21:54:08 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bm1fycrmv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Jan 2026 21:54:08 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60ELs7Qn65995252
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 Jan 2026 21:54:07 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 992B658053;
- Wed, 14 Jan 2026 21:54:07 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E0F6358043;
- Wed, 14 Jan 2026 21:54:05 +0000 (GMT)
-Received: from [9.61.11.245] (unknown [9.61.11.245])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 14 Jan 2026 21:54:05 +0000 (GMT)
-Message-ID: <d31a747f-d2b3-429a-9ee1-924e55ea3aea@linux.ibm.com>
-Date: Wed, 14 Jan 2026 16:54:05 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg8sZ-0003A0-4N
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 16:58:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768427893;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=t8SBT1pBmEfJh/nYjObHr7fEkO+/sSZDOi3orguP0nw=;
+ b=eT39JzGfd1gIAMQbjC57ZNSnhrqhpL0GEBhceMl/eyw2hjqXCB6Z8KOONTccUXhtz/kGRE
+ 1VsMgqPiyqXnskUzXk7XIbslQdvUWt1RdqjUNKECcml5LXWGPwSuwe7JBEtFdLiEyMHfyJ
+ nZaG1tTSXV1JOGpDVqXmWGf1vUUkxXo=
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-3-VY9bc7nyPpKw0dEhmSkslg-1; Wed, 14 Jan 2026 16:58:11 -0500
+X-MC-Unique: VY9bc7nyPpKw0dEhmSkslg-1
+X-Mimecast-MFC-AGG-ID: VY9bc7nyPpKw0dEhmSkslg_1768427891
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-5ed0b7ed42eso268975137.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 13:58:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768427891; x=1769032691; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=t8SBT1pBmEfJh/nYjObHr7fEkO+/sSZDOi3orguP0nw=;
+ b=T0KEIySt7m+Z2l2qlaFdbeZcEHNkH5VgcOgsjHVGXac0amQ1Yn9bRHFlVcQIhn6Ryp
+ tFY/eVRWC7warIa0g9KpzgNbL3AxeAEljJrhU6dq+syKslZMRR6X2ULB6uHl0V3tZQDv
+ dIe54YWUQGaRSHt20mhJIMDQMZE4VBxJPBCEm48ex1Y6koNL1rU1m8OUC4+2dGgaYdKY
+ Ek1PsmuHL5ANcTf3Z1V3Df06AjpYUItYAnOb0WKgvLGBSzgYQ9e0tu3kUWyRnJPan57X
+ rD+a6KY/D0hiU5gFosc+BDYPIurOpbQ9iHIcbsS+BrVy53ndKKBg5lK3OUo9Y3bBxay7
+ 6LbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768427891; x=1769032691;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=t8SBT1pBmEfJh/nYjObHr7fEkO+/sSZDOi3orguP0nw=;
+ b=JZL+RKBCzUtb3jFL8H7GH00IEmXgLW+0gCoCiiNzwweGIof2Fv79qaVPQZkZYp6GXO
+ gjri0/Dzet5SCwdnpUHSse14h8rNemUyTcE78PeK2wWF2QpqYdrwybivzXSC870Mtq65
+ 83ChmNhDaEAAm4YBUUcINcWa0teXph+rOsLlM8UeA6E9F+PwHE8f81Ngrc35yYcwSu0+
+ Tv/HTPKIrc6bQ3HXQhtUD01b0EIQ6VYGz10mkP+W7gwct4THC6bZMZQxW0uFsNP3Dvuw
+ cirqaJACB5fFBYPs+Dp3Ch0F27E6sblNEbpFOhElZs3P37egXblqBGFt3IdT11zqAisS
+ Vaqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXaHFnSQ/EdWoyW0/vr3sQTG6CMNvfwuTuLlqXCpu1CWzkU5o+0QNW/V4pzt3mem1Hf3y88yX/Ccleq@nongnu.org
+X-Gm-Message-State: AOJu0YxGJMf1tQiUKzFx9gO2Ui9MddpHlBU/goFaDI9vspSxbzqvLYTo
+ yNaocx6i9BB7RBUSD0+wWgoKtLQbGr4pngu1rjvcEcjlMw+wlzvNIJ9yXO3YKpsITkSB9qWmmy6
+ /iV+whFsAUzSL7NW4iHdp6ObDf5X1Qd2BARql/b1cbt1qa4BLBe1Qnvtr
+X-Gm-Gg: AY/fxX60bBsgGAo7tq8ZbQjKmeyF37ESon+ifIlyawJ76I8yIvAG6wJ30qtFM1FRpLi
+ coiVJJRbIBzOxiSn9b5C96GxSLLYg0r07+k2aj58Jm8WbgWd+zP5BXHDdh2gM9cLPIRDfL4ZEBN
+ ElxKPiXe4GDUTZ6zI0ridoiP75jU4tSntR84aTLi07Ua0DuTqvOjOAxl2NJyP4uLZXkpEL7FOYK
+ GYjwShQrj17+2owJRgfqZbtjeEOPBw0vY3AldmQhAFa7Da/QT3a2gHj5xS9V/LblGksZkC/92k2
+ Vepmk8x/T52a7EGtAz6mjHQh51zM4Lca7O8Xxgfd61E0ImkHfDGjQK5KgtQx9KEZFkwUc8iOMLM
+ 3HVs=
+X-Received: by 2002:a05:6102:5e86:b0:5ec:c528:4dd3 with SMTP id
+ ada2fe7eead31-5f17f69f277mr1758010137.42.1768427890926; 
+ Wed, 14 Jan 2026 13:58:10 -0800 (PST)
+X-Received: by 2002:a05:6102:5e86:b0:5ec:c528:4dd3 with SMTP id
+ ada2fe7eead31-5f17f69f277mr1757981137.42.1768427890497; 
+ Wed, 14 Jan 2026 13:58:10 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ a1e0cc1a2514c-944124e97b1sm23437598241.15.2026.01.14.13.58.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Jan 2026 13:58:10 -0800 (PST)
+Date: Wed, 14 Jan 2026 16:57:58 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ mzamazal@redhat.com, Fabiano Rosas <farosas@suse.de>,
+ qemu-block@nongnu.org, virtio-fs@lists.linux.dev,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v6 4/5] vhost: add vmstate for inflight region with inner
+ buffer
+Message-ID: <aWgRZmQuQNDRRNRs@x1.local>
+References: <20260113095813.134810-1-dtalexundeer@yandex-team.ru>
+ <20260113095813.134810-5-dtalexundeer@yandex-team.ru>
+ <aWfrT6JOMm9MGoIw@x1.local> <20260114213817.GA622013@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Zhuoying Cai <zycai@linux.ibm.com>
-Subject: Re: [PATCH v7 09/29] s390x/diag: Implement DIAG 320 subcode 2
-To: Farhan Ali <alifm@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-10-zycai@linux.ibm.com>
- <b3a03c68-c011-43e8-8c85-e14fb7f39399@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <b3a03c68-c011-43e8-8c85-e14fb7f39399@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=DI6CIiNb c=1 sm=1 tr=0 ts=69681082 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=OkEAUxHlVwn2UpCt1b4A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: uwPwL_ywwUM1_DpQXJSocAiqY7q9b0Qj
-X-Proofpoint-ORIG-GUID: uwPwL_ywwUM1_DpQXJSocAiqY7q9b0Qj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDE3OSBTYWx0ZWRfX8wVer2aaL5jS
- xwIcZZEuZTCqMnTHqGBkudju28AJcPsamWmWi3njP+ssAJ4Mm/uKgWCRPbu4RF2vuIJyjkMkON7
- eDPaUR6WgOzfFI6yXhL/KAkCPSGWAvqhVJfGyiPYiHFVg09mt6xGtdDc07kJ2tPwL89OQADd/5X
- CWkJ7cNnt/PAEGtKHejJ0GRfILHWUfodDtUZiOiq5Yiev/I2yFuynDUYP2dqibRb4sLiGQZ5eFu
- R8yZfhKSf3eXi29jOX6/BRZEi7KS+SV5umCNDUa1/S3uvQI8DYaO+cELjPh3ttPWD0XRUQ96BYl
- F4pqvLyLsJ3h5EZ39D1bI5EnMUwtfMgXxmiIpdKqaK0asIpo8l4Q9YSpsKaLe5F790/81OKbyu4
- oQ5DM+OsygeaRZw2yMrr/BJXf4cqTz0i9jDZyzMQikjlvlcWSuaUfQX8rxwT/1tsHkju5L7+y75
- J/E+etF+PAZOh2LoMPA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-14_06,2026-01-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 lowpriorityscore=0 adultscore=0
- malwarescore=0 spamscore=0 suspectscore=0 phishscore=0 impostorscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
- definitions=main-2601140179
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260114213817.GA622013@fedora>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,63 +132,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/26 5:54 PM, Farhan Ali wrote:
-> <..snip...>
+On Wed, Jan 14, 2026 at 04:38:17PM -0500, Stefan Hajnoczi wrote:
+> On Wed, Jan 14, 2026 at 02:15:27PM -0500, Peter Xu wrote:
+> > On Tue, Jan 13, 2026 at 02:58:17PM +0500, Alexandr Moshkov wrote:
+> > > Prepare for future inflight region migration for vhost-user-blk.
+> > > We need to migrate size, queue_size, and inner buffer.
+> > > 
+> > > So firstly it migrate size and queue_size fields, then allocate memory for buffer with
+> > > migrated size, then migrate inner buffer itself.
+> > > 
+> > > Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> > > ---
+> > >  hw/virtio/vhost.c         | 57 +++++++++++++++++++++++++++++++++++++++
+> > >  include/hw/virtio/vhost.h |  6 +++++
+> > >  2 files changed, 63 insertions(+)
+> > > 
+> > > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> > > index c46203eb9c..f655c53b67 100644
+> > > --- a/hw/virtio/vhost.c
+> > > +++ b/hw/virtio/vhost.c
+> > > @@ -2028,6 +2028,63 @@ const VMStateDescription vmstate_backend_transfer_vhost_inflight = {
+> > >      }
+> > >  };
+> > >  
+> > > +static int vhost_inflight_buffer_pre_load(void *opaque, Error **errp)
+> > > +{
+> > > +    info_report("vhost_inflight_region_buffer_pre_load");
+> > > +    struct vhost_inflight *inflight = opaque;
+> > > +
+> > > +    int fd = -1;
+> > > +    void *addr = qemu_memfd_alloc("vhost-inflight", inflight->size,
+> > > +                                  F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
+> > > +                                  &fd, errp);
+> > > +    if (*errp) {
+> > > +        return -ENOMEM;
+> > > +    }
+> > > +
+> > > +    inflight->offset = 0;
+> > > +    inflight->addr = addr;
+> > > +    inflight->fd = fd;
+> > > +
+> > > +    return 0;
+> > > +}
+> > > +
+> > > +const VMStateDescription vmstate_vhost_inflight_region_buffer = {
+> > > +    .name = "vhost-inflight-region/buffer",
+> > > +    .pre_load_errp = vhost_inflight_buffer_pre_load,
+> > > +    .fields = (const VMStateField[]) {
+> > > +        VMSTATE_VBUFFER_UINT64(addr, struct vhost_inflight, 0, NULL, size),
+> > > +        VMSTATE_END_OF_LIST()
+> > > +    }
+> > > +};
+> > > +
+> > > +static int vhost_inflight_region_post_load(void *opaque,
+> > > +                                           int version_id,
+> > > +                                           Error **errp)
+> > > +{
+> > > +    struct vhost_inflight *inflight = opaque;
+> > > +
+> > > +    if (inflight->addr == NULL) {
+> > 
+> > IIUC this can never happen because pre_load() must trigger before
+> > post_load(), and when reaching post_load() it means pre_load() must have
+> > succeeded..
+> > 
+> > So, IIUC we can drop this post_load() completely (or assert addr in
+> > pre_load instead).
 > 
-> On 12/8/2025 1:32 PM, Zhuoying Cai wrote:
->> +static int build_vce_data(VCEntry *vce, S390IPLCertificate cert)
->> +{
->> +    uint16_t keyid_field_len;
->> +    uint16_t hash_field_len;
->> +    uint32_t cert_field_len;
->> +    uint32_t vce_len;
->> +    int rc;
->> +
->> +    handle_key_id(vce, cert);
->> +    /* vce key id field length - can be 0 if failed to retrieve */
->> +    keyid_field_len = ROUND_UP(be16_to_cpu(vce->keyid_len), 4);
-> 
-> If we fail to retrieve the key, does it makes sense to build the VCE? I 
-> think we need the key to verify the signature of the certificate, so why 
-> not mark the certificate as invalid?
-> 
-> 
+> I asked for this input validation check. If the migration stream is
+> inconsistent (e.g. broken or malicious source QEMU), then the subsection
+> might be missing but size could be non-zero. The destination QEMU should
+> fail cleanly and not run into undefined behavior.
 
-The key ID is used to identify the public key in the certificate, but
-it is not utilized in the current patch series. Therefore, I thought it
-would be acceptable to continue building the VCE without this field,
-though I am open to other ideas or suggestions on how to handle it.
+Ah I misread it as the one pairing with the pre_load().  It makes sense
+indeed to have such post_load() in the parent VMSD.
 
->> +
->> +    rc = handle_hash(vce, cert, keyid_field_len);
->> +    if (rc) {
->> +        return -1;
->> +    }
->> +    hash_field_len = ROUND_UP(be16_to_cpu(vce->hash_len), 4);
->> +
->> +    rc = handle_cert(vce, cert, hash_field_len);
->> +    if (rc || !is_cert_valid(cert)) {
->> +        return -1;
->> +    }
->> +    /* vce certificate field length */
->> +    cert_field_len = ROUND_UP(be32_to_cpu(vce->cert_len), 4);
->> +
->> +    vce_len = VCE_HEADER_LEN + keyid_field_len + hash_field_len + cert_field_len;
->> +    if (vce_len > be32_to_cpu(vce->len)) {
->> +        return -1;
->> +    }
->> +
->> +    /* The certificate is valid and VCE contains the certificate */
->> +    vce->flags |= DIAG_320_VCE_FLAGS_VALID;
->> +
->> +    /* Update vce length to reflect the actual size used by vce */
->> +    vce->len = cpu_to_be32(vce_len);
->> +
->> +    return 0;
->> +}
->> +
-> 
-> <...snip...>
-> 
+Please ignore my comment, sorry for the noise.
+
+-- 
+Peter Xu
 
 
