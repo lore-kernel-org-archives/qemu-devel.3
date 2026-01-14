@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19F0CD29FEF
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 11:28:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36CFCD29FEC
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 11:29:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfz31-0000YF-MR; Wed, 14 Jan 2026 06:28:23 -0500
+	id 1vfz3j-0001GP-4M; Wed, 14 Jan 2026 06:29:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfz2m-0000UM-Bh
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 06:28:09 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vfz3h-00019x-3u
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 06:29:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vfz2j-00016t-4E
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 06:28:06 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vfz3f-0001wk-F1
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 06:29:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768390084;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1768390142;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=npEeJF9vFqQoupP8982dKGPAIdfwtxnGXFBbQHztvjc=;
- b=KO8PM+uKGapob1RohErPpUIuOm6oVGTWK+6m1K8xxzBlGEhSP5EID9PuXGbwKZYCfK7t8m
- gbKbIDU+KA8Kn4fJm+77f3uzxc4AaOi4qcaeyVoJG/KbxtBha3xmKcW9MHOpooARFZqcBM
- y0Fs05ts5dhH8xOUFN1sOBggMNbB3aQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=D4Di8ekOKy9gTaxd4biHPnTvnjOFZXBL2ZQYBNaA0vs=;
+ b=cO2tBRShtVvW/vC72Yn3sgDXjrRsIBuHGuVKhA8p9Btrz5Du7r6wbyymDgGAqrm79wk/4I
+ il69UtsF7NkqKNNOJB2zJJ4P0/GIs7o9WzSziY7alXEea11tbSdMCA1H7NgdX+FBbA9L+9
+ z1MPY1ZTmLdx0Yvynk6M3CAR/Up96XI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-270-HCmcFRiAPpWP6RMLTxHdaQ-1; Wed,
- 14 Jan 2026 06:28:00 -0500
-X-MC-Unique: HCmcFRiAPpWP6RMLTxHdaQ-1
-X-Mimecast-MFC-AGG-ID: HCmcFRiAPpWP6RMLTxHdaQ_1768390079
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-TmcOmbQyODegkaU4lntNIA-1; Wed,
+ 14 Jan 2026 06:28:59 -0500
+X-MC-Unique: TmcOmbQyODegkaU4lntNIA-1
+X-Mimecast-MFC-AGG-ID: TmcOmbQyODegkaU4lntNIA_1768390138
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 858041800371; Wed, 14 Jan 2026 11:27:59 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A5C6E18004D8; Wed, 14 Jan 2026 11:27:58 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3D18921E692D; Wed, 14 Jan 2026 12:27:56 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E31421955F34; Wed, 14 Jan 2026 11:28:57 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.41])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E0DB019560A2; Wed, 14 Jan 2026 11:28:48 +0000 (UTC)
+Date: Wed, 14 Jan 2026 11:28:43 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Thomas Huth <thuth@redhat.com>,
- qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,  Reinoud Zandijk
- <reinoud@netbsd.org>,  Ryo ONODERA <ryoon@netbsd.org>
-Subject: Re: [PULL 13/31] accel/nvmm: Replace @dirty field by generic
- CPUState::vcpu_dirty field
-In-Reply-To: <8bff8d59-7729-4a08-b4c6-e32c2ff35e68@redhat.com> (Paolo
- Bonzini's message of "Wed, 14 Jan 2026 11:54:09 +0100")
-References: <20250704101433.8813-1-philmd@linaro.org>
- <20250704101433.8813-14-philmd@linaro.org>
- <44ccfba7-21a3-4c24-aa6a-4b2bdb989792@redhat.com>
- <dd7fbe03-1458-4c44-b8db-a9d5e9ae33f1@linaro.org>
- <87v7h44pal.fsf@pond.sub.org> <aWdfqvJhtDt14lTJ@redhat.com>
- <ea1e0e45-f864-4a43-a40e-48fd82c26c56@redhat.com>
- <87a4yg4gmo.fsf@pond.sub.org>
- <8bff8d59-7729-4a08-b4c6-e32c2ff35e68@redhat.com>
-Date: Wed, 14 Jan 2026 12:27:56 +0100
-Message-ID: <87wm1k303n.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org, qemu-block@nongnu.org,
+ qemu-rust@nongnu.org, Stefan Weil <sw@weilnetz.de>,
+ Kevin Wolf <kwolf@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v5 08/24] util: add API to fetch the current thread name
+Message-ID: <aWd96_W2wOGgt0tY@redhat.com>
+References: <20260108170338.2693853-1-berrange@redhat.com>
+ <20260108170338.2693853-9-berrange@redhat.com>
+ <878qe1c17b.fsf@pond.sub.org> <aWYXt9YckvZmFCia@redhat.com>
+ <874iopacr0.fsf@pond.sub.org>
+ <CABgObfYdw9y3621wHkBT+htB8cQ=OsUMdBFJYEoJiuaDELLzUw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfYdw9y3621wHkBT+htB8cQ=OsUMdBFJYEoJiuaDELLzUw@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -94,33 +98,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On Tue, Jan 13, 2026 at 04:49:53PM +0100, Paolo Bonzini wrote:
+> On Tue, Jan 13, 2026 at 2:00 PM Markus Armbruster <armbru@redhat.com> wrote:
+> > > > Tempted to store the thread name in TLS and call it a day.
+> > >
+> > > Using the official APIs in this way ensures that the thread name is
+> > > visible outside QEMU. For example when debugging in GDB, which IMHO
+> > > is an important benefit.
+> >
+> > I didn't mean to suggest not to set the "official" thread name.
+> >
+> > This patch retrieves the "official" thread name back.  Takes a bit of
+> > system-specific code, including Meson magic.  We could instead hold on
+> > to our own copy, and just use that.
+> 
+> Yes, I think that's what we're going to do anyway due to my remark on
+> patch 7/24.
 
-> On 1/14/26 11:45, Markus Armbruster wrote:
->>> ---- target/i386/nvmm/nvmm-all.c.orig	2024-11-20 22:48:05.000000000 +0000
->>> +--- target/i386/nvmm/nvmm-all.c.orig	2025-08-26 18:32:38.000000000 +0000
->>>   +++ target/i386/nvmm/nvmm-all.c
->>> -@@ -1057,7 +1057,11 @@ nvmm_process_section(MemoryRegionSection
->>> +@@ -984,7 +984,7 @@ nvmm_init_vcpu(CPUState *cpu)
->>> +         }
->>> +     }
->>> +
->>> +-    qcpu->vcpu_dirty = true;
->>> ++    cpu->vcpu_dirty = true;
->>> +     cpu->accel = qcpu;
->>> +
->>> +     return 0;
->>> +@@ -1059,7 +1059,11 @@ nvmm_process_section(MemoryRegionSection
->>>        unsigned int delta;
->>>        uintptr_t hva;
->> That they didn't immediately post the fix upstream is a bit of a
->> disappointment.  Deep in the weeds, I guess.
->
-> Eh, it happens. :/  For the future, since Ryo and Reinoud are in Cc, it would have been enough to contact anyone on IRC or reply to the release announcement.
+That doesn't alter things. The constructor merely initialzies the name
+for the main thread. We'll still use pthread APIs for all other threads.
 
-Yes, it happens, especially when you're deep in the weeds.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
