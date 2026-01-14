@@ -4,73 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE89DD31A0E
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 06:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E947D31A11
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 06:48:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfuE3-0008Hw-8z; Wed, 14 Jan 2026 01:19:27 -0500
+	id 1vfufJ-0001uM-AM; Wed, 14 Jan 2026 01:47:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vfuDz-0008GJ-Nr; Wed, 14 Jan 2026 01:19:24 -0500
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ id 1vfuf2-0001pl-UK
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 01:47:21 -0500
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vfuDx-0000A7-Eg; Wed, 14 Jan 2026 01:19:23 -0500
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 98F78C01AC;
- Wed, 14 Jan 2026 09:19:13 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:c88::1:7] (unknown [2a02:6bf:8080:c88::1:7])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id AJNmZ80AfW20-uK4vFqAX; Wed, 14 Jan 2026 09:19:12 +0300
+ id 1vfuf0-0004A8-HB
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 01:47:20 -0500
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 1412D8074D;
+ Wed, 14 Jan 2026 09:47:15 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:c88::1:7])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id ClNQD90AqW20-0Zw04bIg; Wed, 14 Jan 2026 09:47:14 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1768371552;
- bh=MjZ+p+f9yJQUOy1N1T+uGF94WpII2zAukpQ58wZNqxw=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=VOrv0mKtVxZlOXgrJulmBaeG9rxA5WwV97nRzonAzt642GDyYRZQIZfx+XGVNWC9b
- 2/vrkkbWZcIYSWKdR5HmcCUJn9xqMSl1LQPfAD5HimnrhIhTxLdEyI8An6TqNVgAEF
- zuLY/5WaPWGi523oFG+HcGt3BM/5Ls1z/ocIn7Xo=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ s=default; t=1768373234;
+ bh=Tif36W+c4IEEnHeR+8q+hVk+mR4A73d1GMBH7oqV3UA=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=WFnsEhpPlPwxCywp/aMYs4q7alunzPm2kKCS/UZ/JFObwlq7CxpBFx598db3F3UBR
+ 9YTfuG7F5Ga1s/ZHgh6ASrPhQJgwSMVgstY6dnMhvT0IdCtTyso2bYGKvj6sPm7AN0
+ 9H7i4KArs3h+3n5csw9pofYX9hac9Qqrk2ec84A0=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <2af404d1-5e50-4caa-bee6-f8aab6a30a7e@yandex-team.ru>
-Date: Wed, 14 Jan 2026 09:19:10 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/5] support inflight migration
-To: Peter Xu <peterx@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Zhenwei Pi <pizhenwei@bytedance.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, mzamazal@redhat.com,
- Fabiano Rosas <farosas@suse.de>, qemu-block@nongnu.org,
- virtio-fs@lists.linux.dev, "yc-core@yandex-team.ru"
- <yc-core@yandex-team.ru>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20260113095813.134810-1-dtalexundeer@yandex-team.ru>
- <20260113181242.GB528940@fedora> <aWaVVJh13ctiW9Ku@x1.local>
-Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aWaVVJh13ctiW9Ku@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+To: peterx@redhat.com
+Cc: farosas@suse.de, qemu-devel@nongnu.org, dtalexundeer@yandex-team.ru,
+ vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
+ d-tatianin@yandex-team.ru
+Subject: [PATCH 2/5] qemu-file: qemu_file_get_fd(): fail if no expected fd come
+Date: Wed, 14 Jan 2026 09:47:07 +0300
+Message-ID: <20260114064710.176268-3-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20260114064710.176268-1-vsementsov@yandex-team.ru>
+References: <20260114064710.176268-1-vsementsov@yandex-team.ru>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,47 +75,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.01.26 21:56, Peter Xu wrote:
-> On Tue, Jan 13, 2026 at 01:12:42PM -0500, Stefan Hajnoczi wrote:
->> On Tue, Jan 13, 2026 at 02:58:09PM +0500, Alexandr Moshkov wrote:
->>
->> Peter: Please review the migration aspects (especially the vmstates).
->> Thank you!
-> 
-> Looks good from my side as long as it's based on VMSD, I appreciate that
-> change from the old versions where it used to use qemufile APIs.
-> 
-> The major question here is if this series depends on Vladimir's other
-> series
+In _put() we don't actually allow send a service byte
+without fd. So on _get() it's unexpected. Let's be strict.
 
-No, it does not. And if we can proceed with merging these series first, I'll
-be happy to rebase on top of it.
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ migration/qemu-file.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-> while there's still one patch that is not-for-merge:
-> 
-> https://lore.kernel.org/all/20251016114104.1384675-24-vsementsov@yandex-team.ru/#t
-> 
-> Does it automatically mark this series RFC as well?
-> 
-> Personally speaking, a new migration cap would work all fine, we should
-> have discussed it somewhere previously.  Said that, "local-vhost-user-blk"
-> capability is likely not the right one.  IMHO it should be either "local"
-> or "fd-passing" / "fd-passthrough" (or something generic) as the name.  If
-> we are not sure if we will leverage more than "passing the FDs around", we
-> can make it as simple as "local" as a new migration capability.
-> 
-> Then migration's misc.h should export a function migrate_is_local() then
-> device code can probe that in its own vmstate handling paths on save/load.
-> 
-> A note to Vladimir: please remember to add a check to enforce UNIX socket
-> when a formal patch 23 will be proposed some day, no matter what is the
-> name of the capability.  It should fail qmp "migrate" or qmp
-> "migrate_incoming" command if the main URI is not a unix socket.
-> 
-
-Thanks! I'll keep that in mind when prepare next version.
-
+diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+index 4b5a409a80..02f30c1c21 100644
+--- a/migration/qemu-file.c
++++ b/migration/qemu-file.c
+@@ -389,28 +389,34 @@ int qemu_file_get_fd(QEMUFile *f)
+ {
+     int fd = -1;
+     FdEntry *fde;
++    Error *err = NULL;
+ 
+     if (!f->can_pass_fd) {
+-        Error *err = NULL;
+         error_setg(&err, "%s does not support fd passing", f->ioc->name);
+-        error_report_err(error_copy(err));
+-        qemu_file_set_error_obj(f, -EIO, err);
+-        goto out;
++        goto fail;
+     }
+ 
+     /* Force the dummy byte and its fd passenger to appear. */
+     qemu_peek_byte(f, 0);
+ 
+     fde = QTAILQ_FIRST(&f->fds);
+-    if (fde) {
+-        qemu_get_byte(f);       /* Drop the dummy byte */
+-        fd = fde->fd;
+-        QTAILQ_REMOVE(&f->fds, fde, entry);
+-        g_free(fde);
++    if (!fde) {
++        error_setg(&err, "%s no FD come with service byte", f->ioc->name);
++        goto fail;
+     }
+-out:
++
++    qemu_get_byte(f);       /* Drop the dummy byte */
++    fd = fde->fd;
++    QTAILQ_REMOVE(&f->fds, fde, entry);
++    g_free(fde);
++
+     trace_qemu_file_get_fd(f->ioc->name, fd);
+     return fd;
++
++fail:
++    error_report_err(error_copy(err));
++    qemu_file_set_error_obj(f, -EIO, err);
++    return -1;
+ }
+ 
+ /** Closes the file
 -- 
-Best regards,
-Vladimir
+2.48.1
+
 
