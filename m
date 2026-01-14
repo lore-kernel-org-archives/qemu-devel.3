@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE29D37E33
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 13:32:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFEAAD37E2A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 13:32:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg0yK-00039H-Ak; Wed, 14 Jan 2026 08:31:40 -0500
+	id 1vg0zI-0003ho-H2; Wed, 14 Jan 2026 08:32:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vg0yA-00037b-Vn
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:31:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vg0y8-0008UK-2A
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:31:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768397486;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aCxX7A2olBTxr5muMVj3R1I9DXqoiz6hJYGPso0sLWQ=;
- b=DdrKaunlW0KQljXICnZsYag/PUrsLpLXAx+8TyycLBpRVVIvrxJQxcFvtOmqSdzjN4yWt7
- caWMGejaVMA11H1Jl1o35R42vACT4XJLlFsG8NzB9u2i/nD6mXAyEA4uuxeP48fUVU8YKU
- V4DHVxY1AUQyvKG2leOcDpNxbq8YgzE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-HoMbf6grOwWnwFUcXeudoQ-1; Wed,
- 14 Jan 2026 08:31:25 -0500
-X-MC-Unique: HoMbf6grOwWnwFUcXeudoQ-1
-X-Mimecast-MFC-AGG-ID: HoMbf6grOwWnwFUcXeudoQ_1768397484
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C3D29195608F; Wed, 14 Jan 2026 13:31:23 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.41])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8688018007D2; Wed, 14 Jan 2026 13:31:22 +0000 (UTC)
-Date: Wed, 14 Jan 2026 13:31:19 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, dave@treblig.org
-Subject: Re: [PATCH 3/3] qemu-print: Document qemu_fprintf(), qemu_vfprintf()
- failure
-Message-ID: <aWeapyd1vGXBEQvM@redhat.com>
-References: <20260114124713.3308719-1-armbru@redhat.com>
- <20260114124713.3308719-4-armbru@redhat.com>
- <aWeS5wvUBU5FCKSI@redhat.com> <aWeU3soopEhPEQxN@redhat.com>
- <87o6mw1g86.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vg0zG-0003ed-R3
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:32:38 -0500
+Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vg0zD-00016I-GE
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 08:32:38 -0500
+Received: by mail-qt1-x82a.google.com with SMTP id
+ d75a77b69052e-4ee158187aaso93064841cf.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 05:32:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1768397554; x=1769002354; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dYC9MECaOeYkArVj/smUxFw7t4bW/pDEQLXuKrDCVeA=;
+ b=XQWVvqWQFF5O/NKqCSD0ZNYGDgDCOdb7x133v9vF8vR8A5t2cuWVgf3xXA6Y/Gjmnw
+ GRLYu1MR+n0vJ5+FKE3xwTy5o+lLXFknVRCNUuvm/uUhz2bFlsmFrmopm7diBeE6QvKl
+ I4gajl3MRmILTs5zXQwi/lWlPb3f8/2nGZwaoyQ3LGlXUOxoAnLn2+ApB0P+tN8Z5k2b
+ RlFr14wJm3NPDiirniD0NC1CL2FzOpWLEazaRCNsolxw8PrlMYzX5HCLuVeA9hkN7LTe
+ C9/FhU4t5VEcVvBIFke+xfkc5JFiegLt7idl7tSHpeCIZ01kzWGhaER8VetvQS8v48yl
+ TutQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768397554; x=1769002354;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dYC9MECaOeYkArVj/smUxFw7t4bW/pDEQLXuKrDCVeA=;
+ b=giRV/YrnnzSFUcPit1QyMX5x9ZKijF4Gdfork/uzTbOh9JcOznw1OJZ02dJter6eXV
+ 8TBvPutIhTpSZLVtjvw7b1hHa0CfqY1+NpgBxH0S7xaafXkb4TYi0XD/vEng2yO2nijK
+ 0usTSk3AGxgPRnI6BfScKSnIj5jlz7JGe35UNR7ntO7/O00d8MSA6FV4EFRF7hqX8Buj
+ A4TpUyUNV71ZxUzIpf6kpNvaw4aeVuIk/jT+el0V3ozADU+jJor9nfAGKv4BTOseac9Z
+ ADwlogZ/rHzxziJOABLndCAYIJAer1FInFTr6NxL9mZiS4VJx+tEFD2lm7CtmPbDIJ7y
+ kNvw==
+X-Gm-Message-State: AOJu0Yw2vogMP6rO9MZKNBjfV+JMBfH0Zarfi6z5GB8AKSUdk/gb86mk
+ +Mcqmp5yGGOP9GvfcGH/nsPUPXHzrlie3U+SOdJGqWc9Zmb1/Lt6ykH1kTVylNHdL+VidozZKxs
+ RbASUwpD74DX71Utlf04mSp4tT50gVD8=
+X-Gm-Gg: AY/fxX4onw6r771n15MT6bFH8ObJnxaPDBCCLA+OhOSvhKujzn8nXICcYqFd2lfn7y4
+ v8bVXJAPka1rG+qU7IgpwMcjuoEyKKCyu1UJ/t/dhK6DVsp8wu/MlTa75LMY9Yw0Aub80INC82/
+ I/GUZxkKlKXW8Skpe5oIn8SzrukCnSL9+CuS36+4DXz9rw+mP0Isr38s8OSbPAhBhedGXq3dCyL
+ G+foDBVVVSy68XjfTbIAjihcp7/Ywex6J1paXVrGxatJe4xbkyswVggkuXBidqH1DlAthNIprVn
+ n5OoLEx/m4im5k1iUUHwnO540Pc=
+X-Received: by 2002:ac8:4516:0:b0:501:48e9:68f with SMTP id
+ d75a77b69052e-50148e90899mr21255751cf.62.1768397554189; Wed, 14 Jan 2026
+ 05:32:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87o6mw1g86.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260114090523.1315939-1-pbonzini@redhat.com>
+In-Reply-To: <20260114090523.1315939-1-pbonzini@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 14 Jan 2026 17:32:21 +0400
+X-Gm-Features: AZwV_Qjs-Bg2g1g8lHLILJyYJOvCTN8LjXznV6X7Rh9IE_A-58hKvouTjfJxmUI
+Message-ID: <CAJ+F1CJ3n-z6EvRZpCDaezw4ytpyBxPWpos=Ge4CmHZ-uSzhcg@mail.gmail.com>
+Subject: Re: [PATCH] rust: hwcore: add chardev symbols to integration tests
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, thuth@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82a.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,75 +91,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 14, 2026 at 02:22:33PM +0100, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > On Wed, Jan 14, 2026 at 12:58:15PM +0000, Daniel P. Berrangé wrote:
-> >> On Wed, Jan 14, 2026 at 01:47:13PM +0100, Markus Armbruster wrote:
-> >> > These functions fail when @stream is null and the current monitor
-> >> > isn't HMP.
-> >> > 
-> >> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> >> > ---
-> >> >  util/qemu-print.c | 2 ++
-> >> >  1 file changed, 2 insertions(+)
-> >> > 
-> >> > diff --git a/util/qemu-print.c b/util/qemu-print.c
-> >> > index 4a30cd1a8e..bbf8c1823e 100644
-> >> > --- a/util/qemu-print.c
-> >> > +++ b/util/qemu-print.c
-> >> > @@ -45,6 +45,7 @@ int qemu_printf(const char *fmt, ...)
-> >> >  /*
-> >> >   * Print like vfprintf()
-> >> >   * Print to @stream if non-null, else to current monitor.
-> >> > + * Beware: the latter fails unless we have one and it is HMP.
-> >> 
-> >> This leaves me curious what 'fails' means. In this case no
-> >> output is printed and the func returns -1.
-> >> 
-> >> How about we rephrase to match the other method docs better
-> >> 
-> >>  * Print to current HMP monitor if we have one, else to @stream
-> >>    if non-null, else returns -1
-> >
-> > Opps, no, wrong semantics.
-> >
-> >   * Print to @stream if non-null, else to current HMP monitor if
-> >     we have one, else returns -1
-> 
-> Yes, that's better.  What about:
-> 
->     * Print to @stream if non-null, else to current HMP monitor if we
->     * have one, else fail without printing anything.
->     * Return number of characters printed on success, negative value on
->     * error.
+On Wed, Jan 14, 2026 at 1:06=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
+>
+> Even though they are not used, rustc does not elide its symbols on msys2.
+> This causes a linker error.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Works for me, I'll incorporate it when adding these patches to my series.
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-> 
-> >> >   */
-> >> >  int qemu_vfprintf(FILE *stream, const char *fmt, va_list ap)
-> >> >  {
-> >> > @@ -57,6 +58,7 @@ int qemu_vfprintf(FILE *stream, const char *fmt, va_list ap)
-> >> >  /*
-> >> >   * Print like fprintf().
-> >> >   * Print to @stream if non-null, else to current monitor.
-> >> > + * Beware: the latter fails unless we have one and it is HMP.
-> >> >   */
-> >> >  int qemu_fprintf(FILE *stream, const char *fmt, ...)
-> >> >  {
-> >> > -- 
-> >> > 2.52.0
+> ---
+>         Yet another tiny bit.  For the remaining issue, which is another
+>         linker error in the same test due to missing system/memory.c, I'm
+>         posting (after retesting) a patch series from Marc-Andr=C3=A9 tha=
+t is a
+>         bit bigger but was going to be submitted anyway.
+>
+>  rust/hw/core/meson.build | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/rust/hw/core/meson.build b/rust/hw/core/meson.build
+> index fa1765a2302..942ee9cdacf 100644
+> --- a/rust/hw/core/meson.build
+> +++ b/rust/hw/core/meson.build
+> @@ -73,7 +73,7 @@ test('rust-hwcore-rs-integration',
+>          override_options: ['rust_std=3D2021', 'build.rust_std=3D2021'],
+>          rust_args: ['--test'],
+>          install: false,
+> -        dependencies: [common_rs, hwcore_rs, bql_rs, migration_rs, util_=
+rs]),
+> +        dependencies: [chardev_rs, common_rs, hwcore_rs, bql_rs, migrati=
+on_rs, util_rs]),
+>      args: [
+>          '--test', '--test-threads', '1',
+>          '--format', 'pretty',
+> --
+> 2.52.0
+>
+>
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
+--=20
+Marc-Andr=C3=A9 Lureau
 
