@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28538D31A29
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 09:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94FEED31A3B
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 09:45:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfxCZ-0004Ss-8y; Wed, 14 Jan 2026 04:30:07 -0500
+	id 1vfxQV-0007Uc-Lp; Wed, 14 Jan 2026 04:44:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfxCX-0004PV-Ei
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 04:30:05 -0500
+ id 1vfxQU-0007UE-9v
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 04:44:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vfxCV-0003Fb-DV
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 04:30:05 -0500
+ id 1vfxQS-0007wE-Pw
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 04:44:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768383001;
+ s=mimecast20190719; t=1768383867;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZIE1GGbLPZTQ4heJXk1ojwL4Df1Pyfx0tQSJjvJo7iY=;
- b=I2h6QdpdH9Tv3heuHzgb0j4NfV3b9XLIAEv9bTWsD0ehdrs+ckL4toF4tjEvNKywjfnT3x
- mIBJZ9yMv7OsL7BYtTkFBIf8Xenw/g/lhAAqnxLq4gzUP/o+CjQpSqMw8lqsMO4a0GPPXX
- 6L/aKjJw0dzF8GW3XPvu0bHY1j3iCac=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+Ne9lO7lMSPFbplNVYF3LrkrUxqDveNKML1ML9YTQy8=;
+ b=b+6u+aAFsx/7ejxZ13AkwUlSG5KJyRGmijrLjOFD4MIcAU3lVduVHZitVQAXoFhr22KU7y
+ jRK/GHlKzDYnW7/f5vj69HxK/yoowBpBp5hOVcITSj2LZvaWKKoaO8SpTI9dw5pkkZhoAw
+ YOmKioLJaXtx9GChYzibHc8nXk09JhY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-0feEf5ydNMCPqu5gpCIiIA-1; Wed, 14 Jan 2026 04:30:00 -0500
-X-MC-Unique: 0feEf5ydNMCPqu5gpCIiIA-1
-X-Mimecast-MFC-AGG-ID: 0feEf5ydNMCPqu5gpCIiIA_1768382999
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47d62cc05daso55388545e9.3
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 01:29:59 -0800 (PST)
+ us-mta-644-4DF10E8mNXe_PwdjQevAPQ-1; Wed, 14 Jan 2026 04:44:24 -0500
+X-MC-Unique: 4DF10E8mNXe_PwdjQevAPQ-1
+X-Mimecast-MFC-AGG-ID: 4DF10E8mNXe_PwdjQevAPQ_1768383863
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-477a11d9e67so55938345e9.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 01:44:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768382999; x=1768987799; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768383863; x=1768988663; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=ZIE1GGbLPZTQ4heJXk1ojwL4Df1Pyfx0tQSJjvJo7iY=;
- b=hS/OBc/SvsiVNiLuPzmUWGuZuZ6+PR68UEz3AoI5WimOJoViB7uqDAoyAizZmwY0I8
- svUzofO6twuFaCxYLVwK4lKRGBxmS5mwq+1jwB1dBHgkhiDKZSbUkJTARbBtnRqRPhwo
- iUOu4GZpUL69cIJvZ+nuOV8cR/o4x3RQkVvMgLUCW4K0/X3M2YTaxUR3ZqTWSs2jfpG2
- W6cDSuuvp5FTQ/PTc2R2ZiCBOQpMa11IDoPO/FKznAiQQmgO1+S5wkOokdL0F60Ucmme
- yYGRt2YIX5KtNGzIXddZPCHh9McBUxTipkyVFONl0Xe//aVkvbqqH46pHk61uY8uOg4T
- LJBA==
+ bh=+Ne9lO7lMSPFbplNVYF3LrkrUxqDveNKML1ML9YTQy8=;
+ b=P7pjYJUdKSwg1lxAfBQ+rmC8SJX40PPAZOHUBzkbn9TJ+u+tI+hUy/yDJ2gevfANa0
+ GS0nHncliVC+wuBw7YGHOMVhjkAGYU3NZADS55u5f4EwPewV7xYWc4rv4/rD/PJrrqxj
+ J20QyviFNkVPvZi+lJJl3k08Krc5GohIe9p+9a17mMO1DlOnObSNjSk4CcXelqNSAShf
+ +1C+Joh06v+9jCFMfesRW3o8LgbyK9ye6VhajzOvBWRccuViHM/ID3WFokjkaU8tnMDC
+ nOrh7/MCxuBvc5Ydta0tVDzbdYZWwAyHq4xYgvPRsDv04FVVnOgLriEatWjWZNbhLuJT
+ +OVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768382999; x=1768987799;
+ d=1e100.net; s=20230601; t=1768383863; x=1768988663;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZIE1GGbLPZTQ4heJXk1ojwL4Df1Pyfx0tQSJjvJo7iY=;
- b=FUqQf4sY6nViXgHwE/e/U8Uz2ItvSVqn4VljU+SIcjC3hKm6VIg7FWU3JHHRSGWxt1
- KirDXGof+AWWxWSukMhM7l0xHskSbOl3bvkKv9lY6AGeDBGr47+ql+txpbYxeLR4ItxI
- IkP26ZmRKJ6XI2B7CwcVnh9r7LnVoaUXUYWFfGywvDSbS6tEglcW962fh5A3ORbmiDRT
- 5x7x+wqaly0Y5U2I5BNe5TPF4tDkA6xrFIFVDCy5oE00Rz6bjHHgggVGjxINrMkFzXsf
- a83P96jUdKEvTxA1fH0Sww/vkstQZ9JiMVLebJp88xFolehfoEp5v9u5xMEHJLvJ8bf6
- s9fg==
+ bh=+Ne9lO7lMSPFbplNVYF3LrkrUxqDveNKML1ML9YTQy8=;
+ b=VW0C1dBO8SzWLxZlZMScal4fjQvALrMOvqxg86rTBw2ZXaxwDdUxviB2n2Iz6D/UBc
+ /YPYeUh302GqA97Gk91ZGoNmh9nufTkqiXFfXC8zkeC0IeqE8S7D84ECuodGEB8VVV34
+ 65fsvMJCNhZoqGz3rb2RpQrvmb1vu1Zo81ldej5sNvP+dsZgfXEKbuEPwUaQN7VSkyzL
+ 07jg3mj1d0k/DQWB4BMgRfzjX5ULJ8PwbYnruqTp7OxFLipVhlSyALcqIuMXusJF3uSe
+ IErNatah+SobtfYaTKQ7HvE40k/QGpC0SwP/FciekpAPAIVDRJpEpQFhPYlKlQX2krXG
+ 4swA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWqMzdscl8hecA0nHrpArQeRCrF0X0B8FJDO0cfPIyIACOd/WEc1mWFokTTZAOqq1+4bAB7JwPMLvvk@nongnu.org
-X-Gm-Message-State: AOJu0Yx2RyDWolOGI6vVKP2OrZoWFYDg8NupK+YqZ0Lur6UkxuUSUKCu
- ScdephF64KFpceNQwydbRvyCjLW/srwllHhcFjCD9fKTtod/jxvzw5AJCvpCSWrt3tnFKFW4kdA
- kIIzRUE/ALnPRxNvUyFezqXIwR8EMJn9OHx5QPLDUctiGG5fLyubK7gtP
-X-Gm-Gg: AY/fxX76hAcv2cvJT7o1Pw/SikoTRbd7GjgJx7V6Gwe5lvlARaNWtB85h+polfV2nSA
- rsjfT+ozSpoEdatAzL5RXhB2qeFI5U/AbSzrhWQlfEjBXP2OLbtoD9BUdKjy4xGCWxe1aaC9eqd
- iP6jumYWj0jgH0SBHs+3SU02UaSU/trOXUwtUdy874iVPZ7ZO+fh5GU++vexLVY2yIAHJXZne2C
- PbLST9YiEXSpnNgOE05llM1ywJ9Uma9vO7l+ibCwkZoQOx+avxPwamcoqZIQD8ctkzhf+noc2QV
- 5/9GtCnAKwlPc42aR9aC7z/9oA7G7nIR6QFiJVFL9kFXfMJsSJw1pTMLkcOh/OdrUj4r6mx9MqP
- e3weEgXFQ3Ei1Jxo0igUmu0/9pdauXDjTwxkSbNehR2dzv1k9QQ60VqXDi+NX/4F/Q/QPX4pJvn
- CH0lZXyhzZLp7/qg==
-X-Received: by 2002:a05:600c:a46:b0:477:73e9:dc17 with SMTP id
- 5b1f17b1804b1-47ee338c00cmr23778005e9.35.1768382998626; 
- Wed, 14 Jan 2026 01:29:58 -0800 (PST)
-X-Received: by 2002:a05:600c:a46:b0:477:73e9:dc17 with SMTP id
- 5b1f17b1804b1-47ee338c00cmr23777645e9.35.1768382998190; 
- Wed, 14 Jan 2026 01:29:58 -0800 (PST)
+ AJvYcCWyJ6zlsTDU4hYqEmXjnLtE0tTZ+wmllETgFil05kLyuNg2Q8l8p2rQa1ONHi5ptJs6hfKC+ckPQrGS@nongnu.org
+X-Gm-Message-State: AOJu0Yw+INFn6Ii1tcY0sq7qrPUefHDkGhda5knq8bMPUWJC5251u2dq
+ /g9Y0F4xUQDLM+oXoBMGDPXLuzTnGA/M0Fna0zxAtHUCnGP7rUjJrelEOJ6Iu4aQUuCOjw3gugL
+ oQzwYdwT//SriIGnS466b1QIukoso+BzfqIM88I/hMeD0lEzBGQug+EN9
+X-Gm-Gg: AY/fxX7/Lt/KJAPrsGzAxtpRlwD3JeBVQZ5sr8LXM+Gy0GjlJ3BhEJluoYSkssRxKSd
+ VSFFIC14kAqiQv52DKqgqzKw4iT29nkaMdtIhiAy8sm57tLedip1kHrH1p4beAbwUEI7jFGeeXV
+ ktbk/kjRjeQYQBsZe3P2NiaLdtHIAyVif025T2yJS8AMv2GHq6sMBP7vuryolpDPj2GwKASjIc+
+ TqTdoNmy9RZU8sEYslKVqChx5IJpjQbUrprOUq4CIJgjPPFkbVdb0UHBhswwCqNpNsbBQbE5sBp
+ Ye69+WB9JHWejrgxAsz4SB947ELlA9WzMZY7l/yxP13XkuB5sB6o1snO1RhhdZKQHRVKGMeTeCM
+ VH6ti5zgzGJc/NO8yu3Zhq/1rl3Dyy8LleSLIkfN5kekqvzY/nm1ZM4hBjOevm4CPphK5r2W4Bz
+ g/eOhVTm1aS+pzLw==
+X-Received: by 2002:a05:600c:1e1c:b0:477:b734:8c41 with SMTP id
+ 5b1f17b1804b1-47ee3318ffcmr25498765e9.1.1768383862987; 
+ Wed, 14 Jan 2026 01:44:22 -0800 (PST)
+X-Received: by 2002:a05:600c:1e1c:b0:477:b734:8c41 with SMTP id
+ 5b1f17b1804b1-47ee3318ffcmr25498635e9.1.1768383862550; 
+ Wed, 14 Jan 2026 01:44:22 -0800 (PST)
 Received: from [192.168.10.48] ([151.61.26.160])
  by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-47ee28144aasm15769315e9.11.2026.01.14.01.29.56
+ 5b1f17b1804b1-47ee7d58f09sm7970785e9.12.2026.01.14.01.44.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Jan 2026 01:29:57 -0800 (PST)
-Message-ID: <1945c9e4-b970-413e-a754-5b1b500b5758@redhat.com>
-Date: Wed, 14 Jan 2026 10:29:56 +0100
+ Wed, 14 Jan 2026 01:44:21 -0800 (PST)
+Message-ID: <ceee5815-0ff7-4c82-b23c-f47c6b19766f@redhat.com>
+Date: Wed, 14 Jan 2026 10:44:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/tracetool: Honor the Python interpreter that
- "configure" detected
-To: Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>
-References: <20260114092358.22961-1-thuth@redhat.com>
+Subject: Re: [PATCH] target/i386/nvmm: Include missing ramlist.h header
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Reinoud Zandijk <reinoud@netbsd.org>
+Cc: qemu-trivial@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20260114083812.18496-1-thuth@redhat.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -134,7 +134,7 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20260114092358.22961-1-thuth@redhat.com>
+In-Reply-To: <20260114083812.18496-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -146,7 +146,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,47 +162,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/14/26 10:23, Thomas Huth wrote:
+On 1/14/26 09:38, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
-> The tracetool tests currently fail if the host installation does not
-> have a "python3" binary (and you compiled QEMU by selecting a different
-> one during the "configure" step). This happens because tracetool-test.py
-> executes scripts/tracetool.py directly, so that this script is run via
-> its shebang line.
-> To fix the issue, pass the right Python interpreter to tracetool-test.py
-> via the PYTHON environment variable and use that to run the tracetool.py
-> script.
+> Compiling on NetBSD currently fails with:
 > 
-> -    args = [tracetool, f"--format={fmt}", f"--backends={backend}", "--group=testsuite"]
-> +    python = os.environ.get("PYTHON", "python3")
-> +    args = [python, tracetool, f"--format={fmt}", f"--backends={backend}",
-> +            "--group=testsuite"]
->   
->       if fmt.find("stap") != -1:
->           args += ["--binary=qemu", "--probe-prefix=qemu"]
+>   ../src/target/i386/nvmm/nvmm-all.c:1136:22: error: unknown type name 'RAMBlockNotifier'
+>    1136 | nvmm_ram_block_added(RAMBlockNotifier *n, void *host, size_t size,
+>         |                      ^~~~~~~~~~~~~~~~
+>   ../src/target/i386/nvmm/nvmm-all.c:1152:15: error: variable 'nvmm_ram_notifier' has initializer but incomplete type
+>    1152 | static struct RAMBlockNotifier nvmm_ram_notifier = {
+>         |               ^~~~~~~~~~~~~~~~
+>   ../src/target/i386/nvmm/nvmm-all.c:1153:6: error: 'struct RAMBlockNotifier' has no member named 'ram_block_added'
+>    1153 |     .ram_block_added = nvmm_ram_block_added
+>         |      ^~~~~~~~~~~~~~~
+>   ../src/target/i386/nvmm/nvmm-all.c:1153:24: error: 'nvmm_ram_block_added' undeclared here (not in a function)
+>    1153 |     .ram_block_added = nvmm_ram_block_added
+>         |                        ^~~~~~~~~~~~~~~~~~~~
+> 
+> Include the right header to get this fixed.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-What about just
+Acked-by: Paolo Bonzini <pbonzini@redhat.com>
 
-diff --git a/tests/tracetool/tracetool-test.py b/tests/tracetool/tracetool-test.py
-index 30006a99190..efc518a6b1e 100755
---- a/tests/tracetool/tracetool-test.py
-+++ b/tests/tracetool/tracetool-test.py
-@@ -36,7 +36,7 @@ def test_tracetool_one(tracetool, backend, fmt, src_dir, build_dir):
-      actual_file = Path(build_dir, rel_filename)
-      expect_file = Path(src_dir, rel_filename)
-  
--    args = [tracetool, f"--format={fmt}", f"--backends={backend}", "--group=testsuite"]
-+    args = [sys.executable, tracetool, f"--format={fmt}", f"--backends={backend}", "--group=testsuite"]
-  
-      if fmt.find("stap") != -1:
-          args += ["--binary=qemu", "--probe-prefix=qemu"]
 
-(only the second half of the commit message needs changing).
-
-Even if you keep using PYTHON, which makes sense, I would change the
-default to sys.executable.
-
-Paolo
+> ---
+>   target/i386/nvmm/nvmm-all.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
+> index f808828d492..8a1af35ed32 100644
+> --- a/target/i386/nvmm/nvmm-all.c
+> +++ b/target/i386/nvmm/nvmm-all.c
+> @@ -16,6 +16,7 @@
+>   #include "system/nvmm.h"
+>   #include "system/cpus.h"
+>   #include "system/memory.h"
+> +#include "system/ramlist.h"
+>   #include "system/runstate.h"
+>   #include "qemu/main-loop.h"
+>   #include "qemu/error-report.h"
 
 
