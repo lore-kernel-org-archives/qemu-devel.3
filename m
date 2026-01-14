@@ -4,94 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CAACD31A05
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 02:10:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 142E9D31A11
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 04:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfqKR-0007Qu-5g; Tue, 13 Jan 2026 21:09:47 -0500
+	id 1vfsKo-0007Ur-4x; Tue, 13 Jan 2026 23:18:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vfqKP-0007QV-GT
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 21:09:45 -0500
-Received: from mail-lf1-x142.google.com ([2a00:1450:4864:20::142])
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1vfsKn-0007UQ-0B
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:18:17 -0500
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vfqKN-0007Wh-93
- for qemu-devel@nongnu.org; Tue, 13 Jan 2026 21:09:45 -0500
-Received: by mail-lf1-x142.google.com with SMTP id
- 2adb3069b0e04-59b78886454so6820067e87.2
- for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 18:09:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1vfsKl-0000Uq-8Y
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 23:18:16 -0500
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-59b672f8e40so9404115e87.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 20:18:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768356580; x=1768961380; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yeqQcXHt363KF4Qx7aySXe2/l3tkvy3uwTXXtom6M1Q=;
- b=ASu4p+GosqtizXftPLzvOehJ1kr4mE6lf5qS382g57FV8qLW24FbQcfv8S7s7DN2iW
- V4BGvdJP+qHZuMYQ7/WXwvsNm30yOIhvqc7ZtzHH7uDXNlDI1yLQiUyr7otaY6fDi6WN
- fm76IOsWrmGdjAFoT05+lrOViBV6RLm3+m2HfZcB8E3LXkY08XsJXe8bRQI6INI9syQY
- c/nUthL/z4bSLyxkNEXtH1d/zIIbncFUK8RATmkSfSnXcmpQ9o75VTDn8xTXEfewmJXn
- mn27Z7c4AliNbezdPkk6rKqmEYF57MVDf2eA4XoWvAL9UQ9GCPv30Vd3wKIynaq10lc1
- NZ6Q==
+ d=linaro.org; s=google; t=1768364292; x=1768969092; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=rTZsGHMOYUjVARbLPuK9ODYxa8Kw9mlh4CNXfrwhWfs=;
+ b=hjBrPHcNTI0z1APSPLPlfseF7fIzdL65rUhftgegvWhfX4gDOd4GhpnOY3hMMus/TV
+ zsbZd65oHai6QD5DeQSC0/4rpHnLU2dX+04Ywff+O39HV5hBg+/zTlMMxgv5zlERJQpN
+ D5XMC46EyUjj3SGqw2LwY/Wkrrarmt/Pcc9OGTkXOM4+wKjfPtjVC0/u+YdYW8WpL5SY
+ Ph9LzoWh6gHQg4n7Qhw2MoDYC1F+GSuvoXNmwNnCYiPaUgt4xwl/krgdO7EEP/GxeFQY
+ jU03wkJxfSRm+549KF5YEzHd+UCtAJ1JXVgkBJRQtptM16r1NqMYsRLWCIoyH6oK8S2h
+ /Aew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768356580; x=1768961380;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=yeqQcXHt363KF4Qx7aySXe2/l3tkvy3uwTXXtom6M1Q=;
- b=PjbRGZ3cqKUeXzBb/voIUKDOjmXTjiXDJ7yr2y/u/tVJ/33qYeUUrmx6qv6fR99pT9
- GiUbE7YjoFC8vv+/tQ3XH2Go6IO3rOZzUxQcu6j58a8IV5mLrgWhEowcdXB4jCYPw9oi
- WwhmaZN2T1w1QvaSKH8Tgu/B7SAWPDc2Byd3NjNrii2K3fTX4IoZNd6VWiew9IeoRtuR
- Ri0NqU4Zg0sQ9nuLqerysllGEopwlLFoNYIV8ovHtC+BnNGKCLIIPHHpyKURjGml2Dk0
- ijaaFydyHMMDqqdtRCp7VDYrxK+q2GyZWibinlHAO51oP20lIuhojW4RQFaplhvoIINY
- 9GxA==
+ d=1e100.net; s=20230601; t=1768364292; x=1768969092;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rTZsGHMOYUjVARbLPuK9ODYxa8Kw9mlh4CNXfrwhWfs=;
+ b=Sj4hPadXEQX+ZXoqP41/5j1OT8/3S+cZSgKLxrnzaHO/v8pq3P4vAq8fiPqqQnP12a
+ gRQmedr2Mp+OQ1gkkJnzy9Ht0cdewCJgbOqsLFCIIKqkCOGjqTFAlxljzLvUnypaiII/
+ NofkiPKlTyEiPVvGNJHcP3D28dMkjl0MbK40u1fdvKf1RZbck3bKD8gUR1rzdSFQ+927
+ esArwuWYocluY0e/G4NL6vBMsiAewLECFk50DZihm/VM+nlaBdktoQn+4medBcyBHf1z
+ sDVJRsD0JEWYFJvBVUd/07lY2KYyIYXm2cVDoLCEQ+UvE2gQ2gEblnmAH4cvYuI0J9lD
+ t7Nw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXwWOYS1t3bWjy9Aa6wilDL++JEcHxM8QMHx6qFk+DDGBO171DCGWrGyNKIAkbPx6MCZtD+9L6m5x+y@nongnu.org
-X-Gm-Message-State: AOJu0YywMKbFwSdxPLLK7Au2O1hd/j/CZ75NkJ/62Ey5fkRQFqKlW2V+
- DnH7X4pwFDnmUB3oJS6sivQ7hpsSYLoUZ4v7DM4qieDVnuB6M7K7hwJM+lQja3wDhWhRCi3BVwy
- rjt4eNYf1AmVsjIphCfw1W33Lr/OYCDw=
-X-Gm-Gg: AY/fxX4i4yhnjdWJRvAHPfkj/buhokb8AcPjJe2Vucg9idhZtFy0tJHKDASdR9zErj4
- 9G6FaZ3IsB5uwV/Zm3HVEZ/St8UXvilEtpod5Gbae2kjkwT5i1lkwmVVHxN3FjLDA89vHsxSGFr
- 3F9AHrAnLjdcG9muF2UkSnZLyiHI8AU75PARXNhNixOd5LsCBQ0amVRU8bhfcF2akXNbV2BRoba
- BdIoPobVa7WnnhB07wUYvSo0yMp9Xb9rnjixqVf3y2/yuWhcCT5SBA7xkAxTixncOQtMipb1Xpv
- 9jPOisuGMWRz1jbCB/k3Sy5Zeqc=
-X-Received: by 2002:a05:6512:b96:b0:59b:729e:6808 with SMTP id
- 2adb3069b0e04-59ba0f81012mr283242e87.32.1768356579818; Tue, 13 Jan 2026
- 18:09:39 -0800 (PST)
+ AJvYcCX+hvOObCtl9DycCwRFmFaDMLkB89CjNSHWHj0GdDLJxYSGjJ4mLe/KmuMrZWZ9a/EeNumEacO5sCgZ@nongnu.org
+X-Gm-Message-State: AOJu0YzMkVq05QefBYuOHJfHsQzcaIAfN2H00/12vTobsjhnHBj8oGMC
+ NZXTbph869nsawBVdJIHeeKmNiJ1zvVcWabe5x+5KT05sD/qxAM9rXdIMyTvWrPpI6rw8Nz3bhs
+ kp6Punoieh/wLIxGspXwykr6Wp+aXWqrsa41cKw0PEw==
+X-Gm-Gg: AY/fxX7FthGnPEsCqd06i3GGaBR5m3asZkVPyNsonG9FR7yeVnBXHRMFVU4JZ5lohrm
+ 1ETEWTnSwIk0YZdz5riVo76dinKN5g461NP+R+QV9zhOebT9eAhXFx/aELgILSA+SyBuRxvclXO
+ SXNW9nOiSXAD1cNB2qgIqpGPE/REf+gdGiAPKg/WeN1BsPb8mAldcgwA9mQh0V76UCZQQPcSIjs
+ xHTbnJSteNBIlKAjBkcR1lRls8lXbV5aRL2W5GFHCz8cC8K2VXQvGBGfPKii3zL1RlA5yR9
+X-Received: by 2002:a05:6512:12d1:b0:59b:6dbc:e507 with SMTP id
+ 2adb3069b0e04-59ba0f91bdamr405525e87.47.1768364292300; Tue, 13 Jan 2026
+ 20:18:12 -0800 (PST)
 MIME-Version: 1.0
-References: <20251201014255.230069-1-alvinga@andestech.com>
- <0e543e10-970d-4a7c-aa79-d3a0a6358e72@zevorn.cn>
- <SEYPR03MB670057426CD1F169681C54C1A8A9A@SEYPR03MB6700.apcprd03.prod.outlook.com>
- <625299d1-b04e-4c8e-8e96-8f353510ad3c@gmail.com>
- <641dbb9e-302b-434b-a0a9-0a1a5499fbee@ventanamicro.com>
-In-Reply-To: <641dbb9e-302b-434b-a0a9-0a1a5499fbee@ventanamicro.com>
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-Date: Wed, 14 Jan 2026 10:09:26 +0800
-X-Gm-Features: AZwV_QgnF2rOCUSfG2uotlisH_23I2g0I83M7ZXSr2T0EMyWtuFN3dhbmuL0JfI
-Message-ID: <CAGL8uCVEF+POcTws=F+5JPZrs-n0zBW61Ds70yB46JE68MPqUQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] RISC-V: Initial support versioning of debug
- specification
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- =?UTF-8?B?QWx2aW4gQ2hlLUNoaWEgQ2hhbmco5by15ZOy5ZiJKQ==?=
- <alvinga@andestech.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alistair.francis@wdc.com" <alistair.francis@wdc.com>, 
- "bin.meng@windriver.com" <bin.meng@windriver.com>,
- "liwei1518@gmail.com" <liwei1518@gmail.com>, 
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "vivahavey@gmail.com" <vivahavey@gmail.com>, 
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>,
- daniel.barboza@oss.qualcomm.com, andrew.jones@oss.qualcomm.com
+References: <20260111195508.106943-1-skolothumtho@nvidia.com>
+ <20260111195508.106943-34-skolothumtho@nvidia.com>
+In-Reply-To: <20260111195508.106943-34-skolothumtho@nvidia.com>
+From: Zhangfei Gao <zhangfei.gao@linaro.org>
+Date: Wed, 14 Jan 2026 12:18:01 +0800
+X-Gm-Features: AZwV_QiTdX_Xhs9kH2GSdzP87um7zNG4KhsdhXt28nSHyjcfV5i2cFsJYq0-ebk
+Message-ID: <CABQgh9FwSTB8Cp8f1POSBti376ZH3B0e0mLu9FU==p1wVwquGg@mail.gmail.com>
+Subject: Re: [PATCH v7 33/36] hw/pci: Add helper to insert PCIe extended
+ capability at a fixed offset
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com, 
+ peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com, 
+ ddutile@redhat.com, berrange@redhat.com, clg@redhat.com, alex@shazbot.org, 
+ nathanc@nvidia.com, mochs@nvidia.com, smostafa@google.com, 
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com, jonathan.cameron@huawei.com, 
+ zhenzhong.duan@intel.com, yi.l.liu@intel.com, kjaju@nvidia.com, 
+ "Michael S . Tsirkin" <mst@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::142;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-lf1-x142.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=zhangfei.gao@linaro.org; helo=mail-lf1-x131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -109,114 +101,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/14/2026 2:55 AM, Daniel Henrique Barboza wrote:
+Hi, Shameer
+
+On Mon, 12 Jan 2026 at 03:58, Shameer Kolothum <skolothumtho@nvidia.com> wrote:
 >
+> Add pcie_insert_capability(), a helper to insert a PCIe extended
+> capability into an existing extended capability list at a
+> caller-specified offset.
 >
-> On 12/19/2025 6:23 AM, Chao Liu wrote:
->>
->>
->> On 12/19/2025 5:10 PM, Alvin Che-Chia Chang(=E5=BC=B5=E5=93=B2=E5=98=89)=
- wrote:
->>> Hi Chao,
->>>
->>>> -----Original Message-----
->>>> From: Chao Liu <chao.liu@zevorn.cn>
->>>> Sent: Friday, December 19, 2025 4:09 PM
->>>> To: qemu-devel@nongnu.org
->>>> Cc: alistair.francis@wdc.com; Alvin Che-Chia Chang(=E5=BC=B5=E5=93=B2=
-=E5=98=89)
->>>> <alvinga@andestech.com>; bin.meng@windriver.com;
->>>> dbarboza@ventanamicro.com; liwei1518@gmail.com;
->>>> qemu-riscv@nongnu.org; vivahavey@gmail.com;
->>>> zhiwei_liu@linux.alibaba.com
->>>> Subject: Re: [PATCH v3 0/2] RISC-V: Initial support versioning of debu=
-g
->>>> specification
->>>>
->>>> [EXTERNAL MAIL]
->>>>
->>>> On Mon, 1 Dec 2025 09:42:53 +0800, Alvin Chang via wrote:
->>>>> This series try to support versioning of debug specification. The
->>>>> early debug implementation supports debug specification v0.13, and
->>>>> later new trigger types were added which are defined in debug
->>>>> specification v1.0 version. To support both v0.13 and v1.0, we add
->>>>> 'debug-1.0' as CPU property to let user choose debug specification
->>>>> v1.0 by specifying "debug-1.0=3Dtrue". The default version is still v=
-0.13 if
->>>> 'debug-1.0' is not provided and set.
->>>>>
->>>>> For example, to enable debug specification v1.0 on max CPU:
->>>>> * -cpu max,debug-1.0=3Dtrue
->>>>>
->>>>> Changes since v2:
->>>>> * Improve commit message and fix typo
->>>>> * Apply "Reviewed-by" tags
->>>>>
->>>>> Changes since v1:
->>>>> * Apply suggestions from Daniel. Using boolean property instead of st=
-ring.
->>>>
->>>> This is great work! Thanks to Alvin Chang for refining the sdext. It s=
-eems we
->>>> are one step closer to merging rvsp-ref into the mainline.
->>>
->>> Thank you, Chao.
->>> Please note that this series doesn't implement Sdext infrastructure.
->>> We have some patches for Sdtrig based on Debug spec v1.0 and we want to
->>> upstream those patches.
->>> We ever submitted the patches, but unfortunately the patches were block=
-ed.
->>> The maintainer told me that QEMU should support both v0.13 and v1.0 for
->>> backward compatibility, rather than eliminating v0.13.
->>> That why I submitted this series, trying to resolve the version issue.
->>>
->>>
->>> Sincerely,
->>> Alvin Chang
->>>
->>>
->> Oh, thank you for your clarification. I also noticed this when reviewing=
- the
->> main patch series =E2=80=94 it was my misunderstanding. Still, thank you=
- for your
->> contribution!
->>
->> I have done some development work on Sdext before, but I noticed that
->> implementations of the DM module vary among different vendors. In additi=
-on, how
->> to achieve compatibility with gdbstub is also a challenge. I will send o=
-ut the
->> RFC patches at an appropriate time in the future.
+> Unlike pcie_add_capability(), which always appends a capability to the
+> end of the list, this helper preserves the existing list ordering while
+> allowing insertion at an arbitrary offset.
 >
-> Hi Chao,
+> The helper only validates that the insertion does not overwrite an
+> existing PCIe extended capability header, since corrupting a header
+> would break the extended capability linked list. Validation of overlaps
+> with other configuration space registers or capability-specific
+> register blocks is left to the caller.
 >
-> If I understood correctly you might have some code that implements sdext =
- in
-> QEMU. Is that the case?
->
-> If affirmative, feel free to send it at you earliest convenience, even if=
- it's
-> rough on the edges (you can tag it as RFC). We would like to get
-> the Server Platform Reference Board merged, preferably for this release, =
-and we
-> need sdext to be compliant with that spec.
->
->
-Okay, I will send the RFC patch to the upstream for discussion in the next
-couple of days. :)
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+
+The guest kernel fails to boot with para "ssidsize=16" with v7 series.
+Without ssidsize, guest kernel can boot no problem.
+
+However, pasid feature requires ssidsize.
+smmuv3_accel_get_viommu_flags
+if (s->ssidsize) {
+flags |= VIOMMU_FLAG_PASID_SUPPORTED;
+
+v6 does not has such issue, and does not requires ssidsize param.
+
+log:
+ASSERT_EFI_ERROR (Status = Invalid Parameter)
+ASSERT [PciBusDxe]
+/home/linaro/work/edk2/MdeModulePkg/Bus/Pci/PciBusDxe/PciLib.c(626):
+!(((INTN)(RETURN_STATUS)(Status)) < 0)
 
 
-Thanks,
-Chao
+Thanks
 
-> Cheers,
+> ---
+>  hw/pci/pcie.c         | 58 +++++++++++++++++++++++++++++++++++++++++++
+>  include/hw/pci/pcie.h |  2 ++
+>  2 files changed, 60 insertions(+)
 >
-> Daniel
+> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+> index b302de6419..8568a062a5 100644
+> --- a/hw/pci/pcie.c
+> +++ b/hw/pci/pcie.c
+> @@ -1050,6 +1050,64 @@ static void pcie_ext_cap_set_next(PCIDevice *dev, uint16_t pos, uint16_t next)
+>      pci_set_long(dev->config + pos, header);
+>  }
 >
+> +/*
+> + * Insert a PCIe extended capability at a given offset.
+> + *
+> + * This helper only validates that the insertion does not overwrite an
+> + * existing PCIe extended capability header, as corrupting a header would
+> + * break the extended capability linked list.
+> + *
+> + * The caller must ensure that (offset, size) does not overlap with other
+> + * registers or capability-specific register blocks. Overlaps with
+> + * capability-specific registers are not checked and are considered a
+> + * user-controlled override.
+> + */
+> +bool pcie_insert_capability(PCIDevice *dev, uint16_t cap_id, uint8_t cap_ver,
+> +                            uint16_t offset, uint16_t size)
+> +{
+> +    uint16_t prev = 0, next = 0;
+> +    uint16_t cur = pci_get_word(dev->config + PCI_CONFIG_SPACE_SIZE);
+> +
+> +    /* Walk the ext cap list to find insertion point */
+> +    while (cur) {
+> +        uint32_t hdr = pci_get_long(dev->config + cur);
+> +        next = PCI_EXT_CAP_NEXT(hdr);
+> +
+> +        /* Check we are not overwriting any existing CAP header area */
+> +        if (offset >= cur && offset < cur + PCI_EXT_CAP_ALIGN) {
+> +            return false;
+> +        }
+> +
+> +        prev = cur;
+> +        cur = next;
+> +        if (next == 0 || next > offset) {
+> +            break;
+> +        }
+> +    }
+> +
+> +   /* Make sure, next CAP header area is not over written either */
+> +    if (next && (offset + size) >= next) {
+> +        return false;
+> +    }
+> +
+> +    /* Insert new cap */
+> +    pci_set_long(dev->config + offset,
+> +                 PCI_EXT_CAP(cap_id, cap_ver, cur));
+> +    if (prev) {
+> +        pcie_ext_cap_set_next(dev, prev, offset);
+> +    } else {
+> +        /* Insert at head (0x100) */
+> +        pci_set_word(dev->config + PCI_CONFIG_SPACE_SIZE, offset);
+> +    }
+> +
+> +    /* Make capability read-only by default */
+> +    memset(dev->wmask + offset, 0, size);
+> +    memset(dev->w1cmask + offset, 0, size);
+> +    /* Check capability by default */
+> +    memset(dev->cmask + offset, 0xFF, size);
+> +    return true;
+> +}
+> +
+>  /*
+>   * Caller must supply valid (offset, size) such that the range wouldn't
+>   * overlap with other capability or other registers.
+> diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
+> index c880ae1e04..d68bfa6257 100644
+> --- a/include/hw/pci/pcie.h
+> +++ b/include/hw/pci/pcie.h
+> @@ -133,6 +133,8 @@ uint16_t pcie_find_capability(PCIDevice *dev, uint16_t cap_id);
+>  void pcie_add_capability(PCIDevice *dev,
+>                           uint16_t cap_id, uint8_t cap_ver,
+>                           uint16_t offset, uint16_t size);
+> +bool pcie_insert_capability(PCIDevice *dev, uint16_t cap_id, uint8_t cap_ver,
+> +                            uint16_t offset, uint16_t size);
+>  void pcie_sync_bridge_lnk(PCIDevice *dev);
 >
->
->>
->> Thanks,
->> Chao
+>  void pcie_acs_init(PCIDevice *dev, uint16_t offset);
+> --
+> 2.43.0
 >
 
