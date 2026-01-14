@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB57D39016
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 19:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C44D39013
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 19:58:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg702-0001Xs-2B; Wed, 14 Jan 2026 14:57:50 -0500
+	id 1vg702-0001bm-Qy; Wed, 14 Jan 2026 14:57:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg6ze-0001NN-NT
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 14:57:29 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg6zh-0001Nx-Ae
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 14:57:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg6zc-00023I-Vy
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 14:57:26 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg6zf-00023U-GV
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 14:57:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768420643;
+ s=mimecast20190719; t=1768420646;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2bYt2DfDycuBHru+tnnZlfBQjJPIyfZZW47KxB1sqtI=;
- b=RzBMZt7Izzo3Xvh+FzQrQ3p6r3qLOkccw80qFx9g6UNtxyYcSvTI1dhcn/zliyexKlm1je
- 8yTxdygJaz2Ppp6yiDFVeNPW0YIWFmDw6n2bNN7ERAwVoduRTqnMlypSx3WmsGFlPjDh3s
- LqYjdf0dlSYI3xdIan6gqDc8VqrCiR4=
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Sao1wRkhL19NI6f8FC0xP3/0GVRrrC/sElfaU9Azbvw=;
+ b=fDHxKhtjjMqkV3tWmiy5+u8q02A+O4T0ypzaCf7S/eab8xLqJ+LXERHNknI0yl4z8wg3Dw
+ +4BiX31UYK/moAlr/QoYssmXGRoxhHHClmOP6udMbyruL6GEHoVWPKk69wRJTy8UhXjxgc
+ sY0rsT/hPv4ZvMw29w4eR13tyfjXuLY=
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-541-UbSbG3KHM2CDNbtFonziBA-1; Wed, 14 Jan 2026 14:57:22 -0500
-X-MC-Unique: UbSbG3KHM2CDNbtFonziBA-1
-X-Mimecast-MFC-AGG-ID: UbSbG3KHM2CDNbtFonziBA_1768420642
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-93f4ff789c5so593006241.3
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 11:57:22 -0800 (PST)
+ us-mta-361-Zp13_39WPLmLNNwHeqdsxg-1; Wed, 14 Jan 2026 14:57:25 -0500
+X-MC-Unique: Zp13_39WPLmLNNwHeqdsxg-1
+X-Mimecast-MFC-AGG-ID: Zp13_39WPLmLNNwHeqdsxg_1768420644
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-5ed0a71c0beso162778137.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 11:57:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768420641; x=1769025441; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768420644; x=1769025444; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2bYt2DfDycuBHru+tnnZlfBQjJPIyfZZW47KxB1sqtI=;
- b=pCoALMP9Km76CYPgl6Cz/7fmhFyUkmXCs13LSUFJlwaF5sPDW2ykFqClFRxSPZ1tq4
- A5rcWsIQh6pL4eLQ0iiLiAGoeKEUy5AZ31656Nenkj7AuhqohBhW+L2Z+KVHfEnCTJ5y
- XUr2vh+6UwTALONW1GJBZso5FL45WojmsFy+Y9Jz/yQzxvrmUqs6lDIIoCe5sOOfE409
- ASW08RSlOvxRTg0WKKVa5iUtrXRpZNvElYYbftiZwt8AWO8ZQkXG978iusUQEluKXXC0
- i9ueNmAwY1a5u24jW6NMz5PJN3VWgrtmU/DC6YRiYDJ7SQ9cPIkEZ6+Hcf+ZGKsX78l9
- BX2A==
+ bh=Sao1wRkhL19NI6f8FC0xP3/0GVRrrC/sElfaU9Azbvw=;
+ b=guW4VtDEIgm3Zf1lW5DWg9HTQjNYdwhiG2BqmloUg+JcvlQ0UZIMVPJ+K+AjCNDmLz
+ 1sjjZONPh2jQbe6XO08sLTiuJfelKeinEcyXvhSY0jVG0anQsXQ/8zVdlWolxvs5jkzi
+ MhL6fLSp8ZBiN9ZZB29ggbvDDs7zpYxLw/s3MLPnubOUZCwOIRNda4iccXQLa3S3k2Jj
+ 7DlurymPMzBSF9zSLTVCljy6sLtYbhIdrN7j5XodRTnEsOCjOJ0uXViemQ6BKz6oPwI+
+ OTPD+rXskZ/RYKSAS60Oodw1S4pkLfTBKBApKHm350IAa42Slfu8A5PNWPKmWGuDAH1Q
+ Whfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768420641; x=1769025441;
+ d=1e100.net; s=20230601; t=1768420644; x=1769025444;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2bYt2DfDycuBHru+tnnZlfBQjJPIyfZZW47KxB1sqtI=;
- b=vCt8AyLBIpj3P7TSC4HqzE7yF3WVROSYIpoveX1lSjyYGEvNdWnPHBcH0fxJN+0BCy
- aZUo6LSUWCWU0TaOwwaQaHnD6fR3DA1yaXuj/5hrCSiPxfpwT3tC6E8HPL0bUyDuF0J8
- IkwwwxNiueidldMuWXFvQtlkpgq+3HAN5JhAuhbF4PImuFa49MSDJtpNicjXOOfKcr+s
- AXIamr/GbUPK1df8oIP2z7qvdXI2vzbC7Gv+86SaGkoHtWUYE6IL8vqqpcj+wd/KX9ui
- /YN9met+Vpxok0JRJ2AoSDLfh/f7zTd8GLFlk6rxveTAyQJdVCIwfRr4MX+ZlFhTMbn/
- xk3w==
-X-Gm-Message-State: AOJu0YxOsofjBken+H/RAbLJitOGnyh9pigxg7kaf6jDUnCgMvZ5SQXY
- OKIJAKhzmwe1tX4/WKiNmV7PBn7nlB4Mciavu09WFh6K7n9nODQQjPoy36t+YsF/KylvZ3O4nJ5
- Wqe5493gc+ojBbIlvYZXnPQp4bUeClkgiGSlovtH+G9B677Sr5nzkF+u1DBBoIfNNMxf2j+7PId
- JXl/7pZoa2/E/dt253zKCCU0/RutrtoBgyJVzWOw==
-X-Gm-Gg: AY/fxX5hfSkqtBbzGwk/mrXTxDQmi7+4RVpCD4uJAt73eci8lIMjhKX+Z2Bey0SILTQ
- 3pDrwD9Yv7HzRXbjq4JQ3upwkKWImfW9dwrA4+FRxt2iD0igYNMQR/3H7DtI64EB5z1ROXSYe/F
- Rx2HAqDgHIRPdNEb2DC6H33FacQsARJqsUcT9V1sb4gjMgsto9Ar2eOAzBALhFIxERc7amf9h8K
- 7v2D65jlPis7abppNAFR2qkdmC8GJSqzqs2tLGr5Ff+oHD4YhntbbhU1l8VNIKEPjWPA/0MChfU
- d8ibKOrVGLPY8OC2ZV8+8OrMVWonvLgMsBiDT5SWGlMazLNqMACfyXq7XkNDeZnGgxGaU+fY6I+
- M
-X-Received: by 2002:a05:6102:f8c:b0:5ef:a67d:e957 with SMTP id
- ada2fe7eead31-5f1838c36edmr1567580137.17.1768420639927; 
- Wed, 14 Jan 2026 11:57:19 -0800 (PST)
-X-Received: by 2002:a05:6102:f8c:b0:5ef:a67d:e957 with SMTP id
- ada2fe7eead31-5f1838c36edmr1567561137.17.1768420639358; 
- Wed, 14 Jan 2026 11:57:19 -0800 (PST)
+ bh=Sao1wRkhL19NI6f8FC0xP3/0GVRrrC/sElfaU9Azbvw=;
+ b=IKjhCxD/2pbpV1b9Fv3QPd6yG2kmJEESOT0dwjVpFcyGiGN6sdvltzHXj+SgMrNJZ3
+ FeIe+Tsv1au6JTHQEzyx1H1A/WhJyqFklhR793Y3igyNhaFvSv8/3Jln5Z57KmdRJLVI
+ JOekxbWFcWPU84/ofXvy3ddAwCPZTZa6RHQrNNaJPVG9so581vD22AGZ2SMWw3cwgZzs
+ TdljVaV5TGjqxfbsyFcq1hspRKIjKC073itmTPxY8Ser5ZBpPWOhDyOiyG16+gvRAJQv
+ 29eBkpXoi1PQs43rkD+JA1FVwyjgAUlPWu2l0HZ1gj5ZNHKfWbGM6Yjpeex5V6JTh10a
+ yIjg==
+X-Gm-Message-State: AOJu0Yye77kVE11nAZvb4INZS97wALlycdH9cfW5i51tdXysWvYcyY9C
+ YIU4xNPNI78qoiZX77+vA4Juwz056KJgbe8HZYNoURDUAmj6wU8CCDRHwxW+h2+r/oXCQb46h2B
+ UBfBk84DCm+2cU+SOA+nxtko/INrToEFVe3nKKeapfHubFEnfhHHnkG17VdQqpYioNhQxqAD7xU
+ yDiMLfvj+lnW1ppk3+3nMgeALanGwZq9jVu+bePQ==
+X-Gm-Gg: AY/fxX5jZYHet0ZNG6i8SR+dT60iIlesW5TzfRqqqanwClGzCpdsJoOWAbc4xdMeTS7
+ lc8eFHnE+2gAnXDyxrzsmKhNcZRxrTeKGFBJAez8oQLBVtyhFA8MakbJH5WNIUrS2HgQPY4pkdG
+ B7lqBmGB8qtd8mr3vUy7EQJDDhNFyKUnaP+Mu8USORA0vwtGZNnVNviUBsmsvXrQ7BBFB3xXUey
+ 5MGN3bLs/fzuDt0rYPyY2xjYlWnHZpte2CJTxZeP9cwPIZpt3mOWThaQJQJobf8jGL6G/z/YXs+
+ X894xTUJPy1P8RNoLkd7FN1F6BiYRnBCLg2ywXpequdvWjdV3hasyKz+mx57CsMru85s929qmvF
+ V
+X-Received: by 2002:a05:6102:94e:b0:5ef:24aa:986f with SMTP id
+ ada2fe7eead31-5f1838967f1mr1527372137.2.1768420644146; 
+ Wed, 14 Jan 2026 11:57:24 -0800 (PST)
+X-Received: by 2002:a05:6102:94e:b0:5ef:24aa:986f with SMTP id
+ ada2fe7eead31-5f1838967f1mr1527359137.2.1768420643550; 
+ Wed, 14 Jan 2026 11:57:23 -0800 (PST)
 Received: from x1.com ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-944122d3040sm23024832241.4.2026.01.14.11.57.15
+ a1e0cc1a2514c-944122d3040sm23024832241.4.2026.01.14.11.57.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Jan 2026 11:57:19 -0800 (PST)
+ Wed, 14 Jan 2026 11:57:23 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  peterx@redhat.com
-Subject: [PATCH 2/3] migration: Remove zero-blocks capability
-Date: Wed, 14 Jan 2026 14:56:58 -0500
-Message-ID: <20260114195659.2543649-3-peterx@redhat.com>
+Subject: [PATCH 3/3] migration: Remove fd: support on files
+Date: Wed, 14 Jan 2026 14:56:59 -0500
+Message-ID: <20260114195659.2543649-4-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260114195659.2543649-1-peterx@redhat.com>
 References: <20260114195659.2543649-1-peterx@redhat.com>
@@ -120,114 +120,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It was declared deprecated since 9.2.
+This feature was deprecated in 9.1.  Remove it in this release (11.0).
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- docs/about/deprecated.rst       |  6 ------
- docs/about/removed-features.rst |  6 ++++++
- qapi/migration.json             | 11 +----------
- migration/options.c             |  5 -----
- 4 files changed, 7 insertions(+), 21 deletions(-)
+ docs/about/deprecated.rst       | 11 -----------
+ docs/about/removed-features.rst |  9 +++++++++
+ migration/fd.c                  | 11 +++++++----
+ 3 files changed, 16 insertions(+), 15 deletions(-)
 
 diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index b499b2acb0..6e4e2e4833 100644
+index 6e4e2e4833..76ac735315 100644
 --- a/docs/about/deprecated.rst
 +++ b/docs/about/deprecated.rst
-@@ -575,12 +575,6 @@ deprecated in favor of explicitly using the ``file:`` URI with the
- file descriptor being passed as an ``fdset``. Refer to the ``add-fd``
- command documentation for details on the ``fdset`` usage.
+@@ -564,17 +564,6 @@ be rejected.
+ Migration
+ ---------
  
--``zero-blocks`` capability (since 9.2)
--''''''''''''''''''''''''''''''''''''''
+-``fd:`` URI when used for file migration (since 9.1)
+-''''''''''''''''''''''''''''''''''''''''''''''''''''
 -
--The ``zero-blocks`` capability was part of the block migration which
--doesn't exist anymore since it was removed in QEMU v9.1.
+-The ``fd:`` URI can currently provide a file descriptor that
+-references either a socket or a plain file. These are two different
+-types of migration. In order to reduce ambiguity, the ``fd:`` URI
+-usage of providing a file descriptor to a plain file has been
+-deprecated in favor of explicitly using the ``file:`` URI with the
+-file descriptor being passed as an ``fdset``. Refer to the ``add-fd``
+-command documentation for details on the ``fdset`` usage.
 -
  COLO migration framework (since 11.0)
  '''''''''''''''''''''''''''''''''''''
  
 diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index e81d79da47..8a9d21068a 100644
+index 8a9d21068a..538914ef00 100644
 --- a/docs/about/removed-features.rst
 +++ b/docs/about/removed-features.rst
-@@ -717,6 +717,12 @@ Block migration has been removed. For a replacement, see "QMP
- invocation for live storage migration with ``blockdev-mirror`` + NBD"
- in docs/interop/live-block-operations.rst.
+@@ -710,6 +710,15 @@ Use blockdev-mirror with NBD instead. See "QMP invocation for live
+ storage migration with ``blockdev-mirror`` + NBD" in
+ docs/interop/live-block-operations.rst for a detailed explanation.
  
-+``migrate-set-capabilities`` ``zero-blocks`` option (removed in 11.0)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++``migrate`` command with file-based ``fd:`` URI (removed in 11.0)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 +
-+The ``zero-blocks`` capability was part of the block migration capability
-+that got removed.  Removed with no replacement.
++In order to reduce ambiguity, the ``fd:`` URI usage of providing a
++file descriptor to a plain file has been removed in favor of
++explicitly using the ``file:`` URI with the file descriptor being
++passed as an ``fdset``. Refer to the ``add-fd`` command documentation
++for details on the ``fdset`` usage.
 +
- ``migrate-set-parameter`` ``compress-level`` option (removed in 9.1)
- ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ ``migrate-set-capabilities`` ``block`` option (removed in 9.1)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
  
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 3c868efe38..490f72090e 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -440,13 +440,6 @@
- #     footprint is mlock()'d on demand or all at once.  Refer to
- #     docs/rdma.txt for usage.  Disabled by default.  (since 2.0)
- #
--# @zero-blocks: During storage migration encode blocks of zeroes
--#     efficiently.  This essentially saves 1MB of zeroes per block on
--#     the wire.  Enabling requires source and target VM to support
--#     this feature.  To enable it is sufficient to enable the
--#     capability on the source VM.  The feature is disabled by
--#     default.  (since 1.6)
--#
- # @events: generate events for each migration state change (since 2.4)
- #
- # @auto-converge: If enabled, QEMU will automatically throttle down
-@@ -531,13 +524,12 @@
- #
- # @unstable: Members @x-colo and @x-ignore-shared are experimental.
- #
--# @deprecated: Member @zero-blocks and @x-colo are deprecated.
-+# @deprecated: Member @x-colo is deprecated.
- #
- # Since: 1.2
- ##
- { 'enum': 'MigrationCapability',
-   'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
--           { 'name': 'zero-blocks', 'features': [ 'deprecated' ] },
-            'events', 'postcopy-ram',
-            { 'name': 'x-colo', 'features': [ 'unstable', 'deprecated' ] },
-            'release-ram',
-@@ -594,7 +586,6 @@
- #           {"state": false, "capability": "xbzrle"},
- #           {"state": false, "capability": "rdma-pin-all"},
- #           {"state": false, "capability": "auto-converge"},
--#           {"state": false, "capability": "zero-blocks"},
- #           {"state": true, "capability": "events"},
- #           {"state": false, "capability": "postcopy-ram"},
- #           {"state": false, "capability": "x-colo"}
-diff --git a/migration/options.c b/migration/options.c
-index 318850ba94..edb16ad9fa 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -188,7 +188,6 @@ const Property migration_properties[] = {
-     DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
-     DEFINE_PROP_MIG_CAP("x-rdma-pin-all", MIGRATION_CAPABILITY_RDMA_PIN_ALL),
-     DEFINE_PROP_MIG_CAP("x-auto-converge", MIGRATION_CAPABILITY_AUTO_CONVERGE),
--    DEFINE_PROP_MIG_CAP("x-zero-blocks", MIGRATION_CAPABILITY_ZERO_BLOCKS),
-     DEFINE_PROP_MIG_CAP("x-events", MIGRATION_CAPABILITY_EVENTS),
-     DEFINE_PROP_MIG_CAP("x-postcopy-ram", MIGRATION_CAPABILITY_POSTCOPY_RAM),
-     DEFINE_PROP_MIG_CAP("x-postcopy-preempt",
-@@ -576,10 +575,6 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
-     ERRP_GUARD();
-     MigrationIncomingState *mis = migration_incoming_get_current();
+diff --git a/migration/fd.c b/migration/fd.c
+index 9bf9be6acb..fdeece2101 100644
+--- a/migration/fd.c
++++ b/migration/fd.c
+@@ -24,6 +24,7 @@
+ #include "qemu/sockets.h"
+ #include "io/channel-util.h"
+ #include "trace.h"
++#include "qapi/error.h"
  
--    if (new_caps[MIGRATION_CAPABILITY_ZERO_BLOCKS]) {
--        warn_report("zero-blocks capability is deprecated");
--    }
--
-     if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
-         warn_report("COLO migration framework is deprecated");
+ static bool fd_is_pipe(int fd)
+ {
+@@ -58,8 +59,9 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
      }
+ 
+     if (!migration_fd_valid(fd)) {
+-        warn_report("fd: migration to a file is deprecated."
+-                    " Use file: instead.");
++        error_setg(errp, "fd: migration to a file is not supported."
++                   " Use file: instead.");
++        return;
+     }
+ 
+     trace_migration_fd_outgoing(fd);
+@@ -92,8 +94,9 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
+     }
+ 
+     if (!migration_fd_valid(fd)) {
+-        warn_report("fd: migration to a file is deprecated."
+-                    " Use file: instead.");
++        error_setg(errp, "fd: migration to a file is not supported."
++                   " Use file: instead.");
++        return;
+     }
+ 
+     trace_migration_fd_incoming(fd);
 -- 
 2.50.1
 
