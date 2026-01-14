@@ -4,64 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F25D30CDB
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Jan 2026 22:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8073D30CDB
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 01:29:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vfmco-0005kl-Vn; Tue, 13 Jan 2026 17:12:31 -0500
+	id 1vfph9-0004Yh-Ts; Tue, 13 Jan 2026 20:29:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vfmcl-0005iy-TX; Tue, 13 Jan 2026 17:12:27 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vfmcj-000521-QU; Tue, 13 Jan 2026 17:12:27 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id BEBC15969FF;
- Tue, 13 Jan 2026 23:12:21 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 5oVUWoZqCWQX; Tue, 13 Jan 2026 23:12:19 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A68FC596A0D; Tue, 13 Jan 2026 23:12:19 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A3D6A5969E4;
- Tue, 13 Jan 2026 23:12:19 +0100 (CET)
-Date: Tue, 13 Jan 2026 23:12:19 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Bastian Koppelmann <kbastian@rumtueddeln.de>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Laurent Vivier <laurent@vivier.eu>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- qemu-arm@nongnu.org, Yoshinori Sato <yoshinori.sato@nifty.com>, 
- Yanan Wang <wangyanan55@huawei.com>, Aleksandar Rikalo <arikalo@gmail.com>, 
- Thomas Huth <huth@tuxfamily.org>, Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [RFC PATCH 04/12] hw/m68k: register a mcf5208evb_cpu_reset handler
-In-Reply-To: <CAFEAcA9b8hnZ24+XMyXxVVV5ZEVZUFbMmR678hJ0eWqdi1r0Fg@mail.gmail.com>
-Message-ID: <c35bd54e-1b6b-4676-493e-d225a6386d8f@eik.bme.hu>
-References: <20260108143423.1378674-1-alex.bennee@linaro.org>
- <20260108143423.1378674-5-alex.bennee@linaro.org>
- <CAFEAcA_Y_fTBo_0qg4Lm+7WrMdEown=-RrHHjcsKKE6WRX3eRw@mail.gmail.com>
- <b2c72aef-4a60-76af-4cd8-dd3142e46d2a@eik.bme.hu>
- <CAFEAcA9b8hnZ24+XMyXxVVV5ZEVZUFbMmR678hJ0eWqdi1r0Fg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1vfph8-0004YQ-FU
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 20:29:10 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1vfph6-0004aR-4t
+ for qemu-devel@nongnu.org; Tue, 13 Jan 2026 20:29:10 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-81c72659e6bso5157655b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Jan 2026 17:29:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1768354146; x=1768958946; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=DfSsqrY4m5l9wqNcAohTwErrcLasKN+T9wMXTT1IpDs=;
+ b=X0t7ZHT2dWnDhww6MKa6xCsfnhhPLxX/NrpBCKuA/XYEQSR36jE7fbX8JIxecaBBg9
+ Z8m1ZCkM/g5YReNFqZ2R/MBis+RzlVXjrouHP9u5XYE6LP4T6Q8NaoNILz2Ieo03aTBJ
+ ghwNBvdv+6GG2GaI085QVdwg8RhwRT9CXyIEc/b8MQlAWFhS7Yo4zLiNNQRChC6jJeYt
+ qJQOIOrOuO1cY6dyWItpou4Rcwo+6EUHsn6Mdillh6EpoQzTuMcuHab40Kypz+rjHkhF
+ AiKEzNzVMX8z9netwAK4qOyJJyAYIeiY6oGAwbeoWgQtBvCen+JS/5wkJ9S2Byxx+Y33
+ tSNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768354146; x=1768958946;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DfSsqrY4m5l9wqNcAohTwErrcLasKN+T9wMXTT1IpDs=;
+ b=VGC17eqfjKaj4dm1RtDiD5ynTBWbFlACyUzY8sd2Jzk1cd464ByWSFetPcPlrgWHhg
+ Ro59BGFZP6dijpi/kfycWBiehLtlOjelujLp/9bS3lG9kTFIu7WeELKzi4iyhapGLqId
+ EEPtmgDgVyDE9h0/XGsI8SROjvvO8XWmAHRcROqXKJk7bvwMkIY/exsf6h5GsPZm0IPj
+ lWoKXEDcN5zK+qU5fHMW5mYx/1Gjo7Hj16l7DqMwiKPIRh4lIfagvX/WbHvwDP8uFMMF
+ dXA1C3XVRTICPqF0uUMDfGNnMSQs9PSxAVTe2V1ZNT/sa2jHTsUsqD+IXdbhG2IGpunN
+ 52vQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7JxXDPeyX3lL5QF/v2BQmpXjPrtgk8lKA1dIkMZaxW/plM2UprUNqDJJadIFVsZPC5vpWCLxISLgF@nongnu.org
+X-Gm-Message-State: AOJu0Yxtk676mzxsk99flxQV7qyN3rz8s4SJhFnL2NbOoeZ+des9+vl8
+ mEjNmZOag+Kx2AolpuDetsF899QtNi7HyZKmLm0DLB1SYSGb9QOBfEXV
+X-Gm-Gg: AY/fxX4pwBXBiAo/IWCLlYbtnDLPxp+oJnEy6D0yURRKSh6iNpJgtlaneGwrLaOe5uA
+ UU7Q3gPCjSBo/xbLVX82Dwjqw/zXd+U38XMbW8Mk9HLEbMmKqvkwIVWCRUt9NSsKn3n2VmsTe1v
+ 4zHs1PCoOcZ9ok7VX6P+0lacFfg5Kd6msXqgO0yjADkT1ufr19VUyVnEMJ1YuePzijaBlJhlng+
+ uDdcO0mpaXhTcALYb9oPF0ZMFImUzBBevtoCnxTzn87+F90n+jGHFdWIUWL2Ok2ux7jLz0MHUwx
+ W59yBerx8P/IwbQeOI+lBMeXa7r29zDvK51f1CTJS3sH+UTOqwdWp/Ia2O/oAIodHMxwtZX8JRV
+ I2b/pApRVKQRqN/LbqmT73fkKiKQiqjHZ58R8EuR90UkvmyBGxNdLuNdorCEy1DiODcoUie0kj7
+ /0rx0x4fEIK3eqc6kV7eVd
+X-Received: by 2002:a05:6a00:1c95:b0:81f:3ae9:3f71 with SMTP id
+ d2e1a72fcca58-81f83cc2c99mr432030b3a.28.1768354146143; 
+ Tue, 13 Jan 2026 17:29:06 -0800 (PST)
+Received: from donnager-debian.. ([45.124.203.15])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-81f3909d2cbsm10704108b3a.48.2026.01.13.17.29.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Jan 2026 17:29:05 -0800 (PST)
+From: Joel Stanley <joel@jms.id.au>
+To: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Michael Ellerman <mpe@oss.tenstorrent.com>,
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Nick Piggin <npiggin@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
+Subject: [PATCH 0/2] hw/riscv: Make virt AIA setup reusable 
+Date: Wed, 14 Jan 2026 11:58:42 +1030
+Message-ID: <20260114012846.981884-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-707201850-1768342339=:27486"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=joel.stan@gmail.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,96 +105,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+v2: Add assert for number of irq sources
 
---3866299591-707201850-1768342339=:27486
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Sharing the AIA setup code looked like a good idea when I was
+implementing a machine with AIA. It will be used by Atlantis initially.
 
-On Tue, 13 Jan 2026, Peter Maydell wrote:
-> On Tue, 13 Jan 2026 at 18:08, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->> On Tue, 13 Jan 2026, Peter Maydell wrote:
->>> On Thu, 8 Jan 2026 at 14:34, Alex Bennée <alex.bennee@linaro.org> wrote:
->>>>
->>>> It looks like allowing a -kernel to override any firmware setting is
->>>> intentional.
->>>>
->>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>>> ---
->>>>  hw/m68k/mcf5208.c | 25 +++++++++++++++++++------
->>>>  1 file changed, 19 insertions(+), 6 deletions(-)
->>>>
->>>> diff --git a/hw/m68k/mcf5208.c b/hw/m68k/mcf5208.c
->>>> index c6d1c5fae9f..5680d516a23 100644
->>>> --- a/hw/m68k/mcf5208.c
->>>> +++ b/hw/m68k/mcf5208.c
->>>> @@ -27,6 +27,7 @@
->>>>  #include "qemu/timer.h"
->>>>  #include "hw/core/ptimer.h"
->>>>  #include "system/system.h"
->>>> +#include "system/reset.h"
->>>>  #include "system/qtest.h"
->>>>  #include "net/net.h"
->>>>  #include "hw/core/boards.h"
->>>> @@ -274,6 +275,20 @@ static void mcf_fec_init(MemoryRegion *sysmem, hwaddr base, qemu_irq *irqs)
->>>>      memory_region_add_subregion(sysmem, base, sysbus_mmio_get_region(s, 0));
->>>>  }
->>>>
->>>> +static void mcf5208evb_cpu_reset(void *opaque)
->>>> +{
->>>> +    M68kCPU *cpu = opaque;
->>>> +    CPUM68KState *env = &cpu->env;
->>>> +    CPUState *cs = CPU(cpu);
->>>> +
->>>> +    cpu_reset(cs);
->>>> +    /* Initialize CPU registers.  */
->>>> +    env->vbr = 0;
->>>> +    /* TODO: Configure BARs.  */
->>>> +    env->aregs[7] = ldl_phys(cs->as, 0);
->>>> +    env->pc = env->reset_pc;
->>>> +}
->>>
->>> It looks from my quick skim of the m68k manual like
->>> "on reset, initial PC is read from offset 4, initial
->>> SP is read from offset 0" is part of the architected
->>> CPU reset, not board-specific. Maybe we should model
->>> that inside the CPU reset method? Compare M-profile
->>> Arm, which does basically the same thing in
->>> arm_cpu_reset_hold().
->>>
->>> (I really need to look again at whether we can move
->>> that to the reset_exit phase now and drop the awkward
->>> "maybe we need to look at a rom blob" special casing.)
->>
->> Real machines usually have a way to remap ROM to address 0 on reset
->> shadowing RAM and then the firmware flips the bits needed to set up the
->> memory map with RAM at 0 and ROM at somewhere higher up but the way to do
->> it is different for each board. Maybe in QEMU we don't bother to model
->> this and have this special case instead to simplify things and be able to
->> start from the final ROM address without needing to model this ROM remap
->> thing. So modeling real CPU behaviour might make board models more
->> complex.
->
-> To me it looks like we are already modelling "load SP
-> and PC from memory", we're just doing it in each
-> board model rather than in the CPU model for some reason...
+Atlantis will use 128 IRQ sources so the second patch makes that
+configurable as part of the setup. I initially changed it globally and
+that broke the virt acpi tests as the number is encoded in acpi
+blob.
 
-Only q800 seems to do that, virt passes this info in a struct not thorugh 
-memory and other boards don't seem to have a cpu reset function at all and 
-just poke the cpu object directly without resetting it unless I missed 
-something. Looks like each board came up with its own way independently 
-but could be cleaned up the way you propose implementing the proper reset 
-behaviour of the CPU then changing boards to just put the addresses in 
-memory or do the ROM remap if needed. But how could boards write the 
-addresses on reset without using qemu_register_reset or needing a lot of 
-boilerplate to add a reset method to machine? Maybe it is simple and I 
-just don't remember how machine reset works for machine or it could be 
-that MACHINE class needs a simple way for boards to register a reset 
-method. Maybe this is the reason why several boards use a boot info struct 
-to pass reset info into cpu_reset and don't model board reset?
+Joel Stanley (2):
+  hw/riscv/virt: Move AIA initialisation to helper file
+  hw/riscv/aia: Provide number of irq sources
 
-Regards,
-BALATON Zoltan
---3866299591-707201850-1768342339=:27486--
+ hw/riscv/aia.h             | 59 ++++++++++++++++++++++++
+ include/hw/riscv/virt.h    | 30 +------------
+ hw/riscv/aia.c             | 92 ++++++++++++++++++++++++++++++++++++++
+ hw/riscv/virt-acpi-build.c | 27 +++++++----
+ hw/riscv/virt.c            | 87 +++++------------------------------
+ hw/riscv/meson.build       |  2 +-
+ 6 files changed, 182 insertions(+), 115 deletions(-)
+ create mode 100644 hw/riscv/aia.h
+ create mode 100644 hw/riscv/aia.c
+
+-- 
+2.47.3
+
 
