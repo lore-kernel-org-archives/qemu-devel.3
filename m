@@ -4,114 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47986D39011
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 20:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 015E3D3901A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 20:52:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vg7Dy-0005Zc-3V; Wed, 14 Jan 2026 15:12:14 -0500
+	id 1vg7qP-0006aa-1b; Wed, 14 Jan 2026 15:51:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg7Dv-0005Uj-Uw
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 15:12:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vg7Du-0004Hj-2h
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 15:12:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768421527;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bPPoU7prOgWqNj7Xk4sAHVwSsSiXtEoBQbN02gN5Ytc=;
- b=XdNFZkyp1Qi7zWPWWAxu+ai7E8103cDENtT7DFSfX9G5VY+L/s351p8nqt6CetvwmrDb9y
- SIM+pMHCA0EGjB524ZJjkj+NEABaxS6h4pobnmZTTKfUurDsDlEv6P+uATLWkfnqIWcgQC
- HyFV0PPg9PvTIipuQpiFngaX0v+xF44=
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-224-yI-uODIxP4yEoYbxBu9ZjQ-1; Wed, 14 Jan 2026 15:12:06 -0500
-X-MC-Unique: yI-uODIxP4yEoYbxBu9ZjQ-1
-X-Mimecast-MFC-AGG-ID: yI-uODIxP4yEoYbxBu9ZjQ_1768421525
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-5eb810c80c4so4066871137.0
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 12:12:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vg7qG-0006Vy-0U
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 15:51:49 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vg7qD-0007d0-TS
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 15:51:47 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-47d1d8a49f5so1571255e9.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 12:51:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768421525; x=1769026325; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=bPPoU7prOgWqNj7Xk4sAHVwSsSiXtEoBQbN02gN5Ytc=;
- b=JJrYV7l+8n5W19Ji0fiej7XPphCMA0W6t1u9Xw/wUtUps0RolIYx1+3ZbTIN2QTgO7
- edkfJ2++3fDV11meoHPOxfynHHN0TYGIfkxY9T7d7VbHi5LHsztqCf2uZapHhJTBnRWn
- Aa/f48Psj8OgJ/CcuK7VIypMmZvL2MkvNvAuguyaHiVxPM83HRWRaD553jks+XAVmklc
- kjl1TeCPs/EVRyAHpALvQPRD3s8jXBG2sYrO9y1edfINphzpm0txmJ8FVb0CQxH8ILFL
- LwSynIY2AaGwW+fWXtLpJChMEt/7P5dARopaJebsJwHlw4ORMiJdIbKvcKEbfgYkcuUq
- 8Ssw==
+ d=gmail.com; s=20230601; t=1768423901; x=1769028701; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dURWTwQjpi14GLALSao2JHKXBlPcptXhhohXVZcLBnM=;
+ b=YGkXLS/HWxPXgZI0O8vviw/sBPXd4HXl7Evon00od0SkgJT6eZooRk5MLfxVQT/RQN
+ 6Ty14TVUHbgVzZxZBJimY1hA0oVOXzMaLMfScZWxSaG7c8RgrmhH/j5IcvqSaEM6gp5R
+ 2BTmi7YYrkv2RHVYlxQ0BYopHvGKuzTbmYrVl+Rd9bnP0KVVdV1sSzSNABDyZVPoUfsJ
+ KgwVY6WmxMjj4JI9+dPQZVMPwBc7nxF12YbbZxqqDCzf7c2TrvN09w6h8mFwboHPDCG7
+ Z3Vjb4JC6pJZv8SEiV2LT5Id0eCoMz85tXpNW0emL6+TQw7y6KLCakV/WJjQY9LJ4inB
+ NjtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768421525; x=1769026325;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bPPoU7prOgWqNj7Xk4sAHVwSsSiXtEoBQbN02gN5Ytc=;
- b=QUnj6u6Y9a8kk+IFbdkgfMKlZHjjeT3mG3Lc51+QQ41zQYmUO08Wc5MnsdGJGFcZqB
- ZXhatjsdY+9VJ9Jv7yp98bMaKUqODduG2ZD/ag+zdT3lT/jYlUVfR5s3FFOVQG6wkv4A
- MK8kifSF44VVK+YSN9zQIVU1rDB3HT9LVwEQtaUcba2DyHLzmniyQlg8hiS0+YsncSHV
- tsmMlL31nKXhZ/pzX45dyWkiMJCzEFwTUkIPsFYgAlMi1oKCFfkWfncUY6VPHizr2x05
- u3pf5VwCVHErpsL400Vlm7M2vouhPwHmgCRvEQBZ3VouhinBlMQlB8547EmJ8SmuG9WS
- sUPA==
-X-Gm-Message-State: AOJu0Yw5W4P+UIiDr2zGZuhO3OonAymurZXhON1vlemwcS/h7nQwouHD
- x7pQPinzEqzrSaYcuQYmev5KKdrqzMV2C/f5qzFMHwDR4E5vrCvMTYLWG8iNc8KcJStdYwRl68x
- 8+ldQVGIelXLY7rT7HFL3Q1xwWcppmEkU9Mk7kWspjIW1aqLNT0J+p1oGl4gN4w88arm+i/S4Ai
- g/uD8L/9bhv2wj5gY+fYufA1jjFxvcE/nshN5FwA==
-X-Gm-Gg: AY/fxX5nqKW47D/4mdJhz+405DvEfOxU2IxgIgBIuy6bNYPMsbcYoOqaVxq0ANlA3UY
- ERXwf9n9GtSfXjiSGPLPMfE/BfH16Onv7cqLQ1JJGqHpdJpMPlDlK6GwmsHpn0QQxFQZdog6iMe
- p/kdqdYg1r35OpnQ337CXiJ+/MJzkCrhzYffBQ7KL85iP+Q8pHNkbSzN8ljNEsk4FJ9tgOZYoqG
- 450UP7BBsPqmf8cxImHkv9T0Ta6yJ2Gl9F2TO2eZc8fLgjNdW8IKp1NHWEvUxi+YCReC6XE6Kcn
- T52knlVB8a8aWvjSg5he8LRG1EbGijSJvDKJsiVzLSAinoC98TjtvtPv+16XWYu0+gVx+ys3ZOB
- ppIc=
-X-Received: by 2002:a05:6102:304b:b0:5ef:a24a:50b5 with SMTP id
- ada2fe7eead31-5f19253ba4amr360174137.18.1768421525014; 
- Wed, 14 Jan 2026 12:12:05 -0800 (PST)
-X-Received: by 2002:a05:6102:304b:b0:5ef:a24a:50b5 with SMTP id
- ada2fe7eead31-5f19253ba4amr360148137.18.1768421524445; 
- Wed, 14 Jan 2026 12:12:04 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-944122d3040sm23063638241.4.2026.01.14.12.11.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Jan 2026 12:12:03 -0800 (PST)
-Date: Wed, 14 Jan 2026 15:11:55 -0500
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
- Juan Quintela <quintela@trasno.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Zhang Chen <zhangckid@gmail.com>, zhanghailiang@xfusion.com,
- Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>,
- Lukas Straub <lukasstraub2@web.de>
-Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
-Message-ID: <aWf4i7EOXtpAljGX@x1.local>
-References: <20260114195659.2543649-1-peterx@redhat.com>
- <20260114195659.2543649-2-peterx@redhat.com>
+ d=1e100.net; s=20230601; t=1768423901; x=1769028701;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dURWTwQjpi14GLALSao2JHKXBlPcptXhhohXVZcLBnM=;
+ b=nzQJRp1gPAiprWUWSgEtY6uEZixQSYJppvW+IdxI29n3mz7mxxJVeUAZwORGmA0Uuv
+ KLC6qg3/zWlm1MDEjQ2Dmps7Rqgh1B5hl/qGCE4mL9phobWC7gTymaldbdJ1yNSb7ZMF
+ xReZQuCE3QgaIYxCERVxpzRvA3MpUvh8Q6bpAgA0KOgva8hQqZsaOumBncglSUHsxkf7
+ nydbGXudSWJOUhV+90yTYhtK7IQ9e0++kevbaF6doDmKirNxFgvzv8uHYY1+TiOucd90
+ RLx4piq9jfRIHmhzP4Lcgk2a+16erjoye92pwIZ8U1IP4ZwzOR8vy7QZvjUg5GJRjz+1
+ KFGA==
+X-Gm-Message-State: AOJu0YxgJgTQB8Twnyx7fs2mIupTWhgkSgyIBdlkpKynUsyMLwDYaowe
+ dgA41ev4TTWLsl4lD9pXMXWWLPlAjFfsSK7t2q8yo2oJlufYwGxZP36cWHoSQQ==
+X-Gm-Gg: AY/fxX7oSQVbyXC9K3oS0V5LVRWk7akhTSfKbh1VZTJyp+psYi8ORzu7pjUjwgbCfQe
+ 8YL+Y8rVnzbQ4OtadrVP8OY8+2uUXVNy96SlFvGDbf/11vIG4o7H44rsIvXOH0QG8NC+pU36WLn
+ /6sdrnrU21kiUwe6i45GhHYAuAslJviu2ePy7Ppq4XwHaxSaUJqkxnQzIAIImvam8nxWiTNIa94
+ jxdRKhaEc4Yy6WhB5Fx7w/HCE8OAyqAe51q7epK48Tdi05PU2g7TDRpD9A0O95R+b3qKAzML0wL
+ eUNq6rUalFXj81q4mnLdQPFfmrr8qfxCdaxRAQ8slNIRkBbXyoRdQxJf9QFUuPMtJydANgbQcWr
+ T40A+OGZ1w6ZfvVl5xVmfcmHf/6q2TRqLRFAhdTDN9jlj/C4Q3N2LTwMNmb2j78NCU4B15k6eGW
+ AF2HWzXIpJfs189Xej0AjukPAv872u8FKT7gaQcCJgLClbV6lWyq/TH1CYq7dw9QT5kFgr0k8DX
+ /YBxxYFOFLmg8okR6D+yxpqMvh8CTiW0Cw=
+X-Received: by 2002:a05:600c:c3cb:20b0:47e:e946:3a59 with SMTP id
+ 5b1f17b1804b1-47ee9463c5fmr17569605e9.34.1768423901338; 
+ Wed, 14 Jan 2026 12:51:41 -0800 (PST)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-24fe-2800-f91d-651c-a220-693b.310.pool.telefonica.de.
+ [2a02:3100:24fe:2800:f91d:651c:a220:693b])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47f4b2755absm11868855e9.15.2026.01.14.12.51.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 Jan 2026 12:51:40 -0800 (PST)
+Date: Wed, 14 Jan 2026 20:51:38 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
+ mohamed@unpredictable.fr
+CC: qemu-arm@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?ISO-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Igor Mammedov <imammedo@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Cameron Esfahani <dirty@apple.com>
+Subject: Re: [PATCH v14 07/26] hw: arm: virt: rework MSI-X configuration
+In-Reply-To: <20260114134143.26198-8-mohamed@unpredictable.fr>
+References: <20260114134143.26198-1-mohamed@unpredictable.fr>
+ <20260114134143.26198-8-mohamed@unpredictable.fr>
+Message-ID: <05EEED6C-5A59-4DCB-9836-942E5C6505AD@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260114195659.2543649-2-peterx@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,110 +120,340 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 14, 2026 at 02:56:57PM -0500, Peter Xu wrote:
-> COLO was broken for QEMU release 10.0/10.1 without anyone noticed.  One
-> reason might be that we don't have an unit test for COLO (which we
-> explicitly require now for any new migration feature).  The other reason
-> should be that there are just no more active COLO users, at least based on
-> the latest development of QEMU.
-> 
-> I don't remember seeing anything really active in the past few years in
-> COLO development.
-> 
-> Meanwhile, COLO migration framework maintainer (Hailiang Zhang)'s last
-> email to qemu-devel is in Dec 2021 where the patch proposed an email
-> change (<20211214075424.6920-1-zhanghailiang@xfusion.com>).
-> 
-> We've discussed this for a while, see latest discussions here (our thoughts
-> of deprecating COLO framework might be earlier than that, but still):
-> 
-> https://lore.kernel.org/r/aQu6bDAA7hnIPg-y@x1.local/
-> https://lore.kernel.org/r/20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de
-> 
-> Let's make it partly official and put COLO into deprecation list.  If
-> anyone cares about COLO and is deploying it, please send an email to
-> qemu-devel to discuss.
-> 
-> Otherwise, let's try to save some energy for either maintainers or
-> developers who is looking after QEMU. Let's save the work if we don't even
-> know what the work is for.
-> 
-> Cc: Lukáš Doktor <ldoktor@redhat.com>
 
-My apologize, I copied the wrong email.
 
-Cc: Lukas Straub <lukasstraub2@web.de>
+Am 14=2E Januar 2026 13:41:24 UTC schrieb Mohamed Mediouni <mohamed@unpred=
+ictable=2Efr>:
+>Introduce a -M msi=3D argument to be able to control MSI-X support indepe=
+ndently
+>from ITS, as part of supporting GICv3 + GICv2m platforms=2E
+>
+>Remove vms->its as it's no longer needed after that change=2E
+>
+>Signed-off-by: Mohamed Mediouni <mohamed@unpredictable=2Efr>
+>---
+> hw/arm/virt-acpi-build=2Ec |  24 ++++++---
+> hw/arm/virt=2Ec            | 108 +++++++++++++++++++++++++++++++--------
+> include/hw/arm/virt=2Eh    |   4 +-
+> 3 files changed, 108 insertions(+), 28 deletions(-)
+>
+>diff --git a/hw/arm/virt-acpi-build=2Ec b/hw/arm/virt-acpi-build=2Ec
+>index 86024a1a73=2E=2E187dd4e272 100644
+>--- a/hw/arm/virt-acpi-build=2Ec
+>+++ b/hw/arm/virt-acpi-build=2Ec
+>@@ -440,6 +440,17 @@ static void create_rc_its_idmaps(GArray *its_idmaps,=
+ GArray *smmuv3_devs)
+>     }
+> }
+>=20
+>+/*
+>+ * In the prior Qemu ACPI table handling, GICv2 configurations
+>+ * had vms->its=3D1=2E=2E=2E That's broken=2E
+>+ *
+>+ * Match that assumption to match the existing ACPI tables that
+>+ * have been shipping for quite a while=2E
+>+ */
+>+static int is_gicv2_acpi_workaround_needed(VirtMachineState *vms) {
+>+    return vms->gic_version =3D=3D 2;
+>+}
+>+
+> /*
+>  * Input Output Remapping Table (IORT)
+>  * Conforms to "IO Remapping Table System Software on ARM Platforms",
+>@@ -473,7 +484,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, Vi=
+rtMachineState *vms)
+>         nb_nodes =3D num_smmus + 1; /* RC and SMMUv3 */
+>         rc_mapping_count =3D rc_smmu_idmaps_len;
+>=20
+>-        if (virt_is_its_enabled(vms)) {
+>+        if (virt_is_its_enabled(vms) || is_gicv2_acpi_workaround_needed(=
+vms)) {
+>             /*
+>              * Knowing the ID ranges from the RC to the SMMU, it's possi=
+ble to
+>              * determine the ID ranges from RC that go directly to ITS=
+=2E
+>@@ -484,7 +495,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, Vi=
+rtMachineState *vms)
+>             rc_mapping_count +=3D rc_its_idmaps->len;
+>         }
+>     } else {
+>-        if (virt_is_its_enabled(vms)) {
+>+        if (virt_is_its_enabled(vms) || is_gicv2_acpi_workaround_needed(=
+vms)) {
+>             nb_nodes =3D 2; /* RC and ITS */
+>             rc_mapping_count =3D 1; /* Direct map to ITS */
+>         } else {
+>@@ -499,7 +510,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, Vi=
+rtMachineState *vms)
+>     build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
+>     build_append_int_noprefix(table_data, 0, 4); /* Reserved */
+>=20
+>-    if (virt_is_its_enabled(vms)) {
+>+    if (virt_is_its_enabled(vms) || is_gicv2_acpi_workaround_needed(vms)=
+) {
+>         /* Table 12 ITS Group Format */
+>         build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* =
+Type */
+>         node_size =3D  20 /* fixed header size */ + 4 /* 1 GIC ITS Ident=
+ifier */;
+>@@ -518,7 +529,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, Vi=
+rtMachineState *vms)
+>         int smmu_mapping_count, offset_to_id_array;
+>         int irq =3D sdev->irq;
+>=20
+>-        if (virt_is_its_enabled(vms)) {
+>+        if (virt_is_its_enabled(vms) || is_gicv2_acpi_workaround_needed(=
+vms)) {
+>             smmu_mapping_count =3D 1; /* ITS Group node */
+>             offset_to_id_array =3D SMMU_V3_ENTRY_SIZE; /* Just after the=
+ header */
+>         } else {
+>@@ -611,7 +622,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, Vi=
+rtMachineState *vms)
+>             }
+>         }
+>=20
+>-        if (virt_is_its_enabled(vms)) {
+>+        if (virt_is_its_enabled(vms) || is_gicv2_acpi_workaround_needed(=
+vms)) {
+>             /*
+>              * Map bypassed (don't go through the SMMU) RIDs (input) to
+>              * ITS Group node directly: RC -> ITS=2E
+>@@ -962,8 +973,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, Vi=
+rtMachineState *vms)
+>         }
+>     }
+>=20
+>-    if (!(vms->gic_version !=3D VIRT_GIC_VERSION_2 && virt_is_its_enable=
+d(vms))
+>-     && !vms->no_gicv3_with_gicv2m) {
+>+    if (virt_is_gicv2m_enabled(vms)) {
+>         const uint16_t spi_base =3D vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_=
+BASE;
+>=20
+>         /* 5=2E2=2E12=2E16 GIC MSI Frame Structure */
+>diff --git a/hw/arm/virt=2Ec b/hw/arm/virt=2Ec
+>index 553c7f62cc=2E=2E0e84ccd82c 100644
+>--- a/hw/arm/virt=2Ec
+>+++ b/hw/arm/virt=2Ec
+>@@ -966,12 +966,12 @@ static void create_gic(VirtMachineState *vms, Memor=
+yRegion *mem)
+>=20
+>     fdt_add_gic_node(vms);
+>=20
+>-    if (vms->gic_version !=3D VIRT_GIC_VERSION_2 && virt_is_its_enabled(=
+vms)) {
+>+    if (virt_is_its_enabled(vms)) {
+>         create_its(vms);
+>-    } else if (vms->gic_version !=3D VIRT_GIC_VERSION_2 && !vms->no_gicv=
+3_with_gicv2m) {
+>-        create_v2m(vms);
+>-    } else if (vms->gic_version =3D=3D VIRT_GIC_VERSION_2) {
+>+    } else if (virt_is_gicv2m_enabled(vms)) {
+>         create_v2m(vms);
+>+    } else {
+>+        vms->msi_controller =3D VIRT_MSI_CTRL_NONE;
+>     }
+> }
+>=20
+>@@ -2710,32 +2710,93 @@ static void virt_set_highmem_mmio_size(Object *ob=
+j, Visitor *v,
+>=20
+> bool virt_is_its_enabled(VirtMachineState *vms)
+> {
+>-    if (vms->its =3D=3D ON_OFF_AUTO_OFF) {
+>+    switch (vms->msi_controller) {
+>+    case VIRT_MSI_CTRL_NONE:
+>         return false;
+>-    }
+>-    if (vms->its =3D=3D ON_OFF_AUTO_AUTO) {
+>-        if (whpx_enabled()) {
+>+    case VIRT_MSI_CTRL_ITS:
+>+        return true;
+>+    case VIRT_MSI_CTRL_GICV2M:
+>+        return false;
+>+    case VIRT_MSI_CTRL_AUTO:
+>+        if (whpx_enabled() && whpx_irqchip_in_kernel()) {
+>+            return false;
+>+        }
+>+        if (vms->gic_version =3D=3D VIRT_GIC_VERSION_2) {
+>             return false;
+>         }
+>+        return true;
+>     }
+>-    return true;
 
-> Cc: Juan Quintela <quintela@trasno.org>
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Cc: Zhang Chen <zhangckid@gmail.com>
-> Cc: zhanghailiang@xfusion.com
-> Cc: Li Zhijian <lizhijian@fujitsu.com>
-> Cc: Jason Wang <jasowang@redhat.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  docs/about/deprecated.rst | 6 ++++++
->  qapi/migration.json       | 5 ++---
->  migration/options.c       | 4 ++++
->  3 files changed, 12 insertions(+), 3 deletions(-)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 7abb3dab59..b499b2acb0 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -580,3 +580,9 @@ command documentation for details on the ``fdset`` usage.
->  
->  The ``zero-blocks`` capability was part of the block migration which
->  doesn't exist anymore since it was removed in QEMU v9.1.
-> +
-> +COLO migration framework (since 11.0)
-> +'''''''''''''''''''''''''''''''''''''
-> +
-> +To be removed with no replacement, as the COLO migration framework doesn't
-> +seem to have any active user for a while.
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 201dedd982..3c868efe38 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -531,8 +531,7 @@
->  #
->  # @unstable: Members @x-colo and @x-ignore-shared are experimental.
->  #
-> -# @deprecated: Member @zero-blocks is deprecated as being part of
-> -#     block migration which was already removed.
-> +# @deprecated: Member @zero-blocks and @x-colo are deprecated.
->  #
->  # Since: 1.2
->  ##
-> @@ -540,7 +539,7 @@
->    'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
->             { 'name': 'zero-blocks', 'features': [ 'deprecated' ] },
->             'events', 'postcopy-ram',
-> -           { 'name': 'x-colo', 'features': [ 'unstable' ] },
-> +           { 'name': 'x-colo', 'features': [ 'unstable', 'deprecated' ] },
->             'release-ram',
->             'return-path', 'pause-before-switchover', 'multifd',
->             'dirty-bitmaps', 'postcopy-blocktime', 'late-block-activate',
-> diff --git a/migration/options.c b/migration/options.c
-> index 9a5a39c886..318850ba94 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -580,6 +580,10 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
->          warn_report("zero-blocks capability is deprecated");
->      }
->  
-> +    if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
-> +        warn_report("COLO migration framework is deprecated");
-> +    }
-> +
->  #ifndef CONFIG_REPLICATION
->      if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
->          error_setg(errp, "QEMU compiled without replication module"
-> -- 
-> 2.50.1
-> 
+With the last return statement removed, I get a spurious warning from MSYS=
+2/x86_64 GCC 15=2E2: "control reaches end of non-void function"=2E
 
--- 
-Peter Xu
+> }
+>=20
+>-static void virt_get_its(Object *obj, Visitor *v, const char *name,
+>-                          void *opaque, Error **errp)
+>+bool virt_is_gicv2m_enabled(VirtMachineState *vms)
+>+{
+>+    switch (vms->msi_controller) {
+>+    case VIRT_MSI_CTRL_NONE:
+>+        return false;
+>+    default:
+>+        return !virt_is_its_enabled(vms);
+>+    }
+>+}
+>+
+>+static char *virt_get_msi(Object *obj, Error **errp)
+>+{
+>+    VirtMachineState *vms =3D VIRT_MACHINE(obj);
+>+    const char *val;
+>+
+>+    switch (vms->msi_controller) {
+>+    case VIRT_MSI_CTRL_NONE:
+>+        val =3D "off";
+>+        break;
+>+    case VIRT_MSI_CTRL_ITS:
+>+        val =3D "its";
+>+        break;
+>+    case VIRT_MSI_CTRL_GICV2M:
+>+        val =3D "gicv2m";
+>+        break;
+>+    case VIRT_MSI_CTRL_AUTO:
+>+        val =3D "auto";
+>+        break;
+>+    }
 
+Similar to the above I get a spurious warning: "'val' may be used uninitia=
+lized in this function"=2E
+
+Apparently the compiler doesn't notice that both switch statements handle =
+all enums=2E I wonder why it can figure that out in other cases=2E=2E=2E
+
+Other than that the series works for me!
+
+Best regards,
+Bernhard
+
+>+    return g_strdup(val);
+>+}
+>+
+>+static void virt_set_msi(Object *obj, const char *value, Error **errp)
+> {
+>+    ERRP_GUARD();
+>     VirtMachineState *vms =3D VIRT_MACHINE(obj);
+>-    OnOffAuto its =3D vms->its;
+>=20
+>-    visit_type_OnOffAuto(v, name, &its, errp);
+>+    if (!strcmp(value, "auto")) {
+>+        vms->msi_controller =3D VIRT_MSI_CTRL_AUTO; /* Will be overriden=
+ later */
+>+    } else if (!strcmp(value, "its")) {
+>+        vms->msi_controller =3D VIRT_MSI_CTRL_ITS;
+>+    } else if (!strcmp(value, "gicv2m")) {
+>+        vms->msi_controller =3D VIRT_MSI_CTRL_GICV2M;
+>+    } else if (!strcmp(value, "none")) {
+>+        vms->msi_controller =3D VIRT_MSI_CTRL_NONE;
+>+    } else {
+>+        error_setg(errp, "Invalid msi value");
+>+        error_append_hint(errp, "Valid values are auto, gicv2m, its, off=
+\n");
+>+    }
+> }
+>=20
+>-static void virt_set_its(Object *obj, Visitor *v, const char *name,
+>-                          void *opaque, Error **errp)
+>+static bool virt_get_its(Object *obj, Error **errp)
+> {
+>     VirtMachineState *vms =3D VIRT_MACHINE(obj);
+>=20
+>-    visit_type_OnOffAuto(v, name, &vms->its, errp);
+>+    return virt_is_its_enabled(vms);
+>+}
+>+
+>+static void virt_set_its(Object *obj, bool value, Error **errp)
+>+{
+>+    VirtMachineState *vms =3D VIRT_MACHINE(obj);
+>+
+>+    if (value) {
+>+        vms->msi_controller =3D VIRT_MSI_CTRL_ITS;
+>+    } else if (vms->no_gicv3_with_gicv2m) {
+>+        vms->msi_controller =3D VIRT_MSI_CTRL_NONE;
+>+    } else {
+>+        vms->msi_controller =3D VIRT_MSI_CTRL_GICV2M;
+>+    }
+> }
+>=20
+> static bool virt_get_dtb_randomness(Object *obj, Error **errp)
+>@@ -3062,6 +3123,8 @@ static void virt_machine_device_pre_plug_cb(Hotplug=
+Handler *hotplug_dev,
+>             db_start =3D base_memmap[VIRT_GIC_V2M]=2Ebase;
+>             db_end =3D db_start + base_memmap[VIRT_GIC_V2M]=2Esize - 1;
+>             break;
+>+        case VIRT_MSI_CTRL_AUTO:
+>+            g_assert_not_reached();
+>         }
+>         resv_prop_str =3D g_strdup_printf("0x%"PRIx64":0x%"PRIx64":%u",
+>                                         db_start, db_end,
+>@@ -3452,13 +3515,18 @@ static void virt_machine_class_init(ObjectClass *=
+oc, const void *data)
+>                                           "guest CPU which implements th=
+e ARM "
+>                                           "Memory Tagging Extension");
+>=20
+>-    object_class_property_add(oc, "its", "OnOffAuto",
+>-        virt_get_its, virt_set_its,
+>-        NULL, NULL);
+>+    object_class_property_add_bool(oc, "its", virt_get_its,
+>+                                   virt_set_its);
+>     object_class_property_set_description(oc, "its",
+>                                           "Set on/off to enable/disable =
+"
+>                                           "ITS instantiation");
+>=20
+>+    object_class_property_add_str(oc, "msi", virt_get_msi,
+>+                                  virt_set_msi);
+>+    object_class_property_set_description(oc, "msi",
+>+                                          "Set MSI settings=2E "
+>+                                          "Valid values are auto/gicv2m/=
+its/off");
+>+
+>     object_class_property_add_bool(oc, "dtb-randomness",
+>                                    virt_get_dtb_randomness,
+>                                    virt_set_dtb_randomness);
+>@@ -3515,7 +3583,7 @@ static void virt_instance_init(Object *obj)
+>     vms->highmem_redists =3D true;
+>=20
+>     /* Default allows ITS instantiation if available */
+>-    vms->its =3D ON_OFF_AUTO_AUTO;
+>+    vms->msi_controller =3D VIRT_MSI_CTRL_AUTO;
+>     /* Allow ITS emulation if the machine version supports it */
+>     vms->tcg_its =3D !vmc->no_tcg_its;
+>     vms->no_gicv3_with_gicv2m =3D false;
+>diff --git a/include/hw/arm/virt=2Eh b/include/hw/arm/virt=2Eh
+>index 394b70c62e=2E=2Eff43bcb739 100644
+>--- a/include/hw/arm/virt=2Eh
+>+++ b/include/hw/arm/virt=2Eh
+>@@ -101,6 +101,8 @@ typedef enum VirtIOMMUType {
+>=20
+> typedef enum VirtMSIControllerType {
+>     VIRT_MSI_CTRL_NONE,
+>+    /* This value is overriden at runtime=2E*/
+>+    VIRT_MSI_CTRL_AUTO,
+>     VIRT_MSI_CTRL_GICV2M,
+>     VIRT_MSI_CTRL_ITS,
+> } VirtMSIControllerType;
+>@@ -147,7 +149,6 @@ struct VirtMachineState {
+>     bool highmem_ecam;
+>     bool highmem_mmio;
+>     bool highmem_redists;
+>-    OnOffAuto its;
+>     bool tcg_its;
+>     bool virt;
+>     bool ras;
+>@@ -217,5 +218,6 @@ static inline int virt_gicv3_redist_region_count(Virt=
+MachineState *vms)
+> }
+>=20
+> bool virt_is_its_enabled(VirtMachineState *vms);
+>+bool virt_is_gicv2m_enabled(VirtMachineState *vms);
+>=20
+> #endif /* QEMU_ARM_VIRT_H */
 
