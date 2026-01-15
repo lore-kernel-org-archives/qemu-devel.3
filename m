@@ -4,90 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFD74D3CCAF
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 04:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8AF3D3CCAF
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 05:15:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgFNn-00027A-ED; Wed, 14 Jan 2026 23:54:55 -0500
+	id 1vgFga-0000Kv-8L; Thu, 15 Jan 2026 00:14:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1vgFNl-00024R-6U
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 23:54:53 -0500
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1vgFNj-00076t-DK
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 23:54:52 -0500
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-c2dc870e194so211003a12.2
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 20:54:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768452890; x=1769057690; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0rJHXNit0JKho2PSdVDxe5tw9YboCOURabBlYsSPHIE=;
- b=RXtPfpJZVWV+auA12PLFxS8O8QJ9TBIa4g2V1MxyaVC9ueUyPTADxKH/yNAZzb30G9
- rDMBO7dkOexPPEjjbl28WF6zCFeDt4RZXpxh08jGziUZPceDBiz+TRaqglayPt4PvNPO
- OsksBXJ0N9vefg1Ugh+uRa+JM3/QEcZHyl+LctyQ4/zJtGt7hLRvF4L9tCpAruLpg1Yx
- 7OS2ilUh1VvEWJFC+TB3GUrcXfcRtTAR5MMvuJtGtndm3oPqGDhbaQYrPyRYe+YyjVu1
- EZFPZNvFaWg5twVWUgC37XIa89EvPKcFJSVhSKB53EKFrKruKYmvwuUXxpmK6B4cc7Hu
- hMbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768452890; x=1769057690;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0rJHXNit0JKho2PSdVDxe5tw9YboCOURabBlYsSPHIE=;
- b=M7/bwgL1J8r3BPiYpZZL6RrOEdlEqJykOTLbtPr6OeROdM+KBV2Ol2iM0diA1j6DJz
- VJ7+5M6kKT3Y3Gzj7xOoCGzbGZjfmACrc6QOaMpRnQCcab7RtvyETykNhwZvS03b28vO
- m1btvA3Kmym6vLK4EJ3vz+2Z/cxsiwZukBwNbR2o8SG3S7S2e+HF7QGV8uT0eDVFxy8+
- MvI2ZQISY/dRbpmkjt2bP5xIi4b7hBnZNuPaAakpXW+0bNhfX42KgsxfvG7NCCdSl4CJ
- YfKkbEzNlwJAZbWwCAMx6MXl2owIBGwhp8edQ8ccVqg663vFy7iyZ529ECtqHbSZJLE3
- HZpg==
-X-Gm-Message-State: AOJu0YzJcg/EoTBcp9rFpB00tJUu+m0GdlFGxG74UEpFhwT4JE2rWHlx
- ORFKiDF/52reynbvnJ/D5+gqlrykv46zHN4O7qGeXeR3VhtpxCFD31ktz/x7sQ==
-X-Gm-Gg: AY/fxX6Jnzz9itUyi8pmFVvt1StrqkZdAUwtnfYXLtmdQOis0FdG2Sl1mqeRmQxvKrX
- 86sq9OjEkkUsyZw9k0i7EpNzqPHuxzrnr6wPlTuJkQt8FjlJ9jZI8Hq+Lb45TzmOD6du6rH+nUK
- /ghfPGH4yG6R+LyO9jkG3ifkZz0GMKUpyWEulyzXKn9lK0fZsutHpAb57TpvHF36fcviPX6Yr1s
- hn6+2MZjpPGfLifxtS+mtgQDOdvyDFxfCTPNSSlGWASyOR2uTu/0AQioiZ13sOYgdexlK0N1XzA
- YCdtEdRgp1zslSbdFA7OKhjDYGxGSeLPb9y4yCV+z13XqAtOlXAnW5K64T4PTsOB9wEj0GO/QYc
- aS5Z8agyQUORqluvLnzjkHe+bKdF1YR55dtQeiPoled9WcT4VYraEErRnJczdkQpjdbcAEDnYHq
- PozLPhjWfXxlUfVA==
-X-Received: by 2002:a05:6a00:420b:b0:81f:3cd5:2069 with SMTP id
- d2e1a72fcca58-81f81d13491mr5272132b3a.4.1768452889755; 
- Wed, 14 Jan 2026 20:54:49 -0800 (PST)
-Received: from jeuk-MS-7D42.. ([175.119.5.143])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81f8e4b4110sm1141426b3a.10.2026.01.14.20.54.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Jan 2026 20:54:49 -0800 (PST)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-To: qemu-devel@nongnu.org,
-	richard.henderson@linaro.org
-Cc: pbonzini@redhat.com, qemu-block@nongnu.org, jeuk20.kim@samsung.com,
- j-young.choi@samsung.com, Ilia Levi <ilia.levi@intel.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PULL 3/3] tests/qtest/ufs-test: Add test for mcq completion queue
- wraparound
-Date: Thu, 15 Jan 2026 13:54:01 +0900
-Message-ID: <0995e513c7c46412ccb5b11a2e71b9c7145997b0.1768452598.git.jeuk20.kim@samsung.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1768452598.git.jeuk20.kim@samsung.com>
-References: <cover.1768452598.git.jeuk20.kim@samsung.com>
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1vgFgY-0000KK-SH; Thu, 15 Jan 2026 00:14:18 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1vgFgV-0006jD-Fm; Thu, 15 Jan 2026 00:14:17 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60EIAxQn030620;
+ Thu, 15 Jan 2026 05:14:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=foDgfz
+ Rvfx6BnbX2Fe6VvYR4ev0e86Ddh8ypJzZv5sA=; b=Ij60k07DxGbSBnQb/ySxXZ
+ YMnbDJi+XEott2HW4Xdfdq3hS+G8YWEnhdOsOwsqqvK6dfbC97snFj2XcPLdCIQt
+ 5K3959G9G1H3QfbKIQzC73r+1XbL8TBnoIfCm3wJ/0+9ILCW5hHLIOO0nHkuaC1Y
+ C6qaDQF9bO7pUAJVG6v0+769Uq/sDxW0gZmB1rH43pLlq0iR6B+utm77yA5tfWmb
+ VJZhwa6fc+M0ZOGzRq+tyW6LomZ+cDnvX3BlczMqk5P4vYid/8EOSdCJsPvS+Jp4
+ bAf7OB47NmGrbWDFbhpZ8dzppW8W0oAiRXYKsTOy2fhhGfs/wUP2YBnMX9et2BAw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bkc6hcnbq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 Jan 2026 05:14:11 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60F4qOo6031250;
+ Thu, 15 Jan 2026 05:14:10 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bm3t1ww6q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 Jan 2026 05:14:10 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60F5E9gc28312248
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 15 Jan 2026 05:14:09 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 67C0658054;
+ Thu, 15 Jan 2026 05:14:09 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CC4D15803F;
+ Thu, 15 Jan 2026 05:14:08 +0000 (GMT)
+Received: from [9.61.255.133] (unknown [9.61.255.133])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 15 Jan 2026 05:14:08 +0000 (GMT)
+Message-ID: <eb891295-5ffd-4613-bc37-56d8a07d1fff@linux.ibm.com>
+Date: Wed, 14 Jan 2026 23:14:07 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pg1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v1 3/3] qapi/iothread: introduce poll-weight parameter
+ for aio-poll
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, pbonzini@redhat.com,
+ stefanha@redhat.com, fam@euphon.net, eblake@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
+References: <20260113174824.464720-1-jhkim@linux.ibm.com>
+ <20260113174824.464720-4-jhkim@linux.ibm.com> <87qzrs4oud.fsf@pond.sub.org>
+Content-Language: en-US
+From: JAEHOON KIM <jhkim@linux.ibm.com>
+In-Reply-To: <87qzrs4oud.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: YhPjKT2Kmku-ZshdQGHla_ZxMyF5_09k
+X-Proofpoint-ORIG-GUID: YhPjKT2Kmku-ZshdQGHla_ZxMyF5_09k
+X-Authority-Analysis: v=2.4 cv=TaibdBQh c=1 sm=1 tr=0 ts=696877a3 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=Pg_0jPdBt9vz6Qyl_R0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDAyOCBTYWx0ZWRfX65K1say45viX
+ 6nUy6poU0cKaEHWt8DebPuQRMrcljLONxavMm3lg1LweoYijuYePV/OuG8j/uyOq4ZjXXtBtZub
+ UaPzIuAPvzjrgQ3zCA6ISu5XUDhjSBiM1eYa+RRxw9BsYqGJYiFeDS1nqcgtqKvtJqX4YsORYSz
+ hq2bF0UgslxlJpZP4rLAGb303nrNRymbYfUSmNF6Li59+M46oawxTWnkDUIEYS/ApuUNhpCJgwr
+ mrlwJSm7vcbp2cqWp6tTF0W9sLX+LcY3DB07SPAuB8XCdN4ezrLW1BpIj1fTzyXOE/wKE6ZfqU2
+ W3p35KRTrvGiaiJ+Lxg+cAdHYZn03aDG9QZJ0i7VGAqXAR4ImIBgKvV9p74dBDQsoBygc+QLfzB
+ 92E6n6j35tbJeE9cR5m22fnlnFcMgx2LqjYDSKrl+vKXd+8dfHamnT5BEwcjm6P4YCDGgWSHXJZ
+ IyN0Ww3II9KBgwD0SQw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-15_01,2026-01-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 phishscore=0 impostorscore=0 bulkscore=0 clxscore=1015
+ suspectscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
+ definitions=main-2601150028
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,190 +124,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilia Levi <ilia.levi@intel.com>
-
-Added a test that sends 32 NOP Out commands asynchronously. Since the CQ
-has 31 entries by default, this tests the scenario where CQ processing
-needs to wait for space to become available.
-
-Additionally, added two minor fixes to existing tests:
-* advance CQ head after reading from CQ
-* initialize command descriptor slots bitmap in ufs_init()
-
-Signed-off-by: Ilia Levi <ilia.levi@intel.com>
-Acked-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
----
- tests/qtest/ufs-test.c | 126 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 126 insertions(+)
-
-diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
-index 4867ccf08a..ff9835735c 100644
---- a/tests/qtest/ufs-test.c
-+++ b/tests/qtest/ufs-test.c
-@@ -166,6 +166,7 @@ __ufs_send_transfer_request_mcq(QUfs *ufs, uint8_t lun,
-     cqhp = ufs_rreg(ufs, ufs->cqdao[TEST_QID]);
-     cqentry_addr = ufs->cqlba[TEST_QID] + cqhp;
-     qtest_memread(ufs->dev.bus->qts, cqentry_addr, &cqentry, sizeof(cqentry));
-+    cqhp = (cqhp + sizeof(UfsCqEntry)) % (QUEUE_SIZE * sizeof(UfsCqEntry));
-     ufs_wreg(ufs, ufs->cqdao[TEST_QID], cqhp);
- 
-     return cqentry.status;
-@@ -208,6 +209,81 @@ static enum UtpOcsCodes ufs_send_nop_out(QUfs *ufs, UtpUpiuRsp *rsp_out)
-     return ret;
- }
- 
-+static bool ufs_mcq_sq_has_space(QUfs *ufs)
-+{
-+    uint32_t sqhp = ufs_rreg(ufs, ufs->sqdao[TEST_QID]);
-+    uint32_t sqtp = ufs_rreg(ufs, ufs->sqdao[TEST_QID] + 0x4);
-+    uint32_t next_sqtp =
-+        (sqtp + sizeof(UfsSqEntry)) % (QUEUE_SIZE * sizeof(UfsSqEntry));
-+    return next_sqtp != sqhp;
-+}
-+
-+static void
-+__ufs_send_transfer_request_mcq_async(QUfs *ufs, uint8_t lun,
-+                                      const UtpTransferReqDesc *utrd)
-+{
-+    uint32_t sqtp;
-+    uint64_t utrd_addr;
-+
-+    /* Wait for SQ space */
-+    while (!ufs_mcq_sq_has_space(ufs)) {
-+        qtest_clock_step(ufs->dev.bus->qts, 100);
-+    }
-+
-+    sqtp = ufs_rreg(ufs, ufs->sqdao[TEST_QID] + 0x4);
-+    utrd_addr = ufs->sqlba[TEST_QID] + sqtp;
-+    qtest_memwrite(ufs->dev.bus->qts, utrd_addr, utrd, sizeof(*utrd));
-+    sqtp = (sqtp + sizeof(UfsSqEntry)) % (QUEUE_SIZE * sizeof(UfsSqEntry));
-+    ufs_wreg(ufs, ufs->sqdao[TEST_QID] + 0x4, sqtp);
-+}
-+
-+static int ufs_mcq_send_nop_out_async(QUfs *ufs)
-+{
-+    int cmd_desc_slot = alloc_cmd_desc_slot(ufs);
-+    uint64_t req_upiu_addr =
-+        ufs->cmd_desc_addr + cmd_desc_slot * UTP_COMMAND_DESCRIPTOR_SIZE;
-+
-+    /* Build up request upiu */
-+    UtpUpiuReq req_upiu = { 0 };
-+    req_upiu.header.trans_type = UFS_UPIU_TRANSACTION_NOP_OUT;
-+    req_upiu.header.task_tag = cmd_desc_slot;
-+    qtest_memwrite(ufs->dev.bus->qts, req_upiu_addr, &req_upiu,
-+                   sizeof(req_upiu));
-+
-+    /* Build up utp transfer request descriptor */
-+    UtpTransferReqDesc utrd =
-+        ufs_build_req_utrd(req_upiu_addr, UFS_UTP_NO_DATA_TRANSFER, 0);
-+
-+    /* Send Transfer Request */
-+    __ufs_send_transfer_request_mcq_async(ufs, 0, &utrd);
-+
-+    return cmd_desc_slot;
-+}
-+
-+static int ufs_mcq_poll_cq(QUfs *ufs, UfsCqEntry *cqe, uint16_t n_cqe)
-+{
-+    uint32_t cqhp, cqtp;
-+    uint64_t cqe_addr;
-+    int ix = 0;
-+
-+    cqhp = ufs_rreg(ufs, ufs->cqdao[TEST_QID]);
-+    cqtp = ufs_rreg(ufs, ufs->cqdao[TEST_QID] + 0x4);
-+
-+    while (cqhp != cqtp && ix < n_cqe) {
-+        /* read completion entry */
-+        cqe_addr = ufs->cqlba[TEST_QID] + cqhp;
-+        qtest_memread(ufs->dev.bus->qts, cqe_addr, &cqe[ix], sizeof(cqe[ix]));
-+
-+        /* advance completion queue head pointer */
-+        cqhp = (cqhp + sizeof(UfsCqEntry)) % (QUEUE_SIZE * sizeof(UfsCqEntry));
-+        ix++;
-+    }
-+
-+    ufs_wreg(ufs, ufs->cqdao[TEST_QID], cqhp);
-+
-+    return ix;
-+}
-+
- static enum UtpOcsCodes ufs_send_query(QUfs *ufs, uint8_t query_function,
-                                        uint8_t query_opcode, uint8_t idn,
-                                        uint8_t index, uint8_t selector,
-@@ -416,6 +492,7 @@ static void ufs_init(QUfs *ufs, QGuestAllocator *alloc)
-     ufs_wreg(ufs, A_UTRIACR, 0);
- 
-     /* Enable transfer request */
-+    bitmap_zero(ufs->cmd_desc_bitmap, UFS_MAX_CMD_DESC);
-     ufs->cmd_desc_addr =
-         guest_alloc(alloc, UFS_MAX_CMD_DESC * UTP_COMMAND_DESCRIPTOR_SIZE);
-     ufs->data_buffer_addr =
-@@ -679,6 +756,53 @@ static void ufstest_read_write(void *obj, void *data, QGuestAllocator *alloc)
-     ufs_exit(ufs, alloc);
- }
- 
-+static void ufstest_mcq_cq_wraparound(void *obj, void *data,
-+                                      QGuestAllocator *alloc)
-+{
-+    QUfs *ufs = obj;
-+    UfsCqEntry cqe[QUEUE_SIZE];
-+    const int num_requests = QUEUE_SIZE;
-+    int i, completed = 0;
-+
-+    ufs_init(ufs, alloc);
-+
-+    /* Ensure MCQ is supported */
-+    g_assert_true(ufs->support_mcq);
-+
-+    for (i = 0; i < num_requests; ++i) {
-+        ufs_mcq_send_nop_out_async(ufs);
-+    }
-+
-+    while (completed != num_requests) {
-+        int n_cqe = ufs_mcq_poll_cq(ufs, cqe, ARRAY_SIZE(cqe));
-+        if (!n_cqe) {
-+            break;
-+        }
-+
-+        for (i = 0; i < n_cqe; ++i) {
-+            uint64_t ucdba;
-+            uint64_t rsp_upiu_addr;
-+            UtpUpiuRsp rsp_upiu;
-+            uint8_t tag;
-+
-+            g_assert_cmpuint(cqe[i].status, ==, UFS_OCS_SUCCESS);
-+
-+            ucdba = le64_to_cpu(cqe[i].utp_addr) & MAKE_64BIT_MASK(7, 57);
-+            rsp_upiu_addr = ucdba + UTP_RESPONSE_UPIU_OFFSET;
-+            qtest_memread(ufs->dev.bus->qts, rsp_upiu_addr, &rsp_upiu,
-+                          sizeof(rsp_upiu));
-+
-+            tag = rsp_upiu.header.task_tag;
-+            release_cmd_desc_slot(ufs, tag);
-+        }
-+
-+        completed += n_cqe;
-+    }
-+
-+    g_assert_cmpint(completed, ==, num_requests);
-+    ufs_exit(ufs, alloc);
-+}
-+
- static void ufstest_query_flag_request(void *obj, void *data,
-                                        QGuestAllocator *alloc)
- {
-@@ -1129,6 +1253,8 @@ static void ufs_register_nodes(void)
-     qos_add_test("init", "ufs", ufstest_init, NULL);
-     qos_add_test("legacy-read-write", "ufs", ufstest_read_write, &io_test_opts);
-     qos_add_test("mcq-read-write", "ufs", ufstest_read_write, &mcq_test_opts);
-+    qos_add_test("mcq-cq-wraparound", "ufs", ufstest_mcq_cq_wraparound,
-+                 &mcq_test_opts);
-     qos_add_test("query-flag", "ufs", ufstest_query_flag_request,
-                  &io_test_opts);
-     qos_add_test("query-attribute", "ufs", ufstest_query_attr_request,
--- 
-2.43.0
+On 1/14/2026 1:48 AM, Markus Armbruster wrote:
+> Jaehoon Kim <jhkim@linux.ibm.com> writes:
+>
+>> Introduce a new poll-weight parameter for aio-poll. This parameter
+>> controls how much the most recent event interval affects the next
+>> polling duration. When set to 0, a default value of 2 is used, meaning
+>> the current interval contributes roughly 25% to the calculation. Larger
+>> values decrease the weight of the current interval, enabling more
+>> gradual adjustments to polling duration.
+>>
+>> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
+> [...]
+>
+>> diff --git a/qapi/misc.json b/qapi/misc.json
+>> index 28c641fe2f..b21cc48a03 100644
+>> --- a/qapi/misc.json
+>> +++ b/qapi/misc.json
+>> @@ -85,6 +85,11 @@
+>>   # @poll-shrink: how many ns will be removed from polling time, 0 means
+>>   #     that it's not configured (since 2.9)
+>>   #
+>> +# @poll-weight: the weight factor for adaptive polling.
+>> +#     Determines how much the current event interval contributes to
+>> +#     the next polling time calculation.  0 means that the default
+>> +#     value is used.  (since 10.1)
+> When the default value is used, the actual value being used remains
+> hidden.  Why?
+Actually, I just followed the existing pattern of poll-grow, which also 
+defaults to a factor of 2 when set to 0.
+It wasn't my intention to hide the value; I kept this because the 
+previous API has been working fine without issues.
+If you think the actual value should be visible, I'll consider ways to 
+make it explicit in the next version.
+>> +#
+>>   # @aio-max-batch: maximum number of requests in a batch for the AIO
+>>   #     engine, 0 means that the engine will use its default (since 6.1)
+>>   #
+>> @@ -96,6 +101,7 @@
+>>              'poll-max-ns': 'int',
+>>              'poll-grow': 'int',
+>>              'poll-shrink': 'int',
+>> +           'poll-weight': 'int',
+>>              'aio-max-batch': 'int' } }
+>>   
+>>   ##
+>> diff --git a/qapi/qom.json b/qapi/qom.json
+>> index 6f5c9de0f0..d90823478d 100644
+>> --- a/qapi/qom.json
+>> +++ b/qapi/qom.json
+>> @@ -606,6 +606,11 @@
+>>   #     algorithm detects it is spending too long polling without
+>>   #     encountering events.  0 selects a default behaviour (default: 0)
+>>   #
+>> +# @poll-weight: the weight factor for adaptive polling.
+>> +#     Determines how much the current event interval contributes to
+>> +#     the next polling time calculation.  0 selects a default
+>> +#     behaviour (default: 0) since 10.1.
+> This leaves the actual default behavior unspecified.  Is this a good
+> idea?
+I agree that the documentation should be more explicit.
+I'll update it to clarify that the default factor is 2 and explain its 
+meaning.
+>> +#
+>>   # The @aio-max-batch option is available since 6.1.
+>>   #
+>>   # Since: 2.0
+>> @@ -614,7 +619,8 @@
+>>     'base': 'EventLoopBaseProperties',
+>>     'data': { '*poll-max-ns': 'int',
+>>               '*poll-grow': 'int',
+>> -            '*poll-shrink': 'int' } }
+>> +            '*poll-shrink': 'int',
+>> +            '*poll-weight': 'int' } }
+>>   
+>>   ##
+>>   # @MainLoopProperties:
+> [...]
+>
+>
 
 
