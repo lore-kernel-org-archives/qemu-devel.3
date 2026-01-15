@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE41D46610
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B477BD4660F
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgSVb-000111-NG; Thu, 15 Jan 2026 13:55:53 -0500
+	id 1vgSVk-0001F5-Au; Thu, 15 Jan 2026 13:56:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSVN-0000hx-4l
+ id 1vgSVN-0000hw-45
  for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:39 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSVE-0005vL-Gn
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:30 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-47edd9024b1so7868945e9.3
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:25 -0800 (PST)
+ id 1vgSVC-0005uW-U9
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:29 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-42fed090e5fso668888f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768503324; x=1769108124; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768503321; x=1769108121; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hJ5/R4uOQVO1w2NUZ09BFRMj+Fv1ZzyqWV3/QgKZwZw=;
- b=Yc+7A8MC2GW9Ej3eAKMgTcP4WW0NB6Z3zyKk8rkQvKWprIaa/7qSasJnXSmcH5vAHh
- QFtSJNJ1cls9Kv4J+4G5GhlGhRQ5KiZm6byb/8nRa1cydPvr45M0eAfs9pFGgAql5qgj
- ZUYQDICX0CGwQG78Njfxq5aSHuEOs5shBudZquqn/JLHDpLsWdMRKkLCImLfZKwGrgUW
- d+UlRgsSlP6/rFB2Lumo60HItQtPgNeSqrhOvQyC7Z1xPOG1bX/bIyMxML04wfOE4Moy
- S+3NHJMRRnCC/68dJhA0HDP/umraudztCftqu/DLvanaKUgevO5s+/uDsJjbTBc2sr36
- W1Ow==
+ :reply-to; bh=JihJ9EjtCmXQJXv06egkSfCreOQAD+ZK24B5aK3jXDQ=;
+ b=ncESgrMWVCqILhiJsTxkWVMOcUjbPquYn85HggJO4joFZ97tzf8T3I4lRGSL5e8cy2
+ QHe+scKKY2OdNZaLhJ2CzYaOmBAKV8cKflH37VSBTicJctGQiypi0ILSqivMb0e/YgSL
+ Ad1/lAEdZlaS1G2dWeSS/s14iaKFy6O4ozQsP0k7mwvvDyGjNARZyOlfgA/1k1X5R8MU
+ l0tDwanaysGVNsgvcmCB2MSKam8WOqw1PKaAvFhxbf+5Q75MXm+nhhHZYFoalOBcJLjn
+ pOwcP/2T44bUkIEUTTmLVZFeN3ozxV6YgUwHnjDX0lWrn9feOakvh8Uf5EufTWOa1DZT
+ 0eZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768503324; x=1769108124;
+ d=1e100.net; s=20230601; t=1768503321; x=1769108121;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=hJ5/R4uOQVO1w2NUZ09BFRMj+Fv1ZzyqWV3/QgKZwZw=;
- b=RWRmidHWisHsMMJR65HNTiZm3IQ4nAFIV8Se1hk7SE/8v4KSOZAwI2FWxoy/2UnDyu
- M6tRxc+95Q9EGfqrsCdpT83dcev3iYg70KudmMa4ijVgjQnMMMGvr8ixan2v9MvG7xOS
- 6//eQuU/1yLgjxG8IRCpk0hP4VL5S1Ff42OhFdSDfehWi3i/y7wymQYpl146n2zBFfMn
- trKsMoveDR9fYSbb7bfZ6PVi8YPJgdmlf0tP2yPvUGHH6zvDD6pafGyISHF5KREYLURi
- cccxFTrUT+04tJn9oS9zATlvoukzMCka3exIDx4jgDOPmWqbKB8o4QPe+Ga0b+LOejvK
- 6goA==
-X-Gm-Message-State: AOJu0Yy9hOG8dRCeAXLpwyXuaJPM7n89eTN31nJmgPCrP4K9GdCchrYX
- PKlzogp3sj5KztYKt2gMB6GUF4K3a8jmu8kXacjkUkKmg0tFNyLV38En6zElfDIRSoKqlzJiWYq
- +3d9L
-X-Gm-Gg: AY/fxX5J8tYhJdkOjgdgA46od6faB3Cunv0Jm4S0IMN80WUF4YIkjyLAYbWxFSX7zUN
- l4Z9PSitpkb+Mc/RXBlgZSibgOOI+5CLVY5FJhvjowM7t6L4RMd+3ija+AJa9pnT47H2C0SnBSw
- vv0QotdL21ruRCqfA+HFHV6m+m+ZS2qR4WZujfRxrtUu85b5UzX+QAwX3bzzfVSTY5grdg2P2iC
- TvklpJmyoIdRucsMR/BYLKUakDOAgX/wi6Wt9spNiiB7OynThZ+PZwQa4AUOlN4gKJ+O9//860a
- yQMWqFx7dt64DQqeUkeKowv2gFDkpxxm7e8PMrxBVKvpSmfGSc4dbWS1q/EHkAp5MmAQPlJoOJd
- 2EIQD1MdJho6jNbFKpGp9fLUIVPn3YKPIgP+nK5EoxcMmOCrMv+E8HnRZpeyZjoQFRCunOs0KlX
- zILtbIgT+wY6d0ensvADpt3i63zd4c/5+vfUYBwVrEIv8jZLEEjrqFfbfEC2fyxoTWS5rr45r36
- 2daZqSWznCe9tgOT15rsMFEstxn8hLzTI5Ki/j9oYWkD+N0FLwBSl6P
-X-Received: by 2002:a05:600c:1986:b0:475:dcbb:7903 with SMTP id
- 5b1f17b1804b1-4801eac2e37mr2059185e9.9.1768503324031; 
- Thu, 15 Jan 2026 10:55:24 -0800 (PST)
+ bh=JihJ9EjtCmXQJXv06egkSfCreOQAD+ZK24B5aK3jXDQ=;
+ b=fnGvzArQf1hROsDhKZEFqcS0GTxQgxSkimnTDC2J11mqTTFParQR3WZHfwGlbo9y9h
+ zUlZKhWZ1w4LdPfLddFWTiovjjQfoue5piEVQUa2cAb/uBxAFuIAvAlSN+NaZq1EWh3d
+ EIu8ZewOovApM4fmbuqKC45Aojaa6hxturPR57yQjmQO5YzPz1wv+FLFyfY+VC057D+H
+ LASv34WRXY6GLHtIz6FJTvkICELiPqIXVnkfnCVq1f6Tme3vNF8kUUnxOQMX6vJ11Cg5
+ T6G5DqArkzi902IDDShTTHM7N6SdxCGpXuBSNLJuzopADwtH0n37sF24muglPRGbqqwh
+ fzyA==
+X-Gm-Message-State: AOJu0Yzd5gLBIpgU9Ag2L8C1iWzmHr/3xQsT6A17YEy1ixt3/lzGrJRK
+ 1QsvF8SMYjosK+Ww3lILEFJNKU9Rx2q3SmXx8ZdXYT4TMo3zaC6bTArfx3f67LeKYvmObbKR8Nt
+ 1O8oP
+X-Gm-Gg: AY/fxX7UzRbbtEKo+M4YHR5/ButS0OekHqkZHUJJYhsTXEH9AygifP759l2LxK/+GlS
+ 8GvX/pJI5VYiavDiCNvhusYR6v1MfSXoCiN4XPORzdbDMZfxzmOxnr6sFOcphuPgjuDY1iLAwG3
+ XTUQ1ckkNeR1c/ftY14SHxIDDXwfzhDWizVn8eBLP4ksTYn0aNXDc7cpQxEWYYWFQr5/LoYHueV
+ gR7N4BRbmiyN8rgTJsq8D3sEWLvMePx3gt6vE2Lut84s46esQ2hhgukQoPW4Es2B5Md9/gFFs67
+ F3nPLBT0PRCvW77Aot11+SwmQAmwpp0qz2IgkmsopCEGkC+4+JJKLHVFZ1r6LPZvIG6lXqkPLEK
+ SQhIQzUYKISO3SPsYPzieEMqlrsBHN3wAY2wsU3j6BJ1+d4Wrf6ixFXzATC4HaHKaefdoJ4BeWc
+ Xq/ICg25XXvxZ+h4k1SNTYXBWUe2QpHGOa+v47Ofwk+DtH2pUi3QFDUuUG13+96lB+7JLxQGMRO
+ aWfeph7GHJn+tXA0Jn8XkMI/cAsPaYmvLsqIkK5ihXiag==
+X-Received: by 2002:a05:6000:2910:b0:42f:b0ab:7b48 with SMTP id
+ ffacd0b85a97d-43569979c52mr465136f8f.1.1768503321525; 
+ Thu, 15 Jan 2026 10:55:21 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.23
+ ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 10:55:23 -0800 (PST)
+ Thu, 15 Jan 2026 10:55:20 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/25] hw/arm/omap1: Remove omap_badwidth_* implementations
-Date: Thu, 15 Jan 2026 18:54:58 +0000
-Message-ID: <20260115185508.786428-17-peter.maydell@linaro.org>
+Subject: [PULL 13/25] hw/dma/omap_dma: Remove omap_badwidth_* calls
+Date: Thu, 15 Jan 2026 18:54:55 +0000
+Message-ID: <20260115185508.786428-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260115185508.786428-1-peter.maydell@linaro.org>
 References: <20260115185508.786428-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,107 +103,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now there are no callsites for the omap_badwidth_* family
-of functions we can remove their implementations.
+The omap_badwidth_read* and omap_badwidth_write* functions are
+used by various OMAP devices when the guest makes an access
+to registers with an invalid width; they do two things:
+ - log a GUEST_ERROR for the access
+ - call cpu_physical_memory_read() or cpu_physical_memory_write()
+   with the offset they are passed in
+
+The first of these produces an unhelpful log message because the
+function name that is printed is that of the omap-badwidth_*
+function, not that of the read or write function of the device that
+called it; this means you can't tell what device is involved.
+
+The second is wrong because the offset is an offset into the device
+but we use it as an absolute physical address, so we will access
+whatever is at low memory.  That happens to be the boot ROM, so we
+will ignore a write and return random garbage on a read.  This bug
+has been present since 2011, when we did the conversions to the
+MemoryRegion APIs, which involved changing all devices from working
+with absolute physical addresses to working with offsets within their
+MemoryRegions.  We must have missed updating these functions.
+
+Replace the uses of these functions in omap_dma.c with an
+open-coded call to qemu_log_mask() and RAZ/WI behaviour.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/omap1.c        | 59 -------------------------------------------
- include/hw/arm/omap.h | 10 --------
- 2 files changed, 69 deletions(-)
+ hw/dma/omap_dma.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
-index b28fbd64fd..47d0f0d736 100644
---- a/hw/arm/omap1.c
-+++ b/hw/arm/omap1.c
-@@ -45,65 +45,6 @@
- #include "target/arm/cpu-qom.h"
- #include "trace.h"
+diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
+index 963ce6fd10..784a3a4f7f 100644
+--- a/hw/dma/omap_dma.c
++++ b/hw/dma/omap_dma.c
+@@ -1455,7 +1455,9 @@ static uint64_t omap_dma_read(void *opaque, hwaddr addr, unsigned size)
+     uint16_t ret;
  
--static inline void omap_log_badwidth(const char *funcname, hwaddr addr, int sz)
--{
--    qemu_log_mask(LOG_GUEST_ERROR, "%s: %d-bit register %#08" HWADDR_PRIx "\n",
--                  funcname, 8 * sz, addr);
--}
--
--/* Should signal the TCMI/GPMC */
--uint32_t omap_badwidth_read8(void *opaque, hwaddr addr)
--{
--    uint8_t ret;
--
--    omap_log_badwidth(__func__, addr, 1);
--    cpu_physical_memory_read(addr, &ret, 1);
--    return ret;
--}
--
--void omap_badwidth_write8(void *opaque, hwaddr addr,
--                uint32_t value)
--{
--    uint8_t val8 = value;
--
--    omap_log_badwidth(__func__, addr, 1);
--    cpu_physical_memory_write(addr, &val8, 1);
--}
--
--uint32_t omap_badwidth_read16(void *opaque, hwaddr addr)
--{
--    uint16_t ret;
--
--    omap_log_badwidth(__func__, addr, 2);
--    cpu_physical_memory_read(addr, &ret, 2);
--    return ret;
--}
--
--void omap_badwidth_write16(void *opaque, hwaddr addr,
--                uint32_t value)
--{
--    uint16_t val16 = value;
--
--    omap_log_badwidth(__func__, addr, 2);
--    cpu_physical_memory_write(addr, &val16, 2);
--}
--
--uint32_t omap_badwidth_read32(void *opaque, hwaddr addr)
--{
--    uint32_t ret;
--
--    omap_log_badwidth(__func__, addr, 4);
--    cpu_physical_memory_read(addr, &ret, 4);
--    return ret;
--}
--
--void omap_badwidth_write32(void *opaque, hwaddr addr,
--                uint32_t value)
--{
--    omap_log_badwidth(__func__, addr, 4);
--    cpu_physical_memory_write(addr, &value, 4);
--}
--
- /* MPU OS timers */
- struct omap_mpu_timer_s {
-     MemoryRegion iomem;
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index bdb2e887e4..66a435a3d7 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -673,16 +673,6 @@ struct omap_mpu_state_s {
- struct omap_mpu_state_s *omap310_mpu_init(MemoryRegion *sdram,
-                 const char *core);
+     if (size != 2) {
+-        return omap_badwidth_read16(opaque, addr);
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: read at offset 0x%" HWADDR_PRIx
++                      " with bad width %d\n", __func__, addr, size);
++        return 0;
+     }
  
--uint32_t omap_badwidth_read8(void *opaque, hwaddr addr);
--void omap_badwidth_write8(void *opaque, hwaddr addr,
--                uint32_t value);
--uint32_t omap_badwidth_read16(void *opaque, hwaddr addr);
--void omap_badwidth_write16(void *opaque, hwaddr addr,
--                uint32_t value);
--uint32_t omap_badwidth_read32(void *opaque, hwaddr addr);
--void omap_badwidth_write32(void *opaque, hwaddr addr,
--                uint32_t value);
--
- void omap_mpu_wakeup(void *opaque, int irq, int req);
+     switch (addr) {
+@@ -1502,7 +1504,8 @@ static void omap_dma_write(void *opaque, hwaddr addr,
+     int reg, ch;
  
- #define OMAP_BAD_REG(paddr)        \
+     if (size != 2) {
+-        omap_badwidth_write16(opaque, addr, value);
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
++                      " with bad width %d\n", __func__, addr, size);
+         return;
+     }
+ 
 -- 
 2.47.3
 
