@@ -4,99 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DDE4D46601
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 16:55:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F13D46602
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 17:13:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgQcm-00020v-SV; Thu, 15 Jan 2026 11:55:08 -0500
+	id 1vgQt0-0005aV-O4; Thu, 15 Jan 2026 12:11:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vgQcl-0001xD-8j
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:55:07 -0500
-Received: from mail-qv1-xf36.google.com ([2607:f8b0:4864:20::f36])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vgQci-00059R-7w
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:55:06 -0500
-Received: by mail-qv1-xf36.google.com with SMTP id
- 6a1803df08f44-88a2d21427dso8484806d6.3
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 08:55:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vgQsu-0005Un-PI
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 12:11:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vgQsr-0000gT-Sm
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 12:11:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768497103;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=WpKAFbrbhw8Y3zbVA1Hx2kXD3Fm3q+LMlFbWFQ8qHzo=;
+ b=glpHgoOI4xF73vigwFit7bNB1uzBw1ltdcKAq1C/fJglkhcg7vdcDdYxmShXJjRJ19fzzB
+ lB8+N3wBTM80QlJAXD3cuSDoULdLlyfL/CAqRlV8UjXkKYJuslpgEFn5p0pIp11HpPwQ4Q
+ QjgQyG5HIwlUKV4+xJ8jZArz/0d+GQo=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-632-HqOaKE78OpGce0er6Ufuaw-1; Thu, 15 Jan 2026 12:11:41 -0500
+X-MC-Unique: HqOaKE78OpGce0er6Ufuaw-1
+X-Mimecast-MFC-AGG-ID: HqOaKE78OpGce0er6Ufuaw_1768497100
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-b831e10ba03so171975766b.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 09:11:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1768496103; x=1769100903; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SLRhVGOdg5V/uv5uiMv/GNaUiAjC9NuVJPhnG/IPl04=;
- b=Gt7E0d4ehwMew1QR+pf1PrlJML+y+6A6prqi6M7OAExbI9CcO+BBnqxm6wm4nFFgl4
- Ng3aIBkr8g2f2sRO5RMlh6kiQzpP60hLDQ2r1hcaNqr/KL3Du8geDie+ptFvdHNxE4zW
- fw5WFOxb0R0Xim/evdNjSI2ELR0+pOEGoeFPt8wBwZmgHA261xBJwOJRk7vksVO8qier
- QXFQy9TbdGOhvoAsqmn4icJd4dmsXsINDzeAaMNmaCUuUR8LjfBo2ANnCDdI5MgBokY3
- OhsU9M59AmdgwGdl9fhXYoeFbvbYsClIzwBcpQD01OdwMPFE+zvmZ/CnuAp22h/nQn3G
- VkDw==
+ d=redhat.com; s=google; t=1768497100; x=1769101900; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=WpKAFbrbhw8Y3zbVA1Hx2kXD3Fm3q+LMlFbWFQ8qHzo=;
+ b=nDMHDwAroXnONfZcFRrxLBvRCC9ntvDBTBiCU539hMJuPr1/mR8VM8cLxh4/Q0C7UZ
+ Tmicu5kVe7AKRg4yHsu+LNrQZrhhh/mhZQDAAz/7MYorIaIhnoG4v5ozMDP3MgpGKbm5
+ lOXkHUvUdd6nN4+XNRa5lFea3zVHFdR4mYYiBesbY6+pFwZklF61oJuqnixGJXgsaG9+
+ F4Kyat5HH21j5dRuGC+eM84vTsSEtb8E69UqJWXSLczSBmdhDDGAU8E/6U6CCmK+ixS1
+ r7y8JMvEOBbbTvscirCH3AsOELaQjNBKSgz8WuycNmd0Qy8dyPUOQaY6y/lKRfP8Q8qA
+ Ygfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768496103; x=1769100903;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SLRhVGOdg5V/uv5uiMv/GNaUiAjC9NuVJPhnG/IPl04=;
- b=N38leNHWnGBPfb38uvBgcoJt1Ud0/rAQkUHcXUtl0+K435N8yRZ814nMiNsg0N/fTp
- ddQIJYa1Q9sZZJGUUsEXVVr1NUCLwynWvU++KAUBIw6uIa2ZqrHH0YVGvygpIU8wYjbS
- VOwtgkt0JpOv4Q5YE9jn3Hs5kUJ5yEZHigWpIYy2tGMaOFgrS6ev4iz8B9H2vvZejLfp
- OLH1TahFEXEhKGK+DQIFZvRNj9r6vTVsE8+voEDm8EVJ7LgCRlnkHTTTNzWb0VKTxsrK
- WjaA2Et3/5tKscTwDbtUdul4xz9TyDHE6TAMz59xQtKUiPO+nzDHH1DuAyZW5Y0y4eUu
- zzUg==
+ d=1e100.net; s=20230601; t=1768497100; x=1769101900;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WpKAFbrbhw8Y3zbVA1Hx2kXD3Fm3q+LMlFbWFQ8qHzo=;
+ b=vw3ffCOyctHKtOXHKDR8CZTH6Q73HUi/ltWlbto7XsjqdV8SNVpEdz8mxpbnrgMbX0
+ Gw156vgXsU1KzFwjubgxJubw5CWFBOIUa70SlXazeoD0AzP5cXzSOSzQnYSnW/6Q8S8p
+ mt9/9R0nT9FfOs+pe4SX9lD+h8RQWidmMxs+4vL2RB5UAxCpxwYu0Vkpk/Gbk91hG/ay
+ xFAqAchzFcMxivHhCBlCz5iKTehOKFne2kFueGYNOcHSNZs/fnjYZ4wZZ8WokooZAnh7
+ 2Qh6bCI53qlh8XaMethALNJVM0XNDmU2Z1Ykl5sfh27P26ijpEsgqEgZKvY5zqRWh2a5
+ zKBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsieDTulYVdzPL7XGS3104v+YGW+XNmv6CmZGXV3PLtfHP86h5tMN6ONWA/4ad1zoe07U1QeRDu4bY@nongnu.org
-X-Gm-Message-State: AOJu0YznOJp3gRW5ZAhTrjngZI1Xy80BlnBU+8g6a58+P/x5zui0HOvZ
- GWz9WNLkr+VDcWCUzQttwhCttpAL2aE3ryYvtrBJJ2j5Ku5Jihvpn3LDhV/wuFGQbto=
-X-Gm-Gg: AY/fxX7LNIC1hZGJaTiKM3gBEBs4EoI5noVcMFX/6votWSE9aVpraBN1HM91SKStGuu
- 6nV2ud1H2wULXvff+fWNy9rzxMEHCtBSaWwUGTFBbAUKsKuE6qesJz5pgmCEAS/LVJNzM67Qv4N
- bJj230BOcXWW0Jr2uu90gcLAKRqvrAwLORG7MBAbIftxj4SFdlmTY+KykZtTkAeZy4WrmaVBc5M
- bAxUFbwQ4HPpfIFsIgzqhBt7rOrlS6j1m46vdH5XO4tBJlQW3v/n7JRAUr72PXhJWoHun5crVnS
- 6HWDTZu5fzPNHnwMxdtmVg6/39naQ6wtfincyq0UEaCC/zg+IrGSGTASfifIJbU5vqGiePEazDM
- Uk3zeSz+hfD3HStTtULrSChxT98VH6xzRs+4TvYq7ecwwdulqISPaZLBaRxoBg6J1K0KIQUbLWp
- M3rXsBFMsx9jJ6a9U4U4BH1YcKtVZYc4vM+76hPwIs
-X-Received: by 2002:ad4:5c63:0:b0:890:60f:f8ed with SMTP id
- 6a1803df08f44-8942dcf6fa7mr883566d6.19.1768496103072; 
- Thu, 15 Jan 2026 08:55:03 -0800 (PST)
-Received: from [192.168.68.103] ([152.234.121.223])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-890770e2a8fsm204938456d6.16.2026.01.15.08.55.00
+ AJvYcCWUasmZDoV+eUpcWedo3XalYjZqUeBTYHJFyUlxZWCrQeLI3yEWvIOnB9X7HRr4uBHE8TdayHHyCqER@nongnu.org
+X-Gm-Message-State: AOJu0YyoBiZfo7BAKW0q/1kGtuZoimFwQJrsSvCxwJzav2DwE0Q6quEe
+ AcqZpZ3YhAJGlniJUdpT80W7dvXNK0/WmDeyF3miDS5I0AOSfTtOao0XDZS7KVVESxBrsxxEThi
+ lfNMjTd47oN+73l+IqpS4BmbV3yWgKC+QJg+Z2IqSU/zTYkQacpMbwaK2
+X-Gm-Gg: AY/fxX4VoCb9jQMvUGGrhyLQAyFlLNG6A7rs4FWimKR4R0ytI+QiAQ6WOiXOMBOY30a
+ RarqVuSVwOSkuzlGObrFJpo100G1tRTb0s8/3HFIRWcx7Qxnxik/qXesDo9tAWXYMlowjaz2vqg
+ qcrx54YzDTZnamsTYcMPdhCdsUNaLwszapoSlG73UVadTS3EESL/JozceItzULkpFvnym2QFc2B
+ fHDCCVvYOzSQ6Zomz9MJd20m/I2V6LgZkeil4wZlklz9HfCMef08viQDzpwccTMjPOEJYtMEEUI
+ u6LG8fA9WfSwb6yG5DUwlikcW+YM5aY2RRRKF4sS2q93GJwMRpt235+9hbW8G3UfnOXj0dFf1kK
+ 56ZzEtbZhpKphGl5ygv0G9c+J8xRrez6fbotJt2wJk+ll0GTKuzF20dd5dFQ7lznzK6T+gEYaua
+ CPMiIjscz75Ew=
+X-Received: by 2002:a17:907:7255:b0:b87:c61:7d4a with SMTP id
+ a640c23a62f3a-b8792df0114mr34972966b.29.1768497100248; 
+ Thu, 15 Jan 2026 09:11:40 -0800 (PST)
+X-Received: by 2002:a17:907:7255:b0:b87:c61:7d4a with SMTP id
+ a640c23a62f3a-b8792df0114mr34970466b.29.1768497099834; 
+ Thu, 15 Jan 2026 09:11:39 -0800 (PST)
+Received: from [192.168.1.84] ([93.56.161.93])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-b8793f5b20asm8007166b.20.2026.01.15.09.11.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 08:55:02 -0800 (PST)
-Message-ID: <66870d68-0d48-4c78-aa51-37c24a82baee@ventanamicro.com>
-Date: Thu, 15 Jan 2026 13:54:59 -0300
+ Thu, 15 Jan 2026 09:11:39 -0800 (PST)
+Message-ID: <c8436397-fe56-4281-b9a4-5ed6175be055@redhat.com>
+Date: Thu, 15 Jan 2026 18:11:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] hw/riscv/boot: Provide a simple halting payload
-To: Joel Stanley <joel@jms.id.au>, Alistair Francis
- <alistair.francis@wdc.com>, qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Vijai Kumar K <vijai@behindbytes.com>, Ran Wang <wangran@bosc.ac.cn>,
- Michael Ellerman <mpe@oss.tenstorrent.com>,
- Joel Stanley <jms@oss.tenstorrent.com>,
- Nick Piggin <npiggin@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
-References: <20260109131657.396794-1-joel@jms.id.au>
- <20260109131657.396794-5-joel@jms.id.au>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [RFC 0/4] scsi: persistent reservation live migration
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: Fam Zheng <fam@euphon.net>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, pkrempa@redhat.com, Hannes Reinecke <hare@suse.de>,
+ Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Alberto Faria <afaria@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20260113215320.566595-1-stefanha@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-In-Reply-To: <20260109131657.396794-5-joel@jms.id.au>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20260113215320.566595-1-stefanha@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f36;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qv1-xf36.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,103 +165,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 1/9/2026 10:16 AM, Joel Stanley wrote:
-> From: Nicholas Piggin <npiggin@gmail.com>
+On 1/13/26 22:53, Stefan Hajnoczi wrote:
+> Live migration does not work for SCSI Persistent Reservations acquired on
+> scsi-block devices. This patch series migrates the reservation key and
+> reservation type so that the destination QEMU can take over the persistent
+> reservation with the PREEMPT service action upon live migration.
 > 
-> OpenSBI hangs before any console output if the domain init code sees the
-> next stage is not in an executable region.
-> 
-> If no kernel payload is provided to QEMU, the next stage address is
-> NULL, and the riscv virt machine memory map ends up covering the 0
-> address with the catch all S-mode RWX region and so OpenSBI prints
-> console messages and does not hang until the next stage boot.
-> 
-> The TT Atlantis address map has RAM starting at 0 and it loads OpenSBI
-> there, so it is M-mode and not accessible by S-mode, tripping the early
-> check and hang.
+> The approach involves snooping PERSISTENT RESERVE OUT replies and tracking the
+> scsi-block device's current reservation key and reservation type. In most cases
+> this involves no additional SCSI commands. This approach isn't perfect: if
+> another machine modifies the reservation on the physical LUN, then QEMU's state
+> becomes stale. Persistent reservations are inherently cooperative, so this is
+> acceptable as long as real applications don't run into problems.
 
-Please note that these patches were split from the main Atlantis series, 
-meaning this patch can land upstream earlier than the main Atlantis 
-board work. In this context, saying "The TT Atlantis address map has RAM 
-starting at 0" makes no sense because there's no Atlantis board in QEMU.
+One issue is that this would not transfer reservations done from a 
+previous invocation of the VM.  Are you assuming that the restarted VM 
+won't assume to still have the reservation?  I think this is fine, but 
+it has to be documented, or maybe QEMU could issue a PR IN command at 
+startup?
 
-I suggest adding something like:
+> I am also working on a test suite called pr-tests that runs sg_persist(8)
+> commands across multiple machines in order to exercise various scenarios:
+> https://gitlab.com/stefanha/pr-tests
 
-"The soon to be added Tenstorrent Atlantis board address map ..."
+Thank you so much for that!
 
-To make it clear that, as far as this commit goes, we're talking about a 
-board that will be added in future.
-
-
-With this commit msg nit:
-
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
-
-Thanks,
-
-Daniel
-
-
-
-> 
-> Add a helper to set up a simple payload that gets OpenSBI messages
-> to console.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->   include/hw/riscv/boot.h |  2 ++
->   hw/riscv/boot.c         | 21 +++++++++++++++++++++
->   2 files changed, 23 insertions(+)
-> 
-> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-> index fb90bf12399e..d1d7258a2179 100644
-> --- a/include/hw/riscv/boot.h
-> +++ b/include/hw/riscv/boot.h
-> @@ -78,6 +78,8 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
->                                  hwaddr rom_base, hwaddr rom_size,
->                                  uint64_t kernel_entry,
->                                  uint64_t fdt_load_addr);
-> +void riscv_setup_halting_payload(MachineState *machine,
-> +                                 RISCVBootInfo *info, hwaddr addr);
->   void riscv_rom_copy_firmware_info(MachineState *machine,
->                                     RISCVHartArrayState *harts,
->                                     hwaddr rom_base,
-> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> index 3ea95c175c14..fc8a39a8d913 100644
-> --- a/hw/riscv/boot.c
-> +++ b/hw/riscv/boot.c
-> @@ -518,6 +518,27 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
->                                    kernel_entry);
->   }
->   
-> +/* Simple payload so OpenSBI does not hang early with no output */
-> +void riscv_setup_halting_payload(MachineState *machine,
-> +                                 RISCVBootInfo *info, hwaddr addr)
-> +{
-> +    int i;
-> +    uint32_t payload_vec[] = {
-> +        0x10500073,                     /* 1: wfi           */
-> +        0xffdff06f,                     /* j       1b       */
-> +    };
-> +    /* copy in the payload vector in little_endian byte order */
-> +    for (i = 0; i < ARRAY_SIZE(payload_vec); i++) {
-> +        payload_vec[i] = cpu_to_le32(payload_vec[i]);
-> +    }
-> +    rom_add_blob_fixed_as("mrom.payload", payload_vec, sizeof(payload_vec),
-> +                          addr, &address_space_memory);
-> +
-> +    info->kernel_size = sizeof(payload_vec);
-> +    info->image_low_addr = addr;
-> +    info->image_high_addr = info->image_low_addr + info->kernel_size;
-> +}
-> +
->   void riscv_setup_direct_kernel(hwaddr kernel_addr, hwaddr fdt_addr)
->   {
->       CPUState *cs;
+Paolo
 
 
