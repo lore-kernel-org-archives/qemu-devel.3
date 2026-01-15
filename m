@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A056D4660F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE485D4660F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:57:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgSVx-0001hK-QI; Thu, 15 Jan 2026 13:56:13 -0500
+	id 1vgSVz-00024U-Pk; Thu, 15 Jan 2026 13:56:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSVQ-0000jC-5i
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:41 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1vgSV8-0000dt-Im
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:22 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSVN-0005ws-SO
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:39 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-47ee9817a35so7213205e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:33 -0800 (PST)
+ id 1vgSV6-0005tZ-Os
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:22 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-42fb0fc5aa4so1004818f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768503332; x=1769108132; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768503318; x=1769108118; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ccwGlBepenyCt3hvVIc/HOQFMTjzI66ATiAU+WWKcZY=;
- b=U0kzU4v8zCl1jb+qyojwLN64A9+mUJkOoLznXskODM0aFUDoqegKuPsdyqiPuw+cI3
- XqipsePylCk0aStO2nhLUGaR1gpdmGVq6xka7FALjLa+rlFKjw0sNlOQ86rpmpKP2OA4
- xzmycOmM0Ae64Bm0VWPnm/E5K0fnCHoiPMQGUGVrwV4EnN6accW5SHbqryqJNjSuV6Y0
- Vy3beculITMSBrnYofJRSmydf/J8GlcPdLgj88Ogkb0TPmdi1V/8vuYtfXqAoNIuBtAp
- O3xINVIaciRVgmQ6O9n0PM378dTV5IuHkf6hUS9Y15vFCLKXF9l+i8as+YUUjTewI5Yd
- xwqA==
+ :reply-to; bh=cetP1J1aWKEi9nsVT6d4hD/J2+TMx9aoQKwyU7+I/5k=;
+ b=L+OR4JgC3w1abF2S756pUcRjviofjjcXp2y3uEe5LapJ/akv+QPUf0B9ihHBuNffKt
+ KOL6GZkZm3GaAIGfQXYzFVo4Cx2v7PUkf+XENzxrBJRex79JruQWqZRGIlsHdNvDAQD1
+ FV/o42iyMWKHwpWYE7HwXXQ/rOtw0mitM2XTYwj6m+RHmpMZbX8QerRCViF3DW6VxzRU
+ cwFd7OcX5Tqf7NNzjusxfVa6MqmQ0xHoU1InVhhziaVCmobMyjWxUM02kmPXUoW/4M/j
+ E515qzfYMiVTKzP7+3a/u7ZswO4xG4LjJFtgBgrgkuO65ZOH0xK9ALEh7aVXF8lteoiI
+ a09Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768503332; x=1769108132;
+ d=1e100.net; s=20230601; t=1768503318; x=1769108118;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ccwGlBepenyCt3hvVIc/HOQFMTjzI66ATiAU+WWKcZY=;
- b=tJ5KLg3W3C3G8Yv8Dn/pkFKqsZcyVsdW6CQUVo/3yzq0K+l2earAY15FKv2gJp6DdI
- ASyRgbXgmiGCvKUhMyyrPLMtW5OjZX9drLSjcVDa4qd9ZCE+T3+oPDG1SosRgSHPYC4H
- M9NvZJbPj3XJLh09M1tX2dXQbcND+A/rK6u+B7644We+yS4IYtllJVOCClgTfi0g9+jU
- 2ii/7ZcPxUJ7lshrOnKGHaMve7CF2WWhx3v8v/zGsx64W7JZFmEnlLVnrxdu3YxcCzmQ
- ZfzXp1s/MiKcGO5kZ79OcfN84vVjs/ZoZy6umXscCetqQoNgDL/NAxto0JSNeaZ296Gc
- Xaqg==
-X-Gm-Message-State: AOJu0Yyh1+whBCI/S05crIKfI2ZokTUudklJsnKUqk0vbGKBoDecW1YS
- KzKWMaoRufMafHj5qIr8sF2yKJb8qGF1Sld/y/oWZPQxhOM/zqwSJ1KR5jsGrTIEv0VkenH8++H
- H7FvG
-X-Gm-Gg: AY/fxX6o62K4Y5j81iXH4zNFS7BZCZSub79V2iw49ssoGsluiprYaFZoUIzRS5ENXE2
- fZHc8v1o5N8nDaurSkbjLJZ53D8Eymma5Fpjar9Cp6ktEOk6fMZDwYluTGJ66pGzAUMkoVdGboh
- R6YV5pT3Q5SjjtAhSG2hiIxDU+SEejpZmdVglbJNqKuvKHuVv8S2Gtzic26GO9ZHs/wHw5uDSK/
- ns1k1yCMd+H7w4U4XzBnHSPWo+3UkmL0u/vuT9GqFa5J3CBSQyTGYT1XVbRiLAALA8lr2te94Kf
- 47PvSBPQAAiHHSZiBRhCaMjUYZlYKZImEIOtK/POuOwrxnTTadMmYhLTeGWUrUXeqNt90Gcy/Zb
- mxhQXNwpZzER5phfEgaZB4y1yJLs5WMRTkV5xjIWEiCnGAvqHmIDeuq6yCF888zSA12U4CsDTpQ
- BGvzFDqgGeUQA9sd2NHggJOFn4Naqb47HI8hjMB7KHeeAwxlQDesQlHio8+LniOloK/OIxjr9lG
- q4J6NSvMMFN51H+v5ISSCQvm8ExEPRTFXlNfmXf9f63DQ==
-X-Received: by 2002:a05:600c:a07:b0:47f:8c05:786b with SMTP id
- 5b1f17b1804b1-4801e3484eamr8651315e9.28.1768503331998; 
- Thu, 15 Jan 2026 10:55:31 -0800 (PST)
+ bh=cetP1J1aWKEi9nsVT6d4hD/J2+TMx9aoQKwyU7+I/5k=;
+ b=FOOxwd2E1Glendh410L3ZUhjuZiRYGSlnT/j0Ih/F6mUv/cdTrpONb8ClE7TAJO6Be
+ TKr4LKOrLnzv/KBt2ssCvNXIVey/25QAuUJCLA4DE7JBm3ef5AM+jXg0rDq+1hJvF0sR
+ hwThJNWXydTU9RlnIna00Wqi5q3raSnYCLcxT/fEBLSQ3o3cJDenmwosri9/CAtFHDns
+ fsPd4q4QrJl/J4PckAddDtHSqG8h7GBjyQXji4ueDdZyVGBcmjEXaVRKyb2jVwRdi+XX
+ C3PMo2+YfsogvnUz0qO4bc00ZO9P7Aqz6uDwyOZUB+fDgpt17y/lPnjA21yBFDhhd/Fu
+ Qq4Q==
+X-Gm-Message-State: AOJu0Yx4ExzEviZaGoOV6WdU/emdbD1qYTBquCcDTXjiIQxel/BA+BJI
+ xkkZnreuXhZrzUNgsZETGgZSrw8PbecxTAuFrVLtq/bEBVic2jEpEE5y0KRUcBTP99uGQgNjcil
+ ZXPL7
+X-Gm-Gg: AY/fxX4OBG3zRLPvU88DE76l0l3XgY3/jmHqyydx3ul8aFQXa1KbZwAJcuI2Jo0Zucp
+ D4je0WsUv5aMfo6V+oU9F6H+P11MmEHsMJDVEWiXayflq/OzFEvJENk1jF/55+YHUo9Jv4qcn93
+ 73CVl2JagjidUIXAEE7B8lq5jfb0SbrNL3q4Ixrqo35DYjirjB7dtN1iiIenIXlt4rZEBUkRFN8
+ QIiDDjsVp0Zh+0qCaaiK0BxKo0SzAMyjmITxZl/q18PousqrSJVzMkk82C7d5tHuTkRlTn0jeoz
+ pDhzFu4MFILN7n2eS50RX3KnBkMpDAWBwzGOL7vSskbg5nhJx6UvzWncwTkij+Zh2qGVAcOSCAw
+ X2Dw7KnPT/GyVMZdB0sb4Vr7QPxKd8320FRphswPuh3VFYdtndzt9TkaYYTqBu3JAEfVDvlP1uL
+ Ueq+cN6HvoLqdalae+tA5QswEhtn2hNBcNY0GU1SA2PCUIYSw1E3nf/Rf7wZ/UarFzXJRy5z1fX
+ kzWd2sObI8NI1W46kUv8PbW3BVH0cf95ZIBriPw9XGGvA==
+X-Received: by 2002:a05:6000:2306:b0:434:32cc:6c86 with SMTP id
+ ffacd0b85a97d-4356a039819mr372200f8f.14.1768503317773; 
+ Thu, 15 Jan 2026 10:55:17 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.30
+ ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 10:55:30 -0800 (PST)
+ Thu, 15 Jan 2026 10:55:17 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/25] target/arm: Correctly trap HCR.TID1 registers in v7A
-Date: Thu, 15 Jan 2026 18:55:06 +0000
-Message-ID: <20260115185508.786428-25-peter.maydell@linaro.org>
+Subject: [PULL 09/25] target/arm/ptw: make granule_protection_check usable
+ without a cpu
+Date: Thu, 15 Jan 2026 18:54:51 +0000
+Message-ID: <20260115185508.786428-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260115185508.786428-1-peter.maydell@linaro.org>
 References: <20260115185508.786428-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,100 +103,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In v7A HCR.TID1 is defined to trap for TCMTR, TLBTR, REVIDR and AIDR.
-We incorrectly use an accessfn for REVIDR and AIDR that only traps on
-v8A cores.  Fix this by collapsing access_aa64_tid1() and
-access_aa32_tid1() together and never doing a check for v8 vs v7.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-The accessfn is also used for SMIDR_EL1, which is fine as this
-register is AArch64 only.
+By removing cpu details and use a config struct, we can use the
+same granule_protection_check with other devices, like SMMU.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251231170858.254594-4-peter.maydell@linaro.org
+Message-id: 20251216000122.763264-3-pierrick.bouvier@linaro.org
+[PMM: avoid local vars in middle of block]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/helper.c | 24 +++++++-----------------
- 1 file changed, 7 insertions(+), 17 deletions(-)
+ target/arm/cpu.h | 34 +++++++++++++++++++++++++++++
+ target/arm/ptw.c | 57 ++++++++++++++++++++++++++++++------------------
+ 2 files changed, 70 insertions(+), 21 deletions(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 3f422f509d..acfb2cbc31 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -933,8 +933,8 @@ static uint64_t isr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-     return ret;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 992dff41c3..2f124d1b15 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1216,6 +1216,40 @@ void arm_v7m_cpu_do_interrupt(CPUState *cpu);
+ 
+ hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
+                                          MemTxAttrs *attrs);
++
++typedef struct ARMGranuleProtectionConfig {
++    /* GPCCR_EL3 */
++    uint64_t gpccr;
++    /* GPTBR_EL3 */
++    uint64_t gptbr;
++    /* ID_AA64MMFR0_EL1.PARange */
++    uint8_t parange;
++    /* FEAT_SEL2 */
++    bool support_sel2;
++    /* Address space to access Granule Protection Table */
++    AddressSpace *gpt_as;
++} ARMGranuleProtectionConfig;
++
++/**
++ * arm_granule_protection_check
++ * @config: granule protection configuration
++ * @paddress: address accessed
++ * @pspace: physical address space accessed
++ * @ss: security state for access
++ * @fi: fault information in case a fault is detected
++ *
++ * Checks if @paddress can be accessed in physical adress space @pspace
++ * for @ss secure state, following granule protection setup with @config.
++ * If a fault is detected, @fi is set accordingly.
++ * See GranuleProtectionCheck() in A-profile manual.
++ *
++ * Returns: true if access is authorized, else false.
++ */
++bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
++                                  uint64_t paddress,
++                                  ARMSecuritySpace pspace,
++                                  ARMSecuritySpace ss,
++                                  ARMMMUFaultInfo *fi);
+ #endif /* !CONFIG_USER_ONLY */
+ 
+ int arm_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 2e6b149b2d..a986dc66f6 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -330,26 +330,26 @@ static bool regime_translation_disabled(CPUARMState *env, ARMMMUIdx mmu_idx,
+     return (regime_sctlr(env, mmu_idx) & SCTLR_M) == 0;
  }
  
--static CPAccessResult access_aa64_tid1(CPUARMState *env, const ARMCPRegInfo *ri,
--                                       bool isread)
-+static CPAccessResult access_tid1(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                  bool isread)
+-static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+-                                     ARMSecuritySpace pspace,
+-                                     ARMSecuritySpace ss,
+-                                     ARMMMUFaultInfo *fi)
++bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
++                                  uint64_t paddress,
++                                  ARMSecuritySpace pspace,
++                                  ARMSecuritySpace ss,
++                                  ARMMMUFaultInfo *fi)
  {
-     if (arm_current_el(env) == 1 && (arm_hcr_el2_eff(env) & HCR_TID1)) {
-         return CP_ACCESS_TRAP_EL2;
-@@ -943,16 +943,6 @@ static CPAccessResult access_aa64_tid1(CPUARMState *env, const ARMCPRegInfo *ri,
-     return CP_ACCESS_OK;
+     MemTxAttrs attrs = {
+         .secure = true,
+         .space = ARMSS_Root,
+     };
+-    ARMCPU *cpu = env_archcpu(env);
+-    uint64_t gpccr = env->cp15.gpccr_el3;
++    const uint64_t gpccr = config.gpccr;
+     unsigned pps, pgs, l0gptsz, level = 0;
+     uint64_t tableaddr, pps_mask, align, entry, index;
+-    AddressSpace *as;
+     MemTxResult result;
+     int gpi;
+ 
+-    if (!FIELD_EX64(gpccr, GPCCR, GPC)) {
+-        return true;
+-    }
++    /*
++     * We assume Granule Protection Check is enabled when
++     * calling this function (GPCCR.GPC == 1).
++     */
+ 
+     /*
+      * GPC Priority 1 (R_GMGRR):
+@@ -362,7 +362,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+      * physical address size is invalid.
+      */
+     pps = FIELD_EX64(gpccr, GPCCR, PPS);
+-    if (pps > FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE)) {
++    if (pps > config.parange) {
+         goto fault_walk;
+     }
+     pps = pamax_map[pps];
+@@ -432,7 +432,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+     }
+ 
+     /* GPC Priority 4: the base address of GPTBR_EL3 exceeds PPS. */
+-    tableaddr = env->cp15.gptbr_el3 << 12;
++    tableaddr = config.gptbr << 12;
+     if (tableaddr & ~pps_mask) {
+         goto fault_size;
+     }
+@@ -446,12 +446,10 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+     align = MAKE_64BIT_MASK(0, align);
+     tableaddr &= ~align;
+ 
+-    as = arm_addressspace(env_cpu(env), attrs);
+-
+     /* Level 0 lookup. */
+     index = extract64(paddress, l0gptsz, pps - l0gptsz);
+     tableaddr += index * 8;
+-    entry = address_space_ldq_le(as, tableaddr, attrs, &result);
++    entry = address_space_ldq_le(config.gpt_as, tableaddr, attrs, &result);
+     if (result != MEMTX_OK) {
+         goto fault_eabt;
+     }
+@@ -479,7 +477,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+     level = 1;
+     index = extract64(paddress, pgs + 4, l0gptsz - pgs - 4);
+     tableaddr += index * 8;
+-    entry = address_space_ldq_le(as, tableaddr, attrs, &result);
++    entry = address_space_ldq_le(config.gpt_as, tableaddr, attrs, &result);
+     if (result != MEMTX_OK) {
+         goto fault_eabt;
+     }
+@@ -513,7 +511,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+     case 0b1111: /* all access */
+         return true;
+     case 0b1000: /* secure */
+-        if (!cpu_isar_feature(aa64_sel2, cpu)) {
++        if (!config.support_sel2) {
+             goto fault_walk;
+         }
+         /* fall through */
+@@ -3786,11 +3784,28 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
+                             memop, result, fi)) {
+         return true;
+     }
+-    if (!granule_protection_check(env, result->f.phys_addr,
+-                                  result->f.attrs.space, ptw->in_space, fi)) {
+-        fi->type = ARMFault_GPCFOnOutput;
+-        return true;
++
++    if (FIELD_EX64(env->cp15.gpccr_el3, GPCCR, GPC)) {
++        ARMCPU *cpu = env_archcpu(env);
++        MemTxAttrs attrs = {
++            .secure = true,
++            .space = ARMSS_Root,
++        };
++        struct ARMGranuleProtectionConfig config = {
++            .gpccr = env->cp15.gpccr_el3,
++            .gptbr = env->cp15.gptbr_el3,
++            .parange = FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE),
++            .support_sel2 = cpu_isar_feature(aa64_sel2, cpu),
++            .gpt_as = arm_addressspace(env_cpu(env), attrs)
++        };
++        if (!arm_granule_protection_check(config, result->f.phys_addr,
++                                          result->f.attrs.space, ptw->in_space,
++                                          fi)) {
++            fi->type = ARMFault_GPCFOnOutput;
++            return true;
++        }
+     }
++
+     return false;
  }
  
--static CPAccessResult access_aa32_tid1(CPUARMState *env, const ARMCPRegInfo *ri,
--                                       bool isread)
--{
--    if (arm_feature(env, ARM_FEATURE_V8)) {
--        return access_aa64_tid1(env, ri, isread);
--    }
--
--    return CP_ACCESS_OK;
--}
--
- static const ARMCPRegInfo v7_cp_reginfo[] = {
-     /* the old v6 WFI, UNPREDICTABLE in v7 but we choose to NOP */
-     { .name = "NOP", .cp = 15, .crn = 7, .crm = 0, .opc1 = 0, .opc2 = 4,
-@@ -978,7 +968,7 @@ static const ARMCPRegInfo v7_cp_reginfo[] = {
-     { .name = "AIDR", .state = ARM_CP_STATE_BOTH,
-       .opc0 = 3, .opc1 = 1, .crn = 0, .crm = 0, .opc2 = 7,
-       .access = PL1_R, .type = ARM_CP_CONST,
--      .accessfn = access_aa64_tid1,
-+      .accessfn = access_tid1,
-       .fgt = FGT_AIDR_EL1,
-       .resetvalue = 0 },
-     /*
-@@ -5001,7 +4991,7 @@ static const ARMCPRegInfo sme_reginfo[] = {
-       .writefn = smcr_write, .raw_writefn = raw_write },
-     { .name = "SMIDR_EL1", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 1, .crn = 0, .crm = 0, .opc2 = 6,
--      .access = PL1_R, .accessfn = access_aa64_tid1,
-+      .access = PL1_R, .accessfn = access_tid1,
-       /*
-        * IMPLEMENTOR = 0 (software)
-        * REVISION    = 0 (implementation defined)
-@@ -7112,7 +7102,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-             { .name = "REVIDR_EL1", .state = ARM_CP_STATE_BOTH,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 0, .opc2 = 6,
-               .access = PL1_R,
--              .accessfn = access_aa64_tid1,
-+              .accessfn = access_tid1,
-               .fgt = FGT_REVIDR_EL1,
-               .type = ARM_CP_CONST, .resetvalue = cpu->revidr },
-         };
-@@ -7136,7 +7126,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-             { .name = "TCMTR",
-               .cp = 15, .crn = 0, .crm = 0, .opc1 = 0, .opc2 = 2,
-               .access = PL1_R,
--              .accessfn = access_aa32_tid1,
-+              .accessfn = access_tid1,
-               .type = ARM_CP_CONST, .resetvalue = 0 },
-         };
-         /* TLBTR is specific to VMSA */
-@@ -7144,7 +7134,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-               .name = "TLBTR",
-               .cp = 15, .crn = 0, .crm = 0, .opc1 = 0, .opc2 = 3,
-               .access = PL1_R,
--              .accessfn = access_aa32_tid1,
-+              .accessfn = access_tid1,
-               .type = ARM_CP_CONST, .resetvalue = 0,
-         };
-         /* MPUIR is specific to PMSA V6+ */
 -- 
 2.47.3
 
