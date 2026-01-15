@@ -4,105 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4CC5D46610
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 618DED4660F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:55:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgSTk-0007aR-TT; Thu, 15 Jan 2026 13:53:56 -0500
+	id 1vgSVL-0000gc-0Q; Thu, 15 Jan 2026 13:55:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgSTe-0007XO-Hi
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:53:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgSTc-0005Zh-SB
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:53:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768503227;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jJ1/sybIWubS1aoRl7iPWQOB1qX4Sbm+k1dXhZnoQUE=;
- b=QU53HgWUa8Kuyamphq//X/OjeggJUd53o0wGy1k4C+UHfDSSZwg/oSpg6+39AsLt93nL/W
- RdKgcsfd63KVpD537Gqqdp7/vhTuMxbzLeClXqc8J3PGRlRjHgqSvCYpxs7tvlf/GttOwO
- NYFYgLMvi7mnH0dHygMnZP8Glni6YOs=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-315-6oYLoVdNPvCvyBn1O1279g-1; Thu, 15 Jan 2026 13:53:45 -0500
-X-MC-Unique: 6oYLoVdNPvCvyBn1O1279g-1
-X-Mimecast-MFC-AGG-ID: 6oYLoVdNPvCvyBn1O1279g_1768503225
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-88a316ddbacso31830636d6.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:53:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vgSV6-0000dJ-Si
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:20 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vgSV2-0005sl-D6
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:18 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47fedb7c68dso8474845e9.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768503225; x=1769108025; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=jJ1/sybIWubS1aoRl7iPWQOB1qX4Sbm+k1dXhZnoQUE=;
- b=JF6NORhmlXWmEYr+y9cXJ5L1jG1Dung7KgS7yq7cxbB2XxvkA3aMdmdR9KoMDXzeiG
- /yf3tOHd9kOBFxv++R/6BvE+AmqcD/Y13DL+vuxiVHuLnCDslkK8psAWv/rd0Nl+tHmH
- gUv13t7PaGZtnUrWldnvxxLaF6ThTv6/HZpU0kyqKIh+5/4m6PipvAxxBAqWwE06FiVK
- yIAg2Yg5AfK+i1OWqojUnuvMW/oqFE4djC/gA9uSVAkrp+wA0OUeSQxLjTlIarJfECVm
- E0aHeLbqu8c+miSYTuzQxzk3LLgMP34T1/t+7Pymbf/ouuihz7V/zgtkDNJpqAk5JTfF
- BwKQ==
+ d=linaro.org; s=google; t=1768503313; x=1769108113; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=q51h4LOe1HGQIAJLCsEgnFJbwI2EukWy/+nt44oI/io=;
+ b=krcJOCZMw8UW15HwHnEBlIsaF2+D8gffz2Xgj58vGS9ekA1lrF092nuLHka1LDEPrS
+ e31wOcDOfgvqbaFwKnBX7B6n5w5NB2PltXHOygnCHnTH8AkDRS43+++uSg3JI53MbRru
+ dJxr701L8JPnLTcHtXr1m81mGS0ZCi7PqeP7zNg8bkPHdI8ut9/XQPHZgyW6QYvgkFnF
+ aVxgqcSQBitQ6EvutVBB6HyJIkWrTb74fmyxv/wiL59W0PdfXH5ykiW0/dIMFeaKR6x6
+ 4RT1jrHPuAowYEFVpnz640kCTwnOz/HmNEDDIN0jPyivmKe0UeCd7TnmjG1ooZDxIi5a
+ Uu6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768503225; x=1769108025;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jJ1/sybIWubS1aoRl7iPWQOB1qX4Sbm+k1dXhZnoQUE=;
- b=OPOP7F3yGecSasQ76sv5xsEpLjfjTdbe0nhDSacZfBnIC4YlSefZrU+X/IaAc1O/yC
- spvmtbynbfXT2sxTteiFsXoXQEkLofUFgbCkwzLjy/Ur2L4FwbPTLK/a2QO2reDjbkCN
- ObH6bpG4DiR15kPbTXuaFC4G+ZS+uf6HnFihyDUF2l2a8wEujibDRupJIAszsVCnLbzz
- F7cXdFlqZgDfmw0NnIa/EIQ8yZMTBFmUQG4CrOss8OFGSUAzdhGQI29qJis+FEhn8N99
- 6IG/iDefptFEO4E620O23aGKBualMsMU+EcgMRPuey4pQ8duj+vJ/HcGUhjf1c2G4/qc
- iC6Q==
-X-Gm-Message-State: AOJu0Yw2ANWSbDdzhQPgPtt4oYZwme5sL4iippPr+QzCe7sL8hjNbMCq
- 4SEFsrAKF2XfnxjxjOZXmUODcYgKeZvyR6TOfigmtwUlDTDVi137JBv2jpuZ0ta8rcaLBzC9FwM
- LeSDWOVJpRzlRL8g6/wb30enRLebgpaJOA+uie9MY2/tpFt/PE/JbVB6N
-X-Gm-Gg: AY/fxX4G+C4Lm/ojsANFGy0pt5Kvmhsc8qfzi3Y6Opc13F46OKufC7bal4YmKylXGVv
- oOnHDwCCRXtVZDVz/Sfquz+ASaT1N46E7oRLHHaF1w4xoGnQdASsqDUiM3MwJBWVaNyKSITIrGY
- tiZKuseXHnMu3qT4qd4lAwa6EzY8WEmXU/T4+thwosNVda6EXmHb3F090Duf4hlW8vr83sl292q
- s8tq/GYdLCvbh268rIunds7HAqbGV6SHIa0PLHv7YJjDPb4HBz847omxvXJVU9Im3rRp/n6miKZ
- tZU0+NTr7yTQikg3AV2mAG9FdPEuqN/fLBZwV5SAE4VCGmwbhcAow3r/knQ5bdHHa4u/Wjv3Hks
- 9Hnc=
-X-Received: by 2002:a05:6214:2523:b0:88a:2e39:957e with SMTP id
- 6a1803df08f44-8942dd9e90fmr4829226d6.57.1768503224967; 
- Thu, 15 Jan 2026 10:53:44 -0800 (PST)
-X-Received: by 2002:a05:6214:2523:b0:88a:2e39:957e with SMTP id
- 6a1803df08f44-8942dd9e90fmr4828916d6.57.1768503224419; 
- Thu, 15 Jan 2026 10:53:44 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8942e5e5352sm2283106d6.3.2026.01.15.10.53.41
+ d=1e100.net; s=20230601; t=1768503313; x=1769108113;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=q51h4LOe1HGQIAJLCsEgnFJbwI2EukWy/+nt44oI/io=;
+ b=o9y491uecGG6mBRjEyMPenIIx4LfDgRWIlJRBPyR+DjS7QsPlwlY3M/K86Nep+pMo+
+ 5jUY/MDP7evlqMYe4+85lhlMp2g5Hll0oM7cPje/DoxFAHYTXofo8t5DHzfKI0GweFEB
+ MNO2rY7UCzvV2d8KWcmwUjdrZ8e+arHH3FEwTmuUC1g01lLRZ7a02sINMwQVlU89eWpX
+ +Z5vNBjt2FNYKXSwONUUHvOZ2odxqygf0BbrU9UTPkVR7fYbNBIvOwpo8EWCtTeF49DC
+ VRkYBfLESYlJHIuIaL/9AOay8ycMjHWzhrMtI97oBT1BcnAZLHOnceh97WhLXBvqdrUN
+ kCGg==
+X-Gm-Message-State: AOJu0Yxq744R3yL1mupKuBnXDUmOl3oYjrtzQ1FTSL7QVzPP1Mz7eQg2
+ hGWpV/tBPhVG3CWZ68C0Z471uy3lSeJ4z4qqHvkYBm8TZZj27HE6ZOTd5utmr73m4B3MMOt5/FV
+ NGFM6
+X-Gm-Gg: AY/fxX6XeCQ678t1H+VYCrA5QFsKYRtI4kziW6lhvI//SOTHd5wldxnfv/5YVbUnuPA
+ z5IdA2Bs3fKGQmsTro4ioGs35XWuiuzA15/DlCNId6NyCPQajdMmcXgKZyQbk/ISrzQkmkyxcko
+ 53Yb9/NXPBm68AwUJcxHYPK3W81FePiticLdja+aVFVh+3cmb2bFQaiHZnxe1MLISkFtDeFxOoU
+ ft1t+dnjTyUj9CWrbVJC1GQBh6t3/CEw0MkSjX4imUsRVj9rdAPbtBiVxqpNmd53+s5LBlvS3oo
+ cwQN5YV7yt0MossufI4zrPOWkYf6VMiiLm6MpjmHw9YxNtgEzG2fxq+nI/QfGOV4yNXQoEExTF2
+ 6zh4RY/ZLoMdGPIlm64kSjODBIWmzeXcDJYUmExXW6dcpQU2bfF5n8lQzNJdkecJLLLaHx1d+Fr
+ Wk159wVCkiAuMircFigo2IeLvzMXl8DR/csnnpV9/ogVsCtgWtmc+PRWzCHcNzSJEmVMn0dgvU5
+ pAjBsMxr+ZPNAWyUBNDJMTZP/MdvfbbsZtkDBRLHuGBnA==
+X-Received: by 2002:a05:600c:19cd:b0:479:3a89:121d with SMTP id
+ 5b1f17b1804b1-4801e359031mr9017935e9.36.1768503312868; 
+ Thu, 15 Jan 2026 10:55:12 -0800 (PST)
+Received: from mnementh.archaic.org.uk
+ (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
+ [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.12
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 10:53:44 -0800 (PST)
-Date: Thu, 15 Jan 2026 13:53:38 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH 2/3] migration: Remove zero-blocks capability
-Message-ID: <aWk3shSD4ixPt_Z0@x1.local>
-References: <20260114195659.2543649-1-peterx@redhat.com>
- <20260114195659.2543649-3-peterx@redhat.com>
- <871pjrza7m.fsf@pond.sub.org>
+ Thu, 15 Jan 2026 10:55:12 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 04/25] target/arm/tcg/cpu64.c: Enable ASID2 for cpu_max
+Date: Thu, 15 Jan 2026 18:54:46 +0000
+Message-ID: <20260115185508.786428-5-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260115185508.786428-1-peter.maydell@linaro.org>
+References: <20260115185508.786428-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <871pjrza7m.fsf@pond.sub.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,68 +102,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 15, 2026 at 07:00:45AM +0100, Markus Armbruster wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > It was declared deprecated since 9.2.
-> >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  docs/about/deprecated.rst       |  6 ------
-> >  docs/about/removed-features.rst |  6 ++++++
-> >  qapi/migration.json             | 11 +----------
-> >  migration/options.c             |  5 -----
-> >  4 files changed, 7 insertions(+), 21 deletions(-)
-> >
-> > diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> > index b499b2acb0..6e4e2e4833 100644
-> > --- a/docs/about/deprecated.rst
-> > +++ b/docs/about/deprecated.rst
-> > @@ -575,12 +575,6 @@ deprecated in favor of explicitly using the ``file:`` URI with the
-> >  file descriptor being passed as an ``fdset``. Refer to the ``add-fd``
-> >  command documentation for details on the ``fdset`` usage.
-> >  
-> > -``zero-blocks`` capability (since 9.2)
-> > -''''''''''''''''''''''''''''''''''''''
-> > -
-> > -The ``zero-blocks`` capability was part of the block migration which
-> > -doesn't exist anymore since it was removed in QEMU v9.1.
-> > -
-> >  COLO migration framework (since 11.0)
-> >  '''''''''''''''''''''''''''''''''''''
-> >  
-> > diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-> > index e81d79da47..8a9d21068a 100644
-> > --- a/docs/about/removed-features.rst
-> > +++ b/docs/about/removed-features.rst
-> > @@ -717,6 +717,12 @@ Block migration has been removed. For a replacement, see "QMP
-> >  invocation for live storage migration with ``blockdev-mirror`` + NBD"
-> >  in docs/interop/live-block-operations.rst.
-> >  
-> > +``migrate-set-capabilities`` ``zero-blocks`` option (removed in 11.0)
-> > +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> > +
-> > +The ``zero-blocks`` capability was part of the block migration capability
-> > +that got removed.  Removed with no replacement.
-> > +
-> 
-> Suggest something like
-> 
->    The ``zero-blocks`` capability was accidentally left behind when
->    block migration capability got removed in 9.1.  Removed with no
->    replacement.
+From: Jim MacArthur <jim.macarthur@linaro.org>
 
-Will do.
+docs/system/arm/emulation.rst: Add ASID2
 
-> 
-> >  ``migrate-set-parameter`` ``compress-level`` option (removed in 9.1)
-> >  ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> >  
-> 
-> [...]
-> 
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ docs/system/arm/emulation.rst | 1 +
+ target/arm/tcg/cpu64.c        | 4 ++++
+ 2 files changed, 5 insertions(+)
 
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 31a5878a8f..3f30ea5a30 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -24,6 +24,7 @@ the following architecture extensions:
+ - FEAT_AIE (Memory Attribute Index Enhancement)
+ - FEAT_Armv9_Crypto (Armv9 Cryptographic Extension)
+ - FEAT_ASID16 (16 bit ASID)
++- FEAT_ASID2 (Concurrent use of two ASIDs)
+ - FEAT_ATS1A (Address Translation operations that ignore stage 1 permissions)
+ - FEAT_BBM at level 2 (Translation table break-before-make levels)
+ - FEAT_BF16 (AArch64 BFloat16 instructions)
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 917db5bb09..611838171b 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1334,6 +1334,10 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64MMFR3, AIE, 1);      /* FEAT_AIE */
+     SET_IDREG(isar, ID_AA64MMFR3, t);
+ 
++    t = GET_IDREG(isar, ID_AA64MMFR4);
++    t = FIELD_DP64(t, ID_AA64MMFR4, ASID2, 1);    /* FEAT_ASID2 */
++    SET_IDREG(isar, ID_AA64MMFR4, t);
++
+     t = GET_IDREG(isar, ID_AA64ZFR0);
+     t = FIELD_DP64(t, ID_AA64ZFR0, SVEVER, 2);    /* FEAT_SVE2p1 */
+     t = FIELD_DP64(t, ID_AA64ZFR0, AES, 2);       /* FEAT_SVE_PMULL128 */
 -- 
-Peter Xu
+2.47.3
 
 
