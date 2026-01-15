@@ -4,99 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE632D3CC88
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Jan 2026 23:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ADFAD3CC8C
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 00:16:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgASl-0008HC-48; Wed, 14 Jan 2026 18:39:43 -0500
+	id 1vgB1U-0005yq-Ni; Wed, 14 Jan 2026 19:15:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgASj-0008Fe-Lm
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 18:39:41 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgASi-0005UZ-7B
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 18:39:41 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2a0f3f74587so2631095ad.2
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 15:39:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768433978; x=1769038778; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=R2FqAeIgTLxlJAHEqyaSx4oxF5sBS9zn1KQsbpWEH/A=;
- b=wMTK8phOvD0e1W71R3b2lE5alPNYF0btGxGaIMf5DEi2Qle+EWGfgxaruxlJELaL8R
- V0pmXNne86Uz1bb+LC2WJViNafeCHSQcMV1Hm3Ga+VbFvjdOjvwpxR1jUJEHFpsuq40G
- Yut7Om3V2faoJVonOsPJ0wgOjvCVxhTF1QkNVkh5wc9EuCbTxYnj31uQsvDiC5q/q4+z
- FHhVkC6iiHlj2F/1w+jCM1VfRQ/0PgGTeeYvbJInUom8b088Jk1TTXfD1+L7cSeB/wd1
- CqKklZjh9yScuXi9ZPDRmDgu4138/vg7MpBx1kiTsZ33wO83oHrnQ/rSLcqT7/Gu7dy/
- mf6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768433978; x=1769038778;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=R2FqAeIgTLxlJAHEqyaSx4oxF5sBS9zn1KQsbpWEH/A=;
- b=JV5IEMLV9WOjAEKLkHLwN/JezT6q5+mMw427ITPp3/WiqqCZQR4BDyBSDeYrrtyi6T
- 9cf6FGbaKi4Dxzb8sIlmYjWty70GaQq5KmUzCvKo1gf9OjGQVaZSMBcwBNl9GR5405Up
- VQwJawpXsDqgnICm7uFFhLNDJWZ8RhIgU+aInvxKrieKTC7h1mNN2JtpN2eUeK4J4Kyw
- s7CkaPJbT/R7B/XML1wfynTOdEx16nTU9GgYJP/UdtInvI/u3QPUKA505WGepnSN1Sr5
- tYJ0X92c/GgFsC7lpAMyS6tKwGz0fnsqo0VqdQ6ULKj4GOaktVVvsXfL2vwVQwW+4f5T
- +2mA==
-X-Gm-Message-State: AOJu0Yx2S3TBp3jNcK7s7KfsayGWd9s5CoCGA72JTEnIZiblWB29i8kp
- 2o0f3M/czJwX/uAy8jBVu8H9ytrV5gogMAho1YdW8cl1EBHuN+fyIROBJtK58m5NaXQ=
-X-Gm-Gg: AY/fxX6YJ9VWAKlLKNsym4Kg9gySpXE4a2DEvpJsHhbydg6Iq60uAT9xErBoJP41wIV
- GxspROcHgJgkwl9Tgt1OhXbbsogFF3X4yTaAJY5c0kzDsKIvYP2T92eT/grg8nYAtHMXxMegO1d
- iPFTTuLLt/gIZeJYSAqPxy6G2to9akfrtHJ2PdGtFpIBX4k8Xb3Hbd7lVFkhYO6vHYg6aI0C6kN
- shv4oV03u/NG7v78sTm6TQs67NqfV7FpzrHFhN4xUdQGFPVlXayPMBtb9lkkrjaFSUshEnS5Isl
- /XVTkOxkGf53HXq07AJrsBWncEJNAD/XuMAfFr6+sYXx7nOwyvj/mzclbPQ0U4O2bfRYFq8TQuM
- VgwbfidQfyDJyydFAapzuy1KC4MIQHdEEaGkumHYy5rtiG34lUIXlRvCW0VGEFcSAXitZpy6Ve8
- ZavGEIrUZ55LTS0qU/B/u8mpZT5NEhQIIV+35dzd/q5MYxRn23zE/ewBfy
-X-Received: by 2002:a17:902:f651:b0:295:592e:7633 with SMTP id
- d9443c01a7336-2a599e2b429mr45782425ad.29.1768433978102; 
- Wed, 14 Jan 2026 15:39:38 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3c3a2eesm71298595ad.6.2026.01.14.15.39.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Jan 2026 15:39:37 -0800 (PST)
-Message-ID: <9fba7ded-d31d-4789-b83d-efcc96f5448e@linaro.org>
-Date: Wed, 14 Jan 2026 15:39:36 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v8 0/7] hw/misc: Introduce a generalized IOMMU test framework
-Content-Language: en-US
-To: Tao Tang <tangtao1634@phytium.com.cn>, Paolo Bonzini
- <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vgB1S-0005y9-Uk
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 19:15:34 -0500
+Received: from p-west3-cluster4-host8-snip4-3.eps.apple.com ([57.103.74.144]
+ helo=outbound.ms.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vgB1R-0001pN-Ig
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 19:15:34 -0500
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-60-percent-0 (Postfix) with ESMTPS id
+ 2CD681800452; Thu, 15 Jan 2026 00:15:28 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=ksqwamjc+5RKV9piY5vkALtcG0RUP+bOT4m8O729l+Y=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
+ b=gTMP1R6bC6EeMD/YW0hlgTez9KCB4vhilrRfPgr6DPjfDdCuFwSu39hmlcZqLfrA28KEMVkk928vGQyjzlgMfGN0f2qNiC4e23fUPJgpL8Zh58qJ68Guu0seNt9sXG4TpHpfhgS9qf+o9KYaF1eeDCfAFkvF4o4MtZfcqcQXaAON+f7Z+Ajbqo/6jvaO4Kx63nZjVrNmPt+Cf0pFiM5+E5NYxKY/1UKBfvBAW/kddEK5ZAdLxsjrmlww59HOphyW9xg3j+wkGC467L+ViVv5msV5O1pPRx2tIRYzGbdqECrZHECSvCDX9ybTB08NGDizZ1Gtp3ExUHKAAYO6uF+JFA==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.154.37])
+ by p00-icloudmta-asmtp-us-west-3a-60-percent-0 (Postfix) with ESMTPSA id
+ C9ADC1800430; Thu, 15 Jan 2026 00:15:23 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: mohamed@unpredictable.fr,
+	qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, Alexander Graf <agraf@csgraf.de>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Xu <peterx@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, Cameron Esfahani <dirty@apple.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-References: <20251224034647.2596434-1-tangtao1634@phytium.com.cn>
- <6d50c3fe-e235-48e8-b461-fe0689f12070@phytium.com.cn>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <6d50c3fe-e235-48e8-b461-fe0689f12070@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v15 02/26] accel/system: Introduce hwaccel_enabled() helper
+Date: Thu, 15 Jan 2026 01:14:41 +0100
+Message-ID: <20260115001505.57237-3-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260115001505.57237-1-mohamed@unpredictable.fr>
+References: <20260115001505.57237-1-mohamed@unpredictable.fr>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDAwMCBTYWx0ZWRfX305nvJjifuEG
+ jJ1RLxyT0Qbswawbypa4CL0Pq6idzL3MRxqmOyO9a1thPUQx+Nmfjpmp7mAj375CbkAsO3YymLC
+ PhXGTAdJk1+fU5sbdCBaVyFec49lsx6hXOVUXMyfV8+2gY7aRtznXyocffI1ivUUZtBaK+MvmDi
+ vBi8dSi0UwJKczjQTO/q8oe+jOXYo/alenu8glb51gRRS9GYHF2kwLkybsSLTr1W+0DAaT5QhzR
+ Bj4jZ0scDXN7pmvUVZR7gjK4vcmRr5xu0cFkRbjDoWO2zcebPgKerytcbmOmWfWULU35FMkgwka
+ DV9ZmTe60rGonYt2tUV
+X-Authority-Info: v=2.4 cv=f4lFxeyM c=1 sm=1 tr=0 ts=696831a3
+ cx=c_apl:c_apl_out:c_pps a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
+ a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8
+ a=zYwLhoXY7WJC0OmO1EgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: emQ7N1tHdKfoVbvSo-3wZgKw4Z5LY6tC
+X-Proofpoint-ORIG-GUID: emQ7N1tHdKfoVbvSo-3wZgKw4Z5LY6tC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-14_07,2026-01-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ clxscore=1030 adultscore=0 bulkscore=0 phishscore=0
+ mlxscore=0 malwarescore=0
+ spamscore=0 mlxlogscore=999 classifier=spam authscore=0 adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2510240001 definitions=main-2601150000
+X-JNJ: AAAAAAABvJT1B6xahH4fjaGiOQgugX5HwZt56FsFT2QkbKcig+15KJukNWRK+32AJ7E8to2S4wRfShcuMUdS1GpKfir+LEOGzB/tDxP3GVLME7y7Q2nWZJ8yxctHJis+76Mm/rCAg8iY7hcRh+I2Ixq1UKYZBaY5RoO78wlER5wy5iTGAytmtN/x1aYfkOAfgXNLmGwChpC5LLre8TQBXPj8mZyYMPNHW0y5y0241PULlBTa2C3aF1clcJXmaXDCfBzz65cnKtj5gTYeKgzQwgqOFBRXP75Ts8Ng6sM2uK+bdk3BxMoacBG1VkFM3LMFkIS8oJ0guVf+ZKiU7z1EufM/reCHwltWgJlKeOX3Ggwr2mm1lqhmcnXR6gMjnwzlKwiWvoKKf9p08WRvR141DhZBSYOEzZqFwfypg+qzT+pWKVfuljwEutNU9qOmmIHp6ABRMU12UmVG4yA+UfK9m2e41KLI/gEruJbiSRzUiMPsmiHimEwyLIsBT9sMNqA7NbJYbbiJeZVVnWR6yWzQca1mGEhU7QzFLiEkZZynTX+z93c+gueoftC2A4ahGzPMtZiR4IwP+BSQztyd2uTGdo/yMD1poj34pwk/5VFTISA0S0ochwKvzPOXpZxfnwX3ekjloELNAJWAQOtg9LGxbjeHS7M+ORhx13xyG6YTQD3zCyHNoVUOWHWNMKuO2/vLB26cTpSj8pSpd1pfQET5J54kRfWi+wOF1g7Rtg1K2dQ6CgG267YNgi9sdGyvB4N1x7bT4H2DciGj/PdJ9nFv9r6OoKBxQz63NOypD04hB/FZzuF2/1pKTFsYBmi2aPxtELihiYUs+ZuS2uf2pUs+lk+A+r8EV9NaTiwBSevKZJ2yuYhwnTIE8IFjSV6XPhTpk/rj5Xh8QVgiA6xb0TVTV/WWol+NUPtxC6d3qZ24f1c2Y77xAow+6jMlCqP7Vls27JwldwFefi3aAwMwcaTEkn4=
+Received-SPF: pass client-ip=57.103.74.144;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,25 +110,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/14/26 5:30 AM, Tao Tang wrote:
-> 
-> A gentle ping on this series. Any further suggestions would be greatly
-> appreciated.
-> 
-> 
-> Link:
-> 
-> https://lore.kernel.org/qemu-devel/20251224034647.2596434-1-tangtao1634@phytium.com.cn/
-> 
-> 
-> Best regards,
-> 
-> Tao
-> 
-This version is in good shape and is ready to be merged.
-Eric, do you feel like merging it, or would you prefer someone else to 
-pick it up?
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Regards,
-Pierrick
+hwaccel_enabled() return whether any hardware accelerator
+is enabled.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ include/system/hw_accel.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/include/system/hw_accel.h b/include/system/hw_accel.h
+index 55497edc29..628a50e066 100644
+--- a/include/system/hw_accel.h
++++ b/include/system/hw_accel.h
+@@ -40,4 +40,17 @@ void cpu_synchronize_pre_loadvm(CPUState *cpu);
+ void cpu_synchronize_post_reset(CPUState *cpu);
+ void cpu_synchronize_post_init(CPUState *cpu);
+ 
++/**
++ * hwaccel_enabled:
++ *
++ * Returns: %true if a hardware accelerator is enabled, %false otherwise.
++ */
++static inline bool hwaccel_enabled(void)
++{
++    return hvf_enabled()
++        || kvm_enabled()
++        || nvmm_enabled()
++        || whpx_enabled();
++}
++
+ #endif /* QEMU_HW_ACCEL_H */
+-- 
+2.50.1 (Apple Git-155)
+
 
