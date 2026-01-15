@@ -4,112 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABDEAD44C51
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 14:34:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37BADD44C57
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 14:34:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgOJY-0003bm-60; Thu, 15 Jan 2026 09:27:08 -0500
+	id 1vgONJ-0008N8-2Z; Thu, 15 Jan 2026 09:31:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vgOJS-0003ay-64
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:27:03 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vgONG-0008Ks-Cc
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:30:58 -0500
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vgOJP-0004nG-BE
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:27:01 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 178565BCEB;
- Thu, 15 Jan 2026 14:26:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768487217; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lnxjG/P5HdyOusBN3EXBIdVb+5bWCjOooGjKUoMJQ6w=;
- b=r6TMBL/cxIYtE8cpk9GRS/gdT8LUnWNxlTTi1GH4ychsWazcq5cNM1poQpHXQQ48dq4Ix/
- Phssi0r/3zzTT5Ise3mqodCabAsDssKFrF8Y4kj4Nbx1E4hoMqNVyFcUd3y/EPGNVuJakI
- SHBTbVBFHguBLdPozFfnLTK5hrXwbVQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768487217;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lnxjG/P5HdyOusBN3EXBIdVb+5bWCjOooGjKUoMJQ6w=;
- b=f0YxrrT7LZZJYUsVZQtw2yjgPKUFlGU9+g0LzYLDf3x7pqcnucTPTxwVno9ZJ/9i4ARglM
- x1fAxvjyckatA6CA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="r6TMBL/c";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=f0YxrrT7
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768487217; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lnxjG/P5HdyOusBN3EXBIdVb+5bWCjOooGjKUoMJQ6w=;
- b=r6TMBL/cxIYtE8cpk9GRS/gdT8LUnWNxlTTi1GH4ychsWazcq5cNM1poQpHXQQ48dq4Ix/
- Phssi0r/3zzTT5Ise3mqodCabAsDssKFrF8Y4kj4Nbx1E4hoMqNVyFcUd3y/EPGNVuJakI
- SHBTbVBFHguBLdPozFfnLTK5hrXwbVQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768487217;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lnxjG/P5HdyOusBN3EXBIdVb+5bWCjOooGjKUoMJQ6w=;
- b=f0YxrrT7LZZJYUsVZQtw2yjgPKUFlGU9+g0LzYLDf3x7pqcnucTPTxwVno9ZJ/9i4ARglM
- x1fAxvjyckatA6CA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8BBCF3EA63;
- Thu, 15 Jan 2026 14:26:56 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id AjRKEzD5aGkQZQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 15 Jan 2026 14:26:56 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com
-Subject: Re: [PATCH 1/5] migration: Use QAPI_CLONE_MEMBERS in
- migrate_params_test_apply
-In-Reply-To: <87h5sonkdu.fsf@suse.de>
-References: <20260114132309.5832-1-farosas@suse.de>
- <20260114132309.5832-2-farosas@suse.de> <aWex7yI4jIoYXEjp@x1.local>
- <87h5sonkdu.fsf@suse.de>
-Date: Thu, 15 Jan 2026 11:26:53 -0300
-Message-ID: <87v7h3lzo2.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vgOND-0005ve-5z
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:30:58 -0500
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-6420c08f886so1341040d50.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 06:30:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768487454; x=1769092254; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N0zShav1UQbJe+jlx8+ggbM8hQrgaYliCuFXZ6Edzt0=;
+ b=zxixuDT7LGfjUwesw+2UIAB5VjeWWndlI7fHhjTx+jr90ai9AE6v9GsV0yHjHMOTJC
+ XyDmE3jTpgH2SWIj58KHLwQVQFmDuVUCDL+y8OuDHiMf8K8MwObC+85v9DiU4ZMd22sl
+ Z53499xE79WFc6ULk31vPs7ahGZWUIUWbvr946hdg2raCe/BTsHhWguqtJVouqdf41wJ
+ yGZVt+pVhJ5H9udNGSvzS0VsDejVpoMrUSQHZmxslEw5Gd/Z46MzFtLYv5Arr6xfxMtq
+ RiFs+i2Y5L2yOX5L+szoIlwcjNkWDP4bnm68RDiHbou7Wd8BothM0ZItzZiBwf8NfGk7
+ xscA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768487454; x=1769092254;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=N0zShav1UQbJe+jlx8+ggbM8hQrgaYliCuFXZ6Edzt0=;
+ b=IZMgyFRj1zLMh5mk0WvqNcD5CXCGVHltJ69o10iXxmD0OpSV+h8AqTZ+Y/ZCFvYRLJ
+ +xyIQm0sg6E1+ZbDy7oqftHByoWZwx0LQacwqPdKDcSAjoVpyRq6zrRoQzIwjgdG7QJB
+ 564yO2EKfrWqU0UpeWY5R6p+PCR+1TSnHAP4ohBhLh8pKjCER98Dw6wuSDplZbuU+UwD
+ APJ0iSGZxxU84wh9gBrG2gsYYrKEba1Phn3wCzsrcTg+ekd1CAE/vR+8TPVAwFM7UL1e
+ DLlqatYJxXCfyHvPP2od2jFuBNb+5KGNVDOS9ZhMcLvBW1CbKRoxDVwyZb07Vm/jxACn
+ SATQ==
+X-Gm-Message-State: AOJu0YzEGpW6XaakgXvjTgMAQHE04hGv7P3Qvfans10STPgJqNYrQnGL
+ ac4YzPRNguRSYHgsjHZ0aSMwJQCqrZ5KAUvVkb9KxvedIRARgLYqEDXpeIF3NPR/YwVNDJNk1bo
+ hhLreAD4lZMqrKIfPmKBC/klqyxqisEXX90m5PLnLYw==
+X-Gm-Gg: AY/fxX62MK3OXm8WRLJimsFeFUZF3SqY8sgnlHn74pbFNpkmmOuQsNBQfq/3rOeu6Le
+ nulc38YpKT8XIwx4tKatevJJ9wMip9fHysPcjlrVc1wJPxxEYLNXTYAJKxLUIGWaMnUs2KYGuvE
+ Z4ZXrTl4i2Ojz1lm5rEp39U4jsFoR/jC1kdC0fk5jLD7JmCqQw51EhSbfsAhxpNGgCNuHDxxc8P
+ 5wyULNCEr3mXsdCx+QtvHUkdaGOjxh5tMd2XrYX2urIVRJaPtSN+k56TBsM06lfLDth0jQFc3vD
+ VvYbQOgJkDNKWXH8Y/GKpH0=
+X-Received: by 2002:a05:690e:408b:b0:635:4ecd:5fcc with SMTP id
+ 956f58d0204a3-64901ac9ec3mr4862107d50.41.1768487453776; Thu, 15 Jan 2026
+ 06:30:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 178565BCEB
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20251204093502.50582-1-corvin.koehne@gmail.com>
+ <20251204093502.50582-16-corvin.koehne@gmail.com>
+ <CAFEAcA-fU1qxTCoHaEQfGOmPPHyFL2Q74DXvLyti+28xe2bM+Q@mail.gmail.com>
+In-Reply-To: <CAFEAcA-fU1qxTCoHaEQfGOmPPHyFL2Q74DXvLyti+28xe2bM+Q@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 15 Jan 2026 14:30:41 +0000
+X-Gm-Features: AZwV_QgteSE8okzAl33qDtrQ7GDZTMm0OVRS36h5g7vTevGkxuceuZICwVCRlNw
+Message-ID: <CAFEAcA9fLQS=UTcRgd2oztkPK9g=dXzt7ZkMAO=H8Dxn=TTJEw@mail.gmail.com>
+Subject: Re: [PATCH v5 15/15] docs/system/arm: Add support for Beckhoff CX7200
+To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
+Cc: qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ qemu-arm@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, 
+ =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
+ Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,147 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+On Thu, 15 Jan 2026 at 11:57, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+>
+> On Thu, 4 Dec 2025 at 09:35, Corvin K=C3=B6hne <corvin.koehne@gmail.com> =
+wrote:
+> >
+> > From: YannickV <Y.Vossen@beckhoff.com>
+> >
+> > This commit offers some documentation on the Beckhoff CX7200
+> > qemu emulation.
+> >
+> > Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
+> > ---
+> >  docs/system/arm/beckhoff-cx7200.rst | 57 +++++++++++++++++++++++++++++
+> >  docs/system/target-arm.rst          |  1 +
 
-> Peter Xu <peterx@redhat.com> writes:
->
->> On Wed, Jan 14, 2026 at 10:23:05AM -0300, Fabiano Rosas wrote:
->>> Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
->>> method makes the handling of the TLS strings more intuitive because it
->>> clones them as well.
->>
->> The cover letter said this patch didn't change, but it has changed at least
->> somewhere.. anyway, I'm re-reviewing every line here.
->>
->
-> Sorry, I forgot I had already addressed your review comments from the
-> other series in this patch.
->
->>> 
->>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->>> ---
->>>  migration/options.c | 32 ++++++++++++++++++--------------
->>>  1 file changed, 18 insertions(+), 14 deletions(-)
->>> 
->>> diff --git a/migration/options.c b/migration/options.c
->>> index 9a5a39c886..994e1cc5ac 100644
->>> --- a/migration/options.c
->>> +++ b/migration/options.c
->>> @@ -1264,9 +1264,9 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
->>>  static void migrate_params_test_apply(MigrationParameters *params,
->>>                                        MigrationParameters *dest)
->>>  {
->>> -    *dest = migrate_get_current()->parameters;
->>> +    MigrationState *s = migrate_get_current();
->>>  
->>> -    /* TODO use QAPI_CLONE() instead of duplicating it inline */
->>> +    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
->>>  
->>>      if (params->has_throttle_trigger_threshold) {
->>>          dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
->>> @@ -1285,24 +1285,18 @@ static void migrate_params_test_apply(MigrationParameters *params,
->>>      }
->>>  
->>>      if (params->tls_creds) {
->>> +        qapi_free_StrOrNull(dest->tls_creds);
->>>          dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
->>> -    } else {
->>> -        /* clear the reference, it's owned by s->parameters */
->>> -        dest->tls_creds = NULL;
->>>      }
->>>  
->>>      if (params->tls_hostname) {
->>> +        qapi_free_StrOrNull(dest->tls_hostname);
->>>          dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
->>> -    } else {
->>> -        /* clear the reference, it's owned by s->parameters */
->>> -        dest->tls_hostname = NULL;
->>>      }
->>>  
->>>      if (params->tls_authz) {
->>> +        qapi_free_StrOrNull(dest->tls_authz);
->>>          dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
->>> -    } else {
->>> -        /* clear the reference, it's owned by s->parameters */
->>> -        dest->tls_authz = NULL;
->>>      }
->>>  
->>>      if (params->has_max_bandwidth) {
->>> @@ -1359,8 +1353,9 @@ static void migrate_params_test_apply(MigrationParameters *params,
->>>      }
->>>  
->>>      if (params->has_block_bitmap_mapping) {
->>> -        dest->has_block_bitmap_mapping = true;
->>> -        dest->block_bitmap_mapping = params->block_bitmap_mapping;
->>> +        qapi_free_BitmapMigrationNodeAliasList(dest->block_bitmap_mapping);
->>> +        dest->block_bitmap_mapping = QAPI_CLONE(BitmapMigrationNodeAliasList,
->>> +                                                params->block_bitmap_mapping);
->>>      }
->>>  
->>>      if (params->has_x_vcpu_dirty_limit_period) {
->>> @@ -1384,7 +1379,8 @@ static void migrate_params_test_apply(MigrationParameters *params,
->>>      }
->>>  
->>>      if (params->has_cpr_exec_command) {
->>> -        dest->cpr_exec_command = params->cpr_exec_command;
->>> +        qapi_free_strList(dest->cpr_exec_command);
->>> +        dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
->>>      }
->>>  }
->>
->> So we have 5 special cases here, (1-3) for tls, (4) for block bitmap, (5)
->> for cpr-exec-cmd.  All good.
->>
->>>  
->>> @@ -1535,6 +1531,14 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
->>>      migrate_params_test_apply(params, &tmp);
->>>  
->>>      if (migrate_params_check(&tmp, errp)) {
->>> +        /*
->>> +         * Mark block_bitmap_mapping as present now while we have the
->>> +         * params structure with the user input around.
->>> +         */
->>> +        if (params->has_block_bitmap_mapping) {
->>> +            migrate_get_current()->has_block_bitmap_mapping = true;
->>> +        }
->>
->> Now I'm looking at the lastest master branch, we have:
->>
->> migrate_params_apply():
->>     if (params->has_block_bitmap_mapping) {
->>         qapi_free_BitmapMigrationNodeAliasList(
->>             s->parameters.block_bitmap_mapping);
->>
->>         s->has_block_bitmap_mapping = true;
->>         s->parameters.block_bitmap_mapping =
->>             QAPI_CLONE(BitmapMigrationNodeAliasList,
->>                        params->block_bitmap_mapping);
->>     }
->>
->> Do we really need above change?
->>
->
-> It should be in the next patch.
->
->>> +
->>>          migrate_params_apply(params);
->>>          migrate_post_update_params(params, errp);
->>>      }
->>
->> The other thing is, when reaching here, after we have all 5 special cases
->> dynamically allocated, do we need to always free it?
->>
->> We used to do it for the initial (1-3) for tls (in migrate_tls_opts_free()).
->> I think we should also free (4,5) now from &tmp?
->>
->
-> Yes!
->
+> This doesn't render very nicely in the HTML documentation,
 
-Although, for CPR, the ASAN, valgrind, etc tools will never catch the
-leak because of the execvp(). It took me a while to figure that one.
+I noticed also that the nested bulleted lists in this
+file come out a bit odd, and so I checked the existing
+xlnx-zynq docs, which also have that issue. I just sent
+this patch to docs/system/arm/xlnx-zynq.rst which fixes
+various minor rendering issues:
 
->>> -- 
->>> 2.51.0
->>> 
+https://patchew.org/QEMU/20260115142629.665319-1-peter.maydell@linaro.org/2=
+0260115142629.665319-2-peter.maydell@linaro.org/
+
+You might find it useful to refer to in updating your
+patch here.
+
+-- PMM
 
