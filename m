@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B16B5D3CC8C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 01:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADD30D3CC88
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 01:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgBrU-0000Ts-SG; Wed, 14 Jan 2026 20:09:20 -0500
+	id 1vgBrq-0000ti-HJ; Wed, 14 Jan 2026 20:09:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vgBrT-0000Tf-Ak
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 20:09:19 -0500
-Received: from mgamail.intel.com ([192.198.163.7])
+ id 1vgBro-0000tT-Oq
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 20:09:40 -0500
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vgBrR-0004qz-Ic
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 20:09:19 -0500
+ id 1vgBrn-0004sR-5g
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 20:09:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1768439357; x=1799975357;
+ t=1768439379; x=1799975379;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=j7+IM67mifDuc48YzmS+Yh9v4dq1w2CzQp4UFeFTzMI=;
- b=IF1Ek2n9SfZJ4lhZN8FQ5ltqDIXFJCQODNziu7Agn7zSK2uk5G0KXfPl
- KF1LGNNDezyiq1WDeX4+T/TkCarNk+QcZTliX+iRzySLrDrstOHRRTCfo
- EU/9E7e+I4ZX6Zf0ztaZAxwuuBxJlrPwUELjJK/SLcpDOSsBFaGv8l2p3
- L/274ETncaIY8UKrU93uYKlvGbMUfGHeglztUaonV283qzq5FXKOU2bni
- wCxVCdBrQ6mBSes1jeJrR43Ss7AcYfaHqPvY0wMffp5kBlY3X+u4myD1d
- MENXlqwqVxfQHiL4yxDtXGWjuWBE9j7uy7BIsBdxU2Wk+RM+MudWtqKhv w==;
-X-CSE-ConnectionGUID: H/4sIlJwS6i1mgHUA0iEPA==
-X-CSE-MsgGUID: sGIq4P+OT+OOCMTYIqle4Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11671"; a="95227398"
-X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; d="scan'208";a="95227398"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jan 2026 17:09:15 -0800
-X-CSE-ConnectionGUID: x7Hd1BQJTFiAN1uNp3YVvQ==
-X-CSE-MsgGUID: BeZaA6sYTA65ZO1YNeCn2w==
+ bh=nKfA7oo3iz6NvIQgBLyXvj0eZxvS2QvpIqQx4MrvuoU=;
+ b=FBzdAZi6zh+37/Mc2kg0KnUBa0IRZ4EYq8wQ5B0bjwXQgyoqtdxYjzff
+ 3yStzAxjOKHFjFiYqyA2/E61OsvteYex9myVVHZCnpp/2tvJ7SK+no5ws
+ nI/Mnn+pKW0KOd4dmaXCbBx1ciuFVWtUfiSc7oW4/SV1SK2TWujovSKff
+ PAE9WWKp1lSe44mwfwNSN8fk566W0kWIuzOagF/rafFH/YtMOnkhQqzWo
+ V3hr1yNgqDfUmL2ek6z7+tO/FhZDtDmyf7cU9mZlN+pIOv5BBqjhRPphg
+ jw7Xcxfino3pGSE/isR3z0qIwpHqdiPoDbyKVNv+igkhC6ktcwq9guNns w==;
+X-CSE-ConnectionGUID: ZDugqfuZQF+BiUGPyk6CFg==
+X-CSE-MsgGUID: W81oRo69RYyXoaejdHz1nw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11671"; a="69723963"
+X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; d="scan'208";a="69723963"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jan 2026 17:09:37 -0800
+X-CSE-ConnectionGUID: ttJ52xNnST253F5pAA8OGw==
+X-CSE-MsgGUID: M37YBMv5QM6LqbjoKOvHhA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; d="scan'208";a="205241351"
+X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; d="scan'208";a="235544620"
 Received: from fhuang-mobl1.amr.corp.intel.com (HELO [10.125.38.93])
  ([10.125.38.93])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jan 2026 17:09:14 -0800
-Message-ID: <5e72cb05-25b9-4bfe-89da-6f67b54de9b8@intel.com>
-Date: Wed, 14 Jan 2026 17:09:13 -0800
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jan 2026 17:09:37 -0800
+Message-ID: <fe918947-054b-4b53-b065-2b51a3fe1835@intel.com>
+Date: Wed, 14 Jan 2026 17:09:36 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 5/5] target/i386/kvm: support perfmon-v2 for reset
+Subject: Re: [PATCH v9 3/5] target/i386/kvm: rename architectural PMU variables
 To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org
 Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
@@ -62,13 +62,13 @@ Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
  dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
  ewanhai@zhaoxin.com
 References: <20260109075508.113097-1-dongli.zhang@oracle.com>
- <20260109075508.113097-6-dongli.zhang@oracle.com>
+ <20260109075508.113097-4-dongli.zhang@oracle.com>
 Content-Language: en-US
 From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260109075508.113097-6-dongli.zhang@oracle.com>
+In-Reply-To: <20260109075508.113097-4-dongli.zhang@oracle.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zide.chen@intel.com;
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=zide.chen@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -95,27 +95,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 1/8/2026 11:54 PM, Dongli Zhang wrote:
-> Since perfmon-v2, the AMD PMU supports additional registers. This update
-> includes get/put functionality for these extra registers.
+On 1/8/2026 11:53 PM, Dongli Zhang wrote:
+> AMD does not have what is commonly referred to as an architectural PMU.
+> Therefore, we need to rename the following variables to be applicable for
+> both Intel and AMD:
 > 
-> Similar to the implementation in KVM:
+> - has_architectural_pmu_version
+> - num_architectural_pmu_gp_counters
+> - num_architectural_pmu_fixed_counters
 > 
-> - MSR_CORE_PERF_GLOBAL_STATUS and MSR_AMD64_PERF_CNTR_GLOBAL_STATUS both
-> use env->msr_global_status.
-> - MSR_CORE_PERF_GLOBAL_CTRL and MSR_AMD64_PERF_CNTR_GLOBAL_CTL both use
-> env->msr_global_ctrl.
-> - MSR_CORE_PERF_GLOBAL_OVF_CTRL and MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR
-> both use env->msr_global_ovf_ctrl.
+> For Intel processors, the meaning of pmu_version remains unchanged.
 > 
-> No changes are needed for vmstate_msr_architectural_pmu or
-> pmu_enable_needed().
+> For AMD processors:
+> 
+> pmu_version == 1 corresponds to versions before AMD PerfMonV2.
+> pmu_version == 2 corresponds to AMD PerfMonV2.
 > 
 > Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 > Reviewed-by: Sandipan Das <sandipan.das@amd.com>
 > ---
-
 LGTM.
 Reviewed-by: Zide Chen <zide.chen@intel.com>
 
