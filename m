@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30CAED4661E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 19:54:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B57D4661E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 19:57:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgTQG-0004D0-Jh; Thu, 15 Jan 2026 14:54:24 -0500
+	id 1vgTSy-0007Qw-GS; Thu, 15 Jan 2026 14:57:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgTPu-0003xr-I6
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:54:06 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgTSw-0007Px-Ax
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:57:10 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgTPt-00016Y-5I
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:54:02 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-47ee07570deso10581115e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 11:54:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgTSt-000215-Ne
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:57:10 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-47ee3a63300so13090765e9.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 11:57:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768506839; x=1769111639; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768507026; x=1769111826; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sbdTg4dIcqWLj12DXpgDtbHJbnMpx+2B8gJGT4AskMk=;
- b=Q0FaKKjiYHC8vyZ4hadMvxdA7D8g1e+h9NY1LRBQ7B7mIT54n9CvlqwfbKJuGrlwfJ
- rSqopCOR1Irafhyov47TJ6OAVa5VRjmMI4xleYK1fUSciE0fmsZMQQXUP0kwKMc5WYEM
- NKfcfbbDrtlotj4g9jBEteTFvoghIr0n6RSzz5IDfmgMxm6mDKhgZlAeq1m9n81OrYZw
- g4XfRcTTDffpBkD75h42L8aH1S8JjiHTEsHAVLeDTBaOcLLV/1EdUxgvAoSTPnPvVjPs
- +PArjBptdvK06SyQPwBdvJ3xYkzCwMuJAK2AQ3nY976g/ZyK2neaB9UyXohvNuhNBd+X
- jPlA==
+ bh=CDxOeLsQUuAwAJ99EWFZG2ThaQnSS1JvO0kW03wqPq8=;
+ b=AHsfLohBTAZdR03V5k7GiLcc9BXadX96XcXZrMNhy0Sa2G9Vjz66shlzzT6y2XDu53
+ GtgYH6a15LlTb4kwgGlJnpE1+WYlU27EV5hrXloeBGSf9LKozZIf+XsyCsDpcnVIk2g/
+ dxTK8WeogYyvLAg0e2Fil4zqSEhOapU2tBWhnhLXuaHEcUDjz3obgQDKUG90jSb+lrII
+ T6BCuaW7gMkNZJqIFOp2SIovYDHga/f1qbLRn01jsrpuuOm4KX+k3JP1SRpe7POKkOyo
+ Of/+29evedMkXz3P8zBXfXMNwhzEnWhZefXkk2DjtFv96HUiJxEiDj0IuwYGZ8WTisZD
+ coEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768506839; x=1769111639;
+ d=1e100.net; s=20230601; t=1768507026; x=1769111826;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sbdTg4dIcqWLj12DXpgDtbHJbnMpx+2B8gJGT4AskMk=;
- b=kA1dWsX/eFfmN2NoEZxxDNPSyagD2eGj1FUf9GciY4aa1IZ86QZVuYvr71QkVxMZiF
- xjxUoA+qleRLDrzVtRO9szdM4Yfh8QPllRlEVbOlQUt9kebUe3wUqA2GRJUItJfDNkM9
- fwvTWDB9H89WjBcIDa2LlE3Dh65fiCZnPArqrsj/TKOPyd0VtzabEaATfdmz2vRplSQf
- Zc+65OcBcrUE/Laps8l5SDN6vKJnbW0NEw+5Sc15GOWkO+dtq84GTHLsDX7xPU289Vgn
- 4aNdwBYTnwIMRuv1ljvzFXvX9ph0AJBvvvgaSonfkF1nJEVj2Y12nwVINQZZYpQVK9aO
- 8PIQ==
-X-Gm-Message-State: AOJu0YxSAV14e92H02rf1etgdXyXZc8e2mzQ/UHdp1fQC40VlPVckYcv
- 43ZsxJHm8fsqs3JtdjNtlieW0tTWKblXVMDHl7210DIhdqx6wF2T7djRAbjaENfg3wcJaWJdy+t
- pjreoWqU=
-X-Gm-Gg: AY/fxX40nUctB8e46su3wnMDbCBEiQWdSbQ5mmhox4kwNnK4tIndldDKY1PmE96pTxu
- Py9z/G2OZcDzHyp5mkzAs0FVY6aNPGlCibL7B8Nvn1artV+u5wAlIa0t8al65U1IxU3ErByFp5p
- FIq8yWEa0oqJXag3fidz+5zaQni1lOwcae1aLXWXbA0j2cHtCtIEKmnYslkJU5ewMWjW8M7YsB8
- EsUmI5uxrcQQKAPCqksl64H4oZHR08Hdg4bar9F7La06XGnkuttdPYfHPWuJvLyXWpkHDRJXgyy
- uXI0dP8a4T7OSptAhBFj7b+K+Itre+iSteTaOHQe+1uSZZX+MNW0q34UYY/ff00LVU33VKmgTS9
- YyEPMWWL7W9vTRj/tBWVhW0DLaSN8/H4Lrh1gvwf1/cSirJ/kNrIXDGOOAAPd32LfRtt+rwL51I
- YqlvnBPOjjmTAQBzgOVNewl7Pl+sSt5LG/BWsuQtBBPq3d76YO/f6+Qw==
-X-Received: by 2002:a05:600c:3f07:b0:477:2f7c:314f with SMTP id
- 5b1f17b1804b1-4801eac2fe6mr3851055e9.10.1768506839282; 
- Thu, 15 Jan 2026 11:53:59 -0800 (PST)
+ bh=CDxOeLsQUuAwAJ99EWFZG2ThaQnSS1JvO0kW03wqPq8=;
+ b=gh093YNwgcIQGkkC1qSZtoOykkquQWlDsw2/zmLWeyy0WJZakhA3BSu5sP4jftULtk
+ 7WucEvPWEBTqCbrhYrJ0s1PK0IXKP5+AOxeBA+2b4wjPEUh+jHtioRehQKxh2wr1BMww
+ sm1nXUCKp0x/JBDgQGvv11dzCkLoE0ZJeSCftMxeOwCTMRrjz5hccDEA0UivkRthwUqj
+ /Pv+txZKIVWExqpxBNy0VBiri8lYWDZelvM0KydRfzpsGniC9ILl8s/KFDV2DpqIHNJ4
+ lAlcAMAVr+qcvMg6Ioq9tNVYrBnoCc6B8uvYuohLP+Z2XEJntBrLHUBxiNNFWFU3G8ee
+ TZvA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUaQLLC6VpSf08uWUrwC9NVHvheVcbj9NpZYCf1MeaO/NyRgkWBVO7oaxmQrEkZ0hOhsZ2D6LY4VpVV@nongnu.org
+X-Gm-Message-State: AOJu0YzsDBR1GRjWfmdydz+1nvEQNIBwNSVXhTam1RsiwNY1kzSbclBs
+ BpBmWUeM6TdC6Rf8X+Z5m9FTucKiLo2Fca/wMm/ZUdSoEzYtS22Nm5S0dTeYQV3lzexQ4repyHW
+ R4X5808w=
+X-Gm-Gg: AY/fxX7Gqt/MsggS7fRCyQcn6Vy53MbGCcESTfctDLA9pCFohDqz7p3fePLws6ifi5Z
+ jTBqWnOineCynDvGApLP5uot+96K+k6H1D98McDtOkL8voE5prmt10xCjG17GQjXgGyI4e1Pqax
+ BEURX/bRVSF2EdeSlpO2pIz54Wb1sTa2DX2uiVFvXRJq61oKImOkuqNLwNx95SJn71jlEjHtTy2
+ zbLJ0AUjhjL3umQpA8mObRI9WkRKmJKBhr1tYKNZQBy8wZKfbGjQyFhKrrQARwk2cEw8ry3ZU74
+ JsmQu2duPf8OsBEQ2uwIPd2St2ZFAA5yspbmSddaKmswMEpY0TFRU/+vfaGpUOc2WWCD9TFuy5P
+ kR7KpHp0Qnpjr4Vo1aojVHkHmIysY3+dWbq2KevoH1yUkSZB+8SuyfkwEAmFnQwiOQ3R21+GPA2
+ QhuuDdx7Bq1DJkCxK76qJreAhLryLEscPSH62ng7/YgvKKE0iaLNmvGg==
+X-Received: by 2002:a05:600c:8b09:b0:477:5b0a:e616 with SMTP id
+ 5b1f17b1804b1-4801e2f90efmr9940725e9.5.1768507025849; 
+ Thu, 15 Jan 2026 11:57:05 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47f42907141sm62176295e9.9.2026.01.15.11.53.58
+ 5b1f17b1804b1-4801fe44b37sm268585e9.12.2026.01.15.11.57.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 11:53:58 -0800 (PST)
-Message-ID: <9469a67c-cb31-47a0-b609-4a30f1e822a8@linaro.org>
-Date: Thu, 15 Jan 2026 20:53:57 +0100
+ Thu, 15 Jan 2026 11:57:05 -0800 (PST)
+Message-ID: <ca306386-d793-4617-9ffa-d12749a4fe8c@linaro.org>
+Date: Thu, 15 Jan 2026 20:57:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Require TCG to run reverse debugging
- tests
+Subject: Re: [PATCH 3/6] target/i386/tcg: remove dead constants
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
-References: <20260115161029.24116-1-philmd@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org
+References: <20260115113306.126905-1-pbonzini@redhat.com>
+ <20260115113306.126905-4-pbonzini@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260115161029.24116-1-philmd@linaro.org>
+In-Reply-To: <20260115113306.126905-4-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,16 +104,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/1/26 17:10, Philippe Mathieu-Daudé wrote:
-> Record/replay is specific to TCG. Require it to avoid failure
-> when using a HVF-only build on Darwin:
+On 15/1/26 12:33, Paolo Bonzini wrote:
+> NB_OP_SIZES has been dead since the conversion to TCG, REG_L_OFFSET
+> since 2015, the others somewhere in the middle.
 > 
->    qemu-system-aarch64: -icount shift=7,rr=record,rrfile=/scratch/replay.bin,rrsnapshot=init: cannot configure icount, TCG support not available
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   tests/functional/reverse_debugging.py | 2 ++
->   1 file changed, 2 insertions(+)
+>   target/i386/tcg/translate.c | 24 ------------------------
+>   1 file changed, 24 deletions(-)
 
-Queued via accel-next tree, thanks.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
