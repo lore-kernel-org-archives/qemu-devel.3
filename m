@@ -4,113 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D84AD44C6F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 16:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57ACAD44C6F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 16:02:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgPm8-0004td-O2; Thu, 15 Jan 2026 11:00:44 -0500
+	id 1vgPmq-0005Gr-TZ; Thu, 15 Jan 2026 11:01:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1vgPm7-0004sb-67; Thu, 15 Jan 2026 11:00:43 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1vgPm5-00084r-5Q; Thu, 15 Jan 2026 11:00:42 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60F67LvU025028;
- Thu, 15 Jan 2026 16:00:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=vuaQhm
- 6piBUjExMxTUmJhCGHOCR+J4bC0H7O+vSS0bs=; b=MzXFlra/PANX9DmRiDWWuJ
- A6l+SgfFX+dTzd1NecAdNqC+fd0gO17CF/Xy3yHKHBSu7+7Nzwkjf0KZJDzbxJ4u
- ftg0cdqzxKPmqa1AGDzBXVDD9XdeuiMMG78bvh58hbqC7dFJ0lCTO+uqggJJWI+/
- mS89GrAt/B3sitjGqbDlLU9OVflQaN3wQN8WSpa16cUDKQt5LUPZz8LteQNE42KM
- rPMg8yqq18pGkYtS0fMOVdFj3YgPTxcZtI1lOdHdneoyEn73O1o1dqZ0599VgC+1
- Qc/S+O/F7fSYNjrD9VXiwGGkFMjn3zhy/z9epyUE4RwqKFjRdRgk5+oCHTrPBNwA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bkeg4qd3n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 Jan 2026 16:00:36 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60FDDblW031255;
- Thu, 15 Jan 2026 16:00:35 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bm3t20kp7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 Jan 2026 16:00:35 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60FG0Y0C25166522
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 15 Jan 2026 16:00:35 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DA3775806A;
- Thu, 15 Jan 2026 16:00:34 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5156B58063;
- Thu, 15 Jan 2026 16:00:34 +0000 (GMT)
-Received: from [9.24.20.72] (unknown [9.24.20.72])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 15 Jan 2026 16:00:34 +0000 (GMT)
-Message-ID: <902d8110-b7c9-435b-84d3-d171faa555c8@linux.ibm.com>
-Date: Thu, 15 Jan 2026 10:00:33 -0600
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgPmp-0005G5-8D
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:01:27 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgPmn-0008CM-OD
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:01:26 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-47eddddcdcfso5962525e9.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 08:01:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768492884; x=1769097684; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UweMaXfqR+dZPDI/i6nvrt2jpmeu3EtAdjeZkf9SSNQ=;
+ b=Rlj1Obyx/CW7f0eFqMPRGysPyab8HB9g85X4lh6gxwBAr9LJO+fRD5Dxvm3q/alo2V
+ /YbMmdJUcvDlMOQinn9ngRYmG/cPcuTYHQADVk6WHt/XMXYEGwycJq570JhFKvFttrrQ
+ mF9eyVxCgSL88l5/FqxOuYE07+SStd0Iek9vcyKymRc5N8Din5nD+jr0NCAi/Vfg7Q1i
+ sOxW4rj8+4kdr98BtHsooQKzP+gzmBVG68atAyw1oxC3Qf8skA34+3pm7p/siPhamcJs
+ FThzL2+O0gVNcuVUFdWwTSbIW82J9lS+/qHq72bmAPKRH2MNw6KUbbMUDMwyj8F7wLXP
+ fpKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768492884; x=1769097684;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UweMaXfqR+dZPDI/i6nvrt2jpmeu3EtAdjeZkf9SSNQ=;
+ b=SvVo9BjfABtyG6X+yP9xbXww4uAJOltViCBOe/zagpn1WpGfUMW+ePZ5ojyoedG9fc
+ B789GYdvF/bDYKT7zaF4MtNNTtdz1XtxXTk9VxT+QzZPMsfkzUqf0kAdFnzx0mofd24L
+ UoULhJ3n0fhYqHB4G5ujESKQNyTUcq83a/KjsDpP3g4KIYdDHi6mieXn60qW+tl+XGxg
+ R5txAIEcFl9rFODVbU/Ry1ineaXw7t7YSWt1m3MzFf5eLXKjvNca2noN/xAH5V9ixVB7
+ 7A5JqQT5MRqI2iI4xk1Mjv057vBPwrbJZnrEcx55zBL92oAe36dFgOm/Cv91gQbdR3SR
+ aiZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCmYyR/0yCDsmXARvGZ0hmauEOriKg3aIwyCbgZIoXo0uO9XN5w0RDCJGP8iRxtCdNELbMveECXQG5@nongnu.org
+X-Gm-Message-State: AOJu0YxGIqDPyLebPl+31cYGmhJ2uVwpk1Ktq9vngknO3qz2bV5RQGjW
+ uJqi0jIVu/EkgFXl5ftOWfhZGkvXqu50YwgBkP/autNcHmVisOpwpuJvx8Kv3GAJy9I=
+X-Gm-Gg: AY/fxX4oozmWRQfKR0Txzl5057IEX16ssM1KkD/o5YfUOHSldt44KkVO5vY0mrsVVJi
+ ox2mshoRcWwOCZHH/kdDiXmSpeVoO9OBHwLnPPr+rJP+0Ws6x6vg0whGUd7CYdXEHqCh4pSYRPv
+ Nnt9R06x5JzBJng8iLv1XW3fcFgIU7WWXsr0mGrA+f8ALUt9ZHIyj5IlZWJStYKAahWEmqlie4v
+ oRL7gnWc/BZyQthpRQX7MKJYPkXlGg93eW7SCiNxn+KTT2uIeTgyuuzYtxMTQEFHaqiE+AZqtT3
+ QUCHwWj4DuKIrhQvu/JEQu+TDTqZ+GDd6yEfzHFmFe5jbiJTWB7/s2HIMOJ2n0dWWHQgN6nNXNo
+ 2D3eJeSNVlcAee6rwKNF03OHdRi3hOXB9Wf+wGaVco1ed4O9772puA5REcF9u7Lamk3M66CAY6/
+ 85vI2gb17HbL8=
+X-Received: by 2002:a05:600c:3495:b0:47e:e87f:4bba with SMTP id
+ 5b1f17b1804b1-4801e344232mr3374685e9.29.1768492882074; 
+ Thu, 15 Jan 2026 08:01:22 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-434af653560sm6838015f8f.10.2026.01.15.08.01.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Jan 2026 08:01:21 -0800 (PST)
+Message-ID: <604f2e51-81e9-4e97-ac89-0b783f27e97f@linaro.org>
+Date: Thu, 15 Jan 2026 17:01:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v1 3/3] qapi/iothread: introduce poll-weight parameter
- for aio-poll
-To: Halil Pasic <pasic@linux.ibm.com>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, pbonzini@redhat.com,
- stefanha@redhat.com, fam@euphon.net, eblake@redhat.com,
- berrange@redhat.com, eduardo@habkost.net, dave@treblig.org,
- sw@weilnetz.de, devel@lists.libvirt.org
-References: <20260113174824.464720-1-jhkim@linux.ibm.com>
- <20260113174824.464720-4-jhkim@linux.ibm.com> <87qzrs4oud.fsf@pond.sub.org>
- <eb891295-5ffd-4613-bc37-56d8a07d1fff@linux.ibm.com>
- <87ikd3xrkc.fsf@pond.sub.org> <20260115110532.27cb1516.pasic@linux.ibm.com>
+Subject: Re: [PATCH] target/i386/nvmm: Include missing ramlist.h header
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Reinoud Zandijk <reinoud@netbsd.org>
+Cc: qemu-trivial@nongnu.org
+References: <20260114083812.18496-1-thuth@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Content-Language: en-US
-From: JAEHOON KIM <jhkim@linux.ibm.com>
-In-Reply-To: <20260115110532.27cb1516.pasic@linux.ibm.com>
+In-Reply-To: <20260114083812.18496-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDExOSBTYWx0ZWRfX1wt+tVfDShff
- Hk/zvRmM42I1TOro5RU0pAxBxw21qAg+YYYOltV57lZHv9URtZgVIfpsojVkLA8f/tL9qVg6DES
- hQQNJ77q26fFr5V1vlyzOiGJxu4cUTM3RIFLKTtdSUAhpLvPkmIfmENW/xjPDid+KY/vWb2hPI0
- vX68C7uExmuYUYLXHJyfEnQ8Wo/hw9PkOWIyp3CEEif7Nc6uNWfwrn+jFEo3N93wy0OICaraf98
- 4l7BMdyWjXhbxWos/8M8P1PKFGwLP1d3SHtctxljm/Zu372aay4JLndYkOfhbIEmw9VGYLv/dq1
- 4YBb+l1rEQbZwBQqN9MamQIlA1RdKELRfaJjbsmjcwrXRI1/Td+H2xg7SQ0FCxUXvegOY1AtJvw
- zj7B34aRKMvracy8o5wE9pmj/sS/dgpCeUr7AL8+CNjCXHhWGyohEt+TvTV9goe8P+Xy2nKaieU
- 5TpGmQYF5KDTdFhvymg==
-X-Proofpoint-ORIG-GUID: H2DJ1l9kK1V1j8BZ5VNexrrGrEJQ5uvM
-X-Authority-Analysis: v=2.4 cv=B/60EetM c=1 sm=1 tr=0 ts=69690f24 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=20KFwNOVAAAA:8 a=RJ7VnkRXJxR4zq9O5SEA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: H2DJ1l9kK1V1j8BZ5VNexrrGrEJQ5uvM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-15_05,2026-01-15_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 bulkscore=0 spamscore=0 impostorscore=0
- malwarescore=0 phishscore=0 adultscore=0 clxscore=1011 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601150119
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,61 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/15/2026 4:05 AM, Halil Pasic wrote:
-> On Thu, 15 Jan 2026 08:28:51 +0100
-> Markus Armbruster <armbru@redhat.com> wrote:
->
->> I understand that you're mirroring how @poll-grow and @poll-shrink work,
->> but let's ignore that for a minute.
->>
->> Compare four possible interfaces:
->>
->> 1. Optional @poll-weight defaults to 2.  Values <= 0 are rejected.
->>
->> 2. Optional @poll-weight defaults to 2.  Value 0 is replaced by the
->>     default value 2.  Values < 0 are rejected.
->>
->> 3. Optional @poll-weight defaults to 0.  Values < 0 are rejected.  Value
->>     0 makes the system pick a value, namely 2.
->>
->> 4. Optional @poll-weight defaults to 0.  Values < 0 are rejected.  Value
->>     0 makes the system pick a value.  It currently picks 2.
->>
->> The difference between 3. and 4. is that 3. makes "system picks 2" part
->> of the contract, while 4. doesn't.
->>
->> 1. is the simplest.  Is 2.'s additional complexity worthwhile?  3.'s?
->> 4.'s?
-> Isn't there more options? Like
->
-> 5. Optional @poll-weight defaults to system-default.  Value 0 is replaced
-> by the system pick the system default value. Currently the system default
-> value is 2. Values < 0 are rejected.
->
-> That would mean:
-> * current value inspectable
-> * system default not part of the interface contract
-> * interface offers a "please go back to value not user specified:
->    operation
->
-> BTW I like your approach with explicitly listing and evaluating the
-> options a lot!
->
-> Regards,
-> Halil
->
-Thank you both for laying out options 1-5 so clearly; the detailed 
-breakdown was very helpful.
-After considering the trade-offs, I agree that "Option 1" is the 
-simplest and most robust interface. It ensures the value exposed to 
-users always reflects the actual effect.
-Option 5 is a clever way to reset values, but I'm leaning toward Option 
-1 to keep the interface as predictable as possible.
-Avoiding special meanings for '0' makes the logic easier for users to 
-reason about.
+On 14/1/26 09:38, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> Compiling on NetBSD currently fails with:
+> 
+>   ../src/target/i386/nvmm/nvmm-all.c:1136:22: error: unknown type name 'RAMBlockNotifier'
+>    1136 | nvmm_ram_block_added(RAMBlockNotifier *n, void *host, size_t size,
+>         |                      ^~~~~~~~~~~~~~~~
+>   ../src/target/i386/nvmm/nvmm-all.c:1152:15: error: variable 'nvmm_ram_notifier' has initializer but incomplete type
+>    1152 | static struct RAMBlockNotifier nvmm_ram_notifier = {
+>         |               ^~~~~~~~~~~~~~~~
+>   ../src/target/i386/nvmm/nvmm-all.c:1153:6: error: 'struct RAMBlockNotifier' has no member named 'ram_block_added'
+>    1153 |     .ram_block_added = nvmm_ram_block_added
+>         |      ^~~~~~~~~~~~~~~
+>   ../src/target/i386/nvmm/nvmm-all.c:1153:24: error: 'nvmm_ram_block_added' undeclared here (not in a function)
+>    1153 |     .ram_block_added = nvmm_ram_block_added
+>         |                        ^~~~~~~~~~~~~~~~~~~~
+> 
+> Include the right header to get this fixed.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   target/i386/nvmm/nvmm-all.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-I will update the next revision to follow "Option 1".
-Thanks again for the feedback!
-
-
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
