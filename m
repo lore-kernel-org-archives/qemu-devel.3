@@ -4,109 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 261D7D4662E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 21:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29AABD4662F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 21:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgUz1-0003oE-JJ; Thu, 15 Jan 2026 16:34:23 -0500
+	id 1vgVAp-0004JL-T0; Thu, 15 Jan 2026 16:46:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1vgUyt-0003lS-KU; Thu, 15 Jan 2026 16:34:15 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
+ id 1vgVAJ-00047k-F5
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 16:46:05 -0500
+Received: from mout.web.de ([217.72.192.78])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1vgUyr-00039n-GC; Thu, 15 Jan 2026 16:34:15 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60FIvnSD025891;
- Thu, 15 Jan 2026 21:34:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=1QoOA4
- PfTKdJeTD5XscHpdyknQX+/WxkYfd2TXlNmDQ=; b=q7f+zWmAIVhgrAi9/7dA7V
- 80LXkqsLL2a9/8+gZCjBV8jwkBiYFy02XGWHvchLzvINaA8HNerI/FS10xV5XY0p
- H45Z/x2dtm8gdXoB36HlZVzy5Qb71aUPZD0ldCPlPdnG/5efn7uzI2ytWtRi84Gu
- +OEgzFUjY3BgW3z3owqDFbbTt/5FEfWVZVBz/tx4TfGn3K3qvGIPiA5MidEz3C6i
- LEJkqwYU40Rybr/Be5UxB1G/YeMQNINyr5AxbMKDoZoaotdRlWWF+d+4lbubIaX0
- FL7ZGhxOfo75C8UdbKPBGKELDO21KgD2JPpsYy+EQt7YqvHQOEnNhqHRyoXbXsQA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bpja4nef0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 Jan 2026 21:34:08 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60FKO3Rm025877;
- Thu, 15 Jan 2026 21:34:07 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bm2kktm1k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 15 Jan 2026 21:34:07 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60FLY6iA63308054
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 15 Jan 2026 21:34:06 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1284958045;
- Thu, 15 Jan 2026 21:34:06 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 54E9558050;
- Thu, 15 Jan 2026 21:34:04 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 15 Jan 2026 21:34:04 +0000 (GMT)
-Message-ID: <e5a34764-4fa2-40c8-af80-8bd5aefd1e63@linux.ibm.com>
-Date: Thu, 15 Jan 2026 16:34:03 -0500
+ (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
+ id 1vgVAH-0005eq-9u
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 16:46:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+ s=s29768273; t=1768513543; x=1769118343; i=lukasstraub2@web.de;
+ bh=XBFBd5qTDNbiTEjStg13UbhDcyu3FChLaPCvr/pDjXU=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:In-Reply-To:
+ References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=S3Je5K7dZGxMkykHmS1BC5FMVthOsftKIEKnFggeUn2VwplIh3h94oWCraHi4brp
+ dx8hpu8Vu7W+RyaXWHK326A22mqd8Vb+Uy1ckwhLyEJpZdMgGDMNUMx/vf3Fk60fD
+ qrjn9exrKf5ErswDKEbVkB8gX4V6NJ8gzFoyD6Ce9Ed4fd0h0RJ8cqg80HlOSSc9v
+ KZbisMMY1/gvk/io8w/qUiG483geVqRvgEl0R05xWnoE/CILUdn8uTLQtciiwddMy
+ 5q/YSENnd7yTkkg0Eg+rtmOjHcIF7srxl41wqLTF2sEmX3G7ixiMjGotCN7HMV4Pu
+ qF1j/cvxgWmQlbRYxg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from penguin ([217.247.100.70]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MP382-1vSAF041pU-00PO5h; Thu, 15
+ Jan 2026 22:45:43 +0100
+Date: Thu, 15 Jan 2026 22:45:16 +0100
+From: Lukas Straub <lukasstraub2@web.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: Zhang Chen <zhangckid@gmail.com>, qemu-devel@nongnu.org, Fabiano Rosas
+ <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Juan Quintela <quintela@trasno.org>, Hailiang Zhang
+ <zhanghailiang@xfusion.com>
+Subject: Re: [PATCH 0/3] migration: Add COLO multifd support and COLO
+ migration unit test
+Message-ID: <20260115224516.7f0309ba@penguin>
+In-Reply-To: <aV1m_vneDzI_5WDV@x1.local>
+References: <20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de>
+ <aVPpg_LwlGFIPfen@x1.local>
+ <CAK3tnv+f8b9fd_n9_6Od3f__ZuNUtuT2Q_MXszam_k=ooRPqyQ@mail.gmail.com>
+ <aV1m_vneDzI_5WDV@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Collin Walling <walling@linux.ibm.com>
-Subject: Re: [PATCH v7 13/29] pc-bios/s390-ccw: Introduce IPL Information
- Report Block (IIRB)
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-14-zycai@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <20251208213247.702569-14-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDE2NyBTYWx0ZWRfX4QmA14DS07x9
- 5gMcBF9T5L5KX9vfjjxgdTeYoDalgDoT2ZDgK1qrv82bjJ+Wk5gUcHJJDYb0te83Ma3w3threEn
- I2muD586WEaygsWgaJmaEBKMId+XsjtREDR4JlSvDuClfBBZ1RlbLnhIn12d6OsuKPRrezLTjlt
- GAQetrDuz4SR3oQtYRQ+T1lpnlPqAphrI6erKsuxJBpdl8YFUQvRtL3SqlYxuUKAAZMhYznfTJU
- iOxaTTbJh7y7POtHcpvH7ydBDhD90floi5Rk5dsvibyjFBkFdq+fI8vRN+WA/8WUo66zva8JeGa
- GXqZK3qd3xKcvLuooFTUp7ZNW3fwvktZ9KiM9/5zEYGO5eiLpBPhP0VGcPV8jEWraD1ZidKMofS
- IBAlt06qH+dooIo9gFtj+DGiZc6Muivc6dnPgIDDAQ1cVcJoFYVe0a2oUS9H/ynB9K6b9AiWVHN
- Zv92SOnVLSJL0YByHww==
-X-Proofpoint-ORIG-GUID: L6OvBfliww9gJoooJLWwSOiH1UuJLwpR
-X-Proofpoint-GUID: L6OvBfliww9gJoooJLWwSOiH1UuJLwpR
-X-Authority-Analysis: v=2.4 cv=U4afzOru c=1 sm=1 tr=0 ts=69695d50 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=vSUreBBp3LQBltKZeEMA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-15_06,2026-01-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0 adultscore=0
- malwarescore=0 bulkscore=0 phishscore=0 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2512120000 definitions=main-2601150167
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: multipart/signed; boundary="Sig_/D0uwH9Sgf_kK54QhULLXHWX";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+X-Provags-ID: V03:K1:w6gsi/0CWS4i3hTu3Ktt0Zd3+Mp2g87GU617Hpq8vfU5bjWS2qy
+ 970CMWA6wvZYSVhHcbFsjwNNQqk8UUBcq76n2xMlhbO5EhJLktQr7cSs1fFiQv+XIveC2gc
+ kuVYUAl/lpQ7bpfuse6YLIOVUUPMLj9neyO14fC2J5cjE0EJCilv0P00uTnUY+KxYZrDTQq
+ G8ap6ZxirVdR4F3M0U97w==
+UI-OutboundReport: notjunk:1;M01:P0:ad0JoiRyouA=;gZI8+y+rQJjwSy3tdGObwtxbqD7
+ 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
+ MIQgMTXc=
+Received-SPF: pass client-ip=217.72.192.78; envelope-from=lukasstraub2@web.de;
+ helo=mout.web.de
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -125,145 +159,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/8/25 16:32, Zhuoying Cai wrote:
-> The IPL information report block (IIRB) contains information used
-> to locate IPL records and to report the results of signature verification
-> of one or more secure components of the load device.
-> 
-> IIRB is stored immediately following the IPL Parameter Block. Results on
-> component verification in any case (failure or success) are stored.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->  docs/specs/s390x-secure-ipl.rst | 13 +++++++
->  pc-bios/s390-ccw/iplb.h         | 62 +++++++++++++++++++++++++++++++++
->  2 files changed, 75 insertions(+)
-> 
-> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-> index be98dc143d..29c5d59b99 100644
-> --- a/docs/specs/s390x-secure-ipl.rst
-> +++ b/docs/specs/s390x-secure-ipl.rst
-> @@ -86,3 +86,16 @@ Subcode 1 - perform signature verification
->      * ``0x0302``: PKCS#7 format signature is invalid
->      * ``0x0402``: signature-verification failed
->      * ``0x0502``: length of Diag508SigVerifBlock is invalid
-> +
-> +IPL Information Report Block
-> +----------------------------
-> +
-> +The IPL Parameter Block (IPLPB), utilized for IPL operation, is extended with an
-> +IPL Information Report Block (IIRB), which contains the results from secure IPL
-> +operations such as:
-> +
-> +* component data
-> +* verification results
-> +* certificate data
-> +
-> +The guest kernel will inspect the IIRB and build the keyring.
+--Sig_/D0uwH9Sgf_kK54QhULLXHWX
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-This needs more elaboration.  Is the data listed above used in
-the keyring?  Maybe rewording to "The guest's kernel will use this data
-in the IIRB when building its keyring." ?
+On Tue, 6 Jan 2026 14:48:14 -0500
+Peter Xu <peterx@redhat.com> wrote:
 
-> diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
-> index 08f259ff31..cc3ecc69e5 100644
-> --- a/pc-bios/s390-ccw/iplb.h
-> +++ b/pc-bios/s390-ccw/iplb.h
-> @@ -23,6 +23,68 @@ extern QemuIplParameters qipl;
->  extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
->  extern bool have_iplb;
->  
-> +struct IplInfoReportBlockHeader {
-> +    uint32_t len;
-> +    uint8_t  iirb_flags;
+> On Sun, Jan 04, 2026 at 01:44:52PM +0800, Zhang Chen wrote:
+> > On Tue, Dec 30, 2025 at 11:02=E2=80=AFPM Peter Xu <peterx@redhat.com> w=
+rote: =20
+> > >
+> > > On Tue, Dec 30, 2025 at 03:05:43PM +0100, Lukas Straub wrote: =20
+> > > > Hello everyone,
+> > > > This adds COLO multifd support and migration unit tests for COLO mi=
+gration
+> > > > and failover. =20
+> > >
+> > > Hi, Lukas,
+> > >
+> > > I'll review the series after the new year.
+> > >
+> > > Could you still introduce some background on how you're deploying COL=
+O?  Do
+> > > you use it in production, or for fun?
+> > >
+> > > COLO is still a nice and interesting feature, said that, COLO has qui=
+te a
+> > > lot of code plugged into migration core.  I wished it's like a multifd
+> > > compressor which was much more self-contained, but it's not.  I wishe=
+d we
+> > > can simplify the code in QEMU migration.
+> > >
+> > > We've talked it through before with current COLO maintainers, it look=
+s to
+> > > me there aren't really much users using it in production, meanwhile C=
+OLO
+> > > doesn't look like a feature to benefit individual QEMU users either.
+> > >
+> > > I want to study the use case of COLO in status quo, and evaluate how =
+much
+> > > effort we should put on it in the future.  Note that if it's for fun =
+we can
+> > > always use a stable branch which will be there forever.  We'll need to
+> > > think about QEMU evolving in the future, and what's best for QEMU.
+> > >
+> > > Thanks,
+> > > =20
+> >=20
+> > Hi Lukas and Peter, =20
+>=20
+> Hi, Chen,
+>=20
+> >=20
+> > Thanks for this series, I will support for background info if Peter
+> > have any questions. =20
+>=20
+> Thanks, I believe my major question so far was, whether we should depreca=
+te
+> COLO in migration framework. :)
+>=20
+> The netfilters and rest can be discussed separately.
+>=20
+> Now looking back at my initial ask in Zhijian's fix, I still agree with
+> Zhijian on these two points mentioned:
+>=20
+> https://lore.kernel.org/all/b2eadde7-57e9-426c-8487-e500ba06410e@fujitsu.=
+com/
+>=20
+> That is:
+>=20
+>         - Active users who depend on it.
+>         - A unit test for the COLO framework.
+>=20
+> Meanwhile, I can't see how COLO would win if to be compared with some
+> app-level HA infrastructure.. considering the overhead it requires on
+> running two VMs and compare every packet.
+>=20
+> Lukas, thanks for trying to fix the 2nd.  I apologize that I still
+> requested you to send these patches, without further raising the attention
+> that I still want to discuss deprecation.  I don't think anyone yet proved
+> we should keep COLO.  I do plan to send one patch adding COLO framework to
+> deprecation, if nobody would stop me in a week justifying question 1 abov=
+e.
 
-s/iirb_flags/flags
+Hello Peter,
 
-> +    uint8_t  reserved1[2];
-> +    uint8_t  version;
+I am a consultant on open-source high availability and fault tolaerance
+solutions. I provide a complete cluster management solution with
+automatic failover and failback for Qemu COLO.
 
-Is version used?  If not, merge into one `reserved` field.
+Qemu COLOs lockstepping architecture has a big performance advantage
+and it outperforms the market leader by 10x-100x in latency.
+No one else provides this unique architecture.
 
-> +    uint8_t  reserved2[8];
-> +};
-> +typedef struct IplInfoReportBlockHeader IplInfoReportBlockHeader;
-> +
-> +struct IplInfoBlockHeader {
-> +    uint32_t len;
-> +    uint8_t  ibt;
+I have customers that depend on this.
 
-s/ibt/type
+I occasionally get inquiries about Qemu COLO even without doing
+any kind of marketing. So there is a general interest for this.
 
-> +    uint8_t  reserved1[3];
-> +    uint8_t  reserved2[8];
+Also, Canonical considers providing this to one of their customers.
 
-Make this one `reserved[11]`.
-
-> +};
-> +typedef struct IplInfoBlockHeader IplInfoBlockHeader;
-> +
-> +enum IplIbt {
-> +    IPL_IBT_CERTIFICATES = 1,
-> +    IPL_IBT_COMPONENTS = 2,
-> +};
-
-s/IplIbt/IplInfoBlockType
-
-s/IPL_IBT/IPL_INFO_BLOCK_TYPE
-
-It becomes more verbose, but it's much easier to read.
-
-> +
-> +struct IplSignatureCertificateEntry {
-> +    uint64_t addr;
-> +    uint64_t len;
-> +};
-> +typedef struct IplSignatureCertificateEntry IplSignatureCertificateEntry;
-> +
-> +struct IplSignatureCertificateList {
-> +    IplInfoBlockHeader            ipl_info_header;
-> +    IplSignatureCertificateEntry  cert_entries[MAX_CERTIFICATES];
-> +};
-> +typedef struct IplSignatureCertificateList IplSignatureCertificateList;
-> +
-> +#define S390_IPL_COMPONENT_FLAG_SC  0x80
-> +#define S390_IPL_COMPONENT_FLAG_CSV 0x40
-
-Rename these to S390_IPL_DEV_COMP_FLAG_*
-
-> +
-> +struct IplDeviceComponentEntry {
-> +    uint64_t addr;
-> +    uint64_t len;
-> +    uint8_t  flags;
-> +    uint8_t  reserved1[5];
-> +    uint16_t cert_index;
-> +    uint8_t  reserved2[8];
-> +};
-> +typedef struct IplDeviceComponentEntry IplDeviceComponentEntry;
-> +
-> +struct IplDeviceComponentList {
-> +    IplInfoBlockHeader       ipl_info_header;
-> +    IplDeviceComponentEntry  device_entries[MAX_CERTIFICATES];
-> +};
-> +typedef struct IplDeviceComponentList IplDeviceComponentList;
-> +
-> +#define COMP_LIST_MAX   sizeof(IplDeviceComponentList)
-> +#define CERT_LIST_MAX   sizeof(IplSignatureCertificateList)
-> +
-> +struct IplInfoReportBlock {
-> +    IplInfoReportBlockHeader     hdr;
-> +    uint8_t                      info_blks[COMP_LIST_MAX + CERT_LIST_MAX];
-> +};
-> +typedef struct IplInfoReportBlock IplInfoReportBlock;
-> +
->  #define S390_IPL_TYPE_FCP 0x00
->  #define S390_IPL_TYPE_CCW 0x02
->  #define S390_IPL_TYPE_QEMU_SCSI 0xff
-
-Other than the nits above, the data structure layouts are correct.
-
--- 
 Regards,
-  Collin
+Lukas Straub
+
+
+>=20
+> We kind of proved almost nobody is actively using COLO anymore in the past
+> few releases.  If nobody is using COLO, we should simply drop it.
+>=20
+> > And CC Hailiang Zhang, although he hasn't replied to emails for a long =
+time.
+> > If no one objects, I think Lukas can replease Hailiang for COLO Framewo=
+rk.
+> >=20
+> > COLO Framework
+> > M: Hailiang Zhang <zhanghailiang@xfusion.com>
+> > S: Maintained
+> > F: migration/colo*
+> > F: include/migration/colo.h
+> > F: include/migration/failover.h
+> > F: docs/COLO-FT.txt =20
+>=20
+> Right, this is also another reason why I think we may want to deprecate
+> COLO framework.
+
+I will take over maintainership.
+
+>=20
+> Since I requested this series (sorry again, Lukas), I'll review it today =
+no
+> matter if we decide to merge this series at last, or deprecate COLO
+> framework.
+>=20
+> Thanks,
+>=20
+> >=20
+> > Thanks
+> > Chen
+> >  =20
+> > > >
+> > > > Regards,
+> > > > Lukas
+> > > >
+> > > > Signed-off-by: Lukas Straub <lukasstraub2@web.de>
+> > > > ---
+> > > > Lukas Straub (3):
+> > > >       multifd: Add colo support
+> > > >       migration-test: Add -snapshot option for COLO
+> > > >       migration-test: Add COLO migration unit test
+> > > >
+> > > >  migration/meson.build              |   2 +-
+> > > >  migration/multifd-colo.c           |  57 ++++++++++++++++++
+> > > >  migration/multifd-colo.h           |  26 +++++++++
+> > > >  migration/multifd.c                |  14 ++++-
+> > > >  tests/qtest/meson.build            |   7 ++-
+> > > >  tests/qtest/migration-test.c       |   1 +
+> > > >  tests/qtest/migration/colo-tests.c | 115 +++++++++++++++++++++++++=
+++++++++++++
+> > > >  tests/qtest/migration/framework.c  |  69 +++++++++++++++++++++-
+> > > >  tests/qtest/migration/framework.h  |  10 ++++
+> > > >  9 files changed, 294 insertions(+), 7 deletions(-)
+> > > > ---
+> > > > base-commit: 942b0d378a1de9649085ad6db5306d5b8cef3591
+> > > > change-id: 20251230-colo_unit_test_multifd-8bf58dcebd46
+> > > >
+> > > > Best regards,
+> > > > --
+> > > > Lukas Straub <lukasstraub2@web.de>
+> > > > =20
+> > >
+> > > --
+> > > Peter Xu
+> > > =20
+> >  =20
+>=20
+
+
+--Sig_/D0uwH9Sgf_kK54QhULLXHWX
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEg/qxWKDZuPtyYo+kNasLKJxdslgFAmlpX+wACgkQNasLKJxd
+slj+5w//SntY8UsmJCid5H7IbfRSWN2zCE+Bb1JMBuFt/d1BUFD99eDJsooX3ZDo
+EYFs1lKf2uY3gCbnra3lzYzt4cCENbkX/kdS9WjyotGlZgkHN9RVtW2gBOJhur83
+swbo6NFtZ+XT0wkyplFvh2xwqLy4TUKP7au2jQO1bkRGzvFuo5u9ft8Ja5Abw0Tr
+jMoH2rA7Vh2dYNUrtlXST3hbH91akZtq0KneaqKUB5CLAY5/1rY5abRX0wElA2Zd
+3alv7kOLTrIEKKMr+j+LXM5SpX2//4hXFt66b0Nm4+msuARsODXfphKj4On/vlQF
+c2ebPASQXRnzIi77lB9rPIU5LXpTi6AueXms3JBs5wEYU2lhuGnSmTfSIe2Zjh5P
+HJoen4UtP/JmMk4MjzBgGaijCugVUZ7gfTpDh5lMGY4osl9GSLRreYUXBC8IeScq
+zM/eir6T8JMivhVt4rt1gLuZ/pDp9XxUoGnQ4/45vbEm/CIuH7pNpMZu0rtAMRwG
+Nhm3VWMT8t7WhgZywv54WrNEAlj+e/9jYhwuRBmW4gbLn9vNlhuJKYZVDnYA6Pva
+zKMjjN4lJ8kLdTe72OBuFVSiDFDz7OjSIlAH+QsDB6iP8XmpWtyPtfoHjBukRsP5
+ZZFeJQ4R9mz5pBL0VmoyNddCPrnMazsZVdmjD0HSNs8fStiQyuQ=
+=MdzB
+-----END PGP SIGNATURE-----
+
+--Sig_/D0uwH9Sgf_kK54QhULLXHWX--
 
