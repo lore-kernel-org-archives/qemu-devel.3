@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFFE3D4661E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 19:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30CAED4661E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 19:54:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgTPP-0003WN-PD; Thu, 15 Jan 2026 14:53:31 -0500
+	id 1vgTQG-0004D0-Jh; Thu, 15 Jan 2026 14:54:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgTPN-0003UL-Me
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:53:29 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgTPu-0003xr-I6
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:54:06 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgTPM-0000nR-6e
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:53:29 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-47d1d8a49f5so8143115e9.3
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 11:53:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgTPt-00016Y-5I
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:54:02 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-47ee07570deso10581115e9.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 11:54:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768506806; x=1769111606; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768506839; x=1769111639; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZyuAt08zLTT6cT4HzTZ8dzSryrV2/NU9Nv9qwkCJbcg=;
- b=dVBN8BdM1eX3Az+tF2CRQXpFlCIRPHGnzkHTCTxLTcKaRF19YbkDCX1jHWFNrZxoo0
- KHZb99oy2vxEuNpa/kWWe8s/1/DDebQgdFLttcSUaOZmfVdqWmKl2fAecryw0Ti8MIUL
- x8NeJ2kGJiuBk7pGuARxPyjh/U2Km4bJVOPfyvySKGqzDXuKB/ztc2HDDVn5vPBeVCh5
- r0mxeapvRhD2bt7Te6cup33H10klj7A8zY0uxzXwwoq1SVVGpxnCymneIFmCPPGj2+xV
- AASzHkisPef6qDYaI6fQFFO5sfCwzAVV2MzgqUfrrkLtDkxWRJ8z/PXgaD4qYqvGXxje
- QGHw==
+ bh=sbdTg4dIcqWLj12DXpgDtbHJbnMpx+2B8gJGT4AskMk=;
+ b=Q0FaKKjiYHC8vyZ4hadMvxdA7D8g1e+h9NY1LRBQ7B7mIT54n9CvlqwfbKJuGrlwfJ
+ rSqopCOR1Irafhyov47TJ6OAVa5VRjmMI4xleYK1fUSciE0fmsZMQQXUP0kwKMc5WYEM
+ NKfcfbbDrtlotj4g9jBEteTFvoghIr0n6RSzz5IDfmgMxm6mDKhgZlAeq1m9n81OrYZw
+ g4XfRcTTDffpBkD75h42L8aH1S8JjiHTEsHAVLeDTBaOcLLV/1EdUxgvAoSTPnPvVjPs
+ +PArjBptdvK06SyQPwBdvJ3xYkzCwMuJAK2AQ3nY976g/ZyK2neaB9UyXohvNuhNBd+X
+ jPlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768506806; x=1769111606;
+ d=1e100.net; s=20230601; t=1768506839; x=1769111639;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ZyuAt08zLTT6cT4HzTZ8dzSryrV2/NU9Nv9qwkCJbcg=;
- b=nYnkvHZPOicS7SgRRXEucyJAAst0rKwmo6L08EwKJKaiX9maAxFMf4kBiB6aP1AUPO
- IQPIOyASHeX6T2rvDB+JM6bt8xQb4LIkCLtfAFReyX/LlDeq9F6KCZmlDb73DbLoVND8
- SNNUVwkzQiW4b5ev+1DVXtSiv2w9eRiIixmBNQUC7LrbUwHtUMVu3EyNGKTIs14sNm+1
- RTuZEqe/FCCSDKLTwzbtVwtSysR5E3Y4xWTYHHtd24q9empqgHTo64mUZ0hDrWjl0PZs
- H1226RIp+M/BwTB6aQkpi30uKKmprsTyMVrdRfAcJoTx5ILmow8bR37E6JdTGzCbE+1m
- LxaQ==
-X-Gm-Message-State: AOJu0YwImgZPySOwSC248jLay8Z/VJE6YJ6tVRnXCsn0tsn43LjsTyDu
- n4ay2Hst0WD4xPHLV4+aOlBxiTWJ1FgBRQVfy8tbDV4d7gFtKdKvyhWOLM75HwJ47XsRznhSiRf
- +ypYUjcw=
-X-Gm-Gg: AY/fxX4Unz2oj0BupNwx764utkpQB97yP/QOwxv3zgMlw1Xeb5dULbGR1I8HADevier
- qO1hMTXxD1pHgUdQf0JMBNVWkowG/l5dr9SMOwQv9TY/vlnpIpdiW2i3Zk1WdnqrrFUuDrqgqQ6
- ZvuK7R9F8cQY13Nsv4Nf5/T/XxcnpjunPDKKodvmq3XEwTFxpl1vrtxPnzRrz8y4AxwNPYpDe1U
- ocU9ZQHuRHdSwZ4ZtrW4iWD5Tcd1AqOqJBHE28t3p4PN6YWELPHzGRFaHMiFmO3YiY+7mqpwFdS
- YvxGUrb7XOg4vLhA+whBX02USfJrBQ0ty+5K6/4+4+NC1XwOQszex88y5UnQyxKnNNQ4cRmYQ7L
- h025j6oAjVXmu+wYTCtmoIZJUH98EoIqJEZRXZBKV1LZS0Y/dtRySUN7ezZ/OaoyZiqju8Sn9A3
- Kuykb+1di3zopEvy/ixKz8xN2GhCGYsqHten0aP5iCAVqtvemWYl6ssMIzd2hEXkXP
-X-Received: by 2002:a05:600c:3b9f:b0:477:abea:9028 with SMTP id
- 5b1f17b1804b1-4801e2f2989mr11046875e9.6.1768506806179; 
- Thu, 15 Jan 2026 11:53:26 -0800 (PST)
+ bh=sbdTg4dIcqWLj12DXpgDtbHJbnMpx+2B8gJGT4AskMk=;
+ b=kA1dWsX/eFfmN2NoEZxxDNPSyagD2eGj1FUf9GciY4aa1IZ86QZVuYvr71QkVxMZiF
+ xjxUoA+qleRLDrzVtRO9szdM4Yfh8QPllRlEVbOlQUt9kebUe3wUqA2GRJUItJfDNkM9
+ fwvTWDB9H89WjBcIDa2LlE3Dh65fiCZnPArqrsj/TKOPyd0VtzabEaATfdmz2vRplSQf
+ Zc+65OcBcrUE/Laps8l5SDN6vKJnbW0NEw+5Sc15GOWkO+dtq84GTHLsDX7xPU289Vgn
+ 4aNdwBYTnwIMRuv1ljvzFXvX9ph0AJBvvvgaSonfkF1nJEVj2Y12nwVINQZZYpQVK9aO
+ 8PIQ==
+X-Gm-Message-State: AOJu0YxSAV14e92H02rf1etgdXyXZc8e2mzQ/UHdp1fQC40VlPVckYcv
+ 43ZsxJHm8fsqs3JtdjNtlieW0tTWKblXVMDHl7210DIhdqx6wF2T7djRAbjaENfg3wcJaWJdy+t
+ pjreoWqU=
+X-Gm-Gg: AY/fxX40nUctB8e46su3wnMDbCBEiQWdSbQ5mmhox4kwNnK4tIndldDKY1PmE96pTxu
+ Py9z/G2OZcDzHyp5mkzAs0FVY6aNPGlCibL7B8Nvn1artV+u5wAlIa0t8al65U1IxU3ErByFp5p
+ FIq8yWEa0oqJXag3fidz+5zaQni1lOwcae1aLXWXbA0j2cHtCtIEKmnYslkJU5ewMWjW8M7YsB8
+ EsUmI5uxrcQQKAPCqksl64H4oZHR08Hdg4bar9F7La06XGnkuttdPYfHPWuJvLyXWpkHDRJXgyy
+ uXI0dP8a4T7OSptAhBFj7b+K+Itre+iSteTaOHQe+1uSZZX+MNW0q34UYY/ff00LVU33VKmgTS9
+ YyEPMWWL7W9vTRj/tBWVhW0DLaSN8/H4Lrh1gvwf1/cSirJ/kNrIXDGOOAAPd32LfRtt+rwL51I
+ YqlvnBPOjjmTAQBzgOVNewl7Pl+sSt5LG/BWsuQtBBPq3d76YO/f6+Qw==
+X-Received: by 2002:a05:600c:3f07:b0:477:2f7c:314f with SMTP id
+ 5b1f17b1804b1-4801eac2fe6mr3851055e9.10.1768506839282; 
+ Thu, 15 Jan 2026 11:53:59 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e9ee5c3sm2203215e9.2.2026.01.15.11.53.25
+ 5b1f17b1804b1-47f42907141sm62176295e9.9.2026.01.15.11.53.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 11:53:25 -0800 (PST)
-Message-ID: <12379570-0b83-4ebf-92fe-609d6327c700@linaro.org>
-Date: Thu, 15 Jan 2026 20:53:24 +0100
+ Thu, 15 Jan 2026 11:53:58 -0800 (PST)
+Message-ID: <9469a67c-cb31-47a0-b609-4a30f1e822a8@linaro.org>
+Date: Thu, 15 Jan 2026 20:53:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/nvmm: Fix 'cpu' typo in nvmm_init_vcpu()
+Subject: Re: [PATCH] tests/functional: Require TCG to run reverse debugging
+ tests
 Content-Language: en-US
 To: qemu-devel@nongnu.org
-Cc: Reinoud Zandijk <reinoud@netbsd.org>, qemu-stable@nongnu.org,
- Thomas Huth <thuth@redhat.com>
-References: <20260113203924.81560-1-philmd@linaro.org>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+References: <20260115161029.24116-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260113203924.81560-1-philmd@linaro.org>
+In-Reply-To: <20260115161029.24116-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,23 +105,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/1/26 21:39, Philippe Mathieu-Daudé wrote:
-> Fix typo to avoid the following build failure:
+On 15/1/26 17:10, Philippe Mathieu-Daudé wrote:
+> Record/replay is specific to TCG. Require it to avoid failure
+> when using a HVF-only build on Darwin:
 > 
->    target/i386/nvmm/nvmm-all.c: In function 'nvmm_init_vcpu':
->    target/i386/nvmm/nvmm-all.c:988:9: error: 'AccelCPUState' has no member named 'vcpu_dirty'
->      988 |     qcpu->vcpu_dirty = true;
->          |         ^~
+>    qemu-system-aarch64: -icount shift=7,rr=record,rrfile=/scratch/replay.bin,rrsnapshot=init: cannot configure icount, TCG support not available
 > 
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Fixes: 2098164a6be ("accel/nvmm: Replace @dirty field by generic CPUState::vcpu_dirty field")
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> Untested.
-> ---
->   target/i386/nvmm/nvmm-all.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   tests/functional/reverse_debugging.py | 2 ++
+>   1 file changed, 2 insertions(+)
 
 Queued via accel-next tree, thanks.
 
