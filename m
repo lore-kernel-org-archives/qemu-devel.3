@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C31D8D3CC84
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 00:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32B06D3CC8B
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 00:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgB3m-0005KQ-B4; Wed, 14 Jan 2026 19:17:58 -0500
+	id 1vgB2m-0000A5-NL; Wed, 14 Jan 2026 19:16:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vgB3j-000595-VB
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 19:17:55 -0500
-Received: from p-west3-cluster4-host6-snip4-2.eps.apple.com ([57.103.74.203]
+ id 1vgB2k-0008UI-7a
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 19:16:54 -0500
+Received: from p-west3-cluster5-host12-snip4-10.eps.apple.com ([57.103.72.123]
  helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vgB3i-0002Ir-HD
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 19:17:55 -0500
+ id 1vgB2i-00024b-K3
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 19:16:53 -0500
 Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-3a-60-percent-0 (Postfix) with ESMTPS id
- 766611800412; Thu, 15 Jan 2026 00:17:50 +0000 (UTC)
+ 5936A1800435; Thu, 15 Jan 2026 00:16:50 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=j3gxaGgJ/UOlr7E7Wf1HhS3Y6+PzTtQg7lYYYapxm5A=;
+ s=sig1; bh=F9oLyg/qgYRJ/JZV5dNJO6abkXMsGF/lMhk1P5D4R60=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=WUPKWO3G+qTUjzeVfm3tOxfIIkQVN0eECH5wH2/qmIW60WWGmYtkWvAu91watGYvWfEo4ejWnFCd2nvJDvGQMV7HGKVKeWBdusNPLbFh+PGS+sxcoV9ySFP4o2TdRdI5pgl00mA6heV3rlH78aq4kOmJheIYPD6iuhpksAUvPjSf7zMMcwzEjUMOird3Hv5v4zErxqlWshNxIaf0xz4WtMcNER9F8AIViFAqMy4cJdBMQkjrJrrYh5B9fWH3Z1blWAU+8QhePa0FFaigzsVJw2+5n1syAwuiHHMXta6QyPC0hBpXCS2oYw+5DXbFIvKJpjIdC3IrnT2p9xyHnJJe2g==
+ b=IqOztzt9StR+6sYp8cPTFJVLBOVBkGBx8LkA/84CvU4RMI27PTdJpmdeIGG0uuanNkkgALopaVPWZThLZNhwyjVjG/JqaBG03zuYg/V/IBVh9fGUO7n9VwcHwjlTOEa9sTDs3my9/miAvyo4OKutd/2H4EMnjQOU25n5r42cm6ouR7BdY7a7MdPcDLJDbOwgW01eVTsaUpWNtTVoEbkXbAFGSSrfEYNeogxCVuw/BAm9AuGPEbhuCVxedHMCtMPQbEKsQnWijW9ZRLnAkQ4qSKC6OYpjPL38knm8fzrneB7HMjQTr4Z874LKjkyiNgmxDvO+zZyt4K9BvJSHBimFNA==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.154.37])
  by p00-icloudmta-asmtp-us-west-3a-60-percent-0 (Postfix) with ESMTPSA id
- DCE571800440; Thu, 15 Jan 2026 00:17:42 +0000 (UTC)
+ EF17018000CC; Thu, 15 Jan 2026 00:16:42 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: mohamed@unpredictable.fr,
 	qemu-devel@nongnu.org
@@ -55,44 +55,45 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v15 24/26] whpx: arm64: check for physical address width after
- WHPX availability
-Date: Thu, 15 Jan 2026 01:15:03 +0100
-Message-ID: <20260115001505.57237-25-mohamed@unpredictable.fr>
+Subject: [PATCH v15 16/26] whpx: change memory management logic
+Date: Thu, 15 Jan 2026 01:14:55 +0100
+Message-ID: <20260115001505.57237-17-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260115001505.57237-1-mohamed@unpredictable.fr>
 References: <20260115001505.57237-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Info: v=2.4 cv=a7c9NESF c=1 sm=1 tr=0 ts=69683230
+X-Proofpoint-ORIG-GUID: NylZ5WPpvIk-3fR0CGbUS0jBsfC-pD_r
+X-Authority-Info: v=2.4 cv=L48QguT8 c=1 sm=1 tr=0 ts=696831f3
  cx=c_apl:c_apl_out:c_pps a=qkKslKyYc0ctBTeLUVfTFg==:117 a=vUbySO9Y5rIA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=lhTSZ31de6YUvqMuns4A:9
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=Warxv3Xc6ASOjn9-k1MA:9
  a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: BuuWRK_Lf1o0Y0N85gXC5QsfmjBvE1cH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDAwMCBTYWx0ZWRfX7HAmcsrnwADA
- Mfh4zNbG2bZJp6womv0C97Yfnoa9kr16AfsymB+GG6xzWoJ7KhE/Xf1u6vijddYm09tSaNBoBmM
- ihYFx4MncKEBLXPDEwqOJ27+2rU8mtcna9pKB2Mv4i0H75T2mzVE6tw8ChlwEQkFxGt3O8jea49
- t+ariZjcCHOePPDHt57uORPArb4FlcrtamLipQtdjq/XeEAIR9FmpcyRxhJZrgOEgULbX2Bpsi1
- 5DqJbIarIxbQdMg6tEP6nBYvXxmLBsDRll0e/OMTzofSpKNql4DqAivSTQr4+T1puxNj34X6026
- QMRmMzIZPjnAiaHubD8
-X-Proofpoint-ORIG-GUID: BuuWRK_Lf1o0Y0N85gXC5QsfmjBvE1cH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDAwMCBTYWx0ZWRfX6SGmzdcuwhmo
+ 1Hg+8FKdZ4647bQkzF3bBW0KFEUy9ytOtpyA6DF2WKvlwPmW4miOqU7ePKMBXcIWtVDiaKo0xRh
+ b1M8akYujqaux/WHMcoCqXZgH+ol+uopAZgeHBgQD7OF843HSW1tIIBnXadNqc0MZ8OC4AyQ1au
+ qt0/W6HXf7hgaHrhoP/7I+ihiNZKEIvaZJ5/yG4K1oJzwRBLAUQgokaQI0jBvMrKfgfj3OGm1Xs
+ gkY4nzwz89ohZ9NsQZeuPHkQeVnhH1um6Wzfyp6BENmFRk1Pl6Ju5rRLN+l44RPaCBOrREeE/bA
+ EaRzJCmAFXGwKiQSkCC
+X-Proofpoint-GUID: NylZ5WPpvIk-3fR0CGbUS0jBsfC-pD_r
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-14_07,2026-01-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- bulkscore=0 suspectscore=0 spamscore=0 malwarescore=0 clxscore=1030
- adultscore=0 mlxlogscore=999 mlxscore=0 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601150000
-X-JNJ: AAAAAAABRHA02LwuS8bMOV//VuGbwwN7qP1XWZWUe9FCH8SMcFY8uI578w7jFeKiJKviayplt5Aq4+z/heNzIT+b/Eoq9KVNXzJqmF/V9CkMTNvJN2Gj7umedawJh6osIlTVw2FGk9CiuBhjFGs+4IW81zbBdnNTuO6L069xizv/uJxj49QsTro3N7Pyap7Yr/WZjyJKsGEiVikAWGT3AZnuvUPQONjNheTy/2PXNjxaxJFK0GFDTbbHyqB7PYEm1l1ON9uWJd/Z8oIZqAh/UzOyD+DCgH77QNJ2Twrv61qviTUYAhK7xftTAeld+CBXS5Upzt8lQ5rPWrze8Mzl9Yb/0cpvzN4kQVTjQL5CDW4BpaKsEkilBjEkD3Vbc6osMnojJGV/L5zZyAFzTf0SeUVw4VLgZQ9Ll9SB4n12yIVrc5bWJ1VLIgdw74QvgHYTjog/fZuh7xtM+j1r08+hBUh+iQGoq1H33gL3ZTRlF3g2glkpEkqvvt2QQ57ZKS12aYluJt5YlhTs0/Gou6lc852qy1KN9vY7gATo1zrdYYgarL6fBgmTMb6XMMI3UjIJX0xb97xjIixcDJBM4Fb6vXnl/HVqSi2FnO+07B8N7KPsaIetGz2nRvsl5+k+1rVH7pkBmIjfmlVsDGW6eQf/X1IdhBxDclsTrUxUyB1rZBDcSFqb5spyGcHObFax+HGDVQq+EamBXShnQxOjOXZyNQYd2LmXjbdtHB/BxVuZUQwCgWWZ7kpJ1ZpEQ8tX1JBdXkO5Q5gQDQigBopDyzGHIlrU+uTmlrJjLVOg9Y/+egYBut4QK249wLRfH6csbmdgdU0Lraw+N27Uge/GwKuwgrQtGbevXKfBxeOR7KmDVRXL0I8z50vFdq9SrSVFCfs1Vj9wTQAntxpTezhT3Z8KlHYt/eXVenKbxrtYo6kgIV49L8OSDNQ9iZAMeGKvJ7gl05qcZZyO3ul2FdRpYTGeavVt
-Received-SPF: pass client-ip=57.103.74.203;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ phishscore=0 clxscore=1030 spamscore=0 mlxscore=0 suspectscore=0
+ mlxlogscore=999 adultscore=0 malwarescore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2601150000
+X-JNJ: AAAAAAABz3pmGMNRX2nHCx553nipzu/u3DjEYNYkmc5xHkx0UWfyF96JKzD+JQFtFqyKQFkJGJp0yEnVZriBBF0J6YM5DTMq5kf8oNZQ8WWaa72HzEi+aSoktgr++LyrdOmJ4GG6eMxLzQSWPyNBVc/Jhtr8s+kaGlPhKlzRKEq+/RBlVo7SAXKfMY5QgvrAJ+9z5GcC9030HqU4f/0Ezq1CVkiOz6MX8jp2rMXOd6In1dhL5UTZdREplXzyr9zeE96O07OJQ+Skpj1akjGA8uegTN+qAMDfn3OdPyxxDqxmxRO0a+WEP4UoedYhVnYVYcLkIagB0Pe8gMpeoyiu+0E46sL7FRkoO+75lxOMIaloLuG9fgOY0Jsbs1XiFTNH4rW3R3zPL3cw4qyIgU3VHwyd6UXsSN43ArXo1YU0oNYZIym9Ds1T+xOn/kWwsk2LN8cYcu2Gaffy2RKud4f2R8e3J+S6xhrwoyiKa9V9XnlSgiEuxLo41m4z2NTKtddSgU8SRRxlyqLXG32oZQcRx7OVLQB+D7WhkAzu9NKZ6t3y9I3cW33dzwiSDrRrfKnu8ruYhy2BEKFxONo5VQY8luB6qiWvqTChcMrWc+B+1iMBrYdDjuIv/vZOISHuskaHCYTRtiRbLWESPsgPuQPRG/0eArHfyHXmrVgbOSxM2FaNfZ+MPGNhw0SHHCu75eb6NW2kx2MSYS2IZgnhyZsFUx3gjiHKIaepfrJtg4iohIDj3r5RuPlD9jkrn+SPN877bq8AXeJAU+oZFPO/i/+ul3x4ZIzCRwDYkBJRahVTu+CJWAyZrj766V3Bd94syAnECGNJJj6neDM5sLZquIlTWerV0DGvjD3mHSDxrGw3/FkZPG5MuQQVNSorTEw3AzWGzXnaWY1H6ZxX/DUuGTLkXhXkiCQnZeH0aBXsi7+omrHSkdbFBlnZ04qLu9fxWcTsNrR9+gYqaVWWXCWn
+Received-SPF: pass client-ip=57.103.72.123;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,59 +109,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the case where WHPX isn't supported on the platform, makes the
-intended error appear instead of failing at getting the IPA width.
+This allows edk2 to work on Arm, although u-boot is still not functional.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/whpx/whpx-all.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ accel/whpx/whpx-common.c | 97 +++++++++++++++-------------------------
+ 1 file changed, 36 insertions(+), 61 deletions(-)
 
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index ab31371aea..def85988e7 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -654,7 +654,7 @@ uint32_t whpx_arm_get_ipa_bit_size(void)
-         WHvCapabilityCodePhysicalAddressWidth, &whpx_cap,
-         sizeof(whpx_cap), &whpx_cap_size);
-     if (FAILED(hr)) {
--        error_report("WHPX: failed to get supported"
-+        error_report("WHPX: failed to get supported "
-              "physical address width, hr=%08lx", hr);
-     }
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index 827f50f3e0..f018a8f5c7 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -255,89 +255,64 @@ void whpx_vcpu_kick(CPUState *cpu)
+  * Memory support.
+  */
  
-@@ -879,15 +879,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
-     }
+-static void whpx_update_mapping(hwaddr start_pa, ram_addr_t size,
+-                                void *host_va, int add, int rom,
+-                                const char *name)
++static void whpx_set_phys_mem(MemoryRegionSection *section, bool add)
+ {
+     struct whpx_state *whpx = &whpx_global;
++    MemoryRegion *area = section->mr;
++    bool writable = !area->readonly && !area->rom_device;
++    WHV_MAP_GPA_RANGE_FLAGS flags;
++    uint64_t page_size = qemu_real_host_page_size();
++    uint64_t gva = section->offset_within_address_space;
++    uint64_t size = int128_get64(section->size);
+     HRESULT hr;
++    void *mem;
  
--    if (mc->get_physical_address_range) {
--        pa_range = mc->get_physical_address_range(ms,
--            whpx_arm_get_ipa_bit_size(), whpx_arm_get_ipa_bit_size());
--        if (pa_range < 0) {
--            ret = -EINVAL;
--            goto error;
--        }
+-    /*
+-    if (add) {
+-        printf("WHPX: ADD PA:%p Size:%p, Host:%p, %s, '%s'\n",
+-               (void*)start_pa, (void*)size, host_va,
+-               (rom ? "ROM" : "RAM"), name);
+-    } else {
+-        printf("WHPX: DEL PA:%p Size:%p, Host:%p,      '%s'\n",
+-               (void*)start_pa, (void*)size, host_va, name);
+-    }
+-    */
+-
+-    if (add) {
+-        hr = whp_dispatch.WHvMapGpaRange(whpx->partition,
+-                                         host_va,
+-                                         start_pa,
+-                                         size,
+-                                         (WHvMapGpaRangeFlagRead |
+-                                          WHvMapGpaRangeFlagExecute |
+-                                          (rom ? 0 : WHvMapGpaRangeFlagWrite)));
+-    } else {
+-        hr = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
+-                                           start_pa,
+-                                           size);
 -    }
 -
-     whpx->mem_quota = ms->ram_size;
+-    if (FAILED(hr)) {
+-        error_report("WHPX: Failed to %s GPA range '%s' PA:%p, Size:%p bytes,"
+-                     " Host:%p, hr=%08lx",
+-                     (add ? "MAP" : "UNMAP"), name,
+-                     (void *)(uintptr_t)start_pa, (void *)size, host_va, hr);
++    if (!memory_region_is_ram(area)) {
++        if (writable) {
++            return;
++        } else if (!memory_region_is_romd(area)) {
++            add = false;
++        }
+     }
+-}
+-
+-static void whpx_process_section(MemoryRegionSection *section, int add)
+-{
+-    MemoryRegion *mr = section->mr;
+-    hwaddr start_pa = section->offset_within_address_space;
+-    ram_addr_t size = int128_get64(section->size);
+-    unsigned int delta;
+-    uint64_t host_va;
  
-     hr = whp_dispatch.WHvGetCapability(
-@@ -915,6 +906,14 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
+-    if (!memory_region_is_ram(mr)) {
+-        return;
++    if (!QEMU_IS_ALIGNED(size, page_size) ||
++        !QEMU_IS_ALIGNED(gva, page_size)) {
++        /* Not page aligned, so we can not map as RAM */
++        add = false;
      }
  
-+    if (mc->get_physical_address_range) {
-+        pa_range = mc->get_physical_address_range(ms,
-+            whpx_arm_get_ipa_bit_size(), whpx_arm_get_ipa_bit_size());
-+        if (pa_range < 0) {
-+            return -EINVAL;
+-    delta = qemu_real_host_page_size() - (start_pa & ~qemu_real_host_page_mask());
+-    delta &= ~qemu_real_host_page_mask();
+-    if (delta > size) {
+-        return;
+-    }
+-    start_pa += delta;
+-    size -= delta;
+-    size &= qemu_real_host_page_mask();
+-    if (!size || (start_pa & ~qemu_real_host_page_mask())) {
++    if (!add) {
++        hr = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
++                gva, size);
++        if (FAILED(hr)) {
++            error_report("WHPX: failed to unmap GPA range");
++            abort();
 +        }
+         return;
+     }
+ 
+-    host_va = (uintptr_t)memory_region_get_ram_ptr(mr)
+-            + section->offset_within_region + delta;
++    flags = WHvMapGpaRangeFlagRead | WHvMapGpaRangeFlagExecute
++     | (writable ? WHvMapGpaRangeFlagWrite : 0);
++    mem = memory_region_get_ram_ptr(area) + section->offset_within_region;
+ 
+-    whpx_update_mapping(start_pa, size, (void *)(uintptr_t)host_va, add,
+-                        memory_region_is_rom(mr), mr->name);
++    hr = whp_dispatch.WHvMapGpaRange(whpx->partition,
++         mem, gva, size, flags);
++    if (FAILED(hr)) {
++        error_report("WHPX: failed to map GPA range");
++        abort();
 +    }
-+
-     hr = whp_dispatch.WHvCreatePartition(&whpx->partition);
-     if (FAILED(hr)) {
-         error_report("WHPX: Failed to create partition, hr=%08lx", hr);
+ }
+ 
+ static void whpx_region_add(MemoryListener *listener,
+                            MemoryRegionSection *section)
+ {
+-    memory_region_ref(section->mr);
+-    whpx_process_section(section, 1);
++    whpx_set_phys_mem(section, true);
+ }
+ 
+ static void whpx_region_del(MemoryListener *listener,
+                            MemoryRegionSection *section)
+ {
+-    whpx_process_section(section, 0);
+-    memory_region_unref(section->mr);
++    whpx_set_phys_mem(section, false);
+ }
+ 
+ static void whpx_transaction_begin(MemoryListener *listener)
 -- 
 2.50.1 (Apple Git-155)
 
