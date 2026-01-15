@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5609FD4660D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35114D4660D
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:56:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgSVf-00019E-EK; Thu, 15 Jan 2026 13:55:55 -0500
+	id 1vgSVb-00010w-L2; Thu, 15 Jan 2026 13:55:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSVN-0000i0-Me
+ id 1vgSVO-0000i5-3v
  for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:39 -0500
 Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSVC-0005uz-US
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:31 -0500
+ id 1vgSVE-0005vU-Oh
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:36 -0500
 Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-42fb0fc5aa9so675550f8f.1
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:24 -0800 (PST)
+ ffacd0b85a97d-4327555464cso714742f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768503323; x=1769108123; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768503325; x=1769108125; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7l0287uBAbtHCtUi/PPRvwqREv4BJ1eQRFxfkS1QS7Q=;
- b=HXa1008nbLd6m59SNCib2w5Jc79OePvKMW5YnjhNtwE7fpeM4ok/SGDyy0ejaejPy6
- HIOBI6BFimP/fsVokHAAoIwtG2odS5wCPQ+Alr7gCsp1h9odOgq8c+o4ATaVcPHH9fBe
- vkj7E7DOL/0PUN9EUcBtoj6pSHoMDzt/+o6i0icJ/48ImIHW5BC70nmUhnnOyY29UAYV
- C68hvRbb/NVkRKtEDp3IkKa/ni0hdOC94Po2QgfqeLYiFmHuhdM9KBD8Cuc22dEP9ZVJ
- oe5+5lhL/MslX/ARGhG4iVnpYkn/sB3zyyle9KKhIJCCRNprT8EatRrMpbwDsNEu772i
- 0rsg==
+ :reply-to; bh=pqPVb0Qg9mDq1j6XkxF6FMXRLHCRpoZyrstm/uoCxio=;
+ b=HMkhcfATlFwdD94M6co8vkHTSO9Q+e3QD1la21oDR3KqoD87qaWBs+WtZieD5LMeKx
+ CoOm7Gi0nkfeygMfBphLpf33soLmCbuMuS+heFngSq9/3ci8dPPeXQUWeGSkXdyTmt9n
+ fVVu1mjYLTmFQHB0Gcm2myCTNqK2ZIkBxK5J3avFpEjcF2MegFkN2CMDmo+7l3RtnWHw
+ 8BCMA4NCkNq82rYhrq+dKroxvhpKLpZi0js1V7dHJcrJ8Bil2qZmTY/I2v1eVmitPU30
+ Tjg2tl/i4aGcLgABIJMsLFW1YpUOW1y4jE7gBReK3yjwYpnIbMp+Ltw2kONum7ohqlFW
+ Ea4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768503323; x=1769108123;
+ d=1e100.net; s=20230601; t=1768503325; x=1769108125;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=7l0287uBAbtHCtUi/PPRvwqREv4BJ1eQRFxfkS1QS7Q=;
- b=Q4XMqJfUU4gyk++LhGaIrJSwS/PjUfEGofCLSYj2CkIZyFL48pvbjwGgKozHBAR1wH
- AkOIP7XhY69LRZuLU9eXZxV6Sihelo09JRZlWy+mrwddzM81YHUXjEya/mXJrxx2gEDc
- nbpnd0suI4XxL98vNBjxDiGl00B7H4bgXY/oIAq1rA0dejIJ45CO3RQh4zEJ4snBm7R8
- iZXrJVq3JAPGgs0+55/JqrRLzEnpjPryRUu0eAUxum8WiQXtl0Wgp/k3YQOiuz+XKXGu
- htoYUFmQRzwxExqUs+fy+nSYBWziVvCOG/AGnPDQZvXCAqib+6yfx1AVRE28jdvgueWi
- rYVw==
-X-Gm-Message-State: AOJu0YzaF8SFFX4h+axLaxJFAgYU5MCQNkUlPOJMuEW/ZgbMWTiqI4jD
- tdSCzQBbxd82QJbY9SF2Lgl08O6FIAzqQW0+CjZxb95h2wWgp0RAtjb54k2FufY4m7LVkbuV9nF
- TZHJ3
-X-Gm-Gg: AY/fxX42OTbXaG5nWPp3jCs/3sfJi1lpggo3jhgZDKZx4sC83cbOsaQughr28bTJtf+
- P4gV6qIcH2iFkw+ywuuLcAEO3vvtGEWqymXatFveRTvvZ1zacpctQuMEE62fw0+BPI1aoVJ6VU8
- HmsHf0zYMEV5VQ0TmLVWg0LEOVXCsvk/+1n+XiN0yYshNY2LYYoq0CCTmg8c4gO32hR9BcMiY6h
- aOG4hVhShtLgHFsBlHe8egZVvcf1pMPQRLEWoRqb71ECFLJrP8K4XRPgni/Qv+NlJfx+QYFfgI3
- 6Ijzk4UmIIg3pIsPwaS1cc0UshjSfswlURrMdoLSPgC2dYW+N3sKv57kqqUwo3T5D64aVKTYYCm
- BTQlqoT+7+SwTPltDjNFGKbusv1a4yQKuo3I1Ak97eZU2SGvFOhp6A13w3HPyEJuI3XBOdTKr3y
- 1Sn4Al/UD3ZpuxeFP5KlwHxD5+wjtTW8IIUHCEkGw0gTkZGJO0wOcPjh3fT6wYV1whGg6oxoveC
- 3IVHAtMs60QHZakMssyU0TWWEYkLD7nWb3wTKrbrw/oGA==
-X-Received: by 2002:a05:6000:400c:b0:430:f742:fbc7 with SMTP id
- ffacd0b85a97d-4356a0296e9mr345711f8f.14.1768503323212; 
- Thu, 15 Jan 2026 10:55:23 -0800 (PST)
+ bh=pqPVb0Qg9mDq1j6XkxF6FMXRLHCRpoZyrstm/uoCxio=;
+ b=QtmHg8d9R5X3IT19Tj9gvYCd7qn9L/RYNmkedEbFUeqkfrVJZtYttI7dwqhtuumN7i
+ Ku9S/edYKbT+GwFozmtyJk1UpZ5pQi+8jBLUgfwdX5okuptm007uYgMFOK8FAN9MUGH7
+ 7iivGGjjCluaF7H1arjhV6t6vVXZA+7Y0uI/5PQtwb1PgYAE4MZFBoGYDOrrfncTNXt4
+ F1HDG49+1QNu13yCVm99zrlL/OdSOoJ6ZaEKZVPTgTwoHsoKEJjkNCc0KduaeYDLlYk6
+ Drg1VPG8H9Iy/IwEAW1cQb1FJeVxsLJK7syUnfpNkS3Q7b7s8yb83zisfHiEWw/lpIqq
+ 0pEw==
+X-Gm-Message-State: AOJu0Ywwk77d8GEJkVTckxugWrlLQJWzwA+nSbtDwPjJvlFAk+b/PqY4
+ 5HmXeKILaRmgfYL3jJ+sqT5t0534kIJCuqjo9a60hOv4IxUt/bDbQxned8ZFUVkicGC4WjIeNki
+ 35/kt
+X-Gm-Gg: AY/fxX6Xr5l2NrtUxMGtgBJqv/EomZBHztSsRXxSGBf9+E5/KzGzZyoPMNUXEvY8dtJ
+ TWXQS6XzehJXGWhDJDKgbzcBszFwPJ22HVaz6Qss8iVjMr3I9/zJ/Mf6yM7snxe824IXoM6Jpvu
+ wBg/yC1CD6lnnH6Aw8hC+cfRvjIY1ViZT7D5afewpJzcj0H3tGcdw1x7FxnsjxfrCLoZsUEaXkX
+ n/4DLpsX6xeIR7t7EsdtVESQLFeRvP4PIpX2jRmzL03OEqvrZJU9s4AvCjLqg/Tmta0sTMWS9+6
+ JCWIbvrXhkRw2KoPmCXsNlC8Rm8MIlg4YrMkGsdvhaJYrH6hpuA5OS1No52Vxr1cU9TZxiZ3Vhj
+ t6JB1MbobljON6pw6wg7sK9/mBmzBKr45fNGoriT376DxeyTuoLWZC+XuUvPFlmS8KmoeFOXNAZ
+ M84xhN+T+Z1lJviuIaPocV99fVlK6zDvUXzGsNb/ny3ezGEA9xgkXvCN06PeMts3jdc9X9gaHUL
+ tEyxpheGj2fBNCrMCfiEkA8sJ3bNux+PFL1pZmOSrwJgA==
+X-Received: by 2002:a5d:5848:0:b0:42c:b8fd:21b4 with SMTP id
+ ffacd0b85a97d-43569bd3483mr440211f8f.57.1768503324858; 
+ Thu, 15 Jan 2026 10:55:24 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.22
+ ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 10:55:22 -0800 (PST)
+ Thu, 15 Jan 2026 10:55:24 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/25] hw/arm/omap1: Remove omap_badwidth_write* calls
-Date: Thu, 15 Jan 2026 18:54:57 +0000
-Message-ID: <20260115185508.786428-16-peter.maydell@linaro.org>
+Subject: [PULL 17/25] hw/arm/smmu: add memory regions as property for an SMMU
+ instance
+Date: Thu, 15 Jan 2026 18:54:59 +0000
+Message-ID: <20260115185508.786428-18-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260115185508.786428-1-peter.maydell@linaro.org>
 References: <20260115185508.786428-1-peter.maydell@linaro.org>
@@ -103,236 +104,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Complete the conversion started in the previous commit by
-changing all the omap_badwidth_write* calls to open-coded
-log-and-ignore behaviour.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-We can delete a FIXME comment about an infinite loop, because that
-only looped infinitely back before 2011 when the device was still
-using absolute physical addresses.  Now that we are simply logging
-the error we can clearly see that there's no loop.
+This will be used to access non-secure and secure memory. Secure support
+and Granule Protection Check (for RME) for SMMU need to access secure
+memory.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+As well, it allows to remove usage of global address_space_memory,
+allowing different SMMU instances to have a specific view of memory.
+
+User creatable SMMU are handled as well for virt machine,
+by setting the memory properties when device is plugged in.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Message-id: 20260108210453.2280733-1-pierrick.bouvier@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/omap1.c | 64 +++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 42 insertions(+), 22 deletions(-)
+ hw/arm/sbsa-ref.c            | 16 ++++++++++++----
+ hw/arm/smmu-common.c         | 11 +++++++++++
+ hw/arm/virt.c                | 13 +++++++++++--
+ include/hw/arm/smmu-common.h |  4 ++++
+ include/hw/arm/virt.h        |  2 ++
+ 5 files changed, 40 insertions(+), 6 deletions(-)
 
-diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
-index 742ee48fcf..b28fbd64fd 100644
---- a/hw/arm/omap1.c
-+++ b/hw/arm/omap1.c
-@@ -235,7 +235,8 @@ static void omap_mpu_timer_write(void *opaque, hwaddr addr,
-     struct omap_mpu_timer_s *s = opaque;
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index d86b470686..52c35e10c2 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -613,7 +613,9 @@ static void create_xhci(const SBSAMachineState *sms)
+     sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(sms->gic, irq));
+ }
  
-     if (size != 4) {
--        omap_badwidth_write32(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -344,7 +345,8 @@ static void omap_wd_timer_write(void *opaque, hwaddr addr,
-     struct omap_watchdog_timer_s *s = opaque;
- 
-     if (size != 2) {
--        omap_badwidth_write16(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -472,7 +474,8 @@ static void omap_os_timer_write(void *opaque, hwaddr addr,
-     int offset = addr & OMAP_MPUI_REG_MASK;
- 
-     if (size != 4) {
--        omap_badwidth_write32(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -619,7 +622,8 @@ static void omap_ulpd_pm_write(void *opaque, hwaddr addr,
-     uint16_t diff;
- 
-     if (size != 2) {
--        omap_badwidth_write16(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -894,7 +898,8 @@ static void omap_pin_cfg_write(void *opaque, hwaddr addr,
-     uint32_t diff;
- 
-     if (size != 4) {
--        omap_badwidth_write32(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -1052,7 +1057,8 @@ static void omap_id_write(void *opaque, hwaddr addr,
-                           uint64_t value, unsigned size)
+-static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
++static void create_smmu(const SBSAMachineState *sms, PCIBus *bus,
++                        MemoryRegion *sysmem,
++                        MemoryRegion *secure_sysmem)
  {
-     if (size != 4) {
--        omap_badwidth_write32(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -1124,7 +1130,8 @@ static void omap_mpui_write(void *opaque, hwaddr addr,
-     struct omap_mpu_state_s *s = opaque;
- 
-     if (size != 4) {
--        omap_badwidth_write32(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -1221,7 +1228,8 @@ static void omap_tipb_bridge_write(void *opaque, hwaddr addr,
-     struct omap_tipb_bridge_s *s = opaque;
- 
-     if (size < 2) {
--        omap_badwidth_write16(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -1332,7 +1340,8 @@ static void omap_tcmi_write(void *opaque, hwaddr addr,
-     struct omap_mpu_state_s *s = opaque;
- 
-     if (size != 4) {
--        omap_badwidth_write32(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -1430,7 +1439,8 @@ static void omap_dpll_write(void *opaque, hwaddr addr,
-     int div, mult;
- 
-     if (size != 2) {
--        omap_badwidth_write16(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -1703,7 +1713,8 @@ static void omap_clkm_write(void *opaque, hwaddr addr,
-     };
- 
-     if (size != 2) {
--        omap_badwidth_write16(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -1833,7 +1844,8 @@ static void omap_clkdsp_write(void *opaque, hwaddr addr,
-     uint16_t diff;
- 
-     if (size != 2) {
--        omap_badwidth_write16(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -2043,7 +2055,8 @@ static void omap_mpuio_write(void *opaque, hwaddr addr,
-     int ln;
- 
-     if (size != 2) {
--        omap_badwidth_write16(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -2268,7 +2281,8 @@ static void omap_uwire_write(void *opaque, hwaddr addr,
-     int offset = addr & OMAP_MPUI_REG_MASK;
- 
-     if (size != 2) {
--        omap_badwidth_write16(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -2397,7 +2411,8 @@ static void omap_pwl_write(void *opaque, hwaddr addr,
-     int offset = addr & OMAP_MPUI_REG_MASK;
- 
-     if (size != 1) {
--        omap_badwidth_write8(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -2494,7 +2509,8 @@ static void omap_pwt_write(void *opaque, hwaddr addr,
-     int offset = addr & OMAP_MPUI_REG_MASK;
- 
-     if (size != 1) {
--        omap_badwidth_write8(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -2691,7 +2707,8 @@ static void omap_rtc_write(void *opaque, hwaddr addr,
-     time_t ti[2];
- 
-     if (size != 1) {
--        omap_badwidth_write8(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -3419,7 +3436,8 @@ static void omap_mcbsp_writew(void *opaque, hwaddr addr,
-         return;
-     }
- 
--    omap_badwidth_write16(opaque, addr, value);
-+    qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                  " with bad width %d\n", __func__, addr, 4);
- }
- 
- static void omap_mcbsp_write(void *opaque, hwaddr addr,
-@@ -3433,7 +3451,8 @@ static void omap_mcbsp_write(void *opaque, hwaddr addr,
-         omap_mcbsp_writew(opaque, addr, value);
-         break;
-     default:
--        omap_badwidth_write16(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
+     hwaddr base = sbsa_ref_memmap[SBSA_SMMU].base;
+     int irq =  sbsa_ref_irqmap[SBSA_SMMU];
+@@ -625,6 +627,10 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
+     object_property_set_str(OBJECT(dev), "stage", "nested", &error_abort);
+     object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
+                              &error_abort);
++    object_property_set_link(OBJECT(dev), "memory", OBJECT(sysmem),
++                             &error_abort);
++    object_property_set_link(OBJECT(dev), "secure-memory", OBJECT(secure_sysmem),
++                             &error_abort);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+     for (i = 0; i < NUM_SMMU_IRQS; i++) {
+@@ -633,7 +639,9 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
      }
  }
  
-@@ -3607,7 +3626,8 @@ static void omap_lpg_write(void *opaque, hwaddr addr,
-     int offset = addr & OMAP_MPUI_REG_MASK;
- 
-     if (size != 1) {
--        omap_badwidth_write8(opaque, addr, value);
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                      " with bad width %d\n", __func__, addr, size);
-         return;
-     }
- 
-@@ -3681,8 +3701,8 @@ static uint64_t omap_mpui_io_read(void *opaque, hwaddr addr,
- static void omap_mpui_io_write(void *opaque, hwaddr addr,
-                                uint64_t value, unsigned size)
+-static void create_pcie(SBSAMachineState *sms)
++static void create_pcie(SBSAMachineState *sms,
++                        MemoryRegion *sysmem,
++                        MemoryRegion *secure_sysmem)
  {
--    /* FIXME: infinite loop */
--    omap_badwidth_write16(opaque, addr, value);
-+    qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
-+                  " with bad width %d\n", __func__, addr, size);
+     hwaddr base_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
+     hwaddr size_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].size;
+@@ -689,7 +697,7 @@ static void create_pcie(SBSAMachineState *sms)
+ 
+     pci_create_simple(pci->bus, -1, "bochs-display");
+ 
+-    create_smmu(sms, pci->bus);
++    create_smmu(sms, pci->bus, sysmem, secure_sysmem);
  }
  
- static const MemoryRegionOps omap_mpui_io_ops = {
+ static void *sbsa_ref_dtb(const struct arm_boot_info *binfo, int *fdt_size)
+@@ -825,7 +833,7 @@ static void sbsa_ref_init(MachineState *machine)
+ 
+     create_xhci(sms);
+ 
+-    create_pcie(sms);
++    create_pcie(sms, sysmem, secure_sysmem);
+ 
+     create_secure_ec(secure_sysmem);
+ 
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index e1b77cc55f..cdcfb1343d 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -944,6 +944,13 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    g_assert(s->memory);
++    address_space_init(&s->memory_as, s->memory, "smmu-memory-view");
++    if (s->secure_memory) {
++        address_space_init(&s->secure_memory_as, s->secure_memory,
++                           "smmu-secure-memory-view");
++    }
++
+     /*
+      * We only allow default PCIe Root Complex(pcie.0) or pxb-pcie based extra
+      * root complexes to be associated with SMMU.
+@@ -994,6 +1001,10 @@ static const Property smmu_dev_properties[] = {
+     DEFINE_PROP_BOOL("smmu_per_bus", SMMUState, smmu_per_bus, false),
+     DEFINE_PROP_LINK("primary-bus", SMMUState, primary_bus,
+                      TYPE_PCI_BUS, PCIBus *),
++    DEFINE_PROP_LINK("memory", SMMUState, memory,
++                     TYPE_MEMORY_REGION, MemoryRegion *),
++    DEFINE_PROP_LINK("secure-memory", SMMUState, secure_memory,
++                     TYPE_MEMORY_REGION, MemoryRegion *),
+ };
+ 
+ static void smmu_base_class_init(ObjectClass *klass, const void *data)
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 9d0568a7d5..4badc1a734 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1514,8 +1514,7 @@ static void create_smmuv3_dev_dtb(VirtMachineState *vms,
+                            0x0, vms->iommu_phandle, 0x0, 0x10000);
+ }
+ 
+-static void create_smmu(const VirtMachineState *vms,
+-                        PCIBus *bus)
++static void create_smmu(const VirtMachineState *vms, PCIBus *bus)
+ {
+     VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+     int irq =  vms->irqmap[VIRT_SMMU];
+@@ -1535,6 +1534,10 @@ static void create_smmu(const VirtMachineState *vms,
+     }
+     object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
+                              &error_abort);
++    object_property_set_link(OBJECT(dev), "memory", OBJECT(vms->sysmem),
++                             &error_abort);
++    object_property_set_link(OBJECT(dev), "secure-memory", OBJECT(vms->secure_sysmem),
++                             &error_abort);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+     for (i = 0; i < NUM_SMMU_IRQS; i++) {
+@@ -1609,6 +1612,7 @@ static void create_pcie(VirtMachineState *vms)
+     memory_region_init_alias(ecam_alias, OBJECT(dev), "pcie-ecam",
+                              ecam_reg, 0, size_ecam);
+     memory_region_add_subregion(get_system_memory(), base_ecam, ecam_alias);
++    vms->sysmem = get_system_memory();
+ 
+     /* Map the MMIO window into system address space so as to expose
+      * the section of PCI MMIO space which starts at the same base address
+@@ -2256,6 +2260,7 @@ static void machvirt_init(MachineState *machine)
+          * devices go in at higher priority and take precedence.
+          */
+         secure_sysmem = g_new(MemoryRegion, 1);
++        vms->secure_sysmem = secure_sysmem;
+         memory_region_init(secure_sysmem, OBJECT(machine), "secure-memory",
+                            UINT64_MAX);
+         memory_region_add_subregion_overlap(secure_sysmem, 0, sysmem, -1);
+@@ -3051,6 +3056,10 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+         } else if (vms->iommu == VIRT_IOMMU_NONE) {
+             /* The new SMMUv3 device is specific to the PCI bus */
+             object_property_set_bool(OBJECT(dev), "smmu_per_bus", true, NULL);
++            object_property_set_link(OBJECT(dev), "memory",
++                                     OBJECT(vms->sysmem), NULL);
++            object_property_set_link(OBJECT(dev), "secure-memory",
++                                     OBJECT(vms->secure_sysmem), NULL);
+         }
+     }
+ }
+diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+index 48368c8e89..b49b2f27fa 100644
+--- a/include/hw/arm/smmu-common.h
++++ b/include/hw/arm/smmu-common.h
+@@ -162,6 +162,10 @@ struct SMMUState {
+     uint8_t bus_num;
+     PCIBus *primary_bus;
+     bool smmu_per_bus; /* SMMU is specific to the primary_bus */
++    MemoryRegion *memory;
++    AddressSpace memory_as;
++    MemoryRegion *secure_memory;
++    AddressSpace secure_memory_as;
+ };
+ 
+ struct SMMUBaseClass {
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 8694aaa4e2..5907d41dbb 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -180,6 +180,8 @@ struct VirtMachineState {
+     bool ns_el2_virt_timer_irq;
+     CXLState cxl_devices_state;
+     bool legacy_smmuv3_present;
++    MemoryRegion *sysmem;
++    MemoryRegion *secure_sysmem;
+ };
+ 
+ #define VIRT_ECAM_ID(high) (high ? VIRT_HIGH_PCIE_ECAM : VIRT_PCIE_ECAM)
 -- 
 2.47.3
 
