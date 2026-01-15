@@ -4,61 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71997D41144
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 08:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70408D4114A
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 09:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgJBl-0002mk-Fm; Thu, 15 Jan 2026 03:58:46 -0500
+	id 1vgJQV-0007d6-K2; Thu, 15 Jan 2026 04:13:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vgJBb-0002kl-R7
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 03:58:36 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vgJBZ-0000T8-3t
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 03:58:35 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60F8w4UY098871
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 15 Jan 2026 17:58:24 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=V9D6uD06tA+y0PeKJN7YfRkc31Jv0PTu72czwkhwAOU=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1768467504; v=1;
- b=Y1bxxRH+9ES6hQI457T+wA0nlTBv59pGUGhNvzXnoP5v2Fj056jk+CDsQlUs3m70
- BlKdmjdXT2b39iXOtaB7wLiEQbo8VePxYkqcGq8CbywPwlyHxSD6GlKRagoOfGrA
- XOZafZLtWmJDXESW8WXmJdwbmdEztwci3x4AhMEidxW+e9Z2PebQtxf+Znwgwx4G
- jUewErS/yhEKvY4PuLny3/QaQPoFKWIBP7o6sZ3KgCsrijY1Y/rgMhUQP/iA2CpU
- Xaj4lZXmng50pDUytcmtGgYSo7WVzjZ4A4wrzdqYXNzGRqUrLrfxfZXGx2q79lZp
- 41k7E5TsJE6o7B47YbR7gw==
-Message-ID: <93ffc0c7-e3bc-448e-b7c2-33af77e8f95d@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 15 Jan 2026 17:58:04 +0900
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vgJQU-0007Vq-1H
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 04:13:58 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vgJQS-0004WX-EW
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 04:13:57 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-350fe1f8ea3so287843a91.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 01:13:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1768468435; x=1769073235; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=BE8+BVwCItbVkZ+HzotK323QDwEeEnvUm7FqChLvWRc=;
+ b=Ys1Xctf372fVGWlMcnXAZXz1F/m7NsK6tPFvlMsnlVDE5kym77wWEUM+DyvccQ/1fF
+ 9BpP1XUGuAGYIsLnTA4QzhhbFRt98jQq3+hK2ko7VQlDfCvrhGlY22bNWyvgvpWl1CuP
+ sx1CxgBC4ltSmcZbG5jozztuaWNrWrZh8Q21Ki9tSYV5Bn3HxNkyWWlGvnzQHCYBwVhQ
+ p97IdeNwVbV9gdNY3HHOZM/tgdEKUbNxEMfhST7OG5vbZFr1PZwzTjKa1EAyt753Kg7S
+ VsUWdC3Hah8QgflAkBaQjQ/o/F17Q9373h+UIxbq7BSpMhmbtK6Zaadz9AzJyLru22bd
+ LX9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768468435; x=1769073235;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BE8+BVwCItbVkZ+HzotK323QDwEeEnvUm7FqChLvWRc=;
+ b=wEE+qYD+Bi4P4AJf06aLlEJuQuElOKD8aLngstmjkUh1kUH35U/X84SE6QywBXJWn5
+ U/+FMSCPgS8aQ51s/I1vl4wz/3ZktJawTxIqXOoiSZ37peuE7MbODuQOeKes8aMJrwcV
+ 7qotAXis26MB/TC6Wao5uPpPCcUQaqU9vqwEI+mTm/1MCOKCNXWiMZB3SwRdzu84X3Ua
+ fgiHuGUBQUHDlcaObFd9XFrdbDzOY6qVVnzx7fM6vT5EvQy3XpQbQ/e3IvSRYRipW8r+
+ VV79o1AKNX9XBXAFRBU1nsOXIa971B4DMhPStEL+SxrW0NYW/SI9BJl9860tkn0wXajF
+ aJxQ==
+X-Gm-Message-State: AOJu0YxHEwmmjas0ob21ieD87JAsg7b8GcT8lNN+sO77l7ygCCD/mO75
+ UpSsdrfbouB1FdlM8DyBbNmXQh9tv//Qckhy7twgryJb9c1SxRUaZCYyUQnN3FgLs2E=
+X-Gm-Gg: AY/fxX7xZn+3z4185DD2kRKBqUzPLGqvXWnw2OD0YKnckRYUNw9wH7vf8QQU02+gsDO
+ UBFLZkaiB0iVuev9eNMv4cb+QEpsB2A7UCLjbss+BJUWoqiAz/4k1+76SZuDycjRc+NrzYK0mgm
+ 7NASDvM+avi75XY87amWWIw7AftahZsph4Yq/mVnlcmarHFhi7a6KcBIghf98CFakoHgiNfjNjl
+ ArixspW8lv8P5OkZ916WRwFrRWPNWiEMAHl3LbVsw1QTolDStrzVpLxfvgcdaUTzAvQhAZziKew
+ P6mMn8/TlU/3Siy8/8f45ww9hHWMhHik1rxdqKOs3SYaTgdJ9mMSOae43zP1U5rgG+czToU5u9I
+ lzhj+8pQpVhVzEZZO60m1QjMvbjEJBIvpla43KmJhRQoEnp7Hm9+brXMoTBGno1NN5p6aj6St1e
+ lpVDpnKf55YmBKNZCk4oxbuXn/zrwPcIHipFmgcPjRVf9o01q9o6mF
+X-Received: by 2002:a17:90b:3e4b:b0:341:8b2b:43c with SMTP id
+ 98e67ed59e1d1-3510b12676emr4963671a91.18.1768468434908; 
+ Thu, 15 Jan 2026 01:13:54 -0800 (PST)
+Received: from sifive.com ([136.226.240.171]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-35267809f4esm1505246a91.9.2026.01.15.01.13.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Jan 2026 01:13:54 -0800 (PST)
+Date: Thu, 15 Jan 2026 17:13:51 +0800
+From: Max Chou <max.chou@sifive.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH 03/18] fpu/softfloat: Add convert operations(bf16, fp32)
+ for OFP8 data types
+Message-ID: <aWibknGSdddSeJD5@sifive.com>
+References: <20260108151650.16329-1-max.chou@sifive.com>
+ <20260108151650.16329-4-max.chou@sifive.com>
+ <ef2b8965-9c7a-4b81-a6cb-3cd387a71472@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ui/gtk: Narrow DMA-BUF critical section
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org
-References: <20260115-gtk-v1-1-57f49e856408@rsg.ci.i.u-tokyo.ac.jp>
- <CAJ+F1CJDdjL5fKKzsDUGN8y20aX5dkb7Xere_cXJ5WZw-V0HOg@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <CAJ+F1CJDdjL5fKKzsDUGN8y20aX5dkb7Xere_cXJ5WZw-V0HOg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ef2b8965-9c7a-4b81-a6cb-3cd387a71472@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=max.chou@sifive.com; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,87 +107,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/01/15 17:25, Marc-André Lureau wrote:
-> Hi Akihiko
+On 2026-01-10 14:20, Richard Henderson wrote:
+> I suggest you pass that as a bool parameter to bfloat16_to_float8_e4m3 etc.
+> This would then be handled as part of round-and-pack, maybe a separate step,
+> maybe via float_round_nearest_even_max.
 > 
-> On Thu, Jan 15, 2026 at 9:44 AM Akihiko Odaki
-> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> ui/gtk performs the following procedure to flush a scanout:
->> 1) Queue a draw event.
->> 2) The draw event gets triggered.
->> 3) Blit the scanout to the framebuffer.
->>
->> When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) if
->> possible and unblocks it after 3).
->>
->> Blocking the device before 2) has two problems.
->>
->> First, it can leave the device blocked indefinitely because GTK
->> sometimes decides to cancel 2) when the window is not visible for
->> example. ui/gtk regularly repeats 1) as a workaround, but it is not
->> applicable to GtkGLArea because it causes display corruption.
->>
->> Second, the behavior is inconsistent with the other types of scanout
->> that leaves the device unblocked between 1) and 2).
->>
->> To fix these problems, let ui/gtk block the device after 2) instead.
+
+Thanks for the suggestion!
+Will replace the format saturate flag by a bool parameter of convert
+function at v2.
+
+> I'm not sure what to do with arm_althp vs ocpfp.  It seems like they have a
+> couple of things in common.  Perhaps we should decompose these to separate
+> behavior flags.
 > 
-> Wouldn't that let the device overwrite the buffer before it is displayed?
-
-That's correct.
-
-The rationale I wrote in the commit message is that it is a 
-long-standing behavior for the other scanout types.
-
-You can also "infer" this from the fact that the specification mentions 
-pageflip, though it is a convoluted way:
-
- > It is possible to create multiple framebuffers, flip between them
- > using VIRTIO_GPU_CMD_SET_SCANOUT and VIRTIO_GPU_CMD_RESOURCE_FLUSH,
- > and update the invisible framebuffer using
- > VIRTIO_GPU_CMD_TRANSFER_TO_HOST_2D.
-
-https://docs.oasis-open.org/virtio/virtio/v1.2/csd01/virtio-v1.2-csd01.html#x1-375001r381
-
-If scanout flush is truly atomic, there is no point of performing 
-pageflip and you can instead simply always use 
-VIRTIO_GPU_CMD_TRANSFER_TO_HOST_2D for the visible framebuffer.
-
-So, from the guest perspective, there are two options to implement scanout:
-
-- Do pageflip to avoid tearing at cost of having two framebuffers and
-   late display.
-- Do not pageflip to avoid having two buffers and display the content
-   as soon as possible though it may cause tearing.
-
 > 
-> I wish there would be a clear design for how virtio-gpu handles
-> display buffering.. I suppose more demanding users, like crosvm may
-> have documented this.
+> r~
 
-Allowing tearing to occur when not doing pageflip is a common sensible 
-design (e.g., EGL: eglSwapInterval() with 0 as the interval parameter, 
-Vulkan: VK_PRESENT_MODE_IMMEDIATE_KHR), though I see other things 
-lacking in the design (e.g., vsync).
+I agree that we should decompose these to seperate behavior flags. I
+will try to introduce some behavior flas (liked no infinity, maximum
+normal pattern, etc.) at v2.
 
-crosvm performs no synchronization and prone to tearing if I read it 
-correctly. A code comment says:
- > It is possible that we are committing frames faster than the
- > compositor can put them on the screen. This may result in dropped
- > frames, but this is acceptable considering there is no good way to
- > apply back pressure to the guest gpu driver right now. The intention
- > of this module is to help bootstrap gpu support, so it does not have
- > to have artifact free rendering.
-
-https://chromium.googlesource.com/crosvm/crosvm/+/51cf0f429d64bd24281d9c9920c6712c491b5473/gpu_display/src/display_wl.c#1238
-
-I suppose they care the Wayland passthrough more than the plain scanout 
-mechanism. It will be nice if the specification clearly documents the 
-expected behavior. The current documentation is more like saying "use 
-the common sense and see QEMU if not sure"; it doesn't help much when 
-writing QEMU.
-
-Regards,
-Akihiko Odaki
+rnax
 
