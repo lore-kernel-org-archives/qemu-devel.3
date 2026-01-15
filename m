@@ -4,112 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A79E7C47BF2
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 13:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20AE0C47BEA
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Jan 2026 13:55:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vd7PT-0001mE-RG; Tue, 06 Jan 2026 08:47:45 -0500
+	id 1vd7WH-0005Ny-K2; Tue, 06 Jan 2026 08:54:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vd7PO-0001lf-OG
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 08:47:39 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vd7PM-0008LI-TN
- for qemu-devel@nongnu.org; Tue, 06 Jan 2026 08:47:38 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id CE6305BCD5;
- Tue,  6 Jan 2026 13:47:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1767707253; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xVNNgqQQiJPv7wRJbFsl8DmdpVTMBAjU3y3/RMyolX8=;
- b=T677Igdw8CuNc1z3/OVhLtpyL8lBjkMP8vO1DtDHBSFkN7VdvhiacGzlnqbYNxRT6rEu1X
- jPcC64FiZZ0s75ds7eURxcBfqY3schoI1If2mdyDGojJh57a9Y7I1BATVa3kW+INOQCmBZ
- qva+BJDsaWS0FluMkOGKbw0sMyRC9/g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1767707253;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xVNNgqQQiJPv7wRJbFsl8DmdpVTMBAjU3y3/RMyolX8=;
- b=4s645y+6prt+eqc129wRmB5DiOqjMZ3mgfjuVhhT0ySb4rmemAdTYr0qrE91w6VS2HhRS8
- 7q39dkTnjdTxEPAQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=T677Igdw;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=4s645y+6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1767707253; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xVNNgqQQiJPv7wRJbFsl8DmdpVTMBAjU3y3/RMyolX8=;
- b=T677Igdw8CuNc1z3/OVhLtpyL8lBjkMP8vO1DtDHBSFkN7VdvhiacGzlnqbYNxRT6rEu1X
- jPcC64FiZZ0s75ds7eURxcBfqY3schoI1If2mdyDGojJh57a9Y7I1BATVa3kW+INOQCmBZ
- qva+BJDsaWS0FluMkOGKbw0sMyRC9/g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1767707253;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xVNNgqQQiJPv7wRJbFsl8DmdpVTMBAjU3y3/RMyolX8=;
- b=4s645y+6prt+eqc129wRmB5DiOqjMZ3mgfjuVhhT0ySb4rmemAdTYr0qrE91w6VS2HhRS8
- 7q39dkTnjdTxEPAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4DA143EA63;
- Tue,  6 Jan 2026 13:47:33 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Vmf1A3USXWm4TgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 06 Jan 2026 13:47:33 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Prasad Pandit <ppandit@redhat.com>, Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH] migration: introduce MIGRATION_STATUS_FAILING
-In-Reply-To: <CAE8KmOzcOdYhnxpDr8BMV8zjixpEh9r+COe=xyLfXCVWKD0CRw@mail.gmail.com>
-References: <20251222114822.327623-1-ppandit@redhat.com>
- <87h5tilhcq.fsf@suse.de> <aUq1oA73W9rAdCgG@x1.local>
- <CAE8KmOzcOdYhnxpDr8BMV8zjixpEh9r+COe=xyLfXCVWKD0CRw@mail.gmail.com>
-Date: Tue, 06 Jan 2026 10:47:30 -0300
-Message-ID: <87zf6q26q5.fsf@suse.de>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <wei.w.wang@hotmail.com>)
+ id 1vd7WF-0005NU-J6
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 08:54:43 -0500
+Received: from mail-japanwestazolkn19012048.outbound.protection.outlook.com
+ ([52.103.66.48] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <wei.w.wang@hotmail.com>)
+ id 1vd7WD-0003lB-Q6
+ for qemu-devel@nongnu.org; Tue, 06 Jan 2026 08:54:43 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nv1SO/Q0EPgygUOObT4bGmIh22S+fD0R+VSWmWpeC3sqVxJrcAOz4abiqkS0x+AIwteK2TfA6wej2o/rTV3+toFkDR6XXVMY0Hl+uobcKc9/6pkS8lmafXu1loTbGTGsjKxRVl4U0KB3rRVPqIMYGOfB9FHfrCcIHKUUPo6eyEeOMjN/3mIXshA72xpmvgAGGv7tgKPYhPZI4DjaCERpSE/pAX/RImYDg+aSxPL+FJt2l8U0GcQGsW9J8ty8RKPK6lqqp5tcmJKfqwkgqhwIM0Xsb5QLahvTJ+ssRN1PTaTNLreW2d2+So3BqJe//eOYh2q7VCOmnFCC21KBelNf3g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RQRF06nUDB5tDZFMgCv2i7eIMWGBhyelHFVz18/XXOU=;
+ b=uVRwZ6llOI8XfOm6rwmWGbnVdRFmOVFjBY04JwMJ09zKb2b9ksqnHNqzw6Uhh3CR0U25wu2Pt6uZCS3yY9Xkn5CgIDW1S2Y6mPCh+RsU3zRWQvgxEVMkdRtSnxkH230sFAnLr4poNvYrGTApIAkLdzAYdR3w98Zdu6JyuijPMUJvq303CE3FUwr4zNrWoEG94rDVTuAOP+dvY18M4SlIF7rPODiCshpxzZ9V/3SEzXSXfumoQWCNYDJr3NVf2NVykm6Pr/C3bmnyfylfLWMtQnnp45fADolTphzI2NZ4cMJZ0HgIhlzIXiXmKZ6iDPqx4nEXetKa47Vkhai2Cw59CA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RQRF06nUDB5tDZFMgCv2i7eIMWGBhyelHFVz18/XXOU=;
+ b=dZIAWf/UhY9ww5jzzNah7MERWnDRZemXPnG3Zv8i4xxre3kKjO5LIFLWxPF9DSDp2GftmgBzxCKesco+FTVJNyQK5yGIHV/5jVSkF2OIV8K8h4Dj615EY8Wex8Hg+Y/hAVLZwB9/JU0CztgsctcpFI4aGhYNBZ1TzbSrIu7bEhQ/2TOKDbylIUyPiL7RxuUl+J72gV5eq8lsnaJ1nur4D9u/mUV00fwnxsv9q9WexLkmLjUyd2+uC0JgmEhY2bmzAzcUCjJb5/omq5vbseDv4+S1+xo6NbQ9Fr6NX/MWcwNjd3pVtJ5Rzb+e6Fm/FDAmghhLPcCKPnU7RN24YKJBxA==
+Received: from SI2PR01MB4393.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:1b0::7) by SEYPR01MB4174.apcprd01.prod.exchangelabs.com
+ (2603:1096:101:56::7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9478.5; Tue, 6 Jan
+ 2026 13:49:33 +0000
+Received: from SI2PR01MB4393.apcprd01.prod.exchangelabs.com
+ ([fe80::5e86:f04a:37e5:64f1]) by SI2PR01MB4393.apcprd01.prod.exchangelabs.com
+ ([fe80::5e86:f04a:37e5:64f1%5]) with mapi id 15.20.9499.002; Tue, 6 Jan 2026
+ 13:49:33 +0000
+From: Wei Wang <wei.w.wang@hotmail.com>
+To: eduardo@habkost.net,
+	pbonzini@redhat.com,
+	qemu-devel@nongnu.org
+Cc: wei.w.wang@hotmail.com
+Subject: [PATCH v1] target/i386: Reserve 0x8000001D and 0x8000001E if
+ !CPUID_EXT3_TOPOEXT
+Date: Fri, 16 Jan 2026 03:19:33 +0800
+Message-ID: <SI2PR01MB4393C152E5D8E3E964AA9E02DC87A@SI2PR01MB4393.apcprd01.prod.exchangelabs.com>
+X-Mailer: git-send-email 2.51.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: CE6305BCD5
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-ClientProxiedBy: TYWP286CA0020.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:262::7) To SI2PR01MB4393.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:1b0::7)
+X-Microsoft-Original-Message-ID: <20260115191933.3629006-1-wei.w.wang@hotmail.com>
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SI2PR01MB4393:EE_|SEYPR01MB4174:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9e5fb4c3-67ef-4dde-ff38-08de4d2a6b79
+X-MS-Exchange-SLBlob-MailProps: qdrM8TqeFBv5zL3Pq3ogIg0sNnRYStpo9ixdgsxkFBX4GQndK7PDrZXvGL9bbdn24FXGLmHUkQjys4r3KN2cT4ORkgLKtV6evAvW//UpIrDsD7iynO2kw4K4fNZJsULlpOw5GcMTZE19c1x3nn3KcmDGRIwBfjbTJM3gkXSpq/Y34dBhtb/78LcPd1ZD/HTeMEsuPeRp4nAHVzArvHw8J0ScbEk3vFzHFI9VakgNYcZY8xnBL3JY6Qgf8taLVK2Y7AAsa/GDKMIk5uJfIMY2HcjWNkqQtpOw2cV6g5Kns3mwkeL/B3Npi4qy7OmsDHhGgDvwy2l6txdoJzPQEYfkfRQeCDUM6n1Iv54oVvwsEACowHmuZu/hizh3XPxZ4C8eOkQLFxfVW4LiQq9h2gARL+XazZ1+4HexjsezhP0H6pMLLhq3uKidTtmDuseJVKueSykS+1hpTK1dUDbzg9Tfxtuu1fbqpkLyF7tReaaPOBOzU6vnhyFceQRRppRYyYCV6Pe2JfBEC6Gd7MPiPm7ubZKccOE09aSyehqXWae/ybpI2gWNNH5I4L3A80GiX7G4JhVDM6zf98dyOrSCNIBt+HxHgAy3yWJGJj5VHlX/j/NK3mKnbs7INn0Nl50NI75JG1+U/uqsHAOY6UXb7HEnkyeElG7yWDMbo9xXDOuJEUqvMq4UCsa8qw5YwtTG12k7lMDdlqX7R8eO3a+7clCCWrobH/EpWLlcNd670d3egFJyYadBeSRnA7BkhvwSxyS5/JAdJI/0HIEClCoqo7lUAxxZT9qlbppz
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|51005399006|37102599003|5072599009|5062599005|461199028|8060799015|41001999006|23021999003|15080799012|19110799012|440099028|3412199025|40105399003|1710799026;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?zeZfIBV+9jEcB7Hjbvv/g8L2TAeh+MyRcMe/gI66VKEz6eWh51rFYXNoLFUH?=
+ =?us-ascii?Q?aEiPGJQgadeSCPs8Lqx0jeOT6EQIjBQiPPc68ApbbZWi3+NnbRONg4uo86wn?=
+ =?us-ascii?Q?wyxRIEkfOrNKrfSl+N6Oadl6B1gp+KjsxASc1qMtkKMbvT7Y2EwmxDFq9ky2?=
+ =?us-ascii?Q?emGjpJeJDt7FloP54H8xG4k6vBbV6yJmrnqot0yjW52mALQvbK2LAVBzwgs+?=
+ =?us-ascii?Q?4Eri5tSizDGtECEolzIOMGwfxbxSxFWLI34qG0yseAlgbzm2jJw6iySP9/q3?=
+ =?us-ascii?Q?oJhUztWgCzRuQwNbCZLxvF12YjwQSZWfKh++jamy71ZgDrHPVdS5qsy7h6WS?=
+ =?us-ascii?Q?o3RKpeZrgqTMZ5xwQTUql9oqDczgJrHTqYJUnsdtGv7BtUMEfIQ1QZvQgBdX?=
+ =?us-ascii?Q?bEIbharN+4uMejVw79Kht6q0BjfLn/fQZcjtO3H7ie5/HZW12KqUFzkexJjf?=
+ =?us-ascii?Q?ooltgOc3yaZ3RJ/RKPjOZRnLppNOrpzKtreIK88CmwgZbwvsyMOlI3ZQEBmi?=
+ =?us-ascii?Q?8druQqpE+AkQmQxyzxCJrPN3gQpnXywDacfwHLn5NRxwQ1AYAjCesXZb/NDa?=
+ =?us-ascii?Q?6EV0p9jBjOoM8X7KWO1H7QVWTxVD2ro2NaHl7ABGGwXB5lKhAgbvKyrBdsql?=
+ =?us-ascii?Q?xdbBG/vpEtLP0Nh7hzPxXpkE8LO/CQbBV2cYu1MbOaiTgIZOlag+LcocZUX8?=
+ =?us-ascii?Q?eoVanWXaO2s3Cqc6Eu/nN2jvSM9C3qHbjg9Wjn7ZW/o87P3SOrzGIr9SJPFa?=
+ =?us-ascii?Q?f2BorGB89Bb5fC6QIvf/diLcyOONCp/HF+TBiUam5XVbbumbaoZXpk6SaunW?=
+ =?us-ascii?Q?I2hnSxJbENZZHzQ3X97QAhNd3LXlVuAu0rDyFCD/q7WLxqhGthnSrVptG0Bs?=
+ =?us-ascii?Q?ILTVsWYGN2NU/JG9MVf3Kk5s2iaxCevx8HFAZtdekQ/XZ1mm6axF4SGRnF0P?=
+ =?us-ascii?Q?om0/Pn6ihKgF4nsSvOw3i26MFHxcQMUZNfPWKY8hrVAGIFcDLtJYIYjU1etP?=
+ =?us-ascii?Q?66eOzxuB0SiQOkEMBO0BKryWoabnC7fCZsT73T2e7Ac850Gfan4T+cgWNcc6?=
+ =?us-ascii?Q?+u6P/pwL9/e5JqVwiE9svlVpgIbMnQrzIiMQBM7mx7OLnUG+rkMd+QhMYRLa?=
+ =?us-ascii?Q?wd/6LM37b8cYFQC51VwxQjJAoPz8FD14AdXT2wrPnSXZKb+CHnr4TNsack9K?=
+ =?us-ascii?Q?Kn8DnZyy0hrEo9waEKuM1H5bTpxN9tqCg68WlVwI4MDYbxu+K3i5HLTCwhWs?=
+ =?us-ascii?Q?2s0oObG14qC4IqhgqZqvbBP1bOBRd9oo959AavMIT0KamGQk3Ky8PG/cD4E7?=
+ =?us-ascii?Q?FpA=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?hyRyN5F80eTce9bcGsrosxFhBt0HL+wbXCEfcZAooctjdii4HCSZwF7wuSVv?=
+ =?us-ascii?Q?elXTVFQUtAmSKBrEoTEoeS7xPzN4lzms0bu/ZpQOdcM0v8TXh4Yjdv2fh8HP?=
+ =?us-ascii?Q?oZ9Pau9pCTUiFJdS2SN3zbIQOdsSy3OTHt7ia+oVAyXzDm7xKcm0mXraUzAl?=
+ =?us-ascii?Q?MX5F0VKCoGDaDsg6J5zhxrSSAvYUHXj4YDAkYtioufpks+/jDR2rAwlghb9m?=
+ =?us-ascii?Q?CTwpDnUEAxA+SxrLp5A76ON/iNjqE7acA+w+Jh/2EuA6i2jxVunZTnOvcWnv?=
+ =?us-ascii?Q?1JJXFA6OKliGx7YZHMk8Jvuw2nbJfRsDs0TPMhdqThpVmbm6lvfuRl9FunXV?=
+ =?us-ascii?Q?DF1f2FK15AbvjZUIYCA4DSRqoIUeCW6Fk4WahPgTisL1wE4INgLvCoJISCPR?=
+ =?us-ascii?Q?FuHsTcVHxG+RSFdsRiUpjiz5Y9HErCwO71cX+Ck33QvCtUVCGgBNDwBeAWCP?=
+ =?us-ascii?Q?3UBvpsM9RpQHFw4Fbwz+ZlZK+8Rfw3FVMqmR4Jo1cAZ8ZUYC1vKHNGv+Matg?=
+ =?us-ascii?Q?HraqnCLlI9yBWvUK/FwQWUs42c20PD0pW51f2MGYT7LTdkXcIgzyFOcvcl5u?=
+ =?us-ascii?Q?UfZFlZ6RI3uaKBpD5i/1gVpU0Sr3KGl+X2RVpAh8B+/hMnolpzOCK0oL59uL?=
+ =?us-ascii?Q?cvf4nJ0WnPEYXU8ss8367M3gePtHbz5fVNPIaEKSuJ4JKcNWKgC//2CdENCR?=
+ =?us-ascii?Q?uIoMgpXQbeOlrPrWRhmEt1GCz70/ZVwKcka4zyqf+TqNxv36M7rKO54Qgegl?=
+ =?us-ascii?Q?RdkjvnD/Zqb7qUnPn56YgBlSf7Ppf+sYJbmmKZDj6r0Xqv6+e+KJA6Cn/sFA?=
+ =?us-ascii?Q?2IuWIrQzUzDutQ6Yum7c0KxECJECreqrpv+8rjrP0iPalutmwIquFd50r1fr?=
+ =?us-ascii?Q?Jyc0r8EUblT1s6AbXmXEYvzlQ8q5NKDjts039DZoSbAqEZN/jfyVidnPtVtW?=
+ =?us-ascii?Q?3kHOssacJL5MuZnqmnhRTG4m73P2d8+Q+eLUvAhYl2l9DJArboLNe2x4zjdN?=
+ =?us-ascii?Q?s5Ze6a2mJlVwW+gvJca+N9rhoVu0h3UnrH99N1BJYGFiz0sbdlFuU7reWaQL?=
+ =?us-ascii?Q?mZiDUKuZ5j/X5pnoX9leTZaX0FPL29PhgXtMhdadftOPMU4qfXF+Rr8Tpd9I?=
+ =?us-ascii?Q?U9CtdJM007lPJ22mYeIX57C1YNuGB4Nca5/CP6Bokd9Eif/AsF0UYI6bhj9z?=
+ =?us-ascii?Q?2Dwz/16bjyhBKgEAHwU67jxraunOwlyROzJOJsApNYnhr00ECyhkga2o8iNH?=
+ =?us-ascii?Q?u9la5uaXamL6xz0q1yWeDLipTehBZLNV7nFYMTzHQnRyAeKZDrnGKh9yfOYf?=
+ =?us-ascii?Q?OqLAe/a/jua4bxXYwI4jA4IioGBSyGoMxuFiXdbt7qUknK5BmwB77SpEUp7v?=
+ =?us-ascii?Q?dsqsnZ7M07piZNaUqdfi+Lt/AISO?=
+X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-5f51e.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9e5fb4c3-67ef-4dde-ff38-08de4d2a6b79
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR01MB4393.apcprd01.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jan 2026 13:49:32.9170 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR01MB4174
+Received-SPF: pass client-ip=52.103.66.48; envelope-from=wei.w.wang@hotmail.com;
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_DATE_IN_FUTURE_96_Q=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,144 +150,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prasad Pandit <ppandit@redhat.com> writes:
+The AMD APM states that if CPUID 0x80000001.ECX[TopologyExtensions] = 0,
+then CPUID 0x8000001D and 0x8000001E are reserved. To comply with this,
+ensure that EAX, EBX, ECX, and EDX for the two leaves return zero when
+CPUID_EXT3_TOPOEXT is not enabled.
 
-> Hi,
->
-> On Tue, 23 Dec 2025 at 21:00, Peter Xu <peterx@redhat.com> wrote:
->> One thing good about exposing such status via QAPI is, it can help us
->> diagnose issues by seeing CANCELLING / FAILING even looking at
->> query-migrate results (as normally when bug happens we can't see the
->> internal status..), so that we know either it's explicitly cancelled, or
->> something went wrong.
->>
->> If it's a completely hidden / internal status, we may see ACTIVE even if
->> something wrong happened..
->
-> * Both process state and reason(s) for the state change needs to be
-> visible to the user. But states like cancelling/failing are redundant,
-> users would derive the same conclusion from CANCELLED and CANCELLING
-> OR FAILED AND FAILING. Besides, migration_cleanup() does exactly the
-> same steps irrespective of whether migration is failing or cancelling
-> or failed or cancelled.
->
->> My current hope is any mgmt should normally by default ignore new migration
->> states..  If that's always achieved, it looks to me adding FAILING directly
->> into migration status would still have some benefits on debugging.
->
-> * libvirtd(8) complains about unknown states multiple times:
->       libvirtd[2194267]: unknown status 'failing' in migration event
->       libvirtd[2194267]: unknown status 'failing' in migration event
->       libvirtd[2194267]: unknown status 'failing' in migration event
->
->
->> > > @@ -2907,7 +2914,7 @@ fail_closefb:
->> > >      qemu_fclose(fb);
->> > >  fail:
->> > >      if (ms->state != MIGRATION_STATUS_CANCELLING) {
->> > > -        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
->> > > +        migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILING);
->> > >      }
->> >
->> > This is a good example where having MigrationStatus makes the code more
->> > complicated. This could be exiting=true, running=false, etc. It
->> > shouldn't matter why this routine failed. If we reach
->> > migration_cleanup() and, at the very end, state is CANCELLING, then we
->> > know the cancel command has caused this and set the state to
->> > CANCELLED. If the state was something else, then it's unintended and we
->> > set FAILED.
->>
->> If it'll be an internal status, we'll still need to identify if someone
->> already have cancelled it, right?
->>
->> Assuming we introduce stop_reason flag, making it:
->>
->> enum {
->>     MIG_STOP_REASON_CANCEL,
->>     MIG_STOP_REASON_FAIL,
->> } MigrationStopReason;
->>
->> Then we can switch to CANCELLED / FAILED when cleanup from those reasons.
->>
->> Then here, logically we also need logic like:
->>
->>     if (stop_reason != MIG_STOP_REASON_CANCEL) {
->>         stop_reason = MIG_STOP_REASON_FAIL;
->>     }
->>
->> Because we want to make sure when the user already triggered cancel, it
->> won't show FAILED but only show CANCELLED at last?
->
-> * I think the way we are setting/changing these states in as many
-> locations is only adding to the complications. Do we have to
-> explicitly set these states like this? What if migration_cleanup()
-> always sets the state to 'STOP'. Similarly other places set the state
-> to a predefined state. OR
-> ===
->     struct {
->         current_state;
->         old_state;
->         event/trigger;
->         reason[];
->     } MigrationState s;
->
->     migration_change_state(s) {
->           s->old_state = s->current_state;
->           if (s->current_state == START && s->trigger ==
-> 'connections-established') {
->               s->current_state = ACTIVE;
->               s->reason = "connections-established, migration starting"
->           } else if (s->current_state == ACTIVE && s->trigger == 'completed') {
->               s->current_state = STOP
->               s->reason = "migration completed"
->           } else if (s->current_state == ACTIVE  && s->trigger == 'pause') {
->               s->current_state = PAUSE
->               s->reason = "pause, migration paused"
->           } else if (s->current_state == ACTIVE && s->trigger ==
-> 'error-occurred') {
->               s->current_state = STOP
->               s->reason = "Error occurred, migration failed"
->           } else if (s->current_state == ACTIVE && s->trigger ==
-> 'user-cancel') {
->               s->current_state = STOP
->               s->reason = "user-cancel, migration cancelled"
->          } else {
->               s->current_state = s->current_state;
->               warn_msg("unknown combination, maybe define a new rule?");
->          }
->     }
-> ===
-> * We define explicit rules for the state change and accordingly we
-> only call migration_change_state() at any point and it'll change to an
-> appropriate next state, recording the due reason for the change.
->
+To test, launch a VM with CPUID_EXT3_TOPOEXT disabled using "-cpu host" or
+"-cpu EPYC-Genoa,-topoext" on a Zen-based machine.
 
-If we had a linear state transition table, i.e. a DFA without any
-branching, that would be ideal. But since we have states that can reach
-(and be reached from) multiple other states, then we'll always need some
-input to migration_change_state(). Here you're making it the
-s->trigger. Where will that come from?
+Signed-off-by: Wei Wang <wei.w.wang@hotmail.com>
+---
+ target/i386/cpu.c     | 7 ++++++-
+ target/i386/kvm/kvm.c | 1 +
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-Looking at runstate.c and job.c, it seems we could at least define a
-state transition table and do away with the second parameter to
-migrate_set_state(s, old, new).
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 6417775786..437da88b4a 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -8489,6 +8489,10 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         break;
+     case 0x8000001D:
+         *eax = 0;
++        /* 0x8000001D leaf is reserved if CPUID_EXT3_TOPOEXT is not set */
++        if (!(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT)) {
++            break;
++        }
+         if (cpu->cache_info_passthrough) {
+             x86_cpu_get_cache_cpuid(index, count, eax, ebx, ecx, edx);
+             break;
+@@ -8519,7 +8523,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         }
+         break;
+     case 0x8000001E:
+-        if (cpu->core_id <= 255) {
++        if ((env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT) &&
++            cpu->core_id <= 255) {
+             encode_topo_cpuid8000001e(cpu, topo_info, eax, ebx, ecx, edx);
+         } else {
+             *eax = 0;
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 60c7981138..c988358548 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2029,6 +2029,7 @@ uint32_t kvm_x86_build_cpuid(CPUX86State *env, struct kvm_cpuid_entry2 *entries,
+                 cpu_x86_cpuid(env, i, j, &c->eax, &c->ebx, &c->ecx, &c->edx);
+ 
+                 if (c->eax == 0) {
++                    cpuid_i--;
+                     break;
+                 }
+                 if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
+-- 
+2.51.0
 
-As we've been discussing, the current state-change mechanism has the
-dual purpose of emitting the state change event and also serving as
-internal tracking of the migration state. It's not clear to me whether
-you're covering both in this proposal or just one of them.
-
-I don't think we've established actually what are the goals of having
-any state changes. Do we even need state changes for internal tracking?
-We could use your s->trigger as an enum and just check it wherever
-necessary. And keep the MIGRATION_STATUS exclusive for the external API,
-in which case, it's probably better to just set it unconditionally (in
-many places migrate_set_state already takes the current state as
-argument, i.e. it doesn't care about the current state).
-
-> Wdyt...?
->
-> Thank you.
-> ---
->   - Prasad
 
