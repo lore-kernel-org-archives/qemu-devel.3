@@ -4,106 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D91D46607
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 17:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA834D46607
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 17:46:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgRPD-0008RF-P6; Thu, 15 Jan 2026 12:45:18 -0500
+	id 1vgRQI-0000Zn-Ik; Thu, 15 Jan 2026 12:46:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vgROu-0008PA-9S
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 12:44:53 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vgROp-0006zA-3O
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 12:44:48 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b8712507269so185235766b.3
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 09:44:46 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768499085; cv=none;
- d=google.com; s=arc-20240605;
- b=gptRfEgKsgrvbQMdpCmVbVQkfEEGnOlqTvkJQpiU/s3zZsFtmL5XpvkhBYtkyGmdPL
- 1IGH4zLANevmrZ5VWlVe1K8+zzGbskWO8ZeSpCQjDAs2de8tXdWcx4g4g81ebDPQZC56
- kPr1RQyjHCW9c8L14aJrAfzB4aXS40CrwilQtiFNAS+OMDgErLvyQXdHldlr/Vt3NXqV
- tkURxGDJKfQhLwMU04UVY1pJ9P9O/rIBTwjTz0CuQNjEVfAN8sGFqivvIjE/Zwmgq8Ad
- 58JQ0oMhHxp0qp0p/nd2r4wa+xUnFT76PluATkcrEWotf1RykxrmdU03uMrgRPLNftsM
- mtLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=fA7FOKlU7W8aCa33XDCB2juyBR0y0n1FS/r0Xb890nc=;
- fh=KgimXnKYua7njztgMQq2QSz3aOrdbSVOwRY3A+EqJ1s=;
- b=RfMiUT0Wx1hfrUhu6jCLLvG5MJJhZnr6VaI1hoULRCSVZGvFmP4dS0IAOXWB2C8eJh
- EL+s5AsKTzf7mkF8N2+3tWrGMc9WMFQXpWxcCV4Z01ibh3XRl8G4yO+GG9Q9PoeCfGYI
- 4XB1TuCbUk0YK7YEbqOLHsOXcwizSznTVfX13Y3BJgkI+I58ftK7tCFjsu4B5zSQWM/f
- r/3LPVsPxAoB5bNXw6vWcZ+iLSB7gt0brBE0TjAi3l9D6P7tTb1MVaG56TTVZrD83KZK
- G1UuNFyQDpWxJUzTlGGPwY2854+Y7o5B9va2WYCUy/xDd4he6LuGZ00pHfwedC/NIEeK
- i5aw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768499085; x=1769103885; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fA7FOKlU7W8aCa33XDCB2juyBR0y0n1FS/r0Xb890nc=;
- b=RRh9q8ZFRSmYPLh/MWlzwmSRsaSlGsVUtBsPTBjZfdw+l3wigEwDiHOtrEKszHcV+X
- 2Xi+U6To2ud1ljpQX4tdb0O2pyp91dvtRAoE8J7n5pFPrhSmzmC/kZVSrO4D3eECVRKD
- 9OFka252L4q1LPZ8SrVsW3rl+xOOQ+kNIHByzSPWXlNaXrrp2kH45AcMKZQE6vm9Au9P
- C05LkM65wKTAlvFefwjLYwal7X5pdxTWUdzgOLhcXI2R1ksY1nvxuLodsMSA0BGhNuNt
- z8eTfWUmult5xgSSX3gispJTaefVgWofC7FOrhnD39s8Go8WyNMvNUUILj4vDGgKEqTF
- lEuQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vgRPR-000070-UP
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 12:45:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vgRPP-0007D3-8B
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 12:45:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768499121;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YwuuURJOphYbKG+K5Cg50gwJY5ISiq0Af9cSrz+ssII=;
+ b=T7aGKkaygW1//TcY6PQFgYu7IIjWhLCVHoqP+6cJNnD56PwlmOx8cH0KmcOWyo+CdoKIFs
+ Ypctoat+DVY80XSKIof2eV2tEDGsF0bRRJlX+LiivdSWadnr7PVn0s9yLevKfGYoUUr6y8
+ YYcU1H1c8BST4/zowPhleIdnx1uXm6Y=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-612-rOn8HcCjNKCxPVbXNMkM8w-1; Thu, 15 Jan 2026 12:45:20 -0500
+X-MC-Unique: rOn8HcCjNKCxPVbXNMkM8w-1
+X-Mimecast-MFC-AGG-ID: rOn8HcCjNKCxPVbXNMkM8w_1768499119
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-430fcb6b2ebso997337f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 09:45:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768499085; x=1769103885;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fA7FOKlU7W8aCa33XDCB2juyBR0y0n1FS/r0Xb890nc=;
- b=XWFnC5o9lt2fZb6YgrzhWNf1xXPptm+jQ8Pk03Jq0TqkltGUzmEMRJGoaRYOFuPaAB
- mOITygztmCT3H3W3nP56DvMAzNGQ8eG9cjzojoWm3OkHB/6BdA+5FS1ARQlYOZ88Z6Pn
- tXCAhrnmUQLyQ6l8kbQzGMopFYVaUeE4HsikuV3d/tM8QcPLH3U0Eaz0NwPCCGHakKbR
- sYw4TGCeZljdz31xOW6z/7oC/8dUXqE1YXC1wJbRXaNp0lGw5AC8tn/47Huvflm44vCm
- NPlbTVkK3M0w4daUmai8qIRAmvbhSLp+ZEIKJhLyoLHmFpNENVmlhm8ZMIpcOm7nMC8R
- w8Ew==
-X-Gm-Message-State: AOJu0YwuqUZhjaV8jAEbb+4AjZT8mod1Oho6zxxDusbTQPVOWE5lCXcA
- VtGc83ABzNQUtxIhfIMev0YXBI7JpRMREV6Pcr4bf7+SJ+vrFQmrpkWIaU7bB6Cl/z3pkiDjpbr
- /7gVpp+hgpyKrvmxQLr3fDf4O644vdpw=
-X-Gm-Gg: AY/fxX55CxenobAjrRX13KQAlUwjy4MYGJDwaUU79YEnMLvAVh6C0xdZrHPRthYa8DV
- 4l/ogAUNJ/MUl7ALRLr/hDfd+m8WDN1O1sp7801KDcXnfdolx6ibvCc7oNH0B3y9HGvf/kbCtGr
- VisIzBaKihaAe5BpZx4x9luMbObtyTma1lGQRRWIHoVbgXOjmtrw2jfDHGEeIvRooJu8X/nIEWQ
- VUbcsQ+ohc8YWR+rqenl2QoCHV6lXDzWW5PpVp4AFiC4KqFzmt0K5+tFVnMl40COqCQZKnH
-X-Received: by 2002:a17:907:7b98:b0:b83:8f35:773b with SMTP id
- a640c23a62f3a-b879300de06mr34640566b.54.1768499085045; Thu, 15 Jan 2026
- 09:44:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768499119; x=1769103919;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YwuuURJOphYbKG+K5Cg50gwJY5ISiq0Af9cSrz+ssII=;
+ b=adS60XS130IiTttNpL9RIDvqGQNjYexM1YVESgcRoOiLHSMAgj8O9KsNIjkOMYDQLm
+ kv62QE0okX+H38FfphlHri5gPhLlgWAodAmfsOwxb9SFkH4CajkY2PkJn1UOxbiuouQ+
+ 6vqO9kp7PC2RdkU71b6sNugn4dOUQRaXdU+i07hZ41WDI8FUjApewqOsHJyaD/gVs91T
+ jX271V1RQmz0UujgLpBJql0UNrDRtXyPrn7yzheXHYvuxd4ADiYuSWJDudTxkTvdKQ5L
+ c+3eqxKWYuqOi18ORjuE2xzAMnt5M4W+sBkgvnZQoS4TYxbO1Ys/hjuHS65+6UaYruv3
+ VuJQ==
+X-Gm-Message-State: AOJu0YzmC/DKf5LUBOxGq4rt/Z7RNnSRMeUOgiW7lUXPCMnYFzPaTsGL
+ ZPAh42G6to1jRIT2iJmBJq7JAn8i7trn9pDNNSatV/TQg3Z8SWTjFyEsnvy4OaqtkJuQCrKwlT3
+ WsxIrpiBmDiW9TcAOjRYG8J2ABCxzDu6v+HLQOfw8cNqnuAKYk+r2i1U7
+X-Gm-Gg: AY/fxX5sk5t/jRv+q6L5PzWpXkVSQry2WoS0EKoqYOmVguwTwgjK+6aHuyTt1RGPYeD
+ dgZr8z9pJEpXDNzBcr5fQ95lGTlYQYx8FG0FVSH60A9pULWtmVSfT3avM31v5a4ssK6Q3VDThn0
+ fAz2e+4IQ75maFpLtJbvuxzE1xEMZSvMr9EabUn+gTCaQx6xHL0hmF7Z0ccHkqf85ACCZeqXDLg
+ /83O+aDb2qu4EiRVlQ6pzFQpT/mM7IusK3C/HdOgKpxtWV/t1z9t5qnKlXPGxSpDfaH51KfPhAn
+ QB4MIy6aL5LSMNr2waBvOCewgCEkFEE0Hw9IXZY9LIbIItEXM/2buOt+8ZA0/x8dFzp8RJACYSB
+ QE9QwrC0oe9LdoUhO0z8vLlkF/xXg/5iiXDrh1Tc8NIjyQHaLhv8WLYX9Qw==
+X-Received: by 2002:a05:6000:24c6:b0:432:bc90:2cfa with SMTP id
+ ffacd0b85a97d-43569bbd3e8mr230593f8f.33.1768499118996; 
+ Thu, 15 Jan 2026 09:45:18 -0800 (PST)
+X-Received: by 2002:a05:6000:24c6:b0:432:bc90:2cfa with SMTP id
+ ffacd0b85a97d-43569bbd3e8mr230563f8f.33.1768499118565; 
+ Thu, 15 Jan 2026 09:45:18 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43569921dedsm295479f8f.9.2026.01.15.09.45.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Jan 2026 09:45:18 -0800 (PST)
+Message-ID: <eb30eab5-40b4-4635-aeab-6e7b62c233fe@redhat.com>
+Date: Thu, 15 Jan 2026 18:45:16 +0100
 MIME-Version: 1.0
-References: <20251229103859.98777-1-zhangckid@gmail.com>
- <20251229103859.98777-3-zhangckid@gmail.com>
- <877bts8fsa.fsf@pond.sub.org>
- <CAK3tnvJuoin17F9FDnYJA+vXeUeGpMv3R=2vrOBFUotjRCymfQ@mail.gmail.com>
-In-Reply-To: <CAK3tnvJuoin17F9FDnYJA+vXeUeGpMv3R=2vrOBFUotjRCymfQ@mail.gmail.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Fri, 16 Jan 2026 01:44:06 +0800
-X-Gm-Features: AZwV_QiIfu4qp4jdT166PBaqbS0ZR7nlJoi1_eDx_Dcg8vU_sxj_GhWlSMuvIFo
-Message-ID: <CAK3tnvLo45v9M26TLg3Djsn0FeUKNuRyXTfmP77uFp5f2JrN_Q@mail.gmail.com>
-Subject: Re: [PATCH 3/3] qapi: Add thread_status flag for iothreads
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v8 5/7] hw/arm/smmuv3-common: Add STE/CD set helpers for
+ repeated field setup
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>, Paolo Bonzini
+ <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+References: <20251224034647.2596434-1-tangtao1634@phytium.com.cn>
+ <20251224034647.2596434-6-tangtao1634@phytium.com.cn>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251224034647.2596434-6-tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,149 +121,121 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 9, 2026 at 11:11=E2=80=AFAM Zhang Chen <zhangckid@gmail.com> wr=
-ote:
->
-> On Thu, Jan 8, 2026 at 8:12=E2=80=AFPM Markus Armbruster <armbru@redhat.c=
-om> wrote:
-> >
-> > Zhang Chen <zhangckid@gmail.com> writes:
-> >
-> > > The thread_status depends on struct IOThreadInfo's
-> > > 'attached': 'bool'. Show in the qmp/hmp CMD with
-> > > 'attached' or 'detached'.
-> > >
-> > > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > > ---
-> > >  iothread.c         | 1 +
-> > >  monitor/hmp-cmds.c | 2 ++
-> > >  qapi/misc.json     | 6 ++++++
-> > >  3 files changed, 9 insertions(+)
-> > >
-> > > diff --git a/iothread.c b/iothread.c
-> > > index 38e38fb44d..fb4898e491 100644
-> > > --- a/iothread.c
-> > > +++ b/iothread.c
-> > > @@ -358,6 +358,7 @@ static int query_one_iothread(Object *object, voi=
-d *opaque)
-> > >      info =3D g_new0(IOThreadInfo, 1);
-> > >      info->id =3D iothread_get_id(iothread);
-> > >      info->thread_id =3D iothread->thread_id;
-> > > +    info->attached =3D iothread->attached;
-> > >      info->poll_max_ns =3D iothread->poll_max_ns;
-> > >      info->poll_grow =3D iothread->poll_grow;
-> > >      info->poll_shrink =3D iothread->poll_shrink;
-> > > diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> > > index 33a88ce205..84b01737cf 100644
-> > > --- a/monitor/hmp-cmds.c
-> > > +++ b/monitor/hmp-cmds.c
-> > > @@ -197,6 +197,8 @@ void hmp_info_iothreads(Monitor *mon, const QDict=
- *qdict)
-> > >          value =3D info->value;
-> > >          monitor_printf(mon, "%s:\n", value->id);
-> > >          monitor_printf(mon, "  thread_id=3D%" PRId64 "\n", value->th=
-read_id);
-> > > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
-> > > +                       value->attached ? "attached" : "detached");
-> > >          monitor_printf(mon, "  poll-max-ns=3D%" PRId64 "\n", value->=
-poll_max_ns);
-> > >          monitor_printf(mon, "  poll-grow=3D%" PRId64 "\n", value->po=
-ll_grow);
-> > >          monitor_printf(mon, "  poll-shrink=3D%" PRId64 "\n", value->=
-poll_shrink);
-> > > diff --git a/qapi/misc.json b/qapi/misc.json
-> > > index 6153ed3d04..2eea920bd2 100644
-> > > --- a/qapi/misc.json
-> > > +++ b/qapi/misc.json
-> > > @@ -76,6 +76,9 @@
-> > >  #
-> > >  # @thread-id: ID of the underlying host thread
-> > >  #
-> > > +# @attached: flag to show current iothread attached status
-> >
-> > What does "attached status" actually mean?
->
-> This flag means weather the "-object iothread" already been used by a
-> real device.
-> In hotplug scenario, user can add multiple "-object iothread" and
-> multiple devices (like virtio-blk).
-> When user hotunplug the devices can keep the iothreads as a thread
-> pool, following the new
-> hotplug devices can attach to the released iothread.
->
-> >
-> > > +#            (since 10.3.0)
-> >
-> > (since 12.0)
->
-> OK.
->
-> >
-> > > +#
-> > >  # @poll-max-ns: maximum polling time in ns, 0 means polling is
-> > >  #     disabled (since 2.9)
-> > >  #
-> > > @@ -93,6 +96,7 @@
-> > >  { 'struct': 'IOThreadInfo',
-> > >    'data': {'id': 'str',
-> > >             'thread-id': 'int',
-> > > +           'attached': 'bool',
-> > >             'poll-max-ns': 'int',
-> > >             'poll-grow': 'int',
-> > >             'poll-shrink': 'int',
-> > > @@ -118,6 +122,7 @@
-> > >  #              {
-> > >  #                 "id":"iothread0",
-> > >  #                 "thread-id":3134,
-> > > +#                 'thread_status':"attached",
-> >
-> > I believe this is actually
-> >
-> >                      "attached": true
-> >
-> > and ...
->
-> No, I changed it here for readability:
-> > > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
-> > > +                       value->attached ? "attached" : "detached");
->
-> But if you think ""attached": true" is more direct way, I can change
-> it next version.
 
-If no other comments, I will keep this part and update to version 2
-for this series.
 
-Thanks
-Chen
+On 12/24/25 4:46 AM, Tao Tang wrote:
+> This change introduces STE_SET_* and CD_SET_* helpers to centralize and
+> simplify repeated field setting logic.
+>
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
+Eric
+> ---
+>  include/hw/arm/smmuv3-common.h | 79 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 79 insertions(+)
 >
-> >
-> > >  #                 'poll-max-ns':0,
-> > >  #                 "poll-grow":0,
-> > >  #                 "poll-shrink":0,
-> > > @@ -126,6 +131,7 @@
-> > >  #              {
-> > >  #                 "id":"iothread1",
-> > >  #                 "thread-id":3135,
-> > > +#                 'thread_status':"detached",
-> >
-> >                      "attached": false
-> >
-> > Recommend to create example output by running a test instead of making
-> > it up, because making it up likely screws it up :)
->
-> Uh.... This output print is the real test in my machine, maybe you
-> missed the previous description.
->
-> Thanks
-> Chen
->
-> >
-> > >  #                 'poll-max-ns':0,
-> > >  #                 "poll-grow":0,
-> > >  #                 "poll-shrink":0,
-> >
+> diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
+> index 7f7dd02221..0c6c162288 100644
+> --- a/include/hw/arm/smmuv3-common.h
+> +++ b/include/hw/arm/smmuv3-common.h
+> @@ -100,6 +100,37 @@ REG32(STE_7, 28)
+>  #define STE_CFG_ABORT(config)      (!(config & 0x4))
+>  #define STE_CFG_BYPASS(config)     (config == 0x4)
+>  
+> +/* Update STE fields */
+> +#define STE_SET_VALID(ste, v)                                                 \
+> +    ((ste)->word[0] = FIELD_DP32((ste)->word[0], STE_0, VALID, (v)))
+> +#define STE_SET_CONFIG(ste, v)                                                \
+> +    ((ste)->word[0] = FIELD_DP32((ste)->word[0], STE_0, CONFIG, (v)))
+> +
+> +#define STE_SET_CTXPTR(ste, v) do {                                           \
+> +    (ste)->word[0] = FIELD_DP32((ste)->word[0], STE_0, CTXPTR_LO, (v) >> 6);  \
+> +    (ste)->word[1] = FIELD_DP32((ste)->word[1], STE_1, CTXPTR_HI, (v) >> 32); \
+> +} while (0)
+> +#define STE_SET_S2T0SZ(ste, v)                                                \
+> +    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2T0SZ, (v)))
+> +#define STE_SET_S2SL0(ste, v)                                                 \
+> +    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2SL0, (v)))
+> +#define STE_SET_S2TG(ste, v)                                                  \
+> +    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2TG, (v)))
+> +#define STE_SET_S2PS(ste, v)                                                  \
+> +    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2PS, (v)))
+> +#define STE_SET_S2AA64(ste, v)                                                \
+> +    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2AA64, (v)))
+> +#define STE_SET_S2ENDI(ste, v)                                                \
+> +    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2ENDI, (v)))
+> +#define STE_SET_S2AFFD(ste, v)                                                \
+> +    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2AFFD, (v)))
+> +#define STE_SET_S2S(ste, v)                                                   \
+> +    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2S, (v)))
+> +#define STE_SET_S2TTB(ste, v) do {                                            \
+> +    (ste)->word[6] = FIELD_DP32((ste)->word[6], STE_6, S2TTB_LO, (v) >> 4);   \
+> +    (ste)->word[7] = FIELD_DP32((ste)->word[7], STE_7, S2TTB_HI, (v) >> 32);  \
+> +} while (0)
+> +
+>  /* CD fields */
+>  
+>  REG32(CD_0, 0)
+> @@ -169,6 +200,54 @@ REG32(CD_5, 20)
+>               (((uint64_t)FIELD_EX32((x)->word[3], CD_3, TTB0_HI) << 32) | \
+>                ((uint64_t)FIELD_EX32((x)->word[2], CD_2, TTB0_LO) << 4)))
+>  
+> +/* Update CD fields */
+> +#define CD_SET_VALID(cd, v)                                                   \
+> +    ((cd)->word[0] = FIELD_DP32((cd)->word[0], CD_0, VALID, (v)))
+> +#define CD_SET_ASID(cd, v)                                                    \
+> +    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, ASID, (v)))
+> +#define CD_SET_TTB(cd, sel, v) do {                                           \
+> +    if (sel) {                                                                \
+> +        (cd)->word[4] = FIELD_DP32((cd)->word[4], CD_4, TTB1_LO, (v) >> 4);   \
+> +        (cd)->word[5] = FIELD_DP32((cd)->word[5], CD_5, TTB1_HI, (v) >> 32);  \
+> +    } else {                                                                  \
+> +        (cd)->word[2] = FIELD_DP32((cd)->word[2], CD_2, TTB0_LO, (v) >> 4);   \
+> +        (cd)->word[3] = FIELD_DP32((cd)->word[3], CD_3, TTB0_HI, (v) >> 32);  \
+> +    }                                                                         \
+> +} while (0)
+> +
+> +#define CD_SET_TSZ(cd, sel, v)                                                \
+> +    ((cd)->word[0] = (sel) ? FIELD_DP32((cd)->word[0], CD_0, TSZ1, (v)) :     \
+> +                             FIELD_DP32((cd)->word[0], CD_0, TSZ0, (v)))
+> +#define CD_SET_TG(cd, sel, v)                                                 \
+> +    ((cd)->word[0] = (sel) ? FIELD_DP32((cd)->word[0], CD_0, TG1, (v)) :      \
+> +                             FIELD_DP32((cd)->word[0], CD_0, TG0, (v)))
+> +#define CD_SET_EPD(cd, sel, v)                                                \
+> +    ((cd)->word[0] = (sel) ? FIELD_DP32((cd)->word[0], CD_0, EPD1, (v)) :     \
+> +                             FIELD_DP32((cd)->word[0], CD_0, EPD0, (v)))
+> +#define CD_SET_ENDI(cd, v)                                                    \
+> +    ((cd)->word[0] = FIELD_DP32((cd)->word[0], CD_0, ENDI, (v)))
+> +#define CD_SET_IPS(cd, v)                                                     \
+> +    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, IPS, (v)))
+> +#define CD_SET_AFFD(cd, v)                                                    \
+> +    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, AFFD, (v)))
+> +#define CD_SET_TBI(cd, v)                                                     \
+> +    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, TBI, (v)))
+> +#define CD_SET_HD(cd, v)                                                      \
+> +    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, HD, (v)))
+> +#define CD_SET_HA(cd, v)                                                      \
+> +    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, HA, (v)))
+> +#define CD_SET_S(cd, v)                                                       \
+> +    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, S, (v)))
+> +#define CD_SET_R(cd, v)                                                       \
+> +    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, R, (v)))
+> +#define CD_SET_A(cd, v)                                                       \
+> +    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, A, (v)))
+> +#define CD_SET_AARCH64(cd, v)                                                 \
+> +    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, AARCH64, (v)))
+> +#define CD_SET_NSCFG(cd, sel, v)                                              \
+> +    ((sel) ? ((cd)->word[4] = FIELD_DP32((cd)->word[4], CD_4, NSCFG1, (v))) : \
+> +             ((cd)->word[2] = FIELD_DP32((cd)->word[2], CD_2, NSCFG0, (v))))
+> +
+>  /* MMIO Registers */
+>  
+>  REG32(IDR0,                0x0)
+
 
