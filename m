@@ -4,107 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9BFCD44C46
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 13:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75294D44C4C
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 13:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgNep-0006Ab-So; Thu, 15 Jan 2026 08:45:03 -0500
+	id 1vgNoW-0002JX-2c; Thu, 15 Jan 2026 08:55:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgNen-00066B-8U
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 08:45:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vgNoU-0002IP-Gi
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 08:55:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgNel-0003K1-Nj
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 08:45:01 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vgNoT-0004sc-0x
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 08:55:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768484698;
+ s=mimecast20190719; t=1768485299;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7aEEIf9k5WIt4D2WiSktQOOnKcpYSuWKPSijPWu6/Zo=;
- b=OWG84OVwILTOXlfwQuo9n2hRsPSb+fhLgY+seqHHChKGv7kbeaMjL2ifS1/jyN731UNOU4
- GVHf8cE4tl2MlmiMdbb1HUY2fOt9I6Y/avfHg72nPTtTS/MwYEksNs/a2nd4E8Z7G3ZD5m
- eWN5xyLIugThUkIsvXnOAgCZUWQlkhg=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Ndms6K63jRJRGbuMXlSEcy4hbxYjKn9uqDQrRqGbwF4=;
+ b=DcgBRXxEf5+7uTowV/1YCsoVNAy1maDPoLDCx6bsAY6mMn1jUDo9xkWLH2PGScEzx4g59t
+ oFj1eYtyMvTIyK3jdt7em7zqS0kI9POHcxlZ8jLzEqEWGdELZNG0HjXiJJlm65MP7l9Ssz
+ ptHd1tE6xnMrAwp3kTDd1V2ApJFs9lU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-OYJFCcuuOJqMz81CE9Ag0Q-1; Thu, 15 Jan 2026 08:44:57 -0500
-X-MC-Unique: OYJFCcuuOJqMz81CE9Ag0Q-1
-X-Mimecast-MFC-AGG-ID: OYJFCcuuOJqMz81CE9Ag0Q_1768484696
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-888825e6423so14820616d6.3
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 05:44:57 -0800 (PST)
+ us-mta-519-pptVJoZAOQ2HSjgfa4ECcg-1; Thu, 15 Jan 2026 08:54:57 -0500
+X-MC-Unique: pptVJoZAOQ2HSjgfa4ECcg-1
+X-Mimecast-MFC-AGG-ID: pptVJoZAOQ2HSjgfa4ECcg_1768485296
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-432488a0ce8so715732f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 05:54:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768484696; x=1769089496; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=7aEEIf9k5WIt4D2WiSktQOOnKcpYSuWKPSijPWu6/Zo=;
- b=TxVoHlkAtjG71t9qb4qRzVG0g4VyxVqheMy+UBoJvBd1hfJJs5aaTSacAiEDTQerTE
- abEgE8+jqtM/3EGGVsd++5HnXqsiAecdaYIEHdjYAMLvMtn6KrAVCuue8yU587mjnpHp
- 27CLVOrIJ1Ry8GOhY9XfJWzCJUbnGuUuVoAiuwRAOapkMeFSGOTTno8jr2xhP0TIoNZo
- mBTIVN/CSoLHFMSLKOeSrM55LxfMCugDpS4WDbFGVJe2PZ5sECijsaBG7/5Zxdbwi7IU
- G14Ttf/4yfbICNQKqwmYfM9km0BQBTvuIdNa0fO4Kcglfjln3vfkiGXnK0zgQbIagQwm
- jeww==
+ d=redhat.com; s=google; t=1768485295; x=1769090095; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ndms6K63jRJRGbuMXlSEcy4hbxYjKn9uqDQrRqGbwF4=;
+ b=msiZNJea/w7vKlbvEYvZ71gLv7XsMCrIR0I0BUKJREUjbLWyiSgUC4O84Zb/HiC4vn
+ JVTxLsm8JgLUVIY0NwWYiDTWx1SoSXraVk2uBj+uY0FgN1gCTTpFHiQrSaE0QBWow0Wc
+ 9xC7+/GxswpT3vt5v0PfSDdBLeB1a5Dm4lCmdt7qAZ3euulJGpBNtJJyVL4lxAl6TUE7
+ xZtQ00MgV0kOWF7NT5f6WSypgn5YokdHE255YC6IvKH7ZfKH2zIMCHqHwk+w9bhItIlb
+ dBwp+Do6lpdQ+381u0tFVe2zwttNWI7MV+dNB/w5UJteyVmXZqdLeLtHCG9MTZs4hxH5
+ FoeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768484696; x=1769089496;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7aEEIf9k5WIt4D2WiSktQOOnKcpYSuWKPSijPWu6/Zo=;
- b=aAHRfwtrpjOZow7oEc6FpGoluRkJx2NEmLOxnZUPieAA21sDFMvT2wHsXUwYtdh67s
- 0hPAuIyeNEBRt6hqaSJ8aDn70A4qRiofiVuGaM9bAxB6U3iyvUhhfegvk8WGNduu+wDf
- jokDTOMN9ch0xE8PQ+L6fbxvqsLqFJzLShsYv6wJHroXDKD0O7KibLegjMg6CNkw4Cej
- qVx0k8r7qclxxFNYnj4+FwZHdqvszIVdEfMyJTxK/ctIOwYxWWZmbWy21Es3dWp+bTaI
- kwBYbNqQeuaI3jshLIiSz/c+zqZE0MBbkXH8Tjao5T/v7PH/KNnjiDNQIzsGSW0Z6e9m
- bB5A==
-X-Gm-Message-State: AOJu0YynKwdYWiPZZ+O5egGNDqBIq6EXUpBP5YIxAygdIiGQSwPJiplE
- 46wKShXCuKsVzJp1lfukl3ukFyo8cNmlte9XE4yTHKIsVrMUotZAZhd0rltS/p+eGDPnN4hEOH5
- LhBaRHqE75P/C0sTCb6qSttUyZCbDiGZGnGgLrjTSSrIrbDgqe8To7/OE
-X-Gm-Gg: AY/fxX7Qvs9oX2NJ7XAE0D8HqOdQysqvft5p88T+8l1plOFZQIEQn88Iiy1u9pW9Jj9
- kgABX3JzAdHGIwjAuRTlRSj0gCAMCaS+X5tyhqUtsFc7g3x1lorlhRyKicH9dbZ0NIEe1fdWva9
- b5Bh6gRjYltpY42vCRKJ3kwY/DfHEbTNbglAceXGVOF464szXK/p6Jdgdj+zijYwmDrWxXjROlk
- wuC980OWK+M7Me07FHdkhkAhLjTgQ6cQLbhagKOPg9f81TL7IToBis7vo7p72TmIY+RPogU0QiC
- BsVQLlUtsfP1bduF14p5N/UX3qLAC71hKuaDDPrY+ubIk24hFIRLB+5FgQzsAlPGxfSAP0KRBUd
- a/7c=
-X-Received: by 2002:a05:6214:212b:b0:888:60c4:29cf with SMTP id
- 6a1803df08f44-89275c7bbe1mr83653326d6.68.1768484696436; 
- Thu, 15 Jan 2026 05:44:56 -0800 (PST)
-X-Received: by 2002:a05:6214:212b:b0:888:60c4:29cf with SMTP id
- 6a1803df08f44-89275c7bbe1mr83652816d6.68.1768484695886; 
- Thu, 15 Jan 2026 05:44:55 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50148eba456sm34928221cf.20.2026.01.15.05.44.52
+ d=1e100.net; s=20230601; t=1768485295; x=1769090095;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ndms6K63jRJRGbuMXlSEcy4hbxYjKn9uqDQrRqGbwF4=;
+ b=JYqVYjwcWpAvB/lHtlzG2rVXr5Mmqqv6a8gelEZtxLuNu2oauUFus/PXCWx03COjL5
+ /99pz7eLRNsQajMFPzohqe6PokuGB5KVbrDfdP+14tgyKq9JHgpwBVXBLjbvOKzRtY+0
+ pE0H1aP9B+u+UkGKtSOI6/1ZidLfv9E+UYGdKs1N1RDg6EqxraKSKqlSPKq8ILUEmKvT
+ JB60uyer5JXHvZeoIdVIpoeyjF4OigAx6M5oMGuVfZYL8YnYSFlNRI4sXaTeRDbMf86v
+ slFhOwTSSEJS3XMmiMREY0uoF5PgAc+I3UI8rTFYKRA0CLe+xi17takTwIH1KHsBmqGC
+ 6vHw==
+X-Gm-Message-State: AOJu0YwWFEm0apGVK04cyBTFmA7iVQ2Iesna29mux9b1agutt+iPFzmf
+ o+z3qbEaVrl9+TyAyGilscGbeiY9z0E40aHcTezpum3PNWSo7VaLzVKZ/76ouimCgauvC//WGAu
+ 6JdqgvYbRTo5ZoA/yuEG2uF5dO5MnV/34hPdZvB6NeVn3fyTjuWoQKue55l6Bo78UzA93sqv9AX
+ PULeyg5n0QwR6xj4Mf98r3S3keWhPD7+6HpsSZgmXK
+X-Gm-Gg: AY/fxX7Q2YkJ77EOQNsgLDluPoXpS4C9RMrLVF67H+tXgiXh722YKLupYOnQsPEtJvV
+ vt/T+nss7KzQN+WlZYGa//sHzKcTzwHk884PPUVgQzU6o34Q+YgoqyZtyEMoZHy5j0XsIthyKTZ
+ TmdIRCvcoTKzFgwVNDaS9fz41EbJfJCN/vqsp4sd0YD81RPH5Rq2IPN2hvxKxCOSaIF4TqWYJIy
+ WKAQqGp7KnJ7h1MUG/LC6Urx4RlSJiuz/mnGSh2FP56cSOu97rnR+aShczs7SyPMCmKgOu6lAhu
+ MhR30f5p0kQ1YNBOHuY6G5vXqhxMy0iguNM6rnWUJzX2Lyd+GwCRGYVer8vLNGFi6OwC7Y8bhZN
+ o3QF41e3m8A9yTwQkG3MKOJsi3jPzbRFJq0dIETAcoYQds73P3929aefhJd9rZDfU3HyykNOuyI
+ gwvUF9KE9qw9dMRg==
+X-Received: by 2002:a05:6000:2910:b0:430:f494:6abb with SMTP id
+ ffacd0b85a97d-4342c4ee90dmr7071331f8f.8.1768485295044; 
+ Thu, 15 Jan 2026 05:54:55 -0800 (PST)
+X-Received: by 2002:a05:6000:2910:b0:430:f494:6abb with SMTP id
+ ffacd0b85a97d-4342c4ee90dmr7071301f8f.8.1768485294626; 
+ Thu, 15 Jan 2026 05:54:54 -0800 (PST)
+Received: from [192.168.10.48] ([151.61.26.160])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-434af6d9039sm6185735f8f.30.2026.01.15.05.54.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 05:44:55 -0800 (PST)
-Date: Thu, 15 Jan 2026 08:44:49 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Lukas Straub <lukasstraub2@web.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 2/2] tests/migration-test: Remove
- postcopy_recovery_fail_stage from MigrateCommon
-Message-ID: <aWjvUS1BOBfuOdGb@x1.local>
-References: <20260106203320.2110372-1-peterx@redhat.com>
- <20260106203320.2110372-3-peterx@redhat.com>
- <CAE8KmOz9XtaEY+LMD9CCCR_bMXe04chGHdvuwVqsYRNe+AtUJg@mail.gmail.com>
- <aV6UhNJzQLnDaJvO@x1.local>
- <CAE8KmOzPHTf6eaufn3dWTJJ2nsifdxZzwENK2hD_LZLGiE-pcQ@mail.gmail.com>
- <aWe35LsGn_68MIUu@x1.local>
- <CAE8KmOwgSyVYBsUjsY07ynKU3YUYn=2pmSCxZnKT9=nQVor7kA@mail.gmail.com>
+ Thu, 15 Jan 2026 05:54:54 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org
+Subject: [PATCH 0/2] tcg: improve instruction selection for extract and
+ deposit_z
+Date: Thu, 15 Jan 2026 14:54:51 +0100
+Message-ID: <20260115135453.140870-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAE8KmOwgSyVYBsUjsY07ynKU3YUYn=2pmSCxZnKT9=nQVor7kA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,25 +118,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 15, 2026 at 05:27:30PM +0530, Prasad Pandit wrote:
-> On Wed, 14 Jan 2026 at 21:06, Peter Xu <peterx@redhat.com> wrote:
-> > > * Let's make it fail_stage in both places then?
-> >
-> > Could you explain what's the 2nd place to use it besides the parameter in
-> > test_postcopy_recovery_common()?
-> ===
-> tests/qtest/migration/framework.c:
->     static void postcopy_recover_fail(QTestState *from, QTestState *to,
->                                        PostcopyRecoveryFailStage stage)
-> ===
-> This one. ^^
+extract and deposit_z are similar operations, only differing in
+that extract shifts the operand right and deposit_z shifts it left.
+However, their code generation is currently different.
 
-I don't have a strong opinion, since that's unrelevant to the current
-change, IMHO we can keep it as is.
+extract is implemented as either SHL+SHR or SHR+AND, with the latter
+chosen for "simple" cases where we expect the immediate to be available
+or a zero extension instruction to be usable.  deposit instead uses only
+AND+SHL, though SHL+SHR would be just as usable.
 
-Thanks,
+To get the best of both worlds, introduce tcg_op_imm_match to check
+whether the processor supports the immediate that is needed for the mask,
+and if not fall back to two shifts.
+
+Paolo
+
+Paolo Bonzini (2):
+  tcg: target-dependent lowering of extract to shr/and
+  tcg: possibly convert deposit_z to shl+shr
+
+ include/tcg/tcg.h |  2 ++
+ tcg/tcg-op.c      | 58 +++++++++++++++++++++++++++++++----------------
+ tcg/tcg.c         | 23 +++++++++++++++----
+ 3 files changed, 59 insertions(+), 24 deletions(-)
 
 -- 
-Peter Xu
+2.52.0
 
 
