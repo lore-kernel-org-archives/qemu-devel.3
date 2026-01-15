@@ -4,96 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30A70D3CC8C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 00:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 719A4D3CC92
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 00:29:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgB37-0002NC-M8; Wed, 14 Jan 2026 19:17:17 -0500
+	id 1vgBE1-0006as-CY; Wed, 14 Jan 2026 19:28:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vgB35-00027e-VZ
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 19:17:16 -0500
-Received: from p-west3-cluster5-host6-snip4-4.eps.apple.com ([57.103.72.57]
- helo=outbound.ms.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vgB33-0002AQ-No
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 19:17:15 -0500
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-0 (Postfix) with ESMTPS id
- 06FDE18000B5; Thu, 15 Jan 2026 00:17:10 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=/1iV9+91lqonkqhpLU7lG9nVe/pL6IoL+SeKGASMt8w=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=I0Z/10Qz80kpaYiTkxKo10CBCymyXBVzZopQvpDg6XkUMOEVUDnMR+p9pRQxM+VRlKqqR7YaAqyGC7EZOdi5waC08D3SJA/fCSgdsrinOBok33MlEoB9wlzoT5o9DPD0ylGzOT3k2dEtPtTuUryJ/cjsCgnLbC+4fSBQ+sRMaRqpGLZ3qIKsn8EwCu8fANRO7ITqRDwMhTMs4gQJpu1bY516HujqF8Ov9xolLLOh6D4cprzY1aCWg8XKSR7MF1HX+YX9jeTfQLZsEBzGErNIabdVa24fAKTTXxF9mRwcGbnw6gxrEYR8x+FuifuN+enyteCLdMb2UWHN90o1sEFd+g==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-0 (Postfix) with ESMTPSA id
- 598E41800457; Thu, 15 Jan 2026 00:17:01 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: mohamed@unpredictable.fr,
-	qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, Alexander Graf <agraf@csgraf.de>,
- Mads Ynddal <mads@ynddal.dk>, Peter Xu <peterx@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Pedro Barbuda <pbarbuda@microsoft.com>, Cameron Esfahani <dirty@apple.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v15 19/26] hw/arm, accel/hvf,
- whpx: unify get_physical_address_range between WHPX and HVF
-Date: Thu, 15 Jan 2026 01:14:58 +0100
-Message-ID: <20260115001505.57237-20-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260115001505.57237-1-mohamed@unpredictable.fr>
-References: <20260115001505.57237-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vgBDz-0006aO-RI
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 19:28:31 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vgBDy-0005d2-AL
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 19:28:31 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2a0c20ee83dso2549665ad.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 16:28:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768436908; x=1769041708; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=77Ug7NzpzfWjfWyAtp2VZ4twNiWzFxWy0atfRlqnuhI=;
+ b=pB1eX4YYLMoiZzPp74IACwABCYju4R/tqCw5HN+yN3rNe84WiZK45RhSfMmKrj/A0n
+ Vp8ODvV7PY8qGXpxJ24nxv1PtZdsp0BSHYRNU/iLQowssHsLn3PLQn/rEOpGVnrus8u1
+ q8EYG2ZpYs1QAGTRfhRJO0eWp/D3GMVCTjfleNdyicGIHKTO7bpCiRb46YpYiFCxah2a
+ 5QB8/dK+JRzqy6Q6TumLvx1FBkSOpNxDueSBTANX9J47WvSIH8bU7BhCfUL2fIgKijl3
+ nUWgFluUVm+4L7S1mjvM5tL+8MDXB2PjOL7lOIpYETEGsdrkFEz2cQbPfHmCjI0AwQh1
+ 8Q9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768436908; x=1769041708;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=77Ug7NzpzfWjfWyAtp2VZ4twNiWzFxWy0atfRlqnuhI=;
+ b=wMLocSU4c/f+Azxsd8FVPnM4zdn7beCZCrx6vAvamF+8pXSpKk/XVwsMMZ+d40LEhs
+ oAbsAoBOEwYHgm6xQExSjtl3lYCDeP66tzSCF94CW40qIt28SBSZ40rNquK0igZQJN+v
+ DU4l9PjEfU2V0lS4byts50mc9tS+/KA9xrjUQF/PSHn6NE1c9p95SOEl5L+nT7LqFV5t
+ wxP548pUHFy2VQVAytdMgq/d4eIHQaDcT9j7LsZlXawxFT+j3qHG72UidWeN9/Mjx/2s
+ kZfP44c5O0zCQsWnp/nL+kJVDaDa6EwoKrBho51bb2jtRndLy1sns0g/YcoNs2bwIugH
+ RT2g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWMpEGQIPOKFoS5Zcrtg0cn2c82XJHROHi4FO5dGRNbCxA+ce6BcocBMUL2xs8Ed7V6o46XtdUYKKz6@nongnu.org
+X-Gm-Message-State: AOJu0YzfXMxYZUKBrO7VQHedrqur+Id5DxLQ8qW3HpenGg9wTkg4SNmZ
+ bo6q9EdNOoeXj+WalGqJ7t5NAehJZzsucQ6dndJn5dNYx9LfnzotfuJxtpy5cWXbd1Y=
+X-Gm-Gg: AY/fxX4vBI1Zp62nLQ9+7cHr/kEvV3RT3U68DEIVKRjZ35HbBtdEZd0MoQotkIZj4T8
+ 3Abr3LyqIE0lm0N7JS+6erQoQqY/nTJqryf1kqEtf2XlaRD57BpGi14whnjC0X4dXPGOp+agkOh
+ OnvBfXb25zv5KGFtJCcxAYanHQtflZb20DxpqFjyfwQ9t6CbfITMu5l7i661MJpphl+fYglZF7d
+ yfdazowGM24FAtWfK3eYek3mLIGNA39mYd/XeXmSYvLWmJRiDcuaOzpGZQ3/E7HXAgTVZS0VG76
+ 86Gx7pDRWVsEkKeqsXgP8an2WIXaPlHePddw+ShQISKHhodzsvGeTWqpxAGRcaN7c5CCHPUHaMZ
+ iv4KNL2wbHUl+NV1Hzf0y60cDv9R6raG1HsEX3p3cHjeN18KrUDMmX4g8g8FXFim/aqnfT/Xfhm
+ yJ86L5fvPNJZRjkWOwNyTG/E6yHmtMYpdSJbHYQ/bvilEJ1j2kU9YFcE1g3ZGskw==
+X-Received: by 2002:a17:903:2305:b0:298:5fde:5a93 with SMTP id
+ d9443c01a7336-2a59bc0ca29mr35667645ad.32.1768436907945; 
+ Wed, 14 Jan 2026 16:28:27 -0800 (PST)
+Received: from [10.244.221.227] (27-32-111-122.static.tpgi.com.au.
+ [27.32.111.122]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a3e3c3a31dsm236423835ad.9.2026.01.14.16.28.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 Jan 2026 16:28:27 -0800 (PST)
+Message-ID: <7d33d835-fcb5-41f0-893c-617a224ac894@linaro.org>
+Date: Thu, 15 Jan 2026 11:28:19 +1100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/41] vfio queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>
+References: <20260113093637.1549214-1-clg@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260113093637.1549214-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Info: v=2.4 cv=O6k0fR9W c=1 sm=1 tr=0 ts=69683208
- cx=c_apl:c_apl_out:c_pps a=qkKslKyYc0ctBTeLUVfTFg==:117 a=vUbySO9Y5rIA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=2RVAx2gzJTwwV__86OcA:9
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: mYhczQEXIIg9J1qD-86xgFNxlb8IPJJJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDAwMCBTYWx0ZWRfXzKGjGapbnbDt
- C8LQTLBsU/6chNZVQn/WC55/KuwWEvlqHOjuvnDx5lZopcq2FcPm82jejNDm+ZQGuwl+8ZWP6WS
- d52+a/M5bNItrI6r8vNeBo4RubvUlW6DUpDTrk2njHOW/94nuO1TIc0T95Pep3uYJQdXWpe+fUb
- LPZ3bbWrHyo/PLUkP5Xog0nUmuoVGiIoKZ4qtQbysIykxOKvruUWPvFuBpvpzrXmBTEKRDuPi9y
- Xl6ns9DkjKD2XbuFAb9hi9vxlIk11u7rsvHtXhXVqSIQWQnC6/FMszKA9YcpiHqWZGLJlpDlWN/
- kR3aEp0Vh33PVKQvzuO
-X-Proofpoint-ORIG-GUID: mYhczQEXIIg9J1qD-86xgFNxlb8IPJJJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-14_07,2026-01-14_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- bulkscore=0 clxscore=1030 mlxlogscore=999 adultscore=0 suspectscore=0
- spamscore=0 malwarescore=0 phishscore=0 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601150000
-X-JNJ: AAAAAAAB3uUyGNAj8bbh7iYK1kvZEiNOySUKD5Z8hJtgdYkk9Rs1FEMkCSCukib6l8XmImhUXAFnVJyezWQs9AsePtt8M4VN4+VSWJvFIDwTEjBmMeVE2atMLaSgfFXiZfJ+/7wYOEeK3zkYAXdrpAqirmRoHKTL0/0eN0dmEpx0xZXXwa/0a63+TF5got8u/waX+wS2VDbjE9nYyn0ZWaD34k+ZtqGlO7KgJNfdYt3ADh+kBarkhB/LdE9PL1kJzt0GA3cPY9E7dNA2wGMegZcwo/jtKIXO1kBB+HPkCl0D52+3N2JON9ZSOg/F7kaGXLR3TJ8P/bWeCTflVoAC72s1TXtf6WQwqX0B6lkADoe4xB8W35HZKgspT0oBamLFqyst/m7Wi5gyX1VmrniiyblbHOvg9ng4Rl8ef7CRUh96XCX7J4KJIevQ492wIpJKtm35c5Ln+vj14B1r9KJhyA+GhOF2q5SsSeD70dnCqCMWnJTPPmDS5tgquGy1L0hCqiyWOVazFALWAUf7q3vzGP0+C937Z1aR/DQ2bWxXAh9RjKfANk8vwJyz/NqsxiCyIdjUInqph8Ns92GFYrvG3jyWeuEeJf134BChmtakrTxzHB3+P7YmagAwKSIjga67FybY1vrSBKlgIERRlSqJmjuN8BiedJQGA2+O26EoMxCXmp8iCHrfTAVDnAD2SSUX0PaAL5REuerwRbsRIwrHr3fwCVw5h9ugRUZAD5bFKYGzroH27Y2ZD+mdSgAVbESa1hoeafC1RzG6MVpbomvTgYyHC0D/prBwnJue/iS8C+wXxdeG4Bl8D8ueP7vXFdfbYolbQUaUSIUc6fgzhe4c+egvQ/d5dmDykcLQCfLy09n16Y+kW/lu339CTDKHXEa8R9TLD8Gj9EHbYzPKUOz3oDV5X8qEryKVj5esrcRMzQMk9SciUA8PTGQCED5h7BRrgq0OHjBhg4iz5YmHoN2CBzkuKGg+II/
- a
-Received-SPF: pass client-ip=57.103.72.57;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,275 +104,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+On 1/13/26 20:35, Cédric Le Goater wrote:
+> The following changes since commit cf3e71d8fc8ba681266759bb6cb2e45a45983e3e:
+> 
+>    Merge tag 'single-binary-20260112' ofhttps://github.com/philmd/qemu into staging (2026-01-13 11:51:18 +1100)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/legoater/qemu/ tags/pull-vfio-20260113
+> 
+> for you to fetch changes up to 7a05be8c70bb789c23076b1ca2563ed7d87c6fb8:
+> 
+>    tests/rcutorture: Fix build error (2026-01-13 08:29:59 +0100)
+> 
+> ----------------------------------------------------------------
+> vfio queue:
+> 
+> * Resolves build errors with gcc 16
+> * Adjusts the Linux headers for s390x and mshv
+> * Fixes endianness issue in the VFIO helper functions
+> * Adds support for live migration with vIOMMU when using IOMMU
+>    dirty tracking
+> * Implements a migration blocker to prevent failures when VM
+>    memory is too large
+> * Corrects an unmap_bitmap failure in the legacy VFIO backend
+> * Addresses a workaround for an Intel IOMMU errata.
+> * Implements Intel IOMMU first stage translation for passthrough
+>    device. Also a prerequisite work for vSVA.
+> * Updates documentation
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- accel/hvf/hvf-all.c        |  7 +++++--
- hw/arm/virt.c              | 43 +++++---------------------------------
- include/hw/core/boards.h   |  4 ++--
- include/system/hvf_int.h   |  5 +++++
- target/arm/hvf-stub.c      | 20 ------------------
- target/arm/hvf/hvf.c       |  6 +++---
- target/arm/hvf_arm.h       |  3 ---
- target/arm/meson.build     |  1 -
- target/arm/whpx/whpx-all.c |  5 +++--
- target/i386/hvf/hvf.c      | 11 ++++++++++
- 10 files changed, 34 insertions(+), 71 deletions(-)
- delete mode 100644 target/arm/hvf-stub.c
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
 
-diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-index 77f4e4e4f3..ce18bc0dac 100644
---- a/accel/hvf/hvf-all.c
-+++ b/accel/hvf/hvf-all.c
-@@ -17,6 +17,7 @@
- #include "system/hvf_int.h"
- #include "hw/core/cpu.h"
- #include "hw/core/boards.h"
-+#include "target/arm/hvf_arm.h"
- #include "trace.h"
- 
- bool hvf_allowed;
-@@ -256,8 +257,10 @@ static int hvf_accel_init(AccelState *as, MachineState *ms)
-     int pa_range = 36;
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
- 
--    if (mc->hvf_get_physical_address_range) {
--        pa_range = mc->hvf_get_physical_address_range(ms);
-+
-+    if (mc->get_physical_address_range) {
-+        pa_range = mc->get_physical_address_range(ms,
-+            hvf_arch_get_default_ipa_bit_size(), hvf_arch_get_max_ipa_bit_size());
-         if (pa_range < 0) {
-             return -EINVAL;
-         }
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 06513728d3..1cc4f2a1ad 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3322,43 +3322,11 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
-     return fixed_ipa ? 0 : requested_pa_size;
- }
- 
--static int virt_whpx_get_physical_address_range(MachineState *ms)
-+static int virt_get_physical_address_range(MachineState *ms,
-+    int default_ipa_size, int max_ipa_size)
- {
-     VirtMachineState *vms = VIRT_MACHINE(ms);
- 
--    int max_ipa_size = whpx_arm_get_ipa_bit_size();
--
--    /* We freeze the memory map to compute the highest gpa */
--    virt_set_memmap(vms, max_ipa_size);
--
--    int requested_ipa_size = 64 - clz64(vms->highest_gpa);
--
--    /*
--     * If we're <= the default IPA size just use the default.
--     * If we're above the default but below the maximum, round up to
--     * the maximum. whpx_arm_get_max_ipa_bit_size() conveniently only
--     * returns values that are valid ARM PARange values.
--     */
--    if (requested_ipa_size <= max_ipa_size) {
--        requested_ipa_size = max_ipa_size;
--    } else {
--        error_report("-m and ,maxmem option values "
--                     "require an IPA range (%d bits) larger than "
--                     "the one supported by the host (%d bits)",
--                     requested_ipa_size, max_ipa_size);
--        return -1;
--    }
--
--    return requested_ipa_size;
--}
--
--static int virt_hvf_get_physical_address_range(MachineState *ms)
--{
--    VirtMachineState *vms = VIRT_MACHINE(ms);
--
--    int default_ipa_size = hvf_arm_get_default_ipa_bit_size();
--    int max_ipa_size = hvf_arm_get_max_ipa_bit_size();
--
-     /* We freeze the memory map to compute the highest gpa */
-     virt_set_memmap(vms, max_ipa_size);
- 
-@@ -3367,8 +3335,8 @@ static int virt_hvf_get_physical_address_range(MachineState *ms)
-     /*
-      * If we're <= the default IPA size just use the default.
-      * If we're above the default but below the maximum, round up to
--     * the maximum. hvf_arm_get_max_ipa_bit_size() conveniently only
--     * returns values that are valid ARM PARange values.
-+     * the maximum. hvf/whpx_arch_get_max_ipa_bit_size() conveniently only
-+     * return values that are valid ARM PARange values.
-      */
-     if (requested_ipa_size <= default_ipa_size) {
-         requested_ipa_size = default_ipa_size;
-@@ -3450,8 +3418,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-     mc->get_valid_cpu_types = virt_get_valid_cpu_types;
-     mc->get_default_cpu_node_id = virt_get_default_cpu_node_id;
-     mc->kvm_type = virt_kvm_type;
--    mc->hvf_get_physical_address_range = virt_hvf_get_physical_address_range;
--    mc->whpx_get_physical_address_range = virt_whpx_get_physical_address_range;
-+    mc->get_physical_address_range = virt_get_physical_address_range;
-     assert(!mc->get_hotplug_handler);
-     mc->get_hotplug_handler = virt_machine_get_hotplug_handler;
-     hc->pre_plug = virt_machine_device_pre_plug_cb;
-diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-index 0b2aefb126..26e0879e1a 100644
---- a/include/hw/core/boards.h
-+++ b/include/hw/core/boards.h
-@@ -277,8 +277,8 @@ struct MachineClass {
-     void (*reset)(MachineState *state, ResetType type);
-     void (*wakeup)(MachineState *state);
-     int (*kvm_type)(MachineState *machine, const char *arg);
--    int (*hvf_get_physical_address_range)(MachineState *machine);
--    int (*whpx_get_physical_address_range)(MachineState *machine);
-+    int (*get_physical_address_range)(MachineState *machine,
-+        int default_ipa_size, int max_ipa_size);
- 
-     BlockInterfaceType block_default_type;
-     int units_per_default_bus;
-diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
-index 3d2be4092e..cecd4617d2 100644
---- a/include/system/hvf_int.h
-+++ b/include/system/hvf_int.h
-@@ -73,6 +73,8 @@ void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
- const char *hvf_return_string(hv_return_t ret);
- int hvf_arch_init(void);
- hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range);
-+uint32_t hvf_arch_get_default_ipa_bit_size(void);
-+uint32_t hvf_arch_get_max_ipa_bit_size(void);
- hvf_slot *hvf_find_overlap_slot(uint64_t, uint64_t);
- void hvf_kick_vcpu_thread(CPUState *cpu);
- 
-@@ -120,4 +122,7 @@ int hvf_update_guest_debug(CPUState *cpu);
-  */
- bool hvf_arch_supports_guest_debug(void);
- 
-+uint32_t hvf_arch_get_default_ipa_bit_size(void);
-+uint32_t hvf_arch_get_max_ipa_bit_size(void);
-+
- #endif
-diff --git a/target/arm/hvf-stub.c b/target/arm/hvf-stub.c
-deleted file mode 100644
-index ff137267a0..0000000000
---- a/target/arm/hvf-stub.c
-+++ /dev/null
-@@ -1,20 +0,0 @@
--/*
-- * QEMU Hypervisor.framework (HVF) stubs for ARM
-- *
-- *  Copyright (c) Linaro
-- *
-- * SPDX-License-Identifier: GPL-2.0-or-later
-- */
--
--#include "qemu/osdep.h"
--#include "hvf_arm.h"
--
--uint32_t hvf_arm_get_default_ipa_bit_size(void)
--{
--    g_assert_not_reached();
--}
--
--uint32_t hvf_arm_get_max_ipa_bit_size(void)
--{
--    g_assert_not_reached();
--}
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index fa26f63a61..5e93c42047 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -731,7 +731,7 @@ static uint64_t hvf_get_reg(CPUState *cpu, int rt)
- static void clamp_id_aa64mmfr0_parange_to_ipa_size(ARMISARegisters *isar)
- {
-     uint32_t ipa_size = chosen_ipa_bit_size ?
--            chosen_ipa_bit_size : hvf_arm_get_max_ipa_bit_size();
-+            chosen_ipa_bit_size : hvf_arch_get_max_ipa_bit_size();
-     uint64_t id_aa64mmfr0;
- 
-     /* Clamp down the PARange to the IPA size the kernel supports. */
-@@ -827,7 +827,7 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     return r == HV_SUCCESS;
- }
- 
--uint32_t hvf_arm_get_default_ipa_bit_size(void)
-+uint32_t hvf_arch_get_default_ipa_bit_size(void)
- {
-     uint32_t default_ipa_size;
-     hv_return_t ret = hv_vm_config_get_default_ipa_size(&default_ipa_size);
-@@ -836,7 +836,7 @@ uint32_t hvf_arm_get_default_ipa_bit_size(void)
-     return default_ipa_size;
- }
- 
--uint32_t hvf_arm_get_max_ipa_bit_size(void)
-+uint32_t hvf_arch_get_max_ipa_bit_size(void)
- {
-     uint32_t max_ipa_size;
-     hv_return_t ret = hv_vm_config_get_max_ipa_size(&max_ipa_size);
-diff --git a/target/arm/hvf_arm.h b/target/arm/hvf_arm.h
-index ea82f2691d..5d19d82e5d 100644
---- a/target/arm/hvf_arm.h
-+++ b/target/arm/hvf_arm.h
-@@ -22,7 +22,4 @@ void hvf_arm_init_debug(void);
- 
- void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu);
- 
--uint32_t hvf_arm_get_default_ipa_bit_size(void);
--uint32_t hvf_arm_get_max_ipa_bit_size(void);
--
- #endif
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index ce155ba9b4..1ddc4b2a54 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -41,7 +41,6 @@ arm_common_system_ss.add(files('cpu.c'))
- arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
-   'cpu32-stubs.c'))
- arm_common_system_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
--arm_common_system_ss.add(when: 'CONFIG_HVF', if_false: files('hvf-stub.c'))
- arm_common_system_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
- 		                 if_true: files('common-semi-target.c'))
- arm_common_system_ss.add(files(
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index fce4e1ba10..038a9dcfd7 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -775,8 +775,9 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         goto error;
-     }
- 
--    if (mc->whpx_get_physical_address_range) {
--        pa_range = mc->whpx_get_physical_address_range(ms);
-+    if (mc->get_physical_address_range) {
-+        pa_range = mc->get_physical_address_range(ms,
-+            whpx_arm_get_ipa_bit_size(), whpx_arm_get_ipa_bit_size());
-         if (pa_range < 0) {
-             ret = -EINVAL;
-             goto error;
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 2023a7bfbb..9d41e51b83 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -225,6 +225,17 @@ int hvf_arch_init(void)
-     return 0;
- }
- 
-+/* 48-bit on all Intel Macs. Function currently unused. */
-+uint32_t hvf_arch_get_default_ipa_bit_size(void)
-+{
-+    g_assert_not_reached();
-+}
-+
-+uint32_t hvf_arch_get_max_ipa_bit_size(void)
-+{
-+    g_assert_not_reached();
-+}
-+
- hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
- {
-     return hv_vm_create(HV_VM_DEFAULT);
--- 
-2.50.1 (Apple Git-155)
-
+r~
 
