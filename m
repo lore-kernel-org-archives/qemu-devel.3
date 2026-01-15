@@ -4,102 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A50D41174
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 11:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 222D7D41177
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 11:45:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgLiW-0000gZ-Af; Thu, 15 Jan 2026 06:40:44 -0500
+	id 1vgLkc-0001jT-9D; Thu, 15 Jan 2026 06:42:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgLiV-0000g1-DF
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:40:43 -0500
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vgLkX-0001gl-Rt
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:42:49 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgLiS-0006XP-96
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:40:42 -0500
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-6481bd1763bso681167d50.3
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 03:40:39 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768477239; cv=none;
- d=google.com; s=arc-20240605;
- b=NPIoBm+67POC2VGyaV/TuIPYFm3ME0FA+/imic9TOjVbiCza6JKpDIrxCimqq/JSpo
- HUOEuh84YHtxSsciB1apFg0J+CeQrciqRn5i4vVWKgV1qZSbxlHFlTedomXFDIwvd/mf
- WImzfV7jDULQ+x607G3HSF5CWrYXGS8rAOGB8Gkx6R/u5STpP06Fz32vuKPhs1bjtUkl
- 3OqI3rme8MZLEq3gBoZusoupLmwAFfUtxZvzBjp0aQORBqolN0K4XeA34oKAjYXY7rFl
- ZifWMzWuNSEmi+U6HbqNx/SIL7kjL37GGsLf4u0IXOa4158bKuIcBuEqxlRqnO6mbeE2
- OmKw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=fFFx7OzskZAfL50UvXSLyWt2Znq4Ui3kmVewWPOvWWk=;
- fh=/qGZ1hzH5xmJGWmsPnrLrZicMR615sp3k8X3IIPfDCg=;
- b=JA0QoMAQ5491vwzSj8gGJDrFdn1yn5HaFZggzK7Ya6B82Hs3+WBiX+shoi0AL6O60D
- cXqRRcnI33ScB81xvz8q22u5kX4trKMjc6FChFqy5mzcMj1iGYIiZ0BlYn2ZeYOpazMY
- mSvTU1f9gwmqJFdoJaYKHczihvSgS6Zp3N99jKsS+J62xO+UHySLS+00t5fV/bjSbIXW
- 0F3sxQ1QqskN7A8jIb0fxsPU76uc+TlpP5kBFKSuKpHKod98zLOw7Xf8TMQLDXXOMi2k
- PnU7Q1/H28d7dqa9YOjg09Vfy0MUjTfAJ5cn2CwsbL6L7ujHAHZxPtY/AwymvqLWPN7F
- cScA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vgLkW-0007pK-1P
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:42:49 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-47d1d8a49f5so4934075e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 03:42:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768477239; x=1769082039; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1768477366; x=1769082166; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fFFx7OzskZAfL50UvXSLyWt2Znq4Ui3kmVewWPOvWWk=;
- b=Mmw9IcAZcgKoBh2Hw98mri7ea4Uo/nx00fSKdAEoJ5dnKJBKxOLkQrn3Wv1DDY4fwS
- lbTPKG+7M+n88eWW+EeDKRGSimHdprbgFiHFJhfbywkyiH7fWZe4Ar2vfXNJALxNmmDq
- 5UwCw30VlC1osvbpWywOsAX80yqhpsK43KRp8TvZkjuCpl6RPofW3rpDeYfdyAJ9irOw
- 85IzkP4A9h3xtTqL3upCBLup32fhoupD8czey9xRJpruD2pwMY6fcZFBgbXytq1VZ3my
- LadEYF1wnu0pxZKcABSEmlRkk4RFo3c0a3KdAeFW8ouArH9emJMMkzU/RvBUlh02CB2g
- jHSQ==
+ bh=NN+nTi3z6PsBK3uMRjzL/HTd/b5De+UW+l7/dnIMMzQ=;
+ b=uwM0TS9mfLm/RLnR8oaiEHxKHf5c3/26QLKXxRnbn4cU2wOjQxICmpBsXKT0vdryUl
+ ZSLUYf91gijL1PoJEWpSe21K5h1A+rAkBitHSGY9+VuUkCJU7N4WgSN527qUmkXT1LNY
+ nWkMnlbtTKK2nfOVQgdoj67+1AqpS354IQgkvsUNjlk8nCSnTPLtVk17EgbyiwlJ1ZY9
+ ZrHz8AOXLQqc3xzfYv/rc27DTcxCOPUmGaALatWHtrF4XuIgiW9LGQgWlMB2BhwQcSgW
+ 7a+OjCDmty2aUn1nbxCMz28UIDl/GCTFpVOxzWUCuGF1jCHA4+ErdIeyJ9BuitCvpD1L
+ nA+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768477239; x=1769082039;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fFFx7OzskZAfL50UvXSLyWt2Znq4Ui3kmVewWPOvWWk=;
- b=mq/FCyESd9jZ29vCywrH312uXW2ObpGSQZNAnmLUaEokqKw6tJimpSfbyi5r6CLkF9
- Hhp9OBJKUFvHJFc7CFPfEBo3VYnQW2gAHT5VGEaUGY47O6cTfvbEP8eGDPdkPRh+JZvP
- h8fCMqBRkZta9CyNRzc7JOcxX+aOc6CA9+X9TBWJsvnpzHiw4zjWcfDFWtaJHT8EwSCd
- U08hA3TwDnsxZqvbigB81YDyezsAu3S5OLrV5RMxAxZy2k/t8qBqdS3x1tKyJc8gltq6
- J5GNK4sMSc+I8mem+F5H/XKQK6RDeROZdVmWk2tvRDY/EsaasEFG79bxX/7/Zzbmjd9o
- 8r8g==
-X-Gm-Message-State: AOJu0YydcRXslmeaZAcv0+GkyhWcN5nYSC9WJJgq3PQyPaQvWx0HK4pr
- q0VF76F9YKU3me1WsAXqwSybSh5veKl9UdhM7zHMP37LZx9Vn6kU/P8bjU8ojmjk1yj2sn3qskp
- gTTfkbZPCGt4GfpwNANSEKpmXgcg5qdKLyK0ESaUgYA==
-X-Gm-Gg: AY/fxX7J4vHCs0nK6ZaK8Sm0Do8KtgVlcTGuYjqTBr1Pz7KoACxd+LSxglmTC3I7GM4
- jHEbARwfG/jemzshHKp0zRaci7PtLzrUXTtsOA2Ox2EEfBDR/RUReSFeB8S/iRP7/Ct/yNEuC9b
- Bg35a2V/s0PmHOHlVZglFBZ2FoyFU/hchAoXsSPmpV2EKPAiaoTby33le5yOWCWSn6LHenjsdxz
- QdbLv3WBeYi0l3+L6D2Dx2SPFa9FNVYnIW4Bbf7/ZG6D+4scsLWIEW85BQbFm/UK3lCo2b8tpZQ
- 1NO5EG16gGJWlpEcDDVxL08=
-X-Received: by 2002:a05:690e:150f:b0:640:cc09:b7c8 with SMTP id
- 956f58d0204a3-64901aba07dmr4671181d50.23.1768477239127; Thu, 15 Jan 2026
- 03:40:39 -0800 (PST)
-MIME-Version: 1.0
+ d=1e100.net; s=20230601; t=1768477366; x=1769082166;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NN+nTi3z6PsBK3uMRjzL/HTd/b5De+UW+l7/dnIMMzQ=;
+ b=QAmlH39gfYfKQEA9Gk2KbijGMgddevWB+XspQRqnbTp/b51hMDwt0dtMtNlTQUeG57
+ 255HJ9lIwtTfZOp1BqNykd1y3ZB4iGbNOIng58KlHbwIbz7CDC2Tk6+SEuBkrqM7oMlT
+ uR2b6xG+y3KrHjFdtqftKfVOVvd7hY6Vg8BzbT3qjjqCjz/g4jGVhLYfbb1peGAbQbqR
+ sHGNLkBwJI9Yt9R/6oE0+0BBoKYL6Hx+1G110AxiUmIw7bB3kvjvpfpRQgeq4kAEVMkL
+ rrelwCSB2EuSfrrAjpEpUnNyup/XjD7ZlaX7xA+kHjexWl+uPD3k/5fV+EEct0s9jmKv
+ /y5w==
+X-Gm-Message-State: AOJu0YxUWqdzvid170PQbNh/fMAECvoEmTP5z3F3CPKE6aZbo7gte7Ea
+ y0jr9GZ96F0fPmnZuNMjsGtJZHh85ODTjh888pQyPzwdQ16dCH/XVZU34E0ZxRiItyU=
+X-Gm-Gg: AY/fxX4eHSSvZ02c00sTLQYFbzi9lpeooxSYuW3qZmR1HLh96BFDOh8Ngrg3GcIZaqX
+ puemZHhCt7zgHGMaF1I0kh2Ug7SeDHORJr4mzLSL2FQDR/jBB9H2KReFYhMrNxptRG84x1bjFDw
+ 5kY/0JBps/tuSF5BlIhNqTXmvknX5+W/D/WAbJ8po+MKKycbNmUGViaHyUXA2Y2K2TREBQxfjmn
+ DETe7wcZh60AI6KUzE85rA4xCnjfyjrvTpkrDfKLHrq+LzyQUIP77hKFro2MS98Oq4QCgwqvrvq
+ nZ6Ndm7clxHC1/Jkyj1oTGwp/rOQpYzKNgg6Ks1GzC16vF8J/m+xWjDnhZ9wi1PIbRCGmRIifaF
+ KaGs6ppTb/F5Or4a+lu/w6N0rAGuykDNiG+5dUWob1pSPqJUyVpn/VDx+l64YoK7dHp1nrHcZEi
+ UlpSlugA9QpNg=
+X-Received: by 2002:a05:600c:46cc:b0:47e:df86:e83d with SMTP id
+ 5b1f17b1804b1-47ee337a086mr72627855e9.31.1768477365832; 
+ Thu, 15 Jan 2026 03:42:45 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47f428cb5f4sm43093315e9.10.2026.01.15.03.42.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Jan 2026 03:42:45 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6EABD5F7DD;
+ Thu, 15 Jan 2026 11:42:44 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Corvin =?utf-8?Q?K=C3=B6hne?= <corvin.koehne@gmail.com>
+Cc: qemu-devel@nongnu.org,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Alistair Francis
+ <alistair@alistair23.me>,  qemu-arm@nongnu.org,  Peter Maydell
+ <peter.maydell@linaro.org>,  Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org,  Corvin =?utf-8?Q?K=C3=B6hne?=
+ <c.koehne@beckhoff.com>,  Hanna
+ Reitz <hreitz@redhat.com>,  Yannick =?utf-8?Q?Vo=C3=9Fen?=
+ <y.vossen@beckhoff.com>
+Subject: Re: [PATCH v5 00/15] hw/arm: add Beckhoff CX7200 board
+In-Reply-To: <20251204093502.50582-1-corvin.koehne@gmail.com> ("Corvin
+ =?utf-8?Q?K=C3=B6hne=22's?= message of "Thu, 4 Dec 2025 10:34:47 +0100")
 References: <20251204093502.50582-1-corvin.koehne@gmail.com>
- <20251204093502.50582-9-corvin.koehne@gmail.com>
-In-Reply-To: <20251204093502.50582-9-corvin.koehne@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 15 Jan 2026 11:40:27 +0000
-X-Gm-Features: AZwV_QgKu58r0LIKquRSRuVzdnh7PRKVH1bqCbwMKbGE_GSVVGK8QxK32e_jsCA
-Message-ID: <CAFEAcA_qY3pPREJ5bW7dLN17bTC2b_6ydLD3PLOkpPUFViOXbA@mail.gmail.com>
-Subject: Re: [PATCH v5 08/15] hw/misc: Add dummy ZYNQ DDR controller
-To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
-Cc: qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- qemu-arm@nongnu.org, 
- Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, 
- =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: mu4e 1.12.15-pre1; emacs 30.1
+Date: Thu, 15 Jan 2026 11:42:44 +0000
+Message-ID: <87wm1jhzkb.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,100 +110,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 4 Dec 2025 at 09:35, Corvin K=C3=B6hne <corvin.koehne@gmail.com> wr=
-ote:
+Corvin K=C3=B6hne <corvin.koehne@gmail.com> writes:
+
+> From: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
 >
-> From: YannickV <Y.Vossen@beckhoff.com>
+> Hi,
 >
-> A dummy DDR controller for ZYNQ has been added. While all registers are p=
-resent,
-> not all are functional. Read and write access is validated, and the user =
-mode
-> can be set. This provides a basic DDR controller initialization, preventi=
-ng
-> system hangs due to endless polling or similar issues.
+> Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
+> platform. This commit series adds the Beckhoff CX7200 as new board varian=
+t to
+> QEMU.
 >
-> Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
-
-I have a few minor review comments below, but this otherwise
-looks good to me.
-
-> diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-> index fccd735c24..3de37c9e1d 100644
-> --- a/hw/misc/Kconfig
-> +++ b/hw/misc/Kconfig
-> @@ -240,4 +240,7 @@ config IOSB
->  config XLNX_VERSAL_TRNG
->      bool
+> The emulation is able to successfully boot an CX7200 image. The image inc=
+ludes
+> some self tests executed on every boot. Only the cache self test fails du=
+e to
+> QEMU emulating the cache as always being coherent. The self tests include=
+ f.e.:
 >
-> +config XLNX_ZYNQ_DDRC
-> +    bool
-> +
->  source macio/Kconfig
+> * Network
+> * Flash
+> * CCAT DMA + EEPROM [1]
+> * TwinCAT (Beckhoff's automation control software [2])
+>
+> [1] https://github.com/beckhoff/ccat
+> [2] https://www.beckhoff.com/en-us/products/automation/
 
-You also need to have the "config ZYNQ" section in hw/arm/Kconfig
-have a line "select XLNX_ZYNQ_DDRC", to tell kconfig that the
-Zynq SoC needs this device.
+Is it possible to host a binary build somewhere so there can be a
+functional test?
 
-> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-> index b1d8d8e5d2..ffbcca9796 100644
-> --- a/hw/misc/meson.build
-> +++ b/hw/misc/meson.build
-> @@ -95,6 +95,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
->  ))
->  system_ss.add(when: 'CONFIG_SLAVIO', if_true: files('slavio_misc.c'))
->  system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq_slcr.c'))
-> +system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('xlnx-zynq-ddrc.c'))
+>
+> YannickV (15):
+>   hw/timer: Make frequency configurable
+>   hw/timer: Make PERIPHCLK divider configurable
+>   hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
+>   hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
+>   hw/dma/zynq: Ensure PCFG_DONE bit remains set to indicate PL is in
+>     user mode
+>   hw/dma/zynq-devcfg: Simulate dummy PL reset
+>   hw/dma/zynq-devcfg: Indicate power-up status of PL
+>   hw/misc: Add dummy ZYNQ DDR controller
+>   hw/misc/zynq_slcr: Add logic for DCI configuration
+>   hw/misc: Add Beckhoff CCAT device
+>   hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
+>   hw/arm/xilinx_zynq: Split xilinx_zynq into header and implementation
+>     files
+>   hw/arm/xilinx_zynq: Add flash-type property
+>   hw/arm: Add new machine based on xilinx-zynq-a9 for Beckhoff CX7200
+>   docs/system/arm: Add support for Beckhoff CX7200
+>
+>  docs/system/arm/beckhoff-cx7200.rst |  57 ++++
+>  docs/system/target-arm.rst          |   1 +
+>  hw/arm/Kconfig                      |   7 +
+>  hw/arm/beckhoff_CX7200.c            | 104 +++++++
+>  hw/arm/meson.build                  |   1 +
+>  hw/arm/xilinx_zynq.c                |  54 ++--
+>  hw/block/m25p80.c                   |   3 +-
+>  hw/dma/xlnx-zynq-devcfg.c           |  27 +-
+>  hw/misc/Kconfig                     |   6 +
+>  hw/misc/beckhoff_ccat.c             | 339 +++++++++++++++++++++++
+>  hw/misc/meson.build                 |   2 +
+>  hw/misc/xlnx-zynq-ddrc.c            | 413 ++++++++++++++++++++++++++++
+>  hw/misc/zynq_slcr.c                 |  31 +++
+>  hw/timer/a9gtimer.c                 |  26 +-
+>  hw/timer/arm_mptimer.c              |  32 ++-
+>  include/hw/arm/xilinx_zynq.h        |  37 +++
+>  include/hw/misc/xlnx-zynq-ddrc.h    | 148 ++++++++++
+>  include/hw/timer/a9gtimer.h         |   2 +
+>  include/hw/timer/arm_mptimer.h      |   4 +
+>  19 files changed, 1263 insertions(+), 31 deletions(-)
+>  create mode 100644 docs/system/arm/beckhoff-cx7200.rst
+>  create mode 100644 hw/arm/beckhoff_CX7200.c
+>  create mode 100644 hw/misc/beckhoff_ccat.c
+>  create mode 100644 hw/misc/xlnx-zynq-ddrc.c
+>  create mode 100644 include/hw/arm/xilinx_zynq.h
+>  create mode 100644 include/hw/misc/xlnx-zynq-ddrc.h
 
-This should be "when: 'CONFIG_XLNX_ZYNQ_DDRC'", so we build the
-source file exactly when some board or SoC says it needs the device.
-(This mistake is what is hiding the effects of missing the
-"select XLNX_ZYNQ_DDRC".)
-
->  system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqm=
-p-crf.c'))
->  system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqm=
-p-apu-ctrl.c'))
->  system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files(
-
-> +static const MemoryRegionOps ddrctrl_ops =3D {
-> +    .read =3D register_read_memory,
-> +    .write =3D register_write_memory,
-> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
-> +};
-
-It's better to explicitly set the access size controls
- .valid.min_access_size
- .valid.max_access_size
- .impl.min_access_size
- .impl.max_access_size
-
-explicitly, even if they happen to match the defaults. This tells
-the reader you've thought about what the device actually permits
-and what your implementation code can deal with.
-(The default is "accept anything, never generate external abort"
-and "assume the read and write functions handle all widths".
-This is usually not what actual devices do or what the code
-people write is intended to accept. Devices on Arm systems are
-often "only 32-bit accesses are permitted".)
-
-
-> +#define TYPE_DDRCTRL "zynq.ddr-ctlr"
-> +#define DDRCTRL(obj) \
-> +    OBJECT_CHECK(DDRCTRLState, (obj), TYPE_DDRCTRL)
-
-Current QEMU style prefers using one of the helper
-macros to generate the cast macros etc. For this kind of
-"simple leaf class" OBJECT_DECLARE_SIMPLE_TYPE is probably
-what you want. See for some more info:
-https://www.qemu.org/docs/master/devel/qom.html#standard-type-declaration-a=
-nd-definition-macros
-
-There is also OBJECT_DEFINE_SIMPLE_TYPE which provides
-the boilerplate TypeInfo and type registration in the .c
-file for you, but that one is more "optional if you
-prefer it".
-
-thanks
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
