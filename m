@@ -4,70 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 054EDD41174
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 11:42:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A50D41174
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 11:42:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgLht-0000Wa-Qu; Thu, 15 Jan 2026 06:40:05 -0500
+	id 1vgLiW-0000gZ-Af; Thu, 15 Jan 2026 06:40:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vgLh2-0000Mi-ND; Thu, 15 Jan 2026 06:39:13 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vgLgz-0005vL-FO; Thu, 15 Jan 2026 06:39:12 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dsLbL4NpZzJ467k;
- Thu, 15 Jan 2026 19:38:38 +0800 (CST)
-Received: from dubpeml100005.china.huawei.com (unknown [7.214.146.113])
- by mail.maildlp.com (Postfix) with ESMTPS id CB36940086;
- Thu, 15 Jan 2026 19:38:54 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml100005.china.huawei.com
- (7.214.146.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.36; Thu, 15 Jan
- 2026 11:38:53 +0000
-Date: Thu, 15 Jan 2026 11:38:52 +0000
-To: "Michael S. Tsirkin" <mst@redhat.com>
-CC: Shameer Kolothum <skolothumtho@nvidia.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, Jason Gunthorpe <jgg@nvidia.com>, Nicolin Chen
- <nicolinc@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, "clg@redhat.com"
- <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>, "zhangfei.gao@linaro.org"
- <zhangfei.gao@linaro.org>, "zhenzhong.duan@intel.com"
- <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- Krishnakant Jaju <kjaju@nvidia.com>
-Subject: Re: [PATCH v7 33/36] hw/pci: Add helper to insert PCIe extended
- capability at a fixed offset
-Message-ID: <20260115113852.00004248@huawei.com>
-In-Reply-To: <20260114073338-mutt-send-email-mst@kernel.org>
-References: <20260111195508.106943-1-skolothumtho@nvidia.com>
- <20260111195508.106943-34-skolothumtho@nvidia.com>
- <20260114114556.0000153c@huawei.com>
- <CH3PR12MB7548C1DABCCCB8CB332B59A0AB8FA@CH3PR12MB7548.namprd12.prod.outlook.com>
- <20260114073338-mutt-send-email-mst@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vgLiV-0000g1-DF
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:40:43 -0500
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vgLiS-0006XP-96
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:40:42 -0500
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-6481bd1763bso681167d50.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 03:40:39 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768477239; cv=none;
+ d=google.com; s=arc-20240605;
+ b=NPIoBm+67POC2VGyaV/TuIPYFm3ME0FA+/imic9TOjVbiCza6JKpDIrxCimqq/JSpo
+ HUOEuh84YHtxSsciB1apFg0J+CeQrciqRn5i4vVWKgV1qZSbxlHFlTedomXFDIwvd/mf
+ WImzfV7jDULQ+x607G3HSF5CWrYXGS8rAOGB8Gkx6R/u5STpP06Fz32vuKPhs1bjtUkl
+ 3OqI3rme8MZLEq3gBoZusoupLmwAFfUtxZvzBjp0aQORBqolN0K4XeA34oKAjYXY7rFl
+ ZifWMzWuNSEmi+U6HbqNx/SIL7kjL37GGsLf4u0IXOa4158bKuIcBuEqxlRqnO6mbeE2
+ OmKw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=fFFx7OzskZAfL50UvXSLyWt2Znq4Ui3kmVewWPOvWWk=;
+ fh=/qGZ1hzH5xmJGWmsPnrLrZicMR615sp3k8X3IIPfDCg=;
+ b=JA0QoMAQ5491vwzSj8gGJDrFdn1yn5HaFZggzK7Ya6B82Hs3+WBiX+shoi0AL6O60D
+ cXqRRcnI33ScB81xvz8q22u5kX4trKMjc6FChFqy5mzcMj1iGYIiZ0BlYn2ZeYOpazMY
+ mSvTU1f9gwmqJFdoJaYKHczihvSgS6Zp3N99jKsS+J62xO+UHySLS+00t5fV/bjSbIXW
+ 0F3sxQ1QqskN7A8jIb0fxsPU76uc+TlpP5kBFKSuKpHKod98zLOw7Xf8TMQLDXXOMi2k
+ PnU7Q1/H28d7dqa9YOjg09Vfy0MUjTfAJ5cn2CwsbL6L7ujHAHZxPtY/AwymvqLWPN7F
+ cScA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768477239; x=1769082039; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fFFx7OzskZAfL50UvXSLyWt2Znq4Ui3kmVewWPOvWWk=;
+ b=Mmw9IcAZcgKoBh2Hw98mri7ea4Uo/nx00fSKdAEoJ5dnKJBKxOLkQrn3Wv1DDY4fwS
+ lbTPKG+7M+n88eWW+EeDKRGSimHdprbgFiHFJhfbywkyiH7fWZe4Ar2vfXNJALxNmmDq
+ 5UwCw30VlC1osvbpWywOsAX80yqhpsK43KRp8TvZkjuCpl6RPofW3rpDeYfdyAJ9irOw
+ 85IzkP4A9h3xtTqL3upCBLup32fhoupD8czey9xRJpruD2pwMY6fcZFBgbXytq1VZ3my
+ LadEYF1wnu0pxZKcABSEmlRkk4RFo3c0a3KdAeFW8ouArH9emJMMkzU/RvBUlh02CB2g
+ jHSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768477239; x=1769082039;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=fFFx7OzskZAfL50UvXSLyWt2Znq4Ui3kmVewWPOvWWk=;
+ b=mq/FCyESd9jZ29vCywrH312uXW2ObpGSQZNAnmLUaEokqKw6tJimpSfbyi5r6CLkF9
+ Hhp9OBJKUFvHJFc7CFPfEBo3VYnQW2gAHT5VGEaUGY47O6cTfvbEP8eGDPdkPRh+JZvP
+ h8fCMqBRkZta9CyNRzc7JOcxX+aOc6CA9+X9TBWJsvnpzHiw4zjWcfDFWtaJHT8EwSCd
+ U08hA3TwDnsxZqvbigB81YDyezsAu3S5OLrV5RMxAxZy2k/t8qBqdS3x1tKyJc8gltq6
+ J5GNK4sMSc+I8mem+F5H/XKQK6RDeROZdVmWk2tvRDY/EsaasEFG79bxX/7/Zzbmjd9o
+ 8r8g==
+X-Gm-Message-State: AOJu0YydcRXslmeaZAcv0+GkyhWcN5nYSC9WJJgq3PQyPaQvWx0HK4pr
+ q0VF76F9YKU3me1WsAXqwSybSh5veKl9UdhM7zHMP37LZx9Vn6kU/P8bjU8ojmjk1yj2sn3qskp
+ gTTfkbZPCGt4GfpwNANSEKpmXgcg5qdKLyK0ESaUgYA==
+X-Gm-Gg: AY/fxX7J4vHCs0nK6ZaK8Sm0Do8KtgVlcTGuYjqTBr1Pz7KoACxd+LSxglmTC3I7GM4
+ jHEbARwfG/jemzshHKp0zRaci7PtLzrUXTtsOA2Ox2EEfBDR/RUReSFeB8S/iRP7/Ct/yNEuC9b
+ Bg35a2V/s0PmHOHlVZglFBZ2FoyFU/hchAoXsSPmpV2EKPAiaoTby33le5yOWCWSn6LHenjsdxz
+ QdbLv3WBeYi0l3+L6D2Dx2SPFa9FNVYnIW4Bbf7/ZG6D+4scsLWIEW85BQbFm/UK3lCo2b8tpZQ
+ 1NO5EG16gGJWlpEcDDVxL08=
+X-Received: by 2002:a05:690e:150f:b0:640:cc09:b7c8 with SMTP id
+ 956f58d0204a3-64901aba07dmr4671181d50.23.1768477239127; Thu, 15 Jan 2026
+ 03:40:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+References: <20251204093502.50582-1-corvin.koehne@gmail.com>
+ <20251204093502.50582-9-corvin.koehne@gmail.com>
+In-Reply-To: <20251204093502.50582-9-corvin.koehne@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 15 Jan 2026 11:40:27 +0000
+X-Gm-Features: AZwV_QgKu58r0LIKquRSRuVzdnh7PRKVH1bqCbwMKbGE_GSVVGK8QxK32e_jsCA
+Message-ID: <CAFEAcA_qY3pPREJ5bW7dLN17bTC2b_6ydLD3PLOkpPUFViOXbA@mail.gmail.com>
+Subject: Re: [PATCH v5 08/15] hw/misc: Add dummy ZYNQ DDR controller
+To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
+Cc: qemu-devel@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ qemu-arm@nongnu.org, 
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, 
+ =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
+ Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
- dubpeml100005.china.huawei.com (7.214.146.113)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,144 +119,103 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 14 Jan 2026 07:35:01 -0500
-"Michael S. Tsirkin" <mst@redhat.com> wrote:
+On Thu, 4 Dec 2025 at 09:35, Corvin K=C3=B6hne <corvin.koehne@gmail.com> wr=
+ote:
+>
+> From: YannickV <Y.Vossen@beckhoff.com>
+>
+> A dummy DDR controller for ZYNQ has been added. While all registers are p=
+resent,
+> not all are functional. Read and write access is validated, and the user =
+mode
+> can be set. This provides a basic DDR controller initialization, preventi=
+ng
+> system hangs due to endless polling or similar issues.
+>
+> Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
 
-> On Wed, Jan 14, 2026 at 12:26:29PM +0000, Shameer Kolothum wrote:
-> >=20
-> >  =20
-> > > -----Original Message-----
-> > > From: Jonathan Cameron <jonathan.cameron@huawei.com>
-> > > Sent: 14 January 2026 11:46
-> > > To: Shameer Kolothum <skolothumtho@nvidia.com>
-> > > Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
-> > > eric.auger@redhat.com; peter.maydell@linaro.org; Jason Gunthorpe
-> > > <jgg@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>; ddutile@redhat.=
-com;
-> > > berrange@redhat.com; clg@redhat.com; alex@shazbot.org; Nathan Chen
-> > > <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
-> > > smostafa@google.com; wangzhou1@hisilicon.com;
-> > > jiangkunkun@huawei.com; zhangfei.gao@linaro.org;
-> > > zhenzhong.duan@intel.com; yi.l.liu@intel.com; Krishnakant Jaju
-> > > <kjaju@nvidia.com>; Michael S . Tsirkin <mst@redhat.com>
-> > > Subject: Re: [PATCH v7 33/36] hw/pci: Add helper to insert PCIe exten=
-ded
-> > > capability at a fixed offset
-> > >=20
-> > > External email: Use caution opening links or attachments
-> > >=20
-> > >=20
-> > > On Sun, 11 Jan 2026 19:53:19 +0000
-> > > Shameer Kolothum <skolothumtho@nvidia.com> wrote:
-> > >  =20
-> > > > Add pcie_insert_capability(), a helper to insert a PCIe extended
-> > > > capability into an existing extended capability list at a
-> > > > caller-specified offset.
-> > > >
-> > > > Unlike pcie_add_capability(), which always appends a capability to =
-the
-> > > > end of the list, this helper preserves the existing list ordering w=
-hile
-> > > > allowing insertion at an arbitrary offset.
-> > > >
-> > > > The helper only validates that the insertion does not overwrite an
-> > > > existing PCIe extended capability header, since corrupting a header
-> > > > would break the extended capability linked list. Validation of over=
-laps
-> > > > with other configuration space registers or capability-specific
-> > > > register blocks is left to the caller.
-> > > >
-> > > > Cc: Michael S. Tsirkin <mst@redhat.com>
-> > > > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com> =20
-> > > Hi Shameer. =20
-> >=20
-> > Happy new year!
-> >  =20
-> > >=20
-> > > Random musings inline... Maybe I'm just failing in my spec grep skill=
-s.
-> > >  =20
-> > > > ---
-> > > >  hw/pci/pcie.c         | 58 =20
-> > > +++++++++++++++++++++++++++++++++++++++++++ =20
-> > > >  include/hw/pci/pcie.h |  2 ++
-> > > >  2 files changed, 60 insertions(+)
-> > > >
-> > > > diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-> > > > index b302de6419..8568a062a5 100644
-> > > > --- a/hw/pci/pcie.c
-> > > > +++ b/hw/pci/pcie.c
-> > > > @@ -1050,6 +1050,64 @@ static void pcie_ext_cap_set_next(PCIDevice =
-=20
-> > > *dev, uint16_t pos, uint16_t next) =20
-> > > >      pci_set_long(dev->config + pos, header);
-> > > >  }
-> > > >
-> > > > +/*
-> > > > + * Insert a PCIe extended capability at a given offset.
-> > > > + *
-> > > > + * This helper only validates that the insertion does not overwrit=
-e an
-> > > > + * existing PCIe extended capability header, as corrupting a heade=
-r would
-> > > > + * break the extended capability linked list.
-> > > > + *
-> > > > + * The caller must ensure that (offset, size) does not overlap wit=
-h other
-> > > > + * registers or capability-specific register blocks. Overlaps with
-> > > > + * capability-specific registers are not checked and are considere=
-d a
-> > > > + * user-controlled override.
-> > > > + */
-> > > > +bool pcie_insert_capability(PCIDevice *dev, uint16_t cap_id, uint8=
-_t =20
-> > > cap_ver, =20
-> > > > +                            uint16_t offset, uint16_t size)
-> > > > +{
-> > > > +    uint16_t prev =3D 0, next =3D 0;
-> > > > +    uint16_t cur =3D pci_get_word(dev->config + PCI_CONFIG_SPACE_S=
-IZE);
-> > > > +
-> > > > +    /* Walk the ext cap list to find insertion point */
-> > > > +    while (cur) {
-> > > > +        uint32_t hdr =3D pci_get_long(dev->config + cur);
-> > > > +        next =3D PCI_EXT_CAP_NEXT(hdr);
-> > > > +
-> > > > +        /* Check we are not overwriting any existing CAP header ar=
-ea */
-> > > > +        if (offset >=3D cur && offset < cur + PCI_EXT_CAP_ALIGN) {
-> > > > +            return false;
-> > > > +        }
-> > > > +
-> > > > +        prev =3D cur;
-> > > > +        cur =3D next;
-> > > > +        if (next =3D=3D 0 || next > offset) { =20
-> > >=20
-> > > So this (sort of) relies on a thing I've never been able to find a cl=
-ear
-> > > statement of in the PCIe spec.  Does Next Capability Offset have to be
-> > > larger than the offset of the current record?  I.e. Can we have
-> > > backwards pointers? =20
-> >=20
-> > That=E2=80=99s right. I also couldn=E2=80=99t find a place in the spec =
-that explicitly
-> > says the list must be forward only. A device doing a backward walk
-> > would be pretty odd, hopefully nothing like that exists in the wild. =20
->=20
-> Yes, there's no reason not to have such pointers, with either
-> PCIe or classical PCI capability.
+I have a few minor review comments below, but this otherwise
+looks good to me.
 
-I think best we can do here is a comment saying this is 'best effort' attem=
-pt
-to place it based on many devices using increasing addresses. (I can't claim
-to have seen any that don't, but I've only looked a few dozen of my career =
-:)
+> diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+> index fccd735c24..3de37c9e1d 100644
+> --- a/hw/misc/Kconfig
+> +++ b/hw/misc/Kconfig
+> @@ -240,4 +240,7 @@ config IOSB
+>  config XLNX_VERSAL_TRNG
+>      bool
+>
+> +config XLNX_ZYNQ_DDRC
+> +    bool
+> +
+>  source macio/Kconfig
 
-Jonathan
+You also need to have the "config ZYNQ" section in hw/arm/Kconfig
+have a line "select XLNX_ZYNQ_DDRC", to tell kconfig that the
+Zynq SoC needs this device.
 
+> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> index b1d8d8e5d2..ffbcca9796 100644
+> --- a/hw/misc/meson.build
+> +++ b/hw/misc/meson.build
+> @@ -95,6 +95,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
+>  ))
+>  system_ss.add(when: 'CONFIG_SLAVIO', if_true: files('slavio_misc.c'))
+>  system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq_slcr.c'))
+> +system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('xlnx-zynq-ddrc.c'))
+
+This should be "when: 'CONFIG_XLNX_ZYNQ_DDRC'", so we build the
+source file exactly when some board or SoC says it needs the device.
+(This mistake is what is hiding the effects of missing the
+"select XLNX_ZYNQ_DDRC".)
+
+>  system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqm=
+p-crf.c'))
+>  system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqm=
+p-apu-ctrl.c'))
+>  system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files(
+
+> +static const MemoryRegionOps ddrctrl_ops =3D {
+> +    .read =3D register_read_memory,
+> +    .write =3D register_write_memory,
+> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+> +};
+
+It's better to explicitly set the access size controls
+ .valid.min_access_size
+ .valid.max_access_size
+ .impl.min_access_size
+ .impl.max_access_size
+
+explicitly, even if they happen to match the defaults. This tells
+the reader you've thought about what the device actually permits
+and what your implementation code can deal with.
+(The default is "accept anything, never generate external abort"
+and "assume the read and write functions handle all widths".
+This is usually not what actual devices do or what the code
+people write is intended to accept. Devices on Arm systems are
+often "only 32-bit accesses are permitted".)
+
+
+> +#define TYPE_DDRCTRL "zynq.ddr-ctlr"
+> +#define DDRCTRL(obj) \
+> +    OBJECT_CHECK(DDRCTRLState, (obj), TYPE_DDRCTRL)
+
+Current QEMU style prefers using one of the helper
+macros to generate the cast macros etc. For this kind of
+"simple leaf class" OBJECT_DECLARE_SIMPLE_TYPE is probably
+what you want. See for some more info:
+https://www.qemu.org/docs/master/devel/qom.html#standard-type-declaration-a=
+nd-definition-macros
+
+There is also OBJECT_DEFINE_SIMPLE_TYPE which provides
+the boilerplate TypeInfo and type registration in the .c
+file for you, but that one is more "optional if you
+prefer it".
+
+thanks
+-- PMM
 
