@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE485D4660F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 030EAD4660D
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgSVz-00024U-Pk; Thu, 15 Jan 2026 13:56:15 -0500
+	id 1vgSW1-0002Fo-EY; Thu, 15 Jan 2026 13:56:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSV8-0000dt-Im
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:22 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1vgSVE-0000fu-Nc
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:30 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSV6-0005tZ-Os
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:22 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-42fb0fc5aa4so1004818f8f.1
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:19 -0800 (PST)
+ id 1vgSV7-0005tt-Tx
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:23 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-432755545fcso788121f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768503318; x=1769108118; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768503320; x=1769108120; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=cetP1J1aWKEi9nsVT6d4hD/J2+TMx9aoQKwyU7+I/5k=;
- b=L+OR4JgC3w1abF2S756pUcRjviofjjcXp2y3uEe5LapJ/akv+QPUf0B9ihHBuNffKt
- KOL6GZkZm3GaAIGfQXYzFVo4Cx2v7PUkf+XENzxrBJRex79JruQWqZRGIlsHdNvDAQD1
- FV/o42iyMWKHwpWYE7HwXXQ/rOtw0mitM2XTYwj6m+RHmpMZbX8QerRCViF3DW6VxzRU
- cwFd7OcX5Tqf7NNzjusxfVa6MqmQ0xHoU1InVhhziaVCmobMyjWxUM02kmPXUoW/4M/j
- E515qzfYMiVTKzP7+3a/u7ZswO4xG4LjJFtgBgrgkuO65ZOH0xK9ALEh7aVXF8lteoiI
- a09Q==
+ :reply-to; bh=t1p81LYxQD9tgjtY4PEPaGrAv8vSY3A/eQhUlZgUjX8=;
+ b=JFPZ91arEhIrKMtCm2GBxBNleHnd+vc0eqYZ0Qz3KlszENxrg6KhGmTk/Oq0q/0Olz
+ 95uiUwtI4Php2KWimuMKgI7tiYcCSP/Ie6IYNqMZBChI3RBv3LJ013dNXUB0FM0F4Zxw
+ sUV1WmOfEPbDfmWnh3mgw5sBVaeScHAzDVm26478iq4YmhP18EJIvE4eFGVDqZuBdVeN
+ QYV/o67wuB5bzfI+6uaueRnmNAvYBN1psUoKcuUEH/dRIhkHUcNFy5tATjc1aVjqDpfw
+ N1iPOgIdWw6E74riyj2N0IIkYCiKatiH8wYdl9IWPBqAB32rw77mmNd60RGxpwQ3Bp78
+ sCoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768503318; x=1769108118;
+ d=1e100.net; s=20230601; t=1768503320; x=1769108120;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=cetP1J1aWKEi9nsVT6d4hD/J2+TMx9aoQKwyU7+I/5k=;
- b=FOOxwd2E1Glendh410L3ZUhjuZiRYGSlnT/j0Ih/F6mUv/cdTrpONb8ClE7TAJO6Be
- TKr4LKOrLnzv/KBt2ssCvNXIVey/25QAuUJCLA4DE7JBm3ef5AM+jXg0rDq+1hJvF0sR
- hwThJNWXydTU9RlnIna00Wqi5q3raSnYCLcxT/fEBLSQ3o3cJDenmwosri9/CAtFHDns
- fsPd4q4QrJl/J4PckAddDtHSqG8h7GBjyQXji4ueDdZyVGBcmjEXaVRKyb2jVwRdi+XX
- C3PMo2+YfsogvnUz0qO4bc00ZO9P7Aqz6uDwyOZUB+fDgpt17y/lPnjA21yBFDhhd/Fu
- Qq4Q==
-X-Gm-Message-State: AOJu0Yx4ExzEviZaGoOV6WdU/emdbD1qYTBquCcDTXjiIQxel/BA+BJI
- xkkZnreuXhZrzUNgsZETGgZSrw8PbecxTAuFrVLtq/bEBVic2jEpEE5y0KRUcBTP99uGQgNjcil
- ZXPL7
-X-Gm-Gg: AY/fxX4OBG3zRLPvU88DE76l0l3XgY3/jmHqyydx3ul8aFQXa1KbZwAJcuI2Jo0Zucp
- D4je0WsUv5aMfo6V+oU9F6H+P11MmEHsMJDVEWiXayflq/OzFEvJENk1jF/55+YHUo9Jv4qcn93
- 73CVl2JagjidUIXAEE7B8lq5jfb0SbrNL3q4Ixrqo35DYjirjB7dtN1iiIenIXlt4rZEBUkRFN8
- QIiDDjsVp0Zh+0qCaaiK0BxKo0SzAMyjmITxZl/q18PousqrSJVzMkk82C7d5tHuTkRlTn0jeoz
- pDhzFu4MFILN7n2eS50RX3KnBkMpDAWBwzGOL7vSskbg5nhJx6UvzWncwTkij+Zh2qGVAcOSCAw
- X2Dw7KnPT/GyVMZdB0sb4Vr7QPxKd8320FRphswPuh3VFYdtndzt9TkaYYTqBu3JAEfVDvlP1uL
- Ueq+cN6HvoLqdalae+tA5QswEhtn2hNBcNY0GU1SA2PCUIYSw1E3nf/Rf7wZ/UarFzXJRy5z1fX
- kzWd2sObI8NI1W46kUv8PbW3BVH0cf95ZIBriPw9XGGvA==
-X-Received: by 2002:a05:6000:2306:b0:434:32cc:6c86 with SMTP id
- ffacd0b85a97d-4356a039819mr372200f8f.14.1768503317773; 
- Thu, 15 Jan 2026 10:55:17 -0800 (PST)
+ bh=t1p81LYxQD9tgjtY4PEPaGrAv8vSY3A/eQhUlZgUjX8=;
+ b=lA/5LbUg0IewidF/iVZ9dZKN3QNiQL/vdcPmjUqTDiYyXdY3ERi3PzfzF21SdvvNLP
+ /jV7GzxcSP5d514SChrYXmjocqlYKRB1W2YanxamBq7y1uR53lTDtPwqmiJoCkO/Od62
+ Fn8YJyIZafXDJomAH/Wf6/mgU5iyAALUUX8gT//x3gZmrRigY3Z0FnSPhwUrEpDg57mo
+ 8YnjC40Qp3/8XkjNgdOxNk+/xIRWeav/BGLrTjeZ05ffKjJL/2I0npSrgfoZTli/3fU8
+ +atl6KmEibWkwpBr7OiYoty0umLMw2ClM3vvlDgheD6MJMIzYee2siO7p7RN+0zGBj+S
+ dfyg==
+X-Gm-Message-State: AOJu0YxZq4Nka7ee5xIEY0KAHlKr0rLPF7P3MGGvHnWf/2CvcrN/4LS6
+ X4nJOvWMT2f6Sla79acGeCRPtzbbZ7nrJ/oK6HCEQnQ4fnOj4LK8V1/80P/K3+cKDv3Whr1NGcy
+ H0xZb
+X-Gm-Gg: AY/fxX4l44duW3zKfQ/SyjZ2352Vn4wUOgJ64Y4WHHCU1TSl0kTvQuj+/wL0UGPfV+q
+ Df9v8zzHyGX55YXnJGtGiTruhaM9ZWRwX/tUQYvzMsBGk1au7Ob4tMbY+d3gDMOZAs/OwQDZv3T
+ PrEl8BMPLoMcoxhL+IzVJdzmFQcUka3BrR3Yf1lGvn8OZvjZ0YN54wtfoTMLQbWfYccgr/Qy/38
+ xqsCOjx+s/nsjKXPRM9H0LQQ5xc/blhDZxht0ml/tDcG3Dk/bhE3Tdir1kJDwjoChCdIX9j6uE1
+ E0gn5NnfA2SBbDi7ujCPXkBSyRU98wQWTi6VBdf17fjj0BkLABd2YHoe7Kmk4uX2fhmukdKPpVI
+ OWPzhVDPjJ+95dfP7YHJ4ErzWLr2Rljll1PafElyIWsliAhbNkvSvOHE7p3RmGMpX78Pkne/ome
+ 1B9sV0nbPhxvhZHwgwnec9a7oKB8IuRv+T52cctY0ADmEzS9yhfFjusCW29qZukKtscUeS44UGh
+ AVVP5nLZmL8QjgnIhA/GCGlmMlT4hjPyvX0y+G1i2bkng==
+X-Received: by 2002:a05:6000:4287:b0:432:84ef:756c with SMTP id
+ ffacd0b85a97d-43569bc7422mr418068f8f.50.1768503319835; 
+ Thu, 15 Jan 2026 10:55:19 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.17
+ ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 10:55:17 -0800 (PST)
+ Thu, 15 Jan 2026 10:55:19 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/25] target/arm/ptw: make granule_protection_check usable
- without a cpu
-Date: Thu, 15 Jan 2026 18:54:51 +0000
-Message-ID: <20260115185508.786428-10-peter.maydell@linaro.org>
+Subject: [PULL 11/25] hw/i2c/omap_i2c: Remove omap_badwidth_* calls
+Date: Thu, 15 Jan 2026 18:54:53 +0000
+Message-ID: <20260115185508.786428-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260115185508.786428-1-peter.maydell@linaro.org>
 References: <20260115185508.786428-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,190 +103,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+The omap_badwidth_read* and omap_badwidth_write* functions are
+used by various OMAP devices when the guest makes an access
+to registers with an invalid width; they do two things:
+ - log a GUEST_ERROR for the access
+ - call cpu_physical_memory_read() or cpu_physical_memory_write()
+   with the offset they are passed in
 
-By removing cpu details and use a config struct, we can use the
-same granule_protection_check with other devices, like SMMU.
+The first of these produces an unhelpful log message because the
+function name that is printed is that of the omap-badwidth_*
+function, not that of the read or write function of the device that
+called it; this means you can't tell what device is involved.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251216000122.763264-3-pierrick.bouvier@linaro.org
-[PMM: avoid local vars in middle of block]
+The second is wrong because the offset is an offset into the device
+but we use it as an absolute physical address, so we will access
+whatever is at low memory.  That happens to be the boot ROM, so we
+will ignore a write and return random garbage on a read.  This bug
+has been present since 2011, when we did the conversions to the
+MemoryRegion APIs, which involved changing all devices from working
+with absolute physical addresses to working with offsets within their
+MemoryRegions.  We must have missed updating these functions.
+
+Replace the uses of these functions in omap_i2c.c with an
+open-coded call to qemu_log_mask() and RAZ/WI behaviour.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/cpu.h | 34 +++++++++++++++++++++++++++++
- target/arm/ptw.c | 57 ++++++++++++++++++++++++++++++------------------
- 2 files changed, 70 insertions(+), 21 deletions(-)
+ hw/i2c/omap_i2c.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 992dff41c3..2f124d1b15 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1216,6 +1216,40 @@ void arm_v7m_cpu_do_interrupt(CPUState *cpu);
- 
- hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
-                                          MemTxAttrs *attrs);
-+
-+typedef struct ARMGranuleProtectionConfig {
-+    /* GPCCR_EL3 */
-+    uint64_t gpccr;
-+    /* GPTBR_EL3 */
-+    uint64_t gptbr;
-+    /* ID_AA64MMFR0_EL1.PARange */
-+    uint8_t parange;
-+    /* FEAT_SEL2 */
-+    bool support_sel2;
-+    /* Address space to access Granule Protection Table */
-+    AddressSpace *gpt_as;
-+} ARMGranuleProtectionConfig;
-+
-+/**
-+ * arm_granule_protection_check
-+ * @config: granule protection configuration
-+ * @paddress: address accessed
-+ * @pspace: physical address space accessed
-+ * @ss: security state for access
-+ * @fi: fault information in case a fault is detected
-+ *
-+ * Checks if @paddress can be accessed in physical adress space @pspace
-+ * for @ss secure state, following granule protection setup with @config.
-+ * If a fault is detected, @fi is set accordingly.
-+ * See GranuleProtectionCheck() in A-profile manual.
-+ *
-+ * Returns: true if access is authorized, else false.
-+ */
-+bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
-+                                  uint64_t paddress,
-+                                  ARMSecuritySpace pspace,
-+                                  ARMSecuritySpace ss,
-+                                  ARMMMUFaultInfo *fi);
- #endif /* !CONFIG_USER_ONLY */
- 
- int arm_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 2e6b149b2d..a986dc66f6 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -330,26 +330,26 @@ static bool regime_translation_disabled(CPUARMState *env, ARMMMUIdx mmu_idx,
-     return (regime_sctlr(env, mmu_idx) & SCTLR_M) == 0;
+diff --git a/hw/i2c/omap_i2c.c b/hw/i2c/omap_i2c.c
+index e0798f2c8a..d6e28a1a89 100644
+--- a/hw/i2c/omap_i2c.c
++++ b/hw/i2c/omap_i2c.c
+@@ -441,7 +441,9 @@ static uint64_t omap_i2c_readfn(void *opaque, hwaddr addr,
+     case 2:
+         return omap_i2c_read(opaque, addr);
+     default:
+-        return omap_badwidth_read16(opaque, addr);
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: read at offset 0x%" HWADDR_PRIx
++                      " with bad width %d\n", __func__, addr, size);
++        return 0;
+     }
  }
  
--static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
--                                     ARMSecuritySpace pspace,
--                                     ARMSecuritySpace ss,
--                                     ARMMMUFaultInfo *fi)
-+bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
-+                                  uint64_t paddress,
-+                                  ARMSecuritySpace pspace,
-+                                  ARMSecuritySpace ss,
-+                                  ARMMMUFaultInfo *fi)
- {
-     MemTxAttrs attrs = {
-         .secure = true,
-         .space = ARMSS_Root,
-     };
--    ARMCPU *cpu = env_archcpu(env);
--    uint64_t gpccr = env->cp15.gpccr_el3;
-+    const uint64_t gpccr = config.gpccr;
-     unsigned pps, pgs, l0gptsz, level = 0;
-     uint64_t tableaddr, pps_mask, align, entry, index;
--    AddressSpace *as;
-     MemTxResult result;
-     int gpi;
- 
--    if (!FIELD_EX64(gpccr, GPCCR, GPC)) {
--        return true;
--    }
-+    /*
-+     * We assume Granule Protection Check is enabled when
-+     * calling this function (GPCCR.GPC == 1).
-+     */
- 
-     /*
-      * GPC Priority 1 (R_GMGRR):
-@@ -362,7 +362,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
-      * physical address size is invalid.
-      */
-     pps = FIELD_EX64(gpccr, GPCCR, PPS);
--    if (pps > FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE)) {
-+    if (pps > config.parange) {
-         goto fault_walk;
+@@ -457,7 +459,8 @@ static void omap_i2c_writefn(void *opaque, hwaddr addr,
+         omap_i2c_write(opaque, addr, value);
+         break;
+     default:
+-        omap_badwidth_write16(opaque, addr, value);
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
++                      " with bad width %d\n", __func__, addr, size);
+         break;
      }
-     pps = pamax_map[pps];
-@@ -432,7 +432,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
-     }
- 
-     /* GPC Priority 4: the base address of GPTBR_EL3 exceeds PPS. */
--    tableaddr = env->cp15.gptbr_el3 << 12;
-+    tableaddr = config.gptbr << 12;
-     if (tableaddr & ~pps_mask) {
-         goto fault_size;
-     }
-@@ -446,12 +446,10 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
-     align = MAKE_64BIT_MASK(0, align);
-     tableaddr &= ~align;
- 
--    as = arm_addressspace(env_cpu(env), attrs);
--
-     /* Level 0 lookup. */
-     index = extract64(paddress, l0gptsz, pps - l0gptsz);
-     tableaddr += index * 8;
--    entry = address_space_ldq_le(as, tableaddr, attrs, &result);
-+    entry = address_space_ldq_le(config.gpt_as, tableaddr, attrs, &result);
-     if (result != MEMTX_OK) {
-         goto fault_eabt;
-     }
-@@ -479,7 +477,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
-     level = 1;
-     index = extract64(paddress, pgs + 4, l0gptsz - pgs - 4);
-     tableaddr += index * 8;
--    entry = address_space_ldq_le(as, tableaddr, attrs, &result);
-+    entry = address_space_ldq_le(config.gpt_as, tableaddr, attrs, &result);
-     if (result != MEMTX_OK) {
-         goto fault_eabt;
-     }
-@@ -513,7 +511,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
-     case 0b1111: /* all access */
-         return true;
-     case 0b1000: /* secure */
--        if (!cpu_isar_feature(aa64_sel2, cpu)) {
-+        if (!config.support_sel2) {
-             goto fault_walk;
-         }
-         /* fall through */
-@@ -3786,11 +3784,28 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
-                             memop, result, fi)) {
-         return true;
-     }
--    if (!granule_protection_check(env, result->f.phys_addr,
--                                  result->f.attrs.space, ptw->in_space, fi)) {
--        fi->type = ARMFault_GPCFOnOutput;
--        return true;
-+
-+    if (FIELD_EX64(env->cp15.gpccr_el3, GPCCR, GPC)) {
-+        ARMCPU *cpu = env_archcpu(env);
-+        MemTxAttrs attrs = {
-+            .secure = true,
-+            .space = ARMSS_Root,
-+        };
-+        struct ARMGranuleProtectionConfig config = {
-+            .gpccr = env->cp15.gpccr_el3,
-+            .gptbr = env->cp15.gptbr_el3,
-+            .parange = FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE),
-+            .support_sel2 = cpu_isar_feature(aa64_sel2, cpu),
-+            .gpt_as = arm_addressspace(env_cpu(env), attrs)
-+        };
-+        if (!arm_granule_protection_check(config, result->f.phys_addr,
-+                                          result->f.attrs.space, ptw->in_space,
-+                                          fi)) {
-+            fi->type = ARMFault_GPCFOnOutput;
-+            return true;
-+        }
-     }
-+
-     return false;
  }
- 
 -- 
 2.47.3
 
