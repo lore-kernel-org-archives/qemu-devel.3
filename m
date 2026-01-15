@@ -4,101 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7CF2D46607
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 17:57:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7FA4D46606
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:02:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgRaw-0006ZU-CP; Thu, 15 Jan 2026 12:57:18 -0500
+	id 1vgRfY-00083O-BH; Thu, 15 Jan 2026 13:02:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgRat-0006Wt-PS
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 12:57:16 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgRaq-0000e3-Gs
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 12:57:14 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-432d2670932so991696f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 09:57:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768499829; x=1769104629; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+mMd8+uq4RQ9gxshvZ3aMOaigD8tQdNbIE/NTd7OiDc=;
- b=p2B/QYnYUt12rWV/79sEFa4C8UF3DrOz5C1ojJwhqZwI+nAyKsK0XCHBTgLiqHez7t
- vu0XHUyOQzAF0XA44taRaV2uTmUrE9412fyw8huKvM7PdbgsoC+NZYuUJWmEs1g/oCAG
- pd+Bx3f9Le0lC0+/f99g6u8mQrCCl4LRjB67e4N9hYwM9QdjK4T/Gw4gy0RWErO9jvLP
- VgQBbQsZKbOBxQkl3DVSGbqbELY0QX7TNNaf9HBKsuTEPbMGhuKPCKUMkeJnCxtZ8+Fd
- ASjq/34WgCHCcRwh1TjiNy+FdyfbAo1/4Cg4t6frQJV5yRSBfokT4V4ILFyxDX+boKqR
- 9TIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768499829; x=1769104629;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+mMd8+uq4RQ9gxshvZ3aMOaigD8tQdNbIE/NTd7OiDc=;
- b=BnZoPJe/K9ts9nmAnTrbfzASWdsXfH+pC47yodmzQpjK4lDooKqlYO3/JtRbtJ5joL
- EMVNK7A8j4+5RdZSANeas8lspP5si9ZC7GSCzjBtQnrcrpEcXaApd64lJPSjjEYuWKuw
- DoauCegcFJv2POhqbTqpyrefUGWyhzTQzyDun/yX7kTWW6dzk3VvaEz1OX3RbqJyX7kO
- gbfitcYVgUPKm3h5nip8KUq+EBgSHMmppo48EL2qWRrzQ1Z9QAGHIa2JU8dxFF9WfwJS
- ML5BhpWk1jXROtDMO+JGS4xnaUSO44yPrGnt2bYM0QBG3zFFI9Ks3Jrp39jBlBCkU7Aw
- 0bwg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDgnYgsu4TW28itJiC1DSw4P9oPti9sy0DmItUh2xidVYkwWXM6i9RepPJUMT/P2JqpiqOPdocQqxB@nongnu.org
-X-Gm-Message-State: AOJu0YzQwiUUMGUkkc9faSOX8DOFmu7EWAnunY5SiSKF05Z5ZU7xdjnM
- M5wenxRLHzpXvdT66dvtM9mPQZLPJ/CrJExwl2irRCwb+aI5kiEqplZ/KpTzB0kC2i0=
-X-Gm-Gg: AY/fxX485pSPoTWus+JA5i9ipzzZdYGZKgRu/hYvGWSrIeNUDNHP9BKx6RATK/DaqtG
- w7ur5OXFVTEvkjiiDk/0eG2ostbgnjvleoMFmAquI9V6I+esdQB7euYvF/6tWoyYJ+Ard0KouWo
- z79aqJyEYoPCY8DkgvrF1bmM2s6TobTLobgj7ex5YyIbAjCF6+wPcDv1tKkd+g2sjIGv1ncb6sm
- NM9ZeQ3v7i+tQsHP6FJ6sc8RMGjauEr+TLOxM9TLfa27PMz2UchQfIX0KGjjKib99PNlUIg6IHw
- Txmrh1MreONUajJyIRepy7vu8j2pHGN+cCpyy4cM7bk9QDcmOiRY0TnR9HhRvKOxBWA8E4qGPez
- fQjigfQEDVrWl8zf/pg6E7HbRmZzArxsbAuaIJTQNIO0f3218aNmhhnu5n6pr9v1F4xTIqG1AeZ
- NZr1iL7B6dDOnYa6ILF0E5j3u4R6+nWnjMHaYolWgJ2rsUpcdbOMNSdlBda4S3Gwru
-X-Received: by 2002:a05:6000:2910:b0:42f:b3b9:874d with SMTP id
- ffacd0b85a97d-43569bc4a81mr259220f8f.37.1768499828800; 
- Thu, 15 Jan 2026 09:57:08 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43569997f41sm283293f8f.38.2026.01.15.09.57.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 09:57:08 -0800 (PST)
-Message-ID: <30ca8aa6-3e07-4d09-b09f-58d7a6a480c6@linaro.org>
-Date: Thu, 15 Jan 2026 18:57:06 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vgRf7-0007vn-9q
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:01:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vgRf4-0001is-Io
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:01:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768500093;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=fHp4Ni9+r2ZNN9z+AU02/dm2gs4w8p5NZOX1wWyP/IU=;
+ b=O8OUqqyIVIes0nKAXcDz7FjLRVkR3DKYNBXa8fgHlSBCnrraZuQL8ypztliGMQw9ls8bmL
+ 1lKC29idPXHmp0TUuXqMHwAz7gAklaP8S2AFLpvmZ1tzpJLZ+4tY2N2bKNBr7aCm3uHDWC
+ L/3AtW1WklHlU89t8zzm+DB49qOK1DY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-47-iZnTB4fnMb-vATGvjA3u0w-1; Thu,
+ 15 Jan 2026 13:01:29 -0500
+X-MC-Unique: iZnTB4fnMb-vATGvjA3u0w-1
+X-Mimecast-MFC-AGG-ID: iZnTB4fnMb-vATGvjA3u0w_1768500088
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F6061955F04; Thu, 15 Jan 2026 18:01:28 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.98])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 99BE61800994; Thu, 15 Jan 2026 18:01:25 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] docs/about: propose OS platform/arch support tiers
+Date: Thu, 15 Jan 2026 18:01:23 +0000
+Message-ID: <20260115180123.848640-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: Be consistent about capitalization of 'Arm' (again)
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan
- <zhenzhong.duan@intel.com>, Ninad Palsule <ninad@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260115150545.669444-1-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260115150545.669444-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,38 +87,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/1/26 16:05, Peter Maydell wrote:
-> The company 'Arm' went through a rebranding many years back
-> involving a recapitalization from 'ARM' to 'Arm'. As a result
-> our documentation is a bit inconsistent between the two forms.
-> It's not worth trying to update everywhere in QEMU, but it's
-> easy enough to make docs/ consistent.
-> 
-> We last did this in commit 6fe6d6c9a in 2020, but a few new
-> uses of the wrong capitalization have crept back in since.
-> 
-> As before, "ARMv8" and similar architecture names, and
-> older CPU names like "ARM926" still retain all-caps.
-> 
-> In a few places we make minor grammar fixups as we touch
-> the sentences we're fixing.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> I have left the uses in xlnx-zynq.rst because I fixed those
-> in a different patchset that overhauled that file.
-> ---
->   docs/devel/testing/qgraph.rst        |  8 ++++----
->   docs/devel/vfio-iommufd.rst          |  2 +-
->   docs/specs/fsi.rst                   |  2 +-
->   docs/system/arm/aspeed.rst           |  6 +++---
->   docs/system/arm/b-l475e-iot01a.rst   |  2 +-
->   docs/system/arm/nrf.rst              |  4 ++--
->   docs/system/arm/stm32.rst            | 12 ++++++------
->   docs/system/arm/xlnx-versal-virt.rst | 16 ++++++++--------
->   docs/system/guest-loader.rst         |  2 +-
->   docs/system/replay.rst               |  2 +-
->   10 files changed, 28 insertions(+), 28 deletions(-)
+Informally we have approximately three groups of platforms
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+ * Tier 1: fully built and fully tested by CI. Must always be
+           kept working & regressions fixed immediately
+
+ * Tier 2: fully built and partially tested by CI. Should
+           always be kept working & regressions fixed quickly
+
+ * Tier 3: code exists but is not built or tested by CI.
+           Should not be intentionally broken but not
+	   guaranteed to work at any time. Downstream must
+	   manually test, report & fix bugs.
+
+Anything else is "unclassified" and any historical code
+remnants may be removed.
+
+It is somewhat tricky to define unambiguous rules for each tier,
+but this doc takes a stab at it. We don't need to cover every
+eventuality. If we get the core points of view across, then it
+at least sets the direction for maintainers/contributors/users.
+Other aspects can be inferred with greater accuracy than today.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+
+This came out of the discussion about recent unnoticed breakage
+in NetBSD builds and what maintainers are expected todo about
+it (if anything)
+
+  https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg02543.html
+
+ docs/about/build-platforms.rst | 152 +++++++++++++++++++++++++++++++++
+ 1 file changed, 152 insertions(+)
+
+diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
+index e95784cdb5..950e164c02 100644
+--- a/docs/about/build-platforms.rst
++++ b/docs/about/build-platforms.rst
+@@ -171,3 +171,155 @@ Only 64-bit Windows is supported.
+ .. _MacPorts: https://www.macports.org/
+ .. _MSYS2: https://www.msys2.org/
+ .. _Repology: https://repology.org/
++
++OS Support Tiers
++----------------
++
++While the QEMU code targets a number of different OS platforms, they don't
++all get the same level of support from the project. This applies to
++contributor & maintainer expectations, CI automation and requirements
++for merge gating.
++
++Tier 1
++~~~~~~
++
++These platforms attain the highest level of quality offered by
++the QEMU project.
++
++ * Builds and all tests pass at all times in both git HEAD and releases
++
++ * Builds for multiple build configuration are integrated in CI
++
++ * Runs all available tests frameworks (unit, qtest, iotests, functional)
++   in CI
++
++ * Merging code is gated on successful CI jobs
++
++This covers
++
++ * Linux (x86_64, aarch64, s390x)
++
++Responsibilities:
++
++ * Contributors MUST test submitted patches on one of Tier 1 platforms.
++
++ * Contributors SHOULD test submitted patches on Tier 1 platforms
++   by running a GitLab CI pipeline in their fork.
++
++ * Maintainers MUST request contributors to fix problems with Tier 1
++   platforms.
++
++ * Maintainers MUST test pull requests on Tier 1 platforms
++   by running a GitLab CI pipeline in their fork.
++
++ * Maintainers MUST co-ordinate fixing regressions identified
++   post-merge immediately.
++
++
++Tier 2
++~~~~~~
++
++These platforms are considered to be near Tier 1 level, but are
++lacking sufficient automated CI testing cover to guarantee this.
++
++ * Builds and all tests pass at all times in both git HEAD and releases
++
++ * Builds for multiple build configuration are integrated in CI
++
++ * Runs some test frameworks in CI
++
++This covers
++
++ * Linux (mips64el, ppc64el, riscv64)
++
++ * FreeBSD (x86_64)
++
++ * macOS (aarch64)
++
++ * Windows (x86_64)
++
++Responsibilities:
++
++ * Contributors MAY test patches on Tier 2 platforms
++   by running a GitLab CI pipeline in their fork
++
++ * Maintainers SHOULD request contributors to fix problems with Tier 2
++   platforms.
++
++ * Maintainers MUST test pull requests on all Tier 2 platforms,
++   by running a GitLab CI pipeline in their fork.
++
++ * Maintainers MUST co-ordinate fixing regressions identified
++   post-merge quickly.
++
++
++Tier 3
++~~~~~~
++
++These platforms have theoretical support in the code, but have
++little, or no, automated build and test coverage. Downstream
++consumers (users or distributors) who care about these platforms
++are requested to perform manual testing, report bugs and provide
++patches.
++
++ * Builds and tests may be broken at any time in Git HEAD and
++   releases
++
++ * Builds are not integrated into CI
++
++ * Tests are not integrated into CI
++
++ * Merging code is not gated
++
++This covers:
++
++ * NetBSD
++ * OpenBSD
++ * macOS (except aarch64)
++ * FreeBSD (except x86_64)
++ * Windows (except x86_64)
++ * Solaris
++
++Responsibilities:
++
++ * Contributors MAY test patches on Tier 3 platforms manually
++
++ * Maintainers MAY request contributors to fix problems
++   on Tier 3 platforms
++
++ * Maintainers MAY test patches on Tier 3 platforms manually
++
++ * Maintainers SHOULD NOT accept patches that remove code
++   targetting Tier 3 platforms even if currently broken
++
++ * Downstream vendors SHOULD test RC releases on Tier 3 platforms
++   and provide bug reports and patches to address problems
++
++Note: if a Tier 3 platform is found to be significantly broken,
++no patches are contributed for a prolonged period, and there is
++no sign of downstream usage, it is liable to be moved to
++"Unclassified" and thus be subject to removal.
++
++
++Unclassified
++~~~~~~~~~~~~
++
++These platforms are not intended to be supported in the code
++and outside the scope of any support tiers.
++
++  * Code supporting these platforms can removed at any time
++  * Bugs reports related to these platforms will generally
++    be ignored
++
++This covers:
++
++ * All 32-bit architectures on any OS
++ * Any OS not listed above
++
++Responsibilities:
++
++ * Maintainers MAY decline patches that add code targetting
++   unclassified platforms
++
++ * Maintainers MAY accept patches that remove code targetting
++   unclassified platforms
+-- 
+2.52.0
+
 
