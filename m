@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E88D4660D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5DC1D46611
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:55:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgSVR-0000jX-Sl; Thu, 15 Jan 2026 13:55:43 -0500
+	id 1vgSVT-0000kF-O9; Thu, 15 Jan 2026 13:55:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSV3-0000ci-OO
+ id 1vgSV6-0000dI-Rh
  for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:20 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSUz-0005hO-24
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:16 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-47d6a1f08bbso4825735e9.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:10 -0800 (PST)
+ id 1vgSV3-0005sr-CM
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:19 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-432d2670932so1027880f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768503309; x=1769108109; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=xH7Vjl1eJH80wqrfjzngkEtIrSK7E1AY90dS9LHsuaM=;
- b=uP91kcNAyGiSz1Wn8ZbZ32eu1aFezvoZ8BhWzBNKgC173X6yamSw5eDrxa0HrNoZlU
- JXAwpU+jMJmCad89t65yWucJzXZem5comBDudJ7d5FjmrB6SmPJ2Jqb5mCwnqzNKwpVa
- fZIMeISCndCKB2i0PZduMNZrKinCcu/sSD3YjGkUWcFyrv6aHLaiTFsAHwtPgwg1viRF
- V/rFgmuiOzPBFbweGXvT9b64FLOLktWRwZ85h9e6ZBSbJyND6j1ln2/QxP5bQEevP3CD
- lOSj+29stlJfJGCmA5r6E+iY7L1dfFzkX8R9XMH71RYiwwqHSOqc3E7UyCe7XAZEdSER
- pYJQ==
+ d=linaro.org; s=google; t=1768503314; x=1769108114; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=MZSrvEIlk9r04onLNJkYuSgINfXXG+Ma+gvj4K7ywbE=;
+ b=fkcDbNSUT6VYUFehoj2jqmYjEQw1aRsiGXFE0b56KX1DMAcY0zurowWZ+Sbl7J+cYM
+ U9onx6AU4/0kU0D/ForlrvxtvwmE1aHHuTVuBcVxWQcZ8/jtmtdA2Ds7nl8fcMb1SWpm
+ GNLKnyfRg2hL2ztPC8EzcY2fe158mGacuLmEmKL4PRmSkVDXXGmyQ9YEgSXNqIr0axcD
+ qPm4rr1UlWYCedL2UVEU3EC7RaDsq17v5IP6MGn9y6vuc+4yMRPKfaTWQiwwo9RWzIoU
+ Knm5YIhfFYMrer91408AcrirPBryY2InCUPplQaG9FL8suQRg0I3DWjwX+srBq2/1LQs
+ Uuww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768503309; x=1769108109;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xH7Vjl1eJH80wqrfjzngkEtIrSK7E1AY90dS9LHsuaM=;
- b=kNbDOxYEP3oZCqaAEXy2N+fCQ1E41ULhd5iR6+ya62RVKWkyoy7InaPp3i6j7JsSYB
- AwfoAAg+gfYHE20zjP1faVk5R+96sW6jq8vkXPZwmH1MoLQ3vB0e1JiHlBB1arwV29L9
- DPO62iMErStDq5pXhsFPE6+LW07rntR35ipFQ3/tRvfuNBFT6MYQp5mXB8fLucwNUshs
- IeBp6hl0X9cVTooMx0MiMmIq1Dq3wHgN1raWnC9XeqY+o3sqD65bT45MXhJonVlE6GzW
- yxmiGVFeXqFO1am97anMp/p12LQEW3lhM5ctDj4Az9OtRgVZvOVTdxWJF8xaT0BBYOqE
- DL+A==
-X-Gm-Message-State: AOJu0YyCA7fAeWOgE5AXD9a44t/Q6AB+yJXcvJRrUs60iQbAWzv6Ab8f
- PxqhB3WjVvO1Su7iCUHJymESmzWrNbXRJVCnp2SliTyG7e4XfJ5HD6cvVo5OK32D1eCE8XJgHLa
- ti2J3
-X-Gm-Gg: AY/fxX7CMS54z5C17YSeU9QOOe7Jsy1FaQqcYNkZn9XTEHH8awiHSY32/OnF6NVzI7G
- VtYuxL5mzzuJikYtaEGfkQVYJAGmSKH2Wa/f6+1jIUvOwzKRWkuDFR+yv9sr8YZydGLJtnc+rfP
- FHLhwT6AnjSqK/V1+8VZYTqVgl3+6y6aaYUsojH9Vc+aLvbD1OX8PBM1OG8IXHrBUEVmJ42Lq8Z
- 9H91u5cVlpssOOcrm0I8R+12/RFRcEy9xKVVZdpaIodqs02UzMLA/OFxSQJlKa4XQPgMuNalqWk
- 5CBMv2Taf3lTJ4apeG16imBLHACdmg6b4Cj9jaeZAwWphyqBjoRwt1Yl0xp2uOEQnIx4vbnYspt
- HB0o3xGZiwEQo50DvCcuPw/jtvxAWI6Wui8Buw2B6Mb/mBRal2syaLqm8hm2ij9ATlTFVcDnFJg
- P5XHOLhOKbjj7LiDECNaYoqgqSr8q35x+hcrcJoPKbLMk4pMvxJhN5uSKICzTZxIQopqhqUhzRb
- 3dw1Sqvd1wYUrB9NzT7Dm1orkH3zv2MKExq6UTBci69gA==
-X-Received: by 2002:a05:600c:c0ce:b0:47e:e78a:c834 with SMTP id
- 5b1f17b1804b1-4801eb14ffbmr1246465e9.34.1768503309439; 
- Thu, 15 Jan 2026 10:55:09 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768503314; x=1769108114;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=MZSrvEIlk9r04onLNJkYuSgINfXXG+Ma+gvj4K7ywbE=;
+ b=rqoCeI0+p47j5JSfVBAkUaXayW9zeVydWe2SiNxS+9U8K6R1fq2mTReGEOwFh8CMm9
+ 1zvmsYq8djFhibNU/MAbppRgCuvT/OWbL2ZLanokQwfyXAlytL6mW/S4n1+yv1GWCbNL
+ 5LYrHhH34bNBagfSwegJwVLxsA1h2U8xjvpfAN+7Pct+lFERCO3ewIw0s4hKtKVsPINr
+ oWSk0sURn4elS4NY2wVBQG0Pqtc1HPRnE6ahY0Bc2O/xMDOYas87inh4OUZ0Xce6/2qD
+ jXtr0dUwZe+/LYgRObj+ZKQ+EN/6j4fUymyhgehga3WVUYyFHnDY2Lv7wSJxjaY0zh6f
+ 1cXA==
+X-Gm-Message-State: AOJu0YxIv7c7TvU9kPejRgHlcNIMkdvAxmZXSV257yH8/VtAWZxhvIyM
+ qN7dRQaewn7Ydu5t5b79BUN0vKUrkUkARRpYcWfOnCxHOQFrwvyLsfuviMUsBASXlx+WlEMnE9q
+ IcFZX
+X-Gm-Gg: AY/fxX5HCDGMU40vEBM1+Ykf0+k3TXSeoGeo20pSppBo0FWDvdTRhmiFq7nRsxJBkxp
+ fbCp6zXkXCG2ZZ5K57u+JAzVutWjlFeF4Wu+nXLrFdzocyJyA/5bn2Pp7tTfCVZY6pbB1b7VVQo
+ YRg5bV6xm+mVZ/kZacMi4Z4RAh/Ndgq0mPe2aOiYJzP2h7QeWLCmqliesabWgNJst6HeZBP449V
+ fWT06nerXtbrvL0+z0pbz/sNisOSiiayRk9m+OLdPX7fhpAtVCH2QXB0X6zwa3myGET+P9nuXtk
+ 1vAOFd580EAIAW29DuVxHDwvaVW7tXxshvL3cqUQz8yyNvkK8zHANMTLZEj69jsvatL9bC2cf1t
+ qJ1UcLGahlFZk/biY35xXMFZ7QzNZET9b0a2wndKqzlYy8I/vl0oMkLDfCm7pI68CqCKc/j3bYV
+ PpsaS+7FGQJhQlDELF7DG3ODO3L2vbOCyh+T4CfoZw1ygo+qEU4n4Kplpqxiv8dDDzh9sW61hXv
+ xoTIv9mWD9WjoohO+7tY8vvrddhWhB/E3O7iS2Ib6g+Zw==
+X-Received: by 2002:a05:6000:2910:b0:42f:b3b9:874d with SMTP id
+ ffacd0b85a97d-43569bc4a81mr456484f8f.37.1768503313727; 
+ Thu, 15 Jan 2026 10:55:13 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.08
+ ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.12
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 10:55:08 -0800 (PST)
+ Thu, 15 Jan 2026 10:55:13 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/25] target-arm queue
-Date: Thu, 15 Jan 2026 18:54:42 +0000
-Message-ID: <20260115185508.786428-1-peter.maydell@linaro.org>
+Subject: [PULL 05/25] tests: Add test for ASID2 and write/read of feature bits
+Date: Thu, 15 Jan 2026 18:54:47 +0000
+Message-ID: <20260115185508.786428-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260115185508.786428-1-peter.maydell@linaro.org>
+References: <20260115185508.786428-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,107 +103,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's the first pullreq for arm for 2026. I had a big backlog
-of code review after the holidays so this is mostly "things that
-were fairly easy to review and collect up"...
+From: Jim MacArthur <jim.macarthur@linaro.org>
 
--- PMM
+Test for presence of ASID2; if it is, check FNG1, FNG0, and A2 are
+writable, and read value shows the update. If not present, check these
+read as RES0.
 
-The following changes since commit 4cfa1ce0365f56832f46ed8a82d8bd954d16be11:
-
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-01-15 11:29:21 +1100)
-
-are available in the Git repository at:
-
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260115
-
-for you to fetch changes up to 4efed64ffcdb99b977ad0b2129a9c0208456a6c9:
-
-  target/arm: Rename access_aa64_tid5() to access_tid5() (2026-01-15 15:30:16 +0000)
-
-----------------------------------------------------------------
-target-arm queue:
- * hw/arm/raspi: remove duplicate include
- * target/arm: Enable FEAT_ASID2 emulation
- * hw/char/cmsdk-apb-uart.c: log guest_errors for r/w to disabled uart
- * hw/arm: Re-enable the MAX78000FTHR machine in qemu-system-arm/aarch64
- * target/arm/ptw: make granule_protection_check usable without a cpu
- * hw/arm/omap: Remove omap_badwidth_* functions
- * hw/arm/smmu: add memory regions as property for an SMMU instance
- * docs/system/generic-loader: clarify
- * tests/functional: migrate aspeed_rainier image
- * target/arm: Correctly handle HCR.TID1 and TID3 traps on v7A CPUs
-
-----------------------------------------------------------------
-Alex Bennée (1):
-      tests/functional: migrate aspeed_rainier image
-
-Jim MacArthur (4):
-      target/arm: Enable ID_AA64MMFR4_EL1 register
-      target/arm: Allow writes to FNG1, FNG0, A2
-      target/arm/tcg/cpu64.c: Enable ASID2 for cpu_max
-      tests: Add test for ASID2 and write/read of feature bits
-
-Osama Abdelkader (1):
-      hw/arm/raspi: remove duplicate include
-
-Peter Maydell (14):
-      hw/sd/omap_mmc: Remove omap_badwidth_* calls
-      hw/i2c/omap_i2c: Remove omap_badwidth_* calls
-      hw/gpio/omap_gpio: Remove omap_badwidth_* calls
-      hw/dma/omap_dma: Remove omap_badwidth_* calls
-      hw/arm/omap1: Remove omap_badwidth_read* calls
-      hw/arm/omap1: Remove omap_badwidth_write* calls
-      hw/arm/omap1: Remove omap_badwidth_* implementations
-      docs/system/generic-loader: Clarify behaviour of cpu-num
-      docs/system/generic-loader: Don't mention QemuOpts implementation detail
-      docs/system/generic-loader: move TODO to source code
-      target/arm: Don't specify ID_PFR1 accessfn twice
-      target/arm: Correctly honour HCR.TID3 for v7A cores
-      target/arm: Correctly trap HCR.TID1 registers in v7A
-      target/arm: Rename access_aa64_tid5() to access_tid5()
-
-Philippe Mathieu-Daudé (1):
-      hw/arm: Re-enable the MAX78000FTHR machine in qemu-system-arm/aarch64
-
-Pierrick Bouvier (2):
-      target/arm/ptw: make granule_protection_check usable without a cpu
-      hw/arm/smmu: add memory regions as property for an SMMU instance
-
-Tao Tang (1):
-      target/arm: Move ARMSecuritySpace to a common header
-
-julia (1):
-      hw/char/cmsdk-apb-uart.c: log guest_errors for r/w to disabled uart
-
- docs/system/arm/emulation.rst               |   1 +
- docs/system/generic-loader.rst              |  56 ++++----
- hw/arm/max78000fthr.c                       |   3 +-
- hw/arm/omap1.c                              | 203 +++++++++++++-------------
- hw/arm/raspi.c                              |   1 -
- hw/arm/sbsa-ref.c                           |  16 ++-
- hw/arm/smmu-common.c                        |  11 ++
- hw/arm/virt.c                               |  13 +-
- hw/char/cmsdk-apb-uart.c                    |   8 ++
- hw/core/generic-loader.c                    |  18 +++
- hw/dma/omap_dma.c                           |   7 +-
- hw/gpio/omap_gpio.c                         |   7 +-
- hw/i2c/omap_i2c.c                           |   7 +-
- hw/sd/omap_mmc.c                            |   7 +-
- include/hw/arm/arm-security.h               |  37 +++++
- include/hw/arm/omap.h                       |  10 --
- include/hw/arm/smmu-common.h                |   4 +
- include/hw/arm/virt.h                       |   2 +
- target/arm/cpu-features.h                   |   7 +
- target/arm/cpu-sysregs.h.inc                |   1 +
- target/arm/cpu.h                            |  59 ++++----
- target/arm/helper.c                         | 211 +++++++++++++++-------------
- target/arm/internals.h                      |   5 +
- target/arm/ptw.c                            |  57 +++++---
- target/arm/tcg/cpu64.c                      |   4 +
- tests/functional/arm/test_aspeed_rainier.py |   6 +-
- tests/tcg/aarch64/system/asid2.c            |  76 ++++++++++
- 27 files changed, 537 insertions(+), 300 deletions(-)
- create mode 100644 include/hw/arm/arm-security.h
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tests/tcg/aarch64/system/asid2.c | 76 ++++++++++++++++++++++++++++++++
+ 1 file changed, 76 insertions(+)
  create mode 100644 tests/tcg/aarch64/system/asid2.c
+
+diff --git a/tests/tcg/aarch64/system/asid2.c b/tests/tcg/aarch64/system/asid2.c
+new file mode 100644
+index 0000000000..7d5466af34
+--- /dev/null
++++ b/tests/tcg/aarch64/system/asid2.c
+@@ -0,0 +1,76 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ *
++ * ASID2 Feature presence and enabled TCR2_EL1 bits test
++ *
++ * Copyright (c) 2025 Linaro Ltd
++ *
++ */
++
++#include <stdint.h>
++#include <minilib.h>
++
++#define ID_AA64MMFR3_EL1 "S3_0_C0_C7_3"
++#define ID_AA64MMFR4_EL1 "S3_0_C0_C7_4"
++#define TCR2_EL1 "S3_0_C2_C0_3"
++
++int main()
++{
++    /*
++     * Test for presence of ASID2 and three feature bits enabled by it:
++     * https://developer.arm.com/documentation/109697/2025_09/Feature-descriptions/The-Armv9-5-architecture-extension
++     * Bits added are FNG1, FNG0, and A2. These should be RES0 if A2 is
++     * not enabled and read as the written value if A2 is enabled.
++     */
++
++    uint64_t out;
++    uint64_t idreg3;
++    uint64_t idreg4;
++    int tcr2_present;
++    int asid2_present;
++
++    /* Mask is FNG1, FNG0, and A2 */
++    const uint64_t feature_mask = (1ULL << 18 | 1ULL << 17 | 1ULL << 16);
++    const uint64_t in = feature_mask;
++
++    asm("mrs %[idreg3], " ID_AA64MMFR3_EL1 "\n\t"
++        : [idreg3] "=r" (idreg3));
++
++    tcr2_present = ((idreg3 & 0xF) != 0);
++
++    if (!tcr2_present) {
++        ml_printf("TCR2 is not present, cannot perform test");
++        return 0;
++    }
++
++    asm("mrs %[idreg4], " ID_AA64MMFR4_EL1 "\n\t"
++        : [idreg4] "=r" (idreg4));
++
++    asid2_present = ((idreg4 & 0xF00) != 0);
++
++    asm("msr " TCR2_EL1 ", %[x0]\n\t"
++        "mrs %[x1], " TCR2_EL1 "\n\t"
++        : [x1] "=r" (out)
++        : [x0] "r" (in));
++
++    if (asid2_present) {
++        if ((out & feature_mask) == in) {
++            ml_printf("OK\n");
++            return 0;
++        } else {
++            ml_printf("FAIL: ASID2 present, but read value %lx != "
++                      "written value %lx\n",
++                      out & feature_mask, in);
++            return 1;
++        }
++    } else {
++        if (out == 0) {
++            ml_printf("TCR2_EL1 reads as RES0 as expected\n");
++            return 0;
++        } else {
++            ml_printf("FAIL: ASID2, missing but read value %lx != 0\n",
++                      out & feature_mask, in);
++            return 1;
++        }
++    }
++}
+-- 
+2.47.3
+
 
