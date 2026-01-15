@@ -4,143 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E842D33A09
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 08:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37581D41144
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 08:43:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgIn1-0000uJ-5F; Thu, 15 Jan 2026 03:33:11 -0500
+	id 1vgIw4-0004U8-2H; Thu, 15 Jan 2026 03:42:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1vgImx-0000k2-5v
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 03:33:08 -0500
-Received: from mail-centralusazon11010056.outbound.protection.outlook.com
- ([52.101.61.56] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <emckean@protonmail.com>)
+ id 1vgIDz-00059d-Hx; Thu, 15 Jan 2026 02:56:59 -0500
+Received: from mail-0701.mail-europe.com ([51.83.17.38]
+ helo=mail-07.mail-europe.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1vgImv-0002lE-Hp
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 03:33:06 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZaCT1tjjfdN+X2ukIIxS0N19VAFoV1HO3+TnQi4fdwPR+Nx8WmhelrWSR6VjkK9LWs4GdKhveY/k64QvWRFZ73IdFzIDfz1/kGEELRY8ht7+Gj2lCUzzoynJkEf1sl0LcBMIvwUACJSslw0YOJLrCEUUV8oCtyEoq/p2sxIldd8AwSIBrBzsyAgsc8Nj39WzdYRIbtKVvu86tiN3F7fEoUIo6jln9jhkb11ZzvIs4SFX6X0j2frIz/6yiBlGLJOwBgDm0vQRSLjdQsbvg185nnBQGaYeI3MGjql3QEs+X3+4iejLozJO/xM6egKfyCKBhgS9WgyH98DppT76QmqFEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hobFZoGJUl+y/IB94YbkL7Cj8D+Or1nPlGMm4csT5DY=;
- b=ht9hsNG3WjYhMiP56WUclq2P+xrQ+fzypV4Ngf59/fToJo/KT3eFImeHY1D8mSeXxFjNylGKw2d582tly4b5oWBLOoemeskWKnvI846tjN9Z7hViOqd9JfdE31HIr4ZGgbQcPJPmkS85OixbWlytV/I3ohyICwU0kwklyEiYBVjLvc/BWtsHTXY7//CaE9aL34FpbVWbZ5fIEHhTU25tRDKSW1X7OSEuZhbso/7g5/g7FVCBQDWw1hQQFMtgbtG0DjXeCd/PxXUCj6tZ+xfaGvuir11GE1DRk4PMMjYSoU3y7Fl0T66x/rruMz45UtJG4GqKPNGEEX5899EHO8rDrg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hobFZoGJUl+y/IB94YbkL7Cj8D+Or1nPlGMm4csT5DY=;
- b=zAabYrnzq0LLgtIwtMoLAN9vC8EstaTClQuTlYxLLKDDX49mFaV9kzjdtyvKDYFB6R0nGkjaJgpUDdH8ltTf6ZdEq9iwMoBz73URd8luugB2mWeGCvaNNBUphdZ0pud+Vxd/BiB+q2kg1+vxs9JyNQnM9u299Rqnz6xEsdHEoTg=
-Received: from BN9PR03CA0100.namprd03.prod.outlook.com (2603:10b6:408:fd::15)
- by DM4PR12MB6231.namprd12.prod.outlook.com (2603:10b6:8:a6::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.5; Thu, 15 Jan
- 2026 08:27:58 +0000
-Received: from BN2PEPF000044A2.namprd02.prod.outlook.com
- (2603:10b6:408:fd:cafe::8c) by BN9PR03CA0100.outlook.office365.com
- (2603:10b6:408:fd::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9520.6 via Frontend Transport; Thu,
- 15 Jan 2026 08:27:51 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BN2PEPF000044A2.mail.protection.outlook.com (10.167.243.153) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9520.1 via Frontend Transport; Thu, 15 Jan 2026 08:27:57 +0000
-Received: from honglei-remote.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 15 Jan
- 2026 02:27:55 -0600
-From: Honglei Huang <honghuan@amd.com>
-To: <alex.bennee@linaro.org>, <dmitry.osipenko@collabora.com>,
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, <Ray.Huang@amd.com>
-CC: <mst@redhat.com>, <cohuck@redhat.com>, <pbonzini@redhat.com>,
- <qemu-devel@nongnu.org>, <honghuan@amd.com>
-Subject: [PATCH v5 1/4] virtio-gpu: Update Linux headers to add virtio-gpu
- userptr support
-Date: Thu, 15 Jan 2026 16:27:36 +0800
-Message-ID: <20260115082739.174224-2-honghuan@amd.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260115082739.174224-1-honghuan@amd.com>
-References: <20260115082739.174224-1-honghuan@amd.com>
+ (Exim 4.90_1) (envelope-from <emckean@protonmail.com>)
+ id 1vgIDx-0002ue-Pe; Thu, 15 Jan 2026 02:56:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+ s=protonmail3; t=1768463810; x=1768723010;
+ bh=fqmesBnwB+wTVZRd+/9qpEYTfuDDmVjMJOMhDs00iSQ=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=BkMieD2ZCagwwpQcuDvpMPaDfma8c1lib909+99rNmR6o8x5U1GBzSwavL3KQNyN+
+ IKW98mxQOA9L+GdM756RR9HYufH40XOkw3GaytK4JOGdnBFrm+80X/Yc11uCAXAzIg
+ ZhZLmmlbWmLSKTPMj4OW7dHEVfI9/zHhfS3isSx3fA59BFv/LQ2Dafy0+esJ5cMxuF
+ v5vw/yOAKz5jOVjNoW6+F07ngqxeWhmJMgMxJG3brROU4QqmjGY3x4r3A94TRTrNNE
+ 5fBWG5q+Zrz02ELBqk5/HAph5LyjxJUMJOXixSR/tMq38JotF4CacQBQ/OaZ/SDCdO
+ 0R+09yXe26LDA==
+Date: Thu, 15 Jan 2026 07:56:45 +0000
+To: Peter Maydell <peter.maydell@linaro.org>
+From: e <emckean@protonmail.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Subject: Re: [PATCH qemu] hw/arm/max78000: Fix num-irq to match hardware
+ specification
+Message-ID: <DUWQ5Ve-tVEHGZDWH-XpmErxJDu5_tIsPEcYNxE4YX1w1u_skMBv2xWS9SIiEQoLlFXH11WuMIinhvXQaWcdnGSdpMc60Ea0Dm3i9lTaxCg=@protonmail.com>
+In-Reply-To: <CAFEAcA_YkEVkm_6ihHHrDv43wAEw2qceBWW2xHjZdQzW0H4KSg@mail.gmail.com>
+References: <176663430090.23028.16926971585326050904-0@git.sr.ht>
+ <CAFEAcA_YkEVkm_6ihHHrDv43wAEw2qceBWW2xHjZdQzW0H4KSg@mail.gmail.com>
+Feedback-ID: 173361351:user:proton
+X-Pm-Message-ID: 14015f9d8a2588b0c51f860050499871cf9f5b74
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF000044A2:EE_|DM4PR12MB6231:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9d22fe9e-6376-42d3-0c28-08de540ffd08
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?2d3RTueQfzZXzNcqIkEY9y9wcC8tHk2pUhmU6w3cK8WNOz+7twbbcoHVnaJZ?=
- =?us-ascii?Q?eyyShLB/I5oZCxNpE2C458vsjgsU3Umpsc7BdT+GBnf7ilGT8TBV0wDuYk40?=
- =?us-ascii?Q?GCovIyGh4VPxcbb+AduqB5oQ5mt2Dc9aVlSHky5+3XdvGdOmRF08vOmdGmP6?=
- =?us-ascii?Q?bJxc1PLmX7DnZsYi9CqE9Y0d0H0CeNj3y2hjTAxaQjfoM441wbjyIcpnshqs?=
- =?us-ascii?Q?qhO4UbM44SZjysVtdps7ClhPNPuR2dTTq33K1wYbxY3BeooFKsr7CP9/ptj4?=
- =?us-ascii?Q?VtrfaviVs33HdrfwC9gsztPCT9FeojiLsDY6IMHAgYNLxttSWVahutc55OKd?=
- =?us-ascii?Q?QzYVp9aWY8R4xNPnsny6silit3joMR+GzlE9cTIXLN6/MC2rAQXHMlWSmnL7?=
- =?us-ascii?Q?zqJ8Apu/71HpsiTt5Xt3YVLfY6Ox+0kEy5WhqmHBuun/t80B4vICiZe2N0A1?=
- =?us-ascii?Q?M4rzgBgEhpqxNJXQ5AKWcrx0aI2mIO8fHtAmT7AnfkH53ZS9JwuxezQ5qcZE?=
- =?us-ascii?Q?8e0dA6w0KrRFXF/QoTwbC+0gT2h1Z00zYz4M7N+mN04EjSn/MzoCAbbDaUUA?=
- =?us-ascii?Q?Q3PSMMF0KpDOSo5Y6JlIFIgVCpkXmVJAwet4oGkFMnIeYEK0kGhrDhs9jpKx?=
- =?us-ascii?Q?bO54NNsfIYNeZK/dNrLB8QuXQOFJZmFTt61duPErhRo+A+3IoATAcb3DZNNE?=
- =?us-ascii?Q?do9Zv9t/ta110cN+TUeKenDlh0c3ouovHNuIgyATrfKCQ7jVvt7aFLlBoKeg?=
- =?us-ascii?Q?5B6umpk7L4ojJnLNgH8BkVb8VSSNAHf+nYMISsNMCfKo+KOBBzr+dOBag4WQ?=
- =?us-ascii?Q?gFXhAKo9FSPCVpGGW5VYKJ7tzvKAV3ViY1G5kRNapmxYUB8g9AcNu9/qEmzz?=
- =?us-ascii?Q?eNfOU5rS6XSJfGZF40rU8+3M1TSSoSiygHifFnyLNC1l31a4jipn0WsRFso5?=
- =?us-ascii?Q?JwfMak/zzEsOnto6tT8Vew76JQvfX+Z0JksK+IovwRWjDRYZuDb9u7x/sXqm?=
- =?us-ascii?Q?BU9o0Xjy2Xr4t+hHAsgnYmSuVwSRlsnOWYp1F6Z+VWHFO6yBkXX/A+T3O9bp?=
- =?us-ascii?Q?KHzonv1VYQoc8cTTc6euVAxUzft2p22FIPu6dKtRgGRsZcgR7t8L/zQ9L2Yj?=
- =?us-ascii?Q?t3izcSZUG2SihrkmJW37/WBS1uEzw86wOlKhTArPRjJ8zosW2cfyCwWBVdKY?=
- =?us-ascii?Q?t+fU78ZOv8xh8dlkXDAU+3g+nld9Ap6Y8FWJ9zQcVOvmbvvov+dix+Tz2NMN?=
- =?us-ascii?Q?3yJNcuY4UE2i+5gK0iXxqQwx34wPJszqnjogBavZD7T1wylo4+Z/8zUb3ALN?=
- =?us-ascii?Q?BScEFSy0/Pu02umFshozguAbPn2q182u7b3DRJVEVXbgc6w5fJHVNmj/yeUW?=
- =?us-ascii?Q?xFiXHHtvv+qDJxS1pO5vWKqo03Ws78nLqDe1nZOj2mCdnUsN31IDMTqoxX3+?=
- =?us-ascii?Q?Ysi43iI2pp/sqQ3vLUlKNZfhaWtrO6/9pAiDUNU9xD2v9MBaJFj3XiY4dqKJ?=
- =?us-ascii?Q?lgoEEy5qqPCPPiVChcxECEk6CfYD5CEA4njfj0FXKsRy3mzk4yWQV72Sr7n0?=
- =?us-ascii?Q?DISmjO8w5deZXC4zV/C2CQHyPUgrUb8xXJ7U4hiJ+KoHzejiVb6U39QqMjIP?=
- =?us-ascii?Q?eBpTbDs9UlME7P43zJGLUPBkD6JzrNaGaJ/DROwZVwDXWiQb3kwXUAzlLPfw?=
- =?us-ascii?Q?Ury9pw=3D=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jan 2026 08:27:57.9175 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9d22fe9e-6376-42d3-0c28-08de540ffd08
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044A2.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6231
-Received-SPF: permerror client-ip=52.101.61.56;
- envelope-from=Honglei1.Huang@amd.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: softfail client-ip=51.83.17.38;
+ envelope-from=emckean@protonmail.com; helo=mail-07.mail-europe.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 15 Jan 2026 03:42:30 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -155,40 +71,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update linux header same with the related linux patches.
-kernel headers, which introduces:
-- VIRTIO_GPU_F_RESOURCE_USERPTR feature flag
-- VIRTIO_GPU_BLOB_FLAG_USE_USERPTR blob flag
+I appreciate the detailed reply and breakdown. Apologies for the lack of du=
+e diligence on the previous discussion. I do not have the hardware with me =
+currently but will confirm the real number of external interrupts in a few =
+months when I do again.
 
-Signed-off-by: Honglei Huang <honghuan@amd.com>
----
- include/standard-headers/linux/virtio_gpu.h | 5 +++++
- 1 file changed, 5 insertions(+)
+- Ethan
 
-diff --git a/include/standard-headers/linux/virtio_gpu.h b/include/standard-headers/linux/virtio_gpu.h
-index 00cd3f04af..b562f5d6a0 100644
---- a/include/standard-headers/linux/virtio_gpu.h
-+++ b/include/standard-headers/linux/virtio_gpu.h
-@@ -64,6 +64,10 @@
-  * context_init and multiple timelines
-  */
- #define VIRTIO_GPU_F_CONTEXT_INIT        4
-+/*
-+ * VIRTGPU_BLOB_FLAG_USE_USERPTR
-+ */
-+#define VIRTIO_GPU_F_RESOURCE_USERPTR    5
- 
- enum virtio_gpu_ctrl_type {
- 	VIRTIO_GPU_UNDEFINED = 0,
-@@ -405,6 +409,7 @@ struct virtio_gpu_resource_create_blob {
- #define VIRTIO_GPU_BLOB_FLAG_USE_MAPPABLE     0x0001
- #define VIRTIO_GPU_BLOB_FLAG_USE_SHAREABLE    0x0002
- #define VIRTIO_GPU_BLOB_FLAG_USE_CROSS_DEVICE 0x0004
-+#define VIRTIO_GPU_BLOB_FLAG_USE_USERPTR      0x0008
- 	/* zero is invalid blob mem */
- 	uint32_t blob_mem;
- 	uint32_t blob_flags;
--- 
-2.34.1
+On Tuesday, January 13th, 2026 at 1:19 AM, Peter Maydell <peter.maydell@lin=
+aro.org> wrote:
 
+>=20
+>=20
+> On Thu, 25 Dec 2025 at 04:14, ~emckean emckean@git.sr.ht wrote:
+>=20
+> > From: Ethan McKean emckean@protonmail.com
+> >=20
+> > The MAX78000 user guide Section 5.2 and Table 5-1 specify 119 interrupt
+> > entries. The previous value of 120 was based on a misreading of the
+> > table which spans three pages, with entries 0-104 on pages 102-103 and
+> > the remaining entries 105-118 on page 104.
+> >=20
+> > Signed-off-by: Ethan McKean emckean@protonmail.com
+> > ---
+> > hw/arm/max78000_soc.c | 8 +-------
+> > 1 file changed, 1 insertion(+), 7 deletions(-)
+> >=20
+> > diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
+> > index 7f1856f5ba..1e2f66428d 100644
+> > --- a/hw/arm/max78000_soc.c
+> > +++ b/hw/arm/max78000_soc.c
+> > @@ -88,13 +88,7 @@ static void max78000_soc_realize(DeviceState *dev_so=
+c, Error **errp)
+> >=20
+> > armv7m =3D DEVICE(&s->armv7m);
+> >=20
+> > - /*
+> > - * The MAX78000 user guide's Interrupt Vector Table section
+> > - * suggests that there are 120 IRQs in the text, while only listing
+> > - * 104 in table 5-1. Implement the more generous of the two.
+> > - * This has not been tested in hardware.
+> > - */
+> > - qdev_prop_set_uint32(armv7m, "num-irq", 120);
+> > + qdev_prop_set_uint32(armv7m, "num-irq", 119);
+>=20
+>=20
+> The num-irq property of the armv7m QEMU device is the number
+> of external interrupts (see the comments in the props_nvic[]
+> definition in hw/intc/armv7m_nvic.c). Table 5-1 includes in
+> its count the 16 internal interrupts (from 0, unused, through
+> to 15, systick). So to get from the last listed external interrupt
+> number in table 5-1 (which is # 119) to the total number of external
+> interrupts we must subtract 15. That gets us 119 - 15 =3D=3D 104,
+> which is what our comment says for the table 5-1 figure.
+>=20
+> But the datasheet also says this in section 5.2:
+>=20
+> "Including the 15 system exceptions for the Arm
+> Cortex-M4 with FPU, the total number of entries is 134."
+>=20
+> That's where we get the "more generous" number from. If you
+> strictly believe the 134 figure and that they weren't off
+> by one by not accounting for the unused zero internal exception
+> then that would be 134 - 15 =3D=3D 119, but I am very reluctant to
+> believe in a non-multiple-of-8 number of external interrupts
+> unless somebody goes and finds the real hardware and tests
+> by writing to the NVIC_ISERn register bank to find where the
+> RAZ/WI bits start. If anybody did do that it would not
+> massively surprise me if it turned out that the actual number
+> of external interrupts is 104 and the datasheet text was wrong.
+>=20
+> Getting the number slightly high in QEMU is pretty harmless.
+>=20
+> The original discussion about what we should set num-irq to
+> in the review of the patchseries is in this mail thread:
+> https://lore.kernel.org/qemu-devel/CAFEAcA96fap_EJiFtX6a_PFmWeP1OPZGABueA=
+yE_=3DJQwFi-spA@mail.gmail.com/
+>=20
+> thanks
+> -- PMM
 
