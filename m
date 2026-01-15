@@ -4,58 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F8F6D4660D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:42:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A7BCD4660D
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:54:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgSIp-0002WY-M5; Thu, 15 Jan 2026 13:42:39 -0500
+	id 1vgSTG-0007NS-3j; Thu, 15 Jan 2026 13:53:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vgSIn-0002UD-4h
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:42:37 -0500
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgSTC-0007LG-Jn
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:53:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vgSIl-0003ES-2T
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:42:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=uh1kbpDK70GHe/tid3R3AOVOgw+6STsOAyorSVzxloI=; b=V1pw7YkVRVhHuput
- zBBSIcKdVGEqyYbGtdPP8DFJyhdPKmXX6sdedXyL++O3tyjbneGH6ThTP9naA902ZwUi8d6mlxnTP
- BTBWLn1xkCGOKl9lf55p5eKQUKtFBknKgTYqg5u0Vkljr3Go94FrYH2AwbJatA3Ds7CUT1ur0hkFc
- K/6c2BkUY2jmqTjFurl2StSQp2uiAWlNqb1fuJckKvGXFhfBBS/0Pb/drC7DxDIs+QsSGpk+Ipph5
- T9Ai4UqBaNbxJJOFEyAo7Z86M89PAXwAbd8QWECW5Ixp/zZLNyb7/zmG97RBLP4yM4B+NGydUMjFr
- fk/TsE2viuFpD35slw==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1vgSIg-0000000F3Nm-3WC6;
- Thu, 15 Jan 2026 18:42:30 +0000
-Date: Thu, 15 Jan 2026 18:42:30 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgSTA-0005Hp-0N
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:53:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768503197;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lVRQ43fty3LRv7RRjgEy1YVkB1oEH+D5YYsmPnYWrQI=;
+ b=A/B0syf7E24LA1zOljszdgl+S1Tqt7JOOq8pO3LUbeQmplIE/PckDp3wjteJUTwovbHO9O
+ lJWpeS5z20wxJ1lgeGlFBok1Op2bn4Z7Kdpvxgi1TZQex5j2hiz2bVU1mDkM46GOCp2nKt
+ zze9eZCBV6e88TwxYLtMaQ0OJWxVrl8=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-210-W9FUUCA3My23IxKxE7J-Jg-1; Thu, 15 Jan 2026 13:53:16 -0500
+X-MC-Unique: W9FUUCA3My23IxKxE7J-Jg-1
+X-Mimecast-MFC-AGG-ID: W9FUUCA3My23IxKxE7J-Jg_1768503196
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8c52fd47227so245307085a.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:53:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768503196; x=1769107996; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=lVRQ43fty3LRv7RRjgEy1YVkB1oEH+D5YYsmPnYWrQI=;
+ b=K2yhDN3e6o4GOGBf9krQfvrT7C44TRMpLuOaAq3HZPP/uzAGVp6qxyTrHMn6cwG8FZ
+ ehkz5gBoEQ7lhzvWzSofsWyjHFA1YJfgGH8x3L6rv/nKcpHVo8DCNmdeaJzMqRsPZlz6
+ TZ5qFsTys3wxVz4hTAs9MTmQvrJsRsR6UnithWugjgE8Y/mnl2+KpSDZHedEK3kf6DpV
+ IsEyxRGgG7+yzTMWvX8l2YZkqpJTObCwPRII4yeiTvLmqb7AK0YfJ+6F5HymZxOeBepn
+ V4AlraJxjwvv6TRtrLYFtWdbZcyKnzNroAaILWk4jXR53Sfnj/MDSERmZOJmcv5/A4Ly
+ 9tsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768503196; x=1769107996;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lVRQ43fty3LRv7RRjgEy1YVkB1oEH+D5YYsmPnYWrQI=;
+ b=WRFDyfhXwPDDfCbDu0BSzvxsntsZe88G4lPtD6TQhM7wRnwNK5c08uG3nri1c1sSeT
+ cYNAqZ6nMB6NwHqFA4w7nQEmEI4bgj/abrMtWN9hNalTx2xGLjdnyrsQ5gG9EVXuiX1r
+ rZNbOQoad39deCRrJ+VhTAdvE6hLwW3WoAoEe6afuN954Ef1aUh8zyc+Z7270AERUd3v
+ uq2jYDMP0UgfKCig/v/l77CB0CLdQ4XfIS2h0Oz+5+4uKITF6dmdKKyUu5CYicYxJxlc
+ uwcV5imX1Z+qjnVLqEE7P6R6vuct9FWWkMBv6yR4Q7AhjYNlOCfd9PUYgk7mbK9xbuCs
+ pIxg==
+X-Gm-Message-State: AOJu0YweRM6ENO/cEAOaOe7xHsP204YyXyDq1RFEe0nL61iAC+mN3JR2
+ q3r+1x324CFRkYeewtXQN7tPtB6S4Y7j+qscpUhOCARfQvi2XvJiag4OmolxOORW3mAB1Qs/7pl
+ eA6FzmTUnMBv88dSQoqGG/dToJxMqSS81vMTSw6g5WR6ixf0VCRl7ncTo
+X-Gm-Gg: AY/fxX6uQLaO8ei7ozVaD20/ynR1G75tV5qnsKNBNyFmEnnKxdo0JuESp5MNLmHrCze
+ 6chiZ/rU6XKux/eW4AUPuH1vigV9qqDBeh+zp+cC9ghpzitoNLcVmLmN+5ojvQx84iX0Z0g46Kf
+ SJrnJGNdZdb/rHGp1esm27sHN0MyAoG0hxYMJxbqqgewMrS918iapv9qXI705qz7G9SSuX/Qc7k
+ Bmx1K3BJAcJ+/OanHb8cuFIrUXuR2ACt8gamahTb0Ss2klz3vow0rdYpY2zKawC5HtBtlU6THi1
+ K6cLDqX+ORcSnjoLMdC/k4oAiET8kAtRCo8OC0SXb27hCJA6aWbgOTqK2pTXBv8MXckSsCjPF5Q
+ fDQA=
+X-Received: by 2002:a05:620a:44ce:b0:8c5:1fb5:1631 with SMTP id
+ af79cd13be357-8c6a694a426mr49045885a.76.1768503195712; 
+ Thu, 15 Jan 2026 10:53:15 -0800 (PST)
+X-Received: by 2002:a05:620a:44ce:b0:8c5:1fb5:1631 with SMTP id
+ af79cd13be357-8c6a694a426mr49041685a.76.1768503195153; 
+ Thu, 15 Jan 2026 10:53:15 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8c6a7260229sm10920785a.42.2026.01.15.10.53.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Jan 2026 10:53:14 -0800 (PST)
+Date: Thu, 15 Jan 2026 13:53:06 -0500
+From: Peter Xu <peterx@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
-Cc: berrange@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/4] hmp*hx: Move info docs
-Message-ID: <aWk1FvYlhq6a1Sbm@gallifrey>
-References: <20260115020423.722069-1-dave@treblig.org>
- <20260115020423.722069-3-dave@treblig.org>
- <875x93xf4q.fsf@pond.sub.org>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
+ Juan Quintela <quintela@trasno.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Zhang Chen <zhangckid@gmail.com>, zhanghailiang@xfusion.com,
+ Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
+Message-ID: <aWk3kgeAqbYEom5v@x1.local>
+References: <20260114195659.2543649-1-peterx@redhat.com>
+ <20260114195659.2543649-2-peterx@redhat.com>
+ <875x93zae6.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <875x93xf4q.fsf@pond.sub.org>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 18:42:06 up 80 days, 18:18,  3 users,  load average: 0.01, 0.02, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+In-Reply-To: <875x93zae6.fsf@pond.sub.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,74 +126,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Markus Armbruster (armbru@redhat.com) wrote:
-> dave@treblig.org writes:
+On Thu, Jan 15, 2026 at 06:56:49AM +0100, Markus Armbruster wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> > From: "Dr. David Alan Gilbert" <dave@treblig.org>
+> > COLO was broken for QEMU release 10.0/10.1 without anyone noticed.
+> 
+> We could arguably drop this right away.  I'm not demanding we do, just
+> pointing out.
+> 
+> First, COLO is marked 'unstable' in the QAPI schema:
+> 
+> * MigrationCapability member x-colo:
+> 
+>     # @unstable: Members @x-colo and @x-ignore-shared are experimental.
+> 
+> * MigrationParameter and MigrationParameters member x-checkpoint-delay:
+> 
+>     # @unstable: Members @x-checkpoint-delay and
+>     #     @x-vcpu-dirty-limit-period are experimental.
+> 
+> * Command x-colo-lost-heartbeat:
+> 
+>     # @unstable: This command is experimental.
+> 
+> There's more COLO stuff we neglected to mark, e.g. MigrationStatus
+> member @colo, event COLO_EXIT, commands xen-colo-do-checkpoint,
+> query-colo-status.  We should clean that up.  More on that below.
+> 
+> Second, it's been broken for two releases, our deprecation grace period.
+> In my opinion, "broken" is even stronger notice than "deprecated".
+
+I agree.
+
+> 
+> >                                                                     One
+> > reason might be that we don't have an unit test for COLO (which we
+> > explicitly require now for any new migration feature).  The other reason
+> > should be that there are just no more active COLO users, at least based on
+> > the latest development of QEMU.
 > >
-> > Move the docs for the info subcommand from the separate hx
-> > into the top level file next to the 'info' command itself.
-> > That makes every command in the top level file have a RST section.
+> > I don't remember seeing anything really active in the past few years in
+> > COLO development.
 > >
-> > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+> > Meanwhile, COLO migration framework maintainer (Hailiang Zhang)'s last
+> > email to qemu-devel is in Dec 2021 where the patch proposed an email
+> > change (<20211214075424.6920-1-zhanghailiang@xfusion.com>).
+> >
+> > We've discussed this for a while, see latest discussions here (our thoughts
+> > of deprecating COLO framework might be earlier than that, but still):
+> >
+> > https://lore.kernel.org/r/aQu6bDAA7hnIPg-y@x1.local/
+> > https://lore.kernel.org/r/20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de
+> >
+> > Let's make it partly official and put COLO into deprecation list.  If
+> > anyone cares about COLO and is deploying it, please send an email to
+> > qemu-devel to discuss.
+> >
+> > Otherwise, let's try to save some energy for either maintainers or
+> > developers who is looking after QEMU. Let's save the work if we don't even
+> > know what the work is for.
+> >
+> > Cc: Lukáš Doktor <ldoktor@redhat.com>
+> > Cc: Juan Quintela <quintela@trasno.org>
+> > Cc: Dr. David Alan Gilbert <dave@treblig.org>
+> > Cc: Zhang Chen <zhangckid@gmail.com>
+> > Cc: zhanghailiang@xfusion.com
+> > Cc: Li Zhijian <lizhijian@fujitsu.com>
+> > Cc: Jason Wang <jasowang@redhat.com>
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  docs/about/deprecated.rst | 6 ++++++
+> >  qapi/migration.json       | 5 ++---
+> >  migration/options.c       | 4 ++++
+> >  3 files changed, 12 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> > index 7abb3dab59..b499b2acb0 100644
+> > --- a/docs/about/deprecated.rst
+> > +++ b/docs/about/deprecated.rst
+> > @@ -580,3 +580,9 @@ command documentation for details on the ``fdset`` usage.
+> >  
+> >  The ``zero-blocks`` capability was part of the block migration which
+> >  doesn't exist anymore since it was removed in QEMU v9.1.
+> > +
+> > +COLO migration framework (since 11.0)
+> > +'''''''''''''''''''''''''''''''''''''
+> > +
+> > +To be removed with no replacement, as the COLO migration framework doesn't
+> > +seem to have any active user for a while.
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index 201dedd982..3c868efe38 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -531,8 +531,7 @@
+> >  #
+> >  # @unstable: Members @x-colo and @x-ignore-shared are experimental.
+> >  #
+> > -# @deprecated: Member @zero-blocks is deprecated as being part of
+> > -#     block migration which was already removed.
+> > +# @deprecated: Member @zero-blocks and @x-colo are deprecated.
+> >  #
+> >  # Since: 1.2
+> >  ##
+> > @@ -540,7 +539,7 @@
+> >    'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
+> >             { 'name': 'zero-blocks', 'features': [ 'deprecated' ] },
+> >             'events', 'postcopy-ram',
+> > -           { 'name': 'x-colo', 'features': [ 'unstable' ] },
+> > +           { 'name': 'x-colo', 'features': [ 'unstable', 'deprecated' ] },
+> >             'release-ram',
+> >             'return-path', 'pause-before-switchover', 'multifd',
+> >             'dirty-bitmaps', 'postcopy-blocktime', 'late-block-activate',
 > 
-> Generated HTML changes slightly, diff appended.  Shows as vertical space
-> differences in Firefox.  Do we care?
+> Issues / doubts:
+> 
+> 1. We delete the text why @zero-blocks is deprecated.  Harmless; the
+> next patch drops @zero-blocks entirely.  Better: swap the patches.
 
-It looked OK to me in Firefox, is there a bit that looks wrong/bad to you?
-
-Dave
+Will do.
 
 > 
-> --- bld-docs/docs.old/manual/system/monitor.html	2026-01-15 12:30:17.300968723 +0100
-> +++ bld-docs/docs/manual/system/monitor.html	2026-01-15 12:55:43.909694634 +0100
-> @@ -601,10 +601,11 @@ command.</p>
->  </dd>
->  <dt><code class="docutils literal notranslate"><span class="pre">xen-event-list</span></code></dt><dd><p>List event channels in the guest</p>
->  </dd>
-> -</dl>
-> -<dl>
->  <dt><code class="docutils literal notranslate"><span class="pre">info</span></code> <em>subcommand</em></dt><dd><p>Show various information about the system state.</p>
-> -<dl>
-> +</dd>
-> +</dl>
-> +<blockquote>
-> +<div><dl>
->  <dt><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">version</span></code></dt><dd><p>Show the version of QEMU.</p>
->  </dd>
->  <dt><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">network</span></code></dt><dd><p>Show the network state.</p>
-> @@ -639,8 +640,6 @@ command.</p>
->  </dd>
->  <dt><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">jit</span></code></dt><dd><p>Show dynamic compiler info.</p>
->  </dd>
-> -<dt><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">accel</span></code></dt><dd><p>Show accelerator statistics.</p>
-> -</dd>
->  <dt><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">sync-profile</span> <span class="pre">[-m|-n]</span></code> [<em>max</em>]</dt><dd><p>Show synchronization profiling info, up to <em>max</em> entries (default: 10),
->  sorted by total wait time.</p>
->  <dl class="simple">
-> @@ -653,6 +652,8 @@ sorted by total wait time.</p>
->  the “Object” field shows—enclosed in brackets—the number of objects
->  being coalesced.</p>
->  </dd>
-> +<dt><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">accel</span></code></dt><dd><p>Show accelerator statistics.</p>
-> +</dd>
->  <dt><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">kvm</span></code></dt><dd><p>Show KVM information.</p>
->  </dd>
->  <dt><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">accelerators</span></code></dt><dd><p>Show which accelerators are compiled into a QEMU binary, and what accelerator
-> @@ -765,8 +766,7 @@ enabled) memory in bytes.</p>
->  <dt><code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">firmware-log</span></code></dt><dd><p>Show the firmware (ovmf) debug log.</p>
->  </dd>
->  </dl>
-> -</dd>
-> -</dl>
-> +</div></blockquote>
->  </section>
->  <section id="integer-expressions">
->  <h2>Integer expressions<a class="headerlink" href="#integer-expressions" title="Link to this heading"></a></h2>
+> 2. The text for @x-colo is lacking.  Suggest something like "Member
+> @x-colo" is deprecated without replacement."
 > 
+> 3. Does it make sense to keep x-colo @unstable?
+> 
+> 4. Shouldn't we mark *all* the COLO interfaces the same way?
+
+All questions are fair asks.  For issue 4, it means we will need to add new
+tag to COLO if we have the deprecation window..
+
+Let me try to propose removal of COLO in 11.0 directly and see if there'll
+be objections.
+
+> 
+> > diff --git a/migration/options.c b/migration/options.c
+> > index 9a5a39c886..318850ba94 100644
+> > --- a/migration/options.c
+> > +++ b/migration/options.c
+> > @@ -580,6 +580,10 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+> >          warn_report("zero-blocks capability is deprecated");
+> >      }
+> >  
+> > +    if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
+> > +        warn_report("COLO migration framework is deprecated");
+> > +    }
+> > +
+> >  #ifndef CONFIG_REPLICATION
+> >      if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
+> >          error_setg(errp, "QEMU compiled without replication module"
+> 
+
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+Peter Xu
+
 
