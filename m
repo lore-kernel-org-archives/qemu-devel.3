@@ -4,100 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 447CED4662F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 22:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC83CD4662F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 22:42:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgW0K-0002Sp-Ji; Thu, 15 Jan 2026 17:39:48 -0500
+	id 1vgW2r-0003fH-MI; Thu, 15 Jan 2026 17:42:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgW0I-0002ST-Rw
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 17:39:47 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgW2p-0003by-Fq
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 17:42:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgW0H-0005RN-Ab
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 17:39:46 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgW2o-0006GY-1Z
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 17:42:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768516782;
+ s=mimecast20190719; t=1768516941;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NY+2aCMh3NYlRsGa9SEjnigGHfPfupg6xjuyMyhdeWI=;
- b=SQDZBHKx+eu27PXr+o2CqvWFhi4qH3iFIA/694OCwSqCFKiu6hzSr0GZvP6bB9tp/UHD5+
- o8w2sQ1NraDWfeyO9/blOxTUD/UOKDmwV5m70CfOrrflgn4V3mHwK2swYpdLlBL6hZBKAO
- CyzDMUWD0zCu8DR/2Mk787/qpFQZ4Z4=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1dAWb+m8K6g51267EIb6nuvKAfhPimcxXslolI7Ibz8=;
+ b=hHcYqjlq8Yp4BFQdluc+0j/bwbBLZ1ku9V16KbTPUbvjEHKtRnC8RNm1S+rBMs9WvsTRLW
+ N1mMKh7OAiVjSef7SButh9+hKoAixy7g4miSFhbvcKB0DqBaBqzoDOCa5BRP/hs6K8Mrdf
+ LlEjLOLyeQaaUu2e3EOJG/0Oi3MwzZY=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-241-iE0y1n67PZyu8G8WGM6qpw-1; Thu, 15 Jan 2026 17:39:41 -0500
-X-MC-Unique: iE0y1n67PZyu8G8WGM6qpw-1
-X-Mimecast-MFC-AGG-ID: iE0y1n67PZyu8G8WGM6qpw_1768516781
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8c5296c7e57so541209485a.1
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 14:39:41 -0800 (PST)
+ us-mta-573-IC9DVX0JMG-ctZGgvsAIdg-1; Thu, 15 Jan 2026 17:42:19 -0500
+X-MC-Unique: IC9DVX0JMG-ctZGgvsAIdg-1
+X-Mimecast-MFC-AGG-ID: IC9DVX0JMG-ctZGgvsAIdg_1768516939
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-5014d8b3ae0so34122341cf.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 14:42:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768516781; x=1769121581; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768516939; x=1769121739; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=NY+2aCMh3NYlRsGa9SEjnigGHfPfupg6xjuyMyhdeWI=;
- b=ccsoFL+/HToNoeTmtHtZS7b1otSDRbwwC00lxrgpphEPU7JhFbeElG9Yu3DXiGRK7a
- gEW/XZw0TOHaIpMDUKCgiEB7I3g4FdAw1pV9kl9eKLS0h+ItWa7Aipj9d+yCGe1ZtQoP
- Q+TM6ldWBbtU0H7UsxlI0sqt5fveDKq31OHMA8ZWZDWVwa6vZBFkgqK7sLwBLM61wdh0
- vpuAwg8lUVryiPRwyU8wNDN+9qbfaK9a2be9wUyHB0empw848u1v1Sa3U5rsqxtHWtXS
- h2VhewN1lKJq4ErpewtbVTzi3TMxuIdV71Mc0njtAQ6fbQ7Q1ycAJWADiUXk4ELG5Fr6
- r5+w==
+ bh=1dAWb+m8K6g51267EIb6nuvKAfhPimcxXslolI7Ibz8=;
+ b=LXm45RmlDYVvhdotMuuW4zQQ40dgvTqiGtsBvDhl98AFZUqbPBAKqDSL0auq4ZeamQ
+ ah5LYZ5NZlyWspHdAIwRFGN9LQ7371Cyy55mstSi9hxCduUJD3kyZEXmzbbFa27nLYHf
+ oY3fps+3Fbzj2tX74XRnZbHvSQdFpznaqS9c7VC3b4ovRBKwG+e1vNfp9EQp5kRWkzy9
+ hbrU1Cl8SgWWAz7B8SJEEIUUlr33E/gyx+OJeAvvSPd2/zjbsDYaBoyi/Kd9YFjkVvIe
+ XaqdfN51Y6H9tEA3GwYc2xBiex74mpV2+KKxNEXEdF+KjGA9Ye5GZoyTgYcJHerrqoMV
+ 6WeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768516781; x=1769121581;
+ d=1e100.net; s=20230601; t=1768516939; x=1769121739;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NY+2aCMh3NYlRsGa9SEjnigGHfPfupg6xjuyMyhdeWI=;
- b=XF7x/tHCo+tb9hRIB9iOtl7guBIzAezDpYy7Dx5RDyaEr0hPf01YtQ30FDzklxCxs/
- QlTJmCnqubMfAlUpqDK9air5Clc2FRWUm6UsR1WT2Bs+hHjna5sFSaSC29PtC+oiTRjh
- +YZT7lLiSkEBnE9Bk1y9kVMwaKDZ+Cwny5J5foyn5SVq5lPFeH0lt0CF0UsD684CwnpI
- +k5HwAMN/7efzO7tf4XRsxoulgr3q86HAuHxMuft3hg9wB01Kgd3fHAU+bVmc26mxoXw
- aIvB8k/Ll4p9pqOcip2+KU7k0ecjuuQibuCDSjMp6T1pZPmXcENH6dIXH5mVI/Qu87vv
- fNHQ==
-X-Gm-Message-State: AOJu0YxRjsTEyHW/1O08NtiLuIQqvafub5s0rhieNLVcW1Bm+l8LN/F5
- 4VGyKx1ZPn2vH/2fjubc5SnyvAddQRQSZcjhkqbJHYHMmh3148Qh8p5WXij1wW/5jRIE/Wtj+Y8
- UjGHRgBevh+BXYtHb2LRpveFdQaCpQ9ci4+/CGBlHr7frlQwoSGmV9JTj
-X-Gm-Gg: AY/fxX4avNN0ga5S1uxPdNIi6hcm4mr/lz2HvBlslJhcCkppqrYvBZrUd6yQhBNB5Lz
- XGknkE8pJ3iOnOAYEwWohnpACquoV+BIacSY9h4poSOMOTP1wHWlJ/HBgHtalOYD6i4+40EIfJd
- n8pA4Y4D82U0bsMyn3ddYtD+4cMpgi0yks2wWYB7AtMK8Hi5NQAN1R5mNkb3y16BcmcfTaMe3Nh
- WDycfEjYHx96uzmpf6v327TSycZutFoivSnRh5kS2vnHePNfAZoCQIG9+ohMsGlnozjcPKvaa+Y
- GiI5gzuUO17KhMlyTrvFesfAU20/Sd99Q7quSU7umiKU5dG+EXVhhQv5XJ/EluA0rH9aoqpP+UN
- NdrE=
-X-Received: by 2002:a05:620a:710c:b0:8b2:edc8:13d0 with SMTP id
- af79cd13be357-8c6a68ec805mr153658485a.17.1768516780828; 
- Thu, 15 Jan 2026 14:39:40 -0800 (PST)
-X-Received: by 2002:a05:620a:710c:b0:8b2:edc8:13d0 with SMTP id
- af79cd13be357-8c6a68ec805mr153656085a.17.1768516780399; 
- Thu, 15 Jan 2026 14:39:40 -0800 (PST)
+ bh=1dAWb+m8K6g51267EIb6nuvKAfhPimcxXslolI7Ibz8=;
+ b=traZnPbgThDTuaa8DKh8U5fFo0p68mPhd5DeXqG6Nj5/W1IZ6BK2Z/PiqMgpLMpO1p
+ L8CZi5bKM9y/4/UFrYb/t7xiXvLVnd3NhrflaTCAJsMzb6X5eXqkEkmY0gqSg5PAydOf
+ LkCFYHI0vcCaAQpgB54/+9tqoXzXp3Jb82G/WhWe16GbPfRTUaedG1FG9FYktdrKOVus
+ ra4MAnYsXTUE8k6j8eQjHqlWZaUy4bwtV2pXbBhQlrhWaTagfPHL2jFcfZKBnagmrPwX
+ Djwe7wGoey0a6ZJ3wZ6uas2jVh8xxwXsGVsyNOVpRb5iOswog5AkrGTdKpwuReD6IVAq
+ ZG7w==
+X-Gm-Message-State: AOJu0YwhTxJQWsLAIESH0bCJhoV5PYx468KeXoZaKbhFQ+XkByNPBpY1
+ tmTw4RiO+2NywFuFCrr2YRVeMUvuspsYNvsMuuFD5KddqmTkDzZsBp7857LjEftx21mJOli9Fai
+ EKuPIWeMvghmlyIV1H4jfX8AoVME6WNmxAqzYFIsQAWLSkAmBUhQmmC/L
+X-Gm-Gg: AY/fxX4QLg567QciU+U5Oa/VzpPDzyjLc1ZWLnvFi9HCuWXN0GhmhxpKvpOPdFnevtu
+ D0ODG4JDMhZsZZrcDZFkv4Iqi2MZ/pXTb85/rR/jZ20xVAlT0WCEvt+VjNLEB2Ncj7lG+dPOesR
+ lfTnmbFDlMI56aNoQ/WZoBVNaPPZfQHT5EAuuzknSKeAk3V/WwFQ1xRmdiTVlawAHQMlS3rcD0S
+ tN4xAphsbAjlbqfEJq1YdLj41b8N2lH2JZOuw8p6diIpjcCzW22K32aUwEOlbzyQ5YhS3IxOxMt
+ gKXX1KwmACNIGfMs/ccWYsEhbKvNwqU3WPpmBK9mo6NSUKs+oTor73hcOl/dJV15UzpwcGpwfCe
+ xMFs=
+X-Received: by 2002:ac8:5a08:0:b0:4ee:1875:42fa with SMTP id
+ d75a77b69052e-502a15ebca2mr16419781cf.1.1768516939238; 
+ Thu, 15 Jan 2026 14:42:19 -0800 (PST)
+X-Received: by 2002:ac8:5a08:0:b0:4ee:1875:42fa with SMTP id
+ d75a77b69052e-502a15ebca2mr16419661cf.1.1768516938861; 
+ Thu, 15 Jan 2026 14:42:18 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c6a71ab272sm70740885a.2.2026.01.15.14.39.34
+ 6a1803df08f44-8942e6ca6e0sm7070486d6.42.2026.01.15.14.42.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 14:39:39 -0800 (PST)
-Date: Thu, 15 Jan 2026 17:39:31 -0500
+ Thu, 15 Jan 2026 14:42:18 -0800 (PST)
+Date: Thu, 15 Jan 2026 17:42:12 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Lukas Straub <lukasstraub2@web.de>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
- Juan Quintela <quintela@trasno.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Zhang Chen <zhangckid@gmail.com>, zhanghailiang@xfusion.com,
- Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
-Message-ID: <aWlso1w39cQnEh2t@x1.local>
-References: <20260114195659.2543649-1-peterx@redhat.com>
- <20260114195659.2543649-2-peterx@redhat.com>
- <aWf4i7EOXtpAljGX@x1.local> <20260115224929.616aab85@penguin>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>
+Subject: Re: [PATCH 3/3] migration-test: Add COLO migration unit test
+Message-ID: <aWltRH6Nra-Tji7w@x1.local>
+References: <20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de>
+ <20251230-colo_unit_test_multifd-v1-3-f9734bc74c71@web.de>
+ <aV1qf5uDYYiGrqR_@x1.local> <20260115233500.26fd1628@penguin>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260115224929.616aab85@penguin>
+In-Reply-To: <20260115233500.26fd1628@penguin>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -123,29 +118,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 15, 2026 at 10:49:29PM +0100, Lukas Straub wrote:
-> Nack.
+On Thu, Jan 15, 2026 at 11:35:00PM +0100, Lukas Straub wrote:
+> > > diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+> > > index 8c1fc6e009f16dc05a47e917167f62e0250ca992..08bca49a8980f9988be9447acf54b17acd56da94 100644
+> > > --- a/tests/qtest/migration/framework.c
+> > > +++ b/tests/qtest/migration/framework.c
+> > > @@ -315,7 +315,7 @@ int migrate_args(char **from, char **to, const char *uri, MigrateStart *args)
+> > >      if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
+> > >          memory_size = "150M";
+> > >  
+> > > -        if (g_str_equal(arch, "i386")) {
+> > > +        if (g_str_equal(arch, "i386") || args->is_colo) {  
+> > 
+> > OK, one more reference..
+> > 
+> > I'm curious, why Q35 is not supported?
 > 
-> This code has users, as explained in my other email:
-> https://lore.kernel.org/qemu-devel/20260115224516.7f0309ba@penguin/T/#mc99839451d6841366619c4ec0d5af5264e2f6464
+> There is a bug in the emulated ahci disk controller which crashes when
+> it's vmstate is loaded more than once.
 
-Please then rework that series and consider include the following (I
-believe I pointed out a long time ago somewhere..):
+I wonder what happens if one does a loadvm on top of a migrated QEMU, then.
 
-- (Working) unit test for COLO migration
-
-- Some form of justification of why multifd needs to be enabled for COLO.
-  For example, in your cluster deployment, using multifd can improve XXX
-  by YYY.  Please describe the use case and improvements.
-
-- Maintainer file to replace Hailiang in his role (unless Hailiang could
-  reply before you send it)
-
-- Please consider converting COLO-FT.txt to .rst, and maybe we should also
-  move it over to devel/migration/, then add an index in the index.rst.
-
-IMHO we should either merge a series at least covers above in 11.0, or we
-drop it.
+Is that the only device that is broken?  Could we fix the device instead?
 
 Thanks,
 
