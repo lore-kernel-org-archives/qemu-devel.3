@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4E75D4662F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 21:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3387ED4662F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 22:01:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgVE7-0008NV-PI; Thu, 15 Jan 2026 16:49:59 -0500
+	id 1vgVO4-0004l3-1Z; Thu, 15 Jan 2026 17:00:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgVDt-0008J0-R2
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 16:49:46 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgVNY-0004iY-Qq
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 16:59:47 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgVDs-0005mw-G9
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 16:49:45 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4801d7c72a5so3804535e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 13:49:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgVNW-0006l8-Sm
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 16:59:44 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-47d1d8a49f5so8609335e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 13:59:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768513783; x=1769118583; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768514380; x=1769119180; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MdsQ2gazNALECRxJP1VZ1zRl85PWY1rLo9QPjTTKkeA=;
- b=M40n6KFVk/KSV4x7fijujNaCRT/9UbcQ3bl3ue+JiQfSZYo2G1gneTGg/HnUBqDlya
- a2EVviER4jgMiqgEGeUZ0o+1dzExsB+7BWqdg+ayPEvqYntJSjB4Ga03JDbiSqy+CNhM
- Im25yfIZLnl4ndjA6mUbQBmhej7E8iwsvY2wdbbQOz4FaxJTPsXdydDobe0ZGX6+KSYv
- NRTyWVOVXOmPbGBA49tmqmC0taZrBx+fZP/juaPhJx2FzSqVM/cMRzTGgWlM4R48XRWW
- CGazaK784lHI+6R1oBcNbivyfPl7Apd6OiZkePgA0oAZyh/thoHVDgBnTbAHldt/uxJA
- 4f0w==
+ bh=LSamhGQvngleve3YRFRZ+HCMddKF98Rae/+IXwDlVQQ=;
+ b=xDVbr9haLLCW9sL1PIsWoY5tc47s9zi2LegtpCltUJ3E8Y/5Nqva2ZpAoy8DJwrd++
+ 6p8YeWM7mRXU9a5MQ4+2RwHKZ3MjPpp32MGNVHVqJDdMmqVNZzgfa5bR+fBeSFy5RjVa
+ SexJIMtbJvsKX5HNvT7YZRKXBaJwaH6muc4mu/JTM2N3WDKIf06EKhcFdSzXL53/IO1v
+ 4fxel+3X/WWCNchEUcLBSLIv7XOITH/huepQBRK/P+QCmNr8DwuKzl7fkOMtUvXAcyju
+ AIIMi2ft64tjc3iU5ZHysB0BfoTzfLikJqsXoYax48h3koL1t0ENuy2901JEHMvwpq4V
+ g37w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768513783; x=1769118583;
+ d=1e100.net; s=20230601; t=1768514380; x=1769119180;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MdsQ2gazNALECRxJP1VZ1zRl85PWY1rLo9QPjTTKkeA=;
- b=QT4mtHLT4zrZqy0sXJ/GF9J8jmVynhxR+ZXpG7A5XcpjUxhPU2i57NDnRCAN57CyMI
- Nxwtb7eJM5Pt7dl2ZaoBq1dZqy7cOV4rVw5/mO7xRQPuYU6lUJR3C7e8F3oiqbi5GM8i
- h9OuIMXe8LpLsTBDNJpYUOF9q6rTly4zAZDhulzzHkfbIyMMgffrtVLDb5nuH1LOR39j
- HwZMWmlRo38szqCi2/S5voyukUcU01XB1ImQabkcnlUrEbPbai96eLui7LoT50crVCNy
- /mU5sN1Bmu7IFe7px8A5mF8IAnUhUJobTdYmsaGdOcGlwFoFsAXJGyL1VST+PEtPo2AP
- cF0Q==
+ bh=LSamhGQvngleve3YRFRZ+HCMddKF98Rae/+IXwDlVQQ=;
+ b=ruzjTY4aOixzhTWIWmvdbHwifU0doh+H7XkmjVV+yIKVQo23MS3vh/vYY3J623aiCH
+ Z9a3WwjZLu5kPcHKzgIHFYL98PQ2bifmQ0bEM7w05mYejHT2h22/agtdYsipuQdxHLfy
+ YtjJxOlCCdqHffvxDLgiMMt8iPsb5Fp05rsBZw/TVIXc3oTlLkwBfaGIVGcULRuArmRK
+ XMORUcLVTn4Iy6zbbivkSn0CQD4RP9wdokYZKOJUuhgBrJtv6SpkzJ6YmuhP2Bd5W9Cj
+ JdYZ4R3yhMzgl21w/MAWjQajeCURyFWnV8NfkmbpwW3bA6gbPPxqa5i8tuFEWtCHrFYm
+ WONA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSRHrjbF3a24KhPIUsBdZpnzBK2q0JmB9e+snQvoGeJfhLbVhL6XcNsF5ib1z7b1KLdtjf4jmyaeYn@nongnu.org
-X-Gm-Message-State: AOJu0YzoF0NsYCfgX983yPE0YJg1WIYqbPfiakN2yMij9phYm39yykJK
- 0Gy9zXR8Ts8XBhAfq6ETfrpXXJwomkpNH/tkognGz5wbXghB/l/RZiuUbA0+aYjsycRC246kwT5
- f3HiJpCE=
-X-Gm-Gg: AY/fxX4KrWdnVwAvpecVUj0YGE5cYyDGY/WilDel0G/eiOn7L/T3laG+0g7zkDo6Sjw
- n/iV+Vi7NDskdKPwnTzjexwtz9omP0JqzvgRCxgKvrjFxa12Jg651UomJ/HSzOzsvGwHL+VLIF8
- A7arqRrG0R5mG+u4QvO/SoXaqkXRxj0G0qbaMok71/lE5PkNIB3c7ucWGM/fIFzqkyCv0okwFJN
- D6coWUiQexHb0CDdmy8+gIVg6cthfTtiOMtZDeRp+Ks0fkhuFvNMLa+zWTQh6gUmQv7P2vQFREP
- dI+1M4Fi59UQiql1CCJnLqlZD1TiMPCcw1ewcQg7b/xACagPryYKUJachl1Z92t5mGf/mPIrvdO
- UaBxG5crwbnwUICKazITBZYQeh0WKr+nIxtsw+ES0rmpOMS+CpniaEolu29RZFlx7voXvCdpOUZ
- NYcYH+NZdfcvBTesfOzND8fnP7ugtwEr2bpx6SSDoT/LuMGsdv/SDZcQ==
-X-Received: by 2002:a05:6000:288c:b0:430:fd60:940f with SMTP id
- ffacd0b85a97d-4356a02c594mr849237f8f.14.1768513782977; 
- Thu, 15 Jan 2026 13:49:42 -0800 (PST)
+ AJvYcCXfQC1GDNhtd8E2RFmm4B6gnGZicRWiuLpTdQs4jD/6rFRPuBU7QQvTPuZrBZhHrRispMLW05LhpSJi@nongnu.org
+X-Gm-Message-State: AOJu0YzFHcooUeE/1c1roWh01tQQ3dwTt7onggtlSUzzTYpYZd9qTAwx
+ Pmx4Rmj7PP2Q8x878mUroqASxr+j8u3yZxe/rau/+i5fshbxh7YBzXToLkafl5Z6bUg=
+X-Gm-Gg: AY/fxX5EB4WkZWYm2f2C/HTAVwjI8mAfJijnYaXz6Rx2AD9bm7j2xq15an+4dgAhCz0
+ tG0vXxTr1B2dfV/vRrzzIAXgKmgA8IWDUrz9MznVQf9NxU4KXOxIOuUo1Fcd3xmXhU0wtatFfgY
+ HzZz/CDoarA4vNh2R9KLh4g3PZF8VFSn/zbYYXb2MIZTB9TuTrLogjtNX0vdnkhhVYmm+D89ghy
+ A3gxaFDx2eJCt4iX9UpWqkW32190AaUouL5oIZt8Oz+WB3+/U+s3ViyaPDCpzUW/avzE6TLO5yE
+ Gk6mJGWaH/so1w4hniiiADI+R2+GwiDP12bS9a8j4G7bvrrOOHSPw9o8OfIOX0fyjMt2UkUTowJ
+ N/qT/qTAqu/0fjBFWHhY1yMWKSPtZr5MX49UqWnmMzFBvqgW+2m4WI+iG1Gp8G4bLz3FgpPOcYg
+ uOIcH5DQG5jTyTJ8LJQNsaA9fSiCOyX1jCPvggRsi3kwREiONsSIGitOnNOtjaKwVQ
+X-Received: by 2002:a05:600c:1d0a:b0:480:1bbc:30df with SMTP id
+ 5b1f17b1804b1-4801e33c1cbmr11633425e9.23.1768514380211; 
+ Thu, 15 Jan 2026 13:59:40 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435699271easm1238154f8f.14.2026.01.15.13.49.41
+ 5b1f17b1804b1-4801fe6d9a7sm2008115e9.17.2026.01.15.13.59.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 13:49:42 -0800 (PST)
-Message-ID: <5ef11484-a45a-418e-9ead-baa67527a2dc@linaro.org>
-Date: Thu, 15 Jan 2026 22:49:41 +0100
+ Thu, 15 Jan 2026 13:59:39 -0800 (PST)
+Message-ID: <d848e36c-848e-4d3f-9b43-dbd14b1bbee6@linaro.org>
+Date: Thu, 15 Jan 2026 22:59:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: add reviewer for linux-user
+Subject: Re: [PATCH v5 0/4] wasm: Enable 64bit guests on TCI using wasm64
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, Brian Cain <brian.cain@oss.qualcomm.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260115201712.2706663-1-pierrick.bouvier@linaro.org>
+To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <cover.1768308374.git.ktokunaga.mail@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260115201712.2706663-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <cover.1768308374.git.ktokunaga.mail@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,14 +108,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/1/26 21:17, Pierrick Bouvier wrote:
-> I had interest in this area for some time, and would like to help
-> reviewing it.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
+Hi,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 13/1/26 14:54, Kohei Tokunaga wrote:
+
+> Kohei Tokunaga (4):
+>    meson: Add wasm64 support to the --cpu flag
+>    configure: Enable to propagate -sMEMORY64 flag to Emscripten
+>    dockerfiles: Add support for wasm64 to the wasm Dockerfile
+>    .gitlab-ci.d: Add build tests for wasm64
+
+Out of curiosity, since the series is fully reviewed, who is
+going to merge it, Paolo or Richard?
+
 
