@@ -4,80 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9E65D46606
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 17:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D91D46607
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 17:45:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgRKy-0002fO-6t; Thu, 15 Jan 2026 12:40:50 -0500
+	id 1vgRPD-0008RF-P6; Thu, 15 Jan 2026 12:45:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vgRKr-0002XY-1N
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 12:40:41 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1vgROu-0008PA-9S
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 12:44:53 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vgRKp-0006Wq-1i
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 12:40:40 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-65378ba2ff7so2066347a12.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 09:40:38 -0800 (PST)
+ id 1vgROp-0006zA-3O
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 12:44:48 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b8712507269so185235766b.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 09:44:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768499085; cv=none;
+ d=google.com; s=arc-20240605;
+ b=gptRfEgKsgrvbQMdpCmVbVQkfEEGnOlqTvkJQpiU/s3zZsFtmL5XpvkhBYtkyGmdPL
+ 1IGH4zLANevmrZ5VWlVe1K8+zzGbskWO8ZeSpCQjDAs2de8tXdWcx4g4g81ebDPQZC56
+ kPr1RQyjHCW9c8L14aJrAfzB4aXS40CrwilQtiFNAS+OMDgErLvyQXdHldlr/Vt3NXqV
+ tkURxGDJKfQhLwMU04UVY1pJ9P9O/rIBTwjTz0CuQNjEVfAN8sGFqivvIjE/Zwmgq8Ad
+ 58JQ0oMhHxp0qp0p/nd2r4wa+xUnFT76PluATkcrEWotf1RykxrmdU03uMrgRPLNftsM
+ mtLw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=fA7FOKlU7W8aCa33XDCB2juyBR0y0n1FS/r0Xb890nc=;
+ fh=KgimXnKYua7njztgMQq2QSz3aOrdbSVOwRY3A+EqJ1s=;
+ b=RfMiUT0Wx1hfrUhu6jCLLvG5MJJhZnr6VaI1hoULRCSVZGvFmP4dS0IAOXWB2C8eJh
+ EL+s5AsKTzf7mkF8N2+3tWrGMc9WMFQXpWxcCV4Z01ibh3XRl8G4yO+GG9Q9PoeCfGYI
+ 4XB1TuCbUk0YK7YEbqOLHsOXcwizSznTVfX13Y3BJgkI+I58ftK7tCFjsu4B5zSQWM/f
+ r/3LPVsPxAoB5bNXw6vWcZ+iLSB7gt0brBE0TjAi3l9D6P7tTb1MVaG56TTVZrD83KZK
+ G1UuNFyQDpWxJUzTlGGPwY2854+Y7o5B9va2WYCUy/xDd4he6LuGZ00pHfwedC/NIEeK
+ i5aw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768498836; x=1769103636; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1768499085; x=1769103885; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2pFygvUPRNLSZ/XY8rCnQorj/Zj/aRb+urUYcsyKhDk=;
- b=KcImzeMrjEG/K4Sn8sqDNzyv4sH7jS5TIrmDQZPOW3dX2/NX7wyiCFR8ni8t+E5BNq
- OKfiTSu8WjWudsbvqxephn/Wb2CbC7IFxF1xcxia6uMqQZpjWTqPpkZgZLwwOrg6AvQs
- jd5GLxtBtHqTMXh94i8iE+ZBNsSn4j6l3FZ6/5/JMbfgkwDaf8goWBEdjeESzL9qsSLd
- qtGFC7NnibE+2LrDLSad4LW5JbMymS95ShOKrTlmHKBl6yd8BLtDWFGS3ubiTAB1pHHu
- BE1xoczcwEkd4cIu74QHRIw2oYYMux24P061JAt6dH3bW2xYqi55AmH72kxZIFQn70ad
- oZUA==
+ bh=fA7FOKlU7W8aCa33XDCB2juyBR0y0n1FS/r0Xb890nc=;
+ b=RRh9q8ZFRSmYPLh/MWlzwmSRsaSlGsVUtBsPTBjZfdw+l3wigEwDiHOtrEKszHcV+X
+ 2Xi+U6To2ud1ljpQX4tdb0O2pyp91dvtRAoE8J7n5pFPrhSmzmC/kZVSrO4D3eECVRKD
+ 9OFka252L4q1LPZ8SrVsW3rl+xOOQ+kNIHByzSPWXlNaXrrp2kH45AcMKZQE6vm9Au9P
+ C05LkM65wKTAlvFefwjLYwal7X5pdxTWUdzgOLhcXI2R1ksY1nvxuLodsMSA0BGhNuNt
+ z8eTfWUmult5xgSSX3gispJTaefVgWofC7FOrhnD39s8Go8WyNMvNUUILj4vDGgKEqTF
+ lEuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768498836; x=1769103636;
+ d=1e100.net; s=20230601; t=1768499085; x=1769103885;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2pFygvUPRNLSZ/XY8rCnQorj/Zj/aRb+urUYcsyKhDk=;
- b=KFfrrcbzXOvFrgDQezkOt50ry2KRnJQlP0qwndrwJ6/iWPdsMx+oa9mli8BxziEmFs
- Nek0SPNPQ23iL+lEhp6buQ9U3EARMjAvafgEjE89I3yu61VREPKia+AaWg3x/azCUWp9
- McaMosGR2/uyHW7zABQuzg5ndQAjU8hPRlCFe9rxs/YRu59jNoh2IJKc5dcTS4/H2cXp
- 6dAG6Yl3CO6LfQUWfkdsgK7IGAJS+KAcQqfh6d1DdDM09Mr/vfdUxbluH6IS9cI1rr/X
- 6k8dQk80C4TEi14K5tr/IE54nD3XSZ9g0A0CKaDmLmy8wf3PQ23xAjzPVlhDYqIa0Xwe
- 1kMg==
-X-Gm-Message-State: AOJu0YykJyJManHcvWOyFLaf3ToScPltIOKNM1aJvOEXZ6h/vFft0e0K
- zURKVIjI9wVkNpIi+/0bjg30LAzNm57P50BnDkhQ10HRXTWAzJwQ7dzvd4MQQvvnIV/2lgMrjBw
- 782VmT8BN0TcTDgUrTUGDCdYOmU8baMVghYe4
-X-Gm-Gg: AY/fxX6vT2OEjjvZr3mU6gvjrjizd/lmK4jMPwDAF5ODp0TZxyvABD3q1efhgFBEMED
- FJCJ2hbuDVEU0zcRL28YWxDuRG7p5v+eNn9Huo4u6YN7L1+991VgeU0O4yJCKAwkKbx8oULiz9Q
- wS61GPjZPWrAamUt+6yfvhJuvME4hdNpXgsP+YIlajEBuMr2c2zhWAFmkxwObgBHKSJdxRISf7i
- 7zKhdjxHXsgQGiE9jBsTuVrAs7LfyEX0pqPWg9nenktD3kfay5XJVObJHYNC7IQK+F6bOHD
-X-Received: by 2002:a17:907:94d2:b0:b86:edaf:5553 with SMTP id
- a640c23a62f3a-b879302924fmr35906466b.59.1768498835615; Thu, 15 Jan 2026
- 09:40:35 -0800 (PST)
+ bh=fA7FOKlU7W8aCa33XDCB2juyBR0y0n1FS/r0Xb890nc=;
+ b=XWFnC5o9lt2fZb6YgrzhWNf1xXPptm+jQ8Pk03Jq0TqkltGUzmEMRJGoaRYOFuPaAB
+ mOITygztmCT3H3W3nP56DvMAzNGQ8eG9cjzojoWm3OkHB/6BdA+5FS1ARQlYOZ88Z6Pn
+ tXCAhrnmUQLyQ6l8kbQzGMopFYVaUeE4HsikuV3d/tM8QcPLH3U0Eaz0NwPCCGHakKbR
+ sYw4TGCeZljdz31xOW6z/7oC/8dUXqE1YXC1wJbRXaNp0lGw5AC8tn/47Huvflm44vCm
+ NPlbTVkK3M0w4daUmai8qIRAmvbhSLp+ZEIKJhLyoLHmFpNENVmlhm8ZMIpcOm7nMC8R
+ w8Ew==
+X-Gm-Message-State: AOJu0YwuqUZhjaV8jAEbb+4AjZT8mod1Oho6zxxDusbTQPVOWE5lCXcA
+ VtGc83ABzNQUtxIhfIMev0YXBI7JpRMREV6Pcr4bf7+SJ+vrFQmrpkWIaU7bB6Cl/z3pkiDjpbr
+ /7gVpp+hgpyKrvmxQLr3fDf4O644vdpw=
+X-Gm-Gg: AY/fxX55CxenobAjrRX13KQAlUwjy4MYGJDwaUU79YEnMLvAVh6C0xdZrHPRthYa8DV
+ 4l/ogAUNJ/MUl7ALRLr/hDfd+m8WDN1O1sp7801KDcXnfdolx6ibvCc7oNH0B3y9HGvf/kbCtGr
+ VisIzBaKihaAe5BpZx4x9luMbObtyTma1lGQRRWIHoVbgXOjmtrw2jfDHGEeIvRooJu8X/nIEWQ
+ VUbcsQ+ohc8YWR+rqenl2QoCHV6lXDzWW5PpVp4AFiC4KqFzmt0K5+tFVnMl40COqCQZKnH
+X-Received: by 2002:a17:907:7b98:b0:b83:8f35:773b with SMTP id
+ a640c23a62f3a-b879300de06mr34640566b.54.1768499085045; Thu, 15 Jan 2026
+ 09:44:45 -0800 (PST)
 MIME-Version: 1.0
-References: <20260115142629.665319-1-peter.maydell@linaro.org>
-In-Reply-To: <20260115142629.665319-1-peter.maydell@linaro.org>
+References: <20251229103859.98777-1-zhangckid@gmail.com>
+ <20251229103859.98777-3-zhangckid@gmail.com>
+ <877bts8fsa.fsf@pond.sub.org>
+ <CAK3tnvJuoin17F9FDnYJA+vXeUeGpMv3R=2vrOBFUotjRCymfQ@mail.gmail.com>
+In-Reply-To: <CAK3tnvJuoin17F9FDnYJA+vXeUeGpMv3R=2vrOBFUotjRCymfQ@mail.gmail.com>
 From: Zhang Chen <zhangckid@gmail.com>
-Date: Fri, 16 Jan 2026 01:39:56 +0800
-X-Gm-Features: AZwV_Qj9JliyKS3B_TKlviEryYyyt2RuH5ioW0vkb__sQ0xmD7K3S4kwXJnKk9g
-Message-ID: <CAK3tnvKdSGRpy8q4kHsNFXCKdSezmG4ZHaDAbWKw=RZ=n-J9gA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] docs: Remove bogus mailto links, minor cleanups
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, 
- Li Zhijian <lizhijian@fujitsu.com>
+Date: Fri, 16 Jan 2026 01:44:06 +0800
+X-Gm-Features: AZwV_QiIfu4qp4jdT166PBaqbS0ZR7nlJoi1_eDx_Dcg8vU_sxj_GhWlSMuvIFo
+Message-ID: <CAK3tnvLo45v9M26TLg3Djsn0FeUKNuRyXTfmP77uFp5f2JrN_Q@mail.gmail.com>
+Subject: Re: [PATCH 3/3] qapi: Add thread_status flag for iothreads
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>, 
+ Eric Blake <eblake@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,57 +119,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 15, 2026 at 10:26=E2=80=AFPM Peter Maydell <peter.maydell@linar=
-o.org> wrote:
+On Fri, Jan 9, 2026 at 11:11=E2=80=AFAM Zhang Chen <zhangckid@gmail.com> wr=
+ote:
 >
-> I noticed while reviewing a patch to add documentation for
-> a new Arm board that an unescaped '@' character resulted in
-> an unintended mailto: hyperlink. This prompted me to grep
-> to see if we had any others of those, which we do. This
-> series fixes them, plus some other things I noticed along
-> the way.
+> On Thu, Jan 8, 2026 at 8:12=E2=80=AFPM Markus Armbruster <armbru@redhat.c=
+om> wrote:
+> >
+> > Zhang Chen <zhangckid@gmail.com> writes:
+> >
+> > > The thread_status depends on struct IOThreadInfo's
+> > > 'attached': 'bool'. Show in the qmp/hmp CMD with
+> > > 'attached' or 'detached'.
+> > >
+> > > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > > ---
+> > >  iothread.c         | 1 +
+> > >  monitor/hmp-cmds.c | 2 ++
+> > >  qapi/misc.json     | 6 ++++++
+> > >  3 files changed, 9 insertions(+)
+> > >
+> > > diff --git a/iothread.c b/iothread.c
+> > > index 38e38fb44d..fb4898e491 100644
+> > > --- a/iothread.c
+> > > +++ b/iothread.c
+> > > @@ -358,6 +358,7 @@ static int query_one_iothread(Object *object, voi=
+d *opaque)
+> > >      info =3D g_new0(IOThreadInfo, 1);
+> > >      info->id =3D iothread_get_id(iothread);
+> > >      info->thread_id =3D iothread->thread_id;
+> > > +    info->attached =3D iothread->attached;
+> > >      info->poll_max_ns =3D iothread->poll_max_ns;
+> > >      info->poll_grow =3D iothread->poll_grow;
+> > >      info->poll_shrink =3D iothread->poll_shrink;
+> > > diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> > > index 33a88ce205..84b01737cf 100644
+> > > --- a/monitor/hmp-cmds.c
+> > > +++ b/monitor/hmp-cmds.c
+> > > @@ -197,6 +197,8 @@ void hmp_info_iothreads(Monitor *mon, const QDict=
+ *qdict)
+> > >          value =3D info->value;
+> > >          monitor_printf(mon, "%s:\n", value->id);
+> > >          monitor_printf(mon, "  thread_id=3D%" PRId64 "\n", value->th=
+read_id);
+> > > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
+> > > +                       value->attached ? "attached" : "detached");
+> > >          monitor_printf(mon, "  poll-max-ns=3D%" PRId64 "\n", value->=
+poll_max_ns);
+> > >          monitor_printf(mon, "  poll-grow=3D%" PRId64 "\n", value->po=
+ll_grow);
+> > >          monitor_printf(mon, "  poll-shrink=3D%" PRId64 "\n", value->=
+poll_shrink);
+> > > diff --git a/qapi/misc.json b/qapi/misc.json
+> > > index 6153ed3d04..2eea920bd2 100644
+> > > --- a/qapi/misc.json
+> > > +++ b/qapi/misc.json
+> > > @@ -76,6 +76,9 @@
+> > >  #
+> > >  # @thread-id: ID of the underlying host thread
+> > >  #
+> > > +# @attached: flag to show current iothread attached status
+> >
+> > What does "attached status" actually mean?
 >
-> The first patch cleans up some awkward rendering in the
-> xilinx-zynq-a9 board docs, including dropping a hex
-> address that was triggering a mailto: hyperlink.
+> This flag means weather the "-object iothread" already been used by a
+> real device.
+> In hotplug scenario, user can add multiple "-object iothread" and
+> multiple devices (like virtio-blk).
+> When user hotunplug the devices can keep the iothreads as a thread
+> pool, following the new
+> hotplug devices can attach to the released iothread.
 >
-> Patch 2 is all the easy cases which we can just escape
-> or put into ``...`` preformatted text.
+> >
+> > > +#            (since 10.3.0)
+> >
+> > (since 12.0)
 >
-> Patch 3 removes some uses of "@var{...}" in qemu-options.hx
-> which may be there because the authors had the impression
-> that that would be rendered into italics -- it isn't.
-> I've replaced them with uses of "<...>" as the most
-> common way we currently mark up "my-option=3D<something>".
-> These aren't mis-rendering as mailto links because they
-> all happen to already be in preformatted text.
+> OK.
 >
-> Patch 4 makes a bigger cleanup to the colo-compare
-> option docs: it also uses "@var{...}" and here it is
-> causing mailto links to be generated.
+> >
+> > > +#
+> > >  # @poll-max-ns: maximum polling time in ns, 0 means polling is
+> > >  #     disabled (since 2.9)
+> > >  #
+> > > @@ -93,6 +96,7 @@
+> > >  { 'struct': 'IOThreadInfo',
+> > >    'data': {'id': 'str',
+> > >             'thread-id': 'int',
+> > > +           'attached': 'bool',
+> > >             'poll-max-ns': 'int',
+> > >             'poll-grow': 'int',
+> > >             'poll-shrink': 'int',
+> > > @@ -118,6 +122,7 @@
+> > >  #              {
+> > >  #                 "id":"iothread0",
+> > >  #                 "thread-id":3134,
+> > > +#                 'thread_status':"attached",
+> >
+> > I believe this is actually
+> >
+> >                      "attached": true
+> >
+> > and ...
 >
+> No, I changed it here for readability:
+> > > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
+> > > +                       value->attached ? "attached" : "detached");
+>
+> But if you think ""attached": true" is more direct way, I can change
+> it next version.
 
-For this series:
-Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+If no other comments, I will keep this part and update to version 2
+for this series.
 
+Thanks
+Chen
 
-> thanks
-> -- PMM
 >
-> Peter Maydell (4):
->   docs/system/arm/xlnx-zynq.rst: Improve docs rendering
->   docs: avoid unintended mailto: hyperlinks
->   qemu-options.hx: Drop uses of @var
->   qemu-options.hx: Improve formatting in colo-compare docs
+> >
+> > >  #                 'poll-max-ns':0,
+> > >  #                 "poll-grow":0,
+> > >  #                 "poll-shrink":0,
+> > > @@ -126,6 +131,7 @@
+> > >  #              {
+> > >  #                 "id":"iothread1",
+> > >  #                 "thread-id":3135,
+> > > +#                 'thread_status':"detached",
+> >
+> >                      "attached": false
+> >
+> > Recommend to create example output by running a test instead of making
+> > it up, because making it up likely screws it up :)
 >
->  docs/devel/submitting-a-patch.rst     |  2 +-
->  docs/system/arm/xlnx-zynq.rst         | 51 ++++++++++++++-------------
->  docs/system/device-url-syntax.rst.inc |  4 +--
->  docs/system/vnc-security.rst          |  6 ++--
->  qemu-options.hx                       | 51 ++++++++++++++++-----------
->  5 files changed, 63 insertions(+), 51 deletions(-)
+> Uh.... This output print is the real test in my machine, maybe you
+> missed the previous description.
 >
-> --
-> 2.47.3
+> Thanks
+> Chen
 >
+> >
+> > >  #                 'poll-max-ns':0,
+> > >  #                 "poll-grow":0,
+> > >  #                 "poll-shrink":0,
+> >
 
