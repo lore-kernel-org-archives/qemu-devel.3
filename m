@@ -4,103 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75294D44C4C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E617D44C46
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 13:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgNoW-0002JX-2c; Thu, 15 Jan 2026 08:55:04 -0500
+	id 1vgNoZ-0002YJ-U7; Thu, 15 Jan 2026 08:55:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vgNoU-0002IP-Gi
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 08:55:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vgNoX-0002R3-Um
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 08:55:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vgNoT-0004sc-0x
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 08:55:02 -0500
+ id 1vgNoW-00050P-Bx
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 08:55:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768485299;
+ s=mimecast20190719; t=1768485303;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Ndms6K63jRJRGbuMXlSEcy4hbxYjKn9uqDQrRqGbwF4=;
- b=DcgBRXxEf5+7uTowV/1YCsoVNAy1maDPoLDCx6bsAY6mMn1jUDo9xkWLH2PGScEzx4g59t
- oFj1eYtyMvTIyK3jdt7em7zqS0kI9POHcxlZ8jLzEqEWGdELZNG0HjXiJJlm65MP7l9Ssz
- ptHd1tE6xnMrAwp3kTDd1V2ApJFs9lU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=93wgKnKmeOZilnfE5bsaANYa8+VZ81kU71KXmSuD97A=;
+ b=GPzitpeUhezHanw08iv1HaulsTT19mH9NnKvY0PhmbS6WInY4M7atPAXzPDu8vRWPlkGPE
+ lyjAxSAcvus4XZHiY9bRdY70oIjrnDYGIOMSRnnpRVi8DzfexyglhTO96pqUr4momvPYBm
+ dYA58FRN384B/uxl/WdHtEGKz3JkZGU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-pptVJoZAOQ2HSjgfa4ECcg-1; Thu, 15 Jan 2026 08:54:57 -0500
-X-MC-Unique: pptVJoZAOQ2HSjgfa4ECcg-1
-X-Mimecast-MFC-AGG-ID: pptVJoZAOQ2HSjgfa4ECcg_1768485296
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-432488a0ce8so715732f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 05:54:56 -0800 (PST)
+ us-mta-448-aBpARl1gMFCnMtE0jahjZQ-1; Thu, 15 Jan 2026 08:55:02 -0500
+X-MC-Unique: aBpARl1gMFCnMtE0jahjZQ-1
+X-Mimecast-MFC-AGG-ID: aBpARl1gMFCnMtE0jahjZQ_1768485301
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4801c1056c7so4686145e9.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 05:55:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768485295; x=1769090095; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Ndms6K63jRJRGbuMXlSEcy4hbxYjKn9uqDQrRqGbwF4=;
- b=msiZNJea/w7vKlbvEYvZ71gLv7XsMCrIR0I0BUKJREUjbLWyiSgUC4O84Zb/HiC4vn
- JVTxLsm8JgLUVIY0NwWYiDTWx1SoSXraVk2uBj+uY0FgN1gCTTpFHiQrSaE0QBWow0Wc
- 9xC7+/GxswpT3vt5v0PfSDdBLeB1a5Dm4lCmdt7qAZ3euulJGpBNtJJyVL4lxAl6TUE7
- xZtQ00MgV0kOWF7NT5f6WSypgn5YokdHE255YC6IvKH7ZfKH2zIMCHqHwk+w9bhItIlb
- dBwp+Do6lpdQ+381u0tFVe2zwttNWI7MV+dNB/w5UJteyVmXZqdLeLtHCG9MTZs4hxH5
- FoeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768485295; x=1769090095;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1768485300; x=1769090100; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ndms6K63jRJRGbuMXlSEcy4hbxYjKn9uqDQrRqGbwF4=;
- b=JYqVYjwcWpAvB/lHtlzG2rVXr5Mmqqv6a8gelEZtxLuNu2oauUFus/PXCWx03COjL5
- /99pz7eLRNsQajMFPzohqe6PokuGB5KVbrDfdP+14tgyKq9JHgpwBVXBLjbvOKzRtY+0
- pE0H1aP9B+u+UkGKtSOI6/1ZidLfv9E+UYGdKs1N1RDg6EqxraKSKqlSPKq8ILUEmKvT
- JB60uyer5JXHvZeoIdVIpoeyjF4OigAx6M5oMGuVfZYL8YnYSFlNRI4sXaTeRDbMf86v
- slFhOwTSSEJS3XMmiMREY0uoF5PgAc+I3UI8rTFYKRA0CLe+xi17takTwIH1KHsBmqGC
- 6vHw==
-X-Gm-Message-State: AOJu0YwWFEm0apGVK04cyBTFmA7iVQ2Iesna29mux9b1agutt+iPFzmf
- o+z3qbEaVrl9+TyAyGilscGbeiY9z0E40aHcTezpum3PNWSo7VaLzVKZ/76ouimCgauvC//WGAu
- 6JdqgvYbRTo5ZoA/yuEG2uF5dO5MnV/34hPdZvB6NeVn3fyTjuWoQKue55l6Bo78UzA93sqv9AX
- PULeyg5n0QwR6xj4Mf98r3S3keWhPD7+6HpsSZgmXK
-X-Gm-Gg: AY/fxX7Q2YkJ77EOQNsgLDluPoXpS4C9RMrLVF67H+tXgiXh722YKLupYOnQsPEtJvV
- vt/T+nss7KzQN+WlZYGa//sHzKcTzwHk884PPUVgQzU6o34Q+YgoqyZtyEMoZHy5j0XsIthyKTZ
- TmdIRCvcoTKzFgwVNDaS9fz41EbJfJCN/vqsp4sd0YD81RPH5Rq2IPN2hvxKxCOSaIF4TqWYJIy
- WKAQqGp7KnJ7h1MUG/LC6Urx4RlSJiuz/mnGSh2FP56cSOu97rnR+aShczs7SyPMCmKgOu6lAhu
- MhR30f5p0kQ1YNBOHuY6G5vXqhxMy0iguNM6rnWUJzX2Lyd+GwCRGYVer8vLNGFi6OwC7Y8bhZN
- o3QF41e3m8A9yTwQkG3MKOJsi3jPzbRFJq0dIETAcoYQds73P3929aefhJd9rZDfU3HyykNOuyI
- gwvUF9KE9qw9dMRg==
-X-Received: by 2002:a05:6000:2910:b0:430:f494:6abb with SMTP id
- ffacd0b85a97d-4342c4ee90dmr7071331f8f.8.1768485295044; 
- Thu, 15 Jan 2026 05:54:55 -0800 (PST)
-X-Received: by 2002:a05:6000:2910:b0:430:f494:6abb with SMTP id
- ffacd0b85a97d-4342c4ee90dmr7071301f8f.8.1768485294626; 
- Thu, 15 Jan 2026 05:54:54 -0800 (PST)
+ bh=93wgKnKmeOZilnfE5bsaANYa8+VZ81kU71KXmSuD97A=;
+ b=YlPYoU2MMPg1QS9NhEIp0c+EF6Z4PQM+ZNztrziM5AhEJP8Fwc5hPOiKnpE/6muaKZ
+ zhwaHwYzCwBpgWc9ncGCmQXIij6PD5YUiCw5+WibC2+MXe1NcWKW25KGTnV8QUmVA+Pq
+ y0suO24uGs0s/aRDmK3TmAJWEpUpGCx++nim5bbv6bufFvjzSwZuH/gzGpBrPs9B8208
+ XRjUQ6cS6hUXDxxOSB47lDSj6r7qtkWM2m0Wer8TioBJvPDAd/g6TPw5D2bqqmgQHdo5
+ 2WvwU2OaqkMetPF9tWvCOzW7aSRhV1dJrk59V8CMDdcZ8NSstVS+LCVFN8KGFrN8t7GU
+ whsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768485300; x=1769090100;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=93wgKnKmeOZilnfE5bsaANYa8+VZ81kU71KXmSuD97A=;
+ b=OLVYGQpt2uTq3YvWnJYHZl5Jk3VvpUImYwBp5KwNKhHG7/Vh+7iQdohdsG78eiAZrB
+ Bik3vqgBYd6L6HtiM9QqUOzYlLf063xMmLupbgCANkakvILajoOujAp/T+tWlPI3bm91
+ AfTpV7zv+8lTEtIT2bTzADjXbqdZsQK+bMbcGYrUYuYTs14EO84cHJNbUS0Z1kAD+IaD
+ mlofcoWMoruIyW50ypKDDv2/7h34ZEmo3oCtEHpZYSq0xZb4onWDTT+4hMfmW4Y5RM50
+ 1XNXO3Dhg85HuQz/7QLflxVp2xQMizILGQUwcZi0mrbvHF+8QRtnWKMSRTWZmfgMQrUR
+ PRDA==
+X-Gm-Message-State: AOJu0YwyKS86XZItnu/KFiZTg9Ri65Z+C8AzIiGN7lvOOe/sag/x9JfY
+ r7cOhuVjpZ10eKlVAdC7Gt1Ea+L0lTisYhpbeTagWn+DOtFthWIkixNxXAwQz3vpXvQAOPOZEA2
+ Q0QMvlbAJ/kwYAy/eKqX3s6JEveT7/QJH4HqZIM189F5EdmMJWREM9eRzviwpS7CvP0IGbKCj4c
+ iVSXui8/F56H3hMPfY8SZBXDeeLqCCDE8HBefuYH3q
+X-Gm-Gg: AY/fxX5gWBG3e9iUfPFdTbeqOpE8M1faTLmqjDfh49VXLUc3Qw+vjfLSbx903siWdNq
+ qRIhePod/N0sgBlfi3TKw58QlMcNTbnIy5hvbI7Q+sBpc+kUjpqzhNkL7Ut9RPP6EXcigbHjQ6W
+ HAmvsMKq/o2pTZ+pXaG2Tov5SzIfRxmYSxgg7jJeJpgmxRznMzNKY15BfB2GcqIqHlx11orT9I4
+ lrjBULYi3x075O/9oRsmbIo+ImQtUQC+i43Xha3lgZ/Ak/EkxIbzf9i8MtPEJOr69IXa/UId2gG
+ fkTQIh33p+AWWBowQi5lSS89cWaUwSIbft2PSX6gj5IOiZ6lriErydU5l/KpYNopr8al9Du/It6
+ HijRfK6nbDxXoXHoP3OIGD/7N+gx/CY8Kh+qXqze6gctZFZrOORDVm7pO4g/FEbQxq1CbDX0oxR
+ L+d0nbeu5o6GaIHQ==
+X-Received: by 2002:a05:600c:4fd6:b0:479:3a86:dc1c with SMTP id
+ 5b1f17b1804b1-47ee338d74cmr78838955e9.36.1768485300352; 
+ Thu, 15 Jan 2026 05:55:00 -0800 (PST)
+X-Received: by 2002:a05:600c:4fd6:b0:479:3a86:dc1c with SMTP id
+ 5b1f17b1804b1-47ee338d74cmr78838735e9.36.1768485299963; 
+ Thu, 15 Jan 2026 05:54:59 -0800 (PST)
 Received: from [192.168.10.48] ([151.61.26.160])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-434af6d9039sm6185735f8f.30.2026.01.15.05.54.53
+ 5b1f17b1804b1-47f428afd9csm48568825e9.6.2026.01.15.05.54.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 05:54:54 -0800 (PST)
+ Thu, 15 Jan 2026 05:54:58 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: [PATCH 0/2] tcg: improve instruction selection for extract and
- deposit_z
-Date: Thu, 15 Jan 2026 14:54:51 +0100
-Message-ID: <20260115135453.140870-1-pbonzini@redhat.com>
+Subject: [PATCH 2/2] tcg: possibly convert deposit_z to shl+shr
+Date: Thu, 15 Jan 2026 14:54:53 +0100
+Message-ID: <20260115135453.140870-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260115135453.140870-1-pbonzini@redhat.com>
+References: <20260115135453.140870-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,28 +123,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 extract and deposit_z are similar operations, only differing in
 that extract shifts the operand right and deposit_z shifts it left.
-However, their code generation is currently different.
+Like extract, it is possible to implement deposit_z as either AND+SHL or
+SHL+SHR.  Use tcg_op_imm_match to check whether the processor supports the
+immediate that is needed for the mask, and if not fall back to two shifts.
 
-extract is implemented as either SHL+SHR or SHR+AND, with the latter
-chosen for "simple" cases where we expect the immediate to be available
-or a zero extension instruction to be usable.  deposit instead uses only
-AND+SHL, though SHL+SHR would be just as usable.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ tcg/tcg-op.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-To get the best of both worlds, introduce tcg_op_imm_match to check
-whether the processor supports the immediate that is needed for the mask,
-and if not fall back to two shifts.
-
-Paolo
-
-Paolo Bonzini (2):
-  tcg: target-dependent lowering of extract to shr/and
-  tcg: possibly convert deposit_z to shl+shr
-
- include/tcg/tcg.h |  2 ++
- tcg/tcg-op.c      | 58 +++++++++++++++++++++++++++++++----------------
- tcg/tcg.c         | 23 +++++++++++++++----
- 3 files changed, 59 insertions(+), 24 deletions(-)
-
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index ccf66382623..e7d6702f9c4 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -960,8 +960,18 @@ void tcg_gen_deposit_z_i32(TCGv_i32 ret, TCGv_i32 arg,
+             tcg_gen_extract_i32(ret, ret, 0, ofs + len);
+             return;
+         }
+-        tcg_gen_andi_i32(ret, arg, (1u << len) - 1);
+-        tcg_gen_shli_i32(ret, ret, ofs);
++        /*
++         * Use TCG_TARGET_extract_valid to check for 8- and 16-bit extension
++         * opcodes, which tcg_gen_andi_i32 can produce.
++         */
++        if (TCG_TARGET_extract_valid(TCG_TYPE_I32, 0, len) ||
++            tcg_op_imm_match(INDEX_op_and, TCG_TYPE_I32, (1u << len) - 1)) {
++            tcg_gen_andi_i32(ret, arg, (1u << len) - 1);
++            tcg_gen_shli_i32(ret, ret, ofs);
++        } else {
++            tcg_gen_shli_i32(ret, arg, 32 - len);
++            tcg_gen_shri_i32(ret, ret, 32 - len - ofs);
++        }
+     }
+ }
+ 
+@@ -2628,8 +2638,18 @@ void tcg_gen_deposit_z_i64(TCGv_i64 ret, TCGv_i64 arg,
+             tcg_gen_extract_i64(ret, ret, 0, ofs + len);
+             return;
+         }
+-        tcg_gen_andi_i64(ret, arg, (1ull << len) - 1);
+-        tcg_gen_shli_i64(ret, ret, ofs);
++        /*
++         * Use TCG_TARGET_extract_valid to check for 8-, 16- and 32-bit extension
++         * opcodes, which tcg_gen_andi_i64 can produce.
++         */
++        if (TCG_TARGET_extract_valid(TCG_TYPE_I64, 0, len) ||
++	    tcg_op_imm_match(INDEX_op_and, TCG_TYPE_I64, (1ull << len) - 1)) {
++            tcg_gen_andi_i64(ret, arg, (1ull << len) - 1);
++            tcg_gen_shli_i64(ret, ret, ofs);
++        } else {
++            tcg_gen_shli_i64(ret, arg, 64 - len);
++            tcg_gen_shri_i64(ret, ret, 64 - len - ofs);
++        }
+     }
+ }
+ 
 -- 
 2.52.0
 
