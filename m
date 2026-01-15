@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A35D4660D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FC49D4660D
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:55:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgSVb-00016H-P3; Thu, 15 Jan 2026 13:55:53 -0500
+	id 1vgSVY-0000se-FC; Thu, 15 Jan 2026 13:55:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSV8-0000ds-3x
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:24 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1vgSV4-0000cm-Ii
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:20 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSV4-0005tE-Gk
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:21 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-47f3b7ef761so7223705e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:18 -0800 (PST)
+ id 1vgSV1-0005sc-0W
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:17 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-47ee974e230so11812015e9.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768503317; x=1769108117; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768503312; x=1769108112; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AEo8xACRrqFksaTq19NMJKvtuBauiXQ84oXtSBtjaLQ=;
- b=B1/BTKDkceuaFrscUlHIwzbvoJX2qyFWVQcrgz6d8VXsWo5yqmdIcrTa7x1m65qRCT
- La/74YkbfzUfp2Wxwdarn7qd+Yj4BJVMhbXfX5Ajes5VUnPSXzkd+UFh5NOdmZ+VPdix
- m8G6aO0FM1ncMHI1/hVme6sfoNmhpg+544JY2hMvZPEc0sIKdVEfRRUHZATm8JoJEwW4
- UT2kYQVccG930gsztdGEj6P0e3ASn13xisZv3OzD4E1eZsBEwVBYe/48c3BHW+WPCI8C
- 85AQWofQ0QMo7xhxaKOJNl+6F/zT0Ef7Hp7tgYmWcdMWkBRqLYZnSD/qkhJn2ykvECnn
- C4MQ==
+ :reply-to; bh=dFDbbBRCQ6aEWxiWdS+TlHvgeoAjTJihJKhODkPXEig=;
+ b=tDo/pOn9LjzTBysfcSn5Nn/2Vf6xqgjk0cr9ocbmizezB6yK442cQt6pIQZXPvLHOY
+ NQpCyrkJWdehzXlETpLpPqOb2CMnRaXhz+werThltktVToc2ePZOOZHMrVvjU9WpKPPF
+ vz0Remufz2jTaqOVQT2FcagzjWarxtmmpo2MrZXlT4b0pspqYxWc3bQM33oUsUP4E4Ir
+ 5aG/PEQGpN14POonr/lEYWBH2XLiinYHsAFynKQsVcBgRYMFRG1NmdRlLGbUSWHlBtJo
+ Kf+TArecXwE4YLKw/PHvxrpQiNcV+ymsd4GDCc+zzwQ4LxZZooYrC+hrVUdeAJAE6QUT
+ xZlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768503317; x=1769108117;
+ d=1e100.net; s=20230601; t=1768503312; x=1769108112;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=AEo8xACRrqFksaTq19NMJKvtuBauiXQ84oXtSBtjaLQ=;
- b=h2dlqw8yApF7NlgN1+jbf9IP1XlMbMv53TmbOKWqYDWQFtJ+5ZORwhncQArmLj/aOp
- 0xoEPnFXq7jZjOVw8QFY+VSFmsJltQk+UwGoc+QTk5K58iaXooqT9I5Eb8h7SedDrejd
- hgoc0+cM4m57kJVakmGNsvoiqy20ango80YavvStAPIhnl0tpK0A3eBDcTsNlUjI9H8J
- hXvb9JTEuNV6Ta3UI0D4t4fb672ukg7Y3POqDtkeWs6ZLOSbswBueICSK4UqecSpwNIH
- JdWADDYfzljiTWqWJwHN/0cc0WBk8NEz9wGG7VhTtxgjrsAqfbSefUUyHBx5X7gdHp5/
- 7TZA==
-X-Gm-Message-State: AOJu0Yxbmw9Ufd6mn/15JGoDYACIiKcImJXI9r2Cy3Bbc/J6V/tdxAXt
- fw6fyocoW++E8AN21Ay3uD3Rj6YOYc+L0op5ck4/0J/BAmIWUzI53JiH8XqeSmH8PUc6jDMrUv5
- gPnrN
-X-Gm-Gg: AY/fxX5B9fhAljLVRhIBRurcwiLZ6AT9AxsE1uyc5gbq9JoaRTEFpdhY/2gCgLaRkUj
- annKVKIqXQZg3jhZAL442pcncc2h30K3SZ8C0bKDU86vCcCzuTThf5wtT2eOqOf+P/4hNZwCRS3
- Eg/TmZQTwYC0yS0SrvDgns7sWK4O6obC9DJdTphe3bX1eIvG8FLirZHv5iovaPU9KGAgWjCDx9p
- MrzLx2Lh9T/6p03gzZJ4Z0HhhZ9eVzrevuNPphIn/Nljd6gs1tTquuT5qrT39g8z19/NtowYh79
- rqRe05W+dh6zESzxfBoZFjxKk7xKLuyrpuzOww0oGpYHEoSiBXpuLp/YPW3wWSuZ/2rKSg/fEZc
- boG/JaR+sds6hWu+VHWTzR+eos+0u+vAyYKWzo4bOyolqImd9GvxG4SgHaZTqP8D3xwm6j4YyA6
- tOyZ7TOAVzjmPXb9RjxKw2vbSXdGBml8Va4I3suUGKh71xwjyK0q+BSak+F8Ot4lAupfdzkg3mN
- 8CYcRNpHgSvQ+E40N+Y016OodDnRiUKqJ17mfC5xnRsGA==
-X-Received: by 2002:a05:6000:4387:b0:431:9f1:e4c8 with SMTP id
- ffacd0b85a97d-4356998ad34mr441044f8f.17.1768503316909; 
- Thu, 15 Jan 2026 10:55:16 -0800 (PST)
+ bh=dFDbbBRCQ6aEWxiWdS+TlHvgeoAjTJihJKhODkPXEig=;
+ b=Zb7RDZkreALnTAMJzMCavIFrAGDTHrsG0qzqjoPT6LENEi/eoZPvc4Oe+3c9bl1b95
+ tzxYDxMJZKxbT56aMBsVKrGSs2bDk/Ab+WUDJoztSowu8yTL6fIOnW+lgSWbZeJdgrti
+ OMWIIJXQDtf4wdpD4rgDb4CIsQlntz4w3WmvLug2yCsSc+jlywmActTJfQVfV36KcQsw
+ 7wraUY83qi6pg5NNoAHqCyLpRdfnPU/ebj6LcXCIdZjoPbgaQtcZqiXGhZtthoYV9sLv
+ VgrtAxISP1hpc6dhHFOBe7jAnlFiDNSAcGdcydDgC8lgO3iFe/LauI6VAoiMKgURNm5X
+ Zs8A==
+X-Gm-Message-State: AOJu0YxhQPJcfRPld/x/TgsZE2sY/jOFMHbmg+xSNs8bJN5zc4VTQkHb
+ oL7oNMSFlCznUPTTeR/bwWYboPUV+R1h5RDIa6bHU72p/XRKSFXZ0qz126NPCRiPKFZ10dQ6tNk
+ LcwT/
+X-Gm-Gg: AY/fxX5m9wNXAZsFB3UN+O4gHaP5Tl7NDBVFiU6lsyvt2Kiy5nKQeiqJU15B1aSGEkO
+ bwjwQ31ieT8bJzWzT1SXIa0ZNsM+Sk3dWuW6GE8vOc2UcaQOemZ6YXWRfEoyYeHmgmDKRVwBFvb
+ +fCJyAUxxWhsB1F3g/FHn+QTipISl2klJhtLVmRHWvRlSXL6kh/95dFbR9nf6JiEQwJAQpfwS99
+ NNn0ghKKUrhPPhhB6HBRnm/4/QvoLzllM6DImj3ROkTYmEse9nq1QlKNz5UZPjIVEvi57ADMr8Y
+ mt+dU0Gkv/AMYpenxm1Xv7u+VH1OniuBbo1nAT9jbVv3/sK+zxGRwqmltwxLI3lRNje3R9VSHN7
+ j/TbK+kdcxdfLRSznfyTnHb7hUrJK3yI8cNpk64aVYgtMnFligNbRkOlkUBNrau0CyNK8wHSujM
+ YrioqCGK4Q3cRkGEgfTJbFMse0zl2PxP6y0/ZoMTp2zsyTHCG1042G9KL9m0NULjDSYQTe9iJ0j
+ mXPcjKLEJYgVO3UazghLnw9rDR1W2QQFhC1nyzkzGYVxQ==
+X-Received: by 2002:a05:600c:4584:b0:47b:deb9:15fb with SMTP id
+ 5b1f17b1804b1-4801e350af0mr7788195e9.33.1768503312031; 
+ Thu, 15 Jan 2026 10:55:12 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.16
+ ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 10:55:16 -0800 (PST)
+ Thu, 15 Jan 2026 10:55:11 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/25] target/arm: Move ARMSecuritySpace to a common header
-Date: Thu, 15 Jan 2026 18:54:50 +0000
-Message-ID: <20260115185508.786428-9-peter.maydell@linaro.org>
+Subject: [PULL 03/25] target/arm: Allow writes to FNG1, FNG0, A2
+Date: Thu, 15 Jan 2026 18:54:45 +0000
+Message-ID: <20260115185508.786428-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260115185508.786428-1-peter.maydell@linaro.org>
 References: <20260115185508.786428-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,128 +102,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tao Tang <tangtao1634@phytium.com.cn>
+From: Jim MacArthur <jim.macarthur@linaro.org>
 
-The ARMSecuritySpace enum and its related helpers were defined in the
-target-specific header target/arm/cpu.h. This prevented common,
-target-agnostic code like the SMMU model from using these definitions
-without triggering "cpu.h included from common code" errors.
+This just allows read/write of three feature bits. ASID is still
+ignored. Any writes to TTBR0_EL0 and TTBR1_EL0, including changing
+the ASID, will still cause a complete flush of the TLB.
 
-To resolve this, this commit introduces a new, lightweight header,
-include/hw/arm/arm-security.h, which is safe for inclusion by common
-code.
-
-The following change was made:
-
-- The ARMSecuritySpace enum and the arm_space_is_secure() and
-arm_secure_to_space() helpers have been moved from target/arm/cpu.h
-to the new hw/arm/arm-security.h header.
-
-This refactoring decouples the security state definitions from the core
-CPU implementation, allowing common hardware models to correctly handle
-security states without pulling in heavyweight, target-specific headers.
-
-Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20251216000122.763264-2-pierrick.bouvier@linaro.org
-Link: https://lists.nongnu.org/archive/html/qemu-arm/2025-09/msg01288.html
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/arm-security.h | 37 +++++++++++++++++++++++++++++++++++
- target/arm/cpu.h              | 25 +----------------------
- 2 files changed, 38 insertions(+), 24 deletions(-)
- create mode 100644 include/hw/arm/arm-security.h
+ target/arm/cpu-features.h |  7 +++++++
+ target/arm/helper.c       | 28 ++++++++++++++++++++++------
+ target/arm/internals.h    |  5 +++++
+ 3 files changed, 34 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/arm/arm-security.h b/include/hw/arm/arm-security.h
-new file mode 100644
-index 0000000000..196cddd14c
---- /dev/null
-+++ b/include/hw/arm/arm-security.h
-@@ -0,0 +1,37 @@
-+/*
-+ * ARM security space helpers
-+ *
-+ * Provide ARMSecuritySpace and helpers for code that is not tied to CPU.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index c86a4e667d..a7ca410dcb 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -346,6 +346,8 @@ FIELD(ID_AA64MMFR3, SDERR, 52, 4)
+ FIELD(ID_AA64MMFR3, ADERR, 56, 4)
+ FIELD(ID_AA64MMFR3, SPEC_FPACC, 60, 4)
+ 
++FIELD(ID_AA64MMFR4, ASID2, 8, 4)
 +
-+#ifndef HW_ARM_ARM_SECURITY_H
-+#define HW_ARM_ARM_SECURITY_H
-+
-+/*
-+ * ARM v9 security states.
-+ * The ordering of the enumeration corresponds to the low 2 bits
-+ * of the GPI value, and (except for Root) the concat of NSE:NS.
-+ */
-+
-+ typedef enum ARMSecuritySpace {
-+    ARMSS_Secure     = 0,
-+    ARMSS_NonSecure  = 1,
-+    ARMSS_Root       = 2,
-+    ARMSS_Realm      = 3,
-+} ARMSecuritySpace;
-+
-+/* Return true if @space is secure, in the pre-v9 sense. */
-+static inline bool arm_space_is_secure(ARMSecuritySpace space)
+ FIELD(ID_AA64DFR0, DEBUGVER, 0, 4)
+ FIELD(ID_AA64DFR0, TRACEVER, 4, 4)
+ FIELD(ID_AA64DFR0, PMUVER, 8, 4)
+@@ -1369,6 +1371,11 @@ static inline bool isar_feature_aa64_aie(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64MMFR3, AIE) != 0;
+ }
+ 
++static inline bool isar_feature_aa64_asid2(const ARMISARegisters *id)
 +{
-+    return space == ARMSS_Secure || space == ARMSS_Root;
++    return FIELD_EX64_IDREG(id, ID_AA64MMFR4, ASID2) != 0;
 +}
 +
-+/* Return the ARMSecuritySpace for @secure, assuming !RME or EL[0-2]. */
-+static inline ARMSecuritySpace arm_secure_to_space(bool secure)
+ static inline bool isar_feature_aa64_mec(const ARMISARegisters *id)
+ {
+     return FIELD_EX64_IDREG(id, ID_AA64MMFR3, MEC) != 0;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index a7239ff25b..1ee721ac7b 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -428,6 +428,15 @@ int alle1_tlbmask(CPUARMState *env)
+             ARMMMUIdxBit_Stage2_S);
+ }
+ 
++int alle2_tlbmask(void)
 +{
-+    return secure ? ARMSS_Secure : ARMSS_NonSecure;
++    return (ARMMMUIdxBit_E20_2 |
++            ARMMMUIdxBit_E20_2_PAN |
++            ARMMMUIdxBit_E20_2_GCS |
++            ARMMMUIdxBit_E20_0 |
++            ARMMMUIdxBit_E20_0_GCS);
 +}
 +
-+#endif /* HW_ARM_ARM_SECURITY_H */
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 9579d43ba3..992dff41c3 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -31,6 +31,7 @@
- #include "exec/page-protection.h"
- #include "qapi/qapi-types-common.h"
- #include "target/arm/multiprocessing.h"
-+#include "hw/arm/arm-security.h"
- #include "target/arm/gtimer.h"
- #include "target/arm/cpu-sysregs.h"
- #include "target/arm/mmuidx.h"
-@@ -2102,30 +2103,6 @@ static inline int arm_feature(CPUARMState *env, int feature)
+ static const ARMCPRegInfo cp_reginfo[] = {
+     /*
+      * Define the secure and non-secure FCSE identifier CP registers
+@@ -2802,12 +2811,7 @@ static void vmsa_tcr_ttbr_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
+      */
+     if (extract64(raw_read(env, ri) ^ value, 48, 16) &&
+         (arm_hcr_el2_eff(env) & HCR_E2H)) {
+-        uint16_t mask = ARMMMUIdxBit_E20_2 |
+-                        ARMMMUIdxBit_E20_2_PAN |
+-                        ARMMMUIdxBit_E20_2_GCS |
+-                        ARMMMUIdxBit_E20_0 |
+-                        ARMMMUIdxBit_E20_0_GCS;
+-        tlb_flush_by_mmuidx(env_cpu(env), mask);
++        tlb_flush_by_mmuidx(env_cpu(env), alle2_tlbmask());
+     }
+     raw_write(env, ri, value);
+ }
+@@ -6102,6 +6106,12 @@ static void tcr2_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     if (cpu_isar_feature(aa64_aie, cpu)) {
+         valid_mask |= TCR2_AIE;
+     }
++    if (cpu_isar_feature(aa64_asid2, cpu)) {
++        valid_mask |= TCR2_FNG1 | TCR2_FNG0 | TCR2_A2;
++        if (((raw_read(env, ri) ^ value) & TCR2_A2) != 0) {
++            tlb_flush_by_mmuidx(CPU(cpu), alle1_tlbmask(env));
++        }
++    }
+     value &= valid_mask;
+     raw_write(env, ri, value);
+ }
+@@ -6121,6 +6131,12 @@ static void tcr2_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     if (cpu_isar_feature(aa64_mec, cpu)) {
+         valid_mask |= TCR2_AMEC0 | TCR2_AMEC1;
+     }
++    if (cpu_isar_feature(aa64_asid2, cpu)) {
++        valid_mask |= TCR2_FNG1 | TCR2_FNG0 | TCR2_A2;
++        if (((raw_read(env, ri) ^ value) & TCR2_A2) != 0) {
++            tlb_flush_by_mmuidx(CPU(cpu), alle2_tlbmask());
++        }
++    }
+     value &= valid_mask;
+     raw_write(env, ri, value);
+ }
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 440072d820..f7b641342a 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1892,6 +1892,11 @@ uint64_t gt_direct_access_timer_offset(CPUARMState *env, int timeridx);
+  * all EL1" scope; this covers stage 1 and stage 2.
+  */
+ int alle1_tlbmask(CPUARMState *env);
++/*
++ * Return mask of ARMMMUIdxBit values corresponding to an "invalidate
++ * all EL2&0" scope.
++ */
++int alle2_tlbmask(void);
  
- void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp);
- 
--/*
-- * ARM v9 security states.
-- * The ordering of the enumeration corresponds to the low 2 bits
-- * of the GPI value, and (except for Root) the concat of NSE:NS.
-- */
--
--typedef enum ARMSecuritySpace {
--    ARMSS_Secure     = 0,
--    ARMSS_NonSecure  = 1,
--    ARMSS_Root       = 2,
--    ARMSS_Realm      = 3,
--} ARMSecuritySpace;
--
--/* Return true if @space is secure, in the pre-v9 sense. */
--static inline bool arm_space_is_secure(ARMSecuritySpace space)
--{
--    return space == ARMSS_Secure || space == ARMSS_Root;
--}
--
--/* Return the ARMSecuritySpace for @secure, assuming !RME or EL[0-2]. */
--static inline ARMSecuritySpace arm_secure_to_space(bool secure)
--{
--    return secure ? ARMSS_Secure : ARMSS_NonSecure;
--}
- 
- #if !defined(CONFIG_USER_ONLY)
- /**
+ /* Set the float_status behaviour to match the Arm defaults */
+ void arm_set_default_fp_behaviours(float_status *s);
 -- 
 2.47.3
 
