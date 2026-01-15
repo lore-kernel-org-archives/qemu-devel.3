@@ -4,104 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 483B7D41178
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 12:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 178A6D4117B
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 12:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgMBu-0005Ce-0w; Thu, 15 Jan 2026 07:11:06 -0500
+	id 1vgMC5-0005Ja-P5; Thu, 15 Jan 2026 07:11:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1vgMBp-0005Aj-Af
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 07:11:01 -0500
-Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgMC4-0005JN-Ee
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 07:11:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1vgMBj-00014s-7I
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 07:10:57 -0500
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfout.phl.internal (Postfix) with ESMTP id D338AEC02C8;
- Thu, 15 Jan 2026 07:10:50 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Thu, 15 Jan 2026 07:10:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm1; t=1768479050; x=1768565450; bh=lSUZ/b50rv
- ziLgTAO8h0r4ZuYJdWI7SdQqV/oN9mX40=; b=n3XV8tRhsXAx+xHWl2Ks/BmmV3
- 2UOCG1J7gOVrA0aIeS4cL44P+W0XrWN2ZFQGIidC60gawMnupK/zGk77+mnAaJ8E
- IzMDqEDbRBloJ7HyAvcNV0RcppgsD5He8DQSqYGviuMwA5gMLr4VrA/VA8GEO+Ox
- IDFcQdKnvOQRP1PP4Dglb2uHR/Mh+kEwcuPyHX8mR7tOLBI5Znh9cKbLgvu1OE6r
- liLRyIvNoaIcFs9yEUKrEbUMYLknGKCVGlazK3LSEt4RRd+9PbHjJdy9uEEwcSMV
- eUH6lEd4jLaD6uwc95LQBACEEI9gk1oS7U7E734A42EpALN6i2ZdvBGQD0Ug==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1768479050; x=1768565450; bh=lSUZ/b50rvziLgTAO8h0r4ZuYJdWI7SdQqV
- /oN9mX40=; b=Duc59CVBaDO1cpf6wVAOYWV1RXW7PvtHZsUgCFOnt92IOc6/mIN
- ksVlGnKIIIcSwG8a0U3VIYmdGFah7j3nhDhpr+R2A8gXQcbK8+yWieGno3BvPCjR
- w+pmLiSWhSil0OsDMy4g3dhdzUVunK9EGKoD1f1+85I0BQYEoZPNIng/1/i422BK
- 5X1nCJm0yl1kHspv5ws/fG0+jrkEyAfMH9u7lu08MGHz8mQkV5M9/nl2E7qHgC1U
- 4+Oy6vl+PO7EMrj6HhmtmZ+uVS47tzRrXa0JjJiYdBda5VEz6KFvEWaCB4T5AJoB
- qwUs8TIA8zvAx2+bewPbAujr0tbJp0Tyu1Q==
-X-ME-Sender: <xms:StloabHujWuFAwkZtjUi5Cs_b9juwlaq5uMlXzlwEaGuiehTmX2vFg>
- <xme:StloaX7mK3conjjOGEOriI2fSbO0j0xNnPNt9ZJKcYeVmeBHbOpKY3Ecj6gZd2GlS
- dJTFL0n9XvL59JJMOUA0vxUAP5rBuW7LlRW36Oglo1IMN3x3lEA9mE>
-X-ME-Received: <xmr:StloaRfradHPdb0umh_IPbW37n3-4XMb7XD751mqEx8cshEIhcWp5ltbjR71vlY-e5Y6wSMJLiYw4dWw3n0J>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdeitddvucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffvvefujghffffkgggtsehgtderredttdejnecuhfhrohhmpeetlhihshhsrgcu
- tfhoshhsuceohhhisegrlhihshhsrgdrihhsqeenucggtffrrghtthgvrhhnpeetheevud
- fgjefghefhieejudelkeeljeegvdekueeuhffhgedvveefteevgeetieenucevlhhushht
- vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehhihesrghlhihsshgrrd
- hishdpnhgspghrtghpthhtohepudehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
- pehsthgvvhgvnhhsugestghhrhhomhhiuhhmrdhorhhgpdhrtghpthhtoheprghlvgigrd
- gsvghnnhgvvgeslhhinhgrrhhordhorhhgpdhrtghpthhtohepmhgrnhhoshdrphhithhs
- ihguihgrnhgrkhhisheslhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmhhuqdguvg
- hvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopegrvghsthgvvhgvsehrvgguhhgr
- thdrtghomhdprhgtphhtthhopegurghvihgusehrvgguhhgrthdrtghomhdprhgtphhtth
- hopegusggrshhsvgihsehrvgguhhgrthdrtghomhdprhgtphhtthhopehjrghsohifrghn
- ghesrhgvughhrghtrdgtohhmpdhrtghpthhtoheplhhvihhvihgvrhesrhgvughhrghtrd
- gtohhm
-X-ME-Proxy: <xmx:StloablCZD9bcxXl1qV3fQt4HnstAzmNFu2AD9NFfg3oaFxQGwbu5g>
- <xmx:Stloae8v6kQDrNjJq-NBzTz2gKAQVY-WmfrUJz3q9Aa5ZzIEaXlIFA>
- <xmx:StloaZE3ULgd8uvX3GrKRuepUPBsyRYFHfWtxLc4n2BbXmY1E9OSQg>
- <xmx:StloaaKOhjA09NCm3TxtghKU_9dFI1wd26PZHoa6LHKgIcINliAk_w>
- <xmx:StloabFJPxQ9wgdfaJGIV99wsR3RL-NyvlF3PTDITJGwyiJ0f09HX4dk>
-Feedback-ID: i12284293:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Jan 2026 07:10:50 -0500 (EST)
-Received: by mbp.qyliss.net (Postfix, from userid 1000)
- id B058B705D789; Thu, 15 Jan 2026 13:10:48 +0100 (CET)
-From: Alyssa Ross <hi@alyssa.is>
-To: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org
-Cc: dbassey@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>,
- manos.pitsidianakis@linaro.org, slp@redhat.com, stefanha@redhat.com,
- Fabiano Rosas <farosas@suse.de>, jasowang@redhat.com, Alex =?utf-8?Q?Benn?=
- =?utf-8?Q?=C3=A9e?=
- <alex.bennee@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- david@redhat.com, stevensd@chromium.org, Stefano Garzarella
- <sgarzare@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Albert Esteve
- <aesteve@redhat.com>
-Subject: Re: [PATCH v11 3/7] vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
-In-Reply-To: <20251111091058.879669-4-aesteve@redhat.com>
-References: <20251111091058.879669-1-aesteve@redhat.com>
- <20251111091058.879669-4-aesteve@redhat.com>
-Date: Thu, 15 Jan 2026 13:10:44 +0100
-Message-ID: <87cy3brs8r.fsf@alyssa.is>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgMC2-00017g-6b
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 07:11:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768479071;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oitaWc8EGKZ+z4a20+FSgPr05tFUMVe0QvgOO5DVqeE=;
+ b=gF6niEy4I0vdHzE7cuTjTnWhKJ9IVGnnq7Si/u8SsvBq5bxNmzVq8MhVRHjWsbvFaowqKS
+ rV4Nh+sFCqKeEd9RAfzNj/0aPMHubMJZqpRaLyIrhoazTrnb/iqvHrmuxCG4YETrosXGVe
+ DhduLwuztweJRNzXchREzOYXjR867n4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-332-4vHbCJ3LMHqNt3VDfwmp2g-1; Thu,
+ 15 Jan 2026 07:11:08 -0500
+X-MC-Unique: 4vHbCJ3LMHqNt3VDfwmp2g-1
+X-Mimecast-MFC-AGG-ID: 4vHbCJ3LMHqNt3VDfwmp2g_1768479067
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D0ED1800473; Thu, 15 Jan 2026 12:11:07 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9CC311800240; Thu, 15 Jan 2026 12:11:06 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 25AFA21E692D; Thu, 15 Jan 2026 13:11:04 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: dave@treblig.org
+Cc: armbru@redhat.com,  berrange@redhat.com,  qemu-devel@nongnu.org
+Subject: Re: [PATCH 3/4] hxtool: Split srst/erst add checks
+In-Reply-To: <20260115020423.722069-4-dave@treblig.org> (dave@treblig.org's
+ message of "Thu, 15 Jan 2026 02:04:22 +0000")
+References: <20260115020423.722069-1-dave@treblig.org>
+ <20260115020423.722069-4-dave@treblig.org>
+Date: Thu, 15 Jan 2026 13:11:04 +0100
+Message-ID: <87y0lzvzxj.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Received-SPF: pass client-ip=103.168.172.149; envelope-from=hi@alyssa.is;
- helo=fout-a6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,147 +85,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+dave@treblig.org writes:
 
-Albert Esteve <aesteve@redhat.com> writes:
-
-> Add SHMEM_MAP/_UNMAP request to the vhost-user
-> spec documentation.
+> From: "Dr. David Alan Gilbert" <dave@treblig.org>
 >
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> Split the SRST/ERST case and add some checks.
+> This is mainly to make it easier to add some checks in following
+> patches.
+>
+> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 > ---
->  docs/interop/vhost-user.rst | 59 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 59 insertions(+)
+>  scripts/hxtool | 20 +++++++++++++++++---
+>  1 file changed, 17 insertions(+), 3 deletions(-)
 >
-> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-> index 17a68a62eb..6c1d66d7d3 100644
-> --- a/docs/interop/vhost-user.rst
-> +++ b/docs/interop/vhost-user.rst
-> @@ -350,6 +350,27 @@ Device state transfer parameters
->    In the future, additional phases might be added e.g. to allow
->    iterative migration while the device is running.
->=20=20
-> +MMAP request
-> +^^^^^^^^^^^^
-> +
-> ++-------+---------+-----------+------------+-----+-------+
-> +| shmid | padding | fd_offset | shm_offset | len | flags |
-> ++-------+---------+-----------+------------+-----+-------+
-> +
-> +:shmid: a 8-bit shared memory region identifier
-> +
-> +:fd_offset: a 64-bit offset of this area from the start
-> +            of the supplied file descriptor
-> +
-> +:shm_offset: a 64-bit offset from the start of the
-> +             pointed shared memory region
-> +
-> +:len: a 64-bit size of the memory to map
-> +
-> +:flags: a 64-bit value:
-> +  - 0: Pages are mapped read-only
-> +  - 1: Pages are mapped read-write
-> +
->  C structure
->  -----------
->=20=20
-> @@ -375,6 +396,7 @@ In QEMU the vhost-user message is implemented with th=
-e following struct:
->            VhostUserInflight inflight;
->            VhostUserShared object;
->            VhostUserTransferDeviceState transfer_state;
-> +          VhostUserMMap mmap;
->        };
->    } QEMU_PACKED VhostUserMsg;
->=20=20
-> @@ -1064,6 +1086,7 @@ Protocol features
->    #define VHOST_USER_PROTOCOL_F_XEN_MMAP             17
->    #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT        18
->    #define VHOST_USER_PROTOCOL_F_DEVICE_STATE         19
-> +  #define VHOST_USER_PROTOCOL_F_SHMEM                20
->=20=20
->  Front-end message types
->  -----------------------
-> @@ -1872,6 +1895,42 @@ is sent by the front-end.
->    when the operation is successful, or non-zero otherwise. Note that if =
-the
->    operation fails, no fd is sent to the backend.
->=20=20
-> +``VHOST_USER_BACKEND_SHMEM_MAP``
-> +  :id: 9
-> +  :equivalent ioctl: N/A
-> +  :request payload: fd and ``struct VhostUserMMap``
-> +  :reply payload: N/A
-> +
-> +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-> +  successfully negotiated, this message can be submitted by the backends=
- to
-> +  advertise a new mapping to be made in a given VIRTIO Shared Memory Reg=
-ion.
-> +  Upon receiving the message, the front-end will mmap the given fd into =
-the
-> +  VIRTIO Shared Memory Region with the requested ``shmid``.
-> +  If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and
-> +  back-end set the ``VHOST_USER_NEED_REPLY`` flag, the front-end
-> +  must respond with zero when operation is successfully completed,
-> +  or non-zero otherwise.
+> diff --git a/scripts/hxtool b/scripts/hxtool
+> index 80516b9437..ea2accef98 100755
+> --- a/scripts/hxtool
+> +++ b/scripts/hxtool
+> @@ -2,15 +2,29 @@
+>  
+>  hxtoh()
+>  {
+> -    flag=1
+> +    outsiderst=1
 
-Having now tried to implement this, I'm wondering whether replies should
-be mandatory, even without VHOST_USER_PROTOCOL_F_REPLY_ACK, like they
-are for some other messages.  Without waiting for a reply, a backend
-doesn't know when it can tell the driver to start using the mapped
-memory, so I'm not sure there's ever a case in which a backend would not
-want to wait for a reply after sending VHOST_USER_BACKEND_SHMEM_MAP,
-even if it doesn't wait habitually wait for replies for other messages.
-(crosvm is like this =E2=80=94 its backends don't negotiate
-VHOST_USER_PROTOCOL_F_REPLY_ACK, and their non-standard map/unmap
-requests had mandatory replies.)
+I parsed this "outsider st" and went "WAT?  Backtrack... aha".  Name it
+outside_rst?  in_h?  Or revert sense and call it in_rst?
 
-> +  Mapping over an already existing map is not allowed and requests shall=
- fail.
-> +  Therefore, the memory range in the request must correspond with a vali=
-d,
-> +  free region of the VIRTIO Shared Memory Region. Also, note that mappin=
-gs
-> +  consume resources and that the request can fail when there are no reso=
-urces
-> +  available. Lastly, mappings are automatically unmapped by the front-end
-> +  across device reset operation.
-> +
-> +``VHOST_USER_BACKEND_SHMEM_UNMAP``
-> +  :id: 10
-> +  :equivalent ioctl: N/A
-> +  :request payload: ``struct VhostUserMMap``
-> +  :reply payload: N/A
-> +
-> +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-> +  successfully negotiated, this message can be submitted by the backends=
- so
-> +  that the front-end un-mmaps a given range (``shm_offset``, ``len``) in=
- the
-> +  VIRTIO Shared Memory Region with the requested ``shmid``. Note that the
-> +  given range shall correspond to the entirety of a valid mapped region.
-> +  A reply is generated indicating whether unmapping succeeded.
-> +
->  .. _reply_ack:
->=20=20
->  VHOST_USER_PROTOCOL_F_REPLY_ACK
-> --=20
-> 2.49.0
+>      while read -r str; do
+>          case $str in
+>              HXCOMM*)
+>              ;;
+> -            SRST*|ERST*) flag=$(($flag^1))
+> +            SRST*)
+> +              if [ $outsiderst -eq 0 ]
+> +              then
+> +                echo "Error: SRST inside another RST" >&2
+> +                exit 1
+> +              fi
+> +              outsiderst=0
+> +            ;;
+> +            ERST*)
+> +              if [ $outsiderst -eq 1 ]
+> +              then
+> +                echo "Error: ERST already outside RST" >&2
+> +                exit 1
+> +              fi
+> +              outsiderst=1
+>              ;;
+>              *)
+> -            test $flag -eq 1 && printf "%s\n" "$str"
+> +            test $outsiderst -eq 1 && printf "%s\n" "$str"
+>              ;;
+>          esac
+>      done
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQRV/neXydHjZma5XLJbRZGEIw/wogUCaWjZRAAKCRBbRZGEIw/w
-ojTxAP93lHaJh2kmvHwG5O2vK/Jh+U1b0Ku8woayEWso4+mkMAEA9IszIjVUPVO9
-z2sWZctewdSNuhRCqObUzKVhwkY8DwA=
-=7k++
------END PGP SIGNATURE-----
---=-=-=--
 
