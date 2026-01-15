@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B12D3CCB3
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 06:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A11DBD3CCB6
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 06:49:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgHA9-00078f-MK; Thu, 15 Jan 2026 01:48:57 -0500
+	id 1vgHAA-00079m-9A; Thu, 15 Jan 2026 01:48:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vgHA6-00077d-Mr
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 01:48:54 -0500
+ id 1vgHA8-00078q-Ta
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 01:48:56 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vgHA4-0006G0-0R
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 01:48:54 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1vgHA4-0006G6-Hz
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 01:48:56 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8AxScLOjWhp9xMJAA--.29312S3;
+ by gateway (Coremail) with SMTP id _____8AxjsPOjWhp+BMJAA--.30143S3;
  Thu, 15 Jan 2026 14:48:46 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJAxHMLJjWhpReoeAA--.61288S6;
- Thu, 15 Jan 2026 14:48:45 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJAxHMLJjWhpReoeAA--.61288S7;
+ Thu, 15 Jan 2026 14:48:46 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>
-Subject: [PULL 4/6] target/loongarch: Fix exception BCE missing to update
- CSR_BADV
-Date: Thu, 15 Jan 2026 14:48:38 +0800
-Message-Id: <20260115064840.219920-5-maobibo@loongson.cn>
+Subject: [PULL 5/6] target/loongarch: Fix exception ADEF/ADEM missing to
+ update CSR_BADV
+Date: Thu, 15 Jan 2026 14:48:39 +0800
+Message-Id: <20260115064840.219920-6-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20260115064840.219920-1-maobibo@loongson.cn>
 References: <20260115064840.219920-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxHMLJjWhpReoeAA--.61288S6
+X-CM-TRANSID: qMiowJAxHMLJjWhpReoeAA--.61288S7
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,37 +67,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Song Gao <gaosong@loongson.cn>
 
-Exception BCE need update CSR_BADV, and the value is env->pc.
+Exception ADEM/ADEF need update CSR_BADV, the value from the virtual
+address.
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/tcg/tcg_cpu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ target/loongarch/tcg/tcg_cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
-index d91cb9904f..4b4bf39d09 100644
+index 4b4bf39d09..af92277669 100644
 --- a/target/loongarch/tcg/tcg_cpu.c
 +++ b/target/loongarch/tcg/tcg_cpu.c
-@@ -113,6 +113,9 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-         cause = cs->exception_index;
-         update_badinstr = 0;
-         break;
-+    case EXCCODE_BCE:
-+        env->CSR_BADV = env->pc;
-+        QEMU_FALLTHROUGH;
-     case EXCCODE_SYS:
-     case EXCCODE_BRK:
-     case EXCCODE_INE:
-@@ -121,7 +124,6 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-     case EXCCODE_FPE:
-     case EXCCODE_SXD:
-     case EXCCODE_ASXD:
--    case EXCCODE_BCE:
-     case EXCCODE_ADEM:
-     case EXCCODE_PIL:
-     case EXCCODE_PIS:
+@@ -227,6 +227,7 @@ static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+ {
+     CPULoongArchState *env = cpu_env(cs);
+ 
++    env->CSR_BADV = addr;
+     if (access_type == MMU_INST_FETCH) {
+         do_raise_exception(env, EXCCODE_ADEF, retaddr);
+     } else {
 -- 
 2.52.0
 
