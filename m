@@ -4,66 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7FA4D46606
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:02:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1493D46606
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:32:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgRfY-00083O-BH; Thu, 15 Jan 2026 13:02:04 -0500
+	id 1vgS7I-0003bi-6M; Thu, 15 Jan 2026 13:30:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vgRf7-0007vn-9q
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:01:38 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vgS73-0003Zy-G8
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:30:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vgRf4-0001is-Io
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:01:37 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vgS6z-0008Sc-US
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:30:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768500093;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=fHp4Ni9+r2ZNN9z+AU02/dm2gs4w8p5NZOX1wWyP/IU=;
- b=O8OUqqyIVIes0nKAXcDz7FjLRVkR3DKYNBXa8fgHlSBCnrraZuQL8ypztliGMQw9ls8bmL
- 1lKC29idPXHmp0TUuXqMHwAz7gAklaP8S2AFLpvmZ1tzpJLZ+4tY2N2bKNBr7aCm3uHDWC
- L/3AtW1WklHlU89t8zzm+DB49qOK1DY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-47-iZnTB4fnMb-vATGvjA3u0w-1; Thu,
- 15 Jan 2026 13:01:29 -0500
-X-MC-Unique: iZnTB4fnMb-vATGvjA3u0w-1
-X-Mimecast-MFC-AGG-ID: iZnTB4fnMb-vATGvjA3u0w_1768500088
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F6061955F04; Thu, 15 Jan 2026 18:01:28 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.98])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 99BE61800994; Thu, 15 Jan 2026 18:01:25 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] docs/about: propose OS platform/arch support tiers
-Date: Thu, 15 Jan 2026 18:01:23 +0000
-Message-ID: <20260115180123.848640-1-berrange@redhat.com>
+ s=mimecast20190719; t=1768501824;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MjPcp3KS+Vjtjwy6dWeos0eMgKWwAL9LalKIiqx095U=;
+ b=Kas3FOwX/08ne5LsVLl0Fd6zM/eRUFteVktlBgehWygoh5IJeFp7ZkWmC690Cii5lw2DsB
+ jMSm7atUMZE2nKkCnuYO/PxJeaLRm2EVeiiS9w4IFxeiP86MVo271Xpg5tqAHN8ThetFgz
+ Wf6LzGFzfR6Tk82SR1xzdaT0o6bDrP8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-591-RrAEivywMMWk74pRMJDnIw-1; Thu, 15 Jan 2026 13:30:23 -0500
+X-MC-Unique: RrAEivywMMWk74pRMJDnIw-1
+X-Mimecast-MFC-AGG-ID: RrAEivywMMWk74pRMJDnIw_1768501822
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-47d62cc05daso12112335e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:30:22 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768501822; x=1769106622;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MjPcp3KS+Vjtjwy6dWeos0eMgKWwAL9LalKIiqx095U=;
+ b=kWX8vyfjlW8HTBM0GLMI6PmFa8DlIalBZ7DM7o9KhVcsHRQhuwwUk9BlGYr9ydLLVI
+ rlhzEfqgwMuZvs912P5zXfn1lMqF291jeScwbZ6RwJ4x0J2COiXIbcFAkGX8rfhza7ng
+ GwvGy+mPwpVPgXbKQxCdJgCkYMHHoBfnneFNcP0PGYdvMvloFekYAIJDlgnahEUTIQ14
+ qrBsQCUexABG4Pqsl6bhJF6I8K2/2cJnjm6TPnAfdSr5i1Nzo/951oUzgQFBSSrW4JZh
+ ZK49XJloMD2G5uC7Zw9rwvGFJF9AkOgiUB0sm+P5PLn8Q33BZgdqsfHySa2zfAJvjOgG
+ GQ4A==
+X-Gm-Message-State: AOJu0Yw+TAmLEiMek7LWmn4iItUEE8DqLqx8FbgvfkFDvtoZbgPHVSc+
+ N/Y28FzqFbObES0QFo7xrXn05acXpr+iZUht8wkPntmcMyj7I8JB7luIrp2eWVLLWDSsMuCgzf7
+ nRCg62WRn3rT25IKTvBF1cdr8SgJa/W9hX9l7MKtdQS8MjMCBH+MBeQR1
+X-Gm-Gg: AY/fxX4dkLhLU5a03f9OzkRXraKdJEX7SHxHYqhPsRHAsJEi2t333wYtsd/t/3EXY4E
+ L4GmrTlQ9mZKMblxlhR8xJDVNOyKUK2iYli2vHJSucjI/nApVrGcmYTGZj/CCpmasMpg8Go/SQb
+ j6TQ4uHSp7CitLLd+noHHI+E3xQm/hzEaTedDo/JX89RQFMuEffcpWryUwrG9QGBEvDnjHdLiCx
+ lx8Bmt37nAO0DNR7nxyBRm5shlyH31g1dnyId03tzRkm1CzD910tB5himMrzvxW9Rdi2/kCihxN
+ OM4DqgB5RHN1fTWnMGeBjcSepmBGH/MaqElZMXvakmmD5D1Iq2QHhg+C5M2XDgnyytrYfEI16jS
+ 6BxoRWN8czeKMiUxIBUq0UL9EU9gvwtvMbcAIJx4HvH8s/nCyh8s3KbuDGQ==
+X-Received: by 2002:a05:600c:4ed3:b0:46e:4e6d:79f4 with SMTP id
+ 5b1f17b1804b1-4801e30f004mr9265735e9.15.1768501821379; 
+ Thu, 15 Jan 2026 10:30:21 -0800 (PST)
+X-Received: by 2002:a05:600c:4ed3:b0:46e:4e6d:79f4 with SMTP id
+ 5b1f17b1804b1-4801e30f004mr9265115e9.15.1768501820705; 
+ Thu, 15 Jan 2026 10:30:20 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47ee951937asm31070625e9.17.2026.01.15.10.30.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Jan 2026 10:30:20 -0800 (PST)
+Message-ID: <a03abf43-60b9-4e80-be5c-f87dccf17dde@redhat.com>
+Date: Thu, 15 Jan 2026 19:30:18 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v8 6/7] tests/qtest/libqos: Add SMMUv3 helper library
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>, Paolo Bonzini
+ <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+References: <20251224034647.2596434-1-tangtao1634@phytium.com.cn>
+ <20251224034647.2596434-7-tangtao1634@phytium.com.cn>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251224034647.2596434-7-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -84,204 +120,993 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Informally we have approximately three groups of platforms
+Hi Tao,
 
- * Tier 1: fully built and fully tested by CI. Must always be
-           kept working & regressions fixed immediately
+On 12/24/25 4:46 AM, Tao Tang wrote:
+> Introduce qos-smmuv3, a reusable library for SMMUv3-related qtest
+> operations. This module encapsulates common tasks like:
+>
+> - SMMUv3 initialization (enabling, configuring command/event queues)
+> - Stream Table Entry (STE) and Context Descriptor (CD) setup
+> - Multi-level page table construction (L0-L3 for 4KB granules)
+> - Support for Stage 1, Stage 2, and nested translation modes
+> - Could be easily extended to support multi-space testing infrastructure
+>     (Non-Secure, Secure, Root, Realm)
+>
+> The library provides high-level abstractions that allow test code to
+> focus on IOMMU behavior validation rather than low-level register
+> manipulation and page table encoding. Key features include:
+>
+> - Provide memory allocation for translation structures with proper
+>     alignment
+> - Helper functions to build valid STEs/CDs for different translation
+>     scenarios
+> - Page table walkers that handle address offset calculations per
+>     security space
+>
+> This infrastructure is designed to be used by iommu-testdev-based tests
+> and future SMMUv3 test suites, reducing code duplication and improving
+> test maintainability.
+>
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  MAINTAINERS                     |   6 +
+>  tests/qtest/libqos/meson.build  |   3 +
+>  tests/qtest/libqos/qos-smmuv3.c | 633 ++++++++++++++++++++++++++++++++
+>  tests/qtest/libqos/qos-smmuv3.h | 256 +++++++++++++
+>  4 files changed, 898 insertions(+)
+>  create mode 100644 tests/qtest/libqos/qos-smmuv3.c
+>  create mode 100644 tests/qtest/libqos/qos-smmuv3.h
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 3c88ed5dc4..68ab713429 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3546,6 +3546,12 @@ F: docs/devel/testing/qtest.rst
+>  X: tests/qtest/bios-tables-test*
+>  X: tests/qtest/migration-*
+>  
+> +QTest SMMUv3 helpers
+> +M: Tao Tang <tangtao1634@phytium.com.cn>
+> +L: qemu-arm@nongnu.org
+> +S: Maintained
+> +F: tests/qtest/libqos/qos-smmuv3*
+> +
+>  Device Fuzzing
+>  M: Alexander Bulekov <alxndr@bu.edu>
+>  R: Paolo Bonzini <pbonzini@redhat.com>
+> diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
+> index 1ddaf7b095..8d6758ec2b 100644
+> --- a/tests/qtest/libqos/meson.build
+> +++ b/tests/qtest/libqos/meson.build
+> @@ -60,6 +60,9 @@ libqos_srcs = files(
+>          'x86_64_pc-machine.c',
+>          'riscv-virt-machine.c',
+>          'loongarch-virt-machine.c',
+> +
+> +        # SMMU:
+> +        'qos-smmuv3.c',
+>  )
+>  
+>  if have_virtfs
+> diff --git a/tests/qtest/libqos/qos-smmuv3.c b/tests/qtest/libqos/qos-smmuv3.c
+> new file mode 100644
+> index 0000000000..a48abb186b
+> --- /dev/null
+> +++ b/tests/qtest/libqos/qos-smmuv3.c
+> @@ -0,0 +1,633 @@
+> +/*
+> + * QOS SMMUv3 Module
+> + *
+> + * This module provides SMMUv3-specific helper functions for libqos tests,
+> + * encapsulating SMMUv3 setup, and assertions.
+> + *
+> + * Copyright (c) 2025 Phytium Technology
+> + *
+> + * Author:
+> + *  Tao Tang <tangtao1634@phytium.com.cn>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/arm/smmuv3-common.h"
+In file included from ../tests/qtest/libqos/qos-smmuv3.c:16:
+/home/augere/UPSTREAM/qemu/include/hw/arm/smmuv3-common.h:14:10: fatal
+error: hw/registerfields.h: No such file or directory
+   14 | #include "hw/registerfields.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~
 
- * Tier 2: fully built and partially tested by CI. Should
-           always be kept working & regressions fixed quickly
+This needs a rebase after the move to header files I am afraid
+> +#include "tests/qtest/libqos/pci.h"
+> +#include "hw/misc/iommu-testdev.h"
+> +#include "qos-smmuv3.h"
+> +
+> +#define QSMMU_STE_S2T0SZ_VAL 0x14
+> +
+> +/* Apply space offset to address */
+> +static inline uint64_t qsmmu_apply_space_offs(QSMMUSpace sp,
+> +                                              uint64_t address)
+> +{
+> +    return address + qsmmu_space_offset(sp);
+> +}
+> +
+> +uint32_t qsmmu_expected_dma_result(QSMMUTestContext *ctx)
+> +{
+> +    /* Currently only non-secure space is supported. */
+> +    if (ctx->tx_space != QSMMU_SPACE_NONSECURE) {
+> +        return ITD_DMA_ERR_TX_FAIL;
+> +    }
+> +    return ctx->config.expected_result;
+> +}
+> +
+> +uint32_t qsmmu_build_dma_attrs(QSMMUSpace space)
+> +{
+> +    uint32_t attrs = 0;
+> +    switch (space) {
+> +    case QSMMU_SPACE_NONSECURE:
+> +        /* Non-secure: secure=0, space=1 */
+> +        attrs = ITD_ATTRS_SET_SECURE(attrs, 0);
+> +        attrs = ITD_ATTRS_SET_SPACE(attrs, QSMMU_SPACE_NONSECURE);
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    return attrs;
+> +}
+> +
+> +uint32_t qsmmu_setup_and_enable_translation(QSMMUTestContext *ctx)
+> +{
+> +    uint32_t build_result;
+> +
+> +    /* Build page tables and SMMU structures first */
+> +    build_result = qsmmu_build_translation(
+> +                       ctx->qts, ctx->config.trans_mode,
+> +                       ctx->tx_space, ctx->sid);
+> +    if (build_result != 0) {
+> +        g_test_message("Build failed: mode=%u sid=%u status=0x%x",
+> +                       ctx->config.trans_mode, ctx->sid, build_result);
+> +        ctx->trans_status = build_result;
+> +        return ctx->trans_status;
+> +    }
+> +
+> +    /* Program SMMU registers for the appropriate security space */
+> +    qsmmu_program_regs(ctx->qts, ctx->smmu_base, ctx->tx_space);
+> +
+> +    ctx->trans_status = 0;
+> +    return ctx->trans_status;
+> +}
+> +
+> +uint32_t qsmmu_trigger_dma(QSMMUTestContext *ctx)
+> +{
+> +    uint32_t result, attrs_val;
+> +
+> +    /* Program DMA parameters */
+> +    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_GVA_LO,
+> +                   (uint32_t)ctx->config.dma_iova);
+> +    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_GVA_HI,
+> +                   (uint32_t)(ctx->config.dma_iova >> 32));
+> +    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_LEN,
+> +                   ctx->config.dma_len);
+> +
+> +    /* Build and write DMA attributes based on device security state. */
+> +    attrs_val = qsmmu_build_dma_attrs(QSMMU_SPACE_NONSECURE);
+> +    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_ATTRS, attrs_val);
+> +
+> +    /* Flip status */
+> +    /* Arm iommu-testdev so the next read triggers DMA */
+> +    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_DBELL, ITD_DMA_DBELL_ARM);
+> +
+> +    /* Trigger DMA */
+> +    qpci_io_readl(ctx->dev, ctx->bar, ITD_REG_DMA_TRIGGERING);
+> +
+> +    /* Poll for DMA completion */
+> +    for (int i = 0; i < 1000; i++) {
+> +        result = qpci_io_readl(ctx->dev, ctx->bar, ITD_REG_DMA_RESULT);
+> +        if (result != ITD_DMA_RESULT_BUSY) {
+> +            ctx->dma_result = result;
+> +            break;
+> +        }
+> +        g_usleep(1000);
+> +    }
+> +
+> +    /* Fallback for timeout */
+> +    if (ctx->dma_result == ITD_DMA_RESULT_BUSY) {
+> +        ctx->dma_result = ITD_DMA_ERR_TX_FAIL;
+> +    }
+> +
+> +    return ctx->dma_result;
+> +}
+> +
+> +bool qsmmu_validate_test_result(QSMMUTestContext *ctx)
+> +{
+> +    uint32_t expected = qsmmu_expected_dma_result(ctx);
+> +    g_test_message("-> Validating result: expected=0x%x actual=0x%x",
+> +                   expected, ctx->dma_result);
+> +    return (ctx->dma_result == expected);
+> +}
+> +
+> +QSMMUSpace qsmmu_sec_sid_to_space(QSMMUSecSID sec_sid)
+> +{
+> +    switch (sec_sid) {
+> +    case QSMMU_SEC_SID_NONSECURE:
+> +        return QSMMU_SPACE_NONSECURE;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +uint64_t qsmmu_space_offset(QSMMUSpace sp)
+> +{
+> +    switch (sp) {
+> +    case QSMMU_SPACE_NONSECURE:
+> +        return QSMMU_SPACE_OFFS_NS;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +void qsmmu_single_translation(QSMMUTestContext *ctx)
+> +{
+> +    uint32_t config_result;
+> +    uint32_t dma_result;
+> +
+> +    /* Configure SMMU translation */
+> +    config_result = qsmmu_setup_and_enable_translation(ctx);
+> +    g_assert_cmpuint(config_result, ==, 0);
+> +
+> +    /* Trigger DMA operation */
+> +    dma_result = qsmmu_trigger_dma(ctx);
+> +    if (dma_result != 0) {
+> +        g_test_message("DMA failed: mode=%u result=0x%x",
+> +                       ctx->config.trans_mode, dma_result);
+> +    } else {
+> +        g_test_message("-> DMA succeeded: mode=%u", ctx->config.trans_mode);
+> +    }
+> +
+> +    /* Validate test result */
+> +    g_assert_true(qsmmu_validate_test_result(ctx));
+> +}
+> +
+> +void qsmmu_run_translation_case(QTestState *qts, QPCIDevice *dev,
+> +                                QPCIBar bar, uint64_t smmu_base,
+> +                                const QSMMUTestConfig *cfg)
+> +{
+> +    QSMMUTestContext ctx = {
+> +        .qts = qts,
+> +        .dev = dev,
+> +        .bar = bar,
+> +        .smmu_base = smmu_base,
+> +        .config = *cfg,
+> +        .sid = dev->devfn,
+> +        .tx_space = qsmmu_sec_sid_to_space(cfg->sec_sid),
+> +    };
+> +
+> +    qtest_memset(qts, cfg->dma_iova, 0x00, cfg->dma_len);
+> +    qsmmu_single_translation(&ctx);
+> +}
+> +
+> +uint32_t qsmmu_build_translation(QTestState *qts, QSMMUTransMode mode,
+> +                                 QSMMUSpace tx_space, uint32_t sid)
+> +{
+> +    uint64_t ste_addr, ste_addr_real, cd_addr_real;
+> +    uint64_t cd_ttb, vttb, vttb_real;
+> +    uint8_t nscfg0, nscfg1;
+> +    QSMMUSpace build_space;
+> +    size_t ste_cd_entry_bytes = sizeof(STE);
+> +    STE ste;
+> +    CD cd;
+> +
+> +    build_space = tx_space;
+> +    if (build_space != QSMMU_SPACE_NONSECURE) {
+> +        return 0xdeadbeafu;
+> +    }
+> +
+> +    /* Build STE image */
+> +    memset(&ste, 0, sizeof(ste));
+> +    switch (mode) {
+> +    case QSMMU_TM_S1_ONLY:
+> +        STE_SET_CONFIG(&ste, 0x5);
+> +        break;
+> +    case QSMMU_TM_S2_ONLY:
+> +        STE_SET_CONFIG(&ste, 0x6);
+> +        break;
+> +    case QSMMU_TM_NESTED:
+> +    default:
+> +        STE_SET_CONFIG(&ste, 0x7);
+> +        break;
+> +    }
+> +
+> +    STE_SET_VALID(&ste, 1);
+> +    STE_SET_S2T0SZ(&ste, QSMMU_STE_S2T0SZ_VAL);
+> +    STE_SET_S2SL0(&ste, 0x2);
+> +    STE_SET_S2TG(&ste, 0);
+> +    STE_SET_S2PS(&ste, 0x5);
+> +    STE_SET_S2AA64(&ste, 1);
+> +    STE_SET_S2ENDI(&ste, 0);
+> +    STE_SET_S2AFFD(&ste, 0);
+> +
+> +    /*
+> +     * The consistent policy also extends to pointer fetches. For cases that
+> +     * require reading STE.S1ContextPtr or STE.S2TTB, we still follow the same
+> +     * policy:
+> +     * - The PA space security attribute of the address pointed to
+> +     *   (e.g., the CD or S2L1 table) must also match the input 'SEC_SID'.
+> +     */
+> +    cd_addr_real = qsmmu_apply_space_offs(build_space, QSMMU_CD_GPA);
+> +    STE_SET_CTXPTR(&ste, cd_addr_real);
+> +
+> +    vttb = QSMMU_VTTB;
+> +    vttb_real = qsmmu_apply_space_offs(build_space, vttb);
+> +    STE_SET_S2TTB(&ste, vttb_real);
+> +
+> +    ste_addr = sid * ste_cd_entry_bytes + QSMMU_STR_TAB_BASE;
+> +    ste_addr_real = qsmmu_apply_space_offs(build_space, ste_addr);
+> +
+> +    /* Write STE to memory */
+> +    for (int i = 0; i < ARRAY_SIZE(ste.word); i++) {
+> +        qtest_writel(qts, ste_addr_real + i * 4, ste.word[i]);
+> +    }
+> +
+> +    switch (tx_space) {
+> +    case QSMMU_SPACE_NONSECURE:
+> +        nscfg0 = 0x1;
+> +        nscfg1 = 0x1;
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +    /* Build CD image for S1 path if needed */
+> +    if (mode != QSMMU_TM_S2_ONLY) {
+> +        memset(&cd, 0, sizeof(cd));
+> +
+> +        CD_SET_ASID(&cd, 0x1e20);
+> +        CD_SET_AARCH64(&cd, 1);
+> +        CD_SET_VALID(&cd, 1);
+> +        CD_SET_A(&cd, 1);
+> +        CD_SET_S(&cd, 0);
+> +        CD_SET_HD(&cd, 0);
+> +        CD_SET_HA(&cd, 0);
+> +        CD_SET_IPS(&cd, 0x4);
+> +        CD_SET_TBI(&cd, 0x0);
+> +        CD_SET_AFFD(&cd, 0x0);
+> +        CD_SET_EPD(&cd, 0, 0x0);
+> +        CD_SET_EPD(&cd, 1, 0x1);
+> +        CD_SET_TSZ(&cd, 0, 0x10);
+> +        CD_SET_TG(&cd, 0, 0x0);
+> +        CD_SET_ENDI(&cd, 0x0);
+> +
+> +        CD_SET_NSCFG(&cd, 0, nscfg0);
+> +        CD_SET_NSCFG(&cd, 1, nscfg1);
+> +        CD_SET_R(&cd, 0x1);
+> +        cd_ttb = vttb_real;
+> +        CD_SET_TTB(&cd, 0, cd_ttb);
+> +
+> +        for (int i = 0; i < ARRAY_SIZE(cd.word); i++) {
+> +            /* TODO: Maybe need more work to write to secure RAM in future */
+> +            qtest_writel(qts, cd_addr_real + i * 4, cd.word[i]);
+> +            g_assert_cmpint(qtest_readl(qts, cd_addr_real + i * 4), ==,
+> +                            cd.word[i]);
+> +        }
+> +    }
+> +
+> +    qsmmu_setup_translation_tables(qts, QSMMU_IOVA, build_space,
+> +                                   false, mode);
+> +    /* Nested extras: CD S2 tables */
+> +    if (mode == QSMMU_TM_NESTED) {
+> +        /*
+> +         * Extra Stage 2 page tables is needed if
+> +         *          SMMUTranslationClass == SMMU_CLASS_CD
+> +         * as smmuv3_do_translate would translate an IPA of the CD to the final
+> +         * output CD after a Stage 2 translation.
+> +         */
+> +        qsmmu_setup_translation_tables(qts, cd_addr_real, build_space,
+> +                                       true, mode);
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +uint64_t qsmmu_bank_base(uint64_t base, QSMMUSpace sp)
+> +{
+> +    switch (sp) {
+> +    case QSMMU_SPACE_NONSECURE:
+> +        return base;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +void qsmmu_program_bank(QTestState *qts, uint64_t bank_base, QSMMUSpace sp)
+> +{
+> +    uint64_t cmdq_base, eventq_base, strtab_base;
+> +
+> +    qtest_writel(qts, bank_base + A_GBPA, 0x80000000);  /* UPDATE */
+> +    qtest_writel(qts, bank_base + A_CR0, 0x0);          /* Disable */
+> +    qtest_writel(qts, bank_base + A_CR1, 0x0d75);       /* Config */
+> +
+> +    /* CMDQ_BASE: add address-space offset*/
+> +    cmdq_base = qsmmu_apply_space_offs(sp, QSMMU_CMDQ_BASE_ADDR);
+> +    cmdq_base |= 0x0a;  /* Size and valid bits */
+> +    qtest_writeq(qts, bank_base + A_CMDQ_BASE, cmdq_base);
+> +
+> +    qtest_writel(qts, bank_base + A_CMDQ_CONS, 0x0);
+> +    qtest_writel(qts, bank_base + A_CMDQ_PROD, 0x0);
+> +
+> +    /* EVENTQ_BASE: add address-space offset */
+> +    eventq_base = qsmmu_apply_space_offs(sp, QSMMU_EVENTQ_BASE_ADDR);
+> +    eventq_base |= 0x0a;  /* Size and valid bits */
+> +    qtest_writeq(qts, bank_base + A_EVENTQ_BASE, eventq_base);
+> +
+> +    qtest_writel(qts, bank_base + A_EVENTQ_PROD, 0x0);
+> +    qtest_writel(qts, bank_base + A_EVENTQ_CONS, 0x0);
+> +
+> +    /* STRTAB_BASE_CFG: linear stream table, LOG2SIZE=5 */
+> +    qtest_writel(qts, bank_base + A_STRTAB_BASE_CFG, 0x5);
+> +
+> +    /* STRTAB_BASE: add address-space offset */
+> +    strtab_base = qsmmu_apply_space_offs(sp, QSMMU_STR_TAB_BASE);
+> +    qtest_writeq(qts, bank_base + A_STRTAB_BASE, strtab_base);
+> +
+> +    /* CR0: Enable SMMU with appropriate flags */
+> +    qtest_writel(qts, bank_base + A_CR0, 0xd);
+> +}
+> +
+> +void qsmmu_program_regs(QTestState *qts, uint64_t smmu_base, QSMMUSpace space)
+> +{
+> +    uint64_t sp_base;
+> +    /* Always program Non-Secure bank first */
+> +    uint64_t ns_base = qsmmu_bank_base(smmu_base, QSMMU_SPACE_NONSECURE);
+> +    qsmmu_program_bank(qts, ns_base, QSMMU_SPACE_NONSECURE);
+> +
+> +    /* Program the requested space if different from Non-Secure */
+> +    sp_base = qsmmu_bank_base(smmu_base, space);
+> +    if (sp_base != ns_base) {
+> +        qsmmu_program_bank(qts, sp_base, space);
+> +    }
+> +}
+> +
+> +static uint32_t qsmmu_get_table_index(uint64_t addr, int level)
+> +{
+> +    switch (level) {
+> +    case 0:
+> +        return (addr >> 39) & 0x1ff;
+> +    case 1:
+> +        return (addr >> 30) & 0x1ff;
+> +    case 2:
+> +        return (addr >> 21) & 0x1ff;
+> +    case 3:
+> +        return (addr >> 12) & 0x1ff;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +static uint64_t qsmmu_get_table_addr(uint64_t base, int level, uint64_t iova)
+> +{
+> +    uint32_t index = qsmmu_get_table_index(iova, level);
+> +    return (base & QSMMU_PTE_MASK) + (index * 8);
+> +}
+> +
+> +/*
+> + * qsmmu_get_pte_attrs - Calculate the S1 leaf PTE value
+> + *
+> + * IOMMU need to set different attributes for PTEs based on the translation mode
+> + */
+> +static uint64_t qsmmu_get_pte_attrs(QSMMUTransMode mode, bool is_leaf,
+> +                                    QSMMUSpace space)
+> +{
+> +    uint64_t rw_mask = QSMMU_LEAF_PTE_RW_MASK;
+> +    uint64_t ro_mask = QSMMU_LEAF_PTE_RO_MASK;
+> +    uint64_t non_leaf_mask = QSMMU_NON_LEAF_PTE_MASK;
+> +
+> +    switch (space) {
+> +    case QSMMU_SPACE_NONSECURE:
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    if (!is_leaf) {
+> +        return non_leaf_mask;
+> +    }
+> +
+> +    /* For leaf PTE */
+> +    if (mode == QSMMU_TM_NESTED || mode == QSMMU_TM_S1_ONLY) {
+> +        return rw_mask;
+> +    }
+> +
+> +    return ro_mask;
+> +}
+> +
+> +/*
+> + * qsmmu_setup_s2_walk_for_ipa - Setup Stage 2 page table walk for an IPA
+> + *
+> + * @qts: QTest state handle
+> + * @space: Security space
+> + * @ipa: Intermediate Physical Address to translate
+> + * @s2_vttb: Stage 2 VTTB (page table base)
+> + * @mode: Translation mode
+> + * @is_final: Whether this is the final S2 walk (not nested within S1)
+> + *
+> + * Calculates and writes a 4-level Stage 2 page table walk for the given IPA.
+> + * This function dynamically generates and writes all page table entries
+> + * (L0-L3) to guest memory based on the input IPA and configuration.
+> + */
+> +static void qsmmu_setup_s2_walk_for_ipa(QTestState *qts,
+> +                                        QSMMUSpace space,
+> +                                        uint64_t ipa,
+> +                                        uint64_t s2_vttb,
+> +                                        QSMMUTransMode mode,
+> +                                        bool is_final)
+> +{
+> +    uint64_t all_s2_l0_pte_val;
+> +    uint64_t all_s2_l1_pte_val;
+> +    uint64_t all_s2_l2_pte_val;
+> +    uint64_t all_s2_l3_pte_val;
+> +    uint64_t s2_l0_addr, s2_l1_addr, s2_l2_addr, s2_l3_addr;
+> +
+> +    /* Shared intermediate PTE values for all S2 walks */
+> +    all_s2_l0_pte_val = qsmmu_apply_space_offs(
+> +        space, QSMMU_L0_PTE_VAL | qsmmu_get_pte_attrs(mode, false, space));
+> +    all_s2_l1_pte_val = qsmmu_apply_space_offs(
+> +        space, QSMMU_L1_PTE_VAL | qsmmu_get_pte_attrs(mode, false, space));
+> +    all_s2_l2_pte_val = qsmmu_apply_space_offs(
+> +        space, QSMMU_L2_PTE_VAL | qsmmu_get_pte_attrs(mode, false, space));
+> +
+> +    /* Stage 2 Level 0 */
+> +    s2_l0_addr = qsmmu_get_table_addr(s2_vttb, 0, ipa);
+> +    qtest_writeq(qts, s2_l0_addr, all_s2_l0_pte_val);
+> +
+> +    /* Stage 2 Level 1 */
+> +    s2_l1_addr = qsmmu_get_table_addr(all_s2_l0_pte_val, 1, ipa);
+> +    qtest_writeq(qts, s2_l1_addr, all_s2_l1_pte_val);
+> +
+> +    /* Stage 2 Level 2 */
+> +    s2_l2_addr = qsmmu_get_table_addr(all_s2_l1_pte_val, 2, ipa);
+> +    qtest_writeq(qts, s2_l2_addr, all_s2_l2_pte_val);
+> +
+> +    /* Stage 2 Level 3 (leaf) */
+> +    s2_l3_addr = qsmmu_get_table_addr(all_s2_l2_pte_val, 3, ipa);
+> +
+> +    /*
+> +     * Stage 2 L3 PTE attributes depend on the context:
+> +     * - For nested S1 table address translations (!is_final):
+> +     *   Use LEAF attrs (0x763) because these PTEs map S1 table pages directly
+> +     * - For final S2 walk (is_final):
+> +     *   Use TABLE attrs (0x7e3) for the final IPA→PA mapping
+> +     */
+> +    if (!is_final) {
+> +        all_s2_l3_pte_val =
+> +            (ipa & QSMMU_PTE_MASK) |
+> +            qsmmu_get_pte_attrs(QSMMU_TM_NESTED, true, space);
+> +    } else {
+> +        all_s2_l3_pte_val =
+> +            (ipa & QSMMU_PTE_MASK) |
+> +            qsmmu_get_pte_attrs(QSMMU_TM_S2_ONLY, true, space);
+> +    }
+> +
+> +    qtest_writeq(qts, s2_l3_addr, all_s2_l3_pte_val);
+> +}
+> +
+> +/*
+> + * qsmmu_setup_s1_level_with_nested_s2 - Setup S1 level with nested S2 walk
+> + *
+> + * @qts: QTest state handle
+> + * @space: Security space
+> + * @s1_level: Stage 1 level (0-3)
+> + * @s1_pte_addr: Stage 1 PTE address (as IPA)
+> + * @s1_pte_val: Stage 1 PTE value to write
+> + * @s2_vttb: Stage 2 VTTB for nested translation
+> + * @mode: Translation mode
+> + *
+> + * For nested translation, each S1 table access requires a full S2 walk
+> + * to translate the S1 table's IPA to PA. This function performs the nested
+> + * S2 walk and writes the S1 PTE value to guest memory.
+> + */
+> +static void qsmmu_setup_s1_level_with_nested_s2(QTestState *qts,
+> +                                                QSMMUSpace space,
+> +                                                int s1_level,
+> +                                                uint64_t s1_pte_addr,
+> +                                                uint64_t s1_pte_val,
+> +                                                uint64_t s2_vttb,
+> +                                                QSMMUTransMode mode)
+> +{
+> +    /*
+> +     * Perform nested S2 walk to translate S1 table IPA to PA.
+> +     * This is always needed for S1_ONLY/S2_ONLY/NESTED modes because:
+> +     * - S1_ONLY: Needs S2 tables for "IPA as PA" mapping (for testing)
+> +     * - S2_ONLY: Needs S2 tables for direct translation
+> +     * - NESTED: Needs S2 tables for nested translation
+> +     */
+> +    qsmmu_setup_s2_walk_for_ipa(qts, space, s1_pte_addr,
+> +                                s2_vttb, mode, false);
+> +
+> +    /* Write the S1 PTE value */
+> +    qtest_writeq(qts, s1_pte_addr, s1_pte_val);
+> +}
+> +
+> +/*
+> + * qsmmu_setup_translation_tables - Setup SMMU translation tables
+> + *
+> + * The 'SEC_SID' represents the input security state of the device/transaction,
+> + * whether it's a static Secure state or a dynamically-switched Realm state.
+> + * SEC_SID has been converted to the corresponding Security Space (QSMMUSpace)
+> + * before calling this function.
+> + *
+> + * In a real SMMU translation, this input security state does not unilaterally
+> + * determine the output Physical Address (PA) space. The output PA space is
+> + * ultimately determined by attributes encountered during the page table walk,
+> + * such as NSCFG and NSTable.
+> + *
+> + * However, for the specific context of testing the SMMU with the iommu-testdev,
+> + * and to simplify the future support for Secure and Realm states, we adopt a
+> + * consistent policy:
+> + *
+> + * - We always ensure that the page table attributes (e.g., nscfg, nstable)
+> + * *match* the input 'SEC_SID' of the test case.
+> + *
+> + * For example: If 'SEC_SID' is Non-Secure, the corresponding nscfg and nstable
+> + * attributes in the translation tables will always be set to 1.
+> + *
+> + */
+> +void qsmmu_setup_translation_tables(QTestState *qts,
+> +                                    uint64_t iova,
+> +                                    QSMMUSpace space,
+> +                                    bool is_cd,
+> +                                    QSMMUTransMode mode)
+> +{
+> +    uint64_t all_s2_l0_pte_val, all_s2_l1_pte_val, all_s2_l2_pte_val;
+> +    uint64_t s1_vttb, s2_vttb, s1_leaf_pte_val;
+> +    uint64_t l0_addr, l1_addr, l2_addr, l3_addr;
+> +
+> +    g_test_message("Begin of construction: IOVA=0x%" PRIx64
+> +                   " mode=%d is_building_CD=%s ===",
+> +                   iova, mode, is_cd ? "yes" : "no");
+> +
+> +    /* Initialize shared S2 PTE values used across all walks */
+> +    all_s2_l0_pte_val = qsmmu_apply_space_offs(
+> +        space, QSMMU_L0_PTE_VAL | qsmmu_get_pte_attrs(mode, false, space));
+> +    all_s2_l1_pte_val = qsmmu_apply_space_offs(
+> +        space, QSMMU_L1_PTE_VAL | qsmmu_get_pte_attrs(mode, false, space));
+> +    all_s2_l2_pte_val = qsmmu_apply_space_offs(
+> +        space, QSMMU_L2_PTE_VAL | qsmmu_get_pte_attrs(mode, false, space));
+> +
+> +    /* Both S1 and S2 share the same VTTB base */
+> +    s1_vttb = qsmmu_apply_space_offs(space, QSMMU_VTTB & QSMMU_PTE_MASK);
+> +    s2_vttb = s1_vttb;
+> +
+> +    if (!is_cd) {
+> +        /*
+> +         * Setup Stage 1 page tables with nested Stage 2 walks.
+> +         * For each S1 level (L0-L3), we need to:
+> +         * 1. Calculate S1 PTE address (as IPA)
+> +         * 2. Perform nested S2 walk to translate that IPA to PA
+> +         * 3. Write the S1 PTE value
+> +         */
+> +
+> +        /* Stage 1 Level 0 */
+> +        l0_addr = qsmmu_get_table_addr(s1_vttb, 0, iova);
+> +        qsmmu_setup_s1_level_with_nested_s2(qts, space, 0, l0_addr,
+> +                                            all_s2_l0_pte_val, s2_vttb, mode);
+> +
+> +        /* Stage 1 Level 1 */
+> +        l1_addr = qsmmu_get_table_addr(all_s2_l0_pte_val & QSMMU_PTE_MASK,
+> +                                       1, iova);
+> +        qsmmu_setup_s1_level_with_nested_s2(qts, space, 1, l1_addr,
+> +                                            all_s2_l1_pte_val, s2_vttb, mode);
+> +
+> +        /* Stage 1 Level 2 */
+> +        l2_addr = qsmmu_get_table_addr(all_s2_l1_pte_val & QSMMU_PTE_MASK,
+> +                                       2, iova);
+> +        qsmmu_setup_s1_level_with_nested_s2(qts, space, 2, l2_addr,
+> +                                            all_s2_l2_pte_val, s2_vttb, mode);
+> +
+> +        /* Stage 1 Level 3 (leaf) */
+> +        l3_addr = qsmmu_get_table_addr(all_s2_l2_pte_val & QSMMU_PTE_MASK,
+> +                                       3, iova);
+> +
+> +        s1_leaf_pte_val = qsmmu_apply_space_offs(
+> +            space, QSMMU_L3_PTE_VAL | qsmmu_get_pte_attrs(mode, true, space)
+> +        );
+> +
+> +        qsmmu_setup_s1_level_with_nested_s2(qts, space, 3, l3_addr,
+> +                                            s1_leaf_pte_val, s2_vttb, mode);
+> +    } else {
+> +        /*
+> +         * For CD address translation, we start directly with the IPA.
+> +         */
+> +        s1_leaf_pte_val = iova | qsmmu_get_pte_attrs(QSMMU_TM_NESTED,
+> +                                                     false, space);
+> +    }
+> +
+> +    /*
+> +     * Final Stage 2 walk: Translate the result from Stage 1.
+> +     * - For S1_ONLY: This is skipped in hardware but we set it up for testing
+> +     * - For S2_ONLY: This is the only walk
+> +     * - For NESTED: This translates the IPA from S1 to final PA
+> +     * - For CD address (is_cd=true): This is a table address, use !is_final
+> +     */
+> +    qsmmu_setup_s2_walk_for_ipa(qts, space, s1_leaf_pte_val, s2_vttb,
+> +                                mode, !is_cd);
+> +
+> +    /* Calculate and log final translated PA */
+> +    g_test_message("End of construction: PA=0x%llx ===",
+> +                   (s1_leaf_pte_val & QSMMU_PTE_MASK) + (iova & 0xfff));
+> +}
+> diff --git a/tests/qtest/libqos/qos-smmuv3.h b/tests/qtest/libqos/qos-smmuv3.h
+> new file mode 100644
+> index 0000000000..375778517f
+> --- /dev/null
+> +++ b/tests/qtest/libqos/qos-smmuv3.h
+> @@ -0,0 +1,256 @@
+> +/*
+> + * QOS SMMUv3 Module
+> + *
+> + * This module provides SMMUv3-specific helper functions for libqos tests,
+> + * encapsulating SMMUv3 setup, and assertions.
+> + *
+> + * Copyright (c) 2025 Phytium Technology
+> + *
+> + * Author:
+> + *  Tao Tang <tangtao1634@phytium.com.cn>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef QTEST_LIBQOS_SMMUV3_H
+> +#define QTEST_LIBQOS_SMMUV3_H
+> +
+> +#include "hw/misc/iommu-testdev.h"
+> +
+> +/*
+> + * SMMU MMIO register base. We hardcode this as base_memmap is 'static const'
+> + * in hw/arm/virt.c and not directly accessible here.
+this is not true anymore with -device arm-smmuv3. So you can explicitly
+state that will only work with machine wide vsmmu
+> + */
+> +#define VIRT_SMMU_BASE            0x0000000009050000ull
+> +
+> +/* SMMU queue and table base addresses */
+> +#define QSMMU_CMDQ_BASE_ADDR      0x000000000e16b000ull
+> +#define QSMMU_EVENTQ_BASE_ADDR    0x000000000e170000ull
+> +
+> +/*
+> + * Translation tables and descriptors for a mapping of
+> + *   - IOVA(Stage 1 only)
+> + *   - IPA (Stage 2 only)
+> + * to GPA.
+> + *
+> + * The translation is based on the Arm architecture with the following
+> + * prerequisites:
+> + * - Granule size: 4KB pages.
+> + * - Page table levels: 4 levels (L0, L1, L2, L3), starting at level 0.
+> + * - IOVA size: The walk resolves a IOVA: 0x8080604567
+> + * - Address space: The 4-level lookup with 4KB granules supports up to a
+> + * 48-bit (256TB) virtual address space. Each level uses a 9-bit index
+> + * (512 entries per table). The breakdown is:
+> + * - L0 index: IOVA bits [47:39]
+> + * - L1 index: IOVA bits [38:30]
+> + * - L2 index: IOVA bits [29:21]
+> + * - L3 index: IOVA bits [20:12]
+> + * - Page offset: IOVA bits [11:0]
+> + *
+> + * NOTE: All physical addresses defined here (QSMMU_VTTB, table addresses, etc.)
+> + * appear to be within a secure RAM region. In practice, an offset is added
+> + * to these values to place them in non-secure RAM. For example, when running
+> + * in a virt machine type, the RAM base address (e.g., 0x40000000) is added to
+> + * these constants.
+> + */
+> +#define QSMMU_IOVA                      0x0000008080604567ull
+> +#define QSMMU_VTTB                      0x000000000e4d0000ull
+> +#define QSMMU_STR_TAB_BASE              0x000000000e179000ull
+> +#define QSMMU_CD_GPA                    (QSMMU_STR_TAB_BASE - 0x40ull)
+> +
+> +
+> +#define QSMMU_L0_PTE_VAL                0x000000000e4d1000ull
+> +#define QSMMU_L1_PTE_VAL                0x000000000e4d2000ull
+> +#define QSMMU_L2_PTE_VAL                0x000000000e4d3000ull
+> +#define QSMMU_L3_PTE_VAL                0x000000000ecba000ull
+> +
+> +#define QSMMU_NON_LEAF_PTE_MASK         0x8000000000000003ull
+> +#define QSMMU_LEAF_PTE_RO_MASK          0x04000000000007e3ull
+> +#define QSMMU_LEAF_PTE_RW_MASK          0x0400000000000763ull
+> +#define QSMMU_PTE_MASK                  0x0000fffffffff000ull
+> +
+> +/*
+> + * Address-space base offsets for test tables.
+> + * - Non-Secure uses a fixed offset, keeping internal layout identical.
+> + *
+> + * Note: Future spaces (e.g. Secure/Realm/Root) are not implemented here.
+> + * When needed, introduce new offsets and reuse the helpers below so relative
+> + * layout stays identical across spaces.
+> + */
+> +#define QSMMU_SPACE_OFFS_NS             0x0000000040000000ull
+> +
+> +typedef enum QSMMUSecSID {
+> +    QSMMU_SEC_SID_NONSECURE    = 0,
+> +} QSMMUSecSID;
+> +
+> +typedef enum QSMMUSpace {
+> +    QSMMU_SPACE_NONSECURE      = 1,
+> +} QSMMUSpace;
+> +
+> +typedef enum QSMMUTransMode {
+> +    QSMMU_TM_S1_ONLY           = 0,
+> +    QSMMU_TM_S2_ONLY           = 1,
+> +    QSMMU_TM_NESTED            = 2,
+> +} QSMMUTransMode;
+> +
+> +typedef struct QSMMUTestConfig {
+> +    QSMMUTransMode trans_mode;        /* Translation mode (S1, S2, Nested) */
+> +    QSMMUSecSID sec_sid;              /* SEC_SID of test device */
+> +    uint64_t dma_iova;                /* DMA IOVA address for testing */
+> +    uint32_t dma_len;                 /* DMA length for testing */
+> +    uint32_t expected_result;         /* Expected DMA result for validation */
+> +} QSMMUTestConfig;
+> +
+> +typedef struct QSMMUTestContext {
+> +    QTestState *qts;            /* QTest state handle */
+> +    QPCIDevice *dev;            /* PCI device handle */
+> +    QPCIBar bar;                /* PCI BAR for MMIO access */
+> +    QSMMUTestConfig config;     /* Test configuration */
+> +    uint64_t smmu_base;         /* SMMU base address */
+> +    uint32_t trans_status;      /* Translation configuration status */
+> +    uint32_t dma_result;        /* DMA operation result */
+> +    uint32_t sid;               /* Stream ID for the test */
+> +    QSMMUSpace tx_space;        /* Cached transaction space */
+> +} QSMMUTestContext;
+> +
+> +/* Convert SEC_SID to corresponding Security Space */
+> +QSMMUSpace qsmmu_sec_sid_to_space(QSMMUSecSID sec_sid);
+> +
+> +/* Get base offset of the specific Security space */
+> +uint64_t qsmmu_space_offset(QSMMUSpace sp);
+> +
+> +uint32_t qsmmu_build_dma_attrs(QSMMUSpace space);
+> +
+> +/*
+> + * qsmmu_setup_and_enable_translation - Complete translation setup and enable
+> + *
+> + * @ctx: Test context containing configuration and device handles
+> + *
+> + * Returns: Translation status (0 = success, non-zero = error)
+> + *
+> + * This function performs the complete translation setup sequence:
+> + * 1. Builds all required SMMU structures (STE, CD, page tables)
+> + * 2. Programs SMMU registers for the appropriate security space
+> + * 3. Returns configuration status
+> + */
+> +uint32_t qsmmu_setup_and_enable_translation(QSMMUTestContext *ctx);
+> +
+> +/*
+> + * qsmmu_build_translation - Build SMMU translation structures
+> + *
+> + * @qts: QTest state handle
+> + * @mode: Translation mode (S1_ONLY, S2_ONLY, NESTED)
+> + * @tx_space: Transaction security space
+> + * @sid: Stream ID
+> + *
+> + * Returns: Build status (0 = success, non-zero = error)
+> + *
+> + * Constructs all necessary SMMU translation structures in guest memory:
+> + * - Stream Table Entry (STE) for the given SID
+> + * - Context Descriptor (CD) if Stage 1 translation is involved
+> + * - Complete page table hierarchy based on translation mode
+> + *
+> + * The structures are written to security-space-specific memory regions.
+> + */
+> +uint32_t qsmmu_build_translation(QTestState *qts, QSMMUTransMode mode,
+> +                                 QSMMUSpace tx_space, uint32_t sid);
+> +
+> +/*
+> + * qsmmu_bank_base - Get SMMU control bank base address
+> + *
+> + * @base: SMMU base address
+> + * @sp: Security space
+> + *
+> + * Returns: Bank base address for the given security space
+> + *
+> + * Maps security space to the corresponding SMMU control register bank.
+> + * Currently only Non-Secure bank is supported.
+> + */
+> +uint64_t qsmmu_bank_base(uint64_t base, QSMMUSpace sp);
+> +
+> +/*
+> + * qsmmu_program_bank - Program SMMU control bank registers
+> + *
+> + * @qts: QTest state handle
+> + * @bank_base: SMMU bank base address
+> + * @sp: Security space
+> + *
+> + * Programs a specific SMMU control bank with minimal configuration:
+> + * - Global Bypass Attribute (GBPA)
+> + * - Control registers (CR0, CR1)
+> + * - Command queue (base, producer, consumer)
+> + * - Event queue (base, producer, consumer)
+> + * - Stream table configuration (base, format)
+> + *
+> + * Addresses are adjusted based on security space offset.
+> + */
+> +void qsmmu_program_bank(QTestState *qts, uint64_t bank_base, QSMMUSpace sp);
+> +
+> +/*
+> + * qsmmu_program_regs - Program all required SMMU register banks
+> + *
+> + * @qts: QTest state handle
+> + * @smmu_base: SMMU base address
+> + * @space: Target security space
+> + *
+> + * Programs SMMU registers for the requested security space which is called in
+> + * qsmmu_setup_and_enable_translation. Always programs Non-Secure bank first,
+> + * then the target space if different.
+> + */
+> +void qsmmu_program_regs(QTestState *qts, uint64_t smmu_base, QSMMUSpace space);
+> +
+> +uint32_t qsmmu_trigger_dma(QSMMUTestContext *ctx);
+> +
+> +/* qsmmu_expected_dma_result - Calculate expected DMA result */
+> +uint32_t qsmmu_expected_dma_result(QSMMUTestContext *ctx);
+> +
+> +/*
+> + * qsmmu_validate_test_result - Validate actual VS expected test result
+> + *
+> + * @ctx: Test context containing actual and expected results
+> + *
+> + * Returns: true if test passed (actual == expected), false otherwise
+> + *
+> + * Compares the actual DMA result with the expected result and logs
+> + * the comparison for debugging purposes.
+> + */
+> +bool qsmmu_validate_test_result(QSMMUTestContext *ctx);
+> +
+> +/*
+> + * qsmmu_setup_translation_tables - Setup complete SMMU page table hierarchy
+> + *
+> + * @qts: QTest state handle
+> + * @iova: Input Virtual Address or IPA to translate
+> + * @space: Security space (NONSECURE, SECURE, REALM, ROOT)
+> + * @is_cd: Whether translating CD address (vs regular IOVA)
+> + * @mode: Translation mode (S1_ONLY, S2_ONLY, NESTED)
+> + *
+> + * This function builds the complete page table structure for translating
+> + * the given IOVA through the SMMU. The structure varies based on mode:
+> + *
+> + * - S1_ONLY: Single Stage 1 walk (IOVA -> PA)
+> + * - S2_ONLY: Single Stage 2 walk (IPA -> PA)
+> + * - NESTED: Stage 1 walk (IOVA -> IPA) with nested S2 walks for each
+> + *   S1 table access, plus final S2 walk for the result IPA
+> + *
+> + * For nested mode, this creates a complex hierarchy:
+> + * - 4 Stage 1 levels (L0-L3), each requiring a 4-level Stage 2 walk
+> + * - 1 final Stage 2 walk for the resulting IPA
+> + *
+> + * The function writes all necessary Page Table Entries (PTEs) to guest
+> + * memory using qtest_writeq(), setting up the complete translation path
+> + * that the SMMU hardware will traverse during DMA operations.
+> + */
+> +void qsmmu_setup_translation_tables(QTestState *qts,
+> +                                    uint64_t iova,
+> +                                    QSMMUSpace space,
+> +                                    bool is_cd,
+> +                                    QSMMUTransMode mode);
+> +
+> +/* High-level test execution helpers */
+> +void qsmmu_single_translation(QSMMUTestContext *ctx);
+> +void qsmmu_run_translation_case(QTestState *qts, QPCIDevice *dev,
+> +                                QPCIBar bar, uint64_t smmu_base,
+> +                                const QSMMUTestConfig *cfg);
+> +
+> +#endif /* QTEST_LIBQOS_SMMUV3_H */
+Thanks
 
- * Tier 3: code exists but is not built or tested by CI.
-           Should not be intentionally broken but not
-	   guaranteed to work at any time. Downstream must
-	   manually test, report & fix bugs.
-
-Anything else is "unclassified" and any historical code
-remnants may be removed.
-
-It is somewhat tricky to define unambiguous rules for each tier,
-but this doc takes a stab at it. We don't need to cover every
-eventuality. If we get the core points of view across, then it
-at least sets the direction for maintainers/contributors/users.
-Other aspects can be inferred with greater accuracy than today.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
-
-This came out of the discussion about recent unnoticed breakage
-in NetBSD builds and what maintainers are expected todo about
-it (if anything)
-
-  https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg02543.html
-
- docs/about/build-platforms.rst | 152 +++++++++++++++++++++++++++++++++
- 1 file changed, 152 insertions(+)
-
-diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-index e95784cdb5..950e164c02 100644
---- a/docs/about/build-platforms.rst
-+++ b/docs/about/build-platforms.rst
-@@ -171,3 +171,155 @@ Only 64-bit Windows is supported.
- .. _MacPorts: https://www.macports.org/
- .. _MSYS2: https://www.msys2.org/
- .. _Repology: https://repology.org/
-+
-+OS Support Tiers
-+----------------
-+
-+While the QEMU code targets a number of different OS platforms, they don't
-+all get the same level of support from the project. This applies to
-+contributor & maintainer expectations, CI automation and requirements
-+for merge gating.
-+
-+Tier 1
-+~~~~~~
-+
-+These platforms attain the highest level of quality offered by
-+the QEMU project.
-+
-+ * Builds and all tests pass at all times in both git HEAD and releases
-+
-+ * Builds for multiple build configuration are integrated in CI
-+
-+ * Runs all available tests frameworks (unit, qtest, iotests, functional)
-+   in CI
-+
-+ * Merging code is gated on successful CI jobs
-+
-+This covers
-+
-+ * Linux (x86_64, aarch64, s390x)
-+
-+Responsibilities:
-+
-+ * Contributors MUST test submitted patches on one of Tier 1 platforms.
-+
-+ * Contributors SHOULD test submitted patches on Tier 1 platforms
-+   by running a GitLab CI pipeline in their fork.
-+
-+ * Maintainers MUST request contributors to fix problems with Tier 1
-+   platforms.
-+
-+ * Maintainers MUST test pull requests on Tier 1 platforms
-+   by running a GitLab CI pipeline in their fork.
-+
-+ * Maintainers MUST co-ordinate fixing regressions identified
-+   post-merge immediately.
-+
-+
-+Tier 2
-+~~~~~~
-+
-+These platforms are considered to be near Tier 1 level, but are
-+lacking sufficient automated CI testing cover to guarantee this.
-+
-+ * Builds and all tests pass at all times in both git HEAD and releases
-+
-+ * Builds for multiple build configuration are integrated in CI
-+
-+ * Runs some test frameworks in CI
-+
-+This covers
-+
-+ * Linux (mips64el, ppc64el, riscv64)
-+
-+ * FreeBSD (x86_64)
-+
-+ * macOS (aarch64)
-+
-+ * Windows (x86_64)
-+
-+Responsibilities:
-+
-+ * Contributors MAY test patches on Tier 2 platforms
-+   by running a GitLab CI pipeline in their fork
-+
-+ * Maintainers SHOULD request contributors to fix problems with Tier 2
-+   platforms.
-+
-+ * Maintainers MUST test pull requests on all Tier 2 platforms,
-+   by running a GitLab CI pipeline in their fork.
-+
-+ * Maintainers MUST co-ordinate fixing regressions identified
-+   post-merge quickly.
-+
-+
-+Tier 3
-+~~~~~~
-+
-+These platforms have theoretical support in the code, but have
-+little, or no, automated build and test coverage. Downstream
-+consumers (users or distributors) who care about these platforms
-+are requested to perform manual testing, report bugs and provide
-+patches.
-+
-+ * Builds and tests may be broken at any time in Git HEAD and
-+   releases
-+
-+ * Builds are not integrated into CI
-+
-+ * Tests are not integrated into CI
-+
-+ * Merging code is not gated
-+
-+This covers:
-+
-+ * NetBSD
-+ * OpenBSD
-+ * macOS (except aarch64)
-+ * FreeBSD (except x86_64)
-+ * Windows (except x86_64)
-+ * Solaris
-+
-+Responsibilities:
-+
-+ * Contributors MAY test patches on Tier 3 platforms manually
-+
-+ * Maintainers MAY request contributors to fix problems
-+   on Tier 3 platforms
-+
-+ * Maintainers MAY test patches on Tier 3 platforms manually
-+
-+ * Maintainers SHOULD NOT accept patches that remove code
-+   targetting Tier 3 platforms even if currently broken
-+
-+ * Downstream vendors SHOULD test RC releases on Tier 3 platforms
-+   and provide bug reports and patches to address problems
-+
-+Note: if a Tier 3 platform is found to be significantly broken,
-+no patches are contributed for a prolonged period, and there is
-+no sign of downstream usage, it is liable to be moved to
-+"Unclassified" and thus be subject to removal.
-+
-+
-+Unclassified
-+~~~~~~~~~~~~
-+
-+These platforms are not intended to be supported in the code
-+and outside the scope of any support tiers.
-+
-+  * Code supporting these platforms can removed at any time
-+  * Bugs reports related to these platforms will generally
-+    be ignored
-+
-+This covers:
-+
-+ * All 32-bit architectures on any OS
-+ * Any OS not listed above
-+
-+Responsibilities:
-+
-+ * Maintainers MAY decline patches that add code targetting
-+   unclassified platforms
-+
-+ * Maintainers MAY accept patches that remove code targetting
-+   unclassified platforms
--- 
-2.52.0
+Eric
 
 
