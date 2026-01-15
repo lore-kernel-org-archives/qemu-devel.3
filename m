@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C21BD3CC8C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 01:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AD16D3CC8C
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 01:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgBpR-0007zG-QM; Wed, 14 Jan 2026 20:07:13 -0500
+	id 1vgBr1-0000KK-A0; Wed, 14 Jan 2026 20:08:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vgBpP-0007yG-SN
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 20:07:11 -0500
-Received: from mgamail.intel.com ([198.175.65.17])
+ id 1vgBqy-0000Jf-NO
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 20:08:48 -0500
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vgBpN-0004io-L5
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 20:07:11 -0500
+ id 1vgBqx-0004ov-4s
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 20:08:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1768439230; x=1799975230;
+ t=1768439328; x=1799975328;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=WiznaQNyKTEee+KonRMn9LZpkSjZNvxzn8/0C5dd21s=;
- b=g2jhGtw8zNXgiREXWSCF+0ZV3pZaRnFFIbgnzpovXsKg6pcId1HRRfcm
- 1N3BY1CNjiA16KJWXq2IssL3F6GNfmoVnNhScuugFQQMtYBHQnkBh24D8
- c/ALlLg+sA/qKFylaibQpLywo4bQipnN6Ko/eG1q2l339GAeoJXyg2hpN
- xc5cKYgQyveN34NGerhA2Tuc3UQ1RJmHnZTYvL2ucnlGVqB4pAlARx80a
- NKvKaFPbVkKZ1xP/QZCBvG1jESTTjPwRMksIDRf0hgdmgjIJPqNKNz356
- KB3U89A9CyAqAlbJjnL/jJacqONHgqdYeJH36SCZlz7q0SqTZIZX6ziAM g==;
-X-CSE-ConnectionGUID: 5fzpsUIcRRCaL61Zf5v5fQ==
-X-CSE-MsgGUID: WMBsxFnBRDqP5smTtNxOhw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11671"; a="69723713"
-X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; d="scan'208";a="69723713"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jan 2026 17:07:05 -0800
-X-CSE-ConnectionGUID: vlh9H0UkTtOO1ZhUT1gGXw==
-X-CSE-MsgGUID: fc0feO5oQRevSrpIW+1Wpw==
+ bh=o5PtTJSEvpJXGgpc3pmgatc+2Pd70u0mxVJPqcWDYg0=;
+ b=lwPDuZTuKtjF7ESymQJEdUqUBxrQRrSAKOKMN/Lpw78z77W11A0Ar+bQ
+ mpeoi346NmbDCAvpXfAG54uKskUoa1i2PbF4RafCjVn6U10jiPCgimt7/
+ pHqDjG5gSvqSgjJ9HwyngsehVgc/WD52Q1ns4/oQ6wyiuzckvz84ZEzKB
+ 5p8GyZ8rp0lTmNn/aEpeOuWjEtV/DXO0Agzi4BlhbqsJ/VDcAtPsYKybz
+ /9fGOAmm74uwHQD93ePi29OPpgJmm70ublNld05gUMGKLyklNZypG9g6f
+ Uhtc4Pgm9IzzIoMJno1djufvp2+yYptM8bF7uzf2+ZHnr8uui3CvQcv// w==;
+X-CSE-ConnectionGUID: pKBpuVYpRMyWQoN537qb6A==
+X-CSE-MsgGUID: JTORvDEwRvWzzhDd1kJ2RQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11671"; a="69481499"
+X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; d="scan'208";a="69481499"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jan 2026 17:08:46 -0800
+X-CSE-ConnectionGUID: DN03NiI6SR2irFYJoMqVTA==
+X-CSE-MsgGUID: ROvRXqaKQb2PITBLC98dGg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; d="scan'208";a="235544403"
+X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; d="scan'208";a="204614704"
 Received: from fhuang-mobl1.amr.corp.intel.com (HELO [10.125.38.93])
  ([10.125.38.93])
- by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jan 2026 17:07:05 -0800
-Message-ID: <ca48a26d-251d-437d-9d5b-b29dd38a4ab1@intel.com>
-Date: Wed, 14 Jan 2026 17:07:04 -0800
+ by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jan 2026 17:08:45 -0800
+Message-ID: <c952b8d7-d1f9-44cc-812d-1a6600b26709@intel.com>
+Date: Wed, 14 Jan 2026 17:08:44 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 1/5] target/i386/kvm: set KVM_PMU_CAP_DISABLE if "-pmu"
- is configured
+Subject: Re: [PATCH v9 2/5] target/i386/kvm: extract unrelated code out of
+ kvm_x86_build_cpuid()
 To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org
 Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
@@ -63,13 +63,13 @@ Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
  dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
  ewanhai@zhaoxin.com
 References: <20260109075508.113097-1-dongli.zhang@oracle.com>
- <20260109075508.113097-2-dongli.zhang@oracle.com>
+ <20260109075508.113097-3-dongli.zhang@oracle.com>
 Content-Language: en-US
 From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260109075508.113097-2-dongli.zhang@oracle.com>
+In-Reply-To: <20260109075508.113097-3-dongli.zhang@oracle.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zide.chen@intel.com;
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=zide.chen@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -97,31 +97,23 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 1/8/2026 11:53 PM, Dongli Zhang wrote:
-> Although AMD PERFCORE and PerfMonV2 are removed when "-pmu" is configured,
-> there is no way to fully disable KVM AMD PMU virtualization. Neither
-> "-cpu host,-pmu" nor "-cpu EPYC" achieves this.
+> The initialization of 'has_architectural_pmu_version',
+> 'num_architectural_pmu_gp_counters', and
+> 'num_architectural_pmu_fixed_counters' is unrelated to the process of
+> building the CPUID.
 > 
-> As a result, the following message still appears in the VM dmesg:
+> Extract them out of kvm_x86_build_cpuid().
 > 
-> [    0.263615] Performance Events: AMD PMU driver.
-> 
-> However, the expected output should be:
-> 
-> [    0.596381] Performance Events: PMU not available due to virtualization, using software events only.
-> [    0.600972] NMI watchdog: Perf NMI watchdog permanently disabled
-> 
-> This occurs because AMD does not use any CPUID bit to indicate PMU
-> availability.
-> 
-> To address this, KVM_CAP_PMU_CAPABILITY is used to set KVM_PMU_CAP_DISABLE
-> when "-pmu" is configured.
+> In addition, use cpuid_find_entry() instead of cpu_x86_cpuid(), because
+> CPUID has already been filled at this stage.
 > 
 > Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 > Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 > ---
 
 LGTM.
 Reviewed-by: Zide Chen <zide.chen@intel.com>
+
+
 
