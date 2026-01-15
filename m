@@ -4,46 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89C86D3CCB6
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 07:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58FFAD3CCB2
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 07:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgHa5-0001VC-K6; Thu, 15 Jan 2026 02:15:45 -0500
+	id 1vgHce-0002rs-CC; Thu, 15 Jan 2026 02:18:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vgHa2-0001So-1f; Thu, 15 Jan 2026 02:15:42 -0500
-Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
+ id 1vgHcc-0002qh-3A; Thu, 15 Jan 2026 02:18:22 -0500
+Received: from smtpout2.mo529.mail-out.ovh.net ([79.137.123.220])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1vgHZy-0006wF-UN; Thu, 15 Jan 2026 02:15:41 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.37.179])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4dsDld2vDsz5wBN;
- Thu, 15 Jan 2026 07:15:24 +0000 (UTC)
-Received: from kaod.org (37.59.142.95) by DAG3EX1.mxp5.local (172.16.2.21)
+ id 1vgHca-0008RU-52; Thu, 15 Jan 2026 02:18:21 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.37.52])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4dsDpw6Jqcz5xWB;
+ Thu, 15 Jan 2026 07:18:16 +0000 (UTC)
+Received: from kaod.org (37.59.142.99) by DAG3EX1.mxp5.local (172.16.2.21)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Thu, 15 Jan
- 2026 08:15:24 +0100
+ 2026 08:18:16 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-95G0015fba716e-b646-4fff-9adf-8aa66565fe54,
+ (GARM-99G00348077dcb-da60-447b-b4f2-a1fee2ae97d9,
  730BEF4863DC82B2970748FB5926F4A3C98AA806) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <cd9a0f11-7d36-4e58-afc8-96113ceb3613@kaod.org>
-Date: Thu, 15 Jan 2026 08:15:23 +0100
+Message-ID: <8b0f766b-6afc-4eba-836e-08edc9e09e48@kaod.org>
+Date: Thu, 15 Jan 2026 08:18:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v1 1/1] hw/i2c/aspeed: Introduce 'bus-label' to customize
  bus naming
-To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>
+To: Nabih Estefan <nabihestefan@google.com>, Kane Chen
+ <kane_chen@aspeedtech.com>
+CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ <troy_lee@aspeedtech.com>
 References: <20260112083054.4151945-1-kane_chen@aspeedtech.com>
  <20260112083054.4151945-2-kane_chen@aspeedtech.com>
+ <CA+QoejXKnT6iNuyAS3rDg3ovYbAyBf5crPrw9kYGm73Uk0S1uw@mail.gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -88,35 +90,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260112083054.4151945-2-kane_chen@aspeedtech.com>
+In-Reply-To: <CA+QoejXKnT6iNuyAS3rDg3ovYbAyBf5crPrw9kYGm73Uk0S1uw@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.95]
-X-ClientProxiedBy: DAG1EX1.mxp5.local (172.16.2.1) To DAG3EX1.mxp5.local
+X-Originating-IP: [37.59.142.99]
+X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG3EX1.mxp5.local
  (172.16.2.21)
-X-Ovh-Tracer-GUID: ecf55630-45d8-4b9f-9d0b-42b37f39c6e3
-X-Ovh-Tracer-Id: 10667901617816439730
+X-Ovh-Tracer-GUID: 195f83ed-d608-4665-81e0-8e3b9f3dc043
+X-Ovh-Tracer-Id: 10716315317399620597
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTE9GB32VZeJfIPRyXGgh2bmunTwVh3XaIeEViZIAHLqsuZUso3s31nHwzdIXA4XQ8Y9RbYEzfAOqrV1WYMc+LVGtFGzi/mwfw0v+4KgfABOiYaZhZuAW4WJReW85RCchXJDdqjd/I4zOGy0P+gk04TvR69P2/TdMy2Z0RdkrXDTPvxZrpQ+IgzBVdp+3My0vMrvS00NJsWl94i4KdkG9zBIwBWS96pLr8mWHh6KSgEeXgxmrN/oVLyFBBGXoJ0h+oEwCCnu8wxntpdOS++xK5M3pbr2W0kmHSLvymVf9zfIbFSLJaUc9c+KsQMzFOOmKY0n68YKipINQxkD9Gx7RbueR43/hMOvW4SbiMlwcVfVnXChFud/SMyG2nb0bSg9Sb2W9+n5Zz3ElwbGqfJVSqFiSJxZDXLyzaKd6NxIk7vkEUxZpyDe9BdlaJxyUetxJ4LJ9wEjt2x2RF1OR4f6Hs4hneXpeojZqYLNLMbW7upPEGTEKAtA5YB1IYxYx0t4PwA8rt+HEhuaNv++kF7ygPjdZeQZa77tYYerPcImfya4cBk0lfgOo7YB90ZhlpZWHeG3ygfOdrtnt07iU4IYTNbSY9eKQNWbLyGJdBoOhUqQWd0Ncq+zHp9QVrORJ3siOP+dZ6YMEOnOhAX9y0g6WdbNLDVolv5lpNB8y2ooJ8pK8w
-DKIM-Signature: a=rsa-sha256; bh=iiAvlZD4hYm3xKjWOvSHWFkX22TXpE1R57u0w3275OU=; 
+X-VR-SPAMCAUSE: dmFkZTE8X60K/URvaWCCeDySNHJme9MpKIU8X4/xfRNaTt/W08YJNH15qF7x/+fkmdHyusnyErJaUypNsHhFTAKqLk6/96kgFEoybo7RSjj83OLAyW9eHfEj5hL+9nY7UTgAou8sTMxWlVlg0sz4yMJmzs0eXRc+FNBowFSwhNf8NUYYaG616Tb4VE+e6RGzg4Ym7CFs15fuuLhM93odwCG2pNGlU5m78Y38Gm1I1iNgWJtzMhLqXvwSePXyPNPGeE/qEj12KAT22zLWd8ib1vEYwmIYtRw1H4vmTdjPDf51m7dYDgW8VUvOFbnfM/su5IFdlEi+it0ff1idpea9zh1s1gSPimoqhlxGBi8hxolV1nY2J61+A2ZO5C+gPDkCc2CSPyZqEIdtet6TENUK5S9h9DBuXUwS7SJpMoU50jhm+mBqEWKMLqHViloxzYzhcxwjr2RMvT6gyBUtyAnlG9mJqHVD2OmbdVP1TYJwvGC0LLY22WtwoB6UUt0hBInPT9FedY9lQyqZXRRsmIrVZm+lQND9+JuuEnShcw51EuEyD/d34TS6e2S7MjYpdjH4+DxotkyIHCevEj7xGyfAy+qeAKTDMh3QttOJ1HXuixvJq+n1DoOT+D3I++ChiosQbfKSEHCfG8tOuHFFotom38Dy8npfNLUSUXMg7I0TLaQ8WkcC9w
+DKIM-Signature: a=rsa-sha256; bh=WmeHAYYeGisUsuakS4sAockGZR91ZbLiIuqDNuukYHM=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1768461327; v=1;
- b=qTTMKtZkisjhYnJvsuD7djjG30ucv/KwTXdIUrIbWZJO/TFXX4caQHjph5HCIhl9vvXFgy3Y
- HErYPFm3TEqxk4L4ZnctqM5u+A1RqpKCS3OBLIMsqEka88QsXiqoA94kSm3RUtedt5XV2/IMfeg
- eqatPpwfry1eIl36xQLtm/DkrY+QSpIliD5+xp9WaT+/5kqL4/e0bGASb5WCP9uurUvsMrL3IWt
- SMsvQmlsMNeBWM5wgFefR1MGOE39oRdBPW2BhUkdpsoOjV+CCbAHCgOZlszVSDH1SSzn3SCTGml
- kWSzWHXfikU/a7jcWakVVPmS8w6BkANUa4Mcp1CTAxCRw==
-Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
- helo=smtpout1.mo529.mail-out.ovh.net
+ t=1768461497; v=1;
+ b=eaIB4E3br2yRFjvMTyVxEWmuIwfcYj/9U+okUpqRw1Cocmej9u2ekcUy9MXZ39icsdGK//TO
+ n0qlt7hmMQTU9nuU/t5cLyWLzlWLVNOEwxkKg1D+JSOsBcxIMvQvHKjfv+Yr6C0FshEeYxQZ3oL
+ 5zMXjykZPYDiGr7tcfUGqBQqQaPyxHX+q85CvMs76TDjNvv7+smhvyeNZjZShUPFYP7GUXhSTbo
+ SSU3Ck8Q3vKyM5WQA3Gog8wP1M3uPMgrUeJIbux2gJC8tEZiDwtTHnAgjiqoiKRSMiA9E8Agm7/
+ 42Rak/V1DJyeAOpiWusOz4PS24bKyzPGEzRc6UpfCKWRQ==
+Received-SPF: pass client-ip=79.137.123.220; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,137 +134,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/12/26 09:30, Kane Chen via wrote:
-> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
-> 
-> On some Aspeed-based machines, multiple I2C controllers may exist
-> across different components, such as the primary SoC and an external
-> IO expander or co-processor (e.g., AST1700). Using the current static
-> naming convention results in object name conflicts when multiple
-> controllers attempt to instantiate buses with the same ID.
-> 
-> This patch introduces a 'bus-label' property for the Aspeed I2C
-> controller. This allows higher-level layers, such as the SoC realize
-> function, to provide a unique identifier for the buses. The I2C bus
-> object name is then constructed using this label (e.g., "ioexp0.0"
-> instead of the default "aspeed.i2c.bus.0").
-> 
-> This enhancement ensures unique bus identifiers across the system and
-> resolves naming conflicts in multi-controller configurations.
-> 
-> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Hello Nabih,
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+On 1/15/26 00:11, Nabih Estefan wrote:
+> On Mon, Jan 12, 2026 at 12:38 AM Kane Chen via qemu development
+> <qemu-devel@nongnu.org> wrote:
+>>
+>> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+>>
+>> On some Aspeed-based machines, multiple I2C controllers may exist
+>> across different components, such as the primary SoC and an external
+>> IO expander or co-processor (e.g., AST1700). Using the current static
+>> naming convention results in object name conflicts when multiple
+>> controllers attempt to instantiate buses with the same ID.
+>>
+>> This patch introduces a 'bus-label' property for the Aspeed I2C
+>> controller. This allows higher-level layers, such as the SoC realize
+>> function, to provide a unique identifier for the buses. The I2C bus
+>> object name is then constructed using this label (e.g., "ioexp0.0"
+>> instead of the default "aspeed.i2c.bus.0").
+>>
+>> This enhancement ensures unique bus identifiers across the system and
+>> resolves naming conflicts in multi-controller configurations.
+>>
+>> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> 
+> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+
+
+Did you mean 'Reviewed-by' ?
 
 Thanks,
 
 C.
 
-> ---
->   include/hw/i2c/aspeed_i2c.h |  2 ++
->   hw/i2c/aspeed_i2c.c         | 27 +++++++++++++++++++++------
->   2 files changed, 23 insertions(+), 6 deletions(-)
+
+> Tested-by: Nabih Estefan <nabihestefan@google.com>
 > 
-> diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
-> index ffcff2580f..68bd138026 100644
-> --- a/include/hw/i2c/aspeed_i2c.h
-> +++ b/include/hw/i2c/aspeed_i2c.h
-> @@ -252,6 +252,7 @@ struct AspeedI2CBus {
->       MemoryRegion mr_pool;
->   
->       I2CBus *bus;
-> +    char *name;
->       uint8_t id;
->       qemu_irq irq;
->   
-> @@ -269,6 +270,7 @@ struct AspeedI2CState {
->       uint32_t intr_status;
->       uint32_t ctrl_global;
->       uint32_t new_clk_divider;
-> +    char *bus_label;
->       MemoryRegion pool_iomem;
->       uint8_t share_pool[ASPEED_I2C_SHARE_POOL_SIZE];
->   
-> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-> index 1b8ac561c3..7cf92423c7 100644
-> --- a/hw/i2c/aspeed_i2c.c
-> +++ b/hw/i2c/aspeed_i2c.c
-> @@ -1215,9 +1215,16 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
->                             "aspeed.i2c", aic->mem_size);
->       sysbus_init_mmio(sbd, &s->iomem);
->   
-> +    /* default value */
-> +    if (!s->bus_label) {
-> +        s->bus_label = g_strdup(TYPE_ASPEED_I2C_BUS);
-> +    }
-> +
->       for (i = 0; i < aic->num_busses; i++) {
->           Object *bus = OBJECT(&s->busses[i]);
->           int offset = i < aic->gap ? 1 : 5;
-> +        g_autofree char *name = g_strdup_printf("%s.%d",
-> +                                                s->bus_label, i);
->   
->           if (!object_property_set_link(bus, "controller", OBJECT(s), errp)) {
->               return;
-> @@ -1227,6 +1234,10 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
->               return;
->           }
->   
-> +        if (!object_property_set_str(bus, "bus-name", name, errp)) {
-> +            return;
-> +        }
-> +
->           if (!sysbus_realize(SYS_BUS_DEVICE(bus), errp)) {
->               return;
->           }
-> @@ -1263,6 +1274,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
->   static const Property aspeed_i2c_properties[] = {
->       DEFINE_PROP_LINK("dram", AspeedI2CState, dram_mr,
->                        TYPE_MEMORY_REGION, MemoryRegion *),
-> +    DEFINE_PROP_STRING("bus-label", AspeedI2CState, bus_label),
->   };
->   
->   static void aspeed_i2c_class_init(ObjectClass *klass, const void *data)
-> @@ -1423,24 +1435,26 @@ static void aspeed_i2c_bus_realize(DeviceState *dev, Error **errp)
->   {
->       AspeedI2CBus *s = ASPEED_I2C_BUS(dev);
->       AspeedI2CClass *aic;
-> -    g_autofree char *name = g_strdup_printf(TYPE_ASPEED_I2C_BUS ".%d", s->id);
-> -    g_autofree char *pool_name = g_strdup_printf("%s.pool", name);
-> +    g_autofree char *pool_name = NULL;
->   
-> -    if (!s->controller) {
-> -        error_setg(errp, TYPE_ASPEED_I2C_BUS ": 'controller' link not set");
-> +    if (!s->controller || !s->name) {
-> +        error_setg(errp, TYPE_ASPEED_I2C_BUS
-> +                   ": 'controller' or 'bus-name' not set");
->           return;
->       }
->   
-> +    pool_name = g_strdup_printf("%s.pool", s->name);
-> +
->       aic = ASPEED_I2C_GET_CLASS(s->controller);
->   
->       sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
->   
-> -    s->bus = i2c_init_bus(dev, name);
-> +    s->bus = i2c_init_bus(dev, s->name);
->       s->slave = i2c_slave_create_simple(s->bus, TYPE_ASPEED_I2C_BUS_SLAVE,
->                                          0xff);
->   
->       memory_region_init_io(&s->mr, OBJECT(s), &aspeed_i2c_bus_ops,
-> -                          s, name, aic->reg_size);
-> +                          s, s->name, aic->reg_size);
->       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
->   
->       memory_region_init_io(&s->mr_pool, OBJECT(s), &aspeed_i2c_bus_pool_ops,
-> @@ -1452,6 +1466,7 @@ static const Property aspeed_i2c_bus_properties[] = {
->       DEFINE_PROP_UINT8("bus-id", AspeedI2CBus, id, 0),
->       DEFINE_PROP_LINK("controller", AspeedI2CBus, controller, TYPE_ASPEED_I2C,
->                        AspeedI2CState *),
-> +    DEFINE_PROP_STRING("bus-name", AspeedI2CBus, name),
->   };
->   
->   static void aspeed_i2c_bus_class_init(ObjectClass *klass, const void *data)
+> This is basically a rework of the bus-label patches I already tested
+> and we're carrying for AST1700, re-tested just in case, and everything
+> still looks good!
+> 
+> Thank you Kane!
+> 
+> -Nabih
+> 
+>> ---
+>>   include/hw/i2c/aspeed_i2c.h |  2 ++
+>>   hw/i2c/aspeed_i2c.c         | 27 +++++++++++++++++++++------
+>>   2 files changed, 23 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
+>> index ffcff2580f..68bd138026 100644
+>> --- a/include/hw/i2c/aspeed_i2c.h
+>> +++ b/include/hw/i2c/aspeed_i2c.h
+>> @@ -252,6 +252,7 @@ struct AspeedI2CBus {
+>>       MemoryRegion mr_pool;
+>>
+>>       I2CBus *bus;
+>> +    char *name;
+>>       uint8_t id;
+>>       qemu_irq irq;
+>>
+>> @@ -269,6 +270,7 @@ struct AspeedI2CState {
+>>       uint32_t intr_status;
+>>       uint32_t ctrl_global;
+>>       uint32_t new_clk_divider;
+>> +    char *bus_label;
+>>       MemoryRegion pool_iomem;
+>>       uint8_t share_pool[ASPEED_I2C_SHARE_POOL_SIZE];
+>>
+>> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+>> index 1b8ac561c3..7cf92423c7 100644
+>> --- a/hw/i2c/aspeed_i2c.c
+>> +++ b/hw/i2c/aspeed_i2c.c
+>> @@ -1215,9 +1215,16 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
+>>                             "aspeed.i2c", aic->mem_size);
+>>       sysbus_init_mmio(sbd, &s->iomem);
+>>
+>> +    /* default value */
+>> +    if (!s->bus_label) {
+>> +        s->bus_label = g_strdup(TYPE_ASPEED_I2C_BUS);
+>> +    }
+>> +
+>>       for (i = 0; i < aic->num_busses; i++) {
+>>           Object *bus = OBJECT(&s->busses[i]);
+>>           int offset = i < aic->gap ? 1 : 5;
+>> +        g_autofree char *name = g_strdup_printf("%s.%d",
+>> +                                                s->bus_label, i);
+>>
+>>           if (!object_property_set_link(bus, "controller", OBJECT(s), errp)) {
+>>               return;
+>> @@ -1227,6 +1234,10 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
+>>               return;
+>>           }
+>>
+>> +        if (!object_property_set_str(bus, "bus-name", name, errp)) {
+>> +            return;
+>> +        }
+>> +
+>>           if (!sysbus_realize(SYS_BUS_DEVICE(bus), errp)) {
+>>               return;
+>>           }
+>> @@ -1263,6 +1274,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
+>>   static const Property aspeed_i2c_properties[] = {
+>>       DEFINE_PROP_LINK("dram", AspeedI2CState, dram_mr,
+>>                        TYPE_MEMORY_REGION, MemoryRegion *),
+>> +    DEFINE_PROP_STRING("bus-label", AspeedI2CState, bus_label),
+>>   };
+>>
+>>   static void aspeed_i2c_class_init(ObjectClass *klass, const void *data)
+>> @@ -1423,24 +1435,26 @@ static void aspeed_i2c_bus_realize(DeviceState *dev, Error **errp)
+>>   {
+>>       AspeedI2CBus *s = ASPEED_I2C_BUS(dev);
+>>       AspeedI2CClass *aic;
+>> -    g_autofree char *name = g_strdup_printf(TYPE_ASPEED_I2C_BUS ".%d", s->id);
+>> -    g_autofree char *pool_name = g_strdup_printf("%s.pool", name);
+>> +    g_autofree char *pool_name = NULL;
+>>
+>> -    if (!s->controller) {
+>> -        error_setg(errp, TYPE_ASPEED_I2C_BUS ": 'controller' link not set");
+>> +    if (!s->controller || !s->name) {
+>> +        error_setg(errp, TYPE_ASPEED_I2C_BUS
+>> +                   ": 'controller' or 'bus-name' not set");
+>>           return;
+>>       }
+>>
+>> +    pool_name = g_strdup_printf("%s.pool", s->name);
+>> +
+>>       aic = ASPEED_I2C_GET_CLASS(s->controller);
+>>
+>>       sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
+>>
+>> -    s->bus = i2c_init_bus(dev, name);
+>> +    s->bus = i2c_init_bus(dev, s->name);
+>>       s->slave = i2c_slave_create_simple(s->bus, TYPE_ASPEED_I2C_BUS_SLAVE,
+>>                                          0xff);
+>>
+>>       memory_region_init_io(&s->mr, OBJECT(s), &aspeed_i2c_bus_ops,
+>> -                          s, name, aic->reg_size);
+>> +                          s, s->name, aic->reg_size);
+>>       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
+>>
+>>       memory_region_init_io(&s->mr_pool, OBJECT(s), &aspeed_i2c_bus_pool_ops,
+>> @@ -1452,6 +1466,7 @@ static const Property aspeed_i2c_bus_properties[] = {
+>>       DEFINE_PROP_UINT8("bus-id", AspeedI2CBus, id, 0),
+>>       DEFINE_PROP_LINK("controller", AspeedI2CBus, controller, TYPE_ASPEED_I2C,
+>>                        AspeedI2CState *),
+>> +    DEFINE_PROP_STRING("bus-name", AspeedI2CBus, name),
+>>   };
+>>
+>>   static void aspeed_i2c_bus_class_init(ObjectClass *klass, const void *data)
+>> --
+>> 2.43.0
+>>
+>>
 
 
