@@ -4,100 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45DEED46623
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 20:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E55D46623
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 20:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgUE3-0005to-CJ; Thu, 15 Jan 2026 15:45:51 -0500
+	id 1vgUH8-0006kr-UW; Thu, 15 Jan 2026 15:49:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kelly.cullinane@oasis-open.org>)
- id 1vgTFF-0008TR-Ti
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:43:02 -0500
-Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vgUH7-0006jI-4J
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 15:49:01 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <kelly.cullinane@oasis-open.org>)
- id 1vgTFD-00077O-Sa
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:43:01 -0500
-Received: by mail-qt1-x832.google.com with SMTP id
- d75a77b69052e-4ffc5f35b54so18511031cf.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 11:42:58 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768506177; cv=none;
- d=google.com; s=arc-20240605;
- b=RqKUSaZccbUvX5e0AnfijaZ6ogcgI9delz8mVqAa8oq5Jn0ujlBDXJhqPCo6iOLgPx
- EAEWXNArMzi119YQIokTp0MPPwv8vyGAep8XsvNwPiD+S8EQ3LH+bwXPpEKrYjUG06lQ
- krbRQd/j9gYJHTXv5699mI3tnSYBNZ0K94gDKlxCl812kSVRWuR5CMoeXwL8X3AsusPr
- U4swPrpkk4148WQBE57cjiAFtwQOyN+FHKTzV+eKdlnoljKNKXFckE6DU+6MTwYMG3kn
- dp7XIxxFjFaOMJf6DbKHZRviO0JbWV8pxgpqu70TZbdAPg55iLHFv4EXCZW8pgcJK4nK
- ktHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:to:subject:message-id:date:from
- :mime-version:dkim-signature;
- bh=BVuRcIp9C9aDs7YujmRCIsJWyiCOSqmqC7FZNs5wMUU=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=a13hVAHkh471hkmw0sE1eawaxQTTbl4c2UbgfDMrulZG6SqQizlfNf7JaDW1Arm4ei
- 4JY/CGkAPYZT1nzUvip0lcUoH4JfgtlTzoTAYpfDMmPKqmR8lfAwR8LGy0euTGFjNRle
- L6LGiXCZFC+vFXWXldzoEFH0Zz7WPsw4xrUSg23Q7x1vApsixTnfDWJkViqeJZ1esTvD
- TQ4EdEA0brpIa/YYY6uODdK8dNtEuMXPMTydnR8PUJ+jdmN2IathzNPgZaYZmUqKI+DN
- NcNuTs0uwDsK5whudhYkcBDBnd8lVhbUqrqgt3VssGSPmiWkPQE49z5OPzxjNd9EcUpf
- WyUA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vgUH5-0002uo-2M
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 15:49:00 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-81f478e5283so1190989b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 12:48:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oasis-open-org.20230601.gappssmtp.com; s=20230601; t=1768506177; x=1769110977;
- darn=nongnu.org; 
- h=content-transfer-encoding:to:subject:message-id:date:from
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BVuRcIp9C9aDs7YujmRCIsJWyiCOSqmqC7FZNs5wMUU=;
- b=mVG0hM8FeOdabHztB/ZFIfawD7ou0CWJDF4/T8lXx7yHDyKMs0w2NqAoavHTIVL3oN
- 3xZw8+ezKZFmw4dNyGAc5/jMxxYKHsLSKQJCdTVqs4ltnILvTn442cAYzqm+FWtal32Y
- XpFz8dITwBt0Y/vxxHyK+7eYiASwkZkAM5dKPGtMpWZALvuswyd+Snj4YBMcx/d3ACvz
- jBnibDNwhjzqsF9/tJ+dTt83UL6z52hpxPuBllfbvTUQGR22KeJKYmrM2L3nnzLGi3aw
- jSzTykQvlNkqBaBvjB+JqipLEYohvV+bDWjws2OXDh14Mk5YTUfJrfPzKX3aVzs4HUrI
- xI0w==
+ d=linaro.org; s=google; t=1768510137; x=1769114937; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=0k2MhlKsygvagAp9BXw+O9ZjKE0uE6K+kYwBqSsimTM=;
+ b=oO2VV2iKtmhMfCigHauf8iZYFs8ntYR64794HC8ZohEggiW/b3HFh3LvrvzcH1ozZ3
+ +SJCNMKf/KIU/rR6N+hX3iBb08/Gmbq3zjwOujJ1TjBYma1I1EN970zm1LRpHrl/dj+k
+ BaKLnINJWLnNVML8qBX9IxfCutBCWtYHKnpp4lwx6cieuJ+cYuGflCxnP38IM+iPCMX1
+ lUKyAlIHRULcirfLfAb9Zcw+t+Y7BO7xoheaaZBOaPuWkuwF/7hUmwPcGATOLnqklBdi
+ sc8c6NGzgNEX7Hajxq/CKYY6uwdJ3u2+BBLjw/X3rjr4MZreQnup/8Mk7aVNx8TR4th3
+ JkyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768506177; x=1769110977;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1768510137; x=1769114937;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BVuRcIp9C9aDs7YujmRCIsJWyiCOSqmqC7FZNs5wMUU=;
- b=N0vmELyGeUUxZx/LR34gdKtrxTj+9UOJHq7xFMOb75CTzG+QyQa8x7/TYphBCqzwIi
- uejnPYxp1eQVn9g192sSLcFpO4hmqP4CCC9Kh6bxs5/kCX4o2oGFtbdhuCAPLGOWwHX6
- +8wKbcfkbnX6DtW+sr5n1OYcxa+Po0Qhg5+Ss00aB7qsAY1gTw3y5ISP/QoyM4/bFyW0
- RXKOf3mydbCddtzRZaIUA1V8zCZ+AKLcFzy/co25kVn+m3FE9WyFQZv54HQeSMT1Hwcm
- ON/vGmUkTgaPx3nUosZ83jk2Z3qWLNxMkZXJp1Xb24qUYp84Zkp/9oxZ8zEo7mfNrywA
- pTfA==
-X-Gm-Message-State: AOJu0YzqXj8PwmpVPyro1ehyqI/78ymyJnSKg3uNnqK7ahFNfFMYQrAg
- UlNI4jG5A7FbuWE0Wi4aJK+v5vdVOhg8Cqnu3dwwn6W2/se1IbyHR2/jYlTal238Zf0/mRQG1v/
- YHPKeNAjY2OJ2VgJEDI/x+6LaXVxhr0VwoJSRnuuFb+ljxe14JoRI9X4=
-X-Gm-Gg: AY/fxX7FKIcLMZ9eQ71rTT9yPbPDaDPvNbmKTziavO+4JSYHfYbUvLzzkhHk+vcoEZ/
- Z1KPB86gd0YGaTBR2v0iwQJczPd5UL6lT1ozgLHFGeJWFGL/IY0NECaVJeVnxZTP5axsIsHHdS/
- kKacdcu4CGQegihDq5CpNhN5NjV5kfVxktNfZqs/obSc0bLJ7YjoMgHMBJoFdETGH86dcfkxiAO
- GDxHWEmESrTkywLPUWUMctSFa5vs1gO9xWbb+TS+0tJRbjBN/npVjCghYDhz3RWnRHeKMt9khr0
- DaKQ85NPKbhO8dHN2LzzrJnUSgZB09P0hjIcXqdqpPKyZebNJzwyQA/t1VD7
-X-Received: by 2002:a05:622a:411:b0:4f1:ccec:84b0 with SMTP id
- d75a77b69052e-502a1f82c21mr6340201cf.57.1768506177294; Thu, 15 Jan 2026
- 11:42:57 -0800 (PST)
+ bh=0k2MhlKsygvagAp9BXw+O9ZjKE0uE6K+kYwBqSsimTM=;
+ b=RIqA/YeFJ+Q0BNIBzK07IdnJ6yk5TLHv8048QIaGaKWA5JHkotq1evVXGSi5p37O5U
+ xPWLtmtiJR5uttkMmHkuk3XRz6wG/dVCc1yJcOhXGoodnIn3jMVPx+spJiApmCl40y0E
+ MLkbxDe5n/OWqldZ+BWW+HfsK9RyKSQBI9065lgHU/SqFE4cWqAoWMHqgMv965Xdzffg
+ AtCnFL2H+aajLf9/x1IDuD5t0ZO0T2Qxc0rAM+7GvU83CqWu66xpXM7ahXTxXHA+Ri/n
+ 24R1nPheUopnrR4DRJPDXFn3qxLcXSbI17YPLRiuQz0HgBPFIXp3XnwTndLLhJTV4EIJ
+ JBLA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCm75/Or7IK499CNtru0JMp1OYnerIDJTV7hMUSjvbeiyn0WvGKuNYsisfnil/mv8bg02zzuHXFKWK@nongnu.org
+X-Gm-Message-State: AOJu0Yzprl1rEeFUmn3wBAvRujH0c82G9aXMAaX6ehayOSnbfPPr//Sb
+ lpMQ8lEXn7fiYTEqgRxi9YCuATPvlFZZ/I2OqL61PdACfSGHLIW+ZH/Sz0WlLJpapTg=
+X-Gm-Gg: AY/fxX48/plKLGcxzXPDCG3xOmi7qILPyzQvhOt5arIkx2OZGQIaDaGj7R4mZ3Ropma
+ 08AwB52PYtqePT5LvsMM9Sq3OLBiLhVESl+mGcmbkbD7I5ef7jnbRxVLwRVi0o6zb0wmNTgVME4
+ 1oaGwBwOUxnlFDv4n+5fzdEsJ5FtrCt4o5eFZGwy7oRxVf/sSiZgJqvl1DhKgimz7ktzvVCGYT9
+ S6H5UE1MvrDoW/IIvjpGFZGnkW6CkQRAGLg62UVfXf2RPpT7LoClW7tJLGJ6ByFGZJZY48lR+bB
+ FW2SR7pBc94aNiw3Cuvccij3u7C3snvIV2eKlQiuLMG7FEmm+hrPbwhPF+ZHhuJIsCtftALyYeY
+ ujZFauGRMphtNQI5le5h2kzSNDk8x+fp2OGf/Dl4MOKN5H8hXcnLtobgooXmaFlQpqLlDYXtChP
+ MlO0fc2p1xBlVWv88Y7yVcp7orv2TL7390Xip9xswOpC2JNA1F/SNxje+8
+X-Received: by 2002:a05:6a20:3c8f:b0:366:14ac:e1f5 with SMTP id
+ adf61e73a8af0-38dfe94521bmr910541637.71.1768510137240; 
+ Thu, 15 Jan 2026 12:48:57 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c5edf32d2a2sm268082a12.20.2026.01.15.12.48.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Jan 2026 12:48:56 -0800 (PST)
+Message-ID: <05bc2cec-874f-48c9-8ba8-9f14f41e9dab@linaro.org>
+Date: Thu, 15 Jan 2026 12:48:56 -0800
 MIME-Version: 1.0
-From: Kelly Cullinane <kelly.cullinane@oasis-open.org>
-Date: Thu, 15 Jan 2026 14:42:20 -0500
-X-Gm-Features: AZwV_Qjs08tGS2fCNaZfZKc6ZBlNPl7GFmYqfaCBM6gz6pHZBaSGEXxzjP1u8sg
-Message-ID: <CAAiF601MvyNNsA77U=vdKwHr-xgQFmUp2u5izCY7Qfbs5_OfTA@mail.gmail.com>
-Subject: Invitation to comment on VIRTIO v1.4 CSD01
-To: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
- envelope-from=kelly.cullinane@oasis-open.org; helo=mail-qt1-x832.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs/about: propose OS platform/arch support tiers
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260115180123.848640-1-berrange@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260115180123.848640-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 15 Jan 2026 15:45:49 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -112,61 +144,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OASIS members and other interested parties,
+On 1/15/26 10:01 AM, Daniel P. Berrangé wrote:
+> Informally we have approximately three groups of platforms
+> 
+>   * Tier 1: fully built and fully tested by CI. Must always be
+>             kept working & regressions fixed immediately
+> 
+>   * Tier 2: fully built and partially tested by CI. Should
+>             always be kept working & regressions fixed quickly
+> 
+>   * Tier 3: code exists but is not built or tested by CI.
+>             Should not be intentionally broken but not
+> 	   guaranteed to work at any time. Downstream must
+> 	   manually test, report & fix bugs.
+> 
+> Anything else is "unclassified" and any historical code
+> remnants may be removed.
+> 
+> It is somewhat tricky to define unambiguous rules for each tier,
+> but this doc takes a stab at it. We don't need to cover every
+> eventuality. If we get the core points of view across, then it
+> at least sets the direction for maintainers/contributors/users.
+> Other aspects can be inferred with greater accuracy than today.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+> 
+> This came out of the discussion about recent unnoticed breakage
+> in NetBSD builds and what maintainers are expected todo about
+> it (if anything)
+> 
+>    https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg02543.html
+> 
+>   docs/about/build-platforms.rst | 152 +++++++++++++++++++++++++++++++++
+>   1 file changed, 152 insertions(+)
+> 
+> diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
+> index e95784cdb5..950e164c02 100644
+> --- a/docs/about/build-platforms.rst
+> +++ b/docs/about/build-platforms.rst
+> @@ -171,3 +171,155 @@ Only 64-bit Windows is supported.
+>   .. _MacPorts: https://www.macports.org/
+>   .. _MSYS2: https://www.msys2.org/
+>   .. _Repology: https://repology.org/
+> +
+> +OS Support Tiers
+> +----------------
+> +
+> +While the QEMU code targets a number of different OS platforms, they don't
+> +all get the same level of support from the project. This applies to
+> +contributor & maintainer expectations, CI automation and requirements
+> +for merge gating.
+> +
+> +Tier 1
+> +~~~~~~
+> +
+> +These platforms attain the highest level of quality offered by
+> +the QEMU project.
+> +
+> + * Builds and all tests pass at all times in both git HEAD and releases
+> +
+> + * Builds for multiple build configuration are integrated in CI
+> +
+> + * Runs all available tests frameworks (unit, qtest, iotests, functional)
+> +   in CI
+> +
+> + * Merging code is gated on successful CI jobs
+> +
+> +This covers
+> +
+> + * Linux (x86_64, aarch64, s390x)
+> +
+> +Responsibilities:
+> +
+> + * Contributors MUST test submitted patches on one of Tier 1 platforms.
+> +
+> + * Contributors SHOULD test submitted patches on Tier 1 platforms
+> +   by running a GitLab CI pipeline in their fork.
+> +
+> + * Maintainers MUST request contributors to fix problems with Tier 1
+> +   platforms.
+> +
+> + * Maintainers MUST test pull requests on Tier 1 platforms
+> +   by running a GitLab CI pipeline in their fork.
+> +
+> + * Maintainers MUST co-ordinate fixing regressions identified
+> +   post-merge immediately.
+> +
+> +
+> +Tier 2
+> +~~~~~~
+> +
+> +These platforms are considered to be near Tier 1 level, but are
+> +lacking sufficient automated CI testing cover to guarantee this.
+> +
+> + * Builds and all tests pass at all times in both git HEAD and releases
+> +
+> + * Builds for multiple build configuration are integrated in CI
+> +
+> + * Runs some test frameworks in CI
+> +
+> +This covers
+> +
+> + * Linux (mips64el, ppc64el, riscv64)
+> +
+> + * FreeBSD (x86_64)
+> +
+> + * macOS (aarch64)
+> +
+> + * Windows (x86_64)
+> +
+> +Responsibilities:
+> +
+> + * Contributors MAY test patches on Tier 2 platforms
+> +   by running a GitLab CI pipeline in their fork
+> +
+> + * Maintainers SHOULD request contributors to fix problems with Tier 2
+> +   platforms.
+> +
+> + * Maintainers MUST test pull requests on all Tier 2 platforms,
+> +   by running a GitLab CI pipeline in their fork.
+> +
+> + * Maintainers MUST co-ordinate fixing regressions identified
+> +   post-merge quickly.
+> +
+> +
+> +Tier 3
+> +~~~~~~
+> +
+> +These platforms have theoretical support in the code, but have
+> +little, or no, automated build and test coverage. Downstream
+> +consumers (users or distributors) who care about these platforms
+> +are requested to perform manual testing, report bugs and provide
+> +patches.
+> +
+> + * Builds and tests may be broken at any time in Git HEAD and
+> +   releases
+> +
+> + * Builds are not integrated into CI
+> +
+> + * Tests are not integrated into CI
+> +
+> + * Merging code is not gated
+> +
+> +This covers:
+> +
+> + * NetBSD
+> + * OpenBSD
+> + * macOS (except aarch64)
+> + * FreeBSD (except x86_64)
+> + * Windows (except x86_64)
+> + * Solaris
+> +
+> +Responsibilities:
+> +
+> + * Contributors MAY test patches on Tier 3 platforms manually
+> +
+> + * Maintainers MAY request contributors to fix problems
+> +   on Tier 3 platforms
+> +
+> + * Maintainers MAY test patches on Tier 3 platforms manually
+> +
+> + * Maintainers SHOULD NOT accept patches that remove code
+> +   targetting Tier 3 platforms even if currently broken
+> +
+> + * Downstream vendors SHOULD test RC releases on Tier 3 platforms
+> +   and provide bug reports and patches to address problems
+> +
+> +Note: if a Tier 3 platform is found to be significantly broken,
+> +no patches are contributed for a prolonged period, and there is
+> +no sign of downstream usage, it is liable to be moved to
+> +"Unclassified" and thus be subject to removal.
+> +
+> +
+> +Unclassified
+> +~~~~~~~~~~~~
+> +
+> +These platforms are not intended to be supported in the code
+> +and outside the scope of any support tiers.
+> +
+> +  * Code supporting these platforms can removed at any time
+> +  * Bugs reports related to these platforms will generally
+> +    be ignored
+> +
+> +This covers:
+> +
+> + * All 32-bit architectures on any OS
+> + * Any OS not listed above
+> +
+> +Responsibilities:
+> +
+> + * Maintainers MAY decline patches that add code targetting
+> +   unclassified platforms
+> +
+> + * Maintainers MAY accept patches that remove code targetting
+> +   unclassified platforms
 
-OASIS and the VIRTIO TC are pleased to announce that VIRTIO v1.4 CSD01
-is now available for public review and comment.
+That's a good summary, but it should differentiate testing/runtime 
+issues from building issues.
 
-VIRTIO TC aims to enhance the performance of virtual devices by
-standardizing key features of the VIRTIO (Virtual I/O) Device
-Specification.
+In general, maintainers should ensure code build on all 
+platforms/configs. Of course, it's a best effort considering not all of 
+them are built in CI, but in case a build issue is caught on time, it 
+should be fixed before hitting master.
 
-Virtual I/O Device (VIRTIO) Version 1.4
-Committee Specification Draft 01 / Public Review Draft 01
-09 December 2025
+It may be worth to mention that all platforms can be accessed for free 
+using: https://github.com/second-reality/github-runners.
+If you're open to it, we could move this project under 
+https://github.com/qemu and preinstall all dependencies on each runner, 
+so people can easily jump on a shell and start debugging things without 
+wasting time.
 
-TEX: https://docs.oasis-open.org/virtio/virtio/v1.4/csprd01/virtio-v1.4-csp=
-rd01.html
-(Authoritative)
-HTML: https://docs.oasis-open.org/virtio/virtio/v1.4/csprd01/virtio-v1.4-cs=
-prd01.html
-PDF: https://docs.oasis-open.org/virtio/virtio/v1.4/csprd01/virtio-v1.4-csp=
-rd01.pdf
+With this at hand, there is no reason to let a build failure be merged.
 
-The ZIP containing the complete files of this release is found in the direc=
-tory:
-https://docs.oasis-open.org/virtio/virtio/v1.4/csprd01/virtio-v1.4-csprd01.=
-zip
-
-How to Provide Feedback
-OASIS and the VIRTIO TC value your feedback. We solicit input from
-developers, users and others, whether OASIS members or not, for the
-sake of improving the interoperability and quality of its technical
-work.
-
-The public review is now open and ends Friday, February 13 2026 at 23:59 UT=
-C.
-
-Comments may be submitted to the project=E2=80=99s comment mailing list at
-virtio-comment@lists.linux.dev. You can subscribe to the list by
-sending an email to
-virtio-comment+subscribe@lists.linux.dev.
-
-All comments submitted to OASIS are subject to the OASIS Feedback
-License, which ensures that the feedback you provide carries the same
-obligations at least as the obligations of the TC members. In
-connection with this public review, we call your attention to the
-OASIS IPR Policy applicable especially to the work of this technical
-committee. All members of the TC should be familiar with this
-document, which may create obligations regarding the disclosure and
-availability of a member's patent, copyright, trademark and license
-rights that read on an approved OASIS specification.
-
-OASIS invites any persons who know of any such claims to disclose
-these if they may be essential to the implementation of the above
-specification, so that notice of them may be posted to the notice page
-for this TC's work.
-
-Additional information about the specification and the VIRTIO TC can
-be found at the TC=E2=80=99s public homepage.
+Thanks,
+Pierrick
 
