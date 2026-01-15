@@ -4,63 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04035D4114C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 09:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72DE2D41156
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 10:06:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgJlX-0001wz-9M; Thu, 15 Jan 2026 04:35:43 -0500
+	id 1vgKEc-0005NX-PD; Thu, 15 Jan 2026 05:05:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vgJlR-0001w5-JO
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 04:35:38 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1vgKEb-0005MW-9z; Thu, 15 Jan 2026 05:05:45 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vgJlL-0001kP-Qy
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 04:35:36 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60F9YBr7013094
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 15 Jan 2026 18:35:10 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=EGBoJmCFq8ZUlxpc4vEa+w/XvMghTLmbO+B0Ln4E/0E=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1768469711; v=1;
- b=nUEkg7fmjXWYEoUzdic6IdPq/FvonTIHBXumlGItCxKjcY5BsSQAPP6fl+YLpcIm
- HujshcXdm3gwY9pmeIZ0CbHirf3RbsXOSDatfo/fA6jtVuoVisgZ+vLNp6LM2YLE
- MMrq7qxYbBkNO2GzN+kZsNybkvvaJ94JCUK+yxW5Yjs+2YLS2D79z8UqvoZ8IWg+
- v5QhlMmYme45W/iNL7FkZgpyhBWESODMulnkbAo2GoT2EXePWllDtt948pjOd/ks
- LcJS0iliCxSZCu0eW7Htv/RS0zJXRCDJhxWB6NEVCapicjhBl1Ov8dsXKvYKMUqO
- Uv9HCqAaonl9cv49nQmA/Q==
-Message-ID: <71358c60-7048-4bf1-8b4d-81c1a958780a@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 15 Jan 2026 18:34:11 +0900
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1vgKEZ-0002d0-Mu; Thu, 15 Jan 2026 05:05:44 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60F9JpU6023573;
+ Thu, 15 Jan 2026 10:05:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Ekg4mY
+ 08BPRLGEzngw0AEOB8lQz9VcFRiPodHJnRMao=; b=fAA9dOrBZjsCB1tKrfuyGx
+ dIWKCBd2ORYLz2ZF3/EpZDLC76zInMH9TtMozFfkfplTEyH6nZ0I2LaH/ud3VBDx
+ HQFRhZ9I/qrIzGIBEVOYeH5gVLGxmDB0QkwVNcPBK32ZNeIDRQfM/CSVTDb3GG14
+ Bdu3CzfyJuztKf6YYLSAIYHEeQd+49KBK+na8LHfiXYM4KwhWc3bmzeyYZt9W+0g
+ k1wAFYtGCRh51+hGc9+TW82u7gFKLLgiL6FCBCJW5nJE219kpIYqss8jLjXKaxXx
+ fUCvty0Jyx+EfL0vytm8K+fBCTXXgwAlsAhssqnF723qs9Pjo72BK89w42XNQ3tw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bkedt5f8b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 Jan 2026 10:05:38 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60F83iBC025566;
+ Thu, 15 Jan 2026 10:05:38 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bm23nfa2w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 15 Jan 2026 10:05:38 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60FA5YKh56164844
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 15 Jan 2026 10:05:34 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 20E2A20065;
+ Thu, 15 Jan 2026 10:05:34 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E48F82005A;
+ Thu, 15 Jan 2026 10:05:33 +0000 (GMT)
+Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.52.198.210])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 15 Jan 2026 10:05:33 +0000 (GMT)
+Date: Thu, 15 Jan 2026 11:05:32 +0100
+From: Halil Pasic <pasic@linux.ibm.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: JAEHOON KIM <jhkim@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, pbonzini@redhat.com, stefanha@redhat.com,
+ fam@euphon.net, eblake@redhat.com, berrange@redhat.com,
+ eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de,
+ devel@lists.libvirt.org, Halil Pasic <pasic@linux.ibm.com>
+Subject: Re: [PATCH RFC v1 3/3] qapi/iothread: introduce poll-weight
+ parameter for aio-poll
+Message-ID: <20260115110532.27cb1516.pasic@linux.ibm.com>
+In-Reply-To: <87ikd3xrkc.fsf@pond.sub.org>
+References: <20260113174824.464720-1-jhkim@linux.ibm.com>
+ <20260113174824.464720-4-jhkim@linux.ibm.com>
+ <87qzrs4oud.fsf@pond.sub.org>
+ <eb891295-5ffd-4613-bc37-56d8a07d1fff@linux.ibm.com>
+ <87ikd3xrkc.fsf@pond.sub.org>
+Organization: IBM
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/4] virtio-gpu: Add userptr support and ROCm
- capability enhancements
-To: Honglei Huang <honghuan@amd.com>, alex.bennee@linaro.org,
- dmitry.osipenko@collabora.com, Ray.Huang@amd.com
-Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org
-References: <20260115082739.174224-1-honghuan@amd.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260115082739.174224-1-honghuan@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDA2OSBTYWx0ZWRfXw4rAxSxvHZ2J
+ o8r6s0NWwl4OaB4pCPRzYqsoBx8lIx2GlEkF82CQypfMVf3BAHCtxB2MTHos/42zXUBLOEdlNfc
+ 7o3VBEiUJMmidm9IDMenRIq1Ll2vR7ioXHxRE1vOiH2gHbEWQllSUPXUEg+lOxqb6AYMYGn28Ts
+ PoaG1O01xMdYhOt2HF5gy/bbkE7HlPFpBoxv9rYpKRZxZI0+oFHkYmEMlBha5phm0yNewnr8QJY
+ J68bzUil7vXHRnJX80Hw5lnin7cOT5S5tpioAUK6dzTr1XaPCkDkbShpWG/9uVVtpj/XGqwqx+o
+ C7E0edC95RHSncEWIX8tNhcrNZZxJjkoniYzeSx8/s9S6zdVkIqqfkQ5+OxpDOPFQ2UtmiQ/pyg
+ 74fp1f384elXkCBh2nrK4+jugpN0PdjTcMAdXFoRkbTttMtrOsWmjCHvoOVFhgAK4ZeisbNjWCC
+ lLqzyoNgNq49929xgVQ==
+X-Proofpoint-GUID: nXYUkDTdPYjddVwqSwn7BJdG9Sc8zW-_
+X-Authority-Analysis: v=2.4 cv=WLJyn3sR c=1 sm=1 tr=0 ts=6968bbf2 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=20KFwNOVAAAA:8 a=cv7ZjbEX4tCoQRNZzaUA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: nXYUkDTdPYjddVwqSwn7BJdG9Sc8zW-_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-15_03,2026-01-14_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 malwarescore=0 phishscore=0 suspectscore=0
+ priorityscore=1501 bulkscore=0 clxscore=1011 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2512120000
+ definitions=main-2601150069
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=pasic@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,117 +129,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/01/15 17:27, Honglei Huang wrote:
-> This patch series introduces enhancements to virtio-gpu to improve
-> memory management and GPU virtualization capabilities for ROCm (Radeon Open Compute)
-> workloads.
-> 
-> Usage example:
->    -device virtio-gpu-gl,rocm=on
-> 
-> The series includes:
-> 
-> 1. Linux header updates for userptr support: Synchronizes virtio-gpu headers
->     with upstream kernel changes, adding VIRTIO_GPU_F_RESOURCE_USERPTR feature
->     flag and VIRTIO_GPU_BLOB_FLAG_USE_USERPTR blob flag support. This enables
->     user pointer mapping for blob resources, allowing guest applications to use
->     user-allocated memory for GPU resources more efficiently.
-> 
-> 2. Removal of nr_entries limit: Removes the artificial 16384 entry limit in
->     virtio_gpu_create_mapping_iov() to align with kernel driver behavior and
->     support legitimate large scatter-gather operations.
-> 
-> 3. Linux header updates for ROCm capability: Synchronizes headers to add
->     VIRTIO_GPU_CAPSET_ROCM capability set definition.
-> 
-> 4. ROCm capability support: Adds native support for AMD's ROCm (Radeon Open
->     Compute) platform through a new "rocm=on" device property and capability.
->     This enables GPU compute workloads using the ROCm stack through virtio-gpu.
-> 
-> Changes in v5:
-> - Split userptr header updates into dedicated patch (patch 1/4)
-> - Extracted nr_entries limit removal into standalone commit (patch 2/4)
-> - Split ROCm header updates into dedicated patch (patch 3/4)
-> - Removed VIRTIO_GPU_F_RESOURCE_USERPTR feature decectiontion
-> - Keep ROCm capability support with "rocm=on" device property (patch 4/4)
-> - Change corresponding commit messages, change corresponding cover letter content
-> - Remove RFC label
+On Thu, 15 Jan 2026 08:28:51 +0100
+Markus Armbruster <armbru@redhat.com> wrote:
 
-It is too early to drop the RFC labell. The following should happen 
-before dropping the RFC label:
-- The Linux header change land in some maintainer's tree.
-- The Linux headers with scripts/update-linux-headers.sh is updated
-   using the tree.
-- The virglrenderer change lands the upstream.
-- A proper virglrenderer feature detection with a version number that is
-   expected to have the change.
+> I understand that you're mirroring how @poll-grow and @poll-shrink work,
+> but let's ignore that for a minute.
+> 
+> Compare four possible interfaces:
+> 
+> 1. Optional @poll-weight defaults to 2.  Values <= 0 are rejected.
+> 
+> 2. Optional @poll-weight defaults to 2.  Value 0 is replaced by the
+>    default value 2.  Values < 0 are rejected.
+> 
+> 3. Optional @poll-weight defaults to 0.  Values < 0 are rejected.  Value
+>    0 makes the system pick a value, namely 2.
+> 
+> 4. Optional @poll-weight defaults to 0.  Values < 0 are rejected.  Value
+>    0 makes the system pick a value.  It currently picks 2.
+> 
+> The difference between 3. and 4. is that 3. makes "system picks 2" part
+> of the contract, while 4. doesn't.
+> 
+> 1. is the simplest.  Is 2.'s additional complexity worthwhile?  3.'s?
+> 4.'s?
 
-So the QEMU change will land the last. The patches can still be reviewed 
-in the RFC state to ensure that the series will be quickly pulled when 
-ready.
+Isn't there more options? Like
+
+5. Optional @poll-weight defaults to system-default.  Value 0 is replaced
+by the system pick the system default value. Currently the system default
+value is 2. Values < 0 are rejected.
+
+That would mean:
+* current value inspectable
+* system default not part of the interface contract
+* interface offers a "please go back to value not user specified:
+  operation
+
+BTW I like your approach with explicitly listing and evaluating the
+options a lot!
 
 Regards,
-Akihiko Odaki
-
-> 
-> Changes in v4:
-> - Change this series to RFC
-> - Renamed HSAKMT-related functionality to ROCm for better clarity and
->    alignment with the ROCm ecosystem terminology
-> - Changed device property from "hsakmt=on" to "rocm=on"
-> - Changed flag from VIRTIO_GPU_FLAG_HSAKMT_ENABLED to
->    VIRTIO_GPU_FLAG_ROCM_ENABLED
-> - Changed renderer flag from VIRGL_RENDER_USE_HSAKMT to
->    VIRGL_RENDERER_USE_ROCM
-> - Updated capset handling to use VIRTIO_GPU_CAPSET_ROCM (8) instead of
->    VIRTIO_GPU_CAPSET_HSAKMT (8)
-> - Removed the error handling fix from patch 1 (virtio-gpu-virgl.c) into
->    another thread
-> 
-> Changes in v3:
-> - Renamed HSAKMT-related functionality to ROCm for better clarity and
->    alignment with the ROCm ecosystem terminology
-> - Changed device property from "hsakmt=on" to "rocm=on"
-> - Changed flag from VIRTIO_GPU_FLAG_HSAKMT_ENABLED to
->    VIRTIO_GPU_FLAG_ROCM_ENABLED
-> - Changed renderer flag from VIRGL_RENDER_USE_HSAKMT to
->    VIRGL_RENDERER_USE_ROCM
-> - Updated capset handling to use VIRTIO_GPU_CAPSET_ROCM (8) instead of
->    VIRTIO_GPU_CAPSET_HSAKMT (8)
-> - Removed the error handling fix from patch 1 (virtio-gpu-virgl.c) into
->    another thread
-> 
-> Changes in v2:
-> - Fixed error handling bug in virtio-gpu-virgl.c where the return
->    value check was inverted (changed from "if (!ret)" to "if (ret != 0)")
-> - Added VIRGL_RENDER_USE_HSAKMT flag initialization in virtio_gpu_virgl_init()
->    when HSAKMT support is enabled
-> - Simplified blob resource creation logic by removing complex conditional
->    branching for userptr vs regular blob handling
-> - Updated commit messages to reflect bug fixes and improvements
-> - Added references to related patches in Linux kernel, virglrenderer, and
->    ROCm Runtime components for complete feature implementation tracking
-> 
-> Related patches in other components:
-> - Linux kernel virtio-gpu support:
->    https://lore.kernel.org/lkml/20251112072910.3716944-1-honglei1.huang@amd.com/
-> - Virglrenderer support:
->    https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1568
-> - ROCm Runtime support (merged):
->    https://github.com/ROCm/ROCR-Runtime/commit/48d3719dba6ca91f597a8179d8b341387ce155e8
-> 
-> Honglei Huang (4):
->    virtio-gpu: Update Linux headers to add virtio-gpu userptr support
->    virtio-gpu: Remove nr_entries limit check in create_mapping_iov
->    virtio-gpu: Update Linux headers to add ROCM capability set
->    virtio-gpu: Add ROCm capability support
-> 
->   hw/display/virtio-gpu-gl.c                  |  2 ++
->   hw/display/virtio-gpu-virgl.c               | 12 ++++++++++++
->   hw/display/virtio-gpu.c                     |  7 -------
->   include/hw/virtio/virtio-gpu.h              |  3 +++
->   include/standard-headers/linux/virtio_gpu.h |  6 ++++++
->   5 files changed, 23 insertions(+), 7 deletions(-)
-> 
-
+Halil
 
