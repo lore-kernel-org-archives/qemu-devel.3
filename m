@@ -4,59 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0DBBD46617
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 20:40:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45DEED46623
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 20:46:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgU7t-0002ae-Co; Thu, 15 Jan 2026 15:39:29 -0500
+	id 1vgUE3-0005to-CJ; Thu, 15 Jan 2026 15:45:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vgU7r-0002W2-2I
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 15:39:27 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vgU7o-0000wa-Gq
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 15:39:26 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1488E596A0E;
- Thu, 15 Jan 2026 21:39:16 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id re94NgKP5oDI; Thu, 15 Jan 2026 21:39:13 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A3C4F596A0D; Thu, 15 Jan 2026 21:39:13 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A1A575969E4;
- Thu, 15 Jan 2026 21:39:13 +0100 (CET)
-Date: Thu, 15 Jan 2026 21:39:13 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
-cc: qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Stefan Hajnoczi <stefanha@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] docs/about: propose OS platform/arch support tiers
-In-Reply-To: <20260115180123.848640-1-berrange@redhat.com>
-Message-ID: <c53dbe16-98cb-0cde-7024-3deacabf9bfd@eik.bme.hu>
-References: <20260115180123.848640-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <kelly.cullinane@oasis-open.org>)
+ id 1vgTFF-0008TR-Ti
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:43:02 -0500
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <kelly.cullinane@oasis-open.org>)
+ id 1vgTFD-00077O-Sa
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:43:01 -0500
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-4ffc5f35b54so18511031cf.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 11:42:58 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768506177; cv=none;
+ d=google.com; s=arc-20240605;
+ b=RqKUSaZccbUvX5e0AnfijaZ6ogcgI9delz8mVqAa8oq5Jn0ujlBDXJhqPCo6iOLgPx
+ EAEWXNArMzi119YQIokTp0MPPwv8vyGAep8XsvNwPiD+S8EQ3LH+bwXPpEKrYjUG06lQ
+ krbRQd/j9gYJHTXv5699mI3tnSYBNZ0K94gDKlxCl812kSVRWuR5CMoeXwL8X3AsusPr
+ U4swPrpkk4148WQBE57cjiAFtwQOyN+FHKTzV+eKdlnoljKNKXFckE6DU+6MTwYMG3kn
+ dp7XIxxFjFaOMJf6DbKHZRviO0JbWV8pxgpqu70TZbdAPg55iLHFv4EXCZW8pgcJK4nK
+ ktHg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :mime-version:dkim-signature;
+ bh=BVuRcIp9C9aDs7YujmRCIsJWyiCOSqmqC7FZNs5wMUU=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=a13hVAHkh471hkmw0sE1eawaxQTTbl4c2UbgfDMrulZG6SqQizlfNf7JaDW1Arm4ei
+ 4JY/CGkAPYZT1nzUvip0lcUoH4JfgtlTzoTAYpfDMmPKqmR8lfAwR8LGy0euTGFjNRle
+ L6LGiXCZFC+vFXWXldzoEFH0Zz7WPsw4xrUSg23Q7x1vApsixTnfDWJkViqeJZ1esTvD
+ TQ4EdEA0brpIa/YYY6uODdK8dNtEuMXPMTydnR8PUJ+jdmN2IathzNPgZaYZmUqKI+DN
+ NcNuTs0uwDsK5whudhYkcBDBnd8lVhbUqrqgt3VssGSPmiWkPQE49z5OPzxjNd9EcUpf
+ WyUA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oasis-open-org.20230601.gappssmtp.com; s=20230601; t=1768506177; x=1769110977;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=BVuRcIp9C9aDs7YujmRCIsJWyiCOSqmqC7FZNs5wMUU=;
+ b=mVG0hM8FeOdabHztB/ZFIfawD7ou0CWJDF4/T8lXx7yHDyKMs0w2NqAoavHTIVL3oN
+ 3xZw8+ezKZFmw4dNyGAc5/jMxxYKHsLSKQJCdTVqs4ltnILvTn442cAYzqm+FWtal32Y
+ XpFz8dITwBt0Y/vxxHyK+7eYiASwkZkAM5dKPGtMpWZALvuswyd+Snj4YBMcx/d3ACvz
+ jBnibDNwhjzqsF9/tJ+dTt83UL6z52hpxPuBllfbvTUQGR22KeJKYmrM2L3nnzLGi3aw
+ jSzTykQvlNkqBaBvjB+JqipLEYohvV+bDWjws2OXDh14Mk5YTUfJrfPzKX3aVzs4HUrI
+ xI0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768506177; x=1769110977;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BVuRcIp9C9aDs7YujmRCIsJWyiCOSqmqC7FZNs5wMUU=;
+ b=N0vmELyGeUUxZx/LR34gdKtrxTj+9UOJHq7xFMOb75CTzG+QyQa8x7/TYphBCqzwIi
+ uejnPYxp1eQVn9g192sSLcFpO4hmqP4CCC9Kh6bxs5/kCX4o2oGFtbdhuCAPLGOWwHX6
+ +8wKbcfkbnX6DtW+sr5n1OYcxa+Po0Qhg5+Ss00aB7qsAY1gTw3y5ISP/QoyM4/bFyW0
+ RXKOf3mydbCddtzRZaIUA1V8zCZ+AKLcFzy/co25kVn+m3FE9WyFQZv54HQeSMT1Hwcm
+ ON/vGmUkTgaPx3nUosZ83jk2Z3qWLNxMkZXJp1Xb24qUYp84Zkp/9oxZ8zEo7mfNrywA
+ pTfA==
+X-Gm-Message-State: AOJu0YzqXj8PwmpVPyro1ehyqI/78ymyJnSKg3uNnqK7ahFNfFMYQrAg
+ UlNI4jG5A7FbuWE0Wi4aJK+v5vdVOhg8Cqnu3dwwn6W2/se1IbyHR2/jYlTal238Zf0/mRQG1v/
+ YHPKeNAjY2OJ2VgJEDI/x+6LaXVxhr0VwoJSRnuuFb+ljxe14JoRI9X4=
+X-Gm-Gg: AY/fxX7FKIcLMZ9eQ71rTT9yPbPDaDPvNbmKTziavO+4JSYHfYbUvLzzkhHk+vcoEZ/
+ Z1KPB86gd0YGaTBR2v0iwQJczPd5UL6lT1ozgLHFGeJWFGL/IY0NECaVJeVnxZTP5axsIsHHdS/
+ kKacdcu4CGQegihDq5CpNhN5NjV5kfVxktNfZqs/obSc0bLJ7YjoMgHMBJoFdETGH86dcfkxiAO
+ GDxHWEmESrTkywLPUWUMctSFa5vs1gO9xWbb+TS+0tJRbjBN/npVjCghYDhz3RWnRHeKMt9khr0
+ DaKQ85NPKbhO8dHN2LzzrJnUSgZB09P0hjIcXqdqpPKyZebNJzwyQA/t1VD7
+X-Received: by 2002:a05:622a:411:b0:4f1:ccec:84b0 with SMTP id
+ d75a77b69052e-502a1f82c21mr6340201cf.57.1768506177294; Thu, 15 Jan 2026
+ 11:42:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1389464339-1768509553=:70469"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+From: Kelly Cullinane <kelly.cullinane@oasis-open.org>
+Date: Thu, 15 Jan 2026 14:42:20 -0500
+X-Gm-Features: AZwV_Qjs08tGS2fCNaZfZKc6ZBlNPl7GFmYqfaCBM6gz6pHZBaSGEXxzjP1u8sg
+Message-ID: <CAAiF601MvyNNsA77U=vdKwHr-xgQFmUp2u5izCY7Qfbs5_OfTA@mail.gmail.com>
+Subject: Invitation to comment on VIRTIO v1.4 CSD01
+To: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=kelly.cullinane@oasis-open.org; helo=mail-qt1-x832.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 15 Jan 2026 15:45:49 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,219 +112,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+OASIS members and other interested parties,
 
---3866299591-1389464339-1768509553=:70469
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+OASIS and the VIRTIO TC are pleased to announce that VIRTIO v1.4 CSD01
+is now available for public review and comment.
 
-On Thu, 15 Jan 2026, Daniel P. Berrangé wrote:
-> Informally we have approximately three groups of platforms
->
-> * Tier 1: fully built and fully tested by CI. Must always be
->           kept working & regressions fixed immediately
->
-> * Tier 2: fully built and partially tested by CI. Should
->           always be kept working & regressions fixed quickly
->
-> * Tier 3: code exists but is not built or tested by CI.
->           Should not be intentionally broken but not
-> 	   guaranteed to work at any time. Downstream must
-> 	   manually test, report & fix bugs.
->
-> Anything else is "unclassified" and any historical code
-> remnants may be removed.
->
-> It is somewhat tricky to define unambiguous rules for each tier,
-> but this doc takes a stab at it. We don't need to cover every
-> eventuality. If we get the core points of view across, then it
-> at least sets the direction for maintainers/contributors/users.
-> Other aspects can be inferred with greater accuracy than today.
->
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->
-> This came out of the discussion about recent unnoticed breakage
-> in NetBSD builds and what maintainers are expected todo about
-> it (if anything)
->
->  https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg02543.html
->
-> docs/about/build-platforms.rst | 152 +++++++++++++++++++++++++++++++++
-> 1 file changed, 152 insertions(+)
->
-> diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-> index e95784cdb5..950e164c02 100644
-> --- a/docs/about/build-platforms.rst
-> +++ b/docs/about/build-platforms.rst
-> @@ -171,3 +171,155 @@ Only 64-bit Windows is supported.
-> .. _MacPorts: https://www.macports.org/
-> .. _MSYS2: https://www.msys2.org/
-> .. _Repology: https://repology.org/
-> +
-> +OS Support Tiers
-> +----------------
-> +
-> +While the QEMU code targets a number of different OS platforms, they don't
-> +all get the same level of support from the project. This applies to
-> +contributor & maintainer expectations, CI automation and requirements
-> +for merge gating.
-> +
-> +Tier 1
-> +~~~~~~
-> +
-> +These platforms attain the highest level of quality offered by
-> +the QEMU project.
-> +
-> + * Builds and all tests pass at all times in both git HEAD and releases
-> +
-> + * Builds for multiple build configuration are integrated in CI
-> +
-> + * Runs all available tests frameworks (unit, qtest, iotests, functional)
-> +   in CI
-> +
-> + * Merging code is gated on successful CI jobs
-> +
-> +This covers
-> +
-> + * Linux (x86_64, aarch64, s390x)
-> +
-> +Responsibilities:
-> +
-> + * Contributors MUST test submitted patches on one of Tier 1 platforms.
-> +
-> + * Contributors SHOULD test submitted patches on Tier 1 platforms
-> +   by running a GitLab CI pipeline in their fork.
-> +
-> + * Maintainers MUST request contributors to fix problems with Tier 1
-> +   platforms.
-> +
-> + * Maintainers MUST test pull requests on Tier 1 platforms
-> +   by running a GitLab CI pipeline in their fork.
-> +
-> + * Maintainers MUST co-ordinate fixing regressions identified
-> +   post-merge immediately.
-> +
-> +
-> +Tier 2
-> +~~~~~~
-> +
-> +These platforms are considered to be near Tier 1 level, but are
-> +lacking sufficient automated CI testing cover to guarantee this.
-> +
-> + * Builds and all tests pass at all times in both git HEAD and releases
-> +
-> + * Builds for multiple build configuration are integrated in CI
-> +
-> + * Runs some test frameworks in CI
-> +
-> +This covers
-> +
-> + * Linux (mips64el, ppc64el, riscv64)
-> +
-> + * FreeBSD (x86_64)
-> +
-> + * macOS (aarch64)
-> +
-> + * Windows (x86_64)
-> +
-> +Responsibilities:
-> +
-> + * Contributors MAY test patches on Tier 2 platforms
-> +   by running a GitLab CI pipeline in their fork
-> +
-> + * Maintainers SHOULD request contributors to fix problems with Tier 2
-> +   platforms.
-> +
-> + * Maintainers MUST test pull requests on all Tier 2 platforms,
-> +   by running a GitLab CI pipeline in their fork.
-> +
-> + * Maintainers MUST co-ordinate fixing regressions identified
-> +   post-merge quickly.
-> +
-> +
-> +Tier 3
-> +~~~~~~
-> +
-> +These platforms have theoretical support in the code, but have
-> +little, or no, automated build and test coverage. Downstream
-> +consumers (users or distributors) who care about these platforms
-> +are requested to perform manual testing, report bugs and provide
-> +patches.
-> +
-> + * Builds and tests may be broken at any time in Git HEAD and
-> +   releases
-> +
-> + * Builds are not integrated into CI
-> +
-> + * Tests are not integrated into CI
-> +
-> + * Merging code is not gated
-> +
-> +This covers:
-> +
-> + * NetBSD
-> + * OpenBSD
-> + * macOS (except aarch64)
-> + * FreeBSD (except x86_64)
-> + * Windows (except x86_64)
-> + * Solaris
-> +
-> +Responsibilities:
-> +
-> + * Contributors MAY test patches on Tier 3 platforms manually
-> +
-> + * Maintainers MAY request contributors to fix problems
-> +   on Tier 3 platforms
-> +
-> + * Maintainers MAY test patches on Tier 3 platforms manually
-> +
-> + * Maintainers SHOULD NOT accept patches that remove code
-> +   targetting Tier 3 platforms even if currently broken
+VIRTIO TC aims to enhance the performance of virtual devices by
+standardizing key features of the VIRTIO (Virtual I/O) Device
+Specification.
 
-If an OS stops supporting a platform in new versions then due to the 
-policy of supporting only the last two OS versions in QEMU may lead to 
-breaking this. Maybe it tries to say that Tier 3 is intended to be fixed 
-but no guarantees on when? It is also clarified below so maybe this clause 
-is not needed or need to be reworded?
+Virtual I/O Device (VIRTIO) Version 1.4
+Committee Specification Draft 01 / Public Review Draft 01
+09 December 2025
 
-> + * Downstream vendors SHOULD test RC releases on Tier 3 platforms
-> +   and provide bug reports and patches to address problems
-> +
-> +Note: if a Tier 3 platform is found to be significantly broken,
-> +no patches are contributed for a prolonged period, and there is
-> +no sign of downstream usage, it is liable to be moved to
-> +"Unclassified" and thus be subject to removal.
-> +
-> +
-> +Unclassified
-> +~~~~~~~~~~~~
-> +
-> +These platforms are not intended to be supported in the code
-> +and outside the scope of any support tiers.
-> +
-> +  * Code supporting these platforms can removed at any time
+TEX: https://docs.oasis-open.org/virtio/virtio/v1.4/csprd01/virtio-v1.4-csp=
+rd01.html
+(Authoritative)
+HTML: https://docs.oasis-open.org/virtio/virtio/v1.4/csprd01/virtio-v1.4-cs=
+prd01.html
+PDF: https://docs.oasis-open.org/virtio/virtio/v1.4/csprd01/virtio-v1.4-csp=
+rd01.pdf
 
-can be removed
+The ZIP containing the complete files of this release is found in the direc=
+tory:
+https://docs.oasis-open.org/virtio/virtio/v1.4/csprd01/virtio-v1.4-csprd01.=
+zip
 
-> +  * Bugs reports related to these platforms will generally
-> +    be ignored
-> +
-> +This covers:
-> +
-> + * All 32-bit architectures on any OS
-> + * Any OS not listed above
-> +
-> +Responsibilities:
-> +
-> + * Maintainers MAY decline patches that add code targetting
-> +   unclassified platforms
-> +
-> + * Maintainers MAY accept patches that remove code targetting
-> +   unclassified platforms
+How to Provide Feedback
+OASIS and the VIRTIO TC value your feedback. We solicit input from
+developers, users and others, whether OASIS members or not, for the
+sake of improving the interoperability and quality of its technical
+work.
 
-Regards,
-BALATON Zoltan
---3866299591-1389464339-1768509553=:70469--
+The public review is now open and ends Friday, February 13 2026 at 23:59 UT=
+C.
+
+Comments may be submitted to the project=E2=80=99s comment mailing list at
+virtio-comment@lists.linux.dev. You can subscribe to the list by
+sending an email to
+virtio-comment+subscribe@lists.linux.dev.
+
+All comments submitted to OASIS are subject to the OASIS Feedback
+License, which ensures that the feedback you provide carries the same
+obligations at least as the obligations of the TC members. In
+connection with this public review, we call your attention to the
+OASIS IPR Policy applicable especially to the work of this technical
+committee. All members of the TC should be familiar with this
+document, which may create obligations regarding the disclosure and
+availability of a member's patent, copyright, trademark and license
+rights that read on an approved OASIS specification.
+
+OASIS invites any persons who know of any such claims to disclose
+these if they may be essential to the implementation of the above
+specification, so that notice of them may be posted to the notice page
+for this TC's work.
+
+Additional information about the specification and the VIRTIO TC can
+be found at the TC=E2=80=99s public homepage.
 
