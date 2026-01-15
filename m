@@ -4,104 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E708D44C53
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 14:20:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02514D44C56
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 14:27:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgOCj-00017y-TS; Thu, 15 Jan 2026 09:20:06 -0500
+	id 1vgOJ4-0003Xj-QG; Thu, 15 Jan 2026 09:26:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vgOCi-00017V-QS
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:20:04 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vgOJ3-0003XG-B4
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:26:37 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vgOCg-0003Lp-Gg
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:20:03 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8D8715BD43;
- Thu, 15 Jan 2026 14:19:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768486797; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s9sLZwr6RbuiekgW6Zz33YGkel03GvnXs7QJpQMnsss=;
- b=OAKsMVHtO7l4+EZ0rL6s8qPuuJWhsusxJE+hN4OR+DujQBPNth9Y6sE5sWTKf6pxpIQqBG
- t0ddQ622hbmCaCI1luXsECWvP2hnHiN5vyRcszZYBsHmj09NHGw+PupFES7FfQxF0uyCuA
- Opd5AxJySjodpX2UNbOC/VrEXnH6mcw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768486797;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s9sLZwr6RbuiekgW6Zz33YGkel03GvnXs7QJpQMnsss=;
- b=dyyGuyEXqh9MAoEBMVmBNslxhCytYE9NI+kADNnRAznbe016Z5eKh+WRX3AOBf8bJe0yyB
- pbccNNl0w6QG8TBg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768486797; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s9sLZwr6RbuiekgW6Zz33YGkel03GvnXs7QJpQMnsss=;
- b=OAKsMVHtO7l4+EZ0rL6s8qPuuJWhsusxJE+hN4OR+DujQBPNth9Y6sE5sWTKf6pxpIQqBG
- t0ddQ622hbmCaCI1luXsECWvP2hnHiN5vyRcszZYBsHmj09NHGw+PupFES7FfQxF0uyCuA
- Opd5AxJySjodpX2UNbOC/VrEXnH6mcw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768486797;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s9sLZwr6RbuiekgW6Zz33YGkel03GvnXs7QJpQMnsss=;
- b=dyyGuyEXqh9MAoEBMVmBNslxhCytYE9NI+kADNnRAznbe016Z5eKh+WRX3AOBf8bJe0yyB
- pbccNNl0w6QG8TBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0CD433EA63;
- Thu, 15 Jan 2026 14:19:56 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id eZhQL4z3aGmeXgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 15 Jan 2026 14:19:56 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Lukas Straub <lukasstraub2@web.de>, Juraj Marcin <jmarcin@redhat.com>,
- peterx@redhat.com, Prasad Pandit <ppandit@redhat.com>
-Subject: Re: [PATCH v2 0/2] tests/migration-test: Small cleanup series on
- postcopy tests
-In-Reply-To: <20260114153751.2427172-1-peterx@redhat.com>
-References: <20260114153751.2427172-1-peterx@redhat.com>
-Date: Thu, 15 Jan 2026 11:19:53 -0300
-Message-ID: <87a4yfnek6.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vgOJ0-0004jc-Tw
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:26:37 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-47ee76e8656so12206635e9.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 06:26:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768487193; x=1769091993; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pAnwY4PzPHpEbddcfZS0lRxYq0htrXKjp/HZmwpKGDk=;
+ b=M7vZcOkOjFRb830QQUSRk4+6Kcbd7yIG7ugn1cqyig09UAKd1fRsg+t2rTOyeJrUTe
+ gp40pAmkub8ee2Xdr4LPWhjkcQ3IsscgJRi02aUcvXn8VJhaVOmES40FE4y3FKmi8xOp
+ 6bfUeAisdohVlRVY0fV2qPlZSE2R2eCexDund12P034U06l9nW57R4cItjBgzZnccEce
+ xos1/5DEvP1mzWEWBYwPrY1eVXTAIXn9Y1v2XGOTWiZ8gbBFgazPOvkMx7QM2ufyWwWJ
+ pjwSyJWRaxmey/km8dYUUsHXnClSh0TeVN/0FcgIueR57RgCi2uvS79JCrefGY9sq7kq
+ GQHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768487193; x=1769091993;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pAnwY4PzPHpEbddcfZS0lRxYq0htrXKjp/HZmwpKGDk=;
+ b=eVxJHizU+Bcty7yBHPqdFD1YxI/cMt33AuSxFlmqvOuLXNTyWp9qrqG9SGHSqEpHPm
+ vThJqTki7Mktqdsu8/y3R7ycG4j7jKX9+yUou9xd6PKPAcWU+hZPGvlKna6M+7rVkLBn
+ io9poFY6k6SBVhwXfEWvzXNDwrC2zR7bhoDFsY67EltjeR2n9ffITlCBEtrtxVxS7ZoK
+ qhvxlDLTS7+Kr7Lp4AfU1uflJEusouDOoHBXwZDaqsrmJp8eAK2bcmzDalExtLtuuMGZ
+ uXm2vNxGuoAeMTyEYYcnv+Mgn9MLr570h+Y3s7WMZK5CEjU498gxnerJiS53zCI725tZ
+ vN4g==
+X-Gm-Message-State: AOJu0Yw/sQYsFjQJXIQav9WMOWxnrlocOKNCXDfHOUJX91tY1NZQJ61G
+ KPUGObKeNRkHYdJP0KRXVhKhI7waR74DjrRAQZUMK77joOMmVgub4vlqQhxqyKqmKEhDeQJ5cxz
+ DgZ49
+X-Gm-Gg: AY/fxX5Ak6JBQje8t4B4qhR3aIqoBPMZJ9cG0/a8WTo4ch8bWpBPfnoEPnMi7RN+wWs
+ uwVnWtqOWwUILzNaWJ9ImJrohGWMNLWWbGtbbO+/CBy/ta5qcOecMg+719TwRibQIS4V4bm32Xi
+ 0No1hM6LnrSshX3XW1PEM8ABs2LWygVgoUSHs2Ch9L0lTGz/YPK3ixwHM1YEsghpyAWkzVF7iO6
+ ZLQ3HDqPWo4yyjHQKb15RmTtSj9oEgoK2ny8sfhterCNHHaS7ndxiMW3l7TYLsE4BGsyemkIf+D
+ TQxvFJF4ZD5lElW8k5UTE4+7Ym+rfk4fk1QHIujTBjUlj8vFdYg4m7L7xwF1ge7gMOlESBbuFR9
+ Y0p2W5mBYnI4HOt4sXAZAOVYrehXnIlPEU4jNRMsaKhuLyqZxtVXqzQqy/XxJ80QUbgw7CBK6Iu
+ uJ48EXFR+9WF65qmb6Hv/b4mXcdH+qRXT7pB1rJG9WEOBvztcgqZbSGSJ877OcM7jq+yqEWrM+d
+ 7YJRb4OxLhIl1udY5flbowOAhoW5uW0/uZ+LIaFLHhaKQ==
+X-Received: by 2002:a05:600c:34cd:b0:477:54cd:200e with SMTP id
+ 5b1f17b1804b1-47ee32e5d05mr79663955e9.1.1768487193006; 
+ Thu, 15 Jan 2026 06:26:33 -0800 (PST)
+Received: from mnementh.archaic.org.uk
+ (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
+ [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47f4b2672d6sm50759435e9.14.2026.01.15.06.26.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Jan 2026 06:26:31 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>,
+ Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>
+Subject: [PATCH 1/4] docs/system/arm/xlnx-zynq.rst: Improve docs rendering
+Date: Thu, 15 Jan 2026 14:26:26 +0000
+Message-ID: <20260115142629.665319-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260115142629.665319-1-peter.maydell@linaro.org>
+References: <20260115142629.665319-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[web.de]; MISSING_XM_UA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; FREEMAIL_CC(0.00)[web.de,redhat.com];
- RCPT_COUNT_FIVE(0.00)[6]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,26 +109,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Make some minor improvements to the rendering of the docs for
+the xlnx-zynq-a9 board:
 
-> v2:
-> - add one sentence to commit message of patch 2
->
-> This series removes two unnecessary fields in MigrateCommon that was only
-> for postcopy tests.
->
-> Comments welcomed, thanks.
->
-> Peter Xu (2):
->   tests/migration-test: Remove postcopy_data from MigrateCommon
->   tests/migration-test: Remove postcopy_recovery_fail_stage from
->     MigrateCommon
->
->  tests/qtest/migration/framework.h      |  7 ++-----
->  tests/qtest/migration/framework.c      | 25 ++++++++++++++-----------
->  tests/qtest/migration/postcopy-tests.c | 12 ++++--------
->  tests/qtest/migration/tls-tests.c      |  8 ++++----
->  4 files changed, 24 insertions(+), 28 deletions(-)
+ * use a proper hyperlink rather than a bare URL for the
+   link to the reference manual
+ * drop the hex address of the SMC SRAM: the bare '@' is
+   rendered as bogus mailto: hyperlink, and the information
+   is not very interesting to the user anyway
+ * expand out the abbreviations in the list of Cortex-A9
+   per-CPU devices
+ * correct the bullet-point list markup so it doesn't render
+   with odd highlighted lines
+ * capitalize 'Arm' correctly
 
-Queued, thanks
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ docs/system/arm/xlnx-zynq.rst | 51 ++++++++++++++++++-----------------
+ 1 file changed, 27 insertions(+), 24 deletions(-)
+
+diff --git a/docs/system/arm/xlnx-zynq.rst b/docs/system/arm/xlnx-zynq.rst
+index ade18a3fe1..aa37df2926 100644
+--- a/docs/system/arm/xlnx-zynq.rst
++++ b/docs/system/arm/xlnx-zynq.rst
+@@ -4,32 +4,35 @@ The Zynq 7000 family is based on the AMD SoC architecture. These products
+ integrate a feature-rich dual or single-core Arm Cortex-A9 MPCore based
+ processing system (PS) and AMD programmable logic (PL) in a single device.
+ 
+-More details here:
+-https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Zynq-7000-SoC-Technical-Reference-Manual
+-
+-QEMU xilinx-zynq-a9 board supports following devices:
+-    - A9 MPCORE
+-        - cortex-a9
+-        - GIC v1
+-        - Generic timer
+-        - wdt
+-    - OCM 256KB
+-    - SMC SRAM@0xe2000000 64MB
+-    - Zynq SLCR
+-    - SPI x2
+-    - QSPI
+-    - UART
+-    - TTC x2
+-    - Gigabit Ethernet Controller x2
+-    - SD Controller x2
+-    - XADC
+-    - Arm PrimeCell DMA Controller
+-    - DDR Memory
+-    - USB 2.0 x2
++The SoC is documented in the
++`Zynq 7000 Technical Reference manual <https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Zynq-7000-SoC-Technical-Reference-Manual>`__.
++
++The QEMU xilinx-zynq-a9 board supports the following devices:
++
++- Arm Cortex-A9 MPCore CPU
++
++  - Cortex-A9 CPUs
++  - GIC v1 interrupt controller
++  - Generic timer
++  - Watchdog timer
++
++- OCM 256KB
++- SMC SRAM 64MB
++- Zynq SLCR
++- SPI x2
++- QSPI
++- UART
++- TTC x2
++- Gigabit Ethernet Controller x2
++- SD Controller x2
++- XADC
++- Arm PrimeCell DMA Controller
++- DDR Memory
++- USB 2.0 x2
+ 
+ Running
+ """""""
+-Direct Linux boot of a generic ARM upstream Linux kernel:
++Direct Linux boot of a generic Arm upstream Linux kernel:
+ 
+ .. code-block:: bash
+ 
+@@ -44,4 +47,4 @@ For configuring the boot-mode provide the following on the command line:
+ 
+    -machine boot-mode=qspi
+ 
+-Supported values are jtag, sd, qspi, nor.
++Supported values are ``jtag``, ``sd``, ``qspi`` and ``nor``.
+-- 
+2.47.3
+
 
