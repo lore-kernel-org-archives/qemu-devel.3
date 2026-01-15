@@ -4,97 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 222D7D41177
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 11:45:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6DCBD41177
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 11:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgLkc-0001jT-9D; Thu, 15 Jan 2026 06:42:54 -0500
+	id 1vgLmE-0006Nm-Ta; Thu, 15 Jan 2026 06:44:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vgLkX-0001gl-Rt
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:42:49 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vgLkW-0007pK-1P
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:42:49 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47d1d8a49f5so4934075e9.3
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 03:42:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1vgLm5-0006Hx-3r
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:44:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1vgLm3-0008Fw-Bc
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:44:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768477461;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=B0mUnKqTDPYeGBq3J7FxGI1fg8tXB/i7Hy7CrdeMHoE=;
+ b=PUg8qNoCQeKDc9JAQnTf1q2x4BMuUZWtuyMzl6JRvaMcSXHaa2jJwQS352P1/js9M3VeVa
+ izeEueGl+PospBSG8CrpP3Hkr8Vm9o2/OxO0Xwixt6q1l+lsX6oR9XlZNiRdgmBKIfFkBC
+ cAzhX0OAYkBFrNpEx+Ojf4WIQrhJB0o=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-515-DwQPzDI5MaGWJfTbOqituQ-1; Thu, 15 Jan 2026 06:44:19 -0500
+X-MC-Unique: DwQPzDI5MaGWJfTbOqituQ-1
+X-Mimecast-MFC-AGG-ID: DwQPzDI5MaGWJfTbOqituQ_1768477458
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-430fb8d41acso490919f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 03:44:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768477366; x=1769082166; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NN+nTi3z6PsBK3uMRjzL/HTd/b5De+UW+l7/dnIMMzQ=;
- b=uwM0TS9mfLm/RLnR8oaiEHxKHf5c3/26QLKXxRnbn4cU2wOjQxICmpBsXKT0vdryUl
- ZSLUYf91gijL1PoJEWpSe21K5h1A+rAkBitHSGY9+VuUkCJU7N4WgSN527qUmkXT1LNY
- nWkMnlbtTKK2nfOVQgdoj67+1AqpS354IQgkvsUNjlk8nCSnTPLtVk17EgbyiwlJ1ZY9
- ZrHz8AOXLQqc3xzfYv/rc27DTcxCOPUmGaALatWHtrF4XuIgiW9LGQgWlMB2BhwQcSgW
- 7a+OjCDmty2aUn1nbxCMz28UIDl/GCTFpVOxzWUCuGF1jCHA4+ErdIeyJ9BuitCvpD1L
- nA+A==
+ d=redhat.com; s=google; t=1768477458; x=1769082258; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=B0mUnKqTDPYeGBq3J7FxGI1fg8tXB/i7Hy7CrdeMHoE=;
+ b=LPRVs+DCQ9W0UNC+Ad/P6VmzQxQrrownvgu0Gem0bLtvZLxveVepTnNrxOPl5U1F7f
+ 2GpyyNAapxh7bXm9rqMXUVnVo5pBAjx3FptvfieZvv9k++4r6vSEF46RvkjFoid69r9V
+ vswKArE4C1vGyV82ki/ilaaJzjbC9tU39c6cX1FTTbEOpausdwK2ZxcMly5xyuo9BBjj
+ 93wm3GuN7fyvhbWJw9BnT2Et2U0Y/bAF0P1eWKVx1TOhUtc30xaMtVwPktcqVG0hLOYy
+ +WnFdUnR7QhRZcsPAmCIIGv8k86XxJZr5xWS2ijVoJZv6carxjFiukgZzWTsuzzrcpaO
+ rkqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768477366; x=1769082166;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NN+nTi3z6PsBK3uMRjzL/HTd/b5De+UW+l7/dnIMMzQ=;
- b=QAmlH39gfYfKQEA9Gk2KbijGMgddevWB+XspQRqnbTp/b51hMDwt0dtMtNlTQUeG57
- 255HJ9lIwtTfZOp1BqNykd1y3ZB4iGbNOIng58KlHbwIbz7CDC2Tk6+SEuBkrqM7oMlT
- uR2b6xG+y3KrHjFdtqftKfVOVvd7hY6Vg8BzbT3qjjqCjz/g4jGVhLYfbb1peGAbQbqR
- sHGNLkBwJI9Yt9R/6oE0+0BBoKYL6Hx+1G110AxiUmIw7bB3kvjvpfpRQgeq4kAEVMkL
- rrelwCSB2EuSfrrAjpEpUnNyup/XjD7ZlaX7xA+kHjexWl+uPD3k/5fV+EEct0s9jmKv
- /y5w==
-X-Gm-Message-State: AOJu0YxUWqdzvid170PQbNh/fMAECvoEmTP5z3F3CPKE6aZbo7gte7Ea
- y0jr9GZ96F0fPmnZuNMjsGtJZHh85ODTjh888pQyPzwdQ16dCH/XVZU34E0ZxRiItyU=
-X-Gm-Gg: AY/fxX4eHSSvZ02c00sTLQYFbzi9lpeooxSYuW3qZmR1HLh96BFDOh8Ngrg3GcIZaqX
- puemZHhCt7zgHGMaF1I0kh2Ug7SeDHORJr4mzLSL2FQDR/jBB9H2KReFYhMrNxptRG84x1bjFDw
- 5kY/0JBps/tuSF5BlIhNqTXmvknX5+W/D/WAbJ8po+MKKycbNmUGViaHyUXA2Y2K2TREBQxfjmn
- DETe7wcZh60AI6KUzE85rA4xCnjfyjrvTpkrDfKLHrq+LzyQUIP77hKFro2MS98Oq4QCgwqvrvq
- nZ6Ndm7clxHC1/Jkyj1oTGwp/rOQpYzKNgg6Ks1GzC16vF8J/m+xWjDnhZ9wi1PIbRCGmRIifaF
- KaGs6ppTb/F5Or4a+lu/w6N0rAGuykDNiG+5dUWob1pSPqJUyVpn/VDx+l64YoK7dHp1nrHcZEi
- UlpSlugA9QpNg=
-X-Received: by 2002:a05:600c:46cc:b0:47e:df86:e83d with SMTP id
- 5b1f17b1804b1-47ee337a086mr72627855e9.31.1768477365832; 
- Thu, 15 Jan 2026 03:42:45 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47f428cb5f4sm43093315e9.10.2026.01.15.03.42.44
+ d=1e100.net; s=20230601; t=1768477458; x=1769082258;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=B0mUnKqTDPYeGBq3J7FxGI1fg8tXB/i7Hy7CrdeMHoE=;
+ b=AMrTQWq2X3l1fWjLQSpjmtE/0c4zkmJ+xwJXwHzDzF2Iaoet6E4gIXY9Bi6Mv5ib7Q
+ o44HGN6sVPDJqzt1txJKKXhlIHu8c7TjOK+644RuMkzPyYph0ms8KjqLBJb3XDMXYifJ
+ td68ovl4qGOc1dmlMwPSzUgO6uM/Zq/an+fXLmCsttR9ShEaF5bbRvO39ulAK+qL+D4q
+ ilMuBld6ozdpcZ1oXWrWdHMR5N+nkBSetQ9UZfwmxxQrIWVbQFEX2kXAc3KVBSK7UXxN
+ uYoAKc0jHJQu1ClAJduxUmQZTtSsZI+jn079gof8jmMQDwPFIPVVWTyXtDlwTwcdOXmg
+ Kurw==
+X-Gm-Message-State: AOJu0YxDOpCmgKjcWGYUcQKJbO7lKQAZXc3lUQCMEm1jatXfPKd6BDyK
+ TIb1/2anEX7Uy8tnFZQPi/Gjcj5KdFhysMDExGWlIldL6K0K6rywK56keaWVUUbpw9uZtrpluyR
+ /9kbyBijmDzcMqpK7fYiuTej6pk+4GL0z73vW66znagKRlz0EQaqK0n7N
+X-Gm-Gg: AY/fxX71lmWaqFyS5+1e7qcn95NbIePz4QvGEq6gTmzwFAHH9gDG4WBpUHpqcmGPqZ6
+ +SnSXboxBcJTNH8741oYVtXLoN9ityigb7Bxhpp5iexqhWlojxQcFVkj+lhnT0OCYYnt1yN7EtR
+ F0jzsxY3ib+qUUbdaIb5LuQsSMJvQJ3WzLsQzBrnkG31tejjT1Y/PiUti5uyFN12o3oMMSyUPN/
+ 76Zc4DS6o2Ih9GuiwqVIoBk5mKntcpVnIZ2p2nkxbBAi5bUPJxjIT3r1ELIa+BmZ7Ceu6NnTKTV
+ o9UW/x3BvoJxV1x8jCOqgZ7XILs+/c1/TXBWZWNIkYrK0EBJGkxEOP/MUe3W3djuu2sp7FpoaZV
+ wy3Ns+zRHXNh5x6I=
+X-Received: by 2002:a05:6000:26c6:b0:430:f40f:61b9 with SMTP id
+ ffacd0b85a97d-4342c4ef09emr6865159f8f.4.1768477458370; 
+ Thu, 15 Jan 2026 03:44:18 -0800 (PST)
+X-Received: by 2002:a05:6000:26c6:b0:430:f40f:61b9 with SMTP id
+ ffacd0b85a97d-4342c4ef09emr6865132f8f.4.1768477457900; 
+ Thu, 15 Jan 2026 03:44:17 -0800 (PST)
+Received: from leonardi-redhat ([176.206.16.134])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-434af6b143fsm5374205f8f.25.2026.01.15.03.44.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 03:42:45 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6EABD5F7DD;
- Thu, 15 Jan 2026 11:42:44 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Corvin =?utf-8?Q?K=C3=B6hne?= <corvin.koehne@gmail.com>
-Cc: qemu-devel@nongnu.org,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Alistair Francis
- <alistair@alistair23.me>,  qemu-arm@nongnu.org,  Peter Maydell
- <peter.maydell@linaro.org>,  Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org,  Corvin =?utf-8?Q?K=C3=B6hne?=
- <c.koehne@beckhoff.com>,  Hanna
- Reitz <hreitz@redhat.com>,  Yannick =?utf-8?Q?Vo=C3=9Fen?=
- <y.vossen@beckhoff.com>
-Subject: Re: [PATCH v5 00/15] hw/arm: add Beckhoff CX7200 board
-In-Reply-To: <20251204093502.50582-1-corvin.koehne@gmail.com> ("Corvin
- =?utf-8?Q?K=C3=B6hne=22's?= message of "Thu, 4 Dec 2025 10:34:47 +0100")
-References: <20251204093502.50582-1-corvin.koehne@gmail.com>
-User-Agent: mu4e 1.12.15-pre1; emacs 30.1
-Date: Thu, 15 Jan 2026 11:42:44 +0000
-Message-ID: <87wm1jhzkb.fsf@draig.linaro.org>
+ Thu, 15 Jan 2026 03:44:17 -0800 (PST)
+Date: Thu, 15 Jan 2026 12:44:14 +0100
+From: Luigi Leonardi <leonardi@redhat.com>
+To: Oliver Steffen <osteffen@redhat.com>
+Cc: qemu-devel@nongnu.org, Marcelo Tosatti <mtosatti@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Joerg Roedel <joerg.roedel@amd.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Gerd Hoffmann <kraxel@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH v4 3/5] igvm: Add common function for finding parameter
+ entries
+Message-ID: <aWjQyUrF_bLIhm9H@leonardi-redhat>
+References: <20260114175007.90845-1-osteffen@redhat.com>
+ <20260114175007.90845-4-osteffen@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260114175007.90845-4-osteffen@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,83 +127,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Corvin K=C3=B6hne <corvin.koehne@gmail.com> writes:
+Hi Oliver,
 
-> From: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
+On Wed, Jan 14, 2026 at 06:50:05PM +0100, Oliver Steffen wrote:
+>Move repeating code for finding the parameter entries in the IGVM
+>backend out of the parameter handlers into a common function.
 >
-> Hi,
+>Signed-off-by: Oliver Steffen <osteffen@redhat.com>
+>---
+> backends/igvm.c | 117 +++++++++++++++++++++++++-----------------------
+> 1 file changed, 61 insertions(+), 56 deletions(-)
 >
-> Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
-> platform. This commit series adds the Beckhoff CX7200 as new board varian=
-t to
-> QEMU.
+>diff --git a/backends/igvm.c b/backends/igvm.c
+>index a350c890cc..ccb2f51cd9 100644
+>--- a/backends/igvm.c
+>+++ b/backends/igvm.c
+>@@ -95,6 +95,19 @@ typedef struct QIgvm {
+>     unsigned region_page_count;
+> } QIgvm;
 >
-> The emulation is able to successfully boot an CX7200 image. The image inc=
-ludes
-> some self tests executed on every boot. Only the cache self test fails du=
-e to
-> QEMU emulating the cache as always being coherent. The self tests include=
- f.e.:
+>+static QIgvmParameterData*
+>+qigvm_find_param_entry(QIgvm *igvm, const IGVM_VHS_PARAMETER *param)
+>+{
+>+    QIgvmParameterData *param_entry;
+>+    QTAILQ_FOREACH(param_entry, &igvm->parameter_data, next)
+>+    {
+>+        if (param_entry->index == param->parameter_area_index) {
+>+            return param_entry;
+>+        }
+>+    }
+>+    return NULL;
+>+}
+>+
+> static int qigvm_directive_page_data(QIgvm *ctx, const uint8_t *header_data,
+>                                      Error **errp);
+> static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
+>@@ -569,58 +582,53 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
+>     }
 >
-> * Network
-> * Flash
-> * CCAT DMA + EEPROM [1]
-> * TwinCAT (Beckhoff's automation control software [2])
+>     /* Find the parameter area that should hold the memory map */
+>-    QTAILQ_FOREACH(param_entry, &ctx->parameter_data, next)
+>-    {
+>-        if (param_entry->index == param->parameter_area_index) {
+>-            max_entry_count =
+>-                param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
+>-            mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
+>-
+>-            retval = get_mem_map_entry(entry, &cgmm_entry, errp);
+>-            while (retval == 0) {
+>-                if (entry >= max_entry_count) {
+>-                    error_setg(
+>-                        errp,
+>-                        "IGVM: guest memory map size exceeds parameter area defined in IGVM file");
+>-                    return -1;
+>-                }
+>-                mm_entry[entry].starting_gpa_page_number = cgmm_entry.gpa >> 12;
+>-                mm_entry[entry].number_of_pages = cgmm_entry.size >> 12;
+>-
+>-                switch (cgmm_entry.type) {
+>-                case CGS_MEM_RAM:
+>-                    mm_entry[entry].entry_type =
+>-                        IGVM_MEMORY_MAP_ENTRY_TYPE_MEMORY;
+>-                    break;
+>-                case CGS_MEM_RESERVED:
+>-                    mm_entry[entry].entry_type =
+>-                        IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
+>-                    break;
+>-                case CGS_MEM_ACPI:
+>-                    mm_entry[entry].entry_type =
+>-                        IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
+>-                    break;
+>-                case CGS_MEM_NVS:
+>-                    mm_entry[entry].entry_type =
+>-                        IGVM_MEMORY_MAP_ENTRY_TYPE_PERSISTENT;
+>-                    break;
+>-                case CGS_MEM_UNUSABLE:
+>-                    mm_entry[entry].entry_type =
+>-                        IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
+>-                    break;
+>-                }
+>-                retval = get_mem_map_entry(++entry, &cgmm_entry, errp);
+>-            }
+>-            if (retval < 0) {
+>-                return retval;
+>-            }
+>-            /* The entries need to be sorted */
+>-            qsort(mm_entry, entry, sizeof(IGVM_VHS_MEMORY_MAP_ENTRY),
+>-                  qigvm_cmp_mm_entry);
+>+    param_entry = qigvm_find_param_entry(ctx, param);
+>+    if (param_entry == NULL) {
+>+        return 0;
+>+    }
+>+
+>+    max_entry_count = param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
+>+    mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
 >
-> [1] https://github.com/beckhoff/ccat
-> [2] https://www.beckhoff.com/en-us/products/automation/
+>+    retval = get_mem_map_entry(entry, &cgmm_entry, errp);
+>+    while (retval == 0) {
+>+        if (entry >= max_entry_count) {
+>+            error_setg(
+>+                errp,
+>+                "IGVM: guest memory map size exceeds parameter area defined in IGVM file");
+>+            return -1;
+>+        }
+>+        mm_entry[entry].starting_gpa_page_number = cgmm_entry.gpa >> 12;
+>+        mm_entry[entry].number_of_pages = cgmm_entry.size >> 12;
+>+
+>+        switch (cgmm_entry.type) {
+>+        case CGS_MEM_RAM:
+>+            mm_entry[entry].entry_type = IGVM_MEMORY_MAP_ENTRY_TYPE_MEMORY;
+>+            break;
+>+        case CGS_MEM_RESERVED:
+>+            mm_entry[entry].entry_type =
+>+                IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
+>+            break;
+>+        case CGS_MEM_ACPI:
+>+            mm_entry[entry].entry_type =
+>+                IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
+>+            break;
+>+        case CGS_MEM_NVS:
+>+            mm_entry[entry].entry_type = IGVM_MEMORY_MAP_ENTRY_TYPE_PERSISTENT;
+>+            break;
+>+        case CGS_MEM_UNUSABLE:
+>+            mm_entry[entry].entry_type =
+>+                IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
+>             break;
+>         }
+>+        retval = get_mem_map_entry(++entry, &cgmm_entry, errp);
+>     }
+>+    if (retval < 0) {
+>+        return retval;
+>+    }
+>+    /* The entries need to be sorted */
+>+    qsort(mm_entry, entry, sizeof(IGVM_VHS_MEMORY_MAP_ENTRY),
+>+          qigvm_cmp_mm_entry);
+>     return 0;
+> }
+>
+>@@ -655,14 +663,11 @@ static int qigvm_directive_environment_info(QIgvm *ctx,
+>     QIgvmParameterData *param_entry;
+>     IgvmEnvironmentInfo *environmental_state;
+>
+>-    QTAILQ_FOREACH(param_entry, &ctx->parameter_data, next)
+>-    {
+>-        if (param_entry->index == param->parameter_area_index) {
+>-            environmental_state =
+>-                (IgvmEnvironmentInfo *)(param_entry->data + param->byte_offset);
+>-            environmental_state->memory_is_shared = 1;
+>-            break;
+>-        }
+>+    param_entry = qigvm_find_param_entry(ctx, param);
+>+    if (param_entry != NULL) {
 
-Is it possible to host a binary build somewhere so there can be a
-functional test?
+What about an early return?
 
+>+        environmental_state =
+>+            (IgvmEnvironmentInfo *)(param_entry->data + 
+>param->byte_offset);
+>+        environmental_state->memory_is_shared = 1;
+>     }
+>     return 0;
+> }
+>-- 2.52.0
 >
-> YannickV (15):
->   hw/timer: Make frequency configurable
->   hw/timer: Make PERIPHCLK divider configurable
->   hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
->   hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
->   hw/dma/zynq: Ensure PCFG_DONE bit remains set to indicate PL is in
->     user mode
->   hw/dma/zynq-devcfg: Simulate dummy PL reset
->   hw/dma/zynq-devcfg: Indicate power-up status of PL
->   hw/misc: Add dummy ZYNQ DDR controller
->   hw/misc/zynq_slcr: Add logic for DCI configuration
->   hw/misc: Add Beckhoff CCAT device
->   hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
->   hw/arm/xilinx_zynq: Split xilinx_zynq into header and implementation
->     files
->   hw/arm/xilinx_zynq: Add flash-type property
->   hw/arm: Add new machine based on xilinx-zynq-a9 for Beckhoff CX7200
->   docs/system/arm: Add support for Beckhoff CX7200
->
->  docs/system/arm/beckhoff-cx7200.rst |  57 ++++
->  docs/system/target-arm.rst          |   1 +
->  hw/arm/Kconfig                      |   7 +
->  hw/arm/beckhoff_CX7200.c            | 104 +++++++
->  hw/arm/meson.build                  |   1 +
->  hw/arm/xilinx_zynq.c                |  54 ++--
->  hw/block/m25p80.c                   |   3 +-
->  hw/dma/xlnx-zynq-devcfg.c           |  27 +-
->  hw/misc/Kconfig                     |   6 +
->  hw/misc/beckhoff_ccat.c             | 339 +++++++++++++++++++++++
->  hw/misc/meson.build                 |   2 +
->  hw/misc/xlnx-zynq-ddrc.c            | 413 ++++++++++++++++++++++++++++
->  hw/misc/zynq_slcr.c                 |  31 +++
->  hw/timer/a9gtimer.c                 |  26 +-
->  hw/timer/arm_mptimer.c              |  32 ++-
->  include/hw/arm/xilinx_zynq.h        |  37 +++
->  include/hw/misc/xlnx-zynq-ddrc.h    | 148 ++++++++++
->  include/hw/timer/a9gtimer.h         |   2 +
->  include/hw/timer/arm_mptimer.h      |   4 +
->  19 files changed, 1263 insertions(+), 31 deletions(-)
->  create mode 100644 docs/system/arm/beckhoff-cx7200.rst
->  create mode 100644 hw/arm/beckhoff_CX7200.c
->  create mode 100644 hw/misc/beckhoff_ccat.c
->  create mode 100644 hw/misc/xlnx-zynq-ddrc.c
->  create mode 100644 include/hw/arm/xilinx_zynq.h
->  create mode 100644 include/hw/misc/xlnx-zynq-ddrc.h
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Can we reuse `qigvm_find_param_entry` for 
+`qigvm_directive_parameter_insert` and `qigvm_directive_vp_count` as 
+well?
+
+Luigi
+
 
