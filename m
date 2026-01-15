@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6819D44C48
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 14:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD18D44C56
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 14:27:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgOJ6-0003Xt-80; Thu, 15 Jan 2026 09:26:40 -0500
+	id 1vgOJ2-0003X9-N2; Thu, 15 Jan 2026 09:26:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgOJ4-0003Xf-J4
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:26:38 -0500
+ id 1vgOJ1-0003WU-4a
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:26:35 -0500
 Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgOJ2-0004k4-Kr
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:26:38 -0500
+ id 1vgOIz-0004jM-Bd
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:26:34 -0500
 Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47ee3a63300so9579045e9.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 06:26:36 -0800 (PST)
+ 5b1f17b1804b1-47ee4539adfso9070075e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 06:26:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768487195; x=1769091995; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LSGx3OEhBLISzf0x1Pda8IGrY+Ns7N44p2jUoJb+UpE=;
- b=Uc6PDBtCr/v2MzKpY38BGy/PTUrhdSlDgV9+pmM/jzgS7WHKto7yrdP8lfX0/g+FlA
- HC6h023/Xd2OVTCBcDk7ANAeo53LABZOM+UFUx2qWB3RhWhplprdtbglUrlTNpZkcjgf
- djT9/yCpCGcIp4ijfo3A/ySeJdJBkg0X23AgHBlZ70xw8Iff6vHpGjD5QzvIuKAZx7qG
- 7Jr8iclJ9TuS9mIRWDYV/T7CkhyKNQbvQKYYTM0VhzmxtGNHN6W9Omv7y5E4wk9oQuC2
- qYfOt9pVZxZQsSn9OsQ3MOVU6tPXu9xUsbKmD+MTzoB3iBdfUTxY7fH+j1QA22KKD+fD
- Lobw==
+ d=linaro.org; s=google; t=1768487191; x=1769091991; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8D0tuo6L9hq8eRYiyZ2ZRoJM1wMpms++7NO6X3T+CZ0=;
+ b=yCTKsDMgnOtbu6jQrjpyozlfeRHJXcmhjGZRqnBk86lXIS2D6qAR8dJ1SISy7Ox59W
+ jl83YnwOyNx66+kDwEPCHBLe/7h5fUxD65vvbotyviIzErvUz9Y5PaHOB0zlqIveYlvn
+ 4G/AUiFvVGfYXFOOgO8iTvS6SeHnx/ufW+oNXuhv/FPUOfr7XKuNR/w+y0xtXn6z5BqW
+ zrMwMGiTwr13efC2xNvyeK20ndCTfdGf3UARe5+BYQ441pKZqRkSK8lFYg4x3I96o5H1
+ XzKBEZGggiq0a0E1Ke4cn0PJnZO8HgGtzuTpAeAKQB/bT0VGsS06tl03FOnG3umDvp8n
+ ur6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768487195; x=1769091995;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=LSGx3OEhBLISzf0x1Pda8IGrY+Ns7N44p2jUoJb+UpE=;
- b=D2U5MFKChrvJ1feWWbqspWCmxgoZIxeQc05n9NC14NUq1tvSUNvOaCmVc33a4xkjNB
- 2avDCyAsXmdeGEJPwxLj6QdOIQyGrxgYvbyBaw0SvguXULerKTlU27Svb+vBE30L3fEi
- v/V1JHwZdcYB5VmTwlL9kUOrFk/CvECRYRYxw+2FWx+QVM6QvK6HajKD0vLSnZBo7VOm
- nVgAGAZIyY546qRDU3r/Dw5z7Go7jnJuEdwGX632jwHNJ6xp/JyiE7tzqftCC0CcjX/A
- T8hnyckesRZ2jMlMoCGIkQwpJJ6bgMUjVRfFbh1+4rdpDFbRyEwv+xRqx+vA001LOT6X
- 8tUA==
-X-Gm-Message-State: AOJu0Ywrr1EpjxLe5Dv2HhwBwhQgzlcw3D32EpGrgUqoFe4AiCJGOrc/
- uOuRnqow4tTOalJSIVTwUA6ef9+DzSMKqahmQfBYeZJgtTlkSexfchAXXgOSj7KOSvzrSPQJumO
- PQ7VC
-X-Gm-Gg: AY/fxX4wfoA9IhlKvSXOVCu3aR5M5lTGtwrM6hUyC0Z0L/sK7d9HQpFTNmUtl42T0Jq
- 4BJC7oIJ1pRuKdUkWH0tvWk/WWnBQoPQPfxUWPhTSWAqryopi+bOzMyRwm6T4NFJrATcP0Z6zX0
- BrjKkFr+LJcjuWgVX/uUa/YTqWIPbymuxSo53jt9cJdHLARUnnhuGx6OE2Le28GFt08mNE6df+q
- 8OwpVeIosA44GaAB/tKuYwy1l+nDpzLZ7y9v5eEL8csE8pQATONK451BYe9fBvyNO0jnoth3P24
- RE1xqjqlKVx3hFOYf+Od9FvS3IhZFURs28WVhJ6pmc30ti+5I6mmIBpuey9FRvH7MuwxmkcoYVu
- dP2O5YeCY+thHMPGwEcUMPMS5WU79vDId/XYdnlxdmIDoe6ofRXDJuaB31vJonCJhvTLhEvz7U4
- E9L/jeB97PYcSYtgfk39QL/jDgzdgLhKy6GFxZl8rfYEakUWUdLeQJUUHMTkkQS6faeXMvuxZpO
- /A0kP0p8/GtKdz8iKhrpvThwO1tSZgoVWQihalGuYKfEw==
-X-Received: by 2002:a05:600c:a4c:b0:477:7975:30ea with SMTP id
- 5b1f17b1804b1-47ee338a820mr78141035e9.29.1768487195130; 
- Thu, 15 Jan 2026 06:26:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768487191; x=1769091991;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8D0tuo6L9hq8eRYiyZ2ZRoJM1wMpms++7NO6X3T+CZ0=;
+ b=dD0rS33U43HP/XGCwU1rlfsEEABwF2T0Q54OhV3csLrJSVS0Iks1UGqC2L3FQGoLBT
+ JjbwrA1q26RE8ZPAMPWAnYV5VSEtFn1qdmyZEA6ObaYqiP/nuhy5cQe5RB88HiP3bhDE
+ flikJP/mk8DzAM2jjDBtOtUx3zPi4PJhq+wReKBksU6maS0/vOOWPLUk/KQjy3QXiG7U
+ HTJKVYGVLPb/WeBjYoN9gOWy3n2Jj3iT7kbKPK2huOwpuF7z9UD6vnJxtgKkLCSK/wlt
+ SW78Hwa4VQNEEMPx6h7iGAPVpeN0S/u5TZxja0wk0jez2o3nmwxxvkNzx6WIdSMqkZI1
+ Mt0Q==
+X-Gm-Message-State: AOJu0Yym5I8cR8Lxyo0vyWl7sZs3mnTgWypasOyxs872BsEZCqyYulE2
+ EJVAbL9H4S1NNi/GBmkxOgb/rKgJ+OIiDmNtV4ieJkbNLafBmgNaFmYqRcZvCcQfmesuwqaVrnW
+ Agn3J
+X-Gm-Gg: AY/fxX5889DX3AUyMapLMjv7VFkTB0+oWWeIfZUU7gMuisc9C3CoDKXgULq1mwevtVr
+ 67N9WrFzcNI0NRNsG4PT2qHZRo7ZaJ7EE3+dUvLlBtdvKnIkG3vlC4UcBp40bfZbVrDH84HhdDq
+ YOH7AS1LiS1z6/7vxOo4Do6TkVhZ7CPVVQKv/IsXtNmBjJkRRvUHF1wob8WDsSftJmA/aufSkOL
+ eBE/WW6G6I8Vwg7iMZMEW4PHBHV0E0jjXt3Dn6ICiENd5RBs1Tl2dkDeihJ0FB9pjPqG3NJQrIs
+ vZmEs8W5DjZUFOOCJbM2HKX7Ca7LZ3WOjQNsPA8UkvKVbnYJi4jZ1+0I/ANiJSPg7I16LVnNo6e
+ rcA2eOGmXlg21CU58hra3Gn2H2pFlZjN0940QSIOdCCkSIuwx+3YskzqYDkPFrHatuH/NsyHEPa
+ BYOaNGY7YZmwLAhSs9fB6muKPnockozHcRTZ3NkJk/A4sXU3KRvHMMIAdmpTxCNXRmwZwdoGlaa
+ a7EF7+lGSFKoAChQr4J75VImmM1cT6xvObSfZ4kBGpEWA==
+X-Received: by 2002:a05:600c:a51:b0:477:7bca:8b34 with SMTP id
+ 5b1f17b1804b1-47ee32e5cd3mr80824005e9.6.1768487191277; 
+ Thu, 15 Jan 2026 06:26:31 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47f4b2672d6sm50759435e9.14.2026.01.15.06.26.33
+ 5b1f17b1804b1-47f4b2672d6sm50759435e9.14.2026.01.15.06.26.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 06:26:33 -0800 (PST)
+ Thu, 15 Jan 2026 06:26:30 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -77,12 +76,10 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Alistair Francis <alistair@alistair23.me>,
  Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PATCH 2/4] docs: avoid unintended mailto: hyperlinks
-Date: Thu, 15 Jan 2026 14:26:27 +0000
-Message-ID: <20260115142629.665319-3-peter.maydell@linaro.org>
+Subject: [PATCH 0/4] docs: Remove bogus mailto links, minor cleanups
+Date: Thu, 15 Jan 2026 14:26:25 +0000
+Message-ID: <20260115142629.665319-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260115142629.665319-1-peter.maydell@linaro.org>
-References: <20260115142629.665319-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
@@ -109,75 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In rST documents, an '@' character in normal text or a parsed-literal is
-assumed to be an email address and will result in a 'mailto:' hyperlink in
-the generated HTML.  In several places we have mailto: hyperlinks that are
-unintended nonsense; correct these by either escaping the @ character or
-making the text use ``...`` preformatted rendering.
+I noticed while reviewing a patch to add documentation for
+a new Arm board that an unescaped '@' character resulted in
+an unintended mailto: hyperlink. This prompted me to grep
+to see if we had any others of those, which we do. This
+series fixes them, plus some other things I noticed along
+the way.
+ 
+The first patch cleans up some awkward rendering in the
+xilinx-zynq-a9 board docs, including dropping a hex
+address that was triggering a mailto: hyperlink.
+ 
+Patch 2 is all the easy cases which we can just escape
+or put into ``...`` preformatted text.
+ 
+Patch 3 removes some uses of "@var{...}" in qemu-options.hx
+which may be there because the authors had the impression
+that that would be rendered into italics -- it isn't.
+I've replaced them with uses of "<...>" as the most
+common way we currently mark up "my-option=<something>".
+These aren't mis-rendering as mailto links because they
+all happen to already be in preformatted text.
+ 
+Patch 4 makes a bigger cleanup to the colo-compare
+option docs: it also uses "@var{...}" and here it is
+causing mailto links to be generated.
 
-This commit covers only the simple cases which can be trivially fixed
-with escaping or ``..``; the remaining cases will be handled in
-separate commits.
+thanks
+-- PMM
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- docs/devel/submitting-a-patch.rst     | 2 +-
- docs/system/device-url-syntax.rst.inc | 4 ++--
- docs/system/vnc-security.rst          | 6 +++---
- 3 files changed, 6 insertions(+), 6 deletions(-)
+Peter Maydell (4):
+  docs/system/arm/xlnx-zynq.rst: Improve docs rendering
+  docs: avoid unintended mailto: hyperlinks
+  qemu-options.hx: Drop uses of @var
+  qemu-options.hx: Improve formatting in colo-compare docs
 
-diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
-index dd1cf32ad3..5ccd09a397 100644
---- a/docs/devel/submitting-a-patch.rst
-+++ b/docs/devel/submitting-a-patch.rst
-@@ -18,7 +18,7 @@ one-shot fix, the bare minimum we ask is that:
- 
-    * - Check
-      - Reason
--   * - Patches contain Signed-off-by: Your Name <author@email>
-+   * - Patches contain ``Signed-off-by: Your Name <author@email>``
-      - States you are legally able to contribute the code. See :ref:`patch_emails_must_include_a_signed_off_by_line`
-    * - Sent as patch emails to ``qemu-devel@nongnu.org``
-      - The project uses an email list based workflow. See :ref:`submitting_your_patches`
-diff --git a/docs/system/device-url-syntax.rst.inc b/docs/system/device-url-syntax.rst.inc
-index 43b5c2596b..aae65d138c 100644
---- a/docs/system/device-url-syntax.rst.inc
-+++ b/docs/system/device-url-syntax.rst.inc
-@@ -33,7 +33,7 @@ These are specified using a special URL syntax.
- 
-    .. parsed-literal::
- 
--      |qemu_system| -drive file=iscsi://user%password@192.0.2.1/iqn.2001-04.com.example/1
-+      |qemu_system| -drive file=iscsi://user%password\@192.0.2.1/iqn.2001-04.com.example/1
- 
-    Example (CHAP username/password via environment variables):
- 
-@@ -79,7 +79,7 @@ These are specified using a special URL syntax.
- 
-    .. parsed-literal::
- 
--      |qemu_system| -drive file=ssh://user@host/path/to/disk.img
-+      |qemu_system| -drive file=ssh://user\@host/path/to/disk.img
-       |qemu_system| -drive file.driver=ssh,file.user=user,file.host=host,file.port=22,file.path=/path/to/disk.img
- 
-    Currently authentication must be done using ssh-agent. Other
-diff --git a/docs/system/vnc-security.rst b/docs/system/vnc-security.rst
-index 4c1769eeb8..97e94ff407 100644
---- a/docs/system/vnc-security.rst
-+++ b/docs/system/vnc-security.rst
-@@ -182,9 +182,9 @@ When not using TLS the recommended configuration is
- This says to use the 'GSSAPI' mechanism with the Kerberos v5 protocol,
- with the server principal stored in /etc/qemu/krb5.tab. For this to work
- the administrator of your KDC must generate a Kerberos principal for the
--server, with a name of 'qemu/somehost.example.com@EXAMPLE.COM' replacing
--'somehost.example.com' with the fully qualified host name of the machine
--running QEMU, and 'EXAMPLE.COM' with the Kerberos Realm.
-+server, with a name of ``qemu/somehost.example.com@EXAMPLE.COM`` replacing
-+``somehost.example.com`` with the fully qualified host name of the machine
-+running QEMU, and ``EXAMPLE.COM`` with the Kerberos Realm.
- 
- When using TLS, if username+password authentication is desired, then a
- reasonable configuration is
+ docs/devel/submitting-a-patch.rst     |  2 +-
+ docs/system/arm/xlnx-zynq.rst         | 51 ++++++++++++++-------------
+ docs/system/device-url-syntax.rst.inc |  4 +--
+ docs/system/vnc-security.rst          |  6 ++--
+ qemu-options.hx                       | 51 ++++++++++++++++-----------
+ 5 files changed, 63 insertions(+), 51 deletions(-)
+
 -- 
 2.47.3
 
