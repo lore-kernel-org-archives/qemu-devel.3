@@ -4,136 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29AABD4662F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 21:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13611D4662B
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 21:50:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgVAp-0004JL-T0; Thu, 15 Jan 2026 16:46:35 -0500
+	id 1vgVDz-0008My-00; Thu, 15 Jan 2026 16:49:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
- id 1vgVAJ-00047k-F5
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 16:46:05 -0500
-Received: from mout.web.de ([217.72.192.78])
+ id 1vgVDs-0008IX-MH
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 16:49:45 -0500
+Received: from mout.web.de ([212.227.17.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
- id 1vgVAH-0005eq-9u
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 16:46:03 -0500
+ id 1vgVDq-0005mq-PF
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 16:49:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
- s=s29768273; t=1768513543; x=1769118343; i=lukasstraub2@web.de;
- bh=XBFBd5qTDNbiTEjStg13UbhDcyu3FChLaPCvr/pDjXU=;
+ s=s29768273; t=1768513772; x=1769118572; i=lukasstraub2@web.de;
+ bh=bLfYHL+qa4NXDtzHfCBCyhQoCUBx05RVDDeXFsVlA2s=;
  h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:In-Reply-To:
  References:MIME-Version:Content-Type:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=S3Je5K7dZGxMkykHmS1BC5FMVthOsftKIEKnFggeUn2VwplIh3h94oWCraHi4brp
- dx8hpu8Vu7W+RyaXWHK326A22mqd8Vb+Uy1ckwhLyEJpZdMgGDMNUMx/vf3Fk60fD
- qrjn9exrKf5ErswDKEbVkB8gX4V6NJ8gzFoyD6Ce9Ed4fd0h0RJ8cqg80HlOSSc9v
- KZbisMMY1/gvk/io8w/qUiG483geVqRvgEl0R05xWnoE/CILUdn8uTLQtciiwddMy
- 5q/YSENnd7yTkkg0Eg+rtmOjHcIF7srxl41wqLTF2sEmX3G7ixiMjGotCN7HMV4Pu
- qF1j/cvxgWmQlbRYxg==
+ b=UIpcFNah3RX+YuTDTDJ+gm+D/ViMQ8FLPVLorPqCtjRslk/ghX0ty+XVv9npxdbB
+ 3qjq+4kueOeXPiCrmJAPIqN9LDI66BD7o7oMUCIF1C870hHLr6iECyzoE2iVuzbQi
+ LfxufEivNSMSbOZ1lx6PdMtmE9a3c2Ncz8Rlzxr7YWuwqubjsz1EzR9oYaJEWZbyK
+ AFvc2fkxmN8IF9UKy2CGIH3KACZSKwPaeTgI3ZT0JjucGRtMkPLHbkkM7aUtPNsxw
+ iyBrezCnNBjfXIJFBghDXsZo8+CgwFO7QXpA27flpkAvwEOpQX7lQN12vr2OZeDQD
+ /p/Cff46W+4ykJpyEQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from penguin ([217.247.100.70]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MP382-1vSAF041pU-00PO5h; Thu, 15
- Jan 2026 22:45:43 +0100
-Date: Thu, 15 Jan 2026 22:45:16 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N2jWI-1voFSS0bca-013AKU; Thu, 15
+ Jan 2026 22:49:32 +0100
+Date: Thu, 15 Jan 2026 22:49:29 +0100
 From: Lukas Straub <lukasstraub2@web.de>
 To: Peter Xu <peterx@redhat.com>
-Cc: Zhang Chen <zhangckid@gmail.com>, qemu-devel@nongnu.org, Fabiano Rosas
- <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Juan Quintela <quintela@trasno.org>, Hailiang Zhang
- <zhanghailiang@xfusion.com>
-Subject: Re: [PATCH 0/3] migration: Add COLO multifd support and COLO
- migration unit test
-Message-ID: <20260115224516.7f0309ba@penguin>
-In-Reply-To: <aV1m_vneDzI_5WDV@x1.local>
-References: <20251230-colo_unit_test_multifd-v1-0-f9734bc74c71@web.de>
- <aVPpg_LwlGFIPfen@x1.local>
- <CAK3tnv+f8b9fd_n9_6Od3f__ZuNUtuT2Q_MXszam_k=ooRPqyQ@mail.gmail.com>
- <aV1m_vneDzI_5WDV@x1.local>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>, "Daniel P .
+ =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, =?UTF-8?B?THVrw6HFoQ==?=
+ Doktor <ldoktor@redhat.com>, Juan Quintela <quintela@trasno.org>, "Dr.
+ David Alan Gilbert" <dave@treblig.org>, Zhang Chen <zhangckid@gmail.com>,
+ zhanghailiang@xfusion.com, Li Zhijian <lizhijian@fujitsu.com>, Jason Wang
+ <jasowang@redhat.com>
+Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
+Message-ID: <20260115224929.616aab85@penguin>
+In-Reply-To: <aWf4i7EOXtpAljGX@x1.local>
+References: <20260114195659.2543649-1-peterx@redhat.com>
+ <20260114195659.2543649-2-peterx@redhat.com>
+ <aWf4i7EOXtpAljGX@x1.local>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/D0uwH9Sgf_kK54QhULLXHWX";
+Content-Type: multipart/signed; boundary="Sig_/L=Puqk4PVPigwWjgN+OSds3";
  protocol="application/pgp-signature"; micalg=pgp-sha512
-X-Provags-ID: V03:K1:w6gsi/0CWS4i3hTu3Ktt0Zd3+Mp2g87GU617Hpq8vfU5bjWS2qy
- 970CMWA6wvZYSVhHcbFsjwNNQqk8UUBcq76n2xMlhbO5EhJLktQr7cSs1fFiQv+XIveC2gc
- kuVYUAl/lpQ7bpfuse6YLIOVUUPMLj9neyO14fC2J5cjE0EJCilv0P00uTnUY+KxYZrDTQq
- G8ap6ZxirVdR4F3M0U97w==
-UI-OutboundReport: notjunk:1;M01:P0:ad0JoiRyouA=;gZI8+y+rQJjwSy3tdGObwtxbqD7
- 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
- MIQgMTXc=
-Received-SPF: pass client-ip=217.72.192.78; envelope-from=lukasstraub2@web.de;
+X-Provags-ID: V03:K1:pxISS2FGEKW+ZQmzq8KnH6T/f9j18JjfFTdaLjIh4sL4eZPLFY9
+ 5/30h0BWL11C7hfYGXzIxEhV7Ujl9VN3dAvOUfYCEwKNZeMbWtiBCbxIK5aDtGCYICrsI5W
+ apGgJpvB/C9hiTXoskw5waxCQ0Xv8s1bKmLq2hKsxoezB8WRCCEBEm2vHvTkExX+sDjLYmQ
+ zLQdwb6MqxKWdngdiVz9Q==
+UI-OutboundReport: notjunk:1;M01:P0:jrDHfHqOWOU=;wkPc+o/Ut5mEpChLkhzV40g8b+z
+ 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
+ hvM9mtjO2O2KV7t3lG4I
+Received-SPF: pass client-ip=212.227.17.11; envelope-from=lukasstraub2@web.de;
  helo=mout.web.de
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -141,7 +143,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -159,203 +161,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---Sig_/D0uwH9Sgf_kK54QhULLXHWX
+--Sig_/L=Puqk4PVPigwWjgN+OSds3
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, 6 Jan 2026 14:48:14 -0500
+On Wed, 14 Jan 2026 15:11:55 -0500
 Peter Xu <peterx@redhat.com> wrote:
 
-> On Sun, Jan 04, 2026 at 01:44:52PM +0800, Zhang Chen wrote:
-> > On Tue, Dec 30, 2025 at 11:02=E2=80=AFPM Peter Xu <peterx@redhat.com> w=
-rote: =20
-> > >
-> > > On Tue, Dec 30, 2025 at 03:05:43PM +0100, Lukas Straub wrote: =20
-> > > > Hello everyone,
-> > > > This adds COLO multifd support and migration unit tests for COLO mi=
-gration
-> > > > and failover. =20
-> > >
-> > > Hi, Lukas,
-> > >
-> > > I'll review the series after the new year.
-> > >
-> > > Could you still introduce some background on how you're deploying COL=
-O?  Do
-> > > you use it in production, or for fun?
-> > >
-> > > COLO is still a nice and interesting feature, said that, COLO has qui=
-te a
-> > > lot of code plugged into migration core.  I wished it's like a multifd
-> > > compressor which was much more self-contained, but it's not.  I wishe=
-d we
-> > > can simplify the code in QEMU migration.
-> > >
-> > > We've talked it through before with current COLO maintainers, it look=
-s to
-> > > me there aren't really much users using it in production, meanwhile C=
-OLO
-> > > doesn't look like a feature to benefit individual QEMU users either.
-> > >
-> > > I want to study the use case of COLO in status quo, and evaluate how =
-much
-> > > effort we should put on it in the future.  Note that if it's for fun =
-we can
-> > > always use a stable branch which will be there forever.  We'll need to
-> > > think about QEMU evolving in the future, and what's best for QEMU.
-> > >
-> > > Thanks,
-> > > =20
+> On Wed, Jan 14, 2026 at 02:56:57PM -0500, Peter Xu wrote:
+> > COLO was broken for QEMU release 10.0/10.1 without anyone noticed.  One
+> > reason might be that we don't have an unit test for COLO (which we
+> > explicitly require now for any new migration feature).  The other reason
+> > should be that there are just no more active COLO users, at least based=
+ on
+> > the latest development of QEMU.
 > >=20
-> > Hi Lukas and Peter, =20
->=20
-> Hi, Chen,
->=20
+> > I don't remember seeing anything really active in the past few years in
+> > COLO development.
 > >=20
-> > Thanks for this series, I will support for background info if Peter
-> > have any questions. =20
+> > Meanwhile, COLO migration framework maintainer (Hailiang Zhang)'s last
+> > email to qemu-devel is in Dec 2021 where the patch proposed an email
+> > change (<20211214075424.6920-1-zhanghailiang@xfusion.com>).
+> >=20
+> > We've discussed this for a while, see latest discussions here (our thou=
+ghts
+> > of deprecating COLO framework might be earlier than that, but still):
+> >=20
+> > https://lore.kernel.org/r/aQu6bDAA7hnIPg-y@x1.local/
+> > https://lore.kernel.org/r/20251230-colo_unit_test_multifd-v1-0-f9734bc7=
+4c71@web.de
+> >=20
+> > Let's make it partly official and put COLO into deprecation list.  If
+> > anyone cares about COLO and is deploying it, please send an email to
+> > qemu-devel to discuss.
+> >=20
+> > Otherwise, let's try to save some energy for either maintainers or
+> > developers who is looking after QEMU. Let's save the work if we don't e=
+ven
+> > know what the work is for.
+> >=20
+> > Cc: Luk=C3=A1=C5=A1 Doktor <ldoktor@redhat.com> =20
 >=20
-> Thanks, I believe my major question so far was, whether we should depreca=
-te
-> COLO in migration framework. :)
+> My apologize, I copied the wrong email.
 >=20
-> The netfilters and rest can be discussed separately.
->=20
-> Now looking back at my initial ask in Zhijian's fix, I still agree with
-> Zhijian on these two points mentioned:
->=20
-> https://lore.kernel.org/all/b2eadde7-57e9-426c-8487-e500ba06410e@fujitsu.=
-com/
->=20
-> That is:
->=20
->         - Active users who depend on it.
->         - A unit test for the COLO framework.
->=20
-> Meanwhile, I can't see how COLO would win if to be compared with some
-> app-level HA infrastructure.. considering the overhead it requires on
-> running two VMs and compare every packet.
->=20
-> Lukas, thanks for trying to fix the 2nd.  I apologize that I still
-> requested you to send these patches, without further raising the attention
-> that I still want to discuss deprecation.  I don't think anyone yet proved
-> we should keep COLO.  I do plan to send one patch adding COLO framework to
-> deprecation, if nobody would stop me in a week justifying question 1 abov=
-e.
+> Cc: Lukas Straub <lukasstraub2@web.de>
 
-Hello Peter,
+Nack.
 
-I am a consultant on open-source high availability and fault tolaerance
-solutions. I provide a complete cluster management solution with
-automatic failover and failback for Qemu COLO.
-
-Qemu COLOs lockstepping architecture has a big performance advantage
-and it outperforms the market leader by 10x-100x in latency.
-No one else provides this unique architecture.
-
-I have customers that depend on this.
-
-I occasionally get inquiries about Qemu COLO even without doing
-any kind of marketing. So there is a general interest for this.
-
-Also, Canonical considers providing this to one of their customers.
+This code has users, as explained in my other email:
+https://lore.kernel.org/qemu-devel/20260115224516.7f0309ba@penguin/T/#mc998=
+39451d6841366619c4ec0d5af5264e2f6464
 
 Regards,
 Lukas Straub
 
-
 >=20
-> We kind of proved almost nobody is actively using COLO anymore in the past
-> few releases.  If nobody is using COLO, we should simply drop it.
->=20
-> > And CC Hailiang Zhang, although he hasn't replied to emails for a long =
-time.
-> > If no one objects, I think Lukas can replease Hailiang for COLO Framewo=
-rk.
+> > Cc: Juan Quintela <quintela@trasno.org>
+> > Cc: Dr. David Alan Gilbert <dave@treblig.org>
+> > Cc: Zhang Chen <zhangckid@gmail.com>
+> > Cc: zhanghailiang@xfusion.com
+> > Cc: Li Zhijian <lizhijian@fujitsu.com>
+> > Cc: Jason Wang <jasowang@redhat.com>
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  docs/about/deprecated.rst | 6 ++++++
+> >  qapi/migration.json       | 5 ++---
+> >  migration/options.c       | 4 ++++
+> >  3 files changed, 12 insertions(+), 3 deletions(-)
 > >=20
-> > COLO Framework
-> > M: Hailiang Zhang <zhanghailiang@xfusion.com>
-> > S: Maintained
-> > F: migration/colo*
-> > F: include/migration/colo.h
-> > F: include/migration/failover.h
-> > F: docs/COLO-FT.txt =20
->=20
-> Right, this is also another reason why I think we may want to deprecate
-> COLO framework.
-
-I will take over maintainership.
-
->=20
-> Since I requested this series (sorry again, Lukas), I'll review it today =
-no
-> matter if we decide to merge this series at last, or deprecate COLO
-> framework.
->=20
-> Thanks,
->=20
-> >=20
-> > Thanks
-> > Chen
+> > diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> > index 7abb3dab59..b499b2acb0 100644
+> > --- a/docs/about/deprecated.rst
+> > +++ b/docs/about/deprecated.rst
+> > @@ -580,3 +580,9 @@ command documentation for details on the ``fdset`` =
+usage.
+> > =20
+> >  The ``zero-blocks`` capability was part of the block migration which
+> >  doesn't exist anymore since it was removed in QEMU v9.1.
+> > +
+> > +COLO migration framework (since 11.0)
+> > +'''''''''''''''''''''''''''''''''''''
+> > +
+> > +To be removed with no replacement, as the COLO migration framework doe=
+sn't
+> > +seem to have any active user for a while.
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index 201dedd982..3c868efe38 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -531,8 +531,7 @@
+> >  #
+> >  # @unstable: Members @x-colo and @x-ignore-shared are experimental.
+> >  #
+> > -# @deprecated: Member @zero-blocks is deprecated as being part of
+> > -#     block migration which was already removed.
+> > +# @deprecated: Member @zero-blocks and @x-colo are deprecated.
+> >  #
+> >  # Since: 1.2
+> >  ##
+> > @@ -540,7 +539,7 @@
+> >    'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
+> >             { 'name': 'zero-blocks', 'features': [ 'deprecated' ] },
+> >             'events', 'postcopy-ram',
+> > -           { 'name': 'x-colo', 'features': [ 'unstable' ] },
+> > +           { 'name': 'x-colo', 'features': [ 'unstable', 'deprecated' =
+] },
+> >             'release-ram',
+> >             'return-path', 'pause-before-switchover', 'multifd',
+> >             'dirty-bitmaps', 'postcopy-blocktime', 'late-block-activate=
+',
+> > diff --git a/migration/options.c b/migration/options.c
+> > index 9a5a39c886..318850ba94 100644
+> > --- a/migration/options.c
+> > +++ b/migration/options.c
+> > @@ -580,6 +580,10 @@ bool migrate_caps_check(bool *old_caps, bool *new_=
+caps, Error **errp)
+> >          warn_report("zero-blocks capability is deprecated");
+> >      }
+> > =20
+> > +    if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
+> > +        warn_report("COLO migration framework is deprecated");
+> > +    }
+> > +
+> >  #ifndef CONFIG_REPLICATION
+> >      if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
+> >          error_setg(errp, "QEMU compiled without replication module"
+> > --=20
+> > 2.50.1
 > >  =20
-> > > >
-> > > > Regards,
-> > > > Lukas
-> > > >
-> > > > Signed-off-by: Lukas Straub <lukasstraub2@web.de>
-> > > > ---
-> > > > Lukas Straub (3):
-> > > >       multifd: Add colo support
-> > > >       migration-test: Add -snapshot option for COLO
-> > > >       migration-test: Add COLO migration unit test
-> > > >
-> > > >  migration/meson.build              |   2 +-
-> > > >  migration/multifd-colo.c           |  57 ++++++++++++++++++
-> > > >  migration/multifd-colo.h           |  26 +++++++++
-> > > >  migration/multifd.c                |  14 ++++-
-> > > >  tests/qtest/meson.build            |   7 ++-
-> > > >  tests/qtest/migration-test.c       |   1 +
-> > > >  tests/qtest/migration/colo-tests.c | 115 +++++++++++++++++++++++++=
-++++++++++++
-> > > >  tests/qtest/migration/framework.c  |  69 +++++++++++++++++++++-
-> > > >  tests/qtest/migration/framework.h  |  10 ++++
-> > > >  9 files changed, 294 insertions(+), 7 deletions(-)
-> > > > ---
-> > > > base-commit: 942b0d378a1de9649085ad6db5306d5b8cef3591
-> > > > change-id: 20251230-colo_unit_test_multifd-8bf58dcebd46
-> > > >
-> > > > Best regards,
-> > > > --
-> > > > Lukas Straub <lukasstraub2@web.de>
-> > > > =20
-> > >
-> > > --
-> > > Peter Xu
-> > > =20
-> >  =20
 >=20
 
 
---Sig_/D0uwH9Sgf_kK54QhULLXHWX
+--Sig_/L=Puqk4PVPigwWjgN+OSds3
 Content-Type: application/pgp-signature
 Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEg/qxWKDZuPtyYo+kNasLKJxdslgFAmlpX+wACgkQNasLKJxd
-slj+5w//SntY8UsmJCid5H7IbfRSWN2zCE+Bb1JMBuFt/d1BUFD99eDJsooX3ZDo
-EYFs1lKf2uY3gCbnra3lzYzt4cCENbkX/kdS9WjyotGlZgkHN9RVtW2gBOJhur83
-swbo6NFtZ+XT0wkyplFvh2xwqLy4TUKP7au2jQO1bkRGzvFuo5u9ft8Ja5Abw0Tr
-jMoH2rA7Vh2dYNUrtlXST3hbH91akZtq0KneaqKUB5CLAY5/1rY5abRX0wElA2Zd
-3alv7kOLTrIEKKMr+j+LXM5SpX2//4hXFt66b0Nm4+msuARsODXfphKj4On/vlQF
-c2ebPASQXRnzIi77lB9rPIU5LXpTi6AueXms3JBs5wEYU2lhuGnSmTfSIe2Zjh5P
-HJoen4UtP/JmMk4MjzBgGaijCugVUZ7gfTpDh5lMGY4osl9GSLRreYUXBC8IeScq
-zM/eir6T8JMivhVt4rt1gLuZ/pDp9XxUoGnQ4/45vbEm/CIuH7pNpMZu0rtAMRwG
-Nhm3VWMT8t7WhgZywv54WrNEAlj+e/9jYhwuRBmW4gbLn9vNlhuJKYZVDnYA6Pva
-zKMjjN4lJ8kLdTe72OBuFVSiDFDz7OjSIlAH+QsDB6iP8XmpWtyPtfoHjBukRsP5
-ZZFeJQ4R9mz5pBL0VmoyNddCPrnMazsZVdmjD0HSNs8fStiQyuQ=
-=MdzB
+iQIzBAEBCgAdFiEEg/qxWKDZuPtyYo+kNasLKJxdslgFAmlpYOkACgkQNasLKJxd
+slgkqg//WyRjnMhXnCt/cYytaymHAmYwtEngPoqOFG8o00wiEju+rKY6iQcYuDMF
+OBJRcUWGmJs3Gd0l8CVwapW2pqNA+LbPm5kqM6Ov/N0uovGPSCWuWz1XfX/qeZCS
+wthJi6Z9BZW8B/+nHA68pKenArCc+qjgopvofzBBVHzkiOiTK2PgaLpHzKzZltC5
+x77FCaIRk2kayicmI6iP9Y3AVcxvwkzouzKdCXEfwYPxZc6p0sFAvXgGDo9Gl4hx
+Kzm3/3qZSK3GG0beyj8WHUM+stQIJMrTQr2B8frc4w+a+EWzfTqTLj7OWxoebB8J
+qerUUifEe08Nw6QbJyt5CGVXHF9UHjjI6mbSKtibimIWoMouc1VKKy7R4mdyabfD
+qIEF4VM1/sblFQw3cDP1g6IYnu//+1q9ySJTGebzn/h07rvdYEMnpyY5pJ7U1FWK
+23d65O/3R7tfEDD9gRrAA0BOPgzS3c2uy1nesebb4zRkHBIZtgANL5HLYkwZ89+1
+9PnqPDaE7vsCDMLJqAnv8BPMM4CU3Ht1y26Em/X6TzUNx3EqFEolwMGcF1Z+QXAs
+BnNqBlilbnU+l0WfMKLDKBeBM2ZLp1/g93L0qVHIzNyQAGZhYqlKpRzdoQuDJrCH
+S9FeCni+pn6aOVq5Rz6Wvaf4LQ+UBhXfcUPV6OjQmwNc/7x/ENs=
+=D14w
 -----END PGP SIGNATURE-----
 
---Sig_/D0uwH9Sgf_kK54QhULLXHWX--
+--Sig_/L=Puqk4PVPigwWjgN+OSds3--
 
