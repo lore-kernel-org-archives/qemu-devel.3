@@ -4,95 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0D90D44C54
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 14:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABDEAD44C51
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 14:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgOJ8-0003Z9-4K; Thu, 15 Jan 2026 09:26:42 -0500
+	id 1vgOJY-0003bm-60; Thu, 15 Jan 2026 09:27:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgOJ6-0003Xu-7t
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:26:40 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vgOJS-0003ay-64
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:27:03 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgOJ4-0004kN-F5
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:26:39 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-47ee9817a35so5586195e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 06:26:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768487196; x=1769091996; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MrIH/PkxdxhcCb21xCtkdaU8PJrncavs24FzlTPfmdw=;
- b=ypineUBwJfNdmjbEJbmaTZfr9SCdUNWx+/PmBqLftbWvG+yskC+jHUW15JNfwuNIgE
- zkWFpqoo31bHsciqvJ2+Xmm2fwhBLN3p/fMIE3L1kZkHZvGYxd7kqaCqkbIkIdedc/+n
- kZkOui8a0MdIA4mkBHdTTBJJl1GgELPiYd8zlsSqkr7/CfYYGMK00M+w+yGscmq+iRgu
- Sda9/CFkb9d6HmLPkXiw3XYepvZ6c8lPG3Eeg9exfGNLqCSd++hrLa7zjT/h19CzyMfM
- 9KoHW/Bdip1fWHpF3lAAtu4OrOy9J4WBfFPKs3FUtIK8USYOSKzRpFG5fC0NerPieV58
- npQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768487196; x=1769091996;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=MrIH/PkxdxhcCb21xCtkdaU8PJrncavs24FzlTPfmdw=;
- b=b92t/+LJGJ5QK+Dobt3ZOLHYQv6Eu9ykYo79NmqYPKzB5lCFaOOiZjgJB/2TxITsbw
- IAIAUYwzUgdSrLdm9ANjs9IAR4rjMnxvZh9UR3AegOqjD36ibkaJ4io6yCCAA0AbBfPT
- +TELX6um/oViufURSOcgbCbBkuitKVvKOu2IQA4zD8sEnvHWvTJzCw8ERypW/8f4Ru30
- jsyABobDU0BSxC9CjSuccamNYuJYb41hG2JAVNNQ0Ent2rjjSVgzoxNzt/CFSosVKlBq
- kMPCit9OCd5iRbjXRebXWdUldppIYEX05j2bn7zyl/BjBa2amBP54doO6g7hpLtEod0g
- J94g==
-X-Gm-Message-State: AOJu0Yx/ZNwYvhX6Kbq6ZBkIGIDtXN1burMywxOb69a4neV6uShVTxJM
- imWQvOEzkzoFrfHk8RF1+aLGGk34kMAWjF2+9y9HjkqYrCk4+OLjc8piOvmmOis+ZkOiLv+vWAC
- fGoU1
-X-Gm-Gg: AY/fxX4wfMHE5cmlJJTn5WnXc9Tu9vsAuoEBgPCWfJo/1NGPvC0RmPbm5SVdvey0rjp
- /6jDgPQlF32Vy0tyHKMzkBHgQ5P0/0XiRW1YLJHIL2ZXsUOqFxCfUfBIlUeaQMmHscw9HWdh+eR
- /yxy1pJDIXuxodPz1mKfzGvbCQadBstumJNvt0OSHsc3Gv6bIL+y+N1DguywD+DeaOwQevtdZiJ
- or8EQTVKsYK70g2BZZZZnPrJA0FCyrvhdhcQ1L9N032YqAxVhDK0REj3wWBrKuZNi9YqNUbsiRO
- fV9TB1b3HGNdOdAxtnbdMR9u7HvIwq9XB4M++S+CQJR+qWiy9ujWMkqDg1h9qVk9lRF4Px0yaYj
- UY15TwNgoTZ8vgNYykOCTSRFE2QRG/Z/5obOzORE4aLvXWXEcsy8Th7uxSN/OI/t7GDqqjLGUFQ
- Iz42ekU9wPeR3mSz8/YplBLPFw5JJExcsqeYUaB3ic6puWKZgS1gpP4vci/bMBlFwIbayJ5a8uO
- MLTOFaFWN2M8O0k5Q9VRsJavLMUVAJrmr52ZW6FJUwdFQ==
-X-Received: by 2002:a05:600c:548c:b0:477:abea:9028 with SMTP id
- 5b1f17b1804b1-47ee32e0c52mr73399235e9.6.1768487196218; 
- Thu, 15 Jan 2026 06:26:36 -0800 (PST)
-Received: from mnementh.archaic.org.uk
- (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
- [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47f4b2672d6sm50759435e9.14.2026.01.15.06.26.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 06:26:35 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PATCH 3/4] qemu-options.hx: Drop uses of @var
-Date: Thu, 15 Jan 2026 14:26:28 +0000
-Message-ID: <20260115142629.665319-4-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260115142629.665319-1-peter.maydell@linaro.org>
-References: <20260115142629.665319-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vgOJP-0004nG-BE
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:27:01 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 178565BCEB;
+ Thu, 15 Jan 2026 14:26:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1768487217; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lnxjG/P5HdyOusBN3EXBIdVb+5bWCjOooGjKUoMJQ6w=;
+ b=r6TMBL/cxIYtE8cpk9GRS/gdT8LUnWNxlTTi1GH4ychsWazcq5cNM1poQpHXQQ48dq4Ix/
+ Phssi0r/3zzTT5Ise3mqodCabAsDssKFrF8Y4kj4Nbx1E4hoMqNVyFcUd3y/EPGNVuJakI
+ SHBTbVBFHguBLdPozFfnLTK5hrXwbVQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1768487217;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lnxjG/P5HdyOusBN3EXBIdVb+5bWCjOooGjKUoMJQ6w=;
+ b=f0YxrrT7LZZJYUsVZQtw2yjgPKUFlGU9+g0LzYLDf3x7pqcnucTPTxwVno9ZJ/9i4ARglM
+ x1fAxvjyckatA6CA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="r6TMBL/c";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=f0YxrrT7
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1768487217; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lnxjG/P5HdyOusBN3EXBIdVb+5bWCjOooGjKUoMJQ6w=;
+ b=r6TMBL/cxIYtE8cpk9GRS/gdT8LUnWNxlTTi1GH4ychsWazcq5cNM1poQpHXQQ48dq4Ix/
+ Phssi0r/3zzTT5Ise3mqodCabAsDssKFrF8Y4kj4Nbx1E4hoMqNVyFcUd3y/EPGNVuJakI
+ SHBTbVBFHguBLdPozFfnLTK5hrXwbVQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1768487217;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lnxjG/P5HdyOusBN3EXBIdVb+5bWCjOooGjKUoMJQ6w=;
+ b=f0YxrrT7LZZJYUsVZQtw2yjgPKUFlGU9+g0LzYLDf3x7pqcnucTPTxwVno9ZJ/9i4ARglM
+ x1fAxvjyckatA6CA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8BBCF3EA63;
+ Thu, 15 Jan 2026 14:26:56 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id AjRKEzD5aGkQZQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 15 Jan 2026 14:26:56 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com
+Subject: Re: [PATCH 1/5] migration: Use QAPI_CLONE_MEMBERS in
+ migrate_params_test_apply
+In-Reply-To: <87h5sonkdu.fsf@suse.de>
+References: <20260114132309.5832-1-farosas@suse.de>
+ <20260114132309.5832-2-farosas@suse.de> <aWex7yI4jIoYXEjp@x1.local>
+ <87h5sonkdu.fsf@suse.de>
+Date: Thu, 15 Jan 2026 11:26:53 -0300
+Message-ID: <87v7h3lzo2.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 178565BCEB
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,81 +126,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A few entries in qemu-options.hx use the syntax "my-option=@var{name}"
-when documenting an option that takes an argument. This syntax isn't
-consistently used, and the documentation generation has no support for
-it: it just appears literally in the HTML output.
+Fabiano Rosas <farosas@suse.de> writes:
 
-Switch these uses to the more common "my-option=<name>". This also
-doesn't have any particular support in the documentation generation
-and so appears literally in the output, but it is a little less odd
-looking to the end-user.
+> Peter Xu <peterx@redhat.com> writes:
+>
+>> On Wed, Jan 14, 2026 at 10:23:05AM -0300, Fabiano Rosas wrote:
+>>> Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
+>>> method makes the handling of the TLS strings more intuitive because it
+>>> clones them as well.
+>>
+>> The cover letter said this patch didn't change, but it has changed at least
+>> somewhere.. anyway, I'm re-reviewing every line here.
+>>
+>
+> Sorry, I forgot I had already addressed your review comments from the
+> other series in this patch.
+>
+>>> 
+>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>> ---
+>>>  migration/options.c | 32 ++++++++++++++++++--------------
+>>>  1 file changed, 18 insertions(+), 14 deletions(-)
+>>> 
+>>> diff --git a/migration/options.c b/migration/options.c
+>>> index 9a5a39c886..994e1cc5ac 100644
+>>> --- a/migration/options.c
+>>> +++ b/migration/options.c
+>>> @@ -1264,9 +1264,9 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+>>>  static void migrate_params_test_apply(MigrationParameters *params,
+>>>                                        MigrationParameters *dest)
+>>>  {
+>>> -    *dest = migrate_get_current()->parameters;
+>>> +    MigrationState *s = migrate_get_current();
+>>>  
+>>> -    /* TODO use QAPI_CLONE() instead of duplicating it inline */
+>>> +    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
+>>>  
+>>>      if (params->has_throttle_trigger_threshold) {
+>>>          dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
+>>> @@ -1285,24 +1285,18 @@ static void migrate_params_test_apply(MigrationParameters *params,
+>>>      }
+>>>  
+>>>      if (params->tls_creds) {
+>>> +        qapi_free_StrOrNull(dest->tls_creds);
+>>>          dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
+>>> -    } else {
+>>> -        /* clear the reference, it's owned by s->parameters */
+>>> -        dest->tls_creds = NULL;
+>>>      }
+>>>  
+>>>      if (params->tls_hostname) {
+>>> +        qapi_free_StrOrNull(dest->tls_hostname);
+>>>          dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
+>>> -    } else {
+>>> -        /* clear the reference, it's owned by s->parameters */
+>>> -        dest->tls_hostname = NULL;
+>>>      }
+>>>  
+>>>      if (params->tls_authz) {
+>>> +        qapi_free_StrOrNull(dest->tls_authz);
+>>>          dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
+>>> -    } else {
+>>> -        /* clear the reference, it's owned by s->parameters */
+>>> -        dest->tls_authz = NULL;
+>>>      }
+>>>  
+>>>      if (params->has_max_bandwidth) {
+>>> @@ -1359,8 +1353,9 @@ static void migrate_params_test_apply(MigrationParameters *params,
+>>>      }
+>>>  
+>>>      if (params->has_block_bitmap_mapping) {
+>>> -        dest->has_block_bitmap_mapping = true;
+>>> -        dest->block_bitmap_mapping = params->block_bitmap_mapping;
+>>> +        qapi_free_BitmapMigrationNodeAliasList(dest->block_bitmap_mapping);
+>>> +        dest->block_bitmap_mapping = QAPI_CLONE(BitmapMigrationNodeAliasList,
+>>> +                                                params->block_bitmap_mapping);
+>>>      }
+>>>  
+>>>      if (params->has_x_vcpu_dirty_limit_period) {
+>>> @@ -1384,7 +1379,8 @@ static void migrate_params_test_apply(MigrationParameters *params,
+>>>      }
+>>>  
+>>>      if (params->has_cpr_exec_command) {
+>>> -        dest->cpr_exec_command = params->cpr_exec_command;
+>>> +        qapi_free_strList(dest->cpr_exec_command);
+>>> +        dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
+>>>      }
+>>>  }
+>>
+>> So we have 5 special cases here, (1-3) for tls, (4) for block bitmap, (5)
+>> for cpr-exec-cmd.  All good.
+>>
+>>>  
+>>> @@ -1535,6 +1531,14 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
+>>>      migrate_params_test_apply(params, &tmp);
+>>>  
+>>>      if (migrate_params_check(&tmp, errp)) {
+>>> +        /*
+>>> +         * Mark block_bitmap_mapping as present now while we have the
+>>> +         * params structure with the user input around.
+>>> +         */
+>>> +        if (params->has_block_bitmap_mapping) {
+>>> +            migrate_get_current()->has_block_bitmap_mapping = true;
+>>> +        }
+>>
+>> Now I'm looking at the lastest master branch, we have:
+>>
+>> migrate_params_apply():
+>>     if (params->has_block_bitmap_mapping) {
+>>         qapi_free_BitmapMigrationNodeAliasList(
+>>             s->parameters.block_bitmap_mapping);
+>>
+>>         s->has_block_bitmap_mapping = true;
+>>         s->parameters.block_bitmap_mapping =
+>>             QAPI_CLONE(BitmapMigrationNodeAliasList,
+>>                        params->block_bitmap_mapping);
+>>     }
+>>
+>> Do we really need above change?
+>>
+>
+> It should be in the next patch.
+>
+>>> +
+>>>          migrate_params_apply(params);
+>>>          migrate_post_update_params(params, errp);
+>>>      }
+>>
+>> The other thing is, when reaching here, after we have all 5 special cases
+>> dynamically allocated, do we need to always free it?
+>>
+>> We used to do it for the initial (1-3) for tls (in migrate_tls_opts_free()).
+>> I think we should also free (4,5) now from &tmp?
+>>
+>
+> Yes!
+>
 
-The other common pattern we have is "my-option=name" with no marking
-at all that the right hand side of the '=' is not literal text;
-using <> seems preferable to me, as it makes it more distinct from
-cases where the right hand side is documenting that only certain
-values are permitted, as in "my-option=on|off".
+Although, for CPR, the ASAN, valgrind, etc tools will never catch the
+leak because of the execvp(). It took me a while to figure that one.
 
-We don't change the uses of @var in the colo-compare documentation,
-as that part deserves a slightly more wide-ranging overhaul that
-is better in its own commit.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- qemu-options.hx | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/qemu-options.hx b/qemu-options.hx
-index ec92723f10..aca9dba8b9 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -36,7 +36,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
-     "                dea-key-wrap=on|off controls support for DEA key wrapping (default=on)\n"
-     "                suppress-vmdesc=on|off disables self-describing migration (default=off)\n"
-     "                nvdimm=on|off controls NVDIMM support (default=off)\n"
--    "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
-+    "                memory-encryption=<id> memory encryption object to use (default=none)\n"
-     "                hmat=on|off controls ACPI HMAT support (default=off)\n"
-     "                spcr=on|off controls ACPI SPCR support (default=on)\n"
- #ifdef CONFIG_POSIX
-@@ -100,7 +100,7 @@ SRST
-     ``nvdimm=on|off``
-         Enables or disables NVDIMM support. The default is off.
- 
--    ``memory-encryption=``
-+    ``memory-encryption=<id>``
-         Memory encryption object to use. The default is none.
- 
-     ``hmat=on|off``
-@@ -180,7 +180,7 @@ SRST
- 
-             -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
- 
--    ``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
-+    ``sgx-epc.0.memdev=<memid>,sgx-epc.0.node=<numaid>``
-         Define an SGX EPC section.
- 
-     ``smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel``
-@@ -4530,7 +4530,7 @@ DEF("compat", HAS_ARG, QEMU_OPTION_compat,
-     "                Policy for handling unstable management interfaces\n",
-     QEMU_ARCH_ALL)
- SRST
--``-compat [deprecated-input=@var{input-policy}][,deprecated-output=@var{output-policy}]``
-+``-compat [deprecated-input=<input-policy>][,deprecated-output=<output-policy>]``
-     Set policy for handling deprecated management interfaces (experimental):
- 
-     ``deprecated-input=accept`` (default)
-@@ -4546,7 +4546,7 @@ SRST
- 
-     Limitation: covers only syntactic aspects of QMP.
- 
--``-compat [unstable-input=@var{input-policy}][,unstable-output=@var{output-policy}]``
-+``-compat [unstable-input=<input-policy>][,unstable-output=<output-policy>]``
-     Set policy for handling unstable management interfaces (experimental):
- 
-     ``unstable-input=accept`` (default)
--- 
-2.47.3
-
+>>> -- 
+>>> 2.51.0
+>>> 
 
