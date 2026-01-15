@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E2AD3CCA2
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 02:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 574E1D3CCA2
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 02:05:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgCiz-000185-J1; Wed, 14 Jan 2026 21:04:37 -0500
+	id 1vgCj1-00018s-1j; Wed, 14 Jan 2026 21:04:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgCiy-00017f-16
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 21:04:36 -0500
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgCiz-000180-Ca
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 21:04:37 -0500
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgCiw-0001hy-FK
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 21:04:35 -0500
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgCiw-0001hn-F2
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 21:04:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=K7IkeO8eN1VAP9xOsoqI20lnoom1a0KQ/5GXf4InmqY=; b=WC/iMU+hLFxRpJf6
- 7vVN/WRxRW0NKrcw2EmfRprmqB4BfCDSTAFvmf/MTXO/QJvokfk1hzX1rK7zZl6KzoLZy4Ly+qwj3
- NjkFWok6OOYaS6kcXUO3LRuMg8PCmjI8nG8CxgsLMFolIzgHbZEQaB1ji+4vSqFRoSjndbCjiAr+T
- u5Zadha/wSAu2j2w1jI0PgaBbqXaqV+E87xlacApU2hIxQg9RhAABDjI4zPkgXrW9XlZMCIMsKAXX
- eWKPwUrJfyRxbxaR+b8O1fUeZFyjPRu1c0cHtB5nY5n2vGk9lD6bRE5R1B2qXsTGTgjm/AtsHI3TB
- 2qU3tARltS+02Oj2hw==;
+ :Subject; bh=UF/C1/YyJL2Raz9w8Jk2ZQlJ5lWkUSxLDIWmN53lJCM=; b=TVkReYm9K0faAMSh
+ 2az4tEFYsP4aL92qLJ5mEna7PDKLPDKySFPmp0vkAVzMyWDXSF5MAWoNHs0HZOvfn8gNjp+Jptbyt
+ /uueAVCyJQ20yMsZfI39M/a8vkLOiYL8ghga+2PuDy4SvjymWiwbgmrpBq311Dj3ssfB0CU5fDCLe
+ ZY/C+vH55oeLcunMhhfi3UVzAJoVU+4ToNcE/2A3IFm7EskPkThlqtMeF7TDy9kfKT73AoK0xL11c
+ VDhZ0whs6xTYaeeXZY4S31V2IupI0Nqonx0iMT10ZamKuUfCInw2omH9ZhqNzl8DvHCrAFjLQvvk+
+ F7GUWREaIcxNyLJbBQ==;
 Received: from localhost ([127.0.0.1] helo=dalek)
  by mx.treblig.org with esmtp (Exim 4.98.2)
- (envelope-from <dave@treblig.org>) id 1vgCit-0000000Eq8W-2jqk;
+ (envelope-from <dave@treblig.org>) id 1vgCit-0000000Eq8W-0H9W;
  Thu, 15 Jan 2026 02:04:31 +0000
 From: dave@treblig.org
 To: dave@treblig.org,
 	armbru@redhat.com,
 	berrange@redhat.com
 Cc: qemu-devel@nongnu.org
-Subject: [PATCH 3/4] hxtool: Split srst/erst add checks
-Date: Thu, 15 Jan 2026 02:04:22 +0000
-Message-ID: <20260115020423.722069-4-dave@treblig.org>
+Subject: [PATCH 2/4] hmp*hx: Move info docs
+Date: Thu, 15 Jan 2026 02:04:21 +0000
+Message-ID: <20260115020423.722069-3-dave@treblig.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115020423.722069-1-dave@treblig.org>
 References: <20260115020423.722069-1-dave@treblig.org>
@@ -69,52 +69,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-Split the SRST/ERST case and add some checks.
-This is mainly to make it easier to add some checks in following
-patches.
+Move the docs for the info subcommand from the separate hx
+into the top level file next to the 'info' command itself.
+That makes every command in the top level file have a RST section.
 
 Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 ---
- scripts/hxtool | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ hmp-commands-info.hx |  9 +--------
+ hmp-commands.hx      | 27 +++++++++++++++++----------
+ 2 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/scripts/hxtool b/scripts/hxtool
-index 80516b9437..ea2accef98 100755
---- a/scripts/hxtool
-+++ b/scripts/hxtool
-@@ -2,15 +2,29 @@
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 74c741f80e..964eed004c 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -8,14 +8,7 @@ HXCOMM
+ HXCOMM In this file, generally SRST fragments should have two extra
+ HXCOMM spaces of indent, so that the documentation list item for "info foo"
+ HXCOMM appears inside the documentation list item for the top level
+-HXCOMM "info" documentation entry. The exception is the first SRST
+-HXCOMM fragment that defines that top level entry.
+-
+-SRST
+-``info`` *subcommand*
+-  Show various information about the system state.
+-
+-ERST
++HXCOMM "info" documentation entry.
  
- hxtoh()
- {
--    flag=1
-+    outsiderst=1
-     while read -r str; do
-         case $str in
-             HXCOMM*)
-             ;;
--            SRST*|ERST*) flag=$(($flag^1))
-+            SRST*)
-+              if [ $outsiderst -eq 0 ]
-+              then
-+                echo "Error: SRST inside another RST" >&2
-+                exit 1
-+              fi
-+              outsiderst=0
-+            ;;
-+            ERST*)
-+              if [ $outsiderst -eq 1 ]
-+              then
-+                echo "Error: ERST already outside RST" >&2
-+                exit 1
-+              fi
-+              outsiderst=1
-             ;;
-             *)
--            test $flag -eq 1 && printf "%s\n" "$str"
-+            test $outsiderst -eq 1 && printf "%s\n" "$str"
-             ;;
-         esac
-     done
+     {
+         .name       = "version",
+diff --git a/hmp-commands.hx b/hmp-commands.hx
+index 5cc4788f12..f4a6eeda93 100644
+--- a/hmp-commands.hx
++++ b/hmp-commands.hx
+@@ -1814,16 +1814,6 @@ SRST
+   command.
+ ERST
+ 
+-    {
+-        .name       = "info",
+-        .args_type  = "item:s?",
+-        .params     = "[subcommand]",
+-        .help       = "show various information about the system state",
+-        .cmd        = hmp_info_help,
+-        .sub_table  = hmp_info_cmds,
+-        .flags      = "p",
+-    },
+-
+ #if defined(CONFIG_FDT)
+     {
+         .name       = "dumpdtb",
+@@ -1867,3 +1857,20 @@ SRST
+   List event channels in the guest
+ ERST
+ #endif
++
++HXCOMM *** MUST BE LAST ENTRY **
++    {
++        .name       = "info",
++        .args_type  = "item:s?",
++        .params     = "[subcommand]",
++        .help       = "show various information about the system state",
++        .cmd        = hmp_info_help,
++        .sub_table  = hmp_info_cmds,
++        .flags      = "p",
++    },
++
++SRST
++``info`` *subcommand*
++  Show various information about the system state.
++ERST
++HXCOMM *** MUST BE LAST ENTRY **
 -- 
 2.52.0
 
