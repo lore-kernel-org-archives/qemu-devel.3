@@ -4,98 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5693D41178
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 11:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D4F8D41178
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 11:58:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgLwa-0003lI-0N; Thu, 15 Jan 2026 06:55:16 -0500
+	id 1vgLyy-0002vb-Gu; Thu, 15 Jan 2026 06:57:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vgLwJ-00037Q-1G
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:55:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgLyv-0002tG-7L
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:57:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vgLwH-0002w3-Ce
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:54:58 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgLys-00045F-Aq
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 06:57:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768478095;
+ s=mimecast20190719; t=1768478253;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u0th5VhGu7rvQfZUpVYyawCPX/KrPrzZgrw1SuOK/ko=;
- b=E2GgOFjEspiOKl4Bufr1gezZ5TNu68Z1Kvi1/AHGdAumbaiUPw8mFIiWDKnwoTaSt3SGvT
- K4RBDcexT6PBrz460Ymy2KDGHw3bPgHWe4OGAyxNdWfGChaBYnynXpFqZtF1bUErYFXPOg
- xlYsB4kProe3PGwFWFkiAGlJXYQUZco=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-LNDe5RbyPnuJhFb1RLkNnA-1; Thu, 15 Jan 2026 06:54:54 -0500
-X-MC-Unique: LNDe5RbyPnuJhFb1RLkNnA-1
-X-Mimecast-MFC-AGG-ID: LNDe5RbyPnuJhFb1RLkNnA_1768478093
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47ed980309aso9132165e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 03:54:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768478093; x=1769082893; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=u0th5VhGu7rvQfZUpVYyawCPX/KrPrzZgrw1SuOK/ko=;
- b=THw4dha3Kox4XJtBegGH4wzeinLteIAr0YrRT27r3rcE/ywRvEu76HELaeDPPKaC6X
- rTx5jMWWve4vdENEO6sTNgExwPJWIv6aV4lcaukjRMiVWJAEdBSuNtJ24ovsRFqqt/Iz
- cchwmPbMGlBQfGfV5DIZ3zN3AX/ZLorg6serqO65UV7cFYfbGcqJUQp5rBGC2Ys+PxLc
- ynygeD/9/nPpBC86OP3FNys0/Z/LjdkOrcEicCegDMSE0Ge9ZZd3Oi4zLc35Qx4B7ZxF
- x1mAFDtx5SLcnWIk9bbn3wdCn3TQCoP/YIn0qZkdDd3Y5fTzmUsk2yKsD9cyWTjh9qqn
- 3a8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768478093; x=1769082893;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u0th5VhGu7rvQfZUpVYyawCPX/KrPrzZgrw1SuOK/ko=;
- b=p9Yf8D+6TC8UAAiYCtg4IYJcndUOQYfi12kt8tinSd8qpvxFlQOHQU6VqSiXDkW9rC
- 6pOxk2bHJ2d3A9ogBadtnbK+YfTDcfEw5olZMFxCeqDW230YAPPVxA6x/qAKhsR/qtWD
- YBYkQSlM66X/2v9JEHAtHIMU6kF+FVfgzL2tBPKRSyXdH0T6PYaEFr4Epu6sInxAQ8vg
- quirc56Xx14Sq0he2C4Q7T/C2ox5I3N1vxAc2Gkjfb7qdz8+TU79EET4sBU6dXMkcWie
- +YOCQH0sOH+h0xpnPBZ2ACvb4gIiC8JhrQ9jSTCK7xUzja4HwymB4XUwVPtXoHO81vOD
- k6Lw==
-X-Gm-Message-State: AOJu0Yx/w85N6mMqcupd+nlfDGzlu4fWZkIyNsc1tZEgJ3+mefBo3t7y
- tdJBPjNm7MwDbblhhY9fgxQWFtPdsUTH3e/OIJdhJ7BlJPT2z4X0Xv+aY+fnjTFo6mPikvw7Svy
- L9LxJcQFY81VXlj3rTsVPuVin6o3JhSesvSf2xmWWBZLj0PivYTA3WoBqplA3SqlvQfgm75Q5qp
- Lx9kG0AYW0UbN3pvqmHUIZXPkXvXq51d8DA+y768Xmag==
-X-Gm-Gg: AY/fxX5YdsYTzL5ZcXlDTmqbCu/Afx7GXXo34Cg6JTMS/qiVdx2Fvs7zB1WaPB0BpJY
- TltnvkU9hV59T2PXZm2O2B3Uup4Sxz0xgIMPmUDXc3XshA+SbakhIztjGQ78oplgrpvHmZul1kF
- nzjwnY2GdPiNZTN/ldF599h2YQ9cNCrJepU8HBay0N/nBvgvePYPDlNeF4GsoEh55uL1JRMq5pA
- quBfufJbTnpPD2WTbQ3yRTg3kY9a8xxnvCsvqV2JtbVC30yr8Iv6SB5
-X-Received: by 2002:a05:600c:64c6:b0:477:9d88:2da6 with SMTP id
- 5b1f17b1804b1-4801d7881femr2250375e9.0.1768478092841; 
- Thu, 15 Jan 2026 03:54:52 -0800 (PST)
-X-Received: by 2002:a05:600c:64c6:b0:477:9d88:2da6 with SMTP id
- 5b1f17b1804b1-4801d7881femr2250055e9.0.1768478092449; Thu, 15 Jan 2026
- 03:54:52 -0800 (PST)
+ bh=7OCALVC/3j6ktdBcTUNVWuK58dN4UBblPertRsER8cs=;
+ b=NMebn14aRWcfYv1LooIRdHt5DzDjIF+/LhCEP60WtAQ6NPhkA6f3fN8EvWTYMPxlCTcY/4
+ XvIMsfSSdhQRYzd2Pz99BkHE7ndAXEKRkrTCGQQoIQLoRSaIuCQPpvS91Gle1kKbgXQM6V
+ maK/NXIccVFkxyG1M3e6alSV+CE7xI8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-gle9Yp3AOOK6yx3TgW2Pdw-1; Thu,
+ 15 Jan 2026 06:57:32 -0500
+X-MC-Unique: gle9Yp3AOOK6yx3TgW2Pdw-1
+X-Mimecast-MFC-AGG-ID: gle9Yp3AOOK6yx3TgW2Pdw_1768478251
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7E61718007EB; Thu, 15 Jan 2026 11:57:28 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0A6601801A45; Thu, 15 Jan 2026 11:57:27 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 77EC221E692D; Thu, 15 Jan 2026 12:57:25 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: dave@treblig.org
+Cc: berrange@redhat.com,  qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/4] hmp*hx: Move info docs
+In-Reply-To: <20260115020423.722069-3-dave@treblig.org> (dave@treblig.org's
+ message of "Thu, 15 Jan 2026 02:04:21 +0000")
+References: <20260115020423.722069-1-dave@treblig.org>
+ <20260115020423.722069-3-dave@treblig.org>
+Date: Thu, 15 Jan 2026 12:57:25 +0100
+Message-ID: <875x93xf4q.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260109124043.25019-1-farosas@suse.de>
- <20260109124043.25019-8-farosas@suse.de>
-In-Reply-To: <20260109124043.25019-8-farosas@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 15 Jan 2026 17:24:35 +0530
-X-Gm-Features: AZwV_QjAK5xJUSMjsceCzT8HQroWZM5gvoe0LDIO4Wvu9_NJYz1hkLe0nM9kPWo
-Message-ID: <CAE8KmOzLG1QzPqw4H989Ws0-1LjcQzcXHJ8QbX06rVGsRQEKyg@mail.gmail.com>
-Subject: Re: [PATCH v3 07/25] migration: Free the error earlier in the resume
- case
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,54 +87,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 Jan 2026 at 18:11, Fabiano Rosas <farosas@suse.de> wrote:
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1811,8 +1811,8 @@ int migrate_init(MigrationState *s, Error **errp)
->      s->setup_time = 0;
->      s->start_postcopy = false;
->      s->migration_thread_running = false;
-> -    error_free(s->error);
-> -    s->error = NULL;
-> +
-> +    migrate_error_free(s);
->
->      if (should_send_vmdesc()) {
->          s->vmdesc = json_writer_new(false);
-> @@ -2087,6 +2087,13 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
->          migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_PAUSED,
->                            MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
->
-> +        /*
-> +         * If there's a previous error, free it and prepare for
-> +         * another one. For the non-resume case, this happens at
-> +         * migrate_init() below.
-> +         */
-> +        migrate_error_free(s);
-> +
->          /* This is a resume, skip init status */
->          return true;
->      }
-> @@ -4015,13 +4022,6 @@ void migration_connect(MigrationState *s, Error *error_in)
->      bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
->      int ret;
->
-> -    /*
-> -     * If there's a previous error, free it and prepare for another one.
-> -     * Meanwhile if migration completes successfully, there won't have an error
-> -     * dumped when calling migration_cleanup().
-> -     */
-> -    migrate_error_free(s);
-> -
->      s->expected_downtime = migrate_downtime_limit();
->      if (error_in) {
->          migration_connect_error_propagate(s, error_in);
+dave@treblig.org writes:
 
-* Looks okay.
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+> From: "Dr. David Alan Gilbert" <dave@treblig.org>
+>
+> Move the docs for the info subcommand from the separate hx
+> into the top level file next to the 'info' command itself.
+> That makes every command in the top level file have a RST section.
+>
+> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 
-Thank you.
----
-  - Prasad
+Generated HTML changes slightly, diff appended.  Shows as vertical space
+differences in Firefox.  Do we care?
+
+
+--- bld-docs/docs.old/manual/system/monitor.html	2026-01-15 12:30:17.300968=
+723 +0100
++++ bld-docs/docs/manual/system/monitor.html	2026-01-15 12:55:43.909694634 =
++0100
+@@ -601,10 +601,11 @@ command.</p>
+ </dd>
+ <dt><code class=3D"docutils literal notranslate"><span class=3D"pre">xen-e=
+vent-list</span></code></dt><dd><p>List event channels in the guest</p>
+ </dd>
+-</dl>
+-<dl>
+ <dt><code class=3D"docutils literal notranslate"><span class=3D"pre">info<=
+/span></code> <em>subcommand</em></dt><dd><p>Show various information about=
+ the system state.</p>
+-<dl>
++</dd>
++</dl>
++<blockquote>
++<div><dl>
+ <dt><code class=3D"docutils literal notranslate"><span class=3D"pre">info<=
+/span> <span class=3D"pre">version</span></code></dt><dd><p>Show the versio=
+n of QEMU.</p>
+ </dd>
+ <dt><code class=3D"docutils literal notranslate"><span class=3D"pre">info<=
+/span> <span class=3D"pre">network</span></code></dt><dd><p>Show the networ=
+k state.</p>
+@@ -639,8 +640,6 @@ command.</p>
+ </dd>
+ <dt><code class=3D"docutils literal notranslate"><span class=3D"pre">info<=
+/span> <span class=3D"pre">jit</span></code></dt><dd><p>Show dynamic compil=
+er info.</p>
+ </dd>
+-<dt><code class=3D"docutils literal notranslate"><span class=3D"pre">info<=
+/span> <span class=3D"pre">accel</span></code></dt><dd><p>Show accelerator =
+statistics.</p>
+-</dd>
+ <dt><code class=3D"docutils literal notranslate"><span class=3D"pre">info<=
+/span> <span class=3D"pre">sync-profile</span> <span class=3D"pre">[-m|-n]<=
+/span></code> [<em>max</em>]</dt><dd><p>Show synchronization profiling info=
+, up to <em>max</em> entries (default: 10),
+ sorted by total wait time.</p>
+ <dl class=3D"simple">
+@@ -653,6 +652,8 @@ sorted by total wait time.</p>
+ the =E2=80=9CObject=E2=80=9D field shows=E2=80=94enclosed in brackets=E2=
+=80=94the number of objects
+ being coalesced.</p>
+ </dd>
++<dt><code class=3D"docutils literal notranslate"><span class=3D"pre">info<=
+/span> <span class=3D"pre">accel</span></code></dt><dd><p>Show accelerator =
+statistics.</p>
++</dd>
+ <dt><code class=3D"docutils literal notranslate"><span class=3D"pre">info<=
+/span> <span class=3D"pre">kvm</span></code></dt><dd><p>Show KVM informatio=
+n.</p>
+ </dd>
+ <dt><code class=3D"docutils literal notranslate"><span class=3D"pre">info<=
+/span> <span class=3D"pre">accelerators</span></code></dt><dd><p>Show which=
+ accelerators are compiled into a QEMU binary, and what accelerator
+@@ -765,8 +766,7 @@ enabled) memory in bytes.</p>
+ <dt><code class=3D"docutils literal notranslate"><span class=3D"pre">info<=
+/span> <span class=3D"pre">firmware-log</span></code></dt><dd><p>Show the f=
+irmware (ovmf) debug log.</p>
+ </dd>
+ </dl>
+-</dd>
+-</dl>
++</div></blockquote>
+ </section>
+ <section id=3D"integer-expressions">
+ <h2>Integer expressions<a class=3D"headerlink" href=3D"#integer-expression=
+s" title=3D"Link to this heading">=EF=83=81</a></h2>
 
 
