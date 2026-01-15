@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808DCD44C71
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 16:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77439D44C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 16:16:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgPwE-0001Yc-6I; Thu, 15 Jan 2026 11:11:14 -0500
+	id 1vgQ0q-0003n9-8E; Thu, 15 Jan 2026 11:15:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1vgPvw-0001WJ-DE
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:10:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vgQ0h-0003j2-82
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:15:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1vgPvt-00031B-LF
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:10:51 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vgQ0f-0003cw-L1
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:15:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768493446;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1768493744;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1ipYNHVcQHBnf6VuG3gRzdGItDut/F+bPKSS7jkUFuk=;
- b=U/P1KyqyGOapGzy69gqcSxZYjC6Z7edJs9QxwxQfldqcEQXiw9t9SSHjwTF9IqQ0tHD9Xg
- KjwVqKkAqfqXBI1YljDOeJ7GTJFE4OhDaacLps8Fq9ZTMU1y8P9odxYu9FXF4+5l3Tifdg
- akpMm0UNxtzaJZUT+t2moiGlAEa3y2w=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=yTCa6szanm2tUYJl1nHOlXi58cDAtwR1rDDWPwUQPUo=;
+ b=edflDudYVVHGz0nBvNbr6kptMNNZ4d/cD67AVJUWqbVfUNvvo+pyRiRwRxsOpNzpxRu8bF
+ dcwBibN0gR40lwJCfg9ruiEIIvkyTjK1gHKbFh76QH17pmDT01qVHTbs+bSmBPH8T0lg9J
+ 5p27pDP7sjcvRCK180uvuyyY2qFgBls=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-Fw8RSA6aMOutVbeocelcuw-1; Thu,
- 15 Jan 2026 11:10:40 -0500
-X-MC-Unique: Fw8RSA6aMOutVbeocelcuw-1
-X-Mimecast-MFC-AGG-ID: Fw8RSA6aMOutVbeocelcuw_1768493438
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-uPASjd-7NEat7Tyn3WfbLQ-1; Thu,
+ 15 Jan 2026 11:15:42 -0500
+X-MC-Unique: uPASjd-7NEat7Tyn3WfbLQ-1
+X-Mimecast-MFC-AGG-ID: uPASjd-7NEat7Tyn3WfbLQ_1768493741
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EB602180057E; Thu, 15 Jan 2026 16:10:37 +0000 (UTC)
-Received: from angien.pipo.sk (unknown [10.45.242.3])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15C863001DB9; Thu, 15 Jan 2026 16:10:32 +0000 (UTC)
-Date: Thu, 15 Jan 2026 17:10:29 +0100
-From: Peter Krempa <pkrempa@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Fam Zheng <fam@euphon.net>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Hannes Reinecke <hare@suse.de>, Yanan Wang <wangyanan55@huawei.com>,
- Kevin Wolf <kwolf@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alberto Faria <afaria@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- qemu-block@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [RFC 0/4] scsi: persistent reservation live migration
-Message-ID: <aWkRdfL192WR22ni@angien.pipo.sk>
-References: <20260113215320.566595-1-stefanha@redhat.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 24CC51956067; Thu, 15 Jan 2026 16:15:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.98])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EA8E1180049F; Thu, 15 Jan 2026 16:15:38 +0000 (UTC)
+Date: Thu, 15 Jan 2026 16:15:35 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+Subject: Re: [PATCH] tests/functional: Require TCG to run reverse debugging
+ tests
+Message-ID: <aWkSp6o-q-Pf-Ran@redhat.com>
+References: <20260115161029.24116-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260113215320.566595-1-stefanha@redhat.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260115161029.24116-1-philmd@linaro.org>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pkrempa@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,28 +88,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 13, 2026 at 16:53:15 -0500, Stefan Hajnoczi wrote:
-> Live migration does not work for SCSI Persistent Reservations acquired on
-> scsi-block devices. This patch series migrates the reservation key and
-> reservation type so that the destination QEMU can take over the persistent
-> reservation with the PREEMPT service action upon live migration.
+On Thu, Jan 15, 2026 at 05:10:29PM +0100, Philippe Mathieu-Daudé wrote:
+> Record/replay is specific to TCG. Require it to avoid failure
+> when using a HVF-only build on Darwin:
 > 
-> The approach involves snooping PERSISTENT RESERVE OUT replies and tracking the
-> scsi-block device's current reservation key and reservation type. In most cases
-> this involves no additional SCSI commands. This approach isn't perfect: if
-> another machine modifies the reservation on the physical LUN, then QEMU's state
-> becomes stale. Persistent reservations are inherently cooperative, so this is
-> acceptable as long as real applications don't run into problems.
+>   qemu-system-aarch64: -icount shift=7,rr=record,rrfile=/scratch/replay.bin,rrsnapshot=init: cannot configure icount, TCG support not available
 > 
-> I am also working on a test suite called pr-tests that runs sg_persist(8)
-> commands across multiple machines in order to exercise various scenarios:
-> https://gitlab.com/stefanha/pr-tests
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  tests/functional/reverse_debugging.py | 2 ++
+>  1 file changed, 2 insertions(+)
 
-I've also prepared libvirt RFC patches adding support for the feature:
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/KBZDAIQWFILAC4USJY3C3TDPYHI6K5WK/
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
