@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA400D4661F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 19:53:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFFE3D4661E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 19:54:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgTPC-0003NQ-F9; Thu, 15 Jan 2026 14:53:18 -0500
+	id 1vgTPP-0003WN-PD; Thu, 15 Jan 2026 14:53:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgTPB-0003N7-5m
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:53:17 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgTPN-0003UL-Me
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:53:29 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgTP9-0000hK-Ln
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:53:16 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47ee3da7447so8105315e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 11:53:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgTPM-0000nR-6e
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 14:53:29 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-47d1d8a49f5so8143115e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 11:53:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768506794; x=1769111594; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768506806; x=1769111606; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oxg48iJpicsxkRKyRe0DmuSZk4wGUzVv/6pVl2gFEUo=;
- b=UiG5ZlHN9cPcrU5FVna4oJqsVuGeLT4xkLxsLMX/P4xC7/iCuYICbVBTRbJnpG6OaB
- bxavBZwHREuOELHzHiuxc4OeTyOWuHJiNRxl/EgPS8/fJVPpxOqhkNSLrA6hLJ8cXy60
- 7DnlykNZKfjG6slgB+oH3Rq37jQserZn3XvSuY8TfzEXeBJpg8ZYNOKPVFmBCWxXdYYm
- E1BnMQYeX5bm2qpNQEk8/KifhxFwpw26YfvGkryQZSQxi8BZdIe0ZMPOaDWetCcOqqgN
- zwUxJPUD06aYYfva0ACd47l/J5eR6b0Aab66pZE39KektBwtFpKGeL1AMGpEaRoEoH8D
- 5XQA==
+ bh=ZyuAt08zLTT6cT4HzTZ8dzSryrV2/NU9Nv9qwkCJbcg=;
+ b=dVBN8BdM1eX3Az+tF2CRQXpFlCIRPHGnzkHTCTxLTcKaRF19YbkDCX1jHWFNrZxoo0
+ KHZb99oy2vxEuNpa/kWWe8s/1/DDebQgdFLttcSUaOZmfVdqWmKl2fAecryw0Ti8MIUL
+ x8NeJ2kGJiuBk7pGuARxPyjh/U2Km4bJVOPfyvySKGqzDXuKB/ztc2HDDVn5vPBeVCh5
+ r0mxeapvRhD2bt7Te6cup33H10klj7A8zY0uxzXwwoq1SVVGpxnCymneIFmCPPGj2+xV
+ AASzHkisPef6qDYaI6fQFFO5sfCwzAVV2MzgqUfrrkLtDkxWRJ8z/PXgaD4qYqvGXxje
+ QGHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768506794; x=1769111594;
+ d=1e100.net; s=20230601; t=1768506806; x=1769111606;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=oxg48iJpicsxkRKyRe0DmuSZk4wGUzVv/6pVl2gFEUo=;
- b=tEwJ9CPJjb5BmEOwpN3ErW3fPoqGu6FEa27HKJ4BciAfKh5S8hFUIrVhS1mEnkQDPy
- 3i4QR8dEpp09XiqFfg1g1cYENTwt26aEsZ7PQ5dpgEb5Ff5q6vOUJrfPnwfUHpMtV+YC
- 7xxT6ZvkSxUz7LhtUYHNxHU6NDxnLZACxw96TG14il4xoQwNtOyqZ2sdxmx1Y28gkdRj
- CHmZrde2hVOKjSE94akM4h6+mrbL2s14cCRjR+7V/O1PMYXXXQVo950dNEXettspahlD
- H6dnPIx3VLlL3OzsboOZxUQu/waMQOkXiUDQdqywvSiZLKkEv6dYIaZ5JbFWqYezOmQZ
- bwOA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXn9L8FAiky3yHzOmHbyjymogYf3tj4eABbsiurxW0xxtiM2fP881ClnXmonvo1MuGtY52KivCMSrSS@nongnu.org
-X-Gm-Message-State: AOJu0Yyr9KrciUfjtV34VZyEvMtERDGckRkrBn/YfCSsrIGKv3HU866G
- jzLp7Crc3UxNIJ9evNVe02FtqqYeTdTUu5mLpKyzZy2nLZ3OXaspf0dayd7SaxyTdVM=
-X-Gm-Gg: AY/fxX6t80GCxhs7mS3UyclkAunzxBF2V6oat65EbGjB2YEIGMkrmpeep57wqoMuTut
- s37W7JFc+ZqpZ5nXT8EvIXckyTlsKGPrLtAS1NI16zwlQX9Vvl/k9t3G0BYt9z5VuDS9HoS2AAp
- Sj3hm4f80TOXRLrE0t5RybKhLpOWMD57JvgCsmJ22+f7ClM0ZMiL12VR0W1O2nGqNViyCoMiH9c
- 6vH8JznnrQyKPt5ISRXNMivC7lbuOEz5oKIGKeDGzLIGqFtS51elWZaEXg55jWRwu28Vmi68dqr
- UdbUB7nNi+zRF+5UQMU/haGTfnYdRXvAR8zWUBsR73a0bCErtBnuQ+a0LOdWg/GzrLkdB2/wyH2
- 2WwZnBYDwhXY2rspDJP7042QcFyXIVspjAykgjW0HNDrSwJaMufY81QrylAWzWATKe8fPKKKBgv
- MOXV0uFA+iKVkehGsf1NpFaU6rEXmehD82Y9h57rVJBuLD6d0RPuq6SA==
-X-Received: by 2002:a05:600c:1909:b0:479:1a09:1c4a with SMTP id
- 5b1f17b1804b1-4801e33c745mr11015495e9.31.1768506793746; 
- Thu, 15 Jan 2026 11:53:13 -0800 (PST)
+ bh=ZyuAt08zLTT6cT4HzTZ8dzSryrV2/NU9Nv9qwkCJbcg=;
+ b=nYnkvHZPOicS7SgRRXEucyJAAst0rKwmo6L08EwKJKaiX9maAxFMf4kBiB6aP1AUPO
+ IQPIOyASHeX6T2rvDB+JM6bt8xQb4LIkCLtfAFReyX/LlDeq9F6KCZmlDb73DbLoVND8
+ SNNUVwkzQiW4b5ev+1DVXtSiv2w9eRiIixmBNQUC7LrbUwHtUMVu3EyNGKTIs14sNm+1
+ RTuZEqe/FCCSDKLTwzbtVwtSysR5E3Y4xWTYHHtd24q9empqgHTo64mUZ0hDrWjl0PZs
+ H1226RIp+M/BwTB6aQkpi30uKKmprsTyMVrdRfAcJoTx5ILmow8bR37E6JdTGzCbE+1m
+ LxaQ==
+X-Gm-Message-State: AOJu0YwImgZPySOwSC248jLay8Z/VJE6YJ6tVRnXCsn0tsn43LjsTyDu
+ n4ay2Hst0WD4xPHLV4+aOlBxiTWJ1FgBRQVfy8tbDV4d7gFtKdKvyhWOLM75HwJ47XsRznhSiRf
+ +ypYUjcw=
+X-Gm-Gg: AY/fxX4Unz2oj0BupNwx764utkpQB97yP/QOwxv3zgMlw1Xeb5dULbGR1I8HADevier
+ qO1hMTXxD1pHgUdQf0JMBNVWkowG/l5dr9SMOwQv9TY/vlnpIpdiW2i3Zk1WdnqrrFUuDrqgqQ6
+ ZvuK7R9F8cQY13Nsv4Nf5/T/XxcnpjunPDKKodvmq3XEwTFxpl1vrtxPnzRrz8y4AxwNPYpDe1U
+ ocU9ZQHuRHdSwZ4ZtrW4iWD5Tcd1AqOqJBHE28t3p4PN6YWELPHzGRFaHMiFmO3YiY+7mqpwFdS
+ YvxGUrb7XOg4vLhA+whBX02USfJrBQ0ty+5K6/4+4+NC1XwOQszex88y5UnQyxKnNNQ4cRmYQ7L
+ h025j6oAjVXmu+wYTCtmoIZJUH98EoIqJEZRXZBKV1LZS0Y/dtRySUN7ezZ/OaoyZiqju8Sn9A3
+ Kuykb+1di3zopEvy/ixKz8xN2GhCGYsqHten0aP5iCAVqtvemWYl6ssMIzd2hEXkXP
+X-Received: by 2002:a05:600c:3b9f:b0:477:abea:9028 with SMTP id
+ 5b1f17b1804b1-4801e2f2989mr11046875e9.6.1768506806179; 
+ Thu, 15 Jan 2026 11:53:26 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47f4b2755absm80395205e9.15.2026.01.15.11.53.12
+ 5b1f17b1804b1-4801e9ee5c3sm2203215e9.2.2026.01.15.11.53.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 11:53:13 -0800 (PST)
-Message-ID: <2e0cd040-b80b-4dbd-9645-eff04d84a8ac@linaro.org>
-Date: Thu, 15 Jan 2026 20:53:12 +0100
+ Thu, 15 Jan 2026 11:53:25 -0800 (PST)
+Message-ID: <12379570-0b83-4ebf-92fe-609d6327c700@linaro.org>
+Date: Thu, 15 Jan 2026 20:53:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/nvmm: Include missing ramlist.h header
+Subject: Re: [PATCH] accel/nvmm: Fix 'cpu' typo in nvmm_init_vcpu()
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Reinoud Zandijk <reinoud@netbsd.org>
-Cc: qemu-trivial@nongnu.org
-References: <20260114083812.18496-1-thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Reinoud Zandijk <reinoud@netbsd.org>, qemu-stable@nongnu.org,
+ Thomas Huth <thuth@redhat.com>
+References: <20260113203924.81560-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260114083812.18496-1-thuth@redhat.com>
+In-Reply-To: <20260113203924.81560-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,30 +102,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/1/26 09:38, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 13/1/26 21:39, Philippe Mathieu-Daudé wrote:
+> Fix typo to avoid the following build failure:
 > 
-> Compiling on NetBSD currently fails with:
+>    target/i386/nvmm/nvmm-all.c: In function 'nvmm_init_vcpu':
+>    target/i386/nvmm/nvmm-all.c:988:9: error: 'AccelCPUState' has no member named 'vcpu_dirty'
+>      988 |     qcpu->vcpu_dirty = true;
+>          |         ^~
 > 
->   ../src/target/i386/nvmm/nvmm-all.c:1136:22: error: unknown type name 'RAMBlockNotifier'
->    1136 | nvmm_ram_block_added(RAMBlockNotifier *n, void *host, size_t size,
->         |                      ^~~~~~~~~~~~~~~~
->   ../src/target/i386/nvmm/nvmm-all.c:1152:15: error: variable 'nvmm_ram_notifier' has initializer but incomplete type
->    1152 | static struct RAMBlockNotifier nvmm_ram_notifier = {
->         |               ^~~~~~~~~~~~~~~~
->   ../src/target/i386/nvmm/nvmm-all.c:1153:6: error: 'struct RAMBlockNotifier' has no member named 'ram_block_added'
->    1153 |     .ram_block_added = nvmm_ram_block_added
->         |      ^~~~~~~~~~~~~~~
->   ../src/target/i386/nvmm/nvmm-all.c:1153:24: error: 'nvmm_ram_block_added' undeclared here (not in a function)
->    1153 |     .ram_block_added = nvmm_ram_block_added
->         |                        ^~~~~~~~~~~~~~~~~~~~
-> 
-> Include the right header to get this fixed.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Thomas Huth <thuth@redhat.com>
+> Fixes: 2098164a6be ("accel/nvmm: Replace @dirty field by generic CPUState::vcpu_dirty field")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/i386/nvmm/nvmm-all.c | 1 +
->   1 file changed, 1 insertion(+)
+> Untested.
+> ---
+>   target/i386/nvmm/nvmm-all.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Queued via accel-next tree, thanks!
+Queued via accel-next tree, thanks.
 
