@@ -4,87 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44FACD44C71
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 16:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808DCD44C71
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 16:11:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgPvj-0001MT-8V; Thu, 15 Jan 2026 11:10:39 -0500
+	id 1vgPwE-0001Yc-6I; Thu, 15 Jan 2026 11:11:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgPvf-0001Ku-Jo
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:10:35 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgPve-0002yu-5b
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:10:35 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-432d28870ddso562781f8f.3
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 08:10:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768493432; x=1769098232; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jpgxSAtpDvh4znvKu7HJhiw+YyxeOEm6t5Dlx0iqXbc=;
- b=L5B3crEaK+jVrMgMChw7/zxxODNv4UiKScrp1tMMSoohHrhUCW1vXMS4kghm33kYCf
- p7EU+dBt65Qu1drEIvRGPB0pWVllfihxZKNcfRQD1P9wgO33aNLpYK3UedTMhUDQ08/u
- NMDhUZdU5pkr6SQJPvAwByBo3z0Mj2O0P2vwu7no5itJqHe2yrKkVC7YScoBy3I3rlWU
- low/XoVNhJ7D3Pyzsrn64QvTKMODEvoN3+dtZlkVjez4OxmyHPHa4aUr60IW1mk/5Pnz
- FSZiq9AKgtQXlNscxJA4ie9lbC2bIDGyH9fyC9SOo0tylPklXQb3DR9cfRkqTzh7GfAQ
- jtQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768493432; x=1769098232;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jpgxSAtpDvh4znvKu7HJhiw+YyxeOEm6t5Dlx0iqXbc=;
- b=e0cnOxhno0HjdUmPfPPpaqZWqIdsT9+JqZi8remy1c5PYtoqxtABuFbHw18f7UWi/l
- 5E4FgizThDBcCKy4cAMdaXR/v0KsLc2GTbJzIFyBrAyewaou+0yhlwbS+Olr5IhbVX9C
- I0HpVK3w6pFq75cuU/GjsgkyXoB1vJnuyJCkE4dguiPWJ3zo6TeEN15jOVpzvBATwMej
- IP6EqoiMSYL/BuVxXZbq5tNuIO/lQ4nqvMoraG5d1cvs3kyuJNUUhSSshf433MFb6txT
- lssvFfrBL1Ye0PHzZ2PI/xneRnRf2gXN/rsE/4HAshxRMUm2IVLTvm8+6PJeCLVUKiu8
- AGVg==
-X-Gm-Message-State: AOJu0YynQy47kYL4gsEyCL7jsGFLwHAwWQm8iSd8aBQIOxAiqeYNIOqd
- iA7Uz/OhOJ7lCMJNHkMTZioOXF4kX6XnO1D596Pgn8JY8YWTpvBx3BSXIsexJkrsjkL4DqWUC45
- 7mCaJpf8=
-X-Gm-Gg: AY/fxX58mVBt5rPcYv7zc4hPIpMjCV3ww8sRbRZ5MzGFyk6fcxpdZ5Bnxf0ZY6yMyW4
- Okp1Va9c1m8DhVYdJ3Aj1u/9wDp2p6jniYoNFIPlNhefgr8eaOCiltw3XYuGBeY5H17kDILXhaq
- 0cJRM5bJ6suozGEdL3zHY+4/HLX4lP7UWVCFZVBcsWPm75eYG1wyw6IA7q74c1R0k6J9QciWrsC
- 4NsaBz38ttTT3HzM5ox5aBY7ahOYXkBTkpPd+dVQ84KHB9rcS6eh47Pe2btzUXLw2wSVyiPwOzm
- hZRjv+J/r/wvbDH4sV+VuMx3Qt6smtepO+Cra2bY4aO7mJllbmUO77/DRg1rC0UW2jSFtpVNM11
- rWHc7Q06tahUpX+ca/+OnPQpfB9rPAYOTrTdgsE4+DHCZXgTcdgT5t74tewviwdlqGJwy3YTTcS
- DMRJiseEf7leUDcAjpIppGkVZxlC6oOIjFGjHeC1QxszgH74D5L5CokFOHbQWZNyrs/MWzoX8=
-X-Received: by 2002:a05:6000:2c02:b0:432:8585:6830 with SMTP id
- ffacd0b85a97d-4342c557201mr8997291f8f.45.1768493431618; 
- Thu, 15 Jan 2026 08:10:31 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-434a4cf4140sm6989654f8f.0.2026.01.15.08.10.30
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Jan 2026 08:10:30 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] tests/functional: Require TCG to run reverse debugging tests
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1vgPvw-0001WJ-DE
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:10:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1vgPvt-00031B-LF
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:10:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768493446;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1ipYNHVcQHBnf6VuG3gRzdGItDut/F+bPKSS7jkUFuk=;
+ b=U/P1KyqyGOapGzy69gqcSxZYjC6Z7edJs9QxwxQfldqcEQXiw9t9SSHjwTF9IqQ0tHD9Xg
+ KjwVqKkAqfqXBI1YljDOeJ7GTJFE4OhDaacLps8Fq9ZTMU1y8P9odxYu9FXF4+5l3Tifdg
+ akpMm0UNxtzaJZUT+t2moiGlAEa3y2w=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-Fw8RSA6aMOutVbeocelcuw-1; Thu,
+ 15 Jan 2026 11:10:40 -0500
+X-MC-Unique: Fw8RSA6aMOutVbeocelcuw-1
+X-Mimecast-MFC-AGG-ID: Fw8RSA6aMOutVbeocelcuw_1768493438
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EB602180057E; Thu, 15 Jan 2026 16:10:37 +0000 (UTC)
+Received: from angien.pipo.sk (unknown [10.45.242.3])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 15C863001DB9; Thu, 15 Jan 2026 16:10:32 +0000 (UTC)
 Date: Thu, 15 Jan 2026 17:10:29 +0100
-Message-ID: <20260115161029.24116-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
+From: Peter Krempa <pkrempa@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Fam Zheng <fam@euphon.net>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Hannes Reinecke <hare@suse.de>, Yanan Wang <wangyanan55@huawei.com>,
+ Kevin Wolf <kwolf@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alberto Faria <afaria@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-block@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [RFC 0/4] scsi: persistent reservation live migration
+Message-ID: <aWkRdfL192WR22ni@angien.pipo.sk>
+References: <20260113215320.566595-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260113215320.566595-1-stefanha@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pkrempa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,30 +90,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Record/replay is specific to TCG. Require it to avoid failure
-when using a HVF-only build on Darwin:
+On Tue, Jan 13, 2026 at 16:53:15 -0500, Stefan Hajnoczi wrote:
+> Live migration does not work for SCSI Persistent Reservations acquired on
+> scsi-block devices. This patch series migrates the reservation key and
+> reservation type so that the destination QEMU can take over the persistent
+> reservation with the PREEMPT service action upon live migration.
+> 
+> The approach involves snooping PERSISTENT RESERVE OUT replies and tracking the
+> scsi-block device's current reservation key and reservation type. In most cases
+> this involves no additional SCSI commands. This approach isn't perfect: if
+> another machine modifies the reservation on the physical LUN, then QEMU's state
+> becomes stale. Persistent reservations are inherently cooperative, so this is
+> acceptable as long as real applications don't run into problems.
+> 
+> I am also working on a test suite called pr-tests that runs sg_persist(8)
+> commands across multiple machines in order to exercise various scenarios:
+> https://gitlab.com/stefanha/pr-tests
 
-  qemu-system-aarch64: -icount shift=7,rr=record,rrfile=/scratch/replay.bin,rrsnapshot=init: cannot configure icount, TCG support not available
+I've also prepared libvirt RFC patches adding support for the feature:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/functional/reverse_debugging.py | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/tests/functional/reverse_debugging.py b/tests/functional/reverse_debugging.py
-index 8b9507674a0..8e6f0b0e923 100644
---- a/tests/functional/reverse_debugging.py
-+++ b/tests/functional/reverse_debugging.py
-@@ -67,6 +67,8 @@ def vm_get_icount(vm):
-     def reverse_debugging(self, gdb_arch, shift=7, args=None, big_endian=False):
-         from qemu_test import GDB
- 
-+        self.require_accelerator("tcg")
-+
-         # create qcow2 for snapshots
-         self.log.info('creating qcow2 image for VM snapshots')
-         image_path = os.path.join(self.workdir, 'disk.qcow2')
--- 
-2.52.0
+https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/KBZDAIQWFILAC4USJY3C3TDPYHI6K5WK/
 
 
