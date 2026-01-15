@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FC49D4660D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:55:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3BCD46610
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:56:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgSVY-0000se-FC; Thu, 15 Jan 2026 13:55:48 -0500
+	id 1vgSVg-00019l-WE; Thu, 15 Jan 2026 13:55:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSV4-0000cm-Ii
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:20 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1vgSVE-0000ft-NR
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:30 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSV1-0005sc-0W
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:17 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-47ee974e230so11812015e9.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:13 -0800 (PST)
+ id 1vgSV8-0005uJ-8I
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:23 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-430f57cd471so755922f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768503312; x=1769108112; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768503321; x=1769108121; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dFDbbBRCQ6aEWxiWdS+TlHvgeoAjTJihJKhODkPXEig=;
- b=tDo/pOn9LjzTBysfcSn5Nn/2Vf6xqgjk0cr9ocbmizezB6yK442cQt6pIQZXPvLHOY
- NQpCyrkJWdehzXlETpLpPqOb2CMnRaXhz+werThltktVToc2ePZOOZHMrVvjU9WpKPPF
- vz0Remufz2jTaqOVQT2FcagzjWarxtmmpo2MrZXlT4b0pspqYxWc3bQM33oUsUP4E4Ir
- 5aG/PEQGpN14POonr/lEYWBH2XLiinYHsAFynKQsVcBgRYMFRG1NmdRlLGbUSWHlBtJo
- Kf+TArecXwE4YLKw/PHvxrpQiNcV+ymsd4GDCc+zzwQ4LxZZooYrC+hrVUdeAJAE6QUT
- xZlw==
+ :reply-to; bh=rzXa0m3nz1cG2gDO1gPqQo6PFYCv0OqwAEN4mWq3o0A=;
+ b=vgYk4lTacgAGuyC+YEg5Mij697vbqQ7VQpmktwAxjNm9XhDHz4b+JDq14YDOGn3W0C
+ a0/99ealgX6Ayw2OWg/YvjUfp0eJ838Ot4Umxa/9DmdNL4IOWkzrewq5aeZ/oa0bEhri
+ R1J196q3a4a230rg3IcDA+S3deA6ZkSgQMiw6Uo739xCj6+Q19OFmUX0g2t2ceSmC3BG
+ 80vcbtxLy3pebtIorMdznmgxPwUAaUqhiAMNevRnhZMAWxa2TJCRWGe/UiLu2xxWPFFm
+ td+bmpYv57wlWTqXffBgigAACEYoMi1pYPLK4FQ3pwzeSuDzL3UmI7TEhhIOQEIQu/aO
+ R1ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768503312; x=1769108112;
+ d=1e100.net; s=20230601; t=1768503321; x=1769108121;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=dFDbbBRCQ6aEWxiWdS+TlHvgeoAjTJihJKhODkPXEig=;
- b=Zb7RDZkreALnTAMJzMCavIFrAGDTHrsG0qzqjoPT6LENEi/eoZPvc4Oe+3c9bl1b95
- tzxYDxMJZKxbT56aMBsVKrGSs2bDk/Ab+WUDJoztSowu8yTL6fIOnW+lgSWbZeJdgrti
- OMWIIJXQDtf4wdpD4rgDb4CIsQlntz4w3WmvLug2yCsSc+jlywmActTJfQVfV36KcQsw
- 7wraUY83qi6pg5NNoAHqCyLpRdfnPU/ebj6LcXCIdZjoPbgaQtcZqiXGhZtthoYV9sLv
- VgrtAxISP1hpc6dhHFOBe7jAnlFiDNSAcGdcydDgC8lgO3iFe/LauI6VAoiMKgURNm5X
- Zs8A==
-X-Gm-Message-State: AOJu0YxhQPJcfRPld/x/TgsZE2sY/jOFMHbmg+xSNs8bJN5zc4VTQkHb
- oL7oNMSFlCznUPTTeR/bwWYboPUV+R1h5RDIa6bHU72p/XRKSFXZ0qz126NPCRiPKFZ10dQ6tNk
- LcwT/
-X-Gm-Gg: AY/fxX5m9wNXAZsFB3UN+O4gHaP5Tl7NDBVFiU6lsyvt2Kiy5nKQeiqJU15B1aSGEkO
- bwjwQ31ieT8bJzWzT1SXIa0ZNsM+Sk3dWuW6GE8vOc2UcaQOemZ6YXWRfEoyYeHmgmDKRVwBFvb
- +fCJyAUxxWhsB1F3g/FHn+QTipISl2klJhtLVmRHWvRlSXL6kh/95dFbR9nf6JiEQwJAQpfwS99
- NNn0ghKKUrhPPhhB6HBRnm/4/QvoLzllM6DImj3ROkTYmEse9nq1QlKNz5UZPjIVEvi57ADMr8Y
- mt+dU0Gkv/AMYpenxm1Xv7u+VH1OniuBbo1nAT9jbVv3/sK+zxGRwqmltwxLI3lRNje3R9VSHN7
- j/TbK+kdcxdfLRSznfyTnHb7hUrJK3yI8cNpk64aVYgtMnFligNbRkOlkUBNrau0CyNK8wHSujM
- YrioqCGK4Q3cRkGEgfTJbFMse0zl2PxP6y0/ZoMTp2zsyTHCG1042G9KL9m0NULjDSYQTe9iJ0j
- mXPcjKLEJYgVO3UazghLnw9rDR1W2QQFhC1nyzkzGYVxQ==
-X-Received: by 2002:a05:600c:4584:b0:47b:deb9:15fb with SMTP id
- 5b1f17b1804b1-4801e350af0mr7788195e9.33.1768503312031; 
- Thu, 15 Jan 2026 10:55:12 -0800 (PST)
+ bh=rzXa0m3nz1cG2gDO1gPqQo6PFYCv0OqwAEN4mWq3o0A=;
+ b=gBeINk6NlXUlsQg3plVyuHtHaXZbciHSfkUjBIsd94G6hw1umZvAmAVJqOw3KgFFqs
+ UqsiAeWwccpl5tcj2T6LYy2ILo7agRylcmfvRVS+8Ne+5eGLoauTWH1uAKYAAPJtnPPG
+ mBzwlVZJCkJjJiAnqIYPNMwaWtR0zUoRIbOgWJqqUYiCpMXgctPwUXlE3JCm9Qj9wkn/
+ 5xuKGylpmsVwFSnbyz2e9A8Aqnvl++N+gugfkTRrZu6ROqlbMfT+GrVwgnL2IIJTUP2D
+ Ta8JZdi3idnNnQYTJX//fXGfH0PY+jzTToJl+8H30GyV0PxBXl28KKoXFtIEtiPA8vOT
+ 4Sng==
+X-Gm-Message-State: AOJu0Yxdfj9F38OhMkfIQZSnSpivAOo+gQl4+L528leQ5AotgQGE8u+g
+ 60QnkC9W1Ryvcf595O8UzAIRwJoijUP9C27LCuhwzCaTbZLe9nlwuKxr2CZI9xZMiNAbsGBxfia
+ r0qMk
+X-Gm-Gg: AY/fxX7vfnQlZ+pQZjSj6QuXfzPKfjAVrom0VjP1vzAO8Z/R7Ls5dYwgDLDaJAEQqH9
+ vUkxZKwrmr8dTVgL0FgROAtcupuZVpQgnl9ThoMMwpRbm9r9jixpamMT0Fh0I9y0nHstHQtBfJB
+ fCIztE37ZKFc3mm6BozkRoovL2y+stga1TjYVIyJypJo0hpnk4COk85Biz/Cgi1AcdRCeGEV8m/
+ hvAEDxS2Cj5i2Nd3vPMVL1vsGRQCQgc7OthSb1YY2gsyyhUOc6Q6xFpSiOC/r2bplv5KexjhKlA
+ KmK6PgK/2wihSpZcGYIN/QvLMwvXs8ZOO27OifpHdbLg8AXHhM99VqiKmDPMfIvz98LrXyCHtWM
+ 10uZbEke15bMjh7rMOeiamt6DMDS+uMctdgNMH/yFGSocS2/+W8NCT5+FIpzr3jTEkMLEmGF1L1
+ kh4tYZnqicsg4A6lV0wvbkEhNMpyu8VJq62olMgsNnGsFvz26eD7Sxk5qepkwoGhYuOmEYlzEdg
+ jGlMsGZwfTitQfIXp7VRNuT0iVEbSwXTXzfcXtlTDUjuw==
+X-Received: by 2002:a5d:5886:0:b0:430:ff0c:35fb with SMTP id
+ ffacd0b85a97d-4356a05c404mr359020f8f.52.1768503320720; 
+ Thu, 15 Jan 2026 10:55:20 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.11
+ ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 10:55:11 -0800 (PST)
+ Thu, 15 Jan 2026 10:55:20 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/25] target/arm: Allow writes to FNG1, FNG0, A2
-Date: Thu, 15 Jan 2026 18:54:45 +0000
-Message-ID: <20260115185508.786428-4-peter.maydell@linaro.org>
+Subject: [PULL 12/25] hw/gpio/omap_gpio: Remove omap_badwidth_* calls
+Date: Thu, 15 Jan 2026 18:54:54 +0000
+Message-ID: <20260115185508.786428-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260115185508.786428-1-peter.maydell@linaro.org>
 References: <20260115185508.786428-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,122 +103,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim MacArthur <jim.macarthur@linaro.org>
+The omap_badwidth_read* and omap_badwidth_write* functions are
+used by various OMAP devices when the guest makes an access
+to registers with an invalid width; they do two things:
+ - log a GUEST_ERROR for the access
+ - call cpu_physical_memory_read() or cpu_physical_memory_write()
+   with the offset they are passed in
 
-This just allows read/write of three feature bits. ASID is still
-ignored. Any writes to TTBR0_EL0 and TTBR1_EL0, including changing
-the ASID, will still cause a complete flush of the TLB.
+The first of these produces an unhelpful log message because the
+function name that is printed is that of the omap-badwidth_*
+function, not that of the read or write function of the device that
+called it; this means you can't tell what device is involved.
 
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The second is wrong because the offset is an offset into the device
+but we use it as an absolute physical address, so we will access
+whatever is at low memory.  That happens to be the boot ROM, so we
+will ignore a write and return random garbage on a read.  This bug
+has been present since 2011, when we did the conversions to the
+MemoryRegion APIs, which involved changing all devices from working
+with absolute physical addresses to working with offsets within their
+MemoryRegions.  We must have missed updating these functions.
+
+Replace the uses of these functions in omap_gpio.c with an
+open-coded call to qemu_log_mask() and RAZ/WI behaviour.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/cpu-features.h |  7 +++++++
- target/arm/helper.c       | 28 ++++++++++++++++++++++------
- target/arm/internals.h    |  5 +++++
- 3 files changed, 34 insertions(+), 6 deletions(-)
+ hw/gpio/omap_gpio.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index c86a4e667d..a7ca410dcb 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -346,6 +346,8 @@ FIELD(ID_AA64MMFR3, SDERR, 52, 4)
- FIELD(ID_AA64MMFR3, ADERR, 56, 4)
- FIELD(ID_AA64MMFR3, SPEC_FPACC, 60, 4)
+diff --git a/hw/gpio/omap_gpio.c b/hw/gpio/omap_gpio.c
+index f7619260ca..ee3ddb09e3 100644
+--- a/hw/gpio/omap_gpio.c
++++ b/hw/gpio/omap_gpio.c
+@@ -76,7 +76,9 @@ static uint64_t omap_gpio_read(void *opaque, hwaddr addr,
+     int offset = addr & OMAP_MPUI_REG_MASK;
  
-+FIELD(ID_AA64MMFR4, ASID2, 8, 4)
-+
- FIELD(ID_AA64DFR0, DEBUGVER, 0, 4)
- FIELD(ID_AA64DFR0, TRACEVER, 4, 4)
- FIELD(ID_AA64DFR0, PMUVER, 8, 4)
-@@ -1369,6 +1371,11 @@ static inline bool isar_feature_aa64_aie(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR3, AIE) != 0;
- }
- 
-+static inline bool isar_feature_aa64_asid2(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR4, ASID2) != 0;
-+}
-+
- static inline bool isar_feature_aa64_mec(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64MMFR3, MEC) != 0;
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index a7239ff25b..1ee721ac7b 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -428,6 +428,15 @@ int alle1_tlbmask(CPUARMState *env)
-             ARMMMUIdxBit_Stage2_S);
- }
- 
-+int alle2_tlbmask(void)
-+{
-+    return (ARMMMUIdxBit_E20_2 |
-+            ARMMMUIdxBit_E20_2_PAN |
-+            ARMMMUIdxBit_E20_2_GCS |
-+            ARMMMUIdxBit_E20_0 |
-+            ARMMMUIdxBit_E20_0_GCS);
-+}
-+
- static const ARMCPRegInfo cp_reginfo[] = {
-     /*
-      * Define the secure and non-secure FCSE identifier CP registers
-@@ -2802,12 +2811,7 @@ static void vmsa_tcr_ttbr_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-      */
-     if (extract64(raw_read(env, ri) ^ value, 48, 16) &&
-         (arm_hcr_el2_eff(env) & HCR_E2H)) {
--        uint16_t mask = ARMMMUIdxBit_E20_2 |
--                        ARMMMUIdxBit_E20_2_PAN |
--                        ARMMMUIdxBit_E20_2_GCS |
--                        ARMMMUIdxBit_E20_0 |
--                        ARMMMUIdxBit_E20_0_GCS;
--        tlb_flush_by_mmuidx(env_cpu(env), mask);
-+        tlb_flush_by_mmuidx(env_cpu(env), alle2_tlbmask());
+     if (size != 2) {
+-        return omap_badwidth_read16(opaque, addr);
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: read at offset 0x%" HWADDR_PRIx
++                      " with bad width %d\n", __func__, addr, size);
++        return 0;
      }
-     raw_write(env, ri, value);
- }
-@@ -6102,6 +6106,12 @@ static void tcr2_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     if (cpu_isar_feature(aa64_aie, cpu)) {
-         valid_mask |= TCR2_AIE;
-     }
-+    if (cpu_isar_feature(aa64_asid2, cpu)) {
-+        valid_mask |= TCR2_FNG1 | TCR2_FNG0 | TCR2_A2;
-+        if (((raw_read(env, ri) ^ value) & TCR2_A2) != 0) {
-+            tlb_flush_by_mmuidx(CPU(cpu), alle1_tlbmask(env));
-+        }
-+    }
-     value &= valid_mask;
-     raw_write(env, ri, value);
- }
-@@ -6121,6 +6131,12 @@ static void tcr2_el2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     if (cpu_isar_feature(aa64_mec, cpu)) {
-         valid_mask |= TCR2_AMEC0 | TCR2_AMEC1;
-     }
-+    if (cpu_isar_feature(aa64_asid2, cpu)) {
-+        valid_mask |= TCR2_FNG1 | TCR2_FNG0 | TCR2_A2;
-+        if (((raw_read(env, ri) ^ value) & TCR2_A2) != 0) {
-+            tlb_flush_by_mmuidx(CPU(cpu), alle2_tlbmask());
-+        }
-+    }
-     value &= valid_mask;
-     raw_write(env, ri, value);
- }
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 440072d820..f7b641342a 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1892,6 +1892,11 @@ uint64_t gt_direct_access_timer_offset(CPUARMState *env, int timeridx);
-  * all EL1" scope; this covers stage 1 and stage 2.
-  */
- int alle1_tlbmask(CPUARMState *env);
-+/*
-+ * Return mask of ARMMMUIdxBit values corresponding to an "invalidate
-+ * all EL2&0" scope.
-+ */
-+int alle2_tlbmask(void);
  
- /* Set the float_status behaviour to match the Arm defaults */
- void arm_set_default_fp_behaviours(float_status *s);
+     switch (offset) {
+@@ -116,7 +118,8 @@ static void omap_gpio_write(void *opaque, hwaddr addr,
+     int ln;
+ 
+     if (size != 2) {
+-        omap_badwidth_write16(opaque, addr, value);
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: write at offset 0x%" HWADDR_PRIx
++                      " with bad width %d\n", __func__, addr, size);
+         return;
+     }
+ 
 -- 
 2.47.3
 
