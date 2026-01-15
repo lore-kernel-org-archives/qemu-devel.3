@@ -4,101 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B206D46638
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 23:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C31D4662F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 23:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgWcQ-0000Zn-Dq; Thu, 15 Jan 2026 18:19:10 -0500
+	id 1vgWvl-0004dx-FX; Thu, 15 Jan 2026 18:39:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vgWcO-0000ZD-Bi
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 18:19:08 -0500
-Received: from p-east2-cluster1-host3-snip4-1.eps.apple.com ([57.103.76.4]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgWvk-0004dT-3l
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 18:39:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vgWcK-0004La-IC
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 18:19:08 -0500
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-7 (Postfix) with ESMTPS id
- 6CDCE1800165; Thu, 15 Jan 2026 23:19:00 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1768519143; x=1771111143;
- bh=Acu32Lcfw8AvR+Ig/QSkrpjXcuZWfLKDHPwyWf61ERQ=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=DZSEmhWRQJd9ARIHKs4hvta6RPPhnCUyHe8lUWPG/Hhlq5YhLQDkOmhSm0ve4U4TkUjvFv34fukpNBlwGk2wkrcVIoRtNpQ2h/XAECX2/HVAAGV63GQWOGpgAszKxyy8VNjXTET26rQqvhxv33V4BFyKeaVcWClACQsrqO9HecYOOtQJDYZbX8+WeTKOw29M2NUYYugEf0IXP8DEXs8flVDZyLSVqfdm2lP7eorN4RD8xyp7n0K8KhHQLp6zSJaU/6n/RbNEK/uf515CSHKG4sgw0MMbF1iv1G0mWSFGTrnDjKyAObVyi1hGD6GBN+XzIgRcPjhvi0ek+TsHQ7KkkQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-7 (Postfix) with ESMTPSA id
- 9F432180008D; Thu, 15 Jan 2026 23:18:55 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <08FA06E5-DAAA-4939-9547-FC51563B48D1@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_0B5C5ECE-8B90-44DF-940E-F4FA51132E6A"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH v15 14/26] whpx: interrupt controller support
-Date: Fri, 16 Jan 2026 00:18:43 +0100
-In-Reply-To: <d148dd60-6666-404d-9b18-37975bfac0cf@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, Alexander Graf <agraf@csgraf.de>,
- Mads Ynddal <mads@ynddal.dk>, Peter Xu <peterx@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, Cameron Esfahani <dirty@apple.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260115001505.57237-1-mohamed@unpredictable.fr>
- <20260115001505.57237-15-mohamed@unpredictable.fr>
- <d148dd60-6666-404d-9b18-37975bfac0cf@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
-X-Authority-Info: v=2.4 cv=KrhAGGWN c=1 sm=1 tr=0 ts=696975e6
- cx=c_apl:c_apl_out:c_pps a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=z2a8LLWyoXQ6zlAPQ-0A:9 a=QEXdDO2ut3YA:10
- a=qRJx5fHQmxuhlBqSpHYA:9 a=R4p1XLbCs-2smFIh:21 a=_W_S_7VecoQA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: h_P-gCDn3k8FScg45jzgjCpom8Gk4fJ3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE1MDE4NCBTYWx0ZWRfX6FjEqgEXyy6i
- NiLNyUoxKK3SxrfAOO3e7j2nN0oP61gET7D7RBz3AMDee7ikzhlZvYwM3/uDd6o5EKjSMjYrOtr
- UT14Z5U1dg08Oc0Q9ABl+3FX2CM8fMQcikpG0qf6G3YnKw/R97VfI3HSEVt47A+pAhXOHFHvu1v
- UpiUNy3W4e8zcNsfuilBfKXBa3poi85dp3Ssu84IkAnc8zEyp643anyBUPsMsFjeIt1aI7QMkLV
- pU1XHeh7yKZgzxZKww6D1IZelnjmF40CxYM9Rle2LmfMvT6zjgsEO4OZBWzzU++sWV1L+LERoEK
- 0BxTJ9IVcLNwm7/QVjk
-X-Proofpoint-ORIG-GUID: h_P-gCDn3k8FScg45jzgjCpom8Gk4fJ3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-15_07,2026-01-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- phishscore=0 suspectscore=0 malwarescore=0 mlxscore=0 adultscore=0
- spamscore=0 mlxlogscore=999 clxscore=1030 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2601150184
-X-JNJ: AAAAAAABOXPd4PmFcgCdMFbVm9AMKhoHT4mJeXXyDigf6UVupqw5qCRjihuVNAwTR/q59/sDILIenep88CFpnSRtgnQWw7TwAncgHqS9xYtV1VezSyu1UDCo3nLLp2q1hYA9e7FuOYDVKSx6eMkwDJ3JeKLmenCRUTlPJTJZxB/o9B51NwfCiIZe3E3+ICB8AyGQECWF/wP+yJYGHvfiUNqv4sBqkMPA7bJD4Us3qLUALRJC84B4UGXtWtYwYYAIXy0zAm3erZ/ksmLTNU4p1EI8lX9zA7mXqf/fOH8eXqy8mGKBzCBsJIYv2MFx8iXI5uUgaMz9f1LQVfDHS3Gti0wxywjZSChNFm/EuXFgNjgEU9nWwKOV+bcswyyXKTUOwDrny3Yd9s6ssjKH7REwvJ1KEzZCnkTr4dvYyAkyu59vq/vGcvlkY3lgJJEt7FU3yzF1apaudmRWNyclsZbx8vgFS+XI0LLMca0kBGP+IAel+a567Y7hmiZATR/Jp1ZsqMTmCLVhtMRZtC8558YsMmRNsP8HhLt3rAQdDEMR6GV+rknegtUE6EvgmNwxPu+sRAWhHp4FYvb2hRQnK/en3rPZRL+FcocoJZhaTeHQe1FQMRfxpbQ52dX73yNBx8RYCOM+7crEz9o2sZN3GdFuJyONxpytWQDX0Mi40nu8s7b4/BQ1iciWmL3KYMm9EH4fRUBbW41+4NDJaQGyd/NaRCplzd0TVqfpWCjUE+zFOpGM3wZa7IxDQiyV7tpsA+oPJM8mJEMJNu2reSsbwRP95UTfm1LxLRhXiN3dNxYl2RSRJrLoZtRp1WJYFaxSMNZjGqACbqIKi+pjoDZb0RBRVrHD7RxyxhOCbfNovnpR6WI7gTy4Eu6UulMA8S9YodvVUkV2dsbXT8nxoIa3nbFTcrqMmIrf2G7lGJVGDU8mZ15QjeBSJGfZKzY3gPBkKnjzpclcSateqcX5OrGAmzInn+Zbh+1C/na
- Mjg==
-Received-SPF: pass client-ip=57.103.76.4;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgWvi-0006H2-52
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 18:39:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768520343;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ciUaUZYQ2Rj9RnjiiFPXMIfG3NfVmTkOT3wr4ABpzag=;
+ b=Zz8ng+IFu6htePucBcqwr9bdZl4ihlZp0pBhJV6Funh/8qHtgjW3EKVgmKAfmmCjPjHutu
+ hHD/dr05KsXdldLedkQgqXXzXrO0WKvcrkN8fQDd/RLH3L8KOqDgzgCYYUQHrMqiii60L3
+ WTudbm0swRmtjvNw/ntl2OC1m7a8QEY=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-693-3EMVQBtyOXKMWYYjSh2_Ng-1; Thu, 15 Jan 2026 18:39:02 -0500
+X-MC-Unique: 3EMVQBtyOXKMWYYjSh2_Ng-1
+X-Mimecast-MFC-AGG-ID: 3EMVQBtyOXKMWYYjSh2_Ng_1768520341
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-5019f8a18cdso44048261cf.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 15:39:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768520341; x=1769125141; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ciUaUZYQ2Rj9RnjiiFPXMIfG3NfVmTkOT3wr4ABpzag=;
+ b=MK3+/PAuMrW6siplMJYqdw87AZ8IN2MB1Ms5hleDjQZslu+GYCcNCdvWCeX+GDz4Cb
+ /cQuieUR2GBXyCp/olUfarwZ/4wMhdRET3TS7ytBIhb81TKpF359KAI2mg+STW8l0JSO
+ VecPMnwILevmlKiPd0/hLl7QNCsJlo006Izl4PYtPC8dYEBIOaP48SUSDHzyEUD4CwU2
+ jekzrDaHAM6Sr3n56ipDeazh8I2rjlpHnZ34hAXH6JhiFMIO/hIEaF+UvEh1faVlAUJB
+ D1jABtaTv2sfFLR40OQNZr0ZLoW96wnqDZll2M9mtsvnUyfKbxWhKpyaJquJF7d4M+1D
+ V/iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768520341; x=1769125141;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ciUaUZYQ2Rj9RnjiiFPXMIfG3NfVmTkOT3wr4ABpzag=;
+ b=r/9XO+06udTpO0Yi/JF4KdPdAl5xQUY2AhXQi722SMYtxFj7AiKpBbVlM1nIqLq+AO
+ 6ipvq4gQnF1V8lCPoB3PKZ+3GfDiaxdLwn7+ptbqnaNtlENa3HCEOuI6S+hGCPvttpEQ
+ BDXAdIcBKbCPZnzTGq0FnZEg8m0H9207NtJqfbB89dXuh1aO9MmLWB6SmXmmpAmR9CbC
+ 9+9ggl2jzTqwB7wR/qYrUv3TpFYwKiJzqDEsJZ7ajTTMHtxDE02bZjOvQmsP+FsHmvYT
+ fwT2DGoZHRzjLlAW54+Yn1A0FPi1CygG5y3pJo/b98l51P0shzA/UllRBiJ+/9mjIZln
+ uDRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX+Xow3HAo2lw1zqF9srC7KcAXCldQ4HEYuNkWWkum0rtgVCTvHgX0/hlpuu+1Ha0fiC52fdeJnvei9@nongnu.org
+X-Gm-Message-State: AOJu0Yym6bjudV6XoR2BbORXPyUslbf6uKurzrokBFjPQwvz60WUJxYJ
+ PTiRBT8Aqp5mxvVwgGvg2zDayL3S06TSH6kfOcwfKIttYjh1FsDog/tVPNqdtVt082FN2Gqd6vK
+ GQtrF6zdBgB7mltCG/d4VvrxWivyPJX+rObzxVkmR68wa+/QMpkAxvLRI
+X-Gm-Gg: AY/fxX4ELjcL2HkwSJPy8/6o0KRniNtNXWRN7C9K/Tr5O2ei8P/tkIA8B9TM3wSKG1K
+ qNxWYNmw/JiCqvo1JD1xnXt3t5L+10AyUHtOmT9s1JIzb+XOIWkXRP5JmuoCT9CYCvOOsKxy7v/
+ PBSIQtcHqSpXFnb2IsASSSOfjqoknpJUtEs8+3rtXhd/j+jRUzxg6tBXUMO224pX0ihBnFSPeUU
+ PkbuFOlEGf9HnH3IbymTC+7oxrVQWjOq2j5EugaUCqu0qD3i8BK+ianYsjakp/TAb0FecAvYFXC
+ ClrmgWSKOB32NZsPjwgt1ia4dvCWjr+j6Qak8o1bkSW8ofyrVMx/5Yo7a4FwJUJ86aAT07giqeO
+ RHuM=
+X-Received: by 2002:a05:622a:1794:b0:4ec:a568:7b1c with SMTP id
+ d75a77b69052e-502a16229ecmr19722361cf.21.1768520341557; 
+ Thu, 15 Jan 2026 15:39:01 -0800 (PST)
+X-Received: by 2002:a05:622a:1794:b0:4ec:a568:7b1c with SMTP id
+ d75a77b69052e-502a16229ecmr19722051cf.21.1768520341033; 
+ Thu, 15 Jan 2026 15:39:01 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-502a1ef8553sm8007621cf.24.2026.01.15.15.38.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Jan 2026 15:39:00 -0800 (PST)
+Date: Thu, 15 Jan 2026 18:38:51 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
+ Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
+ Juan Quintela <quintela@trasno.org>,
+ Zhang Chen <zhangckid@gmail.com>, zhanghailiang@xfusion.com,
+ Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
+Message-ID: <aWl6ixQpHaMJhV_E@x1.local>
+References: <20260114195659.2543649-1-peterx@redhat.com>
+ <20260114195659.2543649-2-peterx@redhat.com>
+ <aWf4i7EOXtpAljGX@x1.local> <20260115224929.616aab85@penguin>
+ <aWlso1w39cQnEh2t@x1.local> <aWlxY9TWGT1aaMJz@gallifrey>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aWlxY9TWGT1aaMJz@gallifrey>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,895 +126,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Jan 15, 2026 at 10:59:47PM +0000, Dr. David Alan Gilbert wrote:
+> * Peter Xu (peterx@redhat.com) wrote:
+> > On Thu, Jan 15, 2026 at 10:49:29PM +0100, Lukas Straub wrote:
+> > > Nack.
+> > > 
+> > > This code has users, as explained in my other email:
+> > > https://lore.kernel.org/qemu-devel/20260115224516.7f0309ba@penguin/T/#mc99839451d6841366619c4ec0d5af5264e2f6464
+> > 
+> > Please then rework that series and consider include the following (I
+> > believe I pointed out a long time ago somewhere..):
+> > 
+> 
+> > - Some form of justification of why multifd needs to be enabled for COLO.
+> >   For example, in your cluster deployment, using multifd can improve XXX
+> >   by YYY.  Please describe the use case and improvements.
+> 
+> That one is pretty easy; since COLO is regularly taking snapshots, the faster
+> the snapshoting the less overhead there is.
 
---Apple-Mail=_0B5C5ECE-8B90-44DF-940E-F4FA51132E6A
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Thanks for chiming in, Dave.  I can explain why I want to request for some
+numbers.
 
+Firstly, numbers normally proves it's used in a real system.  It's at least
+being used and seriously tested.
 
+Secondly, per my very limited understanding to COLO... the two VMs in most
+cases should be in-sync state already when both sides generate the same
+network packets.
 
-> On 15. Jan 2026, at 07:15, Akihiko Odaki =
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->=20
-> On 2026/01/15 9:14, Mohamed Mediouni wrote:
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>  hw/arm/virt.c                      |   3 +
->>  hw/intc/arm_gicv3_common.c         |   3 +
->>  hw/intc/arm_gicv3_whpx.c           | 239 =
-+++++++++++++++++++++++++++++
->>  hw/intc/meson.build                |   1 +
->>  include/hw/intc/arm_gicv3_common.h |   3 +
->>  5 files changed, 249 insertions(+)
->>  create mode 100644 hw/intc/arm_gicv3_whpx.c
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index bc0d54eb7c..b51c97a020 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -49,6 +49,7 @@
->>  #include "system/tcg.h"
->>  #include "system/kvm.h"
->>  #include "system/hvf.h"
->> +#include "system/whpx.h"
->>  #include "system/qtest.h"
->>  #include "system/system.h"
->>  #include "hw/core/loader.h"
->> @@ -2117,6 +2118,8 @@ static void =
-finalize_gic_version(VirtMachineState *vms)
->>          /* KVM w/o kernel irqchip can only deal with GICv2 */
->>          gics_supported |=3D VIRT_GIC_VERSION_2_MASK;
->>          accel_name =3D "KVM with kernel-irqchip=3Doff";
->> +    } else if (whpx_enabled()) {
->> +        gics_supported |=3D VIRT_GIC_VERSION_3_MASK;
->>      } else if (tcg_enabled() || hvf_enabled() || qtest_enabled())  {
->>          gics_supported |=3D VIRT_GIC_VERSION_2_MASK;
->>          if (module_object_class_by_name("arm-gicv3")) {
->> diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
->> index 0a2e5a3e2f..9054143ea7 100644
->> --- a/hw/intc/arm_gicv3_common.c
->> +++ b/hw/intc/arm_gicv3_common.c
->> @@ -32,6 +32,7 @@
->>  #include "gicv3_internal.h"
->>  #include "hw/arm/linux-boot-if.h"
->>  #include "system/kvm.h"
->> +#include "system/whpx.h"
->>      static void =
-gicv3_gicd_no_migration_shift_bug_post_load(GICv3State *cs)
->> @@ -663,6 +664,8 @@ const char *gicv3_class_name(void)
->>  {
->>      if (kvm_irqchip_in_kernel()) {
->>          return "kvm-arm-gicv3";
->> +    } else if (whpx_enabled()) {
->> +        return TYPE_WHPX_GICV3;
->>      } else {
->>          if (kvm_enabled()) {
->>              error_report("Userspace GICv3 is not supported with =
-KVM");
->> diff --git a/hw/intc/arm_gicv3_whpx.c b/hw/intc/arm_gicv3_whpx.c
->> new file mode 100644
->> index 0000000000..f34f841a4a
->> --- /dev/null
->> +++ b/hw/intc/arm_gicv3_whpx.c
->> @@ -0,0 +1,239 @@
->> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->> +/*
->> + * ARM Generic Interrupt Controller using HVF platform support
->> + *
->> + * Copyright (c) 2025 Mohamed Mediouni
->> + * Based on vGICv3 KVM code by Pavel Fedin
->> + *
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "qapi/error.h"
->> +#include "hw/intc/arm_gicv3_common.h"
->> +#include "qemu/error-report.h"
->> +#include "qemu/module.h"
->> +#include "system/runstate.h"
->> +#include "system/whpx.h"
->> +#include "system/whpx-internal.h"
->> +#include "gicv3_internal.h"
->> +#include "vgic_common.h"
->> +#include "qom/object.h"
->> +#include "target/arm/cpregs.h"
->> +
->> +#include "hw/arm/bsa.h"
->> +#include <winhvplatform.h>
->> +#include <winhvplatformdefs.h>
->> +#include <winnt.h>
->> +
->> +struct WHPXARMGICv3Class {
->> +    ARMGICv3CommonClass parent_class;
->> +    DeviceRealize parent_realize;
->> +    ResettablePhases parent_phases;
->> +};
->> +
->> +OBJECT_DECLARE_TYPE(GICv3State, WHPXARMGICv3Class, WHPX_GICV3)
->> +
->> +/* TODO: Implement GIC state save-restore */
->> +static void whpx_gicv3_check(GICv3State *s)
->> +{
->> +}
->> +
->> +static void whpx_gicv3_put(GICv3State *s)
->> +{
->> +    whpx_gicv3_check(s);
->> +}
->> +
->> +static void whpx_gicv3_get(GICv3State *s)
->> +{
->> +}
->> +
->> +static void whpx_gicv3_set_irq(void *opaque, int irq, int level)
->> +{
->> +    struct whpx_state *whpx =3D &whpx_global;
->> +
->> +    GICv3State *s =3D opaque;
->> +    if (irq > s->num_irq) {
->> +        return;
->> +    }
->> +
->> +    WHV_INTERRUPT_CONTROL interrupt_control =3D {
->> +        .InterruptControl.InterruptType =3D =
-WHvArm64InterruptTypeFixed,
->> +        .RequestedVector =3D GIC_INTERNAL + irq,
->> +        .InterruptControl.Asserted =3D level
->> +    };
->=20
-> This is a mixed declaration prohibited in docs/devel/style.rst
->=20
-> Please ensure that mixed declarations are avoided everywhere, not just =
-the places I pointed out.
->=20
->> +
->> +    whp_dispatch.WHvRequestInterrupt(whpx->partition, =
-&interrupt_control,
->> +         sizeof(interrupt_control));
->> +}
->> +
->> +static void whpx_gicv3_icc_reset(CPUARMState *env, const =
-ARMCPRegInfo *ri)
->> +{
->> +    GICv3State *s;
->> +    GICv3CPUState *c;
->> +
->> +    c =3D env->gicv3state;
->> +    s =3D c->gic;
->> +
->> +    c->icc_pmr_el1 =3D 0;
->> +    /*
->> +     * Architecturally the reset value of the ICC_BPR registers
->> +     * is UNKNOWN. We set them all to 0 here; when the kernel
->> +     * uses these values to program the ICH_VMCR_EL2 fields that
->> +     * determine the guest-visible ICC_BPR register values, the
->> +     * hardware's "writing a value less than the minimum sets
->> +     * the field to the minimum value" behaviour will result in
->> +     * them effectively resetting to the correct minimum value
->> +     * for the host GIC.
->> +     */
->> +    c->icc_bpr[GICV3_G0] =3D 0;
->> +    c->icc_bpr[GICV3_G1] =3D 0;
->> +    c->icc_bpr[GICV3_G1NS] =3D 0;
->> +
->> +    c->icc_sre_el1 =3D 0x7;
->> +    memset(c->icc_apr, 0, sizeof(c->icc_apr));
->> +    memset(c->icc_igrpen, 0, sizeof(c->icc_igrpen));
->> +
->> +    if (s->migration_blocker) {
->> +        return;
->> +    }
->> +
->> +    c->icc_ctlr_el1[GICV3_S] =3D c->icc_ctlr_el1[GICV3_NS];
->> +}
->> +
->> +static void whpx_gicv3_reset_hold(Object *obj, ResetType type)
->> +{
->> +    GICv3State *s =3D ARM_GICV3_COMMON(obj);
->> +    WHPXARMGICv3Class *kgc =3D WHPX_GICV3_GET_CLASS(s);
->> +
->> +    if (kgc->parent_phases.hold) {
->> +        kgc->parent_phases.hold(obj, type);
->> +    }
->> +
->> +    whpx_gicv3_put(s);
->> +}
->> +
->> +
->> +/*
->> + * CPU interface registers of GIC needs to be reset on CPU reset.
->> + * For the calling arm_gicv3_icc_reset() on CPU reset, we register
->> + * below ARMCPRegInfo. As we reset the whole cpu interface under =
-single
->> + * register reset, we define only one register of CPU interface =
-instead
->> + * of defining all the registers.
->> + */
->> +static const ARMCPRegInfo gicv3_cpuif_reginfo[] =3D {
->> +    { .name =3D "ICC_CTLR_EL1", .state =3D ARM_CP_STATE_BOTH,
->> +      .opc0 =3D 3, .opc1 =3D 0, .crn =3D 12, .crm =3D 12, .opc2 =3D =
-4,
->> +      /*
->> +       * If ARM_CP_NOP is used, resetfn is not called,
->> +       * So ARM_CP_NO_RAW is appropriate type.
->> +       */
->> +      .type =3D ARM_CP_NO_RAW,
->> +      .access =3D PL1_RW,
->> +      .readfn =3D arm_cp_read_zero,
->> +      .writefn =3D arm_cp_write_ignore,
->> +      /*
->> +       * We hang the whole cpu interface reset routine off here
->> +       * rather than parcelling it out into one little function
->> +       * per register
->> +       */
->> +      .resetfn =3D whpx_gicv3_icc_reset,
->> +    },
->> +};
->> +
->> +static void whpx_set_reg(CPUState *cpu, WHV_REGISTER_NAME reg, =
-WHV_REGISTER_VALUE val)
->> +{
->> +    struct whpx_state *whpx =3D &whpx_global;
->> +    HRESULT hr;
->> +
->> +    hr =3D =
-whp_dispatch.WHvSetVirtualProcessorRegisters(whpx->partition, =
-cpu->cpu_index,
->> +         &reg, 1, &val);
->> +
->> +    if (FAILED(hr)) {
->> +        error_report("WHPX: Failed to set register %08x, hr=3D%08lx", =
-reg, hr);
->> +    }
->> +}
->> +
->> +static void whpx_gicv3_realize(DeviceState *dev, Error **errp)
->> +{
->> +    ERRP_GUARD();
->> +    GICv3State *s =3D WHPX_GICV3(dev);
->> +    WHPXARMGICv3Class *kgc =3D WHPX_GICV3_GET_CLASS(s);
->> +    Error *local_err =3D NULL;
->> +    int i;
->> +
->> +    kgc->parent_realize(dev, &local_err);
->> +    if (local_err) {
->=20
-> This is not correct. Citing my comment for v13:
->=20
-> > With ERRP_GUARD(), this should be:
-> >
-> > kgc->parent_realize(dev, errp);
-> > if (*errp) {
-> >   return;
-> > }
-> >
-> > include/qapi/error.h has an explanation for this.
-Hello,
+Another sync (where multifd can start to take effect) is only needed when
+there're packets misalignments, but IIUC it should be rare.  I don't know
+how rare it is, it would be good if Lukas could introduce some of those
+numbers in his deployment to help us understand COLO better if we'll need
+to keep it.
 
-Also going to apply this change to the HVF vGIC code (wrote both of them =
-at around the same time=E2=80=A6)
+IIUC, the critical path of COLO shouldn't be migration on its own?  It
+should be when heartbeat gets lost; that normally should happen when two
+VMs are in sync.  In this path, I don't see how multifd helps..  because
+there's no migration happening, only the src recording what has changed.
+Hence I think some number with description of the measurements may help us
+understand how important multifd is to COLO.
 
-Thank you,
--Mohamed
->> +        return;
->> +    }
->> +
->> +    if (s->revision !=3D 3) {
->> +        error_setg(errp, "unsupported GIC revision %d for platform =
-GIC",
->> +                   s->revision);
->> +        return;
->> +    }
->> +
->> +    if (s->security_extn) {
->> +        error_setg(errp, "the platform vGICv3 does not implement the =
-"
->> +                   "security extensions");
->> +        return;
->> +    }
->> +
->> +    if (s->nmi_support) {
->> +        error_setg(errp, "NMI is not supported with the platform =
-GIC");
->> +        return;
->> +    }
->> +
->> +    if (s->nb_redist_regions > 1) {
->> +        error_setg(errp, "Multiple VGICv3 redistributor regions are =
-not "
->> +                   "supported by WHPX");
->> +        error_append_hint(errp, "A maximum of %d VCPUs can be used",
->> +                          s->redist_region_count[0]);
->> +        return;
->> +    }
->> +
->> +    gicv3_init_irqs_and_mmio(s, whpx_gicv3_set_irq, NULL);
->> +
->> +    for (i =3D 0; i < s->num_cpu; i++) {
->> +        CPUState *cpu_state =3D qemu_get_cpu(i);
->> +        ARMCPU *cpu =3D ARM_CPU(cpu_state);
->> +        WHV_REGISTER_VALUE val =3D {.Reg64 =3D 0x080A0000 + =
-(GICV3_REDIST_SIZE * i)};
->> +        whpx_set_reg(cpu_state, WHvArm64RegisterGicrBaseGpa, val);
->> +        define_arm_cp_regs(cpu, gicv3_cpuif_reginfo);
->> +    }
->> +
->> +    if (s->maint_irq) {
->> +        error_setg(errp, "Nested virtualisation not currently =
-supported by WHPX.");
->> +        return;
->> +    }
->> +}
->> +
->> +static void whpx_gicv3_class_init(ObjectClass *klass, const void =
-*data)
->> +{
->> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
->> +    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
->> +    ARMGICv3CommonClass *agcc =3D ARM_GICV3_COMMON_CLASS(klass);
->> +    WHPXARMGICv3Class *kgc =3D WHPX_GICV3_CLASS(klass);
->> +
->> +    agcc->pre_save =3D whpx_gicv3_get;
->> +    agcc->post_load =3D whpx_gicv3_put;
->> +
->> +    device_class_set_parent_realize(dc, whpx_gicv3_realize,
->> +                                    &kgc->parent_realize);
->> +    resettable_class_set_parent_phases(rc, NULL, =
-whpx_gicv3_reset_hold, NULL,
->> +                                       &kgc->parent_phases);
->> +}
->> +
->> +static const TypeInfo whpx_arm_gicv3_info =3D {
->> +    .name =3D TYPE_WHPX_GICV3,
->> +    .parent =3D TYPE_ARM_GICV3_COMMON,
->> +    .instance_size =3D sizeof(GICv3State),
->> +    .class_init =3D whpx_gicv3_class_init,
->> +    .class_size =3D sizeof(WHPXARMGICv3Class),
->> +};
->> +
->> +static void whpx_gicv3_register_types(void)
->> +{
->> +    type_register_static(&whpx_arm_gicv3_info);
->> +}
->> +
->> +type_init(whpx_gicv3_register_types)
->> diff --git a/hw/intc/meson.build b/hw/intc/meson.build
->> index faae20b93d..96742df090 100644
->> --- a/hw/intc/meson.build
->> +++ b/hw/intc/meson.build
->> @@ -41,6 +41,7 @@ specific_ss.add(when: 'CONFIG_APIC', if_true: =
-files('apic.c', 'apic_common.c'))
->>  arm_common_ss.add(when: 'CONFIG_ARM_GIC', if_true: =
-files('arm_gicv3_cpuif_common.c'))
->>  arm_common_ss.add(when: 'CONFIG_ARM_GICV3', if_true: =
-files('arm_gicv3_cpuif.c'))
->>  specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: =
-files('arm_gic_kvm.c'))
->> +specific_ss.add(when: ['CONFIG_WHPX', 'TARGET_AARCH64'], if_true: =
-files('arm_gicv3_whpx.c'))
->>  specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], =
-if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
->>  arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: =
-files('armv7m_nvic.c'))
->>  specific_ss.add(when: 'CONFIG_GRLIB', if_true: =
-files('grlib_irqmp.c'))
->> diff --git a/include/hw/intc/arm_gicv3_common.h =
-b/include/hw/intc/arm_gicv3_common.h
->> index 3d24ad22d2..c55cf18120 100644
->> --- a/include/hw/intc/arm_gicv3_common.h
->> +++ b/include/hw/intc/arm_gicv3_common.h
->> @@ -313,6 +313,9 @@ typedef struct ARMGICv3CommonClass =
-ARMGICv3CommonClass;
->>  DECLARE_OBJ_CHECKERS(GICv3State, ARMGICv3CommonClass,
->>                       ARM_GICV3_COMMON, TYPE_ARM_GICV3_COMMON)
->>  +/* Types for GICv3 kernel-irqchip */
->> +#define TYPE_WHPX_GICV3 "whpx-arm-gicv3"
->> +
->>  struct ARMGICv3CommonClass {
->>      /*< private >*/
->>      SysBusDeviceClass parent_class;
+Supporting multifd will cause new COLO functions to inject into core
+migration code paths (even if not much..). I want to make sure such (new)
+complexity is justified. I also want to avoid introducing a feature only
+because "we have XXX, then let's support XXX in COLO too, maybe some day
+it'll be useful".
 
+After these days, I found removing code is sometimes harder than writting
+new..
 
---Apple-Mail=_0B5C5ECE-8B90-44DF-940E-F4FA51132E6A
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
+Thanks,
 
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dutf-8"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 15. Jan 2026, at 07:15, Akihiko Odaki =
-&lt;odaki@rsg.ci.i.u-tokyo.ac.jp&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">On 2026/01/15 9:14, Mohamed Mediouni =
-wrote:</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><blockquote type=3D"cite" =
-style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: =
-solid;">Signed-off-by: Mohamed Mediouni =
-&lt;mohamed@unpredictable.fr&gt;<br>Reviewed-by: Pierrick Bouvier =
-&lt;pierrick.bouvier@linaro.org&gt;<br>---<br>&nbsp;hw/arm/virt.c =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;3 =
-+<br>&nbsp;hw/intc/arm_gicv3_common.c =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;3 =
-+<br>&nbsp;hw/intc/arm_gicv3_whpx.c =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| 239 =
-+++++++++++++++++++++++++++++<br>&nbsp;hw/intc/meson.build =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;| &nbsp;&nbsp;1 =
-+<br>&nbsp;include/hw/intc/arm_gicv3_common.h | &nbsp;&nbsp;3 =
-+<br>&nbsp;5 files changed, 249 insertions(+)<br>&nbsp;create mode =
-100644 hw/intc/arm_gicv3_whpx.c<br>diff --git a/hw/arm/virt.c =
-b/hw/arm/virt.c<br>index bc0d54eb7c..b51c97a020 100644<br>--- =
-a/hw/arm/virt.c<br>+++ b/hw/arm/virt.c<br>@@ -49,6 +49,7 =
-@@<br>&nbsp;#include "system/tcg.h"<br>&nbsp;#include =
-"system/kvm.h"<br>&nbsp;#include "system/hvf.h"<br>+#include =
-"system/whpx.h"<br>&nbsp;#include "system/qtest.h"<br>&nbsp;#include =
-"system/system.h"<br>&nbsp;#include "hw/core/loader.h"<br>@@ -2117,6 =
-+2118,8 @@ static void finalize_gic_version(VirtMachineState =
-*vms)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* KVM =
-w/o kernel irqchip can only deal with GICv2 =
-*/<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gics_supported=
- |=3D =
-VIRT_GIC_VERSION_2_MASK;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;accel_name =3D "KVM with kernel-irqchip=3Doff";<br>+ =
-&nbsp;&nbsp;&nbsp;} else if (whpx_enabled()) {<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gics_supported |=3D =
-VIRT_GIC_VERSION_3_MASK;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if =
-(tcg_enabled() || hvf_enabled() || qtest_enabled()) =
-&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gics_supp=
-orted |=3D =
-VIRT_GIC_VERSION_2_MASK;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;if (module_object_class_by_name("arm-gicv3")) {<br>diff --git =
-a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c<br>index =
-0a2e5a3e2f..9054143ea7 100644<br>--- a/hw/intc/arm_gicv3_common.c<br>+++ =
-b/hw/intc/arm_gicv3_common.c<br>@@ -32,6 +32,7 @@<br>&nbsp;#include =
-"gicv3_internal.h"<br>&nbsp;#include =
-"hw/arm/linux-boot-if.h"<br>&nbsp;#include "system/kvm.h"<br>+#include =
-"system/whpx.h"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static void =
-gicv3_gicd_no_migration_shift_bug_post_load(GICv3State *cs)<br>@@ -663,6 =
-+664,8 @@ const char =
-*gicv3_class_name(void)<br>&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if =
-(kvm_irqchip_in_kernel()) =
-{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return =
-"kvm-arm-gicv3";<br>+ &nbsp;&nbsp;&nbsp;} else if (whpx_enabled()) =
-{<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return =
-TYPE_WHPX_GICV3;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else =
-{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if =
-(kvm_enabled()) =
-{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;error_report("Userspace GICv3 is not supported with =
-KVM");<br>diff --git a/hw/intc/arm_gicv3_whpx.c =
-b/hw/intc/arm_gicv3_whpx.c<br>new file mode 100644<br>index =
-0000000000..f34f841a4a<br>--- /dev/null<br>+++ =
-b/hw/intc/arm_gicv3_whpx.c<br>@@ -0,0 +1,239 @@<br>+/* =
-SPDX-License-Identifier: GPL-2.0-or-later */<br>+/*<br>+ * ARM Generic =
-Interrupt Controller using HVF platform support<br>+ *<br>+ * Copyright =
-(c) 2025 Mohamed Mediouni<br>+ * Based on vGICv3 KVM code by Pavel =
-Fedin<br>+ *<br>+ */<br>+<br>+#include "qemu/osdep.h"<br>+#include =
-"qapi/error.h"<br>+#include "hw/intc/arm_gicv3_common.h"<br>+#include =
-"qemu/error-report.h"<br>+#include "qemu/module.h"<br>+#include =
-"system/runstate.h"<br>+#include "system/whpx.h"<br>+#include =
-"system/whpx-internal.h"<br>+#include "gicv3_internal.h"<br>+#include =
-"vgic_common.h"<br>+#include "qom/object.h"<br>+#include =
-"target/arm/cpregs.h"<br>+<br>+#include "hw/arm/bsa.h"<br>+#include =
-&lt;winhvplatform.h&gt;<br>+#include =
-&lt;winhvplatformdefs.h&gt;<br>+#include &lt;winnt.h&gt;<br>+<br>+struct =
-WHPXARMGICv3Class {<br>+ &nbsp;&nbsp;&nbsp;ARMGICv3CommonClass =
-parent_class;<br>+ &nbsp;&nbsp;&nbsp;DeviceRealize parent_realize;<br>+ =
-&nbsp;&nbsp;&nbsp;ResettablePhases =
-parent_phases;<br>+};<br>+<br>+OBJECT_DECLARE_TYPE(GICv3State, =
-WHPXARMGICv3Class, WHPX_GICV3)<br>+<br>+/* TODO: Implement GIC state =
-save-restore */<br>+static void whpx_gicv3_check(GICv3State =
-*s)<br>+{<br>+}<br>+<br>+static void whpx_gicv3_put(GICv3State =
-*s)<br>+{<br>+ =
-&nbsp;&nbsp;&nbsp;whpx_gicv3_check(s);<br>+}<br>+<br>+static void =
-whpx_gicv3_get(GICv3State *s)<br>+{<br>+}<br>+<br>+static void =
-whpx_gicv3_set_irq(void *opaque, int irq, int level)<br>+{<br>+ =
-&nbsp;&nbsp;&nbsp;struct whpx_state *whpx =3D =
-&amp;whpx_global;<br>+<br>+ &nbsp;&nbsp;&nbsp;GICv3State *s =3D =
-opaque;<br>+ &nbsp;&nbsp;&nbsp;if (irq &gt; s-&gt;num_irq) {<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>+ =
-&nbsp;&nbsp;&nbsp;}<br>+<br>+ &nbsp;&nbsp;&nbsp;WHV_INTERRUPT_CONTROL =
-interrupt_control =3D {<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.InterruptControl.InterruptType =
-=3D WHvArm64InterruptTypeFixed,<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.RequestedVector =3D =
-GIC_INTERNAL + irq,<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.InterruptControl.Asserted =3D =
-level<br>+ &nbsp;&nbsp;&nbsp;};<br></blockquote><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">This is a mixed declaration prohibited in =
-docs/devel/style.rst</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Please ensure that mixed declarations are =
-avoided everywhere, not just the places I pointed out.</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: =
-solid;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
-none; text-decoration-thickness: auto; text-decoration-style: =
-solid;">+<br>+ =
-&nbsp;&nbsp;&nbsp;whp_dispatch.WHvRequestInterrupt(whpx-&gt;partition, =
-&amp;interrupt_control,<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sizeof(interrupt_control))=
-;<br>+}<br>+<br>+static void whpx_gicv3_icc_reset(CPUARMState *env, =
-const ARMCPRegInfo *ri)<br>+{<br>+ &nbsp;&nbsp;&nbsp;GICv3State *s;<br>+ =
-&nbsp;&nbsp;&nbsp;GICv3CPUState *c;<br>+<br>+ &nbsp;&nbsp;&nbsp;c =3D =
-env-&gt;gicv3state;<br>+ &nbsp;&nbsp;&nbsp;s =3D c-&gt;gic;<br>+<br>+ =
-&nbsp;&nbsp;&nbsp;c-&gt;icc_pmr_el1 =3D 0;<br>+ =
-&nbsp;&nbsp;&nbsp;/*<br>+ &nbsp;&nbsp;&nbsp;&nbsp;* Architecturally the =
-reset value of the ICC_BPR registers<br>+ &nbsp;&nbsp;&nbsp;&nbsp;* is =
-UNKNOWN. We set them all to 0 here; when the kernel<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;* uses these values to program the ICH_VMCR_EL2 =
-fields that<br>+ &nbsp;&nbsp;&nbsp;&nbsp;* determine the guest-visible =
-ICC_BPR register values, the<br>+ &nbsp;&nbsp;&nbsp;&nbsp;* hardware's =
-"writing a value less than the minimum sets<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;* the field to the minimum value" behaviour will =
-result in<br>+ &nbsp;&nbsp;&nbsp;&nbsp;* them effectively resetting to =
-the correct minimum value<br>+ &nbsp;&nbsp;&nbsp;&nbsp;* for the host =
-GIC.<br>+ &nbsp;&nbsp;&nbsp;&nbsp;*/<br>+ =
-&nbsp;&nbsp;&nbsp;c-&gt;icc_bpr[GICV3_G0] =3D 0;<br>+ =
-&nbsp;&nbsp;&nbsp;c-&gt;icc_bpr[GICV3_G1] =3D 0;<br>+ =
-&nbsp;&nbsp;&nbsp;c-&gt;icc_bpr[GICV3_G1NS] =3D 0;<br>+<br>+ =
-&nbsp;&nbsp;&nbsp;c-&gt;icc_sre_el1 =3D 0x7;<br>+ =
-&nbsp;&nbsp;&nbsp;memset(c-&gt;icc_apr, 0, sizeof(c-&gt;icc_apr));<br>+ =
-&nbsp;&nbsp;&nbsp;memset(c-&gt;icc_igrpen, 0, =
-sizeof(c-&gt;icc_igrpen));<br>+<br>+ &nbsp;&nbsp;&nbsp;if =
-(s-&gt;migration_blocker) {<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>+ =
-&nbsp;&nbsp;&nbsp;}<br>+<br>+ =
-&nbsp;&nbsp;&nbsp;c-&gt;icc_ctlr_el1[GICV3_S] =3D =
-c-&gt;icc_ctlr_el1[GICV3_NS];<br>+}<br>+<br>+static void =
-whpx_gicv3_reset_hold(Object *obj, ResetType type)<br>+{<br>+ =
-&nbsp;&nbsp;&nbsp;GICv3State *s =3D ARM_GICV3_COMMON(obj);<br>+ =
-&nbsp;&nbsp;&nbsp;WHPXARMGICv3Class *kgc =3D =
-WHPX_GICV3_GET_CLASS(s);<br>+<br>+ &nbsp;&nbsp;&nbsp;if =
-(kgc-&gt;parent_phases.hold) {<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kgc-&gt;parent_phases.hold(obj, =
-type);<br>+ &nbsp;&nbsp;&nbsp;}<br>+<br>+ =
-&nbsp;&nbsp;&nbsp;whpx_gicv3_put(s);<br>+}<br>+<br>+<br>+/*<br>+ * CPU =
-interface registers of GIC needs to be reset on CPU reset.<br>+ * For =
-the calling arm_gicv3_icc_reset() on CPU reset, we register<br>+ * below =
-ARMCPRegInfo. As we reset the whole cpu interface under single<br>+ * =
-register reset, we define only one register of CPU interface =
-instead<br>+ * of defining all the registers.<br>+ */<br>+static const =
-ARMCPRegInfo gicv3_cpuif_reginfo[] =3D {<br>+ &nbsp;&nbsp;&nbsp;{ .name =
-=3D "ICC_CTLR_EL1", .state =3D ARM_CP_STATE_BOTH,<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.opc0 =3D 3, .opc1 =3D 0, .crn =3D 12, =
-.crm =3D 12, .opc2 =3D 4,<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* If ARM_CP_NOP is used, resetfn is =
-not called,<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* So ARM_CP_NO_RAW =
-is appropriate type.<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.type =3D ARM_CP_NO_RAW,<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.access =3D PL1_RW,<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.readfn =3D arm_cp_read_zero,<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.writefn =3D arm_cp_write_ignore,<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* We hang the whole cpu interface =
-reset routine off here<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* rather =
-than parcelling it out into one little function<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* per register<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.resetfn =3D whpx_gicv3_icc_reset,<br>+ =
-&nbsp;&nbsp;&nbsp;},<br>+};<br>+<br>+static void whpx_set_reg(CPUState =
-*cpu, WHV_REGISTER_NAME reg, WHV_REGISTER_VALUE val)<br>+{<br>+ =
-&nbsp;&nbsp;&nbsp;struct whpx_state *whpx =3D &amp;whpx_global;<br>+ =
-&nbsp;&nbsp;&nbsp;HRESULT hr;<br>+<br>+ &nbsp;&nbsp;&nbsp;hr =3D =
-whp_dispatch.WHvSetVirtualProcessorRegisters(whpx-&gt;partition, =
-cpu-&gt;cpu_index,<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;reg, 1, =
-&amp;val);<br>+<br>+ &nbsp;&nbsp;&nbsp;if (FAILED(hr)) {<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_report("WHPX: Failed to =
-set register %08x, hr=3D%08lx", reg, hr);<br>+ =
-&nbsp;&nbsp;&nbsp;}<br>+}<br>+<br>+static void =
-whpx_gicv3_realize(DeviceState *dev, Error **errp)<br>+{<br>+ =
-&nbsp;&nbsp;&nbsp;ERRP_GUARD();<br>+ &nbsp;&nbsp;&nbsp;GICv3State *s =3D =
-WHPX_GICV3(dev);<br>+ &nbsp;&nbsp;&nbsp;WHPXARMGICv3Class *kgc =3D =
-WHPX_GICV3_GET_CLASS(s);<br>+ &nbsp;&nbsp;&nbsp;Error *local_err =3D =
-NULL;<br>+ &nbsp;&nbsp;&nbsp;int i;<br>+<br>+ =
-&nbsp;&nbsp;&nbsp;kgc-&gt;parent_realize(dev, &amp;local_err);<br>+ =
-&nbsp;&nbsp;&nbsp;if (local_err) {<br></blockquote><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">This is not correct. Citing my comment for =
-v13:</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&gt; With ERRP_GUARD(), this should =
-be:</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&gt;</span><br style=3D"caret-color: rgb(0, =
-0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&gt; kgc-&gt;parent_realize(dev, =
-errp);</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&gt; if (*errp) {</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&gt; &nbsp;&nbsp;return;</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&gt; }</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&gt;</span><br style=3D"caret-color: rgb(0, =
-0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&gt; include/qapi/error.h has an =
-explanation for this.</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: =
-solid;"></div></blockquote><div>Hello,</div><div><br></div>Also going to =
-apply this change to the HVF vGIC code (wrote both of them at around the =
-same time=E2=80=A6)</div><div><br></div><div>Thank =
-you,</div><div>-Mohamed<br><blockquote type=3D"cite"><div><blockquote =
-type=3D"cite" style=3D"font-family: Helvetica; font-size: 12px; =
-font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;">+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>+ =
-&nbsp;&nbsp;&nbsp;}<br>+<br>+ &nbsp;&nbsp;&nbsp;if (s-&gt;revision !=3D =
-3) {<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_setg(errp, =
-"unsupported GIC revision %d for platform GIC",<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s-&gt;revision);<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>+ =
-&nbsp;&nbsp;&nbsp;}<br>+<br>+ &nbsp;&nbsp;&nbsp;if (s-&gt;security_extn) =
-{<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_setg(errp, "the =
-platform vGICv3 does not implement the "<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"security extensions");<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>+ =
-&nbsp;&nbsp;&nbsp;}<br>+<br>+ &nbsp;&nbsp;&nbsp;if (s-&gt;nmi_support) =
-{<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_setg(errp, "NMI =
-is not supported with the platform GIC");<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>+ =
-&nbsp;&nbsp;&nbsp;}<br>+<br>+ &nbsp;&nbsp;&nbsp;if =
-(s-&gt;nb_redist_regions &gt; 1) {<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_setg(errp, "Multiple =
-VGICv3 redistributor regions are not "<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"supported by WHPX");<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_append_hint(errp, "A =
-maximum of %d VCPUs can be used",<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;s-&gt;redist_region_count[0]);<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>+ =
-&nbsp;&nbsp;&nbsp;}<br>+<br>+ =
-&nbsp;&nbsp;&nbsp;gicv3_init_irqs_and_mmio(s, whpx_gicv3_set_irq, =
-NULL);<br>+<br>+ &nbsp;&nbsp;&nbsp;for (i =3D 0; i &lt; s-&gt;num_cpu; =
-i++) {<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPUState =
-*cpu_state =3D qemu_get_cpu(i);<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ARMCPU *cpu =3D =
-ARM_CPU(cpu_state);<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHV_REGISTER_VALUE val =3D =
-{.Reg64 =3D 0x080A0000 + (GICV3_REDIST_SIZE * i)};<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whpx_set_reg(cpu_state, =
-WHvArm64RegisterGicrBaseGpa, val);<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;define_arm_cp_regs(cpu, =
-gicv3_cpuif_reginfo);<br>+ &nbsp;&nbsp;&nbsp;}<br>+<br>+ =
-&nbsp;&nbsp;&nbsp;if (s-&gt;maint_irq) {<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_setg(errp, "Nested =
-virtualisation not currently supported by WHPX.");<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;<br>+ =
-&nbsp;&nbsp;&nbsp;}<br>+}<br>+<br>+static void =
-whpx_gicv3_class_init(ObjectClass *klass, const void *data)<br>+{<br>+ =
-&nbsp;&nbsp;&nbsp;DeviceClass *dc =3D DEVICE_CLASS(klass);<br>+ =
-&nbsp;&nbsp;&nbsp;ResettableClass *rc =3D RESETTABLE_CLASS(klass);<br>+ =
-&nbsp;&nbsp;&nbsp;ARMGICv3CommonClass *agcc =3D =
-ARM_GICV3_COMMON_CLASS(klass);<br>+ &nbsp;&nbsp;&nbsp;WHPXARMGICv3Class =
-*kgc =3D WHPX_GICV3_CLASS(klass);<br>+<br>+ =
-&nbsp;&nbsp;&nbsp;agcc-&gt;pre_save =3D whpx_gicv3_get;<br>+ =
-&nbsp;&nbsp;&nbsp;agcc-&gt;post_load =3D whpx_gicv3_put;<br>+<br>+ =
-&nbsp;&nbsp;&nbsp;device_class_set_parent_realize(dc, =
-whpx_gicv3_realize,<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;kgc-&gt=
-;parent_realize);<br>+ =
-&nbsp;&nbsp;&nbsp;resettable_class_set_parent_phases(rc, NULL, =
-whpx_gicv3_reset_hold, NULL,<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&amp;kgc-&gt;parent_phases);<br>+}<br>+<br>+static const TypeInfo =
-whpx_arm_gicv3_info =3D {<br>+ &nbsp;&nbsp;&nbsp;.name =3D =
-TYPE_WHPX_GICV3,<br>+ &nbsp;&nbsp;&nbsp;.parent =3D =
-TYPE_ARM_GICV3_COMMON,<br>+ &nbsp;&nbsp;&nbsp;.instance_size =3D =
-sizeof(GICv3State),<br>+ &nbsp;&nbsp;&nbsp;.class_init =3D =
-whpx_gicv3_class_init,<br>+ &nbsp;&nbsp;&nbsp;.class_size =3D =
-sizeof(WHPXARMGICv3Class),<br>+};<br>+<br>+static void =
-whpx_gicv3_register_types(void)<br>+{<br>+ =
-&nbsp;&nbsp;&nbsp;type_register_static(&amp;whpx_arm_gicv3_info);<br>+}<br=
->+<br>+type_init(whpx_gicv3_register_types)<br>diff --git =
-a/hw/intc/meson.build b/hw/intc/meson.build<br>index =
-faae20b93d..96742df090 100644<br>--- a/hw/intc/meson.build<br>+++ =
-b/hw/intc/meson.build<br>@@ -41,6 +41,7 @@ specific_ss.add(when: =
-'CONFIG_APIC', if_true: files('apic.c', =
-'apic_common.c'))<br>&nbsp;arm_common_ss.add(when: 'CONFIG_ARM_GIC', =
-if_true: =
-files('arm_gicv3_cpuif_common.c'))<br>&nbsp;arm_common_ss.add(when: =
-'CONFIG_ARM_GICV3', if_true: =
-files('arm_gicv3_cpuif.c'))<br>&nbsp;specific_ss.add(when: =
-'CONFIG_ARM_GIC_KVM', if_true: =
-files('arm_gic_kvm.c'))<br>+specific_ss.add(when: ['CONFIG_WHPX', =
-'TARGET_AARCH64'], if_true: =
-files('arm_gicv3_whpx.c'))<br>&nbsp;specific_ss.add(when: =
-['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true: =
-files('arm_gicv3_kvm.c', =
-'arm_gicv3_its_kvm.c'))<br>&nbsp;arm_common_ss.add(when: =
-'CONFIG_ARM_V7M', if_true: =
-files('armv7m_nvic.c'))<br>&nbsp;specific_ss.add(when: 'CONFIG_GRLIB', =
-if_true: files('grlib_irqmp.c'))<br>diff --git =
-a/include/hw/intc/arm_gicv3_common.h =
-b/include/hw/intc/arm_gicv3_common.h<br>index 3d24ad22d2..c55cf18120 =
-100644<br>--- a/include/hw/intc/arm_gicv3_common.h<br>+++ =
-b/include/hw/intc/arm_gicv3_common.h<br>@@ -313,6 +313,9 @@ typedef =
-struct ARMGICv3CommonClass =
-ARMGICv3CommonClass;<br>&nbsp;DECLARE_OBJ_CHECKERS(GICv3State, =
-ARMGICv3CommonClass,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;ARM_GICV3_COMMON, TYPE_ARM_GICV3_COMMON)<br>&nbsp;+/* Types for =
-GICv3 kernel-irqchip */<br>+#define TYPE_WHPX_GICV3 =
-"whpx-arm-gicv3"<br>+<br>&nbsp;struct ARMGICv3CommonClass =
-{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&lt; private =
-&gt;*/<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SysBusDeviceClass =
-parent_class;</blockquote></div></blockquote></div><br></body></html>=
+> 
+> Lukas: Given COLO has a bunch of different features (i.e. the block
+> replication, the clever network comparison etc) do you know which ones
+> are used in the setups you are aware of?
+> 
+> I'd guess the tricky part of a test would be the network side; I'm
+> not too sure how you'd set that in a test.
 
---Apple-Mail=_0B5C5ECE-8B90-44DF-940E-F4FA51132E6A--
+-- 
+Peter Xu
+
 
