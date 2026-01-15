@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BF44D3CCA0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5CD9D3CCA2
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 02:05:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgCj1-00019A-Ip; Wed, 14 Jan 2026 21:04:39 -0500
+	id 1vgCj1-00018w-FA; Wed, 14 Jan 2026 21:04:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgCiz-00017x-7X
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgCiz-00017w-6d
  for qemu-devel@nongnu.org; Wed, 14 Jan 2026 21:04:37 -0500
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgCiw-0001hZ-Ej
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgCiw-0001iR-Gs
  for qemu-devel@nongnu.org; Wed, 14 Jan 2026 21:04:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Date:Subject:From:From
- :Subject; bh=vTsays0ETJp6BanPmJCeH4cFoOgVYJ6RFxILo8OXNug=; b=bKAe4ora3HwOMfrd
- EwrMpwNHdIYpkn/tiqHT1MW1QRiSXXMOkNBSc3dBipfq8A7LTrssNEOtzPWz7o0+eOsY3KppjSqKo
- 1Cmoq8hKCQNPqu7Ne6tlA/hZz9KIMR+bXLFKHzwfi8k1HHPdlnVXVGN12I43klm7bGELc6QFSztzH
- JVKM2Ir1xja3MzWtQ3hVrSC+XLZ9Kpkk4EQzLaHpLuEuZTCWoBR4yiDwtFC9kdsdsmmOT1KQZFoAK
- bsIt2iUEI+ftAM73NsA93QqkNCknBCfV0tYBmtVjeBFssCbz2nR/KuPo7UJtClcqly3zfwRAS0dqQ
- nwd8z/Of2icgi4NUjg==;
+ h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
+ :Subject; bh=pVf4Nq5yyOaiSh5/d48eFUOJ2zNDs9ZI9Zq2WaZY3k0=; b=eGmluPZOfSr2roMY
+ DzCNXFes9AHpJly7PAYePIihsYP1DpQWOw6qxsh/YQqOZ8wdTuCBFT3g/KDDVuVI0REnL9xOqijOg
+ gk9zkaIuvISQVdM16dnRdOCcHX19KShuPIGNS1LYXa62O1seCJCsxbOqPx6AaSrmzZ/tFHjUMN9Vz
+ 53JS4fmsS06bDtfCNy1gO8orI8g8pi7rVUwuoLqWLV6A/6OpydtxxPpiHyy7mXmZvz9fNhW4lv5Ja
+ Vpf8aA9JdjY5oAd8s9ZY9BBGg6UrCSBSj7dbsUNVCLT22hZGx1VGizDMRB50SwaRUuHsrCZib2iQD
+ 7iCXP8mXVYVzm+wAsQ==;
 Received: from localhost ([127.0.0.1] helo=dalek)
  by mx.treblig.org with esmtp (Exim 4.98.2)
- (envelope-from <dave@treblig.org>) id 1vgCir-0000000Eq8W-1JsT;
- Thu, 15 Jan 2026 02:04:29 +0000
+ (envelope-from <dave@treblig.org>) id 1vgCiu-0000000Eq8W-16bK;
+ Thu, 15 Jan 2026 02:04:32 +0000
 From: dave@treblig.org
 To: dave@treblig.org,
 	armbru@redhat.com,
 	berrange@redhat.com
 Cc: qemu-devel@nongnu.org
-Subject: [PATCH 0/4] HMP: hxtool sanity checks
-Date: Thu, 15 Jan 2026 02:04:19 +0000
-Message-ID: <20260115020423.722069-1-dave@treblig.org>
+Subject: [PATCH 4/4] hxtool: Error on missing docs
+Date: Thu, 15 Jan 2026 02:04:23 +0000
+Message-ID: <20260115020423.722069-5-dave@treblig.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260115020423.722069-1-dave@treblig.org>
+References: <20260115020423.722069-1-dave@treblig.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dave@treblig.org;
  helo=mx.treblig.org
@@ -68,26 +69,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-Hi,
-  This adds a couple of sanity checks to hxtool to try and catch the
-  type of mistake that Markus' patch fixes.
-  (Included Markus' patch since otherwise the script correctly fails)
+Error if a '.name' is seen after another '.name' without an intervening
+SRST, this normally indicates missing or misplaced docs.
 
-Dave
+We can't check DEF (as used in command line options) because those
+often have multiple DEF per doc.
 
-Dr. David Alan Gilbert (3):
-  hmp*hx: Move info docs
-  hxtool: Split srst/erst add checks
-  hxtool: Error on missing docs
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+---
+ scripts/hxtool | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-Markus Armbruster (1):
-  hmp-commands-info.hx: Move definition of "info accel"
-
- hmp-commands-info.hx | 33 +++++++++++++--------------------
- hmp-commands.hx      | 27 +++++++++++++++++----------
- scripts/hxtool       | 38 +++++++++++++++++++++++++++++++++++---
- 3 files changed, 65 insertions(+), 33 deletions(-)
-
+diff --git a/scripts/hxtool b/scripts/hxtool
+index ea2accef98..f310071daa 100755
+--- a/scripts/hxtool
++++ b/scripts/hxtool
+@@ -1,8 +1,14 @@
+ #!/bin/sh
+ 
++printifnotrst()
++{
++    test $outsiderst -eq 1 && printf "%s\n" "$str"
++}
+ hxtoh()
+ {
+     outsiderst=1
++    # .name for HMP
++    seenname=0
+     while read -r str; do
+         case $str in
+             HXCOMM*)
+@@ -13,6 +19,8 @@ hxtoh()
+                 echo "Error: SRST inside another RST" >&2
+                 exit 1
+               fi
++              # consume the name
++              seenname=0
+               outsiderst=0
+             ;;
+             ERST*)
+@@ -23,8 +31,18 @@ hxtoh()
+               fi
+               outsiderst=1
+             ;;
++            # Note the space at the start - we need to exclude something.name
++             .name*)
++              if [ $seenname -eq 1 ]
++              then
++                echo "Error: Seen another .name, maybe missing docs?" >&2
++                exit 1
++              fi
++              seenname=1
++              printifnotrst
++            ;;
+             *)
+-            test $outsiderst -eq 1 && printf "%s\n" "$str"
++            printifnotrst
+             ;;
+         esac
+     done
 -- 
 2.52.0
 
