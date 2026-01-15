@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EF16D4660F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E88D4660D
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:55:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgSVI-0000fv-C7; Thu, 15 Jan 2026 13:55:32 -0500
+	id 1vgSVR-0000jX-Sl; Thu, 15 Jan 2026 13:55:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSV4-0000ck-IS
+ id 1vgSV3-0000ci-OO
  for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:20 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSV1-0005sV-0S
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:17 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-4327790c4e9so882700f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:12 -0800 (PST)
+ id 1vgSUz-0005hO-24
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:16 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-47d6a1f08bbso4825735e9.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768503311; x=1769108111; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gVbnXqfgbvwxJ7BEsCc6CmzypR5ojwe4TPV/AFLeVSs=;
- b=xXjo9wdhuEqpAE5+XP3xTf+9lIuz9bChneJ8L2WUAgvHQM4Hz8ma9GtRItaC+6mgC5
- S7ADenZhX6YOeJVB2sRi4TayObtg6GYNmHZfw0OMO1lAfpf9RJg5n0q4hR3QytCfMnkx
- OAxqG8ePlaNS9+CNLEKBR90zAvO/sMrNiGwluRN5/JANVDRU6DjNeq0hdlppJjxmWdL/
- 3Zraz+4OQmz8NLxFnijHyF/QFNyTEOZbqWTTfUHHSnlp19kPWF80L74uXLUl3/K7BLha
- 3AZrGZXDuJoDD/ap4wCun0vLCrbOyp6WKdRz4A9K6N5Dcxa/7WVL2dbJszd24lQgN96Q
- 1ySA==
+ d=linaro.org; s=google; t=1768503309; x=1769108109; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xH7Vjl1eJH80wqrfjzngkEtIrSK7E1AY90dS9LHsuaM=;
+ b=uP91kcNAyGiSz1Wn8ZbZ32eu1aFezvoZ8BhWzBNKgC173X6yamSw5eDrxa0HrNoZlU
+ JXAwpU+jMJmCad89t65yWucJzXZem5comBDudJ7d5FjmrB6SmPJ2Jqb5mCwnqzNKwpVa
+ fZIMeISCndCKB2i0PZduMNZrKinCcu/sSD3YjGkUWcFyrv6aHLaiTFsAHwtPgwg1viRF
+ V/rFgmuiOzPBFbweGXvT9b64FLOLktWRwZ85h9e6ZBSbJyND6j1ln2/QxP5bQEevP3CD
+ lOSj+29stlJfJGCmA5r6E+iY7L1dfFzkX8R9XMH71RYiwwqHSOqc3E7UyCe7XAZEdSER
+ pYJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768503311; x=1769108111;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=gVbnXqfgbvwxJ7BEsCc6CmzypR5ojwe4TPV/AFLeVSs=;
- b=lvavYWKyciTOvXLwNL9IfuBfDo00q2SYcqOZVxN6OvFWU3QbwIBpSLK9vdOAflY3Ll
- 3nvWHUtRUFDq2T5KEzhFcCCKgQ10of89K7bxPgc9qix+xXohia8X64vS5WwafjS1RFkT
- cuiJF0IY/snoANn7SoG4PDQDKNBnWLGCqJ8VPe4sdvBe9nr4AVaXZhhVA4336fSCA4c/
- Mx6gRtm2S560VvGPv7XYJYBQgD5m3Y4vpShbAekb+LsNXrahubfgPEA9o4EdYQznRQx5
- BSCLpw8NJnd778XOI4FtJjfQ4NAXnbda26WjaVSyR/Ay8zqns7R6DY6k+JFXguuSzc/o
- Xqlg==
-X-Gm-Message-State: AOJu0Yz9TEKr66x7sCo+J/YLrYbeFiAwXWFonI7o2AOKcyL4qiNtYOPK
- bJplZ6tz1PDZxZHdbfXArd528MvyX8Qaf+jQM/L5cv7Uyw2fv7nfVTY1JrdllyLUdtJ6wrEyiYY
- t3RVJ
-X-Gm-Gg: AY/fxX6ee44j4axNL/mZ6ZVWpYANyBzaXNkRrMbWtlPoVamCxEdwCYYjl3xRht9IBc9
- XZGflprZUnlOJdXBWZFmvabed9DeADAP+20v6zSsvAferqIZ2PYjeKvKjZRFoS6Z1yCsP3mPH9a
- jMZEorwYfFWXO7ztQJSPp5yZ9/MT37JRMLIG94gq4D4/39+GRMBnamBJuy5TOSJiP49atertJSB
- IZrA2DEQaWU9ynE5X6apT4p5KG0cgMmic0rRXFB9dDuzuQjgQpj/QkKnumcRoQLLHaYZkhp4dS/
- a5+lizCcKx2FR8WvRzSduIdVH2LWj1eclLPALddNIIBJNqHDKUDquDzoC2bpCAx+ncl83EjY9EA
- eA7tRQSQHQQuDfgt4kUZ2Wz1da20QFDxoPQw/0ibsTTYF9xSRJZVh4SV1cQafTtaJvYejijhClp
- 6+negs41f8oTKBEmeyTJFpeSEuDbUgMHlG94dMX0fOwNkwXqsac9Y+Jf8T8mgiHcX+5LRoPwxMr
- RFsxPITfJeAkJKekEa13x/Wo2XpfIqHvvIw8nRh/PkdHQ==
-X-Received: by 2002:a05:6000:144c:b0:430:f68f:ee91 with SMTP id
- ffacd0b85a97d-43569bbeb36mr479488f8f.37.1768503311204; 
- Thu, 15 Jan 2026 10:55:11 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768503309; x=1769108109;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xH7Vjl1eJH80wqrfjzngkEtIrSK7E1AY90dS9LHsuaM=;
+ b=kNbDOxYEP3oZCqaAEXy2N+fCQ1E41ULhd5iR6+ya62RVKWkyoy7InaPp3i6j7JsSYB
+ AwfoAAg+gfYHE20zjP1faVk5R+96sW6jq8vkXPZwmH1MoLQ3vB0e1JiHlBB1arwV29L9
+ DPO62iMErStDq5pXhsFPE6+LW07rntR35ipFQ3/tRvfuNBFT6MYQp5mXB8fLucwNUshs
+ IeBp6hl0X9cVTooMx0MiMmIq1Dq3wHgN1raWnC9XeqY+o3sqD65bT45MXhJonVlE6GzW
+ yxmiGVFeXqFO1am97anMp/p12LQEW3lhM5ctDj4Az9OtRgVZvOVTdxWJF8xaT0BBYOqE
+ DL+A==
+X-Gm-Message-State: AOJu0YyCA7fAeWOgE5AXD9a44t/Q6AB+yJXcvJRrUs60iQbAWzv6Ab8f
+ PxqhB3WjVvO1Su7iCUHJymESmzWrNbXRJVCnp2SliTyG7e4XfJ5HD6cvVo5OK32D1eCE8XJgHLa
+ ti2J3
+X-Gm-Gg: AY/fxX7CMS54z5C17YSeU9QOOe7Jsy1FaQqcYNkZn9XTEHH8awiHSY32/OnF6NVzI7G
+ VtYuxL5mzzuJikYtaEGfkQVYJAGmSKH2Wa/f6+1jIUvOwzKRWkuDFR+yv9sr8YZydGLJtnc+rfP
+ FHLhwT6AnjSqK/V1+8VZYTqVgl3+6y6aaYUsojH9Vc+aLvbD1OX8PBM1OG8IXHrBUEVmJ42Lq8Z
+ 9H91u5cVlpssOOcrm0I8R+12/RFRcEy9xKVVZdpaIodqs02UzMLA/OFxSQJlKa4XQPgMuNalqWk
+ 5CBMv2Taf3lTJ4apeG16imBLHACdmg6b4Cj9jaeZAwWphyqBjoRwt1Yl0xp2uOEQnIx4vbnYspt
+ HB0o3xGZiwEQo50DvCcuPw/jtvxAWI6Wui8Buw2B6Mb/mBRal2syaLqm8hm2ij9ATlTFVcDnFJg
+ P5XHOLhOKbjj7LiDECNaYoqgqSr8q35x+hcrcJoPKbLMk4pMvxJhN5uSKICzTZxIQopqhqUhzRb
+ 3dw1Sqvd1wYUrB9NzT7Dm1orkH3zv2MKExq6UTBci69gA==
+X-Received: by 2002:a05:600c:c0ce:b0:47e:e78a:c834 with SMTP id
+ 5b1f17b1804b1-4801eb14ffbmr1246465e9.34.1768503309439; 
+ Thu, 15 Jan 2026 10:55:09 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.10
+ ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 10:55:10 -0800 (PST)
+ Thu, 15 Jan 2026 10:55:08 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/25] target/arm: Enable ID_AA64MMFR4_EL1 register
-Date: Thu, 15 Jan 2026 18:54:44 +0000
-Message-ID: <20260115185508.786428-3-peter.maydell@linaro.org>
+Subject: [PULL 00/25] target-arm queue
+Date: Thu, 15 Jan 2026 18:54:42 +0000
+Message-ID: <20260115185508.786428-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260115185508.786428-1-peter.maydell@linaro.org>
-References: <20260115185508.786428-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,59 +101,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim MacArthur <jim.macarthur@linaro.org>
+Hi; here's the first pullreq for arm for 2026. I had a big backlog
+of code review after the holidays so this is mostly "things that
+were fairly easy to review and collect up"...
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-[PMM: add entry to v8_user_idregs[] list also]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/cpu-sysregs.h.inc | 1 +
- target/arm/helper.c          | 6 ++++--
- 2 files changed, 5 insertions(+), 2 deletions(-)
+-- PMM
 
-diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-index 2bb2861c62..2ba49d8478 100644
---- a/target/arm/cpu-sysregs.h.inc
-+++ b/target/arm/cpu-sysregs.h.inc
-@@ -14,6 +14,7 @@ DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
- DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
- DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
- DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
-+DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
- DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
- DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
- DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 263ca29d92..a7239ff25b 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6566,11 +6566,11 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-               .access = PL1_R, .type = ARM_CP_CONST,
-               .accessfn = access_aa64_tid3,
-               .resetvalue = GET_IDREG(isar, ID_AA64MMFR3) },
--            { .name = "ID_AA64MMFR4_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
-+            { .name = "ID_AA64MMFR4_EL1", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 4,
-               .access = PL1_R, .type = ARM_CP_CONST,
-               .accessfn = access_aa64_tid3,
--              .resetvalue = 0 },
-+              .resetvalue = GET_IDREG(isar, ID_AA64MMFR4) },
-             { .name = "ID_AA64MMFR5_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 5,
-               .access = PL1_R, .type = ARM_CP_CONST,
-@@ -6706,6 +6706,8 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-               .exported_bits = R_ID_AA64MMFR2_AT_MASK },
-             { .name = "ID_AA64MMFR3_EL1",
-               .exported_bits = 0 },
-+            { .name = "ID_AA64MMFR4_EL1",
-+              .exported_bits = 0 },
-             { .name = "ID_AA64MMFR*_EL1_RESERVED",
-               .is_glob = true },
-             { .name = "ID_AA64DFR0_EL1",
--- 
-2.47.3
+The following changes since commit 4cfa1ce0365f56832f46ed8a82d8bd954d16be11:
 
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-01-15 11:29:21 +1100)
+
+are available in the Git repository at:
+
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260115
+
+for you to fetch changes up to 4efed64ffcdb99b977ad0b2129a9c0208456a6c9:
+
+  target/arm: Rename access_aa64_tid5() to access_tid5() (2026-01-15 15:30:16 +0000)
+
+----------------------------------------------------------------
+target-arm queue:
+ * hw/arm/raspi: remove duplicate include
+ * target/arm: Enable FEAT_ASID2 emulation
+ * hw/char/cmsdk-apb-uart.c: log guest_errors for r/w to disabled uart
+ * hw/arm: Re-enable the MAX78000FTHR machine in qemu-system-arm/aarch64
+ * target/arm/ptw: make granule_protection_check usable without a cpu
+ * hw/arm/omap: Remove omap_badwidth_* functions
+ * hw/arm/smmu: add memory regions as property for an SMMU instance
+ * docs/system/generic-loader: clarify
+ * tests/functional: migrate aspeed_rainier image
+ * target/arm: Correctly handle HCR.TID1 and TID3 traps on v7A CPUs
+
+----------------------------------------------------------------
+Alex Bennée (1):
+      tests/functional: migrate aspeed_rainier image
+
+Jim MacArthur (4):
+      target/arm: Enable ID_AA64MMFR4_EL1 register
+      target/arm: Allow writes to FNG1, FNG0, A2
+      target/arm/tcg/cpu64.c: Enable ASID2 for cpu_max
+      tests: Add test for ASID2 and write/read of feature bits
+
+Osama Abdelkader (1):
+      hw/arm/raspi: remove duplicate include
+
+Peter Maydell (14):
+      hw/sd/omap_mmc: Remove omap_badwidth_* calls
+      hw/i2c/omap_i2c: Remove omap_badwidth_* calls
+      hw/gpio/omap_gpio: Remove omap_badwidth_* calls
+      hw/dma/omap_dma: Remove omap_badwidth_* calls
+      hw/arm/omap1: Remove omap_badwidth_read* calls
+      hw/arm/omap1: Remove omap_badwidth_write* calls
+      hw/arm/omap1: Remove omap_badwidth_* implementations
+      docs/system/generic-loader: Clarify behaviour of cpu-num
+      docs/system/generic-loader: Don't mention QemuOpts implementation detail
+      docs/system/generic-loader: move TODO to source code
+      target/arm: Don't specify ID_PFR1 accessfn twice
+      target/arm: Correctly honour HCR.TID3 for v7A cores
+      target/arm: Correctly trap HCR.TID1 registers in v7A
+      target/arm: Rename access_aa64_tid5() to access_tid5()
+
+Philippe Mathieu-Daudé (1):
+      hw/arm: Re-enable the MAX78000FTHR machine in qemu-system-arm/aarch64
+
+Pierrick Bouvier (2):
+      target/arm/ptw: make granule_protection_check usable without a cpu
+      hw/arm/smmu: add memory regions as property for an SMMU instance
+
+Tao Tang (1):
+      target/arm: Move ARMSecuritySpace to a common header
+
+julia (1):
+      hw/char/cmsdk-apb-uart.c: log guest_errors for r/w to disabled uart
+
+ docs/system/arm/emulation.rst               |   1 +
+ docs/system/generic-loader.rst              |  56 ++++----
+ hw/arm/max78000fthr.c                       |   3 +-
+ hw/arm/omap1.c                              | 203 +++++++++++++-------------
+ hw/arm/raspi.c                              |   1 -
+ hw/arm/sbsa-ref.c                           |  16 ++-
+ hw/arm/smmu-common.c                        |  11 ++
+ hw/arm/virt.c                               |  13 +-
+ hw/char/cmsdk-apb-uart.c                    |   8 ++
+ hw/core/generic-loader.c                    |  18 +++
+ hw/dma/omap_dma.c                           |   7 +-
+ hw/gpio/omap_gpio.c                         |   7 +-
+ hw/i2c/omap_i2c.c                           |   7 +-
+ hw/sd/omap_mmc.c                            |   7 +-
+ include/hw/arm/arm-security.h               |  37 +++++
+ include/hw/arm/omap.h                       |  10 --
+ include/hw/arm/smmu-common.h                |   4 +
+ include/hw/arm/virt.h                       |   2 +
+ target/arm/cpu-features.h                   |   7 +
+ target/arm/cpu-sysregs.h.inc                |   1 +
+ target/arm/cpu.h                            |  59 ++++----
+ target/arm/helper.c                         | 211 +++++++++++++++-------------
+ target/arm/internals.h                      |   5 +
+ target/arm/ptw.c                            |  57 +++++---
+ target/arm/tcg/cpu64.c                      |   4 +
+ tests/functional/arm/test_aspeed_rainier.py |   6 +-
+ tests/tcg/aarch64/system/asid2.c            |  76 ++++++++++
+ 27 files changed, 537 insertions(+), 300 deletions(-)
+ create mode 100644 include/hw/arm/arm-security.h
+ create mode 100644 tests/tcg/aarch64/system/asid2.c
 
