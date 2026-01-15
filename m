@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E55D46623
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 20:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81969D46623
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 20:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgUH8-0006kr-UW; Thu, 15 Jan 2026 15:49:03 -0500
+	id 1vgULN-00013C-Lt; Thu, 15 Jan 2026 15:53:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgUH7-0006jI-4J
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 15:49:01 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1vgUL4-0000wB-Kq
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 15:53:07 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgUH5-0002uo-2M
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 15:49:00 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-81f478e5283so1190989b3a.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 12:48:58 -0800 (PST)
+ id 1vgUL2-0003cJ-Nn
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 15:53:06 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-34b75fba315so583984a91.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 12:53:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768510137; x=1769114937; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=0k2MhlKsygvagAp9BXw+O9ZjKE0uE6K+kYwBqSsimTM=;
- b=oO2VV2iKtmhMfCigHauf8iZYFs8ntYR64794HC8ZohEggiW/b3HFh3LvrvzcH1ozZ3
- +SJCNMKf/KIU/rR6N+hX3iBb08/Gmbq3zjwOujJ1TjBYma1I1EN970zm1LRpHrl/dj+k
- BaKLnINJWLnNVML8qBX9IxfCutBCWtYHKnpp4lwx6cieuJ+cYuGflCxnP38IM+iPCMX1
- lUKyAlIHRULcirfLfAb9Zcw+t+Y7BO7xoheaaZBOaPuWkuwF/7hUmwPcGATOLnqklBdi
- sc8c6NGzgNEX7Hajxq/CKYY6uwdJ3u2+BBLjw/X3rjr4MZreQnup/8Mk7aVNx8TR4th3
- JkyA==
+ d=linaro.org; s=google; t=1768510383; x=1769115183; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NUz4GX8ByEoSpG2KghD4CFBBDW1bW9Zc1AZ6m/2ZXQI=;
+ b=D6Bfb5ZRX3QLtgArNO3o8tO2bLkN4wWKWYw4QMLrKibzu5sV9nmqUnjQG/omFaOUZG
+ cVqr0sibYxrWh6Lul+KcAeBag66UjSqIKUTX2QEUd0n9H1aXMeyf79NjwdXj+zMp00jJ
+ KTPCuCcJB0oWQ+7GgFz6WmvQgi0O5FgOH42bHVqZup+iI3FQw5WTmQUy9bJqp6k0WEyu
+ kMIiQCRgxgpi/lYk3dwWLrSrJ+YveUhHl/yLhM6rDpgVHN/LgLU+pUPUr74YF7aJnLjs
+ nwygNj6GJ+5cSF3uXSxJT7x4cRS3wHnWmeRse3bCKi5uxIVyS/zhQ+9PfazybVtTaSUN
+ m6CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768510137; x=1769114937;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0k2MhlKsygvagAp9BXw+O9ZjKE0uE6K+kYwBqSsimTM=;
- b=RIqA/YeFJ+Q0BNIBzK07IdnJ6yk5TLHv8048QIaGaKWA5JHkotq1evVXGSi5p37O5U
- xPWLtmtiJR5uttkMmHkuk3XRz6wG/dVCc1yJcOhXGoodnIn3jMVPx+spJiApmCl40y0E
- MLkbxDe5n/OWqldZ+BWW+HfsK9RyKSQBI9065lgHU/SqFE4cWqAoWMHqgMv965Xdzffg
- AtCnFL2H+aajLf9/x1IDuD5t0ZO0T2Qxc0rAM+7GvU83CqWu66xpXM7ahXTxXHA+Ri/n
- 24R1nPheUopnrR4DRJPDXFn3qxLcXSbI17YPLRiuQz0HgBPFIXp3XnwTndLLhJTV4EIJ
- JBLA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUCm75/Or7IK499CNtru0JMp1OYnerIDJTV7hMUSjvbeiyn0WvGKuNYsisfnil/mv8bg02zzuHXFKWK@nongnu.org
-X-Gm-Message-State: AOJu0Yzprl1rEeFUmn3wBAvRujH0c82G9aXMAaX6ehayOSnbfPPr//Sb
- lpMQ8lEXn7fiYTEqgRxi9YCuATPvlFZZ/I2OqL61PdACfSGHLIW+ZH/Sz0WlLJpapTg=
-X-Gm-Gg: AY/fxX48/plKLGcxzXPDCG3xOmi7qILPyzQvhOt5arIkx2OZGQIaDaGj7R4mZ3Ropma
- 08AwB52PYtqePT5LvsMM9Sq3OLBiLhVESl+mGcmbkbD7I5ef7jnbRxVLwRVi0o6zb0wmNTgVME4
- 1oaGwBwOUxnlFDv4n+5fzdEsJ5FtrCt4o5eFZGwy7oRxVf/sSiZgJqvl1DhKgimz7ktzvVCGYT9
- S6H5UE1MvrDoW/IIvjpGFZGnkW6CkQRAGLg62UVfXf2RPpT7LoClW7tJLGJ6ByFGZJZY48lR+bB
- FW2SR7pBc94aNiw3Cuvccij3u7C3snvIV2eKlQiuLMG7FEmm+hrPbwhPF+ZHhuJIsCtftALyYeY
- ujZFauGRMphtNQI5le5h2kzSNDk8x+fp2OGf/Dl4MOKN5H8hXcnLtobgooXmaFlQpqLlDYXtChP
- MlO0fc2p1xBlVWv88Y7yVcp7orv2TL7390Xip9xswOpC2JNA1F/SNxje+8
-X-Received: by 2002:a05:6a20:3c8f:b0:366:14ac:e1f5 with SMTP id
- adf61e73a8af0-38dfe94521bmr910541637.71.1768510137240; 
- Thu, 15 Jan 2026 12:48:57 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768510383; x=1769115183;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NUz4GX8ByEoSpG2KghD4CFBBDW1bW9Zc1AZ6m/2ZXQI=;
+ b=skxFuNCATOkRtYxO3kVrJRowq6wr9v5MULXutbaoxo1um6n6uWvDr+ofeNzAjs928E
+ xdjQeA7sOi6+LPF8oYZ7IMjmNXbhNYBnMH1VtWBcxibpRSLjtNMtIpv/+bpO8YhY+s4h
+ igbMgkfQXBn0OmEKYeHmQLAPsCsGtlTluC4SDiV1hsviTmRy+u3/ZMTG1seklDOJSDwJ
+ IJ/q+vWlw7YuhZ/9Tp7OlR+Wt3VetJxTYUpR8LZ+/iqRejjCyuYNkhhf+WK9up0XHxYh
+ /7FpIoKcJQBshd7YbkxpC+tyIQtBJYYUHoBBHZ5ztMP7+DvTUpSbpxt6O2j8JmVy3eQ3
+ Me6g==
+X-Gm-Message-State: AOJu0YwIZTPw0DeE7Grsu6dwiEAfBADFLLGcUPlqA9lZmi5gDwl3FAs2
+ ERfvEcA553mr0n94gbOlEIb0JEXNdWJNeqih1VvXIS3oFjA+/Vc70+2sM8kBe8eaPUYw0UHYZDu
+ beuHv
+X-Gm-Gg: AY/fxX5Os8NB6tRu2RPH9AG8cd9w+/aw1na4wAmgeYZobguO8KeNnMeyKQXmukTezZm
+ Vq45GM5aVzq6Mri/G2Pxn94qJBubf05JgG751ybAwve9mtUJCWPLRpfiI+WwF6qN55DtET1hdb+
+ fhwA83thfJnnMGOxB56KplJp8fLuIRZVvfOPtTEfm8jJqeLvS+kLmF1+uWJAoRxRj5fdReCKkPJ
+ 8StW2rfQJ+eO+luyxdSnWOCkn1qk/w+UdPvO4Vgcx5B5Py+xHQ1pro5atcCSzcIV+QXk86I2vRe
+ 1dJXMo/dLLkkNfOe2zvh5Xp6HSaAjjQZXGkKsBGMVOScGvfRn7iwLESR6DLnQ1E7UDpuZOOdLZ6
+ tu1XZAtg4R0pYDQF1KsB3nt/DJinaBRf1+3W0h+hlBK8rpgYGw2Ek8J+yjgDwkIg62mrsgnFNnM
+ FxaNlY4bPHALVZFJpwuavAcjOms/Ov+gwDrsA2iwAJ1Kpk88jo7r7juxk09/n76KBVSUo=
+X-Received: by 2002:a17:90b:4fc1:b0:340:ad5e:c3 with SMTP id
+ 98e67ed59e1d1-35272ee0d43mr527987a91.1.1768510382844; 
+ Thu, 15 Jan 2026 12:53:02 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c5edf32d2a2sm268082a12.20.2026.01.15.12.48.56
+ 98e67ed59e1d1-3527304c5d3sm287332a91.3.2026.01.15.12.53.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 12:48:56 -0800 (PST)
-Message-ID: <05bc2cec-874f-48c9-8ba8-9f14f41e9dab@linaro.org>
-Date: Thu, 15 Jan 2026 12:48:56 -0800
+ Thu, 15 Jan 2026 12:53:02 -0800 (PST)
+Message-ID: <fd00e161-6727-4d92-978e-8bb83a27f612@linaro.org>
+Date: Thu, 15 Jan 2026 12:53:01 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/about: propose OS platform/arch support tiers
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260115180123.848640-1-berrange@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v2 00/11] plugins: enable C++ plugins
 Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -117,11 +116,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260115180123.848640-1-berrange@redhat.com>
+In-Reply-To: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -144,218 +143,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/15/26 10:01 AM, Daniel P. Berrangé wrote:
-> Informally we have approximately three groups of platforms
+On 1/2/26 1:47 PM, Pierrick Bouvier wrote:
+> Writing plugins in C can be sometimes tedious, especially when using Glib to
+> keep track of execution state. We can directly use the same C API but write our
+> plugin in C++, benefiting from its great standard library offering strings,
+> smart pointers, data structures and synchronization mechanisms.
 > 
->   * Tier 1: fully built and fully tested by CI. Must always be
->             kept working & regressions fixed immediately
+> It's common for downstream QEMU forks to provide C++ for plugins, like this:
+> - https://github.com/panda-re/panda/tree/dev/panda/plugins
+> - https://github.com/FlorentRevest/DejaView/tree/main/src/qemu_plugin
 > 
->   * Tier 2: fully built and partially tested by CI. Should
->             always be kept working & regressions fixed quickly
+> Hopefully this will help more people to use upstream QEMU, and as a benefit, get
+> their contribution back and help to develop plugins ecosystem upstream directly.
 > 
->   * Tier 3: code exists but is not built or tested by CI.
->             Should not be intentionally broken but not
-> 	   guaranteed to work at any time. Downstream must
-> 	   manually test, report & fix bugs.
+> This series first cleans up build system for plugins, factorizing details
+> between contrib/plugins and tests/tcg/plugins folders.
+> Then, we perform codebase cleanups to fix conflicts between existing headers
+> and C++ headers.
+> After that, we can update the C++ standard used by QEMU, to benefit fully
+> from latest updates of the language.
+> Finally, we define an empty C++ plugin, making sure we can keep track of
+> possible regression in qemu-plugin header.
 > 
-> Anything else is "unclassified" and any historical code
-> remnants may be removed.
+> Note: This series is *not* a trojan horse to bring C++ in QEMU
+> codebase, nor to define an alternative C++ API for plugins. It's just enabling
+> more users to get the most out of existing C plugin API.
 > 
-> It is somewhat tricky to define unambiguous rules for each tier,
-> but this doc takes a stab at it. We don't need to cover every
-> eventuality. If we get the core points of view across, then it
-> at least sets the direction for maintainers/contributors/users.
-> Other aspects can be inferred with greater accuracy than today.
+> CI: https://gitlab.com/pbo-linaro/qemu/-/pipelines/2242427013
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
+> v2
+> --
 > 
-> This came out of the discussion about recent unnoticed breakage
-> in NetBSD builds and what maintainers are expected todo about
-> it (if anything)
+> - drop coroutine.h rename patch as it's not needed
+> - drop ctype.h rename patch, and move qemu-plugin.h to include/plugins
+> - fix mem.c to not depend on other QEMU headers
 > 
->    https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg02543.html
+> Pierrick Bouvier (11):
+>    plugins: move win32_linker.c file to plugins directory
+>    plugins: factorize plugin dependencies and library details
+>    plugins: use complete filename for defining plugins sources
+>    plugins: define plugin API symbols as extern "C" when compiling in C++
+>    tests/tcg/plugins/mem.c: remove dependency on qemu headers
+>    plugins: move qemu-plugin.h to include/plugins/
+>    meson: fix supported compiler arguments in other languages than C
+>    meson: enable cpp (optionally) for plugins
+>    qga/vss-win32: fix clang warning with C++20
+>    meson: update C++ standard to C++23
+>    contrib/plugins: add empty cpp plugin
 > 
->   docs/about/build-platforms.rst | 152 +++++++++++++++++++++++++++++++++
->   1 file changed, 152 insertions(+)
+>   docs/devel/tcg-plugins.rst                  |   4 +-
+>   meson.build                                 |  26 +++--
+>   include/{qemu => plugins}/qemu-plugin.h     |  11 +-
+>   include/qemu/plugin.h                       |   2 +-
+>   plugins/core.c                              |   2 +-
+>   {contrib/plugins => plugins}/win32_linker.c |   0
+>   tests/tcg/plugins/mem.c                     |  59 ++++------
+>   contrib/plugins/cpp.cpp                     | 119 ++++++++++++++++++++
+>   contrib/plugins/meson.build                 |  25 ++--
+>   plugins/meson.build                         |  17 ++-
+>   qga/vss-win32/requester.cpp                 |   6 +-
+>   scripts/clean-includes                      |   2 +-
+>   tests/tcg/plugins/meson.build               |  18 +--
+>   13 files changed, 204 insertions(+), 87 deletions(-)
+>   rename include/{qemu => plugins}/qemu-plugin.h (99%)
+>   rename {contrib/plugins => plugins}/win32_linker.c (100%)
+>   create mode 100644 contrib/plugins/cpp.cpp
 > 
-> diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-> index e95784cdb5..950e164c02 100644
-> --- a/docs/about/build-platforms.rst
-> +++ b/docs/about/build-platforms.rst
-> @@ -171,3 +171,155 @@ Only 64-bit Windows is supported.
->   .. _MacPorts: https://www.macports.org/
->   .. _MSYS2: https://www.msys2.org/
->   .. _Repology: https://repology.org/
-> +
-> +OS Support Tiers
-> +----------------
-> +
-> +While the QEMU code targets a number of different OS platforms, they don't
-> +all get the same level of support from the project. This applies to
-> +contributor & maintainer expectations, CI automation and requirements
-> +for merge gating.
-> +
-> +Tier 1
-> +~~~~~~
-> +
-> +These platforms attain the highest level of quality offered by
-> +the QEMU project.
-> +
-> + * Builds and all tests pass at all times in both git HEAD and releases
-> +
-> + * Builds for multiple build configuration are integrated in CI
-> +
-> + * Runs all available tests frameworks (unit, qtest, iotests, functional)
-> +   in CI
-> +
-> + * Merging code is gated on successful CI jobs
-> +
-> +This covers
-> +
-> + * Linux (x86_64, aarch64, s390x)
-> +
-> +Responsibilities:
-> +
-> + * Contributors MUST test submitted patches on one of Tier 1 platforms.
-> +
-> + * Contributors SHOULD test submitted patches on Tier 1 platforms
-> +   by running a GitLab CI pipeline in their fork.
-> +
-> + * Maintainers MUST request contributors to fix problems with Tier 1
-> +   platforms.
-> +
-> + * Maintainers MUST test pull requests on Tier 1 platforms
-> +   by running a GitLab CI pipeline in their fork.
-> +
-> + * Maintainers MUST co-ordinate fixing regressions identified
-> +   post-merge immediately.
-> +
-> +
-> +Tier 2
-> +~~~~~~
-> +
-> +These platforms are considered to be near Tier 1 level, but are
-> +lacking sufficient automated CI testing cover to guarantee this.
-> +
-> + * Builds and all tests pass at all times in both git HEAD and releases
-> +
-> + * Builds for multiple build configuration are integrated in CI
-> +
-> + * Runs some test frameworks in CI
-> +
-> +This covers
-> +
-> + * Linux (mips64el, ppc64el, riscv64)
-> +
-> + * FreeBSD (x86_64)
-> +
-> + * macOS (aarch64)
-> +
-> + * Windows (x86_64)
-> +
-> +Responsibilities:
-> +
-> + * Contributors MAY test patches on Tier 2 platforms
-> +   by running a GitLab CI pipeline in their fork
-> +
-> + * Maintainers SHOULD request contributors to fix problems with Tier 2
-> +   platforms.
-> +
-> + * Maintainers MUST test pull requests on all Tier 2 platforms,
-> +   by running a GitLab CI pipeline in their fork.
-> +
-> + * Maintainers MUST co-ordinate fixing regressions identified
-> +   post-merge quickly.
-> +
-> +
-> +Tier 3
-> +~~~~~~
-> +
-> +These platforms have theoretical support in the code, but have
-> +little, or no, automated build and test coverage. Downstream
-> +consumers (users or distributors) who care about these platforms
-> +are requested to perform manual testing, report bugs and provide
-> +patches.
-> +
-> + * Builds and tests may be broken at any time in Git HEAD and
-> +   releases
-> +
-> + * Builds are not integrated into CI
-> +
-> + * Tests are not integrated into CI
-> +
-> + * Merging code is not gated
-> +
-> +This covers:
-> +
-> + * NetBSD
-> + * OpenBSD
-> + * macOS (except aarch64)
-> + * FreeBSD (except x86_64)
-> + * Windows (except x86_64)
-> + * Solaris
-> +
-> +Responsibilities:
-> +
-> + * Contributors MAY test patches on Tier 3 platforms manually
-> +
-> + * Maintainers MAY request contributors to fix problems
-> +   on Tier 3 platforms
-> +
-> + * Maintainers MAY test patches on Tier 3 platforms manually
-> +
-> + * Maintainers SHOULD NOT accept patches that remove code
-> +   targetting Tier 3 platforms even if currently broken
-> +
-> + * Downstream vendors SHOULD test RC releases on Tier 3 platforms
-> +   and provide bug reports and patches to address problems
-> +
-> +Note: if a Tier 3 platform is found to be significantly broken,
-> +no patches are contributed for a prolonged period, and there is
-> +no sign of downstream usage, it is liable to be moved to
-> +"Unclassified" and thus be subject to removal.
-> +
-> +
-> +Unclassified
-> +~~~~~~~~~~~~
-> +
-> +These platforms are not intended to be supported in the code
-> +and outside the scope of any support tiers.
-> +
-> +  * Code supporting these platforms can removed at any time
-> +  * Bugs reports related to these platforms will generally
-> +    be ignored
-> +
-> +This covers:
-> +
-> + * All 32-bit architectures on any OS
-> + * Any OS not listed above
-> +
-> +Responsibilities:
-> +
-> + * Maintainers MAY decline patches that add code targetting
-> +   unclassified platforms
-> +
-> + * Maintainers MAY accept patches that remove code targetting
-> +   unclassified platforms
 
-That's a good summary, but it should differentiate testing/runtime 
-issues from building issues.
-
-In general, maintainers should ensure code build on all 
-platforms/configs. Of course, it's a best effort considering not all of 
-them are built in CI, but in case a build issue is caught on time, it 
-should be fixed before hitting master.
-
-It may be worth to mention that all platforms can be accessed for free 
-using: https://github.com/second-reality/github-runners.
-If you're open to it, we could move this project under 
-https://github.com/qemu and preinstall all dependencies on each runner, 
-so people can easily jump on a shell and start debugging things without 
-wasting time.
-
-With this at hand, there is no reason to let a build failure be merged.
+Ping on this series.
+It has been reviewed and is ready to be merged.
 
 Thanks,
 Pierrick
