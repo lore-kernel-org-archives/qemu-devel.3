@@ -4,87 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 092A4D3CCA3
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 02:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF69FD3CCA3
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 02:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgD9k-0007Ql-8g; Wed, 14 Jan 2026 21:32:16 -0500
+	id 1vgDBx-0000Zq-GM; Wed, 14 Jan 2026 21:34:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vgD9j-0007LZ-6F
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 21:32:15 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1vgDBu-0000K0-T5
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 21:34:30 -0500
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vgD9g-0000wI-P0
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 21:32:14 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-64b9d01e473so712020a12.2
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 18:32:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1vgDBr-0002jj-1N
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 21:34:29 -0500
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-383153e06d1so3408951fa.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 18:34:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768444329; x=1769049129; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ko/6/rdcY70/txcGV3jeMgyd4oDblNbkCCLFNAt4WT8=;
- b=e710ntrnMNO59qoklpVHifQY6aOxRZ+7KyodAgIh8stTp+7mZnVowQV7RVmJ639a1Z
- Ht5Incjtr993C0+qh/tUGr4DaPRTLM5tJkTU4Zrppo+gRF73swOdb+54TmVOSXX4rrb6
- XwMLWgSC8D3xd0NByhsN4CcGQeVJjBQwqhyE5L2wjSwaq9jcTt3AzfYTs2YrLi2VpUqI
- R4/XrJWV3j7lotfVW7b2GY9U8BvpjsxYogcjYoCnLtaxV2WtjtthbR0TWX5lLd5xIk41
- OrXAQ8dwM0Z35SxyWI+1B53/eO8v4rmw0TmPuZjCmUILyq2iO+VfdxnhCspOcSg9S6Zp
- O7uA==
+ d=linaro.org; s=google; t=1768444465; x=1769049265; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=XEwI3n+jj47LEe/J2yYJsmC8bzHTTE7rgMyYKiTpSrA=;
+ b=oZcYFsUx8jB5q42OTDdi5vNhfvVNWU9DFT4ce3ivG+qp0JI78CLqv9DHtcC9iK5m0C
+ QIDSlv4BsIrnpM2CDng9wYbdgFd2qyXo8gUhjdlDS6w83d2okvZbH5IZJ/ae8pZldj45
+ CFbr8Xdu2B+puAp+Mjnf7a8FJWGZffmI8fnYoJFzFvrvxQ8fgk6XQzl3bUtidSrSLfP/
+ lhLPU5+ohLXEjx1OgO4p+75pRpHhufjrH++s8cPj3KBFzhMQdYEvllF6nikFDLJCpfEo
+ 4CI8ET5tz1NmAXXHs2tIRm1+zxqcbu9wNIMkqKfGtvrXqHwBt0H/fuST1wabW90HC/wY
+ NZpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768444329; x=1769049129;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ko/6/rdcY70/txcGV3jeMgyd4oDblNbkCCLFNAt4WT8=;
- b=w61kee3RdZ1YSGFi9A5ejTlUisurN+QNjwgmDlzz7bSR9UcPjxRcJJq5+nllZKl8+x
- SBxYn9sAKGPKoDJwoHla14hvGFvwUyAsslF/GqVvF1JD2HyW2qkJE4sRj9lF4XhvfJ+B
- eFrVy7PpxX9Brjqj7NqRMZnrIYYDOXHjjzdNy7/dXx7ex6kAbGBQkzxkbUvvrVQGynmh
- Jbi18Uh4eo4Gl8NYIKQ0jK1SVpwPabOCeM0Zq9SNbWASh0DPIkcPCETeJdfWKC6NSPiv
- v92GnwO9hTJy5ofptFedwEWEdZgkk/PyuPWr7qZ3V55g44gg01NCFTPRX6t8O8mtCnbI
- KiVg==
+ d=1e100.net; s=20230601; t=1768444465; x=1769049265;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XEwI3n+jj47LEe/J2yYJsmC8bzHTTE7rgMyYKiTpSrA=;
+ b=brgswkh4AZXFFO02UBBtQuyYY4oDRORbCvKGZX2SLgv3jm9OqzQVrvR6YhCVxIbg+S
+ Igl3DvI9Y2gKkVTDjT3SQYUYO3NWj5c5uRjTPPjKHTLTA5VotPdtxY2MWzm0LnCJ+mpQ
+ 8Vnf9uozMxnh+gdo38vm2HkaXV6loyTZNg6QxEWDDrhFRbpzu+9WQDzxHKibI/ekx079
+ L2v9eyVHxkZ5q1sylOS3bgWrnsPKb9/x3fUk4pfHahwqnmKGj6b1TVGAkERPWhpFuDZm
+ SxV7B5ZvRmiDdy8jx22GpDe4KVuJ5c5CGVnbCnQjm0i4yTD02MJ4P1s6DAT2KkNJuG6Y
+ aphw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUjL/fOZmOKhhuDNo0gus8Cz4e9FudDPUwjiAsdtp0mID/zO0y5nIVQzuOmL0WbcQ+ET/XSIEiCgdfp@nongnu.org
-X-Gm-Message-State: AOJu0YxzNjv9JB78iyzgRVqqZKJizYgAXoHUqHYCzAXr3hYP50ptifKi
- hGPScF5Bvox0AuYUtWQtE/IVpHHMFn4Oe0sji/Hn8qJ/Dv15vD0wM/csp2zCri2i3DmBeEJEHEZ
- Jp3c+Cxa7VmjdaDlQswBGH+vLfgsbs48=
-X-Gm-Gg: AY/fxX4GTpMKivMNBhVXe4kAkR361mjsJ+K0NNLNo9Gb8MnV8d2DKaSE7Q0/1lgCFhA
- O7oCm3k3x5rGCJREYb3W8m8HNImOOMOCUhD+DO2cNLyZiRG0jQ5ciuBnhk4byx9ZXwBCDrR/Nu0
- qKFoLqKsKUr3Bn3hQTlvLvQ4HBX+/x6nMS89Fp4qy5OzTFCMrKuKAp5QjxQshrVDOdAVkppH2HF
- vPsSJHU62vkHbOnDxwmZKryTQrZBMkGpyB98Sz/3pbIffo3roy/LywW7eh2HrtjuQtZPwk=
-X-Received: by 2002:a17:907:94c4:b0:b87:173f:630 with SMTP id
- a640c23a62f3a-b87677a827amr348080066b.40.1768444328532; Wed, 14 Jan 2026
- 18:32:08 -0800 (PST)
+ AJvYcCUc55yyPyPByAl/cJ4n1zIqfHR4wNCSnuQwPqtyg1S3MVbyw4gTYVElRWczdYiAWvN6YbofT/estJpG@nongnu.org
+X-Gm-Message-State: AOJu0Yw0GCy10fyMm2EeqciLrWf6nAV0VbgI1EXLgoal3EmMplyQ2IwR
+ Uuv3t9XliLSX7gM7I2TzvI+n+yiuViQdeNUdzcsO/mr1Man4F/fRluDNamwSbAisOcWv0fFBYbU
+ zJMWOkwi/4mPtlllolBYQYEBdvXfDu9qlthqNBIoRAQ==
+X-Gm-Gg: AY/fxX7KurWuB1QXVk0gwOWRoUByv3WBO4e0VMn7P9TzW77z+lpsz6PzTc7rdYCQfs/
+ qVtjHek5bbcBEnws+dOvWK+sTjrHS/6N6FT5iJ8Eh5A6XJr8L8YvJ6lLxxc/ooEzPT9u5ZCZEwD
+ vKLl31ECEYhhSNcboy6eWfAq11FhYU0StwBfn/2DJVn6EuSd/NRd1+DKmmq5GWNy5DztMjbNDLi
+ M8soXxx+ICFeQdeQCbtYT4zUFEk24NS879wZBS9d39jEnn9juWYlAbBpU5sK4KrmMU/BrA=
+X-Received: by 2002:a2e:a98e:0:b0:383:2425:ca9 with SMTP id
+ 38308e7fff4ca-3836073f894mr15442791fa.20.1768444465177; Wed, 14 Jan 2026
+ 18:34:25 -0800 (PST)
 MIME-Version: 1.0
-References: <20260104075412.1262-1-jasowang@redhat.com>
- <20260104075412.1262-2-jasowang@redhat.com>
- <CAK3tnv+97kgSAt-do3BwhzFewy+A3rcMrJj8K5r7hvSJag_tgA@mail.gmail.com>
- <CACGkMEsA4hoTWqetffmfJEZ7Jq5=6gQ1ik+UznXgSGiyhE_Hqw@mail.gmail.com>
- <CACGkMEs08wX5yBWcs05wiUmReb7boxTNy4+Br0dDUi=npfo1Cg@mail.gmail.com>
- <CAK3tnv+j_7s5JhPb32C9FK565B6M2V9gRsGkg6x_J0YesEmgFQ@mail.gmail.com>
- <CACGkMEvuMW-KSOrFi-28pSQP8WNzmgk4Dnnd4KLhd7_DYih35Q@mail.gmail.com>
-In-Reply-To: <CACGkMEvuMW-KSOrFi-28pSQP8WNzmgk4Dnnd4KLhd7_DYih35Q@mail.gmail.com>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Thu, 15 Jan 2026 10:31:31 +0800
-X-Gm-Features: AZwV_QgUDx4LQ2UqeUbGr-ZH89pvHuO35gjLAY0esUlhg5yxtyHHVxxotTwFC5k
-Message-ID: <CAK3tnvLiAvfFXatS7MvwXe0=Ak=4Un6o-yPY9je_BA+FRY5dJQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] net/filter-redirector: add support for dynamic status
- on/off switching
-To: Jason Wang <jasowang@redhat.com>
-Cc: lizhijian@fujitsu.com, qemu-devel@nongnu.org, lulu@redhat.com
+References: <20260111195508.106943-1-skolothumtho@nvidia.com>
+ <20260111195508.106943-34-skolothumtho@nvidia.com>
+ <CABQgh9FwSTB8Cp8f1POSBti376ZH3B0e0mLu9FU==p1wVwquGg@mail.gmail.com>
+ <CH3PR12MB7548626563C6E67FB802D850AB8FA@CH3PR12MB7548.namprd12.prod.outlook.com>
+In-Reply-To: <CH3PR12MB7548626563C6E67FB802D850AB8FA@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Zhangfei Gao <zhangfei.gao@linaro.org>
+Date: Thu, 15 Jan 2026 10:34:13 +0800
+X-Gm-Features: AZwV_QgtZIyDAV-lHkaiV-7Dyd_AGklw0IDLv6nbjh1wh-g-_sDA7JEaFNPp3i8
+Message-ID: <CABQgh9EUMtEO4xdBhZZuD23G0j89PcnSZ_Zjgfja+u=z7xvwEw@mail.gmail.com>
+Subject: Re: [PATCH v7 33/36] hw/pci: Add helper to insert PCIe extended
+ capability at a fixed offset
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, 
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Jason Gunthorpe <jgg@nvidia.com>, 
+ Nicolin Chen <nicolinc@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>, 
+ "berrange@redhat.com" <berrange@redhat.com>, "clg@redhat.com" <clg@redhat.com>,
+ "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen <nathanc@nvidia.com>,
+ Matt Ochs <mochs@nvidia.com>, "smostafa@google.com" <smostafa@google.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>, 
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>, 
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>, 
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>, 
+ Krishnakant Jaju <kjaju@nvidia.com>, "Michael S . Tsirkin" <mst@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=zhangfei.gao@linaro.org; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,164 +111,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 14, 2026 at 3:35=E2=80=AFPM Jason Wang <jasowang@redhat.com> wr=
-ote:
+On Wed, 14 Jan 2026 at 18:36, Shameer Kolothum <skolothumtho@nvidia.com> wrote:
 >
-> On Tue, Jan 13, 2026 at 5:22=E2=80=AFPM Zhang Chen <zhangckid@gmail.com> =
-wrote:
+> Hi Zhangfei,
+>
+> > -----Original Message-----
+> > From: Zhangfei Gao <zhangfei.gao@linaro.org>
+> > Sent: 14 January 2026 04:18
+> > To: Shameer Kolothum <skolothumtho@nvidia.com>
+> > Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
+> > eric.auger@redhat.com; peter.maydell@linaro.org; Jason Gunthorpe
+> > <jgg@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>; ddutile@redhat.com;
+> > berrange@redhat.com; clg@redhat.com; alex@shazbot.org; Nathan Chen
+> > <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
+> > smostafa@google.com; wangzhou1@hisilicon.com;
+> > jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
+> > zhenzhong.duan@intel.com; yi.l.liu@intel.com; Krishnakant Jaju
+> > <kjaju@nvidia.com>; Michael S . Tsirkin <mst@redhat.com>
+> > Subject: Re: [PATCH v7 33/36] hw/pci: Add helper to insert PCIe extended
+> > capability at a fixed offset
 > >
-> > On Tue, Jan 13, 2026 at 2:43=E2=80=AFPM Jason Wang <jasowang@redhat.com=
-> wrote:
+> > External email: Use caution opening links or attachments
+> >
+> >
+> > Hi, Shameer
+> >
+> > On Mon, 12 Jan 2026 at 03:58, Shameer Kolothum
+> > <skolothumtho@nvidia.com> wrote:
 > > >
-> > > On Tue, Jan 6, 2026 at 4:09=E2=80=AFPM Jason Wang <jasowang@redhat.co=
-m> wrote:
-> > > >
-> > > > On Mon, Jan 5, 2026 at 9:19=E2=80=AFPM Zhang Chen <zhangckid@gmail.=
-com> wrote:
-> > > > >
-> > > > > On Sun, Jan 4, 2026 at 3:54=E2=80=AFPM Jason Wang <jasowang@redha=
-t.com> wrote:
-> > > > > >
-> > > > > > Currently, filter-redirector does not implement the status_chan=
-ged
-> > > > > > callback, which means the 'status' property cannot be used to
-> > > > > > dynamically enable/disable the filter at runtime. When status i=
-s
-> > > > > > set to 'off' via QMP/HMP, the filter still receives data from t=
-he
-> > > > > > indev chardev because the chardev handlers remain registered.
-> > > > > >
-> > > > > > This patch adds proper support for the 'status' property:
-> > > > > >
-> > > > > > 1. Implement filter_redirector_status_changed() callback:
-> > > > > >    - When status changes to 'off': remove chardev read handlers
-> > > > > >    - When status changes to 'on': re-register chardev handlers
-> > > > > >      (only if chardev is already open)
-> > > > > >
-> > > > > > 2. Update filter_redirector_setup() to respect initial status:
-> > > > > >    - If filter is created with status=3Doff, do not register ha=
-ndlers
-> > > > > >    - This allows creating disabled filters via command line or =
-QMP
-> > > > > >
-> > > > > > 3. Handle chardev OPENED/CLOSED events to re-arm handlers on re=
-connect:
-> > > > > >    - Keep the chr_event callback installed on CLOSE so a later =
-OPENED
-> > > > > >      can re-register the read handlers when nf->on
-> > > > > >    - Use qemu_chr_fe_set_handlers_full(..., set_open=3Dfalse, s=
-ync_state=3Dfalse)
-> > > > > >      instead of qemu_chr_fe_set_handlers() because the latter f=
-orces
-> > > > > >      sync_state=3Dtrue and may emit CHR_EVENT_OPENED for an alr=
-eady-open
-> > > > > >      backend. Doing that from inside the chr_event callback wou=
-ld cause
-> > > > > >      recursive/re-entrant OPENED handling.
-> > > > > >
-> > > > > > Signed-off-by: Jason Wang <jasowang@redhat.com>
-> > > > > > ---
-> > > > > >  net/filter-mirror.c | 38 +++++++++++++++++++++++++++++++++----=
--
-> > > > > >  1 file changed, 33 insertions(+), 5 deletions(-)
-> > > > > >
-> > > > > > diff --git a/net/filter-mirror.c b/net/filter-mirror.c
-> > > > > > index 8e01e98f40..aa2ab452fd 100644
-> > > > > > --- a/net/filter-mirror.c
-> > > > > > +++ b/net/filter-mirror.c
-> > > > > > @@ -179,9 +179,16 @@ static void redirector_chr_event(void *opa=
-que, QEMUChrEvent event)
-> > > > > >      MirrorState *s =3D FILTER_REDIRECTOR(nf);
-> > > > > >
-> > > > > >      switch (event) {
-> > > > > > +    case CHR_EVENT_OPENED:
-> > > > > > +        if (nf->on) {
-> > > > > > +            qemu_chr_fe_set_handlers_full(&s->chr_in, redirect=
-or_chr_can_read,
-> > > > > > +                                          redirector_chr_read,=
- redirector_chr_event,
-> > > > > > +                                          NULL, nf, NULL, fals=
-e, false);
-> > > > > > +        }
-> > > > > > +        break;
-> > > > > >      case CHR_EVENT_CLOSED:
-> > > > > > -        qemu_chr_fe_set_handlers(&s->chr_in, NULL, NULL, NULL,
-> > > > > > -                                 NULL, NULL, NULL, true);
-> > > > > > +        qemu_chr_fe_set_handlers_full(&s->chr_in, NULL, NULL, =
-redirector_chr_event,
-> > > > > > +                                      NULL, nf, NULL, false, f=
-alse);
-> > > > > >          break;
-> > > > > >      default:
-> > > > > >          break;
-> > > > > > @@ -306,9 +313,11 @@ static void filter_redirector_setup(NetFil=
-terState *nf, Error **errp)
-> > > > > >              return;
-> > > > > >          }
-> > > > > >
-> > > > > > -        qemu_chr_fe_set_handlers(&s->chr_in, redirector_chr_ca=
-n_read,
-> > > > > > -                                 redirector_chr_read, redirect=
-or_chr_event,
-> > > > > > -                                 NULL, nf, NULL, true);
-> > > > > > +        if (nf->on) {
-> > > > > > +            qemu_chr_fe_set_handlers(&s->chr_in, redirector_ch=
-r_can_read,
-> > > > > > +                                     redirector_chr_read, redi=
-rector_chr_event,
-> > > > > > +                                     NULL, nf, NULL, true);
-> > > > > > +        }
-> > > > > >      }
-> > > > > >
-> > > > > >      if (s->outdev) {
-> > > > > > @@ -324,6 +333,24 @@ static void filter_redirector_setup(NetFil=
-terState *nf, Error **errp)
-> > > > > >      }
-> > > > > >  }
-> > > > > >
-> > > > > > +static void filter_redirector_status_changed(NetFilterState *n=
-f, Error **errp)
-> > > > > > +{
-> > > > > > +    MirrorState *s =3D FILTER_REDIRECTOR(nf);
-> > > > > > +
-> > > > > > +    if (!s->indev) {
-> > > > >
-> > > > > It's better to add a error here, for example:
-> > > > >
-> > > > >         error_setg(errp,  "filter_redirector_status_changed faile=
-d for
-> > > > > the s->indev cleared" );
-> > > >
-> > > > Will do.
-> > > >
+> > > Add pcie_insert_capability(), a helper to insert a PCIe extended
+> > > capability into an existing extended capability list at a
+> > > caller-specified offset.
 > > >
-> > > I think it's probably wrong to return an error here as we may only us=
-e
-> > > outdev but not indev, in this case status_changed doesn't need to do
-> > > anything.
+> > > Unlike pcie_add_capability(), which always appends a capability to the
+> > > end of the list, this helper preserves the existing list ordering
+> > > while allowing insertion at an arbitrary offset.
+> > >
+> > > The helper only validates that the insertion does not overwrite an
+> > > existing PCIe extended capability header, since corrupting a header
+> > > would break the extended capability linked list. Validation of
+> > > overlaps with other configuration space registers or
+> > > capability-specific register blocks is left to the caller.
+> > >
+> > > Cc: Michael S. Tsirkin <mst@redhat.com>
+> > > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 > >
-> > This confuses me. The filter_redirector_status_changed code focus on
-> > how to read the the indev, it looks not affect the outdev.
-> > If we just return without any error, the user is unsure whether the att=
-empt
-> > was successful.
+> > The guest kernel fails to boot with para "ssidsize=16" with v7 series.
+> > Without ssidsize, guest kernel can boot no problem.
+>
+> Thanks for giving this a spin.
+>
+> > However, pasid feature requires ssidsize.
+> > smmuv3_accel_get_viommu_flags
+> > if (s->ssidsize) {
+> > flags |= VIOMMU_FLAG_PASID_SUPPORTED;
 > >
+> > v6 does not has such issue, and does not requires ssidsize param.
 >
-> Consider the case where there's only outdev, in this case we don't
-> need to do anything when status is changed:
+> As mentioned in cover letter this series has changed the way the overall
+> PASID is enabled. It now allows user to specify an offset to place the
+> PASID CAP for vfio-pci devices,
 >
-> 1) we don't poll outdev
-> 2) net core will bypass the redirector if the status is off.
+> -device vfio-pci,host=0018:06:00.0,..,x-vpasid-cap-offset=xxx
 >
-> I meant basically we don't need to do anything in this case and it's
-> not an error.
+> If none is specified it will place it at the last offset as default.
 >
+> And you need "ssidsize" to specify the SMMUv3 sub stream Id bits.
+>
+> > log:
+> > ASSERT_EFI_ERROR (Status = Invalid Parameter) ASSERT [PciBusDxe]
+> > /home/linaro/work/edk2/MdeModulePkg/Bus/Pci/PciBusDxe/PciLib.c(626):
+> > !(((INTN)(RETURN_STATUS)(Status)) < 0)
+>
+> It could be that the pcie_insert_capability() helper added here is corrupting
+> the config space. Looking at it again, I can see that it is not handling a few
+> corner cases.  Could you please replace the pcie_insert_capability() with
+> the below and retest.
+>
+> Thanks,
+> Shameer
+>
+> ...
+>
+> bool pcie_insert_capability(PCIDevice *dev, uint16_t cap_id, uint8_t cap_ver,
+>                             uint16_t offset, uint16_t size)
+> {
+>     uint16_t pos = PCI_CONFIG_SPACE_SIZE, prev = 0;
+>     uint32_t header;
+>
+>     assert(offset >= PCI_CONFIG_SPACE_SIZE);
+>     assert(offset < (uint16_t)(offset + size));
+>     assert((uint16_t)(offset + size) <= PCIE_CONFIG_SPACE_SIZE);
+>     assert(size >= 8);
+>     assert(pci_is_express(dev));
+>
+>     header = pci_get_long(dev->config + pos);
+>     if (!header) {
+>         /* No extended capability, check requested offset is at PCI_CONFIG_SPACE_SIZE*/
+>         if (offset != pos) {
+>             return false;
+>         }
+>         pci_set_long(dev->config + pos, PCI_EXT_CAP(cap_id, cap_ver, 0));
+>         goto out;
+>     }
+>
+>     while (header && pos && offset >= pos) {
+>         uint16_t next = PCI_EXT_CAP_NEXT(header);
+>
+>         /* Reject insertion inside an existing ECAP header (4 bytes) */
+>         if (offset < pos + PCI_EXT_CAP_ALIGN) {
+>             return false;
+>         }
+>
+>         prev = pos;
+>         pos = next;
+>         header = pos ? pci_get_long(dev->config + pos) : 0;
+>     }
+>
+>     pci_set_long(dev->config + offset, PCI_EXT_CAP(cap_id, cap_ver, pos));
+>     if (prev) {
+>         pcie_ext_cap_set_next(dev, prev, offset);
+>     }
+>
+> out:
+>     /* Make capability read-only by default */
+>     memset(dev->wmask + offset, 0, size);
+>     memset(dev->w1cmask + offset, 0, size);
+>     /* Check capability by default */
+>     memset(dev->cmask + offset, 0xFF, size);
+>     return true;
+> }
 
-Okay, I understand now.
+Yes, this works
 
-Thanks
-Chen
-
-> Thanks
->
+Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 
