@@ -4,62 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1778BD3CCB1
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 05:43:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C1AED3CCAF
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 05:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgG8i-0001Xk-7I; Thu, 15 Jan 2026 00:43:24 -0500
+	id 1vgGM7-0006LU-Q6; Thu, 15 Jan 2026 00:57:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vgG8g-0001Vm-Ds
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 00:43:22 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgGLu-0006Hq-CB
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 00:57:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vgG8e-0005Az-11
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 00:43:22 -0500
-Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
- [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60F5hDoN063109
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 15 Jan 2026 14:43:17 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=i+BwiseMQj0mQxHK2/k1VFKYppgZNnaCntKyrEeA21Q=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1768455797; v=1;
- b=PHg4bOlPncwbSk090tdPNg4rQX8Wye+/Q3Yl3kMQqet8QtsK9dj0r9aPl0wLapDB
- ugG9Qp4oRyBU3ogsHyEI8pz1Km5/v9+4i9Y8mXaOfGypTwozJwTWzMw/qqlcEJ9N
- NGswrYe5PV8vG6iNoWqdWAl6V4YIboZUDrqqRfVQDwOqm/PEYxI9wq9iK4nUupP0
- YDbPZGvxFVuq67Xg14qAsUulooARIR3Bw2XlohCRkxvet63zUG2HDk+n2MXoVRPY
- eg41EGeW0fBstGcIWql9O/GsyCbfvY7tOpy5wHUZ6tGZLyRYM5BZBqB4lfYQAE4O
- FIhHFP3I4Olv7aQfXOlvcA==
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 15 Jan 2026 14:42:56 +0900
-Subject: [PATCH] ui/gtk: Narrow DMA-BUF critical section
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgGLr-0007pU-TH
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 00:57:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768456618;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AujIqaltR9/2qrP5D+eeiW4Zw7bpYrGVdmREnV6eSdk=;
+ b=GEflrs/iSQ8XvlLZXsdQfPgSMez0OW7dWcKZb7tPyi6t+Tq6GU33s6bzgI3qDnQYEYvqJo
+ yz95aDOTYrXvo+72SRLh5eWitnZESsmCwRlV6PiFcEEpFWc2WYPvI3DO1GDSbo5ZGwWFG/
+ f9NAZWdHoLN0+7AJnpYWz0U6stbHzv8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-8Anty3mxOPGA6cZxKgHdOQ-1; Thu,
+ 15 Jan 2026 00:56:54 -0500
+X-MC-Unique: 8Anty3mxOPGA6cZxKgHdOQ-1
+X-Mimecast-MFC-AGG-ID: 8Anty3mxOPGA6cZxKgHdOQ_1768456613
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AEFC0180057E; Thu, 15 Jan 2026 05:56:52 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A24E730002D8; Thu, 15 Jan 2026 05:56:51 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3063421E692D; Thu, 15 Jan 2026 06:56:49 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org,  Juraj Marcin <jmarcin@redhat.com>,  Fabiano
+ Rosas <farosas@suse.de>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,  Juan Quintela
+ <quintela@trasno.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,  Zhang Chen
+ <zhangckid@gmail.com>,  zhanghailiang@xfusion.com,  Li Zhijian
+ <lizhijian@fujitsu.com>,  Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
+In-Reply-To: <20260114195659.2543649-2-peterx@redhat.com> (Peter Xu's message
+ of "Wed, 14 Jan 2026 14:56:57 -0500")
+References: <20260114195659.2543649-1-peterx@redhat.com>
+ <20260114195659.2543649-2-peterx@redhat.com>
+Date: Thu, 15 Jan 2026 06:56:49 +0100
+Message-ID: <875x93zae6.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260115-gtk-v1-1-57f49e856408@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAF9+aGkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDQ0NT3fSSbF0TI5NkoyRLQ4NUM1MloMqCotS0zAqwKdGxtbUA5vrOZVU
- AAAA=
-X-Change-ID: 20260115-gtk-424c2b910e65
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: b4 0.15-dev-179e8
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,127 +94,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ui/gtk performs the following procedure to flush a scanout:
-1) Queue a draw event.
-2) The draw event gets triggered.
-3) Blit the scanout to the framebuffer.
+Peter Xu <peterx@redhat.com> writes:
 
-When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) if
-possible and unblocks it after 3).
+> COLO was broken for QEMU release 10.0/10.1 without anyone noticed.
 
-Blocking the device before 2) has two problems.
+We could arguably drop this right away.  I'm not demanding we do, just
+pointing out.
 
-First, it can leave the device blocked indefinitely because GTK
-sometimes decides to cancel 2) when the window is not visible for
-example. ui/gtk regularly repeats 1) as a workaround, but it is not
-applicable to GtkGLArea because it causes display corruption.
+First, COLO is marked 'unstable' in the QAPI schema:
 
-Second, the behavior is inconsistent with the other types of scanout
-that leaves the device unblocked between 1) and 2).
+* MigrationCapability member x-colo:
 
-To fix these problems, let ui/gtk block the device after 2) instead.
-Note that the device is still blocked during 3) for DMA-BUF; this is
-because, unlike the other scanout types, 3) can happen asynchronously
-with the device for a DMA-BUF, and the device may simulatenously
-overwrite it, resulting in tearing, if it is left unblocked.
+    # @unstable: Members @x-colo and @x-ignore-shared are experimental.
 
-With the problems fixed, the workaround to repeat 1) is no longer
-necessary and removed.
+* MigrationParameter and MigrationParameters member x-checkpoint-delay:
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
----
- ui/gtk-egl.c     |  8 +-------
- ui/gtk-gl-area.c | 23 +----------------------
- 2 files changed, 2 insertions(+), 29 deletions(-)
+    # @unstable: Members @x-checkpoint-delay and
+    #     @x-vcpu-dirty-limit-period are experimental.
 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index ae9239999cdb..61bb8d731ac5 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -91,6 +91,7 @@ void gd_egl_draw(VirtualConsole *vc)
-             } else {
-                 qemu_dmabuf_set_draw_submitted(dmabuf, false);
-             }
-+            graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         }
- #endif
-         gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
-@@ -152,12 +153,6 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
-     gd_update_monitor_refresh_rate(
-             vc, vc->window ? vc->window : vc->gfx.drawing_area);
- 
--    if (vc->gfx.guest_fb.dmabuf &&
--        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        gd_egl_draw(vc);
--        return;
--    }
--
-     if (!vc->gfx.esurface) {
-         gd_egl_init(vc);
-         if (!vc->gfx.esurface) {
-@@ -408,7 +403,6 @@ void gd_egl_flush(DisplayChangeListener *dcl,
- 
-     if (vc->gfx.guest_fb.dmabuf &&
-         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
-         gtk_egl_set_scanout_mode(vc, true);
-         gtk_widget_queue_draw_area(area, x, y, w, h);
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index cd86022d264a..9e7ec7043037 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -86,6 +86,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
-             } else {
-                 qemu_dmabuf_set_draw_submitted(dmabuf, false);
-             }
-+            graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         }
- #endif
- 
-@@ -163,27 +164,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
- 
-     gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
- 
--    if (vc->gfx.guest_fb.dmabuf &&
--        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        /*
--         * gd_egl_refresh() calls gd_egl_draw() if a DMA-BUF draw has already
--         * been submitted, but this function does not call gd_gl_area_draw() in
--         * such a case due to display corruption.
--         *
--         * Calling gd_gl_area_draw() is necessary to prevent a situation where
--         * there is a scheduled draw event but it won't happen bacause the window
--         * is currently in inactive state (minimized or tabified). If draw is not
--         * done for a long time, gl_block timeout and/or fence timeout (on the
--         * guest) will happen eventually.
--         *
--         * However, it is found that calling gd_gl_area_draw() here causes guest
--         * display corruption on a Wayland Compositor. The display corruption is
--         * more serious than the possible fence timeout so gd_gl_area_draw() is
--         * omitted for now.
--         */
--        return;
--    }
--
-     if (!vc->gfx.gls) {
-         if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {
-             return;
-@@ -342,7 +322,6 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
- 
-     if (vc->gfx.guest_fb.dmabuf &&
-         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        graphic_hw_gl_block(vc->gfx.dcl.con, true);
-         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
-         gtk_gl_area_set_scanout_mode(vc, true);
-     }
+* Command x-colo-lost-heartbeat:
 
----
-base-commit: 667e1fff878326c35c7f5146072e60a63a9a41c8
-change-id: 20260115-gtk-424c2b910e65
+    # @unstable: This command is experimental.
 
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+There's more COLO stuff we neglected to mark, e.g. MigrationStatus
+member @colo, event COLO_EXIT, commands xen-colo-do-checkpoint,
+query-colo-status.  We should clean that up.  More on that below.
+
+Second, it's been broken for two releases, our deprecation grace period.
+In my opinion, "broken" is even stronger notice than "deprecated".
+
+>                                                                     One
+> reason might be that we don't have an unit test for COLO (which we
+> explicitly require now for any new migration feature).  The other reason
+> should be that there are just no more active COLO users, at least based on
+> the latest development of QEMU.
+>
+> I don't remember seeing anything really active in the past few years in
+> COLO development.
+>
+> Meanwhile, COLO migration framework maintainer (Hailiang Zhang)'s last
+> email to qemu-devel is in Dec 2021 where the patch proposed an email
+> change (<20211214075424.6920-1-zhanghailiang@xfusion.com>).
+>
+> We've discussed this for a while, see latest discussions here (our though=
+ts
+> of deprecating COLO framework might be earlier than that, but still):
+>
+> https://lore.kernel.org/r/aQu6bDAA7hnIPg-y@x1.local/
+> https://lore.kernel.org/r/20251230-colo_unit_test_multifd-v1-0-f9734bc74c=
+71@web.de
+>
+> Let's make it partly official and put COLO into deprecation list.  If
+> anyone cares about COLO and is deploying it, please send an email to
+> qemu-devel to discuss.
+>
+> Otherwise, let's try to save some energy for either maintainers or
+> developers who is looking after QEMU. Let's save the work if we don't even
+> know what the work is for.
+>
+> Cc: Luk=C3=A1=C5=A1 Doktor <ldoktor@redhat.com>
+> Cc: Juan Quintela <quintela@trasno.org>
+> Cc: Dr. David Alan Gilbert <dave@treblig.org>
+> Cc: Zhang Chen <zhangckid@gmail.com>
+> Cc: zhanghailiang@xfusion.com
+> Cc: Li Zhijian <lizhijian@fujitsu.com>
+> Cc: Jason Wang <jasowang@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  docs/about/deprecated.rst | 6 ++++++
+>  qapi/migration.json       | 5 ++---
+>  migration/options.c       | 4 ++++
+>  3 files changed, 12 insertions(+), 3 deletions(-)
+>
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 7abb3dab59..b499b2acb0 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -580,3 +580,9 @@ command documentation for details on the ``fdset`` us=
+age.
+>=20=20
+>  The ``zero-blocks`` capability was part of the block migration which
+>  doesn't exist anymore since it was removed in QEMU v9.1.
+> +
+> +COLO migration framework (since 11.0)
+> +'''''''''''''''''''''''''''''''''''''
+> +
+> +To be removed with no replacement, as the COLO migration framework doesn=
+'t
+> +seem to have any active user for a while.
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 201dedd982..3c868efe38 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -531,8 +531,7 @@
+>  #
+>  # @unstable: Members @x-colo and @x-ignore-shared are experimental.
+>  #
+> -# @deprecated: Member @zero-blocks is deprecated as being part of
+> -#     block migration which was already removed.
+> +# @deprecated: Member @zero-blocks and @x-colo are deprecated.
+>  #
+>  # Since: 1.2
+>  ##
+> @@ -540,7 +539,7 @@
+>    'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
+>             { 'name': 'zero-blocks', 'features': [ 'deprecated' ] },
+>             'events', 'postcopy-ram',
+> -           { 'name': 'x-colo', 'features': [ 'unstable' ] },
+> +           { 'name': 'x-colo', 'features': [ 'unstable', 'deprecated' ] =
+},
+>             'release-ram',
+>             'return-path', 'pause-before-switchover', 'multifd',
+>             'dirty-bitmaps', 'postcopy-blocktime', 'late-block-activate',
+
+Issues / doubts:
+
+1. We delete the text why @zero-blocks is deprecated.  Harmless; the
+next patch drops @zero-blocks entirely.  Better: swap the patches.
+
+2. The text for @x-colo is lacking.  Suggest something like "Member
+@x-colo" is deprecated without replacement."
+
+3. Does it make sense to keep x-colo @unstable?
+
+4. Shouldn't we mark *all* the COLO interfaces the same way?
+
+> diff --git a/migration/options.c b/migration/options.c
+> index 9a5a39c886..318850ba94 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -580,6 +580,10 @@ bool migrate_caps_check(bool *old_caps, bool *new_ca=
+ps, Error **errp)
+>          warn_report("zero-blocks capability is deprecated");
+>      }
+>=20=20
+> +    if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
+> +        warn_report("COLO migration framework is deprecated");
+> +    }
+> +
+>  #ifndef CONFIG_REPLICATION
+>      if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
+>          error_setg(errp, "QEMU compiled without replication module"
 
 
