@@ -4,76 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5755AD29FFA
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 08:13:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1534AD3CC9F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 08:27:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgITN-0003jA-QP; Thu, 15 Jan 2026 03:12:55 -0500
+	id 1vgIgF-0005LU-Nl; Thu, 15 Jan 2026 03:26:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1vgITF-0003L6-Lu; Thu, 15 Jan 2026 03:12:45 -0500
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1vgITD-0006Fh-LP; Thu, 15 Jan 2026 03:12:45 -0500
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:5c05:0:640:ff67:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 241CCC0151;
- Thu, 15 Jan 2026 11:12:41 +0300 (MSK)
-Received: from dtalexundeer-nx.yandex-team.ru (unknown
- [2a02:6bf:8080:973::1:c])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id PBQgfR0Ar8c0-OgOdefDm; Thu, 15 Jan 2026 11:12:40 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1768464760;
- bh=X3OeDLmKjVV7/P6aJCTi/mebxCg/pOWZ8d2ftLLT6Rg=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=EJl5erSoqRp2bfoZbkQIRY1krXauPegVhb7e0mJOS0XUOCftw1Rizq7aV3PXWjG4g
- sPrbRl/s+hIeZEPGajNBp7hidYTD7H3TkDnj1EhjZNqkrHbYJ/4ua1j0jLrWI9/CPT
- GbZDw4MXyctD6kCxDHu+f7AdMSc8on0x+iY6QXBU=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-To: qemu-devel@nongnu.org
-Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Zhenwei Pi <pizhenwei@bytedance.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, mzamazal@redhat.com,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-block@nongnu.org, virtio-fs@lists.linux.dev,
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v7 5/5] vhost-user-blk: support inter-host inflight migration
-Date: Thu, 15 Jan 2026 13:11:09 +0500
-Message-Id: <20260115081103.655749-6-dtalexundeer@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260115081103.655749-1-dtalexundeer@yandex-team.ru>
-References: <20260115081103.655749-1-dtalexundeer@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vgIgC-0005LB-Jg
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 03:26:08 -0500
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vgIg8-0001LO-S1
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 03:26:06 -0500
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-50146483bf9so11683161cf.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 00:26:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1768465564; x=1769070364; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UxZBHNhT1o2H7oHQa5pSKhIB3sBLjsNfhZdXskofB5c=;
+ b=WUn15F5O88M9AUTXL0Pz5v+s+WUbcO2Tf6UYv0wUwuL5Bfvb6+oN5R1iuhhCCD0VRJ
+ zwaYAWw5I5DfnDc5vd5W7xRx9hg9C3C1XqzLFvWYcLJkcIUEtAIzGbc/FEqoxpHE1hGM
+ 9A0nZbvGIdZejzU0KyaMdHqD3sooR15Xa9cY7NiK1zJeo2oraTjItyWWEYeABV2Z2rKh
+ 1Y9IoA0eKYDWXb7SYQ6//NB//x/+lGOiji4EC12EmKouNoZNFM7DmJ56Twl4OZ9ZuD8v
+ PvUnGG1uVZBe2rcRaEKUg4J1dVKWv4LlYazwKIQY/T49IR7vKjaInAihvKXlUD/YwyIm
+ 7twg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768465564; x=1769070364;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UxZBHNhT1o2H7oHQa5pSKhIB3sBLjsNfhZdXskofB5c=;
+ b=SsfZmnyz15YPvkUpmWF/qm+k/dSAE3wQ2DC/ksM79i+eO7izgKNEtJ3tLp4+w+yMbk
+ j/6F93U/ohy7R35QJ6xe8SRPZuO5ZiTLvE2cZWHd2eZjaZs9I7PWWyb/rPJwc5z8v779
+ CdivCLGp8zzBn9Sp4GkQ1ye8M3QcTwrtkUXPwjPh22MsqgrIzRsmVWtr/WciBg6Eh5oz
+ KkID6Rrdlz/YK0t1f9phcrNRkjIhSTKuZmQsFBB4JZ7Oa15S7O4tzkwA4Z3T+pYhwj+l
+ 225uo7Fv2j/OMw+jxsliGVM8MkSuifdF6bV3pcYrfR98rzOW6F9J4JYzIj723ovzTh4h
+ crLA==
+X-Gm-Message-State: AOJu0YyVcxYbCb+m/UMEHsWPoz+1Nmpd4yGLsU6Wfhc4B++UYyT0ecS3
+ zyCdwoBPgCEn8yL27NZf6zJobTLWmehSB1kM0ddjZ/KzSEeZQOoOxifRtkOHOi3lYHl8sqnx/8F
+ IF+rwBiTynEvnn0+mJwQfpHF4geWzh01RwA==
+X-Gm-Gg: AY/fxX6vIywkhbUV77mTkocerzwq/UJdvIKKPsKzw/CUnsbKBFnGNqMAXBRw9oDIY0M
+ SP5ac28cIGBxEesaDc3B8NY6w+l2QkRtbKdELti6V0y1gg2dYIKPdaLjhv4K/KVBS7yP1Vptpfa
+ cNmi9qZIj+COVKyHhV9I23dgPyn+i7E0B56cf9lpu3HMDFIBSc5AuRGEdM8pi4uV1+rD0hJ6Xs1
+ CqhYENrjG+Zr9PB3PeP8Rb9aOZpwU8Lj7Qb+wVbep+lhokil5yXBLP/7YLb9GzU7gBxV8SI3QiC
+ pPSsop5NWWpAw1CJy8RpMoMZBIs=
+X-Received: by 2002:a05:622a:261b:b0:4ee:1676:faa6 with SMTP id
+ d75a77b69052e-5014820827dmr80248731cf.20.1768465563531; Thu, 15 Jan 2026
+ 00:26:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+References: <20260115-gtk-v1-1-57f49e856408@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260115-gtk-v1-1-57f49e856408@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Thu, 15 Jan 2026 12:25:52 +0400
+X-Gm-Features: AZwV_QiJs3wNMh0A8u-0_iQgRdi2oRcJ7u7lXrdkCE_-2l2D-R8mn2hFegH_R10
+Message-ID: <CAJ+F1CJDdjL5fKKzsDUGN8y20aX5dkb7Xere_cXJ5WZw-V0HOg@mail.gmail.com>
+Subject: Re: [PATCH] ui/gtk: Narrow DMA-BUF critical section
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x832.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -85,110 +94,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During inter-host migration, waiting for disk requests to be drained
-in the vhost-user backend can incur significant downtime.
+Hi Akihiko
 
-This can be avoided if QEMU migrates the inflight region in
-vhost-user-blk.
-Thus, during the qemu migration, with feature flag the vhost-user
-back-end can immediately stop vrings, so all in-flight requests will be
-migrated to another host.
+On Thu, Jan 15, 2026 at 9:44=E2=80=AFAM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> ui/gtk performs the following procedure to flush a scanout:
+> 1) Queue a draw event.
+> 2) The draw event gets triggered.
+> 3) Blit the scanout to the framebuffer.
+>
+> When flushing a DMA-BUF scanout, ui/gtk blocks the device before 2) if
+> possible and unblocks it after 3).
+>
+> Blocking the device before 2) has two problems.
+>
+> First, it can leave the device blocked indefinitely because GTK
+> sometimes decides to cancel 2) when the window is not visible for
+> example. ui/gtk regularly repeats 1) as a workaround, but it is not
+> applicable to GtkGLArea because it causes display corruption.
+>
+> Second, the behavior is inconsistent with the other types of scanout
+> that leaves the device unblocked between 1) and 2).
+>
+> To fix these problems, let ui/gtk block the device after 2) instead.
 
-Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- hw/block/vhost-user-blk.c          | 27 +++++++++++++++++++++++++++
- include/hw/virtio/vhost-user-blk.h |  1 +
- include/hw/virtio/vhost.h          |  6 ++++++
- 3 files changed, 34 insertions(+)
+Wouldn't that let the device overwrite the buffer before it is displayed?
 
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 4d81d2dc34..c151e83677 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -353,6 +353,7 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
-     vhost_dev_set_config_notifier(&s->dev, &blk_ops);
- 
-     s->vhost_user.supports_config = true;
-+    s->vhost_user.supports_inflight_migration = s->inflight_migration;
-     ret = vhost_dev_init(&s->dev, &s->vhost_user, VHOST_BACKEND_TYPE_USER, 0,
-                          errp);
-     if (ret < 0) {
-@@ -568,6 +569,26 @@ static struct vhost_dev *vhost_user_blk_get_vhost(VirtIODevice *vdev)
-     return &s->dev;
- }
- 
-+static bool vhost_user_blk_inflight_needed(void *opaque)
-+{
-+    struct VHostUserBlk *s = opaque;
-+
-+    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
-+                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
-+
-+    return inflight_migration;
-+}
-+
-+static const VMStateDescription vmstate_vhost_user_blk_inflight = {
-+    .name = "vhost-user-blk/inflight",
-+    .version_id = 1,
-+    .needed = vhost_user_blk_inflight_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- static const VMStateDescription vmstate_vhost_user_blk = {
-     .name = "vhost-user-blk",
-     .minimum_version_id = 1,
-@@ -576,6 +597,10 @@ static const VMStateDescription vmstate_vhost_user_blk = {
-         VMSTATE_VIRTIO_DEVICE,
-         VMSTATE_END_OF_LIST()
-     },
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_vhost_user_blk_inflight,
-+        NULL
-+    }
- };
- 
- static const Property vhost_user_blk_properties[] = {
-@@ -591,6 +616,8 @@ static const Property vhost_user_blk_properties[] = {
-                       VIRTIO_BLK_F_WRITE_ZEROES, true),
-     DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserBlk,
-                      skip_get_vring_base_on_force_shutdown, false),
-+    DEFINE_PROP_BOOL("inflight-migration", VHostUserBlk,
-+                     inflight_migration, false),
- };
- 
- static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/virtio/vhost-user-blk.h b/include/hw/virtio/vhost-user-blk.h
-index 8158d4673d..1e41a2bcdf 100644
---- a/include/hw/virtio/vhost-user-blk.h
-+++ b/include/hw/virtio/vhost-user-blk.h
-@@ -52,6 +52,7 @@ struct VHostUserBlk {
-     bool started_vu;
- 
-     bool skip_get_vring_base_on_force_shutdown;
-+    bool inflight_migration;
- };
- 
- #endif
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 08bbb4dfe9..89817bd848 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -554,4 +554,10 @@ static inline int vhost_load_backend_state(struct vhost_dev *dev, QEMUFile *f,
- }
- #endif
- 
-+extern const VMStateDescription vmstate_vhost_inflight_region;
-+#define VMSTATE_VHOST_INFLIGHT_REGION(_field, _state) \
-+    VMSTATE_STRUCT_POINTER(_field, _state, \
-+                           vmstate_vhost_inflight_region, \
-+                           struct vhost_inflight)
-+
- #endif
--- 
-2.34.1
+I wish there would be a clear design for how virtio-gpu handles
+display buffering.. I suppose more demanding users, like crosvm may
+have documented this.
 
+> Note that the device is still blocked during 3) for DMA-BUF; this is
+> because, unlike the other scanout types, 3) can happen asynchronously
+> with the device for a DMA-BUF, and the device may simulatenously
+> overwrite it, resulting in tearing, if it is left unblocked.
+>
+> With the problems fixed, the workaround to repeat 1) is no longer
+> necessary and removed.
+>
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+>  ui/gtk-egl.c     |  8 +-------
+>  ui/gtk-gl-area.c | 23 +----------------------
+>  2 files changed, 2 insertions(+), 29 deletions(-)
+>
+> diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+> index ae9239999cdb..61bb8d731ac5 100644
+> --- a/ui/gtk-egl.c
+> +++ b/ui/gtk-egl.c
+> @@ -91,6 +91,7 @@ void gd_egl_draw(VirtualConsole *vc)
+>              } else {
+>                  qemu_dmabuf_set_draw_submitted(dmabuf, false);
+>              }
+> +            graphic_hw_gl_block(vc->gfx.dcl.con, true);
+>          }
+>  #endif
+>          gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
+> @@ -152,12 +153,6 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+>      gd_update_monitor_refresh_rate(
+>              vc, vc->window ? vc->window : vc->gfx.drawing_area);
+>
+> -    if (vc->gfx.guest_fb.dmabuf &&
+> -        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> -        gd_egl_draw(vc);
+> -        return;
+> -    }
+> -
+>      if (!vc->gfx.esurface) {
+>          gd_egl_init(vc);
+>          if (!vc->gfx.esurface) {
+> @@ -408,7 +403,6 @@ void gd_egl_flush(DisplayChangeListener *dcl,
+>
+>      if (vc->gfx.guest_fb.dmabuf &&
+>          !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> -        graphic_hw_gl_block(vc->gfx.dcl.con, true);
+>          qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+>          gtk_egl_set_scanout_mode(vc, true);
+>          gtk_widget_queue_draw_area(area, x, y, w, h);
+> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+> index cd86022d264a..9e7ec7043037 100644
+> --- a/ui/gtk-gl-area.c
+> +++ b/ui/gtk-gl-area.c
+> @@ -86,6 +86,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
+>              } else {
+>                  qemu_dmabuf_set_draw_submitted(dmabuf, false);
+>              }
+> +            graphic_hw_gl_block(vc->gfx.dcl.con, true);
+>          }
+>  #endif
+>
+> @@ -163,27 +164,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+>
+>      gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx=
+.drawing_area);
+>
+> -    if (vc->gfx.guest_fb.dmabuf &&
+> -        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> -        /*
+> -         * gd_egl_refresh() calls gd_egl_draw() if a DMA-BUF draw has al=
+ready
+> -         * been submitted, but this function does not call gd_gl_area_dr=
+aw() in
+> -         * such a case due to display corruption.
+> -         *
+> -         * Calling gd_gl_area_draw() is necessary to prevent a situation=
+ where
+> -         * there is a scheduled draw event but it won't happen bacause t=
+he window
+> -         * is currently in inactive state (minimized or tabified). If dr=
+aw is not
+> -         * done for a long time, gl_block timeout and/or fence timeout (=
+on the
+> -         * guest) will happen eventually.
+> -         *
+> -         * However, it is found that calling gd_gl_area_draw() here caus=
+es guest
+> -         * display corruption on a Wayland Compositor. The display corru=
+ption is
+> -         * more serious than the possible fence timeout so gd_gl_area_dr=
+aw() is
+> -         * omitted for now.
+> -         */
+> -        return;
+> -    }
+> -
+>      if (!vc->gfx.gls) {
+>          if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {
+>              return;
+> @@ -342,7 +322,6 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *=
+dcl,
+>
+>      if (vc->gfx.guest_fb.dmabuf &&
+>          !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> -        graphic_hw_gl_block(vc->gfx.dcl.con, true);
+>          qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
+>          gtk_gl_area_set_scanout_mode(vc, true);
+>      }
+>
+> ---
+> base-commit: 667e1fff878326c35c7f5146072e60a63a9a41c8
+> change-id: 20260115-gtk-424c2b910e65
+>
+> Best regards,
+> --
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
