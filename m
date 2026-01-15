@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AD16D3CC8C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 01:09:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B16B5D3CC8C
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 01:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgBr1-0000KK-A0; Wed, 14 Jan 2026 20:08:52 -0500
+	id 1vgBrU-0000Ts-SG; Wed, 14 Jan 2026 20:09:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vgBqy-0000Jf-NO
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 20:08:48 -0500
-Received: from mgamail.intel.com ([198.175.65.20])
+ id 1vgBrT-0000Tf-Ak
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 20:09:19 -0500
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vgBqx-0004ov-4s
- for qemu-devel@nongnu.org; Wed, 14 Jan 2026 20:08:48 -0500
+ id 1vgBrR-0004qz-Ic
+ for qemu-devel@nongnu.org; Wed, 14 Jan 2026 20:09:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1768439328; x=1799975328;
+ t=1768439357; x=1799975357;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=o5PtTJSEvpJXGgpc3pmgatc+2Pd70u0mxVJPqcWDYg0=;
- b=lwPDuZTuKtjF7ESymQJEdUqUBxrQRrSAKOKMN/Lpw78z77W11A0Ar+bQ
- mpeoi346NmbDCAvpXfAG54uKskUoa1i2PbF4RafCjVn6U10jiPCgimt7/
- pHqDjG5gSvqSgjJ9HwyngsehVgc/WD52Q1ns4/oQ6wyiuzckvz84ZEzKB
- 5p8GyZ8rp0lTmNn/aEpeOuWjEtV/DXO0Agzi4BlhbqsJ/VDcAtPsYKybz
- /9fGOAmm74uwHQD93ePi29OPpgJmm70ublNld05gUMGKLyklNZypG9g6f
- Uhtc4Pgm9IzzIoMJno1djufvp2+yYptM8bF7uzf2+ZHnr8uui3CvQcv// w==;
-X-CSE-ConnectionGUID: pKBpuVYpRMyWQoN537qb6A==
-X-CSE-MsgGUID: JTORvDEwRvWzzhDd1kJ2RQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11671"; a="69481499"
-X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; d="scan'208";a="69481499"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jan 2026 17:08:46 -0800
-X-CSE-ConnectionGUID: DN03NiI6SR2irFYJoMqVTA==
-X-CSE-MsgGUID: ROvRXqaKQb2PITBLC98dGg==
+ bh=j7+IM67mifDuc48YzmS+Yh9v4dq1w2CzQp4UFeFTzMI=;
+ b=IF1Ek2n9SfZJ4lhZN8FQ5ltqDIXFJCQODNziu7Agn7zSK2uk5G0KXfPl
+ KF1LGNNDezyiq1WDeX4+T/TkCarNk+QcZTliX+iRzySLrDrstOHRRTCfo
+ EU/9E7e+I4ZX6Zf0ztaZAxwuuBxJlrPwUELjJK/SLcpDOSsBFaGv8l2p3
+ L/274ETncaIY8UKrU93uYKlvGbMUfGHeglztUaonV283qzq5FXKOU2bni
+ wCxVCdBrQ6mBSes1jeJrR43Ss7AcYfaHqPvY0wMffp5kBlY3X+u4myD1d
+ MENXlqwqVxfQHiL4yxDtXGWjuWBE9j7uy7BIsBdxU2Wk+RM+MudWtqKhv w==;
+X-CSE-ConnectionGUID: H/4sIlJwS6i1mgHUA0iEPA==
+X-CSE-MsgGUID: sGIq4P+OT+OOCMTYIqle4Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11671"; a="95227398"
+X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; d="scan'208";a="95227398"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jan 2026 17:09:15 -0800
+X-CSE-ConnectionGUID: x7Hd1BQJTFiAN1uNp3YVvQ==
+X-CSE-MsgGUID: BeZaA6sYTA65ZO1YNeCn2w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; d="scan'208";a="204614704"
+X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; d="scan'208";a="205241351"
 Received: from fhuang-mobl1.amr.corp.intel.com (HELO [10.125.38.93])
  ([10.125.38.93])
- by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Jan 2026 17:08:45 -0800
-Message-ID: <c952b8d7-d1f9-44cc-812d-1a6600b26709@intel.com>
-Date: Wed, 14 Jan 2026 17:08:44 -0800
+ by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jan 2026 17:09:14 -0800
+Message-ID: <5e72cb05-25b9-4bfe-89da-6f67b54de9b8@intel.com>
+Date: Wed, 14 Jan 2026 17:09:13 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 2/5] target/i386/kvm: extract unrelated code out of
- kvm_x86_build_cpuid()
+Subject: Re: [PATCH v9 5/5] target/i386/kvm: support perfmon-v2 for reset
 To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org
 Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
@@ -63,13 +62,13 @@ Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
  dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
  ewanhai@zhaoxin.com
 References: <20260109075508.113097-1-dongli.zhang@oracle.com>
- <20260109075508.113097-3-dongli.zhang@oracle.com>
+ <20260109075508.113097-6-dongli.zhang@oracle.com>
 Content-Language: en-US
 From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260109075508.113097-3-dongli.zhang@oracle.com>
+In-Reply-To: <20260109075508.113097-6-dongli.zhang@oracle.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zide.chen@intel.com;
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zide.chen@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -96,24 +95,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 1/8/2026 11:53 PM, Dongli Zhang wrote:
-> The initialization of 'has_architectural_pmu_version',
-> 'num_architectural_pmu_gp_counters', and
-> 'num_architectural_pmu_fixed_counters' is unrelated to the process of
-> building the CPUID.
+On 1/8/2026 11:54 PM, Dongli Zhang wrote:
+> Since perfmon-v2, the AMD PMU supports additional registers. This update
+> includes get/put functionality for these extra registers.
 > 
-> Extract them out of kvm_x86_build_cpuid().
+> Similar to the implementation in KVM:
 > 
-> In addition, use cpuid_find_entry() instead of cpu_x86_cpuid(), because
-> CPUID has already been filled at this stage.
+> - MSR_CORE_PERF_GLOBAL_STATUS and MSR_AMD64_PERF_CNTR_GLOBAL_STATUS both
+> use env->msr_global_status.
+> - MSR_CORE_PERF_GLOBAL_CTRL and MSR_AMD64_PERF_CNTR_GLOBAL_CTL both use
+> env->msr_global_ctrl.
+> - MSR_CORE_PERF_GLOBAL_OVF_CTRL and MSR_AMD64_PERF_CNTR_GLOBAL_STATUS_CLR
+> both use env->msr_global_ovf_ctrl.
+> 
+> No changes are needed for vmstate_msr_architectural_pmu or
+> pmu_enable_needed().
 > 
 > Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+> Reviewed-by: Sandipan Das <sandipan.das@amd.com>
 > ---
 
 LGTM.
 Reviewed-by: Zide Chen <zide.chen@intel.com>
-
-
 
