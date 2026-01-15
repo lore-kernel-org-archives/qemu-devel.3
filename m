@@ -4,78 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF81AD3CCB8
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 07:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C301D3CCB8
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 07:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgHn0-0008HX-HB; Thu, 15 Jan 2026 02:29:06 -0500
+	id 1vgI4P-0000Py-Jn; Thu, 15 Jan 2026 02:47:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgHmy-0008Gt-4N
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 02:29:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgHmw-0002SO-DJ
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 02:29:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768462141;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wq93b/aG/R4Ng31Nxzzde4vegY8Xs/HthyP/WrqRPN4=;
- b=dG1IZlqq8Z5emXEvO7O9OjlGf4r+d2/YsRafJLMRky/+kXgBc7Kf/g61MnDKo3RZrFeh+i
- w9/1atwPWHkFujROEsjriqqepPXVC9tMl3dDwO/JdnjOzD7k09b8ctRXGHDPFf7lEhQUhM
- 0+bsqHYlC6/5AmZ7eIbgAMhVFszOIEs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-399-MOPVUFO8PS-b2nQddhiKGw-1; Thu,
- 15 Jan 2026 02:28:57 -0500
-X-MC-Unique: MOPVUFO8PS-b2nQddhiKGw-1
-X-Mimecast-MFC-AGG-ID: MOPVUFO8PS-b2nQddhiKGw_1768462136
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB2B11956080; Thu, 15 Jan 2026 07:28:55 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 540C01955F22; Thu, 15 Jan 2026 07:28:54 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A07F021E692D; Thu, 15 Jan 2026 08:28:51 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: JAEHOON KIM <jhkim@linux.ibm.com>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  pbonzini@redhat.com,
- stefanha@redhat.com,  fam@euphon.net,  eblake@redhat.com,
- berrange@redhat.com,  eduardo@habkost.net,  dave@treblig.org,
- sw@weilnetz.de, devel@lists.libvirt.org
-Subject: Re: [PATCH RFC v1 3/3] qapi/iothread: introduce poll-weight
- parameter for aio-poll
-In-Reply-To: <eb891295-5ffd-4613-bc37-56d8a07d1fff@linux.ibm.com> (JAEHOON
- KIM's message of "Wed, 14 Jan 2026 23:14:07 -0600")
-References: <20260113174824.464720-1-jhkim@linux.ibm.com>
- <20260113174824.464720-4-jhkim@linux.ibm.com>
- <87qzrs4oud.fsf@pond.sub.org>
- <eb891295-5ffd-4613-bc37-56d8a07d1fff@linux.ibm.com>
-Date: Thu, 15 Jan 2026 08:28:51 +0100
-Message-ID: <87ikd3xrkc.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vgI4N-0000LQ-Is
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 02:47:03 -0500
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vgI4L-0000Dp-5S
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 02:47:03 -0500
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-81dab89f286so283854b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 23:47:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1768463219; x=1769068019; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=iWVDSq5OiKVUBelC41swZQyGgJPE67IaiLiNcaOZ7Og=;
+ b=FrAmkSvVDUx6M+vwfvTCeC5pR/MqAvFQiQnOfIuD38aH6jePSpNqOzByRpZ7HYFp7S
+ XqgW5CrykcG8mM7CRXa0qI5NpXdhiAgoL2EA05SwsfjcksPSSarf0N1JMbMT4WN9KZ0D
+ 0HyikGiVCPORzjhUsFVOw8m2FiHsQqX8MvJUiztZH90gkjzehYk6ZD9saD1TsUWRx+qK
+ o0ovKrEHopNjCdMpXz4KqptFHbQB7N7qX2GeqdKX8j9WjshUfn3lHA8AyeN47BLgEiou
+ pRwmFCoKib1GNTDYZcoevT5P/nbtEvU+G3aS9FN8H5vr8mlJVA4AB7LqAmybKTastGLf
+ feAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768463219; x=1769068019;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iWVDSq5OiKVUBelC41swZQyGgJPE67IaiLiNcaOZ7Og=;
+ b=XCCelq6tzJDmLY+CQ37D0/A3E3E7UyLwEaY6QSKjFo+AClF8KTIHH4pSMFE9jifOAf
+ +OUGE5AoCnu96ZlamaPJFwuJ3HZXeYL/KHVrEsKptq7BbzX0L0L6qZbzQo4FUcWpj/Gz
+ tikpzHNcGBAin8TSjzMH6QHyIazvFpWoHJJhjCtYtZQhR+DtwMgn7cf0rWa4tIK3sCyW
+ +yE+Cnj67FbgPAOppvvUgFgw/napmar87nVxkasPWY+xt4VTl74PPZSCdtdoXMyAIWrb
+ xidatnmMPKcWG8qTvjUQrP0bbbsAq5faL+JW/e7d+KHTzbWua3rIeORQSWKEUdKc5Xiv
+ 2HXg==
+X-Gm-Message-State: AOJu0YyxyPyor/bf1hfngdEorU796BKsD2Bn/1/NMDS6F4KQ6XqP9nXv
+ h4L4OorsiVYZ1BHc3LB2xZMRqUx0vUQPvVTWlma+AGPCMBYNLIVS5zqG0p2nyTCRwc0=
+X-Gm-Gg: AY/fxX5JTyCojsVQu/19An9EQfBOjGYXgsgRA4JgzFamLSryCh/dCi6kix9bBed/Jid
+ HzBdOWHwGeY90+46269Y85UCwHqLcFhGcijcIKNcV/zXi1cF48nhrz8mVNH7asEN2qxeAxcYrbr
+ CKXLIpD/NVqzb7rNWAKvYKKo18JNIx4WVX4Dz2itz2Gf01ljiljUZ2hSRHgAi0wA/tIyP3kx0UU
+ Og+6K3ozSHWacPDV6bUMb2QhIo23jl9GWnLx7UJmJELdfhFS63h/9z9jWs0yy49KBAUxwRUBgzp
+ Jsb7StPwLw8maQ6JNA94KKMelHVmvvSZdafhPRa+34C/k3015M63EyeqCmRB9MMqZc7oDADA59T
+ LwagnHFGo2kDGsdq3B45URucoufGeouK2oU1vFcmdTzzyxRFdPKzY+8hSo+w2iE7Olj7t+mEghI
+ OUWVd0DZ6gbvNwgEByLtZMjiTcD6onLZpYJ0YysYzCd7zKi1eZE0IY
+X-Received: by 2002:a05:6a20:748e:b0:37e:4396:146e with SMTP id
+ adf61e73a8af0-38bed217235mr5824216637.74.1768463219607; 
+ Wed, 14 Jan 2026 23:46:59 -0800 (PST)
+Received: from sifive.com ([136.226.240.171]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a3e3cd2acdsm242430245ad.89.2026.01.14.23.46.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Jan 2026 23:46:59 -0800 (PST)
+Date: Thu, 15 Jan 2026 15:46:48 +0800
+From: Max Chou <max.chou@sifive.com>
+To: Chao Liu <chao.liu.zevorn@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH 02/18] fpu/softfloat: Add OCP(Open Compute Project) OFP8
+ data type
+Message-ID: <aWiYk0zUruMI7uU6@sifive.com>
+References: <20260108151650.16329-1-max.chou@sifive.com>
+ <20260108151650.16329-3-max.chou@sifive.com>
+ <CAGL8uCX46bm9DsT2Tk=roW8VucY--G5fc10PuqJ=aQgo7y5+8g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGL8uCX46bm9DsT2Tk=roW8VucY--G5fc10PuqJ=aQgo7y5+8g@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,145 +107,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc: devel@lists.libvirt.org for a possible query-iothreads change
-discussed below.
+On 2026-01-09 15:29, Chao Liu wrote:
+> Open Compute Platform -> Open Compute Project
+> 
 
-JAEHOON KIM <jhkim@linux.ibm.com> writes:
+Thanks. Will fix it at v2.
 
-> On 1/14/2026 1:48 AM, Markus Armbruster wrote:
->> Jaehoon Kim <jhkim@linux.ibm.com> writes:
->>
->>> Introduce a new poll-weight parameter for aio-poll. This parameter
->>> controls how much the most recent event interval affects the next
->>> polling duration. When set to 0, a default value of 2 is used, meaning
->>> the current interval contributes roughly 25% to the calculation. Larger
->>> values decrease the weight of the current interval, enabling more
->>> gradual adjustments to polling duration.
->>>
->>> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
->> [...]
->>
->>> diff --git a/qapi/misc.json b/qapi/misc.json
->>> index 28c641fe2f..b21cc48a03 100644
->>> --- a/qapi/misc.json
->>> +++ b/qapi/misc.json
->>> @@ -85,6 +85,11 @@
->>>  # @poll-shrink: how many ns will be removed from polling time, 0 means
->>>  #     that it's not configured (since 2.9)
->>>  #
->>> +# @poll-weight: the weight factor for adaptive polling.
->>> +#     Determines how much the current event interval contributes to
->>> +#     the next polling time calculation.  0 means that the default
->>> +#     value is used.  (since 10.1)
->>
->> When the default value is used, the actual value being used remains
->> hidden.  Why?
->
-> Actually, I just followed the existing pattern of poll-grow, which also 
-> defaults to a factor of 2 when set to 0.
-
-Yes, and consistency is always desirable.  But let's have a look at the
-new interface in isolation, to see whether it's actually good.
-
-> It wasn't my intention to hide the value; I kept this because the 
-> previous API has been working fine without issues.
-> If you think the actual value should be visible, I'll consider ways to 
-> make it explicit in the next version.
-
-As is, query-iothreads tells us "the weight factor for adaptive polling
-is X, and it was set by the user", or "the weight factor for adaptive
-polling was not set by the user, but picked by the system."
-
-If we returned the actual value, it would tell us "the weight factor for
-adaptive polling is X".  
-
-Only the former interface tells us whether the user or the system
-picked.
-
-Only the latter interface tells us what the system picked.
-
-Which one is useful in practice?
-
-I'd argue the latter.  A management application knows whether it set a
-value without query-iothreads' help, but it doesn't know what the system
-picked.  The people coding it may know if a contract specifies what the
-system picks (see below).
-
-If we conclude that returning the actual value is better for new
-@poll-weight, then it would surely be better for @poll-grow and
-@poll-shrink, too.  Could we still improve them?
-
-Libvirt developers, any advice?
-
->>> +#
->>>  # @aio-max-batch: maximum number of requests in a batch for the AIO
->>>  #     engine, 0 means that the engine will use its default (since 6.1)
->>>  #
->>> @@ -96,6 +101,7 @@
->>>              'poll-max-ns': 'int',
->>>              'poll-grow': 'int',
->>>              'poll-shrink': 'int',
->>> +           'poll-weight': 'int',
->>>              'aio-max-batch': 'int' } }
->>>   
->>>  ##
->>> diff --git a/qapi/qom.json b/qapi/qom.json
->>> index 6f5c9de0f0..d90823478d 100644
->>> --- a/qapi/qom.json
->>> +++ b/qapi/qom.json
->>> @@ -606,6 +606,11 @@
->>>  #     algorithm detects it is spending too long polling without
->>>  #     encountering events.  0 selects a default behaviour (default: 0)
->>>  #
->>> +# @poll-weight: the weight factor for adaptive polling.
->>> +#     Determines how much the current event interval contributes to
->>> +#     the next polling time calculation.  0 selects a default
->>> +#     behaviour (default: 0) since 10.1.
->>
->> This leaves the actual default behavior unspecified.  Is this a good
->> idea?
->
-> I agree that the documentation should be more explicit.
-> I'll update it to clarify that the default factor is 2 and explain its 
-> meaning.
-
-I understand that you're mirroring how @poll-grow and @poll-shrink work,
-but let's ignore that for a minute.
-
-Compare four possible interfaces:
-
-1. Optional @poll-weight defaults to 2.  Values <= 0 are rejected.
-
-2. Optional @poll-weight defaults to 2.  Value 0 is replaced by the
-   default value 2.  Values < 0 are rejected.
-
-3. Optional @poll-weight defaults to 0.  Values < 0 are rejected.  Value
-   0 makes the system pick a value, namely 2.
-
-4. Optional @poll-weight defaults to 0.  Values < 0 are rejected.  Value
-   0 makes the system pick a value.  It currently picks 2.
-
-The difference between 3. and 4. is that 3. makes "system picks 2" part
-of the contract, while 4. doesn't.
-
-1. is the simplest.  Is 2.'s additional complexity worthwhile?  3.'s?
-4.'s?
-
->>> +#
->>>  # The @aio-max-batch option is available since 6.1.
->>>  #
->>>  # Since: 2.0
->>> @@ -614,7 +619,8 @@
->>>     'base': 'EventLoopBaseProperties',
->>>     'data': { '*poll-max-ns': 'int',
->>>               '*poll-grow': 'int',
->>> -            '*poll-shrink': 'int' } }
->>> +            '*poll-shrink': 'int',
->>> +            '*poll-weight': 'int' } }
->>>   
->>>  ##
->>>  # @MainLoopProperties:
->>
->> [...]
+rnax
 
 
