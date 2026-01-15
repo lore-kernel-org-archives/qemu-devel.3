@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA72CD44C5B
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 14:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D6BDD44C56
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 14:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgOct-0005iF-Oh; Thu, 15 Jan 2026 09:47:07 -0500
+	id 1vgOcp-0005PL-5l; Thu, 15 Jan 2026 09:47:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vgOcF-0004kC-BK
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:46:42 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1vgOcK-0004kw-RQ
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:46:47 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vgOc9-0002qN-G4
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:46:25 -0500
+ id 1vgOcC-0002rN-N2
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 09:46:28 -0500
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:bca6:0:640:3d05:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 829FA8085B;
- Thu, 15 Jan 2026 17:46:18 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 9E5D7C020B;
+ Thu, 15 Jan 2026 17:46:20 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:b8d::1:8])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 8kWwj30BHuQ0-y04i00m1; Thu, 15 Jan 2026 17:46:18 +0300
+ ESMTPSA id 8kWwj30BHuQ0-6fAae0hg; Thu, 15 Jan 2026 17:46:19 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1768488378;
- bh=bQYVpi9h/XeFmg4YiMONzqgbFnEGXFr1WdKfKulSY18=;
- h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
- b=FoTiQJ0ZR+7rWTncK72VnpsKjzbE6dyQeIupd7wlGyfdRPsPwJfOzt9kBJwQiuF5n
- 0z/T4Ex0v0zL3a5lV8IwGoSzmQmvQtUS5tOXYRu7qUntpkoAP9cFTcnAy1lk/W7bH8
- TuyiMjIS0ds4CfXCb75zDpvMtgSOy8UONdsJ9hmY=
+ s=default; t=1768488379;
+ bh=Ou4lRE5AojY7fWZVN/NXIe6momlZuSlhghA8qbKt0xI=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=boSZY5Q6jEoy9f/kcH/653A4vZ7Bjwy6dsHTAuExngUR/pJ7O3zVsMMMokn35sAdj
+ 5ii1e2aCTChdtF4PNBJWnxa7JN5N4VP6yyN8uaXgSJejGRKjBQn1+7axIOcOlnGenM
+ iewYjQfhE9N9NrAUviErmbePVXQjGR/XFGPC1JYY=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -43,18 +43,16 @@ To: marcandre.lureau@redhat.com
 Cc: pbonzini@redhat.com,
 	qemu-devel@nongnu.org,
 	vsementsov@yandex-team.ru
-Subject: [PATCH v3 07/10] chardev/char-pty: store pty_name into PtyChardev
- state
-Date: Thu, 15 Jan 2026 17:46:01 +0300
-Message-ID: <20260115144606.233252-8-vsementsov@yandex-team.ru>
+Subject: [PATCH v3 09/10] chardev: rework filename handling
+Date: Thu, 15 Jan 2026 17:46:03 +0300
+Message-ID: <20260115144606.233252-10-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115144606.233252-1-vsementsov@yandex-team.ru>
 References: <20260115144606.233252-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -77,86 +75,253 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We'll use it in following commit.
-
-Note the bonus: stop use blind strcpy().
+Instead of checking, did backend set the filename state or not, let's
+be stateless: filename is needed rarely, so, let's just have a generic
+function (with optional implementation by backends) to get it.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- chardev/char-pty.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ chardev/char-pty.c     |  8 +++++++-
+ chardev/char-socket.c  | 31 ++++++++++++-------------------
+ chardev/char.c         | 22 ++++++++++++++++------
+ hw/misc/ivshmem-pci.c  |  4 ++--
+ include/chardev/char.h |  5 ++++-
+ 5 files changed, 41 insertions(+), 29 deletions(-)
 
 diff --git a/chardev/char-pty.c b/chardev/char-pty.c
-index 9e26e97baf..a582aa7bc7 100644
+index 047aade09e..7e95132cdb 100644
 --- a/chardev/char-pty.c
 +++ b/chardev/char-pty.c
-@@ -43,6 +43,7 @@ struct PtyChardev {
-     int connected;
-     GSource *timer_src;
-     char *path;
-+    char *pty_name;
- };
- typedef struct PtyChardev PtyChardev;
- 
-@@ -303,7 +304,7 @@ static void cfmakeraw (struct termios *termios_p)
- #endif
- 
- /* like openpty() but also makes it raw; return master fd */
--static int qemu_openpty_raw(int *aslave, char *pty_name)
-+static int qemu_openpty_raw(int *aslave, char **pty_name)
- {
-     int amaster;
-     struct termios tty;
-@@ -324,9 +325,7 @@ static int qemu_openpty_raw(int *aslave, char *pty_name)
-     cfmakeraw(&tty);
-     tcsetattr(*aslave, TCSAFLUSH, &tty);
- 
--    if (pty_name) {
--        strcpy(pty_name, q_ptsname(amaster));
--    }
-+    *pty_name = g_strdup(q_ptsname(amaster));
- 
-     return amaster;
- }
-@@ -335,11 +334,12 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     PtyChardev *s;
-     int master_fd, slave_fd;
--    char pty_name[PATH_MAX];
-     char *name;
-     char *path = backend->u.pty.data->path;
- 
--    master_fd = qemu_openpty_raw(&slave_fd, pty_name);
-+    s = PTY_CHARDEV(chr);
-+
-+    master_fd = qemu_openpty_raw(&slave_fd, &s->pty_name);
-     if (master_fd < 0) {
-         error_setg_errno(errp, errno, "Failed to create PTY");
-         return false;
-@@ -351,11 +351,10 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+@@ -351,7 +351,6 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
          return false;
      }
  
--    chr->filename = g_strdup_printf("pty:%s", pty_name);
-+    chr->filename = g_strdup_printf("pty:%s", s->pty_name);
+-    chr->filename = g_strdup_printf("pty:%s", s->pty_name);
      qemu_printf("char device redirected to %s (label %s)\n",
--                pty_name, chr->label);
-+                s->pty_name, chr->label);
+                 s->pty_name, chr->label);
  
--    s = PTY_CHARDEV(chr);
-     s->ioc = QIO_CHANNEL(qio_channel_file_new_fd(master_fd));
-     name = g_strdup_printf("chardev-pty-%s", chr->label);
-     qio_channel_set_name(s->ioc, name);
-@@ -364,7 +363,7 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+@@ -393,6 +392,12 @@ static char *pty_chr_get_pty_name(Chardev *chr)
+     return g_strdup(s->pty_name);
+ }
  
-     /* create symbolic link */
-     if (path) {
--        int res = symlink(pty_name, path);
-+        int res = symlink(s->pty_name, path);
++static char *pty_chr_get_filename(Chardev *chr)
++{
++    PtyChardev *s = PTY_CHARDEV(chr);
++    return g_strdup_printf("pty:%s", s->pty_name);
++}
++
+ static void char_pty_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+@@ -403,6 +408,7 @@ static void char_pty_class_init(ObjectClass *oc, const void *data)
+     cc->chr_update_read_handler = pty_chr_update_read_handler;
+     cc->chr_add_watch = pty_chr_add_watch;
+     cc->chr_get_pty_name = pty_chr_get_pty_name;
++    cc->chr_get_filename = pty_chr_get_filename;
+ }
  
-         if (res != 0) {
-             error_setg_errno(errp, errno, "Failed to create PTY symlink");
+ static const TypeInfo char_pty_type_info = {
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 908bbdbc12..5adeb90865 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -40,6 +40,7 @@
+ 
+ static gboolean socket_reconnect_timeout(gpointer opaque);
+ static void tcp_chr_telnet_init(Chardev *chr);
++static char *qemu_chr_compute_filename(SocketChardev *s);
+ 
+ static void tcp_chr_change_state(SocketChardev *s, TCPChardevState state)
+ {
+@@ -384,8 +385,6 @@ static void tcp_chr_free_connection(Chardev *chr)
+     s->sioc = NULL;
+     object_unref(OBJECT(s->ioc));
+     s->ioc = NULL;
+-    g_free(chr->filename);
+-    chr->filename = NULL;
+     tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
+ }
+ 
+@@ -439,16 +438,17 @@ static char *qemu_chr_socket_address(SocketChardev *s, const char *prefix)
+     }
+ }
+ 
+-static void update_disconnected_filename(SocketChardev *s)
++static char *tcp_chr_get_filename(Chardev *chr)
+ {
+-    Chardev *chr = CHARDEV(s);
++    SocketChardev *s = SOCKET_CHARDEV(chr);
+ 
+-    g_free(chr->filename);
+-    if (s->addr) {
+-        chr->filename = qemu_chr_socket_address(s, "disconnected:");
+-    } else {
+-        chr->filename = g_strdup("disconnected:socket");
++    if (s->state == TCP_CHARDEV_STATE_CONNECTED) {
++        return qemu_chr_compute_filename(s);
++    } else if (s->addr) {
++        return qemu_chr_socket_address(s, "disconnected:");
+     }
++
++    return g_strdup("disconnected:socket");
+ }
+ 
+ /* NB may be called even if tcp_chr_connect has not been
+@@ -468,7 +468,6 @@ static void tcp_chr_disconnect_locked(Chardev *chr)
+         qio_net_listener_set_client_func_full(s->listener, tcp_chr_accept,
+                                               chr, NULL, chr->gcontext);
+     }
+-    update_disconnected_filename(s);
+     if (emit_close) {
+         qemu_chr_be_event(chr, CHR_EVENT_CLOSED);
+     }
+@@ -639,9 +638,6 @@ static void tcp_chr_connect(void *opaque)
+     Chardev *chr = CHARDEV(opaque);
+     SocketChardev *s = SOCKET_CHARDEV(opaque);
+ 
+-    g_free(chr->filename);
+-    chr->filename = qemu_chr_compute_filename(s);
+-
+     tcp_chr_change_state(s, TCP_CHARDEV_STATE_CONNECTED);
+     update_ioc_handlers(s);
+     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
+@@ -1000,8 +996,8 @@ static void tcp_chr_accept_server_sync(Chardev *chr)
+ {
+     SocketChardev *s = SOCKET_CHARDEV(chr);
+     QIOChannelSocket *sioc;
+-    info_report("QEMU waiting for connection on: %s",
+-                chr->filename);
++    g_autofree char *filename = qemu_chr_get_filename(chr);
++    info_report("QEMU waiting for connection on: %s", filename);
+     tcp_chr_change_state(s, TCP_CHARDEV_STATE_CONNECTING);
+     sioc = qio_net_listener_wait_client(s->listener);
+     tcp_chr_set_client_ioc_name(chr, sioc);
+@@ -1258,8 +1254,6 @@ static int qmp_chardev_open_socket_server(Chardev *chr,
+     s->addr = qio_net_listener_get_local_address(s->listener, 0, errp);
+ 
+ skip_listen:
+-    update_disconnected_filename(s);
+-
+     if (is_waitconnect) {
+         tcp_chr_accept_server_sync(chr);
+     } else {
+@@ -1436,8 +1430,6 @@ static bool tcp_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+     }
+     s->registered_yank = true;
+ 
+-    update_disconnected_filename(s);
+-
+     if (s->is_listen) {
+         if (qmp_chardev_open_socket_server(chr, is_telnet || is_tn3270,
+                                            is_waitconnect, errp) < 0) {
+@@ -1593,6 +1585,7 @@ static void char_socket_class_init(ObjectClass *oc, const void *data)
+     cc->chr_add_watch = tcp_chr_add_watch;
+     cc->chr_update_read_handler = tcp_chr_update_read_handler;
+     cc->chr_listener_cleanup = tcp_chr_listener_cleanup;
++    cc->chr_get_filename = tcp_chr_get_filename;
+ 
+     object_class_property_add(oc, "addr", "SocketAddress",
+                               char_socket_get_addr, NULL,
+diff --git a/chardev/char.c b/chardev/char.c
+index 0dc792b88f..ef0cdffd3f 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -309,7 +309,6 @@ static void char_finalize(Object *obj)
+     if (chr->fe) {
+         chr->fe->chr = NULL;
+     }
+-    g_free(chr->filename);
+     g_free(chr->label);
+     if (chr->logfd != -1) {
+         close(chr->logfd);
+@@ -796,7 +795,7 @@ static int qmp_query_chardev_foreach(Object *obj, void *data)
+     ChardevInfo *value = g_malloc0(sizeof(*value));
+ 
+     value->label = g_strdup(chr->label);
+-    value->filename = g_strdup(chr->filename);
++    value->filename = qemu_chr_get_filename(chr);
+     value->frontend_open = chr->fe && chr->fe->fe_is_open;
+ 
+     QAPI_LIST_PREPEND(*list, value);
+@@ -1025,10 +1024,6 @@ static Chardev *chardev_new(const char *id, const char *typename,
+         return NULL;
+     }
+ 
+-    if (!chr->filename) {
+-        chr->filename = g_strdup(typename + 8);
+-    }
+-
+     return chr;
+ }
+ 
+@@ -1110,6 +1105,21 @@ char *qemu_chr_get_pty_name(Chardev *chr)
+     return NULL;
+ }
+ 
++char *qemu_chr_get_filename(Chardev *chr)
++{
++    ChardevClass *cc = CHARDEV_GET_CLASS(chr);
++    const char *typename;
++
++    if (cc->chr_get_filename) {
++        return cc->chr_get_filename(chr);
++    }
++
++    typename = object_get_typename(OBJECT(chr));
++    assert(g_str_has_prefix(typename, "chardev-"));
++    return g_strdup(typename + 8);
++}
++
++
+ ChardevReturn *qmp_chardev_change(const char *id, ChardevBackend *backend,
+                                   Error **errp)
+ {
+diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
+index b9162589a0..bf05688065 100644
+--- a/hw/misc/ivshmem-pci.c
++++ b/hw/misc/ivshmem-pci.c
+@@ -873,10 +873,10 @@ static void ivshmem_common_realize(PCIDevice *dev, Error **errp)
+         host_memory_backend_set_mapped(s->hostmem, true);
+     } else {
+         Chardev *chr = qemu_chr_fe_get_driver(&s->server_chr);
++        char *filename = qemu_chr_get_filename(chr);
+         assert(chr);
+ 
+-        IVSHMEM_DPRINTF("using shared memory server (socket = %s)\n",
+-                        chr->filename);
++        IVSHMEM_DPRINTF("using shared memory server (socket = %s)\n", filename);
+ 
+         /* we allocate enough space for 16 peers and grow as needed */
+         resize_peers(s, 16);
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index ada5529fa6..81bc0cbdf2 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -62,7 +62,6 @@ struct Chardev {
+     QemuMutex chr_write_lock;
+     CharFrontend *fe;
+     char *label;
+-    char *filename;
+     int logfd;
+     int be_open;
+     /* used to coordinate the chardev-change special-case: */
+@@ -309,6 +308,9 @@ struct ChardevClass {
+ 
+     /* return PTY name if available */
+     char *(*chr_get_pty_name)(Chardev *s);
++
++    /* get filename for reporting */
++    char *(*chr_get_filename)(Chardev *s);
+ };
+ 
+ Chardev *qemu_chardev_new(const char *id, const char *typename,
+@@ -324,5 +326,6 @@ void suspend_mux_open(void);
+ void resume_mux_open(void);
+ 
+ char *qemu_chr_get_pty_name(Chardev *chr);
++char *qemu_chr_get_filename(Chardev *chr);
+ 
+ #endif
 -- 
 2.52.0
 
