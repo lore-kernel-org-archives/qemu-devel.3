@@ -4,93 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E973D4660D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:37:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDF70D46606
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:39:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgSDi-0006SN-OA; Thu, 15 Jan 2026 13:37:22 -0500
+	id 1vgSFa-0007dq-QG; Thu, 15 Jan 2026 13:39:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgSDe-0006Pp-Sd
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:37:19 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgSDd-00024f-4s
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:37:18 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-81f4a1a3181so661737b3a.3
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:37:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768502235; x=1769107035; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Jfz1OQlalvKRzpoOhyofzbjWnEFY6szucxGkxT6mAnM=;
- b=C6CYZDiXJjfmpiYWbs0F44UorrpwxtHRdiav2da+o2rtmkTE7Zdi3+rWHtk8hYgWEQ
- 2AfwMKOg6NRiKa0ZBQJEq+Sas3z6LAx6iqQ+fjRxLoh2hlnMuJd6SSs16g3tTvf84+BA
- c5h2OsOL4KxqQKSoUshe+SJE/XU1dm7SC6SukOVohtqXSiKrhNmNjZwOOmdnT+ZpIFTm
- NHBSkYWJx+kRcPQS4E28vBQrqLCFSRPtSLZMpCY88zFpeD5J68YDiU2E2BlcJ3PvaAkE
- CEME0/K6T7uhfoS6pFP+veqxgc2UQc/cf2LUvr+uJWj7GKAY2rpRY8TgcUbgaDg0ArBt
- v+9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768502235; x=1769107035;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Jfz1OQlalvKRzpoOhyofzbjWnEFY6szucxGkxT6mAnM=;
- b=DvxCLKAq3wQNSobMrhq5A+kyXjfruyMTed+HIxFOn6wlLHMnI2Yew7ozfl2GgiAvzq
- 3a1tXaQEsUX9jf2/XWIGwEzdekfNqoDDnxsh9E3vNRk8nv8ueYAT8Y7Lvoh/cHxnKkhD
- H4PYmNubRDJdutkVM5M3f9cqBgA6tAgaQqoQmifuHBxV5TWnlkEjCAbswClzAs410hIB
- PMmqk1fr3CGzazTrguCBuwqn8vdkz2OqEUazoYe3MmhzVXBj9imW0lGC+JXsBjrmDEEG
- LuoALcAV4F4f49obgEx10Vut2Bpiyx+GNh3SvPaEgBCwhgRdggtoiTLRE+qKOA9FU+Xb
- rNcQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVl6P6GuPRgkzNkmzfiRUAfQcp13FiKHKs9VSzW9jWlHHcPv9Jou06Rq45fkgPKsBCvxjE0h0OEtVZg@nongnu.org
-X-Gm-Message-State: AOJu0Yymj0tF03XPUvUXrKdqCqAh73cEyqeeUQ0xe6Tv/h5Tw6sSEsUX
- Hluyojc03ypo5D46p2u435uv34NtudV4Jmmi7fqMTkwhdpZ+gcaQBaOcPNCrJwciFP4=
-X-Gm-Gg: AY/fxX4PBnI31bvBzeWyvg6qVZ1F+gIbTZJQq4WiV4QGzF8NrgRIUN/6LQs2JoNqvbR
- dC8lEzvfOe5spQzecEUGGm6bxICHp6PBMeCMkRFj0SPTge5OU9VzZEPkkjA2HLZ6sJCdDqgBAYl
- Z1dny9S+xv2P6w1059+zzkDfEsilUw5TncLvuVavQ939EQ6efZXxAHNlE1gLPstHf7F9ag/ugkS
- VE2ORawYpQh5LQtEplrLJE7ph3bPHbgWi15f5HTtTPUgulQIo4KBQdRgY2qYnODf4hERIH427sO
- RDlwL6AlwpM+9+xo00P0HSDgoc7YV8U+Cqy1XAD3S3rAvYyRaQRJlPguMA2fC5xO2zhpiNTJ8To
- goQkWXXqUqYG2pEpDhL6IfEWMdiOoLGnF88tt1flrGy/cNbJywK68p6QJElnwm+2mR9ya3Pqf26
- 0oba3qWkq2YgNPZfCS0Pw36V2s9guyNUDXFAhDQcStphty/EWOXgY2JzAy
-X-Received: by 2002:a05:6a00:288d:b0:81d:a1b1:7321 with SMTP id
- d2e1a72fcca58-81f9f69001fmr512292b3a.13.1768502234641; 
- Thu, 15 Jan 2026 10:37:14 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81fa1277a15sm84471b3a.42.2026.01.15.10.37.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 10:37:14 -0800 (PST)
-Message-ID: <f1861bf5-0988-46be-a903-846e0f573743@linaro.org>
-Date: Thu, 15 Jan 2026 10:37:13 -0800
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vgSEX-0007Bn-5G
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:38:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vgSEV-0002AP-KH
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:38:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768502289;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DFjaApEJr7UidLbl4TGgfaNez9rwAXU3BJHbq0JW8AY=;
+ b=EVq40YYTp8QEZ2nmxnMEHF2UeZnMTXXuoMzP2+Rx5HCa9B30VyDwSg+M9adSdYV/TYbH76
+ aYipz29fTl+HB+u6LMktvvphJm9Zmi4XDcR1JcLuL6XbKF5C3CxUODhRZovwWhrctuXCEv
+ 8NrVHLihe6W5QqKHtpv99pcDOIHFudQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-489-a8T2bkn7MtamOpgVF0MAiA-1; Thu,
+ 15 Jan 2026 13:38:03 -0500
+X-MC-Unique: a8T2bkn7MtamOpgVF0MAiA-1
+X-Mimecast-MFC-AGG-ID: a8T2bkn7MtamOpgVF0MAiA_1768502282
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 86B36180060F; Thu, 15 Jan 2026 18:38:01 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.134])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 21B6D1800665; Thu, 15 Jan 2026 18:37:59 +0000 (UTC)
+Date: Thu, 15 Jan 2026 13:37:58 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Fam Zheng <fam@euphon.net>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ pkrempa@redhat.com, Hannes Reinecke <hare@suse.de>,
+ Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Alberto Faria <afaria@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-block@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [RFC 0/4] scsi: persistent reservation live migration
+Message-ID: <20260115183758.GA665239@fedora>
+References: <20260113215320.566595-1-stefanha@redhat.com>
+ <c8436397-fe56-4281-b9a4-5ed6175be055@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/nvmm: Fix 'cpu' typo in nvmm_init_vcpu()
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Reinoud Zandijk <reinoud@netbsd.org>, qemu-stable@nongnu.org,
- Thomas Huth <thuth@redhat.com>
-References: <20260113203924.81560-1-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20260113203924.81560-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="UTKX3iOVnKmmhvW/"
+Content-Disposition: inline
+In-Reply-To: <c8436397-fe56-4281-b9a4-5ed6175be055@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,41 +91,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/13/26 12:39 PM, Philippe Mathieu-Daudé wrote:
-> Fix typo to avoid the following build failure:
-> 
->    target/i386/nvmm/nvmm-all.c: In function 'nvmm_init_vcpu':
->    target/i386/nvmm/nvmm-all.c:988:9: error: 'AccelCPUState' has no member named 'vcpu_dirty'
->      988 |     qcpu->vcpu_dirty = true;
->          |         ^~
-> 
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Fixes: 2098164a6be ("accel/nvmm: Replace @dirty field by generic CPUState::vcpu_dirty field")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Untested.
-> ---
->   target/i386/nvmm/nvmm-all.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
-> index b9bd9ed985a..f808828d492 100644
-> --- a/target/i386/nvmm/nvmm-all.c
-> +++ b/target/i386/nvmm/nvmm-all.c
-> @@ -985,7 +985,7 @@ nvmm_init_vcpu(CPUState *cpu)
->           }
->       }
->   
-> -    qcpu->vcpu_dirty = true;
-> +    cpu->vcpu_dirty = true;
->       cpu->accel = qcpu;
->   
->       return 0;
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+--UTKX3iOVnKmmhvW/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Regards,
-Pierrick
+On Thu, Jan 15, 2026 at 06:11:37PM +0100, Paolo Bonzini wrote:
+> On 1/13/26 22:53, Stefan Hajnoczi wrote:
+> > Live migration does not work for SCSI Persistent Reservations acquired =
+on
+> > scsi-block devices. This patch series migrates the reservation key and
+> > reservation type so that the destination QEMU can take over the persist=
+ent
+> > reservation with the PREEMPT service action upon live migration.
+> >=20
+> > The approach involves snooping PERSISTENT RESERVE OUT replies and track=
+ing the
+> > scsi-block device's current reservation key and reservation type. In mo=
+st cases
+> > this involves no additional SCSI commands. This approach isn't perfect:=
+ if
+> > another machine modifies the reservation on the physical LUN, then QEMU=
+'s state
+> > becomes stale. Persistent reservations are inherently cooperative, so t=
+his is
+> > acceptable as long as real applications don't run into problems.
+>=20
+> One issue is that this would not transfer reservations done from a previo=
+us
+> invocation of the VM.  Are you assuming that the restarted VM won't assume
+> to still have the reservation?  I think this is fine, but it has to be
+> documented, or maybe QEMU could issue a PR IN command at startup?
+
+Good point. The reason for this limitation is that I don't see a
+reliable way to detect reservation keys and reservations that belong to
+a guest. This is why the patch series uses the snooping approach.
+
+The basic READ KEYS and READ RESERVATION service actions for PERSISTENT
+RESERVATION IN only report the list of reservation keys that have been
+registered and the key of the current reservation holder. There is no
+way of tying that information back to the guest or even the host. It
+would be necessary to know the guest's unique reservation key, but that
+can be chosen by the guest at runtime. In addition, keys are not
+guaranteed to be unique so there is no way to tell whether this host is
+actually the reservation holder without potentially destructive probing
+(e.g. attempting a command and seeing if it results in a RESERVATION
+CONFLICT).
+
+The optional READ FULL STATUS service action improves the situation by
+identifying the initiator together with the reservation holder's key,
+but it is not universally available. The hardware I'm testing on doesn't
+implement this service action.
+
+Therefore the assumption is that the guest configures persistent
+reservations and if it is shut down, it reclaims the reservation while
+starting up again. It also means that an administrator cannot configure
+persistent reservations outside the guest and expect live migration to
+move those persistent reservations with the guest.
+
+The clean way to handle persistent reservation migration is using Fibre
+Channel N_Port ID Virtualization (NPIV) so that each guest is a distinct
+initiator that can migrate to another host without messing with the
+persistent reservation state. NPIV requires the storage administrator to
+set up the initiators and their zoning - something that few users go
+through the trouble of doing.
+
+Having said all this, if someone knows about a better way or I'm wrong
+about how this works, please let me know!
+
+Stefan
+
+--UTKX3iOVnKmmhvW/
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmlpNAYACgkQnKSrs4Gr
+c8g4IAgAqmnDoepsTqyWtQNgO2ms4ShVyBcXqS9qHLk1SetTWvKY0EVKQEur1zx/
+6UlySvkM8qBRw0/GmcqkO56+sTcY/WFy3DLjvSkHMUhszqRXwWsr8+HXvBr7NjSY
+faSoRu9vGNbaE4E/U0P2nBrsG82FsPXjfThK8Utlcp+nbMPP9n1Kf8vOJcUoj3+X
+/Zbw6BCr09vaNB/3ecZCkj/JuCvGmD/Dw0tsGId6UEobFDjw6zZasyG2XteyUQ3T
+derv/6umvKDvrUAwqLnm2XRJjRhrChe1H+PTu+mqfjXkW19bcCRJVdc4w3rjN/Id
+kIsWKcsfk24cfemYa7AyNyj+tTZLWA==
+=zIk/
+-----END PGP SIGNATURE-----
+
+--UTKX3iOVnKmmhvW/--
+
 
