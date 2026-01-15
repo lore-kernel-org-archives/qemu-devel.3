@@ -4,90 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0999D4660F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06DBDD4660D
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 18:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgSW2-0002PN-Nh; Thu, 15 Jan 2026 13:56:18 -0500
+	id 1vgSYS-0001Sv-Vb; Thu, 15 Jan 2026 13:58:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSVQ-0000jF-CA
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:41 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgSVN-0005w7-VI
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:55:40 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47ee301a06aso11660055e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:55:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgSYD-0000wZ-H4
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:58:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgSYB-0006a7-Rv
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 13:58:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768503510;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hSaWkiEldx16GFFC1s9mqelmr/R2HTRT2+Buu/tOcCU=;
+ b=hrm3SnhWUORdFLf8v+4BE4FO/9rWeLrbnzkcx8rmPV6Q+14rQImyckk602P65DlAAndUSN
+ p9IA9XB4/jFK0tGbefH4wRgSw1rtFySM+vSKESq2p9GzLsFKO3Q+5N73cyg4fchG5Cyv5Q
+ 41zFAkSOfmO0rbiRHtq94hBL9Pstopw=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-353-PzW3wbYvODS167qxMFoNGQ-1; Thu, 15 Jan 2026 13:58:28 -0500
+X-MC-Unique: PzW3wbYvODS167qxMFoNGQ-1
+X-Mimecast-MFC-AGG-ID: PzW3wbYvODS167qxMFoNGQ_1768503508
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-5014d56a63aso35335891cf.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 10:58:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768503328; x=1769108128; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=DUH5FjK7b2EIsIIQmTzRC8PsiEQGFhbRDC16YQhe6Bo=;
- b=RHJmFFjGOMUoN8xir+PTHuNagJIG4ExpBSq71IqWGKGQm5c+ll71RSKfkk6awXzHPh
- XOHBWXJqsXFAdMWNB2OucowogKX0ft0BQR59Mwf9XUWpNeCjXaHWav4TZGxATrLH6RSE
- 8zbdee9eb1N1lItaPF1Vw7p8x2LLoD7VaJ8Xbw7Ja1gBrwiqN048ih789CQk3Pxu+I12
- IBPyhSVLIl4kjNDOI7lqfw1Y6kaq/Enzc+GVhCJECAM9gyWxxs1YsPXTh/n31wMxfd3P
- JOMz0Abwoj5b7oriIgFJ7UoYrUIO/L9l9he26+52oKBWyMC3rJjBiEJXcgK8A6oPHc9a
- LYWg==
+ d=redhat.com; s=google; t=1768503508; x=1769108308; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=hSaWkiEldx16GFFC1s9mqelmr/R2HTRT2+Buu/tOcCU=;
+ b=ArXVvQOsWQswUiGyYdfmofPwtRJRT6jJASRlyAVDSGD90rac9HnHxf+fzwzkVVmHFH
+ h28nb3amGyCZZiJtAlqjW9teL+OZhGv+P9BALtr3++nba7O4rDT2MwaEMxzk8v0fXDt0
+ u3GunZ8eXQk+INsbq1+5myi2atzFXxSjk5GRAzXs6mJWdYoKmIy4buBkCMIjS8XxAQaT
+ caGMpL5X1te7ckyok1g64m1+G4DbtHouUdBsvpWuuP0l9DK6EfYR9Ob8Yh4e9xKaJSv2
+ L/RYDGsmo2F2FjJ8dNQUawfWfGKhJqsfSipuTZ+bwltMkJ5MCKih61fELrwfIEXU/6jW
+ 3ipA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768503328; x=1769108128;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=DUH5FjK7b2EIsIIQmTzRC8PsiEQGFhbRDC16YQhe6Bo=;
- b=OcKqFYqVapsSLI60yGvH+34IEkhk1Al54P2zCFrZ+h7I6c3U9WR+TowbPhkw9jVhEQ
- A7EE54xIdzPER8GvTJnsqk9YTWqOOpVo3meQirrH14tupASJXlo+OphjgiHESzGBKfLH
- 9iB9vwTpwfP400x1xnXFsJYVXUawOfJR/RZcKhNMgAspDYBcN/KdK8cw+Lt9bQRzuWWd
- zywnCaXts6UPS5JLHDnoJuWYj6oMHSVU8MdXNcBqIzMWxYe8/I+kOJ2mmK3rpY5MPq2w
- mjdRv8XmUAHOeLzj+rIrc3BwfkNRJ4CAOtHnkjOGqNWuJ201iMgyomBERPh1k6+qmGeB
- FGtA==
-X-Gm-Message-State: AOJu0Yybvdh9hw7POOoovh1M3EbNURDPAQYFU7yzKleE85Y1u10Yq0/c
- AjVjDLe8Ts0jD2Lfu1CR/AXvAus3YHl9U73TZMuriImaMK0/BAL02O+PMwJcuO3LomMBzlS2P/v
- kUef4
-X-Gm-Gg: AY/fxX52JOhx1m9S/9xdrSQHntpc+RvzcW/Zk9Lfl6PFLNmbkLg0jzKRr4I5zpTzSFZ
- 7A3FxjQ1GtKLiKZOdfGXFuC0aInfsvPFObt5SA7NkSO7CdJoTLa+9Ragmo1xMRe5qfF1qEmAQr6
- FpFwn2xvnism5YMfv90mPONiArdXuYrNcmEpteVIhjhr+k0jBeNCRQh+MYoiAksHe9MPkHAmOTH
- Ml7HaVti4g15pNB/7f6PPYUQAV9tnhsXmsI8m/q1ZEzUp//lpyAu2rxr0oy0bxHqtFoQtGMGl5m
- Hhc37EYUF4qDoLT1nQrDb8Chb5ybRDgi515nzPN+Xd5q50n/lxZofAFnHLmlSH6QYorsewwriG6
- tToAW915Eig3uFsTdyh4l/9Z5C9DQVDE+W0EUvLMiAE3koIZ+Fh25J44TcQd+40abKLnMkmKWD2
- zG4BgfdKS4A9HPMjJVBVw6hb5CYSOtdfXNRyANz9Z6Jw0hEq9MAhcSerUQiOnUPPGvg/AbZw3Vq
- nHu8BTIHoeOjMq5p9y5wv2ACWY9OnnLyBDFFUR4Iv6HUw==
-X-Received: by 2002:a05:600c:8710:b0:471:14f5:126f with SMTP id
- 5b1f17b1804b1-4801eb142famr2253005e9.33.1768503328060; 
- Thu, 15 Jan 2026 10:55:28 -0800 (PST)
-Received: from mnementh.archaic.org.uk
- (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
- [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356996cecasm514207f8f.26.2026.01.15.10.55.26
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1768503508; x=1769108308;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hSaWkiEldx16GFFC1s9mqelmr/R2HTRT2+Buu/tOcCU=;
+ b=mWzM4BbErnws5HzcX4UP25TF2zlBPpguYhZy5X8c7bQHFTXGyHPHEpxvfH/WYAHsbg
+ 2lhz3TykfV7tsUXsIiembf9gEJ+6/kS7JwIQAhMUmwqIHypt8siKggXbc01IglHaRdxT
+ kr7lYl+AvVsn+Ar7E2dYoimj0Vxaq/UPLsmopg3hLhcngC6OWQzmglKhRb6px8K1JmiW
+ SKdpwSIITJeZib92tXRDGDqEf464FVXGGFNWkrYIgW1Vh2qstv+ZzJ5+Wwh7qptqDQWF
+ malRrNfScz+ftdqymuq88HNjGnizsen1e3dicxBohMql9/j4oL25TngB1cOLIM1cm3mu
+ IT/Q==
+X-Gm-Message-State: AOJu0Yzi/fSiYDoY65QEj02QySCdYOn2sxzwOwZI9wudYDAP0Mc6WH/R
+ zqBItD1vwBlSdiH6Y1S5h+uHb7IyEaog+tyeVsFoSd+3cZcglhSh8ssAzN0yRfpf4DK4HkCl//m
+ LrDdW6xGngdor2pzPzsB3ZTl9Kluiv/INLXNDbVYPpl5i+xXKcg69t457
+X-Gm-Gg: AY/fxX4aexvXqZZXUjpsCj8EwrSsmdXKimE5uT3TbFHin73XwkOpMOmWxMy09SBc1Ha
+ XBqPm/js2hEj83lIM4slPkL3/6NlqqozoO+ChMf/2813afRyG9Qstm9hcjYTHqY3SB/OOsd8sMY
+ A+Au9vB3HIyn9J34+dDCA1YLOKq8YfKtqAmHax5upQuRLxCFBEkJvG2W2joN+j8LRiejBfK/Kr8
+ rKyyGfsd4ceAf1UrNhvnyHxNvZhGtP0/q4hz8jCdQudwZ/j5M/2v+mvFNt5iZoVimqZWSJ1SVGG
+ sRUbjC2VzFNkIl04Oy2n/fe9v9CzLR2Yp0Pznx+eGlPGe9BKWQsbmgcr87HRJaZR3FBHthPLtE2
+ z38Q=
+X-Received: by 2002:ac8:424c:0:b0:502:a235:e1a1 with SMTP id
+ d75a77b69052e-502a235e424mr1884081cf.10.1768503508238; 
+ Thu, 15 Jan 2026 10:58:28 -0800 (PST)
+X-Received: by 2002:ac8:424c:0:b0:502:a235:e1a1 with SMTP id
+ d75a77b69052e-502a235e424mr1883891cf.10.1768503507851; 
+ Thu, 15 Jan 2026 10:58:27 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-502a1ed3155sm2010011cf.19.2026.01.15.10.58.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 10:55:27 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 20/25] docs/system/generic-loader: move TODO to source code
-Date: Thu, 15 Jan 2026 18:55:02 +0000
-Message-ID: <20260115185508.786428-21-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260115185508.786428-1-peter.maydell@linaro.org>
-References: <20260115185508.786428-1-peter.maydell@linaro.org>
+ Thu, 15 Jan 2026 10:58:27 -0800 (PST)
+Date: Thu, 15 Jan 2026 13:58:22 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH 0/3] migration: deprecations and removals for 11.0
+Message-ID: <aWk4zklo0pV_Folu@x1.local>
+References: <20260114195659.2543649-1-peterx@redhat.com>
+ <87wm1jxv4n.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87wm1jxv4n.fsf@pond.sub.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,79 +117,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we have a "Restrictions and ToDos" section at the bottom of
-the document which notes that there's no way to specify a CPU to load
-a file through that doesn't also set that CPU's PC.  This is written
-as a developer-facing note.  Move this to a TODO comment in the
-source code, and provide a shorter user-facing statement of the
-current restriction under the specific sub-option that it applies to.
+On Thu, Jan 15, 2026 at 07:11:52AM +0100, Markus Armbruster wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > This series removes two deprecated features and formally propose
+> > deprecation of COLO framework for 11.0.
+> >
+> > Please review, thanks.
+> 
+> As far as I can tell, this together with
+> 
+>     [PATCH 0/2] migration: Drop deprecated QMP stuff
+>     Message-ID: <20260108125512.2234147-1-armbru@redhat.com>
+>     https://lore.kernel.org/qemu-devel/20260108125512.2234147-1-armbru@redhat.com/
+> 
+> buries all the deprecated migration interfaces.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
----
- docs/system/generic-loader.rst | 14 +++-----------
- hw/core/generic-loader.c       | 18 ++++++++++++++++++
- 2 files changed, 21 insertions(+), 11 deletions(-)
+Yes.  This series was definitely inspired by that one, thanks for doing it
+(and the fast reviews)!
 
-diff --git a/docs/system/generic-loader.rst b/docs/system/generic-loader.rst
-index d5416711e9..0df9b66976 100644
---- a/docs/system/generic-loader.rst
-+++ b/docs/system/generic-loader.rst
-@@ -99,6 +99,9 @@ shown below:
-   If this option is not specified, then the data will be loaded via
-   the address space of the first CPU, and no CPU will have its PC set.
- 
-+  Note that there is currently no way to specify the address space to
-+  load the data without also causing that CPU's PC to be set.
-+
-   Since it sets the starting PC, this option should only be used for the boot
-   image.
- 
-@@ -111,14 +114,3 @@ shown below:
- An example of loading an ELF file which CPU0 will boot is shown below::
- 
-     -device loader,file=./images/boot.elf,cpu-num=0
--
--Restrictions and ToDos
--^^^^^^^^^^^^^^^^^^^^^^
--
--At the moment it is just assumed that if you specify a cpu-num then
--you want to set the PC as well. This might not always be the case. In
--future the internal state 'set_pc' (which exists in the generic loader
--now) should be exposed to the user so that they can choose if the PC
--is set or not.
--
--
-diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
-index 24f3908b1c..66a24f7b2a 100644
---- a/hw/core/generic-loader.c
-+++ b/hw/core/generic-loader.c
-@@ -30,6 +30,24 @@
-  * separate backend.
-  */
- 
-+/*
-+ * TODO: currently the "load a file" functionality provides no way
-+ * for the user to specify which CPU address space to load the data
-+ * into without also causing that CPU's PC to be set to the start
-+ * address of the file.
-+ *
-+ * We could fix this by having a new suboption set-pc (default: true)
-+ * so the user can say
-+ *  -device loader,file=<file>,cpu-num=<cpu-num>
-+ * for the current "use this address space and set the PC" behaviour
-+ * or
-+ *  -device loader,file=<file>,cpu-num=<cpu-num>,set-pc=off
-+ * to just pick the address space and not set the PC.
-+ *
-+ * Using set-pc without file= should be handled as an error; otherwise
-+ * it can feed through to what we set s->set_pc to.
-+ */
-+
- #include "qemu/osdep.h"
- #include "system/dma.h"
- #include "system/reset.h"
+> Opportunity to deprecate some more ;)
+
+Let's see if we can remove COLO first. I would treat COLO as five features
+in a wholesale package.. :)
+
 -- 
-2.47.3
+Peter Xu
 
 
