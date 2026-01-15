@@ -4,93 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 743B8D44C7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 16:44:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 549ACD44C73
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 16:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgQRy-0003Vl-2I; Thu, 15 Jan 2026 11:43:58 -0500
+	id 1vgQRw-0003Uu-Bf; Thu, 15 Jan 2026 11:43:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vgQRw-0003UN-1y
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:43:56 -0500
-Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vgQRu-0003Ri-FH
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:43:54 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vgQRu-0001jV-If
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:43:55 -0500
-Received: by mail-qt1-x833.google.com with SMTP id
- d75a77b69052e-5014d4ddb54so11516381cf.1
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 08:43:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vgQRs-0001jM-2T
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 11:43:54 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-432d2c7dd52so986504f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 08:43:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1768495433; x=1769100233; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=X89QpuI6QDEihOpyrs/cvhqZeN6bdh9pqeSWXqR7ryk=;
- b=JXmnAs1arjG6ocIP1EV2QzsWKl+JwnHGpR+lDoXyDES+gcBtv6kLu6p7swBIXA9qZN
- lVdLUI/TMZIeuDB01wXaDVzLESpxdLN+YPNGNjgzpJiIywpH1XL4kUjFK25gcwyDD4Fk
- NLyog1chW9cAux3PDYBIFt/3XTfV/nqaAF4sV4bFk/mJpMuVuA9IUJT/1aY5qozMZBat
- J0cORDRvK1fjlgbuTDGolsdMT14qC5KzZJOKztBu6oLaqUddH5w/IDs23kaWwO21YLCW
- ryyT2XU1lHG0DaZxbgkMjmiDXFKQt0vNTlmm2J1j9gssMawh6Tw2y2K76OS1JSysN3YN
- t3nQ==
+ d=linaro.org; s=google; t=1768495430; x=1769100230; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=h/5F67crpwhGUIaSgemYTAQqay02sgYsdy0cnOA/2UU=;
+ b=ZBI3QjG6GYCjNwK3lCY3CQXW3YEezROo5vQv+S/3udxPNx09Cf2jqVgTKZt6BVLcQx
+ XoadTAbxXr3v/ZMYuVESCrB+JxmvRHksJP+keMgiLlsIAZyT6NdKzpxg7sGdcRI8aa5H
+ yxb/krcrdGRbAKPIbn6YD+Qt7//AIcEXlZvpRNLR4Rje5PJ3je9byKLAeA6CIHmL5/pq
+ zJJ2Fx2vJ5WfPA+OKr3nXZy6NoxotspJGrpfI42up2jT+98DlR3ZEu7F9tM0I7ubqgeM
+ gDKgY6XbtJfcURcdjkcgHm3tD3Z9q/aIw5XnIR4dMvroCK+qpK+/lZUoRSVC1C952ASB
+ e2Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768495433; x=1769100233;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=X89QpuI6QDEihOpyrs/cvhqZeN6bdh9pqeSWXqR7ryk=;
- b=mKfK4wUBo0d3uZL5g8z0cvFu8m6YHpsayCoC17hvKbaV1+eczELh+iOKTTcghHz0Vd
- tivAYQ68FHVW9I0phwqyC4i8GAQreZQNi+xRgGZvDciN1Ha/uQJ5ofSVKeU+N1poHlvn
- lW/Jswq9Odd1PeuSlPKVt08pgq/o1QpHgHqPmb6CCqR0CSdhyaFv9m3Z3kI4cW+p0Dw/
- MGHy4XVvsJF/VlOsOokPhMKdsLv4FxJJhu0ojJq4on302gtrg8/kIRblViTmASS3Beod
- lp6E0+iC2jjDFcqmJ5Ob326NNVm+jhCXf1wnWns8fyqO4q/68OxviOA1RgkNs42murWZ
- ppsA==
+ d=1e100.net; s=20230601; t=1768495430; x=1769100230;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=h/5F67crpwhGUIaSgemYTAQqay02sgYsdy0cnOA/2UU=;
+ b=OAuXwZfzu8UJhrILpKVCMNcWQeMlUfcZyrzu/3y2Dng+s4xfnUtgwjUCVkrWVXbYxk
+ ZIYK6kny2VGtWEtg2NnnfMsGtC1zqZmdHEGjng/LqRleS2WqdLhtAazzMMAHaCaJ3nFp
+ zULvfeWRPUM03h1MyakOKop0FxzNKmNxcuszlDwmXb/QPQ9XChEYPC4OGt1WQ673EZ4N
+ X36w+yYFJF90BTAgef99EHblZaKw28Nbj9EBwlRXg5AqTQlg3aGI6WGfE8VkY1sNEyE4
+ kIE7iWzf8SsQYKwHg0b8flLqSWBL71Ng6iAPxGgSFlOgiGGsEEGducByuCxWJ8UWKkah
+ LSFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQ5CB7JOG7eRvfWVzvEpzOKUeeNy8T8qj2AtD8Shpdx4O8CqL8JOMUtZA01ydRWD5FC3RiRrts5EdJ@nongnu.org
-X-Gm-Message-State: AOJu0YwsWWl3VumioOQqGpgjuUtKiXCGtCruFyk1Mt83DpvM/QwTYeLG
- 7asqlHckkCJXsUOVuvIXLQsFs9Y7voeO63FvBSAkVgQJHXCzxDuIrJUteMpfN/5dX6Q=
-X-Gm-Gg: AY/fxX6Q2BEigfQ0huEYypFKGiGTlB9zpddo5f/8nQvb+yohUvJbuH3554jm9f9woOO
- OqmZiP/bCtP2IHVz0jm4ph5JIpBnRdBWKuKpKzLgMNGJHedePHmFEIB4iUCY46IbRKHZJcpivux
- Yd/MCe/pivju2MmikkDqFcVgxKLRNP7yhD/7DzxTSAEx8P6ua/mk6tReav1jLbap2veNEnwha4E
- REzmFqxJiX3VJmppEoB1AJFL60KRWTwwWf4DlnJrGia3rtWhHPMf2TR5le9IgdaZdVrjpMVUEmm
- T68dirMal+wF4ZJslOdxSjDYftFl80Uz8XGhxUy3QHtuO0wmXPeo4jlIX5rXnSArFF5i83ImiTg
- Sp/Fs7rPMaeWKo3BeTWb6qu7EsuuJ+4U9wzj4T+9I9YANzb02ATHwfeWiNz6dMIb0godYRdCHgH
- bY/b1qC0eMzIu+gKIiDABiP/JmpL+4UkX4UjdCXsFS
-X-Received: by 2002:a05:622a:44e:b0:4ee:1b0e:860b with SMTP id
- d75a77b69052e-502a168934cmr1481261cf.23.1768495432735; 
- Thu, 15 Jan 2026 08:43:52 -0800 (PST)
-Received: from [192.168.68.103] ([152.234.121.223])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50148ebac91sm38903051cf.21.2026.01.15.08.43.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 08:43:52 -0800 (PST)
-Message-ID: <5c30fdd8-4d97-4424-aba6-f10a6528d74b@ventanamicro.com>
-Date: Thu, 15 Jan 2026 13:43:47 -0300
+ AJvYcCVFuC3I/A/5qMxxZ/TeVTUZx/BmzDNPrsnls7aUdIOApujwQCkeAPb7v3pm5QePX337JyiKYKYGxbaP@nongnu.org
+X-Gm-Message-State: AOJu0YyPRalLC1ZvYnH0DF9YGPtyQwxExM5c0z8ea6WEB6Wt6tt8dsia
+ sqq5zsnXcJODz3HwYlh9w96dKTU7QhbfrBRIbi973nPlvP8CUq127gx6zA3hOjQLvLM=
+X-Gm-Gg: AY/fxX7Y5/ydtQ+bEpiNzzRC2hJyPOs9q2iR/aLjyzKYlff9ilp6gPLVd81JCNVGnan
+ cZ0adx5/+Cmm1yAocctK6EWQTQz6jSDC61bZnOUVoA+eNYkTghDI3oxxGriMlp9YfCvLK1tjV92
+ 96buBRSp/zWpmI7HHSGnUj1SMfAz8ayIEE3cXzJAA7DeArs/qQwzBNN/xtA8OaLlQ0ANPkOyvVN
+ WkGsbZp/CmLmVrW1ZjRK5AMM+BjT1PTllhSQWPleqThSk56+b/xNe24+UKi2AmdENLFf9hACuXh
+ 1glsxpRQPXgd3Vi1b1NaUSPQi196ICoNGqLbasx3K2mZhbb7EgmXk48iMEc+aWCMxMaxKYgGDS0
+ v4v7R2DM9xZ+oRZbhSNHxOJvsu6Q69BegTjepByxFRQtGEXv35XXCET/igPkli/FPw03aNI6ltS
+ ck8ZyFPo2+M+U=
+X-Received: by 2002:a05:6000:4283:b0:430:ff81:296c with SMTP id
+ ffacd0b85a97d-4342c54ab86mr8256220f8f.34.1768495429997; 
+ Thu, 15 Jan 2026 08:43:49 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-434af6fc7e0sm7012220f8f.41.2026.01.15.08.43.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Jan 2026 08:43:49 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8382C5F88E;
+ Thu, 15 Jan 2026 16:43:48 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Reinoud Zandijk <reinoud@NetBSD.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Thomas Huth
+ <thuth@redhat.com>,  qemu-devel@nongnu.org,  Peter Maydell
+ <peter.maydell@linaro.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Ryo ONODERA <ryoon@netbsd.org>
+Subject: Re: [PULL 13/31] accel/nvmm: Replace @dirty field by generic
+ CPUState::vcpu_dirty field
+In-Reply-To: <87a4yfxgm9.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Thu, 15 Jan 2026 12:25:18 +0100")
+References: <20250704101433.8813-1-philmd@linaro.org>
+ <20250704101433.8813-14-philmd@linaro.org>
+ <44ccfba7-21a3-4c24-aa6a-4b2bdb989792@redhat.com>
+ <dd7fbe03-1458-4c44-b8db-a9d5e9ae33f1@linaro.org>
+ <87v7h44pal.fsf@pond.sub.org> <aWdfqvJhtDt14lTJ@redhat.com>
+ <ea1e0e45-f864-4a43-a40e-48fd82c26c56@redhat.com>
+ <87a4yg4gmo.fsf@pond.sub.org>
+ <aWd9wP9-9rx0ELhY@gorilla.13thmonkey.org>
+ <5279bbb4-a4b8-4c71-8275-92643b8796d7@redhat.com>
+ <aWjBiwjKpfmnaBSe@gorilla.13thmonkey.org>
+ <87a4yfxgm9.fsf@pond.sub.org>
+User-Agent: mu4e 1.12.15-pre1; emacs 30.1
+Date: Thu, 15 Jan 2026 16:43:48 +0000
+Message-ID: <87sec6hlmj.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] hw/riscv/boot: Describe discontiguous memory in
- boot_info
-To: Joel Stanley <joel@jms.id.au>, Alistair Francis
- <alistair.francis@wdc.com>, qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Vijai Kumar K <vijai@behindbytes.com>, Ran Wang <wangran@bosc.ac.cn>,
- Michael Ellerman <mpe@oss.tenstorrent.com>,
- Joel Stanley <jms@oss.tenstorrent.com>,
- Nick Piggin <npiggin@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
-References: <20260109131657.396794-1-joel@jms.id.au>
- <20260109131657.396794-2-joel@jms.id.au>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <20260109131657.396794-2-joel@jms.id.au>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qt1-x833.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,77 +122,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Markus Armbruster <armbru@redhat.com> writes:
+
+> Reinoud Zandijk <reinoud@NetBSD.org> writes:
+>
+>> On Wed, Jan 14, 2026 at 01:17:20PM +0100, Paolo Bonzini wrote:
+>>> On 1/14/26 12:28, Reinoud Zandijk wrote:
+>
+> [...]
+>
+>>> We're not asking you to keep CI up-to-date (which Thomas is doing now,
+>>> despite having no specific need that I know of to support NetBSD), just=
+ to
+>>> *report* failure to build from source and tell us "hey, that's how we f=
+ixed
+>>> it".  Otherwise we have the false impression that no one even cares abo=
+ut
+>>> new QEMU on NetBSD.
+>>
+>> As pkgsrc normally tracks releases and has a directory with local patche=
+s on
+>> top of that, build errors only show up when we bump the version. Version=
+ 10.2
+>> is now in pkgsrc though I am running 10.1.3 so there is surely interest =
+in
+>> keeping it running. I could try to commit some more trivial patches in t=
+he
+>> repo here to reduce the diffs some more.
+>
+> Fixing the build long after it broke is less than ideal.  What would it
+> take to get NetBSD covered in CI?
+
+We have the ability to run tests via the vm-build:
+
+  make vm-build-netbsd
+
+however to take full advantage that needs a runner with a reasonable
+amount of memory and access to KVM so it can run reasonably fast. Does
+anyone want to host a dedicated x86_64 custom runner?
 
 
-On 1/9/2026 10:16 AM, Joel Stanley wrote:
-> From: Nicholas Piggin <npiggin@gmail.com>
-> 
-> Machines that have discontiguous memory may need to adjust where
-> firmware and images are loaded at boot. Provide an interfaces for
-> machines to describe a discontiguous low/high RAM scheme for this
-> purpose.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
->   include/hw/riscv/boot.h |  7 +++++++
->   hw/riscv/boot.c         | 11 +++++++++++
->   2 files changed, 18 insertions(+)
-> 
-> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-> index f00b3ca12245..115e3222174f 100644
-> --- a/include/hw/riscv/boot.h
-> +++ b/include/hw/riscv/boot.h
-> @@ -28,6 +28,10 @@
->   #define RISCV64_BIOS_BIN    "opensbi-riscv64-generic-fw_dynamic.bin"
->   
->   typedef struct RISCVBootInfo {
-> +    /* First contiguous RAM region. If size is zero then assume entire RAM */
-> +    hwaddr ram_low_start;
-> +    hwaddr ram_low_size;
-> +
->       ssize_t kernel_size;
->       hwaddr image_low_addr;
->       hwaddr image_high_addr;
-> @@ -43,6 +47,9 @@ bool riscv_is_32bit(RISCVHartArrayState *harts);
->   char *riscv_plic_hart_config_string(int hart_count);
->   
->   void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
-> +void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
-> +                                        RISCVHartArrayState *harts,
-> +                                        hwaddr start, hwaddr size);
->   vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
->                                      hwaddr firmware_end_addr);
->   hwaddr riscv_find_and_load_firmware(MachineState *machine,
-> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> index e5490beda007..9babb85b0458 100644
-> --- a/hw/riscv/boot.c
-> +++ b/hw/riscv/boot.c
-> @@ -69,11 +69,22 @@ char *riscv_plic_hart_config_string(int hart_count)
->   
->   void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts)
->   {
-> +    info->ram_low_start = 0;
-> +    info->ram_low_size = 0;
->       info->kernel_size = 0;
->       info->initrd_size = 0;
->       info->is_32bit = riscv_is_32bit(harts);
->   }
->   
-> +void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
-> +                                        RISCVHartArrayState *harts,
-> +                                        hwaddr start, hwaddr size)
-> +{
-> +    riscv_boot_info_init(info, harts);
-> +    info->ram_low_start = start;
-> +    info->ram_low_size = size;
-> +}
-> +
->   vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
->                                      hwaddr firmware_end_addr) {
->       if (info->is_32bit) {
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
