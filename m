@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41633D31A08
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD8AD29FFA
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 07:56:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgIDR-0004eB-S3; Thu, 15 Jan 2026 02:56:25 -0500
+	id 1vgIDX-0004i6-Cz; Thu, 15 Jan 2026 02:56:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgIDQ-0004d0-10
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 02:56:24 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1vgIDV-0004g3-QS
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 02:56:29 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgIDO-0002o7-L7
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 02:56:23 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2a09d981507so3805665ad.1
- for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 23:56:21 -0800 (PST)
+ id 1vgIDU-0002pX-5L
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 02:56:29 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2a07f8dd9cdso4438555ad.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Jan 2026 23:56:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768463781; x=1769068581; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768463786; x=1769068586; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=qvSxvzFQdbcXzJb4lGNhulQQJhcGCTokFA1T1vLJv5I=;
- b=drD56ju+dTqeOicxF11s2s2jF8QeL/ry+Bz96gocyQUxM0DUT0lWMHA1zsH+DwIeuK
- mSD1zzdu3UP718MUH+6ivfEtyc9hhzggDYT5zZGuK2f5v+zot1+JVt+T1yXUNISqyqwY
- 6htNXylu0i0O/oRHvJikS9aN8CB5c28QDSZMuc3Uek1Va1I1yQQPkqB2/NBr+Q9tpZnd
- XOJFRepQfwghZSUuFusQwV9fWBEG6KqpEroD2Dv7083tDXrew9YIK0Q98mR3EdH54XKw
- Zm/R7En8m32/+itUTyM2TxRAZGwWXbMayziWoS/b36uCdJ/edO5zNsMTHNCa9QQNUTT1
- OP1A==
+ bh=iv38R0w0UhtZUHCNYDFYJNpVgQoPsUcJBlhNKE+1IGg=;
+ b=VStGHpfee51ta7+Xxe+eVcjVpZJcuRFfl4O1ZUx6/XhHA9iTlPhgzj61cyndljB+9j
+ ytfnBaItoTGnLI1di1K8Ka31AZVGk1VBsdUuRj0SAb72M+txk4NP4Gs9K4+1KblDHZxC
+ 5OxMX/b0QQnb6dzrxBsCyoqJWy3Fcu+/mjMheAx/F4d7ZcJMSDuS10XQ2hUOnk92YOhJ
+ IG7x89n+GYaQT31VPlyIA7TwlrhN4Z1E3zQb3jeh1RQCj3vAk1DjfydzTeVJNs7jMHjb
+ a4kUPC+JpwO3DM/T5ChYrTWgf0vWVpA9eXvrCpkUNF9NncGQrhtBW5Rm/S6PcYGoGzQw
+ w3Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768463781; x=1769068581;
+ d=1e100.net; s=20230601; t=1768463786; x=1769068586;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qvSxvzFQdbcXzJb4lGNhulQQJhcGCTokFA1T1vLJv5I=;
- b=knHUQUVrHsuLk/dewZXtMqxAbsXYODJUi67Gtpt0nW3A+YhjGsjeKhixKPj/Ut8gB6
- AYml25Kz41jyMutLgaOHsTuIVAL5dFCswvn9fXpEoD6gOvfRNcZUisWY7BdT3uZ1uVRa
- /tS8/7m1BSQ5uTO9re8Xsb/3ZcfoD0SIzs+dUXMezHN62ySJ85hq8CwPIOfWql94yZSP
- IL3ir+RBnD8IFrm3r5K2l8esKg38lV0PdjEZkydd1riXiZGIdmCK+Fm+x6Sp3rdQawXu
- QF26uw1oDUbsI3+If/00JpvreENo7gOrp8/IjwbNvleqwgfIaLXALiKqQIU6zB3bz/n6
- cjtQ==
+ bh=iv38R0w0UhtZUHCNYDFYJNpVgQoPsUcJBlhNKE+1IGg=;
+ b=FFoOaorzXLfF/Uw/yhhm6IAgUL8/a4YqeLTesloOg5sQGn0+sUnugju+qC8dpqzaN9
+ YEqq292AlWOx/tzLmXf+AL2Xp2gex0fkgIiOlP4l2b99MUooINZNxhRGsjFmWLvLm+AG
+ lzvhKiiUTUZVivbpDCgIFNfXirjrn3ilB7xdYG7BWTpkMEPd/rZaPe2A+IG4gB4XfzCK
+ QGpfiNekrNCnyiqnqhTlii+T6Ud2V7OEfyrPGZQbuGYlZfQp6E5hBiz89zfgbrNgEi3n
+ n+5gtUB/bd7Zb0ctkIRbK+St/Ka0OqqJNMM10iuxVZuozkDUFeVOFtOkLZMNJRxXk6fd
+ Og8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVK2Xq5k7QQ6c++PasJ5IGkJuwPiUFyYOIImnnK8GApAym3F6hP/Wdg0KqtEWfzFJbzA/2eMi6AMfGy@nongnu.org
-X-Gm-Message-State: AOJu0Yzb3yLRPjav7jxPxACk4L4vmjTr6g2rD1UIJ540K+zBZCtsOybz
- IhkGUInjadXTe2GA3uD8IMtXTzkcKTLzMy50HI1+IeyWaStU0XAsAJkbHRgtLOzADsrcEc36hs5
- cvzCP72Jwdw==
-X-Gm-Gg: AY/fxX7eiTQLCMo4ITb4JfIi5dPIYBRFlRslEmKj+eZaI0L6RM46UmvTVynkFOcoPzQ
- kWeD3NtnpAJ52l5Ob+H6IYNhKsSSP/rJ2/bFZSW+WkaaEkgxKlMhx29rSEw72cpu/iQZTzRjVqb
- bT0PT91Se7xyQ5DhYyazdcrWFRYqktH98tMk18x5fwP0KkT5+7x7mF7ET32M2wGIcU3WrR+lCDS
- zXwpJ4q218u3UI888cn6755vq2wbCKbvs6C71tH3iZuPLqhJ5747i8udUXMMrM6Ia9sSBlxjI0J
- qpxIUPGgzmFCWGyDNlCkGp1wcw+v/SNpreYCpkmsYBz1EwHEVyar2tZM/lbNjG4O4Vr3sfY27On
- EFoOWzqFSJFGJluVVQuT1VzJwIir8BBvg07YsFEpVG/iMWBco3oUYI4kbliIRIwmp9ymVmXmOX0
- J1964LrkzvLlEqYxWmcP+LkvoO64U7gA==
-X-Received: by 2002:a17:902:ea09:b0:29f:2734:837d with SMTP id
- d9443c01a7336-2a700a51209mr22315625ad.28.1768463780413; 
- Wed, 14 Jan 2026 23:56:20 -0800 (PST)
+ AJvYcCUJSv6yimOOgbj0Hic3L5Jcv8CN8+DF9gBKwXP/ymlqJXwJx51FSZ0EhdSyrfhboOoHOxd+Zk5OPb+1@nongnu.org
+X-Gm-Message-State: AOJu0YxD9kh86LzvJiozyblMZ3ITIA0AFNLnQgIyYvLbF+Mvk7Lfm8UA
+ 5cdb9x/LlL6jRIUywVwO1Yilh/a3russt919QBGZVxYZj9mVFw4cVBP/+S2GDjHt/pl6qqGuX7D
+ 7XJW3jXF1pw==
+X-Gm-Gg: AY/fxX5YReB9L+BHwMrbzkWsQ1HLyX2E9v7tf6Vwd5SlaQj46xEFPpibesmX8U02NIt
+ /AoGZUwLQi7mAIPYNhxcNMVc2o7FuupnNA03cpXg6LzdZ6Zf/oAwsPksUYXEw1mCIPjxt3qDfFN
+ 5+WwRLHSwB04Jh9N7RteiEO9OzuiDF40/jOE63QiP3fOYEUX+MwL6StgzhQ7hV+hDeCQJiB6+kn
+ pKa2pnSWHG/duwnzsRwVnkV74N9jSXs55bLVpdyEDvElsqescGFDyG4ztnZLPOInlaRtSvLyCsp
+ y07UwtIV9EDf5kW+T+90DdVwpfVgxJKr7wUd4Zw09Svq/lmVVdfuA9qSE9w1hIDcnL+neRpWgwx
+ CaRNs3C9Med+nnabWmiaiEOw/kEfgJniuptpAt9EAbLV1WVL5jnshZTpJkqL7gV4zYLM3TBg0tY
+ GtzctZt3ygJl6EaM/L7/WR8H8fInl+wQ==
+X-Received: by 2002:a17:902:cec3:b0:246:7a43:3f66 with SMTP id
+ d9443c01a7336-2a599d81c70mr63025785ad.7.1768463786394; 
+ Wed, 14 Jan 2026 23:56:26 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a3e3cd2954sm79703625ad.86.2026.01.14.23.56.18
+ d9443c01a7336-2a3e3cd2954sm79703625ad.86.2026.01.14.23.56.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Jan 2026 23:56:19 -0800 (PST)
-Message-ID: <a0f94a78-b368-4cfb-adb2-339fa50f19e5@linaro.org>
-Date: Thu, 15 Jan 2026 18:56:11 +1100
+ Wed, 14 Jan 2026 23:56:25 -0800 (PST)
+Message-ID: <42588c0e-91ed-4a6c-8a1d-777bb42d8927@linaro.org>
+Date: Thu, 15 Jan 2026 18:56:23 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/3] M68k for 11.0 patches
-To: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org
-References: <20260113100320.1009608-1-laurent@vivier.eu>
+Subject: Re: [PULL 0/7] Mostly x86 fixes for 2025-01-13
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20260113111333.1138160-1-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260113100320.1009608-1-laurent@vivier.eu>
+In-Reply-To: <20260113111333.1138160-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,21 +104,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/13/26 21:03, Laurent Vivier wrote:
-> The following changes since commit b254e486242466dad881fc2bbfa215f1b67cd30f:
+On 1/13/26 22:13, Paolo Bonzini wrote:
+> The following changes since commit cf3e71d8fc8ba681266759bb6cb2e45a45983e3e:
 > 
->    Merge tag 'pull-riscv-to-apply-20260109' ofhttps://github.com/alistair23/qemu into staging (2026-01-10 10:31:57 +1100)
+>    Merge tag 'single-binary-20260112' ofhttps://github.com/philmd/qemu into staging (2026-01-13 11:51:18 +1100)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/vivier/qemu-m68k.git tags/m68k-for-11.0-pull-request
+>    https://gitlab.com/bonzini/qemu.git tags/for-upstream
 > 
-> for you to fetch changes up to cad529260a8503b79d76589f1427ee592e31a801:
+> for you to fetch changes up to a24f045228271391b5c5064ebf049e1f50b6d712:
 > 
->    target/m68k: Improve CHK and CHK2; implement CMP2 (2026-01-12 16:26:48 +0100)
+>    rust: Update Cargo.lock (2026-01-13 10:54:28 +0100)
 > 
 > ----------------------------------------------------------------
-> Pull request for M68K emulation (20250113)
+> * target/i386/tcg fixes
+> * hw/i386/kvm: fix PIRQ bounds check in xen_physdev_map_pirq()
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
 
