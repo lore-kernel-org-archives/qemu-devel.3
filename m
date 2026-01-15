@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB59AD46621
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 20:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA27CD46617
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 20:26:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgTmv-0002iK-Ln; Thu, 15 Jan 2026 15:17:53 -0500
+	id 1vgTuY-0004v5-Eg; Thu, 15 Jan 2026 15:25:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgTmb-0002hU-3L
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 15:17:29 -0500
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1vgTuH-0004tC-VW
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 15:25:26 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgTmX-0005Z7-VD
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 15:17:28 -0500
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-bc29d64b39dso454846a12.3
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 12:17:25 -0800 (PST)
+ id 1vgTuB-0007Ji-Gl
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 15:25:21 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2a0a33d0585so9245985ad.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 12:25:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768508244; x=1769113044; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768508717; x=1769113517; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=UQZwIKAYZC4LW5zF1gWIMFUQiSDcTZ+f3FblLwjd6Us=;
- b=SnydGFmvg4WJnyid9TWAzg06i1FL1Ea50BN721orMQTK95xYFkgJl/1gqOeEQRYe63
- pyEfIOEoCZZaNFCq4zHfLnzq4zrq8xswgbuKGuIosukzBHkqQy5s4D2KvIJEPpjg3fMJ
- uDuYA1tbvI2fE2jMtc56DZiMr0jjeLKRhrvfuD+HiGks+tDerXZ7sE4f+Bh5YvuiXi7R
- YNVD9tv02PUzpaUHneLeoHMGepSnRyjufNbmp0e46LGdN/bOTVO8tG8MS+3QefqF8JuQ
- Wdf7C0kOWEVy8IPuplVdSMskX5hOJTAot1FL41W/B78bFM5/6OwNthO2v9DLe7MnwdmQ
- DG7Q==
+ bh=4SGDRIGMnOYPWjOMPlSBEyglc7jQCe55ED0RKSb2Zj8=;
+ b=V1t9M5WYTfyhwMDkGR59jCy0LIAVGmRArqSY7o/gSbVG5JjvDNsX0TLappNmMI7TYt
+ sanhSh159j8uW9jzgjouOanxGazCckcIoGDg5pJhnujhuANhFyuk/Qic1QlG5NMx+CnR
+ qMCXew3JJuIC/+ucRL90pIEci38qEa8WJjzkh8Z3Hv6cDLiIRJ3cq+jpVvUFnobW/gdl
+ S8k2FugR2wB296q8J5YH37xK4QCBiMc6V3aBHKkYr2hcs0QKT+e7RHZF0sXO6PqcfNn4
+ aKszwhT8Mv9grJ75fgKS7mqryPrZbURdGM575RVQrcKW+sDDHzrEyfvkP5YjH1iG+2LR
+ AUKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768508244; x=1769113044;
+ d=1e100.net; s=20230601; t=1768508717; x=1769113517;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UQZwIKAYZC4LW5zF1gWIMFUQiSDcTZ+f3FblLwjd6Us=;
- b=fCt4HIqd+XufEF3SWNnADUjAxBdOB3lyfF1qloHI3Gl4QxkXtnGKXA22M6DyPn67g5
- QtaDtZoEIhTh1bqQsZHKl0nI6AS3oCz52GvnuFdeHLBdGZcYMtS8JHEFnxc4yPcnW1b9
- hx/VfBhHIf6+huPhrMWNFI3HpPdEk/auzKZWTbgyJisJZz+yrbXWPCvg8tekXKqzBBcC
- tOFenKoI6pf6DZayAKL35TKPACdv4CkgZkdgprm1ASqrzQ+Ojh9ElVDwQHzNYrlj07Lt
- FZsz5Fo5WAW7deH+hUtSq0EGG1mvVaIBro2UcWgPBsfi0iNbEVq7he8NVzVNwpospy+u
- CuQQ==
-X-Gm-Message-State: AOJu0YzApg3kPFxQi9w9N7RAInbtFK2KUXytXvsyozrjChhqAMqOX5ls
- d6Fi63s+zA0mPdwNTkhTsZr/e9A/LlAluuidBAVTTIupDjSjk/0mzaYTqXbJTdkdl2a+/0FuPn2
- r/vXv
-X-Gm-Gg: AY/fxX7d/9dskwBmofbaR5QmOLooj/NfsYrKhG4RRYZhPiHp3goF0kGAWnPEmMqqkVM
- HJ827ibjIA8uMF+exJ/EnDPfIo3Qbt8/ezQMTCwFOL+DEa1qh8cnuHvbBlOJZ6MlyDlvBoB1s7X
- eK6mSbXrirWHJNhuulaUfQajfchPNHF1ADENNZb0edfm+Qv81w4JTRONgZoSgRXEk9vclSUxQjO
- wTz9UrQsJUj8P3NY/Ixtm/Xxwkblbig9jQsz9+rbJ9eONwmn+BDU7lchHlnPJOS9UWnwu73kBoO
- mBjT2zT9YLk+uN0tBDgXOGdooC5IBknGtY/1NMTZJ2RjtbsUN9Wp1e8UqQTJnl86WGbmOkwsfOy
- QXaRScZzDFbCsFHAUnBozobNTPv4HoEoHoEZIZY3MANdS6hTK/M/kVdDsSGRj4GJrxscPEbY53+
- 5w8Sg0tEUN2PIb1J6yiXUAWvxFC8cB1M7kk//e2lHZvIS4YvmZk6ZYfs3fhNe3Xzbm
-X-Received: by 2002:a17:90b:4d11:b0:340:bb56:79de with SMTP id
- 98e67ed59e1d1-35273275054mr423592a91.30.1768508243948; 
- Thu, 15 Jan 2026 12:17:23 -0800 (PST)
+ bh=4SGDRIGMnOYPWjOMPlSBEyglc7jQCe55ED0RKSb2Zj8=;
+ b=OmpPvYAFa4VoUowaN4JgM3K+Oqco07AljJoaaTWvB2mjz7lS3tLLrMMQj5NK6kHELE
+ CJFEnrOg7ZIsH2rwq3wlDHzfk1CN1afFRW0gHZO1l0EuSvzj+nY0w/BBVvDpKwgL8a13
+ zZe5RfMnWBu/KkjLtONgS8sVLNganQbYVWnj1hXK/j1buY45114eV5ObvvYJjnWVdpyE
+ 83YkfnZSpBV8799oWN40hM+snHT3ibllgQVnOdu4WfECqAHFYSmM8uTSWnrh1gYRYrHT
+ gJ2mbS9917mo1w+8B1APZt8OUi3QYRfzAqLP+BRSmjrEFtz/eYz36cuMfxOs/kveBYB/
+ CdJQ==
+X-Gm-Message-State: AOJu0Yxp7wus3QUhh4GTj/YzZDroN01pOAtS2gkPecIHVPJUHZi83jqs
+ 9AKeAPFVHDkaTRLNJX/QbFwuxpi7pO+Ys70Ux8mN0ld+r2deBPytLVXjp92XdbevLxNWfw9tAEe
+ 9UuWm
+X-Gm-Gg: AY/fxX6pO2qiZRQ+QasyeliF3YuRWpglNpK6DlAwDtbdAJd+a8pmDTogUbYJNCE83nB
+ /rbZNY0TrNrUeld3//PDk6dl3g0hXiACenfFmmpn/4EHNnRLkB9tb37bMRtnPiUyZC5w8Fhn66p
+ RexZ4Q38+8qBZEdjr4QbikRnNToxcQS4RucwlvAuZVrYlNsmZchjIlb/0u1pEda1NFGd7c5UDjg
+ CDuchPRmPdVQftDWCNhWQyYjvOeMgfZQlaCQPjYzxP+8+U8FM9bsRsoumEF4ja7KGmWQ2XOLEEY
+ tLkub0K755ttvE1OJjhWTwgZ3gjEuC6Vt3p6Fp3Tt1tGH0gOLVnT3CinRB6VhDiyY15aTw8jHhs
+ tfemC9hd7a9isMLfVI9D6aR4WbQKL74w3ibeg5q1IY498omoNNB2KCBDCa/n6vuFMYMt747H8HA
+ AUhq5aXARoIryAEXBPaDedxdqdF8UBl4gEbgXkZOikWF+bO4lkrZohYKImoA16kfuR
+X-Received: by 2002:a17:902:d549:b0:29e:1415:df95 with SMTP id
+ d9443c01a7336-2a718943c43mr3240165ad.51.1768508716693; 
+ Thu, 15 Jan 2026 12:25:16 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35274225d45sm20303a91.5.2026.01.15.12.17.23
+ d9443c01a7336-2a7190ce6a9sm1488065ad.34.2026.01.15.12.25.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 12:17:23 -0800 (PST)
+ Thu, 15 Jan 2026 12:25:16 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, Brian Cain <brian.cain@oss.qualcomm.com>,
  =?UTF-8?q?Phil=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH] MAINTAINERS: add reviewer for linux-user
-Date: Thu, 15 Jan 2026 12:17:12 -0800
-Message-ID: <20260115201712.2706663-1-pierrick.bouvier@linaro.org>
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, stefanha@redhat.com,
+ pbonzini@redhat.com, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH] MAINTAINERS: add co-maintainer for TCG Plugins
+Date: Thu, 15 Jan 2026 12:25:09 -0800
+Message-ID: <20260115202511.2709767-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,26 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I had interest in this area for some time, and would like to help
-reviewing it.
+I would like to help Alex to maintain TCG Plugins. We talked about it
+and he will keep the priority for merging series, but I can occasionally
+merge some of them when there is a special interest.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 4ddbfba9f01..4ef0c10f63a 100644
+index 4ddbfba9f01..d80cdfbb6e7 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -4021,6 +4021,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-user bsd-user-rebase-3.1
+@@ -4039,10 +4039,10 @@ F: include/tcg/
  
- Linux user
- M: Laurent Vivier <laurent@vivier.eu>
-+R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ TCG Plugins
+ M: Alex Bennée <alex.bennee@linaro.org>
++M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ T: git https://gitlab.com/stsquad/qemu plugins/next
+ R: Alexandre Iooss <erdnaxe@crans.org>
+ R: Mahmoud Mandour <ma.mandourr@gmail.com>
+-R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
  S: Maintained
- F: linux-user/
- F: configs/targets/*linux-user.mak
+ F: docs/devel/tcg-plugins.rst
+ F: plugins/
 -- 
 2.47.3
 
