@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB72D47CA4
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 00:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18016D47CAB
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 00:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgXQ7-0007I5-NS; Thu, 15 Jan 2026 19:10:31 -0500
+	id 1vgXPy-0007Dl-BW; Thu, 15 Jan 2026 19:10:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgXQ2-0007Hc-2C
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:10:26 -0500
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ id 1vgXPk-0007BQ-Qg
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:10:10 -0500
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgXPz-00030i-B2
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:10:25 -0500
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-7cfdcae466eso490745a34.3
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 16:10:22 -0800 (PST)
+ id 1vgXPi-0002rR-BV
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:10:08 -0500
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-45c838069e5so859455b6e.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 16:10:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768522221; x=1769127021; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768522204; x=1769127004; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nW3K/ZIgeqH9ZJ0pbw8yuQ8bos01FtCHvP48Xzx4NI8=;
- b=aaJDz+dO2fkXE4yiVfM8uj3rZLCE2sLbPCkmSVO+cKafkF0uDh2C5T1G+LiBWJvcJE
- +fWhOlsEwEtR/cIsRteTUUwbYVNu2WavSvgn/aiaJ1LAqY2zWg+fpxp+gaqNqr5ivz5c
- HK5NbI7liBNjVYaz6GRwGTDFixQ5YT95M58YLCBC8xCW0rgV7xI90je/XsuVwzZQjO00
- jhf/dylx54sxWUWv2JqEC7nKGmX9Bfi2nfIQVm0PWJpwy56WMAWs7Bwb9D77h8MDCWBO
- /RdA3R5u7OOCPzl++0unjKHe0fw9Ipn01lP3QUYk3MLohJNeGg1znYEi4ClqTzgDDg4h
- hk9A==
+ bh=wZvTYcLaqKlw0wIxtAkLAmLveDy4j95X4eQG9s3hOI4=;
+ b=uH9YJ2Z11mQRU2FfGKPsf06hvltORvB8Iv60bBSObT6TQ1xrLUpeBeCsvIS3f9oHte
+ nZUtBlNCqXkxWgIIwI1Sz+v4hxcRV+AczLC5iTYuaTFLu+lVSQ2MMVuGL1ZyVui9E1zi
+ /Fq+KC0PlMdIBOQndJGzXj3pBnb7PlpSFwyC1wjNrA7q1QZsni9pkA3t6QeV1tfQRC0h
+ k39+Rb45kjPNwTqe5qC8MG37NYOqYhqYeTRiXNh7VG99lrwTM7zwd6+YTXcWfcRJKbHw
+ HCPcbilNorjb7YxI8JqmlnuRxINJ2bwRn4qO4J24mvs271J5ZuNGQvqoxljPWS9ulkSg
+ rrJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768522221; x=1769127021;
+ d=1e100.net; s=20230601; t=1768522204; x=1769127004;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nW3K/ZIgeqH9ZJ0pbw8yuQ8bos01FtCHvP48Xzx4NI8=;
- b=ugxoz7INwORcu6YSErYmRMlZXynHnfr7ZkVZXNwYgHiz4alSNKFCgRzUQAVbRmXDKm
- xa5OVPIbW+PUCi2ZthQiMhlBzIrFty61UqSNF60JUVJ5Mm+IlnrGW7E2BZSGEMD/+3jF
- zFHVf1LQivFSa3GF33m4SsThyvI1kuP5pFlmJsRRMcj9AutzekmuopxXLRpSUcsWT90v
- JfoihvDc7UKIkBF/SX5AThVFh0xYLG/JrmEFtee7ezo4/4lA4M43w83HJSfpiElLzezq
- GC1xGzl6NJtwFvC4bPfer7zT/AaFKzRbJafOv+gPgF5fDNt5VTuNTPjvpHBl9scnfqRn
- wH5w==
+ bh=wZvTYcLaqKlw0wIxtAkLAmLveDy4j95X4eQG9s3hOI4=;
+ b=QvQCuU4GpQvgbIfVvxrKfw4IsNowlyVHLFMSHkjwDFUHFdCAlhuvxkGsChXR1MYlbl
+ 15nV8VXa7O3+K7Vb8IxvnIg9ubEwMghjaKC/gCJYM6Bmi+WUE+jCltHgVmJdjoOeGEr7
+ NW3msBDRVwGP1XFB4YagGot3CJ6JGSV0X1KpfpZ3suMKNtfGL4bzzElxHtd8TRoTQUCj
+ qK035/DmvLQfd5f5wNlLVK8RuEMZDTYwXqxezydGg2atVUqMC0ihEt8fSrK4hXXshgH4
+ +4GvistuvJUs3ODDEQlEf6veseUtBIiQ7nUNtM/aMPDZaRvfFFWxjrLYf2tiDGTSoAJN
+ 30LQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUrK/KjQge1Xmvp+ui4hD0R5DHyHbFDaPPlnvcLTcIapYXB2cOLqO8BTGtt/jEWvR2QssYpNgXxBHYy@nongnu.org
-X-Gm-Message-State: AOJu0Yzdz3y2oaTsJiHhkg7w2ddv+M7V7YQ+uNEOL0v393ecu6YOgElZ
- 0XdeJG8ljXIpbSvU0Ck9/MngH3u4n2VmwYOEaqrXRfltt8HuP8eXkpVIOBRwhVR5JAekSV8qK+q
- HWgo+zv0=
-X-Gm-Gg: AY/fxX7cinme2aTuy7043/hTu7k73kQ+ehPbMZJ4k8zgoYhXQj9fJ2MN23KaKQmuH9H
- VkIHaNZH6Xya9ii0UXUNNyBhkrybNfxl9JN9ooEdigrDJT01/0tw3aQKwgVRbJML6JA8u0Lxb4j
- /gcDK4XHYUY873kU/pyxvFcXp6Kh6mZgURtlLT0Bl7hvmUbmqVBEFSWnJR1WgBPgp+UBfVt8ywU
- yEP7ONJ7bZdu+72xypMg22b8AQiBZjCokQqVymPzF4Wpmu+IZKYevq6GUOOebXAdtdpXI9GwLCC
- Kx8Ck2E18Hz03Jc0UkbB6I7Igw3DmjDsBiVGaMqCW8TYFCaqQRjx+nPp7CKuqPAgRPdNVVN81MY
- 5DXygNnmB2nKtlKTEVN9fMBHrgJDimWfsWU+Hs/qMUfPr4OuIGj/grI9AOCtN2FS5njLN8BUQAa
- bxqDFWaiY3LcKjKzytDsyg+LJHOdYM7oWupszgu9P49OlPE1CAdTi7Ws+3tyYVXgY=
-X-Received: by 2002:a05:6830:6f42:b0:7c7:5d72:567b with SMTP id
- 46e09a7af769-7cfdee2124bmr728606a34.23.1768522221091; 
- Thu, 15 Jan 2026 16:10:21 -0800 (PST)
+ AJvYcCVWJshqvWj4Or0DAeGFLtsSy/ptlLOs0hQ2Ip6s0YpL3if3n0hY+cUyFoWmp0/XilfU1fx6RBtnLW+P@nongnu.org
+X-Gm-Message-State: AOJu0Yw8Xc8XK/sQ2nI7vjhMjMTzmE8IoHJyP7rr58VUmlAiWx+DRxSz
+ Dx9A+F+QXg8+nbEZXMJWFFzdbWNeKi+3Yi1IiMKvuI6xwt1xRIoe6j+gVVoEn39IzDM=
+X-Gm-Gg: AY/fxX4On5iYPFyhmsykSWvnsMw2TYZBeIBPudJZmC8eO54DJ/TA1gwHT35JOq/WjUH
+ t66bsXBPhLocYJjW7v/pNgxE4C7eFoLioNPGDdbM1nHVr3ZY/R7LaACcVJmRchn8e7sSNabpoXT
+ HPGUaC7E/3WZ3DR+lJYmE/ds6cElYgaLlsCVczqw7HX68gEp3EkQ7Xjftidd/nh4sMUIYBYkVtV
+ P5RMtfVjNOQBzE6FX5tVC9F/t67HW7mfUOwIh4VEA4RBYy1Q/iB55aerTKxVUJ8Qm16cFsAcQuW
+ vkLgCwurJZq1GU5vztEhRuAMSbTKsngs2plkdWUhAmPgIaK/rqKaMQQozczT9kt3yrujHyYnitZ
+ dsDbL8O6pzOXbQaOnQ0f1LmFGA3GQ2CcxLA9IbeDfVIwh3r46WrhjNzD4gd1alTdbitm3kAo5hN
+ QNfpAg2kKiDkYAUpNpU29wChaY22RNDh151m1k50E+BabA9U8IsJK/
+X-Received: by 2002:a05:6808:1246:b0:450:d143:b79f with SMTP id
+ 5614622812f47-45c9c1640a1mr584264b6e.66.1768522204220; 
+ Thu, 15 Jan 2026 16:10:04 -0800 (PST)
 Received: from [10.244.221.227] ([172.59.196.187])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7cfdf28ef93sm686077a34.15.2026.01.15.16.10.13
+ 5614622812f47-45c9e03dff2sm484256b6e.17.2026.01.15.16.09.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 16:10:20 -0800 (PST)
-Message-ID: <52228d4a-2c5c-452c-9d39-a8b7b0adda27@linaro.org>
-Date: Fri, 16 Jan 2026 11:10:08 +1100
+ Thu, 15 Jan 2026 16:10:03 -0800 (PST)
+Message-ID: <2ebf4582-630c-4f2d-980e-fd5216c4e9c9@linaro.org>
+Date: Fri, 16 Jan 2026 11:09:49 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: add reviewer for linux-user
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260115201712.2706663-1-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v5 0/4] wasm: Enable 64bit guests on TCI using wasm64
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <cover.1768308374.git.ktokunaga.mail@gmail.com>
+ <d848e36c-848e-4d3f-9b43-dbd14b1bbee6@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260115201712.2706663-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <d848e36c-848e-4d3f-9b43-dbd14b1bbee6@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,31 +111,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/16/26 07:17, Pierrick Bouvier wrote:
-> I had interest in this area for some time, and would like to help
-> reviewing it.
+On 1/16/26 08:59, Philippe Mathieu-Daudé wrote:
+> Hi,
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
+> On 13/1/26 14:54, Kohei Tokunaga wrote:
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 4ddbfba9f01..4ef0c10f63a 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -4021,6 +4021,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-user bsd-user-rebase-3.1
->   
->   Linux user
->   M: Laurent Vivier <laurent@vivier.eu>
-> +R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->   S: Maintained
->   F: linux-user/
->   F: configs/targets/*linux-user.mak
+>> Kohei Tokunaga (4):
+>>    meson: Add wasm64 support to the --cpu flag
+>>    configure: Enable to propagate -sMEMORY64 flag to Emscripten
+>>    dockerfiles: Add support for wasm64 to the wasm Dockerfile
+>>    .gitlab-ci.d: Add build tests for wasm64
+> 
+> Out of curiosity, since the series is fully reviewed, who is
+> going to merge it, Paolo or Richard?
+> 
 
-Yay.
+I've pulled this into my remove-32 branch, which I'll be re-posting soon.  But if someone 
+includes it into a PR first, that's fine too.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
