@@ -4,99 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4916D47CD6
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 10:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A691D47CD6
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 10:57:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vghVm-00050p-OQ; Fri, 16 Jan 2026 05:57:02 -0500
+	id 1vghVz-00053R-6g; Fri, 16 Jan 2026 05:57:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vghVk-00050O-UX
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:57:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vghVx-00052w-PY
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:57:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vghVj-0002e9-8g
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:57:00 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vghVw-0002en-Es
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:57:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768561017;
+ s=mimecast20190719; t=1768561031;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=CQP5crnfclmr8J0RsxViBXyZLT1KSdU9JcYePQ+0Bv4=;
- b=FPsK6w38DmJ1wMbRoxBjcHVD2v7pvEFoG2Iztd4X3CYJCEzL4oV3Eq4PsUoRGch/LcszVu
- q3yfn84ZO6ZKINyDHa/LqgNjQAPIi6i57cktin4qid4JhQgJuanPxVcIr2rQKAF6JFlReL
- Kni90boAJmBG7bJYNlTg7VwIovZpqSI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=F9NfGLIILCJE93X62D4Nehh3Ajcehdh9OdXsCk75FDc=;
+ b=V5DkiV8ubOOt9gTp4ZyZfLkNLlknOJbdd719zXmvIrqoYyZ5AKzjU0lKFzlEYf10KJdqVN
+ 2jR+DiELeAz5VuzVhfhwedpeSa1SYIm5B7AeledmYuLjSKYu9es3K97gqDqmCnQBD9zQWJ
+ Ga0NM+PeMdKp2IRewre0deTXTwqJAcU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-U7kv6fpZPseStygGe9AsSA-1; Fri, 16 Jan 2026 05:56:55 -0500
-X-MC-Unique: U7kv6fpZPseStygGe9AsSA-1
-X-Mimecast-MFC-AGG-ID: U7kv6fpZPseStygGe9AsSA_1768561015
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-430f4609e80so1112514f8f.3
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 02:56:55 -0800 (PST)
+ us-mta-650-6a72YCsaPQmpj60m6FoXww-1; Fri, 16 Jan 2026 05:57:08 -0500
+X-MC-Unique: 6a72YCsaPQmpj60m6FoXww-1
+X-Mimecast-MFC-AGG-ID: 6a72YCsaPQmpj60m6FoXww_1768561027
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4801e2e3532so4894365e9.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 02:57:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768561015; x=1769165815; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768561027; x=1769165827; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=CQP5crnfclmr8J0RsxViBXyZLT1KSdU9JcYePQ+0Bv4=;
- b=QyKEYP8yk5zJIRHko5dd6tdWt+R44fIDLXGi6E6YG119EtrkkfvYYUtph3+f3WDRG0
- erpStyYx8YB2RuUJnqcFG9KPh6K2XFPLLcpaLZ4f9UdjirRrpDzd7GWlD5Qyj2eSaMy1
- XSMsZpcKJzaez3/g+6VIzGwpCgJ22ZspH90Pi3z1/IWEFjdOsecDIKOqpvzOnxKd2x9m
- k3IG8iiExwDYp7I1oCgZE2U6RzQnhWTYeYnPX+BngPJfiKBtwNqv78mftKA5BM3ej/a6
- 4J/INk2prgn7YJJux9hYLzjU6O+xDTo3j6ZPcgAFQ/AkVjHaGSsvnywilOcQFYy9Jlk/
- aiPQ==
+ bh=F9NfGLIILCJE93X62D4Nehh3Ajcehdh9OdXsCk75FDc=;
+ b=PN177NkjgKnn4UtvF7VYY6EHg2nj2enb7e33jN6n4m6SBNiKwAXnqCSGg3wduSYl6A
+ d0Y8GQsYBv6f946SM/PnelBgTsmke0Ejxl2uzb/rN8Qbjyv1kuqrHJUb/kd9vfHD2RTe
+ zfLkZEtP7BS5wZH1DpMr88yrSd6bJbzkBdfVFyHYaxkFNwOVUosUWsolKb/Un0LRBRc3
+ 1+EEeFksu2YFLvhNA7/E0rddlmBoehSU6BaODitOmVDP9sV5KIwYuSWbz8ujGMiDP5nY
+ o6J6t2EptTTP55nsOYekLztzxPPrTxAoyI63eCEkKIQW5isRcaZO+tcdRfVZ087NWhsa
+ Gk3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768561015; x=1769165815;
+ d=1e100.net; s=20230601; t=1768561027; x=1769165827;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CQP5crnfclmr8J0RsxViBXyZLT1KSdU9JcYePQ+0Bv4=;
- b=Eg0zURMoSf20o4qy59SBmio1Fkt2pyG16DUrqBdr9fpEqpL/3MHwP9OCvVGH/mJO5N
- gnuT4X00r8Ckpm9kodw+IPmpPtOZYAkkm/lqTkkDAoPulSvlWyzrFUifmzLMZrZ2P9Jc
- 3s+b15RMNcItEc7qSgRgySYGF7VHvS78qBTYdAabVMoJVaLwpm+l1G3eZkkKSl14/1mU
- mYJYMuAQvt+fiys4L0Yrstz2Enwh7XunqJpWt7EzNUjmRDOKOGrzqGlWGzxw/f6i/fK7
- 6tM/gTajDot8zwYY/7zZiGDR8KY6kQBFFZX5zqlL8uWGkCQBQoNnoejjogaROeBmCW9R
- o4pA==
+ bh=F9NfGLIILCJE93X62D4Nehh3Ajcehdh9OdXsCk75FDc=;
+ b=ZOYG/aAKdMgUBBN5LV70ZGt2DvzoQ+y0KbeLvUheLDKWXG+zvVJXjdqnB7IqTN/6TT
+ dujRaMsV29REZIstqAYGm+JqEj7zttjUs45e8kKW6P2FfmoLUSo380waBVRLYhREj03P
+ 8PWPeIFpwEYEFdXe4zNg90BQDfOyBjObbZnEkyznRIotCEWcw/5fJ+jbkICPAXoU0Ap3
+ lWc1o4K5lVCQtYhkQuL76r+3pEB9u0B2M65zRoYJGJf6QAhbfwTrhDSTmm3W8t5lDoed
+ BQFkAZj8XJ+WJXtzXQjslRAQbG9Zib/6+Rr/zjWX2B8IzSHjjIKjXsVLXU6y9HRlfmp3
+ hufA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVwoWteRdJRUUWE/uEw34CfGuolmueKpSgrL2PtE4cK641JMQL7Ii9uRBYOGeQXWWulp+FnvqQyMZgE@nongnu.org
-X-Gm-Message-State: AOJu0Yy2VF0TTTsCQOy7e6B9cG+hsV2Myj8NrXGM+SOSn76qbp/wg/TH
- JnP3SOQhjs6dzJc0ltIA3aWvyWh9q0nqn6TAcCMHEVaRlzBNyPTcClPKvIVT5yaVqTkV9t9ZrMq
- 6BOVb3gmfRq3RHxVEp2r2MYIRuLjy5k2sh+hqisCxbIy9Sk7S8FsU72Fy
-X-Gm-Gg: AY/fxX4GMipH7JPaVb08w2pGFQW2ACVNUjI4MviAGj8cFyTp5sFrMbw/8K1MNuCkCuR
- WRC3o77emdT+H+sDb/PHqoeyewRbIn2DVGvWKc8+Svpo41lyVxHAk/AAGdunUpSBa8m2unoIXzP
- pVRk2AcZJ5Kn05MClOmYYQ73rUzG+qKF7A5Cp2/Jne8YqFp1XfGTAgERpkPWXWtgj4uHzhcHb8J
- BdVF08TiTmlIFdkhBAw9IV/IJxIwO4IW00D4fxN8JjVGLuM0Dqf6FRKZdB7mGcE0/hSxT5vFcj3
- xrQMdzgR/T6bVOT1RaOSJgwoeBnyTt7fRFFyCRTeov2UgeRYw531pco2z4SezNSqv3NQZ4zRmZJ
- 9SLSsVANL5f6anQKm7J2nu8eD8BQw+yBcLvdDV8Clmgf/nTIg
-X-Received: by 2002:a05:6000:26d1:b0:431:2cb:d335 with SMTP id
- ffacd0b85a97d-4356a053852mr2614562f8f.34.1768561014552; 
- Fri, 16 Jan 2026 02:56:54 -0800 (PST)
-X-Received: by 2002:a05:6000:26d1:b0:431:2cb:d335 with SMTP id
- ffacd0b85a97d-4356a053852mr2614515f8f.34.1768561014005; 
- Fri, 16 Jan 2026 02:56:54 -0800 (PST)
+ AJvYcCUOwpIHCANeInCYnsl+rTmCX8XAJalhFik+srdzaFohVhIWMcNDTF/6nHAn5y3/X15VFMAHl/6+OnRG@nongnu.org
+X-Gm-Message-State: AOJu0YzC/sBRriW39RtPlfGLtZCULDvuMEWS+KP3NKGGbXmHfbA5TnaM
+ FsCj2o8vWGOh2Ay6vBBEC74AIJ/a8MXEkYTHllLbCJaq3548EednicRDSDqhdh4DM8RI3A4fbNy
+ OBiO9o1I406s/j2+1T7BcmYTMiA4JqlNN2xaq4pTwv0Uap6RW8KFzsNUs
+X-Gm-Gg: AY/fxX4mBuqnjqy53LaVpY/aqjEb1l5j9j2lF2QfUrIvbbfBc+apko2FY759/GSFhU3
+ WrhEbVLUnLczXhySYpdEjGzgt9bPL1urBnSvTAj7ijplCFFxMkPo4Xg9o3t61czPLio0UTUHtr2
+ jO5O9US2YjLmPtrq19oZaYNclAgefaFcCEMe0sFWt4mHOru4qlAcNmqa3732mndKkEP8gP3l1mf
+ lrhutLkYjRqMJef0/CJs4aQucawIj9ND/beoytDu43pszQN5AbAgLQI7/aA33Z+fOiqCo0TTDDb
+ C7hG71s2P+leGaloDDcKokTypt/Ax513kQdH+zjomcY3kdluDH+aQaduQJAsQJQeqaW/JwMo26A
+ uCC37lHv710MsCFXxhHdqtAlu0uCNai5HG0kcG52GYbUGTTNe
+X-Received: by 2002:a05:600c:8109:b0:480:1c69:9d36 with SMTP id
+ 5b1f17b1804b1-4801eb04f54mr21770805e9.17.1768561026969; 
+ Fri, 16 Jan 2026 02:57:06 -0800 (PST)
+X-Received: by 2002:a05:600c:8109:b0:480:1c69:9d36 with SMTP id
+ 5b1f17b1804b1-4801eb04f54mr21770625e9.17.1768561026575; 
+ Fri, 16 Jan 2026 02:57:06 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356996cf42sm4501961f8f.20.2026.01.16.02.56.53
+ 5b1f17b1804b1-4801e9ac373sm16277375e9.1.2026.01.16.02.57.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Jan 2026 02:56:53 -0800 (PST)
-Message-ID: <f15b6372-7a34-4bc3-90d1-a412514d5bf8@redhat.com>
-Date: Fri, 16 Jan 2026 11:56:52 +0100
+ Fri, 16 Jan 2026 02:57:06 -0800 (PST)
+Message-ID: <ce4eeb41-4c35-4919-b315-3431b99f03ab@redhat.com>
+Date: Fri, 16 Jan 2026 11:57:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] vfio: Add DMABUF support for PCI BAR regions
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, alex@shazbot.org, cohuck@redhat.com,
- mst@redhat.com, nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com,
- jgg@nvidia.com, jonathan.cameron@huawei.com, zhenzhong.duan@intel.com,
- vivek.kasireddy@intel.com, kjaju@nvidia.com
-References: <20260116092950.15796-1-skolothumtho@nvidia.com>
+Subject: Re: [PATCH] vfio/migration: Fix page size calculation
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org
+References: <20260116060315.65723-1-zhenzhong.duan@intel.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -142,17 +138,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260116092950.15796-1-skolothumtho@nvidia.com>
+In-Reply-To: <20260116060315.65723-1-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -170,79 +166,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/16/26 10:29, Shameer Kolothum wrote:
-> Hi,
+On 1/16/26 07:03, Zhenzhong Duan wrote:
+> Coverity detected an issue of left shifting int by more than 31 bits leading
+> to undefined behavior.
 > 
-> Linux now provides a VFIO dmabuf exporter to expose PCI BAR memory for P2P
-> use cases. This adds support for vfio devices to create a dmabuf for
-> each mapped BAR region.
+> In practice bcontainer->dirty_pgsizes always have some common page sizes
+> when dirty tracking is supported.
 > 
-> Changes from v2:
-> https://lore.kernel.org/qemu-devel/20260113113754.1189-1-skolothumtho@nvidia.com/
+> Resolves: Coverity CID 1644186
+> Resolves: Coverity CID 1644187
+> Resolves: Coverity CID 1644188
+> Fixes: 46c763311419 ("vfio/migration: Add migration blocker if VM memory is too large to cause unmap_bitmap failure").
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   hw/vfio/migration.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index f857dc25ed..b4695030c7 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -1173,7 +1173,7 @@ static bool vfio_dirty_tracking_exceed_limit(VFIODevice *vbasedev)
+>        * can also switch to use IOMMUFD backend if there is a need to migrate
+>        * large VM.
+>        */
+> -    page_size = 1 << ctz64(bcontainer->dirty_pgsizes);
+> +    page_size = 1ULL << ctz64(bcontainer->dirty_pgsizes);
+>       max_size = bcontainer->max_dirty_bitmap_size * BITS_PER_BYTE * page_size;
 >   
->   - Addressed feedback on v2 and picked up R-by/T-by tags. Thanks!.
->   - This has dependnecy on patches sent by Cédric[0][1]
-> 
-> The dmabuf support was sanity tested on an NVIDIA grace paltform.
-> 
-> Please take a look and let me know.
-> 
-> Thanks,
-> Shameer
-> [0] https://lore.kernel.org/qemu-devel/20260112155341.1209988-1-clg@redhat.com/
-> [1] https://lore.kernel.org/qemu-devel/20260108185012.2568277-1-clg@redhat.com/
-> 
-> Nicolin Chen (1):
->    hw/vfio/region: Create dmabuf for PCI BAR per region
-> 
-> Shameer Kolothum (3):
->    linux-headers: Update to Linux v6.19-rc1
->    hw/net/virtio-net: Adapt hash handling to updated UAPI
->    hw/vfio: Add helper to retrieve device feature
-> 
->   hw/net/virtio-net.c                           |  11 +-
->   hw/vfio/container.c                           |   2 +-
->   hw/vfio/device.c                              |   9 +
->   hw/vfio/listener.c                            |   4 +-
->   hw/vfio/region.c                              |  65 ++-
->   hw/vfio/trace-events                          |   1 +
->   include/hw/vfio/vfio-device.h                 |   3 +
->   include/standard-headers/drm/drm_fourcc.h     |  25 +-
->   include/standard-headers/linux/ethtool.h      |   5 +
->   .../linux/input-event-codes.h                 |  14 +-
->   include/standard-headers/linux/pci_regs.h     |  89 ++++
->   include/standard-headers/linux/virtio_net.h   |   3 +-
->   include/standard-headers/linux/virtio_pci.h   |   2 +-
->   linux-headers/asm-arm64/kvm.h                 |   2 +-
->   linux-headers/asm-arm64/unistd_64.h           |   1 +
->   linux-headers/asm-generic/unistd.h            |   4 +-
->   linux-headers/asm-loongarch/kvm.h             |   1 +
->   linux-headers/asm-loongarch/unistd.h          |   6 +
->   linux-headers/asm-loongarch/unistd_64.h       |   1 +
->   linux-headers/asm-mips/unistd_n32.h           |   1 +
->   linux-headers/asm-mips/unistd_n64.h           |   1 +
->   linux-headers/asm-mips/unistd_o32.h           |   1 +
->   linux-headers/asm-powerpc/unistd_32.h         |   1 +
->   linux-headers/asm-powerpc/unistd_64.h         |   1 +
->   linux-headers/asm-riscv/kvm.h                 |   3 +
->   linux-headers/asm-riscv/unistd_32.h           |   1 +
->   linux-headers/asm-riscv/unistd_64.h           |   1 +
->   linux-headers/asm-s390/bitsperlong.h          |   4 -
->   linux-headers/asm-s390/unistd.h               |   4 -
->   linux-headers/asm-s390/unistd_32.h            | 446 ------------------
->   linux-headers/asm-s390/unistd_64.h            |   9 +-
->   linux-headers/asm-x86/kvm.h                   |   1 +
->   linux-headers/asm-x86/unistd_32.h             |   1 +
->   linux-headers/asm-x86/unistd_64.h             |   1 +
->   linux-headers/asm-x86/unistd_x32.h            |   1 +
->   linux-headers/linux/iommufd.h                 |  10 +
->   linux-headers/linux/kvm.h                     |  11 +
->   linux-headers/linux/mshv.h                    | 116 ++++-
->   linux-headers/linux/psp-sev.h                 |  66 ++-
->   linux-headers/linux/vfio.h                    |  28 ++
->   40 files changed, 450 insertions(+), 506 deletions(-)
->   delete mode 100644 linux-headers/asm-s390/unistd_32.h
-> 
+>       return current_machine->ram_size > max_size;
 
 Applied to vfio-next.
 
