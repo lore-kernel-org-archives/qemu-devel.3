@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69EBAD4A609
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68527D4A609
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:20:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgf2m-0005eq-0U; Fri, 16 Jan 2026 03:18:56 -0500
+	id 1vgf3s-0006D2-1P; Fri, 16 Jan 2026 03:20:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgf2j-0005eI-1N
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:18:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgf3q-0006Cc-IP
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:20:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgf2h-0000br-D5
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:18:52 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgf3o-0000jd-SU
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:20:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768551529;
+ s=mimecast20190719; t=1768551600;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LXjZInSASzu85EOJxxobjMLlRd3oJlKMDpWKPe31mVo=;
- b=A4XSCBrqCfhmp0feUxi3qUBuIHg7dkjqvgQ0O5qUdJ6w1Z1PtH1TU5nuGUHRj6l4ZZ+m6e
- mqUbG+/z9haaNwtyGsmEiehoUBab9X+Nb8e834rlj/Nn8uYFDaAeLAYrFPLRE3KVw/s2k4
- FijN9e1lSn7ZM93flJWOtdJEx0ZjDe4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=4y58swJ8SEaUb3Okk1L6cXS1m2gBdcM5UQ6hxS9jcig=;
+ b=au9cXuR9RcDj/oVfTzY42Fs8UEO3fe2jClTpvhG8XS6RR3aA3Y8LxmM/bQpkjHaqIAU8kT
+ 5JsmDAR+5NLMYVdaGE1UlhdlK3gx867vkMmRKBemvGeMqOVN6G0wiCl8xLpMv5iyZ/qxR5
+ +/IgXtePrYIa7P1cD4tUVWZQGLbQI/s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-120-ZSZyNQdSMmi9ooVjG_5bZw-1; Fri,
- 16 Jan 2026 03:18:48 -0500
-X-MC-Unique: ZSZyNQdSMmi9ooVjG_5bZw-1
-X-Mimecast-MFC-AGG-ID: ZSZyNQdSMmi9ooVjG_5bZw_1768551527
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-VLaqVavPMjyoUHEpVurMIQ-1; Fri,
+ 16 Jan 2026 03:19:57 -0500
+X-MC-Unique: VLaqVavPMjyoUHEpVurMIQ-1
+X-Mimecast-MFC-AGG-ID: VLaqVavPMjyoUHEpVurMIQ_1768551596
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 093C51800357; Fri, 16 Jan 2026 08:18:47 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DE9A019560B3; Fri, 16 Jan 2026 08:19:55 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1C9643001DBA; Fri, 16 Jan 2026 08:18:46 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 142201955F67; Fri, 16 Jan 2026 08:19:54 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C05D221E692D; Fri, 16 Jan 2026 09:18:43 +0100 (CET)
+ id 79B1621E692D; Fri, 16 Jan 2026 09:19:52 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH 3/3] qapi: Add thread_status flag for iothreads
-In-Reply-To: <CAK3tnvJuoin17F9FDnYJA+vXeUeGpMv3R=2vrOBFUotjRCymfQ@mail.gmail.com>
- (Zhang Chen's message of "Fri, 9 Jan 2026 11:11:27 +0800")
-References: <20251229103859.98777-1-zhangckid@gmail.com>
- <20251229103859.98777-3-zhangckid@gmail.com>
- <877bts8fsa.fsf@pond.sub.org>
- <CAK3tnvJuoin17F9FDnYJA+vXeUeGpMv3R=2vrOBFUotjRCymfQ@mail.gmail.com>
-Date: Fri, 16 Jan 2026 09:18:43 +0100
-Message-ID: <87wm1irmvw.fsf@pond.sub.org>
+To: Halil Pasic <pasic@linux.ibm.com>
+Cc: JAEHOON KIM <jhkim@linux.ibm.com>,  qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,  pbonzini@redhat.com,  stefanha@redhat.com,
+ fam@euphon.net,  eblake@redhat.com,  berrange@redhat.com,
+ eduardo@habkost.net,  dave@treblig.org,  sw@weilnetz.de,
+ devel@lists.libvirt.org
+Subject: Re: [PATCH RFC v1 3/3] qapi/iothread: introduce poll-weight
+ parameter for aio-poll
+In-Reply-To: <20260115110532.27cb1516.pasic@linux.ibm.com> (Halil Pasic's
+ message of "Thu, 15 Jan 2026 11:05:32 +0100")
+References: <20260113174824.464720-1-jhkim@linux.ibm.com>
+ <20260113174824.464720-4-jhkim@linux.ibm.com>
+ <87qzrs4oud.fsf@pond.sub.org>
+ <eb891295-5ffd-4613-bc37-56d8a07d1fff@linux.ibm.com>
+ <87ikd3xrkc.fsf@pond.sub.org>
+ <20260115110532.27cb1516.pasic@linux.ibm.com>
+Date: Fri, 16 Jan 2026 09:19:52 +0100
+Message-ID: <87sec6rmtz.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,179 +94,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+Halil Pasic <pasic@linux.ibm.com> writes:
 
-> On Thu, Jan 8, 2026 at 8:12=E2=80=AFPM Markus Armbruster <armbru@redhat.c=
-om> wrote:
->>
->> Zhang Chen <zhangckid@gmail.com> writes:
->>
->> > The thread_status depends on struct IOThreadInfo's
->> > 'attached': 'bool'. Show in the qmp/hmp CMD with
->> > 'attached' or 'detached'.
->> >
->> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
->> > ---
->> >  iothread.c         | 1 +
->> >  monitor/hmp-cmds.c | 2 ++
->> >  qapi/misc.json     | 6 ++++++
->> >  3 files changed, 9 insertions(+)
->> >
->> > diff --git a/iothread.c b/iothread.c
->> > index 38e38fb44d..fb4898e491 100644
->> > --- a/iothread.c
->> > +++ b/iothread.c
->> > @@ -358,6 +358,7 @@ static int query_one_iothread(Object *object, void=
- *opaque)
->> >      info =3D g_new0(IOThreadInfo, 1);
->> >      info->id =3D iothread_get_id(iothread);
->> >      info->thread_id =3D iothread->thread_id;
->> > +    info->attached =3D iothread->attached;
->> >      info->poll_max_ns =3D iothread->poll_max_ns;
->> >      info->poll_grow =3D iothread->poll_grow;
->> >      info->poll_shrink =3D iothread->poll_shrink;
->> > diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
->> > index 33a88ce205..84b01737cf 100644
->> > --- a/monitor/hmp-cmds.c
->> > +++ b/monitor/hmp-cmds.c
->> > @@ -197,6 +197,8 @@ void hmp_info_iothreads(Monitor *mon, const QDict =
-*qdict)
->> >          value =3D info->value;
->> >          monitor_printf(mon, "%s:\n", value->id);
->> >          monitor_printf(mon, "  thread_id=3D%" PRId64 "\n", value->thr=
-ead_id);
->> > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
->> > +                       value->attached ? "attached" : "detached");
->> >          monitor_printf(mon, "  poll-max-ns=3D%" PRId64 "\n", value->p=
-oll_max_ns);
->> >          monitor_printf(mon, "  poll-grow=3D%" PRId64 "\n", value->pol=
-l_grow);
->> >          monitor_printf(mon, "  poll-shrink=3D%" PRId64 "\n", value->p=
-oll_shrink);
->> > diff --git a/qapi/misc.json b/qapi/misc.json
->> > index 6153ed3d04..2eea920bd2 100644
->> > --- a/qapi/misc.json
->> > +++ b/qapi/misc.json
->> > @@ -76,6 +76,9 @@
->> >  #
->> >  # @thread-id: ID of the underlying host thread
->> >  #
->> > +# @attached: flag to show current iothread attached status
->>
->> What does "attached status" actually mean?
+> On Thu, 15 Jan 2026 08:28:51 +0100
+> Markus Armbruster <armbru@redhat.com> wrote:
 >
-> This flag means weather the "-object iothread" already been used by a
-> real device.
-> In hotplug scenario, user can add multiple "-object iothread" and
-> multiple devices (like virtio-blk).
-> When user hotunplug the devices can keep the iothreads as a thread
-> pool, following the new
-> hotplug devices can attach to the released iothread.
-
-Why would a management application or human user want to know this?
-
-The answer should lead us to better doc text.
-
->>
->> > +#            (since 10.3.0)
->>
->> (since 12.0)
+>> I understand that you're mirroring how @poll-grow and @poll-shrink work,
+>> but let's ignore that for a minute.
+>> 
+>> Compare four possible interfaces:
+>> 
+>> 1. Optional @poll-weight defaults to 2.  Values <= 0 are rejected.
+>> 
+>> 2. Optional @poll-weight defaults to 2.  Value 0 is replaced by the
+>>    default value 2.  Values < 0 are rejected.
+>> 
+>> 3. Optional @poll-weight defaults to 0.  Values < 0 are rejected.  Value
+>>    0 makes the system pick a value, namely 2.
+>> 
+>> 4. Optional @poll-weight defaults to 0.  Values < 0 are rejected.  Value
+>>    0 makes the system pick a value.  It currently picks 2.
+>> 
+>> The difference between 3. and 4. is that 3. makes "system picks 2" part
+>> of the contract, while 4. doesn't.
+>> 
+>> 1. is the simplest.  Is 2.'s additional complexity worthwhile?  3.'s?
+>> 4.'s?
 >
-> OK.
+> Isn't there more options? Like
+
+Yes :)
+
+> 5. Optional @poll-weight defaults to system-default.  Value 0 is replaced
+> by the system pick the system default value. Currently the system default
+> value is 2. Values < 0 are rejected.
 >
->>
->> > +#
->> >  # @poll-max-ns: maximum polling time in ns, 0 means polling is
->> >  #     disabled (since 2.9)
->> >  #
->> > @@ -93,6 +96,7 @@
->> >  { 'struct': 'IOThreadInfo',
->> >    'data': {'id': 'str',
->> >             'thread-id': 'int',
->> > +           'attached': 'bool',
->> >             'poll-max-ns': 'int',
->> >             'poll-grow': 'int',
->> >             'poll-shrink': 'int',
->> > @@ -118,6 +122,7 @@
->> >  #              {
->> >  #                 "id":"iothread0",
->> >  #                 "thread-id":3134,
->> > +#                 'thread_status':"attached",
->>
->> I believe this is actually
->>
->>                      "attached": true
->>
->> and ...
+> That would mean:
+> * current value inspectable
+> * system default not part of the interface contract
+> * interface offers a "please go back to value not user specified:
+>   operation
 >
-> No, I changed it here for readability:
->
->> > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
->> > +                       value->attached ? "attached" : "detached");
->
-> But if you think ""attached": true" is more direct way, I can change
-> it next version.
+> BTW I like your approach with explicitly listing and evaluating the
+> options a lot!
 
-The example in the doc comment shows QMP.  Here's what I see in QMP:
-
-    $ qemu-system-x86_64 -S -display none -qmp stdio -object iothread,id=3D=
-iot0 -name debug-threads=3Don
-    {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 10}, "p=
-ackage": "v10.2.0-521-g05115811fa"}, "capabilities": ["oob"]}}
-    {"execute": "qmp_capabilities", "arguments": {"enable": ["oob"]}}
-    {"return": {}}
-    {"execute": "query-iothreads"}
-    {"return": [{"attached": false, "poll-shrink": 0, "thread-id": 4031494,=
- "aio-max-batch": 0, "poll-grow": 0, "poll-max-ns": 32768, "id": "iot0"}]}
-
-This shows "attached": false, not 'thread_status': "attached".
-
-The code you showed applies to HMP:
-
-    $ qemu-system-x86_64 -S -display none -monitor stdio -object iothread,i=
-d=3Diot0 -name debug-threads=3Don
-    QEMU 10.2.50 monitor - type 'help' for more information
-    (qemu) info iothreads
-    iot0:
-      thread_id=3D4032011
-      thread_status=3Ddetached
-      poll-max-ns=3D32768
-      poll-grow=3D0
-      poll-shrink=3D0
-      aio-max-batch=3D0
-
-thread_status=3Ddetached might be slightly more readable than
-attached=3Dfalse, but it could also be confusing to people working with
-both HMP and QMP.  I'd avoid the difference between the two.
-
->>
->> >  #                 'poll-max-ns':0,
->> >  #                 "poll-grow":0,
->> >  #                 "poll-shrink":0,
->> > @@ -126,6 +131,7 @@
->> >  #              {
->> >  #                 "id":"iothread1",
->> >  #                 "thread-id":3135,
->> > +#                 'thread_status':"detached",
->>
->>                      "attached": false
->>
->> Recommend to create example output by running a test instead of making
->> it up, because making it up likely screws it up :)
->
-> Uh.... This output print is the real test in my machine, maybe you
-> missed the previous description.
-
-I can't see how QMP could possibly show 'thread_status':"detached:.
-
->
-> Thanks
-> Chen
->
->>
->> >  #                 'poll-max-ns':0,
->> >  #                 "poll-grow":0,
->> >  #                 "poll-shrink":0,
->>
+Thanks!
 
 
