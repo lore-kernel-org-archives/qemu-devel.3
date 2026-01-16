@@ -4,99 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4A7DC79FBC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 14:22:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D93E2C79FBF
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 14:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgkiG-0004l1-9t; Fri, 16 Jan 2026 09:22:08 -0500
+	id 1vgko1-0004nv-Bz; Fri, 16 Jan 2026 09:28:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgkhQ-0004L5-E2
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 09:21:21 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgkhN-0007Y9-Tm
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 09:21:15 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-47ee807a4c5so15459285e9.2
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 06:21:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768573272; x=1769178072; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1kdlQ9vZ5FVssk2+kabWN080uS8qQd0BGYQvNWzj1sE=;
- b=kRPC/jeUCTGNGTZgF8MDWoabNI1TTtW68vmPjzeFNcBHF5hwkK69CUBfxxGuOyh+oC
- sykRPlii45bK0+GA1mL9HpY8c5tWqZeZD7Ag5ni+MDjkaRdwh891hyqQKVyDfbr6KRci
- ejGcQIQcS3mhYNikM8rvV/0la5ARa+B2yMJGjtnFrdY0ZzLDE8yCIE6mJj9BwzbwpdYt
- CwcauKZ9YsYi31kygkCKqF3UUdcWQ+Ev9F/wO3Wlbknowk9IXlBHiMXvjhjovkd9Sof3
- pqwugJFVu4zk6vypknfkjR7CIx9OyjhNq4YaHbKNzdQe2sSPvkCo4m3lEWhT2yVyymzl
- +4jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768573272; x=1769178072;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1kdlQ9vZ5FVssk2+kabWN080uS8qQd0BGYQvNWzj1sE=;
- b=ZPgYtFGsWuPToLa4vqDpa6rnQn4A7cNoLMRbxVV08k5vgzIMnoTOSwlOMdLtr7qbRj
- HFyWiAYUsrEw71lYl8dpeHa1MfS4RKkshjzNjn6/Ftls0fEkSbK4OW0PSorRpi3xVNCk
- CyuXda6/Eh1T4u02v+EtI0AYJNqT/nZHJeR22ePMzHXx5bhuOPAkxeDrj5XFHppGyo2y
- Ap/Mbt9qKFizJZKKBYzXhNkXdpATrLN9VPzie7V6rklgn5XPEj6Yr8+xHgmihaQ4UmzD
- p1Ra26CVJLeWCCphqYoHM/xwkSvE3UkzxM+Bz7WJooXtiT5KyQ6gi8LZdHlK+NIocDd3
- g23Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURGgBWEXt98sXxFp2yH5urIajLuSuBsAyHUi0D+dSQA1hupH1zHY83/DoVRTqoo3+Sv78jkDPD1bf3@nongnu.org
-X-Gm-Message-State: AOJu0YzXXit0pn5z94ECfZxSAIBtuVitwXnuhD2Ws8MPQUx/brq+dvUu
- Eff+GuI8zGo5rYh/L4Jy71vb04gNRRSpi5fLI8ONVrbmm01EKuVkq/wPlIPictlZjpU=
-X-Gm-Gg: AY/fxX4aNB6RlMIvx/BEdl9UBwFSOdYUV5WqTmdRO+f+XnTik/4ifFLUJvmu747f8y1
- icLNXEuDGdY5F1dcmim4KDHUzlce2ZLMOtBMWVfbutX5vLcQKdBmwxQt1QwOPKapnc6liDU6loD
- A7HTuoHyE8RlQtMR2ygx3lzdJ/aQ3gAuq3EhzqQrvVAMPy3lALGrtZILKdtk9wkNy9jKWGfvztr
- 9vC2iD8Qh4FyQ9YuDscYd9pjY5Doy6yPrCIdzvGyFcMNC4rJTa5ZkLRbUI77Lyz5YZzn1J41l+u
- kIxFJQmoi4upTtIewnU4Z00LnVFKgQIqVrcLFCtrKQyjG8rwvVkENVdrj7uXkFfJb++f5zBVe7M
- reftLsF1iJiVHdPzRgatPFGGFSF4UimRKoZYuAIgWkdKr51y52CuH8+jcej934UZU71COSECGL6
- FpYSpTmcwnOWGfl9aT5HSRjvxTKVuEFTNrg1u3oleooH+wgjHClwryfg==
-X-Received: by 2002:a05:600c:4e0f:b0:47e:e779:36e with SMTP id
- 5b1f17b1804b1-4801eb0375amr32279285e9.19.1768573272470; 
- Fri, 16 Jan 2026 06:21:12 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47f4b2672d6sm103066525e9.14.2026.01.16.06.21.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Jan 2026 06:21:11 -0800 (PST)
-Message-ID: <23800170-66aa-4e31-9e74-e256933c8a8b@linaro.org>
-Date: Fri, 16 Jan 2026 15:21:09 +0100
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgknn-0004b7-Bi
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 09:27:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgkng-0000hy-Ey
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 09:27:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768573646;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Tjqai45VtIpB+TC9hvLPc4FA8nk6wgFyh94OWo+MqPs=;
+ b=iF83XWj2GgWNr+5y/V701FlVgthx/udr0nY4kuAqZ0B4CpgHEjddvESw72ziaM9iVB2tz3
+ c9/LJ0fTf7rlWve1bPrBLTIH0gJPxhah189ifAPURH8pKbiCtM85k5ZOXi8+k9d5FXSStw
+ nIIzHb+rNTKU6Nu0KJgl51Q+aefUFRo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-0DuN0OjXPCG341ywFxvuFQ-1; Fri,
+ 16 Jan 2026 09:27:24 -0500
+X-MC-Unique: 0DuN0OjXPCG341ywFxvuFQ-1
+X-Mimecast-MFC-AGG-ID: 0DuN0OjXPCG341ywFxvuFQ_1768573643
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B03719560B2; Fri, 16 Jan 2026 14:27:23 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 218C81955F22; Fri, 16 Jan 2026 14:27:23 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B6ECE21E692D; Fri, 16 Jan 2026 15:27:20 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2 5/6] scripts/clean-includes: Give the args in git
+ commit messages
+In-Reply-To: <CAFEAcA80HGxbESO8FwrHy967yXtVG1KMas=mWekaS436rrSamA@mail.gmail.com>
+ (Peter Maydell's message of "Fri, 16 Jan 2026 13:32:53 +0000")
+References: <20260116124005.925382-1-peter.maydell@linaro.org>
+ <20260116124005.925382-6-peter.maydell@linaro.org>
+ <87a4ydwuty.fsf@pond.sub.org>
+ <CAFEAcA80HGxbESO8FwrHy967yXtVG1KMas=mWekaS436rrSamA@mail.gmail.com>
+Date: Fri, 16 Jan 2026 15:27:20 +0100
+Message-ID: <87qzrpvdiv.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 15/26] whpx: add arm64 support
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260116135235.38092-1-mohamed@unpredictable.fr>
- <20260116135235.38092-16-mohamed@unpredictable.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260116135235.38092-16-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,37 +88,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/1/26 14:52, Mohamed Mediouni wrote:
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   accel/whpx/whpx-common.c    |   1 +
->   target/arm/meson.build      |   1 +
->   target/arm/whpx/meson.build |   3 +
->   target/arm/whpx/whpx-all.c  | 810 ++++++++++++++++++++++++++++++++++++
->   4 files changed, 815 insertions(+)
->   create mode 100644 target/arm/whpx/meson.build
->   create mode 100644 target/arm/whpx/whpx-all.c
+Peter Maydell <peter.maydell@linaro.org> writes:
 
+> On Fri, 16 Jan 2026 at 13:28, Markus Armbruster <armbru@redhat.com> wrote:
+>>
+>> Peter Maydell <peter.maydell@linaro.org> writes:
+>>
+>> > If clean-includes is creating a git commit for its changes,
+>> > currently it says only "created with scripts/clean-includes".
+>> > Add the command line arguments the user passed us, as useful
+>> > extra information.
+>> >
+>> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>> > ---
+>> >  scripts/clean-includes | 25 ++++++++++++++++++++++++-
+>> >  1 file changed, 24 insertions(+), 1 deletion(-)
+>> >
+>> > diff --git a/scripts/clean-includes b/scripts/clean-includes
+>> > index a45421d2ff..b16eec0a5c 100755
+>> > --- a/scripts/clean-includes
+>> > +++ b/scripts/clean-includes
+>> > @@ -42,6 +42,28 @@
+>> >  GIT=no
+>> >  DUPHEAD=no
+>> >
+>> > +# Save the original arguments in case we want to put them in
+>> > +# a git commit message, quoted for the shell so that we handle
+>> > +# args with spaces/metacharacters correctly.
+>> > +# The quote_sh() function is the same one we use in configure.
+>>
+>> Not quite, configure's is
+>>
+>>    quote_sh() {
+>>        printf "%s" "$1" | sed "s,','\\\\'',g; s,.*,'&',"
+>>    }
+>>
+>> > +
+>> > +quote_sh() {
+>> > +    for arg in "$@"; do
+>> > +        printf "%s" "$arg" | sed "s,','\\\\'',g; s,.*,'&',"
+>> > +    done
+>> > +}
+>>
+>> Is the loop intentional?  We seem to always call the function with
+>> exactly one argument.
+>
+> Whoops, no -- I was iterating around trying to get something
+> working and didn't notice that I'd left that loop in place.
+> The quote_sh() function should match the configure one.
 
-> +void whpx_apply_breakpoints(
-> +    struct whpx_breakpoint_collection *breakpoints,
-> +    CPUState *cpu,
-> +    bool resuming)
-> +{
-> +
+Got it.
 
-         g_assert_not_reached() ?
+With that
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
-> +}
-> +void whpx_translate_cpu_breakpoints(
-> +    struct whpx_breakpoints *breakpoints,
-> +    CPUState *cpu,
-> +    int cpu_breakpoint_count)
-> +{
-> +
-
-         g_assert_not_reached() ?
-
-> +}
 
