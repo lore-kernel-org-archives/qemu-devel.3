@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4C94D4A5E2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD54D4A5EA
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 01:47:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgYvH-0000uh-K3; Thu, 15 Jan 2026 20:46:49 -0500
+	id 1vgYvK-0000xf-MP; Thu, 15 Jan 2026 20:46:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vgYvE-0000tc-FD
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 20:46:44 -0500
-Received: from k62.kb8c70eb.use4.send.mailgun.net ([204.220.184.62])
+ id 1vgYvF-0000uR-MA
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 20:46:47 -0500
+Received: from k57.kb8c70eb.use4.send.mailgun.net ([204.220.184.57])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1)
  (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vgYvC-0000NO-Pm
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 20:46:44 -0500
+ id 1vgYvC-0000NV-Uh
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 20:46:45 -0500
 X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
 Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- e135ba6b4eaabb3a718321876b3d4c1b0ef20ef0d8c1d5c55b022d32c50c63c2 with SMTP id
- 69699879834a10b0f0ab8bf4; Fri, 16 Jan 2026 01:46:33 GMT
-X-Mailgun-Sending-Ip: 204.220.184.62
+ cad0cebcd768843fd51d305414832d0b6da05acbafe8094d47580c8c19531652 with SMTP id
+ 6969987a834a10b0f0ab9013; Fri, 16 Jan 2026 01:46:34 GMT
+X-Mailgun-Sending-Ip: 204.220.184.57
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1768527992;
- bh=PcA0PqFcyi/WpunFKVQepOyGOWTMA5jeNU6hH1h2BCc=;
- h=X-Mailgun-Dkim:From:To:Cc:Subject:Date:Message-ID:MIME-Version:
- Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
- Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
- References;
- b=jNxzqk4VmxidolHOz8st/EXMyXOCIlPgxBaG1R3mEccvgDDt9KudtYAJSNUlrbghR
- e5Vd8JufhRFP8J+zxPlrFrphH9h/40BCh4uMHCzQU7SLWd7ye84OdgAkpbU+2PYcmw
- yH18A5s7z2scAoewTZMZ9iCZr9nlEf0WJkZvGt2xhoaLuX/huIf9BFyWU3tpZff72g
- i796tgeOTCCP3xuqS3SbudWBWOwBXKsgT6EI4/De2Iu+psk/NIZlvdvoUj+1pOLxZb
- Q+VqAcms/jEx7mVACrLy5zJ9JxElmWO6oSFVK/SDPjWY1Do9IJ3GqSpHUZZeNfbDXi
- VgOSrK24PhtaA==
+ s=rsa2048; t=1768527993;
+ bh=gAN3Y5SV5SlPLFmcCVzEMCphX2dQx2LOgVwQXPYMOmc=;
+ h=X-Mailgun-Dkim:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
+ References:MIME-Version:Content-Transfer-Encoding:From:Reply-to:
+ Subject:Date:Message-id:To:Cc:Mime-version:Content-type:
+ Content-transfer-encoding:In-reply-to:References;
+ b=gaZxgqtT0eNavgx+DrrldhjCW4bqYirZhEoU74zQvYlQTDmaUCGsoZ4/wypmi3LWK
+ eZlmPNJemVf+hzZ65nea15haiuvIa87q28Jtu+PDzUwD6yY1SDBNyJtC0xQ3ZYwOUd
+ dpR2corv8gQZtsfBwUV0QK6jGlZ9NOUdsMmixvPHl5/aqrhMBDTCTASNhHZoFiY+BJ
+ UmD7kGLkWUucB2pk+uSFG7Isjw0vNMz//h0yPfmXWRr0zzn+oUS9gaslLjj8FKZrAP
+ EC0i3ARabpLBR4d8eigy8T90gLT3rAjjxt5HUP12rc99xpP/Rxevd7hsWxC5oP5J9f
+ t/FHTwTDolLRg==
 X-Mailgun-Dkim: no
 X-Mailgun-Dkim: no
 From: Yodel Eldar <yodel.eldar@yodel.dev>
@@ -50,22 +50,25 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Dominik Disconnect3d Czarnota <dominik.b.czarnota@gmail.com>,
  Yodel Eldar <yodel.eldar@yodel.dev>
-Subject: [PATCH v3 0/3] gdbstub: Export helper to use GDB errno values
-Date: Thu, 15 Jan 2026 19:46:09 -0600
-Message-ID: <20260116014612.226183-1-yodel.eldar@yodel.dev>
+Subject: [PATCH v3 3/3] gdbstub/user-target: Convert host errno to GDB
+ File-I/O errno
+Date: Thu, 15 Jan 2026 19:46:12 -0600
+Message-ID: <20260116014612.226183-4-yodel.eldar@yodel.dev>
+In-Reply-To: <20260116014612.226183-1-yodel.eldar@yodel.dev>
+References: <20260116014612.226183-1-yodel.eldar@yodel.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=204.220.184.62;
+Received-SPF: pass client-ip=204.220.184.57;
  envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=k62.kb8c70eb.use4.send.mailgun.net
+ helo=k57.kb8c70eb.use4.send.mailgun.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,71 +84,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, F reply packets in gdbstub/user-target.c emit the host's
-errno values [1], but to facilitate host<->target independence the GDB
-File-I/O protocol defines its own set of supported errno values that
-should be used in replies instead.
+Use host_to_gdb_errno to convert host-supplied errnos to their GDB
+File-I/O remote protocol values, and use them in F reply packets.
 
-Patch 1 adds two GDB File-I/O errno values that were previously
-undocumented despite having support.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2751
+Reported-by: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
+Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+---
+ gdbstub/user-target.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-Patch 2 exports a mapping helper function statically defined in
-m68k-dependent code by declaring it in include/gdbstub/syscalls.h
-with the GDB File-I/O errno values, and moving the definition to
-gdbstub/syscalls.c.
-
-Patch 3 passes the host errnos to the newly global mapping function
-before emitting the result in F reply packets. This is the only patch
-that still needs review, although it is somewhat similar to the v1
-version that Alex reviewed.
-
-I'm resending instead of just pinging, because there were DKIM-signing
-issues last time, and that led to From-munging of the emails which could
-be problematic for tooling. I believe that problem's resolved now.
-
-Besides the DKIM-signing issue, the bashism in the commit title of Patch
-1 was getting mangled with a spurious space presumably by Mailman, so
-I've also changed it, despite my partiality for bashisms as that also
-would've caused DKIM verification failure and possible munging.
-
-Thanks to Richard for the reviews in v2 and for having written that nice
-helper function exported and used in this series.
-
-Thanks to Alex for the review of v1 that is now Patch 3. I wanted to
-collect your R-b, but the patch underwent nontrivial change in v2, so I
-left it out in case you had objections to those changes.
-
-Changes in v3:
-No functional changes
-- Rebase on mainline (no conflicts)
-- Collect R-b's (Thanks, Richard)
-- Minor rewording of commit messages
-
-Changes in v2:
-- New patch adding two errno values
-- New patch exporting helper function that maps errno values
-
-Link to v2:
-https://lore.kernel.org/qemu-devel/20251017211149.163762-1-yodel.eldar@yodel.dev/
-Link to v1:
-https://lore.kernel.org/qemu-devel/20251015162520.15736-1-yodel.eldar@yodel.dev/
-
-[1] https://gitlab.com/qemu-project/qemu/-/issues/2751
-
-Thanks,
-Yodel
-
-Yodel Eldar (3):
-  include/gdbstub/syscalls: Add EIO and ENOSYS GDB File-I/O errno values
-  gdbstub: Export host_to_gdb_errno File-I/O helper function
-  gdbstub/user-target: Convert host errno to GDB File-I/O errno
-
- gdbstub/syscalls.c         | 36 ++++++++++++++++++++++++++++++++++++
- gdbstub/user-target.c      | 13 +++++++++----
- include/gdbstub/syscalls.h | 11 +++++++++++
- target/m68k/m68k-semi.c    | 29 -----------------------------
- 4 files changed, 56 insertions(+), 33 deletions(-)
-
+diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
+index 43231e695e..7ef0282f70 100644
+--- a/gdbstub/user-target.c
++++ b/gdbstub/user-target.c
+@@ -10,6 +10,7 @@
+ #include "qemu/osdep.h"
+ #include "exec/gdbstub.h"
+ #include "gdbstub/commands.h"
++#include "gdbstub/syscalls.h"
+ #include "qemu.h"
+ #include "internals.h"
+ #ifdef CONFIG_LINUX
+@@ -315,7 +316,8 @@ void gdb_handle_v_file_open(GArray *params, void *user_ctx)
+     int fd = open(filename, flags, mode);
+ #endif
+     if (fd < 0) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
++        int gdb_errno = host_to_gdb_errno(errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
+     } else {
+         g_string_printf(gdbserver_state.str_buf, "F%x", fd);
+     }
+@@ -327,7 +329,8 @@ void gdb_handle_v_file_close(GArray *params, void *user_ctx)
+     int fd = gdb_get_cmd_param(params, 0)->val_ul;
+ 
+     if (close(fd) == -1) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
++        int gdb_errno = host_to_gdb_errno(errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
+         gdb_put_strbuf();
+         return;
+     }
+@@ -350,7 +353,8 @@ void gdb_handle_v_file_pread(GArray *params, void *user_ctx)
+ 
+     ssize_t n = pread(fd, buf, bufsiz, offset);
+     if (n < 0) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
++        int gdb_errno = host_to_gdb_errno(errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
+         gdb_put_strbuf();
+         return;
+     }
+@@ -373,7 +377,8 @@ void gdb_handle_v_file_readlink(GArray *params, void *user_ctx)
+     ssize_t n = readlink(filename, buf, BUFSIZ);
+ #endif
+     if (n < 0) {
+-        g_string_printf(gdbserver_state.str_buf, "F-1,%x", errno);
++        int gdb_errno = host_to_gdb_errno(errno);
++        g_string_printf(gdbserver_state.str_buf, "F-1,%x", gdb_errno);
+         gdb_put_strbuf();
+         return;
+     }
 -- 
 2.52.0
 
