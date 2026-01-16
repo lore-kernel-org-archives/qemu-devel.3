@@ -4,43 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32757C982C7
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 14:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D98C982C4
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 15:00:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgkzj-0005Xw-Sz; Fri, 16 Jan 2026 09:40:11 -0500
+	id 1vglIP-0004ep-3u; Fri, 16 Jan 2026 09:59:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vgkzh-0005Fj-C7; Fri, 16 Jan 2026 09:40:09 -0500
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vglIL-0004bT-7D
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 09:59:25 -0500
+Received: from ci-2002g-snip4-10.eps.apple.com ([57.103.88.200]
+ helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vgkzc-0003HT-IF; Fri, 16 Jan 2026 09:40:09 -0500
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id B06FF47122;
- Fri, 16 Jan 2026 15:39:51 +0100 (CET)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- jsnow@redhat.com
-Subject: [PATCH] hw/block/block: add 'throttle-group' property
-Date: Fri, 16 Jan 2026 15:39:33 +0100
-Message-ID: <20260116143946.1031006-1-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.47.3
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1768574340328
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vglII-0007Nt-Kj
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 09:59:24 -0500
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-60-percent-2 (Postfix) with ESMTPS id
+ BBDC318001E4; Fri, 16 Jan 2026 14:59:14 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=tC6YTFAovhFLg23/Pz+1+VAx5b1Wl6hq1RxiNRKdork=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=HKmtF/76m7aQBx10eQx9rA1moY/Se3rvA6/zSt/U/wkaKnTdFVFNdn/QpVDLgqCGyZGHA6vBzIfLRvPhwL4PI9Q6RJFMbKEjeTpKMn7xFHMY5snQc4WGLpz1ExBtez5XyOuZ/eO094zSBm3qTXMW6eCC8rYjV+nXgzjv8YYv8x0eoJrQupU4op4J8FNNB88HJ4bnMBRJ9/zDYwAykqq9K9cpUVCIOzmTFQEl6ZDLjirjDrwaN8rkLmpgTNJTZ/pLXfmypUydX1uPy6aTmj6EtbEHNbN87LlDMVU+wSsa2g1QBOhNFU0zKXpAKJ/TtumKy6eAAF4RTBhfHFuaUeCT2A==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-60-percent-2 (Postfix) with ESMTPSA id
+ 54D6F1801A90; Fri, 16 Jan 2026 14:59:10 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH v16 15/26] whpx: add arm64 support
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <23800170-66aa-4e31-9e74-e256933c8a8b@linaro.org>
+Date: Fri, 16 Jan 2026 15:58:57 +0100
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D57D8689-9535-41D8-9818-79E544E46DB1@unpredictable.fr>
+References: <20260116135235.38092-1-mohamed@unpredictable.fr>
+ <20260116135235.38092-16-mohamed@unpredictable.fr>
+ <23800170-66aa-4e31-9e74-e256933c8a8b@linaro.org>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-Proofpoint-GUID: lpA-fp68N0FMgz95DAnz1zplqCi6nuZW
+X-Authority-Info: v=2.4 cv=GdIaXAXL c=1 sm=1 tr=0 ts=696a5247
+ cx=c_apl:c_apl_out:c_pps a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=9N9iz4hUtBtpV_NYapMA:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE2MDEwNyBTYWx0ZWRfX3izUvUkwxwCg
+ fqLIBmUbM6Susu0moWqKbbAJJPqqV9Nfo/Xl4cpP4Jr6hyY128x+VRo2IqLBFh0+GY3Noj3qz1y
+ vgqKHCKmcm6hev8Nyv8vMIllua7+Xcc9xXCPhUe6vBKSJB+2tAD+acRiMXhCkGpEcK43gn5Jxdq
+ IOJDjO5VhbVxiJEfqY1fy7e3x7mnxiBpcsjSPmXjCGuy4ZmhFoKNMH4cbDS8byOZc0OZ6y2ZFpC
+ EsLbG8SPwLOV2GKjv/kY57sDLWk6nQsxLH5MSaaaKQtG6mbSV8+0FbBbppcOfpQBJTjl/+Ic4sf
+ 1y/EaYZQ2IBKO1pyPpj
+X-Proofpoint-ORIG-GUID: lpA-fp68N0FMgz95DAnz1zplqCi6nuZW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-16_06,2026-01-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=0 clxscore=1030 mlxlogscore=746 bulkscore=0 malwarescore=0
+ mlxscore=0 adultscore=0 phishscore=0 classifier=spam authscore=0 adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601160107
+X-JNJ: AAAAAAABr9qRnLQ1jXJ8XHYL/ft/hyAipQY+ydk/vW4Yq6AWJChqEhHCzcSOGIwpA0LmeD0SAZ/cI+cIhExpAuYT93EYt6kz7CjN5GLsq43epSghzbKC0/GZ6vYZ6xnlUFRaS5ikWSfkiEGkvC3nfSC7ZXvuosbQbqIofVB3scsKbrB/cu0s/RwFDDpJAIsreIjPs7ukjWDG+hsnDs69FtopAKL0nUFgLA8HtlLn0ezMA9N67PUuzOPgX2InKRnKApbFWnIIFtwIosJoOaC8MjtGKIMtvOhjtrlW8TvkUPMJYXqhcAktJHN1Qm2Ebsm1R+gTFv4yx5T8mjNBI4YzJgHCi1UppyUyNsEQAaQR433UxMFmc/i45/K+HpYDqDZizCqVx1sx5HaXM7M/Fli3oTBhZzeohynzl5ETfNtH5RUvWMug3uqyU5yvzHzYEa1Yp9SPhcc2jc5S3GIs5m6+0a9DZ+0heXumsG9kMSXGc3TFzs56sHjeX98/MNuZUEvFN49LUTOvnCozNEwTCsSQvFUaPaojhJMG6Lq71MruscdNuRgX9b52+gO/v3w1nB+CPl6JbI8fVkmaHwxia4kUa/bXkESLRIZQcDT0w4B9xm2kX0sregleOhAAOhws2MkGM6MfhAgUGfoIS+sfoWwyQ2xrJHCv4hY3CkytIYnTHbsVSeENka0qVsGOdPMvlvF6MUSnP3MYIRiZ83qVqBLPCeNWIT5XiJjui1TzL2El8C0Iktoxo7G+xNK4Hfqj83UU8ixFhACRDoG25mnIBGe9dJbcrukhS0nIUHfvkDWEvw9YDN+ang==
+Received-SPF: pass client-ip=57.103.88.200;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -56,389 +102,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With '-drive', it is possible to specify the throttle configuration
-directly on the commandline. Add the possibility to do the same when
-using the modern way with '-blockdev' and a front-end device. Using a
-throttle filter block node is not always an option: in particular, the
-mirror block job operates on a root block node and it might be desired
-to throttle only the guest IO, but not to the block job.
 
-There already is a 'block_set_io_throttle' QMP command, but it's nicer
-to be able to do it via the commandline too.
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
----
+> On 16. Jan 2026, at 15:21, Philippe Mathieu-Daud=C3=A9 =
+<philmd@linaro.org> wrote:
+>=20
+> On 16/1/26 14:52, Mohamed Mediouni wrote:
+>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>  accel/whpx/whpx-common.c    |   1 +
+>>  target/arm/meson.build      |   1 +
+>>  target/arm/whpx/meson.build |   3 +
+>>  target/arm/whpx/whpx-all.c  | 810 =
+++++++++++++++++++++++++++++++++++++
+>>  4 files changed, 815 insertions(+)
+>>  create mode 100644 target/arm/whpx/meson.build
+>>  create mode 100644 target/arm/whpx/whpx-all.c
+>=20
+>=20
+>> +void whpx_apply_breakpoints(
+>> +    struct whpx_breakpoint_collection *breakpoints,
+>> +    CPUState *cpu,
+>> +    bool resuming)
+>> +{
+>> +
+>=20
+>        g_assert_not_reached() ?
+>=20
+>> +}
+>> +void whpx_translate_cpu_breakpoints(
+>> +    struct whpx_breakpoints *breakpoints,
+>> +    CPUState *cpu,
+>> +    int cpu_breakpoint_count)
+>> +{
+>> +
+>=20
+>        g_assert_not_reached() ?
+>=20
+>> +}
+>=20
+Hello,
 
-Hope I didn't miss a way to do this already.
+Called unconditionally today from the common code. But does nothing as =
+breakpoints aren=E2=80=99t supported on the platform.
 
-Should changing via qom-set be supported? Currently, an attempt fails:
-> Error: Attempt to set property 'throttle-group' on device 'scsi0'
-> (type 'scsi-hd') after it was realized
-but there already is the 'block_set_io_throttle' QMP command.
-
- hw/block/block.c           | 15 +++++++++++++++
- include/hw/block/block.h   |  4 +++-
- tests/qemu-iotests/172.out | 38 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 56 insertions(+), 1 deletion(-)
-
-diff --git a/hw/block/block.c b/hw/block/block.c
-index f187fa025d..1d70acdb76 100644
---- a/hw/block/block.c
-+++ b/hw/block/block.c
-@@ -254,6 +254,21 @@ bool blkconf_apply_backend_options(BlockConf *conf, bool readonly,
-                           conf->num_stats_intervals, errp)) {
-         return false;
-     }
-+
-+    if (conf->throttle_group) {
-+        if (!throttle_group_exists(conf->throttle_group)) {
-+            error_setg(errp, "Throttle group '%s' not found",
-+                       conf->throttle_group);
-+            return false;
-+        }
-+        if (blk_get_public(blk)->throttle_group_member.throttle_state) {
-+            error_setg(errp, "Cannot set throttle group, because there already"
-+                       " is a throttle configuration (via '-drive'?)");
-+            return false;
-+        }
-+        blk_io_limits_enable(blk, conf->throttle_group);
-+    }
-+
-     return true;
- }
- 
-diff --git a/include/hw/block/block.h b/include/hw/block/block.h
-index 7dc19d8a45..5565b32e62 100644
---- a/include/hw/block/block.h
-+++ b/include/hw/block/block.h
-@@ -36,6 +36,7 @@ typedef struct BlockConf {
-     BlockdevOnError werror;
-     uint32_t num_stats_intervals;
-     uint32_t *stats_intervals;
-+    char *throttle_group;
- } BlockConf;
- 
- static inline unsigned int get_physical_block_exp(BlockConf *conf)
-@@ -71,7 +72,8 @@ static inline unsigned int get_physical_block_exp(BlockConf *conf)
-                             _conf.account_failed, ON_OFF_AUTO_AUTO),    \
-     DEFINE_PROP_ARRAY("stats-intervals", _state,                        \
-                      _conf.num_stats_intervals, _conf.stats_intervals,  \
--                     qdev_prop_uint32, uint32_t)
-+                     qdev_prop_uint32, uint32_t),                       \
-+    DEFINE_PROP_STRING("throttle-group", _state, _conf.throttle_group)
- 
- #define DEFINE_BLOCK_PROPERTIES(_state, _conf)                          \
-     DEFINE_PROP_DRIVE("drive", _state, _conf.blk),                      \
-diff --git a/tests/qemu-iotests/172.out b/tests/qemu-iotests/172.out
-index a023cd407d..368c411dcf 100644
---- a/tests/qemu-iotests/172.out
-+++ b/tests/qemu-iotests/172.out
-@@ -31,6 +31,7 @@ Testing:
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "288"
- 
- 
-@@ -61,6 +62,7 @@ Testing: -fda TEST_DIR/t.qcow2
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/unattached/device[N]
-@@ -98,6 +100,7 @@ Testing: -fdb TEST_DIR/t.qcow2
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
-               dev: floppy, id ""
-                 unit = 0 (0x0)
-@@ -113,6 +116,7 @@ Testing: -fdb TEST_DIR/t.qcow2
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "288"
- floppy1 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/unattached/device[N]
-@@ -154,6 +158,7 @@ Testing: -fda TEST_DIR/t.qcow2 -fdb TEST_DIR/t.qcow2.2
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
-               dev: floppy, id ""
-                 unit = 0 (0x0)
-@@ -169,6 +174,7 @@ Testing: -fda TEST_DIR/t.qcow2 -fdb TEST_DIR/t.qcow2.2
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/unattached/device[N]
-@@ -211,6 +217,7 @@ Testing: -fdb
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "288"
-               dev: floppy, id ""
-                 unit = 0 (0x0)
-@@ -226,6 +233,7 @@ Testing: -fdb
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "288"
- 
- 
-@@ -256,6 +264,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/unattached/device[N]
-@@ -293,6 +302,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2,index=1
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
-               dev: floppy, id ""
-                 unit = 0 (0x0)
-@@ -308,6 +318,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2,index=1
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "288"
- floppy1 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/unattached/device[N]
-@@ -349,6 +360,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=floppy,file=TEST_DIR/t
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
-               dev: floppy, id ""
-                 unit = 0 (0x0)
-@@ -364,6 +376,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=floppy,file=TEST_DIR/t
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/unattached/device[N]
-@@ -409,6 +422,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/peripheral-anon/device[N]
-@@ -446,6 +460,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,unit=1
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/peripheral-anon/device[N]
-@@ -483,6 +498,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qco
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
-               dev: floppy, id ""
-                 unit = 0 (0x0)
-@@ -498,6 +514,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qco
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/peripheral-anon/device[N]
-@@ -549,6 +566,7 @@ Testing: -fda TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
-               dev: floppy, id ""
-                 unit = 0 (0x0)
-@@ -564,6 +582,7 @@ Testing: -fda TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/unattached/device[N]
-@@ -606,6 +625,7 @@ Testing: -fda TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
-               dev: floppy, id ""
-                 unit = 0 (0x0)
-@@ -621,6 +641,7 @@ Testing: -fda TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/unattached/device[N]
-@@ -663,6 +684,7 @@ Testing: -fdb TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
-               dev: floppy, id ""
-                 unit = 1 (0x1)
-@@ -678,6 +700,7 @@ Testing: -fdb TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- floppy1 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/unattached/device[N]
-@@ -720,6 +743,7 @@ Testing: -fdb TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
-               dev: floppy, id ""
-                 unit = 1 (0x1)
-@@ -735,6 +759,7 @@ Testing: -fdb TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.qcow2.2 -device fl
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- floppy1 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/unattached/device[N]
-@@ -786,6 +811,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.q
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
-               dev: floppy, id ""
-                 unit = 0 (0x0)
-@@ -801,6 +827,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.q
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/unattached/device[N]
-@@ -843,6 +870,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.q
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
-               dev: floppy, id ""
-                 unit = 0 (0x0)
-@@ -858,6 +886,7 @@ Testing: -drive if=floppy,file=TEST_DIR/t.qcow2 -drive if=none,file=TEST_DIR/t.q
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- floppy0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/unattached/device[N]
-@@ -906,6 +935,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -global floppy.drive=none0 -device
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/peripheral-anon/device[N]
-@@ -973,6 +1003,7 @@ Testing: -device floppy
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "288"
- 
- Testing: -device floppy,drive-type=120
-@@ -1000,6 +1031,7 @@ Testing: -device floppy,drive-type=120
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "120"
- 
- Testing: -device floppy,drive-type=144
-@@ -1027,6 +1059,7 @@ Testing: -device floppy,drive-type=144
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- 
- Testing: -device floppy,drive-type=288
-@@ -1054,6 +1087,7 @@ Testing: -device floppy,drive-type=288
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "288"
- 
- 
-@@ -1084,6 +1118,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,drive-t
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "120"
- none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/peripheral-anon/device[N]
-@@ -1121,6 +1156,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,drive-t
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "288"
- none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/peripheral-anon/device[N]
-@@ -1161,6 +1197,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,logical
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/peripheral-anon/device[N]
-@@ -1198,6 +1235,7 @@ Testing: -drive if=none,file=TEST_DIR/t.qcow2 -device floppy,drive=none0,physica
-                 account-invalid = "auto"
-                 account-failed = "auto"
-                 stats-intervals = <null>
-+                throttle-group = ""
-                 drive-type = "144"
- none0 (NODE_NAME): TEST_DIR/t.qcow2 (qcow2)
-     Attached to:      /machine/peripheral-anon/device[N]
--- 
-2.47.3
+If trying to actually enable a breakpoint, common code will go through =
+whpx_set_exception_exit_bitmap and error there.
 
 
 
