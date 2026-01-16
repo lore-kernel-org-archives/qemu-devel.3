@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D84ED48984
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2941D47CD0
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:21:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vghqq-0007M8-Gu; Fri, 16 Jan 2026 06:18:48 -0500
+	id 1vghsw-0003kP-7n; Fri, 16 Jan 2026 06:21:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghqo-0007Kc-OM
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:18:47 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghsf-0002RC-LT
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:20:42 -0500
 Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghqm-0005jU-SC
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:18:46 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghse-0007CH-3I
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:20:41 -0500
 Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-47d63594f7eso12878225e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 03:18:44 -0800 (PST)
+ 5b1f17b1804b1-47ee3da7447so11391545e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 03:20:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768562323; x=1769167123; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768562438; x=1769167238; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0HpoXgcBtw/jlAhT3nBU0eOAguVGh9HBtx5DELtQlEQ=;
- b=hO2Yoh7hX/3IJ1RkGzUEksNSeATaO9oyjlvkbyuW7dTEgbU87o9QW9CfmenQdTJjXX
- Kfp0LGqA38d0hlU1wxb2Umip8VSG0haXawo6fjajm0+vU9mr/h1oSf31G528Lexw4Gpm
- WXj7kLbJoNHOlhv/dxfFWlioxnzzLLsrkNSkIcl1kb84h1r/V9oQFPQJspxpW5sIArkU
- Zjz3Bs+sx8IzizDp/KsADU/gvslKSl9FBuBsdpx7LfVhiK+LQ0r71eHKUic1HMJLFBkg
- XZULvS4+ShYzHMgAkATpndn/gKgWQwd6RNMRjn9i+NdGAXGCgIowowRjIC9k5+y0Yx/m
- zecg==
+ :reply-to; bh=KstmbcyqBDmNKiirh3lzOKShkET70rsL+d/5h23NuT8=;
+ b=YIcCuywZJgD7wA8zsWip5eLD01xdYXKkyY1NwyHqgRNXyWX8x3Dq5EnG57QcLkaUQF
+ hmdrKEOECp30pLdLUF+8d/D00gEW4IG8I2dHfIm1XzEAidIdMNNv6GDiQJ67JYOkSbQN
+ vuF/b2WbNh/Bt4i6uCx8crT2fBG+WMu2/7DG1dKVW7GnN6sHG5DAFNWxatZHS2pkJmdG
+ k+B+AilJSJ4iS18ap3xNLSPsXL0KrjX9RrJIjWjVVdkIEsKL+r5uXoJazP0VMzHL+v6j
+ JMk2L50ASa16dIl+mURUDWtTV5BJBZJnetuSlJKgWrq3MnxvKMDUeELwzrwsvgt8N3P+
+ t6YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768562323; x=1769167123;
+ d=1e100.net; s=20230601; t=1768562438; x=1769167238;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=0HpoXgcBtw/jlAhT3nBU0eOAguVGh9HBtx5DELtQlEQ=;
- b=IF10YPg/rQpZUZyTUb1FbtE9Zs8RhUxYGgHWGDH9Bl+Zt25Jiopn497uzMv9eAq5Xm
- yJRr+/zqv43ilue+kjeCwbOWFKG3heNWq+e2rvoDkv4K8XP2vCRozV7K8oGQMql5Fl8g
- Dx+cM0mZCm1u6+Cft+NgTandjSFycRIF0/uN2nzCp3fuMWq5BDszJS7do/5WFX3GNduW
- zn0UYDmlwS8WbfUKenC/Q9+TuiIBQLQPStuqmancqHzRDmT9c/M8W1cRThMw4gqT9tO3
- UE9S2oPF5i8iNwTyv63g7Q25BpbdJoB17wkqk4i18mERD3KwVSpg8tsqY1XHvzKIiFH4
- p02g==
-X-Gm-Message-State: AOJu0YyHoC+G975LJBDto7BqkgBA3udKGOIFg38TEfJH5/DKETctgIih
- LboDcIuohgmnVsafVaZ8eXflr8O5y5VXLhf9SXM/ET+Rp6ZdyBEmoPD2YzcQWbDrYdfNy0bAscH
- ukVYt5yc=
-X-Gm-Gg: AY/fxX6X7u87MwLuSIqNx1qNAREURYkMPDU1fwWx4OGmixueZm/H0oBcOnp+3AKQzEq
- I3GGC2DLeCYtrgHu0l8MHKPMEB+lt0Gwlg8HzlmDkeNWuUCIPYy1HuavBe7oi2Yhg95F6UA5vbD
- quiXCfu1QvCKdkmAKR+9mNasP/CSgQOcyQG+4l2A7vAH22eXPwoDWY6pHJZbljezo2KMA+zVa2l
- Dn1Yi7+NnPPgLQ0dEoYH1rQJ96Wi7YFpuQIWnsVjCNwvGmk+WNKk0WnaqzJ97Ecd0DnCTluWHkp
- pScrN6QRfAqasKANstRzc0zcDRUx7cnrms5A8kVan2CuSIZ6/G63Gzl3dU5iVIAxEI3tKSJ5SeV
- AUOqVmT+HxTTbbF2EkFCU4k9OUIGL4srPu+wwHEFmDtCpgk7hbktX+L7QkMQki+K6vzhsFVZHyi
- 44+T8JRJB6QNHTZVGH0QMm4LK1r3rIYJS3hP0ZMaeF28tPH2/KwwV4XgDJdPyk+WHNvWMJBYM=
-X-Received: by 2002:a05:600c:1986:b0:475:da1a:53f9 with SMTP id
- 5b1f17b1804b1-4801e30ba86mr32838625e9.14.1768562322648; 
- Fri, 16 Jan 2026 03:18:42 -0800 (PST)
+ bh=KstmbcyqBDmNKiirh3lzOKShkET70rsL+d/5h23NuT8=;
+ b=Q0sXhB/ZUTYsu01qEUy27DySrgGdXGSOSoi5oYMwKPt0T8FljhuruPGcksYkU/1KiW
+ 7Gi72HHJ7qIeWeAHMCzEpSnxB1qwyjNuRpdZcLyhWB8UxviXhNfaebyEsZ4WLgP6XFB9
+ uYS++go4mpEOpmW+bB+kwB8RAtXy/9TVPDk3sMWpzUzE4G/DZ1X1mK9RCIZC5RknL8u/
+ g+xgP8WxORUhR+bmGc0U7Lds+GWkJjkswG+Q7I/fX2sE6soqxCNB5jpIeQ3HAC8SwqSv
+ fcCFjhzu19gygK9K1wimsRhRTCK4/BobrIDO4R2Yfe0C/99mzZf/Jnk8YUwF1gTrlRJI
+ hqyw==
+X-Gm-Message-State: AOJu0YyRV2ZXuCPaMAoIje7Ko6oTkH8voGTKf45C8kQWb3ts6lPGS8gc
+ xHotXfsHJfcBcS3ONxqDPE6N0dd9GGjc+wLaq9yeOxuVogwJtC64cZ59DFyohiR6rrE7MVIPlXe
+ WEpIw4MVTsQ==
+X-Gm-Gg: AY/fxX7M9lj+AmuDfQX8jp1qndolITZFW9cxm2nIziKpvrQ0snv/OzTa5e/wiQDLVSi
+ p2xDzCo+QTwryHxF08Hu3iL7fRuFu6wmKoQHWOtXg/pDV0jylEZrCpPlBh0TNpoUMIWKf7Vqhkc
+ Z3vQ7x7yfALdbwwcMdCjvTgN+x8fRqxyIzGRJ41lYJDBhBho/MwFOtKxgz3skHQN1Mr8O3wznl7
+ lbRns77TC8BOIYe6obtCHlkHPoxLfS/GTFPYmaKrDk01ogQsHOn8nHAJLthMk2wkVeTb2j12RT/
+ HZ5QU2r+wF7h9zo80kgsowm2Wm87K7octRQ3Ea+aACaMU3BeZuzAD8lZ4CnfoAyCXO8ZAErFyhH
+ spR7yaKbDIrVbECnG1sy7oiGLVgMJFTnGSrusqgaKVTVBHRRaR7y/yAiseF+f6zMn7E6JOU7kVK
+ FW25p2JPqN0thsFhTmn2OG+fSf1thyPRH8pCixtU1283QVL5kKF1qzp9MhYuzPDA/aUhhIsn4=
+X-Received: by 2002:a05:600c:458c:b0:47d:6856:9bd9 with SMTP id
+ 5b1f17b1804b1-4801e3342bamr23479895e9.23.1768562437787; 
+ Fri, 16 Jan 2026 03:20:37 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356997e79asm4682308f8f.33.2026.01.16.03.18.41
+ 5b1f17b1804b1-47f42907141sm93961735e9.9.2026.01.16.03.20.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Jan 2026 03:18:42 -0800 (PST)
+ Fri, 16 Jan 2026 03:20:37 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/30] configure: Enable to propagate -sMEMORY64 flag to
- Emscripten
-Date: Fri, 16 Jan 2026 12:17:42 +0100
-Message-ID: <20260116111807.36053-6-philmd@linaro.org>
+Subject: [PULL 22/30] accel: Introduce AccelOpsClass::cpu_target_realize() hook
+Date: Fri, 16 Jan 2026 12:17:59 +0100
+Message-ID: <20260116111807.36053-23-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260116111807.36053-1-philmd@linaro.org>
 References: <20260116111807.36053-1-philmd@linaro.org>
@@ -99,80 +98,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Allow accelerators to set vCPU properties before its realization.
 
-Currently there are some engines that don't support wasm64 (e.g. unsupported
-on Safari[1]). To mitigate this issue, the configure script allows the user
-to use Emscripten's compatibility feature, "-sMEMORY64=2" flag[2].
-
-Emscripten's "-sMEMORY64=2" flag still enables 64bit pointers in C code. But
-this flag lowers the output binary into wasm32, with limiting the maximum
-memory size to 4GB. So QEMU can run on wasm32 engines.
-
-[1] https://webassembly.org/features/
-[2] https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
-
-Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <a2f068c7884a629fe3e4b297368d70b0956ab048.1768308374.git.ktokunaga.mail@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20251103101034.59039-16-philmd@linaro.org>
 ---
- configure | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ include/accel/accel-cpu-ops.h | 1 +
+ accel/accel-common.c          | 5 +++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/configure b/configure
-index 92bfc5f9765..326d27dab1f 100755
---- a/configure
-+++ b/configure
-@@ -182,6 +182,10 @@ EXTRA_CXXFLAGS=""
- EXTRA_OBJCFLAGS=""
- EXTRA_LDFLAGS=""
+diff --git a/include/accel/accel-cpu-ops.h b/include/accel/accel-cpu-ops.h
+index 0674764914f..9c07a903ea0 100644
+--- a/include/accel/accel-cpu-ops.h
++++ b/include/accel/accel-cpu-ops.h
+@@ -34,6 +34,7 @@ struct AccelOpsClass {
+     /* initialization function called when accel is chosen */
+     void (*ops_init)(AccelClass *ac);
  
-+# The value is propagated to Emscripten's "-sMEMORY64" flag.
-+# https://emscripten.org/docs/tools_reference/settings_reference.html#memory64
-+wasm64_memory64=1
-+
- # Default value for a variable defining feature "foo".
- #  * foo="no"  feature will only be used if --enable-foo arg is given
- #  * foo=""    feature will be searched for, and if found, will be used
-@@ -239,6 +243,8 @@ for opt do
-   ;;
-   --without-default-features) default_feature="no"
-   ;;
-+  --wasm64-32bit-address-limit) wasm64_memory64="2"
-+  ;;
-   esac
- done
++    bool (*cpu_target_realize)(CPUState *cpu, Error **errp);
+     bool (*cpus_are_resettable)(void);
+     void (*cpu_reset_hold)(CPUState *cpu);
  
-@@ -521,7 +527,7 @@ case "$cpu" in
-     CPU_CFLAGS="-m32"
-     ;;
-   wasm64)
--    CPU_CFLAGS="-m64 -sMEMORY64=1"
-+    CPU_CFLAGS="-m64 -sMEMORY64=$wasm64_memory64"
-     ;;
- esac
+diff --git a/accel/accel-common.c b/accel/accel-common.c
+index 850c5ab4b8e..eecb2a292af 100644
+--- a/accel/accel-common.c
++++ b/accel/accel-common.c
+@@ -106,6 +106,11 @@ bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
+     if (acc->cpu_common_realize && !acc->cpu_common_realize(cpu, errp)) {
+         return false;
+     }
++    if (acc->ops
++        && acc->ops->cpu_target_realize
++        && !acc->ops->cpu_target_realize(cpu, errp)) {
++        return false;
++    }
  
-@@ -779,6 +785,8 @@ for opt do
-   ;;
-   --disable-rust) rust=disabled
-   ;;
-+  --wasm64-32bit-address-limit)
-+  ;;
-   # everything else has the same name in configure and meson
-   --*) meson_option_parse "$opt" "$optarg"
-   ;;
-@@ -904,6 +912,8 @@ Advanced options (experts only):
-   --disable-containers     don't use containers for cross-building
-   --container-engine=TYPE  which container engine to use [$container_engine]
-   --gdb=GDB-path           gdb to use for gdbstub tests [$gdb_bin]
-+  --wasm64-32bit-address-limit Restrict wasm64 address space to 32-bit (default
-+                               is to use the whole 64-bit range).
- EOF
-   meson_options_help
- cat << EOF
+     return true;
+ }
 -- 
 2.52.0
 
