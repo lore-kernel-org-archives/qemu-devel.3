@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC099D4A5F1
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:35:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC3BD4A5F1
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgabp-0007Wy-5C; Thu, 15 Jan 2026 22:34:49 -0500
+	id 1vgabw-00007h-2h; Thu, 15 Jan 2026 22:34:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgaba-0007D3-DL
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:34:36 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1vgabs-00087J-Jv
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:34:52 -0500
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgabY-0005jL-Ee
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:34:33 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-81f42a49437so814573b3a.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:34:32 -0800 (PST)
+ id 1vgabq-0005rd-RX
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:34:52 -0500
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-34c84ec3b6eso1345733a91.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:34:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768534471; x=1769139271; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768534489; x=1769139289; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=92HxQ69qgo/2VgbhtKQwCIAt9EeS2yQ9NqJlStKghbs=;
- b=xDBXwA4PuXWc8tsBP9t2Xa6kNpUI73daLhz0LXm7rBRK8QmfvFMBSyW3SyudguXTFY
- ErG1Ogojl9oqORI10rl0byoqHeN9eAm7yjrpLPRVbPKqgvLvB2cNGaTsnmvCzzSvZIU0
- tMxKo3e5xTIlH0cxtc0YuSKz5SAI62BJKvTGYiyrDNWmax8ufhk9CG4zgn2XzHTXlrAV
- +qsFxxTDGqGzGqFVGsEIlJkMwDn+hBguMdmXA/GrmeARJLL3KTtGLOHplGRB5lg4B+lA
- lf62NUxlWC0Zm7RmdFze5DiPJa9gGZEjvG2zn7UsAcfBj8NWpX2ysXOxKcJZn44gJMRX
- cv5Q==
+ bh=U5sBU2zk1bX0ddl3O5KkamyL/V1clpqH1xPWvT/iVmQ=;
+ b=mzerapluU1pkEfGURjdoGNGGck4Y5vIK1vpBVYvwkWRRKV3jFYgso4xh5+AtDBbkCd
+ rVt3mbm+HW9U3XOA0SHlpnovTNokqPszjRSQdiOnkHGjmKsUrTgxNrElC13G6wGtQtjd
+ wgCYCHjqtdNV0OCkcJYN0CKxY8uVp5eHKK+hA3hGTnihukzxkV00Zx00vm9akPnHh+yD
+ kFOVobpssgI2aZEx5ilKIA7+j9sk21mEZ/VlYww3fH5ppZ6a61KeitmOZP6kGaU1CqCO
+ 2YGA6LT4LD3gJYifaX6UapaYQpW9XQoHnflZag2lkRJ5V/47OcMF/1vRhSNNrkwd41Xe
+ YlJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768534471; x=1769139271;
+ d=1e100.net; s=20230601; t=1768534489; x=1769139289;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=92HxQ69qgo/2VgbhtKQwCIAt9EeS2yQ9NqJlStKghbs=;
- b=hGLqIBmp0wYG0jxSo2TuU/QU+1hFVYqIAKmPpcaCWj2EzSO5+h1oGlAZbJu/5ShykD
- x8q25jwSzbydPPA5oCdow0u1DComAY26s/U8oW8xKuoWuMdESzVfHg8TvW+gcaPktVvN
- AFW3triTn4/Hscn2OdgHOV53ovwruNf/QS3IdHbpaBaQTQW9jm/rofizfxQT/swgO0QZ
- LayE/QwuyOo3O1OhOarXwpskSleIJBfoT6wD5bnRZo/PDIE4BsvPVxV/qrs9fi+U8Pti
- Ai8/07vz3Gw4oKZbPGxpKnKRIBVjiJagWrDTowEdyiE1/yxSlwObiRhjLhI57K5OgmSv
- 0mqQ==
-X-Gm-Message-State: AOJu0Yx5lZdE0SubB3gfaE3MaslP2s0namJyplw37bwC0J72zDgAkABU
- +pg7jcfVaFYJDh0KaruQ9542E+t6+crnDOk5h8lifZueWYWqD02aMa273rqxbR3KLBvHgGyxCQA
- pv3eGmfuAbg==
-X-Gm-Gg: AY/fxX6z2YgrKR7rXQitNTKHYCxwPxjXd3NbI9aV1Cf4bz4xbr2Aa3GitJXAFRHc0Qy
- WyzRgGGvd8NV7o1LsPXGZQZPai93R5IIuBWRaXixbEHrlwTBIayvN2eCVnC4xgsKfySh29h8ekS
- MDO8asJQiw98bHdNh1lFpoSz+KOiwulbiRTxhLoSHZgkRqF0AfD/wKLKUpuII/o9LHepKaUnlHg
- 9IbEZlK3sVD4I++yqrgq15drUaKhA+ozxbRlYdQ9h2cTQaBQTfPRSS0qSJCq28EXhWRKPlsYUAR
- qgqQHvXVgP6FJf/stob7N/6xOXeK4ccUBloIEGexwIqiEZsBEAH59oJcWuu+ru4WhgEAgFbOU0+
- uH7vwd20ZOW1LTORfq0K2EvbX4XVB9XER+z4TokrFswwdEIB+GeTDtN095ep5pHDtvnnkZLs0E6
- y40xm8xDWejgRBqGpssw==
-X-Received: by 2002:a05:6a00:1da7:b0:7e8:43f5:bd40 with SMTP id
- d2e1a72fcca58-81fa01e2082mr1468693b3a.44.1768534470926; 
- Thu, 15 Jan 2026 19:34:30 -0800 (PST)
+ bh=U5sBU2zk1bX0ddl3O5KkamyL/V1clpqH1xPWvT/iVmQ=;
+ b=FQuQq5Ijaw2zZ2OkzwRCwAglgBsa2do/WubDWayXR/vmrx9+JJGQ+yoysioJEUzMb9
+ ZrYWkHKVfhULqSJzZx3yHF0eOGjzAU7o2f1Swyjoss+RmKrLgfyS+NgVld2Ywo7h3xpw
+ Al4mW7NNfy9qkwhNZvst5oXGcheTwGb3EB4CoIVrxv/xPExi6i+IKDvPEoW5D4+JZbMm
+ fFOLTKes1iB1wcmScUb5yRzR87/G1JJUcPiNZx0VjLFV1hFXmQl5wlfWs6110LTmYmLI
+ FRTAlMs9zQ9ehXDKj/zECuJHR7tvFJEu1UI2C0Yj5C1tauObXIFBgu7QBlPHHgkfjSOF
+ D0Sw==
+X-Gm-Message-State: AOJu0YwgG8lg5d5zZR7J+IRGthy77WnxeGU/KHEF7o4eI6jD4hYw4ZPA
+ zPn+9u/vQ7QM5i1Y4Km0rnPJrEPEJVTDH7IShwgTf+wErpG3djDse1ydN6wZfjGeGmkGk44VTFl
+ eit5dWJYpmA==
+X-Gm-Gg: AY/fxX6uUnhiKRd5CZFIhJRrDN5VgPJE1KJBx0S2cjUrKr+8lMz/9kgN4zChZA9o3nx
+ aIAVHp0zwpGCm2MfqUsTFvfxmL1ItebD9U/WV33bzv52YIgaj9G6iDZxyvKOgKpJOSjbMpjVG0x
+ 717U/xbOGg6dOhk7SJwDcoPJdo0/6QwL3irXAcs/j81XLWe+4YHl7DskbJugtFpVd9V9WcJC71C
+ wb0JZIRTKo6Q632xrrvEx9vl28NuRxIZRznkzKaevQxGAt98wP6udzdCuBjngWFueZ5eyqBOon/
+ U8ftYtXc5grz4z+CzLl0kkZ642WZ6CxTD3vtyvjmSj4J1l/0VzfshtpEIjiJSwuReFoDv7pJW11
+ Y04m8Wz4vFByvf0/c407qg68CsWYREiWsBCwoxrDTfSqCvxCV1BYjuKsMH0jF/QxJBfYcrpEcSq
+ ELegqtb3j3Aba31skwew==
+X-Received: by 2002:a17:90b:58c4:b0:34c:9cf7:60a0 with SMTP id
+ 98e67ed59e1d1-35272ec5a42mr1176126a91.5.1768534489423; 
+ Thu, 15 Jan 2026 19:34:49 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81fa12b5c67sm683372b3a.69.2026.01.15.19.34.27
+ d2e1a72fcca58-81fa12b5c67sm683372b3a.69.2026.01.15.19.34.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 19:34:30 -0800 (PST)
+ Thu, 15 Jan 2026 19:34:49 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: ktokunaga.mail@gmail.com, berrange@redhat.com, pierrick.bouvier@linaro.org,
  thuth@redhat.com, pbonzini@redhat.com, philmd@linaro.org
-Subject: [PATCH v2 19/58] tcg/ppc64: Rename from ppc
-Date: Fri, 16 Jan 2026 14:32:25 +1100
-Message-ID: <20260116033305.51162-20-richard.henderson@linaro.org>
+Subject: [PATCH v2 24/58] tcg: Replace TCG_TARGET_REG_BITS / 8
+Date: Fri, 16 Jan 2026 14:32:30 +1100
+Message-ID: <20260116033305.51162-25-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260116033305.51162-1-richard.henderson@linaro.org>
 References: <20260116033305.51162-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,91 +100,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Emphasize that we're generating 64-bit code.
-Drop the explicit rename from meson's cpu.
+Use sizeof(tcg_target_long) instead of division.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/{ppc => ppc64}/tcg-target-con-set.h  | 0
- tcg/{ppc => ppc64}/tcg-target-con-str.h  | 0
- tcg/{ppc => ppc64}/tcg-target-has.h      | 0
- tcg/{ppc => ppc64}/tcg-target-mo.h       | 0
- tcg/{ppc => ppc64}/tcg-target-reg-bits.h | 0
- tcg/{ppc => ppc64}/tcg-target.h          | 0
- MAINTAINERS                              | 2 +-
- meson.build                              | 2 --
- tcg/{ppc => ppc64}/tcg-target-opc.h.inc  | 0
- tcg/{ppc => ppc64}/tcg-target.c.inc      | 0
- 10 files changed, 1 insertion(+), 3 deletions(-)
- rename tcg/{ppc => ppc64}/tcg-target-con-set.h (100%)
- rename tcg/{ppc => ppc64}/tcg-target-con-str.h (100%)
- rename tcg/{ppc => ppc64}/tcg-target-has.h (100%)
- rename tcg/{ppc => ppc64}/tcg-target-mo.h (100%)
- rename tcg/{ppc => ppc64}/tcg-target-reg-bits.h (100%)
- rename tcg/{ppc => ppc64}/tcg-target.h (100%)
- rename tcg/{ppc => ppc64}/tcg-target-opc.h.inc (100%)
- rename tcg/{ppc => ppc64}/tcg-target.c.inc (100%)
+ tcg/tcg-op-gvec.c                | 2 +-
+ tcg/loongarch64/tcg-target.c.inc | 4 ++--
+ tcg/ppc64/tcg-target.c.inc       | 2 +-
+ tcg/riscv64/tcg-target.c.inc     | 4 ++--
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tcg/ppc/tcg-target-con-set.h b/tcg/ppc64/tcg-target-con-set.h
-similarity index 100%
-rename from tcg/ppc/tcg-target-con-set.h
-rename to tcg/ppc64/tcg-target-con-set.h
-diff --git a/tcg/ppc/tcg-target-con-str.h b/tcg/ppc64/tcg-target-con-str.h
-similarity index 100%
-rename from tcg/ppc/tcg-target-con-str.h
-rename to tcg/ppc64/tcg-target-con-str.h
-diff --git a/tcg/ppc/tcg-target-has.h b/tcg/ppc64/tcg-target-has.h
-similarity index 100%
-rename from tcg/ppc/tcg-target-has.h
-rename to tcg/ppc64/tcg-target-has.h
-diff --git a/tcg/ppc/tcg-target-mo.h b/tcg/ppc64/tcg-target-mo.h
-similarity index 100%
-rename from tcg/ppc/tcg-target-mo.h
-rename to tcg/ppc64/tcg-target-mo.h
-diff --git a/tcg/ppc/tcg-target-reg-bits.h b/tcg/ppc64/tcg-target-reg-bits.h
-similarity index 100%
-rename from tcg/ppc/tcg-target-reg-bits.h
-rename to tcg/ppc64/tcg-target-reg-bits.h
-diff --git a/tcg/ppc/tcg-target.h b/tcg/ppc64/tcg-target.h
-similarity index 100%
-rename from tcg/ppc/tcg-target.h
-rename to tcg/ppc64/tcg-target.h
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c39a8f54e8..c58fa93fd5 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4079,7 +4079,7 @@ F: tcg/mips/
- PPC TCG target
- M: Richard Henderson <richard.henderson@linaro.org>
- S: Odd Fixes
--F: tcg/ppc/
-+F: tcg/ppc64/
+diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
+index 2d184547ba..9c33430638 100644
+--- a/tcg/tcg-op-gvec.c
++++ b/tcg/tcg-op-gvec.c
+@@ -607,7 +607,7 @@ static void do_dup(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
+     }
  
- RISC-V TCG target
- M: Palmer Dabbelt <palmer@dabbelt.com>
-diff --git a/meson.build b/meson.build
-index 594e7d42c0..0647ca0c89 100644
---- a/meson.build
-+++ b/meson.build
-@@ -907,8 +907,6 @@ if have_tcg
-   endif
-   if get_option('tcg_interpreter')
-     tcg_arch = 'tci'
--  elif host_arch == 'ppc64'
--    tcg_arch = 'ppc'
-   endif
-   add_project_arguments('-iquote', meson.current_source_dir() / 'tcg' / tcg_arch,
-                         language: all_languages)
-diff --git a/tcg/ppc/tcg-target-opc.h.inc b/tcg/ppc64/tcg-target-opc.h.inc
-similarity index 100%
-rename from tcg/ppc/tcg-target-opc.h.inc
-rename to tcg/ppc64/tcg-target-opc.h.inc
-diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc64/tcg-target.c.inc
-similarity index 100%
-rename from tcg/ppc/tcg-target.c.inc
-rename to tcg/ppc64/tcg-target.c.inc
+     /* Otherwise, inline with an integer type, unless "large".  */
+-    if (check_size_impl(oprsz, TCG_TARGET_REG_BITS / 8)) {
++    if (check_size_impl(oprsz, sizeof(tcg_target_long))) {
+         t_64 = NULL;
+         t_32 = NULL;
+ 
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index 10c69211ac..c3350c90fc 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -2604,7 +2604,7 @@ static const int tcg_target_callee_save_regs[] = {
+ };
+ 
+ /* Stack frame parameters.  */
+-#define REG_SIZE   (TCG_TARGET_REG_BITS / 8)
++#define REG_SIZE   ((int)sizeof(tcg_target_long))
+ #define SAVE_SIZE  ((int)ARRAY_SIZE(tcg_target_callee_save_regs) * REG_SIZE)
+ #define TEMP_SIZE  (CPU_TEMP_BUF_NLONGS * (int)sizeof(long))
+ #define FRAME_SIZE ((TCG_STATIC_CALL_ARGS_SIZE + TEMP_SIZE + SAVE_SIZE \
+@@ -2731,7 +2731,7 @@ static const DebugFrame debug_frame = {
+     .h.cie.id = -1,
+     .h.cie.version = 1,
+     .h.cie.code_align = 1,
+-    .h.cie.data_align = -(TCG_TARGET_REG_BITS / 8) & 0x7f, /* sleb128 */
++    .h.cie.data_align = -sizeof(tcg_target_long) & 0x7f, /* sleb128 */
+     .h.cie.return_column = TCG_REG_RA,
+ 
+     /* Total FDE size does not include the "len" member.  */
+diff --git a/tcg/ppc64/tcg-target.c.inc b/tcg/ppc64/tcg-target.c.inc
+index 3c36b26f25..b54afa0b6d 100644
+--- a/tcg/ppc64/tcg-target.c.inc
++++ b/tcg/ppc64/tcg-target.c.inc
+@@ -70,7 +70,7 @@
+ #define SZP  ((int)sizeof(void *))
+ 
+ /* Shorthand for size of a register.  */
+-#define SZR  (TCG_TARGET_REG_BITS / 8)
++#define SZR  ((int)sizeof(tcg_target_long))
+ 
+ #define TCG_CT_CONST_S16     0x00100
+ #define TCG_CT_CONST_U16     0x00200
+diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+index 0967a445a3..76dd4fca97 100644
+--- a/tcg/riscv64/tcg-target.c.inc
++++ b/tcg/riscv64/tcg-target.c.inc
+@@ -2934,7 +2934,7 @@ static const int tcg_target_callee_save_regs[] = {
+ };
+ 
+ /* Stack frame parameters.  */
+-#define REG_SIZE   (TCG_TARGET_REG_BITS / 8)
++#define REG_SIZE   ((int)sizeof(tcg_target_long))
+ #define SAVE_SIZE  ((int)ARRAY_SIZE(tcg_target_callee_save_regs) * REG_SIZE)
+ #define TEMP_SIZE  (CPU_TEMP_BUF_NLONGS * (int)sizeof(long))
+ #define FRAME_SIZE ((TCG_STATIC_CALL_ARGS_SIZE + TEMP_SIZE + SAVE_SIZE \
+@@ -3114,7 +3114,7 @@ static const DebugFrame debug_frame = {
+     .h.cie.id = -1,
+     .h.cie.version = 1,
+     .h.cie.code_align = 1,
+-    .h.cie.data_align = -(TCG_TARGET_REG_BITS / 8) & 0x7f, /* sleb128 */
++    .h.cie.data_align = -sizeof(tcg_target_long) & 0x7f, /* sleb128 */
+     .h.cie.return_column = TCG_REG_RA,
+ 
+     /* Total FDE size does not include the "len" member.  */
 -- 
 2.43.0
 
