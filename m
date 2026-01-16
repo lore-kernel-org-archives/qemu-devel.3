@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 088B7D4A60A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 07:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC4ED4A60A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 07:58:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgefR-0006CX-Qa; Fri, 16 Jan 2026 02:54:49 -0500
+	id 1vgei7-0000kw-G1; Fri, 16 Jan 2026 02:57:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vgefQ-00066o-44
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:54:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vgehf-0000dt-Hm
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:57:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vgefO-0003c0-OQ
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:54:47 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vgehc-00044O-2C
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:57:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768550086;
+ s=mimecast20190719; t=1768550223;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=46kaUmLyvCXCVfKKMt8mlD2ZJRuEydj1YDPVNS0uo9U=;
- b=XzvQdRvFiw7huF6xszKRqpUqkAkSAyzKItQfPPkZo7kdxuV15+PxBBrgLiSs3ZEcx0DIrd
- pcubihoTHNVgt3fHfqKvWxwOQ+2Iiv2YurK/6HUTUrZU0I82no8QqH/j/DmInLxkv4ovst
- Ytob2YphGuNdqjfMKvc/4bz9Bu/6YtQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KW2wUi75Bxov1Sph6vKG8yHs4rhyMVY3GnvvDalDvhU=;
+ b=VgGP2g2ee6gROx9XMbeB3LnXLYKmlz9AO/oB28nihTGgl2Pphbr5pFaP0iizlconACu1tO
+ k64ImWOgv25tXV0iZFDlRO+ZKHYWkofvsSU2c4167xzdT2sHHVkYiXvNZKvI8IGkY2wkl4
+ DAbr+8HDeHbq1RUjzZ7y9hgLBws1PpU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-670-PS61LH9_N6G2vSYVuF8Afg-1; Fri, 16 Jan 2026 02:54:44 -0500
-X-MC-Unique: PS61LH9_N6G2vSYVuF8Afg-1
-X-Mimecast-MFC-AGG-ID: PS61LH9_N6G2vSYVuF8Afg_1768550083
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47edf8ba319so13494985e9.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 23:54:43 -0800 (PST)
+ us-mta-453-oKVENrIHPdGwQiVnp7o7fw-1; Fri, 16 Jan 2026 02:57:00 -0500
+X-MC-Unique: oKVENrIHPdGwQiVnp7o7fw-1
+X-Mimecast-MFC-AGG-ID: oKVENrIHPdGwQiVnp7o7fw_1768550219
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-47d5bd981c8so11041205e9.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 23:57:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768550083; x=1769154883; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768550219; x=1769155019; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=46kaUmLyvCXCVfKKMt8mlD2ZJRuEydj1YDPVNS0uo9U=;
- b=l1F4NHbfaAuQbaVJYIiUSv3P3ajrkjJLFcD9awPgngQM0f3HSFve/iT4jVW4y3FxC1
- RppnKfBd0UIAjaw68xnb96siGCHpErTINqCGHgDkrDYZ0wLa26gvvr5mOlst7M6GBcmu
- pJ6GU9Y6Zv+p4vv7PO9o2eGKbL3Wzyo2KwSCTDTH12x/Yl1BVNSlvFiSo4Z8S7DynA4Y
- lsrEQ2x5MrpF9FR6XhtJv0CTks8EimT2+YNMaQS4S6u82Wjmuy2YW6O0e+shMhr6NJLp
- CXpAciFAGJYOGKCidu/7yLRhCj4i66xEXeoTatwEkh6kPYlttBFDUIJxyh+IvTvCNzQp
- C+bg==
+ bh=KW2wUi75Bxov1Sph6vKG8yHs4rhyMVY3GnvvDalDvhU=;
+ b=Gb5x0UVNjY8mn4EmyE5ufrmaOSEllpXTJXHy1xsMBbsqZULwmtLTBR1/GX5eP/WACS
+ akHUv7+UORDdHTFaJ/pFNj5yf20L5bQcC+JWR1u36wsUo6riDx6s1RFZntvyZnz7eV4n
+ LsJl0lnIxbdTj/KgyJB9dFwcBApkW0AsuoYJaHqTUQfPTYN7mHPCLX8UKt3fQiqOSoda
+ +LIxq9FLktz0IDoYw/N4eFn5QkTzlDaO7iuDVgdp3hF/2ixQv1jkT7A+aUf413LW10fI
+ aQJ8bQQTCIXgTMvYhCOcg0R6YDIsW7OoZzDRRG5jqT2fRLok2BExDnlA55TVgDuF5LXZ
+ 9qfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768550083; x=1769154883;
+ d=1e100.net; s=20230601; t=1768550219; x=1769155019;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=46kaUmLyvCXCVfKKMt8mlD2ZJRuEydj1YDPVNS0uo9U=;
- b=tyh2nQZt2ne+gLEu5QcUfwXVYIA0pu+SwpuaP7NgOyjZy3lmy9qGgVavq4XgU/tyz6
- Czc8E3sopNsriWP8PkykBB4iaI1VIl5JOB2YmqOtKIikfFc7Sl7OTBL6P+kLHU2n+MPS
- hVAR4lcB9GUU3cjJ6It5iwO1oPOJ6lSKi0flP9NHd7B8ObbOHdfSjGCs92pkzD4usqPm
- uFkpdIh69WqFfvk9RMRCj0dAz005+MfAk9h2NRL2raV0oO97KyhDMTpJJO6IGzb6jjI9
- FZ0kyasIi55n6tEmWhgfkSqckZw8gxUKyJKa9ybpcZexZaYpTjNe5uvfQDsWlN8ly3NR
- NOVQ==
+ bh=KW2wUi75Bxov1Sph6vKG8yHs4rhyMVY3GnvvDalDvhU=;
+ b=vd6yLdp794NDKtKBnbWl3Sa9xVm8Ai8728ZWv9B2/ueNKHvE9c259FepkUkcq1VYnu
+ BgxhY9F8jM+cXX9Q2g76d/C1i0cUZJAFEOCo1E72hg70MXrPTcISYYxRdAPhLd4Vaina
+ g9EgSZKIuLTCeV+hq9KMcOASd6VgbyWNIATNWF+ZPFPmTqROLoAAT1KVD/TYEHO9RJsp
+ 2GnVcajSr2WuN0tZpUdql4e/jwSHS+evNAmu8CUeiN5b5mmDADnBrlG6rFISx0qT7OZa
+ HHUD/lyUfB5NxtH5kiyuEXJRnUGLAzuCAVA7snxWwWmQ27f8LxfWq6cerlHm6IQPdgQD
+ Wk6A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKGs7jT2IErSAFgwysymLzjMUotSKndRe2E+4LRPtj0GODJz7viCEi3QtRvSW2lpWp0DStZkg+P5pU@nongnu.org
-X-Gm-Message-State: AOJu0Yx4gHny6CBub5lwxRSsBi1/riZPpxBdjuwBrH/4/VXugoJBn5M2
- zCQb1RdONjPvp1UFgxAVFAA9cM1YUuZ/oMooRal5QaEMSInClTMNi1ZP5RCr6DgDNpO8FU0GOU6
- 51udEm4nk/NvVmE8evl2VFQ7+1X5D/SF1RX5cTCTQFQwsFOyy4RT6iwi1
-X-Gm-Gg: AY/fxX7WXoYohaz3S3t+Pjn8smxXo8bw92EteGQv0m3CgES2nSFK4+QnswNhkfKMGb/
- iod/liF0HWYJSC+Cq5w6UGPD7LP+N5SBzZMhKlADPqs01aEpinD7icRaHlO8Grlnsyt5MkTfreB
- 71n8ML9BqGXVrRPESehqA7EcSgMSgKukZOBKUp5B5Jg8TXItw1MvxKASvd91PaQjapsoI+MmqiX
- vxqmAO+ruTdGgPNOwHFqYAw1kOVXwNtM1+IW304QKW8PjMt17Zd9p5ow2WdhzBSNhEknhNfWWUX
- /SEXknOiV1E4+tWQvloAUaJIlf2+yghVEcNK19QkbdmKJtguZaJv8GXMznjncFqlIffQ6VFoFvu
- W9Jbvswqf5aN7lcW+hDJqVhswLoeNgOD1V254OrntKg8RDHM3
-X-Received: by 2002:a05:600c:138d:b0:475:e067:f23d with SMTP id
- 5b1f17b1804b1-4801e3432fbmr22477275e9.25.1768550082572; 
- Thu, 15 Jan 2026 23:54:42 -0800 (PST)
-X-Received: by 2002:a05:600c:138d:b0:475:e067:f23d with SMTP id
- 5b1f17b1804b1-4801e3432fbmr22476955e9.25.1768550082141; 
- Thu, 15 Jan 2026 23:54:42 -0800 (PST)
+ AJvYcCVkOUMCvjzIWOUgwkZfPGBgrbn0NFWg9S7/BGyJH9eKfimEoEs2tF0Td7MSjlfsG62se1KkLmsiKQJD@nongnu.org
+X-Gm-Message-State: AOJu0YxfT9X+aZil0c9BHLG3bhaEjn65C7tQHh/m/LIKxVeu67MGZNjo
+ ekkwQ37IjKQt+6RdJOaRvJMZ2H5tb64mS2pjtYVQP1H3sVv23a8HaHV3JznWFK66tEf6VilsHjs
+ WhjCN3S5rhZdKBuImdKdcmaX8mGl9v6jMBdMSvsAOXUPf2imjv40E050Q
+X-Gm-Gg: AY/fxX66eehUfuENb9pcf6GpBPQigE5kBLOfYAMfmX6W5Vw8I+NeGTo/ZfUpCkUIOSh
+ LGHhp4tnIoVn0dXenePZJ9hRNm1fWPda1OvSVLvqM7JEDnJ+/gh+zseuVd6kNOJERm/vIKzZ5Gn
+ aGSb/yLzUTa6wm5T7sP5FrWH6vZz5O5PDGcdHHHuKKSj+q8sO+TC4rUv1dQfXg5EjCKtgst5iML
+ BJd5jRLwH0emHUqHrdefLJm6BljZWwW5ZhuJ8cmiiCjBX51205CjYElI9QTGHLHp1LMXXdZLIoK
+ j7FC/mZ+e10w+4ZjresMH25Td6/9cDSZy7iHH7ssZSFIgUS6zadB3nlw0XYoIvTbpEakESS9KQO
+ YvhJZ9vQ+d70rjxqbfU4uK+eXwIDn8ldZ1fOAynhOcrm4Xh0K
+X-Received: by 2002:a05:600c:46ce:b0:477:7b16:5f9f with SMTP id
+ 5b1f17b1804b1-4801eb0efe0mr18165315e9.31.1768550219509; 
+ Thu, 15 Jan 2026 23:56:59 -0800 (PST)
+X-Received: by 2002:a05:600c:46ce:b0:477:7b16:5f9f with SMTP id
+ 5b1f17b1804b1-4801eb0efe0mr18165075e9.31.1768550219070; 
+ Thu, 15 Jan 2026 23:56:59 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47f429071besm84104505e9.10.2026.01.15.23.54.41
+ 5b1f17b1804b1-4801e86c1b2sm29386865e9.3.2026.01.15.23.56.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 23:54:41 -0800 (PST)
-Message-ID: <0cb553bd-793d-400d-9856-ffdbada35682@redhat.com>
-Date: Fri, 16 Jan 2026 08:54:40 +0100
+ Thu, 15 Jan 2026 23:56:58 -0800 (PST)
+Message-ID: <b747f454-58f4-4f21-9e43-db3b7a43c1b5@redhat.com>
+Date: Fri, 16 Jan 2026 08:56:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/3] Update vbootrom image to commit 1c8e9510b22c
+Subject: Re: [PULL 1/3] MAINTAINERS: Update ASPEED entry
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
@@ -101,6 +101,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
 Cc: troy_lee@aspeedtech.com, kane_chen@aspeedtech.com,
  nabihestefan@google.com, komlodi@google.com
 References: <20260116073024.3485812-1-jamin_lin@aspeedtech.com>
+ <20260116073024.3485812-2-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -146,17 +147,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260116073024.3485812-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260116073024.3485812-2-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -175,39 +176,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/16/26 08:30, Jamin Lin wrote:
-> The following changes since commit c1c58cee16380f81f88fbde6b12f247b376839e2:
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   MAINTAINERS | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
->    Merge tag 'pull-target-arm-20260115' of https://gitlab.com/pm215/qemu into staging (2026-01-16 09:33:20 +1100)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/jamin-aspeed/qemu.git tags/pull-vbootrom-20260116
-> 
-> for you to fetch changes up to 107253db5886ec9c0173ffdcb1671a51695a20d5:
-> 
->    pc-bios: Update vbootrom image to commit 1c8e9510b22c (2026-01-16 15:09:53 +0800)
-> 
-> ----------------------------------------------------------------
-> vbootrom update pull request
-> 
-> ----------------------------------------------------------------
-> 
-> Jamin Lin (3):
->    MAINTAINERS: Update ASPEED entry
->    roms/vbootrom: Update to commit 1c8e9510b22c
->    pc-bios: Update vbootrom image to commit 1c8e9510b22c
-> 
->   MAINTAINERS                 |   2 ++
->   pc-bios/ast27x0_bootrom.bin | Bin 16408 -> 28564 bytes
->   pc-bios/npcm7xx_bootrom.bin | Bin 672 -> 736 bytes
->   pc-bios/npcm8xx_bootrom.bin | Bin 672 -> 672 bytes
->   roms/vbootrom               |   2 +-
->   5 files changed, 3 insertions(+), 1 deletion(-)
-> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 4ddbfba9f0..28046b457a 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1248,11 +1248,13 @@ F: hw/net/ftgmac100.c
+>   F: include/hw/net/ftgmac100.h
+>   F: docs/system/arm/aspeed.rst
+>   F: docs/system/arm/fby35.rst
+> +F: docs/specs/aspeed*
+>   F: tests/functional/*/*aspeed*
+>   F: tests/*/*aspeed*
+>   F: tests/*/*ast2700*
+>   F: hw/arm/fby35.c
+>   F: pc-bios/ast27x0_bootrom.bin
+> +F: roms/vbootrom
 
-For next time, the subject should be:
-
-    [PULL SUBSYSTEM vbootrom 0/x] ...
+roms/vbootrom is under "Nuvoton NPCM7xx" already. I guess it is fine
+to have duplicated entries. Did you check with ./scripts/get_maintainer.pl ?
 
 Thanks,
 
