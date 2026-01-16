@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B971AD4899A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD25D47CDE
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:41:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgj8D-00028B-1t; Fri, 16 Jan 2026 07:40:59 -0500
+	id 1vgj8E-000286-Te; Fri, 16 Jan 2026 07:41:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgj7b-00021K-Ma
+ id 1vgj7c-000220-9O
  for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:12 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgj7Z-0004fd-3L
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:10 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-432d2670932so1634962f8f.2
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 04:40:08 -0800 (PST)
+ id 1vgj7a-0004g1-08
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:11 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-430f3ef2d37so1468765f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 04:40:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768567207; x=1769172007; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3uqa3yy6jOWl6xd50zEi7jWQQ+5qpcwUzSxH9gQWYcY=;
- b=LXsgjeogmIgJJO/F7BMaI5bktot2OkT2xdXnE8tsVoUOuQxI4LK0AHf9DqNY44MS1U
- BMerUsPUl8VIbO2U4qLYPDOPqR1RG06T+5JX5T8AGmc6Xq67j9HQWHKk3XRM8GGgZtnq
- t6VX48JcNQYfWxgcXRzSWowuFng6ttEmQLPjF26iIhWjMPdvAdXZhvsH55cUut5Im9kA
- UCXmzuqgCsaCm/WY/c0YaqG4rSQMx2Nj/UDL5Qp1/qKBqpt/WF/YWqd3hvf3JEsTY5h7
- 7t0CrUC4/PMaykPNGkGPzMa7inDxvSCXU+IjPNdloQWIKS4Lapvo7Fhh7RIK+XVK4Nk1
- Ae+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768567207; x=1769172007;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1768567208; x=1769172008; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3uqa3yy6jOWl6xd50zEi7jWQQ+5qpcwUzSxH9gQWYcY=;
- b=XTzQtxiBGiZp3Mxd0G20rDU06mCGE8sP2kQIg9kuvRNl3rJO9yhDtJAG97w5khhHjL
- IZg7BloVGSgMdDVzE4gPTFR5U0ZMnXyVnnGrrcB4rxTtNNGH6CYjK2ZKxbD3MegBzDtt
- bJRNrz75U5YDszY9q6YAyMISQTEbjZA8ZxVfPH/6STghSNJneVjh2gcPZmXzbc4kqWJS
- u5Rx2QntS49y0IYXaPFKSWzbBuSCZiaYv7vt1QfNCBa58oiW/NzfaziWAEKE+G7IPJMw
- fCMT72wpNJ/u9eMnejRRadQaCJxOQJtu7iBPLKQFtlZLnS+iYWOgKNjHdiBYSsIgtsRC
- 871w==
-X-Gm-Message-State: AOJu0Yz0KhAnBvjvUyJSxmGU+MhgNyENWDl3GtPA6k7O1OppsJoA/GNo
- r0ipDxhcRuIykDPCg60MMppzj51WmYTkhVqqgTnZGhYDuy1RJtL92TXlVa+5kHskOxdy1QD5BI6
- dtC7d
-X-Gm-Gg: AY/fxX54NCfNaQa8voOR7ksvBcXJF3WgOhidM21xkiYp08vlB33rQPGPff3o+kcFT/P
- p12arEq31m3efc71BRIg4t2V4SPdXHtQR8sTEnufDQFOaEydmbH6sTZ9nFZcdQHnsysqQ99sALk
- FKvqoF3XDR8NsEa4m/ByKiI/V0cb67YaE90Z/3UYh+Xfj9Bv0+BHf2LT8vEXXsOHX3Rx1ATtmwP
- K/fXElnq2KHJ3cisaFdfaYqIU85X1OxwBRFb/Y1UyGmvWhjmJHN5DMsF7U5reWjKEgfWhKi1cSG
- ulNhx6Upoi9v8Fr9PguvEK7nn8b0p21HPG9l2iTY6Wl/a6jf0MRDsQOnp42DwnOI+Mypurl4a5M
- 28orIvpeq8t3yWtIXTl0GDmFUkf1mhxAYrFRb7NM2uIkAGctEkkb8xU9cDmIni+j2BUnPEgccFu
- XHA89ItQua6qjbNZSF0ikqw4OZ4l/77QWmU+N5Zo11IWRlDwAErSM4xApR8IJAjPXa1LV/NUDgo
- 5RUC4C1PHUlSD4ROfJX3ZntUugukIL3RyJMTOArbpuBlKGn/N8Ysuaw
-X-Received: by 2002:a05:6000:2512:b0:430:fa9a:74d with SMTP id
- ffacd0b85a97d-43569998efdmr3454760f8f.24.1768567207255; 
- Fri, 16 Jan 2026 04:40:07 -0800 (PST)
+ bh=tP5WdEw2SWqsSQRDCQEyx/TDMvYDo3Lw58Gf9MWPLqc=;
+ b=ltmqnkig0lk0YMX988KWbITW4IjjsLNXfvAl8AeU7p9m1R70EpLbB42johZEavmcx3
+ 6mer3oQEr+bW354EK0bzOdotoZrrQf/Jm1EjrsfcVVJhdWtzYhOYzcgVuU0ELfmhFKQc
+ HlgHQYye6gODymPDo+nlNZA/Tb7JtGmB2+g356XAqsXgUrJ/CIY1S16PUYQZUJBP5Ic+
+ yMayi91cUqdOQipUJi1cfvA61wBCOv+ZnH+9BKhsjhx6sayXHFN71t/UYQo8/7DJ5WkS
+ ffXZTG8fAMSfDuSn53VGklGXPxHEsAp9V33JWQ2UGKSZkkiyf4s40nLoQ1flSAVgtfEp
+ FYRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768567208; x=1769172008;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tP5WdEw2SWqsSQRDCQEyx/TDMvYDo3Lw58Gf9MWPLqc=;
+ b=cvMrZfX9OBbU6kUG7T3IrWebpWGJ8IDWpp4401EIXPkhWQvXF9mfF/FX3Ik9LGzOSs
+ 56HkFP8UORb96vY9ljx0gYeUbdsuvktOenb8VUFBo9E1aIrhcjpBLxlCOJjWWLa1FuWk
+ JF0K5JyfW0P9R6Q5aTun1wwhyqYXkbCMOLd4KlnApIZTTdmoHQPDdKF+LH0S+AkZNwnt
+ FpKWSzV3ZZLLVcRC2apyNVaNCeDFUU5e7vL00m5zerbemKoPOTaGETtGbRkgeX9ADTpk
+ McSyrqjbxVQZGejdgqm9aHckqnkIGhHknnQPsb9E9XK9Fy/p84ZdCDTYXOD7P2P3lIBT
+ wJXw==
+X-Gm-Message-State: AOJu0YzSKGTs2D2McIon6SdSoClH7RK9J2badsuCt6Jfdxhe984rqiq5
+ pbGA+JC988oipirVnlivs2daciV7Fz4ea1HXqjmBUoBrccqpYHYIdjArKs9KLW7ZNEXjw6PFiNC
+ BfK2F
+X-Gm-Gg: AY/fxX4aRBc2Qt9GO8VLVBUPiA7weLtG/ftMhauIQcoL+Q5O1jg4D7B5oHVAucq84Pz
+ rPnUBAiym4qLgxTRxTcy58i9fbE46fVUicXdaJpuNIDawJg6VM4z+0y/eLKns9mK1UDlU7uTavb
+ srYQxaaxttyFS9grJz5o6oAW8U7VsNDukA/MwznNas0PN6Z/cJC7tmiQVHPGyuR73gutR+E5puM
+ HaRyNPRbIujfkID5vnXVuHOxiT6jXWDFNexXI1/NAzc5/SUGbGlgGLsEV9r0OPIX+KFrA+F3F/J
+ /i5Hpcm7Px6vPD0WmveZazKzksje1R7E/m4jsBDpKWym7sEyIC8FGbcpYNzLg1vWRWvVTOywiyQ
+ KLbpWSJ+N5GWFa63l1aVaj/DG73NHWR5df1A9ioZOUq2OfOkTcBAPD4YL6APr7V3WAlZ6S7B801
+ tjUbj9B0wE2Zo6Hh+GhNjwYSYap8MGMAqFU0ghQhQnhXOGcbgubAVFidwhKnPRJ9JJDcY+bDkSN
+ Cn4WlZiQk0fc7rAvCp9pFZhe4f/EYGwZKY0VRM+CWzoDA==
+X-Received: by 2002:a05:6000:40e1:b0:430:fdb8:8510 with SMTP id
+ ffacd0b85a97d-43569989668mr3238891f8f.24.1768567208339; 
+ Fri, 16 Jan 2026 04:40:08 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356992c6f2sm5192566f8f.19.2026.01.16.04.40.06
+ ffacd0b85a97d-4356992c6f2sm5192566f8f.19.2026.01.16.04.40.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Jan 2026 04:40:06 -0800 (PST)
+ Fri, 16 Jan 2026 04:40:07 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v2 0/6] scripts/clean-includes: Misc improvements
-Date: Fri, 16 Jan 2026 12:39:59 +0000
-Message-ID: <20260116124005.925382-1-peter.maydell@linaro.org>
+Subject: [PATCH v2 1/6] scripts/clean-includes: Allow directories on command
+ line
+Date: Fri, 16 Jan 2026 12:40:00 +0000
+Message-ID: <20260116124005.925382-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260116124005.925382-1-peter.maydell@linaro.org>
+References: <20260116124005.925382-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,37 +105,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is v2 of a series I sent last year:
-https://patchew.org/QEMU/20251104160943.751997-1-peter.maydell@linaro.org/
+Currently clean-includes supports two ways of specifying files to check:
+ * --all to run on everything
+ * specific files
+There's no way to say "check everything in target/arm".
 
-which make clean-includes a bit easier to use and maintain,
-and update the exclude list.
+Add support for handling directory names, by always running
+the arguments through git ls-files.
 
-All these patches have been reviewed except patch 5; the change
-there is to make the command line given in the generated git
-commit message properly shell-quote the arguments.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ scripts/clean-includes | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-I also have some patches which I have produced by running this
-updated script, but I'll post those separately. The exclude list
-as updated by this series is enough to make all the changes the
-script suggests be correct ones, with the possible exception of
-hw/virtio/cbor-helpers.c, where I'm waiting to find out if we
-should make the change or put it on the exclude list.
-
-thanks
--- PMM
-
-Peter Maydell (6):
-  scripts/clean-includes: Allow directories on command line
-  scripts/clean-includes: Remove outdated comment
-  scripts/clean-includes: Make ignore-regexes one per line
-  scripts/clean-includes: Do all our exclusions with REGEXFILE
-  scripts/clean-includes: Give the args in git commit messages
-  scripts/clean-includes: Update exclude list
-
- scripts/clean-includes | 105 +++++++++++++++++++++++++++++------------
- 1 file changed, 74 insertions(+), 31 deletions(-)
-
+diff --git a/scripts/clean-includes b/scripts/clean-includes
+index 25dbf16c02..07c0fd44e4 100755
+--- a/scripts/clean-includes
++++ b/scripts/clean-includes
+@@ -14,7 +14,7 @@
+ # the top-level directory.
+ 
+ # Usage:
+-#   clean-includes [--git subjectprefix] [--check-dup-head] file ...
++#   clean-includes [--git subjectprefix] [--check-dup-head] file-or-dir ...
+ # or
+ #   clean-includes [--git subjectprefix] [--check-dup-head] --all
+ #
+@@ -28,7 +28,8 @@
+ #
+ # Using --all will cause clean-includes to run on the whole source
+ # tree (excluding certain directories which are known not to need
+-# handling).
++# handling). This is equivalent to passing '.' as the directory to
++# scan.
+ 
+ # This script requires Coccinelle to be installed.
+ 
+@@ -86,11 +87,14 @@ if [ $# -eq 0 ]; then
+     exit 1
+ fi
+ 
++# --all means "scan everything starting from the current directory"
+ if [ "$1" = "--all" ]; then
+-    # We assume there are no files in the tree with spaces in their name
+-    set -- $(git ls-files '*.[ch]' | grep -E -v "$XDIRREGEX")
++    set -- '.'
+ fi
+ 
++# We assume there are no files in the tree with spaces in their name
++set -- $(git ls-files "$@" | grep '\.[ch]$' | grep -E -v "$XDIRREGEX")
++
+ # Annoyingly coccinelle won't read a scriptfile unless its
+ # name ends '.cocci', so write it out to a tempfile with the
+ # right kind of name.
 -- 
 2.47.3
 
