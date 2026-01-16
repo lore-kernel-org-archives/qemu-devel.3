@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F5CBD4A5F7
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC732D4A5F7
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgacK-0001S1-KJ; Thu, 15 Jan 2026 22:35:20 -0500
+	id 1vgabo-0007Vr-TH; Thu, 15 Jan 2026 22:34:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgacI-0001OF-Jn
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:35:18 -0500
+ id 1vgabd-0007Fz-N5
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:34:40 -0500
 Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgacH-0006EB-1A
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:35:18 -0500
+ id 1vgabc-0005ks-0Y
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:34:37 -0500
 Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-81f478e5283so1397737b3a.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:35:16 -0800 (PST)
+ d2e1a72fcca58-7b22ffa2a88so705436b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:34:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768534516; x=1769139316; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768534475; x=1769139275; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rGBrEuQ4ySeYQyQaMh9vioeyRGMPOCdt+8viJgwwXN0=;
- b=A7WtctokLym5FwhdMzbnZXHgkTlVX2iEldYrXiNQ3zLz7SqgmdOIjBnILa5EHD+oKX
- gfcI671aIl0S9sR+FtlnSq+ioDbLCITEC0oUSTckdU1tO8DjZ1RxB//ZlI4OFsThUbte
- DUwj+/Q4sKqONKg86BwOmOoXdn5ZLyLREZA0qypB6rt+8dyVMXt2LGBialR+o8oKkiHW
- p3lm2HArrS/I7X1U9Id9wS4JYbflKQlQVfv4lz1jnSo/E/Kv+W+Aqr9LaOi+96ldXtmG
- gRiz/5LGfM/b20Gpap4ZPCtxcjTQPQmp3UTcxvyi37FoVlWC3QeOmRQtlViNOU5+I86p
- jzIA==
+ bh=KL546BRv3o5TBcmNuNTcD1O7NivqyCwfyc6P5AJbIyY=;
+ b=PebdVed6IiAeFlUbg9Y3i0KLuwCTinvPIBb1gbDbIoBnAOHtRTFxiz0t9gEcuGEGkJ
+ sSFhhhzPIQf94LA22qkuivpJwz6WsnuOoTSl+xjujhRaulSyobhvmWXbsYLF8GDRP+nh
+ ed+NQ4pcNdp/GZpviJCvNLUxOvwzb3QtyumaHLVLrySAv310bDcoJD7lRU/rMaF/IVXr
+ QA69pcYcmSj0ayNn4A7DKs4ZZ2I/TPXWzipfpXD54go1DmufDgmpkdEKNvO+jWMjQ5tu
+ IG0zm3o/TjMeyJ9bdxC/fUfqWn4blWejcKQnC9R/N/U/cXQEhvCQ8Xp6MLPGM1zqlvUT
+ N3kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768534516; x=1769139316;
+ d=1e100.net; s=20230601; t=1768534475; x=1769139275;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rGBrEuQ4ySeYQyQaMh9vioeyRGMPOCdt+8viJgwwXN0=;
- b=ZtoLdhqQzMAkBv9SH3ztE1aA1B5k1S95I3VY8XzA3dHqCPrhc9jvCalLvPL0C3pi0U
- 44EcGks6eWvs0fyGwgt3StLaDiyOSGbTjZqM1jpeC0dSqhENJijkQe8sqx2l5fXY+iCU
- wnIJ/jaSD6JHdw66013vUtuXBeZqdQVvusWJpbKUL8puensMrqcYbzuFE1WxtZB4OoEP
- ZkwobP5NuLFbMoW8MzU1NyiDVio9G4++u1y/BZiofQhBJpVN+isvLEQXKDzTwz5IMOQB
- J56esnfzT78df+FWWqqKvc3UXbLk0+fmoIBRwO0ST3XoeTVVFCty/NXvtqt5KRyCKDt+
- GT4w==
-X-Gm-Message-State: AOJu0Yyi6vkgvfrRKcZRc7+IzhA4CpApy0tkDx2OBPWFwjgSqh8YzYYQ
- 9SvN4BOMn1IPBo8MHqytD0F0jJ6ZGUwaHx/KN/N27x0E7P+sKK02RVO7lFpHO/6J70T01nwyWiV
- 05kZAfikVhA==
-X-Gm-Gg: AY/fxX7UnUWa0Haj8x8O86rmiGBbYSMwlN6s+wPMOuL7I/2FJUqKzN56UjMdXbPJqTU
- hRWd/yAKGc0qSCeZhcN3+CapT1Z/RFMNqpbLGraMB6++9G8aSzZsu66T/6naofOQcFp/iHAllJm
- 0wG4h+qfOT22QBaTzrmEdGVk1s90yeEQW6j1h4qr18krwA+uMZ57fusN9sif/8xiBYHueXdZOlq
- KxpvrtiFGIpXEMuZ5wD3IpdNHGLqUgl1fhxkrkgg0IaaixlC+J9TKKn9+1pBwskH6/oQ/vyZ+cX
- UyGVEWzuNGJb1W+mwKxJCC6+jJQ6MEhH4nPjc4VhrL7oWgjlCBmyJ4megaY1jyZVlC0MCVsQFqj
- RA7Q6YbAfRndHyA4b4/FsaICBFOtbaT1EiGmOhfatNbHkTdZX/Bb3wDWv3c4ZHYf7k/xguc+J//
- pTxrCDeSaEykmK+p0e+QRl2QWzL9pt
-X-Received: by 2002:a05:6a00:4517:b0:81e:8e66:38eb with SMTP id
- d2e1a72fcca58-81fa03cd847mr1536188b3a.63.1768534515617; 
- Thu, 15 Jan 2026 19:35:15 -0800 (PST)
+ bh=KL546BRv3o5TBcmNuNTcD1O7NivqyCwfyc6P5AJbIyY=;
+ b=UaLqJhz5+Lfonhw56w3gaM0XYY7uPJnTYmWM5hoC77kGjIVC+Z6DZe4HNrc4eCsrL2
+ 7XV7KJZclMbwinSdU0MtCU4OpVRH4k4sRknBbVLea1tEvoiZybs6stQrA/rMOMsTm0r0
+ 154JSBqd748+tfq551t7KOr/yAvhGrKD0OPMJcr6bDiK0Q2RiCEHSIwJCIDVncUjTUoP
+ tYSyb5Qgemosfn3EmRRRkY08hXmBzjQSi0kacuQao7PMG+l2VaaMf941JOveE/NmX07P
+ fEhiwnD86ooYIlxzJ3kk4+gZlmFzPzHMh7yrsxdBB3oG6/v/rCi0mGmh5JZBlCVblWrp
+ zNzQ==
+X-Gm-Message-State: AOJu0YyCnqBPTlbUvnhifU/WE3gIv1VtX0TNLmyfyOfwJ5B42nT0Farl
+ e31omeaOqUx04LYzHecWTKIhWTED2YWi2IAk47FBwVQeA2ArEw0pwH3v9t3/unzB7RXbSApm1LS
+ +dEmxNn3q5A==
+X-Gm-Gg: AY/fxX7wtR/GA6lRTK4LDeMQh6q/M15OfyfSDsIqAJUBI4GMOOTbRyPt8XVQIpDn7D0
+ sVyM65qUM02lq+nydUBll/iCgeKCyKKk7jdJSiRhbNwdOFJ+5O/gDrQietUVFw3rNe1ID/i96TQ
+ nA44xHvfnpZGZUV2KbTAd6HbyOQmk67sqI4GKv2dNhIR72LmXuHmD4z4XvgAz8mcVs1XrFPN/MI
+ 3UbH8Ed6PtnfhGbDVvzBW4OTJHVnC+Sg6BzP9hR4vlbTbSjhwNtddKE4k2GuiqcS8yN8keiFKLn
+ njA6YibUqAJw2KSJ0URZetOJbY7t/fSCHA+jYjglb78je39mZobbGW1u691oH2+IWYrlmSb1Rj4
+ NV9Tmj+MIXalnaGXxxlV3kFOpb0UoSi2Duil3w3geTQQZq+1Xdbblmk0Vfpmzqu4rE17L4QrNK2
+ 2tsGJdGFYPjKJHygrVYA==
+X-Received: by 2002:a05:6a00:2e90:b0:81f:44f9:7c1a with SMTP id
+ d2e1a72fcca58-81fa1771ec6mr1122948b3a.3.1768534474569; 
+ Thu, 15 Jan 2026 19:34:34 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81fa12b5c67sm683372b3a.69.2026.01.15.19.35.12
+ d2e1a72fcca58-81fa12b5c67sm683372b3a.69.2026.01.15.19.34.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 19:35:15 -0800 (PST)
+ Thu, 15 Jan 2026 19:34:34 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: ktokunaga.mail@gmail.com, berrange@redhat.com, pierrick.bouvier@linaro.org,
  thuth@redhat.com, pbonzini@redhat.com, philmd@linaro.org
-Subject: [PATCH v2 31/58] tcg: Drop TCG_TARGET_REG_BITS test in region.c
-Date: Fri, 16 Jan 2026 14:32:37 +1100
-Message-ID: <20260116033305.51162-32-richard.henderson@linaro.org>
+Subject: [PATCH v2 20/58] meson: Drop host_arch rename for mips64
+Date: Fri, 16 Jan 2026 14:32:26 +1100
+Message-ID: <20260116033305.51162-21-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260116033305.51162-1-richard.henderson@linaro.org>
 References: <20260116033305.51162-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
  envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
@@ -100,42 +101,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This requires renaming several directories:
+tcg/mips, linux-user/include/host/mips, and
+common-user/host/mips.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/region.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ linux-user/include/host/{mips => mips64}/host-signal.h | 0
+ tcg/{mips => mips64}/tcg-target-con-set.h              | 0
+ tcg/{mips => mips64}/tcg-target-con-str.h              | 0
+ tcg/{mips => mips64}/tcg-target-has.h                  | 0
+ tcg/{mips => mips64}/tcg-target-mo.h                   | 0
+ tcg/{mips => mips64}/tcg-target-reg-bits.h             | 0
+ tcg/{mips => mips64}/tcg-target.h                      | 0
+ MAINTAINERS                                            | 2 +-
+ common-user/host/{mips => mips64}/safe-syscall.inc.S   | 0
+ configure                                              | 8 +++-----
+ meson.build                                            | 2 --
+ tcg/{mips => mips64}/tcg-target-opc.h.inc              | 0
+ tcg/{mips => mips64}/tcg-target.c.inc                  | 0
+ 13 files changed, 4 insertions(+), 8 deletions(-)
+ rename linux-user/include/host/{mips => mips64}/host-signal.h (100%)
+ rename tcg/{mips => mips64}/tcg-target-con-set.h (100%)
+ rename tcg/{mips => mips64}/tcg-target-con-str.h (100%)
+ rename tcg/{mips => mips64}/tcg-target-has.h (100%)
+ rename tcg/{mips => mips64}/tcg-target-mo.h (100%)
+ rename tcg/{mips => mips64}/tcg-target-reg-bits.h (100%)
+ rename tcg/{mips => mips64}/tcg-target.h (100%)
+ rename common-user/host/{mips => mips64}/safe-syscall.inc.S (100%)
+ rename tcg/{mips => mips64}/tcg-target-opc.h.inc (100%)
+ rename tcg/{mips => mips64}/tcg-target.c.inc (100%)
 
-diff --git a/tcg/region.c b/tcg/region.c
-index 2181267e48..5d4be1453b 100644
---- a/tcg/region.c
-+++ b/tcg/region.c
-@@ -464,17 +464,6 @@ static size_t tcg_n_regions(size_t tb_size, unsigned max_threads)
-  */
- #define MIN_CODE_GEN_BUFFER_SIZE     (1 * MiB)
+diff --git a/linux-user/include/host/mips/host-signal.h b/linux-user/include/host/mips64/host-signal.h
+similarity index 100%
+rename from linux-user/include/host/mips/host-signal.h
+rename to linux-user/include/host/mips64/host-signal.h
+diff --git a/tcg/mips/tcg-target-con-set.h b/tcg/mips64/tcg-target-con-set.h
+similarity index 100%
+rename from tcg/mips/tcg-target-con-set.h
+rename to tcg/mips64/tcg-target-con-set.h
+diff --git a/tcg/mips/tcg-target-con-str.h b/tcg/mips64/tcg-target-con-str.h
+similarity index 100%
+rename from tcg/mips/tcg-target-con-str.h
+rename to tcg/mips64/tcg-target-con-str.h
+diff --git a/tcg/mips/tcg-target-has.h b/tcg/mips64/tcg-target-has.h
+similarity index 100%
+rename from tcg/mips/tcg-target-has.h
+rename to tcg/mips64/tcg-target-has.h
+diff --git a/tcg/mips/tcg-target-mo.h b/tcg/mips64/tcg-target-mo.h
+similarity index 100%
+rename from tcg/mips/tcg-target-mo.h
+rename to tcg/mips64/tcg-target-mo.h
+diff --git a/tcg/mips/tcg-target-reg-bits.h b/tcg/mips64/tcg-target-reg-bits.h
+similarity index 100%
+rename from tcg/mips/tcg-target-reg-bits.h
+rename to tcg/mips64/tcg-target-reg-bits.h
+diff --git a/tcg/mips/tcg-target.h b/tcg/mips64/tcg-target.h
+similarity index 100%
+rename from tcg/mips/tcg-target.h
+rename to tcg/mips64/tcg-target.h
+diff --git a/MAINTAINERS b/MAINTAINERS
+index c58fa93fd5..d3e6041186 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4074,7 +4074,7 @@ R: Huacai Chen <chenhuacai@kernel.org>
+ R: Jiaxun Yang <jiaxun.yang@flygoat.com>
+ R: Aleksandar Rikalo <arikalo@gmail.com>
+ S: Odd Fixes
+-F: tcg/mips/
++F: tcg/mips64/
  
--#if TCG_TARGET_REG_BITS == 32
--#define DEFAULT_CODE_GEN_BUFFER_SIZE_1 (32 * MiB)
--#ifdef CONFIG_USER_ONLY
--/*
-- * For user mode on smaller 32 bit systems we may run into trouble
-- * allocating big chunks of data in the right place. On these systems
-- * we utilise a static code generation buffer directly in the binary.
-- */
--#define USE_STATIC_CODE_GEN_BUFFER
--#endif
--#else /* TCG_TARGET_REG_BITS == 64 */
- #ifdef CONFIG_USER_ONLY
- /*
-  * As user-mode emulation typically means running multiple instances
-@@ -490,7 +479,6 @@ static size_t tcg_n_regions(size_t tb_size, unsigned max_threads)
-  */
- #define DEFAULT_CODE_GEN_BUFFER_SIZE_1 (1 * GiB)
- #endif
--#endif
+ PPC TCG target
+ M: Richard Henderson <richard.henderson@linaro.org>
+diff --git a/common-user/host/mips/safe-syscall.inc.S b/common-user/host/mips64/safe-syscall.inc.S
+similarity index 100%
+rename from common-user/host/mips/safe-syscall.inc.S
+rename to common-user/host/mips64/safe-syscall.inc.S
+diff --git a/configure b/configure
+index e9d0b9e2c0..04d0b214b6 100755
+--- a/configure
++++ b/configure
+@@ -400,10 +400,8 @@ elif check_define _ARCH_PPC64 ; then
+   else
+     cpu="ppc64"
+   fi
+-elif check_define __mips__ ; then
+-  if check_define __mips64 ; then
+-    cpu="mips64"
+-  fi
++elif check_define __mips64 ; then
++  cpu="mips64"
+ elif check_define __s390__ ; then
+   if check_define __s390x__ ; then
+     cpu="s390x"
+@@ -455,7 +453,7 @@ case "$cpu" in
  
- #define DEFAULT_CODE_GEN_BUFFER_SIZE \
-   (DEFAULT_CODE_GEN_BUFFER_SIZE_1 < MAX_CODE_GEN_BUFFER_SIZE \
+   mips64*|mipsisa64*)
+     cpu=mips64
+-    host_arch=mips
++    host_arch=mips64
+     linux_arch=mips
+     ;;
+ 
+diff --git a/meson.build b/meson.build
+index 0647ca0c89..c36f2f6962 100644
+--- a/meson.build
++++ b/meson.build
+@@ -265,8 +265,6 @@ enable_modules = get_option('modules') \
+ 
+ if cpu not in supported_cpus
+   host_arch = 'unknown'
+-elif cpu == 'mips64'
+-  host_arch = 'mips'
+ elif cpu in ['riscv32', 'riscv64']
+   host_arch = 'riscv'
+ else
+diff --git a/tcg/mips/tcg-target-opc.h.inc b/tcg/mips64/tcg-target-opc.h.inc
+similarity index 100%
+rename from tcg/mips/tcg-target-opc.h.inc
+rename to tcg/mips64/tcg-target-opc.h.inc
+diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips64/tcg-target.c.inc
+similarity index 100%
+rename from tcg/mips/tcg-target.c.inc
+rename to tcg/mips64/tcg-target.c.inc
 -- 
 2.43.0
 
