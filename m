@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D06FDD4899E
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D69A2D4899D
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgjPW-0003fi-0a; Fri, 16 Jan 2026 07:58:42 -0500
+	id 1vgjPh-0003hz-7o; Fri, 16 Jan 2026 07:58:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgjPR-0003dz-8V
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:58:37 -0500
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ id 1vgjPS-0003eh-2d
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:58:38 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgjPO-00009j-H4
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:58:36 -0500
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-4801d7c72a5so7460605e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 04:58:33 -0800 (PST)
+ id 1vgjPP-00009o-Ss
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:58:37 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47d59da3d81so13264955e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 04:58:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768568312; x=1769173112; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wY5SAA5FCcDOevLMIkYsgiOyIIXdmH7VFxYgl6NNqkE=;
- b=AD4jAsiIgCui4TF4l+hs7yqVZSfL6E0tnCPFhCi/Ol2ELqpoNqTZqkzs4GWrvf2B7L
- lUImSypL20Ts88tiZrRYQ/ofH2+05bAi1SgdLaKLu6IzN8qeNqE0hjn7KdrzrAhPB7r9
- KF2rDgxRk4QErl6Wp7PfFgaZvGnnCQnh/G1daMKZccQtlm1nbdzOIU5K2RtDxMoB9XjB
- mumWCjzUEpojnF349VRvE3/OVNys4sN285/IOUVo97GvVmflFMqiar/bAraqsGWONugp
- xTerARmjr6MiHtjX6e/KlX/wETmCtP+jPUOMZb31V97DaBP6Oad+vcDRae/EM6zhVvNn
- XoSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768568312; x=1769173112;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1768568314; x=1769173114; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wY5SAA5FCcDOevLMIkYsgiOyIIXdmH7VFxYgl6NNqkE=;
- b=ekr8QVeWFelUGjCAt2OkEvIhSO8ha6uKLk+v0/pMh7yYFFAvpf2D1iFNt979Kq+9bt
- Narb8B34Yu5USS+DZvXG3bP0WvEbd7OzOVQuoEOgLn481a+NCz3epMt6WzPKa8HslkGg
- XNWWoQq+yZ2sC0RgBEzVNwfV9CEgTZReqJfSnqm9OOpkYATDBCompuJpwfaX7XCSIxz1
- dxPpF0deiaYdmb3OISMGl8tqI+a6SPYMOP5/7KNOQSQQqOIgcfSB1uVwve+gquHm5sg3
- G9ATaJGOvMy3AT27PXfxNE+/adcOxzQzb0j5IPLl6GaY3MvqDFQEVs2aTynlnJ+fdCos
- rs6w==
-X-Gm-Message-State: AOJu0YxhdynUbOhMEqpOXx/Tm/64mwi+ijyyKYsmtcrC5OK/0HpeU8/Y
- O4FtMPuoWJq9VPi+a5pgsttN0vWuucJAJ9MOMFiI4Fqm5RfUU/Q2rZ3YJ2rKKaHh+PoZs5X5R7d
- 5zCoa
-X-Gm-Gg: AY/fxX4Dcm1Z4ea5wWDm30rHYeKYnK9gRk88pyJzccD/aP6eD7pmAjbpLtaAdaKu5AO
- dUTFu6gLLHZatYuOqqxh7SWdDU+RrFTuJB99pVhu66lrq4ueoAf0574Zs7u+71zkDM1dJApsel3
- BvCyL7tA3GrXLOM7hbYhBbCDTAvVxVqjGwhP9Box0EZZ8rATWcEsK2K8P0ejHq/Rn1nv14tyBu8
- FLcYlyzPHxPfQDIYA0fxY/mMWMdy1Y/gmJUaQEK/V5HweilT4/yKI2hiYpw0s9dLNFpprKB+GKk
- D/N6XRu7E1fgvGfv/ys83/H4M0KTF1hr1B3Ajprc9oQYrMt4xYYoc0/hn/2qxFT7+HYAyZuiI5K
- rX3SVthoRPvbfisgvlHPA5GouETEkMd/qkDuWa721r55FBHmHYWYf4i0MFuWOHl0xFXAedGm0v9
- NpW+tJ1AVnTlPflwKrdOrhdvre/5bnxICK27UJ7vTWVfThNWyF807VKhbtMEq/fQWqgn9QPLNVp
- fTuSIvq13pkAvNJr8qdO8nycretEPQ9KDjXYLDi/qmf7A==
-X-Received: by 2002:a05:600c:a009:b0:475:dd9a:f791 with SMTP id
- 5b1f17b1804b1-4801eb0ef0bmr23358635e9.28.1768568311853; 
- Fri, 16 Jan 2026 04:58:31 -0800 (PST)
+ bh=AOsYTkHMDWaZJQZPkrAXk9jzTOl3OFsQkdgtD7kLcAY=;
+ b=Argoz/zn4ZDyh6i2nvmE89Hq49QOg5SbG2wWpS3trnJd9+P1mcme4df7ShlgVBDYar
+ r3/RxJpiJbhq6TmKgAFgNnyyaTtrt7cdyxtihQOsqMuPP/lf83cwHPw2akrphAfGBlII
+ 0IIWsSFUdEc60G91FJgBwPm+tpLfZXUCj++opPMRQ8038itetgpd9D3ZJ+tYvU3M2tA2
+ UGFE3TxsSD8fIiJb2mtrct9kQJdBt8MXvvI8TTioLZ/zdDRSxFmxwWk4QhOq0LAHpm9v
+ cgsjpI3H2/MKhi63QZWSqpQShm9w4RQeSJFObzGfNtP3NNUZUr1BJjWmMhTwyNVd2+zR
+ iJRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768568314; x=1769173114;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AOsYTkHMDWaZJQZPkrAXk9jzTOl3OFsQkdgtD7kLcAY=;
+ b=M00oA1s5IZt6vCiUUmp82YsWWXROy1GDKZOVEjvXuc/nanO9jwjT1AwYC07FZTlepv
+ tKSyk7b1S/KwicYWDhzQXtfW3qQ5G1YxL7XtQoJv0sthU2R0NDS3maADm42sfcb+TJbA
+ KnnRIScdZ8wB0opdq/LT860t59ZAbeS2Y9SlgwJz0BcvpVmpQu3D71+rycS7kthyFEYE
+ vdN9trihnpq/MjfW0qWKE5WnK9t+bh3p9UPWth0JZXPvnOk2d9WrloT42NlPX+SI4uwb
+ T/vviW1vX5gfIxk3GQ2CaBdM8/oo0Z1k7krWqBSGX2Ojp8BVYS+m+SGz1RXVDDGLLCcp
+ GVQA==
+X-Gm-Message-State: AOJu0Ywv0YVrNeIN51jYm2B578FfXNC6vUCrXmLegpr3cfTMc2Yd5Xt1
+ ovIS/M02bE2wKbd3T7PcQYpyRfeP+3CtkR1CwD4jekkilVO1vGk0XQmjzJcLodN+OSoRHko7BlE
+ NxddR
+X-Gm-Gg: AY/fxX602NPbt/6tD/E96Mxr+IUMZxO6xr57Yhxr0lpUjC4sk0xftAi+uCLa2XcY4/D
+ D5/B8HMPlmPSi8PnKJLV86ou8IPe5svFdnrIprCIE+Z/q8jx0Cv8cjAbpxSKghny4nSaI9v28J2
+ p3IgqOKqP6zmXeZfJfOYrbuH+HbHAZBx9WQszQze7Bka8vhv/mn6RMVtDoIobqXqFAgJ2KBBaVS
+ it+D2U71xaJf96OT8ShYYWEsQyZ+hStqUwWqcPulNINl3j0k+7d9VwkpnEFqz1ew16xZuVe2GGP
+ W7sjWAvlr2J1t5jL4KJGhT0Gf82AfqYLn0NcVvFlXYJh50qwqv8rrCDE9AGkzBzCbIqPdtIJ7LR
+ VTyrwdbSisxOQM33r8KqXwJnGRtnqaBVFcfqr1bdPEpOn+ipH+IBGH+qnQ6LA6t65L/dy5p3wX6
+ /VV+qGMkiFTfB8fCYhyxCNPRwlstH5UtDgQjlX401KJQQ5RohRrFIibRpmsHn9wrJbjn3zx8RrF
+ 1p8pgQ98BCIiNFN4MfTjlOmmlnn8rrxFIAHMsqBeakd/A==
+X-Received: by 2002:a05:600c:8b6c:b0:46e:2815:8568 with SMTP id
+ 5b1f17b1804b1-4801e66fcc5mr31827705e9.10.1768568313587; 
+ Fri, 16 Jan 2026 04:58:33 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801fe67780sm15387565e9.16.2026.01.16.04.58.30
+ 5b1f17b1804b1-4801fe67780sm15387565e9.16.2026.01.16.04.58.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Jan 2026 04:58:31 -0800 (PST)
+ Fri, 16 Jan 2026 04:58:32 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnus.kulke@linux.microsoft.com>,
@@ -76,14 +77,16 @@ Cc: Magnus Kulke <magnus.kulke@linux.microsoft.com>,
  Helge Deller <deller@gmx.de>, Michael Roth <michael.roth@amd.com>,
  Kostiantyn Kostiuk <kkostiuk@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>
-Subject: [PATCH 0/4] misc: clean up includes
-Date: Fri, 16 Jan 2026 12:58:26 +0000
-Message-ID: <20260116125830.926296-1-peter.maydell@linaro.org>
+Subject: [PATCH 1/4] mshv: Clean up includes
+Date: Fri, 16 Jan 2026 12:58:27 +0000
+Message-ID: <20260116125830.926296-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260116125830.926296-1-peter.maydell@linaro.org>
+References: <20260116125830.926296-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x343.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,69 +109,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset is the result of running scripts/clean-includes
-as updated with my changes in the v2 patchset I just posted:
-https://patchew.org/QEMU/20260116124005.925382-1-peter.maydell@linaro.org/
+This commit was created with scripts/clean-includes:
+ ./scripts/clean-includes '--git' 'mshv' 'accel/mshv' 'target/i386/mshv' 'include/system/mshv.h'
 
-It makes the usual set of cleanups to #include lines:
-    * Ensure .c files include qemu/osdep.h first.
-    * Including it in a .h is redundant, since the .c  already includes
-      it.  Drop such inclusions.
-    * Likewise, including headers qemu/osdep.h includes is redundant.
-      Drop these, too.
+All .c should include qemu/osdep.h first.  The script performs three
+related cleanups:
 
-I have split the changes it proposes into five categories:
- (1) changes to mshv related files
- (2) changes to bsd-user files
- (3) changes where a .c file included a system header that
-     osdep.h already provides
- (4) changes where .h files either included osdep.h or
-     else some system header that osdep.h provides
+* Ensure .c files include qemu/osdep.h first.
+* Including it in a .h is redundant, since the .c  already includes
+  it.  Drop such inclusions.
+* Likewise, including headers qemu/osdep.h includes is redundant.
+  Drop these, too.
 
-The only change the updated script proposes which is not in
-any patch in this series is to hw/virtio/cbor-helpers.c: I am
-waiting to find out if we should put this file on the
-exclude-list.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ accel/mshv/irq.c            | 3 +--
+ accel/mshv/mshv-all.c       | 1 -
+ include/system/mshv.h       | 1 -
+ target/i386/mshv/mshv-cpu.c | 1 -
+ target/i386/mshv/x86.c      | 1 -
+ 5 files changed, 1 insertion(+), 6 deletions(-)
 
-thanks
--- PMM
-
-Peter Maydell (4):
-  mshv: Clean up includes
-  bsd-user: Clean up includes
-  misc: Clean up includes
-  all: Clean up includes
-
- accel/mshv/irq.c                   | 3 +--
- accel/mshv/mshv-all.c              | 1 -
- bsd-user/bsd-mem.h                 | 3 ---
- bsd-user/bsd-proc.c                | 1 -
- bsd-user/freebsd/os-proc.h         | 2 --
- bsd-user/qemu-bsd.h                | 1 -
- hw/core/machine-qmp-cmds.c         | 1 -
- hw/scsi/lasi_ncr710.h              | 1 -
- hw/scsi/ncr53c710.h                | 1 -
- include/hw/core/loader.h           | 1 -
- include/hw/i386/tdvf.h             | 1 -
- include/hw/ppc/spapr_fadump.h      | 1 -
- include/hw/riscv/iommu.h           | 1 -
- include/system/accel-irq.h         | 1 -
- include/system/mshv.h              | 1 -
- linux-user/alpha/target_proc.h     | 1 -
- qga/commands-windows-ssh.h         | 1 -
- qga/vss-win32/vss-debug.h          | 1 -
- semihosting/arm-compat-semi-stub.c | 1 -
- target/arm/cpu32-stubs.c           | 1 -
- target/i386/kvm/kvm.c              | 1 -
- target/i386/kvm/vmsr_energy.h      | 2 --
- target/i386/mshv/mshv-cpu.c        | 1 -
- target/i386/mshv/x86.c             | 1 -
- target/loongarch/csr.c             | 1 -
- target/riscv/csr.c                 | 1 -
- tools/i386/qemu-vmsr-helper.c      | 1 -
- util/cpuinfo-aarch64.c             | 1 -
- 28 files changed, 1 insertion(+), 33 deletions(-)
-
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index adf8f337d9..3c238c33c3 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -10,8 +10,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-#include "linux/mshv.h"
+ #include "qemu/osdep.h"
++#include "linux/mshv.h"
+ #include "qemu/error-report.h"
+ #include "hw/hyperv/hvhdk_mini.h"
+ #include "hw/hyperv/hvgdk_mini.h"
+@@ -20,7 +20,6 @@
+ #include "system/mshv.h"
+ #include "system/mshv_int.h"
+ #include "trace.h"
+-#include <stdint.h>
+ #include <sys/ioctl.h>
+ 
+ #define MSHV_IRQFD_RESAMPLE_FLAG (1 << MSHV_IRQFD_BIT_RESAMPLE)
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 4675cb886f..bed0fa298e 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -41,7 +41,6 @@
+ #include "system/reset.h"
+ #include "trace.h"
+ #include <err.h>
+-#include <stdint.h>
+ #include <sys/ioctl.h>
+ 
+ #define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 8b1fc20c80..75286baf16 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -14,7 +14,6 @@
+ #ifndef QEMU_MSHV_H
+ #define QEMU_MSHV_H
+ 
+-#include "qemu/osdep.h"
+ #include "qemu/accel.h"
+ #include "hw/hyperv/hyperv-proto.h"
+ #include "hw/hyperv/hvhdk.h"
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 1c3db02188..586383b882 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -13,7 +13,6 @@
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+ #include "qemu/memalign.h"
+-#include "qemu/typedefs.h"
+ 
+ #include "system/mshv.h"
+ #include "system/mshv_int.h"
+diff --git a/target/i386/mshv/x86.c b/target/i386/mshv/x86.c
+index d574b3bc52..0700cc05ef 100644
+--- a/target/i386/mshv/x86.c
++++ b/target/i386/mshv/x86.c
+@@ -13,7 +13,6 @@
+ #include "cpu.h"
+ #include "emulate/x86_decode.h"
+ #include "emulate/x86_emu.h"
+-#include "qemu/typedefs.h"
+ #include "qemu/error-report.h"
+ #include "system/mshv.h"
+ 
 -- 
 2.47.3
 
