@@ -4,89 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D98C982C4
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 15:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84501C982C7
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 15:23:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vglIP-0004ep-3u; Fri, 16 Jan 2026 09:59:29 -0500
+	id 1vglf5-000887-Tu; Fri, 16 Jan 2026 10:22:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vglIL-0004bT-7D
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 09:59:25 -0500
-Received: from ci-2002g-snip4-10.eps.apple.com ([57.103.88.200]
- helo=outbound.ci.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vglII-0007Nt-Kj
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 09:59:24 -0500
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-60-percent-2 (Postfix) with ESMTPS id
- BBDC318001E4; Fri, 16 Jan 2026 14:59:14 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; bh=tC6YTFAovhFLg23/Pz+1+VAx5b1Wl6hq1RxiNRKdork=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=HKmtF/76m7aQBx10eQx9rA1moY/Se3rvA6/zSt/U/wkaKnTdFVFNdn/QpVDLgqCGyZGHA6vBzIfLRvPhwL4PI9Q6RJFMbKEjeTpKMn7xFHMY5snQc4WGLpz1ExBtez5XyOuZ/eO094zSBm3qTXMW6eCC8rYjV+nXgzjv8YYv8x0eoJrQupU4op4J8FNNB88HJ4bnMBRJ9/zDYwAykqq9K9cpUVCIOzmTFQEl6ZDLjirjDrwaN8rkLmpgTNJTZ/pLXfmypUydX1uPy6aTmj6EtbEHNbN87LlDMVU+wSsa2g1QBOhNFU0zKXpAKJ/TtumKy6eAAF4RTBhfHFuaUeCT2A==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-60-percent-2 (Postfix) with ESMTPSA id
- 54D6F1801A90; Fri, 16 Jan 2026 14:59:10 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [PATCH v16 15/26] whpx: add arm64 support
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <23800170-66aa-4e31-9e74-e256933c8a8b@linaro.org>
-Date: Fri, 16 Jan 2026 15:58:57 +0100
-Cc: qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1vglf2-00086w-GW
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 10:22:52 -0500
+Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1vgley-0002DW-EW
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 10:22:50 -0500
+Received: by mail-ua1-x932.google.com with SMTP id
+ a1e0cc1a2514c-93f5905e60eso1250850241.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 07:22:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768576966; cv=none;
+ d=google.com; s=arc-20240605;
+ b=MgsbVlAbzRtEx30yGjvIKqGZW0iir9ZjehwqhEAkHTv0i6wL0Oxl7CYHQrE0Ai41dM
+ cQJ4GjU8dl71xdUlTyW6ir1hw09O1STCWC5YivCbSFvpB45+UzNMS4VjhuG6Sv0TEKTX
+ eC1s9aU6nLS+4che2JEdi7BpOnzC5oYnFNqux4tkI8/PIyHT4Im/9HVthk+eCOvBKyA3
+ PHBhW4JXlk7I2NmeTvEhzDuQLTSK1M4tl9QCjZXOA6YC+09hpc1rNA8B2S1ea/pJK7dU
+ imleGRXqYGVetE4VDBcNCklWWPAMIR8JLAjwoSUQQU7yMpMDSRl4XDVBW/ZWwlrcurAX
+ gJhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=+Cn7TJEGLW80xXdvX1NxMATqZN6UeczIjNYExZi46mM=;
+ fh=6RdNnZ/cYLz/ikEQGfFf7j7Zjtym5SGOE0+6me+7874=;
+ b=lyFrXMwiMtxBpU1KTJiQKq8tmPjec0LywiccVopwwSBxxbnD6vB1DNjT+BR9c1K52P
+ tNffSytnV9X4Ywpz4xTByfG839Z3EyH+iP5W1ygY7bL7VAwzjLt8Yt37fM+rxSzq5QvZ
+ ZC+ZtqXcOP+Pwk2vE2QYiNPcFBU81yag2qBzPj1IB++7j+IZr8pAGkIZGfzkbnZnPl6+
+ uXwlxCSNj8ZEYU0wo7G/jp5yetDOJFBIE6jNKfA8MXMHZEgIrMa1UCYVssgmoP2KNHBw
+ OxkPm9dJY5TvzqpVa+s1u0lNOypRfidWQ3DqgcrBSBW4OoErasJhGiwS6QOvsY4EPIfV
+ crRw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1768576966; x=1769181766; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+Cn7TJEGLW80xXdvX1NxMATqZN6UeczIjNYExZi46mM=;
+ b=AqV9lzUG+GwnuDFdxLo8vjX5517Q047DhWh0fnb3MPmEOpe6vr8DqwtrsZP0vvbuLH
+ s0SKaFiOP2LA2Dx1x3KQ0OPSPbL27nzOuylPzgC5DwdwlysXKcsTomFQUw7q9jrcJ5hL
+ W+eVkD0nz93Ta/PERy7obz+l4o+VEDdSPLGOEVkjx9r+lafA3GKSm0FXL3zQ8pshpdgY
+ XbMrOfVVb9APV2tfpOW1QTWsG1tIg4CNEG28+67XabVBokxHhDAk04sp9cRM+mRolsoy
+ aoLnq+zNCSdJ8QcTdauASuCXGQqqg6YEixtcLUh/pg30KZ7v/+pJuvAbG5DQE5aFfE+4
+ 9q9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768576966; x=1769181766;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+Cn7TJEGLW80xXdvX1NxMATqZN6UeczIjNYExZi46mM=;
+ b=lCpTbZMDC6UV6IEuSNYv85foQ0b5BLdtE7rNbtPqKA/QbhfKR0FDBnJJawG3eFMK1f
+ CE0ua0a+vYK8dHaKluejS9vZql6/BqTDlzXHcakAiPwHOW4tsZOxVh9DRKFqYMnHnXLC
+ 2XfpjBtNnRGOQN212lx0rMdSAxbDxP/xGY9pQMRJW235h7dJ0x6EDnU5jvte6DJxUKu2
+ drvCNZbSKb7cu39Vm0HWoF+oN17V1nLrHJFKfcpDZJXR+6doLU/HnnrBkNp2tc22gS1I
+ VM1e6qHbhdA8WpWWLGxwf23MeOA4G1uOTjDROoiDp/ZshVpE9jX+8Ao7hBdL8XCiwy/L
+ 6aog==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVJWuFW9k0GrWVq4ANmjxXParTWCJURiZi+AVczcGEHFnNZ2hzzsKt7RMAt608DUe2JKWH/+/V00SW@nongnu.org
+X-Gm-Message-State: AOJu0YwB2QJeJOVzyr8ZgEPIpOnNeVMmvi32d7oD9p0dUZYUGqKVOuA8
+ fN64hSUIh/28sz7oeua4vdRNIK6HWlxQRnxg42yPcABMROplGYOen+VbjEJSWEdA+ifJIzqZFmb
+ 6N+IY0fpnIdFnqG7gPdRFJOTcbbsk/yM=
+X-Gm-Gg: AY/fxX6krMhpm5GLYY3fT8QAsdH3M/jcEbiE05qhkqgwDeLTxSDzacvG9ey49p581IV
+ 30vZ3F0ENSJM5dbFkQMhJDxyPoY8wROsWmoWZOcHZn/w2I+n/5AxeI/wlN4jAYOV8guw8vCouI5
+ lV4DQ2MH28DYnvbZNCJjlYwvXMvEEGHAliadr+4wL1dNFpiBbu+emcWbunbwBajSffe0caCsEiO
+ l9i3fCqKrnIfFmhN/FZm2JK4ateQjsYtcNpp9VxEIlEzGSB+OXylY40WIPR7yg/QGlD73EEfjmv
+ M6s7lBWmkjS/LiF54yLLJIn7HH8=
+X-Received: by 2002:a05:6102:6c8:b0:5ee:a08e:8c0a with SMTP id
+ ada2fe7eead31-5f1a559378cmr1241736137.33.1768576965779; Fri, 16 Jan 2026
+ 07:22:45 -0800 (PST)
+MIME-Version: 1.0
+References: <20241031175214.214455-1-pbonzini@redhat.com>
+ <20241031175214.214455-23-pbonzini@redhat.com>
+ <CAFEAcA-CZ-pL_nOSSinZdgmP8NbzuTN0xhRFhB-ny0NkgCfLOw@mail.gmail.com>
+In-Reply-To: <CAFEAcA-CZ-pL_nOSSinZdgmP8NbzuTN0xhRFhB-ny0NkgCfLOw@mail.gmail.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Fri, 16 Jan 2026 21:22:34 +0600
+X-Gm-Features: AZwV_Qg3nDreQHq-6kdc8LsjTHdD-_O5jXufws0IpvdHeKFdnNdLcJHGRFpfaw4
+Message-ID: <CAFfO_h7qQLeKq-n5hngpaNYCcxiRJQjeEpiXQwk_9sVM2jQKWA@mail.gmail.com>
+Subject: Re: [PULL 22/49] device/virtio-nsm: Support for Nitro Secure Module
+ device
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ Alexander Graf <graf@amazon.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <D57D8689-9535-41D8-9818-79E544E46DB1@unpredictable.fr>
-References: <20260116135235.38092-1-mohamed@unpredictable.fr>
- <20260116135235.38092-16-mohamed@unpredictable.fr>
- <23800170-66aa-4e31-9e74-e256933c8a8b@linaro.org>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
-X-Proofpoint-GUID: lpA-fp68N0FMgz95DAnz1zplqCi6nuZW
-X-Authority-Info: v=2.4 cv=GdIaXAXL c=1 sm=1 tr=0 ts=696a5247
- cx=c_apl:c_apl_out:c_pps a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=9N9iz4hUtBtpV_NYapMA:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE2MDEwNyBTYWx0ZWRfX3izUvUkwxwCg
- fqLIBmUbM6Susu0moWqKbbAJJPqqV9Nfo/Xl4cpP4Jr6hyY128x+VRo2IqLBFh0+GY3Noj3qz1y
- vgqKHCKmcm6hev8Nyv8vMIllua7+Xcc9xXCPhUe6vBKSJB+2tAD+acRiMXhCkGpEcK43gn5Jxdq
- IOJDjO5VhbVxiJEfqY1fy7e3x7mnxiBpcsjSPmXjCGuy4ZmhFoKNMH4cbDS8byOZc0OZ6y2ZFpC
- EsLbG8SPwLOV2GKjv/kY57sDLWk6nQsxLH5MSaaaKQtG6mbSV8+0FbBbppcOfpQBJTjl/+Ic4sf
- 1y/EaYZQ2IBKO1pyPpj
-X-Proofpoint-ORIG-GUID: lpA-fp68N0FMgz95DAnz1zplqCi6nuZW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-16_06,2026-01-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0 clxscore=1030 mlxlogscore=746 bulkscore=0 malwarescore=0
- mlxscore=0 adultscore=0 phishscore=0 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601160107
-X-JNJ: AAAAAAABr9qRnLQ1jXJ8XHYL/ft/hyAipQY+ydk/vW4Yq6AWJChqEhHCzcSOGIwpA0LmeD0SAZ/cI+cIhExpAuYT93EYt6kz7CjN5GLsq43epSghzbKC0/GZ6vYZ6xnlUFRaS5ikWSfkiEGkvC3nfSC7ZXvuosbQbqIofVB3scsKbrB/cu0s/RwFDDpJAIsreIjPs7ukjWDG+hsnDs69FtopAKL0nUFgLA8HtlLn0ezMA9N67PUuzOPgX2InKRnKApbFWnIIFtwIosJoOaC8MjtGKIMtvOhjtrlW8TvkUPMJYXqhcAktJHN1Qm2Ebsm1R+gTFv4yx5T8mjNBI4YzJgHCi1UppyUyNsEQAaQR433UxMFmc/i45/K+HpYDqDZizCqVx1sx5HaXM7M/Fli3oTBhZzeohynzl5ETfNtH5RUvWMug3uqyU5yvzHzYEa1Yp9SPhcc2jc5S3GIs5m6+0a9DZ+0heXumsG9kMSXGc3TFzs56sHjeX98/MNuZUEvFN49LUTOvnCozNEwTCsSQvFUaPaojhJMG6Lq71MruscdNuRgX9b52+gO/v3w1nB+CPl6JbI8fVkmaHwxia4kUa/bXkESLRIZQcDT0w4B9xm2kX0sregleOhAAOhws2MkGM6MfhAgUGfoIS+sfoWwyQ2xrJHCv4hY3CkytIYnTHbsVSeENka0qVsGOdPMvlvF6MUSnP3MYIRiZ83qVqBLPCeNWIT5XiJjui1TzL2El8C0Iktoxo7G+xNK4Hfqj83UU8ixFhACRDoG25mnIBGe9dJbcrukhS0nIUHfvkDWEvw9YDN+ang==
-Received-SPF: pass client-ip=57.103.88.200;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-ua1-x932.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,53 +122,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Peter,
 
+On Fri, Jan 16, 2026 at 5:45=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Thu, 31 Oct 2024 at 17:56, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> >
+> > From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> >
+> > Nitro Secure Module (NSM)[1] device is used in AWS Nitro Enclaves[2]
+> > for stripped down TPM functionality like cryptographic attestation.
+> > The requests to and responses from NSM device are CBOR[3] encoded.
+> >
+> > This commit adds support for NSM device in QEMU. Although related to
+> > AWS Nitro Enclaves, the virito-nsm device is independent and can be
+> > used in other machine types as well. The libcbor[4] library has been
+> > used for the CBOR encoding and decoding functionalities.
+> >
+> > [1] https://lists.oasis-open.org/archives/virtio-comment/202310/msg0038=
+7.html
+> > [2] https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
+> > [3] http://cbor.io/
+> > [4] https://libcbor.readthedocs.io/en/latest/
+>
+> Hi; this commit includes a file hw/virtio/cbor-helpers.c which
+> does not include our standard qemu/osdep.h header:
+>
+>
+> > diff --git a/hw/virtio/cbor-helpers.c b/hw/virtio/cbor-helpers.c
+> > new file mode 100644
+> > index 00000000000..49f55df3994
+> > --- /dev/null
+> > +++ b/hw/virtio/cbor-helpers.c
+> > @@ -0,0 +1,321 @@
+> > +/*
+> > + * QEMU CBOR helpers
+> > + *
+> > + * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> > + *
+> > + * This work is licensed under the terms of the GNU GPL, version 2 or
+> > + * (at your option) any later version.  See the COPYING file in the
+> > + * top-level directory.
+> > + */
+> > +
+> > +#include "hw/virtio/cbor-helpers.h"
+>
+> Is this intentional? Could we make this file include osdep.h
+> as our standard practice requires, or would that break something?
+>
 
-> On 16. Jan 2026, at 15:21, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
->=20
-> On 16/1/26 14:52, Mohamed Mediouni wrote:
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>  accel/whpx/whpx-common.c    |   1 +
->>  target/arm/meson.build      |   1 +
->>  target/arm/whpx/meson.build |   3 +
->>  target/arm/whpx/whpx-all.c  | 810 =
-++++++++++++++++++++++++++++++++++++
->>  4 files changed, 815 insertions(+)
->>  create mode 100644 target/arm/whpx/meson.build
->>  create mode 100644 target/arm/whpx/whpx-all.c
->=20
->=20
->> +void whpx_apply_breakpoints(
->> +    struct whpx_breakpoint_collection *breakpoints,
->> +    CPUState *cpu,
->> +    bool resuming)
->> +{
->> +
->=20
->        g_assert_not_reached() ?
->=20
->> +}
->> +void whpx_translate_cpu_breakpoints(
->> +    struct whpx_breakpoints *breakpoints,
->> +    CPUState *cpu,
->> +    int cpu_breakpoint_count)
->> +{
->> +
->=20
->        g_assert_not_reached() ?
->=20
->> +}
->=20
-Hello,
+I don't think something will break. It's just that when I added the
+file I was not aware of this standard practice.
 
-Called unconditionally today from the common code. But does nothing as =
-breakpoints aren=E2=80=99t supported on the platform.
-
-If trying to actually enable a breakpoint, common code will go through =
-whpx_set_exception_exit_bitmap and error there.
-
-
+Regards,
+Dorjoy
 
