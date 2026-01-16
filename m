@@ -4,96 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D6D7D48981
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B03BD48981
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:41:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgi9D-00020c-MV; Fri, 16 Jan 2026 06:37:47 -0500
+	id 1vgi58-0000cR-L2; Fri, 16 Jan 2026 06:33:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vgi8q-0001xq-KK
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:37:27 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vgi8p-00011x-7Q
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:37:24 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-42fb0fc5aa9so993728f8f.1
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 03:37:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768563440; x=1769168240; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=o/9FO1UO8KL8VpofMlm6RsNWYo0B2Gy8oMuLBOYMRLA=;
- b=WJcXbxK4EQqpcukC9SMAPxWUOf+UWJ6yXr5avgVCatnmWGIdXsjvju5IJMM525wMgp
- k7dEtqcnD00/6vegzZtCcY9aeUDbAayzAbZK+eyMBXQ4aLOf0B1bu+zmLBFzJup4I71a
- iHoil50Bug4KsEMWWli8UMjCS4kRsBtVUrV/Au7l+tmsTi05GjB6yNPj27t+4Z/HxjnE
- KJt83IXCZa+ZNzKztlBi+R2jtnIfbXfsKMeICgqahIn2AluNvPQPDNICTmfJx7iMjWb6
- rRRP8L9+uCi/h+ZHgSpgQ/bpOg6uhDYxpAEg3a58azEVqGBJ6W2RJHhxMU93irnWl0PP
- qkXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768563440; x=1769168240;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o/9FO1UO8KL8VpofMlm6RsNWYo0B2Gy8oMuLBOYMRLA=;
- b=Pw2MvEQbZZmh7WFQRuGVCsk9RCLv/28R55K5ePh3prtjcflqcmyUNv/M35bjpPzuXs
- hDDJZtW3az0CarEtyvneH6h82zYgTF95wwnX5n5HEAdVxhVEdaCqEwNirNCL/Y2j8OXJ
- 4hVnLIEDrH29jM7jwIeUGDTBgk+c+4Lz4Xzq5pq79LluWW30tgWxlyv6qe9EmiJuTWzF
- gnz6z9LjMzERn4YEm9ButEgqn63YCPSE8nlHpeiRy4I+h8x16nFO1epyDvd6qFJPEoX9
- tz3iNKL/VUx8cllnwKMot2xhiMJqiqRPfmyE6/oC3s3u1d8XUvMl0r6niDkL5j7jXfE4
- pKpA==
-X-Gm-Message-State: AOJu0YysUVb93OKPQMBDc6KW1MdL+xuqi0Ud8aJmqZjJY9dxx1bptkRr
- jvKfZ4E9rOGhAPhciu6/d2oZJnBqcQ2SL0qQNBNTINIpZZNH28Rj8fwVbsOXGSqaknM=
-X-Gm-Gg: AY/fxX6lD3qQ7ICngOsXrGnrVXHTDWLdRPaYsNbDV4z8KlkSKRJn1t3e5z2obhFHKmP
- Mb4GPxPlPx68IfJdJKqtuzipi7duAlS6JjUMUb9i2R0PlyjA+VraasM3lsIw9xWwNEV1TEQKB/c
- tAKwYnGui9c68ro3wmea98yPMtENdUN9aVabbKVWhGE1dZBly3UZI+d+BV0hKhlsd5uWace5Xkf
- hFqPXOIX+/NdNC+vSs+iaEH+FDiaJyHNKnGJqm+X9af2hLhZbNHylBtqcx3kBMxvWpkfk+nc5e3
- NNbJmirD2n4Kun/2chw7piUSJaXLuVab0rgChx3eWym7YWVAvvwReOo++8nQ2QVIK1l9kpfatGp
- lSCbPBwrngyRV1ocQgNORCY3ZMJlc2nlv8wJCQ2ayO8S39GneWFnztiRMJKe7GQyH12J1dcWjCV
- TdLCPu2wwoJtVSw4GZXBp0Tw==
-X-Received: by 2002:a05:6000:4304:b0:432:8504:b8a9 with SMTP id
- ffacd0b85a97d-4356a06769cmr3425031f8f.62.1768563440395; 
- Fri, 16 Jan 2026 03:37:20 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43569921dddsm4907193f8f.6.2026.01.16.03.37.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Jan 2026 03:37:19 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D9C0D5F898;
- Fri, 16 Jan 2026 11:37:18 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Phil =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Markus
- Armbruster <armbru@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Stefan
- Hajnoczi <stefanha@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  John Snow <jsnow@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [PATCH] MAINTAINERS: add maintainer for docs/
-In-Reply-To: <20260115203529.2713193-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Thu, 15 Jan 2026 12:35:29 -0800")
-References: <20260115203529.2713193-1-pierrick.bouvier@linaro.org>
-User-Agent: mu4e 1.12.15-pre1; emacs 30.1
-Date: Fri, 16 Jan 2026 11:37:18 +0000
-Message-ID: <87ms2dhjpt.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vgi56-0000aO-Aq
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:33:32 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vgi54-0000CI-Fs
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:33:32 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 976BE17EDA3;
+ Fri, 16 Jan 2026 14:33:15 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D622D34EC96;
+ Fri, 16 Jan 2026 14:33:25 +0300 (MSK)
+Message-ID: <5b520a18-ee10-4403-9599-d144652dc93e@tls.msk.ru>
+Date: Fri, 16 Jan 2026 14:33:25 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 2/6] hw/loongarch/virt: Fix irq allocation failure with pci
+ device from fdt
+To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org
+Cc: Xianglai Li <lixianglai@loongson.cn>
+References: <20260115064840.219920-1-maobibo@loongson.cn>
+ <20260115064840.219920-3-maobibo@loongson.cn>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260115064840.219920-3-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,20 +105,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 1/15/26 09:48, Bibo Mao wrote:
+> From: Xianglai Li <lixianglai@loongson.cn>
+> 
+> When we use the -kernel parameter to start an elf format kernel relying on
+> fdt, we get the following error:
+..
 
-> I would like to help maintaining qemu documentation and I've been
-> invited by Alex to apply as maintainer.
->
-> Files in docs/ that are already maintained will continue to be under
-> their respective maintainer. The goal here is to have someone that can
-> help on all other files that don't have an official maintainer.
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Hi!
 
-Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+I can't find this patch in qemu-devel mailing list archives,
+besides this pull request.  Has it not been there?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> pcieport 0000:00:01.0: of_irq_parse_pci: failed with rc=-22
+> pcieport 0000:00:01.0: enabling device (0000 -> 0003)
+> pcieport 0000:00:01.0: PME: Signaling with IRQ 19
+> pcieport 0000:00:01.0: AER: enabled with IRQ 19
+> pcieport 0000:00:01.1: of_irq_parse_pci: failed with rc=-22
+> pcieport 0000:00:01.1: enabling device (0000 -> 0003)
+> pcieport 0000:00:01.1: PME: Signaling with IRQ 20
+> pcieport 0000:00:01.1: AER: enabled with IRQ 20
+> pcieport 0000:00:01.2: of_irq_parse_pci: failed with rc=-22
+> pcieport 0000:00:01.2: enabling device (0000 -> 0003)
+> pcieport 0000:00:01.2: PME: Signaling with IRQ 21
+> pcieport 0000:00:01.2: AER: enabled with IRQ 21
+> pcieport 0000:00:01.3: of_irq_parse_pci: failed with rc=-22
+> pcieport 0000:00:01.3: enabling device (0000 -> 0003)
+> pcieport 0000:00:01.3: PME: Signaling with IRQ 22
+> pcieport 0000:00:01.3: AER: enabled with IRQ 22
+> pcieport 0000:00:01.4: of_irq_parse_pci: failed with rc=-22
+> 
+> This is because  the description of interrupt-cell is missing in the pcie
+> irq map.  And there is a lack of a description of the interrupt trigger
+> type.  Now it is corrected and the correct interrupt-cell is added in the
+> pcie irq map.
+> 
+> Refer to the implementation in arm and add some comments.
+
+This looks like a qemu-stable material to me.
+Please let me know if it is not and I shouldn't pick it up
+for qemu stable series.
+
+Thanks,
+
+/mjt
 
