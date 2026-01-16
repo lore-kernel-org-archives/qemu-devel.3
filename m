@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E0E7D47CAD
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 00:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F97CD47CA3
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 00:52:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgY44-0005zs-Cq; Thu, 15 Jan 2026 19:51:48 -0500
+	id 1vgY47-00063k-2r; Thu, 15 Jan 2026 19:51:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgY3w-0005vx-Kg
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:51:40 -0500
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgY3z-0005wL-7l
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:51:44 -0500
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgY3t-0000qg-SW
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:51:39 -0500
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgY3u-0000qn-S2
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:51:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Date:Subject:From:From
- :Subject; bh=spUoSBLxVK/LW2IDytQ4t3d9mqfWBv3rna67/EINeR8=; b=XyDaLURKCHM1x1hb
- 6cRA2zfs+ZNObGk85Le7rYxnRvK5zS6oi1BPp0LNfD71Fpe1ZDyacIbDAWzAnMViCoyQcxQL6xL1b
- UnP/rs5qX/Tjggyks9AHkovz6+A1yihYVJdUELqZecoNcZm5CgHf2t4zx9clR39mP6qv1EXmjhv0Q
- 8Ue7ESyCm6yR5ATRsoSHw3/1b/QI3BSMGj6HI9/YBUw2cMVBbAoHGrUDGfwGvriQjEQETRpDdneNp
- lf4GH4xFF8PoFPT/G6Z0JyaItVdSy2ifd08G+Ae0r48BgqepV9IKyKtdohYyw/oFPPzDGkyZGS3x4
- ZHXvrvZf61X9krrv7w==;
+ h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
+ :Subject; bh=E2mXrTWQiOztBEj6wySA6rn8mt3kagBW5G9HJyHhrOU=; b=cbfTYx79baCyMNgx
+ +LmhZNfFSrg9PeqSHZi7EhkAiYdx8AYNMrIKtFvBUcbN79W8KtmU2qWxxQuRUrbyr81L/MFqznk1O
+ W2pB01AfzmMPsYpDKG35elqsmbdqxWNpE/JG6p+1peqgwfQPitB142d5pHKQxDbZutISJhU4fxNfZ
+ 77xsrWuaIu+jT0t6O1Iz0jL33tcF0wcxvjeE/fGTmsGRM9KuvLPoid4Ha2LG3WPHu7R85Q18QiUhv
+ qg279PeZOUotnjMWRLUg/BMiad4rMTgL7mKhMh9Q1gwmvrOOt5+NixlPKe73ljXkaKtGrQVgemwGR
+ TwH2zPrCew76+6LN7A==;
 Received: from localhost ([127.0.0.1] helo=dalek)
  by mx.treblig.org with esmtp (Exim 4.98.2)
- (envelope-from <dave@treblig.org>) id 1vgY3s-0000000F7wG-0YkN;
- Fri, 16 Jan 2026 00:51:36 +0000
+ (envelope-from <dave@treblig.org>) id 1vgY3t-0000000F7wG-13Zw;
+ Fri, 16 Jan 2026 00:51:37 +0000
 From: dave@treblig.org
 To: dave@treblig.org, armbru@redhat.com, berrange@redhat.com,
  marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org
-Subject: [PATCH v2 2/4] hmp*hx: Move info docs
-Date: Fri, 16 Jan 2026 00:50:46 +0000
-Message-ID: <20260116005050.376616-3-dave@treblig.org>
+Subject: [PATCH v2 4/4] hxtool: Error on missing docs
+Date: Fri, 16 Jan 2026 00:50:48 +0000
+Message-ID: <20260116005050.376616-5-dave@treblig.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260116005050.376616-1-dave@treblig.org>
 References: <20260116005050.376616-1-dave@treblig.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dave@treblig.org;
  helo=mx.treblig.org
@@ -69,79 +68,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-Move the docs for the info subcommand from the separate hx
-into the top level file next to the 'info' command itself.
-That makes every command in the top level file have a RST section.
+Error if a '.name' is seen after another '.name' without an intervening
+SRST, this normally indicates missing or misplaced docs.
+
+We can't check DEF (as used in command line options) because those
+often have multiple DEF per doc.
 
 Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hmp-commands-info.hx |  9 +--------
- hmp-commands.hx      | 27 +++++++++++++++++----------
- 2 files changed, 18 insertions(+), 18 deletions(-)
+ scripts/hxtool | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index 74c741f80e..964eed004c 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -8,14 +8,7 @@ HXCOMM
- HXCOMM In this file, generally SRST fragments should have two extra
- HXCOMM spaces of indent, so that the documentation list item for "info foo"
- HXCOMM appears inside the documentation list item for the top level
--HXCOMM "info" documentation entry. The exception is the first SRST
--HXCOMM fragment that defines that top level entry.
--
--SRST
--``info`` *subcommand*
--  Show various information about the system state.
--
--ERST
-+HXCOMM "info" documentation entry.
+diff --git a/scripts/hxtool b/scripts/hxtool
+index 51dc841479..ee98fb9c09 100755
+--- a/scripts/hxtool
++++ b/scripts/hxtool
+@@ -1,8 +1,14 @@
+ #!/bin/sh
  
-     {
-         .name       = "version",
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 5cc4788f12..f4a6eeda93 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -1814,16 +1814,6 @@ SRST
-   command.
- ERST
- 
--    {
--        .name       = "info",
--        .args_type  = "item:s?",
--        .params     = "[subcommand]",
--        .help       = "show various information about the system state",
--        .cmd        = hmp_info_help,
--        .sub_table  = hmp_info_cmds,
--        .flags      = "p",
--    },
--
- #if defined(CONFIG_FDT)
-     {
-         .name       = "dumpdtb",
-@@ -1867,3 +1857,20 @@ SRST
-   List event channels in the guest
- ERST
- #endif
-+
-+HXCOMM *** MUST BE LAST ENTRY **
-+    {
-+        .name       = "info",
-+        .args_type  = "item:s?",
-+        .params     = "[subcommand]",
-+        .help       = "show various information about the system state",
-+        .cmd        = hmp_info_help,
-+        .sub_table  = hmp_info_cmds,
-+        .flags      = "p",
-+    },
-+
-+SRST
-+``info`` *subcommand*
-+  Show various information about the system state.
-+ERST
-+HXCOMM *** MUST BE LAST ENTRY **
++print_if_not_rst()
++{
++    test $in_rst -eq 0 && printf "%s\n" "$str"
++}
+ hxtoh()
+ {
+     in_rst=0
++    # .name for HMP
++    seen_name=0
+     while read -r str; do
+         case $str in
+             HXCOMM*)
+@@ -13,6 +19,8 @@ hxtoh()
+                 echo "Error: SRST inside another RST" >&2
+                 exit 1
+               fi
++              # consume the name
++              seen_name=0
+               in_rst=1
+             ;;
+             ERST*)
+@@ -23,6 +31,16 @@ hxtoh()
+               fi
+               in_rst=0
+             ;;
++            # Note the space at the start - we need to exclude something.name
++            ( .name*)
++              if [ $seen_name -eq 1 ]
++              then
++                echo "Error: Seen another .name, maybe missing docs?" >&2
++                exit 1
++              fi
++              seen_name=1
++              print_if_not_rst
++            ;;
+             *)
+             test $in_rst -eq 0 && printf "%s\n" "$str"
+             ;;
 -- 
 2.52.0
 
