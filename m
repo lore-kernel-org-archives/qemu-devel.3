@@ -4,153 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39CE2D4A609
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48D22D4A60E
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:16:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgetc-0008UZ-7Z; Fri, 16 Jan 2026 03:09:28 -0500
+	id 1vgetg-0008VJ-3h; Fri, 16 Jan 2026 03:09:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeta-0008Tv-9y
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:09:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from
+ <BATV+ef4a224ebda3f9d7dd15+8181+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1vgetd-0008Uo-9F
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:09:29 -0500
+Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgetY-0005rn-KK
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:09:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768550962;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gUIw3O//XYeqSIp3LhrVxuCNcs7iXth9avzR721VM6I=;
- b=J74bNpj5/HHOQaBlIE64q7SiAJFCjsny7B2yApU0kuQygJ+4nmlO9AIJ/q6s8ANXRmZKs4
- LtWVvhz6UKG8hklUBl9qUqhNl6E3z19WFY5M5qZ5OYW58jYWtwfiPndh390lp0vDrX8sLs
- 2vIpH28TQzbwGXdtBJfQrDboiLV7+yM=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-636-wa5Q5HopORuGjw2CnRt6Gw-1; Fri, 16 Jan 2026 03:09:20 -0500
-X-MC-Unique: wa5Q5HopORuGjw2CnRt6Gw-1
-X-Mimecast-MFC-AGG-ID: wa5Q5HopORuGjw2CnRt6Gw_1768550959
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-64b7907dd42so2366379a12.3
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 00:09:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768550959; x=1769155759; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=gUIw3O//XYeqSIp3LhrVxuCNcs7iXth9avzR721VM6I=;
- b=fH45iqmgIpVjjUMCr92sjJXP0nTSDyJs/qd3yAQqQbAXGvHvOcu+9Jvd3nqFNvJTrF
- uXK/2meVkGhd0jFqU2Eq2isqD7IdEn8hfx568Q8FdDvXHAEisfUPV8AxzJAoNXg5LBD5
- 91WgxbRQxc8o+JUzx3LNhSXNxBA5IHbAv32njPV2+glJMwVKOqxB5DTA9KbAjLkpcUYG
- S/qZ/Mekwx2B45uxpxU7aVFrFO7QgCLsffe9jlRHOXkci/fcsu3c6gKD2crTf06kz1aO
- CYjES9fqT0xhUUsh0KUT3FDsKicC0/NOd6WQf0l3Ir4OZJMMQMrTEFyEVkZfCgHErrin
- ZQKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768550959; x=1769155759;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gUIw3O//XYeqSIp3LhrVxuCNcs7iXth9avzR721VM6I=;
- b=AT4HD+wgBsPn574mbjjgKMg1pe3OVQB1BCwJSesOIbz68uEnjupf53IqaGQWLicq5E
- Q5AHFig9HHqqAJfh3aSU6O/U5F/82DzrfHVsNWpZjZyaPXogAy9aAzqrBZ3xQQhWR/87
- VuIRAva6MLH/eJggYcF+3w2DLYSAu/1eHAxma84ZnSIL+ZqoLHMLcbArGsXjT0P9r7Hi
- vqYST+DKFo4Q0D/XPuFsmgwkszqdrCHP4Fk34CyOotVsaVk5ARjY6h6QGRZ8TAj8fwJR
- gQd1+Y1+u77aQDVyAPJveuyaUV6wt30+sJT5rNhHXUDExeRRF5SiSbdKabPyo6gOmdpl
- AGVA==
-X-Gm-Message-State: AOJu0YwcOeD2Z9ZwWyoeJ/jjOC8LZ1n4Xdk7spB1kYtZwfiS2m47/YoL
- gdqF/bRRGgowDVw3uWmwZiRgqn2tzaCfhoTPTohh/ugRN9vnTN3RZeGje4a20uq8byzgSNzlZ3A
- DDy1a6ppX88H+Kdhrh64bpEv/HyUqv53VJA7Tg4jwXRhVsr+8uPFU4pGtwE4qmBYX
-X-Gm-Gg: AY/fxX5eFvMqdSfXjpyEnI9Q8G9WoB9992LCQ8VLKJuNscApA687i22Ga/jhUd7N5pv
- 7VF8mKWaFrWbLpOl+MriQPa5aW85Y968l51Pn26N+isWi7Ui6nhFlcWCGtrSXa2yePvAkmnihGe
- zyg+TvJz2+KoAmRxh14MHHvBlTOHSTwvgN3LWD9++wgNu4Guu3YgWwSx4kRxayp3ShmQX84ob8/
- 9gj1QniMynoFZaXeBJyXUfv6S9oq4eIBchh6FdBAJ2Px5x/GfFZ+8WNQqsOAKKLiBLd7HL0aRph
- 3SGFFcKyLcDpmfSz7KWnPFfxHkV3vsig3TZipvlGmJErZHBBVl8UJoaJiG5HzAqkfO1qhTlP2Z2
- mblNLrQo=
-X-Received: by 2002:a05:6402:5106:b0:64c:584c:556c with SMTP id
- 4fb4d7f45d1cf-654bb6192admr1307264a12.30.1768550959241; 
- Fri, 16 Jan 2026 00:09:19 -0800 (PST)
-X-Received: by 2002:a05:6402:5106:b0:64c:584c:556c with SMTP id
- 4fb4d7f45d1cf-654bb6192admr1307253a12.30.1768550958905; 
- Fri, 16 Jan 2026 00:09:18 -0800 (PST)
-Received: from [192.168.0.9] ([47.64.113.220])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-654534c8b7fsm1771867a12.27.2026.01.16.00.09.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Jan 2026 00:09:18 -0800 (PST)
-Message-ID: <fdc2093e-8acb-44fb-b280-edf40f5f8883@redhat.com>
-Date: Fri, 16 Jan 2026 09:09:17 +0100
+ (Exim 4.90_1) (envelope-from
+ <BATV+ef4a224ebda3f9d7dd15+8181+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1vgeta-0005rG-IS
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:09:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=desiato.20200630; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=LfXb4UYkA1UT7AQ5N2JJW2OyjfvcN+1K9cGDGbl6gmM=; b=h8OO1K/7N0ABYVyRIa3ROZNffM
+ pXWlwy+3nNCTF8NA19uN3qOPQ/owNcdRTggo5jrp2bsRPyxM6mUZ4gzPtirhOGNWP5qJXE8ls3O7t
+ tCqzGoKYSlZPL+N1oh74FJkpg5z7/9TaHCYic1m1NQvhrrvSOV9hUwVQpUbG47lWzXGLfNFoGfHCt
+ NCZRo+du4WfDJOcz1QZOPaNllyAeUly6T9NTsJwuPszpLxPNRQ1by6AKhZiM2BlB9hRej/AuImi/k
+ XUbOH7HoANoUUNMVNilqw71UFUIpAWO/tCd/ZwDDRClOTydCMCJdfU73Y5mFNIgWFfbXEpcQkUhEU
+ 3g7vsjqg==;
+Received: from [172.31.31.148] (helo=u09cd745991455d.lumleys.internal)
+ by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+ id 1vgetQ-00000008Fug-3t5c; Fri, 16 Jan 2026 08:09:17 +0000
+Message-ID: <2404ef4c0976de7f2b2f5ab94f6c6d0d7c35e345.camel@infradead.org>
+Subject: Re: [PATCH 1/1] target/i386/kvm: account blackout downtime for
+ kvm-clock and guest TSC
+From: David Woodhouse <dwmw2@infradead.org>
+To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org, 
+ kvm@vger.kernel.org
+Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, pbonzini@redhat.com, 
+ richard.henderson@linaro.org, eduardo@habkost.net, mtosatti@redhat.com
+Date: Fri, 16 Jan 2026 08:09:16 +0000
+In-Reply-To: <20251009095831.46297-1-dongli.zhang@oracle.com>
+References: <20251009095831.46297-1-dongli.zhang@oracle.com>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-7nzKCjMLrNmuGV4G1ZjX"
+User-Agent: Evolution 3.52.3-0ubuntu1.1 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/x86_64: Limit the memlock test to Linux
- hosts
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-References: <20260114095904.35442-1-thuth@redhat.com>
- <aWdpi4ibUm9qNrwa@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <aWdpi4ibUm9qNrwa@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ desiato.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
+ envelope-from=BATV+ef4a224ebda3f9d7dd15+8181+infradead.org+dwmw2@desiato.srs.infradead.org;
+ helo=desiato.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,39 +78,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/01/2026 11.01, Daniel P. Berrangé wrote:
-> On Wed, Jan 14, 2026 at 10:59:04AM +0100, Thomas Huth wrote:
->> From: Thomas Huth <thuth@redhat.com>
->>
->> The memlock test analyzes /proc/*/status files and expects the layout
->> from Linux in there. However, these files also exist on NetBSD hosts
->> with a completely different layout, causing this test to fail. Thus
->> limit the test to Linux hosts now.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   tests/functional/x86_64/meson.build | 5 +++--
->>   1 file changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
->> index f78eec5e6cf..97286d78b8f 100644
->> --- a/tests/functional/x86_64/meson.build
->> +++ b/tests/functional/x86_64/meson.build
->> @@ -9,12 +9,13 @@ test_x86_64_timeouts = {
->>     'virtio_balloon': 120,
->>   }
->>   
->> -tests_x86_64_system_quick = [
->> +tests_x86_64_system_quick = \
->> +  (host_os == 'linux' ? ['memlock'] : []) + \
-> 
-> IMHO this should be done with a decorator in the test program, so
-> we keep all conditions in the source, not meson.
 
-If we already know here that the test will only SKIP during runtime, I think 
-there is no need to add it to the test plan. Otherwise this will just always 
-waste some cycles when running the tests.
+--=-7nzKCjMLrNmuGV4G1ZjX
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-  Thomas
+On Thu, 2025-10-09 at 02:58 -0700, Dongli Zhang wrote:
+> So far, QEMU/KVM live migration does not account all elapsed blackout
+> downtimes. For example, if a guest is live-migrated to a file, left idle
+> for one hour, and then restored from that file to the target host, the
+> one-hour blackout period will not be reflected in the kvm-clock or guest
+> TSC.
+>=20
+> Typically, the elapsed time between KVM_GET_CLOCK (on the source QEMU) an=
+d
+> KVM_SET_CLOCK (on the target QEMU) is not accounted in the kvm-clock.
+> Similarly, the elapsed time between reading MSR_IA32_TSC on the source QE=
+MU
+> and writing it on the target QEMU is not reflected in the guest TSC.
+>=20
+> The KVM patchset [1] introduced KVM_VCPU_TSC_CTRL, KVM_CLOCK_REALTIME, an=
+d
+> KVM_CLOCK_HOST_TSC to account the elapsed time during live migration
+> blackouts in the guest's system counter view.
+>=20
+> The core idea is to use the realtime clock (KVM_CLOCK_REALTIME) from both
+> the source and target hosts as a reference to calculate the elapsed
+> downtime in nanoseconds and adjust kvm-clock.=20
 
+Nah, don't do that.
+
+For a start, never use CLOCK_REALTIME. You should use CLOCK_TAI. Leap
+seconds can still occur at least for the next few years, and
+CLOCK_REALTIME isn't monotonic.
+
+(Hopefully the BIPM will see sense and continue doing leap seconds even
+after 2035, rather than kicking the can down the road and creating a
+new larger y2k/y2038 style problem for the future. But regardless of
+that, they've given us the worst of all worlds by *both* pandering to
+broken software *and* not actually stopping immediately, so for now you
+still have to avoid having those bugs until 2035. And... your great-
+grandchildren might thank you for not introducing those bugs even if
+there isn't a leap second before you retire?)
+
+Secondly, in all sane modern hardware the kvmclock should be a fixed
+relationship from the guest's TSC which doesn't change for the whole
+lifetime of the guest. We should set the guest *TSC* as accurately as
+we can (with offsets, if it's on the same hardware after live update,
+via CLOCK_TAI if it's a live migration). And the y=3Dmx+c relationship of
+the KVM clock should be put back *exactly* as it was. With KVM
+selftests which validate that the bits seen in the PVTI by the guest
+literally DID NOT CHANGE. Or at least, that they give the same
+precisely the same time result for all historical TSC readings, as they
+did at the time.
+
+So:
+
+1. Set the TSC, from offset or CLOCK_TAI.
+2. Set the TSC=E2=86=92kvmclock relationship.
+
+Let's get the kernel APIs in place to support that, and then make qemu
+do it right. I'm not sure I see any value in half-measures.
+
+--=-7nzKCjMLrNmuGV4G1ZjX
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
+ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
+MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
+a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
+jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
+GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
+aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
+nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
+8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
+HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
+IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
+KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
+BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
+QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
+QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
+ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
+/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
+uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
+xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
+W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
+c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
+VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
+NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
+DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
+sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
+w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
+i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
+kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
+0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
+ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
+blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
+hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
+VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
+HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
+ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
+AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
+cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
+cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
+AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
+aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
+hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
+iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
+8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
+JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
+xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
+EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
+B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
+MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
+KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
+Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
+nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
+WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
+W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
+nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
+g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
+9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
+9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
+sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
+a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
+ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
+AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
+dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
+MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
+YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
+4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
+6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
+QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
+nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
+MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
+VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
+ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDExNjA4MDkx
+NlowLwYJKoZIhvcNAQkEMSIEIA4XrNI31LOI9GJDVRZ20WMTWXwUfozM/87rVS/WADGwMGQGCSsG
+AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
+cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
+VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
+cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAhKprhyg850AV
+1ozCZaXSI3OeFFa5bbyPcG8CxIsVUGCtYedFPnubrlRWRSGIQn219WtuTWgLVPir/xWUtcwKHdfG
+jlLa2Erro7VvvI+HcJu3b1hZgD0ZNeg3tc2WbHZkO+zTkAzEVI//dFuMIUNK+mPuIE3rN1/KuQ/i
+ccmdFxyO+p2vp5C92e6QEXhcCRxdeycaRh1/7nhDD49gyKzIkDISW/xTT+6iJdNFABDwUqyHChJh
+J9ZTj4JWasUy6afbSisAO5/YkjPbs6EdXMBKqEAN9mBRxA1Kn7O8/yLeUlZJnjxmEGIXz6V80au1
+6raHGEdSRRSKF7b9EpWUwdY48cRyWd64WEDLclPw1JK0GbhkU3EfhtCvIK1rHwbgsy7oyLn+ujv6
+vsDUjo2/QOV6u+xsr2ezLNVxax0SOalTov19ZFGB9sPLpeMhUqlE3yrdIUaec0Nrmd/lHw2nl54s
+yUp+SZOqYtuyZCT0BDyWr/HkpGw7J7DsHnY+0s3c516NTPJuUcdf1HXF2HHMr+VNCOoTBLSroq+2
+dWz5lonK542V2Qc3ubz8nbwZqo6X37dL0xwYfkqqMInjBnXBPxWjdof7AJrR/qJ1fuy8TB7jwMVS
+0Ogllv044lR80iRBtU6Y80LOCa4XcC0G3iK0KFvzIbtYt/xyaVDXnaAWg5xR23wAAAAAAAA=
+
+
+--=-7nzKCjMLrNmuGV4G1ZjX--
 
