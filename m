@@ -4,87 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6FADD4A60E
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3FD7D4A613
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:53:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgfPB-0000Sf-QS; Fri, 16 Jan 2026 03:42:05 -0500
+	id 1vgfWk-0005MR-PX; Fri, 16 Jan 2026 03:49:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vgfPA-0000ML-8A
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:42:04 -0500
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vgfP8-0005Iy-AB
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:42:03 -0500
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b86f81d8051so298649566b.1
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 00:42:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768552920; x=1769157720; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=x/i01022pn4b0W1Z6FMgVQtu2p36TiA9XoXPxQazvEU=;
- b=JHu/fKpfyWwuYyvCsGnJ1UvKDpNChHRQ8WssiAC5XZ0pAY1XArMlSWsjZzwx4iBZ48
- nGS1u8r4sVdBhW/niCUV5M1mXJWy0Li14WYrsDANtaZ5gyxgIc9H8+QBuect3xuOAkiV
- Fc/ybkAs60P9CxPThbnDhQUHF26E7g3FeGUUx4EdRg4cZx2RFrZtIK6FxDyMO1+gzgbO
- dmzj3lKUkdLdMskuX0/GbTon/2Pm3dIkJiv08e2hK9uuTK3YTvH0PXz74jZDcKqDpHyE
- FGtNmp+AbM2pPSCxwndp0O7HpqQQEjOfJQFhz8TLJZjg3c6wzXBFHIqWWB68wL+Gb5ef
- c25g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768552920; x=1769157720;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=x/i01022pn4b0W1Z6FMgVQtu2p36TiA9XoXPxQazvEU=;
- b=ZCZ5dSpY8ZoWd0HWoKrOu3bH2dWs81NlbuxgD/VwraqRGVEXwJziwjRgiZy6QYehVL
- kIuTsMAI92cYfp97ihAqo1+Jjf/oA5519US0qvpU+uxdOZfwyDK0rY4CXbHf84x6Wekb
- DNmAaYl69kywllBnQioCnqEjDqZ2vO/2Wpid5RyWq+PQ29/4xdnCjcG6OlHL3vGxGG29
- f8z/Ohvw766fWkfnRuMsNhyRRmvINpWqQMBKzy8WGaeVRIE1i18lvEsOdghOzLriWyeZ
- Mzy2Q+/w/F9Ri8C/+EIMAhk2jN0Iwe9FHGEH0Ony6R1ZlQivbtXYtQCBvfbwzXaoh2YE
- JuQA==
-X-Gm-Message-State: AOJu0YxYdeEJ23y7KQYd+yzmdrvshqcb/Gas3R1mzDFkG/6M0eUv6LxU
- mEqJGCy9d0xvaWefW2Cl9pem2PDqllti2rPeEhZk/JPTwycnmx8LGCzlDaQLFsouey56GJ0qyUd
- H9cNVFyAaQTek+rcYWEoq6UQH/NBVVdTDTU5ftLI=
-X-Gm-Gg: AY/fxX7tL0a2bXp59sZRh9S615GpiGxic5WhBTNnv8fQnKar7y7h7pPIV6hZAFEVlpY
- BeXA3NfsiopR+rXbkaNgkJPNbnQurG/aZaZhq68WECbeZ/mwAqmZK1Btfwvr3QvjEsoALey7XO0
- a1gOH2Hgz1cbd0dwOicPR+A3QgJ6neLGu7PZ/8Oy1gYUFH8B34HQXZIcqWk4a7Ikkvi7OC8iEiH
- gqmkqkTPdh6a0g3G+6VvNylzoq6aehu+kruL3h5BJXH75sCsrcKk8zQMvkEH/9DMztKQKdpM/T6
- yRzLU/Y=
-X-Received: by 2002:a17:907:948d:b0:b3a:8070:e269 with SMTP id
- a640c23a62f3a-b879389056fmr232052666b.14.1768552919442; Fri, 16 Jan 2026
- 00:41:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1vgfWh-0005LF-GE
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:49:51 -0500
+Received: from mail-southcentralusazon11013015.outbound.protection.outlook.com
+ ([40.93.196.15] helo=SA9PR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1vgfWf-0006lN-6n
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:49:51 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sGbHfrH6G6dv7Z2qJur1N7LfDaYnWOfTrzuGcO0BJXn37W6Xd2EWML4HZ7eklI8/bREktR5DUpBuI3qInffq4xCeP5LNCX9uyU4jSHLL+1/eCCj1O+W1x4prM+G5x9qqshLSMxUngGR6squVGci86iAVxDPpR21LiF59YpKWePgDTpAYadyaNIrFl8US79j8+xzpomNakhlpq85ZYqqrWAokczLg8YLu+/ywIdN5D7YyRa4OxmXJ52ehLvXiGGl8J+M82E1ZXOmp0t3PyFJguGABZxsdbelM1FD2SFd5dh6ohYnVFFMUCFIRgjhZaNpgsO0jdoZBu6vcS+z64LHKgQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LGf7jyJpBiHxJiRIv6OMKRM97zqNbCPhJia+MybEATI=;
+ b=PW66lSGY9OyHMNl7XT6KZZE179x5xnw/QvAg/mTcqwzqsuQjvIEkTSTWrQAAkQQJtIn5X1xyoFBb4l8HAyQ2Pfs2QiLvfu9F9GuAAQWwGE+5HElQPVktxTlofnkvj/3/w3OV1mKLRzV1E2Kb9VUlT6EBuj4fAztOrxo1SIo6s9mYyFKGP/JtkpW0Hjk2/TojdTxWjXs4un1AfJpMr2qJKNewPdtu0DghqtKUYg67WevCwedM03imxRwUbPX02Zy5B0NDpeR+hOlucJzPZ/QigdWl9VyQ4ljKkzChDRedvuVuXt9pZ9Cq5Hi1iDz60JPl9HoKFGLEoC5RQR5WUZuUqA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LGf7jyJpBiHxJiRIv6OMKRM97zqNbCPhJia+MybEATI=;
+ b=YJNj1Y23CdlO6JucIjQedopRBvIjDc3rzu+MXjAh/nIbYn63dYbcObbc1cbfmhHRgRoQFusdYj2AfyGN3BkWKe9mDFZKFeRIzWHOmdSL1faujxS8k+4iMmz/oINu938fsyX7/aovSrcm2pPv1ymrjZ44ulAQe3PYv7K+0NIdNNs=
+Received: from BN9PR03CA0493.namprd03.prod.outlook.com (2603:10b6:408:130::18)
+ by DS7PR12MB5815.namprd12.prod.outlook.com (2603:10b6:8:77::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.4; Fri, 16 Jan
+ 2026 08:44:40 +0000
+Received: from BN1PEPF0000468A.namprd05.prod.outlook.com
+ (2603:10b6:408:130:cafe::ac) by BN9PR03CA0493.outlook.office365.com
+ (2603:10b6:408:130::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9520.6 via Frontend Transport; Fri,
+ 16 Jan 2026 08:44:38 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN1PEPF0000468A.mail.protection.outlook.com (10.167.243.135) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9542.4 via Frontend Transport; Fri, 16 Jan 2026 08:44:40 +0000
+Received: from honglei-remote.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Fri, 16 Jan
+ 2026 02:44:24 -0600
+From: Honglei Huang <honghuan@amd.com>
+To: <alex.bennee@linaro.org>, <dmitry.osipenko@collabora.com>,
+ <odaki@rsg.ci.i.u-tokyo.ac.jp>, <Ray.Huang@amd.com>
+CC: <mst@redhat.com>, <cohuck@redhat.com>, <pbonzini@redhat.com>,
+ <qemu-devel@nongnu.org>, <honghuan@amd.com>
+Subject: [RFC v6 0/4] virtio-gpu: Add userptr support and ROCm capability
+ enhancements
+Date: Fri, 16 Jan 2026 16:44:05 +0800
+Message-ID: <20260116084409.326062-1-honghuan@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20251229103859.98777-1-zhangckid@gmail.com>
- <20251229103859.98777-3-zhangckid@gmail.com>
- <877bts8fsa.fsf@pond.sub.org>
- <CAK3tnvJuoin17F9FDnYJA+vXeUeGpMv3R=2vrOBFUotjRCymfQ@mail.gmail.com>
- <87wm1irmvw.fsf@pond.sub.org>
-In-Reply-To: <87wm1irmvw.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Fri, 16 Jan 2026 16:41:21 +0800
-X-Gm-Features: AZwV_QhbkDpuqV2bJKG1sNZbf1t43Qm9NAv0nGmZRduZgICusq5CcIBjmjen--s
-Message-ID: <CAK3tnvK=hyrVhwyEHfAOaDNStG=C9irPK39ua=g=Upep6f8g6g@mail.gmail.com>
-Subject: Re: [PATCH 3/3] qapi: Add thread_status flag for iothreads
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62e.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN1PEPF0000468A:EE_|DS7PR12MB5815:EE_
+X-MS-Office365-Filtering-Correlation-Id: ef3cf9b9-7aef-40e4-d5c9-08de54db7cd9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|36860700013|1800799024|376014|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?hZ4E4/HI8EM5ZGECUN0cy3MHpF5RvFDv6M8BdJS3dEfKIMoc1TXd6xFwP44U?=
+ =?us-ascii?Q?YMZWrb4w309NV7zaUUrf9KkO6gLLB4qDYEH484FBOoRNyzzDRLrHrydjPORb?=
+ =?us-ascii?Q?lGf0DTyQQHfI2lAuD64/qSkhNNk7jQ6K530HIwteag9UkP3Co7smjRIMLggj?=
+ =?us-ascii?Q?Qdnpeh0MpJggWE4ZbH9yXXQV1oVGTvCTsek8vXD2NY00w7gbTUspa0Cs/cap?=
+ =?us-ascii?Q?iZaV1nqinCcW7PqU9k4xmratY3QMeKSHXWMyao+mi22KSqoqJh5Od3qnrjrV?=
+ =?us-ascii?Q?KtJ4DTI4RNJnxK5RycBWNRU8NLschHQ/yCDA8Ft2HBn+RnMAD1t+PuSp6Uv5?=
+ =?us-ascii?Q?3wF7ciLc06UpqjEap1JV0lyXj5XAlErccdYqSQRUGfSj+I7IN3+QpUOLvYt9?=
+ =?us-ascii?Q?5BpjqdpoHdLpf9ErKREqLTu2s/uJNrTjipqh+Mj1O4auBDfdQ5g8+QmM7sBr?=
+ =?us-ascii?Q?hTrABZs1Hb209oJ8zWlw1xgkbqj3/oUHg79TNNQelkoD6jIp489Nw70Z+Kid?=
+ =?us-ascii?Q?HcRJq0n+Y8KWUFtp8t4hjDAj163ZH+laUL05nJu4Cx0fOz1PEPOgeiffCHBh?=
+ =?us-ascii?Q?4L2CFubEBd20jC5K2MEWKrbcBPkaP3GkIdSuXect3wLz6Rj5+0smOb+SWY6h?=
+ =?us-ascii?Q?s8u/oOXl//fZ0MLe4JuR0zf9be8OLPlGpJIvbG2OtVjBnCSZlA9w8A9lBgR6?=
+ =?us-ascii?Q?6vvKQGMOIjBC/DN/M+6KBjJ8ll01eBhTWRGb+XkAwe7Le9Kj8sYUNTan0pyU?=
+ =?us-ascii?Q?D3+wO5OjSzHekrUvTV6HFX3WFTZMep2CITZc8yfJPyGIOry3Nl+NgCdKSCN4?=
+ =?us-ascii?Q?xsH5CInfp7cLfZm5BF/vnjCBznqLiO/JUK5sr4xFzW2gxm4LvGyM6hWkCuZu?=
+ =?us-ascii?Q?QXi87oOhOQtzUrRRCHPrULrttJvx6lX2iiJOOzKrVvKWmPd5hfFXg5danhTm?=
+ =?us-ascii?Q?PQ17Ik2NmB1FLhPL3+PjW8VE3dLPp6hhQYbYFWYFHIS+FrL4ozWWaEiqb+Lg?=
+ =?us-ascii?Q?qlpp6cXePS+4W0qzZ5gSpvoI5iMcRzE0teW4QYIYyTonhSKFcuAhtC2jp54Y?=
+ =?us-ascii?Q?J00yl5AD/M3QRF2MMfVucVxzV3nzQO8rAGkk3cmx0qfX+VZRAwgImTZafTty?=
+ =?us-ascii?Q?LxWCLKH3QrjjYA/jzg3dCYDSkPgMd9V4ymyUK+Mp1UJQs4QztYWsA2QTnTQb?=
+ =?us-ascii?Q?/A0Un8OXYsPVfqwUboelevIo0Urm0AKHd2NylPgt9mmcSHQeYKhJVWpRppyi?=
+ =?us-ascii?Q?jyjUaVQK9qAvRZt2Uc7H1Eu0fxK0LHvLAu6Kbf20R4D6SCoT4e5J12efl0Zq?=
+ =?us-ascii?Q?gv0FkHDZlkJC133tZU02ny6LiG/8lu/2zs3XFJs0yY+HSKBaHg1xJtQ7VyJE?=
+ =?us-ascii?Q?wXlIF2UodFJbyHYyJJNyg5KvQEJXsRARzQ+YGOAwLriVU82XOzRbhIsDKoz1?=
+ =?us-ascii?Q?so7j1u7jSlFoRO/cYpVVbi7Uo2CabtkI7xcgxFzRE7sYW5yaGifR/0YSkzAK?=
+ =?us-ascii?Q?1Bw2eiXFo4NAcIe/S0x79PzqhEPflqMT0sravRUOBpph4UpM/pO3DSaNNgNr?=
+ =?us-ascii?Q?pEMW0ePAnxg2r9NZ3zvhbfdW76lm9A2V7/OUquMrhssvQt7cac8Eo72YpCr7?=
+ =?us-ascii?Q?Aah1r6BC3yoPpXJsRecFvbU=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700013)(1800799024)(376014)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jan 2026 08:44:40.2002 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ef3cf9b9-7aef-40e4-d5c9-08de54db7cd9
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF0000468A.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5815
+Received-SPF: permerror client-ip=40.93.196.15;
+ envelope-from=Honglei1.Huang@amd.com;
+ helo=SA9PR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,203 +152,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 16, 2026 at 4:18=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Zhang Chen <zhangckid@gmail.com> writes:
->
-> > On Thu, Jan 8, 2026 at 8:12=E2=80=AFPM Markus Armbruster <armbru@redhat=
-.com> wrote:
-> >>
-> >> Zhang Chen <zhangckid@gmail.com> writes:
-> >>
-> >> > The thread_status depends on struct IOThreadInfo's
-> >> > 'attached': 'bool'. Show in the qmp/hmp CMD with
-> >> > 'attached' or 'detached'.
-> >> >
-> >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> >> > ---
-> >> >  iothread.c         | 1 +
-> >> >  monitor/hmp-cmds.c | 2 ++
-> >> >  qapi/misc.json     | 6 ++++++
-> >> >  3 files changed, 9 insertions(+)
-> >> >
-> >> > diff --git a/iothread.c b/iothread.c
-> >> > index 38e38fb44d..fb4898e491 100644
-> >> > --- a/iothread.c
-> >> > +++ b/iothread.c
-> >> > @@ -358,6 +358,7 @@ static int query_one_iothread(Object *object, vo=
-id *opaque)
-> >> >      info =3D g_new0(IOThreadInfo, 1);
-> >> >      info->id =3D iothread_get_id(iothread);
-> >> >      info->thread_id =3D iothread->thread_id;
-> >> > +    info->attached =3D iothread->attached;
-> >> >      info->poll_max_ns =3D iothread->poll_max_ns;
-> >> >      info->poll_grow =3D iothread->poll_grow;
-> >> >      info->poll_shrink =3D iothread->poll_shrink;
-> >> > diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> >> > index 33a88ce205..84b01737cf 100644
-> >> > --- a/monitor/hmp-cmds.c
-> >> > +++ b/monitor/hmp-cmds.c
-> >> > @@ -197,6 +197,8 @@ void hmp_info_iothreads(Monitor *mon, const QDic=
-t *qdict)
-> >> >          value =3D info->value;
-> >> >          monitor_printf(mon, "%s:\n", value->id);
-> >> >          monitor_printf(mon, "  thread_id=3D%" PRId64 "\n", value->t=
-hread_id);
-> >> > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
-> >> > +                       value->attached ? "attached" : "detached");
-> >> >          monitor_printf(mon, "  poll-max-ns=3D%" PRId64 "\n", value-=
->poll_max_ns);
-> >> >          monitor_printf(mon, "  poll-grow=3D%" PRId64 "\n", value->p=
-oll_grow);
-> >> >          monitor_printf(mon, "  poll-shrink=3D%" PRId64 "\n", value-=
->poll_shrink);
-> >> > diff --git a/qapi/misc.json b/qapi/misc.json
-> >> > index 6153ed3d04..2eea920bd2 100644
-> >> > --- a/qapi/misc.json
-> >> > +++ b/qapi/misc.json
-> >> > @@ -76,6 +76,9 @@
-> >> >  #
-> >> >  # @thread-id: ID of the underlying host thread
-> >> >  #
-> >> > +# @attached: flag to show current iothread attached status
-> >>
-> >> What does "attached status" actually mean?
-> >
-> > This flag means weather the "-object iothread" already been used by a
-> > real device.
-> > In hotplug scenario, user can add multiple "-object iothread" and
-> > multiple devices (like virtio-blk).
-> > When user hotunplug the devices can keep the iothreads as a thread
-> > pool, following the new
-> > hotplug devices can attach to the released iothread.
->
-> Why would a management application or human user want to know this?
+This patch series introduces enhancements to virtio-gpu to improve
+memory management and GPU virtualization capabilities for ROCm (Radeon Open Compute) 
+workloads.
 
-Because some usercases already been changed.
-This demand comes from Cloud Native ecosystem.
-User want to manage resources more flexible like containers (Kata container=
-).
-The real workload maybe changed(runc) in the VM without VM reboot,
-It may need hotplug/unplug different multi disks with multi iothreads to me=
-et
-high level scheduler's needs(like K8s).
+Usage example:
+  -device virtio-gpu-gl,rocm=on
 
+The series includes:
 
->
-> The answer should lead us to better doc text.
->
+1. Linux header updates for userptr blob flags: Synchronizes virtio-gpu headers
+   with upstream kernel changes, adding VIRTIO_GPU_BLOB_FLAG_USE_USERPTR and
+   VIRTIO_GPU_BLOB_FLAG_USERPTR_RDONLY blob flags. This enables user pointer
+   mapping for blob resources, allowing guest applications to use user-allocated
+   memory for GPU resources more efficiently.
 
-OK, I will add it in next version.
+2. Removal of nr_entries limit: Removes the artificial 16384 entry limit in
+   virtio_gpu_create_mapping_iov() to align with kernel driver behavior and
+   support legitimate large scatter-gather operations.
 
-> >>
-> >> > +#            (since 10.3.0)
-> >>
-> >> (since 12.0)
-> >
-> > OK.
-> >
-> >>
-> >> > +#
-> >> >  # @poll-max-ns: maximum polling time in ns, 0 means polling is
-> >> >  #     disabled (since 2.9)
-> >> >  #
-> >> > @@ -93,6 +96,7 @@
-> >> >  { 'struct': 'IOThreadInfo',
-> >> >    'data': {'id': 'str',
-> >> >             'thread-id': 'int',
-> >> > +           'attached': 'bool',
-> >> >             'poll-max-ns': 'int',
-> >> >             'poll-grow': 'int',
-> >> >             'poll-shrink': 'int',
-> >> > @@ -118,6 +122,7 @@
-> >> >  #              {
-> >> >  #                 "id":"iothread0",
-> >> >  #                 "thread-id":3134,
-> >> > +#                 'thread_status':"attached",
-> >>
-> >> I believe this is actually
-> >>
-> >>                      "attached": true
-> >>
-> >> and ...
-> >
-> > No, I changed it here for readability:
-> >
-> >> > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
-> >> > +                       value->attached ? "attached" : "detached");
-> >
-> > But if you think ""attached": true" is more direct way, I can change
-> > it next version.
->
-> The example in the doc comment shows QMP.  Here's what I see in QMP:
->
->     $ qemu-system-x86_64 -S -display none -qmp stdio -object iothread,id=
-=3Diot0 -name debug-threads=3Don
->     {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 10}, =
-"package": "v10.2.0-521-g05115811fa"}, "capabilities": ["oob"]}}
->     {"execute": "qmp_capabilities", "arguments": {"enable": ["oob"]}}
->     {"return": {}}
->     {"execute": "query-iothreads"}
->     {"return": [{"attached": false, "poll-shrink": 0, "thread-id": 403149=
-4, "aio-max-batch": 0, "poll-grow": 0, "poll-max-ns": 32768, "id": "iot0"}]=
-}
->
-> This shows "attached": false, not 'thread_status': "attached".
->
-> The code you showed applies to HMP:
->
->     $ qemu-system-x86_64 -S -display none -monitor stdio -object iothread=
-,id=3Diot0 -name debug-threads=3Don
->     QEMU 10.2.50 monitor - type 'help' for more information
->     (qemu) info iothreads
->     iot0:
->       thread_id=3D4032011
->       thread_status=3Ddetached
->       poll-max-ns=3D32768
->       poll-grow=3D0
->       poll-shrink=3D0
->       aio-max-batch=3D0
->
-> thread_status=3Ddetached might be slightly more readable than
-> attached=3Dfalse, but it could also be confusing to people working with
-> both HMP and QMP.  I'd avoid the difference between the two.
+3. Linux header updates for ROCm capability: Synchronizes headers to add
+   VIRTIO_GPU_CAPSET_ROCM capability set definition.
 
-Make sense, I will change it to ""attached": false" style next version.
+4. ROCm capability support: Adds native support for AMD's ROCm (Radeon Open
+   Compute) platform through a new "rocm=on" device property and capability.
+   This enables GPU compute workloads using the ROCm stack through virtio-gpu.
 
-Thanks
-Chen
+Changes in v6:
+- Changed to RFC status
+- Removed VIRTIO_GPU_F_RESOURCE_USERPTR feature flag from patch 1
+- Added VIRTIO_GPU_BLOB_FLAG_USERPTR_RDONLY flag to patch 1
 
->
-> >>
-> >> >  #                 'poll-max-ns':0,
-> >> >  #                 "poll-grow":0,
-> >> >  #                 "poll-shrink":0,
-> >> > @@ -126,6 +131,7 @@
-> >> >  #              {
-> >> >  #                 "id":"iothread1",
-> >> >  #                 "thread-id":3135,
-> >> > +#                 'thread_status':"detached",
-> >>
-> >>                      "attached": false
-> >>
-> >> Recommend to create example output by running a test instead of making
-> >> it up, because making it up likely screws it up :)
-> >
-> > Uh.... This output print is the real test in my machine, maybe you
-> > missed the previous description.
->
-> I can't see how QMP could possibly show 'thread_status':"detached:.
->
-> >
-> > Thanks
-> > Chen
-> >
-> >>
-> >> >  #                 'poll-max-ns':0,
-> >> >  #                 "poll-grow":0,
-> >> >  #                 "poll-shrink":0,
-> >>
->
+Changes in v5:
+- Split userptr header updates into dedicated patch (patch 1/4)
+- Extracted nr_entries limit removal into standalone commit (patch 2/4)
+- Split ROCm header updates into dedicated patch (patch 3/4)
+- Removed VIRTIO_GPU_F_RESOURCE_USERPTR feature detection
+- Keep ROCm capability support with "rocm=on" device property (patch 4/4)
+- Change corresponding commit messages, change corresponding cover letter content
+- Remove RFC label
+
+Changes in v4:
+- Change this series to RFC
+- Renamed HSAKMT-related functionality to ROCm for better clarity and
+  alignment with the ROCm ecosystem terminology
+- Changed device property from "hsakmt=on" to "rocm=on"
+- Changed flag from VIRTIO_GPU_FLAG_HSAKMT_ENABLED to
+  VIRTIO_GPU_FLAG_ROCM_ENABLED
+- Changed renderer flag from VIRGL_RENDER_USE_HSAKMT to
+  VIRGL_RENDERER_USE_ROCM
+- Updated capset handling to use VIRTIO_GPU_CAPSET_ROCM (8) instead of
+  VIRTIO_GPU_CAPSET_HSAKMT (8)
+- Removed the error handling fix from patch 1 (virtio-gpu-virgl.c) into
+  another thread
+
+Changes in v3:
+- Renamed HSAKMT-related functionality to ROCm for better clarity and
+  alignment with the ROCm ecosystem terminology
+- Changed device property from "hsakmt=on" to "rocm=on"
+- Changed flag from VIRTIO_GPU_FLAG_HSAKMT_ENABLED to
+  VIRTIO_GPU_FLAG_ROCM_ENABLED
+- Changed renderer flag from VIRGL_RENDER_USE_HSAKMT to
+  VIRGL_RENDERER_USE_ROCM
+- Updated capset handling to use VIRTIO_GPU_CAPSET_ROCM (8) instead of
+  VIRTIO_GPU_CAPSET_HSAKMT (8)
+- Removed the error handling fix from patch 1 (virtio-gpu-virgl.c) into
+  another thread
+
+Changes in v2:
+- Fixed error handling bug in virtio-gpu-virgl.c where the return
+  value check was inverted (changed from "if (!ret)" to "if (ret != 0)")
+- Added VIRGL_RENDER_USE_HSAKMT flag initialization in virtio_gpu_virgl_init()
+  when HSAKMT support is enabled
+- Simplified blob resource creation logic by removing complex conditional
+  branching for userptr vs regular blob handling
+- Updated commit messages to reflect bug fixes and improvements
+- Added references to related patches in Linux kernel, virglrenderer, and
+  ROCm Runtime components for complete feature implementation tracking
+
+Related patches in other components:
+- Linux kernel virtio-gpu support:
+  https://lore.kernel.org/lkml/20251112072910.3716944-1-honglei1.huang@amd.com/
+- Virglrenderer support:
+  https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1568
+- ROCm Runtime support (merged):
+  https://github.com/ROCm/ROCR-Runtime/commit/48d3719dba6ca91f597a8179d8b341387ce155e8
+
+Honglei Huang (4):
+  virtio-gpu: Update Linux headers to add userptr blob flags
+  virtio-gpu: Remove nr_entries limit check in create_mapping_iov
+  virtio-gpu: Update Linux headers to add ROCM capability set
+  virtio-gpu: Add ROCm capability support
+
+ hw/display/virtio-gpu-gl.c                  |  2 ++
+ hw/display/virtio-gpu-virgl.c               | 12 ++++++++++++
+ hw/display/virtio-gpu.c                     |  7 -------
+ include/hw/virtio/virtio-gpu.h              |  3 +++
+ include/standard-headers/linux/virtio_gpu.h |  3 +++
+ 5 files changed, 20 insertions(+), 7 deletions(-)
+
+-- 
+2.34.1
+
 
