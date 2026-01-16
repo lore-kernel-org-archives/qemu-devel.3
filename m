@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21582D48986
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 052C7D48981
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:20:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vghqw-0007Oa-G0; Fri, 16 Jan 2026 06:18:54 -0500
+	id 1vghrg-0001JJ-Sn; Fri, 16 Jan 2026 06:19:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghqu-0007Ni-Sw
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:18:52 -0500
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghrf-0001HY-Mj
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:19:39 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghqt-0005mh-7Z
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:18:52 -0500
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-47ee76e8656so22837575e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 03:18:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghre-0006GH-2f
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:19:39 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-47ee76e8656so22846185e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 03:19:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768562329; x=1769167129; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768562376; x=1769167176; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=LWngYNpKVOutwMoJmRt3Ydc7XaZnIpLSQMBHhtCpGe8=;
- b=mQu5F+DRpWbDcC1NNgfdjICjUyVW+QCfaeaRG20p7FJvXsohZbrZxt7hyrMlOpCAn0
- co/UN3g8B9ICQG7Tn8KMIzaNCSUTEhsv/zag5E4YNy2UgqL9sj+y1kaR/qk5hKHdLO2O
- 2yK43pqNh0ZYFivN3wGESuCiSTpSqi4FbGE36kl7c7S1HlzLwh6ZU2pQKUBr1NWzVufy
- 8hXDOh70m4Mmlf9DxxAap+ZPyOinWq/Ej3eR7l7aUUna+L1IuaKmr3ZVVlgQ2ZkjhLDO
- LLRqBrPVA04Y/DT6u1pJoD39zceGCfqDb7/8GfTlX/aoSgpX2mYrGNNIIebqNbue0G0t
- Y8Qg==
+ :reply-to; bh=OyfPLIv6CoMr8kyKBxR+dLvug2cD6tJc7HIr84MLnZ8=;
+ b=iWyK1zNSc+49yZ6k1gm2W/9Dfd+yyz//e34t6Pn0lmDRQIaE1GHjKL561FuMk+kebN
+ 9lwUAkc6tY34GbKxphSiZLZS+jkzBYNXKhwoG+jnmw/Ef2sgRMGnOD6NQ2AN1dwbzpGu
+ hxuMEw0FFruYSJ5mKbsn6FzhuwndfWblliGrQJpCl2gEOq92HqHqxxF0uE2Cl2H0bT9n
+ iqpv0I+fA2RYVp1Dpf9NslTp/0skzaQ9sqPHXZauXOKaZYN4KRvh/qC4FjWu2NIscbxh
+ T5Cdx6D//hRCccaJWMRmfAh39eWVdZiXNMKs5wW9ZyzEUMzMZu/aAMl4MiFy4T1FmeU4
+ 2XlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768562329; x=1769167129;
+ d=1e100.net; s=20230601; t=1768562376; x=1769167176;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=LWngYNpKVOutwMoJmRt3Ydc7XaZnIpLSQMBHhtCpGe8=;
- b=CUf7d3R0fvmUS2ApwcORYYenEix9751i6uqlhKMPsoNN2R4YsTglnwEDAll/pPVs1i
- A0+nX+2XBW/Jj1qnBQlOM9hKzxuaauYLkCfZD1bst5qaV3dy9MMdFvRKDFTgDLOR6dqn
- zKrmloKqHm0cS0L1fLUjJfaTlB1QifIX3pSo0Va2uxd7CX6SbKaFqDRSOSlY8kHRdcM/
- Kq/OIOHg47VnCFjcDW5xYozpjS9yYQJSKVYhVDZ+dCHVAAhvymUdvtehf/HvPThnlwzK
- SIqspsEbJg7zaaEj2v21tP1fcb3vtKBCJ21e2AEG5v/Z2uMDaXXd5mA78GAPFppXZxFe
- M9kw==
-X-Gm-Message-State: AOJu0YyOEaL44uPd8OHjTYyXUUHukbmtJmb6eeKnWpASZTXVPh6eFQ6q
- HA6mJwXimF46gW8pOtt21TAthTOZ2cNWmZmksEPmCKoe3OdPancoYr1o5R6vRwedDHEuNQzwkKl
- +xykjFsA=
-X-Gm-Gg: AY/fxX5bFr0KuOBKxJob1CCO3esupvtNRx0x81DMLIDixSt28f6WEjEg8THqAF45iv/
- EqoPo8KyBGBDPMDwLQUffL0koDIxHNutM6RGhk5GAwPZnJ2IcFPizYoIsE38EyxPZhoyd8y2Jbv
- Jicsj47geKQ5c0BJtzvS6zQUQ0oaHIIZUMG/9ucihcG47ph08Q8z+PBhNnMW+wcLbRjw3ag2v9Q
- ODA0OVOX2TDNjdgF2QwctM4Qp4PbAJ4gGATwfVA89v5fDNluaVsYIew19bRGZb+8mAo2VOa2cya
- DqHwKeI4OmuSCBQ/1toIqOFpG1mrfv7280veRf5hBZ+Jbn2LvQX5D7os8rVBO7/fxnawdpowymW
- jyhKTJP7qT0IsZ9jWQdpcjUpWHqTsNe+hkHL9GcN9ov1cTXagmp94PyWy0o9ChrjrqOntSxUOiK
- xgOaQIiM0J1DpG0vxJMR+3Ud9MceWJ4yluFr8DKwQhZTB080XITqy9RgxRUwNlFmaa0nZyKnU=
-X-Received: by 2002:a05:6000:2203:b0:431:92e:1d44 with SMTP id
- ffacd0b85a97d-43569980e80mr3082678f8f.20.1768562329377; 
- Fri, 16 Jan 2026 03:18:49 -0800 (PST)
+ bh=OyfPLIv6CoMr8kyKBxR+dLvug2cD6tJc7HIr84MLnZ8=;
+ b=R6khLVbBh24nYYB3sMeifX2P6RtchzEQh3OwK2+5gctScDeCghH39YebrvIF61Sjfc
+ yI6r2jDBs5A5q9dKaZN+3vNUgj6DDcNjCh+xvORiNjTfAQ/ys2t7YviZAu3AEX9VNSqw
+ 4EL0r2ocPZTjPgCljGegQR2DLu9rf/A1iOHzsnhf3kF4nYv/3zTN0nYqgB2O2rk70xdM
+ oOUpYK+aUSuKY7qzEAmg4cgbdETThgrVKqCd8juhnOBeh2NeS0AVF8ueQRjeF1U7WeVm
+ V4da3SHZyYSnBmUyYZRxpI7OWY2gm8nInHY5TGjWni8VRvU+Juxs/4AOmBYKQsIK46Wy
+ dz0w==
+X-Gm-Message-State: AOJu0YzJ1VkAhqVUvqzvWhtxHrue6sjRK2xwEOVjztmx5rKDbDlfxDne
+ tYCFDWveUVhF4HPZhirtv5OgKKpBeZQVz8tspDfe8kj0DjCoFaS0LK+kv8WLB5URYZkCNxP9c2w
+ 3iJ+tncA=
+X-Gm-Gg: AY/fxX6uHDoJgClaKLD7iq+7NDQ5pqsdkKuaxQASMpXMHGIX+fmns3XxWxa881k08V5
+ 2Bs3HEp4dObEv3S1cnBmY51aLf+jkCO+79eOKrJdZ3EN8ZYPi/Cba2WDgG7voOelSOAFaOEPtll
+ NjHZIgKLvaVleCGGV0qPA/LEhPFuQ9eiwaBERTInfJVSKevPG+kxdmAxpimZkVC0pH8PVKQ+Xnm
+ kmZxsjN/wnfqV70u4AKtJuHzPBIOyq9aL8VMAuk4+88IsOeo+gTE7c9ZBaynqVCNaOkFKJcTPCa
+ m50SP4EBgIEk+HV004demuWHSZNOu/mIcdM4mJ0GmQNU7bSDo+9Lu99QfqKRJ476omzQz+hKgTn
+ IQUU+flh+lTtJ7d2Q89R6ywyzLnQ3mlJ8dSG/7Tdvt8oGEXBW4hCM+SvQtwb5m0VUCViFQmH75b
+ GU0X7amPCn8bOvqVAkHM/JbtUzaGAsjJp7YLZI0+Cxzt0RYkIck9VCZkniM3tjV47FAwoSN84=
+X-Received: by 2002:a05:600c:3495:b0:479:1348:c614 with SMTP id
+ 5b1f17b1804b1-4801e34343cmr33901785e9.26.1768562376069; 
+ Fri, 16 Jan 2026 03:19:36 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356996cf58sm4614145f8f.22.2026.01.16.03.18.48
+ 5b1f17b1804b1-47f4289b83csm94187775e9.3.2026.01.16.03.19.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Jan 2026 03:18:48 -0800 (PST)
+ Fri, 16 Jan 2026 03:19:35 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/30] dockerfiles: Add support for wasm64 to the wasm
- Dockerfile
-Date: Fri, 16 Jan 2026 12:17:43 +0100
-Message-ID: <20260116111807.36053-7-philmd@linaro.org>
+Subject: [PULL 13/30] accel/hvf: Simplify hvf_log_*
+Date: Fri, 16 Jan 2026 12:17:50 +0100
+Message-ID: <20260116111807.36053-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260116111807.36053-1-philmd@linaro.org>
 References: <20260116111807.36053-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,113 +98,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This commit fixes Dockerfile of the wasm build to support both of wasm32 and
-wasm64 build. Dockerfile takes the following build argument and use it for
-building dependencies.
+Rely on the AddressSpace and MemoryRegion structures
+rather than hvf_slot.
 
-- TARGET_CPU: target wasm arch (wasm32 or wasm64)
-
-Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <3f21342f50e0412a32143fe21ecc0d8db95b3f37.1768308374.git.ktokunaga.mail@gmail.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <20260112103034.65310-7-philmd@linaro.org>
 ---
- MAINTAINERS                                   |  2 +-
- ...2-cross.docker => emsdk-wasm-cross.docker} | 26 ++++++++++++++-----
- 2 files changed, 20 insertions(+), 8 deletions(-)
- rename tests/docker/dockerfiles/{emsdk-wasm32-cross.docker => emsdk-wasm-cross.docker} (89%)
+ include/system/hvf_int.h |  3 ---
+ accel/hvf/hvf-all.c      | 40 ++++++++++------------------------------
+ 2 files changed, 10 insertions(+), 33 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4ddbfba9f01..de8246c3ffd 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -683,7 +683,7 @@ F: include/system/os-wasm.h
- F: os-wasm.c
- F: util/coroutine-wasm.c
- F: configs/meson/emscripten.txt
--F: tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-+F: tests/docker/dockerfiles/emsdk-wasm-cross.docker
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index 5a57691885f..ee7ab689f45 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -24,9 +24,6 @@ typedef hv_vcpu_t hvf_vcpuid;
+ typedef hv_vcpuid_t hvf_vcpuid;
+ #endif
  
- Alpha Machines
- --------------
-diff --git a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
-similarity index 89%
-rename from tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-rename to tests/docker/dockerfiles/emsdk-wasm-cross.docker
-index 1f08eb0b855..ecd5a029037 100644
---- a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-+++ b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
-@@ -1,14 +1,15 @@
- # syntax = docker/dockerfile:1.5
+-/* hvf_slot flags */
+-#define HVF_SLOT_LOG (1 << 0)
+-
+ typedef struct hvf_slot {
+     uint64_t start;
+     uint64_t size;
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index 96ed79108a6..bbb0403d246 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -204,45 +204,24 @@ static void hvf_set_phys_mem(MemoryRegionSection *section, bool add)
+     }
+ }
  
--ARG EMSDK_VERSION_QEMU=3.1.50
-+ARG EMSDK_VERSION_QEMU=4.0.10
- ARG ZLIB_VERSION=1.3.1
- ARG GLIB_MINOR_VERSION=2.84
- ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
- ARG PIXMAN_VERSION=0.44.2
--ARG FFI_VERSION=v3.4.7
-+ARG FFI_VERSION=v3.5.2
- ARG MESON_VERSION=1.5.0
-+ARG TARGET_CPU=wasm32
+-static void hvf_set_dirty_tracking(MemoryRegionSection *section, bool on)
+-{
+-    hvf_slot *slot;
+-
+-    slot = hvf_find_overlap_slot(
+-            section->offset_within_address_space,
+-            int128_get64(section->size));
+-
+-    /* protect region against writes; begin tracking it */
+-    if (on) {
+-        slot->flags |= HVF_SLOT_LOG;
+-        hv_vm_protect((uintptr_t)slot->start, (size_t)slot->size,
+-                      HV_MEMORY_READ | HV_MEMORY_EXEC);
+-    /* stop tracking region*/
+-    } else {
+-        slot->flags &= ~HVF_SLOT_LOG;
+-        hv_vm_protect((uintptr_t)slot->start, (size_t)slot->size,
+-                      HV_MEMORY_READ | HV_MEMORY_WRITE | HV_MEMORY_EXEC);
+-    }
+-}
+-
+ static void hvf_log_start(MemoryListener *listener,
+                           MemoryRegionSection *section, int old, int new)
+ {
+-    if (old != 0) {
+-        return;
++    assert(new != 0);
++    if (old == 0) {
++        hvf_protect_clean_range(section->offset_within_address_space,
++                                int128_get64(section->size));
+     }
+-
+-    hvf_set_dirty_tracking(section, 1);
+ }
  
--FROM docker.io/emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base
-+FROM docker.io/emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base-common
- ARG MESON_VERSION
- ENV TARGET=/builddeps/target
- ENV CPATH="$TARGET/include"
-@@ -29,12 +30,22 @@ RUN pip3 install meson==${MESON_VERSION} tomli
- RUN mkdir /build
- WORKDIR /build
- RUN mkdir -p $TARGET
-+
-+FROM build-base-common AS build-base-wasm32
-+
-+FROM build-base-common AS build-base-wasm64
-+ENV CFLAGS="$CFLAGS -sMEMORY64=1"
-+ENV CXXFLAGS="$CXXFLAGS -sMEMORY64=1"
-+ENV LDFLAGS="$LDFLAGS -sMEMORY64=1"
-+
-+FROM build-base-${TARGET_CPU} AS build-base
-+ARG TARGET_CPU
- RUN <<EOF
- cat <<EOT > /cross.meson
- [host_machine]
- system = 'emscripten'
--cpu_family = 'wasm32'
--cpu = 'wasm32'
-+cpu_family = '${TARGET_CPU}'
-+cpu = '${TARGET_CPU}'
- endian = 'little'
+ static void hvf_log_stop(MemoryListener *listener,
+                          MemoryRegionSection *section, int old, int new)
+ {
+-    if (new != 0) {
+-        return;
++    assert(old != 0);
++    if (new == 0) {
++        hvf_unprotect_dirty_range(section->offset_within_address_space,
++                                  int128_get64(section->size));
+     }
+-
+-    hvf_set_dirty_tracking(section, 0);
+ }
  
- [binaries]
-@@ -56,13 +67,14 @@ RUN emconfigure ./configure --prefix=$TARGET --static
- RUN emmake make install -j$(nproc)
+ static void hvf_log_sync(MemoryListener *listener,
+@@ -252,7 +231,8 @@ static void hvf_log_sync(MemoryListener *listener,
+      * sync of dirty pages is handled elsewhere; just make sure we keep
+      * tracking the region.
+      */
+-    hvf_set_dirty_tracking(section, 1);
++    hvf_protect_clean_range(section->offset_within_address_space,
++                            int128_get64(section->size));
+ }
  
- FROM build-base AS libffi-dev
-+ARG TARGET_CPU
- ARG FFI_VERSION
- RUN mkdir -p /libffi
- RUN git clone https://github.com/libffi/libffi /libffi
- WORKDIR /libffi
- RUN git checkout $FFI_VERSION
- RUN autoreconf -fiv
--RUN emconfigure ./configure --host=wasm32-unknown-linux \
-+RUN emconfigure ./configure --host=${TARGET_CPU}-unknown-linux \
-     --prefix=$TARGET --enable-static \
-     --disable-shared --disable-dependency-tracking \
-     --disable-builddir --disable-multi-os-directory \
-@@ -140,6 +152,6 @@ RUN sed -i -E "/#define HAVE_POSIX_SPAWN 1/d" ./_build/config.h
- RUN sed -i -E "/#define HAVE_PTHREAD_GETNAME_NP 1/d" ./_build/config.h
- RUN meson install -C _build
- 
--FROM build-base
-+FROM build-base-common
- COPY --from=glib-dev /builddeps/ /builddeps/
- COPY --from=pixman-dev /builddeps/ /builddeps/
+ static void hvf_region_add(MemoryListener *listener,
 -- 
 2.52.0
 
