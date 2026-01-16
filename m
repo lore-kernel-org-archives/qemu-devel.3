@@ -4,94 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95273D4A60D
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39CE2D4A609
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:16:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgeng-000410-Tt; Fri, 16 Jan 2026 03:03:20 -0500
+	id 1vgetc-0008UZ-7Z; Fri, 16 Jan 2026 03:09:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgenQ-0003y9-DV
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:03:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeta-0008Tv-9y
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:09:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgenO-0004tz-3a
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:03:03 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgetY-0005rn-KK
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:09:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768550581;
+ s=mimecast20190719; t=1768550962;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=C3ZBUHHyolbCQKXpdNTKdDZLl0KWnKMbxuoo5Sdf4PA=;
- b=DwrxmEHMbG+QCfpc/iOLS4WUxjcWnahtjzn8h3LTGTn5WnfuQeZk5CYs9e8yPHxHxaJBMX
- RZsrekYJ188dw9pgP/Ssueq5bFf4tZR47hFdeBcWAasSHgF+Q0jjbYT3NUfs8p80e5j9Sh
- iBK0zGplHLNVEMv+XoHGp1T3ZjE2OGI=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gUIw3O//XYeqSIp3LhrVxuCNcs7iXth9avzR721VM6I=;
+ b=J74bNpj5/HHOQaBlIE64q7SiAJFCjsny7B2yApU0kuQygJ+4nmlO9AIJ/q6s8ANXRmZKs4
+ LtWVvhz6UKG8hklUBl9qUqhNl6E3z19WFY5M5qZ5OYW58jYWtwfiPndh390lp0vDrX8sLs
+ 2vIpH28TQzbwGXdtBJfQrDboiLV7+yM=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-IIPcVJ22MiiaSrC0iZVgGQ-1; Fri, 16 Jan 2026 03:02:59 -0500
-X-MC-Unique: IIPcVJ22MiiaSrC0iZVgGQ-1
-X-Mimecast-MFC-AGG-ID: IIPcVJ22MiiaSrC0iZVgGQ_1768550578
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-64b756e2fd1so1923980a12.1
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 00:02:58 -0800 (PST)
+ us-mta-636-wa5Q5HopORuGjw2CnRt6Gw-1; Fri, 16 Jan 2026 03:09:20 -0500
+X-MC-Unique: wa5Q5HopORuGjw2CnRt6Gw-1
+X-Mimecast-MFC-AGG-ID: wa5Q5HopORuGjw2CnRt6Gw_1768550959
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-64b7907dd42so2366379a12.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 00:09:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768550578; x=1769155378; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768550959; x=1769155759; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=C3ZBUHHyolbCQKXpdNTKdDZLl0KWnKMbxuoo5Sdf4PA=;
- b=A/mJaTlmC3Kl1q0nog0yt11xFYTTDhiWL0k9v3VE6ai3oAxLEWpJbY9ehlwkURuwmq
- dDB3XqRWoFIYDGS3e/k9zKcjfBuLgvBCOZXD4v2jm4Cjksbgue7vNxu2G84JAK2TobRH
- NY9j16wfK+WwuE7liu5Xx4SJ5jyBB15iIF+2vNUrcEt+wPV84blsbAOVHOo5AF9lAkr7
- 49CpebQ3n9OWcKKkk9wlBpqruNNBiDXsNyDX9NRl5s+Aov4Xt3IhizNGYkmv1dZ76pfz
- ThpqjNNatytk+9MPvvd3RUrtPtXXUQOH0qhWC2dGDeyNCPCiQCMQBauNJCnUVUoWh2gZ
- Xcpw==
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=gUIw3O//XYeqSIp3LhrVxuCNcs7iXth9avzR721VM6I=;
+ b=fH45iqmgIpVjjUMCr92sjJXP0nTSDyJs/qd3yAQqQbAXGvHvOcu+9Jvd3nqFNvJTrF
+ uXK/2meVkGhd0jFqU2Eq2isqD7IdEn8hfx568Q8FdDvXHAEisfUPV8AxzJAoNXg5LBD5
+ 91WgxbRQxc8o+JUzx3LNhSXNxBA5IHbAv32njPV2+glJMwVKOqxB5DTA9KbAjLkpcUYG
+ S/qZ/Mekwx2B45uxpxU7aVFrFO7QgCLsffe9jlRHOXkci/fcsu3c6gKD2crTf06kz1aO
+ CYjES9fqT0xhUUsh0KUT3FDsKicC0/NOd6WQf0l3Ir4OZJMMQMrTEFyEVkZfCgHErrin
+ ZQKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768550578; x=1769155378;
+ d=1e100.net; s=20230601; t=1768550959; x=1769155759;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=C3ZBUHHyolbCQKXpdNTKdDZLl0KWnKMbxuoo5Sdf4PA=;
- b=OcvZ7nGo6q4G0Qw6yGGxln+1/9LjYLoeNsEz6EwxnVP32Q6mys+4hHpQOtsRIFnbJ2
- kj/0ZzLieTMuFLUddeHgR4ljoWVZ0A8f4IafGlyQpu988u5oG29IgZAcP28atvYgOjya
- muAPdJKc04Hh64C9D/hWgpSGkNHv/GKNCTA8Dct9CoNYdB4NesG0S/1rzRxlWVqVpM7J
- 9OtK9v0sdZtlWwnv1w7+/d1LFz/FbI3+fSLQ2fvwbBGKWCpBnb+SN/h18cltQJwrBMnV
- RrvC7XYXqIKEG8tLADKw2ZPjx+c0kbuPJpy4ti6TVriqhCRR/mtqlEABHYTPDDktpO1O
- 5g2A==
-X-Gm-Message-State: AOJu0Yx3pCovQEX4IXAspD3P3cTcYsHIofAT5Mw/HexOCxrJHDLfW5be
- rMWP4qfhbKfhRgpzylm1/JkdCLWIrg6GpA3mu7ehnfCKyrnKfbmDd/CfUTylvXrZZgt+sCbUHkF
- XcpUTOBBHSkYi7ZTZCrkz7/m+IGrc2NQokqEX+1LJfVhbncsfZ1VO/yA+Yq8ENKEADcqXYeHJJv
- Xqyk0qvPkx5arwgsdQ0c5GDKupxvWSEOpoQol2
-X-Gm-Gg: AY/fxX6pDBCXDiCNxgNrxGc8BK4ZK3cLuYfHkavNCbNtmLQxf/yRwjZVhweazIncaCm
- xKU8pLf/K9nInNRfIHVDGfUaj9fEv7rnpFx9q57zZcNVpk/2sSPWVjKqYw9AiRZhVqs0pM4nAR6
- UmutikCPijl4B/EJDDM4R8gNFQzChLj5qGcPw8hwqkMEjslCgFlm6Ce5Sww52y7kM1Tm6TRTkox
- IkUcFDexAFKb32T7VG0Vz5aq5LbyeRdUJANGNdoRp4wlnfC1ewJ/ZDIBKrjL2TfwdHf/r1vI0J6
- dU1E6oTTv6Z3zGXmDZ8Bo3ZUidAypUxIWZ5IcpEtHBVOTbHfLcakfRPvHLZieiUg34tOReLJydl
- EF/oFR04=
-X-Received: by 2002:a17:907:d8f:b0:b87:d44:81d with SMTP id
- a640c23a62f3a-b8793035657mr170098066b.45.1768550577609; 
- Fri, 16 Jan 2026 00:02:57 -0800 (PST)
-X-Received: by 2002:a17:907:d8f:b0:b87:d44:81d with SMTP id
- a640c23a62f3a-b8793035657mr170096366b.45.1768550577118; 
- Fri, 16 Jan 2026 00:02:57 -0800 (PST)
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gUIw3O//XYeqSIp3LhrVxuCNcs7iXth9avzR721VM6I=;
+ b=AT4HD+wgBsPn574mbjjgKMg1pe3OVQB1BCwJSesOIbz68uEnjupf53IqaGQWLicq5E
+ Q5AHFig9HHqqAJfh3aSU6O/U5F/82DzrfHVsNWpZjZyaPXogAy9aAzqrBZ3xQQhWR/87
+ VuIRAva6MLH/eJggYcF+3w2DLYSAu/1eHAxma84ZnSIL+ZqoLHMLcbArGsXjT0P9r7Hi
+ vqYST+DKFo4Q0D/XPuFsmgwkszqdrCHP4Fk34CyOotVsaVk5ARjY6h6QGRZ8TAj8fwJR
+ gQd1+Y1+u77aQDVyAPJveuyaUV6wt30+sJT5rNhHXUDExeRRF5SiSbdKabPyo6gOmdpl
+ AGVA==
+X-Gm-Message-State: AOJu0YwcOeD2Z9ZwWyoeJ/jjOC8LZ1n4Xdk7spB1kYtZwfiS2m47/YoL
+ gdqF/bRRGgowDVw3uWmwZiRgqn2tzaCfhoTPTohh/ugRN9vnTN3RZeGje4a20uq8byzgSNzlZ3A
+ DDy1a6ppX88H+Kdhrh64bpEv/HyUqv53VJA7Tg4jwXRhVsr+8uPFU4pGtwE4qmBYX
+X-Gm-Gg: AY/fxX5eFvMqdSfXjpyEnI9Q8G9WoB9992LCQ8VLKJuNscApA687i22Ga/jhUd7N5pv
+ 7VF8mKWaFrWbLpOl+MriQPa5aW85Y968l51Pn26N+isWi7Ui6nhFlcWCGtrSXa2yePvAkmnihGe
+ zyg+TvJz2+KoAmRxh14MHHvBlTOHSTwvgN3LWD9++wgNu4Guu3YgWwSx4kRxayp3ShmQX84ob8/
+ 9gj1QniMynoFZaXeBJyXUfv6S9oq4eIBchh6FdBAJ2Px5x/GfFZ+8WNQqsOAKKLiBLd7HL0aRph
+ 3SGFFcKyLcDpmfSz7KWnPFfxHkV3vsig3TZipvlGmJErZHBBVl8UJoaJiG5HzAqkfO1qhTlP2Z2
+ mblNLrQo=
+X-Received: by 2002:a05:6402:5106:b0:64c:584c:556c with SMTP id
+ 4fb4d7f45d1cf-654bb6192admr1307264a12.30.1768550959241; 
+ Fri, 16 Jan 2026 00:09:19 -0800 (PST)
+X-Received: by 2002:a05:6402:5106:b0:64c:584c:556c with SMTP id
+ 4fb4d7f45d1cf-654bb6192admr1307253a12.30.1768550958905; 
+ Fri, 16 Jan 2026 00:09:18 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.113.220])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b87959ca4casm163588866b.34.2026.01.16.00.02.56
- for <qemu-devel@nongnu.org>
+ 4fb4d7f45d1cf-654534c8b7fsm1771867a12.27.2026.01.16.00.09.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Jan 2026 00:02:56 -0800 (PST)
-Message-ID: <059f0401-4743-4d58-b833-e736e9c744f1@redhat.com>
-Date: Fri, 16 Jan 2026 09:02:55 +0100
+ Fri, 16 Jan 2026 00:09:18 -0800 (PST)
+Message-ID: <fdc2093e-8acb-44fb-b280-edf40f5f8883@redhat.com>
+Date: Fri, 16 Jan 2026 09:09:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] hxtool: Error on missing docs
-To: qemu-devel@nongnu.org
-References: <20260116005050.376616-1-dave@treblig.org>
- <20260116005050.376616-5-dave@treblig.org>
+Subject: Re: [PATCH] tests/functional/x86_64: Limit the memlock test to Linux
+ hosts
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+References: <20260114095904.35442-1-thuth@redhat.com>
+ <aWdpi4ibUm9qNrwa@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -136,17 +138,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260116005050.376616-5-dave@treblig.org>
+In-Reply-To: <aWdpi4ibUm9qNrwa@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -164,69 +166,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/01/2026 01.50, dave@treblig.org wrote:
-> From: "Dr. David Alan Gilbert" <dave@treblig.org>
+On 14/01/2026 11.01, Daniel P. Berrangé wrote:
+> On Wed, Jan 14, 2026 at 10:59:04AM +0100, Thomas Huth wrote:
+>> From: Thomas Huth <thuth@redhat.com>
+>>
+>> The memlock test analyzes /proc/*/status files and expects the layout
+>> from Linux in there. However, these files also exist on NetBSD hosts
+>> with a completely different layout, causing this test to fail. Thus
+>> limit the test to Linux hosts now.
+>>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   tests/functional/x86_64/meson.build | 5 +++--
+>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
+>> index f78eec5e6cf..97286d78b8f 100644
+>> --- a/tests/functional/x86_64/meson.build
+>> +++ b/tests/functional/x86_64/meson.build
+>> @@ -9,12 +9,13 @@ test_x86_64_timeouts = {
+>>     'virtio_balloon': 120,
+>>   }
+>>   
+>> -tests_x86_64_system_quick = [
+>> +tests_x86_64_system_quick = \
+>> +  (host_os == 'linux' ? ['memlock'] : []) + \
 > 
-> Error if a '.name' is seen after another '.name' without an intervening
-> SRST, this normally indicates missing or misplaced docs.
-> 
-> We can't check DEF (as used in command line options) because those
-> often have multiple DEF per doc.
-> 
-> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-> ---
->   scripts/hxtool | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
-> 
-> diff --git a/scripts/hxtool b/scripts/hxtool
-> index 51dc841479..ee98fb9c09 100755
-> --- a/scripts/hxtool
-> +++ b/scripts/hxtool
-> @@ -1,8 +1,14 @@
->   #!/bin/sh
->   
-> +print_if_not_rst()
-> +{
-> +    test $in_rst -eq 0 && printf "%s\n" "$str"
-> +}
+> IMHO this should be done with a decorator in the test program, so
+> we keep all conditions in the source, not meson.
 
-Add an empty line after this function?
-
->   hxtoh()
->   {
->       in_rst=0
-> +    # .name for HMP
-> +    seen_name=0
->       while read -r str; do
->           case $str in
->               HXCOMM*)
-> @@ -13,6 +19,8 @@ hxtoh()
->                   echo "Error: SRST inside another RST" >&2
->                   exit 1
->                 fi
-> +              # consume the name
-> +              seen_name=0
->                 in_rst=1
->               ;;
->               ERST*)
-> @@ -23,6 +31,16 @@ hxtoh()
->                 fi
->                 in_rst=0
->               ;;
-> +            # Note the space at the start - we need to exclude something.name
-> +            ( .name*)
-> +              if [ $seen_name -eq 1 ]
-> +              then
-> +                echo "Error: Seen another .name, maybe missing docs?" >&2
-> +                exit 1
-> +              fi
-> +              seen_name=1
-> +              print_if_not_rst
-> +            ;;
->               *)
->               test $in_rst -eq 0 && printf "%s\n" "$str"
-
-I think this line could be replaced with print_if_not_rst now?
+If we already know here that the test will only SKIP during runtime, I think 
+there is no need to add it to the test plan. Otherwise this will just always 
+waste some cycles when running the tests.
 
   Thomas
 
