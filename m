@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F7D1D4A5E2
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 02:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E4DDD4A5E2
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 02:44:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgZoM-0005we-Od; Thu, 15 Jan 2026 21:43:44 -0500
+	id 1vgZoU-0005zI-1t; Thu, 15 Jan 2026 21:43:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vgZnx-0005qB-3c
+ id 1vgZo0-0005qW-OG
  for qemu-devel@nongnu.org; Thu, 15 Jan 2026 21:43:22 -0500
-Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
+Received: from fout-b8-smtp.messagingengine.com ([202.12.124.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vgZnu-0002QZ-0e
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 21:43:16 -0500
+ id 1vgZnt-0002QM-VF
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 21:43:17 -0500
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 7E2957A00B6;
- Thu, 15 Jan 2026 21:43:11 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
+ by mailfout.stl.internal (Postfix) with ESMTP id EA7BE1D0007A;
+ Thu, 15 Jan 2026 21:43:10 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
  by phl-compute-05.internal (MEProxy); Thu, 15 Jan 2026 21:43:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
  :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1768531391; x=
- 1768617791; bh=x+hJwFq/v++I+0iKZQ1ocG4h1Obu0oQ6673P/8kKcsI=; b=K
- qGYizXq6kvRGXIqZYsssI/TeCeXKjvTixuuYc/seE4KYzwInmFEDRrjsW+4ROib2
- zKJqmuO6roqoDPSXXLHzYHCnIyHBzw4r+0b2CjrzOubLGYMWOkrhdQBAUPWWQiDK
- Q1eBk7Ei606kzD5Tec+df0hM6AWRF95+0sxKUUj5OFOph0X5HUDOHYfK1HjOADTe
- wkPffUQ3Dz5CzzJ0ej7bVOtCovcqzMAp8FyiA7kvWdD8DE2P7qBOMM/pPsECI8DW
- oQDRpouw32qaTFzkUbfrJndqueRZ7tIgzFEVsSdSITcOsLHz4Xso9uh3QMBnernQ
- fw5ZhvBOufHp+MhHGkhyg==
+ :reply-to:subject:subject:to:to; s=fm1; t=1768531390; x=
+ 1768617790; bh=xXARdxSoThdAoSgU0MiSr+42Qqr3VDhiqVj+t/lO+Og=; b=I
+ 3atU2UJ9lJIyyGXC9f2RzKvSTlJyIwMQXyPUgJct6qPHZWWyJBuhUyzUhGYEx5n2
+ HiZt2lnPL15iwhTUQLqqMbNuoVJ8frwdw29fy0DBRb9hNyvMyOKou5S4sAk+/35Z
+ CjNnd/cLlp0LgnieFcPcmu9KCtltgWtBuhJAqWA1+J3khT2tHfmzwzzizujIlD6P
+ 0e5XyLNssMDdS2C+pExcZ1mNTGR1Y4yno4djnJh5mLvvp4O2jk4nnKeuc++HPUV2
+ +0z4NLd5OQJ6dYhyROmm0mrI384X3YS8F97ThB5SqleArdXodtpSzYoF9yIbuoSU
+ 3FrpMwRxjUzEeLf9WJDRQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; t=1768531391; x=1768617791; bh=x
- +hJwFq/v++I+0iKZQ1ocG4h1Obu0oQ6673P/8kKcsI=; b=f5XtQcrHoPeBT73Fi
- sl82s2hqYQT9VLNSKLTdu5g/VuB2PFu3GpDfqPfNCapbcqFWSaRI2FVQj7CVtxcY
- mukaTAGpI9lhquANh1gTuiviRs6s/cvdGSl6Dkk6sYflqJlThpM2k1hJhNWJHruh
- 9Yy5x/Ty9oTaEJ23shsL2k63XN+HIEPEFul6mRYzq8vtXL/cNfpybzUJHmv7NJmP
- C+T+Lft4vZvRtCaCV/DHQj8vkU++NInXWrJntuxvuN08JgEW5Hecih2662Cj3kAz
- 0KhmbVqO0JMSSTxim598Y19WbmfD179yNnOPxAj3eJNdOsW/qKQgRrBNej5Phgdc
- eNtRw==
-X-ME-Sender: <xms:v6VpaXnH09vRD06zCBlECRxnZJxmGwbznLrnesqu3Le73KJi56MK0Q>
- <xme:v6VpaSScwGF3YxPlDV6LWleXPN0XYGD5_wI0PGaKeXLPXCsz_fP91nO8f4wT08t8O
- 8OBHziuhRXFoA8St9TAaP4BwNEW7uum4328faN3zYUV3CxzVuzwonQ>
-X-ME-Received: <xmr:v6VpabDb-AiuBcRNVnCAZa2_98INKG_Cyso7n50EzfJX7RSsG5r3yHsEsueO>
+ :x-me-sender:x-sasl-enc; s=fm2; t=1768531390; x=1768617790; bh=x
+ XARdxSoThdAoSgU0MiSr+42Qqr3VDhiqVj+t/lO+Og=; b=pkG3eoagc6qpNbzEf
+ FdizzNpy3n6NP5ZbKWAMWIi/5G2sL3slFQiVDsmY72qa4PYl3YfpVKSHBaofkNFQ
+ uQ0u8irEA1n0vRc6EphzgMtRQLjVt2+Z/05OfD/QzPM63bpWHYKSoykp1OMlvkES
+ srGbbDN524Jq1RBpLbDbQGLPg6sNh9v+GzU8uParr2z2FJSrc7Ev3BGuZpss5xjV
+ y7e/g9Ha93zkq+UEisJLoXCkGgM3C5PsSOOWVO/KDZw28Mf6EJ/IpXUwgTH/KneU
+ hMGum8jgSBXQ64ie/SjezDVTIn3hVUzSwhRw+O/Um67zsp/IKVs04QQLlqC3Gjny
+ z21Wg==
+X-ME-Sender: <xms:vqVpaclcXj_i9NP8A3pnTTqJRdHECarhq1qVcjVoV48ZFsuSLjUeGg>
+ <xme:vqVpaTQPqEtapA1ZZMQLFO_NnGOZ70dbKdAk3jIAtDpoYqMZRBmlojXHAPu_vF-4R
+ OM0AxYF2-3j8Vc_YKxWGiUQnXmxevPrc4bZGZYnnNG-cdN8Sm3Atpc>
+X-ME-Received: <xmr:vqVpaYA5pYS6ZiNUWQ3_oxy4xHMWPpicQhxtZAQ21Fhjqo5IBdYPt4e4D1y6>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdejjeejucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
@@ -64,40 +64,39 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdejjeejucetufdote
  thdprhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhope
  hqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepsggrlhgrthho
  nhesvghikhdrsghmvgdrhhhu
-X-ME-Proxy: <xmx:v6VpaZQtYHZ3rbdbk646s8rZ-qo9ONuqcJb_04QgMTdHWBEwA6nSVw>
- <xmx:v6VpaZrbt5Z73v7n6JSfLDxuSTWkfGa23n9RmLD4-BXqDs1qCjs6sQ>
- <xmx:v6VpabxdHmQfJ6U0L0hI15-cBiRVP32AHMJNI7k_gLwpUrhs69Ms4g>
- <xmx:v6VpaeLaR8gs1zC-639aE6raUrD7YL2BY24mM5l60ujgqV3wavFweA>
- <xmx:v6Vpab98qXW292Sj8oMZwTfYw3-N6NCf906cEoBhFf091WwGbtLhow-x>
+X-ME-Proxy: <xmx:vqVpaST_zNaNuxwpNqkC4D3fZ0jQKadIUzVY7E4j6zOgb7XpSYRXoA>
+ <xmx:vqVpaep1FHoGyGvOmigvpm97W4_E2Ft_5xJSs2FMhZQQcxqUzSn4HQ>
+ <xmx:vqVpaczx7wb89BybAKLHFkdp13TwkVe_pmXHBNd1cDc3tLemewhmmQ>
+ <xmx:vqVpabJFSsXZNeTqvBMBkT1qJ6eg724yvwgfY17xohu-esgM4QNtlQ>
+ <xmx:vqVpaU9f-GiIS8V-JjwIzAk2eVWI55nbOohL4ygJSzzak7MQmeeMB2vA>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Jan 2026 21:43:11 -0500 (EST)
+ 15 Jan 2026 21:43:10 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id b7009cdb;
+ by chomposaur (OpenSMTPD) with ESMTPA id 4f7071b3;
  Fri, 16 Jan 2026 02:43:07 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: balaton@eik.bme.hu,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v5 03/12] ati-vga: Latch src and dst pitch and offset on
- master_cntl default
-Date: Thu, 15 Jan 2026 21:42:49 -0500
-Message-ID: <20260116024258.1487173-4-chad@jablonski.xyz>
+Subject: [PATCH v5 02/12] ati-vga: Read aliased values from DP_GUI_MASTER_CNTL
+Date: Thu, 15 Jan 2026 21:42:48 -0500
+Message-ID: <20260116024258.1487173-3-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.51.2
 In-Reply-To: <20260116024258.1487173-1-chad@jablonski.xyz>
 References: <20260116024258.1487173-1-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.159; envelope-from=chad@jablonski.xyz;
- helo=fhigh-b8-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.151; envelope-from=chad@jablonski.xyz;
+ helo=fout-b8-smtp.messagingengine.com
 X-Spam_score_int: -2
 X-Spam_score: -0.3
 X-Spam_bar: /
 X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,88 +113,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hardware testing on the Rage 128 confirms that (SRC/DST)_OFFSET,
-and (SRC/DST)_PITCH are latched when (SRC/DST)_PITCH_OFFSET_CNTL bits
-in DP_GUI_MASTER_CNTL are set to "default".
-
-The earlier approach looked at the state of the (SRC/DST)_PITCH_OFFSET_CNTL
-bits when offset and pitch registers were used. This meant that when
-(SRC/DST)_PITCH_OFFSET_CNTL was reset to "leave alone" the old values
-stored in the registers would return. This is not how the real hardware
-works.
+DP_GUI_MASTER_CNTL aliases several fields from DP_DATATYPE and DP_MIX.
+These were being written correctly but not returned on a read of
+GP_GUI_MASTER_CNTL.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 ---
- hw/display/ati.c    |  9 +++++++++
- hw/display/ati_2d.c | 13 ++++---------
- 2 files changed, 13 insertions(+), 9 deletions(-)
+ hw/display/ati.c      | 17 +++++++++++++++--
+ hw/display/ati_regs.h |  5 +++++
+ 2 files changed, 20 insertions(+), 2 deletions(-)
 
 diff --git a/hw/display/ati.c b/hw/display/ati.c
-index b0c87f9f80..bd48b0db49 100644
+index 6967cc0ad9..b0c87f9f80 100644
 --- a/hw/display/ati.c
 +++ b/hw/display/ati.c
-@@ -875,6 +875,15 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         s->regs.dp_datatype = (data & 0x0f00) >> 8 | (data & 0x30f0) << 4 |
-                               (data & 0x4000) << 16;
-         s->regs.dp_mix = (data & GMC_ROP3_MASK) | (data & 0x7000000) >> 16;
-+
-+        if (!(data & GMC_SRC_PITCH_OFFSET_CNTL)) {
-+            s->regs.src_offset = s->regs.default_offset;
-+            s->regs.src_pitch = s->regs.default_pitch;
-+        }
-+        if (!(data & GMC_DST_PITCH_OFFSET_CNTL)) {
-+            s->regs.dst_offset = s->regs.default_offset;
-+            s->regs.dst_pitch = s->regs.default_pitch;
-+        }
+@@ -459,9 +459,22 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+     case DST_Y:
+         val = s->regs.dst_y;
          break;
-     case DST_WIDTH_X:
-         s->regs.dst_x = data & 0x3fff;
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 309bb5ccb6..a8c4c534b9 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -43,8 +43,6 @@ static int ati_bpp_from_datatype(ATIVGAState *s)
-     }
- }
+-    case DP_GUI_MASTER_CNTL:
+-        val = s->regs.dp_gui_master_cntl;
++    case DP_GUI_MASTER_CNTL: {
++        /* DP_GUI_MASTER_CNTL aliases fields from DP_MIX and DP_DATATYPE */
++        uint32_t dst_datatype = s->regs.dp_datatype & DP_DST_DATATYPE;
++        uint32_t brush_datatype = (s->regs.dp_datatype &
++                                  DP_BRUSH_DATATYPE) >> 8;
++        uint32_t src_datatype = (s->regs.dp_datatype & DP_SRC_DATATYPE) >> 16;
++        uint32_t src_source = (s->regs.dp_mix & DP_SRC_SOURCE) >> 8;
++        uint32_t rop3 = (s->regs.dp_mix & DP_ROP3) >> 16;
++        val = s->regs.dp_gui_master_cntl |
++              (brush_datatype << 4) |
++              (dst_datatype << 8) |
++              (src_datatype << 12) |
++              (rop3 << 16) |
++              (src_source << 24);
+         break;
++    }
+     case SRC_OFFSET:
+         val = s->regs.src_offset;
+         break;
+diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
+index d7127748ff..0a0825db04 100644
+--- a/hw/display/ati_regs.h
++++ b/hw/display/ati_regs.h
+@@ -386,6 +386,9 @@
+ #define DST_16BPP                               0x00000004
+ #define DST_24BPP                               0x00000005
+ #define DST_32BPP                               0x00000006
++#define DP_DST_DATATYPE                         0x0000000f
++#define DP_BRUSH_DATATYPE                       0x00000f00
++#define DP_SRC_DATATYPE                         0x00030000
  
--#define DEFAULT_CNTL (s->regs.dp_gui_master_cntl & GMC_DST_PITCH_OFFSET_CNTL)
--
- void ati_2d_blt(ATIVGAState *s)
- {
-     /* FIXME it is probably more complex than this and may need to be */
-@@ -63,13 +61,12 @@ void ati_2d_blt(ATIVGAState *s)
-         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
-         return;
-     }
--    int dst_stride = DEFAULT_CNTL ? s->regs.dst_pitch : s->regs.default_pitch;
-+    int dst_stride = s->regs.dst_pitch;
-     if (!dst_stride) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Zero dest pitch\n");
-         return;
-     }
--    uint8_t *dst_bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
--                        s->regs.dst_offset : s->regs.default_offset);
-+    uint8_t *dst_bits = s->vga.vram_ptr + s->regs.dst_offset;
+ #define BRUSH_SOLIDCOLOR                        0x00000d00
  
-     if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-         dst_bits += s->regs.crtc_offset & 0x07ffffff;
-@@ -97,14 +94,12 @@ void ati_2d_blt(ATIVGAState *s)
-                        s->regs.src_x : s->regs.src_x + 1 - s->regs.dst_width);
-         unsigned src_y = (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM ?
-                        s->regs.src_y : s->regs.src_y + 1 - s->regs.dst_height);
--        int src_stride = DEFAULT_CNTL ?
--                         s->regs.src_pitch : s->regs.default_pitch;
-+        int src_stride = s->regs.src_pitch;
-         if (!src_stride) {
-             qemu_log_mask(LOG_GUEST_ERROR, "Zero source pitch\n");
-             return;
-         }
--        uint8_t *src_bits = s->vga.vram_ptr + (DEFAULT_CNTL ?
--                            s->regs.src_offset : s->regs.default_offset);
-+        uint8_t *src_bits = s->vga.vram_ptr + s->regs.src_offset;
+@@ -437,6 +440,8 @@
+ #define DP_SRC_RECT                             0x00000200
+ #define DP_SRC_HOST                             0x00000300
+ #define DP_SRC_HOST_BYTEALIGN                   0x00000400
++#define DP_SRC_SOURCE                           0x00000700
++#define DP_ROP3                                 0x00ff0000
  
-         if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-             src_bits += s->regs.crtc_offset & 0x07ffffff;
+ /* LVDS_GEN_CNTL constants */
+ #define LVDS_BL_MOD_LEVEL_MASK                  0x0000ff00
 -- 
 2.51.2
 
