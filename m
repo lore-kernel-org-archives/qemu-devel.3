@@ -4,113 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C31D4662F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Jan 2026 23:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB72D47CA4
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 00:11:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgWvl-0004dx-FX; Thu, 15 Jan 2026 18:39:09 -0500
+	id 1vgXQ7-0007I5-NS; Thu, 15 Jan 2026 19:10:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgWvk-0004dT-3l
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 18:39:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgWvi-0006H2-52
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 18:39:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768520343;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ciUaUZYQ2Rj9RnjiiFPXMIfG3NfVmTkOT3wr4ABpzag=;
- b=Zz8ng+IFu6htePucBcqwr9bdZl4ihlZp0pBhJV6Funh/8qHtgjW3EKVgmKAfmmCjPjHutu
- hHD/dr05KsXdldLedkQgqXXzXrO0WKvcrkN8fQDd/RLH3L8KOqDgzgCYYUQHrMqiii60L3
- WTudbm0swRmtjvNw/ntl2OC1m7a8QEY=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-693-3EMVQBtyOXKMWYYjSh2_Ng-1; Thu, 15 Jan 2026 18:39:02 -0500
-X-MC-Unique: 3EMVQBtyOXKMWYYjSh2_Ng-1
-X-Mimecast-MFC-AGG-ID: 3EMVQBtyOXKMWYYjSh2_Ng_1768520341
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-5019f8a18cdso44048261cf.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 15:39:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vgXQ2-0007Hc-2C
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:10:26 -0500
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vgXPz-00030i-B2
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:10:25 -0500
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-7cfdcae466eso490745a34.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 16:10:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768520341; x=1769125141; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ciUaUZYQ2Rj9RnjiiFPXMIfG3NfVmTkOT3wr4ABpzag=;
- b=MK3+/PAuMrW6siplMJYqdw87AZ8IN2MB1Ms5hleDjQZslu+GYCcNCdvWCeX+GDz4Cb
- /cQuieUR2GBXyCp/olUfarwZ/4wMhdRET3TS7ytBIhb81TKpF359KAI2mg+STW8l0JSO
- VecPMnwILevmlKiPd0/hLl7QNCsJlo006Izl4PYtPC8dYEBIOaP48SUSDHzyEUD4CwU2
- jekzrDaHAM6Sr3n56ipDeazh8I2rjlpHnZ34hAXH6JhiFMIO/hIEaF+UvEh1faVlAUJB
- D1jABtaTv2sfFLR40OQNZr0ZLoW96wnqDZll2M9mtsvnUyfKbxWhKpyaJquJF7d4M+1D
- V/iw==
+ d=linaro.org; s=google; t=1768522221; x=1769127021; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nW3K/ZIgeqH9ZJ0pbw8yuQ8bos01FtCHvP48Xzx4NI8=;
+ b=aaJDz+dO2fkXE4yiVfM8uj3rZLCE2sLbPCkmSVO+cKafkF0uDh2C5T1G+LiBWJvcJE
+ +fWhOlsEwEtR/cIsRteTUUwbYVNu2WavSvgn/aiaJ1LAqY2zWg+fpxp+gaqNqr5ivz5c
+ HK5NbI7liBNjVYaz6GRwGTDFixQ5YT95M58YLCBC8xCW0rgV7xI90je/XsuVwzZQjO00
+ jhf/dylx54sxWUWv2JqEC7nKGmX9Bfi2nfIQVm0PWJpwy56WMAWs7Bwb9D77h8MDCWBO
+ /RdA3R5u7OOCPzl++0unjKHe0fw9Ipn01lP3QUYk3MLohJNeGg1znYEi4ClqTzgDDg4h
+ hk9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768520341; x=1769125141;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ciUaUZYQ2Rj9RnjiiFPXMIfG3NfVmTkOT3wr4ABpzag=;
- b=r/9XO+06udTpO0Yi/JF4KdPdAl5xQUY2AhXQi722SMYtxFj7AiKpBbVlM1nIqLq+AO
- 6ipvq4gQnF1V8lCPoB3PKZ+3GfDiaxdLwn7+ptbqnaNtlENa3HCEOuI6S+hGCPvttpEQ
- BDXAdIcBKbCPZnzTGq0FnZEg8m0H9207NtJqfbB89dXuh1aO9MmLWB6SmXmmpAmR9CbC
- 9+9ggl2jzTqwB7wR/qYrUv3TpFYwKiJzqDEsJZ7ajTTMHtxDE02bZjOvQmsP+FsHmvYT
- fwT2DGoZHRzjLlAW54+Yn1A0FPi1CygG5y3pJo/b98l51P0shzA/UllRBiJ+/9mjIZln
- uDRw==
+ d=1e100.net; s=20230601; t=1768522221; x=1769127021;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nW3K/ZIgeqH9ZJ0pbw8yuQ8bos01FtCHvP48Xzx4NI8=;
+ b=ugxoz7INwORcu6YSErYmRMlZXynHnfr7ZkVZXNwYgHiz4alSNKFCgRzUQAVbRmXDKm
+ xa5OVPIbW+PUCi2ZthQiMhlBzIrFty61UqSNF60JUVJ5Mm+IlnrGW7E2BZSGEMD/+3jF
+ zFHVf1LQivFSa3GF33m4SsThyvI1kuP5pFlmJsRRMcj9AutzekmuopxXLRpSUcsWT90v
+ JfoihvDc7UKIkBF/SX5AThVFh0xYLG/JrmEFtee7ezo4/4lA4M43w83HJSfpiElLzezq
+ GC1xGzl6NJtwFvC4bPfer7zT/AaFKzRbJafOv+gPgF5fDNt5VTuNTPjvpHBl9scnfqRn
+ wH5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+Xow3HAo2lw1zqF9srC7KcAXCldQ4HEYuNkWWkum0rtgVCTvHgX0/hlpuu+1Ha0fiC52fdeJnvei9@nongnu.org
-X-Gm-Message-State: AOJu0Yym6bjudV6XoR2BbORXPyUslbf6uKurzrokBFjPQwvz60WUJxYJ
- PTiRBT8Aqp5mxvVwgGvg2zDayL3S06TSH6kfOcwfKIttYjh1FsDog/tVPNqdtVt082FN2Gqd6vK
- GQtrF6zdBgB7mltCG/d4VvrxWivyPJX+rObzxVkmR68wa+/QMpkAxvLRI
-X-Gm-Gg: AY/fxX4ELjcL2HkwSJPy8/6o0KRniNtNXWRN7C9K/Tr5O2ei8P/tkIA8B9TM3wSKG1K
- qNxWYNmw/JiCqvo1JD1xnXt3t5L+10AyUHtOmT9s1JIzb+XOIWkXRP5JmuoCT9CYCvOOsKxy7v/
- PBSIQtcHqSpXFnb2IsASSSOfjqoknpJUtEs8+3rtXhd/j+jRUzxg6tBXUMO224pX0ihBnFSPeUU
- PkbuFOlEGf9HnH3IbymTC+7oxrVQWjOq2j5EugaUCqu0qD3i8BK+ianYsjakp/TAb0FecAvYFXC
- ClrmgWSKOB32NZsPjwgt1ia4dvCWjr+j6Qak8o1bkSW8ofyrVMx/5Yo7a4FwJUJ86aAT07giqeO
- RHuM=
-X-Received: by 2002:a05:622a:1794:b0:4ec:a568:7b1c with SMTP id
- d75a77b69052e-502a16229ecmr19722361cf.21.1768520341557; 
- Thu, 15 Jan 2026 15:39:01 -0800 (PST)
-X-Received: by 2002:a05:622a:1794:b0:4ec:a568:7b1c with SMTP id
- d75a77b69052e-502a16229ecmr19722051cf.21.1768520341033; 
- Thu, 15 Jan 2026 15:39:01 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-502a1ef8553sm8007621cf.24.2026.01.15.15.38.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 15:39:00 -0800 (PST)
-Date: Thu, 15 Jan 2026 18:38:51 -0500
-From: Peter Xu <peterx@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
- Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
- Juan Quintela <quintela@trasno.org>,
- Zhang Chen <zhangckid@gmail.com>, zhanghailiang@xfusion.com,
- Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
-Message-ID: <aWl6ixQpHaMJhV_E@x1.local>
-References: <20260114195659.2543649-1-peterx@redhat.com>
- <20260114195659.2543649-2-peterx@redhat.com>
- <aWf4i7EOXtpAljGX@x1.local> <20260115224929.616aab85@penguin>
- <aWlso1w39cQnEh2t@x1.local> <aWlxY9TWGT1aaMJz@gallifrey>
+ AJvYcCUrK/KjQge1Xmvp+ui4hD0R5DHyHbFDaPPlnvcLTcIapYXB2cOLqO8BTGtt/jEWvR2QssYpNgXxBHYy@nongnu.org
+X-Gm-Message-State: AOJu0Yzdz3y2oaTsJiHhkg7w2ddv+M7V7YQ+uNEOL0v393ecu6YOgElZ
+ 0XdeJG8ljXIpbSvU0Ck9/MngH3u4n2VmwYOEaqrXRfltt8HuP8eXkpVIOBRwhVR5JAekSV8qK+q
+ HWgo+zv0=
+X-Gm-Gg: AY/fxX7cinme2aTuy7043/hTu7k73kQ+ehPbMZJ4k8zgoYhXQj9fJ2MN23KaKQmuH9H
+ VkIHaNZH6Xya9ii0UXUNNyBhkrybNfxl9JN9ooEdigrDJT01/0tw3aQKwgVRbJML6JA8u0Lxb4j
+ /gcDK4XHYUY873kU/pyxvFcXp6Kh6mZgURtlLT0Bl7hvmUbmqVBEFSWnJR1WgBPgp+UBfVt8ywU
+ yEP7ONJ7bZdu+72xypMg22b8AQiBZjCokQqVymPzF4Wpmu+IZKYevq6GUOOebXAdtdpXI9GwLCC
+ Kx8Ck2E18Hz03Jc0UkbB6I7Igw3DmjDsBiVGaMqCW8TYFCaqQRjx+nPp7CKuqPAgRPdNVVN81MY
+ 5DXygNnmB2nKtlKTEVN9fMBHrgJDimWfsWU+Hs/qMUfPr4OuIGj/grI9AOCtN2FS5njLN8BUQAa
+ bxqDFWaiY3LcKjKzytDsyg+LJHOdYM7oWupszgu9P49OlPE1CAdTi7Ws+3tyYVXgY=
+X-Received: by 2002:a05:6830:6f42:b0:7c7:5d72:567b with SMTP id
+ 46e09a7af769-7cfdee2124bmr728606a34.23.1768522221091; 
+ Thu, 15 Jan 2026 16:10:21 -0800 (PST)
+Received: from [10.244.221.227] ([172.59.196.187])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7cfdf28ef93sm686077a34.15.2026.01.15.16.10.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Jan 2026 16:10:20 -0800 (PST)
+Message-ID: <52228d4a-2c5c-452c-9d39-a8b7b0adda27@linaro.org>
+Date: Fri, 16 Jan 2026 11:10:08 +1100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aWlxY9TWGT1aaMJz@gallifrey>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: add reviewer for linux-user
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>,
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20260115201712.2706663-1-pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260115201712.2706663-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,68 +112,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 15, 2026 at 10:59:47PM +0000, Dr. David Alan Gilbert wrote:
-> * Peter Xu (peterx@redhat.com) wrote:
-> > On Thu, Jan 15, 2026 at 10:49:29PM +0100, Lukas Straub wrote:
-> > > Nack.
-> > > 
-> > > This code has users, as explained in my other email:
-> > > https://lore.kernel.org/qemu-devel/20260115224516.7f0309ba@penguin/T/#mc99839451d6841366619c4ec0d5af5264e2f6464
-> > 
-> > Please then rework that series and consider include the following (I
-> > believe I pointed out a long time ago somewhere..):
-> > 
+On 1/16/26 07:17, Pierrick Bouvier wrote:
+> I had interest in this area for some time, and would like to help
+> reviewing it.
 > 
-> > - Some form of justification of why multifd needs to be enabled for COLO.
-> >   For example, in your cluster deployment, using multifd can improve XXX
-> >   by YYY.  Please describe the use case and improvements.
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   MAINTAINERS | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> That one is pretty easy; since COLO is regularly taking snapshots, the faster
-> the snapshoting the less overhead there is.
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 4ddbfba9f01..4ef0c10f63a 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4021,6 +4021,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-user bsd-user-rebase-3.1
+>   
+>   Linux user
+>   M: Laurent Vivier <laurent@vivier.eu>
+> +R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>   S: Maintained
+>   F: linux-user/
+>   F: configs/targets/*linux-user.mak
 
-Thanks for chiming in, Dave.  I can explain why I want to request for some
-numbers.
+Yay.
 
-Firstly, numbers normally proves it's used in a real system.  It's at least
-being used and seriously tested.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Secondly, per my very limited understanding to COLO... the two VMs in most
-cases should be in-sync state already when both sides generate the same
-network packets.
-
-Another sync (where multifd can start to take effect) is only needed when
-there're packets misalignments, but IIUC it should be rare.  I don't know
-how rare it is, it would be good if Lukas could introduce some of those
-numbers in his deployment to help us understand COLO better if we'll need
-to keep it.
-
-IIUC, the critical path of COLO shouldn't be migration on its own?  It
-should be when heartbeat gets lost; that normally should happen when two
-VMs are in sync.  In this path, I don't see how multifd helps..  because
-there's no migration happening, only the src recording what has changed.
-Hence I think some number with description of the measurements may help us
-understand how important multifd is to COLO.
-
-Supporting multifd will cause new COLO functions to inject into core
-migration code paths (even if not much..). I want to make sure such (new)
-complexity is justified. I also want to avoid introducing a feature only
-because "we have XXX, then let's support XXX in COLO too, maybe some day
-it'll be useful".
-
-After these days, I found removing code is sometimes harder than writting
-new..
-
-Thanks,
-
-> 
-> Lukas: Given COLO has a bunch of different features (i.e. the block
-> replication, the clever network comparison etc) do you know which ones
-> are used in the setups you are aware of?
-> 
-> I'd guess the tricky part of a test would be the network side; I'm
-> not too sure how you'd set that in a test.
-
--- 
-Peter Xu
-
+r~
 
