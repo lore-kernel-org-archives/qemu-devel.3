@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 946AEC982F0
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 18:25:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0766DC982F1
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 18:25:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgoVD-0002Hb-T0; Fri, 16 Jan 2026 13:24:56 -0500
+	id 1vgoW1-00034j-Si; Fri, 16 Jan 2026 13:25:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgoVB-0002H1-VS
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 13:24:53 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1vgoVx-00031h-Sn
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 13:25:42 -0500
+Received: from mail-oi1-x244.google.com ([2607:f8b0:4864:20::244])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgoVA-0003J1-7M
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 13:24:53 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-81e98a1f55eso1244165b3a.3
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 10:24:51 -0800 (PST)
+ id 1vgoVt-0003Vi-IR
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 13:25:39 -0500
+Received: by mail-oi1-x244.google.com with SMTP id
+ 5614622812f47-45c9c505fe8so511836b6e.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 10:25:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768587890; x=1769192690; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768587933; x=1769192733; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3t0fppGGp8wbeBJsZlJjCxZfJnR5T22zy4KMfifvV2g=;
- b=b9oCARZXSwmaVYyBLfhNNyYlJ//JpxhfiZC3Nza9fQTpRK2DCs7uXzpaznAmpFb29V
- toWr5/d1lD35JvPghvHmtlTmzVNYDjhT0v9yESx7y7bFO/ThQ7l4CXyGnV7rhG1/7arV
- X9l1Oty82TfqID++BdpajtQCgPnjnwz3EKE0miB6PFlJYG5kOkzsXJXIP+WzL+URzp45
- huLFdKAccg7GfFKt3OhALMQxO6VzYnA5bLMUdwzUGFrP2r0mXqYg380FQSxb0BOH2J3t
- CAJKzWJ8QBeA2NZ94hOml88JcoAveCwqt8GJDltwgUg0I/VT9OMcQIgHox7co0g53t4Y
- FWTw==
+ bh=JptwofF7oBpFgcmE3kuUuDUG2/pClJlDBY4U8YW3c+E=;
+ b=wc9YAkKI458HaU/lkFiSY016iphlOzw9hP1ouF0F6W2edSX/55o572JtwfZffduqxE
+ pxrDEClDq4QWWt4k0+20oaqaRU5siItH3fMeqEXALuo7EypBtnfdmxAcKEQWPhhddH4r
+ gzNhnflYS+iZvHYW+WkpwJhcF+h3B0vOMt+Z0gi+Bg7AIT5ga5cqBQjM9DEIHNGsQsGv
+ sO+uKzW5HL0DtHnoOzA07QuDo3UlD52pp3UTfwODGI1t0MLdTuyELWke/jIsR8DY5S6z
+ /RaVBIaWtWXkWtO9ZxIirs9WwbHfekVzT7SZygs0Nz1psWQwZvBPIMd5BujCHYbvsVwe
+ bhxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768587890; x=1769192690;
+ d=1e100.net; s=20230601; t=1768587933; x=1769192733;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3t0fppGGp8wbeBJsZlJjCxZfJnR5T22zy4KMfifvV2g=;
- b=VwHuQnbB1KFRQyumFxO0iT2PPLeGEiYZAz2//P+RK072uX4FBUPkon9889HJ7Ui1ov
- A4E13l4RkmkPH7ucRGu1k/SEngipcMjijNnzsgUx2gPZypZVYZ/Wb+HIvd2VXUDlE1BF
- 9jdPeViKO7hO59j0tHVlvV/6Yl/FVD5bEHL0D5sEL5Tm4U3qFQaJKmYxmyf8LojeZEZ5
- Gzc8lniWsH5QeCXFQB/louz6HX0Gf8A8i66WCve9/02CWyA/uX9p6XPhEhA05Q1d271O
- vAMw/cNN9scWCVXC3PpaG6QvGU3/PpLx9sU00VamVNii3lY7yUZcFS7skbcVfBS3YUPQ
- c4PQ==
+ bh=JptwofF7oBpFgcmE3kuUuDUG2/pClJlDBY4U8YW3c+E=;
+ b=Bc/rnEW4L+JJmLVPgux9SsUEtwZ7uyoFO2htzxM9ZKm6LH/KlgJG2kHDtM+J+g53xO
+ FM2DdTdn7bYbFSpHZ2AetS3eXv8q3WCSdW8zUXWCUHJiHw7AKU4Z3W47SuAL83LMMRtt
+ 34vUlEwUIuUpNBNlm5gVSeeIKMpSItUV4fHGSvnfntPdUFCZ7aXq2AtCwIX6ao7njWwB
+ LJAm3gEhyYS1/GvN2k4ADBrTWFyA4MFFowekTFFPpiGe/dplVRT0E58e7OB52A80XPXv
+ JUJqffVVkMf9hyoyib2ihUSBC38/25KpWG55fXs8s6HtrwWMt5OFJfKHyhL5oF5Zz/mo
+ 1bHA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU77gyoB4BglqseR2m+bbvoue7s9q6ENaS1y7WHU+suT9/S/y2T/37rniEVLcmN0SvaoMPtOggVqXcl@nongnu.org
-X-Gm-Message-State: AOJu0YywatXyJlryOY94ZTpxF5sZri+y5U4GjJXrvboR0JinuQ7FT7bR
- MDcN52b/Fxink0cpplmLsssbEJg2xxRrFujoxH/QC19wjVpr/2BZcpGfqLT94uMdyV4=
-X-Gm-Gg: AY/fxX5n35Nq4JuarBl5OXh8xtXmWcLUxUj176kyOQ48ZlG/87JCJhq84DFUQgLtKzR
- nLpPEkSaGTpFOednghMco2Tv42+FHqATMtU/c0KKuG6rUn7ljEP0bQGNGIkCe0YuJf6TkZHSSp2
- 2D5HRj64bZXz2JNkDGgPdJLhhujnkuHumRQ9I/rXjZxmFX1mVN4jI8OqVmlFDeSxEEZhpFPQOYH
- vnAIZjHIMqlAY2TtbAIqRffTPN85lVjxd9qsdvPkinCHg0qmdAbvpQvF61APeU89TbIshv0iK6S
- a5n/OjXqPeJ6ogiLpTJgIHRYhyehWIkIeRcAZ2Do7nmVNiH/DC6XZqvgebbHXX1P72U0+hYAB/+
- id+cFpLLOWHhAQIGWuKlG25+oMZ/jnSlJ0Os5OUMKNQnPgLeqFU1ZkEWLetbdL1ZkK18WKeyJSW
- mg+V/UdGl2EE/7/SVyICSxyNJNHlKcRZbXPWoQG1OwrpszjNRqIw6M7cRF
-X-Received: by 2002:a05:6a21:3383:b0:38b:de3d:d527 with SMTP id
- adf61e73a8af0-38e00d1aa44mr4012578637.48.1768587889856; 
- Fri, 16 Jan 2026 10:24:49 -0800 (PST)
+ AJvYcCW7jUmSa75pElFlEGlaqesfwKHgmgD5U9bvS2GedlwFWWPCj0v6ZwSQl53tKesANF/DlriKbDyQtMHH@nongnu.org
+X-Gm-Message-State: AOJu0YxERQt/HWgcz/ITcNflNjmD7JtHPR8RpwgV9W8mkCZUAkRb8qTp
+ e6smIJ7v2l/V6n2ljRWEZtNqltQycAjITdHGhB3Fb73IzaoFIzES99Yv3Q23FApolK8=
+X-Gm-Gg: AY/fxX72U9K31Lve7zhXSlTTPiP1PlGp7EMQwS5hC+eLncOyRr7QVK6dXBXf3a9fcoo
+ 1SXvBZSyVCuy1l/lsXb0npZYLNS6YjqJXi/2E6oVPWd0k9DFkOwsuLy5RqXGi9FzZKDAkzj+B/B
+ 7n/foBBUAypYAT2D8wjzUX/kHZCNFVlCErNNcvrgIN4KbupeXmlVC0QzmwdtwLk/j70xagGNXWs
+ ld8D+YGR8mXFHeyHsiIz/L4S5rUsScr3gQwWmR9VwvanhdJ+gdpFCCkjhX9TwUVtth7+08dcBvY
+ hCkPyymCUCYyEM5mDhNc1Fx22gJQqoSfRZHOUMviooI44uwkaBQeOEYW/EhEtzqr/zUXvwCrihd
+ CTBq9e935HmwZwYnOUrjfg58ZNSMg+lfatUj03/IjitTbT1iiogmwG3U5HsL3JJSWdD1vK59N/o
+ 103sRGRnQtedoiWvcTKk7DicqRAJ73HrEyZNGpzbN2GRriX3LyvcdouRPU
+X-Received: by 2002:a05:6808:318f:b0:45a:6d59:44f5 with SMTP id
+ 5614622812f47-45c9d77f4b8mr1338179b6e.30.1768587932745; 
+ Fri, 16 Jan 2026 10:25:32 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81fa12787e6sm2603600b3a.37.2026.01.16.10.24.49
+ 5614622812f47-45c9e03e82esm1660746b6e.15.2026.01.16.10.25.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Jan 2026 10:24:49 -0800 (PST)
-Message-ID: <0d32ba74-9171-425d-ac0e-1303d6ca154a@linaro.org>
-Date: Fri, 16 Jan 2026 10:24:48 -0800
+ Fri, 16 Jan 2026 10:25:32 -0800 (PST)
+Message-ID: <8fb45c60-3975-47e0-8513-d76f9e2bfdbb@linaro.org>
+Date: Fri, 16 Jan 2026 10:25:30 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial] plugins: correct docstring for write_register API
+Subject: Re: [PATCH] meson: Do not try to build module for empty per-target
+ hw/ directory
 Content-Language: en-US
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-References: <60089475-3891-4448-bfe0-8dd698cd2435@epfl.ch>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Frederic Bezies <fredbezies@gmail.com>
+References: <20260116131817.38009-1-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -113,11 +115,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <60089475-3891-4448-bfe0-8dd698cd2435@epfl.ch>
+In-Reply-To: <20260116131817.38009-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::244;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-oi1-x244.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,34 +142,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/16/26 9:38 AM, Florian Hofhammer wrote:
-> The return value in the docstring did not match the return value in the
-> code (see plugins/api.c).
+On 1/16/26 5:18 AM, Philippe Mathieu-Daudé wrote:
+> In commit 83d5db95d38 ("meson: Allow system binaries to not
+> have target-specific units") we allowed targets with empty
+> target_system_arch[] source set, but missed hw_arch[] could
+> also be empty when building modules.
 > 
-> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+> Skip such case, otherwise due to commit a1ced487549
+> ("hw/microblaze: Build files once"), building with
+> --enable-modules triggers:
+> 
+>    ../meson.build:4034:14: ERROR: Key microblaze is not in the dictionary.
+> 
+> Fixes: a1ced487549 ("hw/microblaze: Build files once")
+> Reported-by: Frederic Bezies <fredbezies@gmail.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3272
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/qemu/qemu-plugin.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   meson.build | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
 > 
-> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-> index 1f25fb2b40..def6693a17 100644
-> --- a/include/qemu/qemu-plugin.h
-> +++ b/include/qemu/qemu-plugin.h
-> @@ -1002,7 +1002,7 @@ int qemu_plugin_read_register(struct qemu_plugin_register *handle,
->    * Attempting to write a register with @buf smaller than the register size
->    * will result in a crash or other undesired behavior.
->    *
-> - * Returns the number of bytes written. On failure returns 0.
-> + * Returns the number of bytes written. On failure returns -1.
->    */
->   QEMU_PLUGIN_API
->   int qemu_plugin_write_register(struct qemu_plugin_register *handle,
 
-In practice, it may return anything else than 0 (see 
-arm_cpu_gdb_write_register for instance).
-So the right (vague) description should be:
-On success returns 0.
-
-Regards,
-Pierrick
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
