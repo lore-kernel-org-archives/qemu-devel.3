@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C77CD47CD6
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93348D47CD0
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vghss-00037I-Ct; Fri, 16 Jan 2026 06:20:54 -0500
+	id 1vghtY-0006sr-Vf; Fri, 16 Jan 2026 06:21:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghsL-0002DS-5Z
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:20:26 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghtW-0006ip-Nx
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:21:35 -0500
+Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghsE-0006rP-VW
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:20:18 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4801d98cf39so6299185e9.1
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 03:20:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghtV-0007Ne-4r
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:21:34 -0500
+Received: by mail-wr1-x442.google.com with SMTP id
+ ffacd0b85a97d-432dc56951eso1238901f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 03:21:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768562410; x=1769167210; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768562491; x=1769167291; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Jlctq5vKHYkeEDFI7uZ1fcRMPddROuIgRymQ+Ihf0vE=;
- b=oaydNj8mDedOdtlViYk2w4PEdgPBPd+OP3Owsms+/bpV1DB5Ek5TAsSrGtHlQltNTO
- 0vm9BWzTdnQ62wy/4d8/k8+QdCDgyYxCyFKfmaAaEnFCUaQF9hNs+33RLF30oEAuyuWW
- wsII68Y3l0Rtu3xleYoGK2bR4CBYct88BHf8X5OBpxcOU2uF/Ed29oGVKwK3y/C+18xm
- 8n+4I8LmzKP5feDGCsghkiBoG+Dxi+7LMx32dH1PFvMQp0G+yZI8hQCDBvlmh+qqDhfx
- g90UDYqjhAY5L5vltlQL/hhPnIKCouUdxQgzv/4pqsAOeYuGZIvTNA5vczsbWlnZx5X1
- IxZg==
+ :reply-to; bh=hYBppovx5aTKboLp6qMxPvKWQRGV5NsjKuRsihbv0cc=;
+ b=WSxUESZwOcYUEZDb1iG2HEp04ik0dSm/xMAG7YEthY0M/uAZffBUNOE6L55UJz29ZZ
+ bo+galtlegvHPhRKlqSB5LLNg6XQl6Vys1faNemkFroy5vW8P7BSy/fqhtjmlrn7ywBo
+ B0E6w+aiDhpRsMTJZbrLNYA6f1EXlyiG7BVcEAv7LAwMbON7oAvM5lZsxq51/0Kf4bR0
+ A9zuP1dceYEMZ0eNrA6JkWZNq2Vxrt/ncvjXTp/YuAX8m9ABe68qTxjynfqguC9pfG6F
+ 0i2Idrm8tiPhNUp9AW95tWugz5X0UvHQdGfQPDZ487VWbSFJxL2WIzFeK6cmNc6CQM9v
+ 6OPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768562410; x=1769167210;
+ d=1e100.net; s=20230601; t=1768562491; x=1769167291;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Jlctq5vKHYkeEDFI7uZ1fcRMPddROuIgRymQ+Ihf0vE=;
- b=wGFrXzh2NH3DJvsVgQUGleFJ4CuPFhZqdXiEcqY4KQSHqYZNP6Di5OV57CTTRCzL/a
- sLBFM2ujRnAb7h4ARvUOt2z6EnofR43+SQARcPVE8T/QYKHvqgL1odSdEdafoFN8PxXd
- XU2wXTcRqZMKqsNQs0yVj0tSuaGPPVP2dJdnqY0Yamqb2oF3ryUsrsGAyYikct8utH1T
- gems5zBNw0adW4xLOrXOXGqqEcKM+TvgYCclOVXrZOqA/nh5MFYN3ARArwxjJTL0h+Va
- CyHhfPeLGPU3WnYwxFz7L72YWmTXfdgTNNo/Crq2kVT1zi6yGZnAri4+QmEmAuKp8URa
- mJKw==
-X-Gm-Message-State: AOJu0YzDhJOKt1yTm6q2cVl0V6T9N/77YpOwgTYzmE25LXc7EGKsCW8k
- D3nlKX3alFYhjjilDz1lwVjJNHQK9BsKeyWKtp66/FQTZcdhOxlqSGR51vu5jk4o5KQR2O9dvkb
- R959RlME=
-X-Gm-Gg: AY/fxX66hiiaNPNBuO5qnEb2SJEcgB5ZO8KXm5ZWAggbTxBaoifb+gmdZq5IZCFd6zg
- S7qVb7/tZyQ3MhogWSkufpjI8FbnvJWimykf5I3AxOGHnUrNWZ3rRLE+jVQGBNphROk4rVYIErw
- AvwxyMC76HXdPYZ+QaggZTmUnxmctK1ULkdMPk2m/ibwKNfxAu3zf4Ui+/I4uWB4ENdfd3A2Fp4
- W19/BdpVlio8qN8o8PUXnxZTlEkbj60Qfc4yKP0FVsn5jiJ0GR4pg7ukrDv8eylHhnsJwabUUGU
- Bnk49drzGyn6ykD4MMWc+T1ve4w9469cbcDn+9VNNXAIyFMu3kvwzsj7c+oQMn4PtpzUdZR5FWX
- ljxAmKvZb5RYalF3JdFyBE/2ECuoGh/mj87JTp6DXHjVUWJC0B1ZisGKBt587y14ia6JquEucMc
- tHLre85ni7dzrsXmrkhrV0JDS0y1Bz/1L5zDHGxETaf/X3OQynH6BUf+Aya1+2
-X-Received: by 2002:a05:600c:4fc6:b0:47a:7fd0:9f01 with SMTP id
- 5b1f17b1804b1-4801eacf142mr29859025e9.16.1768562410413; 
- Fri, 16 Jan 2026 03:20:10 -0800 (PST)
+ bh=hYBppovx5aTKboLp6qMxPvKWQRGV5NsjKuRsihbv0cc=;
+ b=fn2kheec8HpRvnkJpLwQkLNgEwcB54mE4dOrdBIsU3/ai38u/tuPxa68ykcTnOngbX
+ mMGKiQcE0kgm+rbSQmnazd7PB0w/RcagyJV/lfr1bBHlSPuPtlZqh9jsgVm3+8smS/jP
+ Fv+b+B8LhNt/6xKDXIQ70RNBCYqzvTBPC83AfsFkKsnx2dXpDl3jVyI5nPlz9DAejFEi
+ IGuESsOC3lVnqhLHFH1Q3a58bHAY9oFbDohOxnQv6UTRIkoQfXNu1PyQ6Piqz1gYTqsK
+ 1Qk9VMEpRIvl5dZP4xunDb+6hhO72gpQ6YKTVIjeSISbFvM9Cs8Tr4hwhT3G5x0sopR3
+ teog==
+X-Gm-Message-State: AOJu0YzUtLnf/ujo+Pk7WDg5c9aektOI8eclX6ABapld8sHnClOHGOA6
+ zGvzAtjkBao8Ey+uUQsCexp9cp2ZorAr7T/NreIRMCyXWWF6RYRQo5jf6UdxYpeECmhCBfLd/Vh
+ khoe7y1A=
+X-Gm-Gg: AY/fxX6r0vD0qw3kyMr9l5aQMen8k0ZPq0KZYg3opypwMwYx1y6q5QDrZHzbzXg2H0y
+ Kl2zWSuBJ3MOH3YYJHkz+XtXLqPkrqOZwx3+ymy4au3El468dS4x25YCti2tW3DzHAmk3c7a8ur
+ EswxIaTf79eb+31R7wyn47Hu/Y0XEyN8HVPxCWfxY5EgQg3CC4Z+L+X1k18WgXQj2tYW/Smr7vC
+ NVRyVOxNy6pumgE87f9YeOiuHiH7Z4RP8emBOcCDH4vaoP1Y9RNbVlJZ5Lo092de85lz/fqhvPw
+ CNnWDibxd6kP0hcaIfpAHDRGzncJzmCrL4fevyDLVGmA91ZzbFnH/NBb7eyhnfU7f5PzRM4qMV3
+ zueCKXWOIMiXG1JKcLSi3SurVWdKfqE1FSoldhr0tSDO6eeqc0zUj+mwb62S4C7u2sqKZyBn6ce
+ tmpWuxPwnpdI7AjFe4VINvbSnN4AVjrFbBjuCXoJCRaPILVnRk8cWn5zINXWEm
+X-Received: by 2002:a05:6000:2389:b0:430:fd9f:e6e2 with SMTP id
+ ffacd0b85a97d-4356996f593mr2867406f8f.9.1768562491069; 
+ Fri, 16 Jan 2026 03:21:31 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801fe67780sm13781605e9.16.2026.01.16.03.20.09
+ ffacd0b85a97d-4356996d02dsm4581186f8f.23.2026.01.16.03.21.30
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Jan 2026 03:20:09 -0800 (PST)
+ Fri, 16 Jan 2026 03:21:30 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/30] target/arm/hvf: Implement dirty page tracking
-Date: Fri, 16 Jan 2026 12:17:55 +0100
-Message-ID: <20260116111807.36053-19-philmd@linaro.org>
+Subject: [PULL 30/30] tests/functional: Require TCG to run reverse debugging
+ tests
+Date: Fri, 16 Jan 2026 12:18:07 +0100
+Message-ID: <20260116111807.36053-31-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260116111807.36053-1-philmd@linaro.org>
 References: <20260116111807.36053-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::442;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,104 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Record/replay is specific to TCG. Require it to avoid failure
+when using a HVF-only build on Darwin:
 
-Notice writes to pages which are being monitored.  Mark the page dirty,
-re-enable writes, and retry the instruction without emulation.
+  qemu-system-aarch64: -icount shift=7,rr=record,rrfile=/scratch/replay.bin,rrsnapshot=init: cannot configure icount, TCG support not available
 
-Assert the fault is not from a stage1 page table walk.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20260112103034.65310-12-philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20260115161029.24116-1-philmd@linaro.org>
 ---
- target/arm/hvf/hvf.c | 52 ++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 43 insertions(+), 9 deletions(-)
+ tests/functional/reverse_debugging.py | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index fa26f63a61a..af28b8e8825 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1869,9 +1869,10 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-         uint32_t srt = (syndrome >> 16) & 0x1f;
-         uint32_t cm = (syndrome >> 8) & 0x1;
-         uint64_t val = 0;
-+        uint64_t ipa = excp->physical_address;
-+        AddressSpace *as = cpu_get_address_space(cpu, ARMASIdx_NS);
+diff --git a/tests/functional/reverse_debugging.py b/tests/functional/reverse_debugging.py
+index 8b9507674a0..8e6f0b0e923 100644
+--- a/tests/functional/reverse_debugging.py
++++ b/tests/functional/reverse_debugging.py
+@@ -67,6 +67,8 @@ def vm_get_icount(vm):
+     def reverse_debugging(self, gdb_arch, shift=7, args=None, big_endian=False):
+         from qemu_test import GDB
  
--        trace_hvf_data_abort(excp->virtual_address,
--                             excp->physical_address, isv,
-+        trace_hvf_data_abort(excp->virtual_address, ipa, isv,
-                              iswrite, s1ptw, len, srt);
- 
-         if (cm) {
-@@ -1880,23 +1881,56 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-             break;
-         }
- 
-+        /* Handle dirty page logging for ram. */
-+        if (iswrite) {
-+            hwaddr xlat;
-+            MemoryRegion *mr = address_space_translate(as, ipa, &xlat,
-+                                                       NULL, true,
-+                                                       MEMTXATTRS_UNSPECIFIED);
-+            if (memory_region_is_ram(mr)) {
-+                uintptr_t page_size = qemu_real_host_page_size();
-+                intptr_t page_mask = -(intptr_t)page_size;
-+                uint64_t ipa_page = ipa & page_mask;
++        self.require_accelerator("tcg")
 +
-+                /* TODO: Inject exception to the guest. */
-+                assert(!mr->readonly);
-+
-+                if (memory_region_get_dirty_log_mask(mr)) {
-+                    memory_region_set_dirty(mr, ipa_page + xlat, page_size);
-+                    hvf_unprotect_dirty_range(ipa_page, page_size);
-+                }
-+
-+                /* Retry with page writes enabled. */
-+                break;
-+            }
-+        }
-+
-+        /*
-+         * TODO: If s1ptw, this is an error in the guest os page tables.
-+         * Inject the exception into the guest.
-+         */
-+        assert(!s1ptw);
-+
-+        /*
-+         * TODO: ISV will be 0 for SIMD or SVE accesses.
-+         * Inject the exception into the guest.
-+         */
-         assert(isv);
- 
-+        /*
-+         * Emulate MMIO.
-+         * TODO: Inject faults for errors.
-+         */
-         if (iswrite) {
-             val = hvf_get_reg(cpu, srt);
--            address_space_write(&address_space_memory,
--                                excp->physical_address,
--                                MEMTXATTRS_UNSPECIFIED, &val, len);
-+            address_space_write(as, ipa, MEMTXATTRS_UNSPECIFIED, &val, len);
-         } else {
--            address_space_read(&address_space_memory,
--                               excp->physical_address,
--                               MEMTXATTRS_UNSPECIFIED, &val, len);
-+            address_space_read(as, ipa, MEMTXATTRS_UNSPECIFIED, &val, len);
-             if (sse) {
-                 val = sextract64(val, 0, len * 8);
-             }
-             hvf_set_reg(cpu, srt, val);
-         }
--
-         advance_pc = true;
-         break;
-     }
+         # create qcow2 for snapshots
+         self.log.info('creating qcow2 image for VM snapshots')
+         image_path = os.path.join(self.workdir, 'disk.qcow2')
 -- 
 2.52.0
 
