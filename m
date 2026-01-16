@@ -4,95 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 207BDD4A608
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 07:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36D95D4A607
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 07:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vge04-0003Mh-Gh; Fri, 16 Jan 2026 02:12:04 -0500
+	id 1vgdsz-0001o2-NK; Fri, 16 Jan 2026 02:04:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vge00-0003Kw-Ti
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:12:01 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgdsy-0001nn-D7
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:04:44 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgdzz-00018b-Ci
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:12:00 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-4308d81fdf6so967081f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 23:11:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgdsw-0007TN-OV
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:04:44 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-4327778df7fso964116f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 23:04:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768547510; x=1769152310; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5CAHwUn8YXntEQ8O4POihLaO+M8kM/Rf1a0MQloUD/g=;
- b=d77xYMZOGUjE7VixG5uecoxlQRegFFA8AdXLaCSiNoWjK65KhY5f+5j9+uBYSfrNy6
- UBe0x4lwmZhnI0dKSloeInT3xHD3d+IsIOcjvdflUOUI205PH2bkbD1Z8osiwJYqMUwj
- F6pO4osBtg6fej5plon+aK1/ytG4ZzIEuFV+YmvV8vjesZscxh2gnufW9h8LpeSRG3ki
- 9tOHiCWSfKVxQIBEqGoLygikTzsxQUIrDul2xdw2R3ONBKaCYnNNea1KYDUzOFunpYdr
- hnO/hDy/yLMLxGGSMt/taHYej6iB2IwE+yQ2Pwf9lvOzxGqA7eGb26kbV/oUvzEUuSwI
- c6Pw==
+ d=linaro.org; s=google; t=1768547080; x=1769151880; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/R5BZ9//1J+auLQWp/EEFSreqN+iaaYrBNvk9LIr+3g=;
+ b=R7RFDtbap552HQh7cLfQTrihdMEvE1LTIhKHabucwRTDts+FNRWjjdpuWchtqgnMg0
+ tsM/PcREJcAsijNgFRqecAlauZWFqTDl7JpRyfFV9dkc2v73KVg9OaPRcKnixq7+4vd8
+ bPlw4bjkDhbbbXr78a1NdqEu8uNiu9O7IdO3GRMiY0PkrPJMLKDIOt6fiKFtmpuFzZGK
+ MvqbnBat3mVPkMDy+YWiOtJkcwHrQKlYMGYe9Bj9aR2e4gptIOgdk9IhEHkXVSG/lZ/2
+ DzNvoDidUJb14tB2T3amC+j21e8Nw6SXmMJ19+3KUzhpPIrd3x77dpNSCINtMKrEZ9HQ
+ BKQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768547510; x=1769152310;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5CAHwUn8YXntEQ8O4POihLaO+M8kM/Rf1a0MQloUD/g=;
- b=f64zJ5hDFkVgf2xjrx6+k0PTC8TTUj1HCcsa/XAsj8MT+n5D2iliHLG5N59GBRNnMX
- 9VWAijCADhCe1jr2IlI2fUVhmgtR3xd0aqtKfTWxqPhgDQaqJa9vKwC+fWthQjhttwYI
- 1N/0P4L3jeLKdGetRvjgiwx0MGzuhLW+uFdf/UECrcN6QvquXyRtsF+lB0WL9DQd/uv9
- pXflARglx6YPtPZkgPKw26+t0VBy0i4i5iyN+f3w24YVLIU76SnBGCUVGeAN/ijr5y92
- y7lsWPefwpS7Xl89NfVcZJ7bIeaAjHHgsSHndG2rxNQwTtjPGHvd2WGKSZQs+GX8A/6M
- iiTg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVCfRBAhi3HpTwiCz5+IUZgDCNBFK+jJ4X0n2xqwMo29nfGY2GRHHGqcR9Ul98/DQgSHErzcX/q2eoe@nongnu.org
-X-Gm-Message-State: AOJu0YwheFS0Giexca+B/MRZZRz0n4xn25IB/s3U//0NzOyCaDD7DkIQ
- /znzXudJwTJFuRRc2YwB8/8dF4PU7vGI7VlKmDF0w9GOmSzNOLu5gyt4ZhJ8ALCgNfSHyInRGFw
- pOYP6aN8=
-X-Gm-Gg: AY/fxX45NAOIGlJTJvUkf2t714we+DUN0Cdp8p4I2E/SJdRZSROIvmX0nZrI2jtBW5i
- ijN8T2E9b55v43LF0QD7/urZaBMaFmF1GQQGzi+k41xvGHazptX9GldKlXx1L2YmMM1toDb+oC9
- wY8gt9mgax5b1kuVs3Y4TCcCPFLHpVUu3LHq3cnVV17RggsxpmgEbNsgQ5REqz/qnw0KFyTMt8s
- wFuMB6XvpkwRF2hw+KYCYEWgZ1yyqmX7gRtYV00+4aQLhI/+4sJtEM/Bx22U5Fdo+343qXHphkT
- 88aDFL6R3rMnMe96w8tuuIr4/vW9FRUDgMBh3MVQ2CPcQVkCJ0eXL9LPc3KW461WJjmp9NQB/LM
- oESgv+JxRl1GxzLJzjwGgtC0LDuHLuFP1lEQeX4BAbAh/WhE+9yjVu1D4d2uhy1br2Wgoo2iH5W
- Yc1+1O9cNHVgLWyEmuWpaXYGVht2iHfaeS64eCsC6dmIxCkvjj/md3KOjzbf1A7jNo
-X-Received: by 2002:a5d:5d02:0:b0:430:f97a:6f42 with SMTP id
- ffacd0b85a97d-43569bcd728mr2076503f8f.54.1768547510429; 
- Thu, 15 Jan 2026 23:11:50 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1768547080; x=1769151880;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/R5BZ9//1J+auLQWp/EEFSreqN+iaaYrBNvk9LIr+3g=;
+ b=wruTFBOa4shYecJMpUrdxKOJ4y3hEh4CbbMWVuM09of9fze9wjQRQLSScW+3bULPu7
+ fG+EwDLS6A7oUd3C502tyBt7asfnVVBGfyH5c2uO6WG+/fFu/ySRezCm9Z6jDRwfWWuV
+ K10gyx5cA+2SWHNKAMiOTrArNpM9YaD8LPfdThiM2zXJENW11gO8Ji5qrIU3Hjbh9z+a
+ 11FGxtnv4gkUgri3AuV4AckeOlTx1/r6jZKY26C+Jz3CMi5VpyWpP2YFWKFEw6J5IoAN
+ DBRABKFJ1HWPYEpFe6o7CjPYFBEXVMHaCCXllYmZmjZ1nZY4dyniz/UCMAI0VqHhmwGo
+ fbVg==
+X-Gm-Message-State: AOJu0Yw54dzf+wDJ+eFgXL2eqqJ0O+TfBoUwwJraYXagyFnG0aMe5dLe
+ uGcQs28sCq9slp6yONRAtW1zEdVMEMv/ncTwDEVLN4mJt/t99AxyAsD/mVJRcYHunUtU6he9OyH
+ Y3uO2N7w=
+X-Gm-Gg: AY/fxX5PePv6mDBKwkhkdFhj6rbp1McCaQQVlIZfZa9qr+gQy884X/WDB+jqtO4p0fr
+ 0FKAWuyMLKwygAUjZ+q93kWes12OLhaS5cAdsAy57g8pOv2OasZCORxDaeM7MvXDuAGAqm3ca1a
+ uxBBtrrX2uCd03LDE3epv+eiHBOV6WqGHZ9lunjvFIj3EC1DiWbz8ZPHbzVHSs9+uXfJXUejpUv
+ McUUkhXbPuQhq0OODs7UzJ8v6vdzlLsnZawLFXjgxcfAmyqe3F/3U0ugioVWRmpzse1rNo0Fybq
+ 4LA1VoNNCSHrxmhEgz+XappPPYpNAOz+DvER6IUcBKfJnkf/vAWjzfs/UK34vx4BCczmumOxLeg
+ uOy49vwBfLKKaWgDRCEMXH4lwX72fKWBJ2RgJekv+//IAwOZgNmyuSl/mujfrf6jJ3Ggk+l0H0p
+ cu70zwVKZ/yn2wEaQUsd7WOKIoXEfsMsgLVAVHtLDD6zTAKs1WGK/7xE/PoQ2X
+X-Received: by 2002:a5d:5f46:0:b0:430:f463:b6ae with SMTP id
+ ffacd0b85a97d-4356a060e19mr2267377f8f.53.1768547080329; 
+ Thu, 15 Jan 2026 23:04:40 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43569921dddsm3591061f8f.6.2026.01.15.23.11.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 23:11:49 -0800 (PST)
-Message-ID: <7be78f97-18b0-42a1-98ac-084a1a4c005d@linaro.org>
-Date: Fri, 16 Jan 2026 08:11:48 +0100
+ ffacd0b85a97d-43569921da2sm3422032f8f.1.2026.01.15.23.04.39
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 15 Jan 2026 23:04:39 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] tests/functional: Check for nested virtualization to run KVM
+ tests
+Date: Fri, 16 Jan 2026 08:04:38 +0100
+Message-ID: <20260116070438.31869-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] gdbstub: Export host_to_gdb_errno File-I/O helper
- function
-Content-Language: en-US
-To: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- Dominik Disconnect3d Czarnota <dominik.b.czarnota@gmail.com>
-References: <20260116014612.226183-1-yodel.eldar@yodel.dev>
- <20260116014612.226183-3-yodel.eldar@yodel.dev>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260116014612.226183-3-yodel.eldar@yodel.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,20 +101,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/1/26 02:46, Yodel Eldar wrote:
-> Move host_to_gdb_errno from target/m68k/m68k-semi.c to
-> gdbstub/syscalls.c. Declare it in include/gdbstub/syscalls.h.
-> 
-> Add both newly added GDB File-I/O supported errno values, EIO and
-> ENOSYS, to the mapping.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
-> ---
->   gdbstub/syscalls.c         | 36 ++++++++++++++++++++++++++++++++++++
->   include/gdbstub/syscalls.h |  9 +++++++++
->   target/m68k/m68k-semi.c    | 29 -----------------------------
->   3 files changed, 45 insertions(+), 29 deletions(-)
+On Apple Silicon, nested virtualization starts to be usable
+with M3 models and later. Check for the CPU model to avoid
+failure on pre-M3:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+  qemu-system-aarch64: unable to find CPU model 'cortex-a72'
+
+Now tests are correctly skipped, i.e. on M1:
+
+  ok 1 test_kvm.Aarch64VirtKVMTests.test_aarch64_nvhe_selftest # SKIP Nested Virtualization not available on Apple M1 Pro
+  ok 2 test_kvm.Aarch64VirtKVMTests.test_aarch64_vhe_selftest # SKIP Nested Virtualization not available on Apple M1 Pro
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tests/functional/aarch64/test_kvm.py | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/tests/functional/aarch64/test_kvm.py b/tests/functional/aarch64/test_kvm.py
+index 7545f5ed554..b26c849ec67 100755
+--- a/tests/functional/aarch64/test_kvm.py
++++ b/tests/functional/aarch64/test_kvm.py
+@@ -29,8 +29,31 @@ class Aarch64VirtKVMTests(LinuxKernelTest):
+     # base of tests
+     KUT_BASE = "/usr/share/kvm-unit-tests/"
+ 
++    def require_nested_virtualization(self):
++        """
++        Requires the accelerator to support nested virtualization for the test
++        to continue
++
++        If the check fails, the test is canceled.
++        """
++        import platform, re, subprocess
++
++        if platform.system() != 'Darwin':
++            return
++        r = subprocess.run(['sysctl', '-n', 'machdep.cpu.brand_string'],
++                           text=True, capture_output=True)
++        if r.returncode != 0:
++            return
++        m = re.match(r"Apple M(\d+)( .*)?", r.stdout)
++        if m:
++            if int(m.group(1)) < 3:
++                self.skipTest("Nested Virtualization not available"
++                              " on %s" % r.stdout.strip())
++
+     def _launch_guest(self, kvm_mode="nvhe"):
+ 
++        self.require_nested_virtualization()
++
+         self.set_machine('virt')
+         kernel_path = self.ASSET_KVM_TEST_KERNEL.fetch()
+ 
+-- 
+2.52.0
+
 
