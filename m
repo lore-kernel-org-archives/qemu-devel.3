@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2941D47CD0
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53726D48981
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:21:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vghsw-0003kP-7n; Fri, 16 Jan 2026 06:21:01 -0500
+	id 1vghrT-0008NE-9U; Fri, 16 Jan 2026 06:19:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghsf-0002RC-LT
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:20:42 -0500
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghrF-00087d-7Y
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:19:17 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghse-0007CH-3I
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:20:41 -0500
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-47ee3da7447so11391545e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 03:20:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghrD-0005sE-Db
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:19:12 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-42fb0fc5aa9so983550f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 03:19:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768562438; x=1769167238; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768562349; x=1769167149; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KstmbcyqBDmNKiirh3lzOKShkET70rsL+d/5h23NuT8=;
- b=YIcCuywZJgD7wA8zsWip5eLD01xdYXKkyY1NwyHqgRNXyWX8x3Dq5EnG57QcLkaUQF
- hmdrKEOECp30pLdLUF+8d/D00gEW4IG8I2dHfIm1XzEAidIdMNNv6GDiQJ67JYOkSbQN
- vuF/b2WbNh/Bt4i6uCx8crT2fBG+WMu2/7DG1dKVW7GnN6sHG5DAFNWxatZHS2pkJmdG
- k+B+AilJSJ4iS18ap3xNLSPsXL0KrjX9RrJIjWjVVdkIEsKL+r5uXoJazP0VMzHL+v6j
- JMk2L50ASa16dIl+mURUDWtTV5BJBZJnetuSlJKgWrq3MnxvKMDUeELwzrwsvgt8N3P+
- t6YQ==
+ :reply-to; bh=FJKnxppWAC/n1eSB1d1Olh3eK3qa6g9cnmgeq7kmKnk=;
+ b=QrA6FZ04erDB+CuzLIUdrUEMiTf1P3uXjEp35btjIcUG15WAW1p9hCtLYyLBbYfWjw
+ DVRqmmfS/DWFeWsplvr5tEk6S/E4xRNGl/43MRNEVus+FIUXDKX+KS5u+ElhezBndnTD
+ YFQn2yjMOMq7bPoUkvVB/qxVgv+j493GZupWmZ+BGsdUcGB/Zv6tWnYXew3cJ5B0AxPN
+ 6C3UDtwNz9Fj+T7ZoLZhAWeDa6sh6jFkmwiVHBL8LAcIyKyVoIeDuTfSduBte72uYtBm
+ FBKS0KuHfUyKKRSewZGOXv9PRMpalmRsxE+LJ+Wri2vgPbixTmn7GcwqNkennJ6NZZS5
+ OYug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768562438; x=1769167238;
+ d=1e100.net; s=20230601; t=1768562349; x=1769167149;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=KstmbcyqBDmNKiirh3lzOKShkET70rsL+d/5h23NuT8=;
- b=Q0sXhB/ZUTYsu01qEUy27DySrgGdXGSOSoi5oYMwKPt0T8FljhuruPGcksYkU/1KiW
- 7Gi72HHJ7qIeWeAHMCzEpSnxB1qwyjNuRpdZcLyhWB8UxviXhNfaebyEsZ4WLgP6XFB9
- uYS++go4mpEOpmW+bB+kwB8RAtXy/9TVPDk3sMWpzUzE4G/DZ1X1mK9RCIZC5RknL8u/
- g+xgP8WxORUhR+bmGc0U7Lds+GWkJjkswG+Q7I/fX2sE6soqxCNB5jpIeQ3HAC8SwqSv
- fcCFjhzu19gygK9K1wimsRhRTCK4/BobrIDO4R2Yfe0C/99mzZf/Jnk8YUwF1gTrlRJI
- hqyw==
-X-Gm-Message-State: AOJu0YyRV2ZXuCPaMAoIje7Ko6oTkH8voGTKf45C8kQWb3ts6lPGS8gc
- xHotXfsHJfcBcS3ONxqDPE6N0dd9GGjc+wLaq9yeOxuVogwJtC64cZ59DFyohiR6rrE7MVIPlXe
- WEpIw4MVTsQ==
-X-Gm-Gg: AY/fxX7M9lj+AmuDfQX8jp1qndolITZFW9cxm2nIziKpvrQ0snv/OzTa5e/wiQDLVSi
- p2xDzCo+QTwryHxF08Hu3iL7fRuFu6wmKoQHWOtXg/pDV0jylEZrCpPlBh0TNpoUMIWKf7Vqhkc
- Z3vQ7x7yfALdbwwcMdCjvTgN+x8fRqxyIzGRJ41lYJDBhBho/MwFOtKxgz3skHQN1Mr8O3wznl7
- lbRns77TC8BOIYe6obtCHlkHPoxLfS/GTFPYmaKrDk01ogQsHOn8nHAJLthMk2wkVeTb2j12RT/
- HZ5QU2r+wF7h9zo80kgsowm2Wm87K7octRQ3Ea+aACaMU3BeZuzAD8lZ4CnfoAyCXO8ZAErFyhH
- spR7yaKbDIrVbECnG1sy7oiGLVgMJFTnGSrusqgaKVTVBHRRaR7y/yAiseF+f6zMn7E6JOU7kVK
- FW25p2JPqN0thsFhTmn2OG+fSf1thyPRH8pCixtU1283QVL5kKF1qzp9MhYuzPDA/aUhhIsn4=
-X-Received: by 2002:a05:600c:458c:b0:47d:6856:9bd9 with SMTP id
- 5b1f17b1804b1-4801e3342bamr23479895e9.23.1768562437787; 
- Fri, 16 Jan 2026 03:20:37 -0800 (PST)
+ bh=FJKnxppWAC/n1eSB1d1Olh3eK3qa6g9cnmgeq7kmKnk=;
+ b=gVr9cqqVbXo2XiOuy6GYgAbm7Uac6+4SEpViOjYr/uDg/wfFyR6pylZQowFfmXiJ06
+ fYXR6/qESDpk6bEzM89lvG1PzYs0Zc30G8l9ccrHheJ0BdvTD2sGHuvqkpPplV5i2S8r
+ E7oQrCRobtegDyDARZut/a3mdn0FLsFrIwM0FqkeFeV4T/tyo3uB3Iv+yc7G9+YZbmS3
+ Tnp25D1nxns7mKLKAwTmsR9Z/cUIhvdGjty+gTF4lFwXZ8R0gvF/slT8Hg1XnsY6oT/g
+ 13hRqDOWcrZc6N4qqrmtTKd7dZTRuZfakr0pFlFRJ59+yTkPyRoiDBiZGrPB7aivzjfj
+ JZ5Q==
+X-Gm-Message-State: AOJu0Ywk/0xHvXWC6CWMUiOKP4RYO+rMWRo6I/dXTO9nur1EO0mxzTzT
+ KfZq8pFsmm5V77juzD3LNgfqmuq7rI1nMcWvjJSGZ09d6DuoyxWsSjfM+N3O1kH7+u4k6knuwYy
+ pLRdd71I=
+X-Gm-Gg: AY/fxX60c3RiDKZmCzg2xrBFbF5Bmsk/E+4Tx2Liob/bfHLziWr69G6Y8ka4mGSalBq
+ CxpY2J5nFqf1hMQFYq7HYlOrj6DrTmJgJRCFGjgYVJawOdHJfZl7EQbfu9WAozBgI3OnGUl8fqq
+ 4v7O2vrLl1iWxBurzLfHLzYbgHD/QJX1MvFCUU0LbG9Ntwp+ODUFMMil1SkUdQmRvKmpbvGAUOn
+ aLI09QvwKUjZ1cPC73v75zOUpjzvkqqki6lOhdVL7HzDV1rYTaXQ2EkORRAaxuDhi/WgIjMFRu/
+ Ucowo2tB+U8AosLHCqg0s/9/i3iCU32rN2sUDYxz4Bg1WvUe1lwZ4N9q5uossWXmuKwqn4xHYYu
+ igN7WNI67Hpzr3rAUyLA77KMpjF/b6RUGB+dRaKZ2bGB3GPQrqAnoRmqE6i6PD1MBN5xGf8shts
+ eWxERApOvjOZTVf6PukzoCCeH4ydSamlKZO2uZip+8wFfTzJNbiEcYmf3WGck7ar5uCNxsQzM=
+X-Received: by 2002:a05:6000:2281:b0:430:f40f:61b9 with SMTP id
+ ffacd0b85a97d-4356a024c7amr3136262f8f.4.1768562349435; 
+ Fri, 16 Jan 2026 03:19:09 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47f42907141sm93961735e9.9.2026.01.16.03.20.36
+ ffacd0b85a97d-4356999810bsm4690869f8f.40.2026.01.16.03.19.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Jan 2026 03:20:37 -0800 (PST)
+ Fri, 16 Jan 2026 03:19:08 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/30] accel: Introduce AccelOpsClass::cpu_target_realize() hook
-Date: Fri, 16 Jan 2026 12:17:59 +0100
-Message-ID: <20260116111807.36053-23-philmd@linaro.org>
+Subject: [PULL 09/30] target/i386/hvf: Use host page alignment in
+ ept_emulation_fault()
+Date: Fri, 16 Jan 2026 12:17:46 +0100
+Message-ID: <20260116111807.36053-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260116111807.36053-1-philmd@linaro.org>
 References: <20260116111807.36053-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,45 +99,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow accelerators to set vCPU properties before its realization.
+While on x86 the host page size is fixed to 4KB, it is
+better to call qemu_real_host_page_size() for consistency.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20251103101034.59039-16-philmd@linaro.org>
+Message-ID: <20251103101034.59039-3-philmd@linaro.org>
 ---
- include/accel/accel-cpu-ops.h | 1 +
- accel/accel-common.c          | 5 +++++
- 2 files changed, 6 insertions(+)
+ target/i386/hvf/hvf.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/accel/accel-cpu-ops.h b/include/accel/accel-cpu-ops.h
-index 0674764914f..9c07a903ea0 100644
---- a/include/accel/accel-cpu-ops.h
-+++ b/include/accel/accel-cpu-ops.h
-@@ -34,6 +34,7 @@ struct AccelOpsClass {
-     /* initialization function called when accel is chosen */
-     void (*ops_init)(AccelClass *ac);
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 2023a7bfbb0..731cd954630 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -76,7 +76,7 @@
+ #include "qemu/main-loop.h"
+ #include "qemu/accel.h"
+ #include "target/i386/cpu.h"
+-#include "exec/target_page.h"
++#include "exec/cpu-common.h"
  
-+    bool (*cpu_target_realize)(CPUState *cpu, Error **errp);
-     bool (*cpus_are_resettable)(void);
-     void (*cpu_reset_hold)(CPUState *cpu);
+ static Error *invtsc_mig_blocker;
  
-diff --git a/accel/accel-common.c b/accel/accel-common.c
-index 850c5ab4b8e..eecb2a292af 100644
---- a/accel/accel-common.c
-+++ b/accel/accel-common.c
-@@ -106,6 +106,11 @@ bool accel_cpu_common_realize(CPUState *cpu, Error **errp)
-     if (acc->cpu_common_realize && !acc->cpu_common_realize(cpu, errp)) {
-         return false;
+@@ -137,9 +137,12 @@ static bool ept_emulation_fault(hvf_slot *slot, uint64_t gpa, uint64_t ept_qual)
+ 
+     if (write && slot) {
+         if (slot->flags & HVF_SLOT_LOG) {
+-            uint64_t dirty_page_start = gpa & ~(TARGET_PAGE_SIZE - 1u);
++            uintptr_t page_size = qemu_real_host_page_size();
++            intptr_t page_mask = -(intptr_t)page_size;
++            uint64_t dirty_page_start = gpa & page_mask;
++
+             memory_region_set_dirty(slot->region, gpa - slot->start, 1);
+-            hv_vm_protect(dirty_page_start, TARGET_PAGE_SIZE,
++            hv_vm_protect(dirty_page_start, page_size,
+                           HV_MEMORY_READ | HV_MEMORY_WRITE | HV_MEMORY_EXEC);
+         }
      }
-+    if (acc->ops
-+        && acc->ops->cpu_target_realize
-+        && !acc->ops->cpu_target_realize(cpu, errp)) {
-+        return false;
-+    }
- 
-     return true;
- }
 -- 
 2.52.0
 
