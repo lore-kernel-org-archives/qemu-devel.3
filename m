@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F97CD47CA3
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 00:52:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A531ED47CAB
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 00:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgY47-00063k-2r; Thu, 15 Jan 2026 19:51:51 -0500
+	id 1vgY46-00061u-Hs; Thu, 15 Jan 2026 19:51:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgY3z-0005wL-7l
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgY3z-0005wM-7v
  for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:51:44 -0500
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgY3u-0000qn-S2
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgY3v-0000qk-UA
  for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:51:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=E2mXrTWQiOztBEj6wySA6rn8mt3kagBW5G9HJyHhrOU=; b=cbfTYx79baCyMNgx
- +LmhZNfFSrg9PeqSHZi7EhkAiYdx8AYNMrIKtFvBUcbN79W8KtmU2qWxxQuRUrbyr81L/MFqznk1O
- W2pB01AfzmMPsYpDKG35elqsmbdqxWNpE/JG6p+1peqgwfQPitB142d5pHKQxDbZutISJhU4fxNfZ
- 77xsrWuaIu+jT0t6O1Iz0jL33tcF0wcxvjeE/fGTmsGRM9KuvLPoid4Ha2LG3WPHu7R85Q18QiUhv
- qg279PeZOUotnjMWRLUg/BMiad4rMTgL7mKhMh9Q1gwmvrOOt5+NixlPKe73ljXkaKtGrQVgemwGR
- TwH2zPrCew76+6LN7A==;
+ :Subject; bh=S69CqaNpTILaVSDiIWXdlALCd2xyUfUPqtotfKwH5BA=; b=Ey2VbmIa6kkQRMJe
+ ZAYLAcxMqeQflkPzEOivowIstH7K4wk9GIIsaCdE4wG0AqPCOBtJVy/bHjGqi+p+DQdW56TUV+TKr
+ kDsl21LnaNhwyHNWS2Foc4ZozzKQ+XyS4h9tf1wKvUJAr3+g7EcxuD7veltvwsoG7x4JvpmQWO8O9
+ JdK9VwVgPn/QLwZijoq9QSz2le+KORlf1AHXKx21FYy89/gpRb0haoRnt9IEXNeRNRXmEN7BVRo+r
+ hEDe3d4fOcc+qnntbC+an8Cts9TxIkVQopWFcxA05KUk/Y3vpHDIasRc/QBrkVAvikCDlPsIHP+TF
+ /UgEtQabf2FgHJ6xqQ==;
 Received: from localhost ([127.0.0.1] helo=dalek)
  by mx.treblig.org with esmtp (Exim 4.98.2)
- (envelope-from <dave@treblig.org>) id 1vgY3t-0000000F7wG-13Zw;
- Fri, 16 Jan 2026 00:51:37 +0000
+ (envelope-from <dave@treblig.org>) id 1vgY3s-0000000F7wG-2cWl;
+ Fri, 16 Jan 2026 00:51:36 +0000
 From: dave@treblig.org
 To: dave@treblig.org, armbru@redhat.com, berrange@redhat.com,
  marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org
-Subject: [PATCH v2 4/4] hxtool: Error on missing docs
-Date: Fri, 16 Jan 2026 00:50:48 +0000
-Message-ID: <20260116005050.376616-5-dave@treblig.org>
+Subject: [PATCH v2 3/4] hxtool: Split srst/erst add checks
+Date: Fri, 16 Jan 2026 00:50:47 +0000
+Message-ID: <20260116005050.376616-4-dave@treblig.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260116005050.376616-1-dave@treblig.org>
 References: <20260116005050.376616-1-dave@treblig.org>
@@ -68,62 +68,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-Error if a '.name' is seen after another '.name' without an intervening
-SRST, this normally indicates missing or misplaced docs.
-
-We can't check DEF (as used in command line options) because those
-often have multiple DEF per doc.
+Split the SRST/ERST case and add some checks.
+This is mainly to make it easier to add some checks in following
+patches.
 
 Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 ---
- scripts/hxtool | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ scripts/hxtool | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/scripts/hxtool b/scripts/hxtool
-index 51dc841479..ee98fb9c09 100755
+index 80516b9437..51dc841479 100755
 --- a/scripts/hxtool
 +++ b/scripts/hxtool
-@@ -1,8 +1,14 @@
- #!/bin/sh
+@@ -2,15 +2,29 @@
  
-+print_if_not_rst()
-+{
-+    test $in_rst -eq 0 && printf "%s\n" "$str"
-+}
  hxtoh()
  {
-     in_rst=0
-+    # .name for HMP
-+    seen_name=0
+-    flag=1
++    in_rst=0
      while read -r str; do
          case $str in
              HXCOMM*)
-@@ -13,6 +19,8 @@ hxtoh()
-                 echo "Error: SRST inside another RST" >&2
-                 exit 1
-               fi
-+              # consume the name
-+              seen_name=0
-               in_rst=1
              ;;
-             ERST*)
-@@ -23,6 +31,16 @@ hxtoh()
-               fi
-               in_rst=0
-             ;;
-+            # Note the space at the start - we need to exclude something.name
-+            ( .name*)
-+              if [ $seen_name -eq 1 ]
+-            SRST*|ERST*) flag=$(($flag^1))
++            SRST*)
++              if [ $in_rst -eq 1 ]
 +              then
-+                echo "Error: Seen another .name, maybe missing docs?" >&2
++                echo "Error: SRST inside another RST" >&2
 +                exit 1
 +              fi
-+              seen_name=1
-+              print_if_not_rst
++              in_rst=1
 +            ;;
-             *)
-             test $in_rst -eq 0 && printf "%s\n" "$str"
++            ERST*)
++              if [ $in_rst -eq 0 ]
++              then
++                echo "Error: ERST already outside RST" >&2
++                exit 1
++              fi
++              in_rst=0
              ;;
+             *)
+-            test $flag -eq 1 && printf "%s\n" "$str"
++            test $in_rst -eq 0 && printf "%s\n" "$str"
+             ;;
+         esac
+     done
 -- 
 2.52.0
 
