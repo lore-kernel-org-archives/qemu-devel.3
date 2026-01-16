@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75712D4A60D
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:00:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95273D4A60D
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:03:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgekg-00037x-JQ; Fri, 16 Jan 2026 03:00:14 -0500
+	id 1vgeng-000410-Tt; Fri, 16 Jan 2026 03:03:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeke-000373-PL
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:00:12 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgenQ-0003y9-DV
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:03:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgekc-0004a6-CJ
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:00:12 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgenO-0004tz-3a
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:03:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768550409;
+ s=mimecast20190719; t=1768550581;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=EvHapu9Ad1IOoCWtEUfNDm0QwqwE5KZeXOwLP7Ya8yM=;
- b=F5CLLP03ZuZNaU0KZD1d/I2rR+2Yd8vjqB/RoVMQtMH2qc8An/tNhusAppmXCMUnnMzWM7
- Zf5fgaFSFhcgq/39dx7Y3RQC6BGTPqY5II75SWxOuGw4V9vZLvSsW9y6GIxMilV6zcLAmc
- FwZN1TXPHJSziONQuF1lAtQL3fXZcg0=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=C3ZBUHHyolbCQKXpdNTKdDZLl0KWnKMbxuoo5Sdf4PA=;
+ b=DwrxmEHMbG+QCfpc/iOLS4WUxjcWnahtjzn8h3LTGTn5WnfuQeZk5CYs9e8yPHxHxaJBMX
+ RZsrekYJ188dw9pgP/Ssueq5bFf4tZR47hFdeBcWAasSHgF+Q0jjbYT3NUfs8p80e5j9Sh
+ iBK0zGplHLNVEMv+XoHGp1T3ZjE2OGI=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-201-JgsCf28lPsykGKCoQhee4A-1; Fri, 16 Jan 2026 03:00:07 -0500
-X-MC-Unique: JgsCf28lPsykGKCoQhee4A-1
-X-Mimecast-MFC-AGG-ID: JgsCf28lPsykGKCoQhee4A_1768550406
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b8711b467f3so466205766b.1
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 00:00:07 -0800 (PST)
+ us-mta-515-IIPcVJ22MiiaSrC0iZVgGQ-1; Fri, 16 Jan 2026 03:02:59 -0500
+X-MC-Unique: IIPcVJ22MiiaSrC0iZVgGQ-1
+X-Mimecast-MFC-AGG-ID: IIPcVJ22MiiaSrC0iZVgGQ_1768550578
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-64b756e2fd1so1923980a12.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 00:02:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768550406; x=1769155206; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=EvHapu9Ad1IOoCWtEUfNDm0QwqwE5KZeXOwLP7Ya8yM=;
- b=UzX1Rd0lF8Q2rEx8Ib0L/r9xpw/r01whZA5Ri0s7pUkHereran/fuziscwsXhRP26A
- /fIIzvnHrfbC+EW78on4YlKzW2aBkoPhZJRRy6S6WJCkLOzcsZ0YzogBavB8gCYU7uHQ
- BviF1KJ60oHt41TkucObUam7tB8mw6z3jaYymIvRlnW4c8aa6Fk8AqWf8GUnGTE0YdjV
- Y8pWdTYPQzRjmqMqIELkmfnRXL/x+avCDuSgGiQH6Tji25d5OVR/7vbxAYSI+1sQWZXS
- 2Qzi+iPecLZ6WO3JyH44TK8rhEaog43oMt6m90brvYVwPUII2C78Gs8oMxbZQu4kM57t
- Mo7A==
+ d=redhat.com; s=google; t=1768550578; x=1769155378; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=C3ZBUHHyolbCQKXpdNTKdDZLl0KWnKMbxuoo5Sdf4PA=;
+ b=A/mJaTlmC3Kl1q0nog0yt11xFYTTDhiWL0k9v3VE6ai3oAxLEWpJbY9ehlwkURuwmq
+ dDB3XqRWoFIYDGS3e/k9zKcjfBuLgvBCOZXD4v2jm4Cjksbgue7vNxu2G84JAK2TobRH
+ NY9j16wfK+WwuE7liu5Xx4SJ5jyBB15iIF+2vNUrcEt+wPV84blsbAOVHOo5AF9lAkr7
+ 49CpebQ3n9OWcKKkk9wlBpqruNNBiDXsNyDX9NRl5s+Aov4Xt3IhizNGYkmv1dZ76pfz
+ ThpqjNNatytk+9MPvvd3RUrtPtXXUQOH0qhWC2dGDeyNCPCiQCMQBauNJCnUVUoWh2gZ
+ Xcpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768550406; x=1769155206;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EvHapu9Ad1IOoCWtEUfNDm0QwqwE5KZeXOwLP7Ya8yM=;
- b=YHI+yaHifzZ42VdgpD0N7jdgSBRJcYUgocAgbcuNfDosbyCm9/CQdAVS88TUQc+t1C
- QXacX/blXdvcwXwplEX//9ST9bXaSFpWJepHnGYzi+iIz1auUUCJ+/DX4uFY5+uexy/F
- hHYkrkE66eSfIUU5Os4Goq0SpLp2OahmZn99ERuf3zlbuJfypLroiqGo7qBvcE+NTzX0
- mz+ukqj0xddM5rnbVHY0mIy95KqlNoClEcBp5bodIazP9uve03w13X/um8QCEXCjhv7j
- qLzEWFqjR6bUK4cyb4ipae6d31whDZjvbhHdIu6W4i3sS2Y+hDOPBzWyV1UFcStuz4+o
- UF/Q==
-X-Gm-Message-State: AOJu0YzmyboXHsIJDo5eQD14NFsDBRnn75EvDPCScNudH45xWyZTmvpd
- c5aR7Ythd3AQqyq/4HyhNldomG/j7i0scQYWqmCr4lyCsLCNhyKOY8BtN9Q7r7p9S3H15zRmMgj
- 1EFjCFQ/6vN2R42tRr8GvDHBlLVCuKycvm52NQ7H+1VpepD1QrfUg4Syb
-X-Gm-Gg: AY/fxX4VNxF2XVaXzIYEqFw+xmlo9q53uL4CLiWwqIgExSbCvG4lbeigMo0zrRtvkKd
- AL8ZU0SajiZgHX2/JsKjK/D/ezAW/ktLAP04edD//gxrUZseMphqqBz3Lwv9GFpSAmAI027+oDP
- 6stc0Wd0geRNXYSOzatFglkUjqlUIRTqsfYTglTTpsX8eRQjzKSooZwRTAOSfZ7i5aG9/NURqQT
- 0ZwfwwdUgfMr5hjhObN0gVr3aGjDdFEjI6uV3uUOpWW5/Zxbt817eKa3Zv744htYSQkwXAKFDec
- FAk3nsWms1K8CBpMwn3DvlDXmjLungxMlGs6D5JjbVgRKHbcuYSrFS6hk019kS/Sip0jsW42Ycy
- ueqpC7GU=
-X-Received: by 2002:a17:907:bd0:b0:b87:7430:d5e2 with SMTP id
- a640c23a62f3a-b8777a59432mr369952966b.12.1768550406439; 
- Fri, 16 Jan 2026 00:00:06 -0800 (PST)
-X-Received: by 2002:a17:907:bd0:b0:b87:7430:d5e2 with SMTP id
- a640c23a62f3a-b8777a59432mr369951566b.12.1768550406079; 
- Fri, 16 Jan 2026 00:00:06 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768550578; x=1769155378;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=C3ZBUHHyolbCQKXpdNTKdDZLl0KWnKMbxuoo5Sdf4PA=;
+ b=OcvZ7nGo6q4G0Qw6yGGxln+1/9LjYLoeNsEz6EwxnVP32Q6mys+4hHpQOtsRIFnbJ2
+ kj/0ZzLieTMuFLUddeHgR4ljoWVZ0A8f4IafGlyQpu988u5oG29IgZAcP28atvYgOjya
+ muAPdJKc04Hh64C9D/hWgpSGkNHv/GKNCTA8Dct9CoNYdB4NesG0S/1rzRxlWVqVpM7J
+ 9OtK9v0sdZtlWwnv1w7+/d1LFz/FbI3+fSLQ2fvwbBGKWCpBnb+SN/h18cltQJwrBMnV
+ RrvC7XYXqIKEG8tLADKw2ZPjx+c0kbuPJpy4ti6TVriqhCRR/mtqlEABHYTPDDktpO1O
+ 5g2A==
+X-Gm-Message-State: AOJu0Yx3pCovQEX4IXAspD3P3cTcYsHIofAT5Mw/HexOCxrJHDLfW5be
+ rMWP4qfhbKfhRgpzylm1/JkdCLWIrg6GpA3mu7ehnfCKyrnKfbmDd/CfUTylvXrZZgt+sCbUHkF
+ XcpUTOBBHSkYi7ZTZCrkz7/m+IGrc2NQokqEX+1LJfVhbncsfZ1VO/yA+Yq8ENKEADcqXYeHJJv
+ Xqyk0qvPkx5arwgsdQ0c5GDKupxvWSEOpoQol2
+X-Gm-Gg: AY/fxX6pDBCXDiCNxgNrxGc8BK4ZK3cLuYfHkavNCbNtmLQxf/yRwjZVhweazIncaCm
+ xKU8pLf/K9nInNRfIHVDGfUaj9fEv7rnpFx9q57zZcNVpk/2sSPWVjKqYw9AiRZhVqs0pM4nAR6
+ UmutikCPijl4B/EJDDM4R8gNFQzChLj5qGcPw8hwqkMEjslCgFlm6Ce5Sww52y7kM1Tm6TRTkox
+ IkUcFDexAFKb32T7VG0Vz5aq5LbyeRdUJANGNdoRp4wlnfC1ewJ/ZDIBKrjL2TfwdHf/r1vI0J6
+ dU1E6oTTv6Z3zGXmDZ8Bo3ZUidAypUxIWZ5IcpEtHBVOTbHfLcakfRPvHLZieiUg34tOReLJydl
+ EF/oFR04=
+X-Received: by 2002:a17:907:d8f:b0:b87:d44:81d with SMTP id
+ a640c23a62f3a-b8793035657mr170098066b.45.1768550577609; 
+ Fri, 16 Jan 2026 00:02:57 -0800 (PST)
+X-Received: by 2002:a17:907:d8f:b0:b87:d44:81d with SMTP id
+ a640c23a62f3a-b8793035657mr170096366b.45.1768550577118; 
+ Fri, 16 Jan 2026 00:02:57 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.113.220])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8794f93c34sm176641666b.0.2026.01.16.00.00.05
+ a640c23a62f3a-b87959ca4casm163588866b.34.2026.01.16.00.02.56
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Jan 2026 00:00:05 -0800 (PST)
-Message-ID: <7d190ec5-9a15-4d95-a63a-4f25b7b13895@redhat.com>
-Date: Fri, 16 Jan 2026 09:00:04 +0100
+ Fri, 16 Jan 2026 00:02:56 -0800 (PST)
+Message-ID: <059f0401-4743-4d58-b833-e736e9c744f1@redhat.com>
+Date: Fri, 16 Jan 2026 09:02:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] hxtool: Split srst/erst add checks
-To: dave@treblig.org, armbru@redhat.com, berrange@redhat.com,
- marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 4/4] hxtool: Error on missing docs
+To: qemu-devel@nongnu.org
 References: <20260116005050.376616-1-dave@treblig.org>
- <20260116005050.376616-4-dave@treblig.org>
-Content-Language: en-US
+ <20260116005050.376616-5-dave@treblig.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -136,7 +136,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260116005050.376616-4-dave@treblig.org>
+In-Reply-To: <20260116005050.376616-5-dave@treblig.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -167,53 +167,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 16/01/2026 01.50, dave@treblig.org wrote:
 > From: "Dr. David Alan Gilbert" <dave@treblig.org>
 > 
-> Split the SRST/ERST case and add some checks.
-> This is mainly to make it easier to add some checks in following
-> patches.
+> Error if a '.name' is seen after another '.name' without an intervening
+> SRST, this normally indicates missing or misplaced docs.
+> 
+> We can't check DEF (as used in command line options) because those
+> often have multiple DEF per doc.
 > 
 > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 > ---
->   scripts/hxtool | 20 +++++++++++++++++---
->   1 file changed, 17 insertions(+), 3 deletions(-)
+>   scripts/hxtool | 18 ++++++++++++++++++
+>   1 file changed, 18 insertions(+)
 > 
 > diff --git a/scripts/hxtool b/scripts/hxtool
-> index 80516b9437..51dc841479 100755
+> index 51dc841479..ee98fb9c09 100755
 > --- a/scripts/hxtool
 > +++ b/scripts/hxtool
-> @@ -2,15 +2,29 @@
+> @@ -1,8 +1,14 @@
+>   #!/bin/sh
 >   
+> +print_if_not_rst()
+> +{
+> +    test $in_rst -eq 0 && printf "%s\n" "$str"
+> +}
+
+Add an empty line after this function?
+
 >   hxtoh()
 >   {
-> -    flag=1
-> +    in_rst=0
+>       in_rst=0
+> +    # .name for HMP
+> +    seen_name=0
 >       while read -r str; do
 >           case $str in
 >               HXCOMM*)
+> @@ -13,6 +19,8 @@ hxtoh()
+>                   echo "Error: SRST inside another RST" >&2
+>                   exit 1
+>                 fi
+> +              # consume the name
+> +              seen_name=0
+>                 in_rst=1
 >               ;;
-> -            SRST*|ERST*) flag=$(($flag^1))
-> +            SRST*)
-> +              if [ $in_rst -eq 1 ]
+>               ERST*)
+> @@ -23,6 +31,16 @@ hxtoh()
+>                 fi
+>                 in_rst=0
+>               ;;
+> +            # Note the space at the start - we need to exclude something.name
+> +            ( .name*)
+> +              if [ $seen_name -eq 1 ]
 > +              then
-> +                echo "Error: SRST inside another RST" >&2
+> +                echo "Error: Seen another .name, maybe missing docs?" >&2
 > +                exit 1
 > +              fi
-> +              in_rst=1
+> +              seen_name=1
+> +              print_if_not_rst
 > +            ;;
-> +            ERST*)
-> +              if [ $in_rst -eq 0 ]
-> +              then
-> +                echo "Error: ERST already outside RST" >&2
-> +                exit 1
-> +              fi
-> +              in_rst=0
->               ;;
 >               *)
-> -            test $flag -eq 1 && printf "%s\n" "$str"
-> +            test $in_rst -eq 0 && printf "%s\n" "$str"
->               ;;
->           esac
->       done
+>               test $in_rst -eq 0 && printf "%s\n" "$str"
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I think this line could be replaced with print_if_not_rst now?
+
+  Thomas
 
 
