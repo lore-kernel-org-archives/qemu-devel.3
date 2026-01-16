@@ -4,87 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27BCAC982F1
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 19:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F69C982FB
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 19:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgp27-0001Kp-7m; Fri, 16 Jan 2026 13:58:55 -0500
+	id 1vgprG-0001Qa-Gx; Fri, 16 Jan 2026 14:51:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1vgp25-0001KG-LA
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 13:58:54 -0500
-Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1vgpqa-0000Xr-7A
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 14:51:04 -0500
+Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1vgp23-0000lS-Sx
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 13:58:53 -0500
-Received: by mail-dy1-x132f.google.com with SMTP id
- 5a478bee46e88-2b6b0500e06so2001149eec.1
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 10:58:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
+ id 1vgpqY-0001No-Dp
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 14:51:03 -0500
+Received: by mail-ot1-x335.google.com with SMTP id
+ 46e09a7af769-7cfcebf1725so1616763a34.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 11:50:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768593056; cv=none;
+ d=google.com; s=arc-20240605;
+ b=OO4cIZsglSAwpxkMDnKUQgnfE2n3wPJMd8XtBEsWJrnkrmTt2av2/O2R2ObdZqWaxa
+ 2tLvltpn9gdbutcqJ0oFh4WeoQJ4J+Ak5tAj1uj/TZ9OORHC8SZ11xBfFIimX0vJqnD1
+ pSu4qZFxVFqizzRgJrMIFi3TSt6oiCIbYTa2e0iJ66gmWbMd1aQexT4Y9dRMKGrjhxOy
+ QpTOJSVkytGqkC2pvzSInfaSFU4R72oRBNEc+/adT94+lAkHAEg8teufjgoru9i2nP/2
+ RSobY5T+t7To7r+h3tocs1hsbDcSi+MfETbUJIINVwMxZCYOIPgg4yNIt4ndlVPy4JaU
+ Q5Gw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=teDDPgMWHLMcsEK7YMG91On4831FNcIesgnPi/nB9tM=;
+ fh=hRvcaf7CRZnDmsdsAsI4IeE+AGX8S2VzN3Tp5gobNAk=;
+ b=D+YI4uUECg9/OJFWu70rVHZ/YBrZ359DH+P1zYYM9h5iwZ/9+jcFoSD8FLpfN5gI3a
+ TCGT9QYMUVXV5s7ZGZsBEMVMEUdsAU8vJFO1VLYD3Rr7/CAStWLAgq8D2ktojwEQQw40
+ Hll+kP6TMZpRtyfS9/q8BERC79C510Qh4F961XDHX82VH1cImV0PSkvuDt+BlJJDVnMv
+ EckkqZPS7vzmUFNK4HnJS0g4pZJRMokQ4zU7wl/bAOYNzagNP/nwPzGHxsxO4BWMfnN6
+ RU09ebTNEygMTniKeKB6pC1lTvCvxen+3HZBTW5C9DGn7c/65pm1n8XZivcihh97qeij
+ kWnw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768589930; x=1769194730; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1768593056; x=1769197856; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0cae0AKU0AXhKRe7liQDqczScNpFcN33Kwt7lSzXYw0=;
- b=Np8FqvN7CuPRfsAEGVeggKT/11HLyXAVEQCogvp85gRElnN3gtCbhQCh47A8LEh5rt
- kELtR5xrICx2ufShrsQZsQA2H2o+rYZmIZVxklWJNhGuwr7pfXne8KEHXIB4yJ9nNeu0
- 5lo06dneRGGMsqyPOoUR6ZpV9AKw8yUrENNIqM89ckhndu+HJjjPGnX6pXBgsZ6vIkZK
- A2xv9KJE77efyCUyKjdg/R2vnZAm8+cw43VgXhnH0+iC5Z3Vyu8LuJ+iEiZO1YS8hpRk
- +gyRYZprMsfW7iCWDH09abdItd7ZKu5FxWXas8dGPZN4kRLrXIQuQUdFu/SkTp7UqaSJ
- TJeQ==
+ bh=teDDPgMWHLMcsEK7YMG91On4831FNcIesgnPi/nB9tM=;
+ b=H7uFHbN1Sk69fC0UpE/UHI9SQCtJHVXaqkWG05B8gYYapwjWh59uF9Pfo4znkDBlNR
+ eStFxMddi/C43s2Ax8Yq2LXdvQkVR4y5C3kfVQIlGmVMtjd1sbmSQFm9fqmNOiuc0UYL
+ Es4N19vgKZ5KnvuEkhn0KPN4qs6Y1l3dmTS5mwbh/MDxHOwnZM2fRLHb9dn4+TF+0S/Q
+ eWclfL/84vaxYYLdrsUs7uKsESOUk1cdRb2ZdNgwX95maKK5cgLogjvSLHEAo7Vjcnum
+ KP8WzIG6/xJVj3oDWEmJfGziC0FqwVGu+IeqXJR/xbnweqHIb51Q/cXt+tb4cNsCTAQJ
+ 3mZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768589930; x=1769194730;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1768593056; x=1769197856;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=0cae0AKU0AXhKRe7liQDqczScNpFcN33Kwt7lSzXYw0=;
- b=USTP8f972OIGaU3SoQ6jTzSlDbRoA7w0Dv19+kiROa34TIzHDLOeWzFnBJWQwYuldT
- vlKedJhyQ+/k6jeS3kqIWp5Iitet5y8yWluqg2LbG4EYg7EC8EBreH6LJCbaPevDw5fe
- z1mPHzdp6Lg10Cq4qU591LwjLYHSUn63iAzA81vagOrpa60Ja/uKwadVH3PzYI5vyCnx
- D4myPZzSvEOBygl8/ZTdeOLHmcGfuCQOK14OSQ7z37IOa0rSixcoLr4PsI3rX6Ms2/G9
- qhGwCS6EIB1kWSJmcbmsMiKKV6cz6lJAmO79jRQAsGpLm2CnW6DtJNxtxymZ+5rVpeNT
- q40A==
-X-Gm-Message-State: AOJu0YxKI40TJ9Kknig04j8sRcOqMU/FZPX8+mP1MWph+p5RcyD3qRtF
- xddUFQzsGBrTreATfCaPXhW1vfFXOj73VYgwGcaLoGF1mQ+pBQWq6gXPciebATMQpmmFBkfwc7Z
- 8CBhL
-X-Gm-Gg: AY/fxX6MPNds29aIBHg7Uc+WYoK/QYuhgtCr+IWTrCkPKHMbQuRw9IdN7pfiZw9cUd6
- Xwerhkr44JJOfWPZDY7q+NYwM699bMJG2bwYrUd/AmMcRXVpwa5hEQNrlqB3aVmDIPntBu91Brh
- an3KEw6x5hsGJuvVRsrhq9bp63/y35HMORywXYaWYz16dqGoni+2/k9G4mi+viKKDo0yCFCg4C5
- xRtaikwyXavdcm0lAcaRGKYwAcdc/X92WZMQbjl2xHFWHu34exdukV8UvayFLf/QGig+s7qd9wM
- 6q9gW8nHVclKwXVMD9tMhkdLbkUTQ59XIf6J2ta6V0iejM4uDEywkY4gLVeb5S3Wn7SBG3LhB6e
- uelk5+n9zHkz2V0fy3zdNVHgV2KxqzTfPa9Akb0g+srkRrOATiuFzB8DJ1QP3MxncUEXUDzNBds
- /ysOwziL4xWRuCIA==
-X-Received: by 2002:a05:7301:129a:b0:2ab:9b40:fc78 with SMTP id
- 5a478bee46e88-2b6b40f3574mr2511745eec.20.1768589928927; 
- Fri, 16 Jan 2026 10:58:48 -0800 (PST)
-Received: from gromero0.. ([191.8.214.17]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2b6c2de1f29sm1524126eec.15.2026.01.16.10.58.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Jan 2026 10:58:48 -0800 (PST)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, philmd@linaro.org, peter.maydell@linaro.org
-Cc: gustavo.romero@linaro.org
-Subject: [PATCH v4 2/4] target/i386: Add a _MAX sentinel to X86ASIdx enum
-Date: Fri, 16 Jan 2026 15:58:12 -0300
-Message-Id: <20260116185814.108560-3-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260116185814.108560-1-gustavo.romero@linaro.org>
-References: <20260116185814.108560-1-gustavo.romero@linaro.org>
+ bh=teDDPgMWHLMcsEK7YMG91On4831FNcIesgnPi/nB9tM=;
+ b=r119zmv6P2/7RjaSHb+yiCZ49ddmKF61uQKN8BJzTJczpy+DRcIPMT2UlPSntUEk0j
+ uA/llaS5Z/4SIZHAigcxayNdJgrcpXTOXexnjsdlIVZDDT6giYkmBW0dD9WcoL8fUtUT
+ a3ZQFG/SAV4vbHMGPnaU86V0OgI77jpgUSMIdjGOwTET4Hx4JHVj3/ykOegL8ULshSJm
+ zJgjtFjc8NeGQhAMNh/Hqq5Z45ddUFHY95LdMQggKoYnLrjPUZtJbwf0keWa/MTz3aWl
+ sSDhx6hxOmvSythBXE4HpX61MXgcU95UM6vvxf9r10R8OeYJ7kL3ZZ/7AxjpH84QqV50
+ RIug==
+X-Gm-Message-State: AOJu0Yx9pAtU6P9RMc2QAi+mF6W1FVYB8/dH0oPBhcQbzPNkOf6AQfdB
+ LParYdvdrPPrNba+FS50WhrphuHnO/lQsLeJJVcg9RtNsbE8ZF9X1YYo0aw9Zvqr/8Y5j+mX3WU
+ /h3c9I3+n5S0zgUuw9lYMb+mSuZ/mqNA=
+X-Gm-Gg: AY/fxX5G8qTek/RwcdvnyVpPkCoSwUmpAGgTJe+AF5G3SJ1HyMGimNv17mJsxS/Ov14
+ YBZhQ5GEBkuE7FZuxGY22b/P/PPupJJTyeMLPZpMLvm1gv9SeOXR2eEP/R8Eyq+608z7Fgw0xHU
+ y1NN+0lKzKYR7dXGsduQtivSb3Ni8J4mpoQ2ubQ6jbAPjnOucW07hn1m2+Vv+khnsTPAOWsRZ/Q
+ 2hBrtHp9RD2UgEIDHI2EnvyMxYAak+QbuBZmg/GCETMFSQChNAq1HRgPN0Z/J2dUO4Oa78b6xGW
+ DizzWcCzeUNlQIacETb4YKn07g==
+X-Received: by 2002:a05:6820:174a:b0:65e:f37f:93a4 with SMTP id
+ 006d021491bc7-66117959c64mr1764198eaf.8.1768593056108; Fri, 16 Jan 2026
+ 11:50:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
- envelope-from=gustavo.romero@linaro.org; helo=mail-dy1-x132f.google.com
+References: <20260115081103.655749-1-dtalexundeer@yandex-team.ru>
+ <20260115081103.655749-6-dtalexundeer@yandex-team.ru>
+In-Reply-To: <20260115081103.655749-6-dtalexundeer@yandex-team.ru>
+From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Date: Fri, 16 Jan 2026 14:50:45 -0500
+X-Gm-Features: AZwV_QiMN4DGVtzxgAKEZgmhbOBLU-3A6_s5nR0j38K8nCOVb7nHf8zJ0wBplr8
+Message-ID: <CAFubqFtKrsPn++kMPEAOO2LdygY9BZyDmzb0nU7YbK1on2GNCw@mail.gmail.com>
+Subject: Re: [PATCH v7 5/5] vhost-user-blk: support inter-host inflight
+ migration
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ Zhenwei Pi <pizhenwei@bytedance.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, mzamazal@redhat.com,
+ Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, qemu-block@nongnu.org,
+ virtio-fs@lists.linux.dev, 
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-ot1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,27 +130,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a sentinel to the X86ASIdx enum so it can be used to compute the
-total number of address spaces supported by the arch.
+Apologies if I've missed something obvious here - what actually skips
+the GET_VRING_BASE operation here? I was expecting something like:
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- target/i386/cpu.h | 1 +
- 1 file changed, 1 insertion(+)
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -221,8 +221,9 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+         return 0;
+     }
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 2bbc977d90..da5161fc1a 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2733,6 +2733,7 @@ void cpu_sync_avx_hflag(CPUX86State *env);
- typedef enum X86ASIdx {
-     X86ASIdx_MEM = 0,
-     X86ASIdx_SMM = 1,
-+    X86ASIdx_MAX = X86ASIdx_SMM
- } X86ASIdx;
- 
- #ifndef CONFIG_USER_ONLY
--- 
-2.34.1
+-    force_stop =3D s->skip_get_vring_base_on_force_shutdown &&
+-                 qemu_force_shutdown_requested();
++    force_stop =3D (s->skip_get_vring_base_on_force_shutdown &&
++                 qemu_force_shutdown_requested()) ||
++                 s->inflight_migration; // FIXME: runstate check?
 
+Without setting force_stop in vhost_user_blk_stop() I don't see how
+the GET_VRING_BASE operation would be skipped.
+
+On Thu, Jan 15, 2026 at 3:13=E2=80=AFAM Alexandr Moshkov
+<dtalexundeer@yandex-team.ru> wrote:
+>
+> During inter-host migration, waiting for disk requests to be drained
+> in the vhost-user backend can incur significant downtime.
+>
+> This can be avoided if QEMU migrates the inflight region in
+> vhost-user-blk.
+> Thus, during the qemu migration, with feature flag the vhost-user
+> back-end can immediately stop vrings, so all in-flight requests will be
+> migrated to another host.
+>
+> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  hw/block/vhost-user-blk.c          | 27 +++++++++++++++++++++++++++
+>  include/hw/virtio/vhost-user-blk.h |  1 +
+>  include/hw/virtio/vhost.h          |  6 ++++++
+>  3 files changed, 34 insertions(+)
+>
+> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+> index 4d81d2dc34..c151e83677 100644
+> --- a/hw/block/vhost-user-blk.c
+> +++ b/hw/block/vhost-user-blk.c
+> @@ -353,6 +353,7 @@ static int vhost_user_blk_connect(DeviceState *dev, E=
+rror **errp)
+>      vhost_dev_set_config_notifier(&s->dev, &blk_ops);
+>
+>      s->vhost_user.supports_config =3D true;
+> +    s->vhost_user.supports_inflight_migration =3D s->inflight_migration;
+>      ret =3D vhost_dev_init(&s->dev, &s->vhost_user, VHOST_BACKEND_TYPE_U=
+SER, 0,
+>                           errp);
+>      if (ret < 0) {
+> @@ -568,6 +569,26 @@ static struct vhost_dev *vhost_user_blk_get_vhost(Vi=
+rtIODevice *vdev)
+>      return &s->dev;
+>  }
+>
+> +static bool vhost_user_blk_inflight_needed(void *opaque)
+> +{
+> +    struct VHostUserBlk *s =3D opaque;
+> +
+> +    bool inflight_migration =3D virtio_has_feature(s->dev.protocol_featu=
+res,
+> +                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFL=
+IGHT);
+> +
+> +    return inflight_migration;
+> +}
+> +
+> +static const VMStateDescription vmstate_vhost_user_blk_inflight =3D {
+> +    .name =3D "vhost-user-blk/inflight",
+> +    .version_id =3D 1,
+> +    .needed =3D vhost_user_blk_inflight_needed,
+> +    .fields =3D (const VMStateField[]) {
+> +        VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
+> +        VMSTATE_END_OF_LIST()
+> +    },
+> +};
+> +
+>  static const VMStateDescription vmstate_vhost_user_blk =3D {
+>      .name =3D "vhost-user-blk",
+>      .minimum_version_id =3D 1,
+> @@ -576,6 +597,10 @@ static const VMStateDescription vmstate_vhost_user_b=
+lk =3D {
+>          VMSTATE_VIRTIO_DEVICE,
+>          VMSTATE_END_OF_LIST()
+>      },
+> +    .subsections =3D (const VMStateDescription * const []) {
+> +        &vmstate_vhost_user_blk_inflight,
+> +        NULL
+> +    }
+>  };
+>
+>  static const Property vhost_user_blk_properties[] =3D {
+> @@ -591,6 +616,8 @@ static const Property vhost_user_blk_properties[] =3D=
+ {
+>                        VIRTIO_BLK_F_WRITE_ZEROES, true),
+>      DEFINE_PROP_BOOL("skip-get-vring-base-on-force-shutdown", VHostUserB=
+lk,
+>                       skip_get_vring_base_on_force_shutdown, false),
+> +    DEFINE_PROP_BOOL("inflight-migration", VHostUserBlk,
+> +                     inflight_migration, false),
+>  };
+>
+>  static void vhost_user_blk_class_init(ObjectClass *klass, const void *da=
+ta)
+> diff --git a/include/hw/virtio/vhost-user-blk.h b/include/hw/virtio/vhost=
+-user-blk.h
+> index 8158d4673d..1e41a2bcdf 100644
+> --- a/include/hw/virtio/vhost-user-blk.h
+> +++ b/include/hw/virtio/vhost-user-blk.h
+> @@ -52,6 +52,7 @@ struct VHostUserBlk {
+>      bool started_vu;
+>
+>      bool skip_get_vring_base_on_force_shutdown;
+> +    bool inflight_migration;
+>  };
+>
+>  #endif
+> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> index 08bbb4dfe9..89817bd848 100644
+> --- a/include/hw/virtio/vhost.h
+> +++ b/include/hw/virtio/vhost.h
+> @@ -554,4 +554,10 @@ static inline int vhost_load_backend_state(struct vh=
+ost_dev *dev, QEMUFile *f,
+>  }
+>  #endif
+>
+> +extern const VMStateDescription vmstate_vhost_inflight_region;
+> +#define VMSTATE_VHOST_INFLIGHT_REGION(_field, _state) \
+> +    VMSTATE_STRUCT_POINTER(_field, _state, \
+> +                           vmstate_vhost_inflight_region, \
+> +                           struct vhost_inflight)
+> +
+>  #endif
+> --
+> 2.34.1
+>
+>
 
