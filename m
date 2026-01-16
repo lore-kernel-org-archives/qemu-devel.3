@@ -4,50 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B2AC982D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 16:24:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB9D9C982D1
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 16:30:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgmbu-0002fn-EZ; Fri, 16 Jan 2026 11:23:42 -0500
+	id 1vgmhw-0000bf-U5; Fri, 16 Jan 2026 11:29:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vgmb1-0002Sg-VK; Fri, 16 Jan 2026 11:22:51 -0500
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vgmat-0006M7-EC; Fri, 16 Jan 2026 11:22:41 -0500
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id EB86247727;
- Fri, 16 Jan 2026 17:22:35 +0100 (CET)
-Message-ID: <57bc5da0-5889-43dd-ab53-635363583b5c@proxmox.com>
-Date: Fri, 16 Jan 2026 17:22:34 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgmhn-0000aD-1y
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 11:29:51 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgmhl-00074w-6h
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 11:29:46 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4801eb2c0a5so7795175e9.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 08:29:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768580982; x=1769185782; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tjG4vIAWwuc+XtwynpzOFi2h/9DUenqkua/KON79W9E=;
+ b=arDRPp07JDrTpHx60ijQmJPLtyt8PUL5e07ju0NWAZW7MxXAd9nT9+vrLqyBsfFszP
+ exIdS57Cc36wfzqoUv1NCPcx7wDCjPIOX4aTT26kifbR6SzsPLXgdrgMBIoQLCbHC0sm
+ bXa+gjEQRWTXsqYlmdcUucQitPKzplw6zEbwrdF9OQLHv7hZlhKk/Uak+pyfdrHzZI5Y
+ J1sVyDhTBAbWWNLV10NvOFHXVVavh9LUW5If1GoC/a1Ha2sjYLFFrQuHNU4hTdNG0qNb
+ ReLyLJpLQ/gbMADgcvLwWunooCmSdHgbzeHknXssC1uox90GVDp1sCoPh5Z83gCU5aRX
+ jRSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768580982; x=1769185782;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tjG4vIAWwuc+XtwynpzOFi2h/9DUenqkua/KON79W9E=;
+ b=WaM3NqIrLCycDC+ILsXIEeuS9ttGHP6Qw7NVAY/XIIbljCbl9ImvsJrUY9y611amfB
+ +hnrXwZMvKFfuPnhbjoB/lqgtMNKNsHCM9mxwiqhhJRs5S2xvEnE5GT1rMma0sx+Yx/a
+ m9WonOEPCHru1i98kEFK3U0WRt370X1oYjR3cf8YNXBT/q5tdCb9Z9y+NH0awQcb3i+y
+ IYNtBkC3JLWQuJ93WoRiLeHuVs6e3zb8gT3Mb8iBDRAyU+uhnTrNOtzoRtgg/O43HSk1
+ Avxkz4cf8ndCsiLkZHVYx2ainqTqLZf3fsHExxW2CxGklB12KIu1jJvBkpKATnVQ47EO
+ kNvA==
+X-Gm-Message-State: AOJu0Yy9jEVkYWTJaKTuU74wEyGID5vIq9v+zqVPxsZYDaNXgSpHQdwO
+ HsdOMrIkCsDgDymQE41Ne/LAa2IFeIeTnAq1HRk8eIyxCTgj6EHODBF1PyPmXagQZT0=
+X-Gm-Gg: AY/fxX4wlrieEaYw/YGsfdF0xYgiYNc6rFJ8EmOnBLATZ5THAPQyK+3Z2TXP3SBGTKf
+ S6J7K0kVmMnnqH5fg3tmDB+cGjUDXxB9SNOgh1ZRqHky+zBpg/w/GB56USYC1hde3Ze/Hk/yRHc
+ wzhCK+4WBchvSstG8gECxmZQXXjiI9HHmI8Vy897+UGLukj4U/uAc35qd0HXwQ3PbtuKMS3TZ/j
+ SeAYyfkU6ObOEoQPfdP+/s2xcr4RYC1g+Ae/u5vC08cU5y9rLvBrEo3PBAeeNJn8muiKbJso5Wm
+ HZvA3tEX37bhA4F+IRPj9gdbxDsQ4AmAYhRU83fJifYkEyrKEJ1nPhmu3yTYerggR9tskHV1Ivb
+ TP5VdkCpJbKANNZZhrePljXBNwYh8/IWuVBg8U2DbPRaIoE2ukbIlC3swmQzdPQJmyUwp9oSaoY
+ fuCAY7NCDzT9KelhNR2fF/YWlpl21CP6fVJdkkxMcy3DsvCPM1gt4i4w==
+X-Received: by 2002:a05:600c:458c:b0:47d:6856:9bd9 with SMTP id
+ 5b1f17b1804b1-4801e3342bamr33031195e9.23.1768580981897; 
+ Fri, 16 Jan 2026 08:29:41 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43569927007sm5989271f8f.16.2026.01.16.08.29.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Jan 2026 08:29:41 -0800 (PST)
+Message-ID: <9405870c-1278-43a7-9fdf-ba986e362ed2@linaro.org>
+Date: Fri, 16 Jan 2026 17:29:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 14/15] block/io_uring: use aio_add_sqe()
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, eblake@redhat.com,
- Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- hibriansong@gmail.com
-References: <20251104022933.618123-1-stefanha@redhat.com>
- <20251104022933.618123-15-stefanha@redhat.com>
+Subject: Re: [PATCH v16 15/26] whpx: add arm64 support
 Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <20251104022933.618123-15-stefanha@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1768580505689
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260116135235.38092-1-mohamed@unpredictable.fr>
+ <20260116135235.38092-16-mohamed@unpredictable.fr>
+ <23800170-66aa-4e31-9e74-e256933c8a8b@linaro.org>
+ <D57D8689-9535-41D8-9818-79E544E46DB1@unpredictable.fr>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <D57D8689-9535-41D8-9818-79E544E46DB1@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,67 +112,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-Am 04.11.25 um 5:11 AM schrieb Stefan Hajnoczi:
-> AioContext has its own io_uring instance for file descriptor monitoring.
-> The disk I/O io_uring code was developed separately. Originally I
-> thought the characteristics of file descriptor monitoring and disk I/O
-> were too different, requiring separate io_uring instances.
+On 16/1/26 15:58, Mohamed Mediouni wrote:
 > 
-> Now it has become clear to me that it's feasible to share a single
-> io_uring instance for file descriptor monitoring and disk I/O. We're not
-> using io_uring's IOPOLL feature or anything else that would require a
-> separate instance.
 > 
-> Unify block/io_uring.c and util/fdmon-io_uring.c using the new
-> aio_add_sqe() API that allows user-defined io_uring sqe submission. Now
-> block/io_uring.c just needs to submit readv/writev/fsync and most of the
-> io_uring-specific logic is handled by fdmon-io_uring.c.
+>> On 16. Jan 2026, at 15:21, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> On 16/1/26 14:52, Mohamed Mediouni wrote:
+>>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>   accel/whpx/whpx-common.c    |   1 +
+>>>   target/arm/meson.build      |   1 +
+>>>   target/arm/whpx/meson.build |   3 +
+>>>   target/arm/whpx/whpx-all.c  | 810 ++++++++++++++++++++++++++++++++++++
+>>>   4 files changed, 815 insertions(+)
+>>>   create mode 100644 target/arm/whpx/meson.build
+>>>   create mode 100644 target/arm/whpx/whpx-all.c
+>>
+>>
+>>> +void whpx_apply_breakpoints(
+>>> +    struct whpx_breakpoint_collection *breakpoints,
+>>> +    CPUState *cpu,
+>>> +    bool resuming)
+>>> +{
+>>> +
+>>
+>>         g_assert_not_reached() ?
+>>
+>>> +}
+>>> +void whpx_translate_cpu_breakpoints(
+>>> +    struct whpx_breakpoints *breakpoints,
+>>> +    CPUState *cpu,
+>>> +    int cpu_breakpoint_count)
+>>> +{
+>>> +
+>>
+>>         g_assert_not_reached() ?
+>>
+>>> +}
+>>
+> Hello,
 > 
-> There are two immediate advantages:
-> 1. Fewer system calls. There is no need to monitor the disk I/O io_uring
->    ring fd from the file descriptor monitoring io_uring instance. Disk
->    I/O completions are now picked up directly. Also, sqes are
->    accumulated in the sq ring until the end of the event loop iteration
->    and there are fewer io_uring_enter(2) syscalls.
-> 2. Less code duplication.
+> Called unconditionally today from the common code. But does nothing as breakpoints aren’t supported on the platform.
 > 
-> Note that error_setg() messages are not supposed to end with
-> punctuation, so I removed a '.' for the non-io_uring build error
-> message.
-> 
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Reviewed-by: Eric Blake <eblake@redhat.com>
+> If trying to actually enable a breakpoint, common code will go through whpx_set_exception_exit_bitmap and error there.
 
-after commit 047dabef97 ("block/io_uring: use aio_add_sqe()") using
-'aio=io_uring' for an 'ide-hd' drive becomes prohibitively slow: for me,
-a Debian 12 guest [0] won't even reach the GRUB menu after multiple
-minutes. Using aio=threads makes the issue go away, as does building
-from the previous commit, i.e. 1eebdab3c3 ("aio-posix: add aio_add_sqe()
-API for user-defined io_uring requests"). The issue still exists on
-current master.
-
-There are lots and lots of 512 byte read requests. MAX_BUFFERED_REQS in
-ide_buffered_readv() is only 16, maybe that has something to do with it?
-Haven't had the time to dig into the issue yet, and wasn't able to
-reproduce with 'qemu-img bench' or something other than 'ide-hd'.
-
-Best Regards,
-Fiona
-
-[0]:
-> ./qemu-system-x86_64 \
->   -accel kvm \
->   -chardev 'socket,id=qmp,path=/var/run/qemu-server/500.qmp,server=on,wait=off' \
->   -mon 'chardev=qmp,mode=control' \
->   -pidfile /var/run/qemu-server/500.pid \
->   -nodefaults \
->   -vnc 'unix:/var/run/qemu-server/500.vnc,password=on' \
->   -m 4096 \
->   -device 'VGA,id=vga,bus=pci.0,addr=0x2' \
->   -drive 'file=/mnt/pve/dir/images/500/vm-500-disk-0.raw,if=none,id=drive-ide0,format=raw,aio=io_uring' \
->   -device 'ide-hd,bus=ide.0,unit=0,drive=drive-ide0,id=ide0'
-
+Ah OK, then let's just add /* Breakpoints aren’t supported on this 
+platform */ twice.
 
 
