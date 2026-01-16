@@ -4,104 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC4ED4A60A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 264A9D4A60D
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 07:58:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgei7-0000kw-G1; Fri, 16 Jan 2026 02:57:35 -0500
+	id 1vgeiI-0000qd-5m; Fri, 16 Jan 2026 02:57:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vgehf-0000dt-Hm
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:57:09 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vgeiG-0000ox-2C
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:57:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vgehc-00044O-2C
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:57:06 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vgeiE-000484-EC
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:57:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768550223;
+ s=mimecast20190719; t=1768550261;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=KW2wUi75Bxov1Sph6vKG8yHs4rhyMVY3GnvvDalDvhU=;
- b=VgGP2g2ee6gROx9XMbeB3LnXLYKmlz9AO/oB28nihTGgl2Pphbr5pFaP0iizlconACu1tO
- k64ImWOgv25tXV0iZFDlRO+ZKHYWkofvsSU2c4167xzdT2sHHVkYiXvNZKvI8IGkY2wkl4
- DAbr+8HDeHbq1RUjzZ7y9hgLBws1PpU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LQeED1LprtQUBjJWR2tVLf2FOAA6uQ2wOLzo79S2Mgw=;
+ b=OWkCbnxk1PziX6elRZs3aEvgR+5Qvb2LnIdheEKRxMyFTBaRz3+9fSqptYCujbWVgUjIBo
+ KX50EGJ0ZK/W1ONeBrZaA5mx9h9ke6VZpD2v3alrZ7ngvcgLFqmPhIvlseffhBD9BDv7MJ
+ 7ExX0U5J3QAzFm5rariWjcS9whIRpzU=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-oKVENrIHPdGwQiVnp7o7fw-1; Fri, 16 Jan 2026 02:57:00 -0500
-X-MC-Unique: oKVENrIHPdGwQiVnp7o7fw-1
-X-Mimecast-MFC-AGG-ID: oKVENrIHPdGwQiVnp7o7fw_1768550219
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-47d5bd981c8so11041205e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 23:57:00 -0800 (PST)
+ us-mta-573-lb9wFBYjNkue6Gge2f-AYQ-1; Fri, 16 Jan 2026 02:57:38 -0500
+X-MC-Unique: lb9wFBYjNkue6Gge2f-AYQ-1
+X-Mimecast-MFC-AGG-ID: lb9wFBYjNkue6Gge2f-AYQ_1768550258
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-430ffc4dc83so1359880f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 23:57:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768550219; x=1769155019; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768550257; x=1769155057; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=KW2wUi75Bxov1Sph6vKG8yHs4rhyMVY3GnvvDalDvhU=;
- b=Gb5x0UVNjY8mn4EmyE5ufrmaOSEllpXTJXHy1xsMBbsqZULwmtLTBR1/GX5eP/WACS
- akHUv7+UORDdHTFaJ/pFNj5yf20L5bQcC+JWR1u36wsUo6riDx6s1RFZntvyZnz7eV4n
- LsJl0lnIxbdTj/KgyJB9dFwcBApkW0AsuoYJaHqTUQfPTYN7mHPCLX8UKt3fQiqOSoda
- +LIxq9FLktz0IDoYw/N4eFn5QkTzlDaO7iuDVgdp3hF/2ixQv1jkT7A+aUf413LW10fI
- aQJ8bQQTCIXgTMvYhCOcg0R6YDIsW7OoZzDRRG5jqT2fRLok2BExDnlA55TVgDuF5LXZ
- 9qfg==
+ bh=LQeED1LprtQUBjJWR2tVLf2FOAA6uQ2wOLzo79S2Mgw=;
+ b=eDXRaShn+EIJJ/q30fulwj8SGy4WdYHAa7+/SB4JnyD5HBK1eKxAMspwPjOy0XrgU9
+ 42/0PHHJipzROgZtdZ4LvMkfjpscF1Pzn99K/7ONTbqx0sZsSciEnjyz7h/5gD8y1YJG
+ cXK865rFhysQgXrB1n3Y3M8O3Z37h+1woWUihQ6fP4/rK4kugSDUExNIGOtNosaZGA4l
+ rtTdDy7xaJgK/onQUNUCcd7NaH+b/kXEyAAuta5N0iK5wbaV6/BRnq8kcKkxf//GzWZA
+ cZGPonCVAYRPLxO19ymdl/Qdvz3DBRshOkWJjP1HX+f88u10VZP1eoGuwoM8Zp9NZ/L7
+ Xo8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768550219; x=1769155019;
+ d=1e100.net; s=20230601; t=1768550257; x=1769155057;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KW2wUi75Bxov1Sph6vKG8yHs4rhyMVY3GnvvDalDvhU=;
- b=vd6yLdp794NDKtKBnbWl3Sa9xVm8Ai8728ZWv9B2/ueNKHvE9c259FepkUkcq1VYnu
- BgxhY9F8jM+cXX9Q2g76d/C1i0cUZJAFEOCo1E72hg70MXrPTcISYYxRdAPhLd4Vaina
- g9EgSZKIuLTCeV+hq9KMcOASd6VgbyWNIATNWF+ZPFPmTqROLoAAT1KVD/TYEHO9RJsp
- 2GnVcajSr2WuN0tZpUdql4e/jwSHS+evNAmu8CUeiN5b5mmDADnBrlG6rFISx0qT7OZa
- HHUD/lyUfB5NxtH5kiyuEXJRnUGLAzuCAVA7snxWwWmQ27f8LxfWq6cerlHm6IQPdgQD
- Wk6A==
+ bh=LQeED1LprtQUBjJWR2tVLf2FOAA6uQ2wOLzo79S2Mgw=;
+ b=B0qxieewk/1ruMeAw5RpkBG3FfFhahaAciCk5WXb5A5Vdd7kOx5e1VNrpAqy4rvQCS
+ I1AOqwepm51KINYRNYDIkQ7xINuuptYdiZrs6L7gvytRo5mmlce6v66/DZI3iRiVAzPD
+ nR/SqiHFEERw65w5fhtn1fzBjEEso2bO21SbGOpn6ytusU5lGJtKZt+DKrGeET4VWdWU
+ LjDa1ZJ7WPCK2cDs0yfs5Z/QaO77iEgPQYUI+qEn2WSNYbfMaAmMlAapHSrZhXqWPT4k
+ +TH4cTyMQgWyKXdfFo++jUICkuqz2qQugLavfY8PiOMq3Dmp223cBdAwwwWnDbShmm7S
+ N+ZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVkOUMCvjzIWOUgwkZfPGBgrbn0NFWg9S7/BGyJH9eKfimEoEs2tF0Td7MSjlfsG62se1KkLmsiKQJD@nongnu.org
-X-Gm-Message-State: AOJu0YxfT9X+aZil0c9BHLG3bhaEjn65C7tQHh/m/LIKxVeu67MGZNjo
- ekkwQ37IjKQt+6RdJOaRvJMZ2H5tb64mS2pjtYVQP1H3sVv23a8HaHV3JznWFK66tEf6VilsHjs
- WhjCN3S5rhZdKBuImdKdcmaX8mGl9v6jMBdMSvsAOXUPf2imjv40E050Q
-X-Gm-Gg: AY/fxX66eehUfuENb9pcf6GpBPQigE5kBLOfYAMfmX6W5Vw8I+NeGTo/ZfUpCkUIOSh
- LGHhp4tnIoVn0dXenePZJ9hRNm1fWPda1OvSVLvqM7JEDnJ+/gh+zseuVd6kNOJERm/vIKzZ5Gn
- aGSb/yLzUTa6wm5T7sP5FrWH6vZz5O5PDGcdHHHuKKSj+q8sO+TC4rUv1dQfXg5EjCKtgst5iML
- BJd5jRLwH0emHUqHrdefLJm6BljZWwW5ZhuJ8cmiiCjBX51205CjYElI9QTGHLHp1LMXXdZLIoK
- j7FC/mZ+e10w+4ZjresMH25Td6/9cDSZy7iHH7ssZSFIgUS6zadB3nlw0XYoIvTbpEakESS9KQO
- YvhJZ9vQ+d70rjxqbfU4uK+eXwIDn8ldZ1fOAynhOcrm4Xh0K
-X-Received: by 2002:a05:600c:46ce:b0:477:7b16:5f9f with SMTP id
- 5b1f17b1804b1-4801eb0efe0mr18165315e9.31.1768550219509; 
- Thu, 15 Jan 2026 23:56:59 -0800 (PST)
-X-Received: by 2002:a05:600c:46ce:b0:477:7b16:5f9f with SMTP id
- 5b1f17b1804b1-4801eb0efe0mr18165075e9.31.1768550219070; 
- Thu, 15 Jan 2026 23:56:59 -0800 (PST)
+ AJvYcCUtysaDh4cvMqaIMv6J94KKiMgzKLWwcG4rWZ+k0B8ldrTxVieulG8nojV3NNygZOW7n7rBhag9nFmT@nongnu.org
+X-Gm-Message-State: AOJu0YwJ08Rt3CMi2Pr/f7Q8odOTw2qu6bD/Pjcjy90jPc21BhswtFhz
+ /7DB1m9QsJfRM/WyLUu+++UyH81tGM49XGDVHenvj+AkPAJ8hKMVkIPZFiFIPA2SfNTFFbuvVRh
+ Sr49KMxEIb4seXQy7uCYMzvw0ED+fVeUrFaNGyXRmkhEd5Bf9OGjlsMVR
+X-Gm-Gg: AY/fxX4hbSJXQPAYTxdBKh7gr7B/nmEhB0dAKOxV86cMvNB/B4B0A74DDVocqrycRBJ
+ Cf6MCYVx8pRYXXlYkupl4jh7hiY2DwmEpdbtL2yyn5vBF9F2S77kBcYtaj/AlG8o2bpb/Qltjlx
+ 5abOsn41t/6hkhFj7Wr5oJ+I/JE6sl/GKLrs3Qy1eEdynnkuYFw1CiZDpcJtZTy2MeVEumx9cyd
+ aBVOa40i0CbsmMfUtdC7SDH+07f8vHD2pOOk6cm24OhEM990QzEZJ6quYpqYCxg4fNhXwQCYTob
+ aUcf34VJV/nIxg81zE37b5Httglwo2hyFr07eTNnEOs/RwnzDmnM7dZprcAb3JtyeNKLtuL0Tyg
+ P67kjTku5eWcmaBv/59t4AAUfHP5MZG5lUD61qK0sDRg47ieZ
+X-Received: by 2002:a05:6000:2f88:b0:430:fdfc:7dd0 with SMTP id
+ ffacd0b85a97d-4356a089943mr1942584f8f.63.1768550257590; 
+ Thu, 15 Jan 2026 23:57:37 -0800 (PST)
+X-Received: by 2002:a05:6000:2f88:b0:430:fdfc:7dd0 with SMTP id
+ ffacd0b85a97d-4356a089943mr1942559f8f.63.1768550257218; 
+ Thu, 15 Jan 2026 23:57:37 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e86c1b2sm29386865e9.3.2026.01.15.23.56.58
+ ffacd0b85a97d-43569921df9sm3686098f8f.3.2026.01.15.23.57.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 23:56:58 -0800 (PST)
-Message-ID: <b747f454-58f4-4f21-9e43-db3b7a43c1b5@redhat.com>
-Date: Fri, 16 Jan 2026 08:56:57 +0100
+ Thu, 15 Jan 2026 23:57:36 -0800 (PST)
+Message-ID: <5c7ab831-a3d1-4d47-90e6-e0400f9d17b1@redhat.com>
+Date: Fri, 16 Jan 2026 08:57:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/3] MAINTAINERS: Update ASPEED entry
+Subject: Re: [PULL 2/3] roms/vbootrom: Update to commit 1c8e9510b22c
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>,
- Hao Wu <wuhaotsh@google.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Hao Wu <wuhaotsh@google.com>,
+ Michael Tokarev <mjt@tls.msk.ru>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, kane_chen@aspeedtech.com,
  nabihestefan@google.com, komlodi@google.com
 References: <20260116073024.3485812-1-jamin_lin@aspeedtech.com>
- <20260116073024.3485812-2-jamin_lin@aspeedtech.com>
+ <20260116073024.3485812-3-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -147,7 +147,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260116073024.3485812-2-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260116073024.3485812-3-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -178,30 +178,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 1/16/26 08:30, Jamin Lin wrote:
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   MAINTAINERS | 2 ++
->   1 file changed, 2 insertions(+)
+>   roms/vbootrom | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 4ddbfba9f0..28046b457a 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1248,11 +1248,13 @@ F: hw/net/ftgmac100.c
->   F: include/hw/net/ftgmac100.h
->   F: docs/system/arm/aspeed.rst
->   F: docs/system/arm/fby35.rst
-> +F: docs/specs/aspeed*
->   F: tests/functional/*/*aspeed*
->   F: tests/*/*aspeed*
->   F: tests/*/*ast2700*
->   F: hw/arm/fby35.c
->   F: pc-bios/ast27x0_bootrom.bin
-> +F: roms/vbootrom
+> diff --git a/roms/vbootrom b/roms/vbootrom
+> index 183c9ff805..1c8e9510b2 160000
+> --- a/roms/vbootrom
+> +++ b/roms/vbootrom
+> @@ -1 +1 @@
+> -Subproject commit 183c9ff8056b7946db1ae49cc23e8980ac413174
+> +Subproject commit 1c8e9510b22c5b0fd7d7753f08042a4bcbd2939d
 
-roms/vbootrom is under "Nuvoton NPCM7xx" already. I guess it is fine
-to have duplicated entries. Did you check with ./scripts/get_maintainer.pl ?
+patch 2 and 3 can be merged.
 
 Thanks,
 
 C.
+
 
 
