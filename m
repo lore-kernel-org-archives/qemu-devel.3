@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FE75D4A60A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 07:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1325D4A607
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 07:45:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgeTu-0000xr-Sp; Fri, 16 Jan 2026 02:42:54 -0500
+	id 1vgeVH-0002OC-7E; Fri, 16 Jan 2026 02:44:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeTs-0000ve-RR
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:42:52 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeVF-0002MW-Qv
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:44:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeTr-0008Ra-4K
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:42:52 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeVE-0000Im-GF
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:44:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768549370;
+ s=mimecast20190719; t=1768549455;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6apU0W3/qZqsdU2jfr+ErDgYzVg8nO9i6OMfKCmDMQQ=;
- b=AsipQCcEobgHfP7mwMtRpyyb8NQbZHNYVxYBDCg257PjzYZ9yDAflhfwGhLJgJKB4+UL1u
- i7A0E+mMACkslAWq/5ZbYilElFRLBLT8TkJDp9ow/AhbMD9P7tkWyZwJm8GxJAwLwIO0iB
- gbVFseiBVbxD40ev3GjASONMA1cwLfA=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YLZoprLd9Vkw98A4Oh/ld4cM7pQkpd3mlIWf7jY5eIk=;
+ b=cR7HTarqXDZRFWkBvTrBFjAjpYFIVQ1i0veVvDgMXLWpcZ3ecnm+6yrgi5/SePbhlU0uUX
+ BcO70YIsbaTT0CL7eWZsn6flxvcbl6rJhwJIegvXp0k6Bu0R1qPlaQNB1YoDbspnfxJf/W
+ i+5mhZ/4MVB+hQt97X4Q9fTgBCcSpEo=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-297-b5vJv4DGPZeApsUK-R7Smw-1; Fri, 16 Jan 2026 02:42:48 -0500
-X-MC-Unique: b5vJv4DGPZeApsUK-R7Smw-1
-X-Mimecast-MFC-AGG-ID: b5vJv4DGPZeApsUK-R7Smw_1768549367
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b870d3327baso183323766b.3
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 23:42:48 -0800 (PST)
+ us-mta-607-puLflReQNcO2fYqZidq-BA-1; Fri, 16 Jan 2026 02:44:13 -0500
+X-MC-Unique: puLflReQNcO2fYqZidq-BA-1
+X-Mimecast-MFC-AGG-ID: puLflReQNcO2fYqZidq-BA_1768549452
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-b870870f1aeso401042266b.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 23:44:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768549367; x=1769154167; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768549452; x=1769154252; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=6apU0W3/qZqsdU2jfr+ErDgYzVg8nO9i6OMfKCmDMQQ=;
- b=BoCGZoaY0p6RNjjnKexE0ZfSamK+Tql7ug+C0Lyso6haLcDM50fSBD0/2m+E1n3DbF
- EoVL/e0QtgynPk9ebSso6UEhXf3vwbaM2FfU2ClecnAfC5h0+GfM9r6egEfwTJNWJYB0
- rktOO9XrpYNVivk1vHBJTMVEhnFrO44SYWoV4NbDfZ5c6v12PPLS+18VyQpSWtvBV6HG
- ZyeF2WBPBMZIR92AJQCzIsKtV6/HzHi5RT0/mbbkcbDRSYMnnUfFz+E5keRvtvcjb6bz
- +7dQmwa3Ghh8ZF7kFPibRRjVlgo4zNv0h6smdXmFxL1NfuK66MfHAtj1oyeExMLS7Fy3
- f6FA==
+ bh=YLZoprLd9Vkw98A4Oh/ld4cM7pQkpd3mlIWf7jY5eIk=;
+ b=k9/MGji+O7zlgJvCqFGr4AQX4oj9FbFJTkmESK/CkbORckVoqjDJsAJZpAb3MZeytI
+ dQ+mPHwS1yuJy9B58CXgJiCAywEtAkJte2OihCL4k0h80cQQNRPwPh5ZP69Hp5VFLfys
+ 6RDaKUySn62lla8vqZ+hEtiBoCAPC5GpsYaKj0o24YJqXRp9NjYNZu0xjearrZpo3k9G
+ pY0eIgBosvHXR5wbWHGFEQ5CVYzmnQsqTQ7zH2wjhCEykgR7Eo0JrJTy9nt0OGCW4qr/
+ wDd/czoeDo303lSuW57tAJaxNtlTz31vFP/XdJMxN4cX1DepGdskSPI7HSWsLbR49Te9
+ 6lqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768549367; x=1769154167;
+ d=1e100.net; s=20230601; t=1768549452; x=1769154252;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6apU0W3/qZqsdU2jfr+ErDgYzVg8nO9i6OMfKCmDMQQ=;
- b=TG8oB1AXJK0aSbftLBFuBsBTUpDdlPOy1WJL45T6GiURgvNOO2ExqY5ZJwwS+iDC4T
- qCqkeyr1UGH62d8cOETrACn0Pze+bGl5ol7WICBp81AEtt1wBqowGq/JfC6js0hFDjm4
- iKnJtXgmNDid+vohKjTUIvZgz3fBZgTD5UeiRGb1Nup9/G0drN3XdTx5ssjof2RSPNjF
- m1MVjLxyN2oQr0BU7EOZ86t0lon7+qpf40J3wLwPCNoBLGifec/X3aXnX3xfySmwtU9x
- iU5U11agUnEg8PDM/voUyEHpQBlvb/N3D7gbpXc+8f3E2TJRj0o1Y3gQuC88Lk5SPPO6
- +A9A==
+ bh=YLZoprLd9Vkw98A4Oh/ld4cM7pQkpd3mlIWf7jY5eIk=;
+ b=oyPq0am3SvyFORQAEGDvPg8FjS3ZiaVtL6nUmUD7Kno/RPAtSgxtE9HoGgB3ubne92
+ QEMDUzYaXuddJtGMD2vD+LGGeo93X1ZLO01G/cMI3OrjYu/CbJZ3VFB+3GGgGSoPJbHD
+ SoZdAHoygj1k4jNeNUDLWgdOYILNRJTqRHnIM7DNJFXFdJ8xJk01wn2p62enpjF+qBdC
+ omjyMnIYdhVoxMQgL1Fg/uFc6vXMIHd6WIhyBAxJtbK7scqUilFokvwdbyv/x36P0162
+ POUjuIhXWZ2qmtY989Eu0qRsHVO+DkYwvxX13mGCJsWvDqhLFq0kSyBVYWKkoPuEuyR4
+ ufSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWBpjWlXwKYZRc2tyYzf389qb0RiWtaq0K0vdx5aOxwX58vYZtC3Jq76xl5AUXDonCrxyUT2E1MPfSN@nongnu.org
-X-Gm-Message-State: AOJu0YxZBjEpN7D587rI+K+h6LtZ5xHFnzhVouSc1/uO6qX8wzqP6Afl
- gps9xZ8RF/8fNcmlKwRirqgQN6NetuufERVRTr2VN1L43DmSi9j4KjDpNdiKUNsOHWNu1TkWhrY
- iO76NGRlu7zSE7dmQM26tTyDFwiLzRcH2Zl1nWfxurmlzB3Q0sXmhidda
-X-Gm-Gg: AY/fxX42kIyYAQLbkwujjV2B9Gvj3pprrqhi4vlszo30nfkS6cCk2Dc0JhTjM22PP/K
- 6w2fPdbxVCYcPsmuBkiGg3q5o+OrMN2l+V5DCwoEVNYrLi7wDoRw3P/3j0jLcsrE453GgdnfJmc
- 2WxQfeBwQRu+4WDA68NBdErk8Kn8JqaoVJeJhxYYyYh+LoK3tDPSMpWxhSKWXeh+wRzQ4LVzl2y
- ekjaQTfSDqvUqdyWkAd9/44c2gMXJEPF+08O3IwJsl7xfNbaF2eITMBY54CJnvqYHlZ8RiLc/KA
- fqsyG2/odykwtl9qusW6vNIaaRPoFXqkw6+4XJtrSop5cpZKc3KlKnmgLxGeoiRcbNDyyHyFh1W
- 1Insj0Ms=
-X-Received: by 2002:a17:907:f818:b0:b84:1fef:329f with SMTP id
- a640c23a62f3a-b8792e0f4bamr192123466b.26.1768549367258; 
- Thu, 15 Jan 2026 23:42:47 -0800 (PST)
-X-Received: by 2002:a17:907:f818:b0:b84:1fef:329f with SMTP id
- a640c23a62f3a-b8792e0f4bamr192121566b.26.1768549366871; 
- Thu, 15 Jan 2026 23:42:46 -0800 (PST)
+ AJvYcCVwc1f4GSg4lEpqZfxM+CI89UB+pYaYefRdJhX9A7J3wQQDtccUg3Zv4wJ/+uBnsSzb+BPsz+p3nvsk@nongnu.org
+X-Gm-Message-State: AOJu0YygW6OZEaQw8YhBvqAAPrPkcD/2AApPOtrsxUEAKAh2FAzGAivV
+ OkleOARsBdoLo5bu8b9uJ5U3V/515eXQqCkxbFVm1/5/z5Dg9alnNOhKOaYcfDOyfFpCD08es2P
+ QVfGlXsGRFeNKhBZXTSdD1Ec1GtSs6M1haLKdY2IR+cUolssDc1N+kFXs
+X-Gm-Gg: AY/fxX7JdLe601wwTsZ3NdcqBXzumaW3ghO5oVlBFowV2n83KyEdjjQVUEPr2HFyM0Z
+ BjSA+7HjS81BcQxXZzE9mPyyEl6x6Ggs3kcW55b7uVbu1+3Ng3K93q9mhTfCPyl8tBMEcDaJYbe
+ 4uNo48xHmT660CptVUGyHLJsGwLKKbZ80jOb6AXR2zisNQdwD6akimyUxjfQgWIFsWvN3ijpsjX
+ Y02+SGE172iSp0cGrO53FmOtKw1CWUAs0fZZKNz1nXUBMQ01uIvYoUWpg4X9mjZrMRY5gXS2wRt
+ jvbANLUIS1XrFDJAmULE7VEtktqDx5veJdpok39pTC8dEzFM0J8L+NWrLp3z04mImqg2mfNxX72
+ Do/9UWFs=
+X-Received: by 2002:a17:906:9897:b0:b86:eeab:510d with SMTP id
+ a640c23a62f3a-b8777bc5e2amr397568066b.15.1768549452283; 
+ Thu, 15 Jan 2026 23:44:12 -0800 (PST)
+X-Received: by 2002:a17:906:9897:b0:b86:eeab:510d with SMTP id
+ a640c23a62f3a-b8777bc5e2amr397565966b.15.1768549451889; 
+ Thu, 15 Jan 2026 23:44:11 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.113.220])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8795a2f1a3sm163767266b.62.2026.01.15.23.42.45
+ 4fb4d7f45d1cf-654533cc45asm1708863a12.21.2026.01.15.23.44.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 23:42:46 -0800 (PST)
-Message-ID: <8b9e8961-b553-4163-b65e-752effef8c1e@redhat.com>
-Date: Fri, 16 Jan 2026 08:42:44 +0100
+ Thu, 15 Jan 2026 23:44:11 -0800 (PST)
+Message-ID: <e461d2db-c09c-4bf9-ba23-b67878a9cf35@redhat.com>
+Date: Fri, 16 Jan 2026 08:44:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/14] tests: add nbd and luks to the I/O test suites
+Subject: Re: [PATCH v3 10/14] tests: use 'driver' as collective term for
+ either format or protocol
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -97,7 +98,7 @@ Cc: John Snow <jsnow@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Cleber Rosa <crosa@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Kevin Wolf <kwolf@redhat.com>
 References: <20260115164756.799402-1-berrange@redhat.com>
- <20260115164756.799402-10-berrange@redhat.com>
+ <20260115164756.799402-11-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -142,7 +143,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260115164756.799402-10-berrange@redhat.com>
+In-Reply-To: <20260115164756.799402-11-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -154,7 +155,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,55 +172,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 15/01/2026 17.47, Daniel P. Berrangé wrote:
-> This introduces new suites for running I/O tests on NBD and LUKS
-> drivers, giving new make targets
-> 
->   * make check-block-luks
->   * make check-block-nbd
-> 
-> as well as adding their tests to 'make check-block SPEED=thorough'
+> The I/O tests integration previously exclusively tested block formats
+> and now also covers the NBD protocol. Replace references to 'format'
+> with 'driver', as a generic term to collectively apply to either a
+> format or protocol.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   docs/devel/testing/main.rst    | 4 ++--
->   tests/qemu-iotests/meson.build | 4 +++-
->   2 files changed, 5 insertions(+), 3 deletions(-)
-> 
-> diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-> index dc4f7202a5..8067d0a3ed 100644
-> --- a/docs/devel/testing/main.rst
-> +++ b/docs/devel/testing/main.rst
-> @@ -233,8 +233,8 @@ to run. A slightly more comprehensive test plan can be run by defining
->   ``SPEED=slow``, which enables all tests for the ``qcow2`` and ``raw``
->   formats. The most comprehensive test plan can be run by defining
->   ``SPEED=thorough``, which enables all available tests for the formats
-> -``parallels``, ``qcow2``, ``qed``, ``raw``, ``vdi``, ``vhdx``,
-> -``vmdk``, and ``vpc``.
-> +``luks``, ``nbd``, ``parallels``, ``qcow2``, ``qed``, ``raw``, ``vdi``,
-> +``vhdx``, ``vmdk``, and ``vpc``.
->   
->   Each of formats also has its own dedicated make target, named
->   ``make check-block-$FORMAT`` which will run all available tests for
-> diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-> index 66b09d6b97..744d0b6e88 100644
-> --- a/tests/qemu-iotests/meson.build
-> +++ b/tests/qemu-iotests/meson.build
-> @@ -15,12 +15,14 @@ qemu_iotests_env = {'PYTHON': python.full_path()}
->   qemu_iotests_formats = {
->     'qcow2': 'quick',
->     'raw': 'slow',
-> +  'luks': 'thorough',
-> +  'nbd': 'thorough',
->     'parallels': 'thorough',
->     'qed': 'thorough',
->     'vdi': 'thorough',
->     'vhdx': 'thorough',
->     'vmdk': 'thorough',
-> -  'vpc': 'thorough'
-> +  'vpc': 'thorough',
->   }
->   
->   foreach k, v : emulators
+>   docs/devel/testing/main.rst    | 13 +++++++------
+>   tests/Makefile.include         |  4 ++--
+>   tests/qemu-iotests/meson.build |  6 +++---
+>   3 files changed, 12 insertions(+), 11 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
