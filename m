@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 861D2D4A5FF
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 05:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D58CCD4A5FD
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 05:18:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgc4B-0000wA-SK; Fri, 16 Jan 2026 00:08:11 -0500
+	id 1vgcCd-0004ky-EY; Fri, 16 Jan 2026 00:16:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vgc49-0000ut-Q5
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 00:08:09 -0500
-Received: from 1.mo552.mail-out.ovh.net ([178.32.96.117])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vgcCb-0004kH-RQ
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 00:16:53 -0500
+Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vgc47-0006U0-CE
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 00:08:09 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.75])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4dsntB4bg0z5wCb;
- Fri, 16 Jan 2026 05:08:02 +0000 (UTC)
-Received: from kaod.org (37.59.142.95) by DAG3EX1.mxp5.local (172.16.2.21)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vgcCZ-0001dF-AB
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 00:16:53 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.249.71])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4dsp4F6FrFz5y8C;
+ Fri, 16 Jan 2026 05:16:45 +0000 (UTC)
+Received: from kaod.org (37.59.142.101) by DAG3EX1.mxp5.local (172.16.2.21)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 16 Jan
- 2026 06:08:02 +0100
+ 2026 06:16:45 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-95G00145caa022-23f6-4a57-ace2-8976056a36a0,
+ (GARM-101G0047be64982-8d77-415b-ab33-2486a7c80117,
  356448E47ECF6FF3573990070D4D23F6C14CAFA2) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <14e4bfb8-9458-4f75-a479-878ef8d286c0@kaod.org>
-Date: Fri, 16 Jan 2026 06:08:01 +0100
+Message-ID: <7b67c00a-2bf3-4a25-aae4-9d4dd932486a@kaod.org>
+Date: Fri, 16 Jan 2026 06:16:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] pc-bios: Update vbootrom image to commit
- 1c8e9510b22c
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Nabih Estefan
- <nabihestefan@google.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Troy Lee
- <troy_lee@aspeedtech.com>, "wuhaotsh@google.com" <wuhaotsh@google.com>,
- "komlodi@google.com" <komlodi@google.com>, Kane Chen
- <kane_chen@aspeedtech.com>
-References: <20260115023758.3600447-1-jamin_lin@aspeedtech.com>
- <20260115023758.3600447-2-jamin_lin@aspeedtech.com>
- <CA+QoejUkn14qq49A5RF5iVUCrcdBN077Ce0FZSw8sWAQ+vU3EA@mail.gmail.com>
- <157bdec0-64f9-43b8-b42c-cf29a34d083b@kaod.org>
- <TYPPR06MB820664D78B0B4F5A780822B8FC8DA@TYPPR06MB8206.apcprd06.prod.outlook.com>
+Subject: Re: [PATCH v1 0/1] hw/i2c/aspeed: Introduce 'bus-label' to customize
+ bus naming
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Kane Chen
+ <kane_chen@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>, Steven
+ Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>, Markus Armbruster
+ <armbru@redhat.com>
+CC: <troy_lee@aspeedtech.com>
+References: <20260112083054.4151945-1-kane_chen@aspeedtech.com>
+ <5e72f6d4-6914-4797-85f6-6131af0d1349@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -91,35 +89,35 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <TYPPR06MB820664D78B0B4F5A780822B8FC8DA@TYPPR06MB8206.apcprd06.prod.outlook.com>
+In-Reply-To: <5e72f6d4-6914-4797-85f6-6131af0d1349@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.95]
+X-Originating-IP: [37.59.142.101]
 X-ClientProxiedBy: DAG1EX2.mxp5.local (172.16.2.2) To DAG3EX1.mxp5.local
  (172.16.2.21)
-X-Ovh-Tracer-GUID: c2186ff6-6b9b-41cb-bf67-7e24d6aec17f
-X-Ovh-Tracer-Id: 14389563759583071084
+X-Ovh-Tracer-GUID: df4eb063-e03e-4545-9e17-c7619d275184
+X-Ovh-Tracer-Id: 14536775174704761848
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTE06g46XlLcUHTI9G4MiA1LOUXKV82j82/gtXnoEigDFjWM/rht/6wlOCc8GEtCer6F6KOPPPr4Nu2FGtcehrMEXGL0+7CfG5Os5IpH3dgMIaOPg3tgtabbOH+GQXIA3mNRGpdIqXu1OPRSPwAMw3UBRQTPBN/VisOIBVhywilxOCHYgYgFc6NyMLCLyBeSBQfI34aASLi4YTdmJ2jbXIidr37KZSqTA9wZzVzXcvC9hq/JEH0wOPH8Mdt8Owcyh6/Z5uxnE5aHbpoDH7lBVagasQx9AGtIsXzPNnBiTXA4oj/A+h6u3CbpyniYznuZdh4wMMxxp2JT2LHfuxWDxHmOPPgE8rMa601SpvP0K7xPg4FRTaC94p+MbQDOAk+Ok5IfK7ekim7JE1yDAQRYwuFlQo98YeVoL0eddBrLvNLYLuIH9IgwUoAGih1lDuaQlhnaUuWz9ENoS7Gu5hF2ZoRLHG5ngVnkq12B9WvQaok4X47/+JpeLSH9aMpBT+QaMKPRHRPxTMHGrKe7L95EMBeVztvabp61AIESFYNyf129Lbr7MpYQ9IQOZYM9ms8DoFjE8PSdcFSawx45MwMVD2Ojqse3YGI8IwP6RaQrmxL3WViuewCeCjGxQK0QmypJAPosXTWUiHVIOkkK+fn/vUS05yST3Zl4xwNObz0aW5iA3Q
-DKIM-Signature: a=rsa-sha256; bh=6xEp1dEIP6X0WpIwQnavRvua8F5kd/4PSp18vaGo6B8=; 
+X-VR-SPAMCAUSE: dmFkZTE1Vzj1R++xyV6u5xYUyW8zk6GfxKpihphS0DiuIPEq+q5jVuAj0jXysbfLSakR0VqvxfBMSyedq/iH7Yfv1+Bh1DzmneHjPB/wwP+xhzyLP2Zoolb8N6QyRkhLgB+rHD0WXsk7HbxIAMT79EkZtLwI9qR1uoRLVuuSkXPtWa3Zn0Tv1/KN0Y9LHaTwywEJt5+HKRX+dofZC/vFjQCLvwJ0QZ5zGDApswnAFToYzOhLuigHxkzyp0xL9Aoz84Fuxxfpz4Fpz+7NRSK2d3ztRAOajz33qABcz/tI8+43TfOdeSwPbAjTioA0gytBCc4125fxCGYkP+7A7BAaeoz4OIa8LbP96YhA8tMqAtPCWU6lTtpi8Y7ZsujH6w+29+v/vX1wUazJYYHYq9rsPak9ZNPHQMBN6YIaKOXblswV8x3+ztt74/QUDsD+dIDGfAvpF3mepPOTH/XIDu7qIAMZ92Gza4hZvluvODOKCl8QIAv3hMxjWRz+oJVBYpZ1HOwjFvkAeW+w65rhi3ZFQ2Ucs9hNW9eG/Pv906Pebo2eu7WmUCsXss/ps4BXoN23KPLMEnIUj7kR6C4XgoCSbfR+KUIi8c5RrSIiCYWAAHOgMUEW1cqOmJpDdglUZxuPjKv1SeLbu54BOuWB05SDP5XQ4rCKnwRxao6NQ3aAhDsnZS+/JA
+DKIM-Signature: a=rsa-sha256; bh=BzVyFzkHnuAOWhGxY53u5PppSnrAxCou6bOXfXPnIak=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1768540083; v=1;
- b=KnVxqz7BzVv0RR/6t8poukCC8M996G3vMnjvrzEv4tcF6j7LtSwGer1tA0W5pAgorq2PMvrB
- dclK+0vl44TKRBsia1x7tGziqHmUqP1djnGz5EnQLU1SWXIWTZhKHZ8BpKiLrrPeko/KRdBtXir
- Mo59YG5X0+r70+DZPu/jAs+w5mTu0yJL/xNVaPTDeAj7RmtK/r3r/Zmkisa6hJC++lG2t/EffPM
- rk7DdsfwX62n7DWAJGH8OjQZ51UecDd3XUmV7j5fagKg8nvYF/sUlvhv1QWTyqh3zwvlU4AxO3u
- bu8dMJnI4jZPF5as4XRFBgscRsANQlRHvWsaRLCxZH0Lw==
-Received-SPF: pass client-ip=178.32.96.117; envelope-from=clg@kaod.org;
- helo=1.mo552.mail-out.ovh.net
+ t=1768540607; v=1;
+ b=R/Dv12m9Rwi4mdYhKiSwzQX7bG6vM1QBH9zGDNmy827yqdu1hsJIbzjw0SQAWkENKnCsSvNt
+ l6WvvVSXJjgw07FUt/KZXstxUuPkfbWFzNJp9ESqidaxMyu9lQGgMBe1KeLPscrg1Ehv1cx5Pqq
+ NZ9DnXBvoW0dXaDUAL5XvYYXMLbduZNuyK/I+qDjWVXnfqJoMfDZHUzYrisR5Z8zEaklbzH0Gfn
+ oFuff0GB0d3phdH5/y8FX7XbTJ5f5aoyBANrYBDYUIbr6r8i1FqRx1AMMZQ7Zx9j41DbzvOyB9Z
+ WNI8U+xqJi47wRkAqACcqRUoERhaC1KXfT2hhYJk5AmPg==
+Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,82 +133,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jamin,
-
-On 1/16/26 02:20, Jamin Lin wrote:
->> From: Cédric Le Goater <clg@kaod.org>
->> Sent: Friday, January 16, 2026 12:21 AM
->> To: Nabih Estefan <nabihestefan@google.com>; Jamin Lin
->> <jamin_lin@aspeedtech.com>
->> Cc: qemu-devel@nongnu.org; peter.maydell@linaro.org; Troy Lee
->> <troy_lee@aspeedtech.com>; wuhaotsh@google.com; komlodi@google.com
->> Subject: Re: [PATCH v1 1/1] pc-bios: Update vbootrom image to commit
->> 1c8e9510b22c
+On 1/15/26 20:47, Philippe Mathieu-Daudé wrote:
+> Hi,
+> 
+> Cc'ing Markus.
+> 
+> On 12/1/26 09:30, Kane Chen via qemu development wrote:
+>> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 >>
->> hmm, I didn't receive the initial email.
+>> Currently, the Aspeed I2C controller uses a static naming convention
+>> for its buses (e.g., "aspeed.i2c.bus.0"). This approach leads to
+>> object name conflicts in machine models that incorporate multiple I2C
+>> controllers, such as an Aspeed SoC paired with an external IO expander
+>> or a co-processor like the AST1700.
 >>
 > 
-> Cédric,
+> Is this a side-effect of Problem 4: 'The /machine/unattached/ orphanage'
+> described here?
+> https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
 > 
-> I used the following command to generate a patch to update the pre-built vbootrom images:
-> 
-> git format-patch -o ../v1-patch HEAD~1
-> 
-> However, when I ran get_maintainer.pl, it could not find any maintainers and printed the following message:
-> 
-> ./scripts/get_maintainer.pl -f ../v1-patch/v1-0001-pc-bios-Update-vbootrom-image-to-commit-1c8e9510b.patch
-> get_maintainer.pl: No maintainers found, printing recent contributors.
-> get_maintainer.pl: Do not blindly cc: them on patches!  Use common sense.
-
-Weird. MAINTAINERS has :
-
-   Nuvoton NPCM7xx
-   ...
-   F: pc-bios/npcm7xx_bootrom.bin
-   F: pc-bios/npcm8xx_bootrom.bin
-   F: roms/vbootrom
-
-We do lack a MAINTAINERS entry for Aspeed :
-
-   F: pc-bios/ast27x0_bootrom.bin
-
-Can you please send an update ?
+> This problem isn't specific to I2C nor Aspeed.
 
 
-> 
-> fatal: ../v1-patch/v1-0001-pc-bios-Update-vbootrom-image-to-commit-1c8e9510b.patch: '../v1-patch/v1-0001-pc-bios-Update-vbootrom-image-to-commit-1c8e9510b.patch' is outside repository at '/home/jamin_lin/upstream/qemu/vbootrom/qemu'
-> qemu-devel@nongnu.org (open list:All patches CC here)
-> 
-> As a result, only the mailing list was suggested:
-> Eventually, I sent the patch using the following command
-> 
-> git send-email -cc jamin_lin@aspeedtech.com -cc troy_lee@aspeedtech.com -cc --to qemu-devel@nongnu.org --to peter.maydell@linaro.org --to clg@kaod.org ../v1-patch/*.patch --no-smtp-auth --smtp-domain=mail.aspeedtech.com
+See the discussion here :
 
-Looks correct.
+   https://lore.kernel.org/qemu-devel/006fa26f-6b84-4e82-b6e1-7d1353579441@kaod.org/
 
-I hope my provider OVH is not silently dropping email :/ The same thing
-happened with an email from Kane. Was any email returned to you ?
-  
-> It seems that I included you in the --to list. Do I need to resend the patch?
+The Aspeed SoC has 3*16 I2C buses attached on 3 different I2C
+controllers plus the I2C/I3C buses. We need to find a way to
+distinguish these groups at the QEMU machine level to be able
+to add devices on the right bus when using the command line.
 
-You do need to resend for another reason : roms/vbootrom needs an update too.
-
-Also, for updates with large binaries, for FW updates typically,
-we prefer subsystem PRs :
-
-See an example for a SLOF update from Thomas :
-
-   https://lore.kernel.org/qemu-devel/20251027074404.25758-1-thuth@redhat.com/
-
-Some docs here :
-
-   https://www.qemu.org/docs/master/devel/submitting-a-pull-request.html
-
-Ping me if you need help setting up your environment,
+Suggestions welcome !
 
 Thanks,
 
 C.
 
+
+> 
+>> This patch series introduces a 'bus-label' property to the Aspeed I2C
+>> controller. By setting this property, higher-level platform code
+>> (e.g., the SoC realize function) can provide a unique prefix for the
+>> I2C buses.
+>>
+>> Changes in v1:
+>>
+>> Added bus-label property to AspeedI2CState.
+>> Added bus-name property to AspeedI2CBus.
+>> Modified aspeed_i2c_realize to generate bus names based on the label.
+>> Updated aspeed_i2c_bus_realize to use the customized name for bus
+>> initialization and memory region naming.
+>>
+>> Example usage: If a controller's bus-label is set to "ioexp0", its buses
+>> will be named "ioexp0.0", "ioexp0.1", etc., instead of the default
+>> "aspeed.i2c.bus.0".
+>>
+>> Any feedback or suggestions are appreciated.
+>>
+>> Best Regards,
+>> Kane
+>>
+>> Kane-Chen-AS (1):
+>>    hw/i2c/aspeed: Introduce 'bus-label' to customize bus naming
+>>
+>>   include/hw/i2c/aspeed_i2c.h |  2 ++
+>>   hw/i2c/aspeed_i2c.c         | 27 +++++++++++++++++++++------
+>>   2 files changed, 23 insertions(+), 6 deletions(-)
+>>
+> 
 
 
