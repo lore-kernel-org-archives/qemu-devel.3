@@ -4,91 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC519D4899A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AF92D4899A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgitu-0003ct-3h; Fri, 16 Jan 2026 07:26:02 -0500
+	id 1vgj4K-0008H1-Qs; Fri, 16 Jan 2026 07:36:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vgitn-0003ZR-Kt
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:25:55 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vgj3T-00085R-9a
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:36:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vgitm-0001tc-3i
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:25:55 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vgj3R-0003z1-7u
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:35:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768566353;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nZ4y8uqCRINEK/ME3gVahYI+u+vDZeh3gltIhi5Zmok=;
- b=Xm+0qa9Mzh9wRdNcCxwQTmIdSYIg1r0VpcYrORgydLxUFOU+1sC0diI9ZoglMwEG/XvcnQ
- TfcR1z6PBejf9h/+Tb3Uodc8560jzCzuq+JDcPUCvBVDs3Pkw6QqNfCc0gz6txU29ubM14
- KBBjt/QQda6h5KtIYGxqoToLPUmhYE8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-22-CI_7RMGmMoemZy0M_etPFQ-1; Fri, 16 Jan 2026 07:25:47 -0500
-X-MC-Unique: CI_7RMGmMoemZy0M_etPFQ-1
-X-Mimecast-MFC-AGG-ID: CI_7RMGmMoemZy0M_etPFQ_1768566346
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47d3c9b8c56so28491485e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 04:25:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768566346; x=1769171146; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nZ4y8uqCRINEK/ME3gVahYI+u+vDZeh3gltIhi5Zmok=;
- b=L6rxtdGrKwl+JWCvYdSYQSoQfnt+/x9+r9E+CGe06t3q0w49JNy66xZjYI8guxuD2h
- dpo6gJPwPuW0W7RHcfnPOkPTrNzGdMP6EPSiKqE7GJ5/UuSytsuVtekb+NhLOm753jMf
- TzQ24KG8iOvrrM2Mk1XBLhgTQ0+9m2b1oW8UaiQMXucOiYZEoNQWUi13OB2HDAk51Ky3
- D0dyqrUG72DzKWVn4TMyaATgKZTGSuSkoTGgMjJTXl1idpamdwTz2xJE3Lm6bFP6qPNr
- kHzlgZYRWC8wjqMu4OIK4dSS/HcPjD+4jtZanLpvGYjGUCqGroGUzHg/wIQN0dP7L7xQ
- bTdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768566346; x=1769171146;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nZ4y8uqCRINEK/ME3gVahYI+u+vDZeh3gltIhi5Zmok=;
- b=VkL9nnT8Z4k3/eUu9jrzWFalxtyELgN/IdQF0cGSCXeIL0IAmpmMRV/ARMItnIOYpl
- N4um81uITWTC3WgXWkpuyfvY7LM6dW6pEfB0GMtYK4b0T5piHrMCWIzM7KxcAx14excs
- 62BfVB84GvF3+RbvfphJLPK0lmWNKv4VvxlfuWrCHSr36+bcHjwJN70/70R9pctkZNtk
- FL2VQt2dC9mQVbZ1C6ULVlQFz+hPDm9pYKsZZ4OHN5EOxrFoZo8hLPWqGJvdYwSza8j8
- eE8hCj6/SEJ978rJwT8Aw/qXAcQgnBSKcqW3rQUYlk7rRB7jPFb5ecATRoqKkW9zT8KU
- RKUA==
-X-Gm-Message-State: AOJu0Yw9mbbAXJlUcscHxustckX38w4cXvnU0uSyA1evjzGUdsicpkal
- LYkWiO4Zm083PuSDraS2EDAMAwb4KLgJlTN4iX7uToGc9iSweM+skaACqbGUL1JvrX4NeAXgi3/
- Hul4+4lAR8fSx5Ox8YEIpKMNgCEO/GtpgNpi6wYyox3DTvbj3jaaLIE5H+Ia+1nUDcWIcEeQTuY
- 3Le2BSDdDeMUmMNmS0jEVd/9btH0lO4jM=
-X-Gm-Gg: AY/fxX7utCdpW8PNxRWdHyrC6tRHeSeK2e/V/rQTGfMcnu8E5H3dNElxVyF8PZfIpA3
- y2qJXjIKx+0LlhfzBpEFKedz8RsxqACV7Ne6qQ/zedIyr+f9O7GaUxB5iHLrOM3hlcc6pIp7TUY
- 8UVl9T7mpglkEDGdQSbVEokGb/V2YvqOeYlA/VH7rva+z+vPyBH+PvDCDWJ7XihFlzIo/kNZZ1V
- oBScGKfq83lXfhueZVIeKeHrpRdfV5YFpCcgHM+GI11TNhS+UwLBBtj
-X-Received: by 2002:a05:600c:3495:b0:477:639d:bca2 with SMTP id
- 5b1f17b1804b1-4801eaadbd9mr26166275e9.4.1768566345738; 
- Fri, 16 Jan 2026 04:25:45 -0800 (PST)
-X-Received: by 2002:a05:600c:3495:b0:477:639d:bca2 with SMTP id
- 5b1f17b1804b1-4801eaadbd9mr26166025e9.4.1768566345365; Fri, 16 Jan 2026
- 04:25:45 -0800 (PST)
+ s=mimecast20190719; t=1768566951;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=MxHPyNr8RGPpOoO6uRu8LEpTsn9JVEirCrQP9JQAHDE=;
+ b=LtoWzdCm7p1Tq8Fo1ldQNeUzybmZ8wZfJEb+7iOJT5CB3WAxOGCkqI4nMQ4bpqLeEwdWVL
+ o2S+Jo+gyYHl3z/14JQO1WXMwohuV45oKJELTIESpHDueoNb3f0OmCsWE3ApZ4M7/cdK3p
+ YG7Tl/J/Y9g/14mniXD4l4/NCAgPnfA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-au4ywnOMPq2PRu_TLBJYfA-1; Fri,
+ 16 Jan 2026 07:35:49 -0500
+X-MC-Unique: au4ywnOMPq2PRu_TLBJYfA-1
+X-Mimecast-MFC-AGG-ID: au4ywnOMPq2PRu_TLBJYfA_1768566948
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3A93519560A3; Fri, 16 Jan 2026 12:35:48 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.135])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D0E8A1800665; Fri, 16 Jan 2026 12:35:45 +0000 (UTC)
+Date: Fri, 16 Jan 2026 12:35:42 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 00/11] plugins: enable C++ plugins
+Message-ID: <aWownlTDHCx10w9I@redhat.com>
+References: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-References: <20260109124043.25019-1-farosas@suse.de>
- <20260109124043.25019-12-farosas@suse.de>
-In-Reply-To: <20260109124043.25019-12-farosas@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Fri, 16 Jan 2026 17:55:27 +0530
-X-Gm-Features: AZwV_QhTuuQ-uFdolbUVsEU1G97SuQzxY7xxXQJQ5OH_SPn7s1FNwpFEfLCI9bk
-Message-ID: <CAE8KmOwGzbRca1TpcQWjYrvd2UiFJ57RVNd8g44-cQdddOKktQ@mail.gmail.com>
-Subject: Re: [PATCH v3 11/25] migration: Fold migration_cleanup() into
- migration_connect_error_propagate()
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -110,138 +86,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 Jan 2026 at 18:12, Fabiano Rosas <farosas@suse.de> wrote:
-> Whenever an error occurs between migrate_init() and the start of
-> migration_thread, do cleanup immediately after.
+On Fri, Jan 02, 2026 at 01:47:13PM -0800, Pierrick Bouvier wrote:
+> Writing plugins in C can be sometimes tedious, especially when using Glib to
+> keep track of execution state. We can directly use the same C API but write our
+> plugin in C++, benefiting from its great standard library offering strings,
+> smart pointers, data structures and synchronization mechanisms.
+> 
+> It's common for downstream QEMU forks to provide C++ for plugins, like this:
+> - https://github.com/panda-re/panda/tree/dev/panda/plugins
+> - https://github.com/FlorentRevest/DejaView/tree/main/src/qemu_plugin
+> 
+> Hopefully this will help more people to use upstream QEMU, and as a benefit, get
+> their contribution back and help to develop plugins ecosystem upstream directly.
+> 
+> This series first cleans up build system for plugins, factorizing details
+> between contrib/plugins and tests/tcg/plugins folders.
+> Then, we perform codebase cleanups to fix conflicts between existing headers
+> and C++ headers.
+> After that, we can update the C++ standard used by QEMU, to benefit fully
+> from latest updates of the language.
+> Finally, we define an empty C++ plugin, making sure we can keep track of
+> possible regression in qemu-plugin header.
+> 
+> Note: This series is *not* a trojan horse to bring C++ in QEMU
+> codebase, nor to define an alternative C++ API for plugins. It's just enabling
+> more users to get the most out of existing C plugin API.
 
-* .. immediately after -> immediately.
+That's somewhat misleading, because as the diffstat below shows,
+this is indeed bringing new C++ source files into QEMU:
 
-> The cleanup at qmp_migrate_finish_cb can also be removed because it
-> will always be reached wither via the error path at
+   contrib/plugins/cpp.cpp                     | 119 ++++++++++++++++++++
 
-* wither -> whether OR either
+and the description above talks about bringing more C++ plugins in
+from external forks, and the meson.build files are modified to
+deal with C++.
 
-> qmp_migrate_finish->migration_connect_error_propagate or via the
-> migrate_cleanup_bh.
->
-> The yank_unregister_instance at qmp_migrate() is now replaced by the
-> one at migration_cleanup().
->
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/migration.c | 26 +++++++++++++++++---------
->  1 file changed, 17 insertions(+), 9 deletions(-)
->
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 164cb26c48..d57cc2dc3b 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1576,15 +1576,21 @@ static void migration_connect_error_propagate(MigrationState *s, Error *error)
->  {
->      MigrationStatus current = s->state;
->      MigrationStatus next = MIGRATION_STATUS_NONE;
-> +    bool resume = false;
->
->      switch (current) {
->      case MIGRATION_STATUS_SETUP:
->          next = MIGRATION_STATUS_FAILED;
->          break;
->
-> +    case MIGRATION_STATUS_POSTCOPY_PAUSED:
-> +        resume = true;
-> +        break;
-> +
->      case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
->          /* Never fail a postcopy migration; switch back to PAUSED instead */
->          next = MIGRATION_STATUS_POSTCOPY_PAUSED;
-> +        resume = true;
->          break;
->
->      case MIGRATION_STATUS_CANCELLING:
-> @@ -1609,6 +1615,10 @@ static void migration_connect_error_propagate(MigrationState *s, Error *error)
->      }
->
->      migrate_error_propagate(s, error);
-> +
-> +    if (!resume) {
-> +        migration_cleanup(s);
-> +    }
->  }
->
->  void migration_cancel(void)
-> @@ -2211,9 +2221,6 @@ static gboolean qmp_migrate_finish_cb(QIOChannel *channel,
->      MigrationAddress *addr = opaque;
->
->      qmp_migrate_finish(addr, NULL);
-> -
-> -    cpr_state_close();
-> -    migrate_hup_delete(migrate_get_current());
->      qapi_free_MigrationAddress(addr);
->      return G_SOURCE_REMOVE;
->  }
-> @@ -2222,7 +2229,6 @@ void qmp_migrate(const char *uri, bool has_channels,
->                   MigrationChannelList *channels, bool has_detach, bool detach,
->                   bool has_resume, bool resume, Error **errp)
->  {
-> -    Error *local_err = NULL;
->      MigrationState *s = migrate_get_current();
->      g_autoptr(MigrationChannel) channel = NULL;
->      MigrationAddress *addr = NULL;
-> @@ -2279,6 +2285,13 @@ void qmp_migrate(const char *uri, bool has_channels,
->          return;
->      }
->
-> +    /*
-> +     * The migrate_prepare() above calls migrate_init(). From this
-> +     * point on, until the end of migration, make sure any failures
-> +     * eventually result in a call to migration_cleanup().
-> +     */
+We've had a handful of C++ files historically we've worked to
+reduce, with the eventual goal of not using a C++ toolchain for
+any part of QEMU build. Given that IMHO qemu.git should not be
+adding new C++ sources files, even if in the plugins dir.
 
-*  +1
+Since the qemu-plugin.h file should be entirely self-contained,
+do we actually need to be bundling all the plugins into qemu.git ?
 
-> +    Error *local_err = NULL;
-> +
->      if (!cpr_state_save(cpr_channel, &local_err)) {
->          goto out;
->      }
-> @@ -2303,7 +2316,6 @@ void qmp_migrate(const char *uri, bool has_channels,
->
->  out:
->      if (local_err) {
-> -        yank_unregister_instance(MIGRATION_YANK_INSTANCE);
->          migration_connect_error_propagate(s, error_copy(local_err));
->          error_propagate(errp, local_err);
->      }
-> @@ -4026,9 +4038,6 @@ void migration_connect(MigrationState *s, Error *error_in)
->      s->expected_downtime = migrate_downtime_limit();
->      if (error_in) {
->          migration_connect_error_propagate(s, error_in);
-> -        if (!resume) {
-> -            migration_cleanup(s);
-> -        }
->          if (s->error) {
->              error_report_err(error_copy(s->error));
->          }
-> @@ -4107,7 +4116,6 @@ void migration_connect(MigrationState *s, Error *error_in)
->
->  fail:
->      migration_connect_error_propagate(s, local_err);
-> -    migration_cleanup(s);
->      if (s->error) {
->          error_report_err(error_copy(s->error));
->      }
-> --
-> 2.51.0
+Should we in fact have a sepate gitlab.com/qemu/qemu-plugins repository
+where we keep plugins ?
 
-* Change looks okay.
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+Since the qemu-plugin.h file is defining a somewhat stable API, plugins
+in that separate repo ought to be able to build against multiple QEMU
+releases, and could thus benefit from not being bundled together and
+don't need to be on the same release cycle.
 
-Thank you.
----
-  - Prasad
+The main qemu.git CI jobs could trigger testing of a separate
+qemu-plugins.git repo, so we still validate no regressions.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
