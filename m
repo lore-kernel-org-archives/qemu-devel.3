@@ -4,70 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66A08D4A619
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 09:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B671DD4A619
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 10:00:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vggZG-0000hG-RM; Fri, 16 Jan 2026 04:56:34 -0500
+	id 1vggco-000306-UY; Fri, 16 Jan 2026 05:00:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vggZD-0000fs-Jp
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 04:56:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vggcn-0002vU-5x
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:00:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vggZB-00016x-BD
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 04:56:30 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vggci-0001s7-2h
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:00:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768557388;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=u4ykMC/1FLpZxu7vo/GAthdvo+eg7hPfTZi1Np4TRPU=;
- b=KXkIiyyCLalxuGjXKlqZD+6drWIpBHdjHjCHpqvehjfovaQF+Vn/omJASqFhaD83XfbUCi
- EW0FY2GPT0a3i422yZoN+XZ/nAHlB2rrTiSEN5ZzWlUP2BGlZSfx1yO1VLAtwpixQuXxCg
- ZY3EqMlWG/OtrQYkUyLO952ss7a8vCM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ s=mimecast20190719; t=1768557605;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qKFDFkyprOV4Vw/MUnmlT/ocG3ThLVvpfdkkSGm06kk=;
+ b=SzRXYVSsm80px/pPR3VYekoU/9wHUyapU65Gj9HhE/T3hRVqo0hile1sm8i5H5cL4i/N6O
+ Yg743a/MyjCAuytF1po2YJj6iSPjSF3k6v74SFmmDKhrv4iUGDTwxC5IEFj3hUATusUdoe
+ ofasmsoQpo20Xdj2xfwrWX5x2B6cwpI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-284-CuqIuYVKO3-8B5pej6yvTw-1; Fri,
- 16 Jan 2026 04:56:22 -0500
-X-MC-Unique: CuqIuYVKO3-8B5pej6yvTw-1
-X-Mimecast-MFC-AGG-ID: CuqIuYVKO3-8B5pej6yvTw_1768557381
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-HeQQHIOGMg6jFhE-tV2TQw-1; Fri,
+ 16 Jan 2026 05:00:03 -0500
+X-MC-Unique: HeQQHIOGMg6jFhE-tV2TQw-1
+X-Mimecast-MFC-AGG-ID: HeQQHIOGMg6jFhE-tV2TQw_1768557601
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CAD781800372; Fri, 16 Jan 2026 09:56:20 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.34.79])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CD26F18007D2; Fri, 16 Jan 2026 09:56:17 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org
-Cc: Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
- Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-Subject: [PATCH] tests/functional/riscv64: Silence warnings from Pylint in the
- boston test
-Date: Fri, 16 Jan 2026 10:56:15 +0100
-Message-ID: <20260116095615.269199-1-thuth@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8815C19560B2; Fri, 16 Jan 2026 10:00:01 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.135])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C4551955F22; Fri, 16 Jan 2026 09:59:58 +0000 (UTC)
+Date: Fri, 16 Jan 2026 09:59:56 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Thomas Huth <thuth@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH] tests/functional: Check for nested virtualization to run
+ KVM tests
+Message-ID: <aWoMHGNxzHVdh2CT@redhat.com>
+References: <20260116070438.31869-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+In-Reply-To: <20260116070438.31869-1-philmd@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,69 +89,88 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Fri, Jan 16, 2026 at 08:04:38AM +0100, Philippe Mathieu-Daudé wrote:
+> On Apple Silicon, nested virtualization starts to be usable
+> with M3 models and later. Check for the CPU model to avoid
+> failure on pre-M3:
+> 
+>   qemu-system-aarch64: unable to find CPU model 'cortex-a72'
+> 
+> Now tests are correctly skipped, i.e. on M1:
+> 
+>   ok 1 test_kvm.Aarch64VirtKVMTests.test_aarch64_nvhe_selftest # SKIP Nested Virtualization not available on Apple M1 Pro
+>   ok 2 test_kvm.Aarch64VirtKVMTests.test_aarch64_vhe_selftest # SKIP Nested Virtualization not available on Apple M1 Pro
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  tests/functional/aarch64/test_kvm.py | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
+> 
+> diff --git a/tests/functional/aarch64/test_kvm.py b/tests/functional/aarch64/test_kvm.py
+> index 7545f5ed554..b26c849ec67 100755
+> --- a/tests/functional/aarch64/test_kvm.py
+> +++ b/tests/functional/aarch64/test_kvm.py
+> @@ -29,8 +29,31 @@ class Aarch64VirtKVMTests(LinuxKernelTest):
+>      # base of tests
+>      KUT_BASE = "/usr/share/kvm-unit-tests/"
+>  
+> +    def require_nested_virtualization(self):
+> +        """
+> +        Requires the accelerator to support nested virtualization for the test
+> +        to continue
+> +
+> +        If the check fails, the test is canceled.
+> +        """
+> +        import platform, re, subprocess
+> +
+> +        if platform.system() != 'Darwin':
+> +            return
+> +        r = subprocess.run(['sysctl', '-n', 'machdep.cpu.brand_string'],
+> +                           text=True, capture_output=True)
+> +        if r.returncode != 0:
+> +            return
+> +        m = re.match(r"Apple M(\d+)( .*)?", r.stdout)
 
-Pylint complains:
+I tend to prefer check_call/check_output over the plain 'run',
+in this case check_output is suitble
 
- tests/functional/riscv64/test_boston.py:1:0: C0114:
-  Missing module docstring (missing-module-docstring)
- tests/functional/riscv64/test_boston.py:95:8: C0415:
-  Import outside toplevel (subprocess.run, subprocess.PIPE) (import-outside-toplevel)
- tests/functional/riscv64/test_boston.py:112:17: W1510:
-  'subprocess.run' used without explicitly defining the value for 'check'. (subprocess-run-check)
- tests/functional/riscv64/test_boston.py:95:8: W0611:
-  Unused PIPE imported from subprocess (unused-import)
+    try
+       data = subprocess.check_output([..args..], encoding='utf8')
+    except CalledProcessError
+       return
+    m = re.match(r"Apple M(\d+)( .*)?", data)
 
-Rework the code a little bit to make the linter happy.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/functional/riscv64/test_boston.py | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+> +        if m:
+> +            if int(m.group(1)) < 3:
+> +                self.skipTest("Nested Virtualization not available"
+> +                              " on %s" % r.stdout.strip())
 
-diff --git a/tests/functional/riscv64/test_boston.py b/tests/functional/riscv64/test_boston.py
-index 385de6a61df..2582df96f21 100755
---- a/tests/functional/riscv64/test_boston.py
-+++ b/tests/functional/riscv64/test_boston.py
-@@ -1,11 +1,14 @@
- #!/usr/bin/env python3
- #
--# Boston board test for RISC-V P8700 processor by MIPS
--#
- # Copyright (c) 2025 MIPS
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- #
-+"""
-+Boston board test for RISC-V P8700 processor by MIPS
-+"""
-+
-+from subprocess import run
- 
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
-@@ -92,7 +95,6 @@ def test_boston_invalid_cpu_count(self):
-         """
-         Test that 65 CPUs is rejected as invalid (negative test case)
-         """
--        from subprocess import run, PIPE
- 
-         fw_payload_path = self.ASSET_FW_PAYLOAD.fetch()
-         rootfs_path = self.ASSET_ROOTFS.fetch()
-@@ -109,7 +111,8 @@ def test_boston_invalid_cpu_count(self):
-         ]
- 
-         # Run QEMU and expect it to fail immediately.
--        result = run(cmd, capture_output=True, text=True, timeout=5)
-+        result = run(cmd, capture_output=True, text=True, timeout=5,
-+                     check=False)
- 
-         # Check that QEMU exited with error code 1
-         self.assertEqual(result.returncode, 1,
+Please add this as a decorator in tests/functional/qemu_tests/decorators.py
+called something like  "skipUnlessNestedVirtSupported".
+
+> +
+>      def _launch_guest(self, kvm_mode="nvhe"):
+>  
+> +        self.require_nested_virtualization()
+> +
+>          self.set_machine('virt')
+>          kernel_path = self.ASSET_KVM_TEST_KERNEL.fetch()
+>  
+> -- 
+> 2.52.0
+> 
+> 
+
+With regards,
+Daniel
 -- 
-2.52.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
