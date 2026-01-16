@@ -4,117 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7944C79FBC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 14:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9020AC79FBC
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 14:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgkJX-0001N3-0O; Fri, 16 Jan 2026 08:56:35 -0500
+	id 1vgkH0-0003nB-16; Fri, 16 Jan 2026 08:54:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgkJV-0001FB-9Q
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 08:56:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vgkGN-0003GO-2o
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 08:53:20 -0500
+Received: from ci-2004b-snip4-11.eps.apple.com ([57.103.89.23]
+ helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vgkJT-0002na-Fc
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 08:56:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768571786;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uDgsnbCjZSjeVu1hpP6d6FhdLzhsZjFvvfTvLOOf90g=;
- b=gRDJXTA2vup9y7IBP8V8oGSyHKSs4+Eglsf9/fNcdwNRuZ47iv2WeS+nEYaLk/3K1UX1yn
- NahAXCFOsWbfZebxvoq3DXWPiXPjddTxxNUEREdKlNCskMarFZ+t+sgGqC0y6Rmoqa1jUI
- Z6ZvnhhbmU5fSOVqgRjzKGf6a3LOHGk=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-443-xBcenYFgPfCypc0e9jCNWQ-1; Fri, 16 Jan 2026 08:56:25 -0500
-X-MC-Unique: xBcenYFgPfCypc0e9jCNWQ-1
-X-Mimecast-MFC-AGG-ID: xBcenYFgPfCypc0e9jCNWQ_1768571784
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-34cc88eca7eso1736871a91.2
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 05:56:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768571784; x=1769176584; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=uDgsnbCjZSjeVu1hpP6d6FhdLzhsZjFvvfTvLOOf90g=;
- b=HwrpWLWgFROmKH3ZjAXTMpZ6At3kuwpEUblphofcg5GS9v0u6sk52mC7BFKA6ENrf3
- USikO46yRT5Bd4FGlGDaRJ4o2DM98f09HMo6BdT6VyksBDSu+4Xd+Dmk0ZzvTnbCVqTP
- /ok7CsQwrxWiN0ER/y6kruSubp+0yB/Drz/lBaWn7YoehY7Lq5j8Pv0y/UFiXgk1/ps2
- rH7EkLZYp+MtI9Lbj1sU/AutMirj97qjS0oPoQjV+ESaNWRWqr69lI6XyUv3j1tN8WDf
- BMyEL1tU3wiwTttJaQDXdWnAdOrGyBHbpGLwduWol/R0ZIJ0gj6dCMSht9qiasdJGizz
- xtcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768571784; x=1769176584;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uDgsnbCjZSjeVu1hpP6d6FhdLzhsZjFvvfTvLOOf90g=;
- b=p/tbutif2WhPYSWezn+7L+JybBvuj66ooHV76qy1vzz5Fy1iTFPYtJUVZ/OKpWjPVc
- P882v1Ef32T1pPpFCJ7PnvzxvbAERP7fo5+7adkfyyIJr9EO6jI4IRSKzcqtN2tSpQkc
- lCII8NJIcfOSHiwbUnrkETTq9r86CJ5hosU9JAkGldVMc2Hvx28yRruw5thuM2cUSDZb
- NpTRfAlZaIGJ5xaRRwRJrOJh2ToTcYQ+q+UmDm7cRtw6xDwnxsdepBBvHWHCrn9sPp7+
- T4QwrQpz6EpWFr0WQFw8BShFLN4AI69Dw6thDJz0qDoANjaKzSfOHRkyrXb1unovjL0+
- jMyA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmPHbmBpNpTcbbOV3Axhj4QqBAe9Pl2UhBG7BUt9Ndsk1rnAypO7d/rhDuWh7Rp76SKrIYUO63O/pQ@nongnu.org
-X-Gm-Message-State: AOJu0Yz7DNGUYYoXswAWbZExJ/1Ngj/KoYOHlHIZiNfO/mxveJV3c2qF
- FCCw/JXokj410dUM0NKJpwGWiU31NV7NqBfXL/ni8+Ef+VADwZ+hpcdn7R4xNkjFS79LOS0Bxec
- w3jmVLLJjtZBe4kcqsxahGn/VpA7cIe5/yZkRNxxKWP765u9GXyLNbmK+
-X-Gm-Gg: AY/fxX79VHCWPVu36SJTtbqTwX9cTS6YRW/m1zcoDTKkb4kTPmOt5zTpO+necQ1B4At
- caD/piz7gchhDzi/oMQLauRtim5aUCd5lfT2nJtLVrkspIyiI0PkrhYg2Li+RjL8p94vtpfTsse
- T3dqx4aDFvYM2VFYtNj3iRyofaZ4P07dfJdUUVHOZMk4QbocagrABoGOKg5E1QtJo3r2VGJaehD
- j8bJBvQyOs86qcRT2ph8MUeWpb+4oNIWaaH2sXAZXp0iWK7saFOdq+vtKPn1Os1wGN8f4irgza/
- 3Iuu8C/TmVVMDo+E3+DwgLNQFy7V1fw8uiUAYHSarMVgOmCbJtVrPG7WKuREHPA7+xhfS/BcCDD
- UDJ4=
-X-Received: by 2002:a17:90b:4e87:b0:349:8116:a2d8 with SMTP id
- 98e67ed59e1d1-35272ef87fcmr2618939a91.7.1768571784211; 
- Fri, 16 Jan 2026 05:56:24 -0800 (PST)
-X-Received: by 2002:a17:90b:4e87:b0:349:8116:a2d8 with SMTP id
- 98e67ed59e1d1-35272ef87fcmr2618917a91.7.1768571783758; 
- Fri, 16 Jan 2026 05:56:23 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35273470a6fsm843347a91.3.2026.01.16.05.56.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Jan 2026 05:56:23 -0800 (PST)
-Date: Fri, 16 Jan 2026 08:56:13 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
- Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
- Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>,
- =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
- Juan Quintela <quintela@trasno.org>,
- Zhang Chen <zhangckid@gmail.com>, zhanghailiang@xfusion.com,
- Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
-Message-ID: <aWpDfUNbt_V-ipQo@x1.local>
-References: <20260114195659.2543649-1-peterx@redhat.com>
- <20260114195659.2543649-2-peterx@redhat.com>
- <aWf4i7EOXtpAljGX@x1.local> <20260115224929.616aab85@penguin>
- <aWlso1w39cQnEh2t@x1.local> <aWlxY9TWGT1aaMJz@gallifrey>
- <aWoJAz_GLXzqs_oH@redhat.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vgkGI-00028i-Uy
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 08:53:17 -0500
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-60-percent-15 (Postfix) with ESMTPS id
+ 12C2B180F920; Fri, 16 Jan 2026 13:53:09 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=usn+5WRKOGJaDLoRmA1S0SGx2PVU5yWwDmjw2JCpvZ4=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=bbTcOVaR1HRoBT9kCuQre+gfTf1YWh0bnSTJLQQAiqhMhjtqJUmfsk+zAL2CKktHfQFP+xHb5rdxce9m1UvLVO8MZhI59CBvI8G1TnwcgqAVbkTi062Gyk5DrOnIfwSxX2sny5G/610fmjxC9AQwx9Mudjt0HEhj9hoyEM+LOhXvhSdZ6OVZr1HBOosbm64up2mK7O13ydo89mljI6Jdjliv00KUoZKcWDib4Y3nVlZp1JQWtHh1N5d0XPGsxdRFHDAjFqgRyBYQBQ5HXbckTdULkW29OPHJ1X+HPaC+W2ZZIsE6cTpT5xhoJCUVw+L3b5p7mi4s0rmKs0aBY5IP4Q==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-60-percent-15 (Postfix) with ESMTPSA id
+ 8E5AA180011E; Fri, 16 Jan 2026 13:53:07 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: mohamed@unpredictable.fr,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v16 12/26] whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS define
+Date: Fri, 16 Jan 2026 14:52:21 +0100
+Message-ID: <20260116135235.38092-13-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260116135235.38092-1-mohamed@unpredictable.fr>
+References: <20260116135235.38092-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aWoJAz_GLXzqs_oH@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE2MDA5NyBTYWx0ZWRfX+Se2HDRYoLyT
+ rJEdNmB18SrwsxcjPGg5Hr9qTD3DAJghtx4piWdGWrX/GNfrL9F5LxGmryacvXB7XYF+LE/GMdr
+ JRMEIt/FFSGMOUGx8gX+T4Cb9EKf9EJZL77ULVTgfnSMN7qylt0B+UgGDrTS8gg/R3gAQEc9eqg
+ bIjreJsgZ5aC/6z7nGMx4DNX2ZmJaxwvKBXxsNmLUUDtRavsxpVdWIXvabYOLrKu1r3EHr+vLpS
+ J+wXlxvOwL62rchgw8lN2Ta0aCXYQEc5dUbSbh8OeCW1+A52PAPg3r4f05H2zn1+FE0pbZNcXpx
+ o+UDse6qMMFWiCeM1uu
+X-Proofpoint-ORIG-GUID: 4DwXAfP2qen8uIIzVEchue9TeEM8-DW-
+X-Proofpoint-GUID: 4DwXAfP2qen8uIIzVEchue9TeEM8-DW-
+X-Authority-Info: v=2.4 cv=QrRTHFyd c=1 sm=1 tr=0 ts=696a42c7
+ cx=c_apl:c_apl_out:c_pps a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=2psWIPzlEfUqwKpUe20A:9 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-16_05,2026-01-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ mlxlogscore=999 bulkscore=0 phishscore=0 malwarescore=0 clxscore=1030
+ suspectscore=0 adultscore=0 mlxscore=0 classifier=spam authscore=0 adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601160097
+X-JNJ: AAAAAAABPEn+9ZKAE0/xM5Pa2cMDVGBfWEQE2EEmMOefmkALhX8QTSieCfj18+Pu2THBt+JLPpqTvI7XfF6u1oqNzNLUqx1sBo9UgqVCrEGEj6QoYwmWJIXvMliw6HneVnAY1igZmihx3GkEz/lvcNbxUCtP5VRhHqPQ0EO9FXN/XJcymypIXCS5pHn7UoU4OcPSJGGQOPPkVx59CtX16ECGHXpN4crvL+cnHCiGYZlmoiHZW4Ck7mS6bLtW/kQ+iQ7tE5o4+Ro5I9rqwYoEWfXZ9jWfZ/iBL5IjtJNv9v5YNUw1oXsMS79hDknBiC3GioF6KZ9w7tOkdwrT2AH8wUoyoc/E8rf8K6mJH2e3Dscw3BGO5RXvnrfxLDjN2MtGRgW5MxtaLqLxZqzd1yz2nSTZnzjF4Ygeof0+UGWrE4PjjAGGkLvfM4ltbgmwSwW/W5BX/ksZnBwtRUeMvE6sVbQ7OgLVHudloaBp4DAptFrJfn6YBIaaKxQQNwGH6XybPI5ERFLV+eKOs2g7iYs7pAxU7cGjlMoXTPFzZKFrrmTUzuTDsGQoKijb3Lu8bF2TUvFb/3XeEdfk5TzstiHlZbog0JDJ3kkQaYc1D/QAGYr6dkE4L4df66B0s0yMkgUvlY1mQrK9wnBg8hCblJKWHCskc39WFhK27PuDoUAR6xl1CXyA3J7LvRssVGPYirkFJjVVAKCcGDg57+1Cfmg2YtdyqLeUHIQEBjlCOqWaUIty1fJhMEiYrK8wm3GloL4IEg2tl5zwWI2Lm8jyDeg5LODYoVITU5xOjqJZpxTJd78A7Nl3Oht2PF1ovOkDF/KUaGs=
+Received-SPF: pass client-ip=57.103.89.23;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,50 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 16, 2026 at 09:46:43AM +0000, Daniel P. Berrangé wrote:
-> On Thu, Jan 15, 2026 at 10:59:47PM +0000, Dr. David Alan Gilbert wrote:
-> > * Peter Xu (peterx@redhat.com) wrote:
-> > > On Thu, Jan 15, 2026 at 10:49:29PM +0100, Lukas Straub wrote:
-> > > > Nack.
-> > > > 
-> > > > This code has users, as explained in my other email:
-> > > > https://lore.kernel.org/qemu-devel/20260115224516.7f0309ba@penguin/T/#mc99839451d6841366619c4ec0d5af5264e2f6464
-> > > 
-> > > Please then rework that series and consider include the following (I
-> > > believe I pointed out a long time ago somewhere..):
-> > > 
-> > 
-> > > - Some form of justification of why multifd needs to be enabled for COLO.
-> > >   For example, in your cluster deployment, using multifd can improve XXX
-> > >   by YYY.  Please describe the use case and improvements.
-> > 
-> > That one is pretty easy; since COLO is regularly taking snapshots, the faster
-> > the snapshoting the less overhead there is.
-> 
-> Also if we ever want to be able to deprecate the non-multifd migration,
-> then we need to ensure multifd migration has the super-set of functionality.
+As of why: WHPX on arm64 doesn't have debug trap support as of today.
 
-IIUC there's still long way to go for that, and I'm not yet sure if it will
-happen..
+Keep the exception bitmap interface for now - despite that being entirely unavailable on arm64 too.
 
-To achieve it, we'll need to first remove/deprecate multifd capability,
-because as long as it's there people can still set it to OFF..
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-But before that, we'll need to figure out how to do with features
-non-trivial to be supported, at least RDMA (it turns out we decided to keep
-RDMA, prior to this COLO discussion), and "fd:" URIs.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ accel/whpx/whpx-common.c     | 2 +-
+ include/system/whpx-common.h | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-I still don't know if we can justify nobody will be using some handy
-streaming tooling with QEMU migration, in that case it'll never work with
-multifd because multifd (even if channels=1) requires two sessions; there's
-always the main channel.
-
-So I'd put that aside when considering what we'd do with COLO.  In that
-case IIUC COLO is the easy part if we really want to always use multifd.
-
-Thanks,
-
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index c58344cb61..c0610815d9 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -119,7 +119,7 @@ int whpx_first_vcpu_starting(CPUState *cpu)
+          * have one or more breakpoints enabled. Both require intercepting
+          * the WHvX64ExceptionTypeBreakpointTrap exception.
+          */
+-        exception_mask = 1UL << WHvX64ExceptionTypeDebugTrapOrFault;
++        exception_mask = 1UL << WHPX_INTERCEPT_DEBUG_TRAPS;
+     } else {
+         /* Let the guest handle all exceptions. */
+         exception_mask = 0;
+diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
+index 8f171d1397..b86fe9db6e 100644
+--- a/include/system/whpx-common.h
++++ b/include/system/whpx-common.h
+@@ -20,4 +20,7 @@ int whpx_first_vcpu_starting(CPUState *cpu);
+ int whpx_last_vcpu_stopping(CPUState *cpu);
+ void whpx_memory_init(void);
+ struct whpx_breakpoint *whpx_lookup_breakpoint_by_addr(uint64_t address);
++
++/* On x64: same as WHvX64ExceptionTypeDebugTrapOrFault */
++#define WHPX_INTERCEPT_DEBUG_TRAPS 1
+ #endif
 -- 
-Peter Xu
+2.50.1 (Apple Git-155)
 
 
