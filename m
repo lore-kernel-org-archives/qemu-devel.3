@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFCA3C98305
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 21:40:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC64C98305
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 21:43:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgrY0-00074C-3Z; Fri, 16 Jan 2026 16:40:00 -0500
+	id 1vgraU-0001IZ-Nm; Fri, 16 Jan 2026 16:42:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgrXf-0006wc-8A
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 16:39:43 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1vgraS-0001GY-UE
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 16:42:32 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgrXd-0003nK-IO
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 16:39:39 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2a07f8dd9cdso16264385ad.1
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 13:39:36 -0800 (PST)
+ id 1vgraR-00047u-8z
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 16:42:32 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-81f4a1a3181so1433845b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 13:42:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768599575; x=1769204375; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=u+OXoxZ2yz8oyfYThqMVUMHPVV+vhIYYi6AFoyqRa9I=;
- b=CCXILDAnzKFvTQMg00PLWfTcEzL/0e3CDsZuWmJyW1jPJ5Qpbij0UG2r5W6ZQvuf1t
- Ta3iKGZ9l8sSzdS+ZFH1IOzAbkzgNuDy2RsHOYdOvSkRzldRczGpCemag4y4yNXF2FRP
- 4gs3m6TxYs8H3CjifsybqEglg9EW0tIVxn2ScjLnF/tyEKnb337YU176eZVMB7gKDHZW
- UiM5Y+oA1UiaI7GnFhq8kLaJVRx3wawDA6kktYi/CjqdnxkCH6cfUVDUGi9un9DTQQft
- 3AI8UOe84n2yjJKpd8cB8C+PA3o1xsYf//vYQH/5nOvAeSnbtQ8I6/evkejqPgUdJt2x
- NZ8g==
+ d=linaro.org; s=google; t=1768599750; x=1769204550; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=PzR+I0idtOJqBIv9nu7Y+LPM48T7D3txOGJnywP3H9Q=;
+ b=M4l/G3hufCVTUjCAzxhDh+VYuskwFz7Mr0NSoXMa6iMGjJFJFdzxBw274zrgQx9TQZ
+ i9tQgh+lEm7oGMF677IvU2PDe6JVp4GT4vYw+nzRRwpbPhFZscpAXSyxw8NP/M+krR6x
+ ygjQ2z2DPuB4I70EL7JpVDgILbVbS8X4fg5z8MIIdkkz6Z+Jr3Zg1xF6iltERHHn+toL
+ WCzUwPfJpJMSZu82ywKWZlXsiqJxlEmnwC0zG3R30lppHyBAP+0C0EzKy0RxCmn8smhg
+ Hx3xLbyV5TAUlxVEsERPLFQg+L6omzzU6IKwWKdlS69mphXP/jKzVaIkxb6D0t89BAk/
+ AcAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768599575; x=1769204375;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=u+OXoxZ2yz8oyfYThqMVUMHPVV+vhIYYi6AFoyqRa9I=;
- b=jEzbnqYYyZmfFo7UT1+6gi8Uk+ZSukcg1Rfxe2ZvouYbg+NX+ZIdpYfqgnZdeVjHV5
- za4QOmOOnc0qOu6bzb00IT63/yqQDdHDbnLUEC7sCDGvPQVPFyHIJKJHdlcOFoRfM0kj
- VWpO6PA6P7sko/hYuxuD5H/QJwTPcKxQIayk0+XA56fIP1GTGkwtapm36Y+y7rOU06PU
- MtB7pW4nPuCBAezGFHK317KI0fcUF00oCpXE8gtD9suJThDYryupM4qhf8zc9j0o7coq
- +1O36X4p9cpu5Qpshn0gnWBVxiX2tQJbVB5LKK3HdWJXwIxpLak+BYHvDcK1kRCsO6EK
- fYLg==
+ d=1e100.net; s=20230601; t=1768599750; x=1769204550;
+ h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PzR+I0idtOJqBIv9nu7Y+LPM48T7D3txOGJnywP3H9Q=;
+ b=T6Yzs1a3DnAZVQUUfLtN0dolFM23GDtEP081IuxpEL1QE8D8PfH78ZrnaJm1zCxvhG
+ E32sNzJ6oQ2oZAQ6PAT/fOVDCAW/kNmV0jDmYD/gQTurpoeFR7w1X7fU8/TNzYQBOVjt
+ 5mUsOKuqb21C294LDp0h0TOApMtSPlrqGk2kqle8R6ATYoicyMROUz4mYoS7TmH/ADQC
+ aai/3pRuytefb2v1SA3gHo27Sn4VJhHhdNNxcGHIIKwacL/fwHXr5BqA+AVvEZNbS4tT
+ 8bebnUtTprEk+ibnC1Jx1B7sG+fMNo7f2WFPQcbLCDnz9/MV07FaDMKpSnpJBtXvkLWd
+ 2+Zw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVg4NoreKZdQGDgFsKMZrSq0Rav1o/XasZWGe822NhGjYpiVarZ+JmcJPPWAK8TR9dKM5LfoTNwtF/2@nongnu.org
-X-Gm-Message-State: AOJu0YwZxxNA5FbCfWTrowtOEVzG1o99UcthHzI2Mt1oEXMBhEBz+eVx
- pUuQWG0qRnudJr+fG9dQKOEyNFOabq9biIOYncim8uoIoE5l4acfQdkzlwEQ7DWO4Vk=
-X-Gm-Gg: AY/fxX7mWgMltBtzCJ8BMtXD7z4fL9DpfZt6adNBW4ELzvvTPtkjPHUsCYbzZsU6ibJ
- KfQvfgOwUQ4JLxykMQhW3w74K0Gr+fBG3KB0gJ94uGPE7W6yS0rm89qVZWlx19Rm2us3YHWHp8j
- FyqImkc07O7VllA6OTH0rtzl4spVX5ljI0F7FkMz3YS2yrZdTmeA5x+Qy3DJlCersNUweToyHGv
- GaXXE6OszQHBsMGJqJWlXjkEuhDf/U1gkSgYiHZKni0plT/b+JXYufs4AwJnRxaL0p1HHzm0JeT
- gZGIHzy/GSnv0XgGNWcvYpqxRT4efxKUgB/hdSy/hf0nxu9QU99xeQJa1RRle74WHrC8iJ9wfP2
- z95byVlhhrtlzbXHVF+Esg2o4HAN2y27zzYMOIyc34NB7G3O0iXLpT9Lc76dIFmLlOznse1Sokj
- 4j6TUwlQcOZEbiuFbFz0ee0/DYI8xlMVZZ+npaQ5iXzNeFM6/P8xqZqBUcWmAcU7jEW5s=
-X-Received: by 2002:a17:903:2ac4:b0:2a1:2b5f:d16b with SMTP id
- d9443c01a7336-2a7175cc0bbmr37222915ad.31.1768599574898; 
- Fri, 16 Jan 2026 13:39:34 -0800 (PST)
+ AJvYcCUQT5bnZeCH+Wwy6Txh+dZcHqbJokHl77Yb1vAVGZXWQFHPGD74ec0vMEAsvgma9GtL7PQ2HgN1021J@nongnu.org
+X-Gm-Message-State: AOJu0YzfkIiW5bBTYjPBzlh069RmZgDi9NL4UMXzrOkDPtsrW563LDJy
+ IjE+0kKlVVeVup2QTnisRTAv+EU+W8XWM9gC/93VAzKV3CaZpQXhPVezYYMDhlIm+fU=
+X-Gm-Gg: AY/fxX75px1FKuF1R9xuMD+A45dEKli27xuoRYJaNDyPr3/tby253KRsRO+4N9itFqv
+ qdPQY1t1Qe8V8w/SK5DAuFQkXw1ztigK5h45hFEoUEnSYP1yfEJ/w65W+UsTZW3n2ogcoh3LjT8
+ KNoCoiWwvu8NuAIaOJLf3QhmadJUck+LnhttN6eFODFewXQLqBnBMwV1C9jLcXyUSfG2V69v5kC
+ wh2ke6WU3yKvIv5Iz5JD6mcVV9Oe7yxWj5Ib9HUYsrqrEY1rBePpNigr+LAyg1xRUNn+OWXQjlb
+ MdL7dDk/h2iBOWi0zCBdeBcmCyGSZnIDWzG00Z5SyD40S2RlOzxh5x3Egt5gIgQG2jjQ+dMjyhD
+ RhvG2yd9OvsQynXxkIFoBvm3JMEt8wjMJSlZERSDzKN+b98Vd6UFPHNaGMQygZTkkaUhPZ6GG22
+ KM0dtQzH+bXqRlBaCZRTotsnVuKTA0lp6vlBUZQzKWBpYZ0I7oY7QYVI65
+X-Received: by 2002:a05:6a00:909e:b0:81f:995d:6cb with SMTP id
+ d2e1a72fcca58-81fa01ec7f9mr3977096b3a.36.1768599749658; 
+ Fri, 16 Jan 2026 13:42:29 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7193dbb74sm29258415ad.56.2026.01.16.13.39.34
+ d2e1a72fcca58-81fa108c4dbsm2871470b3a.5.2026.01.16.13.42.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Jan 2026 13:39:34 -0800 (PST)
-Message-ID: <3d9c9fbe-711c-4be1-84f6-5fa3cc18d2a8@linaro.org>
-Date: Fri, 16 Jan 2026 13:39:33 -0800
+ Fri, 16 Jan 2026 13:42:29 -0800 (PST)
+Message-ID: <2ea37e5b-b671-42e4-bd78-127714e0a2e6@linaro.org>
+Date: Fri, 16 Jan 2026 13:42:28 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH trivial] plugins: correct docstring for write_register API
 Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -80,7 +81,7 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
 References: <60089475-3891-4448-bfe0-8dd698cd2435@epfl.ch>
  <0d32ba74-9171-425d-ac0e-1303d6ca154a@linaro.org>
  <0458a52c-b86b-43e8-84f6-ec75b012a9a2@epfl.ch>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ <3d9c9fbe-711c-4be1-84f6-5fa3cc18d2a8@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -115,11 +116,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <0458a52c-b86b-43e8-84f6-ec75b012a9a2@epfl.ch>
+In-Reply-To: <3d9c9fbe-711c-4be1-84f6-5fa3cc18d2a8@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -142,72 +143,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/16/26 10:48 AM, Florian Hofhammer wrote:
-> On 16/01/2026 19:24, Pierrick Bouvier wrote:
+On 1/16/26 1:39 PM, Pierrick Bouvier wrote:
+> On 1/16/26 10:48 AM, Florian Hofhammer wrote:
+>> On 16/01/2026 19:24, Pierrick Bouvier wrote:
+>>
+>>> In practice, it may return anything else than 0 (see arm_cpu_gdb_write_register for instance).
+>>> So the right (vague) description should be:
+>>> On success returns 0.
+>>
+>> Hmm, it seems to me as if the code is a bit inconsistent here: the
+>> plugin API in plugins/api.c returns -1 if it detects an error directly,
+>> and the arm_cpu_gdb_write_register() (but it's similar for other archs,
+>> e.g., x86_cpu_gdb_write_register()) returns 0 if the register is unknown
+>> and the number of bytes written otherwise (in the arm example: 4 for the
+>> general-purpose registers).
+>> That means that currently, both -1 and 0 as return value indicate an
+>> error.
+>>
+>> Thanks for the catch, that made me dig into the actual gdbstub code a
+>> bit more!
+>>
 > 
->> In practice, it may return anything else than 0 (see arm_cpu_gdb_write_register for instance).
->> So the right (vague) description should be:
->> On success returns 0.
+> Indeed, same for me. I've been reading too quick when answering through
+> your first email, and missed the nuance.
 > 
-> Hmm, it seems to me as if the code is a bit inconsistent here: the
-> plugin API in plugins/api.c returns -1 if it detects an error directly,
-> and the arm_cpu_gdb_write_register() (but it's similar for other archs,
-> e.g., x86_cpu_gdb_write_register()) returns 0 if the register is unknown
-> and the number of bytes written otherwise (in the arm example: 4 for the
-> general-purpose registers).
-> That means that currently, both -1 and 0 as return value indicate an
-> error.
+>> In order to make this consistent, there are two options I see:
+>> 1) Change the plugin API function to return 0 on error (but then it's
+>> inconsistent with the qemu_plugin_read_register() function which returns
+>> -1 on error), or
+>> 2) Change the arch-specific gdbstub functions to return -1 on error
+>> instead of 0.
+>>
+>> What do you think? I'd be happy to prepare a patch for either option.>
 > 
-> Thanks for the catch, that made me dig into the actual gdbstub code a
-> bit more!
+> For sake of consistency, we should make this use the same interface than
+> {read,write}_memory_vaddr, minus the len param.
+> bool qemu_plugin_read_memory_vaddr(uint64_t addr,
+>                                      GByteArray *data, size_t len);
+> bool qemu_plugin_write_memory_vaddr(uint64_t addr,
+>                                      GByteArray *data);
+> 
+> So it would be:
+> bool qemu_plugin_read_register(uint64_t addr, GByteArray *data);
+> bool qemu_plugin_write_register(uint64_t addr, GByteArray *data);
+> 
+> This is better and unambiguous, as no one needs a documentation to know
+> what a bool return is, and data already holds the size information.
+> 
+> As well, writing this, I realized that existing write_register is broken
+> by design: we never check the size of data array (except > 1) and
+> blindly an arbitrary amount of memory from it, which is wrong.
+> Even though the doc mentions it, we should just fix it, detect when size
+> < reg_size, and return false.
+> 
+> This comes from the fact gdb_write_register itself has no notion of size
+> and trust the pointer. so it would need another refactor also. And while
+> at it, change gdb_{read,write}_register definition to return bool also.
 >
 
-Indeed, same for me. I've been reading too quick when answering through 
-your first email, and missed the nuance.
-
-> In order to make this consistent, there are two options I see:
-> 1) Change the plugin API function to return 0 on error (but then it's
-> inconsistent with the qemu_plugin_read_register() function which returns
-> -1 on error), or
-> 2) Change the arch-specific gdbstub functions to return -1 on error
-> instead of 0.
-> 
-> What do you think? I'd be happy to prepare a patch for either option.>
-
-For sake of consistency, we should make this use the same interface than
-{read,write}_memory_vaddr, minus the len param.
-bool qemu_plugin_read_memory_vaddr(uint64_t addr,
-                                    GByteArray *data, size_t len);
-bool qemu_plugin_write_memory_vaddr(uint64_t addr,
-                                    GByteArray *data);
-
-So it would be:
-bool qemu_plugin_read_register(uint64_t addr, GByteArray *data);
-bool qemu_plugin_write_register(uint64_t addr, GByteArray *data);
-
-This is better and unambiguous, as no one needs a documentation to know 
-what a bool return is, and data already holds the size information.
-
-As well, writing this, I realized that existing write_register is broken 
-by design: we never check the size of data array (except > 1) and 
-blindly an arbitrary amount of memory from it, which is wrong.
-Even though the doc mentions it, we should just fix it, detect when size 
-< reg_size, and return false.
-
-This comes from the fact gdb_write_register itself has no notion of size 
-and trust the pointer. so it would need another refactor also. And while 
-at it, change gdb_{read,write}_register definition to return bool also.
-
-> Best regards,
-> Florian
-
-I think it pushes a lot of changes just for a simple comment change, so 
-I would understand if you don't want to do this whole refactoring beyond 
-plugins interface. I can pick it up, or let you work on it if you have 
-time/interest. Feel free to let us know.
-
-In all cases, thank you for pointing this.
-
-Regards,
-Pierrick
+I reviewed that code by the way, so definitely my fault I let it through.
 
