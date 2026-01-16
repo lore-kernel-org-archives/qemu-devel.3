@@ -4,81 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 188BAD47CD3
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 10:47:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9D5D47CD6
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 10:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vghM3-0000TE-Br; Fri, 16 Jan 2026 05:46:59 -0500
+	id 1vghQ8-0002WC-Jf; Fri, 16 Jan 2026 05:51:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vghM1-0000SS-NX
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:46:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1vghQ6-0002Sf-PV
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:51:10 -0500
+Received: from mout.kundenserver.de ([212.227.126.135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vghLz-0001Tb-Jc
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:46:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768560412;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kgrR3QDqTuIYeOUu3Lj0B91lZcBBcmU23yGctL209UY=;
- b=LuVsVavVXIlgid6HJXhmAnoMmMC9T05S6ExiE0BGpL3WWhG7bhoN/di5T4KrtLbBGGPw3k
- FRPtsTZtFSX59JLY8X8RL7sQ+R7wDrmvRokhxI+0rrBH+1z6bMKMD0mey6ByPXWbd5Sclb
- BzCd/2Kqb/Gfme4oZdcvvCjNzg/7hBg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-228-tTA4WbFsP_-zw2Nj7s_mvQ-1; Fri,
- 16 Jan 2026 05:46:48 -0500
-X-MC-Unique: tTA4WbFsP_-zw2Nj7s_mvQ-1
-X-Mimecast-MFC-AGG-ID: tTA4WbFsP_-zw2Nj7s_mvQ_1768560407
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A6F51955F34; Fri, 16 Jan 2026 10:46:47 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.135])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C80A530002D6; Fri, 16 Jan 2026 10:46:44 +0000 (UTC)
-Date: Fri, 16 Jan 2026 10:46:41 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] docs/about: propose OS platform/arch support tiers
-Message-ID: <aWoXEU5kYbLpuKEI@redhat.com>
-References: <20260115180123.848640-1-berrange@redhat.com>
- <05bc2cec-874f-48c9-8ba8-9f14f41e9dab@linaro.org>
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1vghQ3-0001t6-7z
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:51:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
+ s=s1-ionos; t=1768560663; x=1769165463; i=laurent@vivier.eu;
+ bh=iRKF310EFQNGmCP8paV//pm5V/6sTa5BH+WdGSxH+nk=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=2XUO+FbQmuxoB8Er2NX709gYs82rE15uuw1Sfwg3BjHOg1dIEQJee36cRedW7XwS
+ z1ayDPU3JF06BIzi+qz/YxnrBfANPa+wFAP25YSO4ODiTP2Z9KZOIIKKmL+eKd7DG
+ BUYX27hpXM49iW5U+BQFS0P7zFqFEbPxz1TXgITLrev3cy1vPWSJ8nT39ztY+SiFD
+ b9ssZh55hDguKJyolKT2QrKRr5bW2/Tjww26SDM/hE+gKs/JelM3cyUhynTqqYIb7
+ NCUBvQUiTNpEQUbBhlqeGQfXjK48gUOQcaYArnjO4zYwfCUgJHQG55g7aDILPk4or
+ fjbSukQMGeS6bJ8YdA==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
+ (mreue010 [213.165.67.103]) with ESMTPSA (Nemesis) id
+ 1McXwD-1wFCtG2cGb-00ZqXs; Fri, 16 Jan 2026 11:51:03 +0100
+Message-ID: <fe632639-7174-47dc-a6b3-7594a04d3a43@vivier.eu>
+Date: Fri, 16 Jan 2026 11:51:01 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <05bc2cec-874f-48c9-8ba8-9f14f41e9dab@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: add reviewer for linux-user
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>,
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20260115201712.2706663-1-pierrick.bouvier@linaro.org>
+Content-Language: fr
+From: Laurent Vivier <laurent@vivier.eu>
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <20260115201712.2706663-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:cxIuurGh4d7Dr2qmdIvui9GO3L+DHnu0NDCPHFKbbYsOh3uJdc0
+ kuAEdoTHMEmsk7zMZt9kEFnsro+fBZJyTLefhFN+45d1lRslfe2Aew0IPIGw9SwMjLdQXeM
+ KazBk9oW9btIwkr6KvnYf637gwHuIv5kkfPPeCinL3DVFv8x2ApDd+JHrX3zsFlS4vz2tOF
+ 8qMAhROLspXUTgOXYkRfw==
+UI-OutboundReport: notjunk:1;M01:P0:e2CELrLxduo=;5f3TNaO3kVDJtlSkDxSwl3S0UFh
+ PgYGv3PZ2qNAlRVNH8oKpOnDhc9mu8phZhORPOXTEeXnH/rt4Ikes1GP9Uyq0i9gzhZGFwKXn
+ qpbwPsrLK+kn7Vg0GxYHAqQ+UT8FDV9bJ6P/4vcIohNJ/IuPKdLmgarq/uYLnA0Xrhg70ogK7
+ rH8YdNPoFOn0/rCUGwKHlvTxsNoiJTOgxbJg0EDSoD05mYRlxEUpKabTNAGbWSMq2W+K1Ddni
+ gjy+oaZz7OsRUN+cnH6S3oKnvw255LIrXs3ApIz69dfg1u1NLKugMuId/1ymxxoLf6A0d+/vm
+ SnPGPd0DT9RUBjwDI9tSae4bUMMU+w/qqrZ+kjkMbfh/CG/awjaCJ5D/alf5w/HFygzLpE0mq
+ As2xCeADL7BR1NJbwM1ozrFLo0GyBWxwPBjVB1dV/JW0YcoGv2KgC2QEZjkjTQCIKkMCCBhdd
+ /a/vfR6zI8ETNsjESPSIOdfMKFWqGrB7yXBkupBYMuo2hNnYXpXOuWpnFScv6iuAPDlE+yQZv
+ +d0BH00LkleJhcGrTTFv6cv/fLgDwJQj/TUXQgRC7WfEzZxzEitVG1BhOTOTlALdqn6PMDP4X
+ OCh+kigePB5d+fB3xA5akhP7EG8rF5g8cvr7XQJCvieGZ/Fj+iKuJByDvhfE9yzEpgaha024y
+ My5E/JcmhSV2NxBxtrtR/sJuP2ivGhN4pfZfm0QlCy/SDUyv4m92n74EVUgYJT0NJ+un5rLnt
+ gpeX2h0EdWuuMYEKw4CIpCKEEQSpn98OafX3bE9By6D6ooc5f70Fnakg741oFA0KIiBNJMJOC
+ oGG2WappWccQpb029okmR2vybB46DsVQLQlsE8jZowf5EjzvX2OjJUBuq4tMT3YUdKJD63TN1
+ V9TbgWCGQML8hlOhNZSIferfWbVIdQ0WGQ6IcSBsa1KB8CBEYGAzgVbWfsAP12njtFs61FH/+
+ rup0/7POXwB/kMi28T59HEy6sOuCWzp5nrIEdiMspIaDpQh4gWLBRAbwts5j/5X0QCpQvWefv
+ uk6U/eCp5ib3coGbrYUDLCCIYuz2v8cWr9eU1Z8tHiKoUIk1lBNd3rzYY/hKtEFibD0O8S4t6
+ lrODUkylgeS1pIlCnwAgCAbtj1k98Gdb8jndfM8ukoH1H12eTR6dxmzUKusa1IGw78AvvfXEA
+ y4b1QnwL4AbQXUR0T2dmH8ni/wxgUIVaNeiqu7xM9v9pknaHkWbVyT+6MyJAJmEmyaGZrc0Co
+ KdhEYMaH/HzIdFeml0GHQJ9R74sh0ImYv4AFZ3zF3/yWb0BpEEsTRFyJ0bEFGxrDHtfPdbil0
+ tBccXwYBbGyf3hmgFgkWxvCuvv8l1mrg3JWCcYPagmtdp8/qwneECziqDurB1MaO4Dn/O4Dzk
+ iH8ZkKqUpfvGUe1R7IJRgi6YSZ3X60QAub0E7SrkTh1GpK6AuPebpUw1K4nvp7dgHsqpdyUTx
+ IcgyAqDMO7crTjN1hlQyPJh1qpReH1n4ouaR9tDIY6JooxdxFnEIQQnVQ4Ht57oUD5uo246gC
+ yiLEA54JkFZxUPniIrGAQ/ZMrTyT83AyJywBV0OyYvVH3BW6Wh+KLm15hLcRi60Kqa7dLF4VL
+ rVnNxw4jCjos0t1u7q3+m8VbQfUPINVuICkDIqG74pLoj1ggOoEsBh+d1SxKLl6szLXRLJjQT
+ 3Rq7xopQV6yHcLCjoMCF75kJacyMbyxflP1QSDKCFkv0ZBcd/IAaxsmJMQWyAN58E+pQVKb1k
+ TBghaoaaG/047iHV2Fwkq2z+TWLgoh4/IBQy82DlnwfwEYq0oPJE5dBA=
+Received-SPF: pass client-ip=212.227.126.135; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,252 +150,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 15, 2026 at 12:48:56PM -0800, Pierrick Bouvier wrote:
-> On 1/15/26 10:01 AM, Daniel P. Berrangé wrote:
-> > Informally we have approximately three groups of platforms
-> > 
-> >   * Tier 1: fully built and fully tested by CI. Must always be
-> >             kept working & regressions fixed immediately
-> > 
-> >   * Tier 2: fully built and partially tested by CI. Should
-> >             always be kept working & regressions fixed quickly
-> > 
-> >   * Tier 3: code exists but is not built or tested by CI.
-> >             Should not be intentionally broken but not
-> > 	   guaranteed to work at any time. Downstream must
-> > 	   manually test, report & fix bugs.
-> > 
-> > Anything else is "unclassified" and any historical code
-> > remnants may be removed.
-> > 
-> > It is somewhat tricky to define unambiguous rules for each tier,
-> > but this doc takes a stab at it. We don't need to cover every
-> > eventuality. If we get the core points of view across, then it
-> > at least sets the direction for maintainers/contributors/users.
-> > Other aspects can be inferred with greater accuracy than today.
-> > 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> > 
-> > This came out of the discussion about recent unnoticed breakage
-> > in NetBSD builds and what maintainers are expected todo about
-> > it (if anything)
-> > 
-> >    https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg02543.html
-> > 
-> >   docs/about/build-platforms.rst | 152 +++++++++++++++++++++++++++++++++
-> >   1 file changed, 152 insertions(+)
-> > 
-> > diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-> > index e95784cdb5..950e164c02 100644
-> > --- a/docs/about/build-platforms.rst
-> > +++ b/docs/about/build-platforms.rst
-> > @@ -171,3 +171,155 @@ Only 64-bit Windows is supported.
-> >   .. _MacPorts: https://www.macports.org/
-> >   .. _MSYS2: https://www.msys2.org/
-> >   .. _Repology: https://repology.org/
-> > +
-> > +OS Support Tiers
-> > +----------------
-> > +
-> > +While the QEMU code targets a number of different OS platforms, they don't
-> > +all get the same level of support from the project. This applies to
-> > +contributor & maintainer expectations, CI automation and requirements
-> > +for merge gating.
-> > +
-> > +Tier 1
-> > +~~~~~~
-> > +
-> > +These platforms attain the highest level of quality offered by
-> > +the QEMU project.
-> > +
-> > + * Builds and all tests pass at all times in both git HEAD and releases
-> > +
-> > + * Builds for multiple build configuration are integrated in CI
-> > +
-> > + * Runs all available tests frameworks (unit, qtest, iotests, functional)
-> > +   in CI
-> > +
-> > + * Merging code is gated on successful CI jobs
-> > +
-> > +This covers
-> > +
-> > + * Linux (x86_64, aarch64, s390x)
-> > +
-> > +Responsibilities:
-> > +
-> > + * Contributors MUST test submitted patches on one of Tier 1 platforms.
-> > +
-> > + * Contributors SHOULD test submitted patches on Tier 1 platforms
-> > +   by running a GitLab CI pipeline in their fork.
-> > +
-> > + * Maintainers MUST request contributors to fix problems with Tier 1
-> > +   platforms.
-> > +
-> > + * Maintainers MUST test pull requests on Tier 1 platforms
-> > +   by running a GitLab CI pipeline in their fork.
-> > +
-> > + * Maintainers MUST co-ordinate fixing regressions identified
-> > +   post-merge immediately.
-> > +
-> > +
-> > +Tier 2
-> > +~~~~~~
-> > +
-> > +These platforms are considered to be near Tier 1 level, but are
-> > +lacking sufficient automated CI testing cover to guarantee this.
-> > +
-> > + * Builds and all tests pass at all times in both git HEAD and releases
-> > +
-> > + * Builds for multiple build configuration are integrated in CI
-> > +
-> > + * Runs some test frameworks in CI
-> > +
-> > +This covers
-> > +
-> > + * Linux (mips64el, ppc64el, riscv64)
-> > +
-> > + * FreeBSD (x86_64)
-> > +
-> > + * macOS (aarch64)
-> > +
-> > + * Windows (x86_64)
-> > +
-> > +Responsibilities:
-> > +
-> > + * Contributors MAY test patches on Tier 2 platforms
-> > +   by running a GitLab CI pipeline in their fork
-> > +
-> > + * Maintainers SHOULD request contributors to fix problems with Tier 2
-> > +   platforms.
-> > +
-> > + * Maintainers MUST test pull requests on all Tier 2 platforms,
-> > +   by running a GitLab CI pipeline in their fork.
-> > +
-> > + * Maintainers MUST co-ordinate fixing regressions identified
-> > +   post-merge quickly.
-> > +
-> > +
-> > +Tier 3
-> > +~~~~~~
-> > +
-> > +These platforms have theoretical support in the code, but have
-> > +little, or no, automated build and test coverage. Downstream
-> > +consumers (users or distributors) who care about these platforms
-> > +are requested to perform manual testing, report bugs and provide
-> > +patches.
-> > +
-> > + * Builds and tests may be broken at any time in Git HEAD and
-> > +   releases
-> > +
-> > + * Builds are not integrated into CI
-> > +
-> > + * Tests are not integrated into CI
-> > +
-> > + * Merging code is not gated
-> > +
-> > +This covers:
-> > +
-> > + * NetBSD
-> > + * OpenBSD
-> > + * macOS (except aarch64)
-> > + * FreeBSD (except x86_64)
-> > + * Windows (except x86_64)
-> > + * Solaris
-> > +
-> > +Responsibilities:
-> > +
-> > + * Contributors MAY test patches on Tier 3 platforms manually
-> > +
-> > + * Maintainers MAY request contributors to fix problems
-> > +   on Tier 3 platforms
-> > +
-> > + * Maintainers MAY test patches on Tier 3 platforms manually
-> > +
-> > + * Maintainers SHOULD NOT accept patches that remove code
-> > +   targetting Tier 3 platforms even if currently broken
-> > +
-> > + * Downstream vendors SHOULD test RC releases on Tier 3 platforms
-> > +   and provide bug reports and patches to address problems
-> > +
-> > +Note: if a Tier 3 platform is found to be significantly broken,
-> > +no patches are contributed for a prolonged period, and there is
-> > +no sign of downstream usage, it is liable to be moved to
-> > +"Unclassified" and thus be subject to removal.
-> > +
-> > +
-> > +Unclassified
-> > +~~~~~~~~~~~~
-> > +
-> > +These platforms are not intended to be supported in the code
-> > +and outside the scope of any support tiers.
-> > +
-> > +  * Code supporting these platforms can removed at any time
-> > +  * Bugs reports related to these platforms will generally
-> > +    be ignored
-> > +
-> > +This covers:
-> > +
-> > + * All 32-bit architectures on any OS
-> > + * Any OS not listed above
-> > +
-> > +Responsibilities:
-> > +
-> > + * Maintainers MAY decline patches that add code targetting
-> > +   unclassified platforms
-> > +
-> > + * Maintainers MAY accept patches that remove code targetting
-> > +   unclassified platforms
-> 
-> That's a good summary, but it should differentiate testing/runtime issues
-> from building issues.
-> 
-> In general, maintainers should ensure code build on all platforms/configs.
-> Of course, it's a best effort considering not all of them are built in CI,
-> but in case a build issue is caught on time, it should be fixed before
-> hitting master.
+Le 15/01/2026 =C3=A0 21:17, Pierrick Bouvier a =C3=A9crit=C2=A0:
+> I had interest in this area for some time, and would like to help
+> reviewing it.
+>=20
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   MAINTAINERS | 1 +
+>   1 file changed, 1 insertion(+)
+>=20
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 4ddbfba9f01..4ef0c10f63a 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4021,6 +4021,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-u=
+ser bsd-user-rebase-3.1
+>  =20
+>   Linux user
+>   M: Laurent Vivier <laurent@vivier.eu>
+> +R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>   S: Maintained
+>   F: linux-user/
+>   F: configs/targets/*linux-user.mak
 
-It is certainly the case for Tier 1/2 platforms, that a known build
-issue must not be willfully merged into master.
-
-That's not the case for Tier 3, since we can't guarantee that the QEMU
-code builds successfully to begin with. If we do a see a probable issue
-in a Tiar 3 platform build, and its easy to resolve then we should. We
-can't gate on every Tier 3 problem given the lack of guaranteed working
-dev/test envs and lack of CI.
-
-Ideally we should not have any platforms listed under Tier 3 at all,
-but today we do. May be some will graduate to Tier 2 at some point.
-
-> It may be worth to mention that all platforms can be accessed for free
-> using: https://github.com/second-reality/github-runners.
-> If you're open to it, we could move this project under
-> https://github.com/qemu and preinstall all dependencies on each runner, so
-> people can easily jump on a shell and start debugging things without wasting
-> time.
-
-I don't speak for all maintainers, but personally I've no desire
-to increase use of github for QEMU, or indeed any other projects.
-
-The choice of platform is about more than just possible features.
-The ability to control our own destiny, and maintain use of OSS
-infrastructure was/is important.
-
-GitLab is certainly not perfect, but gitlab.com was an acceptable
-tradeoff with the ability to switch to self-hosted Gitlab since
-it is based on OSS. Beyond that we could also migrate to Forgejo/
-Codeberg. Tieing ourselves into GitHub's fully proprietary service
-has never really been on the table for QEMU.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Acked-by: Laurent Vivier <laurent@vivier.eu>
 
