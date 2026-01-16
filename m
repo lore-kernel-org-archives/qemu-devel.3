@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEA42D47CC3
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 10:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CB02D47CC3
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 10:11:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vggi9-0005Z7-9Q; Fri, 16 Jan 2026 05:05:45 -0500
+	id 1vggnN-0000Gt-OM; Fri, 16 Jan 2026 05:11:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vggi5-0005YM-VR
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:05:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vggnH-0000Fc-7H
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:11:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vggi4-0002lY-4i
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:05:41 -0500
+ id 1vggnF-0003rO-F0
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:11:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768557939;
+ s=mimecast20190719; t=1768558260;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AcpNYgr3DDa5Mnlz9gSpNx7RjeitHhlFTV+1GjLz4ug=;
- b=HIX9K/ev/p8aI59ZWCHczOu8FAldKoaI4A6q/mwE8jtbKyJ253RItcDUYvZ5UWpesCgFle
- 2O3yUE1ggfjtc4WKaeudwoIukfzchgV3xxrmTjuq8ugJpau5BZ9HfP75CT/NgHmAKsLor1
- mHDWIv3dUAj/FZz3qMf9p4mKW73FO2E=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=eI68cha5JGUsQpAvzdg6WvnxrlBL6PBlDr3vkBMlqe0=;
+ b=CRzjyneoEcD6CZJ9Cl6dkAPHun32LyLQdvtbS732TDUebIuN5krmuaKcIuIbKei9tQG9Gm
+ LG6Gz2H71hY2+qp2p0XHWwnDIZ2Mf1Bxf44gwqXsKSfTkexshY2Dezm7eAg1WcIa5rE5JP
+ LJEN9xvJ8i+gUMxhyUSxGHpVgTRRh9c=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-390-HieWMGTROT-n6R8LH19WJQ-1; Fri,
- 16 Jan 2026 05:05:37 -0500
-X-MC-Unique: HieWMGTROT-n6R8LH19WJQ-1
-X-Mimecast-MFC-AGG-ID: HieWMGTROT-n6R8LH19WJQ_1768557936
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-4M1Iv--2N8CSC6blmS3jBw-1; Fri,
+ 16 Jan 2026 05:10:56 -0500
+X-MC-Unique: 4M1Iv--2N8CSC6blmS3jBw-1
+X-Mimecast-MFC-AGG-ID: 4M1Iv--2N8CSC6blmS3jBw_1768558255
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1963D1954B17; Fri, 16 Jan 2026 10:05:36 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2F5F2195605A; Fri, 16 Jan 2026 10:10:55 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.135])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 30AB219560A7; Fri, 16 Jan 2026 10:05:32 +0000 (UTC)
-Date: Fri, 16 Jan 2026 10:05:29 +0000
+ id 78D5719560A7; Fri, 16 Jan 2026 10:10:52 +0000 (UTC)
+Date: Fri, 16 Jan 2026 10:10:49 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
+To: Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
 Subject: Re: [PATCH] docs/about: propose OS platform/arch support tiers
-Message-ID: <aWoNaVemB2oiK9Ui@redhat.com>
+Message-ID: <aWoOqcWreVutPrM7@redhat.com>
 References: <20260115180123.848640-1-berrange@redhat.com>
- <c53dbe16-98cb-0cde-7024-3deacabf9bfd@eik.bme.hu>
+ <251f819b-8a47-43f5-b74c-6ba5fb307de8@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c53dbe16-98cb-0cde-7024-3deacabf9bfd@eik.bme.hu>
+In-Reply-To: <251f819b-8a47-43f5-b74c-6ba5fb307de8@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,18 +95,18 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 15, 2026 at 09:39:13PM +0100, BALATON Zoltan wrote:
-> On Thu, 15 Jan 2026, Daniel P. Berrangé wrote:
+On Thu, Jan 15, 2026 at 09:56:31PM +0100, Thomas Huth wrote:
+> On 15/01/2026 19.01, Daniel P. Berrangé wrote:
 > > Informally we have approximately three groups of platforms
 > > 
-> > * Tier 1: fully built and fully tested by CI. Must always be
-> >           kept working & regressions fixed immediately
+> >   * Tier 1: fully built and fully tested by CI. Must always be
+> >             kept working & regressions fixed immediately
 > > 
-> > * Tier 2: fully built and partially tested by CI. Should
-> >           always be kept working & regressions fixed quickly
+> >   * Tier 2: fully built and partially tested by CI. Should
+> >             always be kept working & regressions fixed quickly
 > > 
-> > * Tier 3: code exists but is not built or tested by CI.
-> >           Should not be intentionally broken but not
+> >   * Tier 3: code exists but is not built or tested by CI.
+> >             Should not be intentionally broken but not
 > > 	   guaranteed to work at any time. Downstream must
 > > 	   manually test, report & fix bugs.
 > > 
@@ -121,22 +121,31 @@ On Thu, Jan 15, 2026 at 09:39:13PM +0100, BALATON Zoltan wrote:
 > > 
 > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > > ---
-> > 
-> > This came out of the discussion about recent unnoticed breakage
-> > in NetBSD builds and what maintainers are expected todo about
-> > it (if anything)
-> > 
-> >  https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg02543.html
-> > 
-> > docs/about/build-platforms.rst | 152 +++++++++++++++++++++++++++++++++
-> > 1 file changed, 152 insertions(+)
-> > 
-> > diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-> > index e95784cdb5..950e164c02 100644
-> > --- a/docs/about/build-platforms.rst
-> > +++ b/docs/about/build-platforms.rst
+> ...
+> > +
+> > +Tier 2
+> > +~~~~~~
+> > +
+> > +These platforms are considered to be near Tier 1 level, but are
+> > +lacking sufficient automated CI testing cover to guarantee this.
+> > +
+> > + * Builds and all tests pass at all times in both git HEAD and releases
+> > +
+> > + * Builds for multiple build configuration are integrated in CI
+> > +
+> > + * Runs some test frameworks in CI
+> 
+> I don't think that we run any test frameworks for Linux on mips64el or
+> riscv64 in the CI, do we? It's only cross-compilation of the code.
 
+I didn't want to put those in tier 3 since I think they're generally
+better than that. Perhaps this bullet should be loosened slightly
 
+   "May run some tests frameworks in CI"
+
+> 
+> ...
+> > +
 > > +Tier 3
 > > +~~~~~~
 > > +
@@ -163,43 +172,11 @@ On Thu, Jan 15, 2026 at 09:39:13PM +0100, BALATON Zoltan wrote:
 > > + * FreeBSD (except x86_64)
 > > + * Windows (except x86_64)
 > > + * Solaris
-> > +
-> > +Responsibilities:
-> > +
-> > + * Contributors MAY test patches on Tier 3 platforms manually
-> > +
-> > + * Maintainers MAY request contributors to fix problems
-> > +   on Tier 3 platforms
-> > +
-> > + * Maintainers MAY test patches on Tier 3 platforms manually
-> > +
-> > + * Maintainers SHOULD NOT accept patches that remove code
-> > +   targetting Tier 3 platforms even if currently broken
 > 
-> If an OS stops supporting a platform in new versions then due to the policy
-> of supporting only the last two OS versions in QEMU may lead to breaking
-> this. Maybe it tries to say that Tier 3 is intended to be fixed but no
-> guarantees on when? It is also clarified below so maybe this clause is not
-> needed or need to be reworded?
+> You missed Haiku.
 
-The policy on only supporting the most recent 2 releases of an
-OS applies universally regardless of the Tier levels. I should
-state that explicitly in this new doc to make that clear.
+Opps, I knew I'd miss something :-)
 
-IOW, maintainers are free to remove code that is only relevant
-to OS versions /older/ than 2 releases whether that code is
-broken or not.
-
-
-> 
-> > + * Downstream vendors SHOULD test RC releases on Tier 3 platforms
-> > +   and provide bug reports and patches to address problems
-> > +
-> > +Note: if a Tier 3 platform is found to be significantly broken,
-> > +no patches are contributed for a prolonged period, and there is
-> > +no sign of downstream usage, it is liable to be moved to
-> > +"Unclassified" and thus be subject to removal.
-> > +
 > > +
 > > +Unclassified
 > > +~~~~~~~~~~~~
@@ -208,24 +185,29 @@ broken or not.
 > > +and outside the scope of any support tiers.
 > > +
 > > +  * Code supporting these platforms can removed at any time
-> 
-> can be removed
-> 
 > > +  * Bugs reports related to these platforms will generally
 > > +    be ignored
 > > +
 > > +This covers:
 > > +
 > > + * All 32-bit architectures on any OS
+> 
+> Support for 32-bit OSes is currently being removed.
+
+Yep, this doc is slightly anticipating the future. I was expecting
+that Richard's series:
+
+  https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg03073.html
+
+will be merged soon enough.
+
 > > + * Any OS not listed above
-> > +
-> > +Responsibilities:
-> > +
-> > + * Maintainers MAY decline patches that add code targetting
-> > +   unclassified platforms
-> > +
-> > + * Maintainers MAY accept patches that remove code targetting
-> > +   unclassified platforms
+> 
+> Is it possible at all to compile QEMU for any other OS? I though our
+> configure script would block such attempts...?
+
+Hmm, true, we should be blocking atttempts to build. So anycode related
+to unclassified OS would be non-buildable and definitely OK to remove.
 
 With regards,
 Daniel
