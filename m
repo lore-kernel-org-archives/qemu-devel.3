@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC45ED4899A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:42:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EC28D47CDE
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:42:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgj8r-0002iD-JE; Fri, 16 Jan 2026 07:41:33 -0500
+	id 1vgj91-0002xk-4L; Fri, 16 Jan 2026 07:41:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgj7d-000247-Jj
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:14 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1vgj7i-00026i-U5
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:19 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgj7b-0004gF-Uy
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:13 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-42fbbc3df8fso1092164f8f.2
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 04:40:11 -0800 (PST)
+ id 1vgj7f-0004i2-Cs
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:18 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-42fed090e5fso1073941f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 04:40:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768567209; x=1769172009; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768567213; x=1769172013; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a0wgjb5PW8AjpxMtNWI1pQBRJl7CsYfLGacp91OKMNE=;
- b=yd9eRq0SnFLy+TBpt3WL4muWW10EIOHnMcg7Qten7YfrB8Jy1dr6R6gwik8VhT5EpM
- IYqC5ZMdtOVPTgFv/qSFBJaM4msvjxvVleLJtfGcg11VGh7F4fR9y+s3wBtKsxZKwW5r
- hlDZERpt+CVQNE+FrYlQ4wXm6zX7//LoLFwzFOcjXCv+5GPhuR+M+P6ItMdm2o0nWSbN
- yPyJFO7e+yQls50h63CmOFqrAae8XDZVH1zmXMgQfT4XLrrl/+OOGW+3Kyq5ofOyIVJ6
- pfkOx6VlJkiv1P8AMcDGJDgijh0VLAIyuJOGr//v/wBBk4Anw7ROqm0+0ZDvftVhJ+XG
- F9tQ==
+ bh=XSKck+G80/uzFXWf7uvXDLCttSCHbaHtXMlCJXMft04=;
+ b=s3ImtIfYsTPvRjNZ3at+H2fvQrxaUl6VrllCz/u1znzN1Wn/Sar1oFqKLqzD48bJ7+
+ 7pD6+AqykVtKIA9mc+zGg4x1h2aHBxa3FBrV4cB77Nfi+IvlLIlkBSaHXAKORkoQPP0/
+ DT/ByfeKC704LxazxLlHJROUTYO78O5cgCkCe/yRTdGc6qDEySXk1gp0ClCEslF3MCXS
+ CqF8+lPILhkEGfEJild5siEoMztFBBLmfnDgtZlDr8QnbP0DKiBMXuGTD5CMKgodCd43
+ X+sDecuD71gtfG1iZSCTnXAt+4mYeWAbCh4Upq+GOhI/CosDMq8Izf1ZKba/wYbTXx35
+ oxmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768567209; x=1769172009;
+ d=1e100.net; s=20230601; t=1768567213; x=1769172013;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=a0wgjb5PW8AjpxMtNWI1pQBRJl7CsYfLGacp91OKMNE=;
- b=GebLhwkCSLG5jOGNevCNVB2CiJyemqM7nGchgsinad+6RdqBZUsNxlXDrrXkx2BAnL
- ktdZVX04HcGeM48gq8G5uz896o6LLan+pFW3EZVaLkXFbe5BGbJZ6WKJcZZcHmtyNYWf
- H9F4wFi8ilXirUhM3VWI51fcs6YyQCfLdm1VFaJkoMCahC4fEOO+SluRJ8aufzloBUGQ
- ga1wkSX1BU3OeekBgPaPFD6a1wQSiaQBQ7RUDUfY/1mi89N4d8a1OCxi3QLcHMaUQ20S
- AmC4J5P4s5QIOE+GWpcFusb9WYQoq1Omf16PvacOEooQFNz72aicJX1ZDrcSYFhZ+lin
- 7TvA==
-X-Gm-Message-State: AOJu0Yy4z+K054EWEARdsSvTEEVOhUx9j5CG1aK/aTiy+7TP6SHUiCdY
- mwVG0n3NRFAh8x+Q7Hg2rC+7+n7U4lK8PSsCjFGWLgf9LIJAGFclEsuDWXCEWsNYYGS5o1Z/f2I
- ddK3x
-X-Gm-Gg: AY/fxX5+nKl9+w/rgIHxQ2n6axhdz0cPjpY1FbSIsIw5969P4ck+0oSSJchIuiRJbiQ
- +dRldA2i8WFLi7YRuokDVZM92NyFI+ECHpW3sKA2hAFu/QLvCCQVXNkImvfudRg67UvXD2L0i8m
- zrNyUr+iqPkGRhJ4t8ZK3NNEiQbWea0dGci2wOqwH4NrNO0K5yrwaiDOYQLgXCT1iCOq51J4IET
- NEp1aPutzSWT6GO1ebqZ8vFlpwrmbOK5doryd984LJZ9w5tSI+A6NywLIl2hO3+evObiVFYJw9y
- a/MZj4G/t598UOCPYd9ddFuGizvWLrtfzAc4X+9ptfxVpXAf5M3Y0qHdyWvEG/xw25ktzYP10cL
- Pw5u1ifV0LckRuSF1mV5lOUVP491feiu4JSW6GSfWUXQJMwgu3TRUx8mKhAQ4meLJgChu+Ti5Nw
- XVZIdTpaVjMtpBCflZuLQxqXsr8lItdl8aekS9n/KIGGm5r2LfMHDaro10u26pcSR/PM7qh1UBZ
- eM74zJ1hJPTb1omgHTBl3bH7HYSuncoxeaoXRQPIuMVzg==
-X-Received: by 2002:a05:6000:2f83:b0:430:fd9f:e705 with SMTP id
- ffacd0b85a97d-4356999c900mr3789276f8f.27.1768567209547; 
- Fri, 16 Jan 2026 04:40:09 -0800 (PST)
+ bh=XSKck+G80/uzFXWf7uvXDLCttSCHbaHtXMlCJXMft04=;
+ b=Hi5nj/yiJWf6f2tMejR1qiKo4uIoUXvluC4lypOIcsMzcHgjNOCzi5AKmdT7wfiVl9
+ pbt58yFJXP/qcv3nHX9ddrz1LzoTH32oQOl76PQEDdBk9f+4KiUTIoPRn6NMEOE4mSPB
+ rGw7JCPrzfQzsezQmLgsUk+rXHhjR3lj3m2An2e/9Tgi/NUnQ2TmMVhk1dRmAddK/Qpy
+ nvGA3oNE9tMa2WWILOAsU8lw3o6eZLCXc6Ct2alVbUzhF6PmNpO72FfrLoYwqbNH9YIX
+ vR4CGA/lc5vv2R84RbXiZ3L2AoEWdKZEDn99qSa+Ll+cKm/LmudID9PSlx1pN6OenE4O
+ /Yew==
+X-Gm-Message-State: AOJu0YwIniNtv3WDqs7OAl2e8/FmdBuslvGK9GzLUFUxax8dalKMA5k0
+ +7jNzPwpU1i36MRzwpF8+m++okjMjfbg1zorx2p5HpshqnpzO83f/Tn+FAk1ynLFCpEozIcrd3I
+ Dfri3
+X-Gm-Gg: AY/fxX49p41WUF4rvaO1PXP8ys7FqzK9ECRF3Iim64//cnxsQSwCImD5CLYJOMScH6a
+ AdOuryRz9i6RHwxbqzsx2MnwV4zUAfly3/jhgPrM4jazPJG1s+5XsD7Z3CUQfRanpTiv4y5hwGL
+ 0ZEMr0t5ksQuPqAcjB8SWynF09cTo//t37SJEsYBmcxyAEeBAOKiJs48C5rHy46hh3fgTssW+ZH
+ +Xa9HNZXmjW3YR8JjHRTRcIraXynoyZcrE0B9eRdVbWoSgWN5VDytR9io5D1xyobDWTdqyligOU
+ GZTt7ZQ+yErrzJ5mKzK5wCnLTNeyweAqXmmG1PhAKBd3b4y3o/6I9scokelXVTdSab4p0PaMYb9
+ DTJ8MdeEdzfsOwDCzdJzEi8ATGMg0PPHld2mbvLv74WGGMPEpKvyUaiZsNXPkG+lMzJYqvl0zvI
+ 00r0wstHFJTEnwE2Fp+injoPrS9QQW4rtwt9XmNWc3xDnU9midSEjfWsA0UCYY44L0DrTg/c+mK
+ l9WgyOaunRB/EEy3h8HYGaef/FGVZX1qntjDwWrS3lwoQ==
+X-Received: by 2002:a05:6000:1789:b0:430:f7ae:af3c with SMTP id
+ ffacd0b85a97d-43569bc1801mr3473364f8f.31.1768567213251; 
+ Fri, 16 Jan 2026 04:40:13 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356992c6f2sm5192566f8f.19.2026.01.16.04.40.08
+ ffacd0b85a97d-4356992c6f2sm5192566f8f.19.2026.01.16.04.40.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Jan 2026 04:40:08 -0800 (PST)
+ Fri, 16 Jan 2026 04:40:12 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v2 2/6] scripts/clean-includes: Remove outdated comment
-Date: Fri, 16 Jan 2026 12:40:01 +0000
-Message-ID: <20260116124005.925382-3-peter.maydell@linaro.org>
+Subject: [PATCH v2 6/6] scripts/clean-includes: Update exclude list
+Date: Fri, 16 Jan 2026 12:40:05 +0000
+Message-ID: <20260116124005.925382-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260116124005.925382-1-peter.maydell@linaro.org>
 References: <20260116124005.925382-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,36 +104,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove an old comment suggesting a manual shell line to use to find
-files to run the script on. The script's exclude-list and its
-support for directory names make this irrelevant.
+Remove from the exclude list:
+ * tests/plugin, which is a non-existent directory. This was
+   probably intended to exclude tests/tcg/plugins/, which is caught
+   by the tests/tcg exclude pattern anyway
+Add to the exclude list:
+ * rust/ -- the headers in here are purely for input to bindgen
+ * target/hexagon has some standalone tools used at build time
+ * linux-user/gen-vsdo.c -- another standalone tool
+ * linux-user/mips64/elfload.c just includes mips/elfload.c
+ * scripts/xen-detect.c is feature-detection code used by meson.build
+ * tests/tracetool/simple.c is autogenerated
+ * tests/unit/ has some "C file just includes another one" files
+ * include/system/os-wasm.h is like os-posix.h and os-win32.h and
+   shouldn't be adjusted
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- scripts/clean-includes | 9 ---------
- 1 file changed, 9 deletions(-)
+ scripts/clean-includes | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/scripts/clean-includes b/scripts/clean-includes
-index 07c0fd44e4..568033ee9c 100755
+index b16eec0a5c..7e3347f261 100755
 --- a/scripts/clean-includes
 +++ b/scripts/clean-includes
-@@ -39,15 +39,6 @@
- # removed.
- # Other files (including C++ and ObjectiveC) can't be handled by this script.
+@@ -115,10 +115,12 @@ trap 'rm -f -- "$COCCIFILE" "$REGEXFILE"' INT TERM HUP EXIT
+ # Comments starting with '#' are permitted
+ grep -v '^#' >"$REGEXFILE" <<EOT
+ # These tests are generally standalone binaries
+-^tests/(tcg|multiboot|fp|plugin|uefi-test-tools)
++^tests/(tcg|multiboot|fp|uefi-test-tools|qtest/migration/s390x)
+ # BIOS sources and third-party subprojects don't follow our rules
+ ^pc-bios
+ ^subprojects
++# headers under rust are only used for input to bindgen
++^rust
+ # plugin binaries are standalone
+ ^contrib/plugins
+ # the ebpf tool is standalone, and the skeleton header is autogenerated
+@@ -126,15 +128,28 @@ grep -v '^#' >"$REGEXFILE" <<EOT
+ ^ebpf/rss.bpf.skeleton.h
+ # These files just include some other .c file and have no content themselves
+ ^linux-user/(mips64|x86_64)/(cpu_loop|signal).c
++^linux-user/mips64/elfload.c
+ # These are autogenerated headers
+ ^include/standard-headers/
+ # osdep.h itself and its friends are expected to include system headers
+ ^include/qemu/osdep.h
+ ^include/qemu/compiler.h
+ ^include/glib-compat.h
+-^include/system/os-(posix|win32).h
++^include/system/os-(posix|win32|wasm).h
+ # This is for use by plugins, which are standalone binaries
+ ^include/qemu/qemu-plugin.h
++# standalone tools used in building the hexagon target code
++^target/hexagon/(idef-parser|gen_semantics.c|gen_dectree_import.c)
++# standalone tool
++^target/s390x/gen-features.c
++# gen-vdso is a standalone tool
++^linux-user/gen-vdso.c
++# feature-detection code used by meson.bulid
++^scripts/xen-detect.c
++# autogenerated by tracetool
++^tests/tracetool/simple.c
++# these just include another C file
++^tests/unit/test-rcu-(simpleq|slist|tailq).c
+ EOT
  
--# The following one-liner may be handy for finding files to run this on.
--# However some caution is required regarding files that might be part
--# of the guest agent or standalone tests.
--
--# for i in $(git ls-tree --name-only HEAD) ; do test -f $i && \
--#   grep -E '^# *include' $i | head -1 | grep 'osdep.h' ; test $? != 0 && \
--#   echo $i ; done
--
--
- GIT=no
- DUPHEAD=no
- 
+ # We assume there are no files in the tree with spaces in their name
 -- 
 2.47.3
 
