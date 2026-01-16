@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1325D4A607
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 07:45:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70524D4A607
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 07:46:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgeVH-0002OC-7E; Fri, 16 Jan 2026 02:44:19 -0500
+	id 1vgeWt-0003zU-Qv; Fri, 16 Jan 2026 02:45:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeVF-0002MW-Qv
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:44:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeWJ-0003iq-Eh
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:45:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeVE-0000Im-GF
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:44:17 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeWH-0000e7-Sr
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:45:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768549455;
+ s=mimecast20190719; t=1768549518;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=YLZoprLd9Vkw98A4Oh/ld4cM7pQkpd3mlIWf7jY5eIk=;
- b=cR7HTarqXDZRFWkBvTrBFjAjpYFIVQ1i0veVvDgMXLWpcZ3ecnm+6yrgi5/SePbhlU0uUX
- BcO70YIsbaTT0CL7eWZsn6flxvcbl6rJhwJIegvXp0k6Bu0R1qPlaQNB1YoDbspnfxJf/W
- i+5mhZ/4MVB+hQt97X4Q9fTgBCcSpEo=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+8c6+Zq899YlfYFOY4yb6ndoINetI9NkLn7TQHRS2Ro=;
+ b=L9fMH9BECPg9SjG19PKZefSAOGPWAqvFDgj+R6WrRBUZ9MR4aVhrma7rXN7Zn20w4Wo4eG
+ PGBP7PWhCRUDwWO9GN6lOiaY9vG/YN2p3kJr9QHSbiOr3sTdkFyixVxmzOD3yFCMeeeTc0
+ 5oH0owkd3RYCrc+ifld+HR7rqhlmE5o=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-puLflReQNcO2fYqZidq-BA-1; Fri, 16 Jan 2026 02:44:13 -0500
-X-MC-Unique: puLflReQNcO2fYqZidq-BA-1
-X-Mimecast-MFC-AGG-ID: puLflReQNcO2fYqZidq-BA_1768549452
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-b870870f1aeso401042266b.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 23:44:13 -0800 (PST)
+ us-mta-606-tT5n8BamNcOwqZPP-2jc7Q-1; Fri, 16 Jan 2026 02:45:16 -0500
+X-MC-Unique: tT5n8BamNcOwqZPP-2jc7Q-1
+X-Mimecast-MFC-AGG-ID: tT5n8BamNcOwqZPP-2jc7Q_1768549515
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-64d01707c32so2482665a12.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 23:45:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768549452; x=1769154252; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768549515; x=1769154315; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=YLZoprLd9Vkw98A4Oh/ld4cM7pQkpd3mlIWf7jY5eIk=;
- b=k9/MGji+O7zlgJvCqFGr4AQX4oj9FbFJTkmESK/CkbORckVoqjDJsAJZpAb3MZeytI
- dQ+mPHwS1yuJy9B58CXgJiCAywEtAkJte2OihCL4k0h80cQQNRPwPh5ZP69Hp5VFLfys
- 6RDaKUySn62lla8vqZ+hEtiBoCAPC5GpsYaKj0o24YJqXRp9NjYNZu0xjearrZpo3k9G
- pY0eIgBosvHXR5wbWHGFEQ5CVYzmnQsqTQ7zH2wjhCEykgR7Eo0JrJTy9nt0OGCW4qr/
- wDd/czoeDo303lSuW57tAJaxNtlTz31vFP/XdJMxN4cX1DepGdskSPI7HSWsLbR49Te9
- 6lqw==
+ bh=+8c6+Zq899YlfYFOY4yb6ndoINetI9NkLn7TQHRS2Ro=;
+ b=VjRcRjeIWXkARgAWqmBSNw8CvCdhs5AuCBs65rBDPrHJoXzxOWwRfBl9Ja1ab7q+bM
+ i4m8laRQu9sQd0aXTOnOH8MPOnTXjP4kX3va/bzMe0INRlthj0aA2sIFaP8275fIDVvC
+ SUw1Po9obIIOdxB06iH4ceattXrJg4IFbgzqxqdl7oIUgWLOGG25Uuy9PfdLWoBIQcAC
+ WjcGdEl/Et0/ePDb7KTNHgyTlsDIXa05z96FMRmmNqn1piYq4v6TtqbK9Rad6bNGhAxF
+ HOfrJPH91EyWI0ckdEkJJp7Qizsx+W+6C5bCOvufn+guts6t3m/AB/Sy8BRr7VTKPUhS
+ QXgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768549452; x=1769154252;
+ d=1e100.net; s=20230601; t=1768549515; x=1769154315;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YLZoprLd9Vkw98A4Oh/ld4cM7pQkpd3mlIWf7jY5eIk=;
- b=oyPq0am3SvyFORQAEGDvPg8FjS3ZiaVtL6nUmUD7Kno/RPAtSgxtE9HoGgB3ubne92
- QEMDUzYaXuddJtGMD2vD+LGGeo93X1ZLO01G/cMI3OrjYu/CbJZ3VFB+3GGgGSoPJbHD
- SoZdAHoygj1k4jNeNUDLWgdOYILNRJTqRHnIM7DNJFXFdJ8xJk01wn2p62enpjF+qBdC
- omjyMnIYdhVoxMQgL1Fg/uFc6vXMIHd6WIhyBAxJtbK7scqUilFokvwdbyv/x36P0162
- POUjuIhXWZ2qmtY989Eu0qRsHVO+DkYwvxX13mGCJsWvDqhLFq0kSyBVYWKkoPuEuyR4
- ufSQ==
+ bh=+8c6+Zq899YlfYFOY4yb6ndoINetI9NkLn7TQHRS2Ro=;
+ b=SXRZ5N/ctGdF54Vrd7s2L9Y6VCpjgTKgVSEIkN+T4AyTqtj8I3zEIxixmgl8oEkkn+
+ tTIzRA0t3WTx/FqLu3HJtFglNPRiaXjVRuJLDAnKHOcIasKgJe3OJZGbKoLUBOA8Aeua
+ iwPJCqOmgVXMrhlsiTJi4tJB9goMzGKWErAdzLZYwSzXQQbMBrVi80Vlj3ZYP1urdwSf
+ Unl5rXSlpnnjNPuObC/Y9P1uvxVd7ejtR9sOcicvK2oFkDzemVRIvYp3zphZ+i0TKcR1
+ HYV6wb5w3EWSpZBXceky8nrxxgikY3KARj1wZHJ6Hgh3lTDoq17YENRV7tDB6V8jH/In
+ H+Vw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVwc1f4GSg4lEpqZfxM+CI89UB+pYaYefRdJhX9A7J3wQQDtccUg3Zv4wJ/+uBnsSzb+BPsz+p3nvsk@nongnu.org
-X-Gm-Message-State: AOJu0YygW6OZEaQw8YhBvqAAPrPkcD/2AApPOtrsxUEAKAh2FAzGAivV
- OkleOARsBdoLo5bu8b9uJ5U3V/515eXQqCkxbFVm1/5/z5Dg9alnNOhKOaYcfDOyfFpCD08es2P
- QVfGlXsGRFeNKhBZXTSdD1Ec1GtSs6M1haLKdY2IR+cUolssDc1N+kFXs
-X-Gm-Gg: AY/fxX7JdLe601wwTsZ3NdcqBXzumaW3ghO5oVlBFowV2n83KyEdjjQVUEPr2HFyM0Z
- BjSA+7HjS81BcQxXZzE9mPyyEl6x6Ggs3kcW55b7uVbu1+3Ng3K93q9mhTfCPyl8tBMEcDaJYbe
- 4uNo48xHmT660CptVUGyHLJsGwLKKbZ80jOb6AXR2zisNQdwD6akimyUxjfQgWIFsWvN3ijpsjX
- Y02+SGE172iSp0cGrO53FmOtKw1CWUAs0fZZKNz1nXUBMQ01uIvYoUWpg4X9mjZrMRY5gXS2wRt
- jvbANLUIS1XrFDJAmULE7VEtktqDx5veJdpok39pTC8dEzFM0J8L+NWrLp3z04mImqg2mfNxX72
- Do/9UWFs=
-X-Received: by 2002:a17:906:9897:b0:b86:eeab:510d with SMTP id
- a640c23a62f3a-b8777bc5e2amr397568066b.15.1768549452283; 
- Thu, 15 Jan 2026 23:44:12 -0800 (PST)
-X-Received: by 2002:a17:906:9897:b0:b86:eeab:510d with SMTP id
- a640c23a62f3a-b8777bc5e2amr397565966b.15.1768549451889; 
- Thu, 15 Jan 2026 23:44:11 -0800 (PST)
+ AJvYcCX4fKM4AqXnPbJSqfNZWQGk82LmqZQZR3IfW3U86kvSpocsPl3f9ToWgBj85ub3wTF6dQJXg6bgj3Kh@nongnu.org
+X-Gm-Message-State: AOJu0YxAVETQ2tEl+4uOkHnxNJ8XpCoytKS0/nUvKQbBMcB2q/3Yqe0/
+ isR2zN5mpY6f75blZUu3s89YtOsfjidNk3faPNhTqQrVrH8RBgUhSA8XSz7iWv07qjpZZS6vBMn
+ RxWVyKabKEk1SHS7+baceuy9/xE1ep0twshxWdJKL3HxrHuHLYmZ28FQy
+X-Gm-Gg: AY/fxX4z3SF14/ixYEdmik5y/Aw4W3FQYQFierCkBeac7vu3I3JhkWRxcrHWaxcMVJ3
+ h00kwKGRFximC/oLA/XX/WimzcmI7QiK6KOzTiS9WEMXU0DiUKgpKWN/Px2znFyURUO1OPj23Lq
+ BGQVYcDYbcsTNezCvhryf4JK43gWoMOj30qTA3ABL3LS39feeQv31GTYhF93wY7l+tL7e2aeYJc
+ VjJS8td0oPcS3hMdvHb3gYmqKThnsJYOc89nN563OtCVfSjY3cVfqjm7cLbElsSdCXvSjbqA/7C
+ TZTldavZex84TpqNddlZIN+PKr74uFmnq++DA3kTydJva7AGeVUBZvxFG0OvAEusBI+095r4Z+k
+ U0wKZ9tU=
+X-Received: by 2002:a17:907:9713:b0:b80:402e:6e77 with SMTP id
+ a640c23a62f3a-b8796b9da5fmr146802566b.54.1768549515372; 
+ Thu, 15 Jan 2026 23:45:15 -0800 (PST)
+X-Received: by 2002:a17:907:9713:b0:b80:402e:6e77 with SMTP id
+ a640c23a62f3a-b8796b9da5fmr146800366b.54.1768549514983; 
+ Thu, 15 Jan 2026 23:45:14 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.113.220])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-654533cc45asm1708863a12.21.2026.01.15.23.44.10
+ a640c23a62f3a-b87959fa4f3sm156185866b.50.2026.01.15.23.45.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 23:44:11 -0800 (PST)
-Message-ID: <e461d2db-c09c-4bf9-ba23-b67878a9cf35@redhat.com>
-Date: Fri, 16 Jan 2026 08:44:10 +0100
+ Thu, 15 Jan 2026 23:45:14 -0800 (PST)
+Message-ID: <c266cd24-61e1-4f40-811c-9b7e5db3cc17@redhat.com>
+Date: Fri, 16 Jan 2026 08:45:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/14] tests: use 'driver' as collective term for
- either format or protocol
+Subject: Re: [PATCH v3 11/14] tests: validate dmsetup result in test 128
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -98,7 +97,7 @@ Cc: John Snow <jsnow@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Cleber Rosa <crosa@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Kevin Wolf <kwolf@redhat.com>
 References: <20260115164756.799402-1-berrange@redhat.com>
- <20260115164756.799402-11-berrange@redhat.com>
+ <20260115164756.799402-12-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -143,17 +142,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260115164756.799402-11-berrange@redhat.com>
+In-Reply-To: <20260115164756.799402-12-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -172,17 +171,55 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 15/01/2026 17.47, Daniel P. Berrangé wrote:
-> The I/O tests integration previously exclusively tested block formats
-> and now also covers the NBD protocol. Replace references to 'format'
-> with 'driver', as a generic term to collectively apply to either a
-> format or protocol.
+> The I/O test 128 uses 'dmsetup create' to create a device, optionally
+> using sudo to elevate privileges.
+> 
+> This dmsetup command works in GitLab CI, however, the test then fails
+> with a missing device name:
+> 
+>    1..1
+>    # running raw 128
+>    not ok raw 128
+>    ----------------------------------- stderr -----------------------------------
+>    --- /builds/berrange/qemu/tests/qemu-iotests/128.out
+>    +++ /builds/berrange/qemu/build/scratch/raw-file-128/128.out.bad
+>    @@ -1,5 +1,5 @@
+>     QA output created by 128
+> 
+>     == reading from error device ==
+>    -read failed: Input/output error
+>    +qemu-io: can't open device /dev/mapper/eiodev16546: Could not open '/dev/mapper/eiodev16546': No such file or directory
+>     *** done
+> 
+>    (test program exited with status code 1)
+> 
+> It is believed that this is due to the build env using a manually
+> populated /dev, such that the device mapper node won't ever appear.
+> It is not a race, since a test adding a sleep did not result in the
+> device appearing.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   docs/devel/testing/main.rst    | 13 +++++++------
->   tests/Makefile.include         |  4 ++--
->   tests/qemu-iotests/meson.build |  6 +++---
->   3 files changed, 12 insertions(+), 11 deletions(-)
+>   tests/qemu-iotests/128 | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/tests/qemu-iotests/128 b/tests/qemu-iotests/128
+> index d0e00d24b1..d75b1a451a 100755
+> --- a/tests/qemu-iotests/128
+> +++ b/tests/qemu-iotests/128
+> @@ -42,6 +42,12 @@ _setup_eiodev()
+>   		echo "0 $((1024 * 1024 * 1024 / 512)) error" | \
+>   			$cmd dmsetup create "$devname" 2>/dev/null
+>   		if [ "$?" -eq 0 ]; then
+> +			DEV="/dev/mapper/$devname"
+> +			if ! -e $DEV
+> +			then
+> +				_notrun "Device $DEV not appearing"
+> +			fi
+> +
+>   			sudo="$cmd"
+>   			return
+>   		fi
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
