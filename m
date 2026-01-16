@@ -4,96 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07D8DD47CAB
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 00:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB7BD47CAB
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 00:38:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgXQy-0007xP-78; Thu, 15 Jan 2026 19:11:24 -0500
+	id 1vgXqc-0001F5-Uv; Thu, 15 Jan 2026 19:37:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgXQu-0007u2-Jz
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:11:21 -0500
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgXQs-0003IH-Tg
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:11:20 -0500
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-7cfd5d34817so966031a34.1
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 16:11:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768522278; x=1769127078; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zEXqWvyYHBxajM5Ie54wEc6mNyB8beVHMI2CCX/w60U=;
- b=frdC/ay4K66qhSTwwfrBD2v/qrl//5tvJsOLOKNjmnDSbnbmdrqqH7ePgwXDdPX5DN
- r6obYr7XJSx8/N1xQZ2fpeg6eWdLtCi9wXRKqr7Mbpz7Aps2oWpkXdXAZa/395DfhHXb
- 1bnPADKf2Lu87qQQTgXgrHM0+F3xF9nokvcXUZUQTRTgBJv9BPWVxY13PoUf1YhoPRxo
- nLaUVz0KMNvqzgE3AuzfqCEiKFXHiYOww8ewkQMB5eRLPUoJ6yoOMdFhI+4ZEr+kJDgn
- grYrWucvNJWTg3F9uxW7jupXMn8AOika7LC6T91d5c+oBSaAWDMwRWOyPs5dPlO5c4+z
- V6Lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768522278; x=1769127078;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zEXqWvyYHBxajM5Ie54wEc6mNyB8beVHMI2CCX/w60U=;
- b=U7hYcdWwyoppBi8soc10noFspb9Gfid1UsFimjfX/JMZcAEgKRauBAm8oRCVW3B/rt
- Idsh7pNVEYbArRbq9XcmDzFUHKpOih8sb7reFJjzvhokdfXvrclhttI+by3kM5UcViKt
- lqAIbumz73iCbLiThyxmxXrN7rWxgfq43p85x/uaj6yxIkl6Sp7T4D1lb32utsxmUljr
- EcCCTQdWsqGrNv9qa/VuqHrUgeoCHD6QsVnALYi1xJgZXsNqhwmG6nPSjyTjUakSEQR9
- T0rz+ULc1f/JGSreJiprpIE0dRuPynL+ZFKJ8Jo0O+GyjwfgQODFe+iPWTfVNy+j81od
- sN9Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVjFcbLCnTiQcq9VcDLlStBlKxC5GVvNDc01CZWNHbXaUIxF2aVNcnWcC1xN3warcZ8iHpN0QKqY9Tj@nongnu.org
-X-Gm-Message-State: AOJu0YxW3g9EVDUVPrfYNlamdPhnvKTh/fLcIr68CyJ4u25tFfsCk6U+
- FVCizQH4xLVlnRfZ/dgwcUudtnOIKRl1vXraCc4NSNnsMGxoZNQGZ6TYAjKzMq6HT5nNPxoEwQm
- Z+vXxBlE=
-X-Gm-Gg: AY/fxX4vgAFje4vglO8FQ6LJY0kdNJ4AKD2W2Mi8WIWXpHnlUZtWVbKqsRserzwX4k5
- gUVhJEtcP1Qm1itSdtpw/vAgwSLuMjH7G/zFh2K6cgIDoSEgLp9N5d6QkCTmQ5spshnpEp5pmWi
- 0+PBIJmA/tow9/UwoKjdlq52qsVrF8muxXBdccvLukzCTPXR9vF9hn1r9s5xNYaIkGHiYQ9tz3N
- zVk1DEqmUNOikiAnZ7D0nyWfdDngJ+ukIthqvLKjr6A2OYdajsvTSw3x2fNIePJwUPNEVfXbZbP
- fXDQSzEAzdFL5N8mlQdu7hCC6xIsBeBF/nrFAAd3P6CIY87ZCeo3zlsY0wVls98ixJOkQKtxBCY
- gYiEhADN/UdY8vQmmmUNjZ9C8X8PQIplpZd8opsihPi+YR1h8peqv1+LJAC7NBjXvJbFAulyl+4
- 6qn3JJnCfm8cc1xEGEKO4XT8a3Qcmm7Yca5BWPsmNZAitNV+23yYLf
-X-Received: by 2002:a05:6830:378a:b0:7c9:594f:2d16 with SMTP id
- 46e09a7af769-7cfdfc8f7admr427618a34.0.1768522277661; 
- Thu, 15 Jan 2026 16:11:17 -0800 (PST)
-Received: from [10.244.221.227] ([172.59.196.187])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-4044baf5402sm763721fac.4.2026.01.15.16.11.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 16:11:17 -0800 (PST)
-Message-ID: <0a8f1d66-7c1d-41e2-ba7d-7b872ef97036@linaro.org>
-Date: Fri, 16 Jan 2026 11:11:06 +1100
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vgXqa-00018z-QA
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:37:53 -0500
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vgXqY-0006p6-UH
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:37:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=Hk5vPVHTbkZrNeRChoZf5W5jJgaWffuO+o8XC5KTg+k=; b=kCZa5zQfW4g9KEiE
+ 5JmSr2l8GXPevQQY4LPtzpPfGLwF5yZFksqB9OTDgfUukyA1HlwOEx61ewy1+McUldmxV6vOFo3R2
+ JopWeDbvBzYlAeSR/XMbS7Sf8VIkyLsFfEaP082NZGVJz4FcSRq1ooXy1WbL5TOvm57mqHZTL3nNk
+ 1IkNP3quDEqwUrQSqNtQmwBVb/8Jd4kjFwph8vZOHikpF1PYgUruse/k3DrnD5dJsoC8AYWEMwZYQ
+ Gfv56KKsmrlbiomLR+9uiGm5HyqXjUqIBDBaj3c5/glvNj+/YccJyjjXe84f+tg8pZialmFneMNv/
+ al5DEUJJiGKyrOXEjA==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1vgXqU-0000000F7q9-3A5j;
+ Fri, 16 Jan 2026 00:37:46 +0000
+Date: Fri, 16 Jan 2026 00:37:46 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Peter Xu <peterx@redhat.com>
+Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
+ Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
+ Juan Quintela <quintela@trasno.org>,
+ Zhang Chen <zhangckid@gmail.com>, zhanghailiang@xfusion.com,
+ Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
+Message-ID: <aWmIWrXjxLsqwLd6@gallifrey>
+References: <20260114195659.2543649-1-peterx@redhat.com>
+ <20260114195659.2543649-2-peterx@redhat.com>
+ <aWf4i7EOXtpAljGX@x1.local> <20260115224929.616aab85@penguin>
+ <aWlso1w39cQnEh2t@x1.local> <aWlxY9TWGT1aaMJz@gallifrey>
+ <aWl6ixQpHaMJhV_E@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: add co-maintainer for TCG Plugins
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, stefanha@redhat.com,
- pbonzini@redhat.com
-References: <20260115202511.2709767-1-pierrick.bouvier@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260115202511.2709767-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <aWl6ixQpHaMJhV_E@x1.local>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
+X-Uptime: 00:01:42 up 80 days, 23:37,  2 users,  load average: 0.13, 0.06, 0.02
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,34 +79,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/16/26 07:25, Pierrick Bouvier wrote:
-> I would like to help Alex to maintain TCG Plugins. We talked about it
-> and he will keep the priority for merging series, but I can occasionally
-> merge some of them when there is a special interest.
+* Peter Xu (peterx@redhat.com) wrote:
+> On Thu, Jan 15, 2026 at 10:59:47PM +0000, Dr. David Alan Gilbert wrote:
+> > * Peter Xu (peterx@redhat.com) wrote:
+> > > On Thu, Jan 15, 2026 at 10:49:29PM +0100, Lukas Straub wrote:
+> > > > Nack.
+> > > > 
+> > > > This code has users, as explained in my other email:
+> > > > https://lore.kernel.org/qemu-devel/20260115224516.7f0309ba@penguin/T/#mc99839451d6841366619c4ec0d5af5264e2f6464
+> > > 
+> > > Please then rework that series and consider include the following (I
+> > > believe I pointed out a long time ago somewhere..):
+> > > 
+> > 
+> > > - Some form of justification of why multifd needs to be enabled for COLO.
+> > >   For example, in your cluster deployment, using multifd can improve XXX
+> > >   by YYY.  Please describe the use case and improvements.
+> > 
+> > That one is pretty easy; since COLO is regularly taking snapshots, the faster
+> > the snapshoting the less overhead there is.
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   MAINTAINERS | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> Thanks for chiming in, Dave.  I can explain why I want to request for some
+> numbers.
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 4ddbfba9f01..d80cdfbb6e7 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -4039,10 +4039,10 @@ F: include/tcg/
->   
->   TCG Plugins
->   M: Alex Bennée <alex.bennee@linaro.org>
-> +M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->   T: git https://gitlab.com/stsquad/qemu plugins/next
->   R: Alexandre Iooss <erdnaxe@crans.org>
->   R: Mahmoud Mandour <ma.mandourr@gmail.com>
-> -R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->   S: Maintained
->   F: docs/devel/tcg-plugins.rst
->   F: plugins/
+> Firstly, numbers normally proves it's used in a real system.  It's at least
+> being used and seriously tested.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fair.
 
-r~
+> Secondly, per my very limited understanding to COLO... the two VMs in most
+> cases should be in-sync state already when both sides generate the same
+> network packets.
+
+(It's about a decade since I did any serious Colo, so I'll try and remember)
+
+> Another sync (where multifd can start to take effect) is only needed when
+> there're packets misalignments, but IIUC it should be rare.  I don't know
+> how rare it is, it would be good if Lukas could introduce some of those
+> numbers in his deployment to help us understand COLO better if we'll need
+> to keep it.
+
+In reality misalignments are actually pretty common - although it's
+very workload dependent.  Any randomness in the order of execution in a multi-threaded
+guest for example, or when a timer arrives etc can change the packet generation.
+The migration time then becomes a latency issue before you can
+transmit the mismatched packet once it's detected.
+
+I think You still need to send a regular stream of snapshots even without
+having *yet* received a packet difference.  Now, I'm trying to remember the
+reasoning; for a start if you leave the difference too long the migration
+snapshot gets larger (which I think needs to be stored on RAM on the dest?)
+and also you increase the chances of them getting a packet difference from
+randomness increases.
+I seem to remember there were clever schemes to get the optimal snapshot
+scheme.
+
+> IIUC, the critical path of COLO shouldn't be migration on its own?  It
+> should be when heartbeat gets lost; that normally should happen when two
+> VMs are in sync.  In this path, I don't see how multifd helps..  because
+> there's no migration happening, only the src recording what has changed.
+> Hence I think some number with description of the measurements may help us
+> understand how important multifd is to COLO.
+
+There's more than one critical path:
+  a) Time to recovery when one host fails
+  b) Overhead when both hosts are happy.
+
+> Supporting multifd will cause new COLO functions to inject into core
+> migration code paths (even if not much..). I want to make sure such (new)
+> complexity is justified. I also want to avoid introducing a feature only
+> because "we have XXX, then let's support XXX in COLO too, maybe some day
+> it'll be useful".
+
+I can't remember where the COLO code got into the main migration paths;
+is that the reception side storing the received differences somewhere else?
+
+> After these days, I found removing code is sometimes harder than writting
+> new..
+
+Haha yes.
+
+Dave
+
+> Thanks,
+> 
+> > 
+> > Lukas: Given COLO has a bunch of different features (i.e. the block
+> > replication, the clever network comparison etc) do you know which ones
+> > are used in the setups you are aware of?
+> > 
+> > I'd guess the tricky part of a test would be the network side; I'm
+> > not too sure how you'd set that in a test.
+> 
+> -- 
+> Peter Xu
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
