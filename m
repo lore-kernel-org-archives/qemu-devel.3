@@ -4,98 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED01C982DB
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 16:39:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8357C982DD
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 16:48:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgmqk-00040B-Br; Fri, 16 Jan 2026 11:39:02 -0500
+	id 1vgmzb-0003q1-SP; Fri, 16 Jan 2026 11:48:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgmqf-0003zj-My
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 11:38:59 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vgmzJ-0003lk-LB
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 11:48:04 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgmqd-0008FI-4l
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 11:38:56 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-b8765be29d6so324806466b.0
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 08:38:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vgmzG-0000tQ-3z
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 11:47:53 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-47edffe5540so22067055e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 08:47:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768581533; x=1769186333; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=x4Tc973jOTHABPnQERVMdDzMxzIQZH/UhcGyjpS8qMk=;
- b=pDHEJGo8BFSumjteebPoXWfTgwvsxkC/vD5egWNDO+nyoj4Jvh0OLzpb0WhLL1l6LK
- 8rILhb3kIXzOKQM6yVnwyJ1/VSGi0GLGglHdS0S2EuAvYH/67giQ2BqD3S6jyquwQ4L2
- 8pi0Ys6suv7GMtMZwnVv/u0SOHCJZoh8KEw5zELHta061RmObncpV7+B8YswkO83R4N2
- n3VmmH/HlEJ2Ad34LhKMTOy+bBG1o9ILSzF4a0H6s+bkT0tw7eQTG5MEpfr5TMzOOG2A
- jTS0Czd2QDRmm4eJwItzOlfhVmoS6l07Ox9ZSQq/d27SdYpuZ5HRRWibc/FPqYpkD+WG
- RQ6w==
+ d=gmail.com; s=20230601; t=1768582068; x=1769186868; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9LHNd+zQIsOl7lcULzizGGFTF90Aficlo+VaMNunJxU=;
+ b=AK+cvinkJNHu4Wam1IJj0diDkrbSznOkpEeHOGQwqzoHD+SPZ8tglHBv7SU0Tf15OX
+ LzHKrenXUz/EST9aX3iRdNH46TQpGFtGu+a5F8nHIHCTZwp5z3MrdL3wl+oee7bfWzcO
+ PxKaXEkOofcPCJh7a2A7hxOV6tsuvUWOszVWQsh/Usu9dtS7ozMliPiE3qhyIdopP3/f
+ bUGSRGcypO9lnJhq7r/7HroIePvO1HSDrDczcIBgzRZWWa7/2IagrFASD6bSsGJDQAiK
+ +7yp/qmLnMSNaiHuYmxrEHJ/pKEsuGFI1yyFlgzW1oXJNcMJUGnrI6ojem8vFOMqcFfG
+ FC2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768581533; x=1769186333;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=x4Tc973jOTHABPnQERVMdDzMxzIQZH/UhcGyjpS8qMk=;
- b=JRvE5EbpbAoBwvL6pLoz1qWU2QvEqJFU5+9d9GYvKEOIjE1F1fxfUZStVE7bNOLK21
- aCk3R07kx7RtJfn3RXwmiyDO9eCdtF/Iev1AmX+sPWIfJCYYCXmAEdAESBYH6q9ToWUR
- 9tgjl6RYulgi3Cd0ij1QetDht1W8fyJjuU+KI7gekHf1RmvsvPostWjVFI1joFQY8HlQ
- A5rsd9YPRNt20VKoa8Nb2zHM19jVvNw8EHZ2R14pu+sFhNfrfgUpH6kdpc9l208j01yo
- +W00OyC9mgv9eyc9u4qRGRYxBKkcO8y12NOlPCwZV6GY0VXixbw+Q3ZbsShIAsUnEYWw
- TNpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVQG8SG6W8A5aAZJ9RA4AUd35T/6YgMKn4nIXsdtZGir+1D8Hc5uKwH1mC7t/0RMNGHfYVhs5w2Fox8@nongnu.org
-X-Gm-Message-State: AOJu0YyjCmYE7TK2D18lbdneVTRhZtnXU0YlGcwfuIJY3GIEs+PeVWLx
- oM9hzu0ltrGvsSjxyTdVDC3azLjv7n+sF5Dg91Xr4gcrEb4ZDaCAa4yzKG8d9ucrfcE=
-X-Gm-Gg: AY/fxX7Q4PUpGWWqhLIKw3pdpe2Um0T+ReOTNnMDIotVZN7a3R2atibiY//Zs3eYA+k
- iJhId98cx1Zvr2gNSBs0f6h4gd2BL2Cw6ZdTjON3q4JdU7CexSDUaUBkA7lKTtl6TLGmgo3N+jZ
- IZNz3jK5wnswsieo6wdWnQ+puMEUkcrDCxaY4kr1G9q8nX2pKTPW7Xq9LO4W1SPPogWznZ2Mrc7
- ibKbapbxzrCpkcO/d7RBViKM2O/pBaFCkKpJ+JtHRqB0gpiB35TAn694uVWqaOIMmXspHGPv2ii
- VqF/MS0ff2cmPpXRc1XjZMBVSOMk0d/mAan4vGLrsMlPNect3XU1H8sdV2LJ4ycU+FEQWf2h01M
- P+VRoO600RuHgNIw0PJ9LoltLTqN19UD1FDMBg82kin/jQZbgftWk7VJEjE4AmkNmT7mT3UgRYJ
- syF/qD/aBMfcQ7vrNnANl+kowINdPwFWpuGL9seOCvWukYHoDW+gVZMw==
-X-Received: by 2002:a17:907:930a:b0:b87:751:6f21 with SMTP id
- a640c23a62f3a-b879300b515mr326634066b.36.1768581532631; 
- Fri, 16 Jan 2026 08:38:52 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b87959f6e74sm277303266b.48.2026.01.16.08.38.51
+ d=1e100.net; s=20230601; t=1768582068; x=1769186868;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9LHNd+zQIsOl7lcULzizGGFTF90Aficlo+VaMNunJxU=;
+ b=HnP/H3jQX060TeiKfR5iD7uljRq8ac7KTZrMLg3+zrzmxV0rmcMNzmx4cHomWN4dmr
+ xYL61s1YElF50A1CSGSOk4NtBfuwBZAgGt1I6+KHMmO7pjYEIQtJkz7rlblXmOPNA5uO
+ YqEVA9Nrzf2zfEQLmv02DSwCSSV6PDf6OQLUXLHoxaHvbN16EI1pMeYJvCJjTBB7AaMG
+ Bcxyu2i0Q26SdFes6nXeDZVX0vAGXQOKmguAyWgk4HtbbLs+FzU5eKVjtA9kYpzefPQn
+ 7HFfHDzrn590g1/j+YvcPnZzHK14+/cKj7/3Xk3WJ9h0AGU3BBCy8OJIfiCgKI3y7qH/
+ Xp9w==
+X-Gm-Message-State: AOJu0Yw2eaEzrG/uoHwdsV5TJTpYgKjh3Iki/q+88d6SKU7v2dAAZtGV
+ OP0N8SjtNC8ysDCwmKWKmAwVNFrFDhQz33GMHEvBpi+RHV7FZMjetsaJKpjVnw==
+X-Gm-Gg: AY/fxX7KE/L+AvEcyfBEmBthFqTuR2Xy7wlV5WynK2G8fZ9U4VJaTlkbtKapHS7YXxE
+ l1tDnPH8vfT52PY1pULJs+oc0Nh0lWtWvxUNlu6dNDhr1WF2428w2iaIHdgDLKp8uO/AOPoxEaW
+ +v/59fuolVro9+bhIqyRtOAJtUv5ePn59ASoU+S7y73ZXcd/dHiZ7KUK+kPB2Zdo6kcMPBKB9Ib
+ RQvAm6SEo9ky3dlSrr1J/SjX2Ir/IqwbibUfsoJjrtgLsX5K/nOTPBzpC0vVR7URT7ig+0Rh90d
+ YN5+cAsdx1juI3qEikDeaLzke2SrbKPTE0hGqXDcxg8jH053dIY3Lhlg62g4HLP9YI83oyHukWO
+ wLqY8IUPgyA2xaty2T+c1ir0Sjs0CBxQI2D6Blv/40sKel7h1tKxaTybKZKGOVZOgE8meuaZyGh
+ R/0kfSdGvPF27ac0o3rjTIk8m2zrsCwK44Ci0ud1dYT4ehk26o+TwYqs9iQWzhn0hLNcYAbeoOD
+ i3KseIxySxjgdUDXoGf8U5SguQxp59za2E=
+X-Received: by 2002:a05:600c:a102:b0:480:1e92:dc65 with SMTP id
+ 5b1f17b1804b1-4801e92de37mr31777855e9.31.1768576801225; 
+ Fri, 16 Jan 2026 07:20:01 -0800 (PST)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-2c88-c900-f91d-651c-a220-693b.310.pool.telefonica.de.
+ [2a02:3100:2c88:c900:f91d:651c:a220:693b])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47f429071a2sm101895445e9.11.2026.01.16.07.20.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Jan 2026 08:38:52 -0800 (PST)
-Message-ID: <bb2418df-067b-4686-8118-b7a40325b732@linaro.org>
-Date: Fri, 16 Jan 2026 17:38:50 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 26/26] MAINTAINERS: update the list of maintained
- files for WHPX
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
+ Fri, 16 Jan 2026 07:20:00 -0800 (PST)
+Date: Fri, 16 Jan 2026 14:25:07 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?ISO-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260116135235.38092-1-mohamed@unpredictable.fr>
- <20260116135235.38092-27-mohamed@unpredictable.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260116135235.38092-27-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Igor Mammedov <imammedo@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ =?ISO-8859-1?Q?=22Daniel_P=2E_Berrang=E9=22?= <berrange@redhat.com>,
+ Cameron Esfahani <dirty@apple.com>
+Subject: Re: [PATCH v14 07/26] hw: arm: virt: rework MSI-X configuration
+In-Reply-To: <6BB15A10-0917-4300-B619-0AA98F3F7880@unpredictable.fr>
+References: <20260114134143.26198-1-mohamed@unpredictable.fr>
+ <20260114134143.26198-8-mohamed@unpredictable.fr>
+ <05EEED6C-5A59-4DCB-9836-942E5C6505AD@gmail.com>
+ <07C6A459-5708-4403-B3CE-125A088B3F06@unpredictable.fr>
+ <6BB15A10-0917-4300-B619-0AA98F3F7880@unpredictable.fr>
+Message-ID: <46E7987D-9562-4E65-90CE-DE64D5A4EBB9@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,29 +122,377 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/1/26 14:52, Mohamed Mediouni wrote:
-> Add arm64-specific files.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   MAINTAINERS | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 9127a82ec3..f03ffe907d 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -565,6 +565,8 @@ M: Mohamed Mediouni <mohamed@unpredictable.fr>
->   S: Supported
->   F: accel/whpx/
->   F: target/i386/whpx/
-> +F: target/arm/whpx/
 
-  -> squash in patch #15
 
-> +F: hw/intc/arm_gicv3_whpx.c
+Am 14=2E Januar 2026 23:12:40 UTC schrieb Mohamed Mediouni <mohamed@unpred=
+ictable=2Efr>:
+>
+>
+>> On 15=2E Jan 2026, at 00:08, Mohamed Mediouni <mohamed@unpredictable=2E=
+fr> wrote:
+>>=20
+>>=20
+>>=20
+>>> On 14=2E Jan 2026, at 21:51, Bernhard Beschow <shentey@gmail=2Ecom> wr=
+ote:
+>>>=20
+>>>=20
+>>>=20
+>>> Am 14=2E Januar 2026 13:41:24 UTC schrieb Mohamed Mediouni <mohamed@un=
+predictable=2Efr <mailto:mohamed@unpredictable=2Efr>>:
+>>>> Introduce a -M msi=3D argument to be able to control MSI-X support in=
+dependently
+>>>> from ITS, as part of supporting GICv3 + GICv2m platforms=2E
+>>>>=20
+>>>> Remove vms->its as it's no longer needed after that change=2E
+>>>>=20
+>>>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable=2Efr>
+>>>> ---
+>>>> hw/arm/virt-acpi-build=2Ec |  24 ++++++---
+>>>> hw/arm/virt=2Ec            | 108 +++++++++++++++++++++++++++++++-----=
+---
+>>>> include/hw/arm/virt=2Eh    |   4 +-
+>>>> 3 files changed, 108 insertions(+), 28 deletions(-)
+>>>>=20
+>>>> diff --git a/hw/arm/virt-acpi-build=2Ec b/hw/arm/virt-acpi-build=2Ec
+>>>> index 86024a1a73=2E=2E187dd4e272 100644
+>>>> --- a/hw/arm/virt-acpi-build=2Ec
+>>>> +++ b/hw/arm/virt-acpi-build=2Ec
+>>>> @@ -440,6 +440,17 @@ static void create_rc_its_idmaps(GArray *its_idm=
+aps, GArray *smmuv3_devs)
+>>>>    }
+>>>> }
+>>>>=20
+>>>> +/*
+>>>> + * In the prior Qemu ACPI table handling, GICv2 configurations
+>>>> + * had vms->its=3D1=2E=2E=2E That's broken=2E
+>>>> + *
+>>>> + * Match that assumption to match the existing ACPI tables that
+>>>> + * have been shipping for quite a while=2E
+>>>> + */
+>>>> +static int is_gicv2_acpi_workaround_needed(VirtMachineState *vms) {
+>>>> +    return vms->gic_version =3D=3D 2;
+>>>> +}
+>>>> +
+>>>> /*
+>>>> * Input Output Remapping Table (IORT)
+>>>> * Conforms to "IO Remapping Table System Software on ARM Platforms",
+>>>> @@ -473,7 +484,7 @@ build_iort(GArray *table_data, BIOSLinker *linker=
+, VirtMachineState *vms)
+>>>>        nb_nodes =3D num_smmus + 1; /* RC and SMMUv3 */
+>>>>        rc_mapping_count =3D rc_smmu_idmaps_len;
+>>>>=20
+>>>> -        if (virt_is_its_enabled(vms)) {
+>>>> +        if (virt_is_its_enabled(vms) || is_gicv2_acpi_workaround_nee=
+ded(vms)) {
+>>>>            /*
+>>>>             * Knowing the ID ranges from the RC to the SMMU, it's pos=
+sible to
+>>>>             * determine the ID ranges from RC that go directly to ITS=
+=2E
+>>>> @@ -484,7 +495,7 @@ build_iort(GArray *table_data, BIOSLinker *linker=
+, VirtMachineState *vms)
+>>>>            rc_mapping_count +=3D rc_its_idmaps->len;
+>>>>        }
+>>>>    } else {
+>>>> -        if (virt_is_its_enabled(vms)) {
+>>>> +        if (virt_is_its_enabled(vms) || is_gicv2_acpi_workaround_nee=
+ded(vms)) {
+>>>>            nb_nodes =3D 2; /* RC and ITS */
+>>>>            rc_mapping_count =3D 1; /* Direct map to ITS */
+>>>>        } else {
+>>>> @@ -499,7 +510,7 @@ build_iort(GArray *table_data, BIOSLinker *linker=
+, VirtMachineState *vms)
+>>>>    build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
+>>>>    build_append_int_noprefix(table_data, 0, 4); /* Reserved */
+>>>>=20
+>>>> -    if (virt_is_its_enabled(vms)) {
+>>>> +    if (virt_is_its_enabled(vms) || is_gicv2_acpi_workaround_needed(=
+vms)) {
+>>>>        /* Table 12 ITS Group Format */
+>>>>        build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /=
+* Type */
+>>>>        node_size =3D  20 /* fixed header size */ + 4 /* 1 GIC ITS Ide=
+ntifier */;
+>>>> @@ -518,7 +529,7 @@ build_iort(GArray *table_data, BIOSLinker *linker=
+, VirtMachineState *vms)
+>>>>        int smmu_mapping_count, offset_to_id_array;
+>>>>        int irq =3D sdev->irq;
+>>>>=20
+>>>> -        if (virt_is_its_enabled(vms)) {
+>>>> +        if (virt_is_its_enabled(vms) || is_gicv2_acpi_workaround_nee=
+ded(vms)) {
+>>>>            smmu_mapping_count =3D 1; /* ITS Group node */
+>>>>            offset_to_id_array =3D SMMU_V3_ENTRY_SIZE; /* Just after t=
+he header */
+>>>>        } else {
+>>>> @@ -611,7 +622,7 @@ build_iort(GArray *table_data, BIOSLinker *linker=
+, VirtMachineState *vms)
+>>>>            }
+>>>>        }
+>>>>=20
+>>>> -        if (virt_is_its_enabled(vms)) {
+>>>> +        if (virt_is_its_enabled(vms) || is_gicv2_acpi_workaround_nee=
+ded(vms)) {
+>>>>            /*
+>>>>             * Map bypassed (don't go through the SMMU) RIDs (input) t=
+o
+>>>>             * ITS Group node directly: RC -> ITS=2E
+>>>> @@ -962,8 +973,7 @@ build_madt(GArray *table_data, BIOSLinker *linker=
+, VirtMachineState *vms)
+>>>>        }
+>>>>    }
+>>>>=20
+>>>> -    if (!(vms->gic_version !=3D VIRT_GIC_VERSION_2 && virt_is_its_en=
+abled(vms))
+>>>> -     && !vms->no_gicv3_with_gicv2m) {
+>>>> +    if (virt_is_gicv2m_enabled(vms)) {
+>>>>        const uint16_t spi_base =3D vms->irqmap[VIRT_GIC_V2M] + ARM_SP=
+I_BASE;
+>>>>=20
+>>>>        /* 5=2E2=2E12=2E16 GIC MSI Frame Structure */
+>>>> diff --git a/hw/arm/virt=2Ec b/hw/arm/virt=2Ec
+>>>> index 553c7f62cc=2E=2E0e84ccd82c 100644
+>>>> --- a/hw/arm/virt=2Ec
+>>>> +++ b/hw/arm/virt=2Ec
+>>>> @@ -966,12 +966,12 @@ static void create_gic(VirtMachineState *vms, M=
+emoryRegion *mem)
+>>>>=20
+>>>>    fdt_add_gic_node(vms);
+>>>>=20
+>>>> -    if (vms->gic_version !=3D VIRT_GIC_VERSION_2 && virt_is_its_enab=
+led(vms)) {
+>>>> +    if (virt_is_its_enabled(vms)) {
+>>>>        create_its(vms);
+>>>> -    } else if (vms->gic_version !=3D VIRT_GIC_VERSION_2 && !vms->no_=
+gicv3_with_gicv2m) {
+>>>> -        create_v2m(vms);
+>>>> -    } else if (vms->gic_version =3D=3D VIRT_GIC_VERSION_2) {
+>>>> +    } else if (virt_is_gicv2m_enabled(vms)) {
+>>>>        create_v2m(vms);
+>>>> +    } else {
+>>>> +        vms->msi_controller =3D VIRT_MSI_CTRL_NONE;
+>>>>    }
+>>>> }
+>>>>=20
+>>>> @@ -2710,32 +2710,93 @@ static void virt_set_highmem_mmio_size(Object=
+ *obj, Visitor *v,
+>>>>=20
+>>>> bool virt_is_its_enabled(VirtMachineState *vms)
+>>>> {
+>>>> -    if (vms->its =3D=3D ON_OFF_AUTO_OFF) {
+>>>> +    switch (vms->msi_controller) {
+>>>> +    case VIRT_MSI_CTRL_NONE:
+>>>>        return false;
+>>>> -    }
+>>>> -    if (vms->its =3D=3D ON_OFF_AUTO_AUTO) {
+>>>> -        if (whpx_enabled()) {
+>>>> +    case VIRT_MSI_CTRL_ITS:
+>>>> +        return true;
+>>>> +    case VIRT_MSI_CTRL_GICV2M:
+>>>> +        return false;
+>>>> +    case VIRT_MSI_CTRL_AUTO:
+>>>> +        if (whpx_enabled() && whpx_irqchip_in_kernel()) {
+>>>> +            return false;
+>>>> +        }
+>>>> +        if (vms->gic_version =3D=3D VIRT_GIC_VERSION_2) {
+>>>>            return false;
+>>>>        }
+>>>> +        return true;
+>>>>    }
+>>>> -    return true;
+>>>=20
+>>> With the last return statement removed, I get a spurious warning from =
+MSYS2/x86_64 GCC 15=2E2: "control reaches end of non-void function"=2E
+>>>=20
+>>>> }
+>>>>=20
+>>>> -static void virt_get_its(Object *obj, Visitor *v, const char *name,
+>>>> -                          void *opaque, Error **errp)
+>>>> +bool virt_is_gicv2m_enabled(VirtMachineState *vms)
+>>>> +{
+>>>> +    switch (vms->msi_controller) {
+>>>> +    case VIRT_MSI_CTRL_NONE:
+>>>> +        return false;
+>>>> +    default:
+>>>> +        return !virt_is_its_enabled(vms);
+>>>> +    }
+>>>> +}
+>>>> +
+>>>> +static char *virt_get_msi(Object *obj, Error **errp)
+>>>> +{
+>>>> +    VirtMachineState *vms =3D VIRT_MACHINE(obj);
+>>>> +    const char *val;
+>>>> +
+>>>> +    switch (vms->msi_controller) {
+>>>> +    case VIRT_MSI_CTRL_NONE:
+>>>> +        val =3D "off";
+>>>> +        break;
+>>>> +    case VIRT_MSI_CTRL_ITS:
+>>>> +        val =3D "its";
+>>>> +        break;
+>>>> +    case VIRT_MSI_CTRL_GICV2M:
+>>>> +        val =3D "gicv2m";
+>>>> +        break;
+>>>> +    case VIRT_MSI_CTRL_AUTO:
+>>>> +        val =3D "auto";
+>>>> +        break;
+>>>> +    }
+>>>=20
+>>> Similar to the above I get a spurious warning: "'val' may be used unin=
+itialized in this function"=2E
+>>>=20
+>>> Apparently the compiler doesn't notice that both switch statements han=
+dle all enums=2E I wonder why it can figure that out in other cases=E2=80=
+=A6
+>>>=20
+>> Hello,
+>>=20
+>> I didn=E2=80=99t see this on Clang but I do see this on GCC=2E Will see=
+ what I can do=E2=80=A6
+>>=20
+>> Apparently it=E2=80=99s https://stackoverflow=2Ecom/questions/33607284/=
+control-reaches-end-of-non-void-function-with-fully-handled-case-switch-ove=
+r-a and the best way to go seems to be to add an unreachable assert
+>>=20
+>
+>There seems to be a long-standing GCC bug filed for this: https://gcc=2Eg=
+nu=2Eorg/bugzilla/show_bug=2Ecgi?id=3D87950
 
-  -> squash in patch #14
+Yeah, seems like a case for language lawyers=2E=2E=2E
 
+>
+>>> Other than that the series works for me!
+>>>=20
+>>> Best regards,
+>>> Bernhard
+>>>=20
+>>>> +    return g_strdup(val);
+>>>> +}
+>>>> +
+>>>> +static void virt_set_msi(Object *obj, const char *value, Error **err=
+p)
+>>>> {
+>>>> +    ERRP_GUARD();
+>>>>    VirtMachineState *vms =3D VIRT_MACHINE(obj);
+>>>> -    OnOffAuto its =3D vms->its;
+>>>>=20
+>>>> -    visit_type_OnOffAuto(v, name, &its, errp);
+>>>> +    if (!strcmp(value, "auto")) {
+>>>> +        vms->msi_controller =3D VIRT_MSI_CTRL_AUTO; /* Will be overr=
+iden later */
+>>>> +    } else if (!strcmp(value, "its")) {
+>>>> +        vms->msi_controller =3D VIRT_MSI_CTRL_ITS;
+>>>> +    } else if (!strcmp(value, "gicv2m")) {
+>>>> +        vms->msi_controller =3D VIRT_MSI_CTRL_GICV2M;
+>>>> +    } else if (!strcmp(value, "none")) {
+>>>> +        vms->msi_controller =3D VIRT_MSI_CTRL_NONE;
+>>>> +    } else {
+>>>> +        error_setg(errp, "Invalid msi value");
+>>>> +        error_append_hint(errp, "Valid values are auto, gicv2m, its,=
+ off\n");
+>>>> +    }
+>>>> }
+>>>>=20
+>>>> -static void virt_set_its(Object *obj, Visitor *v, const char *name,
+>>>> -                          void *opaque, Error **errp)
+>>>> +static bool virt_get_its(Object *obj, Error **errp)
+>>>> {
+>>>>    VirtMachineState *vms =3D VIRT_MACHINE(obj);
+>>>>=20
+>>>> -    visit_type_OnOffAuto(v, name, &vms->its, errp);
+>>>> +    return virt_is_its_enabled(vms);
+>>>> +}
+>>>> +
+>>>> +static void virt_set_its(Object *obj, bool value, Error **errp)
+>>>> +{
+>>>> +    VirtMachineState *vms =3D VIRT_MACHINE(obj);
+>>>> +
+>>>> +    if (value) {
+>>>> +        vms->msi_controller =3D VIRT_MSI_CTRL_ITS;
+>>>> +    } else if (vms->no_gicv3_with_gicv2m) {
+>>>> +        vms->msi_controller =3D VIRT_MSI_CTRL_NONE;
+>>>> +    } else {
+>>>> +        vms->msi_controller =3D VIRT_MSI_CTRL_GICV2M;
+>>>> +    }
+>>>> }
+>>>>=20
+>>>> static bool virt_get_dtb_randomness(Object *obj, Error **errp)
+>>>> @@ -3062,6 +3123,8 @@ static void virt_machine_device_pre_plug_cb(Hot=
+plugHandler *hotplug_dev,
+>>>>            db_start =3D base_memmap[VIRT_GIC_V2M]=2Ebase;
+>>>>            db_end =3D db_start + base_memmap[VIRT_GIC_V2M]=2Esize - 1=
+;
+>>>>            break;
+>>>> +        case VIRT_MSI_CTRL_AUTO:
+>>>> +            g_assert_not_reached();
+>>>>        }
+>>>>        resv_prop_str =3D g_strdup_printf("0x%"PRIx64":0x%"PRIx64":%u"=
+,
+>>>>                                        db_start, db_end,
+>>>> @@ -3452,13 +3515,18 @@ static void virt_machine_class_init(ObjectCla=
+ss *oc, const void *data)
+>>>>                                          "guest CPU which implements =
+the ARM "
+>>>>                                          "Memory Tagging Extension");
+>>>>=20
+>>>> -    object_class_property_add(oc, "its", "OnOffAuto",
+>>>> -        virt_get_its, virt_set_its,
+>>>> -        NULL, NULL);
+>>>> +    object_class_property_add_bool(oc, "its", virt_get_its,
+>>>> +                                   virt_set_its);
+>>>>    object_class_property_set_description(oc, "its",
+>>>>                                          "Set on/off to enable/disabl=
+e "
+>>>>                                          "ITS instantiation");
+>>>>=20
+>>>> +    object_class_property_add_str(oc, "msi", virt_get_msi,
+>>>> +                                  virt_set_msi);
+>>>> +    object_class_property_set_description(oc, "msi",
+>>>> +                                          "Set MSI settings=2E "
+>>>> +                                          "Valid values are auto/gic=
+v2m/its/off");
+>>>> +
+>>>>    object_class_property_add_bool(oc, "dtb-randomness",
+>>>>                                   virt_get_dtb_randomness,
+>>>>                                   virt_set_dtb_randomness);
+>>>> @@ -3515,7 +3583,7 @@ static void virt_instance_init(Object *obj)
+>>>>    vms->highmem_redists =3D true;
+>>>>=20
+>>>>    /* Default allows ITS instantiation if available */
+>>>> -    vms->its =3D ON_OFF_AUTO_AUTO;
+>>>> +    vms->msi_controller =3D VIRT_MSI_CTRL_AUTO;
+>>>>    /* Allow ITS emulation if the machine version supports it */
+>>>>    vms->tcg_its =3D !vmc->no_tcg_its;
+>>>>    vms->no_gicv3_with_gicv2m =3D false;
+>>>> diff --git a/include/hw/arm/virt=2Eh b/include/hw/arm/virt=2Eh
+>>>> index 394b70c62e=2E=2Eff43bcb739 100644
+>>>> --- a/include/hw/arm/virt=2Eh
+>>>> +++ b/include/hw/arm/virt=2Eh
+>>>> @@ -101,6 +101,8 @@ typedef enum VirtIOMMUType {
+>>>>=20
+>>>> typedef enum VirtMSIControllerType {
+>>>>    VIRT_MSI_CTRL_NONE,
+>>>> +    /* This value is overriden at runtime=2E*/
+>>>> +    VIRT_MSI_CTRL_AUTO,
+>>>>    VIRT_MSI_CTRL_GICV2M,
+>>>>    VIRT_MSI_CTRL_ITS,
+>>>> } VirtMSIControllerType;
+>>>> @@ -147,7 +149,6 @@ struct VirtMachineState {
+>>>>    bool highmem_ecam;
+>>>>    bool highmem_mmio;
+>>>>    bool highmem_redists;
+>>>> -    OnOffAuto its;
+>>>>    bool tcg_its;
+>>>>    bool virt;
+>>>>    bool ras;
+>>>> @@ -217,5 +218,6 @@ static inline int virt_gicv3_redist_region_count(=
+VirtMachineState *vms)
+>>>> }
+>>>>=20
+>>>> bool virt_is_its_enabled(VirtMachineState *vms);
+>>>> +bool virt_is_gicv2m_enabled(VirtMachineState *vms);
+>>>>=20
+>>>> #endif /* QEMU_ARM_VIRT_H */
+>
 
