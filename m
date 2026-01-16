@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41A75D47CA4
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 01:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A834D47CAE
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 01:14:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgYPz-0007Wd-2E; Thu, 15 Jan 2026 20:14:27 -0500
+	id 1vgYQF-0007j6-5l; Thu, 15 Jan 2026 20:14:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgYPo-0007Tr-IM
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 20:14:17 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1vgYQC-0007fP-Rd
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 20:14:40 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vgYPn-0004B7-2s
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 20:14:16 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-29f102b013fso14153235ad.2
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 17:14:14 -0800 (PST)
+ id 1vgYQB-0004Br-9F
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 20:14:40 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-81f416c0473so1336552b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 17:14:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768526054; x=1769130854; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768526078; x=1769130878; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Sw3ixO1XydiMFGlaf7LEcmHMVIdOeCKGQYR5Oxw14l8=;
- b=rpbbRBP7P5eDxfak4/OzVJEdjvFyAF0nrEarQe5nCIHWq7kaq0fHk6RoSAJyFMRxIA
- FgTChBR6KZhlnibrakh4NkspFlZwjwDgb4EkfiI5F11F2i4SnY4fKMqf6/829J+WYDrF
- u0S+KZtXeNkAVK24923kmq92EZqB4ePO3ms4LsJ1Hm2v6Q/xptxbX0HgSt3EzSPX6cYd
- j2mTv52QEkaz/WIMmi7CbyRRuUUjK8wCkF6DSICAU0OdqkftB3dpZc7mY8PDzcr/zcnT
- yQt95bWIASmWAd+cKwVwOxdElMsidgQytK2B7NfbLKAKbdE5cGzlPMrmSbvoEPKQom1s
- +afw==
+ bh=uhKMfvRt7621rL/vgi8lvItva823mlDjblYrb5dT2Lw=;
+ b=H9rMoiWlO/cyKE5+DYpAJD+PkfkRYkK7bJqfpy/mZSeZguP2+iMk4GC++fcdD8ARx7
+ 8mfZO41po9agte0Iu+rQIF43drFlB3hjCqM73+WoK6795dAjkFzhKR5Vw01dPr64B3JI
+ vG15l3GxCgP03xvd717KOswT6tTl8douBXfyI1VO2qjJtyAZAnYZ4c/HUTolMFtKn+kM
+ xOfKedGvjMSua3RL645+fTIXjgEKEEl7jQDSY9FstvpLND2vUPRe1VbhP+qgUwI7caxN
+ 2A0qS8ln4fSL+tEOj56Ym6jjiUChVfz1UJbVISn1LFvtF6Cck8sttUrVN+xNJxpQ2bR4
+ Rxyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768526054; x=1769130854;
+ d=1e100.net; s=20230601; t=1768526078; x=1769130878;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Sw3ixO1XydiMFGlaf7LEcmHMVIdOeCKGQYR5Oxw14l8=;
- b=v9Z3Ga6PKPY1yICxm5MzpHHF5rjoNfa7NWMcRjwf3Uz1XmKsDblVSu7C+wt8gn6JRZ
- qf/ddl35VwslToK1wIct/65xxljTwvBxI/NH7krDN9ZJVYxqTPlh5Bc2eN25by8nOC8F
- 6xtt1+We7uGKOP2rzKUqPX0oGjbmUc5h2usDKlFHQdtTkX0E51Fc5eTDPP1si4UYjyty
- iO8MUpgoFlyf5aU6bdyuiCOBQNGTHUV88bITs+O4BhjObY+Pm49sExupmT41IfeWhBWI
- 55OM3GUH4ptphZhwv0HwEzCnc43b5BPsd3OvvhpuTY00HHml8CRmc4agfUxm/HaL0aMj
- lr9g==
+ bh=uhKMfvRt7621rL/vgi8lvItva823mlDjblYrb5dT2Lw=;
+ b=A/X/Nj/8aXCkFWot63vWHJEVTtNbmJrKIW8aCzHwMhAhi8Md2Srxug7/s/TxpVyCIw
+ M9UwRYZnNiB5Dc17WwQUaMAcE9DiFuoWwaIZbiII9RtkD5e/kldYZCzAazvGpB9S8i85
+ Y6SUYzNkbE0XyAYcbiYK3oyBytj4e17tRqsc2Spmpa11b7+tpPLQMxnTTkla/5u9+Myt
+ 3APcIH0y1e5G9pKrJe4375nE2Lx3+80suDDWexEXhecXUqdHJdWYvzgZQ3UDYTZkI+j3
+ dDybLdVo8Q0EzJerpaFUEqaq181AQm0vofMeX6CNsD6dm2eie5FXeO7aaHCHusqmGZto
+ Yi9g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXRk9LRZQur+mnjg/U2DvL2hj9ebgL/p8hglYF8+dUyuGVj3F0LQctNXEa8dAnxmOGJrLr1+0efQRy@nongnu.org
-X-Gm-Message-State: AOJu0YxBUnrlMvewQiDibw5K3Nv3xWX70O9OBpRn1EcTRxgNzU9E8Ol7
- zaH+RDs/kMj24x+ZIwgtUGRvwQeaUFIJvPP+pmVfIY2EzOmMHR22eI773B+ooxSUwyA=
-X-Gm-Gg: AY/fxX41IXbWEqS41SM8wKwrME8J9JmPqZtrWUBBnsnjFfO6HyXAxfyzwT1rToO4P24
- QEPDjhN5XLjK74TZfVzlT+nd6BvozWoSnRBetRnL/QAXdeZ8ZH8/Gh8dNL+Pj0roLwgt2OmLuu9
- tIMZIG8ufTHEMivgjHvQKEuB3CnmXMBk8e9oVicmbgWehmvQ+vozlA+Zww/C68wKmVZ8AhVDeHe
- W1XdT4MNxJX7ufTybCHfuAGF2hQvGXfwdKGWuOIPeCGGj21Yt53dGKvDV/JhOm96x9BQniecTmu
- f1N3kbZ/i9zB3Vc16Y9JUbMLx1i4gJvrYPb1jRSVuQSxI+LjH7H9D3B/1KxRYyHv7ZYTtL/zoRM
- Sj19UfQMXLwkwqGm5x47kIXrXeYClJmagk/RQngSYJ29mFc98UDnvyw4EkU2YS4F6v0Hdcj4wRm
- 5zEbFzmTsk5lgbhU9p7EG8SWFIfFDOiqmgMB55CwFivmqq9YD4w94sTrEe
-X-Received: by 2002:a17:902:f78a:b0:297:ece8:a3cb with SMTP id
- d9443c01a7336-2a7188a1a0dmr10092845ad.25.1768526053542; 
- Thu, 15 Jan 2026 17:14:13 -0800 (PST)
+ AJvYcCXcHlrqe08x+ReU76hVQTGnKYwpVjeq+BWe3UikI35hSYhGpYb02pnws1aIJrMhFExlyKU5SvMegcdv@nongnu.org
+X-Gm-Message-State: AOJu0Yx9WLK5N1lvVnZCXdvbmRufY1abMDP3Q/+7Zx2yjrhsOzMnbgNY
+ icFOtju7HXK7cm3kAHSPo/cDVV1wgYXXTyYmmMkk5/t/uYE0fKbNTISAxn2LRgMywdg=
+X-Gm-Gg: AY/fxX6tDDCrOkJHZ2JGGijT8blqg/kOJeVEfyJkDMGrRLOsiAS7rQjdMyBEGakAUIE
+ 9lI0D9iskQIPbE6HcUNQCDkNVNBOkzPlnleD+VcIr3lqpczGLeioSWGyFQvwqWYzfnd/c5xYZrJ
+ BbfcdD3i10yQ9PUnK4pTV5McUePHmfHrbPK4TprpmxwmRMpiudqH+iZ1mwlBQllxCM7rcRikKfG
+ lDE+45te6lhsmsrA/PG73WE2gQlCafCCak2RwcqBffWiQqoAvpgVoVTMvWI6S0UJie/7+zvI1SU
+ Aq2e5QeClKjVdlDF7TZ9YlS694iHyLXibW6ckbUFcFFLhvoijYtf78q9zEFJAW37DwcJhDsxopu
+ zhXzLfoPc964Cjy6emqazUClbkAAieogLu5fLEraWT8uUdcrzb4UAp2OYc0xfAS1gmG0G8sUL61
+ Bnr2YpEezxG8Bru2M3I1BO1tm8y3QI4ICsCMLQgz2Ru4oA2n3Y8CW81+ji
+X-Received: by 2002:a05:6a00:3e19:b0:81f:3f88:89ee with SMTP id
+ d2e1a72fcca58-81f9f684e7bmr1414302b3a.12.1768526077794; 
+ Thu, 15 Jan 2026 17:14:37 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7190ab96fsm4826285ad.13.2026.01.15.17.14.11
+ d2e1a72fcca58-81fa12b50fasm504918b3a.64.2026.01.15.17.14.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 17:14:13 -0800 (PST)
-Message-ID: <4f3cd44e-70cb-47a9-8749-27c81bf28bf5@linaro.org>
-Date: Thu, 15 Jan 2026 17:14:10 -0800
+ Thu, 15 Jan 2026 17:14:37 -0800 (PST)
+Message-ID: <500e5146-9823-4ffa-a4b9-c106f4208e45@linaro.org>
+Date: Thu, 15 Jan 2026 17:14:36 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 06/26] hw/arm: virt: cleanly fail on attempt to use
- the platform vGIC together with ITS
+Subject: Re: [PATCH v15 07/26] hw: arm: virt: rework MSI-X configuration
 Content-Language: en-US
 To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
@@ -93,7 +92,7 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
  qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>
 References: <20260115001505.57237-1-mohamed@unpredictable.fr>
- <20260115001505.57237-7-mohamed@unpredictable.fr>
+ <20260115001505.57237-8-mohamed@unpredictable.fr>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -129,18 +128,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260115001505.57237-7-mohamed@unpredictable.fr>
+In-Reply-To: <20260115001505.57237-8-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,21 +156,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/14/26 4:14 PM, Mohamed Mediouni wrote:
-> Switch its to a tristate.
+> Introduce a -M msi= argument to be able to control MSI-X support independently
+> from ITS, as part of supporting GICv3 + GICv2m platforms.
 > 
-> Windows Hypervisor Platform's vGIC doesn't support ITS.
-> Deal with this by reporting to the user and exiting.
-> 
-> Regular configuration: GICv3 + ITS
-> New default configuration with WHPX: GICv3 with GICv2m
-> And its=off explicitly for the newest machine version: GICv3 + GICv2m
+> Remove vms->its as it's no longer needed after that change.
 > 
 > Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->   hw/arm/virt-acpi-build.c | 14 ++++++------
->   hw/arm/virt.c            | 46 +++++++++++++++++++++++++++++++---------
->   include/hw/arm/virt.h    |  4 +++-
->   3 files changed, 46 insertions(+), 18 deletions(-)
+>   hw/arm/virt-acpi-build.c |  24 +++++---
+>   hw/arm/virt.c            | 116 ++++++++++++++++++++++++++++++++-------
+>   include/hw/arm/virt.h    |   4 +-
+>   3 files changed, 116 insertions(+), 28 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
