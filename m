@@ -4,103 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01B2AD4A601
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 05:24:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 677BBD4A602
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 06:00:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgcJB-0008Rd-55; Fri, 16 Jan 2026 00:23:41 -0500
+	id 1vgcs3-0003gW-Ui; Fri, 16 Jan 2026 00:59:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vgcJ9-0008QA-Ga
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 00:23:39 -0500
-Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgcs2-0003gK-Oc
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 00:59:42 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vgcJ7-00053H-MP
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 00:23:39 -0500
-Received: by mail-dl1-x1231.google.com with SMTP id
- a92af1059eb24-1233702afd3so2116791c88.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 21:23:37 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768541016; cv=none;
- d=google.com; s=arc-20240605;
- b=PSLl4gKeFzKCgLw818hZT78FsHVuny5BtXuubr8xi19/1tbKeIJKyE+a+itRbBWuPy
- wt07HhIagPfHHHo26NRtgWvRUTWSL45ZnHoY1PzRi7dKnEX8V0uvGEzMielqIminsI8Z
- 3Nbdokb2SfZdyMVYT3/L8YtHBtBYeVEtFNqb6kb2nEChX62hrSUtWdMXkgdlLGRGKt00
- qMR5/yg42QzfC4PTssnbFlw70p9JoxUOj29vwjQw4zr3Rdpc0w4u6W9o2nysAj2AFUPW
- HP96Y4nSlmf4DKvhScKA6JW1fJCuels2/boyJ2dGabbvwhFgrohSh2R5gfK/IQ+vyyN/
- 83qQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=MCT6AS8C4sxj8fT4cLaKMr4zxpBr+wOT6Wl9pNVSvRU=;
- fh=JxbFDm//Q/K0vmJOBwqF9Ed57QYSkX3GI+tb16n9SLs=;
- b=iRkvmSgiwMB6QYeIj5qvQVo7lAUM8jdsRcmRl0j/sZHl4/xneCW2dwZPyOXsTfLilu
- cbhpfWVZr79naAhZL1aXLLwA6bd3PFHXVQAawfveeGMmLCy/8EJ1uPjHDfDijADVm5dO
- wQDS93grjAB5i2ggZ/IhV2WmKv3p3iQtyTWNCEYCkhqmaaSOLwfszKKarylqIMaN3LNQ
- ko6oReVgwuOBATZn+ZNdE1PWSclIUvAttr6PHclT7OPqtN6oMZQMpu92erIJN/Bww5z8
- EFA+USgJauTl8QDPAA5C8eBV7e3GuERzkGev34oaq0mcMQmr/qvd4JLWr40eixfTWVJS
- dzgA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgcs1-0007Ee-80
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 00:59:42 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-47edd6111b4so13994645e9.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 21:59:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768541016; x=1769145816; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MCT6AS8C4sxj8fT4cLaKMr4zxpBr+wOT6Wl9pNVSvRU=;
- b=Oto3fEZC3qBwuueeahqda+hlsuL91ve3bulr8dNxbFJgiwxIpvSs+QTBAi0ffmOLWf
- l8SuBun6Q2wuvcNdOP7n8pBpvGKJmjtPjeTjIJxbMJCT29oeU1ElGjluOWr8I88bNAYn
- w7mzYJZ6g4kAUgLt6xrhUgKtBau4jrzvXfl17biRCq4z36vl3QI1eAswKhFDO0rYG1GQ
- MfjhV+BEjuBIm1139Qu96G1/ACAjCIS5Y46f05dxGvWA/7cC0vdNO0er2soX8xVkhpFi
- Fm0F1yz10YJMfiaePtFn5liwfhaDitb123vKVF95pND74Qw4M3308Cp8MArsB+6xu3Xz
- 9y1A==
+ d=linaro.org; s=google; t=1768543179; x=1769147979; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=O3K7mfps6uk69+3HixSTpf/c0zPsjPX1b3gOQPfnFgw=;
+ b=xpvozG9fCzjsO1hinVd/clSIv9qPGLB6frCiN2sL/5edGzmuojOARKg1uHEUfyxK/1
+ lkxd7LoS/Sx3IL0DI9Q5IikGLJAEoukikYuvuepnySDLAMP7oH6oEdBS9deHUe4RFWKZ
+ Ux1/k51oAs/+O7Jz/6vfR7ZrL2c9RCWvePEhTUPV6rpyDPLPejUHsuKt9CBzRWIgmVGC
+ 8pFl093cTV59jkqptkjfmmN7TRmJ4P5MMfGvAAzIsoMwpgdhQLlAMRb9OM2pXOCjIBnh
+ T1aP5k/dW779wLHP440hmeGhnm2lnbyE3v8dtJG+FVWTceyZKeRvQ3Ppq3CWLIvB47MF
+ Nm7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768541016; x=1769145816;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MCT6AS8C4sxj8fT4cLaKMr4zxpBr+wOT6Wl9pNVSvRU=;
- b=ZDSDSuPgH3KNIqE2qCEci3cu+EUCSntqhe3gQtdWdCcUY/5Y5Jr7KOB0G59VaxO8Oo
- vxkaMQ/XxxOKSsoT3dph42iucJ2nu8NqTxU7CiNWvdrx042v4QI1Def0iQf6MC6jK1xw
- 4x1uCrZ/ldCt2AT/wIVyJAkGWC1Djcf023jO1CtoAE+dTlxlAsrWhhCiIiueBo0H78BR
- iGmgavDV4Pbk89EAdpEdcy2b21rTbfB7gm7LsbK2njyOAgXJ3IIDlIlSoz3M+Wb6Qa2g
- PQwkp+5wFBFLpq2mD0I9ybbWh9H/42/uAPkOp+QW1+9fAk+w8C+2HQTOOF74KXIyHAGe
- D2+A==
+ d=1e100.net; s=20230601; t=1768543179; x=1769147979;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=O3K7mfps6uk69+3HixSTpf/c0zPsjPX1b3gOQPfnFgw=;
+ b=G711mCCBJ7Ckgr6cHWvqbGe75xu0zl51v4QL81lUBTq0yRTwZVOnBqZcDitZLbcsTZ
+ H+lDJCpFJvkSeLJBj4JFaL07c19pK+ULSwSzr68QWaybAfaoPK4RaxFKh1L7PH32dV6z
+ RP6cDQU0yLUqx6L/o16wV31HZfKlHIH6y9spayqYz6lkN6FSyqqsbviSE2ItQcleuOBR
+ ylmgrsbSB440ddFEH69YgNAfsxi02urVXCMszj6fnaWLv9W0tvKqwB3f1Rirnt6WswSt
+ 9S9+dIPACgyTJ55tgR0/PtyG/nM+tfPOZkHDNBxZy4o3b/vjbFPEiYYGmVSS+fCLa8KD
+ W5Tw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCCP9goy6AhYAXOiw7PS4/W5n4P8f14c4fhFEZNviLEGq9YKuZ5W8qXyiapAerxw/NV/4VWX5tM+hc@nongnu.org
-X-Gm-Message-State: AOJu0YydizxSQkJ9POj7ulfnUoXSKIQnItrbl1uS7gGiq5ho5F1db1wC
- QiuUV4VyQuaNLkr2RbfnvYmM5iUybL2g0Muuf77iItpkCTXtqZTWSjgQes6omdoLLaCUEBb5ECr
- F6oJanEHtGbZRsjXQXZXGMhXvahqIdS4=
-X-Gm-Gg: AY/fxX4/7PqI5YDNDLyFkHy0fzfx63Bohu29hlI9YV0Qb/7xGXWDQ8Ee7uF7+S5DSIm
- 8z78X7oxX5+uGPSJ4DT9x4eaSYaY4hMae7X8rLCJ4Qxbkp15z/1ponQGNBweUIqIs3yN7l5FDla
- tfDiebsqyBS6Y7tR4xyqHQd5Di/dRklzt7wYZiRvVmaU/XcF0iUwnid7mHurxPS8m9pupHkRUIj
- HfjxUR+xV1ZkR9llqTV5UUwNJdDOaUiS6JPvTUXV5GGqkqC/OWht6M7tdH84QH/NGufhlY0Jdwr
- CLCVDgEZnNU7I9czXgCKSdI51A==
-X-Received: by 2002:a05:7022:f96:b0:123:3488:899c with SMTP id
- a92af1059eb24-1244a7830f1mr1949003c88.40.1768541016059; Thu, 15 Jan 2026
- 21:23:36 -0800 (PST)
+ AJvYcCVOKoz3HKjIsg8cKio5tSbPwqiwkqAQfdN5w2C9Nx20i1UmrRwSUPmlplgenkpnADLtGElllhZ2mLS6@nongnu.org
+X-Gm-Message-State: AOJu0YzXxxs3hwRvw1yEl5wWqr1CHDJPcKU4RKj+8YGmPAg84PQgnWss
+ ExzkYyqNxEfuunLoWYsWXZpv4Ym/8LfmwGtrbfTPoKRHqTGvGfXX5xe3AR5WW4NfKkw=
+X-Gm-Gg: AY/fxX7earR/ik/ITXkkTmDnHIar5Kyb47DkzTVlcYE/8aRap1mk8F6wsQiXMFZKknk
+ tGZNGkO4k9zjqIcXxsnV8VomdVqA9BK+L77KEJCKMk5Kett0pI+9BrmNeXiwe+B1a+TaeZsuwhg
+ I9KO+4wJFxUsfu14kVI4zt61nB+4G9Oi1ct7+Uz9tov9Ns5Nl1TKNbD2hM6soQNhoS3hWy7lrKB
+ 3plTxiiVbB5yF30EFoX1oLGOCt4saI2SPW2mfE4wRGm3BNKndOLTSyUXv113ygjEq/ys/kQrG+g
+ CTWIeERT/bsrXsqY7gZkK7nWz1z0dPQ7EUI74zR24/3FmjCIcSEQi0ZyHwb/N5fLA8L/odOFNxJ
+ p2AaobYzUR9SSeRT/bJFa35pr7fGBGNXJjgBadlBlZl60XmDzoCXlR+lv+DQRVKTJlrvVLp9Yzv
+ Lh3BEOutEFoaMqGXnY8l6GKGVj9EcdVr50ioqbB4k/9mGydCIq9ouXGQ==
+X-Received: by 2002:a5d:588a:0:b0:431:62:d946 with SMTP id
+ ffacd0b85a97d-43569999473mr1931795f8f.23.1768543179182; 
+ Thu, 15 Jan 2026 21:59:39 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43569921df9sm3140204f8f.3.2026.01.15.21.59.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Jan 2026 21:59:38 -0800 (PST)
+Message-ID: <d955ea0a-9ee9-4048-b825-d913927b1f32@linaro.org>
+Date: Fri, 16 Jan 2026 06:59:37 +0100
 MIME-Version: 1.0
-References: <20260116033305.51162-1-richard.henderson@linaro.org>
- <20260116033305.51162-10-richard.henderson@linaro.org>
-In-Reply-To: <20260116033305.51162-10-richard.henderson@linaro.org>
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Fri, 16 Jan 2026 14:23:24 +0900
-X-Gm-Features: AZwV_QhKDgMyqVkoWM-YgMRRZWe1_9lt98ycoJ0ODY1z8kUGYCCccI5LZsQZfjQ
-Message-ID: <CAEDrbUY90==ZtpTXa66HzDQYufG+JFBk8G_tZetGBen+xmEL+A@mail.gmail.com>
-Subject: Re: [PATCH v2 09/58] meson: Drop cpu == wasm32 tests
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/58] gitlab-ci: Drop build-wasm32-32bit
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: berrange@redhat.com, pierrick.bouvier@linaro.org, thuth@redhat.com, 
- pbonzini@redhat.com, philmd@linaro.org
-Content-Type: multipart/alternative; boundary="0000000000000871b106487a8bd9"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1231;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-dl1-x1231.google.com
+Cc: ktokunaga.mail@gmail.com, berrange@redhat.com,
+ pierrick.bouvier@linaro.org, thuth@redhat.com, pbonzini@redhat.com
+References: <20260116033305.51162-1-richard.henderson@linaro.org>
+ <20260116033305.51162-6-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260116033305.51162-6-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,135 +104,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000871b106487a8bd9
-Content-Type: text/plain; charset="UTF-8"
-
-> The 32-bit wasm32 host is no longer supported.
->
+On 16/1/26 04:32, Richard Henderson wrote:
+> Drop the wasm32 build and container jobs.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  configure   | 5 +----
->  meson.build | 6 +++---
->  2 files changed, 4 insertions(+), 7 deletions(-)
->
-> diff --git a/configure b/configure
-> index 326d27dab1..ba1b207b56 100755
-> --- a/configure
-> +++ b/configure
-> @@ -425,7 +425,7 @@ elif check_define __aarch64__ ; then
->  elif check_define __loongarch64 ; then
->    cpu="loongarch64"
->  elif check_define EMSCRIPTEN ; then
-> -  error_exit "wasm32 or wasm64 must be specified to the cpu flag"
-> +  error_exit "wasm64 must be specified to the cpu flag"
->  else
->    # Using uname is really broken, but it is just a fallback for
-architectures
->    # that are going to use TCI anyway
-> @@ -523,9 +523,6 @@ case "$cpu" in
->      linux_arch=x86
->      CPU_CFLAGS="-m64"
->      ;;
-> -  wasm32)
-> -    CPU_CFLAGS="-m32"
-> -    ;;
->    wasm64)
->      CPU_CFLAGS="-m64 -sMEMORY64=$wasm64_memory64"
->      ;;
-> diff --git a/meson.build b/meson.build
-> index 28f61be675..082c7a86ca 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -51,7 +51,7 @@ qapi_trace_events = []
->  bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly',
-'darwin']
->  supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin',
-'sunos', 'linux', 'emscripten']
->  supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86',
-'x86_64',
-> -  'arm', 'aarch64', 'loongarch64', 'mips64', 'sparc64', 'wasm32',
-'wasm64']
-> +  'arm', 'aarch64', 'loongarch64', 'mips64', 'sparc64', 'wasm64']
->
->  cpu = host_machine.cpu_family()
->
-> @@ -927,7 +927,7 @@ if have_tcg
->      if not get_option('tcg_interpreter')
->        error('Unsupported CPU @0@, try
---enable-tcg-interpreter'.format(cpu))
->      endif
-> -  elif host_arch == 'wasm32' or host_arch == 'wasm64'
-> +  elif host_arch == 'wasm64'
->      if not get_option('tcg_interpreter')
->        error('WebAssembly host requires --enable-tcg-interpreter')
->      endif
-> @@ -4248,7 +4248,7 @@ if have_rust
->      bindgen_args_common += ['--merge-extern-blocks']
->    endif
->    bindgen_c_args = []
-> -  if host_arch == 'wasm32'
-> +  if host_arch == 'wasm64'
->      bindgen_c_args += ['-fvisibility=default']
->    endif
->    subdir('rust')
+>   .gitlab-ci.d/buildtest.yml       | 9 ---------
+>   .gitlab-ci.d/container-cross.yml | 7 -------
+>   .gitlab-ci.d/containers.yml      | 1 -
+>   3 files changed, 17 deletions(-)
 
-Reviewed-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-
---0000000000000871b106487a8bd9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">&gt; The 32-bit wasm32 host is no longer =
-supported.<br>&gt; <br>&gt; Signed-off-by: Richard Henderson &lt;<a href=3D=
-"mailto:richard.henderson@linaro.org">richard.henderson@linaro.org</a>&gt;<=
-br>&gt; ---<br>&gt; =C2=A0configure =C2=A0 | 5 +----<br>&gt; =C2=A0meson.bu=
-ild | 6 +++---<br>&gt; =C2=A02 files changed, 4 insertions(+), 7 deletions(=
--)<br>&gt; <br>&gt; diff --git a/configure b/configure<br>&gt; index 326d27=
-dab1..ba1b207b56 100755<br>&gt; --- a/configure<br>&gt; +++ b/configure<br>=
-&gt; @@ -425,7 +425,7 @@ elif check_define __aarch64__ ; then<br>&gt; =C2=
-=A0elif check_define __loongarch64 ; then<br>&gt; =C2=A0 =C2=A0cpu=3D&quot;=
-loongarch64&quot;<br>&gt; =C2=A0elif check_define EMSCRIPTEN ; then<br>&gt;=
- - =C2=A0error_exit &quot;wasm32 or wasm64 must be specified to the cpu fla=
-g&quot;<br>&gt; + =C2=A0error_exit &quot;wasm64 must be specified to the cp=
-u flag&quot;<br>&gt; =C2=A0else<br>&gt; =C2=A0 =C2=A0# Using uname is reall=
-y broken, but it is just a fallback for architectures<br>&gt; =C2=A0 =C2=A0=
-# that are going to use TCI anyway<br>&gt; @@ -523,9 +523,6 @@ case &quot;$=
-cpu&quot; in<br>&gt; =C2=A0 =C2=A0 =C2=A0linux_arch=3Dx86<br>&gt; =C2=A0 =
-=C2=A0 =C2=A0CPU_CFLAGS=3D&quot;-m64&quot;<br>&gt; =C2=A0 =C2=A0 =C2=A0;;<b=
-r>&gt; - =C2=A0wasm32)<br>&gt; - =C2=A0 =C2=A0CPU_CFLAGS=3D&quot;-m32&quot;=
-<br>&gt; - =C2=A0 =C2=A0;;<br>&gt; =C2=A0 =C2=A0wasm64)<br>&gt; =C2=A0 =C2=
-=A0 =C2=A0CPU_CFLAGS=3D&quot;-m64 -sMEMORY64=3D$wasm64_memory64&quot;<br>&g=
-t; =C2=A0 =C2=A0 =C2=A0;;<br>&gt; diff --git a/meson.build b/meson.build<br=
->&gt; index 28f61be675..082c7a86ca 100644<br>&gt; --- a/meson.build<br>&gt;=
- +++ b/meson.build<br>&gt; @@ -51,7 +51,7 @@ qapi_trace_events =3D []<br>&g=
-t; =C2=A0bsd_oses =3D [&#39;gnu/kfreebsd&#39;, &#39;freebsd&#39;, &#39;netb=
-sd&#39;, &#39;openbsd&#39;, &#39;dragonfly&#39;, &#39;darwin&#39;]<br>&gt; =
-=C2=A0supported_oses =3D [&#39;windows&#39;, &#39;freebsd&#39;, &#39;netbsd=
-&#39;, &#39;openbsd&#39;, &#39;darwin&#39;, &#39;sunos&#39;, &#39;linux&#39=
-;, &#39;emscripten&#39;]<br>&gt; =C2=A0supported_cpus =3D [&#39;ppc&#39;, &=
-#39;ppc64&#39;, &#39;s390x&#39;, &#39;riscv32&#39;, &#39;riscv64&#39;, &#39=
-;x86&#39;, &#39;x86_64&#39;,<br>&gt; - =C2=A0&#39;arm&#39;, &#39;aarch64&#3=
-9;, &#39;loongarch64&#39;, &#39;mips64&#39;, &#39;sparc64&#39;, &#39;wasm32=
-&#39;, &#39;wasm64&#39;]<br>&gt; + =C2=A0&#39;arm&#39;, &#39;aarch64&#39;, =
-&#39;loongarch64&#39;, &#39;mips64&#39;, &#39;sparc64&#39;, &#39;wasm64&#39=
-;]<br>&gt; <br>&gt; =C2=A0cpu =3D host_machine.cpu_family()<br>&gt; <br>&gt=
-; @@ -927,7 +927,7 @@ if have_tcg<br>&gt; =C2=A0 =C2=A0 =C2=A0if not get_op=
-tion(&#39;tcg_interpreter&#39;)<br>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0error(&#=
-39;Unsupported CPU @0@, try --enable-tcg-interpreter&#39;.format(cpu))<br>&=
-gt; =C2=A0 =C2=A0 =C2=A0endif<br>&gt; - =C2=A0elif host_arch =3D=3D &#39;wa=
-sm32&#39; or host_arch =3D=3D &#39;wasm64&#39;<br>&gt; + =C2=A0elif host_ar=
-ch =3D=3D &#39;wasm64&#39;<br>&gt; =C2=A0 =C2=A0 =C2=A0if not get_option(&#=
-39;tcg_interpreter&#39;)<br>&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0error(&#39;WebA=
-ssembly host requires --enable-tcg-interpreter&#39;)<br>&gt; =C2=A0 =C2=A0 =
-=C2=A0endif<br>&gt; @@ -4248,7 +4248,7 @@ if have_rust<br>&gt; =C2=A0 =C2=
-=A0 =C2=A0bindgen_args_common +=3D [&#39;--merge-extern-blocks&#39;]<br>&gt=
-; =C2=A0 =C2=A0endif<br>&gt; =C2=A0 =C2=A0bindgen_c_args =3D []<br>&gt; - =
-=C2=A0if host_arch =3D=3D &#39;wasm32&#39;<br>&gt; + =C2=A0if host_arch =3D=
-=3D &#39;wasm64&#39;<br>&gt; =C2=A0 =C2=A0 =C2=A0bindgen_c_args +=3D [&#39;=
--fvisibility=3Ddefault&#39;]<br>&gt; =C2=A0 =C2=A0endif<br>&gt; =C2=A0 =C2=
-=A0subdir(&#39;rust&#39;)<br><br>Reviewed-by: Kohei Tokunaga &lt;<a href=3D=
-"mailto:ktokunaga.mail@gmail.com">ktokunaga.mail@gmail.com</a>&gt;</div></d=
-iv>
-
---0000000000000871b106487a8bd9--
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
