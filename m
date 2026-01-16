@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FEA3D4A5EE
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB5F1D4A5EE
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgabq-0007jF-Gi; Thu, 15 Jan 2026 22:34:50 -0500
+	id 1vgaaq-00059h-Oe; Thu, 15 Jan 2026 22:33:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgabo-0007Wn-VC
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:34:48 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1vgaap-000597-1T
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:33:47 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgabn-0005pn-1l
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:34:48 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-29efd139227so10002765ad.1
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:34:46 -0800 (PST)
+ id 1vgaan-0005Jt-CI
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:33:46 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-81f3fba4a11so1499662b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:33:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768534486; x=1769139286; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768534424; x=1769139224; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C9G7CRzjGckeYSeIr9MRvFLtIOKXPKdQ7GnAe48PSp8=;
- b=ZsVF9FHCLDdhJWXp/C67NKAQF7rs70zfudqzclBqQ740b+s2dTdxtHgUuEn3KcdH0S
- Ce9Sff0cRJEKI+So2+ODTRwctm7M3jF+lptvth3VbvrkWq/hVVMX2lBb1i9Kef/B3wZK
- e5a5mVzAkTsAJ9+Uym5ToIyYNGFLoxBKV5fryhgULF6j7fVNECcJJxvRjSPDnxAxR6tR
- d9uMNhQGNNziffv5lvL8o4pRDhlf8Skh3fdTh/ALoIAzBZzso/pP1BstVab2KZ45cB5u
- /qawJpfsWxk83vepaX7LZQiPIQVhhrfvpxi/Ux0AaS+hvEVU1b83JIPzomg32ayBo0SP
- iVFQ==
+ bh=zzDXHHrlzlOvFG8u9bvgWF8ocDA0BIRZVJaj0j3UHCk=;
+ b=m5OwzCJkLxa9eneWZ5koaL0oXhuHHOWGpsMQ8qOkneILXD91NHidUh/Ot3u/lQKva7
+ 6hBh4NuxoBSXxdVnq0ydoxcUnBWz7gBvuO0xOA5gSnSXuRVoZd8/VG/D6UOBay+3Ukz2
+ iJq0bv9w2sYJXsLL7sM+y8HfaDWXE4P2N5C875g3vgDdHzrjxEpYm3a1jTo5GTBxlly8
+ Qvu7cvrwbSEgHy5+y2izuFl5Q3HS/1fO/7iVtOtAM9IAOlhydRdk2fMjpnD2oD+gl0yF
+ om4v4WOCPeWX/TW/nR9IDlc3nvxK4dxjANFJQh0VdtpGgny0oPkbz+FMDHHeOHASWi6A
+ /prA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768534486; x=1769139286;
+ d=1e100.net; s=20230601; t=1768534424; x=1769139224;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=C9G7CRzjGckeYSeIr9MRvFLtIOKXPKdQ7GnAe48PSp8=;
- b=P8nPv8k8XGYPwJQSvqWLoyoPldG//GI0cjsoOJMmxJ+/7EQhobDD1T3h02P19lCXou
- YH6RbIR5hMVe/qcmdsgzmAD9uluCwIubMqeNGGeQz2EbzSspIp9a7qrrfWhZet6Bunjt
- xTjMl6+MDiXNJm3HS53r5E5N44hdERDRk7hqG5IVCikPNGlsR/ZYcfBmLuFz7QsPa1j7
- neqEajrQU7auPIiGKHGrrJ7E1WSlKj1RuNPn3XidzgevDKPEinrCl6JgnSC9BogLo2tp
- DKn/z9+cN1RmxjTzapTaUPPRJh1f6KiYSbTteLINbfU8cfaGk0F4EeAN6EdiPG48I6KF
- 0A7w==
-X-Gm-Message-State: AOJu0YxdMrfbSjE0eufVdE8CIBjo/OfTrycdg1JfALioErpvgTtw6pdk
- 48nO+eelS14L1+ICVzJMdM3FA7x5Se5enoX90Qii0LLJMEobus+kPm3kf45dLDBAssZmACxjaKa
- xyXbGRuOboA==
-X-Gm-Gg: AY/fxX7jYudMTRKRSCb466Vdm4+MImm8ZBre6kUP0agRFqtXNLnlWmFZ5rIM29pWg/N
- knWQcNZu/DTm70vvXr7S3tjGx56f29IjLslk0ZQx9Q6xtXs3TknNn1MY1x6bKp2oAUNNJezA3pg
- B5Lv38R2KpCr3ICuR3YagD0DOdb7B+wRF+o4BX0kywiQDaxbpe07iQYH37S0ovEMay6I3OQ0H70
- oZqqW16LTwCqEbRzm0ZQQHa/bxsNl9k/1dut7MHchcd/a54co4sb1F5vjQplIp/iAkC37kuFvm1
- P7Ku7JAl5T8ChCKidRjoXhnSqx4nKaRo+iUw2sSYkMOo3LAU+Hkf1nVSvkgqD1ibE8+gdMIgnNL
- yzppQ5e5R1p6DrL2LKJEDPXkV8CEvt4hxrcs/3amN3omTXYqhh3a6VwN5TFUm419zcmDjmKeo0x
- 45vIuDuphJvKE3p6M2IQ==
-X-Received: by 2002:a17:902:f652:b0:269:8d1b:40c3 with SMTP id
- d9443c01a7336-2a71888abfdmr15869545ad.12.1768534485534; 
- Thu, 15 Jan 2026 19:34:45 -0800 (PST)
+ bh=zzDXHHrlzlOvFG8u9bvgWF8ocDA0BIRZVJaj0j3UHCk=;
+ b=AYMlVkwVK8Bsn+OOgpLk3MbBOV8SQkQdUpowgFIAJVttVxCuW/IR2H79urdpfptmZ0
+ 0Gcu2agmg1F1vfEDaagougbrqS9M3rnESoGbEL/bGFQQmH1ymxV7K0fpzuk2odQLExq0
+ fsgQOJ7kP6rzx8dyk2Pc+bPSvQpec2EPUUoZ2hUCRog0lkhxubAeaz5bXOrEhnJC8sis
+ CcHTHjiEBdq4v7l/E4tUkbyyKXcl1SRT9z9nHSWRzfI9Bc1+qDfLyrn7w4Y+HFrZ3WuU
+ eX5fag4gmEen1FShhibT72uywlFRE+2A3NPP42Dk/QZu0fD8N888WsmmXnVVbKeHVvRg
+ xs3w==
+X-Gm-Message-State: AOJu0YySVtBGo5MQoO6OjmDy89nD0C6sQRIH87xL7hNsTeMfB+WELSWw
+ XjLwXhnZejE7/zIAJf+EiFPmXgf4vkY1CrbPlH+B/B9Y98e3hduBTSrM9q/ssVsjaaHDij+/Sy0
+ QNxSoUdIJqg==
+X-Gm-Gg: AY/fxX427CdF3abJ4cbJoak1uzhY4CpBIpJTUITH+fklPKjXEB6fWRM4T5TJOQu/y/l
+ PxcTDHeFXjxtU2aRe7ey7xwiVpiGLZctvR8kAumuIcDLyHcbr2oL5mIlL3Ro3QZumryidtTVnfV
+ /QmJoSSgm6s36egfVDrGrij3S1kFHqOU3Z4ZqzAHbvI6PK+o+MK2ZNvDWx8DphjPxz5bYRjoEBR
+ cqsLJAvJBr0QeyYk0CIxIiwzxa+NqLDcoFwsvM9Q+obZmvePl7tY2NDH9fTJi6s3RuPXdfeZQcM
+ iu6BG6zb3gD4QFvJUWiICe+9IdIohdzAHPpAV4Ez02Og6B2G7kOFmiUzuXQuktszQiI9SNbhYVj
+ eu9P1rmZ/VvETJeLyUDxyRy9DYvoOBS9qEAJyZVaT4uPB53/yYwT6S01HmxF1q8MxBCRhX5Q2CM
+ XMLfOx4+Es4bvosefPJjUyHgbwOzrx
+X-Received: by 2002:a05:6a00:1891:b0:7f7:5783:fc6d with SMTP id
+ d2e1a72fcca58-81fa01d9d58mr1350898b3a.41.1768534423881; 
+ Thu, 15 Jan 2026 19:33:43 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81fa12b5c67sm683372b3a.69.2026.01.15.19.34.42
+ d2e1a72fcca58-81fa12b5c67sm683372b3a.69.2026.01.15.19.33.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 19:34:45 -0800 (PST)
+ Thu, 15 Jan 2026 19:33:43 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: ktokunaga.mail@gmail.com, berrange@redhat.com, pierrick.bouvier@linaro.org,
  thuth@redhat.com, pbonzini@redhat.com, philmd@linaro.org
-Subject: [PATCH v2 23/58] tcg: Make TCG_TARGET_REG_BITS common
-Date: Fri, 16 Jan 2026 14:32:29 +1100
-Message-ID: <20260116033305.51162-24-richard.henderson@linaro.org>
+Subject: [PATCH v2 07/58] gitlab: Remove 32-bit host testing
+Date: Fri, 16 Jan 2026 14:32:13 +1100
+Message-ID: <20260116033305.51162-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260116033305.51162-1-richard.henderson@linaro.org>
 References: <20260116033305.51162-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,266 +100,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since we only support 64-bit hosts, there's no real need
-to parameterize TCG_TARGET_REG_BITS.  It seems worth holding
-on to the identifier though, for documentation purposes.
+These deprecated builds will be disabled.
+Remove testing of armhf and i686.
 
-Move one tcg/*/tcg-target-reg-bits.h to tcg/target-reg-bits.h
-and remove the others.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/helper-info.h                     |  2 +-
- .../tcg/target-reg-bits.h                     |  8 +++----
- include/tcg/tcg.h                             |  2 +-
- tcg/aarch64/tcg-target-reg-bits.h             | 12 -----------
- tcg/loongarch64/tcg-target-reg-bits.h         | 21 -------------------
- tcg/mips64/tcg-target-reg-bits.h              | 16 --------------
- tcg/riscv64/tcg-target-reg-bits.h             | 19 -----------------
- tcg/s390x/tcg-target-reg-bits.h               | 17 ---------------
- tcg/sparc64/tcg-target-reg-bits.h             | 12 -----------
- tcg/tci/tcg-target-reg-bits.h                 | 18 ----------------
- tcg/x86_64/tcg-target-reg-bits.h              | 16 --------------
- 11 files changed, 6 insertions(+), 137 deletions(-)
- rename tcg/ppc64/tcg-target-reg-bits.h => include/tcg/target-reg-bits.h (71%)
- delete mode 100644 tcg/aarch64/tcg-target-reg-bits.h
- delete mode 100644 tcg/loongarch64/tcg-target-reg-bits.h
- delete mode 100644 tcg/mips64/tcg-target-reg-bits.h
- delete mode 100644 tcg/riscv64/tcg-target-reg-bits.h
- delete mode 100644 tcg/s390x/tcg-target-reg-bits.h
- delete mode 100644 tcg/sparc64/tcg-target-reg-bits.h
- delete mode 100644 tcg/tci/tcg-target-reg-bits.h
- delete mode 100644 tcg/x86_64/tcg-target-reg-bits.h
+ .gitlab-ci.d/container-cross.yml | 12 ---------
+ .gitlab-ci.d/containers.yml      |  2 --
+ .gitlab-ci.d/crossbuilds.yml     | 45 --------------------------------
+ 3 files changed, 59 deletions(-)
 
-diff --git a/include/tcg/helper-info.h b/include/tcg/helper-info.h
-index 49a27e4eae..d5bda83a2e 100644
---- a/include/tcg/helper-info.h
-+++ b/include/tcg/helper-info.h
-@@ -24,7 +24,7 @@
- #include <ffi.h>
- #pragma GCC diagnostic pop
- #endif
--#include "tcg-target-reg-bits.h"
-+#include "tcg/target-reg-bits.h"
+diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
+index b376c837dc..d7ae57fb1f 100644
+--- a/.gitlab-ci.d/container-cross.yml
++++ b/.gitlab-ci.d/container-cross.yml
+@@ -22,12 +22,6 @@ arm64-debian-cross-container:
+   variables:
+     NAME: debian-arm64-cross
  
- #define MAX_CALL_IARGS  7
+-armhf-debian-cross-container:
+-  extends: .container_job_template
+-  stage: containers
+-  variables:
+-    NAME: debian-armhf-cross
+-
+ hexagon-cross-container:
+   extends: .container_job_template
+   stage: containers
+@@ -40,12 +34,6 @@ loongarch-debian-cross-container:
+   variables:
+     NAME: debian-loongarch-cross
  
-diff --git a/tcg/ppc64/tcg-target-reg-bits.h b/include/tcg/target-reg-bits.h
-similarity index 71%
-rename from tcg/ppc64/tcg-target-reg-bits.h
-rename to include/tcg/target-reg-bits.h
-index 3a15d7bee4..8f4ad3ed99 100644
---- a/tcg/ppc64/tcg-target-reg-bits.h
-+++ b/include/tcg/target-reg-bits.h
-@@ -7,10 +7,10 @@
- #ifndef TCG_TARGET_REG_BITS_H
- #define TCG_TARGET_REG_BITS_H
+-i686-debian-cross-container:
+-  extends: .container_job_template
+-  stage: containers
+-  variables:
+-    NAME: debian-i686-cross
+-
+ mips64el-debian-cross-container:
+   extends: .container_job_template
+   stage: containers
+diff --git a/.gitlab-ci.d/containers.yml b/.gitlab-ci.d/containers.yml
+index 9b6d33ac13..6aeccf8be0 100644
+--- a/.gitlab-ci.d/containers.yml
++++ b/.gitlab-ci.d/containers.yml
+@@ -47,10 +47,8 @@ weekly-container-builds:
+     - amd64-debian-user-cross-container
+     - amd64-debian-legacy-cross-container
+     - arm64-debian-cross-container
+-    - armhf-debian-cross-container
+     - hexagon-cross-container
+     - loongarch-debian-cross-container
+-    - i686-debian-cross-container
+     - mips64el-debian-cross-container
+     - ppc64el-debian-cross-container
+     - riscv64-debian-cross-container
+diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
+index 99dfa7eea6..59ff8b1d87 100644
+--- a/.gitlab-ci.d/crossbuilds.yml
++++ b/.gitlab-ci.d/crossbuilds.yml
+@@ -1,13 +1,6 @@
+ include:
+   - local: '/.gitlab-ci.d/crossbuild-template.yml'
  
--#ifndef _ARCH_PPC64
--# error Expecting 64-bit host architecture
--#endif
+-cross-armhf-user:
+-  extends: .cross_user_build_job
+-  needs:
+-    - job: armhf-debian-cross-container
+-  variables:
+-    IMAGE: debian-armhf-cross
 -
-+/*
-+ * We only support 64-bit hosts now.
-+ * Retain the identifier for documentation.
-+ */
- #define TCG_TARGET_REG_BITS  64
+ cross-arm64-system:
+   extends: .cross_system_build_job
+   needs:
+@@ -30,44 +23,6 @@ cross-arm64-kvm-only:
+     IMAGE: debian-arm64-cross
+     EXTRA_CONFIGURE_OPTS: --disable-tcg --without-default-features
  
- #endif
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index a6d9aa50d4..067150c542 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -31,7 +31,7 @@
- #include "qemu/plugin.h"
- #include "qemu/queue.h"
- #include "tcg/tcg-mo.h"
--#include "tcg-target-reg-bits.h"
-+#include "tcg/target-reg-bits.h"
- #include "tcg-target.h"
- #include "tcg/tcg-cond.h"
- #include "tcg/insn-start-words.h"
-diff --git a/tcg/aarch64/tcg-target-reg-bits.h b/tcg/aarch64/tcg-target-reg-bits.h
-deleted file mode 100644
-index 3b57a1aafb..0000000000
---- a/tcg/aarch64/tcg-target-reg-bits.h
-+++ /dev/null
-@@ -1,12 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0-or-later */
--/*
-- * Define target-specific register size
-- * Copyright (c) 2023 Linaro
-- */
+-cross-i686-system:
+-  extends:
+-    - .cross_system_build_job
+-    - .cross_test_artifacts
+-  needs:
+-    - job: i686-debian-cross-container
+-  variables:
+-    IMAGE: debian-i686-cross
+-    EXTRA_CONFIGURE_OPTS: --disable-kvm
+-    MAKE_CHECK_ARGS: check-qtest
 -
--#ifndef TCG_TARGET_REG_BITS_H
--#define TCG_TARGET_REG_BITS_H
+-cross-i686-user:
+-  extends:
+-    - .cross_user_build_job
+-    - .cross_test_artifacts
+-  needs:
+-    - job: i686-debian-cross-container
+-  variables:
+-    IMAGE: debian-i686-cross
+-    MAKE_CHECK_ARGS: check
 -
--#define TCG_TARGET_REG_BITS  64
+-cross-i686-tci:
+-  extends:
+-    - .cross_accel_build_job
+-    - .cross_test_artifacts
+-  timeout: 60m
+-  needs:
+-    - job: i686-debian-cross-container
+-  variables:
+-    IMAGE: debian-i686-cross
+-    ACCEL: tcg-interpreter
+-    EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,arm-softmmu,arm-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
+-    # Force tests to run with reduced parallelism, to see whether this
+-    # reduces the flakiness of this CI job. The CI
+-    # environment by default shows us 8 CPUs and so we
+-    # would otherwise be using a parallelism of 9.
+-    MAKE_CHECK_ARGS: check check-tcg -j2
 -
--#endif
-diff --git a/tcg/loongarch64/tcg-target-reg-bits.h b/tcg/loongarch64/tcg-target-reg-bits.h
-deleted file mode 100644
-index 51373ad70a..0000000000
---- a/tcg/loongarch64/tcg-target-reg-bits.h
-+++ /dev/null
-@@ -1,21 +0,0 @@
--/* SPDX-License-Identifier: MIT */
--/*
-- * Define target-specific register size
-- * Copyright (c) 2021 WANG Xuerui <git@xen0n.name>
-- */
--
--#ifndef TCG_TARGET_REG_BITS_H
--#define TCG_TARGET_REG_BITS_H
--
--/*
-- * Loongson removed the (incomplete) 32-bit support from kernel and toolchain
-- * for the initial upstreaming of this architecture, so don't bother and just
-- * support the LP64* ABI for now.
-- */
--#if defined(__loongarch64)
--# define TCG_TARGET_REG_BITS 64
--#else
--# error unsupported LoongArch register size
--#endif
--
--#endif
-diff --git a/tcg/mips64/tcg-target-reg-bits.h b/tcg/mips64/tcg-target-reg-bits.h
-deleted file mode 100644
-index ee346a3f25..0000000000
---- a/tcg/mips64/tcg-target-reg-bits.h
-+++ /dev/null
-@@ -1,16 +0,0 @@
--/* SPDX-License-Identifier: MIT */
--/*
-- * Define target-specific register size
-- * Copyright (c) 2008-2009 Arnaud Patard <arnaud.patard@rtp-net.org>
-- */
--
--#ifndef TCG_TARGET_REG_BITS_H
--#define TCG_TARGET_REG_BITS_H
--
--#if !defined(_MIPS_SIM) || _MIPS_SIM != _ABI64
--# error "Unknown ABI"
--#endif
--
--#define TCG_TARGET_REG_BITS 64
--
--#endif
-diff --git a/tcg/riscv64/tcg-target-reg-bits.h b/tcg/riscv64/tcg-target-reg-bits.h
-deleted file mode 100644
-index 761ca0d774..0000000000
---- a/tcg/riscv64/tcg-target-reg-bits.h
-+++ /dev/null
-@@ -1,19 +0,0 @@
--/* SPDX-License-Identifier: MIT */
--/*
-- * Define target-specific register size
-- * Copyright (c) 2018 SiFive, Inc
-- */
--
--#ifndef TCG_TARGET_REG_BITS_H
--#define TCG_TARGET_REG_BITS_H
--
--/*
-- * We don't support oversize guests.
-- * Since we will only build tcg once, this in turn requires a 64-bit host.
-- */
--#if __riscv_xlen != 64
--#error "unsupported code generation mode"
--#endif
--#define TCG_TARGET_REG_BITS 64
--
--#endif
-diff --git a/tcg/s390x/tcg-target-reg-bits.h b/tcg/s390x/tcg-target-reg-bits.h
-deleted file mode 100644
-index b01414e09d..0000000000
---- a/tcg/s390x/tcg-target-reg-bits.h
-+++ /dev/null
-@@ -1,17 +0,0 @@
--/* SPDX-License-Identifier: MIT */
--/*
-- * Define target-specific register size
-- * Copyright (c) 2009 Ulrich Hecht <uli@suse.de>
-- */
--
--#ifndef TCG_TARGET_REG_BITS_H
--#define TCG_TARGET_REG_BITS_H
--
--/* We only support generating code for 64-bit mode.  */
--#if UINTPTR_MAX == UINT64_MAX
--# define TCG_TARGET_REG_BITS 64
--#else
--# error "unsupported code generation mode"
--#endif
--
--#endif
-diff --git a/tcg/sparc64/tcg-target-reg-bits.h b/tcg/sparc64/tcg-target-reg-bits.h
-deleted file mode 100644
-index 34a6711013..0000000000
---- a/tcg/sparc64/tcg-target-reg-bits.h
-+++ /dev/null
-@@ -1,12 +0,0 @@
--/* SPDX-License-Identifier: MIT */
--/*
-- * Define target-specific register size
-- * Copyright (c) 2023 Linaro
-- */
--
--#ifndef TCG_TARGET_REG_BITS_H
--#define TCG_TARGET_REG_BITS_H
--
--#define TCG_TARGET_REG_BITS  64
--
--#endif
-diff --git a/tcg/tci/tcg-target-reg-bits.h b/tcg/tci/tcg-target-reg-bits.h
-deleted file mode 100644
-index dcb1a203f8..0000000000
---- a/tcg/tci/tcg-target-reg-bits.h
-+++ /dev/null
-@@ -1,18 +0,0 @@
--/* SPDX-License-Identifier: MIT */
--/*
-- * Define target-specific register size
-- * Copyright (c) 2009, 2011 Stefan Weil
-- */
--
--#ifndef TCG_TARGET_REG_BITS_H
--#define TCG_TARGET_REG_BITS_H
--
--#if UINTPTR_MAX == UINT32_MAX
--# define TCG_TARGET_REG_BITS 32
--#elif UINTPTR_MAX == UINT64_MAX
--# define TCG_TARGET_REG_BITS 64
--#else
--# error Unknown pointer size for tci target
--#endif
--
--#endif
-diff --git a/tcg/x86_64/tcg-target-reg-bits.h b/tcg/x86_64/tcg-target-reg-bits.h
-deleted file mode 100644
-index fc3377e829..0000000000
---- a/tcg/x86_64/tcg-target-reg-bits.h
-+++ /dev/null
-@@ -1,16 +0,0 @@
--/* SPDX-License-Identifier: MIT */
--/*
-- * Define target-specific register size
-- * Copyright (c) 2008 Fabrice Bellard
-- */
--
--#ifndef TCG_TARGET_REG_BITS_H
--#define TCG_TARGET_REG_BITS_H
--
--#ifdef __x86_64__
--# define TCG_TARGET_REG_BITS  64
--#else
--# error
--#endif
--
--#endif
+ cross-mips64el-system:
+   extends: .cross_system_build_job
+   needs:
 -- 
 2.43.0
 
