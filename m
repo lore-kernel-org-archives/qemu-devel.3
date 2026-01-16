@@ -4,96 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27FDAD4899D
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 13:33:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BA82D4899D
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 13:38:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgjwr-0001oo-R1; Fri, 16 Jan 2026 08:33:10 -0500
+	id 1vgk1L-0004TC-CB; Fri, 16 Jan 2026 08:37:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgjwq-0001nh-IQ
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 08:33:08 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgk1G-0004Su-CO
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 08:37:42 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgjwp-0006gQ-17
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 08:33:08 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-790992528f6so18761897b3.1
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 05:33:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768570386; cv=none;
- d=google.com; s=arc-20240605;
- b=Rb1Pi6mMSAA748LaYbt/Kw+OtT3VjxeVhVG0UaYnZaKe62EYsfNrihaJsjv6V6PyBC
- +9mKI2iVLeN3bRhQpiWbw8sxocAoQVZi2HnjSQkdvoxHKPzjSOB/TFmalmMcpKs38UzA
- laQttD3e0Rm8K+6SICrtUYISXWESD6FG6ov0wu8dMoWpir7hTwHeOZ8sCgEijri98zTf
- yyImOJPL+vuFVJml43mN18Jh+ExcrG8GoNToSurWOI4JRBp8xUqfm538OIIyeSwzq2Qs
- d7aFZZPDr07huwk16MBrRfp23rwSezdoeGDAexMUwUytxx5eR3Ki+nvbCLoORiEX2WyG
- 1dRw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=nYsJzwPuBc+PJYwI10SmXf93PH3tryFGEAWTJ4id3WE=;
- fh=iXi1O36oA6iH3LqUvSBFe0Cjxqz9C3gK/kHWpPzH6bo=;
- b=eNNcxvmO2SmE7CAFIu/rrRA+4rEo7lHR3sDcTfkNrL67dyPcN+EtjfXBcPBvvN3np9
- TZ7Kp/sv6qUxKn43FG50ehr7CPnXjzqRN9NjY0EHWuBtv9AEIqSmkdNG3jt3KBKMKUn7
- Lid0yYqwA2X1z5QpjrjT6KY+rW1pqrfGjeDLzSfnMHCdeZV9SMtL46LOlG9hTxKDlWMp
- DG7kCkB23qCWWBpSi2Hw1vnN1uCb06BGChxXzxvkxW7mq1ouNvntNgKO81RGMXWP2f2X
- ANKXQnjzg+swYzWdIPSFfamqrsL21yVkxhaWhk+H91SsHgNPK/HtSoCL5mzS+10OBlmW
- B81Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgk1B-0007Em-8X
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 08:37:39 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-47ee937ecf2so15860205e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 05:37:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768570386; x=1769175186; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nYsJzwPuBc+PJYwI10SmXf93PH3tryFGEAWTJ4id3WE=;
- b=UuHmi3a4b4AxtCxVT5JtUTwijGUvVQYFN2PyhOYnRosjMQMcLvbQnF0E69lj1shRaV
- /c1mKzyUa7p2QE2O9ak1RsVQpVQFVu9Vgiva8WHwlrdnFuQsFSdVhrix5XQ0M2oYJ8iv
- XMvWRWeHyOgj5SrPOyxkWhk159H0PComsow58aejlo7zfiPI4X+1Tk2bGUEI3c4ZArYv
- EyQoVasR7BIjs6WS5+asyBJfQkj21yVCabNvN4nxIOQVJlpqBX0a3FqU8MB/mWFMdETq
- wcBYL7UpzEl80huSCZZd0C5pdI2T03UC8ZZTtlf1hZhm2KWVKS3i5M+NqN3dl7tZbOVo
- Bmug==
+ d=linaro.org; s=google; t=1768570655; x=1769175455; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aTSz941HVsO95uiEgXS6uJr90DAznk8SCpu+CG0XZzE=;
+ b=mQUAnYatZpY8XDP3WD5AxReuNJdSpowFxEshCkTkzhqUnAK9P/BAHgQn3WJ0jutndA
+ 4COTy8Te8jh/vYKvU4ERnQtIxMprmK5yps+AH7vdQEE0HNNT1bb96kGTZi7jjNQ2Iyyl
+ 241G2qZ3wgx+Bu444tC1OowHgM5BdB2pySSoxAlaF0Eev+hWq3Zt2J7KDAlJ/tWBaut/
+ f7N0r53TTJZQHtpWVkil2Cx6MaCuBZJq+4DTJPUw9uvnzIaX3WG3rzRQ+QvrhXnYSQRa
+ c3nH0wYVqFCXmRKyBzjFuXCertvfLqkFBOgyxoDtMu3+8m+HzWr++Rb3yFsmQFUdNGUl
+ 6pEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768570386; x=1769175186;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nYsJzwPuBc+PJYwI10SmXf93PH3tryFGEAWTJ4id3WE=;
- b=VM0xgxMeh6vO9cGqjF4v6uMkB2bBv91Qy1Aocrl9+NdHjWHrw19ZCAFNvLDb22ZSWT
- pmwrjXpa7zsR+qVgG8qpv7TBPnd0OLE9dro4hW27pHLkDHofpjbjYabCWPUX6yvhaMS7
- P9P2XFPlqPbERClar7obsppaEHmqPsof2DRCcjO5wriy3Q7wLs/Pdg/g9RcNwAveteOS
- EeMWL+PSPa5ZDGSk1HTmB0KsPekwrJmMR8GPVJy4bTXw/qEdUUDuWtX3MjKfOVCDEIAQ
- Wl0isNhA+LKZYggDic+buPfg0Zv+9K8j3/28K3yZQdABCq7XRAP0LF6WOb9UCfexCnll
- 6uIw==
-X-Gm-Message-State: AOJu0YyM7gG14W3T+eJvY91CJURbS68gvwMgZCmLddaC0INj5083zAsM
- pNSv146ETTs3rUP4yFceZW0jHyDAUFMkZlvgzRTkIhieJ6BXfWFkKfQeleIq9CrC/SqBi3QXdOw
- CfhdQqwurtVRxpln0YIsgkcVrR+LueE5GLLe7bTYZoQ==
-X-Gm-Gg: AY/fxX6EUhhy8LbBd7iZ5zWnjns7tyo1aGaoQH68mEdVbT5TC3srGNv/qJKn9BeBXDw
- mQ34tu0MZnA8QW6Wz3r0Ax/c0MxaWVp0JgFi9zcujqYfnmrfLib+relnev2d/rq6wIN/SZ4+iWt
- pr06/GnKWTeEAu+fe0ND/BtJ98DNRfRF3yn29qy2Nsp10OWSGl3cRl9yF4pkqCHKfLamg8Wc6vd
- otnun0lfvjH5KomPA5tV3aZzrIIwK2DTAU0JSE+xPXEpcZ6rSPp8fF+iLtUaSEwRX0h5+nUdn9/
- O86wj+D3wRtCUOU5WyjiLD4=
-X-Received: by 2002:a05:690c:2784:b0:786:4fbb:645 with SMTP id
- 00721157ae682-793c52509c5mr28642627b3.19.1768570385794; Fri, 16 Jan 2026
- 05:33:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768570655; x=1769175455;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aTSz941HVsO95uiEgXS6uJr90DAznk8SCpu+CG0XZzE=;
+ b=n/AP3g3VSVWiDvNPkHbmjcX2ig3p7TnMVy+YKjGMtJcRdFoNdqbcabgt1vSL2XTddc
+ 6Tg0mIR8KtIR+KGYaGHe+poVZ5C0VqvL8YsBAFBARwp9bXBosFtm2ySFUMpWp9E3PEqH
+ 4XM6WZUGsI96pavedSjaAfqsaPpkAQSARvPnGsum8nyF5QCQDuVXEtpjbdWgr5JWJbeW
+ Zrmes1lbjnb85PltubPa9VnRFF7JWh2YRqr+V5x01zoAMea+FMFmouUw8mOVcqXN6K+u
+ ByX2Jezy5rD6xplOYCQtqEykrjrzzazq8R3y0pHGDVC2H9gvktNoPNbfFMRL1VtTFnRg
+ xH4w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXv/YZA4AK17LcmzT/PqQmQhoNRo3sTJDtyATTuNdHGT623bphwHF3OAOxCkQscbYsdDGrzxjnpedOp@nongnu.org
+X-Gm-Message-State: AOJu0Yzz++bUXHaR5S0NM1t9Aif9gxApt9JyG9I57E3iOmHyZ3TT45dz
+ tw1HWrxbpa0I5b3QDQAetN4xMhjJgewflAq8QeBGkxNgvEXsr1R9qWKmW1CxjIiQmlE=
+X-Gm-Gg: AY/fxX7AQf9WlM3dUmQZR1tO5cdw3/HJ1hTUGWRE/btaVjhdpok/o4ItWwoGRaHCza0
+ S3Gqq+ukJsnm8q48RxVIC/LBiZYrIgxrqMzknd3nHt/mCBAJd2HBCf41i/7PveaylbS/BCBgNPN
+ /AvOKlso3i2u75rNyvGm+XE9kczt5RuuC4JGVweLOJ1p1YuUPefs6D30fzghdXxB+Hbbz2giyjp
+ Y1FuSqLZpJ6dn1n6xh3OCIt4MNiHYOiP/fLIlMzNBcDfVWUvdaQAc5+X3ZMojdV8Ql0YZMa2FjB
+ YsmsN3zCkTEgLJpX2vMcEfCCW6/Rn2d7wPmm8Sp/r+XCyDsrtBRxqW9Hn73rQolkB43u0TZI7St
+ cox1/Wx7kseSSJPVjQyooEiCwKcgctsl6rkN2Mqqsz8W6dp/ewGjbuy36wlxIWHrzPwEs9n/aRm
+ dzpugP14QJnsZ3MhVUIfFGM9ckIfhcrHNrCgeckdCaNc2vCxxoc3UT7w==
+X-Received: by 2002:a05:600c:4f15:b0:477:9890:9ab8 with SMTP id
+ 5b1f17b1804b1-4801e530d15mr39115375e9.3.1768570655505; 
+ Fri, 16 Jan 2026 05:37:35 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47f428b954esm98288565e9.7.2026.01.16.05.37.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Jan 2026 05:37:34 -0800 (PST)
+Message-ID: <a6d592ab-3473-4355-8578-e001f58b3751@linaro.org>
+Date: Fri, 16 Jan 2026 14:37:33 +0100
 MIME-Version: 1.0
-References: <20260116124005.925382-1-peter.maydell@linaro.org>
- <20260116124005.925382-6-peter.maydell@linaro.org>
- <87a4ydwuty.fsf@pond.sub.org>
-In-Reply-To: <87a4ydwuty.fsf@pond.sub.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 16 Jan 2026 13:32:53 +0000
-X-Gm-Features: AZwV_Qg67UjCW0UBvmsX_N4yfWBCJxznYxyVjCBCwRXTvcw4kO1fBqw_Ph7ecLY
-Message-ID: <CAFEAcA80HGxbESO8FwrHy967yXtVG1KMas=mWekaS436rrSamA@mail.gmail.com>
-Subject: Re: [PATCH v2 5/6] scripts/clean-includes: Give the args in git
- commit messages
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] misc: Clean up includes
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnus.kulke@linux.microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Warner Losh <imp@bsdimp.com>,
+ Kyle Evans <kevans@freebsd.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+References: <20260116125830.926296-1-peter.maydell@linaro.org>
+ <20260116125830.926296-4-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260116125830.926296-4-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,52 +109,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Jan 2026 at 13:28, Markus Armbruster <armbru@redhat.com> wrote:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
-> > If clean-includes is creating a git commit for its changes,
-> > currently it says only "created with scripts/clean-includes".
-> > Add the command line arguments the user passed us, as useful
-> > extra information.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >  scripts/clean-includes | 25 ++++++++++++++++++++++++-
-> >  1 file changed, 24 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/scripts/clean-includes b/scripts/clean-includes
-> > index a45421d2ff..b16eec0a5c 100755
-> > --- a/scripts/clean-includes
-> > +++ b/scripts/clean-includes
-> > @@ -42,6 +42,28 @@
-> >  GIT=no
-> >  DUPHEAD=no
-> >
-> > +# Save the original arguments in case we want to put them in
-> > +# a git commit message, quoted for the shell so that we handle
-> > +# args with spaces/metacharacters correctly.
-> > +# The quote_sh() function is the same one we use in configure.
->
-> Not quite, configure's is
->
->    quote_sh() {
->        printf "%s" "$1" | sed "s,','\\\\'',g; s,.*,'&',"
->    }
->
-> > +
-> > +quote_sh() {
-> > +    for arg in "$@"; do
-> > +        printf "%s" "$arg" | sed "s,','\\\\'',g; s,.*,'&',"
-> > +    done
-> > +}
->
-> Is the loop intentional?  We seem to always call the function with
-> exactly one argument.
+On 16/1/26 13:58, Peter Maydell wrote:
+> This commit deals with various .c files that included system
+> headers that are already pulled in by osdep.h, where the .c
+> file includes osdep.h already itself.
+> 
+> This commit was created with scripts/clean-includes:
+>   ./scripts/clean-includes '--git' 'misc' 'hw/core' 'semihosting' 'target/arm' 'target/i386/kvm/kvm.c' 'target/loongarch' 'target/riscv' 'tools' 'util'
+> 
+> All .c should include qemu/osdep.h first.  The script performs three
+> related cleanups:
+> 
+> * Ensure .c files include qemu/osdep.h first.
+> * Including it in a .h is redundant, since the .c  already includes
+>    it.  Drop such inclusions.
+> * Likewise, including headers qemu/osdep.h includes is redundant.
+>    Drop these, too.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/core/machine-qmp-cmds.c         | 1 -
+>   semihosting/arm-compat-semi-stub.c | 1 -
+>   target/arm/cpu32-stubs.c           | 1 -
+>   target/i386/kvm/kvm.c              | 1 -
+>   target/loongarch/csr.c             | 1 -
+>   target/riscv/csr.c                 | 1 -
+>   tools/i386/qemu-vmsr-helper.c      | 1 -
+>   util/cpuinfo-aarch64.c             | 1 -
+>   8 files changed, 8 deletions(-)
 
-Whoops, no -- I was iterating around trying to get something
-working and didn't notice that I'd left that loop in place.
-The quote_sh() function should match the configure one.
-
--- PMM
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
