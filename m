@@ -4,97 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 709D1D4A5EE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 592E8D4A5E2
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 02:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgZoU-00060Y-WF; Thu, 15 Jan 2026 21:43:51 -0500
+	id 1vgZoP-0005x5-6P; Thu, 15 Jan 2026 21:43:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vgZo0-0005qY-Om
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 21:43:23 -0500
+ id 1vgZnx-0005qD-Dg
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 21:43:22 -0500
 Received: from fout-b8-smtp.messagingengine.com ([202.12.124.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vgZnw-0002Ra-Dj
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 21:43:18 -0500
+ id 1vgZnu-0002Pt-0O
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 21:43:17 -0500
 Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfout.stl.internal (Postfix) with ESMTP id 1E9A51D00091;
- Thu, 15 Jan 2026 21:43:13 -0500 (EST)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-01.internal (MEProxy); Thu, 15 Jan 2026 21:43:13 -0500
+ by mailfout.stl.internal (Postfix) with ESMTP id 022861D00077;
+ Thu, 15 Jan 2026 21:43:09 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-01.internal (MEProxy); Thu, 15 Jan 2026 21:43:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1768531392; x=
- 1768617792; bh=+/FyD+vMcIQ9VqCK0mlHx+J4DTJhXkCV6w8jNgGWsJY=; b=f
- tCYX8VxzOiCSBS7/oaxPxWC18g5yAfKqaB8dP241l/5f+IOUDfaZJEw061aihrXa
- dIHkRIiFFfrsyZb09uzCx07jZ9PmN7wUaOxFzZSLhFXRz/AiacNceAxTOv3js0aK
- 7Z+B/uzX0ed40KdUzkzsRN7dSzdz154dlfu0e4bSmdWsGgqlXBYUR9wPTlzLsqlN
- Hm02wDX09585pMJyTofbx5zZZ58k1pFZCuL13ULfc3NAApNtSJpyfd3Smm7ZkNf0
- L0sm598NE4QaTFQyw5NzngBHES62BFleEL+lEBWWbOcP9lNuKIdPihafbb0tPKom
- 27iXuaXdDa3W4+QUY6eZQ==
+ :from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to; s=fm1; t=1768531389; x=1768617789; bh=SXqKWJ0Hgy
+ Zn/0akxlIlymdar4DsFeXHB6fw4/1Y8N0=; b=EGsQd77ls/QUx2nKu+noVUZWut
+ rfx909wo9EOyTXANexwKPP3ld1xMdT5G5iQYfelehU/OUp/+BJP9PlbEoDFUXzZg
+ lSX5o+m5QaEIONerJ1U6bD+1aXiWt7O7RVSTPEC4myRSU8hMvyRsQCMaV8Efh8Hm
+ mflvVz9b6BTyYSaF2BD7YsMZI7nFW1ZwBHs5asqCmHcVUMzniXP9+4w3yKggiRqy
+ moJaBoJhPWPreWWn+GluORqpC4X1AKrl2Rvuy2lCYE1l30ffcWPk/w8TKex3lhBi
+ jWaS3CMIdzQWmIN6Ffd/ZORDWuaB7d7MOu/br+Eu/wk38tj3jNrPJt8t+5pg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; t=1768531392; x=1768617792; bh=+
- /FyD+vMcIQ9VqCK0mlHx+J4DTJhXkCV6w8jNgGWsJY=; b=XrwnQoSALE+jlpj5y
- hncevzHxYZgcDjukbpn6bJ1tHUMiU0kogvmhT28NS/F1dZhaSpzOgHJimNQly1VY
- 5qkvHyEqIQP137sXodgatD5/VNUL/M3igfRbKqa7hHnfM91++iKUm8EjDC+YAfj4
- epJT7Q7WLrrESQovOxxtOIPN31mga9p6F4TGrrjJbLrIzvLv5VUsiFp2r8gB0r11
- RiaHC4MgJMRP5+/yUu6hfmpwQoxkwyz2YPu51rc5xohZNrrButSR/bChSaoLWbk7
- 34cHFFsp005psKUKBFUJBj7uU5h+Dcs4oF3rkER/fvbTNjy+oB0q0CW0VazCDVep
- i+trg==
-X-ME-Sender: <xms:wKVpaaRunNqcKc0WQj_aW11SBJd-u1ulvA_GGVXPwh8PM_AQ-K54zA>
- <xme:wKVpaXNrBIl8Mzp63RE-FG3-DawOQRCn_9KCHQo3-PTn2espEYW3nH40F7NsxFuzh
- OiGi6HdzBpQPF1i5ThE8p2vd1av0bzGOy18kKXBvvKfz6SVs3F7m6E>
-X-ME-Received: <xmr:wKVpaVMa7Uv7kdG12CBFJIWnT_7z7uq6Gbdik8llWTr7Ouy_zz4abwBsfePW>
+ :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+ 1768531389; x=1768617789; bh=SXqKWJ0HgyZn/0akxlIlymdar4DsFeXHB6f
+ w4/1Y8N0=; b=HpSPaJGiULyDgtQLNSadBcuuRLrQBMbun3e7NY0Yq4wus/tI0o2
+ 9P9v4QE/V9GuvOfm8fvzrPy1OVzvJyOhFo+3kvwQo9kjbVNERgRejku95SVyiWti
+ /uzDdcbmODlZK99bjbtQc+HYBGF4HG2g7+IQfB7IvcUC89NIgqETgGi293HkaCg+
+ i73bHCIj4QQJWbNvp0K1wYGUqUdm4pMWxrZtGuQKFWDW+BqI8vualfWxAggbEXgl
+ zlQZcAAxGvAP72Cwf4KSJ7imIA5aQwsrgIBgO+nQWQI7VXC2TTbiDMk+jwR1ScV7
+ gc2OD1jbqbGSD4buAvTqmwvD5nB6ip0drOg==
+X-ME-Sender: <xms:vKVpaSkFncjAdhVZgSDAb62Nsz7Qk7evbbSvummO1PCRHJvsN13enQ>
+ <xme:vKVpaRQAHH-MyrxdMGMIqIjshYhMd6lhVPBFJqQS7gZQJwfg4quT1JGuZTrU8nS-4
+ eoTWXqslOK3jHzXnBZ-L3uv_vCLigJ4tv26gSu8FGIPRvT6XDKFM0U>
+X-ME-Received: <xmr:vKVpaeAI7OWNrIIEy1rBkouRB_Ij_iheHzlUBsfU_CYZQgvypeJ3IY6GR-jK>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdejjeejucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpefhvfevuf
- ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhk
- ihcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepgf
- eiteejhfelheefieetjefgleejfffhueffvdduieejgfeuueeuvddvkeejhfelnecuvehl
- uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrggusehjrg
- gslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpth
- htohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtoheptghhrggusehj
- rggslhhonhhskhhirdighiii
-X-ME-Proxy: <xmx:wKVpaftK6YB0j2ZPhL5EE9U5Xas74SB72snqRBkxhjUdsy85TjYuGQ>
- <xmx:wKVpaXXqd7CdZ_bIZ0hHuxTYdDh8wLQ5crsnhPhYG9r3uniSoUIVqQ>
- <xmx:wKVpaftyIYSw5_e5sW5Xgi7Pbpg39oCiBBswnR0NP75aGLYqZnWgwQ>
- <xmx:wKVpabWAwmbRBi_sBSellP0JTgO_-UA5-NeMhmP_KRdbtfw41RFzfw>
- <xmx:wKVpaRbhA2KfR5t_JK9ANMFxitA5m-2vS7o3s06PcFdV9sOwfBV-lbmx>
+ rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpefhvfevuf
+ ffkffoggfgsedtkeertdertddtnecuhfhrohhmpeevhhgrugculfgrsghlohhnshhkihcu
+ oegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhephfdtvd
+ ehieevgefgteffheeigeehtdelvddvueeijeejvdeliefftedvffejtdeunecuffhomhgr
+ ihhnpegtohguvggsvghrghdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+ grmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidpnhgspghr
+ tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggrlhgrthhonh
+ esvghikhdrsghmvgdrhhhupdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhn
+ uhdrohhrghdprhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihii
+X-ME-Proxy: <xmx:vKVpaQSLw0waATSTfppW6ksEUhNzsY72owzLA9CeWA2JPTEhZRUXIA>
+ <xmx:vKVpaUpEOWh1Onr1w3qveQdp3uNo6JkgDrdeHT4sIJzh97gszs8pGw>
+ <xmx:vKVpaawQhv4kNbNiwVpDWG2hwAl0xRmJWQnQePFp5dq6ZfbNZ196cg>
+ <xmx:vKVpaRKrcsaojBOTyhzL36LwUixsmoY5H2dH-VcyK0BoR4BR_7-gVQ>
+ <xmx:vaVpaS85GiNCeO54sJorPfVcpLTiEPasOnvHmGhEAghTcmcJdMCmUOdh>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Jan 2026 21:43:12 -0500 (EST)
+ 15 Jan 2026 21:43:08 -0500 (EST)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id ab29ab07;
+ by chomposaur (OpenSMTPD) with ESMTPA id 67ab2568;
  Fri, 16 Jan 2026 02:43:07 +0000 (UTC)
 From: Chad Jablonski <chad@jablonski.xyz>
 To: qemu-devel@nongnu.org
 Cc: balaton@eik.bme.hu,
 	Chad Jablonski <chad@jablonski.xyz>
-Subject: [PATCH v5 08/12] ati-vga: Consolidate set dirty and dst update
-Date: Thu, 15 Jan 2026 21:42:54 -0500
-Message-ID: <20260116024258.1487173-9-chad@jablonski.xyz>
+Subject: [PATCH v5 00/12] ati-vga: Implement HOST_DATA transfers to enable
+ X.org text rendering
+Date: Thu, 15 Jan 2026 21:42:46 -0500
+Message-ID: <20260116024258.1487173-1-chad@jablonski.xyz>
 X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20260116024258.1487173-1-chad@jablonski.xyz>
-References: <20260116024258.1487173-1-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=202.12.124.151; envelope-from=chad@jablonski.xyz;
  helo=fout-b8-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_score_int: 17
+X-Spam_score: 1.7
+X-Spam_bar: +
+X-Spam_report: (1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FROM_SUSPICIOUS_NTLD=0.499,
+ FROM_SUSPICIOUS_NTLD_FP=1.999, PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
@@ -113,93 +110,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both supported ROPs follow the same memory set dirty logic.
-This consolidates that logic to remove the duplication.
+This series implements HOST_DATA as a blit source enabling text rendering in
+xterm under X.org with 2D acceleration.
 
-Hardware testing revealed that the Rage 128 does not update dst_x or dst_y
-after a blit, regardless of the source. This removes the update for the
-Rage 128 device.
+The series builds up functionality incrementally:
 
-Note that there is a behavior change here in that previously the "fill"
-ROPs updated only dst_y and SRC_COPY updated dst_y and dst_x. The
-Mobility M6 register reference (DST_HEIGHT_WIDTH) states that dst_y is
-updated after a blit but doesn't mention dst_x.
+* Patches   1-5:  Bug fixes and register implementations
+* Patches   6-9:  Refactor of ati_2d_blt
+* Patch      10:  Scissor clipping implementation
+* Patches 11-12:  HOST_DATA register writes, color expansion, and
+                  accumulator flush
 
-Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+Tested with xterm on X.org using the r128 driver built with
+--disable-dri (MMIO mode).
 
----
+Hardware tests can be found at:
+https://codeberg.org/cjab/ati-tests/src/branch/main/tests/host_data.c
 
-I plan to validate the above Radeon behavior in the future but I don't
-have the best test environment set up for that card at the moment.
-Zoltan if you've seen the dst_x behavior is required then we can modify
-this but otherwise it felt safe to me to follow the docs for now.
----
- hw/display/ati_2d.c | 41 +++++++++++++++++++----------------------
- 1 file changed, 19 insertions(+), 22 deletions(-)
+Changes from v4:
+- Refactored ati_2d_blt to accept src and dst state
+- Implemented host_data blits on top of the refactored ati_2d_blt
+  (suggested by Zoltan)
+- Dropped separate field storage for DP_DATATYPE/DP_MIX (per Zoltan)
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 91fd3b7827..38390f2da8 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -207,18 +207,6 @@ void ati_2d_blt(ATIVGAState *s)
-                 memmove(&dst->bits[i], &src->bits[j], dst->rect.width * bypp);
-             }
-         }
--        if (dst->bits >= s->vga.vram_ptr + s->vga.vbe_start_addr &&
--            dst->bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
--            s->vga.vbe_regs[VBE_DISPI_INDEX_YRES] * s->vga.vbe_line_offset) {
--            memory_region_set_dirty(&s->vga.vram, s->vga.vbe_start_addr +
--                                    s->regs.dst_offset +
--                                    dst->rect.y * surface_stride(ds),
--                                    dst->rect.height * surface_stride(ds));
--        }
--        s->regs.dst_x = (dst->left_to_right ?
--                         dst->rect.x + dst->rect.width : dst->rect.x);
--        s->regs.dst_y = (dst->top_to_bottom ?
--                         dst->rect.y + dst->rect.height : dst->rect.y);
-         break;
-     }
-     case ROP3_PATCOPY:
-@@ -260,20 +248,29 @@ void ati_2d_blt(ATIVGAState *s)
-                 }
-             }
-         }
--        if (dst->bits >= s->vga.vram_ptr + s->vga.vbe_start_addr &&
--            dst->bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
--            s->vga.vbe_regs[VBE_DISPI_INDEX_YRES] * s->vga.vbe_line_offset) {
--            memory_region_set_dirty(&s->vga.vram, s->vga.vbe_start_addr +
--                                    s->regs.dst_offset +
--                                    dst->rect.y * surface_stride(ds),
--                                    dst->rect.height * surface_stride(ds));
--        }
--        s->regs.dst_y = (dst->top_to_bottom ?
--                         dst->rect.y + dst->rect.height : dst->rect.y);
-         break;
-     }
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unimplemented ati_2d blt op %x\n",
-                       (s->regs.dp_mix & GMC_ROP3_MASK) >> 16);
-     }
-+
-+    if (s->dev_id != PCI_DEVICE_ID_ATI_RAGE128_PF) {
-+        /*
-+         * Hardware testing shows that dst is _not_ updated for Rage 128.
-+         * The M6 (R100/Radeon) docs state however that dst_y is updated.
-+         * This has not yet been validated on R100 hardware.
-+         */
-+        s->regs.dst_y = (dst->top_to_bottom ?
-+                        dst->rect.y + dst->rect.height : dst->rect.y);
-+    }
-+
-+    if (dst->bits >= s->vga.vram_ptr + s->vga.vbe_start_addr &&
-+        dst->bits < s->vga.vram_ptr + s->vga.vbe_start_addr +
-+        s->vga.vbe_regs[VBE_DISPI_INDEX_YRES] * s->vga.vbe_line_offset) {
-+        memory_region_set_dirty(&s->vga.vram, s->vga.vbe_start_addr +
-+                                s->regs.dst_offset +
-+                                dst->rect.y * surface_stride(ds),
-+                                dst->rect.height * surface_stride(ds));
-+    }
- }
+Changes from v3:
+- New patch 1 fixing DP_DATATYPE/MIX register aliasing, this supersedes old patch 5
+- Fix MSB/LSB HOST_DATA bit ordering, it is per-byte rather than per-word
+- Fixed a missing break in register write handler
+- Squashed and reorganized the dst/scissor helper patches (per Zoltan)
+- Simplified register field constants and increment logic (per Zoltan)
+- Tested with MorphOS and TVPaint (opaque bitmap fonts now work)
+
+Changes from v2:
+- Verified with hardware that clipping default bit latches
+- Verified with hardware that pitch/offset default bits latch
+  (supersedes Zoltan's "ati-vga: Separate default control bit for
+  source")
+- A new approach to HOST_DATA using a 128-bit accumulator instead of a
+  large buffer
+- Fixed a longstanding bug in (DST/SRC)_PITCH reads that zeroed pitch value.
+- Removed mask from the DP_GUI_MASTER_CNTL write, all fields are
+  important
+- Created helpers for code shared between ati_2d_blt and
+  ati_host_data_flush
+
+Changes from v1:
+- Split monolithic patch into 7 logical patches as requested
+- Integrate HOST_DATA blit into existing ati_2d_blt()
+- Add fallback implementation for non-pixman builds
+- Remove unnecessary initialization in realize (kept in reset only)
+- Fixed DP_GUI_MASTER_CNTL mask to preserve GMC_SRC_SOURCE field
+- Implement scissor clipping
+
+Chad Jablonski (12):
+  ati-vga: Fix DST_PITCH and SRC_PITCH reads
+  ati-vga: Read aliased values from DP_GUI_MASTER_CNTL
+  ati-vga: Latch src and dst pitch and offset on master_cntl default
+  ati-vga: Implement foreground and background color register writes
+  ati-vga: Add scissor clipping register support
+  ati-vga: Create setup_2d_blt_dst helper
+  ati-vga: Create and use ATIBltSrc struct
+  ati-vga: Consolidate set dirty and dst update
+  ati-vga: Add internal ati_2d_do_blt accepting src and dst
+  ati-vga: Implement scissor rectangle clipping for 2D operations
+  ati-vga: Implement HOST_DATA register writes
+  ati-vga: Implement HOST_DATA flush to VRAM
+
+ hw/display/ati.c      | 138 +++++++++++++++-
+ hw/display/ati_2d.c   | 369 +++++++++++++++++++++++++++++-------------
+ hw/display/ati_dbg.c  |   9 ++
+ hw/display/ati_int.h  |  19 +++
+ hw/display/ati_regs.h |  20 +++
+ 5 files changed, 435 insertions(+), 120 deletions(-)
+
 -- 
 2.51.2
 
