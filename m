@@ -4,109 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84501C982C7
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 15:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D83A4C982CA
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 15:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vglf5-000887-Tu; Fri, 16 Jan 2026 10:22:56 -0500
+	id 1vglpg-0006c9-9P; Fri, 16 Jan 2026 10:33:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1vglf2-00086w-GW
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 10:22:52 -0500
-Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1vgley-0002DW-EW
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 10:22:50 -0500
-Received: by mail-ua1-x932.google.com with SMTP id
- a1e0cc1a2514c-93f5905e60eso1250850241.0
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 07:22:46 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768576966; cv=none;
- d=google.com; s=arc-20240605;
- b=MgsbVlAbzRtEx30yGjvIKqGZW0iir9ZjehwqhEAkHTv0i6wL0Oxl7CYHQrE0Ai41dM
- cQJ4GjU8dl71xdUlTyW6ir1hw09O1STCWC5YivCbSFvpB45+UzNMS4VjhuG6Sv0TEKTX
- eC1s9aU6nLS+4che2JEdi7BpOnzC5oYnFNqux4tkI8/PIyHT4Im/9HVthk+eCOvBKyA3
- PHBhW4JXlk7I2NmeTvEhzDuQLTSK1M4tl9QCjZXOA6YC+09hpc1rNA8B2S1ea/pJK7dU
- imleGRXqYGVetE4VDBcNCklWWPAMIR8JLAjwoSUQQU7yMpMDSRl4XDVBW/ZWwlrcurAX
- gJhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=+Cn7TJEGLW80xXdvX1NxMATqZN6UeczIjNYExZi46mM=;
- fh=6RdNnZ/cYLz/ikEQGfFf7j7Zjtym5SGOE0+6me+7874=;
- b=lyFrXMwiMtxBpU1KTJiQKq8tmPjec0LywiccVopwwSBxxbnD6vB1DNjT+BR9c1K52P
- tNffSytnV9X4Ywpz4xTByfG839Z3EyH+iP5W1ygY7bL7VAwzjLt8Yt37fM+rxSzq5QvZ
- ZC+ZtqXcOP+Pwk2vE2QYiNPcFBU81yag2qBzPj1IB++7j+IZr8pAGkIZGfzkbnZnPl6+
- uXwlxCSNj8ZEYU0wo7G/jp5yetDOJFBIE6jNKfA8MXMHZEgIrMa1UCYVssgmoP2KNHBw
- OxkPm9dJY5TvzqpVa+s1u0lNOypRfidWQ3DqgcrBSBW4OoErasJhGiwS6QOvsY4EPIfV
- crRw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768576966; x=1769181766; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+Cn7TJEGLW80xXdvX1NxMATqZN6UeczIjNYExZi46mM=;
- b=AqV9lzUG+GwnuDFdxLo8vjX5517Q047DhWh0fnb3MPmEOpe6vr8DqwtrsZP0vvbuLH
- s0SKaFiOP2LA2Dx1x3KQ0OPSPbL27nzOuylPzgC5DwdwlysXKcsTomFQUw7q9jrcJ5hL
- W+eVkD0nz93Ta/PERy7obz+l4o+VEDdSPLGOEVkjx9r+lafA3GKSm0FXL3zQ8pshpdgY
- XbMrOfVVb9APV2tfpOW1QTWsG1tIg4CNEG28+67XabVBokxHhDAk04sp9cRM+mRolsoy
- aoLnq+zNCSdJ8QcTdauASuCXGQqqg6YEixtcLUh/pg30KZ7v/+pJuvAbG5DQE5aFfE+4
- 9q9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768576966; x=1769181766;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+Cn7TJEGLW80xXdvX1NxMATqZN6UeczIjNYExZi46mM=;
- b=lCpTbZMDC6UV6IEuSNYv85foQ0b5BLdtE7rNbtPqKA/QbhfKR0FDBnJJawG3eFMK1f
- CE0ua0a+vYK8dHaKluejS9vZql6/BqTDlzXHcakAiPwHOW4tsZOxVh9DRKFqYMnHnXLC
- 2XfpjBtNnRGOQN212lx0rMdSAxbDxP/xGY9pQMRJW235h7dJ0x6EDnU5jvte6DJxUKu2
- drvCNZbSKb7cu39Vm0HWoF+oN17V1nLrHJFKfcpDZJXR+6doLU/HnnrBkNp2tc22gS1I
- VM1e6qHbhdA8WpWWLGxwf23MeOA4G1uOTjDROoiDp/ZshVpE9jX+8Ao7hBdL8XCiwy/L
- 6aog==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUVJWuFW9k0GrWVq4ANmjxXParTWCJURiZi+AVczcGEHFnNZ2hzzsKt7RMAt608DUe2JKWH/+/V00SW@nongnu.org
-X-Gm-Message-State: AOJu0YwB2QJeJOVzyr8ZgEPIpOnNeVMmvi32d7oD9p0dUZYUGqKVOuA8
- fN64hSUIh/28sz7oeua4vdRNIK6HWlxQRnxg42yPcABMROplGYOen+VbjEJSWEdA+ifJIzqZFmb
- 6N+IY0fpnIdFnqG7gPdRFJOTcbbsk/yM=
-X-Gm-Gg: AY/fxX6krMhpm5GLYY3fT8QAsdH3M/jcEbiE05qhkqgwDeLTxSDzacvG9ey49p581IV
- 30vZ3F0ENSJM5dbFkQMhJDxyPoY8wROsWmoWZOcHZn/w2I+n/5AxeI/wlN4jAYOV8guw8vCouI5
- lV4DQ2MH28DYnvbZNCJjlYwvXMvEEGHAliadr+4wL1dNFpiBbu+emcWbunbwBajSffe0caCsEiO
- l9i3fCqKrnIfFmhN/FZm2JK4ateQjsYtcNpp9VxEIlEzGSB+OXylY40WIPR7yg/QGlD73EEfjmv
- M6s7lBWmkjS/LiF54yLLJIn7HH8=
-X-Received: by 2002:a05:6102:6c8:b0:5ee:a08e:8c0a with SMTP id
- ada2fe7eead31-5f1a559378cmr1241736137.33.1768576965779; Fri, 16 Jan 2026
- 07:22:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vglpe-0006aB-Bo
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 10:33:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vglpc-0004Fs-Bz
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 10:33:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768577626;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z7DSsGSwfG5zmPUsYyY6FYuKzt2JCK2PYvbg3P8jF28=;
+ b=bggi/a/I8mhynk/S8dj+lxnTQgne1SU5AGGllgvzp7609gY/+lI5pvz3JjenZbIX9fjP7M
+ jOO8n1nmhL5mUPPcxBK21DC2TDIaesHEW8rR2V5g5thHzvsCArYDPcN3IXWdSFPc4XUJFP
+ VntzkJbPORhLGKjRc2ToQVTMuGEavQU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-ZPW_0_5WNEiewpFQ4oTVfQ-1; Fri,
+ 16 Jan 2026 10:33:43 -0500
+X-MC-Unique: ZPW_0_5WNEiewpFQ4oTVfQ-1
+X-Mimecast-MFC-AGG-ID: ZPW_0_5WNEiewpFQ4oTVfQ_1768577622
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6231619560A7; Fri, 16 Jan 2026 15:33:41 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 26D183001DB9; Fri, 16 Jan 2026 15:33:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B854121E692D; Fri, 16 Jan 2026 16:33:37 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Zhang Chen <zhangckid@gmail.com>,  Lukas Straub <lukasstraub2@web.de>,
+ qemu-devel@nongnu.org,  Juraj Marcin <jmarcin@redhat.com>,  Fabiano Rosas
+ <farosas@suse.de>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Juan
+ Quintela <quintela@trasno.org>,  "Dr. David Alan Gilbert"
+ <dave@treblig.org>,  zhanghailiang@xfusion.com,  Li Zhijian
+ <lizhijian@fujitsu.com>,  Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
+In-Reply-To: <aWpGY9Y1dPwlBuw3@x1.local> (Peter Xu's message of "Fri, 16 Jan
+ 2026 09:08:35 -0500")
+References: <20260114195659.2543649-1-peterx@redhat.com>
+ <20260114195659.2543649-2-peterx@redhat.com>
+ <aWf4i7EOXtpAljGX@x1.local> <20260115224929.616aab85@penguin>
+ <87ecnqt6nc.fsf@pond.sub.org>
+ <CAK3tnvKUXk9yvvTKC6cJOKnMJrhZz6W_ZuKze=rqj8JHAREg1g@mail.gmail.com>
+ <87ecnpyjw7.fsf@pond.sub.org> <aWpGY9Y1dPwlBuw3@x1.local>
+Date: Fri, 16 Jan 2026 16:33:37 +0100
+Message-ID: <87ldhxtvvy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20241031175214.214455-1-pbonzini@redhat.com>
- <20241031175214.214455-23-pbonzini@redhat.com>
- <CAFEAcA-CZ-pL_nOSSinZdgmP8NbzuTN0xhRFhB-ny0NkgCfLOw@mail.gmail.com>
-In-Reply-To: <CAFEAcA-CZ-pL_nOSSinZdgmP8NbzuTN0xhRFhB-ny0NkgCfLOw@mail.gmail.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Fri, 16 Jan 2026 21:22:34 +0600
-X-Gm-Features: AZwV_Qg3nDreQHq-6kdc8LsjTHdD-_O5jXufws0IpvdHeKFdnNdLcJHGRFpfaw4
-Message-ID: <CAFfO_h7qQLeKq-n5hngpaNYCcxiRJQjeEpiXQwk_9sVM2jQKWA@mail.gmail.com>
-Subject: Re: [PULL 22/49] device/virtio-nsm: Support for Nitro Secure Module
- device
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
- Alexander Graf <graf@amazon.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
- envelope-from=dorjoychy111@gmail.com; helo=mail-ua1-x932.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,59 +97,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+Peter Xu <peterx@redhat.com> writes:
 
-On Fri, Jan 16, 2026 at 5:45=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> On Thu, 31 Oct 2024 at 17:56, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> >
-> > From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> >
-> > Nitro Secure Module (NSM)[1] device is used in AWS Nitro Enclaves[2]
-> > for stripped down TPM functionality like cryptographic attestation.
-> > The requests to and responses from NSM device are CBOR[3] encoded.
-> >
-> > This commit adds support for NSM device in QEMU. Although related to
-> > AWS Nitro Enclaves, the virito-nsm device is independent and can be
-> > used in other machine types as well. The libcbor[4] library has been
-> > used for the CBOR encoding and decoding functionalities.
-> >
-> > [1] https://lists.oasis-open.org/archives/virtio-comment/202310/msg0038=
-7.html
-> > [2] https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
-> > [3] http://cbor.io/
-> > [4] https://libcbor.readthedocs.io/en/latest/
->
-> Hi; this commit includes a file hw/virtio/cbor-helpers.c which
-> does not include our standard qemu/osdep.h header:
->
->
-> > diff --git a/hw/virtio/cbor-helpers.c b/hw/virtio/cbor-helpers.c
-> > new file mode 100644
-> > index 00000000000..49f55df3994
-> > --- /dev/null
-> > +++ b/hw/virtio/cbor-helpers.c
-> > @@ -0,0 +1,321 @@
-> > +/*
-> > + * QEMU CBOR helpers
-> > + *
-> > + * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> > + *
-> > + * This work is licensed under the terms of the GNU GPL, version 2 or
-> > + * (at your option) any later version.  See the COPYING file in the
-> > + * top-level directory.
-> > + */
-> > +
-> > +#include "hw/virtio/cbor-helpers.h"
->
-> Is this intentional? Could we make this file include osdep.h
-> as our standard practice requires, or would that break something?
->
+> On Fri, Jan 16, 2026 at 10:41:28AM +0100, Markus Armbruster wrote:
+>> Zhang Chen <zhangckid@gmail.com> writes:
+>>=20
+>> > On Fri, Jan 16, 2026 at 2:26=E2=80=AFPM Markus Armbruster <armbru@redh=
+at.com> wrote:
 
-I don't think something will break. It's just that when I added the
-file I was not aware of this standard practice.
+[...]
 
-Regards,
-Dorjoy
+>> >> I think we should deprecate COLO now to send a clear distress signal.
+>> >> The deprecation notice should explain it doesn't work, and will be
+>> >> removed unless people step up to fix it and to maintain it.  This will
+>> >> ensure progress one way or the other.  Doing nothing now virtually
+>> >> ensures we'll have the same discussion again later.
+>> >>
+>> >> "Broken for two releases without anyone noticing" and "maintainer abs=
+ent
+>> >> for more than four years" doesn't exacltly inspire hope, though.  We
+>> >> should seriously consider removing it right away.
+>> >>
+>> >> Lukas, can you give us hope?
+>> >>
+>> >
+>> > Hi Markus,
+>> > Maybe you missed something?
+>> > I think Lukas is ready to maintain this code in his previous emails.
+>> > https://lore.kernel.org/qemu-devel/20260115224516.7f0309ba@penguin/T/#=
+mc99839451d6841366619c4ec0d5af5264e2f6464
+>>=20
+>> Patch to MAINTAINERS or it didn't happen ;)
+>
+> I'd even say MAINTAINERS file is, in many cases, cosmetic..
+>
+> It definitely is helpful for people to do lookups or scripts to fetch
+> information, but IMHO we need more than one single entry, and in some sen=
+se
+> that entry is less important than the activities.
+>
+> We need someone to be first familiar with a piece of code, spend time on
+> it, actively reply to the relevant queries upstream, proper testing /
+> gating to make sure the feature is usable as stated - either fully
+> maintained or odd fixes or others, and more.
+
+Yes, we need a maintainer not just in name, but for real.
+
+(My one-liner was an attempt at a joke)
+
+> I used to request Lukas help reviewing the loadvm threadify series [1,2]
+> which definitely touches COLO, I didn't really get a respond.  That's also
+> a sign I don't feel like Lucas cares enough about COLO, after I explicitly
+> pointing out something might be changing and might be risky.
+>
+> It's like Hailiang is also in the MAINTAINERS file but Hailiang is
+> unfortunately not active anymore recently over the years.
+
+We're bad at updating the MAINTAINERS file when maintainers have
+wandered off.
+
+> Frankly, it was Zhijian and Chen that were always helping from that regar=
+d.
+> I would rather think anyone of both would be more suitable at least from
+> all the discussions I had with COLO, but this is a promise I can't do.  I
+> also still want to remove it as I proposed, in case it releases everyone.
+>
+> So an update in the file isn't even enough if we accept it.  We need
+> activity corresponding to the file change.  That's also why I still think
+> we should remove COLO regardless if 11.0 doesn't improve in this conditio=
+n,
+> as I stated in the other email.
+
+Concur.
+
+> [1] https://lore.kernel.org/qemu-devel/aSSx28slqi1ywg2v@x1.local
+> [2] https://lore.kernel.org/all/20251022192612.2737648-1-peterx@redhat.com
+>
+> Thanks,
+
 
