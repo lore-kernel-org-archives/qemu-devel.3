@@ -4,71 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91483D4A5E4
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 01:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFE70D4A5E4
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 02:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgYvJ-0000wk-PK; Thu, 15 Jan 2026 20:46:49 -0500
+	id 1vgZ8B-0002pk-K6; Thu, 15 Jan 2026 21:00:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vgYvG-0000ud-7O
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 20:46:47 -0500
-Received: from k62.kb8c70eb.use4.send.mailgun.net ([204.220.184.62])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vgZ89-0002kQ-8a
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 21:00:05 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vgYvC-0000NQ-RT
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 20:46:45 -0500
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- cad0cebcd768843fd51d305414832d0b6da05acbafe8094d47580c8c19531652 with SMTP id
- 69699879588bf5e27b25d567; Fri, 16 Jan 2026 01:46:33 GMT
-X-Mailgun-Sending-Ip: 204.220.184.62
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1768527993;
- bh=itrmGXYS2hXeVHcX4IdA5yYDi6xDh9sSyb12JTpWnMY=;
- h=X-Mailgun-Dkim:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
- References:MIME-Version:Content-Transfer-Encoding:From:Reply-to:
- Subject:Date:Message-id:To:Cc:Mime-version:Content-type:
- Content-transfer-encoding:In-reply-to:References;
- b=bqHuZYLiPhr4uW42/2kX5DGEBkkJbALbVp4fUp50dnug4bBkkPmIvK3WpDM/+Nwzo
- 5T5OnqcRUy0ZelgDTkQtR5/YEq+BSAI+ju90TPFA1u08c3woR7WSDfqHns+5st+A4Z
- jhbMem62LAwTKYMt/UhDUUW750ZjXtaJIub4GJbwRZawnOKJtrRvXVHrH3zDwd1V9D
- Dy3gp1Wrj2EGI7HC4+UHI1Ns2Xlexj4X97tP8ubXi3KZevUyZU15bslgPgdRCSUXtI
- BQl2AZ1uFDPw01MHrdVokUODZ5FyuVmJCY+Ievk3nBEFmjaqLQfjPrVuS6FLCb+UIX
- tzRy7H1s/vOfw==
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- Dominik Disconnect3d Czarnota <dominik.b.czarnota@gmail.com>,
- Yodel Eldar <yodel.eldar@yodel.dev>
-Subject: [PATCH v3 2/3] gdbstub: Export host_to_gdb_errno File-I/O helper
- function
-Date: Thu, 15 Jan 2026 19:46:11 -0600
-Message-ID: <20260116014612.226183-3-yodel.eldar@yodel.dev>
-In-Reply-To: <20260116014612.226183-1-yodel.eldar@yodel.dev>
-References: <20260116014612.226183-1-yodel.eldar@yodel.dev>
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vgZ87-0002e4-LQ
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 21:00:04 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2a07fac8aa1so10732025ad.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 18:00:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1768528801; x=1769133601; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=9yFEczzgqitOLWULI6hXHPLEo/GmjrNUL7oeuv38zAU=;
+ b=QoGV+s3MmUiIWzbCvIZ7+RY/9EK0LL2KYpiB/7DyO6ZXmdRAblr1HSPb06eAWpCeps
+ 5ydYPT5Oqk01iWYmFNd7H2bDBE3X9jrN2Qy6B2NJhBjibvMr4OM5LkP2QJoQfjLjmP+6
+ yD5B1Mhf01JkOWSBJ2Fzlhl1p4WoNk9Ozdlq5VFPUSKyPMIAH+Tjf0+n1UQDHYorCybA
+ QLcQgSWCNdKhyMge2jl6TeeUjpttznX3DcRBz+Js5egi7uYBEkPRMSsmz7oKr8LKg3Ll
+ x+yQzichCcCJaiO5OAZUOzTGxH+sLP/bOKQMmbXanu7l1FAozmJMcrCVqffNwAj/CfGv
+ rzxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768528801; x=1769133601;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9yFEczzgqitOLWULI6hXHPLEo/GmjrNUL7oeuv38zAU=;
+ b=WEuNjmdTnbhCthZdXqwN3HE1LkvmPJ/vq+ha/zE3D6vJPsLWsFvSOSg/KfTb/UxoXl
+ yIDfgMKnEwqaht+Aee41EJ/ni16RRXd98RJ+9v6PZQvVUEwHBkDsMsiOkZcN9Kjd7HUO
+ UbFUDCXK2C+UtHhgULfzSdRHZjk6zT/8AkA2UUErTjpUkoNOvYNVECi2ZjipZ5CYJ43Q
+ GnEw37AQH/GEdvv2J10IBeKRyzvey5+8FHdvEhwndV7nI8tqQEDIHMr5PVOWUzbr6zDr
+ 52P9H5gP03seGm29epiD6N8/EeeBzyeglOtcJj/ryF/w9/V6sWRISqKM9YXpQ51ppP1a
+ qEIQ==
+X-Gm-Message-State: AOJu0Yxt14+YhXUMk0GNhMO66K5r4leP87Mjh0xNO5Kw9CcNxGI9sSlg
+ 0mVwRTy8RGo/d90w5RPnK6o3n+bfzBy4B8EtwkbuOsdKXM6UpE+E9raKnb8x5PuwHMHGYVL3Qfu
+ neTpQOyI=
+X-Gm-Gg: AY/fxX6O8OvfPj49GjK91oCQ6u0fA9SEGXyYV6IHwvP/oMTfdkmhuBbdgzJh+Dz3KIr
+ UKQMz/+OvWKkvW/ouNSrpceFc4BcYburNdh41Fo3H2WUgs2CkKJPEb+Ho2anbmxysEiy+wtd2kF
+ qFhCjD5RmdRHIHf5E7Oc85//NM4vngtiR3Ula7fZNJTdxpprqH6VrDI9zsGlU30CHoLHCpfJzYM
+ U7KWJ/tp7OOt3mgq9bFnYepTWl5nm7y4aVBqrynzY1OgnsLOkFVM8eUx44ripaLUw0VOMFPcxSe
+ SnZ8Wj0hSesuwLh5Hl3ZMD+lfWRIVGufmmFp4+XRmWOJuD62fCKLIfZfZJnUMpyd6zsUkJ0vobv
+ tj8hUUN/9X1Jz2h7GX9tn5lqnb2jDF1v8o7qAF1myAcCGDBo0SlN6l4FP8E+TBNlCASO4D4KdzP
+ D9202Vu/NL1Icf5HgaAzY54wtS7fT1vXWVmfk+y1oaxkUWxx2Q0LhK
+X-Received: by 2002:a17:903:2351:b0:2a0:ccef:a5d3 with SMTP id
+ d9443c01a7336-2a7174f8e2emr15059195ad.3.1768528801261; 
+ Thu, 15 Jan 2026 18:00:01 -0800 (PST)
+Received: from sifive.com ([136.226.240.171]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a7190ce2ebsm5414625ad.32.2026.01.15.17.59.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Jan 2026 18:00:00 -0800 (PST)
+Date: Fri, 16 Jan 2026 09:59:57 +0800
+From: Max Chou <max.chou@sifive.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v2 5/9] target/riscv: Use the tb->cs_bqse as the extend
+ tb flags.
+Message-ID: <aWma0vO3uxd7mek9@sifive.com>
+References: <20260108132631.9429-1-max.chou@sifive.com>
+ <20260108132631.9429-6-max.chou@sifive.com>
+ <ade8a525-c12c-4de8-9d24-9851181e04fb@ventanamicro.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=204.220.184.62;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=k62.kb8c70eb.use4.send.mailgun.net
+In-Reply-To: <ade8a525-c12c-4de8-9d24-9851181e04fb@ventanamicro.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,128 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move host_to_gdb_errno from target/m68k/m68k-semi.c to
-gdbstub/syscalls.c. Declare it in include/gdbstub/syscalls.h.
+On 2026-01-12 15:28, Daniel Henrique Barboza wrote:
+> Note: typo in commit title: 'cs->bqse'
+> 
+> On 1/8/2026 10:26 AM, Max Chou wrote:
+> > We have more than 32-bits worth of state per TB, so use the
+> > tb->cs_base, which is otherwise unused for RISC-V, as the extend flag.
+> > 
+> > Signed-off-by: Max Chou <max.chou@sifive.com>
+> > ---
+> 
+> That's a neat idea. I'll use it in my e-trace series in case this series
+> is merged first.
+> 
+> 
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> 
 
-Add both newly added GDB File-I/O supported errno values, EIO and
-ENOSYS, to the mapping.
+Thanks for the review, Daniel. I just discovered a typo in the patch
+message, so I’ll send out the v3 to fix it.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
----
- gdbstub/syscalls.c         | 36 ++++++++++++++++++++++++++++++++++++
- include/gdbstub/syscalls.h |  9 +++++++++
- target/m68k/m68k-semi.c    | 29 -----------------------------
- 3 files changed, 45 insertions(+), 29 deletions(-)
-
-diff --git a/gdbstub/syscalls.c b/gdbstub/syscalls.c
-index d8bb90cc1c..15050984a0 100644
---- a/gdbstub/syscalls.c
-+++ b/gdbstub/syscalls.c
-@@ -145,6 +145,42 @@ void gdb_do_syscall(gdb_syscall_complete_cb cb, const char *fmt, ...)
-     gdb_syscall_handling(gdbserver_syscall_state.syscall_buf);
- }
- 
-+/*
-+ * Map host error numbers to their GDB protocol counterparts.
-+ * For the list of GDB File-I/O supported error numbers, please consult:
-+ * https://sourceware.org/gdb/current/onlinedocs/gdb.html/Errno-Values.html
-+ */
-+int host_to_gdb_errno(int err)
-+{
-+#define E(X)  case E##X: return GDB_E##X
-+    switch (err) {
-+    E(PERM);
-+    E(NOENT);
-+    E(INTR);
-+    E(IO);
-+    E(BADF);
-+    E(ACCES);
-+    E(FAULT);
-+    E(BUSY);
-+    E(EXIST);
-+    E(NODEV);
-+    E(NOTDIR);
-+    E(ISDIR);
-+    E(INVAL);
-+    E(NFILE);
-+    E(MFILE);
-+    E(FBIG);
-+    E(NOSPC);
-+    E(SPIPE);
-+    E(ROFS);
-+    E(NOSYS);
-+    E(NAMETOOLONG);
-+    default:
-+        return GDB_EUNKNOWN;
-+    }
-+#undef E
-+}
-+
- /*
-  * GDB Command Handlers
-  */
-diff --git a/include/gdbstub/syscalls.h b/include/gdbstub/syscalls.h
-index 6200416f77..a09559128b 100644
---- a/include/gdbstub/syscalls.h
-+++ b/include/gdbstub/syscalls.h
-@@ -102,6 +102,15 @@ void gdb_do_syscall(gdb_syscall_complete_cb cb, const char *fmt, ...);
-  */
- int use_gdb_syscalls(void);
- 
-+/**
-+ * host_to_gdb_errno: convert host errno to GDB errno value
-+ * @err: errno from host
-+ *
-+ * Given an error number from the host, this helper function returns
-+ * its GDB File-I/O specified representation.
-+ */
-+int host_to_gdb_errno(int err);
-+
- /**
-  * gdb_exit: exit gdb session, reporting inferior status
-  * @code: exit code reported
-diff --git a/target/m68k/m68k-semi.c b/target/m68k/m68k-semi.c
-index 578a08dfee..bdc798a28c 100644
---- a/target/m68k/m68k-semi.c
-+++ b/target/m68k/m68k-semi.c
-@@ -46,35 +46,6 @@
- #define HOSTED_ISATTY 12
- #define HOSTED_SYSTEM 13
- 
--static int host_to_gdb_errno(int err)
--{
--#define E(X)  case E##X: return GDB_E##X
--    switch (err) {
--    E(PERM);
--    E(NOENT);
--    E(INTR);
--    E(BADF);
--    E(ACCES);
--    E(FAULT);
--    E(BUSY);
--    E(EXIST);
--    E(NODEV);
--    E(NOTDIR);
--    E(ISDIR);
--    E(INVAL);
--    E(NFILE);
--    E(MFILE);
--    E(FBIG);
--    E(NOSPC);
--    E(SPIPE);
--    E(ROFS);
--    E(NAMETOOLONG);
--    default:
--        return GDB_EUNKNOWN;
--    }
--#undef E
--}
--
- static void m68k_semi_u32_cb(CPUState *cs, uint64_t ret, int err)
- {
-     CPUM68KState *env = cpu_env(cs);
--- 
-2.52.0
-
+Thanks,
+rnax
 
