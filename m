@@ -4,124 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D91D4A607
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 07:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1918D4A60A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 07:54:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgecE-0000kn-2c; Fri, 16 Jan 2026 02:51:30 -0500
+	id 1vgeek-0004oA-0V; Fri, 16 Jan 2026 02:54:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vgecB-0000iG-Ks
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:51:28 -0500
-Received: from 3.mo548.mail-out.ovh.net ([188.165.32.156])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeei-0004jp-6U
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:54:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vgec9-0001vL-7M
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:51:27 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.43.161])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4dssVT5s3xz5vsD;
- Fri, 16 Jan 2026 07:51:13 +0000 (UTC)
-Received: from kaod.org (37.59.142.102) by DAG3EX1.mxp5.local (172.16.2.21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 16 Jan
- 2026 08:51:11 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-102R004dad8d819-7248-4512-901c-8a9c4f9d8349,
- 356448E47ECF6FF3573990070D4D23F6C14CAFA2) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <2ed6bde8-9a68-4eca-ad2d-12f7b2ee597e@kaod.org>
-Date: Fri, 16 Jan 2026 08:51:09 +0100
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vgeeg-0003Fm-Hl
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 02:54:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768550039;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=BUSWysyHKHMebho0H6gzDOwUxh4mQM2YSn/WcDSdfUM=;
+ b=D6hukh4Cz5aGC3ksJ96HN6BJJij/QIYIjoqZ9aZ/WOOupr/1NHa9aPMrROR3mT5JgUNBad
+ lLf/OaMpO3D0S+XFILZ0bIj9vdtqA5JiEC+nojd5mNtGhm4b+qTL/Z8r3UCjwu7A+uZ4rd
+ F9YTM3SaafhqPEEFucLFmsAPWPuoU74=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-654-qMzk3lm4NvmT-7HIu1G5rA-1; Fri, 16 Jan 2026 02:53:57 -0500
+X-MC-Unique: qMzk3lm4NvmT-7HIu1G5rA-1
+X-Mimecast-MFC-AGG-ID: qMzk3lm4NvmT-7HIu1G5rA_1768550036
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-b7ff8a27466so169140066b.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 23:53:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768550036; x=1769154836; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=BUSWysyHKHMebho0H6gzDOwUxh4mQM2YSn/WcDSdfUM=;
+ b=VqB+Hrp8E3WNJOhK7/T9oeieM6m1ZYZZ4vcPYRP/QdtJjo6jOsExmj2UTooVaa4656
+ GjW/fl3i9XORg9+QL/F66xC9aMI6VzOGAlLDF4f1Trf5CvnNmOMKa2zvYj+W1UdiUKCX
+ 02oRt+Y3oCV+4MuItxOqulPGrXyiwO80iV9mjbwKlCNDZ0KRLFqMxAiA++FlqK/xG0/X
+ YLnYOf2cQ9tSI616NUSmDbg+dR6NKR/rtrNTYOcLa2m7W1jyFFivBc9w5zEn2Dq6dEXT
+ ZzBET+XdDJ/bsdmAw4bHCVRSx3pZFCuXIfIlnkCbmGvswBZInyFVhBk8ehwn83A4fZKk
+ LkxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768550036; x=1769154836;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BUSWysyHKHMebho0H6gzDOwUxh4mQM2YSn/WcDSdfUM=;
+ b=uZIfWRkgIM+xF4T0yT+CAIv/tuPUK6sFWXuupPReWCZLlPrCIaMvd/hXNokmv82Exv
+ UTcVTLXcMY0shF5KPBvVc1v6jrJ+zPaMo75E+UDL69N3YxdJlYgI4Q6SaFRZMdN2w6p+
+ cyIzdIEufJXflL5LLqlBeUkdvGGVjGRLb/sm65wYdUk/df421xj3kk+FP9NCoJpT/GmR
+ +euBdlGlQ2ybn9sfeoXzBNP6hwnTqHzJX4s4aasrHijz0B8zB5ZV5V8DfaRJHrPJ+/cU
+ SmNQo8Iq9VmG3SEQTIbEGeQMp3y9GUYDHCQbRsZD1JvrEsSQ/dSO+8IlHwx32NWk+xhE
+ /CwQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWLtm/m94VwqITGfiiQ5fTI27iCGF2WaryShiobixSiXfQPPqxnvsq5rLuTdRbqwQ96u3KdH9kBIJhX@nongnu.org
+X-Gm-Message-State: AOJu0YxinHT71ASurNm9osb6l2yw3mE9vYqbtq9kQCR6PcG1ZpUGx5Hq
+ gwh8+4givxyBAaGziY1WFDJBLVepHLPUMx+YmqcJ4USb3dVYqejLaBJLqF70EpX9CytDcXgDj/s
+ 3EIjGm4I1/dHpppi8i/gYwdoD78SS9fjLrqqNHGP5HpgEkI2Xd3D6lWo0
+X-Gm-Gg: AY/fxX5BhxNMkpH5V21i08maSYEUSyU0Exoca0RFL2UqpPqzugSp4mGFEwv9WMr3HQi
+ qi+qbQtbIBIEEbQgNUzR+HOgy2LAAgFGWmoqN88Ww4qc9DOxBqeuqQoj+cKpgZNld+Z5cigZJ+g
+ aPkDOJNfDET+KH2XdJ7tzwkwiJuSpI8gE95lnDzdUgIb1Yz+zl7tRO9/H3R1zbO37cFe16nRW9j
+ zoD8Ur15gQ8fEflYa9nfTsA6a990o8BwQItZzkkv+4+pm9xkLWtAHpodpUgayrWzbMLojWhfaWe
+ 9mqxOAFoSqFBAOblmKd5zC6LRK0O6zvblfLPKT3tgIj6fbpmqivR7CKIMxiuCF5Yhvn7tMbEtO6
+ g/e8ei58=
+X-Received: by 2002:a17:906:9f90:b0:b87:2b61:b03e with SMTP id
+ a640c23a62f3a-b87968f57e0mr150692066b.14.1768550035745; 
+ Thu, 15 Jan 2026 23:53:55 -0800 (PST)
+X-Received: by 2002:a17:906:9f90:b0:b87:2b61:b03e with SMTP id
+ a640c23a62f3a-b87968f57e0mr150688466b.14.1768550035258; 
+ Thu, 15 Jan 2026 23:53:55 -0800 (PST)
+Received: from [192.168.0.9] ([47.64.113.220])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b87959fbd23sm159543366b.51.2026.01.15.23.53.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Jan 2026 23:53:54 -0800 (PST)
+Message-ID: <8a659ac3-e113-49c1-b83b-fd86690e3dbd@redhat.com>
+Date: Fri, 16 Jan 2026 08:53:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] pc-bios: Update vbootrom image to commit
- 1c8e9510b22c
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Nabih Estefan
- <nabihestefan@google.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Troy Lee
- <troy_lee@aspeedtech.com>, "wuhaotsh@google.com" <wuhaotsh@google.com>,
- "komlodi@google.com" <komlodi@google.com>, Kane Chen
- <kane_chen@aspeedtech.com>
-References: <20260115023758.3600447-1-jamin_lin@aspeedtech.com>
- <20260115023758.3600447-2-jamin_lin@aspeedtech.com>
- <CA+QoejUkn14qq49A5RF5iVUCrcdBN077Ce0FZSw8sWAQ+vU3EA@mail.gmail.com>
- <157bdec0-64f9-43b8-b42c-cf29a34d083b@kaod.org>
- <TYPPR06MB820664D78B0B4F5A780822B8FC8DA@TYPPR06MB8206.apcprd06.prod.outlook.com>
- <14e4bfb8-9458-4f75-a479-878ef8d286c0@kaod.org>
- <TYPPR06MB8206370E45E78812598BB1D4FC8DA@TYPPR06MB8206.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <TYPPR06MB8206370E45E78812598BB1D4FC8DA@TYPPR06MB8206.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH v3 14/14] gitlab: add jobs for thorough block tests
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Kevin Wolf <kwolf@redhat.com>
+References: <20260115164756.799402-1-berrange@redhat.com>
+ <20260115164756.799402-15-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260115164756.799402-15-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.102]
-X-ClientProxiedBy: DAG1EX2.mxp5.local (172.16.2.2) To DAG3EX1.mxp5.local
- (172.16.2.21)
-X-Ovh-Tracer-GUID: 0505ee41-06aa-422f-85d0-3933aac97222
-X-Ovh-Tracer-Id: 17145485257014020972
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTF75+kzNOxj8ic2Y+ZMaeS8rQGb9aS/JsV1HQdUbuDTjMeRMCNnJvWD3qulJIzkMInX4kcrDYiyLyB0PVmQgq7pIC2gVSy+zWSN7c8ejWFRweegZPvbzpiaLkl4qrlD8xucCrKjapyiJ/UVWpuRbtK8TR/3CXs72932amGEL3TvsC6Wn1i0qC4/hPHrCmjXadn2uRWquH/bjRVTGFU7owqk6sNlvwVKxVtecgaqiJlRwtwKOw2wPwVx8B0mtu+LIMdnjX/tDVNpmO7+1zPszusMp4UOsp1f000a2PbRNa+eyWe2i8o4m8y6+bnkgQoBUpkaflk5/YnEipEYFm4gsgk7JZz7Lhse7sBSoRy7SNR+LHL7SWguuRBnneBrMz4B+LSrv/+o/7TDBV0MwMuZSMq8qbw3YQOgnSSamCxgOipcFMcG8vOZZRZkhmQoAInIdh4bTDJa5qGS7sOJ/1sRqqCQxv42ZMmmNWzMwCKjF9aAu+dY+hRixZ6A+BlLJaFuGsk4MlY0x8EMwMLnCFO1w0herTJurA9v1h2besM+7WUX/Zv/OqqYu7wOafvj3mOeKbQgcaej4Dv8hHtOhNGnTai/knpkiPZn+jHD149sTwpIlN7XsRlF2iiUJa4wUvVrU8C6c500AJ0CpcYiJt8HWvwycFxCmk9fOQHWPrISM67HQw
-DKIM-Signature: a=rsa-sha256; bh=Va6M5N5WFl1u5+yfqaFMSVEuJd7hSVMtSAbUWDVhTXk=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1768549874; v=1;
- b=g6KASnm3A4rcANfkU7G6CTKIZuqiJGmgTQCZiiT4HSKh2sxXV7SjHhp2r2JkMzpGpD/uORrJ
- yz3HkQZzHZS2ZXstDvxvLhAXSRKDOAKIcycIQUeoqyQJoVKMjbR0uZ0wEtVZeAO0sGG66BV+oCm
- ociyiYr8SOIAD+4wVF5ay55HqsWT1jnNJliErc9YumCDnKnM2NNYK9uV5hVH+N/oU07coDY2MSY
- c22L85yFCQvsecnZCxGcidGydOGtHykTWspSPaZZxG3SEsXsNV4AOK13N4BJcvlcTMD0LjbfIT2
- PZtE2Y1FsemDnbOjjTgkoaz/tajUZ3xGA0+i7dQ2yDysA==
-Received-SPF: pass client-ip=188.165.32.156; envelope-from=clg@kaod.org;
- helo=3.mo548.mail-out.ovh.net
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,110 +170,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/16/26 08:40, Jamin Lin wrote:
-> Hi Cédric
+On 15/01/2026 17.47, Daniel P. Berrangé wrote:
+> CI is only exercising the qcow2 'auto' tests currently. As a result we
+> get no exposure of changes which cause regressions in other block format
+> drivers.
 > 
->> Subject: Re: [PATCH v1 1/1] pc-bios: Update vbootrom image to commit
->> 1c8e9510b22c
->>
->> Hello Jamin,
->>
->> On 1/16/26 02:20, Jamin Lin wrote:
->>>> From: Cédric Le Goater <clg@kaod.org>
->>>> Sent: Friday, January 16, 2026 12:21 AM
->>>> To: Nabih Estefan <nabihestefan@google.com>; Jamin Lin
->>>> <jamin_lin@aspeedtech.com>
->>>> Cc: qemu-devel@nongnu.org; peter.maydell@linaro.org; Troy Lee
->>>> <troy_lee@aspeedtech.com>; wuhaotsh@google.com;
->> komlodi@google.com
->>>> Subject: Re: [PATCH v1 1/1] pc-bios: Update vbootrom image to commit
->>>> 1c8e9510b22c
->>>>
->>>> hmm, I didn't receive the initial email.
->>>>
->>>
->>> Cédric,
->>>
->>> I used the following command to generate a patch to update the pre-built
->> vbootrom images:
->>>
->>> git format-patch -o ../v1-patch HEAD~1
->>>
->>> However, when I ran get_maintainer.pl, it could not find any maintainers and
->> printed the following message:
->>>
->>> ./scripts/get_maintainer.pl -f
->>> ../v1-patch/v1-0001-pc-bios-Update-vbootrom-image-to-commit-1c8e9510b.
->>> patch
->>> get_maintainer.pl: No maintainers found, printing recent contributors.
->>> get_maintainer.pl: Do not blindly cc: them on patches!  Use common sense.
->>
->> Weird. MAINTAINERS has :
->>
->>     Nuvoton NPCM7xx
->>     ...
->>     F: pc-bios/npcm7xx_bootrom.bin
->>     F: pc-bios/npcm8xx_bootrom.bin
->>     F: roms/vbootrom
->>
->> We do lack a MAINTAINERS entry for Aspeed :
->>
->>     F: pc-bios/ast27x0_bootrom.bin
->>
->> Can you please send an update ?
->>
->>
->>>
->>>
->> fatal: ../v1-patch/v1-0001-pc-bios-Update-vbootrom-image-to-commit-1c8e95
->> 10b.patch:
->> '../v1-patch/v1-0001-pc-bios-Update-vbootrom-image-to-commit-1c8e9510b.p
->> atch' is outside repository at
->> '/home/jamin_lin/upstream/qemu/vbootrom/qemu'
->>> qemu-devel@nongnu.org (open list:All patches CC here)
->>>
->>> As a result, only the mailing list was suggested:
->>> Eventually, I sent the patch using the following command
->>>
->>> git send-email -cc jamin_lin@aspeedtech.com -cc
->>> troy_lee@aspeedtech.com -cc --to qemu-devel@nongnu.org --to
->>> peter.maydell@linaro.org --to clg@kaod.org ../v1-patch/*.patch
->>> --no-smtp-auth --smtp-domain=mail.aspeedtech.com
->>
->> Looks correct.
->>
->> I hope my provider OVH is not silently dropping email :/ The same thing
->> happened with an email from Kane. Was any email returned to you ?
->>
->>> It seems that I included you in the --to list. Do I need to resend the patch?
->>
->> You do need to resend for another reason : roms/vbootrom needs an update
->> too.
->>
->> Also, for updates with large binaries, for FW updates typically, we prefer
->> subsystem PRs :
->>
->> See an example for a SLOF update from Thomas :
->>
->>
->> https://lore.kernel.org/qemu-devel/20251027074404.25758-1-thuth@redhat.c
->> om/
->>
->> Some docs here :
->>
->>     https://www.qemu.org/docs/master/devel/submitting-a-pull-request.html
->>
->> Ping me if you need help setting up your environment,
->>
+> This adds new CI jobs for each block format, that will run the target
+> 'make check-block-$FORMAT'. The jobs are separate so that we have the
+> ability to make each format gating or not, depending on their level
+> of reliability.
 > 
-> This is my first time submitting a pull request.
-> Please let me know if there is anything incorrect.
-> https://patchwork.kernel.org/project/qemu-devel/patch/20260116073024.3485812-1-jamin_lin@aspeedtech.com/
-The subject should be:
+> There is currently an undiagnosed failure of job 185 with the qcow2 when
+> run in CI that is marked to be skipped, reported at:
+> 
+>    https://gitlab.com/qemu-project/qemu/-/issues/3270
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   .gitlab-ci.d/buildtest.yml | 92 ++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 92 insertions(+)
+> 
+> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+> index dfe954fe3c..91b398bd63 100644
+> --- a/.gitlab-ci.d/buildtest.yml
+> +++ b/.gitlab-ci.d/buildtest.yml
+> @@ -176,6 +176,98 @@ build-system-centos:
+>         x86_64-softmmu rx-softmmu sh4-softmmu
+>       MAKE_CHECK_ARGS: check-build
 
-   [PULL SUBSYSTEM vbootrom 0/x] ...
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-I didn't get the email again :/
+One more though: I think we could then also remove the iotests from the 
+"build-tcg-disabled" job since they should now be covered by this new job... 
+WDYT?
 
-C.
+  Thomas
+
 
