@@ -4,90 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D34D47CDA
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5BADD47CDE
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:13:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgheT-0000Hc-Fi; Fri, 16 Jan 2026 06:06:01 -0500
+	id 1vghjs-0003b2-RD; Fri, 16 Jan 2026 06:11:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vgheK-0000Ej-8L
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:05:53 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vgheI-0003oA-I3
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:05:52 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 659ED17ED6F;
- Fri, 16 Jan 2026 14:05:27 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 980BD34EC76;
- Fri, 16 Jan 2026 14:05:37 +0300 (MSK)
-Message-ID: <ce304e18-b28c-4a85-a765-4a3f2680901e@tls.msk.ru>
-Date: Fri, 16 Jan 2026 14:05:37 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghji-0003Wq-8i
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:11:28 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vghjg-0004d7-QD
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:11:26 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4801d24d91bso10503315e9.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 03:11:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768561882; x=1769166682; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=77cgBHRlUnShoBzWPACbQPJ12pA4mzmrLz5x0XftaM0=;
+ b=WzRprK6IlA6xbZKEaQA4AWjhHwSwMJAiN/AzohE81JrecBDqetfTe+z2tRklC9ZPQd
+ IT5e3aAgLX+qHszYno7zkGJg1Ua1JtET1h8kvO+kXtBUddNJOhGrnGSNS1s14Tf+cI6G
+ +uE2rVmteC8tpJCgpwHao7Y8tWLsMmDziu9Qjg4S74WwOGz/I3o2KKw3LKvcidn6Z8rZ
+ yUgYzLF6nA48efYCwCQTP7u42AawTaegR2x+W7pVl69Hd112ovkBeZbjLK4Tb4PP9+jZ
+ vIh7FdWa+FQnr0Q9HBOZybXrBtqc0mtRfjQvQpeiWH/985zlRJlRV0a3vobiCAGVUvIU
+ q9BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768561882; x=1769166682;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=77cgBHRlUnShoBzWPACbQPJ12pA4mzmrLz5x0XftaM0=;
+ b=ivdAN9W1/7VQMZwx3iZPyXjgIXF1lWID2D2pk/80puzzEx1KzNNnzdQ8NSMCFpWBOG
+ 8cq7vVcwvOH3b/zq+z9mJPAb6vxk/xDShAAogyA1u0dow56OVLrQmhK+nFJ7XdVIzYGU
+ B3R38IBJt2UV0MXz+oH9qJvKuqSBb8K9QbYqPFgKpRIeuRElDm72C5VYj402gDG8HLxz
+ z/8fJCxycbZRaVmMF9WgVOfX5dzm37+iCSsydM1R9CGExmzHVjxtkBWqNZzdFiTWN5z7
+ NdD9idOOBWS9EynjztybbEpFxyafE/kMsx+7Ro2SxVLr4NkJhMskyUmJt6fRqdq/j5qZ
+ De/g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW9HBoYfc3yFsraqEokolIzMme5st9K02DdYsDO+AF7rYrN7z8sKKsjpFEZNQYbCKf7k2YmrZBekdXl@nongnu.org
+X-Gm-Message-State: AOJu0YzBkq/Bd36ZKvP3zlYVGcJHq14Bp9aIJ8JjDLZwoCL6AFKFVQtG
+ AGPSsN2diu9Mvwus52OvmZ7gyaC3suEJXTiWiJCyZFcluctB1OUQMijuIUfnBwWEwAQ=
+X-Gm-Gg: AY/fxX7O3AjHSIhx2OPspJ7kNKFEiF+SuchRpQDG8QCVCF82ZwxdFJffTxQ+zC8OuZV
+ Isrcd0khKVpieST7fRGZjCqKX2I8a2oKSsaEr9977YSHk/cmmt4eLtHGnR31SO7nBXSpuLjUzlQ
+ 3fWwtgCLxGV3yVyxcdPpjzDIK2RUTI5jwnlCDniEmliskcq2dt192Joau+L546iD2GLnIBoQhud
+ 4B/XNkFcGJX2jGHyJOXWF+nGIdotWBAg3m18wmjgJ8g7v0Sk8e9YynvQYE2LXDTeZQWYG4K9KEN
+ OLSs/FJRYhgz3GpoQI3q6e2BuUd67ZxyYuf54C6TM01L52O+TMsyzNpClHxwmzUY4/P/Q5fRjr8
+ esLft65oaepwWabzwb3uVTm/4F4ajaRHRqI9xdfW32cyZPTkLp/+z/Sxezs6zA5Oy9dMM9QWEgE
+ gtT2fcd4sq3M5nsdNIOwkmmm53sZ8qVhp3EmeYrKpvIlBeueESE9hsJw==
+X-Received: by 2002:a05:600c:4693:b0:477:28c1:26ce with SMTP id
+ 5b1f17b1804b1-4801e2fe194mr33615535e9.7.1768561882275; 
+ Fri, 16 Jan 2026 03:11:22 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4801e879542sm39488275e9.4.2026.01.16.03.11.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Jan 2026 03:11:21 -0800 (PST)
+Message-ID: <b5088bb5-80f7-4a7e-a5ec-d096a4b67bef@linaro.org>
+Date: Fri, 16 Jan 2026 12:11:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/3] Update vbootrom image to commit 1c8e9510b22c
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-References: <20260116073024.3485812-1-jamin_lin@aspeedtech.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260116073024.3485812-1-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH v5 0/4] wasm: Enable 64bit guests on TCI using wasm64
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <cover.1768308374.git.ktokunaga.mail@gmail.com>
+ <d848e36c-848e-4d3f-9b43-dbd14b1bbee6@linaro.org>
+ <2ebf4582-630c-4f2d-980e-fd5216c4e9c9@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <2ebf4582-630c-4f2d-980e-fd5216c4e9c9@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,35 +110,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/16/26 10:30, Jamin Lin wrote:
-> ----------------------------------------------------------------
-> vbootrom update pull request
+On 16/1/26 01:09, Richard Henderson wrote:
+> On 1/16/26 08:59, Philippe Mathieu-Daudé wrote:
+>> Hi,
+>>
+>> On 13/1/26 14:54, Kohei Tokunaga wrote:
+>>
+>>> Kohei Tokunaga (4):
+>>>    meson: Add wasm64 support to the --cpu flag
+>>>    configure: Enable to propagate -sMEMORY64 flag to Emscripten
+>>>    dockerfiles: Add support for wasm64 to the wasm Dockerfile
+>>>    .gitlab-ci.d: Add build tests for wasm64
+>>
+>> Out of curiosity, since the series is fully reviewed, who is
+>> going to merge it, Paolo or Richard?
+>>
 > 
-> ----------------------------------------------------------------
+> I've pulled this into my remove-32 branch, which I'll be re-posting 
+> soon.  But if someone includes it into a PR first, that's fine too.
 
-Hi Jamin!
-
-I've become curious.
-
-You sent a pull request (and second one), listing multiple
-people in To: and Cc: fields.  Usually, this is done when
-you're sending a patch series for review.  For a pull request,
-usually it's enough to list qemu-devel@nongnu.org in the To:
-field, and maybe the current person who's managing the master
-branch, who's merging the pull requests.  Listing multiple
-people for the pull request makes not much sense, since a
-pullreq is something which is (almost) cast in stone already,
-it is being merged as-is, there's no way to comment on it or
-to modify it - since the whole pull request is being applied
-to the master branch as-is.
-
-And another question is why did you add my address to the
-list of recipients?  Is it for me to review the changes, or
-to pick them up through qemu-trivial tree (in which case it
-shouldn't be pull request), or to pick it up for qemu-stable?
-
-Thanks,
-
-/mjt
+Oh OK great, I'll do that so less to carry then!
 
 
