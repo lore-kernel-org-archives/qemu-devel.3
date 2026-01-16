@@ -4,114 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B82ED4A5E6
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69EBAD4A609
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:19:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgf1a-00045T-RV; Fri, 16 Jan 2026 03:17:43 -0500
+	id 1vgf2m-0005eq-0U; Fri, 16 Jan 2026 03:18:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vgf1O-0003RS-3R
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:17:30 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vgf1M-00081m-6V
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:17:29 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b7cf4a975d2so316088466b.2
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 00:17:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768551446; cv=none;
- d=google.com; s=arc-20240605;
- b=KmZ82OKVvIKeVwxlxcKNrdtdPxZGmjNOrzmfD0v8YpdRcsHt0U363+j4nYF/fT+YRz
- rVG/USyuynskeCECBlCX/rMvX/dYFFJrW9/2YIyG/NtAIH2gRNA7Zed9527YEzAxwKVw
- /T0P1TSYTmcsDfa/tUxpt05S1KnVrGEsXFxzzaLWvYmhB2MKu3uap0t0QT8QaFAyIlet
- MpE35ndI1v2+lUr8qxzkcPqUaMDnBTnPZu06N3Tf4StGZPIiZsByqxiAgS+f78NDUi1D
- vwtRO4sMY0+OMiYoUkFbwkqQUxDFx4FJXO78fBTiG0bX8nwQ766Ndixo0mLWGBrFL8t2
- rlOw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ZbLFSN9pqTaZWsW7Tv51kV6cq099MEEUFR2Eyj6INTI=;
- fh=alzSlbJrEVf4j+8up1O0SatIUsbQdSZIvVMUSs3NYlQ=;
- b=T8XO51vHM6ppXIfL8z5wrLQzJYFmok21+F4MPsIodaOnfNlkQbakJLXscLehvdziIc
- Tolb1JzRvBMFPVecrstJoLURPzatnOWJZd6Bha9dQW+jtjaA2VuGL7t0m/v45qWVEZDA
- 6HfTCnuTK2PVAWWyu0fUH6WfjGrHK06z1dYrBLl0NNASOTK7H2pSSVzK2gC/TM0ao+2A
- pCF1ZsSfJjIrthqPF5Z1y+2Nu0L/AjUyzxA9cmdbt4RxJvHLDajvvR+hE9p+qTjl/RUr
- D1O9LNMrKv/SGcsn+Bgxxu5Wj+geumR52j8LlEVLUPcLPMHU3ZqCIxcXRIhOD5rBz5BX
- ijEQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768551446; x=1769156246; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZbLFSN9pqTaZWsW7Tv51kV6cq099MEEUFR2Eyj6INTI=;
- b=cI305o9r0J0MLJNWP+Kjh1LaG98dDI1GFghOtfItv9E5LBpsHWE4NpV15vaTFC8+Ng
- vsuHQcHX6mQzEA/7wBVIWdT+yGXifC/cARi++KcUKt89XKw+xT8VJrESO/hexV3CgXDz
- 99oL3XOL3r7bt4djSaZyt812k/vNggkB1NS2PG55BqLyEVcgVthaaJwCn/GC0utRdTr0
- SjEAKtkHqH1QnIMr739c23d9ZbaNBcxPADsPoHLoObsfVC6r1WECRO4zrVjVm3LWJs3l
- wacmHncGTXkTGQ7pN7v15E2SbanGV8HiC0aeQuJreAoxKhldbXOlg/F2CisBWaPbfpx5
- LkmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768551446; x=1769156246;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ZbLFSN9pqTaZWsW7Tv51kV6cq099MEEUFR2Eyj6INTI=;
- b=Z4Cx8fIZa0b5rfYLkW17KvasPKne4+itRrIU/Kz6DZ6ocZsJ1ncxq07pn+9TdK4CwV
- SAT5f6EMGPVOIv7XiUg08cY/yc2K9nm5s4d5jCaF2T/ElZoYHPh6d+YtHfVGpVtOE3z5
- bKY720Z7QXRDrSOPo5ED31+ZAAf62R9jGR/XWpkYNJ2B155MwiAlyhwANLxuFJ9FYnel
- 3J7aehD6vWhj5T0my54s0616JHRZa7XFxrVjVGoXLfn5El8oXjfFRh9+FyXGQgA1ey5e
- OswC5WXg/r36h/FJ200bZX1GjCDg4k1MzpvgEO+3DkrS6SpcIXdrzJ+LPe0JEUW14bMp
- n+Aw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlSC6KhM4UklEeWFFXVqV/N03gvOxdNjfboGxELWOIatt/QbdEtJ8raeLNngegN99VsIxEJjRR1aYX@nongnu.org
-X-Gm-Message-State: AOJu0YytROLJICIYFDRDzAta+x4N4aVupZvNqPU1As8lMsoqlLhZqucl
- FvftnXz4uZcXk8lX9zajXk4I0qecymFMCx37isq7j54Yz0aKp7oXuQVWH2tU5KNseacoIqaKPJD
- KLCjNP/ELJJgQAeAS+YqKZA1rX6PQ+rs=
-X-Gm-Gg: AY/fxX4zmu0Z3GkmzuG2mLq18qrX8gV/IDSMfPbNsNzxPB68B4NIpwIz9x+TXj7c7XN
- xUgmUrLD/ITHOM4vZCcUKY051P9nSety1+8Q8teSHxvUf8Ndn8ysWBUVgDizcnAHw5/yHPmSBQL
- WRckTxq8qy8HcPgKD9ouhfPbK3VJmVjAbUax0/wuKEgPB7aD4Pbka6zg0EnD03f4WBsekAAVLbQ
- LlOIh3rtYZueyFd5HG2Q3fB0mbqSwwxIHZvVxsOSZ3G5WyxLnqxvXga4ObBRntp3KyRFi6Q
-X-Received: by 2002:a17:907:3cc4:b0:b87:2b1a:3c55 with SMTP id
- a640c23a62f3a-b8792fc438cmr220003966b.39.1768551446190; Fri, 16 Jan 2026
- 00:17:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgf2j-0005eI-1N
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:18:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgf2h-0000br-D5
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:18:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768551529;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LXjZInSASzu85EOJxxobjMLlRd3oJlKMDpWKPe31mVo=;
+ b=A4XSCBrqCfhmp0feUxi3qUBuIHg7dkjqvgQ0O5qUdJ6w1Z1PtH1TU5nuGUHRj6l4ZZ+m6e
+ mqUbG+/z9haaNwtyGsmEiehoUBab9X+Nb8e834rlj/Nn8uYFDaAeLAYrFPLRE3KVw/s2k4
+ FijN9e1lSn7ZM93flJWOtdJEx0ZjDe4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-120-ZSZyNQdSMmi9ooVjG_5bZw-1; Fri,
+ 16 Jan 2026 03:18:48 -0500
+X-MC-Unique: ZSZyNQdSMmi9ooVjG_5bZw-1
+X-Mimecast-MFC-AGG-ID: ZSZyNQdSMmi9ooVjG_5bZw_1768551527
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 093C51800357; Fri, 16 Jan 2026 08:18:47 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C9643001DBA; Fri, 16 Jan 2026 08:18:46 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C05D221E692D; Fri, 16 Jan 2026 09:18:43 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 3/3] qapi: Add thread_status flag for iothreads
+In-Reply-To: <CAK3tnvJuoin17F9FDnYJA+vXeUeGpMv3R=2vrOBFUotjRCymfQ@mail.gmail.com>
+ (Zhang Chen's message of "Fri, 9 Jan 2026 11:11:27 +0800")
+References: <20251229103859.98777-1-zhangckid@gmail.com>
+ <20251229103859.98777-3-zhangckid@gmail.com>
+ <877bts8fsa.fsf@pond.sub.org>
+ <CAK3tnvJuoin17F9FDnYJA+vXeUeGpMv3R=2vrOBFUotjRCymfQ@mail.gmail.com>
+Date: Fri, 16 Jan 2026 09:18:43 +0100
+Message-ID: <87wm1irmvw.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260114195659.2543649-1-peterx@redhat.com>
- <20260114195659.2543649-2-peterx@redhat.com>
- <aWf4i7EOXtpAljGX@x1.local> <20260115224929.616aab85@penguin>
- <aWlso1w39cQnEh2t@x1.local> <aWlxY9TWGT1aaMJz@gallifrey>
- <aWl6ixQpHaMJhV_E@x1.local> <aWmIWrXjxLsqwLd6@gallifrey>
-In-Reply-To: <aWmIWrXjxLsqwLd6@gallifrey>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Fri, 16 Jan 2026 16:16:48 +0800
-X-Gm-Features: AZwV_QjvJRzK-O_kPoMMemGuq55c5kVSZXp1rMwJoXm73ajmcrQ775GwXWD5bP0
-Message-ID: <CAK3tnvKGtCfGPqa73wyYHQbzSC_eiZWGHcMS-E=Sjbb_ngkM3g@mail.gmail.com>
-Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: Peter Xu <peterx@redhat.com>, Lukas Straub <lukasstraub2@web.de>,
- qemu-devel@nongnu.org, 
- Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?THVrw6HFoSBEb2t0b3I=?= <ldoktor@redhat.com>, 
- Juan Quintela <quintela@trasno.org>, zhanghailiang@xfusion.com, 
- Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62d.google.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,151 +90,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 16, 2026 at 8:37=E2=80=AFAM Dr. David Alan Gilbert <dave@trebli=
-g.org> wrote:
->
-> * Peter Xu (peterx@redhat.com) wrote:
-> > On Thu, Jan 15, 2026 at 10:59:47PM +0000, Dr. David Alan Gilbert wrote:
-> > > * Peter Xu (peterx@redhat.com) wrote:
-> > > > On Thu, Jan 15, 2026 at 10:49:29PM +0100, Lukas Straub wrote:
-> > > > > Nack.
-> > > > >
-> > > > > This code has users, as explained in my other email:
-> > > > > https://lore.kernel.org/qemu-devel/20260115224516.7f0309ba@pengui=
-n/T/#mc99839451d6841366619c4ec0d5af5264e2f6464
-> > > >
-> > > > Please then rework that series and consider include the following (=
-I
-> > > > believe I pointed out a long time ago somewhere..):
-> > > >
-> > >
-> > > > - Some form of justification of why multifd needs to be enabled for=
- COLO.
-> > > >   For example, in your cluster deployment, using multifd can improv=
-e XXX
-> > > >   by YYY.  Please describe the use case and improvements.
-> > >
-> > > That one is pretty easy; since COLO is regularly taking snapshots, th=
-e faster
-> > > the snapshoting the less overhead there is.
-> >
-> > Thanks for chiming in, Dave.  I can explain why I want to request for s=
-ome
-> > numbers.
-> >
-> > Firstly, numbers normally proves it's used in a real system.  It's at l=
-east
-> > being used and seriously tested.
->
-> Fair.
->
-> > Secondly, per my very limited understanding to COLO... the two VMs in m=
-ost
-> > cases should be in-sync state already when both sides generate the same
-> > network packets.
->
-> (It's about a decade since I did any serious Colo, so I'll try and rememb=
-er)
+Zhang Chen <zhangckid@gmail.com> writes:
 
-Haha, that was a pleasant time~
-I already explained the background in the previous email.
+> On Thu, Jan 8, 2026 at 8:12=E2=80=AFPM Markus Armbruster <armbru@redhat.c=
+om> wrote:
+>>
+>> Zhang Chen <zhangckid@gmail.com> writes:
+>>
+>> > The thread_status depends on struct IOThreadInfo's
+>> > 'attached': 'bool'. Show in the qmp/hmp CMD with
+>> > 'attached' or 'detached'.
+>> >
+>> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+>> > ---
+>> >  iothread.c         | 1 +
+>> >  monitor/hmp-cmds.c | 2 ++
+>> >  qapi/misc.json     | 6 ++++++
+>> >  3 files changed, 9 insertions(+)
+>> >
+>> > diff --git a/iothread.c b/iothread.c
+>> > index 38e38fb44d..fb4898e491 100644
+>> > --- a/iothread.c
+>> > +++ b/iothread.c
+>> > @@ -358,6 +358,7 @@ static int query_one_iothread(Object *object, void=
+ *opaque)
+>> >      info =3D g_new0(IOThreadInfo, 1);
+>> >      info->id =3D iothread_get_id(iothread);
+>> >      info->thread_id =3D iothread->thread_id;
+>> > +    info->attached =3D iothread->attached;
+>> >      info->poll_max_ns =3D iothread->poll_max_ns;
+>> >      info->poll_grow =3D iothread->poll_grow;
+>> >      info->poll_shrink =3D iothread->poll_shrink;
+>> > diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+>> > index 33a88ce205..84b01737cf 100644
+>> > --- a/monitor/hmp-cmds.c
+>> > +++ b/monitor/hmp-cmds.c
+>> > @@ -197,6 +197,8 @@ void hmp_info_iothreads(Monitor *mon, const QDict =
+*qdict)
+>> >          value =3D info->value;
+>> >          monitor_printf(mon, "%s:\n", value->id);
+>> >          monitor_printf(mon, "  thread_id=3D%" PRId64 "\n", value->thr=
+ead_id);
+>> > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
+>> > +                       value->attached ? "attached" : "detached");
+>> >          monitor_printf(mon, "  poll-max-ns=3D%" PRId64 "\n", value->p=
+oll_max_ns);
+>> >          monitor_printf(mon, "  poll-grow=3D%" PRId64 "\n", value->pol=
+l_grow);
+>> >          monitor_printf(mon, "  poll-shrink=3D%" PRId64 "\n", value->p=
+oll_shrink);
+>> > diff --git a/qapi/misc.json b/qapi/misc.json
+>> > index 6153ed3d04..2eea920bd2 100644
+>> > --- a/qapi/misc.json
+>> > +++ b/qapi/misc.json
+>> > @@ -76,6 +76,9 @@
+>> >  #
+>> >  # @thread-id: ID of the underlying host thread
+>> >  #
+>> > +# @attached: flag to show current iothread attached status
+>>
+>> What does "attached status" actually mean?
+>
+> This flag means weather the "-object iothread" already been used by a
+> real device.
+> In hotplug scenario, user can add multiple "-object iothread" and
+> multiple devices (like virtio-blk).
+> When user hotunplug the devices can keep the iothreads as a thread
+> pool, following the new
+> hotplug devices can attach to the released iothread.
+
+Why would a management application or human user want to know this?
+
+The answer should lead us to better doc text.
+
+>>
+>> > +#            (since 10.3.0)
+>>
+>> (since 12.0)
+>
+> OK.
+>
+>>
+>> > +#
+>> >  # @poll-max-ns: maximum polling time in ns, 0 means polling is
+>> >  #     disabled (since 2.9)
+>> >  #
+>> > @@ -93,6 +96,7 @@
+>> >  { 'struct': 'IOThreadInfo',
+>> >    'data': {'id': 'str',
+>> >             'thread-id': 'int',
+>> > +           'attached': 'bool',
+>> >             'poll-max-ns': 'int',
+>> >             'poll-grow': 'int',
+>> >             'poll-shrink': 'int',
+>> > @@ -118,6 +122,7 @@
+>> >  #              {
+>> >  #                 "id":"iothread0",
+>> >  #                 "thread-id":3134,
+>> > +#                 'thread_status':"attached",
+>>
+>> I believe this is actually
+>>
+>>                      "attached": true
+>>
+>> and ...
+>
+> No, I changed it here for readability:
+>
+>> > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
+>> > +                       value->attached ? "attached" : "detached");
+>
+> But if you think ""attached": true" is more direct way, I can change
+> it next version.
+
+The example in the doc comment shows QMP.  Here's what I see in QMP:
+
+    $ qemu-system-x86_64 -S -display none -qmp stdio -object iothread,id=3D=
+iot0 -name debug-threads=3Don
+    {"QMP": {"version": {"qemu": {"micro": 50, "minor": 2, "major": 10}, "p=
+ackage": "v10.2.0-521-g05115811fa"}, "capabilities": ["oob"]}}
+    {"execute": "qmp_capabilities", "arguments": {"enable": ["oob"]}}
+    {"return": {}}
+    {"execute": "query-iothreads"}
+    {"return": [{"attached": false, "poll-shrink": 0, "thread-id": 4031494,=
+ "aio-max-batch": 0, "poll-grow": 0, "poll-max-ns": 32768, "id": "iot0"}]}
+
+This shows "attached": false, not 'thread_status': "attached".
+
+The code you showed applies to HMP:
+
+    $ qemu-system-x86_64 -S -display none -monitor stdio -object iothread,i=
+d=3Diot0 -name debug-threads=3Don
+    QEMU 10.2.50 monitor - type 'help' for more information
+    (qemu) info iothreads
+    iot0:
+      thread_id=3D4032011
+      thread_status=3Ddetached
+      poll-max-ns=3D32768
+      poll-grow=3D0
+      poll-shrink=3D0
+      aio-max-batch=3D0
+
+thread_status=3Ddetached might be slightly more readable than
+attached=3Dfalse, but it could also be confusing to people working with
+both HMP and QMP.  I'd avoid the difference between the two.
+
+>>
+>> >  #                 'poll-max-ns':0,
+>> >  #                 "poll-grow":0,
+>> >  #                 "poll-shrink":0,
+>> > @@ -126,6 +131,7 @@
+>> >  #              {
+>> >  #                 "id":"iothread1",
+>> >  #                 "thread-id":3135,
+>> > +#                 'thread_status':"detached",
+>>
+>>                      "attached": false
+>>
+>> Recommend to create example output by running a test instead of making
+>> it up, because making it up likely screws it up :)
+>
+> Uh.... This output print is the real test in my machine, maybe you
+> missed the previous description.
+
+I can't see how QMP could possibly show 'thread_status':"detached:.
 
 >
-> > Another sync (where multifd can start to take effect) is only needed wh=
-en
-> > there're packets misalignments, but IIUC it should be rare.  I don't kn=
-ow
-> > how rare it is, it would be good if Lukas could introduce some of those
-> > numbers in his deployment to help us understand COLO better if we'll ne=
-ed
-> > to keep it.
+> Thanks
+> Chen
 >
-> In reality misalignments are actually pretty common - although it's
-> very workload dependent.  Any randomness in the order of execution in a m=
-ulti-threaded
-> guest for example, or when a timer arrives etc can change the packet gene=
-ration.
-> The migration time then becomes a latency issue before you can
-> transmit the mismatched packet once it's detected.
->
-> I think You still need to send a regular stream of snapshots even without
-> having *yet* received a packet difference.  Now, I'm trying to remember t=
-he
-> reasoning; for a start if you leave the difference too long the migration
-> snapshot gets larger (which I think needs to be stored on RAM on the dest=
-?)
-> and also you increase the chances of them getting a packet difference fro=
-m
-> randomness increases.
-> I seem to remember there were clever schemes to get the optimal snapshot
-> scheme.
+>>
+>> >  #                 'poll-max-ns':0,
+>> >  #                 "poll-grow":0,
+>> >  #                 "poll-shrink":0,
+>>
 
-Basically correct. As I explaned in the previous email.
-We cannot expect to lose migration for an extended period of time.
-Even if the application's results are consistent, it cannot guarantee that
-two independently running guest kernels will behave completely identically.
-
->
-> > IIUC, the critical path of COLO shouldn't be migration on its own?  It
-> > should be when heartbeat gets lost; that normally should happen when tw=
-o
-> > VMs are in sync.  In this path, I don't see how multifd helps..  becaus=
-e
-> > there's no migration happening, only the src recording what has changed=
-.
-> > Hence I think some number with description of the measurements may help=
- us
-> > understand how important multifd is to COLO.
->
-> There's more than one critical path:
->   a) Time to recovery when one host fails
->   b) Overhead when both hosts are happy.
->
-> > Supporting multifd will cause new COLO functions to inject into core
-> > migration code paths (even if not much..). I want to make sure such (ne=
-w)
-> > complexity is justified. I also want to avoid introducing a feature onl=
-y
-> > because "we have XXX, then let's support XXX in COLO too, maybe some da=
-y
-> > it'll be useful".
->
-> I can't remember where the COLO code got into the main migration paths;
-> is that the reception side storing the received differences somewhere els=
-e?
->
-
-Yes. COLO secondary have a buffer to store the primary VMstate.
-And load it when triggered the checkpoint.
-
-Thanks
-Chen
-
-> > After these days, I found removing code is sometimes harder than writti=
-ng
-> > new..
->
-> Haha yes.
->
-> Dave
->
-> > Thanks,
-> >
-> > >
-> > > Lukas: Given COLO has a bunch of different features (i.e. the block
-> > > replication, the clever network comparison etc) do you know which one=
-s
-> > > are used in the setups you are aware of?
-> > >
-> > > I'd guess the tricky part of a test would be the network side; I'm
-> > > not too sure how you'd set that in a test.
-> >
-> > --
-> > Peter Xu
-> >
-> --
->  -----Open up your eyes, open up your mind, open up your code -------
-> / Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \
-> \        dave @ treblig.org |                               | In Hex /
->  \ _________________________|_____ http://www.treblig.org   |_______/
 
