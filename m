@@ -4,69 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E670D4A619
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 09:51:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C3BAD3CCAB
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 09:52:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vggUS-0006jT-7n; Fri, 16 Jan 2026 04:51:36 -0500
+	id 1vggVP-0007Kc-Uz; Fri, 16 Jan 2026 04:52:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vggUO-0006ie-CA; Fri, 16 Jan 2026 04:51:32 -0500
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vggUM-0008VA-BE; Fri, 16 Jan 2026 04:51:32 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwA3PJgYCmpphiHgBQ--.2460S2;
- Fri, 16 Jan 2026 17:51:20 +0800 (CST)
-Received: from [10.31.62.13] (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwAXbusWCmppGyEUAA--.20987S2;
- Fri, 16 Jan 2026 17:51:19 +0800 (CST)
-Message-ID: <2255d30c-cc58-4a45-974c-f7fd89694c26@phytium.com.cn>
-Date: Fri, 16 Jan 2026 17:51:18 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v8 2/7] hw/arm/smmuv3-common: Define STE/CD fields via
- registerfields
-To: eric.auger@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vggVO-0007KS-SR
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 04:52:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vggVN-0000HM-Dr
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 04:52:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768557152;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LxG0LPaoPZsu6j0Uhe18O8f9XQcbrK0pCZFIrR+VxjQ=;
+ b=aM5y2tBy7DfgoNas8UuO55udmfVUONu9f8j13EBcUkfnNkFy4EdtOUy8a0uNj/pckExrF4
+ dEqOTwecp+T4LiiihtQuhuQexAEpaC0dbWm0KiBOf7+FoFofcedB2Sk8Ho2VfLFTo62cRR
+ +syqpA9lrMFCwQeanoV4sdfxduAqYOg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-tUfdrnhAM3GBMqkrhpNQvA-1; Fri,
+ 16 Jan 2026 04:52:31 -0500
+X-MC-Unique: tUfdrnhAM3GBMqkrhpNQvA-1
+X-Mimecast-MFC-AGG-ID: tUfdrnhAM3GBMqkrhpNQvA_1768557149
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A3F5519560B5; Fri, 16 Jan 2026 09:52:29 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.135])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EF74019560BA; Fri, 16 Jan 2026 09:52:25 +0000 (UTC)
+Date: Fri, 16 Jan 2026 09:52:22 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-References: <20251224034647.2596434-1-tangtao1634@phytium.com.cn>
- <20251224034647.2596434-3-tangtao1634@phytium.com.cn>
- <9f780549-8d03-4761-a2c0-32e85d245a0d@redhat.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <9f780549-8d03-4761-a2c0-32e85d245a0d@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH] MAINTAINERS: add maintainer for docs/
+Message-ID: <aWoKVi4gvrnjq4p4@redhat.com>
+References: <20260115203529.2713193-1-pierrick.bouvier@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwAXbusWCmppGyEUAA--.20987S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQARBWlpSgQE7AAAsz
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW7CrWkGF13Zw15tFyDJF15XFb_yoW8uF4Dp3
- WxtF1fCaykt3WI9w1xJr43uF1ft3ykCr4Ivry7trWIqr1Yvr92yrW7tF1Yqr18Xryqqr45
- uFs29a93Wr1Ut3DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260115203529.2713193-1-pierrick.bouvier@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,90 +91,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+On Thu, Jan 15, 2026 at 12:35:29PM -0800, Pierrick Bouvier wrote:
+> I would like to help maintaining qemu documentation and I've been
+> invited by Alex to apply as maintainer.
+> 
+> Files in docs/ that are already maintained will continue to be under
+> their respective maintainer. The goal here is to have someone that can
+> help on all other files that don't have an official maintainer.
 
-On 2026/1/15 17:14, Eric Auger wrote:
-> Hi Tao,
->
-> On 12/24/25 4:46 AM, Tao Tang wrote:
->> Switch STE/CD bitfield definitions and accessors to the
->> 'hw/registerfields.h' REG/FIELD API.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   include/hw/arm/smmuv3-common.h | 169 +++++++++++++++++++++++----------
->>   1 file changed, 120 insertions(+), 49 deletions(-)
->>
->> diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
->> index 9da817f41a..b6da2fd62c 100644
->> --- a/include/hw/arm/smmuv3-common.h
->> +++ b/include/hw/arm/smmuv3-common.h
->> @@ -11,6 +11,8 @@
->>   #ifndef HW_ARM_SMMUV3_COMMON_H
->>   #define HW_ARM_SMMUV3_COMMON_H
->>   
->> +#include "hw/registerfields.h"
->> +
->>   /* Configuration Data */
->>   
->>   /* STE Level 1 Descriptor */
->> @@ -35,63 +37,132 @@ typedef struct CD {
->>   
->>   /* STE fields */
->>   
->> -#define STE_VALID(x)   extract32((x)->word[0], 0, 1)
->> +REG32(STE_0, 0)
->> +    FIELD(STE_0, VALID, 0, 1)
->> +    FIELD(STE_0, CONFIG, 1, 3)
->> +    FIELD(STE_0, S1FMT, 4, 2)
->> +    FIELD(STE_0, CTXPTR_LO, 6, 26)
->> +REG32(STE_1, 4)
->> +    FIELD(STE_1, CTXPTR_HI, 0, 16)
-> not related to your patch, but shouldn't it be 24 instead of 16
->>
->> +REG32(STE_6, 24)
->> +    FIELD(STE_6, S2TTB_LO, 4, 28)
->> +REG32(STE_7, 28)
->> +    FIELD(STE_7, S2TTB_HI, 0, 16)
-> same here?
->>
->> +REG32(CD_2, 8)
->> +    FIELD(CD_2, HAD0, 1, 1)
->> +    FIELD(CD_2, TTB0_LO, 4, 28)
->> +REG32(CD_3, 12)
->> +    FIELD(CD_3, TTB0_HI, 0, 19)
-> I think it is 24 now
->> +REG32(CD_4, 16)
->> +    FIELD(CD_4, HAD1, 1, 1)
->> +    FIELD(CD_4, TTB1_LO, 4, 28)
->> +REG32(CD_5, 20)
->> +    FIELD(CD_5, TTB1_HI, 0, 19)
-> same
+Thanks for volunteering - the lack of a catch-all maintainer
+for docs has been a long standing gap leading to patches getting
+dropped on the floor.
 
-Thank you for your review and the careful observation — you are 
-absolutely correct.
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  MAINTAINERS | 5 +++++
+>  1 file changed, 5 insertions(+)
+
+Acked-by: Daniel P. Berrangé <berrange@redhat.com>
 
 
-These field width definitions originally came from the existing 
-implementation when I moved them into the new REG/FIELD API, so I did 
-not update the widths at that time.
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 4ddbfba9f01..786f3b3a456 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4505,6 +4505,11 @@ Incompatible changes
+>  R: devel@lists.libvirt.org
+>  F: docs/about/deprecated.rst
+>  
+> +General Documentation
+> +M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> +S: Maintained
+> +F: docs/
+> +
+>  Build System
+>  ------------
+>  Meson
+> -- 
+> 2.47.3
+> 
 
-
-Would you prefer that I submit a separate patch to correct the field 
-widths after this series patch are merged?
-
-
-Best regards,
-
-Tao
-
-> Otherwise looks good to me
->
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
->
-> Eric
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
