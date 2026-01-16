@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DBE9D489A3
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 13:07:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BDB5D4899D
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 13:07:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgjXW-0000sQ-9n; Fri, 16 Jan 2026 08:06:58 -0500
+	id 1vgjXn-0001H6-KZ; Fri, 16 Jan 2026 08:07:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgjXR-0000rh-EW
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 08:06:53 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgjXm-0001DK-4J
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 08:07:14 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgjXP-0002mj-OO
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 08:06:53 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4801bc32725so9341005e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 05:06:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgjXk-0002oI-GH
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 08:07:13 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-47d59da3d81so13310415e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 05:07:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768568808; x=1769173608; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768568830; x=1769173630; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=rMBiL8Ik4KobwQMZUOPGCIKZuj7DVBHdotEjvdgjHUo=;
- b=HipKEfJx/JelJEF05i7si+ngu4H/uuXMg2OckwtnyAJtqcBklj0WnYhJVaS5Cqpuur
- p5WrxBdklnGIuESfcoYufVUqWj4HYNywelXhLIhL4YMCSMt2dVISYyDBV9MQXYLE7Qbz
- Tk19IvnPLWla+xMLWmsQSdWKKXTzustvRMS9IDcL+z7jBEVMwiA6HlUrXxMjJtFghbwo
- cukamMfN0GH1uU4YP0O7mirVT2TpZUuZ3D+JHoEjhl6hImournSYsO/kCFRyK/FQuyCP
- gQ1ASG11lNYd0W3GppsgXElsDb6kTUAMSPzmUBbS0kVUi3/BA05ZwEPLl/FyMMFdhH7N
- DXxA==
+ bh=aK6F1EgfZptbCPZgXYn8tipK+fFZWaRkgMvTrJ6JaaA=;
+ b=CvQVQBucHxy7ZEw8clkGWyWJEsyLCPZrkJdCvgoe3b2TYvNAExSWuILUGA1orMTiz3
+ hLsTpy2TMLlBCF6m49YOiswpQ42mRQklEKmck5sB5JGEIkLCk9eWAazLk9/0UyK5IM5c
+ 8nFJTEf7iswb8KNZEPsytY37k/iXvgCjVRf0kklS/1RNB41yNNy1Qekjnuu04+Iga0oP
+ QT0nvNZ0BJZll2KBzmh8Wg/Lwr6iIdROnpk86gKt7+zZD2EEv5QTLTDup5huCXzjgnmv
+ EjTaJNxNFZvBV9IcwQACbGa3IXXf38svV14A2XDFNnwhL44gDkikHyPCt+sa7X5jpjWm
+ t/Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768568808; x=1769173608;
+ d=1e100.net; s=20230601; t=1768568830; x=1769173630;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=rMBiL8Ik4KobwQMZUOPGCIKZuj7DVBHdotEjvdgjHUo=;
- b=hRBCyEOWIkOzXva2sqFKRvqkr3ACfKrGyPGwHOY8PEAFlnrRgUqk3IvAUHIMMll7kV
- zsnygJCYYgEia01lIhsKgKThGxIn+4uqZxSa8hCN89av0G5V8jnNkAeBwjZ7hAKK/CK/
- Czyqx8zrYF3hywtoblgAzWEiRBhn+ZNiGqJ/gQbNupBJzfXASjm9hn/IB3GD03OTMvnU
- JsWWTg8mA8jYENdosxyHFQDDUk9aH9kSXYgajLbDpn6thQhkkYELtqKBy+eGJJrm5LL5
- s/tRkBfrMnwRYGUVB/C6/KxEnsIH9iwsgXnsWAoSyYRuj7LLamfmybHGdXkMj5DTPyCa
- IRvg==
+ bh=aK6F1EgfZptbCPZgXYn8tipK+fFZWaRkgMvTrJ6JaaA=;
+ b=hhUGOL/54z2GdzHyt+pYeGXOWpyH3e8hokCEwTU8UUlo0QzTtNzOOOSUag4/J9qamP
+ P/uVPdlF3RuRdfsTxBo59g0vr8BrgmH0OVbvrxLXDKa5IqxYmsp+tWFrLKCE5AEJXjjx
+ 1UQnynnoKvyfIAe4X5eZQe+m0Eis2WEXdEh2FFiGEu9LrmzwQctQZ0kt3SPLNh8zyRJt
+ MPIFU2MsxKLLOPZXXnw6bT91xs2qqiEwSx/hZsxQxU0tpJnsblvR9XLmN4hW0/FEUgq+
+ 3tO9GV2sS+Fu/vJtlAPUOAoozcqaoJ/roD9hYgfnEcPYG7FAfNf2gC8HtbcSEIiWu+yM
+ PKbw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWKHshUUk4pZfswb4YO1bLUFKifNzhnkLsfMy30CXrj8vOkbqBOi5hoct1M7IAv1/edCHUyvETVzPpP@nongnu.org
-X-Gm-Message-State: AOJu0Yyu8Z1gf9pgPIE1/au8pex2QPd9yJ/0D56d6/Vxmdl/QIpy+oEB
- bcqaEyj2v9J0NjSxnXAl45236WI9DnjNWDXa+6ILPTovMKCK7qVVlfagmA6dfnzwSss=
-X-Gm-Gg: AY/fxX4AGJar/MxZNN0qlwwln+A3wUaBvc+b9Ap5golXaPIBBSbM4D8ENt2/QsgzzMR
- FwDdHwudGq4MU/JWRnmo5Tks7ddJgJeus1YWWKC+MkPAM7PRy2fDZ2iuuiZ68b5xIlsvAjnWdH/
- cOH5trxhkRLIFhEVPt53MkOH26mN4bEBB1uKqwwaH9ZS4L4KK3vIO2KWv6UjMEyT2uf/sCVfRdU
- A/eBAbmnhqOTYs53q3Fsgx6fsuK8PDIHQh4HRs9l0thVJmNQXUYC8rSjG2RnMwyzGbkyUGx1MlB
- Sb7dUpHPDumoG0yDetf49xoKImvWP528nJmg0LrlgsmU4xauOZyrXW6ZmGimmMhiMGMao/QIPRa
- X/HlnpraFq7Vi7Zq4NmDy1gg4L6HX9YUVzf8N+U3hPjz5xZ/8a+3wAMgUoH5LiE6dsAfI5cgMdd
- AmptJMReQ64j6PyaurpJnjzCR6G0z9/LIwjiez1Cu33yhmzi/b4E21TQ==
-X-Received: by 2002:a05:600c:37c8:b0:46e:1a5e:211 with SMTP id
- 5b1f17b1804b1-4801eb09213mr29567465e9.21.1768568808381; 
- Fri, 16 Jan 2026 05:06:48 -0800 (PST)
+ AJvYcCW/lnLltfhbE6N0yeSHine4jiV985wthx/ND0cQ2APeQNHtXHEDYugl9ppQKA/FwKO+T6HGy8dFDGEk@nongnu.org
+X-Gm-Message-State: AOJu0Ywxfm+hYazG+/Gd78l1DPVhQmnt3Hgu4+U3KWFRLS1t4OkCF/T4
+ EC8VbZ+wegiN8QJqNnettn5fq9aoXbYqNw9RJRMqAjKDp9QOXGTsy+gt2M6Eh0Ny3Vk=
+X-Gm-Gg: AY/fxX4/2BpIKobZMBP71SbKY5htrVgA+c3pLH67RpjASpT9HRjLG+S/fQbakAf3JTu
+ CRjMwxAUBcbrZAFjahu3iOxKMv9iZo4Y8qpZmSXm0EloJ6fAsxcT/7KvOctfX58QaHIkgB1EXlf
+ /T5ZS8sKLdvgyLYJs6sfCZ98chW2M6fEAW28GUHWD8a3sHB1tS9ivFS01zFNJt5NZ0hRZg27Qd/
+ k6M7fHY2KBfCzEj5jLulDHzPWH3hu/AS6Tv9IOD9FemzeMYwMQWX5qdmo8AgBXp/jhXZuw5mHa4
+ JI//FTS7Or9uFYNbG5Ss3gVKw6W62lpzZevO4h0PaV8kniO53WuWay3dCkq+K5qX9ZkJjOLOR3Q
+ C5qzMNt03Yx3knfIjkIUmsC2clpc66y1IQnCWU0FfcL7BtzaJ6Ti2By+LXslMaSu+LFEq1CRr8p
+ JeXIh40SX23QtB4JJIRSP4TRHyLd6SsmSBgjuXX6XbAp2d8GhsQGyRMQ==
+X-Received: by 2002:a05:600c:4f15:b0:477:9890:9ab8 with SMTP id
+ 5b1f17b1804b1-4801e530d15mr37698695e9.3.1768568829900; 
+ Fri, 16 Jan 2026 05:07:09 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43569926ffcsm5255158f8f.18.2026.01.16.05.06.46
+ 5b1f17b1804b1-47f428ac749sm98825715e9.5.2026.01.16.05.07.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Jan 2026 05:06:47 -0800 (PST)
-Message-ID: <0263441b-ff23-422e-bb53-726fd7fd8795@linaro.org>
-Date: Fri, 16 Jan 2026 14:06:46 +0100
+ Fri, 16 Jan 2026 05:07:08 -0800 (PST)
+Message-ID: <68340e51-1d33-424d-9e07-ac0820a7faac@linaro.org>
+Date: Fri, 16 Jan 2026 14:07:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] bsd-user: Clean up includes
+Subject: Re: [PATCH 1/4] mshv: Clean up includes
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnus.kulke@linux.microsoft.com>,
@@ -80,13 +80,13 @@ Cc: Magnus Kulke <magnus.kulke@linux.microsoft.com>,
  Kostiantyn Kostiuk <kkostiuk@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>
 References: <20260116125830.926296-1-peter.maydell@linaro.org>
- <20260116125830.926296-3-peter.maydell@linaro.org>
+ <20260116125830.926296-2-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260116125830.926296-3-peter.maydell@linaro.org>
+In-Reply-To: <20260116125830.926296-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,7 +111,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/1/26 13:58, Peter Maydell wrote:
 > This commit was created with scripts/clean-includes:
->   ./scripts/clean-includes '--git' 'bsd-user' 'bsd-user'
+>   ./scripts/clean-includes '--git' 'mshv' 'accel/mshv' 'target/i386/mshv' 'include/system/mshv.h'
 > 
 > All .c should include qemu/osdep.h first.  The script performs three
 > related cleanups:
@@ -124,11 +124,12 @@ On 16/1/26 13:58, Peter Maydell wrote:
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   bsd-user/bsd-mem.h         | 3 ---
->   bsd-user/bsd-proc.c        | 1 -
->   bsd-user/freebsd/os-proc.h | 2 --
->   bsd-user/qemu-bsd.h        | 1 -
->   4 files changed, 7 deletions(-)
+>   accel/mshv/irq.c            | 3 +--
+>   accel/mshv/mshv-all.c       | 1 -
+>   include/system/mshv.h       | 1 -
+>   target/i386/mshv/mshv-cpu.c | 1 -
+>   target/i386/mshv/x86.c      | 1 -
+>   5 files changed, 1 insertion(+), 6 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
