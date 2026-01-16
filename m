@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07E68D4A5FD
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 05:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7976D4A5FD
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 05:20:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgcE5-0005Oc-Da; Fri, 16 Jan 2026 00:18:25 -0500
+	id 1vgcFy-0005yW-Pt; Fri, 16 Jan 2026 00:20:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vgcE3-0005OO-QN
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 00:18:23 -0500
-Received: from mail-dl1-x122e.google.com ([2607:f8b0:4864:20::122e])
+ id 1vgcFt-0005xz-AF
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 00:20:17 -0500
+Received: from mail-dl1-x1232.google.com ([2607:f8b0:4864:20::1232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vgcE1-00031g-Ly
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 00:18:23 -0500
-Received: by mail-dl1-x122e.google.com with SMTP id
- a92af1059eb24-123320591a4so1715342c88.1
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 21:18:20 -0800 (PST)
+ id 1vgcFp-0003oI-KL
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 00:20:17 -0500
+Received: by mail-dl1-x1232.google.com with SMTP id
+ a92af1059eb24-11f1fb91996so3950209c88.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 21:20:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768540699; x=1769145499; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1768540807; x=1769145607; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=P4l9aEHLmbUtt5yHPL2qxyxINvUTyjwiJa2fMR+2Qf0=;
- b=nqCLNuIexR5VZqfZL5tu/XaMu+WOxxUZasi+pGT/BhGTzq1dVny2MVSdUJq4Oo0eZg
- pFvaF3U9hXPahTqvze7SSrgH+4huXFw1jwyQS9vcsIVPUjOKgFIoAZDpe8pmZR3RX4TR
- cDlNL35Agulfrckzh268WZWe0X+ZFjUxgqTOyJXW17OJCM0fCNLwKoBCPlRTY7kk7pnR
- a0DLRQpWELMAzLwm88HKEYafq3xLvTcDrSB9tS1O/KPWNsWiGHYyV9UHkMHF0hX2QkCZ
- XWTfJV03PKQRbL0dE4CIwLwy7fw7osP3a845kytSBEJUbRpxfBkOT3LCPU2dBGqjZZKN
- OEOA==
+ bh=RD1J4BogNFF21DlCmqH6QaTA3hy6UqdyiGX1UJGq3ag=;
+ b=HKfIslDoYETjtzxOiSU6lMW3w1KYVo/kGWgzQqFWNXuvgk2ho0zPz/fJixGiQHxyjM
+ 096/XIEyZz5L9jo03jvun5b0BxvJdGGw5M6rqOtA1ehTThP94dMECwQxw4qXzQHFj8IV
+ tg9pXG1iomyWPEk4gK00m6r5MezDsGDyAyZBIlMfLIixX8EBCDh9esW0tqIKpInMlaaY
+ ZSNF3W5uQKY/HfCzBN3ddPnl4ZuWT8AQUfrZWzsNU51vwyv3L/U/0hNcmC3lFpMpV8Jq
+ DYNuGHimXkOQS+V2fhdwTBtX2LmrXbPGg6eMQ87oqSf9APbKdKVefgNPsdiz+IBUSv82
+ +xvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768540699; x=1769145499;
+ d=1e100.net; s=20230601; t=1768540807; x=1769145607;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P4l9aEHLmbUtt5yHPL2qxyxINvUTyjwiJa2fMR+2Qf0=;
- b=ovFdmQVkANV/ZN6P55kIfHJUCBQKPNLxPJKMhETqBJkslCGy69Pf0brXxeWzAnnYfo
- 5Yu5gnspqiFA/AIu76cpSGWslL1/zAZrNG42X1G/Rd/i8d/GB03drPPVf0gUmBY9KTT5
- 6e/WA708hyXOaEN3Y39hzfzmTW/N9LglRjdMRHSpXgK6sT10pP/obo49lh9MPSGokCxR
- +lt0baUJsXvVvBRsoNaFXF2aX0cgyDrfSEHv/ubsO9e9vO3vd360/1js9fHjsAZigy0u
- o0c9nhorazsX98pd8xc4XtSXOFiswCxP/FXSHoS5uuAji8SXIYsv2HTmcVK4x+te7wuC
- wCfw==
+ bh=RD1J4BogNFF21DlCmqH6QaTA3hy6UqdyiGX1UJGq3ag=;
+ b=iqwGtH2maNc/8i8yKXgHIyevGZ3AFSUIFY5lCgNEyb4P8DTLUEIoFvv2Jtgle421ey
+ 2OAFRe07zRkFsD1Vw3nNHIv/P+fz1Js9HPkd8MoyQQH4OvXo0p3cFf1u9NEvqbCltq4U
+ olhjqo0IlukzNLdKH68Wpk3rurlZuHDnTUuodCYMyDbEBvovfoEuHNb2PD2fMc9AVe3q
+ Va3hRoTre+tdXSM4LRzZ5ov2KTvSurl0dCFsukyyYfyXFnE+gfYcEjRwvX4YxlYEbcnH
+ TzPfUrJkNWfydi5c7k0mf6sm23LFqBxy0zk6W187Iy3Xvl1251L6db8TFb1aqkbTb7an
+ x4Wg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+awdZZIgDZhsYShQbdzlbiuMihbfdcdrNRe+gC9lK5q/l9kEKITbt3L/pWJnU9kBf5T3DnxuvGms3@nongnu.org
-X-Gm-Message-State: AOJu0YzYhQy073JKH1kARqDXsPaE2GmN21Q+5Yb592hpPb/BDaMMIMEz
- mB8BtV41ZQdBc8ulfb0WapmQE6TnSwa65zVlu5iHTx0WxIsEWEyd7/0U5aiKGMGMqiFBpSN88Gw
- 8zQDnuGExnkK6PEc2Wm84m9TIwM4xNpc=
-X-Gm-Gg: AY/fxX6yUBcx89tHWVtbCyTLrV1DjGh3AwgfKBwzL2jIOlMWAqRT3U4nMeiKtfaKKNP
- nW4HLjxpHrXMj93KbMbv5A4IjGeOibqE1PGX7Bqy8ELmrH0KWBWp4zzqJ4BQh8tc5bT1/LPNsnt
- rppVTktDqsnLU/MpYc61i2of8NO+uSSkVZz1G4LV2Y5/anfg8RK6coW+ZOgKeixReo5UXAjhyYY
- 4RXEEHZ6FjCVDiBNtPQT4+ukysqV+MsfbibGEgTZOmH9qChzfI9eqdBxUoeNBwdipKO9okiD1Z5
- pyVT8QX+HOUOxdJM9HSuHInfew==
-X-Received: by 2002:a05:7022:e1d:b0:122:2f4:b251 with SMTP id
- a92af1059eb24-1244a734a66mr2627900c88.21.1768540699119; Thu, 15 Jan 2026
- 21:18:19 -0800 (PST)
+ AJvYcCVWDfDvDyJZuZQMIgYvdg9m1crmmOikRuFDGif67faWDMgsxSd+mMYtd37ZWDq6HsjihLqxXkiWKkXW@nongnu.org
+X-Gm-Message-State: AOJu0Yz71xBI8d2Q0fvoEWhK2itQvIjpd+1ZQSkhPer3fIjEFAKVwqG2
+ 1FMmPPv2wdzXslIK1ErJcMAkcMdpXSYrkAdIvY1Ost1TukRZiieiZmTUvwrHqF2vbK88VzF9/ev
+ 6gQ3waJXxu+fnZnraR8Cc03xyMKfXOUo=
+X-Gm-Gg: AY/fxX7z87Vjt7rdliMtW/nXWdBAC/uvMXB9xoYA7F02OxLw0zaeeqBpGUQp3YdDT+V
+ 3oSj+U2k/Lj6k0wPYoSpuWRELn4OaGD4uCwBtIxXVaJ3WIc28q1tTboZOAPwRanNmivDXUDnoUC
+ hc/s0nY6FuV9dLB+v1TpE3OKxP42ymLDA+YCI3k4DHrPuad17cjLnxDi9PiHfp9IMfBrFOF9hzc
+ FzTEvgsFFQbCvftJL+OSNa+LEhWAFZnr0rsMZr3adPdfcoCVBBYivfV8jHB89JZKXalUqKgV+nf
+ aCoaqjxZqZqn8pswwDvsd1y/4Q==
+X-Received: by 2002:a05:7022:6290:b0:11a:e426:911a with SMTP id
+ a92af1059eb24-1244b335c09mr1468644c88.15.1768540806967; Thu, 15 Jan 2026
+ 21:20:06 -0800 (PST)
 MIME-Version: 1.0
 References: <20260116033305.51162-1-richard.henderson@linaro.org>
- <20260116033305.51162-6-richard.henderson@linaro.org>
-In-Reply-To: <20260116033305.51162-6-richard.henderson@linaro.org>
+ <20260116033305.51162-7-richard.henderson@linaro.org>
+In-Reply-To: <20260116033305.51162-7-richard.henderson@linaro.org>
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Fri, 16 Jan 2026 14:18:06 +0900
-X-Gm-Features: AZwV_QhAfryvsryGCOJ5OxFsgDYqpjRW4ASCqLou1XA95gyEAOoG9A4KVtnIJfA
-Message-ID: <CAEDrbUakb-SCJBoxJPJJtMW8+1BdCP=mbx1GYXtarj8keRw-yQ@mail.gmail.com>
-Subject: Re: [PATCH v2 05/58] gitlab-ci: Drop build-wasm32-32bit
+Date: Fri, 16 Jan 2026 14:19:55 +0900
+X-Gm-Features: AZwV_QibTEmu-3ot-DrD5LvmaWCi7s6o_ApUY7l4M6Tka39x-FyuXbTo8fey5Xw
+Message-ID: <CAEDrbUY85LNotYo+E+nvSYvnyWwKbRdUedop6_uktR=McSU6iA@mail.gmail.com>
+Subject: Re: [PATCH v2 06/58] tests/docker/dockerfiles: Drop wasm32 from
+ emsdk-wasm-cross.docker
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: berrange@redhat.com, pierrick.bouvier@linaro.org, thuth@redhat.com, 
  pbonzini@redhat.com, philmd@linaro.org
-Content-Type: multipart/alternative; boundary="0000000000002452fd06487a78f3"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122e;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-dl1-x122e.google.com
+Content-Type: multipart/alternative; boundary="00000000000091f37f06487a7ebc"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1232;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-dl1-x1232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,117 +97,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002452fd06487a78f3
+--00000000000091f37f06487a7ebc
 Content-Type: text/plain; charset="UTF-8"
 
-> Drop the wasm32 build and container jobs.
+> We will no longer build wasm32, so drop the docker config.
+> Streamline the dockerfile to hardcode TARGET_CPU as wasm64.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  .gitlab-ci.d/buildtest.yml       | 9 ---------
->  .gitlab-ci.d/container-cross.yml | 7 -------
->  .gitlab-ci.d/containers.yml      | 1 -
->  3 files changed, 17 deletions(-)
+>  .gitlab-ci.d/container-cross.yml                 |  1 -
+>  tests/docker/dockerfiles/emsdk-wasm-cross.docker | 15 ++++-----------
+>  2 files changed, 4 insertions(+), 12 deletions(-)
 >
-> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> index ea0f5bb057..e9b5b05e6e 100644
-> --- a/.gitlab-ci.d/buildtest.yml
-> +++ b/.gitlab-ci.d/buildtest.yml
-> @@ -785,15 +785,6 @@ coverity:
->      # Always manual on forks even if $QEMU_CI == "2"
->      - when: manual
->
-> -build-wasm32-32bit:
-> -  extends: .wasm_build_job_template
-> -  timeout: 2h
-> -  needs:
-> -    - job: wasm32-emsdk-cross-container
-> -  variables:
-> -    IMAGE: emsdk-wasm32-cross
-> -    CONFIGURE_ARGS: --static --cpu=wasm32 --disable-tools --enable-debug
---enable-tcg-interpreter
-> -
->  build-wasm64-64bit:
->    extends: .wasm_build_job_template
->    timeout: 2h
 > diff --git a/.gitlab-ci.d/container-cross.yml
 b/.gitlab-ci.d/container-cross.yml
-> index 7022015e95..6bdd482b80 100644
+> index 6bdd482b80..b376c837dc 100644
 > --- a/.gitlab-ci.d/container-cross.yml
 > +++ b/.gitlab-ci.d/container-cross.yml
-> @@ -86,13 +86,6 @@ win64-fedora-cross-container:
->    variables:
->      NAME: fedora-win64-cross
->
-> -wasm32-emsdk-cross-container:
-> -  extends: .container_job_template
-> -  variables:
-> -    NAME: emsdk-wasm32-cross
-> -    BUILD_ARGS: --build-arg TARGET_CPU=wasm32
-> -    DOCKERFILE: emsdk-wasm-cross
-> -
->  wasm64-emsdk-cross-container:
+> @@ -90,5 +90,4 @@ wasm64-emsdk-cross-container:
 >    extends: .container_job_template
 >    variables:
-> diff --git a/.gitlab-ci.d/containers.yml b/.gitlab-ci.d/containers.yml
-> index dde9a3f840..9b6d33ac13 100644
-> --- a/.gitlab-ci.d/containers.yml
-> +++ b/.gitlab-ci.d/containers.yml
-> @@ -58,7 +58,6 @@ weekly-container-builds:
->      - tricore-debian-cross-container
->      - xtensa-debian-cross-container
->      - win64-fedora-cross-container
-> -    - wasm32-emsdk-cross-container
->      - wasm64-emsdk-cross-container
->      # containers
->      - amd64-alpine-container
+>      NAME: emsdk-wasm64-cross
+> -    BUILD_ARGS: --build-arg TARGET_CPU=wasm64
+>      DOCKERFILE: emsdk-wasm-cross
+> diff --git a/tests/docker/dockerfiles/emsdk-wasm-cross.docker
+b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
+> index ecd5a02903..8a924816f9 100644
+> --- a/tests/docker/dockerfiles/emsdk-wasm-cross.docker
+> +++ b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
+> @@ -7,7 +7,6 @@ ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
+>  ARG PIXMAN_VERSION=0.44.2
+>  ARG FFI_VERSION=v3.5.2
+>  ARG MESON_VERSION=1.5.0
+> -ARG TARGET_CPU=wasm32
+>
+>  FROM docker.io/emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base-common
+>  ARG MESON_VERSION
+> @@ -31,21 +30,16 @@ RUN mkdir /build
+>  WORKDIR /build
+>  RUN mkdir -p $TARGET
+>
+> -FROM build-base-common AS build-base-wasm32
+> -
+> -FROM build-base-common AS build-base-wasm64
+> +FROM build-base-common AS build-base
+>  ENV CFLAGS="$CFLAGS -sMEMORY64=1"
+>  ENV CXXFLAGS="$CXXFLAGS -sMEMORY64=1"
+>  ENV LDFLAGS="$LDFLAGS -sMEMORY64=1"
+> -
+> -FROM build-base-${TARGET_CPU} AS build-base
+> -ARG TARGET_CPU
+>  RUN <<EOF
+>  cat <<EOT > /cross.meson
+>  [host_machine]
+>  system = 'emscripten'
+> -cpu_family = '${TARGET_CPU}'
+> -cpu = '${TARGET_CPU}'
+> +cpu_family = 'wasm64'
+> +cpu = 'wasm64'
+>  endian = 'little'
+>
+>  [binaries]
+> @@ -67,14 +61,13 @@ RUN emconfigure ./configure --prefix=$TARGET --static
+>  RUN emmake make install -j$(nproc)
+>
+>  FROM build-base AS libffi-dev
+> -ARG TARGET_CPU
+>  ARG FFI_VERSION
+>  RUN mkdir -p /libffi
+>  RUN git clone https://github.com/libffi/libffi /libffi
+>  WORKDIR /libffi
+>  RUN git checkout $FFI_VERSION
+>  RUN autoreconf -fiv
+> -RUN emconfigure ./configure --host=${TARGET_CPU}-unknown-linux \
+> +RUN emconfigure ./configure --host=wasm64-unknown-linux \
+>      --prefix=$TARGET --enable-static \
+>      --disable-shared --disable-dependency-tracking \
+>      --disable-builddir --disable-multi-os-directory \
 
 Reviewed-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 
---0000000000002452fd06487a78f3
+--00000000000091f37f06487a7ebc
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr">&gt; Drop the wasm32 build and container =
-jobs.<br>&gt; <br>&gt; Signed-off-by: Richard Henderson &lt;<a href=3D"mail=
-to:richard.henderson@linaro.org">richard.henderson@linaro.org</a>&gt;<br>&g=
-t; ---<br>&gt; =C2=A0.gitlab-ci.d/buildtest.yml =C2=A0 =C2=A0 =C2=A0 | 9 --=
--------<br>&gt; =C2=A0.gitlab-ci.d/container-cross.yml | 7 -------<br>&gt; =
-=C2=A0.gitlab-ci.d/containers.yml =C2=A0 =C2=A0 =C2=A0| 1 -<br>&gt; =C2=A03=
- files changed, 17 deletions(-)<br>&gt; <br>&gt; diff --git a/.gitlab-ci.d/=
-buildtest.yml b/.gitlab-ci.d/buildtest.yml<br>&gt; index ea0f5bb057..e9b5b0=
-5e6e 100644<br>&gt; --- a/.gitlab-ci.d/buildtest.yml<br>&gt; +++ b/.gitlab-=
-ci.d/buildtest.yml<br>&gt; @@ -785,15 +785,6 @@ coverity:<br>&gt; =C2=A0 =
-=C2=A0 =C2=A0# Always manual on forks even if $QEMU_CI =3D=3D &quot;2&quot;=
-<br>&gt; =C2=A0 =C2=A0 =C2=A0- when: manual<br>&gt; <br>&gt; -build-wasm32-=
-32bit:<br>&gt; - =C2=A0extends: .wasm_build_job_template<br>&gt; - =C2=A0ti=
-meout: 2h<br>&gt; - =C2=A0needs:<br>&gt; - =C2=A0 =C2=A0- job: wasm32-emsdk=
--cross-container<br>&gt; - =C2=A0variables:<br>&gt; - =C2=A0 =C2=A0IMAGE: e=
-msdk-wasm32-cross<br>&gt; - =C2=A0 =C2=A0CONFIGURE_ARGS: --static --cpu=3Dw=
-asm32 --disable-tools --enable-debug --enable-tcg-interpreter<br>&gt; -<br>=
-&gt; =C2=A0build-wasm64-64bit:<br>&gt; =C2=A0 =C2=A0extends: .wasm_build_jo=
-b_template<br>&gt; =C2=A0 =C2=A0timeout: 2h<br>&gt; diff --git a/.gitlab-ci=
-.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml<br>&gt; index 702=
-2015e95..6bdd482b80 100644<br>&gt; --- a/.gitlab-ci.d/container-cross.yml<b=
-r>&gt; +++ b/.gitlab-ci.d/container-cross.yml<br>&gt; @@ -86,13 +86,6 @@ wi=
-n64-fedora-cross-container:<br>&gt; =C2=A0 =C2=A0variables:<br>&gt; =C2=A0 =
-=C2=A0 =C2=A0NAME: fedora-win64-cross<br>&gt; <br>&gt; -wasm32-emsdk-cross-=
-container:<br>&gt; - =C2=A0extends: .container_job_template<br>&gt; - =C2=
-=A0variables:<br>&gt; - =C2=A0 =C2=A0NAME: emsdk-wasm32-cross<br>&gt; - =C2=
-=A0 =C2=A0BUILD_ARGS: --build-arg TARGET_CPU=3Dwasm32<br>&gt; - =C2=A0 =C2=
-=A0DOCKERFILE: emsdk-wasm-cross<br>&gt; -<br>&gt; =C2=A0wasm64-emsdk-cross-=
-container:<br>&gt; =C2=A0 =C2=A0extends: .container_job_template<br>&gt; =
-=C2=A0 =C2=A0variables:<br>&gt; diff --git a/.gitlab-ci.d/containers.yml b/=
-.gitlab-ci.d/containers.yml<br>&gt; index dde9a3f840..9b6d33ac13 100644<br>=
-&gt; --- a/.gitlab-ci.d/containers.yml<br>&gt; +++ b/.gitlab-ci.d/container=
-s.yml<br>&gt; @@ -58,7 +58,6 @@ weekly-container-builds:<br>&gt; =C2=A0 =C2=
-=A0 =C2=A0- tricore-debian-cross-container<br>&gt; =C2=A0 =C2=A0 =C2=A0- xt=
-ensa-debian-cross-container<br>&gt; =C2=A0 =C2=A0 =C2=A0- win64-fedora-cros=
-s-container<br>&gt; - =C2=A0 =C2=A0- wasm32-emsdk-cross-container<br>&gt; =
-=C2=A0 =C2=A0 =C2=A0- wasm64-emsdk-cross-container<br>&gt; =C2=A0 =C2=A0 =
-=C2=A0# containers<br>&gt; =C2=A0 =C2=A0 =C2=A0- amd64-alpine-container<br>=
-<br>Reviewed-by: Kohei Tokunaga &lt;<a href=3D"mailto:ktokunaga.mail@gmail.=
-com">ktokunaga.mail@gmail.com</a>&gt;</div></div>
+<div dir=3D"ltr"><div dir=3D"ltr">&gt; We will no longer build wasm32, so d=
+rop the docker config.<br>&gt; Streamline the dockerfile to hardcode TARGET=
+_CPU as wasm64.<br>&gt; <br>&gt; Signed-off-by: Richard Henderson &lt;<a hr=
+ef=3D"mailto:richard.henderson@linaro.org">richard.henderson@linaro.org</a>=
+&gt;<br>&gt; ---<br>&gt; =C2=A0.gitlab-ci.d/container-cross.yml =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A01 -<br>&gt; =C2=A0tes=
+ts/docker/dockerfiles/emsdk-wasm-cross.docker | 15 ++++-----------<br>&gt; =
+=C2=A02 files changed, 4 insertions(+), 12 deletions(-)<br>&gt; <br>&gt; di=
+ff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.=
+yml<br>&gt; index 6bdd482b80..b376c837dc 100644<br>&gt; --- a/.gitlab-ci.d/=
+container-cross.yml<br>&gt; +++ b/.gitlab-ci.d/container-cross.yml<br>&gt; =
+@@ -90,5 +90,4 @@ wasm64-emsdk-cross-container:<br>&gt; =C2=A0 =C2=A0extend=
+s: .container_job_template<br>&gt; =C2=A0 =C2=A0variables:<br>&gt; =C2=A0 =
+=C2=A0 =C2=A0NAME: emsdk-wasm64-cross<br>&gt; - =C2=A0 =C2=A0BUILD_ARGS: --=
+build-arg TARGET_CPU=3Dwasm64<br>&gt; =C2=A0 =C2=A0 =C2=A0DOCKERFILE: emsdk=
+-wasm-cross<br>&gt; diff --git a/tests/docker/dockerfiles/emsdk-wasm-cross.=
+docker b/tests/docker/dockerfiles/emsdk-wasm-cross.docker<br>&gt; index ecd=
+5a02903..8a924816f9 100644<br>&gt; --- a/tests/docker/dockerfiles/emsdk-was=
+m-cross.docker<br>&gt; +++ b/tests/docker/dockerfiles/emsdk-wasm-cross.dock=
+er<br>&gt; @@ -7,7 +7,6 @@ ARG GLIB_VERSION=3D${GLIB_MINOR_VERSION}.0<br>&g=
+t; =C2=A0ARG PIXMAN_VERSION=3D0.44.2<br>&gt; =C2=A0ARG FFI_VERSION=3Dv3.5.2=
+<br>&gt; =C2=A0ARG MESON_VERSION=3D1.5.0<br>&gt; -ARG TARGET_CPU=3Dwasm32<b=
+r>&gt; <br>&gt; =C2=A0FROM <a href=3D"http://docker.io/emscripten/emsdk:$EM=
+SDK_VERSION_QEMU">docker.io/emscripten/emsdk:$EMSDK_VERSION_QEMU</a> AS bui=
+ld-base-common<br>&gt; =C2=A0ARG MESON_VERSION<br>&gt; @@ -31,21 +30,16 @@ =
+RUN mkdir /build<br>&gt; =C2=A0WORKDIR /build<br>&gt; =C2=A0RUN mkdir -p $T=
+ARGET<br>&gt; <br>&gt; -FROM build-base-common AS build-base-wasm32<br>&gt;=
+ -<br>&gt; -FROM build-base-common AS build-base-wasm64<br>&gt; +FROM build=
+-base-common AS build-base<br>&gt; =C2=A0ENV CFLAGS=3D&quot;$CFLAGS -sMEMOR=
+Y64=3D1&quot;<br>&gt; =C2=A0ENV CXXFLAGS=3D&quot;$CXXFLAGS -sMEMORY64=3D1&q=
+uot;<br>&gt; =C2=A0ENV LDFLAGS=3D&quot;$LDFLAGS -sMEMORY64=3D1&quot;<br>&gt=
+; -<br>&gt; -FROM build-base-${TARGET_CPU} AS build-base<br>&gt; -ARG TARGE=
+T_CPU<br>&gt; =C2=A0RUN &lt;&lt;EOF<br>&gt; =C2=A0cat &lt;&lt;EOT &gt; /cro=
+ss.meson<br>&gt; =C2=A0[host_machine]<br>&gt; =C2=A0system =3D &#39;emscrip=
+ten&#39;<br>&gt; -cpu_family =3D &#39;${TARGET_CPU}&#39;<br>&gt; -cpu =3D &=
+#39;${TARGET_CPU}&#39;<br>&gt; +cpu_family =3D &#39;wasm64&#39;<br>&gt; +cp=
+u =3D &#39;wasm64&#39;<br>&gt; =C2=A0endian =3D &#39;little&#39;<br>&gt; <b=
+r>&gt; =C2=A0[binaries]<br>&gt; @@ -67,14 +61,13 @@ RUN emconfigure ./confi=
+gure --prefix=3D$TARGET --static<br>&gt; =C2=A0RUN emmake make install -j$(=
+nproc)<br>&gt; <br>&gt; =C2=A0FROM build-base AS libffi-dev<br>&gt; -ARG TA=
+RGET_CPU<br>&gt; =C2=A0ARG FFI_VERSION<br>&gt; =C2=A0RUN mkdir -p /libffi<b=
+r>&gt; =C2=A0RUN git clone <a href=3D"https://github.com/libffi/libffi">htt=
+ps://github.com/libffi/libffi</a> /libffi<br>&gt; =C2=A0WORKDIR /libffi<br>=
+&gt; =C2=A0RUN git checkout $FFI_VERSION<br>&gt; =C2=A0RUN autoreconf -fiv<=
+br>&gt; -RUN emconfigure ./configure --host=3D${TARGET_CPU}-unknown-linux \=
+<br>&gt; +RUN emconfigure ./configure --host=3Dwasm64-unknown-linux \<br>&g=
+t; =C2=A0 =C2=A0 =C2=A0--prefix=3D$TARGET --enable-static \<br>&gt; =C2=A0 =
+=C2=A0 =C2=A0--disable-shared --disable-dependency-tracking \<br>&gt; =C2=
+=A0 =C2=A0 =C2=A0--disable-builddir --disable-multi-os-directory \<br><br>R=
+eviewed-by: Kohei Tokunaga &lt;<a href=3D"mailto:ktokunaga.mail@gmail.com">=
+ktokunaga.mail@gmail.com</a>&gt;</div></div>
 
---0000000000002452fd06487a78f3--
+--00000000000091f37f06487a7ebc--
 
