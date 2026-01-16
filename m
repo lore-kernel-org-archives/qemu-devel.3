@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E5F7D4A602
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 06:01:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B16BD4A601
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 06:01:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgctE-0004R4-Dp; Fri, 16 Jan 2026 01:00:56 -0500
+	id 1vgctP-0004nl-Fh; Fri, 16 Jan 2026 01:01:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgcsz-0004Lt-EF
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 01:00:41 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgctN-0004kz-7a
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 01:01:05 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgcsy-0007ql-0X
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 01:00:41 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47f5c2283b6so10437245e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 22:00:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vgctL-0007yw-O5
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 01:01:04 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4801d7c72a5so5112835e9.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 22:01:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768543238; x=1769148038; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768543262; x=1769148062; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=r5sYBS2kESQe3rQhftJ8aEkAT5UD4N3brmYKsc7JJPo=;
- b=IJXko+SkpqZW0J+vVwQbzpT8PwPvZqi7lhti3fJEPqEFDb48RQq6F66SBDQljc60sD
- MqjdLR2SHwlh19MhsCdppnDhTXN5i09Dd64vLVrZBu6lr8nxS/pV6iMqAQYewaVOjRvO
- AHABOS8FthLJEnONntkZsra0HLPRzKQUp5MdxQwy5te0+0DKiwsSykwMBad5e4/LSZv3
- cKK5zPw161uiWIoRLX24RTuBnUrXCjFy2Ka6MatGZ6FCjQIdWlBdPUr+2VAZF29os28C
- fqdE72sIE/fqkxvDDzGjoi3yIeoUgyaqjqzIaYI6wZ7ib3xy+E5JtswZDBNUTYcULaiQ
- tdTA==
+ bh=e3UPZEfF2ibq2MEl6XvBBMAIzGiMY5TrDNXm9djthIg=;
+ b=AfOxM+N10XV+OFWDMy8mtl2KES3SGeUQ5+gdq9nTlqSY6OFZlxUglqar8Gu6Z0TjbC
+ XNyvMEeciMWOpp3pnMR/i8gDO6818NEmJcN2hE2XlM2AsOWBdEvbh/VRNbXXt/WQxv3g
+ pungpTMQrO75Mlh2HAXsVhWpxwhpK4u3BHv7PuawgqH6jR7+0BTj+SNo9ZI2acL1YjMn
+ 1GS7gDb3KIFTQT2AVB0lVdJozTMFPmrTYLE7H30zTQDi92+ik4r5Es6w17Dj+EyDYKUV
+ Z+Bm8n7e7TXqdWQD+3O8J6SzslpjLhiobIrGhFKE2xUmPNNCk+dEVAOSwzSxsZW4lx+3
+ 7wtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768543238; x=1769148038;
+ d=1e100.net; s=20230601; t=1768543262; x=1769148062;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=r5sYBS2kESQe3rQhftJ8aEkAT5UD4N3brmYKsc7JJPo=;
- b=Os+54/r6Ce0KbJo3jrN8NaX6WdpJNoKjQjwv2ptX+c6GoqWC6yOQ53/pl21JLPoqXt
- vlkAUK9cr5DOMmBrmX+o8M6S11s0oq/j6aghoTcRAt3bnYPc3BepNSC32UmDY694nCMh
- ok3dEcrYmGcRwnQeORpizSgPte4AyxRylCJQ39HrWoDTxkaWrvP5OtcIICbHaWKYRKK2
- 9Xw7w5+R+j/+deVFfiXR3wD02VKPAxv1q6Y1qkGIUiIHvhcnTAh+1sNZodUv15JEIamG
- H8SPyOidHOzGNy2Zhxil4e+d9EyaFMu6l5/4attEU4oJxml4ppni0PIOpCz1fBtFifHb
- XHhw==
+ bh=e3UPZEfF2ibq2MEl6XvBBMAIzGiMY5TrDNXm9djthIg=;
+ b=ROjLySDcKEYVVyLEAlUl6rNRnDnS7qIFeHQlTblWAEZGxOvdTOY/fvhH+e5j+FcKG7
+ wso9rGtIQ0LpxubK4dLTdZq7mMZH384ACf0J+EVHswD27HuO5DNRYYhHzjEbovkXiiYA
+ SjzBYaYxNONqSCMpV0hpV8e/LO9bh9K1tUSw1T9YaKQ3Y16wf3SL2tHJaCK8PL+ldlD+
+ SusekaxUfZGeKw04RWsfrmfKtYnFe8e5IsZXAT1Rm+K9s3TZvnxTYTQJFLECf1R2GoG1
+ LZqQBxyfd3HwV+ppeD+Gi/+6V3lvYhMhTydEIM7jFdOp5mMd9dw3xagyohY+XthbkjVz
+ FbuA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbFv6xn8vNsuRDtPElSrvR1lEU4ILWIdnE26tzr5yKJucQhy8ur1/wxbWa0i3z7r0CNP4pkjQ221i6@nongnu.org
-X-Gm-Message-State: AOJu0Yy21c3SU/MwQ6aANgk8iRM3k96XDzFdTEnhGCt5hDg6bucB27mj
- +53CyumwhO7so3jVECHBTq7dvsJzLzU/8y14tSZJnbuRfIOEeCqIGiuXOkvUcNgbQjw=
-X-Gm-Gg: AY/fxX6mY9rlHhSqSTwgMl+Egin7SVCgTc3J6xCrgcu8/6dM17lzTN6OQloYu7OkGZ5
- z2iEhJH6Ihj7l0N3K1C58reeUyfjXErRflO3jLKERg5t91MDCJpd3g3C5MWq2PRkYdsyMDoS667
- rbqiq0LuvTcJUg+I9ULtSeP6O9gN1T9fNwhiOk5rFNixUYGMIbk+my/s/opL9E+yPoxV/Itey6e
- HKf+dMaijDJBcWqy0PgnRkmH+BS444c0W+BaGqjY8XmbxWqx2iW93VzeFGLvZWRWVrMKcygwBjy
- 1gywmoa1uSr4gM8ev/+/DuahLw/Tbsa3i7Srt8fpUydFSw2YDj3gzP26M72nxcgRIomlSuAT91h
- e2jr3ZHzC9Cdu5zinukCi3DkiK/Uq8kIcVXPETQcGBhUwbbFl4thwE4QVzoGfseJZ1I1dBBKxYU
- ewvFWh83aA7Szhrcs2FNstbtaMnjFTbvFbEmfmyrzyr2Zn0QvW8pMWTQ==
-X-Received: by 2002:a05:600c:548d:b0:477:9fcf:3fe3 with SMTP id
- 5b1f17b1804b1-4801e2a4c3bmr24839485e9.0.1768543238569; 
- Thu, 15 Jan 2026 22:00:38 -0800 (PST)
+ AJvYcCXXf583h/0PUNGx2vEK/tZeqyxob67NneupVPVBqBA1t8K4lEwDntlqxcCaFKJlIt7SC0vykefSsgpB@nongnu.org
+X-Gm-Message-State: AOJu0YwcU+l3CttC88LC7MXZZQge1PG+Zh1mcIaWaR2QcUiIabwyn5iO
+ Qumjst4vXd8d+gFtFG2TJHy/tiGZee+Z8OPmOp43GUhf4n5Ha4lrUEm4ZN8nAsDtl7A=
+X-Gm-Gg: AY/fxX55rJ8JN0NuXWfyyX2/2gDmb8XLTo9DNj7koqY2fCGrbpt9O6N2383jJmDQ8ys
+ OmnUwjM3XTiFGChNez5hKvYVlXJwDdS58c3kD/Nxm15gjJFQfEOWr+TVCU5mn2L5Gq3TUFPsKD9
+ +PcIvwMYRruY4p0QL3+KrGVRJSHtoH5VTA7BHX4DTcOvtXAb7cCNUQJ04WDzuQOdnk/y/NNLsvM
+ GoHQwNoHw2MUahRf3meoU26Y3iNkqVau3f2eu82gHYubckumg54F3+V+vHuKni9gWxum34Cb/kw
+ fEIWkknRnlyObzAvPPLlMpKdthp5/8muVL/IMRNxE0e6CKPNKY4KkTX9uING4304sMuoKvpq9sI
+ +AG/xkFz20mpiGSTBl9qW3dmFEL7hr6z6EXT11aFgzKw4DThjKSzHq3eZ3Z/KMNPB5dmnt4yPar
+ /aO+h0attpJbfwQDedEHo8xxRRvWe5rld90RmbT5RH+rS2stOuwu2HEw==
+X-Received: by 2002:a05:600c:5304:b0:45d:dc85:c009 with SMTP id
+ 5b1f17b1804b1-4801eac09c0mr13176565e9.10.1768543261727; 
+ Thu, 15 Jan 2026 22:01:01 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e886834sm25840475e9.7.2026.01.15.22.00.37
+ ffacd0b85a97d-4356996dad0sm3052463f8f.27.2026.01.15.22.01.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Jan 2026 22:00:37 -0800 (PST)
-Message-ID: <1640c849-9c10-4033-948e-9a2660640a21@linaro.org>
-Date: Fri, 16 Jan 2026 07:00:37 +0100
+ Thu, 15 Jan 2026 22:01:01 -0800 (PST)
+Message-ID: <fc213839-5ec1-4f58-bd33-8db5645ac45f@linaro.org>
+Date: Fri, 16 Jan 2026 07:01:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/58] gitlab: Remove 32-bit host testing
+Subject: Re: [PATCH v2 08/58] meson: Reject 32-bit hosts
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: ktokunaga.mail@gmail.com, berrange@redhat.com,
  pierrick.bouvier@linaro.org, thuth@redhat.com, pbonzini@redhat.com
 References: <20260116033305.51162-1-richard.henderson@linaro.org>
- <20260116033305.51162-8-richard.henderson@linaro.org>
+ <20260116033305.51162-9-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260116033305.51162-8-richard.henderson@linaro.org>
+In-Reply-To: <20260116033305.51162-9-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,15 +105,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/1/26 04:32, Richard Henderson wrote:
-> These deprecated builds will be disabled.
-> Remove testing of armhf and i686.
+> 32-bit hosts have been deprecated since 10.0.
+> As the first step, disable any such at configuration time.
+> Further patches will remove the dead code.
 > 
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   .gitlab-ci.d/container-cross.yml | 12 ---------
->   .gitlab-ci.d/containers.yml      |  2 --
->   .gitlab-ci.d/crossbuilds.yml     | 45 --------------------------------
->   3 files changed, 59 deletions(-)
+>   docs/about/deprecated.rst       | 29 -----------------------------
+>   docs/about/removed-features.rst |  6 ++++++
+>   meson.build                     | 17 ++++-------------
+>   3 files changed, 10 insertions(+), 42 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
