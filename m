@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0736ED4A5F7
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:47:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 725DFD4A5F6
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:47:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgagQ-0005BV-2G; Thu, 15 Jan 2026 22:39:34 -0500
+	id 1vgagd-0005NX-I9; Thu, 15 Jan 2026 22:39:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgagM-00058W-I8
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:39:30 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1vgagc-0005Mp-90
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:39:46 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgagJ-0008QX-Hs
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:39:30 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-29f2676bb21so15494725ad.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:39:25 -0800 (PST)
+ id 1vgaga-00007Y-LZ
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:39:46 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2a0fe77d141so11771165ad.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:39:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768534765; x=1769139565; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768534783; x=1769139583; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rU1RTCNNq4TKsOcqp8cLlT2o5D/A3g+nlZpIvpHSpXU=;
- b=T4oGY/unEW2fcS2yoDuRKctAjo2SvIXwAHWQ2Rx9veDSX/B+uADJIJJ0xiY2I9scPG
- vG53HU/zZEMkfcrRnIDQ0Lci67rv/3suO15BWkrSISdaPvaEJjUVAMlUHQ6rpaE+q5ty
- QY5QqA9uo8wYndc8sMh2UBSR+lJqx8HGsjeWrRLaPVzSe9vJ5LZJwv2fIIkxW2T9o0up
- cehYauW5OrHqZ+Wu5l0RRtugYa4nGm+Z1ZW3vd10WrH1SPRSaiswswzePpgUQWvJ+G9H
- rZxjYHY0tJYOrLw+uAt1tlQ8oobTjCmxmRvUL3Gb9Mea1YaiIkQsJPnhgpu9RtO4Rzln
- bCaQ==
+ bh=0b6Gm0w9KlLs51qj052MnIFfJ9dUHou4Uw1pKozVZqU=;
+ b=NC2WntN65OQnLkzi34BqurICNgIjyFMo/UB/dGww/Ig6Le+Jn3/J3q841CXuB3tqUY
+ mqgq2d4lo3ukHNWYZXchBA6IHzZc+A6J0Bnh/dNfa8/5rv3tDUMdYAkzSHmUC9SVW8bY
+ wAKAkATWm7j4d226Yz0p14PXdxvXikNTP1IloTVGJyXtQqEyPAjIjjIYGti3wpWh1LOV
+ zrjiKQnlYOeS3GD9MQRjdLdnUu0NgFNQUu3HHJjGQftp8lf2YjU8m4eRBTs8x8YNjKJH
+ VlZVAnZpaOr+fRXDZWhdyMuUtW+NQNfVhUjLJbWOJG2+UJ6FmOXSXv3TZIEsGGfzDYdv
+ bNNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768534765; x=1769139565;
+ d=1e100.net; s=20230601; t=1768534783; x=1769139583;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rU1RTCNNq4TKsOcqp8cLlT2o5D/A3g+nlZpIvpHSpXU=;
- b=Qv33H2Ei0tnF6A5rY0XooNvP6NeSjpXNzBYlC2xUjY66L4wrixi2fh7SMDcKBRDzO1
- jMnQxq7RsZccuv8gaDVEJZGFMNcqSAb+DPhMdZu2a4RmLr4iVeQw1qthAVtSmCWLrZVh
- GFp3/nAWc7MbrFHj/OgdyGh0rTFOoNyLPdDw3b+nIF3utdblF6ewQ6c4hlqyobRYqmmG
- zylJIDs/V/oB0NjOCs5nV9g+UpYQ27tlQTBvz9AUAUNorW75lU1D0eAlcuFPjUufcOiS
- E0ciHwiPB2YIt0xZ3719hbJwG9r1VkpjDX22L8Er/q8PnZfI8uCOhv+v5qylyVchBkT2
- djEA==
-X-Gm-Message-State: AOJu0Yz5fR+NDTMyJBSut1Jbe80j3gSA1RyjESdvND6rkcvSgmXpJQ6B
- xpNwJctw6gWhXqGsU10iVhcCl95WbHYpmgiKq4K2vHTcuDI3EivszetII7bBNHVW7zUTc81Oqzq
- crmprzr4nEw==
-X-Gm-Gg: AY/fxX4CJB/TiFcLNjl6W6dkTrjnOKIKwQf1FEOvzV+jSqdyzOvWsyGOqLv2ALw+69R
- OybtqyOgWUiUIJFfMPqbTPMo7NLtPIG73ce9bwB6NfGrz3AsQGA6y4qHODlcS8gLlqddPYZlZes
- 8zkKzkgp4DNpLun231cGd8kfnZJp+LiS4Sq52wjTv1wwVBmFQTcDxtseti6NuYPRx0fhvNeJY4j
- f5S+FmXP5ra80XGVQCh7XA8z1c9hspbhaQzzcyDM658Bm//Tzq0QnisndlTY39xh257MyVZpQiF
- KyKcAug1YWfwA3+ALVfi3l/4G0CwOZ6DI0qwkEGlmujXx3U48bBeEvv18SUtawamPvOmn/ofIjp
- aqqocN29YZMj9IcItI3OjqA0SLACq/OWSRGu2GlcK7LQYo/8s7kPqDtLRYz8tqfI6G8iTGFPbZt
- hiwdw1Df9fqiQ7a+G5JA==
-X-Received: by 2002:a17:903:1104:b0:29e:9c82:a920 with SMTP id
- d9443c01a7336-2a7188589bcmr13575545ad.6.1768534764667; 
- Thu, 15 Jan 2026 19:39:24 -0800 (PST)
+ bh=0b6Gm0w9KlLs51qj052MnIFfJ9dUHou4Uw1pKozVZqU=;
+ b=NQNWJQ403ORk+YWOhBixx54ruGSAFUVxYk6H9DJ87sJ6ePNUW6Qg8KWbMdm7SO7uH4
+ om/AWIvjB6sA8B4+OgAYmEWl3pUNGvNmgbah3Uimsbf0PcfqEi64hwB+HmKKgiltqtkH
+ 7DO0qsx7Df0pkra4ANqzTu3eBOuk8gwow/e2eu7fFVBqy4eW7jFq4vlfnNyuORFZdJpL
+ hLZcXqC3i5yzX6PKIr71E/Y09supVNx7y5lac0lizMEomDjP3M3j9lrV7PtntiOJOker
+ a9Kj4W1hs/C9NSWe2rLLUEA4aCAYm2OIjTccUyhgVsV7GLlSOct4zarN4c2SvjojcW2l
+ m/RQ==
+X-Gm-Message-State: AOJu0YzM7gmYcgsuk4UprFEvDA2FM8z4DotmXmiTgfxxl0Io+Ar0T4ms
+ PUFpoLac+dLw+PwdFTkk5gfyMe1lXz/bvHZytnK0NpPjY9noMAXmyiyMMXh1uymNh+2Xt9Yqqp5
+ T99mFbXWHzg==
+X-Gm-Gg: AY/fxX4kuk6VfwMjGkwaPhbJPflxGbZlpCtiqcthKGf9xUHl97efK3vcvbgAUKRCl2d
+ umqIb2wU+POMPhIFEkgL/s0T7jCuusyhvAC5sTPT+fkmp3pVQJAuoLceXaWqqQnZjofW4yo5XDH
+ 9X+ZiYXe/oOZ3La3JlbEXxsLlnR2For8C2tAt031U4gpq+X+0k8HRV0TPZskXZRUdGDde48ltWz
+ swWNf6ela1K8IxC4pvxsQ0QgktJa7k1YAUXJiHvKAKOkOU5ahVsa+8wz2b7yJvh7x+YcMdn5kis
+ d9N7LtEsWu8tmVY9ZB74/+hrqM4p+3SjBD1icSvOY9LUrZDsGE0yYTx5ANNKz6emeZJnUFWD6c0
+ 5zjp618+pCCs3h44uiqBEgiwhbHwYhqZsipeL07mcelZclIIKxQ5WNGRSCAn6QNGrwRDptEsge8
+ b5/IT1iFItCmb1r4xI8A==
+X-Received: by 2002:a17:903:40cb:b0:2a0:bb3b:4193 with SMTP id
+ d9443c01a7336-2a7176cc6c7mr15699485ad.40.1768534782829; 
+ Thu, 15 Jan 2026 19:39:42 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7190ca9d5sm6527975ad.25.2026.01.15.19.39.21
+ d9443c01a7336-2a7190ca9d5sm6527975ad.25.2026.01.15.19.39.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 19:39:24 -0800 (PST)
+ Thu, 15 Jan 2026 19:39:42 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: ktokunaga.mail@gmail.com, berrange@redhat.com, pierrick.bouvier@linaro.org,
  thuth@redhat.com, pbonzini@redhat.com, philmd@linaro.org
-Subject: [PATCH v2 49/58] target/hppa: Drop CONFIG_ATOMIC64 test
-Date: Fri, 16 Jan 2026 14:32:55 +1100
-Message-ID: <20260116033305.51162-50-richard.henderson@linaro.org>
+Subject: [PATCH v2 54/58] block: Drop use of Stat64
+Date: Fri, 16 Jan 2026 14:33:00 +1100
+Message-ID: <20260116033305.51162-55-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260116033305.51162-1-richard.henderson@linaro.org>
 References: <20260116033305.51162-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,41 +100,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The Stat64 structure is an aid for 32-bit hosts, and
+is no longer required.  Use plain 64-bit types.
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/op_helper.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ include/block/block_int-common.h |  3 +--
+ block/io.c                       | 10 +++++++++-
+ block/qapi.c                     |  2 +-
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
-index 65faf03cd0..f961046e4c 100644
---- a/target/hppa/op_helper.c
-+++ b/target/hppa/op_helper.c
-@@ -74,7 +74,6 @@ static void atomic_store_mask64(CPUHPPAState *env, target_ulong addr,
-                                 uint64_t val, uint64_t mask,
-                                 int size, uintptr_t ra)
- {
--#ifdef CONFIG_ATOMIC64
-     int mmu_idx = cpu_mmu_index(env_cpu(env), 0);
-     uint64_t old, new, cmp, *haddr;
-     void *vaddr;
-@@ -88,15 +87,12 @@ static void atomic_store_mask64(CPUHPPAState *env, target_ulong addr,
-     old = *haddr;
-     while (1) {
-         new = be32_to_cpu((cpu_to_be32(old) & ~mask) | (val & mask));
--        cmp = qatomic_cmpxchg__nocheck(haddr, old, new);
-+        cmp = qatomic_cmpxchg(haddr, old, new);
-         if (cmp == old) {
-             return;
-         }
-         old = cmp;
-     }
--#else
--    cpu_loop_exit_atomic(env_cpu(env), ra);
--#endif
- }
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index 6d0898e53d..9324af903d 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -30,7 +30,6 @@
+ #include "qemu/aiocb.h"
+ #include "qemu/iov.h"
+ #include "qemu/rcu.h"
+-#include "qemu/stats64.h"
  
- static void do_stby_b(CPUHPPAState *env, target_ulong addr, target_ulong val,
+ #define BLOCK_FLAG_LAZY_REFCOUNTS   8
+ 
+@@ -1246,7 +1245,7 @@ struct BlockDriverState {
+     QLIST_HEAD(, BdrvDirtyBitmap) dirty_bitmaps;
+ 
+     /* Offset after the highest byte written to */
+-    Stat64 wr_highest_offset;
++    uint64_t wr_highest_offset;
+ 
+     /*
+      * If true, copy read backing sectors into image.  Can be >1 if more
+diff --git a/block/io.c b/block/io.c
+index cace297f22..e8fb4ede4d 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -39,6 +39,7 @@
+ #include "qemu/main-loop.h"
+ #include "system/replay.h"
+ #include "qemu/units.h"
++#include "qemu/atomic.h"
+ 
+ /* Maximum bounce buffer for copy-on-read and write zeroes, in bytes */
+ #define MAX_BOUNCE_BUFFER (32768 << BDRV_SECTOR_BITS)
+@@ -2044,7 +2045,14 @@ bdrv_co_write_req_finish(BdrvChild *child, int64_t offset, int64_t bytes,
+     if (req->bytes) {
+         switch (req->type) {
+         case BDRV_TRACKED_WRITE:
+-            stat64_max(&bs->wr_highest_offset, offset + bytes);
++            {
++                uint64_t new = offset + bytes;
++                uint64_t old = qatomic_read(&bs->wr_highest_offset);
++
++                while (old < new) {
++                    old = qatomic_cmpxchg(&bs->wr_highest_offset, old, new);
++                }
++            }
+             /* fall through, to set dirty bits */
+         case BDRV_TRACKED_DISCARD:
+             bdrv_set_dirty(bs, offset, bytes);
+diff --git a/block/qapi.c b/block/qapi.c
+index 9f5771e019..27e0ac6a32 100644
+--- a/block/qapi.c
++++ b/block/qapi.c
+@@ -651,7 +651,7 @@ bdrv_query_bds_stats(BlockDriverState *bs, bool blk_level)
+         s->node_name = g_strdup(bdrv_get_node_name(bs));
+     }
+ 
+-    s->stats->wr_highest_offset = stat64_get(&bs->wr_highest_offset);
++    s->stats->wr_highest_offset = qatomic_read(&bs->wr_highest_offset);
+ 
+     s->driver_specific = bdrv_get_specific_stats(bs);
+ 
 -- 
 2.43.0
 
