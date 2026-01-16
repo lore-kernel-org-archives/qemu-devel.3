@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C2AD4A5FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:36:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4189DD4A5F7
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:37:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgacS-0001wh-9l; Thu, 15 Jan 2026 22:35:28 -0500
+	id 1vgacc-0002qT-KP; Thu, 15 Jan 2026 22:35:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgacQ-0001n2-Iy
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:35:26 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1vgacb-0002oY-6Z
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:35:37 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgacO-0006Hu-IF
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:35:26 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-81c72659e6bso1387890b3a.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:35:24 -0800 (PST)
+ id 1vgacZ-0006NC-Hg
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:35:36 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-81dbc0a99d2so814807b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:35:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768534523; x=1769139323; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768534534; x=1769139334; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qmAp6PNa9duSslOM86Ejx4hWWn+4Ohddq0ga5kua76c=;
- b=TpW9ztJO/solssyoyb+xjMzSRnAeaY6jo/mkr30wB/IanhvmpEQMQ/QpJxpWwRjNAZ
- /Pr0iNpzY1BQI7tmbJlgYV8o+MiiKls25u9C7WKjyk3nFMEUaW8/8zYRhRZLJxFq4ijf
- la5NAzGZr1zW9sHreU3RfsYA7MG/xYemyIwIW4f04812I3hYYlCPx5HAp75pBiE/qg+V
- oMydXHzpknRPsMHkgxI4Xp59iZYM9w5uStdXx7JbKbRatwobo8WMQ9pmO4YzEFmV/PWR
- 4ySFQZd7+JnTDAbORe7wEenTNCFyR1tV/THcoSCcy4pv5KkSFyYf/l7+pSG2bDNKTj5s
- Ywvg==
+ bh=Jt6epgzk+hjWVFj/7ojbUiaxuIhW/JGBZIUcf+FDUAw=;
+ b=A/B1HllsicECcJqaCUCxzpydBYKs6dr+iBzb4mO1Ks+9Fr8v52PkcCFo+HqVHVNdI6
+ +PMADd65J5nX5RHbJnYHiwyXYr8i3B2fBIy83gaOgdyrXlRSCWu+a1S6mWUBdnM3Vy49
+ lmyiUTUPUtAcdKF8lpNbufETW+i/2uA0pG5GI3iMd1NqlLc9AR6lIYyCJVp8pS2AaIen
+ WzGDrnjxFlm+0a6ppbPrbS2p08IEBR1JCe7UM7nZTXB1xZXFDYYjZqFJqB21qkeFyW5R
+ MjHfONZSUAbylsi3GRShzBQ5RG3hVxw1EXa8niAhcRoqYeS/DULn8PFkYwhyNKjxQyuy
+ iWBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768534523; x=1769139323;
+ d=1e100.net; s=20230601; t=1768534534; x=1769139334;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=qmAp6PNa9duSslOM86Ejx4hWWn+4Ohddq0ga5kua76c=;
- b=ucKzcixNhnsvf8PhK+bTwARaLuE4VMe/v+28cIvOD/mPVtOzL/uKI3wOP7krarfWyZ
- WO0K6ftp5h3dsOybVikl9UIEYxtM9pnWd4VSfEIqiumwCMS6k0poKmZsYGBSek4AgIuJ
- 1x/IusR0uycojWsm6kISXxoIe1IrmRaVYAZ+Aka81WtY0FV6p6h42TXabYcpyFQs4/4k
- KdTVHkh/8d6c7JySEWWtWhqeqKhDXU3Y+a2TWk11jfV6ZQPQA9RfdKvhqT56VxxfF4uC
- qjmQSVpntztNMe6M865zniBJxAbnc/YfdDq9Fd5iE0yGvM8vLU7kuaDU8RpBzwDDC9/D
- zS6g==
-X-Gm-Message-State: AOJu0YwLCDGGrCiO5QocYiS0ErQmVMYGzbODIDEkgq3//+DpQjJ1I1i+
- WyLrxRqpHUYI9SXcUrSs5yJ+A5P6LMS45Xip8UNtbtCVgGdcvDkVJfgzftHrWMoh8XaBBL2/g6j
- 7KV4dhgNNtw==
-X-Gm-Gg: AY/fxX6RmnI4UhszfNj1nXZijskAeG7dEFUxCqIVbGOZtJFnBOcS1rfpvEqsO3C5Kzl
- rtgy6cUKj/mU4pBsgrxZLmHyq3L+vmDkv0wgSQ4duV0XHbjbGfB9mSW17ToGtPDIZRpEbS79HUd
- yzDOYPof+ZDYaE2RrWAS0tKLODqOT0XwPjBsoLygGW834NxBpxkpv0LBxkjmYL5sElWAI40FcOW
- p9NHJFvS7KZuOiYVRbsSX8tuEMizA5blq7JH1YiD8EJB4SM0uBtobhotsy9LpyUio9fur36C/8e
- MOsz4nwsL5cFgpLi93LVr/df/yyzwliTXE2JdL4Ki2FN5FME50Ph+WlYZ9aRHwxJFzxoHaUHgQO
- EgeHYOI7owd69ohKfckmu0UQ6gRHUlfv5ev4Zp/Va8GYUEDpb80uIz1r1d4IhUECt00M+rtPejG
- XAsEwJGgIhGtsZ+i642Q/DZuKQwKXk
-X-Received: by 2002:a05:6a00:4c94:b0:81f:4dfe:dddc with SMTP id
- d2e1a72fcca58-81f9f7f65edmr1622709b3a.13.1768534523143; 
- Thu, 15 Jan 2026 19:35:23 -0800 (PST)
+ bh=Jt6epgzk+hjWVFj/7ojbUiaxuIhW/JGBZIUcf+FDUAw=;
+ b=JtjrMnwnsrR0OwJiAyqceRqWrT/2CAeC0I8pyEhZ5CNNXxRjzYml+7QUUcigvS7Pcr
+ UrGizIWUWd1+SM0f3fN7qFcZpW7D2OOW0IDnxJCtTVaHUeCtoKzB+sh865QrTzsv+uWT
+ GDz09IXthaKzc957xxgehsLM96zn5f9MtV0z4e1ic9X/gkgliNpvONhhXfWWj54Thi+v
+ D1Emu4rajnfgMIWV+duREd5L+z2Wo+Tq7OAeiiX5yIku8a7JcSG8GZuJBSeU0XFFnwBw
+ itZ1TOKzsIkpSl5gDfzcr96tfRAWn7huxlh0lBjE9P4SbSGcEJhjJ2CnfMTTnCvTRfyg
+ gcuQ==
+X-Gm-Message-State: AOJu0YzjTehLKWqNdyaCO5+LFTN46AsibzLX9jp1nFmjFodAsS0yF1kd
+ XZsgbevM2/9o+LqCJy2S6iLDQCdUtI3MYaggd0NwnLFly2cxEUboYXo0EgV0D+QQEmPyXAi/bRI
+ cRfzoZQ6wug==
+X-Gm-Gg: AY/fxX6tWsPldeKoqEjr5Bl3DMeyMmAoo/T50ciEeZyuxqPqwhZ0+juFxIzKZTfzY3o
+ OzeAgB50MmZE3GaXikCazT/24iLRcpMUYWvyUyWSB1bLZRw4NOUg58Yl24saUPwcvKN7VUL7lzw
+ PhcOH/MKnr52IGhTGNUrjGyeSWXAoH7vdOGA/2detLEDwrbb3X/KsL+sZ0cU/7ROVZJOs4YLp1q
+ 9iDwpyTwIKzNcuJ6LJkKSVFwNetSzdesV+umhgsRTmmgNAyOHD1dbqdBfguqAwuZol+MH5lFfxt
+ QunSeZntJuWK6DJfPi3LImOUNeEsk1S3VkfjaOUjHuoDs4EJbeZGIsmcFZ2infreq16XUooWs+9
+ Nz4EX6SHgCCIjkQAclR/HGDt5MqrRQGDIEPb/KloBr13cxKrKvodmFqpz8YSOQd9Hj8N31uuNwF
+ ikztf1Uz/Ug6N56vSG+w==
+X-Received: by 2002:a05:6a00:368c:b0:81f:4abd:f15c with SMTP id
+ d2e1a72fcca58-81fa03b4312mr1453373b3a.70.1768534534105; 
+ Thu, 15 Jan 2026 19:35:34 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81fa12b5c67sm683372b3a.69.2026.01.15.19.35.19
+ d2e1a72fcca58-81fa12b5c67sm683372b3a.69.2026.01.15.19.35.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 19:35:22 -0800 (PST)
+ Thu, 15 Jan 2026 19:35:33 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: ktokunaga.mail@gmail.com, berrange@redhat.com, pierrick.bouvier@linaro.org,
  thuth@redhat.com, pbonzini@redhat.com, philmd@linaro.org
-Subject: [PATCH v2 33/58] tcg: Drop TCG_TARGET_REG_BITS tests in tcg-op-gvec.c
-Date: Fri, 16 Jan 2026 14:32:39 +1100
-Message-ID: <20260116033305.51162-34-richard.henderson@linaro.org>
+Subject: [PATCH v2 36/58] tcg: Drop TCG_TARGET_REG_BITS tests in tcg-internal.h
+Date: Fri, 16 Jan 2026 14:32:42 +1100
+Message-ID: <20260116033305.51162-37-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260116033305.51162-1-richard.henderson@linaro.org>
 References: <20260116033305.51162-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,102 +103,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/tcg-op-gvec.c | 49 +++++++++++++++++++++++------------------------
- 1 file changed, 24 insertions(+), 25 deletions(-)
+ tcg/tcg-internal.h | 21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
 
-diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
-index 2cfc7e9409..bc323e2500 100644
---- a/tcg/tcg-op-gvec.c
-+++ b/tcg/tcg-op-gvec.c
-@@ -586,12 +586,11 @@ static void do_dup(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
-         }
-     }
+diff --git a/tcg/tcg-internal.h b/tcg/tcg-internal.h
+index d6a12afe06..2cbfb5d5ca 100644
+--- a/tcg/tcg-internal.h
++++ b/tcg/tcg-internal.h
+@@ -54,31 +54,14 @@ static inline unsigned tcg_call_flags(TCGOp *op)
+     return tcg_call_info(op)->flags;
+ }
  
--    /* Implement inline with a vector type, if possible.
--     * Prefer integer when 64-bit host and no variable dup.
-+    /*
-+     * Implement inline with a vector type, if possible;
-+     * prefer_i64 with 64-bit variable dup.
-      */
--    type = choose_vector_type(NULL, vece, oprsz,
--                              (TCG_TARGET_REG_BITS == 64 && in_32 == NULL
--                               && (in_64 == NULL || vece == MO_64)));
-+    type = choose_vector_type(NULL, vece, oprsz, vece == MO_64 && in_64);
-     if (type != 0) {
-         TCGv_vec t_vec = tcg_temp_new_vec(type);
+-#if TCG_TARGET_REG_BITS == 32
+-static inline TCGv_i32 TCGV_LOW(TCGv_i64 t)
+-{
+-    return temp_tcgv_i32(tcgv_i64_temp(t) + HOST_BIG_ENDIAN);
+-}
+-static inline TCGv_i32 TCGV_HIGH(TCGv_i64 t)
+-{
+-    return temp_tcgv_i32(tcgv_i64_temp(t) + !HOST_BIG_ENDIAN);
+-}
+-#else
+-TCGv_i32 TCGV_LOW(TCGv_i64) QEMU_ERROR("32-bit code path is reachable");
+-TCGv_i32 TCGV_HIGH(TCGv_i64) QEMU_ERROR("32-bit code path is reachable");
+-#endif
+-
+ static inline TCGv_i64 TCGV128_LOW(TCGv_i128 t)
+ {
+-    /* For 32-bit, offset by 2, which may then have TCGV_{LOW,HIGH} applied. */
+-    int o = HOST_BIG_ENDIAN ? 64 / TCG_TARGET_REG_BITS : 0;
+-    return temp_tcgv_i64(tcgv_i128_temp(t) + o);
++    return temp_tcgv_i64(tcgv_i128_temp(t) + HOST_BIG_ENDIAN);
+ }
  
-@@ -612,11 +611,11 @@ static void do_dup(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
-         t_32 = NULL;
+ static inline TCGv_i64 TCGV128_HIGH(TCGv_i128 t)
+ {
+-    int o = HOST_BIG_ENDIAN ? 0 : 64 / TCG_TARGET_REG_BITS;
+-    return temp_tcgv_i64(tcgv_i128_temp(t) + o);
++    return temp_tcgv_i64(tcgv_i128_temp(t) + !HOST_BIG_ENDIAN);
+ }
  
-         if (in_32) {
--            /* We are given a 32-bit variable input.  For a 64-bit host,
--               use a 64-bit operation unless the 32-bit operation would
--               be simple enough.  */
--            if (TCG_TARGET_REG_BITS == 64
--                && (vece != MO_32 || !check_size_impl(oprsz, 4))) {
-+            /*
-+             * We are given a 32-bit variable input.  Use a 64-bit operation
-+             * unless the 32-bit operation would be simple enough.
-+             */
-+            if (vece != MO_32 || !check_size_impl(oprsz, 4)) {
-                 t_64 = tcg_temp_ebb_new_i64();
-                 tcg_gen_extu_i32_i64(t_64, in_32);
-                 tcg_gen_dup_i64(vece, t_64, t_64);
-@@ -629,14 +628,16 @@ static void do_dup(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
-             t_64 = tcg_temp_ebb_new_i64();
-             tcg_gen_dup_i64(vece, t_64, in_64);
-         } else {
--            /* We are given a constant input.  */
--            /* For 64-bit hosts, use 64-bit constants for "simple" constants
--               or when we'd need too many 32-bit stores, or when a 64-bit
--               constant is really required.  */
-+            /*
-+             * We are given a constant input.
-+             * Use 64-bit constants for "simple" constants or when we'd
-+             * need too many 32-bit stores, or when a 64-bit constant
-+             * is really required.
-+             */
-             if (vece == MO_64
--                || (TCG_TARGET_REG_BITS == 64
--                    && (in_c == 0 || in_c == -1
--                        || !check_size_impl(oprsz, 4)))) {
-+                || in_c == 0
-+                || in_c == -1
-+                || !check_size_impl(oprsz, 4)) {
-                 t_64 = tcg_constant_i64(in_c);
-             } else {
-                 t_32 = tcg_constant_i32(in_c);
-@@ -3872,12 +3873,11 @@ void tcg_gen_gvec_cmp(TCGCond cond, unsigned vece, uint32_t dofs,
-     }
- 
-     /*
--     * Implement inline with a vector type, if possible.
--     * Prefer integer when 64-bit host and 64-bit comparison.
-+     * Implement inline with a vector type, if possible;
-+     * prefer_i64 for a 64-bit comparison.
-      */
-     hold_list = tcg_swap_vecop_list(cmp_list);
--    type = choose_vector_type(cmp_list, vece, oprsz,
--                              TCG_TARGET_REG_BITS == 64 && vece == MO_64);
-+    type = choose_vector_type(cmp_list, vece, oprsz, vece == MO_64);
-     switch (type) {
-     case TCG_TYPE_V256:
-         /* Recall that ARM SVE allows vector sizes that are not a
-@@ -3992,11 +3992,10 @@ void tcg_gen_gvec_cmps(TCGCond cond, unsigned vece, uint32_t dofs,
-     }
- 
-     /*
--     * Implement inline with a vector type, if possible.
--     * Prefer integer when 64-bit host and 64-bit comparison.
-+     * Implement inline with a vector type, if possible;
-+     * prefer_i64 for a 64-bit comparison.
-      */
--    type = choose_vector_type(cmp_list, vece, oprsz,
--                              TCG_TARGET_REG_BITS == 64 && vece == MO_64);
-+    type = choose_vector_type(cmp_list, vece, oprsz, vece == MO_64);
-     if (type != 0) {
-         const TCGOpcode *hold_list = tcg_swap_vecop_list(cmp_list);
-         TCGv_vec t_vec = tcg_temp_new_vec(type);
+ bool tcg_target_has_memory_bswap(MemOp memop);
 -- 
 2.43.0
 
