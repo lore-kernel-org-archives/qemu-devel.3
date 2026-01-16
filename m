@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA16D4A5FD
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 04:45:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A9BD4A5FD
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 04:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgbh2-0001SA-KJ; Thu, 15 Jan 2026 23:44:16 -0500
+	id 1vgbkx-0002dV-PB; Thu, 15 Jan 2026 23:48:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vgbgy-0001Qz-QE
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 23:44:13 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1vgbkv-0002d4-0Q
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 23:48:17 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vgbgx-0005bS-4w
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 23:44:12 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b876bf5277dso397648566b.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 20:44:10 -0800 (PST)
+ id 1vgbkr-000763-Vj
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 23:48:16 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-b87693c981fso298928566b.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 20:48:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768538649; x=1769143449; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1768538892; x=1769143692; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VHDFnGo8MiqX/X2KiGCwnz2zaMsTfov3EUbMbxzRRW0=;
- b=m1OP7SMZzk026u/z/jpAu3RZoHlOOv4qifhNbaAARsT37bcJUVPOH2pk77p7hlru8K
- a2cUtK+qzebwyBR9nnWJ6f3Z06jYODGDUngtKLBWN2yap01vW8P2Pn+uAbrq+JRKCyQK
- knDUF0XtrzyEy2VUfpJj0UtzZKxT/tFrGtCm8rGu1FThHuKZZScKMj0HxBsX/XUVZGTd
- UOrFv9F2NdqlqXrdNdUlIWvId4rCc2PTidV6vr3G5Rcns7ED5u9nkaEd0fI0dODtgGQu
- CUG0OZble8ZujDGb8pM1LaUvs5ofO67/OMDbSndWg3eLp7AcT1OqKUMHBQhDwKeCpXQp
- FEAw==
+ bh=iA8XesB8YSvIpr81x5F94ifNOJkg0jSAiavKc62P2N8=;
+ b=D9lVxKJxPRh5bCE2XA7vaXxO6gkmWCRcBkd9lCoc/iHs9kNj9ZpU4QQJJ1SqVkPPV7
+ 3mI2OAcD+5Y3gCScTAi0EcbgbCLZPjOzuAa/uxpzQYu3ZtCm/Q0F3uFAIH4hniAMESCC
+ bgkxKppBNkNaVB7rMbzBWJiMs87hmPr6js82sKEKbD/Um1a6z/mfVQDcwn0fIqyvcRkr
+ sh00U67Upl/QMqQmqifrPcQ8bE/rm7Sy75JBa8WfYP/ndj2fWbt10XI2vE9qOKf3/Xvb
+ 6gX8ufDO/VWhSkqiSRbtBY7P+8eVVWnb6FRqHQvjwrWe62z3vp47QgXXjXCrEz+AdxQ1
+ WsZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768538649; x=1769143449;
+ d=1e100.net; s=20230601; t=1768538892; x=1769143692;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=VHDFnGo8MiqX/X2KiGCwnz2zaMsTfov3EUbMbxzRRW0=;
- b=FJbpiFFFF8LlFGRAc370p+Y8NS/tmujYVRAR331ZdED63tuqxnqDyN5RBmaRDeZKcq
- bSJ2+BKONQQ1LeZRP5ktZMYEjET+MaELjmqTCwufFg6hvDk7/onD27ER+yga4xbuOAq5
- zgE8dn0TYvPVDkVq6RLt6nZ00mQWK9EyV90ZFF3U9M3kV7bbF356EveLsRN92SLADL6r
- 9o1cjlvxlGRpyX+Ho/36USLgBhT9OpVDEZvWgLtJpGT4Pk+QVjsmI+t1et/l1MDNtMrR
- T4nJJhoTLtguZwZ/DecF9PZgOygWSzwdZcCFH8c2D3ghwGrBzIssD/91Hu+5R+XpagI6
- P0iA==
-X-Gm-Message-State: AOJu0Yz+od/VQWDcyWaPeaWrq6xHmuLokABa5aI5CQyIr9HnoaP3fK0I
- Iz+Sk7bYWJvKIoJ7ffSyGyUgvwN0AnpWg6NT04mfzTpNUJPNqrV+WY1X7/lqTfU8chid+Q6Bw2Z
- gYTiKiEFk8ty6zS9rM0qy0mg05MiBjNc=
-X-Gm-Gg: AY/fxX672VEiOIzy8IVtCwGYwu1wapOFiYMZCgcrlfDdEPzSWedkiNJGucCQ5D2sKUe
- aPE0R3xR1569sI8hYRpdA0f1XzhUlQwAajPwnEW3SdfzbKJenm6i69Pnm0hMThSgdEewVFbkCgy
- 7MwQwIMFA6/i6CutokLZ7f66McNMzgq2ViAvbdR4zfq3K1TleoOz5PMUQcTVxYbsdL2/MkY6vMW
- 9T/OffSzk8v1P1bcDE+Ho096AMo0CzJj5E3Jn/njpzkk0s80eAKe1QSspqHJOdMy17gdu3iy80X
- kVIOhXCd2dKILuz7mkcoNtn17Q==
-X-Received: by 2002:a17:907:3d92:b0:b87:8c1:1ea8 with SMTP id
- a640c23a62f3a-b8793857ba6mr158463266b.7.1768538648443; Thu, 15 Jan 2026
- 20:44:08 -0800 (PST)
+ bh=iA8XesB8YSvIpr81x5F94ifNOJkg0jSAiavKc62P2N8=;
+ b=uofJJid/47tqRrXjK9ewC1BfwJPd2Afrj9CIP+ENgxba2sJXma/s68ONBmZFjb37yO
+ XVtANU28HJR0ZoGxtA3zue4Eks4XNcx/sJ9NVh5jrkWia5JmkTL/bCCW+vLPgs5BZp5E
+ w4GDNN0eHv7oi7wPh/9RSojdJOs4MEGBiuQy0P3jhDoX80xaMSKoKZdusrXW0RwKnVKk
+ ArsetfolrJ0EOhRrIAKOfp4AOxpLEpP4UYOMEdsWLhU+twHEh8crn0PNHUc3G4wVIoSy
+ P3zjNUqTX8sW2BI201a4luGDBwwlE9kqIA9Dlr7Ca3IYr1RhDv/lVIu0w7RYbZmCOAQs
+ nAcQ==
+X-Gm-Message-State: AOJu0YyZ1VftM8UNQTWeRA1WvUgteXmViK9zOk8t4Jz0tihqUXuDjAXY
+ 2MuxtKJDvkVFLS2211qe4xfKFqgNmf6LyoYQAWllKp/Jnq8Rg2H4eRkU3YH40ccGteu5BTDwAT1
+ efp7wE6ZdzkdtWyFhlk6xzaXOJUluJ+Y=
+X-Gm-Gg: AY/fxX5OaO1SK0CLGpn6G1foxZFWAfOpw38B4tF9+gfu0H4r4vaVZDL+eP64Tbozs/b
+ zzbioS9mEunBlst+WWx2N5etpgVYkAQEowGPy4HwSYKLVuwY8QnKKIkSZyOZjWpGUtrG3rla0ah
+ lGgwcZt+6XhcTI7R1+68aniUwXz8IYRyxq3bynzQ+oc5HwCs6cSwF/n3C7Scz7nVHKQ7d9HzDMU
+ jRXCC2bVdowX5cPBAf7d1Ufe69tPS1BOfziktk/EFOHHOi60zWLwLnQxGBy7BOrZXFVLnCO8g8L
+ HnafeQCRvMpVBFmlqxdVYmvnXA==
+X-Received: by 2002:a17:907:868d:b0:b86:fa17:4cf5 with SMTP id
+ a640c23a62f3a-b8792d274c0mr171902166b.13.1768538892102; Thu, 15 Jan 2026
+ 20:48:12 -0800 (PST)
 MIME-Version: 1.0
 References: <20260115130110.2825796-1-djordje.todorovic@htecgroup.com>
- <20260115130110.2825796-2-djordje.todorovic@htecgroup.com>
-In-Reply-To: <20260115130110.2825796-2-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20260115130110.2825796-1-djordje.todorovic@htecgroup.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 16 Jan 2026 14:43:42 +1000
-X-Gm-Features: AZwV_QjqlNV-rAgiM6TP-aylowCavb8PY3k6nYbBBht_tVg99OMkpL_2pGDBBl8
-Message-ID: <CAKmqyKOqtJ+zjY4Opz3iD0b=VsuwKMAvebz6T9fMGa+AL5ZgCA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] hw/riscv: Fix integer overflow in cm_base
- calculation
+Date: Fri, 16 Jan 2026 14:47:45 +1000
+X-Gm-Features: AZwV_QjWLUrDHE5CjIinnkOPArog13U_MvYeZ04uhONbkYfJj77eaiRpjSPjcWk
+Message-ID: <CAKmqyKOdVuCnkRi-buADd=n+qvAu++hztk_DiiQD=_uBJsxyvA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] [riscv] Fix issues found by Coverity
 To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
  "cfu@mips.com" <cfu@mips.com>, "philmd@linaro.org" <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,34 +100,23 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, Jan 15, 2026 at 11:01=E2=80=AFPM Djordje Todorovic
 <Djordje.Todorovic@htecgroup.com> wrote:
 >
-> Ensure 64-bit arithmetic is used when computing cm_base,
-> avoiding potential integer overflow.
+> Address one comment in the first patch.
 >
-> Resolves: Coverity CID 1644076
->
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> Djordje Todorovic (2):
+>   hw/riscv: Fix integer overflow in cm_base calculation
+>   target/riscv: Fix null pointer dereference in cpu_set_exception_base
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
-> ---
+>
 >  include/hw/riscv/cps.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  target/riscv/cpu.c     | 1 +
+>  2 files changed, 2 insertions(+), 1 deletion(-)
 >
-> diff --git a/include/hw/riscv/cps.h b/include/hw/riscv/cps.h
-> index f33fd7ac86..39029bca8f 100644
-> --- a/include/hw/riscv/cps.h
-> +++ b/include/hw/riscv/cps.h
-> @@ -27,7 +27,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(RISCVCPSState, RISCV_CPS)
->  /* The global CM base for the boston-aia model. */
->  #define GLOBAL_CM_BASE 0x16100000
->  /* The CM block is 512 KiB. */
-> -#define CM_SIZE (1 << 19)
-> +#define CM_SIZE (1ULL << 19)
->
->  /*
->   * The mhartid bits has cluster at bit 16, core at bit 4, and hart at
 > --
 > 2.34.1
 
