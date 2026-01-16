@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C674D4899A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:42:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC45ED4899A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:42:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgj8p-0002g0-Iz; Fri, 16 Jan 2026 07:41:29 -0500
+	id 1vgj8r-0002iD-JE; Fri, 16 Jan 2026 07:41:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgj7f-00024v-6j
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:17 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1vgj7d-000247-Jj
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:14 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vgj7d-0004gi-0O
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:14 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-430f5ecaa08so989915f8f.3
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 04:40:12 -0800 (PST)
+ id 1vgj7b-0004gF-Uy
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:13 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-42fbbc3df8fso1092164f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 04:40:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768567211; x=1769172011; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768567209; x=1769172009; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=siylqvvbraELN/5iy0HoOLso7sahmO7uGAPRzEtYdYc=;
- b=NOPJ1rIZyAQJSWctahH9B4nWwyXZs0jxxlUVcebxos98C9sEfMJnpexLJV/55pbUng
- dmk9sdS8u2PAgMgVVlIQ4DBqXAHrJN3j9+IAolWH9+gYPBHqWKIN9LnvbpsDI4ymZNYm
- QRUwm986oaZo8Hp4ucsdGnavCqOZnipaii09qeY4mAqQl5cGwklJMZW+PIEjD5m9a0w6
- V8FBgmkz+MZWfzj2FewYcs1MJ8FMPQGxoF9VOWoQ9m6bxCNX2TLLKJ2O9zi8pfWgLD9t
- p1iMLZDXerZIvdf4nsu6sIWyagSnRXIKrYcav1nX12sdl/mNRtMcObx+Vv2M6b4X1vHD
- ImDg==
+ bh=a0wgjb5PW8AjpxMtNWI1pQBRJl7CsYfLGacp91OKMNE=;
+ b=yd9eRq0SnFLy+TBpt3WL4muWW10EIOHnMcg7Qten7YfrB8Jy1dr6R6gwik8VhT5EpM
+ IYqC5ZMdtOVPTgFv/qSFBJaM4msvjxvVleLJtfGcg11VGh7F4fR9y+s3wBtKsxZKwW5r
+ hlDZERpt+CVQNE+FrYlQ4wXm6zX7//LoLFwzFOcjXCv+5GPhuR+M+P6ItMdm2o0nWSbN
+ yPyJFO7e+yQls50h63CmOFqrAae8XDZVH1zmXMgQfT4XLrrl/+OOGW+3Kyq5ofOyIVJ6
+ pfkOx6VlJkiv1P8AMcDGJDgijh0VLAIyuJOGr//v/wBBk4Anw7ROqm0+0ZDvftVhJ+XG
+ F9tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768567211; x=1769172011;
+ d=1e100.net; s=20230601; t=1768567209; x=1769172009;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=siylqvvbraELN/5iy0HoOLso7sahmO7uGAPRzEtYdYc=;
- b=H9lMhQVGa2I31LfEljS7ZCKEph29yBOVr6KzTd8Gf5bhLZUhaQ1NzfT36bWJLFuix3
- uMvMgW8VkHK/XSjJ9yT9J8hVBvihT+YPfaJqq/+8KFO8Zc2Ks6+8toILV+rM8IZUTBx4
- b3yQEI2ujUoic1LldErbALzyJxWf+/UJskiGthN28B9hqGJ8fTbLDhNltMToxVjsRPlb
- 0MHjv+Gsq1g6PPtyk6IA2eTHfPz6BYQuJX8XX6JRaAneQ7f8lTa3Ykrm/Am9ymOtzIga
- Oa4bU048U391aJHCpnIWSH8+9vOQ8q/oy7sWKTqYowD7PX+kXfzfbMe+B78TDYUhGv1I
- ukOQ==
-X-Gm-Message-State: AOJu0Yx48wTstGRxdSHxksGRAndaoME+fs2nd7tsezrXr3zllhBlPgMI
- FNyaFGmXXGaWMs2gyrCi2G8pC2aobhoFTJEvmi9+RQIcA8C58KnfrmDuW7gYtikqX3GtjuWzbyr
- OZMsg
-X-Gm-Gg: AY/fxX6gNkAf9jxF5Q/jz29xH+D16RkZWX75jxDUWxe/5ueot8/RjWtl+CF0o4wTp0F
- +ZJmScTEUXLlOPZuuDNgyEIyqXlIZat/4TRliWS94Np3TzcQp7cfcHG91OMOuKAOUXeCoCQrRny
- LuoB1CtnljAZhIPoMsLU3izkEdeoQXGdEyTeeexm4Mk6q5DeRTl2fmlmvBySGHgnqs2EylEu8TD
- 8FvCStuEmmn0djE4M6veuLOt+bnCMZGqZ1fS0tJywfNCmRTFqf0ucO3txXbqRItm2frtG67kkTd
- jQNSwnR9LSiKjX3AElmYq3iOuwG3CKIECwwBT/r8Ds4QnS0PDB0gAackQfZ6cfM5bPEGlMJZquo
- 8A06OxeKgNTRgoSMd3zYa4XRjT7js4iXw+p0HT1jU9QhfoS0neaeQeJnvf7sva7iEBVG6JywNE9
- 89YXb2u4hFRKl7etD1UjwORYybbN4Gtgk92tsuc5pQTJ6atHc4FM42VwrEVJnsbKcDywECzCT0l
- r3QKbrCtKUYeEa1pfHr7ltnViNaX+38BvgqZpPfkSt4ig==
-X-Received: by 2002:a05:6000:2505:b0:42f:f627:3aa7 with SMTP id
- ffacd0b85a97d-4356a0298d8mr3229604f8f.16.1768567211519; 
- Fri, 16 Jan 2026 04:40:11 -0800 (PST)
+ bh=a0wgjb5PW8AjpxMtNWI1pQBRJl7CsYfLGacp91OKMNE=;
+ b=GebLhwkCSLG5jOGNevCNVB2CiJyemqM7nGchgsinad+6RdqBZUsNxlXDrrXkx2BAnL
+ ktdZVX04HcGeM48gq8G5uz896o6LLan+pFW3EZVaLkXFbe5BGbJZ6WKJcZZcHmtyNYWf
+ H9F4wFi8ilXirUhM3VWI51fcs6YyQCfLdm1VFaJkoMCahC4fEOO+SluRJ8aufzloBUGQ
+ ga1wkSX1BU3OeekBgPaPFD6a1wQSiaQBQ7RUDUfY/1mi89N4d8a1OCxi3QLcHMaUQ20S
+ AmC4J5P4s5QIOE+GWpcFusb9WYQoq1Omf16PvacOEooQFNz72aicJX1ZDrcSYFhZ+lin
+ 7TvA==
+X-Gm-Message-State: AOJu0Yy4z+K054EWEARdsSvTEEVOhUx9j5CG1aK/aTiy+7TP6SHUiCdY
+ mwVG0n3NRFAh8x+Q7Hg2rC+7+n7U4lK8PSsCjFGWLgf9LIJAGFclEsuDWXCEWsNYYGS5o1Z/f2I
+ ddK3x
+X-Gm-Gg: AY/fxX5+nKl9+w/rgIHxQ2n6axhdz0cPjpY1FbSIsIw5969P4ck+0oSSJchIuiRJbiQ
+ +dRldA2i8WFLi7YRuokDVZM92NyFI+ECHpW3sKA2hAFu/QLvCCQVXNkImvfudRg67UvXD2L0i8m
+ zrNyUr+iqPkGRhJ4t8ZK3NNEiQbWea0dGci2wOqwH4NrNO0K5yrwaiDOYQLgXCT1iCOq51J4IET
+ NEp1aPutzSWT6GO1ebqZ8vFlpwrmbOK5doryd984LJZ9w5tSI+A6NywLIl2hO3+evObiVFYJw9y
+ a/MZj4G/t598UOCPYd9ddFuGizvWLrtfzAc4X+9ptfxVpXAf5M3Y0qHdyWvEG/xw25ktzYP10cL
+ Pw5u1ifV0LckRuSF1mV5lOUVP491feiu4JSW6GSfWUXQJMwgu3TRUx8mKhAQ4meLJgChu+Ti5Nw
+ XVZIdTpaVjMtpBCflZuLQxqXsr8lItdl8aekS9n/KIGGm5r2LfMHDaro10u26pcSR/PM7qh1UBZ
+ eM74zJ1hJPTb1omgHTBl3bH7HYSuncoxeaoXRQPIuMVzg==
+X-Received: by 2002:a05:6000:2f83:b0:430:fd9f:e705 with SMTP id
+ ffacd0b85a97d-4356999c900mr3789276f8f.27.1768567209547; 
+ Fri, 16 Jan 2026 04:40:09 -0800 (PST)
 Received: from mnementh.archaic.org.uk
  (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
  [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356992c6f2sm5192566f8f.19.2026.01.16.04.40.10
+ ffacd0b85a97d-4356992c6f2sm5192566f8f.19.2026.01.16.04.40.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Jan 2026 04:40:10 -0800 (PST)
+ Fri, 16 Jan 2026 04:40:08 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v2 4/6] scripts/clean-includes: Do all our exclusions with
- REGEXFILE
-Date: Fri, 16 Jan 2026 12:40:03 +0000
-Message-ID: <20260116124005.925382-5-peter.maydell@linaro.org>
+Subject: [PATCH v2 2/6] scripts/clean-includes: Remove outdated comment
+Date: Fri, 16 Jan 2026 12:40:01 +0000
+Message-ID: <20260116124005.925382-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260116124005.925382-1-peter.maydell@linaro.org>
 References: <20260116124005.925382-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,62 +104,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We currently have two mechanisms for excluding files:
- * the REGEXFILE which excludes by regex
- * special cases in the "loop over each file" which make
-   us skip the file
-
-Roll all the "skip this" cases into REGEXFILE, so we use
-a single mechanism for identifying which files to exclude.
+Remove an old comment suggesting a manual shell line to use to find
+files to run the script on. The script's exclude-list and its
+support for directory names make this irrelevant.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- scripts/clean-includes | 24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ scripts/clean-includes | 9 ---------
+ 1 file changed, 9 deletions(-)
 
 diff --git a/scripts/clean-includes b/scripts/clean-includes
-index 5ab3b07196..a45421d2ff 100755
+index 07c0fd44e4..568033ee9c 100755
 --- a/scripts/clean-includes
 +++ b/scripts/clean-includes
-@@ -104,6 +104,15 @@ grep -v '^#' >"$REGEXFILE" <<EOT
- ^ebpf/rss.bpf.skeleton.h
- # These files just include some other .c file and have no content themselves
- ^linux-user/(mips64|x86_64)/(cpu_loop|signal).c
-+# These are autogenerated headers
-+^include/standard-headers/
-+# osdep.h itself and its friends are expected to include system headers
-+^include/qemu/osdep.h
-+^include/qemu/compiler.h
-+^include/glib-compat.h
-+^include/system/os-(posix|win32).h
-+# This is for use by plugins, which are standalone binaries
-+^include/qemu/qemu-plugin.h
- EOT
+@@ -39,15 +39,6 @@
+ # removed.
+ # Other files (including C++ and ObjectiveC) can't be handled by this script.
  
- # We assume there are no files in the tree with spaces in their name
-@@ -137,21 +146,6 @@ for f in "$@"; do
-     *.c)
-       MODE=c
-       ;;
--    *include/qemu/osdep.h | \
--    *include/qemu/compiler.h | \
--    *include/qemu/qemu-plugin.h | \
--    *include/glib-compat.h | \
--    *include/system/os-posix.h | \
--    *include/system/os-win32.h | \
--    *include/standard-headers/ )
--      # Removing include lines from osdep.h itself would be counterproductive.
--      echo "SKIPPING $f (special case header)"
--      continue
--      ;;
--    *include/standard-headers/*)
--      echo "SKIPPING $f (autogenerated header)"
--      continue
--      ;;
-     *.h)
-       MODE=h
-       ;;
+-# The following one-liner may be handy for finding files to run this on.
+-# However some caution is required regarding files that might be part
+-# of the guest agent or standalone tests.
+-
+-# for i in $(git ls-tree --name-only HEAD) ; do test -f $i && \
+-#   grep -E '^# *include' $i | head -1 | grep 'osdep.h' ; test $? != 0 && \
+-#   echo $i ; done
+-
+-
+ GIT=no
+ DUPHEAD=no
+ 
 -- 
 2.47.3
 
