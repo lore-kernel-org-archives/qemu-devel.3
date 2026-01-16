@@ -4,134 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B838BD4A609
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9336D4A613
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:54:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgfWh-0005LO-RS; Fri, 16 Jan 2026 03:49:51 -0500
+	id 1vgfbB-0000lM-1n; Fri, 16 Jan 2026 03:54:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1vgfWf-0005KV-RY
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:49:49 -0500
-Received: from mail-westcentralusazon11010040.outbound.protection.outlook.com
- ([40.93.198.40] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgfap-0008AS-I0
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:54:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1vgfWd-0006l5-Ho
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:49:49 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lca3vBuc3KXRe2OUS1UQp7GndOmvYzB3hstW6QWPdBXNtxZ/OsP4tdwdw5lgz9RnPOhRqKTHlS2/O9NixtAlLujaphkN6OFsNBwOGj3dJjDe0jPmfKVh6lAvc++sejscyVKiv4HOa9p+Wj/Cqg2XO4TrtKxf+RQFHTwRQ/rZBhG/FsKgt68wSTpN8CxPtGLXy/ZUigcuv81rennBBxiHtmFTU/Jqj0k5ytZVNpfD5Lx92AHWCTHIePBpOnaDwIObnGTQi/HDjR5PpbA4O0b8V0vmuQykwDRDD4G359bj6nTqOp27ee1qRy+DHcRhQY2asJw2jZ2CK5WfYg9k1ADsPQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LCILyFXJRp68SbHxjGsc1WH1/xe0lFnQgRepQklgxsM=;
- b=exEoxs5l4rAQG/WWG76IylTVurTOzRAgsOVIA96hJwt9k281KTDiTvR8y1IMJsXgE1xpAj1hkPzQ79LTwM7ChX/xQjxlPnLtJ5Lx0Rp2WT06Pi1CMnkfoUlDda6NiOSxhk/dfW4WkmEBzs/0KTXQIdH2cy6bKG48uaSBVoq2hx+KNCDxw2Uk0njStmqhXQuQRO5JFrbULNLx+/81K+Gp8qfnmN93HqSYiUuTRUu5aeNuylDUh/fB7p8le3MpSeQDn8zt84JPWLH4zb78vGbBCCPLxYsmBXapnEAkhErWhVW6o1vjRXwgXjFa6JwnZaUZbzXXQ4m35tsK+Wib9RZFDQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LCILyFXJRp68SbHxjGsc1WH1/xe0lFnQgRepQklgxsM=;
- b=aMU91o21SaoCQE0iiI0bVmkJu0ANCf5BipltV+TalHZJU3g3A1dP//EIPxx4k5UI0+V/YFpK+hmHUIpSAWk1nw0YOVIcB4BmovFbPg9EYYIjnqGZ9Wbqn+393xM8DOKp5CveXxNRUkUBKA+1ubuqvRFyXifOz1MbCeNoN96sdt0=
-Received: from BN9PR03CA0498.namprd03.prod.outlook.com (2603:10b6:408:130::23)
- by BN7PPF62A0C9A68.namprd12.prod.outlook.com
- (2603:10b6:40f:fc02::6d2) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.6; Fri, 16 Jan
- 2026 08:44:43 +0000
-Received: from BN1PEPF0000468A.namprd05.prod.outlook.com
- (2603:10b6:408:130:cafe::c5) by BN9PR03CA0498.outlook.office365.com
- (2603:10b6:408:130::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9520.6 via Frontend Transport; Fri,
- 16 Jan 2026 08:44:38 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BN1PEPF0000468A.mail.protection.outlook.com (10.167.243.135) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9542.4 via Frontend Transport; Fri, 16 Jan 2026 08:44:42 +0000
-Received: from honglei-remote.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Fri, 16 Jan
- 2026 02:44:31 -0600
-From: Honglei Huang <honghuan@amd.com>
-To: <alex.bennee@linaro.org>, <dmitry.osipenko@collabora.com>,
- <odaki@rsg.ci.i.u-tokyo.ac.jp>, <Ray.Huang@amd.com>
-CC: <mst@redhat.com>, <cohuck@redhat.com>, <pbonzini@redhat.com>,
- <qemu-devel@nongnu.org>, <honghuan@amd.com>
-Subject: [RFC v6 3/4] virtio-gpu: Update Linux headers to add ROCM capability
- set
-Date: Fri, 16 Jan 2026 16:44:08 +0800
-Message-ID: <20260116084409.326062-4-honghuan@amd.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260116084409.326062-1-honghuan@amd.com>
-References: <20260116084409.326062-1-honghuan@amd.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgfao-0007Jk-Ab
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:54:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768553645;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tSaIy5HRARgF3pNVwoCgJGsfH2y79VcUubW46gs7B/o=;
+ b=RC26brOuJHCeV/ZYgGG3KpiNOugj47UOMW7kohzvz83afuNTmIJ9RhKQnvwVTgXHy+I/H3
+ zk7v+RMEZuXFe6KA2I9P80iFe7trYfO+FrUW1dSDndp5xmjc6q+Nwo8TQeikihXvDmwTs0
+ X9zY5JzpOYasg9Xu01q9PuEkUCydz2I=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-CXfWKw_8Ofe42aU29Kr10Q-1; Fri,
+ 16 Jan 2026 03:54:01 -0500
+X-MC-Unique: CXfWKw_8Ofe42aU29Kr10Q-1
+X-Mimecast-MFC-AGG-ID: CXfWKw_8Ofe42aU29Kr10Q_1768553641
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B00C21956059; Fri, 16 Jan 2026 08:54:00 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 45C3D30002D6; Fri, 16 Jan 2026 08:54:00 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E9D0121E692D; Fri, 16 Jan 2026 09:53:57 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: dave@treblig.org
+Cc: berrange@redhat.com,  marcandre.lureau@redhat.com,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 3/4] hxtool: Split srst/erst add checks
+In-Reply-To: <20260116005050.376616-4-dave@treblig.org> (dave@treblig.org's
+ message of "Fri, 16 Jan 2026 00:50:47 +0000")
+References: <20260116005050.376616-1-dave@treblig.org>
+ <20260116005050.376616-4-dave@treblig.org>
+Date: Fri, 16 Jan 2026 09:53:57 +0100
+Message-ID: <87a4yerl96.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF0000468A:EE_|BN7PPF62A0C9A68:EE_
-X-MS-Office365-Filtering-Correlation-Id: ff26ce7b-f6ae-49c1-79f9-08de54db7e7c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?ZOEYP3rLj2DzzgS6nED0qG7rYAWGhrXOLynH04RkPYw8RzdSaVddYm2HwJyH?=
- =?us-ascii?Q?jVPn0URzkvizkYvD9ANzGSJ9U1obWAN9s0hxBwkBtUBh1te7TG45A9fXS0Qk?=
- =?us-ascii?Q?6iD2Nubu0aoeztTw0AeOJzHfxDvUtvb12nkmfDXkyqtIgfo+3z+QLi3MusFD?=
- =?us-ascii?Q?6vKdsU67kE8fYr0dk15QEVlANruRseKIKkcPYc9EA4zv1Qp6fqOlfPhZx/wN?=
- =?us-ascii?Q?dQnSCZGmZ0QEPQ/ekvBl7nuW3kPRZQx1bWRe/C0rL5bMO2Z3XevnG0tmOeWN?=
- =?us-ascii?Q?z/26UHMdix2jATdzOLKnUHs8tIX8ik/cATYS+NgUkHqAR7MhWzHugw2IP7Un?=
- =?us-ascii?Q?X1/EvTYpNkY40HFzgWaFa6KLmV1slApuhlLGBBwODg61gkOmTAIYKF0Y+gZj?=
- =?us-ascii?Q?Otl8LVr5IAYkkxhe+Ok37aCyoV4mNpVvOE85BAeIl0uCeu4EdqU+u0DxxzF3?=
- =?us-ascii?Q?Ngl5vUW2Dw0herax99Hy8SslGEw8Gehd8vp85d93dYv/DwJB2Qf/tAgtNqNv?=
- =?us-ascii?Q?zEvzTlyZSf1LZm/p43e7d6lblTUTvpUxa6BqQ4GcxaKPiax0vZOAuClrZFvh?=
- =?us-ascii?Q?YqU6yzV6OEdo/CLcQUB7SZjT6TKwHg9A/EyydKYesHmADSVhQKaaCf5d0AF2?=
- =?us-ascii?Q?SXR1Mu0+UqVv5nu0QAUcXz+JyjBQuH3247k4CY8KJqPtGe12RdPkdVEsqqhv?=
- =?us-ascii?Q?6OrxOEDg6wyV2hzM6qjOhcKB5EyJkEZlekttNcnE9xwNLtNn1TzhQo8Qr6zo?=
- =?us-ascii?Q?kkgRY6aTxOwx6YBmVitfubAZSb+umfiPKI5lf8TLlmlmxkTiYHCFNATVpVS5?=
- =?us-ascii?Q?KUA7a9qX+sBaT9EjNUCT2TNYWn7qE0gkR7k5NbNeMT1GHDxP2cpKF7ippefx?=
- =?us-ascii?Q?S6pR+6PbW9RswdHcZIctUSyWBAGmxy1Ersacm839LnPYDX7fAHwzE3oNWwfl?=
- =?us-ascii?Q?njleb0I1/okF0Fthd8HXc5/zVmTFMXCnYQexGDGu6ndKbhDX9uk6V8q3Eqgu?=
- =?us-ascii?Q?vjsG0GfngSmiywNS9toBgYvUgQZCk7ztc9SbWSLYhEmarlF+ld0zLxZUJA7/?=
- =?us-ascii?Q?DHIt2Qzq/DDx7ScZAPwsUgyyPQdNCGdVWM/CG+KHHFuU1dUitZ3psgXBpOs7?=
- =?us-ascii?Q?wKF/sVWrOr9g+kxOVQbjYRQpy3NPSOe67j3mrHlNmE8Qmmi/EawJFj5chObu?=
- =?us-ascii?Q?xj5gM9eTJJgKrXjatflwbQJnyG8ZZpRpTv2Iz5rtnjHzUvmUdcSf8cmLDj8G?=
- =?us-ascii?Q?BF9tqIjAKmYGSBW+sNPpEYuXDluyAOmHaItdBhYP/nh433TkPrdwS0PnlACv?=
- =?us-ascii?Q?aQHRts+AiIl6RdJMySqcTwiTBv5G4PUjgMWCJYj87vTw+EVBEi6qz55I7IV0?=
- =?us-ascii?Q?E+2HJ8AFzPmBR8c4B3AH8/EnCGw1cba9wRVv6DGHKBuLHeiFHO1n57Q637e+?=
- =?us-ascii?Q?sgDjl7+3cG8MNfmG6Eps5DdMWCke25n/ViLH45yV0UZTiLw9eWUkd3Gf4BeJ?=
- =?us-ascii?Q?+RByfBkzb/Dwd5ICUQ3qQwbXKdVbdeY7ELQvDXUf97vUOMOhQSfnvBJo3f/l?=
- =?us-ascii?Q?FTUj2uKhn8M5EjTccuVUzrSHtHqc5/6/sMRgiKLVOyLYFhlavhaXgc5gzWU0?=
- =?us-ascii?Q?LPGKARpn/rsx2q7Yc9sjvyWyR79y2I+eP3Rehp7k7VixDPQKyapjEuxqB5EE?=
- =?us-ascii?Q?kxbOhQ=3D=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jan 2026 08:44:42.9413 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff26ce7b-f6ae-49c1-79f9-08de54db7e7c
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF0000468A.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPF62A0C9A68
-Received-SPF: permerror client-ip=40.93.198.40;
- envelope-from=Honglei1.Huang@amd.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -155,28 +85,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update linux header same with the related linux patches.
-kernel headers, which introduces:
-- VIRTIO_GPU_CAPSET_ROCM capability set definition
+dave@treblig.org writes:
 
-Signed-off-by: Honglei Huang <honghuan@amd.com>
----
- include/standard-headers/linux/virtio_gpu.h | 1 +
- 1 file changed, 1 insertion(+)
+> From: "Dr. David Alan Gilbert" <dave@treblig.org>
+>
+> Split the SRST/ERST case and add some checks.
+> This is mainly to make it easier to add some checks in following
+> patches.
+>
+> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
 
-diff --git a/include/standard-headers/linux/virtio_gpu.h b/include/standard-headers/linux/virtio_gpu.h
-index c40961bee5..f4f0a821ba 100644
---- a/include/standard-headers/linux/virtio_gpu.h
-+++ b/include/standard-headers/linux/virtio_gpu.h
-@@ -313,6 +313,7 @@ struct virtio_gpu_cmd_submit {
- #define VIRTIO_GPU_CAPSET_VENUS 4
- #define VIRTIO_GPU_CAPSET_CROSS_DOMAIN 5
- #define VIRTIO_GPU_CAPSET_DRM 6
-+#define VIRTIO_GPU_CAPSET_ROCM 8
- 
- /* VIRTIO_GPU_CMD_GET_CAPSET_INFO */
- struct virtio_gpu_get_capset_info {
--- 
-2.34.1
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
