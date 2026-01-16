@@ -4,76 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AF92D4899A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B971AD4899A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:41:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgj4K-0008H1-Qs; Fri, 16 Jan 2026 07:36:48 -0500
+	id 1vgj8D-00028B-1t; Fri, 16 Jan 2026 07:40:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vgj3T-00085R-9a
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:36:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vgj3R-0003z1-7u
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:35:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768566951;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=MxHPyNr8RGPpOoO6uRu8LEpTsn9JVEirCrQP9JQAHDE=;
- b=LtoWzdCm7p1Tq8Fo1ldQNeUzybmZ8wZfJEb+7iOJT5CB3WAxOGCkqI4nMQ4bpqLeEwdWVL
- o2S+Jo+gyYHl3z/14JQO1WXMwohuV45oKJELTIESpHDueoNb3f0OmCsWE3ApZ4M7/cdK3p
- YG7Tl/J/Y9g/14mniXD4l4/NCAgPnfA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-au4ywnOMPq2PRu_TLBJYfA-1; Fri,
- 16 Jan 2026 07:35:49 -0500
-X-MC-Unique: au4ywnOMPq2PRu_TLBJYfA-1
-X-Mimecast-MFC-AGG-ID: au4ywnOMPq2PRu_TLBJYfA_1768566948
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3A93519560A3; Fri, 16 Jan 2026 12:35:48 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.135])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D0E8A1800665; Fri, 16 Jan 2026 12:35:45 +0000 (UTC)
-Date: Fri, 16 Jan 2026 12:35:42 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 00/11] plugins: enable C++ plugins
-Message-ID: <aWownlTDHCx10w9I@redhat.com>
-References: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vgj7b-00021K-Ma
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:12 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vgj7Z-0004fd-3L
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:40:10 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-432d2670932so1634962f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 04:40:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768567207; x=1769172007; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3uqa3yy6jOWl6xd50zEi7jWQQ+5qpcwUzSxH9gQWYcY=;
+ b=LXsgjeogmIgJJO/F7BMaI5bktot2OkT2xdXnE8tsVoUOuQxI4LK0AHf9DqNY44MS1U
+ BMerUsPUl8VIbO2U4qLYPDOPqR1RG06T+5JX5T8AGmc6Xq67j9HQWHKk3XRM8GGgZtnq
+ t6VX48JcNQYfWxgcXRzSWowuFng6ttEmQLPjF26iIhWjMPdvAdXZhvsH55cUut5Im9kA
+ UCXmzuqgCsaCm/WY/c0YaqG4rSQMx2Nj/UDL5Qp1/qKBqpt/WF/YWqd3hvf3JEsTY5h7
+ 7t0CrUC4/PMaykPNGkGPzMa7inDxvSCXU+IjPNdloQWIKS4Lapvo7Fhh7RIK+XVK4Nk1
+ Ae+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768567207; x=1769172007;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3uqa3yy6jOWl6xd50zEi7jWQQ+5qpcwUzSxH9gQWYcY=;
+ b=XTzQtxiBGiZp3Mxd0G20rDU06mCGE8sP2kQIg9kuvRNl3rJO9yhDtJAG97w5khhHjL
+ IZg7BloVGSgMdDVzE4gPTFR5U0ZMnXyVnnGrrcB4rxTtNNGH6CYjK2ZKxbD3MegBzDtt
+ bJRNrz75U5YDszY9q6YAyMISQTEbjZA8ZxVfPH/6STghSNJneVjh2gcPZmXzbc4kqWJS
+ u5Rx2QntS49y0IYXaPFKSWzbBuSCZiaYv7vt1QfNCBa58oiW/NzfaziWAEKE+G7IPJMw
+ fCMT72wpNJ/u9eMnejRRadQaCJxOQJtu7iBPLKQFtlZLnS+iYWOgKNjHdiBYSsIgtsRC
+ 871w==
+X-Gm-Message-State: AOJu0Yz0KhAnBvjvUyJSxmGU+MhgNyENWDl3GtPA6k7O1OppsJoA/GNo
+ r0ipDxhcRuIykDPCg60MMppzj51WmYTkhVqqgTnZGhYDuy1RJtL92TXlVa+5kHskOxdy1QD5BI6
+ dtC7d
+X-Gm-Gg: AY/fxX54NCfNaQa8voOR7ksvBcXJF3WgOhidM21xkiYp08vlB33rQPGPff3o+kcFT/P
+ p12arEq31m3efc71BRIg4t2V4SPdXHtQR8sTEnufDQFOaEydmbH6sTZ9nFZcdQHnsysqQ99sALk
+ FKvqoF3XDR8NsEa4m/ByKiI/V0cb67YaE90Z/3UYh+Xfj9Bv0+BHf2LT8vEXXsOHX3Rx1ATtmwP
+ K/fXElnq2KHJ3cisaFdfaYqIU85X1OxwBRFb/Y1UyGmvWhjmJHN5DMsF7U5reWjKEgfWhKi1cSG
+ ulNhx6Upoi9v8Fr9PguvEK7nn8b0p21HPG9l2iTY6Wl/a6jf0MRDsQOnp42DwnOI+Mypurl4a5M
+ 28orIvpeq8t3yWtIXTl0GDmFUkf1mhxAYrFRb7NM2uIkAGctEkkb8xU9cDmIni+j2BUnPEgccFu
+ XHA89ItQua6qjbNZSF0ikqw4OZ4l/77QWmU+N5Zo11IWRlDwAErSM4xApR8IJAjPXa1LV/NUDgo
+ 5RUC4C1PHUlSD4ROfJX3ZntUugukIL3RyJMTOArbpuBlKGn/N8Ysuaw
+X-Received: by 2002:a05:6000:2512:b0:430:fa9a:74d with SMTP id
+ ffacd0b85a97d-43569998efdmr3454760f8f.24.1768567207255; 
+ Fri, 16 Jan 2026 04:40:07 -0800 (PST)
+Received: from mnementh.archaic.org.uk
+ (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
+ [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4356992c6f2sm5192566f8f.19.2026.01.16.04.40.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Jan 2026 04:40:06 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH v2 0/6] scripts/clean-includes: Misc improvements
+Date: Fri, 16 Jan 2026 12:39:59 +0000
+Message-ID: <20260116124005.925382-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,69 +98,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 02, 2026 at 01:47:13PM -0800, Pierrick Bouvier wrote:
-> Writing plugins in C can be sometimes tedious, especially when using Glib to
-> keep track of execution state. We can directly use the same C API but write our
-> plugin in C++, benefiting from its great standard library offering strings,
-> smart pointers, data structures and synchronization mechanisms.
-> 
-> It's common for downstream QEMU forks to provide C++ for plugins, like this:
-> - https://github.com/panda-re/panda/tree/dev/panda/plugins
-> - https://github.com/FlorentRevest/DejaView/tree/main/src/qemu_plugin
-> 
-> Hopefully this will help more people to use upstream QEMU, and as a benefit, get
-> their contribution back and help to develop plugins ecosystem upstream directly.
-> 
-> This series first cleans up build system for plugins, factorizing details
-> between contrib/plugins and tests/tcg/plugins folders.
-> Then, we perform codebase cleanups to fix conflicts between existing headers
-> and C++ headers.
-> After that, we can update the C++ standard used by QEMU, to benefit fully
-> from latest updates of the language.
-> Finally, we define an empty C++ plugin, making sure we can keep track of
-> possible regression in qemu-plugin header.
-> 
-> Note: This series is *not* a trojan horse to bring C++ in QEMU
-> codebase, nor to define an alternative C++ API for plugins. It's just enabling
-> more users to get the most out of existing C plugin API.
+This is v2 of a series I sent last year:
+https://patchew.org/QEMU/20251104160943.751997-1-peter.maydell@linaro.org/
 
-That's somewhat misleading, because as the diffstat below shows,
-this is indeed bringing new C++ source files into QEMU:
+which make clean-includes a bit easier to use and maintain,
+and update the exclude list.
 
-   contrib/plugins/cpp.cpp                     | 119 ++++++++++++++++++++
+All these patches have been reviewed except patch 5; the change
+there is to make the command line given in the generated git
+commit message properly shell-quote the arguments.
 
-and the description above talks about bringing more C++ plugins in
-from external forks, and the meson.build files are modified to
-deal with C++.
+I also have some patches which I have produced by running this
+updated script, but I'll post those separately. The exclude list
+as updated by this series is enough to make all the changes the
+script suggests be correct ones, with the possible exception of
+hw/virtio/cbor-helpers.c, where I'm waiting to find out if we
+should make the change or put it on the exclude list.
 
-We've had a handful of C++ files historically we've worked to
-reduce, with the eventual goal of not using a C++ toolchain for
-any part of QEMU build. Given that IMHO qemu.git should not be
-adding new C++ sources files, even if in the plugins dir.
+thanks
+-- PMM
 
-Since the qemu-plugin.h file should be entirely self-contained,
-do we actually need to be bundling all the plugins into qemu.git ?
+Peter Maydell (6):
+  scripts/clean-includes: Allow directories on command line
+  scripts/clean-includes: Remove outdated comment
+  scripts/clean-includes: Make ignore-regexes one per line
+  scripts/clean-includes: Do all our exclusions with REGEXFILE
+  scripts/clean-includes: Give the args in git commit messages
+  scripts/clean-includes: Update exclude list
 
-Should we in fact have a sepate gitlab.com/qemu/qemu-plugins repository
-where we keep plugins ?
+ scripts/clean-includes | 105 +++++++++++++++++++++++++++++------------
+ 1 file changed, 74 insertions(+), 31 deletions(-)
 
-Since the qemu-plugin.h file is defining a somewhat stable API, plugins
-in that separate repo ought to be able to build against multiple QEMU
-releases, and could thus benefit from not being bundled together and
-don't need to be on the same release cycle.
-
-The main qemu.git CI jobs could trigger testing of a separate
-qemu-plugins.git repo, so we still validate no regressions.
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.47.3
 
 
