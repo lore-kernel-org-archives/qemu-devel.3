@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC732D4A5F7
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2E06D4A5EE
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:37:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgabo-0007Vr-TH; Thu, 15 Jan 2026 22:34:48 -0500
+	id 1vgacA-0000wa-1Y; Thu, 15 Jan 2026 22:35:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgabd-0007Fz-N5
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:34:40 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1vgac8-0000uP-Sq
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:35:08 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgabc-0005ks-0Y
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:34:37 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-7b22ffa2a88so705436b3a.1
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:34:35 -0800 (PST)
+ id 1vgac5-000695-Vc
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:35:08 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7b22ffa2a88so705556b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:35:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768534475; x=1769139275; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768534505; x=1769139305; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KL546BRv3o5TBcmNuNTcD1O7NivqyCwfyc6P5AJbIyY=;
- b=PebdVed6IiAeFlUbg9Y3i0KLuwCTinvPIBb1gbDbIoBnAOHtRTFxiz0t9gEcuGEGkJ
- sSFhhhzPIQf94LA22qkuivpJwz6WsnuOoTSl+xjujhRaulSyobhvmWXbsYLF8GDRP+nh
- ed+NQ4pcNdp/GZpviJCvNLUxOvwzb3QtyumaHLVLrySAv310bDcoJD7lRU/rMaF/IVXr
- QA69pcYcmSj0ayNn4A7DKs4ZZ2I/TPXWzipfpXD54go1DmufDgmpkdEKNvO+jWMjQ5tu
- IG0zm3o/TjMeyJ9bdxC/fUfqWn4blWejcKQnC9R/N/U/cXQEhvCQ8Xp6MLPGM1zqlvUT
- N3kQ==
+ bh=lyHPNybRY+NoN8XylpS1cgArMSCY+8ib77S0l59/9JY=;
+ b=VgYvO0uuJqoKTabj+8oTcr/CS5R3I5LiPhi4MK9Wtvh5XFffp53yQZW6WUOBv0Dcb4
+ hKcMJ35DsRP5M01khRjHYfcBIIltbnF0U8/UjS6qAA73p3ukX12iShMeUuxU59q/6zND
+ 6GIxK2KfJ6f3lX3gqcyii5EPjo2KrsVB19XIsyUS1nS+/21MclaYuVIepmMCDrbIksZq
+ CPcIpY1Xp2tR1DyBN0z6Ylhxjr+NmpfMo/IjIDDBxHUTLiUiQQjLn3pAFdWNa/Fu09Fe
+ Jnl9koSlbG3ZdSYyJZrxpta8FSfm7XVss/GEpi9puV1O9jb6wLMu25gbS1ns2G/Flced
+ S0tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768534475; x=1769139275;
+ d=1e100.net; s=20230601; t=1768534505; x=1769139305;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KL546BRv3o5TBcmNuNTcD1O7NivqyCwfyc6P5AJbIyY=;
- b=UaLqJhz5+Lfonhw56w3gaM0XYY7uPJnTYmWM5hoC77kGjIVC+Z6DZe4HNrc4eCsrL2
- 7XV7KJZclMbwinSdU0MtCU4OpVRH4k4sRknBbVLea1tEvoiZybs6stQrA/rMOMsTm0r0
- 154JSBqd748+tfq551t7KOr/yAvhGrKD0OPMJcr6bDiK0Q2RiCEHSIwJCIDVncUjTUoP
- tYSyb5Qgemosfn3EmRRRkY08hXmBzjQSi0kacuQao7PMG+l2VaaMf941JOveE/NmX07P
- fEhiwnD86ooYIlxzJ3kk4+gZlmFzPzHMh7yrsxdBB3oG6/v/rCi0mGmh5JZBlCVblWrp
- zNzQ==
-X-Gm-Message-State: AOJu0YyCnqBPTlbUvnhifU/WE3gIv1VtX0TNLmyfyOfwJ5B42nT0Farl
- e31omeaOqUx04LYzHecWTKIhWTED2YWi2IAk47FBwVQeA2ArEw0pwH3v9t3/unzB7RXbSApm1LS
- +dEmxNn3q5A==
-X-Gm-Gg: AY/fxX7wtR/GA6lRTK4LDeMQh6q/M15OfyfSDsIqAJUBI4GMOOTbRyPt8XVQIpDn7D0
- sVyM65qUM02lq+nydUBll/iCgeKCyKKk7jdJSiRhbNwdOFJ+5O/gDrQietUVFw3rNe1ID/i96TQ
- nA44xHvfnpZGZUV2KbTAd6HbyOQmk67sqI4GKv2dNhIR72LmXuHmD4z4XvgAz8mcVs1XrFPN/MI
- 3UbH8Ed6PtnfhGbDVvzBW4OTJHVnC+Sg6BzP9hR4vlbTbSjhwNtddKE4k2GuiqcS8yN8keiFKLn
- njA6YibUqAJw2KSJ0URZetOJbY7t/fSCHA+jYjglb78je39mZobbGW1u691oH2+IWYrlmSb1Rj4
- NV9Tmj+MIXalnaGXxxlV3kFOpb0UoSi2Duil3w3geTQQZq+1Xdbblmk0Vfpmzqu4rE17L4QrNK2
- 2tsGJdGFYPjKJHygrVYA==
-X-Received: by 2002:a05:6a00:2e90:b0:81f:44f9:7c1a with SMTP id
- d2e1a72fcca58-81fa1771ec6mr1122948b3a.3.1768534474569; 
- Thu, 15 Jan 2026 19:34:34 -0800 (PST)
+ bh=lyHPNybRY+NoN8XylpS1cgArMSCY+8ib77S0l59/9JY=;
+ b=reP7SxLndpUXHjlm692OUhwkGWwgugyDgP4/c8MYw+b7doMm6HPVu+08fctEXLbOQM
+ usQZ+3okrtBc3+geMfVU4PQfiR3pgTobh83ZbvBi5qNcZMv7/ZvSjCFOIb2r+3xoeHGd
+ wEKZBOYOXbwTZLSf1qwvrTBplW+xxNC7QlLXO0+VWgHM+BrIGsQro/7eR4abBTF3KIM7
+ H0rKV/BZ5AoLuOQQymAQTC8j5KzROZWsh2dkDL41n0r5wdNBqVdIg3dTP5e4PgcZyfrj
+ 9xevL8/+IwJu1LWTeY3LH5xf3/JIz/GvT49wrihRuNobG14HGf7UOJMWd6jr8xR4r2pX
+ 5fyg==
+X-Gm-Message-State: AOJu0Yy9xkibhQQ3nYSLZDLd4FRl8l0ulga1mFOlwXuNnB6gCptlPPeb
+ p0KTa0EOr52R7zjnhkZMtI2M/UynN0eBSlsqjP9YosxVlEd6wefN64/SFS/bS49X8Wd3ncclGyC
+ C7UV7Dalflg==
+X-Gm-Gg: AY/fxX6dNdVcR7w67LTuL9M+pwtxS7ZaZhHnelojvKoAWwoJRX5ET8Wd578uCvyqRVt
+ ZG3qexxCfDcxLqn9lhT0Sn4jvx+wAQyEpwU1uXmoR8Umm/5hjcWywuJ9E1Jv1m/PxwkTi7EvQth
+ pwo9HPgU5+d7RI/BIxsLdvdinbxa2SW1dSm7vDb870eJ37DtVwhuVN6oLuO08kmN8v4oBv6VY76
+ 9FXO9cTKzAcOuHofiGKqX5mTuckAH3TrrDLGKI9Jjywm/PnKLb7b+7QHVp0tu8sC4MTps8E+0XR
+ O/sSAIFzl1rnWTNoM9IVl9dU7Jv+bN6H9Fnb4SosM0tjLRUUruJz5p0lX2DCPPRiH4tH2qYX1/X
+ cPTAvkvH+vIqjDwqtxeUwhZK8IfGy2JnHwBG2wsBz8veAHNvVxNHTQ0YCdVDsJK3k4bEHH96nHs
+ 6e/Zsw+bz4gFVnvLbqNw==
+X-Received: by 2002:a05:6a00:3926:b0:81f:b97:14a with SMTP id
+ d2e1a72fcca58-81fa189099fmr1161114b3a.61.1768534504507; 
+ Thu, 15 Jan 2026 19:35:04 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81fa12b5c67sm683372b3a.69.2026.01.15.19.34.31
+ d2e1a72fcca58-81fa12b5c67sm683372b3a.69.2026.01.15.19.35.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 19:34:34 -0800 (PST)
+ Thu, 15 Jan 2026 19:35:04 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: ktokunaga.mail@gmail.com, berrange@redhat.com, pierrick.bouvier@linaro.org,
  thuth@redhat.com, pbonzini@redhat.com, philmd@linaro.org
-Subject: [PATCH v2 20/58] meson: Drop host_arch rename for mips64
-Date: Fri, 16 Jan 2026 14:32:26 +1100
-Message-ID: <20260116033305.51162-21-richard.henderson@linaro.org>
+Subject: [PATCH v2 28/58] tcg: Remove INDEX_op_dup2_vec
+Date: Fri, 16 Jan 2026 14:32:34 +1100
+Message-ID: <20260116033305.51162-29-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260116033305.51162-1-richard.henderson@linaro.org>
 References: <20260116033305.51162-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,131 +100,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This requires renaming several directories:
-tcg/mips, linux-user/include/host/mips, and
-common-user/host/mips.
+This opcode was exclusively for 32-bit hosts.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/include/host/{mips => mips64}/host-signal.h | 0
- tcg/{mips => mips64}/tcg-target-con-set.h              | 0
- tcg/{mips => mips64}/tcg-target-con-str.h              | 0
- tcg/{mips => mips64}/tcg-target-has.h                  | 0
- tcg/{mips => mips64}/tcg-target-mo.h                   | 0
- tcg/{mips => mips64}/tcg-target-reg-bits.h             | 0
- tcg/{mips => mips64}/tcg-target.h                      | 0
- MAINTAINERS                                            | 2 +-
- common-user/host/{mips => mips64}/safe-syscall.inc.S   | 0
- configure                                              | 8 +++-----
- meson.build                                            | 2 --
- tcg/{mips => mips64}/tcg-target-opc.h.inc              | 0
- tcg/{mips => mips64}/tcg-target.c.inc                  | 0
- 13 files changed, 4 insertions(+), 8 deletions(-)
- rename linux-user/include/host/{mips => mips64}/host-signal.h (100%)
- rename tcg/{mips => mips64}/tcg-target-con-set.h (100%)
- rename tcg/{mips => mips64}/tcg-target-con-str.h (100%)
- rename tcg/{mips => mips64}/tcg-target-has.h (100%)
- rename tcg/{mips => mips64}/tcg-target-mo.h (100%)
- rename tcg/{mips => mips64}/tcg-target-reg-bits.h (100%)
- rename tcg/{mips => mips64}/tcg-target.h (100%)
- rename common-user/host/{mips => mips64}/safe-syscall.inc.S (100%)
- rename tcg/{mips => mips64}/tcg-target-opc.h.inc (100%)
- rename tcg/{mips => mips64}/tcg-target.c.inc (100%)
+ include/tcg/tcg-opc.h |  1 -
+ tcg/optimize.c        | 18 ---------
+ tcg/tcg-op-vec.c      | 14 +------
+ tcg/tcg.c             | 94 -------------------------------------------
+ 4 files changed, 2 insertions(+), 125 deletions(-)
 
-diff --git a/linux-user/include/host/mips/host-signal.h b/linux-user/include/host/mips64/host-signal.h
-similarity index 100%
-rename from linux-user/include/host/mips/host-signal.h
-rename to linux-user/include/host/mips64/host-signal.h
-diff --git a/tcg/mips/tcg-target-con-set.h b/tcg/mips64/tcg-target-con-set.h
-similarity index 100%
-rename from tcg/mips/tcg-target-con-set.h
-rename to tcg/mips64/tcg-target-con-set.h
-diff --git a/tcg/mips/tcg-target-con-str.h b/tcg/mips64/tcg-target-con-str.h
-similarity index 100%
-rename from tcg/mips/tcg-target-con-str.h
-rename to tcg/mips64/tcg-target-con-str.h
-diff --git a/tcg/mips/tcg-target-has.h b/tcg/mips64/tcg-target-has.h
-similarity index 100%
-rename from tcg/mips/tcg-target-has.h
-rename to tcg/mips64/tcg-target-has.h
-diff --git a/tcg/mips/tcg-target-mo.h b/tcg/mips64/tcg-target-mo.h
-similarity index 100%
-rename from tcg/mips/tcg-target-mo.h
-rename to tcg/mips64/tcg-target-mo.h
-diff --git a/tcg/mips/tcg-target-reg-bits.h b/tcg/mips64/tcg-target-reg-bits.h
-similarity index 100%
-rename from tcg/mips/tcg-target-reg-bits.h
-rename to tcg/mips64/tcg-target-reg-bits.h
-diff --git a/tcg/mips/tcg-target.h b/tcg/mips64/tcg-target.h
-similarity index 100%
-rename from tcg/mips/tcg-target.h
-rename to tcg/mips64/tcg-target.h
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c58fa93fd5..d3e6041186 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4074,7 +4074,7 @@ R: Huacai Chen <chenhuacai@kernel.org>
- R: Jiaxun Yang <jiaxun.yang@flygoat.com>
- R: Aleksandar Rikalo <arikalo@gmail.com>
- S: Odd Fixes
--F: tcg/mips/
-+F: tcg/mips64/
+diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
+index fc1270f01e..28806057c5 100644
+--- a/include/tcg/tcg-opc.h
++++ b/include/tcg/tcg-opc.h
+@@ -130,7 +130,6 @@ DEF(qemu_st2, 0, 3, 1, TCG_OPF_CALL_CLOBBER | TCG_OPF_SIDE_EFFECTS | TCG_OPF_INT
+ DEF(mov_vec, 1, 1, 0, TCG_OPF_VECTOR | TCG_OPF_NOT_PRESENT)
  
- PPC TCG target
- M: Richard Henderson <richard.henderson@linaro.org>
-diff --git a/common-user/host/mips/safe-syscall.inc.S b/common-user/host/mips64/safe-syscall.inc.S
-similarity index 100%
-rename from common-user/host/mips/safe-syscall.inc.S
-rename to common-user/host/mips64/safe-syscall.inc.S
-diff --git a/configure b/configure
-index e9d0b9e2c0..04d0b214b6 100755
---- a/configure
-+++ b/configure
-@@ -400,10 +400,8 @@ elif check_define _ARCH_PPC64 ; then
-   else
-     cpu="ppc64"
-   fi
--elif check_define __mips__ ; then
--  if check_define __mips64 ; then
--    cpu="mips64"
--  fi
-+elif check_define __mips64 ; then
-+  cpu="mips64"
- elif check_define __s390__ ; then
-   if check_define __s390x__ ; then
-     cpu="s390x"
-@@ -455,7 +453,7 @@ case "$cpu" in
+ DEF(dup_vec, 1, 1, 0, TCG_OPF_VECTOR)
+-DEF(dup2_vec, 1, 2, 0, TCG_OPF_VECTOR)
  
-   mips64*|mipsisa64*)
-     cpu=mips64
--    host_arch=mips
-+    host_arch=mips64
-     linux_arch=mips
-     ;;
+ DEF(ld_vec, 1, 1, 1, TCG_OPF_VECTOR)
+ DEF(st_vec, 0, 2, 1, TCG_OPF_VECTOR)
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index d845c7eef2..801a0a2c68 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1716,21 +1716,6 @@ static bool fold_dup(OptContext *ctx, TCGOp *op)
+     return finish_folding(ctx, op);
+ }
  
-diff --git a/meson.build b/meson.build
-index 0647ca0c89..c36f2f6962 100644
---- a/meson.build
-+++ b/meson.build
-@@ -265,8 +265,6 @@ enable_modules = get_option('modules') \
+-static bool fold_dup2(OptContext *ctx, TCGOp *op)
+-{
+-    if (arg_is_const(op->args[1]) && arg_is_const(op->args[2])) {
+-        uint64_t t = deposit64(arg_const_val(op->args[1]), 32, 32,
+-                               arg_const_val(op->args[2]));
+-        return tcg_opt_gen_movi(ctx, op, op->args[0], t);
+-    }
+-
+-    if (args_are_copies(op->args[1], op->args[2])) {
+-        op->opc = INDEX_op_dup_vec;
+-        TCGOP_VECE(op) = MO_32;
+-    }
+-    return finish_folding(ctx, op);
+-}
+-
+ static bool fold_eqv(OptContext *ctx, TCGOp *op)
+ {
+     uint64_t z_mask, o_mask, s_mask;
+@@ -2887,9 +2872,6 @@ void tcg_optimize(TCGContext *s)
+         case INDEX_op_dup_vec:
+             done = fold_dup(&ctx, op);
+             break;
+-        case INDEX_op_dup2_vec:
+-            done = fold_dup2(&ctx, op);
+-            break;
+         case INDEX_op_eqv:
+         case INDEX_op_eqv_vec:
+             done = fold_eqv(&ctx, op);
+diff --git a/tcg/tcg-op-vec.c b/tcg/tcg-op-vec.c
+index 893d68e7d8..67e837174b 100644
+--- a/tcg/tcg-op-vec.c
++++ b/tcg/tcg-op-vec.c
+@@ -75,7 +75,6 @@ bool tcg_can_emit_vecop_list(const TCGOpcode *list,
+         case INDEX_op_xor_vec:
+         case INDEX_op_mov_vec:
+         case INDEX_op_dup_vec:
+-        case INDEX_op_dup2_vec:
+         case INDEX_op_ld_vec:
+         case INDEX_op_st_vec:
+         case INDEX_op_bitsel_vec:
+@@ -228,20 +227,11 @@ void tcg_gen_dupi_vec(unsigned vece, TCGv_vec r, uint64_t a)
+ void tcg_gen_dup_i64_vec(unsigned vece, TCGv_vec r, TCGv_i64 a)
+ {
+     TCGArg ri = tcgv_vec_arg(r);
++    TCGArg ai = tcgv_i64_arg(a);
+     TCGTemp *rt = arg_temp(ri);
+     TCGType type = rt->base_type;
  
- if cpu not in supported_cpus
-   host_arch = 'unknown'
--elif cpu == 'mips64'
--  host_arch = 'mips'
- elif cpu in ['riscv32', 'riscv64']
-   host_arch = 'riscv'
- else
-diff --git a/tcg/mips/tcg-target-opc.h.inc b/tcg/mips64/tcg-target-opc.h.inc
-similarity index 100%
-rename from tcg/mips/tcg-target-opc.h.inc
-rename to tcg/mips64/tcg-target-opc.h.inc
-diff --git a/tcg/mips/tcg-target.c.inc b/tcg/mips64/tcg-target.c.inc
-similarity index 100%
-rename from tcg/mips/tcg-target.c.inc
-rename to tcg/mips64/tcg-target.c.inc
+-    if (TCG_TARGET_REG_BITS == 64) {
+-        TCGArg ai = tcgv_i64_arg(a);
+-        vec_gen_2(INDEX_op_dup_vec, type, vece, ri, ai);
+-    } else if (vece == MO_64) {
+-        TCGArg al = tcgv_i32_arg(TCGV_LOW(a));
+-        TCGArg ah = tcgv_i32_arg(TCGV_HIGH(a));
+-        vec_gen_3(INDEX_op_dup2_vec, type, MO_64, ri, al, ah);
+-    } else {
+-        TCGArg ai = tcgv_i32_arg(TCGV_LOW(a));
+-        vec_gen_2(INDEX_op_dup_vec, type, vece, ri, ai);
+-    }
++    vec_gen_2(INDEX_op_dup_vec, type, vece, ri, ai);
+ }
+ 
+ void tcg_gen_dup_i32_vec(unsigned vece, TCGv_vec r, TCGv_i32 a)
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index b6a65fe224..2b3bcbe750 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -2493,8 +2493,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
+     case INDEX_op_xor_vec:
+     case INDEX_op_cmp_vec:
+         return has_type;
+-    case INDEX_op_dup2_vec:
+-        return has_type && TCG_TARGET_REG_BITS == 32;
+     case INDEX_op_not_vec:
+         return has_type && TCG_TARGET_HAS_not_vec;
+     case INDEX_op_neg_vec:
+@@ -5888,93 +5886,6 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
+     }
+ }
+ 
+-static bool tcg_reg_alloc_dup2(TCGContext *s, const TCGOp *op)
+-{
+-    const TCGLifeData arg_life = op->life;
+-    TCGTemp *ots, *itsl, *itsh;
+-    TCGType vtype = TCGOP_TYPE(op);
+-
+-    /* This opcode is only valid for 32-bit hosts, for 64-bit elements. */
+-    tcg_debug_assert(TCG_TARGET_REG_BITS == 32);
+-    tcg_debug_assert(TCGOP_VECE(op) == MO_64);
+-
+-    ots = arg_temp(op->args[0]);
+-    itsl = arg_temp(op->args[1]);
+-    itsh = arg_temp(op->args[2]);
+-
+-    /* ENV should not be modified.  */
+-    tcg_debug_assert(!temp_readonly(ots));
+-
+-    /* Allocate the output register now.  */
+-    if (ots->val_type != TEMP_VAL_REG) {
+-        TCGRegSet allocated_regs = s->reserved_regs;
+-        TCGRegSet dup_out_regs = opcode_args_ct(op)[0].regs;
+-        TCGReg oreg;
+-
+-        /* Make sure to not spill the input registers. */
+-        if (!IS_DEAD_ARG(1) && itsl->val_type == TEMP_VAL_REG) {
+-            tcg_regset_set_reg(allocated_regs, itsl->reg);
+-        }
+-        if (!IS_DEAD_ARG(2) && itsh->val_type == TEMP_VAL_REG) {
+-            tcg_regset_set_reg(allocated_regs, itsh->reg);
+-        }
+-
+-        oreg = tcg_reg_alloc(s, dup_out_regs, allocated_regs,
+-                             output_pref(op, 0), ots->indirect_base);
+-        set_temp_val_reg(s, ots, oreg);
+-    }
+-
+-    /* Promote dup2 of immediates to dupi_vec. */
+-    if (itsl->val_type == TEMP_VAL_CONST && itsh->val_type == TEMP_VAL_CONST) {
+-        uint64_t val = deposit64(itsl->val, 32, 32, itsh->val);
+-        MemOp vece = MO_64;
+-
+-        if (val == dup_const(MO_8, val)) {
+-            vece = MO_8;
+-        } else if (val == dup_const(MO_16, val)) {
+-            vece = MO_16;
+-        } else if (val == dup_const(MO_32, val)) {
+-            vece = MO_32;
+-        }
+-
+-        tcg_out_dupi_vec(s, vtype, vece, ots->reg, val);
+-        goto done;
+-    }
+-
+-    /* If the two inputs form one 64-bit value, try dupm_vec. */
+-    if (itsl->temp_subindex == HOST_BIG_ENDIAN &&
+-        itsh->temp_subindex == !HOST_BIG_ENDIAN &&
+-        itsl == itsh + (HOST_BIG_ENDIAN ? 1 : -1)) {
+-        TCGTemp *its = itsl - HOST_BIG_ENDIAN;
+-
+-        temp_sync(s, its + 0, s->reserved_regs, 0, 0);
+-        temp_sync(s, its + 1, s->reserved_regs, 0, 0);
+-
+-        if (tcg_out_dupm_vec(s, vtype, MO_64, ots->reg,
+-                             its->mem_base->reg, its->mem_offset)) {
+-            goto done;
+-        }
+-    }
+-
+-    /* Fall back to generic expansion. */
+-    return false;
+-
+- done:
+-    ots->mem_coherent = 0;
+-    if (IS_DEAD_ARG(1)) {
+-        temp_dead(s, itsl);
+-    }
+-    if (IS_DEAD_ARG(2)) {
+-        temp_dead(s, itsh);
+-    }
+-    if (NEED_SYNC_ARG(0)) {
+-        temp_sync(s, ots, s->reserved_regs, 0, IS_DEAD_ARG(0));
+-    } else if (IS_DEAD_ARG(0)) {
+-        temp_dead(s, ots);
+-    }
+-    return true;
+-}
+-
+ static void load_arg_reg(TCGContext *s, TCGReg reg, TCGTemp *ts,
+                          TCGRegSet allocated_regs)
+ {
+@@ -6939,11 +6850,6 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
+         case INDEX_op_mb:
+             tcg_out_mb(s, op->args[0]);
+             break;
+-        case INDEX_op_dup2_vec:
+-            if (tcg_reg_alloc_dup2(s, op)) {
+-                break;
+-            }
+-            /* fall through */
+         default:
+         do_default:
+             /* Sanity check that we've not introduced any unhandled opcodes. */
 -- 
 2.43.0
 
