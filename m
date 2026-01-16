@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9534BD4A5F7
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C140D4A5F7
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 03:48:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgagQ-0005C3-VD; Thu, 15 Jan 2026 22:39:34 -0500
+	id 1vgagm-0005Ul-4y; Thu, 15 Jan 2026 22:39:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgagN-00059T-QD
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:39:31 -0500
+ id 1vgagj-0005Tr-SB
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:39:53 -0500
 Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vgagL-0008S3-Rf
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:39:31 -0500
+ id 1vgagh-0000BA-JU
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 22:39:53 -0500
 Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-29f2676bb21so15495015ad.0
- for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:39:29 -0800 (PST)
+ d9443c01a7336-29f1bc40b35so16546085ad.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Jan 2026 19:39:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768534768; x=1769139568; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768534790; x=1769139590; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RqHIEExBUi66KFxM/MRoC2fNgQMXmj+1KcwcA/FBGKk=;
- b=OTt8hAdEq86ijjGYbOq5KhhPhyiaOH02WmjJlXZ6jCuHyJ+7a+P0ntEQcakHHXAzuT
- d+qYYHQM/IVfftu3HvrpN8+Ej/REpqQ0xEr7icTlOjDoi+8trIOxD8US3IeSb9qcLMnu
- aaK69GXGQdnGUctLPd0aV2CLibwhaEJb5pUjnpmW99PsinVZpPBfMslU2FgcjbSqOPvc
- 6cQjZfsR24z5JniizYsa931sn3y3XH1jqGzRVDroUPgHDbW0+LoPQeLDy2ludMaTkeiW
- oEAWBYWU0zlUIER9n0MyrpF5HUvl+L8ghXRDnxQV34K03diD0Syf1nPTDAry9k88lUhS
- 35nw==
+ bh=mEULzlPw6xjPe+4/C4phqMCxelohiweTDlicKl24zKE=;
+ b=Y+bCDKqsWVvI/9z3YlYjtgAp7uPciW9LwtdihhXAlG8Y+6nq+mFjHjHieNvWemw0gj
+ 0Yek3hsLNSO55FYqFJFBb3R2sZ9Gz8gfCTN5faGAz6UotlJ6r8ar+C5PVtN1c+76wsdX
+ jC04VupSrzi0N9lKBildWlDz5VhRQo0/7gMmrM2W3s4xr3IcHWzLBIYbQSHw8CF9/Nhd
+ TjKN9+UtC7oJjAbguhLapN33NunW2zMeVidSKvTPoImHNdILKu93Xj7/vLVP6Avi9i6A
+ ungc5pXLn/c0B4oRhaz2dcI0gVVXjDZFJhLt68I1Ijn0ssIJAUbpVyHVJpdOOShq0BFH
+ jdQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768534768; x=1769139568;
+ d=1e100.net; s=20230601; t=1768534790; x=1769139590;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=RqHIEExBUi66KFxM/MRoC2fNgQMXmj+1KcwcA/FBGKk=;
- b=DVwcxVzDSmF96X4pmIoaDnmBeGvRw9aQbAbAD7jtkM7j7Ruh1ojkt5L1ceRyBe2fkR
- aHrin4c44SrbJ7A+KC7rVnbp4BSgSPYq1YWF5f5AhEezJqr/wzyoc0aarggLmaJWsL/N
- 28snwPM4CT6xdgJ57hmjfZQ/Ku0sg5mgZZPWbQQbQ1rIbWmfx42rbhD6zs0RKnbmAwlC
- xOiqZarx+UfmmBzwCR8rDNkJtpG2318zb4HR5tX68nv5/ALeV45/bl7cLLD4FV11OsXK
- TuRsqXVBrjpbyBPh8OacTFpqZh6uKFOHStQtMmZE+N8ayFImTk3IN8WaZzXLS4TGBEhK
- pYVA==
-X-Gm-Message-State: AOJu0YxUB+JPWsSDie2gyyjbiRkt/ivL5omtvSW0J/i/E0D7mPEpybR/
- ATMH14UAgi9Vyth4U+pd69fyQLSPfHC9VSQD04udCzeIzuM25N22gvGvbfhkOoojwhUGybLKARt
- YnZOYXqdCYQ==
-X-Gm-Gg: AY/fxX41pl0Fnz4exD/PrMPZilikAdj/XivVTiiqdzBC+P7nVVit9GM5nMlMMEfRk2V
- lDr3W9AxUFEh13yRRzFeJ/Dw/gHz8xsF36BVkc7DG6C9SjTvtEp0nxdEaDhIK1bKJMyi85qb2zH
- LVZZ0+SFEG2yEmKhsnWBWneHAIZy+jgOGlDB9in0CLqmKccarfxR1SciCY2YHW74Kv19apGWSpS
- CnWp8FZSLnEMe+wRL40QxSWBAexHejH6MVF2P4pPLyRd3okpvoMb6ubTY9RjRrlMoheSWOjLe0s
- gLKczUicYIR+knwEwsWxOuqB31ENt0wHuirZnqXFAKNvn74Rfakwd9RDsCvYm0K1y+E6YPqKydS
- sirusDwGRkbiP2et14cDDFucDWDrUBKUbtwJmJ70WN2uWOcSsaYnapT+Heh2vBFIt6CuNejDZ+8
- AzVoevQfZuz/m5/WtfUg==
-X-Received: by 2002:a17:902:f64c:b0:297:e3c4:b2b0 with SMTP id
- d9443c01a7336-2a71894325amr15315125ad.54.1768534768273; 
- Thu, 15 Jan 2026 19:39:28 -0800 (PST)
+ bh=mEULzlPw6xjPe+4/C4phqMCxelohiweTDlicKl24zKE=;
+ b=SOtkZtxHlStIwJCoTKfBEqWl54kDzv7FgG8hVaRzJiH8usxZ9/TcDFJONkMQdaXj1I
+ m2cufoxETJhIVYjh65YjhDT6hnF5+MqpnN/RO/+wodYOoYj6qhQvcysawuZtVAoWONwu
+ 1QpCTFfcpE4/i+Qitvr8kV3ZjFbfEN6jFbeLtf39rPdl4pWhWcqx7tBIlMzh03iVQ9+C
+ 5/NTvim9Sze2ox1l3rGPBM5c7p9tnxjPWC5qEVLFf4W6rmxpsIb/e2/h2WaVtSq0WNbu
+ l72evmMvN4Qp/AltuCaTSeZwbN6dYg0QbtpRGmIvnRROJK0HBaYDp45RYTIJlm3sQE2d
+ +hkg==
+X-Gm-Message-State: AOJu0Yz6INPlL5lY43hD59krWIs8MPPhRUM+404ULZJWajPURZ4LJtep
+ humE0JXR3eX1uyKASlBDuIoCdKra+7hgKtnu+e6iOEYhitS0wjJZT1lQxrvOKgYNYetEKNxyeCP
+ 7K/uq4FN7MQ==
+X-Gm-Gg: AY/fxX6eOYIeVxslg2TqW4h/xoisC0f+yGKdigXSD14tK91Zg8r6KomSvfmvoylIMUK
+ uDKUWvEynoBNLJfa5FfNeYsdTP70RTuy/GpRtZaqN0AzU3239zNQHkJdkzXBQIXykQdtUHYAC67
+ pxOQ4CXm1bqMb10mEjWQx9JrqKNoj0TTM0KayUn28+qXCuLDEYmbxVOuhwKTRntf9SspaA6Yn2O
+ J8PrI4Et9xMPxzDbD7GrtFsBUnQjTZKdarTDQwbrVgMyBrUHZcvVOLLfFDZC4/8fJfSWFVs3TZN
+ iRBiKbGqEqAr3riIGe10K5fG4n18dByeGEGgjfauUDAdeNLcsG73ejnG9z2uGYOOnm/U/ijtyHT
+ WhsaDtI8Uh7IyXcAkObHZ6oekFo+pV79dS71L19yf7G1TakM9/adAk8tFRDPZYb4mkjt0EJQtZU
+ k03qVhRpwO6tgpsEHr0w==
+X-Received: by 2002:a17:903:124f:b0:2a0:c84f:4124 with SMTP id
+ d9443c01a7336-2a7177e2b6fmr15884955ad.52.1768534790136; 
+ Thu, 15 Jan 2026 19:39:50 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7190ca9d5sm6527975ad.25.2026.01.15.19.39.25
+ d9443c01a7336-2a7190ca9d5sm6527975ad.25.2026.01.15.19.39.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Jan 2026 19:39:27 -0800 (PST)
+ Thu, 15 Jan 2026 19:39:49 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: ktokunaga.mail@gmail.com, berrange@redhat.com, pierrick.bouvier@linaro.org,
  thuth@redhat.com, pbonzini@redhat.com, philmd@linaro.org
-Subject: [PATCH v2 50/58] target/m68k: Drop CONFIG_ATOMIC64 tests
-Date: Fri, 16 Jan 2026 14:32:56 +1100
-Message-ID: <20260116033305.51162-51-richard.henderson@linaro.org>
+Subject: [PATCH v2 56/58] include/qemu/atomic: Drop qatomic_{read,set}_[iu]64
+Date: Fri, 16 Jan 2026 14:33:02 +1100
+Message-ID: <20260116033305.51162-57-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260116033305.51162-1-richard.henderson@linaro.org>
 References: <20260116033305.51162-1-richard.henderson@linaro.org>
@@ -100,42 +100,351 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Replace all uses with the normal qatomic_{read,set}.
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/op_helper.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ include/qemu/atomic.h      | 22 ----------
+ accel/qtest/qtest.c        |  4 +-
+ accel/tcg/icount-common.c  | 25 ++++++-----
+ system/dirtylimit.c        |  2 +-
+ tests/unit/test-rcu-list.c | 17 ++++----
+ util/atomic64.c            | 85 --------------------------------------
+ util/cacheflush.c          |  2 -
+ util/qsp.c                 |  8 ++--
+ util/meson.build           |  3 --
+ 9 files changed, 27 insertions(+), 141 deletions(-)
+ delete mode 100644 util/atomic64.c
 
-diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-index a27e2bcfbc..f7df83c850 100644
---- a/target/m68k/op_helper.c
-+++ b/target/m68k/op_helper.c
-@@ -816,14 +816,11 @@ static void do_cas2l(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2,
-     uint32_t u2 = env->dregs[Du2];
-     uint32_t l1, l2;
-     uintptr_t ra = GETPC();
--#if defined(CONFIG_ATOMIC64)
-     int mmu_idx = cpu_mmu_index(env_cpu(env), 0);
-     MemOpIdx oi = make_memop_idx(MO_BEUQ, mmu_idx);
--#endif
+diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
+index c39dc99f2f..27d98014d4 100644
+--- a/include/qemu/atomic.h
++++ b/include/qemu/atomic.h
+@@ -247,26 +247,4 @@
+ typedef int64_t aligned_int64_t __attribute__((aligned(8)));
+ typedef uint64_t aligned_uint64_t __attribute__((aligned(8)));
  
-     if (parallel) {
-         /* We're executing in a parallel context -- must be atomic.  */
 -#ifdef CONFIG_ATOMIC64
-         uint64_t c, u, l;
-         if ((a1 & 7) == 0 && a2 == a1 + 4) {
-             c = deposit64(c2, 32, 32, c1);
-@@ -837,9 +834,7 @@ static void do_cas2l(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2,
-             l = cpu_atomic_cmpxchgq_be_mmu(env, a2, c, u, oi, ra);
-             l2 = l >> 32;
-             l1 = l;
--        } else
--#endif
--        {
-+        } else {
-             /* Tell the main loop we need to serialize this insn.  */
-             cpu_loop_exit_atomic(env_cpu(env), ra);
+-/* Use __nocheck because sizeof(void *) might be < sizeof(u64) */
+-#define qatomic_read_i64(P) \
+-    _Generic(*(P), int64_t: qatomic_read__nocheck(P))
+-#define qatomic_read_u64(P) \
+-    _Generic(*(P), uint64_t: qatomic_read__nocheck(P))
+-#define qatomic_set_i64(P, V) \
+-    _Generic(*(P), int64_t: qatomic_set__nocheck(P, V))
+-#define qatomic_set_u64(P, V) \
+-    _Generic(*(P), uint64_t: qatomic_set__nocheck(P, V))
+-
+-static inline void qatomic64_init(void)
+-{
+-}
+-#else /* !CONFIG_ATOMIC64 */
+-int64_t  qatomic_read_i64(const int64_t *ptr);
+-uint64_t qatomic_read_u64(const uint64_t *ptr);
+-void qatomic_set_i64(int64_t *ptr, int64_t val);
+-void qatomic_set_u64(uint64_t *ptr, uint64_t val);
+-void qatomic64_init(void);
+-#endif /* !CONFIG_ATOMIC64 */
+-
+ #endif /* QEMU_ATOMIC_H */
+diff --git a/accel/qtest/qtest.c b/accel/qtest/qtest.c
+index 1d4337d698..bb1491d93b 100644
+--- a/accel/qtest/qtest.c
++++ b/accel/qtest/qtest.c
+@@ -31,12 +31,12 @@ static int64_t qtest_clock_counter;
+ 
+ static int64_t qtest_get_virtual_clock(void)
+ {
+-    return qatomic_read_i64(&qtest_clock_counter);
++    return qatomic_read(&qtest_clock_counter);
+ }
+ 
+ static void qtest_set_virtual_clock(int64_t count)
+ {
+-    qatomic_set_i64(&qtest_clock_counter, count);
++    qatomic_set(&qtest_clock_counter, count);
+ }
+ 
+ static int qtest_init_accel(AccelState *as, MachineState *ms)
+diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c
+index d6471174a3..b1b6c005fe 100644
+--- a/accel/tcg/icount-common.c
++++ b/accel/tcg/icount-common.c
+@@ -86,8 +86,8 @@ static void icount_update_locked(CPUState *cpu)
+     int64_t executed = icount_get_executed(cpu);
+     cpu->icount_budget -= executed;
+ 
+-    qatomic_set_i64(&timers_state.qemu_icount,
+-                    timers_state.qemu_icount + executed);
++    qatomic_set(&timers_state.qemu_icount,
++                timers_state.qemu_icount + executed);
+ }
+ 
+ /*
+@@ -116,15 +116,14 @@ static int64_t icount_get_raw_locked(void)
+         /* Take into account what has run */
+         icount_update_locked(cpu);
+     }
+-    /* The read is protected by the seqlock, but needs atomic64 to avoid UB */
+-    return qatomic_read_i64(&timers_state.qemu_icount);
++    /* The read is protected by the seqlock, but needs atomic to avoid UB */
++    return qatomic_read(&timers_state.qemu_icount);
+ }
+ 
+ static int64_t icount_get_locked(void)
+ {
+     int64_t icount = icount_get_raw_locked();
+-    return qatomic_read_i64(&timers_state.qemu_icount_bias) +
+-        icount_to_ns(icount);
++    return qatomic_read(&timers_state.qemu_icount_bias) + icount_to_ns(icount);
+ }
+ 
+ int64_t icount_get_raw(void)
+@@ -201,9 +200,9 @@ static void icount_adjust(void)
+                     timers_state.icount_time_shift + 1);
+     }
+     timers_state.last_delta = delta;
+-    qatomic_set_i64(&timers_state.qemu_icount_bias,
+-                    cur_icount - (timers_state.qemu_icount
+-                                  << timers_state.icount_time_shift));
++    qatomic_set(&timers_state.qemu_icount_bias,
++                cur_icount - (timers_state.qemu_icount
++                              << timers_state.icount_time_shift));
+     seqlock_write_unlock(&timers_state.vm_clock_seqlock,
+                          &timers_state.vm_clock_lock);
+ }
+@@ -269,8 +268,8 @@ static void icount_warp_rt(void)
+             }
+             warp_delta = MIN(warp_delta, delta);
          }
+-        qatomic_set_i64(&timers_state.qemu_icount_bias,
+-                        timers_state.qemu_icount_bias + warp_delta);
++        qatomic_set(&timers_state.qemu_icount_bias,
++                    timers_state.qemu_icount_bias + warp_delta);
+     }
+     timers_state.vm_clock_warp_start = -1;
+     seqlock_write_unlock(&timers_state.vm_clock_seqlock,
+@@ -361,8 +360,8 @@ void icount_start_warp_timer(void)
+              */
+             seqlock_write_lock(&timers_state.vm_clock_seqlock,
+                                &timers_state.vm_clock_lock);
+-            qatomic_set_i64(&timers_state.qemu_icount_bias,
+-                            timers_state.qemu_icount_bias + deadline);
++            qatomic_set(&timers_state.qemu_icount_bias,
++                        timers_state.qemu_icount_bias + deadline);
+             seqlock_write_unlock(&timers_state.vm_clock_seqlock,
+                                  &timers_state.vm_clock_lock);
+             qemu_clock_notify(QEMU_CLOCK_VIRTUAL);
+diff --git a/system/dirtylimit.c b/system/dirtylimit.c
+index a0c327533c..50fa67f3d6 100644
+--- a/system/dirtylimit.c
++++ b/system/dirtylimit.c
+@@ -123,7 +123,7 @@ static void *vcpu_dirty_rate_stat_thread(void *opaque)
+ int64_t vcpu_dirty_rate_get(int cpu_index)
+ {
+     DirtyRateVcpu *rates = vcpu_dirty_rate_stat->stat.rates;
+-    return qatomic_read_i64(&rates[cpu_index].dirty_rate);
++    return qatomic_read(&rates[cpu_index].dirty_rate);
+ }
+ 
+ void vcpu_dirty_rate_stat_start(void)
+diff --git a/tests/unit/test-rcu-list.c b/tests/unit/test-rcu-list.c
+index 8f0adb8b00..8dde3e61a8 100644
+--- a/tests/unit/test-rcu-list.c
++++ b/tests/unit/test-rcu-list.c
+@@ -105,7 +105,7 @@ static void reclaim_list_el(struct rcu_head *prcu)
+     struct list_element *el = container_of(prcu, struct list_element, rcu);
+     g_free(el);
+     /* Accessed only from call_rcu thread.  */
+-    qatomic_set_i64(&n_reclaims, n_reclaims + 1);
++    qatomic_set(&n_reclaims, n_reclaims + 1);
+ }
+ 
+ #if TEST_LIST_TYPE == 1
+@@ -247,7 +247,7 @@ static void *rcu_q_updater(void *arg)
+     qemu_mutex_lock(&counts_mutex);
+     n_nodes += n_nodes_local;
+     n_updates += n_updates_local;
+-    qatomic_set_i64(&n_nodes_removed, n_nodes_removed + n_removed_local);
++    qatomic_set(&n_nodes_removed, n_nodes_removed + n_removed_local);
+     qemu_mutex_unlock(&counts_mutex);
+     return NULL;
+ }
+@@ -301,23 +301,22 @@ static void rcu_qtest(const char *test, int duration, int nreaders)
+         n_removed_local++;
+     }
+     qemu_mutex_lock(&counts_mutex);
+-    qatomic_set_i64(&n_nodes_removed, n_nodes_removed + n_removed_local);
++    qatomic_set(&n_nodes_removed, n_nodes_removed + n_removed_local);
+     qemu_mutex_unlock(&counts_mutex);
+     synchronize_rcu();
+-    while (qatomic_read_i64(&n_nodes_removed) >
+-           qatomic_read_i64(&n_reclaims)) {
++    while (qatomic_read(&n_nodes_removed) > qatomic_read(&n_reclaims)) {
+         g_usleep(100);
+         synchronize_rcu();
+     }
+     if (g_test_in_charge) {
+-        g_assert_cmpint(qatomic_read_i64(&n_nodes_removed), ==,
+-                        qatomic_read_i64(&n_reclaims));
++        g_assert_cmpint(qatomic_read(&n_nodes_removed), ==,
++                        qatomic_read(&n_reclaims));
+     } else {
+         printf("%s: %d readers; 1 updater; nodes read: "  \
+                "%lld, nodes removed: %"PRIi64"; nodes reclaimed: %"PRIi64"\n",
+                test, nthreadsrunning - 1, n_reads,
+-               qatomic_read_i64(&n_nodes_removed),
+-               qatomic_read_i64(&n_reclaims));
++               qatomic_read(&n_nodes_removed),
++               qatomic_read(&n_reclaims));
+         exit(0);
+     }
+ }
+diff --git a/util/atomic64.c b/util/atomic64.c
+deleted file mode 100644
+index c20d071d8e..0000000000
+--- a/util/atomic64.c
++++ /dev/null
+@@ -1,85 +0,0 @@
+-/*
+- * Copyright (C) 2018, Emilio G. Cota <cota@braap.org>
+- *
+- * License: GNU GPL, version 2 or later.
+- *   See the COPYING file in the top-level directory.
+- */
+-#include "qemu/osdep.h"
+-#include "qemu/atomic.h"
+-#include "qemu/thread.h"
+-#include "qemu/cacheinfo.h"
+-#include "qemu/memalign.h"
+-
+-#ifdef CONFIG_ATOMIC64
+-#error This file must only be compiled if !CONFIG_ATOMIC64
+-#endif
+-
+-/*
+- * When !CONFIG_ATOMIC64, we serialize both reads and writes with spinlocks.
+- * We use an array of spinlocks, with padding computed at run-time based on
+- * the host's dcache line size.
+- * We point to the array with a void * to simplify the padding's computation.
+- * Each spinlock is located every lock_size bytes.
+- */
+-static void *lock_array;
+-static size_t lock_size;
+-
+-/*
+- * Systems without CONFIG_ATOMIC64 are unlikely to have many cores, so we use a
+- * small array of locks.
+- */
+-#define NR_LOCKS 16
+-
+-static QemuSpin *addr_to_lock(const void *addr)
+-{
+-    uintptr_t a = (uintptr_t)addr;
+-    uintptr_t idx;
+-
+-    idx = a >> qemu_dcache_linesize_log;
+-    idx ^= (idx >> 8) ^ (idx >> 16);
+-    idx &= NR_LOCKS - 1;
+-    return lock_array + idx * lock_size;
+-}
+-
+-#define GEN_READ(name, type)                    \
+-    type name(const type *ptr)                  \
+-    {                                           \
+-        QemuSpin *lock = addr_to_lock(ptr);     \
+-        type ret;                               \
+-                                                \
+-        qemu_spin_lock(lock);                   \
+-        ret = *ptr;                             \
+-        qemu_spin_unlock(lock);                 \
+-        return ret;                             \
+-    }
+-
+-GEN_READ(qatomic_read_i64, int64_t)
+-GEN_READ(qatomic_read_u64, uint64_t)
+-#undef GEN_READ
+-
+-#define GEN_SET(name, type)                     \
+-    void name(type *ptr, type val)              \
+-    {                                           \
+-        QemuSpin *lock = addr_to_lock(ptr);     \
+-                                                \
+-        qemu_spin_lock(lock);                   \
+-        *ptr = val;                             \
+-        qemu_spin_unlock(lock);                 \
+-    }
+-
+-GEN_SET(qatomic_set_i64, int64_t)
+-GEN_SET(qatomic_set_u64, uint64_t)
+-#undef GEN_SET
+-
+-void qatomic64_init(void)
+-{
+-    int i;
+-
+-    lock_size = ROUND_UP(sizeof(QemuSpin), qemu_dcache_linesize);
+-    lock_array = qemu_memalign(qemu_dcache_linesize, lock_size * NR_LOCKS);
+-    for (i = 0; i < NR_LOCKS; i++) {
+-        QemuSpin *lock = lock_array + i * lock_size;
+-
+-        qemu_spin_init(lock);
+-    }
+-}
+diff --git a/util/cacheflush.c b/util/cacheflush.c
+index 99221a409f..c043c5f881 100644
+--- a/util/cacheflush.c
++++ b/util/cacheflush.c
+@@ -216,8 +216,6 @@ static void __attribute__((constructor)) init_cache_info(void)
+     qemu_icache_linesize_log = ctz32(isize);
+     qemu_dcache_linesize = dsize;
+     qemu_dcache_linesize_log = ctz32(dsize);
+-
+-    qatomic64_init();
+ }
+ 
+ 
+diff --git a/util/qsp.c b/util/qsp.c
+index 6b783e2e7f..382e4397e2 100644
+--- a/util/qsp.c
++++ b/util/qsp.c
+@@ -346,9 +346,9 @@ static QSPEntry *qsp_entry_get(const void *obj, const char *file, int line,
+  */
+ static inline void do_qsp_entry_record(QSPEntry *e, int64_t delta, bool acq)
+ {
+-    qatomic_set_u64(&e->ns, e->ns + delta);
++    qatomic_set(&e->ns, e->ns + delta);
+     if (acq) {
+-        qatomic_set_u64(&e->n_acqs, e->n_acqs + 1);
++        qatomic_set(&e->n_acqs, e->n_acqs + 1);
+     }
+ }
+ 
+@@ -538,8 +538,8 @@ static void qsp_aggregate(void *p, uint32_t h, void *up)
+      * The entry is in the global hash table; read from it atomically (as in
+      * "read once").
+      */
+-    agg->ns += qatomic_read_u64(&e->ns);
+-    agg->n_acqs += qatomic_read_u64(&e->n_acqs);
++    agg->ns += qatomic_read(&e->ns);
++    agg->n_acqs += qatomic_read(&e->n_acqs);
+ }
+ 
+ static void qsp_iter_diff(void *p, uint32_t hash, void *htp)
+diff --git a/util/meson.build b/util/meson.build
+index d7d6b213f6..59e835a8d3 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -1,8 +1,5 @@
+ util_ss.add(files('osdep.c', 'cutils.c', 'unicode.c', 'qemu-timer-common.c'))
+ util_ss.add(files('thread-context.c'), numa)
+-if not config_host_data.get('CONFIG_ATOMIC64')
+-  util_ss.add(files('atomic64.c'))
+-endif
+ if host_os != 'windows'
+   util_ss.add(files('aio-posix.c'))
+   util_ss.add(files('fdmon-poll.c'))
 -- 
 2.43.0
 
