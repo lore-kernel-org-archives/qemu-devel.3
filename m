@@ -4,77 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4866FD4899E
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D06FDD4899E
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 12:59:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgjM9-0002Wb-Tv; Fri, 16 Jan 2026 07:55:13 -0500
+	id 1vgjPW-0003fi-0a; Fri, 16 Jan 2026 07:58:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1vgjM8-0002Vg-7M
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:55:12 -0500
-Received: from smtpx.feld.cvut.cz ([147.32.210.153] helo=smtpx.fel.cvut.cz)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1vgjM5-0007gV-N3
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:55:11 -0500
-Received: from localhost (unknown [192.168.200.27])
- by smtpx.fel.cvut.cz (Postfix) with ESMTP id 2A36817555;
- Fri, 16 Jan 2026 13:55:00 +0100 (CET)
-X-Virus-Scanned: IMAP STYX AMAVIS
-Authentication-Results: cerokez-250.feld.cvut.cz (amavis);
- dkim=pass (2048-bit key) header.d=fel.cvut.cz
-Received: from smtpx.fel.cvut.cz ([192.168.200.2])
- by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
- with ESMTP id qgjJjWJeQbWI; Fri, 16 Jan 2026 13:54:58 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
- s=felmail; t=1768568098;
- bh=60pr++JoK1wwQqX6bIuJa/vQ3XwOsfgPp6nM5rP24g0=;
- h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
- b=o25B046InVNNvWM73n6LsyxmzpGGfAFD8Mo7a2BfipQ8FfA+B4v97Nrhg3WbCftTy
- ZRU+DlCKY1SZS7axubmLylIXPdpDpgb3SCHiF1zaaXEnIAE5Luh4qlj5nmYz7Kwy64
- p8GFpQm8ST2d4FHQJHX8NhXdD2ZYiJiwdWF7+QZhSgn4mLket1+CpANGFqGLZI/xRP
- 0nQ5KkEb7T6qty/7tUGk8GGZ3MKgsu+mZURKyD6AQ5xEZar07jKw12VhKEYvLcF1eD
- z3R9qSNWtIDgQLLGi6ZOUWLtCSHeC2CsYwrpFxHgHXaIpLTrEmbRQ52Hsds+a7AkKM
- giR7zW02uy3Fw==
-Received: from baree.pikron.com (static-84-242-78-234.bb.vodafone.cz
- [84.242.78.234])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: pisa)
- by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id 4B07817628;
- Fri, 16 Jan 2026 13:54:58 +0100 (CET)
-From: Pavel Pisa <pisa@fel.cvut.cz>
-To: Bernhard Beschow <shentey@gmail.com>
-Subject: Re: [PATCH v1 3/6] hw/net/can/flexcan: NXP FlexCAN core emulation
-Date: Fri, 16 Jan 2026 13:54:57 +0100
-User-Agent: KMail/1.9.10
-Cc: =?utf-8?q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
- qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
- "Marc Kleine-Budde" <mkl@pengutronix.de>,
- Oliver Hartkopp <socketcan@hartkopp.net>,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <cover.1765826753.git.matyas.bobek@gmail.com>
- <f3cb3166-c3f8-4ed8-8c9a-cbf48b071d1e@gmail.com>
- <E5AC1F6B-EC35-4454-87BF-B95D162456C2@gmail.com>
-In-Reply-To: <E5AC1F6B-EC35-4454-87BF-B95D162456C2@gmail.com>
-X-KMail-QuotePrefix: > 
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vgjPR-0003dz-8V
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:58:37 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vgjPO-00009j-H4
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 07:58:36 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-4801d7c72a5so7460605e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 04:58:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768568312; x=1769173112; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wY5SAA5FCcDOevLMIkYsgiOyIIXdmH7VFxYgl6NNqkE=;
+ b=AD4jAsiIgCui4TF4l+hs7yqVZSfL6E0tnCPFhCi/Ol2ELqpoNqTZqkzs4GWrvf2B7L
+ lUImSypL20Ts88tiZrRYQ/ofH2+05bAi1SgdLaKLu6IzN8qeNqE0hjn7KdrzrAhPB7r9
+ KF2rDgxRk4QErl6Wp7PfFgaZvGnnCQnh/G1daMKZccQtlm1nbdzOIU5K2RtDxMoB9XjB
+ mumWCjzUEpojnF349VRvE3/OVNys4sN285/IOUVo97GvVmflFMqiar/bAraqsGWONugp
+ xTerARmjr6MiHtjX6e/KlX/wETmCtP+jPUOMZb31V97DaBP6Oad+vcDRae/EM6zhVvNn
+ XoSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768568312; x=1769173112;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wY5SAA5FCcDOevLMIkYsgiOyIIXdmH7VFxYgl6NNqkE=;
+ b=ekr8QVeWFelUGjCAt2OkEvIhSO8ha6uKLk+v0/pMh7yYFFAvpf2D1iFNt979Kq+9bt
+ Narb8B34Yu5USS+DZvXG3bP0WvEbd7OzOVQuoEOgLn481a+NCz3epMt6WzPKa8HslkGg
+ XNWWoQq+yZ2sC0RgBEzVNwfV9CEgTZReqJfSnqm9OOpkYATDBCompuJpwfaX7XCSIxz1
+ dxPpF0deiaYdmb3OISMGl8tqI+a6SPYMOP5/7KNOQSQQqOIgcfSB1uVwve+gquHm5sg3
+ G9ATaJGOvMy3AT27PXfxNE+/adcOxzQzb0j5IPLl6GaY3MvqDFQEVs2aTynlnJ+fdCos
+ rs6w==
+X-Gm-Message-State: AOJu0YxhdynUbOhMEqpOXx/Tm/64mwi+ijyyKYsmtcrC5OK/0HpeU8/Y
+ O4FtMPuoWJq9VPi+a5pgsttN0vWuucJAJ9MOMFiI4Fqm5RfUU/Q2rZ3YJ2rKKaHh+PoZs5X5R7d
+ 5zCoa
+X-Gm-Gg: AY/fxX4Dcm1Z4ea5wWDm30rHYeKYnK9gRk88pyJzccD/aP6eD7pmAjbpLtaAdaKu5AO
+ dUTFu6gLLHZatYuOqqxh7SWdDU+RrFTuJB99pVhu66lrq4ueoAf0574Zs7u+71zkDM1dJApsel3
+ BvCyL7tA3GrXLOM7hbYhBbCDTAvVxVqjGwhP9Box0EZZ8rATWcEsK2K8P0ejHq/Rn1nv14tyBu8
+ FLcYlyzPHxPfQDIYA0fxY/mMWMdy1Y/gmJUaQEK/V5HweilT4/yKI2hiYpw0s9dLNFpprKB+GKk
+ D/N6XRu7E1fgvGfv/ys83/H4M0KTF1hr1B3Ajprc9oQYrMt4xYYoc0/hn/2qxFT7+HYAyZuiI5K
+ rX3SVthoRPvbfisgvlHPA5GouETEkMd/qkDuWa721r55FBHmHYWYf4i0MFuWOHl0xFXAedGm0v9
+ NpW+tJ1AVnTlPflwKrdOrhdvre/5bnxICK27UJ7vTWVfThNWyF807VKhbtMEq/fQWqgn9QPLNVp
+ fTuSIvq13pkAvNJr8qdO8nycretEPQ9KDjXYLDi/qmf7A==
+X-Received: by 2002:a05:600c:a009:b0:475:dd9a:f791 with SMTP id
+ 5b1f17b1804b1-4801eb0ef0bmr23358635e9.28.1768568311853; 
+ Fri, 16 Jan 2026 04:58:31 -0800 (PST)
+Received: from mnementh.archaic.org.uk
+ (f.7.f.1.7.5.e.f.f.f.c.5.d.8.2.4.0.0.0.0.0.d.1.0.0.b.8.0.1.0.0.2.ip6.arpa.
+ [2001:8b0:1d0:0:428d:5cff:fe57:1f7f])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4801fe67780sm15387565e9.16.2026.01.16.04.58.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Jan 2026 04:58:31 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnus.kulke@linux.microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Warner Losh <imp@bsdimp.com>,
+ Kyle Evans <kevans@freebsd.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+Subject: [PATCH 0/4] misc: clean up includes
+Date: Fri, 16 Jan 2026 12:58:26 +0000
+Message-ID: <20260116125830.926296-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-Message-Id: <202601161354.57405.pisa@fel.cvut.cz>
-Received-SPF: pass client-ip=147.32.210.153; envelope-from=pisa@fel.cvut.cz;
- helo=smtpx.fel.cvut.cz
-X-Spam_score_int: -54
-X-Spam_score: -5.5
-X-Spam_bar: -----
-X-Spam_report: (-5.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-1.229,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x343.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,75 +106,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear Bernhard,
+This patchset is the result of running scripts/clean-includes
+as updated with my changes in the v2 patchset I just posted:
+https://patchew.org/QEMU/20260116124005.925382-1-peter.maydell@linaro.org/
 
-On Friday 16 of January 2026 10:53:24 Bernhard Beschow wrote:
-> Am 2. Januar 2026 14:53:42 UTC schrieb Bernhard Beschow <shentey@gmail.co=
-m>:
-> >Am 15. Dezember 2025 20:03:12 UTC schrieb "Maty=C3=A1=C5=A1 Bobek"=20
-<matyas.bobek@gmail.com>:
-> >> This commit adds the FlexCAN2 emulator implementation and
-> >> plugs it into Meson and Kconfig.
-> >> FlexCAN2 version can be found in i.MX6 SoCs and others.
-> >>
-> >> More information about the implementation can be found in [1].
-> >>
-> >> [1]
-> >> http://dspace.cvut.cz/bitstream/handle/10467/122654/F3-BP-2025-Bobek-M=
-at
-> >>yas-BP_Bobek_FlexCAN_final_4.pdf
-> >>
-> >> Signed-off-by: Maty=C3=A1=C5=A1 Bobek <matyas.bobek@gmail.com>
-> >> ---
-=2E..
-> >Quite a lot of comments from my side, I hope you don'f feel intimidated!
-> > I'm looking forward to seeing FlexCAN support upstreamed. If you have a=
-ny
-> > questions please feel free to ask.
->
-> Ping
->
-> Any help needed?
->
-> Best regards,
-> Bernhard
+It makes the usual set of cleanups to #include lines:
+    * Ensure .c files include qemu/osdep.h first.
+    * Including it in a .h is redundant, since the .c  already includes
+      it.  Drop such inclusions.
+    * Likewise, including headers qemu/osdep.h includes is redundant.
+      Drop these, too.
 
-thanks for thorough review of the patches and suggestions.
-We have discussed feedback with Matyas Bobek and he plans to follow
-suggestions. But the courses final project reviews week and then
-the exam period have started at our university after Christmas
-and he needs to submit more projects and prepare and pass exams,
-so this is the priority for now. He would inform you himself
-soon.
+I have split the changes it proposes into five categories:
+ (1) changes to mshv related files
+ (2) changes to bsd-user files
+ (3) changes where a .c file included a system header that
+     osdep.h already provides
+ (4) changes where .h files either included osdep.h or
+     else some system header that osdep.h provides
 
-The another topic, there will be Linux Plumbers Conference
-and Open Source Summit in Prague in October 2026.
-So if there is interrest there is option to meet and even
-to negotiate some room for some collocated meeting
-at the university. For me, embedded systems emulation in QEMU,
-CAN, CAN FD, motion control, realtime and RISC-V in education
-and real missions are of my interrest.
-We can even try to submit something for conference when CfP
-is open.
+The only change the updated script proposes which is not in
+any patch in this series is to hw/virtio/cbor-helpers.c: I am
+waiting to find out if we should put this file on the
+exclude-list.
 
-Best wishes,
+thanks
+-- PMM
 
-                Pavel
+Peter Maydell (4):
+  mshv: Clean up includes
+  bsd-user: Clean up includes
+  misc: Clean up includes
+  all: Clean up includes
 
-                Pavel Pisa
-    phone:      +420 603531357
-    e-mail:     pisa@cmp.felk.cvut.cz
-    Department of Control Engineering FEE CVUT
-    Karlovo namesti 13, 121 35, Prague 2
-    university: http://control.fel.cvut.cz/
-    personal:   http://cmp.felk.cvut.cz/~pisa
-    social:     https://social.kernel.org/ppisa
-    projects:   https://www.openhub.net/accounts/ppisa
-    CAN related:http://canbus.pages.fel.cvut.cz/
-    RISC-V education: https://comparch.edu.cvut.cz/
-    Open Technologies Research Education and Exchange Services
-    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
+ accel/mshv/irq.c                   | 3 +--
+ accel/mshv/mshv-all.c              | 1 -
+ bsd-user/bsd-mem.h                 | 3 ---
+ bsd-user/bsd-proc.c                | 1 -
+ bsd-user/freebsd/os-proc.h         | 2 --
+ bsd-user/qemu-bsd.h                | 1 -
+ hw/core/machine-qmp-cmds.c         | 1 -
+ hw/scsi/lasi_ncr710.h              | 1 -
+ hw/scsi/ncr53c710.h                | 1 -
+ include/hw/core/loader.h           | 1 -
+ include/hw/i386/tdvf.h             | 1 -
+ include/hw/ppc/spapr_fadump.h      | 1 -
+ include/hw/riscv/iommu.h           | 1 -
+ include/system/accel-irq.h         | 1 -
+ include/system/mshv.h              | 1 -
+ linux-user/alpha/target_proc.h     | 1 -
+ qga/commands-windows-ssh.h         | 1 -
+ qga/vss-win32/vss-debug.h          | 1 -
+ semihosting/arm-compat-semi-stub.c | 1 -
+ target/arm/cpu32-stubs.c           | 1 -
+ target/i386/kvm/kvm.c              | 1 -
+ target/i386/kvm/vmsr_energy.h      | 2 --
+ target/i386/mshv/mshv-cpu.c        | 1 -
+ target/i386/mshv/x86.c             | 1 -
+ target/loongarch/csr.c             | 1 -
+ target/riscv/csr.c                 | 1 -
+ tools/i386/qemu-vmsr-helper.c      | 1 -
+ util/cpuinfo-aarch64.c             | 1 -
+ 28 files changed, 1 insertion(+), 33 deletions(-)
 
+-- 
+2.47.3
 
-=20
 
