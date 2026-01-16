@@ -4,109 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BD47D47CD0
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 10:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9800ED47CD1
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 10:36:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vggwm-0005ZT-6G; Fri, 16 Jan 2026 05:20:52 -0500
+	id 1vgh0h-0007My-7J; Fri, 16 Jan 2026 05:24:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vggwk-0005Z6-2h
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:20:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vgh0f-0007MH-Hv
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:24:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1vggwh-0004oS-MT
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:20:49 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vgh0e-00052v-7D
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 05:24:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768558846;
+ s=mimecast20190719; t=1768559091;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5xzOgohv7yBKn77oDEMKGcZu4sw47w1zDBXcdbHXO4s=;
- b=FmYbxHS1koNv/mSFm19pAkeh0qveLXpcyRqVyH7PK5/e5p8iFf9pqKyHVFEgpmFAiSYETA
- 54SnrD3o8owkHaSkyi6zU2um9Fvng/OUlSMQlPUjm3n1hjNUVMP6LkkxQWZBAINO8MhAdS
- SjRFvVVs0KSqgF2B5dWIVST0ewJXoKQ=
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Slg4SR4NpZcCyiHanyBP4jjCh6Rnkss8vndeKYoUTBA=;
+ b=Mrg5cBigCMHQ0czei4geu/tn97h8FL7Wcm9m7xmt/KJTEpJLBe23V4hjavbF1o35riw0ZS
+ PNGoUoo9u1xXW7LDiNxZ0qbKgVZAoeDA0RJ80Ez+irRTrNaKR0uXCBLBQNefX51iWbb/lh
+ Fk6b3w6XyzGsVAVEkjaHau0tThomJ+M=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-fnWoSXyQOXWeQf3rgW73yQ-1; Fri, 16 Jan 2026 05:20:45 -0500
-X-MC-Unique: fnWoSXyQOXWeQf3rgW73yQ-1
-X-Mimecast-MFC-AGG-ID: fnWoSXyQOXWeQf3rgW73yQ_1768558844
-Received: by mail-yx1-f69.google.com with SMTP id
- 956f58d0204a3-6446c91addfso3119254d50.3
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 02:20:45 -0800 (PST)
+ us-mta-58-qeWXdh7nO5WXCLCtk2Aseg-1; Fri, 16 Jan 2026 05:24:49 -0500
+X-MC-Unique: qeWXdh7nO5WXCLCtk2Aseg-1
+X-Mimecast-MFC-AGG-ID: qeWXdh7nO5WXCLCtk2Aseg_1768559089
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-430ffc4dc83so1453083f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 02:24:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768558844; x=1769163644; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5xzOgohv7yBKn77oDEMKGcZu4sw47w1zDBXcdbHXO4s=;
- b=Ci7AMJgEKUeJA/fw5TSChVNksPGNY9cuiRlgb21ccApm+Mju0IFzuUZPMsexfuw7VB
- 4SVJl3yNLA/jlfWuB08hoDbca3xM2Rc82NNaKTHW06Ow4DHu6cyjrvjwriPAEidqKkjz
- Ba2b1MtUsYzf86mPRzHnesbwwcwsiC5BXiRvGWUzYHtL7D8Y63X4hNNWqu8cdPb47VDD
- f2d2ytkdDN6BcRqxZy6/YGzdn/AubkbyFvc2di50DWs2o+A1tZ2wK3JpJ22o/wLoLxCn
- Z/vZ/CZ4Xlu3I6JKVnMtzmvQ0jvfQLwMYlYCNivYwpJJXWtav554Rp/DmE4klQBsV4qk
- W1Eg==
+ d=redhat.com; s=google; t=1768559088; x=1769163888; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=Slg4SR4NpZcCyiHanyBP4jjCh6Rnkss8vndeKYoUTBA=;
+ b=EzNkJLk6WdvB4iHr6jD7bGwzkQikUx7R2eVwsrqGxg4PhxKqmjzQaBvPJhMtt2BVLP
+ HaZ7b+3rtqpGTukyXzWGL4pSOFn8Tjy/7EGgkepLWE3RYorcpQhJaGXglULeJuVjg7FS
+ yEZ3gRdzmb7AZyz9n8sA+cM+MSO793YwlFduTzFSzNzX2CWu9d5jG/MBIgQ2zwP1J4YZ
+ lIllcKLa0IanRmHVPP47J0uBE+xkBISl3SaL7S4f6NV7PswBznuTYqueHxHH/4qyvZFj
+ E3vhNrTHuaRouZ+I/41GtoLyjq0OKJsdy/IGn7yC6xkUZ4iiwHGAB85gzwNZ4spQo5oH
+ JhQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768558844; x=1769163644;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=5xzOgohv7yBKn77oDEMKGcZu4sw47w1zDBXcdbHXO4s=;
- b=n6P02rzx5zjBludBdoYECZbaYZZHbCUICsVzcheLwYTP2x6HwMUUfHUifpFDL69RYE
- LOhrbus5bXsdRGd9hLWaAWdNlKxI8LwTuYinEiOnIvLpKAxOGizfUJdIhkHR9hykyayq
- 8RvJTceUVavF5rl6edkaG9K28atQI23V2SYcl22rlG6NQN3vecqE/3QyNiq4RmNECqFy
- xkc6q8p/omzmi/mvHRcpUeE9EeCvHUaQPIjNu8edTu3VrNcVAQ/s+kg0dRCAulk2tPnS
- /zYaIuht923IWHSv6SDbQ9QTu3Xg7rMTgDOk1e5BJ+E46DTdfl7pi1NZneWVCF1inkGa
- E/PA==
-X-Gm-Message-State: AOJu0YxImkALyqiV+vR3YvCzUPebBjt9V0Dha8zGdGkrsNcJh8oKMrhe
- UYvkQxmnR1kWVefVZcEXqqFClBXsD/vk1qerUMXjz5trXNZ+AnAUYnWccvOvzzQFdW3l3q+tWwn
- 2K+epSh6K3CZDwrwdiGeg4N5RLaC5UjkaOTghx1qpf9Ne/6qRYK/uB5mkI0ERBs2J3kn4IlBmav
- GJuzNzsWPDsricXcpAh3v1bDTcETrPe1KlBruXAnA=
-X-Gm-Gg: AY/fxX5b8aa1LQSm90Q8WY7yWcw6zPjIfxtZj2myptVa0YOShrAH8r3AVCJ6Xxnjjse
- KfUAuepBroBiY4v6NQQVKCjVUKOveXlThQBAWIFGoQi1/B9A9j2hDZ8blzYl6XQyg3EExapNpTZ
- GEhG+5ROjPDe+lS+WsAy7F77bFU+5Wh9r0uDK5feBc3U5c8uevexSZEZ+RiT3BiA==
-X-Received: by 2002:a05:690e:d59:b0:643:ab7e:8dd0 with SMTP id
- 956f58d0204a3-6491775094fmr1704498d50.61.1768558844265; 
- Fri, 16 Jan 2026 02:20:44 -0800 (PST)
-X-Received: by 2002:a05:690e:d59:b0:643:ab7e:8dd0 with SMTP id
- 956f58d0204a3-6491775094fmr1704479d50.61.1768558843942; Fri, 16 Jan 2026
- 02:20:43 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768559088; x=1769163888;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Slg4SR4NpZcCyiHanyBP4jjCh6Rnkss8vndeKYoUTBA=;
+ b=eqsh3in/R2QyC2n+1SFXkr3q7PJjsCqyuwwnPresG05F+nLHsE3m3SKsYUCjaK1/1u
+ L5ncy0rvZI0rSNQKbZdWT1dDODpiVG+SmisMdzx/ginFg5aAuUZbYtV3w9DHqeixDgmv
+ wN2scytz4ckGdrSrnBGmZ/QbMuA+vfTxPcWGBhYw6qkft+Hi7U4p15Ui2fsgeHLVAiXl
+ 0IsWaLN/TJuxyCO8hs5o299EdoN0LJnMdvkOxBxZ6fexX8sEmi9PB3mUVjUsVHx46WCV
+ 0pVSC7cnar/eJwLbNU46RKCSxYXacd1MFAWGF4c99bM7/rylu2Ymb/6oCt93mszuSq6R
+ lWHw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdHKqHrh+VSPq+EKqQTZ+ZPlDghTglriq1bYZhXYO8JQcVwGN8JOVeBqKBzkn23lJsGwPsO0VGBqzF@nongnu.org
+X-Gm-Message-State: AOJu0Yylq7FevW/qm2OVnI2/xMbKt8V2hPOXm8NpYuYtrgGxvCwOVxtT
+ GVsbV7CHkozZefRfBulmI0f3yBhj7FgHO6m4cLTmRmzZE1sZvIMZrbNSik6aEy7Q5PW/AWxHXUp
+ 25xaHUTMgpNAX19aDqNJpBZCJ0eODq8ROTkOGoayTbAvXbJwOB8syR42oHQQnJaX0
+X-Gm-Gg: AY/fxX53sK/EiFK4JB3f5Sy8nnl8A2Almv3Ouiqc4Wy8+pcAbksZE3CvEY7VMLtbAOV
+ /fw0GTx+xLSvFVk1eDxbxh8E/jWBQYuToj5Tk8Z/JrWGiV/gJlNfTeKkSV9g5YFegTQ2e9YDAgu
+ 5u/Xn10c17fsyW2GIjIskj0bJiU/5eKYxI7mrQ8nzYilEoaAgZV5KGGAhwrQd7cT2iA+qMfOBsl
+ /ub2e+JIcIes+U+OoiobYgOhjseQZtEBLuvvUSljMn154Li/DDEuYMvLmmOnJPqOo4O9HVcte2V
+ oLuZTAvRDEMDR8SPU9EU1cnpqiSXpQcE0vS0NSuX11tdbr4LCYlo6JFzYBcGirWOY/P2UItcMxF
+ oR7DM8P1xcwFduRJ9oj7cyXa/I7770fjLAJDEir+k0GGeubda
+X-Received: by 2002:a5d:5f48:0:b0:431:6ba:38ac with SMTP id
+ ffacd0b85a97d-4356a033204mr2622414f8f.4.1768559088104; 
+ Fri, 16 Jan 2026 02:24:48 -0800 (PST)
+X-Received: by 2002:a5d:5f48:0:b0:431:6ba:38ac with SMTP id
+ ffacd0b85a97d-4356a033204mr2622388f8f.4.1768559087705; 
+ Fri, 16 Jan 2026 02:24:47 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4356992211dsm4355067f8f.7.2026.01.16.02.24.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Jan 2026 02:24:47 -0800 (PST)
+Message-ID: <b2b76700-1172-41e1-8077-db5149eb14f3@redhat.com>
+Date: Fri, 16 Jan 2026 11:24:46 +0100
 MIME-Version: 1.0
-References: <20251111091058.879669-1-aesteve@redhat.com>
- <20251111091058.879669-6-aesteve@redhat.com>
-In-Reply-To: <20251111091058.879669-6-aesteve@redhat.com>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Fri, 16 Jan 2026 11:20:25 +0100
-X-Gm-Features: AZwV_QhH2vWtalzgHTYeFRTLWAQ07Yy9iVdhnwDM0droQF-iLirn9XI0wObMWTQ
-Message-ID: <CADSE00+24EjXdRMDXXf7tgWLaH2gqeDhL_OeRbmZQ2e8JULPXA@mail.gmail.com>
-Subject: Re: [PATCH v11 5/7] vhost_user.rst: Add GET_SHMEM_CONFIG message
-To: qemu-devel@nongnu.org
-Cc: dbassey@redhat.com, "Michael S. Tsirkin" <mst@redhat.com>,
- manos.pitsidianakis@linaro.org, 
- slp@redhat.com, stefanha@redhat.com, Fabiano Rosas <farosas@suse.de>,
- jasowang@redhat.com, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, david@redhat.com, hi@alyssa.is,
- stevensd@chromium.org, 
- Stefano Garzarella <sgarzare@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio/migration: Fix page size calculation
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org
+References: <20260116060315.65723-1-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260116060315.65723-1-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,110 +166,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 11, 2025 at 10:11=E2=80=AFAM Albert Esteve <aesteve@redhat.com>=
- wrote:
->
-> Add GET_SHMEM_CONFIG vhost-user frontend
-> message to the spec documentation.
->
-> Reviewed-by: Alyssa Ross <hi@alyssa.is>
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Signed-off-by: Albert Esteve <aesteve@redhat.com>
+On 1/16/26 07:03, Zhenzhong Duan wrote:
+> Coverity detected an issue of left shifting int by more than 31 bits leading
+> to undefined behavior.
+> 
+> In practice bcontainer->dirty_pgsizes always have some common page sizes
+> when dirty tracking is supported.
+> 
+> Resolves: Coverity CID 1644186
+> Resolves: Coverity CID 1644187
+> Resolves: Coverity CID 1644188
+> Fixes: 46c763311419 ("vfio/migration: Add migration blocker if VM memory is too large to cause unmap_bitmap failure").
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > ---
->  docs/interop/vhost-user.rst | 39 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 39 insertions(+)
->
-> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-> index 6c1d66d7d3..6a1ecd7f48 100644
-> --- a/docs/interop/vhost-user.rst
-> +++ b/docs/interop/vhost-user.rst
-> @@ -371,6 +371,20 @@ MMAP request
->    - 0: Pages are mapped read-only
->    - 1: Pages are mapped read-write
->
-> +VIRTIO Shared Memory Region configuration
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> ++-------------+---------+------------+----+--------------+
-> +| num regions | padding | mem size 0 | .. | mem size 255 |
-> ++-------------+---------+------------+----+--------------+
-> +
-> +:num regions: a 32-bit number of regions
-> +
-> +:padding: 32-bit
-> +
-> +:mem size: contains ``num regions`` 64-bit fields representing the size =
-of each
-> +           VIRTIO Shared Memory Region
-> +
+>   hw/vfio/migration.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index f857dc25ed..b4695030c7 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -1173,7 +1173,7 @@ static bool vfio_dirty_tracking_exceed_limit(VFIODevice *vbasedev)
+>        * can also switch to use IOMMUFD backend if there is a need to migrate
+>        * large VM.
+>        */
+> -    page_size = 1 << ctz64(bcontainer->dirty_pgsizes);
+> +    page_size = 1ULL << ctz64(bcontainer->dirty_pgsizes);
+>       max_size = bcontainer->max_dirty_bitmap_size * BITS_PER_BYTE * page_size;
+>   
+>       return current_machine->ram_size > max_size;
 
-When implementing this for rust-vmm, the mem size came up a bit
-confusing. In the last patch (7/7) of this series, the implementation
-uses `num regions` as a count for the number of valid regions (thus
-accounting for gaps in the shmem region mapping). Thus, `mem size` has
-this confusing statement saying that it containers `num regions`
-fields. It should say it contains 256 fields (it is only sent once
-during initialization, so no need to save bytes here), with only `num
-regions` that are valid (i.e., greater than 0). Maybe it could even
-discard the `num regions` field, and send only the full array.
-Thoughts?
-
-As much as I wanted this series merged, this deserves a clarification.
-So I can either send a new version of the series or split the last
-three patches into a different series. Hopefully it only requires one
-more version though.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 
->  C structure
->  -----------
->
-> @@ -397,6 +411,7 @@ In QEMU the vhost-user message is implemented with th=
-e following struct:
->            VhostUserShared object;
->            VhostUserTransferDeviceState transfer_state;
->            VhostUserMMap mmap;
-> +          VhostUserShMemConfig shmem;
->        };
->    } QEMU_PACKED VhostUserMsg;
->
-> @@ -1761,6 +1776,30 @@ Front-end message types
->    Using this function requires prior negotiation of the
->    ``VHOST_USER_PROTOCOL_F_DEVICE_STATE`` feature.
->
-> +``VHOST_USER_GET_SHMEM_CONFIG``
-> +  :id: 44
-> +  :equivalent ioctl: N/A
-> +  :request payload: N/A
-> +  :reply payload: ``struct VhostUserShMemConfig``
-> +
-> +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-> +  successfully negotiated, this message can be submitted by the front-en=
-d
-> +  to gather the VIRTIO Shared Memory Region configuration. The back-end =
-will
-> +  respond with the number of VIRTIO Shared Memory Regions it requires, a=
-nd
-> +  each shared memory region size in an array. The shared memory IDs are
-> +  represented by the array index. The information returned shall comply
-> +  with the following rules:
-> +
-> +  * The shared information will remain valid and unchanged for the entir=
-e
-> +    lifetime of the connection.
-> +
-> +  * The Shared Memory Region size must be a multiple of the page size
-> +    supported by mmap(2).
-> +
-> +  * The size may be 0 if the region is unused. This can happen when the
-> +    device does not support an optional feature but does support a featu=
-re
-> +    that uses a higher shmid.
-> +
->  Back-end message types
->  ----------------------
->
-> --
-> 2.49.0
->
+Thanks,
+
+C.
 
 
