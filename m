@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E7A0D4A613
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A97ED4A613
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 08:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgfWb-0005JF-Da; Fri, 16 Jan 2026 03:49:45 -0500
+	id 1vgfSF-0003dD-R2; Fri, 16 Jan 2026 03:45:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgfWY-0005Iz-EX
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:49:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgfSE-0003ZL-Ly
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:45:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgfWX-0006kO-53
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:49:42 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vgfSC-0006E5-R4
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 03:45:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768553380;
+ s=mimecast20190719; t=1768553111;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uR1AgGgjMArvKgtYLxN2w/wO3Fdiw9TqKqnPdY4UlD8=;
- b=WDYkmEI9TOmqdRkWYENiWnMvhOZcfXSggGyyxE68yR8m3ITJDYpInjy5kOi03HYRJ7+68C
- 6IYtFUu/XopQ93szZdO8vKcQXm64rEqd9YwAVVVQWrVp5ArKYd16kYDMzAsaZPoutg2fxy
- D0u57PYCJd0O6eZ/mVcdkE4qeX3ZsSE=
+ bh=feJ4iqoolBevQVHLQZWcSpM6kOGliGrjPiRWu5eLyk0=;
+ b=M3pPHbzyOppxwjHOGLSokKu/PgOs3HBBojokEmLwqRQq5GVCT7QfARkHxvCv9Uhz5wxSJC
+ qsdaMKy9IRX25zdBZ5evvRC7Ryltuxq+y8RJ6PxjfSMJmOL+aLE6WshdoTApUANs8mqWQ5
+ zyaw4PZKuQPYAOJNGHFhGiyLfBtLqvg=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-3LPg6RbgOaeFEkkD9h0eNw-1; Fri,
- 16 Jan 2026 03:49:36 -0500
-X-MC-Unique: 3LPg6RbgOaeFEkkD9h0eNw-1
-X-Mimecast-MFC-AGG-ID: 3LPg6RbgOaeFEkkD9h0eNw_1768553375
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-PicsCuUDNBu34fOKtpj0-Q-1; Fri,
+ 16 Jan 2026 03:45:09 -0500
+X-MC-Unique: PicsCuUDNBu34fOKtpj0-Q-1
+X-Mimecast-MFC-AGG-ID: PicsCuUDNBu34fOKtpj0-Q_1768553108
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 03AD41956095; Fri, 16 Jan 2026 08:49:35 +0000 (UTC)
+ id C377919560B2; Fri, 16 Jan 2026 08:45:08 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.32])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B0996195419D; Fri, 16 Jan 2026 08:49:34 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5468A18001D5; Fri, 16 Jan 2026 08:45:08 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 457B121E692D; Fri, 16 Jan 2026 09:49:32 +0100 (CET)
+ id DF50621E692D; Fri, 16 Jan 2026 09:45:05 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org,  Juraj Marcin <jmarcin@redhat.com>,  Daniel P .
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  Prasad Pandit <ppandit@redhat.com>
-Subject: Re: [PATCH v2 1/2] migration: Remove zero-blocks capability
-In-Reply-To: <20260115225503.3083355-2-peterx@redhat.com> (Peter Xu's message
- of "Thu, 15 Jan 2026 17:55:02 -0500")
-References: <20260115225503.3083355-1-peterx@redhat.com>
- <20260115225503.3083355-2-peterx@redhat.com>
-Date: Fri, 16 Jan 2026 09:49:32 +0100
-Message-ID: <87jyxirlgj.fsf@pond.sub.org>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: berrange@redhat.com,  qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/4] hmp*hx: Move info docs
+In-Reply-To: <aWk1FvYlhq6a1Sbm@gallifrey> (David Alan Gilbert's message of
+ "Thu, 15 Jan 2026 18:42:30 +0000")
+References: <20260115020423.722069-1-dave@treblig.org>
+ <20260115020423.722069-3-dave@treblig.org>
+ <875x93xf4q.fsf@pond.sub.org> <aWk1FvYlhq6a1Sbm@gallifrey>
+Date: Fri, 16 Jan 2026 09:45:05 +0100
+Message-ID: <87o6murlny.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,13 +86,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+"Dr. David Alan Gilbert" <dave@treblig.org> writes:
 
-> It was declared deprecated since 9.2.
+> * Markus Armbruster (armbru@redhat.com) wrote:
+>> dave@treblig.org writes:
+>> 
+>> > From: "Dr. David Alan Gilbert" <dave@treblig.org>
+>> >
+>> > Move the docs for the info subcommand from the separate hx
+>> > into the top level file next to the 'info' command itself.
+>> > That makes every command in the top level file have a RST section.
+>> >
+>> > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+>> 
+>> Generated HTML changes slightly, diff appended.  Shows as vertical space
+>> differences in Firefox.  Do we care?
 >
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> It looked OK to me in Firefox, is there a bit that looks wrong/bad to you?
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+The vertical spacing around "info subcommand" changes.
+
+Old: extra space between "xen-event-list" and "info subcommand" compared
+to between other commands.
+
+New: extra space between "info subcommand"'s doc text and "info
+version".
+
+Hypothesis: the extra space is at the boundary between hmp-commands.hx
+and hmp-commands-info.hx.
+
+I dislike the old extra space a bit less, but no big deal either way.
+
+[...]
 
 
