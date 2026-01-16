@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 613D4D48981
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2B40D47CDE
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 11:42:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgiBn-0002hv-Fl; Fri, 16 Jan 2026 06:40:27 -0500
+	id 1vgiD9-0003XR-GE; Fri, 16 Jan 2026 06:41:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vgiBl-0002gG-7c
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:40:25 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vgiBj-0001Ql-Mh
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 06:40:25 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-47ee3a63300so18667685e9.2
- for <qemu-devel@nongnu.org>; Fri, 16 Jan 2026 03:40:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768563622; x=1769168422; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=zBZCtMMSHGdzGkjLwfCIBNs4Zt6uPYpF65Piti3Q6Gc=;
- b=xWu9YdkFcOpmBKSiJmf0UqLZv9OPkDU943MJAo0CsAP9mlaFb/zYVSoe0Vm7p9sIIT
- 2WkFkTkyLFqQd6FyzXFxonImXhvD+utKGhVEMNemj5SpUIlN/TkCRmL+TSy9HTTlgtXm
- GhHtaTN8EudZ1taKlPWah5b8dUvonAuJmdt57vLSu7xGgEtCFC3WTJ3kn3gPNflrIHv8
- /aqAIkalheYN3Ew4uI8x5xJZUZDqRuvYJzYSbqXXnv8dmAzK34Xfu38752FhAxLVPBH3
- x/NWjtrUGYnw4EsiUCjbUXlsm10N98iFQIjGwkq6Yax/FoEfOrUprahuWP3BHEAbKA+z
- F8fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768563622; x=1769168422;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zBZCtMMSHGdzGkjLwfCIBNs4Zt6uPYpF65Piti3Q6Gc=;
- b=TRc9IdWLaLX06pQvkRq4Kb8ZKou/TYghXJmqcsGmK9aJO+bYhCulMvG2m21girc3hD
- bAwPV/Q44wlmzIRBLfLI1ArJ9ymA8sImCExANKSOe3JIj+BovPFAksLgKidbG8pISJIz
- n0InZ6FPVnbcodoMEuRTWPiXn8hkEMfKnMNhYIcXe9wwKZoecgmCLdFRiqKZrdvG5Q+t
- iBRDdrpX5MqUie58K18aQGXdMEolXe8oXUStycjRSYaQuKz70F62H2NC0y1GE+3Pfe2h
- cLvs4O/5cWDu4TWRS58+ybG/BfrdJB8uJJKkNN+Rp6YzWLZFI19bj2ewAO9dNV9pRbFO
- 9P9A==
-X-Gm-Message-State: AOJu0Yzddj/ZAZbQKKvF23hFrMdAW7IXQ0Oj3iujwYrYDEMULoFnKFXK
- fNzYc7jlbBdnpau5tLXjz+/inI214FGYSlYBlkLgKCMvA32b+CvLxooqdeKZ3mG0DTW5x+AVEn/
- WM7j+
-X-Gm-Gg: AY/fxX52Fq0vHxX2dv05MIMv7Q1N19zowS5RGiEX1PogsVRTAmF5P6xZwhVFipdMATP
- njWBJEQOAS/TBb5l3gTWdtH4HynqRYhVjbOW6l/WZz27L5sIjWiAsaIxe4HU3egngaasH9aGQB9
- ty4jrZ6iUy9oGcKKpmtGRH07uwXr9ji918dBCCX+l78x7H2JJzPBUEg+ZfLUs8YBfQJGN//SMdX
- sciLK9Xchy1nHfJLwQrn/zgFu3zJqqyVH3xOjR48FSLMlh8XhlDBVvR5s70Vw0rNPTsv7jdlb/+
- CmI8uNIrSKApbyvy0oGAvoa53DH2zxXtzaEKj+OUkQVeYeN+qCVlrESuVmsQxF7VQzfrCFeP8eh
- jSVNthpyQ+0u95YwFmJpU0V9KjP7Urb3aijY5aNDk8K0eRbfwj3wtBAPYdv8cxmRUzHeIGWpRks
- WsVo6lPLgSIecRfksj03ToH/maf6E09n3WlcLZMw/5XfwJBGglY6yARITF
-X-Received: by 2002:a05:600c:3d8b:b0:47e:e2ec:995b with SMTP id
- 5b1f17b1804b1-4801e30b205mr26870845e9.9.1768563622082; 
- Fri, 16 Jan 2026 03:40:22 -0800 (PST)
-Received: from ?IPV6:2a10:d582:31e:0:bf4d:6c0b:c4a1:ca58?
- ([2a10:d582:31e:0:bf4d:6c0b:c4a1:ca58])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43569921f6esm4845958f8f.4.2026.01.16.03.40.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Jan 2026 03:40:21 -0800 (PST)
-Message-ID: <9b052ee4-1700-456b-96c6-7ae2af900d40@linaro.org>
-Date: Fri, 16 Jan 2026 11:40:21 +0000
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vgiCf-0003Nc-WA; Fri, 16 Jan 2026 06:41:22 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vgiCe-0001TH-9H; Fri, 16 Jan 2026 06:41:21 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3F8BC17EDA9;
+ Fri, 16 Jan 2026 14:41:06 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6857934ECA4;
+ Fri, 16 Jan 2026 14:41:16 +0300 (MSK)
+Message-ID: <9d50f4d0-4953-4517-900a-25fdcb42b5cb@tls.msk.ru>
+Date: Fri, 16 Jan 2026 14:41:16 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] tcg: possibly convert deposit_z to shl+shr
-To: qemu-devel@nongnu.org
-References: <20260115135453.140870-1-pbonzini@redhat.com>
- <20260115135453.140870-3-pbonzini@redhat.com>
-Content-Language: en-US
-Cc: pbonzini@redhat.com
-From: Jim MacArthur <jim.macarthur@linaro.org>
-In-Reply-To: <20260115135453.140870-3-pbonzini@redhat.com>
+Subject: Re: [PULL 0/6] loongarch queue
+To: Bibo Mao <maobibo@loongson.cn>, qemu-devel@nongnu.org,
+ Song Gao <gaosong@loongson.cn>, Yao Zi <me@ziyao.cc>,
+ Xianglai Li <lixianglai@loongson.cn>, qemu-stable <qemu-stable@nongnu.org>
+References: <20260115064840.219920-1-maobibo@loongson.cn>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260115064840.219920-1-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,34 +104,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/15/26 13:54, Paolo Bonzini wrote:
->   
-> @@ -2628,8 +2638,18 @@ void tcg_gen_deposit_z_i64(TCGv_i64 ret, TCGv_i64 arg,
->               tcg_gen_extract_i64(ret, ret, 0, ofs + len);
->               return;
->           }
-> -        tcg_gen_andi_i64(ret, arg, (1ull << len) - 1);
-> -        tcg_gen_shli_i64(ret, ret, ofs);
-> +        /*
-> +         * Use TCG_TARGET_extract_valid to check for 8-, 16- and 32-bit extension
-> +         * opcodes, which tcg_gen_andi_i64 can produce.
-> +         */
-> +        if (TCG_TARGET_extract_valid(TCG_TYPE_I64, 0, len) ||
-> +	    tcg_op_imm_match(INDEX_op_and, TCG_TYPE_I64, (1ull << len) - 1)) {
-> +            tcg_gen_andi_i64(ret, arg, (1ull << len) - 1);
-> +            tcg_gen_shli_i64(ret, ret, ofs);
-> +        } else {
-> +            tcg_gen_shli_i64(ret, arg, 64 - len);
-> +            tcg_gen_shri_i64(ret, ret, 64 - len - ofs);
-> +        }
->       }
->   }
->   
+On 1/15/26 09:48, Bibo Mao wrote:
+...
+> pull-loongarch-20260115 queue
+> 
+> ----------------------------------------------------------------
+> Song Gao (3):
+>        target/loongach: Fix some exceptions failure in updating CSR_BADV
 
-Also just a couple of coding standards issues - "Use 
-TCG_TARGET_extract_valid" comment is over 80 characters and you have a 
-tab at the start of the call to tcp_op_imm_match. Otherwise, looks good.
+There's a typo here, "loongach".  FWIW, - this patch has been applied to
+the master branch already.
 
-Jim
+>        target/loongarch: Fix exception BCE missing to update CSR_BADV
+>        target/loongarch: Fix exception ADEF/ADEM missing to update CSR_BADV
+> 
+> Xianglai Li (2):
+>        hw/loongarch/virt: Modify the interrupt trigger type in fdt table
+>        hw/loongarch/virt: Fix irq allocation failure with pci device from fdt
 
+Actually, none of the above changes has been on qemu-devel list for some
+reason.  This is rather unusual.
+
+> Yao Zi (1):
+>        hw/loongarch/virt: Don't abort on access to unimplemented IOCSR
+
+And it looks like most of it - maybe except of "Modify the interrupt
+trigger type" which is just cosmetic - are candidates for qemu-stable.
+
+Please let me know if this is the case or not.  And please add
+Cc: qemu-stable@.. for patches which should be picked up for the stable
+series in the future.
+
+Thanks,
+
+/mjt
 
