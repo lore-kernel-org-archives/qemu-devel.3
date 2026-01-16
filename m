@@ -4,59 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB7BD47CAB
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 00:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 976F6D47CA3
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Jan 2026 00:51:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vgXqc-0001F5-Uv; Thu, 15 Jan 2026 19:37:54 -0500
+	id 1vgY3O-0005fY-BS; Thu, 15 Jan 2026 19:51:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vgXqa-00018z-QA
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:37:53 -0500
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgY3L-0005ee-53
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:51:03 -0500
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1vgXqY-0006p6-UH
- for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:37:52 -0500
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1vgY3J-0000pd-87
+ for qemu-devel@nongnu.org; Thu, 15 Jan 2026 19:51:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=Hk5vPVHTbkZrNeRChoZf5W5jJgaWffuO+o8XC5KTg+k=; b=kCZa5zQfW4g9KEiE
- 5JmSr2l8GXPevQQY4LPtzpPfGLwF5yZFksqB9OTDgfUukyA1HlwOEx61ewy1+McUldmxV6vOFo3R2
- JopWeDbvBzYlAeSR/XMbS7Sf8VIkyLsFfEaP082NZGVJz4FcSRq1ooXy1WbL5TOvm57mqHZTL3nNk
- 1IkNP3quDEqwUrQSqNtQmwBVb/8Jd4kjFwph8vZOHikpF1PYgUruse/k3DrnD5dJsoC8AYWEMwZYQ
- Gfv56KKsmrlbiomLR+9uiGm5HyqXjUqIBDBaj3c5/glvNj+/YccJyjjXe84f+tg8pZialmFneMNv/
- al5DEUJJiGKyrOXEjA==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1vgXqU-0000000F7q9-3A5j;
- Fri, 16 Jan 2026 00:37:46 +0000
-Date: Fri, 16 Jan 2026 00:37:46 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Xu <peterx@redhat.com>
-Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
- Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
- Juan Quintela <quintela@trasno.org>,
- Zhang Chen <zhangckid@gmail.com>, zhanghailiang@xfusion.com,
- Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
-Message-ID: <aWmIWrXjxLsqwLd6@gallifrey>
-References: <20260114195659.2543649-1-peterx@redhat.com>
- <20260114195659.2543649-2-peterx@redhat.com>
- <aWf4i7EOXtpAljGX@x1.local> <20260115224929.616aab85@penguin>
- <aWlso1w39cQnEh2t@x1.local> <aWlxY9TWGT1aaMJz@gallifrey>
- <aWl6ixQpHaMJhV_E@x1.local>
+ h=Content-Type:MIME-Version:Message-ID:Date:Subject:From:From
+ :Subject; bh=yXE5DAzREVRncZzG8IcYN7w0EZxUVLrmRfKIU2gp0SY=; b=ReukTzBaKB6bP+GO
+ Gj5ok2Obix3dC3N/ZEIbME4EVx3ILjPZ+t4oLWzCL9bF574x1oSmJzV3AD58iYYqMG5rxFapxHP6j
+ o1DAAKyauT3Gk921EJMRS0754/mspzNZWBigHWkdUqTKsa2hn3FGektk+vRBnaBM3NpO2yiTWcJFF
+ bz9Aji3wIcrYvDLwdB2E8ty565hys4w8qWDsOFoIgAZRfQToamp0NDbamVZ9AgwdUMuRYog0tscHq
+ hmx0CjnhwxB2lraNmhq0ad6cQSV0zL6V41xFmdyoUrc1vWGXLTxptSUV8zf8dZu54W0wSJYwHL2nV
+ zLhe1gEAFMG4kWjn1Q==;
+Received: from localhost ([127.0.0.1] helo=dalek)
+ by mx.treblig.org with esmtp (Exim 4.98.2)
+ (envelope-from <dave@treblig.org>) id 1vgY3G-0000000F7wG-1pVd;
+ Fri, 16 Jan 2026 00:50:58 +0000
+From: dave@treblig.org
+To: dave@treblig.org, armbru@redhat.com, berrange@redhat.com,
+ marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH v2 0/4] HMP: hxtool sanity checks
+Date: Fri, 16 Jan 2026 00:50:44 +0000
+Message-ID: <20260116005050.376616-1-dave@treblig.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <aWl6ixQpHaMJhV_E@x1.local>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 00:01:42 up 80 days, 23:37,  2 users,  load average: 0.13, 0.06, 0.02
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dave@treblig.org;
  helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -79,104 +65,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Xu (peterx@redhat.com) wrote:
-> On Thu, Jan 15, 2026 at 10:59:47PM +0000, Dr. David Alan Gilbert wrote:
-> > * Peter Xu (peterx@redhat.com) wrote:
-> > > On Thu, Jan 15, 2026 at 10:49:29PM +0100, Lukas Straub wrote:
-> > > > Nack.
-> > > > 
-> > > > This code has users, as explained in my other email:
-> > > > https://lore.kernel.org/qemu-devel/20260115224516.7f0309ba@penguin/T/#mc99839451d6841366619c4ec0d5af5264e2f6464
-> > > 
-> > > Please then rework that series and consider include the following (I
-> > > believe I pointed out a long time ago somewhere..):
-> > > 
-> > 
-> > > - Some form of justification of why multifd needs to be enabled for COLO.
-> > >   For example, in your cluster deployment, using multifd can improve XXX
-> > >   by YYY.  Please describe the use case and improvements.
-> > 
-> > That one is pretty easy; since COLO is regularly taking snapshots, the faster
-> > the snapshoting the less overhead there is.
-> 
-> Thanks for chiming in, Dave.  I can explain why I want to request for some
-> numbers.
-> 
-> Firstly, numbers normally proves it's used in a real system.  It's at least
-> being used and seriously tested.
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-Fair.
-
-> Secondly, per my very limited understanding to COLO... the two VMs in most
-> cases should be in-sync state already when both sides generate the same
-> network packets.
-
-(It's about a decade since I did any serious Colo, so I'll try and remember)
-
-> Another sync (where multifd can start to take effect) is only needed when
-> there're packets misalignments, but IIUC it should be rare.  I don't know
-> how rare it is, it would be good if Lukas could introduce some of those
-> numbers in his deployment to help us understand COLO better if we'll need
-> to keep it.
-
-In reality misalignments are actually pretty common - although it's
-very workload dependent.  Any randomness in the order of execution in a multi-threaded
-guest for example, or when a timer arrives etc can change the packet generation.
-The migration time then becomes a latency issue before you can
-transmit the mismatched packet once it's detected.
-
-I think You still need to send a regular stream of snapshots even without
-having *yet* received a packet difference.  Now, I'm trying to remember the
-reasoning; for a start if you leave the difference too long the migration
-snapshot gets larger (which I think needs to be stored on RAM on the dest?)
-and also you increase the chances of them getting a packet difference from
-randomness increases.
-I seem to remember there were clever schemes to get the optimal snapshot
-scheme.
-
-> IIUC, the critical path of COLO shouldn't be migration on its own?  It
-> should be when heartbeat gets lost; that normally should happen when two
-> VMs are in sync.  In this path, I don't see how multifd helps..  because
-> there's no migration happening, only the src recording what has changed.
-> Hence I think some number with description of the measurements may help us
-> understand how important multifd is to COLO.
-
-There's more than one critical path:
-  a) Time to recovery when one host fails
-  b) Overhead when both hosts are happy.
-
-> Supporting multifd will cause new COLO functions to inject into core
-> migration code paths (even if not much..). I want to make sure such (new)
-> complexity is justified. I also want to avoid introducing a feature only
-> because "we have XXX, then let's support XXX in COLO too, maybe some day
-> it'll be useful".
-
-I can't remember where the COLO code got into the main migration paths;
-is that the reception side storing the received differences somewhere else?
-
-> After these days, I found removing code is sometimes harder than writting
-> new..
-
-Haha yes.
+Hi,
+  This adds a couple of sanity checks to hxtool to try and catch the
+  type of mistake that Markus' patch fixes.
+  (Included Markus' patch since otherwise the script correctly fails)
 
 Dave
 
-> Thanks,
-> 
-> > 
-> > Lukas: Given COLO has a bunch of different features (i.e. the block
-> > replication, the clever network comparison etc) do you know which ones
-> > are used in the setups you are aware of?
-> > 
-> > I'd guess the tricky part of a test would be the network side; I'm
-> > not too sure how you'd set that in a test.
-> 
-> -- 
-> Peter Xu
-> 
+v2:
+  Add brackets on the .name regexp
+  Use snake_case for names.
+
+Dr. David Alan Gilbert (3):
+  hmp*hx: Move info docs
+  hxtool: Split srst/erst add checks
+  hxtool: Error on missing docs
+
+Markus Armbruster (1):
+  hmp-commands-info.hx: Move definition of "info accel"
+
+ hmp-commands-info.hx | 33 +++++++++++++--------------------
+ hmp-commands.hx      | 27 +++++++++++++++++----------
+ scripts/hxtool       | 38 +++++++++++++++++++++++++++++++++++---
+ 3 files changed, 65 insertions(+), 33 deletions(-)
+
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.52.0
+
 
