@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 254ECC98315
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Jan 2026 16:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C67BC98327
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Jan 2026 16:30:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vh9BF-0003B6-P9; Sat, 17 Jan 2026 11:29:41 -0500
+	id 1vh9BM-0003PJ-3h; Sat, 17 Jan 2026 11:29:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vh9BD-00039I-Nn
- for qemu-devel@nongnu.org; Sat, 17 Jan 2026 11:29:39 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vh9BK-0003L6-LS
+ for qemu-devel@nongnu.org; Sat, 17 Jan 2026 11:29:46 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vh9BC-0006Ba-7h
- for qemu-devel@nongnu.org; Sat, 17 Jan 2026 11:29:39 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4801c731d0aso16346805e9.1
- for <qemu-devel@nongnu.org>; Sat, 17 Jan 2026 08:29:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vh9BI-0006DY-U6
+ for qemu-devel@nongnu.org; Sat, 17 Jan 2026 11:29:46 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-432d2c7dd52so2653965f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 17 Jan 2026 08:29:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768667376; x=1769272176; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768667383; x=1769272183; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LxWCcW++Lxcknn8mz+ztokq5YZ0Nmxk+SbAcg0xOxLM=;
- b=OHhBRwW0Ycj63M23i9TOvEP5YRcKnCQ0D7aKpYeBwRmLVNTnLAgqUfN6jn15mvxJ4Z
- 2eRKoVSPruccXGgjG3aL8XApRAifENvQty/tKvBFuPYuGvpUuM6EnPDrY0ZdoMC3C8AN
- RfANj0/rhypycszaU+C6hQSVqyDiC5Vyou4q+LGclkcBEqC/V7Wq8GT39QLNdmz4De9/
- 8gn9f/XCbsXrIbR8aQMlansiMbtV8E9GZ7RF7Rhu3BNfzWIi8nMxl07XX9lZMrUPrmLw
- pJ3zsXZ2cHeCODAxhhbNiPGF04yb1Sj47Gu4mcemZX/DVLzbml/FJMQUzPT6z/2KiPlH
- cs3g==
+ bh=VfRg586HPJ+mDGPLeFyi+xxSw4nPOXQ2RpG1oIDhHxM=;
+ b=Fl7J6X4pLR3a50WUTHtLUyPJDH8W6464evcOq3qCsc9ghX0IuECshL3HCXCr9JfUr2
+ xsLa3T0kToAcI7uvbvg7kSSLZB++l5U1L6VwOV1TOfWUxRWCAfZf1XIpMNmLnz6zH2S7
+ yqLxUN3FruQd5h7Z0u3ZdpEAQYwhOxZb/X0ad9dlpGoceWcH++/xV/ACw+c9h4IjayT7
+ INS76mumnvxua56ZjQOgmuEYZ/sal9nLSGj02PTwkxdyhbjLzXyvQiOY+2lh6DB1jqTk
+ QFvsmYNQAKvogvqYyzUExey+lhIANFjytDVJRydMRBknLQCqYUM460Ec6cCKDP8Auaiw
+ ROkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768667376; x=1769272176;
+ d=1e100.net; s=20230601; t=1768667383; x=1769272183;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LxWCcW++Lxcknn8mz+ztokq5YZ0Nmxk+SbAcg0xOxLM=;
- b=GTsimJDWfkRAobTE70IW3DtXAbi7zd9+BASFg5eCN0oWxrLtvVMfAs7TWFC0h/LfOt
- oUodGrf+JpygMV+IHY44ubAftAxluuZ1QU2FwdxaWEtWb9GaHX9eJHYKSvr5rgZlwD1T
- ctHQtkPdTXOmEzA3KKT+jqeyOilM/SoQsBgavdqksfQmVsITObim+AGtgW+9CSKo0gxp
- aWjm7a8KB2SCWhKpYRg1XfZPihplru3VZeDsWuQkPJmoPiQiYT4G4rN9ppEkuho+qGJq
- bgmp2IA7B2RBAGMbo3Z7vsXPkhV6mDeuFlZoF+ObP2cbz0ByIjuOK/egF59iQEnr9xQ/
- mZBA==
-X-Gm-Message-State: AOJu0Yyo+5DsCiwfKZDMcBUOguqSiZbpQx1MnRWtwo+DK+ZA4S7nb+I2
- H1V2WugTMQwGqV0GqSINmtTIeGFsAP6YxujSNhani/cWT1w7bVYB5VHYO+sA4LNiMdwWde/01fI
- gDrydGQE=
-X-Gm-Gg: AY/fxX53zf2wQWHXkEUhRxJ58oAUk7poTdVLEyl+whwlanJJSvzpL9EUdDZrDMX+JA0
- bvCYaAZ0B3N/aOc/dUWuMC99mV/E1MYIe+iJ+mm78e5k2P8ge/aijof9F3ZbkSaINDOzHSAQffq
- rZAdsV5tc5S6WmO4A8HpTPxIBLHb4a4ABLde/531DoGgveOKE/L3fV6Uc8hyu54oN+N6YyP7UDE
- DWNL/JuuasvWk8oeAPFoz8Ncbn6UO+oc/6apLpXdxm7+aiaFLzOUoVs6U9F8hZaTpMq37t61rCT
- /3yLBluBbVKyccXksjvA6hBfbQVISGSPwKSkAg64gwXeBvo4gd9us65wSDmH641fSmMnWyHix87
- 6fXif3pouRqJlInHeasC9GGMNiV9Sd5a0NrrDYtPwq5PDJ8XtmD7u7DfqOLYirAvoa83YIXx5SR
- b6+iHfJ6rBU5zbfpWv5EXsWLyfxLv0aDa6EB1bxdW3HIf8pHCin2t/EH/eV9vM
-X-Received: by 2002:a05:600c:1991:b0:47e:e4ff:e2ac with SMTP id
- 5b1f17b1804b1-4801e356cebmr78919055e9.33.1768667376019; 
- Sat, 17 Jan 2026 08:29:36 -0800 (PST)
+ bh=VfRg586HPJ+mDGPLeFyi+xxSw4nPOXQ2RpG1oIDhHxM=;
+ b=RO4S2QeR42t5zJ6sCleQw4W/5TtW/sRUpesuU+ZUqQlWWlegoh4ovfZUx7k0gKbTOL
+ NpiQSLXUTfuzCFGBzXdAozys68CopnxOU92ovrtFOf9wV0QVHZ9XzrvD4l14HgYip1d2
+ xQOqqC22uaqYwD6zziF6mUmdg0rI9F/pssaXJFm0TcrpUCXF2JeoeKMgmn9WcPnVmEH7
+ vcIBGBPlw7laagPUu3rDtWtjGu0nrxyc6VOQdILx2kwBNScJ6ZXnFFl4dJE1DoKnamyy
+ sQSateYOPmwSNnHxGHzOEO2Tq1DoSrXqX4n379ZTNr2PVtlw7L3whvZer2A8jQ6Xvs4M
+ dkUA==
+X-Gm-Message-State: AOJu0Yy8ApuPmsT1F6rQN0pM59O60AJsAioZEwPyo+9DkJz/Hkgssy/S
+ D7f3GsCtI4L8f2Od6uPoRKs5btsAGKyAlMG1mthaf/o551eaCvMSnwBYKHN4aojn+vXUsQ/wYq9
+ TrDa1nTI=
+X-Gm-Gg: AY/fxX7yamCPJ4x4eHE+j0dWsPL+EMqdOogZsctc/2pV0BcNlbF9wFQZuZWZ+Y6pwTC
+ 3N5ynoRMdKh3hKkDAADM6y3etE5PdgPX/V2s94uy/zuTLAimCBqRZ5UqAFAXvgC2uZNDz9yLUsW
+ s5LkjhjtGQg2OQaJ5Gih3K+12kvzKe9WYZPsq0QcMuWlNwaWXqbPSeRqF4FXZNVZZ7DboMngU0V
+ gzxHIG89mmgR+Gn4DwuU5rUW24IxbO3OSBw+PNAOvIxcICX/ZuuetLFiNHw8e3Rw+McpiupysGN
+ /x7Xieh2rtGTVD52OLtIb2sXflCTiHV5CaIc4RQrn0YR7HUrJANsmHr6k+xUWDNbH2bqIXEDWHy
+ u04NLuNZBbZs/EFk/gk6Pk7Zhm5aHj/7aCYcEkBe6DraWv+C64Bmi4j/fu5DoJj7gHZW1NW4wi7
+ 9ipICJIpkHwL7SbeFKze/pBpC8WebIwGFgHT0vfjKij9cxSDbT8VbLSZIXYj5+
+X-Received: by 2002:adf:fe51:0:b0:430:f5ed:83fc with SMTP id
+ ffacd0b85a97d-43569970a6dmr6076847f8f.11.1768667382913; 
+ Sat, 17 Jan 2026 08:29:42 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e86c197sm101328235e9.1.2026.01.17.08.29.34
+ ffacd0b85a97d-4356997eb1fsm12057839f8f.35.2026.01.17.08.29.41
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 17 Jan 2026 08:29:35 -0800 (PST)
+ Sat, 17 Jan 2026 08:29:42 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -70,20 +70,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- kvm@vger.kernel.org
-Subject: [PATCH v2 1/8] target/i386: Include missing 'svm.h' header in 'sev.h'
-Date: Sat, 17 Jan 2026 17:29:19 +0100
-Message-ID: <20260117162926.74225-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 2/8] monitor: Add hmp_cmds_for_target() helper
+Date: Sat, 17 Jan 2026 17:29:20 +0100
+Message-ID: <20260117162926.74225-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260117162926.74225-1-philmd@linaro.org>
 References: <20260117162926.74225-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,40 +104,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-otarget/i386/cpu.h:2820:#include "svm.h"
-target/i386/sev.h:17:#include "target/i386/svm.h"
-
-"target/i386/sev.h" uses the vmcb_seg structure type, which
-is defined in "target/i386/svm.h". Current builds succeed
-because the files including "target/i386/sev.h" also include
-"monitor/hmp-target.h", itself including "cpu.h" and finally
-"target/i386/svm.h".
-
-Include the latter, otherwise removing "cpu.h" from
-"monitor/hmp-target.h" triggers:
-
-  ../target/i386/sev.h:62:21: error: field has incomplete type 'struct vmcb_seg'
-     62 |     struct vmcb_seg es;
-        |                     ^
+HMPCommand arrays are filled with target-specific
+commands, so defined in a target-specific unit.
+Introduce the hmp_cmds_for_target() to allow
+target-agnostic code to access the arrays.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/i386/sev.h | 2 ++
- 1 file changed, 2 insertions(+)
+ monitor/monitor-internal.h |  9 +++++++--
+ monitor/hmp-target.c       | 13 ++++++++-----
+ monitor/hmp.c              |  8 +++++---
+ 3 files changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/target/i386/sev.h b/target/i386/sev.h
-index 9db1a802f6b..4358df40e48 100644
---- a/target/i386/sev.h
-+++ b/target/i386/sev.h
-@@ -14,6 +14,8 @@
- #ifndef I386_SEV_H
- #define I386_SEV_H
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 7735c731083..feca111ae31 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -169,8 +169,6 @@ extern QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+ extern QemuMutex monitor_lock;
+ extern MonitorList mon_list;
  
-+#include "target/i386/svm.h"
+-extern HMPCommand hmp_cmds[];
+-
+ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+                        bool use_io_thread);
+ void monitor_data_destroy(Monitor *mon);
+@@ -187,4 +185,11 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
+ void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
+ int hmp_compare_cmd(const char *name, const char *list);
+ 
++/*
++ * hmp_cmds_for_target: Return array of HMPCommand entries
++ *
++ * If @info_command is true, return the particular 'info foo' commands array.
++ */
++HMPCommand *hmp_cmds_for_target(bool info_command);
 +
- #ifndef CONFIG_USER_ONLY
- #include CONFIG_DEVICES /* CONFIG_SEV */
  #endif
+diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+index 37dfd7fd4c6..59c60d13b52 100644
+--- a/monitor/hmp-target.c
++++ b/monitor/hmp-target.c
+@@ -44,8 +44,6 @@
+ /* Make devices configuration available for use in hmp-commands*.hx templates */
+ #include CONFIG_DEVICES
+ 
+-static HMPCommand hmp_info_cmds[];
+-
+ /**
+  * Is @name in the '|' separated list of names @list?
+  */
+@@ -76,11 +74,16 @@ static HMPCommand hmp_info_cmds[] = {
+ };
+ 
+ /* hmp_cmds and hmp_info_cmds would be sorted at runtime */
+-HMPCommand hmp_cmds[] = {
++static HMPCommand hmp_cmds[] = {
+ #include "hmp-commands.h"
+     { NULL, NULL, },
+ };
+ 
++HMPCommand *hmp_cmds_for_target(bool info_command)
++{
++    return info_command ? hmp_info_cmds : hmp_cmds;
++}
++
+ /*
+  * Set @pval to the value in the register identified by @name.
+  * return 0 if OK, -1 if not found
+@@ -148,7 +151,7 @@ static void __attribute__((__constructor__)) sortcmdlist(void)
+ void monitor_register_hmp(const char *name, bool info,
+                           void (*cmd)(Monitor *mon, const QDict *qdict))
+ {
+-    HMPCommand *table = info ? hmp_info_cmds : hmp_cmds;
++    HMPCommand *table = hmp_cmds_for_target(info);
+ 
+     while (table->name != NULL) {
+         if (strcmp(table->name, name) == 0) {
+@@ -164,7 +167,7 @@ void monitor_register_hmp(const char *name, bool info,
+ void monitor_register_hmp_info_hrt(const char *name,
+                                    HumanReadableText *(*handler)(Error **errp))
+ {
+-    HMPCommand *table = hmp_info_cmds;
++    HMPCommand *table = hmp_cmds_for_target(true);
+ 
+     while (table->name != NULL) {
+         if (strcmp(table->name, name) == 0) {
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 4caafbc7146..17e5756986f 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -301,7 +301,7 @@ void hmp_help_cmd(Monitor *mon, const char *name)
+     }
+ 
+     /* 2. dump the contents according to parsed args */
+-    help_cmd_dump(mon, hmp_cmds, args, nb_args, 0);
++    help_cmd_dump(mon, hmp_cmds_for_target(false), args, nb_args, 0);
+ 
+     free_cmdline_args(args, nb_args);
+ }
+@@ -1131,7 +1131,8 @@ void handle_hmp_command(MonitorHMP *mon, const char *cmdline)
+ 
+     trace_handle_hmp_command(mon, cmdline);
+ 
+-    cmd = monitor_parse_command(mon, cmdline, &cmdline, hmp_cmds);
++    cmd = monitor_parse_command(mon, cmdline, &cmdline,
++                                hmp_cmds_for_target(false));
+     if (!cmd) {
+         return;
+     }
+@@ -1375,7 +1376,8 @@ static void monitor_find_completion(void *opaque,
+     }
+ 
+     /* 2. auto complete according to args */
+-    monitor_find_completion_by_table(mon, hmp_cmds, args, nb_args);
++    monitor_find_completion_by_table(mon, hmp_cmds_for_target(false),
++                                     args, nb_args);
+ 
+ cleanup:
+     free_cmdline_args(args, nb_args);
 -- 
 2.52.0
 
