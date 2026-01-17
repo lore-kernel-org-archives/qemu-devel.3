@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A12DC9830C
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Jan 2026 01:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FF42C9830C
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Jan 2026 01:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vguxL-0004pl-Cd; Fri, 16 Jan 2026 20:18:23 -0500
+	id 1vguxL-0004pZ-99; Fri, 16 Jan 2026 20:18:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vguxC-0004mW-1l
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:14 -0500
+ id 1vguxD-0004mh-MW
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:16 -0500
 Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vgux9-00078g-Ct
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:13 -0500
+ id 1vguxC-00078g-21
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1768612691; x=1800148691;
+ t=1768612694; x=1800148694;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=1YGD2m13b08g6ocSDICUbrUDqi3sC1hiqJxS0srsQNg=;
- b=A0o6oCaAH6prttYWJ3HETH2xgnay/Twx9zemHsHPy6QYJpEPm2eRypLT
- Hr/73OcWlTQcs7Ohrar7r+RFkzg2SnJz4htr9WkgBTcxapjO/KrHHyduW
- 3OZqD4pCP7CNprEhbNvHzKTh6IkGJNVqg+ojHsHEdZ7A+AIE0dvyPoOiL
- o7E6DbxJR8K6KneYXOK7Oxb1O4sHjxMUEwFJZ5zjrQdBVAHrkAoDnvw5q
- d5UHhXoAY/MEtIOntmp1gargmOnI8qeDXTYwZuDdieorqpGjTvaZ34DZt
- RHGsZ6k4OlS5WJzuucGbh5sTuPYZmlboqQsU93/h6iYfk4uB2oPYDPr/e w==;
-X-CSE-ConnectionGUID: 6pd8hLkyT7CkNXI8msao6A==
-X-CSE-MsgGUID: dX12aJjvR3ajdX4frCFKvQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11673"; a="69131148"
-X-IronPort-AV: E=Sophos;i="6.21,232,1763452800"; d="scan'208";a="69131148"
+ bh=3LAfenVCwIiuUdSFycJUlecFg2V/epsiKiOvzm0Dv2A=;
+ b=bhI1WyUl/LsRt0UFaptF6A3Kq2mTIWaDcRJ3kDLCprR3B9h1eddi4RGk
+ dbWvVu82Qo2zrsOSL57ITRnu8rDFHX7+LbzOXWlSHt5rHuJXBtlOIiiA8
+ 21MT6vMotFEXxmdFvlOT6UPn1baXEAT271DH07wtQnUzTctQ+O+A+BDcl
+ l3dEuWr4cbEplsu7r4q85B8YFNKVv3IUOONPSrLJz3Cf+5zDghIvm0adK
+ 94P8lLIxNnKRUdnq2GtAPPun6NUE0FaX2fs7X5pFNtV7vt1rAgIyoUoxE
+ CotqaDcP3Qr0F177ZEFgnKGvwkuc4KevALroxeCxJmGGeBr0IbpMydCln w==;
+X-CSE-ConnectionGUID: x7QdWVY0Rd+ToIG8AksmTQ==
+X-CSE-MsgGUID: hFVGpvDNQ8yrnCtEBIDJBw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11673"; a="69131158"
+X-IronPort-AV: E=Sophos;i="6.21,232,1763452800"; d="scan'208";a="69131158"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jan 2026 17:18:07 -0800
-X-CSE-ConnectionGUID: 3gTCIqKOQNaUvL1gCEEEKw==
-X-CSE-MsgGUID: do0kuAd5TgW1OmLmWJblrA==
+ 16 Jan 2026 17:18:08 -0800
+X-CSE-ConnectionGUID: WaqVDCyhRT6p/C0Bu1/fMg==
+X-CSE-MsgGUID: JwpHhkpKTA6xms5V78cFUA==
 X-ExtLoop1: 1
 Received: from 9cc2c43eec6b.jf.intel.com ([10.54.77.43])
  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jan 2026 17:18:07 -0800
+ 16 Jan 2026 17:18:08 -0800
 From: Zide Chen <zide.chen@intel.com>
 To: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: xiaoyao.li@intel.com, Dongli Zhang <dongli.zhang@oracle.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Zide Chen <zide.chen@intel.com>
-Subject: [PATCH 1/7] target/i386: Disable unsupported BTS for guest
-Date: Fri, 16 Jan 2026 17:10:47 -0800
-Message-ID: <20260117011053.80723-2-zide.chen@intel.com>
+Subject: [PATCH 3/7] target/i386: Gate enable_pmu on kvm_enabled()
+Date: Fri, 16 Jan 2026 17:10:49 -0800
+Message-ID: <20260117011053.80723-4-zide.chen@intel.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260117011053.80723-1-zide.chen@intel.com>
 References: <20260117011053.80723-1-zide.chen@intel.com>
@@ -84,41 +84,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-BTS (Branch Trace Store), enumerated by IA32_MISC_ENABLE.BTS_UNAVAILABLE
-(bit 11), is deprecated and has been superseded by LBR and Intel PT.
+Guest PMU support requires KVM.  Clear cpu->enable_pmu when KVM is not
+enabled, so PMU-related code can rely solely on cpu->enable_pmu.
 
-KVM yields control of the above mentioned bit to userspace since KVM
-commit 9fc222967a39 ("KVM: x86: Give host userspace full control of
-MSR_IA32_MISC_ENABLES").
+This reduces duplication and avoids bugs where one of the checks is
+missed.  For example, cpu_x86_cpuid() enables CPUID.0AH when
+cpu->enable_pmu is set but does not check kvm_enabled(). This is
+implicitly fixed by this patch:
 
-However, QEMU does not set this bit, which allows guests to write the
-BTS and BTINT bits in IA32_DEBUGCTL.  Since KVM doesn't support BTS,
-this may lead to unexpected MSR access errors.
+if (cpu->enable_pmu) {
+	x86_cpu_get_supported_cpuid(0xA, count, eax, ebx, ecx, edx);
+}
 
-Setting this bit does not introduce migration compatibility issues, so
-the VMState version_id is not bumped.
+Also fix two places that check kvm_enabled() but not cpu->enable_pmu.
 
 Signed-off-by: Zide Chen <zide.chen@intel.com>
 ---
- target/i386/cpu.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ target/i386/cpu.c     | 9 ++++++---
+ target/i386/kvm/kvm.c | 4 ++--
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 2bbc977d9088..f2b79a8bf1dc 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -474,7 +474,10 @@ typedef enum X86Seg {
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 37803cd72490..f1ac98970d3e 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -8671,7 +8671,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         *ecx = 0;
+         *edx = 0;
+         if (!(env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_INTEL_PT) ||
+-            !kvm_enabled()) {
++            !cpu->enable_pmu) {
+             break;
+         }
  
- #define MSR_IA32_MISC_ENABLE            0x1a0
- /* Indicates good rep/movs microcode on some processors: */
--#define MSR_IA32_MISC_ENABLE_DEFAULT    1
-+#define MSR_IA32_MISC_ENABLE_FASTSTRING    1
-+#define MSR_IA32_MISC_ENABLE_BTS_UNAVAIL   (1ULL << 11)
-+#define MSR_IA32_MISC_ENABLE_DEFAULT       (MSR_IA32_MISC_ENABLE_FASTSTRING     |\
-+                                            MSR_IA32_MISC_ENABLE_BTS_UNAVAIL)
- #define MSR_IA32_MISC_ENABLE_MWAIT      (1ULL << 18)
+@@ -9018,7 +9018,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+     case 0x80000022:
+         *eax = *ebx = *ecx = *edx = 0;
+         /* AMD Extended Performance Monitoring and Debug */
+-        if (kvm_enabled() && cpu->enable_pmu &&
++        if (cpu->enable_pmu &&
+             (env->features[FEAT_8000_0022_EAX] & CPUID_8000_0022_EAX_PERFMON_V2)) {
+             *eax |= CPUID_8000_0022_EAX_PERFMON_V2;
+             *ebx |= kvm_arch_get_supported_cpuid(cs->kvm_state, index, count,
+@@ -9642,7 +9642,7 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
+      * are advertised by cpu_x86_cpuid().  Keep these two in sync.
+      */
+     if ((env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_INTEL_PT) &&
+-        kvm_enabled()) {
++        cpu->enable_pmu) {
+         x86_cpu_get_supported_cpuid(0x14, 0,
+                                     &eax_0, &ebx_0, &ecx_0, &edx_0);
+         x86_cpu_get_supported_cpuid(0x14, 1,
+@@ -9790,6 +9790,9 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+     Error *local_err = NULL;
+     unsigned requested_lbr_fmt;
  
- #define MSR_MTRRphysBase(reg)           (0x200 + 2 * (reg))
++    if (!kvm_enabled())
++	    cpu->enable_pmu = false;
++
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+     /* Use pc-relative instructions in system-mode */
+     tcg_cflags_set(cs, CF_PCREL);
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index cffbc90d1c50..e81fa46ed66c 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -4222,7 +4222,7 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+                               env->msr_xfd_err);
+         }
+ 
+-        if (kvm_enabled() && cpu->enable_pmu &&
++        if (cpu->enable_pmu &&
+             (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
+             uint64_t depth;
+             int ret;
+@@ -4698,7 +4698,7 @@ static int kvm_get_msrs(X86CPU *cpu)
+         kvm_msr_entry_add(cpu, MSR_IA32_XFD_ERR, 0);
+     }
+ 
+-    if (kvm_enabled() && cpu->enable_pmu &&
++    if (cpu->enable_pmu &&
+         (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
+         uint64_t depth;
+ 
 -- 
 2.52.0
 
