@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FF42C9830C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C009CC9830F
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Jan 2026 01:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vguxL-0004pZ-99; Fri, 16 Jan 2026 20:18:23 -0500
+	id 1vguxL-0004qD-UX; Fri, 16 Jan 2026 20:18:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vguxD-0004mh-MW
+ id 1vguxD-0004mi-PX
  for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:16 -0500
 Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vguxC-00078g-21
+ id 1vguxC-00077n-2B
  for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
  t=1768612694; x=1800148694;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=3LAfenVCwIiuUdSFycJUlecFg2V/epsiKiOvzm0Dv2A=;
- b=bhI1WyUl/LsRt0UFaptF6A3Kq2mTIWaDcRJ3kDLCprR3B9h1eddi4RGk
- dbWvVu82Qo2zrsOSL57ITRnu8rDFHX7+LbzOXWlSHt5rHuJXBtlOIiiA8
- 21MT6vMotFEXxmdFvlOT6UPn1baXEAT271DH07wtQnUzTctQ+O+A+BDcl
- l3dEuWr4cbEplsu7r4q85B8YFNKVv3IUOONPSrLJz3Cf+5zDghIvm0adK
- 94P8lLIxNnKRUdnq2GtAPPun6NUE0FaX2fs7X5pFNtV7vt1rAgIyoUoxE
- CotqaDcP3Qr0F177ZEFgnKGvwkuc4KevALroxeCxJmGGeBr0IbpMydCln w==;
-X-CSE-ConnectionGUID: x7QdWVY0Rd+ToIG8AksmTQ==
-X-CSE-MsgGUID: hFVGpvDNQ8yrnCtEBIDJBw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11673"; a="69131158"
-X-IronPort-AV: E=Sophos;i="6.21,232,1763452800"; d="scan'208";a="69131158"
+ bh=WVJQSNpNKHu3X0iUjOMBxv0QHS5KDEf9o+KQJ8gyVAQ=;
+ b=gVZJ8uMqShYL/INe6YTbv/boC7zvTxcBIA8/0+G6G90Py+6i1tJ2zxF/
+ 7s3oUnXhCP/t8syEjg3Hu1gPy33LTt5uR07NM8/47J+lCdgTRM23zRRDe
+ iC09f85kGoF61YpnR6Xzkirwj/kCV2uPRWLqOBS/8uSUOxFOKmMtVcvvI
+ Q6F0CdnJvfowu+YLcRJaWRZYYlOc+F7OHTf3dJdm32WkgjXzWeOkMWGri
+ 7mQnBQiv5egHK/oRIWhMzhe5wfNdzvECFBjR6RewaVPIN0H7XaMYTGQfO
+ /8nTA3pCNYhbf2bN3wn94adfvWBdczHau6jUwBSsdLgPAn3O/WeYCSuua w==;
+X-CSE-ConnectionGUID: a0PLjm+BRhumKkzimtDJ8A==
+X-CSE-MsgGUID: LjP/hSMqRAO7vpySNOCAKw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11673"; a="69131153"
+X-IronPort-AV: E=Sophos;i="6.21,232,1763452800"; d="scan'208";a="69131153"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  16 Jan 2026 17:18:08 -0800
-X-CSE-ConnectionGUID: WaqVDCyhRT6p/C0Bu1/fMg==
-X-CSE-MsgGUID: JwpHhkpKTA6xms5V78cFUA==
+X-CSE-ConnectionGUID: /+z504YORU+VnwiO6lsoeA==
+X-CSE-MsgGUID: UW7hqU9YRR2jgIAvFDbxCg==
 X-ExtLoop1: 1
 Received: from 9cc2c43eec6b.jf.intel.com ([10.54.77.43])
  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jan 2026 17:18:08 -0800
+ 16 Jan 2026 17:18:07 -0800
 From: Zide Chen <zide.chen@intel.com>
 To: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: xiaoyao.li@intel.com, Dongli Zhang <dongli.zhang@oracle.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Zide Chen <zide.chen@intel.com>
-Subject: [PATCH 3/7] target/i386: Gate enable_pmu on kvm_enabled()
-Date: Fri, 16 Jan 2026 17:10:49 -0800
-Message-ID: <20260117011053.80723-4-zide.chen@intel.com>
+Subject: [PATCH 2/7] target/i386: Don't save/restore PERF_GLOBAL_OVF_CTRL MSR
+Date: Fri, 16 Jan 2026 17:10:48 -0800
+Message-ID: <20260117011053.80723-3-zide.chen@intel.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260117011053.80723-1-zide.chen@intel.com>
 References: <20260117011053.80723-1-zide.chen@intel.com>
@@ -84,89 +84,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guest PMU support requires KVM.  Clear cpu->enable_pmu when KVM is not
-enabled, so PMU-related code can rely solely on cpu->enable_pmu.
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-This reduces duplication and avoids bugs where one of the checks is
-missed.  For example, cpu_x86_cpuid() enables CPUID.0AH when
-cpu->enable_pmu is set but does not check kvm_enabled(). This is
-implicitly fixed by this patch:
+MSR_CORE_PERF_GLOBAL_OVF_CTRL is a write-only MSR and reads always
+return zero.
 
-if (cpu->enable_pmu) {
-	x86_cpu_get_supported_cpuid(0xA, count, eax, ebx, ecx, edx);
-}
+Saving and restoring this MSR is therefore unnecessary.  Replace
+VMSTATE_UINT64 with VMSTATE_UNUSED in the VMStateDescription to ignore
+env.msr_global_ovf_ctrl during migration.  This avoids the need to bump
+version_id and does not introduce any migration incompatibility.
 
-Also fix two places that check kvm_enabled() but not cpu->enable_pmu.
-
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Signed-off-by: Zide Chen <zide.chen@intel.com>
 ---
- target/i386/cpu.c     | 9 ++++++---
- target/i386/kvm/kvm.c | 4 ++--
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ target/i386/cpu.h     | 1 -
+ target/i386/kvm/kvm.c | 6 ------
+ target/i386/machine.c | 4 ++--
+ 3 files changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 37803cd72490..f1ac98970d3e 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -8671,7 +8671,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         *ecx = 0;
-         *edx = 0;
-         if (!(env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_INTEL_PT) ||
--            !kvm_enabled()) {
-+            !cpu->enable_pmu) {
-             break;
-         }
- 
-@@ -9018,7 +9018,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-     case 0x80000022:
-         *eax = *ebx = *ecx = *edx = 0;
-         /* AMD Extended Performance Monitoring and Debug */
--        if (kvm_enabled() && cpu->enable_pmu &&
-+        if (cpu->enable_pmu &&
-             (env->features[FEAT_8000_0022_EAX] & CPUID_8000_0022_EAX_PERFMON_V2)) {
-             *eax |= CPUID_8000_0022_EAX_PERFMON_V2;
-             *ebx |= kvm_arch_get_supported_cpuid(cs->kvm_state, index, count,
-@@ -9642,7 +9642,7 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
-      * are advertised by cpu_x86_cpuid().  Keep these two in sync.
-      */
-     if ((env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_INTEL_PT) &&
--        kvm_enabled()) {
-+        cpu->enable_pmu) {
-         x86_cpu_get_supported_cpuid(0x14, 0,
-                                     &eax_0, &ebx_0, &ecx_0, &edx_0);
-         x86_cpu_get_supported_cpuid(0x14, 1,
-@@ -9790,6 +9790,9 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-     Error *local_err = NULL;
-     unsigned requested_lbr_fmt;
- 
-+    if (!kvm_enabled())
-+	    cpu->enable_pmu = false;
-+
- #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-     /* Use pc-relative instructions in system-mode */
-     tcg_cflags_set(cs, CF_PCREL);
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index f2b79a8bf1dc..0b480c631ed0 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2086,7 +2086,6 @@ typedef struct CPUArchState {
+     uint64_t msr_fixed_ctr_ctrl;
+     uint64_t msr_global_ctrl;
+     uint64_t msr_global_status;
+-    uint64_t msr_global_ovf_ctrl;
+     uint64_t msr_fixed_counters[MAX_FIXED_COUNTERS];
+     uint64_t msr_gp_counters[MAX_GP_COUNTERS];
+     uint64_t msr_gp_evtsel[MAX_GP_COUNTERS];
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index cffbc90d1c50..e81fa46ed66c 100644
+index 7b9b740a8e5a..cffbc90d1c50 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -4222,7 +4222,7 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-                               env->msr_xfd_err);
+@@ -4069,8 +4069,6 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+             if (has_architectural_pmu_version > 1) {
+                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_STATUS,
+                                   env->msr_global_status);
+-                kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_OVF_CTRL,
+-                                  env->msr_global_ovf_ctrl);
+ 
+                 /* Now start the PMU.  */
+                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL,
+@@ -4588,7 +4586,6 @@ static int kvm_get_msrs(X86CPU *cpu)
+             kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+             kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
+             kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_STATUS, 0);
+-            kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_OVF_CTRL, 0);
          }
+         for (i = 0; i < num_architectural_pmu_fixed_counters; i++) {
+             kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR0 + i, 0);
+@@ -4917,9 +4914,6 @@ static int kvm_get_msrs(X86CPU *cpu)
+         case MSR_CORE_PERF_GLOBAL_STATUS:
+             env->msr_global_status = msrs[i].data;
+             break;
+-        case MSR_CORE_PERF_GLOBAL_OVF_CTRL:
+-            env->msr_global_ovf_ctrl = msrs[i].data;
+-            break;
+         case MSR_CORE_PERF_FIXED_CTR0 ... MSR_CORE_PERF_FIXED_CTR0 + MAX_FIXED_COUNTERS - 1:
+             env->msr_fixed_counters[index - MSR_CORE_PERF_FIXED_CTR0] = msrs[i].data;
+             break;
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index c9139612813b..1125c8a64ec5 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -666,7 +666,7 @@ static bool pmu_enable_needed(void *opaque)
+     int i;
  
--        if (kvm_enabled() && cpu->enable_pmu &&
-+        if (cpu->enable_pmu &&
-             (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
-             uint64_t depth;
-             int ret;
-@@ -4698,7 +4698,7 @@ static int kvm_get_msrs(X86CPU *cpu)
-         kvm_msr_entry_add(cpu, MSR_IA32_XFD_ERR, 0);
+     if (env->msr_fixed_ctr_ctrl || env->msr_global_ctrl ||
+-        env->msr_global_status || env->msr_global_ovf_ctrl) {
++        env->msr_global_status) {
+         return true;
      }
- 
--    if (kvm_enabled() && cpu->enable_pmu &&
-+    if (cpu->enable_pmu &&
-         (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
-         uint64_t depth;
- 
+     for (i = 0; i < MAX_FIXED_COUNTERS; i++) {
+@@ -692,7 +692,7 @@ static const VMStateDescription vmstate_msr_architectural_pmu = {
+         VMSTATE_UINT64(env.msr_fixed_ctr_ctrl, X86CPU),
+         VMSTATE_UINT64(env.msr_global_ctrl, X86CPU),
+         VMSTATE_UINT64(env.msr_global_status, X86CPU),
+-        VMSTATE_UINT64(env.msr_global_ovf_ctrl, X86CPU),
++        VMSTATE_UNUSED(sizeof(uint64_t)),
+         VMSTATE_UINT64_ARRAY(env.msr_fixed_counters, X86CPU, MAX_FIXED_COUNTERS),
+         VMSTATE_UINT64_ARRAY(env.msr_gp_counters, X86CPU, MAX_GP_COUNTERS),
+         VMSTATE_UINT64_ARRAY(env.msr_gp_evtsel, X86CPU, MAX_GP_COUNTERS),
 -- 
 2.52.0
 
