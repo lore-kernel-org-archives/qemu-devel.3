@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE12C9830C
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Jan 2026 01:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AAFAC9830F
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Jan 2026 01:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vguxK-0004oF-QB; Fri, 16 Jan 2026 20:18:22 -0500
+	id 1vguxK-0004oI-Q1; Fri, 16 Jan 2026 20:18:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vguxF-0004nH-Mw
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:18 -0500
+ id 1vguxC-0004mV-1a
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:14 -0500
 Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vguxE-00077n-3l
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:17 -0500
+ id 1vgux9-00077n-D8
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1768612696; x=1800148696;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=2R2pFzeaXsFhmsgZPzDgKDW8nxLi3n1LYVYLNZ0AwJ8=;
- b=F90M5TVI/kqWpE0Spk4okwIz70pQsebQUGye7q8oJFMChkofZeoD5A1C
- M2pF4DQ1e+au1ycndm4SrPJPoqZtLwp6JhGyfspTIxIg2zVqqkyPfAJmr
- Ct1FBXBiNenPU3Gml7hWqOq3gOgqwMEy8OrepUsBQ0fueAnh2xDGYXkFt
- pmv+4J+s5QA+oYsWZy1t0c4cMmUH4sjN9JFrSVODVE1L0PXRAG3pN42vV
- 57GeI4DA0gRZh9BCE1nuLD65wAjav2NS+QN/y6RcL7KSFw8wHh8oW2Owb
- 7qwcY1tBnJYpo4q4R4Nzu72kwst9WHTfJaUuX7JcI3As3YQL+RztQh6I2 Q==;
-X-CSE-ConnectionGUID: 3gCf3/5rQLKXfmdegZvD0w==
-X-CSE-MsgGUID: dscpg8Q0TtCpIYegZjNVUQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11673"; a="69131173"
-X-IronPort-AV: E=Sophos;i="6.21,232,1763452800"; d="scan'208";a="69131173"
+ t=1768612691; x=1800148691;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=w7jOopBKAsOvzRXrsvabqYkwvIVcHNW6Lo4RVZLUNCw=;
+ b=DBqn/9siW8n1zLpnuEVJJf2Vdu9FO+GA10O++XD8Bc2P0e9gtAqM13VY
+ z77kfl0PPeXel6ol5El3/Tcj/mU+Te+NQmzc8RQ2lzcZs0Obrs0CGwdLZ
+ 8vN+YRBVTumuwAwDKjr4Jr18dxpkqvIWrIClkSe9qHmj9lqVTHGp6+qKq
+ y5uU1Zw2AgCcT0wptJm9YkEXwX2O9iwYIYIU3gH9p3GDGoXUa5gxPyKLG
+ ng/2kwutrgiPhXJ07Q54aE4E566+X6FwyN/F232Kvqr0J04Z7aiKRD2w/
+ JMLpNkHDDlWbX5hK1TOGzA83O5mifPcOCLckyrJ5yLNIrTbUEMRjB3d1g Q==;
+X-CSE-ConnectionGUID: nUO49pnPTv2iIK+ptce8rA==
+X-CSE-MsgGUID: EXy4XWGDQq2f0R3LRe11EA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11673"; a="69131145"
+X-IronPort-AV: E=Sophos;i="6.21,232,1763452800"; d="scan'208";a="69131145"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jan 2026 17:18:09 -0800
-X-CSE-ConnectionGUID: BTMa7AWnQjGZUDSRdc2D5Q==
-X-CSE-MsgGUID: ycrDxFSbRPaAZpXUWTRNtg==
+ 16 Jan 2026 17:18:07 -0800
+X-CSE-ConnectionGUID: GiPwZMx5TkueL1hlMkFzwg==
+X-CSE-MsgGUID: OGVleIAPSyCX3IVDb2McVg==
 X-ExtLoop1: 1
 Received: from 9cc2c43eec6b.jf.intel.com ([10.54.77.43])
  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jan 2026 17:18:09 -0800
+ 16 Jan 2026 17:18:06 -0800
 From: Zide Chen <zide.chen@intel.com>
 To: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: xiaoyao.li@intel.com, Dongli Zhang <dongli.zhang@oracle.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Zide Chen <zide.chen@intel.com>
-Subject: [PATCH 6/7] target/i386: Make some PEBS features user-visible
-Date: Fri, 16 Jan 2026 17:10:52 -0800
-Message-ID: <20260117011053.80723-7-zide.chen@intel.com>
+Subject: [PATCH 0/7] target/i386: Misc PMU, PEBS,
+ and MSR fixes and improvements
+Date: Fri, 16 Jan 2026 17:10:46 -0800
+Message-ID: <20260117011053.80723-1-zide.chen@intel.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260117011053.80723-1-zide.chen@intel.com>
-References: <20260117011053.80723-1-zide.chen@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.18; envelope-from=zide.chen@intel.com;
@@ -84,45 +83,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Populate selected PEBS feature names in FEAT_PERF_CAPABILITIES to make
-the corresponding bits user-visible CPU feature knobs, allowing them to
-be explicitly enabled or disabled via -cpu +/-<feature>.
+This series contains a set of mostly independent fixes and small
+improvements in target/i386 related to PMU, PEBS, and MSR handling.
 
-Once named, these bits become part of the guest CPU configuration
-contract.  If a VM is configured with such a feature enabled, migration
-to a destination that does not support the feature may fail, as the
-destination cannot honor the guest-visible CPU model.
+The patches are grouped into a single series for review convenience;
+they are not tightly coupled and can be applied individually.
 
-The PEBS_FMT bits are intentionally not exposed. They are not meaningful
-as user-visible features, and QEMU registers CPU features as boolean
-QOM properties, which makes them unsuitable for representing and
-checking numeric capabilities.
+Dapeng Mi (3):
+  target/i386: Don't save/restore PERF_GLOBAL_OVF_CTRL MSR
+  target/i386: Support full-width writes for perf counters
+  target/i386: Save/Restore DS based PEBS specfic MSRs
 
-Co-developed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Zide Chen <zide.chen@intel.com>
----
- target/i386/cpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Zide Chen (4):
+  target/i386: Disable unsupported BTS for guest
+  target/i386: Gate enable_pmu on kvm_enabled()
+  target/i386: Make some PEBS features user-visible
+  target/i386: Increase MSR_BUF_SIZE and split KVM_[GET/SET]_MSRS calls
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index f1ac98970d3e..fc6a64287415 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1618,10 +1618,10 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-         .type = MSR_FEATURE_WORD,
-         .feat_names = {
-             NULL, NULL, NULL, NULL,
-+            NULL, NULL, "pebs-trap", "pebs-arch-reg"
-             NULL, NULL, NULL, NULL,
--            NULL, NULL, NULL, NULL,
--            NULL, "full-width-write", NULL, NULL,
--            NULL, NULL, NULL, NULL,
-+            NULL, "full-width-write", "pebs-baseline", NULL,
-+            NULL, "pebs-timing-info", NULL, NULL,
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
+ target/i386/cpu.c     |  15 ++--
+ target/i386/cpu.h     |  20 +++++-
+ target/i386/kvm/kvm.c | 162 +++++++++++++++++++++++++++++++++++-------
+ target/i386/machine.c |  35 +++++++--
+ 4 files changed, 191 insertions(+), 41 deletions(-)
+
 -- 
 2.52.0
 
