@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07694C9830C
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Jan 2026 01:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 875C5C9830C
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Jan 2026 01:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vguxM-0004r4-TZ; Fri, 16 Jan 2026 20:18:24 -0500
+	id 1vguxM-0004qS-Da; Fri, 16 Jan 2026 20:18:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vguxG-0004nM-H0
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:18 -0500
+ id 1vguxE-0004mk-5e
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:16 -0500
 Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vguxE-0007Aa-G8
- for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:18 -0500
+ id 1vguxC-0007Aa-Fc
+ for qemu-devel@nongnu.org; Fri, 16 Jan 2026 20:18:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1768612697; x=1800148697;
+ t=1768612695; x=1800148695;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=vEIyTu/kBF1eBSOMPe+vyM/W3HEARflxO8H2okHBMss=;
- b=gUaru1mk1ObuwWV9KEv6KcZBg8BMRSp/EJE5fVn0LD00NlLr7lFZzCaZ
- VyNSfa/koxNYGhxT7ordg1xIohAbodLq7MydaC9e8pv5je+1mrIjyOPRG
- Baz99SKYlziA/UJH5ZJKq6ZTIpTXGKufOMZ3quD/HEQTk7G6brn50I60z
- CZFTAc1xw4pRTrHQ77U+kQ2wf6s9mnjYTHjLiM1z2gdpuuwPs80+pryMd
- sAt7w4I+YDIjQuOjvnQC7mFvrPVkuCpssw7O6lTg5TnKgEc8bKgSaiCcQ
- Jtib29xPMyda46k9EyYx77EI+H1+EOuLH7iF/cbo5QVlu0bQp8be7cPND g==;
-X-CSE-ConnectionGUID: G85Ul2awQFOx1TaWIQbvdw==
-X-CSE-MsgGUID: U8JZRFGNQTiQ/FNRR5WMAA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11673"; a="69131178"
-X-IronPort-AV: E=Sophos;i="6.21,232,1763452800"; d="scan'208";a="69131178"
+ bh=0EHb9zhaCZcf7BErUyjTZ5rV4RNsDDaKZWDuBspJf60=;
+ b=V5El7gmY5lZ6ZgMvmAURYm0HhJvgIyOe+klb8egMS5f+I2iU8NCF/wy1
+ 447WQKNjPXNjWTdR6cFe2iDcsPz7fgCbPk77bWyTWF6KIi4MSTvbSKEoS
+ e/cMIdniSwvbgVhTBcmniI4DWTPYDDdTzyPS+UFK4PCaVKtrVsNnYCsHX
+ 2Y5UMLSo78efqFZzn41u1F2Tzty5t8RC/LbaOSpOXkNPexO9sHTyVbTRz
+ reT8T9vBXasFfvcS7vK4Jyy7DepkgTC9EvA5oA8LTxgCCR9tCLPebCeRP
+ 7vzO/q4102IUG0eJ1Bj5Z1lBJqjhgNC2VQM93EedUMezvm2MesPYLPiOJ Q==;
+X-CSE-ConnectionGUID: Hh0vng1FR7yfRbPQ0Q3Cdg==
+X-CSE-MsgGUID: 6U1zHtkRTV2UKqxCUmJiTg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11673"; a="69131163"
+X-IronPort-AV: E=Sophos;i="6.21,232,1763452800"; d="scan'208";a="69131163"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jan 2026 17:18:09 -0800
-X-CSE-ConnectionGUID: BuQ5J8yQQzOdwChrgS8B7A==
-X-CSE-MsgGUID: UnawozAMSbyGCXagXYsYAQ==
+ 16 Jan 2026 17:18:08 -0800
+X-CSE-ConnectionGUID: mNuTuSRfQAWCK/ad0cnTvQ==
+X-CSE-MsgGUID: uPiptIIgRwyNypKjc59FXQ==
 X-ExtLoop1: 1
 Received: from 9cc2c43eec6b.jf.intel.com ([10.54.77.43])
  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jan 2026 17:18:09 -0800
+ 16 Jan 2026 17:18:08 -0800
 From: Zide Chen <zide.chen@intel.com>
 To: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: xiaoyao.li@intel.com, Dongli Zhang <dongli.zhang@oracle.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Zide Chen <zide.chen@intel.com>
-Subject: [PATCH 7/7] target/i386: Increase MSR_BUF_SIZE and split
- KVM_[GET/SET]_MSRS calls
-Date: Fri, 16 Jan 2026 17:10:53 -0800
-Message-ID: <20260117011053.80723-8-zide.chen@intel.com>
+Subject: [PATCH 4/7] target/i386: Support full-width writes for perf counters
+Date: Fri, 16 Jan 2026 17:10:50 -0800
+Message-ID: <20260117011053.80723-5-zide.chen@intel.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260117011053.80723-1-zide.chen@intel.com>
 References: <20260117011053.80723-1-zide.chen@intel.com>
@@ -85,181 +84,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Newer Intel server CPUs support a large number of PMU MSRs.  Currently,
-QEMU allocates cpu->kvm_msr_buf as a single-page buffer, which is not
-sufficient to hold all possible MSRs.
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-Increase MSR_BUF_SIZE to 8192 bytes, providing space for up to 511 MSRs.
-This is sufficient even for the theoretical worst case, such as
-architectural LBR with a depth of 64.
+If IA32_PERF_CAPABILITIES.FW_WRITE (bit 13) is set, each general-
+purpose counter IA32_PMCi (starting at 0xc1) is accompanied by a
+corresponding alias MSR starting at 0x4c1 (IA32_A_PMC0), which are
+64-bit wide.
 
-KVM_[GET/SET]_MSRS is limited to 255 MSRs per call.  Raising this limit
-to 511 would require changes in KVM and would introduce backward
-compatibility issues.  Instead, split requests into multiple
-KVM_[GET/SET]_MSRS calls when the number of MSRs exceeds the API limit.
+The legacy IA32_PMCi MSRs are not full-width and their effective width
+is determined by CPUID.0AH:EAX[23:16].
 
+Since these two sets of MSRs are aliases, when IA32_A_PMCi is supported
+it is safe to use it for save/restore instead of the legacy MSRs,
+regardless of whether the hypervisor uses the legacy or the 64-bit
+counterpart.
+
+Full-width write is a user-visible feature and can be disabled
+individually.
+
+Reduce MAX_GP_COUNTERS from 18 to 15 to avoid conflicts between the
+full-width MSR range and MSR_MCG_EXT_CTL.  Current CPUs support at most
+10 general-purpose counters, so 15 is sufficient for now and leaves room
+for future expansion.
+
+Bump minimum_version_id to avoid migration from older QEMU, as this may
+otherwise cause VMState overflow. This also requires bumping version_id,
+which prevents migration to older QEMU as well.
+
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Signed-off-by: Zide Chen <zide.chen@intel.com>
 ---
- target/i386/kvm/kvm.c | 109 +++++++++++++++++++++++++++++++++++-------
- 1 file changed, 92 insertions(+), 17 deletions(-)
+ target/i386/cpu.h     |  5 ++++-
+ target/i386/kvm/kvm.c | 19 +++++++++++++++++--
+ target/i386/machine.c |  4 ++--
+ 3 files changed, 23 insertions(+), 5 deletions(-)
 
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 0b480c631ed0..e7cf4a7bd594 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -421,6 +421,7 @@ typedef enum X86Seg {
+ 
+ #define MSR_IA32_PERF_CAPABILITIES      0x345
+ #define PERF_CAP_LBR_FMT                0x3f
++#define PERF_CAP_FULL_WRITE             (1U << 13)
+ 
+ #define MSR_IA32_TSX_CTRL		0x122
+ #define MSR_IA32_TSCDEADLINE            0x6e0
+@@ -448,6 +449,8 @@ typedef enum X86Seg {
+ #define MSR_IA32_SGXLEPUBKEYHASH3       0x8f
+ 
+ #define MSR_P6_PERFCTR0                 0xc1
++/* Alternative perfctr range with full access. */
++#define MSR_IA32_PMC0                   0x4c1
+ 
+ #define MSR_IA32_SMBASE                 0x9e
+ #define MSR_SMI_COUNT                   0x34
+@@ -1740,7 +1743,7 @@ typedef struct {
+ #endif
+ 
+ #define MAX_FIXED_COUNTERS 3
+-#define MAX_GP_COUNTERS    (MSR_IA32_PERF_STATUS - MSR_P6_EVNTSEL0)
++#define MAX_GP_COUNTERS    15
+ 
+ #define NB_OPMASK_REGS 8
+ 
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 80974114a173..a72e4d60dfa2 100644
+index e81fa46ed66c..530f50e4b218 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -98,9 +98,12 @@
- #define KVM_APIC_BUS_CYCLE_NS       1
- #define KVM_APIC_BUS_FREQUENCY      (1000000000ULL / KVM_APIC_BUS_CYCLE_NS)
+@@ -4049,6 +4049,12 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+         }
  
--/* A 4096-byte buffer can hold the 8-byte kvm_msrs header, plus
-- * 255 kvm_msr_entry structs */
--#define MSR_BUF_SIZE 4096
-+/* A 8192-byte buffer can hold the 8-byte kvm_msrs header, plus
-+ * 511 kvm_msr_entry structs */
-+#define MSR_BUF_SIZE      8192
+         if (has_architectural_pmu_version > 0) {
++            uint32_t perf_cntr_base = MSR_P6_PERFCTR0;
 +
-+/* Maximum number of MSRs in one single KVM_[GET/SET]_MSRS call. */
-+#define KVM_MAX_IO_MSRS   255
- 
- typedef bool QEMURDMSRHandler(X86CPU *cpu, uint32_t msr, uint64_t *val);
- typedef bool QEMUWRMSRHandler(X86CPU *cpu, uint32_t msr, uint64_t val);
-@@ -3878,23 +3881,102 @@ static void kvm_msr_entry_add_perf(X86CPU *cpu, FeatureWordArray f)
++            if (env->features[FEAT_PERF_CAPABILITIES] & PERF_CAP_FULL_WRITE) {
++                perf_cntr_base = MSR_IA32_PMC0;
++            }
++
+             if (has_architectural_pmu_version > 1) {
+                 /* Stop the counter.  */
+                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+@@ -4061,7 +4067,7 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+                                   env->msr_fixed_counters[i]);
+             }
+             for (i = 0; i < num_architectural_pmu_gp_counters; i++) {
+-                kvm_msr_entry_add(cpu, MSR_P6_PERFCTR0 + i,
++                kvm_msr_entry_add(cpu, perf_cntr_base + i,
+                                   env->msr_gp_counters[i]);
+                 kvm_msr_entry_add(cpu, MSR_P6_EVNTSEL0 + i,
+                                   env->msr_gp_evtsel[i]);
+@@ -4582,6 +4588,12 @@ static int kvm_get_msrs(X86CPU *cpu)
+         kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
      }
- }
- 
--static int kvm_buf_set_msrs(X86CPU *cpu)
-+static int __kvm_buf_set_msrs(X86CPU *cpu, struct kvm_msrs *msrs)
- {
--    int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MSRS, cpu->kvm_msr_buf);
-+    int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_SET_MSRS, msrs);
-     if (ret < 0) {
-         return ret;
-     }
- 
--    if (ret < cpu->kvm_msr_buf->nmsrs) {
--        struct kvm_msr_entry *e = &cpu->kvm_msr_buf->entries[ret];
-+    if (ret < msrs->nmsrs) {
-+        struct kvm_msr_entry *e = &msrs->entries[ret];
-         error_report("error: failed to set MSR 0x%" PRIx32 " to 0x%" PRIx64,
-                      (uint32_t)e->index, (uint64_t)e->data);
-     }
- 
--    assert(ret == cpu->kvm_msr_buf->nmsrs);
-+    assert(ret == msrs->nmsrs);
-+    return ret;
-+}
+     if (has_architectural_pmu_version > 0) {
++        uint32_t perf_cntr_base = MSR_P6_PERFCTR0;
 +
-+static int __kvm_buf_get_msrs(X86CPU *cpu, struct kvm_msrs *msrs)
-+{
-+    int ret;
-+
-+    ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MSRS, msrs);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    if (ret < msrs->nmsrs) {
-+        struct kvm_msr_entry *e = &msrs->entries[ret];
-+        error_report("error: failed to get MSR 0x%" PRIx32,
-+                     (uint32_t)e->index);
-+    }
-+
-+    assert(ret == msrs->nmsrs);
-+    return ret;
-+}
-+
-+static int kvm_buf_set_or_get_msrs(X86CPU *cpu, bool is_write)
-+{
-+    struct kvm_msr_entry *entries = cpu->kvm_msr_buf->entries;
-+    struct kvm_msrs *buf = NULL;
-+    int current, remaining, ret = 0;
-+    size_t buf_size;
-+
-+    buf_size = KVM_MAX_IO_MSRS * sizeof(struct kvm_msr_entry) +
-+               sizeof(struct kvm_msrs);
-+    buf = g_malloc(buf_size);
-+
-+    remaining = cpu->kvm_msr_buf->nmsrs;
-+    current = 0;
-+    while (remaining) {
-+        size_t size;
-+
-+        memset(buf, 0, buf_size);
-+
-+        if (remaining > KVM_MAX_IO_MSRS) {
-+            buf->nmsrs = KVM_MAX_IO_MSRS;
-+        } else {
-+            buf->nmsrs = remaining;
++        if (env->features[FEAT_PERF_CAPABILITIES] & PERF_CAP_FULL_WRITE) {
++            perf_cntr_base = MSR_IA32_PMC0;
 +        }
 +
-+        size = buf->nmsrs * sizeof(entries[0]);
-+        memcpy(buf->entries, &entries[current], size);
-+
-+        if (is_write) {
-+            ret = __kvm_buf_set_msrs(cpu, buf);
-+        } else {
-+            ret = __kvm_buf_get_msrs(cpu, buf);
-+        }
-+
-+        if (ret < 0) {
-+            goto out;
-+        }
-+
-+        if (!is_write)
-+            memcpy(&entries[current], buf->entries, size);
-+
-+        current += buf->nmsrs;
-+        remaining -= buf->nmsrs;
-+    }
-+
-+out:
-+    g_free(buf);
-+    return ret < 0 ? ret : cpu->kvm_msr_buf->nmsrs;
-+}
-+
-+static int kvm_buf_set_msrs(X86CPU *cpu)
-+{
-+    kvm_buf_set_or_get_msrs(cpu, true);
-     return 0;
- }
- 
-+static int kvm_buf_get_msrs(X86CPU *cpu)
-+{
-+    return kvm_buf_set_or_get_msrs(cpu, false);
-+}
-+
- static void kvm_init_msrs(X86CPU *cpu)
- {
-     CPUX86State *env = &cpu->env;
-@@ -3928,7 +4010,7 @@ static void kvm_init_msrs(X86CPU *cpu)
-     if (has_msr_ucode_rev) {
-         kvm_msr_entry_add(cpu, MSR_IA32_UCODE_REV, cpu->ucode_rev);
-     }
--    assert(kvm_buf_set_msrs(cpu) == 0);
-+    kvm_buf_set_msrs(cpu);
- }
- 
- static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-@@ -4762,18 +4844,11 @@ static int kvm_get_msrs(X86CPU *cpu)
+         if (has_architectural_pmu_version > 1) {
+             kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+             kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
+@@ -4591,7 +4603,7 @@ static int kvm_get_msrs(X86CPU *cpu)
+             kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR0 + i, 0);
+         }
+         for (i = 0; i < num_architectural_pmu_gp_counters; i++) {
+-            kvm_msr_entry_add(cpu, MSR_P6_PERFCTR0 + i, 0);
++            kvm_msr_entry_add(cpu, perf_cntr_base + i, 0);
+             kvm_msr_entry_add(cpu, MSR_P6_EVNTSEL0 + i, 0);
          }
      }
+@@ -4920,6 +4932,9 @@ static int kvm_get_msrs(X86CPU *cpu)
+         case MSR_P6_PERFCTR0 ... MSR_P6_PERFCTR0 + MAX_GP_COUNTERS - 1:
+             env->msr_gp_counters[index - MSR_P6_PERFCTR0] = msrs[i].data;
+             break;
++        case MSR_IA32_PMC0 ... MSR_IA32_PMC0 + MAX_GP_COUNTERS - 1:
++            env->msr_gp_counters[index - MSR_IA32_PMC0] = msrs[i].data;
++            break;
+         case MSR_P6_EVNTSEL0 ... MSR_P6_EVNTSEL0 + MAX_GP_COUNTERS - 1:
+             env->msr_gp_evtsel[index - MSR_P6_EVNTSEL0] = msrs[i].data;
+             break;
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index 1125c8a64ec5..7d08a05835fc 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -685,8 +685,8 @@ static bool pmu_enable_needed(void *opaque)
  
--    ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MSRS, cpu->kvm_msr_buf);
-+    ret = kvm_buf_get_msrs(cpu);
-     if (ret < 0) {
-         return ret;
-     }
- 
--    if (ret < cpu->kvm_msr_buf->nmsrs) {
--        struct kvm_msr_entry *e = &cpu->kvm_msr_buf->entries[ret];
--        error_report("error: failed to get MSR 0x%" PRIx32,
--                     (uint32_t)e->index);
--    }
--
--    assert(ret == cpu->kvm_msr_buf->nmsrs);
-     /*
-      * MTRR masks: Each mask consists of 5 parts
-      * a  10..0: must be zero
+ static const VMStateDescription vmstate_msr_architectural_pmu = {
+     .name = "cpu/msr_architectural_pmu",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .needed = pmu_enable_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64(env.msr_fixed_ctr_ctrl, X86CPU),
 -- 
 2.52.0
 
