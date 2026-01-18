@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63EDBCA5FEC
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:06:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9EF6C9830C
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhauJ-0005JN-DZ; Sun, 18 Jan 2026 17:06:05 -0500
+	id 1vhat3-0000jJ-17; Sun, 18 Jan 2026 17:04:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhatw-0003bI-0G
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:40 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1vhasr-0000Yx-Ck
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:04:34 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhatu-0000uv-9l
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:39 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2a0a95200e8so23590635ad.0
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:05:37 -0800 (PST)
+ id 1vhaso-0000Sl-Cc
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:04:31 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2a0d67f1877so24380215ad.2
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:04:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768773937; x=1769378737; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768773869; x=1769378669; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Jt6epgzk+hjWVFj/7ojbUiaxuIhW/JGBZIUcf+FDUAw=;
- b=FHF3COC+pu6qJNTzL56J+0GKS59e9i0BuIClp0huZfrgNUuz7HNhOJCXDLIfkyO5XB
- QAYt69SFO9R5WbvM8Ibp4KEHLscV2vsYl4KXrY54uIvOLQxd0ExatvdjD/DKHHA3QJSk
- 2iMliY4tOrG5x4MOPZyqqIaNH+FZSU7Fx42XVziMDAIdgvls4NQVCD9Qy+SUnp1ChdBD
- TgxQsEaMVKxIVx7vplaAP82E6kwRiJU9/M6hKPqnhev6HgMh2wQnCt/HkeKlBjVlO8Zd
- NY6qujbbsG5oRApHr5386BwItEjGljhkqWQDsa7qjUWG7/MsqiyrsA32w/N2agnkm00e
- n8aw==
+ bh=8ZftrpeMp67H21abPmjnOQ3bq0oi0EoCBPPE1IUpN8c=;
+ b=JEiyebqWWxsfYcFELjZfeFrj6Ef9zL0pkRBzsa3+9FuokQ0VJcJxpeZ6UjlJxaD59N
+ /bVwm2t8zu9tGJF4SAPoaxM3XRkqmm3QN5HctJswEyXcqm/pAxBuAr7/keaDd13h9s87
+ xtiZ7t38Qzm9cLYdpPgbsRG4VJbRr2XVGq4EiPfxMOwcYsmkBXy8ejwwuSQQBlqkpMU0
+ gZ5BXb6gwn+DGdJSxYs2ZDyjV/cw1hdrQ6/Enwf71+r4H+9N2y/a1pCb34gr77nNK+1s
+ C4rhnqgfyo82pZg+iNqLJxfMgA5Iz2SwDUN3xxeDbr9NfNznHvWXbefcdGWOgH4Q3spp
+ b8qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768773937; x=1769378737;
+ d=1e100.net; s=20230601; t=1768773869; x=1769378669;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Jt6epgzk+hjWVFj/7ojbUiaxuIhW/JGBZIUcf+FDUAw=;
- b=DsofQgP9QE955cHT0rsZSNHzKxrprNzXZLdVLcpgXLuO/SH/uK3sVD0Z9AlSg1Jfks
- NTGmfmhhkePaevOr0xegMeO64L3nYzu6G4bEPeZYBJF2sBMzi1h1MyX56j47xG2/ITU5
- A77DukQwyBnP+D+2YEiCaPXsbr4qIygmROqCPsa7j6g+oVDDrwjLdFneAW9RkMB9TMVg
- +BrZuJA/+RAM6O9RzCNH56wqhLIMylBye7SpDIerbQBcx+QvO4+8uDI1zld96UO2UfCO
- l6LqKvGo6uttKHf9KskIzE8i+VQMhb5fXF7wD02OOTYUvwdY9eyZn9aPXNyF+MSkGG6/
- Tf3g==
-X-Gm-Message-State: AOJu0Yzp4NNEfXyUzppnssNPQ/PJ+JoS88sIXypCjtBhELi0fgOzI62S
- +IJ574KIqYeWeOXOdqSDM90T2yW/QwijFu7W3kYyDBpMrktVad6VjShhy2qF3vaW5MFKSAoaC2t
- Y8UT/+o/7UA==
-X-Gm-Gg: AY/fxX7rQKlrIjVuNvQWe9BZ96RlPFVi8YmWRM9ckVwO8IEcgTYQeFMSrBMi/fq8//n
- iwIQlYA5B43akd0WKQoRZ8AgJcqxsAhSCEwMEg2LDCuYLvkX64HJlNo1ZvLUumqTytRwwKOj1Nr
- 4JmGrITU48w1clD3bDEuntIrYJaZ1bthzXnWOB+5vIyjqrP10vcKAhrt3B0FxrdWLqjLFDlZ2+A
- ciJxA7xTjUfYr6jcMStED2boDKQ4HuDnOAfmiQYwmIiLOCmaIQU2ONviEzehvGLjobHXtlW0Pw0
- 43eHkT0p7wRjBaJwjgBywcm/rGNYvxpaLGDi/3aKFmvpHCVJf9JV70xYp54wXi7AyYgpbE79oxA
- xpqeF6pdeW7Eu/Q+LfyGxOjSDfcr44j1t1glwg4HoT93+O1gR+oW+CllaQH7oxeCE/UzNCoNahh
- NlT3HPm854s0R/By4EoQ==
-X-Received: by 2002:a17:902:db04:b0:2a1:5f23:7ddf with SMTP id
- d9443c01a7336-2a7174fa8a4mr89975835ad.6.1768773936709; 
- Sun, 18 Jan 2026 14:05:36 -0800 (PST)
+ bh=8ZftrpeMp67H21abPmjnOQ3bq0oi0EoCBPPE1IUpN8c=;
+ b=iUZPstyzIwDd5WqtVHWaZsOeDTtrejJSApyNQ+wtt0yPhFhz3C13bfo/kGAKdMrH8t
+ 8QSndt7AKv/Cvj5csHJmigtvr+e6nrZ5niVgo2sg0BJIuxbO6sRQuYqj9OPwPAoCMSeA
+ jNVjjokqRFlTXX7+Y4eA7DpmgEA65xAm+Eepu9vIlaIdIFHdamM13OCEz0avtJp7f+zx
+ XWXIbhDAAshubSoRlUfUqDUqYBeZBDOWwb8zncUo1O5pxGwTVJ56cQhZWvDE52dg5F9x
+ tcU4p31dgC1JW8hM7UvjFQTrOYmvnI+9ufm4Np775MWGbdeIrVCF0VaittM/LogiOV2v
+ ZGXA==
+X-Gm-Message-State: AOJu0YwUli+7IJZ4Ap1zH5QTs3mfcPGsuiUxJP7ot0wfcnWMKVriDEuP
+ 1OfB4OS7sQ48TyctqFVjbzPSuuvsrV0Aib1t2L51PttwX3uahPdGJmaz6hMzNw9SyeLcQPbK0B4
+ hZICCK2xAnQ==
+X-Gm-Gg: AY/fxX7rpqkftRxYs3hzOfCXdbzIri/KsZtf9k/aEvxY+glHZTykQpucUD2dLVR1sGr
+ vEqxr/baiW3J6jP9lw+a5IsI0uzje+yFr7Bo2QI0HSKw1+Alff+xgbu+FYmgoI9k2RIVNIGs9hz
+ Lb+7W3sS551dpO3Mnxf85HsFjJQ5Z8/VGeZSPZ0WADronLp23XY7HKTwWl+k7JGDH/XXd0Dte89
+ kyujAMsaj1WKqoJbMju0uehSw1WXiJ+ACim35ZIZTSGdHI4OjVT0OfJzC/eVIPuPl0XN32YD/54
+ wt4SuXPK5NOH4xKW6yz9v54vsE0uA0FjQLkVxiojjEH0HFksED3cKcaACoSm99GYp01Mz9+2HEt
+ 2XwptdKsOY9xxwJmgnUaBDdXxfUMQMl/6tKrtsH82090nD1ehYueJxDk9TcGkTC9pDnbR9Njw9D
+ S/hxSIK1GyBHSZXH945eYBtljRWyMr
+X-Received: by 2002:a17:903:2a8f:b0:2a1:3cd9:a739 with SMTP id
+ d9443c01a7336-2a7189479e3mr84461795ad.43.1768773868602; 
+ Sun, 18 Jan 2026 14:04:28 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7193dbb74sm74402865ad.56.2026.01.18.14.05.35
+ d9443c01a7336-2a7193dbb74sm74402865ad.56.2026.01.18.14.04.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 14:05:36 -0800 (PST)
+ Sun, 18 Jan 2026 14:04:28 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 32/54] tcg: Drop TCG_TARGET_REG_BITS tests in tcg-internal.h
-Date: Mon, 19 Jan 2026 09:03:52 +1100
-Message-ID: <20260118220414.8177-33-richard.henderson@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 04/54] meson: Reject 32-bit hosts
+Date: Mon, 19 Jan 2026 09:03:24 +1100
+Message-ID: <20260118220414.8177-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260118220414.8177-1-richard.henderson@linaro.org>
 References: <20260118220414.8177-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -99,50 +102,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+32-bit hosts have been deprecated since 10.0.
+As the first step, disable any such at configuration time.
+Further patches will remove the dead code.
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/tcg-internal.h | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
+ docs/about/deprecated.rst       | 29 -----------------------------
+ docs/about/removed-features.rst |  6 ++++++
+ meson.build                     | 17 ++++-------------
+ 3 files changed, 10 insertions(+), 42 deletions(-)
 
-diff --git a/tcg/tcg-internal.h b/tcg/tcg-internal.h
-index d6a12afe06..2cbfb5d5ca 100644
---- a/tcg/tcg-internal.h
-+++ b/tcg/tcg-internal.h
-@@ -54,31 +54,14 @@ static inline unsigned tcg_call_flags(TCGOp *op)
-     return tcg_call_info(op)->flags;
- }
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 7abb3dab59..88efa3aa80 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -186,28 +186,6 @@ maintain our cross-compilation CI tests of the architecture. As we no longer
+ have CI coverage support may bitrot away before the deprecation process
+ completes.
  
--#if TCG_TARGET_REG_BITS == 32
--static inline TCGv_i32 TCGV_LOW(TCGv_i64 t)
--{
--    return temp_tcgv_i32(tcgv_i64_temp(t) + HOST_BIG_ENDIAN);
--}
--static inline TCGv_i32 TCGV_HIGH(TCGv_i64 t)
--{
--    return temp_tcgv_i32(tcgv_i64_temp(t) + !HOST_BIG_ENDIAN);
--}
--#else
--TCGv_i32 TCGV_LOW(TCGv_i64) QEMU_ERROR("32-bit code path is reachable");
--TCGv_i32 TCGV_HIGH(TCGv_i64) QEMU_ERROR("32-bit code path is reachable");
--#endif
+-System emulation on 32-bit x86 hosts (since 8.0)
+-''''''''''''''''''''''''''''''''''''''''''''''''
 -
- static inline TCGv_i64 TCGV128_LOW(TCGv_i128 t)
- {
--    /* For 32-bit, offset by 2, which may then have TCGV_{LOW,HIGH} applied. */
--    int o = HOST_BIG_ENDIAN ? 64 / TCG_TARGET_REG_BITS : 0;
--    return temp_tcgv_i64(tcgv_i128_temp(t) + o);
-+    return temp_tcgv_i64(tcgv_i128_temp(t) + HOST_BIG_ENDIAN);
- }
+-Support for 32-bit x86 host deployments is increasingly uncommon in mainstream
+-OS distributions given the widespread availability of 64-bit x86 hardware.
+-The QEMU project no longer considers 32-bit x86 support for system emulation to
+-be an effective use of its limited resources, and thus intends to discontinue
+-it. Since all recent x86 hardware from the past >10 years is capable of the
+-64-bit x86 extensions, a corresponding 64-bit OS should be used instead.
+-
+-TCG Plugin support not enabled by default on 32-bit hosts (since 9.2)
+-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+-
+-While it is still possible to enable TCG plugin support for 32-bit
+-hosts there are a number of potential pitfalls when instrumenting
+-64-bit guests. The plugin APIs typically pass most addresses as
+-uint64_t but practices like encoding that address in a host pointer
+-for passing as user-data will lose data. As most software analysis
+-benefits from having plenty of host memory it seems reasonable to
+-encourage users to use 64 bit builds of QEMU for analysis work
+-whatever targets they are instrumenting.
+-
+ TCG Plugin support not enabled by default with TCI (since 9.2)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
  
- static inline TCGv_i64 TCGV128_HIGH(TCGv_i128 t)
- {
--    int o = HOST_BIG_ENDIAN ? 0 : 64 / TCG_TARGET_REG_BITS;
--    return temp_tcgv_i64(tcgv_i128_temp(t) + o);
-+    return temp_tcgv_i64(tcgv_i128_temp(t) + !HOST_BIG_ENDIAN);
- }
+@@ -216,13 +194,6 @@ is going to be so much slower it wouldn't make sense for any serious
+ instrumentation. Due to implementation differences there will also be
+ anomalies in things like memory instrumentation.
  
- bool tcg_target_has_memory_bswap(MemOp memop);
+-32-bit host operating systems (since 10.0)
+-''''''''''''''''''''''''''''''''''''''''''
+-
+-Keeping 32-bit host support alive is a substantial burden for the
+-QEMU project.  Thus QEMU will in future drop the support for all
+-32-bit host systems.
+-
+ System emulator CPUs
+ --------------------
+ 
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index e81d79da47..b0d7fa8813 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -572,6 +572,12 @@ like the ``akita`` or ``terrier``; it has been deprecated in the
+ kernel since 2001. None of the board types QEMU supports need
+ ``param_struct`` support, so this option has been removed.
+ 
++32-bit host operating systems (removed in 11.0)
++'''''''''''''''''''''''''''''''''''''''''''''''
++
++Keeping 32-bit host support alive was a substantial burden for the
++QEMU project.  Thus QEMU dropped all support for all 32-bit host systems.
++
+ 
+ User-mode emulator command line arguments
+ -----------------------------------------
+diff --git a/meson.build b/meson.build
+index 600c50007d..28f61be675 100644
+--- a/meson.build
++++ b/meson.build
+@@ -332,6 +332,10 @@ endif
+ # Compiler flags #
+ ##################
+ 
++if cc.sizeof('void *') < 8
++  error('QEMU requires a 64-bit CPU host architecture')
++endif
++
+ foreach lang : all_languages
+   compiler = meson.get_compiler(lang)
+   if compiler.get_id() == 'gcc' and compiler.version().version_compare('>=7.4')
+@@ -3247,9 +3251,6 @@ if host_os == 'windows'
+   endif
+ endif
+ 
+-# Detect host pointer size for the target configuration loop.
+-host_long_bits = cc.sizeof('void *') * 8
+-
+ # Detect if ConvertStringToBSTR has been defined in _com_util namespace
+ if host_os == 'windows'
+   has_convert_string_to_bstr = cxx.links('''
+@@ -3360,10 +3361,6 @@ foreach target : target_dirs
+ 
+   target_kconfig = []
+   foreach sym: accelerators
+-    # Disallow 64-bit on 32-bit emulation and virtualization
+-    if host_long_bits < config_target['TARGET_LONG_BITS'].to_int()
+-      continue
+-    endif
+     if sym == 'CONFIG_TCG' or target in accelerator_targets.get(sym, [])
+       config_target += { sym: 'y' }
+       config_all_accel += { sym: 'y' }
+@@ -5036,12 +5033,6 @@ if host_arch == 'unknown'
+     message('configure has succeeded and you can continue to build, but')
+     message('QEMU will use a slow interpreter to emulate the target CPU.')
+   endif
+-elif host_long_bits < 64
+-  message()
+-  warning('DEPRECATED HOST CPU')
+-  message()
+-  message('Support for 32-bit CPU host architecture ' + cpu + ' is going')
+-  message('to be dropped in a future QEMU release.')
+ elif host_arch == 'mips'
+   message()
+   warning('DEPRECATED HOST CPU')
 -- 
 2.43.0
 
