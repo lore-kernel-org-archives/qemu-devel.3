@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10392C98315
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3C75C9830C
 	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhaxT-0000CY-R0; Sun, 18 Jan 2026 17:09:19 -0500
+	id 1vhaxW-0000QP-G3; Sun, 18 Jan 2026 17:09:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhaxK-0008Ll-9F
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:10 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1vhaxO-000060-Bu
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:16 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhaxI-0001c0-Mh
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:09 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-29f1bc40b35so38116895ad.2
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:09:08 -0800 (PST)
+ id 1vhaxM-0001cG-6q
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:14 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2a081c163b0so19920105ad.0
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:09:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768774147; x=1769378947; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768774149; x=1769378949; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mY8SF4Lgdoetp90UFxDHJbg0kRe28ldzal692R5R0k0=;
- b=yWFe7ee04KaYK9KFPhxBONIehtf1Lb2M/6PV+Ej1R0E79+sstTy5pD7qdyCF3GlAYF
- SJRvJCr2taTdZkih6vtz38guyFrpvOnNd0w2Ce05VLGMV2X4wEyfuPGXJDckew/TQUCQ
- HB9ApnjvWb2D1nAdhEU/XeMvObbjDBl+TErUtF2zNutnGB0SUeuIc5b2KHexYjWe5vAw
- bOpZXW/UfBaOKEjKT1S8BlgnUZEXzTfqc23SGke2TYThsxUIlMzcxGU5TOFRk1whs3KY
- xon8E7+ayp/69Mvr/sS7GQ9GWUDJ8HVutqZQYOnhoDxEFzuZ2eNhleO5EkF+Ji/uJetg
- ceSQ==
+ bh=rU1RTCNNq4TKsOcqp8cLlT2o5D/A3g+nlZpIvpHSpXU=;
+ b=Zf7PIPMSULXQjbgk1xbz0XHWBGhtHxaE8SXAEvR7GX38f5uXttFcROWlqtKbBuPEZf
+ eSHq144BRhKMt9L0pmHy2NRdzOWChIdAltFpZmZFPf9XjW1xGCVKCU3802f8uzI7IGBb
+ Bs5GkgaoCrbOqK15eSCTzycwSLNGtj4CMnBBu4DteEGGu42IN/IIMPeEQrlE7xHi8cVD
+ ol3NB7CUSsXIGjAaynodcJcCp+ZgceAgRwdR0oayl/728pcRlgqLeIWxkmgZQfcu5UmX
+ n1RRum2IP9ZKWtI8tRQrX7bXUosPc6p8nAkFMWqVHYnFrp5Y2NZ1v7xQu3K0nSegMZsY
+ 46Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768774147; x=1769378947;
+ d=1e100.net; s=20230601; t=1768774149; x=1769378949;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=mY8SF4Lgdoetp90UFxDHJbg0kRe28ldzal692R5R0k0=;
- b=PLXxLimNIuWMtAoFQxK3mS7xDiX/kUsyPp59U/VoejfKoNVrvIT5XnzkXrLJg24tqi
- qIZVjrIpiPvXlwVSWROrnABPrcqaZCxuXMLXPbnrIAbRpWnOsZNIJigbrKAFREp2mb/p
- K4o27r5acApiekM40TqXCto87ZQy3oUCt3iO+3I8oLUG/lAqqVmEyI9Os42G30B/BWJB
- xyjBTMCWxALYSAj4T3//KZGPrVfTH6Z10MWAyzmHq3r+Tds+mEvAwiT9EvibgX4nPoQU
- wDfqtvGq7GbZQmjQ3nqg0KjjX2LRGuDndQxeu6ur7ekBmBN74kkfA3PlMRrRVN+qY1fl
- 8ZKA==
-X-Gm-Message-State: AOJu0YyJJakUHAXZAOpJ+GzCtSXJPe1RN3gWVnQJFnQO0Z946yjBMvzx
- m/i59TewFdvbgZtqoRoHaWwEwodEXQM9qo9xAvzLqlpOn0YpPbRIIYLMcHcqz1uXqW2Ux+h3KV9
- WBPEYCwA/DA==
-X-Gm-Gg: AY/fxX6JI7rwm/jNN4eyFGaCLjxoLqunZtsK81SbwTatLyYFOGQit224WMDLuQqPyBt
- xmK5xXgXQKW6iLKu0BPYSecnX75xerHDeJESRgQdYMT8TO2R4hfyDGAoHQlpeYTWTNJ7WAbW145
- OQ7rGZ2mqGo45ScwZkmlZnYhoKblRCXS1EZ/n081rs+LRdKkV/H6jcYUxGFrSa/K5HiIPWT9rXz
- +9+DOB/pv74beqmacKDsWZ8WxFdDRDYMwdR1Ys8uK5szN5Q59cd1Ewpj/cKK6Xi4dUD5KW0iRl5
- mqjfVcbQJk06WuDHKadv/gyv5ApEwhfRH8mArEVqxsW19VbAS1eheIr520C1yctzHYhmMYgV15+
- l1l4K0Ou/KCnKAg99JbTzyJR37AdimOvXkEe9uSAAEnDCc/qFTxCvOEHFDV8oQtboyPL/w4XqZn
- rmRH0NO/B8icANEbKEFQ==
-X-Received: by 2002:a17:902:e84a:b0:2a3:bf5f:926c with SMTP id
- d9443c01a7336-2a7175cbc87mr102103885ad.39.1768774147265; 
- Sun, 18 Jan 2026 14:09:07 -0800 (PST)
+ bh=rU1RTCNNq4TKsOcqp8cLlT2o5D/A3g+nlZpIvpHSpXU=;
+ b=bdz5duK7f5jz7V8p9aImrWto4WI78EWTmPkR5DkUuPuy27aWRuNjCczFDCPEldsNjU
+ Nfoen3V+juxw5O5bR43u1QJDtieBqhnxeI2UdI57jEtEWHBiLFJHZ2AWf0PX9dhPtYyr
+ 6xFa5E8JtjGUH2CjM9/N2FSteEeRrmc5f1KE2FuTycet6L78lZSH9vkpM46W1njBLRH+
+ OOd0BTV25UOK7oI9kia2OgsJmRXJixuts376fpLY2sPa0msGnVdKimOEJjq9eUCXVcol
+ bV0klA8mSu1x0aVu6ucw0exBRzQu6IsCkCN1XeyTlwu0+G9wK78go182rTsG9uJLVnki
+ gMJA==
+X-Gm-Message-State: AOJu0YzFzT/sj9V6ophW/v4KPOwbinAZyA2Tv4pkCKvypvmwVdFOp+20
+ OLkNyh5jRWyta6R0fwGwqN8JkNWJarVHg4HKCH0EIOPCyJCInfk3I5KmeJbaT/01ZN+u1E6Ba5u
+ u/mSIGzqBYQ==
+X-Gm-Gg: AY/fxX5gogD2dD24rvk+Sby6jEOVBB1GmWcsWyD4z0BmnWXWdxdbI2lKeeolILiDNzz
+ ZVL+7FryXTMnXryc7WMMxWLVdmu4FHAkJwdRQ4zJZc2a4bXvmTCDudKdFQBbK20hxyEr0vbBM6H
+ VksalbZepa+UlY/kdw8Dg5PUyWl3KUzrTEVHtLKqOU1lSS89D5WQNyr2yDAMgGOKhnuXFhBzZfm
+ pV+FJHMiddYXnZExWN8N+nNva4/ITWTd/Yg6drs96iPxlWCZ9zLjfEB9KF0lmHl1YKRAOyZ0HSP
+ 4y2cMom6xQI4md2QR1r8yZ6UUHg3Yv1zDbe9eAN3YEoM2kF2AzVd8m+ogw2fk041PiEKEBh4mJN
+ 5/JS5kw9v/z/MsCmbEDdOSena9ZgCH36+WjIE+mrkCiQlvUCpvwmida3wEXo76ZGTEVTxJ9zaMP
+ uK6N68B9y9mvuHDjbTTg==
+X-Received: by 2002:a17:903:1a8b:b0:2a2:d2e8:9f25 with SMTP id
+ d9443c01a7336-2a7175cdaacmr85090705ad.33.1768774149382; 
+ Sun, 18 Jan 2026 14:09:09 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7190ab921sm73298205ad.8.2026.01.18.14.09.05
+ d9443c01a7336-2a7190ab921sm73298205ad.8.2026.01.18.14.09.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 14:09:06 -0800 (PST)
+ Sun, 18 Jan 2026 14:09:09 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 44/54] target/arm: Drop CONFIG_ATOMIC64 tests
-Date: Mon, 19 Jan 2026 09:04:04 +1100
-Message-ID: <20260118220414.8177-45-richard.henderson@linaro.org>
+Subject: [PULL 45/54] target/hppa: Drop CONFIG_ATOMIC64 test
+Date: Mon, 19 Jan 2026 09:04:05 +1100
+Message-ID: <20260118220414.8177-46-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260118220414.8177-1-richard.henderson@linaro.org>
 References: <20260118220414.8177-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -102,65 +102,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/ptw.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ target/hppa/op_helper.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index a986dc66f6..8b8dc09e72 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -757,20 +757,12 @@ static uint64_t arm_ldq_ptw(CPUARMState *env, S1Translate *ptw,
- 
-     if (likely(host)) {
-         /* Page tables are in RAM, and we have the host address. */
--#ifdef CONFIG_ATOMIC64
--        data = qatomic_read__nocheck((uint64_t *)host);
-+        data = qatomic_read((uint64_t *)host);
-         if (ptw->out_be) {
-             data = be64_to_cpu(data);
-         } else {
-             data = le64_to_cpu(data);
-         }
--#else
--        if (ptw->out_be) {
--            data = ldq_be_p(host);
--        } else {
--            data = ldq_le_p(host);
--        }
--#endif
-     } else {
-         /* Page tables are in MMIO. */
-         MemTxAttrs attrs = {
-@@ -798,7 +790,7 @@ static uint64_t arm_casq_ptw(CPUARMState *env, uint64_t old_val,
-                              uint64_t new_val, S1Translate *ptw,
-                              ARMMMUFaultInfo *fi)
+diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
+index 65faf03cd0..f961046e4c 100644
+--- a/target/hppa/op_helper.c
++++ b/target/hppa/op_helper.c
+@@ -74,7 +74,6 @@ static void atomic_store_mask64(CPUHPPAState *env, target_ulong addr,
+                                 uint64_t val, uint64_t mask,
+                                 int size, uintptr_t ra)
  {
--#if defined(CONFIG_ATOMIC64) && defined(CONFIG_TCG)
-+#ifdef CONFIG_TCG
-     uint64_t cur_val;
-     void *host = ptw->out_host;
- 
-@@ -903,17 +895,17 @@ static uint64_t arm_casq_ptw(CPUARMState *env, uint64_t old_val,
-     if (ptw->out_be) {
-         old_val = cpu_to_be64(old_val);
-         new_val = cpu_to_be64(new_val);
--        cur_val = qatomic_cmpxchg__nocheck((uint64_t *)host, old_val, new_val);
-+        cur_val = qatomic_cmpxchg((uint64_t *)host, old_val, new_val);
-         cur_val = be64_to_cpu(cur_val);
-     } else {
-         old_val = cpu_to_le64(old_val);
-         new_val = cpu_to_le64(new_val);
--        cur_val = qatomic_cmpxchg__nocheck((uint64_t *)host, old_val, new_val);
-+        cur_val = qatomic_cmpxchg((uint64_t *)host, old_val, new_val);
-         cur_val = le64_to_cpu(cur_val);
+-#ifdef CONFIG_ATOMIC64
+     int mmu_idx = cpu_mmu_index(env_cpu(env), 0);
+     uint64_t old, new, cmp, *haddr;
+     void *vaddr;
+@@ -88,15 +87,12 @@ static void atomic_store_mask64(CPUHPPAState *env, target_ulong addr,
+     old = *haddr;
+     while (1) {
+         new = be32_to_cpu((cpu_to_be32(old) & ~mask) | (val & mask));
+-        cmp = qatomic_cmpxchg__nocheck(haddr, old, new);
++        cmp = qatomic_cmpxchg(haddr, old, new);
+         if (cmp == old) {
+             return;
+         }
+         old = cmp;
      }
-     return cur_val;
- #else
--    /* AArch32 does not have FEAT_HADFS; non-TCG guests only use debug-mode. */
-+    /* Non-TCG guests only use debug-mode. */
-     g_assert_not_reached();
- #endif
+-#else
+-    cpu_loop_exit_atomic(env_cpu(env), ra);
+-#endif
  }
+ 
+ static void do_stby_b(CPUHPPAState *env, target_ulong addr, target_ulong val,
 -- 
 2.43.0
 
