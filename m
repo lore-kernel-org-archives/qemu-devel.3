@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44DE1C9830C
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 19:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB35C98315
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 21:34:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhYb7-0000re-W8; Sun, 18 Jan 2026 14:38:06 -0500
+	id 1vhaOs-0006da-UE; Sun, 18 Jan 2026 16:33:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhYaH-0007O8-IG
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 14:37:16 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhaOh-0006bD-5F
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 16:33:23 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhYaG-0006uV-2M
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 14:37:13 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-47ee3a63300so33797435e9.2
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 11:37:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhaOf-00050v-J8
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 16:33:22 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4801bc328easo28207015e9.3
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 13:33:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768765030; x=1769369830; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uCyMmfY1je4KK++qvAKc5w59+JOFx7vAsdkNeOooSpo=;
- b=d1IwMewhk3TeNassvrQUI6AI7s1VK1kC9Dt64AMYvgVNEZc7qWm86GFLuyusFDISIb
- 1sqt9gUQNcAziNi6/T8If/bTombDxqWmRYSpif/PU6UGq9dFefUMzxRX2vL61CHGDrmI
- iVU8sboeZw+IoN6oQ+wpHZ0m9CZV+DAgOPxZCCAhBOWw6Ffk5/glov2uY/yaHKQrYr1i
- Puha1fGjCLbyH+8tVDN/B9RdeFu+P6T3D+lWKwfmSTP4VbjMD8NnCFlgtFPppep0zw15
- o3QN/pI24LNCam2avh6z4+eRf4rVk2JLCbefawYkDSAPmQVHLhxek80UhatyvvfdYGlZ
- i/VQ==
+ d=linaro.org; s=google; t=1768771998; x=1769376798; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UlAbN0aIjJm+1Q4xaVrgWdkrJEC6XaTja8/SizYvcTE=;
+ b=xpQlaXG/AjuXZWhETbfYcs1CQMNWTfFoU/Tihbnqwz0DEh/g3rjMyaSRa/uu+fwTxL
+ UzUAEP33a9cUqtCs4Zq407zjpYmxPilwbiplhaAlmx+1w2j+fobJhNBwf4atGW7Keqrj
+ VXm1MTyRid4lo1SIfL+Ij1HX0ubFH1n9Ygt9tve6l2GMIkQexkWCodqxQ0wHBGsRCK4Z
+ McTiPbGiFlJNscFSFExRvHz+blphvNcBKYf6OpXGcFpTbPw/82fYtHnqu8eKNq6ma9rj
+ Qk/3s4NyHoNnynZi7ng4kPu+Xbb9y6U6VipaCcX9QxeUnXV8G12XwcBIPT23PpLYQTKT
+ L7WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768765030; x=1769369830;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uCyMmfY1je4KK++qvAKc5w59+JOFx7vAsdkNeOooSpo=;
- b=CxQpT+W2hng2mUxmmSv5lKBlCF2YC5ntde28zFmWgB9zsoOBkkmg+Fn2m60v1+WhvS
- AOQp69IzUDrr1esFkxjWe5WGIh4STAClAuzFjg+sbk6UsCbvX4jGnGb+BDHDzL0WczP2
- P5sk+IfzGqiqPtCBBfZ+paGm9Q2Hzn3IXuLU5AsodLwUzf2GBJ9nhazdbI9ALtiZZ2cF
- ZIB2oAFSnCUlJJDM/7unmboT67C14z4DKmpFv2nA3+yi9crsGQldyqtXrw6kezwWOvxy
- Iugz16DK0c//5y4lCfEYsIkheXR05GPj6sGmQblK8Z51JtJr+SWg68iUXEMOkLAh0j3Z
- 8BHQ==
-X-Gm-Message-State: AOJu0YxCmPTlMMs1ulLSwi/Lhv74gvzEHZ2hH7MSv1zsT3ufCcQRqZGZ
- jyTXT5RNDQU9SVVLIHjsoCvk74mdTY/bytla+RAcrAeTDfu1xxiaqRZfmMnfQf10yNPq10fmcXU
- qlF9f44k=
-X-Gm-Gg: AY/fxX6dHUsbZdZEDC3K5a5xIOjop5CUC36f/eW1WrJcGesYfQxx9lYVbWN7KQol27M
- aaa5vREOoxNTUT4V8VCUP2bDGfMMtuRvhGsJuRShuMUoKnZLMiBRMxWZcg2+M/HNe9MjuEVuUse
- rprAZ6m6DwGxPTUEf6KVWoBzHwaFwZuElUFbMO6sbCLbWhaHniYeGXyqc/9GeDZfYUOaLOU/pz4
- cfVLerlejz+FXNSsglUJ+bg5SkuM3MVLZG8Ps4JgbfdZiDFW7cATCLMDGDuzMLOU35ESm87FBu7
- F9hgWpqsi4bt0omJ5eFkLevddKq0P1lMkk9Z0e+k9nqN50Nz84g9p+m5jYtUQsaqpXb5lTWkqJZ
- 4tST/RpVCt/Olgf2NmKl9FXY23gKvYAaXaJri693UfKz3tsGewDOm/f9GI9UnfVGCDUmmWmmPK9
- AHsnyv641bByjxq+nh1HlXGI0XdS73JBRsJhfr5Wm+khDukPdlpOcCxTexkM3N
-X-Received: by 2002:a05:600c:1f12:b0:477:a36f:1a57 with SMTP id
- 5b1f17b1804b1-4801e2f9110mr98770925e9.3.1768765030251; 
- Sun, 18 Jan 2026 11:37:10 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1768771998; x=1769376798;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UlAbN0aIjJm+1Q4xaVrgWdkrJEC6XaTja8/SizYvcTE=;
+ b=v6eD003WJAW+2gyBb/ckV2S8tJZ66U+55Z2x2hz4P2oHRbvC9JeybbCwd5mEbwVd8Y
+ umzXL+Z7+OVEw4YOcQ9swAgb2TkC+PuhZFcgQv6hXWIC7IffceS5CXpjnGj6ytK+L2QR
+ xERW08DAMqsed/S/JoeU+GCWkM9j+RbTKnhUhiinN/NjNxrSxUlfeIodWgwcs2T1+4YY
+ 4Q/w9hV+NwnS2f5U4jiDvcWU030m9nD1wDMmvjoMR5ioYwEyLzeZ54tNpevABQ81ODt+
+ O7nQBFkZjNrWTMQsTjUYrTe5831EwuiLGZnFlTlmq8/fUHLJtoC+0mzPWc5HMtwJ4kZQ
+ zgpQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+IEt4NLgR5clZXvm2EIcDMx/DZpAC5dVdMZ+doCeu8WKp9pimUSs6TFS21TBmejy4aajMzR6C0mXg@nongnu.org
+X-Gm-Message-State: AOJu0YyvWnxy9hKFoxUm+xyeqTmAB4J7jtG6KsvGnTQBfSUPs1UTciDI
+ tbkWdLpnJ9Hq1eTNnNqOM4uKsUZD3UQM81fDQ6ou1GLk961Q6pEHsn6aWKnlu05WmeE=
+X-Gm-Gg: AY/fxX7g9s44TJ84Kn37OXyyU2rZczjJyWBpPszZO5xF4eRjU5lWyqOA6geYvKTWepw
+ 5ZlkHRhNyVlSPNBCpfJcSvgiSVv1A2rihu4giBKRg6/2smAzFXyAZ42/d9rEWb9RJVVAZZ7ue/3
+ fq/A8QZv8/LYVED8uDaWTB0THYN1kzSUWKu0XaSYlGNUiSO1U/gs3r0iSUHO/cP/Q2uBdiQb638
+ CXUd1HqVK1iAtM/a1mf8lpYckACWWwKAHim6I9sjQf/vReATME/sDqUjY8725+3Dn/9ci7sj0GR
+ QwmBXByL2xFMFAG+Lt6WfREdP5YjW1HkQi8TsZNs/mVtDOjsVyH6zjt6/oih1WXBot0PFNLhCdt
+ dmpvE+CF/+3GmtOFii1YVn8ryexBeoU6s+6LcxH/x/6zEpKaqL2ElsXogQXwJwfHn7PI/QYq4C3
+ 4sxGHVTFeGzqoVzVLwMx+E/8eAqQLzhf/mhlK0lqTVmoP/l2wQ4MpeVNytehjMN7ku
+X-Received: by 2002:a05:600c:870e:b0:47d:264e:b35a with SMTP id
+ 5b1f17b1804b1-4801eabf1eamr98819465e9.13.1768771998323; 
+ Sun, 18 Jan 2026 13:33:18 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4802dc90068sm76480585e9.7.2026.01.18.11.37.09
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 18 Jan 2026 11:37:09 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v6 17/18] system: Allow restricting the legacy MO_TE*
- 'native-endian' definitions
-Date: Sun, 18 Jan 2026 20:35:07 +0100
-Message-ID: <20260118193509.42923-18-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260118193509.42923-1-philmd@linaro.org>
-References: <20260118193509.42923-1-philmd@linaro.org>
+ 5b1f17b1804b1-47f42907141sm214773655e9.9.2026.01.18.13.33.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 18 Jan 2026 13:33:17 -0800 (PST)
+Message-ID: <ee9a0216-0a1a-46ec-b647-64045c892af3@linaro.org>
+Date: Sun, 18 Jan 2026 22:33:15 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] include/exec: Provide the cpu_tswap() functions
+Content-Language: en-US
+To: =?UTF-8?Q?Martin_Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260106-semihosting-cpu-tswap-v1-0-646576c25f56@eonerc.rwth-aachen.de>
+ <20260106-semihosting-cpu-tswap-v1-1-646576c25f56@eonerc.rwth-aachen.de>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260106-semihosting-cpu-tswap-v1-1-646576c25f56@eonerc.rwth-aachen.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,54 +104,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guard the native endian definitions we want to remove by surrounding
-them with TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API #ifdef'ry.
+Hi Martin,
 
-Once a target gets cleaned we'll set the definition in the
-target config, then the target won't be able to use the legacy
-API anymore.
+On 6/1/26 14:43, Martin Kröning via wrote:
+> These functions are needed for CPUs that support runtime-configurable endianness.
+> In those cases, components such as semihosting need to perform
+> runtime-dependent byte swaps.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/exec/memop.h | 4 ++++
- 1 file changed, 4 insertions(+)
+Are you targetting user or system emulation?
 
-diff --git a/include/exec/memop.h b/include/exec/memop.h
-index 799b5b42218..4aaa6a0ab02 100644
---- a/include/exec/memop.h
-+++ b/include/exec/memop.h
-@@ -36,11 +36,13 @@ typedef enum MemOp {
-     MO_BE    = MO_BSWAP,
- #endif
- #ifdef COMPILING_PER_TARGET
-+#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
- #if TARGET_BIG_ENDIAN
-     MO_TE    = MO_BE,
- #else
-     MO_TE    = MO_LE,
- #endif
-+#endif
- #endif
- 
-     /*
-@@ -150,6 +152,7 @@ typedef enum MemOp {
-     MO_BESQ  = MO_BE | MO_SQ,
- 
- #ifdef COMPILING_PER_TARGET
-+#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
-     MO_TEUW  = MO_TE | MO_UW,
-     MO_TEUL  = MO_TE | MO_UL,
-     MO_TEUQ  = MO_TE | MO_UQ,
-@@ -157,6 +160,7 @@ typedef enum MemOp {
-     MO_TESW  = MO_TE | MO_SW,
-     MO_TESL  = MO_TE | MO_SL,
-     MO_TESQ  = MO_TE | MO_SQ,
-+#endif
- #endif
- 
-     MO_SSIZE = MO_SIZE | MO_SIGN,
--- 
-2.52.0
+I suppose user emulation, otherwise you'd have used the
+"semihosting/uaccess.h" API.
+
+But then I'm confused because a user process can't change
+the CPU endianness...
+
+Can you explain your use case?
+
+> Signed-off-by: Martin Kröning <martin.kroening@eonerc.rwth-aachen.de>
+> ---
+>   include/exec/tswap.h | 30 ++++++++++++++++++++++++++++++
+>   1 file changed, 30 insertions(+)
+> 
+> diff --git a/include/exec/tswap.h b/include/exec/tswap.h
+> index 72219e2c43..9aaafb12f3 100644
+> --- a/include/exec/tswap.h
+> +++ b/include/exec/tswap.h
+> @@ -10,6 +10,7 @@
+>   
+>   #include "qemu/bswap.h"
+>   #include "qemu/target-info.h"
+> +#include "hw/core/cpu.h"
+>   
+>   /*
+>    * If we're in target-specific code, we can hard-code the swapping
+> @@ -21,6 +22,8 @@
+>   #define target_needs_bswap()  (HOST_BIG_ENDIAN != target_big_endian())
+>   #endif /* COMPILING_PER_TARGET */
+>   
+> +#define cpu_needs_bswap(cpu)  (HOST_BIG_ENDIAN != cpu_virtio_is_big_endian(cpu))
+> +
+>   static inline uint16_t tswap16(uint16_t s)
+>   {
+>       if (target_needs_bswap()) {
+> @@ -48,6 +51,33 @@ static inline uint64_t tswap64(uint64_t s)
+>       }
+>   }
+>   
+> +static inline uint16_t cpu_tswap16(CPUState *cpu, uint16_t s)
+> +{
+> +    if (target_needs_bswap() || cpu_needs_bswap(cpu)) {
+> +        return bswap16(s);
+> +    } else {
+> +        return s;
+> +    }
+> +}
+> +
+> +static inline uint32_t cpu_tswap32(CPUState *cpu, uint32_t s)
+> +{
+> +    if (target_needs_bswap() || cpu_needs_bswap(cpu)) {
+> +        return bswap32(s);
+> +    } else {
+> +        return s;
+> +    }
+> +}
+> +
+> +static inline uint64_t cpu_tswap64(CPUState *cpu, uint64_t s)
+> +{
+> +    if (target_needs_bswap() || cpu_needs_bswap(cpu)) {
+> +        return bswap64(s);
+> +    } else {
+> +        return s;
+> +    }
+> +}
+> +
+>   static inline void tswap16s(uint16_t *s)
+>   {
+>       if (target_needs_bswap()) {
+> 
 
 
