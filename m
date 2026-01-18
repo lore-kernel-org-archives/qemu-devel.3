@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99D6BCA5FE1
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:05:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D97CEC9830C
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:05:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhat8-0001V1-Av; Sun, 18 Jan 2026 17:04:50 -0500
+	id 1vhatq-0002sE-Uu; Sun, 18 Jan 2026 17:05:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhat4-00011A-N3
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:04:46 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1vhatV-0002K8-NR
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:22 -0500
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhat3-0000VD-8p
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:04:46 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-29f1bc40b35so38102975ad.2
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:04:44 -0800 (PST)
+ id 1vhatT-0000p1-Du
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:12 -0500
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-c47ee987401so1508587a12.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:05:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768773884; x=1769378684; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768773909; x=1769378709; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cwGPpfxzsG4LOsiRJ3NVV7jG3uJ4HK6BFewRFRnb1bM=;
- b=L68JrP6Ie+SOKS2bFMK18qD6m0VhVgwWvAs47ZSca1ieY3/2IN883v2Zu/04baHEYJ
- WCwyA1uZb8Il9cbnnz6DUr5fTai1SFLmQM0f/zaYXZPxe13roNva5OcvNVMl1o73YyLT
- bDa+kavzVQB4G1tXW0wnuwgQtZBNOoc8XpGKVSk+LZ3PCZ32XIb1j5tuWjQRuZy9gBka
- Mm7qgyQ2bvLBs17NJcrsgl6S88Lbp1FTo5CMEX18PC1SpFEJyWtVoH9QvPhKmz6iTZLy
- irK3wc5/IHF/K7bH8zlXsS4vNVQkE6o3BHlIudGrx+UM84m71nJ2tkXCj0pYAodtW2Xv
- hhOg==
+ bh=U5sBU2zk1bX0ddl3O5KkamyL/V1clpqH1xPWvT/iVmQ=;
+ b=ORzOjGSU8J891NIHhvMVlVDzpY4cvCf509ECb4mMuMNxRJcsHuX2PYtbuDVg7rLbDM
+ SYGgqIZSOTbOjYwqYrS7f/+gWCi7pJ2rwwSuLxx1Sb3QsQ+ZuHuAcVF9pR/CRQgmdEMD
+ +TAdgWUHJKDLW5t4PkX3TTdt2wPzXplh/zyMv76STC9EnHENtblLm9Fh0kqW+iungWgB
+ V2SJHxn3tM/BjAjxhsAZ/QemLZAGOq/fKbhwfUb3CIKR8unnjRp4a0rSR3zMBeYTPXRW
+ FFbXfDZQtuOyNByBQ21pgvkB58i6jFcD50Ri0eNN3VHxzBvDvjhX1LvhYHIf3re+LG89
+ ccPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768773884; x=1769378684;
+ d=1e100.net; s=20230601; t=1768773909; x=1769378709;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cwGPpfxzsG4LOsiRJ3NVV7jG3uJ4HK6BFewRFRnb1bM=;
- b=ZpWCkQcv7onP139jaa1XdcO1o8estTivQp5ClM51OLMPbvGhOIcHcl7NsX/v+DxWuM
- M0kaQSdWQhpfK7H18MOC5bORF4yQ3K/INGikyxciky9gC7ylQ6pFpYcm5PkV5w1kKIIS
- PAPqWCa2x3xtTPMEnSHLsoR1d8wqJKpQ5QvZKi4vWtkaowqFepkK5VEfe0ts2vupVVtd
- pPgG5xLE910fx3D3RJJIJ7iUVjbU1oPuA44zPLY1TRFGNkz7WsaWnp8henJeYUKq16nB
- xr0w0FK1kVpjlZ9igTIHbgUEBBFw79oZul1j6aotbz2vneqBYCXOYp3H54Qymu3FleT9
- FLqQ==
-X-Gm-Message-State: AOJu0Yw4gkaOQ2ba+YzhAjWOfXAQA924WAQCrBKdwMZhxeQb/pJVyDe8
- MFUt129LwgyhPyC5Va3mKleVDGS47Hs6Ixh8ifGW8Z8LYvMJyvclGV9+4FrDwuiQdzZuImIrKeH
- IrVUEu5R3Kg==
-X-Gm-Gg: AY/fxX5QmBNSNywghv2bGQvaySj5fRyPThPLjLN9d913gfxLYDBtLTg0S5IASaR4rp0
- gaIckilBxGD4WfS/+M2dt7lQzR+2K6UO2W6PlBmgf2BOYEm/42r3ToX599uu5tr5FAkyIcKa7iS
- 0TZhp0wE1l1NMyuOT47SN01+626dz1FCN/cD8jL5BvHQV1GPeJ3Rl4+RShxRtNZaJtPJLqDiudy
- yTaYadu4p3tYy9k8sfO2mw5lBEIQl4+BWm+cwe/pYr6yK57lZtvqTL5gZXh/XHo2dOyvDJs1eQX
- 1KWHT46698/oHOePMftGlexhhEbWDWnRvPF8hP0PhkQfV59UVz+hvk5jSKP9fAfVftdXbW9df+P
- PBc+F0/xmih9YiZ52cOSKkJ/VvzP2o32mAOv3LeTYKeU+DadN304lNbmPYelN41QZfzcQtpX17f
- tbVQKkGqSYIKRU9gJTaQ==
-X-Received: by 2002:a17:902:ce0a:b0:2a3:e7b6:ab53 with SMTP id
- d9443c01a7336-2a717554c25mr93798745ad.22.1768773883744; 
- Sun, 18 Jan 2026 14:04:43 -0800 (PST)
+ bh=U5sBU2zk1bX0ddl3O5KkamyL/V1clpqH1xPWvT/iVmQ=;
+ b=u8dt6IWvEaBnAnneqZgc08NSWVkOLezyO054rwYPkrS4P7EJpjQHHPqr3RPrP5vpVW
+ 2NDZk5O/sazMVG/AWDBTay0ZupYRX5IkLsqFhWig4pV+39mugFOaNUM9wueTNW+SwR2J
+ ntzLNLGy/chqEIlOKM6wZtQrBFFlCPeG1LuRGhAc+mxfViC0SwEe//QMwdjxRGQWmL10
+ 0qRMxVlEgKJnxBylZcR8P9j/yrWS42S2LGmZhIVZxC3Ec+8HPTH5MbVJgDYM+jEsTFK3
+ XRGWMeJRhG4LttaO/6/GlPKFDkczIHX+vpBVvFCqC0HlzKnYDXev9rrbeL2XfR9KXgDT
+ rWaQ==
+X-Gm-Message-State: AOJu0YygIuiEU6kXAZt0QwlzVWJ2CRCZoENzm0MyXCDp2bAgRG7LS+ev
+ Dnz1jwROpBlQF8UnDsLf2zSk+jBHCn57wBDhZ19H2Hw+U95M0Zr4ILfuJDa6/jDe5i9qAt3ftHq
+ IstKwBwszDQ==
+X-Gm-Gg: AY/fxX60pGmhTR5TaI7Fkez/tWe1WK6eaw3TK7ACA+helbKUcFIEhAgb73D2BMWVrQR
+ 9Ft6dgYK2kewU9EkL3G6G8LEWaSwue1jqBaJ0kmPZvJXPuH31dTPldPe6Ldnfd+8z4vST3Kel/2
+ FyxVNkbUkb2jwi4vlDlTCUO+FnpceRsb3vfLQpq21/XnB3eJakDLFqvSSYfImPMBZ+zzALoG7VZ
+ CTNuxg5ke+FtQ3g8LRx3ulsvUEOzMxZtk5xemE/NwYUURkjd/lvYHdS7SUsqmCoga2YKYhPgpk2
+ Goa9DJe0RGUis3nRJNwgDeI3VCAcX8WkRnoqO2/jDjf6DQ94R8E7tNjfX4G8kVRhB6Dz24Ir4WB
+ MzlDE1fPTwartlzzkhiKgWwYFxc/qLcjOwKB0NgtXEswwW7sgjGCBeT06M6pjoIvNuksj5ZtHFI
+ 1qUxSrldNB2ad8r4vhGQ==
+X-Received: by 2002:a17:902:f545:b0:294:8c99:f318 with SMTP id
+ d9443c01a7336-2a717546704mr92985575ad.3.1768773908923; 
+ Sun, 18 Jan 2026 14:05:08 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7193dbb74sm74402865ad.56.2026.01.18.14.04.41
+ d9443c01a7336-2a7193dbb74sm74402865ad.56.2026.01.18.14.05.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 14:04:43 -0800 (PST)
+ Sun, 18 Jan 2026 14:05:08 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 10/54] host/include/x86_64/bufferiszero: Remove no SSE2 fallback
-Date: Mon, 19 Jan 2026 09:03:30 +1100
-Message-ID: <20260118220414.8177-11-richard.henderson@linaro.org>
+Subject: [PULL 20/54] tcg: Replace TCG_TARGET_REG_BITS / 8
+Date: Mon, 19 Jan 2026 09:03:40 +1100
+Message-ID: <20260118220414.8177-21-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260118220414.8177-1-richard.henderson@linaro.org>
 References: <20260118220414.8177-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -100,36 +100,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since x86_64 always has SSE2, we can remove the fallback
-that was present for i686.
+Use sizeof(tcg_target_long) instead of division.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- host/include/x86_64/host/bufferiszero.c.inc | 5 -----
- 1 file changed, 5 deletions(-)
+ tcg/tcg-op-gvec.c                | 2 +-
+ tcg/loongarch64/tcg-target.c.inc | 4 ++--
+ tcg/ppc64/tcg-target.c.inc       | 2 +-
+ tcg/riscv64/tcg-target.c.inc     | 4 ++--
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/host/include/x86_64/host/bufferiszero.c.inc b/host/include/x86_64/host/bufferiszero.c.inc
-index 74ae98580f..7e9d896a8d 100644
---- a/host/include/x86_64/host/bufferiszero.c.inc
-+++ b/host/include/x86_64/host/bufferiszero.c.inc
-@@ -3,7 +3,6 @@
-  * buffer_is_zero acceleration, x86 version.
-  */
+diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
+index 2d184547ba..9c33430638 100644
+--- a/tcg/tcg-op-gvec.c
++++ b/tcg/tcg-op-gvec.c
+@@ -607,7 +607,7 @@ static void do_dup(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
+     }
  
--#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
- #include <immintrin.h>
+     /* Otherwise, inline with an integer type, unless "large".  */
+-    if (check_size_impl(oprsz, TCG_TARGET_REG_BITS / 8)) {
++    if (check_size_impl(oprsz, sizeof(tcg_target_long))) {
+         t_64 = NULL;
+         t_32 = NULL;
  
- /* Helper for preventing the compiler from reassociating
-@@ -119,7 +118,3 @@ static unsigned best_accel(void)
- #endif
-     return info & CPUINFO_SSE2 ? 1 : 0;
- }
--
--#else
--# include "host/include/generic/host/bufferiszero.c.inc"
--#endif
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index 10c69211ac..c3350c90fc 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -2604,7 +2604,7 @@ static const int tcg_target_callee_save_regs[] = {
+ };
+ 
+ /* Stack frame parameters.  */
+-#define REG_SIZE   (TCG_TARGET_REG_BITS / 8)
++#define REG_SIZE   ((int)sizeof(tcg_target_long))
+ #define SAVE_SIZE  ((int)ARRAY_SIZE(tcg_target_callee_save_regs) * REG_SIZE)
+ #define TEMP_SIZE  (CPU_TEMP_BUF_NLONGS * (int)sizeof(long))
+ #define FRAME_SIZE ((TCG_STATIC_CALL_ARGS_SIZE + TEMP_SIZE + SAVE_SIZE \
+@@ -2731,7 +2731,7 @@ static const DebugFrame debug_frame = {
+     .h.cie.id = -1,
+     .h.cie.version = 1,
+     .h.cie.code_align = 1,
+-    .h.cie.data_align = -(TCG_TARGET_REG_BITS / 8) & 0x7f, /* sleb128 */
++    .h.cie.data_align = -sizeof(tcg_target_long) & 0x7f, /* sleb128 */
+     .h.cie.return_column = TCG_REG_RA,
+ 
+     /* Total FDE size does not include the "len" member.  */
+diff --git a/tcg/ppc64/tcg-target.c.inc b/tcg/ppc64/tcg-target.c.inc
+index 3c36b26f25..b54afa0b6d 100644
+--- a/tcg/ppc64/tcg-target.c.inc
++++ b/tcg/ppc64/tcg-target.c.inc
+@@ -70,7 +70,7 @@
+ #define SZP  ((int)sizeof(void *))
+ 
+ /* Shorthand for size of a register.  */
+-#define SZR  (TCG_TARGET_REG_BITS / 8)
++#define SZR  ((int)sizeof(tcg_target_long))
+ 
+ #define TCG_CT_CONST_S16     0x00100
+ #define TCG_CT_CONST_U16     0x00200
+diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+index 0967a445a3..76dd4fca97 100644
+--- a/tcg/riscv64/tcg-target.c.inc
++++ b/tcg/riscv64/tcg-target.c.inc
+@@ -2934,7 +2934,7 @@ static const int tcg_target_callee_save_regs[] = {
+ };
+ 
+ /* Stack frame parameters.  */
+-#define REG_SIZE   (TCG_TARGET_REG_BITS / 8)
++#define REG_SIZE   ((int)sizeof(tcg_target_long))
+ #define SAVE_SIZE  ((int)ARRAY_SIZE(tcg_target_callee_save_regs) * REG_SIZE)
+ #define TEMP_SIZE  (CPU_TEMP_BUF_NLONGS * (int)sizeof(long))
+ #define FRAME_SIZE ((TCG_STATIC_CALL_ARGS_SIZE + TEMP_SIZE + SAVE_SIZE \
+@@ -3114,7 +3114,7 @@ static const DebugFrame debug_frame = {
+     .h.cie.id = -1,
+     .h.cie.version = 1,
+     .h.cie.code_align = 1,
+-    .h.cie.data_align = -(TCG_TARGET_REG_BITS / 8) & 0x7f, /* sleb128 */
++    .h.cie.data_align = -sizeof(tcg_target_long) & 0x7f, /* sleb128 */
+     .h.cie.return_column = TCG_REG_RA,
+ 
+     /* Total FDE size does not include the "len" member.  */
 -- 
 2.43.0
 
