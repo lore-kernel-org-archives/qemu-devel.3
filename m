@@ -4,91 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C32C3C9830C
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 344F6C98315
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:03:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhaoX-0003ld-6L; Sun, 18 Jan 2026 17:00:05 -0500
+	id 1vharl-0007iL-AO; Sun, 18 Jan 2026 17:03:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhaoR-0003hY-Qd
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 16:59:59 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhari-0007gv-09
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:03:22 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhaoQ-0008JD-87
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 16:59:59 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47fedb7c68dso23934415e9.2
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 13:59:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vharg-0000P3-Ex
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:03:21 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4801bc328easo28310585e9.3
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:03:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768773596; x=1769378396; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6Z2dvTrseTxOg307MHO4uCzaKs+nhbHFu0/LcG6p+m8=;
- b=nIs8G4BOFeNEji5yG/zmAFO1ZTRDnunlYTjUBweqI/RGt6mhtoFfBP1e8H2/dt4Tzi
- NjNH86mGjfBM257Yz6fAumU890T2xlSRSmq2cdYwOQiyEFqW5oygldsjovjFHBL47SrT
- XWKVQTGZ6tDeJlo+3Cr6WlLQUITAeZH23bwdyVq3waQ+0V2gxUoyoAvcZzhnmsi9IgHl
- YurGXrOnt9nDzBITMfyPYHO25GBkdmeSxDu0GgxFAWPB/j8NsnPrg3RzZLGT/CqaNIO0
- DcYo/EmUU1yaSO4uGF4BE5eI7YlL0BDmAgW+8H8bd2jY6meMOSmT1AMwIEpdbuh0wrsb
- uJ/g==
+ d=linaro.org; s=google; t=1768773799; x=1769378599; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Hgv2TCb53Yuj1iGRviITZXfy1CdbaMx/7OSQNso2nK0=;
+ b=S1oI0z7LtlCQIhELK7uvW695ENeT8jdAKU5ajBwuyEO9qv7YHHG+BhA/ItTMoo5gWs
+ OYcbsBAzjChJ4ZpKDdDrHRbAurkauW3YjHtApZPSVPs4oA0Fzb3BGt527cQJAIO+UiSD
+ ZlIWgCkDyhIY+lMlp2NHtxvP77p2BVZva4WSxp5wGgLVKd265QK3HjovxWBnFMe/UBla
+ d9bY/Psrl5a7MvsLkXJN6lhiUNWbK/SOPZ7xcEKqb/M7QJULlD1YVIANGjfe+8OZEvOy
+ b+wiOW6Mf3iCzQd2pKd3xJppCWdygiV+r3cmPzSm0fnsLm8h0q5SYZpoamrK9/6HGjvk
+ cAfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768773596; x=1769378396;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6Z2dvTrseTxOg307MHO4uCzaKs+nhbHFu0/LcG6p+m8=;
- b=afVPMCNu0ExcEw4/YncS7l+6NPFnUO0eP71OKp+/47EAYAOh+zcAcosdpDKDk/T0Ii
- pA/yxDnUMMrB3YiUHge4w1KMRnNM2WW8vVy4nmXyzsunaNPw2ZLqKLpoWFZtXA29Cl3f
- WESjWFo3+EUJm5pS1j8M0pdBO6/9zy8TXaAR03EmpydoTu7Ht0bA9DmoAo8vjZLDu03l
- iR1bJknz9U1w2lOnQ1vrLE6u7WGIbNNJa8fVqLUYNcOohrtRvL5JE9x8O7Ioef3wdoKg
- jscS5nzwAqIcEbyIjnqtwavN3VwEdzhF5wzD6DSWd6R8+0buoimo+u7myJ/hpuJSCQrh
- nUSQ==
-X-Gm-Message-State: AOJu0YxnZOqDbTlD9zFG0irqQ7nV6/+4QJN/U9X058FsZiIxifMDfM9y
- gaxumZRxJreneHZuJTuJCiK+GFFckT/5gG6AtJ+9/9hJJz7p5MO/UR7KoeRX+QLMEdg7dVTsEUp
- teN2ss3o=
-X-Gm-Gg: AY/fxX4rRdbjapjhhyjd7pf/kGv2IR09fglg2jlgge3LRGCbGkS7lJDSCcpmJYwpOca
- gRQtwCtOH57G7Nkug0luTbFdqMDir5FXDl/MBiUOZry8dv6s+HbquavgY3Gujia0/eU/24wBBzw
- 6gRDUoT2QtIMwY+mKEjoChbK/w3e54zaxLQ4qt1A2S1wh8VWr8lLX7d0VGDPy1P7YUeKHvvAOC5
- Q/Q0CCbWbTnCsfLuaqwMsDBHUracn4TfJolf1tLPO3bmufZFFi4ht7GgM94n1jVGDml7XfrJzp0
- UBBQS8qTFrWoNC9QkUb7OryI0Mb2xuviPNToCkkj2xE+2nGipiok9OVj+pYy3knD8PPjw2kUg3K
- 3JlLdKGcI+GCiyP0IL1Nzt838KDyaf3Z3WxeOCU8L0vcfi9/c8+1d1uwQ5trIRoaGkFxR8eU5+Q
- cnb0DJVsMV612hI2AQVU89vOYp9yWNx0N7aSKGYQ0gGn3Zo5WTxfNYyH6yTMUM
-X-Received: by 2002:a05:600c:b93:b0:480:1db1:b44d with SMTP id
- 5b1f17b1804b1-4801e34cab5mr128428675e9.27.1768773596257; 
- Sun, 18 Jan 2026 13:59:56 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1768773799; x=1769378599;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Hgv2TCb53Yuj1iGRviITZXfy1CdbaMx/7OSQNso2nK0=;
+ b=qKN2Nxcm0rYJqtP5+or699WMvSLMjJ76j7vTErepbNCN+2sQztCTeFxRhKqNZozjzz
+ q7YsahN0rixluV5vQVBuxbQHNGiOIASnISSyMgOoLMAtPHYvu+hipqiItMQluLsGGeLN
+ IDwImlRxoe4X0RG85McMGsOeQy3q9Pyhy2SIpWXTy43azYZ1AcGonvZYNmlywrjlqwfw
+ bGbSy9QsiFk5E0aWar07dB+H4d51d9AfGXfjIlps+oJrKDB2LYxXURRm8Kk3k4OkcCr1
+ XMbLCwYLkzxGbLPjghKmn50+W/h5H12RccIB0id0WqccFpiVN6zVr5xl+QwySPRtGSC2
+ Ki3g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8NupOXB3wRfh31pfyKcSJMYQ45gXwWdB4ohxHhXzjJe6oOZg4l9AlClm1EV/gvcFW3EVBHIBM8V8a@nongnu.org
+X-Gm-Message-State: AOJu0YwXD+nBUayrY7ioFMLhA7l3+QO7WNUy3tzxBV0gGs71ihYADGhd
+ FGpjtYhOXVFxpP8ppTbVTCNhJ32jxwGh9N5pJUquY6mjmQDUe4yHrBw00BKsWmyBAWA=
+X-Gm-Gg: AY/fxX7VVYZ6MI+O3PV1SKc96hxA3pHzHi8xtpSsqRqZeYgKcHAMiuoAYm5j+m+/2U3
+ lQa7i0SeQVcp8m5zDwwguYqwsSRERKoQOWJ4AIgn4Rm8S57pCpURq8V93LzuCrDMMaQEFfj2UOm
+ z/TDuD2d2LHU8I3hc6UWlpzr/Pukw7tD9JdfDUGlulPUxf4ADzbslFXOVLWNNDSEP1lfvyl4trq
+ WeqLrOrupAcr03gcQLGlixx4Dqd3m5Gbl+Q/JPQeR883nO7HWJ4dKnZ7weFISZtkCQRuyiadI9S
+ 21vUYxMbMCmudHGEzGWtNpyuRRfSCl+lhkN8wUmmO8MTV35FQJ8vznXvLX7YtjudhBKFi3/nYlL
+ fvyXvj9bouZgUjj1dJqnIbQxQ0izoRIUqdITROcLTjzVoqIBVtwI840fYviDZv/7nEoFP1UbEJU
+ sIrpvmgfaGkbS7lCMcbZQayvJ0QEZwXhrL1weFq2meqf5eSFpaPlJaCQ==
+X-Received: by 2002:a05:600c:8710:b0:471:14f5:126f with SMTP id
+ 5b1f17b1804b1-4801eb142famr109060695e9.33.1768773798709; 
+ Sun, 18 Jan 2026 14:03:18 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e8c9cbcsm158555475e9.12.2026.01.18.13.59.53
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 18 Jan 2026 13:59:54 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
- Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 1/2] target/arm/hvf: Move hvf_sysreg_[read,
- write]_cp() functions around
-Date: Sun, 18 Jan 2026 22:59:44 +0100
-Message-ID: <20260118215945.46693-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260118215945.46693-1-philmd@linaro.org>
-References: <20260118215945.46693-1-philmd@linaro.org>
+ 5b1f17b1804b1-4801fe67780sm65442845e9.16.2026.01.18.14.03.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 18 Jan 2026 14:03:17 -0800 (PST)
+Message-ID: <06ea18a9-e02c-4d5b-91e8-9f0fd1e8ac43@linaro.org>
+Date: Sun, 18 Jan 2026 23:03:16 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 50/59] target/arm/hvf: Do not abort in
+ hvf_arm_get_*_ipa_bit_size()
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
+ qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Collingbourne <pcc@google.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>
+References: <20251028054238.14949-1-philmd@linaro.org>
+ <20251028054238.14949-51-philmd@linaro.org>
+ <f7a2dc18-ecad-4487-9b7d-f85618fc2ba5@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <f7a2dc18-ecad-4487-9b7d-f85618fc2ba5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,182 +111,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Next commit will use these functions prototype earlier. Rather
-than forward-declaring them, move them around.
+On 28/10/25 13:06, Richard Henderson wrote:
+> On 10/28/25 06:42, Philippe Mathieu-Daudé wrote:
+>> Do not abort in hvf_arm_get_default_ipa_bit_size()
+>> and hvf_arm_get_max_ipa_bit_size() when the IPA can
+>> not be fetched. Return 0 (and document it).
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/arm/hvf_arm.h | 11 +++++++++++
+>>   target/arm/hvf/hvf.c |  8 ++------
+>>   2 files changed, 13 insertions(+), 6 deletions(-)
+> 
+> Doesn't this just lead to a nonsensical error_report, e.g.
+> 
+> -m and ,maxmem option values require an IPA range (XX bits) larger than 
+> the one supported by the host (0 bits)
+> 
+> ?
+> 
+> Is there a reasonable way to populate an Error return?
+> I guess this only happens with older versions of Darwin, because surely 
+> we can always probe the supported IPA size...
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/arm/hvf/hvf.c | 142 +++++++++++++++++++++----------------------
- 1 file changed, 71 insertions(+), 71 deletions(-)
-
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index e4c0d936f1f..fcb7fa3b30c 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -423,6 +423,77 @@ static const hv_sys_reg_t hvf_sreg_list[] = {
- 
- #undef DEF_SYSREG
- 
-+static uint32_t hvf_reg2cp_reg(uint32_t reg)
-+{
-+    return ENCODE_AA64_CP_REG((reg >> SYSREG_OP0_SHIFT) & SYSREG_OP0_MASK,
-+                              (reg >> SYSREG_OP1_SHIFT) & SYSREG_OP1_MASK,
-+                              (reg >> SYSREG_CRN_SHIFT) & SYSREG_CRN_MASK,
-+                              (reg >> SYSREG_CRM_SHIFT) & SYSREG_CRM_MASK,
-+                              (reg >> SYSREG_OP2_SHIFT) & SYSREG_OP2_MASK);
-+}
-+
-+static bool hvf_sysreg_read_cp(CPUState *cpu, const char *cpname,
-+                               uint32_t reg, uint64_t *val)
-+{
-+    ARMCPU *arm_cpu = ARM_CPU(cpu);
-+    CPUARMState *env = &arm_cpu->env;
-+    const ARMCPRegInfo *ri;
-+
-+    ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
-+    if (ri) {
-+        if (!cp_access_ok(1, ri, true)) {
-+            return false;
-+        }
-+        if (ri->accessfn) {
-+            if (ri->accessfn(env, ri, true) != CP_ACCESS_OK) {
-+                return false;
-+            }
-+        }
-+        if (ri->type & ARM_CP_CONST) {
-+            *val = ri->resetvalue;
-+        } else if (ri->readfn) {
-+            *val = ri->readfn(env, ri);
-+        } else {
-+            *val = raw_read(env, ri);
-+        }
-+        trace_hvf_emu_reginfo_read(cpname, ri->name, *val);
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
-+static bool hvf_sysreg_write_cp(CPUState *cpu, const char *cpname,
-+                                uint32_t reg, uint64_t val)
-+{
-+    ARMCPU *arm_cpu = ARM_CPU(cpu);
-+    CPUARMState *env = &arm_cpu->env;
-+    const ARMCPRegInfo *ri;
-+
-+    ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
-+
-+    if (ri) {
-+        if (!cp_access_ok(1, ri, false)) {
-+            return false;
-+        }
-+        if (ri->accessfn) {
-+            if (ri->accessfn(env, ri, false) != CP_ACCESS_OK) {
-+                return false;
-+            }
-+        }
-+        if (ri->writefn) {
-+            ri->writefn(env, ri, val);
-+        } else {
-+            raw_write(env, ri, val);
-+        }
-+
-+        trace_hvf_emu_reginfo_write(cpname, ri->name, val);
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
- int hvf_arch_get_registers(CPUState *cpu)
- {
-     ARMCPU *arm_cpu = ARM_CPU(cpu);
-@@ -1161,46 +1232,6 @@ static bool is_id_sysreg(uint32_t reg)
-            SYSREG_CRM(reg) < 8;
- }
- 
--static uint32_t hvf_reg2cp_reg(uint32_t reg)
--{
--    return ENCODE_AA64_CP_REG((reg >> SYSREG_OP0_SHIFT) & SYSREG_OP0_MASK,
--                              (reg >> SYSREG_OP1_SHIFT) & SYSREG_OP1_MASK,
--                              (reg >> SYSREG_CRN_SHIFT) & SYSREG_CRN_MASK,
--                              (reg >> SYSREG_CRM_SHIFT) & SYSREG_CRM_MASK,
--                              (reg >> SYSREG_OP2_SHIFT) & SYSREG_OP2_MASK);
--}
--
--static bool hvf_sysreg_read_cp(CPUState *cpu, const char *cpname,
--                               uint32_t reg, uint64_t *val)
--{
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    CPUARMState *env = &arm_cpu->env;
--    const ARMCPRegInfo *ri;
--
--    ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
--    if (ri) {
--        if (!cp_access_ok(1, ri, true)) {
--            return false;
--        }
--        if (ri->accessfn) {
--            if (ri->accessfn(env, ri, true) != CP_ACCESS_OK) {
--                return false;
--            }
--        }
--        if (ri->type & ARM_CP_CONST) {
--            *val = ri->resetvalue;
--        } else if (ri->readfn) {
--            *val = ri->readfn(env, ri);
--        } else {
--            *val = raw_read(env, ri);
--        }
--        trace_hvf_emu_reginfo_read(cpname, ri->name, *val);
--        return true;
--    }
--
--    return false;
--}
--
- static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
- {
-     ARMCPU *arm_cpu = ARM_CPU(cpu);
-@@ -1454,37 +1485,6 @@ static void pmswinc_write(CPUARMState *env, uint64_t value)
-     }
- }
- 
--static bool hvf_sysreg_write_cp(CPUState *cpu, const char *cpname,
--                                uint32_t reg, uint64_t val)
--{
--    ARMCPU *arm_cpu = ARM_CPU(cpu);
--    CPUARMState *env = &arm_cpu->env;
--    const ARMCPRegInfo *ri;
--
--    ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
--
--    if (ri) {
--        if (!cp_access_ok(1, ri, false)) {
--            return false;
--        }
--        if (ri->accessfn) {
--            if (ri->accessfn(env, ri, false) != CP_ACCESS_OK) {
--                return false;
--            }
--        }
--        if (ri->writefn) {
--            ri->writefn(env, ri, val);
--        } else {
--            raw_write(env, ri, val);
--        }
--
--        trace_hvf_emu_reginfo_write(cpname, ri->name, val);
--        return true;
--    }
--
--    return false;
--}
--
- static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
- {
-     ARMCPU *arm_cpu = ARM_CPU(cpu);
--- 
-2.52.0
+I suppose (it came from 
+https://gitlab.com/qemu-project/qemu/-/issues/2981). Let's drop this for 
+now.
 
 
