@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB4AC98315
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A2C8C9830C
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhauV-0006MB-Cx; Sun, 18 Jan 2026 17:06:15 -0500
+	id 1vhaxg-0001A0-Dv; Sun, 18 Jan 2026 17:09:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhauD-00057y-9i
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:59 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1vhaxY-0000WR-3j
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:24 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhauB-0000zp-7q
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:57 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2a12ebe4b74so35808595ad.0
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:05:54 -0800 (PST)
+ id 1vhaxW-0001e6-Ef
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:23 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2a12ebe4b74so35821345ad.0
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:09:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768773953; x=1769378753; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768774161; x=1769378961; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0laMDFdu0GCNRz+fuF/L/mWxDMERFitEw5PSc+47rq0=;
- b=NhhLxKQcXKWbPZCENzFx2X8NfEoZo8IEy3GVrO/2k3xr2VCKdu1UvqXCXs97xPRSmC
- 8Zl2GCoeJzFlMfJ/KKeYdzNkZ1yjm7qCJssDMUIczcXzkpolEisC4F/0JcbS3qtwtORV
- D2/uclK8GN7DiFKL9Qjrnr00GIoht1QbL1I0PPVgx6E/Y9NNBuK1Mi1lfhyqwp8a6/6c
- 9p10am95pua7EYMWteGlrCVTSaDsDfMWISSllIX4h6wD4lGnA14KPTcHffsvyqnAElPC
- W/jEL6r3NSe1T1vHZ+glm3YAp3vF3ezjp8tSmYUibuZeTgHZFlNT3eq8KZHYCQvl6lUl
- Jv+Q==
+ bh=0b6Gm0w9KlLs51qj052MnIFfJ9dUHou4Uw1pKozVZqU=;
+ b=ESncKiU7vDhjYLKqMzk0XEZfDFXJhOMLpAyBBGCZGcf/BXt/851LkhlCXeAggAO+Bq
+ VUT0ezxqjmgFvOgLduwczzSSA2xACtM0kMQv0UAA8lO72bO0aiaCRZzgH1d0BCycoE4j
+ 3/2voonX0Gw/qcvhzupmTrq8ZNL0INwm1v4fjwasUpH6YnLYaVWlj9sGQh8QtnYQdHmO
+ Wiwry5CGFETHFpHUrmbX2Y1PnQh2t4svQAYSsrzh98ILMWj+wlrQGNBvE/DDqo2h387e
+ IE94yYallrW+RHgDTjhq5hYEwtbwJC/tGPZvXbFnX2RJpW3xeFsd9L2GiiuTvKm07bl7
+ TTkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768773953; x=1769378753;
+ d=1e100.net; s=20230601; t=1768774161; x=1769378961;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=0laMDFdu0GCNRz+fuF/L/mWxDMERFitEw5PSc+47rq0=;
- b=nxWYmLQK1j0H39cYUxNrRFTkPi5eDO2XI7GFsaWrm81qCcmlNt9cfO6YFMrFrCK6+N
- a5bnxYKNITks2ijR7RyWykTT6vwpO2RvQzEkajOhv8PzOjlRz90hY9cesykr/cVGPuCm
- 3HS+OTYJd99L5NPNGB23/+K4oodeTmAmlBGx5m//ozKRgRx4/1hDE0U9R9zb6UA1aGcq
- Ib20cwp6FXb50GoIJoPAKOwbf7BRUdc3TMc4RtN8fcw2Sr9ICLmreWRPN1J/Q1Qjbn9Y
- SzWfW8rwCC+rcx3siaushY00gRVfcigrtb/ZX6u/XsnyU0IXITbt8sY2hYFVciOLpA2H
- slxQ==
-X-Gm-Message-State: AOJu0YwGipeGbF36ePf1tL7hHbSJxwa6U7hBHBMt3ib/68BNQTc6HYDP
- drsCci68SbiDF4dwvyYEV03hwwOdUkp1u7GNGnboXPSngbECPfXyqk0FOnCbHb/NXYO9wjL6Qk3
- XcdA606uHAg==
-X-Gm-Gg: AY/fxX6H7Nv3t5FB2BrhutARTO1xcF80wUmIYnNQNB2D24s/XVFGr2qXmdAz8umcEwL
- uIRP8r/sipFOV+FQ9SKDQ9xlSaBzlA9CFFV/TKRI5kjtVIEnDDNSx6mN/6hw/zDtTrYdB8Vy94S
- n1BeJt2BwHf5PWviW5HGVovcSOULictLkC3eoR3QXqhDn00neJ1DkRXjob2tS/mnWj1qGhCTB1v
- mqBVt7UZjp9JxOw+k05tCK1uecbMRaZQEC3B4Wt8/c35bo/mUBfz+z+zQSPIxFC4w5fwa4A4HFc
- YezbqWaBTfmI0J0V1czTFThym670TFvTUTGWHIWBMxr76GnApZLxTm2PWnMXtBD2V6YCd5WihOa
- Dz8O5F0CayMptSqYikzpVTHDDAHjxPgu5XHMri9627iZ+cFuZhhto/XvA16yLN0cIy4qinOLqTZ
- KPFOeG1ZHf1QAQD4I5uw==
-X-Received: by 2002:a17:903:b4e:b0:295:5da6:600c with SMTP id
- d9443c01a7336-2a71752979dmr104862875ad.2.1768773953022; 
- Sun, 18 Jan 2026 14:05:53 -0800 (PST)
+ bh=0b6Gm0w9KlLs51qj052MnIFfJ9dUHou4Uw1pKozVZqU=;
+ b=b/Ium4P9BamSrJGFI1nFyjj1/sXkzVKx78Mxww382GGRplcOpHMHmn9xqGHxTNTFLc
+ Vx9vr5v+ZqeHxACuZwnBvCKtTgSWBZxPW6S9zvBVeyWk0Gkzbq4ROyhr49ABp8LpURbL
+ UHBgYGA3PdP6kCS7VPlvg7bk1uBg0ZSvyLIDnXQRmSggox84MNUm8G06o35eq8flQGLf
+ 0nqKX/F2MsE5/aivHkcZz41c/Z3S8ltC3VGuW2/iKsch9QN6efMH/7vrEOdlsD7mkNkg
+ 7M00YaEVxJ1Mr27VdZlvpFpbPlrZg3v3qWYFKnzo8UBIs2aitQ4a6+3KU+y2/9XZCYP/
+ 3gBQ==
+X-Gm-Message-State: AOJu0YzNHsAs2yFq6nASV/RB0zz2AoNIg4Ft2eiNxtqBj7aALa5jPrlC
+ 4jPJlZ6gy1zL0udOvKBFDObMWEeY7U/UZVVZOrF2i/YSfx0g8nUAlK3BI8byJmoESP0g3Apj6Wg
+ 30E9+179OJQ==
+X-Gm-Gg: AY/fxX5UXuld6qedUpP5ZEJ2BIddKMhaQZrz2FcBf53N79Lx9TI/31tTFLTngq20sSW
+ 5NmALRel6lZ7CLpwxG7LcIXVP3xqzlGB3fbtCIJjVjry/wAoC1+FolTsH48i6wV2EsIrFI5snER
+ WSGqj12/F2y5q5W+tatIUqI/Jfqbd7MvLQWnfsRecMQQUgsQhfy4Yce2xs4Xg2HQAjV9q1B5D0n
+ DA9BP+L25VJr0q+K5Dfv2JLXf/qqDgQru2SBAehJNcj/Vf4kI/xIlSsevCMmF6N7/VyGvKGBCKD
+ AnbZnGamxUBtsIewxPrRR7DcxAc/5YSCdo1PnqtMu7/FvQ6dRYgzSAGrwH7itg5DuLvPrWwVVwg
+ Vy6CebBEjJaXLKen7/5mNxgItVe3Caz4763LZ7CMnK8ZPw+vH8qfPFx+KBhaqrYLdt47lDieMvX
+ EVN9DjOln6v8wN3eR5sQ==
+X-Received: by 2002:a17:902:ce92:b0:295:592f:94a3 with SMTP id
+ d9443c01a7336-2a7177da2c4mr91066505ad.48.1768774160999; 
+ Sun, 18 Jan 2026 14:09:20 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7193dbb74sm74402865ad.56.2026.01.18.14.05.51
+ d9443c01a7336-2a7190ab921sm73298205ad.8.2026.01.18.14.09.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 14:05:52 -0800 (PST)
+ Sun, 18 Jan 2026 14:09:20 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 39/54] tcg: Unconditionally define atomic64 helpers
-Date: Mon, 19 Jan 2026 09:03:59 +1100
-Message-ID: <20260118220414.8177-40-richard.henderson@linaro.org>
+Subject: [PULL 50/54] block: Drop use of Stat64
+Date: Mon, 19 Jan 2026 09:04:10 +1100
+Message-ID: <20260118220414.8177-51-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260118220414.8177-1-richard.henderson@linaro.org>
 References: <20260118220414.8177-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -99,209 +99,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CONFIG_ATOMIC64 is a configuration knob for 32-bit hosts.
+The Stat64 structure is an aid for 32-bit hosts, and
+is no longer required.  Use plain 64-bit types.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/tcg-runtime.h             | 16 ----------------
- include/accel/tcg/cpu-ldst-common.h |  9 ---------
- accel/tcg/cputlb.c                  |  2 --
- accel/tcg/user-exec.c               |  2 --
- tcg/tcg-op-ldst.c                   | 17 ++++++-----------
- accel/tcg/atomic_common.c.inc       | 12 ------------
- 6 files changed, 6 insertions(+), 52 deletions(-)
+ include/block/block_int-common.h |  3 +--
+ block/io.c                       | 10 +++++++++-
+ block/qapi.c                     |  2 +-
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/accel/tcg/tcg-runtime.h b/accel/tcg/tcg-runtime.h
-index dc89155c0f..0b832176b3 100644
---- a/accel/tcg/tcg-runtime.h
-+++ b/accel/tcg/tcg-runtime.h
-@@ -48,12 +48,10 @@ DEF_HELPER_FLAGS_5(atomic_cmpxchgl_be, TCG_CALL_NO_WG,
-                    i32, env, i64, i32, i32, i32)
- DEF_HELPER_FLAGS_5(atomic_cmpxchgl_le, TCG_CALL_NO_WG,
-                    i32, env, i64, i32, i32, i32)
--#ifdef CONFIG_ATOMIC64
- DEF_HELPER_FLAGS_5(atomic_cmpxchgq_be, TCG_CALL_NO_WG,
-                    i64, env, i64, i64, i64, i32)
- DEF_HELPER_FLAGS_5(atomic_cmpxchgq_le, TCG_CALL_NO_WG,
-                    i64, env, i64, i64, i64, i32)
--#endif
- #if HAVE_CMPXCHG128
- DEF_HELPER_FLAGS_5(atomic_cmpxchgo_be, TCG_CALL_NO_WG,
-                    i128, env, i64, i128, i128, i32)
-@@ -73,7 +71,6 @@ DEF_HELPER_FLAGS_4(atomic_fetch_oro_le, TCG_CALL_NO_WG,
-                    i128, env, i64, i128, i32)
- #endif
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index 6d0898e53d..9324af903d 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -30,7 +30,6 @@
+ #include "qemu/aiocb.h"
+ #include "qemu/iov.h"
+ #include "qemu/rcu.h"
+-#include "qemu/stats64.h"
  
--#ifdef CONFIG_ATOMIC64
- #define GEN_ATOMIC_HELPERS(NAME)                                  \
-     DEF_HELPER_FLAGS_4(glue(glue(atomic_, NAME), b),              \
-                        TCG_CALL_NO_WG, i32, env, i64, i32, i32)   \
-@@ -89,19 +86,6 @@ DEF_HELPER_FLAGS_4(atomic_fetch_oro_le, TCG_CALL_NO_WG,
-                        TCG_CALL_NO_WG, i64, env, i64, i64, i32)   \
-     DEF_HELPER_FLAGS_4(glue(glue(atomic_, NAME), q_be),           \
-                        TCG_CALL_NO_WG, i64, env, i64, i64, i32)
--#else
--#define GEN_ATOMIC_HELPERS(NAME)                                  \
--    DEF_HELPER_FLAGS_4(glue(glue(atomic_, NAME), b),              \
--                       TCG_CALL_NO_WG, i32, env, i64, i32, i32)   \
--    DEF_HELPER_FLAGS_4(glue(glue(atomic_, NAME), w_le),           \
--                       TCG_CALL_NO_WG, i32, env, i64, i32, i32)   \
--    DEF_HELPER_FLAGS_4(glue(glue(atomic_, NAME), w_be),           \
--                       TCG_CALL_NO_WG, i32, env, i64, i32, i32)   \
--    DEF_HELPER_FLAGS_4(glue(glue(atomic_, NAME), l_le),           \
--                       TCG_CALL_NO_WG, i32, env, i64, i32, i32)   \
--    DEF_HELPER_FLAGS_4(glue(glue(atomic_, NAME), l_be),           \
--                       TCG_CALL_NO_WG, i32, env, i64, i32, i32)
--#endif /* CONFIG_ATOMIC64 */
+ #define BLOCK_FLAG_LAZY_REFCOUNTS   8
  
- GEN_ATOMIC_HELPERS(fetch_add)
- GEN_ATOMIC_HELPERS(fetch_and)
-diff --git a/include/accel/tcg/cpu-ldst-common.h b/include/accel/tcg/cpu-ldst-common.h
-index 17a3250ded..f12be8cfb7 100644
---- a/include/accel/tcg/cpu-ldst-common.h
-+++ b/include/accel/tcg/cpu-ldst-common.h
-@@ -60,7 +60,6 @@ TYPE cpu_atomic_ ## NAME ## SUFFIX ## _mmu      \
-     (CPUArchState *env, vaddr addr, TYPE val,   \
-      MemOpIdx oi, uintptr_t retaddr);
+@@ -1246,7 +1245,7 @@ struct BlockDriverState {
+     QLIST_HEAD(, BdrvDirtyBitmap) dirty_bitmaps;
  
--#ifdef CONFIG_ATOMIC64
- #define GEN_ATOMIC_HELPER_ALL(NAME)          \
-     GEN_ATOMIC_HELPER(NAME, uint32_t, b)     \
-     GEN_ATOMIC_HELPER(NAME, uint32_t, w_le)  \
-@@ -69,14 +68,6 @@ TYPE cpu_atomic_ ## NAME ## SUFFIX ## _mmu      \
-     GEN_ATOMIC_HELPER(NAME, uint32_t, l_be)  \
-     GEN_ATOMIC_HELPER(NAME, uint64_t, q_le)  \
-     GEN_ATOMIC_HELPER(NAME, uint64_t, q_be)
--#else
--#define GEN_ATOMIC_HELPER_ALL(NAME)          \
--    GEN_ATOMIC_HELPER(NAME, uint32_t, b)     \
--    GEN_ATOMIC_HELPER(NAME, uint32_t, w_le)  \
--    GEN_ATOMIC_HELPER(NAME, uint32_t, w_be)  \
--    GEN_ATOMIC_HELPER(NAME, uint32_t, l_le)  \
--    GEN_ATOMIC_HELPER(NAME, uint32_t, l_be)
--#endif
+     /* Offset after the highest byte written to */
+-    Stat64 wr_highest_offset;
++    uint64_t wr_highest_offset;
  
- GEN_ATOMIC_HELPER_ALL(fetch_add)
- GEN_ATOMIC_HELPER_ALL(fetch_sub)
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index c30073326a..a6774083b0 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -2886,10 +2886,8 @@ static void do_st16_mmu(CPUState *cpu, vaddr addr, Int128 val,
- #define DATA_SIZE 4
- #include "atomic_template.h"
+     /*
+      * If true, copy read backing sectors into image.  Can be >1 if more
+diff --git a/block/io.c b/block/io.c
+index cace297f22..e8fb4ede4d 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -39,6 +39,7 @@
+ #include "qemu/main-loop.h"
+ #include "system/replay.h"
+ #include "qemu/units.h"
++#include "qemu/atomic.h"
  
--#ifdef CONFIG_ATOMIC64
- #define DATA_SIZE 8
- #include "atomic_template.h"
--#endif
+ /* Maximum bounce buffer for copy-on-read and write zeroes, in bytes */
+ #define MAX_BOUNCE_BUFFER (32768 << BDRV_SECTOR_BITS)
+@@ -2044,7 +2045,14 @@ bdrv_co_write_req_finish(BdrvChild *child, int64_t offset, int64_t bytes,
+     if (req->bytes) {
+         switch (req->type) {
+         case BDRV_TRACKED_WRITE:
+-            stat64_max(&bs->wr_highest_offset, offset + bytes);
++            {
++                uint64_t new = offset + bytes;
++                uint64_t old = qatomic_read(&bs->wr_highest_offset);
++
++                while (old < new) {
++                    old = qatomic_cmpxchg(&bs->wr_highest_offset, old, new);
++                }
++            }
+             /* fall through, to set dirty bits */
+         case BDRV_TRACKED_DISCARD:
+             bdrv_set_dirty(bs, offset, bytes);
+diff --git a/block/qapi.c b/block/qapi.c
+index 9f5771e019..27e0ac6a32 100644
+--- a/block/qapi.c
++++ b/block/qapi.c
+@@ -651,7 +651,7 @@ bdrv_query_bds_stats(BlockDriverState *bs, bool blk_level)
+         s->node_name = g_strdup(bdrv_get_node_name(bs));
+     }
  
- #if defined(CONFIG_ATOMIC128) || HAVE_CMPXCHG128
- #define DATA_SIZE 16
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 1800dffa63..ddbdc0432d 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -1258,10 +1258,8 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
- #define DATA_SIZE 4
- #include "atomic_template.h"
+-    s->stats->wr_highest_offset = stat64_get(&bs->wr_highest_offset);
++    s->stats->wr_highest_offset = qatomic_read(&bs->wr_highest_offset);
  
--#ifdef CONFIG_ATOMIC64
- #define DATA_SIZE 8
- #include "atomic_template.h"
--#endif
+     s->driver_specific = bdrv_get_specific_stats(bs);
  
- #if defined(CONFIG_ATOMIC128) || HAVE_CMPXCHG128
- #define DATA_SIZE 16
-diff --git a/tcg/tcg-op-ldst.c b/tcg/tcg-op-ldst.c
-index 55bfbf3a20..354d9968f9 100644
---- a/tcg/tcg-op-ldst.c
-+++ b/tcg/tcg-op-ldst.c
-@@ -825,11 +825,6 @@ typedef void (*gen_atomic_op_i64)(TCGv_i64, TCGv_env, TCGv_i64,
- typedef void (*gen_atomic_op_i128)(TCGv_i128, TCGv_env, TCGv_i64,
-                                    TCGv_i128, TCGv_i32);
- 
--#ifdef CONFIG_ATOMIC64
--# define WITH_ATOMIC64(X) X,
--#else
--# define WITH_ATOMIC64(X)
--#endif
- #if HAVE_CMPXCHG128
- # define WITH_ATOMIC128(X) X,
- #else
-@@ -842,8 +837,8 @@ static void * const table_cmpxchg[(MO_SIZE | MO_BSWAP) + 1] = {
-     [MO_16 | MO_BE] = gen_helper_atomic_cmpxchgw_be,
-     [MO_32 | MO_LE] = gen_helper_atomic_cmpxchgl_le,
-     [MO_32 | MO_BE] = gen_helper_atomic_cmpxchgl_be,
--    WITH_ATOMIC64([MO_64 | MO_LE] = gen_helper_atomic_cmpxchgq_le)
--    WITH_ATOMIC64([MO_64 | MO_BE] = gen_helper_atomic_cmpxchgq_be)
-+    [MO_64 | MO_LE] = gen_helper_atomic_cmpxchgq_le,
-+    [MO_64 | MO_BE] = gen_helper_atomic_cmpxchgq_be,
-     WITH_ATOMIC128([MO_128 | MO_LE] = gen_helper_atomic_cmpxchgo_le)
-     WITH_ATOMIC128([MO_128 | MO_BE] = gen_helper_atomic_cmpxchgo_be)
- };
-@@ -1235,8 +1230,8 @@ static void * const table_##NAME[(MO_SIZE | MO_BSWAP) + 1] = {          \
-     [MO_16 | MO_BE] = gen_helper_atomic_##NAME##w_be,                   \
-     [MO_32 | MO_LE] = gen_helper_atomic_##NAME##l_le,                   \
-     [MO_32 | MO_BE] = gen_helper_atomic_##NAME##l_be,                   \
--    WITH_ATOMIC64([MO_64 | MO_LE] = gen_helper_atomic_##NAME##q_le)     \
--    WITH_ATOMIC64([MO_64 | MO_BE] = gen_helper_atomic_##NAME##q_be)     \
-+    [MO_64 | MO_LE] = gen_helper_atomic_##NAME##q_le,                   \
-+    [MO_64 | MO_BE] = gen_helper_atomic_##NAME##q_be,                   \
-     WITH_ATOMIC128([MO_128 | MO_LE] = gen_helper_atomic_##NAME##o_le)   \
-     WITH_ATOMIC128([MO_128 | MO_BE] = gen_helper_atomic_##NAME##o_be)   \
- };                                                                      \
-@@ -1287,8 +1282,8 @@ static void * const table_##NAME[(MO_SIZE | MO_BSWAP) + 1] = {          \
-     [MO_16 | MO_BE] = gen_helper_atomic_##NAME##w_be,                   \
-     [MO_32 | MO_LE] = gen_helper_atomic_##NAME##l_le,                   \
-     [MO_32 | MO_BE] = gen_helper_atomic_##NAME##l_be,                   \
--    WITH_ATOMIC64([MO_64 | MO_LE] = gen_helper_atomic_##NAME##q_le)     \
--    WITH_ATOMIC64([MO_64 | MO_BE] = gen_helper_atomic_##NAME##q_be)     \
-+    [MO_64 | MO_LE] = gen_helper_atomic_##NAME##q_le,                   \
-+    [MO_64 | MO_BE] = gen_helper_atomic_##NAME##q_be,                   \
- };                                                                      \
- void tcg_gen_atomic_##NAME##_i32_chk(TCGv_i32 ret, TCGTemp *addr,       \
-                                      TCGv_i32 val, TCGArg idx,          \
-diff --git a/accel/tcg/atomic_common.c.inc b/accel/tcg/atomic_common.c.inc
-index 1ff80d19fe..7d779dd51d 100644
---- a/accel/tcg/atomic_common.c.inc
-+++ b/accel/tcg/atomic_common.c.inc
-@@ -46,11 +46,8 @@ CMPXCHG_HELPER(cmpxchgw_be, uint32_t)
- CMPXCHG_HELPER(cmpxchgw_le, uint32_t)
- CMPXCHG_HELPER(cmpxchgl_be, uint32_t)
- CMPXCHG_HELPER(cmpxchgl_le, uint32_t)
--
--#ifdef CONFIG_ATOMIC64
- CMPXCHG_HELPER(cmpxchgq_be, uint64_t)
- CMPXCHG_HELPER(cmpxchgq_le, uint64_t)
--#endif
- 
- #if HAVE_CMPXCHG128
- CMPXCHG_HELPER(cmpxchgo_be, Int128)
-@@ -64,7 +61,6 @@ CMPXCHG_HELPER(cmpxchgo_le, Int128)
-                                   TYPE val, uint32_t oi)                 \
-     { return glue(glue(cpu_atomic_,OP),_mmu)(env, addr, val, oi, GETPC()); }
- 
--#ifdef CONFIG_ATOMIC64
- #define GEN_ATOMIC_HELPERS(OP)              \
-     ATOMIC_HELPER(glue(OP,b), uint32_t)     \
-     ATOMIC_HELPER(glue(OP,w_be), uint32_t)  \
-@@ -73,14 +69,6 @@ CMPXCHG_HELPER(cmpxchgo_le, Int128)
-     ATOMIC_HELPER(glue(OP,l_le), uint32_t)  \
-     ATOMIC_HELPER(glue(OP,q_be), uint64_t)  \
-     ATOMIC_HELPER(glue(OP,q_le), uint64_t)
--#else
--#define GEN_ATOMIC_HELPERS(OP)              \
--    ATOMIC_HELPER(glue(OP,b), uint32_t)     \
--    ATOMIC_HELPER(glue(OP,w_be), uint32_t)  \
--    ATOMIC_HELPER(glue(OP,w_le), uint32_t)  \
--    ATOMIC_HELPER(glue(OP,l_be), uint32_t)  \
--    ATOMIC_HELPER(glue(OP,l_le), uint32_t)
--#endif
- 
- GEN_ATOMIC_HELPERS(fetch_add)
- GEN_ATOMIC_HELPERS(fetch_and)
 -- 
 2.43.0
 
