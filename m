@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F685C98315
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 19:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8FE2C9830C
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 19:36:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhYYj-0005We-Ea; Sun, 18 Jan 2026 14:35:37 -0500
+	id 1vhYYR-0004vL-Gg; Sun, 18 Jan 2026 14:35:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhYYh-0005RF-0a
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 14:35:35 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhYYO-0004mT-Sd
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 14:35:16 -0500
 Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhYYf-0006ei-KL
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 14:35:34 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhYYN-0006d7-26
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 14:35:16 -0500
 Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-47ee07570deso23917705e9.1
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 11:35:33 -0800 (PST)
+ 5b1f17b1804b1-4801c1ad878so25059605e9.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 11:35:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768764932; x=1769369732; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ku6MKAbz0lsq66NK21aSSMinHF4P8+aWQtofxx0ViFw=;
- b=Fnu5lJAbLCwi6suxE5PbrAWR9FTxHIT3Du4vItRxPw7tiDqsHn4EkpRCo6mUyEs4MU
- hyUo5VFJMHsGGBVU46FNU53N4EG6w13aHgZD/goNUlLyi4ND9Sov/tszYr2qV4DpehDs
- V3LSkq3l53MJWoJcGCEx1t4AsN2Infn20hK/5A8VsacAE+bmEWSK83hNP9HSN1rL6sB7
- XkF0wAMXRr9/NP3RoY0mAxovD1f1jIAQjwsI9uGvsEqWQavBPUvM3Q+OZGSoV9DdmOOr
- vR+5rpKqGu5CB6TE5Y75AWwtYLqDLxCITILVaej1qSi1BO9nEzpNJMf2Houkf1pHG9w/
- h6Eg==
+ d=linaro.org; s=google; t=1768764911; x=1769369711; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=nMgiWyUDUOdG6oaxZYP55DFYfWYeLUmeEbvA/za/UiI=;
+ b=BwawXdJJ1lr6fcPRA9a5CEsxFqlH/vPYIdPQ2l2baHKVlx0d63pIZyZm2yqyFYB1Sw
+ 66RsJk4mVrbZoXIpKmTCozmk46zhUiwS+ugaSNme7UDyHJdvwKehoJ/IAhBfBGyfFwOy
+ 700bZxN9D8PlUGiEARKg6ZpSkA7A+oAIZecS4uqN01VWiY3zF3f32TTMXd/MGUOpnZJt
+ /Ycn7Q6V/cnVfBwrQyykt8UYMhJRXqlRLrpOXL9HFS4R6qjiIr5OcPQrP3bEV/0h3xrW
+ xBcL3JhKqbd+r9LT5MHwEIT9xR2qQTl2cySADoSbGyL7c83NQXl/5E0pzs1FN1p9+WTq
+ y5kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768764932; x=1769369732;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ku6MKAbz0lsq66NK21aSSMinHF4P8+aWQtofxx0ViFw=;
- b=w/6mQkT9+rc9JaSLdUJ1i7/LnN4QugdKZlEn+bzKcglo8h0WcQB94i8B5puMH6Q/az
- O9fJn2aCNvnqe23+hcy4Tf20DDWkNacn9FC3dor5kGOJoBCEnkG441W5XdtiRjo+W/TW
- 3L2GZrnW1pIgq5VkT8/7OndQTUnTH4LxwFggE4Jj/6lA/+OSpyuRqqv6YG+BtaboqP4e
- WYh02cd0FYtDAuE0FGS82yRlHCN+fiVYtDZxgU7Gvj6klEL86mv0f0iQXBOrLUxjXUV5
- R+VsGraDDLFK9ozZLysLTTqYbA8zfhEF2UZ0NAZgPAABlTNauAB1bRzbOXYpQRgc5fJ8
- KtzA==
-X-Gm-Message-State: AOJu0Yzu/dBuDYhNwy5dks2glyNxsw/5KnS/Qt0JBTxK6WKRnQGksZeo
- QN/Ni7RSCeP4uOW/SG5Kt6l0Y9gxT1OcN7cvaCRXKMHY9pI+eGM2WU4FM/Qr6YdyN200sj/d3mL
- RTlU1a3Y=
-X-Gm-Gg: AY/fxX6y/m77Wq7a3HwNug9cQsOf4ZTCo8JsuihKmQNi+nzYKe6lKEjOneoFMEqDqba
- 4igrIxqXnzXiveXwRvJ+PHRgTPCeh4S/y1ilshxdGxgZLPk0lVL7ZZQixSDgXpBq2TqM4fzj1cE
- cc+vfdzOOKqaPxDlfgkeKcYzQNcz/ebPctKvyIzM/SDc0xGsggS8jmiNGFyfDdwn38Q1Dkw8UMM
- vn+wJTbHldbdOy0zmlcYvHpbLUDd+OAhcBneY5BgBzpcbKSjV9V9dA2DR7UM6GkZjJZk3mPVWQA
- /Gjgj0a9SdPgs0Q+f+lcm0DQgJETGC/2apVz+tqT19HqZA1gBLfJj69semqjlb/f60UUpzM1wt3
- SRd2mg9Vkhe0lCnOuhNshituMmgyvrWoMMezXRHAbF/5ghVemTI/55mfXOzOg/qIzVHq/FXgrlT
- KXmKV8zslyTSch0WDFNQd62xdaaGQsyVVYJ3kleT3dWwd5WSrxauJE2+m9WOfH
-X-Received: by 2002:a05:600c:4e93:b0:46e:4a13:e6c6 with SMTP id
- 5b1f17b1804b1-4801eb09274mr93487815e9.19.1768764931981; 
- Sun, 18 Jan 2026 11:35:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768764911; x=1769369711;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nMgiWyUDUOdG6oaxZYP55DFYfWYeLUmeEbvA/za/UiI=;
+ b=SiVQUtz0J7A96ADmbbX3SLKBGBA32C1IWI8RS9kelgi4U/kS/t23nSX2iflXpHvP2a
+ npjQDGRpLNn3OJX4Fw34cMyYJzUx8Iuv18W0xcPGiZjhGLTyBNQpkoDNeeyIxn/cXHlU
+ hjOhYE/A64u4JIicjB+aDfXLZHWRyRNSQAYkKsSp64WPqYfONlDh/wu+Z/iUa7t5GGR2
+ h0cEKDv2q49yFDzTrR/guelWmWG6xAyFUyYe2JQI7SG/QPDjdsnySBAfj++X5DA4jveK
+ wEMgjyFuR33vsgQoVEWPaq7roCIFK3h7h2tDs+GyQuNKBx/+jLt9L3oWe9aMM/kbcfHX
+ t/gA==
+X-Gm-Message-State: AOJu0YwIxy4wOxMkYvat1nI268+uupqZkSGaLMnWCLnKPflbGV19LoLV
+ LGX26TnAOj7EjIekxX3Dw4pbeZclbz5fK8ivmrARuDM3M05ibHDKChcGoYXfuRCW+AYMFwlpu17
+ zOE37x7M=
+X-Gm-Gg: AY/fxX7m6EFnqxT18UEyUA6xMP2KVa43Uz4gXYfL/cn1GiTZPTPpRDVO2m/pms/ZWiN
+ ErniXPh30FCAZpSIOTIXK4GrF7zxvSpozpIUnDzVDXVeq7+UO7sRcfLFVr9FrtUiMhYVD5cvdWa
+ EWwdjraa7v+lpBChMfIZnyFJ9l0QnSKb+vO/OB2ipsE/Fhm643r5UJc4MtgOqqhKFABehUefOFC
+ A/UZAtec6kBvfmiCtSjs/yYfc/edqIMTzHlU0Y3Lb8fvq82RWN1b+kMUPnHqdsTPIbNPYRItNGX
+ EeUT/RZC8SJ1c4Ld+yCdTfxITMvgrwnNKax9JpYUtnK/VXHjr1JQkEioYW5dM7C6sh5ufGP/jq+
+ SSQL0c8As+Wc6bYNbF/wEk9S0HXk39j+LUY8WMRvWjXnKlEXf47l7ZzkrVB+6gZZV5yuO51uQ1i
+ njWFd61BlJPRJEj4aJTYhTJie8yJb6nGMed2XVQAhLeIb66BLQsjbZcWUVv2lJebvH7INA+6g=
+X-Received: by 2002:a05:600c:3114:b0:46e:4a30:2b0f with SMTP id
+ 5b1f17b1804b1-4801e348326mr114701965e9.29.1768764911379; 
+ Sun, 18 Jan 2026 11:35:11 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e8c0499sm158334345e9.9.2026.01.18.11.35.30
+ ffacd0b85a97d-43569926ff1sm18290453f8f.13.2026.01.18.11.35.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 18 Jan 2026 11:35:31 -0800 (PST)
+ Sun, 18 Jan 2026 11:35:10 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -70,14 +69,13 @@ Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Anton Johansson <anjo@rev.ng>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v6 03/18] bswap: Remove unnecessary 'qemu/bswap.h'
-Date: Sun, 18 Jan 2026 20:34:53 +0100
-Message-ID: <20260118193509.42923-4-philmd@linaro.org>
+Subject: [PATCH v6 00/18] system/memory: Clean ups around address_space_ldst()
+ endian variants
+Date: Sun, 18 Jan 2026 20:34:50 +0100
+Message-ID: <20260118193509.42923-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260118193509.42923-1-philmd@linaro.org>
-References: <20260118193509.42923-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::330;
  envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
@@ -103,42 +101,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"qemu/host-utils.h" and "qemu/int128.h" are included a lot in
-the tree, and don't use any definition from "qemu/bswap.h"...
-Since it contains a lot of inlined functions, remove it to
-reduce pointless compilation cycles.
+Missing review: 1-4
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/qemu/host-utils.h | 1 -
- include/qemu/int128.h     | 2 --
- 2 files changed, 3 deletions(-)
+Since v5:
+- No pointer arithmetic in ld/st[M] (Richard)
+- Inline (Paolo)
 
-diff --git a/include/qemu/host-utils.h b/include/qemu/host-utils.h
-index 0777a2bb60e..181d026b6c7 100644
---- a/include/qemu/host-utils.h
-+++ b/include/qemu/host-utils.h
-@@ -30,7 +30,6 @@
- #ifndef HOST_UTILS_H
- #define HOST_UTILS_H
- 
--#include "qemu/bswap.h"
- #include "qemu/int128.h"
- 
- #ifdef CONFIG_INT128
-diff --git a/include/qemu/int128.h b/include/qemu/int128.h
-index 2b8dd4dec9f..7b3b071c512 100644
---- a/include/qemu/int128.h
-+++ b/include/qemu/int128.h
-@@ -1,8 +1,6 @@
- #ifndef INT128_H
- #define INT128_H
- 
--#include "qemu/bswap.h"
--
- /*
-  * With TCI, we need to use libffi for interfacing with TCG helpers.
-  * But libffi does not support __int128_t, and therefore cannot pass
+Since v4:
+- No change (RESEND)
+
+Since v3:
+- Assign device_endian enums (Richard)
+- Add/use ldm_p() and stm_p() helpers (Paolo)
+
+Since v2:
+- Changed opt-out to opt-in approach (Pierrick)
+- Split big patches in smaller ones
+- Mark ioport little-endian
+
+Philippe Mathieu-Daudé (18):
+  bswap: Include missing 'qemu/bswap.h' header
+  bswap: Use 'qemu/bswap.h' instead of 'qemu/host-utils.h'
+  bswap: Remove unnecessary 'qemu/bswap.h'
+  system/memory: Introduce ldm_p() and stm_p() load/store helpers
+  system/memory: Define address_space_ldst[W] endian variants via
+    template
+  system/memory: Define address_space_ldst[L] endian variants via
+    template
+  system/memory: Define address_space_ldst[Q] endian variants via
+    template
+  system/memory: Factor address_space_ldst[M]_internal() helper out
+  system/memory: Pass device_endian argument as MemOp bit
+  system/memory: Use ldm_p() and stm_p() helpers
+  system/memory: Directly call address_space_ldst[M]_internal() helper
+  system: Allow restricting the legacy ld/st_phys() 'native-endian' API
+  system: Allow restricting legacy address_space_ldst() native-endian
+    API
+  system: Allow restricting the legacy cpu_ld/st() 'native-endian' API
+  system: Allow restricting the legacy translator_ld() 'native-endian'
+    API
+  system: Allow restricting the legacy tswap() 'native-endian' API
+  system: Allow restricting the legacy MO_TE* 'native-endian'
+    definitions
+  system: Allow restricting the legacy DEVICE_NATIVE_ENDIAN definition
+
+ MAINTAINERS                                  |   1 +
+ block/qcow2.h                                |   1 +
+ include/accel/tcg/cpu-ldst.h                 |   2 +
+ include/exec/memop.h                         |   4 +
+ include/exec/translator.h                    |   5 +-
+ include/exec/tswap.h                         |   3 +
+ include/qemu/bswap.h                         |  72 +++
+ include/qemu/host-utils.h                    |   1 -
+ include/qemu/int128.h                        |   2 -
+ include/system/memory.h                      |   8 +-
+ include/system/memory_cached.h               |   2 +
+ system/memory-internal.h                     |   2 +
+ include/system/memory_ldst.h.inc             |  52 +--
+ include/system/memory_ldst_endian.h.inc      |  33 ++
+ include/system/memory_ldst_phys.h.inc        | 113 +----
+ include/system/memory_ldst_phys_endian.h.inc |  57 +++
+ audio/audio.c                                |   1 +
+ block/blklogwrites.c                         |   1 +
+ block/export/vduse-blk.c                     |   1 +
+ block/export/vhost-user-blk-server.c         |   1 +
+ block/export/virtio-blk-handler.c            |   1 +
+ block/parallels-ext.c                        |   1 +
+ hw/9pfs/9p-local.c                           |   1 +
+ hw/block/cdrom.c                             |   1 +
+ hw/block/hd-geometry.c                       |   1 +
+ hw/net/can/ctucan_core.c                     |   1 +
+ hw/nvram/xlnx-efuse.c                        |   1 +
+ hw/scsi/scsi-generic.c                       |   1 +
+ hw/sd/sd.c                                   |   1 +
+ hw/sd/ssi-sd.c                               |   1 +
+ net/l2tpv3.c                                 |   1 +
+ qga/commands-linux.c                         |   1 +
+ scsi/pr-manager-helper.c                     |   1 +
+ target/arm/tcg/arith_helper.c                |   1 +
+ tests/qtest/acpi-utils.c                     |   1 +
+ tests/qtest/ahci-test.c                      |   2 +-
+ tests/qtest/aspeed-hace-utils.c              |   1 +
+ tests/qtest/bios-tables-test.c               |   1 +
+ tests/qtest/libqos/ahci.c                    |   2 +-
+ tests/qtest/libqos/generic-pcihost.c         |   2 +-
+ tests/qtest/libqos/igb.c                     |   1 +
+ tests/qtest/libqos/pci-spapr.c               |   2 +-
+ tests/qtest/libqos/virtio-9p-client.c        |   1 +
+ tests/qtest/migration/framework.c            |   1 +
+ tests/qtest/npcm7xx_emc-test.c               |   1 +
+ tests/qtest/tpm-emu.c                        |   1 +
+ tests/qtest/ufs-test.c                       |   1 +
+ tests/qtest/vmgenid-test.c                   |   1 +
+ tests/unit/test-hbitmap.c                    |   1 +
+ util/bitmap.c                                |   1 +
+ util/hbitmap.c                               |   2 +-
+ system/memory_ldst.c.inc                     | 449 ++-----------------
+ system/memory_ldst_endian.c.inc              |  70 +++
+ scripts/make-config-poison.sh                |   1 +
+ 54 files changed, 354 insertions(+), 564 deletions(-)
+ create mode 100644 include/system/memory_ldst_endian.h.inc
+ create mode 100644 include/system/memory_ldst_phys_endian.h.inc
+ create mode 100644 system/memory_ldst_endian.c.inc
+
 -- 
 2.52.0
 
