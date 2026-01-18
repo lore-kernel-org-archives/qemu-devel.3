@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38AD9CA5FE1
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:00:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C32C3C9830C
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:00:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhaob-0003sY-SQ; Sun, 18 Jan 2026 17:00:09 -0500
+	id 1vhaoX-0003ld-6L; Sun, 18 Jan 2026 17:00:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhaoZ-0003r8-Sd
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:00:08 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhaoR-0003hY-Qd
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 16:59:59 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhaoY-0008WL-24
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:00:07 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4801bbbdb4aso17159115e9.1
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:00:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhaoQ-0008JD-87
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 16:59:59 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-47fedb7c68dso23934415e9.2
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 13:59:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768773604; x=1769378404; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768773596; x=1769378396; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pijc4SGaIxjhH3hv/CpBfkcN+nrHKNQfSy0KVIp/tpg=;
- b=jpK4WCfFHllo+/ae0q0gm6BOFWxRKQ8AykPc7gejav1BKqlWTMbvhI6ZMQFRtIY4V0
- ZWp1L7e0kz4//uMjbMIeFdw15rl0ybl2xJsbuY723z0pnMKLzsXsBV5O56jbgSj+NUhl
- 1fRAu7BlJgN82BAx6A8DJWYyBKmxRzH1df8X9htL4x/RBgn30vWVrZPqY5WmdVDNuNXJ
- l8BD1SH4XayOtCE9KHbv3ljKV15LZBnX5u1iyLkDZRrFSU8/DRxGPeElUnnWUy9qX8Zu
- 3Gy+m2Mm2hE9B6MNxmcC+r35Nk5mY9EZ4ttq9sp3WzEcfFTvRGBE2XqGtnjek35/CBIR
- 8Osw==
+ bh=6Z2dvTrseTxOg307MHO4uCzaKs+nhbHFu0/LcG6p+m8=;
+ b=nIs8G4BOFeNEji5yG/zmAFO1ZTRDnunlYTjUBweqI/RGt6mhtoFfBP1e8H2/dt4Tzi
+ NjNH86mGjfBM257Yz6fAumU890T2xlSRSmq2cdYwOQiyEFqW5oygldsjovjFHBL47SrT
+ XWKVQTGZ6tDeJlo+3Cr6WlLQUITAeZH23bwdyVq3waQ+0V2gxUoyoAvcZzhnmsi9IgHl
+ YurGXrOnt9nDzBITMfyPYHO25GBkdmeSxDu0GgxFAWPB/j8NsnPrg3RzZLGT/CqaNIO0
+ DcYo/EmUU1yaSO4uGF4BE5eI7YlL0BDmAgW+8H8bd2jY6meMOSmT1AMwIEpdbuh0wrsb
+ uJ/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768773604; x=1769378404;
+ d=1e100.net; s=20230601; t=1768773596; x=1769378396;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=pijc4SGaIxjhH3hv/CpBfkcN+nrHKNQfSy0KVIp/tpg=;
- b=E0g68rLKfLRZKSBYLe14hWfywaspPyY+jfx28QudA2B8ryuEwvV5XdxKO8di/eRICM
- BqViatoAGAtv4zmT8pwCqDiW9nLYGNkjn4vYMPdCAZAOF+m4PD4QW/BtTvSTFfAB6wE8
- cMo0hrEvgrRptxkCeCuIIlEgCmY3y5HyqgX76hMdKE85J1hFUoKOXlrEoGVdncIj/jX4
- RBB5KOsOBwvDaX+mxCIjmcLAjLZudS/XBq3/fwtuZjFPPWuV6DoyrKNpIx3u96Z61Mh6
- 6/jayGB9CZqqsnzVsjERNaFcv5X2LqHmvuAbSsc3iRwsWxwKmPRlxltmpnzwM/P0r+WI
- 5Whw==
-X-Gm-Message-State: AOJu0YxezVckyRcopGiTd2ayOrNJn4hM6ouOseypA3R+KLGbdo+khFRz
- i/WSkiD6Cdo+Un+FfAXmuDo5pFxeWBwqN5Ry0B7l/3NNYg2SpKfE/pzYMH5UThpPsUlhA3Uid7H
- wvHeZ5/4=
-X-Gm-Gg: AY/fxX4nlWOT2LzTc1eI+Lz5yNJBfv2uwUfAT+OzzLOgf7ZgLpZrstZs21KDlUOcITS
- SRNW8XbQnQ8F4pG2MiOl8aqjagnBrSFRRQAZw2t9YHsZ4GwK82Ll6bqQ+Zqx2rFZNYuCeE9YLW3
- QQYIhCjgXj50SUvv9ITu5X3XJqaWITHrPiC6/SzwGnn8z0KwaAkUPEt/mjOZ+Itm7Lp4qpJR6gH
- DDYDrs1ZswJfPSexP2xktEWBNqsNn+GV4G4ni+GIVkfacOpMf6AkJYqEZ34h9b2dL84JZLms8vK
- JQh/Q2ZOjqN4qQSrVvicHFW7ZAIU0LPYKZbBbhy91/iOBcTflSEgDP9U+g7/3nJHvl1mBEZlj8+
- xk0fk+T8I0NRMmRnokwT+O4aXzZ3U/EkQgiKUnJsC0aQ4QC3rGxXqAUzTJjPgx/vKbd5l7xBY20
- BeTU5/gTDeAOlff4wyB/zHKEY9fjblnxpFuku7znKHP0LBzzXdbdPJbM9U/IsnOn4uO9//kzI=
-X-Received: by 2002:a05:600c:3e8e:b0:47b:deb9:163d with SMTP id
- 5b1f17b1804b1-4801e53c118mr104787115e9.7.1768773604014; 
- Sun, 18 Jan 2026 14:00:04 -0800 (PST)
+ bh=6Z2dvTrseTxOg307MHO4uCzaKs+nhbHFu0/LcG6p+m8=;
+ b=afVPMCNu0ExcEw4/YncS7l+6NPFnUO0eP71OKp+/47EAYAOh+zcAcosdpDKDk/T0Ii
+ pA/yxDnUMMrB3YiUHge4w1KMRnNM2WW8vVy4nmXyzsunaNPw2ZLqKLpoWFZtXA29Cl3f
+ WESjWFo3+EUJm5pS1j8M0pdBO6/9zy8TXaAR03EmpydoTu7Ht0bA9DmoAo8vjZLDu03l
+ iR1bJknz9U1w2lOnQ1vrLE6u7WGIbNNJa8fVqLUYNcOohrtRvL5JE9x8O7Ioef3wdoKg
+ jscS5nzwAqIcEbyIjnqtwavN3VwEdzhF5wzD6DSWd6R8+0buoimo+u7myJ/hpuJSCQrh
+ nUSQ==
+X-Gm-Message-State: AOJu0YxnZOqDbTlD9zFG0irqQ7nV6/+4QJN/U9X058FsZiIxifMDfM9y
+ gaxumZRxJreneHZuJTuJCiK+GFFckT/5gG6AtJ+9/9hJJz7p5MO/UR7KoeRX+QLMEdg7dVTsEUp
+ teN2ss3o=
+X-Gm-Gg: AY/fxX4rRdbjapjhhyjd7pf/kGv2IR09fglg2jlgge3LRGCbGkS7lJDSCcpmJYwpOca
+ gRQtwCtOH57G7Nkug0luTbFdqMDir5FXDl/MBiUOZry8dv6s+HbquavgY3Gujia0/eU/24wBBzw
+ 6gRDUoT2QtIMwY+mKEjoChbK/w3e54zaxLQ4qt1A2S1wh8VWr8lLX7d0VGDPy1P7YUeKHvvAOC5
+ Q/Q0CCbWbTnCsfLuaqwMsDBHUracn4TfJolf1tLPO3bmufZFFi4ht7GgM94n1jVGDml7XfrJzp0
+ UBBQS8qTFrWoNC9QkUb7OryI0Mb2xuviPNToCkkj2xE+2nGipiok9OVj+pYy3knD8PPjw2kUg3K
+ 3JlLdKGcI+GCiyP0IL1Nzt838KDyaf3Z3WxeOCU8L0vcfi9/c8+1d1uwQ5trIRoaGkFxR8eU5+Q
+ cnb0DJVsMV612hI2AQVU89vOYp9yWNx0N7aSKGYQ0gGn3Zo5WTxfNYyH6yTMUM
+X-Received: by 2002:a05:600c:b93:b0:480:1db1:b44d with SMTP id
+ 5b1f17b1804b1-4801e34cab5mr128428675e9.27.1768773596257; 
+ Sun, 18 Jan 2026 13:59:56 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47f4b26764fsm214997135e9.12.2026.01.18.14.00.02
+ 5b1f17b1804b1-4801e8c9cbcsm158555475e9.12.2026.01.18.13.59.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 18 Jan 2026 14:00:02 -0800 (PST)
+ Sun, 18 Jan 2026 13:59:54 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-arm@nongnu.org,
@@ -70,17 +70,18 @@ Cc: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-arm@nongnu.org,
  Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 2/2] target/arm/hvf: Sync CNTV_CTL_EL0 & CNTV_CVAL_EL0
-Date: Sun, 18 Jan 2026 22:59:45 +0100
-Message-ID: <20260118215945.46693-3-philmd@linaro.org>
+Subject: [PATCH v5 1/2] target/arm/hvf: Move hvf_sysreg_[read,
+ write]_cp() functions around
+Date: Sun, 18 Jan 2026 22:59:44 +0100
+Message-ID: <20260118215945.46693-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260118215945.46693-1-philmd@linaro.org>
 References: <20260118215945.46693-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,78 +104,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Keep CNTV_CTL_EL0 and CNTV_CVAL_EL0 synchronized with the
-host hardware accelerator.
+Next commit will use these functions prototype earlier. Rather
+than forward-declaring them, move them around.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/hvf/hvf.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ target/arm/hvf/hvf.c | 142 +++++++++++++++++++++----------------------
+ 1 file changed, 71 insertions(+), 71 deletions(-)
 
 diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index fcb7fa3b30c..9ce720793d8 100644
+index e4c0d936f1f..fcb7fa3b30c 100644
 --- a/target/arm/hvf/hvf.c
 +++ b/target/arm/hvf/hvf.c
-@@ -200,6 +200,9 @@ void hvf_arm_init_debug(void)
- #define SYSREG_PMCEID0_EL0    SYSREG(3, 3, 9, 12, 6)
- #define SYSREG_PMCEID1_EL0    SYSREG(3, 3, 9, 12, 7)
- #define SYSREG_PMCCNTR_EL0    SYSREG(3, 3, 9, 13, 0)
+@@ -423,6 +423,77 @@ static const hv_sys_reg_t hvf_sreg_list[] = {
+ 
+ #undef DEF_SYSREG
+ 
++static uint32_t hvf_reg2cp_reg(uint32_t reg)
++{
++    return ENCODE_AA64_CP_REG((reg >> SYSREG_OP0_SHIFT) & SYSREG_OP0_MASK,
++                              (reg >> SYSREG_OP1_SHIFT) & SYSREG_OP1_MASK,
++                              (reg >> SYSREG_CRN_SHIFT) & SYSREG_CRN_MASK,
++                              (reg >> SYSREG_CRM_SHIFT) & SYSREG_CRM_MASK,
++                              (reg >> SYSREG_OP2_SHIFT) & SYSREG_OP2_MASK);
++}
 +
-+#define SYSREG_CNTV_CTL_EL0   SYSREG(3, 3, 14, 3, 1)
-+#define SYSREG_CNTV_CVAL_EL0  SYSREG(3, 3, 14, 3, 2)
- #define SYSREG_PMCCFILTR_EL0  SYSREG(3, 3, 14, 15, 7)
- 
- #define SYSREG_ICC_AP0R0_EL1     SYSREG(3, 0, 12, 8, 4)
-@@ -502,6 +505,7 @@ int hvf_arch_get_registers(CPUState *cpu)
-     uint64_t val;
-     hv_simd_fp_uchar16_t fpval;
-     int i, n;
-+    bool b;
- 
-     for (i = 0; i < ARRAY_SIZE(hvf_reg_match); i++) {
-         ret = hv_vcpu_get_reg(cpu->accel->fd, hvf_reg_match[i].reg, &val);
-@@ -631,6 +635,16 @@ int hvf_arch_get_registers(CPUState *cpu)
- 
-     aarch64_restore_sp(env, arm_current_el(env));
- 
-+    ret = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CVAL_EL0, &val);
-+    assert_hvf_ok(ret);
-+    b = hvf_sysreg_write_cp(cpu, "VTimer", SYSREG_CNTV_CVAL_EL0, val);
-+    assert(b);
++static bool hvf_sysreg_read_cp(CPUState *cpu, const char *cpname,
++                               uint32_t reg, uint64_t *val)
++{
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    CPUARMState *env = &arm_cpu->env;
++    const ARMCPRegInfo *ri;
 +
-+    ret = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CTL_EL0, &val);
-+    assert_hvf_ok(ret);
-+    b = hvf_sysreg_write_cp(cpu, "VTimer", SYSREG_CNTV_CTL_EL0, val);
-+    assert(b);
++    ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
++    if (ri) {
++        if (!cp_access_ok(1, ri, true)) {
++            return false;
++        }
++        if (ri->accessfn) {
++            if (ri->accessfn(env, ri, true) != CP_ACCESS_OK) {
++                return false;
++            }
++        }
++        if (ri->type & ARM_CP_CONST) {
++            *val = ri->resetvalue;
++        } else if (ri->readfn) {
++            *val = ri->readfn(env, ri);
++        } else {
++            *val = raw_read(env, ri);
++        }
++        trace_hvf_emu_reginfo_read(cpname, ri->name, *val);
++        return true;
++    }
 +
-     return 0;
++    return false;
++}
++
++static bool hvf_sysreg_write_cp(CPUState *cpu, const char *cpname,
++                                uint32_t reg, uint64_t val)
++{
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    CPUARMState *env = &arm_cpu->env;
++    const ARMCPRegInfo *ri;
++
++    ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
++
++    if (ri) {
++        if (!cp_access_ok(1, ri, false)) {
++            return false;
++        }
++        if (ri->accessfn) {
++            if (ri->accessfn(env, ri, false) != CP_ACCESS_OK) {
++                return false;
++            }
++        }
++        if (ri->writefn) {
++            ri->writefn(env, ri, val);
++        } else {
++            raw_write(env, ri, val);
++        }
++
++        trace_hvf_emu_reginfo_write(cpname, ri->name, val);
++        return true;
++    }
++
++    return false;
++}
++
+ int hvf_arch_get_registers(CPUState *cpu)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+@@ -1161,46 +1232,6 @@ static bool is_id_sysreg(uint32_t reg)
+            SYSREG_CRM(reg) < 8;
  }
  
-@@ -642,6 +656,7 @@ int hvf_arch_put_registers(CPUState *cpu)
-     uint64_t val;
-     hv_simd_fp_uchar16_t fpval;
-     int i, n;
-+    bool b;
- 
-     for (i = 0; i < ARRAY_SIZE(hvf_reg_match); i++) {
-         val = *(uint64_t *)((void *)env + hvf_reg_match[i].offset);
-@@ -756,6 +771,16 @@ int hvf_arch_put_registers(CPUState *cpu)
-     ret = hv_vcpu_set_vtimer_offset(cpu->accel->fd, hvf_state->vtimer_offset);
-     assert_hvf_ok(ret);
- 
-+    b = hvf_sysreg_read_cp(cpu, "VTimer", SYSREG_CNTV_CVAL_EL0, &val);
-+    assert(b);
-+    ret = hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CVAL_EL0, val);
-+    assert_hvf_ok(ret);
-+
-+    b = hvf_sysreg_read_cp(cpu, "VTimer", SYSREG_CNTV_CTL_EL0, &val);
-+    assert(b);
-+    ret = hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CTL_EL0, val);
-+    assert_hvf_ok(ret);
-+
-     return 0;
+-static uint32_t hvf_reg2cp_reg(uint32_t reg)
+-{
+-    return ENCODE_AA64_CP_REG((reg >> SYSREG_OP0_SHIFT) & SYSREG_OP0_MASK,
+-                              (reg >> SYSREG_OP1_SHIFT) & SYSREG_OP1_MASK,
+-                              (reg >> SYSREG_CRN_SHIFT) & SYSREG_CRN_MASK,
+-                              (reg >> SYSREG_CRM_SHIFT) & SYSREG_CRM_MASK,
+-                              (reg >> SYSREG_OP2_SHIFT) & SYSREG_OP2_MASK);
+-}
+-
+-static bool hvf_sysreg_read_cp(CPUState *cpu, const char *cpname,
+-                               uint32_t reg, uint64_t *val)
+-{
+-    ARMCPU *arm_cpu = ARM_CPU(cpu);
+-    CPUARMState *env = &arm_cpu->env;
+-    const ARMCPRegInfo *ri;
+-
+-    ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
+-    if (ri) {
+-        if (!cp_access_ok(1, ri, true)) {
+-            return false;
+-        }
+-        if (ri->accessfn) {
+-            if (ri->accessfn(env, ri, true) != CP_ACCESS_OK) {
+-                return false;
+-            }
+-        }
+-        if (ri->type & ARM_CP_CONST) {
+-            *val = ri->resetvalue;
+-        } else if (ri->readfn) {
+-            *val = ri->readfn(env, ri);
+-        } else {
+-            *val = raw_read(env, ri);
+-        }
+-        trace_hvf_emu_reginfo_read(cpname, ri->name, *val);
+-        return true;
+-    }
+-
+-    return false;
+-}
+-
+ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+@@ -1454,37 +1485,6 @@ static void pmswinc_write(CPUARMState *env, uint64_t value)
+     }
  }
  
+-static bool hvf_sysreg_write_cp(CPUState *cpu, const char *cpname,
+-                                uint32_t reg, uint64_t val)
+-{
+-    ARMCPU *arm_cpu = ARM_CPU(cpu);
+-    CPUARMState *env = &arm_cpu->env;
+-    const ARMCPRegInfo *ri;
+-
+-    ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
+-
+-    if (ri) {
+-        if (!cp_access_ok(1, ri, false)) {
+-            return false;
+-        }
+-        if (ri->accessfn) {
+-            if (ri->accessfn(env, ri, false) != CP_ACCESS_OK) {
+-                return false;
+-            }
+-        }
+-        if (ri->writefn) {
+-            ri->writefn(env, ri, val);
+-        } else {
+-            raw_write(env, ri, val);
+-        }
+-
+-        trace_hvf_emu_reginfo_write(cpname, ri->name, val);
+-        return true;
+-    }
+-
+-    return false;
+-}
+-
+ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
 -- 
 2.52.0
 
