@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DE08C98315
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36828C98315
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhaxf-00016R-RE; Sun, 18 Jan 2026 17:09:31 -0500
+	id 1vhaxk-0001bc-Js; Sun, 18 Jan 2026 17:09:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhaxW-0000WC-Ve
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:24 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1vhaxi-0001MH-2N
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:34 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhaxU-0001dr-Fz
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:22 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-29f1bc40b35so38117935ad.2
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:09:19 -0800 (PST)
+ id 1vhaxg-0001gC-5V
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:33 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2a0833b5aeeso37543665ad.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:09:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768774159; x=1769378959; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768774171; x=1769378971; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Cmt/DkSN995wvdP0a06/sQl06r6QbkCd5PkO/R0OVlU=;
- b=NEFG7HtB/KLo1XfzJTwh/7lTIThctWvOlzgSQH+4bSf8Vhb7e84NhO4O2NqnHqQDbi
- 7NUOiP/6B9ryktqGf+pqUs7axeLORpqIwByc/azVt/8HYAMPoQlBRxjhvKzUQS3jmO6i
- 49lWwNGFCvtMWm8KMptjSMi4G94bhS9J8JiOYoe+/1qzSGDJGdCKo7KExwFh7iKk6BK9
- Kwk2xSXG+WoKLdNMmzlaFn8qJjeInArrUQ3lf8sn8K4AGS4AmZJhIyoQUzfJ5NG7OTPG
- jD/lwLc1EvhWY/FoXds0WmW8+3SH6eB4HiwXP4f5TSMV2/xHmjhKcY+r48L2IdNJCJAG
- shTQ==
+ bh=VnCVV9AnEgawNA+fiIe+uEXCZKJSFhPJndsOefTu71g=;
+ b=nYpprE9xQYkq3l3Amy2P21fGeiHWahqg3XLCvfqPfxFfW3S24pQbtZ72nBZzkkIMqW
+ uIC8hogQc7b93vtjuo3yYwsYOzvqCJr5ljacLyd1OrOvObfR+/W91RlfevT64LxKEQOw
+ Bwu4tDyRMod/+wCyMPV8naIz24wdTgTau01nmJhyLZX9deOFrMUwK2uvDN3Kq+0Awlw6
+ rCiywKbWkFbhEd2DleEy5ZoBmQrAnXh/qPDXuoy19HxhMF2KBjefr4GUtKRWGSvww/Uj
+ YkJROWeB0C5PhQV/pKWROL5sb3Xnlxn051XGgyNsfMBVzciYDCF+vx6zoeTniHlHtMPO
+ n0eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768774159; x=1769378959;
+ d=1e100.net; s=20230601; t=1768774171; x=1769378971;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Cmt/DkSN995wvdP0a06/sQl06r6QbkCd5PkO/R0OVlU=;
- b=SGz8C2sIQekDMJdTlofNdf90sgKPW1prj1M9gTFraBsdXDL6zFfum2HnJcats9JLuE
- n+pOxiFeREpzIVYIgRrF5V4YQtkQ4/HNcIOwVpkmaxXBecjhnckG+sOl3/PMUFYmF5eF
- JYVgJr57J/9O4lGUnrY541yqI818hGdz9V5KAanh8m62ARFFk6CSHVgRh86MUsTLo88j
- XFx05Pv1ZLuQTLSspGVrf6wUh+DVVTjZ6THVnu1KL0t+qU0jPKJT1EVc01kBezsDCE4k
- CQ+L5QtIfZRSIIZCkJIMBhi6H4TuUu4sl4Jz2vs/oaDpfWAVPJY1tuNMznRE+wnI9dR7
- qFhg==
-X-Gm-Message-State: AOJu0YwR/V2M1CMO0ibj7RyutuJ9Ku7wQ0tEicHIiaBlPZPHHZ7N8fm7
- eJBD0/kMuHtKQFexoLXBRn5V513AG+810wfRbvvxgA6BsoN6a242MKbJH7H618q/bJUoxR7GX8a
- NSCKCGNMxBw==
-X-Gm-Gg: AY/fxX5w3HWIFytqqcIZs5zj8fE2BTrbMs2Caw9IdxvS3pbv0xP/g3RI+mdElYznYQB
- yGAxfv0fsjAC0mXVkLFdBwE34qwr8lYq/0j8CUXq+j/syDlnlSdYKrYlQOhRibHlTxiH6PhvfEH
- RhbNk1nmOUj50AAIeGs+9ovAO+wXr+fj50lHbnQJPmZerWz3d3GzHRaoJYMKZoVZ4uuhYtQG7Pr
- c6h+tMxnxS5OwkZALZEEL7lvta9039BN0GrBq2dgb7kSBKk60BudKWegsgJJ6//wBkwBh1r8Sw4
- LYGxVLoMnlOsJHnQ9/jdFGqA2NSaPkcawGJXMnaBTxqqCiS7bbpd5lXziyr6LcoTdjn8MVPB7c3
- 6UwSLqzKxphL76iefK7bqPaxKvYfLmEV5mirolo5ab/egelAS/Vn0umHXex7qyzPcCabB4RHwrv
- 7BfexgvGX4d5s82KL4Mw==
-X-Received: by 2002:a17:902:ce0a:b0:2a3:e7b6:ab53 with SMTP id
- d9443c01a7336-2a717554c25mr93866155ad.22.1768774158905; 
- Sun, 18 Jan 2026 14:09:18 -0800 (PST)
+ bh=VnCVV9AnEgawNA+fiIe+uEXCZKJSFhPJndsOefTu71g=;
+ b=iytQoEl1YYiyxOVJjyXgTWCsuLyU6cs++RMD8z5OskLNdTsGhEMCrmpsJODYpX5PYU
+ TX3PZIl8RkrbEotNAeqfNokduQY0glifTSXTRYinoZgCjnwjoSGIbIlNTL4YI7CbQchg
+ C3nha4RcgxWVtCfb1BwGPibI5sfEZVPjLKth0ac1YJO29wA3cg47RYye+MnXfBOcnOlq
+ jPNJxqryvvw9U6nhQtMCFlAKPNle8vQJLlzKGl7glGMbzGEDKNvrtWduUDhSW6BZ6/IP
+ rR+ELQ94pFqeL8bL7x/ONjVuXGnRtzTYbkSIiYSkb17G+FfC/rDogfUvaQecv4Rp4ebV
+ 02pA==
+X-Gm-Message-State: AOJu0YwNfvhXCZD0zRvupZsFi+Uqzjs3AS+2JUQYIoHsbEdNrYvshN+D
+ m4LoPB9Whqtd1LWmhEu59ZNjvoVLQlyl2F51rXRFPGQ5RxsukDtqBTZFr2+F1HMDaC2k3DGLP5Q
+ lW3oYoBsR8g==
+X-Gm-Gg: AY/fxX6GnMwNKUnDhxGcpTP79dwYBrOSKEhkNvrTUG2tI1qqkPREft5YR8mUacFubYn
+ z84MfRyl47i2cUO9o+vyDlfBINJ3nG1bHLaecYRc3oWwkqPHFNFlPyjZX2ioNH3+y9BW1/T2OXb
+ sFzXUEgZ8DzX6DIbkB8MVTa+/5lzqDtTbHxf/TqfCUeBU+HpvQOaxP4495VLCuLKjmIY03drGrE
+ cS1khVHkmZXhB7zcJiejSX4JneKoMWK1pnm4WIdv0Yr5dr9znN7VR75Xlf8Z7AJQAegsE39NLfo
+ PmNGDJKuKoimTKtinWbCcJQaoTJ60Mf/m0g7QHIJBdGEg7FNHCNt7mTWIgAp64Q+AmpooATq6XW
+ PPMb8/6VKpEAfD9hV3TgC9OUEtEMDzBtm1RXFLXwgBm3cvNSJ4eBGrvUUTv56hdN/fH5cZfmRRz
+ ND1rQvF4b6VIgYGAwwUA==
+X-Received: by 2002:a17:903:2f4c:b0:2a0:a8c2:be5d with SMTP id
+ d9443c01a7336-2a7188583d4mr76683165ad.5.1768774170634; 
+ Sun, 18 Jan 2026 14:09:30 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7190ab921sm73298205ad.8.2026.01.18.14.09.16
+ d9443c01a7336-2a7190ab921sm73298205ad.8.2026.01.18.14.09.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 14:09:18 -0800 (PST)
+ Sun, 18 Jan 2026 14:09:30 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 49/54] migration: Drop use of Stat64
-Date: Mon, 19 Jan 2026 09:04:09 +1100
-Message-ID: <20260118220414.8177-50-richard.henderson@linaro.org>
+Subject: [PULL 54/54] include/qemu/atomic: Drop aligned_{u}int64_t
+Date: Mon, 19 Jan 2026 09:04:14 +1100
+Message-ID: <20260118220414.8177-55-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260118220414.8177-1-richard.henderson@linaro.org>
 References: <20260118220414.8177-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -101,523 +101,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Stat64 structure is an aid for 32-bit hosts, and
-is no longer required.  Use plain 64-bit types.
+As we no longer support i386 as a host architecture,
+this abstraction is no longer required.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- migration/migration-stats.h   | 36 ++++++++++++++++-------------------
- migration/cpu-throttle.c      |  4 ++--
- migration/migration-stats.c   | 16 ++++++++--------
- migration/migration.c         | 24 +++++++++++------------
- migration/multifd-nocomp.c    |  2 +-
- migration/multifd-zero-page.c |  4 ++--
- migration/multifd.c           | 12 ++++--------
- migration/qemu-file.c         |  6 +++---
- migration/ram.c               | 30 ++++++++++++++---------------
- migration/rdma.c              |  8 ++++----
- 10 files changed, 67 insertions(+), 75 deletions(-)
+ accel/tcg/atomic_template.h          |  4 ++--
+ include/qemu/atomic.h                | 13 -------------
+ include/system/cpu-timers-internal.h |  2 +-
+ linux-user/hppa/cpu_loop.c           |  2 +-
+ util/qsp.c                           |  4 ++--
+ 5 files changed, 6 insertions(+), 19 deletions(-)
 
-diff --git a/migration/migration-stats.h b/migration/migration-stats.h
-index 05290ade76..c0f50144c9 100644
---- a/migration/migration-stats.h
-+++ b/migration/migration-stats.h
-@@ -13,8 +13,6 @@
- #ifndef QEMU_MIGRATION_STATS_H
- #define QEMU_MIGRATION_STATS_H
+diff --git a/accel/tcg/atomic_template.h b/accel/tcg/atomic_template.h
+index ae5203b439..f7924078f7 100644
+--- a/accel/tcg/atomic_template.h
++++ b/accel/tcg/atomic_template.h
+@@ -27,8 +27,8 @@
+ # define SHIFT      4
+ #elif DATA_SIZE == 8
+ # define SUFFIX     q
+-# define DATA_TYPE  aligned_uint64_t
+-# define SDATA_TYPE aligned_int64_t
++# define DATA_TYPE  uint64_t
++# define SDATA_TYPE int64_t
+ # define BSWAP      bswap64
+ # define SHIFT      3
+ #elif DATA_SIZE == 4
+diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
+index 27d98014d4..dc9290084b 100644
+--- a/include/qemu/atomic.h
++++ b/include/qemu/atomic.h
+@@ -234,17 +234,4 @@
+     _oldn;                                                              \
+ })
  
--#include "qemu/stats64.h"
+-/*
+- * Abstractions to access atomically (i.e. "once") i64/u64 variables.
+- *
+- * The i386 abi is odd in that by default members are only aligned to
+- * 4 bytes, which means that 8-byte types can wind up mis-aligned.
+- * Clang will then warn about this, and emit a call into libatomic.
+- *
+- * Use of these types in structures when they will be used with atomic
+- * operations can avoid this.
+- */
+-typedef int64_t aligned_int64_t __attribute__((aligned(8)));
+-typedef uint64_t aligned_uint64_t __attribute__((aligned(8)));
 -
- /*
-  * Amount of time to allocate to each "chunk" of bandwidth-throttled
-  * data.
-@@ -29,9 +27,7 @@
+ #endif /* QEMU_ATOMIC_H */
+diff --git a/include/system/cpu-timers-internal.h b/include/system/cpu-timers-internal.h
+index 94bb7394c5..8c262ce139 100644
+--- a/include/system/cpu-timers-internal.h
++++ b/include/system/cpu-timers-internal.h
+@@ -47,7 +47,7 @@ typedef struct TimersState {
+     int64_t last_delta;
  
- /*
-  * These are the ram migration statistic counters.  It is loosely
-- * based on MigrationStats.  We change to Stat64 any counter that
-- * needs to be updated using atomic ops (can be accessed by more than
-- * one thread).
-+ * based on MigrationStats.
-  */
- typedef struct {
-     /*
-@@ -41,66 +37,66 @@ typedef struct {
-      * since last iteration, not counting what the guest has dirtied
-      * since we synchronized bitmaps.
-      */
--    Stat64 dirty_bytes_last_sync;
-+    uint64_t dirty_bytes_last_sync;
-     /*
-      * Number of pages dirtied per second.
-      */
--    Stat64 dirty_pages_rate;
-+    uint64_t dirty_pages_rate;
-     /*
-      * Number of times we have synchronized guest bitmaps.
-      */
--    Stat64 dirty_sync_count;
-+    uint64_t dirty_sync_count;
-     /*
-      * Number of times zero copy failed to send any page using zero
-      * copy.
-      */
--    Stat64 dirty_sync_missed_zero_copy;
-+    uint64_t dirty_sync_missed_zero_copy;
-     /*
-      * Number of bytes sent at migration completion stage while the
-      * guest is stopped.
-      */
--    Stat64 downtime_bytes;
-+    uint64_t downtime_bytes;
-     /*
-      * Number of bytes sent through multifd channels.
-      */
--    Stat64 multifd_bytes;
-+    uint64_t multifd_bytes;
-     /*
-      * Number of pages transferred that were not full of zeros.
-      */
--    Stat64 normal_pages;
-+    uint64_t normal_pages;
-     /*
-      * Number of bytes sent during postcopy.
-      */
--    Stat64 postcopy_bytes;
-+    uint64_t postcopy_bytes;
-     /*
-      * Number of postcopy page faults that we have handled during
-      * postcopy stage.
-      */
--    Stat64 postcopy_requests;
-+    uint64_t postcopy_requests;
-     /*
-      * Number of bytes sent during precopy stage.
-      */
--    Stat64 precopy_bytes;
-+    uint64_t precopy_bytes;
-     /*
-      * Number of bytes transferred with QEMUFile.
-      */
--    Stat64 qemu_file_transferred;
-+    uint64_t qemu_file_transferred;
-     /*
-      * Amount of transferred data at the start of current cycle.
-      */
--    Stat64 rate_limit_start;
-+    uint64_t rate_limit_start;
-     /*
-      * Maximum amount of data we can send in a cycle.
-      */
--    Stat64 rate_limit_max;
-+    uint64_t rate_limit_max;
-     /*
-      * Number of bytes sent through RDMA.
-      */
--    Stat64 rdma_bytes;
-+    uint64_t rdma_bytes;
-     /*
-      * Number of pages transferred that were full of zeros.
-      */
--    Stat64 zero_pages;
-+    uint64_t zero_pages;
- } MigrationAtomicStats;
+     /* Compensate for varying guest execution speed.  */
+-    aligned_int64_t qemu_icount_bias;
++    int64_t qemu_icount_bias;
  
- extern MigrationAtomicStats mig_stats;
-diff --git a/migration/cpu-throttle.c b/migration/cpu-throttle.c
-index 0642e6bdea..3b4d4aea52 100644
---- a/migration/cpu-throttle.c
-+++ b/migration/cpu-throttle.c
-@@ -134,7 +134,7 @@ int cpu_throttle_get_percentage(void)
- 
- void cpu_throttle_dirty_sync_timer_tick(void *opaque)
- {
--    uint64_t sync_cnt = stat64_get(&mig_stats.dirty_sync_count);
-+    uint64_t sync_cnt = qatomic_read(&mig_stats.dirty_sync_count);
- 
-     /*
-      * The first iteration copies all memory anyhow and has no
-@@ -153,7 +153,7 @@ void cpu_throttle_dirty_sync_timer_tick(void *opaque)
-     }
- 
- end:
--    throttle_dirty_sync_count_prev = stat64_get(&mig_stats.dirty_sync_count);
-+    throttle_dirty_sync_count_prev = qatomic_read(&mig_stats.dirty_sync_count);
- 
-     timer_mod(throttle_dirty_sync_timer,
-         qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT) +
-diff --git a/migration/migration-stats.c b/migration/migration-stats.c
-index f690b98a03..3f17b6ac5c 100644
---- a/migration/migration-stats.c
-+++ b/migration/migration-stats.c
-@@ -11,7 +11,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "qemu/stats64.h"
-+#include "qemu/atomic.h"
- #include "qemu-file.h"
- #include "trace.h"
- #include "migration-stats.h"
-@@ -29,7 +29,7 @@ bool migration_rate_exceeded(QEMUFile *f)
-         return false;
-     }
- 
--    uint64_t rate_limit_start = stat64_get(&mig_stats.rate_limit_start);
-+    uint64_t rate_limit_start = qatomic_read(&mig_stats.rate_limit_start);
-     uint64_t rate_limit_current = migration_transferred_bytes();
-     uint64_t rate_limit_used = rate_limit_current - rate_limit_start;
- 
-@@ -41,7 +41,7 @@ bool migration_rate_exceeded(QEMUFile *f)
- 
- uint64_t migration_rate_get(void)
- {
--    return stat64_get(&mig_stats.rate_limit_max);
-+    return qatomic_read(&mig_stats.rate_limit_max);
- }
- 
- #define XFER_LIMIT_RATIO (1000 / BUFFER_DELAY)
-@@ -51,19 +51,19 @@ void migration_rate_set(uint64_t limit)
-     /*
-      * 'limit' is per second.  But we check it each BUFFER_DELAY milliseconds.
-      */
--    stat64_set(&mig_stats.rate_limit_max, limit / XFER_LIMIT_RATIO);
-+    qatomic_set(&mig_stats.rate_limit_max, limit / XFER_LIMIT_RATIO);
- }
- 
- void migration_rate_reset(void)
- {
--    stat64_set(&mig_stats.rate_limit_start, migration_transferred_bytes());
-+    qatomic_set(&mig_stats.rate_limit_start, migration_transferred_bytes());
- }
- 
- uint64_t migration_transferred_bytes(void)
- {
--    uint64_t multifd = stat64_get(&mig_stats.multifd_bytes);
--    uint64_t rdma = stat64_get(&mig_stats.rdma_bytes);
--    uint64_t qemu_file = stat64_get(&mig_stats.qemu_file_transferred);
-+    uint64_t multifd = qatomic_read(&mig_stats.multifd_bytes);
-+    uint64_t rdma = qatomic_read(&mig_stats.rdma_bytes);
-+    uint64_t qemu_file = qatomic_read(&mig_stats.qemu_file_transferred);
- 
-     trace_migration_transferred_bytes(qemu_file, multifd, rdma);
-     return qemu_file + multifd + rdma;
-diff --git a/migration/migration.c b/migration/migration.c
-index 1c34d8d432..1bcde301f7 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1266,22 +1266,22 @@ static void populate_ram_info(MigrationInfo *info, MigrationState *s)
-     info->ram = g_malloc0(sizeof(*info->ram));
-     info->ram->transferred = migration_transferred_bytes();
-     info->ram->total = ram_bytes_total();
--    info->ram->duplicate = stat64_get(&mig_stats.zero_pages);
--    info->ram->normal = stat64_get(&mig_stats.normal_pages);
-+    info->ram->duplicate = qatomic_read(&mig_stats.zero_pages);
-+    info->ram->normal = qatomic_read(&mig_stats.normal_pages);
-     info->ram->normal_bytes = info->ram->normal * page_size;
-     info->ram->mbps = s->mbps;
-     info->ram->dirty_sync_count =
--        stat64_get(&mig_stats.dirty_sync_count);
-+        qatomic_read(&mig_stats.dirty_sync_count);
-     info->ram->dirty_sync_missed_zero_copy =
--        stat64_get(&mig_stats.dirty_sync_missed_zero_copy);
-+        qatomic_read(&mig_stats.dirty_sync_missed_zero_copy);
-     info->ram->postcopy_requests =
--        stat64_get(&mig_stats.postcopy_requests);
-+        qatomic_read(&mig_stats.postcopy_requests);
-     info->ram->page_size = page_size;
--    info->ram->multifd_bytes = stat64_get(&mig_stats.multifd_bytes);
-+    info->ram->multifd_bytes = qatomic_read(&mig_stats.multifd_bytes);
-     info->ram->pages_per_second = s->pages_per_second;
--    info->ram->precopy_bytes = stat64_get(&mig_stats.precopy_bytes);
--    info->ram->downtime_bytes = stat64_get(&mig_stats.downtime_bytes);
--    info->ram->postcopy_bytes = stat64_get(&mig_stats.postcopy_bytes);
-+    info->ram->precopy_bytes = qatomic_read(&mig_stats.precopy_bytes);
-+    info->ram->downtime_bytes = qatomic_read(&mig_stats.downtime_bytes);
-+    info->ram->postcopy_bytes = qatomic_read(&mig_stats.postcopy_bytes);
- 
-     if (migrate_xbzrle()) {
-         info->xbzrle_cache = g_malloc0(sizeof(*info->xbzrle_cache));
-@@ -1302,7 +1302,7 @@ static void populate_ram_info(MigrationInfo *info, MigrationState *s)
-     if (s->state != MIGRATION_STATUS_COMPLETED) {
-         info->ram->remaining = ram_bytes_remaining();
-         info->ram->dirty_pages_rate =
--           stat64_get(&mig_stats.dirty_pages_rate);
-+           qatomic_read(&mig_stats.dirty_pages_rate);
-     }
- 
-     if (migrate_dirty_limit() && dirtylimit_in_service()) {
-@@ -3420,10 +3420,10 @@ static void migration_update_counters(MigrationState *s,
-      * if we haven't sent anything, we don't want to
-      * recalculate. 10000 is a small enough number for our purposes
-      */
--    if (stat64_get(&mig_stats.dirty_pages_rate) &&
-+    if (qatomic_read(&mig_stats.dirty_pages_rate) &&
-         transferred > 10000) {
-         s->expected_downtime =
--            stat64_get(&mig_stats.dirty_bytes_last_sync) / expected_bw_per_ms;
-+            qatomic_read(&mig_stats.dirty_bytes_last_sync) / expected_bw_per_ms;
-     }
- 
-     migration_rate_reset();
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index b48eae3d86..9be79b3b8e 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -141,7 +141,7 @@ static int multifd_nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
-             return -1;
-         }
- 
--        stat64_add(&mig_stats.multifd_bytes, p->packet_len);
-+        qatomic_add(&mig_stats.multifd_bytes, p->packet_len);
-     }
- 
-     return 0;
-diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-page.c
-index 4cde868159..00c330416a 100644
---- a/migration/multifd-zero-page.c
-+++ b/migration/multifd-zero-page.c
-@@ -77,8 +77,8 @@ void multifd_send_zero_page_detect(MultiFDSendParams *p)
-     pages->normal_num = i;
- 
- out:
--    stat64_add(&mig_stats.normal_pages, pages->normal_num);
--    stat64_add(&mig_stats.zero_pages, pages->num - pages->normal_num);
-+    qatomic_add(&mig_stats.normal_pages, pages->normal_num);
-+    qatomic_add(&mig_stats.zero_pages, pages->num - pages->normal_num);
- }
- 
- void multifd_recv_zero_page_process(MultiFDRecvParams *p)
-diff --git a/migration/multifd.c b/migration/multifd.c
-index bf6da85af8..c9d4a67a46 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -58,10 +58,6 @@ struct {
-      * operations on both 32bit / 64 bits hosts.  It means on 32bit systems
-      * multifd will overflow the packet_num easier, but that should be
-      * fine.
--     *
--     * Another option is to use QEMU's Stat64 then it'll be 64 bits on all
--     * hosts, however so far it does not support atomic fetch_add() yet.
--     * Make it easy for now.
-      */
-     uintptr_t packet_num;
-     /*
-@@ -174,7 +170,7 @@ static int multifd_send_initial_packet(MultiFDSendParams *p, Error **errp)
-     if (ret != 0) {
-         return -1;
-     }
--    stat64_add(&mig_stats.multifd_bytes, size);
-+    qatomic_add(&mig_stats.multifd_bytes, size);
-     return 0;
- }
- 
-@@ -607,7 +603,7 @@ static int multifd_zero_copy_flush(QIOChannel *c)
-         return -1;
-     }
-     if (ret == 1) {
--        stat64_add(&mig_stats.dirty_sync_missed_zero_copy, 1);
-+        qatomic_add(&mig_stats.dirty_sync_missed_zero_copy, 1);
-     }
- 
-     return ret;
-@@ -735,7 +731,7 @@ static void *multifd_send_thread(void *opaque)
-                 break;
+     int64_t vm_clock_warp_start;
+     int64_t cpu_clock_offset;
+diff --git a/linux-user/hppa/cpu_loop.c b/linux-user/hppa/cpu_loop.c
+index e5c0f52d94..972e85c487 100644
+--- a/linux-user/hppa/cpu_loop.c
++++ b/linux-user/hppa/cpu_loop.c
+@@ -83,7 +83,7 @@ static abi_ulong hppa_lws(CPUHPPAState *env)
+                 uint64_t o64, n64, r64;
+                 o64 = *(uint64_t *)g2h(cs, old);
+                 n64 = *(uint64_t *)g2h(cs, new);
+-                r64 = qatomic_cmpxchg((aligned_uint64_t *)g2h(cs, addr), o64, n64);
++                r64 = qatomic_cmpxchg((uint64_t *)g2h(cs, addr), o64, n64);
+                 ret = r64 != o64;
              }
- 
--            stat64_add(&mig_stats.multifd_bytes, total_size);
-+            qatomic_add(&mig_stats.multifd_bytes, total_size);
- 
-             p->next_packet_size = 0;
-             multifd_send_data_clear(p->data);
-@@ -766,7 +762,7 @@ static void *multifd_send_thread(void *opaque)
-                     break;
-                 }
-                 /* p->next_packet_size will always be zero for a SYNC packet */
--                stat64_add(&mig_stats.multifd_bytes, p->packet_len);
-+                qatomic_add(&mig_stats.multifd_bytes, p->packet_len);
-             }
- 
-             qatomic_set(&p->pending_sync, MULTIFD_SYNC_NONE);
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index 4b5a409a80..8d82d94416 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -295,7 +295,7 @@ int qemu_fflush(QEMUFile *f)
-             qemu_file_set_error_obj(f, -EIO, local_error);
-         } else {
-             uint64_t size = iov_size(f->iov, f->iovcnt);
--            stat64_add(&mig_stats.qemu_file_transferred, size);
-+            qatomic_add(&mig_stats.qemu_file_transferred, size);
-         }
- 
-         qemu_iovec_release_ram(f);
-@@ -552,7 +552,7 @@ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
-         return;
-     }
- 
--    stat64_add(&mig_stats.qemu_file_transferred, buflen);
-+    qatomic_add(&mig_stats.qemu_file_transferred, buflen);
- }
- 
- 
-@@ -785,7 +785,7 @@ int coroutine_mixed_fn qemu_get_byte(QEMUFile *f)
- 
- uint64_t qemu_file_transferred(QEMUFile *f)
- {
--    uint64_t ret = stat64_get(&mig_stats.qemu_file_transferred);
-+    uint64_t ret = qatomic_read(&mig_stats.qemu_file_transferred);
-     int i;
- 
-     g_assert(qemu_file_is_writable(f));
-diff --git a/migration/ram.c b/migration/ram.c
-index 04958c5603..fc7ece2c1a 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -479,11 +479,11 @@ uint64_t ram_bytes_remaining(void)
- void ram_transferred_add(uint64_t bytes)
- {
-     if (runstate_is_running()) {
--        stat64_add(&mig_stats.precopy_bytes, bytes);
-+        qatomic_add(&mig_stats.precopy_bytes, bytes);
-     } else if (migration_in_postcopy()) {
--        stat64_add(&mig_stats.postcopy_bytes, bytes);
-+        qatomic_add(&mig_stats.postcopy_bytes, bytes);
-     } else {
--        stat64_add(&mig_stats.downtime_bytes, bytes);
-+        qatomic_add(&mig_stats.downtime_bytes, bytes);
-     }
- }
- 
-@@ -605,7 +605,7 @@ static void xbzrle_cache_zero_page(ram_addr_t current_addr)
-     /* We don't care if this fails to allocate a new cache page
-      * as long as it updated an old one */
-     cache_insert(XBZRLE.cache, current_addr, XBZRLE.zero_target_page,
--                 stat64_get(&mig_stats.dirty_sync_count));
-+                 qatomic_read(&mig_stats.dirty_sync_count));
- }
- 
- #define ENCODING_FLAG_XBZRLE 0x1
-@@ -631,7 +631,7 @@ static int save_xbzrle_page(RAMState *rs, PageSearchStatus *pss,
-     int encoded_len = 0, bytes_xbzrle;
-     uint8_t *prev_cached_page;
-     QEMUFile *file = pss->pss_channel;
--    uint64_t generation = stat64_get(&mig_stats.dirty_sync_count);
-+    uint64_t generation = qatomic_read(&mig_stats.dirty_sync_count);
- 
-     if (!cache_is_cached(XBZRLE.cache, current_addr, generation)) {
-         xbzrle_counters.cache_miss++;
-@@ -1035,9 +1035,9 @@ uint64_t ram_pagesize_summary(void)
- 
- uint64_t ram_get_total_transferred_pages(void)
- {
--    return stat64_get(&mig_stats.normal_pages) +
--        stat64_get(&mig_stats.zero_pages) +
--        xbzrle_counters.pages;
-+    return (qatomic_read(&mig_stats.normal_pages) +
-+            qatomic_read(&mig_stats.zero_pages) +
-+            xbzrle_counters.pages);
- }
- 
- static void migration_update_rates(RAMState *rs, int64_t end_time)
-@@ -1045,7 +1045,7 @@ static void migration_update_rates(RAMState *rs, int64_t end_time)
-     uint64_t page_count = rs->target_page_count - rs->target_page_count_prev;
- 
-     /* calculate period counters */
--    stat64_set(&mig_stats.dirty_pages_rate,
-+    qatomic_set(&mig_stats.dirty_pages_rate,
-                rs->num_dirty_pages_period * 1000 /
-                (end_time - rs->time_last_bitmap_sync));
- 
-@@ -1136,7 +1136,7 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
-     RAMBlock *block;
-     int64_t end_time;
- 
--    stat64_add(&mig_stats.dirty_sync_count, 1);
-+    qatomic_add(&mig_stats.dirty_sync_count, 1);
- 
-     if (!rs->time_last_bitmap_sync) {
-         rs->time_last_bitmap_sync = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
-@@ -1150,7 +1150,7 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
-             RAMBLOCK_FOREACH_NOT_IGNORED(block) {
-                 ramblock_sync_dirty_bitmap(rs, block);
-             }
--            stat64_set(&mig_stats.dirty_bytes_last_sync, ram_bytes_remaining());
-+            qatomic_set(&mig_stats.dirty_bytes_last_sync, ram_bytes_remaining());
-         }
-     }
- 
-@@ -1173,7 +1173,7 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
-         rs->bytes_xfer_prev = migration_transferred_bytes();
-     }
-     if (migrate_events()) {
--        uint64_t generation = stat64_get(&mig_stats.dirty_sync_count);
-+        uint64_t generation = qatomic_read(&mig_stats.dirty_sync_count);
-         qapi_event_send_migration_pass(generation);
-     }
- }
-@@ -1232,7 +1232,7 @@ static int save_zero_page(RAMState *rs, PageSearchStatus *pss,
-         return 0;
-     }
- 
--    stat64_add(&mig_stats.zero_pages, 1);
-+    qatomic_add(&mig_stats.zero_pages, 1);
- 
-     if (migrate_mapped_ram()) {
-         /* zero pages are not transferred with mapped-ram */
-@@ -1291,7 +1291,7 @@ static int save_normal_page(PageSearchStatus *pss, RAMBlock *block,
-         }
-     }
-     ram_transferred_add(TARGET_PAGE_SIZE);
--    stat64_add(&mig_stats.normal_pages, 1);
-+    qatomic_add(&mig_stats.normal_pages, 1);
-     return 1;
- }
- 
-@@ -1943,7 +1943,7 @@ int ram_save_queue_pages(const char *rbname, ram_addr_t start, ram_addr_t len,
-     RAMBlock *ramblock;
-     RAMState *rs = ram_state;
- 
--    stat64_add(&mig_stats.postcopy_requests, 1);
-+    qatomic_add(&mig_stats.postcopy_requests, 1);
-     RCU_READ_LOCK_GUARD();
- 
-     if (!rbname) {
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 9e301cf917..cced173379 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -1936,8 +1936,8 @@ retry:
-                  * would think that head.len would be the more similar
-                  * thing to a correct value.
-                  */
--                stat64_add(&mig_stats.zero_pages,
--                           sge.length / qemu_target_page_size());
-+                qatomic_add(&mig_stats.zero_pages,
-+                            sge.length / qemu_target_page_size());
-                 return 1;
-             }
- 
-@@ -2045,7 +2045,7 @@ retry:
-     }
- 
-     set_bit(chunk, block->transit_bitmap);
--    stat64_add(&mig_stats.normal_pages, sge.length / qemu_target_page_size());
-+    qatomic_add(&mig_stats.normal_pages, sge.length / qemu_target_page_size());
-     /*
-      * We are adding to transferred the amount of data written, but no
-      * overhead at all.  I will assume that RDMA is magicaly and don't
-@@ -2055,7 +2055,7 @@ retry:
-      *     sizeof(send_wr) + sge.length
-      * but this being RDMA, who knows.
-      */
--    stat64_add(&mig_stats.rdma_bytes, sge.length);
-+    qatomic_add(&mig_stats.rdma_bytes, sge.length);
-     ram_transferred_add(sge.length);
-     rdma->total_writes++;
- 
+             break;
+diff --git a/util/qsp.c b/util/qsp.c
+index 382e4397e2..55477ae025 100644
+--- a/util/qsp.c
++++ b/util/qsp.c
+@@ -83,8 +83,8 @@ typedef struct QSPCallSite QSPCallSite;
+ struct QSPEntry {
+     void *thread_ptr;
+     const QSPCallSite *callsite;
+-    aligned_uint64_t n_acqs;
+-    aligned_uint64_t ns;
++    uint64_t n_acqs;
++    uint64_t ns;
+     unsigned int n_objs; /* count of coalesced objs; only used for reporting */
+ };
+ typedef struct QSPEntry QSPEntry;
 -- 
 2.43.0
 
