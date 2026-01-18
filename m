@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0C37CA5FE4
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 16:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44DEDD4A5F4
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 16:32:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhVgG-0005U1-LB; Sun, 18 Jan 2026 11:31:12 -0500
+	id 1vhVgG-0005UD-NK; Sun, 18 Jan 2026 11:31:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vhVfx-0005LI-Fz
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 11:30:54 -0500
+ id 1vhVg6-0005Mr-07
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 11:31:04 -0500
 Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vhVfv-0005t3-Tg
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 11:30:53 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1768753839; cv=none; 
+ id 1vhVg4-0005tf-C4
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 11:31:01 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1768753845; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=XJSmS4Psvv9gpzPX0RoCmTa2A78BDGz2APYKjbuGFMVkt2WMuqc4FUxv83yFDSNaN+8PcukVBFyljJCBydI4FLA6tLABI5TKpZtHAZmhav4hTQp8FQAJxlpvS459wcv/nNKtiK2bVAxDWBABkG8UW/UISynERXUXbzsCB11op7k=
+ b=amjE77GNfwT79adjB0SSYR+7rVTuN05oK6Mk99sis1kVUalOp8rYtLS64uhsyQ19kmd8qMzlK9+09NWr6G4KeKfFyuMse3h+9346yOcfvmm/vWAtp562o+x/JPtDiT4OHNhs2VVdXGMJCBSLV4MGnnXtx0+14kVGdexKJNLc2NM=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1768753839;
+ s=zohoarc; t=1768753845;
  h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=02iZhZk/2rjLH+ScDdP0TYq5CYPLZ52daVxPXUoXMuU=; 
- b=ABg8epHUUCPhGCfhOc5OWtRsUjWzpbYLwkBa01GNTLLsZiWBZ5XBjLTuVPFVU0/E2CXg9/kqwVwB1GxY9MMIY8R6qDM4C82V6S5ncxoYZXRV+eTfzFoMiKaQ69bpp3B3HTtaY31PdueEYXvWc0ouh2tX40aVM/vaA1ED4S9esqw=
+ bh=q0Ro4KdLe3jAVCNAm6UZ2OJMc8nj556WESLqptWvOaQ=; 
+ b=Y6PPFgTg64ixrhpC4C1qsLR/tcOCmrsbcPZREKVe6i/TuCe3zRyeKJi1wIxES2NKfNBLMfd5PUj87Kt+77U2swus0NKDJenGnNsFYR7J3VsiT2lGvWG/kdBnvfMKRz01J2Af1/RQqjTlj6Zw0FzNY9qam+FnCdXmzOQ8dNLLvI0=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768753839; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768753845; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
  h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=02iZhZk/2rjLH+ScDdP0TYq5CYPLZ52daVxPXUoXMuU=;
- b=WKd9t/7ckgiXhB5yJeW2ZgGE3KZ2noi2s5omAamOVZdIsbkNO3jZiICW8lgo9K1l
- TcEoVI0Rb6RLFcuaRZO/mmYGI3aT30R8NoRGLLyIZOssqvTLuXhlvQB4fbWa/rrlXCz
- DS/MpRxg1oOIs6wQCJqEaBvwnjIjzc6ks//Q3vzU=
-Received: by mx.zohomail.com with SMTPS id 1768753837582494.5010354789597;
- Sun, 18 Jan 2026 08:30:37 -0800 (PST)
+ bh=q0Ro4KdLe3jAVCNAm6UZ2OJMc8nj556WESLqptWvOaQ=;
+ b=DSFauJpbQf5lN1HssuWIwVBD+vSDZh67cW9JAQAYzAw13fujvXNmb8aHv43Huh/G
+ yghBTcfzoBIssTj+b4ekvh0t0dsfpejz0Zzv34s+ECOQVG+XoAD1xGQH6eJDN1sGXMj
+ yj4GSlnAuIFos9LhrLYYLVBy/Tb/KAoKuPVliCr8=
+Received: by mx.zohomail.com with SMTPS id 1768753844278700.4804038605226;
+ Sun, 18 Jan 2026 08:30:44 -0800 (PST)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
@@ -62,9 +62,10 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
  Robert Beckett <bob.beckett@collabora.com>
-Subject: [RFC PATCH v10 2/5] virtio-gpu: Validate hostmem mapping offset
-Date: Sun, 18 Jan 2026 19:28:53 +0300
-Message-ID: <20260118162856.223796-3-dmitry.osipenko@collabora.com>
+Subject: [RFC PATCH v10 3/5] virtio-gpu: Replace finish_unmapping with
+ mapping_state
+Date: Sun, 18 Jan 2026 19:28:54 +0300
+Message-ID: <20260118162856.223796-4-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260118162856.223796-1-dmitry.osipenko@collabora.com>
 References: <20260118162856.223796-1-dmitry.osipenko@collabora.com>
@@ -96,42 +97,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check hostmem mapping boundaries originated from guest.
+Allow virtio_gpu_virgl_unmap_resource_blob() to be invoked while async
+unmapping is in progress. Do it in preparation to improvement of virtio-gpu
+resetting that will require this change.
 
 Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-virgl.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/display/trace-events       |  2 +-
+ hw/display/virtio-gpu-virgl.c | 28 ++++++++++++++++++++++------
+ 2 files changed, 23 insertions(+), 7 deletions(-)
 
+diff --git a/hw/display/trace-events b/hw/display/trace-events
+index e323a82cff24..4bfc457fbac1 100644
+--- a/hw/display/trace-events
++++ b/hw/display/trace-events
+@@ -39,7 +39,7 @@ virtio_gpu_cmd_res_create_2d(uint32_t res, uint32_t fmt, uint32_t w, uint32_t h)
+ virtio_gpu_cmd_res_create_3d(uint32_t res, uint32_t fmt, uint32_t w, uint32_t h, uint32_t d) "res 0x%x, fmt 0x%x, w %d, h %d, d %d"
+ virtio_gpu_cmd_res_create_blob(uint32_t res, uint64_t size) "res 0x%x, size %" PRId64
+ virtio_gpu_cmd_res_map_blob(uint32_t res, void *vmr, void *mr) "res 0x%x, vmr %p, mr %p"
+-virtio_gpu_cmd_res_unmap_blob(uint32_t res, void *mr, bool finish_unmapping) "res 0x%x, mr %p, finish_unmapping %d"
++virtio_gpu_cmd_res_unmap_blob(uint32_t res, void *mr, int mapping_state) "res 0x%x, mr %p, mapping_state %d"
+ virtio_gpu_cmd_res_unref(uint32_t res) "res 0x%x"
+ virtio_gpu_cmd_res_back_attach(uint32_t res) "res 0x%x"
+ virtio_gpu_cmd_res_back_detach(uint32_t res) "res 0x%x"
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index a6860f63b563..6a2aac0b6e5c 100644
+index 6a2aac0b6e5c..165f9f489d99 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -767,6 +767,7 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
-     struct virtio_gpu_resource_map_blob mblob;
-     struct virtio_gpu_virgl_resource *res;
-     struct virtio_gpu_resp_map_info resp;
-+    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
-     int ret;
+@@ -68,10 +68,16 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
+ #endif
  
-     VIRTIO_GPU_FILL_CMD(mblob);
-@@ -780,6 +781,15 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
-         return;
+ #if VIRGL_VERSION_MAJOR >= 1
++enum virtio_gpu_virgl_hostmem_region_mapping_state {
++    VIRTIO_GPU_MR_MAPPED,
++    VIRTIO_GPU_MR_UNMAP_STARTED,
++    VIRTIO_GPU_MR_UNMAP_COMPLETED,
++};
++
+ struct virtio_gpu_virgl_hostmem_region {
+     MemoryRegion mr;
+     struct VirtIOGPU *g;
+-    bool finish_unmapping;
++    enum virtio_gpu_virgl_hostmem_region_mapping_state mapping_state;
+ };
+ 
+ static struct virtio_gpu_virgl_hostmem_region *
+@@ -95,7 +101,7 @@ static void virtio_gpu_virgl_hostmem_region_free(void *obj)
+     VirtIOGPUGL *gl;
+ 
+     vmr = to_hostmem_region(mr);
+-    vmr->finish_unmapping = true;
++    vmr->mapping_state = VIRTIO_GPU_MR_UNMAP_COMPLETED;
+ 
+     b = VIRTIO_GPU_BASE(vmr->g);
+     b->renderer_blocked--;
+@@ -135,6 +141,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+ 
+     vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
+     vmr->g = g;
++    vmr->mapping_state = VIRTIO_GPU_MR_MAPPED;
+ 
+     mr = &vmr->mr;
+     memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+@@ -171,7 +178,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+ 
+     vmr = to_hostmem_region(res->mr);
+ 
+-    trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr, vmr->finish_unmapping);
++    trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr,
++                                        vmr->mapping_state);
+ 
+     /*
+      * Perform async unmapping in 3 steps:
+@@ -182,7 +190,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+      *    asynchronously by virtio_gpu_virgl_hostmem_region_free().
+      * 3. Finish the unmapping with final virgl_renderer_resource_unmap().
+      */
+-    if (vmr->finish_unmapping) {
++    switch (vmr->mapping_state) {
++    case VIRTIO_GPU_MR_UNMAP_COMPLETED:
+         res->mr = NULL;
+         g_free(vmr);
+ 
+@@ -193,15 +202,22 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+                           __func__, strerror(-ret));
+             return ret;
+         }
+-    } else {
+-        *cmd_suspended = true;
++        break;
+ 
++    case VIRTIO_GPU_MR_MAPPED:
+         /* render will be unblocked once MR is freed */
+         b->renderer_blocked++;
+ 
++        vmr->mapping_state = VIRTIO_GPU_MR_UNMAP_STARTED;
++
+         /* memory region owns self res->mr object and frees it by itself */
+         memory_region_del_subregion(&b->hostmem, mr);
+         object_unparent(OBJECT(mr));
++
++        /* Fallthrough */
++    case VIRTIO_GPU_MR_UNMAP_STARTED:
++        *cmd_suspended = true;
++        break;
      }
  
-+    if (mblob.offset + res->base.blob_size > b->conf.hostmem ||
-+        mblob.offset + res->base.blob_size < mblob.offset) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: failed to map virgl resource: invalid offset\n",
-+                      __func__);
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
-+    }
-+
-     ret = virtio_gpu_virgl_map_resource_blob(g, res, mblob.offset);
-     if (ret) {
-         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+     return 0;
 -- 
 2.52.0
 
