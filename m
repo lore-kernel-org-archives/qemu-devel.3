@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B34C9830C
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C29E1CA5FE1
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhatr-0002sM-0E; Sun, 18 Jan 2026 17:05:35 -0500
+	id 1vhauB-0004zX-Ig; Sun, 18 Jan 2026 17:05:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhatb-0002LB-An
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:22 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1vhatp-0002rY-Td
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:34 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhatV-0000pI-EE
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:17 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2a0c09bb78cso27697705ad.0
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:05:12 -0800 (PST)
+ id 1vhatn-0000tV-Or
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:33 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2a09757004cso33074655ad.3
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:05:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768773912; x=1769378712; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768773930; x=1769378730; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Hrwc5/QxBHhWpurLFh7R0/jF8nT5qB038yvAaKWWwqA=;
- b=y5/7PVeSHgqEoiCnug5wfkCtce1tGv5w4/p1gV0HWscCrAKoB1tEyZqbkR2c+hs+Ed
- /EtwynrJ8fXzZAI0ahD3MtZGoMn3GGnIkXiH3ZAW8ZM5ZUH9LFCW9dIq80F3DdOzPxzc
- 1Vfwlx9EW0sdPWjCXBAnyD4/OaRtn/B1dp8uOtE8N/DiYmaFJVi60uFoP6i3z7S/4Qbr
- W95E9HRZ8PV7pVkfAT93iLuFZNU03r/rfZBq3mVXkD7ynQNPr1fhFEyAnxti/Omshiwm
- tWo/Xtubaz/0ww+0EwJZflhyJ4JUDPYHgF7o99DK6rUwJ2X2Kq8cY8eoo/V3ElqJ4anZ
- vIUw==
+ bh=qmAp6PNa9duSslOM86Ejx4hWWn+4Ohddq0ga5kua76c=;
+ b=G6bmK8iQa3cNfnXfBXj5/zujx9w+fDgZ8BEAnydVgbhEAXTgKyfNAJmsYmywSdW+CH
+ IgMfdnRKBt1LgeaXBmleIRGF6I6d3EfLn+HAjOrPhvebmhxAJ73IT5/7BmNGWmpXuUwk
+ gPBW1m4SDx6IwITvx0sjGoeqdp8oS8jhryUTsk7m6W/uicqQQ/IJG/ZjaiaOAOHc6t5D
+ ylexRhuy44bhHxpyKZG4ztEgpHow5mPuIWdpv/98KIgpKdQQ5i6rbCYtauGuxYrMCP9r
+ /oflwyCegKCNAC/4z7NlUl7NvSgUJsprJsq1aYuISlHuHySTEjDeGt4Z50BAig3vy0P9
+ 1rFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768773912; x=1769378712;
+ d=1e100.net; s=20230601; t=1768773930; x=1769378730;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Hrwc5/QxBHhWpurLFh7R0/jF8nT5qB038yvAaKWWwqA=;
- b=B2lO/y8aytSVneWK2ma7FNqFVsGp18s277AwUtOmhHQ3V8XgJLRbDbs2bH7T/sLPCo
- 9xTKvHNHtBjqKaYdKkw479FAkFebYK+xAZ398YyE26KIBWuvu/UgPoTJMJMiJMkgwFgX
- J2BB57jaVK/f+SIa29ZROZKPHW4PmVKIoCEisB6BV3Ks0X0/P8NeS8T+T4/SJQjyoOEg
- yS9+R/4o0/pRkwOi4sOGB5Ghxgi9WZKoCAWBe7lOKHKDejF24+pJ3mgZLmFyiqjohM9q
- M3cWTV6k3719riIYfUilhg58anbUdoOb/H1a8vUKZVJj335q4fOqLIkamaHRUjpAqjcl
- GSVQ==
-X-Gm-Message-State: AOJu0YyOONTkSOCTtphrrcDU3wlrxDR/jAjtu6yl1Stf4zqmLSuPhzHo
- 0NCNIHzzvpVanSbQMEcQvvi3SbmJZ2nFA9Dksz6UhZR/eENItPvKxNzSVH/1c+cZ4DEX3Ay1znC
- dxlwVpt2xfg==
-X-Gm-Gg: AY/fxX6WnGc+owvMq+VUsJRxVZOoH8JQUqjmW/4xolpGvINbOoNOmjbacSlirs9wiuG
- zkFHNoaRIYvJ4mZz3PukFU4mBmA6O0GPBBYK70AQ/zMPC2Zy4dovV4f5RJx0D8MHI+U6cgLaC6o
- tU2Dox5Z7KQXCv3eZ+W++E/q8b/7FDDrLg1p2mrF3nJ8g5xWoL1VH8AO+KVJ31C4Oddz/qZt/HE
- WoS/uhN16FecRue5xLh1xm4O/xdikWlW/5aHWOKoT6muIg5Ia2ipZNr8crtbsS5q9kv+fgqWklC
- x/mklMcs8mzHbDDk58HnpTcRMSaV8Jslu6FtIXefs0ud0CQZHxw6IGSHTHSUjrSQGQcqB7TngJZ
- F4WoeH+IVecni6vQP8iQhvuPX9A0nTPbc6f+I1cdWfCbRO75ZyKdfJit7Iz0x6MZ2wzYOdOiWbQ
- 1hgK2EwezTccunWxExIVZUbKAbwygu
-X-Received: by 2002:a17:902:ef0a:b0:298:639b:a64f with SMTP id
- d9443c01a7336-2a71754671fmr96891705ad.6.1768773911501; 
- Sun, 18 Jan 2026 14:05:11 -0800 (PST)
+ bh=qmAp6PNa9duSslOM86Ejx4hWWn+4Ohddq0ga5kua76c=;
+ b=tH6/oUy3aeikrDXh01ufOHL1qnPMaUn69BjYBokAEN5DkLn7V7eJY7/u//PcySZBfB
+ devFWZlzSj+HKteD6B8WeGTGwasT+2c+YLAe4FmiNhD5sDVH2pVNtHf/rAEHPoSog94Z
+ l5v+5RqHbBQUBKUdp3QIBimp2dYKaM6Z9MW3fM4S5lDUNV0kTflzckJw1DwnXlJFXa3F
+ rabuX9fpcA1CPKENBKM417XjByZ1c0GCzygjbR0qAUYRhiOv/BqOd6AC0/W5ki898cdx
+ t9gMGsCQx6BIVkfK/x1lktmrZO47m16bHaKQrN2MtPT4mnjH8kU4bcmFOzIYfL/2e02r
+ sbig==
+X-Gm-Message-State: AOJu0Yz8FlwqxB4cWe0DyD2HFAbWPFN1LuOvfrzW8xdDf1+AFAnag4KM
+ CYx/mNLWY0TtZ+pLB0AEmTxJFMypp9ziAq6CC3WhF/eCytEW9fb0IJq5PbfiRGZ3Qxvcro/XnjM
+ WmGPUN4n5Mg==
+X-Gm-Gg: AY/fxX4uexuiR+2pMgrPnaq1JMhiAwdyT2ilB1woqHwdHPO3WMcVE9hRPgwkL7pvIcV
+ LNZg+AIoHw//j1NtQc/TSHKGBDT6P17v1SB+B7h5YrLGG+VuRCzwIT6Lrcu8hhcdAzev4EkUJw0
+ oVrVNL1mybm/2c0VXa+hs44oIPWFBi0CmlJXoDPs/dYncCM1r58prvSihzMlQwXr81J02PRje+O
+ EkQpS5D2fqVnFzDT7J43kPQrqfRcpCZ4CKZfViGDx3h599b0foMOCpd22XuvjKK3RWSi4c7RMyL
+ G7X7G1von9a39DHeu16ebiugYrYGWuQxOGXgWSxxTN8dr8WIrDF2bH7xhArqBNV7NWJ/jX0M4d3
+ d7kmUhR7F3vJCIXZGXhdxRj9kjdG1mU+suFwuW66KOX2bVfDTZKPfapy0i7P9hLD+sW9itcSyMb
+ AyikvpAgdBjrE4Q+ibpA==
+X-Received: by 2002:a17:903:124f:b0:29d:7b9b:515b with SMTP id
+ d9443c01a7336-2a717518f89mr86924745ad.20.1768773930402; 
+ Sun, 18 Jan 2026 14:05:30 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7193dbb74sm74402865ad.56.2026.01.18.14.05.09
+ d9443c01a7336-2a7193dbb74sm74402865ad.56.2026.01.18.14.05.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 14:05:11 -0800 (PST)
+ Sun, 18 Jan 2026 14:05:30 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 21/54] *: Drop TCG_TARGET_REG_BITS test for prefer_i64
-Date: Mon, 19 Jan 2026 09:03:41 +1100
-Message-ID: <20260118220414.8177-22-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 29/54] tcg: Drop TCG_TARGET_REG_BITS tests in tcg-op-gvec.c
+Date: Mon, 19 Jan 2026 09:03:49 +1100
+Message-ID: <20260118220414.8177-30-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260118220414.8177-1-richard.henderson@linaro.org>
 References: <20260118220414.8177-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -101,620 +99,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mechanically via sed -i.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/gengvec.c                | 32 ++++++-------
- target/arm/tcg/gengvec64.c              |  4 +-
- target/arm/tcg/translate-sve.c          | 26 +++++------
- tcg/tcg-op-gvec.c                       | 62 ++++++++++++-------------
- target/i386/tcg/emit.c.inc              |  2 +-
- target/riscv/insn_trans/trans_rvv.c.inc |  2 +-
- 6 files changed, 64 insertions(+), 64 deletions(-)
+ tcg/tcg-op-gvec.c | 49 +++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 25 deletions(-)
 
-diff --git a/target/arm/tcg/gengvec.c b/target/arm/tcg/gengvec.c
-index 01867f8ace..f97d63549c 100644
---- a/target/arm/tcg/gengvec.c
-+++ b/target/arm/tcg/gengvec.c
-@@ -165,7 +165,7 @@ void gen_gvec_ssra(unsigned vece, uint32_t rd_ofs, uint32_t rm_ofs,
-         { .fni8 = gen_ssra64_i64,
-           .fniv = gen_ssra_vec,
-           .fno = gen_helper_gvec_ssra_d,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .opt_opc = vecop_list,
-           .load_dest = true,
-           .vece = MO_64 },
-@@ -241,7 +241,7 @@ void gen_gvec_usra(unsigned vece, uint32_t rd_ofs, uint32_t rm_ofs,
-         { .fni8 = gen_usra64_i64,
-           .fniv = gen_usra_vec,
-           .fno = gen_helper_gvec_usra_d,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .load_dest = true,
-           .opt_opc = vecop_list,
-           .vece = MO_64, },
-@@ -349,7 +349,7 @@ void gen_gvec_srshr(unsigned vece, uint32_t rd_ofs, uint32_t rm_ofs,
-         { .fni8 = gen_srshr64_i64,
-           .fniv = gen_srshr_vec,
-           .fno = gen_helper_gvec_srshr_d,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .opt_opc = vecop_list,
-           .vece = MO_64 },
-     };
-@@ -439,7 +439,7 @@ void gen_gvec_srsra(unsigned vece, uint32_t rd_ofs, uint32_t rm_ofs,
-         { .fni8 = gen_srsra64_i64,
-           .fniv = gen_srsra_vec,
-           .fno = gen_helper_gvec_srsra_d,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .opt_opc = vecop_list,
-           .load_dest = true,
-           .vece = MO_64 },
-@@ -543,7 +543,7 @@ void gen_gvec_urshr(unsigned vece, uint32_t rd_ofs, uint32_t rm_ofs,
-         { .fni8 = gen_urshr64_i64,
-           .fniv = gen_urshr_vec,
-           .fno = gen_helper_gvec_urshr_d,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .opt_opc = vecop_list,
-           .vece = MO_64 },
-     };
-@@ -652,7 +652,7 @@ void gen_gvec_ursra(unsigned vece, uint32_t rd_ofs, uint32_t rm_ofs,
-         { .fni8 = gen_ursra64_i64,
-           .fniv = gen_ursra_vec,
-           .fno = gen_helper_gvec_ursra_d,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .opt_opc = vecop_list,
-           .load_dest = true,
-           .vece = MO_64 },
-@@ -736,7 +736,7 @@ void gen_gvec_sri(unsigned vece, uint32_t rd_ofs, uint32_t rm_ofs,
-         { .fni8 = gen_shr64_ins_i64,
-           .fniv = gen_shr_ins_vec,
-           .fno = gen_helper_gvec_sri_d,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .load_dest = true,
-           .opt_opc = vecop_list,
-           .vece = MO_64 },
-@@ -823,7 +823,7 @@ void gen_gvec_sli(unsigned vece, uint32_t rd_ofs, uint32_t rm_ofs,
-         { .fni8 = gen_shl64_ins_i64,
-           .fniv = gen_shl_ins_vec,
-           .fno = gen_helper_gvec_sli_d,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .load_dest = true,
-           .opt_opc = vecop_list,
-           .vece = MO_64 },
-@@ -927,7 +927,7 @@ void gen_gvec_mla(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-           .vece = MO_32 },
-         { .fni8 = gen_mla64_i64,
-           .fniv = gen_mla_vec,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .load_dest = true,
-           .opt_opc = vecop_list,
-           .vece = MO_64 },
-@@ -959,7 +959,7 @@ void gen_gvec_mls(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-           .vece = MO_32 },
-         { .fni8 = gen_mls64_i64,
-           .fniv = gen_mls_vec,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .load_dest = true,
-           .opt_opc = vecop_list,
-           .vece = MO_64 },
-@@ -1002,7 +1002,7 @@ void gen_gvec_cmtst(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-           .vece = MO_32 },
-         { .fni8 = gen_cmtst_i64,
-           .fniv = gen_cmtst_vec,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .opt_opc = vecop_list,
-           .vece = MO_64 },
-     };
-@@ -1691,7 +1691,7 @@ void gen_gvec_sabd(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-         { .fni8 = gen_sabd_i64,
-           .fniv = gen_sabd_vec,
-           .fno = gen_helper_gvec_sabd_d,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .opt_opc = vecop_list,
-           .vece = MO_64 },
-     };
-@@ -1748,7 +1748,7 @@ void gen_gvec_uabd(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-         { .fni8 = gen_uabd_i64,
-           .fniv = gen_uabd_vec,
-           .fno = gen_helper_gvec_uabd_d,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .opt_opc = vecop_list,
-           .vece = MO_64 },
-     };
-@@ -1803,7 +1803,7 @@ void gen_gvec_saba(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-         { .fni8 = gen_saba_i64,
-           .fniv = gen_saba_vec,
-           .fno = gen_helper_gvec_saba_d,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .opt_opc = vecop_list,
-           .load_dest = true,
-           .vece = MO_64 },
-@@ -1859,7 +1859,7 @@ void gen_gvec_uaba(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-         { .fni8 = gen_uaba_i64,
-           .fniv = gen_uaba_vec,
-           .fno = gen_helper_gvec_uaba_d,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .opt_opc = vecop_list,
-           .load_dest = true,
-           .vece = MO_64 },
-@@ -2429,7 +2429,7 @@ void gen_gvec_rev32(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-     static const GVecGen2 g = {
-         .fni8 = gen_bswap32_i64,
-         .fni4 = tcg_gen_bswap32_i32,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-         .vece = MO_32
-     };
- 
-diff --git a/target/arm/tcg/gengvec64.c b/target/arm/tcg/gengvec64.c
-index 2429cab1b8..c425d2b149 100644
---- a/target/arm/tcg/gengvec64.c
-+++ b/target/arm/tcg/gengvec64.c
-@@ -157,7 +157,7 @@ void gen_gvec_eor3(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
-         .fniv = gen_eor3_vec,
-         .fno = gen_helper_sve2_eor3,
-         .vece = MO_64,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
-     tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &op);
- }
-@@ -183,7 +183,7 @@ void gen_gvec_bcax(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
-         .fniv = gen_bcax_vec,
-         .fno = gen_helper_sve2_bcax,
-         .vece = MO_64,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
-     tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &op);
- }
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 07b827fa8e..64adb5c1ce 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -623,7 +623,7 @@ static void gen_bsl1n(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
-         .fniv = gen_bsl1n_vec,
-         .fno = gen_helper_sve2_bsl1n,
-         .vece = MO_64,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
-     tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &op);
- }
-@@ -661,7 +661,7 @@ static void gen_bsl2n(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
-         .fniv = gen_bsl2n_vec,
-         .fno = gen_helper_sve2_bsl2n,
-         .vece = MO_64,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
-     tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &op);
- }
-@@ -690,7 +690,7 @@ static void gen_nbsl(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
-         .fniv = gen_nbsl_vec,
-         .fno = gen_helper_sve2_nbsl,
-         .vece = MO_64,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
-     tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &op);
- }
-@@ -1367,7 +1367,7 @@ static bool trans_AND_pppp(DisasContext *s, arg_rprr_s *a)
-         .fni8 = gen_and_pg_i64,
-         .fniv = gen_and_pg_vec,
-         .fno = gen_helper_sve_and_pppp,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (!dc_isar_feature(aa64_sve, s)) {
-@@ -1405,7 +1405,7 @@ static bool trans_BIC_pppp(DisasContext *s, arg_rprr_s *a)
-         .fni8 = gen_bic_pg_i64,
-         .fniv = gen_bic_pg_vec,
-         .fno = gen_helper_sve_bic_pppp,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (!dc_isar_feature(aa64_sve, s)) {
-@@ -1436,7 +1436,7 @@ static bool trans_EOR_pppp(DisasContext *s, arg_rprr_s *a)
-         .fni8 = gen_eor_pg_i64,
-         .fniv = gen_eor_pg_vec,
-         .fno = gen_helper_sve_eor_pppp,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (!dc_isar_feature(aa64_sve, s)) {
-@@ -1483,7 +1483,7 @@ static bool trans_ORR_pppp(DisasContext *s, arg_rprr_s *a)
-         .fni8 = gen_orr_pg_i64,
-         .fniv = gen_orr_pg_vec,
-         .fno = gen_helper_sve_orr_pppp,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (!dc_isar_feature(aa64_sve, s)) {
-@@ -1514,7 +1514,7 @@ static bool trans_ORN_pppp(DisasContext *s, arg_rprr_s *a)
-         .fni8 = gen_orn_pg_i64,
-         .fniv = gen_orn_pg_vec,
-         .fno = gen_helper_sve_orn_pppp,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (!dc_isar_feature(aa64_sve, s)) {
-@@ -1542,7 +1542,7 @@ static bool trans_NOR_pppp(DisasContext *s, arg_rprr_s *a)
-         .fni8 = gen_nor_pg_i64,
-         .fniv = gen_nor_pg_vec,
-         .fno = gen_helper_sve_nor_pppp,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (!dc_isar_feature(aa64_sve, s)) {
-@@ -1570,7 +1570,7 @@ static bool trans_NAND_pppp(DisasContext *s, arg_rprr_s *a)
-         .fni8 = gen_nand_pg_i64,
-         .fniv = gen_nand_pg_vec,
-         .fno = gen_helper_sve_nand_pppp,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (!dc_isar_feature(aa64_sve, s)) {
-@@ -3680,7 +3680,7 @@ static bool trans_SUBR_zzi(DisasContext *s, arg_rri_esz *a)
-           .fniv = tcg_gen_sub_vec,
-           .fno = gen_helper_sve_subri_d,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64,
-           .scalar_first = true }
-     };
-@@ -8024,7 +8024,7 @@ static void gen_sclamp(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
-           .fno  = gen_helper_gvec_sclamp_d,
-           .opt_opc = vecop,
-           .vece = MO_64,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64 }
-+          .prefer_i64 = true }
-     };
-     tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &ops[vece]);
- }
-@@ -8075,7 +8075,7 @@ static void gen_uclamp(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
-           .fno  = gen_helper_gvec_uclamp_d,
-           .opt_opc = vecop,
-           .vece = MO_64,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64 }
-+          .prefer_i64 = true }
-     };
-     tcg_gen_gvec_4(d, n, m, a, oprsz, maxsz, &ops[vece]);
- }
 diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
-index 9c33430638..2cfc7e9409 100644
+index 2cfc7e9409..bc323e2500 100644
 --- a/tcg/tcg-op-gvec.c
 +++ b/tcg/tcg-op-gvec.c
-@@ -1754,7 +1754,7 @@ void tcg_gen_gvec_mov_var(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
-         .fni8 = tcg_gen_mov_i64,
-         .fniv = vec_mov2,
-         .fno = gen_helper_gvec_mov,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
+@@ -586,12 +586,11 @@ static void do_dup(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
+         }
+     }
  
-     if (dofs == aofs && dbase == abase) {
-@@ -1917,7 +1917,7 @@ void tcg_gen_gvec_not(unsigned vece, uint32_t dofs, uint32_t aofs,
-         .fni8 = tcg_gen_not_i64,
-         .fniv = tcg_gen_not_vec,
-         .fno = gen_helper_gvec_not,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
-     tcg_gen_gvec_2(dofs, aofs, oprsz, maxsz, &g);
- }
-@@ -2030,7 +2030,7 @@ void tcg_gen_gvec_add_var(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
-           .fniv = tcg_gen_add_vec,
-           .fno = gen_helper_gvec_add64,
-           .opt_opc = vecop_list_add,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
+-    /* Implement inline with a vector type, if possible.
+-     * Prefer integer when 64-bit host and no variable dup.
++    /*
++     * Implement inline with a vector type, if possible;
++     * prefer_i64 with 64-bit variable dup.
+      */
+-    type = choose_vector_type(NULL, vece, oprsz,
+-                              (TCG_TARGET_REG_BITS == 64 && in_32 == NULL
+-                               && (in_64 == NULL || vece == MO_64)));
++    type = choose_vector_type(NULL, vece, oprsz, vece == MO_64 && in_64);
+     if (type != 0) {
+         TCGv_vec t_vec = tcg_temp_new_vec(type);
  
-@@ -2069,7 +2069,7 @@ void tcg_gen_gvec_adds(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_add_vec,
-           .fno = gen_helper_gvec_adds64,
-           .opt_opc = vecop_list_add,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
+@@ -612,11 +611,11 @@ static void do_dup(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
+         t_32 = NULL;
  
-@@ -2109,7 +2109,7 @@ void tcg_gen_gvec_subs(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_sub_vec,
-           .fno = gen_helper_gvec_subs64,
-           .opt_opc = vecop_list_sub,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
+         if (in_32) {
+-            /* We are given a 32-bit variable input.  For a 64-bit host,
+-               use a 64-bit operation unless the 32-bit operation would
+-               be simple enough.  */
+-            if (TCG_TARGET_REG_BITS == 64
+-                && (vece != MO_32 || !check_size_impl(oprsz, 4))) {
++            /*
++             * We are given a 32-bit variable input.  Use a 64-bit operation
++             * unless the 32-bit operation would be simple enough.
++             */
++            if (vece != MO_32 || !check_size_impl(oprsz, 4)) {
+                 t_64 = tcg_temp_ebb_new_i64();
+                 tcg_gen_extu_i32_i64(t_64, in_32);
+                 tcg_gen_dup_i64(vece, t_64, t_64);
+@@ -629,14 +628,16 @@ static void do_dup(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
+             t_64 = tcg_temp_ebb_new_i64();
+             tcg_gen_dup_i64(vece, t_64, in_64);
+         } else {
+-            /* We are given a constant input.  */
+-            /* For 64-bit hosts, use 64-bit constants for "simple" constants
+-               or when we'd need too many 32-bit stores, or when a 64-bit
+-               constant is really required.  */
++            /*
++             * We are given a constant input.
++             * Use 64-bit constants for "simple" constants or when we'd
++             * need too many 32-bit stores, or when a 64-bit constant
++             * is really required.
++             */
+             if (vece == MO_64
+-                || (TCG_TARGET_REG_BITS == 64
+-                    && (in_c == 0 || in_c == -1
+-                        || !check_size_impl(oprsz, 4)))) {
++                || in_c == 0
++                || in_c == -1
++                || !check_size_impl(oprsz, 4)) {
+                 t_64 = tcg_constant_i64(in_c);
+             } else {
+                 t_32 = tcg_constant_i32(in_c);
+@@ -3872,12 +3873,11 @@ void tcg_gen_gvec_cmp(TCGCond cond, unsigned vece, uint32_t dofs,
+     }
  
-@@ -2221,7 +2221,7 @@ void tcg_gen_gvec_sub_var(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
-           .fniv = tcg_gen_sub_vec,
-           .fno = gen_helper_gvec_sub64,
-           .opt_opc = vecop_list_sub,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
+     /*
+-     * Implement inline with a vector type, if possible.
+-     * Prefer integer when 64-bit host and 64-bit comparison.
++     * Implement inline with a vector type, if possible;
++     * prefer_i64 for a 64-bit comparison.
+      */
+     hold_list = tcg_swap_vecop_list(cmp_list);
+-    type = choose_vector_type(cmp_list, vece, oprsz,
+-                              TCG_TARGET_REG_BITS == 64 && vece == MO_64);
++    type = choose_vector_type(cmp_list, vece, oprsz, vece == MO_64);
+     switch (type) {
+     case TCG_TYPE_V256:
+         /* Recall that ARM SVE allows vector sizes that are not a
+@@ -3992,11 +3992,10 @@ void tcg_gen_gvec_cmps(TCGCond cond, unsigned vece, uint32_t dofs,
+     }
  
-@@ -2260,7 +2260,7 @@ void tcg_gen_gvec_mul(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_mul_vec,
-           .fno = gen_helper_gvec_mul64,
-           .opt_opc = vecop_list_mul,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-@@ -2289,7 +2289,7 @@ void tcg_gen_gvec_muls(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_mul_vec,
-           .fno = gen_helper_gvec_muls64,
-           .opt_opc = vecop_list_mul,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-@@ -2618,7 +2618,7 @@ void tcg_gen_gvec_neg(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_neg_vec,
-           .fno = gen_helper_gvec_neg64,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-@@ -2682,7 +2682,7 @@ void tcg_gen_gvec_abs(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_abs_vec,
-           .fno = gen_helper_gvec_abs64,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-@@ -2697,7 +2697,7 @@ void tcg_gen_gvec_and(unsigned vece, uint32_t dofs, uint32_t aofs,
-         .fni8 = tcg_gen_and_i64,
-         .fniv = tcg_gen_and_vec,
-         .fno = gen_helper_gvec_and,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (aofs == bofs) {
-@@ -2714,7 +2714,7 @@ void tcg_gen_gvec_or(unsigned vece, uint32_t dofs, uint32_t aofs,
-         .fni8 = tcg_gen_or_i64,
-         .fniv = tcg_gen_or_vec,
-         .fno = gen_helper_gvec_or,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (aofs == bofs) {
-@@ -2731,7 +2731,7 @@ void tcg_gen_gvec_xor(unsigned vece, uint32_t dofs, uint32_t aofs,
-         .fni8 = tcg_gen_xor_i64,
-         .fniv = tcg_gen_xor_vec,
-         .fno = gen_helper_gvec_xor,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (aofs == bofs) {
-@@ -2748,7 +2748,7 @@ void tcg_gen_gvec_andc(unsigned vece, uint32_t dofs, uint32_t aofs,
-         .fni8 = tcg_gen_andc_i64,
-         .fniv = tcg_gen_andc_vec,
-         .fno = gen_helper_gvec_andc,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (aofs == bofs) {
-@@ -2765,7 +2765,7 @@ void tcg_gen_gvec_orc(unsigned vece, uint32_t dofs, uint32_t aofs,
-         .fni8 = tcg_gen_orc_i64,
-         .fniv = tcg_gen_orc_vec,
-         .fno = gen_helper_gvec_orc,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (aofs == bofs) {
-@@ -2782,7 +2782,7 @@ void tcg_gen_gvec_nand(unsigned vece, uint32_t dofs, uint32_t aofs,
-         .fni8 = tcg_gen_nand_i64,
-         .fniv = tcg_gen_nand_vec,
-         .fno = gen_helper_gvec_nand,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (aofs == bofs) {
-@@ -2799,7 +2799,7 @@ void tcg_gen_gvec_nor(unsigned vece, uint32_t dofs, uint32_t aofs,
-         .fni8 = tcg_gen_nor_i64,
-         .fniv = tcg_gen_nor_vec,
-         .fno = gen_helper_gvec_nor,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (aofs == bofs) {
-@@ -2816,7 +2816,7 @@ void tcg_gen_gvec_eqv(unsigned vece, uint32_t dofs, uint32_t aofs,
-         .fni8 = tcg_gen_eqv_i64,
-         .fniv = tcg_gen_eqv_vec,
-         .fno = gen_helper_gvec_eqv,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-     };
- 
-     if (aofs == bofs) {
-@@ -2830,7 +2830,7 @@ static const GVecGen2s gop_ands = {
-     .fni8 = tcg_gen_and_i64,
-     .fniv = tcg_gen_and_vec,
-     .fno = gen_helper_gvec_ands,
--    .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+    .prefer_i64 = true,
-     .vece = MO_64
- };
- 
-@@ -2857,7 +2857,7 @@ void tcg_gen_gvec_andcs(unsigned vece, uint32_t dofs, uint32_t aofs,
-         .fni8 = tcg_gen_andc_i64,
-         .fniv = tcg_gen_andc_vec,
-         .fno = gen_helper_gvec_andcs,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+        .prefer_i64 = true,
-         .vece = MO_64
-     };
- 
-@@ -2871,7 +2871,7 @@ static const GVecGen2s gop_xors = {
-     .fni8 = tcg_gen_xor_i64,
-     .fniv = tcg_gen_xor_vec,
-     .fno = gen_helper_gvec_xors,
--    .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+    .prefer_i64 = true,
-     .vece = MO_64
- };
- 
-@@ -2895,7 +2895,7 @@ static const GVecGen2s gop_ors = {
-     .fni8 = tcg_gen_or_i64,
-     .fniv = tcg_gen_or_vec,
-     .fno = gen_helper_gvec_ors,
--    .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+    .prefer_i64 = true,
-     .vece = MO_64
- };
- 
-@@ -2967,7 +2967,7 @@ void tcg_gen_gvec_shli(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_shli_vec,
-           .fno = gen_helper_gvec_shl64i,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-@@ -3032,7 +3032,7 @@ void tcg_gen_gvec_shri(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_shri_vec,
-           .fno = gen_helper_gvec_shr64i,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-@@ -3125,7 +3125,7 @@ void tcg_gen_gvec_sari(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_sari_vec,
-           .fno = gen_helper_gvec_sar64i,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-@@ -3184,7 +3184,7 @@ void tcg_gen_gvec_rotli(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_rotli_vec,
-           .fno = gen_helper_gvec_rotl64i,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-@@ -3513,7 +3513,7 @@ void tcg_gen_gvec_shlv(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_shlv_mod_vec,
-           .fno = gen_helper_gvec_shl64v,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-@@ -3576,7 +3576,7 @@ void tcg_gen_gvec_shrv(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_shrv_mod_vec,
-           .fno = gen_helper_gvec_shr64v,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-@@ -3639,7 +3639,7 @@ void tcg_gen_gvec_sarv(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_sarv_mod_vec,
-           .fno = gen_helper_gvec_sar64v,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-@@ -3702,7 +3702,7 @@ void tcg_gen_gvec_rotlv(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_rotlv_mod_vec,
-           .fno = gen_helper_gvec_rotl64v,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-@@ -3761,7 +3761,7 @@ void tcg_gen_gvec_rotrv(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = tcg_gen_rotrv_mod_vec,
-           .fno = gen_helper_gvec_rotr64v,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index bc3a07f972..41bf047b8d 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -3006,7 +3006,7 @@ static void gen_PMOVMSKB(DisasContext *s, X86DecodedInsn *decode)
-         .fniv = gen_pmovmskb_vec,
-         .opt_opc = vecop_list,
-         .vece = MO_64,
--        .prefer_i64 = TCG_TARGET_REG_BITS == 64
-+        .prefer_i64 = true
-     };
-     MemOp ot = decode->op[2].ot;
-     int vec_len = vector_len(s, decode);
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 2a487179f6..caefd38216 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -1489,7 +1489,7 @@ static void tcg_gen_gvec_rsubs(unsigned vece, uint32_t dofs, uint32_t aofs,
-           .fniv = gen_rsub_vec,
-           .fno = gen_helper_vec_rsubs64,
-           .opt_opc = vecop_list,
--          .prefer_i64 = TCG_TARGET_REG_BITS == 64,
-+          .prefer_i64 = true,
-           .vece = MO_64 },
-     };
- 
+     /*
+-     * Implement inline with a vector type, if possible.
+-     * Prefer integer when 64-bit host and 64-bit comparison.
++     * Implement inline with a vector type, if possible;
++     * prefer_i64 for a 64-bit comparison.
+      */
+-    type = choose_vector_type(cmp_list, vece, oprsz,
+-                              TCG_TARGET_REG_BITS == 64 && vece == MO_64);
++    type = choose_vector_type(cmp_list, vece, oprsz, vece == MO_64);
+     if (type != 0) {
+         const TCGOpcode *hold_list = tcg_swap_vecop_list(cmp_list);
+         TCGv_vec t_vec = tcg_temp_new_vec(type);
 -- 
 2.43.0
 
