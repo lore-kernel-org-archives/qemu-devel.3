@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC9FC9830C
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BD0AC98315
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:06:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhauP-0005ei-QY; Sun, 18 Jan 2026 17:06:09 -0500
+	id 1vhat3-0000tA-Ut; Sun, 18 Jan 2026 17:04:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhau3-0004X4-JJ
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:47 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1vhasm-0000UP-0w
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:04:30 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhaty-0000wV-Jg
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:46 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-29f0f875bc5so25188625ad.3
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:05:42 -0800 (PST)
+ id 1vhasj-0000SI-Bn
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:04:27 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2a3e76d0f64so23698025ad.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:04:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768773941; x=1769378741; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768773864; x=1769378664; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SRTKY77Q5AGOWWtgWUqll/eZ5kBhHSvVz6RI7rqXw3s=;
- b=CHoH1mn7qz6q6W51iyKzq3z69hwUZw+e4Wkaz4DlOWCx4c+R6bqc0r7pT5FWojw4nT
- lZqcOY5baY6IGw1UoG7+yq9rR/b3GZAuF2eGuT403mZXaW5QUcOoxQYWstW5IhcX415+
- HDANawinJcZBWv4NW/9359vvYC5qrEC0kKKxexhxWWC7SuDPvzxA/+dcUH0ca64VSRos
- 49YGyBgwmgypJgQffBtNG+GyFafC2UMyx46Cyf0cVITdsZtnKJaCBdh8RhF54dakkxAc
- AmPyUq1Vyq//iXCa4JJFQnt5idTVnPO94Zbz+w9Lt40GWP+lGlZNKNZDuS9DqN76MTTR
- PObw==
+ bh=wxgl+NvwjE6afUEeClSmXGywb0xq3jmuZXqbn2txRNc=;
+ b=iAMN3JR+EYRKV2pFyTbb3uelOx6rqIHG2Nuan8giu/sUnRmahNPC669SaRW40PFseb
+ oaG35tEBmZXX1jnX3jutvGVX9NLo1u3920c4lEc7XEvJGe3bKCMSnunoAnGrhjN31skk
+ q0I1oh0noDYwjYrP/3gCCzzCiDvXqJA8Mvxy1EwqN6PiTe1UVkjxd1IwtXX0j2pd34DY
+ 4Q8jTgfdD1FxeD9+Guoov+FNI0PuHFGn5ledNL9CWWGUaB5/8qYHpF73ICeazUQVXlVp
+ /RFTrsvOZ0znhmp0XoBFk0GE4aAvyeI6cebAmC+N4OC0+0184Ka7mAFSbz+MAyqNnvc+
+ kaig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768773941; x=1769378741;
+ d=1e100.net; s=20230601; t=1768773864; x=1769378664;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SRTKY77Q5AGOWWtgWUqll/eZ5kBhHSvVz6RI7rqXw3s=;
- b=skh6sBkMclOoeeViwuUiLAGi3n8pdzY/BIBvxkEys7eeWWThDTzFbapRMjv9pfAJMA
- f1luy4anPPknTB48MEVEpj/TycXpTICqc9OymaoAfdiaBfij8gYSpXIU8afPIWpbJsNd
- /mx45RErjRSHk+5ie2moRyZXciWPvufs6aijikKrFQhhYi37mW9tch22IVI4K7U0pAnu
- QaMRKk+ZAr8uSkO1uZY0l1XUmbpbWBc46JeQg2Hi5Vz5MM2So4Meo0TDhPCwSG2nQ8up
- CNqMsYc5mlLSb4ch2UEiozmuX1RsFOcOpiGxkR1Ftm0YxzxXNXv9EnExL3t8rvIE8Gul
- Nyvw==
-X-Gm-Message-State: AOJu0YzrvGRItapHNME3C4lnejt8YXqIjHFdf7UMBNLZbIEiBCRr7XCF
- kRyRfXb8JgbCQ0g/hcgSV1bg5am07dFyQKsV7cNpg4O4T0yX7NhukA6JJlUzi6gZDa5cgKVtyGq
- v557e25JOfA==
-X-Gm-Gg: AY/fxX7uDsnfbwtEI0vyYWpQYmXIN+r6tOlP/JUK6TcOvKO8qGeG/2EQpuHF3NIs5Xs
- 3/zw+Yaliz6/af+r1JzFKgXXcp9tX0xBBlLtWLvc/7x3Wy7fiUXzvBJ/2gz43dbsZIkDC7zdCXc
- kK0Rn0Xo1qyV73r/O0E3AmTsjaf1J72brCQflucV4o996W1wtjlSSToJLeH4KO1aN+UzzyQEV/y
- UECGPK/M1jGlCC6s+y+vrkTiUIpFyQq0Dm5lrLeCtj9vvAMyKl+FwDPo/LxqyArwQCz9+2uP1s3
- 2LBk+rZ9Q0qRYqbSnPXr7GAqpvYtKx0kOxDuM5vxRTbspfvo/vlLKjqtifC89rbcrbgd82RXnki
- NreFr1AUZlS/iiDWmbYGM+58C0Qs9yuK0CCwRZR0MqqJQEinXD3J4RIwsoemw1V8zn3ND9lbwIN
- lQtYHn/PV5ofwgTuBB8A==
-X-Received: by 2002:a17:903:40cb:b0:2a0:faf1:782 with SMTP id
- d9443c01a7336-2a717519edbmr68746205ad.9.1768773940990; 
- Sun, 18 Jan 2026 14:05:40 -0800 (PST)
+ bh=wxgl+NvwjE6afUEeClSmXGywb0xq3jmuZXqbn2txRNc=;
+ b=OHQ50i50Lnh6+tAClyDi3dS/nDeT7n+BsZmgbiDHKS1klMeyoPcdzvOV6FWjTeM6V3
+ 01Qd4Oi+6Ay1kfJ/8j4MsJnFudaF1gF2qvqlanCnMjekilDxQDrVEioCSQxo5a7FTMoH
+ R9h8i842niBsIO5nlleh2T5QyP7Rw6T2MBorYHecqK5wU6zENY0Ta4X9YinUt8FPjlu3
+ MBSUXLNEFRXFXt7WbKjt0ht+dwngUrJh5DsiunwBNyomdc9FG4X+7tadEQpNDqFzDgif
+ s0DeyHBEHdgnIBnnUlPi4s+M0nratlUiYo9ie1pir7hUqDsaEsvwIwgSnQA9kzMwLqG4
+ QRJQ==
+X-Gm-Message-State: AOJu0Yy7o0HjXBdCUJ2JKBLcXPwS1S/HN9P9rVbDSziPVKCtmwVVgg+w
+ QmOPp/qyD7l7DWd7k6yd0OikwE1CMxUy2M/tCmwAu0Y/lHBiR8muBJP2qxGEHEi0o17ZQ1v1rDA
+ +DysikK2gMw==
+X-Gm-Gg: AY/fxX7EGP+i5nCtHp12iNtlruhwIU88f7IX/m5WIC9A5nR67V6AneXjec/vxHo5Ksc
+ h4jLjIuNGF/WSOOnzjnxL6LFCc52F6x0mdF2hD+XbmGjmd2GdQCGZy1ziFfxGR/2526K4ZaSbph
+ NDTNQHDpu0njMUgDaxsbKfKRfllgWUAyKFhW1WrhjxCpqeOgFYmFQp0KNhB8umqD39Usa/Uq5Ic
+ TA7F91OQFlmzY23HXoWVv9bSh+rOdJdz3R4LsCIVq8hC4mg3AXXHsE+QTrfVgLiDtRmuIGX5Pev
+ MDgJPqy8RMdSJDLHdbMHbXir22Rn4KieMk1qC4zAXa5DtRDeQOgILKusaAsXuM3HGs3q7OdBChQ
+ LXauO266+JpMh5BsfXiNUOB4lnPswPMyFIwV4tXwHGg25lJGzcmE6OtiUKj07tI3dsy1/vVoKhe
+ y+LcF02GFc50t52RxogLGpPJ602fR9c8tTGX/UpnA=
+X-Received: by 2002:a17:903:1108:b0:294:f6e5:b91a with SMTP id
+ d9443c01a7336-2a7009ba1a2mr111512495ad.13.1768773863727; 
+ Sun, 18 Jan 2026 14:04:23 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7193dbb74sm74402865ad.56.2026.01.18.14.05.39
+ d9443c01a7336-2a7193dbb74sm74402865ad.56.2026.01.18.14.04.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 14:05:40 -0800 (PST)
+ Sun, 18 Jan 2026 14:04:23 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 34/54] include/tcg: Drop TCG_TARGET_REG_BITS tests
-Date: Mon, 19 Jan 2026 09:03:54 +1100
-Message-ID: <20260118220414.8177-35-richard.henderson@linaro.org>
+Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Subject: [PULL 02/54] tests/docker/dockerfiles: Drop wasm32 from
+ emsdk-wasm-cross.docker
+Date: Mon, 19 Jan 2026 09:03:22 +1100
+Message-ID: <20260118220414.8177-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260118220414.8177-1-richard.henderson@linaro.org>
 References: <20260118220414.8177-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -99,131 +100,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+We will no longer build wasm32, so drop the docker config.
+Streamline the dockerfile to hardcode TARGET_CPU as wasm64.
+
+Reviewed-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg-op.h  |  9 +++------
- include/tcg/tcg-opc.h |  5 +----
- include/tcg/tcg.h     | 27 ++-------------------------
- 3 files changed, 6 insertions(+), 35 deletions(-)
+ .gitlab-ci.d/container-cross.yml                 |  1 -
+ tests/docker/dockerfiles/emsdk-wasm-cross.docker | 15 ++++-----------
+ 2 files changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
-index 232733cb71..ee379994e7 100644
---- a/include/tcg/tcg-op.h
-+++ b/include/tcg/tcg-op.h
-@@ -31,8 +31,7 @@
- #if TARGET_INSN_START_EXTRA_WORDS == 0
- static inline void tcg_gen_insn_start(target_ulong pc)
- {
--    TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
--                            INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
-+    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, INSN_START_WORDS);
-     tcg_set_insn_start_param(op, 0, pc);
-     tcg_set_insn_start_param(op, 1, 0);
-     tcg_set_insn_start_param(op, 2, 0);
-@@ -40,8 +39,7 @@ static inline void tcg_gen_insn_start(target_ulong pc)
- #elif TARGET_INSN_START_EXTRA_WORDS == 1
- static inline void tcg_gen_insn_start(target_ulong pc, target_ulong a1)
- {
--    TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
--                            INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
-+    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, INSN_START_WORDS);
-     tcg_set_insn_start_param(op, 0, pc);
-     tcg_set_insn_start_param(op, 1, a1);
-     tcg_set_insn_start_param(op, 2, 0);
-@@ -50,8 +48,7 @@ static inline void tcg_gen_insn_start(target_ulong pc, target_ulong a1)
- static inline void tcg_gen_insn_start(target_ulong pc, target_ulong a1,
-                                       target_ulong a2)
- {
--    TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
--                            INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
-+    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, INSN_START_WORDS);
-     tcg_set_insn_start_param(op, 0, pc);
-     tcg_set_insn_start_param(op, 1, a1);
-     tcg_set_insn_start_param(op, 2, a2);
-diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
-index 28806057c5..61f1c28858 100644
---- a/include/tcg/tcg-opc.h
-+++ b/include/tcg/tcg-opc.h
-@@ -109,9 +109,7 @@ DEF(extu_i32_i64, 1, 1, 0, 0)
- DEF(extrl_i64_i32, 1, 1, 0, 0)
- DEF(extrh_i64_i32, 1, 1, 0, 0)
+diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
+index 6bdd482b80..b376c837dc 100644
+--- a/.gitlab-ci.d/container-cross.yml
++++ b/.gitlab-ci.d/container-cross.yml
+@@ -90,5 +90,4 @@ wasm64-emsdk-cross-container:
+   extends: .container_job_template
+   variables:
+     NAME: emsdk-wasm64-cross
+-    BUILD_ARGS: --build-arg TARGET_CPU=wasm64
+     DOCKERFILE: emsdk-wasm-cross
+diff --git a/tests/docker/dockerfiles/emsdk-wasm-cross.docker b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
+index ecd5a02903..8a924816f9 100644
+--- a/tests/docker/dockerfiles/emsdk-wasm-cross.docker
++++ b/tests/docker/dockerfiles/emsdk-wasm-cross.docker
+@@ -7,7 +7,6 @@ ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
+ ARG PIXMAN_VERSION=0.44.2
+ ARG FFI_VERSION=v3.5.2
+ ARG MESON_VERSION=1.5.0
+-ARG TARGET_CPU=wasm32
  
--#define DATA64_ARGS  (TCG_TARGET_REG_BITS == 64 ? 1 : 2)
+ FROM docker.io/emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base-common
+ ARG MESON_VERSION
+@@ -31,21 +30,16 @@ RUN mkdir /build
+ WORKDIR /build
+ RUN mkdir -p $TARGET
+ 
+-FROM build-base-common AS build-base-wasm32
 -
--DEF(insn_start, 0, 0, DATA64_ARGS * INSN_START_WORDS, TCG_OPF_NOT_PRESENT)
-+DEF(insn_start, 0, 0, INSN_START_WORDS, TCG_OPF_NOT_PRESENT)
+-FROM build-base-common AS build-base-wasm64
++FROM build-base-common AS build-base
+ ENV CFLAGS="$CFLAGS -sMEMORY64=1"
+ ENV CXXFLAGS="$CXXFLAGS -sMEMORY64=1"
+ ENV LDFLAGS="$LDFLAGS -sMEMORY64=1"
+-
+-FROM build-base-${TARGET_CPU} AS build-base
+-ARG TARGET_CPU
+ RUN <<EOF
+ cat <<EOT > /cross.meson
+ [host_machine]
+ system = 'emscripten'
+-cpu_family = '${TARGET_CPU}'
+-cpu = '${TARGET_CPU}'
++cpu_family = 'wasm64'
++cpu = 'wasm64'
+ endian = 'little'
  
- DEF(exit_tb, 0, 0, 1, TCG_OPF_BB_EXIT | TCG_OPF_BB_END | TCG_OPF_NOT_PRESENT)
- DEF(goto_tb, 0, 0, 1, TCG_OPF_BB_EXIT | TCG_OPF_BB_END | TCG_OPF_NOT_PRESENT)
-@@ -184,5 +182,4 @@ DEF(last_generic, 0, 0, 0, TCG_OPF_NOT_PRESENT)
+ [binaries]
+@@ -67,14 +61,13 @@ RUN emconfigure ./configure --prefix=$TARGET --static
+ RUN emmake make install -j$(nproc)
  
- #include "tcg-target-opc.h.inc"
- 
--#undef DATA64_ARGS
- #undef DEF
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index 067150c542..60942ce05c 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -43,19 +43,10 @@
- #define CPU_TEMP_BUF_NLONGS 128
- #define TCG_STATIC_FRAME_SIZE  (CPU_TEMP_BUF_NLONGS * sizeof(long))
- 
--#if TCG_TARGET_REG_BITS == 32
--typedef int32_t tcg_target_long;
--typedef uint32_t tcg_target_ulong;
--#define TCG_PRIlx PRIx32
--#define TCG_PRIld PRId32
--#elif TCG_TARGET_REG_BITS == 64
- typedef int64_t tcg_target_long;
- typedef uint64_t tcg_target_ulong;
- #define TCG_PRIlx PRIx64
- #define TCG_PRIld PRId64
--#else
--#error unsupported
--#endif
- 
- #if TCG_TARGET_NB_REGS <= 32
- typedef uint32_t TCGRegSet;
-@@ -147,11 +138,7 @@ typedef enum TCGType {
- #define TCG_TYPE_COUNT  (TCG_TYPE_V256 + 1)
- 
-     /* An alias for the size of the host register.  */
--#if TCG_TARGET_REG_BITS == 32
--    TCG_TYPE_REG = TCG_TYPE_I32,
--#else
-     TCG_TYPE_REG = TCG_TYPE_I64,
--#endif
- 
-     /* An alias for the size of the native pointer.  */
- #if UINTPTR_MAX == UINT32_MAX
-@@ -605,23 +592,13 @@ static inline void tcg_set_insn_param(TCGOp *op, unsigned arg, TCGArg v)
- static inline uint64_t tcg_get_insn_start_param(TCGOp *op, unsigned arg)
- {
-     tcg_debug_assert(arg < INSN_START_WORDS);
--    if (TCG_TARGET_REG_BITS == 64) {
--        return tcg_get_insn_param(op, arg);
--    } else {
--        return deposit64(tcg_get_insn_param(op, arg * 2), 32, 32,
--                         tcg_get_insn_param(op, arg * 2 + 1));
--    }
-+    return tcg_get_insn_param(op, arg);
- }
- 
- static inline void tcg_set_insn_start_param(TCGOp *op, unsigned arg, uint64_t v)
- {
-     tcg_debug_assert(arg < INSN_START_WORDS);
--    if (TCG_TARGET_REG_BITS == 64) {
--        tcg_set_insn_param(op, arg, v);
--    } else {
--        tcg_set_insn_param(op, arg * 2, v);
--        tcg_set_insn_param(op, arg * 2 + 1, v >> 32);
--    }
-+    tcg_set_insn_param(op, arg, v);
- }
- 
- /* The last op that was emitted.  */
+ FROM build-base AS libffi-dev
+-ARG TARGET_CPU
+ ARG FFI_VERSION
+ RUN mkdir -p /libffi
+ RUN git clone https://github.com/libffi/libffi /libffi
+ WORKDIR /libffi
+ RUN git checkout $FFI_VERSION
+ RUN autoreconf -fiv
+-RUN emconfigure ./configure --host=${TARGET_CPU}-unknown-linux \
++RUN emconfigure ./configure --host=wasm64-unknown-linux \
+     --prefix=$TARGET --enable-static \
+     --disable-shared --disable-dependency-tracking \
+     --disable-builddir --disable-multi-os-directory \
 -- 
 2.43.0
 
