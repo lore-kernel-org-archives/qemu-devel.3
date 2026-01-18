@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 802F8C9830C
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 23:15:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF43CA5FE1
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 23:21:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhbz0-0005W3-2x; Sun, 18 Jan 2026 18:14:58 -0500
+	id 1vhc59-0008CV-Fh; Sun, 18 Jan 2026 18:21:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhbyx-0005Vb-FT
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 18:14:55 -0500
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vhc57-0008BJ-KH
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 18:21:17 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhbyv-0002NM-Q2
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 18:14:55 -0500
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-c5513f598c0so1455961a12.0
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 15:14:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vhc54-0003jx-VH
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 18:21:17 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4801c314c84so20775265e9.0
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 15:21:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768778092; x=1769382892; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XhAUbnqlPhbpyyOgoHFg3IWwc5lGnTET1sHtc7Z7qgs=;
- b=GHf4WqoBV3qYhvIi7QdWACA166xcML+jiSR62fpAS0UDA9qkbvVXs4Idvu/gyqH3Wj
- aO8MVmx2NlM8yPlLOo3Ccti8ySCRijmEd4NyyWeF7NaunaK5tnKerOGA3QUTeuTBcbXW
- eboqfi7c9DiRFpxPiflVsgXWcAYrOFnZwyOiWF7YA/vrtsV/I8uTAxGhlvOori4Xv3Br
- R2weg1tAUT/e7jjj2JwdpZOYMaqr9BthNaM9alu1GYb4u+C/Hq9ce8gmKEfavnkDQ2B3
- /uHxW3+Rmm6pl2rsmPLoFUVPsIf04TdVpgEL6O6NfwqRb720oPI3Sx/DWhonjfFFyPiu
- HcJQ==
+ d=gmail.com; s=20230601; t=1768778473; x=1769383273; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Oi+8iRPhyIsFnki7pDengp9/o/rjfpHUeK4b5AYYbhs=;
+ b=gzRtUbQr4Kn5WEeItBwS/7o0v+k5dUsgrnb3gfKaTcqpG6cW9VyAp5APsp9X2iUTBL
+ AQHOvNTDbcDx6VPf521I4l9sFzXPwGvtabQpBVeLSc5kd3F2R8bIpinCRuUEocVs4KiX
+ s2u3Qozg9S+S+gphPUlanCUtjfJuL/hi1TE1V6gBVaOTwgEoDr1AdVD8q20hhDkf1H7P
+ PFSGGLyWlnxFFhE1kJkIcCeh0lGmgWNz0PeCiOV4C5bk+QR3pBJLpkwrL6PYKkZ0f9U1
+ j00b/mh5tHPNEfq74FjJ7+PLwsRPFt0LD0QaDBoDEVWW5xZ7gFvortnxd0DmfHyc9XSZ
+ UrVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768778092; x=1769382892;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XhAUbnqlPhbpyyOgoHFg3IWwc5lGnTET1sHtc7Z7qgs=;
- b=mpby+FX0xRS7NZ8ahAjEn+0r7h+/Mev4DoVApIkfQLIJ4NcEgTQPuEWnuFBfvpzISy
- WBidzzcdfVguu76GLWIsaluWoW+dOwckOC24S5+xqkyhou0xGVdWwJRyHeIyKhudS5f8
- 7ZHqLsZR8GvYA63+c87bpZNW9RjpzkOyciPgyIVnMNOikHAL7Dm+ynM6vqn/T4uZoeku
- ErvzJjsgCNp7u5Vai5k7ebJPAkLdL6KichbxKo9t0VuR4SXS+IR8ppBWGRRfReTMo3xb
- c+UFtT4RIQiMjQcbaKd/ng74VecNJPCDJqHatT9hAUmOU9cKf3p21kymb9/rZ/Bp0FKt
- Hs2w==
+ d=1e100.net; s=20230601; t=1768778473; x=1769383273;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Oi+8iRPhyIsFnki7pDengp9/o/rjfpHUeK4b5AYYbhs=;
+ b=MFeEEKjBX7a3HldrN0SJ+6bq9t7NW0OMapy2AQj2tCvu21rZUYTd0PYL4XbMUWTnbO
+ 7bFpkWf1DuC0UA3tAtAUMIjagWJsnimz4ys57j28z8ENV8M9/JZX6TEaZN0S4Rc5BbmT
+ aUgAu6Yp1axnqCnabYkuhj8j+HUm4iu+FW+wLOn3Sh8ejYhWnHzBifGfpz9WQ2utkOq0
+ vSW/z/ROvvLWqFN04jO2gYEzS2H+Babxx+uDnfd0EGs8cJpZoAg4e75boYSwXE7nMrmH
+ zr8GUFUAy96MAExisiC0rpxUkpFNjk6BY5yXFC2LmqIxL/QM/l16PuCTV/KoBnK9CI0k
+ 1Huw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXh5D4zoBfhGBOTLTHa+2rIM7DxX/wGf6r625iM+tEgzcB34M5HUnTz4sYhR3SU6wYy8YOefGw9kRh/@nongnu.org
-X-Gm-Message-State: AOJu0YzV0/ZEJ2YtmbtdTjzuZG1aVbIawDNqh3ewp0dh2r+pRFY+YOgx
- Q/EwLLxnB2AYcVV/UAA7l4UWJorumE4X5wB+JXdtnDMydNmlIeCTK1lvR0sCCEZeN74=
-X-Gm-Gg: AY/fxX5fEkh+hnl/1RiXyjLJ6s4rnvnt/dTYZBmzLReUq2Nd5QiuJp1UVvXcx6NzPnq
- Ed2jxH0kCbPean8vt8yHBQvcDCgt2ThqxGQoMvGpl/Yom8VuND90p5Ij32vX1TBoerwGvJ5Yvme
- 87XpG3ZB2psib89s7RHSy5kBr1mPQJ7dYIebKGKpGIGgCMu4Ug+RdI/rJm1Ro5wmLjQd2svKa6R
- wiL1N4EKAdn38ZnjiUCzzGAF66GwTRJstVxY/BBIZw3YUASex2+BbTftVbKkHsf8pahkPrlf258
- nKQXKiZzBwLHnkFagko3GOgVj91Zcl+NpylPjbKpFwScJq3uS/J/7fh4PeIYyCTioBzJ+uDnPw9
- ZEDnTLDl+B4R9cRqa4OGnYWii/+sgrnsPnDDe3xhs1ojzGjd9zCJxehnIEiDHuRssD7shyt4wEF
- TfOeVxhiUn+Dc+T0wLTjD9KzEKAUsRIw==
-X-Received: by 2002:a17:90b:3148:b0:34d:1d54:8bcf with SMTP id
- 98e67ed59e1d1-35272f025e0mr8406727a91.9.1768778091909; 
- Sun, 18 Jan 2026 15:14:51 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
+ AJvYcCWaKeXq931+8+/LO9dzFfUDaYFGizuN8YBqlPQr3Px4qlufmw2moL0HQt/IMzR+9fRmv8ElR9RN5kMw@nongnu.org
+X-Gm-Message-State: AOJu0YwiLPzBxBIu9Ie6CRZIH598I64gh3048j6sRlH3x4CfcHD9rmbD
+ CLusTxzsuxO+boA0XyiQTuzAgDO8Ppf7yhDa7A9ufRZPObtOs9njuuCM
+X-Gm-Gg: AY/fxX4OXd5OuayDcDdDoOWD79/QGcuI103DVugJQfAVBuRY43Krv5uufrg9AwF+Sef
+ g3eB2JJUE06cwJVzkoAdDQTtAr6/YdU6SmYDqxWKibsba0xh0Y6L5dSohPAEht6zmsAfw0HOd2I
+ +avbpW5uW/TfR6gW+5QNYMABUoOglXL1lwDT8EHJnzS3O0x7wts8nJeqtqXE9/To2W4XOvKng8m
+ IVZAwN7a/iJbOtilcuDXAWNYZXxPrNg0PsZPVc6yKPuOGEIEfuPAvtcck2IUesL5v1hzFKvVuR6
+ VhWHa2Ty087Sdv8HPb5byfeCp9K8QKY26zCLqEjNIUO/lx0nWb/CtKuWaFmhpa6uc/g//yrVqDg
+ KYO6tpRA/iY+ebYsVdF6g5AA+UCA+Oc/TSJK/A9BXO65sdjgfmnpz9VmL3EKqgUZLrZk34X2G0c
+ bNrEhMvsnQEQAnQwrYWJcEoCCjC8h7q1sf1bmo7AlzHjCA7kfUroAGZByNoDEWBPqZDErm1l4BJ
+ Nwgkz5jvC6x3AYOZqBic1qRGCJnGAEVCNGhCZXVPaVtBg==
+X-Received: by 2002:a05:6000:2c0a:b0:430:ff41:5c87 with SMTP id
+ ffacd0b85a97d-43569bd490amr11644588f8f.60.1768778472368; 
+ Sun, 18 Jan 2026 15:21:12 -0800 (PST)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-2f50-f200-f91d-651c-a220-693b.310.pool.telefonica.de.
+ [2a02:3100:2f50:f200:f91d:651c:a220:693b])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-352678af047sm9759292a91.10.2026.01.18.15.14.48
+ ffacd0b85a97d-43569997f41sm18664913f8f.38.2026.01.18.15.21.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 18 Jan 2026 15:14:51 -0800 (PST)
-Message-ID: <0b039878-da3d-4e94-af4a-4ccc94cfb0bb@linaro.org>
-Date: Mon, 19 Jan 2026 10:14:45 +1100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 04/18] system/memory: Introduce ldm_p() and stm_p()
- load/store helpers
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Sun, 18 Jan 2026 15:21:11 -0800 (PST)
+Date: Sun, 18 Jan 2026 22:56:29 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Anton Johansson <anjo@rev.ng>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260118193509.42923-1-philmd@linaro.org>
- <20260118193509.42923-5-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260118193509.42923-5-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+CC: Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org,
+ Guenter Roeck <linux@roeck-us.net>, Bin Meng <bmeng.cn@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH 00/14] Freescale SDHCI Fixes
+In-Reply-To: <4add79fa-6cee-4795-96e9-033ae98c472e@linaro.org>
+References: <20260112145418.220506-1-shentey@gmail.com>
+ <4add79fa-6cee-4795-96e9-033ae98c472e@linaro.org>
+Message-ID: <3F4EA15D-0769-4FF6-BC25-B1052EA69032@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,20 +108,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/19/26 06:34, Philippe Mathieu-Daudé wrote:
-> Introduce load/store helpers which take a MemOp argument.
-> 
-> Inspired-by: Paolo Bonzini<pbonzini@redhat.com>
-> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
-> Possible optimization:
-> https://lore.kernel.org/qemu-devel/546f3a4b-64ff-4f63-bb07-f5cb52b6c64c@redhat.com/
-> ---
->   include/qemu/bswap.h | 72 ++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 72 insertions(+)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~
+Am 18=2E Januar 2026 18:23:11 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <p=
+hilmd@linaro=2Eorg>:
+>> Bernhard Beschow (14):
+>>    hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement sd-spec-version 3 by
+>>      default
+>>    hw/arm/fsl-imx6: Remove now redundant setting of "sd-spec-version"
+>>      property
+>>    hw/arm/fsl-imx6: Fix naming of SDHCI related constants and attribute=
+s
+>>    hw/arm/fsl-imx25: Apply missing reset quirk
+>>    Revert "hw/sd/sdhci: Rename ESDHC_* defines to USDHC_*"
+>>    hw/sd/sdhci: Consolidate eSDHC constants
+>>    hw/sd/sdhci: Rename usdhc_ functions
+>>    hw/sd/sdhci: Add TYPE_FSL_ESDHC_BE
+>>    hw/ppc/e500: Use TYPE_FSL_ESDHC_BE
+>>    hw/arm/fsl-imx25: Extract TYPE_FSL_ESDHC_LE
+>>    hw/sd/sdhci: Remove endianness property
+>>    hw/sd/sdhci: Add uSDHC-specific quirk
+>>    hw/sd/sdhci: Remove vendor property
+>>    hw/sd/trace-events: Remove redundant "SWITCH " command name
+>
+>Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+>
+>and queued, thanks!
+
+Thanks, Phil!
+
+Could you do me a favor and drop patch "hw/sd/sdhci: Add uSDHC-specific qu=
+irk" for now? Although the patch does solve a boot problem I think it needs=
+ some more thought=2E Thanks!
+
+Best regards,
+Bernhard
 
