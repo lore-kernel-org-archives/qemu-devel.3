@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64C8CC98315
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5919C98315
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:09:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhaxK-0008J7-Di; Sun, 18 Jan 2026 17:09:14 -0500
+	id 1vhaxF-0007Ui-4O; Sun, 18 Jan 2026 17:09:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhaxI-0007zj-9s
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:08 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1vhaxC-0007H4-Uz
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:03 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhaxG-0001bn-Oo
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:07 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2a102494058so22845135ad.0
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:09:06 -0800 (PST)
+ id 1vhaxA-0001aj-8u
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:02 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2a0c20ee83dso33746725ad.2
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:08:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768774145; x=1769378945; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768774139; x=1769378939; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7cyYL4DVaKa33AbZpjE1YQS7WRtchLKWVUrU1QN8V2g=;
- b=YyVtVg5wUMi7A6/rmNNS221NcLzH5rKQ/JhFjTKUAD3A5NCfSD2FOJ16wRieUFoZ0s
- IE7hwhnzGzabLKG2S9KdWbAwuukgpxPm7pJZmCs/bRWvEwhAZpja7HYzHDb0zBdoa1VG
- hwwumqiYZLw2x4kSKZAUYvtvrMmsuNHzk4z3qF/A2fYVBKvNMrhI8V6qLzas9hDchNDm
- gEmzZDFtp2pKCuVAXMsJmwk6Dn6/AQ3nostlDpWeXO0FtHC7AmiBaI78ezovL7i+eb9w
- vzgB9HRvyii9BZpbDjCGVvgE1iXP+sYSlserqFf5hosE2byRGOAc4P3zyS48rE7U0t3T
- g+Yw==
+ bh=rE9SCEsfxqLkJO7HvWLWosr5Ikr+Oai+wZCJ1H9Hel0=;
+ b=RsCQl6zEmNfGfNQqVOrWwsJ0Vg/mVXYxoWunHzf2Mkw19fL+nFMOXsLjJOaAxwMJLh
+ EZu5KHecYFd/ZwbCpLqq16oa5XMB3h4okC0B9YfbO+en8Fh4DhSGnlBpT2pZZ9vo09tB
+ WqySoiBp4Ikg+knsvjR68Di+DHW774VpoDttbaAXE2W7ZmdIPm5JqytBQvRKfDaHgnsK
+ 5dagACOx36x7dPWe5z7gCJKb9PZQZn/R1+3/MQLaLdTbmEwVYUgkrOLuv+NPjhWeUfo0
+ H0Dn8d3FVuaoU+Xw8z4C7hlvd+E0JGelMRF6ZSDdoKI/WY9JetdAIJqKuhw12R+xC5ze
+ 0etw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768774145; x=1769378945;
+ d=1e100.net; s=20230601; t=1768774139; x=1769378939;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=7cyYL4DVaKa33AbZpjE1YQS7WRtchLKWVUrU1QN8V2g=;
- b=aZkz+fwurAoGWWFgn/W7v07Mbrvm4wLojEP9X8JoveE9sD738GjqFgKcroxDLRtWdW
- 6t92/BpKtIz/6RTUxSblF4pWiVbCtu02+DyFgQoeAf+UQu06+GXjZqdg/3Gm7d4Ka8r2
- zWpFOdlA8yQ3Zhb1jYjjfSOmTbqqou6iBDHAcg42bEa1/QRX2yxmzZItZ8Bf9njvwf13
- ztCfgJ2R+z3JCjiHAbuRB5+3VBKW/rG6oMZWAXse+y+v29o0BNX1Ibwfov6w79s30TgC
- xeZQ8t0TlUYPQzw87/MmIDMX7yoYbs+p+QrSI2woDrik1Q92v0OlktJDSUBB2WtB9mCI
- hUBA==
-X-Gm-Message-State: AOJu0YxeP7AiqHKKxPiE2YeqbkEv86B803KgBCxguO6CYobrodAu+n3Y
- zUdRFNLHnn0yDULSvUocdRxkXc9rvQehO5K9JeHxMGtqHDHItHKgHWcvXFjh0BQ68deMvnPYBm9
- QfB1/9rB3oQ==
-X-Gm-Gg: AY/fxX5CGVN38creUrYkI8DCBf6r+HgVn2h3nHwF+2afg6NXV0Oh1skOUQKleShSl0t
- ZoIYEacIeBnyzbQtco7vsmesYOrt2iHwBAD1YKZDdtaSRgq/82RVo9TQimY+ObBK+H3ZxnNFp02
- I4Z1g4305SsGK3Rq6o5NaAWoc0MuH9h69TZYaJjYYne9d/1Lg18CnWXe+NWAPqTyB2UFsbq7jaq
- 4iFVYGZGfavG7nyP8vQuhVtZCI3xSGs8pW81GQZ5VjTWMUvnwsjQopVCXcYt6GSBr/WaAKfbjhU
- kcOqZhm+I9k2yih4zjlPmHMyo0QtP1Oy4/wtwDJ0JS6bO8Aihsk1YdBUb4moBw0k8ZB6BQc645A
- DIPSLsWl7jSw2fujetZVLlgQrLSdZtap5DBx1FnJKeu/ut49Juh/edJGzjKVnOrb1Cj04G1tfbg
- RE65LmYIGrkK1bvnBpeGsgjOCapPW1
-X-Received: by 2002:a17:902:f686:b0:2a0:e5c3:d149 with SMTP id
- d9443c01a7336-2a71780a3e3mr79236195ad.23.1768774145138; 
- Sun, 18 Jan 2026 14:09:05 -0800 (PST)
+ bh=rE9SCEsfxqLkJO7HvWLWosr5Ikr+Oai+wZCJ1H9Hel0=;
+ b=pXN5m6nh5xRebVUy9bOt6Q1gkkcrR168QA1O2kSiWaK8erox13aKR3aG+dSvxi39ut
+ qdKUkZ59CZfRIoI/GJlTWS6YrI3dh8jgVgxuiL0a+SnSiqgzsDmEU5WOVWR/SzJrn3pf
+ 49SroRaV/NSGXv6aemSO9sUcmF7Bwo4uZAzalUXXMFCZBo0QwiBKY/aVpAxazRP+3LIW
+ 00hB5KYighue1PVPJe5YlYIYE2ySdd8sJux9GuWhcdZnVUD3XHe+4IBvzLxqbQW70aI0
+ kGH0VgpMqgoznWM32rtdu29XJbv3NSrmFv+bjGImNWs+CbxMo8rrFJdIZ6iPTUn+JMeN
+ gznA==
+X-Gm-Message-State: AOJu0Yz3Y+j6RwQQSTmSUqthy0lD4SVpDHe2bayJnd3L3LwpzRH1LE7R
+ gorqiSFdvdu6L44VoH8MLLCeGep32pypYtikhY+7LPWw7Kg49CzSR+8fiHakLJ/hcnKMq/O8rW2
+ beFfdOrBxkg==
+X-Gm-Gg: AY/fxX5spX38ZtdKDzAYCPwfLLic48WTEAAd28iIPP16kK3/j64Pl748/+DDikbxJar
+ 1OoZdro1FGys4ZxS9dW42lBRP9xm+iU6WGof1SNmVpMpvGJEXFk/fkK7fXDLaAbHT8c4ga9wSKX
+ HdHakJME9Mk3l8wUl5cJq2qt0nEo9VvR3bJDN8qnefXxL+er5EjcecR8mbnJRTXHjzbOT8s43nD
+ 6qHseSeDBgPZo+tVyBuwOf1j/DyvAZ0ncX9vdmthDl2NBKHm5/r5XrKDI2YM0kfUjPSOt4N6KXl
+ FbpPUPQ7KMe43HScg+0SM1hBwTOjvb59d9+kM2gNY/8j3K0XusidotoUPd7/mTFIOUhNpfYvBBJ
+ CSojANeXVU3D/EbaaicnbNbbrSQpBOKOzNnJg9nHrISRf4HWjTyA0Itos/ba51xXYTIH8vG9RIV
+ s/0oSsnnErvyg1jGA5ikIfzsyscmXy
+X-Received: by 2002:a17:902:c951:b0:2a0:de4f:ca7 with SMTP id
+ d9443c01a7336-2a7174efc8amr92610895ad.1.1768774138699; 
+ Sun, 18 Jan 2026 14:08:58 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7190ab921sm73298205ad.8.2026.01.18.14.09.03
+ d9443c01a7336-2a7190ab921sm73298205ad.8.2026.01.18.14.08.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 14:09:04 -0800 (PST)
+ Sun, 18 Jan 2026 14:08:58 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 43/54] linux-user/hppa: Drop CONFIG_ATOMIC64 test
-Date: Mon, 19 Jan 2026 09:04:03 +1100
-Message-ID: <20260118220414.8177-44-richard.henderson@linaro.org>
+Subject: [PULL 40/54] accel/tcg: Drop CONFIG_ATOMIC64 checks from
+ ldst_atomicicy.c.inc
+Date: Mon, 19 Jan 2026 09:04:00 +1100
+Message-ID: <20260118220414.8177-41-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260118220414.8177-1-richard.henderson@linaro.org>
 References: <20260118220414.8177-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -99,38 +100,394 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+CONFIG_ATOMIC64 is a configuration knob for 32-bit hosts.
+
+This allows removal of functions like load_atomic8_or_exit
+and simplification of load_atom_extract_al8_or_exit to
+load_atom_extract_al8.
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/hppa/cpu_loop.c | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ accel/tcg/cputlb.c             |  35 +-------
+ accel/tcg/ldst_atomicity.c.inc | 149 +++++----------------------------
+ 2 files changed, 24 insertions(+), 160 deletions(-)
 
-diff --git a/linux-user/hppa/cpu_loop.c b/linux-user/hppa/cpu_loop.c
-index 356cb48acc..e5c0f52d94 100644
---- a/linux-user/hppa/cpu_loop.c
-+++ b/linux-user/hppa/cpu_loop.c
-@@ -83,20 +83,8 @@ static abi_ulong hppa_lws(CPUHPPAState *env)
-                 uint64_t o64, n64, r64;
-                 o64 = *(uint64_t *)g2h(cs, old);
-                 n64 = *(uint64_t *)g2h(cs, new);
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index a6774083b0..6900a12682 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -2080,25 +2080,6 @@ static uint64_t do_ld_parts_beN(MMULookupPageData *p, uint64_t ret_be)
+     return ret_be;
+ }
+ 
+-/**
+- * do_ld_parts_be4
+- * @p: translation parameters
+- * @ret_be: accumulated data
+- *
+- * As do_ld_bytes_beN, but with one atomic load.
+- * Four aligned bytes are guaranteed to cover the load.
+- */
+-static uint64_t do_ld_whole_be4(MMULookupPageData *p, uint64_t ret_be)
+-{
+-    int o = p->addr & 3;
+-    uint32_t x = load_atomic4(p->haddr - o);
+-
+-    x = cpu_to_be32(x);
+-    x <<= o * 8;
+-    x >>= (4 - p->size) * 8;
+-    return (ret_be << (p->size * 8)) | x;
+-}
+-
+ /**
+  * do_ld_parts_be8
+  * @p: translation parameters
+@@ -2111,7 +2092,7 @@ static uint64_t do_ld_whole_be8(CPUState *cpu, uintptr_t ra,
+                                 MMULookupPageData *p, uint64_t ret_be)
+ {
+     int o = p->addr & 7;
+-    uint64_t x = load_atomic8_or_exit(cpu, ra, p->haddr - o);
++    uint64_t x = load_atomic8(p->haddr - o);
+ 
+     x = cpu_to_be64(x);
+     x <<= o * 8;
+@@ -2176,11 +2157,7 @@ static uint64_t do_ld_beN(CPUState *cpu, MMULookupPageData *p,
+         if (atom == MO_ATOM_IFALIGN_PAIR
+             ? p->size == half_size
+             : p->size >= half_size) {
+-            if (!HAVE_al8_fast && p->size < 4) {
+-                return do_ld_whole_be4(p, ret_be);
+-            } else {
+-                return do_ld_whole_be8(cpu, ra, p, ret_be);
+-            }
++            return do_ld_whole_be8(cpu, ra, p, ret_be);
+         }
+         /* fall through */
+ 
+@@ -2586,13 +2563,7 @@ static uint64_t do_st_leN(CPUState *cpu, MMULookupPageData *p,
+         if (atom == MO_ATOM_IFALIGN_PAIR
+             ? p->size == half_size
+             : p->size >= half_size) {
+-            if (!HAVE_al8_fast && p->size <= 4) {
+-                return store_whole_le4(p->haddr, p->size, val_le);
+-            } else if (HAVE_al8) {
+-                return store_whole_le8(p->haddr, p->size, val_le);
+-            } else {
+-                cpu_loop_exit_atomic(cpu, ra);
+-            }
++            return store_whole_le8(p->haddr, p->size, val_le);
+         }
+         /* fall through */
+ 
+diff --git a/accel/tcg/ldst_atomicity.c.inc b/accel/tcg/ldst_atomicity.c.inc
+index c735add261..f5b8289009 100644
+--- a/accel/tcg/ldst_atomicity.c.inc
++++ b/accel/tcg/ldst_atomicity.c.inc
+@@ -12,13 +12,6 @@
+ #include "host/load-extract-al16-al8.h.inc"
+ #include "host/store-insert-al16.h.inc"
+ 
 -#ifdef CONFIG_ATOMIC64
--                r64 = qatomic_cmpxchg__nocheck((aligned_uint64_t *)g2h(cs, addr),
--                                               o64, n64);
-+                r64 = qatomic_cmpxchg((aligned_uint64_t *)g2h(cs, addr), o64, n64);
-                 ret = r64 != o64;
+-# define HAVE_al8          true
 -#else
--                start_exclusive();
--                r64 = *(uint64_t *)g2h(cs, addr);
--                ret = 1;
--                if (r64 == o64) {
--                    *(uint64_t *)g2h(cs, addr) = n64;
--                    ret = 0;
--                }
--                end_exclusive();
+-# define HAVE_al8          false
 -#endif
+-#define HAVE_al8_fast      (ATOMIC_REG_SIZE >= 8)
+-
+ /**
+  * required_atomicity:
+  *
+@@ -132,44 +125,7 @@ static inline uint32_t load_atomic4(void *pv)
+ static inline uint64_t load_atomic8(void *pv)
+ {
+     uint64_t *p = __builtin_assume_aligned(pv, 8);
+-
+-    qemu_build_assert(HAVE_al8);
+-    return qatomic_read__nocheck(p);
+-}
+-
+-/**
+- * load_atomic8_or_exit:
+- * @cpu: generic cpu state
+- * @ra: host unwind address
+- * @pv: host address
+- *
+- * Atomically load 8 aligned bytes from @pv.
+- * If this is not possible, longjmp out to restart serially.
+- */
+-static uint64_t load_atomic8_or_exit(CPUState *cpu, uintptr_t ra, void *pv)
+-{
+-    if (HAVE_al8) {
+-        return load_atomic8(pv);
+-    }
+-
+-#ifdef CONFIG_USER_ONLY
+-    /*
+-     * If the page is not writable, then assume the value is immutable
+-     * and requires no locking.  This ignores the case of MAP_SHARED with
+-     * another process, because the fallback start_exclusive solution
+-     * provides no protection across processes.
+-     */
+-    WITH_MMAP_LOCK_GUARD() {
+-        if (!page_check_range(h2g(pv), 8, PAGE_WRITE_ORG)) {
+-            uint64_t *p = __builtin_assume_aligned(pv, 8);
+-            return *p;
+-        }
+-    }
+-#endif
+-
+-    /* Ultimate fallback: re-execute in serial context. */
+-    trace_load_atom8_or_exit_fallback(ra);
+-    cpu_loop_exit_atomic(cpu, ra);
++    return qatomic_read(p);
+ }
+ 
+ /**
+@@ -264,9 +220,7 @@ static uint64_t load_atom_extract_al8x2(void *pv)
+ }
+ 
+ /**
+- * load_atom_extract_al8_or_exit:
+- * @cpu: generic cpu state
+- * @ra: host unwind address
++ * load_atom_extract_al8
+  * @pv: host address
+  * @s: object size in bytes, @s <= 4.
+  *
+@@ -275,15 +229,14 @@ static uint64_t load_atom_extract_al8x2(void *pv)
+  * 8-byte load and extract.
+  * The value is returned in the low bits of a uint32_t.
+  */
+-static uint32_t load_atom_extract_al8_or_exit(CPUState *cpu, uintptr_t ra,
+-                                              void *pv, int s)
++static uint32_t load_atom_extract_al8(void *pv, int s)
+ {
+     uintptr_t pi = (uintptr_t)pv;
+     int o = pi & 7;
+     int shr = (HOST_BIG_ENDIAN ? 8 - s - o : o) * 8;
+ 
+     pv = (void *)(pi & ~7);
+-    return load_atomic8_or_exit(cpu, ra, pv) >> shr;
++    return load_atomic8(pv) >> shr;
+ }
+ 
+ /**
+@@ -297,7 +250,7 @@ static uint32_t load_atom_extract_al8_or_exit(CPUState *cpu, uintptr_t ra,
+  * and p % 16 + s > 8.  I.e. does not cross a 16-byte
+  * boundary, but *does* cross an 8-byte boundary.
+  * This is the slow version, so we must have eliminated
+- * any faster load_atom_extract_al8_or_exit case.
++ * any faster load_atom_extract_al8 case.
+  *
+  * If this is not possible, longjmp out to restart serially.
+  */
+@@ -374,21 +327,6 @@ static inline uint64_t load_atom_8_by_4(void *pv)
+     }
+ }
+ 
+-/**
+- * load_atom_8_by_8_or_4:
+- * @pv: host address
+- *
+- * Load 8 bytes from aligned @pv, with at least 4-byte atomicity.
+- */
+-static inline uint64_t load_atom_8_by_8_or_4(void *pv)
+-{
+-    if (HAVE_al8_fast) {
+-        return load_atomic8(pv);
+-    } else {
+-        return load_atom_8_by_4(pv);
+-    }
+-}
+-
+ /**
+  * load_atom_2:
+  * @p: host address
+@@ -418,12 +356,8 @@ static uint16_t load_atom_2(CPUState *cpu, uintptr_t ra,
+         return lduw_he_p(pv);
+     case MO_16:
+         /* The only case remaining is MO_ATOM_WITHIN16. */
+-        if (!HAVE_al8_fast && (pi & 3) == 1) {
+-            /* Big or little endian, we want the middle two bytes. */
+-            return load_atomic4(pv - 1) >> 8;
+-        }
+         if ((pi & 15) != 7) {
+-            return load_atom_extract_al8_or_exit(cpu, ra, pv, 2);
++            return load_atom_extract_al8(pv, 2);
+         }
+         return load_atom_extract_al16_or_exit(cpu, ra, pv, 2);
+     default:
+@@ -468,7 +402,7 @@ static uint32_t load_atom_4(CPUState *cpu, uintptr_t ra,
+         return load_atom_extract_al4x2(pv);
+     case MO_32:
+         if (!(pi & 4)) {
+-            return load_atom_extract_al8_or_exit(cpu, ra, pv, 4);
++            return load_atom_extract_al8(pv, 4);
+         }
+         return load_atom_extract_al16_or_exit(cpu, ra, pv, 4);
+     default:
+@@ -493,7 +427,7 @@ static uint64_t load_atom_8(CPUState *cpu, uintptr_t ra,
+      * If the host does not support 8-byte atomics, wait until we have
+      * examined the atomicity parameters below.
+      */
+-    if (HAVE_al8 && likely((pi & 7) == 0)) {
++    if (likely((pi & 7) == 0)) {
+         return load_atomic8(pv);
+     }
+     if (HAVE_ATOMIC128_RO) {
+@@ -502,30 +436,9 @@ static uint64_t load_atom_8(CPUState *cpu, uintptr_t ra,
+ 
+     atmax = required_atomicity(cpu, pi, memop);
+     if (atmax == MO_64) {
+-        if (!HAVE_al8 && (pi & 7) == 0) {
+-            load_atomic8_or_exit(cpu, ra, pv);
+-        }
+         return load_atom_extract_al16_or_exit(cpu, ra, pv, 8);
+     }
+-    if (HAVE_al8_fast) {
+-        return load_atom_extract_al8x2(pv);
+-    }
+-    switch (atmax) {
+-    case MO_8:
+-        return ldq_he_p(pv);
+-    case MO_16:
+-        return load_atom_8_by_2(pv);
+-    case MO_32:
+-        return load_atom_8_by_4(pv);
+-    case -MO_32:
+-        if (HAVE_al8) {
+-            return load_atom_extract_al8x2(pv);
+-        }
+-        trace_load_atom8_fallback(memop, ra);
+-        cpu_loop_exit_atomic(cpu, ra);
+-    default:
+-        g_assert_not_reached();
+-    }
++    return load_atom_extract_al8x2(pv);
+ }
+ 
+ /**
+@@ -565,18 +478,10 @@ static Int128 load_atom_16(CPUState *cpu, uintptr_t ra,
+         b = load_atom_8_by_4(pv + 8);
+         break;
+     case MO_64:
+-        if (!HAVE_al8) {
+-            trace_load_atom16_fallback(memop, ra);
+-            cpu_loop_exit_atomic(cpu, ra);
+-        }
+         a = load_atomic8(pv);
+         b = load_atomic8(pv + 8);
+         break;
+     case -MO_64:
+-        if (!HAVE_al8) {
+-            trace_load_atom16_fallback(memop, ra);
+-            cpu_loop_exit_atomic(cpu, ra);
+-        }
+         a = load_atom_extract_al8x2(pv);
+         b = load_atom_extract_al8x2(pv + 8);
+         break;
+@@ -624,9 +529,7 @@ static inline void store_atomic4(void *pv, uint32_t val)
+ static inline void store_atomic8(void *pv, uint64_t val)
+ {
+     uint64_t *p = __builtin_assume_aligned(pv, 8);
+-
+-    qemu_build_assert(HAVE_al8);
+-    qatomic_set__nocheck(p, val);
++    qatomic_set(p, val);
+ }
+ 
+ /**
+@@ -688,9 +591,8 @@ static void store_atom_insert_al8(uint64_t *p, uint64_t val, uint64_t msk)
+ {
+     uint64_t old, new;
+ 
+-    qemu_build_assert(HAVE_al8);
+     p = __builtin_assume_aligned(p, 8);
+-    old = qatomic_read__nocheck(p);
++    old = qatomic_read(p);
+     do {
+         new = (old & ~msk) | val;
+     } while (!__atomic_compare_exchange_n(p, &old, new, true,
+@@ -802,7 +704,6 @@ static uint64_t store_whole_le8(void *pv, int size, uint64_t val_le)
+     uint64_t m = MAKE_64BIT_MASK(0, sz);
+     uint64_t v;
+ 
+-    qemu_build_assert(HAVE_al8);
+     if (HOST_BIG_ENDIAN) {
+         v = bswap64(val_le) >> sh;
+         m = bswap64(m) >> sh;
+@@ -887,10 +788,8 @@ static void store_atom_2(CPUState *cpu, uintptr_t ra,
+         store_atom_insert_al4(pv - 1, (uint32_t)val << 8, MAKE_64BIT_MASK(8, 16));
+         return;
+     } else if ((pi & 7) == 3) {
+-        if (HAVE_al8) {
+-            store_atom_insert_al8(pv - 3, (uint64_t)val << 24, MAKE_64BIT_MASK(24, 16));
+-            return;
+-        }
++        store_atom_insert_al8(pv - 3, (uint64_t)val << 24, MAKE_64BIT_MASK(24, 16));
++        return;
+     } else if ((pi & 15) == 7) {
+         if (HAVE_CMPXCHG128) {
+             Int128 v = int128_lshift(int128_make64(val), 56);
+@@ -957,10 +856,8 @@ static void store_atom_4(CPUState *cpu, uintptr_t ra,
+         return;
+     case MO_32:
+         if ((pi & 7) < 4) {
+-            if (HAVE_al8) {
+-                store_whole_le8(pv, 4, cpu_to_le32(val));
+-                return;
+-            }
++            store_whole_le8(pv, 4, cpu_to_le32(val));
++            return;
+         } else {
+             if (HAVE_CMPXCHG128) {
+                 store_whole_le16(pv, 4, int128_make64(cpu_to_le32(val)));
+@@ -988,7 +885,7 @@ static void store_atom_8(CPUState *cpu, uintptr_t ra,
+     uintptr_t pi = (uintptr_t)pv;
+     int atmax;
+ 
+-    if (HAVE_al8 && likely((pi & 7) == 0)) {
++    if (likely((pi & 7) == 0)) {
+         store_atomic8(pv, val);
+         return;
+     }
+@@ -1005,7 +902,7 @@ static void store_atom_8(CPUState *cpu, uintptr_t ra,
+         store_atom_8_by_4(pv, val);
+         return;
+     case -MO_32:
+-        if (HAVE_al8) {
++        {
+             uint64_t val_le = cpu_to_le64(val);
+             int s2 = pi & 7;
+             int s1 = 8 - s2;
+@@ -1024,9 +921,8 @@ static void store_atom_8(CPUState *cpu, uintptr_t ra,
+             default:
+                 g_assert_not_reached();
              }
-             break;
-         default:
+-            return;
+         }
+-        break;
++        return;
+     case MO_64:
+         if (HAVE_CMPXCHG128) {
+             store_whole_le16(pv, 8, int128_make64(cpu_to_le64(val)));
+@@ -1077,12 +973,9 @@ static void store_atom_16(CPUState *cpu, uintptr_t ra,
+         store_atom_8_by_4(pv + 8, b);
+         return;
+     case MO_64:
+-        if (HAVE_al8) {
+-            store_atomic8(pv, a);
+-            store_atomic8(pv + 8, b);
+-            return;
+-        }
+-        break;
++        store_atomic8(pv, a);
++        store_atomic8(pv + 8, b);
++        return;
+     case -MO_64:
+         if (HAVE_CMPXCHG128) {
+             uint64_t val_le;
 -- 
 2.43.0
 
