@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02782CA5FE1
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B7F1C98315
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhatv-0003Og-09; Sun, 18 Jan 2026 17:05:39 -0500
+	id 1vhaxd-0000oC-Mk; Sun, 18 Jan 2026 17:09:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhati-0002RC-SP
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:28 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1vhaxT-0000EN-3r
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:19 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhath-0000sO-CK
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:26 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2a102494058so22840015ad.0
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:05:24 -0800 (PST)
+ id 1vhaxR-0001dT-NG
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:18 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2a0c09bb78cso27711075ad.0
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:09:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768773924; x=1769378724; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768774156; x=1769378956; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E3quorIoavgbRlUqCdA1N/hSlFNVi1G5ba+Ci7qX808=;
- b=Cax0Zoj53Ddf9qgvbbJruRAjm3rWVuvqGWCirKBKvQyQXhKuG0DfpmGD0nojuSI6LS
- egSgRK130UwYUEYN+qwHKzQ9aNfXnzTSTkAUBvTfDZ+WRgCl3x/qcJNwDx/2kRmGcusx
- NFwxE+8dnb43kbOk9BHOE89Wi0oO085c7C/24NYMG6bPcf20+jlhACPumn7c0tRGB5i5
- 62S5NiwOyfo+4kP4xMPzlccKn9qTwTmziFV5UdIVchb2gsoPRGQKs20Ay0i3PFkGq5Ah
- 7mfF9Szuh354jMZ5ZQa77rts15AFSAqhd3TBtBDVuG4dsxQ0oyXJGan/08a9Kep3btyZ
- 7eNw==
+ bh=3agDLlzr0Vtwe03Q0XoUK7yGFQ6c06YyHNp7mf4+w4w=;
+ b=pBxiu2TyGqVMslBxChp7GSqvuS0pJFUFzWaoclxkG1Bi3LFZqgBLwv+ySwUaD3ggyO
+ jsnd/dWFjxsuFLQOAu/ZuHqr5djEQjf41NORelDZfz/JwZ6OmE/wS0/iuSHehU2h2dCY
+ i8KJsLGE53LAaEE0cytRyqR/eN/rU3UvYQXEcEsoquh9PY1L4UPZoGFYh2BnC6byvtkZ
+ a7g/l+05PL02QHqj/kYZXPccWCPWDqSIWaOo9hxzxqpWLlypVnPFBHQH6gpWKrkmuv2j
+ CRH1PLkK+BqjW8uW8EYD9+fiTLZ3KhQ6dus9JPq4cGuA4gEZ991ha3Eixznw8E4NTnR3
+ N+ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768773924; x=1769378724;
+ d=1e100.net; s=20230601; t=1768774156; x=1769378956;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=E3quorIoavgbRlUqCdA1N/hSlFNVi1G5ba+Ci7qX808=;
- b=PXx+e2eN9JJg1L+qzCvM91Y1IdKEQ8KgrIeJopd41Uju4BE7gt22e7ixly5cIkVdEp
- upz9v0Avm+FlubUu+NizBYPasrk73Fcw+a30KIfpQwsN6Sr94nGGFMJG8WMsNMnIc23W
- AF4gQD6MEIyqb5bcNSkCrLlKirqQtmLe3S6QJIoqiugYBMcivmTR0QkE4Z0uo6xlnLcM
- B8ZsrLQo4ynnNlRKtGuA97LsxYze6xCO1myBSgRiKuY7F+STZHNNetr6MOcQer53sAGU
- lcJbn4OVraWuBkrlkCcglW4g6gupc/2Ng5V67azzJx2d4tQEwx9Bet3/upX5lQvIGiTH
- Pabg==
-X-Gm-Message-State: AOJu0Yyd5p8kowqhrkERkcmZrXzjZLMX9Iu7SZM1MDN/Qh3UztPRV382
- LicTLWbXOBO64rz+Yam9wX4pex0wzaLB5ysETZZqmw6i8RCCIBqMyPqCt+Ez5Dref66g6S/X4c+
- nOfbmOGLu6g==
-X-Gm-Gg: AY/fxX7iiSXee33UXIY6StEsJ0RDgvXoDV6V4daEX519sH5qVDo2Ma8K3whPT6bxfWC
- YRU8GuYxs920vJyUDa6Q0sKIEVtRSwEUS9juHiL4KLtjXrFYGt93fESxZX4djeD7SRpe+ELiFFM
- bCyx49j83PbBJW0sg9GsO3eydYEyf60c5LtoUPzkxAmIUyn3229SbmXBtZ7xK+g3zTIGi68cxHn
- np49fqeifYZA8Tv8OZ4cQjyFyaXHsII28fRXk5+w2fmdRX6MNVfFyYJUnyfLb6pt/97FhawK5T/
- 91F+eoL/TkMsblNCwVfjxhY2YKjhIrjlB4xFWn1IhckEnHvSiXv3RM4TCZUhN87XPYtJCR/dl0j
- PDYFPF9cC3XtLYnsgYMWhFa1FwNBqi9JMu20Dg/pZeZGYHKcQYxNZ4wuqFlt1qWevFcxNP0J8DK
- XnXabnWMDhPSmvqxM+Jg==
-X-Received: by 2002:a17:902:e745:b0:2a3:ccf5:6691 with SMTP id
- d9443c01a7336-2a71782783emr104058355ad.30.1768773923937; 
- Sun, 18 Jan 2026 14:05:23 -0800 (PST)
+ bh=3agDLlzr0Vtwe03Q0XoUK7yGFQ6c06YyHNp7mf4+w4w=;
+ b=ob+zzdjVLtxB0WBFx1jbLK16v8l0Uaa/5jDZvpJCxrVrV6kOHzcC1dlS4N6SjqM1FS
+ RTWlmlHw2yVyAAp4vfaozQJ6ZQvctccNgvs8oPrdLMP4C43BK3sja+k/RC8QejeKYwTU
+ 5c75Xr41R/Mpot8vYC77rqlit3b/u7zzNFKJf5T107pTgDEROAYEBpc/eYYO2FsIiCLI
+ t8woajEhbc5iQ8Y9w4GG7enusVVIlOEhY9hQAQXVqWtZLre8skSn2BYkO4PS7KBINY2Y
+ xJbxNfG0vuyIQKY28dwk2or9P2IywuBi1aNuN6lVT93+K+aBd2YomKY5d8IuEF9Rd2un
+ yXVQ==
+X-Gm-Message-State: AOJu0YyF22uSs7PYxJXAUCw1zDRJF9tNs35U51/UxvReWGenfDNBoepX
+ 6KfIDhmnWEDda11b9OlgcrsW/pYDH6h8jfEZ3tJ/1nRwvB2xOiLLykEzY9ZmwGGYyRVc00hG06S
+ dWZimFTHkJg==
+X-Gm-Gg: AY/fxX4QlrrszFBUWToJn3iKaW2UAB5wwUs8TEUKIeeEePn2UT4ISjS7N6Wptkfafur
+ YdHpOy/ckYXNU3YcRqqHkhBV5+ddg/d5acSIdFI9B0vOqT1z1nD5THEkvn4RbPymCKGI/WgahTh
+ AZ15gMLVcfH76sRQB4Y9W2tESTEMFtX8J3MKpSrUo0NU1wBXv8j6syDjNEHd9XZrkaY/32AmG6D
+ YaRoNBieiBcwNxeWhTDaLfDT3zeo7EfYZI5eQt8fEs19k70zC1RyhoK+cNAkpDNDxg+/M/gMMNK
+ JRr1SGmpl6+7uwU44G0i2exM2UpJOwg/K4Ke/xs7lGq/LNcQwWNA/mpqRC5GhJljvR3HOHm73r+
+ qKnumcSAeEyr/NUgManggb1iZa0Xg/B3VS+Dn6G6Bk7UvIbJBGDMTD+LcIMYuJnYbxPlYS3Lb8y
+ as9bhkCa+VF9ZJn5kXcg==
+X-Received: by 2002:a17:902:f650:b0:2a3:ccfc:4de5 with SMTP id
+ d9443c01a7336-2a700978f8bmr133427955ad.5.1768774156272; 
+ Sun, 18 Jan 2026 14:09:16 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7193dbb74sm74402865ad.56.2026.01.18.14.05.21
+ d9443c01a7336-2a7190ab921sm73298205ad.8.2026.01.18.14.09.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 14:05:23 -0800 (PST)
+ Sun, 18 Jan 2026 14:09:15 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 26/54] tcg/tci: Remove glue TCG_TARGET_REG_BITS renames
-Date: Mon, 19 Jan 2026 09:03:46 +1100
-Message-ID: <20260118220414.8177-27-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 48/54] target/s390x: Simplify atomicity check in do_csst
+Date: Mon, 19 Jan 2026 09:04:08 +1100
+Message-ID: <20260118220414.8177-49-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260118220414.8177-1-richard.henderson@linaro.org>
 References: <20260118220414.8177-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -101,57 +99,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+We should have used MO_{32,64} from the start, rather than
+raw integer constants.  However, now that the CONFIG_ATOMIC64
+test has been removed, we can remove the 'max' variable and
+simplify the two blocks.
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/tci.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ target/s390x/tcg/mem_helper.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/tcg/tci.c b/tcg/tci.c
-index f71993c287..29ecb39929 100644
---- a/tcg/tci.c
-+++ b/tcg/tci.c
-@@ -26,11 +26,6 @@
- #include <ffi.h>
+diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
+index 0b8b6d3bbb..2a79a789f6 100644
+--- a/target/s390x/tcg/mem_helper.c
++++ b/target/s390x/tcg/mem_helper.c
+@@ -1813,13 +1813,10 @@ static uint32_t do_csst(CPUS390XState *env, uint32_t r3, uint64_t a1,
+      * restart early if we can't support either operation that is supposed
+      * to be atomic.
+      */
+-    if (parallel) {
+-        uint32_t max = 2;
+-        max = 3;
+-        if ((HAVE_CMPXCHG128 ? 0 : fc + 2 > max) ||
+-            (HAVE_ATOMIC128_RW ? 0 : sc > max)) {
+-            cpu_loop_exit_atomic(env_cpu(env), ra);
+-        }
++    if (parallel &&
++        ((!HAVE_CMPXCHG128 && fc + 2 > MO_64) ||
++         (!HAVE_ATOMIC128_RW && sc > MO_64))) {
++        cpu_loop_exit_atomic(env_cpu(env), ra);
+     }
  
- 
--#define ctpop_tr    glue(ctpop, TCG_TARGET_REG_BITS)
--#define deposit_tr  glue(deposit, TCG_TARGET_REG_BITS)
--#define extract_tr  glue(extract, TCG_TARGET_REG_BITS)
--#define sextract_tr glue(sextract, TCG_TARGET_REG_BITS)
--
- /*
-  * Enable TCI assertions only when debugging TCG (and without NDEBUG defined).
-  * Without assertions, the interpreter runs much faster.
-@@ -525,7 +520,7 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
-             break;
-         case INDEX_op_ctpop:
-             tci_args_rr(insn, &r0, &r1);
--            regs[r0] = ctpop_tr(regs[r1]);
-+            regs[r0] = ctpop64(regs[r1]);
-             break;
-         case INDEX_op_addco:
-             tci_args_rrr(insn, &r0, &r1, &r2);
-@@ -639,15 +634,15 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
-             break;
-         case INDEX_op_deposit:
-             tci_args_rrrbb(insn, &r0, &r1, &r2, &pos, &len);
--            regs[r0] = deposit_tr(regs[r1], pos, len, regs[r2]);
-+            regs[r0] = deposit64(regs[r1], pos, len, regs[r2]);
-             break;
-         case INDEX_op_extract:
-             tci_args_rrbb(insn, &r0, &r1, &pos, &len);
--            regs[r0] = extract_tr(regs[r1], pos, len);
-+            regs[r0] = extract64(regs[r1], pos, len);
-             break;
-         case INDEX_op_sextract:
-             tci_args_rrbb(insn, &r0, &r1, &pos, &len);
--            regs[r0] = sextract_tr(regs[r1], pos, len);
-+            regs[r0] = sextract64(regs[r1], pos, len);
-             break;
-         case INDEX_op_brcond:
-             tci_args_rl(insn, tb_ptr, &r0, &ptr);
+     /*
 -- 
 2.43.0
 
