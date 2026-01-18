@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD9D1C98315
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61174C98315
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:09:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhatI-00023H-3r; Sun, 18 Jan 2026 17:05:05 -0500
+	id 1vhatp-0002cn-0j; Sun, 18 Jan 2026 17:05:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhatB-0001pj-5w
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:04:53 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1vhatN-00029f-Kv
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:07 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhat8-0000WJ-Ej
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:04:52 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2a1022dda33so22054835ad.2
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:04:50 -0800 (PST)
+ id 1vhatL-0000d6-Fu
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:05:04 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2a110548cdeso24515685ad.0
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:05:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768773889; x=1769378689; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768773901; x=1769378701; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UanRVIi+nePBx9P9C2dWtHxLGCeZ+PWfJ962yXiADQc=;
- b=BitKkuLNRHvAcIgf58hxp8T30f8baegGgA1O7hj7K81Vf0/nvhQxxFemTIpHoUY2Bf
- Bw323PSnTXlW2c9U4ldgqgZiHy1AQuiewkl0Vob6+93YpTP6JCTb/oTFA497q4fNIwVs
- oKsx45+DZ7ecdXbG/kCa74lGl9/+arG1s8fXnhGpOt+p0cM2j6/Rxdda/p3LE+/OeHR7
- ISUEgg8+qAfPKjNoMiLeNdkK6yzfx3ygegioVum5kf20LsHRRF81coCX3/x9lstMHxyw
- aEA8qT0VU1nNwKLC4/pWyJOHzGtR4bQRpRgK9VwWaRqGh1AvilUgW1RJMNbSpGzuAW8k
- 3u4Q==
+ bh=1elLXYSGrJNsfz40yQiYIFdnTmy9vR+YxG5ftNQkGbA=;
+ b=D3qlQ9OXenMm39QsRr4VJTOR/+M132m2owehbRumXFAXMrQOZxPvUFTtbDcH8yVd2k
+ ucgry0T4AmJWZ0+0sUv8rpPzPoenwauJKp//yA1gDxXbcAdpkcbmaClzwzz6p11/UX/3
+ nyvYxj5UQpN4W4KqiAKW1BpjHeGnGkL8pp7ZYfmn6NC9stgXDOqa0bzKfrpcGy5bppFM
+ MhJn771eR+5dVeyzmeRJTEgfPYe+aXIpZWZwgjNnYh2SBJOdIo9uEKWDXAcKlCqclmIu
+ NzsFDcKYVC5FxWshfU+5/EbK+IZKE8D3tVeQix4Vg6H170u32P2Cd8V/59dnvMqTc5uk
+ GpYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768773889; x=1769378689;
+ d=1e100.net; s=20230601; t=1768773901; x=1769378701;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UanRVIi+nePBx9P9C2dWtHxLGCeZ+PWfJ962yXiADQc=;
- b=qf54zAe8nNORpWpzuSeH60BzkVQF7JVjBPe2bD5/KoZhbEaSTsoAcHPQMXyYjbky/r
- oDv6QpV73Aexrle7btYzndXj1Zo/QNfuUMjs1ZaJS28XkV4jB4S2FY+qE+JZXOHJnzkV
- 7iCBW+pHSsKviZkwL6kPoBVDJ9yKBDG2GzMS2EkuMPd5YcIkR9Yq/7lzPM6/HlWikgMF
- /2Cfgtp/jaquQJO31emK9mv91U3oF+PB3x28tUKZ9x64QhRwqL+laoMgPYM1dzWB9VD9
- D8Uyl+CotS7aeyC+oKOy8qs2xkR0Utm359pfWrpaGTVooFtZeC9ZIQh6YmD48JolRlhU
- z7kA==
-X-Gm-Message-State: AOJu0YzZULAFyaQkLP4ZQzKbiMkEUvNBunH35Zf2MxKyCeMC/wuzOeTX
- miGWITPGQXZYFZLLlmvBv4V464j3bTpuQLP36jrGUIRpxgp2bQFIYbbBFPfdrvykTkZSAUdI79L
- Surqw6RtUBA==
-X-Gm-Gg: AY/fxX5F51zhte45Wxo3wAaKPAPrleocwtgVs2huMTSr3jCQ9mu8ubvo1k7WjrQJpbm
- U6ZHmH9FGfo652xAOH9WHS37eXtaOn99iKOb0hrxRyj0rqp3GmxUjj9Lhy2kEUwyRnR5cOItE3A
- bRU0pL+55I5V/1L7BF19wxsicfbPxb1W4KnUEzIY4M5/lMjoW0T0XB/GhwmTYgURkoUWaDT8XwS
- NFjBktPyJarf5h50MDWqj+fJhqBPkWtbbdYdtlfR9gmo7aGNXYqIzvw/37AR3rQ4RwukmE27//m
- hXwg/q9ISn6vniPW+C/Cz0hV/nh3N7m0LLGeq5nJKGHz/+bI+DXa9UnonBKt/rl9iKtXyQTOuIp
- t3OCzBZXiN38kZ9x65WPlx65ZX9WL2gnZ1Z+z+TP6B8bHkIsi3CLl3ZHpxqPDFJnKnCaV0XXOyw
- GuvKtg6tcHQW6xM8K4ZMWG0l4SePO4
-X-Received: by 2002:a17:902:cf4c:b0:29f:2734:6ffb with SMTP id
- d9443c01a7336-2a717545acamr94899975ad.22.1768773888664; 
- Sun, 18 Jan 2026 14:04:48 -0800 (PST)
+ bh=1elLXYSGrJNsfz40yQiYIFdnTmy9vR+YxG5ftNQkGbA=;
+ b=Ok1r+edDeSGxPkknIBFgDUoN1WUi2BA5GgcyTCQS1wzRcF+6tMt96fP6zWt714bX4B
+ Rv4vIyEYpWyjAN3Rmbw0ZwcxQyZf2I3Uir2OrA8aMV3Kz7V/YOVyw4ENPE44gp2piqrR
+ CZgvH6NrT00Z4zoJF1fL5FkQpoXA3VTTqRW3vAuWoQlMf3ocgJ4iW9OHcRXq4zHjNf4j
+ DB6V91mf5Vw3FMmGiU+wE8c1rhOXb7mM/YIG31eiOQGPmsme6Bs7SkGWGr/MehsVPMSB
+ b1fJ4Ag/AItgF/KxiIervv/ANXyymbZay0D/l6ay8s7qhridRVVI2y7wtm5YOdEt2F8I
+ 5dlw==
+X-Gm-Message-State: AOJu0YybV1OCfsr8JrIE+ZlTukn2uVLtxRIFNqHDAqx7IKA8CF7ac7Go
+ C0lgvTIUqzQ+O4T+kHJKAEX/dd8UnPlvkrKSuwRA0y0p1M1B43as5Wa6RULv+rjjdZwjubjvqnn
+ KCixI4t2rYQ==
+X-Gm-Gg: AY/fxX7Fe4TT+euRVHfID06hbZMHkxUCeSdG5AgT+VdIiEZCbPDjKDeD/X5hOE8KDiz
+ KmHK4lOgoBCnQPbONwnaz2Wm74pg1XoiiIWp6DJD3cEYsGMqeGVCBrAKh9qZEXH3j1Unl0X7lIU
+ CRw/FRCthQUtDestjMoBUwwLeI9ZQ4xgSBTSGspEspZGn3qmMc5zsbyOtG5MdvTYeF9iInuWKDX
+ VvpPXBx6EuyugAgeZhAi6wOSz+D0FJRFkiNAgFC1kmveA10IAEqqmGvLJ4yQ0C/5EApk5QMALJI
+ YQmA8y5GDGu+nB/C0PSVYZ2tpSDMSjMNPwyVVpjZiP9mqdgHiF8ZWuj8dcRu5aJTtdkEpdnRphe
+ +fEbfy1QogN+Vj2ksERVwvfGTcrJhBwB00U6FZ9aJH1lJdhc8PYiZRwVcEIbiQbRnxJMkNtRz6v
+ x7/qPnOvd6b103QTs1MQ==
+X-Received: by 2002:a17:902:d488:b0:295:7b89:cb8f with SMTP id
+ d9443c01a7336-2a717413b94mr74261785ad.0.1768773901329; 
+ Sun, 18 Jan 2026 14:05:01 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7193dbb74sm74402865ad.56.2026.01.18.14.04.46
+ d9443c01a7336-2a7193dbb74sm74402865ad.56.2026.01.18.14.04.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 14:04:48 -0800 (PST)
+ Sun, 18 Jan 2026 14:05:01 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 12/54] *: Remove ppc host support
-Date: Mon, 19 Jan 2026 09:03:32 +1100
-Message-ID: <20260118220414.8177-13-richard.henderson@linaro.org>
+Subject: [PULL 17/54] meson: Drop host_arch rename for riscv64
+Date: Mon, 19 Jan 2026 09:03:37 +1100
+Message-ID: <20260118220414.8177-18-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260118220414.8177-1-richard.henderson@linaro.org>
 References: <20260118220414.8177-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -100,658 +101,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the files from host/include/ppc to host/include/ppc64,
-replacing the stub headers that redirected to ppc.
+This requires renaming several directories:
+tcg/riscv, linux-user/include/host/riscv, and
+common-user/host/riscv.
 
-Remove linux-user/include/host/ppc.
-Remove common-user/host/ppc.
-Remove cpu == ppc tests from meson.
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- host/include/ppc/host/cpuinfo.h            |  30 ----
- host/include/ppc/host/crypto/aes-round.h   | 182 --------------------
- host/include/ppc64/host/cpuinfo.h          |  31 +++-
- host/include/ppc64/host/crypto/aes-round.h | 183 ++++++++++++++++++++-
- linux-user/include/host/ppc/host-signal.h  |  39 -----
- common-user/host/ppc/safe-syscall.inc.S    | 107 ------------
- meson.build                                |   4 +-
- 7 files changed, 213 insertions(+), 363 deletions(-)
- delete mode 100644 host/include/ppc/host/cpuinfo.h
- delete mode 100644 host/include/ppc/host/crypto/aes-round.h
- delete mode 100644 linux-user/include/host/ppc/host-signal.h
- delete mode 100644 common-user/host/ppc/safe-syscall.inc.S
+ host/include/{riscv => riscv64}/host/cpuinfo.h           | 0
+ linux-user/include/host/{riscv => riscv64}/host-signal.h | 0
+ tcg/{riscv => riscv64}/tcg-target-con-set.h              | 0
+ tcg/{riscv => riscv64}/tcg-target-con-str.h              | 0
+ tcg/{riscv => riscv64}/tcg-target-has.h                  | 0
+ tcg/{riscv => riscv64}/tcg-target-mo.h                   | 0
+ tcg/{riscv => riscv64}/tcg-target-reg-bits.h             | 0
+ tcg/{riscv => riscv64}/tcg-target.h                      | 0
+ MAINTAINERS                                              | 2 +-
+ common-user/host/{riscv => riscv64}/safe-syscall.inc.S   | 0
+ configure                                                | 4 ++--
+ meson.build                                              | 2 --
+ tcg/{riscv => riscv64}/tcg-target-opc.h.inc              | 0
+ tcg/{riscv => riscv64}/tcg-target.c.inc                  | 0
+ 14 files changed, 3 insertions(+), 5 deletions(-)
+ rename host/include/{riscv => riscv64}/host/cpuinfo.h (100%)
+ rename linux-user/include/host/{riscv => riscv64}/host-signal.h (100%)
+ rename tcg/{riscv => riscv64}/tcg-target-con-set.h (100%)
+ rename tcg/{riscv => riscv64}/tcg-target-con-str.h (100%)
+ rename tcg/{riscv => riscv64}/tcg-target-has.h (100%)
+ rename tcg/{riscv => riscv64}/tcg-target-mo.h (100%)
+ rename tcg/{riscv => riscv64}/tcg-target-reg-bits.h (100%)
+ rename tcg/{riscv => riscv64}/tcg-target.h (100%)
+ rename common-user/host/{riscv => riscv64}/safe-syscall.inc.S (100%)
+ rename tcg/{riscv => riscv64}/tcg-target-opc.h.inc (100%)
+ rename tcg/{riscv => riscv64}/tcg-target.c.inc (100%)
 
-diff --git a/host/include/ppc/host/cpuinfo.h b/host/include/ppc/host/cpuinfo.h
-deleted file mode 100644
-index 38b8eabe2a..0000000000
---- a/host/include/ppc/host/cpuinfo.h
-+++ /dev/null
-@@ -1,30 +0,0 @@
--/*
-- * SPDX-License-Identifier: GPL-2.0-or-later
-- * Host specific cpu identification for ppc.
-- */
--
--#ifndef HOST_CPUINFO_H
--#define HOST_CPUINFO_H
--
--/* Digested version of <cpuid.h> */
--
--#define CPUINFO_ALWAYS          (1u << 0)  /* so cpuinfo is nonzero */
--#define CPUINFO_V2_06           (1u << 1)
--#define CPUINFO_V2_07           (1u << 2)
--#define CPUINFO_V3_0            (1u << 3)
--#define CPUINFO_V3_1            (1u << 4)
--#define CPUINFO_ISEL            (1u << 5)
--#define CPUINFO_ALTIVEC         (1u << 6)
--#define CPUINFO_VSX             (1u << 7)
--#define CPUINFO_CRYPTO          (1u << 8)
--
--/* Initialized with a constructor. */
--extern unsigned cpuinfo;
--
--/*
-- * We cannot rely on constructor ordering, so other constructors must
-- * use the function interface rather than the variable above.
-- */
--unsigned cpuinfo_init(void);
--
--#endif /* HOST_CPUINFO_H */
-diff --git a/host/include/ppc/host/crypto/aes-round.h b/host/include/ppc/host/crypto/aes-round.h
-deleted file mode 100644
-index 8062d2a537..0000000000
---- a/host/include/ppc/host/crypto/aes-round.h
-+++ /dev/null
-@@ -1,182 +0,0 @@
--/*
-- * Power v2.07 specific aes acceleration.
-- * SPDX-License-Identifier: GPL-2.0-or-later
-- */
--
--#ifndef PPC_HOST_CRYPTO_AES_ROUND_H
--#define PPC_HOST_CRYPTO_AES_ROUND_H
--
--#ifdef __ALTIVEC__
--#include "host/cpuinfo.h"
--
--#ifdef __CRYPTO__
--# define HAVE_AES_ACCEL  true
--#else
--# define HAVE_AES_ACCEL  likely(cpuinfo & CPUINFO_CRYPTO)
--#endif
--#define ATTR_AES_ACCEL
--
--/*
-- * While there is <altivec.h>, both gcc and clang "aid" with the
-- * endianness issues in different ways. Just use inline asm instead.
-- */
--
--/* Bytes in memory are host-endian; bytes in register are @be. */
--static inline AESStateVec aes_accel_ld(const AESState *p, bool be)
--{
--    AESStateVec r;
--
--    if (be) {
--        asm("lvx %0, 0, %1" : "=v"(r) : "r"(p), "m"(*p));
--    } else if (HOST_BIG_ENDIAN) {
--        AESStateVec rev = {
--            15, 14, 13, 12, 11, 10, 9, 8, 7,  6,  5,  4,  3,  2,  1,  0,
--        };
--        asm("lvx %0, 0, %1\n\t"
--            "vperm %0, %0, %0, %2"
--            : "=v"(r) : "r"(p), "v"(rev), "m"(*p));
--    } else {
--#ifdef __POWER9_VECTOR__
--        asm("lxvb16x %x0, 0, %1" : "=v"(r) : "r"(p), "m"(*p));
--#else
--        asm("lxvd2x %x0, 0, %1\n\t"
--            "xxpermdi %x0, %x0, %x0, 2"
--            : "=v"(r) : "r"(p), "m"(*p));
--#endif
--    }
--    return r;
--}
--
--static void aes_accel_st(AESState *p, AESStateVec r, bool be)
--{
--    if (be) {
--        asm("stvx %1, 0, %2" : "=m"(*p) : "v"(r), "r"(p));
--    } else if (HOST_BIG_ENDIAN) {
--        AESStateVec rev = {
--            15, 14, 13, 12, 11, 10, 9, 8, 7,  6,  5,  4,  3,  2,  1,  0,
--        };
--        asm("vperm %1, %1, %1, %2\n\t"
--            "stvx %1, 0, %3"
--            : "=m"(*p), "+v"(r) : "v"(rev), "r"(p));
--    } else {
--#ifdef __POWER9_VECTOR__
--        asm("stxvb16x %x1, 0, %2" : "=m"(*p) : "v"(r), "r"(p));
--#else
--        asm("xxpermdi %x1, %x1, %x1, 2\n\t"
--            "stxvd2x %x1, 0, %2"
--            : "=m"(*p), "+v"(r) : "r"(p));
--#endif
--    }
--}
--
--static inline AESStateVec aes_accel_vcipher(AESStateVec d, AESStateVec k)
--{
--    asm("vcipher %0, %0, %1" : "+v"(d) : "v"(k));
--    return d;
--}
--
--static inline AESStateVec aes_accel_vncipher(AESStateVec d, AESStateVec k)
--{
--    asm("vncipher %0, %0, %1" : "+v"(d) : "v"(k));
--    return d;
--}
--
--static inline AESStateVec aes_accel_vcipherlast(AESStateVec d, AESStateVec k)
--{
--    asm("vcipherlast %0, %0, %1" : "+v"(d) : "v"(k));
--    return d;
--}
--
--static inline AESStateVec aes_accel_vncipherlast(AESStateVec d, AESStateVec k)
--{
--    asm("vncipherlast %0, %0, %1" : "+v"(d) : "v"(k));
--    return d;
--}
--
--static inline void
--aesenc_MC_accel(AESState *ret, const AESState *st, bool be)
--{
--    AESStateVec t, z = { };
--
--    t = aes_accel_ld(st, be);
--    t = aes_accel_vncipherlast(t, z);
--    t = aes_accel_vcipher(t, z);
--    aes_accel_st(ret, t, be);
--}
--
--static inline void
--aesenc_SB_SR_AK_accel(AESState *ret, const AESState *st,
--                      const AESState *rk, bool be)
--{
--    AESStateVec t, k;
--
--    t = aes_accel_ld(st, be);
--    k = aes_accel_ld(rk, be);
--    t = aes_accel_vcipherlast(t, k);
--    aes_accel_st(ret, t, be);
--}
--
--static inline void
--aesenc_SB_SR_MC_AK_accel(AESState *ret, const AESState *st,
--                         const AESState *rk, bool be)
--{
--    AESStateVec t, k;
--
--    t = aes_accel_ld(st, be);
--    k = aes_accel_ld(rk, be);
--    t = aes_accel_vcipher(t, k);
--    aes_accel_st(ret, t, be);
--}
--
--static inline void
--aesdec_IMC_accel(AESState *ret, const AESState *st, bool be)
--{
--    AESStateVec t, z = { };
--
--    t = aes_accel_ld(st, be);
--    t = aes_accel_vcipherlast(t, z);
--    t = aes_accel_vncipher(t, z);
--    aes_accel_st(ret, t, be);
--}
--
--static inline void
--aesdec_ISB_ISR_AK_accel(AESState *ret, const AESState *st,
--                        const AESState *rk, bool be)
--{
--    AESStateVec t, k;
--
--    t = aes_accel_ld(st, be);
--    k = aes_accel_ld(rk, be);
--    t = aes_accel_vncipherlast(t, k);
--    aes_accel_st(ret, t, be);
--}
--
--static inline void
--aesdec_ISB_ISR_AK_IMC_accel(AESState *ret, const AESState *st,
--                            const AESState *rk, bool be)
--{
--    AESStateVec t, k;
--
--    t = aes_accel_ld(st, be);
--    k = aes_accel_ld(rk, be);
--    t = aes_accel_vncipher(t, k);
--    aes_accel_st(ret, t, be);
--}
--
--static inline void
--aesdec_ISB_ISR_IMC_AK_accel(AESState *ret, const AESState *st,
--                            const AESState *rk, bool be)
--{
--    AESStateVec t, k, z = { };
--
--    t = aes_accel_ld(st, be);
--    k = aes_accel_ld(rk, be);
--    t = aes_accel_vncipher(t, z);
--    aes_accel_st(ret, t ^ k, be);
--}
--#else
--/* Without ALTIVEC, we can't even write inline assembly. */
--#include "host/include/generic/host/crypto/aes-round.h"
--#endif
--
--#endif /* PPC_HOST_CRYPTO_AES_ROUND_H */
-diff --git a/host/include/ppc64/host/cpuinfo.h b/host/include/ppc64/host/cpuinfo.h
-index 2f036a0627..38b8eabe2a 100644
---- a/host/include/ppc64/host/cpuinfo.h
-+++ b/host/include/ppc64/host/cpuinfo.h
-@@ -1 +1,30 @@
--#include "host/include/ppc/host/cpuinfo.h"
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Host specific cpu identification for ppc.
-+ */
-+
-+#ifndef HOST_CPUINFO_H
-+#define HOST_CPUINFO_H
-+
-+/* Digested version of <cpuid.h> */
-+
-+#define CPUINFO_ALWAYS          (1u << 0)  /* so cpuinfo is nonzero */
-+#define CPUINFO_V2_06           (1u << 1)
-+#define CPUINFO_V2_07           (1u << 2)
-+#define CPUINFO_V3_0            (1u << 3)
-+#define CPUINFO_V3_1            (1u << 4)
-+#define CPUINFO_ISEL            (1u << 5)
-+#define CPUINFO_ALTIVEC         (1u << 6)
-+#define CPUINFO_VSX             (1u << 7)
-+#define CPUINFO_CRYPTO          (1u << 8)
-+
-+/* Initialized with a constructor. */
-+extern unsigned cpuinfo;
-+
-+/*
-+ * We cannot rely on constructor ordering, so other constructors must
-+ * use the function interface rather than the variable above.
-+ */
-+unsigned cpuinfo_init(void);
-+
-+#endif /* HOST_CPUINFO_H */
-diff --git a/host/include/ppc64/host/crypto/aes-round.h b/host/include/ppc64/host/crypto/aes-round.h
-index 5eeba6dcb7..8062d2a537 100644
---- a/host/include/ppc64/host/crypto/aes-round.h
-+++ b/host/include/ppc64/host/crypto/aes-round.h
-@@ -1 +1,182 @@
--#include "host/include/ppc/host/crypto/aes-round.h"
-+/*
-+ * Power v2.07 specific aes acceleration.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef PPC_HOST_CRYPTO_AES_ROUND_H
-+#define PPC_HOST_CRYPTO_AES_ROUND_H
-+
-+#ifdef __ALTIVEC__
-+#include "host/cpuinfo.h"
-+
-+#ifdef __CRYPTO__
-+# define HAVE_AES_ACCEL  true
-+#else
-+# define HAVE_AES_ACCEL  likely(cpuinfo & CPUINFO_CRYPTO)
-+#endif
-+#define ATTR_AES_ACCEL
-+
-+/*
-+ * While there is <altivec.h>, both gcc and clang "aid" with the
-+ * endianness issues in different ways. Just use inline asm instead.
-+ */
-+
-+/* Bytes in memory are host-endian; bytes in register are @be. */
-+static inline AESStateVec aes_accel_ld(const AESState *p, bool be)
-+{
-+    AESStateVec r;
-+
-+    if (be) {
-+        asm("lvx %0, 0, %1" : "=v"(r) : "r"(p), "m"(*p));
-+    } else if (HOST_BIG_ENDIAN) {
-+        AESStateVec rev = {
-+            15, 14, 13, 12, 11, 10, 9, 8, 7,  6,  5,  4,  3,  2,  1,  0,
-+        };
-+        asm("lvx %0, 0, %1\n\t"
-+            "vperm %0, %0, %0, %2"
-+            : "=v"(r) : "r"(p), "v"(rev), "m"(*p));
-+    } else {
-+#ifdef __POWER9_VECTOR__
-+        asm("lxvb16x %x0, 0, %1" : "=v"(r) : "r"(p), "m"(*p));
-+#else
-+        asm("lxvd2x %x0, 0, %1\n\t"
-+            "xxpermdi %x0, %x0, %x0, 2"
-+            : "=v"(r) : "r"(p), "m"(*p));
-+#endif
-+    }
-+    return r;
-+}
-+
-+static void aes_accel_st(AESState *p, AESStateVec r, bool be)
-+{
-+    if (be) {
-+        asm("stvx %1, 0, %2" : "=m"(*p) : "v"(r), "r"(p));
-+    } else if (HOST_BIG_ENDIAN) {
-+        AESStateVec rev = {
-+            15, 14, 13, 12, 11, 10, 9, 8, 7,  6,  5,  4,  3,  2,  1,  0,
-+        };
-+        asm("vperm %1, %1, %1, %2\n\t"
-+            "stvx %1, 0, %3"
-+            : "=m"(*p), "+v"(r) : "v"(rev), "r"(p));
-+    } else {
-+#ifdef __POWER9_VECTOR__
-+        asm("stxvb16x %x1, 0, %2" : "=m"(*p) : "v"(r), "r"(p));
-+#else
-+        asm("xxpermdi %x1, %x1, %x1, 2\n\t"
-+            "stxvd2x %x1, 0, %2"
-+            : "=m"(*p), "+v"(r) : "r"(p));
-+#endif
-+    }
-+}
-+
-+static inline AESStateVec aes_accel_vcipher(AESStateVec d, AESStateVec k)
-+{
-+    asm("vcipher %0, %0, %1" : "+v"(d) : "v"(k));
-+    return d;
-+}
-+
-+static inline AESStateVec aes_accel_vncipher(AESStateVec d, AESStateVec k)
-+{
-+    asm("vncipher %0, %0, %1" : "+v"(d) : "v"(k));
-+    return d;
-+}
-+
-+static inline AESStateVec aes_accel_vcipherlast(AESStateVec d, AESStateVec k)
-+{
-+    asm("vcipherlast %0, %0, %1" : "+v"(d) : "v"(k));
-+    return d;
-+}
-+
-+static inline AESStateVec aes_accel_vncipherlast(AESStateVec d, AESStateVec k)
-+{
-+    asm("vncipherlast %0, %0, %1" : "+v"(d) : "v"(k));
-+    return d;
-+}
-+
-+static inline void
-+aesenc_MC_accel(AESState *ret, const AESState *st, bool be)
-+{
-+    AESStateVec t, z = { };
-+
-+    t = aes_accel_ld(st, be);
-+    t = aes_accel_vncipherlast(t, z);
-+    t = aes_accel_vcipher(t, z);
-+    aes_accel_st(ret, t, be);
-+}
-+
-+static inline void
-+aesenc_SB_SR_AK_accel(AESState *ret, const AESState *st,
-+                      const AESState *rk, bool be)
-+{
-+    AESStateVec t, k;
-+
-+    t = aes_accel_ld(st, be);
-+    k = aes_accel_ld(rk, be);
-+    t = aes_accel_vcipherlast(t, k);
-+    aes_accel_st(ret, t, be);
-+}
-+
-+static inline void
-+aesenc_SB_SR_MC_AK_accel(AESState *ret, const AESState *st,
-+                         const AESState *rk, bool be)
-+{
-+    AESStateVec t, k;
-+
-+    t = aes_accel_ld(st, be);
-+    k = aes_accel_ld(rk, be);
-+    t = aes_accel_vcipher(t, k);
-+    aes_accel_st(ret, t, be);
-+}
-+
-+static inline void
-+aesdec_IMC_accel(AESState *ret, const AESState *st, bool be)
-+{
-+    AESStateVec t, z = { };
-+
-+    t = aes_accel_ld(st, be);
-+    t = aes_accel_vcipherlast(t, z);
-+    t = aes_accel_vncipher(t, z);
-+    aes_accel_st(ret, t, be);
-+}
-+
-+static inline void
-+aesdec_ISB_ISR_AK_accel(AESState *ret, const AESState *st,
-+                        const AESState *rk, bool be)
-+{
-+    AESStateVec t, k;
-+
-+    t = aes_accel_ld(st, be);
-+    k = aes_accel_ld(rk, be);
-+    t = aes_accel_vncipherlast(t, k);
-+    aes_accel_st(ret, t, be);
-+}
-+
-+static inline void
-+aesdec_ISB_ISR_AK_IMC_accel(AESState *ret, const AESState *st,
-+                            const AESState *rk, bool be)
-+{
-+    AESStateVec t, k;
-+
-+    t = aes_accel_ld(st, be);
-+    k = aes_accel_ld(rk, be);
-+    t = aes_accel_vncipher(t, k);
-+    aes_accel_st(ret, t, be);
-+}
-+
-+static inline void
-+aesdec_ISB_ISR_IMC_AK_accel(AESState *ret, const AESState *st,
-+                            const AESState *rk, bool be)
-+{
-+    AESStateVec t, k, z = { };
-+
-+    t = aes_accel_ld(st, be);
-+    k = aes_accel_ld(rk, be);
-+    t = aes_accel_vncipher(t, z);
-+    aes_accel_st(ret, t ^ k, be);
-+}
-+#else
-+/* Without ALTIVEC, we can't even write inline assembly. */
-+#include "host/include/generic/host/crypto/aes-round.h"
-+#endif
-+
-+#endif /* PPC_HOST_CRYPTO_AES_ROUND_H */
-diff --git a/linux-user/include/host/ppc/host-signal.h b/linux-user/include/host/ppc/host-signal.h
-deleted file mode 100644
-index de25c803f5..0000000000
---- a/linux-user/include/host/ppc/host-signal.h
-+++ /dev/null
-@@ -1,39 +0,0 @@
--/*
-- * host-signal.h: signal info dependent on the host architecture
-- *
-- * Copyright (c) 2022 Linaro Ltd.
-- *
-- * This work is licensed under the terms of the GNU LGPL, version 2.1 or later.
-- * See the COPYING file in the top-level directory.
-- */
--
--#ifndef PPC_HOST_SIGNAL_H
--#define PPC_HOST_SIGNAL_H
--
--#include <asm/ptrace.h>
--
--/* The third argument to a SA_SIGINFO handler is ucontext_t. */
--typedef ucontext_t host_sigcontext;
--
--static inline uintptr_t host_signal_pc(host_sigcontext *uc)
--{
--    return uc->uc_mcontext.regs->nip;
--}
--
--static inline void host_signal_set_pc(host_sigcontext *uc, uintptr_t pc)
--{
--    uc->uc_mcontext.regs->nip = pc;
--}
--
--static inline void *host_signal_mask(host_sigcontext *uc)
--{
--    return &uc->uc_sigmask;
--}
--
--static inline bool host_signal_write(siginfo_t *info, host_sigcontext *uc)
--{
--    return uc->uc_mcontext.regs->trap != 0x400
--        && (uc->uc_mcontext.regs->dsisr & 0x02000000);
--}
--
--#endif
-diff --git a/common-user/host/ppc/safe-syscall.inc.S b/common-user/host/ppc/safe-syscall.inc.S
-deleted file mode 100644
-index 0851f6c0b8..0000000000
---- a/common-user/host/ppc/safe-syscall.inc.S
-+++ /dev/null
-@@ -1,107 +0,0 @@
--/*
-- * safe-syscall.inc.S : host-specific assembly fragment
-- * to handle signals occurring at the same time as system calls.
-- * This is intended to be included by common-user/safe-syscall.S
-- *
-- * Copyright (C) 2022 Linaro, Ltd.
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2 or later.
-- * See the COPYING file in the top-level directory.
-- */
--
--/*
-- * Standardize on the _CALL_FOO symbols used by GCC:
-- * Apple XCode does not define _CALL_DARWIN.
-- * Clang defines _CALL_ELF (64-bit) but not _CALL_SYSV (32-bit).
-- */
--#if !defined(_CALL_SYSV) && \
--    !defined(_CALL_DARWIN) && \
--    !defined(_CALL_AIX) && \
--    !defined(_CALL_ELF)
--# if defined(__APPLE__)
--#  define _CALL_DARWIN
--# elif defined(__ELF__) && TCG_TARGET_REG_BITS == 32
--#  define _CALL_SYSV
--# else
--#  error "Unknown ABI"
--# endif
--#endif 
--
--#ifndef _CALL_SYSV
--# error "Unsupported ABI"
--#endif
--
--
--        .global safe_syscall_base
--        .global safe_syscall_start
--        .global safe_syscall_end
--        .type   safe_syscall_base, @function
--
--        .text
--
--        /*
--         * This is the entry point for making a system call. The calling
--         * convention here is that of a C varargs function with the
--         * first argument an 'int *' to the signal_pending flag, the
--         * second one the system call number (as a 'long'), and all further
--         * arguments being syscall arguments (also 'long').
--         */
--safe_syscall_base:
--        .cfi_startproc
--        stwu    1, -8(1)
--        .cfi_def_cfa_offset 8
--        stw     30, 4(1)
--        .cfi_offset 30, -4
--
--        /*
--         * We enter with r3 == &signal_pending
--         *               r4 == syscall number
--         *               r5 ... r10 == syscall arguments
--         *               and return the result in r3
--         * and the syscall instruction needs
--         *               r0 == syscall number
--         *               r3 ... r8 == syscall arguments
--         *               and returns the result in r3
--         * Shuffle everything around appropriately.
--         */
--        mr      30, 3           /* signal_pending */
--        mr      0, 4            /* syscall number */
--        mr      3, 5            /* syscall arguments */
--        mr      4, 6
--        mr      5, 7
--        mr      6, 8
--        mr      7, 9
--        mr      8, 10
--
--        /*
--         * This next sequence of code works in conjunction with the
--         * rewind_if_safe_syscall_function(). If a signal is taken
--         * and the interrupted PC is anywhere between 'safe_syscall_start'
--         * and 'safe_syscall_end' then we rewind it to 'safe_syscall_start'.
--         * The code sequence must therefore be able to cope with this, and
--         * the syscall instruction must be the final one in the sequence.
--         */
--safe_syscall_start:
--        /* if signal_pending is non-zero, don't do the call */
--        lwz     12, 0(30)
--        cmpwi   0, 12, 0
--        bne-    2f
--        sc
--safe_syscall_end:
--        /* code path when we did execute the syscall */
--        lwz     30, 4(1)        /* restore r30 */
--        addi    1, 1, 8         /* restore stack */
--        .cfi_restore 30
--        .cfi_def_cfa_offset 0
--        bnslr+                  /* return on success */
--        b       safe_syscall_set_errno_tail
--
--        /* code path when we didn't execute the syscall */
--2:      lwz     30, 4(1)
--        addi    1, 1, 8
--        addi    3, 0, QEMU_ERESTARTSYS
--        b       safe_syscall_set_errno_tail
--
--        .cfi_endproc
--
--        .size   safe_syscall_base, .-safe_syscall_base
+diff --git a/host/include/riscv/host/cpuinfo.h b/host/include/riscv64/host/cpuinfo.h
+similarity index 100%
+rename from host/include/riscv/host/cpuinfo.h
+rename to host/include/riscv64/host/cpuinfo.h
+diff --git a/linux-user/include/host/riscv/host-signal.h b/linux-user/include/host/riscv64/host-signal.h
+similarity index 100%
+rename from linux-user/include/host/riscv/host-signal.h
+rename to linux-user/include/host/riscv64/host-signal.h
+diff --git a/tcg/riscv/tcg-target-con-set.h b/tcg/riscv64/tcg-target-con-set.h
+similarity index 100%
+rename from tcg/riscv/tcg-target-con-set.h
+rename to tcg/riscv64/tcg-target-con-set.h
+diff --git a/tcg/riscv/tcg-target-con-str.h b/tcg/riscv64/tcg-target-con-str.h
+similarity index 100%
+rename from tcg/riscv/tcg-target-con-str.h
+rename to tcg/riscv64/tcg-target-con-str.h
+diff --git a/tcg/riscv/tcg-target-has.h b/tcg/riscv64/tcg-target-has.h
+similarity index 100%
+rename from tcg/riscv/tcg-target-has.h
+rename to tcg/riscv64/tcg-target-has.h
+diff --git a/tcg/riscv/tcg-target-mo.h b/tcg/riscv64/tcg-target-mo.h
+similarity index 100%
+rename from tcg/riscv/tcg-target-mo.h
+rename to tcg/riscv64/tcg-target-mo.h
+diff --git a/tcg/riscv/tcg-target-reg-bits.h b/tcg/riscv64/tcg-target-reg-bits.h
+similarity index 100%
+rename from tcg/riscv/tcg-target-reg-bits.h
+rename to tcg/riscv64/tcg-target-reg-bits.h
+diff --git a/tcg/riscv/tcg-target.h b/tcg/riscv64/tcg-target.h
+similarity index 100%
+rename from tcg/riscv/tcg-target.h
+rename to tcg/riscv64/tcg-target.h
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d3e6041186..c1e586c58f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4086,7 +4086,7 @@ M: Palmer Dabbelt <palmer@dabbelt.com>
+ M: Alistair Francis <Alistair.Francis@wdc.com>
+ L: qemu-riscv@nongnu.org
+ S: Maintained
+-F: tcg/riscv/
++F: tcg/riscv64/
+ F: disas/riscv.[ch]
+ 
+ S390 TCG target
+diff --git a/common-user/host/riscv/safe-syscall.inc.S b/common-user/host/riscv64/safe-syscall.inc.S
+similarity index 100%
+rename from common-user/host/riscv/safe-syscall.inc.S
+rename to common-user/host/riscv64/safe-syscall.inc.S
+diff --git a/configure b/configure
+index 04d0b214b6..ee09f90125 100755
+--- a/configure
++++ b/configure
+@@ -469,8 +469,8 @@ case "$cpu" in
+     CPU_CFLAGS="-m64 -mlittle-endian"
+     ;;
+ 
+-  riscv32 | riscv64)
+-    host_arch=riscv
++  riscv64)
++    host_arch=riscv64
+     linux_arch=riscv
+     ;;
+ 
 diff --git a/meson.build b/meson.build
-index 506904c7d7..7993e4cfb9 100644
+index c36f2f6962..e1ac764793 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -50,7 +50,7 @@ qapi_trace_events = []
+@@ -265,8 +265,6 @@ enable_modules = get_option('modules') \
  
- bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
- supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
--supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86_64',
-+supported_cpus = ['ppc64', 's390x', 'riscv32', 'riscv64', 'x86_64',
-   'aarch64', 'loongarch64', 'mips64', 'sparc64', 'wasm64']
- 
- cpu = host_machine.cpu_family()
-@@ -279,8 +279,6 @@ elif cpu == 'aarch64'
-   kvm_targets = ['aarch64-softmmu']
- elif cpu == 's390x'
-   kvm_targets = ['s390x-softmmu']
--elif cpu == 'ppc'
--  kvm_targets = ['ppc-softmmu']
- elif cpu == 'ppc64'
-   kvm_targets = ['ppc-softmmu', 'ppc64-softmmu']
- elif cpu == 'mips64'
+ if cpu not in supported_cpus
+   host_arch = 'unknown'
+-elif cpu in ['riscv32', 'riscv64']
+-  host_arch = 'riscv'
+ else
+   host_arch = cpu
+ endif
+diff --git a/tcg/riscv/tcg-target-opc.h.inc b/tcg/riscv64/tcg-target-opc.h.inc
+similarity index 100%
+rename from tcg/riscv/tcg-target-opc.h.inc
+rename to tcg/riscv64/tcg-target-opc.h.inc
+diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
+similarity index 100%
+rename from tcg/riscv/tcg-target.c.inc
+rename to tcg/riscv64/tcg-target.c.inc
 -- 
 2.43.0
 
