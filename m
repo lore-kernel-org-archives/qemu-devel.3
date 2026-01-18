@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE55C98315
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 011D6C9830C
 	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 19:38:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhYar-0007w9-8z; Sun, 18 Jan 2026 14:37:51 -0500
+	id 1vhYb3-0000MB-PX; Sun, 18 Jan 2026 14:38:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhYZV-0006FZ-1i
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 14:36:26 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhYaA-0007Dr-9V
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 14:37:10 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhYZS-0006lu-Nn
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 14:36:24 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-47fedb7c68dso23618555e9.2
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 11:36:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhYZv-0006su-Go
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 14:36:52 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-4308d81fdf6so1961769f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 11:36:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768764981; x=1769369781; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768765009; x=1769369809; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RRVd3/fIp9XGWnatHHkuG/q29nD05xPL4cBPZy1sqvs=;
- b=dtm8OBltM8Z7XtRIFXvi3XwGlBUJYt6S1YQz7ixUQ3rSOHSnkzib5nLaULRCbTiv1C
- l7kxrnQ3uHzFOAlunJlHmTwDuxp/3Ad0KCPLv9YtGyywwDsBkz+74BGzR8U+UtYj435E
- BZDEe5LVEXHKm7M3tI2CS+pckJkT2fZzqxJbkQULlOi/DL+364dHnQcMqI0uh8Zd47Lj
- JE3dXEo/Xme/8TlQRAIBfkYTxZrnYrNNu+mC3kQHMmxiVMxnJGu8y3ArixKJEI01v9OS
- f1MdrJtHJOvYBjueSYfhk5f0zaby+7uXtLrxY9smzZHte3FWTDiKQwtaUo5IRH46hxRP
- YElA==
+ bh=ZDayLa9IHiaG4d3i6+piUlKioZqcrfCwHQyt+SfPnIE=;
+ b=E73CLYYU2PKFpdOoULWiO+B7f8X/qXDIQJrwQ2I/tzNyGunyIbynu4uvbbSSpGu+jn
+ 1+NaOu2utNGeUVL9pYgx6Je7jDHXPeFGKXOMiebP2tbkaNHjy7upglOyjvPezly9Hde9
+ 43Aw0A2zTeGNcjUyJW4ffhc8CybJARWnBznJdkkn6Lod2mWFJKTxjFx/vs3cfmU+7LCQ
+ v68kzaiKLOXYgqCjPATm9nkqLanOJFztD1kh+apeycXIRq2cwYCy8XwcoKjIHwGiQ9oC
+ 535hZyoCXHbjGS3mCd6eEcMMkMoEWprJzIC3B8ZENta/AfXLjSMPghK9IeOfiHNQsdb/
+ NoRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768764981; x=1769369781;
+ d=1e100.net; s=20230601; t=1768765009; x=1769369809;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=RRVd3/fIp9XGWnatHHkuG/q29nD05xPL4cBPZy1sqvs=;
- b=Nt/w4tLrWIE+4ACmTqOLuBkCpQlpB2Wxu8/IaFfHm9TtPHSNxAxb6cnjTz1A/l2wxK
- ionUmXt94U12Qkno0inMrxRRFNwW02J+JwYN2Sfl7VoaLVcXPLNJLwZZvSE2nxWC9jcM
- hEdxrrnh0yIvmFs3IAvIO18mxvqJGwJypOoZ+J0WmrEMeHkYc40z5r2EF+5e05bXZnp6
- rM5nmh0xdsYANT29g0rbk+892TZhk/r9/aGpJqnyBOaaZdkE+LYIfAe/iZ54k0DcFkuL
- lM0GqhjSJbSomqTd9fr0/YArxNPkt0n8DLNWT9Mu1RF/wII4kiO0mTneESyYQvsojQmU
- NFyA==
-X-Gm-Message-State: AOJu0Yx9jci/3lO3jLIOvnlD3CM5v5ZxY05EzdTxAVZVG7YHJWwIo8e0
- QH+FAqTYWjeIJyUINB36HVHwVzJrqfFOf0VUV10t+djR+PQu7kfACNIE/4SLvPz1F/H1JWSCj2i
- bbd3TLoo=
-X-Gm-Gg: AY/fxX5e5GdXd1gWG14Q+qLf7YrM4CwQnSW2quFETK+130YAZ5X6oYp+Vor8ONubZ1d
- P2lJrZBf3B51eM9zbj20EkzPSL7QqrPalKlnWwgpvF5EtRNirnbHGOuU1Wbq4Yk26Y0+P3t7wxU
- L8GnKni3Y4ObegDH38siI+3nbNmmWnGOPJ8CiDac96cbgu2Rwnfed2EViguOeysD9bqzhkjmz9b
- u5cwaekWl+V5ZCqXjj4u8AXje4ITks40l7hJyeiS+Gp38gjTlsM0V6FV0WJdYMsC2U7MvsABJ2j
- oBAd3UWW+iGiLkZDM/g6eDp8I2ExtCTlk8ev0hZjUM/jJ4kDmYCL9BHr0a1FHhcFjqaRfPcYbQr
- 4GqXDrzTfyZvnq0fqkjEwg7IADtTMdVdfHgilouUOPehwzJruQvAJBLvqeSu6mFQyDnPJFtC3eh
- kfg/421CtkaaJeuUn/mDODAy3bAmhiC0DSBcVhwkgO+AnbM8A6CHZzOK21O3Zj
-X-Received: by 2002:a05:600c:4745:b0:479:2f95:5179 with SMTP id
- 5b1f17b1804b1-4801e30fae9mr120940615e9.15.1768764980873; 
- Sun, 18 Jan 2026 11:36:20 -0800 (PST)
+ bh=ZDayLa9IHiaG4d3i6+piUlKioZqcrfCwHQyt+SfPnIE=;
+ b=Rups0S9N2Krz74ZBWjYbAVjjdTlj6WhYFhnN+uKTAQmTQCQ5ZTOQEtVkodKeNmXoYP
+ i5qkNsqMELO0HXd5kG9NKb0lEUt0jycphbZtTs/V1LO2hCWR3Y5Z2FjeXLagE6bsVj5t
+ xJBLJjjbTKqB23BFz2KeGM8BzBBzb54uO+h9iKEPrwT5/vejjMowxmMCYpBhTmeF4thW
+ ZK7SN7ZE6eeD9xIOCkIdhjZV1OGSAmGlzxRpOMauZAcxUb5S87I6lQBAq1i07a7m3/VB
+ ddnhYZBspd9pxZ522qo9g/apRiAAJg9OQrdJV0carl162fCKZ2kag7/OvidaFAaJ86ck
+ xYWw==
+X-Gm-Message-State: AOJu0Yx3AY6o5lyK/u/uu/1zMrcRDl7PxCCwnmVtWVNlZ0JGFawsa2rX
+ t2/o94oPC+CVrTByC35rjPnF3u0rSKfYWgTXur9mRfcHywv5Jby1pMzghl8vlV4A0HbLZy0JOBG
+ Bg9i/2jo=
+X-Gm-Gg: AY/fxX46BModipEUl/6x/cYGGP+/ryVjR8bedp01IzdYANTP7dPKhl+Ri4ZPhz4PgWC
+ 7dA/n0DG0G9IBZB26HvsiO1XbehkkqochAGlq2LQqdQ0cndZF6p78K60q7jviRAkYXGcAqGjvD5
+ a9GKLYwgHFJnqfeLiDgAgeVo1NV+U6f/aePctKG7NUJRNr1qtEjY//rwOlScVZsCcHTkPvPE9H6
+ Is9uY/Q1NncZM7cdGUBatro7HMn/jG+kZmrh50PKS2qBRve90A5cwkpUos5fY1Ogu/ofchz7Etb
+ KtkE7FU7pRZuUup67QGwdbiSEYsCJUbBhabarTpmnL+WOh0IBh5Momm7ZYGYUAVcv7IRqlPwGED
+ lUvGraI5gPub5PsFPrr7oC3A0v1KOHHd4WNVCkr6e1L7nPOqxhjz+XvHdm5GJ3JRe68d5JuJIea
+ osLbS/ri+GfsRe6tH4SxYpikLCcxTE0Z+0W3A/eUyZNQDAtTkZaEkeEwr8oRYIbdSKdDZMi4I=
+X-Received: by 2002:a05:6000:2508:b0:429:b9bc:e81a with SMTP id
+ ffacd0b85a97d-4356991be9amr9446437f8f.0.1768765008790; 
+ Sun, 18 Jan 2026 11:36:48 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e879542sm159776465e9.4.2026.01.18.11.36.19
+ ffacd0b85a97d-4356992c6f2sm18429221f8f.19.2026.01.18.11.36.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 18 Jan 2026 11:36:20 -0800 (PST)
+ Sun, 18 Jan 2026 11:36:48 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -70,17 +70,18 @@ Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Anton Johansson <anjo@rev.ng>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v6 10/18] system/memory: Use ldm_p() and stm_p() helpers
-Date: Sun, 18 Jan 2026 20:35:00 +0100
-Message-ID: <20260118193509.42923-11-philmd@linaro.org>
+Subject: [PATCH v6 14/18] system: Allow restricting the legacy cpu_ld/st()
+ 'native-endian' API
+Date: Sun, 18 Jan 2026 20:35:04 +0100
+Message-ID: <20260118193509.42923-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260118193509.42923-1-philmd@linaro.org>
 References: <20260118193509.42923-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,64 +104,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-address_space_{ld,st}m_internal() take a MemOp argument
-so can directly use the {ld,st}m_p() helpers.
+Guard the native endian APIs we want to remove by surrounding
+them with TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API #ifdef'ry.
 
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Once a target gets cleaned we'll set the definition in the
+target config, then the target won't be able to use the legacy
+API anymore.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- system/memory_ldst.c.inc | 16 ++--------------
- 1 file changed, 2 insertions(+), 14 deletions(-)
+ include/accel/tcg/cpu-ldst.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/system/memory_ldst.c.inc b/system/memory_ldst.c.inc
-index 5c8299e0cdc..d51c5feddf7 100644
---- a/system/memory_ldst.c.inc
-+++ b/system/memory_ldst.c.inc
-@@ -27,7 +27,6 @@ uint64_t glue(address_space_ldm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
-                                                   MemTxResult *result)
- {
-     const unsigned size = memop_size(mop);
--    uint8_t *ptr;
-     uint64_t val;
-     MemoryRegion *mr;
-     hwaddr l = size;
-@@ -45,12 +44,7 @@ uint64_t glue(address_space_ldm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
-     } else {
-         /* RAM case */
-         fuzz_dma_read_cb(addr, size, mr);
--        ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
--        if ((mop & MO_BSWAP) == MO_LE) {
--            val = ldn_le_p(ptr, size);
--        } else {
--            val = ldn_be_p(ptr, size);
--        }
-+        val = ldm_p(qemu_map_ram_ptr(mr->ram_block, addr1), mop);
-         r = MEMTX_OK;
-     }
-     if (result) {
-@@ -102,7 +96,6 @@ void glue(address_space_stm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
-                                               MemTxResult *result)
- {
-     const unsigned size = memop_size(mop);
--    uint8_t *ptr;
-     MemoryRegion *mr;
-     hwaddr l = size;
-     hwaddr addr1;
-@@ -116,12 +109,7 @@ void glue(address_space_stm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
-         r = memory_region_dispatch_write(mr, addr1, val, mop, attrs);
-     } else {
-         /* RAM case */
--        ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
--        if ((mop & MO_BSWAP) == MO_LE) {
--            stn_le_p(ptr, size, val);
--        } else {
--            stn_be_p(ptr, size, val);
--        }
-+        stm_p(qemu_map_ram_ptr(mr->ram_block, addr1), mop, val);
-         invalidate_and_set_dirty(mr, addr1, size);
-         r = MEMTX_OK;
-     }
+diff --git a/include/accel/tcg/cpu-ldst.h b/include/accel/tcg/cpu-ldst.h
+index 0de7f5eaa6b..a5711bc15a6 100644
+--- a/include/accel/tcg/cpu-ldst.h
++++ b/include/accel/tcg/cpu-ldst.h
+@@ -428,6 +428,7 @@ cpu_stq_le_data(CPUArchState *env, abi_ptr addr, uint64_t val)
+     cpu_stq_le_data_ra(env, addr, val, 0);
+ }
+ 
++#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
+ #if TARGET_BIG_ENDIAN
+ # define cpu_lduw_data        cpu_lduw_be_data
+ # define cpu_ldsw_data        cpu_ldsw_be_data
+@@ -501,5 +502,6 @@ static inline uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr)
+     MemOpIdx oi = make_memop_idx(MO_TEUQ, cpu_mmu_index(cs, true));
+     return cpu_ldq_code_mmu(env, addr, oi, 0);
+ }
++#endif /* TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API */
+ 
+ #endif /* ACCEL_TCG_CPU_LDST_H */
 -- 
 2.52.0
 
