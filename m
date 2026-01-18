@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D032C9832F
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 18:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39685C98315
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 19:35:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhXY2-0002iv-1r; Sun, 18 Jan 2026 13:30:50 -0500
+	id 1vhYYb-0005DH-UI; Sun, 18 Jan 2026 14:35:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhXXi-0002ct-N1
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 13:30:30 -0500
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhYYa-0005B1-9R
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 14:35:28 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhXXf-0001AX-Fl
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 13:30:30 -0500
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-47ff94b46afso23309475e9.1
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 10:30:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhYYY-0006e8-O1
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 14:35:28 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-47ff94b46afso23481475e9.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 11:35:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768761025; x=1769365825; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Y3kjaLezNnpKwPZQ/8PJAks1rY7mZjKFrRn/FzE56TM=;
- b=uMGPQ4xKwarJrYNqifUV4Djdxx15YYk0bQFN1mAi8xz7tjMJqAyQEjSO1NSA3qYOsG
- Da0s0HeCtaj2YyaKBbRrMBUSIfyu1BreDb5xo/r32CYWCtmTdeQYYOYfb0OWlT6vb8n3
- tYn+duUFHGaLtdq1fmfJekfT4uUiDS0P1H07NKPouC0eaw/NwPatSNlOgVTDRdhPLNcR
- uOsqcZdXHUaJ5/AhkPiYAwpiqVd8OFYCORRgs+z7l4dDR7RGipJVx4dGF2Ibi/ZihSE7
- 1d7B7F2hLPdn1Pj/G/GBKMV+swNSPCWaXzoq6I0KH4i9MPijbV3pRinRB+jV8eFofFux
- 0Scw==
+ d=linaro.org; s=google; t=1768764925; x=1769369725; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RTAOH/xq/3mecKgOFQc299O+6eUqLk/ATHdhAOXEHr4=;
+ b=GOp2KxgHSxkHUKiLcqws2pRPk6wDcCr9JvXRx+Wle8I/CWEWv0WAbEMVdZmryiZc/L
+ dyQh0t9gmBKkmhsGEmkgzMUyikg4/s15H+dLOjIxa9UeQ9fXjdeQQBm13p+/K2qGj7M0
+ juImmVHen2OxMDDjfzSINGG+NeQwUNpU+vMKK5nV6ktcH7wk3Xz4zsBdsxPoYg3QT7r8
+ aT8K2I/6YnM66wY1yydMB8jqWcUw7xNb8F73mIxDGcvIM+vL23+kTZM7RZr1Z9erZlRL
+ c+E6K50yWPYhGPxR3M8VA2ikFYZUuiDlGTDwqA//eKPNHdglROOs1Sof63/7ThPzCfz2
+ +B6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768761025; x=1769365825;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Y3kjaLezNnpKwPZQ/8PJAks1rY7mZjKFrRn/FzE56TM=;
- b=ZE6NAg9vZL+30l2GWXZ/ogiLIvKi0WKWjcBDLfPRjMredEAah/oCouK4NHUe8wzD1n
- 8YgUW28CJK1GkmqxoSMREl7Dx1X7a/JcS3Y1dy+t0PMUS/KF2nPIZuUxVFUvvsvCr4Pj
- UbHKrD2O+qe0P8fYWu+7nOqYOnbg+RU2o6pkV+noerm+hFIeQikLZZY7O5gF2Oowg6up
- CFvh9TFdjYoJY7ia2mew6IlRCozvi46e+nBHxHayJm1xit//Q/3OvRkNTHKtNMptmE3m
- DfH/CwT5SNx1T6TKg6YniFzKdGmZfPDOaVjObg3CRnV9EeD/S1UKp3mXZGTwouKPi6QA
- K5Og==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/5FMmbMtHlKw3y4mfK/iw9IcPPxis8Hl7yM8GIgtuwq49ZUBSvnZgEmTtdUrEuvqOZb0fvEBS7FFs@nongnu.org
-X-Gm-Message-State: AOJu0Yy4MeujmNXCBcUqWX80jlnhcWqNTAw2Al3BruucpagqTNuOfPpN
- bGfzaOG1RlVGYjmWRu3o4RgCP8EMbCJem63Nn+sGG/zQyYonlm45t+2oQxpg03ogreg=
-X-Gm-Gg: AY/fxX4cTAE92JEGaMDpYsSiJWz534LoewKEwHpqEMVuvn5c9sLalAvFtz64+DRS8ve
- NR7vzpN1ynhxtA8KOuxKLS5IrJNF/uLAbIXAp0wA/EVv9SL7FrEP6XSVQwSqP+yEHz7SgKQn3lW
- U9ImQGsrBNzvaMtuMsADOF2FJj8Ie4pUe/iSzvm8RUv8ekQ+xqfLo6rVCr7IHR+jcxY+EQKJ+Ir
- 8qobv4Z614ORyL3FvfkPDKuE92EGBb3QW1XSqk7yTr7R0jQ/WT/moXb+2pUsg9QTxcDtxJsK1ZM
- iC+Lg/uhbYQI/ZWCTy7J9tK3mhN7reqaTL8ajXE+29qrk0qRTnGyBs6GUejgVCrsIgJ8Wb51npP
- DWbj5cxX4KKfJmzuThKhcBSPWVsNGDhx/EFSX4Lx44IB/3t46vuMXBJjv3qqEZF35GkmFSrt/SG
- dfsfXkzTijfjjTuD3f8ZLqHro1axQ/lVz+a7dwTj8COl4Ah2/Vd4dzpQ==
-X-Received: by 2002:a05:600c:6749:b0:47d:333d:99c with SMTP id
- 5b1f17b1804b1-4801e68adc6mr94730305e9.18.1768761024782; 
- Sun, 18 Jan 2026 10:30:24 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1768764925; x=1769369725;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RTAOH/xq/3mecKgOFQc299O+6eUqLk/ATHdhAOXEHr4=;
+ b=Umtb3sUOZ46OyVceTWwEEEPBOBc/ZvJp0qEA1TdkeiNYND38Hh768WoSc7uP5akgR7
+ Q3mpUHX7nB98fFI1gvn8bCkufIuGwlofu9uK1IkumRanwKAct8W/G4UR/nHBiSNIqWdY
+ OqT8ApaIt42OceBIn0/lnDsqCeFlKS/YximtHSQo/KtCxu3sGo9LnPbFmcb862drzjoc
+ liVaC88glTfJ8N/ro8enCdzxaMaZvGZrFCg085iGdr4NYjgCuY4LnBlE0d+a5f5mnmHE
+ Jap3xc6kEFEKFv551gaZ433PwFe2UbDZUkKUz6AxzguOsp/2h5k5gwsYKBWFEh5SEME8
+ 3vMA==
+X-Gm-Message-State: AOJu0Yx0EMV9IRmOViVtICRAyP8+Uzt8TYW3MPA8O3hd/MWznDZ7fTjF
+ AUpt/Qhu2G0d/t3X88DVjjYZpVupTBTrYHusRVRuQhLVbl6bkcjWVIRzhQOAySnIVIbnLhVIRyA
+ hyugsC9o=
+X-Gm-Gg: AY/fxX6t/dKGBVOZPlbJOA8vm8p4IOqWhoeoILtn9Xbr50UvUgdY5HY9wiV+KKuR6oM
+ yxidAYkZP3LP9ASQtlJorUVBhxygR7ZGhftYlc1SQSpsGrkTuTgyobTSwKXsLR2ekUqCw9HheIP
+ 3KlS1fUMklmcvkIeG+m3TYGfPibHeT8Cg/QGfo0Y2TIGwwH27A84JKR7jRfGbCWpYrnMpn8x81Z
+ 8+EmWtnkwamdQx0CSTrmzTiY0r3ZPWCIR9o17CaVmWSNhqp1ONvWPgSY6Ey79ZCug1b9e+rRVRM
+ sYSSMpg2flCuk5eIDdUKUSmLlrlKSBMmhRfJNVgdb+KjTN8K+ay80BfJW6pvHTPJQq7dRuLSMtw
+ W3U9fblWBx+T5RuosFRDHWwf3BSYRP0e2WL9fUtebDWDdcpRrOrBibylR1rVlP6/iuzS8NW9pZI
+ 4XkoA/uarN+jll046Nps6TNmeclT8WE57/OoZqXj4U3igsMyH6byw8t8mqfJ/1
+X-Received: by 2002:a05:600c:4094:b0:47a:8383:f2b2 with SMTP id
+ 5b1f17b1804b1-47f44d4dfb4mr109274705e9.17.1768764925003; 
+ Sun, 18 Jan 2026 11:35:25 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801fe2b936sm62343215e9.11.2026.01.18.10.30.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 18 Jan 2026 10:30:24 -0800 (PST)
-Message-ID: <d8359c17-0e7d-43eb-ae61-08564e58bc9c@linaro.org>
-Date: Sun, 18 Jan 2026 19:30:23 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/11] plugins: define plugin API symbols as extern "C"
- when compiling in C++
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ 5b1f17b1804b1-47f428ac749sm213885615e9.5.2026.01.18.11.35.24
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 18 Jan 2026 11:35:24 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
- <20260102214724.4128196-5-pierrick.bouvier@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260102214724.4128196-5-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v6 02/18] bswap: Use 'qemu/bswap.h' instead of
+ 'qemu/host-utils.h'
+Date: Sun, 18 Jan 2026 20:34:52 +0100
+Message-ID: <20260118193509.42923-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260118193509.42923-1-philmd@linaro.org>
+References: <20260118193509.42923-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,11 +104,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/1/26 22:47, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   include/qemu/qemu-plugin.h | 8 ++++++++
->   1 file changed, 8 insertions(+)
+These files only require "qemu/bswap.h", not "qemu/host-utils.h".
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tests/qtest/ahci-test.c              | 2 +-
+ tests/qtest/libqos/ahci.c            | 2 +-
+ tests/qtest/libqos/generic-pcihost.c | 2 +-
+ tests/qtest/libqos/pci-spapr.c       | 2 +-
+ util/hbitmap.c                       | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
+index e8aabfc13f5..5c32ff20029 100644
+--- a/tests/qtest/ahci-test.c
++++ b/tests/qtest/ahci-test.c
+@@ -31,7 +31,7 @@
+ #include "libqos/pci-pc.h"
+ 
+ #include "qobject/qdict.h"
+-#include "qemu/host-utils.h"
++#include "qemu/bswap.h"
+ 
+ #include "hw/pci/pci_ids.h"
+ #include "hw/pci/pci_regs.h"
+diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
+index 34a75b7f43b..0621a6c4775 100644
+--- a/tests/qtest/libqos/ahci.c
++++ b/tests/qtest/libqos/ahci.c
+@@ -28,7 +28,7 @@
+ #include "ahci.h"
+ #include "pci-pc.h"
+ 
+-#include "qemu/host-utils.h"
++#include "qemu/bswap.h"
+ 
+ #include "hw/pci/pci_ids.h"
+ #include "hw/pci/pci_regs.h"
+diff --git a/tests/qtest/libqos/generic-pcihost.c b/tests/qtest/libqos/generic-pcihost.c
+index 4bbeb5ff508..b77617524ca 100644
+--- a/tests/qtest/libqos/generic-pcihost.c
++++ b/tests/qtest/libqos/generic-pcihost.c
+@@ -15,7 +15,7 @@
+ #include "generic-pcihost.h"
+ #include "qobject/qdict.h"
+ #include "hw/pci/pci_regs.h"
+-#include "qemu/host-utils.h"
++#include "qemu/bswap.h"
+ 
+ #include "qemu/module.h"
+ 
+diff --git a/tests/qtest/libqos/pci-spapr.c b/tests/qtest/libqos/pci-spapr.c
+index 0f1023e4a73..3723cbb38db 100644
+--- a/tests/qtest/libqos/pci-spapr.c
++++ b/tests/qtest/libqos/pci-spapr.c
+@@ -13,7 +13,7 @@
+ 
+ #include "hw/pci/pci_regs.h"
+ 
+-#include "qemu/host-utils.h"
++#include "qemu/bswap.h"
+ #include "qemu/module.h"
+ 
+ /*
+diff --git a/util/hbitmap.c b/util/hbitmap.c
+index d9a1dabc630..3525bf7751a 100644
+--- a/util/hbitmap.c
++++ b/util/hbitmap.c
+@@ -10,8 +10,8 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/bswap.h"
+ #include "qemu/hbitmap.h"
+-#include "qemu/host-utils.h"
+ #include "trace.h"
+ #include "crypto/hash.h"
+ 
+-- 
+2.52.0
+
 
