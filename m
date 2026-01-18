@@ -4,81 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F94C9830C
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 22:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02529C9830C
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Jan 2026 23:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhaxi-0001NV-D2; Sun, 18 Jan 2026 17:09:34 -0500
+	id 1vhbvZ-0002L1-2C; Sun, 18 Jan 2026 18:11:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhaxc-0000iT-Jc
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:28 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1vhbvX-0002H7-El
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 18:11:23 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhaxZ-0001ed-5J
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 17:09:27 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2a09d981507so26997055ad.1
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 14:09:24 -0800 (PST)
+ id 1vhbvV-0002Fw-Py
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 18:11:23 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2a0d52768ccso23975345ad.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 15:11:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768774164; x=1769378964; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lL29N2VWw0Lqbbdj3QFDL4vdVxUWKQ/hHfpVJMWA/Kc=;
- b=BQ11A+3ONkl3bSMagckColZPkRC+xO9HQTLCEy+wXsgB/EtoBVohvSTJ22lFZiju+x
- 9Gmi/eheOeM0eRO7+F3Qz3LMYdOFOY1tUPMPsfE5+XUIgUfl/NmbtfvEEDS+9b4ko2P3
- CNeVQLdPAALm9TGHFv9aTyUCYE6BTalp/7y3o1n/ftCfIS4486kvK/cOq92TAD+NPoHg
- gkz7vDmF56bEyqXmRwZTrY8VuMKMKR4xKxUfKazBSxrHF4Q03CqyCeeO4Eu6z8UOna+g
- yhGRJxc3GNvhPjmLGVknllR5mKJBKOeFv9YDESIPpiUceVbidFkR069ZvYJ6zqRu5fAW
- 4tPw==
+ d=linaro.org; s=google; t=1768777880; x=1769382680; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8U3BbmWHNss/hU7EiYqp9lVgKowrEn4KC1xWRNppbYA=;
+ b=xzoLd27ba2SOMNEvQ1BQm+vDoMqAL3JjffWgotvM0eu15KubWkT1E/MGX0GmiUQG7E
+ DxZuHrpg4O07m5iVwZ1dsuCsXsJxYZi3LZ+y3ceWGbIXsKTzGzydDUi8UHyPMyQpb81Z
+ UgF86Do3xUoekmjyGZD1CRHlYA5sRabGOhf1LSogc9OzsR4wCKABMYGO4njutiVOdmgZ
+ Lnr08PzP2nTCpOC1WhP/mM1ghT00n1JVtUpMc+VI9s3oIUTLPKiy/lmuYxhjiMl7HweX
+ WBSLr3jjITsP7yM6EyszunY5uwFhIqbU8k8NqoiK4uQiXu1fwaeyLsiofkujLqN+DCyJ
+ ZX+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768774164; x=1769378964;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lL29N2VWw0Lqbbdj3QFDL4vdVxUWKQ/hHfpVJMWA/Kc=;
- b=V/d8ist4A1NZ/U74OdoEfj3M6fRW4cNJLI54SmaGpdkc/+FlpPmVKgkvXNYd8Zrtva
- Z9Pfs8X6+iV/usqkpXeFGnqT54exrh+VP1brJU7XGV5e5ZbBgfLdawhTyifM6mH82HQF
- J06cb7J0TyvIrPC/b9uwNU5LdT7r9HUpF8mADL+yyW/CJOElQVtDrDeH6QN2T+0SMsH5
- hcmaHh0K5EvjF8hVWS0EEQp5KtMWuUlX0JcRF/xuvdgCEukeQp9dS6RjgdmKCHiROkRb
- lHt0rfpj4nV46o/c90q48t/e8sr4bHAkzxf6T9+2nXe1prwfydu/58pbQh+y/i44az1O
- Om1g==
-X-Gm-Message-State: AOJu0YygfAtQ3tk6+6R2TZRdsRtkOYUJdhcIoOHJcX/hp99SeL2ynpgl
- XvpRTSdZro4ulKj7tLXhq8/XFCmlA3R+wnwbQGcZF9HkYwkPYTd7frWj6dI03AVNFaZA0ouqi1V
- xsSrNARKOkg==
-X-Gm-Gg: AY/fxX60ipwBKSm1x0exLTgGLupnlKlBp357tF8Fs6cit2ZL8PBET7w2pijLDH55jI/
- NEwR8ke7Z3CMB2gdVETjZUlJAy5qdD96uX6JTp6sGqnoC23QjsGIG5tbKpLFlLXpGgsMiPh3u8t
- Dlf4MuQMwvA9jbXBajn66LOjuVFtN3EzUE6xNqFRQc7xNoFuIoQKdpHNIaFfhr11cEW9I4lErsA
- 5KJ3QNflGul4mN+bO/zBKf8wLLFUJQjWAJVMQYCxXOKfuFG+AVFjTXqWJJNLrozc2UXH0c0z1ea
- oKKhLRT7ravEn64UoaeICybUJCi9410JQqlCkdyA5DNbvFtBjCmUieGIxtGSFx8L0fjUq5C04tm
- P100uG0qT1E3Z5jEaTbKnJoyhMZN2DZdSfvuEMFlibRmc/8c/6hcQ+JzrNyUCCNhLmIlVSBb/2n
- jFCnl4CRRvLh8l2efQYw==
-X-Received: by 2002:a17:903:8c7:b0:298:45e5:54a4 with SMTP id
- d9443c01a7336-2a7175460acmr90325415ad.1.1768774163478; 
- Sun, 18 Jan 2026 14:09:23 -0800 (PST)
-Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7190ab921sm73298205ad.8.2026.01.18.14.09.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 14:09:23 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 51/54] util: Remove stats64
-Date: Mon, 19 Jan 2026 09:04:11 +1100
-Message-ID: <20260118220414.8177-52-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260118220414.8177-1-richard.henderson@linaro.org>
-References: <20260118220414.8177-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1768777880; x=1769382680;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8U3BbmWHNss/hU7EiYqp9lVgKowrEn4KC1xWRNppbYA=;
+ b=A6CU4xRxD63e/cgB8QhW/5wmhc6Z0mZQQn3rk+Zq/6p0XaR/Mi6iya2nNszrdpmsby
+ QTZh9TXybKWcixlXOVmgwURuhgrhMInIIsy86CrV1QV1qnscoUuTgovrntxoLOwGGI8c
+ KS8DsyrRABm19yVmIrUoH2URBEn4zcg7zGz4xZiHWXgNvb3mq7Alfm7aFd/l0p5N0WM8
+ G7vkXkd0306otxTIlSq27w5ZsXi1qkLC/LkR6M1DuwvM+eL8damJ4Mer32JV8VVAwxMS
+ afiy3ZVvEJKvw9zdogmJqdrh/Uv1R2xy7NA5cSy/E4RKHF6dpdGy5DZMpqqnzPguV90W
+ jFzw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWnDrsG1Ao1O8w8/4Laoef6ah/HWBluofvMuQ9lELdAabZdPxCslCoEBN0/5htLjq45XtZKwFwmyj5L@nongnu.org
+X-Gm-Message-State: AOJu0Ywd3Vu0PUDAjqvD3Tt6R3QF/vPnoszpk6hdAgNKfiSG0LIldz47
+ vGV//5OVsxt2qtbxPVerxgDoZPqD1xlE6cWnH0yfLDHqjzq6u8+sMBWTBNa5HQFlk7w=
+X-Gm-Gg: AY/fxX7yKnBtrRknTJDJJGqL1bzoCIB92pcruZOII2U1xwZQQ8VXbx26k0/GUCRU/sW
+ ur8qhZ8mt/GIJB1pOxG+G/BG5pM22Vg5mTilLOtQ28oVvIn6cO4eBmdOIVr4xowj6s9XMxlzu1r
+ w7SmNH3exDDej57ZknnbS/OT6ILAZLfvJXeEdtFJBPGGuwpcInsL3tptahLOKEoP6gixjXVRtl8
+ MPc/8wRBQxMCYdvqMfC9UNhDbIiHbjzSip7v96MSmtyfeR3+iCi6rWZuRs/ppbG1DX9ELhi4YMB
+ 8BIh1IQjTwEOXaMNv7weeYvTSku8QPKfIlaZ0p3epFiOVG+azPOziTkhCxsXz87B+QZgJ14S1bp
+ yWeEjSv3Xpi+EHPOLnKmlHvAJ5se1R+RwcMwV2yNBvk3uuyDPJQzQ/80s+gLYxs/UAcrPZBGAco
+ RgaV/Symp61peYnz3EBDK9J7iE9fcN5A==
+X-Received: by 2002:a17:903:289:b0:2a0:9923:6954 with SMTP id
+ d9443c01a7336-2a717554cacmr76573075ad.27.1768777879959; 
+ Sun, 18 Jan 2026 15:11:19 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a7190ab9cbsm76205985ad.14.2026.01.18.15.11.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 18 Jan 2026 15:11:19 -0800 (PST)
+Message-ID: <e0d920ea-2c0f-44fb-9896-95d6ef80b86c@linaro.org>
+Date: Mon, 19 Jan 2026 10:11:13 +1100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 01/18] bswap: Include missing 'qemu/bswap.h' header
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Anton Johansson <anjo@rev.ng>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260118193509.42923-1-philmd@linaro.org>
+ <20260118193509.42923-2-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260118193509.42923-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -101,391 +109,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This API is no longer used.
+On 1/19/26 06:34, Philippe Mathieu-Daudé wrote:
+> All these files indirectly include the "qemu/bswap.h" header.
+> Make this inclusion explicit to avoid build errors when
+> refactoring unrelated headers.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   block/qcow2.h                         | 1 +
+>   audio/audio.c                         | 1 +
+>   block/blklogwrites.c                  | 1 +
+>   block/export/vduse-blk.c              | 1 +
+>   block/export/vhost-user-blk-server.c  | 1 +
+>   block/export/virtio-blk-handler.c     | 1 +
+>   block/parallels-ext.c                 | 1 +
+>   hw/9pfs/9p-local.c                    | 1 +
+>   hw/block/cdrom.c                      | 1 +
+>   hw/block/hd-geometry.c                | 1 +
+>   hw/net/can/ctucan_core.c              | 1 +
+>   hw/nvram/xlnx-efuse.c                 | 1 +
+>   hw/scsi/scsi-generic.c                | 1 +
+>   hw/sd/sd.c                            | 1 +
+>   hw/sd/ssi-sd.c                        | 1 +
+>   net/l2tpv3.c                          | 1 +
+>   qga/commands-linux.c                  | 1 +
+>   scsi/pr-manager-helper.c              | 1 +
+>   target/arm/tcg/arith_helper.c         | 1 +
+>   tests/qtest/acpi-utils.c              | 1 +
+>   tests/qtest/aspeed-hace-utils.c       | 1 +
+>   tests/qtest/bios-tables-test.c        | 1 +
+>   tests/qtest/libqos/igb.c              | 1 +
+>   tests/qtest/libqos/virtio-9p-client.c | 1 +
+>   tests/qtest/migration/framework.c     | 1 +
+>   tests/qtest/npcm7xx_emc-test.c        | 1 +
+>   tests/qtest/tpm-emu.c                 | 1 +
+>   tests/qtest/ufs-test.c                | 1 +
+>   tests/qtest/vmgenid-test.c            | 1 +
+>   tests/unit/test-hbitmap.c             | 1 +
+>   util/bitmap.c                         | 1 +
+>   31 files changed, 31 insertions(+)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/qemu/stats64.h | 199 -----------------------------------------
- util/stats64.c         | 148 ------------------------------
- util/meson.build       |   1 -
- 3 files changed, 348 deletions(-)
- delete mode 100644 include/qemu/stats64.h
- delete mode 100644 util/stats64.c
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/include/qemu/stats64.h b/include/qemu/stats64.h
-deleted file mode 100644
-index 99b5cb724a..0000000000
---- a/include/qemu/stats64.h
-+++ /dev/null
-@@ -1,199 +0,0 @@
--/*
-- * Atomic operations on 64-bit quantities.
-- *
-- * Copyright (C) 2017 Red Hat, Inc.
-- *
-- * Author: Paolo Bonzini <pbonzini@redhat.com>
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2 or later.
-- * See the COPYING file in the top-level directory.
-- */
--
--#ifndef QEMU_STATS64_H
--#define QEMU_STATS64_H
--
--#include "qemu/atomic.h"
--
--/* This provides atomic operations on 64-bit type, using a reader-writer
-- * spinlock on architectures that do not have 64-bit accesses.  Even on
-- * those architectures, it tries hard not to take the lock.
-- */
--
--typedef struct Stat64 {
--#ifdef CONFIG_ATOMIC64
--    aligned_uint64_t value;
--#else
--    uint32_t low, high;
--    uint32_t lock;
--#endif
--} Stat64;
--
--#ifdef CONFIG_ATOMIC64
--static inline void stat64_init(Stat64 *s, uint64_t value)
--{
--    /* This is not guaranteed to be atomic! */
--    *s = (Stat64) { value };
--}
--
--static inline uint64_t stat64_get(const Stat64 *s)
--{
--    return qatomic_read__nocheck(&s->value);
--}
--
--static inline void stat64_set(Stat64 *s, uint64_t value)
--{
--    qatomic_set__nocheck(&s->value, value);
--}
--
--static inline void stat64_add(Stat64 *s, uint64_t value)
--{
--    qatomic_add(&s->value, value);
--}
--
--static inline void stat64_min(Stat64 *s, uint64_t value)
--{
--    uint64_t orig = qatomic_read__nocheck(&s->value);
--    while (orig > value) {
--        orig = qatomic_cmpxchg__nocheck(&s->value, orig, value);
--    }
--}
--
--static inline void stat64_max(Stat64 *s, uint64_t value)
--{
--    uint64_t orig = qatomic_read__nocheck(&s->value);
--    while (orig < value) {
--        orig = qatomic_cmpxchg__nocheck(&s->value, orig, value);
--    }
--}
--#else
--uint64_t stat64_get(const Stat64 *s);
--void stat64_set(Stat64 *s, uint64_t value);
--bool stat64_min_slow(Stat64 *s, uint64_t value);
--bool stat64_max_slow(Stat64 *s, uint64_t value);
--bool stat64_add32_carry(Stat64 *s, uint32_t low, uint32_t high);
--
--static inline void stat64_init(Stat64 *s, uint64_t value)
--{
--    /* This is not guaranteed to be atomic! */
--    *s = (Stat64) { .low = value, .high = value >> 32, .lock = 0 };
--}
--
--static inline void stat64_add(Stat64 *s, uint64_t value)
--{
--    uint32_t low, high;
--    high = value >> 32;
--    low = (uint32_t) value;
--    if (!low) {
--        if (high) {
--            qatomic_add(&s->high, high);
--        }
--        return;
--    }
--
--    for (;;) {
--        uint32_t orig = s->low;
--        uint32_t result = orig + low;
--        uint32_t old;
--
--        if (result < low || high) {
--            /* If the high part is affected, take the lock.  */
--            if (stat64_add32_carry(s, low, high)) {
--                return;
--            }
--            continue;
--        }
--
--        /* No carry, try with a 32-bit cmpxchg.  The result is independent of
--         * the high 32 bits, so it can race just fine with stat64_add32_carry
--         * and even stat64_get!
--         */
--        old = qatomic_cmpxchg(&s->low, orig, result);
--        if (orig == old) {
--            return;
--        }
--    }
--}
--
--static inline void stat64_min(Stat64 *s, uint64_t value)
--{
--    uint32_t low, high;
--    uint32_t orig_low, orig_high;
--
--    high = value >> 32;
--    low = (uint32_t) value;
--    do {
--        orig_high = qatomic_read(&s->high);
--        if (orig_high < high) {
--            return;
--        }
--
--        if (orig_high == high) {
--            /* High 32 bits are equal.  Read low after high, otherwise we
--             * can get a false positive (e.g. 0x1235,0x0000 changes to
--             * 0x1234,0x8000 and we read it as 0x1234,0x0000). Pairs with
--             * the write barrier in stat64_min_slow.
--             */
--            smp_rmb();
--            orig_low = qatomic_read(&s->low);
--            if (orig_low <= low) {
--                return;
--            }
--
--            /* See if we were lucky and a writer raced against us.  The
--             * barrier is theoretically unnecessary, but if we remove it
--             * we may miss being lucky.
--             */
--            smp_rmb();
--            orig_high = qatomic_read(&s->high);
--            if (orig_high < high) {
--                return;
--            }
--        }
--
--        /* If the value changes in any way, we have to take the lock.  */
--    } while (!stat64_min_slow(s, value));
--}
--
--static inline void stat64_max(Stat64 *s, uint64_t value)
--{
--    uint32_t low, high;
--    uint32_t orig_low, orig_high;
--
--    high = value >> 32;
--    low = (uint32_t) value;
--    do {
--        orig_high = qatomic_read(&s->high);
--        if (orig_high > high) {
--            return;
--        }
--
--        if (orig_high == high) {
--            /* High 32 bits are equal.  Read low after high, otherwise we
--             * can get a false positive (e.g. 0x1234,0x8000 changes to
--             * 0x1235,0x0000 and we read it as 0x1235,0x8000). Pairs with
--             * the write barrier in stat64_max_slow.
--             */
--            smp_rmb();
--            orig_low = qatomic_read(&s->low);
--            if (orig_low >= low) {
--                return;
--            }
--
--            /* See if we were lucky and a writer raced against us.  The
--             * barrier is theoretically unnecessary, but if we remove it
--             * we may miss being lucky.
--             */
--            smp_rmb();
--            orig_high = qatomic_read(&s->high);
--            if (orig_high > high) {
--                return;
--            }
--        }
--
--        /* If the value changes in any way, we have to take the lock.  */
--    } while (!stat64_max_slow(s, value));
--}
--
--#endif
--
--#endif
-diff --git a/util/stats64.c b/util/stats64.c
-deleted file mode 100644
-index 09736014ec..0000000000
---- a/util/stats64.c
-+++ /dev/null
-@@ -1,148 +0,0 @@
--/*
-- * Atomic operations on 64-bit quantities.
-- *
-- * Copyright (C) 2017 Red Hat, Inc.
-- *
-- * Author: Paolo Bonzini <pbonzini@redhat.com>
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2 or later.
-- * See the COPYING file in the top-level directory.
-- */
--
--#include "qemu/osdep.h"
--#include "qemu/atomic.h"
--#include "qemu/stats64.h"
--#include "qemu/processor.h"
--
--#ifndef CONFIG_ATOMIC64
--static inline void stat64_rdlock(Stat64 *s)
--{
--    /* Keep out incoming writers to avoid them starving us. */
--    qatomic_add(&s->lock, 2);
--
--    /* If there is a concurrent writer, wait for it.  */
--    while (qatomic_read(&s->lock) & 1) {
--        cpu_relax();
--    }
--}
--
--static inline void stat64_rdunlock(Stat64 *s)
--{
--    qatomic_sub(&s->lock, 2);
--}
--
--static inline bool stat64_wrtrylock(Stat64 *s)
--{
--    return qatomic_cmpxchg(&s->lock, 0, 1) == 0;
--}
--
--static inline void stat64_wrunlock(Stat64 *s)
--{
--    qatomic_dec(&s->lock);
--}
--
--uint64_t stat64_get(const Stat64 *s)
--{
--    uint32_t high, low;
--
--    stat64_rdlock((Stat64 *)s);
--
--    /* 64-bit writes always take the lock, so we can read in
--     * any order.
--     */
--    high = qatomic_read(&s->high);
--    low = qatomic_read(&s->low);
--    stat64_rdunlock((Stat64 *)s);
--
--    return ((uint64_t)high << 32) | low;
--}
--
--void stat64_set(Stat64 *s, uint64_t val)
--{
--    while (!stat64_wrtrylock(s)) {
--        cpu_relax();
--    }
--
--    qatomic_set(&s->high, val >> 32);
--    qatomic_set(&s->low, val);
--    stat64_wrunlock(s);
--}
--
--bool stat64_add32_carry(Stat64 *s, uint32_t low, uint32_t high)
--{
--    uint32_t old;
--
--    if (!stat64_wrtrylock(s)) {
--        cpu_relax();
--        return false;
--    }
--
--    /* 64-bit reads always take the lock, so they don't care about the
--     * order of our update.  By updating s->low first, we can check
--     * whether we have to carry into s->high.
--     */
--    old = qatomic_fetch_add(&s->low, low);
--    high += (old + low) < old;
--    qatomic_add(&s->high, high);
--    stat64_wrunlock(s);
--    return true;
--}
--
--bool stat64_min_slow(Stat64 *s, uint64_t value)
--{
--    uint32_t high, low;
--    uint64_t orig;
--
--    if (!stat64_wrtrylock(s)) {
--        cpu_relax();
--        return false;
--    }
--
--    high = qatomic_read(&s->high);
--    low = qatomic_read(&s->low);
--
--    orig = ((uint64_t)high << 32) | low;
--    if (value < orig) {
--        /* We have to set low before high, just like stat64_min reads
--         * high before low.  The value may become higher temporarily, but
--         * stat64_get does not notice (it takes the lock) and the only ill
--         * effect on stat64_min is that the slow path may be triggered
--         * unnecessarily.
--         */
--        qatomic_set(&s->low, (uint32_t)value);
--        smp_wmb();
--        qatomic_set(&s->high, value >> 32);
--    }
--    stat64_wrunlock(s);
--    return true;
--}
--
--bool stat64_max_slow(Stat64 *s, uint64_t value)
--{
--    uint32_t high, low;
--    uint64_t orig;
--
--    if (!stat64_wrtrylock(s)) {
--        cpu_relax();
--        return false;
--    }
--
--    high = qatomic_read(&s->high);
--    low = qatomic_read(&s->low);
--
--    orig = ((uint64_t)high << 32) | low;
--    if (value > orig) {
--        /* We have to set low before high, just like stat64_max reads
--         * high before low.  The value may become lower temporarily, but
--         * stat64_get does not notice (it takes the lock) and the only ill
--         * effect on stat64_max is that the slow path may be triggered
--         * unnecessarily.
--         */
--        qatomic_set(&s->low, (uint32_t)value);
--        smp_wmb();
--        qatomic_set(&s->high, value >> 32);
--    }
--    stat64_wrunlock(s);
--    return true;
--}
--#endif
-diff --git a/util/meson.build b/util/meson.build
-index 35029380a3..d7d6b213f6 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -59,7 +59,6 @@ util_ss.add(files('qht.c'))
- util_ss.add(files('qsp.c'))
- util_ss.add(files('range.c'))
- util_ss.add(files('reserved-region.c'))
--util_ss.add(files('stats64.c'))
- util_ss.add(files('systemd.c'))
- util_ss.add(files('transactions.c'))
- util_ss.add(files('guest-random.c'))
--- 
-2.43.0
-
+r~
 
