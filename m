@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44F38D4A5EB
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 05:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D73D4A5EB
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 05:12:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhhVP-0007X6-W2; Mon, 19 Jan 2026 00:08:49 -0500
+	id 1vhhYq-0001Kd-IG; Mon, 19 Jan 2026 00:12:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vhhVC-0007WD-2n
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 00:08:36 -0500
-Received: from mgamail.intel.com ([192.198.163.18])
+ id 1vhhY9-0001IB-Vb
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 00:11:37 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vhhV8-0000SS-Pe
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 00:08:33 -0500
+ id 1vhhY7-0000u2-K8
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 00:11:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1768799311; x=1800335311;
+ t=1768799495; x=1800335495;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=nLwTrY9kl6J1cUA3P/OV/Bk7pXQW0CRc9S0pVw4lGtM=;
- b=EifIwAcwBkuUN1VgdhLEbFTsGRi2L9xf6d1UJwH+44HidPzrfwFUNchs
- MgdzdSSpbRMp89QljtxnoSUB/ULkzLjJTuqEQIe95Qg/jJO9qb+ulbMZS
- buHrL8HXFICYmO+sNEfpzFV9cIODi7gTR5B1TNJhBRqVYKFwy7n5RJjOM
- ZT1Cw7DGBdkQuUNRwNZaRWAIFXDhr6C2BzOWlg2zb5yVfNJiMacFvgTfL
- EvgOTZwUelz998iFcUGcFcPRo1LPVXYsrQdsOEfJi+Gk1jnDZnJOU7RrW
- UrWXGHGRw6vt31r5OaG/fGcUpN3Dbs9RovR7F7Hbud6goVOynJvP07mgV g==;
-X-CSE-ConnectionGUID: 3h4NOJWDTQOrk901z7RnXg==
-X-CSE-MsgGUID: UjDrDJ3GSV6BJLJQv4vy0g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11675"; a="69207414"
-X-IronPort-AV: E=Sophos;i="6.21,237,1763452800"; d="scan'208";a="69207414"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jan 2026 21:08:26 -0800
-X-CSE-ConnectionGUID: B7cEtOlzSgWNWOXkrxB2ww==
-X-CSE-MsgGUID: lr3SEjnqTiGBV+MDr9H41w==
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=F3ZmE+K8iQIwTrl0flL1UXcjJ1vcmWXrTI1rsoIx2JY=;
+ b=Th/uvV1kZDj4Ise+FWSbmfJRC6vvCnaVV7r1qWPUav/btPb7bc/sXItw
+ zpVvE1PGAkLcw9yNlGVF0MCYuCuSz8nSKFYHNpCzPbci9jl5vLoK8fflj
+ 4jcGK2BCm+cDzBojbebv0KMTQW3GrczIIKwUiE83ohmlhw6QG6wocZ8jG
+ 6IHORlTVD2lepvbNDIJ+oFwZbxXhXFStMFJefnbcmbSb4JxtgUdSkXyWy
+ wENZkVg0gXLss432ZWsd1THr2CNH+59LhMW+6wpg2A4BtVOTQtBWnJaw1
+ 0mESWNdr88aRYe29g/GYEEJY2Govj9NcvGQoRkatajPg44fekBSGZb7pR g==;
+X-CSE-ConnectionGUID: YbFaYyO8Ri+Lv4f49qGMeA==
+X-CSE-MsgGUID: udNarimUTYKhB2PDv03QdA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11675"; a="69918423"
+X-IronPort-AV: E=Sophos;i="6.21,237,1763452800"; d="scan'208";a="69918423"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Jan 2026 21:11:32 -0800
+X-CSE-ConnectionGUID: fy0Ge2oNQBOdXuJXDNq82w==
+X-CSE-MsgGUID: zUBkyUFTSBSIUa5xhSSrDQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,237,1763452800"; d="scan'208";a="228704859"
+X-IronPort-AV: E=Sophos;i="6.21,237,1763452800"; d="scan'208";a="243340665"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa002.fm.intel.com with ESMTP; 18 Jan 2026 21:08:21 -0800
-Date: Mon, 19 Jan 2026 13:33:52 +0800
+ by orviesa001.jf.intel.com with ESMTP; 18 Jan 2026 21:11:31 -0800
+Date: Mon, 19 Jan 2026 13:37:01 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
- likexu@tencent.com, like.xu.linux@gmail.com, groug@kaod.org,
- khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
- den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com,
- ewanhai-oc@zhaoxin.com, ewanhai@zhaoxin.com, zide.chen@intel.com
-Subject: Re: [PATCH v9 4/5] target/i386/kvm: reset AMD PMU registers during
- VM reset
-Message-ID: <aW3CQIHgv5nP85gd@intel.com>
-References: <20260109075508.113097-1-dongli.zhang@oracle.com>
- <20260109075508.113097-5-dongli.zhang@oracle.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH v2 1/8] target/i386: Include missing 'svm.h' header in
+ 'sev.h'
+Message-ID: <aW3C/eLwSoqsvOtt@intel.com>
+References: <20260117162926.74225-1-philmd@linaro.org>
+ <20260117162926.74225-2-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260109075508.113097-5-dongli.zhang@oracle.com>
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260117162926.74225-2-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -90,84 +90,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 08, 2026 at 11:53:59PM -0800, Dongli Zhang wrote:
-> Date: Thu,  8 Jan 2026 23:53:59 -0800
-> From: Dongli Zhang <dongli.zhang@oracle.com>
-> Subject: [PATCH v9 4/5] target/i386/kvm: reset AMD PMU registers during VM
->  reset
-> X-Mailer: git-send-email 2.43.5
+On Sat, Jan 17, 2026 at 05:29:19PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Sat, 17 Jan 2026 17:29:19 +0100
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH v2 1/8] target/i386: Include missing 'svm.h' header in
+>  'sev.h'
+> X-Mailer: git-send-email 2.52.0
 > 
-> QEMU uses the kvm_get_msrs() function to save Intel PMU registers from KVM
-> and kvm_put_msrs() to restore them to KVM. However, there is no support for
-> AMD PMU registers. Currently, pmu_version and num_pmu_gp_counters are
-> initialized based on cpuid(0xa), which does not apply to AMD processors.
-> For AMD CPUs, prior to PerfMonV2, the number of general-purpose registers
-> is determined based on the CPU version.
+> otarget/i386/cpu.h:2820:#include "svm.h"
+> target/i386/sev.h:17:#include "target/i386/svm.h"
 > 
-> To address this issue, we need to add support for AMD PMU registers.
-> Without this support, the following problems can arise:
+> "target/i386/sev.h" uses the vmcb_seg structure type, which
+> is defined in "target/i386/svm.h". Current builds succeed
+> because the files including "target/i386/sev.h" also include
+> "monitor/hmp-target.h", itself including "cpu.h" and finally
+> "target/i386/svm.h".
 > 
-> 1. If the VM is reset (e.g., via QEMU system_reset or VM kdump/kexec) while
-> running "perf top", the PMU registers are not disabled properly.
+> Include the latter, otherwise removing "cpu.h" from
+> "monitor/hmp-target.h" triggers:
 > 
-> 2. Despite x86_cpu_reset() resetting many registers to zero, kvm_put_msrs()
-> does not handle AMD PMU registers, causing some PMU events to remain
-> enabled in KVM.
+>   ../target/i386/sev.h:62:21: error: field has incomplete type 'struct vmcb_seg'
+>      62 |     struct vmcb_seg es;
+>         |                     ^
 > 
-> 3. The KVM kvm_pmc_speculative_in_use() function consistently returns true,
-> preventing the reclamation of these events. Consequently, the
-> kvm_pmc->perf_event remains active.
-> 
-> 4. After a reboot, the VM kernel may report the following error:
-> 
-> [    0.092011] Performance Events: Fam17h+ core perfctr, Broken BIOS detected, complain to your hardware vendor.
-> [    0.092023] [Firmware Bug]: the BIOS has corrupted hw-PMU resources (MSR c0010200 is 530076)
-> 
-> 5. In the worst case, the active kvm_pmc->perf_event may inject unknown
-> NMIs randomly into the VM kernel:
-> 
-> [...] Uhhuh. NMI received for unknown reason 30 on CPU 0.
-> 
-> To resolve these issues, we propose resetting AMD PMU registers during the
-> VM reset process.
-> 
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> Changed since v1:
->   - Modify "MSR_K7_EVNTSEL0 + 3" and "MSR_K7_PERFCTR0 + 3" by using
->     AMD64_NUM_COUNTERS (suggested by Sandipan Das).
->   - Use "AMD64_NUM_COUNTERS_CORE * 2 - 1", not "MSR_F15H_PERF_CTL0 + 0xb".
->     (suggested by Sandipan Das).
->   - Switch back to "-pmu" instead of using a global "pmu-cap-disabled".
->   - Don't initialize PMU info if kvm.enable_pmu=N.
-> Changed since v2:
->   - Remove 'static' from host_cpuid_vendorX.
->   - Change has_pmu_version to pmu_version.
->   - Use object_property_get_int() to get CPU family.
->   - Use cpuid_find_entry() instead of cpu_x86_cpuid().
->   - Send error log when host and guest are from different vendors.
->   - Move "if (!cpu->enable_pmu)" to begin of function. Add comments to
->     reminder developers.
->   - Add support to Zhaoxin. Change is_same_vendor() to
->     is_host_compat_vendor().
->   - Didn't add Reviewed-by from Sandipan because the change isn't minor.
-> Changed since v3:
->   - Use host_cpu_vendor_fms() from Zhao's patch.
->   - Check AMD directly makes the "compat" rule clear.
->   - Add comment to MAX_GP_COUNTERS.
->   - Skip PMU info initialization if !kvm_pmu_disabled.
-> Changed since v4:
->   - Add Reviewed-by from Zhao and Sandipan.
-> Changed since v6:
->   - Add Reviewed-by from Dapeng Mi.
-> Changed since v8:
->   - Remove the usage of 'kvm_pmu_disabled' as sussged by Zide Chen.
->   - Remove Reviewed-by from Zhao Liu, Sandipan Das and Dapeng Mi, as the
->     usage of 'kvm_pmu_disabled' is removed.
-> 
->  target/i386/cpu.h     |  12 +++
->  target/i386/kvm/kvm.c | 168 +++++++++++++++++++++++++++++++++++++++++-
->  2 files changed, 176 insertions(+), 4 deletions(-)
+>  target/i386/sev.h | 2 ++
+>  1 file changed, 2 insertions(+)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
