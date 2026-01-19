@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B779DD29C2E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01861D29C41
 	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 16:13:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhrqx-0005Xr-AE; Mon, 19 Jan 2026 11:11:43 -0500
+	id 1vhrqy-0005Z0-FU; Mon, 19 Jan 2026 11:11:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vhrqt-0005VF-DI; Mon, 19 Jan 2026 11:11:39 -0500
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ id 1vhrqv-0005WC-3g; Mon, 19 Jan 2026 11:11:41 -0500
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vhrqp-00027P-91; Mon, 19 Jan 2026 11:11:38 -0500
+ id 1vhrqs-000297-O0; Mon, 19 Jan 2026 11:11:40 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAHD1OvV25pU3w4Aw--.8345S2;
- Tue, 20 Jan 2026 00:11:27 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwA3PSW2V25pd3w4Aw--.8228S2;
+ Tue, 20 Jan 2026 00:11:34 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwCX8O2mV25pCfIUAA--.37135S7;
- Tue, 20 Jan 2026 00:11:26 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwCX8O2mV25pCfIUAA--.37135S11;
+ Tue, 20 Jan 2026 00:11:33 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
@@ -36,32 +36,34 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Mostafa Saleh <smostafa@google.com>,
  CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v9 4/8] hw/arm/smmuv3-common: Add NSCFG bit definition for CD
-Date: Tue, 20 Jan 2026 00:11:08 +0800
-Message-Id: <20260119161112.3841386-5-tangtao1634@phytium.com.cn>
+Subject: [RFC v9 8/8] tests/qtest: Add SMMUv3 bare-metal test using
+ iommu-testdev
+Date: Tue, 20 Jan 2026 00:11:12 +0800
+Message-Id: <20260119161112.3841386-9-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260119161112.3841386-1-tangtao1634@phytium.com.cn>
 References: <20260119161112.3841386-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwCX8O2mV25pCfIUAA--.37135S7
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAABWltPrkFKgAAso
+X-CM-TRANSID: AQAAfwCX8O2mV25pCfIUAA--.37135S11
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAABWltPrkFMgAAsw
 Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW7AF1kJFWUKFW8AF17CF4kWFg_yoW8GF4DpF
- 1xCr1kG34qgF1Ikrn5Jw47uF9xXayDCr4xtryjgry7urnaqwnrZ392qa15Kr18Wr4vvr15
- uFnavrW8Wr4ftrDanT9S1TB71UUUUj7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoW3Jw1DCF13JF4rCw47Jr17Awb_yoW7uF18pF
+ yDCFy2kFWUJF1fC3Z7Ja1kCr43tan3Cw1UCry3Grn5ur4vyry7tr1kKFyUK3s7X3ykZF1U
+ Z3WvkF45Gr18JaDanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,44 +79,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add NSCFG bit definition for CD structure. This allows proper
-configuration of non-secure access settings in CD.
+Add a qtest suite that validates ARM SMMUv3 translation without guest
+firmware or OS. The tests leverage iommu-testdev to trigger DMA
+operations and the qos-smmuv3 library to configure IOMMU translation
+structures.
+
+This test suite targets the virt machine and covers:
+- Stage 1 only translation (VA -> PA via CD page tables)
+- Stage 2 only translation (IPA -> PA via STE S2 tables)
+- Nested translation (VA -> IPA -> PA, Stage 1 + Stage 2)
+- Design to extended to support multiple security spaces
+    (Non-Secure, Secure, Root, Realm)
+
+Each test case follows this sequence:
+1. Initialize SMMUv3 with appropriate command/event queues
+2. Build translation tables (STE/CD/PTE) for the target scenario
+3. Configure iommu-testdev with IOVA and DMA attributes via MMIO
+4. Trigger DMA and validate successful translation
+5. Verify data integrity through a deterministic write-read pattern
+
+This bare-metal approach provides deterministic IOMMU testing with
+minimal dependencies, making failures directly attributable to the SMMU
+translation path.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
- include/hw/arm/smmuv3-common.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ tests/qtest/iommu-smmuv3-test.c | 132 ++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build         |   3 +
+ 2 files changed, 135 insertions(+)
+ create mode 100644 tests/qtest/iommu-smmuv3-test.c
 
-diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
-index 6b48b5414d..6920a024d1 100644
---- a/include/hw/arm/smmuv3-common.h
-+++ b/include/hw/arm/smmuv3-common.h
-@@ -123,11 +123,13 @@ REG32(CD_1, 4)
-     FIELD(CD_1, A, 14, 1)
-     FIELD(CD_1, ASID, 16, 16)
- REG32(CD_2, 8)
-+    FIELD(CD_2, NSCFG0, 0, 1)
-     FIELD(CD_2, HAD0, 1, 1)
-     FIELD(CD_2, TTB0_LO, 4, 28)
- REG32(CD_3, 12)
-     FIELD(CD_3, TTB0_HI, 0, 19)
- REG32(CD_4, 16)
-+    FIELD(CD_4, NSCFG1, 0, 1)
-     FIELD(CD_4, HAD1, 1, 1)
-     FIELD(CD_4, TTB1_LO, 4, 28)
- REG32(CD_5, 20)
-@@ -155,6 +157,9 @@ REG32(CD_5, 20)
- #define CD_R(x)          FIELD_EX32((x)->word[1], CD_1, R)
- #define CD_A(x)          FIELD_EX32((x)->word[1], CD_1, A)
- #define CD_ASID(x)       FIELD_EX32((x)->word[1], CD_1, ASID)
-+#define CD_NSCFG(x, sel) ((sel) ?                                         \
-+    FIELD_EX32((x)->word[4], CD_4, NSCFG1) :                              \
-+    FIELD_EX32((x)->word[2], CD_2, NSCFG0))
- #define CD_HAD(x, sel)   ((sel) ?                                         \
-     FIELD_EX32((x)->word[4], CD_4, HAD1) :                                \
-     FIELD_EX32((x)->word[2], CD_2, HAD0))
+diff --git a/tests/qtest/iommu-smmuv3-test.c b/tests/qtest/iommu-smmuv3-test.c
+new file mode 100644
+index 0000000000..cced49a9b6
+--- /dev/null
++++ b/tests/qtest/iommu-smmuv3-test.c
+@@ -0,0 +1,132 @@
++/*
++ * QTest for SMMUv3 with iommu-testdev
++ *
++ * This QTest file is used to test the SMMUv3 with iommu-testdev so that we can
++ * test SMMUv3 without any guest kernel or firmware.
++ *
++ * Copyright (c) 2026 Phytium Technology
++ *
++ * Author:
++ *  Tao Tang <tangtao1634@phytium.com.cn>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "libqos/pci.h"
++#include "libqos/generic-pcihost.h"
++#include "hw/pci/pci_regs.h"
++#include "hw/misc/iommu-testdev.h"
++#include "libqos/qos-smmuv3.h"
++
++#define DMA_LEN           4
++
++static uint64_t smmuv3_expected_gpa(uint64_t iova)
++{
++    return qsmmu_space_offset(QSMMU_SPACE_NONSECURE) +
++           QSMMU_L3_PTE_VAL + (iova & 0xfff);
++}
++
++static void save_fn(QPCIDevice *dev, int devfn, void *data)
++{
++    QPCIDevice **pdev = (QPCIDevice **) data;
++
++    *pdev = dev;
++}
++
++static QPCIDevice *setup_qtest_pci_device(QTestState *qts, QGenericPCIBus *gbus,
++                                          QPCIBar *bar)
++{
++    QPCIDevice *dev = NULL;
++
++    qpci_init_generic(gbus, qts, NULL, false);
++
++    qpci_device_foreach(&gbus->bus, IOMMU_TESTDEV_VENDOR_ID,
++                        IOMMU_TESTDEV_DEVICE_ID, save_fn, &dev);
++    g_assert(dev);
++
++    qpci_device_enable(dev);
++    *bar = qpci_iomap(dev, 0, NULL);
++    g_assert_false(bar->is_io);
++
++    return dev;
++}
++
++static void run_smmuv3_translation(const QSMMUTestConfig *cfg)
++{
++    QTestState *qts;
++    QGenericPCIBus gbus;
++    QPCIDevice *dev;
++    QPCIBar bar;
++
++    if (!qtest_has_machine("virt")) {
++        g_test_skip("virt machine not available");
++        return;
++    }
++
++    /* Initialize QEMU environment for SMMU testing */
++    qts = qtest_init("-machine virt,acpi=off,gic-version=3,iommu=smmuv3 "
++                     "-smp 1 -m 512 -cpu max -net none "
++                     "-device iommu-testdev");
++
++    /* Setup and configure PCI device */
++    dev = setup_qtest_pci_device(qts, &gbus, &bar);
++    g_assert(dev);
++
++    g_test_message("### SMMUv3 translation mode=%d sec_sid=%d ###",
++                   cfg->trans_mode, cfg->sec_sid);
++    qsmmu_run_translation_case(qts, dev, bar, VIRT_SMMU_BASE, cfg);
++    qtest_quit(qts);
++}
++
++static void test_smmuv3_ns_s1_only(void)
++{
++    QSMMUTestConfig cfg = {
++        .trans_mode = QSMMU_TM_S1_ONLY,
++        .sec_sid = QSMMU_SEC_SID_NONSECURE,
++        .dma_gpa = smmuv3_expected_gpa(QSMMU_IOVA),
++        .dma_len = DMA_LEN,
++        .expected_result = 0,
++    };
++
++    run_smmuv3_translation(&cfg);
++}
++
++static void test_smmuv3_ns_s2_only(void)
++{
++    QSMMUTestConfig cfg = {
++        .trans_mode = QSMMU_TM_S2_ONLY,
++        .sec_sid = QSMMU_SEC_SID_NONSECURE,
++        .dma_gpa = smmuv3_expected_gpa(QSMMU_IOVA),
++        .dma_len = DMA_LEN,
++        .expected_result = 0,
++    };
++
++    run_smmuv3_translation(&cfg);
++}
++
++static void test_smmuv3_ns_nested(void)
++{
++    QSMMUTestConfig cfg = {
++        .trans_mode = QSMMU_TM_NESTED,
++        .sec_sid = QSMMU_SEC_SID_NONSECURE,
++        .dma_gpa = smmuv3_expected_gpa(QSMMU_IOVA),
++        .dma_len = DMA_LEN,
++        .expected_result = 0,
++    };
++
++    run_smmuv3_translation(&cfg);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("/iommu-testdev/translation/ns-s1-only",
++                   test_smmuv3_ns_s1_only);
++    qtest_add_func("/iommu-testdev/translation/ns-s2-only",
++                   test_smmuv3_ns_s2_only);
++    qtest_add_func("/iommu-testdev/translation/ns-nested",
++                   test_smmuv3_ns_nested);
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 0f053fb56d..a8b09d065f 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -264,6 +264,9 @@ qtests_aarch64 = \
+    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
+   (config_all_devices.has_key('CONFIG_NPCM8XX') ? qtests_npcm8xx : []) + \
++  (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
++   config_all_devices.has_key('CONFIG_ARM_VIRT') ?
++   ['iommu-smmuv3-test'] : []) + \
+   qtests_cxl +                                                                                  \
+   ['arm-cpu-features',
+    'numa-test',
 -- 
 2.34.1
 
