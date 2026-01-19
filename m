@@ -4,109 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE453D29C24
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 13:03:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADD54D29C25
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 13:05:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhot6-0002H6-Es; Mon, 19 Jan 2026 08:01:44 -0500
+	id 1vhowN-0007cp-BP; Mon, 19 Jan 2026 08:05:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vhosU-0001s2-7s
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:01:07 -0500
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ id 1vhowL-0007Z0-Mt
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:05:05 -0500
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vhosQ-0001ii-6O
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:01:04 -0500
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-78fc4425b6bso38648577b3.1
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 05:01:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768827660; cv=none;
+ id 1vhowI-0002I7-7g
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:05:04 -0500
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-7926b269f03so35843617b3.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 05:05:01 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768827901; cv=none;
  d=google.com; s=arc-20240605;
- b=DFpAycyfd6N4/6eopBZYWvXjj7v1LV0Mag37hnYW1SsZ8OXl9ZhuibX1ONkIoKSc1U
- KJyn0QVxurFFaPE0oPlOWwyGciP5ZGMR9itcwtvpLUJpURCb5y0eV4ARo04pbEGdxE87
- xg8eEW7z/ODZFe1bo0kNixY05kPOshiOcQy+mugn5Hi1OjQt6J+P8ePMV9AzEAAuh1cI
- x17qdMIitsExqbdXkqB0uFBk6rWNHJSLzn4HASF7glVNcM+fMyvgLKcdeot6Q8QQvoSz
- 5A7Mi4KOlL9oHgwxcIQtuescuDLwksX1a0kzE8kFArN+hFCLtGMe3RPKYJjMjjVf7suP
- O9nw==
+ b=MBi50zolTrFEuGO86snR2wTssPhYo0H/50TsZom3xD8Vz+S6cs8yhv/hb2pE0NbvLH
+ 8ib1ZHuvt0R581o1Aawhqw1zRd1SgRbOH9VSpfdReQU+FNercjQrFORMGWOWtVzi/o6B
+ wcns7cQX4ppP/v6dBPruie6VZUMfLRU80O2Ai7GkpOhGRsjZLQPG0dX8pyDtcS7MfzP8
+ gwLtTInXcT5QhutEZP0WW4d7pUpXmsaDrerelqI/nArl+JoZnuteXmK5ha+uH4vY6sdL
+ TBXeutli0SMZ8M5CdAOPVBk68IZhsfPMNeqHdZi14iec6b6vgjaE3379PKsUTn/AHjNd
+ R3WQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=TPQi86pLnYRCGvJvueNn+Jvwj1U84ceP69XmscXfzew=;
- fh=1RhkLhOVz+X/l215EGDErNq1r0hxWqCWD2wP4O/UH6Q=;
- b=efRYF5HvKXmiFB4IEmy1oxqri3t4hFyUtYHd5NwOtSG93X20QMjCD+rYJol43MKRhn
- qwilCh66siVNKGGQYWYxvqyxJehdVUNTDzrMdL12oxPsLiNbJHQu8xtzAk51ckn+3N0K
- xzxdxhA52hJL93+xHvuwx8u6+JkI6CiEVieY26EYfkQM+8pICXDkziwCEPiFwvUs29U3
- DMajntGcOntkXY1t8Ni00f77jR9JNxRfUSj6eyvci5JWXrprUNzWwW6Eawd3o5G7txhB
- nlKv8gE0fzCtVGNXxkGINw5NbImfFPUZc6hB1MHp2AXCiK3JD3C2YIelwMSGlj2MhDE8
- /5vA==; darn=nongnu.org
+ bh=fvSoz863+pofqy1eH4DP7vwtOin0O6YjaWxufyzdyf8=;
+ fh=wahW1+RimJuX2MiKJkK+njf/+j9C1d2Eihxe3z70jfE=;
+ b=ERzjx1IvQmt8ENJrlhmvoLYkhyE2mKozvxtmjJ4/KPWwnqjs/Bfvy1gkMs9xXbDva4
+ R7O2XrKRGtSGxb5wmx9dKSVSxIOOpBymdvNMoUe4B+dfQhcnOjav7QaN6vcBe80YrawG
+ 01NRZt8wG16wPWKxxGXpfGvYIb9Q/3JH9a5eTTKNu9S+jGKnrAGnc24e6N8+t+2o0qs9
+ 7mqwTSCCDplkzWqLVHw+2x7cq3yjzuTykj3lCoSTaNEBfa3qvph8JPuv8gpOefqhpR8S
+ DHLdpfxB/hLEQEGjZO7LdSts+XNzOF9IhzAP05KN1UW5Vt1IOD+kdheSTdmfryJ1XQPd
+ I7ew==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768827660; x=1769432460; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768827901; x=1769432701; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TPQi86pLnYRCGvJvueNn+Jvwj1U84ceP69XmscXfzew=;
- b=FZsVofjHz1YMa4GTgYidR6L4l7HpywpTxG1PzH3DjGwsDTycastp2R5WmiQQbqQUfp
- YTtlXFdjh8y68AhdGNaWv1V0Xrqq2Po5T41v/BKVdNrJrrDT0Qkyzk1MNQi+cIh++B3I
- 6wD4FiuxFsrup80kadrGiGYI5MwQpzyfiz0JEZiKiedBx9grqh31lYjtkIqNRDTFI80g
- GtX69vzDDoCFH3QqukjB6mC9UkBQ+1VVO/hsmV6ZXatrznGPuSJIONJ1kBWOfreLY0m0
- cyL5mGiYnYY+ROybhv6UP4cS9C/0qPuHHL/QGHqMvr1lc3X5qKPUg68NDLAgq9V4lmys
- NTew==
+ bh=fvSoz863+pofqy1eH4DP7vwtOin0O6YjaWxufyzdyf8=;
+ b=Mn74yiWEE/ezct6Sk+KtS9m25bL9vUrs/zH3A5E0drlJdZJe4zc84N2MqiNvZolsvY
+ cfvzxH0xY8TqQ2hC5zni++AhEwhOC59mLQWCJ34BGnX9BIEJBB2gdTg6XaLebPSFdnOe
+ GeHOoF0OgdVaKaXI+r+9bC/D3FtQfGXGkMlM3AXjppcGjlhaSf9miiVwahlpzycARuf2
+ axvvqXJhTMHvWU2T0/+K6Iew6sW44vXFL5IbtRaesuhyaUxOPY2H9yNjjgYavDHn0Zvd
+ vNcoxyPUfHBeGgN2xhz1yjMsWOT1EsZ/IVZsF0RhEaT/2E08eWp+izhM3MvuIW8RCHe0
+ W8jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768827660; x=1769432460;
+ d=1e100.net; s=20230601; t=1768827901; x=1769432701;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TPQi86pLnYRCGvJvueNn+Jvwj1U84ceP69XmscXfzew=;
- b=BJftfRbPIHw64CcGT8kvWdp5uoyBF80OEwhAt7cQQYUNqdEranY5J9GCRbCnRBmfw0
- YmsvH6S5ehqY990rUcHjO+ecRBxi6ZManwS8lAodjyYfM+axGlWPKljmDzFZ9egCtFDX
- N9G2D/6bwvFZKtU6wPBrpN54wcqtnrANWgURzaNgKZcMP9tj3WFzouDTY/F3mwZn92zF
- c9TuDq6E6lxLNaQ8wsO2oC/uKGkmr8j4W2fxsWoBd0r8bGKCsQedqVSJAYsVpUbWKfRg
- q9JRwsoxtrh4nIHbHo04wsxm/O3WDKj3mPYB062hGChUCw4u50lJQU4WOGenB08E9QKz
- RVVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUldEcETJk8VCxnfAL7croxAOcny561bsBoPg8/8geNtV5Edvei9pmIkhxXyEfyxm4gFagESbIP11kj@nongnu.org
-X-Gm-Message-State: AOJu0YwXgeSrwYV8kttxntAODajbEjr8B9cukTU4k6DEoyi4+ZrG6bG6
- DJlWtqwKHBdvErzXthQQkLS4IaNvL5EydKGgtX6f1TbhVLeVHcdjAMDa3GI2VBVkP/6NJsCSO9L
- PMj3jYMA6oqApDGnY5+K8fs7g/SCIIR+Zx2gYn34x3w==
-X-Gm-Gg: AZuq6aJKAizuNYa/wwTfiHao0h3PCAgFZR0RO6GkEVkpRczaMgaKwHdCdny+J4gnhBh
- QlUNoNLG+o3DcQNj0SyUoe6XYarKeFgTWzV0pdqLWKEuFITbV0lZ/tKXlPDTata06e7SXsd5hEO
- Yt4fWySykTKlSuNK325LdGKGQxbXLmU80EF8oPu2bZEaTK1JtIVkpiVJKea5xI69x483mw+v4pF
- 8RcbdWnxjKTzcgOBlXhb3jfMirC0hh4qq5aIfEZzp29YXPvpxBdi9qP++b9a/TnSkVjGopFzjxw
- jcE2
-X-Received: by 2002:a05:690c:12:b0:785:fe77:ccce with SMTP id
- 00721157ae682-793c544d54cmr89607217b3.44.1768827659942; Mon, 19 Jan 2026
- 05:00:59 -0800 (PST)
+ bh=fvSoz863+pofqy1eH4DP7vwtOin0O6YjaWxufyzdyf8=;
+ b=HZzTwgbrcz6ZYF9PW7o+9rlPT1gnJemwPxk+dqv5kqGlQjRyIHfFSpGyjLWD7/AWdA
+ i1IRvz7kbNvGu5l6hq+Lfo8q26Kja9OLf9zMWmLtxElYhE9ZjsNrt7I2vN9LrN7KKDkf
+ eYIn1sGFl87JBU7gQXucFDKxfPedjHA0eG2HJM6lPsff3CiTCQLirF9bdjYqJL58ixhT
+ gqEqA6LV5IrqKFTYsAMy0FolwzNXdFbLj4HSUfktabufVEvdJJULqV+s5ptGVfvW8cp5
+ dte+uYjnTHlgV1rsM4m0d2uh2xylhGWROFvjXBO9JR3zBLbTd7kG3h8lKWWjzKwQZA3u
+ 94JQ==
+X-Gm-Message-State: AOJu0YyxTRVDlonI0ICM6aRETS8MHrFARasiwEitbgJyFJKrCB0tSvv9
+ BQCMCdmaTe7AX3zzSqN7sTpwO+o1w9/kstCK1iCH8MCvsBOSnKspCf6B/uY5kOoj9RDLM62osSg
+ nLIcpsQH9MyL2oxJ16sCp/0T4hOJb/mDJ0KvKPZzllw==
+X-Gm-Gg: AZuq6aJJcoyc8QS1e+dLjqlPow4LgYJCB9H6ELYuQgomR+PkMi1RGkVSWYBGhFL3IZe
+ n2E41ZXMoTyereK8AKuhXP4To3f+mlvkoIto3IPDb6A86G2OQBEuW5kzuCreCWoR0DBoiHC7qkg
+ bcfE0OHpudXHj2jY/hDvFkidjuS1Qw0zxZv5S+GJbbwkdJWqXk7dKPHFCOiDF+ThQfqadnVvLX7
+ ymE5JBb347jTCyMPowuhkH4XKFZNGzEmPhOKweG1hMcnST5syUVQSJ+6MrV8D26pcdGKif2wuHg
+ D8mb
+X-Received: by 2002:a05:690c:ec9:b0:78d:6c06:4a04 with SMTP id
+ 00721157ae682-793c523d4dbmr195035277b3.1.1768827900199; Mon, 19 Jan 2026
+ 05:05:00 -0800 (PST)
 MIME-Version: 1.0
-References: <20251028054238.14949-1-philmd@linaro.org>
- <20251028054238.14949-52-philmd@linaro.org>
- <cd27bf13-a8ef-4b7a-bfea-0e4220091ec1@linaro.org>
- <8af2b03c-6fc3-48c6-a307-7d49d38532b4@linaro.org>
- <6b934c5a-bfbc-4877-8e53-b7e89db1531b@linaro.org>
-In-Reply-To: <6b934c5a-bfbc-4877-8e53-b7e89db1531b@linaro.org>
+References: <20260119120030.2593993-1-alex.bennee@linaro.org>
+In-Reply-To: <20260119120030.2593993-1-alex.bennee@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 19 Jan 2026 13:00:47 +0000
-X-Gm-Features: AZwV_QguP00tnkyjRD6H94znLrQCE0jUQ2AOx2kWebFzmEBuRaJEAGHFMdeGyfU
-Message-ID: <CAFEAcA9RnVqWfgm_jhevoFE0Z9E825=7JFZVNNnfnJeCKd0LJg@mail.gmail.com>
-Subject: Re: [PATCH v3 51/59] hw/arm/virt: Warn when HVF doesn't report IPA
- bit length
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
- Mads Ynddal <mads@ynddal.dk>, Cameron Esfahani <dirty@apple.com>,
- qemu-arm@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Mohamed Mediouni <mohamed@unpredictable.fr>, 
- Peter Collingbourne <pcc@google.com>, Alexander Graf <agraf@csgraf.de>,
- Joelle van Dyne <j@getutm.app>
+Date: Mon, 19 Jan 2026 13:04:48 +0000
+X-Gm-Features: AZwV_Qgf1sucgZlu1IDeL5WSKjSsReA-PesTdz71syb-aze6UMvzQWAFmI5TtHk
+Message-ID: <CAFEAcA-WNZsMuHu=3wA8JhjMf1agTBG6yXO8G=C-iX+ApY80bQ@mail.gmail.com>
+Subject: Re: [RFC PATCH] hw/intc: avoid byte swap fiddling in gicv3 its path
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, "open list:ARM cores" <qemu-arm@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,64 +115,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Jan 2026 at 12:13, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Mon, 19 Jan 2026 at 12:00, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> On 18/1/26 23:03, Philippe Mathieu-Daud=C3=A9 wrote:
-> > On 28/10/25 13:07, Richard Henderson wrote:
-> >> On 10/28/25 06:42, Philippe Mathieu-Daud=C3=A9 wrote:
-> >>> Emit a warning when HVF doesn't return the IPA bit length
-> >>> and return -1 as "this accelerator is not usable", allowing
-> >>> QEMU to try with the next one (when using '-accel hvf:tcg').
-> >>>
-> >>> Reported-by: Ivan Krasilnikov
-> >>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2981
-> >>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >>> ---
-> >>>   hw/arm/virt.c | 8 ++++++--
-> >>>   1 file changed, 6 insertions(+), 2 deletions(-)
-> >>>
-> >>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> >>> index 175023897a7..1d65fa471dc 100644
-> >>> --- a/hw/arm/virt.c
-> >>> +++ b/hw/arm/virt.c
-> >>> @@ -3225,8 +3225,12 @@ static int
-> >>> virt_hvf_get_physical_address_range(MachineState *ms)
-> >>>   {
-> >>>       VirtMachineState *vms =3D VIRT_MACHINE(ms);
-> >>> -    int default_ipa_size =3D hvf_arm_get_default_ipa_bit_size();
-> >>> -    int max_ipa_size =3D hvf_arm_get_max_ipa_bit_size();
-> >>> +    uint32_t default_ipa_size =3D hvf_arm_get_default_ipa_bit_size()=
-;
-> >>> +    uint32_t max_ipa_size =3D hvf_arm_get_max_ipa_bit_size();
-> >>> +    if (!default_ipa_size || !max_ipa_size) {
-> >>> +        warn_report("HVF didn't report IPA bit length");
-> >>> +        return -1;
-> >>> +    }
-> >>
-> >> I suppose this goes back to the previous patch.
-> >> It might have been slightly less confusing to merge them, but the
-> >> underlying questions about when and how this can fail remain.
-> >
-> > Right. I'm dropping this patch.
+> The GIC should always be a little-endian device as big-endian
+> behaviour is a function of the current CPU configuration not the
+> system as a whole. This allows us to keep the MSI data in plain host
+> order rather then potentially truncating with multiple byte swaps of
+> different sizes.
 >
-> BTW I was looking at the extra-commits in GetUTM and noticed one
-> related to this:
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  hw/intc/arm_gicv3_its_common.c | 4 ++--
+>  hw/intc/arm_gicv3_its_kvm.c    | 2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/intc/arm_gicv3_its_common.c b/hw/intc/arm_gicv3_its_commo=
+n.c
+> index e946e3fb87b..60a5abd8d3e 100644
+> --- a/hw/intc/arm_gicv3_its_common.c
+> +++ b/hw/intc/arm_gicv3_its_common.c
+> @@ -81,7 +81,7 @@ static MemTxResult gicv3_its_trans_write(void *opaque, =
+hwaddr offset,
+>      if (offset =3D=3D 0x0040 && ((size =3D=3D 2) || (size =3D=3D 4))) {
+>          GICv3ITSState *s =3D ARM_GICV3_ITS_COMMON(opaque);
+>          GICv3ITSCommonClass *c =3D ARM_GICV3_ITS_COMMON_GET_CLASS(s);
+> -        int ret =3D c->send_msi(s, le64_to_cpu(value), attrs.requester_i=
+d);
+> +        int ret =3D c->send_msi(s, value, attrs.requester_id);
 
-IIRC, the failure in the associated gitlab issue is because
-in hvf_accel_init() the very first thing we try to do with HVF
-is "find out the IPA range", so we can create the VM.
-So any kind of "HVF doesn't exist/is not usable" problem manifests
-as "this call to try to get the IPA bit size returned an error".
-So we either need to have hvf_accel_init() determine "HVF
-is basically working" as the first thing it does so that we
-can know that failures in this function really are specific
-to the IPA range check, or else have the error be propagated
-back from getting the IPA range so we can do something sensible
-in hvf_accel_init().
+This change is either fixing a bug on big-endian hosts,
+or breaking big-endian hosts. Which is it ?
 
-(I haven't looked at the rest of this series, so maybe it
-already does something like that.)
+>          if (ret <=3D 0) {
+>              qemu_log_mask(LOG_GUEST_ERROR,
+> @@ -97,7 +97,7 @@ static MemTxResult gicv3_its_trans_write(void *opaque, =
+hwaddr offset,
+>  static const MemoryRegionOps gicv3_its_trans_ops =3D {
+>      .read_with_attrs =3D gicv3_its_trans_read,
+>      .write_with_attrs =3D gicv3_its_trans_write,
+> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+
+This change is fine, as all arm system binaries are LE, so
+it is not a behavioural change.
+
+>  };
+>
+>  void gicv3_its_init_mmio(GICv3ITSState *s, const MemoryRegionOps *ops,
+> diff --git a/hw/intc/arm_gicv3_its_kvm.c b/hw/intc/arm_gicv3_its_kvm.c
+> index ae12d41eee1..a8d6d4fb540 100644
+> --- a/hw/intc/arm_gicv3_its_kvm.c
+> +++ b/hw/intc/arm_gicv3_its_kvm.c
+> @@ -58,7 +58,7 @@ static int kvm_its_send_msi(GICv3ITSState *s, uint32_t =
+value, uint16_t devid)
+>
+>      msi.address_lo =3D extract64(s->gits_translater_gpa, 0, 32);
+>      msi.address_hi =3D extract64(s->gits_translater_gpa, 32, 32);
+> -    msi.data =3D le32_to_cpu(value);
+> +    msi.data =3D value;
+>      msi.flags =3D KVM_MSI_VALID_DEVID;
+>      msi.devid =3D devid;
+>      memset(msi.pad, 0, sizeof(msi.pad));
+
+This is nominally in the same category as the first change,
+with the exception that we know that any host with KVM is
+going to be little-endian, so the bug being fixed or
+introduced is only conceptual.
 
 thanks
 -- PMM
