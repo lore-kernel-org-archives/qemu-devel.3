@@ -4,111 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92B88D29C2D
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 14:13:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 081D5D29C2A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 14:14:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhpzo-0000g7-Ot; Mon, 19 Jan 2026 09:12:44 -0500
+	id 1vhq1E-0001nZ-Ud; Mon, 19 Jan 2026 09:14:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vhpzo-0000eF-3c
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 09:12:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
+ id 1vhjz9-0003cj-JA; Mon, 19 Jan 2026 02:47:41 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vhpzl-0007qA-Mh
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 09:12:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768831959;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4yJcbJXxa0NBg6e/UZTm6jpNfPmN7vOTkKCXm18lRc0=;
- b=AYbdcU+JnT6eYYCcJ8WZpl9YaYMGEHXRBKHbTiXju/lepevKCWiVRavrOprtkfkXgq3dnB
- 3YXMcLwGAeECgGbELwO6wH0CYGzmAyWI7aNRI42jnsAlvTTvyGwNcROe1RqQXR3McPnmwK
- CQkogD+wulwPV4TJwK5GBM5Z0L/gxBw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-9ZVokaLCNNuboceqdYhCTg-1; Mon, 19 Jan 2026 09:12:37 -0500
-X-MC-Unique: 9ZVokaLCNNuboceqdYhCTg-1
-X-Mimecast-MFC-AGG-ID: 9ZVokaLCNNuboceqdYhCTg_1768831957
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-477c49f273fso40633955e9.3
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 06:12:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768831956; x=1769436756;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4yJcbJXxa0NBg6e/UZTm6jpNfPmN7vOTkKCXm18lRc0=;
- b=QPGsjUKcQeAs6prCrzZ+rdcIGIdosogv6VBbYT96XdFJX6m7PVrkxQG+qJOmQW5wY/
- NSBOrmRm6AE1tkEOTW8hjN3Vc+ueleD0aRA+b5IZ3gIwu5BpCLL62x3W7pUwgCoK9/DB
- 9GfDPZel9tUW6S7lT+1aJKDSS+V5EG82Ymr8m2UQ9Vi69Qp1XZrL2wle485vXtNdmcL8
- ssG+lsI3Kvw0oRmJY4KM6tr++SNW0NpAJh+VzDU/vW9hIIVNlPnjzbX84WtGQklGfY9t
- fl7PPM8ln9e9thDxi9QHyRswjhI6gA+TCeEjrlNs+L3jsK3ckrFGxseNHjiWNAk/Rvi6
- 5dUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVwHlRYrRpjhhBJv13mjD2pCIz3HGxBRm4i9OGbqKtyJFZv1/ufX94HSnVW+f3hTm8zQKV0klzTzJNo@nongnu.org
-X-Gm-Message-State: AOJu0Yx4IaXDqImQf/cI9E66xgXMaHerlck9ONuUQRfASayThOA/EmQx
- r1FaBL4d3yPfFdvPZnkqzLiE9daE7ANo3Iy4EQ8wZ7kw73+BbhtWXksMrcjjb8hFhVakmBH448u
- uWorNE5CJVa5t6SWIBjWacXbFEARK+Ona42C+YY9nEuqVD+TikefHWfBJtKJDGH3I
-X-Gm-Gg: AY/fxX4fazult3n41uYKfzkRMiwgyOE38AwiO6IgzlJ5u1+6wraiat8kbJ/Ecu77Nd4
- Tix01uM4MlPgKsmpOtkngpFDylKgJHZ8l/hehVJSEyxGKdsdqPzeqZXDwxDYlvq9yBxup7MP54i
- Lvz+/54MtgMyxBgKpq39GfFihAwv3+uIp4Mb1aCDwJUBh6uFwHx35ckjAMLEH6Ty7c203d1AULo
- rvWZV99Ahv/+guDq41jmdQ44HxULe8lofj3kaZVHAMQU/uz+XtfV4SsZshIqVbTWou6eT2/fLyu
- k7yadSns/t/mSooSZ8PwePUBzKE7putP27V1DJtk34sdGj39qnuLwueS1tXHLdu8VSRgSK84N1Q
- j40xTp4XF4WfLxqLOZs83g74iC53rdFoXNrxXdodd73CguBHHr8EylobPSA==
-X-Received: by 2002:a05:600c:5487:b0:477:755b:5587 with SMTP id
- 5b1f17b1804b1-4801e2f055amr141807715e9.8.1768831956302; 
- Mon, 19 Jan 2026 06:12:36 -0800 (PST)
-X-Received: by 2002:a05:600c:5487:b0:477:755b:5587 with SMTP id
- 5b1f17b1804b1-4801e2f055amr141807355e9.8.1768831955838; 
- Mon, 19 Jan 2026 06:12:35 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e8d90b3sm200129445e9.15.2026.01.19.06.12.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Jan 2026 06:12:35 -0800 (PST)
-Message-ID: <386995bf-b5fc-4cb3-9a9e-8d598c86927f@redhat.com>
-Date: Mon, 19 Jan 2026 15:12:33 +0100
+ (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
+ id 1vhjz6-0003OP-Lz; Mon, 19 Jan 2026 02:47:38 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60IKkhT3021348;
+ Mon, 19 Jan 2026 07:47:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=mhLvNm
+ h+CW2AU+jWTQjjbmuWsC+eEPP+C8KQsuAbQ7U=; b=KpE02hBVE2gdr0zDVjf4V1
+ j6WAM97Foy2iOdh1GIYGhKMTVP9G2nnGHvoYrLwBVKIBmQqtGlZOSswowF8JOAm2
+ 60AOH2Swde00kXYH0bTD4kEXYt/DHi92SIdwuqrCS2gEDL2B/Eza4HV4ewSbekb8
+ EShrbbNTTG5tD0gZNtfLkDz2J5dI4kEBXznOVUJDJGdEqaDZOk6TjsRcQowQosLH
+ DyrHU/jSI7A6Llkr+RpxEOQhAYBMIS1+jHPsjawoW4ZuVq3P7NmtBsrIsj+bwCJA
+ k3U3+wLMapl3iSqd1mMadzWYLOEdE+Kog9gywAuB4cn7/8INqTT16SKWkT+7ULOA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br22u6cvh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Jan 2026 07:47:35 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60J7GRr8009266;
+ Mon, 19 Jan 2026 07:47:34 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brp8jwcj5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Jan 2026 07:47:34 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60J7lTmn34472390
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 Jan 2026 07:47:29 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AE29320049;
+ Mon, 19 Jan 2026 07:47:29 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A738D20040;
+ Mon, 19 Jan 2026 07:47:28 +0000 (GMT)
+Received: from [9.43.98.125] (unknown [9.43.98.125])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 19 Jan 2026 07:47:28 +0000 (GMT)
+Message-ID: <b35e15b0-6677-4fda-b687-50affe40c678@linux.ibm.com>
+Date: Mon, 19 Jan 2026 13:17:27 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 34/36] hw/pci: Factor out common PASID capability
- initialization
+Subject: Re: [PATCH v2 5/9] pnv/mpipl: Preserve CPU registers after crash
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20251206055648.1908734-1-adityag@linux.ibm.com>
+ <20251206055648.1908734-6-adityag@linux.ibm.com>
 Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, berrange@redhat.com, clg@redhat.com, alex@shazbot.org,
- nathanc@nvidia.com, mochs@nvidia.com, smostafa@google.com,
- wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
- jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
- zhenzhong.duan@intel.com, yi.l.liu@intel.com, kjaju@nvidia.com,
- "Michael S . Tsirkin" <mst@redhat.com>
-References: <20260111195508.106943-1-skolothumtho@nvidia.com>
- <20260111195508.106943-35-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260111195508.106943-35-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
+From: Hari Bathini <hbathini@linux.ibm.com>
+In-Reply-To: <20251206055648.1908734-6-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: uu-ca0Va5pcPs-YJoJQUo-p36vDdYsG2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE5MDA2MyBTYWx0ZWRfX0ieXWL60q4Yi
+ Ertm9Z7x/JXkOIJbfYORY6v60E5flSIBOCHgTrHatiue5Hi7h2ElZ1bv9ypXuvfSRZ8REP+a+W6
+ hmwD+k6hlbfdoRhgKQMDu3sYwSa+9Pt9grMJJlMEnq04csEkN2wgBMyDSiSj7z452LQFDzCu5zf
+ iOvwUCaek/4z65gFTKq5PegWCqQ7iXRUnJmTXeMUmNj8mq7KdFZeu5L31TMvWS6OYDlwE4yEuxq
+ kDfTm6EJ84aTdB/HzwoYYcLdG+aYMaUDGoP+c/5PT3Ve9xGnTo8R15rSIQ9oTJto8TSeMVpPZjP
+ i4Dec5qnQnqoAqw4MP6YDLzMJgyh3UTc2O/7kvAIfQ+3v19bgoOqyPUkN3LMDEeV8ubVEBCxvyo
+ kwnxIumtYfQ4ja9i6UG0KPNr2iVQrTZEux010Ev0SflWKC0I1gBUKpLXDbUMRmjX9Jw1IS2axwB
+ +aTYw4boyvk4Zt6EbOw==
+X-Proofpoint-ORIG-GUID: uu-ca0Va5pcPs-YJoJQUo-p36vDdYsG2
+X-Authority-Analysis: v=2.4 cv=Sp2dKfO0 c=1 sm=1 tr=0 ts=696de197 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=Ufpwnig-cY6aIHvSwJ8A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-19_01,2026-01-19_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0 spamscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601190063
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=hbathini@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 19 Jan 2026 09:14:03 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -120,85 +120,181 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 1/11/26 8:53 PM, Shameer Kolothum wrote:
-> Refactor PCIe PASID capability initialization by moving the common
-> register init into a new helper, pcie_pasid_common_init().
->
-> Subsequent patch to synthesize a vPASID will make use of this
-> helper.
->
-> No functional change intended.
->
-> Cc: Michael S. Tsirkin <mst@redhat.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
+On 06/12/25 11:26 am, Aditya Gupta wrote:
+> Kernel expects the platform to provide CPU registers after pausing
+> execution of the CPUs.
+> 
+> Currently only exporting the registers, used by Linux, for generating
+> the /proc/vmcore
+> 
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 > ---
->  hw/pci/pcie.c         | 19 ++++++++++++-------
->  include/hw/pci/pcie.h |  2 ++
->  2 files changed, 14 insertions(+), 7 deletions(-)
->
-> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-> index 8568a062a5..efd5588e96 100644
-> --- a/hw/pci/pcie.c
-> +++ b/hw/pci/pcie.c
-> @@ -1273,18 +1273,13 @@ void pcie_acs_reset(PCIDevice *dev)
->      }
->  }
->  
-> -/* PASID */
-> -void pcie_pasid_init(PCIDevice *dev, uint16_t offset, uint8_t pasid_width,
-> -                     bool exec_perm, bool priv_mod)
-> +void pcie_pasid_common_init(PCIDevice *dev, uint16_t offset,
-> +                            uint8_t pasid_width, bool exec_perm, bool priv_mod)
->  {
->      static const uint16_t control_reg_rw_mask = 0x07;
->      uint16_t capability_reg;
->  
->      assert(pasid_width <= PCI_EXT_CAP_PASID_MAX_WIDTH);
-> -
-> -    pcie_add_capability(dev, PCI_EXT_CAP_ID_PASID, PCI_PASID_VER, offset,
-> -                        PCI_EXT_CAP_PASID_SIZEOF);
-> -
->      capability_reg = ((uint16_t)pasid_width) << PCI_PASID_CAP_WIDTH_SHIFT;
->      capability_reg |= exec_perm ? PCI_PASID_CAP_EXEC : 0;
->      capability_reg |= priv_mod  ? PCI_PASID_CAP_PRIV : 0;
-> @@ -1296,6 +1291,16 @@ void pcie_pasid_init(PCIDevice *dev, uint16_t offset, uint8_t pasid_width,
->      pci_set_word(dev->wmask + offset + PCI_PASID_CTRL, control_reg_rw_mask);
->  
->      dev->exp.pasid_cap = offset;
+>   hw/ppc/pnv_mpipl.c         | 102 +++++++++++++++++++++++++++++++++++++
+>   include/hw/ppc/pnv_mpipl.h |  62 ++++++++++++++++++++++
+>   2 files changed, 164 insertions(+)
+> 
+> diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
+> index a4f7113a44fd..8b41938c2e87 100644
+> --- a/hw/ppc/pnv_mpipl.c
+> +++ b/hw/ppc/pnv_mpipl.c
+> @@ -8,6 +8,8 @@
+>   #include "qemu/log.h"
+>   #include "qemu/units.h"
+>   #include "system/address-spaces.h"
+> +#include "system/cpus.h"
+> +#include "system/hw_accel.h"
+>   #include "system/runstate.h"
+>   #include "hw/ppc/pnv.h"
+>   #include "hw/ppc/pnv_mpipl.h"
+> @@ -17,6 +19,8 @@
+>       (pnv->mpipl_state.skiboot_base + MDST_TABLE_OFF)
+>   #define MDDT_TABLE_RELOCATED                            \
+>       (pnv->mpipl_state.skiboot_base + MDDT_TABLE_OFF)
+> +#define PROC_DUMP_RELOCATED                             \
+> +    (pnv->mpipl_state.skiboot_base + PROC_DUMP_AREA_OFF)
+>   
+>   /*
+>    * Preserve the memory regions as pointed by MDST table
+> @@ -164,9 +168,107 @@ static bool pnv_mpipl_preserve_mem(PnvMachineState *pnv)
+>       return true;
+>   }
+>   
+> +static void do_store_cpu_regs(CPUState *cpu, MpiplPreservedCPUState *state)
+> +{
+> +    CPUPPCState *env = cpu_env(cpu);
+> +    MpiplRegDataHdr *regs_hdr = &state->hdr;
+> +    MpiplRegEntry *reg_entries = state->reg_entries;
+> +    MpiplRegEntry *curr_reg_entry;
+> +    uint32_t num_saved_regs = 0;
 > +
+> +    cpu_synchronize_state(cpu);
+> +
+> +    regs_hdr->pir = cpu_to_be32(env->spr[SPR_PIR]);
+> +
+> +    /* QEMU CPUs are not in Power Saving Mode */
+> +    regs_hdr->core_state = 0xff;
+> +
+> +    regs_hdr->off_regentries = 0;
+> +    regs_hdr->num_regentries = cpu_to_be32(NUM_REGS_PER_CPU);
+> +
+> +    regs_hdr->alloc_size = cpu_to_be32(sizeof(MpiplRegEntry));
+> +    regs_hdr->act_size   = cpu_to_be32(sizeof(MpiplRegEntry));
+> +
+> +#define REG_TYPE_GPR  0x1
+> +#define REG_TYPE_SPR  0x2
+> +#define REG_TYPE_TIMA 0x3
+> +
+> +/*
+> + * ID numbers used by f/w while populating certain registers
+> + *
+> + * Copied these defines from the linux kernel
+> + */
+> +#define REG_ID_NIP          0x7D0
+> +#define REG_ID_MSR          0x7D1
+> +#define REG_ID_CCR          0x7D2
+> +
+> +    curr_reg_entry = reg_entries;
+> +
+> +#define REG_ENTRY(type, num, val)                          \
+> +    do {                                               \
+> +        curr_reg_entry->reg_type = cpu_to_be32(type);  \
+> +        curr_reg_entry->reg_num  = cpu_to_be32(num);   \
+> +        curr_reg_entry->reg_val  = cpu_to_be64(val);   \
+> +        ++curr_reg_entry;                              \
+> +        ++num_saved_regs;                            \
+> +    } while (0)
+> +
+> +    /* Save the GPRs */
+> +    for (int gpr_id = 0; gpr_id < 32; ++gpr_id) {
+> +        REG_ENTRY(REG_TYPE_GPR, gpr_id, env->gpr[gpr_id]);
+> +    }
+> +
+> +    REG_ENTRY(REG_TYPE_SPR, REG_ID_NIP, env->nip);
+> +    REG_ENTRY(REG_TYPE_SPR, REG_ID_MSR, env->msr);
+> +
+> +    /*
+> +     * Ensure the number of registers saved match the number of
+> +     * registers per cpu
+> +     *
+> +     * This will help catch an error if in future a new register entry
+> +     * is added/removed while not modifying NUM_PER_CPU_REGS
+> +     */
+> +    assert(num_saved_regs == NUM_REGS_PER_CPU);
 > +}
 > +
-> +/* PASID */
-> +void pcie_pasid_init(PCIDevice *dev, uint16_t offset, uint8_t pasid_width,
-> +                     bool exec_perm, bool priv_mod)
+> +static void pnv_mpipl_preserve_cpu_state(PnvMachineState *pnv)
 > +{
-> +    pcie_add_capability(dev, PCI_EXT_CAP_ID_PASID, PCI_PASID_VER, offset,
-> +                        PCI_EXT_CAP_PASID_SIZEOF);
-> +    pcie_pasid_common_init(dev, offset, pasid_width, exec_perm, priv_mod);
->  }
->  
->  /* PRI */
-> diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-> index d68bfa6257..fc02aeb169 100644
-> --- a/include/hw/pci/pcie.h
-> +++ b/include/hw/pci/pcie.h
-> @@ -155,6 +155,8 @@ void pcie_cap_slot_unplug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
->  void pcie_cap_slot_unplug_request_cb(HotplugHandler *hotplug_dev,
->                                       DeviceState *dev, Error **errp);
->  
-> +void pcie_pasid_common_init(PCIDevice *dev, uint16_t offset,
-> +                            uint8_t pasid_width, bool exec_perm, bool priv_mod);
->  void pcie_pasid_init(PCIDevice *dev, uint16_t offset, uint8_t pasid_width,
->                       bool exec_perm, bool priv_mod);
->  void pcie_pri_init(PCIDevice *dev, uint16_t offset, uint32_t outstanding_pr_cap,
+> +    MachineState *machine = MACHINE(pnv);
+> +    uint32_t num_cpus = machine->smp.cpus;
+> +    MpiplPreservedCPUState *state;
+> +    CPUState *cpu;
+> +
+> +    if (pnv->mpipl_state.cpu_states) {
+> +        /*
+> +         * CPU States might have been allocated from some past crash, free the
+> +         * memory to preven memory leak
+> +         */
+> +        g_free(pnv->mpipl_state.cpu_states);
+> +        pnv->mpipl_state.num_cpu_states = 0;
+> +    }
+> +
+> +    pnv->mpipl_state.cpu_states = g_malloc_n(num_cpus,
+> +            sizeof(MpiplPreservedCPUState));
+> +    pnv->mpipl_state.num_cpu_states = num_cpus;
+> +
+> +    state = pnv->mpipl_state.cpu_states;
+> +
+> +    /* Preserve the Processor Dump Area */
+> +    cpu_physical_memory_read(PROC_DUMP_RELOCATED, &pnv->mpipl_state.proc_area,
+> +            sizeof(MpiplProcDumpArea));
+> +
+> +    CPU_FOREACH(cpu) {
+> +        do_store_cpu_regs(cpu, state);
+> +        ++state;
+> +    }
+> +}
+> +
+>   void do_mpipl_preserve(PnvMachineState *pnv)
+>   {
+> +    pause_all_vcpus();
+> +
+>       pnv_mpipl_preserve_mem(pnv);
+> +    pnv_mpipl_preserve_cpu_state(pnv);
+>   
+>       /* Mark next boot as Memory-preserving boot */
+>       pnv->mpipl_state.is_next_boot_mpipl = true;
+> diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
+> index ec173ba8268e..d85970bba039 100644
+> --- a/include/hw/ppc/pnv_mpipl.h
+> +++ b/include/hw/ppc/pnv_mpipl.h
+> @@ -16,6 +16,12 @@ typedef struct MdstTableEntry MdstTableEntry;
+>   typedef struct MdrtTableEntry MdrtTableEntry;
+>   typedef struct MpiplPreservedState MpiplPreservedState;
+>   
+> +typedef struct MpiplRegDataHdr MpiplRegDataHdr;
+> +typedef struct MpiplRegEntry MpiplRegEntry;
+> +typedef struct MpiplProcDumpArea MpiplProcDumpArea;
+> +typedef struct MpiplPreservedState MpiplPreservedState;
+> +typedef struct MpiplPreservedCPUState MpiplPreservedCPUState;
+> +
+>   /* Following offsets are copied from skiboot source code */
+>   /* Use 768 bytes for SPIRAH */
+>   #define SPIRAH_OFF      0x00010000
+> @@ -46,6 +52,8 @@ typedef struct MpiplPreservedState MpiplPreservedState;
+>   
+>   #define __packed             __attribute__((packed))
+>   
 
+> +#define NUM_REGS_PER_CPU 34 /*(32 GPRs, NIP, MSR)*/
+> +
+
+Any limitation with saving the other SPRs? At least, LR is one other
+relevant SPR that needs to be saved for some meaningful context..
+
+- Hari
 
