@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F49FCCF2D9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C7EBCCF2DA
 	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 10:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhm9E-0003p1-37; Mon, 19 Jan 2026 05:06:12 -0500
+	id 1vhm9E-0003pl-Fu; Mon, 19 Jan 2026 05:06:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vhm8z-0003ee-4M
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 05:05:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vhm8t-0003ce-Pq
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 05:05:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vhm8x-0005hp-0z
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 05:05:56 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vhm8n-0005dj-Fm
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 05:05:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768817154;
+ s=mimecast20190719; t=1768817144;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ua7njaz9pOiUUx2wfrxq6ER/uHzoU4+I1XH8S0BIZyM=;
- b=U8zM2HjIZRv6eArkXgs+38bn5HultOhO7u/vqMnn7hQieqyD4++82rR/cmpAH0fBnG1S/h
- OLTrP4OXtMzCtrHFB3oqOBax8FRO2UHRgNH2OFS+/k1K3ZPI21nDNY4eioEEWbezSSKWmK
- aTVGLtg1fX53No2hnex9QSj31L9leTo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=E9ezPTkuno68t073cbreQfsbOdVSPFPE3iqBuNyL/UU=;
+ b=N5MY9R45otSwEYbWmPY6I+3bb5vTZqRnss6RbOjj3NbAFgpe3NQaxl8lyaxCyp/HCkjOmb
+ qPHhNvrNo+gEe2pjZ3bUS48EYKVWq6uiAiGArPaNLkxI9+Oq98Yj2QDlxG8qQNpBJ8YEjC
+ egM4uMgTWOo/P+SIafAh8xQrPU4Tby8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-47-RsTwRDSuO664I8Do9Ha9Tw-1; Mon,
- 19 Jan 2026 05:05:50 -0500
-X-MC-Unique: RsTwRDSuO664I8Do9Ha9Tw-1
-X-Mimecast-MFC-AGG-ID: RsTwRDSuO664I8Do9Ha9Tw_1768817148
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-cnTNDs30NzyuxWt4KBxP9Q-1; Mon,
+ 19 Jan 2026 05:05:41 -0500
+X-MC-Unique: cnTNDs30NzyuxWt4KBxP9Q-1
+X-Mimecast-MFC-AGG-ID: cnTNDs30NzyuxWt4KBxP9Q_1768817141
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8B12F18D65E1
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 10:05:43 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E42E6180136B
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 10:05:40 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C83911801760
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 10:05:42 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C9331955F67
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 10:05:40 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8AB2021E66D3; Mon, 19 Jan 2026 11:05:37 +0100 (CET)
+ id 8239021E6933; Mon, 19 Jan 2026 11:05:37 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 5/5] Clean up decorations and whitespace around header guards
-Date: Mon, 19 Jan 2026 11:05:37 +0100
-Message-ID: <20260119100537.463312-6-armbru@redhat.com>
+Subject: [PATCH 3/5] Clean up ill-advised or unusual header guards
+Date: Mon, 19 Jan 2026 11:05:35 +0100
+Message-ID: <20260119100537.463312-4-armbru@redhat.com>
 In-Reply-To: <20260119100537.463312-1-armbru@redhat.com>
 References: <20260119100537.463312-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.077,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,251 +84,319 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cleaned up with scripts/clean-header-guards.pl.
+Leading underscores are ill-advised because such identifiers are
+reserved.  Trailing underscores are merely ugly.  Strip both.
+
+Our header guards commonly end in _H.  Normalize the exceptions.
+
+Macros should be ALL_CAPS.  Normalize the exception.
+
+Done with scripts/clean-header-guards.pl.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- crypto/akcipherpriv.h                       | 2 +-
- crypto/der.h                                | 2 +-
- hw/net/e1000x_regs.h                        | 2 +-
- hw/riscv/riscv-iommu-bits.h                 | 2 +-
- include/accel/accel-cpu-target.h            | 2 +-
- include/exec/tswap.h                        | 2 +-
- include/hw/char/max78000_uart.h             | 2 +-
- include/hw/fsi/fsi-master.h                 | 3 ++-
- include/hw/intc/loongarch_extioi_common.h   | 2 +-
- include/hw/intc/loongarch_pic_common.h      | 2 +-
- include/hw/misc/allwinner-a10-ccm.h         | 2 +-
- include/hw/ppc/pnv_n1_chiplet.h             | 2 +-
- include/semihosting/uaccess.h               | 2 +-
- include/system/ioport.h                     | 2 +-
- include/tcg/tcg-temp-internal.h             | 2 +-
- target/hexagon/idef-parser/parser-helpers.h | 2 +-
- target/i386/kvm/xen-compat.h                | 2 +-
- target/loongarch/cpu-mmu.h                  | 2 +-
- target/loongarch/tcg/tcg_loongarch.h        | 4 +++-
- target/riscv/cpu_vendorid.h                 | 2 +-
- 20 files changed, 23 insertions(+), 20 deletions(-)
+ backends/tpm/tpm_ioctl.h             | 7 ++++---
+ bsd-user/bsd-proc.h                  | 6 +++---
+ hw/net/igb_regs.h                    | 4 ++--
+ include/exec/target_long.h           | 6 +++---
+ include/exec/tb-flush.h              | 7 ++++---
+ include/gdbstub/helpers.h            | 6 +++---
+ include/gdbstub/syscalls.h           | 6 +++---
+ include/hw/arm/raspberrypi-fw-defs.h | 7 +++----
+ include/hw/arm/stm32l4x5_soc.h       | 4 ++--
+ include/hw/gpio/pcf8574.h            | 6 +++---
+ include/hw/virtio/vhost-user-gpio.h  | 6 +++---
+ include/hw/virtio/vhost-user-scmi.h  | 6 +++---
+ include/hw/xen/xen-pvh-common.h      | 4 ++--
+ include/tcg/insn-start-words.h       | 6 +++---
+ qga/cutils.h                         | 6 +++---
+ 15 files changed, 44 insertions(+), 43 deletions(-)
 
-diff --git a/crypto/akcipherpriv.h b/crypto/akcipherpriv.h
-index 3b33e54f08..09db61f120 100644
---- a/crypto/akcipherpriv.h
-+++ b/crypto/akcipherpriv.h
-@@ -52,4 +52,4 @@ struct QCryptoAkCipherDriver {
-     void (*free)(QCryptoAkCipher *akcipher);
+diff --git a/backends/tpm/tpm_ioctl.h b/backends/tpm/tpm_ioctl.h
+index ee2dd15d35..e1e858c4bc 100644
+--- a/backends/tpm/tpm_ioctl.h
++++ b/backends/tpm/tpm_ioctl.h
+@@ -5,8 +5,9 @@
+  *
+  * This file is licensed under the terms of the 3-clause BSD license
+  */
+-#ifndef _TPM_IOCTL_H_
+-#define _TPM_IOCTL_H_
++
++#ifndef TPM_IOCTL_H
++#define TPM_IOCTL_H
+ 
+ #if defined(__CYGWIN__)
+ # define __USE_LINUX_IOCTL_DEFS
+@@ -341,4 +342,4 @@ enum {
+     CMD_LOCK_STORAGE,         /* 0x13 */
  };
  
--#endif /* QCRYPTO_AKCIPHER_H */
-+#endif /* QCRYPTO_AKCIPHERPRIV_H */
-diff --git a/crypto/der.h b/crypto/der.h
-index bcfa4a2495..99275012c6 100644
---- a/crypto/der.h
-+++ b/crypto/der.h
-@@ -261,4 +261,4 @@ size_t qcrypto_der_encode_ctx_buffer_len(QCryptoEncodeContext *ctx);
- void qcrypto_der_encode_ctx_flush_and_free(QCryptoEncodeContext *ctx,
-                                            uint8_t *dst);
+-#endif /* _TPM_IOCTL_H_ */
++#endif /* TPM_IOCTL_H */
+diff --git a/bsd-user/bsd-proc.h b/bsd-user/bsd-proc.h
+index 8b1c2deea3..8b7bd492ba 100644
+--- a/bsd-user/bsd-proc.h
++++ b/bsd-user/bsd-proc.h
+@@ -17,8 +17,8 @@
+  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+  */
  
--#endif  /* QCRYPTO_ASN1_DECODER_H */
-+#endif /* QCRYPTO_ASN1_DECODER_H */
-diff --git a/hw/net/e1000x_regs.h b/hw/net/e1000x_regs.h
-index e9a74de6f4..971653e9b2 100644
---- a/hw/net/e1000x_regs.h
-+++ b/hw/net/e1000x_regs.h
-@@ -968,4 +968,4 @@ struct e1000_context_desc {
- #define E1000_VFTA_ENTRY_MASK           0x7F
- #define E1000_VFTA_ENTRY_BIT_SHIFT_MASK 0x1F
+-#ifndef BSD_PROC_H_
+-#define BSD_PROC_H_
++#ifndef BSD_PROC_H
++#define BSD_PROC_H
  
--#endif /* HW_E1000_REGS_H */
-+#endif /* HW_E1000X_REGS_H */
-diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-index 47fe01bee5..685f9af4e0 100644
---- a/hw/riscv/riscv-iommu-bits.h
-+++ b/hw/riscv/riscv-iommu-bits.h
-@@ -466,4 +466,4 @@ struct riscv_iommu_msi_pte {
- #define RISCV_IOMMU_MSI_MRIF_NPPN       RISCV_IOMMU_PPN_FIELD
- #define RISCV_IOMMU_MSI_MRIF_NID_MSB    BIT_ULL(60)
+ #include <sys/resource.h>
  
--#endif /* _RISCV_IOMMU_BITS_H_ */
-+#endif /* HW_RISCV_IOMMU_BITS_H */
-diff --git a/include/accel/accel-cpu-target.h b/include/accel/accel-cpu-target.h
-index 6feb344e29..4ac85ddf74 100644
---- a/include/accel/accel-cpu-target.h
-+++ b/include/accel/accel-cpu-target.h
-@@ -28,4 +28,4 @@
- #define ACCEL_CPU_NAME(name) (name "-" TYPE_ACCEL_CPU)
- DECLARE_CLASS_CHECKERS(AccelCPUClass, ACCEL_CPU, TYPE_ACCEL_CPU)
- 
--#endif /* ACCEL_CPU_H */
-+#endif /* ACCEL_CPU_TARGET_H */
-diff --git a/include/exec/tswap.h b/include/exec/tswap.h
-index 72219e2c43..31c7d3d40b 100644
---- a/include/exec/tswap.h
-+++ b/include/exec/tswap.h
-@@ -69,4 +69,4 @@ static inline void tswap64s(uint64_t *s)
-     }
+@@ -411,4 +411,4 @@ static inline abi_long do_bsd_setpriority(abi_long which, abi_long who,
+     return get_errno(setpriority(which, who, prio));
  }
  
--#endif  /* TSWAP_H */
-+#endif /* TSWAP_H */
-diff --git a/include/hw/char/max78000_uart.h b/include/hw/char/max78000_uart.h
-index 6977c7b3f1..bef42f5078 100644
---- a/include/hw/char/max78000_uart.h
-+++ b/include/hw/char/max78000_uart.h
-@@ -75,4 +75,4 @@ struct Max78000UartState {
-     CharFrontend chr;
-     qemu_irq irq;
- };
--#endif /* HW_STM32F2XX_USART_H */
-+#endif /* HW_MAX78000_UART_H */
-diff --git a/include/hw/fsi/fsi-master.h b/include/hw/fsi/fsi-master.h
-index 60ddaa994f..193f6e0fde 100644
---- a/include/hw/fsi/fsi-master.h
-+++ b/include/hw/fsi/fsi-master.h
-@@ -4,6 +4,7 @@
-  *
-  * IBM Flexible Service Interface Master
+-#endif /* !BSD_PROC_H_ */
++#endif /* BSD_PROC_H */
+diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
+index 4dc4c31da2..3b135feef2 100644
+--- a/hw/net/igb_regs.h
++++ b/hw/net/igb_regs.h
+@@ -4,8 +4,8 @@
+  * drivers/net/ethernet/intel/igb
   */
-+
- #ifndef FSI_FSI_MASTER_H
- #define FSI_FSI_MASTER_H
  
-@@ -29,4 +30,4 @@ typedef struct FSIMasterState {
- } FSIMasterState;
+-#ifndef HW_IGB_REGS_H_
+-#define HW_IGB_REGS_H_
++#ifndef HW_IGB_REGS_H
++#define HW_IGB_REGS_H
  
+ #include "e1000x_regs.h"
  
--#endif /* FSI_FSI_H */
-+#endif /* FSI_FSI_MASTER_H */
-diff --git a/include/hw/intc/loongarch_extioi_common.h b/include/hw/intc/loongarch_extioi_common.h
-index 2dbc2563eb..878e0a4586 100644
---- a/include/hw/intc/loongarch_extioi_common.h
-+++ b/include/hw/intc/loongarch_extioi_common.h
-@@ -100,4 +100,4 @@ struct LoongArchExtIOICommonClass {
-     int (*pre_save)(void *s);
-     int (*post_load)(void *s, int version_id);
- };
--#endif /* LOONGARCH_EXTIOI_H */
-+#endif /* LOONGARCH_EXTIOI_COMMON_H */
-diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
-index 1627ec0899..14897a6972 100644
---- a/include/hw/intc/loongarch_pic_common.h
-+++ b/include/hw/intc/loongarch_pic_common.h
-@@ -79,4 +79,4 @@ struct LoongArchPICCommonClass {
-     int (*pre_save)(LoongArchPICCommonState *s);
-     int (*post_load)(LoongArchPICCommonState *s, int version_id);
- };
--#endif  /* HW_LOONGARCH_PIC_COMMON_H */
-+#endif /* HW_LOONGARCH_PIC_COMMON_H */
-diff --git a/include/hw/misc/allwinner-a10-ccm.h b/include/hw/misc/allwinner-a10-ccm.h
-index 109b83f4df..a80b814ce7 100644
---- a/include/hw/misc/allwinner-a10-ccm.h
-+++ b/include/hw/misc/allwinner-a10-ccm.h
-@@ -64,4 +64,4 @@ struct AwA10ClockCtlState {
-     uint32_t regs[AW_A10_CCM_REGS_NUM];
- };
- 
--#endif /* HW_MISC_ALLWINNER_H3_CCU_H */
-+#endif /* HW_MISC_ALLWINNER_A10_CCM_H */
-diff --git a/include/hw/ppc/pnv_n1_chiplet.h b/include/hw/ppc/pnv_n1_chiplet.h
-index a7ad039668..ff563eaee1 100644
---- a/include/hw/ppc/pnv_n1_chiplet.h
-+++ b/include/hw/ppc/pnv_n1_chiplet.h
-@@ -29,4 +29,4 @@ typedef struct PnvN1Chiplet {
- #define PNV_PB_SCOM_ES_SIZE 4
-     PnvPbScom es[PNV_PB_SCOM_ES_SIZE];
- } PnvN1Chiplet;
--#endif /*PPC_PNV_N1_CHIPLET_H */
-+#endif /* PPC_PNV_N1_CHIPLET_H */
-diff --git a/include/semihosting/uaccess.h b/include/semihosting/uaccess.h
-index 2093a49827..2e6f80971f 100644
---- a/include/semihosting/uaccess.h
-+++ b/include/semihosting/uaccess.h
-@@ -118,4 +118,4 @@ void uaccess_unlock_user(CPUArchState *env, void *p,
- ssize_t uaccess_strlen_user(CPUArchState *env, vaddr addr);
- #define target_strlen(p) uaccess_strlen_user(env, p)
- 
--#endif /* SEMIHOSTING_SOFTMMU_UACCESS_H */
-+#endif /* SEMIHOSTING_UACCESS_H */
-diff --git a/include/system/ioport.h b/include/system/ioport.h
-index 780ea5a676..6ff57039c1 100644
---- a/include/system/ioport.h
-+++ b/include/system/ioport.h
-@@ -72,4 +72,4 @@ void portio_list_del(PortioList *piolist);
- void portio_list_set_enabled(PortioList *piolist, bool enabled);
- void portio_list_set_address(PortioList *piolist, uint32_t addr);
- 
--#endif /* IOPORT_H */
-+#endif /* SYSTEM_IOPORT_H */
-diff --git a/include/tcg/tcg-temp-internal.h b/include/tcg/tcg-temp-internal.h
-index 98f91e68b7..b3c78e309a 100644
---- a/include/tcg/tcg-temp-internal.h
-+++ b/include/tcg/tcg-temp-internal.h
-@@ -48,4 +48,4 @@ static inline void tcg_temp_ebb_reset_freed(TCGContext *s)
-     memset(s->free_temps, 0, sizeof(s->free_temps));
- }
- 
--#endif /* TCG_TEMP_FREE_H */
-+#endif /* TCG_TEMP_INTERNAL_H */
-diff --git a/target/hexagon/idef-parser/parser-helpers.h b/target/hexagon/idef-parser/parser-helpers.h
-index 2087d534a9..d763a3609b 100644
---- a/target/hexagon/idef-parser/parser-helpers.h
-+++ b/target/hexagon/idef-parser/parser-helpers.h
-@@ -350,4 +350,4 @@ void assert_signedness(Context *c,
-                        YYLTYPE *locp,
-                        HexSignedness signedness);
- 
--#endif /* PARSER_HELPERS_h */
-+#endif /* PARSER_HELPERS_H */
-diff --git a/target/i386/kvm/xen-compat.h b/target/i386/kvm/xen-compat.h
-index 7f30180cc2..9f46eb2aa7 100644
---- a/target/i386/kvm/xen-compat.h
-+++ b/target/i386/kvm/xen-compat.h
-@@ -67,4 +67,4 @@ struct compat_physdev_map_pirq {
-     uint64_t table_base;
- } __attribute__((packed));
- 
--#endif /* QEMU_I386_XEN_COMPAT_H */
-+#endif /* QEMU_I386_KVM_XEN_COMPAT_H */
-diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
-index 2259de9d36..a585cd3332 100644
---- a/target/loongarch/cpu-mmu.h
-+++ b/target/loongarch/cpu-mmu.h
-@@ -99,4 +99,4 @@ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-                         uint64_t *dir_width, unsigned int level);
- hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
- 
--#endif  /* LOONGARCH_CPU_MMU_H */
-+#endif /* LOONGARCH_CPU_MMU_H */
-diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/loongarch/tcg/tcg_loongarch.h
-index 7fb627f2d6..ef6ced33a7 100644
---- a/target/loongarch/tcg/tcg_loongarch.h
-+++ b/target/loongarch/tcg/tcg_loongarch.h
-@@ -4,8 +4,10 @@
-  *
-  * Copyright (c) 2025 Loongson Technology Corporation Limited
+diff --git a/include/exec/target_long.h b/include/exec/target_long.h
+index 3cd8e26a23..db335ebb0b 100644
+--- a/include/exec/target_long.h
++++ b/include/exec/target_long.h
+@@ -7,8 +7,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
   */
+ 
+-#ifndef _TARGET_LONG_H_
+-#define _TARGET_LONG_H_
++#ifndef TARGET_LONG_H
++#define TARGET_LONG_H
+ 
+ /*
+  * Usually this should only be included via cpu-defs.h however for
+@@ -41,4 +41,4 @@ typedef uint64_t target_ulong;
+ #error TARGET_LONG_SIZE undefined
+ #endif
+ 
+-#endif /* _TARGET_LONG_H_ */
++#endif /* TARGET_LONG_H */
+diff --git a/include/exec/tb-flush.h b/include/exec/tb-flush.h
+index e971d4ba6d..76f51094e6 100644
+--- a/include/exec/tb-flush.h
++++ b/include/exec/tb-flush.h
+@@ -5,8 +5,9 @@
+  *
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+-#ifndef _TB_FLUSH_H_
+-#define _TB_FLUSH_H_
 +
- #ifndef TARGET_LOONGARCH_TCG_LOONGARCH_H
- #define TARGET_LOONGARCH_TCG_LOONGARCH_H
-+
- #include "cpu.h"
- #include "cpu-mmu.h"
++#ifndef TB_FLUSH_H
++#define TB_FLUSH_H
  
-@@ -20,4 +22,4 @@ TLBRet loongarch_get_addr_from_tlb(CPULoongArchState *env,
-                                    MMUContext *context,
-                                    MMUAccessType access_type, int mmu_idx);
+ /**
+  * tb_flush__exclusive_or_serial()
+@@ -35,4 +36,4 @@ void queue_tb_flush(CPUState *cs);
  
--#endif  /* TARGET_LOONGARCH_TCG_LOONGARCH_H */
-+#endif /* TARGET_LOONGARCH_TCG_LOONGARCH_H */
-diff --git a/target/riscv/cpu_vendorid.h b/target/riscv/cpu_vendorid.h
-index f1ffc66542..d55632b73d 100644
---- a/target/riscv/cpu_vendorid.h
-+++ b/target/riscv/cpu_vendorid.h
-@@ -8,4 +8,4 @@
- #define VEYRON_V1_MIMPID        0x111
- #define VEYRON_V1_MVENDORID     0x61f
+ void tcg_flush_jmp_cache(CPUState *cs);
  
--#endif /*  TARGET_RISCV_CPU_VENDORID_H */
-+#endif /* TARGET_RISCV_CPU_VENDORID_H */
+-#endif /* _TB_FLUSH_H_ */
++#endif /* TB_FLUSH_H */
+diff --git a/include/gdbstub/helpers.h b/include/gdbstub/helpers.h
+index 197592036b..806195458f 100644
+--- a/include/gdbstub/helpers.h
++++ b/include/gdbstub/helpers.h
+@@ -9,8 +9,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-#ifndef _GDBSTUB_HELPERS_H_
+-#define _GDBSTUB_HELPERS_H_
++#ifndef GDBSTUB_HELPERS_H
++#define GDBSTUB_HELPERS_H
+ 
+ #include "qemu/bswap.h"
+ #include "qemu/target-info.h"
+@@ -115,4 +115,4 @@ static inline uint8_t *gdb_get_reg_ptr(GByteArray *buf, int len)
+ #endif
+ #endif /* COMPILING_PER_TARGET */
+ 
+-#endif /* _GDBSTUB_HELPERS_H_ */
++#endif /* GDBSTUB_HELPERS_H */
+diff --git a/include/gdbstub/syscalls.h b/include/gdbstub/syscalls.h
+index d63228e96b..070b165b42 100644
+--- a/include/gdbstub/syscalls.h
++++ b/include/gdbstub/syscalls.h
+@@ -6,8 +6,8 @@
+  * SPDX-License-Identifier: LGPL-2.0-or-later
+  */
+ 
+-#ifndef _SYSCALLS_H_
+-#define _SYSCALLS_H_
++#ifndef SYSCALLS_H
++#define SYSCALLS_H
+ 
+ /* For gdb file i/o remote protocol open flags. */
+ #define GDB_O_RDONLY  0
+@@ -119,4 +119,4 @@ void gdb_exit(int code);
+  */
+ void gdb_qemu_exit(int code);
+ 
+-#endif /* _SYSCALLS_H_ */
++#endif /* SYSCALLS_H */
+diff --git a/include/hw/arm/raspberrypi-fw-defs.h b/include/hw/arm/raspberrypi-fw-defs.h
+index 60b8e5b451..906de53379 100644
+--- a/include/hw/arm/raspberrypi-fw-defs.h
++++ b/include/hw/arm/raspberrypi-fw-defs.h
+@@ -7,9 +7,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-#ifndef INCLUDE_HW_MISC_RASPBERRYPI_FW_DEFS_H_
+-#define INCLUDE_HW_MISC_RASPBERRYPI_FW_DEFS_H_
+-
++#ifndef INCLUDE_HW_MISC_RASPBERRYPI_FW_DEFS_H
++#define INCLUDE_HW_MISC_RASPBERRYPI_FW_DEFS_H
+ 
+ enum rpi_firmware_property_tag {
+     RPI_FWREQ_PROPERTY_END =                           0,
+@@ -172,4 +171,4 @@ typedef struct rpi_firmware_prop_request {
+     uint8_t payload[0];
+ } rpi_firmware_prop_request_t;
+ 
+-#endif /* INCLUDE_HW_MISC_RASPBERRYPI_FW_DEFS_H_ */
++#endif /* INCLUDE_HW_MISC_RASPBERRYPI_FW_DEFS_H */
+diff --git a/include/hw/arm/stm32l4x5_soc.h b/include/hw/arm/stm32l4x5_soc.h
+index 9c3d662bca..cc61d582cb 100644
+--- a/include/hw/arm/stm32l4x5_soc.h
++++ b/include/hw/arm/stm32l4x5_soc.h
+@@ -21,8 +21,8 @@
+  * https://www.st.com/en/microcontrollers-microprocessors/stm32l4x5/documentation.html
+  */
+ 
+-#ifndef HW_ARM_STM32L4x5_SOC_H
+-#define HW_ARM_STM32L4x5_SOC_H
++#ifndef HW_ARM_STM32L4X5_SOC_H
++#define HW_ARM_STM32L4X5_SOC_H
+ 
+ #include "system/memory.h"
+ #include "hw/arm/armv7m.h"
+diff --git a/include/hw/gpio/pcf8574.h b/include/hw/gpio/pcf8574.h
+index 3291d7dbbc..9f46cf7167 100644
+--- a/include/hw/gpio/pcf8574.h
++++ b/include/hw/gpio/pcf8574.h
+@@ -7,9 +7,9 @@
+  * Written by Dmitrii Sharikhin <d.sharikhin@yadro.com>
+  */
+ 
+-#ifndef _HW_GPIO_PCF8574
+-#define _HW_GPIO_PCF8574
++#ifndef HW_GPIO_PCF8574_H
++#define HW_GPIO_PCF8574_H
+ 
+ #define TYPE_PCF8574 "pcf8574"
+ 
+-#endif /* _HW_GPIO_PCF8574 */
++#endif /* HW_GPIO_PCF8574_H */
+diff --git a/include/hw/virtio/vhost-user-gpio.h b/include/hw/virtio/vhost-user-gpio.h
+index 5814a8400a..4e50f45066 100644
+--- a/include/hw/virtio/vhost-user-gpio.h
++++ b/include/hw/virtio/vhost-user-gpio.h
+@@ -6,8 +6,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-#ifndef _QEMU_VHOST_USER_GPIO_H
+-#define _QEMU_VHOST_USER_GPIO_H
++#ifndef QEMU_VHOST_USER_GPIO_H
++#define QEMU_VHOST_USER_GPIO_H
+ 
+ #include "hw/virtio/virtio.h"
+ #include "hw/virtio/vhost.h"
+@@ -21,4 +21,4 @@ struct VHostUserGPIO {
+     VHostUserBase parent_obj;
+ };
+ 
+-#endif /* _QEMU_VHOST_USER_GPIO_H */
++#endif /* QEMU_VHOST_USER_GPIO_H */
+diff --git a/include/hw/virtio/vhost-user-scmi.h b/include/hw/virtio/vhost-user-scmi.h
+index 30ab0d7ab7..47bdde17ca 100644
+--- a/include/hw/virtio/vhost-user-scmi.h
++++ b/include/hw/virtio/vhost-user-scmi.h
+@@ -6,8 +6,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-#ifndef _QEMU_VHOST_USER_SCMI_H
+-#define _QEMU_VHOST_USER_SCMI_H
++#ifndef QEMU_VHOST_USER_SCMI_H
++#define QEMU_VHOST_USER_SCMI_H
+ 
+ #include "hw/virtio/virtio.h"
+ #include "hw/virtio/vhost.h"
+@@ -28,4 +28,4 @@ struct VHostUserSCMI {
+     bool started_vu;
+ };
+ 
+-#endif /* _QEMU_VHOST_USER_SCMI_H */
++#endif /* QEMU_VHOST_USER_SCMI_H */
+diff --git a/include/hw/xen/xen-pvh-common.h b/include/hw/xen/xen-pvh-common.h
+index 0ed07c5694..a1ec505518 100644
+--- a/include/hw/xen/xen-pvh-common.h
++++ b/include/hw/xen/xen-pvh-common.h
+@@ -6,8 +6,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-#ifndef XEN_PVH_COMMON_H__
+-#define XEN_PVH_COMMON_H__
++#ifndef XEN_PVH_COMMON_H
++#define XEN_PVH_COMMON_H
+ 
+ #include "system/memory.h"
+ #include "qom/object.h"
+diff --git a/include/tcg/insn-start-words.h b/include/tcg/insn-start-words.h
+index c52aec50a7..c2921c24bc 100644
+--- a/include/tcg/insn-start-words.h
++++ b/include/tcg/insn-start-words.h
+@@ -4,9 +4,9 @@
+  * Copyright (c) 2008 Fabrice Bellard
+  */
+ 
+-#ifndef TCG_INSN_START_WORDS
+-#define TCG_INSN_START_WORDS
++#ifndef TCG_INSN_START_WORDS_H
++#define TCG_INSN_START_WORDS_H
+ 
+ #define INSN_START_WORDS 3
+ 
+-#endif /* TCG_INSN_START_WORDS */
++#endif /* TCG_INSN_START_WORDS_H */
+diff --git a/qga/cutils.h b/qga/cutils.h
+index c1f2f4b17a..e6c73c8d83 100644
+--- a/qga/cutils.h
++++ b/qga/cutils.h
+@@ -1,6 +1,6 @@
+-#ifndef CUTILS_H_
+-#define CUTILS_H_
++#ifndef CUTILS_H
++#define CUTILS_H
+ 
+ int qga_open_cloexec(const char *name, int flags, mode_t mode);
+ 
+-#endif /* CUTILS_H_ */
++#endif /* CUTILS_H */
 -- 
 2.52.0
 
