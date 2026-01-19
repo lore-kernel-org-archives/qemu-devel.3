@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 973EFD2ECF0
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 21:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53C39D2ECEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 21:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhwoZ-0003vm-Ke; Mon, 19 Jan 2026 16:29:35 -0500
+	id 1vhwoY-0003qY-BC; Mon, 19 Jan 2026 16:29:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vhwnl-0002Mf-Et
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 16:28:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vhwo1-0002q5-N9
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 16:29:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vhwni-000827-0Y
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 16:28:44 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vhwnz-0008IA-FB
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 16:29:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768858117;
+ s=mimecast20190719; t=1768858138;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Aa8jNgCx/I9mgq+axY3IkSlZYtf4Rh/XsWbodmDUPaQ=;
- b=dc9MS4p1DrSCN79cD4bOFglD15CMKlCUqhwhbcKwaiCoUFyK5rga/TiS1/5DbCKp0GRcAg
- BRTkLRLOhRPlIJRABWvxdeeHWQUD9wPrzaYNWwgNAS9VvLRQvyUUrF2fX6FNc0IcdM0L4C
- f1nYXOE9G9DUHetpyfs97zFmXs24bEY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=cV2lc3N0MbxJhjLRkTuCdN2XwVtlbf4p3z9LWjnzgrU=;
+ b=AhTavvPTSX/R8Sc2cCz+6wnxBmfEV5wbjhHjdhCarWZ6C9by475Z3enr+UZVuMUJSaDYga
+ O2EKEixmC2+l9FS4vJ/uCEM9NxzTn8PGGrxveiwC3uF561LwVzqONRUBfb7zWMX4qLbBsX
+ do7d2fp1N9knYkoPO4jguOpWqlUD7qU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-15-IOM3sle_Of6A6-zHVsVnSQ-1; Mon,
- 19 Jan 2026 16:28:34 -0500
-X-MC-Unique: IOM3sle_Of6A6-zHVsVnSQ-1
-X-Mimecast-MFC-AGG-ID: IOM3sle_Of6A6-zHVsVnSQ_1768858112
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-DNDGoEVlOkW_l1LMT8rQdw-1; Mon,
+ 19 Jan 2026 16:28:57 -0500
+X-MC-Unique: DNDGoEVlOkW_l1LMT8rQdw-1
+X-Mimecast-MFC-AGG-ID: DNDGoEVlOkW_l1LMT8rQdw_1768858136
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3CB721954B06; Mon, 19 Jan 2026 21:28:32 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D7A661956052; Mon, 19 Jan 2026 21:28:55 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.170])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 54F7619560AB; Mon, 19 Jan 2026 21:28:29 +0000 (UTC)
+ id EB3B21955F43; Mon, 19 Jan 2026 21:28:52 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -61,22 +61,22 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v4 06/17] tests: Use configured python to run GitLab iotests
-Date: Mon, 19 Jan 2026 16:27:32 -0500
-Message-ID: <20260119212744.1275455-7-jsnow@redhat.com>
+Subject: [PATCH v4 13/17] tests: remove "make check-venv" target
+Date: Mon, 19 Jan 2026 16:27:39 -0500
+Message-ID: <20260119212744.1275455-14-jsnow@redhat.com>
 In-Reply-To: <20260119212744.1275455-1-jsnow@redhat.com>
 References: <20260119212744.1275455-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,45 +94,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-use the configured python (and the pyvenv) to run iotests instead of the
-system default python3 interpreter. Use the new "run" script in the
-build directory to execute the command inside the meson developer
-environment, templated in qemu.git/run.in.
+With the qemu.qmp and qemu.machine dependencies now installed by default
+at configure time and additional dependencies required by functional
+testing installed on demand, there is no longer any reason to have an
+explicit target.
+
+FIXME: This forces image regeneration for vm tests whenever Make
+determines that the image needs to be rebuilt; which is a regression
+over the previous behavior.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- .gitlab-ci.d/buildtest.yml | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ tests/Makefile.include    | 22 ++--------------------
+ tests/vm/Makefile.include | 24 +++++++-----------------
+ 2 files changed, 9 insertions(+), 37 deletions(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index e9b5b05e6e8..4c280dd29bc 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -350,15 +350,15 @@ build-tcg-disabled:
-     - make -j"$JOBS"
-     - make check-unit
-     - make check-qapi-schema
--    - cd tests/qemu-iotests/
--    - ./check -raw 001 002 003 004 005 008 009 010 011 012 021 025 032 033 048
--            052 063 077 086 101 104 106 113 148 150 151 152 157 159 160 163
--            170 171 184 192 194 208 221 226 227 236 253 277 image-fleecing
--    - ./check -qcow2 028 051 056 057 058 065 068 082 085 091 095 096 102 122
--            124 132 139 142 144 145 151 152 155 157 165 194 196 200 202
--            208 209 216 218 227 234 246 247 248 250 254 255 257 258
--            260 261 262 263 264 270 272 273 277 279 image-fleecing
--    - cd ../..
-+    - ./run tests/qemu-iotests/check -raw 001 002 003 004 005 008 009
-+            010 011 012 021 025 032 033 048 052 063 077 086 101 104 106
-+            113 148 150 151 152 157 159 160 163 170 171 184 192 194 208
-+            221 226 227 236 253 277 image-fleecing
-+    - ./run tests/qemu-iotests/check -qcow2 028 051 056 057 058 065 068
-+            082 085 091 095 096 102 122 124 132 139 142 144 145 151 152
-+            155 157 165 194 196 200 202 208 209 216 218 227 234 246 247
-+            248 250 254 255 257 258 260 261 262 263 264 270 272 273 277
-+            279 image-fleecing
-     - make distclean
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index f28c9e329aa..2a203e23718 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -21,7 +21,6 @@ ifneq ($(filter $(all-check-targets), check-softfloat),)
+ endif
+ 	@echo
+ 	@echo " $(MAKE) check-report.junit.xml   Generates an aggregated XML test report"
+-	@echo " $(MAKE) check-venv               Creates a Python venv for tests"
+ 	@echo " $(MAKE) check-clean              Clean the tests and related data"
+ 	@echo
+ 	@echo "The following are useful for CI builds"
+@@ -92,33 +91,16 @@ clean-tcg: $(CLEAN_TCG_TARGET_RULES)
+ .PHONY: distclean-tcg
+ distclean-tcg: $(DISTCLEAN_TCG_TARGET_RULES)
  
- build-user:
+-# Python venv for running tests
+-
+-.PHONY: check-venv
+-
+ # Build up our target list from the filtered list of ninja targets
+ TARGETS=$(patsubst libqemu-%.a, %, $(filter libqemu-%.a, $(ninja-targets)))
+ 
+-TESTS_VENV_TOKEN=$(BUILD_DIR)/pyvenv/tests.group
+-
+-quiet-venv-pip = $(quiet-@)$(call quiet-command-run, \
+-    $(PYTHON) -m pip -q --disable-pip-version-check $1, \
+-    "VENVPIP","$1")
+-
+-$(TESTS_VENV_TOKEN): $(SRC_PATH)/pythondeps.toml
+-	$(call quiet-venv-pip,install -e "$(SRC_PATH)/python/")
+-	$(MKVENV_ENSUREGROUP) $< tooling functests
+-	$(call quiet-command, touch $@)
+-
+-check-venv: $(TESTS_VENV_TOKEN)
+-
+ FUNCTIONAL_TARGETS=$(patsubst %-softmmu,check-functional-%, $(filter %-softmmu,$(TARGETS)))
+ .PHONY: $(FUNCTIONAL_TARGETS)
+-$(FUNCTIONAL_TARGETS): check-venv
++$(FUNCTIONAL_TARGETS):
+ 	@$(MAKE) SPEED=thorough $(subst -functional,-func,$@)
+ 
+ .PHONY: check-functional
+-check-functional: check-venv
++check-functional:
+ 	@$(NINJA) precache-functional
+ 	@$(PYTHON) $(SRC_PATH)/scripts/clean_functional_cache.py
+ 	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func check-func-quick
+diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
+index 14188bba1c6..095ec2eefa3 100644
+--- a/tests/vm/Makefile.include
++++ b/tests/vm/Makefile.include
+@@ -1,14 +1,5 @@
+ # Makefile for VM tests
+ 
+-# Hack to allow running in an unconfigured build tree
+-ifeq ($(realpath $(SRC_PATH)),$(realpath .))
+-VM_PYTHON = PYTHONPATH=$(SRC_PATH)/python /usr/bin/env python3
+-VM_VENV =
+-else
+-VM_PYTHON = $(PYTHON)
+-VM_VENV = check-venv
+-endif
+-
+ .PHONY: vm-build-all vm-clean-all
+ 
+ EFI_AARCH64 = $(wildcard $(BUILD_DIR)/pc-bios/edk2-aarch64-code.fd)
+@@ -90,11 +81,10 @@ vm-clean-all:
+ 
+ $(IMAGES_DIR)/%.img:	$(SRC_PATH)/tests/vm/% \
+ 			$(SRC_PATH)/tests/vm/basevm.py \
+-			$(SRC_PATH)/tests/vm/Makefile.include \
+-			$(VM_VENV)
++			$(SRC_PATH)/tests/vm/Makefile.include
+ 	@mkdir -p $(IMAGES_DIR)
+ 	$(call quiet-command, \
+-		$(VM_PYTHON) $< \
++		$(PYTHON) $< \
+ 		$(if $(V)$(DEBUG), --debug) \
+ 		$(if $(GENISOIMAGE),--genisoimage $(GENISOIMAGE)) \
+ 		$(if $(QEMU_LOCAL),--build-path $(BUILD_DIR)) \
+@@ -102,14 +92,14 @@ $(IMAGES_DIR)/%.img:	$(SRC_PATH)/tests/vm/% \
+ 		$(if $(LOG_CONSOLE),--log-console) \
+ 		--source-path $(SRC_PATH) \
+ 		--image "$@" \
+-		$(if $(filter-out check-venv, $?), --force) \
++		--force \
+ 		--build-image $@, \
+ 		"  VM-IMAGE $*")
+ 
+ # Build in VM $(IMAGE)
+-vm-build-%: $(IMAGES_DIR)/%.img $(VM_VENV)
++vm-build-%: $(IMAGES_DIR)/%.img
+ 	$(call quiet-command, \
+-		$(VM_PYTHON) $(SRC_PATH)/tests/vm/$* \
++		$(PYTHON) $(SRC_PATH)/tests/vm/$* \
+ 		$(if $(V)$(DEBUG), --debug) \
+ 		$(if $(DEBUG), --interactive) \
+ 		$(if $(J),--jobs $(J)) \
+@@ -133,9 +123,9 @@ vm-boot-serial-%: $(IMAGES_DIR)/%.img
+ 		-device virtio-net-pci,netdev=vnet \
+ 	|| true
+ 
+-vm-boot-ssh-%: $(IMAGES_DIR)/%.img $(VM_VENV)
++vm-boot-ssh-%: $(IMAGES_DIR)/%.img
+ 	$(call quiet-command, \
+-		$(VM_PYTHON) $(SRC_PATH)/tests/vm/$* \
++		$(PYTHON) $(SRC_PATH)/tests/vm/$* \
+ 		$(if $(J),--jobs $(J)) \
+ 		$(if $(V)$(DEBUG), --debug) \
+ 		$(if $(QEMU_LOCAL),--build-path $(BUILD_DIR)) \
 -- 
 2.52.0
 
