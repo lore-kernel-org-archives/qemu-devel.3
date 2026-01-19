@@ -4,111 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8948BCA5FFF
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 07:44:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00273CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 07:45:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhjvJ-0001pL-2s; Mon, 19 Jan 2026 02:43:43 -0500
+	id 1vhjwM-0002EL-SK; Mon, 19 Jan 2026 02:44:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vhjua-0001hm-H7; Mon, 19 Jan 2026 02:42:59 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vhjvy-00028i-1G; Mon, 19 Jan 2026 02:44:24 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vhjuV-0002cP-7b; Mon, 19 Jan 2026 02:42:54 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60INj2Tu030226;
- Mon, 19 Jan 2026 07:42:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=MRKknXDWhEOjMt1S8OgigU33DPDB/f
- HbjSC3FE07Rc4=; b=LOwZDJ92Cn4Kng51a4BGdE1Y6lTvGubQ1PFddcpuWibcc6
- Z9s+QhDpOv3/8wPR8afiGtujaRXdinJvAmXtGhgm6iZKHczhyeAiMlhkR3INGiIq
- Y7G6u/ygkaf2J3Tn0oZFsmq0mZieqryVIjAIGkMqcHCMBrrZJPYQaURUxGkbYcSI
- V1FRrlEjLl/tLx/cEyYY3UQ2+wjdgp3YnYjV47Eh1eM0ximR4LPTxlYV/7N2Ws2T
- RTK3MFSsnSTALCfBEyDui/FP5FjKyPjO2TZtIi79WGyn4rGveaKMrPpgQUB/9yU0
- +K4qU6ubeXxW7lMPZNzCqOylamYwGO2AoJnuep2g==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br0uf6h9a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Jan 2026 07:42:49 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60J7fGKf029777;
- Mon, 19 Jan 2026 07:42:49 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br0uf6h98-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Jan 2026 07:42:49 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60J6tKkK016668;
- Mon, 19 Jan 2026 07:42:48 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brn4xnj8g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Jan 2026 07:42:48 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60J7gipP60817738
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 19 Jan 2026 07:42:44 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6834C20040;
- Mon, 19 Jan 2026 07:42:44 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9933C20043;
- Mon, 19 Jan 2026 07:42:41 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.21.137]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 19 Jan 2026 07:42:41 +0000 (GMT)
-Date: Mon, 19 Jan 2026 13:12:38 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Caleb Schlossin <calebs@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
- milesg@linux.ibm.com, rathc@linux.ibm.com, fbarrat@linux.ibm.com,
- chalapathi.v@linux.ibm.com
-Subject: Re: [PATCH] ppc/pnv: Add a nest MMU model
-Message-ID: <aW3YurqVBVVOWR9D@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20251223145919.2540097-1-calebs@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vhjvv-0002jr-Ty; Mon, 19 Jan 2026 02:44:21 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B9C2817FA4E;
+ Mon, 19 Jan 2026 10:43:51 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 04242350BA3;
+ Mon, 19 Jan 2026 10:44:07 +0300 (MSK)
+Message-ID: <bf48c6fd-bbb8-4289-bd63-b09e2492c14b@tls.msk.ru>
+Date: Mon, 19 Jan 2026 10:44:06 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251223145919.2540097-1-calebs@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: BhNOdVQ8123mW489mI-xA3u5Ubi9FgFE
-X-Proofpoint-ORIG-GUID: xAso3TVkEpvLmZ8S6gRO2QIWLxldy27e
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE5MDA1OSBTYWx0ZWRfX5lbfV9YG3fdW
- /2N9qIJQE0CHHn4wYRmnu5wRdNk9sKDMy/dqgnTc7flqQCq3jQBIu/+m5dLVvpOjfQPV9w93TrS
- AXDhrwYnjStj4ELP4Gcj4zHYxKIaCacytorWl6lYt6Al2vgTuwsBsUHVOseWeACZL2g5UGO4yGG
- Kq6LMS/1Uhrl0kCqWJvToX+v0MbREFxFBVKCTN5hEsUEmvTmRwpUxuLOWx3TQflCj4FvEzky//v
- T1vZm9VkAXZWDSY9d6NmQWLNxbS0m7byEguufyUBquv+QUVZyHz3o+OUXZte+b8k5QzKFXR3K+5
- /3IuICd8DSSrSX+bvXwX1DDeFBeS75aRqxsbpNQpbUTMmGySvJCiT1HqklpqWe0b5NWsBYuMrcQ
- 2tJB5ZtdECIc9fEE7Do8g3GaUPT1CDPhqRLPTaW8qQlJjKvWioM4wQpBYgrlIjpWCAdfuGCnLyJ
- D2mfvql/1zcMgZVYlyw==
-X-Authority-Analysis: v=2.4 cv=bopBxUai c=1 sm=1 tr=0 ts=696de079 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=gMGx47IG0rqLUk0jqDcA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-19_01,2026-01-19_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 adultscore=0 suspectscore=0 impostorscore=0
- phishscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601190059
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 11/58] bsd-user: Fix __i386__ test for
+ TARGET_HAS_STAT_TIME_T_EXT
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: ktokunaga.mail@gmail.com, berrange@redhat.com,
+ pierrick.bouvier@linaro.org, thuth@redhat.com, pbonzini@redhat.com,
+ philmd@linaro.org, Warner Losh <imp@bsdimp.com>,
+ Kyle Evans <kevans@freebsd.org>, qemu-stable <qemu-stable@nongnu.org>
+References: <20260116033305.51162-1-richard.henderson@linaro.org>
+ <20260116033305.51162-12-richard.henderson@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <20260116033305.51162-12-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -126,82 +108,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for adding Nest MMU, Caleb !
-
-Currently seeing a build failure due to recent changes in upstream,
-details and reviews below.
-
-On 25/12/23 08:59AM, Caleb Schlossin wrote:
-> The nest MMU is used for translations needed by I/O subsystems
-> on Power10. The nest is the shared, on-chip infrastructure
-> that connects CPU cores, memory controllers, and I/O.
+On 1/16/26 06:32, Richard Henderson wrote:
+> The target test is TARGET_I386, not __i386__.
 > 
-> This patch sets up a basic skeleton with its xscom
-> area, mapping both needed xscom regions. Support required
-> for PowerVM bringup.
-> 
-> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
-> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
+> Cc: Warner Losh <imp@bsdimp.com>
+> Cc: Kyle Evans <kevans@freebsd.org>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
+This looks like a qemu-stable material (but probably of very
+low priority).  Please let me know if it is not.
+
+Thanks,
+
+/mjt
+
 > ---
->
-> > <...snip...>
->
-> diff --git a/hw/ppc/pnv_nmmu.c b/hw/ppc/pnv_nmmu.c
-> new file mode 100644
-> index 0000000000..37c739b242
-> --- /dev/null
-> +++ b/hw/ppc/pnv_nmmu.c
-> @@ -0,0 +1,132 @@
-> +/*
-> + * QEMU PowerPC nest MMU model
-> + *
-> + * Copyright (c) 2025, IBM Corporation.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * This code is licensed under the GPL version 2 or later. See the
-> + * COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/log.h"
-> +#include "hw/qdev-properties.h"
-
-With below commit, the header `hw/qdev-properties.h` has moved to
-`hw/core/qdev-properties.h`
-
-This causes the compile to fail, can you rebase on upstream and send
-this again as v2 ?
-
-	commit 78d45220b4e6385c6a90302fbc84fdacb415580c
-	Author: Paolo Bonzini <pbonzini@redhat.com>
-	Date:   Thu Nov 27 08:38:05 2025 +0100
-	
-	    include: move hw/qdev-properties.h to hw/core/
-
->
-> > <...snip...>
->
-> +static int pnv_nmmu_dt_xscom(PnvXScomInterface *dev, void *fdt,
-> +                             int offset)
-> +{
-> +    PnvNMMU *nmmu = PNV_NMMU(dev);
-> +    char *name;
-> +    int nmmu_offset;
-> +    const char compat[] = "ibm,power10-nest-mmu";
-
-OPAL looks for compat property "ibm,power9-nest-mmu", as NMMU is treated
-the same in Power9 and Power10 (atleast from opal's perspective)
-
-The Linux kernel asks OPAL itself to do Nest MMU set ptcr, so kernel
-doesn't care about the compat string.
-
-Can we use same ibm,power9-nest-mmu compat string here too ? What do you
-say ?
-
-Other than above reviews, the code looks good to me, Thanks !
-
-- Aditya G
+>   bsd-user/syscall_defs.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+> index 52f84d5dd1..c49be32bdc 100644
+> --- a/bsd-user/syscall_defs.h
+> +++ b/bsd-user/syscall_defs.h
+> @@ -247,7 +247,7 @@ struct target_freebsd11_stat {
+>       unsigned int:(8 / 2) * (16 - (int)sizeof(struct target_freebsd_timespec));
+>   } __packed;
+>   
+> -#if defined(__i386__)
+> +#if defined(TARGET_I386)
+>   #define TARGET_HAS_STAT_TIME_T_EXT       1
+>   #endif
+>   
 
 
