@@ -4,52 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AF55CCF2D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 10:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8EC0CCF2D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 10:14:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhmAZ-00068w-Tc; Mon, 19 Jan 2026 05:07:36 -0500
+	id 1vhmGM-00049W-Cc; Mon, 19 Jan 2026 05:13:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vhmAJ-0005cy-9s
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 05:07:19 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vhmAB-0005sv-GF
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 05:07:15 -0500
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxvsNJAm5pnUYKAA--.33973S3;
- Mon, 19 Jan 2026 18:07:05 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJDxjcJHAm5p5jIlAA--.7303S5;
- Mon, 19 Jan 2026 18:07:04 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH 3/3] target/loongarch: Add property set with
- query-cpu-model-expansion
-Date: Mon, 19 Jan 2026 18:07:02 +0800
-Message-Id: <20260119100702.1214764-4-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20260119100702.1214764-1-maobibo@loongson.cn>
-References: <20260119100702.1214764-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vhmGL-00048n-1J
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 05:13:33 -0500
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vhmGJ-0007Dd-Fx
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 05:13:32 -0500
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-4801c314c84so23529515e9.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 02:13:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768817609; x=1769422409; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ArTS56IeXf+DFXAqRGSMNS5Jjn/RHwFy7ZqSU4dJu0M=;
+ b=rqFM623+8fc/KYqgiYaQThw/hfDjzoyhUIzACr7y+7687KPeTaudfLAJ2xlNgna1wx
+ rp2aw79I8S6gJbsdG3Ff+409Kv00v21oWw4k6H+KHXEeNIqvNR5YKp/yhCf8BcYiQEKD
+ wsPEGigJtm/oZJdbIyDCscTvE1NLGmkvl1yyLxJTeRMQ9Or4Of3yMMECq51kLNIJb+lB
+ 1e83lx6d7VJmdET8Vhoj54kPGoGtY5W1LZTLrqxy6wemGVurELVb4KvIg5C/fbQdo2n6
+ R1khay3roKcuHRGQqDq5mxmMztHmEzIBpiHthkNEEeK578lD0x+rtBr5ppqwJqgXd6vy
+ W3DQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768817609; x=1769422409;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ArTS56IeXf+DFXAqRGSMNS5Jjn/RHwFy7ZqSU4dJu0M=;
+ b=G4iJ+JPeed00430sAcwt2WNO23X4PmzimGFKNAiwnKaxQbBbbycz3QsyRaA2YQ9+7W
+ j1JUBetRDYrtJXGXkV+FlINFarLloaGMp3+oIQidMsanxNkqdhQVnRTmnRhL7bGXPXxK
+ ewkKkYnEr4AZpthTDaWAPbPgRxmv7o+noSe2r5RPo863RsLZqTRJSQKs5ZZNEBCjOItG
+ yBvk+CzlH4qn/cNRbPbsK5C38sKUX+FAdblr4BV/YtAfjDvGPMS3yY1upVhgyda73e0B
+ qwyZqYEWZmhctZCZpGLi6tCJa0ti99eRflbDv6EU2WGWe03/cRKFwFYpm+rg97G1PCnp
+ GQEg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFELlnuk+m5O3EXK/WRZZGXASXvW3S5dJWCB37tndT2I4buW9NmIXLJ1kMveK5m7Gc3s9A9Gh0IBPx@nongnu.org
+X-Gm-Message-State: AOJu0Yz2eT72jREscOP/udI5+N62+ZAD4OWeSe4G48E70LUMHfoREy1T
+ eenidxvaeZI5WJW23wPGJOORwLtJWsrJd/s5+7tw1G1DsoJsXatVCMCZLWITwPqAti0=
+X-Gm-Gg: AY/fxX5n8SKYSXgRsrpRHPFDApcHUy+JwaVMG4CPNjzR5kZcnSHiIAYZabdfvNc/26T
+ 88CLtCIVMxJYNRpkcI6LODcPbP8Vm7+UeQbRDxqMLCcl96QP2MeoCunHjHrRpnD98T5z/6TZh3u
+ bwRYXyzwmJQimZanShgLzydgZp/8s0O3Kijtae+6ZSPhNd6ah80ONQPCUUc4kviIPo3nvcTcw1p
+ FmRG6z3fkvMCz2vEH3gz9yfaJy1O7ea6lkvOLESHarOyQPf556oMp4t8wqdln/klgjHbYYzTaMy
+ Ues7Dgi7tDMDaFtrxt1b/TNXqoHoEI/DZEfhK0f7saNFEoCXKwM3+UFq/bTRUP7RM3IBshCHoov
+ 613PY3aQ+aYynO44ZAsD05y94YF5/qDOwXHWupizZBb1MwGg6c2jud/qYvzpt5lPbgKCOy7n5ui
+ OkhxC0WIXExf4=
+X-Received: by 2002:a05:600c:8207:b0:480:1c75:407c with SMTP id
+ 5b1f17b1804b1-4801e30a4f9mr102976305e9.2.1768817609492; 
+ Mon, 19 Jan 2026 02:13:29 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47f428bb0b5sm240048315e9.8.2026.01.19.02.13.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 19 Jan 2026 02:13:28 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E4E0F5F87E;
+ Mon, 19 Jan 2026 10:13:27 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
+ Alessandro Di Federico <ale@rev.ng>, Alistair Francis
+ <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
+ Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
+ Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ cw@f00f.org, demiobenour@gmail.com, dhedde@kalrayinc.com, Eric Blake
+ <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
+ Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
+ <eric.auger@redhat.com>, felipe@nutanix.com, Alyssa Ross <hi@alyssa.is>,
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, Jan Kiszka
+ <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
+ <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
+ <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>, Max Chou <max.chou@sifive.com>, Mark Burton
+ <mburton@qti.qualcomm.com>, mdean@redhat.com, "Ho, Nelson"
+ <nelson.ho@windriver.com>, Paul Walmsley <paul.walmsley@sifive.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, QEMU Developers
+ <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
+ <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
+ <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
+ <thuth@redhat.com>, wei.w.wang@intel.com, z.huo@139.com, LIU Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+Subject: KVM/QEMU community call for agenda items 20/01/2026
+User-Agent: mu4e 1.12.15-pre1; emacs 30.1
+Date: Mon, 19 Jan 2026 10:13:27 +0000
+Message-ID: <87zf69syew.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxjcJHAm5p5jIlAA--.7303S5
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x341.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,89 +127,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On LoongArch with QMP command query-cpu-model-expansion, property
-setting is not supported witch command such as:
-  query-cpu-model-expansion type=static model={"name":"max","props":{"lasx":false}}
 
-Here add property setting support with QMP command.
+Hi,
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/loongarch-qmp-cmds.c | 40 +++++++++++++++++++--------
- 1 file changed, 28 insertions(+), 12 deletions(-)
+The KVM/QEMU community call is at:
 
-diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
-index 6a95080fe4..f053f22bb8 100644
---- a/target/loongarch/loongarch-qmp-cmds.c
-+++ b/target/loongarch/loongarch-qmp-cmds.c
-@@ -50,7 +50,6 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-                                                      Error **errp)
- {
-     Visitor *visitor;
--    bool ok;
-     CpuModelExpansionInfo *expansion_info;
-     QDict *qdict_out;
-     ObjectClass *oc;
-@@ -64,30 +63,47 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-         return NULL;
-     }
- 
-+    oc = cpu_class_by_name(TYPE_LOONGARCH_CPU, model->name);
-+    if (!oc) {
-+        error_setg(errp, "The CPU type '%s' is not a recognized LoongArch "
-+                         "CPU type", model->name);
-+        return NULL;
-+    }
-+
-+    obj = object_new(object_class_get_name(oc));
-     if (model->props) {
-+        Error *err = NULL;
-+        const QDict *qdict_in;
-+
-         visitor = qobject_input_visitor_new(model->props);
-         if (!visit_start_struct(visitor, "model.props", NULL, 0, errp)) {
-             visit_free(visitor);
-+            object_unref(obj);
-             return NULL;
-         }
- 
--        ok = visit_check_struct(visitor, errp);
-+        qdict_in = qobject_to(QDict, model->props);
-+        i = 0;
-+        while ((name = cpu_model_advertised_features[i++]) != NULL) {
-+            if (qdict_get(qdict_in, name)) {
-+                if (!object_property_set(obj, name, visitor, &err)) {
-+                    break;
-+                }
-+            }
-+        }
-+
-+        if (!err) {
-+            visit_check_struct(visitor, &err);
-+        }
-         visit_end_struct(visitor, NULL);
-         visit_free(visitor);
--        if (!ok) {
-+        if (err) {
-+            error_propagate(errp, err);
-+            object_unref(obj);
-             return NULL;
-         }
-     }
- 
--    oc = cpu_class_by_name(TYPE_LOONGARCH_CPU, model->name);
--    if (!oc) {
--        error_setg(errp, "The CPU type '%s' is not a recognized LoongArch CPU type",
--                   model->name);
--        return NULL;
--    }
--
--    obj = object_new(object_class_get_name(oc));
--
-     expansion_info = g_new0(CpuModelExpansionInfo, 1);
-     expansion_info->model = g_malloc0(sizeof(*expansion_info->model));
-     expansion_info->model->name = g_strdup(model->name);
--- 
-2.39.3
+https://meet.jit.si/kvmcallmeeting
+@
+20/01/2026 14:00 UTC
 
+(hopefully the date is in sync again)
+
+Are there any agenda items for the sync-up?
+
+Admin: I am away tomorrow for unrelated things so Manos has volunteered
+to run the meeting and make sure it is recorded.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
