@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F90C98315
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 00:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE365C98315
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 00:08:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhcoN-0001sM-9O; Sun, 18 Jan 2026 19:08:03 -0500
+	id 1vhcoX-00020f-Da; Sun, 18 Jan 2026 19:08:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhcoC-0001iV-5I
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 19:07:52 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1vhcoE-0001mu-8S
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 19:07:54 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhcoA-000157-25
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 19:07:51 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c5513f598c0so1464341a12.0
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 16:07:49 -0800 (PST)
+ id 1vhcoC-00015P-Gi
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 19:07:54 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-81db1530173so1643040b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 16:07:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768781268; x=1769386068; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768781271; x=1769386071; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QAkc222DnVlZAYEVs59TD8Lx74BTiYYPg03o07EYwlg=;
- b=K7gaGPlNXW2RUCeS1e2CpQnN9ovgaiFaY0HUAHimtz37fwT6iblqh30oSRO3wAmzdR
- GnBoYURCSp2c4vSCyoJNZQYClSMu802A3bNL9Yox+J+lyE0gGBLFId0JrODGZs39tq9e
- GXcAJT73x7GVfQhOjp0X5mj0B7q0rvwsR56T1G4iPo/hRa6np2Lm2GBpJopHLZDMNUJK
- rLmMnPpYchChVZJ9QJMlOPsgoiYrvb/u2DdzcQ2JvMiWoLBytMEI8eC6wbVUwI5naY8l
- FCSk5Iqjiq48eKQ9F5OTUCktqAXhyiJvBh6HG0NM1zuRWnQR/gyMS9XX6FowDC7tCmIT
- pJMA==
+ bh=Aa9mZAXen3GNDGFdJHfEPbpr07SEJ40e/xyiM/mpQH8=;
+ b=nMsdTJCBcBi0fiZw77kVgJ3Di1scBncIH4GjuEgVOrFXrXVOsv++3wH9ZHfrGROC1b
+ /yDVAM/9hWvAeh/ZIsr+jBXeaI4uHoJqPM/Uj8JIMg0aQ1yeACmyVncOzm+koQNJf03L
+ dIRlnNJY908RdSMBHt5d57Jr+fgY/vo8tvO92+aBP4OGZfsWCQBDi0O8wvDCDuUzZSdl
+ PrH0HVXPKb9b/3hT5lxw1yPr7VllH8x5zdPuSIHmF7FBBwLfnoa8MYbZXYlLqdHq3Se6
+ Bv7k7GHMQNMt/PLakJ9FwDIz/rvahTuYq+xpxyGpf9GMfGl7rh8yZMqqpKYH6HsC4Bl/
+ k2wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768781268; x=1769386068;
+ d=1e100.net; s=20230601; t=1768781271; x=1769386071;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QAkc222DnVlZAYEVs59TD8Lx74BTiYYPg03o07EYwlg=;
- b=g2boyDV0jb02UflUOY08sVZtg3KBQxVYX4+CyfZIwdgBMGQPIFHyKws1l8E3/p+lFE
- IwVXEOauNToxTDXUdSF6p4jXleq0knY3OwHv/veUtBuVC/BX0c0Y1gy4qnI4YDb2Enl0
- X8po1Y+VaoxthiI8To8PX9tCJOCEs5ASDtRrrilNNa9+XmYXD9v395fIBDbcFHceSlYW
- h2b2AfwTK6W5fb1UZGF2rQjgG/xDmzL+oG6Vhlxa9GYsbkbprG8yQyjO/RWqEEaSo9VV
- OCjLo0Q4/52P8bq1QDv7tI6Cb1ULQdExk0Q5jezTUEstpPb2toXIrE6cl66NQCcULa7K
- b+Qg==
-X-Gm-Message-State: AOJu0YwjkHDmSEyO2TXTVX3A8wuZlb+8sG1eBJ/IXSgNiYDs9CpAq8BE
- gXJ+sgEvB1Yvi++BdvJfQr5+2whj6TO5ZAbdAMPFUiF1la9/AqRxg1iGOgyl16CaVQWSFCS5Ut7
- a831klVSRiQ==
-X-Gm-Gg: AY/fxX6BcP+Mf7Nckm91I1OwPI+YPmh6W/LfxPreXgy79vK2Jcu5fgGRzxZYv53M/JA
- UJPKa/QLUoEdzj6ZyyRjhkw6IgkjvHzsBMcOO7uAeGU+9js4DxvPYOjqAZy+CZQBteCOzrzAgOI
- LXWpyN03l8vm6Cj+qpoKxDL3aLbAJeAUbqglsz0xW1vTpbHyNYF8EIDpM8QLnKKPDnrs8YY3Ilb
- PMK6OqjLoKx+9qCyuKxi1V1LEGKVAyubO0oOcAP49jAdzYpZXcjNx9JlaYWtPKMXAvA7GfMpz5f
- BLE0TGjjahuaNqdOKi2JDC4TLtfBSAb2EYoK1ta9QNkbA9s8DJKskzKcXcL/hJceBnl8KZtQUUg
- 3EM8GXsPOMZ74fSkA36mtQdwyi0qlErgiSD5CXUv79LWH1eZOOHkR4mdXdomWXa6ftfwSR9DQ4x
- G+UHzhisqK7foQZ5nOBuO0ONk5FML0
-X-Received: by 2002:a17:903:1c2:b0:29e:940c:2cdf with SMTP id
- d9443c01a7336-2a7175be339mr92902325ad.36.1768781268269; 
- Sun, 18 Jan 2026 16:07:48 -0800 (PST)
+ bh=Aa9mZAXen3GNDGFdJHfEPbpr07SEJ40e/xyiM/mpQH8=;
+ b=K+cTYkRmwvSaaw7HIrdTtsOL8bMWM+GKJWniK74M2mFh0E6Yhs+c6nSKzbFYl4QpvH
+ Uvf4nrNOtLkIb+HfaeFSorXFE0xTDMUt6dG5uJCCIhOUlhNyhf8ak+XWdWLVfYrtUt/x
+ CQsfvLtHdyOrROp5h57XtmiBa9vhxxXJGYDc5RBMTe+U5GPe3epPfmh0SSlr5LoyjUHa
+ vfcFYr51TrGbwpUpDGSMZpg6TdNzCEDzZwJ9pZ6XZAGxFo/fG0ZVSbFe53NzftJmX/Tf
+ yXLLPgbpi3TuXAmiFVw17MGoVzYnVSdEbVfFK2xTJ0vxJwsQibAWpx0nCcDA2m7ZYrxK
+ Jyhw==
+X-Gm-Message-State: AOJu0YyFl86YIduQiKQV5D964aeeTp/2unARw2e+79y5WxqhW2Lkb8+f
+ Xs/gmxmqZkRgQUhkdtbmnYD+ca/2tZDQLY2tKgaVHEdRsQSBZiy6EPggevNRrhpvWgd5MbANEe5
+ 29QOMCx4PcQ==
+X-Gm-Gg: AY/fxX7sehvaFDmzcOQZj2PSoicuPGzhR650th5e04dsxkBHQKNL3hJ/3BfBfyVmOuu
+ asDfVoZTDF1Z8WiVwAdRszgVjtBZlJYt+gGagHIHrPgEgaXsvbv15rIkzEjgTtd5XTlssLNuI7N
+ HlKU3tod1Zqc2Xw9abSN7sLkpXARgq9awe+vwBiMZsepWdVwzprtjn16ePfDz42oPrSvakkIAcl
+ gQLMH6S9yqC3wwo/du7DdMnz75SPpgWQU6ohr3M+zMtW8cR4KfcegnZtx/BKJLZBrHPA5UvyucW
+ itkVP1Z0TOLBSaiwQ1GLXwvVJvOgkjeG2xdLS9bSeeJK6f6T5NkkTnCk5++Nlh3fo/+Z9WaTYci
+ hUn+aIlZYrS65yuR9YI7IZvKHOsY10e+iscV2cFsmEFvHUFY9x1qEVOEw04bD2NLF/MZ1kUT7GW
+ BvqHiaEZBUnXZ0qD9BJQ==
+X-Received: by 2002:a05:6a20:3c90:b0:38b:d9b0:e943 with SMTP id
+ adf61e73a8af0-38dfe6f7ec5mr8173102637.38.1768781271009; 
+ Sun, 18 Jan 2026 16:07:51 -0800 (PST)
 Received: from stoup.. ([180.233.125.201]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7190eee39sm74872145ad.45.2026.01.18.16.07.46
+ d9443c01a7336-2a7190eee39sm74872145ad.45.2026.01.18.16.07.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 16:07:47 -0800 (PST)
+ Sun, 18 Jan 2026 16:07:50 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com,
-	jim.macarthur@linaro.org
-Subject: [PATCH 1/3] tcg/optimize: Lower unsupported deposit during optimize
-Date: Mon, 19 Jan 2026 11:07:38 +1100
-Message-ID: <20260119000740.50516-2-richard.henderson@linaro.org>
+Cc: pbonzini@redhat.com, jim.macarthur@linaro.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH 2/3] tcg/optimize: Lower unsupported extract2 during optimize
+Date: Mon, 19 Jan 2026 11:07:39 +1100
+Message-ID: <20260119000740.50516-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260119000740.50516-1-richard.henderson@linaro.org>
 References: <20260119000740.50516-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,405 +104,125 @@ The expansions that we chose in tcg-op.c may be less than optimial.
 Delay lowering until optimize, so that we have propagated constants
 and have computed known zero/one masks.
 
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/optimize.c | 194 +++++++++++++++++++++++++++++++++++++++++++------
- tcg/tcg-op.c   | 113 ++--------------------------
- 2 files changed, 178 insertions(+), 129 deletions(-)
+ tcg/optimize.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++----
+ tcg/tcg-op.c   |  9 ++------
+ 2 files changed, 60 insertions(+), 12 deletions(-)
 
 diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 801a0a2c68..890c8068fb 100644
+index 890c8068fb..e6a16921c9 100644
 --- a/tcg/optimize.c
 +++ b/tcg/optimize.c
-@@ -1652,12 +1652,17 @@ static bool fold_ctpop(OptContext *ctx, TCGOp *op)
+@@ -1933,21 +1933,74 @@ static bool fold_extract2(OptContext *ctx, TCGOp *op)
+     uint64_t z2 = t2->z_mask;
+     uint64_t o1 = t1->o_mask;
+     uint64_t o2 = t2->o_mask;
++    uint64_t zr, or;
+     int shr = op->args[3];
++    int shl;
  
- static bool fold_deposit(OptContext *ctx, TCGOp *op)
- {
--    TempOptInfo *t1 = arg_info(op->args[1]);
--    TempOptInfo *t2 = arg_info(op->args[2]);
-+    TCGArg ret = op->args[0];
-+    TCGArg arg1 = op->args[1];
-+    TCGArg arg2 = op->args[2];
-     int ofs = op->args[3];
-     int len = op->args[4];
--    int width = 8 * tcg_type_size(ctx->type);
--    uint64_t z_mask, o_mask, s_mask;
-+    TempOptInfo *t1 = arg_info(arg1);
-+    TempOptInfo *t2 = arg_info(arg2);
-+    int width;
-+    uint64_t z_mask, o_mask, s_mask, type_mask, len_mask;
-+    TCGOp *op2;
-+    bool valid;
- 
-     if (ti_is_const(t1) && ti_is_const(t2)) {
-         return tcg_opt_gen_movi(ctx, op, op->args[0],
-@@ -1665,35 +1670,182 @@ static bool fold_deposit(OptContext *ctx, TCGOp *op)
-                                           ti_const_val(t2)));
-     }
- 
--    /* Inserting a value into zero at offset 0. */
--    if (ti_is_const_val(t1, 0) && ofs == 0) {
--        uint64_t mask = MAKE_64BIT_MASK(0, len);
-+    width = 8 * tcg_type_size(ctx->type);
-+    type_mask = MAKE_64BIT_MASK(0, width);
-+    len_mask = MAKE_64BIT_MASK(0, len);
- 
-+    /* Inserting all-zero into a value. */
-+    if ((t2->z_mask & len_mask) == 0) {
-         op->opc = INDEX_op_and;
--        op->args[1] = op->args[2];
--        op->args[2] = arg_new_constant(ctx, mask);
-+        op->args[2] = arg_new_constant(ctx, ~(len_mask << ofs));
-         return fold_and(ctx, op);
-     }
- 
--    /* Inserting zero into a value. */
--    if (ti_is_const_val(t2, 0)) {
--        uint64_t mask = deposit64(-1, ofs, len, 0);
--
--        op->opc = INDEX_op_and;
--        op->args[2] = arg_new_constant(ctx, mask);
--        return fold_and(ctx, op);
-+    /* Inserting all-one into a value. */
-+    if ((t2->o_mask & len_mask) == len_mask) {
-+        op->opc = INDEX_op_or;
-+        op->args[2] = arg_new_constant(ctx, len_mask << ofs);
-+        return fold_or(ctx, op);
-     }
- 
--    /* The s_mask from the top portion of the deposit is still valid. */
--    if (ofs + len == width) {
--        s_mask = t2->s_mask << ofs;
--    } else {
--        s_mask = t1->s_mask & ~MAKE_64BIT_MASK(0, ofs + len);
-+    valid = TCG_TARGET_deposit_valid(ctx->type, ofs, len);
-+
-+    /* Lower invalid deposit of constant as AND + OR. */
-+    if (!valid && ti_is_const(t2)) {
-+        uint64_t ins_val = (ti_const_val(t2) & len_mask) << ofs;
-+
-+        op2 = opt_insert_before(ctx, op, INDEX_op_and, 3);
-+        op2->args[0] = ret;
-+        op2->args[1] = arg1;
-+        op2->args[2] = arg_new_constant(ctx, ~(len_mask << ofs));
-+        fold_and(ctx, op2);
-+
-+        op->opc = INDEX_op_or;
-+        op->args[1] = ret;
-+        op->args[2] = arg_new_constant(ctx, ins_val);
-+        return fold_or(ctx, op);
-     }
- 
-+    /*
-+     * Compute result masks before calling other fold_* subroutines
-+     * which could modify the masks of our inputs.
-+     */
-     z_mask = deposit64(t1->z_mask, ofs, len, t2->z_mask);
-     o_mask = deposit64(t1->o_mask, ofs, len, t2->o_mask);
-+    if (ofs + len < width) {
-+        s_mask = t1->s_mask & ~MAKE_64BIT_MASK(0, ofs + len);
-+    } else {
-+        s_mask = t2->s_mask << ofs;
+     if (ctx->type == TCG_TYPE_I32) {
+         z1 = (uint32_t)z1 >> shr;
+         o1 = (uint32_t)o1 >> shr;
+-        z2 = (uint64_t)((int32_t)z2 << (32 - shr));
+-        o2 = (uint64_t)((int32_t)o2 << (32 - shr));
++        shl = 32 - shr;
++        z2 = (uint64_t)((int32_t)z2 << shl);
++        o2 = (uint64_t)((int32_t)o2 << shl);
+     } else {
+         z1 >>= shr;
+         o1 >>= shr;
+-        z2 <<= 64 - shr;
+-        o2 <<= 64 - shr;
++        shl = 64 - shr;
++        z2 <<= shl;
++        o2 <<= shl;
 +    }
++    zr = z1 | z2;
++    or = o1 | o2;
++
++    if (zr == or) {
++        return tcg_opt_gen_movi(ctx, op, op->args[0], zr);
+     }
  
-+    /* Inserting a value into zero. */
-+    if (ti_is_const_val(t1, 0)) {
-+        uint64_t need_mask;
+-    return fold_masks_zo(ctx, op, z1 | z2, o1 | o2);
++    if (z2 == 0) {
++        /* High part zeros folds to simple right shift. */
++        op->opc = INDEX_op_shr;
++        op->args[2] = arg_new_constant(ctx, shr);
++    } else if (z1 == 0) {
++        /* Low part zeros folds to simple left shift. */
++        op->opc = INDEX_op_shl;
++        op->args[1] = op->args[2];
++        op->args[2] = arg_new_constant(ctx, shl);
++    } else if (!tcg_op_supported(INDEX_op_extract2, ctx->type, 0)) {
++        TCGArg tmp = arg_new_temp(ctx);
++        TCGOp *op2 = opt_insert_before(ctx, op, INDEX_op_shr, 3);
 +
-+        /* Always lower deposit into zero at 0 as AND. */
-+        if (ofs == 0) {
-+            op->opc = INDEX_op_and;
-+            op->args[1] = arg2;
-+            op->args[2] = arg_new_constant(ctx, len_mask);
-+            return fold_and(ctx, op);
-+        }
-+
-+        /*
-+         * If the portion of the value outside len that remains after
-+         * shifting is zero, we can elide the mask and just shift.
-+         */
-+        need_mask = t2->z_mask & ~len_mask;
-+        need_mask = (need_mask << ofs) & type_mask;
-+        if (!need_mask) {
-+            op->opc = INDEX_op_shl;
-+            op->args[1] = arg2;
-+            op->args[2] = arg_new_constant(ctx, ofs);
-+            goto done;
-+        }
-+
-+        /* Lower invalid deposit into zero as AND + SHL or SHL + AND. */
-+        if (!valid) {
-+            if (TCG_TARGET_extract_valid(ctx->type, 0, ofs + len) &&
-+                !TCG_TARGET_extract_valid(ctx->type, 0, len)) {
-+                op2 = opt_insert_before(ctx, op, INDEX_op_shl, 3);
-+                op2->args[0] = ret;
-+                op2->args[1] = arg2;
-+                op2->args[2] = arg_new_constant(ctx, ofs);
-+
-+                op->opc = INDEX_op_extract;
-+                op->args[1] = ret;
-+                op->args[2] = 0;
-+                op->args[3] = ofs + len;
-+                goto done;
-+            }
-+
-+            op2 = opt_insert_before(ctx, op, INDEX_op_and, 3);
-+            op2->args[0] = ret;
-+            op2->args[1] = arg2;
-+            op2->args[2] = arg_new_constant(ctx, len_mask);
-+            fold_and(ctx, op2);
-+
-+            op->opc = INDEX_op_shl;
-+            op->args[1] = ret;
-+            op->args[2] = arg_new_constant(ctx, ofs);
-+            goto done;
-+        }
-+    }
-+
-+    /* After special cases, lower invalid deposit. */
-+    if (!valid) {
-+        TCGArg tmp;
-+        bool has_ext2 = tcg_op_supported(INDEX_op_extract2, ctx->type, 0);
-+        bool has_rotl = tcg_op_supported(INDEX_op_rotl, ctx->type, 0);
-+
-+        /*
-+         * ret = arg2:arg1 >> len
-+         * ret = rotl(ret, len)
-+         */
-+        if (ofs == 0 && has_ext2 && has_rotl) {
-+            op2 = opt_insert_before(ctx, op, INDEX_op_extract2, 4);
-+            op2->args[0] = ret;
-+            op2->args[1] = arg1;
-+            op2->args[2] = arg2;
-+            op2->args[3] = len;
-+
-+            op->opc = INDEX_op_rotl;
-+            op->args[1] = ret;
-+            op->args[2] = arg_new_constant(ctx, len);
-+            goto done;
-+        }
-+
-+        /*
-+         * tmp = arg1 << len
-+         * ret = arg2:tmp >> len
-+         */
-+        if (ofs + len == width && has_ext2) {
-+            tmp = ret == arg2 ? arg_new_temp(ctx) : ret;
-+
-+            op2 = opt_insert_before(ctx, op, INDEX_op_shl, 4);
-+            op2->args[0] = tmp;
-+            op2->args[1] = arg1;
-+            op2->args[2] = arg_new_constant(ctx, len);
-+
-+            op->opc = INDEX_op_extract2;
-+            op->args[0] = ret;
-+            op->args[1] = tmp;
-+            op->args[2] = arg2;
-+            op->args[3] = len;
-+            goto done;
-+        }
-+
-+        /*
-+         * tmp = arg2 & mask
-+         * ret = arg1 & ~(mask << ofs)
-+         * tmp = tmp << ofs
-+         * ret = ret | tmp
-+         */
-+        tmp = arg_new_temp(ctx);
-+
-+        op2 = opt_insert_before(ctx, op, INDEX_op_and, 3);
 +        op2->args[0] = tmp;
-+        op2->args[1] = arg2;
-+        op2->args[2] = arg_new_constant(ctx, len_mask);
-+        fold_and(ctx, op2);
++        op2->args[1] = op->args[1];
++        op2->args[2] = arg_new_constant(ctx, shr);
 +
-+        op2 = opt_insert_before(ctx, op, INDEX_op_shl, 3);
-+        op2->args[0] = tmp;
-+        op2->args[1] = tmp;
-+        op2->args[2] = arg_new_constant(ctx, ofs);
++        if (TCG_TARGET_deposit_valid(ctx->type, shl, shr)) {
++            /*
++             * Deposit has more arguments than extract2,
++             * so we need to create a new TCGOp.
++             */
++            op2 = opt_insert_before(ctx, op, INDEX_op_deposit, 5);
++            op2->args[0] = op->args[0];
++            op2->args[1] = tmp;
++            op2->args[2] = op->args[2];
++            op2->args[3] = shl;
++            op2->args[4] = shr;
 +
-+        op2 = opt_insert_before(ctx, op, INDEX_op_and, 3);
-+        op2->args[0] = ret;
-+        op2->args[1] = arg1;
-+        op2->args[2] = arg_new_constant(ctx, ~(len_mask << ofs));
-+        fold_and(ctx, op2);
++            tcg_op_remove(ctx->tcg, op);
++            op = op2;
++        } else {
++            op2 = opt_insert_before(ctx, op, INDEX_op_shl, 3);
++            op2->args[0] = op->args[0];
++            op2->args[1] = op->args[2];
++            op2->args[2] = arg_new_constant(ctx, shl);
 +
-+        op->opc = INDEX_op_or;
-+        op->args[1] = ret;
-+        op->args[2] = tmp;
++            op->opc = INDEX_op_or;
++            op->args[1] = op->args[0];
++            op->args[2] = tmp;
++        }
 +    }
 +
-+ done:
-     return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
++    return fold_masks_zo(ctx, op, zr, or);
  }
  
+ static bool fold_exts(OptContext *ctx, TCGOp *op)
 diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index 8d67acc4fc..96f72ba381 100644
+index 96f72ba381..8a4fd14ad5 100644
 --- a/tcg/tcg-op.c
 +++ b/tcg/tcg-op.c
-@@ -876,9 +876,6 @@ void tcg_gen_rotri_i32(TCGv_i32 ret, TCGv_i32 arg1, int32_t arg2)
- void tcg_gen_deposit_i32(TCGv_i32 ret, TCGv_i32 arg1, TCGv_i32 arg2,
-                          unsigned int ofs, unsigned int len)
- {
--    uint32_t mask;
--    TCGv_i32 t1;
--
-     tcg_debug_assert(ofs < 32);
-     tcg_debug_assert(len > 0);
-     tcg_debug_assert(len <= 32);
-@@ -886,39 +883,9 @@ void tcg_gen_deposit_i32(TCGv_i32 ret, TCGv_i32 arg1, TCGv_i32 arg2,
- 
-     if (len == 32) {
-         tcg_gen_mov_i32(ret, arg2);
--        return;
--    }
--    if (TCG_TARGET_deposit_valid(TCG_TYPE_I32, ofs, len)) {
--        tcg_gen_op5ii_i32(INDEX_op_deposit, ret, arg1, arg2, ofs, len);
--        return;
--    }
--
--    t1 = tcg_temp_ebb_new_i32();
--
--    if (tcg_op_supported(INDEX_op_extract2, TCG_TYPE_I32, 0)) {
--        if (ofs + len == 32) {
--            tcg_gen_shli_i32(t1, arg1, len);
--            tcg_gen_extract2_i32(ret, t1, arg2, len);
--            goto done;
--        }
--        if (ofs == 0) {
--            tcg_gen_extract2_i32(ret, arg1, arg2, len);
--            tcg_gen_rotli_i32(ret, ret, len);
--            goto done;
--        }
--    }
--
--    mask = (1u << len) - 1;
--    if (ofs + len < 32) {
--        tcg_gen_andi_i32(t1, arg2, mask);
--        tcg_gen_shli_i32(t1, t1, ofs);
+@@ -1000,13 +1000,8 @@ void tcg_gen_extract2_i32(TCGv_i32 ret, TCGv_i32 al, TCGv_i32 ah,
+         tcg_gen_mov_i32(ret, ah);
+     } else if (al == ah) {
+         tcg_gen_rotri_i32(ret, al, ofs);
+-    } else if (tcg_op_supported(INDEX_op_extract2, TCG_TYPE_I32, 0)) {
+-        tcg_gen_op4i_i32(INDEX_op_extract2, ret, al, ah, ofs);
      } else {
--        tcg_gen_shli_i32(t1, arg2, ofs);
-+        tcg_gen_op5ii_i32(INDEX_op_deposit, ret, arg1, arg2, ofs, len);
-     }
--    tcg_gen_andi_i32(ret, arg1, ~(mask << ofs));
--    tcg_gen_or_i32(ret, ret, t1);
-- done:
--    tcg_temp_free_i32(t1);
- }
- 
- void tcg_gen_deposit_z_i32(TCGv_i32 ret, TCGv_i32 arg,
-@@ -932,28 +899,10 @@ void tcg_gen_deposit_z_i32(TCGv_i32 ret, TCGv_i32 arg,
-     if (ofs + len == 32) {
-         tcg_gen_shli_i32(ret, arg, ofs);
-     } else if (ofs == 0) {
--        tcg_gen_andi_i32(ret, arg, (1u << len) - 1);
--    } else if (TCG_TARGET_deposit_valid(TCG_TYPE_I32, ofs, len)) {
-+        tcg_gen_extract_i32(ret, arg, 0, len);
-+    } else {
-         TCGv_i32 zero = tcg_constant_i32(0);
-         tcg_gen_op5ii_i32(INDEX_op_deposit, ret, zero, arg, ofs, len);
--    } else {
--        /*
--         * To help two-operand hosts we prefer to zero-extend first,
--         * which allows ARG to stay live.
--         */
--        if (TCG_TARGET_extract_valid(TCG_TYPE_I32, 0, len)) {
--            tcg_gen_extract_i32(ret, arg, 0, len);
--            tcg_gen_shli_i32(ret, ret, ofs);
--            return;
--        }
--        /* Otherwise prefer zero-extension over AND for code size.  */
--        if (TCG_TARGET_extract_valid(TCG_TYPE_I32, 0, ofs + len)) {
--            tcg_gen_shli_i32(ret, arg, ofs);
--            tcg_gen_extract_i32(ret, ret, 0, ofs + len);
--            return;
--        }
--        tcg_gen_andi_i32(ret, arg, (1u << len) - 1);
--        tcg_gen_shli_i32(ret, ret, ofs);
+-        TCGv_i32 t0 = tcg_temp_ebb_new_i32();
+-        tcg_gen_shri_i32(t0, al, ofs);
+-        tcg_gen_deposit_i32(ret, t0, ah, 32 - ofs, ofs);
+-        tcg_temp_free_i32(t0);
++        tcg_gen_op4i_i32(INDEX_op_extract2, ret, al, ah, ofs);
      }
  }
  
-@@ -2148,9 +2097,6 @@ void tcg_gen_rotri_i64(TCGv_i64 ret, TCGv_i64 arg1, int64_t arg2)
- void tcg_gen_deposit_i64(TCGv_i64 ret, TCGv_i64 arg1, TCGv_i64 arg2,
-                          unsigned int ofs, unsigned int len)
- {
--    uint64_t mask;
--    TCGv_i64 t1;
--
-     tcg_debug_assert(ofs < 64);
-     tcg_debug_assert(len > 0);
-     tcg_debug_assert(len <= 64);
-@@ -2158,40 +2104,9 @@ void tcg_gen_deposit_i64(TCGv_i64 ret, TCGv_i64 arg1, TCGv_i64 arg2,
- 
-     if (len == 64) {
-         tcg_gen_mov_i64(ret, arg2);
--        return;
--    }
--
--    if (TCG_TARGET_deposit_valid(TCG_TYPE_I64, ofs, len)) {
--        tcg_gen_op5ii_i64(INDEX_op_deposit, ret, arg1, arg2, ofs, len);
--        return;
--    }
--
--    t1 = tcg_temp_ebb_new_i64();
--
--    if (tcg_op_supported(INDEX_op_extract2, TCG_TYPE_I64, 0)) {
--        if (ofs + len == 64) {
--            tcg_gen_shli_i64(t1, arg1, len);
--            tcg_gen_extract2_i64(ret, t1, arg2, len);
--            goto done;
--        }
--        if (ofs == 0) {
--            tcg_gen_extract2_i64(ret, arg1, arg2, len);
--            tcg_gen_rotli_i64(ret, ret, len);
--            goto done;
--        }
--    }
--
--    mask = (1ull << len) - 1;
--    if (ofs + len < 64) {
--        tcg_gen_andi_i64(t1, arg2, mask);
--        tcg_gen_shli_i64(t1, t1, ofs);
+@@ -2221,7 +2216,7 @@ void tcg_gen_extract2_i64(TCGv_i64 ret, TCGv_i64 al, TCGv_i64 ah,
+         tcg_gen_mov_i64(ret, ah);
+     } else if (al == ah) {
+         tcg_gen_rotri_i64(ret, al, ofs);
+-    } else if (tcg_op_supported(INDEX_op_extract2, TCG_TYPE_I64, 0)) {
++    } else if (TCG_TARGET_REG_BITS == 64) {
+         tcg_gen_op4i_i64(INDEX_op_extract2, ret, al, ah, ofs);
      } else {
--        tcg_gen_shli_i64(t1, arg2, ofs);
-+        tcg_gen_op5ii_i64(INDEX_op_deposit, ret, arg1, arg2, ofs, len);
-     }
--    tcg_gen_andi_i64(ret, arg1, ~(mask << ofs));
--    tcg_gen_or_i64(ret, ret, t1);
-- done:
--    tcg_temp_free_i64(t1);
- }
- 
- void tcg_gen_deposit_z_i64(TCGv_i64 ret, TCGv_i64 arg,
-@@ -2206,27 +2121,9 @@ void tcg_gen_deposit_z_i64(TCGv_i64 ret, TCGv_i64 arg,
-         tcg_gen_shli_i64(ret, arg, ofs);
-     } else if (ofs == 0) {
-         tcg_gen_andi_i64(ret, arg, (1ull << len) - 1);
--    } else if (TCG_TARGET_deposit_valid(TCG_TYPE_I64, ofs, len)) {
-+    } else {
-         TCGv_i64 zero = tcg_constant_i64(0);
-         tcg_gen_op5ii_i64(INDEX_op_deposit, ret, zero, arg, ofs, len);
--    } else {
--        /*
--         * To help two-operand hosts we prefer to zero-extend first,
--         * which allows ARG to stay live.
--         */
--        if (TCG_TARGET_extract_valid(TCG_TYPE_I64, 0, len)) {
--            tcg_gen_extract_i64(ret, arg, 0, len);
--            tcg_gen_shli_i64(ret, ret, ofs);
--            return;
--        }
--        /* Otherwise prefer zero-extension over AND for code size.  */
--        if (TCG_TARGET_extract_valid(TCG_TYPE_I64, 0, ofs + len)) {
--            tcg_gen_shli_i64(ret, arg, ofs);
--            tcg_gen_extract_i64(ret, ret, 0, ofs + len);
--            return;
--        }
--        tcg_gen_andi_i64(ret, arg, (1ull << len) - 1);
--        tcg_gen_shli_i64(ret, ret, ofs);
-     }
- }
- 
+         TCGv_i64 t0 = tcg_temp_ebb_new_i64();
 -- 
 2.43.0
 
