@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A992D29C4D
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 19:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A15EBCCF2DD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 19:19:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhujC-0004ke-So; Mon, 19 Jan 2026 14:15:54 -0500
+	id 1vhumC-0007SD-DU; Mon, 19 Jan 2026 14:19:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vhujB-0004hT-CD
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:15:53 -0500
+ id 1vhumA-0007RL-OJ
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:18:59 -0500
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vhuj5-00020T-S4
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:15:52 -0500
+ id 1vhum8-0002Nt-Sv
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:18:58 -0500
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:5a81:0:640:624e:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id C3E8C8043E;
- Mon, 19 Jan 2026 22:15:43 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 4B80D80671;
+ Mon, 19 Jan 2026 22:18:55 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:934::1:38] (unknown
  [2a02:6bf:8080:934::1:38])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id gFf52a0CDqM0-ONYOOurE; Mon, 19 Jan 2026 22:15:43 +0300
+ ESMTPSA id sIfW5a0CC0U0-MAv6gFxU; Mon, 19 Jan 2026 22:18:54 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1768850143;
- bh=BdJKTvUi2zzwuV7dsD+VNzoolGRQCNzwW1giSzrTq5g=;
+ s=default; t=1768850334;
+ bh=xPZOS7iLgJWlhOpHdPiuajhca88AbSxPEJyNpGYilzI=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=K7NUFVKJILgP5wWifE4jfihn8FwMnoMcxVKZEhnweZPELnY9UymBywYdtrHqQcjSh
- BfFh4TM281r88TK44+sOXRuSm2gWhJlJrM57591M+yABq0XPlmgVunl9sk1cFPxzcP
- eoQYLGPODCl225lqdM60DSCWi+4PKQMRZKHIdCXY=
+ b=ZZNIT/LQtQ4HmROQZHLn1f+V+mnUDMaOKsc3/P60EGcM/jKj4VX2gtwQ/lv/9I77b
+ 3KB7Y/0Mg9JJdw/oKH6pIV3JkK1ODSpHtGeZWU2uayOk4aeWHgDlV0Y8xv7K6tMRnt
+ X+r3gpLoroPPwQifPgYxBwiM72NlfNWqWqHXNlOU=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <036f1f3c-6848-4ce2-af77-5c50616d41c9@yandex-team.ru>
-Date: Mon, 19 Jan 2026 22:15:42 +0300
+Message-ID: <db1f4846-afef-42f5-9181-9c25406be863@yandex-team.ru>
+Date: Mon, 19 Jan 2026 22:18:54 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3] tests/unit: add unit test for qemu_hexdump()
@@ -154,6 +154,9 @@ On 19.01.26 21:38, Philippe Mathieu-Daudé wrote:
 > 
 > Found it, see that pipeline:
 > https://gitlab.com/philmd/qemu/-/pipelines/2238533614
+
+This build contains previous version of the patch. v3 should fix it.
+
 > 
 > configuring with:  '../configure' ... '--disable-system'
 > ...
@@ -163,7 +166,6 @@ On 19.01.26 21:38, Philippe Mathieu-Daudé wrote:
 > collect2: error: ld returned 1 exit status
 > 
 
-Hmm. Interesting, locally it builds for me with same configure line..
 
 -- 
 Best regards,
