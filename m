@@ -4,67 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42840D29C4F
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 17:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EDC8D29C4F
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 17:28:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vht1m-0007PY-1L; Mon, 19 Jan 2026 12:27:01 -0500
+	id 1vht2b-00017B-LQ; Mon, 19 Jan 2026 12:27:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vht1d-0007NT-7p
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 12:26:52 -0500
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vht2Z-00011o-Qj
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 12:27:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vht1Z-0008Ma-4b
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 12:26:49 -0500
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:5c05:0:640:ff67:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 47E7FC0158;
- Mon, 19 Jan 2026 20:26:41 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:934::1:38] (unknown
- [2a02:6bf:8080:934::1:38])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id eQdrmY1BEeA0-HHtdIlER; Mon, 19 Jan 2026 20:26:40 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1768843600;
- bh=2OgTIJbrrf4ClvYAeWbUn/6uJU5CFWid+yYCcdYMezM=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=QaOMpXlZRWl1eZds+FvKvqvxLnN0ZukAQjpLFCEMxfuunw5o1tn007b0Phb0B8csO
- 5tCvKqWJS7cwBr7F7Pzjrr10VLpEIgcOuFDP2ChLKcTJN8qvZ2X9bP0/N1G17wZhhx
- txyKzp1JvQhLJn9vSvUmj8D/YPBLmKjJdIex9ia0=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <1192488b-51d9-4024-8f76-3b2dd85b3d3c@yandex-team.ru>
-Date: Mon, 19 Jan 2026 20:26:40 +0300
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vht2Y-000093-8s
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 12:27:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768843665;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=I9oUB9ONJfwCSwp9vRpulE30gQM7Lcw40drktSGZgXY=;
+ b=ZBFkQ+LoCLu+INsnLWbvBXG8YGuUh40bMHz/cWzEp57pQ+nBLxV5I0tlKpp76cH16l+Tnv
+ rffAufC9wJd8j0MWRmLUuYVRQ/OkUAayv3AB77vS5vqgyrusjuHnfiYp1MLwXoDKRZWNRI
+ uuzJIrliSNcKFnPU2m6mNoVr4L9PpYI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-125-aBfBevRMMbiJd-4kk6SmTA-1; Mon,
+ 19 Jan 2026 12:27:42 -0500
+X-MC-Unique: aBfBevRMMbiJd-4kk6SmTA-1
+X-Mimecast-MFC-AGG-ID: aBfBevRMMbiJd-4kk6SmTA_1768843661
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 13C5618003FD; Mon, 19 Jan 2026 17:27:41 +0000 (UTC)
+Received: from gondolin.str.redhat.com (dhcp-192-210.str.redhat.com
+ [10.33.192.210])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A85E819560A2; Mon, 19 Jan 2026 17:27:39 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+Subject: [PATCH RFC 1/3] arm: handle demuxed ID registers
+Date: Mon, 19 Jan 2026 18:27:30 +0100
+Message-ID: <20260119172732.140613-2-cohuck@redhat.com>
+In-Reply-To: <20260119172732.140613-1-cohuck@redhat.com>
+References: <20260119172732.140613-1-cohuck@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] tests/unit: add unit test for qemu_hexdump()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- berrange@redhat.com
-Cc: qemu-devel@nongnu.org
-References: <20251113064935.342018-1-vsementsov@yandex-team.ru>
- <a40731d0-7add-4d09-9a89-902f75e2eede@linaro.org>
- <8259d920-32bc-41a7-94b9-cd1af9783b6e@yandex-team.ru>
- <05340117-a75b-4d64-98fe-8868b7bfb5c5@linaro.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <05340117-a75b-4d64-98fe-8868b7bfb5c5@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,77 +85,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.01.26 19:31, Philippe Mathieu-Daudé wrote:
-> On 19/1/26 16:42, Vladimir Sementsov-Ogievskiy wrote:
->> Hi! Isn't this patch lost?
->>
->> On 14.11.25 00:01, Philippe Mathieu-Daudé wrote:
->>> On 13/11/25 07:49, Vladimir Sementsov-Ogievskiy wrote:
->>>> Test, that fix in previous commit make sense.
->>>>
->>>> To not break compilation when we build without
->>>> 'block', move hexdump.c out of "if have_block"
->>>> in meson.build.
->>>>
->>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>> ---
->>>>
->>>> v3: change meson.build to compile hexdump.c always
->>>>
->>>>   tests/unit/test-cutils.c | 43 ++++++++++++++++++++++++++++++++++++++++
->>>>   util/meson.build         |  2 +-
->>>>   2 files changed, 44 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/tests/unit/test-cutils.c b/tests/unit/test-cutils.c
->>>> index 227acc5995..24fef16a7f 100644
->>>> --- a/tests/unit/test-cutils.c
->>>> +++ b/tests/unit/test-cutils.c
->>>> @@ -3626,6 +3626,44 @@ static void test_si_prefix(void)
->>>>       g_assert_cmpstr(si_prefix(18), ==, "E");
->>>>   }
->>>> +static void test_qemu_hexdump_alignment(void)
->>>> +{
->>>> +    /*
->>>> +     * Test that ASCII part is properly aligned for incomplete lines.
->>>> +     * This test catches the bug that was fixed in previous commit
->>>> +     * "util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic".
->>>> +     *
->>>> +     * We use data that is not aligned to 16 bytes, so last line
->>>> +     * is incomplete.
->>>> +     */
->>>> +    const uint8_t data[] = {
->>>> +        /* First line: 16 bytes */
->>>> +        0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x57, 0x6f,  /* "Hello Wo" */
->>>> +        0x72, 0x6c, 0x64, 0x21, 0x20, 0x54, 0x68, 0x69,  /* "rld! Thi" */
->>>> +        /* Second line: 5 bytes (incomplete) */
->>>> +        0x73, 0x20, 0x69, 0x73, 0x20                     /* "s is " */
->>>> +    };
->>>> +    char *output = NULL;
->>>> +    size_t size;
->>>> +    FILE *stream = open_memstream(&output, &size);
->>>> +
->>>> +    g_assert_nonnull(stream);
->>>> +
->>>> +    qemu_hexdump(stream, "test", data, sizeof(data));
->>>> +    fclose(stream);
->>>> +
->>>> +    g_assert_nonnull(output);
->>>> +
->>>> +    /* We expect proper alignment of "s is" part on the second line */
->>>> +    const char *expected =
->>>> +        "test: 0000: 48 65 6c 6c  6f 20 57 6f  72 6c 64 21  20 54 68 69   Hello World! Thi\n"
->>>> +        "test: 0010: 73 20 69 73 20                                      s is \n";
->>>
->>> Thanks, queued wrapping the long lines to pass checkpatch.pl,
->>> as in:
->>> https://lore.kernel.org/qemu-devel/20251031211518.38503-9- philmd@linaro.org/
-> 
-> I have it tagged but there is still a meson issue. I should revisit
-> but it is low in my priority queue.
+For some registers, we do not have a single ID register, but actually
+an array of values (e.g. CCSIDR_EL1, where the actual value is
+determined by whatever CSSELR_EL1 points to.) If we want to avoid
+using a different way to handle registers like that for every
+instance, we should provide some kind of infrastructure. Therefore,
+add accessors {GET,SET}_IDREG_DEMUX that are similar to the accessors
+we already use for regular ID registers.
 
-Ok, thanks
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+---
+ target/arm/cpu-sysregs.h |  5 +++++
+ target/arm/cpu.h         | 20 ++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
+diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
+index 7877a3b06a8e..31f82c6a0afc 100644
+--- a/target/arm/cpu-sysregs.h
++++ b/target/arm/cpu-sysregs.h
+@@ -35,6 +35,11 @@ typedef enum ARMSysRegs {
+ 
+ #undef DEF
+ 
++/* ID registers that vary based upon another register */
++typedef enum ARMIDRegisterDemuxIdx {
++    NUM_ID_DEMUX_IDX,
++} ARMIDRegisterDemuxIdx;
++
+ extern const uint32_t id_register_sysreg[NUM_ID_IDX];
+ 
+ int get_sysreg_idx(ARMSysRegs sysreg);
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 08b7d3fb936a..f7bd19f26fbd 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -905,6 +905,25 @@ typedef struct {
+         i_->idregs[REG ## _EL1_IDX];                                    \
+     })
+ 
++#define SET_IDREG_DEMUX(ISAR, REG, INDEX, VALUE)                        \
++    ({                                                                  \
++        ARMISARegisters *i_ = (ISAR);                                   \
++        i_->idregs_demux[REG ## _EL1_DEMUX_IDX][INDEX] = VALUE;         \
++    })
++
++#define GET_IDREG_DEMUX(ISAR, REG, INDEX)                               \
++    ({                                                                  \
++        ARMISARegisters *i_ = (ISAR);                                   \
++        i_->idregs_demux[REG ## _EL1_DEMUX_IDX][INDEX];                 \
++    })
++
++#define COPY_IDREG_DEMUX(ISAR, REG, FROM_INDEX, TO_INDEX)               \
++    ({                                                                  \
++        ARMISARegisters *i_ = (ISAR);                                   \
++        i_->idregs_demux[REG ## _EL1_DEMUX_IDX][TO_INDEX] =             \
++            i_->idregs_demux[REG ## _EL1_DEMUX_IDX][FROM_INDEX];        \
++    })
++
+ /**
+  * ARMCPU:
+  * @env: #CPUARMState
+@@ -1083,6 +1102,7 @@ struct ArchCPU {
+         uint32_t dbgdevid1;
+         uint64_t reset_pmcr_el0;
+         uint64_t idregs[NUM_ID_IDX];
++        uint64_t idregs_demux[NUM_ID_DEMUX_IDX][16];
+     } isar;
+     uint64_t midr;
+     uint32_t revidr;
 -- 
-Best regards,
-Vladimir
+2.52.0
+
 
