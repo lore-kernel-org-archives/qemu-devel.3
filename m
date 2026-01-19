@@ -4,94 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C769CA5FFF
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 07:54:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4A0DCA5FFF
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 07:58:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhk5v-0002r4-6G; Mon, 19 Jan 2026 02:54:39 -0500
+	id 1vhk9i-0004nh-C3; Mon, 19 Jan 2026 02:58:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhk5t-0002lz-2l
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 02:54:37 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vhk92-0004it-Tx
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 02:57:55 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhk5r-0004oT-GU
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 02:54:36 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2a0a95200e8so25888315ad.0
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 23:54:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vhk8z-0005V4-GR
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 02:57:50 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2a1022dda33so24380565ad.2
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 23:57:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768809273; x=1769414073; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BHcqT8fmGMZPLrE9bCz2PMYzfC6jQO0b0+45gNyPNzY=;
- b=gsk9PTonwwpST9DxZYsFnaqZp10W78YPjM7mf0GYxomxy/Dl0w1bYztoDX0dkdI9yF
- S1PoK586/GrCt35Nis/oAG0Z4vO60kjtH4v8a0XiedcY2O3sfPwSD/+jOiHzrub0+hqi
- siF1EIVnJCcBaNNfIKoC1BYZ4NxbeAfvBsm//9GkII+IOP2Vyho/3D1w8HNov7GMp1Bh
- A6zPU6ed0mbPjgJQBpi+t4EEnesYJBNjlA31PBWRhyzLMFa6ZC76FW2tXN2on5xIvNb2
- KFCmv1GYJ8C1XP4BjIFbBREng5kVuYmmk6y9HitcytHJQpVEcLZpGPj/21v3ZdtQMFwl
- fjaA==
+ d=linaro.org; s=google; t=1768809467; x=1769414267; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DxscA+wGo/cchUM2meoIi1dB7Q33+KwYAm0e6cFjx5M=;
+ b=kD3ytv7b9hOVOENXPFSXM7FT44PsO65nUDDkOmoLELvYFS4KBzYA/ZLLICJ0fK3xow
+ HgW7g05cGlYxAxq12ClzUyDBsV4GOZycMqTPJ0mxNNkiUJuAn2jUcQXJ7nBF2SPTDe8R
+ BdVxrcENoxNQKd9hjIeMNCIH5IdZ3JGZ1Qdx/r9q0Dt+skMuGVtwYNNvPtCP3HJ32/Bp
+ XjyI8iKQsJ44uwwYfe0Loyaaub3iJ/Rz1cKABtKZAjrFuOoqzFuTjacVGoBSfBT2n/qO
+ G3rXxt1Q6ztfmRdUrEqkyMcfsZ9AFqJ8piLrkaD20OQ1wHStPrAg7H8f2aw9sVlrX+0o
+ iAAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768809273; x=1769414073;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BHcqT8fmGMZPLrE9bCz2PMYzfC6jQO0b0+45gNyPNzY=;
- b=g10CAGNOqUiX42GSGIMuLWFk5PqbJ+UWBX0hEOxPTTAb9UcIxapEx1r9bs5/daOQ5u
- IfkN4Np7SCPLp5hIu+dVAuMnhEPEbrbWF9FLh7OhLmE/3KT7Bc65bhKtdgDKXwH3EA3f
- B9D082saDWJYs1N4AaWOo8Gni92PiI/XUrP0ABL7J/QBIrANZjQTQQGdhYtHXExauqKU
- KBex+hcqMnUpKvfOZGVVneO02XDbmEafuDL/yCiOzmB41c/KCEGC+1XnvMotSHS+qgTv
- GsuIpHfi4Z5wZ4yzaC8Ng9JZFDTQgUhTq7lz5hyxf68RUpA85g8eaqhychWE2Xk4e6eD
- uwng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXE8Q2vUvUYNGqjNJIXBxK0uMuc+f2TPWWFg5uWze4ybptlPNW9AwJ6akzWEOk4ehJKneskhtc+GLzH@nongnu.org
-X-Gm-Message-State: AOJu0Yyy/PQKEuhH3c0wivsXN+SpPXMyRe8xZqorUaFe71sSHNQzFAL6
- geCVfjlSGVFQ0r4tbrTq3vu3fMLxpJPCRlhCB9tBVWQ1OJX0JNCs03l5yQam8I/unwo=
-X-Gm-Gg: AZuq6aLktN+CdZnuCK9EMcu/UsfrNSU7auhoN2errfd0kTTEJkoR9tFHUQ6kJVWJdZk
- x5ugbd65KIJVWwOCpf9Z88h8iDO+CHEMDDRNL23XeeDmyXxFaIaUCXtWKwtpbkvNtVOJ5fkXLrJ
- 1ISN1+WiAgCU3aERMg4Hhn2MbJow8n+/5sskmxYECQZC3390oOlarRG2C6vDf4x4y/ZoHiP3Rds
- aDfCohcmLaNN/I67WF+dvEu0MYq/Wqg2AdAz8TGalasLJKlHmYMj2U6BmMdDcvEyEkGBIUR/zUP
- OWxmJxF52f374G523rkZRBT7slnGw6yWHPUMHaFraqdU5rscrTX4VG0BNbs0eHs7PRR2BqfNGg4
- xns1zDecih3ReVL58nEbYgU42B9DE8whCCNN+SFjeSe0FHXlDJlNE44iKApEsN+6J0b/91aEFZe
- 4GHjSzhfwgLzvFYyyvZK73fx4ikrW1oA==
-X-Received: by 2002:a17:903:41d2:b0:295:9627:8cbd with SMTP id
- d9443c01a7336-2a7175a5cbemr98275805ad.33.1768809273460; 
- Sun, 18 Jan 2026 23:54:33 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7190abc62sm84920395ad.2.2026.01.18.23.54.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 18 Jan 2026 23:54:33 -0800 (PST)
-Message-ID: <e2b00c96-ecc2-4c47-9bc9-77957e9ba5ae@linaro.org>
-Date: Mon, 19 Jan 2026 18:54:28 +1100
+ d=1e100.net; s=20230601; t=1768809467; x=1769414267;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DxscA+wGo/cchUM2meoIi1dB7Q33+KwYAm0e6cFjx5M=;
+ b=Qu9YXhaRAs+6GP12RFsXHiBkDeInHpi60w/VWp61fMmtPbNG62PKVZhtTZvAimtFJT
+ kx+XwCQQcccYGVRMxYDyiANm/lbMrDmjbRY8FmRsnEPymuallD02y7VdOzsf+8LXNq6j
+ Lrzq6AFzSJCS1CYkeJtMJIvTcfBC1ukwc+BfkVtKVmjyI+4n0z+ft1CRoOZ3r4WDyzTq
+ MQgZiVMqfai+njNA3I9HuUTT2v+nfoB7knMBtW/OpZKJp/0xQpb0seNhE1fRuitdWmjX
+ QbktujA3n2kZdIrb7Os8NBhvO3QNvvfKweazPUI/PvB4FC2mZ84INTPE2Cd6mqcK8jJB
+ og8w==
+X-Gm-Message-State: AOJu0Yy8iA+RSV5ImU7h3qa/2XgJ0etS1gv0MYlrXAnBCcZFh/jCPw9y
+ Kmh1IZBfAqztdlbmwr3JjFqkdNh8wWPQlkb9Y7va+q8u2hT6kZKNWaulbnG67nGTifpDDc+Q8LG
+ 8W7on
+X-Gm-Gg: AZuq6aJHZToIzxMSI9RKhjVl1BOt4cqTSFbniysKy9mYRA4is1Q+sa65z9eRNQH9FT7
+ laftTIN+xsLRJsEZmR8TGGi8M0CEA46qyQsk1M7xOzgNDRHlgzT6kpm2C3ViBCHAaDISlQoy0dn
+ GPjGtUpe/90WRwmOnlRXAume9rXvZcgA6gE8rgSNAb6J0F56XIMGzmnx5YzvTuf8wqtwX6KCFo3
+ hsfPYDvYz8VaM4Www86/U/TCwbYMnqsBdFddgB/Qle2qNimrAOZagl8A/wINvSeo8m0bMGp/h9O
+ UAFg2SZf0ETH6Px7PtGjj04irpbYTjs0M79v6GALBk5WYx51NaUNVhOS0APn4WOroecNUUQCx/H
+ 92yvsp2yNid00oL/WR1dZAQ9DtXvhUd/fGj2MOZiJ1mf02vAL87u9DKafTOEh1mReNSBO/dirBa
+ hrdd4N8qmgelt/hDtqXEI+GY6vZks0envvyM9NAiEyAOqET7kZe4cjsdc/T8wyNITA4TEAUXnhc
+ 6s=
+X-Received: by 2002:a17:903:28d:b0:298:efa:511f with SMTP id
+ d9443c01a7336-2a7176c5c7amr106722525ad.39.1768809466873; 
+ Sun, 18 Jan 2026 23:57:46 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a71941d636sm79213985ad.96.2026.01.18.23.57.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 18 Jan 2026 23:57:46 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, philmd@linaro.org,
+ richard.henderson@linaro.org, Kyle Evans <kevans@freebsd.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH] bsd-user/syscall_defs.h: define STAT_TIME_T_EXT only for 32
+ bits
+Date: Sun, 18 Jan 2026 23:57:38 -0800
+Message-ID: <20260119075738.712207-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial 7/7] rename CONFIG_EPOLL_CREATE1 to CONFIG_EPOLL
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-References: <20260113130008.910240-1-mjt@tls.msk.ru>
- <20260113130008.910240-11-mjt@tls.msk.ru>
- <5fa1630e-e557-4e23-adf6-3bdf695c81fe@linaro.org>
- <f795a93f-fcf4-4aba-952b-dbf53e3876c8@tls.msk.ru>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <f795a93f-fcf4-4aba-952b-dbf53e3876c8@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,55 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/19/26 18:50, Michael Tokarev wrote:
-> On 1/19/26 04:28, Richard Henderson wrote:
->> On 1/14/26 00:00, Michael Tokarev wrote:
->>> Since CONFIG_EPOLL is now unused, it's okay to
->>> perform this rename, to make it less ugly.
->>>
->>> Since epoll is linux-specific and is always
->>> present, we might as well make CONFIG_EPOLL equal
->>> to CONFIG_LINUX.
->>>
->>> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
->>> ---
->>>   meson.build      | 2 +-
->>>   util/aio-posix.h | 4 ++--
->>>   util/meson.build | 2 +-
->>>   3 files changed, 4 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/meson.build b/meson.build
->>> index f8b4f06049..552b34f34e 100644
->>> --- a/meson.build
->>> +++ b/meson.build
->>> @@ -2713,7 +2713,7 @@ config_host_data.set('CONFIG_INOTIFY1', have_inotify_init1)
->>>   # has_header_symbol
->>>   config_host_data.set('CONFIG_BLKZONED',
->>>                        cc.has_header_symbol('linux/blkzoned.h', 'BLKOPENZONE'))
->>> -config_host_data.set('CONFIG_EPOLL_CREATE1',
->>> +config_host_data.set('CONFIG_EPOLL',
->>>                        cc.has_header_symbol('sys/epoll.h', 'epoll_create1'))
->>
->> This is present in glibc 2.9, which is required.
->> Therefore you can drop this bit of configuration as well.
-> 
-> It's a bit more tricky, see my comment in the patch description
-> above.  Yes, epoll_create1 is now always present *on linux*.
-> But this particular test (cc.has_header_symbol) is run on all
-> platforms, not only on linux.  So if we drop this test, we'll
-> have to alias CONFIG_EPOLL to CONFIG_LINUX.  Because epoll is
-> used outside of linux-user too (eg in the main loop), and there,
-> the test is CONFIG_EPOLL, not CONFIG_LINUX.
-> 
-> So it might be possible to replace this test with something
-> like
-> 
->   config_host_data.set('CONFIG_EPOLL', config_host_data.get('CONFIG_LINUX')
-> 
-> but not drop it entirely.
+Commit 369c1ba2b changed the wrong conditional "#if defined(__i386__)" to
+"#if defined(TARGET_I386)".
+However, TARGET_I386 is defined for target x86_64 also.
 
- From the patch description, I had expected s/CONFIG_EPOLL/CONFIG_LINUX/.
+This commit fixes it by identifying correctly 32 bits target.
 
+Found with:
+$ ./build/qemu-x86_64 \
+  -plugin ./build/contrib/plugins/libstoptrigger,icount=1000000 \
+  -plugin ./build/tests/tcg/plugins/libinsn \
+  -d plugin \
+  ./build/qemu-system-x86_64 --version
+ld-elf.so.1: /lib/libz.so.6: invalid file format
+cpu 0 insns: 59746
+total insns: 59746
 
-r~
+Fixes: 369c1ba2b ("Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT")
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ bsd-user/syscall_defs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+index c49be32bdc0..cc4b484f3ab 100644
+--- a/bsd-user/syscall_defs.h
++++ b/bsd-user/syscall_defs.h
+@@ -247,7 +247,7 @@ struct target_freebsd11_stat {
+     unsigned int:(8 / 2) * (16 - (int)sizeof(struct target_freebsd_timespec));
+ } __packed;
+ 
+-#if defined(TARGET_I386)
++#if defined(TARGET_I386) && !defined(TARGET_X86_64)
+ #define TARGET_HAS_STAT_TIME_T_EXT       1
+ #endif
+ 
+-- 
+2.47.3
+
 
