@@ -4,98 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36ED8CCF2CF
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 09:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32DD2CCF2CF
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 09:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhlGC-0007E1-Kc; Mon, 19 Jan 2026 04:09:22 -0500
+	id 1vhlJo-0002pM-IM; Mon, 19 Jan 2026 04:13:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vhlFx-00079o-Eu
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 04:09:10 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vhlFv-0003ka-K4
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 04:09:05 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4801bc328easo31692985e9.3
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 01:09:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768813740; x=1769418540; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=79YVb/hxSMCa6YrIkDWoxyVWkCyAHRMKt/lBTvO06Js=;
- b=PokBnGh7R1QAZyFjqvMVvOUplSItYKH49soXbfdpZYnPYJCSP+MC8Ef5GfiO9mIxLg
- 6OloNMqMlbjI2XvUwwzrObyMITqjI49nUx9DrbzvEfCSTCzcfM3gPkAmBrKqn19EZt9i
- G/eW7528lzgi4hnrNg8I9VpcXcEHxV7roL2wFvZSXOAuatA+nvShQwBiFAjThke6pxEe
- 4/oYpY35vfcdqubBfQoNEQ9EnP5HdmZ3q0gV/C29rAQ/L0tPopSsGc9g2SZ1YkwByCSC
- xBEYyFoMsKEUxKmR9p8JoB7AGic3GEj23X7fk1EXnSC3HKA1g54r1HVChF7ELr1ud4bb
- w2dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768813740; x=1769418540;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=79YVb/hxSMCa6YrIkDWoxyVWkCyAHRMKt/lBTvO06Js=;
- b=Zgh9Zg+BhXnUs/XnbSIFhzC9KxiVzY86W5+C5Npd7s61LnhOfXQZYc3lIVjIv09BUl
- 4pNZx7rB5cvgTyObhgLbrOwx/7RYKnR97jnyNNTfPNRKwdijTO4wVcnwKwc6egd7KxA4
- q0n3wAO7LmE9a7vAj27lrgUhYUS6I0uKfHjoKlPtCaLBQwSuoqXg3BMpM33vbK+DBaE8
- GgyU7X73uHpNlRZ92f3t4qXUNNQj3qjt7dC0Zt4yMZx5DQMlrnIbeUl7l4EkS2qMeYHG
- cIECpq5EZRkb/vUpzaa7j5L1nuiRsOrS/EWpc1SFaNWzqCgA6MVvXLlQlGWv73Rz2ekm
- zhWg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVwsGUA1zYnFiVCpzlkePPWBZT9LwoFAobtpJhNPZYt99zQ6xUByL7cbjaEgFHH/W3TgVHWcnoUpEhp@nongnu.org
-X-Gm-Message-State: AOJu0YwgnYIeZR1+WnzheGbXp9iWNOI6govexbBJ8DFogOhANqrIZ9Jv
- 97bXL5wRUWTA706yqdHlHYOBoLaK9qr7nL4moUf9JrYuwYKe1qLCzB/p8rup5vWEy1E=
-X-Gm-Gg: AZuq6aKd7/Zj1+aIemUzASSStN+MovqpdnvnwZqWG2PT+XnKwP0ael9LTptsfgWkmsV
- WUCY/NMMdB5jhJmw0zLw/l0mRpG+0GunsZcnL4uSvdDwFy5AtSbZURerpez02yOSm4WdQB6Omf+
- /GKljZQerNIfDROrYnBAJdpzj3f+Hpr3VqXsYhRZydm15RvjOP6aP7ioPO1lVWtOTcoCS/hYeuW
- 1Cfm/jjdgYiJvyMfy4jDjAGbA7ly7M6tw9R7qGNAXltGPeR+9nYkv10EBJxHtRLrjQJs8A0WqHO
- 7eRheM0HoZa18lWuO0fA4u3UGLirfY9dzPiQgJd7+lg9YU7IME/2Ok5zAsaGO9phVdpdsUQhJGI
- v6/5p/sCWfLzUJY2yPJDwAJrwGsE3uHGDWeaHFrLSIHUEr2fBwsw9wBR2Rvdasw+cuKIsSTts1u
- OUbs5+VDiluQU=
-X-Received: by 2002:a05:6000:2005:b0:42f:b707:56f0 with SMTP id
- ffacd0b85a97d-4356a0773camr15809483f8f.37.1768813740404; 
- Mon, 19 Jan 2026 01:09:00 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43569926648sm22593369f8f.10.2026.01.19.01.08.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Jan 2026 01:08:59 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E41B65F856;
- Mon, 19 Jan 2026 09:08:58 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,  Laurent Vivier
- <laurent@vivier.eu>
-Subject: Re: [PATCH trivial] plugins: correct docstring for write_register API
-In-Reply-To: <9c71b7dc-ec43-4726-a868-c1c3a3ce3ba1@epfl.ch> (Florian
- Hofhammer's message of "Sat, 17 Jan 2026 18:51:44 +0100")
-References: <60089475-3891-4448-bfe0-8dd698cd2435@epfl.ch>
- <0d32ba74-9171-425d-ac0e-1303d6ca154a@linaro.org>
- <0458a52c-b86b-43e8-84f6-ec75b012a9a2@epfl.ch>
- <3d9c9fbe-711c-4be1-84f6-5fa3cc18d2a8@linaro.org>
- <9c71b7dc-ec43-4726-a868-c1c3a3ce3ba1@epfl.ch>
-User-Agent: mu4e 1.12.15-pre1; emacs 30.1
-Date: Mon, 19 Jan 2026 09:08:58 +0000
-Message-ID: <87tswias0l.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <martin.kroening@eonerc.rwth-aachen.de>)
+ id 1vhlJm-0002gv-21
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 04:13:02 -0500
+Received: from mail-out-3.itc.rwth-aachen.de ([2a00:8a60:1:e501::5:48])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <martin.kroening@eonerc.rwth-aachen.de>)
+ id 1vhlJi-0004Rt-EC
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 04:13:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=rwth-aachen.de; i=@rwth-aachen.de; q=dns/txt;
+ s=20240516-RWTH; t=1768813978; x=1800349978;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=2XJooU4YfGrTuPeAOT1LvWlBVk6213zopt2KylvjcTA=;
+ b=VZuRPG6pXqriQyZLAEYzfmItUFI4nq044V2bHoF4l3o8TaUGa7l9B1pa
+ u3BFPE4xZCLFfriyZz8J9R2EHirOzbIhSnXaauOxrn1tjwvfy2PL8tGQd
+ IFCVlYnC2zlGLzkzUK0HOySI5/ARKiAavMTU0qTHxIyfDF6efrN/jbYU1
+ qQzKPZbANaSv4rRBi32VlnJlarYWHnZh+KuBmqddbwik1yk3dqDjOrltH
+ ZpDKzZOFYxpjfQlIgOQBSxRaIeDRe3TkRajToZvvhRMrScg2TbaRYkFGI
+ ZGHkwjeAXOrnjDF+BLRBPUeMuENO4pKGF14BUPAHknv/VFEc1oi1G7NHp w==;
+X-CSE-ConnectionGUID: lg3Df0h9QU2F8h8nI4/iUg==
+X-CSE-MsgGUID: CPmN1ZjARtyAijXukOU70w==
+X-IPAS-Result: =?us-ascii?q?A2DvAABj9G1p/5sagoZaGwEBAQEBAQEBBQEBARIBAQEDA?=
+ =?us-ascii?q?wEBAUCBUIIYh3GRdAOgGQ8BAQEBAQEBAQEIAVEEAQGCE4J0AhaMYyc4EwECB?=
+ =?us-ascii?q?AEBAQEDAgMBAQEBAQEBAQEBAQsBAQYBAQEBAQEGBYEhhglThlsBBAEjEUUFC?=
+ =?us-ascii?q?wIBCBoCJgICAi8VEAIEAQ2DB4JNJ7FagTKBAd8BgSwVgQouiFMBgW+EAIR4g?=
+ =?us-ascii?q?gxDgRUnDg2CaD6EQxeDRDqCLwSCIoEOiiwGgUiIFAlJeHgsAVUTFwsHBWFCE?=
+ =?us-ascii?q?DMDKi8tI0sFLR1wDCcSDx0XEx9YGwcFEyNsBhsGHBICAwECAjpTDIF2AgIEg?=
+ =?us-ascii?q?hB7ggEPhw6BAAUubxoOIgJBUgMLbT03Bg4bQZJyBj5CgggNBF8LlxCvVgeCO?=
+ =?us-ascii?q?F2BCqFyBC+XYJMLLphYIqh0AgQCBAUCGIF/gX5xeQGCPVEXAg+OLRaBEgEMy?=
+ =?us-ascii?q?SyBNAIHAQoBAQMJgjmRLgEB?=
+IronPort-Data: A9a23:iJxvGauIGiOrJhAbbkDIKZEiFefnVFlfMUV32f8akzHdYApBsoF/q
+ tZmKW6Gbq2JYDT1Ldtxa9i28kpSscWEytNnQAA5r3phESMXgMeUXt7xwmUcns+xBpCZEBg3v
+ 512hv3odp1coqr0/0/1WlTZhSAik/nOHfykVLKs1hlZHWdMUD0mhQ9oh9k3i4tphcnRKw6Ws
+ LsemeWGULOe82AyaDt8B56r8ks14qyr4WNA5DTSWNgS1LPgvyhNZH4gDfzpR5fIatE8NvK3Q
+ e/F0Ia48gvxlz8xCsmom6rMaUYDRLjfJ2Cm0hK6jID733CuDgRrukoKHKJ0hXV/0l1lrPgto
+ Dl5jqFcfC9yVkH6sLlHD0MIQ3kW0Zpuo9crKVDn2SCaItavn3HEm52CB2luVWEUF3oe7Wxmr
+ ZQlxD4xgh+rg+3t7LzjSrhVu54NfMm7OqJD/XBdwmSMZRomacirr6Ti3+Bk/BoAw/sUWNyYf
+ dUFaX9mYFLMbnWjOH9OU854xbzwwCOhNWQF9Tp5poJui4TX5Al4yqTsNpzWYNuHQ8RTkW6Vo
+ WTL5W+/GA4GNJmWwDGF/3TqiuKncSbTA9tKTOXmq6Y76LGV7kcrDTtPZ1mSm+Woo0+8a89cD
+ HFLojV7+MDe82TuFLERRSaQuH6FuhsQc95RFeQg70eK0KW8yx+UA3VBQjNfZdgOssgwSjo3k
+ FiTkLvBDDhioPufRHSb+7q8qTK0MDISa2gYakc5oRAt+cb/oIwjywmVC9wlCrGpjpj8FXf8z
+ lhmsRQDulnatuZTv43TwLwNq2jESkThJuLt2jjqYw==
+IronPort-HdrOrdr: A9a23:40l00q7sQ6aKX++QPwPXwPvXdLJyesId70hD6qkRc202TiX2rb
+ HLoB12726WtN9uYgBHpTnwAtjkfZq0z/cciuhwAV7IZniAhILHFvAa0WKb+UyZJ8QSzINgPL
+ 1bHJRWOZnLFFB/yfzx5hK1euxN/DCYys6VbDjlpUtQcQ==
+X-Talos-CUID: 9a23:uwWIbmPcaQRqEu5DXCY82EBMGpEcTyfznHeAJW7kTmdUR+jA
+X-Talos-MUID: 9a23:Qp6iyAmsgp61skSxfPEndnpJDMJOupasIXoRgLwHufmZNgtNZG+C2WE=
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-AV: E=Sophos;i="6.21,237,1763420400"; d="scan'208";a="310006509"
+Received: from rwthex-s2-b.rwth-ad.de ([134.130.26.155])
+ by mail-in-3.itc.rwth-aachen.de with ESMTP; 19 Jan 2026 10:12:50 +0100
+Received: from rwthex-s2-a.rwth-ad.de (2a00:8a60:1:e500::26:154) by
+ RWTHEX-S2-B.rwth-ad.de (2a00:8a60:1:e500::26:155) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Mon, 19 Jan 2026 10:12:49 +0100
+Received: from rwthex-s2-a.rwth-ad.de ([fe80::e27f:2822:3e3f:84f0]) by
+ rwthex-s2-a.rwth-ad.de ([fe80::e27f:2822:3e3f:84f0%4]) with mapi id
+ 15.02.2562.035; Mon, 19 Jan 2026 10:12:49 +0100
+To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: =?utf-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH 1/2] include/exec: Provide the cpu_tswap() functions
+Thread-Topic: [PATCH 1/2] include/exec: Provide the cpu_tswap() functions
+Thread-Index: AQHcfxJpX9kd3Z45hkeo12U1CBikfbVYdTOAgADUOIA=
+Date: Mon, 19 Jan 2026 09:12:49 +0000
+Message-ID: <FDDAA4F9-C389-4E63-8DEB-B0FBE38FE5CE@eonerc.rwth-aachen.de>
+References: <20260106-semihosting-cpu-tswap-v1-0-646576c25f56@eonerc.rwth-aachen.de>
+ <20260106-semihosting-cpu-tswap-v1-1-646576c25f56@eonerc.rwth-aachen.de>
+ <ee9a0216-0a1a-46ec-b647-64045c892af3@linaro.org>
+In-Reply-To: <ee9a0216-0a1a-46ec-b647-64045c892af3@linaro.org>
+Accept-Language: en-US, de-DE
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/16.105.26011018
+x-originating-ip: [2a0a:a54b:1c96:0:5562:fcec:b2fe:7340]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <46B27F6A393CE449860DDCF708887B4D@rwth-ad.de>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:8a60:1:e501::5:48;
+ envelope-from=martin.kroening@eonerc.rwth-aachen.de;
+ helo=mail-out-3.itc.rwth-aachen.de
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,72 +114,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  =?utf-8?B?S3LDtm5pbmcsIE1hcnRpbg==?=
+ <martin.kroening@eonerc.rwth-aachen.de>
+From: martin.kroening--- via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
-
-> On 16/01/2026 22:39, Pierrick Bouvier wrote:
->
->> For sake of consistency, we should make this use the same interface than
->> {read,write}_memory_vaddr, minus the len param.
->> bool qemu_plugin_read_memory_vaddr(uint64_t addr,
->>                                    GByteArray *data, size_t len);
->> bool qemu_plugin_write_memory_vaddr(uint64_t addr,
->>                                    GByteArray *data);
->>=20
->> So it would be:
->> bool qemu_plugin_read_register(uint64_t addr, GByteArray *data);
->> bool qemu_plugin_write_register(uint64_t addr, GByteArray *data);
->>=20
->> This is better and unambiguous, as no one needs a documentation to know =
-what a bool return is, and data already holds the size information.
->
-> Sounds like a good idea. This would break existing plugins though, is
-> this acceptable? (Asking purely out of curiosity, as I'm not familiar
-> yet with the processes and policies around breaking changes in QEMU
-> development :))
->
->> As well, writing this, I realized that existing write_register is broken=
- by design: we never check the size of data array (except > 1) and blindly =
-an arbitrary amount of memory from it, which is wrong.
->> Even though the doc mentions it, we should just fix it, detect when size=
- < reg_size, and return false.
->>=20
->> This comes from the fact gdb_write_register itself has no notion of
->> size and trust the pointer. so it would need another refactor also.
->> And while at it, change gdb_{read,write}_register definition to
->> return bool also.
->
-> gdb_read_register already takes a GByteArray, it would make sense to
-> also use GByteArray for gdb_write_register instead of a uint8_t* and use
-> the size of the array for sanity checks.
-> However, I'm not sure changing the return value to bool for those
-> internal functions makes sense, as other parts of the codebase rely on
-> the size information. E.g., handle_write_all_regs() in gdbstub/gdbstub.c
-> relies on the size returned by gdb_write_register() to know how far to
-> offset into the packet data it received from GDB, as GDB does not send
-> register size information when writing multiple registers via a 'G'
-> packet (just a flat byte stream with the register values
-> concatenated).
-
-We don't need to expose internal implementation details to the plugins.
-If we have length already as part of GByteArray then returning a bool
-for success/fail makes sense. Its the more modern pattern throughout
-QEMU anyway.
-
->
->> I think it pushes a lot of changes just for a simple comment change,
->> so I would understand if you don't want to do this whole refactoring
->> beyond plugins interface. I can pick it up, or let you work on it if
->> you have time/interest. Feel free to let us know.
->
-> I'd be happy to handle this!
->
-> Best regards,
-> Florian
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+SGkgUGhpbGlwcGUsDQoNCk9uIDE4LjAxLjI2LCAyMjozMywgUGhpbGlwcGUgTWF0aGlldS1EYXVk
+w6kgd3JvdGU6DQoNCj4gPiBUaGVzZSBmdW5jdGlvbnMgYXJlIG5lZWRlZCBmb3IgQ1BVcyB0aGF0
+IHN1cHBvcnQgcnVudGltZS1jb25maWd1cmFibGUgZW5kaWFubmVzcy4NCj4gPiBJbiB0aG9zZSBj
+YXNlcywgY29tcG9uZW50cyBzdWNoIGFzIHNlbWlob3N0aW5nIG5lZWQgdG8gcGVyZm9ybQ0KPiA+
+IHJ1bnRpbWUtZGVwZW5kZW50IGJ5dGUgc3dhcHMuDQo+DQo+IEFyZSB5b3UgdGFyZ2V0dGluZyB1
+c2VyIG9yIHN5c3RlbSBlbXVsYXRpb24/DQo+IA0KPiBJIHN1cHBvc2UgdXNlciBlbXVsYXRpb24s
+IG90aGVyd2lzZSB5b3UnZCBoYXZlIHVzZWQgdGhlDQo+ICJzZW1paG9zdGluZy91YWNjZXNzLmgi
+IEFQSS4NCj4NCj4gQnV0IHRoZW4gSSdtIGNvbmZ1c2VkIGJlY2F1c2UgYSB1c2VyIHByb2Nlc3Mg
+Y2FuJ3QgY2hhbmdlDQo+IHRoZSBDUFUgZW5kaWFubmVzcy4uLg0KPg0KPiBDYW4geW91IGV4cGxh
+aW4geW91ciB1c2UgY2FzZT8NCg0KVGhhbmtzIGZvciBhc2tpbmchIEkgYW0gdGFyZ2V0aW5nIHN5
+c3RlbSBlbXVsYXRpb24uIE15IHVzZSBjYXNlIGlzIGVtdWxhdGluZw0KYmFyZS1tZXRhbCBzb2Z0
+d2FyZSBzdWNoIGFzIGFuIE9TIHRoYXQgc3dpdGNoZXMgdGhlIEFBcmNoNjQgQ1BVIHRvIGJpZy1l
+bmRpYW4NCm1vZGUgZHVyaW5nIHJ1bnRpbWUuDQoNCmB7Z2V0LHNldH1fdXNlcl91ezY0LDMyfWAg
+ZnJvbSAic2VtaWhvc3RpbmcvdWFjY2Vzcy5oIiBjdXJyZW50bHkgdXNlDQpgdHN3YXB7MzIsNjR9
+YCBmcm9tICJleGVjL3Rzd2FwLmgiLCB3aGljaCBkbyBub3QgcmVzcGVjdCBydW50aW1lLWNvbmZp
+Z3VyYWJsZQ0KZW5kaWFubmVzcy4NCg0KUEFUQ0ggMS8yIGludHJvZHVjZXMgYGNwdV90c3dhcHsz
+Miw2NH1gLCB3aGljaCBQQVRDSCAyLzIgaW50ZWdyYXRlcyBpbnRvDQoic2VtaWhvc3RpbmcvdWFj
+Y2Vzcy5oIi4gSSBjYW4gc3F1YXNoIHRob3NlIGNvbW1pdHMgaWYgeW91IHByZWZlciwgb2YgY291
+cnNlLg0KT3IgZGlkIEkgbWlzdW5kZXJzdGFuZCB5b3VyIHF1ZXN0aW9uPw0KDQpBbGV4IHdhcyB3
+b3JyaWVkIGFib3V0IGV4cGFuZGluZyB0aGUgdXNlIG9mIGB2aXJ0aW9faXNfYmlnX2VuZGlhbmA6
+DQoNCj4gSG1tIGxvb2tpbmcgYXQgdGhlIGRlc2NyaXB0aW9uOg0KPiANCj4gICAgIC8qKg0KPiAg
+ICAgICogQHZpcnRpb19pc19iaWdfZW5kaWFuOiBDYWxsYmFjayB0byByZXR1cm4gJXRydWUgaWYg
+YSBDUFUgd2hpY2ggc3VwcG9ydHMNCj4gICAgICAqIHJ1bnRpbWUgY29uZmlndXJhYmxlIGVuZGlh
+bm5lc3MgaXMgY3VycmVudGx5IGJpZy1lbmRpYW4uDQo+ICAgICAgKiBOb24tY29uZmlndXJhYmxl
+IENQVXMgY2FuIHVzZSB0aGUgZGVmYXVsdCBpbXBsZW1lbnRhdGlvbiBvZiB0aGlzIG1ldGhvZC4N
+Cj4gICAgICAqIFRoaXMgbWV0aG9kIHNob3VsZCBub3QgYmUgdXNlZCBieSBhbnkgY2FsbGVycyBv
+dGhlciB0aGFuIHRoZSBwcmUtMS4wDQo+ICAgICAgKiB2aXJ0aW8gZGV2aWNlcy4NCj4gICAgICAq
+Lw0KPiAgICAgYm9vbCAoKnZpcnRpb19pc19iaWdfZW5kaWFuKShDUFVTdGF0ZSAqY3B1KTsNCj4g
+DQo+IEknbSBub3Qgc3VyZSBpZiB3ZSB3YW50IHRvIGV4cGFuZCB0aGUgdXNhZ2Ugb2YgdGhpcyBo
+YWNrLiBJIHRoaW5rDQo+IFBoaWxpcHBlIGlzIGhvcGluZyB0byBnZXQgcmlkIG9mIHRoZXNlIHdh
+cnRzIGV2ZW50dWFsbHkuIE9mIGNvdXJzZSB3ZQ0KPiBjb3VsZCByZW5hbWUgdGhlIG1ldGhvZCBh
+bmQganVzdCBwcm92aWRlIGEgd2F5IHRvIGdldCB0aGUgY3VycmVudA0KPiBzeXN0ZW1zIGVuZGlh
+bmVzcy4NCg0KV2hpbGUgbm90IGJlaW5nIHZlcnkgZmFtaWxpYXIgd2l0aCBRRU1VJ3Mgc291cmNl
+IGNvZGUsIHNvbWV0aGluZyBsaWtlIHRoaXMNCnNlZW1zIG5lY2Vzc2FyeSB0byBtZS4gSSBjYW4g
+cmVuYW1lIGB2aXJ0aW9faXNfYmlnX2VuZGlhbmAgdG8gYGlzX2JpZ19lbmRpYW5gDQphbmQgYGNw
+dV92aXJ0aW9faXNfYmlnX2VuZGlhbmAgdG8gYGNwdV9pc19iaWdfZW5kaWFuYCBpZiB5b3UgcHJl
+ZmVyIHRoYXQuDQoNCkNoZWVycywNCk1hcnRpbg0KDQo=
 
