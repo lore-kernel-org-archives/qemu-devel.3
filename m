@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98571D29C40
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 16:13:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3300D29C40
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 16:13:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhrqw-0005WA-0h; Mon, 19 Jan 2026 11:11:42 -0500
+	id 1vhrqy-0005Yy-FD; Mon, 19 Jan 2026 11:11:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vhrqs-0005V4-Gc; Mon, 19 Jan 2026 11:11:39 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ id 1vhrqv-0005WW-E9; Mon, 19 Jan 2026 11:11:41 -0500
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vhrqm-00026i-OO; Mon, 19 Jan 2026 11:11:37 -0500
+ id 1vhrqt-00028s-6o; Mon, 19 Jan 2026 11:11:41 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDnzSasV25pQnw4Aw--.8390S2;
- Tue, 20 Jan 2026 00:11:24 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAH6CS0V25panw4Aw--.48494S2;
+ Tue, 20 Jan 2026 00:11:32 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwCX8O2mV25pCfIUAA--.37135S4;
- Tue, 20 Jan 2026 00:11:22 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwCX8O2mV25pCfIUAA--.37135S9;
+ Tue, 20 Jan 2026 00:11:31 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
@@ -36,32 +36,30 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Mostafa Saleh <smostafa@google.com>,
  CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC v9 1/8] hw/arm/smmuv3: Extract common definitions to
- smmuv3-common.h
-Date: Tue, 20 Jan 2026 00:11:05 +0800
-Message-Id: <20260119161112.3841386-2-tangtao1634@phytium.com.cn>
+Subject: [RFC v9 6/8] tests/qtest: Add libqos iommu-testdev helpers
+Date: Tue, 20 Jan 2026 00:11:10 +0800
+Message-Id: <20260119161112.3841386-7-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260119161112.3841386-1-tangtao1634@phytium.com.cn>
 References: <20260119161112.3841386-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwCX8O2mV25pCfIUAA--.37135S4
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAABWltPrkFJAAAsm
+X-CM-TRANSID: AQAAfwCX8O2mV25pCfIUAA--.37135S9
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAABWltPrkFLgAAss
 Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvAXoW3ury5XryDCrWrZF4xZry8Grg_yoW8ArW7uo
- W7C3WagwsxXFWxAF4UW348Xr4kZFyvk3W8ur1Fy3yrZF47AF98GFyFk3y3Wr47JFyFgFyU
- Z3yIy3Zaq3y5uF4rn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
- J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
- UUUUUUU==
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Coremail-Antispam: 1Uk129KBjvJXoWxtw4DuF4fZFyDKFWfJrW3trb_yoW7Zr1fpF
+ 1Uuayag3yxGF4fGrn3Gw10yw1rtr4kAF17uryfGas3ZrWxZry8Jr9rKFyY9r9rX3yUZF1r
+ Zan0vFZ5WF1rZaDanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -79,592 +77,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move register definitions, command enums, and Stream Table Entry (STE) /
-Context Descriptor (CD) structure definitions from the internal header
-hw/arm/smmuv3-internal.h to a new common header
-include/hw/arm/smmuv3-common.h.
+Introduce a libqos helper module for the iommu-testdev
+device used by qtests. This module provides some common functions to
+all IOMMU test cases using iommu-testdev.
 
-This allows other components, such as generic SMMUv3 tests or test devices,
-to utilize these definitions without including the specific SMMUv3 device
-internal state.
+Wire the new sources into tests/qtest/libqos/meson.build so
+they are built as part of the qtest support library.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
- hw/arm/smmuv3-internal.h       | 255 +------------------------------
- include/hw/arm/smmuv3-common.h | 268 +++++++++++++++++++++++++++++++++
- 2 files changed, 269 insertions(+), 254 deletions(-)
- create mode 100644 include/hw/arm/smmuv3-common.h
+ MAINTAINERS                            |  5 ++
+ tests/qtest/libqos/meson.build         |  3 +
+ tests/qtest/libqos/qos-iommu-testdev.c | 82 ++++++++++++++++++++++++++
+ tests/qtest/libqos/qos-iommu-testdev.h | 43 ++++++++++++++
+ 4 files changed, 133 insertions(+)
+ create mode 100644 tests/qtest/libqos/qos-iommu-testdev.c
+ create mode 100644 tests/qtest/libqos/qos-iommu-testdev.h
 
-diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-index d15031f265..687ee6aaca 100644
---- a/hw/arm/smmuv3-internal.h
-+++ b/hw/arm/smmuv3-internal.h
-@@ -23,6 +23,7 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1abfec594f..ee8f6eb3af 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3578,6 +3578,11 @@ F: docs/devel/testing/qtest.rst
+ X: tests/qtest/bios-tables-test*
+ X: tests/qtest/migration-*
  
- #include "hw/core/registerfields.h"
- #include "hw/arm/smmu-common.h"
-+#include "hw/arm/smmuv3-common.h"
++QTest IOMMU helpers
++M: Tao Tang <tangtao1634@phytium.com.cn>
++S: Maintained
++F: tests/qtest/libqos/qos-iommu*
++
+ Device Fuzzing
+ M: Alexander Bulekov <alxndr@bu.edu>
+ R: Paolo Bonzini <pbonzini@redhat.com>
+diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
+index 1ddaf7b095..9805d63a29 100644
+--- a/tests/qtest/libqos/meson.build
++++ b/tests/qtest/libqos/meson.build
+@@ -60,6 +60,9 @@ libqos_srcs = files(
+         'x86_64_pc-machine.c',
+         'riscv-virt-machine.c',
+         'loongarch-virt-machine.c',
++
++        # SMMU:
++        'qos-iommu-testdev.c',
+ )
  
- typedef enum SMMUTranslationStatus {
-     SMMU_TRANS_DISABLE,
-@@ -38,147 +39,6 @@ typedef enum SMMUTranslationClass {
-     SMMU_CLASS_IN,
- } SMMUTranslationClass;
- 
--/* MMIO Registers */
--
--REG32(IDR0,                0x0)
--    FIELD(IDR0, S2P,         0 , 1)
--    FIELD(IDR0, S1P,         1 , 1)
--    FIELD(IDR0, TTF,         2 , 2)
--    FIELD(IDR0, COHACC,      4 , 1)
--    FIELD(IDR0, BTM,         5 , 1)
--    FIELD(IDR0, HTTU,        6 , 2)
--    FIELD(IDR0, DORMHINT,    8 , 1)
--    FIELD(IDR0, HYP,         9 , 1)
--    FIELD(IDR0, ATS,         10, 1)
--    FIELD(IDR0, NS1ATS,      11, 1)
--    FIELD(IDR0, ASID16,      12, 1)
--    FIELD(IDR0, MSI,         13, 1)
--    FIELD(IDR0, SEV,         14, 1)
--    FIELD(IDR0, ATOS,        15, 1)
--    FIELD(IDR0, PRI,         16, 1)
--    FIELD(IDR0, VMW,         17, 1)
--    FIELD(IDR0, VMID16,      18, 1)
--    FIELD(IDR0, CD2L,        19, 1)
--    FIELD(IDR0, VATOS,       20, 1)
--    FIELD(IDR0, TTENDIAN,    21, 2)
--    FIELD(IDR0, ATSRECERR,   23, 1)
--    FIELD(IDR0, STALL_MODEL, 24, 2)
--    FIELD(IDR0, TERM_MODEL,  26, 1)
--    FIELD(IDR0, STLEVEL,     27, 2)
--    FIELD(IDR0, RME_IMPL,    30, 1)
--
--REG32(IDR1,                0x4)
--    FIELD(IDR1, SIDSIZE,      0 , 6)
--    FIELD(IDR1, SSIDSIZE,     6 , 5)
--    FIELD(IDR1, PRIQS,        11, 5)
--    FIELD(IDR1, EVENTQS,      16, 5)
--    FIELD(IDR1, CMDQS,        21, 5)
--    FIELD(IDR1, ATTR_PERMS_OVR, 26, 1)
--    FIELD(IDR1, ATTR_TYPES_OVR, 27, 1)
--    FIELD(IDR1, REL,          28, 1)
--    FIELD(IDR1, QUEUES_PRESET, 29, 1)
--    FIELD(IDR1, TABLES_PRESET, 30, 1)
--    FIELD(IDR1, ECMDQ,        31, 1)
--
--#define SMMU_IDR1_SIDSIZE 16
--#define SMMU_CMDQS   19
--#define SMMU_EVENTQS 19
--
--REG32(IDR2,                0x8)
--     FIELD(IDR2, BA_VATOS, 0, 10)
--
--REG32(IDR3,                0xc)
--     FIELD(IDR3, HAD,         2, 1);
--     FIELD(IDR3, PBHA,        3, 1);
--     FIELD(IDR3, XNX,         4, 1);
--     FIELD(IDR3, PPS,         5, 1);
--     FIELD(IDR3, MPAM,        7, 1);
--     FIELD(IDR3, FWB,         8, 1);
--     FIELD(IDR3, STT,         9, 1);
--     FIELD(IDR3, RIL,        10, 1);
--     FIELD(IDR3, BBML,       11, 2);
--     FIELD(IDR3, E0PD,       13, 1);
--     FIELD(IDR3, PTWNNC,     14, 1);
--     FIELD(IDR3, DPT,        15, 1);
--
--REG32(IDR4,                0x10)
--
--REG32(IDR5,                0x14)
--     FIELD(IDR5, OAS,         0, 3);
--     FIELD(IDR5, GRAN4K,      4, 1);
--     FIELD(IDR5, GRAN16K,     5, 1);
--     FIELD(IDR5, GRAN64K,     6, 1);
--     FIELD(IDR5, VAX,        10, 2);
--     FIELD(IDR5, STALL_MAX,  16, 16);
--
--#define SMMU_IDR5_OAS 4
--
--REG32(IIDR,                0x18)
--REG32(AIDR,                0x1c)
--REG32(CR0,                 0x20)
--    FIELD(CR0, SMMU_ENABLE,   0, 1)
--    FIELD(CR0, EVENTQEN,      2, 1)
--    FIELD(CR0, CMDQEN,        3, 1)
--
--#define SMMU_CR0_RESERVED 0xFFFFFC20
--
--REG32(CR0ACK,              0x24)
--REG32(CR1,                 0x28)
--REG32(CR2,                 0x2c)
--REG32(STATUSR,             0x40)
--REG32(GBPA,                0x44)
--    FIELD(GBPA, ABORT,        20, 1)
--    FIELD(GBPA, UPDATE,       31, 1)
--
--/* Use incoming. */
--#define SMMU_GBPA_RESET_VAL 0x1000
--
--REG32(IRQ_CTRL,            0x50)
--    FIELD(IRQ_CTRL, GERROR_IRQEN,        0, 1)
--    FIELD(IRQ_CTRL, PRI_IRQEN,           1, 1)
--    FIELD(IRQ_CTRL, EVENTQ_IRQEN,        2, 1)
--
--REG32(IRQ_CTRL_ACK,        0x54)
--REG32(GERROR,              0x60)
--    FIELD(GERROR, CMDQ_ERR,           0, 1)
--    FIELD(GERROR, EVENTQ_ABT_ERR,     2, 1)
--    FIELD(GERROR, PRIQ_ABT_ERR,       3, 1)
--    FIELD(GERROR, MSI_CMDQ_ABT_ERR,   4, 1)
--    FIELD(GERROR, MSI_EVENTQ_ABT_ERR, 5, 1)
--    FIELD(GERROR, MSI_PRIQ_ABT_ERR,   6, 1)
--    FIELD(GERROR, MSI_GERROR_ABT_ERR, 7, 1)
--    FIELD(GERROR, MSI_SFM_ERR,        8, 1)
--
--REG32(GERRORN,             0x64)
--
--#define A_GERROR_IRQ_CFG0  0x68 /* 64b */
--REG32(GERROR_IRQ_CFG1, 0x70)
--REG32(GERROR_IRQ_CFG2, 0x74)
--
--#define A_STRTAB_BASE      0x80 /* 64b */
--
--#define SMMU_BASE_ADDR_MASK 0xfffffffffffc0
--
--REG32(STRTAB_BASE_CFG,     0x88)
--    FIELD(STRTAB_BASE_CFG, FMT,      16, 2)
--    FIELD(STRTAB_BASE_CFG, SPLIT,    6 , 5)
--    FIELD(STRTAB_BASE_CFG, LOG2SIZE, 0 , 6)
--
--#define A_CMDQ_BASE        0x90 /* 64b */
--REG32(CMDQ_PROD,           0x98)
--REG32(CMDQ_CONS,           0x9c)
--    FIELD(CMDQ_CONS, ERR, 24, 7)
--
--#define A_EVENTQ_BASE      0xa0 /* 64b */
--REG32(EVENTQ_PROD,         0xa8)
--REG32(EVENTQ_CONS,         0xac)
--
--#define A_EVENTQ_IRQ_CFG0  0xb0 /* 64b */
--REG32(EVENTQ_IRQ_CFG1,     0xb8)
--REG32(EVENTQ_IRQ_CFG2,     0xbc)
--
--#define A_IDREGS           0xfd0
--
- static inline int smmu_enabled(SMMUv3State *s)
- {
-     return FIELD_EX32(s->cr[0], CR0, SMMU_ENABLE);
-@@ -272,37 +132,6 @@ static inline void smmu_write_cmdq_err(SMMUv3State *s, uint32_t err_type)
-     s->cmdq.cons = FIELD_DP32(s->cmdq.cons, CMDQ_CONS, ERR, err_type);
- }
- 
--/* Commands */
--
--typedef enum SMMUCommandType {
--    SMMU_CMD_NONE            = 0x00,
--    SMMU_CMD_PREFETCH_CONFIG       ,
--    SMMU_CMD_PREFETCH_ADDR,
--    SMMU_CMD_CFGI_STE,
--    SMMU_CMD_CFGI_STE_RANGE,
--    SMMU_CMD_CFGI_CD,
--    SMMU_CMD_CFGI_CD_ALL,
--    SMMU_CMD_CFGI_ALL,
--    SMMU_CMD_TLBI_NH_ALL     = 0x10,
--    SMMU_CMD_TLBI_NH_ASID,
--    SMMU_CMD_TLBI_NH_VA,
--    SMMU_CMD_TLBI_NH_VAA,
--    SMMU_CMD_TLBI_EL3_ALL    = 0x18,
--    SMMU_CMD_TLBI_EL3_VA     = 0x1a,
--    SMMU_CMD_TLBI_EL2_ALL    = 0x20,
--    SMMU_CMD_TLBI_EL2_ASID,
--    SMMU_CMD_TLBI_EL2_VA,
--    SMMU_CMD_TLBI_EL2_VAA,
--    SMMU_CMD_TLBI_S12_VMALL  = 0x28,
--    SMMU_CMD_TLBI_S2_IPA     = 0x2a,
--    SMMU_CMD_TLBI_NSNH_ALL   = 0x30,
--    SMMU_CMD_ATC_INV         = 0x40,
--    SMMU_CMD_PRI_RESP,
--    SMMU_CMD_RESUME          = 0x44,
--    SMMU_CMD_STALL_TERM,
--    SMMU_CMD_SYNC,
--} SMMUCommandType;
--
- static const char *cmd_stringify[] = {
-     [SMMU_CMD_PREFETCH_CONFIG] = "SMMU_CMD_PREFETCH_CONFIG",
-     [SMMU_CMD_PREFETCH_ADDR]   = "SMMU_CMD_PREFETCH_ADDR",
-@@ -525,64 +354,6 @@ typedef struct SMMUEventInfo {
- 
- void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *event);
- 
--/* Configuration Data */
--
--/* STE Level 1 Descriptor */
--typedef struct STEDesc {
--    uint32_t word[2];
--} STEDesc;
--
--/* CD Level 1 Descriptor */
--typedef struct CDDesc {
--    uint32_t word[2];
--} CDDesc;
--
--/* Stream Table Entry(STE) */
--typedef struct STE {
--    uint32_t word[16];
--} STE;
--
--/* Context Descriptor(CD) */
--typedef struct CD {
--    uint32_t word[16];
--} CD;
--
--/* STE fields */
--
--#define STE_VALID(x)   extract32((x)->word[0], 0, 1)
--
--#define STE_CONFIG(x)  extract32((x)->word[0], 1, 3)
--#define STE_CFG_S1_ENABLED(config) (config & 0x1)
--#define STE_CFG_S2_ENABLED(config) (config & 0x2)
--#define STE_CFG_ABORT(config)      (!(config & 0x4))
--#define STE_CFG_BYPASS(config)     (config == 0x4)
--
--#define STE_S1FMT(x)       extract32((x)->word[0], 4 , 2)
--#define STE_S1CDMAX(x)     extract32((x)->word[1], 27, 5)
--#define STE_S1STALLD(x)    extract32((x)->word[2], 27, 1)
--#define STE_EATS(x)        extract32((x)->word[2], 28, 2)
--#define STE_STRW(x)        extract32((x)->word[2], 30, 2)
--#define STE_S2VMID(x)      extract32((x)->word[4], 0 , 16)
--#define STE_S2T0SZ(x)      extract32((x)->word[5], 0 , 6)
--#define STE_S2SL0(x)       extract32((x)->word[5], 6 , 2)
--#define STE_S2TG(x)        extract32((x)->word[5], 14, 2)
--#define STE_S2PS(x)        extract32((x)->word[5], 16, 3)
--#define STE_S2AA64(x)      extract32((x)->word[5], 19, 1)
--#define STE_S2ENDI(x)      extract32((x)->word[5], 20, 1)
--#define STE_S2AFFD(x)      extract32((x)->word[5], 21, 1)
--#define STE_S2HD(x)        extract32((x)->word[5], 23, 1)
--#define STE_S2HA(x)        extract32((x)->word[5], 24, 1)
--#define STE_S2S(x)         extract32((x)->word[5], 25, 1)
--#define STE_S2R(x)         extract32((x)->word[5], 26, 1)
--
--#define STE_CTXPTR(x)                                   \
--    ((extract64((x)->word[1], 0, 16) << 32) |           \
--     ((x)->word[0] & 0xffffffc0))
--
--#define STE_S2TTB(x)                                    \
--    ((extract64((x)->word[7], 0, 16) << 32) |           \
--     ((x)->word[6] & 0xfffffff0))
--
- static inline int oas2bits(int oas_field)
- {
-     switch (oas_field) {
-@@ -603,30 +374,6 @@ static inline int oas2bits(int oas_field)
-     g_assert_not_reached();
- }
- 
--/* CD fields */
--
--#define CD_VALID(x)   extract32((x)->word[0], 31, 1)
--#define CD_ASID(x)    extract32((x)->word[1], 16, 16)
--#define CD_TTB(x, sel)                                          \
--    ((extract64((x)->word[(sel) * 2 + 3], 0, 19) << 32) |       \
--     ((x)->word[(sel) * 2 + 2] & ~0xfULL))
--
--#define CD_HAD(x, sel)   extract32((x)->word[(sel) * 2 + 2], 1, 1)
--
--#define CD_TSZ(x, sel)   extract32((x)->word[0], (16 * (sel)) + 0, 6)
--#define CD_TG(x, sel)    extract32((x)->word[0], (16 * (sel)) + 6, 2)
--#define CD_EPD(x, sel)   extract32((x)->word[0], (16 * (sel)) + 14, 1)
--#define CD_ENDI(x)       extract32((x)->word[0], 15, 1)
--#define CD_IPS(x)        extract32((x)->word[1], 0 , 3)
--#define CD_AFFD(x)       extract32((x)->word[1], 3 , 1)
--#define CD_TBI(x)        extract32((x)->word[1], 6 , 2)
--#define CD_HD(x)         extract32((x)->word[1], 10 , 1)
--#define CD_HA(x)         extract32((x)->word[1], 11 , 1)
--#define CD_S(x)          extract32((x)->word[1], 12, 1)
--#define CD_R(x)          extract32((x)->word[1], 13, 1)
--#define CD_A(x)          extract32((x)->word[1], 14, 1)
--#define CD_AARCH64(x)    extract32((x)->word[1], 9 , 1)
--
- /**
-  * tg2granule - Decodes the CD translation granule size field according
-  * to the ttbr in use
-diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
+ if have_virtfs
+diff --git a/tests/qtest/libqos/qos-iommu-testdev.c b/tests/qtest/libqos/qos-iommu-testdev.c
 new file mode 100644
-index 0000000000..9da817f41a
+index 0000000000..91718a5673
 --- /dev/null
-+++ b/include/hw/arm/smmuv3-common.h
-@@ -0,0 +1,268 @@
++++ b/tests/qtest/libqos/qos-iommu-testdev.c
+@@ -0,0 +1,82 @@
 +/*
-+ * ARM SMMUv3 support - Common API
++ * IOMMU test device helpers for libqos qtests
 + *
-+ * Copyright (C) 2014-2016 Broadcom Corporation
-+ * Copyright (c) 2017 Red Hat, Inc.
-+ * Written by Prem Mallappa, Eric Auger
++ * Copyright (c) 2026 Phytium Technology
++ *
++ * Author:
++ *  Tao Tang <tangtao1634@phytium.com.cn>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef HW_ARM_SMMUV3_COMMON_H
-+#define HW_ARM_SMMUV3_COMMON_H
++#include "qemu/osdep.h"
++#include "../libqtest.h"
++#include "pci.h"
++#include "qos-iommu-testdev.h"
 +
-+/* Configuration Data */
++uint32_t qos_iommu_testdev_trigger_dma(QPCIDevice *dev, QPCIBar bar,
++                                       uint64_t iova, uint64_t gpa,
++                                       uint32_t len, uint32_t attrs)
++{
++    uint32_t result = ITD_DMA_RESULT_BUSY;
 +
-+/* STE Level 1 Descriptor */
-+typedef struct STEDesc {
-+    uint32_t word[2];
-+} STEDesc;
++    qpci_io_writel(dev, bar, ITD_REG_DMA_GVA_LO, (uint32_t)iova);
++    qpci_io_writel(dev, bar, ITD_REG_DMA_GVA_HI, (uint32_t)(iova >> 32));
++    qpci_io_writel(dev, bar, ITD_REG_DMA_GPA_LO, (uint32_t)gpa);
++    qpci_io_writel(dev, bar, ITD_REG_DMA_GPA_HI, (uint32_t)(gpa >> 32));
++    qpci_io_writel(dev, bar, ITD_REG_DMA_LEN, len);
++    qpci_io_writel(dev, bar, ITD_REG_DMA_ATTRS, attrs);
 +
-+/* CD Level 1 Descriptor */
-+typedef struct CDDesc {
-+    uint32_t word[2];
-+} CDDesc;
++    qpci_io_writel(dev, bar, ITD_REG_DMA_DBELL, ITD_DMA_DBELL_ARM);
++    qpci_io_readl(dev, bar, ITD_REG_DMA_TRIGGERING);
 +
-+/* Stream Table Entry(STE) */
-+typedef struct STE {
-+    uint32_t word[16];
-+} STE;
++    for (int i = 0; i < 1000; i++) {
++        result = qpci_io_readl(dev, bar, ITD_REG_DMA_RESULT);
++        if (result != ITD_DMA_RESULT_BUSY) {
++            break;
++        }
++        g_usleep(1000);
++    }
 +
-+/* Context Descriptor(CD) */
-+typedef struct CD {
-+    uint32_t word[16];
-+} CD;
++    if (result == ITD_DMA_RESULT_BUSY) {
++        return ITD_DMA_ERR_TX_FAIL;
++    }
 +
-+/* STE fields */
++    return result;
++}
 +
-+#define STE_VALID(x)   extract32((x)->word[0], 0, 1)
++void qos_iommu_testdev_single_translation(const QOSIOMMUTestdevDmaCfg *dma,
++                                          void *opaque,
++                                          QOSIOMMUTestdevSetupFn setup_fn,
++                                          QOSIOMMUTestdevAttrsFn attrs_fn,
++                                          QOSIOMMUTestdevValidateFn validate_fn,
++                                          QOSIOMMUTestdevReportFn report_fn,
++                                          uint32_t *dma_result_out)
++{
++    uint32_t config_result;
++    uint32_t dma_result;
++    uint32_t attrs_val;
 +
-+#define STE_CONFIG(x)  extract32((x)->word[0], 1, 3)
-+#define STE_CFG_S1_ENABLED(config) (config & 0x1)
-+#define STE_CFG_S2_ENABLED(config) (config & 0x2)
-+#define STE_CFG_ABORT(config)      (!(config & 0x4))
-+#define STE_CFG_BYPASS(config)     (config == 0x4)
++    g_assert(dma);
++    g_assert(setup_fn);
++    g_assert(attrs_fn);
 +
-+#define STE_S1FMT(x)       extract32((x)->word[0], 4 , 2)
-+#define STE_S1CDMAX(x)     extract32((x)->word[1], 27, 5)
-+#define STE_S1STALLD(x)    extract32((x)->word[2], 27, 1)
-+#define STE_EATS(x)        extract32((x)->word[2], 28, 2)
-+#define STE_STRW(x)        extract32((x)->word[2], 30, 2)
-+#define STE_S2VMID(x)      extract32((x)->word[4], 0 , 16)
-+#define STE_S2T0SZ(x)      extract32((x)->word[5], 0 , 6)
-+#define STE_S2SL0(x)       extract32((x)->word[5], 6 , 2)
-+#define STE_S2TG(x)        extract32((x)->word[5], 14, 2)
-+#define STE_S2PS(x)        extract32((x)->word[5], 16, 3)
-+#define STE_S2AA64(x)      extract32((x)->word[5], 19, 1)
-+#define STE_S2ENDI(x)      extract32((x)->word[5], 20, 1)
-+#define STE_S2AFFD(x)      extract32((x)->word[5], 21, 1)
-+#define STE_S2HD(x)        extract32((x)->word[5], 23, 1)
-+#define STE_S2HA(x)        extract32((x)->word[5], 24, 1)
-+#define STE_S2S(x)         extract32((x)->word[5], 25, 1)
-+#define STE_S2R(x)         extract32((x)->word[5], 26, 1)
++    config_result = setup_fn(opaque);
++    g_assert_cmpuint(config_result, ==, 0);
 +
-+#define STE_CTXPTR(x)                                   \
-+    ((extract64((x)->word[1], 0, 16) << 32) |           \
-+     ((x)->word[0] & 0xffffffc0))
++    attrs_val = attrs_fn(opaque);
++    dma_result = qos_iommu_testdev_trigger_dma(dma->dev, dma->bar,
++                                               dma->iova, dma->gpa,
++                                               dma->len, attrs_val);
++    if (dma_result_out) {
++        *dma_result_out = dma_result;
++    }
 +
-+#define STE_S2TTB(x)                                    \
-+    ((extract64((x)->word[7], 0, 16) << 32) |           \
-+     ((x)->word[6] & 0xfffffff0))
++    if (report_fn) {
++        report_fn(opaque, dma_result);
++    }
 +
-+/* CD fields */
++    if (validate_fn) {
++        g_assert_true(validate_fn(opaque));
++    }
++}
+diff --git a/tests/qtest/libqos/qos-iommu-testdev.h b/tests/qtest/libqos/qos-iommu-testdev.h
+new file mode 100644
+index 0000000000..3713b89ea4
+--- /dev/null
++++ b/tests/qtest/libqos/qos-iommu-testdev.h
+@@ -0,0 +1,43 @@
++/*
++ * IOMMU test device helpers for libqos qtests
++ *
++ * Copyright (c) 2026 Phytium Technology
++ *
++ * Author:
++ *  Tao Tang <tangtao1634@phytium.com.cn>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+#define CD_VALID(x)   extract32((x)->word[0], 31, 1)
-+#define CD_ASID(x)    extract32((x)->word[1], 16, 16)
-+#define CD_TTB(x, sel)                                          \
-+    ((extract64((x)->word[(sel) * 2 + 3], 0, 19) << 32) |       \
-+     ((x)->word[(sel) * 2 + 2] & ~0xfULL))
++#ifndef QTEST_LIBQOS_IOMMU_TESTDEV_H
++#define QTEST_LIBQOS_IOMMU_TESTDEV_H
 +
-+#define CD_HAD(x, sel)   extract32((x)->word[(sel) * 2 + 2], 1, 1)
++#include "pci.h"
++#include "hw/misc/iommu-testdev.h"
 +
-+#define CD_TSZ(x, sel)   extract32((x)->word[0], (16 * (sel)) + 0, 6)
-+#define CD_TG(x, sel)    extract32((x)->word[0], (16 * (sel)) + 6, 2)
-+#define CD_EPD(x, sel)   extract32((x)->word[0], (16 * (sel)) + 14, 1)
-+#define CD_ENDI(x)       extract32((x)->word[0], 15, 1)
-+#define CD_IPS(x)        extract32((x)->word[1], 0 , 3)
-+#define CD_AFFD(x)       extract32((x)->word[1], 3 , 1)
-+#define CD_TBI(x)        extract32((x)->word[1], 6 , 2)
-+#define CD_HD(x)         extract32((x)->word[1], 10 , 1)
-+#define CD_HA(x)         extract32((x)->word[1], 11 , 1)
-+#define CD_S(x)          extract32((x)->word[1], 12, 1)
-+#define CD_R(x)          extract32((x)->word[1], 13, 1)
-+#define CD_A(x)          extract32((x)->word[1], 14, 1)
-+#define CD_AARCH64(x)    extract32((x)->word[1], 9 , 1)
++typedef uint32_t (*QOSIOMMUTestdevSetupFn)(void *opaque);
++typedef uint32_t (*QOSIOMMUTestdevAttrsFn)(void *opaque);
++typedef bool (*QOSIOMMUTestdevValidateFn)(void *opaque);
++typedef void (*QOSIOMMUTestdevReportFn)(void *opaque, uint32_t dma_result);
 +
-+/* MMIO Registers */
++typedef struct QOSIOMMUTestdevDmaCfg {
++    QPCIDevice *dev;
++    QPCIBar bar;
++    uint64_t iova;
++    uint64_t gpa;
++    uint32_t len;
++} QOSIOMMUTestdevDmaCfg;
 +
-+REG32(IDR0,                0x0)
-+    FIELD(IDR0, S2P,         0 , 1)
-+    FIELD(IDR0, S1P,         1 , 1)
-+    FIELD(IDR0, TTF,         2 , 2)
-+    FIELD(IDR0, COHACC,      4 , 1)
-+    FIELD(IDR0, BTM,         5 , 1)
-+    FIELD(IDR0, HTTU,        6 , 2)
-+    FIELD(IDR0, DORMHINT,    8 , 1)
-+    FIELD(IDR0, HYP,         9 , 1)
-+    FIELD(IDR0, ATS,         10, 1)
-+    FIELD(IDR0, NS1ATS,      11, 1)
-+    FIELD(IDR0, ASID16,      12, 1)
-+    FIELD(IDR0, MSI,         13, 1)
-+    FIELD(IDR0, SEV,         14, 1)
-+    FIELD(IDR0, ATOS,        15, 1)
-+    FIELD(IDR0, PRI,         16, 1)
-+    FIELD(IDR0, VMW,         17, 1)
-+    FIELD(IDR0, VMID16,      18, 1)
-+    FIELD(IDR0, CD2L,        19, 1)
-+    FIELD(IDR0, VATOS,       20, 1)
-+    FIELD(IDR0, TTENDIAN,    21, 2)
-+    FIELD(IDR0, ATSRECERR,   23, 1)
-+    FIELD(IDR0, STALL_MODEL, 24, 2)
-+    FIELD(IDR0, TERM_MODEL,  26, 1)
-+    FIELD(IDR0, STLEVEL,     27, 2)
-+    FIELD(IDR0, RME_IMPL,    30, 1)
++uint32_t qos_iommu_testdev_trigger_dma(QPCIDevice *dev, QPCIBar bar,
++                                       uint64_t iova, uint64_t gpa,
++                                       uint32_t len, uint32_t attrs);
 +
-+REG32(IDR1,                0x4)
-+    FIELD(IDR1, SIDSIZE,      0 , 6)
-+    FIELD(IDR1, SSIDSIZE,     6 , 5)
-+    FIELD(IDR1, PRIQS,        11, 5)
-+    FIELD(IDR1, EVENTQS,      16, 5)
-+    FIELD(IDR1, CMDQS,        21, 5)
-+    FIELD(IDR1, ATTR_PERMS_OVR, 26, 1)
-+    FIELD(IDR1, ATTR_TYPES_OVR, 27, 1)
-+    FIELD(IDR1, REL,          28, 1)
-+    FIELD(IDR1, QUEUES_PRESET, 29, 1)
-+    FIELD(IDR1, TABLES_PRESET, 30, 1)
-+    FIELD(IDR1, ECMDQ,        31, 1)
++void qos_iommu_testdev_single_translation(const QOSIOMMUTestdevDmaCfg *dma,
++                                          void *opaque,
++                                          QOSIOMMUTestdevSetupFn setup_fn,
++                                          QOSIOMMUTestdevAttrsFn attrs_fn,
++                                          QOSIOMMUTestdevValidateFn validate_fn,
++                                          QOSIOMMUTestdevReportFn report_fn,
++                                          uint32_t *dma_result_out);
 +
-+#define SMMU_IDR1_SIDSIZE 16
-+#define SMMU_CMDQS   19
-+#define SMMU_EVENTQS 19
-+
-+REG32(IDR2,                0x8)
-+     FIELD(IDR2, BA_VATOS, 0, 10)
-+
-+REG32(IDR3,                0xc)
-+     FIELD(IDR3, HAD,         2, 1);
-+     FIELD(IDR3, PBHA,        3, 1);
-+     FIELD(IDR3, XNX,         4, 1);
-+     FIELD(IDR3, PPS,         5, 1);
-+     FIELD(IDR3, MPAM,        7, 1);
-+     FIELD(IDR3, FWB,         8, 1);
-+     FIELD(IDR3, STT,         9, 1);
-+     FIELD(IDR3, RIL,        10, 1);
-+     FIELD(IDR3, BBML,       11, 2);
-+     FIELD(IDR3, E0PD,       13, 1);
-+     FIELD(IDR3, PTWNNC,     14, 1);
-+     FIELD(IDR3, DPT,        15, 1);
-+
-+REG32(IDR4,                0x10)
-+
-+REG32(IDR5,                0x14)
-+     FIELD(IDR5, OAS,         0, 3);
-+     FIELD(IDR5, GRAN4K,      4, 1);
-+     FIELD(IDR5, GRAN16K,     5, 1);
-+     FIELD(IDR5, GRAN64K,     6, 1);
-+     FIELD(IDR5, VAX,        10, 2);
-+     FIELD(IDR5, STALL_MAX,  16, 16);
-+
-+#define SMMU_IDR5_OAS 4
-+
-+REG32(IIDR,                0x18)
-+REG32(AIDR,                0x1c)
-+REG32(CR0,                 0x20)
-+    FIELD(CR0, SMMU_ENABLE,   0, 1)
-+    FIELD(CR0, EVENTQEN,      2, 1)
-+    FIELD(CR0, CMDQEN,        3, 1)
-+
-+#define SMMU_CR0_RESERVED 0xFFFFFC20
-+
-+REG32(CR0ACK,              0x24)
-+REG32(CR1,                 0x28)
-+REG32(CR2,                 0x2c)
-+REG32(STATUSR,             0x40)
-+REG32(GBPA,                0x44)
-+    FIELD(GBPA, ABORT,        20, 1)
-+    FIELD(GBPA, UPDATE,       31, 1)
-+
-+/* Use incoming. */
-+#define SMMU_GBPA_RESET_VAL 0x1000
-+
-+REG32(IRQ_CTRL,            0x50)
-+    FIELD(IRQ_CTRL, GERROR_IRQEN,        0, 1)
-+    FIELD(IRQ_CTRL, PRI_IRQEN,           1, 1)
-+    FIELD(IRQ_CTRL, EVENTQ_IRQEN,        2, 1)
-+
-+REG32(IRQ_CTRL_ACK,        0x54)
-+REG32(GERROR,              0x60)
-+    FIELD(GERROR, CMDQ_ERR,           0, 1)
-+    FIELD(GERROR, EVENTQ_ABT_ERR,     2, 1)
-+    FIELD(GERROR, PRIQ_ABT_ERR,       3, 1)
-+    FIELD(GERROR, MSI_CMDQ_ABT_ERR,   4, 1)
-+    FIELD(GERROR, MSI_EVENTQ_ABT_ERR, 5, 1)
-+    FIELD(GERROR, MSI_PRIQ_ABT_ERR,   6, 1)
-+    FIELD(GERROR, MSI_GERROR_ABT_ERR, 7, 1)
-+    FIELD(GERROR, MSI_SFM_ERR,        8, 1)
-+
-+REG32(GERRORN,             0x64)
-+
-+#define A_GERROR_IRQ_CFG0  0x68 /* 64b */
-+REG32(GERROR_IRQ_CFG1, 0x70)
-+REG32(GERROR_IRQ_CFG2, 0x74)
-+
-+#define A_STRTAB_BASE      0x80 /* 64b */
-+
-+#define SMMU_BASE_ADDR_MASK 0xfffffffffffc0
-+
-+REG32(STRTAB_BASE_CFG,     0x88)
-+    FIELD(STRTAB_BASE_CFG, FMT,      16, 2)
-+    FIELD(STRTAB_BASE_CFG, SPLIT,    6 , 5)
-+    FIELD(STRTAB_BASE_CFG, LOG2SIZE, 0 , 6)
-+
-+#define A_CMDQ_BASE        0x90 /* 64b */
-+REG32(CMDQ_PROD,           0x98)
-+REG32(CMDQ_CONS,           0x9c)
-+    FIELD(CMDQ_CONS, ERR, 24, 7)
-+
-+#define A_EVENTQ_BASE      0xa0 /* 64b */
-+REG32(EVENTQ_PROD,         0xa8)
-+REG32(EVENTQ_CONS,         0xac)
-+
-+#define A_EVENTQ_IRQ_CFG0  0xb0 /* 64b */
-+REG32(EVENTQ_IRQ_CFG1,     0xb8)
-+REG32(EVENTQ_IRQ_CFG2,     0xbc)
-+
-+#define A_IDREGS           0xfd0
-+
-+/* Commands */
-+
-+typedef enum SMMUCommandType {
-+    SMMU_CMD_NONE            = 0x00,
-+    SMMU_CMD_PREFETCH_CONFIG       ,
-+    SMMU_CMD_PREFETCH_ADDR,
-+    SMMU_CMD_CFGI_STE,
-+    SMMU_CMD_CFGI_STE_RANGE,
-+    SMMU_CMD_CFGI_CD,
-+    SMMU_CMD_CFGI_CD_ALL,
-+    SMMU_CMD_CFGI_ALL,
-+    SMMU_CMD_TLBI_NH_ALL     = 0x10,
-+    SMMU_CMD_TLBI_NH_ASID,
-+    SMMU_CMD_TLBI_NH_VA,
-+    SMMU_CMD_TLBI_NH_VAA,
-+    SMMU_CMD_TLBI_EL3_ALL    = 0x18,
-+    SMMU_CMD_TLBI_EL3_VA     = 0x1a,
-+    SMMU_CMD_TLBI_EL2_ALL    = 0x20,
-+    SMMU_CMD_TLBI_EL2_ASID,
-+    SMMU_CMD_TLBI_EL2_VA,
-+    SMMU_CMD_TLBI_EL2_VAA,
-+    SMMU_CMD_TLBI_S12_VMALL  = 0x28,
-+    SMMU_CMD_TLBI_S2_IPA     = 0x2a,
-+    SMMU_CMD_TLBI_NSNH_ALL   = 0x30,
-+    SMMU_CMD_ATC_INV         = 0x40,
-+    SMMU_CMD_PRI_RESP,
-+    SMMU_CMD_RESUME          = 0x44,
-+    SMMU_CMD_STALL_TERM,
-+    SMMU_CMD_SYNC,
-+} SMMUCommandType;
-+
-+#endif /* HW_ARM_SMMUV3_COMMON_H */
++#endif /* QTEST_LIBQOS_IOMMU_TESTDEV_H */
 -- 
 2.34.1
 
