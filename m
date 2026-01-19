@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A237D2ECEB
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 21:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A334ED2ECE6
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 21:30:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhwp0-0005mI-9y; Mon, 19 Jan 2026 16:30:02 -0500
+	id 1vhwp1-0005z0-KZ; Mon, 19 Jan 2026 16:30:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vhwoE-0003Cg-CB
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 16:29:20 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vhwnn-0002Oa-8a
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 16:28:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vhwoC-0008U5-KQ
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 16:29:14 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vhwnj-000847-Pu
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 16:28:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768858151;
+ s=mimecast20190719; t=1768858121;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=37eYZjfLDDKfcsWVFesPB0ivB7/znnlKkL/aeD6vYe0=;
- b=CY37R5wsFFZ1QMiPOvy9HGXYebcfmCUI/8tQdnZEMZK+9GeoXs+Oc9RrURHb1WssytUmFl
- e//GKllB19VwfF6cs1DN8GsKymZTKEddleZUenWZLNGQhf5MdHv7qDn46BxENNrbuTe6b+
- GqTf7Ss+EWfaR4yaqTS6x06VE7Or8+c=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=CsQrTEcN9Hns4oSyVxG40f0aNlBrrfDnWF2j79Eoezo=;
+ b=LnOSrq7pmmsJbtOtbVurFEwz2AhIs0tV2vSbybukHGoCYayGLCTPRDLzSK9pikfGcVB9Q1
+ GF9Q+AQDHpJe0YAuicifE/qTX33Ee2ihxWy7pRZUL7oQf8nsv6+eWxFT+3U2RXSmIr7MLH
+ 2fVQRoBVhPLmJGeF/DR/kSrNZYOI8ak=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-rq84weV5MTOenRFLs706EQ-1; Mon,
- 19 Jan 2026 16:29:08 -0500
-X-MC-Unique: rq84weV5MTOenRFLs706EQ-1
-X-Mimecast-MFC-AGG-ID: rq84weV5MTOenRFLs706EQ_1768858146
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-101-8T_iaa1QOWWiudWV2cYqAw-1; Mon,
+ 19 Jan 2026 16:28:37 -0500
+X-MC-Unique: 8T_iaa1QOWWiudWV2cYqAw-1
+X-Mimecast-MFC-AGG-ID: 8T_iaa1QOWWiudWV2cYqAw_1768858115
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9FF4A19560B5; Mon, 19 Jan 2026 21:29:06 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A23818005B0; Mon, 19 Jan 2026 21:28:35 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.170])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B41E019560AB; Mon, 19 Jan 2026 21:29:03 +0000 (UTC)
+ id 7485319560AB; Mon, 19 Jan 2026 21:28:32 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -61,10 +61,9 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v4 16/17] python: update README.rst to reflect qemu.qmp's
- removal
-Date: Mon, 19 Jan 2026 16:27:42 -0500
-Message-ID: <20260119212744.1275455-17-jsnow@redhat.com>
+Subject: [PATCH v4 07/17] tests: use "run" script to execute device-crash-test
+Date: Mon, 19 Jan 2026 16:27:33 -0500
+Message-ID: <20260119212744.1275455-8-jsnow@redhat.com>
 In-Reply-To: <20260119212744.1275455-1-jsnow@redhat.com>
 References: <20260119212744.1275455-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -79,7 +78,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,98 +94,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer simply possible to just use this directory as if it were
-an installed package now that it has dependencies, so update the README
-to reflect this.
+Instead of invoking python from the configure venv manually, instruct
+developers to use the "run" script instead. Change the test invocation
+to be a good example going forward.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/README.rst | 50 ++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 43 insertions(+), 7 deletions(-)
+ .gitlab-ci.d/buildtest.yml | 6 +++---
+ scripts/device-crash-test  | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/python/README.rst b/python/README.rst
-index d62e71528d2..2accfd7760e 100644
---- a/python/README.rst
-+++ b/python/README.rst
-@@ -3,7 +3,17 @@ QEMU Python Tooling
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 4c280dd29bc..b2db70ff904 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -102,7 +102,7 @@ crash-test-debian:
+   script:
+     - cd build
+     - make NINJA=":" check-venv
+-    - pyvenv/bin/python3 scripts/device-crash-test -q --tcg-only ./qemu-system-i386
++    - ./run scripts/device-crash-test -q --tcg-only ./qemu-system-i386
  
- This directory houses Python tooling used by the QEMU project to build,
- configure, and test QEMU. It is organized by namespace (``qemu``), and
--then by package (e.g. ``qemu/machine``, ``qemu/qmp``, etc).
-+then by package (e.g. ``qemu/machine``, ``qemu/utils``, etc).
-+
-+These tools and libraries are installed to the QEMU configure-time
-+Python virtual environment by default (see qemu.git/pythondeps.toml
-+"tooling" group), and are available for use by any Python script
-+executed by the build system. To have these libraries available for
-+manual invocations of scripts, use of the "run" script executable in
-+your build directory is recommended.
-+
-+General structure
-+-----------------
+ build-system-fedora:
+   extends:
+@@ -159,8 +159,8 @@ crash-test-fedora:
+   script:
+     - cd build
+     - make NINJA=":" check-venv
+-    - pyvenv/bin/python3 scripts/device-crash-test -q ./qemu-system-ppc
+-    - pyvenv/bin/python3 scripts/device-crash-test -q ./qemu-system-riscv32
++    - ./run scripts/device-crash-test -q ./qemu-system-ppc
++    - ./run scripts/device-crash-test -q ./qemu-system-riscv32
  
- ``setup.py`` is used by ``pip`` to install this tooling to the current
- environment. ``setup.cfg`` provides the packaging configuration used by
-@@ -20,9 +30,9 @@ environment. ``setup.cfg`` provides the packaging configuration used by
+ build-system-centos:
+   extends:
+diff --git a/scripts/device-crash-test b/scripts/device-crash-test
+index f97d9909c05..8a91dcaee31 100755
+--- a/scripts/device-crash-test
++++ b/scripts/device-crash-test
+@@ -42,7 +42,7 @@ except ModuleNotFoundError as exc:
+     print(f"Module '{exc.name}' not found.")
+     print("  Try 'make check-venv' from your build directory,")
+     print("  and then one way to run this script is like so:")
+-    print(f'  > $builddir/pyvenv/bin/python3 "{path}"')
++    print(f'  > $builddir/run "{path}"')
+     sys.exit(1)
  
- If you append the ``--editable`` or ``-e`` argument to either invocation
- above, pip will install in "editable" mode. This installs the package as
--a forwarder ("qemu.egg-link") that points to the source tree. In so
--doing, the installed package always reflects the latest version in your
--source tree.
-+a forwarder that points to the source tree. In so doing, the installed
-+package always reflects the latest version in your source tree. This is
-+the mode used to install these packages at configure time.
- 
- Installing ".[devel]" instead of "." will additionally pull in required
- packages for testing this package. They are not runtime requirements,
-@@ -40,8 +50,18 @@ for more information.
- Using these packages without installing them
- --------------------------------------------
- 
--These packages may be used without installing them first, by using one
--of two tricks:
-+It is no longer recommended to try to use these packages without
-+installing them to a virtual environment, but depending on your use
-+case, it may still be possible to do.
-+
-+The "qemu.qmp" library is now hosted outside of the qemu.git repository,
-+and the "qemu.machine" library that remains in-tree here has qemu.qmp as
-+a dependency. It is possible to install "qemu.qmp" independently and
-+then use the rest of these packages without installing them, but be
-+advised that if future dependencies are introduced, bypassing the
-+installation phase may introduce breakages to your script in the future.
-+
-+That said, you can use these packages without installing them by either:
- 
- 1. Set your PYTHONPATH environment variable to include this source
-    directory, e.g. ``~/src/qemu/python``. See
-@@ -61,8 +81,24 @@ invoke them without installation, you can invoke e.g.:
- 
- ``> PYTHONPATH=~/src/qemu/python python3 -m qemu.qmp.qmp_shell``
- 
-+Or, with the runscript available in the QEMU build directory, simply:
-+
-+``> $builddir/run qmp-shell``
-+
- The mappings between console script name and python module path can be
--found in ``setup.cfg``.
-+found in ``setup.cfg``, but the console scripts available are listed
-+here for reference:
-+
-+* ``qemu-ga-client``
-+* ``qmp-shell``
-+* ``qmp-shell-wrap``
-+* ``qmp-tui`` (prototype urwid interface for async QMP)
-+* ``qom``
-+* ``qom-fuse`` (requires fusepy to be installed!)
-+* ``qom-get``
-+* ``qom-list``
-+* ``qom-set``
-+* ``qom-tree``
- 
- 
- Files in this directory
+ logger = logging.getLogger('device-crash-test')
 -- 
 2.52.0
 
