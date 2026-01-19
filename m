@@ -4,47 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 633C4D29C2D
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 14:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F07D29C2D
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 14:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhptd-00042I-Lo; Mon, 19 Jan 2026 09:06:21 -0500
+	id 1vhpwq-00064i-S5; Mon, 19 Jan 2026 09:09:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vhptU-0003u7-Mp; Mon, 19 Jan 2026 09:06:13 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vhptT-0006Y9-28; Mon, 19 Jan 2026 09:06:12 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B481D17FD47;
- Mon, 19 Jan 2026 17:05:43 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8BB4C350E62;
- Mon, 19 Jan 2026 17:05:59 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PATCH trivial v2 7/7] rename CONFIG_EPOLL_CREATE1 to CONFIG_EPOLL,
- and stop checking for epoll in meson.build
-Date: Mon, 19 Jan 2026 17:05:54 +0300
-Message-ID: <20260119140557.2167351-4-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260119140557.2167351-1-mjt@tls.msk.ru>
-References: <20260119140557.2167351-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhpwm-00062F-TP
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 09:09:37 -0500
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhpwk-000759-FZ
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 09:09:35 -0500
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-47ee301a06aso39641015e9.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 06:09:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768831773; x=1769436573; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IwKIh8LIEad7aH6Tqt5/QHLConUDcBI4y2gsj9RRJfA=;
+ b=TuZILqF997+21e8wY+7NaeYDBOAIom7o1KwhqZMIvl9My6aQsne2Fm0FOSSeVzNGvm
+ WsRpim479MV+LGWBeBZ2XFcVuchM6rJNDWluTX309dljUnQBGwcqxDdRWbVw7KjCiiwi
+ f1cOX8muoBoAEmOhh6uB1PEmPBTpg+ZI21XxUxFUjHg0QaVVyca9s8IfM2F61rTSfDDM
+ iEMMSsheKCeGcq9AzFVAGmrnEvJgluleyQ61IV7RPSBEZm2DG4VFRwYShBQX1YEFhKOB
+ pnnPAk0LSWFSVBAN+sR19Ly6JV3conTyoI535WdHAcbDssqWtZn7Mqr8DZeoUv3+FXW+
+ dN9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768831773; x=1769436573;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IwKIh8LIEad7aH6Tqt5/QHLConUDcBI4y2gsj9RRJfA=;
+ b=aLWIrUXK6UF95fw7Y/SCPvWJKexPMlclZxjBkyG5iCydgTGoenYKKhqJZwpc55hB3Y
+ u/gD7D1JY3b/Yxz6H1aPIMnXsk/OJfoOkqno7z27Tu/YHxz8xEDcxER/N8RVtq1ayGgR
+ h4x4MG/GhH/UV822STLOnCcRiN00sYSBoQ6+h+gNl1w/pbAQwwmmWJKQqGNP1VM+PDnf
+ fE+ylUoyQamYVWwAmCcVxZS5G8zryvaaYiO+YfLOhz/kO/7K7u5jWbV/AxNPTMu0kKj/
+ qytRbNepMIREFihGoJQtg4cfdOsqjNkQTbiNr8gFrlvNnbwNoahBAv7qBMHy8U+c6NTp
+ lK3w==
+X-Gm-Message-State: AOJu0YyxLqpcvoS0NNrbcabSxPcaA6Bx3TSKFfOwvhRhUERdU86GPJdO
+ ofQg0kI47wWXOkn4R3y7puH3aLaulZucLeW8UfFhIwjbtfCmFsMHfdmIdza/GTaL2zg=
+X-Gm-Gg: AY/fxX7T3V/Xz/DPEGlpLiNJ96gaOhSjrCUAxHujUXGDrnJ3GlzVdqYJFVgzrT2IYFw
+ KjXWJTN3y2hDEWcqQW4pqNk1f7zge11Yl6mrZoP4J+KpiAUGlmq4+/yKdFBhwFVTqZSipzzoCBU
+ It0ngiCBavthOWFC5DeAVIpgYvvrnq8GsoAHjAEJy2q27xhmTWrlWDc5wQMROUkiN0z1F7ATC7v
+ 2EZJmexbqXqbDr4GiSx80Nf1O0iheu6VNwyyJVvZpWU0NBg0AJ/WmbOmY5EySb8tbH2B7HWD4JV
+ 7wHyUqVKxIndR+NJI0hI7AGIxPCfQZGEI05IFtSoG7gKQYTv4rL9pAz4yyQLD/ppI6VLMT67CBa
+ oy6IL61/YuXgBROgQ2I4vofGsMRcR7OrG1eK0OGVMj653fZtQrQ9INLKPNAfs4aBoAaAG8wSOVJ
+ e27tRl8LDVXvniBPshp3F8dZ54ZKPISPEF7/zTYKkwviMsRbsDxctPqeUn5Oc+fVR2
+X-Received: by 2002:a05:600c:310c:b0:47e:e20e:bbb2 with SMTP id
+ 5b1f17b1804b1-4801eaadcc0mr133159705e9.7.1768831772723; 
+ Mon, 19 Jan 2026 06:09:32 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4801fe47dddsm81031305e9.13.2026.01.19.06.09.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Jan 2026 06:09:32 -0800 (PST)
+Message-ID: <82fd0099-8041-43c2-9c4e-94c9f0398fac@linaro.org>
+Date: Mon, 19 Jan 2026 15:09:30 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v8 0/7] hw/misc: Introduce a generalized IOMMU test framework
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, eric.auger@redhat.com,
+ Tao Tang <tangtao1634@phytium.com.cn>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+References: <20251224034647.2596434-1-tangtao1634@phytium.com.cn>
+ <6d50c3fe-e235-48e8-b461-fe0689f12070@phytium.com.cn>
+ <9fba7ded-d31d-4789-b83d-efcc96f5448e@linaro.org>
+ <10e1b40c-2edd-400f-8c8e-e0f3ad4c6f75@redhat.com>
+ <7881bfff-59f0-496f-967e-32a697ff11fb@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <7881bfff-59f0-496f-967e-32a697ff11fb@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,69 +112,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since CONFIG_EPOLL is now unused, it's okay to
-perform this rename, to make it less ugly.
+On 15/1/26 21:56, Pierrick Bouvier wrote:
+> On 1/15/26 9:47 AM, Eric Auger wrote:
+>> Hi Pierrick,
+>>
+>> On 1/15/26 12:39 AM, Pierrick Bouvier wrote:
+>>> On 1/14/26 5:30 AM, Tao Tang wrote:
+>>>>
+>>>> A gentle ping on this series. Any further suggestions would be greatly
+>>>> appreciated.
+>>>>
+>>>>
+>>>> Link:
+>>>>
+>>>> https://lore.kernel.org/qemu-devel/20251224034647.2596434-1- 
+>>>> tangtao1634@phytium.com.cn/
+>>>>
+>>>>
+>>>>
+>>>> Best regards,
+>>>>
+>>>> Tao
+>>>>
+>>> This version is in good shape and is ready to be merged.
+>>> Eric, do you feel like merging it, or would you prefer someone else to
+>>> pick it up?
+>>
+>> Peter generally sends the PRs for the vSMMU. Maybe this can also be
+>> taken by qtests maintainers too.
+>>
+>> Thanks
+>>
+>> Eric
+>>>
+>>> Regards,
+>>> Pierrick
+>>>
+>>
+> 
+> Ok, thanks.
+> We really need to help Tao to get this in, as it's really useful and he 
+> put a lot of effort into it, and waiting times between two reviews makes 
+> it probably a bit complicated for him.
 
-Since epoll is linux-specific and is always present on linux,
-define CONFIG_EPOLL to 1 on linux, without compile-time test.
-
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- meson.build      | 3 +--
- util/aio-posix.h | 4 ++--
- util/meson.build | 2 +-
- 3 files changed, 4 insertions(+), 5 deletions(-)
-
-diff --git a/meson.build b/meson.build
-index f4eae50764..157189e306 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2673,8 +2673,7 @@ config_host_data.set('CONFIG_INOTIFY1', have_inotify_init1)
- # has_header_symbol
- config_host_data.set('CONFIG_BLKZONED',
-                      cc.has_header_symbol('linux/blkzoned.h', 'BLKOPENZONE'))
--config_host_data.set('CONFIG_EPOLL_CREATE1',
--                     cc.has_header_symbol('sys/epoll.h', 'epoll_create1'))
-+config_host_data.set('CONFIG_EPOLL', host_os == 'linux')
- config_host_data.set('CONFIG_FALLOCATE_PUNCH_HOLE',
-                      cc.has_header_symbol('linux/falloc.h', 'FALLOC_FL_PUNCH_HOLE') and
-                      cc.has_header_symbol('linux/falloc.h', 'FALLOC_FL_KEEP_SIZE'))
-diff --git a/util/aio-posix.h b/util/aio-posix.h
-index 0cedb8d189..ab894a3c0f 100644
---- a/util/aio-posix.h
-+++ b/util/aio-posix.h
-@@ -52,7 +52,7 @@ extern const FDMonOps fdmon_poll_ops;
- /* Switch back to poll(2). list_lock must be held. */
- void fdmon_poll_downgrade(AioContext *ctx);
- 
--#ifdef CONFIG_EPOLL_CREATE1
-+#ifdef CONFIG_EPOLL
- bool fdmon_epoll_try_upgrade(AioContext *ctx, unsigned npfd);
- void fdmon_epoll_setup(AioContext *ctx);
- 
-@@ -71,7 +71,7 @@ static inline void fdmon_epoll_setup(AioContext *ctx)
- static inline void fdmon_epoll_disable(AioContext *ctx)
- {
- }
--#endif /* !CONFIG_EPOLL_CREATE1 */
-+#endif /* !CONFIG_EPOLL */
- 
- #ifdef CONFIG_LINUX_IO_URING
- bool fdmon_io_uring_setup(AioContext *ctx, Error **errp);
-diff --git a/util/meson.build b/util/meson.build
-index 59e835a8d3..8c01d7a3de 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -3,7 +3,7 @@ util_ss.add(files('thread-context.c'), numa)
- if host_os != 'windows'
-   util_ss.add(files('aio-posix.c'))
-   util_ss.add(files('fdmon-poll.c'))
--  if config_host_data.get('CONFIG_EPOLL_CREATE1')
-+  if config_host_data.get('CONFIG_EPOLL')
-     util_ss.add(files('fdmon-epoll.c'))
-   endif
-   util_ss.add(files('compatfd.c'))
--- 
-2.47.3
+Since this series subject starts with 'hw/misc:' I'll queue it via
+my hw-misc tree, thanks all!
 
 
