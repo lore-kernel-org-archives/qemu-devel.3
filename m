@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8838D2ECF5
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 23:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A6C4D2ECF5
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 23:50:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhz0H-0006Fw-Ml; Mon, 19 Jan 2026 18:49:49 -0500
+	id 1vhz0O-0006PZ-GT; Mon, 19 Jan 2026 18:49:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vhz0D-0006CD-GX
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 18:49:45 -0500
-Received: from mail-oo1-xc2c.google.com ([2607:f8b0:4864:20::c2c])
+ id 1vhz0M-0006OY-Rv
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 18:49:54 -0500
+Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raphael.s.norwitz@gmail.com>)
- id 1vhz0A-0005L0-Uk
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 18:49:45 -0500
-Received: by mail-oo1-xc2c.google.com with SMTP id
- 006d021491bc7-65f66d72b3fso3394262eaf.3
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 15:49:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768866581; cv=none;
+ id 1vhz0L-0005LV-Eg
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 18:49:54 -0500
+Received: by mail-oa1-x2b.google.com with SMTP id
+ 586e51a60fabf-4045e70f36eso2145238fac.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 15:49:53 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768866592; cv=none;
  d=google.com; s=arc-20240605;
- b=fYISpZQSuAlbr1XNltl9qXDaxudsn/X2xc9YIhpToDfyeXsOeKhAXIz5Fn23X8lTHs
- QFq0SdpgifyZZMVG/nQXlMbUAZeaTDGQOOYk5OcBnEqwaK3TugnQ+xTztuJA1wB6GzLT
- SKc871diFrc6o+vQvFjNBpnpfbP28w6tFJP9phk97ioc20l52vFdIPRhPI2CmqdNAzf4
- ypntxqsyv4VWhqJ8zVuGO1lHjmBFaJysF3DIT6hkDxibm2tE+CXLerHSPSxl9LIABclw
- rw1Cu6wl5XAj/lb9ca6Gn0BFS6vS7/P0tknYozAFJZJoxcbmMgJUcGxnqVwnn9ikHktX
- TLHg==
+ b=T6Pt82s3yRlllsrMWL+7fQ9U7/YxKTjInt6cWAY+tNQreRg1lpipZnDcVvqvQA1wM+
+ NCAi9DLU6cKQlx/4UZJ81OWL+zQaQqpFExxr60mn3+kujyb+EIlkBa+0ZtBoKtyON/YB
+ 3Mg0JB3UMWq2szOOW6/4xPzNtBiRFauQzNU3s5UMJrqa236BD55eF9aVxbkmExYCEQmq
+ YJRS9rUlg+HKf82ediMO3VHFhoF1gaB4D674Nu5GVLG4N149c3KQt1cmPmiHJ09nkWeT
+ CCyn5Ouisil1DuP8kZWg3L+7ARJ9rAdlHV8CMUs0gj+he3gFVW4WnG27VuGh3FjUR1T5
+ YpAA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=tvxlVcD8+4DFY4fVHXFvGn5sZjAGg6EQx9MJ/2mW8vA=;
- fh=CnpQ9w8dxxV0qThAonv4kzh72pl/i26JCorwSyvmGks=;
- b=RVBw3Per9D7aRLRxhxtvpNDPolNK5CJHd+BIzFmqojUQqKhjpRX6+DnBlNsIWP7OV7
- daDc1y3JONXbrhbRA029ZmZbh/iPegbWVwMLlxSPvpsoJTvexSJvw/v2nB6wiVowSG4h
- PmC6JwrSjVnIS0OsAYbZKw7l1XDcTjFCRn1ocB8mRwU2qwTYk/WGPDecACC6AqkHcKZH
- E3ujeQTZisZe7lwEHZmPN1fxeGx3cWhAN+GPmMc2/CiD8L1gGL+S2uwiTo9a+tsUmKUg
- CkSPIY9lG9o90NUJH5FqOebAyrwykm6LkQM3IU3wFYZiAyYfuTDkAAMZN18PeTKMtLI+
- txrA==; darn=nongnu.org
+ bh=UGm1NKEf7UM9QlU9jilzDTRbI1uUaP6wyzACI3va/HI=;
+ fh=ZNDD+KoGE6J2ViEo3ShEbUCyyLqxprhN9GVi8HtWc8E=;
+ b=M8F5ONGNduhZZeUPa8VLB4qs+wshR5qOqRvbybM02GwGK/71AYoltaakjeY/Xe6AzW
+ EVOWuHNjHicaQxCsFs/CYjEXZXI6icOHJj4lNz8VoIr0yecB1rSXomtGOwK37gLXiES7
+ 3AJiO6rYwgPG7tUfJk6OdTLwf4YD2x8RIMn/pucvuA79frfJoESEZp6smRikZYyJy1t1
+ 6zjCCco0ZBpMU1bxIHFHX8HwJLWkganecoF7uWDvPnAyelYgGzMJUOyfqC9tKbAKcUv7
+ sjXYi17Mddyy7KqNuFwBCC4eY/JwsV7b+kB79bx4AhFmnH6vYeDUXJUcTRfz8Wrzu54+
+ pA1Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768866581; x=1769471381; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1768866592; x=1769471392; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tvxlVcD8+4DFY4fVHXFvGn5sZjAGg6EQx9MJ/2mW8vA=;
- b=SqJrBS8Mf/7bzGSBleiXl/CiukSCLHpVRibD25b9jUeDjH9SrU/BoFVmOOsFW+Olrl
- MToK95ci4QLKOoUDvXaG8AL3rewV9GPI2y5CWjgOHtmeStbVs7sbh1FX55OPYqf/J8+p
- eXi3u5WNrXslybYgRzh31wkwA97MtQQ5DElfrWd/HmnThPP6eiF74LGBwm8v6JqNiXi2
- 1jfS99bSRS7h8J4t1NSFv2SfrjR5MSKM+Ghmix9GgalpwekFGxz2wMpW6rwD/1S0mKYK
- +X6MU37ERl4FOQjOC1P5vOU5NW6PdWngEirNtmFcWeAzFG1GoAyzlJVkWdExNPD5H6dD
- 2MYw==
+ bh=UGm1NKEf7UM9QlU9jilzDTRbI1uUaP6wyzACI3va/HI=;
+ b=e9b9Cza7AY8zozxDtvJMbGV1c83WQvfIqlsPW6omcnFhEtenUxnMLO3UMp9xOTPuYj
+ oE9AvLRSGQlGJFPI1OAKjsn8AkIdN6TDU8l/emG64dmB1x4Jf+6alUaVPGkv7F5CDXHN
+ keNRIT9WSvVAoLea9zEXiGBax2Hieu+TCcbz9J9zu0txXfvQmLHwWxXJn3Yplbf6P0dY
+ oOBRlr9Ml4xhxtF6dOhMVwypJy/LPsIvjf59ExLz2HRXZmhfREmje13m2UkGjlNybtqw
+ J8fD7Yl2mvLkOPn1YK5VP7VwZdCGP77pJ6XkzeksN3ongwYbtToQj9oAVmzV/rBuhfRR
+ 2qsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768866581; x=1769471381;
+ d=1e100.net; s=20230601; t=1768866592; x=1769471392;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=tvxlVcD8+4DFY4fVHXFvGn5sZjAGg6EQx9MJ/2mW8vA=;
- b=muN+dayGF2sGOG2OvvTqBbL5vq9mCyB9/pLU+U0PIqpi4pWeqZ9E4kAAL7bqIM1U0V
- y8tNsm5Fku75WVyCp3C8biUMRdBr7inIb5l98Wr/FawsAfis8FSzFiCxGpas4+un94mp
- R6F060KybrMSySjpBwAhqyORQDZtK23zXOrtwchYuazwLPuGgyUTn6NSoEW+QaOyEwj8
- lCapuewQA0KZU8CEwnOWeINuMMWWsdfpwtBw+V2s82bgLq81h3e+0VINiWValWTuIEOp
- L7fmNvCmjfNAdtIlbJ46rSUkImqz9wiCovSBOCnHUz9DytRbP0V4Yz6F9bCac3g9UQMr
- c6pQ==
+ bh=UGm1NKEf7UM9QlU9jilzDTRbI1uUaP6wyzACI3va/HI=;
+ b=HMlV8qP3gBUR6d/d5h3Fc7UJ7S2unkpZz2oH4NJ61ACoKz9bDu1BOlYuTlVzXyNvgE
+ q1wrovTQb3mouZiv3/8TLYyHY5xxIoi2Vb+jBvgyMCW7B/3savGZ75hQ1acMzMLwi5ci
+ j1eqqwqZgdwpsZhtaDf90UVIzLd/Jkj87uRKQFgceW2FWTqewsJN0usTaGOWuMNnopPx
+ XFOSFW61qqOQ9bbdmrL8Xg3N0I9hTBFcRQDDfJ+06rpdUBz2CgcfKsgBzpkiGES220Re
+ 5wMxPFlDhOYjt2Rv8ZQ9X5fpAi70Riu7IhdKWHWTfj3YIpXWbH8T7SJmgEkIIs2aBi7C
+ lDAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLfUozyvhXCJoKKXw3k03inCwr5SJ1rpxlgnEcPNvleun5DmtpAFaGV4s78IJEMHtmKcb21a3zHUnF@nongnu.org
-X-Gm-Message-State: AOJu0Yzl0PEWp5tiRsFj8xi8ju+/NDf0gBFKycDho650Re5ayuQ2ygpb
- XM8mq1o+p5wKrc0rkGzEEAQXy/CVu2V6kre0VpQ+KtgS5iGV1g1UMU0iQo2yMv5+hcrFv1JqsFr
- Uixv1y9jwVouD+NMgpAgG73Igc2b6SOg=
-X-Gm-Gg: AY/fxX4oSQnn6ODMJJMQ3JjJd890VRdSl5NZJSuOFej/mg0h9yT4I9ZGpgfV+bAeuxL
- p4zy8rLFh6THgn0DhCo6f6IDj0xU71UA/UNZIXkgkKuXJPuA6k1JRuKa3uvIc5RiEG7TJldFbA0
- mtghdbNjh4K/TPT44TPQlxn3AlPl20utZjpyP+YqXiCpm2ZpChGyeGCm9ZNe/bA4ooExnRcjrKz
- a9MCNPp0xppcbZbU/Eo12hFF8jrPKkhK7JEBg7ubLF0uw/1Zi3mI+gRt4HxlcDs85ZEXyfk5BFc
- XIHMZlh/bjVIJ66RyaSpxsxhwxM=
-X-Received: by 2002:a05:6820:c93:b0:65c:fb6e:7341 with SMTP id
- 006d021491bc7-662b00a54e9mr30323eaf.48.1768866580969; Mon, 19 Jan 2026
- 15:49:40 -0800 (PST)
+ AJvYcCUasm7wQMkhCnk6h698ziydHkx9Yy/SCfdyC8o6gUvQQIZmFjsO6Oitg8zJRn/w6vUgGkrxKJqcQYJu@nongnu.org
+X-Gm-Message-State: AOJu0YwQ4lYT96A2llvaEcOxYkRJ1Gn2rMCoG9xDq8+UVG5KzbXs4U/Y
+ C46LRHeEs2qJlBuijQpL2bvuQ7qkIdcvKaT725tpSNlHm0k7oV4+kUBTIGfZ7bwKExoHGkk3A7s
+ ad5sv7qlkH2FKehzqfWatDx/S/6JwontTuA9f
+X-Gm-Gg: AY/fxX7di9SvmerbSV2DcZg/j2hRksmdStl6c2McKjXtQHEcdTdlm1NpRM1mwBnpG53
+ sdbbxh7AVUiKr9AKY3a7ZNdr/MgdIZ8I8A3jc0/ivrvbvcGUqBZwB5yVtAbQozBS5JyHVsC5yLO
+ qB43aM+pmpDGz5RrcjDf/YYePceM9Di6XE76qVG1SAuNy5TVsJQFJ33SOoZnzVEESuwhe8W5PWn
+ rW1p5FvUg3/+HTNpyz/2pNzepymo6cWZeIu7Ox8LXz7fzlpX27UDN1eMoNULBFR+zt9c1wopbBo
+ SYH2J+h0KUeiCBTnFWzYkb6vfmU=
+X-Received: by 2002:a05:6820:2d09:b0:659:9a49:8f1f with SMTP id
+ 006d021491bc7-662b0042330mr33620eaf.48.1768866592064; Mon, 19 Jan 2026
+ 15:49:52 -0800 (PST)
 MIME-Version: 1.0
 References: <20260119185228.203296-1-vsementsov@yandex-team.ru>
- <20260119185228.203296-12-vsementsov@yandex-team.ru>
-In-Reply-To: <20260119185228.203296-12-vsementsov@yandex-team.ru>
+ <20260119185228.203296-16-vsementsov@yandex-team.ru>
+In-Reply-To: <20260119185228.203296-16-vsementsov@yandex-team.ru>
 From: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Date: Mon, 19 Jan 2026 18:49:30 -0500
-X-Gm-Features: AZwV_Qgc3mKFwJPSMvoWPB5HpSgYhtAsojAUTUmwLYjf11vBh5fIZg6doUJNi1A
-Message-ID: <CAFubqFteXcVA-MP+Wkmvze-5GQbaWxurJTfdrOe4LQmO143Y4w@mail.gmail.com>
-Subject: Re: [PATCH v4 11/23] vhost: vhost_virtqueue_start(): fix failure path
+Date: Mon, 19 Jan 2026 18:49:40 -0500
+X-Gm-Features: AZwV_QizPXZa9vc07wg-it29M42FKKsv9DvbO5xobLH4Gg-M-cgh3GOEKdcmQyI
+Message-ID: <CAFubqFsEs4MgRfVqVYaLPEY+=DTo3=sa=9yvb9GEoTn7qR8LDA@mail.gmail.com>
+Subject: Re: [PATCH v4 15/23] vhost: vhost_virtqueue_start(): drop extra local
+ variables
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: mst@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net, 
  qemu-devel@nongnu.org, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2c;
- envelope-from=raphael.s.norwitz@gmail.com; helo=mail-oo1-xc2c.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2b;
+ envelope-from=raphael.s.norwitz@gmail.com; helo=mail-oa1-x2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,76 +125,56 @@ Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 On Mon, Jan 19, 2026 at 1:55=E2=80=AFPM Vladimir Sementsov-Ogievskiy
 <vsementsov@yandex-team.ru> wrote:
 >
-> We miss call to unmap in cases when vhost_memory_map() returns
-> lenght less than requested (still we consider such cases as an
-> error). Let's fix it in vhost_memory_map().
+> One letter named variables doesn't really help to read the code,
+> and they simply duplicate structure fields.
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  hw/virtio/vhost.c | 27 ++++++++++++++++++---------
->  1 file changed, 18 insertions(+), 9 deletions(-)
+>  hw/virtio/vhost.c | 13 +++----------
+>  1 file changed, 3 insertions(+), 10 deletions(-)
 >
 > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index 40440c6d68..1ef9b3ed6c 100644
+> index 06b0b34cd3..653cb706cc 100644
 > --- a/hw/virtio/vhost.c
 > +++ b/hw/virtio/vhost.c
-> @@ -454,11 +454,20 @@ static inline void vhost_dev_log_resize(struct vhos=
-t_dev *dev, uint64_t size)
->  }
->
->  static void *vhost_memory_map(struct vhost_dev *dev, hwaddr addr,
-> -                              hwaddr *plen, bool is_write)
-> +                              hwaddr len, bool is_write)
->  {
->      if (!vhost_dev_has_iommu(dev)) {
-> -        return address_space_map(dev->vdev->dma_as, addr, plen, is_write=
-,
-> -                                 MEMTXATTRS_UNSPECIFIED);
-> +        hwaddr mapped_len =3D len;
-> +        void *res =3D address_space_map(dev->vdev->dma_as, addr, &mapped=
-_len,
-> +                                      is_write, MEMTXATTRS_UNSPECIFIED);
-> +        if (!res) {
-> +            return NULL;
-> +        }
-> +        if (len !=3D mapped_len) {
-> +            address_space_unmap(dev->vdev->dma_as, res, mapped_len, 0, 0=
-);
-> +            return NULL;
-> +        }
-> +        return res;
->      } else {
->          return (void *)(uintptr_t)addr;
+> @@ -1277,7 +1277,6 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>      BusState *qbus =3D BUS(qdev_get_parent_bus(DEVICE(vdev)));
+>      VirtioBusState *vbus =3D VIRTIO_BUS(qbus);
+>      VirtioBusClass *k =3D VIRTIO_BUS_GET_CLASS(vbus);
+> -    hwaddr l;
+>      int r;
+>      int vhost_vq_index =3D dev->vhost_ops->vhost_get_vq_index(dev, idx);
+>      struct vhost_vring_file file =3D {
+> @@ -1302,23 +1301,17 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>          /* Queue might not be ready for start */
+>          return 0;
 >      }
-> @@ -1312,22 +1321,22 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
->      }
->
->      l =3D vq->desc_size;
-> -    vq->desc =3D vhost_memory_map(dev, vq->desc_phys, &l, false);
-> -    if (!vq->desc || l !=3D vq->desc_size) {
-> +    vq->desc =3D vhost_memory_map(dev, vq->desc_phys, l, false);
-> +    if (!vq->desc) {
+> -
+> -    l =3D vq->desc_size;
+> -    vq->desc =3D vhost_memory_map(dev, vq->desc_phys, l, false);
+> +    vq->desc =3D vhost_memory_map(dev, vq->desc_phys, vq->desc_size, fal=
+se);
+>      if (!vq->desc) {
 >          r =3D -ENOMEM;
->          goto fail_alloc_desc;
+>          goto fail;
 >      }
->
->      l =3D vq->avail_size;
-> -    vq->avail =3D vhost_memory_map(dev, vq->avail_phys, &l, false);
-> -    if (!vq->avail || l !=3D vq->avail_size) {
-> +    vq->avail =3D vhost_memory_map(dev, vq->avail_phys, l, false);
-> +    if (!vq->avail) {
+> -
+> -    l =3D vq->avail_size;
+> -    vq->avail =3D vhost_memory_map(dev, vq->avail_phys, l, false);
+> +    vq->avail =3D vhost_memory_map(dev, vq->avail_phys, vq->avail_size, =
+false);
+>      if (!vq->avail) {
 >          r =3D -ENOMEM;
->          goto fail_alloc_avail;
+>          goto fail;
 >      }
->
->      l =3D vq->used_size;
-> -    vq->used =3D vhost_memory_map(dev, vq->used_phys, &l, true);
-> -    if (!vq->used || l !=3D vq->used_size) {
-> +    vq->used =3D vhost_memory_map(dev, vq->used_phys, l, true);
-> +    if (!vq->used) {
+> -
+> -    l =3D vq->used_size;
+> -    vq->used =3D vhost_memory_map(dev, vq->used_phys, l, true);
+> +    vq->used =3D vhost_memory_map(dev, vq->used_phys, vq->used_size, tru=
+e);
+>      if (!vq->used) {
 >          r =3D -ENOMEM;
->          goto fail_alloc_used;
->      }
+>          goto fail;
 > --
 > 2.52.0
 >
