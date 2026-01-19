@@ -4,102 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F502D29C32
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 17:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D83F9D29C32
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 17:22:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhsv2-0003BH-Ec; Mon, 19 Jan 2026 12:20:00 -0500
+	id 1vhsxD-00048e-9Z; Mon, 19 Jan 2026 12:22:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vhsv0-00039k-C8
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 12:19:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vhsuy-0006Je-8J
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 12:19:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768843194;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5ZWyAsBGP6nJLhcouzi5Luuz27Zs34MPcP8bVQRe5uk=;
- b=Qvo+tTaAYqRg65om9tYd7Wi6ZDiTTsWRstMlkEaUtkdSdqNEgPx38TD4Oq/nL5csmoOdFC
- wSW5xUEncYjllUxU0k7vjBBe/oGk7nFmAOhp8X3GrgP6YvZugBVOrFS77zRyVsl2w8YiYQ
- +llkt4qfuNyDzHXzo5lhkDPd/sR+C6A=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-4XCjHNdVMpOO9vmbeHLqlw-1; Mon, 19 Jan 2026 12:19:52 -0500
-X-MC-Unique: 4XCjHNdVMpOO9vmbeHLqlw-1
-X-Mimecast-MFC-AGG-ID: 4XCjHNdVMpOO9vmbeHLqlw_1768843192
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-78f92e123f5so58775687b3.2
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 09:19:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhsxB-00048K-21
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 12:22:13 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhsx8-0007As-9k
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 12:22:12 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-4327778df7fso2847184f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 09:22:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768843192; x=1769447992; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5ZWyAsBGP6nJLhcouzi5Luuz27Zs34MPcP8bVQRe5uk=;
- b=fIIPch/JazOS2OuXNhtNFQ6f2wtfZMMSzLLE5acemA5RO8Br+5r0ErMbBlbJiC0ZvN
- FiM6ihLt3uL4DXftiXVpm2BwJBh8BWzLvVk2xm7z7afw0B9MuNglQLvs0IRjl3kG9tpw
- 6D8GAD2j2ZnuNifDWB/819GAGNb6YuGTZY3ioVB+sgTi4wJetbVcF3ot0FzVm8jstbSn
- MauP9USln4yDmpPiVnhKsYXoB8I3NopHGA4rY3ec52vTrcMVqz0ghJipHSn40kn6H9u1
- owZ3SO8RPBE5oFvjgxRiVipfncCiuxg76TWUDcP+G1F0QCrwuZ2YREW9YaZ5sIs0vx1z
- dFvA==
+ d=linaro.org; s=google; t=1768843328; x=1769448128; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Q/wgF+H9GfM+z8bC8gU+mH2o00CJyhPHg4kxrg6q5FE=;
+ b=X564E1My25C4crAsUD/eKnTU+Jqzo3sDCYXPsBC/bMsVDIMBVVtC/g7iLjd9XJfq6J
+ UtG6tn/a5e0j2Lm41eEt7c7oMGN8fHbTODebCQenGYyiQ2MxfWWhg8KQyGAt7ZlUoBZw
+ rmObHue84A7l9wpT21oXks4/WhVPnaF6nRbud+oau+zFis7O7P0cf+EcTaRjLexMFceo
+ pm0nVf/B7A7Ur4B8gKa7R3zBrqpQnjkq6kvzX4asOwBMGztaHWegtBsQo7XoIpD5zx8R
+ Lyi5a20ayt8f0D7pWI2ZVyaU3RTAUTevLmLfQgrwYMr5lbb3j2C4WwKhDUEsDs8NwZVY
+ Es+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768843192; x=1769447992;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=5ZWyAsBGP6nJLhcouzi5Luuz27Zs34MPcP8bVQRe5uk=;
- b=ScRjZem+hbWbnnvhN0S6iqZ5avzJax86TynyjthqZxu0yCk4XZm8gfxXy6BqSTP5g4
- u4TYImuhjnZ6JpUwLT8x36muwWRtogzVeQvIt0CC9NQ6Sbe/kJG7fL/Zsz8fsBse6/H1
- usdmlI+XJpp3zKUGynOFHZcgQbuUTlk/73jHp/A4ieUv5rKS+atnyblTl+hOE1EjT8ng
- hjmeNDU2GeMOvRJ7nS8FhdLVlbLQwvxWYx0rMS9e7GjByfKVug9tWvRH+R6jCUMyQYOt
- 75BivMtIwkQDAyIurHO3jQrvYo/WURCtv7v3FD1zY4veJUhwt8QUbfY6/yzwZTvP9web
- APww==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV38Y9ufifgwaNvOQBoxkp5grCsIRY1sbIo2kHNuepTGOjeoQ4m1GcgeJQ9CzVvjv5tYDZuQ3nFr9OP@nongnu.org
-X-Gm-Message-State: AOJu0Yzu/CJm6M7LDtmJlyFB8dwdSXTRwyzaYl2P9b3nLpJFY2wooUOK
- fj95QAqJJkP6+3Il8OzAlFKgX+SHL8QXbrCKCJqTfIuV4z5PR78Li+Si+oT8YRAMbVAn6haU28o
- 8lWY5cyIWtihVdm8zw7Yfc/lFdUO0ZMST3ruP39OHOkrJFmjHGnEWH6K9e4ynyBuo3hKSne+ICh
- HjcSi6NvUnQQL1PntLYeGy64hoDj53vPU=
-X-Gm-Gg: AZuq6aJ1f+GETbjyd/VgcuOvTGrkUBycCCLuJe8R2x9aNnW2fA5Owz3V3M2Lf0oBj7I
- p5JWtMA3YlkODTAKNuO71RRexv4HB9q0vTIlVB2EXR4jdPXdYRVYnTk5CJJi2WlvgHV5fE0HA0b
- N2m3PHk/I+lYUvOXAiBloWWUrviuzgddNR7U4T2vXJLY46YQupFoZahSNxPICjQWl/AikLpRpRH
- NlEbpKgPMMB311RQkHTcoRYSg==
-X-Received: by 2002:a05:690e:1483:b0:644:60d9:7508 with SMTP id
- 956f58d0204a3-6491650817fmr8411258d50.88.1768843192276; 
- Mon, 19 Jan 2026 09:19:52 -0800 (PST)
-X-Received: by 2002:a05:690e:1483:b0:644:60d9:7508 with SMTP id
- 956f58d0204a3-6491650817fmr8411236d50.88.1768843191933; Mon, 19 Jan 2026
- 09:19:51 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768843328; x=1769448128;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Q/wgF+H9GfM+z8bC8gU+mH2o00CJyhPHg4kxrg6q5FE=;
+ b=Wlc11oK+ONMJg06JkRt6JoaXNmCYlOyYK5sh3SFlTfOOVHHmyjZFKV/c9O8O/BWzIM
+ zpDA4M8MgxbMO25QVejuyeY9AeXKgzthcYxgHHUGDu/2s4CLTU+cdNKU2RZ0vbtOrGkr
+ LZFWrp4+/c3XlnUz46HFtsjNzRrQ6hUZNF2I5PO4PWI+rEEhuceIQPUN8cIwxtfxigpf
+ LkxhPn0zSPxb8SnzfjkeZlGLONfgqZAMyH4Tx3XxnNP97CvT529hPgFYW8KZescYbsZh
+ SpG3/qeSp1jXZF/at+FOS0BZ9NlO3zarjq1dsUTWZ8RYq1weCTVUoX+q1Mt1xhpkWt7s
+ PFtQ==
+X-Gm-Message-State: AOJu0YyHTcbNBdkeOYlWmrUGh+a++gu1VQlCCH/WrNpEEiJZvwYVx5fD
+ 9GBdyQHEQQcnVWDZnrpDq5R2vV3upIPBXVF/0AfB0oAJuNyPZ19D6Es8IesACV5dzo4=
+X-Gm-Gg: AZuq6aI9FMA2Gz6tm2Wb73FTi+AJRcSJjmWdjjo7oVr9JfDRb0/getd3lSWoZZEovGX
+ JUOSfh0HzG6p/SnpCMlaadI+hq6Ka7at7QGxbd4sqrvei41H8C28LTN/+CqzXEWXQsze0P9e3Ne
+ V5lEpEDmBa6lgBd7QheAsC3dEHqCMuSDKaH3N6xJWU2JmTv/e4O3cgOFGg0gQkoSZVVlrKD/5II
+ mPPzfjUARwuRjC+Esh4YpOHwB3Mhy6Ht1hnJ6MnpXo/pXWzlLinn2okDrPWGelHVcKHbcz4r7Ma
+ aq9Imc70Dq15Wd+9flGKvtwNxPOADX6QfZ04hZmRSiA88EsVYddmMQKRwaC8TD33GmIKursJmLK
+ zNu2+R38WUYl+hnWHoKixDHEWXoS4GsNyNnYN1q2440i6NAZi4gMvTZJp6EYPuUj/7BVHMv2Met
+ rXKUJVLwht1zIMQr/5hP/Q0k5MCGIW6C2CXbiEN0wxweFR46Dec6X7oQ==
+X-Received: by 2002:a05:6000:22c4:b0:431:9f1:e4c7 with SMTP id
+ ffacd0b85a97d-4356a02c777mr14382497f8f.21.1768843328398; 
+ Mon, 19 Jan 2026 09:22:08 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4356996dad0sm24251241f8f.27.2026.01.19.09.22.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Jan 2026 09:22:07 -0800 (PST)
+Message-ID: <ad975568-9ff4-420f-9b98-725d0c3e7c64@linaro.org>
+Date: Mon, 19 Jan 2026 18:22:06 +0100
 MIME-Version: 1.0
-References: <CAFn=p-YHkDpE62N_gn0MAqDaLfuOxrj-5jt-MUDTvE=1ZopC_g@mail.gmail.com>
- <87h5slmct0.fsf@suse.de>
-In-Reply-To: <87h5slmct0.fsf@suse.de>
-From: John Snow <jsnow@redhat.com>
-Date: Mon, 19 Jan 2026 12:19:41 -0500
-X-Gm-Features: AZwV_Qirq4-MGuLeni5bPNyDy2qWD1UqPjcpvrk7VM-HbQIPgX995aLWbR8GZhk
-Message-ID: <CAFn=p-afPwc2WTE=wqnJji2boDPPi9m2S__FH1AAnfNfbAL74A@mail.gmail.com>
-Subject: Re: migration-stress tests
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v9 2/8] hw/arm/smmuv3-common: Define STE/CD fields via
+ registerfields
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>, Paolo Bonzini
+ <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+References: <20260119161112.3841386-1-tangtao1634@phytium.com.cn>
+ <20260119161112.3841386-3-tangtao1634@phytium.com.cn>
+ <fa73ef10-4a1e-486d-9d80-550c91eef11f@linaro.org>
+ <0e71fdee-3569-4f83-afc8-46e0cbe565d0@phytium.com.cn>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <0e71fdee-3569-4f83-afc8-46e0cbe565d0@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,55 +112,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 16, 2026 at 5:07=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wro=
-te:
->
-> John Snow <jsnow@redhat.com> writes:
->
-> > Heya folks:
-> >
-> > I'm working on a series that removes the qemu.qmp package from the
-> > qemu.git tree and notice that
-> > tests/migration-stress/guestperf/engine.py makes use of the
-> > QEMUMachine class (which depends on qemu.qmp) -- Can you please let me
-> > know which test(s) utilize this code so I can ensure that there are no
-> > disruptions to these tests after the pivot to utilizing an external
-> > library?
-> >
-> > If they aren't executed by "make check", could you please give me some
-> > instructions for how they are normally run?
-> >
-> > Thanks,
-> > --js
->
-> Hi!
->
-> This is a little benchmarking tool we have. You need to first build the
-> guest workload (might need to install a couple static libraries):
->
-> cd build
-> make ./tests/migration-stress/initrd-stress.img
->
-> Then:
->
-> ./run ../tests/migration-stress/guestperf.py --debug --verbose --output
-> output.json
+On 19/1/26 17:51, Tao Tang wrote:
+> Hi Philippe,
+> 
+> On 2026/1/20 00:38, Philippe Mathieu-Daudé wrote:
+>> On 19/1/26 17:11, Tao Tang wrote:
+>>> Switch STE/CD bitfield definitions and accessors to the
+>>> 'registerfields.h' REG/FIELD API.
+>>>
+>>> FOLLOW-UP: Fix CTXPTR_HI/S2TTB_HI/TTB0_HI/TTB1_HI high bits width
+>>> (should be 24 bits, not 16).
+>>
+>> Right, but ...
+>>
+>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+>>> ---
+>>>   include/hw/arm/smmuv3-common.h | 169 +++++++++++++++++++++++----------
+>>>   1 file changed, 120 insertions(+), 49 deletions(-)
+>>
+>>
+>>> -#define STE_VALID(x) extract32((x)->word[0], 0, 1)
+>>> +REG32(STE_0, 0)
+>>> +    FIELD(STE_0, VALID, 0, 1)
+>>> +    FIELD(STE_0, CONFIG, 1, 3)
+>>> +    FIELD(STE_0, S1FMT, 4, 2)
+>>> +    FIELD(STE_0, CTXPTR_LO, 6, 26)
+>>> +REG32(STE_1, 4)
+>>> +    FIELD(STE_1, CTXPTR_HI, 0, 16)
+>>
+>> ... not followed up?
+> 
+> 
+> Sorry, there's a typo here. What I was thinking at the time was that I 
+> would submit a separate patch follow this series.
 
-Oh, fantastic, you're already using the new runscript. That makes
-things an awful lot easier for me. This is soon going to become
-effectively *required* for you to run this script; I will add a little
-error message into the script that makes this obvious in case you
-forget it.
+I squashed:
 
->
-> It starts a guest and migrates it, but with the --debug flag you'll
-> already see lots of qemu.qmp debug messages flying past.
->
-> Beware this is poorly maintained, I just checked it's working, but it
-> might bite you. Let's us know!
->
+--  >8 --
+diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
+index 6b48b5414dd..db30331441a 100644
+--- a/include/hw/arm/smmuv3-common.h
++++ b/include/hw/arm/smmuv3-common.h
+@@ -43,7 +43,7 @@ REG32(STE_0, 0)
+      FIELD(STE_0, S1FMT, 4, 2)
+      FIELD(STE_0, CTXPTR_LO, 6, 26)
+  REG32(STE_1, 4)
+-    FIELD(STE_1, CTXPTR_HI, 0, 16)
++    FIELD(STE_1, CTXPTR_HI, 0, 24)
+      FIELD(STE_1, S1CDMAX, 27, 5)
+  REG32(STE_2, 8)
+      FIELD(STE_2, S1STALLD, 27, 1)
+(1/2) Stage this hunk [y,n,q,a,d,k,K,j,J,g,/,e,p,P,?]? y
+@@ -66,7 +66,7 @@ REG32(STE_5, 20)
+  REG32(STE_6, 24)
+      FIELD(STE_6, S2TTB_LO, 4, 28)
+  REG32(STE_7, 28)
+-    FIELD(STE_7, S2TTB_HI, 0, 16)
++    FIELD(STE_7, S2TTB_HI, 0, 24)
 
-Thanks!
---js
+---
 
+Is that OK with you? Do TTB0_HI/TTB1_HI need update too?
+
+> 
+> Do you need me to resend this series?
+
+Hopefully no :)
+
+Regards,
+
+Phil.
 
