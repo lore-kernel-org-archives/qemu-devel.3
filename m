@@ -4,111 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F0ECCF2DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 19:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EF31CCF2EE
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 20:11:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhv8M-0006Lk-V2; Mon, 19 Jan 2026 14:41:55 -0500
+	id 1vhvaj-00053y-0A; Mon, 19 Jan 2026 15:11:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1vhv8E-0006Fg-L8
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:41:48 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vhvah-000532-76
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 15:11:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1vhv8A-0006ds-KA
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:41:45 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60JFYP4X016761;
- Mon, 19 Jan 2026 19:41:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=GCq57I
- 26L0decrZWvUdm15GSjpnzbvF7fci3eC/CS2U=; b=eCTKR80ebsID/oDkZD/uf7
- GHgg4S/NqMKWWL/Oj0vXC3pkRMS8e8MR/0iMVRAn3Wa6GzrG8oPRQeQI5hLPmYsW
- QMt3f2NvStiefvqcIgvMmttS1ISDz9Lqc8rApV224qS4WF+rriUfRTBOscvtG8UF
- K/5lx/4C4OUrkNDI5m99FMUsfGOqxG+1S1yRf6vIhj3swVOv14MZS6uz2MRCWPSL
- rgFl3psNQhNbF0Puo9Xxvq8JoTc1EyhmbB+UUoAJP5agAoblfHwzPuHHgOMIoUyz
- wjeF9hoWQfqqCpxv82Ftu1a3HC/QRQ+OOAaDPdrkAA1eq2eCqSzIIxWFQxxSGCVA
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br22u9d62-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Jan 2026 19:41:39 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60JJDYHb024640;
- Mon, 19 Jan 2026 19:41:38 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4brxarf4qs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Jan 2026 19:41:38 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60JJfbPH40763786
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 19 Jan 2026 19:41:37 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A789458059;
- Mon, 19 Jan 2026 19:41:37 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1507B58058;
- Mon, 19 Jan 2026 19:41:37 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 19 Jan 2026 19:41:36 +0000 (GMT)
-Message-ID: <3ad5e5b3-d99c-46df-bd9b-a401c144dbfd@linux.ibm.com>
-Date: Mon, 19 Jan 2026 14:41:36 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vhvad-0003Q1-9B
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 15:11:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768853465;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=a3CKzCll4s0CdsixfST1oZ+0xS5UOVq+BJiF7sYOqE8=;
+ b=W7xoxiXKJBqTG6hlaNlH983WBuafKe1EXNgtrQNu32VNBfxHiuWDudHn+aL/i1SNBrHsC+
+ eo/aJpAFW7H806VQ7VzZz+QyCh7HFM91LG+RctwmeCsST105ehrcvRAVyU6QGe3xmbk+PI
+ KMA0nsNFOraIaaRXHh9GQ1l6A1cIlgU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-fHD52PLmNmmtP9RGHwdv1A-1; Mon,
+ 19 Jan 2026 15:11:03 -0500
+X-MC-Unique: fHD52PLmNmmtP9RGHwdv1A-1
+X-Mimecast-MFC-AGG-ID: fHD52PLmNmmtP9RGHwdv1A_1768853462
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C470619560AE; Mon, 19 Jan 2026 20:11:01 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.150])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3E20D1955F43; Mon, 19 Jan 2026 20:10:59 +0000 (UTC)
+Date: Mon, 19 Jan 2026 15:10:59 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hreitz@redhat.com,
+ kwolf@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
+ qemu-stable@nongnu.org, eblake@redhat.com
+Subject: Re: [PATCH] block/mirror: check range when setting zero bitmap for
+ sync write
+Message-ID: <20260119201059.GA869317@fedora>
+References: <20260112152544.261923-1-f.ebner@proxmox.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] follow-up for tpm_emulator errp story
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- stefanb@linux.vnet.ibm.com
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, peterx@redhat.com
-References: <20251106194126.569037-1-vsementsov@yandex-team.ru>
- <5b4220cf-4537-4906-82a9-2213af7ee8a8@yandex-team.ru>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <5b4220cf-4537-4906-82a9-2213af7ee8a8@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Q7Moo0TPE2uzm0RYkl4DEpJL1eRAPWfV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE5MDE2MSBTYWx0ZWRfX8dY02h4jNECS
- dsgoRa8yXK461ptqo0ljnWCxUvCCK7rPed+kJN+0Okji0Z60xsqE/B1ea1kk9gjfUoxzeJXe/YW
- psZzdIqdnr2694gCR0uPj+0XBN/o1phX1X3yyIidhTPD3FxvsVxw2KEOPOmq7uhwM8ik+8RqRFl
- 9Loj7ecoo1TRBlCeKzgyuPsXEHl5FGCKogqV3IxuYmX3AbYchSnmuhI0jGp3VA0FoKAwOdZl5hQ
- hs1qTZSQ5MCA5dhB5dA+N16Kx4eGuBkRctYNlwRK4y74sZF7tVusU1o/tMuKFkqo8P6dcxp7l+Z
- 6hT+5ovdKsDtleWt4PD3m/8q/lSHv82yfGEdW/hxr1uvxWnwYLUtJAjs8YDsP6uzOhJ3GiNpuR4
- jx/4zdabyfoZOlTQZjJl0cLLdZ6sF3RZmGxR7auf4wXEsnFeE7gYEVNNqOiH45C1zOkesVQS79u
- MlmHrbUuuUMpXY84Vsw==
-X-Proofpoint-ORIG-GUID: Q7Moo0TPE2uzm0RYkl4DEpJL1eRAPWfV
-X-Authority-Analysis: v=2.4 cv=Sp2dKfO0 c=1 sm=1 tr=0 ts=696e88f3 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=a9EG4t21K7k3w70_gsYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-19_04,2026-01-19_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 spamscore=0 adultscore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 suspectscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601190161
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="fpHW0qS8zpLog7zp"
+Content-Disposition: inline
+In-Reply-To: <20260112152544.261923-1-f.ebner@proxmox.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,29 +88,100 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--fpHW0qS8zpLog7zp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 1/19/26 10:47 AM, Vladimir Sementsov-Ogievskiy wrote:
-> ping. All patches reviewed, could they be merged?
+On Mon, Jan 12, 2026 at 04:23:51PM +0100, Fiona Ebner wrote:
+> Some Proxmox users reported an occasional assertion failure [0][1] in
+> busy VMs when using drive mirror with active mode. In particular, the
+> failure may occur for zero writes shorter than the job granularity:
+>=20
+> > #0  0x00007b421154b507 in abort ()
+> > #1  0x00007b421154b420 in ?? ()
+> > #2  0x0000641c582e061f in bitmap_set (map=3D0x7b4204014e00, start=3D14,=
+ nr=3D-1)
+> > #3  0x0000641c58062824 in do_sync_target_write (job=3D0x641c7e73d1e0,
+> >       method=3DMIRROR_METHOD_ZERO, offset=3D852480, bytes=3D4096, qiov=
+=3D0x0, flags=3D0)
+> > #4  0x0000641c58062250 in bdrv_mirror_top_do_write (bs=3D0x641c7e62e1f0,
+>         method=3DMIRROR_METHOD_ZERO, copy_to_target=3Dtrue, offset=3D8524=
+80,
+>         bytes=3D4096, qiov=3D0x0, flags=3D0)
+> > #5  0x0000641c58061f31 in bdrv_mirror_top_pwrite_zeroes (bs=3D0x641c7e6=
+2e1f0,
+>         offset=3D852480, bytes=3D4096, flags=3D0)
+>=20
+> The range for the dirty bitmap described by dirty_bitmap_offset and
+> dirty_bitmap_end is narrower than the original range and in fact,
+> dirty_bitmap_end might be smaller than dirty_bitmap_offset. There
+> already is a check for 'dirty_bitmap_offset < dirty_bitmap_end' before
+> resetting the dirty bitmap. Add such a check for setting the zero
+> bitmap too, which uses the same narrower range.
+>=20
+> [0]: https://forum.proxmox.com/threads/177981/
+> [1]: https://bugzilla.proxmox.com/show_bug.cgi?id=3D7222
+>=20
+> Cc: qemu-stable@nongnu.org
+> Fixes: 7e277545b9 ("mirror: Skip writing zeroes when target is already ze=
+ro")
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> ---
+>  block/mirror.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/block/mirror.c b/block/mirror.c
+> index b344182c74..bc982cb99a 100644
+> --- a/block/mirror.c
+> +++ b/block/mirror.c
+> @@ -1514,9 +1514,12 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMe=
+thod method,
+>          assert(!qiov);
+>          ret =3D blk_co_pwrite_zeroes(job->target, offset, bytes, flags);
+>          if (job->zero_bitmap && ret >=3D 0) {
+> -            bitmap_set(job->zero_bitmap, dirty_bitmap_offset / job->gran=
+ularity,
+> -                       (dirty_bitmap_end - dirty_bitmap_offset) /
+> -                       job->granularity);
+> +            if (dirty_bitmap_offset < dirty_bitmap_end) {
+> +                bitmap_set(job->zero_bitmap,
+> +                           dirty_bitmap_offset / job->granularity,
+> +                           (dirty_bitmap_end - dirty_bitmap_offset) /
+> +                           job->granularity);
+> +            }
 
-Can you please rebase the changes on the latest master?
+Why does this case clause use dirty_bitmap_offset and dirty_bitmap_end
+instead of zero_bitmap_offset and zero_bitmap_end like the other
+zero_bitmap operations in this switch statement?
 
-> 
-> On 06.11.25 22:41, Vladimir Sementsov-Ogievskiy wrote:
->> Hi all!
->>
->> Here are fix and small enhancements, following comments on
->> already merged "tmp_emulator: improve and fix use of errp"
->> by Markus.
->>
->> Vladimir Sementsov-Ogievskiy (3):
->>    tpm_emulator: print error on error-ignore path
->>    tpm_emulator: drop direct use of errno variable
->>    tpm_emulator: tpm_emulator_set_state_blobs(): move to boolean return
->>
->>   backends/tpm/tpm_emulator.c | 61 +++++++++++++++----------------------
->>   1 file changed, 24 insertions(+), 37 deletions(-)
->>
-> 
-> 
+   if (job->zero_bitmap && ret >=3D 0) {
+-      bitmap_set(job->zero_bitmap, dirty_bitmap_offset / job->granularity,
+-                 (dirty_bitmap_end - dirty_bitmap_offset) /
+-                 job->granularity);
++      bitmap_set(job->zero_bitmap, zero_bitmap_offset,
++                 zero_bitmap_end - zero_bitmap_offset);
+   }
+
+I'm probably missing something, but it's not obvious to me :).
+
+Stefan
+
+--fpHW0qS8zpLog7zp
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmluj9IACgkQnKSrs4Gr
+c8jzugf+P+Avd6meRYWvXPW34c+ov0w73OhD/DDZJCSwLxbYddYqsqR9LRniCiyt
+qwy9b4U2Pbh1zZ0KWR+yO5TW7KzNr0kzifeKok/5CgvNtnndofRwru63SCdnkq9C
+92hb4p14/CGl29qhBAWcOs/RGbO7fYJ8MgORDTn7tEA8JHc6v4ksmEM+V1vwQOY4
+LjvmWfgJrLaRKSIW3n2Vn4w+v30YjiigSz9eeJgDf94+5E1OJfp58r77NZ8l6IfC
+CjLE9mH06PxaTfzReKeeKdwnjtW1/tTdqoyKEZe4wtwpnMveO9iHXqY8YamZ5whT
+yXoDLPFXEKCFzNerYj336EZ/s86Suw==
+=r+6M
+-----END PGP SIGNATURE-----
+
+--fpHW0qS8zpLog7zp--
 
 
