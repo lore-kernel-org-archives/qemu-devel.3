@@ -4,79 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAC30D29C33
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 15:08:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE97D29C2E
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 15:16:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhqqw-0000T1-Ua; Mon, 19 Jan 2026 10:07:38 -0500
+	id 1vhqq0-0008HY-UK; Mon, 19 Jan 2026 10:06:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vhqqS-0000Bw-FX
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 10:07:09 -0500
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vhqpz-0008FN-IO
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 10:06:39 -0500
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vhqqQ-0003pz-9I
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 10:07:08 -0500
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-34c718c5481so2080833a91.3
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 07:07:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vhqpx-0003nH-Oe
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 10:06:39 -0500
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-78fc3572431so45870017b3.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 07:06:37 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768835196; cv=none;
+ d=google.com; s=arc-20240605;
+ b=KkEH3rp2SDsRe2AkyrpOECcxOwMSNloijdgaXT2EuNq3CdEQNksPMbK5tcCDyR9/pN
+ QovMKeZ0h7qY2TMhWxKdqlsl0CEqFeDPkfOZTKrjr1fe/WxnJ9hOUrK0xenUk7+MtNWI
+ i5J0C7K5Ezq0u+du9MeYi7sDmrFkUUesFhVOFlpUZ2Ke8pm9RkQYMsorZLSztxHSieUP
+ 7vDYu/s3yr1FYupDtWVccNj5RM7ipksQ3H38qQyb7WvLskRtb7rsy++ndvDbRd1zOkuA
+ +RWal9v/C7mOckp7Wz5zKdji2ga4+W6zEApPo9Sm9g48LmZZmnTtCajxiW4qcHY7TcUq
+ 54pQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=p4W1gG0X4bCYXfbzKfBWZgtjQlTtkMq+GzMIfsy9dYg=;
+ fh=ea5iynPX0c3PeNaJDpBz488PRwtBvVAI4RKUDWzUnsI=;
+ b=SAluKjHburYvBsv+XBEH8gw9cLHbUbFsDRH5Ty79fM4KUlEeL7x3tIqcOhp7mHkqhT
+ 9uKXOV++IoEOq0yCV0qVdxooPyf6KTuRhC8LT7RIoR1u8PnEtdQjrg+FdAigbHA/ac1/
+ W2NXVOG9hyHLyMT9aq/JlXkm+jbG6PesOxD2pGX6nzqANxbgOVaJdjZGFMcOhhM+53Bv
+ 16Mcp1qRcNoVeMNItHKSgtsPtY6mHIX3sD7NG06QDNHHEgXXdLnfhlci4G6AywEi8C8G
+ gRuhXI3OUCFQ9mstxJXxAIOBahcsNWRsGAWHNslxyuaLDUTVBOPKtO9h2Gh21z4dkASu
+ ugng==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1768835224; x=1769440024;
- darn=nongnu.org; 
+ d=linaro.org; s=google; t=1768835196; x=1769439996; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=diPHIL1dxCFpL24zXsr3hGAMHV/7C+G0fHwFWdjWEnM=;
- b=2taQYqGjQuHMJAm3LCVcpx1XReXEfPENGkIjUMhERE4giZenA5NOzzAi5aHK6zAB3/
- f2edwNuVhFJPOzEHneqb7C9XPkiE2vd/k72vHBMLce3bP2X7HcHta2txp+r4teO0WV9M
- lBo8BSb2VXLqM+ogWHv1WDwMtlsj7R8IkC7KgGYlSOk1A+oSaJM8OrQW2HQbsjZ2bNTo
- 8UjU0blGfdBYcqf2HIfdbKf5oJgwLZkoWaB95Frr2kjEht3sJgvFc2HHND7We++9xGIE
- du0nMqwN3mQy2TJWVDVO/CvkVo6M4G2Lmbas7ot4+jaN+TQHJ5cPCu47eN8lwcf2MwTb
- Sekw==
+ bh=p4W1gG0X4bCYXfbzKfBWZgtjQlTtkMq+GzMIfsy9dYg=;
+ b=AQ/ZuFUVp4C3+gikJeAP1e5uZWmMa7mav78og1bNBDL+nNOKjZKN/hfAcC7raCKug0
+ dloLZVrB5EF0AeN/ixZAv0rOIeliCMbv0go2F8yfemRgMNb68sswppLYxEIk/Z5gctWy
+ 1YcNDtOxssxQO7DFSNi8cnClqeqz7lM3Sfxp7Wi+/dA6Jx3WHHQ1f8ZFLM9sUHQyrZrX
+ LdafLp3ccowZFUYsyaURjbbj1MJoCtR6yFGYXSd24+4f9Ir2OeK8wFow3qz2X7FbnC7S
+ RkPgAsdsN8WfGZIJd+kc5ESCtflNuTm7796SkqGfAPQ3H1mFTInXKKXxSdJC0lJqLOfB
+ /VcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768835224; x=1769440024;
+ d=1e100.net; s=20230601; t=1768835196; x=1769439996;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=diPHIL1dxCFpL24zXsr3hGAMHV/7C+G0fHwFWdjWEnM=;
- b=mYg8nCH2TDKsWHovioIJPbi03HZX1tcn6OlobPJjiPJsfUUiuo1KZ9qmAJSl4MO6VU
- Rme1MVBEJmgxEVbLGeG7rjYm0r7Lp2eh1/v9o3SQEMZjI4L0KVTJVxnXwP8AsC7aFAbs
- tqVqUImDFWUXO0QJuOjiNOJKtM58rCXRThyx7nkc8Nml3BTh4+jfBnQcZw7WjDFvasD+
- PsAFdnGiwP+I77E1J0cP50q54RxXKCcPIDMILnLx2t6nxEnPQ2a7h7g34dVguyNxJVjr
- UZM+GO2lpp4YvUWoVgFHwJ5kmCGoUIAXUQc96OS8+RHDyvD6Hyw+p5FdQzryGlcKEX7F
- CVOw==
-X-Gm-Message-State: AOJu0YxQ6Ujjfq9Ved6z/Y0TpWQnlo2RfQMFhPrkfBJSsIgZX5Dh1xEt
- Jce0kugHIHgc4sysF/rdbqnsXYWYvv3snepgWvbF7wH5rlC3TbGziyw1JNpqx/aeVywF5GRgdfk
- hX5QmKZS/0MCVd+Lq9tWG4HiZPiDvKBS4dc7x/DLOGQ==
-X-Gm-Gg: AZuq6aL2eHXuMQRQ/gR+EoSNNha5+M0/vOqAv39hvP/+fFjFOdhB47nhxUeEmQqm7NH
- NeIfF93Ildd+Nxt6OHOHJQ52M0R8+/OAf4cDMib6usKfRWAqAfmRUI0lcXhejgH/vcrzUrYb7YY
- C33VfsZe2JC4ghyseyHxd9NR6B89MheCBIrCLUxWe3cvYfkcUyQ/qxtHkxtgYAfleOcBD39X6LP
- nto/h41SdvjAkL3GxzHRIFHC8Z2zyDliwr5RxaoL/7TlMNsEGKO3YJEU8nMYgKjOOU6FlUhVdCa
- 72eM6A==
-X-Received: by 2002:a17:90b:58cf:b0:349:162d:ae1e with SMTP id
- 98e67ed59e1d1-3527327df4fmr10218891a91.33.1768835224060; Mon, 19 Jan 2026
- 07:07:04 -0800 (PST)
+ bh=p4W1gG0X4bCYXfbzKfBWZgtjQlTtkMq+GzMIfsy9dYg=;
+ b=GkS+TBgNGAX6Is1bZPOdI9544ilRfEO5mksfTFEYRminalgYSSxPAzyJGSuzhPg1OP
+ 27mOMcGwniImmHr1TYaU5V1tb0k3ej/1pXXLwHryjZggzKuQHsBJ+1FxZfzuZCMGoK4Y
+ ku1nmm1g+JHZW0Wne+11dU1UvyrswpRC5sn//0D7mw/PRcwYn+zV9S8MRiogbwb+/biS
+ Wv7nf1PdNvFFN2i2NpUlJ722uNg2EyCl3qCdJg4gKHe+OgD/yqMJHWAvUSGxbhxZ8Hf0
+ vGPBXLO/Drz7O+J14zVqIWxRbUtwUrRHuzgU1tJshqYP7Jtt7eagOsHCskKidfyyI8ho
+ XKJw==
+X-Gm-Message-State: AOJu0YzFQqXovTrnC7vND7S6KO1bOBaEOAENcok39anXd5Ndgde+aT8J
+ LVCp5Hmi54VChjnV9VRCds6RuB3zdCHqcUwO6xKGwSaa93op1+F8t5Kx/BS0wTwvQL7c9X7nTnL
+ HDfVOxeMOWu3KpaLIjdjsluwzKR8haShNOOVp62Rh1w==
+X-Gm-Gg: AZuq6aL2Jh7nYCS2oh6nToyKhRJ1zW/aV/+znvK0MjWrPxLeRArlktmqXUQ203kyXzK
+ QlHg5GCeOS6Ml9YDN0ke8PCdUGVLZv83lgt2pXMuwqg9ToQkSrNFWAIiF7lVZI6JVe5xuMZKrao
+ W6QgbWbYvCsoJAE6AOBGGwZGwg9r0FVVoy15UsczcQhF1vcDU2+di2p0NQRLYlHS4xgdd1st8Ux
+ 5Bq/glW/I1Tn/maKrziG9ArDH/PrFUD4yTUui9dFWO+tfj08Wz/w/x5EKUcEy6mufwrww==
+X-Received: by 2002:a05:690c:6f10:b0:793:afdd:e63e with SMTP id
+ 00721157ae682-793c544d6ddmr93068357b3.33.1768835196310; Mon, 19 Jan 2026
+ 07:06:36 -0800 (PST)
 MIME-Version: 1.0
-References: <20260119075738.712207-1-pierrick.bouvier@linaro.org>
-In-Reply-To: <20260119075738.712207-1-pierrick.bouvier@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 19 Jan 2026 08:06:52 -0700
-X-Gm-Features: AZwV_QiRqqWDWXaX6xy2P4eFqD74sLKh9WBqwOSMQu42famt7IpJltH4oT-Mf1E
-Message-ID: <CANCZdfqJr7yEv=GhV=D9hBqqYeiWnNGA=xybpX6TUn50jiUn9g@mail.gmail.com>
-Subject: Re: [PATCH] bsd-user/syscall_defs.h: define STAT_TIME_T_EXT only for
- 32 bits
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, richard.henderson@linaro.org, 
- Kyle Evans <kevans@freebsd.org>
-Content-Type: multipart/alternative; boundary="00000000000032545f0648bf0b79"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1029;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20260115142629.665319-1-peter.maydell@linaro.org>
+ <20260115142629.665319-4-peter.maydell@linaro.org>
+ <87o6mplkjk.fsf@pond.sub.org>
+In-Reply-To: <87o6mplkjk.fsf@pond.sub.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 Jan 2026 15:06:24 +0000
+X-Gm-Features: AZwV_QidmhmSX8kE_OXSmWALCJdlXsjeBViVCQwt6m-P4sfLAZipWrMX0Nnq6ok
+Message-ID: <CAFEAcA8=psrFCnssVUdSwUrw16x3rBRjB=BV0VmGc1MiMDxPZA@mail.gmail.com>
+Subject: Re: [PATCH 3/4] qemu-options.hx: Drop uses of @var
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,120 +121,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000032545f0648bf0b79
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Jan 19, 2026 at 12:57=E2=80=AFAM Pierrick Bouvier <
-pierrick.bouvier@linaro.org> wrote:
-
-> Commit 369c1ba2b changed the wrong conditional "#if defined(__i386__)" to
-> "#if defined(TARGET_I386)".
-> However, TARGET_I386 is defined for target x86_64 also.
+On Mon, 19 Jan 2026 at 14:55, Markus Armbruster <armbru@redhat.com> wrote:
 >
-
-Oh I always forget about that...
-
-
-> This commit fixes it by identifying correctly 32 bits target.
+> Peter Maydell <peter.maydell@linaro.org> writes:
 >
-> Found with:
-> $ ./build/qemu-x86_64 \
->   -plugin ./build/contrib/plugins/libstoptrigger,icount=3D1000000 \
->   -plugin ./build/tests/tcg/plugins/libinsn \
->   -d plugin \
->   ./build/qemu-system-x86_64 --version
-> ld-elf.so.1: /lib/libz.so.6: invalid file format
-> cpu 0 insns: 59746
-> total insns: 59746
+> > A few entries in qemu-options.hx use the syntax "my-option=@var{name}"
+> > when documenting an option that takes an argument. This syntax isn't
+> > consistently used, and the documentation generation has no support for
+> > it: it just appears literally in the HTML output.
 >
-> Fixes: 369c1ba2b ("Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT")
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  bsd-user/syscall_defs.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> TexInfo leftovers?
 >
+> > Switch these uses to the more common "my-option=<name>". This also
+> > doesn't have any particular support in the documentation generation
+> > and so appears literally in the output, but it is a little less odd
+> > looking to the end-user.
+>
+> Note for later: rewrite 1 is from KEY=@var{VALUE} to KEY=<VALUE>.
 
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+More generally, any uses of @var{} to KEY=<VALUE>.
 
+> > The other common pattern we have is "my-option=name" with no marking
+> > at all that the right hand side of the '=' is not literal text;
+> > using <> seems preferable to me, as it makes it more distinct from
+> > cases where the right hand side is documenting that only certain
+> > values are permitted, as in "my-option=on|off".
+>
+> Rewrite 2 is from KEY=VALUE to KEY=<VALUE>.
 
-> diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-> index c49be32bdc0..cc4b484f3ab 100644
-> --- a/bsd-user/syscall_defs.h
-> +++ b/bsd-user/syscall_defs.h
-> @@ -247,7 +247,7 @@ struct target_freebsd11_stat {
->      unsigned int:(8 / 2) * (16 - (int)sizeof(struct
-> target_freebsd_timespec));
->  } __packed;
->
-> -#if defined(TARGET_I386)
-> +#if defined(TARGET_I386) && !defined(TARGET_X86_64)
->  #define TARGET_HAS_STAT_TIME_T_EXT       1
->  #endif
->
-> --
-> 2.47.3
->
->
+This patch is not trying to do any rewrite 2; this part of
+the commit message is just noting that we are not consistent
+about KEY=<VALUE> currently, and so we had another option for
+how to fix the @var{} usage, and explaining why I didn't take
+that other option.
 
---00000000000032545f0648bf0b79
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jan 19,=
- 2026 at 12:57=E2=80=AFAM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.b=
-ouvier@linaro.org">pierrick.bouvier@linaro.org</a>&gt; wrote:<br></div><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
-:1px solid rgb(204,204,204);padding-left:1ex">Commit 369c1ba2b changed the =
-wrong conditional &quot;#if defined(__i386__)&quot; to<br>
-&quot;#if defined(TARGET_I386)&quot;.<br>
-However, TARGET_I386 is defined for target x86_64 also.<br></blockquote><di=
-v><br></div><div>Oh I always forget about that...</div><div>=C2=A0</div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">
-This commit fixes it by identifying correctly 32 bits target.<br>
-<br>
-Found with:<br>
-$ ./build/qemu-x86_64 \<br>
-=C2=A0 -plugin ./build/contrib/plugins/libstoptrigger,icount=3D1000000 \<br=
+> > We don't change the uses of @var in the colo-compare documentation,
+> > as that part deserves a slightly more wide-ranging overhaul that
+> > is better in its own commit.
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >  qemu-options.hx | 10 +++++-----
+> >  1 file changed, 5 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/qemu-options.hx b/qemu-options.hx
+> > index ec92723f10..aca9dba8b9 100644
+> > --- a/qemu-options.hx
+> > +++ b/qemu-options.hx
+> > @@ -36,7 +36,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+> >      "                dea-key-wrap=on|off controls support for DEA key wrapping (default=on)\n"
+> >      "                suppress-vmdesc=on|off disables self-describing migration (default=off)\n"
+> >      "                nvdimm=on|off controls NVDIMM support (default=off)\n"
+> > -    "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
+> > +    "                memory-encryption=<id> memory encryption object to use (default=none)\n"
 >
-=C2=A0 -plugin ./build/tests/tcg/plugins/libinsn \<br>
-=C2=A0 -d plugin \<br>
-=C2=A0 ./build/qemu-system-x86_64 --version<br>
-ld-elf.so.1: /lib/libz.so.6: invalid file format<br>
-cpu 0 insns: 59746<br>
-total insns: 59746<br>
-<br>
-Fixes: 369c1ba2b (&quot;Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT&qu=
-ot;)<br>
-Signed-off-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@lina=
-ro.org" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt;<br>
----<br>
-=C2=A0bsd-user/syscall_defs.h | 2 +-<br>
-=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br></blockquote><div><b=
-r></div><div>Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com"=
->imp@bsdimp.com</a>&gt;</div><div>=C2=A0</div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
-4);padding-left:1ex">
-diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h<br>
-index c49be32bdc0..cc4b484f3ab 100644<br>
---- a/bsd-user/syscall_defs.h<br>
-+++ b/bsd-user/syscall_defs.h<br>
-@@ -247,7 +247,7 @@ struct target_freebsd11_stat {<br>
-=C2=A0 =C2=A0 =C2=A0unsigned int:(8 / 2) * (16 - (int)sizeof(struct target_=
-freebsd_timespec));<br>
-=C2=A0} __packed;<br>
-<br>
--#if defined(TARGET_I386)<br>
-+#if defined(TARGET_I386) &amp;&amp; !defined(TARGET_X86_64)<br>
-=C2=A0#define TARGET_HAS_STAT_TIME_T_EXT=C2=A0 =C2=A0 =C2=A0 =C2=A01<br>
-=C2=A0#endif<br>
-<br>
--- <br>
-2.47.3<br>
-<br>
-</blockquote></div></div>
+> This is rewrite 1, except you additionally make up a missing VALUE.
 
---00000000000032545f0648bf0b79--
+The key=<value> syntax requires one, or it wouldn't be that syntax.
+
+> >      "                hmat=on|off controls ACPI HMAT support (default=off)\n"
+> >      "                spcr=on|off controls ACPI SPCR support (default=on)\n"
+> >  #ifdef CONFIG_POSIX
+> > @@ -100,7 +100,7 @@ SRST
+> >      ``nvdimm=on|off``
+> >          Enables or disables NVDIMM support. The default is off.
+> >
+> > -    ``memory-encryption=``
+> > +    ``memory-encryption=<id>``
+> >          Memory encryption object to use. The default is none.
+>
+> This is rewrite 2, except you additionally make up a missing VALUE.
+
+This is just because we changed the memory-encryption suboption
+in the --help output text above and so also should fix it up
+in the RST docs here.
+
+> This patch and the next apply rewrite 1 exhaustively.
+>
+> Not the case for rewrite 2, e.g. there's still
+>
+>     "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
+>
+> where the value size is not literal.  Many more.
+>
+> So, what this patch actually does is rewrite 1 plus add missing values.
+> Could be separate patches, up to you.  Regardless, the commit message
+> should match what the patch does.
+
+I think it does. Perhaps it could be more clearly stated...
+
+-- PMM
 
