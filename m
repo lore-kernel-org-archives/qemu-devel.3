@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24612C9832F
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 05:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439A5C9832F
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 06:00:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhiFH-00066i-Mz; Mon, 19 Jan 2026 00:56:12 -0500
+	id 1vhiIl-0007RQ-10; Mon, 19 Jan 2026 00:59:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vhiFC-00066F-TL
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 00:56:06 -0500
+ id 1vhiIi-0007R0-Mb
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 00:59:45 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vhiF8-00076I-UR
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 00:56:06 -0500
+ id 1vhiIg-0007RZ-5W
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 00:59:44 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60J5sb6s055143
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60J5x85l056820
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 19 Jan 2026 14:55:34 +0900 (JST)
+ Mon, 19 Jan 2026 14:59:15 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=/DmbTavcJqFtMIAiRuwzW1JrmkVZ/h9yd/JBR5NTfYs=; 
+DKIM-Signature: a=rsa-sha256; bh=uxS04zXX/mAmJCduWdoM4mVSm3rapkhrXN9jfrQSiZY=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1768802134; v=1;
- b=sKjbnhiNg5PrdY5IUrkbVOgdRdiFRo/Z+Rl8KT7ccRPqgIe8NYS2g2+MtqzKlBoQ
- Ci3AvYm8oAqYwZaxuR0zArgNXHRlI1+6sIn8Hl9q0HgpaLeLzUN3ilv4cUDinUOE
- gPXq/diJyr1ybBwcuFwmM+LlvdU7Pm+6jhKMKJjYUB9bTaUNNKCIWyws2znMYv/K
- ij92sREeeMkXLd6GkoX0tidxLfOuy0yQZ06jkNIcFU3aLlGbXrr4Zm0DtgnoGOS/
- n7qpoU1jpbKh6725zYgti9i2BLbwwfdDPPJaSR9eaTcRCBY56rBtdXANsDq7ZMcH
- Mb+MqgmlSHHGkqhjnSjMsw==
-Message-ID: <b7c6f158-f263-4e19-b30c-406312cbee93@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 19 Jan 2026 14:54:36 +0900
+ s=rs20250326; t=1768802356; v=1;
+ b=IcYhEtwgL6t+waN5BvXmDCfvrKTn6wweFhgT3oM0YUBsx/rmMnp1/D68+qLZZTBW
+ IqnFvBIDetDpY4MbcOwFZQ1xA1QArHni7X6hHP26veOjclF2DudkvpwpIRFgL4Iu
+ 6ShzFFMj10Tv1ILrKmyhRYt/q0hSRVxfddDVA8Wnk7jWpWh6iAbO3dBibbqUMuXt
+ ZuYhky9YemlIUrnL9couYKQ8sB/AFkEQbQ1+FpXugz2lWdxQwe/+PKLfOu7Dpo3/
+ /qKXs5Ur0Meg54juFptvkEjdz9/fUGKyqdl7JnLAtDAChM8EKINA9fVY2UVWxM7q
+ Kc8A2hP85wuW1NcQjfawaA==
+Message-ID: <ba1dea86-d599-4978-9e6e-1a3ec610f486@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 19 Jan 2026 14:59:07 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v9 3/5] virtio-gpu: Replace finish_unmapping with
- mapping_state
+Subject: Re: [RFC PATCH v10 5/5] virtio-gpu: Support mapping hostmem blobs
+ with map_fixed
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -62,15 +62,13 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Honglei Huang <honglei1.huang@amd.com>,
  Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
  Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
-References: <20260112225246.3526313-1-dmitry.osipenko@collabora.com>
- <20260112225246.3526313-4-dmitry.osipenko@collabora.com>
- <1011721c-cc29-4e85-a6fe-c26398685ba1@rsg.ci.i.u-tokyo.ac.jp>
- <72a78f94-97cc-4523-bb05-514a3c5f45d7@collabora.com>
+References: <20260118162856.223796-1-dmitry.osipenko@collabora.com>
+ <20260118162856.223796-6-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <72a78f94-97cc-4523-bb05-514a3c5f45d7@collabora.com>
+In-Reply-To: <20260118162856.223796-6-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -96,136 +94,244 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/01/19 1:28, Dmitry Osipenko wrote:
-> On 1/13/26 07:51, Akihiko Odaki wrote:
->> On 2026/01/13 7:52, Dmitry Osipenko wrote:
->>> Allow virtio_gpu_virgl_unmap_resource_blob() to be invoked while async
->>> unmapping is in progress. Do it in preparation to improvement of
->>> virtio-gpu
->>> resetting that will require this change.
->>>
->>> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>> ---
->>>    hw/display/trace-events       |  2 +-
->>>    hw/display/virtio-gpu-virgl.c | 28 +++++++++++++++++++++++-----
->>>    2 files changed, 24 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/hw/display/trace-events b/hw/display/trace-events
->>> index e323a82cff24..4bfc457fbac1 100644
->>> --- a/hw/display/trace-events
->>> +++ b/hw/display/trace-events
->>> @@ -39,7 +39,7 @@ virtio_gpu_cmd_res_create_2d(uint32_t res, uint32_t
->>> fmt, uint32_t w, uint32_t h)
->>>    virtio_gpu_cmd_res_create_3d(uint32_t res, uint32_t fmt, uint32_t w,
->>> uint32_t h, uint32_t d) "res 0x%x, fmt 0x%x, w %d, h %d, d %d"
->>>    virtio_gpu_cmd_res_create_blob(uint32_t res, uint64_t size) "res
->>> 0x%x, size %" PRId64
->>>    virtio_gpu_cmd_res_map_blob(uint32_t res, void *vmr, void *mr) "res
->>> 0x%x, vmr %p, mr %p"
->>> -virtio_gpu_cmd_res_unmap_blob(uint32_t res, void *mr, bool
->>> finish_unmapping) "res 0x%x, mr %p, finish_unmapping %d"
->>> +virtio_gpu_cmd_res_unmap_blob(uint32_t res, void *mr, int
->>> mapping_state) "res 0x%x, mr %p, mapping_state %d"
->>>    virtio_gpu_cmd_res_unref(uint32_t res) "res 0x%x"
->>>    virtio_gpu_cmd_res_back_attach(uint32_t res) "res 0x%x"
->>>    virtio_gpu_cmd_res_back_detach(uint32_t res) "res 0x%x"
->>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-
->>> virgl.c
->>> index 6a2aac0b6e5c..342e93728df0 100644
->>> --- a/hw/display/virtio-gpu-virgl.c
->>> +++ b/hw/display/virtio-gpu-virgl.c
->>> @@ -68,10 +68,16 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
->>>    #endif
->>>      #if VIRGL_VERSION_MAJOR >= 1
->>> +enum virtio_gpu_virgl_hostmem_region_mapping_state {
->>> +    VIRTIO_GPU_MR_MAPPED,
->>> +    VIRTIO_GPU_MR_UNMAP_STARTED,
->>> +    VIRTIO_GPU_MR_UNMAP_COMPLETED,
->>> +};
->>> +
->>>    struct virtio_gpu_virgl_hostmem_region {
->>>        MemoryRegion mr;
->>>        struct VirtIOGPU *g;
->>> -    bool finish_unmapping;
->>> +    enum virtio_gpu_virgl_hostmem_region_mapping_state mapping_state;
->>>    };
->>>      static struct virtio_gpu_virgl_hostmem_region *
->>> @@ -95,7 +101,7 @@ static void
->>> virtio_gpu_virgl_hostmem_region_free(void *obj)
->>>        VirtIOGPUGL *gl;
->>>          vmr = to_hostmem_region(mr);
->>> -    vmr->finish_unmapping = true;
->>> +    vmr->mapping_state = VIRTIO_GPU_MR_UNMAP_COMPLETED;
->>>          b = VIRTIO_GPU_BASE(vmr->g);
->>>        b->renderer_blocked--;
->>> @@ -135,6 +141,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
->>>          vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
->>>        vmr->g = g;
->>> +    vmr->mapping_state = VIRTIO_GPU_MR_MAPPED;
->>>          mr = &vmr->mr;
->>>        memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
->>> @@ -171,7 +178,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
->>>          vmr = to_hostmem_region(res->mr);
->>>    -    trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr,
->>> vmr->finish_unmapping);
->>> +    trace_virtio_gpu_cmd_res_unmap_blob(res->base.resource_id, mr,
->>> +                                        vmr->mapping_state);
->>>          /*
->>>         * Perform async unmapping in 3 steps:
->>> @@ -182,7 +190,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
->>>         *    asynchronously by virtio_gpu_virgl_hostmem_region_free().
->>>         * 3. Finish the unmapping with final
->>> virgl_renderer_resource_unmap().
->>>         */
->>> -    if (vmr->finish_unmapping) {
->>> +    switch (vmr->mapping_state) {
->>> +    case VIRTIO_GPU_MR_UNMAP_COMPLETED:
->>>            res->mr = NULL;
->>>            g_free(vmr);
->>>    @@ -193,15 +202,24 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU
->>> *g,
->>>                              __func__, strerror(-ret));
->>>                return ret;
->>>            }
->>> -    } else {
->>> +        break;
->>> +
->>> +    case VIRTIO_GPU_MR_MAPPED:
->>>            *cmd_suspended = true;
->>>              /* render will be unblocked once MR is freed */
->>>            b->renderer_blocked++;
->>>    +        vmr->mapping_state = VIRTIO_GPU_MR_UNMAP_STARTED;
->>> +
->>>            /* memory region owns self res->mr object and frees it by
->>> itself */
->>>            memory_region_del_subregion(&b->hostmem, mr);
->>>            object_unparent(OBJECT(mr));
->>> +        break;
->>
->> I suggest:
->>
->> - Put vmr->mapping_state = VIRTIO_GPU_MR_UNMAP_STARTED; here
->> - Remove *cmd_suspended = true for VIRTIO_GPU_MR_MAPPED.
->> - Let it fall through.
->>
->> This way, it is clear that we need to execute *cmd_suspended = true
->> because the state is now VIRTIO_GPU_MR_UNMAP_STARTED, and we can save on
->> line by not having a duplicate *cmd_suspended = true.
+> Support mapping virgl blobs to a fixed location of a hostmem memory
+> region using new virglrenderer MAP_FIXED API.
 > 
-> The `mapping_state = VIRTIO_GPU_MR_UNMAP_STARTED` shall be set before
-> memory_region_del_subregion() is invoked because technically refcounting
-> logic may change in future and MR may become freed instantly. Will only
-> add the fall-through if no objections, otherwise please comment on v10.
+> This new feature closes multiple problems for virtio-gpu on QEMU:
+> 
+> - Having dedicated memory region for each mapped blob works notoriously
+> slow due to QEMU's memory region software design built around RCU that
+> isn't optimized for frequent removal of the regions
+> 
+> - KVM isn't optimized for a frequent slot changes too
+> 
+> - QEMU/KVM has a limit for a total number of created memory regions,
+> crashing QEMU when limit is reached
+> 
+> This patch makes virtio-gpu-gl to pre-create a single anonymous memory
+> region covering whole hostmem area to which blobs will be mapped using
+> the MAP_FIXED API.
+> 
+> Not all virgl resources will support mapping at a fixed memory address. For
+> them, we will continue to create individual nested memory sub-regions. In
+> particular, vrend resources may not have MAP_FIXED capability.
+> 
+> Venus and DRM native contexts will largely benefit from the MAP_FIXED
+> feature in terms of performance and stability improvement.
+> 
+> Tested-by: Yiwei Zhang <zzyiwei@gmail.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   hw/display/virtio-gpu-gl.c     | 40 ++++++++++++++++++++++-
+>   hw/display/virtio-gpu-virgl.c  | 59 +++++++++++++++++++++++++++++++++-
+>   include/hw/virtio/virtio-gpu.h |  3 ++
+>   3 files changed, 100 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> index 8b71dd6fc26f..add6af73e980 100644
+> --- a/hw/display/virtio-gpu-gl.c
+> +++ b/hw/display/virtio-gpu-gl.c
+> @@ -13,6 +13,7 @@
+>   
+>   #include "qemu/osdep.h"
+>   #include "qemu/iov.h"
+> +#include "qemu/mmap-alloc.h"
+>   #include "qemu/module.h"
+>   #include "qemu/error-report.h"
+>   #include "qapi/error.h"
+> @@ -106,7 +107,12 @@ static void virtio_gpu_gl_reset(VirtIODevice *vdev)
+>   static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+>   {
+>       ERRP_GUARD();
+> -    VirtIOGPU *g = VIRTIO_GPU(qdev);
+> +    VirtIOGPUBase *b = VIRTIO_GPU_BASE(qdev);
+> +    VirtIOGPU *g = VIRTIO_GPU(b);
+> +#if !defined(CONFIG_WIN32)
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+> +    void *map;
+> +#endif
+>   
+>   #if HOST_BIG_ENDIAN
+>       error_setg(errp, "virgl is not supported on bigendian platforms");
+> @@ -137,6 +143,27 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+>   #endif
+>   
+>       virtio_gpu_device_realize(qdev, errp);
+> +    if (*errp) {
+> +        return;
+> +    }
+> +
+> +#if !defined(CONFIG_WIN32)
+> +    if (virtio_gpu_hostmem_enabled(b->conf)) {
+> +        map = qemu_ram_mmap(-1, b->conf.hostmem, qemu_real_host_page_size(),
+> +                            0, 0);
+> +        if (map == MAP_FAILED) {
+> +            error_setg_errno(errp, errno,
+> +                             "virgl hostmem region could not be initialized");
+> +            return;
 
-That makes sense.
+This "return" will leak bunch of memory allocated in 
+virtio_gpu_device_realize(). Though the relization code is not carefully 
+written to avoid memory leaks in case of errors, it is better to avoid 
+adding another by keeping virtio_gpu_device_realize() at the end.
 
-Strictly speaking, even if the refcounting change happens, 
-qemu_bh_schedule(gl->cmdq_resume_bh) will delay the next invocation of 
-this function in virtio_gpu_virgl_hostmem_region_free(). But even 
-virtio_gpu_virgl_hostmem_region_free() can be changed in the future so I 
-no longer believe moving `mapping_state = VIRTIO_GPU_MR_UNMAP_STARTED` 
-is absolutely good. Please choose a design option you prefer.
+By the way, I think this is likely to be my last comment (unless I miss 
+nothing more; hopefully it won't happen). This patch and "[RFC PATCH v10 
+2/5] virtio-gpu: Validate hostmem mapping offset" are only useful after 
+the new release of virglrenderer is made, but the other patches are 
+independelty useful, so I suggest submitting them without RFC.
+
+Perhaps it may be even fine to submit the MAP_FIXED changes without RFC 
+before virglrenderer 1.2.1 is released since the merge request is 
+already accepted, but I leave that to you.
 
 Regards,
 Akihiko Odaki
+
+> +        }
+> +
+> +        gl->hostmem_mmap = map;
+> +        memory_region_init_ram_ptr(&gl->hostmem_background, NULL,
+> +                                   "hostmem-background", b->conf.hostmem,
+> +                                   gl->hostmem_mmap);
+> +        memory_region_add_subregion(&b->hostmem, 0, &gl->hostmem_background);
+> +    }
+> +#endif
+>   }
+>   
+>   static const Property virtio_gpu_gl_properties[] = {
+> @@ -172,6 +199,17 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+>       gl->renderer_state = RS_START;
+>   
+>       g_array_unref(g->capset_ids);
+> +
+> +    /*
+> +     * It is not guaranteed that the memory region will be finalized
+> +     * immediately with memory_region_del_subregion(), there can be
+> +     * a remaining reference to gl->hostmem_mmap. VirtIO-GPU is not
+> +     * hotpluggable, hence no need to worry about the leaked mapping.
+> +     *
+> +     * The memory_region_del_subregion(gl->hostmem_background) is unnecessary
+> +     * because b->hostmem  and gl->hostmem_background belong to the same
+> +     * device and will be gone at the same time.
+> +     */
+>   }
+>   
+>   static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 63548964ca4f..08f14eb91bfb 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -41,9 +41,13 @@
+>        VIRGL_VERSION_MICRO >= (micro))
+>   #endif
+>   
+> +#define VIRGL_HAS_MAP_FIXED \
+> +    (VIRGL_CHECK_VERSION(1, 2, 1) && !IS_ENABLED(CONFIG_WIN32))
+> +
+>   struct virtio_gpu_virgl_resource {
+>       struct virtio_gpu_simple_resource base;
+>       MemoryRegion *mr;
+> +    void *map_fixed;
+>   };
+>   
+>   static struct virtio_gpu_virgl_resource *
+> @@ -126,6 +130,9 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>   {
+>       struct virtio_gpu_virgl_hostmem_region *vmr;
+>       VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+> +#if VIRGL_HAS_MAP_FIXED
+> +    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+> +#endif
+>       MemoryRegion *mr;
+>       uint64_t size;
+>       void *data;
+> @@ -136,6 +143,41 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>           return -EOPNOTSUPP;
+>       }
+>   
+> +#if VIRGL_HAS_MAP_FIXED
+> +    /*
+> +     * virgl_renderer_resource_map_fixed() allows to create multiple
+> +     * mappings of the same resource, while virgl_renderer_resource_map()
+> +     * not. Don't allow mapping same resource twice.
+> +     */
+> +    if (res->map_fixed || res->mr) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: failed to map(fixed) virgl resource: already mapped\n",
+> +                      __func__);
+> +        return -EBUSY;
+> +    }
+> +
+> +    ret = virgl_renderer_resource_map_fixed(res->base.resource_id,
+> +                                            gl->hostmem_mmap + offset);
+> +    switch (ret) {
+> +    case 0:
+> +        res->map_fixed = gl->hostmem_mmap + offset;
+> +        return 0;
+> +
+> +    case -EOPNOTSUPP:
+> +        /*
+> +         * MAP_FIXED is unsupported by this resource.
+> +         * Mapping falls back to a blob subregion method in that case.
+> +         */
+> +        break;
+> +
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: failed to map(fixed) virgl resource: %s\n",
+> +                      __func__, strerror(-ret));
+> +        return ret;
+> +    }
+> +#endif
+> +
+>       ret = virgl_renderer_resource_map(res->base.resource_id, &data, &size);
+>       if (ret) {
+>           qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map virgl resource: %s\n",
+> @@ -149,7 +191,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>   
+>       mr = &vmr->mr;
+>       memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+> -    memory_region_add_subregion(&b->hostmem, offset, mr);
+> +    memory_region_add_subregion_overlap(&b->hostmem, offset, mr, 1);
+>   
+>       /*
+>        * MR could outlive the resource if MR's reference is held outside of
+> @@ -176,6 +218,21 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+>       MemoryRegion *mr = res->mr;
+>       int ret;
+>   
+> +#if VIRGL_HAS_MAP_FIXED
+> +    if (res->map_fixed) {
+> +        if (mmap(res->map_fixed, res->base.blob_size, PROT_READ | PROT_WRITE,
+> +                 MAP_PRIVATE | MAP_ANONYMOUS | MAP_FIXED,
+> +                 -1, 0) == MAP_FAILED) {
+> +            ret = -errno;
+> +            error_report("%s: failed to unmap(fixed) virgl resource: %s",
+> +                          __func__, strerror(-ret));
+> +            return ret;
+> +        }
+> +
+> +        res->map_fixed = NULL;
+> +    }
+> +#endif
+> +
+>       if (!mr) {
+>           return 0;
+>       }
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index 1f509d0d5beb..a48b50d4c825 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -263,6 +263,9 @@ struct VirtIOGPUGL {
+>   
+>       QEMUBH *async_fence_bh;
+>       QSLIST_HEAD(, virtio_gpu_virgl_context_fence) async_fenceq;
+> +
+> +    MemoryRegion hostmem_background;
+> +    void *hostmem_mmap;
+>   };
+>   
+>   struct VhostUserGPU {
+
 
