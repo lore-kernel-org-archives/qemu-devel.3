@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19374CCF2F6
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 12:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF4FECCF2EF
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 12:38:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhoRS-00005O-AR; Mon, 19 Jan 2026 07:33:10 -0500
+	id 1vhoVq-0000Hh-Hr; Mon, 19 Jan 2026 07:37:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vhoRO-0008US-GY
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 07:33:06 -0500
+ id 1vhoVp-0000Ed-0H
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 07:37:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vhoRM-0005cJ-C2
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 07:33:06 -0500
+ id 1vhoVn-0006LI-3k
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 07:37:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768825982;
+ s=mimecast20190719; t=1768826258;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=xJcJoWkTm/EoDkuXRCYc60sYCRJjN3BIAUVVT99dVJ4=;
- b=ZYzzhgzw7Rfj/U1J7+LRkEDNmrUfNcZKfIDti+qIwhIARKDq85F7SMmb4TVR1tqFlkXe5T
- 9QXN23nmYpPaTboPc/MDjNBT2ESb+KIVFG+76lYtqJx4kxZMf/3Em5I5pZ/V2SCwTlNnvj
- +9jPAEUwLqr0l8AjqNCbLxKAzRLXhx8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vzJFACuNWFfNwYg9VHI6d1FpXkBE8MrLN0kzYbbdTWY=;
+ b=iyrO9zCiGykwd3xzOy/DTdMKDbP/5g/XIpep8RCjZspF5QWrt9moN3Goii/dtJeOIaTInG
+ wZjbbG5RpKuSGX1CJ9wvMLra284x+rOx08SpmR7FX7B2z8kPaBH0iUY92j/LcCoff27D/q
+ bwmZLuTOdivDNZklKKz1ogpTXoFxyuc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-693-IHW3oKXsOR25TH_v5o70hQ-1; Mon, 19 Jan 2026 07:33:01 -0500
-X-MC-Unique: IHW3oKXsOR25TH_v5o70hQ-1
-X-Mimecast-MFC-AGG-ID: IHW3oKXsOR25TH_v5o70hQ_1768825980
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4779d8fd4ecso21027645e9.1
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 04:33:01 -0800 (PST)
+ us-mta-639-U9tC8KAcM9iIl9ltAMYhNg-1; Mon, 19 Jan 2026 07:37:36 -0500
+X-MC-Unique: U9tC8KAcM9iIl9ltAMYhNg-1
+X-Mimecast-MFC-AGG-ID: U9tC8KAcM9iIl9ltAMYhNg_1768826255
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4801e3aab32so20710575e9.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 04:37:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768825980; x=1769430780; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768826255; x=1769431055; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xJcJoWkTm/EoDkuXRCYc60sYCRJjN3BIAUVVT99dVJ4=;
- b=VfhjCLwotH7G/0GihA8+9ealRehnKmW688woNmrm0Pw92ZSaqv1X6Lx7bm/c5IhPwv
- /OXqjaJ2fGOJnl8brxM5o/tLLlL7JZ7UVihMpTKkRyqd0sRqsqp1tPJDeZwQbUnxCTY7
- rsXOZqAhl3l+Kye/1L9zO/hSZI29KUu3rdCV3UjBLAzBcL0tZiAZAsLdPEt/dFjNK2JQ
- MO3EwM7OS1XoCU7CVkjtG3DrqBRCLNY1FljbhPmU8fjmalOJHG41zXilXeq5lCUYpiGy
- JKNqpdP2WDxkmqVrdOrPP7Sa/JIItrMHMGOPEUKzsMduZdjv7MR9c50fBHLV1jU7/6KN
- HNDQ==
+ bh=vzJFACuNWFfNwYg9VHI6d1FpXkBE8MrLN0kzYbbdTWY=;
+ b=mIRf7qY3GYRKfE8tCrHy3vH6475fB+G8Wvgag6b4pyVu8MzgAcJknkJJUpgeqWdccQ
+ bJevcAYey2h8HvQdbnWFU11ypIL+/YVkFQQtdia3Nn4Aq5i//9TmpA9QrBoAPzk9vL0F
+ MJSE3Pojp9+kj8oJmepa52DmbEQSuvk7HdGNkmEmPdxFoOwxyYa3S4ZN4TkY/susmkX7
+ WQnrShxzSfmUi/aGFAaUa/qfvXdNN87b/I5fgEjHS86HB6VSxC0jQMTG2NbtDbE381HT
+ NQN7MZnPxRwuLFfQj19YRGhSbH4GdEqJvw9lJ9uKvejO5nWuALZo2vqqgRtPSDrStik8
+ ddjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768825980; x=1769430780;
+ d=1e100.net; s=20230601; t=1768826255; x=1769431055;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xJcJoWkTm/EoDkuXRCYc60sYCRJjN3BIAUVVT99dVJ4=;
- b=JmwhsvlFsvOudcIMq5M2tvrYhr8Q8mZYn93ohz+/7nXYO+RVqL3h82mliJMnoQekUG
- +EcdHW88kDQlWA7ziTlvy1ZCwYB1+oncpNeqKI03mtcVODgCLBzH9t0C0t66wiesIymC
- aMlXzU6EJgSv4rzviJlH69a7wU6QLAhn8yj9wLpo4mAdCnLLzvvOim+ZIBhzlHG9QImA
- HT3P1Wdrdoo+Hr/zxhcSfEeDBYkdhQH0JteIN3rVgAmBe0oC3x3EUZ2IVAingYn2t+7k
- SgwmSf0OWLDqTT83EQ0TncgrwfKoELP/chF70ym1lyFyeo7L3g+/9641Zgocw84bQfX/
- akVw==
-X-Gm-Message-State: AOJu0YykyOUDHdRW068iy9KvfGhl4tb90MBe+fW+wthra5n8chMNX0VC
- gAhhIemYElv3aTrvRv2svl0i2Tbt8qbi31WHVezRj87k/7Q7vkCVVTmxGzmvwMxLCnqbeNwH8/+
- jK756vj9u3BtN2m0rDsxoDqp9NKy5gC4wVeVIPEECK2vLqRXcCIitaFhK+R4rtm7lxhPZ7m91bL
- vsNjrtWtr0tDsFQXP5/PAg4XnOwZwJ5Z4=
-X-Gm-Gg: AY/fxX7f9i/lyBre9E98BsfbzXW7430n+C1L1MHPL6xM0TRS+0+WGF4l9yfwhAU0jUc
- mqwzXzRkLDIKoSU9oXo9WJ7ynBjiwJ4nfDNRtThzbhhHxRWGyNRX1QdRyb3yFt0GZVxZPFFqnPz
- L3kOU/5Il4BR6haCMWxoqnE2DFJjicn/WuHBIiYDWV/2J99huHEKpvU2u7XpJsdQAMHMrkz4GEE
- 3gAG5+JpU8v8I+Q2HrZgKJJ068KOizQrPBbrl/YDZgcHIYcfIpblwxS
-X-Received: by 2002:a05:600c:524f:b0:46f:a2ba:581f with SMTP id
- 5b1f17b1804b1-4801e685697mr117360945e9.16.1768825980108; 
- Mon, 19 Jan 2026 04:33:00 -0800 (PST)
-X-Received: by 2002:a05:600c:524f:b0:46f:a2ba:581f with SMTP id
- 5b1f17b1804b1-4801e685697mr117360635e9.16.1768825979692; Mon, 19 Jan 2026
- 04:32:59 -0800 (PST)
+ bh=vzJFACuNWFfNwYg9VHI6d1FpXkBE8MrLN0kzYbbdTWY=;
+ b=w8PtnC2uBp//sBFl8Db74ImCpJDvGzThqjNrsvbUJaVWFNDoRC4bRjmdaNX7qRpD+x
+ Fepr3iXlH8LczxenD2d8TLD/vnHnw/nGvU7+X4itHU3PSkLhdKn/gGOvAAPx/bRtfBKL
+ +6JYtbplX9Gxh9akcDuSSN7+pc9Au+xdMXcPU9r68TF57jbec221MGRdpQn8vYmbG4oJ
+ cA9dyLGiF8sQjJm22fRGa2jyj+ngmjzFDvJc2q+5KWIC918Inq04Rlyy/8GIxV5woTFs
+ OYGA97iNn+5zieTAZbbSrhBA4Ir8uCCf/hHP47d4dDYusFZqP1PARYjcpXslfRWzO/ne
+ SlWQ==
+X-Gm-Message-State: AOJu0YyyM33bXaKQSKycKHQnNCeMglpJeQXQzgNJ52PO6+wr/DlNDZHb
+ 89Xy5eV+WfzMuzOLbBIl+n56ejTDBb1KCqtZRPag0MG/q/V1WgE0rRPTNsK9lZpyAzDfdi+BimZ
+ xOb4gYwnhNyQzZVkE08JvveKR04agKro1s7kdHB/aT+ACQ4BaHMZamVdLS/A7LHKEJ6N2VfH1P6
+ r38MTBVqs+lNuvSPJPPh0SXZLQ4EZCZCo=
+X-Gm-Gg: AY/fxX4Xmxul06e6xJURFw1t2AcED5pAuAP92L8j2p5yoSBS1UFuGrw2q3T05FYWzPR
+ esvBk8qnB3qsG+72Oj420glwngQmNuckiIFmvCO8r3Fe3xNhng9WaA+L8KCQsRFjXirNnGQeUQG
+ 8qgNlFl5Ya2TjpS2qMMTWLRqetBwxYWbOXXyfrNB1srfz/xg25lT5Yph/XQtoqvTz41Rf2b4Ndp
+ M5tcbToZRJlEpRmq61oS/9JT3s8564u05F6JfuznUObJNIIf5NBQIIZ
+X-Received: by 2002:a05:600c:4513:b0:477:9cdb:e337 with SMTP id
+ 5b1f17b1804b1-4801e2fc2e3mr150020075e9.7.1768826254810; 
+ Mon, 19 Jan 2026 04:37:34 -0800 (PST)
+X-Received: by 2002:a05:600c:4513:b0:477:9cdb:e337 with SMTP id
+ 5b1f17b1804b1-4801e2fc2e3mr150019755e9.7.1768826254397; Mon, 19 Jan 2026
+ 04:37:34 -0800 (PST)
 MIME-Version: 1.0
 References: <20260109124043.25019-1-farosas@suse.de>
- <20260109124043.25019-9-farosas@suse.de>
-In-Reply-To: <20260109124043.25019-9-farosas@suse.de>
+ <20260109124043.25019-4-farosas@suse.de>
+In-Reply-To: <20260109124043.25019-4-farosas@suse.de>
 From: Prasad Pandit <ppandit@redhat.com>
-Date: Mon, 19 Jan 2026 18:02:43 +0530
-X-Gm-Features: AZwV_QhJLJ0q9NbXg8_fLFYIYSoibm5A4e4VuRRfx5uzo96RTFPfLJDk2Bm8U0g
-Message-ID: <CAE8KmOzQ_iW-TWVq1YypA8xE8uJBh9q7JZUvsmSQ2CMd3Y1__w@mail.gmail.com>
-Subject: Re: [PATCH v3 08/25] migration: Move error reporting out of
- migration_cleanup
+Date: Mon, 19 Jan 2026 18:07:18 +0530
+X-Gm-Features: AZwV_QjGSETJ6WX9TH2HtRfso8he6BZ7dtrquq_v-0_impSVR29NHmdjACs3Lss
+Message-ID: <CAE8KmOwuAS399-cCyj66b7uBeF5VLTg-KNSnDh-bXuqUuGK2wQ@mail.gmail.com>
+Subject: Re: [PATCH v3 03/25] migration/tls: Remove unused parameter
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com
 Content-Type: text/plain; charset="UTF-8"
@@ -113,86 +112,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 Jan 2026 at 18:13, Fabiano Rosas <farosas@suse.de> wrote:
-> In the next patches migration_cleanup() will be used in qmp_migrate(),
-> which currently does not show an error message. Move the error
-> reporting out of migration_cleanup() to avoid duplicated messages.
+On Fri, 9 Jan 2026 at 18:14, Fabiano Rosas <farosas@suse.de> wrote:
+> MigrationState is not used at migration_tls_channel_process_incoming().
 
-* duplicated -> duplicate OR double
+* MigrationState -> MigrationState parameter
+* at -> in
 
+> The last usage was removed by commit 3f461a0c0b ("migration: Drop
+> unused parameter for migration_tls_get_creds()")
+>
 > Reviewed-by: Peter Xu <peterx@redhat.com>
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->  migration/migration.c | 29 +++++++++++++----------------
->  1 file changed, 13 insertions(+), 16 deletions(-)
+>  migration/channel.c | 3 +--
+>  migration/tls.c     | 4 +---
+>  migration/tls.h     | 4 +---
+>  3 files changed, 3 insertions(+), 8 deletions(-)
 >
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 9204029c88..7bef787f00 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1528,10 +1528,6 @@ static void migration_cleanup(MigrationState *s)
->                            MIGRATION_STATUS_CANCELLED);
->      }
->
-> -    if (s->error) {
-> -        /* It is used on info migrate.  We can't free it */
-> -        error_report_err(error_copy(s->error));
-> -    }
->      type = migration_has_failed(s) ? MIG_EVENT_PRECOPY_FAILED :
->                                       MIG_EVENT_PRECOPY_DONE;
->      migration_call_notifiers(type, NULL);
-> @@ -1540,7 +1536,12 @@ static void migration_cleanup(MigrationState *s)
->
->  static void migration_cleanup_bh(void *opaque)
+> diff --git a/migration/channel.c b/migration/channel.c
+> index 4768c71455..b4ab676048 100644
+> --- a/migration/channel.c
+> +++ b/migration/channel.c
+> @@ -32,7 +32,6 @@
+>   */
+>  void migration_channel_process_incoming(QIOChannel *ioc)
 >  {
-> -    migration_cleanup(opaque);
-> +    MigrationState *s = opaque;
-> +
-> +    migration_cleanup(s);
-> +    if (s->error) {
-> +        error_report_err(error_copy(s->error));
-> +    }
+> -    MigrationState *s = migrate_get_current();
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+>      Error *local_err = NULL;
+>
+> @@ -40,7 +39,7 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+>          ioc, object_get_typename(OBJECT(ioc)));
+>
+>      if (migrate_channel_requires_tls_upgrade(ioc)) {
+> -        migration_tls_channel_process_incoming(s, ioc, &local_err);
+> +        migration_tls_channel_process_incoming(ioc, &local_err);
+>      } else {
+>          migration_ioc_register_yank(ioc);
+>          migration_ioc_process_incoming(ioc, &local_err);
+> diff --git a/migration/tls.c b/migration/tls.c
+> index 56b5d1cc90..1df31bdcbb 100644
+> --- a/migration/tls.c
+> +++ b/migration/tls.c
+> @@ -71,9 +71,7 @@ static void migration_tls_incoming_handshake(QIOTask *task,
+>      object_unref(OBJECT(ioc));
 >  }
 >
->  /*
-> @@ -4025,18 +4026,12 @@ void migration_connect(MigrationState *s, Error *error_in)
->      s->expected_downtime = migrate_downtime_limit();
->      if (error_in) {
->          migration_connect_error_propagate(s, error_in);
-> -        if (resume) {
-> -            /*
-> -             * Don't do cleanup for resume if channel is invalid, but only dump
-> -             * the error.  We wait for another channel connect from the user.
-> -             * The error_report still gives HMP user a hint on what failed.
-> -             * It's normally done in migration_cleanup(), but call it here
-> -             * explicitly.
-> -             */
-> -            error_report_err(error_copy(s->error));
-> -        } else {
-> +        if (!resume) {
->              migration_cleanup(s);
->          }
-> +        if (s->error) {
-> +            error_report_err(error_copy(s->error));
-> +        }
->          return;
->      }
+> -void migration_tls_channel_process_incoming(MigrationState *s,
+> -                                            QIOChannel *ioc,
+> -                                            Error **errp)
+> +void migration_tls_channel_process_incoming(QIOChannel *ioc, Error **errp)
+>  {
+>      QCryptoTLSCreds *creds;
+>      QIOChannelTLS *tioc;
+> diff --git a/migration/tls.h b/migration/tls.h
+> index 58b25e1228..7607cfe803 100644
+> --- a/migration/tls.h
+> +++ b/migration/tls.h
+> @@ -24,9 +24,7 @@
+>  #include "io/channel.h"
+>  #include "io/channel-tls.h"
 >
-> @@ -4115,8 +4110,10 @@ fail:
->      if (s->state != MIGRATION_STATUS_CANCELLING) {
->          migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
->      }
-> -    error_report_err(local_err);
->      migration_cleanup(s);
-> +    if (s->error) {
-> +        error_report_err(error_copy(s->error));
-> +    }
->  }
+> -void migration_tls_channel_process_incoming(MigrationState *s,
+> -                                            QIOChannel *ioc,
+> -                                            Error **errp);
+> +void migration_tls_channel_process_incoming(QIOChannel *ioc, Error **errp);
 >
->  static void migration_class_init(ObjectClass *klass, const void *data)
+>  QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
+>                                             const char *hostname,
 > --
 
-* Change looks okay.
+* Looks right.
 Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
 
 Thank you.
