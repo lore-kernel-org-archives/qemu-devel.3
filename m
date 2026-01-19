@@ -4,85 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66953D29C28
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 13:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 025CFD29C28
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 13:59:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhpmG-0000uf-Jb; Mon, 19 Jan 2026 08:58:44 -0500
+	id 1vhpmx-0001i1-Ny; Mon, 19 Jan 2026 08:59:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vhpmB-0000oy-CA
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:58:39 -0500
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vhpm9-0004x4-7V
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:58:39 -0500
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-79276cef7beso36617347b3.2
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 05:58:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768831116; x=1769435916; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NDLX2BM8G/U+yncKv7tdQvnINQrdgAQxw1e7Em7BkHw=;
- b=tf6DvbNP/67dvGircTgPf/LZL4J37jkcTQTHL/D25NP/kPlCODTQmBGZ8UPUBVX1o8
- aEU2pa3ToKWR5ib3/qRICGJLew6agrEvTJ+rHteQICuEX7VoKejgH6tF+aziSfTDh3+B
- YYdiQ7Y9f864Qh7sXV6K06TAhpT9RZJoStyH8Wdz9iTf2AXz4JugY/lalAEbBihahKqF
- 4M13W5vJSNJeBFz13TRVX778eSYusrFnlLairUaFdTsV0YYZ9cyKTR6ef2xzawwyZTwo
- OasSoe+jmm0O3yveMfosehAimAkQPnYcyZPT3aVKsw1or4SPQwYePg/QbJEUtXd+RtVT
- UaBg==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vhpmo-0001We-FN
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:59:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vhpmm-000519-Nv
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:59:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768831150;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Yw0RG/NghKbwEG67RRRsVMs/xtwoknsN3+p1LWHz6kQ=;
+ b=TgeabY7Hn3IBUNx3q2QMaKKpFMBUI6GgVsTFi4M6f1+ZkRMInawIAIpGezgL29ySRJAHvA
+ iV5+Rt+cPEGlcBLOkUzZRzUlhQddaIu/1yhtToamqS2H37+X5X2SnIsqyCwaqKa60HUk2Z
+ 822ZBTnt7olt2gOJGeiR/PKmPsaul1Y=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-550-__rx0nb_PO6DVAOYjrwRpw-1; Mon, 19 Jan 2026 08:59:09 -0500
+X-MC-Unique: __rx0nb_PO6DVAOYjrwRpw-1
+X-Mimecast-MFC-AGG-ID: __rx0nb_PO6DVAOYjrwRpw_1768831148
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-430fe16b481so2778310f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 05:59:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768831116; x=1769435916;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=NDLX2BM8G/U+yncKv7tdQvnINQrdgAQxw1e7Em7BkHw=;
- b=bzSYs7Htqi7IkDXrzuThDkQ+5zrbFmzB8OFug50HEUkU5y8c00p35Y6WH310h97WfZ
- GBrn7TxH4qcgSqEm9MwzQ0zdvixSwtWTVmi7H1G/E51/Zqyp5gxyqAgp6Ca7tSpYI0Dn
- t26XiXJRe2TjoP7c9rjq1kBc7wNE+UcE7GdUwsOcr/Oq1m+BY0HzcFFeION4aMmP5BPQ
- p9xET61oHSlk7GIjCDgfgar/3BSeRe1pUNhgQkfV+1a/OLKtlbNjr4tGSldKiUb2uOjt
- InHV34tf7dewg0OK/UWbjlOvfCz5oTTqcRA+/+H7XQQ3SL3S08ohzo607xwdqHuj1oTs
- YQHA==
+ d=1e100.net; s=20230601; t=1768831148; x=1769435948;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Yw0RG/NghKbwEG67RRRsVMs/xtwoknsN3+p1LWHz6kQ=;
+ b=GrvL4ASu67yz2gYfmk/qOD1xpH/UoeyrofxibHznKo3NGsraq6kfuDGuSCWGhJy/BQ
+ dd1VSmK92n5+UBdym+rCbKwiyXHRVwiqrF0xG3Wlyx9l7DjI/OSwMLN1TtqiLphkgCdv
+ khi7oAKP5C1Vc2IiNVVLQfHASv2NtBXs6qByeRX84CZcoSKRi/wnskbeI69hNjmyZRE+
+ /vCRc3SsOn+W7TJn2U81yKqRMHU5emxZh0LYB+GT15x/jVJeGGC5370/ouEYYntzGBGa
+ 9TQfgIFA6AZtGAV1qE2SHXdWFr59pL6y91pf82KSIrndz009+myRwStzbs/Se3LPedgE
+ 9nUA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWVnRf6FGDa/CSk4e+/OEQEP3SN4ZI9DwFvfdVSlGthCTKDqFSD2qJEMcD2G65VpbDWajVZk8wlQ3nz@nongnu.org
-X-Gm-Message-State: AOJu0Yyo4bicKSW84pjHD5urVif7sJjo1bRUMU6mKlIA8cvPMv+gb9Xj
- /7cKPMKuZwmyc1ujjfteImJWYc6ddq563aRZg3SijL1X+xMUGuHntZFEFrbnRXk8CHlt7ZaYRwR
- TuuBM7LuisUlakH+RAegbSF6HAzhijl+Otw88iYq8GA==
-X-Gm-Gg: AZuq6aLh0Yuu6j4AdPC9+M+6vtKfL5S3TR/NBQSfot9SVXSE2SA2DuhtKeaqL1B3cMj
- rfo2ZAgx1rzwkQdMOexHo2+zWUCs9qpBLq0MF3cXKtt3Wsf61OG/3gpt31hHxWGE3FxrkIXemAo
- g3mgbmMU42g+gXwsMj33F0lY1Ckdb5BNLrySwzoWx8xif846HtduaxyagUBDQPllrjTtYhKRtty
- Ew/8Fstn3VVAWCrYPqs9askJRuNAHi/ecwKmChOwu1mKeq2GYraeJsHpy+qeKKaW4ZF8A==
-X-Received: by 2002:a05:690c:6912:b0:78c:6a6a:123b with SMTP id
- 00721157ae682-793c5406a17mr87136407b3.63.1768831115883; Mon, 19 Jan 2026
- 05:58:35 -0800 (PST)
+ AJvYcCVNiDnTWcYdfzD0VzJP3wy2etljHmukxGcMvYSJmZLBBw9RIFYfgEuYXwbo5InV1ndFF53pirpMXWco@nongnu.org
+X-Gm-Message-State: AOJu0YzYFelv2fAoSPrJvVMkQlwnw8uJvn6z4d9HTuLPqmjqA93j2O5/
+ HF8v/3QagyHQrUmLuwaLiBQxFQ947QdLr+3kZm72xq4TrPC0dSisfQZ5vpvcQFqSEaFpijMzP4b
+ ZqUHOfq5Wob+OVN5ukiNBY0ofXEJ8WmookT7kpvVil62jqz6dbvnu0WsI
+X-Gm-Gg: AZuq6aLlkYWCCqXkbbIG3NK49908M2iWlQqqGkxyPwwEQZd8u9jO/KXyYX4VV3hGSNI
+ IHA4spwftdvXJU1SYkHsjtIdPGtaTzGom/pnhGmRh1Zjw7w7sxDUFz2Lt8cMQQi0wPleeXmZtaP
+ S6rkxEw5sQzUt8XV2T6areoawz8bBykWMVOMGILutU3QrE3e83zor49Di7TLscR5VyXOg6C11im
+ dM14Zr38rW5gDe1/eXyai6Stv7cz6LQrFLvSwUYYOZJ12Jhjz6PQrLxAmn3rT0zheLhsIE8rsOD
+ Rt3JsZdAYHoPOlGrV8yM1G5ojckX/mDx6DVRAWpdhFc1bBIfqqFeawGtRIuilUd+8upGCgh7I4N
+ 8iploGhOcuOPjU60xEjoVcmlhg9+Nc5wqszWwefZGb8o4URjiSu9OXx0MXw==
+X-Received: by 2002:a05:6000:4387:b0:431:9f1:e4c8 with SMTP id
+ ffacd0b85a97d-4356998ad34mr13226336f8f.17.1768831147957; 
+ Mon, 19 Jan 2026 05:59:07 -0800 (PST)
+X-Received: by 2002:a05:6000:4387:b0:431:9f1:e4c8 with SMTP id
+ ffacd0b85a97d-4356998ad34mr13226294f8f.17.1768831147446; 
+ Mon, 19 Jan 2026 05:59:07 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4356999824csm23185633f8f.39.2026.01.19.05.59.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Jan 2026 05:59:06 -0800 (PST)
+Message-ID: <0bb600f2-f47c-4b2d-832a-f19ed4f3fe7b@redhat.com>
+Date: Mon, 19 Jan 2026 14:59:04 +0100
 MIME-Version: 1.0
-References: <20260119120030.2593993-1-alex.bennee@linaro.org>
- <2d379a95-d3ec-4f6b-8b21-188540656019@linaro.org>
- <87o6mpsp3i.fsf@draig.linaro.org>
-In-Reply-To: <87o6mpsp3i.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 19 Jan 2026 13:58:22 +0000
-X-Gm-Features: AZwV_QggNc3OPJ6UvUjKS_Bx_uGL40sL09uzkNSy99RmJNaxKtmkyZRmggzskVA
-Message-ID: <CAFEAcA_=B=X+_fM68qhUqPsogw=GNOHdE_jqEEGvQDU-cOzLhA@mail.gmail.com>
-Subject: Re: [RFC PATCH] hw/intc: avoid byte swap fiddling in gicv3 its path
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, "open list:ARM cores" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 16/36] hw/arm/smmuv3-accel: Implement
+ get_msi_direct_gpa callback
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, clg@redhat.com, alex@shazbot.org,
+ nathanc@nvidia.com, mochs@nvidia.com, smostafa@google.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, yi.l.liu@intel.com, kjaju@nvidia.com
+References: <20260111195508.106943-1-skolothumtho@nvidia.com>
+ <20260111195508.106943-17-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260111195508.106943-17-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,90 +119,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Jan 2026 at 13:34, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
->
-> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
->
-> > On 19/1/26 13:00, Alex Benn=C3=A9e wrote:
-> >> The GIC should always be a little-endian device as big-endian
-> >> behaviour is a function of the current CPU configuration not the
-> >> system as a whole. This allows us to keep the MSI data in plain host
-> >> order rather then potentially truncating with multiple byte swaps of
-> >> different sizes.
-> >> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> >> ---
-> >>   hw/intc/arm_gicv3_its_common.c | 4 ++--
-> >>   hw/intc/arm_gicv3_its_kvm.c    | 2 +-
-> >>   2 files changed, 3 insertions(+), 3 deletions(-)
-> >> diff --git a/hw/intc/arm_gicv3_its_common.c
-> >> b/hw/intc/arm_gicv3_its_common.c
-> >> index e946e3fb87b..60a5abd8d3e 100644
-> >> --- a/hw/intc/arm_gicv3_its_common.c
-> >> +++ b/hw/intc/arm_gicv3_its_common.c
-> >> @@ -81,7 +81,7 @@ static MemTxResult gicv3_its_trans_write(void *opaqu=
-e, hwaddr offset,
-> >>       if (offset =3D=3D 0x0040 && ((size =3D=3D 2) || (size =3D=3D 4))=
-) {
-> >>           GICv3ITSState *s =3D ARM_GICV3_ITS_COMMON(opaque);
-> >>           GICv3ITSCommonClass *c =3D ARM_GICV3_ITS_COMMON_GET_CLASS(s)=
-;
-> >> -        int ret =3D c->send_msi(s, le64_to_cpu(value), attrs.requeste=
-r_id);
-> >> +        int ret =3D c->send_msi(s, value, attrs.requester_id);
-> >>             if (ret <=3D 0) {
-> >>               qemu_log_mask(LOG_GUEST_ERROR,
-> >> @@ -97,7 +97,7 @@ static MemTxResult gicv3_its_trans_write(void *opaqu=
-e, hwaddr offset,
-> >>   static const MemoryRegionOps gicv3_its_trans_ops =3D {
-> >>       .read_with_attrs =3D gicv3_its_trans_read,
-> >>       .write_with_attrs =3D gicv3_its_trans_write,
-> >> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> >> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
-> >>   };
-> >>     void gicv3_its_init_mmio(GICv3ITSState *s, const MemoryRegionOps
-> >> *ops,
-> >> diff --git a/hw/intc/arm_gicv3_its_kvm.c b/hw/intc/arm_gicv3_its_kvm.c
-> >> index ae12d41eee1..a8d6d4fb540 100644
-> >> --- a/hw/intc/arm_gicv3_its_kvm.c
-> >> +++ b/hw/intc/arm_gicv3_its_kvm.c
-> >> @@ -58,7 +58,7 @@ static int kvm_its_send_msi(GICv3ITSState *s, uint32=
-_t value, uint16_t devid)
-> >>         msi.address_lo =3D extract64(s->gits_translater_gpa, 0, 32);
-> >>       msi.address_hi =3D extract64(s->gits_translater_gpa, 32, 32);
-> >> -    msi.data =3D le32_to_cpu(value);
-> >> +    msi.data =3D value;
-> >>       msi.flags =3D KVM_MSI_VALID_DEVID;
-> >>       msi.devid =3D devid;
-> >>       memset(msi.pad, 0, sizeof(msi.pad));
-> >
-> > Could we also clean the other GIC uses in the same patch?
-> >
-> > $ git grep DEVICE_NATIVE_ENDIAN hw/intc/arm_gic*
-> > hw/intc/arm_gic.c:2065:        .endianness =3D DEVICE_NATIVE_ENDIAN,
-> > hw/intc/arm_gic.c:2070:        .endianness =3D DEVICE_NATIVE_ENDIAN,
-> > hw/intc/arm_gic.c:2077:    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> > hw/intc/arm_gic.c:2084:        .endianness =3D DEVICE_NATIVE_ENDIAN,
-> > hw/intc/arm_gic.c:2089:        .endianness =3D DEVICE_NATIVE_ENDIAN,
-> > hw/intc/arm_gic.c:2096:    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> > hw/intc/arm_gicv3.c:420:        .endianness =3D DEVICE_NATIVE_ENDIAN,
-> > hw/intc/arm_gicv3.c:429:        .endianness =3D DEVICE_NATIVE_ENDIAN,
-> > hw/intc/arm_gicv3_its.c:1909:    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> > hw/intc/arm_gicv3_its.c:1919:    .endianness =3D DEVICE_NATIVE_ENDIAN,
-> > hw/intc/arm_gicv3_its_common.c:100:    .endianness =3D DEVICE_NATIVE_EN=
-DIAN,
->
-> I did look to see if we where doing any byte swaps but I forgot to check
-> the .endianness fields. I can re-spin.
 
-I think we should separate fixing up MemoryRegionOps
-endianness fields (clearly safe no-behaviour-change commit)
-from the le32_to_cpu/le64_to_cpu change (probably a bug fix
-to be cc'd to stable, needs explanation of what it's doing).
 
-thanks
--- PMM
+On 1/11/26 8:53 PM, Shameer Kolothum wrote:
+> Accelerated SMMUv3 instances rely on the physical SMMUv3 for nested
+> translation (guest Stage-1, host Stage-2). In this mode, the guest Stage-1
+> tables are programmed directly into hardware, and QEMU must not attempt to
+> walk them for translation, as doing so is not reliably safe. For vfio-pci
+> endpoints behind such a vSMMU, the only translation QEMU needs to perform
+> is for the MSI doorbell used during KVM MSI setup.
+>
+> Implement the callback so that kvm_arch_fixup_msi_route() can retrieve the
+> MSI doorbell GPA directly, instead of attempting a software walk of the
+> guest translation tables.
+>
+> Also introduce an SMMUv3 device property to carry the MSI doorbell GPA.
+> This property will be set by the virt machine in a subsequent patch.
+>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Eric
+> ---
+>  hw/arm/smmuv3-accel.c   | 10 ++++++++++
+>  hw/arm/smmuv3.c         |  2 ++
+>  include/hw/arm/smmuv3.h |  1 +
+>  3 files changed, 13 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index c125974d12..c6ee123cdf 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -393,6 +393,15 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
+>      }
+>  }
+>  
+> +static uint64_t smmuv3_accel_get_msi_gpa(PCIBus *bus, void *opaque, int devfn)
+> +{
+> +    SMMUState *bs = opaque;
+> +    SMMUv3State *s = ARM_SMMUV3(bs);
+> +
+> +    g_assert(s->msi_gpa);
+> +    return s->msi_gpa;
+> +}
+> +
+>  /*
+>   * Only allow PCIe bridges, pxb-pcie roots, and GPEX roots so vfio-pci
+>   * endpoints can sit downstream. Accelerated SMMUv3 requires a vfio-pci
+> @@ -497,6 +506,7 @@ static const PCIIOMMUOps smmuv3_accel_ops = {
+>      .get_viommu_flags = smmuv3_accel_get_viommu_flags,
+>      .set_iommu_device = smmuv3_accel_set_iommu_device,
+>      .unset_iommu_device = smmuv3_accel_unset_iommu_device,
+> +    .get_msi_direct_gpa = smmuv3_accel_get_msi_gpa,
+>  };
+>  
+>  /* Based on SMUUv3 GPBA.ABORT configuration, attach a corresponding HWPT */
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 7a32afd800..6ed9914b1e 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -1998,6 +1998,8 @@ static const Property smmuv3_properties[] = {
+>       * Defaults to stage 1
+>       */
+>      DEFINE_PROP_STRING("stage", SMMUv3State, stage),
+> +    /* GPA of MSI doorbell, for SMMUv3 accel use. */
+> +    DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
+>  };
+>  
+>  static void smmuv3_instance_init(Object *obj)
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index e54ece2d38..5616a8a2be 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -67,6 +67,7 @@ struct SMMUv3State {
+>      /* SMMU has HW accelerator support for nested S1 + s2 */
+>      bool accel;
+>      struct SMMUv3AccelState *s_accel;
+> +    uint64_t msi_gpa;
+>  };
+>  
+>  typedef enum {
+
 
