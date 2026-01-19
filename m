@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB49CCF2D2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 433FCCCF2D4
 	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 09:39:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhlix-0000aV-6W; Mon, 19 Jan 2026 04:39:03 -0500
+	id 1vhljA-0000jK-6N; Mon, 19 Jan 2026 04:39:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vhliv-0000ZE-Gu
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 04:39:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vhlit-0000Or-CI
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 04:39:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768815537;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=fYoeAkYvVAWePIAhGG+8cNgF2+eZdXUQJBvwo5rpbIo=;
- b=WxA9EslxxLQT6AK44msuSG0SpQdbyGIajo/6QsinRtRyvA8Wl4L6PfQCIoVBVPjaKSww1D
- YoZjImpmvRpYmTn7NxwgcCNwW/y0rAGnSEiv2r/acgHukVRiMhfDcqK+ZcurnYyzFSFLgA
- 0fI6jMK6rpA5Uv+PixJAfZvrjVArUbE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-D47x9xwqMPCsu2Esg5j05A-1; Mon,
- 19 Jan 2026 04:38:53 -0500
-X-MC-Unique: D47x9xwqMPCsu2Esg5j05A-1
-X-Mimecast-MFC-AGG-ID: D47x9xwqMPCsu2Esg5j05A_1768815532
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A2D421954B21; Mon, 19 Jan 2026 09:38:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.53])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C6E21800577; Mon, 19 Jan 2026 09:38:45 +0000 (UTC)
-Date: Mon, 19 Jan 2026 09:38:41 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Filip Hejsek <filip.hejsek@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
- Szymon Lukasz <noh4hss@gmail.com>
-Subject: Re: [PATCH v6 08/12] virtio-serial-bus: add terminal resize messages
-Message-ID: <aW37oZ1X_7O6AXvo@redhat.com>
-References: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
- <20260119-console-resize-v6-8-33a7b0330a7a@gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vhlj8-0000iK-Oa
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 04:39:14 -0500
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vhlj7-0000R5-5M
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 04:39:14 -0500
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-78f89501423so49373697b3.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 01:39:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768815551; x=1769420351; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bS3FRY6DBVPb4AJzTSIznws4AKioAo2V1bQN2dhkAPE=;
+ b=RiH79EowJNHxzVumM/Llv8g5706vmn36r7e7yzt6Gxn/P2vckUV+5QX2em3s4iAv5i
+ MhWguSGHA6G31MMRl9rjJyXcP0Cy8VIwiYs8Dhwn0o0hlGEPOL+vJ26DYVowO8Ysp5aF
+ LmaQHXey1pkwsn4cw0V0fBhGcSWrnrXhTOo9k7MLj0s9b47yTWEkTmeLkSAcssb3Pbo0
+ 7vmRhq6f516rwmdgk899TIg/+iyzkW+mjCH8pD93ilnIf6dIT+CynFmtl6YWZEIbcB+8
+ 72LUGNbB05T5Zod2Dg9kPnG7n+4yULqf2GA4dIvo70zKXHACeYHw8SUefrdrySalRfC7
+ bZbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768815551; x=1769420351;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=bS3FRY6DBVPb4AJzTSIznws4AKioAo2V1bQN2dhkAPE=;
+ b=LXijsEaiM/GGrk45qty+zIWa2AGpNL94A1v4olHaUrOlMFJy0Y9u3VrRrSLWVUVtMH
+ D7P15EC2BNxz5apB5B15ih+SaLp2v29uGP2/3PB2d+Dq4TkiA98HMrXfbwbC9M8l/MDA
+ I6Lo3HM8yD2GMe/yWARQ0F7664w4tp760TCebH+WXe8yKQGntGzBFIfnifDr4x6EkrOm
+ RQl4cI25e/1YIRqyXjkoKpfMLivf4tsXZ2nSA2A8jdhq7nTAnu3gI3UcP4RKFw8Bpg58
+ GzFem/+k6j1bQR8E8NeXbPuYnSUY8K8Paedl9Gq5JM0QQdD+fi/2szfAs262BWJnFzf8
+ cMzQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhDSYPT5+3Mzu/Aql3CCkls33K8g233X9li+JT9bRv8MKxSxoauEg35rhuBpc3kXbQz8K3M1322ISn@nongnu.org
+X-Gm-Message-State: AOJu0Ywlx5R2kQZoc14SSzhwIaMDRaP0UvFuft/BPvStjilVXxZlW8jn
+ D/g7Xu5e7yV9T47YJVq43h723foDe7juhS3Vq7aOuWK31imsqJ14eQG3Q455Zfav01gp3DdHVaM
+ fwrV0h8qRiStx03vDzczQGWP3zLZH+1N+SIhrrvK8HA==
+X-Gm-Gg: AZuq6aL4GuUGCxjW6oQAXXT16rvMy2Z4YBYCxjtIy2xT8jHoxLVQS2n07jEToEpWi1e
+ 7ZnM3ffUrPKygsGCKZ95MCFpdseqBEZxnnJK2UXyE/PIuGgW22aQbI608ijUqUowrRsdNSLsBsl
+ LfnWvCR/PQMwVJREAtiPlA2LjZ+VZpQ7WOZuN+kF4ARyXW2BQHjp5JAWfcMzEv2AibJ8x62AdCc
+ pPUhsaaQd3v6Dq62s4B/h9aDLvzhxC5XgHeGrvvfpjxv/jLss/nsfa5191Bsy0qz9I3qA==
+X-Received: by 2002:a05:690e:140f:b0:63f:b6c0:23f8 with SMTP id
+ 956f58d0204a3-6490a67fcf2mr9785463d50.33.1768815550723; Mon, 19 Jan 2026
+ 01:39:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260119-console-resize-v6-8-33a7b0330a7a@gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20260106-semihosting-cpu-tswap-v1-0-646576c25f56@eonerc.rwth-aachen.de>
+ <20260106-semihosting-cpu-tswap-v1-1-646576c25f56@eonerc.rwth-aachen.de>
+ <ee9a0216-0a1a-46ec-b647-64045c892af3@linaro.org>
+ <FDDAA4F9-C389-4E63-8DEB-B0FBE38FE5CE@eonerc.rwth-aachen.de>
+In-Reply-To: <FDDAA4F9-C389-4E63-8DEB-B0FBE38FE5CE@eonerc.rwth-aachen.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 Jan 2026 09:38:59 +0000
+X-Gm-Features: AZwV_Qi1RDHVEyRNcULKD72VZl5J7UzC2avld0aGfZ-78LBOP2AHe9SoLwNVURc
+Message-ID: <CAFEAcA-P2xqNO21rMyt2VA_tRf9yzWh8qtJFggGr4Mn-AWjj5g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] include/exec: Provide the cpu_tswap() functions
+To: =?UTF-8?Q?Kr=C3=B6ning=2C_Martin?= <martin.kroening@eonerc.rwth-aachen.de>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.077,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,80 +97,115 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 19, 2026 at 04:27:51AM +0100, Filip Hejsek wrote:
-> Implement the part of the virtio spec that allows to notify the virtio
-> driver about terminal resizes. The virtio spec contains two methods to
-> achieve that:
-> 
-> For legacy drivers, we have only one port and we put the terminal size
-> in the config space and inject the config changed interrupt.
-> 
-> For multiport devices, we use the control virtqueue to send a packet
-> containing the terminal size. Note that old versions of the Linux kernel
-> used an incorrect order for the fields (rows then cols instead of cols
-> then rows), until it was fixed by commit 5326ab737a47278dbd16ed3ee7380b26c7056ddd.
-> 
-> As a result, when using a Linux kernel older than 6.15, the number of rows
-> and columns will be swapped.
-> 
-> Based on a patch originally written by Szymon Lukasz <noh4hss@gmail.com>,
-> but partially rewritten to fix various corner cases.
-> 
-> Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
-> Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
-> ---
->  hw/char/trace-events              |  1 +
->  hw/char/virtio-serial-bus.c       | 76 +++++++++++++++++++++++++++++++++++++--
->  hw/core/machine.c                 |  4 ++-
->  include/hw/virtio/virtio-serial.h |  5 +++
->  4 files changed, 83 insertions(+), 3 deletions(-)
-> 
+On Mon, 19 Jan 2026 at 09:13, martin.kroening--- via qemu development
+<qemu-devel@nongnu.org> wrote:
+>
+> Hi Philippe,
+>
+> On 18.01.26, 22:33, Philippe Mathieu-Daud=C3=A9 wrote:
+>
+> > > These functions are needed for CPUs that support runtime-configurable=
+ endianness.
+> > > In those cases, components such as semihosting need to perform
+> > > runtime-dependent byte swaps.
+> >
+> > Are you targetting user or system emulation?
+> >
+> > I suppose user emulation, otherwise you'd have used the
+> > "semihosting/uaccess.h" API.
+> >
+> > But then I'm confused because a user process can't change
+> > the CPU endianness...
 
-> @@ -1158,6 +1228,8 @@ static const Property virtio_serial_properties[] = {
->                                                    31),
->      DEFINE_PROP_BIT64("emergency-write", VirtIOSerial, host_features,
->                        VIRTIO_CONSOLE_F_EMERG_WRITE, true),
-> +    DEFINE_PROP_BIT64("console-size", VirtIOSerial, host_features,
-> +                      VIRTIO_CONSOLE_F_SIZE, true),
->  };
+32-bit arm user-mode processes can change the CPU endianness,
+incidentally; the SETEND instruction works at EL0.
 
-Given the horrible mess with the kernel intentionally changing its
-behaviour after 15 years, I don't think we can we set this to be
-enabled by default.
+> > Can you explain your use case?
+>
+> Thanks for asking! I am targeting system emulation. My use case is emulat=
+ing
+> bare-metal software such as an OS that switches the AArch64 CPU to big-en=
+dian
+> mode during runtime.
+>
+> `{get,set}_user_u{64,32}` from "semihosting/uaccess.h" currently use
+> `tswap{32,64}` from "exec/tswap.h", which do not respect runtime-configur=
+able
+> endianness.
+>
+> PATCH 1/2 introduces `cpu_tswap{32,64}`, which PATCH 2/2 integrates into
+> "semihosting/uaccess.h". I can squash those commits if you prefer, of cou=
+rse.
+> Or did I misunderstand your question?
 
-The recent behaviour change is never going to be backported to enough
-stable distros that we can rely on the new behaviour, and thanks to
-the change we can't rely on the old behaviour either. We're doomed no
-matter what ordernig we use.
+So I think we do definitely want to have some setup where a
+big-endian guest OS gets a big-endian semihosting ABI: the
+semihosting spec is not very detailed on this but it does say
 
-Thus, IMHO, this has to stay set to false indefinitely.
+# Multi-byte values in memory must be formatted as pure little-endian
+# or pure big-endian to match the endianness mapping configuration of
+# the processor.
 
->  static void virtio_serial_class_init(ObjectClass *klass, const void *data)
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 6411e68856..50554b8900 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -38,7 +38,9 @@
->  #include "hw/acpi/generic_event_device.h"
->  #include "qemu/audio.h"
->  
-> -GlobalProperty hw_compat_10_2[] = {};
-> +GlobalProperty hw_compat_10_2[] = {
-> +    { "virtio-serial-device", "console-size", "off" },
-> +};
->  const size_t hw_compat_10_2_len = G_N_ELEMENTS(hw_compat_10_2);
->  
->  GlobalProperty hw_compat_10_1[] = {
+The question here is more (1) which specific endianness-config
+bit do we want to be looking at and (2) what is the best API
+and naming for the functions inside QEMU, to make them fit in
+with some of the refactoring that Phil has been doing lately,
+and to make them not liable to accidental misuse.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+On (1) virtio_is_big_endian looks at the current data endianness
+of the CPU, which is probably the most reasonable. (I don't know
+what other semihosting implementations do -- the original "debug
+ROM intercepts the SVC insn" implementation might well have been
+hardcoded for "this is a big-endian ROM" vs "little-endian ROM".
+But I don't think anybody could be relying on still getting
+the little-endian ABI even when they temporarily use SETEND to
+flip to big-endian.)
 
+On (2):
+
+> Alex was worried about expanding the use of `virtio_is_big_endian`:
+>
+> > Hmm looking at the description:
+> >
+> >     /**
+> >      * @virtio_is_big_endian: Callback to return %true if a CPU which s=
+upports
+> >      * runtime configurable endianness is currently big-endian.
+> >      * Non-configurable CPUs can use the default implementation of this=
+ method.
+> >      * This method should not be used by any callers other than the pre=
+-1.0
+> >      * virtio devices.
+> >      */
+> >     bool (*virtio_is_big_endian)(CPUState *cpu);
+> >
+> > I'm not sure if we want to expand the usage of this hack. I think
+> > Philippe is hoping to get rid of these warts eventually. Of course we
+> > could rename the method and just provide a way to get the current
+> > systems endianess.
+>
+> While not being very familiar with QEMU's source code, something like thi=
+s
+> seems necessary to me. I can rename `virtio_is_big_endian` to `is_big_end=
+ian`
+> and `cpu_virtio_is_big_endian` to `cpu_is_big_endian` if you prefer that.
+
+The reason for naming these functions the way we have now is
+that we really didn't want them to be a "this looks like the
+right function to use for my purpose" general name like
+"is_big_endian". Almost nothing in QEMU outside the CPU itself
+should need to know about the data endianness of the CPU,
+because in real hardware the devices can't tell what the CPU
+is set up as, they just get/send data. The exceptions are
+legacy virtio (which is a mistake that was made because nobody
+was thinking about it in the original virtio device design)
+and some oddball interfaces like semihosting. So the name is
+intended to push people away from using it (and towards e.g.
+target_big_endian()).
+
+thanks
+-- PMM
 
