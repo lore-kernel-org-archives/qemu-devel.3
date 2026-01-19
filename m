@@ -4,74 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EF31CCF2EE
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 20:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8691AFC619B
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 20:29:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhvaj-00053y-0A; Mon, 19 Jan 2026 15:11:13 -0500
+	id 1vhvs7-00074d-FD; Mon, 19 Jan 2026 15:29:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vhvah-000532-76
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 15:11:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vhvs1-00073t-Lg
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 15:29:07 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vhvad-0003Q1-9B
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 15:11:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768853465;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=a3CKzCll4s0CdsixfST1oZ+0xS5UOVq+BJiF7sYOqE8=;
- b=W7xoxiXKJBqTG6hlaNlH983WBuafKe1EXNgtrQNu32VNBfxHiuWDudHn+aL/i1SNBrHsC+
- eo/aJpAFW7H806VQ7VzZz+QyCh7HFM91LG+RctwmeCsST105ehrcvRAVyU6QGe3xmbk+PI
- KMA0nsNFOraIaaRXHh9GQ1l6A1cIlgU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-fHD52PLmNmmtP9RGHwdv1A-1; Mon,
- 19 Jan 2026 15:11:03 -0500
-X-MC-Unique: fHD52PLmNmmtP9RGHwdv1A-1
-X-Mimecast-MFC-AGG-ID: fHD52PLmNmmtP9RGHwdv1A_1768853462
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C470619560AE; Mon, 19 Jan 2026 20:11:01 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.150])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3E20D1955F43; Mon, 19 Jan 2026 20:10:59 +0000 (UTC)
-Date: Mon, 19 Jan 2026 15:10:59 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hreitz@redhat.com,
- kwolf@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
- qemu-stable@nongnu.org, eblake@redhat.com
-Subject: Re: [PATCH] block/mirror: check range when setting zero bitmap for
- sync write
-Message-ID: <20260119201059.GA869317@fedora>
-References: <20260112152544.261923-1-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vhvrz-0006ld-Bq
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 15:29:05 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7798217FEA0;
+ Mon, 19 Jan 2026 23:28:42 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B4D13351009;
+ Mon, 19 Jan 2026 23:28:58 +0300 (MSK)
+Message-ID: <9fe709ba-e2e9-419f-82b0-219fc96121ed@tls.msk.ru>
+Date: Mon, 19 Jan 2026 23:28:58 +0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="fpHW0qS8zpLog7zp"
-Content-Disposition: inline
-In-Reply-To: <20260112152544.261923-1-f.ebner@proxmox.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitlab: preserve base rules for container template
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20260119135528.2738108-1-berrange@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260119135528.2738108-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,101 +106,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 1/19/26 16:55, Daniel P. Berrangé wrote:
+> When extending the container template to allow scheduled piplines in
+> upstream context, we must ensure that all the existing rules defined
+> by .base_job_template are preserved.
+> 
+> Fortunately since the new rule for scheduled pipelines can come at
+> the head of all other rules, not in the middle, we can just the obscure
+> '!reference' syntax to pull in all the pre-existing rules as a single
+> block.
+> 
+> This fixes
+> 
+>   * stable branches using the wrong tag name in container images
+>   * pushes to forks unconditionally running container builds
 
---fpHW0qS8zpLog7zp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I wont pretend I know what "!reference" means in yaml.  But this
+change seems to fix both issues, and does not look like it breaks
+something.
 
-On Mon, Jan 12, 2026 at 04:23:51PM +0100, Fiona Ebner wrote:
-> Some Proxmox users reported an occasional assertion failure [0][1] in
-> busy VMs when using drive mirror with active mode. In particular, the
-> failure may occur for zero writes shorter than the job granularity:
->=20
-> > #0  0x00007b421154b507 in abort ()
-> > #1  0x00007b421154b420 in ?? ()
-> > #2  0x0000641c582e061f in bitmap_set (map=3D0x7b4204014e00, start=3D14,=
- nr=3D-1)
-> > #3  0x0000641c58062824 in do_sync_target_write (job=3D0x641c7e73d1e0,
-> >       method=3DMIRROR_METHOD_ZERO, offset=3D852480, bytes=3D4096, qiov=
-=3D0x0, flags=3D0)
-> > #4  0x0000641c58062250 in bdrv_mirror_top_do_write (bs=3D0x641c7e62e1f0,
->         method=3DMIRROR_METHOD_ZERO, copy_to_target=3Dtrue, offset=3D8524=
-80,
->         bytes=3D4096, qiov=3D0x0, flags=3D0)
-> > #5  0x0000641c58061f31 in bdrv_mirror_top_pwrite_zeroes (bs=3D0x641c7e6=
-2e1f0,
->         offset=3D852480, bytes=3D4096, flags=3D0)
->=20
-> The range for the dirty bitmap described by dirty_bitmap_offset and
-> dirty_bitmap_end is narrower than the original range and in fact,
-> dirty_bitmap_end might be smaller than dirty_bitmap_offset. There
-> already is a check for 'dirty_bitmap_offset < dirty_bitmap_end' before
-> resetting the dirty bitmap. Add such a check for setting the zero
-> bitmap too, which uses the same narrower range.
->=20
-> [0]: https://forum.proxmox.com/threads/177981/
-> [1]: https://bugzilla.proxmox.com/show_bug.cgi?id=3D7222
->=20
-> Cc: qemu-stable@nongnu.org
-> Fixes: 7e277545b9 ("mirror: Skip writing zeroes when target is already ze=
-ro")
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
->  block/mirror.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->=20
-> diff --git a/block/mirror.c b/block/mirror.c
-> index b344182c74..bc982cb99a 100644
-> --- a/block/mirror.c
-> +++ b/block/mirror.c
-> @@ -1514,9 +1514,12 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMe=
-thod method,
->          assert(!qiov);
->          ret =3D blk_co_pwrite_zeroes(job->target, offset, bytes, flags);
->          if (job->zero_bitmap && ret >=3D 0) {
-> -            bitmap_set(job->zero_bitmap, dirty_bitmap_offset / job->gran=
-ularity,
-> -                       (dirty_bitmap_end - dirty_bitmap_offset) /
-> -                       job->granularity);
-> +            if (dirty_bitmap_offset < dirty_bitmap_end) {
-> +                bitmap_set(job->zero_bitmap,
-> +                           dirty_bitmap_offset / job->granularity,
-> +                           (dirty_bitmap_end - dirty_bitmap_offset) /
-> +                           job->granularity);
-> +            }
+Tested-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Why does this case clause use dirty_bitmap_offset and dirty_bitmap_end
-instead of zero_bitmap_offset and zero_bitmap_end like the other
-zero_bitmap operations in this switch statement?
+> Fixes: 8bec7b9874235e60f14172618121c60fdbd39302
 
-   if (job->zero_bitmap && ret >=3D 0) {
--      bitmap_set(job->zero_bitmap, dirty_bitmap_offset / job->granularity,
--                 (dirty_bitmap_end - dirty_bitmap_offset) /
--                 job->granularity);
-+      bitmap_set(job->zero_bitmap, zero_bitmap_offset,
-+                 zero_bitmap_end - zero_bitmap_offset);
-   }
+Fixes: 8bec7b987423 ("gitlab: add a weekly container building job")
 
-I'm probably missing something, but it's not obvious to me :).
+Thanks!
 
-Stefan
-
---fpHW0qS8zpLog7zp
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmluj9IACgkQnKSrs4Gr
-c8jzugf+P+Avd6meRYWvXPW34c+ov0w73OhD/DDZJCSwLxbYddYqsqR9LRniCiyt
-qwy9b4U2Pbh1zZ0KWR+yO5TW7KzNr0kzifeKok/5CgvNtnndofRwru63SCdnkq9C
-92hb4p14/CGl29qhBAWcOs/RGbO7fYJ8MgORDTn7tEA8JHc6v4ksmEM+V1vwQOY4
-LjvmWfgJrLaRKSIW3n2Vn4w+v30YjiigSz9eeJgDf94+5E1OJfp58r77NZ8l6IfC
-CjLE9mH06PxaTfzReKeeKdwnjtW1/tTdqoyKEZe4wtwpnMveO9iHXqY8YamZ5whT
-yXoDLPFXEKCFzNerYj336EZ/s86Suw==
-=r+6M
------END PGP SIGNATURE-----
-
---fpHW0qS8zpLog7zp--
-
+/mjt
 
