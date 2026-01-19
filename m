@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F230DCCF2DF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03211CCF2E7
 	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 11:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhn3U-0006xw-SU; Mon, 19 Jan 2026 06:04:20 -0500
+	id 1vhn3c-0007IP-IV; Mon, 19 Jan 2026 06:04:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhn3T-0006rG-NC
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 06:04:19 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhn3a-0007Dj-Eo
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 06:04:26 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhn3S-0006YD-32
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 06:04:19 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-47ff94b46afso26958795e9.1
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 03:04:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhn3Y-0006ZP-Io
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 06:04:26 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-42fbbc3df8fso2120784f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 03:04:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768820656; x=1769425456; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768820663; x=1769425463; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2/5ri0x0HKOQ4AevWnY2CiNFX91P9a3QRDv363s7aV8=;
- b=XfNHp/TrPO1lkJtC/QCvoRAOP8HvOwXhAeUDnP2Ke9d2kzKHL0+IW/cGJ3H6ecfZhk
- azMeHSstJSRpy14opES4lLwIDXhu7jo5kAukj5qbssE7/bo2tPxwlYc5A7v+RVtJCSNE
- dAHklFGs6KpZY6ve1pefOh7VXddpTE1H8q8+mXBI9RbKGRhWyineba+Y19y3zz7KgsVP
- 5VBa5C9WuB5Ut+gxTBo0m3VqJAo1X7pu//dzADL3pnQoP3rvZ4O8jYc9BhqWu03L/o0T
- 8440RqAJata7Ob7BIK6RLeps8UAfJUbSj7V6QUjLUiT3/lSZWG/XJdr4iR6J3pRMdthr
- FhGw==
+ bh=apOZMf0tEn3rJJPrSfMcVgYQ3RZZMtDVtwPqX5t6dIc=;
+ b=RsOBiFDk77TNCR35oaHkp0D4TwL96cEQaEMwTcqeRj95xO1humRsQ8hFzXnyyadSTl
+ yF/TDE4TcZ8b9wTnWCfkgM0JgoBvRD6BMpCn38IQTdjnzX4eIfBsW0/zlrgGwxjoK5Wg
+ W1ScjY2DQTfpE5IXRJiHzXuRfeE368+0jMcQVKXvzamnABxmcGzU6DIGnxN2hOVt64Z2
+ JXZrQlxxOiq1xFyzr74YVQTL2ZD9Hq61c3/j5dvQtq72Yx8m1V+xoh5Q+CPoWF21q9Md
+ sHNuK5BGEM9uMXoXdnNv2Tn40FBNmrqG8LK/Gs0SWhBPG5EIk6zD8yiukA5kRHfB9uWO
+ uWQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768820656; x=1769425456;
+ d=1e100.net; s=20230601; t=1768820663; x=1769425463;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2/5ri0x0HKOQ4AevWnY2CiNFX91P9a3QRDv363s7aV8=;
- b=u8siMuZ16ajasJXCZjPuJz0HAwoL7cg2aVABO0TvDWwFtp/wT90o6mAyRw/4KwP114
- hkJgPqZtyDyEjViiraubgOd2wE+BUCrSxycBkZzS6c3q41IAAJpo3erBfL9zh1QzCPBa
- uVN/tkrYp2WbLvOQupYvsPbO70wajUPo/FL5p+Fg4sR7ysHbXgP1lYJJ28/A2xV1oeyn
- pMf2IjNv74UIWKtLGP58zTyxSekE68YNhnmsPy4EW9m7+bV4G3yQ2bK3um0vr89muX8n
- 7sSSh0q91RSBWu8wwplGwMUm+ATdrvH1AeOLrpagEk7oRb8Vx4jnbhvQzroxiL25ElGm
- g5eQ==
-X-Gm-Message-State: AOJu0YygCt/yOzUm62ZUdxfo+Nrw+OivUsfXFpNRZdENyj3m8n4yAv/m
- FKKvDbTz3RYrBnKb18naNnteJRUy4GPki3RdYqSp1d6iIlltDtJqiY2fsXapqoaelB+NXHdVfA6
- kq/0lB3I=
-X-Gm-Gg: AY/fxX7SjIoUHozQo769+Y64QgSjJK1xhy7uhK3OT/g0c1xHs+fur4J+aT40DcSct3v
- Jh5exjZa3elgyg7vSTqKttOzQDp7uVuFA4uSIwO9Dod3GXj3qNwh8H8O4FDQ+n5uqZngwowXjGp
- pBSJDHaIJNRqgcR87ls29nDnotMND2sXkdzU72ZY3TB5fLZqeldDASkOwIf3YLT2QgW5pdK9f79
- tGv4i84dEWdLHtxXEMq0Ae+hxzdCZboQ/Vg+OqUAmcqQaZ0v5lTNXc9yRc/URNahdxiBGKZzs4c
- 0pDK3S0bJ3sqve3l5Rm1OqluUmvxzesujG3TR00oXSCpT7LVnl7mmz4fqtrPuk9Swy7Gsb71cML
- /WTscmkc0vCRV+GdGXW+C566ebBmnSDS4Pf08jmbwZg1Y4rcx48CMXp0v2ILx+Ad6MsWFPK2o1d
- HB5cFZp64v1Q/LP5W6LF2jxbgzS6IYxWN3ENxnNfMm5uTDbxouScO1VhEuSNEkVrD3MH8m/Xw=
-X-Received: by 2002:a05:600c:8184:b0:475:d9de:952e with SMTP id
- 5b1f17b1804b1-4801e530d08mr129131105e9.1.1768820655782; 
- Mon, 19 Jan 2026 03:04:15 -0800 (PST)
+ bh=apOZMf0tEn3rJJPrSfMcVgYQ3RZZMtDVtwPqX5t6dIc=;
+ b=vayzZf9IPZ3+mdwHhUKnXz/apR5sl7zrjmaIFjB6W42ymDJhjd2GXb3+k48i7GBCXa
+ EYNJYQS4BJAZ+z44w/qINqjm2jHR3sQ6VjOMZVsKf1snMwRlQCvQZeS8PprWXszW2DUI
+ KY9/g2uOp1VsGZaD3k8XaplNyPwcJbK5Uef0g9gQwE71f2orZhjTjzzD+1rmS97G7TkR
+ WT+b9W05ckSeE2dkAHvhufGIRGLSDp2jzR04W4JcgGyXnkBSyyKBFnY9C2OOJ8MHnrqs
+ KfrkrPNQHjWdqMuvZHxsPeuiMrb3qI5Gmaex1Ie8UXnFud/IC0NmJdkMenrFrDE6+AFa
+ jbgw==
+X-Gm-Message-State: AOJu0YzLrfenZjYYwnE0/IxOf8/7EFt3KRA7quOKzFzP9mnPF6fKTznZ
+ kesqD9WjiuJeYq1BkT+frWadFSeJ9Bu9Ox2r+yzvpSyqld6XT28SRIYWvlvzD3+IlkfF7RXm//x
+ NQLD/anU=
+X-Gm-Gg: AZuq6aLsgKFkaCjVLVbnMM6G5EPtewxIQ3fqsUyLuggCBYlwn/o3N9yE4lR/BotdBHv
+ Pmf9xdndvHybJeEQ1p4dRG56FDBGv1gj164Iq2mKrffGl7IUjnNExF1QgKWx3fvpmGbAb3m+iZk
+ yGLerlWRRaW8yhlRDkItIYOkE1EkM11tfQPy93KxoYwrdIFTKC9edANoEOZ142b+8mWQLHHtp/p
+ 4bgu70Uly4Fctor7pDAipJvjyXF9tjeLwyx+x1R6XNqTrbUxA0IitLyhOX1UMaRVmwx+nGPK10B
+ HmWqoGIQVKEEAqM2u3i7j91T9irM4JFBd+OUUKJhHRO3DSeJ619Pwv1mfQfhc+UlDUYM/Sx6BF6
+ kaqHLxB22/+vE8gQ8qvOEWLLoy4MNnp1u6Usw6XIK8UYrAH/Tg8POTZIzLV2ZDQp3iSZPCRr04r
+ RqdM/DjXiEYyyRYnjyiV0wsnBSMjUp6F8r8FTR0pdJtDAdha6qJ0HSd/E8ut/I
+X-Received: by 2002:a05:6000:2988:10b0:431:808:2d32 with SMTP id
+ ffacd0b85a97d-43569972f16mr9422436f8f.7.1768820662670; 
+ Mon, 19 Jan 2026 03:04:22 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801fe74987sm82032795e9.8.2026.01.19.03.04.14
+ ffacd0b85a97d-43569921da2sm22462140f8f.1.2026.01.19.03.04.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Jan 2026 03:04:15 -0800 (PST)
+ Mon, 19 Jan 2026 03:04:22 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -70,17 +70,17 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 2/8] monitor: Add hmp_cmds_for_target() helper
-Date: Mon, 19 Jan 2026 12:03:52 +0100
-Message-ID: <20260119110358.66821-3-philmd@linaro.org>
+Subject: [PATCH v3 3/8] monitor: Reduce target-specific methods
+Date: Mon, 19 Jan 2026 12:03:53 +0100
+Message-ID: <20260119110358.66821-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260119110358.66821-1-philmd@linaro.org>
 References: <20260119110358.66821-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,126 +103,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HMPCommand arrays are filled with target-specific
-commands, so defined in a target-specific unit.
-Introduce the hmp_cmds_for_target() to allow
-target-agnostic code to access the arrays.
+The following methods don't use target-specific code anymore:
+- hmp_compare_cmd()
+- monitor_register_hmp()
+- monitor_register_hmp_info_hrt()
+Move them to hmp.c which is target-agnostic, being built once.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 ---
- monitor/monitor-internal.h |  9 +++++++--
- monitor/hmp-target.c       | 13 ++++++++-----
- monitor/hmp.c              |  8 +++++---
- 3 files changed, 20 insertions(+), 10 deletions(-)
+ monitor/hmp-target.c | 57 --------------------------------------------
+ monitor/hmp.c        | 55 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+), 57 deletions(-)
 
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index 7735c731083..feca111ae31 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -169,8 +169,6 @@ extern QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
- extern QemuMutex monitor_lock;
- extern MonitorList mon_list;
- 
--extern HMPCommand hmp_cmds[];
--
- void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
-                        bool use_io_thread);
- void monitor_data_destroy(Monitor *mon);
-@@ -187,4 +185,11 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
- void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
- int hmp_compare_cmd(const char *name, const char *list);
- 
-+/*
-+ * hmp_cmds_for_target: Return array of HMPCommand entries
-+ *
-+ * If @info_command is true, return the particular 'info foo' commands array.
-+ */
-+HMPCommand *hmp_cmds_for_target(bool info_command);
-+
- #endif
 diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
-index 37dfd7fd4c6..59c60d13b52 100644
+index 59c60d13b52..420969bd6eb 100644
 --- a/monitor/hmp-target.c
 +++ b/monitor/hmp-target.c
-@@ -44,8 +44,6 @@
+@@ -33,8 +33,6 @@
+ #include "qapi/qapi-commands-control.h"
+ #include "qapi/qapi-commands-misc.h"
+ #include "qapi/qapi-commands-machine.h"
+-#include "qapi/error.h"
+-#include "qemu/cutils.h"
+ 
+ #if defined(TARGET_S390X)
+ #include "hw/s390x/storage-keys.h"
+@@ -44,29 +42,6 @@
  /* Make devices configuration available for use in hmp-commands*.hx templates */
  #include CONFIG_DEVICES
  
--static HMPCommand hmp_info_cmds[];
+-/**
+- * Is @name in the '|' separated list of names @list?
+- */
+-int hmp_compare_cmd(const char *name, const char *list)
+-{
+-    const char *p, *pstart;
+-    int len;
+-    len = strlen(name);
+-    p = list;
+-    for (;;) {
+-        pstart = p;
+-        p = qemu_strchrnul(p, '|');
+-        if ((p - pstart) == len && !memcmp(pstart, name, len)) {
+-            return 1;
+-        }
+-        if (*p == '\0') {
+-            break;
+-        }
+-        p++;
+-    }
+-    return 0;
+-}
 -
- /**
-  * Is @name in the '|' separated list of names @list?
-  */
-@@ -76,11 +74,16 @@ static HMPCommand hmp_info_cmds[] = {
- };
- 
- /* hmp_cmds and hmp_info_cmds would be sorted at runtime */
--HMPCommand hmp_cmds[] = {
-+static HMPCommand hmp_cmds[] = {
- #include "hmp-commands.h"
-     { NULL, NULL, },
- };
- 
-+HMPCommand *hmp_cmds_for_target(bool info_command)
-+{
-+    return info_command ? hmp_info_cmds : hmp_cmds;
-+}
-+
- /*
-  * Set @pval to the value in the register identified by @name.
-  * return 0 if OK, -1 if not found
-@@ -148,7 +151,7 @@ static void __attribute__((__constructor__)) sortcmdlist(void)
- void monitor_register_hmp(const char *name, bool info,
-                           void (*cmd)(Monitor *mon, const QDict *qdict))
- {
--    HMPCommand *table = info ? hmp_info_cmds : hmp_cmds;
-+    HMPCommand *table = hmp_cmds_for_target(info);
- 
-     while (table->name != NULL) {
-         if (strcmp(table->name, name) == 0) {
-@@ -164,7 +167,7 @@ void monitor_register_hmp(const char *name, bool info,
- void monitor_register_hmp_info_hrt(const char *name,
-                                    HumanReadableText *(*handler)(Error **errp))
- {
--    HMPCommand *table = hmp_info_cmds;
-+    HMPCommand *table = hmp_cmds_for_target(true);
- 
-     while (table->name != NULL) {
-         if (strcmp(table->name, name) == 0) {
+ /* Please update hmp-commands.hx when adding or changing commands */
+ static HMPCommand hmp_info_cmds[] = {
+ #include "hmp-commands-info.h"
+@@ -147,35 +122,3 @@ static void __attribute__((__constructor__)) sortcmdlist(void)
+           sizeof(*hmp_info_cmds),
+           compare_mon_cmd);
+ }
+-
+-void monitor_register_hmp(const char *name, bool info,
+-                          void (*cmd)(Monitor *mon, const QDict *qdict))
+-{
+-    HMPCommand *table = hmp_cmds_for_target(info);
+-
+-    while (table->name != NULL) {
+-        if (strcmp(table->name, name) == 0) {
+-            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
+-            table->cmd = cmd;
+-            return;
+-        }
+-        table++;
+-    }
+-    g_assert_not_reached();
+-}
+-
+-void monitor_register_hmp_info_hrt(const char *name,
+-                                   HumanReadableText *(*handler)(Error **errp))
+-{
+-    HMPCommand *table = hmp_cmds_for_target(true);
+-
+-    while (table->name != NULL) {
+-        if (strcmp(table->name, name) == 0) {
+-            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
+-            table->cmd_info_hrt = handler;
+-            return;
+-        }
+-        table++;
+-    }
+-    g_assert_not_reached();
+-}
 diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 4caafbc7146..17e5756986f 100644
+index 17e5756986f..0a5bbf82197 100644
 --- a/monitor/hmp.c
 +++ b/monitor/hmp.c
-@@ -301,7 +301,7 @@ void hmp_help_cmd(Monitor *mon, const char *name)
-     }
- 
-     /* 2. dump the contents according to parsed args */
--    help_cmd_dump(mon, hmp_cmds, args, nb_args, 0);
-+    help_cmd_dump(mon, hmp_cmds_for_target(false), args, nb_args, 0);
- 
-     free_cmdline_args(args, nb_args);
+@@ -1497,3 +1497,58 @@ void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+                              monitor_event, NULL, &mon->common, NULL, true);
+     monitor_list_append(&mon->common);
  }
-@@ -1131,7 +1131,8 @@ void handle_hmp_command(MonitorHMP *mon, const char *cmdline)
- 
-     trace_handle_hmp_command(mon, cmdline);
- 
--    cmd = monitor_parse_command(mon, cmdline, &cmdline, hmp_cmds);
-+    cmd = monitor_parse_command(mon, cmdline, &cmdline,
-+                                hmp_cmds_for_target(false));
-     if (!cmd) {
-         return;
-     }
-@@ -1375,7 +1376,8 @@ static void monitor_find_completion(void *opaque,
-     }
- 
-     /* 2. auto complete according to args */
--    monitor_find_completion_by_table(mon, hmp_cmds, args, nb_args);
-+    monitor_find_completion_by_table(mon, hmp_cmds_for_target(false),
-+                                     args, nb_args);
- 
- cleanup:
-     free_cmdline_args(args, nb_args);
++
++/**
++ * Is @name in the '|' separated list of names @list?
++ */
++int hmp_compare_cmd(const char *name, const char *list)
++{
++    const char *p, *pstart;
++    int len;
++    len = strlen(name);
++    p = list;
++    for (;;) {
++        pstart = p;
++        p = qemu_strchrnul(p, '|');
++        if ((p - pstart) == len && !memcmp(pstart, name, len)) {
++            return 1;
++        }
++        if (*p == '\0') {
++            break;
++        }
++        p++;
++    }
++    return 0;
++}
++
++void monitor_register_hmp(const char *name, bool info,
++                          void (*cmd)(Monitor *mon, const QDict *qdict))
++{
++    HMPCommand *table = hmp_cmds_for_target(info);
++
++    while (table->name != NULL) {
++        if (strcmp(table->name, name) == 0) {
++            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
++            table->cmd = cmd;
++            return;
++        }
++        table++;
++    }
++    g_assert_not_reached();
++}
++
++void monitor_register_hmp_info_hrt(const char *name,
++                                   HumanReadableText *(*handler)(Error **errp))
++{
++    HMPCommand *table = hmp_cmds_for_target(true);
++
++    while (table->name != NULL) {
++        if (strcmp(table->name, name) == 0) {
++            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
++            table->cmd_info_hrt = handler;
++            return;
++        }
++        table++;
++    }
++    g_assert_not_reached();
++}
 -- 
 2.52.0
 
