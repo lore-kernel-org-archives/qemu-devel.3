@@ -4,75 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9622C98315
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 03:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CED1C98315
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 03:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhfye-0007J6-Q3; Sun, 18 Jan 2026 22:30:53 -0500
+	id 1vhfx7-000766-1R; Sun, 18 Jan 2026 22:29:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1vhfyd-0007Im-8M
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 22:30:51 -0500
-Received: from mgamail.intel.com ([198.175.65.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1vhfya-0004p2-1v
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 22:30:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1768793448; x=1800329448;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=OfXCEHYlRp+JTpvjm0NXTxZjdeirxLS3UZ4QDUM1bVQ=;
- b=VqCdCcHFbcA7wZP4cdozA752oYldvMXGAhSSE2XN/gO8lueaTF61Z8FP
- fsfno6TMg0731ZmRBMiPP36a/PvGsAaw2QjRkX4fPic//xPsJZ3KcgXFV
- 6Of+J6bbFXoIXZK6lTMOgYCKwkj2nsY2I4la0IwHmM4Vrq+rkCtRb1gly
- osqXxYnOwgCuL+BKbQdspjvsQ3YklRXppWr4IFbE4cQJThjgPETrv9kGd
- TGq+sNSWmEjt7sdNz6xkQT3KZ177YuH0UqLj6/ccOBQnRe2yBhh+D1q7F
- FEubFQb6YBF54XZbc4C2VEVyEQFTl8/OrTGu4/tipp4bloIVV1U/VmadS A==;
-X-CSE-ConnectionGUID: qasa8HAvRVS3HQcvnR3pYQ==
-X-CSE-MsgGUID: FtO7+bdIT0+ag0FcSAoVSA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11675"; a="70050153"
-X-IronPort-AV: E=Sophos;i="6.21,237,1763452800"; d="scan'208";a="70050153"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jan 2026 19:30:44 -0800
-X-CSE-ConnectionGUID: nvZgRvrQSauorqIvBYZZPQ==
-X-CSE-MsgGUID: GP7cXY/CRMSv47o2nKtxtA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,237,1763452800"; d="scan'208";a="243324046"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.240.14])
- ([10.124.240.14])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jan 2026 19:30:42 -0800
-Message-ID: <56dd6056-e3e2-46cd-9426-87c7889bed49@linux.intel.com>
-Date: Mon, 19 Jan 2026 11:30:39 +0800
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1vhfwe-00072g-8W
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 22:28:49 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1vhfwa-0004B0-CM
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 22:28:47 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-b87677a8abeso648064366b.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 19:28:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1768793323; x=1769398123; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=KOxHrDkh7/Td6NrYlRMgCWmk9a51ZdxVFAmtZjzdmGU=;
+ b=PrKsf+ZUVwZyULYnoLM2zr/0wsWgBTYEir+yE720a7CUIQDYH3pGDHV/1pTgcTMzD0
+ zU3AJPCT5DIvj3VWxTuI9j6D3Ulb63extD5k03kuoKBgjUAxDQtaP9aFt3nFdhwBOigs
+ dqoj0U/GaUorkKqeBoYmFTebZ4aFig9sSImvja8tdHojbQJ0Chp8PXZzvKjOIfajx4Kd
+ Gkxi5DkjzOU65De6Em8RfnsRnYu0UM6Q2smnzG7QxyqLvwcbFUplSikSseL17EM5q6q0
+ Z7NJbDW/O4FSfXd0Hvz2fXoSVZpI20ziAcJEqCd2UoN2eiWG6fbTEtsf9MVZgQ+Pd8IQ
+ eRrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768793323; x=1769398123;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=KOxHrDkh7/Td6NrYlRMgCWmk9a51ZdxVFAmtZjzdmGU=;
+ b=H7eCpF/NnCM1i2iJqqDY0mazIvtF6/dEd2MfMgINPHs2BKFDcXWX7hdcTyxh7b/Hnh
+ xyUoyzPVKcrEZb7+nOnQ8lerGYIxYL0h39QJgBvytaMq2Mz6wbOKGmZt8eh2nPJ6W8V+
+ 7RIdOxTAJSw6xzbT66BXSvFHHHfXU3qg0/bNSLmG+MYluoMQvuzJAZ/miaFWnv0wUpFF
+ Kz35HVegdGaXVDTN0Wv6tlXfH+CP3d7FM65hfiJNJi82low7AD44yIEYAuPoAC1poy6L
+ EB8NaLwM4ZheOC9M/hrHrlHBGmZuCeDMWbiNtjWBEaK4tP6b071Yr0zKp7XN7/yQF11R
+ 3zag==
+X-Gm-Message-State: AOJu0YzNOEnra58xbIP457fPA3NsLf7+R2ZGgMzFHvR2CwOK4cTNbngd
+ Fty5RoOASpcZLDNLHRNHyClkP6X9+7HWwhORnLEaKLWq2XzoOzcdjd35
+X-Gm-Gg: AY/fxX5GSFmMFL5AY3WCLIMNnlGtWQpXykz6yzJ12gbxjDLsFFWZUd3czssrWyuhewE
+ XF6Fs0vdLdvYYguHbgCfCpdP8Jii5sJCFBd1hWRRcFy3qG7EM2+KNTBlc4ykAuND15c2hyvOSWT
+ rbprLEX0uoLybkqm8ufY5YxaRNnNXKhm9S/Dhj/xC02cv28SaXeJRg2GVCXPTDJs5OZdq4XK28F
+ Qxp7+UMjngyvIILB52GDVZCICIJVfUU+RH6DKYRHvyS13EaQsepzGyHc/9MVAtsSnzVSqNHaDiA
+ HgMjYXgouNa2dLpORNNKilwNBa+4Ef9ajqv6csun/wEPYpcQo0Cp/HuQ7DsmsJVk920FKSHgUJL
+ H5fuDEpNgjyJaJrmLQyJ0sC+GDysWa0z3a/FV1vSekx1o0bH0WD/qLNfpY0OuJpQOvzJU5YqnG6
+ 2Am3fsJDpOmEhn+HGlH//h91L8Ix5ctCsbFC527LjO
+X-Received: by 2002:a17:907:724d:b0:b87:124c:5f54 with SMTP id
+ a640c23a62f3a-b87932b6908mr879973266b.59.1768793322649; 
+ Sun, 18 Jan 2026 19:28:42 -0800 (PST)
+Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b879e2c1be7sm895132966b.67.2026.01.18.19.28.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 18 Jan 2026 19:28:42 -0800 (PST)
+From: Filip Hejsek <filip.hejsek@gmail.com>
+Date: Mon, 19 Jan 2026 04:27:48 +0100
+Subject: [PATCH v6 05/12] main-loop: change the handling of SIGWINCH
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] target/i386: Make some PEBS features user-visible
-To: Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Cc: xiaoyao.li@intel.com, Dongli Zhang <dongli.zhang@oracle.com>
-References: <20260117011053.80723-1-zide.chen@intel.com>
- <20260117011053.80723-7-zide.chen@intel.com>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20260117011053.80723-7-zide.chen@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.18;
- envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.077,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260119-console-resize-v6-5-33a7b0330a7a@gmail.com>
+References: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
+In-Reply-To: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, 
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, 
+ Szymon Lukasz <noh4hss@gmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768793314; l=3291;
+ i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
+ bh=Wpb+Av6dyfCrnZRtwb26zXMQvGbITtEVXsGaT2s43Mc=;
+ b=cPctFHleyR0v5L0I/ML24SyWZLAmGxINF9qsB+ueQJ/7yel93Xs+Hdp2OZUPnDYq2gprHBiQs
+ v3uBvTfuaQDAbo1ddieFG8WIHNBTrnClyXZDi3Ygp5kQZ1GvIXoYrs/
+X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
+ pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,54 +116,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Szymon Lukasz <noh4hss@gmail.com>
 
-On 1/17/2026 9:10 AM, Zide Chen wrote:
-> Populate selected PEBS feature names in FEAT_PERF_CAPABILITIES to make
-> the corresponding bits user-visible CPU feature knobs, allowing them to
-> be explicitly enabled or disabled via -cpu +/-<feature>.
->
-> Once named, these bits become part of the guest CPU configuration
-> contract.  If a VM is configured with such a feature enabled, migration
-> to a destination that does not support the feature may fail, as the
-> destination cannot honor the guest-visible CPU model.
->
-> The PEBS_FMT bits are intentionally not exposed. They are not meaningful
-> as user-visible features, and QEMU registers CPU features as boolean
-> QOM properties, which makes them unsuitable for representing and
-> checking numeric capabilities.
+Block SIGWINCH, so it is delivered only via signalfd.
+Install a handler that uses NotifierList to tell
+interested parties about SIGWINCH delivery.
 
-Currently KVM supports user space sets PEBS_FMT (see vmx_set_msr()), but
-just requires the guest PEBS_FMT is identical with host PEBS_FMT.
+Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+---
+ include/qemu/main-loop.h |  4 ++++
+ ui/curses.c              | 11 ++++++-----
+ util/main-loop.c         | 21 +++++++++++++++++++++
+ 3 files changed, 31 insertions(+), 5 deletions(-)
 
-IIRC, many places in KVM judges whether guest PEBS is enabled by checking
-the guest PEBS_FMT. If we don't expose PEBS_FMT to user space, how does KVM
-get the guest PEBS_FMT?
+diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
+index 8c1241a2c1..ff41346b0b 100644
+--- a/include/qemu/main-loop.h
++++ b/include/qemu/main-loop.h
+@@ -449,4 +449,8 @@ typedef struct MainLoopPoll {
+ void main_loop_poll_add_notifier(Notifier *notify);
+ void main_loop_poll_remove_notifier(Notifier *notify);
+ 
++#ifndef _WIN32
++void sigwinch_add_notifier(Notifier *n);
++#endif
++
+ #endif
+diff --git a/ui/curses.c b/ui/curses.c
+index 161f78c35c..d1b308d5f8 100644
+--- a/ui/curses.c
++++ b/ui/curses.c
+@@ -33,6 +33,7 @@
+ #include <iconv.h>
+ 
+ #include "qapi/error.h"
++#include "qemu/main-loop.h"
+ #include "qemu/module.h"
+ #include "ui/console.h"
+ #include "ui/input.h"
+@@ -149,7 +150,7 @@ static void curses_resize(DisplayChangeListener *dcl,
+ }
+ 
+ #if !defined(_WIN32) && defined(SIGWINCH) && defined(KEY_RESIZE)
+-static volatile sig_atomic_t got_sigwinch;
++static bool got_sigwinch;
+ static void curses_winch_check(void)
+ {
+     struct winsize {
+@@ -172,17 +173,17 @@ static void curses_winch_check(void)
+     invalidate = 1;
+ }
+ 
+-static void curses_winch_handler(int signum)
++static void curses_winch_handler(Notifier *n, void *data)
+ {
+     got_sigwinch = true;
+ }
+ 
+ static void curses_winch_init(void)
+ {
+-    struct sigaction old, winch = {
+-        .sa_handler  = curses_winch_handler,
++    static Notifier n = {
++        .notify = curses_winch_handler
+     };
+-    sigaction(SIGWINCH, &winch, &old);
++    sigwinch_add_notifier(&n);
+ }
+ #else
+ static void curses_winch_check(void) {}
+diff --git a/util/main-loop.c b/util/main-loop.c
+index ad8645c30a..136886e4ee 100644
+--- a/util/main-loop.c
++++ b/util/main-loop.c
+@@ -100,6 +100,7 @@ static int qemu_signal_init(Error **errp)
+     sigaddset(&set, SIGIO);
+     sigaddset(&set, SIGALRM);
+     sigaddset(&set, SIGBUS);
++    sigaddset(&set, SIGWINCH);
+     /* SIGINT cannot be handled via signalfd, so that ^C can be used
+      * to interrupt QEMU when it is being run under gdb.  SIGHUP and
+      * SIGTERM are also handled asynchronously, even though it is not
+@@ -124,6 +125,26 @@ static int qemu_signal_init(Error **errp)
+     return 0;
+ }
+ 
++static NotifierList sigwinch_notifiers =
++    NOTIFIER_LIST_INITIALIZER(sigwinch_notifiers);
++
++static void sigwinch_handler(int signum)
++{
++    notifier_list_notify(&sigwinch_notifiers, NULL);
++}
++
++void sigwinch_add_notifier(Notifier *n)
++{
++    if (notifier_list_empty(&sigwinch_notifiers)) {
++        struct sigaction action = {
++            .sa_handler = sigwinch_handler,
++        };
++        sigaction(SIGWINCH, &action, NULL);
++    }
++
++    notifier_list_add(&sigwinch_notifiers, n);
++}
++
+ #else /* _WIN32 */
+ 
+ static int qemu_signal_init(Error **errp)
 
+-- 
+2.52.0
 
->
-> Co-developed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-> Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-> Signed-off-by: Zide Chen <zide.chen@intel.com>
-> ---
->  target/i386/cpu.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index f1ac98970d3e..fc6a64287415 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -1618,10 +1618,10 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
->          .type = MSR_FEATURE_WORD,
->          .feat_names = {
->              NULL, NULL, NULL, NULL,
-> +            NULL, NULL, "pebs-trap", "pebs-arch-reg"
->              NULL, NULL, NULL, NULL,
-> -            NULL, NULL, NULL, NULL,
-> -            NULL, "full-width-write", NULL, NULL,
-> -            NULL, NULL, NULL, NULL,
-> +            NULL, "full-width-write", "pebs-baseline", NULL,
-> +            NULL, "pebs-timing-info", NULL, NULL,
->              NULL, NULL, NULL, NULL,
->              NULL, NULL, NULL, NULL,
->              NULL, NULL, NULL, NULL,
 
