@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30F10C98315
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 00:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C11C9830C
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 00:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhdaI-0003MA-1c; Sun, 18 Jan 2026 19:57:34 -0500
+	id 1vhdah-0003zs-QS; Sun, 18 Jan 2026 19:58:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhdaG-0003GX-4C
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 19:57:32 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1vhdab-0003uu-E2
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 19:57:53 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhdaE-00009q-Mj
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 19:57:31 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2a081c163b0so20252885ad.0
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 16:57:30 -0800 (PST)
+ id 1vhdaa-0000Fp-0a
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 19:57:53 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-81f42a49437so1838826b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 16:57:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768784249; x=1769389049; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768784270; x=1769389070; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Z7l0jhe1HkAh9tkj/W1Z7gDkgl/N+bl26tdDcNz+ciQ=;
- b=fN5cmCnHBiI1+UxGc6NMhEcRg+tGgDa2k3Z072u/igJkBNFXd06KmB398uD4H3prCg
- /RTyvP+9VBu52G973ZjdWi8YEQnVdGkZebKVBE/e/7j12t1fixxPT5+ZleoA9NYE0Dyz
- 1FJAq2V+YVxd1Kvomg7WGD1XWXK0szury/1pCAoKlEfq4S8DhnyBWyTO9ZlrIFoz5eXf
- l4rSxS76+W33XX7BUVfnSWoqrKbhEjJsBPGQno24Y3WgKDlwMHifBLZTYrwb9EF53aXH
- UlBGiN6iB5zaf8LlG/uw56FsJ4iCdbhvN6DLfGLur4cZ4FXJI5SA0Wji2ggHQCwJ5zmf
- rv9A==
+ bh=O4s3YLTHb/kxqUnJNzYFRXRo2duLyt5oLaWP5uC6Odk=;
+ b=BKoGJ7Yt+OYLblskWjeYj/pFC5palqb4Ooy2THKquvDQVVy4vL3SBWrLoAp1hBvSdi
+ sHMdrFrx1UAnc4YyE0v3sZzh1N7wsVY32lQ+7xg9JzhgOjuJq13FlmfS4hwNloXpo0Bw
+ 2juIUwUxGCEjsnKVe4USohev4qTDxQAXpornPGGmai4ZvZdPIFi7uM2iDcE2MXFB3iH+
+ 59laeW8rOW6MZ8KEMihvyfvkNDHqpxjh9r9/O3mxTw5O6MpiBp8Pdbvic8csBtrtP03w
+ KcmAl3SVfmFgYzTclBtBFbv6ZqcFjveDk/nMH39neNssNbHeB8f4SbVdWiWULDggjMBf
+ Bqrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768784249; x=1769389049;
+ d=1e100.net; s=20230601; t=1768784270; x=1769389070;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Z7l0jhe1HkAh9tkj/W1Z7gDkgl/N+bl26tdDcNz+ciQ=;
- b=QgRIIlhjp0LGSyzNlEZHMvqJNLZQzkcCP1eoLt2QNdBL3d2dT0+Gkh3VzaHNVZl+Kd
- 4jeyM1sCt+CPoTBkINN97PQhqkUvp6fcpckrBbD+FN9KVMvKyz94IfoPKz69kR+euMhn
- tHlZizSMNCxIMTiNbmpY2oH2JtpamolJ9pmA0HOG3v+qOjhUjytN7SOlhmhq6OAQpIeH
- gva9ZTRREL4nukg9cTDYMtdF13TCmun/EzXpffRsnG5/QvJ6lFDG218fBgujKZpJODMv
- G/MDLe4v3RLgbSPS9BRND9esNcBvwzFKLwPbpF/1o9qIwMtwUtds9VtPl5FpBBsB4qJE
- IJRg==
+ bh=O4s3YLTHb/kxqUnJNzYFRXRo2duLyt5oLaWP5uC6Odk=;
+ b=ZiT81uRAlHl/yX5n/lNE/O+TnrKojr+qwisUXcxjf0mPOKXdnB+cyH0W1F4NHRcrhB
+ uTu8fZDhm276ztzgrP0TkDQHBoVFDvfHXD6UIGHhTXoa5SNeuAsZmDlKrqCp73pvRvZL
+ Qe2X6EMJpXIyfrtHkiAatOY0Ba11teg91kTiWRXwW25os2gUGouDIfISOTj+966kzW/y
+ YtpQFcEKTN1mm/Xk7xVYNi5nxzBMIONT13IVHOF34vlQf7XjLeGYu7xLJbPJCs+X0FXB
+ OyhwGA74XbWxhuyn75OwRshbUWMGjLMS2Nc7MYE33mhtmZc5oDsy+8TAW+F1KVOfRM5/
+ g8Tw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXYAnR65W5cv4B5Mml6CiOBwDA8hQjhefZb/307PVqgEYJKiiS3ZfEviBm7KR2x2cqtzwPhylAVIj1I@nongnu.org
-X-Gm-Message-State: AOJu0YxAU/ga6BMSDtkG99CkDlaug81tgZBN+8/iLnWUVNSGYCQni24Q
- QTCSVBbtsrvaSIl97cT084QfDYHRuJxt11LdFvVhGlJFTToaj9f1peDIlnSSiaWfQvw=
-X-Gm-Gg: AY/fxX5/yO6V+vg1CANGiMQ17Q4BIih8mS2CI5qB14ee0fa/DNKVFG4WHYX9ZhBnQJx
- DWnE1sKT+0CM7k83l4ChNSvCiHETgATBLHGxpJX3czw89F6pK0d7qVNdcxIH5lTriZiOoEayeCI
- LeVww3BtwpdJAmcQjlBFqC4801RvCEXu4rKbclOylshfboRQYNjJdOgf3yFXX9PfA5rYdCRN8eF
- mVupbuMMVhcRSSsCt0PnEEXZczgyRDFivVU6LqxytdFuV+tZS+tEuIfBow7j5ZoAcme8vDwn6Yj
- uj6HkCyWckrzF3hmp/CAD0HwrH4oHCEcK4oM11nL9wtXrCRc16xlFaOD7U8NNgocm5nH7vy5Tdy
- q1ueW7Yd9P6Jz0Kz2i6fBA6OVd1daWd8hOuK/aPQqSYgSK5xts4V17obau+pGR0j29w7zyBSFka
- 5qtkg42ofBlffilCyCsUV87a1NsQ/Rbg==
-X-Received: by 2002:a17:902:f707:b0:295:570d:116e with SMTP id
- d9443c01a7336-2a7177cdb1emr85882535ad.41.1768784249182; 
- Sun, 18 Jan 2026 16:57:29 -0800 (PST)
+ AJvYcCVe/krExRBdS0w4KnY38MNF6PxQYpYLZaWRY1uYrCkWNS+TBTVk8sAjxQGHykGVkmncydmsH4M1G3qk@nongnu.org
+X-Gm-Message-State: AOJu0Yz/CdV6g7d9t4r3P8GsNKYcvAL6Dxf2/+nIXZtC4Tye+WCAEG1N
+ xUWXClQjpRA5mYKD0MpvMQ83cb0wdjldRClSaqYL+GR+Q5pG0AcDbXdDZF1XmXaIQ94=
+X-Gm-Gg: AY/fxX5a2dmsAQng6vRqHAd1dvnYLE6F4pDiSAGBKCEBOEP+y7/jHDHjwgWcoxAcG1+
+ SaEWUUn+xEogZAX3ifYAbna9AaOs25wNTduifeAa42p5pfxJeQ2Pgm96WJoCjxNIo2Qi8eF6BOp
+ LYpwt1K1u1FsecNho3j3/xhBxZUa+bJkALkqbHKnYgNjKSI5fYaNA2cwBXCNsaRbaDDkWEDNHw3
+ YasjueFN09H/es0UXF8ekF+3/nFIeEI7gr48k3JOquDqff8aLWEshFS8Zv+gHxqi8ZjNm47zSIi
+ KzoLvSWbXb6CpbnqLoE8kNv0TCmCLHHZCPvV2bgfiEpK7N4vCOLud1EYQF020wxr/wK4pebuNNc
+ 1HcDxkX8/7REs7hx46hKsqhx9g66U54xQYPfSINJdgoz+BxR+mOPmLcs0GraA5XxQjwZt5ZNfOF
+ C+WAKxg1aXMe7FJxzacnKHDR58TjIvc9DdA6MfxLid
+X-Received: by 2002:a05:6a21:a4c9:b0:36c:2cf5:9b06 with SMTP id
+ adf61e73a8af0-38dfe7fb23bmr9697195637.79.1768784270257; 
+ Sun, 18 Jan 2026 16:57:50 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-352678c69fasm9911446a91.14.2026.01.18.16.57.27
+ 41be03b00d2f7-c5edf354b3bsm754208a12.24.2026.01.18.16.57.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 18 Jan 2026 16:57:28 -0800 (PST)
-Message-ID: <0a186e5b-0b07-4979-b576-4ef4107cf399@linaro.org>
-Date: Mon, 19 Jan 2026 11:57:25 +1100
+ Sun, 18 Jan 2026 16:57:49 -0800 (PST)
+Message-ID: <bb8abc92-0f2c-4916-a4d0-b112b5aefccc@linaro.org>
+Date: Mon, 19 Jan 2026 11:57:45 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] target/i386/tcg: remove dead constants
+Subject: Re: [PATCH 4/6] target/i386/tcg: merge decode_modrm and
+ decode_modrm_address split
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20260115113306.126905-1-pbonzini@redhat.com>
- <20260115113306.126905-4-pbonzini@redhat.com>
+ <20260115113306.126905-5-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260115113306.126905-4-pbonzini@redhat.com>
+In-Reply-To: <20260115113306.126905-5-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -105,13 +106,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/15/26 22:33, Paolo Bonzini wrote:
-> NB_OP_SIZES has been dead since the conversion to TCG, REG_L_OFFSET
-> since 2015, the others somewhere in the middle.
+> Unlike the older code in translate.c, mod=11b*is* filtered out earlier
+> by decode_modrm, and it would have returned bogus code.  Since the register
+> case is so simple, just inline decode_modrm_address into its caller instead
+> of removing the "if".
 > 
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
 > Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   target/i386/tcg/translate.c | 24 ------------------------
->   1 file changed, 24 deletions(-)
+>   target/i386/tcg/decode-new.c.inc | 64 ++++++++++++--------------------
+>   1 file changed, 24 insertions(+), 40 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
