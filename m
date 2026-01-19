@@ -4,71 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29BA2CCF2EE
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 18:53:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 958B7CCF2DD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 18:54:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhuMz-0006FV-CN; Mon, 19 Jan 2026 13:52:57 -0500
+	id 1vhuNv-0000Jx-Mw; Mon, 19 Jan 2026 13:53:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vhuMt-00067W-5j; Mon, 19 Jan 2026 13:52:51 -0500
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vhuMp-0005qM-LL; Mon, 19 Jan 2026 13:52:50 -0500
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:5c05:0:640:ff67:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 83AE4C04D9;
- Mon, 19 Jan 2026 21:52:44 +0300 (MSK)
-Received: from vsementsov-lin (unknown [2a02:6bf:8080:934::1:38])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id dqetGa1BQGk0-ZaHKTs4d; Mon, 19 Jan 2026 21:52:43 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1768848763;
- bh=Upjf9skzI4kGaeXDw0oyhclF1hhVD/ceyfNsiKMrg9M=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=WPC7baMisFzx9+it74o7OPFtPNMxugkZFEmta0uFKrK/d0NC3rnXcw2IeyvAZJChu
- QwdfyQcfR0OU9G0lDJ/CQtGrdL73/LjvoV9achvD2GPY9QWhp37o0paZjEVTl0UvOq
- vPwmJS3kgrTCQcOW8gA6+QAoUyMhPyq4rUTcocp8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: mst@redhat.com
-Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
- vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru, devel@lists.libvirt.org,
- Markus Armbruster <armbru@redhat.com>,
- Raphael Norwitz <raphael.s.norwitz@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Fam Zheng <fam@euphon.net>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PATCH v4 02/23] vhost: drop backend_features field
-Date: Mon, 19 Jan 2026 21:52:06 +0300
-Message-ID: <20260119185228.203296-3-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260119185228.203296-1-vsementsov@yandex-team.ru>
-References: <20260119185228.203296-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vhuNn-0000A6-Rw
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 13:53:48 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vhuNl-00063W-VM
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 13:53:47 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2a0d6f647e2so44974365ad.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 10:53:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768848824; x=1769453624; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AY5MzOw4a8HckOvh6QLzD6UgkgdI/FRbQtUT79On6BI=;
+ b=sJjn6Ooe5H5wAD23o9eEV/NYDKdmmllJXrtlPnW46d5UOhQxf/5rEE4B2dTZNblGgO
+ O2LlTdpcvyBhp5URdvbdk9Gf3EVtRPYGbDvZuVxPEMLj7Viru0vlqImXrZaFWXIG9lCA
+ 7n0p2OoWC6R/Ft/gTIzewWWMV3Hx2VdqR2mN4pU6J2PzafnwL5CGcGgwcwjyClGyuphT
+ i7dp+rI/JN7HFFJNF6dlhy1Ticli0W+cje4Af9OlOrWR8+59DlxcWNBJEOSN2GLfQR0c
+ lrB1DOdnKFdofcs6dTQOnN9ptmiS3VIsmuUmRLI/UTWvxdxWFYZNVaBuHAFQxVL8nDCE
+ iyJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768848824; x=1769453624;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AY5MzOw4a8HckOvh6QLzD6UgkgdI/FRbQtUT79On6BI=;
+ b=h91OXACDR5f0QjIXMhK7Tzb5XPD57dx3CarxNAu9E8rl4VDXzEff1+dwHF6zH6YRko
+ bIKtvnpC7zHZzdS3vdksIHM7pq/GFWdVjJ1QOpWHGi23YP7jhu6djVnSm8TO3uu21+m8
+ pVFqmSjrh/au3hA/g2Yu5qM6BBwakamrViJH4VYq8VDT9VRx+d8lYKXVDgxG7H4wz5P1
+ gVFJI5Xtvy8O+1Nrz2F+G6JCLDQ6CatujzPYFN+VxOJzoanthhis/dcaSJmfaiyYwOso
+ FWqptKdNI12wdyfA05BiUM+KSbOqKJ1SJVkOa5YFUdoLp+quAqwTZXZNKC0FKG5Lm9io
+ /cWg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWFx31os+BuQhl5XZC9oGUdgwSgmUs6Xyo0aLYYtgNy2lAGWfKlmg99HhBuTUaip/C8FjlSXQV3nisw@nongnu.org
+X-Gm-Message-State: AOJu0Yyd+VNgENbtO1GD/b/Xici2DHc4aXbaU+sPiz+3JodoeadkkW3y
+ m52bKMCjoA1cEnjGLJp78YAMAsQsOjxYnjF3U7pJE2iWHCMkeOcAqgZyLRNBtP3t/EM=
+X-Gm-Gg: AZuq6aJxYmqmJZk3tDpus7TdPpqRlbFaX2BeX2a1nflr/Kdm8RuHTqJYcFeakbX0E1L
+ dMX5pZvN+GmymcxcC55vmTdNtrFwuaKBv4slmETXgyHH3HmG4XvDR3oQKOFpXU2JVyvsRyVeU89
+ mLbblQ+KWJypSr9boxQrQ4qpq0y+wJ2GKi5Dd4tknxrXwct7/Ot/vB/vxLfQhhfOM52+ltkPSco
+ R/AqfXOxd7BLUNfmcEM7JbV9pyKack9Xl5D1G/hszOY9YGmoJiA0Ou+vPbnxYTPa8pfcCoWEn1B
+ G61XjCG7vxc+eLXXsXke5MqkgWG8j0g3sq/vwP98C7qRphFH8yJMA52ZzimJg1B++SmuNYw6E3l
+ 9M9xjy3l1MPdZI+8CcXzdinZwAp89mJN/Nq9kc3l77h3zI92rLGdg09JJKvyJsjysNyJ6OhhHBQ
+ 5N3daY6zH1wB5o9foZCzLmzMALXKi+3S2+Nl2lSa6R0SPS5+9Zn7tFAY68
+X-Received: by 2002:a17:902:f685:b0:295:96bc:8699 with SMTP id
+ d9443c01a7336-2a7175408damr119166905ad.20.1768848824415; 
+ Mon, 19 Jan 2026 10:53:44 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a7193dca71sm99186625ad.48.2026.01.19.10.53.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Jan 2026 10:53:43 -0800 (PST)
+Message-ID: <16e93209-efed-4bea-9e21-a5299154e9a9@linaro.org>
+Date: Mon, 19 Jan 2026 10:53:43 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] plugins: return bool from register r/w API
+Content-Language: en-US
+To: Florian Hofhammer <florian.hofhammer@fhofhammer.de>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>
+References: <f877dd79-1285-4752-811e-f0d430ff27fe@fhofhammer.de>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
+ eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
+ CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
+ gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
+ qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
+ 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
+ L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
+ IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
+ dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
+ AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
+ tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
+ PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
+ F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
+ HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
+ CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
+ UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
+ uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
+ vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
+ FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
+ I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
+ oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
+ TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
+ y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
+ /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
+ YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
+ DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
+ v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
+ 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
+ 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
+ dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
+ 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
+ X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <f877dd79-1285-4752-811e-f0d430ff27fe@fhofhammer.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -80,251 +140,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This field is mostly unused and sometimes confusing. We even have
-a TODO-like comment to drop it, the comment is removed in this commit.
+On 1/19/26 5:18 AM, Florian Hofhammer wrote:
+> The qemu_plugin_{read,write} register API previously was inconsistent
+> with regard to its docstring (where a return value of both -1 and 0
+> would indicate an error) and to the memory read/write APIs, which
+> already return a boolean value to indicate success or failure.
+> Returning the number of bytes read or written is superfluous, as the
+> GByteArray* passed to the API functions already encodes the length.
+> See the linked thread for more details.
+> 
+> This patch moves from returning an int (number of bytes read/written) to
+> returning a bool from the register read/write API, bumps the plugin API
+> version, and adjusts plugins and tests accordingly.
+> 
+> Link: https://lore.kernel.org/qemu-devel/60089475-3891-4448-bfe0-8dd698cd2435@epfl.ch/
+> Signed-off-by: Florian Hofhammer <florian.hofhammer@fhofhammer.de>
+> ---
+>   contrib/plugins/execlog.c  | 14 ++++++++------
+>   contrib/plugins/uftrace.c  |  8 ++++----
+>   include/qemu/qemu-plugin.h | 19 +++++++++++--------
+>   plugins/api.c              | 15 ++++++++-------
+>   tests/tcg/plugins/insn.c   |  4 ++--
+>   5 files changed, 33 insertions(+), 27 deletions(-)
+> 
 
-The field is used to held VHOST_USER_F_PROTOCOL_FEATURES for vhost-user
-and/or VHOST_NET_F_VIRTIO_NET_HDR for vhost-net (which may be
-vhost-user-net). But we can simply recalculate these two flags in place
-from hdev->features, and from net-client for VHOST_NET_F_VIRTIO_NET_HDR.
+Thank you for the very quick patch Florian, looks great!
 
-Note: removing field from x-query-virtio-status result is incompatible
-change. We can do it because the command is unstable.
-
-Cc: devel@lists.libvirt.org
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Acked-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
----
- hw/block/vhost-user-blk.c   |  1 -
- hw/net/vhost_net.c          | 26 ++++++++++++++------------
- hw/scsi/vhost-scsi.c        |  1 -
- hw/scsi/vhost-user-scsi.c   |  1 -
- hw/virtio/vdpa-dev.c        |  1 -
- hw/virtio/vhost-user.c      | 17 ++++++++---------
- hw/virtio/virtio-hmp-cmds.c |  2 --
- hw/virtio/virtio-qmp.c      |  4 ----
- include/hw/virtio/vhost.h   |  7 -------
- qapi/virtio.json            |  3 ---
- 10 files changed, 22 insertions(+), 41 deletions(-)
-
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 4d81d2dc34..c8f7156ca6 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -348,7 +348,6 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
-     s->dev.nvqs = s->num_queues;
-     s->dev.vqs = s->vhost_vqs;
-     s->dev.vq_index = 0;
--    s->dev.backend_features = 0;
- 
-     vhost_dev_set_config_notifier(&s->dev, &blk_ops);
- 
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index 25e9f1fd24..fda90e231e 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -52,8 +52,14 @@ int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
- 
- void vhost_net_ack_features_ex(struct vhost_net *net, const uint64_t *features)
- {
--    virtio_features_copy(net->dev.acked_features_ex,
--                         net->dev.backend_features_ex);
-+    virtio_features_clear(net->dev.acked_features_ex);
-+    if (net->backend == -1) {
-+        net->dev.acked_features =
-+           net->dev.features & (1ULL << VHOST_USER_F_PROTOCOL_FEATURES);
-+    } else if (!qemu_has_vnet_hdr(net->nc)) {
-+        net->dev.acked_features = 1ULL << VHOST_NET_F_VIRTIO_NET_HDR;
-+    }
-+
-     vhost_ack_features_ex(&net->dev, net->feature_bits, features);
- }
- 
-@@ -258,12 +264,9 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-         if (r < 0) {
-             goto fail;
-         }
--        net->dev.backend_features = qemu_has_vnet_hdr(options->net_backend)
--            ? 0 : (1ULL << VHOST_NET_F_VIRTIO_NET_HDR);
-         net->backend = r;
-         net->dev.protocol_features = 0;
-     } else {
--        virtio_features_clear(net->dev.backend_features_ex);
-         net->dev.protocol_features = 0;
-         net->backend = -1;
- 
-@@ -284,13 +287,12 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-             net->dev.features &= ~(1ULL << VIRTIO_NET_F_MRG_RXBUF);
-         }
- 
--        if (virtio_features_andnot(missing_features,
--                                   net->dev.backend_features_ex,
--                                   net->dev.features_ex)) {
--            fprintf(stderr, "vhost lacks feature mask 0x" VIRTIO_FEATURES_FMT
--                   " for backend\n", VIRTIO_FEATURES_PR(missing_features));
--            goto fail;
--        }
-+        if (!qemu_has_vnet_hdr(options->net_backend) &&
-+            (~net->dev.features & (1ULL << VHOST_NET_F_VIRTIO_NET_HDR))) {
-+            fprintf(stderr, "vhost lacks feature mask 0x%llx for backend\n",
-+                    ~net->dev.features & (1ULL << VHOST_NET_F_VIRTIO_NET_HDR));
-+             goto fail;
-+         }
-     }
- 
-     /* Set sane init value. Override when guest acks. */
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index 699863cc10..859888fdba 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -275,7 +275,6 @@ static void vhost_scsi_realize(DeviceState *dev, Error **errp)
-     vqs = g_new0(struct vhost_virtqueue, vsc->dev.nvqs);
-     vsc->dev.vqs = vqs;
-     vsc->dev.vq_index = 0;
--    vsc->dev.backend_features = 0;
- 
-     ret = vhost_dev_init(&vsc->dev, (void *)(uintptr_t)vhostfd,
-                          VHOST_BACKEND_TYPE_KERNEL, 0, errp);
-diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-index 3612897d4b..5070178dc2 100644
---- a/hw/scsi/vhost-user-scsi.c
-+++ b/hw/scsi/vhost-user-scsi.c
-@@ -159,7 +159,6 @@ static int vhost_user_scsi_connect(DeviceState *dev, Error **errp)
-     vsc->dev.nvqs = VIRTIO_SCSI_VQ_NUM_FIXED + vs->conf.num_queues;
-     vsc->dev.vqs = s->vhost_vqs;
-     vsc->dev.vq_index = 0;
--    vsc->dev.backend_features = 0;
- 
-     ret = vhost_dev_init(&vsc->dev, &s->vhost_user, VHOST_BACKEND_TYPE_USER, 0,
-                          errp);
-diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-index 4532d63653..06179e402e 100644
---- a/hw/virtio/vdpa-dev.c
-+++ b/hw/virtio/vdpa-dev.c
-@@ -104,7 +104,6 @@ static void vhost_vdpa_device_realize(DeviceState *dev, Error **errp)
-     v->dev.vqs = vqs;
-     v->dev.vq_index = 0;
-     v->dev.vq_index_end = v->dev.nvqs;
--    v->dev.backend_features = 0;
-     v->started = false;
- 
-     ret = vhost_vdpa_get_iova_range(v->vhostfd, &iova_range);
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 7615ae2a9b..0ab1b14da5 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -1470,14 +1470,15 @@ static int vhost_user_set_features(struct vhost_dev *dev,
-     int ret;
- 
-     /*
--     * We need to include any extra backend only feature bits that
--     * might be needed by our device. Currently this includes the
--     * VHOST_USER_F_PROTOCOL_FEATURES bit for enabling protocol
--     * features.
-+     * Don't lose VHOST_USER_F_PROTOCOL_FEATURES, which is vhost-user
-+     * specific.
-      */
--    ret = vhost_user_set_u64(dev, VHOST_USER_SET_FEATURES,
--                              features | dev->backend_features,
--                              log_enabled);
-+    if (virtio_has_feature(dev->features, VHOST_USER_F_PROTOCOL_FEATURES)) {
-+        features |= 1ULL << VHOST_USER_F_PROTOCOL_FEATURES;
-+    }
-+
-+    ret = vhost_user_set_u64(dev, VHOST_USER_SET_FEATURES, features,
-+                             log_enabled);
- 
-     if (virtio_has_feature(dev->protocol_features,
-                            VHOST_USER_PROTOCOL_F_STATUS)) {
-@@ -2197,8 +2198,6 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
-             (dev->config_ops && dev->config_ops->vhost_dev_config_notifier);
-         uint64_t protocol_features;
- 
--        dev->backend_features |= 1ULL << VHOST_USER_F_PROTOCOL_FEATURES;
--
-         err = vhost_user_get_u64(dev, VHOST_USER_GET_PROTOCOL_FEATURES,
-                                  &protocol_features);
-         if (err < 0) {
-diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
-index 1daae482d3..4bf9a3109d 100644
---- a/hw/virtio/virtio-hmp-cmds.c
-+++ b/hw/virtio/virtio-hmp-cmds.c
-@@ -176,8 +176,6 @@ void hmp_virtio_status(Monitor *mon, const QDict *qdict)
-         hmp_virtio_dump_features(mon, s->vhost_dev->features);
-         monitor_printf(mon, "    Acked features:\n");
-         hmp_virtio_dump_features(mon, s->vhost_dev->acked_features);
--        monitor_printf(mon, "    Backend features:\n");
--        hmp_virtio_dump_features(mon, s->vhost_dev->backend_features);
-         monitor_printf(mon, "    Protocol features:\n");
-         hmp_virtio_dump_protocols(mon, s->vhost_dev->protocol_features);
-     }
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index 968299fda0..916972e331 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -780,8 +780,6 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
-                                                  vdev->guest_features_ex);
-     status->host_features = qmp_decode_features(vdev->device_id,
-                                                 vdev->host_features_ex);
--    status->backend_features = qmp_decode_features(vdev->device_id,
--                                                 vdev->backend_features_ex);
- 
-     switch (vdev->device_endian) {
-     case VIRTIO_DEVICE_ENDIAN_LITTLE:
-@@ -822,8 +820,6 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
-             qmp_decode_features(vdev->device_id, hdev->features_ex);
-         status->vhost_dev->acked_features =
-             qmp_decode_features(vdev->device_id, hdev->acked_features_ex);
--        status->vhost_dev->backend_features =
--            qmp_decode_features(vdev->device_id, hdev->backend_features_ex);
- 
-         status->vhost_dev->protocol_features =
-             qmp_decode_protocols(hdev->protocol_features);
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 1ee639dd7e..3e69e47833 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -100,16 +100,9 @@ struct vhost_dev {
-      *
-      * @features: available features provided by the backend
-      * @acked_features: final negotiated features with front-end driver
--     *
--     * @backend_features: this is used in a couple of places to either
--     * store VHOST_USER_F_PROTOCOL_FEATURES to apply to
--     * VHOST_USER_SET_FEATURES or VHOST_NET_F_VIRTIO_NET_HDR. Its
--     * future use should be discouraged and the variable retired as
--     * its easy to confuse with the VirtIO backend_features.
-      */
-     VIRTIO_DECLARE_FEATURES(features);
-     VIRTIO_DECLARE_FEATURES(acked_features);
--    VIRTIO_DECLARE_FEATURES(backend_features);
- 
-     /**
-      * @protocol_features: is the vhost-user only feature set by
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index cd67c4f52e..53ddc6b6a4 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -85,8 +85,6 @@
- #
- # @acked-features: vhost_dev acked_features
- #
--# @backend-features: vhost_dev backend_features
--#
- # @protocol-features: vhost_dev protocol_features
- #
- # @max-queues: vhost_dev max_queues
-@@ -106,7 +104,6 @@
-             'vq-index': 'int',
-             'features': 'VirtioDeviceFeatures',
-             'acked-features': 'VirtioDeviceFeatures',
--            'backend-features': 'VirtioDeviceFeatures',
-             'protocol-features': 'VhostDeviceProtocols',
-             'max-queues': 'uint64',
-             'backend-cap': 'uint64',
--- 
-2.52.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
