@@ -4,64 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB6CBCCF2DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 19:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 781AECCF2DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 19:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhucF-00026g-Fb; Mon, 19 Jan 2026 14:08:43 -0500
+	id 1vhucC-00024z-CA; Mon, 19 Jan 2026 14:08:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vhuc6-00022A-78
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:08:35 -0500
+ id 1vhuc4-000212-US
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:08:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vhuc4-0000u1-NN
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:08:33 -0500
+ id 1vhuc3-0000tt-1b
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:08:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768849712;
+ s=mimecast20190719; t=1768849710;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zscoSxtkSHlwUoNuyPuo1TQzLT/EYP4bx/VvekL2rR0=;
- b=imaDwS46rY48WDwM3s7QdaxZmwPb5kbx2IuOA96txfhG4kqmmJH9wne9DY9UhshhpOF5Ti
- RDqbrNFH11w16IyrIzoHlc9KWJdVBdt09NmAInPKBAjWZv1JmfG/yoJ1iy2XfeQKZmbtEu
- iZioqon3DHI2csXq4senETYdCA4nTAo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=MQcZTYopb1480kzS/2zQeh48udDRCmsJOiAWzp59yYc=;
+ b=O8FIJvAaLmnK9g6njsVVSvZi+0hXebE2wg/OGUWI6XSHMli2gIhfPhP/ZpRp26fus6OZyo
+ goEI1VVOKFbWiVMhiqmW3okXdh0v5fx+DSfPsLnbm4fZFvA/vJFDmngVdG/2g7e60ntaWN
+ ZmINbNdxbAvv3OltQgCEnhPtdLFsUsA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-532-q_Fho1I9PsC-HzhtoGXf2A-1; Mon,
- 19 Jan 2026 14:08:28 -0500
-X-MC-Unique: q_Fho1I9PsC-HzhtoGXf2A-1
-X-Mimecast-MFC-AGG-ID: q_Fho1I9PsC-HzhtoGXf2A_1768849708
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-yct71vNIOQekr21ILouNXQ-1; Mon,
+ 19 Jan 2026 14:08:26 -0500
+X-MC-Unique: yct71vNIOQekr21ILouNXQ-1
+X-Mimecast-MFC-AGG-ID: yct71vNIOQekr21ILouNXQ_1768849706
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9234D195608E; Mon, 19 Jan 2026 19:08:27 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C10E6195605B; Mon, 19 Jan 2026 19:08:25 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.150])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E5853180049F; Mon, 19 Jan 2026 19:08:26 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1C80830001A2; Mon, 19 Jan 2026 19:08:24 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  Mads Ynddal <mads@ynddal.dk>, Richard Henderson <rth@twiddle.net>,
- John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 1/8] tracetool: rename variable with conflicting types
-Date: Mon, 19 Jan 2026 14:08:16 -0500
-Message-ID: <20260119190823.867761-2-stefanha@redhat.com>
-In-Reply-To: <20260119190823.867761-1-stefanha@redhat.com>
-References: <20260119190823.867761-1-stefanha@redhat.com>
+ John Snow <jsnow@redhat.com>
+Subject: [PULL 0/8] Tracing patches
+Date: Mon, 19 Jan 2026 14:08:15 -0500
+Message-ID: <20260119190823.867761-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -87,37 +83,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+The following changes since commit 38879a667fbb4ef54c70de71494882615f600a64:
 
-"backend" is used as both a string and a backend.Wrapper.  In preparation
-for adding type annotations, use different names.
+  Merge tag 'pull-tcg-20260119' of https://gitlab.com/rth7680/qemu into staging (2026-01-19 09:04:31 +1100)
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20251008063546.376603-2-pbonzini@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- scripts/tracetool/__init__.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+are available in the Git repository at:
 
-diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-index 61ba6f1ba8..fab98bf67e 100644
---- a/scripts/tracetool/__init__.py
-+++ b/scripts/tracetool/__init__.py
-@@ -567,9 +567,9 @@ def generate(events, group, format, backends,
- 
-     if len(backends) == 0:
-         raise TracetoolError("no backends specified")
--    for backend in backends:
--        if not tracetool.backend.exists(backend):
--            raise TracetoolError("unknown backend: %s" % backend)
-+    for backend_name in backends:
-+        if not tracetool.backend.exists(backend_name):
-+            raise TracetoolError("unknown backend: %s" % backend_name)
-     backend = tracetool.backend.Wrapper(backends, format)
- 
-     import tracetool.backend.dtrace
+  https://gitlab.com/stefanha/qemu.git tags/tracing-pull-request
+
+for you to fetch changes up to 0527c4fdd28ae8b13ecc34f80b91e42ce42b917f:
+
+  tests/tracetool: Honor the Python interpreter that "configure" detected (2026-01-19 13:58:23 -0500)
+
+----------------------------------------------------------------
+Pull request
+
+- Thomas Huth's Python interpreter fix
+- Paolo Bonzini's tracetool cleanups
+- Stefan Hajnoczi's tracetool test QEMU_TEST_KEEP_SCRATCH=1 support
+
+----------------------------------------------------------------
+
+Paolo Bonzini (6):
+  tracetool: rename variable with conflicting types
+  tracetool: apply isort and add check
+  tracetool: "import annotations"
+  tracetool: add type annotations
+  tracetool: complete typing annotations
+  tracetool: add typing checks to "make -C python check"
+
+Stefan Hajnoczi (1):
+  tracetool-test: add QEMU_TEST_KEEP_SCRATCH=1 support
+
+Thomas Huth (1):
+  tests/tracetool: Honor the Python interpreter that "configure"
+    detected
+
+ python/tests/tracetool-isort.sh              |  4 +
+ python/tests/tracetool-mypy.sh               |  5 ++
+ scripts/tracetool.py                         | 12 +--
+ scripts/tracetool/__init__.py                | 84 ++++++++++----------
+ scripts/tracetool/backend/__init__.py        | 21 ++---
+ scripts/tracetool/backend/dtrace.py          | 19 ++---
+ scripts/tracetool/backend/ftrace.py          | 13 +--
+ scripts/tracetool/backend/log.py             | 13 +--
+ scripts/tracetool/backend/simple.py          | 19 ++---
+ scripts/tracetool/backend/syslog.py          | 13 +--
+ scripts/tracetool/backend/ust.py             | 11 +--
+ scripts/tracetool/format/__init__.py         |  9 ++-
+ scripts/tracetool/format/c.py                |  7 +-
+ scripts/tracetool/format/d.py                |  7 +-
+ scripts/tracetool/format/h.py                |  7 +-
+ scripts/tracetool/format/log_stap.py         | 12 +--
+ scripts/tracetool/format/rs.py               |  7 +-
+ scripts/tracetool/format/simpletrace_stap.py |  7 +-
+ scripts/tracetool/format/stap.py             | 10 ++-
+ scripts/tracetool/format/ust_events_c.py     |  7 +-
+ scripts/tracetool/format/ust_events_h.py     |  7 +-
+ tests/tracetool/tracetool-test.py            | 27 +++++--
+ 22 files changed, 195 insertions(+), 126 deletions(-)
+ create mode 100755 python/tests/tracetool-isort.sh
+ create mode 100755 python/tests/tracetool-mypy.sh
+
 -- 
 2.52.0
 
