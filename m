@@ -4,69 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C62CCA5FFB
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 07:47:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B47CA5FFF
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 07:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhjyn-0003KN-4S; Mon, 19 Jan 2026 02:47:19 -0500
+	id 1vhk2O-000771-7B; Mon, 19 Jan 2026 02:51:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
- id 1vhjxy-0002wQ-0g; Mon, 19 Jan 2026 02:46:30 -0500
-Received: from mail.avm.de ([2001:bf0:244:244::120])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
- id 1vhjxv-0003Gs-3t; Mon, 19 Jan 2026 02:46:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
- t=1768808776; bh=J6AIcZAUvHN6uzIVhIS905ZJ6L6FND5syESAfz8//wY=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=dcBNDj7gqlKq8OIc3XuXSu5MZZqe11QWQjTIuEZQyNtEanQRQTWrWvzZPdCTxtq04
- 3cF0RbRHgDnm7+qUFHQNeVT3vge0I/7gNZ4wtLUQHzqmxh0oLGQUljLNZ/XYJv+e8K
- kHio7oW9HdF7IWv+ypBP3Gw0CQ719A2mYhPFae+I=
-Received: from [172.16.0.1] (helo=mail.avm.de)
- by mail.avm.de with ESMTP (eXpurgate 4.54.3)
- (envelope-from <c.speich@avm.de>)
- id 696de148-44e8-7f0000032729-7f000001ea5e-1
- for <multiple-recipients>; Mon, 19 Jan 2026 08:46:16 +0100
-Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
- by mail.avm.de (Postfix) with ESMTP;
- Mon, 19 Jan 2026 08:46:16 +0100 (CET)
-Received: from l-cspeich ([172.17.89.139])
- by mail-notes.avm.de (HCL Domino Release 14.0FP4)
- with ESMTP id 2026011908461698-2279 ;
- Mon, 19 Jan 2026 08:46:16 +0100 
-Date: Mon, 19 Jan 2026 08:46:15 +0100
-From: Christian Speich <c.speich@avm.de>
-To: qemu-devel@nongnu.org
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Bin Meng
- <bmeng.cn@gmail.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH v2 0/4] hw/sd: Improve performance of read/write/erase
-Message-ID: <ht36imgqpzddppbmkhsb5uuauqtwdozqg4eexjfyno74cnop5s@ta5c4wtovyp6>
-References: <20251202-sdcard-performance-b4-v2-0-d42490b11322@avm.de>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vhk1v-00071O-Ba; Mon, 19 Jan 2026 02:50:31 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vhk1t-0003tv-JO; Mon, 19 Jan 2026 02:50:31 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 59EF217FA5B;
+ Mon, 19 Jan 2026 10:50:10 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id AB20D350BB1;
+ Mon, 19 Jan 2026 10:50:25 +0300 (MSK)
+Message-ID: <f795a93f-fcf4-4aba-952b-dbf53e3876c8@tls.msk.ru>
+Date: Mon, 19 Jan 2026 10:50:25 +0300
 MIME-Version: 1.0
-In-Reply-To: <20251202-sdcard-performance-b4-v2-0-d42490b11322@avm.de>
-X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
- 2025) at 19.01.2026 08:46:16,
- Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
- 19.01.2026 08:46:17, Serialize complete at 19.01.2026 08:46:17
-X-TNEFEvaluated: 1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-purgate-ID: 149429::1768808776-B3E619FC-5E99D67A/0/0
-X-purgate-type: clean
-X-purgate-size: 2422
-X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
-X-purgate: This mail is considered clean (visit https://www.eleven.de for
- further information)
-X-purgate: clean
-Received-SPF: pass client-ip=2001:bf0:244:244::120;
- envelope-from=c.speich@avm.de; helo=mail.avm.de
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.077,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH trivial 7/7] rename CONFIG_EPOLL_CREATE1 to CONFIG_EPOLL
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+References: <20260113130008.910240-1-mjt@tls.msk.ru>
+ <20260113130008.910240-11-mjt@tls.msk.ru>
+ <5fa1630e-e557-4e23-adf6-3bdf695c81fe@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <5fa1630e-e557-4e23-adf6-3bdf695c81fe@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,70 +105,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping?
+On 1/19/26 04:28, Richard Henderson wrote:
+> On 1/14/26 00:00, Michael Tokarev wrote:
+>> Since CONFIG_EPOLL is now unused, it's okay to
+>> perform this rename, to make it less ugly.
+>>
+>> Since epoll is linux-specific and is always
+>> present, we might as well make CONFIG_EPOLL equal
+>> to CONFIG_LINUX.
+>>
+>> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+>> ---
+>>   meson.build      | 2 +-
+>>   util/aio-posix.h | 4 ++--
+>>   util/meson.build | 2 +-
+>>   3 files changed, 4 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/meson.build b/meson.build
+>> index f8b4f06049..552b34f34e 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -2713,7 +2713,7 @@ config_host_data.set('CONFIG_INOTIFY1', 
+>> have_inotify_init1)
+>>   # has_header_symbol
+>>   config_host_data.set('CONFIG_BLKZONED',
+>>                        cc.has_header_symbol('linux/blkzoned.h', 
+>> 'BLKOPENZONE'))
+>> -config_host_data.set('CONFIG_EPOLL_CREATE1',
+>> +config_host_data.set('CONFIG_EPOLL',
+>>                        cc.has_header_symbol('sys/epoll.h', 
+>> 'epoll_create1'))
+> 
+> This is present in glibc 2.9, which is required.
+> Therefore you can drop this bit of configuration as well.
 
-I'll rebase it soon as it won't apply cleanly anymore, but I'd like to know if this
-patch is generally going in an right direction?
+It's a bit more tricky, see my comment in the patch description
+above.  Yes, epoll_create1 is now always present *on linux*.
+But this particular test (cc.has_header_symbol) is run on all
+platforms, not only on linux.  So if we drop this test, we'll
+have to alias CONFIG_EPOLL to CONFIG_LINUX.  Because epoll is
+used outside of linux-user too (eg in the main loop), and there,
+the test is CONFIG_EPOLL, not CONFIG_LINUX.
 
-Greetings,
-Christian
+So it might be possible to replace this test with something
+like
 
-On Tue, Dec 02, 2025 at 03:39:30PM +0100, Christian Speich wrote:
-> This patch series improves the performance of read/write/erase operations
-> on sdcards.
-> 
-> This is done by increasing the maximum buffer size that is worked on.
-> >From 1 byte (master) to 512 bytes (first commit) to larger than 512
-> (adma commit).
-> 
-> Testing on my system with fio I see the following rough performance 
-> values in MiB/s.
-> 
->               read write readwrite 
->        master:   6     6     3/  3
->  first commit:  51    43    23/ 23
-> second commit: 392   180   144/143
-> 
-> Tested on a 2GiB raw image with:
->   fio --filename=/dev/mmcblk0 --direct=1 --runtime=60 --time_based --bs=128k --rw={mode}
-> 
-> The adma values are somewhat unstable but always >100MiB/s, I'm not sure
-> why but I guess it has something to do with the host side caching.
-> 
-> The third commit fixes the DATA_STAT_AFTER_ERASE bit in SCR and
-> introduces an option to allow to erase blocks to 0x00.
-> 
-> The fourth commit optimizes block erase when erase-blocks-as-zero=true
-> is used, by passing the zeroing request down the to the block device.
-> Erasing 2GiB now takes 0.1s instead of 26s.
-> 
-> Signed-off-by: Christian Speich <c.speich@avm.de>
-> ---
-> Changes in v2:
-> - Properly set DATA_STAT_AFTER_ERASE in SCR
-> - Add erase-blocks-as-zero option to allow the user to switch between
->   0x00 and 0xFF for erased blocks.
-> - Link to v1: https://lore.kernel.org/qemu-devel/20250919-sdcard-performance-b4-v1-0-e1037e481a19@avm.de
-> 
-> ---
-> Christian Speich (4):
->       hw/sd: Switch from byte-wise to buf+len read/writes
->       hw/sd/sdhci: Don't use bounce buffer for ADMA
->       hw/sd/sdcard: Add erase-blocks-as-zero option.
->       hw/sd/sdcard: Optimize erase blocks as zero.
-> 
->  hw/sd/core.c       |  16 +--
->  hw/sd/sd.c         | 308 +++++++++++++++++++++++++++++++++++++++++------------
->  hw/sd/sdhci.c      | 102 ++++++++++--------
->  include/hw/sd/sd.h |  13 +--
->  4 files changed, 307 insertions(+), 132 deletions(-)
-> ---
-> base-commit: e7c1e8043a69c5a8efa39d4f9d111f7c72c076e6
-> change-id: 20250912-sdcard-performance-b4-d908bbb5a004
-> 
-> Best regards,
-> -- 
-> Christian Speich <c.speich@avm.de>
-> 
-> 
+  config_host_data.set('CONFIG_EPOLL', config_host_data.get('CONFIG_LINUX')
+
+but not drop it entirely.
+
+Thanks,
+
+/mjt
 
