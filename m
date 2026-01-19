@@ -4,92 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46F72C98315
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 00:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7126EC9830C
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 01:00:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhdbK-0005KJ-3j; Sun, 18 Jan 2026 19:58:38 -0500
+	id 1vhdcl-0006au-35; Sun, 18 Jan 2026 20:00:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhdbG-0005Hw-HD
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 19:58:35 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhdbD-0000LE-O7
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 19:58:33 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-29f2676bb21so37967535ad.0
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 16:58:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768784310; x=1769389110; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=p+uY5IrjD3cq9hX48LlwZ4AEHYnfAul3/7Ttfd6f4aU=;
- b=OhrtX34gL3Q2kHz/Ke2JKAiigCGwxt8e74bv6AGX+5KJWPc74ALF+s+OhiEaYDUSLH
- RgJHr2E1ktOtNfE6qbqrOTE3ivFmWRNaSaV8uiErupuf5vYG6cjf+QWWOvr3MMkybdww
- mLHahlSPWRn3lzmGCU5frHT5Rrlx0W+P0wWP+FKZwrOLxev2SDfbZmpMdYaRp03D04NO
- Kd9FZklQ1tRbF4mZ2vMoEA2PEpyX5Ajvk7gMODn5jZ1uUSesJ9jmhbE2np8CF1pCqrwy
- +zuRJ+1nhIflQSOlO41jjEJ9gymvalQ3tM1wMt/OZjXsTTistlnuvCaXDYaVJBl3iG29
- jTpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768784310; x=1769389110;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=p+uY5IrjD3cq9hX48LlwZ4AEHYnfAul3/7Ttfd6f4aU=;
- b=VAeJLO1u/nfVnl5zWC4mLloIaykJ70mBQnFOdPgYzz2hByfrQkQ0ZfML9rCCz8LAzC
- 9BgRq+dq0GfsNhil91QV6IKq/xBNkFFgbENMi12QTahKD0yC9tTA7x13bEM+FHWwPU7c
- /CjX0pkYslBeNF9TKjaYydJoTBtqlLgf5a3wwjxeuaHe9s04BJQXsFimrkNYbZyOkLhg
- slC/uWFrfALz8m5uc0cCnNbdaDuoM651m8rsx6ogsVgk+bkG6LHsJU18XkHa5GQqKkU6
- Z38hsqx08YgwBsi1Tox9k6vFdAnhhjtNUuW554EFdbcUy+m/M4gsZRCpJAOAQN8hP29Q
- Jf6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4Vq5JXlG7YEpL6z9dD6XV/xM5JGxK1oh3ykV7Vexb0AIR0jleHOjGL1PJkSdOeOAfYzPpLWKMr0XV@nongnu.org
-X-Gm-Message-State: AOJu0YxcFd5Gr7WCIp7p5nMPm68qEJNReBaTpsAtzNIVK6i2yG+XjKTQ
- vhzT4DLtuaUajAjb0RQNq478vvmXXZE+1SQ3Peta/XJqJ9uCZcR29MKwkmE0iM2FzAY=
-X-Gm-Gg: AY/fxX7XQC79LQyUwx6JNSXmg3+j9PWmr4BdsLeusc2Y6w1VkrpMzkYQFEq0B4K+7iM
- ini25uvHt/sZM064EZ485TMbGg8NbdCAhoeuERkb3Xvx46oEzi9v2qS90NoFqTV/qpdZOYsAVSk
- qC+Yp9iUh3tby1eonH25xlrk6bJa3xgwnN+rM+15h/a7Pt1SCa4yvwI9uEJfXCFdDzIzGCRe8Pz
- C9q5Sm4iN4VArVMsRi05OiJl7Kpll21L/j3PeuXxviCCcfPDbVOC0Nh7n32BFdOZwGEUrbVQFEw
- U9yMMGnNlCsozARoY7vdu4QCQiuxZ3EyETqr5Ml3yq8jH2ziXrBTyOymbsjQpWssk7ujYezJAOE
- gGlsUL1YIiwrCTqJw1inB4qF5DjNQqKysBIVEPPjhSp+vig4XBmgyNIJn4NuqvA9P1/dh1ATCVM
- kbXWSaJrYRIuLEWA6IeN/tjCSU3r7jSQ==
-X-Received: by 2002:a17:902:ecce:b0:2a2:d2e8:9f1f with SMTP id
- d9443c01a7336-2a7188f91cdmr88596165ad.31.1768784310304; 
- Sun, 18 Jan 2026 16:58:30 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a7190ca058sm72464005ad.33.2026.01.18.16.58.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 18 Jan 2026 16:58:29 -0800 (PST)
-Message-ID: <e6aa8508-c475-4502-9058-42466e3d61d4@linaro.org>
-Date: Mon, 19 Jan 2026 11:58:26 +1100
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1vhdcf-0006ZU-QC; Sun, 18 Jan 2026 20:00:01 -0500
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1vhdcd-0000Ou-M2; Sun, 18 Jan 2026 20:00:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=0WVsrv89xQbOrPpEsi89/WKphD/nzR7rKd+cQ6vy+kY=; b=bPM56RNZjhm7w/LK
+ 55+glE9a8Y0NK9R1K4jv0qJtDso3xxLDF1PIakM3EMcbOjOJIp+p9oHz1lNzJRhLE17Q76rrH/F7K
+ xmmJbvQl7Los/ztXdLhnIyzT2JeO/J5g1F1xCY/0uT0jYUsCjMHLtVQr12tJlvsnjICGbO0/Bkd+R
+ 4Q91ocHsP9nCHNIxBE01NZm0TM48V/RRHyelb+w/s2EV0ralGkfsPZahoRoxtiRRplFWAQraY4Dgy
+ u/jMNFaVBI5O8tB7E8oR52EYI4MkCdT3/NDW7zVRaf9DHVyaaHaXz/9TErQdo87QGQpPhG0bbga5N
+ yDMURI8Rl10K8YhgSg==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1vhdcX-0000000FeqS-1FzG;
+ Mon, 19 Jan 2026 00:59:53 +0000
+Date: Mon, 19 Jan 2026 00:59:53 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, qemu-ppc@nongnu.org
+Subject: Re: [PATCH v2 4/8] monitor: Have MonitorDef::get_value() return an
+ unsigned type
+Message-ID: <aW2CCaZlpdPo31io@gallifrey>
+References: <20260117162926.74225-1-philmd@linaro.org>
+ <20260117162926.74225-5-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] target/i386/tcg: replace havesib variable with the
- SIB byte itself
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20260115113306.126905-1-pbonzini@redhat.com>
- <20260115113306.126905-6-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260115113306.126905-6-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260117162926.74225-5-philmd@linaro.org>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
+X-Uptime: 00:58:49 up 84 days, 35 min,  2 users,  load average: 0.00, 0.00,
+ 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,13 +79,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/15/26 22:33, Paolo Bonzini wrote:
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+* Philippe Mathieu-Daudé (philmd@linaro.org) wrote:
+> All implementations of the get_value() handler return an
+> unsigned type:
+> 
+> - target/i386/monitor.c
+> 
+>   monitor_get_pc() -> target_ulong eip;
+> 
+> - target/ppc/ppc-qmp-cmds.c
+> 
+>   monitor_get_ccr() -> uint64_t ppc_get_cr(const CPUPPCState *env);
+> 
+>   monitor_get_xer() -> target_ulong cpu_read_xer(const CPUPPCState *env);
+> 
+>   monitor_get_decr() -> target_ulong cpu_ppc_load_decr(CPUPPCState *env);
+> 
+>   monitor_get_tbu() -> uint32_t cpu_ppc_load_tbu(CPUPPCState *env);
+> 
+>   monitor_get_tbl() -> uint64_t cpu_ppc_load_tbl(CPUPPCState *env);
+> 
+> - target/sparc/monitor.c
+> 
+>   monitor_get_psr() -> target_ulong cpu_get_psr(CPUSPARCState *env1);
+> 
+>   monitor_get_reg() -> target_ulong *regwptr;
+> 
+> Convert the MonitorDef::get_value() handler to return unsigned.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/i386/tcg/decode-new.c.inc | 13 ++++++-------
->   1 file changed, 6 insertions(+), 7 deletions(-)
+>  include/monitor/hmp-target.h |  3 +--
+>  monitor/hmp-target.c         |  8 ++++----
+>  target/i386/monitor.c        |  4 ++--
+>  target/ppc/ppc-qmp-cmds.c    | 25 +++++++++++--------------
+>  target/sparc/monitor.c       |  8 ++++----
+>  5 files changed, 22 insertions(+), 26 deletions(-)
+> 
+> diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+> index b679aaebbff..bd9baeaa3ad 100644
+> --- a/include/monitor/hmp-target.h
+> +++ b/include/monitor/hmp-target.h
+> @@ -32,8 +32,7 @@ typedef struct MonitorDef MonitorDef;
+>  struct MonitorDef {
+>      const char *name;
+>      int offset;
+> -    target_long (*get_value)(Monitor *mon, const struct MonitorDef *md,
+> -                             int val);
+> +    uint64_t (*get_value)(Monitor *mon, const struct MonitorDef *md, int val);
+>      int type;
+>  };
+>  #endif
+> diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+> index 420969bd6eb..3fb4fb12508 100644
+> --- a/monitor/hmp-target.c
+> +++ b/monitor/hmp-target.c
+> @@ -67,7 +67,6 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+>  {
+>      const MonitorDef *md = target_monitor_defs();
+>      CPUState *cs = mon_get_cpu(mon);
+> -    void *ptr;
+>      uint64_t tmp = 0;
+>      int ret;
+>  
+> @@ -81,13 +80,14 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+>                  *pval = md->get_value(mon, md, md->offset);
+>              } else {
+>                  CPUArchState *env = mon_get_cpu_env(mon);
+> -                ptr = (uint8_t *)env + md->offset;
+> +                void *ptr = (uint8_t *)env + md->offset;
+> +
+>                  switch(md->type) {
+>                  case MD_I32:
+> -                    *pval = *(int32_t *)ptr;
+> +                    *pval = *(uint32_t *)ptr;
+>                      break;
+>                  case MD_TLONG:
+> -                    *pval = *(target_long *)ptr;
+> +                    *pval = *(target_ulong *)ptr;
+>                      break;
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+So I think this patch does make sense, but it does feel a bit hideous
+to have 'MD_I32' and 'MD_TLONG' as names for unsigneds.
 
-r~
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+
+>                  default:
+>                      *pval = 0;
+> diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+> index 99b32cb7b0f..cce23f987ef 100644
+> --- a/target/i386/monitor.c
+> +++ b/target/i386/monitor.c
+> @@ -593,8 +593,8 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+>      }
+>  }
+>  
+> -static target_long monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
+> -                                  int val)
+> +static uint64_t monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
+> +                               int val)
+>  {
+>      CPUArchState *env = mon_get_cpu_env(mon);
+>      return env->eip + env->segs[R_CS].base;
+> diff --git a/target/ppc/ppc-qmp-cmds.c b/target/ppc/ppc-qmp-cmds.c
+> index 7022564604f..07938abb15f 100644
+> --- a/target/ppc/ppc-qmp-cmds.c
+> +++ b/target/ppc/ppc-qmp-cmds.c
+> @@ -33,26 +33,23 @@
+>  #include "cpu-models.h"
+>  #include "cpu-qom.h"
+>  
+> -static target_long monitor_get_ccr(Monitor *mon, const struct MonitorDef *md,
+> -                                   int val)
+> +static uint64_t monitor_get_ccr(Monitor *mon, const struct MonitorDef *md,
+> +                               int val)
+>  {
+>      CPUArchState *env = mon_get_cpu_env(mon);
+> -    unsigned int u;
+>  
+> -    u = ppc_get_cr(env);
+> -
+> -    return u;
+> +    return ppc_get_cr(env);
+>  }
+>  
+> -static target_long monitor_get_xer(Monitor *mon, const struct MonitorDef *md,
+> -                                   int val)
+> +static uint64_t monitor_get_xer(Monitor *mon, const struct MonitorDef *md,
+> +                                int val)
+>  {
+>      CPUArchState *env = mon_get_cpu_env(mon);
+>      return cpu_read_xer(env);
+>  }
+>  
+> -static target_long monitor_get_decr(Monitor *mon, const struct MonitorDef *md,
+> -                                    int val)
+> +static uint64_t monitor_get_decr(Monitor *mon, const struct MonitorDef *md,
+> +                                 int val)
+>  {
+>      CPUArchState *env = mon_get_cpu_env(mon);
+>      if (!env->tb_env) {
+> @@ -61,8 +58,8 @@ static target_long monitor_get_decr(Monitor *mon, const struct MonitorDef *md,
+>      return cpu_ppc_load_decr(env);
+>  }
+>  
+> -static target_long monitor_get_tbu(Monitor *mon, const struct MonitorDef *md,
+> -                                   int val)
+> +static uint64_t monitor_get_tbu(Monitor *mon, const struct MonitorDef *md,
+> +                                int val)
+>  {
+>      CPUArchState *env = mon_get_cpu_env(mon);
+>      if (!env->tb_env) {
+> @@ -71,8 +68,8 @@ static target_long monitor_get_tbu(Monitor *mon, const struct MonitorDef *md,
+>      return cpu_ppc_load_tbu(env);
+>  }
+>  
+> -static target_long monitor_get_tbl(Monitor *mon, const struct MonitorDef *md,
+> -                                   int val)
+> +static uint64_t monitor_get_tbl(Monitor *mon, const struct MonitorDef *md,
+> +                                int val)
+>  {
+>      CPUArchState *env = mon_get_cpu_env(mon);
+>      if (!env->tb_env) {
+> diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
+> index 73f15aa272d..3e1f4dd5c9c 100644
+> --- a/target/sparc/monitor.c
+> +++ b/target/sparc/monitor.c
+> @@ -40,8 +40,8 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+>  }
+>  
+>  #ifndef TARGET_SPARC64
+> -static target_long monitor_get_psr(Monitor *mon, const struct MonitorDef *md,
+> -                                   int val)
+> +static uint64_t monitor_get_psr(Monitor *mon, const struct MonitorDef *md,
+> +                                int val)
+>  {
+>      CPUArchState *env = mon_get_cpu_env(mon);
+>  
+> @@ -49,8 +49,8 @@ static target_long monitor_get_psr(Monitor *mon, const struct MonitorDef *md,
+>  }
+>  #endif
+>  
+> -static target_long monitor_get_reg(Monitor *mon, const struct MonitorDef *md,
+> -                                   int val)
+> +static uint64_t monitor_get_reg(Monitor *mon, const struct MonitorDef *md,
+> +                                int val)
+>  {
+>      CPUArchState *env = mon_get_cpu_env(mon);
+>      return env->regwptr[val];
+> -- 
+> 2.52.0
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
