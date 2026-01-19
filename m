@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EBF2CCF2EE
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 18:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A920ECCF2DD
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 18:55:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhuNT-00075e-1c; Mon, 19 Jan 2026 13:53:27 -0500
+	id 1vhuNG-0006bA-0o; Mon, 19 Jan 2026 13:53:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vhuN1-0006KP-NQ
+ id 1vhuN1-0006KL-J5
  for qemu-devel@nongnu.org; Mon, 19 Jan 2026 13:53:01 -0500
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vhuMz-0005tR-Vp
+ id 1vhuMy-0005sx-3J
  for qemu-devel@nongnu.org; Mon, 19 Jan 2026 13:52:59 -0500
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:5c05:0:640:ff67:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 48C098862E;
- Mon, 19 Jan 2026 21:52:56 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id CD5AF80870;
+ Mon, 19 Jan 2026 21:52:54 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:934::1:38])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id dqetGa1BQGk0-hQJJEiTC; Mon, 19 Jan 2026 21:52:55 +0300
+ ESMTPSA id dqetGa1BQGk0-GC5XU5CZ; Mon, 19 Jan 2026 21:52:54 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1768848775;
- bh=NH3Nk6dA3QPb24B1uzxLO8gXbhQ1VwUsS/qFCVxxOvs=;
+ s=default; t=1768848774;
+ bh=6HvjYsoZhaC2LSg0jkVYcNTta/Ms24XTnZFLI2Nij9E=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=PBW1xghmY5vcAjjCxe2ERw2FZTCWiEMj7+/eWNwfQLpK71wRgrF1Ltm4TWGyV6kNz
- 6VrkBsmA9q/jUOfuZOkv5AjpeC+1SgpONickrSZlkjXIUjp6rVkX1mRcAKd43vQpCP
- cfWyg1LA5kKbeW2gx41MrZp9b43T1UM3pPtTfkQ8=
+ b=e9CteKYDxJpIIphIdjpDyZ3Z7hCo5OM46059FWanmha0LyAODS9XuozHNw1ibIXy3
+ N6dPqVoBpaawxAVdYkkSQDuPFZATiZo8RqdV0/Z++UkIl1lSZVjWWIbPCiJFFftnzB
+ W1aqm1vExvI4yqTW67asAHVkblpGhcqOWOPe07Zc=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: mst@redhat.com
 Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru
-Subject: [PATCH v4 15/23] vhost: vhost_virtqueue_start(): drop extra local
- variables
-Date: Mon, 19 Jan 2026 21:52:19 +0300
-Message-ID: <20260119185228.203296-16-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru, Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Subject: [PATCH v4 13/23] vhost: simplify calls to vhost_memory_unmap()
+Date: Mon, 19 Jan 2026 21:52:17 +0300
+Message-ID: <20260119185228.203296-14-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260119185228.203296-1-vsementsov@yandex-team.ru>
 References: <20260119185228.203296-1-vsementsov@yandex-team.ru>
@@ -76,53 +75,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-One letter named variables doesn't really help to read the code,
-and they simply duplicate structure fields.
+No reason to calculate memory size again, as we have corresponding
+variable for each vring.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 ---
- hw/virtio/vhost.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ hw/virtio/vhost.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
 diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 06b0b34cd3..653cb706cc 100644
+index 036c28dead..84937c8a67 100644
 --- a/hw/virtio/vhost.c
 +++ b/hw/virtio/vhost.c
-@@ -1277,7 +1277,6 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
-     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
-     VirtioBusState *vbus = VIRTIO_BUS(qbus);
-     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(vbus);
--    hwaddr l;
-     int r;
-     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
-     struct vhost_vring_file file = {
-@@ -1302,23 +1301,17 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
-         /* Queue might not be ready for start */
-         return 0;
+@@ -1383,12 +1383,9 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     return 0;
+ 
+ fail:
+-    vhost_memory_unmap(dev, &vq->used, virtio_queue_get_used_size(vdev, idx),
+-                       0, 0);
+-    vhost_memory_unmap(dev, &vq->avail, virtio_queue_get_avail_size(vdev, idx),
+-                       0, 0);
+-    vhost_memory_unmap(dev, &vq->desc, virtio_queue_get_desc_size(vdev, idx),
+-                       0, 0);
++    vhost_memory_unmap(dev, &vq->used, vq->used_size, 0, 0);
++    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0, 0);
++    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0, 0);
+     return r;
+ }
+ 
+@@ -1435,12 +1432,9 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
+                                                 vhost_vq_index);
      }
--
--    l = vq->desc_size;
--    vq->desc = vhost_memory_map(dev, vq->desc_phys, l, false);
-+    vq->desc = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
-     if (!vq->desc) {
-         r = -ENOMEM;
-         goto fail;
-     }
--
--    l = vq->avail_size;
--    vq->avail = vhost_memory_map(dev, vq->avail_phys, l, false);
-+    vq->avail = vhost_memory_map(dev, vq->avail_phys, vq->avail_size, false);
-     if (!vq->avail) {
-         r = -ENOMEM;
-         goto fail;
-     }
--
--    l = vq->used_size;
--    vq->used = vhost_memory_map(dev, vq->used_phys, l, true);
-+    vq->used = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
-     if (!vq->used) {
-         r = -ENOMEM;
-         goto fail;
+ 
+-    vhost_memory_unmap(dev, &vq->used, virtio_queue_get_used_size(vdev, idx),
+-                       1, virtio_queue_get_used_size(vdev, idx));
+-    vhost_memory_unmap(dev, &vq->avail, virtio_queue_get_avail_size(vdev, idx),
+-                       0, virtio_queue_get_avail_size(vdev, idx));
+-    vhost_memory_unmap(dev, &vq->desc, virtio_queue_get_desc_size(vdev, idx),
+-                       0, virtio_queue_get_desc_size(vdev, idx));
++    vhost_memory_unmap(dev, &vq->used, vq->used_size, 1, vq->used_size);
++    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0, vq->avail_size);
++    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0, vq->desc_size);
+     return r;
+ }
+ 
 -- 
 2.52.0
 
