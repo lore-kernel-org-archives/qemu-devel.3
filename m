@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99ACCC9830C
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 01:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12162C9830C
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 01:29:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhe29-0007ZM-Q4; Sun, 18 Jan 2026 20:26:22 -0500
+	id 1vhe4M-0000vZ-N1; Sun, 18 Jan 2026 20:28:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhe23-0007PZ-Dh
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 20:26:15 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1vhe4K-0000t1-RT
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 20:28:36 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhe21-0004lH-V4
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 20:26:15 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-81f4dfa82edso1708363b3a.0
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 17:26:12 -0800 (PST)
+ id 1vhe4J-0004rz-4O
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 20:28:36 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2a0c20ee83dso34550325ad.2
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 17:28:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768785972; x=1769390772; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768786113; x=1769390913; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Wap4gVhHL2+7+mwYV5ngCK8AUXAeJIsk5rEv9j56blo=;
- b=hyBvxdniquuwVnusilcCwmJG5xa3eyNAjAoysULUMprIlVvHYyz08Ki9klsMTWWaEf
- Qc17fSmyzVrEV6oLERBWk+X9wrC2CRASgbMn0YSZifnTa90k0nwyk4xKi+CncCtdrMEc
- jOvwdXr77ExVeXKsUyznAmbUkC6XRB7SLVQ3HWXEZ62JYpLJLP7YJ4rhG8ro417G5gP1
- cvaK8J8Cr8eR4qgxvlPz+0l+UD1c+D5IKXG2Lhh0l3j1He23bp2+YoVVJXb/11KVn2W1
- BC3xL27kFJrQTjeKy8N0d7VH5ZllGj18NNPDkRvmL4/wcYmHe6TPaF8kx3fb8KFrLRnY
- kQ0g==
+ bh=19b4lsNqh5g0QXi/Wgzru/UUBfNwOcTHs2Y9VJ25mII=;
+ b=HieTplPIsOpuFBC32lh7ZYXhJ47enC6OXPNbC/MtRxNEWpsclgl5g8hE//Rhpcppb4
+ V/9TvI840XXnCmKJmtZn3I0hERrteek33WIINb4L1j2TwmPmabQOK7p2UdS/qo9op4h2
+ vWSmMg2ciNmddnIQn6vS+S3jCl7UBMH96LWrXnfY8Mz0vkcIZcXwf9DPQWlwHGGF+CO9
+ HjksA7l4Vw2c4twlkgRWDVKFOByH897xZeLUMxGtHsqm8QyOz4ZZYqJqKX90Kl4AqYqD
+ qSQWGnQIm9djLE+y3thQ4c/BqV0l7ojtDFEGiBt3CVkPuae3nXl+S5JRxLzImALjqLoS
+ R1SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768785972; x=1769390772;
+ d=1e100.net; s=20230601; t=1768786113; x=1769390913;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Wap4gVhHL2+7+mwYV5ngCK8AUXAeJIsk5rEv9j56blo=;
- b=G5a/FgaZJHwq6THg+JyPN4PF0s9ThrT7SFsZV11/YQKBvRrN5eAm7i7e160LKjKPxC
- 2uU31AN5J3CmcT5kODr0sDjpI2A6Sp1r6jiu3DIl+0miGHqAdFghVDOAm9UKOTHXIDPw
- 2+3zvdjRCjZd11DdChiJnF5Kza9H3ezGnMDJSPFUlQ7GY9zP7kPA7hcf2LKD/rNBlSED
- axOQ356rM4lUcBmOiDCr7++My22n1B7LK1/QmE+YR68oy5uViN/yrNRZ/ISqVbMGKhYO
- JcpNe4Z89Daj4La2GJP2mXZz4450PKxa0bqUfQHAGT3yJOJBYQfxEfDNBYceLcOeYDDX
- w3Kg==
+ bh=19b4lsNqh5g0QXi/Wgzru/UUBfNwOcTHs2Y9VJ25mII=;
+ b=FEXpysr8lit0PaYQGhg+5XOK9hQ9vh4Zh93GM/Ti+kVo81NVELjUw3Ae9dw4ZTkLiQ
+ SsbIGgFlS2x9NJtoq9QmOzYjE7iR4Ye7CBrJdiar0QuVc5qdhph1VI66s76awjp9HG65
+ czbksvu9rqpmZz/KnkHdZXfNxNn3ZdwKjdEvbhgU0QdBipIZ+dDH+a6L1sObbBFyTYIW
+ RJv7GrcL5jfKlQlLuwYj16CXojgcYXIV5t8e0dtdo9n6WNQUqEB5hgpmUrby02GSkhcF
+ nZqkyFUFvyvYuRmBSgUB+mKfdpihpLk+A1fEo6qtsFG3Zi++p318J61R/PLxaWyaVKMP
+ 6nGw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXv+2ASk2Mq3oxjKHAm4+zr6E2+PQfS6d220bgcd2LFLESoYUUVt/N15OH1ryq2vZMO2/LcThT4yk+m@nongnu.org
-X-Gm-Message-State: AOJu0Yy5uuhvjK8yvbHyBnlA6+eIqNPOf1WSjTyKsFK4ouHZsSNpSVmf
- gffago2CZ8gqdh3TbxBDgI1bzW2SYFd8zuJ4aI3nBvJhm0r53BXmw9slnTQEpq96ll0=
-X-Gm-Gg: AY/fxX4gJtj6d/xc7VD9bRlvyAG2i6TjaIPGaadbtvskpfK0TnMo/w34yn8h0VH4HU3
- hFt+kveqYExk+aJf1DJYzL4LJAB+jDuuAq53EjutUtuHLV4dN3ags1d8GqSzFu6r7bI/frVZzfe
- laUicN1ahEfNsGYrkz8vQ8hyhiJ5r/FGxcDBB/hz7XSqcWiWhhZ8SG8O0FXMjArxWXJiuGyV9pP
- 9S/6hGAAUVRZucncuPx/avJ1TnRkbkYMUCRdDdqJTB7bUpsZOKB2uqjlvXNiz9YIezodGUAkq0B
- EUxDTq7YZkDhVQcihVXGsqahtiw0RSj1xV77N3knSruBDlm29YGh/ORlSMmsbMSvZCVCLOp+HVt
- xUg0BOiaTf9aRWC3LMVM3vCXUv4M2ggh9jV+5EQnQr5IUt7Gmqq+yzcePbojX+g+ZcncUKeHUVw
- YyS5XsWUkTqYIZAFDKR2Xf/59qOBb+4A==
-X-Received: by 2002:a05:6a00:408c:b0:7e8:4471:ae66 with SMTP id
- d2e1a72fcca58-81fa1861292mr6808333b3a.50.1768785971696; 
- Sun, 18 Jan 2026 17:26:11 -0800 (PST)
+ AJvYcCXFLm+2r+Jjk9VG/Sz/0uve1vcXegouCpwNqgswgqoBHpuNNrqtDrW4cuWcxNekGFZqUW5e6GXvt/L8@nongnu.org
+X-Gm-Message-State: AOJu0YypIWpEX2wc9NR1wnbSGxyvYZ6GFK2bMgSLuV3i+q/p8VS/JklA
+ IwiOM/6ahrL6/gwbFMqthnaW8+QDEU9BNE/mY3P67iHMT+T1pPb7a4JvmACfCTaDVAzMf4PgWfk
+ ouZUz2TYOHA==
+X-Gm-Gg: AY/fxX57zD40wZ8dcnhZfItSfLkF7mXOoeuhDpaXfKYEpv+jn3OYmYM/mQUgC7V724H
+ Z/T/f8U5U2SoEVvt0M1g0u5tUZL3QLH0DrgDwXLaxMcD8QEepcDKkFilqc5wOlkS8V0Y6L707Iz
+ HExgqqw0K/WwEWGBP4LGEBLbOWLuG/wfiTppiIkCiVFIZrItYWOcfEUwhAh6o0esQbU1pJ2X0Om
+ oWsK7QjDvuH5OuGJbTwUa3u2cwwb1RqsczJcn52vD2vT9xN9tD8rJv2Tc8FZqVSHWEYT6jSR8xs
+ n20C51zoVoMl95LbRlKihNvdOIr0pfJV7jy7fD6HtoznoSuiTWAm79oVuIJqiDDW1jua5If5rxH
+ EbF9w54ztbL93XcsN2GoFVxjqtFhBuumeN8IdwPIZ2pXrA4uVHxxVAnmu1jPYHKPsgv4gvWD2lz
+ cMzUANhAL1Xqpmxccb+PbrHTzxeBzKtQ==
+X-Received: by 2002:a17:903:22c3:b0:2a3:bf9d:9399 with SMTP id
+ d9443c01a7336-2a7175a247emr90649615ad.35.1768786113337; 
+ Sun, 18 Jan 2026 17:28:33 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81fa12911c2sm7411341b3a.46.2026.01.18.17.26.09
+ 41be03b00d2f7-c5edf355ca7sm7670027a12.27.2026.01.18.17.28.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 18 Jan 2026 17:26:11 -0800 (PST)
-Message-ID: <905bd70b-1a98-46f3-84b3-16430f6a287d@linaro.org>
-Date: Mon, 19 Jan 2026 12:26:06 +1100
+ Sun, 18 Jan 2026 17:28:33 -0800 (PST)
+Message-ID: <5fa1630e-e557-4e23-adf6-3bdf695c81fe@linaro.org>
+Date: Mon, 19 Jan 2026 12:28:28 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial 6/7] meson.build: do not check for epoll.h
- (CONFIG_EPOLL)
+Subject: Re: [PATCH trivial 7/7] rename CONFIG_EPOLL_CREATE1 to CONFIG_EPOLL
 To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org
 References: <20260113130008.910240-1-mjt@tls.msk.ru>
- <20260113130008.910240-10-mjt@tls.msk.ru>
+ <20260113130008.910240-11-mjt@tls.msk.ru>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260113130008.910240-10-mjt@tls.msk.ru>
+In-Reply-To: <20260113130008.910240-11-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -107,28 +107,34 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/14/26 00:00, Michael Tokarev wrote:
-> The only place where we used CONFIG_EPOLL was linux-user,
-> which now enables it unconditionally.
+> Since CONFIG_EPOLL is now unused, it's okay to
+> perform this rename, to make it less ugly.
+> 
+> Since epoll is linux-specific and is always
+> present, we might as well make CONFIG_EPOLL equal
+> to CONFIG_LINUX.
 > 
 > Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 > ---
->   meson.build | 1 -
->   1 file changed, 1 deletion(-)
+>   meson.build      | 2 +-
+>   util/aio-posix.h | 4 ++--
+>   util/meson.build | 2 +-
+>   3 files changed, 4 insertions(+), 4 deletions(-)
 > 
 > diff --git a/meson.build b/meson.build
-> index 6ea49c6fc0..f8b4f06049 100644
+> index f8b4f06049..552b34f34e 100644
 > --- a/meson.build
 > +++ b/meson.build
-> @@ -2617,7 +2617,6 @@ config_host_data.set('CONFIG_FSFREEZE', qga_fsfreeze)
->   config_host_data.set('CONFIG_FSTRIM', qga_fstrim)
->   
->   # has_header
-> -config_host_data.set('CONFIG_EPOLL', cc.has_header('sys/epoll.h'))
->   config_host_data.set('CONFIG_LINUX_MAGIC_H', cc.has_header('linux/magic.h'))
->   valgrind = false
->   if get_option('valgrind').allowed()
+> @@ -2713,7 +2713,7 @@ config_host_data.set('CONFIG_INOTIFY1', have_inotify_init1)
+>   # has_header_symbol
+>   config_host_data.set('CONFIG_BLKZONED',
+>                        cc.has_header_symbol('linux/blkzoned.h', 'BLKOPENZONE'))
+> -config_host_data.set('CONFIG_EPOLL_CREATE1',
+> +config_host_data.set('CONFIG_EPOLL',
+>                        cc.has_header_symbol('sys/epoll.h', 'epoll_create1'))
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This is present in glibc 2.9, which is required.
+Therefore you can drop this bit of configuration as well.
 
 
 r~
