@@ -4,47 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7BAD29C28
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 14:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CE8ED29C2A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 14:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhq1u-0002jZ-Oa; Mon, 19 Jan 2026 09:14:55 -0500
+	id 1vhq23-0003QT-Ir; Mon, 19 Jan 2026 09:15:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@fhofhammer.de>)
- id 1vhmS9-0000BR-2K; Mon, 19 Jan 2026 05:25:45 -0500
+ id 1vhp98-0000lP-Nc
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:18:18 -0500
 Received: from mwd01m.fhofhammer.de ([2a02:c207:3002:3725::1])
  by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@fhofhammer.de>)
- id 1vhmS7-0000II-Gw; Mon, 19 Jan 2026 05:25:44 -0500
-Message-ID: <018a86fd-b831-4fd6-b479-9d73e2e95ee0@fhofhammer.de>
+ id 1vhp96-0004oX-Fr
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:18:18 -0500
+Message-ID: <f877dd79-1285-4752-811e-f0d430ff27fe@fhofhammer.de>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fhofhammer.de;
- s=2023; t=1768818331;
+ s=2023; t=1768828693;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:autocrypt:autocrypt;
- bh=KcTQnaxrkm4kdGKnfoHfDTipwHdRMY2Cf4qxbasUQWc=;
- b=bxOEQNXaMyeFkN8Xm846knVqPWA0++ibfhNbxz+pHZwni1njiY2ra4Xxy1BSYACaNhrX0Q
- 7nH0VY0GFD8GVVKSvtNVUacVzCNBLvvdlZN4TA8w3idx9PLqdfd0dwbJzQq8XcOvmerPVX
- 5+uo0yEDuVn78+odYZ/h2UOdUT+YBemJKzFXoAVyX1suOxgN2Te0xyAarlbUkY5nhD5V2z
- znDo5/EHUac/OOaLzr9dgHp9lRFDnbS26h+p/t+nzKGUv+mccXxW5nDa8AOyhWwERO5Cc9
- ZyohfzhqjZ63C9URxEFWPmy2XSkgsOCpdPJUg8d7byaZaIgt/NJIieLW7sMbZanzdCVR+M
- HqNin+U7D/Fnk1NbhwV99v7a7GCOr7LVph0lvkAb2aukatn/QGuBK5qy7hOmIGu2Q7hvMF
- vb7IwE6hKB/CUAq16bg5p81TO0EYjWD6QNon2lNG2qKiZOBJKGjDN9hn3d5OF4YKZQqqZ7
- H6OvnIp9NXQ/Z5zTBFDVSg9A7GRYseuWnKLRFaaXE7IAC6tLEgIniCMtG63S+pKxh4NBy+
- BwYbz3RvhWDs6Aa/5TamJLT1p3hBjcmCktjQifQg9MayfoMoADk2qE8q8Mujl3u2Qmyt7S
- p1AU/4PJsBgUWL+ZvPO7I8PiUIl7+fnPwk9EtFaIYeV5xun9NXbDs=
+ bh=+zvffJgGv3ouUsYkA0vKSbqYjNB5VVO1dcPMheaIZdo=;
+ b=zJBdWFl2qovILoddCoPktI97b4QhxYeTqdYJ5RmkMIPQiQXJTH2mP+kf0I7XRfL5PhI6GM
+ k0KCcecpBQZfHrz8XNXywzaTzuPGqpKRp6qxTmLv2Rd7JSffo0zUBrQBgs3/49kHnkLtSX
+ pIxBsyCWprBks6eGQB2y4TDSLdKVTAm1eoOrH1UnyXccY9f6x/sJ+NO0EDbGUYfdrQEk7S
+ mI3HCtaQJIqn6e6XyxlsrQJ3XdIBzBVBv/6FN8ic1+K28yeUBpFbD9/wAqBtxkPbpESsAQ
+ qtDpp8sPL0XU2N5FSjgp+wVqgOMiR11QdLcfrydebath8tp5kzLmbxlt2rrdzj/+UgFsML
+ 0qe3IitZvLdCTQZbTK8c4kA7f9EUEtIieCCpvwPS2RhX0AqU879kcy/1SDNY7yLte2X2/U
+ HlbxIvQ6vwBns0NosyswKj9t9/wP2fuhgg5IMoa6Bb6Yint2YaEpiOVHzWtMem7Iv4BS5k
+ rq7J5wvCF7sA+Fzlj0JY/JK3N0WoTZY0FzsT+wUvUFzmsEwSdFQpUE+sLuNcYPfiLCFFo0
+ GhXBuWTpp0kl66DGBvPwSefmciz6IzT86JJMMnzcAt87j7K+wCSHEDIYSMOHC9XtPePLtw
+ LGFKC9pGJI8YO2LTAZcrpflvYhNj4Zq9Vp8T+rLAPN6TlHxR9KEYo=
 Authentication-Results: ORIGINATING;
  auth=pass smtp.auth=florian.hofhammer@fhofhammer.de
  smtp.mailfrom=florian.hofhammer@fhofhammer.de
-Date: Mon, 19 Jan 2026 11:25:30 +0100
+Date: Mon, 19 Jan 2026 14:18:12 +0100
 MIME-Version: 1.0
 From: Florian Hofhammer <florian.hofhammer@fhofhammer.de>
-Subject: [PATCH trivial] configure: add ppc target back to container tests
+Subject: [PATCH] plugins: return bool from register r/w API
 Content-Language: en-US
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org, qemu-trivial@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>
 Autocrypt: addr=florian.hofhammer@fhofhammer.de; keydata=
  xsFNBFw7TEkBEADaJzHcW02rDYHgS2X2kjyXLs99tnNpww/r3MlWEkrKxgfgIRbtVQTJ2vNw
  mxIhJnAo/Ltu2VoEXU1WGwoMGv8wxquIuE1RBnYghnYPFd4SOMX8fXz5JylHpl+vPCWiP8U0
@@ -101,7 +106,7 @@ X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 19 Jan 2026 09:14:02 -0500
+X-Mailman-Approved-At: Mon, 19 Jan 2026 09:14:03 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,34 +121,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 2ff8c9a298 removed support for 32-bit PPC hosts from the build
-system. Unfortunately, the patch also removed the 32-bit PPC target for
-containerized tests, which leads to an error when trying to run tests,
-e.g., with "make check-tcg":
-"make[1]: *** No rule to make target 'docker-image-debian-ppc-cross',
-needed by 'build-tcg-tests-ppc-linux-user'.  Stop."
+The qemu_plugin_{read,write} register API previously was inconsistent
+with regard to its docstring (where a return value of both -1 and 0
+would indicate an error) and to the memory read/write APIs, which
+already return a boolean value to indicate success or failure.
+Returning the number of bytes read or written is superfluous, as the
+GByteArray* passed to the API functions already encodes the length.
+See the linked thread for more details.
 
-This patch adds the PPC target back for containerized tests.
+This patch moves from returning an int (number of bytes read/written) to
+returning a bool from the register read/write API, bumps the plugin API
+version, and adjusts plugins and tests accordingly.
 
-Fixes: 2ff8c9a2984bb20e350ae52152812c5370b02e32
+Link: https://lore.kernel.org/qemu-devel/60089475-3891-4448-bfe0-8dd698cd2435@epfl.ch/
 Signed-off-by: Florian Hofhammer <florian.hofhammer@fhofhammer.de>
 ---
- configure | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/plugins/execlog.c  | 14 ++++++++------
+ contrib/plugins/uftrace.c  |  8 ++++----
+ include/qemu/qemu-plugin.h | 19 +++++++++++--------
+ plugins/api.c              | 15 ++++++++-------
+ tests/tcg/plugins/insn.c   |  4 ++--
+ 5 files changed, 33 insertions(+), 27 deletions(-)
 
-diff --git a/configure b/configure
-index e69b3e474e..1b0af0cf46 100755
---- a/configure
-+++ b/configure
-@@ -1451,7 +1451,7 @@ probe_target_compiler() {
-         container_image=debian-all-test-cross
-         container_cross_prefix=mips64-linux-gnuabi64-
-         ;;
--      ppc64|ppc64le)
-+      ppc|ppc64|ppc64le)
-         container_image=debian-all-test-cross
-         container_cross_prefix=powerpc${target_arch#ppc}-linux-gnu-
-         ;;
+diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+index 811f320319..d00d9c4ff3 100644
+--- a/contrib/plugins/execlog.c
++++ b/contrib/plugins/execlog.c
+@@ -91,11 +91,13 @@ static void insn_check_regs(CPU *cpu)
+ {
+     for (int n = 0; n < cpu->registers->len; n++) {
+         Register *reg = cpu->registers->pdata[n];
+-        int sz;
++        bool success = false;
++        int sz = 0;
+ 
+         g_byte_array_set_size(reg->new, 0);
+-        sz = qemu_plugin_read_register(reg->handle, reg->new);
+-        g_assert(sz > 0);
++        success = qemu_plugin_read_register(reg->handle, reg->new);
++        g_assert(success);
++        sz = reg->new->len;
+         g_assert(sz == reg->last->len);
+ 
+         if (memcmp(reg->last->data, reg->new->data, sz)) {
+@@ -303,7 +305,7 @@ static Register *init_vcpu_register(qemu_plugin_reg_descriptor *desc)
+ {
+     Register *reg = g_new0(Register, 1);
+     g_autofree gchar *lower = g_utf8_strdown(desc->name, -1);
+-    int r;
++    bool success = false;
+ 
+     reg->handle = desc->handle;
+     reg->name = g_intern_string(lower);
+@@ -311,8 +313,8 @@ static Register *init_vcpu_register(qemu_plugin_reg_descriptor *desc)
+     reg->new = g_byte_array_new();
+ 
+     /* read the initial value */
+-    r = qemu_plugin_read_register(reg->handle, reg->last);
+-    g_assert(r > 0);
++    success = qemu_plugin_read_register(reg->handle, reg->last);
++    g_assert(success);
+     return reg;
+ }
+ 
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+index b7d6124d2f..a7e21b5b87 100644
+--- a/contrib/plugins/uftrace.c
++++ b/contrib/plugins/uftrace.c
+@@ -403,8 +403,8 @@ static uint64_t cpu_read_register64(Cpu *cpu, struct qemu_plugin_register *reg)
+ {
+     GByteArray *buf = cpu->buf;
+     g_byte_array_set_size(buf, 0);
+-    size_t sz = qemu_plugin_read_register(reg, buf);
+-    g_assert(sz == 8);
++    bool success = qemu_plugin_read_register(reg, buf);
++    g_assert(success);
+     g_assert(buf->len == 8);
+     return *((uint64_t *) buf->data);
+ }
+@@ -413,8 +413,8 @@ static uint32_t cpu_read_register32(Cpu *cpu, struct qemu_plugin_register *reg)
+ {
+     GByteArray *buf = cpu->buf;
+     g_byte_array_set_size(buf, 0);
+-    size_t sz = qemu_plugin_read_register(reg, buf);
+-    g_assert(sz == 4);
++    bool success = qemu_plugin_read_register(reg, buf);
++    g_assert(success);
+     g_assert(buf->len == 4);
+     return *((uint32_t *) buf->data);
+ }
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 60de4fdd3f..c3b0532619 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -72,11 +72,14 @@ typedef uint64_t qemu_plugin_id_t;
+  * - added qemu_plugin_write_memory_hwaddr
+  * - added qemu_plugin_write_register
+  * - added qemu_plugin_translate_vaddr
++ *
++ * version 6:
++ * - changed return value of qemu_plugin_{read,write}_register from int to bool
+  */
+ 
+ extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
+ 
+-#define QEMU_PLUGIN_VERSION 5
++#define QEMU_PLUGIN_VERSION 6
+ 
+ /**
+  * struct qemu_info_t - system information for plugins
+@@ -972,12 +975,12 @@ GArray *qemu_plugin_get_registers(void);
+  * qemu_plugin_register_vcpu_init_cb(), except for callbacks registered with
+  * qemu_plugin_register_atexit_cb() and qemu_plugin_register_flush_cb().
+  *
+- * Returns the size of the read register. The content of @buf is in target byte
+- * order. On failure returns -1.
++ * Returns true on success, false on failure. The content of @buf is in target
++ * byte order.
+  */
+ QEMU_PLUGIN_API
+-int qemu_plugin_read_register(struct qemu_plugin_register *handle,
+-                              GByteArray *buf);
++bool qemu_plugin_read_register(struct qemu_plugin_register *handle,
++                               GByteArray *buf);
+ 
+ /**
+  * qemu_plugin_write_register() - write register for current vCPU
+@@ -997,11 +1000,11 @@ int qemu_plugin_read_register(struct qemu_plugin_register *handle,
+  * Attempting to write a register with @buf smaller than the register size
+  * will result in a crash or other undesired behavior.
+  *
+- * Returns the number of bytes written. On failure returns 0.
++ * Returns true on sucess, false on failure.
+  */
+ QEMU_PLUGIN_API
+-int qemu_plugin_write_register(struct qemu_plugin_register *handle,
+-                              GByteArray *buf);
++bool qemu_plugin_write_register(struct qemu_plugin_register *handle,
++                                GByteArray *buf);
+ 
+ /**
+  * qemu_plugin_read_memory_vaddr() - read from memory using a virtual address
+diff --git a/plugins/api.c b/plugins/api.c
+index eac04cc1f6..d8846b4773 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -434,27 +434,28 @@ GArray *qemu_plugin_get_registers(void)
+     return create_register_handles(regs);
+ }
+ 
+-int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
++bool qemu_plugin_read_register(struct qemu_plugin_register *reg,
++                               GByteArray *buf)
+ {
+     g_assert(current_cpu);
+ 
+     if (qemu_plugin_get_cb_flags() == QEMU_PLUGIN_CB_NO_REGS) {
+-        return -1;
++        return false;
+     }
+ 
+-    return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) - 1);
++    return (gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) - 1) > 0);
+ }
+ 
+-int qemu_plugin_write_register(struct qemu_plugin_register *reg,
+-                               GByteArray *buf)
++bool qemu_plugin_write_register(struct qemu_plugin_register *reg,
++                                GByteArray *buf)
+ {
+     g_assert(current_cpu);
+ 
+     if (buf->len == 0 || qemu_plugin_get_cb_flags() != QEMU_PLUGIN_CB_RW_REGS) {
+-        return -1;
++        return false;
+     }
+ 
+-    return gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(reg) - 1);
++    return (gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(reg) - 1) > 0);
+ }
+ 
+ bool qemu_plugin_read_memory_vaddr(uint64_t addr, GByteArray *data, size_t len)
+diff --git a/tests/tcg/plugins/insn.c b/tests/tcg/plugins/insn.c
+index 0c723cb9ed..e6c5207cd6 100644
+--- a/tests/tcg/plugins/insn.c
++++ b/tests/tcg/plugins/insn.c
+@@ -93,8 +93,8 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+         for (int i = 0; i < reg_list->len; i++) {
+             qemu_plugin_reg_descriptor *rd = &g_array_index(
+                 reg_list, qemu_plugin_reg_descriptor, i);
+-            int count = qemu_plugin_read_register(rd->handle, reg_value);
+-            g_assert(count > 0);
++            bool success = qemu_plugin_read_register(rd->handle, reg_value);
++            g_assert(success);
+         }
+     }
+ }
+
+base-commit: c1c58cee16380f81f88fbde6b12f247b376839e2
 -- 
 2.51.0
 
