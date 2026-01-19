@@ -4,85 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ADE0D4A5F4
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 07:28:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8948BCA5FFF
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 07:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhjfi-0001aj-Ix; Mon, 19 Jan 2026 02:27:34 -0500
+	id 1vhjvJ-0001pL-2s; Mon, 19 Jan 2026 02:43:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1vhjfg-0001YK-IW
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 02:27:32 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1vhjff-0005Zn-2R
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 02:27:32 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-81f416c0473so3375503b3a.3
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 23:27:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768807649; x=1769412449; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=yKeLEi0Je2h1ztfLRVsk2xzeEcuQan8/cVyxDzyqXVw=;
- b=OpoU+1anJftj3DQc0uQu/NENUBD6MGtb5oSLwpwXlXOD1fl/AYggi8IksNMbcsrqIw
- ArndgEt2Yax+yZftK+mPXG+wzjDZOxiSMaVdhl/f2fTertz1xgYLVsz2dlyE7jsQlNFg
- 0Jk+jZa5pDmgKgcAVp9Xt7ALbkk8xf+vrWjySOr/LeSPhIfr35wkFI9vP8E7jpdynXRW
- p091bDGVSBn7asMpSnWDgECd0N0GXBpHx2pc7AcQKi36fxeGgyUQvLHsf8N3/9N/Litu
- oKgMQUutr/cc6xGElcT1ATzy2aradLa4FTZaKIjltlx4jrYPMLDTga816JPySib8d6vI
- dg5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768807649; x=1769412449;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yKeLEi0Je2h1ztfLRVsk2xzeEcuQan8/cVyxDzyqXVw=;
- b=cz/QXym62gxMxdwNOS28QGrSxUigdKt/OpVtLw7syuJYybyBTCvOrrtsUrJ1wqLbgw
- tKB2b3Q5NMR7e8bzKDCDeIaGYZYHP1Tzw6bX47/99zmpeLEu1PWlGzq7pN5jU+BVLxzw
- 0v+gtaUaL+njhpjRD7qj8Qgf/33CYyLW+hmaub7efKpGBJEA82rQMMmAmLza9/RZ2EjS
- kHuMS9yGQ9NrX/Qnv5VptBYwSEjIVmYl+Ofjzax+DHkgS3bnaafA6CwJi6jONjcuH4id
- vo1MDdEtvfSvEJpWbLu1qhVFb8oMoUPTEu4AMdci7N1xWG9QaT5xadPjPEQMKc+3Vf9r
- ftqg==
-X-Gm-Message-State: AOJu0YyzGxanfrtoIBhWgYjJrulE3wb7GmpGlVj2syjRy9F8wbdD12xC
- CO1bxSetABB12IouGpIOkJ0aIdWd4PMj8czxxTvnzal7hNBUqQeSGJSbwoRy2A==
-X-Gm-Gg: AY/fxX6sa1RRF/t9Q1OBT1d0+Uy0EmhypKEOT8U6FfRIw7DOeoS97vv7QH+EFZiqtiC
- 62hJGPbl7A9Xy1FRPbGb1GpIirZ7o/KOOPT9XMXiO1WusyjTquV9V1pQaX0WfwtaQBMxIqwUPkB
- BV5s1YdiG0uUIHeOJh9Pro1Hp7KsWTHKBt6GKSlBl1AZpw2FFiPd+1gBA9PMRyUh+OHZnp5nONh
- 7KfQQXtZzizRtSMnsNquAesaxwfuWW66fZ/g2iCEL1nC1HYS5kjdS1dv7ImZQOt4vwRSJsmcuJp
- JFteZhL8InWMhvSD+4+HFEcXabE/7GEmcTq/E5Q+DTJF5YTpdfm5mI0VN0+PxbwIgByNhiDPQ1d
- 2Ua7L6Mkxr1yYwJ3I6C1DpT/FXRZBkZPMzZH0aNR4rdubxPZ6DEbEJLbLDJNZZn4pvZOEENFHZY
- yWPwG+DYyOaaeuVn/F8gPonjEIaX4=
-X-Received: by 2002:a05:6a00:3a0f:b0:81f:45a2:cbe3 with SMTP id
- d2e1a72fcca58-81fa02ff9cdmr10707287b3a.54.1768807648768; 
- Sun, 18 Jan 2026 23:27:28 -0800 (PST)
-Received: from jeuk-MS-7D42.. ([175.119.5.143])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81fddd12fcasm11856b3a.0.2026.01.18.23.27.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 23:27:28 -0800 (PST)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: jeuk20.kim@samsung.com, qemu-block@nongnu.org, j-young.choi@samsung.com,
- Jeuk Kim <jeuk20.kim@gmail.com>
-Subject: [PATCH v2] hw/ufs: Ensure DBC of PRDT uses only lower 18 bits
-Date: Mon, 19 Jan 2026 16:27:20 +0900
-Message-ID: <df800635daeef202fe6b568d9fe6b09d732abb98.1768807286.git.jeuk20.kim@samsung.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vhjua-0001hm-H7; Mon, 19 Jan 2026 02:42:59 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vhjuV-0002cP-7b; Mon, 19 Jan 2026 02:42:54 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60INj2Tu030226;
+ Mon, 19 Jan 2026 07:42:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=MRKknXDWhEOjMt1S8OgigU33DPDB/f
+ HbjSC3FE07Rc4=; b=LOwZDJ92Cn4Kng51a4BGdE1Y6lTvGubQ1PFddcpuWibcc6
+ Z9s+QhDpOv3/8wPR8afiGtujaRXdinJvAmXtGhgm6iZKHczhyeAiMlhkR3INGiIq
+ Y7G6u/ygkaf2J3Tn0oZFsmq0mZieqryVIjAIGkMqcHCMBrrZJPYQaURUxGkbYcSI
+ V1FRrlEjLl/tLx/cEyYY3UQ2+wjdgp3YnYjV47Eh1eM0ximR4LPTxlYV/7N2Ws2T
+ RTK3MFSsnSTALCfBEyDui/FP5FjKyPjO2TZtIi79WGyn4rGveaKMrPpgQUB/9yU0
+ +K4qU6ubeXxW7lMPZNzCqOylamYwGO2AoJnuep2g==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br0uf6h9a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Jan 2026 07:42:49 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60J7fGKf029777;
+ Mon, 19 Jan 2026 07:42:49 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br0uf6h98-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Jan 2026 07:42:49 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60J6tKkK016668;
+ Mon, 19 Jan 2026 07:42:48 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brn4xnj8g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Jan 2026 07:42:48 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60J7gipP60817738
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 Jan 2026 07:42:44 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6834C20040;
+ Mon, 19 Jan 2026 07:42:44 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9933C20043;
+ Mon, 19 Jan 2026 07:42:41 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.21.137]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 19 Jan 2026 07:42:41 +0000 (GMT)
+Date: Mon, 19 Jan 2026 13:12:38 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Caleb Schlossin <calebs@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
+ milesg@linux.ibm.com, rathc@linux.ibm.com, fbarrat@linux.ibm.com,
+ chalapathi.v@linux.ibm.com
+Subject: Re: [PATCH] ppc/pnv: Add a nest MMU model
+Message-ID: <aW3YurqVBVVOWR9D@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20251223145919.2540097-1-calebs@linux.ibm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251223145919.2540097-1-calebs@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: BhNOdVQ8123mW489mI-xA3u5Ubi9FgFE
+X-Proofpoint-ORIG-GUID: xAso3TVkEpvLmZ8S6gRO2QIWLxldy27e
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE5MDA1OSBTYWx0ZWRfX5lbfV9YG3fdW
+ /2N9qIJQE0CHHn4wYRmnu5wRdNk9sKDMy/dqgnTc7flqQCq3jQBIu/+m5dLVvpOjfQPV9w93TrS
+ AXDhrwYnjStj4ELP4Gcj4zHYxKIaCacytorWl6lYt6Al2vgTuwsBsUHVOseWeACZL2g5UGO4yGG
+ Kq6LMS/1Uhrl0kCqWJvToX+v0MbREFxFBVKCTN5hEsUEmvTmRwpUxuLOWx3TQflCj4FvEzky//v
+ T1vZm9VkAXZWDSY9d6NmQWLNxbS0m7byEguufyUBquv+QUVZyHz3o+OUXZte+b8k5QzKFXR3K+5
+ /3IuICd8DSSrSX+bvXwX1DDeFBeS75aRqxsbpNQpbUTMmGySvJCiT1HqklpqWe0b5NWsBYuMrcQ
+ 2tJB5ZtdECIc9fEE7Do8g3GaUPT1CDPhqRLPTaW8qQlJjKvWioM4wQpBYgrlIjpWCAdfuGCnLyJ
+ D2mfvql/1zcMgZVYlyw==
+X-Authority-Analysis: v=2.4 cv=bopBxUai c=1 sm=1 tr=0 ts=696de079 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=gMGx47IG0rqLUk0jqDcA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-19_01,2026-01-19_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 adultscore=0 suspectscore=0 impostorscore=0
+ phishscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601190059
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,36 +126,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@gmail.com>
+Thanks for adding Nest MMU, Caleb !
 
-The UFS spec defines the PRDT data byte count as an 18-bit field. This
-commit masks the value to the lower 18 bits to prevent incorrect
-transfer lengths and ensure compliance.
+Currently seeing a build failure due to recent changes in upstream,
+details and reviews below.
 
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+On 25/12/23 08:59AM, Caleb Schlossin wrote:
+> The nest MMU is used for translations needed by I/O subsystems
+> on Power10. The nest is the shared, on-chip infrastructure
+> that connects CPU cores, memory controllers, and I/O.
+> 
+> This patch sets up a basic skeleton with its xscom
+> area, mapping both needed xscom regions. Support required
+> for PowerVM bringup.
+> 
+> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
+> ---
+>
+> > <...snip...>
+>
+> diff --git a/hw/ppc/pnv_nmmu.c b/hw/ppc/pnv_nmmu.c
+> new file mode 100644
+> index 0000000000..37c739b242
+> --- /dev/null
+> +++ b/hw/ppc/pnv_nmmu.c
+> @@ -0,0 +1,132 @@
+> +/*
+> + * QEMU PowerPC nest MMU model
+> + *
+> + * Copyright (c) 2025, IBM Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * This code is licensed under the GPL version 2 or later. See the
+> + * COPYING file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +#include "hw/qdev-properties.h"
 
----
-v2
-  - Fix PRDT DBC masking endianness
----
- hw/ufs/ufs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+With below commit, the header `hw/qdev-properties.h` has moved to
+`hw/core/qdev-properties.h`
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index cab42ae7b6..d3f08f2ba9 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -224,7 +224,8 @@ static MemTxResult ufs_dma_read_prdt(UfsRequest *req)
- 
-     for (uint16_t i = 0; i < prdt_len; ++i) {
-         hwaddr data_dma_addr = le64_to_cpu(prd_entries[i].addr);
--        uint32_t data_byte_count = le32_to_cpu(prd_entries[i].size) + 1;
-+        uint32_t data_byte_count =
-+            (le32_to_cpu(prd_entries[i].size) & 0x3ffff) + 1;
-         qemu_sglist_add(req->sg, data_dma_addr, data_byte_count);
-         req->data_len += data_byte_count;
-     }
--- 
-2.43.0
+This causes the compile to fail, can you rebase on upstream and send
+this again as v2 ?
+
+	commit 78d45220b4e6385c6a90302fbc84fdacb415580c
+	Author: Paolo Bonzini <pbonzini@redhat.com>
+	Date:   Thu Nov 27 08:38:05 2025 +0100
+	
+	    include: move hw/qdev-properties.h to hw/core/
+
+>
+> > <...snip...>
+>
+> +static int pnv_nmmu_dt_xscom(PnvXScomInterface *dev, void *fdt,
+> +                             int offset)
+> +{
+> +    PnvNMMU *nmmu = PNV_NMMU(dev);
+> +    char *name;
+> +    int nmmu_offset;
+> +    const char compat[] = "ibm,power10-nest-mmu";
+
+OPAL looks for compat property "ibm,power9-nest-mmu", as NMMU is treated
+the same in Power9 and Power10 (atleast from opal's perspective)
+
+The Linux kernel asks OPAL itself to do Nest MMU set ptcr, so kernel
+doesn't care about the compat string.
+
+Can we use same ibm,power9-nest-mmu compat string here too ? What do you
+say ?
+
+Other than above reviews, the code looks good to me, Thanks !
+
+- Aditya G
 
 
