@@ -4,111 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77FF0CA5FEE
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 07:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CF93CA5FFA
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 07:22:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhjEJ-0002Qf-JC; Mon, 19 Jan 2026 01:59:15 -0500
+	id 1vhjaG-0005Re-DF; Mon, 19 Jan 2026 02:21:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vhjCV-00023O-Gu; Mon, 19 Jan 2026 01:57:48 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vhjaE-0005Jy-4I
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 02:21:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vhjCR-0007F9-6U; Mon, 19 Jan 2026 01:57:23 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60J08nZB000928;
- Mon, 19 Jan 2026 06:57:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=LRMEI0Z23YEhVO7xYVe+NCrN4hut8/
- fvFsUTai5Qo34=; b=aX6j3Iro+L2641yKoVxPL2y3ejiElRC22YRYOyDnHSMBUo
- UE1OPkBbR8DlAfb0Dgj9OTCYM1L6boB3VeWAr+iC4tuRsljxnshF+LZebnfBqc/w
- 3fkqsP0CTH/RjGe19R8gs/oLvwYOb9N6ZwIJzr7V04dmj9qrEME4HnTVCgWfqqoZ
- PkY1jsRmHKlcDtXMzPY9wLCvyMqs7sR1FRCbbFvdxkvG5MfibVbALY/P6EaPmJl1
- gTp3fsrkORIR2YlBrTS+fVgcNUxlwbd6DIh3jfMSU/QH2h3bQ7pp9B6BAVVlak62
- VcQVFg1pi3Mqs7c2YICLEk3n0aEE2XxDQQ4OLRSA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br23rprxp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Jan 2026 06:57:12 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60J6u2TD003874;
- Mon, 19 Jan 2026 06:57:12 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br23rprxf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Jan 2026 06:57:12 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60J6n6OH016636;
- Mon, 19 Jan 2026 06:57:11 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brn4xn9r5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Jan 2026 06:57:10 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60J6v6jF25821654
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 19 Jan 2026 06:57:07 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CCA0C20040;
- Mon, 19 Jan 2026 06:57:06 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E9E7D2004B;
- Mon, 19 Jan 2026 06:57:03 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.21.137]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 19 Jan 2026 06:57:03 +0000 (GMT)
-Date: Mon, 19 Jan 2026 12:27:01 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Caleb Schlossin <calebs@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
- milesg@linux.ibm.com, alistair@alistair23.me, chalapathi.v@linux.ibm.com
-Subject: Re: [PATCH] hw/ssi/pnv_spi: Fix fifo8 memory leak on unrealize
-Message-ID: <aW3VANPAcyejWJ4Y@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20251216154503.2263755-1-calebs@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vhjaB-0004LK-Jd
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 02:21:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768807309;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aeIbH8kdgupS02kPKYVcLTbBxpteozq7XfJWMQR7IHk=;
+ b=ECr9CtumPjf0KVhjWkk9VwWDwQkbI/cQ99CCb6LCoe/fmeXOLd2G0AT/u7H41/m1J6sdsD
+ jtWZVs5Y6N1gtIZym3GNRTibalYCmiwU3iC2+wgpnBBC9PPZeo7+ytHhyUIFK6OBE3HOcA
+ M7uGgkoWP/ao5NEQenIF3ZhYaEqs8kg=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-498-5J9Fh8R_NROl9EIMNRTqvA-1; Mon, 19 Jan 2026 02:21:47 -0500
+X-MC-Unique: 5J9Fh8R_NROl9EIMNRTqvA-1
+X-Mimecast-MFC-AGG-ID: 5J9Fh8R_NROl9EIMNRTqvA_1768807306
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-34c93f0849dso4099607a91.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 23:21:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768807306; x=1769412106; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aeIbH8kdgupS02kPKYVcLTbBxpteozq7XfJWMQR7IHk=;
+ b=m+bZuHDTyiEsCrlv+rsAmH08v8wmoexyCNXcozev9HGC/Z0WQydUCvNkJQ6Lj9noFR
+ ODh5zK2FQKVYlWCxKYVTstvmcDO3uiHhWfaDews1SdDH8nal98c/m6OAO1zk2x3I6/SD
+ GF0ySYCYV5Og3f/wE/8nDRl3z42iHlH+yhu0HFikLuRxA+/NXxYNCYgyXU8T8aHRZq4X
+ lIElz1flk5lZo3KR9CFntDnpFiaGbm8dKMKN23hmn+vzQj6QZTz7QoocGNl0Y0ELad/H
+ eHxCENsMAXe0o/L6iQpatHDvMV7+mj3vpYdUWpg4tk2SDo8Sv7DuJf4NPLUg05+HLB3U
+ Wzbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768807306; x=1769412106;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aeIbH8kdgupS02kPKYVcLTbBxpteozq7XfJWMQR7IHk=;
+ b=jiKJvIiD887Sg7VyOHgwnfH7fqBVnHMsDPSCrl6TAVd9BFDtIwAawF314G9Eqvticc
+ qembFP4YXLcrWwnv53Xth08+1BOwAKaHiA2mlvCoq8jj1sidYZ5pmwrYcm5eQnsjZCSn
+ zztan/pO8y66bsr2Cs546TA9fjC+hlzGTS1quTqricQ4XdaSaH15yIn9xDhfkYeQ+zsy
+ 1peuzhFFAxSz/FAezjz33Z29ma3PUrUm+sTCJtOW/0bnKQ02+GuveSQ8fxwFbZv9pfWV
+ RDbB7D0vk7Mg6iHW3qaAdFMHehGtHtCXGh6V9Wczz+HMSPT1yO9CP2wo6J/mdhP62lIv
+ vr9w==
+X-Gm-Message-State: AOJu0YycCOwXs3hbc6AtxBl3LydgWkGXIgTcPgjOMINZfqx1Dl2Boixh
+ /Qu/R9RJ9Asp9A8PvlVsZknUkaDIehJpCqYe+5efvwJ+2zK+taB8wafBqpQibSYSQT0fRzDmK+l
+ gFpxxykwE+Qxze5f03KVKROFAJ1S1V0feYXScWAVvGKjqOhhh3lYEkDWBplTMj1/OlgmQmytcfX
+ 0Nb4i7v4+YRCywprnpyYfheVcRPN/yHN4=
+X-Gm-Gg: AZuq6aKojkmvXLDtULOTi1Jy+SIPAv8mjpW71ys/kvJsJUfmer6uJbvfRWPx/jSGi11
+ 86Kd2//rPNw/AGnvAMNg/RJmw0plQRgcL7zWNQCTBLQ349yxeQf3J/sDsr1gp21t0m6us8U+JaL
+ YyHoxO8LCLmvHRWExktbGjw0HULc7FQ+F4voPoyLD8yN6zN8JOkzPSPCB/l3dYpkbz2RU=
+X-Received: by 2002:a17:90b:2dd2:b0:343:e692:f8d7 with SMTP id
+ 98e67ed59e1d1-35272c8de28mr9882771a91.11.1768807306011; 
+ Sun, 18 Jan 2026 23:21:46 -0800 (PST)
+X-Received: by 2002:a17:90b:2dd2:b0:343:e692:f8d7 with SMTP id
+ 98e67ed59e1d1-35272c8de28mr9882708a91.11.1768807305431; Sun, 18 Jan 2026
+ 23:21:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251216154503.2263755-1-calebs@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: WslDuQaAowY03uiNjep2rprANE2H3A9W
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE5MDA1MCBTYWx0ZWRfX3qxD/WD8lAV6
- s9q6vXCyR6V9uQhG+WSBgZOblUWvuMTAutLK3hsN86GkDL73mcbFOSrvQYZo13sgxMej7XWwobc
- Gr2WLltbSVPmfWFQUAuN58TIG1YSkHOMO8j5Dlk4ykJxtRi6GN98DTjXH8i/U/H2eu+tAmgBK6X
- n0+24uaO+7Z0kdM0S1FUjUUs7PSBiVcX7L2CVTmEWUOnGVoLa3SrKxrautIrZJ5NsDp08gVVTDZ
- 6iEyDWL3j1bY5kmdKzmPnysy32LQgKKmvLgqLPUR2y9z6V2D1DCJULaAIOEC6msTe/yM2WJI5zQ
- 8o385WTEGrIXw+lSQODNQRd3LRTaxwE4bSpmrDXhkP7LT/UzI05NtgVaHfooqu8agMb5+ygRGkD
- 6C97vUE3T45i4QOWGFqm4qxRIJUrSVG2eCZdwQgcuf0x3C3iVsRpQ5WfxEHF08NbXS0jowE1Fq3
- Cyl+4oFM55kLsLggYDA==
-X-Authority-Analysis: v=2.4 cv=J9SnLQnS c=1 sm=1 tr=0 ts=696dd5c8 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=CJKrucV5HHBk1qxaKX0A:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: KZyx51qkM7F9fF_ARyZxskKqSXRQAKFp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-19_01,2026-01-18_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 adultscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601190050
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20251030164023.710048-1-vsementsov@yandex-team.ru>
+ <a8dcf37b-f7c1-486b-bc7d-5877c4d9ccfe@yandex-team.ru>
+ <CACGkMEtUn8aLApCu5RCF2tpNgMskOYycp4jjrNCvgNe3aWuTLA@mail.gmail.com>
+ <d95df5d1-2837-42cb-9654-b5fa60f8e1d0@yandex-team.ru>
+In-Reply-To: <d95df5d1-2837-42cb-9654-b5fa60f8e1d0@yandex-team.ru>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 19 Jan 2026 15:21:33 +0800
+X-Gm-Features: AZwV_Qii_vNSPqFEYheouu1Syq1frWvDw2egS3kg2sqZQYAwAJbbMCIoyF_ZkxM
+Message-ID: <CACGkMEtUq5YDS6dGe8iXOW078E+sGUn7CLffy2i4Qggbv-UREg@mail.gmail.com>
+Subject: Re: [PATCH v9 0/7] net/tap: simple refactoring
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, leiyang@redhat.com, davydov-max@yandex-team.ru, 
+ yc-core@yandex-team.ru
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.077,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,54 +117,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/12/16 09:45AM, Caleb Schlossin wrote:
-> unrealize should free the fifo8 memory that was allocated by realize.
-> 
-> Fixes: 17befecda85 ("hw/ssi/pnv_spi: Replace PnvXferBuffer with Fifo8 structure")
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
+On Fri, Jan 16, 2026 at 12:47=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> On 05.12.25 09:19, Jason Wang wrote:
+> > On Fri, Dec 5, 2025 at 4:05=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+> > <vsementsov@yandex-team.ru> wrote:
+> >>
+> >> ping
+> >>
+> >> (now as 11.0 material)
+> >>
+> >
+> > I've queued this.
+> >
+> > Thanks
+> >
+>
+> Hi! Gently remind. Aren't these patches forgotten?
 
-Hello Caleb,
+Thanks for the reminder. It's not, I plan to send the pull request no
+later than the end of this week, it should include this series.
 
-Sorry for the delayed review. The patch currently doesn't apply on
-upstream, as there was a merge conflict with vmstate patch and this.
+Thanks
 
-Can you send a v2, rebased on upstream ?
+>
+> --
+> Best regards,
+> Vladimir
+>
 
-Thank you,
-- Aditya G
-
-> ---
->  hw/ssi/pnv_spi.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-> index f40e8836b9..5db440be9a 100644
-> --- a/hw/ssi/pnv_spi.c
-> +++ b/hw/ssi/pnv_spi.c
-> @@ -1176,6 +1176,13 @@ static void pnv_spi_realize(DeviceState *dev, Error **errp)
->                            s, "xscom-spi", PNV10_XSCOM_PIB_SPIC_SIZE);
->  }
->  
-> +static void pnv_spi_unrealize(DeviceState *dev)
-> +{
-> +    PnvSpi *s = PNV_SPI(dev);
-> +    fifo8_destroy(&s->tx_fifo);
-> +    fifo8_destroy(&s->rx_fifo);
-> +}
-> +
->  static int pnv_spi_dt_xscom(PnvXScomInterface *dev, void *fdt,
->                               int offset)
->  {
-> @@ -1208,6 +1215,7 @@ static void pnv_spi_class_init(ObjectClass *klass, const void *data)
->  
->      dc->desc = "PowerNV SPI";
->      dc->realize = pnv_spi_realize;
-> +    dc->unrealize = pnv_spi_unrealize;
->      device_class_set_legacy_reset(dc, do_reset);
->      device_class_set_props(dc, pnv_spi_properties);
->  }
-> -- 
-> 2.47.3
-> 
 
