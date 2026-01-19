@@ -4,78 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF45CD29C36
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 14:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71000D29C2E
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 14:57:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhqf2-0006vO-Tb; Mon, 19 Jan 2026 09:55:21 -0500
+	id 1vhqgM-0008Te-3K; Mon, 19 Jan 2026 09:56:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vhqes-0006kb-4s
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 09:55:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vhqeo-0001Kt-2J
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 09:55:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768834504;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wCvzM6if4FwMrH8BPo2Q3oswj4biU34qldpwKxLgbz0=;
- b=GuNZfRmcCUypjbmFQJoWgZiz7V/K3kB+dw7XpFHXHcnUGRW3+K8rZYu0PrkEBZfync4bmD
- 3HisKGkRctR6406l5xDTTpZtpbUQLYdrzR4Y20ncX4sn8TbWMl0U4rcmyw1/R9aCiBp/l7
- o4Z8DwdOiALbbrOhQHSCqayWFDwoTJk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-ilD-PKr5O3GQilP7Fi0hgQ-1; Mon,
- 19 Jan 2026 09:55:00 -0500
-X-MC-Unique: ilD-PKr5O3GQilP7Fi0hgQ-1
-X-Mimecast-MFC-AGG-ID: ilD-PKr5O3GQilP7Fi0hgQ_1768834499
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E59E1956050; Mon, 19 Jan 2026 14:54:59 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4EF5619560AB; Mon, 19 Jan 2026 14:54:58 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D0A6F21E692D; Mon, 19 Jan 2026 15:54:55 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Thomas Huth
- <thuth@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>,  Alistair Francis <alistair@alistair23.me>,
- Zhang Chen <zhangckid@gmail.com>,  Li Zhijian <lizhijian@fujitsu.com>
-Subject: Re: [PATCH 3/4] qemu-options.hx: Drop uses of @var
-In-Reply-To: <20260115142629.665319-4-peter.maydell@linaro.org> (Peter
- Maydell's message of "Thu, 15 Jan 2026 14:26:28 +0000")
-References: <20260115142629.665319-1-peter.maydell@linaro.org>
- <20260115142629.665319-4-peter.maydell@linaro.org>
-Date: Mon, 19 Jan 2026 15:54:55 +0100
-Message-ID: <87o6mplkjk.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vhqgK-0008Rm-AT
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 09:56:40 -0500
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vhqgI-0001sV-9g
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 09:56:39 -0500
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-792815157f3so41040807b3.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 06:56:36 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768834596; cv=none;
+ d=google.com; s=arc-20240605;
+ b=bChvtaE1NY6qX/S6td4e5qXB3JAcc5baTkZe9C5x8ET0sUjE1JkeBU/g7ABGCeSCXr
+ wBui25WvMdN8z/pD1JsHd7ljcILWloDrXGv1JYOQSDH3lMJ77+zvt5rE3ps6lNfu0Gj6
+ O1BoaNXvc92kjq//7JFPxpDpZvRny68JC8WkrqsfOG9WqsNUxLQ9WOYHaiJXD/2WI32v
+ DmHBiJRUccVfR3tnAIyu6LQCl13USaW/W8/vtFs2u5PxFuFV3I5wlrCD4xcqZUUVYGAq
+ btMuefBwlaTH0ptad3iP9ADY10AY1HZUWwAlaJy4wkYOdlKDulvJiKWvqzm9JLymuVKx
+ A/wg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=PV3uDDHeBQqQAA+JqObzoR5c3i9CNy2IcPcrQh2YKDk=;
+ fh=mxOK504LPUtl5SDPVtU9w8ujo9R0CRqtrceJ4RPCQrI=;
+ b=OuAfYP6WoP1tWq7D01GywDFNgwQstzq67MIreJ+PWZgVuLfOTSXcZrHMFxHjkhGZHB
+ gvfA+G8JbNiAegLyuPCzp7bVK/FJp0HZMSv2RgjtlOl+Hf9GHQBUzTm6hvlFgt+kYVwf
+ +4U12zuLXzAQ+PCus6HftWmwMjVO/wRrup0uhDfXgzD14+K6+TKjGNIi7rjOZZ0Z9VQ7
+ gikrG8Y26e/3Eqo8ubAsK6h//XoMqwWJg+yRlUeupZ7Z64euZS83q7iwFDrKcRVQG6KG
+ J3dVWjXWYKd+3MbNa3YPtAbLk54L56f/+VxgCaqfo8Amg/XlDHPfHFq7VBCxFNTvZW3b
+ DWHg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768834596; x=1769439396; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PV3uDDHeBQqQAA+JqObzoR5c3i9CNy2IcPcrQh2YKDk=;
+ b=CZDRoI2b3ddzfpiPyRuSQwdJzv+Al2w4/7jx1WQpIFEVUSCXJd3MGmitRFDQVlr3Yp
+ XNUodPQutlzSipPj/Qk3f4vRuO+TN524yKbX2oo+PWMmsKrrvVn8zO5OIH6nC7dWy95F
+ DY3C5LxGZ78XUwnF8RLO5J1+DvH50uJ7sU5P6bLNCLJATt4CE4cBjtdWcq4jh9sC/SFQ
+ QuJLNkjNwfT+Ki4n5IwCTLlqMBzt2vjag3yU6yxPucexh4t9zpBq1RSUPvJ9kF7SKoVG
+ 07fGuHHHMWFTn27ge/Z0cYhXdOLkHRxGlASyEyOXzmfW04H11uFJJdwP/gKnEoQUYAnx
+ YMcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768834596; x=1769439396;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PV3uDDHeBQqQAA+JqObzoR5c3i9CNy2IcPcrQh2YKDk=;
+ b=ClpHdjKAgLoJooEtBZkSpYU72I7c6HMRxV2LWZGuYm+P+EfD1/IPplBusHgQ66btXC
+ M5SHWnDOqda7lSi2QaImeV5jgzvi44D5pkzvZ/O7+SHylc3RfKIgPyn+eU4mnRHvkSPc
+ +JfsvUks7y/Lf+7esTU7hfj/GJl0G4EehtFFEZymADQHX/RkM7qq8s9MUakRoJCC/wHO
+ IkX7ZvS69lqIb0G6UckvhcDVRDZ42IhD70GVvzt+d5M2/uHVUM2rtNPBTtNgx/UlYyFP
+ Hy0excaOKSie4UtvDw3ibcqbVS5DUMho8qTUaQzftDuJsKkGRdMOk1CYux//mqeQCAfz
+ TZFw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdsf4cN9Q+gcvhzf/Y6KMTnfGorDkkWq6zvFC75IWgYw7BWQyABDE/AEF6M1UTea+wYUhkfblHoIDJ@nongnu.org
+X-Gm-Message-State: AOJu0Yw4suO4IdY+JvwZBwj4Q+FXhgrTV+vMmD4ySOEUSrhpAwLylpfe
+ /6wYrMZIm2AESqG4OJGp7wlGyD2IUW2QODdXauc/iHSpoB8YUnBGOLBOGbMeLH07KrFqIGu6sbC
+ 5TwdRnd50fXLSuWbcdbHbK+iTWETOG+bDxYr+hKpB2A==
+X-Gm-Gg: AZuq6aJwXhZjpP1o4yg6cHqGJGpVX7g0ckE4nftXQVSrPj4237WOG8zKRU3jbC+J4ci
+ ozmHpnm4xPsZESZR5/z9O8PNACd9ofGHBskJ8zOYQRXaUOlOIxqMlborPOo7oaj/tdozphy0+Tz
+ XNj7RZ1vdFYPPSb/E4J6BWz+XuHkptTMaKSXiMp1gGFJs5bVrM7LTA9s9XkM1qE+dqkxEzoM7P7
+ gs7y3adJoEVgicaPyUx6FV9zVzDEQJPirtax3TwTjCZmcDjLp0iwTJOiKdBkLQUdR9fHQ==
+X-Received: by 2002:a05:690c:f8b:b0:793:b660:fbd0 with SMTP id
+ 00721157ae682-793c66ac1b9mr87298607b3.10.1768834595674; Mon, 19 Jan 2026
+ 06:56:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20251219222439.2497195-1-ruslan_ruslichenko@epam.com>
+ <CAFEAcA-VYhtvXK5tyVJWfskqqKFim43DsKfWrpaMxteWueR6aQ@mail.gmail.com>
+ <CAN-aV1FsbAp3JrqoPgz+c4ORayBjsGxTLWOkDMc0WyE2nD-aZw@mail.gmail.com>
+ <CAN-aV1ERa6uE9U8cPArmXCv+WOJhP7ZgGAF2VEDaAEbiebyawQ@mail.gmail.com>
+In-Reply-To: <CAN-aV1ERa6uE9U8cPArmXCv+WOJhP7ZgGAF2VEDaAEbiebyawQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 Jan 2026 14:56:23 +0000
+X-Gm-Features: AZwV_Qh3V4FzOo6fHkjykc-p0iSV0FFIVF6w4bt92UQoQMe1xA08wc4CK13j6ec
+Message-ID: <CAFEAcA8D19toNxsLsRcSoLgBAGVnV8OXWLP41m7aTLsNSw++PA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/6] hw/arm/smmuv3: Add SMMUv3 sysbus support
+To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+Cc: ruslan_ruslichenko@epam.com, artem_mygaiev@epam.com, 
+ volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com, 
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Eric Auger <eric.auger@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,114 +122,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> A few entries in qemu-options.hx use the syntax "my-option=@var{name}"
-> when documenting an option that takes an argument. This syntax isn't
-> consistently used, and the documentation generation has no support for
-> it: it just appears literally in the HTML output.
-
-TexInfo leftovers?
-
-> Switch these uses to the more common "my-option=<name>". This also
-> doesn't have any particular support in the documentation generation
-> and so appears literally in the output, but it is a little less odd
-> looking to the end-user.
-
-Note for later: rewrite 1 is from KEY=@var{VALUE} to KEY=<VALUE>.
-
-> The other common pattern we have is "my-option=name" with no marking
-> at all that the right hand side of the '=' is not literal text;
-> using <> seems preferable to me, as it makes it more distinct from
-> cases where the right hand side is documenting that only certain
-> values are permitted, as in "my-option=on|off".
-
-Rewrite 2 is from KEY=VALUE to KEY=<VALUE>.
-
-> We don't change the uses of @var in the colo-compare documentation,
-> as that part deserves a slightly more wide-ranging overhaul that
-> is better in its own commit.
+On Mon, 19 Jan 2026 at 14:42, Ruslan Ruslichenko
+<ruslichenko.r@gmail.com> wrote:
 >
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  qemu-options.hx | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+> On Fri, Jan 2, 2026 at 4:36=E2=80=AFPM Ruslan Ruslichenko
+> <ruslichenko.r@gmail.com> wrote:
+> >
+> > On Sun, Dec 28, 2025 at 5:59=E2=80=AFPM Peter Maydell <peter.maydell@li=
+naro.org> wrote:
+> > >
+> > > On Fri, 19 Dec 2025 at 22:25, <ruslichenko.r@gmail.com> wrote:
+> > > >
+> > > > By SMMUv3 specification it can be attached either to PCIe Root
+> > > > Complex or regular IO bus devices. However, current
+> > > > implementation only allow to associate with PCI bus.
+> > > >
+> > > > This patch series add support to use SMMU for sysbus devices.
+> > > >
+> > > > One usage example implemented for virtio-mmio, which allow
+> > > > devices to perform DMA operations SMMUv3 with address translation
+> > > > and isolation.
+> > >
+> > > If you want virtio devices behind an SMMU, why not use
+> > > the PCI virtio?
+> > >
+> > > The only SMMU sysbus requirement I'm aware of is that for
+> > > RME we will want to have things like the GIC do GPT lookups,
+> > > which is most conveniently done by having them route through
+> > > the existing for-PCI SMMU, rather than by having an extra
+> > > SMMU just for them.
+> >
+> > There may be several reasons for supporting SMMU on sysbus:
+> >
+> > Some embedded platforms may not use and don't want to include a full
+> > PCI subsystem, but still want IOMMU isolation with virtio-mmio.
+> >
+> > The other reason is to emulate existing SoC platforms. The model may
+> > need to be closer to real-world HW and SMMU is widely used outside the
+> > PCI subsystem.
+> >
+> > One more reason is Remote-Port devices in our case, currently ongoing
+> > development here:
+> > https://lists.nongnu.org/archive/html/qemu-devel/2025-12/msg02121.html.
+> > Those are platform devices which are emulated by external services.
+> > These devices need to perform SMMU operations for DMA transactions
+> > when they are bus-masters.
+> >
 >
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index ec92723f10..aca9dba8b9 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -36,7 +36,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->      "                dea-key-wrap=on|off controls support for DEA key wrapping (default=on)\n"
->      "                suppress-vmdesc=on|off disables self-describing migration (default=off)\n"
->      "                nvdimm=on|off controls NVDIMM support (default=off)\n"
-> -    "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
-> +    "                memory-encryption=<id> memory encryption object to use (default=none)\n"
+> A gentle ping on this series.
+>
+> Hi Peter!
+>
+> Do you think we can continue discussion on this topic?
 
-This is rewrite 1, except you additionally make up a missing VALUE.
+We would want a reason that applied to upstream QEMU. If you
+have a platform that uses this that you're modelling upstream,
+we can think about the SMMU parts of that at that point.
+At the moment all this patchset does is let you put a
+virtio-mmio device behind an SMMU, which is something I
+don't want because it's a pile of extra complexity for
+a use case that is better handled by using PCI.
 
->      "                hmat=on|off controls ACPI HMAT support (default=off)\n"
->      "                spcr=on|off controls ACPI SPCR support (default=on)\n"
->  #ifdef CONFIG_POSIX
-> @@ -100,7 +100,7 @@ SRST
->      ``nvdimm=on|off``
->          Enables or disables NVDIMM support. The default is off.
->  
-> -    ``memory-encryption=``
-> +    ``memory-encryption=<id>``
->          Memory encryption object to use. The default is none.
-
-This is rewrite 2, except you additionally make up a missing VALUE.
-
->  
->      ``hmat=on|off``
-> @@ -180,7 +180,7 @@ SRST
->  
->              -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
->  
-> -    ``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
-> +    ``sgx-epc.0.memdev=<memid>,sgx-epc.0.node=<numaid>``
->          Define an SGX EPC section.
-
-This is rewrite 1.
-
->  
->      ``smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel``
-> @@ -4530,7 +4530,7 @@ DEF("compat", HAS_ARG, QEMU_OPTION_compat,
->      "                Policy for handling unstable management interfaces\n",
->      QEMU_ARCH_ALL)
->  SRST
-> -``-compat [deprecated-input=@var{input-policy}][,deprecated-output=@var{output-policy}]``
-> +``-compat [deprecated-input=<input-policy>][,deprecated-output=<output-policy>]``
-
-Rewrite 1.
-
->      Set policy for handling deprecated management interfaces (experimental):
->  
->      ``deprecated-input=accept`` (default)
-> @@ -4546,7 +4546,7 @@ SRST
->  
->      Limitation: covers only syntactic aspects of QMP.
->  
-> -``-compat [unstable-input=@var{input-policy}][,unstable-output=@var{output-policy}]``
-> +``-compat [unstable-input=<input-policy>][,unstable-output=<output-policy>]``
-
-Rewrite 1.
-
->      Set policy for handling unstable management interfaces (experimental):
->  
->      ``unstable-input=accept`` (default)
-
-This patch and the next apply rewrite 1 exhaustively.
-
-Not the case for rewrite 2, e.g. there's still
-
-    "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
-
-where the value size is not literal.  Many more.
-
-So, what this patch actually does is rewrite 1 plus add missing values.
-Could be separate patches, up to you.  Regardless, the commit message
-should match what the patch does.
-
+thanks
+-- PMM
 
