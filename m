@@ -4,94 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A0CBD29C4D
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 19:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7958ACCF2DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 19:36:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhuw8-0000An-Je; Mon, 19 Jan 2026 14:29:16 -0500
+	id 1vhv21-0002kg-Mp; Mon, 19 Jan 2026 14:35:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhuw4-000068-4Y
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:29:13 -0500
-Received: from mail-wr1-x443.google.com ([2a00:1450:4864:20::443])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhuw2-0004Ox-2P
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:29:11 -0500
-Received: by mail-wr1-x443.google.com with SMTP id
- ffacd0b85a97d-4327778df7fso2916557f8f.3
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 11:29:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768850948; x=1769455748; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZRoVmET53lUMHQew4L6Cg5SpHVi/7gSxtz1ilje+48w=;
- b=mPy3ttUZk7pABXo96+6G47bkCZDbWTVAzpWou2mMrvxl6vOYzeqt1AsISkpvRXGTc5
- ROBjMsYPoFZSJd+sXqoYQLM5p5MeEAr7qcs8wQtQ/i3dMIEPuXbjSmTIY9rsiEEHmlyM
- ddKWmC9TMDdViPN9c1lXx3knLwHxFHfBE51AqBfB/j0U+QvaYlrByHPBMAufQSICl6oz
- DVWF86kvu6uHMhSh2FoDNhAxi4FJQHSSdYzBELmdTTZphU3kWMaWrUvQqPAeQ9X8gTRW
- SOsBflAtMTjMxeospDOq0kvwnfbPa73iXxNi3c7d796s2OzgEYQ6q4MPh9QCz1nkrL89
- +Pqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768850948; x=1769455748;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZRoVmET53lUMHQew4L6Cg5SpHVi/7gSxtz1ilje+48w=;
- b=eECR7pwbNJ/qoDf4vJj6Sv8l6bncs50A3kKJAb4E44hnLz/Qd5Xb6i43gwoEpexvk5
- bNbGA9K6Yg+pfCeAsp3y0CSNHENDSt1suZYpFQ1NX/UgkdplFyL3Mia2kIC0ekYckY/v
- Vm2Djr15PPDtk4eGAs+VjCkJFFJYRMjPSEOGBw2yLzo0nXSO89fCqFt4YrPfjoD5uYTk
- vmfzcECi9TSote5BaOBV7wReaLSzEdbubv9p+rLfhcKEb9oMuNgK7QkZ4xDuUhqijYwj
- HP6Nt/9y3ncyuQyq7yU7SGQbQixYmf1gSNHXr9mMCvQfSgsmAiKetScarlgldIB9wbKj
- 521A==
-X-Gm-Message-State: AOJu0YzYmjSM8lPIFiGLHv+tsvV4eU6L0c3NXaRWImkB92K/9IBlSpu0
- JksjmNibc4Wsf2qJdA/skxj+6m/+OQn8hYNyztoh94iN8rkDEB0vbW5GAfO3kt+ElZQ=
-X-Gm-Gg: AZuq6aKj6S6d+ZuZ8yAzdHBAAKbIY7fPQyiXBdX5HQ2MTT9J30KqK7V9WWc19FwCzfF
- FLP0yJU0bVxyzpeMBh7IaqDzYrg5SWgbqTWbfM4WPCgw3yzRCBkXOD9hRpSnvzIljbUGWATzgK0
- Cc80nU3dk54T5ZmH1PRi9pdtULrMjr5CKIvxFMQGZJoCUHH+uZH5POZk+mQ8cii8gSTkSKuc0Gw
- SlqRxOOsAapFs7+nmsZGEmDfGAWIDfhDxeJNGagWitoQRY0ih10o5odeaX9+rpWjGV4eykHxRV8
- jFpqmHqQd57Vr/+lKp7KyDrrkj4Zs2dOtE2p1K+g1GfzoUtyuh5EQUhAU+MK+/5C56f5vRimpWO
- UpNkKhJMkWl5J3aRf6elD86nEZQaQX/MdZsTbrVP4ZEg3bVVJnhvBt0XWRuWkLVGRZN/I0Umv8v
- +gwCa4TMmq9yKnrSo1EVbc4KYZOvrdx37g6OOn+rTSN52HCR4MFbRRlB/OzqGrFSez
-X-Received: by 2002:a05:6000:4021:b0:431:488:b9a8 with SMTP id
- ffacd0b85a97d-4356a05373dmr15576828f8f.33.1768850947669; 
- Mon, 19 Jan 2026 11:29:07 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43569921dddsm25875301f8f.6.2026.01.19.11.29.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Jan 2026 11:29:07 -0800 (PST)
-Message-ID: <e0a6625d-1b3d-4fd8-90d8-8bb996e2f259@linaro.org>
-Date: Mon, 19 Jan 2026 20:29:06 +0100
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vhv1p-0002fu-4R
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:35:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vhv1m-0005nN-Ev
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 14:35:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768851305;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kglsyJ/EEW9ertICdR9hPO2CeCmGxxU7LTwapg51F4g=;
+ b=BvgCl7JBajA6BjG8V52XnM5WrZG9zX86j0YdXIhA0Dloeg5xYSLUifEUxP11M0edVtXs/X
+ VKwlok6l2xA/dEk2+Q9iEANPf8cNvae7Yio2iiZJ+qr9gnLenVQ9NT6qOHm0ax+gZAaDNF
+ quLkIcZvAYYuul9krmy1ZAAKVfAEZxc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-352-SJoNYL5wMNC4eHMubUWiGA-1; Mon,
+ 19 Jan 2026 14:35:01 -0500
+X-MC-Unique: SJoNYL5wMNC4eHMubUWiGA-1
+X-Mimecast-MFC-AGG-ID: SJoNYL5wMNC4eHMubUWiGA_1768851300
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40ECC19560B9; Mon, 19 Jan 2026 19:35:00 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.150])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A9DC319560AB; Mon, 19 Jan 2026 19:34:59 +0000 (UTC)
+Date: Mon, 19 Jan 2026 14:34:52 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hreitz@redhat.com,
+ kwolf@redhat.com, fam@euphon.net
+Subject: Re: [PATCH 4/6] block/io: safeguard max transfer calculation in
+ bdrv_aligned_pwritev()
+Message-ID: <20260119193452.GC834718@fedora>
+References: <20260109120837.2772961-1-f.ebner@proxmox.com>
+ <20260109120837.2772961-5-f.ebner@proxmox.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] tests/unit: add unit test for qemu_hexdump()
-Content-Language: en-US
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- berrange@redhat.com
-Cc: qemu-devel@nongnu.org
-References: <20251113064935.342018-1-vsementsov@yandex-team.ru>
- <a40731d0-7add-4d09-9a89-902f75e2eede@linaro.org>
- <8259d920-32bc-41a7-94b9-cd1af9783b6e@yandex-team.ru>
- <05340117-a75b-4d64-98fe-8868b7bfb5c5@linaro.org>
- <1192488b-51d9-4024-8f76-3b2dd85b3d3c@yandex-team.ru>
- <0a7dfd69-26df-407e-a8cb-543dcefab685@linaro.org>
- <db1f4846-afef-42f5-9181-9c25406be863@yandex-team.ru>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <db1f4846-afef-42f5-9181-9c25406be863@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::443;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x443.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="8QH/FGS/1dW9jQju"
+Content-Disposition: inline
+In-Reply-To: <20260109120837.2772961-5-f.ebner@proxmox.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,105 +87,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/1/26 20:18, Vladimir Sementsov-Ogievskiy wrote:
-> On 19.01.26 21:38, Philippe Mathieu-Daudé wrote:
->> On 19/1/26 18:26, Vladimir Sementsov-Ogievskiy wrote:
->>> On 19.01.26 19:31, Philippe Mathieu-Daudé wrote:
->>>> On 19/1/26 16:42, Vladimir Sementsov-Ogievskiy wrote:
->>>>> Hi! Isn't this patch lost?
->>>>>
->>>>> On 14.11.25 00:01, Philippe Mathieu-Daudé wrote:
->>>>>> On 13/11/25 07:49, Vladimir Sementsov-Ogievskiy wrote:
->>>>>>> Test, that fix in previous commit make sense.
->>>>>>>
->>>>>>> To not break compilation when we build without
->>>>>>> 'block', move hexdump.c out of "if have_block"
->>>>>>> in meson.build.
->>>>>>>
->>>>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex- 
->>>>>>> team.ru>
->>>>>>> ---
->>>>>>>
->>>>>>> v3: change meson.build to compile hexdump.c always
->>>>>>>
->>>>>>>   tests/unit/test-cutils.c | 43 +++++++++++++++++++++++++++++++++ 
->>>>>>> ++ +++++
->>>>>>>   util/meson.build         |  2 +-
->>>>>>>   2 files changed, 44 insertions(+), 1 deletion(-)
->>>>>>>
->>>>>>> diff --git a/tests/unit/test-cutils.c b/tests/unit/test-cutils.c
->>>>>>> index 227acc5995..24fef16a7f 100644
->>>>>>> --- a/tests/unit/test-cutils.c
->>>>>>> +++ b/tests/unit/test-cutils.c
->>>>>>> @@ -3626,6 +3626,44 @@ static void test_si_prefix(void)
->>>>>>>       g_assert_cmpstr(si_prefix(18), ==, "E");
->>>>>>>   }
->>>>>>> +static void test_qemu_hexdump_alignment(void)
->>>>>>> +{
->>>>>>> +    /*
->>>>>>> +     * Test that ASCII part is properly aligned for incomplete 
->>>>>>> lines.
->>>>>>> +     * This test catches the bug that was fixed in previous commit
->>>>>>> +     * "util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic".
->>>>>>> +     *
->>>>>>> +     * We use data that is not aligned to 16 bytes, so last line
->>>>>>> +     * is incomplete.
->>>>>>> +     */
->>>>>>> +    const uint8_t data[] = {
->>>>>>> +        /* First line: 16 bytes */
->>>>>>> +        0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x57, 0x6f,  /* 
->>>>>>> "Hello Wo" */
->>>>>>> +        0x72, 0x6c, 0x64, 0x21, 0x20, 0x54, 0x68, 0x69,  /* 
->>>>>>> "rld! Thi" */
->>>>>>> +        /* Second line: 5 bytes (incomplete) */
->>>>>>> +        0x73, 0x20, 0x69, 0x73, 0x20                     /* "s 
->>>>>>> is " */
->>>>>>> +    };
->>>>>>> +    char *output = NULL;
->>>>>>> +    size_t size;
->>>>>>> +    FILE *stream = open_memstream(&output, &size);
->>>>>>> +
->>>>>>> +    g_assert_nonnull(stream);
->>>>>>> +
->>>>>>> +    qemu_hexdump(stream, "test", data, sizeof(data));
->>>>>>> +    fclose(stream);
->>>>>>> +
->>>>>>> +    g_assert_nonnull(output);
->>>>>>> +
->>>>>>> +    /* We expect proper alignment of "s is" part on the second 
->>>>>>> line */
->>>>>>> +    const char *expected =
->>>>>>> +        "test: 0000: 48 65 6c 6c  6f 20 57 6f  72 6c 64 21  20 
->>>>>>> 54 68 69   Hello World! Thi\n"
->>>>>>> +        "test: 0010: 73 20 69 73 
->>>>>>> 20                                      s is \n";
->>>>>>
->>>>>> Thanks, queued wrapping the long lines to pass checkpatch.pl,
->>>>>> as in:
->>>>>> https://lore.kernel.org/qemu-devel/20251031211518.38503-9- 
->>>>>> philmd@linaro.org/
->>>>
->>>> I have it tagged but there is still a meson issue. I should revisit
->>>> but it is low in my priority queue.
->>
->> Found it, see that pipeline:
->> https://gitlab.com/philmd/qemu/-/pipelines/2238533614
-> 
-> This build contains previous version of the patch. v3 should fix it.
 
-Doh sorry, maybe I tested v2 then, I don't remember :(
+--8QH/FGS/1dW9jQju
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
->>
->> configuring with:  '../configure' ... '--disable-system'
->> ...
->> FAILED: tests/unit/test-cutils
->> /usr/bin/ld: tests/unit/test-cutils.p/test-cutils.c.o: in function 
->> `test_qemu_hexdump_alignment':
->> test-cutils.c:(.text+0x71): undefined reference to `qemu_hexdump'
->> collect2: error: ld returned 1 exit status
->>
-> 
-> 
+On Fri, Jan 09, 2026 at 01:08:31PM +0100, Fiona Ebner wrote:
+> This partially fixes iotest 177 with qcow2, where max_transfer is
+> 64KiB, but the cluster size and thus pwrite_zeroes_alignment is 1MiB.
+> Previously, max_transfer would be calculated as 0, triggering an
+> assertion later.
+>=20
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> ---
+>  block/io.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/block/io.c b/block/io.c
+> index 12dc153573..233b2617ea 100644
+> --- a/block/io.c
+> +++ b/block/io.c
+> @@ -2087,8 +2087,10 @@ bdrv_aligned_pwritev(BdrvChild *child, BdrvTracked=
+Request *req,
+>      assert(is_power_of_2(align));
+>      assert((offset & (align - 1)) =3D=3D 0);
+>      assert((bytes & (align - 1)) =3D=3D 0);
+> -    max_transfer =3D QEMU_ALIGN_DOWN(MIN_NON_ZERO(bs->bl.max_transfer, I=
+NT_MAX),
+> -                                   align);
+> +    max_transfer =3D MIN_NON_ZERO(bs->bl.max_transfer, INT_MAX);
+> +    if (max_transfer > align) {
+> +        max_transfer =3D QEMU_ALIGN_DOWN(max_transfer, align);
+> +    }
+
+max_transfer < align seems paradoxical. It's a situation where the
+largest allowed I/O request cannot meet alignment requirements.
+
+Every other place that uses max_transfer in QEMU would also need to cope
+with this.
+
+block/blkdebug.c:blkdebug_open() fails if max_transfer is not aligned,
+indicating that there are assumptions at least in some places that
+max_transfer is aligned.
+
+I hesitate to make this change because I fear it will break more things.
+Why was max_transfer 64KB while pwrite_zeroes_alignment was 1MiB? Either
+max_transfer should fit the alignment or pwrite_zeroes code needs to
+distinguish between actual write zeroes operations and read-write-modify
+I/O (which is plain read/write and not subject to
+pwrite_zeroes_alignment).
+
+Stefan
+
+--8QH/FGS/1dW9jQju
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmluh1wACgkQnKSrs4Gr
+c8jbtwgAsaTatgC3GRiflkteqbsfJ2y/NhfBQc59tzsjYQRnZJ4+X9FG0lPsEe0V
+5Zi6+XGTwbQoAA4UkIZDYIULb93udR/xWyQhybLPRN1Acj2ScoMaWZzOaeEfXhYf
+t+wDvnSrlrW7XjBRXfpiyZpIKburcEhwuO7TTNNHPDq4h3Rgj69R7oEHoyvFnXGA
+6bgfsAANzWWBN3KW1gbe4PIgJBtryOz/kc3Q9y2zAqnwzhpPtJuR4uH5WorN1/kx
+SmMeaODInV3Jaemnm+xdVdI3WVPqphHkZ8dB05wsfJlOIhH60W6P+La+J6YOMpRJ
+EgRuMzT4CQP0F5921FOG8bVNqAC7AA==
+=q2p8
+-----END PGP SIGNATURE-----
+
+--8QH/FGS/1dW9jQju--
 
 
