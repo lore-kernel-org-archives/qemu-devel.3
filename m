@@ -4,86 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E44CA5FF1
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 06:48:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77FF0CA5FEE
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 07:00:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhj3N-0008Kj-9C; Mon, 19 Jan 2026 01:47:57 -0500
+	id 1vhjEJ-0002Qf-JC; Mon, 19 Jan 2026 01:59:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vhj3K-0008Jo-8X
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 01:47:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vhjCV-00023O-Gu; Mon, 19 Jan 2026 01:57:48 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vhj3I-0005ug-3P
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 01:47:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768805270;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XUH1QpD8GuH+emdbXT41qDCRQHDGxZhVEOzNWsFLWKg=;
- b=elyTVh9WdZKMmqvwzJxITegFdKm5K9kkqVRGWWYxhH9EfadjquybicymQ1qLHJcYcWZ4mI
- zRKzH5B4zWyYL+5nLhlhuVrzMJ5waCFjT7cxnsuypkwlCUO1q+QZ7JFeQhPyzifwMJofD/
- s1Q/pBeUBeOJGVreceHkL7C7Lo6ISiI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-OdPljiBFM--ZUrs6IDAHBw-1; Mon,
- 19 Jan 2026 01:47:46 -0500
-X-MC-Unique: OdPljiBFM--ZUrs6IDAHBw-1
-X-Mimecast-MFC-AGG-ID: OdPljiBFM--ZUrs6IDAHBw_1768805265
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC56E180044D; Mon, 19 Jan 2026 06:47:44 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 37A151955F22; Mon, 19 Jan 2026 06:47:44 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C2A2821E692D; Mon, 19 Jan 2026 07:47:41 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Filip Hejsek <filip.hejsek@gmail.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  "Michael S. Tsirkin"
- <mst@redhat.com>,  Laurent Vivier <lvivier@redhat.com>,  Amit Shah
- <amit@kernel.org>,  Markus Armbruster <armbru@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,  Zhao Liu
- <zhao1.liu@intel.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,  Szymon Lukasz
- <noh4hss@gmail.com>
-Subject: Re: [PATCH v6 07/12] qmp: add chardev-window-size-changed command
-In-Reply-To: <20260119-console-resize-v6-7-33a7b0330a7a@gmail.com> (Filip
- Hejsek's message of "Mon, 19 Jan 2026 04:27:50 +0100")
-References: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
- <20260119-console-resize-v6-7-33a7b0330a7a@gmail.com>
-Date: Mon, 19 Jan 2026 07:47:41 +0100
-Message-ID: <87jyxep08i.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vhjCR-0007F9-6U; Mon, 19 Jan 2026 01:57:23 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60J08nZB000928;
+ Mon, 19 Jan 2026 06:57:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=LRMEI0Z23YEhVO7xYVe+NCrN4hut8/
+ fvFsUTai5Qo34=; b=aX6j3Iro+L2641yKoVxPL2y3ejiElRC22YRYOyDnHSMBUo
+ UE1OPkBbR8DlAfb0Dgj9OTCYM1L6boB3VeWAr+iC4tuRsljxnshF+LZebnfBqc/w
+ 3fkqsP0CTH/RjGe19R8gs/oLvwYOb9N6ZwIJzr7V04dmj9qrEME4HnTVCgWfqqoZ
+ PkY1jsRmHKlcDtXMzPY9wLCvyMqs7sR1FRCbbFvdxkvG5MfibVbALY/P6EaPmJl1
+ gTp3fsrkORIR2YlBrTS+fVgcNUxlwbd6DIh3jfMSU/QH2h3bQ7pp9B6BAVVlak62
+ VcQVFg1pi3Mqs7c2YICLEk3n0aEE2XxDQQ4OLRSA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br23rprxp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Jan 2026 06:57:12 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60J6u2TD003874;
+ Mon, 19 Jan 2026 06:57:12 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br23rprxf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Jan 2026 06:57:12 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60J6n6OH016636;
+ Mon, 19 Jan 2026 06:57:11 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brn4xn9r5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Jan 2026 06:57:10 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60J6v6jF25821654
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 Jan 2026 06:57:07 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CCA0C20040;
+ Mon, 19 Jan 2026 06:57:06 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E9E7D2004B;
+ Mon, 19 Jan 2026 06:57:03 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.21.137]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 19 Jan 2026 06:57:03 +0000 (GMT)
+Date: Mon, 19 Jan 2026 12:27:01 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Caleb Schlossin <calebs@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
+ milesg@linux.ibm.com, alistair@alistair23.me, chalapathi.v@linux.ibm.com
+Subject: Re: [PATCH] hw/ssi/pnv_spi: Fix fifo8 memory leak on unrealize
+Message-ID: <aW3VANPAcyejWJ4Y@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20251216154503.2263755-1-calebs@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251216154503.2263755-1-calebs@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: WslDuQaAowY03uiNjep2rprANE2H3A9W
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE5MDA1MCBTYWx0ZWRfX3qxD/WD8lAV6
+ s9q6vXCyR6V9uQhG+WSBgZOblUWvuMTAutLK3hsN86GkDL73mcbFOSrvQYZo13sgxMej7XWwobc
+ Gr2WLltbSVPmfWFQUAuN58TIG1YSkHOMO8j5Dlk4ykJxtRi6GN98DTjXH8i/U/H2eu+tAmgBK6X
+ n0+24uaO+7Z0kdM0S1FUjUUs7PSBiVcX7L2CVTmEWUOnGVoLa3SrKxrautIrZJ5NsDp08gVVTDZ
+ 6iEyDWL3j1bY5kmdKzmPnysy32LQgKKmvLgqLPUR2y9z6V2D1DCJULaAIOEC6msTe/yM2WJI5zQ
+ 8o385WTEGrIXw+lSQODNQRd3LRTaxwE4bSpmrDXhkP7LT/UzI05NtgVaHfooqu8agMb5+ygRGkD
+ 6C97vUE3T45i4QOWGFqm4qxRIJUrSVG2eCZdwQgcuf0x3C3iVsRpQ5WfxEHF08NbXS0jowE1Fq3
+ Cyl+4oFM55kLsLggYDA==
+X-Authority-Analysis: v=2.4 cv=J9SnLQnS c=1 sm=1 tr=0 ts=696dd5c8 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=CJKrucV5HHBk1qxaKX0A:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: KZyx51qkM7F9fF_ARyZxskKqSXRQAKFp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-19_01,2026-01-18_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 adultscore=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601190050
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.077,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,70 +124,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Filip Hejsek <filip.hejsek@gmail.com> writes:
+On 25/12/16 09:45AM, Caleb Schlossin wrote:
+> unrealize should free the fifo8 memory that was allocated by realize.
+> 
+> Fixes: 17befecda85 ("hw/ssi/pnv_spi: Replace PnvXferBuffer with Fifo8 structure")
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
 
-> From: Szymon Lukasz <noh4hss@gmail.com>
->
-> The managment software can use this command to notify QEMU about the
-> size of the terminal connected to a chardev, QEMU can then forward this
-> information to the guest if the chardev is connected to a virtio console
-> device.
->
-> Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
-> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> [Filip: rename command, change documentation]
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Acked-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+Hello Caleb,
 
-[...]
+Sorry for the delayed review. The patch currently doesn't apply on
+upstream, as there was a merge conflict with vmstate patch and this.
 
-> diff --git a/qapi/char.json b/qapi/char.json
-> index 140614f82c..bc08f0161a 100644
-> --- a/qapi/char.json
-> +++ b/qapi/char.json
-> @@ -861,6 +861,37 @@
->  { 'command': 'chardev-send-break',
->    'data': { 'id': 'str' } }
->=20=20
-> +##
-> +# @chardev-window-size-changed:
-> +#
-> +# Notifies a chardev about the current size of the terminal connected
-> +# to this chardev.  The information will be forwarded to the guest if
-> +# the chardev is connected to a virtio console device.
-> +#
-> +# The initial size is 0x0, which should be interpreted as an unknown
-> +# size.
-> +#
-> +# Some backends detect the terminal size automatically, in which case
-> +# the size may unpredictably revert to the detected one at any time.
-> +#
-> +# @id: the chardev's ID, must exist
+Can you send a v2, rebased on upstream ?
 
-Please drop ", must exist" for consistency with ID descriptions
-elsewhere.
+Thank you,
+- Aditya G
 
-> +#
-> +# @cols: the number of columns
-> +#
-> +# @rows: the number of rows
-> +#
-> +# Since: 11.0
-> +#
-> +# .. qmp-example::
-> +#
-> +#     -> { "execute": "chardev-window-size-changed", "arguments": { "id"=
-: "foo", "cols": 80, "rows": 24 } }
-> +#     <- { "return": {} }
-> +##
-> +{ 'command': 'chardev-window-size-changed',
-> +  'data': { 'id': 'str',
-> +            'cols': 'uint16',
-> +            'rows': 'uint16' } }
+> ---
+>  hw/ssi/pnv_spi.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
+> index f40e8836b9..5db440be9a 100644
+> --- a/hw/ssi/pnv_spi.c
+> +++ b/hw/ssi/pnv_spi.c
+> @@ -1176,6 +1176,13 @@ static void pnv_spi_realize(DeviceState *dev, Error **errp)
+>                            s, "xscom-spi", PNV10_XSCOM_PIB_SPIC_SIZE);
+>  }
+>  
+> +static void pnv_spi_unrealize(DeviceState *dev)
+> +{
+> +    PnvSpi *s = PNV_SPI(dev);
+> +    fifo8_destroy(&s->tx_fifo);
+> +    fifo8_destroy(&s->rx_fifo);
+> +}
 > +
->  ##
->  # @VSERPORT_CHANGE:
->  #
-
+>  static int pnv_spi_dt_xscom(PnvXScomInterface *dev, void *fdt,
+>                               int offset)
+>  {
+> @@ -1208,6 +1215,7 @@ static void pnv_spi_class_init(ObjectClass *klass, const void *data)
+>  
+>      dc->desc = "PowerNV SPI";
+>      dc->realize = pnv_spi_realize;
+> +    dc->unrealize = pnv_spi_unrealize;
+>      device_class_set_legacy_reset(dc, do_reset);
+>      device_class_set_props(dc, pnv_spi_properties);
+>  }
+> -- 
+> 2.47.3
+> 
 
