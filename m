@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC613CCF2D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 10:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AF55CCF2D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 10:07:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhmAZ-00065M-LQ; Mon, 19 Jan 2026 05:07:35 -0500
+	id 1vhmAZ-00068w-Tc; Mon, 19 Jan 2026 05:07:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vhmAJ-0005dG-B5
+ id 1vhmAJ-0005cy-9s
  for qemu-devel@nongnu.org; Mon, 19 Jan 2026 05:07:19 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vhmAC-0005sz-WB
+ (envelope-from <maobibo@loongson.cn>) id 1vhmAB-0005sv-GF
  for qemu-devel@nongnu.org; Mon, 19 Jan 2026 05:07:15 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8DxfcNIAm5pnEYKAA--.33677S3;
- Mon, 19 Jan 2026 18:07:04 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxvsNJAm5pnUYKAA--.33973S3;
+ Mon, 19 Jan 2026 18:07:05 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowJDxjcJHAm5p5jIlAA--.7303S4;
+ by front1 (Coremail) with SMTP id qMiowJDxjcJHAm5p5jIlAA--.7303S5;
  Mon, 19 Jan 2026 18:07:04 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>
 Cc: qemu-devel@nongnu.org
-Subject: [PATCH 2/3] target/loongarch: Add full type support with
+Subject: [PATCH 3/3] target/loongarch: Add property set with
  query-cpu-model-expansion
-Date: Mon, 19 Jan 2026 18:07:01 +0800
-Message-Id: <20260119100702.1214764-3-maobibo@loongson.cn>
+Date: Mon, 19 Jan 2026 18:07:02 +0800
+Message-Id: <20260119100702.1214764-4-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20260119100702.1214764-1-maobibo@loongson.cn>
 References: <20260119100702.1214764-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxjcJHAm5p5jIlAA--.7303S4
+X-CM-TRANSID: qMiowJDxjcJHAm5p5jIlAA--.7303S5
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,29 +65,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On LoongArch with QMP command query-cpu-model-expansion, only static
-type is supported, full type is not supported. Here add full type support
-with QMP cpu model query command.
+On LoongArch with QMP command query-cpu-model-expansion, property
+setting is not supported witch command such as:
+  query-cpu-model-expansion type=static model={"name":"max","props":{"lasx":false}}
+
+Here add property setting support with QMP command.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- target/loongarch/loongarch-qmp-cmds.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/loongarch/loongarch-qmp-cmds.c | 40 +++++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 12 deletions(-)
 
 diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
-index f89f67ce47..6a95080fe4 100644
+index 6a95080fe4..f053f22bb8 100644
 --- a/target/loongarch/loongarch-qmp-cmds.c
 +++ b/target/loongarch/loongarch-qmp-cmds.c
-@@ -58,7 +58,8 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-     const char *name;
-     int i;
- 
--    if (type != CPU_MODEL_EXPANSION_TYPE_STATIC) {
-+    if ((type != CPU_MODEL_EXPANSION_TYPE_STATIC) &&
-+        (type != CPU_MODEL_EXPANSION_TYPE_FULL)) {
-         error_setg(errp, "The requested expansion type is not supported");
+@@ -50,7 +50,6 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+                                                      Error **errp)
+ {
+     Visitor *visitor;
+-    bool ok;
+     CpuModelExpansionInfo *expansion_info;
+     QDict *qdict_out;
+     ObjectClass *oc;
+@@ -64,30 +63,47 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
          return NULL;
      }
+ 
++    oc = cpu_class_by_name(TYPE_LOONGARCH_CPU, model->name);
++    if (!oc) {
++        error_setg(errp, "The CPU type '%s' is not a recognized LoongArch "
++                         "CPU type", model->name);
++        return NULL;
++    }
++
++    obj = object_new(object_class_get_name(oc));
+     if (model->props) {
++        Error *err = NULL;
++        const QDict *qdict_in;
++
+         visitor = qobject_input_visitor_new(model->props);
+         if (!visit_start_struct(visitor, "model.props", NULL, 0, errp)) {
+             visit_free(visitor);
++            object_unref(obj);
+             return NULL;
+         }
+ 
+-        ok = visit_check_struct(visitor, errp);
++        qdict_in = qobject_to(QDict, model->props);
++        i = 0;
++        while ((name = cpu_model_advertised_features[i++]) != NULL) {
++            if (qdict_get(qdict_in, name)) {
++                if (!object_property_set(obj, name, visitor, &err)) {
++                    break;
++                }
++            }
++        }
++
++        if (!err) {
++            visit_check_struct(visitor, &err);
++        }
+         visit_end_struct(visitor, NULL);
+         visit_free(visitor);
+-        if (!ok) {
++        if (err) {
++            error_propagate(errp, err);
++            object_unref(obj);
+             return NULL;
+         }
+     }
+ 
+-    oc = cpu_class_by_name(TYPE_LOONGARCH_CPU, model->name);
+-    if (!oc) {
+-        error_setg(errp, "The CPU type '%s' is not a recognized LoongArch CPU type",
+-                   model->name);
+-        return NULL;
+-    }
+-
+-    obj = object_new(object_class_get_name(oc));
+-
+     expansion_info = g_new0(CpuModelExpansionInfo, 1);
+     expansion_info->model = g_malloc0(sizeof(*expansion_info->model));
+     expansion_info->model->name = g_strdup(model->name);
 -- 
 2.39.3
 
