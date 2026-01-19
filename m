@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F05D29C2A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A757D29C2E
 	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 13:35:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhpP2-00016i-MP; Mon, 19 Jan 2026 08:34:44 -0500
+	id 1vhpPG-0001AA-8o; Mon, 19 Jan 2026 08:34:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhpOs-00015F-1r
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:34:35 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vhpP5-00017V-19
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:34:47 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhpOq-0007V5-IQ
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:34:33 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47ee0291921so28306245e9.3
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 05:34:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vhpP2-0007Xk-Np
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 08:34:46 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4801d24d91bso28194835e9.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 05:34:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768829669; x=1769434469; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iOxmQ1J41WXUhMgGeJVxa8iUKy2WguYwE4VADeLOhwY=;
- b=iKhoinH2kJVEYh0SpseWT2YnDTFbtKavp/PQjbZB3WZ1MfqUVvU1HHpt6ZpNJhHW9m
- nSRMUGxvhXIvze7khzf701HRGLT9egEZiYFLvigcm4EprkSFgM9yinI2a8T9rKi+IKae
- 5OkV0UAxCpEMwlHNS5N5oDtqMpae6ZhcZyAWotZBnkp198NJ7kTWeA6mNKoKwt/Bv8FD
- BR1/j/OiQ2CiiQvQHTPbmNdo4zQvfDVV7XVpkwbB2P6JCkKtT99hrZDhsDP8b9KXdeDm
- 99h/hKigWY5vqZRXTOeUUoaMWKDu1by3WkIa8IiVujg3NOdbLVFeiSproLrCIZU9vNIL
- JfhQ==
+ d=linaro.org; s=google; t=1768829683; x=1769434483; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=66TYfErV6eSs8qKE2wURwFkJQVXktBsY/tk+9mOsrgE=;
+ b=qPlsi1Kn2davSGV/3OQi+c8ROYsjdmd4mRoZpbvMFcYjQoJ2BHl12UpXVSgkLivim0
+ KttIjEIYFJWkssso2k+u19pSuxI/K3PYFcr0EJg7BAI2w/TT1/G32amq6vMiXjF6kZ6t
+ dJ+1cTA1fBuImxpjwhitKFBRpKxUhtrJXpFPw3vpd7d/NsH9KeETU2zbO4B8WlZHUHQN
+ rv8WrmqA0ylDYY5U9KaBtCysJX322Dm4rraOp4h5R8Dp5e2/NGFM94t192F7h7qY3EJl
+ zwqxr9bXbvtqNt43SYx/N0yra1YU5cx4fAYHOckC6Y2/ZTn6/XeFLkvKTvYAuuag2MaY
+ STTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768829669; x=1769434469;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iOxmQ1J41WXUhMgGeJVxa8iUKy2WguYwE4VADeLOhwY=;
- b=epQEmzKq8g8+GgrJKoAxJ7TPY8iU6l3r3Og/2dmymkuKs0fqJONTNZHk4th8qpfRD/
- 6QnbMIy6URE9QaW7hP/7jGkyrpG9bCqW4oXsUIKQuWZC+sm8Uo9GY7Mt9y1n2F3w8bIb
- rkzo295SIuBiPTWaUAswOuWruTMxORNAaoNWO1O8xt7FgWuIWJIJJfg1AYEIhFG0q40g
- DR3sHny8IToU5yaRQXgYFdPmSQULsX3RfYC3+kor8p3ncI2slYe5qgtiP5gFwlDnSadk
- gF+wPgMdfNtP7vqhaGiXdM5Ab4V6lzTY2+qRSoUq2SLPjHcFXFM+v9V9PynuIOfodKTm
- tMQA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWMVi03UKtct3SBtM60xrg4o0jOkLNu9xXm1hCkeTy7DknXOdpVqw4aAFqXimAt8rXWB7M+YjKZkADd@nongnu.org
-X-Gm-Message-State: AOJu0Yz/wylLbsENuDjQgpFtTsRBe8qzj5/j21ci9MK9uPbuy3bi5h4Q
- xVBdPYEvFLeXlfLusDM+gPkz/TEw/mGnZZ2EikGl0YFy+jQlaRNZr1RhcwTq82ez+tc=
-X-Gm-Gg: AY/fxX4+x4GXHYFOCXxvT50oEzJgEj2d2a2h8/45AaBA8hrkBD5cKhGjavvW0Lxkwy4
- Ine2ffW+ur7WbxAUAGlI+VNskHtoBH/RIc1BjJQQCxvRm818Xuh9oXmrl06v/32L/H8mpoLAGAv
- gWolq4Ke6OY+vtujbWvQxncPUEz8W/2/Gqj7+9yLsgYdjB8PbyFBpN9043qbUL9cODRvdgn2GkF
- q4N7gwgFMxAkmOg5G2ompQYuMvWi6cqnn9YorMCf9SgQJ51RASbrnzAeuMS0wZ3iqlgSPl6GzPd
- UOuEriM4n5TuXwOmwElbGoC9zvgzUsyx7gK95TSmknGZfT8hEI5cnP5+jq37/FFFq/dPYifw6di
- 9j0rn9QSa5M2GRXyTie4U5IbS7S5+uGVj4tdMEcey0PWaQnzZrT4Gh7pXaTgvUOBUClVnOXY/Lc
- 99mh31Vtf4uKOxhWhTLjx9GcvPYumgywaZwNWRwCJR5Goil9yWcR04Ew==
-X-Received: by 2002:a05:600c:46cf:b0:479:3a88:de5e with SMTP id
- 5b1f17b1804b1-4801eb15549mr106272385e9.37.1768829669372; 
- Mon, 19 Jan 2026 05:34:29 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e8795f1sm193676665e9.6.2026.01.19.05.34.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Jan 2026 05:34:28 -0800 (PST)
-Message-ID: <477a2765-eb33-47f7-b027-a5f7ca6800ca@linaro.org>
-Date: Mon, 19 Jan 2026 14:34:28 +0100
+ d=1e100.net; s=20230601; t=1768829683; x=1769434483;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=66TYfErV6eSs8qKE2wURwFkJQVXktBsY/tk+9mOsrgE=;
+ b=DHAB/sWyxXUjrW+e/lJWuOa+SfB1Ogt24mUJd5dBLeV/rLHnOZ08KJ6pokgT8eyCbS
+ 1TSmVjizj9oO/IExkB3Xu/UdjAVtjbsZW+k2cfD4hlbQHN0nUJbKvogbGRQa6vRhqe7O
+ VWRJ0r4aBTxJ9F9RSKFq9FiX9Pd3I5CCK8+/dXuct1KuO5AlVHmMDAy3V9UkMATUKimc
+ 3iBj3TD8THjiNoeJklrssBMD5YI4bdCpcV0/0IUFGIpYdxHtjTBa6TidWTno8q4HXQav
+ cJ0hkG7B++wLDAeoQ55nEHJOmUBHmYLIN63ciLVuX/37jy+vTgAKcsqeUhgnq20QRCmN
+ QVCQ==
+X-Gm-Message-State: AOJu0YxSDcQpShEF1R8xgOOvGJR82itsN9lHzFoUBAsolcx9tRFKkSC1
+ 8wIOIdQdjSe6jZ4np7HVGDjyLr1NHBliZIoHUeYAc0G4VnCnf33QFBVGxHe68wb7flI=
+X-Gm-Gg: AY/fxX4/3o2hnJbVg3oMkaBirL9OP0jQANid/9uOH2HB/q/vxRLDQODBA3p1xNIlgwi
+ 1IumnSM00mmPKcpIs1btErV6Sz13iLNboYD7cfOq7EL1MiWP6ixm2v7jPQtWsNaA6TavJFFTeDZ
+ GFqGn/Z5eKUmlLRxtR6FPx3cz2OdjKLaYK+tNXZ3b/IJMRrfYkupcKiob7Z/bNRxYivFQ1gvZrg
+ AoLWu7aX8wjZoZFrQlLNdO7Nijcn/W9y0tkIpp9S4OAYN3+HUDOpfa/yzeDEOvi6as5mMQXKcdk
+ rlDd/rCjFWnOsC4wltCA/q8+Tt4ylAH1+you2LxzghaDM7adVj5PMcrqBRHftAcxKy11RQkDV7w
+ oV8i8WR+gVtn71rQm6R6pZfD+YA3DnlPVDjCXi46PqU1c4QZGzZaxt0XxxCyZDeogqjFNpurkzW
+ bBrQnJALoQwLU=
+X-Received: by 2002:a05:600c:458c:b0:476:4efc:8ed4 with SMTP id
+ 5b1f17b1804b1-4801e30d9famr127345675e9.11.1768829683099; 
+ Mon, 19 Jan 2026 05:34:43 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43569926ff1sm22929824f8f.13.2026.01.19.05.34.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 19 Jan 2026 05:34:42 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9D1BE5F87E;
+ Mon, 19 Jan 2026 13:34:41 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,  "open
+ list:ARM cores" <qemu-arm@nongnu.org>
+Subject: Re: [RFC PATCH] hw/intc: avoid byte swap fiddling in gicv3 its path
+In-Reply-To: <2d379a95-d3ec-4f6b-8b21-188540656019@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 19 Jan 2026 13:21:34
+ +0100")
+References: <20260119120030.2593993-1-alex.bennee@linaro.org>
+ <2d379a95-d3ec-4f6b-8b21-188540656019@linaro.org>
+User-Agent: mu4e 1.12.15-pre1; emacs 30.1
+Date: Mon, 19 Jan 2026 13:34:41 +0000
+Message-ID: <87o6mpsp3i.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bsd-user/syscall_defs.h: define STAT_TIME_T_EXT only for
- 32 bits
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, richard.henderson@linaro.org,
- Kyle Evans <kevans@freebsd.org>
-References: <20260119075738.712207-1-pierrick.bouvier@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260119075738.712207-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,28 +106,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/1/26 08:57, Pierrick Bouvier wrote:
-> Commit 369c1ba2b changed the wrong conditional "#if defined(__i386__)" to
-> "#if defined(TARGET_I386)".
-> However, TARGET_I386 is defined for target x86_64 also.
-> 
-> This commit fixes it by identifying correctly 32 bits target.
-> 
-> Found with:
-> $ ./build/qemu-x86_64 \
->    -plugin ./build/contrib/plugins/libstoptrigger,icount=1000000 \
->    -plugin ./build/tests/tcg/plugins/libinsn \
->    -d plugin \
->    ./build/qemu-system-x86_64 --version
-> ld-elf.so.1: /lib/libz.so.6: invalid file format
-> cpu 0 insns: 59746
-> total insns: 59746
-> 
-> Fixes: 369c1ba2b ("Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT")
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   bsd-user/syscall_defs.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> On 19/1/26 13:00, Alex Benn=C3=A9e wrote:
+>> The GIC should always be a little-endian device as big-endian
+>> behaviour is a function of the current CPU configuration not the
+>> system as a whole. This allows us to keep the MSI data in plain host
+>> order rather then potentially truncating with multiple byte swaps of
+>> different sizes.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>   hw/intc/arm_gicv3_its_common.c | 4 ++--
+>>   hw/intc/arm_gicv3_its_kvm.c    | 2 +-
+>>   2 files changed, 3 insertions(+), 3 deletions(-)
+>> diff --git a/hw/intc/arm_gicv3_its_common.c
+>> b/hw/intc/arm_gicv3_its_common.c
+>> index e946e3fb87b..60a5abd8d3e 100644
+>> --- a/hw/intc/arm_gicv3_its_common.c
+>> +++ b/hw/intc/arm_gicv3_its_common.c
+>> @@ -81,7 +81,7 @@ static MemTxResult gicv3_its_trans_write(void *opaque,=
+ hwaddr offset,
+>>       if (offset =3D=3D 0x0040 && ((size =3D=3D 2) || (size =3D=3D 4))) {
+>>           GICv3ITSState *s =3D ARM_GICV3_ITS_COMMON(opaque);
+>>           GICv3ITSCommonClass *c =3D ARM_GICV3_ITS_COMMON_GET_CLASS(s);
+>> -        int ret =3D c->send_msi(s, le64_to_cpu(value), attrs.requester_=
+id);
+>> +        int ret =3D c->send_msi(s, value, attrs.requester_id);
+>>             if (ret <=3D 0) {
+>>               qemu_log_mask(LOG_GUEST_ERROR,
+>> @@ -97,7 +97,7 @@ static MemTxResult gicv3_its_trans_write(void *opaque,=
+ hwaddr offset,
+>>   static const MemoryRegionOps gicv3_its_trans_ops =3D {
+>>       .read_with_attrs =3D gicv3_its_trans_read,
+>>       .write_with_attrs =3D gicv3_its_trans_write,
+>> -    .endianness =3D DEVICE_NATIVE_ENDIAN,
+>> +    .endianness =3D DEVICE_LITTLE_ENDIAN,
+>>   };
+>>     void gicv3_its_init_mmio(GICv3ITSState *s, const MemoryRegionOps
+>> *ops,
+>> diff --git a/hw/intc/arm_gicv3_its_kvm.c b/hw/intc/arm_gicv3_its_kvm.c
+>> index ae12d41eee1..a8d6d4fb540 100644
+>> --- a/hw/intc/arm_gicv3_its_kvm.c
+>> +++ b/hw/intc/arm_gicv3_its_kvm.c
+>> @@ -58,7 +58,7 @@ static int kvm_its_send_msi(GICv3ITSState *s, uint32_t=
+ value, uint16_t devid)
+>>         msi.address_lo =3D extract64(s->gits_translater_gpa, 0, 32);
+>>       msi.address_hi =3D extract64(s->gits_translater_gpa, 32, 32);
+>> -    msi.data =3D le32_to_cpu(value);
+>> +    msi.data =3D value;
+>>       msi.flags =3D KVM_MSI_VALID_DEVID;
+>>       msi.devid =3D devid;
+>>       memset(msi.pad, 0, sizeof(msi.pad));
+>
+> Could we also clean the other GIC uses in the same patch?
+>
+> $ git grep DEVICE_NATIVE_ENDIAN hw/intc/arm_gic*
+> hw/intc/arm_gic.c:2065:        .endianness =3D DEVICE_NATIVE_ENDIAN,
+> hw/intc/arm_gic.c:2070:        .endianness =3D DEVICE_NATIVE_ENDIAN,
+> hw/intc/arm_gic.c:2077:    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> hw/intc/arm_gic.c:2084:        .endianness =3D DEVICE_NATIVE_ENDIAN,
+> hw/intc/arm_gic.c:2089:        .endianness =3D DEVICE_NATIVE_ENDIAN,
+> hw/intc/arm_gic.c:2096:    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> hw/intc/arm_gicv3.c:420:        .endianness =3D DEVICE_NATIVE_ENDIAN,
+> hw/intc/arm_gicv3.c:429:        .endianness =3D DEVICE_NATIVE_ENDIAN,
+> hw/intc/arm_gicv3_its.c:1909:    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> hw/intc/arm_gicv3_its.c:1919:    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> hw/intc/arm_gicv3_its_common.c:100:    .endianness =3D DEVICE_NATIVE_ENDI=
+AN,
+
+I did look to see if we where doing any byte swaps but I forgot to check
+the .endianness fields. I can re-spin.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
