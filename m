@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DB13CA5FED
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 03:36:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33D04CA5FEF
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 03:36:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhfwz-00074z-97; Sun, 18 Jan 2026 22:29:11 -0500
+	id 1vhfwl-00073q-Rs; Sun, 18 Jan 2026 22:28:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1vhfwc-00072Z-B9
+ id 1vhfwc-00072b-C6
  for qemu-devel@nongnu.org; Sun, 18 Jan 2026 22:28:47 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1vhfwW-0004AP-Kt
- for qemu-devel@nongnu.org; Sun, 18 Jan 2026 22:28:44 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-b870732cce2so587908666b.3
- for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 19:28:38 -0800 (PST)
+ id 1vhfwY-0004Ah-Ef
+ for qemu-devel@nongnu.org; Sun, 18 Jan 2026 22:28:45 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b8708930695so597415666b.3
+ for <qemu-devel@nongnu.org>; Sun, 18 Jan 2026 19:28:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768793316; x=1769398116; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=L22o3zLXCwrulXdv1pmQlKTEfLQqaGrEqGb1SqovEz8=;
- b=aOFxP6g2nL/plBBhl9Y2v2yV7YBBAut9Doy0tnQ+41uN3NJ9uDQVPbDPO3jfozAIEx
- CKX0Jblp7fV/Tg/X2KyI826LhK7mSC3cN/8vDMkvabbOWkqm/oLBIS8gjakX0tksB1CS
- RVsyBp0ohwivvV4RPD/3p+VmsWkR3zCIfU9lJNHVIwgI1qVAk5gtkMQNNb/F6yHrC+L4
- vows6TF2ZVFHTo6ncVoQnFqAGV3inkxWD8T88EzzcPNeik+fr4U7eM7qKafo3iLwjU1D
- ycAKR2jAN85p4hCxGDZ6Hivz5dTVw0OUw3OQzSpZjOZtcB6wU3RLTXM1Qey1SCjbyi2I
- S3og==
+ d=gmail.com; s=20230601; t=1768793319; x=1769398119; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=NNa7JchBYbdWd327kanvveizXHw1iCkukScOekjsgvA=;
+ b=Eb2evHKopx8/F/L5eO8xzNd8aGVinsqiAXQqfxm2uo0I3/Yxuh7rb86tcx7pqimSdC
+ ouXgZ/5hZI3o756G3hMpPU3r7EVPVL8+CQz/TsIaXaVdGN+shnFgsoQP5Eo/yys+SL1w
+ mXwbcX8MDRYCusGSCVrkQwTtT34/RH2xSj+fBpmH22T3gkHkhymwXQ2LDF8yk148YAYX
+ J3KMF15IbcUmNkFF8YVOUZg79lTsil09hQVbKjFlTHkfjn/ezI0ZFZqPj7/e2o0D0zck
+ xK4h2lke1nVjJfh1b4cGRYo80slSB268qMcNwdKm/Z9siyVGGYfFiuZ0iej085wLk7t1
+ IA3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768793316; x=1769398116;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L22o3zLXCwrulXdv1pmQlKTEfLQqaGrEqGb1SqovEz8=;
- b=PF/ZXAAIHOs4HNXmPe3RenrxPXIi6rO2bzDtz1heURlYM51OjxwtCf0bNnEWzfzt8F
- PJaU++UfnSSqBv85XuJ8mijs0/1LQSlPa30fWOcwD/M/GuDEJkKrKeo1dk5KW2e047nz
- wXu7myqdhHx/UWIifjNTYXeYLm9ZzBLgmrhQeurZ5hN6KCUA7TUGlBOBwOp0UUE7ZtSr
- U1zkncfBEdY5clBQUot8MDBAhnF5c+Sz1Rw2Evw2pKgptey1WjNu4h0Ppr9jXI7yK4ly
- APfkQPbwU9qPP6pIBUeeSLEtuxG1ArIxYeSQ6G2sdA4Kp7OPIfbBhVAhmXxcy8xfkWfZ
- gtow==
-X-Gm-Message-State: AOJu0YyvbYNzPdEaNhJA8i6na7pWCU8Uuus6GPT4E9TiRJLczqMqsHiK
- i039lx8eXa3BX9wRX6Ki48TmgAB2PaMvqiq+mCVKBN5IamLh4XY6Gaom
-X-Gm-Gg: AY/fxX6c7mR4sD+eWq07rpIOissf9a/Kdt3YOkbUqZlBYaaBdrrEWGuzZAJfoxNV7fd
- +1MZIEsZns9akKpzFTwBlVLFf/Y5T0xaKBtGSYn2BNu7ZvFW0hI/qaS2quiKAFm0D1oyvCPUKi5
- D5Z7NOijv6A1uvVUR26RlUJJjehC12tJhptsUd3CwQL7Mjpz4x9PJe6Hh+ahwLMoap1nB0wPDcB
- P1J6NE45sXkPBq7ziQrgBaelgltqPE2nTYN6RdWeXT0b0T2R4M/hup/7ChL6uRGXDJ3+8Zmmcxh
- Cq8sUaT9znCNn9Ab4nF0Z4vK6KJQY239W6PVFaRxrZ8JeJ466iKxQGd0eg3YGlx5mE1TUQ+Ca12
- 88EsQ4KoGJC+lqR2R65emxOlgr8mIUfkyO4ue1PjkCxlokv3LebqOpw3xw4V9LI5xLbSrrhGnUA
- ydFJQ7m2c230HmM04JqGuQaNGBI/51hhnpuXTQmfRQ
-X-Received: by 2002:a17:907:940b:b0:b73:6d56:f3ff with SMTP id
- a640c23a62f3a-b87968f60f9mr764118466b.20.1768793315846; 
- Sun, 18 Jan 2026 19:28:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768793319; x=1769398119;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=NNa7JchBYbdWd327kanvveizXHw1iCkukScOekjsgvA=;
+ b=TXu/qAwywaLeDjA71Mdekji+yRJrnalT84OdAsnknBZr2wWERqhrl8qm2ABJx8EB1b
+ oXMIE3Pks9K0idljwKxwripS2bV99Pq+SycymHBxe6HMw8cn4ckOqauKKcs81uWB+Hr3
+ leZAqX0hBscPXJ2e2HPay+gKvNTngnO2eNchT+/vZpXFD5lTm+PUVEUjHObG2Ly1sqkI
+ rO+IrEWZrmhYfQON5qWgCl988SSMBMYre142nuXGSzvQU1Xn2MDwWfHF/0jLCfXQwtvf
+ Q2wiMvcKiLWJ7RM7eM4d+1tuWPzIzzq5NoJjp+cpE6jehvnrR8WETf8S2OaK/kmkBhuA
+ NJxA==
+X-Gm-Message-State: AOJu0YxMqSwVtk4JDZ4YhdXO4EpLBm5SxZnyFWTU8d0ngEWKZuJW4CUn
+ 7SK+UOjsD/sJVI6iP4Wzlh/4lgmuRwmYBl1jpEWAGUvK+9zcRWIyZe/+
+X-Gm-Gg: AY/fxX60huXGzvkSa6Grp1TOyzrRxlM4QDk4d5TAVqIjvQlxwzfXtZqA8h3Dibs1ZW0
+ e50pyP/4aKHONTWGxik1lwDdnOr7GN9JLPjJDZ3UI7XcYpvyIxs3ljMFixVuYzGzyiwtz7uLCQd
+ QVJndOHHzz4RE9ogU7E+swNjc9i96Bh5Tct8h+1HbOed7l3QtrUrwfCtN78Y3sSQXRU8U/sEQty
+ F/vVGiiP6FKy+ZvQUfn/M3tg/JxZyMeoSPb+yZ6+izV0WbuXROM+ihTYeN+bNi+yRU6AQbrElUn
+ CaduP4P/4xRrLUuwoRp/rszi1mfELdyxLpXEvAFmEtiPBO3eFSCM3k7WQvhOSw6/BNuAx9jto9I
+ x/R51bhjKOuacxSWPEDKnPRMLt0ftHmNbnUpPDa1+Y9gszDuPRLzCTDm0OKNCDcvdYBQE1ncAEC
+ eU6ehH4ji9dxEXpl4m54SKjQnXRirIyRoRlpgzA73C
+X-Received: by 2002:a17:907:2d9e:b0:b87:908:9aca with SMTP id
+ a640c23a62f3a-b87968a9870mr788941366b.9.1768793319326; 
+ Sun, 18 Jan 2026 19:28:39 -0800 (PST)
 Received: from localhost (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-654533cc70fsm9243511a12.17.2026.01.18.19.28.34
+ a640c23a62f3a-b879513e8d1sm1006970466b.2.2026.01.18.19.28.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Jan 2026 19:28:35 -0800 (PST)
+ Sun, 18 Jan 2026 19:28:38 -0800 (PST)
 From: Filip Hejsek <filip.hejsek@gmail.com>
-Subject: [PATCH v6 00/12] virtio-console: notify about the terminal size
-Date: Mon, 19 Jan 2026 04:27:43 +0100
-Message-Id: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
+Date: Mon, 19 Jan 2026 04:27:45 +0100
+Subject: [PATCH v6 02/12] chardev: add CHR_EVENT_RESIZE
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3WOQWrDMBAAvxJ07obVdiVbPeUfoQdVWUeC2CpSM
- EmD/145UDCEHucwwzxUlZKkqo/dQxWZU015amDfdipEP50F0qmxIiSDThOEPNV8EShS04+As4F
- JM3557FWTvosM6fYMHj8bDyWPcI1F/F8G0ZLTlpH1njsy1IOGKUeOtR7Oo0+Xfcjj2oqpXnO5P
- 99mXov/bswMCJ0jI8zsh8Cb0roxm41O+kU3Te+dvAfbUYcWt/qyLL8T/8hfJwEAAA==
-X-Change-ID: 20250912-console-resize-96c42140ba08
+Message-Id: <20260119-console-resize-v6-2-33a7b0330a7a@gmail.com>
+References: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
+In-Reply-To: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
@@ -88,15 +85,15 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>, 
  Szymon Lukasz <noh4hss@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768793314; l=6395;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768793314; l=8384;
  i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=GYYFdurqMqXOZ/L6zuHuelqc1k5rmTk6bwzBEW7KUuE=;
- b=5xr5agXQ8g1uCNeShJqpap8F5YHfA/X7oY00y6f5C/l76CkmdZaWb8T9pO5qVaV6VmxTOoDP4
- D0cJrOUqmeGDuHhX4m9HtyaXomvW959x0epczABf7Ozax29Yeftryzg
+ bh=HeogtEK+9//Pdju/Fyjpqc6qE812kC26MsPD8+icalE=;
+ b=Tty93DoZounl1Npu32cElY8aZfGnSjD1Hzffdav1X1QCjY16eqFnZ35UlS9GowJ5Uz7ygwh7m
+ n2Yqm/F3TjQB4S3V1bswyJEXPnTM4oJ+n6opOlxtTYUQjzKlQmftyaY
 X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
  pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=filip.hejsek@gmail.com; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,152 +116,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Summary of The Series
----------------------
+From: Szymon Lukasz <noh4hss@gmail.com>
 
-This series adds terminal size support to the virtio-console device.
-The goal is to make it possible to get a resizable terminal into a guest
-without using e.g. ssh.
+Add a new chardev event, CHR_EVENT_RESIZE, which a backend should
+trigger if it detects the size of the connected terminal changed.
 
-Support for detecting terminal size is added to stdio and vc backends,
-but not pty and serial, because for the later it's unfortunately
-impossible to get resize notifications.
-
-A QMP command is added for notifying QEMU about the terminal size
-of any chardev. This can be used by clients to support resizing for
-devices where QEMU is not able to detect the size by itself (e.g. virsh
-console).
-
-There is a bug in Linux versions prior to 6.15 which causes the
-dimensions to be interpreted incorrectly by the guest. If the guest
-kernel is not up to date, the wrong dimensions can make the terminal
-hard to use. The fix will be backported to stable kernels soon, and the
-problem can be worked around by disabling the feature using the
-console-size property, restoring the previous behavior.
-
-Notes for This Version
-----------------------
-
-The issue with swapped rows/cols has now been resolved - the virtio spec
-will remain unchanged, and the kernel fix is being backported.
-
-The console-size property is not documented, even though it can be
-useful for working aroung a guest kernel bug.
-
-The 'vc' chardev size support is still incomplete - size support has
-been added only to the generic and gtk/vte implementations. Size support
-for the spice implementation is still missing, and the generic
-implementation is mostly untested.
-
-The previous version had a bug that it didn't resend the size
-after a guest reset. While fixing this, I ended up rewriting a
-significant part of the virtio changes. I also removed the logic
-that tries to avoid sending VIRTIO_CONSOLE_RESIZE messages before a
-VIRTIO_CONSOLE_CONSOLE_PORT message. I don't think this should cause any
-problems, but if it does, the logic could be reintroduced.
-
-Because one of the patches ended up being significantly different from
-Szymon Lukasz's original version, I decided to change patch author and
-instead add a note about the original version to the commit message. Let
-me know if you would like this to be handled differently.
-
-I have also found an initial size bug in the Linux kernel
-implementation, although it only affects non-multiport devices. I posted
-a fix for the Linux bug to Linux maining lists [1].
-
-[1]: https://lore.kernel.org/virtualization/20251224-virtio-console-fix-v1-1-69d0349692dc@gmail.com/
-
-Full Changelog
---------------
-
-v6:
-- Rebased (renaming CharBackend -> CharFrontend)
-- Virtio resize message code rewritten to fix corner cases
-- Updated version numbers ('Since: 11.0', hw_compat_10_2)
-- Added note to CHR_EVENT_RESIZE definition comment, explaining
-  that only the focused frontend gets the event
-- Fixed checkpatch warning (line length)
-- Link to v5: https://lore.kernel.org/qemu-devel/20250921-console-resize-v5-0-89e3c6727060@gmail.com
-
-v5:
-- Rename chardev-resize -> chardev-window-size-changed
-- Improve chardev-window-size-changed documentation
-- Add partial implementation for 'vc' chardev
-- Config space now returns port 0 size if multiport
-- Console-size property completely disables size support
-- Fix misnamed variables in char-win-stdio
-- Link to v4: https://lore.kernel.org/qemu-devel/20250912-console-resize-v4-0-7925e444afc4@gmail.com
-
-v4:
-- Changed order of rows and cols fields
-- Added support for terminal size on Windows
-- Trace event is also emitted for legacy (non-multiport) drivers
-- Minor fixes required because of changes in QEMU (DECLARE_INSTANCE_CHECKER, qmp-example)
-- Updated version numbers ('Since: 10.2', hw_compat_10_1)
-- Link to v3: https://lore.kernel.org/qemu-devel/20200629164041.472528-1-noh4hss@gmail.com
-
-v3:
-- Add resize messages over QMP, as suggested by Daniel
-
-v2:
-- Fix adding a new virtio feature bit to the virtio console device
-
+Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+[Filip: add note that only the focused frontend gets the event]
+Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 ---
-Filip Hejsek (4):
-      virtio-serial-bus: add terminal resize messages
-      char-win-stdio: add support for terminal size
-      ui/console-vc: forward text console size to vc chardev
-      ui/gtk: forward gtk console size to vc chardev
+ backends/cryptodev-vhost-user.c | 1 +
+ chardev/char.c                  | 1 +
+ hw/block/vhost-user-blk.c       | 1 +
+ hw/char/terminal3270.c          | 1 +
+ hw/char/virtio-console.c        | 1 +
+ hw/ipmi/ipmi_bmc_extern.c       | 1 +
+ hw/scsi/vhost-user-scsi.c       | 1 +
+ hw/usb/ccid-card-passthru.c     | 1 +
+ hw/usb/dev-serial.c             | 1 +
+ hw/usb/redirect.c               | 1 +
+ hw/virtio/vhost-user-base.c     | 1 +
+ hw/virtio/vhost-user-scmi.c     | 1 +
+ include/chardev/char.h          | 6 ++++++
+ monitor/hmp.c                   | 1 +
+ monitor/qmp.c                   | 1 +
+ net/passt.c                     | 1 +
+ net/vhost-user.c                | 1 +
+ 17 files changed, 22 insertions(+)
 
-Szymon Lukasz (8):
-      chardev: add cols, rows fields
-      chardev: add CHR_EVENT_RESIZE
-      chardev: add qemu_chr_resize()
-      char-mux: add support for the terminal size
-      main-loop: change the handling of SIGWINCH
-      char-stdio: add support for the terminal size
-      qmp: add chardev-window-size-changed command
-      virtio-console: notify the guest about terminal resizes
+diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost-user.c
+index cc478d9902..36564d4307 100644
+--- a/backends/cryptodev-vhost-user.c
++++ b/backends/cryptodev-vhost-user.c
+@@ -173,6 +173,7 @@ static void cryptodev_vhost_user_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/chardev/char.c b/chardev/char.c
+index 3e432195a5..0f493d793f 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -75,6 +75,7 @@ void qemu_chr_be_event(Chardev *s, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 4d81d2dc34..a460d6ed33 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -412,6 +412,7 @@ static void vhost_user_blk_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/hw/char/terminal3270.c b/hw/char/terminal3270.c
+index 1d857bad9b..c212fd1aac 100644
+--- a/hw/char/terminal3270.c
++++ b/hw/char/terminal3270.c
+@@ -172,6 +172,7 @@ static void chr_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/hw/char/virtio-console.c b/hw/char/virtio-console.c
+index 25db0f019b..dcfe5830f9 100644
+--- a/hw/char/virtio-console.c
++++ b/hw/char/virtio-console.c
+@@ -168,6 +168,7 @@ static void chr_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/hw/ipmi/ipmi_bmc_extern.c b/hw/ipmi/ipmi_bmc_extern.c
+index fa08ed6c21..bd7c61b2d2 100644
+--- a/hw/ipmi/ipmi_bmc_extern.c
++++ b/hw/ipmi/ipmi_bmc_extern.c
+@@ -436,6 +436,7 @@ static void chr_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
+index 3612897d4b..5601097bc9 100644
+--- a/hw/scsi/vhost-user-scsi.c
++++ b/hw/scsi/vhost-user-scsi.c
+@@ -226,6 +226,7 @@ static void vhost_user_scsi_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/hw/usb/ccid-card-passthru.c b/hw/usb/ccid-card-passthru.c
+index 5ab7855272..3f4052ec82 100644
+--- a/hw/usb/ccid-card-passthru.c
++++ b/hw/usb/ccid-card-passthru.c
+@@ -323,6 +323,7 @@ static void ccid_card_vscard_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
+     case CHR_EVENT_CLOSED:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/hw/usb/dev-serial.c b/hw/usb/dev-serial.c
+index b238cb7937..98d2abbd56 100644
+--- a/hw/usb/dev-serial.c
++++ b/hw/usb/dev-serial.c
+@@ -576,6 +576,7 @@ static void usb_serial_event(void *opaque, QEMUChrEvent event)
+         break;
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/hw/usb/redirect.c b/hw/usb/redirect.c
+index fda5bbca67..34ab8339e1 100644
+--- a/hw/usb/redirect.c
++++ b/hw/usb/redirect.c
+@@ -1390,6 +1390,7 @@ static void usbredir_chardev_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+index 01ab9ca56b..fd3a9d6265 100644
+--- a/hw/virtio/vhost-user-base.c
++++ b/hw/virtio/vhost-user-base.c
+@@ -267,6 +267,7 @@ static void vub_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/hw/virtio/vhost-user-scmi.c b/hw/virtio/vhost-user-scmi.c
+index f9264c4374..180787ec6d 100644
+--- a/hw/virtio/vhost-user-scmi.c
++++ b/hw/virtio/vhost-user-scmi.c
+@@ -214,6 +214,7 @@ static void vu_scmi_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index 237238e5a0..2c139f07dc 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -22,6 +22,12 @@ typedef enum {
+     CHR_EVENT_OPENED, /* new connection established */
+     CHR_EVENT_MUX_IN, /* mux-focus was set to this terminal */
+     CHR_EVENT_MUX_OUT, /* mux-focus will move on */
++    CHR_EVENT_RESIZE, /*
++                       * the size of the terminal connected to
++                       * the chardev has changed.  NOTE: this event is only
++                       * sent to the focused frontend, so you should also
++                       * update the size on receiving CHR_EVENT_MUX_IN.
++                       */
+     CHR_EVENT_CLOSED /* connection closed.  NOTE: currently this event
+                       * is only bound to the read port of the chardev.
+                       * Normally the read port and write port of a
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 4caafbc714..dea912092d 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -1445,6 +1445,7 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
+         break;
+ 
+     case CHR_EVENT_BREAK:
++    case CHR_EVENT_RESIZE:
+         /* Ignored */
+         break;
+     }
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index 687019811f..3d5ab8ff4f 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -486,6 +486,7 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/net/passt.c b/net/passt.c
+index 9ed811a514..a3e239f306 100644
+--- a/net/passt.c
++++ b/net/passt.c
+@@ -421,6 +421,7 @@ static void passt_vhost_user_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
+diff --git a/net/vhost-user.c b/net/vhost-user.c
+index a4bb49bbcf..0b8df2ee30 100644
+--- a/net/vhost-user.c
++++ b/net/vhost-user.c
+@@ -367,6 +367,7 @@ static void net_vhost_user_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+     case CHR_EVENT_MUX_OUT:
++    case CHR_EVENT_RESIZE:
+         /* Ignore */
+         break;
+     }
 
- backends/cryptodev-vhost-user.c   |  1 +
- chardev/char-fe.c                 | 13 +++++++
- chardev/char-mux.c                | 18 +++++++++-
- chardev/char-stdio.c              | 30 ++++++++++++++++
- chardev/char-win-stdio.c          | 19 ++++++++++
- chardev/char.c                    | 26 ++++++++++++++
- hw/block/vhost-user-blk.c         |  1 +
- hw/char/terminal3270.c            |  1 +
- hw/char/trace-events              |  1 +
- hw/char/virtio-console.c          | 35 ++++++++++++++++--
- hw/char/virtio-serial-bus.c       | 76 +++++++++++++++++++++++++++++++++++++--
- hw/core/machine.c                 |  4 ++-
- hw/ipmi/ipmi_bmc_extern.c         |  1 +
- hw/scsi/vhost-user-scsi.c         |  1 +
- hw/usb/ccid-card-passthru.c       |  1 +
- hw/usb/dev-serial.c               |  1 +
- hw/usb/redirect.c                 |  1 +
- hw/virtio/vhost-user-base.c       |  1 +
- hw/virtio/vhost-user-scmi.c       |  1 +
- include/chardev/char-fe.h         | 10 ++++++
- include/chardev/char.h            |  9 +++++
- include/hw/virtio/virtio-serial.h |  5 +++
- include/qemu/main-loop.h          |  4 +++
- monitor/hmp.c                     |  1 +
- monitor/qmp.c                     |  1 +
- net/passt.c                       |  1 +
- net/vhost-user.c                  |  1 +
- qapi/char.json                    | 31 ++++++++++++++++
- ui/console-vc.c                   |  3 ++
- ui/curses.c                       | 11 +++---
- ui/gtk.c                          | 28 +++++++++++++++
- util/main-loop.c                  | 21 +++++++++++
- 32 files changed, 346 insertions(+), 12 deletions(-)
----
-base-commit: 38879a667fbb4ef54c70de71494882615f600a64
-change-id: 20250912-console-resize-96c42140ba08
-
-Best regards,
 -- 
-Filip Hejsek <filip.hejsek@gmail.com>
+2.52.0
 
 
