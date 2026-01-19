@@ -4,92 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E74D2ECE6
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 20:55:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 904EED2ECEC
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 21:01:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhwFR-0002At-BA; Mon, 19 Jan 2026 15:53:17 -0500
+	id 1vhwND-0007TA-NB; Mon, 19 Jan 2026 16:01:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhwFM-00029c-5X
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 15:53:12 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vhwFK-0005mZ-D8
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 15:53:11 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2a0d67f1877so31546925ad.2
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 12:53:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vhwMp-0007L5-EU
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 16:01:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vhwMm-00008b-NA
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 16:00:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768856450;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=2z0zmnJxqxCNk2xk8McI2avm6KO/yJgcNXtB2CcJGUo=;
+ b=gSOgEBkiDEIcqXveml9V76cCEAZ/DVcsCsP6htjTFYpyTgDXmwkjxg5rqK8XH4KGl3qlyd
+ QtWXnUKlio8W/wWXB5wrXWJIV6YFwLfkDVN4XlT3glkO2Gqs590u2eWPhqkucdiX1QaHre
+ WkL1ym0XL8dREafbZVw/oCzqx5qDFaw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-177-tQEXko0mNRuwSVxFi0SEtQ-1; Mon, 19 Jan 2026 16:00:48 -0500
+X-MC-Unique: tQEXko0mNRuwSVxFi0SEtQ-1
+X-Mimecast-MFC-AGG-ID: tQEXko0mNRuwSVxFi0SEtQ_1768856447
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-430f8866932so3977092f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 13:00:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768855988; x=1769460788; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=A+A7cVCAswnFS5egGy861iJ2dG6pr17EJV/k2Lhmo70=;
- b=M8ZxaXFieaoJADDnWStP+XZVCNS8or74P7C9SnwWomEqsaQllpgb38QKknXp0S1dGc
- 86y8YI631nXC+ULkyuZI4AmtBsSrQLE+JJwWfbRafu7jnmOXhp3D/jfcSZYvIz9fKhGL
- e+w97ig22OECdH+lTSUU9v7caLrT4aNCCWZFDG1/IYPkdIB6YaaEyev5jdDEULU5GlI+
- E0KbLd1gFMJSoP8z94QwnhAJlqpaCA89Aq56sYGcncCyglNcBg918N5Ux39JIb2ANfqL
- 2gvTtrspfGB7rkZ8VfXDlLmP/bxKsMWPRTXAWM0qaYQ+SCYpJpQr/rCQcugmyCTc7WAI
- YABg==
+ d=redhat.com; s=google; t=1768856447; x=1769461247; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=2z0zmnJxqxCNk2xk8McI2avm6KO/yJgcNXtB2CcJGUo=;
+ b=EFBeSMxXRu7K3Gya55R5SpjC651BGIQJkYJfqhsHl6c5i2h2WGxjg9Dz4Pyuizsxct
+ ILdhlZrrl3F1l1VYNqEuQkAfIWu9jR+TXYnoQKD0bTZJoHaFn0o+FzInTAXcqHkns3Zk
+ WZ67dwDCbVqGkpdhIQdEDIqjSwTeA6J21sxf1p/QK9pcja5Qr+mit8qj50JU0d02Ekra
+ FlseMb5eiajt7+MvZC4qxiComayEBv78LZUzcg1z0ypyXtX24xqGhgr68wVCkYDFJ4kA
+ D+qUHNvXQJnmG534cDSCGGtG+FvDbzQdhPhQAZH1vtAwHWutevnvzT/GMlLznllCICNP
+ XoeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768855988; x=1769460788;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=A+A7cVCAswnFS5egGy861iJ2dG6pr17EJV/k2Lhmo70=;
- b=ufb82IMbLPkTEqZRGWdyWeROW+JOOqjJhVsJLlBb/NUybtAwVDTWNt0O4Wglqgz9il
- L9d9iZJuVOewic7UC4qkg9mCQ6bkrMl5EG2Q46Zltc4Ux0Uywdivn7OsUqxd+UINf6U5
- 3TSKvSnAL7P5skkI43MF4UEF1VqB56dsVVWqGiK1Wgt0stHAkommMQrOIBxEvpXC82mE
- bjD2Ejf64nGUZGOQKX+tKJgdDFHlllGwIy+Asyc3nV0hDV+0i4KEoFTnMcX95uSEO2z9
- /zke1/KKbADUj3pp7S5qkoK8fkmGjFuBSt9jTNL3ep1e3tOB5vGeGamiG09v7Twgn8TX
- xgXg==
+ d=1e100.net; s=20230601; t=1768856447; x=1769461247;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2z0zmnJxqxCNk2xk8McI2avm6KO/yJgcNXtB2CcJGUo=;
+ b=DobL/k2k+c03WsivjER3N+Tz+TzKV0cVuA5LvOA/bkaMZI3/4WUVjkyZwgWAucB8VV
+ tQixV0rCzTI78rCkpQfyslnsBrWFlSYaP5Z/mHNg3T8n3T3RlCR+NyElGxB8VcNmYr2Z
+ HZGlEBa2IfJ0PrzErYsc84MW/kwuFfh3pZNuXxGn6xnZx2dyDb3HIvaHTX4XPzW3oRXT
+ Nk5t8CuBH6Umo/boYRGJqoA2ZWDeYnMkNxFhTgl/j/fWguVeLFWacMz7ACLvuOAR7b9P
+ LwgSm/KrKhq8piOReZ+IwQ0OlRjzlRJrNkFql/y2Mo/fAPmued3u2pSAU5sb1c2bZYei
+ 1RGQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWzEj+EAutFiSf95bI9S/6u1rBTcDC1Nc/tf4Irgtti9YdmEx+i1fFFqROz+VdoFZCj6UTQd6qr4M2I@nongnu.org
-X-Gm-Message-State: AOJu0YyvG58K6PsaJF1dhM+hR0eFgEa6JLUtsQOXgBVyCffP3gJ1L+Sh
- f4hM1ss9q89ZfbbKqUDLzSWmrnllZ76oyOMPC0qqfZ3/lEMGx4EmOqg7x54yhnXXCjg=
-X-Gm-Gg: AZuq6aK4eiu57y16m5eKrREp9XyWIO/dY9LObRJyfVVtcgWX5aXcsvZPRIHxDx6clYD
- 20ww2PC0BJXZrMV1GhbvxvHIqIOIjenCAJNmLNMR3FLDURzbb/hFuRp4ObALU4kGDWg7k2SwWB0
- LJQDVvQelGfs34M0vgMfRB5StC72UbVLrrz5bYV3eAYSSZNnYeKQSQTdSQuTfT6rwpYDcPicnSB
- zbsX3SaYsxKQ3xqMq5JxqOxZ/Dm6tPzSSYKKGGvNochWzYiSBcDRQcIKlKHrG0o+dVKtyLnk2SU
- xgdilhobpzkybiH7b2PRbq/PNFjh9gRnFqsTPidb4KTXfAKtmfpkXMGmXt5qfNTBhHmtLfwTV68
- CNzVxXgbUwU/pbFGMtYparJ5180L2DEq4Zsb2Q8BWkTzGCozlWHZ8ws2dDZ4bi8BFzg9mmoPInB
- jP7VHmKo5oOfMohKR+5TB2axaJ7N+t9g==
-X-Received: by 2002:a17:902:ecce:b0:29f:2ec4:83eb with SMTP id
- d9443c01a7336-2a718971860mr113792485ad.53.1768855988394; 
- Mon, 19 Jan 2026 12:53:08 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a71941e3cdsm101910825ad.100.2026.01.19.12.53.05
+ AJvYcCV0xrxdjFHkWLa31smAiUIA3GztyyfehcejnClwF1h2442lzyuNNMq787HCAmpCuOhKiQt2ayLEqQ7F@nongnu.org
+X-Gm-Message-State: AOJu0Yww8WZd2rp+h/5iA7M1c32VHnY+vcTDnrJSvaqhdkW5wNETedFe
+ 8xfu1qJL5HyQim6LZbXI+Huz75JOWK/KdbRG+1UUmMuOeDKJx3eNQqFsoAdUqQs73ALsITACOv6
+ 3FWG4TdNR8qYJbTMXgzrZx09gFzCUIjWoGM+2PagfmnwpatqWknpmEtQG
+X-Gm-Gg: AZuq6aIUrBunRG9HO0pBJi18SlidF+SvIcNrGby/IyxVV9viRyxkYeWxsrdtmy2Soe4
+ QTgMTanP3nSz3bYAhcmkYYSppmz7FjsLmHbLGh4J9UWSIehAnk4pb7S4KyWQqLtLZUIr8iMhmha
+ 9SBU0+r6tFVp0AFypea29undtrP6U4eZhh1O1zpSzNTI+mn3ua7qQ7TeIIg/yraYKiBbog8yRKY
+ vRRrVLt5IFtxwfZfdC1PS9LSGWZ/1LbLgfKo3eTyHB8ci00wI3pdHxUYIbFARKaJwDYUMfsJuAC
+ Z5USjFsM04mJdXlFhkvuKshNymbpmBeGdmyr6e3UWO6dF3Hk73yD/NAl8AsQeXVMpJnFppxKHBL
+ /mqZRC3ja2t0EVSRi0A/ZiqNXR1YadRua2He6jUVRt1oadGU7nCly05AlKHuOicDoBqlStnN0nu
+ Sssw1x/gn7wwDMSg==
+X-Received: by 2002:a05:6000:24c6:b0:432:5b81:483 with SMTP id
+ ffacd0b85a97d-43569980c46mr16972946f8f.24.1768856447445; 
+ Mon, 19 Jan 2026 13:00:47 -0800 (PST)
+X-Received: by 2002:a05:6000:24c6:b0:432:5b81:483 with SMTP id
+ ffacd0b85a97d-43569980c46mr16972918f8f.24.1768856447080; 
+ Mon, 19 Jan 2026 13:00:47 -0800 (PST)
+Received: from [192.168.10.48] ([151.61.26.160])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-4356997e6cdsm26428553f8f.31.2026.01.19.13.00.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Jan 2026 12:53:08 -0800 (PST)
-Message-ID: <2bf9fc90-c7c6-4439-8ac8-d955950591c5@linaro.org>
-Date: Tue, 20 Jan 2026 07:53:02 +1100
+ Mon, 19 Jan 2026 13:00:46 -0800 (PST)
+Message-ID: <a0e46280-3c8c-4864-808e-9c728efc1971@redhat.com>
+Date: Mon, 19 Jan 2026 22:00:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 0/8] Tracing patches
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
  Richard Henderson <rth@twiddle.net>, John Snow <jsnow@redhat.com>
 References: <20260119190823.867761-1-stefanha@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+ <2bf9fc90-c7c6-4439-8ac8-d955950591c5@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-In-Reply-To: <20260119190823.867761-1-stefanha@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <2bf9fc90-c7c6-4439-8ac8-d955950591c5@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,66 +163,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/20/26 06:08, Stefan Hajnoczi wrote:
-> The following changes since commit 38879a667fbb4ef54c70de71494882615f600a64:
+On 1/19/26 21:53, Richard Henderson wrote:
 > 
->    Merge tag 'pull-tcg-20260119' of https://gitlab.com/rth7680/qemu into staging (2026-01-19 09:04:31 +1100)
+> This has lots of failures:
 > 
-> are available in the Git repository at:
+> https://gitlab.com/qemu-project/qemu/-/jobs/12772423978
 > 
->    https://gitlab.com/stefanha/qemu.git tags/tracing-pull-request
+>> Summary of Failures:
+>> 507/512 tracetool - 
+>> qemu:dtrace                                              
+>> FAIL             0.03s   exit status 1
+>> 508/512 tracetool - 
+>> qemu:ftrace                                              
+>> FAIL             0.04s   exit status 1
+>> 509/512 tracetool - 
+>> qemu:log                                                 
+>> FAIL             0.04s   exit status 1
+>> 510/512 tracetool - 
+>> qemu:simple                                              
+>> FAIL             0.04s   exit status 1
+>> 511/512 tracetool - 
+>> qemu:syslog                                              
+>> FAIL             0.04s   exit status 1
+>> 512/512 tracetool - 
+>> qemu:ust                                                 
+>> FAIL             0.03s   exit status 1
 > 
-> for you to fetch changes up to 0527c4fdd28ae8b13ecc34f80b91e42ce42b917f:
-> 
->    tests/tracetool: Honor the Python interpreter that "configure" detected (2026-01-19 13:58:23 -0500)
-> 
-> ----------------------------------------------------------------
-> Pull request
-> 
-> - Thomas Huth's Python interpreter fix
-> - Paolo Bonzini's tracetool cleanups
-> - Stefan Hajnoczi's tracetool test QEMU_TEST_KEEP_SCRATCH=1 support
+> https://gitlab.com/qemu-project/qemu/-/jobs/12772423994
 
-This has lots of failures:
+Given the PR is based on an old tag ("Merge tag 'pull-tcg-20250905' of 
+https://gitlab.com/rth7680/qemu into staging") it's probably conflicting 
+with some changes to python/.
 
-https://gitlab.com/qemu-project/qemu/-/jobs/12772423978
+Stefan, drop those and I'll resubmit in some time.
 
-> Summary of Failures:
-> 507/512 tracetool - qemu:dtrace                                              FAIL             0.03s   exit status 1
-> 508/512 tracetool - qemu:ftrace                                              FAIL             0.04s   exit status 1
-> 509/512 tracetool - qemu:log                                                 FAIL             0.04s   exit status 1
-> 510/512 tracetool - qemu:simple                                              FAIL             0.04s   exit status 1
-> 511/512 tracetool - qemu:syslog                                              FAIL             0.04s   exit status 1
-> 512/512 tracetool - qemu:ust                                                 FAIL             0.03s   exit status 1
+Paolo
 
-https://gitlab.com/qemu-project/qemu/-/jobs/12772423994
-
-> Log file "stdout" content for test "38-tests/tracetool-isort.sh" (FAIL):
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/__init__.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/backend/__init__.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/backend/dtrace.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/backend/ftrace.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/backend/log.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/backend/simple.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/backend/syslog.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/backend/ust.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/format/__init__.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/format/c.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/format/d.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/format/h.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/format/log_stap.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/format/rs.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/format/simpletrace_stap.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/format/stap.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/format/ust_events_c.py Imports are incorrectly sorted and/or formatted.
-> ERROR: /builds/qemu-project/qemu/scripts/tracetool/format/ust_events_h.py Imports are incorrectly sorted and/or formatted.
-> Log file "stderr" content for test "38-tests/tracetool-isort.sh" (FAIL):
-> Log file "stdout" content for test "39-tests/tracetool-mypy.sh" (FAIL):
-> tracetool/backend/dtrace.py:76: error: Function is missing a type annotation  [no-untyped-def]
-> tracetool/backend/dtrace.py:91: error: Function is missing a type annotation  [no-untyped-def]
-> tracetool/backend/dtrace.py:99: error: Function is missing a type annotation  [no-untyped-def]
-> Found 3 errors in 1 file (checked 18 source files)
-
-
-r~
 
