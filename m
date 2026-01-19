@@ -4,68 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92B3BD29C43
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 16:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A879D29C46
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 16:53:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhsTP-0000Tr-KK; Mon, 19 Jan 2026 11:51:27 -0500
+	id 1vhsUn-0001Mz-MT; Mon, 19 Jan 2026 11:52:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vhsTN-0000TW-Ag; Mon, 19 Jan 2026 11:51:25 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vhsTK-000672-3S; Mon, 19 Jan 2026 11:51:25 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwCnrCQDYW5pJag4Aw--.20932S2;
- Tue, 20 Jan 2026 00:51:15 +0800 (CST)
-Received: from [192.168.31.151] (unknown [222.244.183.203])
- by mail (Coremail) with SMTP id AQAAfwBXse4BYW5pWfMUAA--.22069S2;
- Tue, 20 Jan 2026 00:51:14 +0800 (CST)
-Message-ID: <0e71fdee-3569-4f83-afc8-46e0cbe565d0@phytium.com.cn>
-Date: Tue, 20 Jan 2026 00:51:10 +0800
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vhsUf-0001Ih-2a
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 11:52:48 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vhsUc-0006Qd-2C
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 11:52:44 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2a0a33d0585so27777375ad.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 08:52:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768841560; x=1769446360; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nLgvqDdn8XzPx3UsEZeLHyQrkqUq3HuhgUFapi66pBk=;
+ b=RGwaxoL71O/QJFFrkofUmPK5VfY426JaY/CRlgx4T0r/p9GJ0MC0TmZZw1Ota7IG2g
+ CXkeA1L5hvjaFlaQxOgD0R/9YqojeLlJ10aVBlSjQwcidtchzKFmnFBJdbjBqRDBgi17
+ FaNxRzAel7R8GHsvnW2pIzS+hyq3qjLqzrrueRgg0+gXZ3v+CtwL7NvPbSyZF8KHhCRJ
+ xABxFxFxUJqkT47JEe2XdLFL61QAoY7tJ38+eXhj8XE0LXHOG1k8D1eQ5+stcuvBe6u6
+ 6Hj7Lroq92S3FBH0SE5QaBzzSVbODxyxf1MO01rj0CyPl1ZMZVhrtvcvGgPeAb1YidUe
+ ZZ3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768841560; x=1769446360;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nLgvqDdn8XzPx3UsEZeLHyQrkqUq3HuhgUFapi66pBk=;
+ b=deRTZ2918qdYveX+3zWz3SqfPtiBf1yZ1jzXC7BZEReRo+QeLXZd8g7cjb0nQl2SoN
+ HWU51bwKmyYJ95xi18MbZuAzzDduTOkL173l8iNhrYJCduhNrN40HVc3HxhGSBfeV+p3
+ hohkAZBp5FgYyI7s3ffIEAmV127VgK4wMOz9pnur3K39kvBD/BknKTqhMWBdxsDdv90s
+ +lw6lh3EsV2PZ8zc7bDXdFa3gumwbEfVPM3OYXDGm3HUHsWbYzVjeBDMu8dwctjbtB3/
+ 0zL3apdyk2gDWEP/UqPkBjM8vcob5PG+ZZ9H3M0iE6BQLcdhjlodeM2+BvrdSEa/rwen
+ nkIg==
+X-Gm-Message-State: AOJu0YzrDxnTTBB3cmEFagPvgvmhRXu5Ok72nE2co+MMcPA9F0AQdjsY
+ L5LWlvTLZg/bg2zh/LcQSGK5OLTCTAlnwAeKMyEolCrzMbPqLs4141S+PfzfLdv9b2s=
+X-Gm-Gg: AZuq6aL4gJgNpHSKsOc5HFb29B/GCRq65DuaK1c0PsHp9yf4YtDcZEVEjs/cCpBLAzl
+ BIlEQ+ZnQEToVGdPNTKg6fmHmtW3CoWT1e8C3KAG1pRlJsDXyqP4asvjX+nhy8HAZXoKq+j0eET
+ ngwPVgftdXVPscYR+T7FJjK+GhgBIYzN/Yk0bYLhWkw5xY/J26Pi4oyVIOIMObHPZmmmfMXPbrv
+ 97D57eqXvW5IJdYIA21h74S6XYxrUieT3bg4SV3eq0zXNtUbIeFGaA5S57/5/KgOiXFV0l3DT04
+ FEpNzYTcCNaFcaJjis//dna16ol4sYiceTq9MT8zZ3sQIZeh6C9eyrFRg6yIk7WKlten7dnjk+K
+ RPymD+wqTroOz2smny74TVlvMe/bARBam7XCDX3hlv6Pk7qECr1TRWKXDlKDa8lPNg1pejwvoRe
+ DYPEB9Z0oR8djyuJI+/QaH1JsV95nlJvGHcVc0BjSsw06MPx4IcOs2BIM8
+X-Received: by 2002:a17:902:ea06:b0:297:dabf:9900 with SMTP id
+ d9443c01a7336-2a71865c7a8mr107940905ad.0.1768841559581; 
+ Mon, 19 Jan 2026 08:52:39 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a71941c200sm95108275ad.95.2026.01.19.08.52.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Jan 2026 08:52:39 -0800 (PST)
+Message-ID: <42bfa9f6-04f8-436c-9a5f-23891366fad0@linaro.org>
+Date: Mon, 19 Jan 2026 08:52:37 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v9 2/8] hw/arm/smmuv3-common: Define STE/CD fields via
- registerfields
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mostafa Saleh <smostafa@google.com>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-References: <20260119161112.3841386-1-tangtao1634@phytium.com.cn>
- <20260119161112.3841386-3-tangtao1634@phytium.com.cn>
- <fa73ef10-4a1e-486d-9d80-550c91eef11f@linaro.org>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <fa73ef10-4a1e-486d-9d80-550c91eef11f@linaro.org>
+Subject: Re: [PATCH v2 02/11] plugins: factorize plugin dependencies and
+ library details
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20260102214724.4128196-1-pierrick.bouvier@linaro.org>
+ <20260102214724.4128196-3-pierrick.bouvier@linaro.org>
+ <aWotkyT7pmw3RKh8@redhat.com>
+ <fa736dbe-6a3b-4e17-87bc-39cae8d8e475@linaro.org>
+ <aW3myeSBKTZLUA3o@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <aW3myeSBKTZLUA3o@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwBXse4BYW5pWfMUAA--.22069S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAABWltPrkFOAACs4
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvdXoWrtrW5Gr43Jr18XF17CF18AFb_yoWkZFb_AF
- WvqFy8ur4DGFs3JFyUGF13Zr93Kw4jkrWUXFs8Xr45Gr90qryDZFs8t39Yvw43Wa1DJryr
- GanIv3yrJFyjqjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
- Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
- UUUU=
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,45 +146,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
-
-On 2026/1/20 00:38, Philippe Mathieu-Daudé wrote:
-> On 19/1/26 17:11, Tao Tang wrote:
->> Switch STE/CD bitfield definitions and accessors to the
->> 'registerfields.h' REG/FIELD API.
+On 1/19/26 12:09 AM, Daniel P. Berrangé wrote:
+> On Fri, Jan 16, 2026 at 04:02:50PM -0800, Pierrick Bouvier wrote:
+>> On 1/16/26 4:22 AM, Daniel P. Berrangé wrote:
+>>> On Fri, Jan 02, 2026 at 01:47:15PM -0800, Pierrick Bouvier wrote:
+>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>> ---
+>>>>    meson.build                   |  2 +-
+>>>>    contrib/plugins/meson.build   | 13 ++-----------
+>>>>    plugins/meson.build           | 15 ++++++++++++++-
+>>>>    tests/tcg/plugins/meson.build | 13 ++-----------
+>>>>    4 files changed, 19 insertions(+), 24 deletions(-)
+>>>>
+>>>> diff --git a/meson.build b/meson.build
+>>>> index db87358d62d..3d6c6c702d0 100644
+>>>> --- a/meson.build
+>>>> +++ b/meson.build
+>>>> @@ -4499,7 +4499,7 @@ if get_option('plugins')
+>>>>      if host_os == 'windows'
+>>>>        # On windows, we want to deliver the qemu_plugin_api.lib file in the qemu installer,
+>>>>        # so that plugin authors can compile against it.
+>>>> -    install_data(win32_qemu_plugin_api_lib, install_dir: 'lib')
+>>>> +    install_data(win32_qemu_plugin_api, install_dir: 'lib')
+>>>>      endif
+>>>>    endif
+>>>> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+>>>> index 6f72b2ce0c9..8f9f0257ee5 100644
+>>>> --- a/contrib/plugins/meson.build
+>>>> +++ b/contrib/plugins/meson.build
+>>>> @@ -9,17 +9,8 @@ endif
+>>>>    t = []
+>>>>    if get_option('plugins')
+>>>>      foreach i : contrib_plugins
+>>>> -    if host_os == 'windows'
+>>>> -      t += shared_module(i, files(i + '.c') + '../../plugins/win32_linker.c',
+>>>> -                        include_directories: '../../include/qemu',
+>>>> -                        link_depends: [win32_qemu_plugin_api_lib],
+>>>> -                        link_args: win32_qemu_plugin_api_link_flags,
+>>>> -                        dependencies: glib)
+>>>> -    else
+>>>> -      t += shared_module(i, files(i + '.c'),
+>>>> -                        include_directories: '../../include/qemu',
+>>>> -                        dependencies: glib)
+>>>> -    endif
+>>>> +    t += shared_module(i, files(i + '.c'),
+>>>> +                      dependencies: plugins_deps)
+>>>
+>>> Nit-pick - under-indented by 1 space. The orignal code had the
+>>> same bug, but lets not preserve it.
+>>>
+>>>
+>>>> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+>>>> index a6e78438510..c58f2e382ae 100644
+>>>> --- a/tests/tcg/plugins/meson.build
+>>>> +++ b/tests/tcg/plugins/meson.build
+>>>> @@ -1,17 +1,8 @@
+>>>>    t = []
+>>>>    if get_option('plugins')
+>>>>      foreach i : ['bb', 'discons', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
+>>>> -    if host_os == 'windows'
+>>>> -      t += shared_module(i, files(i + '.c') + '../../../plugins/win32_linker.c',
+>>>> -                        include_directories: '../../../include/qemu',
+>>>> -                        link_depends: [win32_qemu_plugin_api_lib],
+>>>> -                        link_args: win32_qemu_plugin_api_link_flags,
+>>>> -                        dependencies: glib)
+>>>> -    else
+>>>> -      t += shared_module(i, files(i + '.c'),
+>>>> -                        include_directories: '../../../include/qemu',
+>>>> -                        dependencies: glib)
+>>>> -    endif
+>>>> +    t += shared_module(i, files(i + '.c'),
+>>>> +                      dependencies: plugins_deps)
+>>>
+>>> Same under-indent by 1.
+>>>
+>>> With the indents fixed:
+>>>
+>>>     Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+>>>
 >>
->> FOLLOW-UP: Fix CTXPTR_HI/S2TTB_HI/TTB0_HI/TTB1_HI high bits width
->> (should be 24 bits, not 16).
+>> Patch 3 already fixes the indent.
+> 
+> Please fix the problem in this patch since that is where it is first
+> present in this series.
 >
-> Right, but ...
->
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Reviewed-by: Eric Auger <eric.auger@redhat.com>
->> ---
->>   include/hw/arm/smmuv3-common.h | 169 +++++++++++++++++++++++----------
->>   1 file changed, 120 insertions(+), 49 deletions(-)
->
->
->> -#define STE_VALID(x) extract32((x)->word[0], 0, 1)
->> +REG32(STE_0, 0)
->> +    FIELD(STE_0, VALID, 0, 1)
->> +    FIELD(STE_0, CONFIG, 1, 3)
->> +    FIELD(STE_0, S1FMT, 4, 2)
->> +    FIELD(STE_0, CTXPTR_LO, 6, 26)
->> +REG32(STE_1, 4)
->> +    FIELD(STE_1, CTXPTR_HI, 0, 16)
->
-> ... not followed up?
 
+I will do that for next version, thanks.
 
-Sorry, there's a typo here. What I was thinking at the time was that I 
-would submit a separate patch follow this series.
-
-Do you need me to resend this series?
-
-Best regards,
-
-Tao
+> With regards,
+> Daniel
 
 
