@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 727CED4A5F4
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 08:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CA4ECA5FFB
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 08:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhkCs-0007lI-PK; Mon, 19 Jan 2026 03:01:50 -0500
+	id 1vhkH1-0001z7-Cc; Mon, 19 Jan 2026 03:06:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vhkCq-0007jP-58
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 03:01:48 -0500
-Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ id 1vhkGp-0001tD-Rp
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 03:05:59 -0500
+Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vhkCo-0006O0-Fc
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 03:01:47 -0500
-Received: by mail-pl1-x641.google.com with SMTP id
- d9443c01a7336-2a2ea96930cso23391325ad.2
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 00:01:45 -0800 (PST)
+ id 1vhkGn-0007L3-7k
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 03:05:54 -0500
+Received: by mail-pf1-x441.google.com with SMTP id
+ d2e1a72fcca58-81e8b1bdf0cso2248218b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 00:05:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768809704; x=1769414504; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768809950; x=1769414750; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:subject:from:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=uuWAehcqaKWCczrmhFYz6Ttq4kLDp3Wwx7ZZ/wvFvZE=;
- b=S0Mc2H6ltWg0hqhQNg0rQI0wrEukAxjN3w91NlGo0XH3H5CzrFe5KMerF65DE7cCXA
- z1hqyY7PfZK0uSREQ1oRWojSqnA6/BvtqGPOwZOB8A+l0dXgZqonyFDHpzguxfsBuQ7y
- Qw90hFKLmT4mDG8Az2XaZpsiSo0ggSnyS/n+pqB7h9CzNtlsVyekNaWk+71umptYCgua
- spz+zjMW0OzM9+2HMba4hERlaAOQTfodmDLFY9JAdTLRAjC6CjE3jykblrigtuw+OFV7
- DoD0SPfzpGNdztYELgJNnMmH6TUdSXmhd+BH3HityXaEJnR2qbWyc8NQeYuj0ldnrVEU
- V2tw==
+ bh=vWY/iFJIQrIoyhkl2tx0ZEw38qj30F85p6XeY6HDnP8=;
+ b=RznkiPrNSk/umksS4dzHcTpyvsDfZ0oiix8xacncYjv63rWZk9WtOFqkZ5RUN3ywFi
+ MezlJmU8LZAQO1TVXe+I5akB4mQ66iK8KxuEhZC5IMVtjIb/TlBg/klS3tiJTKRo412C
+ gjckNcgTC98DxBcBVMtMhU7+ZIFVP7wB9DzOrUhKLPeNEW3AlDA6GxZXkx+cT83374NL
+ 2iESVT9+tieTrUMaLROyB9gvD2SnynCMWCJhxBTe3tOMNR4/S1mWD8XZ0jnZb5XNuZXH
+ DS9gBmyacxB1vsf+JAunNsnE3QV6SnU/KRJlis97pfYWcP9J+7Pl4sl9nzgzj1rGm2XA
+ XNJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768809704; x=1769414504;
+ d=1e100.net; s=20230601; t=1768809950; x=1769414750;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:subject:from:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uuWAehcqaKWCczrmhFYz6Ttq4kLDp3Wwx7ZZ/wvFvZE=;
- b=UeMqNzvb9lCJsWEiIyO1EcG3gbkqInn/wCALi/mMyr//NjPjCD5Y+3H5Ps0oVsjLgS
- L/xh7FgLD7MmdSgbln4yEy4++S9lTFk5ZktohFUJ/VykiT2sYQpYEVRXPuoq8l5rWu6S
- FWi2ciiIC8eGNLFYSwNCFU/oVbYsen2AyoF4soqgtXdfkKrcl/aKAst3ir3lFnGf9qBn
- HD1azfvOZTpSOFZdr30V3uHxDZFjPr+OHXJ86UjpU0pQrDAjRQTFYCQi3n0M8k6CF62F
- hzTV+N23RtX61kf9A38GDK+3meiGGcCIf24ekIuywoAZl6HC35DSSvnIqvDZFEOufG2p
- uVjA==
+ bh=vWY/iFJIQrIoyhkl2tx0ZEw38qj30F85p6XeY6HDnP8=;
+ b=hvwgKboxZk9HAaS8keAtKcNUwz+ri0UAMl3VjrmgiWJ2xedh81VCmgcmPSfjMllmBf
+ NfiPY0+wnjf1TOlA2tKceKz4FsHvmdNcrBvXRp5sjnDJ1MolaYMQgSr3hmtrpkOvAHDI
+ i+g6C6oMrWCgDClfjOODu0ZT4/g1pp/hDVeZZJFM71nu7/I2K1FslLKMZKhKik9EtUBC
+ DKItN++V4jqi1k/CGIO1hq7TGZJp0vVI8TCtvw0dcc0zR/i3hnOfayrdD8R49A0Bbf94
+ T7KeiTHgzSicClJPr3wjs8nIM4QEo0pVHSD0nF8mG0zxYFV8hjRwls0fibiQJLfqzn3X
+ C98g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWajAPJ6BDA5zpQXqhHEdGnI9F44PuKY9UGxfO4iJpK7ROIwkrZbVGkkGlE9XAtSs19VbNGEoPPnzew@nongnu.org
-X-Gm-Message-State: AOJu0YxnsqR33LPj5OIbClrJFriQU/WLH4O8GeMeqTnooRY1SIJqPGBS
- MJ6blxwyrK4StItZ8dTQZ1tHxwl54w7obYFPqMftAKWkMDCN/F7hUJNqeIWcv7bQ5mg=
-X-Gm-Gg: AZuq6aJtR664r/4ZtRfRj4q4MZUvhWR+U7cM4MHke/QUL5CBAsF5mokBxWCqI0/Q+h/
- HVcewPPbr60bpxqOQkIuoh3iq+AxfXYwrcuVfceKaC5La2S2IVF5mhFizkaEiQDvVf5Kk+3eBJI
- wH5yykOL9oGsCGGpzV2VQ5NMWu2sQbx0Cqo7s4l3SIQ7CXkYemeZKxu/wYQTCjyjvoR6n9peEsS
- OcKuJG+M7WVGu6fcf2aXv+HGiL8T9xEoOznNdgyTv8ayrnECS8fQxB9DeqvTayxnlLCl1AoaXl+
- wADEbhBGhK8OJFiiIktrxHl3rmUXGJnbPIhM0vjhlxGguxi2VkjD3YVG3GNuaTAk1I52LtdZdrn
- LdGQyaaQ6PpOSTsxUMapVjG1vMdYK5m4wd4Zx7BHIzP5k3Y+hE+bxFTh036S0Tp23KqpFPpumr0
- hRlFMTiBQDc+9RU1CJdMNWUr8CuOQWeLmkvTiWOqEiPALrqWH2cbpdGTwZ
-X-Received: by 2002:a17:90b:5545:b0:340:5c27:a096 with SMTP id
- 98e67ed59e1d1-35272ef6b15mr8338174a91.6.1768809704188; 
- Mon, 19 Jan 2026 00:01:44 -0800 (PST)
+ AJvYcCWWTjpO8PCV1bDG+byws2O/rT9muSlljpRKvXag6wo+slnxJ3/B/eRM/wFrA+loyixdX7sZ+JjZQRln@nongnu.org
+X-Gm-Message-State: AOJu0YyVoxrcWmnEcef4g+cKsJtKpA3weRQkv6cqVwGVY/5Dh/Q6rMe7
+ aBGLTa2+8qT9KdQagHAehVyQtwgP6e9q3x8dDxGGr3sel730Ms8eT3R/8tV/M/Y5Yic=
+X-Gm-Gg: AY/fxX452uYjacKOoqD5l6GQt4Ma/R8aSMD/xdIseRP8BvxCSFRPrT3Hk+gB/u7o79P
+ kI7hSJdAmZT72F+7MpRK33V7oOYj0uQYb1C8eFAvwrDyfBuFMNqjuTdFgWNaRx1H430lu3li+zw
+ T9HvdN35FXJqXobQPdgkkhRnf1Qde317xQrgfcn6HdfVf3nN7yxByPGYew16R20Hy2hUipCuuFN
+ Bd09RrLjug+E9Jgk8yWdycCwQweyn4lrX2V43PsiZrwBCcQMm8Y4vx942T+RZ0BnVCHWqxm1KpJ
+ m11d2m061oqrWCm0cOI58QgH/WyQ/eBvJHoHpKncBmWd7H1xOiVFMynAzNTUZyjvObX7H8deIYm
+ ZgQpNTNnYSEK1aC8Ukp+DcIAQPwE+EqsPIJ8nbyp52KEZVqKiS+FZLciP/665opLcgTNWnfhJlg
+ KArch8emwbXwxFJFswc8jAii6OCWd65LvYVaWOkO9p+Nlu4XPuUb92JrHX
+X-Received: by 2002:a05:6a21:99aa:b0:35b:9ba2:8cd5 with SMTP id
+ adf61e73a8af0-38dfe7c2078mr11150744637.56.1768809950189; 
+ Mon, 19 Jan 2026 00:05:50 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-352678c6a10sm10788444a91.15.2026.01.19.00.01.43
+ 98e67ed59e1d1-352741cc52asm4079632a91.3.2026.01.19.00.05.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Jan 2026 00:01:43 -0800 (PST)
-Message-ID: <f2a27e86-8044-4ae0-ba3e-afa1becf4db8@linaro.org>
-Date: Mon, 19 Jan 2026 00:01:43 -0800
+ Mon, 19 Jan 2026 00:05:49 -0800 (PST)
+Message-ID: <7a605222-4c4a-454f-9d50-d1eac922cee2@linaro.org>
+Date: Mon, 19 Jan 2026 00:05:49 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 07/54] bsd-user: Fix __i386__ test for
- TARGET_HAS_STAT_TIME_T_EXT
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-References: <20260118220414.8177-1-richard.henderson@linaro.org>
- <20260118220414.8177-8-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v2 11/58] bsd-user: Fix __i386__ test for
+ TARGET_HAS_STAT_TIME_T_EXT
+To: Michael Tokarev <mjt@tls.msk.ru>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: ktokunaga.mail@gmail.com, berrange@redhat.com, thuth@redhat.com,
+ pbonzini@redhat.com, philmd@linaro.org, Warner Losh <imp@bsdimp.com>,
+ Kyle Evans <kevans@freebsd.org>, qemu-stable <qemu-stable@nongnu.org>
+References: <20260116033305.51162-1-richard.henderson@linaro.org>
+ <20260116033305.51162-12-richard.henderson@linaro.org>
+ <bf48c6fd-bbb8-4289-bd63-b09e2492c14b@tls.msk.ru>
 Content-Language: en-US
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -115,11 +117,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260118220414.8177-8-richard.henderson@linaro.org>
+In-Reply-To: <bf48c6fd-bbb8-4289-bd63-b09e2492c14b@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x641.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x441.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -142,38 +144,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/18/26 2:03 PM, Richard Henderson wrote:
-> The target test is TARGET_I386, not __i386__.
+On 1/18/26 11:44 PM, Michael Tokarev wrote:
+> On 1/16/26 06:32, Richard Henderson wrote:
+>> The target test is TARGET_I386, not __i386__.
+>>
+>> Cc: Warner Losh <imp@bsdimp.com>
+>> Cc: Kyle Evans <kevans@freebsd.org>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > 
-> Cc: Kyle Evans <kevans@freebsd.org>
-> Reviewed-by: Warner Losh <imp@bsdimp.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   bsd-user/syscall_defs.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> This looks like a qemu-stable material (but probably of very
+> low priority).  Please let me know if it is not.
 > 
-> diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-> index 52f84d5dd1..c49be32bdc 100644
-> --- a/bsd-user/syscall_defs.h
-> +++ b/bsd-user/syscall_defs.h
-> @@ -247,7 +247,7 @@ struct target_freebsd11_stat {
->       unsigned int:(8 / 2) * (16 - (int)sizeof(struct target_freebsd_timespec));
->   } __packed;
->   
-> -#if defined(__i386__)
-> +#if defined(TARGET_I386)
->   #define TARGET_HAS_STAT_TIME_T_EXT       1
->   #endif
->   
+> Thanks,
+> 
+> /mjt
 
-This commit brings a regression, this patch fixes it:
+It needs to come with this fix, or it will introduce a regression on 
+x86_64 hosts:
 https://lore.kernel.org/qemu-devel/20260119075738.712207-1-pierrick.bouvier@linaro.org/T/#u
-
-@Michael, the current patch is a good candidate for stable, but it has 
-to come with the fix also, or it will be a regression.
 
 Regards,
 Pierrick
+
 
