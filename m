@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DEDFCCF2E6
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 11:05:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C363CA5FF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Jan 2026 11:05:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vhn3M-00069Y-Cl; Mon, 19 Jan 2026 06:04:12 -0500
+	id 1vhn3r-00080b-O2; Mon, 19 Jan 2026 06:04:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhn3F-0005ty-Uz
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 06:04:07 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhn3q-0007v3-60
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 06:04:42 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhn3D-0006Uq-80
- for qemu-devel@nongnu.org; Mon, 19 Jan 2026 06:04:05 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-42fed090e5fso2253092f8f.1
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 03:04:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vhn3o-0006ca-Dx
+ for qemu-devel@nongnu.org; Mon, 19 Jan 2026 06:04:41 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-47ee4338e01so16752195e9.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 03:04:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768820641; x=1769425441; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1oLWab/Xaud4IgoL2Fl+eccutCbR+6dlUmvzxaTjay0=;
- b=Z9pqDHdWp1YtBIdqM6G53JsddxJe8LvcK5upQlimjqi3eIO69k9ITonollWdgRDX0C
- PMyc/9chFruJMfN2SjiUeQ1hpdn1d4UyDaTnVO9Ja4EyG16i+fWDn9V+ul9buNgIFLVa
- qS02bDpZ+q+OkJI16XJsKV5hkQ7P2A53U0ERUPGUkqx3bXqKRXiFIeErOH1VvbF+MfKI
- KuIK1uQ/B3uNfTH4RqguhR+MyK7PdFOVgRgyYPWozJywZTBcNK+yHNnJspGW+RFIJ1FE
- eet8mtUC55IhWM43wvo4r1SS/6e6VehFn/sHaXOCjPzG+mD0c3k1klIsSIKPAYPcArX2
- SFPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768820641; x=1769425441;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1768820678; x=1769425478; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1oLWab/Xaud4IgoL2Fl+eccutCbR+6dlUmvzxaTjay0=;
- b=PEEWVtxskkBGagiHZu0H8rJNpMDfqw0gTSQcn2I2zyQfU2uYWl/6qS8Bak5VsPVfty
- Bod6AZx06R9BgTZbKn/hrZsiDKXEnH/mMEOmJdljuIwCowqgUy6vKF97vm1DvtYaMeWY
- XobihVdOM6v80W9ZWnBP98DCd9/71Hr0QXmujVkyNU2zha8rmsnDq1QziEIKl2Qvcv/Q
- SEY4Z6cldBqklH4mz+PHKBISm9BfbMwor2Da1dbMNDRq8LRMo9FmcDMWzXyppIaQFuTJ
- MXvl/fneSby2M557h8L22U1QQEX3bjOjBhqXpeRlyINFLtTZv4noCPtjgSCbnVioAsAE
- ZVYg==
-X-Gm-Message-State: AOJu0YzxoRoPACoiCzxsr5oOi0bsbiE3imbrXAoKsIa6Ltex7n7JScqd
- mK4dPg6HQiSkmcEsW5e1DuIoMPeqIPvbEkWxCAhIPtsjRyaWCXYhUoNyXfypVbvhUcz0kns2S/V
- HKbDWfSU=
-X-Gm-Gg: AZuq6aKQjks99AGSiUt6IezyCFTrjh3I+67Vz0T6Fo24Ili1CJVqbJFV62J4XVf5zyn
- tBuNfs9pc2OYlHjh2WkSTEm6vxgKSHybj2QwuDAozIZWOQI1kSPP8msuowgYxnHvBJHP0/xCANv
- 3T1vlaF3gMplqSri7A5FLA6Wk2+xKC7291M5oRx/6+hsbcvbveTrYI5cqZOorcjs5sNr1jHeu1t
- QPxtCrHlgJjFsDhf5EOtLYXRGl1i+LTVqZgSAY/QtxeBJurf+70qymzZfeWqLbqvunHmRVObxMg
- wz/w767gOM3Ur9DMzQ2E8ZIjuN740dUqMtROvX3Km7VtxHTNjBmt68NHrDg4cvXWZpv4n0VcQN1
- qaoBKFIkRhdrfcdxDZd0f6hEiGz9bBZS4aNnZj/x/eamcTalFTcweco7TML3JdnG/Vcmd9LO24r
- RtY6KnsGvi2RzGx8G/AX8mYIMhJzClYK+Monb5OsoX24A1JvYffVw6V2MlyDFAdsIqqYFHxHI=
-X-Received: by 2002:a05:6000:200d:b0:430:fdc8:8bc9 with SMTP id
- ffacd0b85a97d-43569bc17c2mr14631364f8f.40.1768820640923; 
- Mon, 19 Jan 2026 03:04:00 -0800 (PST)
+ bh=31vcExfhyxITyDpAatH4IsbdJjBgBKYHjZYCzAjc2Rk=;
+ b=reWORSN56g0T0sRIIYYu/8tyV7tCxnz0RnTUm+2RVe4alT/fbT+dqc2AFNkydWam/G
+ MOk/u1CWrwMEYOYWBBL0l0K3sWvqyRM+8m4aGZ83hD3rmtaB72RCDK1siSchpjtiDkTO
+ cDarKtSzFBhllQLl+EIifeZguVu33W828ZuK3xZyWcDw8FoBAOgCMHDkrwzAvziffh3y
+ Rb4T+EN1m0W0Oe9pbopGkbbekPBCO6uTc9jfP1/jpJArpMuAQ+HRnTjm3TOmoWEsnI23
+ xho8CdFRUWXnWbqlGeU3E9iZP0vPVGVSt8daHfq1F6j3kV9w6Y/PddZ5AHqykRqez9HH
+ nuUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768820678; x=1769425478;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=31vcExfhyxITyDpAatH4IsbdJjBgBKYHjZYCzAjc2Rk=;
+ b=cdrMeMqHXv5Yy6iRZRiZSviHleAHySrVeigHxP2yq4IB7+FlGGS628WBisiFnvAvhp
+ Rlek11IjJGuJgd7nUdbhWa8k1lJRD98mPsPdHk6Mkrq3bA6qnwnUbFIcMLFhzo70G55N
+ 6PY/3WRHpD+7xg+W+5aAW8z0YGiWbxosixerdMEYHf7y+BGZ1k85OZnZY3hwHStysm3A
+ 0WwhrcaCZwOpXZkA/O900OpUcuTvGUBVr2CHjioD/3tfwUG+eK3ATjrVOcvVwFjvaME2
+ YbdLh0xe8f2YFD4MvYSjqdxloYV+nb1YOxX4qItnEUY7DhRZbYC+NW0/G0C7iVxenVI6
+ p7Jg==
+X-Gm-Message-State: AOJu0Yx4UNLsHuFJhLTJ9EzmhXrZ2MNvnRQnEXtxn+MYFUjGTOCkatr4
+ AxxqVNClQZgV2ETsusgcPPYVFgPA15ZwORNEdpFfiy86lM86TBJndXEG+xwoaZ9vEEIfh+66dqe
+ NvsW4mXM=
+X-Gm-Gg: AY/fxX4vk7TYl/Cx3TgxnendZdOlw8ubS2gWhUioki6mYN6wKNWNxiR34kxPsYwZV9L
+ cLO2SBE2wAqnFdXO3296nqoGQTgYdpsHZG6NP+J7jG0LfMXjkAxEFuP660RKSTjhhsLo6GAlD0N
+ x0QHhjo2IrFSmzmKVpdI1c+Wq5ODn6Ii7RmQHB8jo7SignpKUrKMTtMtInr3IWILtn0VFbd57kX
+ rrJGvGaVCRk98/d/m1RF9w6yaYZRjo/YFfWssGWKOdY9YD3lM2hAe1gesF13H6LDaiKHj4jfIso
+ k2mvzofq38vGMugmCwfeJOiKq5gqfPhOlytduk5wz+fPPWJDcc3hfeCwPe6zk/55UgcqJIOGEF7
+ hx6Oq+OfNIHd7Q4pR39oCp1k0iNakj49GrgprpucO1UuKYLk0wtdg17Cdp8KHOqxKPzBIgIEvv4
+ LP+ryIQQdOzlE3abiTaYOxgnibJoVJmpwSc9UiSSjIt0cW1xxb4K6i1XhURlMg
+X-Received: by 2002:a05:600c:4448:b0:477:b0b9:312a with SMTP id
+ 5b1f17b1804b1-4801eab9db5mr122218155e9.7.1768820678212; 
+ Mon, 19 Jan 2026 03:04:38 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356997e6cdsm23521377f8f.31.2026.01.19.03.03.59
+ 5b1f17b1804b1-4801fe3b01csm82111835e9.5.2026.01.19.03.04.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Jan 2026 03:04:00 -0800 (PST)
+ Mon, 19 Jan 2026 03:04:36 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -69,15 +70,17 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 0/8] monitor/hmp: Reduce target-specific definitions
-Date: Mon, 19 Jan 2026 12:03:50 +0100
-Message-ID: <20260119110358.66821-1-philmd@linaro.org>
+Subject: [PATCH v3 5/8] monitor: Have *get_monitor_def() fill an unsigned value
+Date: Mon, 19 Jan 2026 12:03:55 +0100
+Message-ID: <20260119110358.66821-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260119110358.66821-1-philmd@linaro.org>
+References: <20260119110358.66821-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,50 +103,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Missing review: #6
+target_get_monitor_def() fills an unsigned value.
+Have get_monitor_def() fill an unsigned value too.
 
-v3: Rename MD_I32 -> MD_U32 (Dave)
-v2: Change get_value() prototype signature, use ldn_he_p()
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+---
+ monitor/monitor-internal.h | 2 +-
+ monitor/hmp-target.c       | 4 ++--
+ monitor/hmp.c              | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-Move most of target-agnostic definitions from
-"monitor/hmp-target.h" to "monitor/hmp.h" to
-reduce files target-poisoning.
-
-Philippe Mathieu-Daudé (8):
-  target/i386: Include missing 'svm.h' header in 'sev.h'
-  monitor: Add hmp_cmds_for_target() helper
-  monitor: Reduce target-specific methods
-  monitor: Have MonitorDef::get_value() return an unsigned type
-  monitor: Have *get_monitor_def() fill an unsigned value
-  monitor: Truncate target register using ldn_he_p() API
-  monitor: Reduce target-specific methods further
-  monitor: Remove 'monitor/hmp-target.h' header
-
- MAINTAINERS                   |   2 +-
- include/monitor/hmp-target.h  |  64 -------------------
- include/monitor/hmp.h         |  31 +++++++++
- monitor/monitor-internal.h    |  10 ++-
- target/i386/sev.h             |   2 +
- hw/i386/sgx-stub.c            |   2 +-
- hw/i386/sgx.c                 |   1 -
- monitor/hmp-cmds.c            |   1 -
- monitor/hmp-target.c          | 108 +------------------------------
- monitor/hmp.c                 | 116 ++++++++++++++++++++++++++++++++--
- stubs/target-monitor-defs.c   |   2 +-
- target/i386/cpu-apic.c        |   2 +-
- target/i386/monitor.c         |   9 ++-
- target/i386/sev-system-stub.c |   2 +-
- target/i386/sev.c             |   1 -
- target/m68k/monitor.c         |  62 +++++++++---------
- target/ppc/ppc-qmp-cmds.c     |  26 ++++----
- target/riscv/monitor.c        |   2 +-
- target/riscv/riscv-qmp-cmds.c |   1 -
- target/sh4/monitor.c          |   1 -
- target/sparc/monitor.c        |  11 ++--
- target/xtensa/monitor.c       |   1 -
- 22 files changed, 212 insertions(+), 245 deletions(-)
- delete mode 100644 include/monitor/hmp-target.h
-
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index feca111ae31..8dc88963630 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -181,7 +181,7 @@ void monitor_data_destroy_qmp(MonitorQMP *mon);
+ void coroutine_fn monitor_qmp_dispatcher_co(void *data);
+ void qmp_dispatcher_co_wake(void);
+ 
+-int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
++int get_monitor_def(Monitor *mon, uint64_t *pval, const char *name);
+ void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
+ int hmp_compare_cmd(const char *name, const char *list);
+ 
+diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+index 1600666ee92..5738b47bb03 100644
+--- a/monitor/hmp-target.c
++++ b/monitor/hmp-target.c
+@@ -63,7 +63,7 @@ HMPCommand *hmp_cmds_for_target(bool info_command)
+  * Set @pval to the value in the register identified by @name.
+  * return 0 if OK, -1 if not found
+  */
+-int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
++int get_monitor_def(Monitor *mon, uint64_t *pval, const char *name)
+ {
+     const MonitorDef *md = target_monitor_defs();
+     CPUState *cs = mon_get_cpu(mon);
+@@ -100,7 +100,7 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+ 
+     ret = target_get_monitor_def(cs, name, &tmp);
+     if (!ret) {
+-        *pval = (target_long) tmp;
++        *pval = (target_ulong)tmp;
+     }
+ 
+     return ret;
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 0a5bbf82197..eee8b7e964e 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -376,7 +376,7 @@ static int64_t expr_unary(Monitor *mon)
+     case '$':
+         {
+             char buf[128], *q;
+-            int64_t reg = 0;
++            uint64_t reg = 0;
+ 
+             pch++;
+             q = buf;
 -- 
 2.52.0
 
