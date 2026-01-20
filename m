@@ -4,92 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7088DD2ECF9
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 05:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD9B5D2ECF9
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 06:06:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi4eI-0002qS-3l; Tue, 20 Jan 2026 00:51:30 -0500
+	id 1vi4rj-0000EL-0B; Tue, 20 Jan 2026 01:05:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vi4eD-0002mt-59
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 00:51:25 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vi4eB-0001bS-Fu
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 00:51:24 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43591b55727so96836f8f.3
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 21:51:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768888281; x=1769493081; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RuAx6vQ4eYYTY2XSLXuy3bV53HSA5ndUJ3Iigery4v0=;
- b=SODBLxH3w/2yMv8kJfzEvEu2x7C9bSgrYnRTyBQ8y9Fzv6krZ7BiqXQoZVlLBQznAq
- UOQYMr3pLCSYRwNND8NE/zMDVT+tdFgjLwHu9s26Bhf/1r6il+lAhtIU0WcKvdv469gu
- /+U5vNJDIRkg/ZVYMg65cezx/8ldlxKvDwWZzq+nbw/txbK0ZBlQtUsp6gL94boVWlOP
- Ys1ANPf6qOvKktXPSCXTEv4QPGQsfOw2BSvghlFkmo6D9r+j1fc606PnM0mXiGdJLRz7
- w6AA4tgahVLKnczZX/ijMB77E9R7uMmvX3BsXa/GDx4s4iL+YpCuRG5/G/D0K9VgCyWG
- DmOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768888281; x=1769493081;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RuAx6vQ4eYYTY2XSLXuy3bV53HSA5ndUJ3Iigery4v0=;
- b=qQFfR/hwUZwfDO/tPigL8pUjSBK4dle21N8Mt9Tj2+EHov2Hi1lKPkVaIbTGnYYesM
- v9AYAIrSdfPKF3vfxhL4SMkFze9BFPJ9+gMoC8Ln0zozBo/tgggYja/OtcHrVck4t5TS
- MLvgX8684fPfHgY3YJ2WYLnD97prxKaVPBeEGRXXSVnUGTkjXw5TlkCahAh8QWUXLof6
- Y/ET9I78x+Lb1L2LT3CzJBx9zUWFGCT5PZyRpwYKBOWP5n+GnM440HU7qkw2DtkfaxkL
- mus0cshyJ84SPPChCTZ2ulFBDjLi7+g+TDfc0VQ1sVF/l1J/yPzFqW3Xe6cfTP6gOwxF
- sX4g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU/AdTRGfp1lWXt9rcFhSkb1r6xSAYyIsyvu5Il5Ljf4v1nsu6XrhNkBBYg7X9smwkLOnjYVln2alzn@nongnu.org
-X-Gm-Message-State: AOJu0YyjoqZUyczwfzx0mhWcN1Gn+xq20J6v28N6X8LEx9VuuEN/ldtn
- XEstAEOdsYaOrnfImqZ0I4Qd4A3vqyR4jNQEJVWNpa4xD4fI+CNOeHKA1bahH1QuT0U=
-X-Gm-Gg: AZuq6aKqSqLU6XOy3urJd60M+wQAC5ahYqiLPwcdvTI7rZaY0C4DxgvWhTttH4LYDPd
- rcjPVuEBBtdQH5fQVYgdfCmAngq3mo82BjxfaBWTYs4F1yJ3MkHE5aN2UTdQp6I+AJTmDR0iyiz
- 7nQULF+ZB1I8z5quAcnYiepMTI7bP1NABND1gSTYD5XftodfMXWpe7Sw0rALVzuHAKvFaqRquqW
- t1VlsJzZKxWoLPARJbbgW/cCJupqSTpry+XnL/DdUcN4DZpekwUsSvNHf6NghAdV+jbsjTNCcpy
- BKpciWEmT69VWMUcpZ//ViHOuIAYGQmBPfSVCqg45pn2jyEcVXpCwSOJGOeAnWeLFR4vilKgdkD
- au/TJJMNQvTefVqpPbDjrIhpcl8PPqGgrYNSxhkekGRfMeSJ5en5l7K25ZPKUi75Y5c78LD44hZ
- eQh9C2aQiz4qR4VGsGtD9j+q+5RAGbCbvtIyRIcRIv5C6nW+9wrWxbNw==
-X-Received: by 2002:a05:6000:2001:b0:432:aad5:320b with SMTP id
- ffacd0b85a97d-4356a039a7fmr19656782f8f.23.1768888280998; 
- Mon, 19 Jan 2026 21:51:20 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4359314bbc6sm299398f8f.12.2026.01.19.21.51.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Jan 2026 21:51:20 -0800 (PST)
-Message-ID: <f8b56912-7f64-49fd-a14c-948ca090bf26@linaro.org>
-Date: Tue, 20 Jan 2026 06:51:19 +0100
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vi4rh-0000E6-So; Tue, 20 Jan 2026 01:05:21 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vi4re-0003ow-Kh; Tue, 20 Jan 2026 01:05:21 -0500
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 243D7C000F;
+ Tue, 20 Jan 2026 09:05:13 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b20::1:6] (unknown [2a02:6bf:8080:b20::1:6])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id B5TSqe1Aq8c0-N4dAFFHO; Tue, 20 Jan 2026 09:05:12 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1768889112;
+ bh=dGVjnxDxf1/gNNvREG0g7Apt/n3tCCTUEpaEZzr7uuw=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=ZeXWv9LmND9cxvS2rq6JzskvpJMGF3v15RtG1c63KopEpR/kTF32lpdw4nUxKPZP7
+ d2F2ZZsa9wdyb7z0ks3kc5I8pbHRfDG7mF14nvMMRCYuOh/fA+jM13TeB82EMIuU8D
+ EuFELF+cG9DHsZFY0LLO2G1SFk5AkC3r7YaKiu/Y=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <24e550ca-31bf-496a-9783-af8c8c19f0f9@yandex-team.ru>
+Date: Tue, 20 Jan 2026 09:05:11 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] gdbstub: Export helper to use GDB errno values
+Subject: Re: [PATCH v4 03/17] python/mkvenv: add 'tooling' and 'functests'
+ dependency groups
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Maksim Davydov <davydov-max@yandex-team.ru>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, Markus Armbruster <armbru@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Hanna Reitz <hreitz@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Yonggang Luo <luoyonggang@gmail.com>,
+ Ed Maste <emaste@freebsd.org>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-block@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260119212744.1275455-1-jsnow@redhat.com>
+ <20260119212744.1275455-4-jsnow@redhat.com>
 Content-Language: en-US
-To: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- Dominik Disconnect3d Czarnota <dominik.b.czarnota@gmail.com>
-References: <20260116014612.226183-1-yodel.eldar@yodel.dev>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260116014612.226183-1-yodel.eldar@yodel.dev>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260119212744.1275455-4-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,12 +86,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/1/26 02:46, Yodel Eldar wrote:
+On 20.01.26 00:27, John Snow wrote:
+> 'tooling' contains depedencies required to run various tools (like
+> qmp-shell) as well as dependencies required to run "make check", and as
+> such, we promise that these dependencies can be sourced from the user's
+> distribution repository or from vendored packages so that "make check"
+> can be executed offline in an isolated build environment.
+> 
+> In contrast, pygdbmi is only needed for functional tests and not tests
+> in general; we do not make the same offline/isolated guarantees for
+> functional tests, and this dependency group is allowed to fetch
+> dependencies from PyPI at runtime.
+> 
+> For the time being, amend the "check-venv" target to install both
+> dependency groups, to avoid a duplicate dependency between them. By the
+> end of this series, however, "check-venv" will be eliminated in favor of
+> always installing "tooling" at configure time and allowing "functests"
+> to be installed on-demand as needed by meson/ninja.
+> 
+> Signed-off-by: John Snow<jsnow@redhat.com>
 
-> Yodel Eldar (3):
->    include/gdbstub/syscalls: Add EIO and ENOSYS GDB File-I/O errno values
->    gdbstub: Export host_to_gdb_errno File-I/O helper function
->    gdbstub/user-target: Convert host errno to GDB File-I/O errno
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Series fully reviewed.
+-- 
+Best regards,
+Vladimir
 
