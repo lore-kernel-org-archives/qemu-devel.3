@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 489CDD2ED11
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 09:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 471BBD2ED11
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 09:31:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi83i-0003R3-0M; Tue, 20 Jan 2026 04:29:58 -0500
+	id 1vi84I-000442-8d; Tue, 20 Jan 2026 04:30:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vi83g-0003Os-8E; Tue, 20 Jan 2026 04:29:56 -0500
+ id 1vi83z-0003z8-Ee; Tue, 20 Jan 2026 04:30:15 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vi83f-0005eG-0y; Tue, 20 Jan 2026 04:29:56 -0500
+ id 1vi83x-0005eG-JN; Tue, 20 Jan 2026 04:30:15 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 20 Jan
- 2026 17:29:40 +0800
+ 2026 17:29:42 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 20 Jan 2026 17:29:40 +0800
+ Transport; Tue, 20 Jan 2026 17:29:42 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 03/11] hw/arm/ast27x0: Start TSP in powered-off state to
- match hardware behavior
-Date: Tue, 20 Jan 2026 17:29:28 +0800
-Message-ID: <20260120092939.2708302-4-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 10/11] tests/functional/aarch64/test_aspeed_ast2700fc: Boot
+ SSP/TSP via PSP and load binaries from DRAM
+Date: Tue, 20 Jan 2026 17:29:35 +0800
+Message-ID: <20260120092939.2708302-11-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260120092939.2708302-1-jamin_lin@aspeedtech.com>
 References: <20260120092939.2708302-1-jamin_lin@aspeedtech.com>
@@ -67,40 +67,118 @@ From:  Jamin Lin via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the previous design, both the PSP and TSP were started together during
-SoC initialization. However, on real hardware, the TSP begins in a powered-off
-state. The typical boot sequence involves the PSP powering up first, loading
-the TSP firmware binary into shared memory via DRAM remap, and then releasing
-the TSP reset and enabling it through SCU control registers.
+SSP and TSP now boot in a powered-off state by default. Enabling them requires
+the PSP (Cortex-A35) to explicitly set SCU control registers at runtime. This
+behavior aligns with real hardware.
 
-To more accurately model this behavior in QEMU, this commit sets the
-"start-powered-off" property for the TSP's ARMv7M core. This change ensures
-the TSP remains off until explicitly enabled via the SCU, simulating the
-real-world flow where the PSP controls TSP boot through SCU interaction.
+Update the AST2700 FC functional test to reflect this behavior by enabling
+SSP and TSP from the U-Boot shell before booting OpenBMC. The test now
+programs the required SCU registers, saves the environment, and boots the
+system so that SSP and TSP are powered on when the PSP starts.
+
+For the vbootrom test case, these steps are not required because vbootrom
+already performs the necessary initialization. Therefore, the U-Boot shell
+configuration is only applied to the manual loader test flow.
+
+Additionally, switch SSP and TSP loading from ELF-based CPU loaders to
+binary images loaded into PSP DRAM at fixed addresses, and remove the use
+of snapshot mode.
+
+Changes include:
+- Add enable_ssp_tsp() to configure SCU registers via U-Boot
+- Remove snapshot option from QEMU command line
+- Load SSP binary at DRAM address 0x42C000000
+- Load TSP binary at DRAM address 0x42E000000
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed_ast27x0-tsp.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ .../aarch64/test_aspeed_ast2700fc.py          | 35 +++++++++++--------
+ 1 file changed, 20 insertions(+), 15 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-index 9c11c016ca..46691080d1 100644
---- a/hw/arm/aspeed_ast27x0-tsp.c
-+++ b/hw/arm/aspeed_ast27x0-tsp.c
-@@ -165,6 +165,13 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-     qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
-     object_property_set_link(OBJECT(&a->armv7m), "memory",
-                              OBJECT(s->memory), &error_abort);
-+    /*
-+     * The TSP starts in a powered-down state and can be powered up
-+     * by setting the TSP Control Register through the SCU
-+     * (System Control Unit)
-+     */
-+    object_property_set_bool(OBJECT(&a->armv7m), "start-powered-off", true,
-+                             &error_abort);
-     sysbus_realize(SYS_BUS_DEVICE(&a->armv7m), &error_abort);
+diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+index 8dbc8f234f..e0fb4890be 100755
+--- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
++++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+@@ -9,7 +9,7 @@
+ import os
  
-     /* SDRAM */
+ from qemu_test import QemuSystemTest, Asset
+-from qemu_test import wait_for_console_pattern
++from qemu_test import wait_for_console_pattern, exec_command
+ from qemu_test import exec_command_and_wait_for_pattern
+ 
+ 
+@@ -23,12 +23,22 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
+         self.vm.add_args('-device', 'e1000e,netdev=net1,bus=pcie.2')
+         self.vm.add_args('-netdev', 'user,id=net1')
+         self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
+-                         '-net', 'nic', '-net', 'user', '-snapshot')
++                         '-net', 'nic', '-net', 'user')
+ 
+         self.vm.launch()
+ 
++    def enable_ssp_tsp(self):
++        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
++        exec_command_and_wait_for_pattern(self, '\012', '=>')
++        exec_command_and_wait_for_pattern(self,
++            'setenv bootcmd "mw 12c02204 40000000; mw 12c02120 1;'
++            'mw 12c02224 00000200; mw 12c02160 1; run bootspi"', '=>')
++        exec_command_and_wait_for_pattern(self, 'saveenv', 'OK')
++        exec_command(self, 'boot')
++
+     def verify_openbmc_boot_and_login(self, name):
+         wait_for_console_pattern(self, 'U-Boot 2023.10')
++        self.enable_ssp_tsp();
+         wait_for_console_pattern(self, '## Loading kernel from FIT Image')
+         wait_for_console_pattern(self, 'Starting kernel ...')
+ 
+@@ -36,17 +46,6 @@ def verify_openbmc_boot_and_login(self, name):
+         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
+         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
+ 
+-    def load_ast2700fc_coprocessor(self, name):
+-        load_elf_list = {
+-            'ssp': self.scratch_file(name, 'zephyr-aspeed-ssp.elf'),
+-            'tsp': self.scratch_file(name, 'zephyr-aspeed-tsp.elf')
+-        }
+-
+-        for cpu_num, key in enumerate(load_elf_list, start=4):
+-            file = load_elf_list[key]
+-            self.vm.add_args('-device',
+-                             f'loader,file={file},cpu-num={cpu_num}')
+-
+     ASSET_SDK_V908_AST2700 = Asset(
+             'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.08/ast2700-default-obmc.tar.gz',
+             'eac3dc409b7ea3cd4b03d4792d3cebd469792ad893cb51e1d15f0fc20bd1e2cd')
+@@ -121,6 +120,14 @@ def start_ast2700fc_test(self, name):
+                 'addr': '0x430080000',
+                 'file': self.scratch_file(name, 'optee',
+                                           'tee-raw.bin')
++            },
++            {
++                'addr': '0x42C000000',
++                'file': self.scratch_file(name, 'zephyr-aspeed-ssp.bin')
++            },
++            {
++                'addr': '0x42E000000',
++                'file': self.scratch_file(name, 'zephyr-aspeed-tsp.bin')
+             }
+         ]
+ 
+@@ -134,13 +141,11 @@ def start_ast2700fc_test(self, name):
+             self.vm.add_args('-device',
+                              f'loader,addr=0x430000000,cpu-num={i}')
+ 
+-        self.load_ast2700fc_coprocessor(name)
+         self.do_test_aarch64_aspeed_sdk_start(
+                 self.scratch_file(name, 'image-bmc'))
+ 
+     def start_ast2700fc_test_vbootrom(self, name):
+         self.vm.add_args('-bios', 'ast27x0_bootrom.bin')
+-        self.load_ast2700fc_coprocessor(name)
+         self.do_test_aarch64_aspeed_sdk_start(
+                 self.scratch_file(name, 'image-bmc'))
+ 
 -- 
 2.43.0
 
