@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 543FBD2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 05:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 503AED2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 05:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi4AW-0006T8-Pp; Tue, 20 Jan 2026 00:20:44 -0500
+	id 1vi49W-0004RF-VX; Tue, 20 Jan 2026 00:19:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vi4AA-0005Y8-9v; Tue, 20 Jan 2026 00:20:22 -0500
+ id 1vi49V-0004QE-Dl; Tue, 20 Jan 2026 00:19:41 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vi4A8-0004v7-Qb; Tue, 20 Jan 2026 00:20:22 -0500
+ id 1vi49T-0004ZS-Tn; Tue, 20 Jan 2026 00:19:41 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 20 Jan
- 2026 13:19:04 +0800
+ 2026 13:19:03 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 20 Jan 2026 13:19:04 +0800
+ Transport; Tue, 20 Jan 2026 13:19:03 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
  <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>, Nabih Estefan
- <nabihestefan@google.com>
-Subject: [PATCH v5 13/22] hw/arm/aspeed: Attach GPIO device to AST1700 model
-Date: Tue, 20 Jan 2026 13:18:44 +0800
-Message-ID: <20260120051859.1920565-14-kane_chen@aspeedtech.com>
+CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
+Subject: [PATCH v5 10/22] hw/arm/aspeed: Attach SPI device to AST1700 model
+Date: Tue, 20 Jan 2026 13:18:41 +0800
+Message-ID: <20260120051859.1920565-11-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260120051859.1920565-1-kane_chen@aspeedtech.com>
 References: <20260120051859.1920565-1-kane_chen@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -70,101 +68,139 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-Connect the GPIO controller to the AST1700 model by mapping its MMIO
-region and wiring its interrupt line.
+Connect the SPI device to AST1700 model.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Nabih Estefan <nabihestefan@google.com>
-Tested-by: Nabih Estefan <nabihestefan@google.com>
 ---
- include/hw/arm/aspeed_ast1700.h |  2 ++
- hw/arm/aspeed_ast1700.c         | 14 ++++++++++++++
- hw/arm/aspeed_ast27x0.c         |  5 +++++
- 3 files changed, 21 insertions(+)
+ include/hw/arm/aspeed_ast1700.h |  3 +++
+ hw/arm/aspeed_ast1700.c         | 30 ++++++++++++++++++++++++++++++
+ hw/arm/aspeed_ast27x0.c         |  2 ++
+ 3 files changed, 35 insertions(+)
 
 diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast1700.h
-index 65f1497a2d..63cfcb4c24 100644
+index a981bff3b2..89562eb64f 100644
 --- a/include/hw/arm/aspeed_ast1700.h
 +++ b/include/hw/arm/aspeed_ast1700.h
-@@ -11,6 +11,7 @@
+@@ -10,6 +10,7 @@
+ 
  #include "hw/core/sysbus.h"
- #include "hw/misc/aspeed_scu.h"
- #include "hw/adc/aspeed_adc.h"
-+#include "hw/gpio/aspeed_gpio.h"
  #include "hw/misc/aspeed_ltpi.h"
- #include "hw/ssi/aspeed_smc.h"
++#include "hw/ssi/aspeed_smc.h"
  #include "hw/char/serial-mm.h"
-@@ -33,6 +34,7 @@ struct AspeedAST1700SoCState {
-     AspeedSMCState spi;
-     AspeedADCState adc;
-     AspeedSCUState scu;
-+    AspeedGPIOState gpio;
+ 
+ #define TYPE_ASPEED_AST1700 "aspeed.ast1700"
+@@ -20,11 +21,13 @@ struct AspeedAST1700SoCState {
+     SysBusDevice parent_obj;
+ 
+     MemoryRegion iomem;
++    MemoryRegion *dram_mr;
+     uint8_t board_idx;
+ 
+     AspeedLTPIState ltpi;
+     SerialMM uart;
+     MemoryRegion sram;
++    AspeedSMCState spi;
  };
  
  #endif /* ASPEED_AST1700_H */
 diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
-index 82f4568af9..c7eaf583e2 100644
+index c82825d71d..49f9b67c91 100644
 --- a/hw/arm/aspeed_ast1700.c
 +++ b/hw/arm/aspeed_ast1700.c
-@@ -21,6 +21,7 @@ enum {
+@@ -9,6 +9,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/core/boards.h"
+ #include "qom/object.h"
++#include "qapi/error.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/arm/aspeed_ast1700.h"
+ 
+@@ -16,15 +17,19 @@
+ #define AST1700_SOC_SRAM_SIZE        0x00040000
+ 
+ enum {
++    ASPEED_AST1700_DEV_SPI0,
      ASPEED_AST1700_DEV_SRAM,
-     ASPEED_AST1700_DEV_ADC,
-     ASPEED_AST1700_DEV_SCU,
-+    ASPEED_AST1700_DEV_GPIO,
      ASPEED_AST1700_DEV_UART12,
      ASPEED_AST1700_DEV_LTPI_CTRL,
-     ASPEED_AST1700_DEV_SPI0_MEM,
-@@ -31,6 +32,7 @@ static const hwaddr aspeed_ast1700_io_memmap[] = {
++    ASPEED_AST1700_DEV_SPI0_MEM,
+ };
+ 
+ static const hwaddr aspeed_ast1700_io_memmap[] = {
++    [ASPEED_AST1700_DEV_SPI0]      =  0x00030000,
      [ASPEED_AST1700_DEV_SRAM]      =  0x00BC0000,
-     [ASPEED_AST1700_DEV_ADC]       =  0x00C00000,
-     [ASPEED_AST1700_DEV_SCU]       =  0x00C02000,
-+    [ASPEED_AST1700_DEV_GPIO]      =  0x00C0B000,
      [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
      [ASPEED_AST1700_DEV_LTPI_CTRL] =  0x00C34000,
-     [ASPEED_AST1700_DEV_SPI0_MEM]  =  0x04000000,
-@@ -103,6 +105,14 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
-                         aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SCU],
-                         sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->scu), 0));
++    [ASPEED_AST1700_DEV_SPI0_MEM]  =  0x04000000,
+ };
  
-+    /* GPIO */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
+ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+@@ -33,6 +38,11 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+     char dev_name[32];
+ 
++    if (!s->dram_mr) {
++        error_setg(errp, TYPE_ASPEED_AST1700 ": 'dram' link not set");
++        return;
++    }
++
+     /* Occupy memory space for all controllers in AST1700 */
+     memory_region_init(&s->iomem, OBJECT(s), TYPE_ASPEED_AST1700,
+                        AST2700_SOC_LTPI_SIZE);
+@@ -57,6 +67,20 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+                         aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_UART12],
+                         sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->uart), 0));
+ 
++    /* SPI */
++    object_property_set_link(OBJECT(&s->spi), "dram",
++                             OBJECT(s->dram_mr), errp);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi), errp)) {
 +        return;
 +    }
 +    memory_region_add_subregion(&s->iomem,
-+                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_GPIO],
-+                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gpio), 0));
++                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SPI0],
++                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->spi), 0));
++
++    memory_region_add_subregion(&s->iomem,
++                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SPI0_MEM],
++                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->spi), 1));
 +
      /* LTPI controller */
      if (!sysbus_realize(SYS_BUS_DEVICE(&s->ltpi), errp)) {
          return;
-@@ -132,6 +142,10 @@ static void aspeed_ast1700_instance_init(Object *obj)
-     object_initialize_child(obj, "ioexp-scu[*]", &s->scu,
-                             TYPE_ASPEED_2700_SCU);
+@@ -74,6 +98,10 @@ static void aspeed_ast1700_instance_init(Object *obj)
+     object_initialize_child(obj, "uart[*]", &s->uart,
+                             TYPE_SERIAL_MM);
  
-+    /* GPIO */
-+    object_initialize_child(obj, "ioexp-gpio[*]", &s->gpio,
-+                            "aspeed.gpio-ast2700");
++    /* SPI */
++    object_initialize_child(obj, "ioexp-spi[*]", &s->spi,
++                            "aspeed.spi0-ast2700");
 +
      /* LTPI controller */
      object_initialize_child(obj, "ltpi-ctrl",
                              &s->ltpi, TYPE_ASPEED_LTPI);
+@@ -83,6 +111,8 @@ static void aspeed_ast1700_instance_init(Object *obj)
+ 
+ static const Property aspeed_ast1700_props[] = {
+     DEFINE_PROP_UINT8("board-idx", AspeedAST1700SoCState, board_idx, 0),
++    DEFINE_PROP_LINK("dram", AspeedAST1700SoCState, dram_mr,
++                     TYPE_MEMORY_REGION, MemoryRegion *),
+ };
+ 
+ static void aspeed_ast1700_class_init(ObjectClass *klass, const void *data)
 diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index dc7a5b8677..58977e2fa3 100644
+index 6933d03fbf..158f44782b 100644
 --- a/hw/arm/aspeed_ast27x0.c
 +++ b/hw/arm/aspeed_ast27x0.c
-@@ -1050,6 +1050,11 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         /* ADC */
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->ioexp[i].adc), 0,
-                            aspeed_soc_ast2700_get_irq(s, ASPEED_DEV_ADC));
-+
-+        /* GPIO */
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->ioexp[i].gpio), 0,
-+                           aspeed_soc_ast2700_get_irq(s, ASPEED_DEV_GPIO));
-+
-     }
- 
-     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
+@@ -1022,6 +1022,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     /* IO Expander */
+     for (i = 0; i < sc->ioexp_num; i++) {
+         qdev_prop_set_uint8(DEVICE(&s->ioexp[i]), "board-idx", i);
++        object_property_set_link(OBJECT(&s->ioexp[i]), "dram",
++                                 OBJECT(s->dram_mr), &error_abort);
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->ioexp[i]), errp)) {
+             return;
+         }
 -- 
 2.43.0
 
