@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 507EFD2ED14
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 09:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CCCCD2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 09:32:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi83z-0003yM-6Z; Tue, 20 Jan 2026 04:30:15 -0500
+	id 1vi83d-0003MM-HK; Tue, 20 Jan 2026 04:29:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vi83w-0003ty-Pp; Tue, 20 Jan 2026 04:30:12 -0500
+ id 1vi83b-0003Ja-Ve; Tue, 20 Jan 2026 04:29:52 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vi83v-0005eG-5B; Tue, 20 Jan 2026 04:30:12 -0500
+ id 1vi83a-0005eG-Fs; Tue, 20 Jan 2026 04:29:51 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 20 Jan
- 2026 17:29:42 +0800
+ 2026 17:29:39 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 20 Jan 2026 17:29:42 +0800
+ Transport; Tue, 20 Jan 2026 17:29:39 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,16 +32,16 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 09/11] hw/misc/aspeed_scu: Add SCU support for TSP SDRAM
- remap
-Date: Tue, 20 Jan 2026 17:29:34 +0800
-Message-ID: <20260120092939.2708302-10-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 01/11] hw/arm/ast27x0: Move DRAM and SDMC initialization
+ earlier to support memory aliasing
+Date: Tue, 20 Jan 2026 17:29:26 +0800
+Message-ID: <20260120092939.2708302-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260120092939.2708302-1-jamin_lin@aspeedtech.com>
 References: <20260120092939.2708302-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -67,86 +67,88 @@ From:  Jamin Lin via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds SCU register support for TSP SDRAM remap control and runtime
-activation. Unlike SSP, the TSP does not support configurable target address remapping
-through SCU registers. It only supports setting the PSP DRAM base and size, which
-are then aliased into the TSP-visible SDRAM window.
+To support DRAM aliasing for coprocessors (SSP/TSP), this commit moves the
+initialization of the SDMC (SDRAM controller) and DRAM models earlier in
+the device realization order.
 
-coprocessor_sdram_remap[2]: maps PSP DRAM offset 0x42E000000 (size: 32MB) to TSP SDRAM
-      offset 0x0
+In the upcoming changes, the PSP will expose a portion of its DRAM as shared
+memory by creating a memory region alias at a specific offset. This alias is
+mapped into the coprocessor's SDRAM address space, allowing both PSP and the
+coprocessor (SSP/TSP) to access the same physical memory through their respective
+views — PSP via its DRAM, and the coprocessor via its SDRAM.
 
-The SCU registers AST2700_SCU_TSP_CTRL_1 and
-AST2700_SCU_TSP_REMAP_SIZE_2 allow runtime reconfiguration of the DRAM base (alias offset)
-and mapping size.
+The remapping is configured through SCU registers and enables shared memory
+communication between PSP and the coprocessors.
 
-|------------------------------------------|         |----------------------------|
-|               PSP DRAM                   |         |        TSP SDRAM           |
-|------------------------------------------|         |----------------------------|
-| 0x42E0_0000_0 (SCU_168 << 4)             |         | 0x0000_0000                |
-|   remap base                             |------>  |  - fixed target addr       |
-|   size: 32MB    (SCU_194)                |         |                            |
-|------------------------------------------|         |----------------------------|
+Therefore, the DRAM and SDMC devices must be realized before:
+  - the SCU, which configures the alias offset and size
+  - the coprocessors, which access the alias through their SDRAM window
+
+No functional change.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/misc/aspeed_scu.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ hw/arm/aspeed_ast27x0.c | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-index 27591f53c4..69d26df818 100644
---- a/hw/misc/aspeed_scu.c
-+++ b/hw/misc/aspeed_scu.c
-@@ -159,6 +159,8 @@
- #define AST2700_SSP_TSP_RST_RB          BIT(8)
- #define AST2700_SSP_TSP_RST_HOLD_RB     BIT(9)
- #define AST2700_SSP_TSP_RST_SRC_RB      BIT(10)
-+#define AST2700_SCU_TSP_CTRL_1          TO_REG(0x168)
-+#define AST2700_SCU_TSP_REMAP_SIZE_2    TO_REG(0x194)
- #define AST2700_SCU_SYS_RST_CTRL_1      TO_REG(0x200)
- #define AST2700_SCU_SYS_RST_CLR_1       TO_REG(0x204)
- #define AST2700_SCU_SYS_RST_SSP         BIT(30)
-@@ -1088,6 +1090,23 @@ static void aspeed_ast2700_scu_write(void *opaque, hwaddr offset,
-         data &= 0x3fffffff;
-         memory_region_set_size(mr, data);
-         break;
-+    case AST2700_SCU_TSP_CTRL_1:
-+        mr = &s->dram_remap_alias[2];
-+        if (s->tsp_cpuid < 0 || mr == NULL) {
-+            return;
-+        }
-+        data &= 0x7fffffff;
-+        memory_region_set_alias_offset(mr,
-+                                       ((uint64_t) data << 4) & 0x3ffffffff);
-+        break;
-+    case AST2700_SCU_TSP_REMAP_SIZE_2:
-+        mr = &s->dram_remap_alias[2];
-+        if (s->tsp_cpuid < 0 || mr == NULL) {
-+            return;
-+        }
-+        data &= 0x3fffffff;
-+        memory_region_set_size(mr, data);
-+        break;
-     case AST2700_SCU_SYS_RST_CTRL_1:
-         if (s->ssp_cpuid < 0) {
-             return;
-@@ -1165,6 +1184,8 @@ static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
-     [AST2700_SCU_SSP_REMAP_ADDR_2]  = 0x00000000,
-     [AST2700_SCU_SSP_REMAP_SIZE_2]  = 0x02000000,
-     [AST2700_SCU_TSP_CTRL_0]        = 0x000007FE,
-+    [AST2700_SCU_TSP_CTRL_1]        = 0x42E00000,
-+    [AST2700_SCU_TSP_REMAP_SIZE_2]  = 0x02000000,
-     [AST2700_SCU_SYS_RST_CTRL_1]    = 0xFFC37FDC,
-     [AST2700_SCU_SYS_RST_CTRL_2]    = 0x00001FFF,
-     [AST2700_SCU_HPLL_PARAM]        = 0x0000009f,
-@@ -1205,6 +1226,8 @@ static void aspeed_ast2700_scu_reset(DeviceState *dev)
- 
-     if (s->tsp_cpuid > 0) {
-         arm_set_cpu_off(s->tsp_cpuid);
-+        memory_region_set_alias_offset(&s->dram_remap_alias[2], 0x2e000000);
-+        memory_region_set_size(&s->dram_remap_alias[2], 32 * MiB);
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index d17f446661..74a004adca 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -702,6 +702,26 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(DEVICE(&a->intc[0].orgates[0]), i));
      }
- }
  
++    /*
++     * SDMC - SDRAM Memory Controller
++     * The SDMC controller is unlocked at SPL stage.
++     * At present, only supports to emulate booting
++     * start from u-boot stage. Set SDMC controller
++     * unlocked by default. It is a temporarily solution.
++     */
++    object_property_set_bool(OBJECT(&s->sdmc), "unlocked", true,
++                                 &error_abort);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sdmc), 0,
++                    sc->memmap[ASPEED_DEV_SDMC]);
++
++    /* RAM */
++    if (!aspeed_soc_ast2700_dram_init(dev, errp)) {
++        return;
++    }
++
+     /* SRAM */
+     name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
+     if (!memory_region_init_ram(&s->sram, OBJECT(s), name, sc->sram_size,
+@@ -792,26 +812,6 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+                                                       ASPEED_DEV_EHCI1 + i));
+     }
+ 
+-    /*
+-     * SDMC - SDRAM Memory Controller
+-     * The SDMC controller is unlocked at SPL stage.
+-     * At present, only supports to emulate booting
+-     * start from u-boot stage. Set SDMC controller
+-     * unlocked by default. It is a temporarily solution.
+-     */
+-    object_property_set_bool(OBJECT(&s->sdmc), "unlocked", true,
+-                                 &error_abort);
+-    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
+-        return;
+-    }
+-    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sdmc), 0,
+-                    sc->memmap[ASPEED_DEV_SDMC]);
+-
+-    /* RAM */
+-    if (!aspeed_soc_ast2700_dram_init(dev, errp)) {
+-        return;
+-    }
+-
+     /* Net */
+     for (i = 0; i < sc->macs_num; i++) {
+         object_property_set_bool(OBJECT(&s->ftgmac100[i]), "aspeed", true,
 -- 
 2.43.0
 
