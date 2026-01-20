@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CCCCD2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 09:32:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8536D2ED11
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 09:32:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi83d-0003MM-HK; Tue, 20 Jan 2026 04:29:53 -0500
+	id 1vi85J-00058a-Na; Tue, 20 Jan 2026 04:31:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vi83b-0003Ja-Ve; Tue, 20 Jan 2026 04:29:52 -0500
+ id 1vi841-00041V-Vr; Tue, 20 Jan 2026 04:30:21 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vi83a-0005eG-Fs; Tue, 20 Jan 2026 04:29:51 -0500
+ id 1vi840-0005eG-Bj; Tue, 20 Jan 2026 04:30:17 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 20 Jan
- 2026 17:29:39 +0800
+ 2026 17:29:42 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 20 Jan 2026 17:29:39 +0800
+ Transport; Tue, 20 Jan 2026 17:29:42 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,16 +32,16 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 01/11] hw/arm/ast27x0: Move DRAM and SDMC initialization
- earlier to support memory aliasing
-Date: Tue, 20 Jan 2026 17:29:26 +0800
-Message-ID: <20260120092939.2708302-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 11/11] docs: Add support vbootrom and update Manual boot
+ for ast2700fc
+Date: Tue, 20 Jan 2026 17:29:36 +0800
+Message-ID: <20260120092939.2708302-12-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260120092939.2708302-1-jamin_lin@aspeedtech.com>
 References: <20260120092939.2708302-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -67,88 +67,82 @@ From:  Jamin Lin via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To support DRAM aliasing for coprocessors (SSP/TSP), this commit moves the
-initialization of the SDMC (SDRAM controller) and DRAM models earlier in
-the device realization order.
-
-In the upcoming changes, the PSP will expose a portion of its DRAM as shared
-memory by creating a memory region alias at a specific offset. This alias is
-mapped into the coprocessor's SDRAM address space, allowing both PSP and the
-coprocessor (SSP/TSP) to access the same physical memory through their respective
-views — PSP via its DRAM, and the coprocessor via its SDRAM.
-
-The remapping is configured through SCU registers and enables shared memory
-communication between PSP and the coprocessors.
-
-Therefore, the DRAM and SDMC devices must be realized before:
-  - the SCU, which configures the alias offset and size
-  - the coprocessors, which access the alias through their SDRAM window
-
-No functional change.
-
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed_ast27x0.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ docs/system/arm/aspeed.rst | 37 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index d17f446661..74a004adca 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -702,6 +702,26 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(DEVICE(&a->intc[0].orgates[0]), i));
-     }
- 
-+    /*
-+     * SDMC - SDRAM Memory Controller
-+     * The SDMC controller is unlocked at SPL stage.
-+     * At present, only supports to emulate booting
-+     * start from u-boot stage. Set SDMC controller
-+     * unlocked by default. It is a temporarily solution.
-+     */
-+    object_property_set_bool(OBJECT(&s->sdmc), "unlocked", true,
-+                                 &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
-+        return;
-+    }
-+    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sdmc), 0,
-+                    sc->memmap[ASPEED_DEV_SDMC]);
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index 4fa1739cb5..a1f4366f87 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -391,6 +391,14 @@ Booting the ast2700fc machine
+ AST2700 features four Cortex-A35 primary processors and two Cortex-M4 coprocessors.
+ **ast2700-evb** machine focuses on emulating the four Cortex-A35 primary processors,
+ **ast2700fc** machine extends **ast2700-evb** by adding support for the two Cortex-M4 coprocessors.
++There are two methods to boot the ast2700fc machine.
 +
-+    /* RAM */
-+    if (!aspeed_soc_ast2700_dram_init(dev, errp)) {
-+        return;
-+    }
++Manual boot using ``-device loader``:
 +
-     /* SRAM */
-     name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
-     if (!memory_region_init_ram(&s->sram, OBJECT(s), name, sc->sram_size,
-@@ -792,26 +812,6 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-                                                       ASPEED_DEV_EHCI1 + i));
-     }
++In this approach, users manually load firmware and assign entry points via QEMU loader devices.
++By default, the PSP begins execution at address ``0x430000000``, the load address of the bl31
++firmware. The SSP and TSP start in the powered-off state and must be explicitly enabled by the
++PSP through writes to SCU registers.
  
--    /*
--     * SDMC - SDRAM Memory Controller
--     * The SDMC controller is unlocked at SPL stage.
--     * At present, only supports to emulate booting
--     * start from u-boot stage. Set SDMC controller
--     * unlocked by default. It is a temporarily solution.
--     */
--    object_property_set_bool(OBJECT(&s->sdmc), "unlocked", true,
--                                 &error_abort);
--    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
--        return;
--    }
--    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sdmc), 0,
--                    sc->memmap[ASPEED_DEV_SDMC]);
--
--    /* RAM */
--    if (!aspeed_soc_ast2700_dram_init(dev, errp)) {
--        return;
--    }
--
-     /* Net */
-     for (i = 0; i < sc->macs_num; i++) {
-         object_property_set_bool(OBJECT(&s->ftgmac100[i]), "aspeed", true,
+ Steps to boot the AST2700fc machine:
+ 
+@@ -401,8 +409,8 @@ Steps to boot the AST2700fc machine:
+  * bl31.bin
+  * optee/tee-raw.bin
+  * image-bmc
+- * zephyr-aspeed-ssp.elf (for SSP firmware, CPU 5)
+- * zephyr-aspeed-tsp.elf (for TSP firmware, CPU 6)
++ * zephyr-aspeed-ssp.bin (for SSP firmware, CPU 5)
++ * zephyr-aspeed-tsp.bin (for TSP firmware, CPU 6)
+ 
+ 2. Execute the following command to start ``ast2700fc`` machine:
+ 
+@@ -416,17 +424,38 @@ Steps to boot the AST2700fc machine:
+        -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
+        -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
+        -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
++       -device loader,addr=0x42C000000,file=${IMGDIR}/zephyr-aspeed-ssp.bin,force-raw=on \
++       -device loader,addr=0x42E000000,file=${IMGDIR}/zephyr-aspeed-tsp.bin,force-raw=on \
+        -device loader,cpu-num=0,addr=0x430000000 \
+        -device loader,cpu-num=1,addr=0x430000000 \
+        -device loader,cpu-num=2,addr=0x430000000 \
+        -device loader,cpu-num=3,addr=0x430000000 \
+        -drive file=${IMGDIR}/image-bmc,if=mtd,format=raw \
+-       -device loader,file=${IMGDIR}/zephyr-aspeed-ssp.elf,cpu-num=4 \
+-       -device loader,file=${IMGDIR}/zephyr-aspeed-tsp.elf,cpu-num=5 \
+        -serial pty -serial pty -serial pty \
+        -snapshot \
+        -S -nographic
+ 
++Boot using a virtual boot ROM (-bios):
++
++In this method, the virtual boot ROM (vbootrom) handles the full initialization sequence.
++It starts the PSP, which then enables the SSP and TSP by programming the appropriate SCU
++registers, following the hardware behavior.
++
++Execute the following command to start ``ast2700fc`` machine:
++
++.. code-block:: bash
++
++  IMGDIR=ast2700-default
++
++  $ qemu-system-aarch64 -M ast2700fc \
++      -bios ast27x0_bootrom.bin \
++      -drive file=${IMGDIR}/image-bmc,if=mtd,format=raw \
++      -serial pty -serial pty -serial pty \
++      -snapshot \
++      -S -nographic
++
++Serial Console Redirection:
++
+ After launching QEMU, serial devices will be automatically redirected.
+ Example output:
+ 
 -- 
 2.43.0
 
