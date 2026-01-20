@@ -4,103 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67322D2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 13:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E722ED2ECE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 14:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viC4S-0000cq-RB; Tue, 20 Jan 2026 08:47:00 -0500
+	id 1viCRU-0004ZW-G4; Tue, 20 Jan 2026 09:10:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ankeesler@google.com>)
- id 1viC4Q-0000cJ-8a
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 08:46:58 -0500
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ankeesler@google.com>)
- id 1viC4N-0006Wb-ID
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 08:46:57 -0500
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-59b76844f89so5246360e87.1
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 05:46:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768916812; cv=none;
- d=google.com; s=arc-20240605;
- b=OoORohIYztccJhoH04/l4BOwIjm5KR7Gl4h/mg62Ueqcsq/ji7dUs4W7SUZC4cMEsV
- gw02Kr11EFCep72jtYYwI7oFfQtFAIcss1OOmLPWjcyy1+J19AMcsWEVM6YGlqSSQrYK
- blo4tVjzIVgFhkuwkAR57eVofTVIrScC5BA5hSMq4rvBg6skTbdMXHgdXM9s28GShAiw
- dN84zVyQ+tAyfac1vH6DVe2+4ziIKyRR5kfGzCK7brsuKbcFXsPxF5y2EUGES2mizZjL
- QgAzsH2n0rse5etWJz1JkO8LGysXMXxigfHwH5WxpGuq+ci7sFaJtMZXEhoqgC1AAs41
- 28mA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=8Uz3amhsVPp+nZfHVVlYW4f9piel5X3SPpWY66F/Bm0=;
- fh=ro/AWavYJ3k8wuJjFcsnbm9LKL8KpbSULCknMk7kheA=;
- b=X8jT3AtFw8xNw32NPWZRTcEOELL9DwIRmFuVibK+LrJtLbzT76bcAtfvr/ecKRNlMC
- EpSmkoKpTfmiNTnPjXzv3u4CQ2RxaETqYq6mJRXIapdr3UF4v//0oqby7CAJz5DEL9XJ
- tra6gx6fGZS7ofUkvpi/O5Oxx/dMQSzdw42W9FM/Dzb6upJKSad/Rwuj1rNujrjrB8dS
- yIuAHCMsWkrEFelY3OSkH/Xfs1wEPWS60bQAsiJZaTHMq9KWCrDH1vt0BldZveuBSP4a
- yW24ZVolvAeoeqMfl9oiR1ALTNDiVGoWNQ985FL7uSPCoRcVg0CoEFT5DmR528G8xGVb
- 3Q2w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1viCRS-0004YK-2t
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 09:10:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1viCRQ-0001mF-Ge
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 09:10:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768918242;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=biEriWypYV8n7KXyRIJjtlJmi3bc+/LzQPT0u4Tvi7Y=;
+ b=gMesvsnWWeSOyyIDZI6XqnL0R4jPXP+pOu21ni+f6gNkd/m9o142ix0/s2fUE6di/NgL8W
+ nzFoWXgakp+GXrKqEwgSMi78pAcp/M6NDQMU2VLWucOFnfqDHxJqn/vrQeC+/da1EEcnAK
+ 8IBnaj145aphC44/s/GTBeedfmxDwmQ=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-661-C4tALEU-M06JiVwhJ73SKQ-1; Tue, 20 Jan 2026 09:10:39 -0500
+X-MC-Unique: C4tALEU-M06JiVwhJ73SKQ-1
+X-Mimecast-MFC-AGG-ID: C4tALEU-M06JiVwhJ73SKQ_1768918238
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-59b6a9bf5cbso4118231e87.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 06:10:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1768916812; x=1769521612; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8Uz3amhsVPp+nZfHVVlYW4f9piel5X3SPpWY66F/Bm0=;
- b=VKARxFwK1y+1VzzNijVoZXWS49vGs+7tORyOUBwjSsGWTOAAKc7H6iFa+aumKKNywb
- IPKVLfqFY/nutAtL+6LdPNISJmQ23vZ0ObnCjtn47ErMKRQCiOAG9MGtUClBLf+fmIg5
- 2CQOIWmg4Q26GsYbLse5stHd7tQqMUAuEpiKmJXL/XR3DQ0SrhZl/LYiG8ownqqmfv/h
- jo4NiU2LGRmSLqHG7dU6xv55lPRI73NpwVd6tdUuJBcXsR82Pf86XVprvl0F8M6PQWIt
- HLknHmhg0V4S8PB1NQ9e+9LgNdZDCkSlvpy2aY7uXJENxr4edXvotKSnFx01ML6hY2Bf
- D3Qw==
+ d=redhat.com; s=google; t=1768918237; x=1769523037; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=biEriWypYV8n7KXyRIJjtlJmi3bc+/LzQPT0u4Tvi7Y=;
+ b=dwSR8Qhrgr7DgVn3lAk/C+4uDIq7bBQA+ldNGVSqdHsbtXMK5SRGt3F9h1cE47SaDq
+ RqMOQ3ddDJO0Kxoeiro1G0vYVkh5/IhZGmbfHo7/WxuEVVqlofBu5dkyoeSCpNuGLR2n
+ SKfd5AGYBP+c/b3oO4wkGzIGjRtIiUtlz4gTM0Nd6YOPwmjuFOxCMzLB2A1cSlbs3ha8
+ cgEHoUnwg1fhSGfgg556AKP8sEsJjuCaGNMpnI0k0Arfj2FkiqkuVdIdVx0NRgn9CZcm
+ RvyFHIVKisx9UY3Fne9t9Ih8d96w+eHW8Gk6mz8j5cV1T2rPObLt4fSF2rJGgn+1eHUE
+ u00Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768916812; x=1769521612;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1768918237; x=1769523037;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8Uz3amhsVPp+nZfHVVlYW4f9piel5X3SPpWY66F/Bm0=;
- b=LAxKVDIOEW/v5m6J1LejFGxuoOdjK72HTZS+jeo8Gxh5BAxBRboMf+AN/Ko/5vECe+
- VbScW4RLGaklqQYZRH45Ol6sO5E46EnLppZ18Lz1CntwtvF4KNfSw7JZLc35vBMjhhEN
- u3SlgiRXjHr6X59yTXtLoLhi64utxID4b4ugSrZt4mIwghGhYNw1IV60ZYWJ17OMuwBK
- FyTNusX2UPzY5DBpnoDC/axj59908MPynf+ce3wvqsDUvCap6sLutlaKG2eIXEMHRBBw
- OTIQmLkkd4WMGvyubPHS6JfSe6cy22HPM26367ssnyMhTplin5zYu51qWnRDmI6IAXOz
- htng==
-X-Gm-Message-State: AOJu0Yx8S5i2s9t9OG31Hik5jb88SFevSH+AENkbIfkrD8dOsXqnxlB4
- oFCRfYTAfj18Rj2SbrzVbACj+rSlpBZDC/EoGUGQhmwymZEB09dgiYEftmxz0cEFiIOFeaHmOAm
- uIU5vJnplccj+YE4euZcSUWX6IDltfb0+v2OTOYE=
-X-Gm-Gg: AZuq6aLp5W+pH9skIVYaxJvM10/jaKdxu/V02F/Vm2MPm9xDh9Maz9P4Udh5WiT9Pn2
- yuF6xZiUHaj08Ls/62aj9EAwADT0tKIXKipwsHQBFtwAioMg1RoSuwejHWreJS5Fk0cJ9Bc2en3
- CIaoM1muDnuD3ksl0Azj/dgnR1CZT0tD0iU0wV/dCy+3sK19lVk7upUY4ju2sbZGWO+0pe3kJNW
- S9G0tDaVcwEIo2k/lkmnWbF0kQ1yWm2bDpeGKdXDeLb0QXH+2tjGimZoyGIepuTFFQ6Q1PMaImh
- cXwVrNZI/KfkzENohlFc4ksj2ts=
-X-Received: by 2002:a05:6512:3992:b0:59b:b420:db3d with SMTP id
- 2adb3069b0e04-59bb420dc19mr4094111e87.0.1768916812024; Tue, 20 Jan 2026
- 05:46:52 -0800 (PST)
+ bh=biEriWypYV8n7KXyRIJjtlJmi3bc+/LzQPT0u4Tvi7Y=;
+ b=SsYyTALsNA4CUm93C1GiUNxLmaPG8nHj7e8cU69GXSeGuHcHlcSPhIeesTGEw8oKEB
+ J8aEn79Jht2036grDCwL/VRmSqijneNNaV83upeW9DdgYq3urcdJsltOYTB9ZXQEAbrm
+ 8IWxeX3NWNEnxhdguYBOOiLaeScmwtvEx3pDkHQvJMntFZkVdx10xr0nox/H0PtXbpsO
+ J6RSh0bGil+SXKo6MGUEiiKZi+yvMYUSuVIMny5CzGMQIwrHjOPqyPbYjsXRMg4nscAP
+ D42psrv08eWMPHM/mUa8tLuCd8b3Jgw3Sz0Yv5Zga9ZjtX+c/qjew0t2c0rlbWMFp8nI
+ 0qPQ==
+X-Gm-Message-State: AOJu0YxEP9YJnoszCJ3dFuRe6C1UMQNA4Sf1j5Ycm9yrJNVIytX8bH6X
+ V8PhkVir5RwfLYis+5zwa1uCYlM3gABTBhqie0WvdGnZOHEKu5AcGja/qR8/l6NHlxUL+n+Akgi
+ dmq72f6Y3M8JoEGFueIS1FyxgWq7TV9T1kW1P0mOhfSF+Y8XJOX8cMH9b
+X-Gm-Gg: AZuq6aIvCcaDRUl6pmAzxGS0r1uMcJddA6WzU04VXQQHs/NiZCi/LPQ+AAGW3/v7rVS
+ ZxtFR+3G7e1A63d+05+ItPwBC2/sJ61KSvU1xICqwvbjQNcj33/nD7G8+veN014gV67wk4w6+sL
+ W1b/nRPwLBoCFlFEM5rwz0Yn8KeFi3ny0c0TwKrWphdC0lf0pMBYmBgx4Ft6aXNcdHtze5VIJ9E
+ 5Y1ltxo0Iz1CigVaw2m7NHrS0Tf+R4wt4sE5VV37aNIGz2eNqqBNMe4dtcQb6wiPB+Y/oddYp7X
+ PcoFFGG0Dg9UgfK6biFkQglGZqbe2AP1TkcWU8AmNb5hlJEBmZip2odpRxFfVqwf9Sog6Pdivtx
+ Ej8ahujQ=
+X-Received: by 2002:a05:6512:1246:b0:59b:8436:79da with SMTP id
+ 2adb3069b0e04-59baffd6f05mr5287517e87.44.1768918237191; 
+ Tue, 20 Jan 2026 06:10:37 -0800 (PST)
+X-Received: by 2002:a05:6512:1246:b0:59b:8436:79da with SMTP id
+ 2adb3069b0e04-59baffd6f05mr5287507e87.44.1768918236769; 
+ Tue, 20 Jan 2026 06:10:36 -0800 (PST)
+Received: from [192.168.0.9] ([47.64.112.255])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-59baf397672sm4220544e87.61.2026.01.20.06.10.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Jan 2026 06:10:36 -0800 (PST)
+Message-ID: <4bee294c-e529-4e05-9bdb-48533aeff4f9@redhat.com>
+Date: Tue, 20 Jan 2026 15:10:34 +0100
 MIME-Version: 1.0
-References: <20260109202740.362506-1-ankeesler@google.com>
- <20260109202740.362506-2-ankeesler@google.com>
- <CAGZECHP9i9zeZP4wLtDtx44OsPesOC3hG=bmpjsGrYUVAG-mXg@mail.gmail.com>
-In-Reply-To: <CAGZECHP9i9zeZP4wLtDtx44OsPesOC3hG=bmpjsGrYUVAG-mXg@mail.gmail.com>
-From: Andrew Keesler <ankeesler@google.com>
-Date: Tue, 20 Jan 2026 08:46:40 -0500
-X-Gm-Features: AZwV_Qigfgd9m-s1HGB8zIQPPnprVliCmkdCrJvW_HpvgpWGdrnPxNi0UtvXlG8
-Message-ID: <CAGZECHOj7X=WXx0-KqunAbSeo-Dh4M2Ci0T+=9BFhe+P1GMMyQ@mail.gmail.com>
-Subject: Re: [PATCH v4 1/1] Support per-head resolutions with virtio-gpu
-To: alex.bennee@linaro.org
-Cc: qemu-devel@nongnu.org, armbru@redhat.com
-Content-Type: multipart/alternative; boundary="00000000000038a0c00648d20af5"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=ankeesler@google.com; helo=mail-lf1-x12c.google.com
-X-Spam_score_int: -177
-X-Spam_score: -17.8
-X-Spam_bar: -----------------
-X-Spam_report: (-17.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.168,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] scripts: Allow sha512 in clean_functional_cache.py, too
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260120121849.131604-1-thuth@redhat.com>
+ <aW985Eq4d70yEPpH@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <aW985Eq4d70yEPpH@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,286 +164,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000038a0c00648d20af5
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 20/01/2026 14.02, Daniel P. Berrangé wrote:
+> On Tue, Jan 20, 2026 at 01:18:49PM +0100, Thomas Huth wrote:
+>> From: Thomas Huth <thuth@redhat.com>
+>>
+>> The functional testing frameworks also supports assets that are
+>> identified by their sha512 checksum (instead of only using sha25),
+>> and at least one of the tests (tests/functional/ppc64/test_fadump.py)
+>> is already using such a checksum, so adjust the clean_functional_cache
+>> script to support these checksums, too.
+> 
+> I wrote this code to match what we had in Avocado, but now I'm really
+> struggling to justify why we should choose different checksum algorithms
+> per asset. With only 1 test diverging from sha256, I'd rather we just
+> dropped sha512 support
 
-Gentle request for review.
+Fine for me, too ... could you suggest a patch, or want me to do it?
 
-This change was previously queued, and then dropped from a PR:
+  Thomas
 
-  https://mail.gnu.org/archive/html/qemu-devel/2025-10/msg04960.html
-
-This v4 PATCH addresses those comments.
-
-
-
-On Fri, Jan 9, 2026 at 3:31=E2=80=AFPM Andrew Keesler <ankeesler@google.com=
-> wrote:
-
-> Note - we use "xres" and "yres" (instead of, say, "width" and "height")
-> to match analogous virtio_gpu_base_conf.xres/yres.
->
-> On Fri, Jan 9, 2026 at 3:27=E2=80=AFPM Andrew Keesler <ankeesler@google.c=
-om>
-> wrote:
->
->> In 454f4b0f, we started down the path of supporting separate
->> configurations per display head (e.g., you have 2 heads - one with
->> EDID name "AAA" and the other with EDID name "BBB").
->>
->> In this change, we add resolution to this configuration surface (e.g.,
->> you have 2 heads - one with resolution 111x222 and the other with
->> resolution 333x444).
->>
->>   -display vnc=3Dlocalhost:0,id=3Daaa,display=3Dvga,head=3D0 \
->>   -display vnc=3Dlocalhost:1,id=3Dbbb,display=3Dvga,head=3D1 \
->>   -device '{"driver":"virtio-vga",
->>             "max_outputs":2,
->>             "id":"vga",
->>             "outputs":[
->>               {
->>                  "name":"AAA",
->>                  "xres":111,
->>                  "yres":222
->>               },
->>               {
->>                  "name":"BBB",
->>                  "xres":333,
->>                  "yres":444
->>               }
->>             ]}'
->>
->> Here is the behavior matrix of the current resolution configuration
->> surface (xres/yres) with the new resolution configuration surface
->> (outputs[i].xres/yres).
->>
->> Case: !(xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
->> Behavior: current behavior - outputs[0] enabled with default xres/yres
->>
->> Case: (xres || yres) && !(outputs[i].has_xres && outputs[i].has_yres)
->> Behavior: current behavior - outputs[0] enabled with xres/yres
->>
->> Case: !(xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
->> Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
->>
->> Case: (xres || yres) && (outputs[i].has_xres && outputs[i].has_yres)
->> Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres
->>
->> Signed-off-by: Andrew Keesler <ankeesler@google.com>
->> ---
->>  hw/display/virtio-gpu-base.c | 10 ++++++++++
->>  qapi/virtio.json             | 13 +++++++++++--
->>  2 files changed, 21 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
->> index 7269477a1c..6adb5312a4 100644
->> --- a/hw/display/virtio-gpu-base.c
->> +++ b/hw/display/virtio-gpu-base.c
->> @@ -233,6 +233,16 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
->>      g->req_state[0].width =3D g->conf.xres;
->>      g->req_state[0].height =3D g->conf.yres;
->>
->> +    for (output_idx =3D 0, node =3D g->conf.outputs;
->> +         node && output_idx < g->conf.max_outputs;
->> +         output_idx++, node =3D node->next) {
->> +        if (node->value->has_xres && node->value->has_yres) {
->> +            g->enabled_output_bitmask |=3D (1 << output_idx);
->> +            g->req_state[output_idx].width =3D node->value->xres;
->> +            g->req_state[output_idx].height =3D node->value->yres;
->> +        }
->> +    }
->> +
->>      g->hw_ops =3D &virtio_gpu_ops;
->>      for (i =3D 0; i < g->conf.max_outputs; i++) {
->>          g->scanout[i].con =3D
->> diff --git a/qapi/virtio.json b/qapi/virtio.json
->> index cd67c4f52e..c1a1fb4997 100644
->> --- a/qapi/virtio.json
->> +++ b/qapi/virtio.json
->> @@ -970,15 +970,24 @@
->>  ##
->>  # @VirtIOGPUOutput:
->>  #
->> -# Describes configuration of a VirtIO GPU output.
->> +# Describes configuration of a VirtIO GPU output.  If both @xres and
->> +# @yres are set, they take precedence over root virtio-gpu
->> +# resolution configuration and enable the corresponding output.  If
->> +# only one or none of @xres or @yres is set, root virtio-gpu
->> +# resolution configuration takes precedence and only the first output
->> +# is enabled.
->>  #
->>  # @name: the name of the output
->>  #
->> +# @xres: horizontal resolution of the output in pixels (since 10.2)
->> +#
->> +# @yres: vertical resolution of the output in pixels (since 10.2)
->> +#
->>  # Since: 10.1
->>  ##
->>
->>  { 'struct': 'VirtIOGPUOutput',
->> -  'data': { 'name': 'str' } }
->> +  'data': { 'name': 'str', '*xres': 'uint16', '*yres': 'uint16' } }
->>
->>  ##
->>  # @DummyVirtioForceArrays:
->> --
->> 2.52.0.457.g6b5491de43-goog
->>
->>
-
---00000000000038a0c00648d20af5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Gentle request for review.<div><br></div><div>This change =
-was previously=C2=A0queued, and then dropped from a PR:</div><div><br></div=
-><div>=C2=A0=C2=A0<a href=3D"https://mail.gnu.org/archive/html/qemu-devel/2=
-025-10/msg04960.html">https://mail.gnu.org/archive/html/qemu-devel/2025-10/=
-msg04960.html</a></div><div><br></div><div>This v4 PATCH addresses those co=
-mments.</div><div><br></div><div>=C2=A0=C2=A0</div></div><br><div class=3D"=
-gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On=
- Fri, Jan 9, 2026 at 3:31=E2=80=AFPM Andrew Keesler &lt;<a href=3D"mailto:a=
-nkeesler@google.com">ankeesler@google.com</a>&gt; wrote:<br></div><blockquo=
-te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
-solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Note - we use &qu=
-ot;xres&quot; and &quot;yres&quot; (instead of, say, &quot;width&quot; and =
-&quot;height&quot;)<br>to match analogous virtio_gpu_base_conf.xres/yres.<b=
-r></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr=
-">On Fri, Jan 9, 2026 at 3:27=E2=80=AFPM Andrew Keesler &lt;<a href=3D"mail=
-to:ankeesler@google.com" target=3D"_blank">ankeesler@google.com</a>&gt; wro=
-te:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">In 454f4b0f,=
- we started down the path of supporting separate<br>
-configurations per display head (e.g., you have 2 heads - one with<br>
-EDID name &quot;AAA&quot; and the other with EDID name &quot;BBB&quot;).<br=
->
-<br>
-In this change, we add resolution to this configuration surface (e.g.,<br>
-you have 2 heads - one with resolution 111x222 and the other with<br>
-resolution 333x444).<br>
-<br>
-=C2=A0 -display vnc=3Dlocalhost:0,id=3Daaa,display=3Dvga,head=3D0 \<br>
-=C2=A0 -display vnc=3Dlocalhost:1,id=3Dbbb,display=3Dvga,head=3D1 \<br>
-=C2=A0 -device &#39;{&quot;driver&quot;:&quot;virtio-vga&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;max_outputs&quot;:2,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;id&quot;:&quot;vga&quot;,<b=
-r>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;outputs&quot;:[<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;name&qu=
-ot;:&quot;AAA&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;xres&qu=
-ot;:111,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;yres&qu=
-ot;:222<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;name&qu=
-ot;:&quot;BBB&quot;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;xres&qu=
-ot;:333,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;yres&qu=
-ot;:444<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ]}&#39;<br>
-<br>
-Here is the behavior matrix of the current resolution configuration<br>
-surface (xres/yres) with the new resolution configuration surface<br>
-(outputs[i].xres/yres).<br>
-<br>
-Case: !(xres || yres) &amp;&amp; !(outputs[i].has_xres &amp;&amp; outputs[i=
-].has_yres)<br>
-Behavior: current behavior - outputs[0] enabled with default xres/yres<br>
-<br>
-Case: (xres || yres) &amp;&amp; !(outputs[i].has_xres &amp;&amp; outputs[i]=
-.has_yres)<br>
-Behavior: current behavior - outputs[0] enabled with xres/yres<br>
-<br>
-Case: !(xres || yres) &amp;&amp; (outputs[i].has_xres &amp;&amp; outputs[i]=
-.has_yres)<br>
-Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres<br>
-<br>
-Case: (xres || yres) &amp;&amp; (outputs[i].has_xres &amp;&amp; outputs[i].=
-has_yres)<br>
-Behavior: new behavior - outputs[i] enabled with outputs[i].xres/yres<br>
-<br>
-Signed-off-by: Andrew Keesler &lt;<a href=3D"mailto:ankeesler@google.com" t=
-arget=3D"_blank">ankeesler@google.com</a>&gt;<br>
----<br>
-=C2=A0hw/display/virtio-gpu-base.c | 10 ++++++++++<br>
-=C2=A0qapi/virtio.json=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 13 =
-+++++++++++--<br>
-=C2=A02 files changed, 21 insertions(+), 2 deletions(-)<br>
-<br>
-diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c<br=
->
-index 7269477a1c..6adb5312a4 100644<br>
---- a/hw/display/virtio-gpu-base.c<br>
-+++ b/hw/display/virtio-gpu-base.c<br>
-@@ -233,6 +233,16 @@ virtio_gpu_base_device_realize(DeviceState *qdev,<br>
-=C2=A0 =C2=A0 =C2=A0g-&gt;req_state[0].width =3D g-&gt;conf.xres;<br>
-=C2=A0 =C2=A0 =C2=A0g-&gt;req_state[0].height =3D g-&gt;conf.yres;<br>
-<br>
-+=C2=A0 =C2=A0 for (output_idx =3D 0, node =3D g-&gt;conf.outputs;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0node &amp;&amp; output_idx &lt; g-&gt;co=
-nf.max_outputs;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0output_idx++, node =3D node-&gt;next) {<=
-br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (node-&gt;value-&gt;has_xres &amp;&amp; nod=
-e-&gt;value-&gt;has_yres) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g-&gt;enabled_output_bitmask |=
-=3D (1 &lt;&lt; output_idx);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g-&gt;req_state[output_idx].widt=
-h =3D node-&gt;value-&gt;xres;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g-&gt;req_state[output_idx].heig=
-ht =3D node-&gt;value-&gt;yres;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0g-&gt;hw_ops =3D &amp;virtio_gpu_ops;<br>
-=C2=A0 =C2=A0 =C2=A0for (i =3D 0; i &lt; g-&gt;conf.max_outputs; i++) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g-&gt;scanout[i].con =3D<br>
-diff --git a/qapi/virtio.json b/qapi/virtio.json<br>
-index cd67c4f52e..c1a1fb4997 100644<br>
---- a/qapi/virtio.json<br>
-+++ b/qapi/virtio.json<br>
-@@ -970,15 +970,24 @@<br>
-=C2=A0##<br>
-=C2=A0# @VirtIOGPUOutput:<br>
-=C2=A0#<br>
--# Describes configuration of a VirtIO GPU output.<br>
-+# Describes configuration of a VirtIO GPU output.=C2=A0 If both @xres and<=
-br>
-+# @yres are set, they take precedence over root virtio-gpu<br>
-+# resolution configuration and enable the corresponding output.=C2=A0 If<b=
-r>
-+# only one or none of @xres or @yres is set, root virtio-gpu<br>
-+# resolution configuration takes precedence and only the first output<br>
-+# is enabled.<br>
-=C2=A0#<br>
-=C2=A0# @name: the name of the output<br>
-=C2=A0#<br>
-+# @xres: horizontal resolution of the output in pixels (since 10.2)<br>
-+#<br>
-+# @yres: vertical resolution of the output in pixels (since 10.2)<br>
-+#<br>
-=C2=A0# Since: 10.1<br>
-=C2=A0##<br>
-<br>
-=C2=A0{ &#39;struct&#39;: &#39;VirtIOGPUOutput&#39;,<br>
--=C2=A0 &#39;data&#39;: { &#39;name&#39;: &#39;str&#39; } }<br>
-+=C2=A0 &#39;data&#39;: { &#39;name&#39;: &#39;str&#39;, &#39;*xres&#39;: &=
-#39;uint16&#39;, &#39;*yres&#39;: &#39;uint16&#39; } }<br>
-<br>
-=C2=A0##<br>
-=C2=A0# @DummyVirtioForceArrays:<br>
--- <br>
-2.52.0.457.g6b5491de43-goog<br>
-<br>
-</blockquote></div>
-</blockquote></div>
-
---00000000000038a0c00648d20af5--
 
