@@ -4,97 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A77CD2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 08:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 282F3D2ED0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 08:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi74a-0002ha-GY; Tue, 20 Jan 2026 03:26:48 -0500
+	id 1vi7Iu-0004D5-Mc; Tue, 20 Jan 2026 03:41:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vi74Y-0002Zk-N3
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:26:46 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vi7Ir-0004BC-Kf
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:41:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vi74W-0003Uv-MM
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:26:46 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vi7Io-0005ps-0v
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:41:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768897602;
+ s=mimecast20190719; t=1768898488;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yaGCCcueMKOPfz8JDv9ii1KfyFVAImDuKJg8upyv8FA=;
- b=jQACRvkTUiMOBF6qadiJ9LfUryrPOrkNMsjPS8MZWr/O4ydazTXC8BfI9ZleUBUMi0FfY2
- ubeiRnJcIezXgpRRAMQ2OZ4ZkYwN0M/FtN3BzploxzTBVo1e4yvH+EWUvXpL+RP0jMJLHI
- 1iOlJkzD4Oc7NYOz6dvOnGhmTg+ZmRA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uSUldqJidX4vN34Kk2+mTIgpHFx/pYrNTCu9fXfgRY8=;
+ b=XTZtriDbUFFzas0RwL3CBy0VnYi0VYhv54WEARwS9985/BQCsLE6hrTzMu/oNNB3FHt12L
+ /N+/KMNCcHLGmtvNplB5X1HeH9WulclotF+U5AA7KyttMqwF5FbuihNpQIMTZhDhjt8dn7
+ Zj4pyX9HlQ07O3uAvcdF30TI/NEgvso=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-Z1yaQIBcNUSlLSWOTDkJfA-1; Tue, 20 Jan 2026 03:26:40 -0500
-X-MC-Unique: Z1yaQIBcNUSlLSWOTDkJfA-1
-X-Mimecast-MFC-AGG-ID: Z1yaQIBcNUSlLSWOTDkJfA_1768897599
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-431026b6252so5166701f8f.1
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 00:26:40 -0800 (PST)
+ us-mta-271-r3YociZMPl-h7VrF5ZppOw-1; Tue, 20 Jan 2026 03:41:26 -0500
+X-MC-Unique: r3YociZMPl-h7VrF5ZppOw-1
+X-Mimecast-MFC-AGG-ID: r3YociZMPl-h7VrF5ZppOw_1768898485
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-42fb1c2c403so3975675f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 00:41:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768897599; x=1769502399; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768898485; x=1769503285; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=yaGCCcueMKOPfz8JDv9ii1KfyFVAImDuKJg8upyv8FA=;
- b=EnAv2kIMu7dVbXG4jYf5h1DxoOBhgkhs2zo16OVAYRRU4K9GGAyfAwyvlARZ6DQNyw
- T/I8weiPaB6oyg1qjmR3ctylQhJWGIbeU9uh2w0xopSUJrym+WLZtMEQ15M/FcbhxbTX
- NsVKT18XawcGp9U6clER/Kt9eTLbe2ebLc4OcWvPYQGLOp7Q50FwJKoRlgVvDAOsyJaw
- AgmBG7DI0pevpgUyd0u+4Vdl2wj3jju1RVL0gKxxA6eS9+CngopJyza/R8kdHpw9yuax
- 4waXaWDwoPUtHnQ2YOiT81qxZK6bkvL4YyRR39hU5VFFqKPNKB6lC6E0jX+mTCVSS1uV
- hT3Q==
+ bh=uSUldqJidX4vN34Kk2+mTIgpHFx/pYrNTCu9fXfgRY8=;
+ b=gvC+w3GRvWpSKxD0Grm0Qk6oYjsg+ibUNtocgd4z37NipqUWsXdp8Qze7RZ65HEyar
+ g4ZLy+C1mF2hSu1qUqIHJYh2Dcbd0HPqdyQf+73mI6DjY7q4oszSZbmSCYzPB3a6buhv
+ hTXpcK54lKs3FiqCsABQqQssmdf90MdwFpyywzOaAXCHKqQr5cJvffZhXREk1JxfmiOj
+ +ej+aSUrcq3li9JWNIfGTBovi6u26ef4rC8ZZG1VE2uyQ4QFJEF/I3ZyevUH7bFMO3bg
+ W8cR5pcQ7iWR1X1Bl8JiaJ5HK1IN2PEd5cZRsw5DerbUrGRUJwZ4loOpDzapgiR6vyK2
+ jp0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768897599; x=1769502399;
+ d=1e100.net; s=20230601; t=1768898485; x=1769503285;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yaGCCcueMKOPfz8JDv9ii1KfyFVAImDuKJg8upyv8FA=;
- b=re/EOE8zad7E6K+6Vxl7tu+EgP7Gvj3WWk3DiFLa/hMXVG+FP90qPKeGgJXeWUX2Ax
- XGCJn48xLtboAEE68L0suOsdVke6GwSIaucKa27CuTSu3WCK+ydfM6V6S3PQ1fr7M4G3
- qNYadbCUmZ6CKdklcyN1Ixka8E0K4xsh3Yhf2yLNsHbowQe8i8vuE70aaPwqw5BV610j
- g8Q8MR0K/Bxw0L2H6LWEOabqhSUfdcoGX720HZbQ7NyAGiu+BoI373UmT3e1kZlx1cAt
- 4QLuyNLydhfba1C7ZWcZHT8w1khiRldXJyi6bTGgKt+nme7sjxssV8vwqym36GoIFA/P
- dm6w==
-X-Gm-Message-State: AOJu0YyqsJI0r4Ykm4PukHd1oxDFLf0e9z82GNCAEfZQXniiwDmwncjV
- /4AWQuCpBxhSSdpUJ/fAHeXKMstcgr+6GWHVMSVhxeIzIKqgU7i8i6DZTQ8GVJPVqVrEQQ/ffwQ
- kQXWzoao0YAAfQfo7zye40sYgGurlojQivuXlNfd4ISNN1RHcA1lCvRO/
-X-Gm-Gg: AZuq6aLLaXVhgUxmezryTqI7n/PhhDVbagqNnfS0XMmC7bnCYmx3nzdAhaK3pkmt/E6
- AUbP3S2o7qEbyHSonx8jkS4J9t7OudUnOQYvnaFnlpGR5kzG7LG9TJXH0rFkUJtAbSDvaTOJBZc
- L2646If4t9fnbDXautdFlGyvik1TWR2E0HnT9P+Khfa0dEyrHX2cod1MsY/WIELmxlf3mCyGnVq
- IdNSHZ06WeR0LEZQuDSZUfa0XDGlalKw1h1KFusvoahkgh5FBnPthEZictl0k75QRN9CYswq3UL
- N4RiNXTUFu3AHKvHuYZ3aTVfR7f5w4j06Wug0b4IvXAKHIBQMZAB7i752Ca1GLo7VMGwOtp2i7Z
- 86m8EgQGfbv3mgc6w0g7nGdac8Xd1u/eU0hg=
-X-Received: by 2002:a05:6000:2f88:b0:430:fdfc:7dd0 with SMTP id
- ffacd0b85a97d-4356a089943mr17532863f8f.63.1768897599011; 
- Tue, 20 Jan 2026 00:26:39 -0800 (PST)
-X-Received: by 2002:a05:6000:2f88:b0:430:fdfc:7dd0 with SMTP id
- ffacd0b85a97d-4356a089943mr17532836f8f.63.1768897598470; 
- Tue, 20 Jan 2026 00:26:38 -0800 (PST)
+ bh=uSUldqJidX4vN34Kk2+mTIgpHFx/pYrNTCu9fXfgRY8=;
+ b=NuinPz6gGi2W9VHeItB4ckPA4STTzV621/h7R4JwlW25J3SE47JG7ZAOi4QBNkeKy4
+ Su5jrdwzsXtwXsq6DBu8nCIUU/QfO0ItCj+kDsacrGbxRqoKSznSXqzo5bLY3SReigJe
+ ywRVxt3jm98O+FAOdrxMGuIbgLCAjyeaWzjpRFC6TOjkLspq4wtTRAo3sBMBvnu/g6Js
+ PAy2VISl3V00P1myyE8k1mqq3g8TWSQFQY0optBAIpwgyoLRUAyO+AuGkbG8G1iUdccA
+ vMCSrVaszpOAtCZRUTt1W9UQQ5URToh2N8w3HzPdd1k58/DoFSnSbUpW8B8Qu2Trl5yt
+ 26RA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVi0RcxmdKdecqPaUM2nmtSkIXUVJwn4OFvbT04W0jx2vqiq4mr3mr5IlDOGoA4LoEoQdnyCM6FveXU@nongnu.org
+X-Gm-Message-State: AOJu0YxKRRk9ITk6YroTHy1CQfPPvdgBBNrWCsOfzeH60hHvNXF3MtXd
+ Stbhchk/gS3sj9N4b6VKtKPeTkba/2LUOIdIKK4mA0/Deu6OwpQ0QbsHMJJoTKbiJkgJ7gb9xBF
+ lxc97g/JqFPZipJlXihpEP/lV1KjOsYyssjZIyxG/xkl6ORAG98wdpJE2
+X-Gm-Gg: AZuq6aKfmNhC2bS03Axu7vdLBKRCvPV2qgpK1NdGt45IQwf/Awh/h5EP9JPrfUNqVCB
+ RCn8DE850X+FN68qHmFUQCO2M5nTmwFjGz277mSlr8E70sPb9ilfA7SuZnl2nnAzmFmY8kKqKES
+ nCP/kwUVdOo9mlymGFFMUv4TpHkGMCbs2PXJxjySipYu8eIym19OYleSE/MlqH5mEmKsSzANuUS
+ C1D5L88ySQpfIIlDOiuYaS7x0F4tA3n0UWyvb7jkU+V/6u+mSwKEQS77BXqoZ+FGg2OQRSQqhC8
+ /PaQlxUljEJu3pWCbaqvYlArBHqWxb6vYPx13rZ57sRngMt0MkpYMLAvvOWrQfMm7TxsgFV8bZ+
+ 0XkgVk+WB2PF5N1sM2igS7Saj4Qc0y/ImRP8=
+X-Received: by 2002:a05:6000:22c9:b0:431:855:c791 with SMTP id
+ ffacd0b85a97d-4356997f5e5mr19272981f8f.3.1768898484572; 
+ Tue, 20 Jan 2026 00:41:24 -0800 (PST)
+X-Received: by 2002:a05:6000:22c9:b0:431:855:c791 with SMTP id
+ ffacd0b85a97d-4356997f5e5mr19272946f8f.3.1768898484039; 
+ Tue, 20 Jan 2026 00:41:24 -0800 (PST)
 Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435699271easm28165853f8f.14.2026.01.20.00.26.37
+ ffacd0b85a97d-435924ae6f1sm1407150f8f.33.2026.01.20.00.41.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Jan 2026 00:26:38 -0800 (PST)
-Message-ID: <e9a55c88-9442-4462-9d7d-21b1d0196401@redhat.com>
-Date: Tue, 20 Jan 2026 09:26:37 +0100
+ Tue, 20 Jan 2026 00:41:23 -0800 (PST)
+Message-ID: <32176147-6ead-4a03-aad5-da5d68bb407e@redhat.com>
+Date: Tue, 20 Jan 2026 09:41:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] tests/functional: Add a OS level migration test
- for pseries
-To: Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20260109123519.28703-1-farosas@suse.de>
- <20260109123519.28703-3-farosas@suse.de>
- <CAE8KmOydo3r7x1AMWyO3hYEqrN5+XxHuz0y9OYNJc4nPMWq2DA@mail.gmail.com>
+Subject: Re: [PATCH v4 03/17] python/mkvenv: add 'tooling' and 'functests'
+ dependency groups
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Maksim Davydov <davydov-max@yandex-team.ru>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, Markus Armbruster <armbru@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Hanna Reitz <hreitz@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Yonggang Luo <luoyonggang@gmail.com>,
+ Ed Maste <emaste@freebsd.org>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-block@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260119212744.1275455-1-jsnow@redhat.com>
+ <20260119212744.1275455-4-jsnow@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -139,7 +149,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <CAE8KmOydo3r7x1AMWyO3hYEqrN5+XxHuz0y9OYNJc4nPMWq2DA@mail.gmail.com>
+In-Reply-To: <20260119212744.1275455-4-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -151,7 +161,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,57 +177,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/01/2026 08.56, Prasad Pandit wrote:
-> On Fri, 9 Jan 2026 at 18:06, Fabiano Rosas <farosas@suse.de> wrote:
->> There's currently no OS level test for ppc64le. Add one such test by
->> reusing the boot level tests that are already present.
->>
->> The test boots the source machine, waits for it to reach a mid-boot
->> message, migrates and checks that the destination has reached the
->> final boot message (VFS error due to no disk).
->>
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>   tests/functional/ppc64/test_migration.py | 12 ++++++++
->>   tests/functional/ppc64/test_pseries.py   | 35 ++++++++++++++++++++++++
->>   2 files changed, 47 insertions(+)
->>
->> diff --git a/tests/functional/ppc64/test_migration.py b/tests/functional/ppc64/test_migration.py
->> index 5dfdaaf709..a3b819680b 100755
->> --- a/tests/functional/ppc64/test_migration.py
->> +++ b/tests/functional/ppc64/test_migration.py
->> @@ -4,6 +4,7 @@
->>   #
->>   # ppc migration test
->>
->> +from qemu_test.ports import Ports
->>   from migration import MigrationTest
->>
->>
->> @@ -21,6 +22,17 @@ def test_migration_with_exec(self):
->>           self.set_machine('mac99')
->>           self.migration_with_exec()
->>
->> +    def do_migrate_ppc64_linux(self, source_vm, dest_vm):
->> +        with Ports() as ports:
->> +            port = ports.find_free_port()
->> +            if port is None:
->> +                self.skipTest('Failed to find a free port')
->> +            uri = 'tcp:localhost:%u' % port
+On 19/01/2026 22.27, John Snow wrote:
+> 'tooling' contains depedencies required to run various tools (like
+> qmp-shell) as well as dependencies required to run "make check", and as
+> such, we promise that these dependencies can be sourced from the user's
+> distribution repository or from vendored packages so that "make check"
+> can be executed offline in an isolated build environment.
 > 
-> * When port is None, shouldn't it return after the skipTest() call?
-> With port = None, uri will become -> 'tcp:localhost:None' OR maybe
-> port should have default value?
+> In contrast, pygdbmi is only needed for functional tests and not tests
+> in general; we do not make the same offline/isolated guarantees for
+> functional tests, and this dependency group is allowed to fetch
+> dependencies from PyPI at runtime.
+> 
+> For the time being, amend the "check-venv" target to install both
+> dependency groups, to avoid a duplicate dependency between them. By the
+> end of this series, however, "check-venv" will be eliminated in favor of
+> always installing "tooling" at configure time and allowing "functests"
+> to be installed on-demand as needed by meson/ninja.
+> 
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>   pythondeps.toml        | 10 +++++++++-
+>   tests/Makefile.include |  2 +-
+>   2 files changed, 10 insertions(+), 2 deletions(-)
+> 
+> diff --git a/pythondeps.toml b/pythondeps.toml
+> index 85220a36426..1a4c2c2c20d 100644
+> --- a/pythondeps.toml
+> +++ b/pythondeps.toml
+> @@ -31,6 +31,14 @@ meson = { accepted = ">=1.10.0", installed = "1.10.0", canary = "meson" }
+>   sphinx = { accepted = ">=3.4.3", installed = "6.2.1", canary = "sphinx-build" }
+>   sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
+>   
+> -[testdeps]
+> +# This test group is for dependencies required to run various tooling
+> +# and tests that should always be installed at configure time. It should
+> +# only include depedencies that can be guaranteed via configure from
 
-skipTest() aborts the test immediately, the remaining code after this 
-statement is not executed anymore. (I think it internally raises an 
-exception that is caught by the unittest code to mark the test as skipped, 
-but you might better ask a Python wizard if you want to know the gory 
-details. See 
-https://docs.python.org/3/library/unittest.html#unittest-skipping for example)
+s/depedencies/dependencies/
 
-  HTH,
-   Thomas
+With the typo fixed:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
