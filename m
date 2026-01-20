@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 365ABD2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 12:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D58A9D2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 12:38:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viAyf-0001Rr-B3; Tue, 20 Jan 2026 07:36:57 -0500
+	id 1viAzb-0001wI-WA; Tue, 20 Jan 2026 07:37:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1viAya-0001OH-Mo; Tue, 20 Jan 2026 07:36:53 -0500
+ id 1viAyf-0001T7-16; Tue, 20 Jan 2026 07:36:57 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1viAyY-0002U6-FA; Tue, 20 Jan 2026 07:36:52 -0500
+ id 1viAyd-0002V7-EC; Tue, 20 Jan 2026 07:36:56 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8F7231802BF;
- Tue, 20 Jan 2026 15:21:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 295DD1802C7;
+ Tue, 20 Jan 2026 15:21:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1331B351748;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A3D11351750;
  Tue, 20 Jan 2026 15:21:51 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PULL 0/9] Trivial patches for 2026-01-20
-Date: Tue, 20 Jan 2026 15:21:37 +0300
-Message-ID: <20260120122150.2254321-1-mjt@tls.msk.ru>
+Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
+ qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 8/9] configure: add ppc target back to container tests
+Date: Tue, 20 Jan 2026 15:21:45 +0300
+Message-ID: <20260120122150.2254321-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260120122150.2254321-1-mjt@tls.msk.ru>
+References: <20260120122150.2254321-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -58,50 +60,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 38879a667fbb4ef54c70de71494882615f600a64:
+From: Florian Hofhammer <florian.hofhammer@fhofhammer.de>
 
-  Merge tag 'pull-tcg-20260119' of https://gitlab.com/rth7680/qemu into staging (2026-01-19 09:04:31 +1100)
+Commit 2ff8c9a298 removed support for 32-bit PPC hosts from the build
+system. Unfortunately, the patch also removed the 32-bit PPC target for
+containerized tests, which leads to an error when trying to run tests,
+e.g., with "make check-tcg":
+"make[1]: *** No rule to make target 'docker-image-debian-ppc-cross',
+needed by 'build-tcg-tests-ppc-linux-user'.  Stop."
 
-are available in the Git repository at:
+This patch adds the PPC target back for containerized tests.
 
-  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+Fixes: 2ff8c9a2984b ("buildsys: Remove support for 32-bit PPC hosts")
+Signed-off-by: Florian Hofhammer <florian.hofhammer@fhofhammer.de>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+[Mjt: specify commit subject in Fixes tag)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-for you to fetch changes up to 83017c4aaa9e3ef80161443019764196dffdb654:
+diff --git a/configure b/configure
+index 0d73eefc15..213880df89 100755
+--- a/configure
++++ b/configure
+@@ -1451,7 +1451,7 @@ probe_target_compiler() {
+         container_image=debian-all-test-cross
+         container_cross_prefix=mips64-linux-gnuabi64-
+         ;;
+-      ppc64|ppc64le)
++      ppc|ppc64|ppc64le)
+         container_image=debian-all-test-cross
+         container_cross_prefix=powerpc${target_arch#ppc}-linux-gnu-
+         ;;
+-- 
+2.47.3
 
-  linux-user/aarch64/target_fcntl.h: add missing TARGET_O_LARGEFILE definition (2026-01-20 15:21:08 +0300)
-
-----------------------------------------------------------------
-trivial patches for 2026-01-20
-
-----------------------------------------------------------------
-Florian Hofhammer (1):
-      configure: add ppc target back to container tests
-
-Julian Ganz (1):
-      tests: fix comment declaring runtime in rv64 interruptedmemory test
-
-Michael Tokarev (3):
-      Revert "gdbstub: Try unlinking the unix socket before binding"
-      gdbstub: unlink the unix socket before bind()
-      qemu-options.hx: use KiB, MiB, GiB for power-of-2 units
-
-Pierrick Bouvier (1):
-      linux-user/aarch64/target_fcntl.h: add missing TARGET_O_LARGEFILE definition
-
-Thomas Huth (3):
-      configure: Set $PYTHON in the configuration of the optionroms
-      tests/qemu-iotests: Use "gsed" for expressions that require GNU sed
-      MAINTAINERS: Add docs/system/i386/ to the general x86 architecture section
-
- MAINTAINERS                           |  1 +
- configure                             |  3 ++-
- gdbstub/user.c                        | 30 +++++++++++++++++++++++++++---
- linux-user/aarch64/target_fcntl.h     |  1 +
- qemu-options.hx                       | 20 ++++++++++----------
- stubs/meson.build                     |  2 --
- tests/qemu-iotests/286                |  2 +-
- tests/qemu-iotests/common.rc          |  2 +-
- tests/tcg/riscv64/interruptedmemory.S |  2 +-
- util/meson.build                      |  2 --
- 10 files changed, 44 insertions(+), 21 deletions(-)
 
