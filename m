@@ -4,135 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C720ECA5FD7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5B2CA5FB8
 	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 18:28:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viGSh-0006E8-1p; Tue, 20 Jan 2026 13:28:19 -0500
+	id 1viGSY-0006BB-6D; Tue, 20 Jan 2026 13:28:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1viGSf-0006Dg-5z
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:28:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1viGSW-00069X-1Y; Tue, 20 Jan 2026 13:28:08 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1viGSc-0003nu-OR
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:28:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768933692;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fVUJ1JIRb1Q8VZzqOfuryykqdN+f2APx7/IZOrw9B5g=;
- b=JznvLCgg6vS4QVAdfFysr56OO7Vvza5khXULkGGAP5A6fnXVOWSRx9umSwMh0Ny0q7eSsd
- s91yLf40H5Owpaj3Errjun6Oti+krw8k4ixFCMRDAwxFjco4asShcSMivQa0gAZmNU9/1h
- 3lZNBpWL0/Hgy+7bPo48GxVBCUGNrU0=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-542-qX1K-lzkMeyRQKvUU5CvMQ-1; Tue, 20 Jan 2026 13:28:11 -0500
-X-MC-Unique: qX1K-lzkMeyRQKvUU5CvMQ-1
-X-Mimecast-MFC-AGG-ID: qX1K-lzkMeyRQKvUU5CvMQ_1768933691
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-792738a717fso65782357b3.1
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 10:28:11 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768933689; cv=none;
- d=google.com; s=arc-20240605;
- b=EWTu1nlyN4pii+m7a1/67GNzxqHqqZwD4CQOyrNMt9GVnS9IpKTmFEMQLa/EYVkFuJ
- H9OYEHP3QixSL6eaKWIQbUt3u9s89JxYEMIpDdZYJtUg7S+W/M7tyXSd+dQbcSGFTcMF
- q33opBN5IGZ1ewvCwwOAAs7nfrpEcN4LVJzj6D4YpugtzpVHPGZSVI0/i31Mwsx7s/cJ
- qRsrevb3eZjy/1ypGXOBNYsV1UoFMX8i6SHigy/2OdlUC72lbVX9vaFwwFW8Fgg0Yn+Z
- yFeZKdNwg6RX/cA7WH3/WQfqCJEZnlM/HCZgzQf6NmeEfznQNl2fQuGcR/B3XEy2vKke
- WRqA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=fVUJ1JIRb1Q8VZzqOfuryykqdN+f2APx7/IZOrw9B5g=;
- fh=3Vi40FEfOsRvAJsSQmHr3FcCQ3abLEDWYqfMpQJLGSk=;
- b=dvrHtFX14p+I9dtRh+oANPQ+6Ny4xsag4Qn7+FS0kAq92bkBMFz1Yk4+F4nn9SMLL4
- xyWclkV1J8IEWOqVp646hKh9mf8gdl2YUecZQLYIi5cN7g4y0Z1qwItBc70aOGULJnTS
- u7kTYrMxenUIXBOa3Hzz2fOcVWjlqO2Vao0pYXBpWx9F81TE2WlLBGGhNvE+F2r0cvew
- uXhr5QWc5zqx6Y/S6ATNL4GKxoj7jlPIfDhCI9pusk0+xENn8SOvgMeG/EM0fYA/Eeir
- g52Ria1ZPPIFjKgVPwGOLA04mdLlC5MraM/HGhnlZWVe9iJLsursCsTXV949lgha7xWh
- ODmw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768933689; x=1769538489; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fVUJ1JIRb1Q8VZzqOfuryykqdN+f2APx7/IZOrw9B5g=;
- b=JY/a37l5YgH/+xfoZheTpXRpuZDAgZU/e/61PNKXG4+LjVFYurjZJSoI05T9Gz2KXx
- XKpxepsQEF8qxgS7w8CKHHMmh5DYqTZJc9mRd4NFlnZYdfj7y+v4vd/9YikxnW0bSHO5
- E8EwGWgt51dU5NsiERQUBM0dfELogD9pksMepjJ+S/EIYSHXGAZdrwxLzFyCNlanb6jy
- xxZ9aQiU635FutpbbwzHE1OM/ZskDhNHZTs2U+XVpPiN/LzG1REO3nERvkRAp1Zy8sDE
- 8g3Z6Mxgan231R6WIauNKWGwh2DiE447GbWsVqwuw44BlvU2zKt6KmOGTl1J3c7U3O8R
- 7FdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768933689; x=1769538489;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fVUJ1JIRb1Q8VZzqOfuryykqdN+f2APx7/IZOrw9B5g=;
- b=B5xQeqdoKHh83XRPLjUZlQ8f7Fz0nXvFfcUR62T8s0H6UFJw4MH7kgKL3R9esj0B5a
- enDlbnLEvEIMA9SUbLqqM6o27Nop8xoF4JiJJNW/aPf5oHGi55xY+CexXFNoOZy5GPHW
- Ufmba++99/NuFsVcP7Vxb0RAe8u++zwH/cor+d4EQER4dB/pMhza3zJCiZYBdxfnKRvf
- Q85NqlrzD8xryrgFup12RVX9IcP5ezmSleeWerYZXG6rb42KFbV3odoqdTWyEkVMVQUR
- Zo+GWaeQmquq4MzAaomKpLql3Gd+YQ/KbdxOnLUyagg1tw+JZljozQRsNp4JP3hIRRLh
- vkyg==
-X-Gm-Message-State: AOJu0YzPYY//BIz24c96L1zlynfnwtGbJVg67e6ITgWV5JFqrO69ur72
- Uq4jRRlA23RbkAaxV9rt4iVU8QPBVNpCpnr8gfMSMCGbEeqWEp7NsgT+8F6bPZ26zJnHBmUtaHZ
- wp8XupAavAKIOyvQKQyK6/6FgdMVuF9ngTh1LmBHMwGcY2I0TtQqDmYuQvpW0RH4DqeIIEbiGJo
- qqIgjc57hkH9lv7MO0kfIW2+Gxfm27H6nd1GrSCEJ65g==
-X-Gm-Gg: AZuq6aJhRXrhSd5ZQERGX965DQ+OQigRQPUouWuZ23Qwr7tOq7En/GsVdZqEbCuuUWW
- QPkJP5px9eS975Ha6qz2mozFmHYPKOTr0/lGqH+pijC6V92VLdayy4SA5V8mKNmwwzBnRSdDWkU
- YMndAtu19/wlqUaeNBZOvtiBwdbWMe92x6NV3u1bFt7NNkWB4/BLZ7BvTti2K/46ADGdjktttA0
- 05KA7ShnTL/VeiyaTLIsvJiOg==
-X-Received: by 2002:a05:690e:4104:b0:644:60d9:7516 with SMTP id
- 956f58d0204a3-6493c86574bmr2009862d50.90.1768933688806; 
- Tue, 20 Jan 2026 10:28:08 -0800 (PST)
-X-Received: by 2002:a05:690e:4104:b0:644:60d9:7516 with SMTP id
- 956f58d0204a3-6493c86574bmr2009830d50.90.1768933688319; Tue, 20 Jan 2026
- 10:28:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1viGST-0003mL-Cn; Tue, 20 Jan 2026 13:28:07 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E8C4B596A07;
+ Tue, 20 Jan 2026 19:27:58 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id HNc79LQCno2M; Tue, 20 Jan 2026 19:27:56 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 8F255596A03; Tue, 20 Jan 2026 19:27:56 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8CC015969E4;
+ Tue, 20 Jan 2026 19:27:56 +0100 (CET)
+Date: Tue, 20 Jan 2026 19:27:56 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Bernhard Beschow <shentey@gmail.com>
+cc: qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org, 
+ Guenter Roeck <linux@roeck-us.net>, Bin Meng <bmeng.cn@gmail.com>, 
+ Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH 00/14] Freescale SDHCI Fixes
+In-Reply-To: <ae54581c-2a49-b6c2-cde1-d50bbde70a84@eik.bme.hu>
+Message-ID: <25c93133-a8a7-5456-5964-a7df9e1daf88@eik.bme.hu>
+References: <20260112145418.220506-1-shentey@gmail.com>
+ <ae54581c-2a49-b6c2-cde1-d50bbde70a84@eik.bme.hu>
 MIME-Version: 1.0
-References: <20260119212744.1275455-1-jsnow@redhat.com>
-In-Reply-To: <20260119212744.1275455-1-jsnow@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 20 Jan 2026 13:27:57 -0500
-X-Gm-Features: AZwV_Qj9W5zNIBIWyud6xaQv8-OPfCbNbnO9trK1dFzCxv_w_Oj4XUu2n7XMhQc
-Message-ID: <CAFn=p-ZwZcvJM=essB8GU1+-P2Gi3xXCQVURvPWxB5qbq0AYbg@mail.gmail.com>
-Subject: Re: [PATCH v4 00/17] python: drop qemu.qmp from qemu.git tree
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, 
- Maksim Davydov <davydov-max@yandex-team.ru>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Li-Wen Hsu <lwhsu@freebsd.org>, Markus Armbruster <armbru@redhat.com>,
- Thomas Huth <thuth@redhat.com>, 
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Hanna Reitz <hreitz@redhat.com>, 
- Cleber Rosa <crosa@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Yonggang Luo <luoyonggang@gmail.com>, Ed Maste <emaste@freebsd.org>,
- Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-block@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,198 +68,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 19, 2026 at 4:28=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
+On Tue, 20 Jan 2026, BALATON Zoltan wrote:
+> On Mon, 12 Jan 2026, Bernhard Beschow wrote:
+>> This series splits TYPE_IMX_USDHC into three device models which fixes 
+>> issues
+>> in the ppce500 and some i.MX machines. In particular, it introduces uSDHC's
+>> predecessor eSDHC in big and little endian variants. Once the eSDHCs are
+>> split off, uSDHC emulation is improved which is a stepping stone towards
+>> running u-boot on the i.MX8MP (not implemented yet).
+>> 
+>> In a way this series picks up previous efforts:
+>> * 
+>> https://lore.kernel.org/qemu-devel/20250310000620.70120-14-philmd@linaro.org
+>> * 
+>> https://lore.kernel.org/qemu-devel/20250310000620.70120-15-philmd@linaro.org
+>> 
+>> There is quite some code churn involved to fix all the issues addressed in
+>> this series. Let me know if you have any better ideas to achieve the same.
+>> 
+>> Best regards,
+>> Bernhard
+>> 
+>> Testing done:
+>> * make check
+>> * Boot https://www.qemu-advent-calendar.org/2018/download/day19.tar.xz in
+>> ppce500
+>> * Boot guest in imx8mp-evk
 >
-> Hello!
+> I've tried it with the A1222 U-Boot and it still works the same with this 
+> series as before so:
 >
-> This series drops the in-tree version of our python-qemu-qmp package
-> ("qemu.qmp") in favor of the version hosted on PyPI, whose repository is
-> located at https://gitlab.com/qemu-project/python-qemu-qmp.
+> Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
 >
-> GitLab CI: https://gitlab.com/jsnow/qemu/-/pipelines/2272170300
+> Looks like after this series I can revert this change:
+>
+> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+> index 5d8dad7bba..c86dfa281f 100644
+> --- a/hw/sd/sdhci.c
+> +++ b/hw/sd/sdhci.c
+> @@ -614,11 +614,11 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState 
+> *s)
+>      * XXX: Some sd/mmc drivers (for example, u-boot-slp) do not account for
+>      * possible stop at page boundary if initial address is not page 
+> aligned,
+>      * allow them to work properly
+>      */
+>     if ((s->sdmasysad % boundary_chk) == 0) {
+> -//        page_aligned = true;
+> +        page_aligned = true;
+>     }
+>
+>     s->prnsts |= SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE;
+>     if (s->trnmod & SDHC_TRNS_READ) {
+>         s->prnsts |= SDHC_DOING_READ;
+>
+> which needed to be commented out before but now works with or without this 
+> change. Is this XXX hack still needed?
+>
+> Another change I see is that before it ended in:
+>
+> SDHC wr_4b @0x44 <- 0x00000010 read-only
+> SDHC wr_4b @0x44 <- 0x00000010 read-only
+>
+> repeated 18 times which now says:
+>
+> SD: CMD12 in a wrong state: transfer (spec v3.01)
+> SD: CMD12 in a wrong state: transfer (spec v3.01)
+>
+> repeated 17 times. But this fails after not finding a bootable device so I'm 
+> not sure this is not a bug in this U-Boot version. With more traces enabled 
+> it seems to do some transfer then get these errors when trying to continue 
+> reading:
 
-Current status of this series: all patches reviewed by either Thomas,
-Dan or Vladimir; except:
+In case that helps here's the beginning of this transfer that produces the 
+above messages after the first block:
 
-[PATCH v4 04/17] python/mkvenv: add mechanism to install local package(s)
-    - Review from Paolo would be nice, if he has the time.
-[PATCH v4 05/17] meson, mkvenv: add functests custom target
-    - Fixed comments as per Dan's review
-[PATCH v4 11/17] meson, mkvenv: add qemu.git/python/qemu package to
-pythondeps.toml
-    - Probably fine, but a Paolo ACK would be nice.
-[PATCH v4 13/17] tests: remove "make check-venv" target
-    - I regress an optimization Alex Bennee made, would like to fix
-this before merge.
-[PATCH v4 16/17] python: update README.rst to reflect qemu.qmp's removal
-    - Discussing this with Dan
-[PATCH v4 17/17] RFC: exclude pyvenv targets from "make check-build"
-    - Still not clear if we want this or not, I'm pretty neutral.
+sdcard_read_data SD  READ_MULTIPLE_BLOCK/ CMD18 ofs 510 size 512 blklen  512
+sdbus_read @sd-bus value 0x00
+sdcard_read_data SD  READ_MULTIPLE_BLOCK/ CMD18 ofs 511 size 512 blklen 512
+sdbus_read @sd-bus value 0x00
+sdhci_end_transfer Automatically issue CMD12 0x00000000
+sdbus_command @sd-bus CMD12 arg 0x00000000
+sdcard_normal_command SD    STOP_TRANSMISSION/ CMD12 arg 0x00000000 (mode transfer, state sendingdata)
+sdcard_response RESP#1 (normal cmd) (sz:4)
+sdhci_access wr32: addr[0x000c] <- 0x123a0037 (305791031)
+sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
+sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
+sdhci_access rd32: addr[0x0010] -> 0x00000900 (2304)
+sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
+sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
+## Starting application at 0x00200000 ...
+Invalid read at addr 0xFFFE0F200, size 4, region '(null)', reason: rejected
+Invalid write at addr 0xFFFE0F200, size 4, region '(null)', reason: rejected
+Invalid read at addr 0xFFFE0F204, size 4, region '(null)', reason: rejected
+Invalid write at addr 0xFFFE0F204, size 4, region '(null)', reason: rejected
+Invalid read at addr 0xFFFE0F208, size 4, region '(null)', reason: rejected
+Invalid write at addr 0xFFFE0F208, size 4, region '(null)', reason: rejected
+sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
+sdbus_get_dat_lines @sd-bus dat_lines: 15
+sdbus_get_cmd_line @sd-bus cmd_line: 1
+sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
+sdbus_get_dat_lines @sd-bus dat_lines: 15
+sdbus_get_cmd_line @sd-bus cmd_line: 1
+sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
+sdbus_get_dat_lines @sd-bus dat_lines: 15
+sdbus_get_cmd_line @sd-bus cmd_line: 1
+sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
+sdhci_access wr32: addr[0x0038] <- 0x00000000 (0)
+sdhci_access wr32: addr[0x0008] <- 0x00000200 (512)
+sdhci_send_command CMD16 ARG[0x00000200]
+sdbus_command @sd-bus CMD16 arg 0x00000200
+sdcard_normal_command SD         SET_BLOCKLEN/ CMD16 arg 0x00000200 (mode transfer, state transfer)
+sdcard_set_blocklen block len 0x200
+sdcard_response RESP#1 (normal cmd) (sz:4)
+sdhci_response4 RSPREG[31..0]=0x00000900
+sdhci_access wr32: addr[0x000c] <- 0x101a0037 (270139447)
+sdhci_access rd32: addr[0x0030] -> 0x00000001 (1)
+sdhci_access rd32: addr[0x0030] -> 0x00000001 (1)
+sdhci_access rd32: addr[0x0010] -> 0x00000900 (2304)
+sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
+sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
+sdbus_get_dat_lines @sd-bus dat_lines: 15
+sdbus_get_cmd_line @sd-bus cmd_line: 1
+sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
+sdbus_get_dat_lines @sd-bus dat_lines: 15
+sdbus_get_cmd_line @sd-bus cmd_line: 1
+sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
+sdbus_get_dat_lines @sd-bus dat_lines: 15
+sdbus_get_cmd_line @sd-bus cmd_line: 1
+sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
+sdhci_access wr32: addr[0x0000] <- 0x79401de8 (2034245096)
+sdhci_access wr32: addr[0x0004] <- 0x00017200 (94720)
+sdhci_access rd32: addr[0x002c] -> 0x000b011f (721183)
+sdhci_access wr32: addr[0x002c] <- 0x000b011f (721183)
+sdhci_access wr32: addr[0x0038] <- 0x00000000 (0)
+sdhci_access wr32: addr[0x0008] <- 0x00000000 (0)
+sdhci_send_command CMD17 ARG[0x00000000]
+sdbus_command @sd-bus CMD17 arg 0x00000000
+sdcard_normal_command SD    READ_SINGLE_BLOCK/ CMD17 arg 0x00000000 (mode transfer, state transfer)
+sdcard_req_addr req 0x0 addr 0x0
+sdcard_read_block addr 0x0 size 0x200
+sdcard_response RESP#1 (normal cmd) (sz:4)
+sdhci_response4 RSPREG[31..0]=0x00000900
+sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 0 size 512 blklen 512
+sdbus_read @sd-bus value 0x00
+sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 1 size 512 blklen 512
+sdbus_read @sd-bus value 0x00
 
->
-> This version reflects Dan's suggestion to always install the in-tree
-> Python packages by default.
->
-> The major effects of this patch series are:
->
-> 1. qemu.qmp and the python/ directory will be installed to the
->    configure-time venv (build/pyvenv) by default.
-> 2. qemu.qmp will be installed from PyPI or vendored packages instead of
->    being utilized directly from the qemu.git tree.
-> 3. "make check-venv" is removed as it is no longer needed.
-> 4. functional test dependencies are installed as-needed when running
->    those tests.
-> 5. Unfortunately, python3-wheel and python3-setuptools are now required
->    on the host system if tests are to be executed and >=3D Python 3.13 is
->    used.
-> 6. An awful lot of deleted lines of code, and a lot fewer headaches
->    managing two nearly-identical copies of this source code. O:-)
->
-> v4:
->
->  - Rename "checktests" group to "tooling", install it by default
->    alongside meson at configure-time.
->  - Remove "check-venv" entirely.
->  - Update python/README.rst to reflect the new paradigm
->  - Update many scripts that import qemu.qmp to give new errors when they
->    are run outside of the configure venv
->
-> KNOWN ISSUES IN V4:
->
->  - The last patch is an RFC based on Thomas' observations, I don't have
->    a strong opinion on if we want it or not.
->  - Removing "make check-venv" causes the VM tests to rebuild more often;
->    I was not sure how to replace the old conditional behavior in an
->    equivalent manner. Suggestions, anyone...?
->
-> v3:
->
->  - Fixed FreeBSD vm test
->  - Fixed Cirrus macOS test (Needed setuptools as a dep, "file:///" had
->    one too many forward slashes, which works fine for older
->    pip/setuptools, but was incompatibly fixed recently.)
->  - Fixed an issue that prevented installing the local python packages in
->    an offline, isolated build environment (need --no-isolated-build and
->    pip environment variable flags)
->  - Added the python3-wheel and python3-setuptools build dependencies to
->    lcitool, owing to the above issues
->  - Ensured that the $download flag (for PyPI access) from configure is
->    carried over into pytest/meson.build invocations.  This defaults to
->    "enabled", so test dependencies should not have any issue being
->    fetched on most developer workstations and build environments.
->  - Fixed several bugs in the mkvenv.py local package installation mechani=
-sm.
->  - Flags and workarounds added for installing local packages offline now
->    apply *only* to local package installations, and not "normal"
->    depspecs.
->  - Reordered patches into more logical "phases" for easier review (I
->    hope...?)
->
-> Known issues: "make check-build" still installs all of the test
-> dependencies to the pyvenv. I'm not sure if this is desired or not, but
-> I ran into problems preventing it from doing this without breaking a ton
-> of CI tests. I'll continue to investigate this, but wanted to send this
-> v3 out.
->
-> v2:
->
->  - move "make check-venv" earlier in GitLab CI/CD pipeline, to avoid
->    re-running configure
->  - Fix functional tests not using PyPI to fetch pygdbmi package
->  - Remove pre-requisites which are now merged
->
-> --js
->
-> John Snow (17):
->   python/mkvenv: create timestamp file for each group "ensured"
->   python/mkvenv: bump 'qemu.qmp' dependency for testdeps
->   python/mkvenv: add 'tooling' and 'functests' dependency groups
->   python/mkvenv: add mechanism to install local package(s)
->   meson, mkvenv: add functests custom target
->   tests: Use configured python to run GitLab iotests
->   tests: use "run" script to execute device-crash-test
->   tests/lcitool: add python3 wheel and setuptools deps for qemu
->   python: add vendored qemu.qmp package
->   meson, mkvenv: make functional tests depend on functests group
->   meson, mkvenv: add qemu.git/python/qemu package to pythondeps.toml
->   configure: unconditionally install "tooling" group
->   tests: remove "make check-venv" target
->   scripts: nudge users to use 'run' script for scripts that import
->     qemu.qmp
->   python: delete qemu.qmp
->   python: update README.rst to reflect qemu.qmp's removal
->   RFC: exclude pyvenv targets from "make check-build"
->
->  python/README.rst                             |   50 +-
->  configure                                     |    2 +-
->  meson.build                                   |    1 +
->  .gitlab-ci.d/buildtest.yml                    |   26 +-
->  .gitlab-ci.d/cirrus/freebsd-14.vars           |    2 +-
->  .gitlab-ci.d/cirrus/macos-14.vars             |    2 +-
->  .gitlab-ci.d/windows.yml                      |    2 +
->  python/qemu/qmp/__init__.py                   |   60 -
->  python/qemu/qmp/error.py                      |   53 -
->  python/qemu/qmp/events.py                     |  751 -----------
->  python/qemu/qmp/legacy.py                     |  339 -----
->  python/qemu/qmp/message.py                    |  217 ----
->  python/qemu/qmp/models.py                     |  146 ---
->  python/qemu/qmp/protocol.py                   | 1101 -----------------
->  python/qemu/qmp/py.typed                      |    0
->  python/qemu/qmp/qmp_client.py                 |  732 -----------
->  python/qemu/qmp/qmp_shell.py                  |  689 -----------
->  python/qemu/qmp/qmp_tui.py                    |  665 ----------
->  python/qemu/qmp/util.py                       |  150 ---
->  python/qemu/utils/qom_fuse.py                 |    1 -
->  python/scripts/mkvenv.py                      |   44 +-
->  python/scripts/vendor.py                      |    2 +
->  python/setup.cfg                              |   31 +-
->  python/tests/minreqs.txt                      |    8 +-
->  python/tests/protocol.py                      |  596 ---------
->  python/wheels/qemu_qmp-0.0.5-py3-none-any.whl |  Bin 0 -> 72263 bytes
->  pythondeps.toml                               |   13 +-
->  pyvenv/meson.build                            |   28 +
->  scripts/compare-machine-types.py              |    7 +-
->  scripts/device-crash-test                     |    5 +-
->  scripts/mtest2make.py                         |    4 +-
->  scripts/qmp/qemu-ga-client                    |   13 +-
->  scripts/qmp/qmp-shell                         |   13 +-
->  scripts/qmp/qmp-shell-wrap                    |   13 +-
->  scripts/qmp/qom-fuse                          |   13 +-
->  scripts/qmp/qom-get                           |   13 +-
->  scripts/qmp/qom-list                          |   13 +-
->  scripts/qmp/qom-set                           |   13 +-
->  scripts/qmp/qom-tree                          |   13 +-
->  scripts/qmp_helper.py                         |    9 +-
->  scripts/render_block_graph.py                 |   10 +-
->  scripts/simplebench/bench_block_job.py        |   10 +-
->  tests/Makefile.include                        |   22 +-
->  tests/docker/dockerfiles/alpine.docker        |    2 +
->  tests/docker/dockerfiles/centos9.docker       |    2 +
->  tests/functional/meson.build                  |    5 +-
->  tests/lcitool/projects/qemu.yml               |    2 +
->  tests/migration-stress/guestperf/engine.py    |   15 +-
->  tests/vm/Makefile.include                     |   24 +-
->  tests/vm/generated/freebsd.json               |    2 +
->  50 files changed, 250 insertions(+), 5684 deletions(-)
->  delete mode 100644 python/qemu/qmp/__init__.py
->  delete mode 100644 python/qemu/qmp/error.py
->  delete mode 100644 python/qemu/qmp/events.py
->  delete mode 100644 python/qemu/qmp/legacy.py
->  delete mode 100644 python/qemu/qmp/message.py
->  delete mode 100644 python/qemu/qmp/models.py
->  delete mode 100644 python/qemu/qmp/protocol.py
->  delete mode 100644 python/qemu/qmp/py.typed
->  delete mode 100644 python/qemu/qmp/qmp_client.py
->  delete mode 100644 python/qemu/qmp/qmp_shell.py
->  delete mode 100644 python/qemu/qmp/qmp_tui.py
->  delete mode 100644 python/qemu/qmp/util.py
->  delete mode 100644 python/tests/protocol.py
->  create mode 100644 python/wheels/qemu_qmp-0.0.5-py3-none-any.whl
->  create mode 100644 pyvenv/meson.build
->
-> --
-> 2.52.0
->
->
+and so on with increasing ofs until:
 
+> sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 509 size 512 blklen 512
+> sdbus_read @sd-bus value 0x00
+> sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 510 size 512 blklen 512
+> sdbus_read @sd-bus value 0x55
+> sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 511 size 512 blklen 512
+> sdbus_read @sd-bus value 0xaa
+> sdhci_end_transfer Automatically issue CMD12 0x00000000
+> sdbus_command @sd-bus CMD12 arg 0x00000000
+> sdcard_normal_command SD    STOP_TRANSMISSION/ CMD12 arg 0x00000000 (mode 
+> transfer, state transfer)
+> SD: CMD12 in a wrong state: transfer (spec v3.01)
+> sdcard_response ILLEGAL RESP (sz:0)
+> sdhci_access wr32: addr[0x000c] <- 0x113a0037 (289013815)
+> sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
+> sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
+> sdhci_access rd32: addr[0x0010] -> 0x00000900 (2304)
+> sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
+> sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
+> sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
+> sdbus_get_dat_lines @sd-bus dat_lines: 15
+> sdbus_get_cmd_line @sd-bus cmd_line: 1
+> sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
+> sdbus_get_dat_lines @sd-bus dat_lines: 15
+> sdbus_get_cmd_line @sd-bus cmd_line: 1
+> sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
+> sdbus_get_dat_lines @sd-bus dat_lines: 15
+> sdbus_get_cmd_line @sd-bus cmd_line: 1
+> sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
+> sdhci_access wr32: addr[0x0038] <- 0x00000000 (0)
+> sdhci_access wr32: addr[0x0008] <- 0x00000200 (512)
+> sdhci_send_command CMD16 ARG[0x00000200]
+> sdbus_command @sd-bus CMD16 arg 0x00000200
+> sdcard_normal_command SD         SET_BLOCKLEN/ CMD16 arg 0x00000200 (mode 
+> transfer, state transfer)
+> sdcard_set_blocklen block len 0x200
+> sdcard_response RESP#1 (normal cmd) (sz:4)
+> sdhci_response4 RSPREG[31..0]=0x00400900
+> sdhci_access wr32: addr[0x000c] <- 0x101a0037 (270139447)
+> sdhci_access rd32: addr[0x0030] -> 0x00000001 (1)
+> sdhci_access rd32: addr[0x0030] -> 0x00000001 (1)
+> sdhci_access rd32: addr[0x0010] -> 0x00400900 (4196608)
+> sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
+> sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
+> sdbus_get_dat_lines @sd-bus dat_lines: 15
+> sdbus_get_cmd_line @sd-bus cmd_line: 1
+> sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
+> sdbus_get_dat_lines @sd-bus dat_lines: 15
+> sdbus_get_cmd_line @sd-bus cmd_line: 1
+> sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
+> sdbus_get_dat_lines @sd-bus dat_lines: 15
+> sdbus_get_cmd_line @sd-bus cmd_line: 1
+> sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
+> sdhci_access wr32: addr[0x0000] <- 0x79401de8 (2034245096)
+> sdhci_access wr32: addr[0x0004] <- 0x00017200 (94720)
+> sdhci_access rd32: addr[0x002c] -> 0x000b011f (721183)
+> sdhci_access wr32: addr[0x002c] <- 0x000b011f (721183)
+> sdhci_access wr32: addr[0x0038] <- 0x00000000 (0)
+> sdhci_access wr32: addr[0x0008] <- 0x00000200 (512)
+> sdhci_send_command CMD17 ARG[0x00000200]
+> sdbus_command @sd-bus CMD17 arg 0x00000200
+> sdcard_normal_command SD    READ_SINGLE_BLOCK/ CMD17 arg 0x00000200 (mode 
+> transfer, state transfer)
+> sdcard_req_addr req 0x200 addr 0x200
+> sdcard_read_block addr 0x200 size 0x200
+> sdcard_response RESP#1 (normal cmd) (sz:4)
+> sdhci_response4 RSPREG[31..0]=0x00000900
+> sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 0 size 512 blklen 512
+> sdbus_read @sd-bus value 0x00
+> sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 1 size 512 blklen 512
+> sdbus_read @sd-bus value 0x00
+>
+> Regards,
+> BALATON Zoltan
+>
+>> Bernhard Beschow (14):
+>>  hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement sd-spec-version 3 by
+>>    default
+>>  hw/arm/fsl-imx6: Remove now redundant setting of "sd-spec-version"
+>>    property
+>>  hw/arm/fsl-imx6: Fix naming of SDHCI related constants and attributes
+>>  hw/arm/fsl-imx25: Apply missing reset quirk
+>>  Revert "hw/sd/sdhci: Rename ESDHC_* defines to USDHC_*"
+>>  hw/sd/sdhci: Consolidate eSDHC constants
+>>  hw/sd/sdhci: Rename usdhc_ functions
+>>  hw/sd/sdhci: Add TYPE_FSL_ESDHC_BE
+>>  hw/ppc/e500: Use TYPE_FSL_ESDHC_BE
+>>  hw/arm/fsl-imx25: Extract TYPE_FSL_ESDHC_LE
+>>  hw/sd/sdhci: Remove endianness property
+>>  hw/sd/sdhci: Add uSDHC-specific quirk
+>>  hw/sd/sdhci: Remove vendor property
+>>  hw/sd/trace-events: Remove redundant "SWITCH " command name
+>> 
+>> hw/sd/sdhci-internal.h    |   3 -
+>> include/hw/arm/fsl-imx6.h |   4 +-
+>> include/hw/sd/sdhci.h     |   8 +-
+>> hw/arm/fsl-imx25.c        |   5 +-
+>> hw/arm/fsl-imx6.c         |  18 ++--
+>> hw/ppc/e500.c             |  10 +-
+>> hw/sd/sdhci.c             | 201 ++++++++++++++++++++++++--------------
+>> hw/sd/trace-events        |   2 +-
+>> 8 files changed, 146 insertions(+), 105 deletions(-)
+>> 
+>> --
+>> 2.52.0
+>> 
+>> 
+>> 
+>
+>
 
