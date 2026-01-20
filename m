@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05274D2ED0F
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 11:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA983D2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 11:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi9fe-0001yy-Kf; Tue, 20 Jan 2026 06:13:16 -0500
+	id 1vi9jv-0006b0-Go; Tue, 20 Jan 2026 06:17:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vi9fJ-0001vk-N2
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 06:12:56 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vi9jp-0006Zn-GJ
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 06:17:33 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vi9fG-0004Zl-D9
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 06:12:53 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-47edffe5540so45417935e9.0
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 03:12:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vi9jn-00054X-TO
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 06:17:33 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-480142406b3so27370185e9.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 03:17:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768907568; x=1769512368; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768907849; x=1769512649; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Xq+7LtLjTmmyLgLFhCSTwgZ2FZqdBKw4qYSaPKbXI+0=;
- b=buMGc3a5LsUjqjSTRMo6gamPprxA1vC4EAcD0yxEKWfsKMeGJ9JgZQI58eR60o2Fit
- uuBmdDM+U7Xsy1+nbLlHg+4U2/QKA61kW9J3oqoZgKQQCRk60akqusDttY8PjXMPcBdD
- gzpjkeeRaXbMoWWA80zVktncOmaMzDpmbZAG55V2W3F5VmsS136P+VFPeobDF03bmYY3
- 8pVUjI/ef2qGSEaJvLMNJwNSn+3wRjXikMF854WGFHfzp942U3bXEouIUjdAuFy/6LDh
- mP9ul2Y9OQaSmnViUAzhvrR22c1OHgGPb4efVaxFNkpdcwtkP9ZHs4zq9J+qa9QOX4jC
- Q/mA==
+ bh=VO9eaYxTpxD9tjjG4lo+9Z3rY8GSxmLO5GHzDjby7Tk=;
+ b=PSn+V1EdA9udgwvTQAQQpl/JWIfHjK3lpnNBYnnDEOHmrOHeZgpYNK1zLHgSGd8jfN
+ 5NA7dV8n1yEk5ZT53HOhNvHbvfcfWAQGFt5zb1kXoPtfiTm1cHlDfrYYnciACfpA/Zbd
+ sqeoSBqDqMZ+uAUOoA2jKBsSw0/DiI2EvxKfUDtlt7zV5n+apZtzcC/DV8vdXSvWJYsB
+ DleSgBMlUoMwmy62SIkEaJegbWQpTIsFM1LJW9kdGrxjriL7r9Qg6rgsMYQ7CbJDStxR
+ MGLbCRj74kRPLxZmJ0MTrLAlynZqKMM94waXvPon74oamKP9yJfJUYJZx6I3BJepCXqt
+ B80g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768907568; x=1769512368;
+ d=1e100.net; s=20230601; t=1768907849; x=1769512649;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Xq+7LtLjTmmyLgLFhCSTwgZ2FZqdBKw4qYSaPKbXI+0=;
- b=Ljg92SzRTVwPAhHNmhleshMjaYTBHJTFCS9G06JArqgXba0fvfL3GLWoPblE40yoY0
- X6LAEWMkTkWLF6siEodIppWMfXMbmr1yqMvuUnEBhjgTFIZW4ypkRnHeiBdVM1Jjm1d9
- ku2iYIxmEcqprRuNqjonkycsfZ8LbhaTjDPXCSGJJ1hxrkXGE63mt+vA9N4BXUAouuOy
- kNpsHEwsRdagiCwW86vmogEiAtdwnFSx9+D6oO13KzJW/mE6fAYf1ATNlKmvYQCUQ/Qb
- H8qbFk+4Xav0diupI9QQRdGnxj5r8gsmdr6gdINVPDnFsozAxIfk9+vlkxunLjZcMT36
- Bd4g==
+ bh=VO9eaYxTpxD9tjjG4lo+9Z3rY8GSxmLO5GHzDjby7Tk=;
+ b=rY7yO2BXBLsaqM9xvacDM9mHit9J6GjGOtDhppw33SulHsjQR9StIw6SJhX9GvMIoE
+ ef9/8BVvd5S0ljcP5eic1ofUHu2XZYbpTSL8zC+737uQrPM87JQl88SmgY9cuRJxoIqK
+ 4yH7mgXqSs1ZSPCM04JVCz5xn5mNIcY2Dve9BzBEmXQSTs7GdHEV9xVbbBcizdq+fVhO
+ miokXUqLbavKD0srdmCXCaVHipvp5peXv9T/TR9moN+MozjBZmXGsgn3aE47nCh8rgqX
+ THyW8iTfIcb2UpuRM4g5Bf9m4R5ylIobubsfyeEiztm/aq5oDV3dmIKause0DqshSz7f
+ gewA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWMBM3ytfAlplV8uFS7qiIp4IZvas9biNf7Wd7zoXjOZzHmb5n4e6h2zxsXDwHRFF5DEq3ej+3Ptdle@nongnu.org
-X-Gm-Message-State: AOJu0YxHSxJGKKntdm8NlnfQIUC1A1FioEKIzmAXMgnFcsx38P1+fffD
- hadAnztW8dj3EOJUWFTSRfxfm/RU1cllYGmN4S+KxP/a0Y2GVuoOSugF1RyPcnaiHlo=
-X-Gm-Gg: AY/fxX6Z6kKREz8clCE+J1l5dD6hnd9jp+ABrBqkAe5X86pVBDREFXTWUkGeZkXGm8M
- Z5XkFiIhRzj/NyMsoSzHurcgtlNxTKdLrKIm7Ngw5i5BHxvdvI8FnF3ArnlJQe/aJBmMAAPOR/J
- iHCv5e41aVEkwRhFyB5UL0eAw/1NphZOyZIokV3Lw15JJn006QzzraHOrbh68x7DPvuQyZBzZSY
- 0ZhUzVx1hff/IDzpeGEFQu0pXq3r6E7c6fNqrPPBwVm5LIGlA4D8x0Es/BP32tgRNg7slzF+xch
- SDBO+ciAhWQNoBLheniS+lWezl1LFxqjHgTrNqPym0McciJ/xCnC5yLwRImKlck9KHjycS6n0JP
- TtHZJymmyrLGM3pRPAK0TC1eo2P++xC9dLdPvJCJmwZO+9TUu6SW7fTw8RdXU6AAmhGVknvnFZP
- JD4oZau7TM29+qjFAk2R/e+XQtL9hV0w51RGYpqNg2Gsw7JpLFHa4P0w==
-X-Received: by 2002:a05:600c:1d14:b0:47d:4fbe:e6cc with SMTP id
- 5b1f17b1804b1-4803e7a39damr20440815e9.13.1768907568247; 
- Tue, 20 Jan 2026 03:12:48 -0800 (PST)
+ AJvYcCXwatsuslOAKZ0Ivy5VpVyaTK0A53dravQ+6K5issxHtKA5Lw7sveDQk/ZOcvoHWcoyIfgSnY8LxG29@nongnu.org
+X-Gm-Message-State: AOJu0Yy28ESE9NoJ1C+uzKZOkyV2v58kcnX/cZCqoniOQWlRTpwqdBJP
+ C43W2Azkt4tDxIzh+DpueXt/RLz/h1QY5Lul7hVg55WDP/jemsQ0AF6gfjfetivo1Ql6/AG3Tnj
+ rztHnQeU=
+X-Gm-Gg: AY/fxX4kml2yEonKpP4pBK8E8wNerEtsvvyXAJlEACl7uXbnsLZhRHKDqaShUkSG3jS
+ ootsFJuy24BxTFpNzaOkxPFTquRxrNcWn2pXF8TG5C/upVsd8kFkb+LU4nAwipavtQw3kGEdbfP
+ LBjqRsgxqi7dpwq3pOQO1yqQz/6BYhIuLqkkCbPWzwJ12YJqCZEt3wCjCLLhFY+9+yBldnftvmd
+ IyyLVp81U6jc4yqd2C2IRJ01vfli/cqcqdqLK4h6qMgMAIjLQQndc+8Y+0KQhljTyB6mcxtpzcG
+ 53LV8n9RQ3OLPn28RsV/Wp8dKL4nkZzJQz6b4pAWGgCNL5WaOS8IhcGx8RogGjXLk4sSpkUnDYI
+ pDNHDzFTScT+n8kzl+ICVX8EZ56K47PdNWHhmpdfkhGTW4h0JjIZfEGZlJQs4Ozht4Nk+5PkxSr
+ WlBUa+mKr6oz0PDx0HKJUB1C9kxU34PlNmVA4kSPNT/yxb4MNBF5PW4g==
+X-Received: by 2002:a05:600c:a399:b0:480:1d0b:2d15 with SMTP id
+ 5b1f17b1804b1-4801e345c96mr145015545e9.27.1768907849193; 
+ Tue, 20 Jan 2026 03:17:29 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47f4b2672d6sm304061045e9.14.2026.01.20.03.12.45
+ 5b1f17b1804b1-47f4b2672d6sm304260535e9.14.2026.01.20.03.17.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Jan 2026 03:12:47 -0800 (PST)
-Message-ID: <8d532719-7bf7-4a35-9d64-85efe6440e41@linaro.org>
-Date: Tue, 20 Jan 2026 12:12:45 +0100
+ Tue, 20 Jan 2026 03:17:28 -0800 (PST)
+Message-ID: <94f88409-f693-455f-9baa-34feaba3dac9@linaro.org>
+Date: Tue, 20 Jan 2026 12:17:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 24/26] whpx: arm64: check for physical address width
- after WHPX availability
+Subject: Re: [PATCH v16 00/26] WHPX support for Arm
 Content-Language: en-US
 To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -81,23 +81,21 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>
 References: <20260116135235.38092-1-mohamed@unpredictable.fr>
- <20260116135235.38092-25-mohamed@unpredictable.fr>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260116135235.38092-25-mohamed@unpredictable.fr>
+In-Reply-To: <20260116135235.38092-1-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,59 +112,40 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 16/1/26 14:52, Mohamed Mediouni wrote:
-> In the case where WHPX isn't supported on the platform, makes the
-> intended error appear instead of failing at getting the IPA width.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   target/arm/whpx/whpx-all.c | 19 +++++++++----------
->   1 file changed, 9 insertions(+), 10 deletions(-)
-> 
-> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-> index 3329deeb57..79e9065d3a 100644
-> --- a/target/arm/whpx/whpx-all.c
-> +++ b/target/arm/whpx/whpx-all.c
-> @@ -654,7 +654,7 @@ uint32_t whpx_arm_get_ipa_bit_size(void)
->           WHvCapabilityCodePhysicalAddressWidth, &whpx_cap,
->           sizeof(whpx_cap), &whpx_cap_size);
->       if (FAILED(hr)) {
-> -        error_report("WHPX: failed to get supported"
-> +        error_report("WHPX: failed to get supported "
->                "physical address width, hr=%08lx", hr);
->       }
->   
-> @@ -874,15 +874,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
->           goto error;
->       }
->   
-> -    if (mc->get_physical_address_range) {
-> -        pa_range = mc->get_physical_address_range(ms,
-> -            whpx_arm_get_ipa_bit_size(), whpx_arm_get_ipa_bit_size());
-> -        if (pa_range < 0) {
-> -            ret = -EINVAL;
-> -            goto error;
-> -        }
-> -    }
-> -
->       whpx->mem_quota = ms->ram_size;
->   
->       hr = whp_dispatch.WHvGetCapability(
-> @@ -910,6 +901,14 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
->           goto error;
->       }
->   
-> +    if (mc->get_physical_address_range) {
-> +        pa_range = mc->get_physical_address_range(ms,
-> +            whpx_arm_get_ipa_bit_size(), whpx_arm_get_ipa_bit_size());
-> +        if (pa_range < 0) {
-> +            return -EINVAL;
-> +        }
-> +    }
-> +
->       hr = whp_dispatch.WHvCreatePartition(&whpx->partition);
->       if (FAILED(hr)) {
->           error_report("WHPX: Failed to create partition, hr=%08lx", hr);
 
-Squash with patch 18/26 "whpx: arm64: clamp down IPA size"?
+> Mohamed Mediouni (24):
+>    qtest: hw/arm: virt: skip ACPI test for ITS off
+>    hw/arm: virt: add GICv2m for the case when ITS is not available
+>    tests: data: update AArch64 ACPI tables
+>    hw/arm: virt: cleanly fail on attempt to use the platform vGIC
+>      together with ITS
+>    hw: arm: virt: rework MSI-X configuration
+>    docs: arm: update virt machine model description
+>    whpx: Move around files before introducing AArch64 support
+>    whpx: reshuffle common code
+>    whpx: ifdef out winhvemulation on non-x86_64
+>    whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS define
+>    hw, target, accel: whpx: change apic_in_platform to kernel_irqchip
+>    whpx: interrupt controller support
+>    whpx: add arm64 support
+>    whpx: change memory management logic
+>    target/arm: cpu: mark WHPX as supporting PSCI 1.3
+>    whpx: arm64: clamp down IPA size
+>    hw/arm, accel/hvf, whpx: unify get_physical_address_range between WHPX
+>      and HVF
+>    whpx: arm64: implement -cpu host
+>    target/arm: whpx: instantiate GIC early
+>    whpx: arm64: gicv3: add migration blocker
+>    whpx: enable arm64 builds
+>    whpx: arm64: check for physical address width after WHPX availability
+>    whpx: arm64: add partition-wide reset on the reboot path
+>    MAINTAINERS: update the list of maintained files for WHPX
+
+Note for myself (rthogonal to this work): thinking about generic
+accel/ infra we could add these common methods to AccelClass and
+get rid of some per-accel #ifdef'ry:
+
+  - accel_has_in_kernel_irq_handling()
+  - accel_arch_get_cpu_features_from_host()
+  - accel_arch_set_cpu_features_from_host()
 
