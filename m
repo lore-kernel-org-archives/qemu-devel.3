@@ -4,99 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C2FED2ED0F
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 11:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D938FD2ED12
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 11:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi9c5-0004da-Se; Tue, 20 Jan 2026 06:09:33 -0500
+	id 1vi9dw-0007ay-5S; Tue, 20 Jan 2026 06:11:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vi9c4-0004aQ-9f
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 06:09:32 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vi9c2-00048s-IV
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 06:09:32 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-42fbc305552so3831088f8f.0
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 03:09:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vi9dq-0007YH-Vx
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 06:11:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1vi9do-0004V3-R9
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 06:11:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768907480;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TxS1R7yv0cCAnM2W2jf0MASw9kSOSzlNKXyFYinRKFI=;
+ b=XVIH0S3CU+r+8DvA5U8jk0khF6M5J7/95x6jzAglSNzqQ/BD4lKjSHUlgl01+K5BLuizBe
+ Rhd5ERd0pp5okhaVjV3VehLaY7myrYbOTKlcT76Kf5mL94sApLvAq8TvJcnyMMvmmI1w3i
+ Y9/N78afM1TKNuQcUpqEd3Lo5MJTtPs=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-86-erNxWxDIM5yLc8778TikYw-1; Tue, 20 Jan 2026 06:11:18 -0500
+X-MC-Unique: erNxWxDIM5yLc8778TikYw-1
+X-Mimecast-MFC-AGG-ID: erNxWxDIM5yLc8778TikYw_1768907477
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-477c49f273fso49301995e9.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 03:11:18 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768907477; cv=none;
+ d=google.com; s=arc-20240605;
+ b=QHOovfv85AiF3gwbvCCKqUecpjgXnHLHnhOagtumTgYp3oxBQ584Cji/i+MaXF60Jd
+ 4cQXPhXJ8Ma2EjD9XI/favAxGLAtudj9628dXY0VqQyj5USSqyKdQuAQxOb8fBHEKw5D
+ jju/e8RC7rnpy1AMMhHAq0GbHtGHkVDoLcDciWy4pjQnU5xhsoIYedwobLy0DxB2qH/D
+ MCHaaIhBAW16BFh/zfrW6J/nbSrQzf8ekKwcGSB2EwBEbdBL+vhaHj7TePckm9kSN/9R
+ qCy/By56whZSgD3viOYHUM21puCZJmMmYwnQLXsLjrqYTUAf0bYBOQTlA0vCDD62frpz
+ YAqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=TxS1R7yv0cCAnM2W2jf0MASw9kSOSzlNKXyFYinRKFI=;
+ fh=SJ3HPovJyRUvRbjEYgfW8f8/HsJC2a+l/HOVRBs3/Wg=;
+ b=ZiyPYuEX3kYw+ygheOZitZmqiyEBtyVjEc3M/IT3S/yP1ad3rru9hi6HVvWto9kfHV
+ sem7XxroVDALPok4HJBtfmz1FW0yts0O0OaKishywzVvcMzGm0NMxPJlAOyS+e+amJu0
+ JxjZmE1cgDpP3HQm83FHAzDGKzrMB7CKr+ygVawYNEbU5B6RIJGI91+otokHHsDrpMqX
+ 35WqzRtRbKUmJvOZdxECuhIOjIYuTWPki7zcap9SZg69EXz/r7hEKZaLNRHIxSyizNl7
+ roJt5Z6CcRPTGVnMUu+qry0ApgyjqgQ0Z1SKbsg4w8SZkgnoZ2GtyOYgRJ/jN5ccYPrZ
+ D2KQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768907369; x=1769512169; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mhjkzYRBTq9Ofw1jT3sPOsdw85Ujc7XaRUyDZIgIbkw=;
- b=fJ0S1wkPsYYBWvuSssMnw4rWH5eJ2eefAIpuRpJvyF41iK3YbgVKXF4dsmqI50wbgf
- XvEtk1i08Kow1sLmTfLCEIEAzXJ+JiqkFmFj0z/lFbNHfLX50f96eIqBcJwh0J/+QtOO
- Z4iZ41MHlpxRzV3bKnY7VdErK/p3KfnkfMpgXFrXC30ePh2XXEWILmJfKg1CYl6skDgi
- sbfQHVFfFMvKFQKu57upIjQmNELUcxEZ6qiO0ckiC7rSV0sbWFSx2KmxqPyVPv4tRKps
- u2h1H5gVukAIaYo5IqnWNaGx7yr5C7jjy8RMcKtYbVuXw/dWVeRLNsudGprExBYJknpv
- wtgg==
+ d=redhat.com; s=google; t=1768907477; x=1769512277; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TxS1R7yv0cCAnM2W2jf0MASw9kSOSzlNKXyFYinRKFI=;
+ b=Vfqfi4fieIOFZ/OCmp0eGkRYU4t0o4rvfZfEECKWUqTrEJLxsXfM8t5b8gOvJLw95i
+ Q+UR54FgW/FDkA/7JXizHOeGAHPCxADA5FhhkeSWh43nYAg+cyOZFZaDEhQ2/97oWBy2
+ jDoz0mloQkFhBMYJawgAQyHAPD1bJKm9ZLELEJMg1a1snAs/PmoPI9xziHE1+FtO6aId
+ F0w2GR9Fhy9VgAq4UAT4UyX/tXWZj5lrVVe0+bJ3ClbaN3GPU8zhJy5lOpw6ZbFTpMwV
+ ZGlmg0aM7tILr/zeW+49A3q9i0It2FwYbOdbXL1Pwzwo3XZ3KW6E6cqmn1JLMfQCoBi9
+ SqZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768907369; x=1769512169;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mhjkzYRBTq9Ofw1jT3sPOsdw85Ujc7XaRUyDZIgIbkw=;
- b=Brb2kIj6X9/rUSjOuBzsEv8kM2bKd7n2bycqCu8lqA/KD9VlunR3ZR6yDIBZN4t6ow
- KkvyhBof0FY66ms4+x4JpuCpyGqJheBGMXk5/4HVolbZUZu9XaBb86aEuv1xhJUtJBQM
- 74xsL4lmdtBYvfB+BTvDXwRS7ZkwqE2qYBwlIuMSCNAm2zroTlix2f4+aFqKt4R6gpvQ
- cJp8q22CI61cIUaOtcgUbvpKhdQWwRgAVN4oScyz8jne/2i1q3278Pykiig5fvwIQzDw
- SH+xoT9Gy0BEea6rci678swnDBUU/tTIRDrJRuYEoiR+MH7WHz+bbyqk+2MLlz1DOEE8
- LQiQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtwjficXtbwGEiB5QWJ9D5AJceW+QG3L1PFXnvTxy43h8InR0eCj840ipA2h/Qv1E+21DmOl2YV8Hj@nongnu.org
-X-Gm-Message-State: AOJu0Yw//JyXuxZgW1SEcpjXh1bJ1Vr2zk/3+HgomH9sWfTj4edZingh
- j2iaa3GxCe0X7bQIY5L8uo66WymWAAonc72WuIU/XSmv7rkUlvil6KuL+fY4RiSRIMY=
-X-Gm-Gg: AZuq6aIHCIh6WqnIvJBRQwLVNTBIwK8PvQmWCtU2q36mxNuf665h1foT5XIIM0xOe/4
- zzFjwwkXnX/wrmxToy4YHZSHO8Sh70vjYRh6mTp/ipRYD9fGcknJaFH379+rDipFWIFG1NkLrgW
- cqzxJfMgV+DiwV7WpIppxZZrRVo7gH/HgbK22/PtJPGjafC1SgN4jXTDlChn17EBZobbQ1eqzr/
- 5pC6ZqCxvm0Jg6ZtnCFCY8fbdg3dvYoqbDt964s7Tc/m3VtGlqmJu7y1Xc6Zp7VUX5AmQQpEkSZ
- VicR7oFMUhFhHXUVZdlPsNY6VZvxjBV7W31mkopi8yO92kV/nd2gWheq54E4vVoDlncOySUfi0r
- hWE25vhBXcH4kvMYZ3DPwGEj4lp3U9aev09FNQfShyZdZ2Ycnu7NHHEfVI2Z2Cwps7eQ4AoIdnp
- nykRLWXf6GHGRzTeUE8O0qc/CmoN8ejAuUQ5j4Cm3K4U1jYxJo610jXw==
-X-Received: by 2002:a05:6000:2282:b0:430:fc63:8d0 with SMTP id
- ffacd0b85a97d-4356a0773aemr18404450f8f.36.1768907368829; 
- Tue, 20 Jan 2026 03:09:28 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4359333b924sm1778302f8f.13.2026.01.20.03.09.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Jan 2026 03:09:28 -0800 (PST)
-Message-ID: <a1b95dc7-cd3d-40e3-b8ac-bbcc6e154298@linaro.org>
-Date: Tue, 20 Jan 2026 12:09:27 +0100
+ d=1e100.net; s=20230601; t=1768907477; x=1769512277;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TxS1R7yv0cCAnM2W2jf0MASw9kSOSzlNKXyFYinRKFI=;
+ b=cFfyE14Gjc9lDqbsc8E/nUySFZqMTPfum0NDsYdV4iAAWEoXdtv7yj0JCiipNmFuDC
+ hUFTlZbtuVOp133xaYRshsC4ozlou8OaDf8gDLB7X1AdnYQGPVXnijykncwMVR0lKZlg
+ WWdfxzBBXxKB7rznbHErgZS1/H34hdZMSvB+tzi7yNYvOp36+Dtm8w5xW8ll+43YPAkj
+ TEbbnY8Xq5k6JMZgq048u3nbywyuL/OQqDL0KVKsR3f41ATB3KGEZx1OsYj+B7/UhVBb
+ rf6zu6bHneI7L9cfTjlk1vZW5ZrTTItxQ82ooorgVTRzAubOMgUBEmDo3U2eLUd/7BAe
+ mgww==
+X-Gm-Message-State: AOJu0YxUoVTaOSfJfhkPt/QtPWUIOz4IBUBBKzBKBy8UQRz9jxAbhhUO
+ JC2aeFsKrEqWUJvVJinlz4kLzGOaAk4+kUmJrFLAfm07gy5CpMyHa3/Mkdsm9DhTspDJjs+5La+
+ xJC++X3EeAT7d4vPtJ0DRR8W+qOMoYgYfSTgDvGdDsOBlg8AzRpmk04w/F9h5I7/W+E6GWghKWa
+ PgeE1ErmN3XJzNZH0b6vvg73U008VgN/Ea5cToos79kg==
+X-Gm-Gg: AY/fxX67hQRpe2N2Z4OTiM82iCBgaMsE3o4X25sjZxam0+aIVa2k0ZtZAw6m9v7N0tR
+ UnPyveEY30WGN+oUr8gGHe26Tq4Z+AhwC1xN+QboBZ7NejkBeX1SWSGrFu0IlDI72xCSykGLVQS
+ NdYphmFrzJq7fdROTeVDM0WXqCUH0zHDufQtM1jxV1tSsxoCsj5OpDqmwzTz5e4YOyKQWMjjDOG
+ pcxVY2AKiPkZ3Kozh06SHVG7TFxikdAtMl1wXWWkZQUeJsUBRgOHryX
+X-Received: by 2002:a05:600c:458c:b0:47d:6856:9bd9 with SMTP id
+ 5b1f17b1804b1-4801e3342bamr138372425e9.23.1768907476657; 
+ Tue, 20 Jan 2026 03:11:16 -0800 (PST)
+X-Received: by 2002:a05:600c:458c:b0:47d:6856:9bd9 with SMTP id
+ 5b1f17b1804b1-4801e3342bamr138372005e9.23.1768907476170; Tue, 20 Jan 2026
+ 03:11:16 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 16/26] whpx: change memory management logic
-Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260116135235.38092-1-mohamed@unpredictable.fr>
- <20260116135235.38092-17-mohamed@unpredictable.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260116135235.38092-17-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+References: <20260109124043.25019-1-farosas@suse.de>
+ <20260109124043.25019-17-farosas@suse.de>
+In-Reply-To: <20260109124043.25019-17-farosas@suse.de>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 20 Jan 2026 16:40:57 +0530
+X-Gm-Features: AZwV_QhOBoh_qnDbn55X14gMInmpVjTdSR857keGZZqIsi65MBLpVnIjukjZIAs
+Message-ID: <CAE8KmOzCMq7rcQyoS8TX6aXXPqn17H6mLwSCjWeHG=H3Mw=3vQ@mail.gmail.com>
+Subject: Re: [PATCH v3 16/25] migration/channel: Rename
+ migration_channel_connect
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,132 +134,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/1/26 14:52, Mohamed Mediouni wrote:
-> This allows edk2 to work on Arm, although u-boot is still not functional.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On Fri, 9 Jan 2026 at 18:18, Fabiano Rosas <farosas@suse.de> wrote:
+> Rename migration_channel_connect to indicate this is the source
+> side. Future patches will do similar changes to the incoming side and
+> this will avoid inconsistencies in naming.
+>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->   accel/whpx/whpx-common.c | 97 +++++++++++++++-------------------------
->   1 file changed, 36 insertions(+), 61 deletions(-)
-> 
-> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-> index 827f50f3e0..f018a8f5c7 100644
-> --- a/accel/whpx/whpx-common.c
-> +++ b/accel/whpx/whpx-common.c
-> @@ -255,89 +255,64 @@ void whpx_vcpu_kick(CPUState *cpu)
->    * Memory support.
->    */
->   
-> -static void whpx_update_mapping(hwaddr start_pa, ram_addr_t size,
-> -                                void *host_va, int add, int rom,
-> -                                const char *name)
-> +static void whpx_set_phys_mem(MemoryRegionSection *section, bool add)
->   {
->       struct whpx_state *whpx = &whpx_global;
-> +    MemoryRegion *area = section->mr;
-> +    bool writable = !area->readonly && !area->rom_device;
-> +    WHV_MAP_GPA_RANGE_FLAGS flags;
-> +    uint64_t page_size = qemu_real_host_page_size();
-> +    uint64_t gva = section->offset_within_address_space;
-> +    uint64_t size = int128_get64(section->size);
->       HRESULT hr;
-> +    void *mem;
->   
-> -    /*
-> -    if (add) {
-> -        printf("WHPX: ADD PA:%p Size:%p, Host:%p, %s, '%s'\n",
-> -               (void*)start_pa, (void*)size, host_va,
-> -               (rom ? "ROM" : "RAM"), name);
-> -    } else {
-> -        printf("WHPX: DEL PA:%p Size:%p, Host:%p,      '%s'\n",
-> -               (void*)start_pa, (void*)size, host_va, name);
-> -    }
-> -    */
+>  migration/channel.c | 9 +--------
+>  migration/channel.h | 2 +-
+>  migration/exec.c    | 2 +-
+>  migration/fd.c      | 2 +-
+>  migration/file.c    | 2 +-
+>  migration/socket.c  | 2 +-
+>  migration/tls.c     | 2 +-
+>  7 files changed, 7 insertions(+), 14 deletions(-)
+>
+> diff --git a/migration/channel.c b/migration/channel.c
+> index b8d757c17b..f41333adcc 100644
+> --- a/migration/channel.c
+> +++ b/migration/channel.c
+> @@ -61,14 +61,7 @@ out:
+>      }
+>  }
+>
 > -
-> -    if (add) {
-> -        hr = whp_dispatch.WHvMapGpaRange(whpx->partition,
-> -                                         host_va,
-> -                                         start_pa,
-> -                                         size,
-> -                                         (WHvMapGpaRangeFlagRead |
-> -                                          WHvMapGpaRangeFlagExecute |
-> -                                          (rom ? 0 : WHvMapGpaRangeFlagWrite)));
-> -    } else {
-> -        hr = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
-> -                                           start_pa,
-> -                                           size);
-> -    }
-> -
-> -    if (FAILED(hr)) {
-> -        error_report("WHPX: Failed to %s GPA range '%s' PA:%p, Size:%p bytes,"
-> -                     " Host:%p, hr=%08lx",
-> -                     (add ? "MAP" : "UNMAP"), name,
-> -                     (void *)(uintptr_t)start_pa, (void *)size, host_va, hr);
-> +    if (!memory_region_is_ram(area)) {
-> +        if (writable) {
-> +            return;
-> +        } else if (!memory_region_is_romd(area)) {
-> +            add = false;
-> +        }
->       }
-> -}
-> -
-> -static void whpx_process_section(MemoryRegionSection *section, int add)
-> -{
-> -    MemoryRegion *mr = section->mr;
-> -    hwaddr start_pa = section->offset_within_address_space;
-> -    ram_addr_t size = int128_get64(section->size);
-> -    unsigned int delta;
-> -    uint64_t host_va;
->   
-> -    if (!memory_region_is_ram(mr)) {
-> -        return;
-> +    if (!QEMU_IS_ALIGNED(size, page_size) ||
-> +        !QEMU_IS_ALIGNED(gva, page_size)) {
-> +        /* Not page aligned, so we can not map as RAM */
-> +        add = false;
->       }
->   
-> -    delta = qemu_real_host_page_size() - (start_pa & ~qemu_real_host_page_mask());
-> -    delta &= ~qemu_real_host_page_mask();
-> -    if (delta > size) {
-> -        return;
-> -    }
-> -    start_pa += delta;
-> -    size -= delta;
-> -    size &= qemu_real_host_page_mask();
-> -    if (!size || (start_pa & ~qemu_real_host_page_mask())) {
-> +    if (!add) {
-> +        hr = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
-> +                gva, size);
-> +        if (FAILED(hr)) {
-> +            error_report("WHPX: failed to unmap GPA range");
-> +            abort();
-> +        }
->           return;
->       }
->   
-> -    host_va = (uintptr_t)memory_region_get_ram_ptr(mr)
-> -            + section->offset_within_region + delta;
-> +    flags = WHvMapGpaRangeFlagRead | WHvMapGpaRangeFlagExecute
-> +     | (writable ? WHvMapGpaRangeFlagWrite : 0);
-> +    mem = memory_region_get_ram_ptr(area) + section->offset_within_region;
->   
-> -    whpx_update_mapping(start_pa, size, (void *)(uintptr_t)host_va, add,
-> -                        memory_region_is_rom(mr), mr->name);
-> +    hr = whp_dispatch.WHvMapGpaRange(whpx->partition,
-> +         mem, gva, size, flags);
-> +    if (FAILED(hr)) {
-> +        error_report("WHPX: failed to map GPA range");
-> +        abort();
+> -/**
+> - * @migration_channel_connect - Create new outgoing migration channel
+> - *
+> - * @s: Current migration state
+> - * @ioc: Channel to which we are connecting
+> - */
+> -void migration_channel_connect(MigrationState *s, QIOChannel *ioc)
+> +void migration_channel_connect_outgoing(MigrationState *s, QIOChannel *ioc)
+>  {
+>      trace_migration_set_outgoing_channel(ioc, object_get_typename(OBJECT(ioc)));
+>
+> diff --git a/migration/channel.h b/migration/channel.h
+> index b361e1c838..574bfec65c 100644
+> --- a/migration/channel.h
+> +++ b/migration/channel.h
+> @@ -28,7 +28,7 @@ typedef enum {
+>
+>  void migration_channel_process_incoming(QIOChannel *ioc);
+>
+> -void migration_channel_connect(MigrationState *s, QIOChannel *ioc);
+> +void migration_channel_connect_outgoing(MigrationState *s, QIOChannel *ioc);
+>
+>  int migration_channel_read_peek(QIOChannel *ioc,
+>                                  const char *buf,
+> diff --git a/migration/exec.c b/migration/exec.c
+> index d83a07435a..d1629944dc 100644
+> --- a/migration/exec.c
+> +++ b/migration/exec.c
+> @@ -55,7 +55,7 @@ void exec_start_outgoing_migration(MigrationState *s, strList *command,
+>      }
+>
+>      qio_channel_set_name(ioc, "migration-exec-outgoing");
+> -    migration_channel_connect(s, ioc);
+> +    migration_channel_connect_outgoing(s, ioc);
+>      object_unref(OBJECT(ioc));
+>  }
+>
+> diff --git a/migration/fd.c b/migration/fd.c
+> index 0144a70742..150b236fbf 100644
+> --- a/migration/fd.c
+> +++ b/migration/fd.c
+> @@ -70,7 +70,7 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
+>      }
+>
+>      qio_channel_set_name(ioc, "migration-fd-outgoing");
+> -    migration_channel_connect(s, ioc);
+> +    migration_channel_connect_outgoing(s, ioc);
+>      object_unref(OBJECT(ioc));
+>  }
+>
+> diff --git a/migration/file.c b/migration/file.c
+> index 7bb9c1c79f..935402f36b 100644
+> --- a/migration/file.c
+> +++ b/migration/file.c
+> @@ -122,7 +122,7 @@ void file_start_outgoing_migration(MigrationState *s,
+>          return;
+>      }
+>      qio_channel_set_name(ioc, "migration-file-outgoing");
+> -    migration_channel_connect(s, ioc);
+> +    migration_channel_connect_outgoing(s, ioc);
+>  }
+>
+>  static gboolean file_accept_incoming_migration(QIOChannel *ioc,
+> diff --git a/migration/socket.c b/migration/socket.c
+> index 298bac30cc..611915f84d 100644
+> --- a/migration/socket.c
+> +++ b/migration/socket.c
+> @@ -73,7 +73,7 @@ static void socket_outgoing_migration(QIOTask *task,
+>      }
+>
+>      trace_migration_socket_outgoing_connected();
+> -    migration_channel_connect(data->s, sioc);
+> +    migration_channel_connect_outgoing(data->s, sioc);
+>      return;
+>  err:
+>      trace_migration_socket_outgoing_error(error_get_pretty(err));
+> diff --git a/migration/tls.c b/migration/tls.c
+> index 837b08294f..89ba52de02 100644
+> --- a/migration/tls.c
+> +++ b/migration/tls.c
+> @@ -114,7 +114,7 @@ static void migration_tls_outgoing_handshake(QIOTask *task,
+>      }
+>
+>      trace_migration_tls_outgoing_handshake_complete();
+> -    migration_channel_connect(s, ioc);
+> +    migration_channel_connect_outgoing(s, ioc);
+>  }
+>
+>  QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
+> --
 
-Maybe aborting is too violent (i.e. trying to start a SBSA-Ref guest)
-and we could just exit(1)... Anyhow,
+* Looks right.
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> +    }
->   }
+Thank you.
+---
+  - Prasad
 
 
