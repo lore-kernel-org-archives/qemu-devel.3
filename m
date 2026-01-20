@@ -4,68 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABFBCD2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 14:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91670D2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 14:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viD22-0004xB-Er; Tue, 20 Jan 2026 09:48:34 -0500
+	id 1viD1x-0004rv-W5; Tue, 20 Jan 2026 09:48:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1viCzw-00049j-3i
+ id 1viCzw-00049i-2P
  for qemu-devel@nongnu.org; Tue, 20 Jan 2026 09:46:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1viCzt-0007NK-M9
+ id 1viCzt-0007NZ-Kw
  for qemu-devel@nongnu.org; Tue, 20 Jan 2026 09:46:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768920366;
+ s=mimecast20190719; t=1768920368;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=lcpTKAGwuBc20aeVeQEjixHLsIBdY9Yni9JHynQhLxA=;
- b=KPjG66kwC6fh5xw3RGo34xhVVmD26ulgGfAra5GPu2KSdHxPhCDbRS8L19kTcbq9wGLFGR
- AEzCiO3tDk5ITp9IMkKl8+EBen7CW9MvSzqh26txldBUOZMe/kRAm6Up6cSWwxpKauCG9z
- vVEg5azVgPVlQ3GG7X0uJ4DOmm6XNrg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HG1rGVQqePPLE6IDyoIRVlwYVulYX3EC6KP3mE4Zk34=;
+ b=H3orIQUOmXQsC8/2La8pNZ3947FEAXIojkWfE1iK617xh1X0ReZm5ndMa+msyCBkYJ2e2E
+ EpHnHcbdNYhHHFMKrlAGgk2vxQ+RF/nJ52WnarQgGs467JI7ZGpVL0Tim5oj+F0715kbr/
+ FJ8s7FwUKhBL47zDHCELaHLIFlcJdvw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-ttiGftaWNsqIzcJo1x3KcQ-1; Tue,
- 20 Jan 2026 09:46:03 -0500
-X-MC-Unique: ttiGftaWNsqIzcJo1x3KcQ-1
-X-Mimecast-MFC-AGG-ID: ttiGftaWNsqIzcJo1x3KcQ_1768920363
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-9-KH2y7BJXPH2t1_GXwrglgg-1; Tue,
+ 20 Jan 2026 09:46:04 -0500
+X-MC-Unique: KH2y7BJXPH2t1_GXwrglgg-1
+X-Mimecast-MFC-AGG-ID: KH2y7BJXPH2t1_GXwrglgg_1768920363
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2AA5D18002E5; Tue, 20 Jan 2026 14:46:01 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9D0E619560B5; Tue, 20 Jan 2026 14:46:03 +0000 (UTC)
 Received: from speedmetal.lan (unknown [10.44.22.5])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0CAF918004D8; Tue, 20 Jan 2026 14:45:58 +0000 (UTC)
+ id BF2ED18004D8; Tue, 20 Jan 2026 14:46:01 +0000 (UTC)
 From: Peter Krempa <pkrempa@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v2 0/2] block: Wire up 'flat' mode also for 'query-block'
-Date: Tue, 20 Jan 2026 15:45:55 +0100
-Message-ID: <cover.1768920111.git.pkrempa@redhat.com>
+Subject: [PATCH v2 1/2] block: Wire up 'flat' mode also for 'query-block'
+Date: Tue, 20 Jan 2026 15:45:56 +0100
+Message-ID: <a28928bee84afcc1755695db58ca6c358da43a76.1768920111.git.pkrempa@redhat.com>
+In-Reply-To: <cover.1768920111.git.pkrempa@redhat.com>
+References: <cover.1768920111.git.pkrempa@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pkrempa@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pkrempa@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -83,22 +86,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2:
- - More descriptive docs text for the new QAPI option (Markus; new
-   wording not approved)
- - use new options in hmp_nbd_server_start to avoid fetching unused
-   backing image info, impossible in 'info block' worker (Markus)
+From: Peter Krempa <pkrempa@redhat.com>
 
-Peter Krempa (2):
-  block: Wire up 'flat' mode also for 'query-block'
-  hmp_nbd_server_start: Don't ask for backing image data
+Some time ago (commit facda5443f5a8) I've added 'flat' mode (which
+omits 'backing-image' key in reply) to 'query-named-block-nodes' to
+minimize the size of the returned JSON for deeper backing chains.
 
+While 'query-block' behaved slightly better it turns out that in libvirt
+we do call 'query-block' to figure out some information about the
+block device (e.g. throttling info) but we don't look at the backing
+chain itself.
+
+Wire up 'flat' for 'query-block' so that libvirt can ask for an
+abbreviated output. The implementation is much simpler as the internals
+are shared with 'query-named-block-nodes'.
+
+Signed-off-by: Peter Krempa <pkrempa@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+---
  block/monitor/block-hmp-cmds.c | 4 ++--
  block/qapi.c                   | 9 +++++----
  qapi/block-core.json           | 7 +++++++
  ui/cocoa.m                     | 2 +-
  4 files changed, 15 insertions(+), 7 deletions(-)
 
+diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
+index 3391cee4d2..bde25bb588 100644
+--- a/block/monitor/block-hmp-cmds.c
++++ b/block/monitor/block-hmp-cmds.c
+@@ -422,7 +422,7 @@ void hmp_nbd_server_start(Monitor *mon, const QDict *qdict)
+     /* Then try adding all block devices.  If one fails, close all and
+      * exit.
+      */
+-    block_list = qmp_query_block(NULL);
++    block_list = qmp_query_block(false, false, NULL);
+
+     for (info = block_list; info; info = info->next) {
+         if (!info->value->inserted) {
+@@ -741,7 +741,7 @@ void hmp_info_block(Monitor *mon, const QDict *qdict)
+
+     /* Print BlockBackend information */
+     if (!nodes) {
+-        block_list = qmp_query_block(NULL);
++        block_list = qmp_query_block(false, false, NULL);
+     } else {
+         block_list = NULL;
+     }
+diff --git a/block/qapi.c b/block/qapi.c
+index 27e0ac6a32..3688d0e713 100644
+--- a/block/qapi.c
++++ b/block/qapi.c
+@@ -456,7 +456,7 @@ fail:
+
+ /* @p_info will be set only on success. */
+ static void GRAPH_RDLOCK
+-bdrv_query_info(BlockBackend *blk, BlockInfo **p_info, Error **errp)
++bdrv_query_info(BlockBackend *blk, bool flat, BlockInfo **p_info, Error **errp)
+ {
+     BlockInfo *info = g_malloc0(sizeof(*info));
+     BlockDriverState *bs = blk_bs(blk);
+@@ -488,7 +488,7 @@ bdrv_query_info(BlockBackend *blk, BlockInfo **p_info, Error **errp)
+     }
+
+     if (bs && bs->drv) {
+-        info->inserted = bdrv_block_device_info(blk, bs, false, errp);
++        info->inserted = bdrv_block_device_info(blk, bs, flat, errp);
+         if (info->inserted == NULL) {
+             goto err;
+         }
+@@ -698,11 +698,12 @@ bdrv_query_bds_stats(BlockDriverState *bs, bool blk_level)
+     return s;
+ }
+
+-BlockInfoList *qmp_query_block(Error **errp)
++BlockInfoList *qmp_query_block(bool has_flat, bool flat, Error **errp)
+ {
+     BlockInfoList *head = NULL, **p_next = &head;
+     BlockBackend *blk;
+     Error *local_err = NULL;
++    bool return_flat = has_flat && flat;
+
+     GRAPH_RDLOCK_GUARD_MAINLOOP();
+
+@@ -714,7 +715,7 @@ BlockInfoList *qmp_query_block(Error **errp)
+         }
+
+         info = g_malloc0(sizeof(*info));
+-        bdrv_query_info(blk, &info->value, &local_err);
++        bdrv_query_info(blk, return_flat, &info->value, &local_err);
+         if (local_err) {
+             error_propagate(errp, local_err);
+             g_free(info);
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index b82af74256..f55cf01dca 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -855,6 +855,12 @@
+ #
+ # Get a list of `BlockInfo` for all virtual block devices.
+ #
++# @flat: Omit the nested data about backing image (Omitted are
++#        contents of 'backing-image' key of the 'ImageInfo' struct
++#        which is returned as 'image' key of 'BlockDeviceInfo' struct
++#        returned as 'inserted' key in  'BlockInfo' struct returned
++#        by this command).  Default is false (Since 11.0)
++#
+ # Returns: a list describing each virtual block device.  Filter nodes
+ #     that were created implicitly are skipped over.
+ #
+@@ -945,6 +951,7 @@
+ #        }
+ ##
+ { 'command': 'query-block', 'returns': ['BlockInfo'],
++  'data': { '*flat': 'bool' },
+   'allow-preconfig': true }
+
+ ##
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index 23b7a736d7..5b21fe3aea 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -1849,7 +1849,7 @@ static void addRemovableDevicesMenuItems(void)
+     BlockInfoList *currentDevice, *pointerToFree;
+     NSString *deviceName;
+
+-    currentDevice = qmp_query_block(NULL);
++    currentDevice = qmp_query_block(false, false, NULL);
+     pointerToFree = currentDevice;
+
+     menu = [[[NSApp mainMenu] itemWithTitle:@"Machine"] submenu];
 -- 
 2.52.0
 
