@@ -4,167 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22192CA5FA0
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 16:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1686ACA5FA6
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 16:15:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viEEe-0001gl-Rc; Tue, 20 Jan 2026 11:05:40 -0500
+	id 1viEIO-0002nC-Dp; Tue, 20 Jan 2026 11:09:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Manojlo.Pekovic@amd.com>)
- id 1viEEJ-0001YT-W8
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 11:05:26 -0500
-Received: from mail-northcentralusazon11013037.outbound.protection.outlook.com
- ([40.107.201.37] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1viEIH-0002mL-IR
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 11:09:26 -0500
+Received: from 1.mo548.mail-out.ovh.net ([178.32.121.110])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Manojlo.Pekovic@amd.com>)
- id 1viEEE-0005jF-9f
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 11:05:17 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ERdrbFa4jNsvcnnepATx6Z/dYkFctUDznmxW6caGRlFZLe7b8UNi0fK6UdtQQXCKSPWgv1KTmKt9pPdH26mZJFwlYddP1hcepAguXhHwLLooo5jo4V6YP/jU4a+ReIS6k5qNX/kKlNbms5u0HiLdP32Okpc8GAWRFLbfWScFwr5wd+ub10rP5oHfzE6jHvCFJFvqsZiPZjocDhTTqcDa5KYx/xbPxTIQLuMlhohjBoT8CokvK620otp9NFBn42LN6tphC1QIP6FZWG0WmffXuxoDrMaMxDAV3/MgOC+qOvdorcD93FwhdgazOoVkdVRcJOMxUG9DF5dW1uSfaiIw6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yK2HQz92J3OJID8DiCXmFVqqxLyXGFJsX1PolIeByNs=;
- b=D4XxJvhzpjuLMYtJVsZztkWsDIjpmSMDXADsQqeUH4HIvEoU+y2MwE5O9HXuAjGIgzhw8gONOeUTm8p/tkm2UIuXHdzXEitKQeQ686/C1+n4OgP72FASHn5Ad+JqxukwL4KmDPRN2iDtWosq1qEGXyuLsBPKfjhwosLonS93vphUoqLWGQwRK/oweJhuouNcplgePsOTuKrHuwoWXJGDilz1qLuqqVaU/6AShpyR2ldI3WOP1blp14vCaMjeQ9egB+RCI6yP6CZBX/dKLBEmTPYIeLQmw9vGGpxFW8gaIhaj7yG5q8nFtPV4RgWT1nal8NjFBtt7uz1LmkLWyXOtPw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yK2HQz92J3OJID8DiCXmFVqqxLyXGFJsX1PolIeByNs=;
- b=WcnpgZyQpocdK/Uj/g680dJCGwSZwXnMQp6uwGEI/4J0D0NTx1S+TKnCTUGYmTuDyRUNNoYlk59nKkN2Jb7CmfzM1rhj6csJO8e8lkWJ4bNKyEC3qcUeDlkS3gL4APeVYcpyahCLSfi6SNhkFiIASJEqO5Qp9Sn7OK1ZijcXhgs=
-Received: from CH0PR12MB5283.namprd12.prod.outlook.com (2603:10b6:610:d6::12)
- by PH8PR12MB7352.namprd12.prod.outlook.com (2603:10b6:510:214::16)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1viEIF-0006Pu-I4
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 11:09:25 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.86])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4dwXMC4FbWz5vrn;
+ Tue, 20 Jan 2026 16:09:11 +0000 (UTC)
+Received: from kaod.org (37.59.142.98) by DAG3EX1.mxp5.local (172.16.2.21)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.12; Tue, 20 Jan
- 2026 16:00:05 +0000
-Received: from CH0PR12MB5283.namprd12.prod.outlook.com
- ([fe80::23f7:7362:bc2f:507d]) by CH0PR12MB5283.namprd12.prod.outlook.com
- ([fe80::23f7:7362:bc2f:507d%4]) with mapi id 15.20.9520.011; Tue, 20 Jan 2026
- 16:00:05 +0000
-From: "Pekovic, Manojlo" <Manojlo.Pekovic@amd.com>
-To: Alex Williamson <alex@shazbot.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "Prica, Nikola" <Nikola.Prica@amd.com>, "Andjelkovic, Dejan"
- <Dejan.Andjelkovic@amd.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
- <clg@redhat.com>
-Subject: RE: [PATCH] vfio/pci: Enable atomic ops for multifunction devices
-Thread-Topic: [PATCH] vfio/pci: Enable atomic ops for multifunction devices
-Thread-Index: AQHcaRi2j570A1RdCkK75QZWVlfQIbVO63qAgAyNN7CAAACt0A==
-Date: Tue, 20 Jan 2026 16:00:05 +0000
-Message-ID: <CH0PR12MB52830768E66CE6734381065EFA89A@CH0PR12MB5283.namprd12.prod.outlook.com>
-References: <20251209143250.714546-1-manojlo.pekovic@amd.com>
- <20260112091641.4d86d8e5@shazbot.org>
- <CH0PR12MB5283B2F97D090DA29776370FFA89A@CH0PR12MB5283.namprd12.prod.outlook.com>
-In-Reply-To: <CH0PR12MB5283B2F97D090DA29776370FFA89A@CH0PR12MB5283.namprd12.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_Enabled=True;
- MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_SiteId=3dd8961f-e488-4e60-8e11-a82d994e183d;
- MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_SetDate=2026-01-20T15:57:13.0000000Z;
- MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_Name=AMD
- Internal Distribution
- Only; MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_ContentBits=3;
- MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_Method=Standard
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH0PR12MB5283:EE_|PH8PR12MB7352:EE_
-x-ms-office365-filtering-correlation-id: acaf4646-a4f6-4fd6-1a69-08de583cfa54
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700021;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?PAQwZ7lO6zPOJNsq336DJ5kkkQaOU9tu48Xq5ciWCdAQxJiKtc9IIFt2zO?=
- =?iso-8859-1?Q?BpAG2FQoDBCIgKC2nHu+P8UK2+3eGOC/8F3/oexzWmcJ4ZKzPkZXj6fkyd?=
- =?iso-8859-1?Q?Rbx/8C3rKD41vFWgFuvZqhEwKPyy2AjoT9IKEidZcbLQ7Q65GMdmj9ppvl?=
- =?iso-8859-1?Q?qOIV6fSnbQSo1rloQ/nTQiAaLzR4rAqRHXe7d1GCNnT0x65yc8B48fFohh?=
- =?iso-8859-1?Q?Hhc5P7ub1FcHPfSHcEUzmPy7YF3GoLfbTtZvXpB3RX7MxxpUKJTM5JUbnr?=
- =?iso-8859-1?Q?4D//EmvX53xLtW9cc28HlW1mI+h9pIJFIadp/cccuhN4iJf/yJ6t4bfwrq?=
- =?iso-8859-1?Q?oZkP9cC6+aZaA2eZ0Km2zryB/87ZVkRT0FVEli/39hehuSPd8IlXg6+KbT?=
- =?iso-8859-1?Q?3dSPl8/sXo9XFH39TKCyFAXK0bG95xAwmFFT+R3/HYdHYoZACktGuF8cZY?=
- =?iso-8859-1?Q?OTTB8W9v9wCTNqSh9Jj0GtccqoEbce/drffbPGv3MFOuff6o/sIHfzuRpt?=
- =?iso-8859-1?Q?obg3F9OXKnAsPaZy/GfIwv9kfashV2P+2Uk8n2ISvrtdlnzOgAxnWZ3dE6?=
- =?iso-8859-1?Q?lvLJTxr07ky4TC+vEYZK4FjBZDMQKUnqIjSKTQ8GayKkBOVU6ZyG7osxce?=
- =?iso-8859-1?Q?rC/KEy4CG9N5Yxc08DujGtqk1FkXx2A5kj3j5YmI6DSRLw4ATYTK5pL9DY?=
- =?iso-8859-1?Q?fO2uCDEJCwkzO2/IE2P/MjiVJf9Ocz8GwIWunf7Vs9HU26DCMI/HboxYH0?=
- =?iso-8859-1?Q?zdLYv1TS7RVsUAfU6bTh1K3cB679vsykkg/7R7dg6O4Rej1wKKNJvzRR2J?=
- =?iso-8859-1?Q?890KCScxRyVBC8aDmvfXYk+GZ8vA02htuRggU3U79YPU9L67GA7Nr1pD6u?=
- =?iso-8859-1?Q?9JVjf1/rpiSkqnJLrI3Cq3M4P2l2DcYZFtv00itUX4ifdQoQJKnuEBd/0z?=
- =?iso-8859-1?Q?KtJpV+jP4FJs9n9COA9Oi4zlAJj3GBPzCvEkJHgcBZtchqkIPn0z1Kuytf?=
- =?iso-8859-1?Q?+OCOcANbGL16cz4zSzSUjMajbhtcU8Pz5qkplRpACe6I2cLavyjD5vaG2X?=
- =?iso-8859-1?Q?xsxD06/Z2ipg5jogKBKKTGQa3GWmKlrc8aGZm7m5FaclN6MDs7robvrqnr?=
- =?iso-8859-1?Q?XsBCXO8ECYsIbntPJnkbv0nYHbvnv9jht+cNWzIPgW2iEaHbBAu6HtUwwM?=
- =?iso-8859-1?Q?8eAQjxbWHGkBQP8EvbFC8BGmti9219lKh+5t6a+f26QdHsJ96TwyP2M7sX?=
- =?iso-8859-1?Q?Aimyhw5zty9McK45B4v2iQBBp35gbMWZD4hPAqpajYcDFc0HA58tW89Owi?=
- =?iso-8859-1?Q?O2x0OgsAV3CEBT7756fbuIbSuhUdkrbB1tAULAC65h9MIxGQU8qBU33kvT?=
- =?iso-8859-1?Q?WYwv0dCD7jOaHU2SCDNodaSFla2bjc0YactyCtRw52M3yYVGMwj2AJwPDC?=
- =?iso-8859-1?Q?Ju84idiFDukENr/wX0j8ls2ZLpJ/NJKZ/xhJTEThMYDMobOsmdqLlbtZgN?=
- =?iso-8859-1?Q?qoSqOti+ZoUk/qQkZJOTez0UHkbxVL5tLRre6AWns/OxLTXyErVHDJKjkt?=
- =?iso-8859-1?Q?fFuO0B0hk52EDHCAb/2cAaNEe98LN6yPSpzghpiGiYseB6bnA9QBhJOk3g?=
- =?iso-8859-1?Q?6MrVpPK6aec9VCHeaL/gvJC9FhSAWIEN8IKzwHT4TKt1/Wa0mN10y6RBiw?=
- =?iso-8859-1?Q?YRitacFs+ZVFCqBJVlQ=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH0PR12MB5283.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(38070700021); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?i1bZAvWjdlxrJMmodiImzFJmw5kh+0caA5nexGfddC51p24uRPdxupw2SM?=
- =?iso-8859-1?Q?VCWxF44pWrSutkNufKgwN2HjMIWmqQIRr3GG5QmHx+i/3ijF+dBm5Co2r0?=
- =?iso-8859-1?Q?cDpxEN9JYXT7kHH2egpFhCV5oLSA74xgTRp0KxQg7Ggm9czOeSGiN0UI0G?=
- =?iso-8859-1?Q?eVfV+qnZ8DBT9rnqIbr1uLoPsuuCG1pbjVMDOafWuAybb+LpQ2RRlyDPnU?=
- =?iso-8859-1?Q?TgbIxry5hrcX5a7doukllTUX4Xder0Atjehyu57g7Spuk2S++1Wi1vVnum?=
- =?iso-8859-1?Q?PPrnivm23LxjvpvYyTg32rgrSEkantbF++Fbkn61M9Sk7nZYSd6OtDyvPK?=
- =?iso-8859-1?Q?Q1/0lcHAuAQhpBSHnhGqym8lmveCJNVFjZwnhoFVkSNmrwVDt98at562GI?=
- =?iso-8859-1?Q?rBzfxR2lL5UNTOyN1OI29rRpZY0lx6MHw7e7sV6cKEV6g118fYRveF4XyP?=
- =?iso-8859-1?Q?ikO+xpH/9uIdsm6wTdWpg0TVrRqJWuJ7EznmumtMSzja03GLEGW7ehZgba?=
- =?iso-8859-1?Q?igePDJaAdsUKD3O8q9aHwBjJ30KWpRPL+pTu7UPF+WMRjfz/6JCsg7Dax/?=
- =?iso-8859-1?Q?TVsy8njL2OykaeAslYtbS8OmhOKwr5oUctBtx5XgA9r/a78Oa1NiFxTJwU?=
- =?iso-8859-1?Q?A/+EvsAL4idClpxDOMK4fjTxiXexyHQVYbyHa5wncjuCXIdaZT+EMW+ogQ?=
- =?iso-8859-1?Q?Idjtmy35NkmpW+S5x3rrZn5sgkuiw9qxq0H/YWSqwIRobNJeasEItu/Pih?=
- =?iso-8859-1?Q?q2KuCmwB0ZdxO1a7oIK7FlIUkwer0eiy6FGCbrmmJn4zT01wWhINtn6iCd?=
- =?iso-8859-1?Q?+5egC6eOgy+h3XaKtx9s9Wr+UW6NN42ncS568zuodNQsLPhLLhd7dsLCiw?=
- =?iso-8859-1?Q?krJ9AlQkSVxiif9THP7ZouzHmBX96wJ/CLSnKY6CpYPzSMXIOGrCReEXhc?=
- =?iso-8859-1?Q?ugec+WUyLFnAdFQuKe00t6zhsVkzmXPwOG7R7pNO7N5oSwhTkPNNxerL1+?=
- =?iso-8859-1?Q?sLYtL3eQbO+hIayZCRsjrb7c/IOrtEmmOSC1trZV5oLkQKWEYjISEhCFnO?=
- =?iso-8859-1?Q?Y3DMIQHoQ7MANiQJ6FY8yj7SH1wsEYbpy2E+kbUJx7DLc/sIzUHM8EE3GA?=
- =?iso-8859-1?Q?Ax/dYTr1w633/MURySSHUc5Om9THZ174tHOiLOzWR9VP6gnJxie/lsE2wh?=
- =?iso-8859-1?Q?IRESKjr8vlk/bnJ/b2Z2cl9/KQ5sUtMv4j9niCshQXqqxPf0Qj9HQFbKoC?=
- =?iso-8859-1?Q?LYszkKocZcIfOD4pKmlYAUQ9LTD4riyVEVtCGEM5gooFt96eMdT+TIJZGB?=
- =?iso-8859-1?Q?AbXuiuR4dJe3evop/r+1xFIvbatiF2h+24q+T8bS1PFdvuSWCz4ORGbBIo?=
- =?iso-8859-1?Q?zHNfXGE0GtUAMKhRHUJziJ7y594OO5feNM5dZTi7I3/RvYvSvib+DpHloG?=
- =?iso-8859-1?Q?ij3KRXFcF5Eq4QuCCI8HTFXL5WNoU9XZ5ORb/IYokxlPZzMiTUHMPd5iT7?=
- =?iso-8859-1?Q?RslKJ/+M/4atXDJrw/uN8fptUE/INYOIIePixHXeyXxyIl/6U8bmVKXYGg?=
- =?iso-8859-1?Q?77EpLA5CJuJdAXUaP8nXFBNEn3sU6hnb2v+UwOz7Kt5KriLiFQ1/LO3Ie8?=
- =?iso-8859-1?Q?l8Saqc6E+263xrQchyUi36HKE2GjClK8uG3aZ1ZZcTfQS0I4lUnBZuFzkh?=
- =?iso-8859-1?Q?c1K0XtEmKv7QQAVGO5qk8SwloLXRbqx19Qc7Mnuamgk1FfHSYfQoww3vyH?=
- =?iso-8859-1?Q?MujuZOBeQTFvKe5oBgUujEws80An4iWA5uVVkVNINl6q6R?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Tue, 20 Jan
+ 2026 17:09:10 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-98R00292744a0c-444c-43c1-96ca-4913ae1004a1,
+ 21EA59D4F1114275CF698448FAF8CB5A144B01CF) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <1433fb86-bb1b-41f7-b7ec-45560e52146a@kaod.org>
+Date: Tue, 20 Jan 2026 17:09:10 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH0PR12MB5283.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: acaf4646-a4f6-4fd6-1a69-08de583cfa54
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jan 2026 16:00:05.3127 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: efLn2JBntatsQx8g1KyaobB0JPhNILoKmKvqW3xItpwJ5aIZPseRoAEzl9wmzpttkpxhGuCr05tT/saeMfconA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7352
-Received-SPF: permerror client-ip=40.107.201.37;
- envelope-from=Manojlo.Pekovic@amd.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 00/22] hw/arm/aspeed: AST1700 LTPI support and device
+ hookups
+To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>
+References: <20260120051859.1920565-1-kane_chen@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260120051859.1920565-1-kane_chen@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.98]
+X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG3EX1.mxp5.local
+ (172.16.2.21)
+X-Ovh-Tracer-GUID: 842f24e1-b751-4961-81ce-cc7d92fad1a6
+X-Ovh-Tracer-Id: 12152682123131194290
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFa9cxNgNqvbSuC3CQR12dLi8tFcYAvU56LW4p6FoyoyvtiV2hGqHxTKs+hVPevy21clvi0a6g8cOr/c0hEw40Az5RnLKFk2Vx2bO8fw4EizpYbhUbF1jgFYuGqUl0fGPhDirgosRrhO4QUxqMarwZbQpTF8iXGFAiCYVQVVzXc/g9VVH0OvxK5NM/oFRNe1WSArsbKJaEnC5frf35UDoDN8RQmx2yFlW1jhQhd4DOsGqbj5tkmYKjHfnibTvKaVQC91qXrUxR1jYLhPYnvd1Vxyb/RdUjAl2K4E6MGYThXEJ1H0L8Zp6jZtedaet9IHDPP3VnblVQDx074AJipqcPneLVPcthTgCtXKfZ+V6riN/gOywsLziAMxLzDWVuLQ08214Fk5N1ykKZx9Kck3S/FzHFwFvbc5i4b3Pe+Mdh1wWLvAzy6+FkShOPmYR/0c0lB24C89PCsMN3oOxpL/BdJq+63RPoUBTX0ok11gMncrge+7c7TogL+1zWBA6HB+lpLid0jNZ8WPP2QxRzR0ADL2xhu31upBdwlRpwWwgBSov9pZ2V8w4CQi6M7b9UoA1lg4VHB7+GAeXrAxSYEOFN9oXHBzxwapIBwlTHccoiRPnREI1eeplHmv3b4I4fQoFfmRwONT5C2Utpi8SG0nNFN26iREVzvJMLGEeivGwhqkQ
+DKIM-Signature: a=rsa-sha256; bh=ddIZh+0aniWV4BokIFLg/3rus/0Il6t6CBNbSWXos80=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1768925352; v=1;
+ b=OhG8Wsj0aC3E0CF4YTXbuqWOwk8fZ7AnUfJ79ymRwnolw7vLtubMw3/wKLkXq/WB6mudsF2H
+ rycZVjlbN5BzE6TLfin8wWGs0pGVXMPYdAO41VUp4KoFVl/M0qJeLrHEjkMiFBbCEbZquV9HjWZ
+ vjqZ3vrNB1NOAA7DJ7kcQqLertHaEw/TJXDCisOLVXIBEsPE9wyBzctMuQ0+nscX6PZBFEuV6My
+ Thpq8V7lQKCXVFBLFUT/e22G261jVn9f1KHdbMUMcpIGlU6lTB5ujXvrojeOUsy6FbCyTxrMIEg
+ toGLqbMTUfznYHdhB5KPAQYpue0ziMmAUPeHOgCGV+OYw==
+Received-SPF: pass client-ip=178.32.121.110; envelope-from=clg@kaod.org;
+ helo=1.mo548.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -180,318 +131,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[AMD Official Use Only - AMD Internal Distribution Only]
+Kane, Jamin,
 
-+ others, on accident
+For some reason, I don't receive your proposals anymore. My provider
+seems to drop silently these emails. Have you changed anything recently ?
 
+Thanks,
 
-Manojlo Pekovic
-Software Development Engineer 2
-Cloud Software Team
+C.
 
-
-
------Original Message-----
-From: Pekovic, Manojlo
-Sent: Tuesday, January 20, 2026 4:59 PM
-To: Alex Williamson <alex@shazbot.org>
-Subject: RE: [PATCH] vfio/pci: Enable atomic ops for multifunction devices
-
-Hi Alex,
-Hope you are good. Sorry for such a late response.
-
-Appreciate the comments
-
-I have split up the fix into two patches as you said, and will be sending t=
-hem into two emails so it's easier for you to check them In this mail, I am=
- sending the helper patch and in the next one the multifunction
-
-Extract the code that reads and converts VFIO atomic capabilities into a se=
-parate helper function. This is a preparatory refactor with no functional c=
-hange, making the code easier to extend for multifunction device support.
-
-Signed-off-by: Manojlo Pekovic <manojlo.pekovic@amd.com>
----
- hw/vfio/pci.c | 53 ++++++++++++++++++++++++++++++---------------------
- 1 file changed, 31 insertions(+), 22 deletions(-)
-
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c index 14bcc725c3..6a6c8f1807 100=
-644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -1900,13 +1900,41 @@ static void vfio_add_emulated_long(VFIOPCIDevice *v=
-dev, int pos,
-     vfio_set_long_bits(vdev->emulated_config_bits + pos, mask, mask);  }
-
--static void vfio_pci_enable_rp_atomics(VFIOPCIDevice *vdev)
-+static uint32_t vfio_get_atomic_cap(VFIOPCIDevice *vdev)
- {
-     struct vfio_device_info_cap_pci_atomic_comp *cap;
-     g_autofree struct vfio_device_info *info =3D NULL;
-+    struct vfio_info_cap_header *hdr;
-+    uint32_t mask =3D 0;
-+
-+    info =3D vfio_get_device_info(vdev->vbasedev.fd);
-+    if (!info) {
-+        return mask;
-+    }
-+
-+    hdr =3D vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_PCI_ATOMIC=
-_COMP);
-+    if (!hdr) {
-+        return mask;
-+    }
-+
-+    cap =3D (void *)hdr;
-+    if (cap->flags & VFIO_PCI_ATOMIC_COMP32) {
-+        mask |=3D PCI_EXP_DEVCAP2_ATOMIC_COMP32;
-+    }
-+    if (cap->flags & VFIO_PCI_ATOMIC_COMP64) {
-+        mask |=3D PCI_EXP_DEVCAP2_ATOMIC_COMP64;
-+    }
-+    if (cap->flags & VFIO_PCI_ATOMIC_COMP128) {
-+        mask |=3D PCI_EXP_DEVCAP2_ATOMIC_COMP128;
-+    }
-+
-+    return mask;
-+}
-+
-+static void vfio_pci_enable_rp_atomics(VFIOPCIDevice *vdev) {
-     PCIBus *bus =3D pci_get_bus(&vdev->pdev);
-     PCIDevice *parent =3D bus->parent_dev;
--    struct vfio_info_cap_header *hdr;
-     uint32_t mask =3D 0;
-     uint8_t *pos;
-
-@@ -1934,26 +1962,7 @@ static void vfio_pci_enable_rp_atomics(VFIOPCIDevice=
- *vdev)
-         return;
-     }
-
--    info =3D vfio_get_device_info(vdev->vbasedev.fd);
--    if (!info) {
--        return;
--    }
--
--    hdr =3D vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_PCI_ATOMIC=
-_COMP);
--    if (!hdr) {
--        return;
--    }
--
--    cap =3D (void *)hdr;
--    if (cap->flags & VFIO_PCI_ATOMIC_COMP32) {
--        mask |=3D PCI_EXP_DEVCAP2_ATOMIC_COMP32;
--    }
--    if (cap->flags & VFIO_PCI_ATOMIC_COMP64) {
--        mask |=3D PCI_EXP_DEVCAP2_ATOMIC_COMP64;
--    }
--    if (cap->flags & VFIO_PCI_ATOMIC_COMP128) {
--        mask |=3D PCI_EXP_DEVCAP2_ATOMIC_COMP128;
--    }
-+    mask =3D vfio_get_atomic_cap(vdev);
-
-     if (!mask) {
-         return;
---
-2.43.0
-
-
-
-Manojlo Pekovic
-Software Development Engineer 2
-Cloud Software Team
-
-
-
------Original Message-----
-From: Alex Williamson <alex@shazbot.org>
-Sent: Monday, January 12, 2026 5:17 PM
-To: Pekovic, Manojlo <Manojlo.Pekovic@amd.com>
-Cc: qemu-devel@nongnu.org; alex.williamson@redhat.com; clg@redhat.com; Pric=
-a, Nikola <Nikola.Prica@amd.com>; Andjelkovic, Dejan <Dejan.Andjelkovic@amd=
-.com>
-Subject: Re: [PATCH] vfio/pci: Enable atomic ops for multifunction devices
-
-On Tue, 9 Dec 2025 14:32:50 +0000
-Manojlo Pekovic <manojlo.pekovic@amd.com> wrote:
-
-> Previously, PCIe Atomic Ops support was only enabled for single
-> function devices due to potential conflicting capabilities between
-> functions. This patch enables atomic ops for multifunction devices by
-> finding the common subset of atomic capabilities supported by all
-> functions.
->
-> The implementation checks all functions on the same slot and
-> advertises only the atomic operations supported by all of them,
-> ensuring compatibility across the multifunction device.
->
-> Signed-off-by: Manojlo Pekovic <manojlo.pekovic@amd.com>
+On 1/20/26 06:18, Kane Chen via qemu development wrote:
+> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> 
+> Hi all,
+> 
+> LTPI (LVDS Tunneling Protocol & Interface) is defined in the OCP DC-SCM
+> 2.0 specification (see Figure 2):
+> https://www.opencompute.org/documents/ocp-dc-scm-2-0-ltpi-ver-1-0-pdf
+> 
+> LTPI provides a protocol and physical interface for tunneling various
+> low-speed signals between the Host Processor Module (HPM) and the
+> Satellite Controller Module (SCM). In Figure 2 of the specification,
+> the AST27x0 SoC (left) integrates two LTPI controllers, allowing it to
+> connect to up to two AST1700 boards. On the other side, the AST1700
+> consolidates HPM FPGA functions and multiple peripheral interfaces
+> (GPIO, UART, I2C, I3C, etc.) onto a single board.
+> 
+> Because the AST1700 exposes additional I/O interfaces (GPIO, I2C, I3C,
+> and others), it acts as an I/O expander. Once connected over LTPI,
+> the AST27x0 can control additional downstream devices through this link.
+> 
+> This patch series is based on the aspeed_next branch and incorporates
+> recent I2C bus label changes.
+> Ref: https://patchwork.kernel.org/project/qemu-devel/patch/20260112083054.4151945-2-kane_chen@aspeedtech.com/
+> 
+> It introduces a basic LTPI controller model and wires it into the
+> AST27x0 SoC. The series also adds the AST1700-specific LTPI expander
+> device and incrementally connects common peripherals on the AST1700
+> model. For the I3C block, which may cause kernel crashes, its MMIO
+> region is modeled as an unimplemented device to reserve address space
+> and make the missing functionality explicit, ensuring stable guest
+> probing.
+> 
+> In the official release images, the AST1700 functions are not included
+> by default. To test the AST1700-related functionality, please include
+> the following DTS files for probing:
+> https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm64/boot/dts/aspeed/aspeed-ltpi0.dtsi
+> https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm64/boot/dts/aspeed/aspeed-ltpi1.dtsi
+> 
+> After including these DTS files in the BMC image, you can verify LTPI
+> functionality using the following scenarios:
+> 
+> 1. In U-Boot:
+>     Run the ltpi command to trigger the LTPI connection and display the
+>     current connection status.
+> 2. In BMC Linux:
+>     Run i2cdetect -y <16-38> to scan and test the I2C buses exposed by
+>     the AST1700.
+> 
+> Any feedback or suggestions are appreciated!
+> 
+> Kane
+> 
 > ---
->  hw/vfio/pci.c | 104
-> +++++++++++++++++++++++++++++++++++++-------------
->  1 file changed, 77 insertions(+), 27 deletions(-)
->
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c index
-> 14bcc725c3..9d1faeabff 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -1900,28 +1900,88 @@ static void vfio_add_emulated_long(VFIOPCIDevice =
-*vdev, int pos,
->      vfio_set_long_bits(vdev->emulated_config_bits + pos, mask, mask);
-> }
->
-> -static void vfio_pci_enable_rp_atomics(VFIOPCIDevice *vdev)
-> +static uint32_t vfio_get_atomic_cap(VFIOPCIDevice *vdev)
->  {
-> -    struct vfio_device_info_cap_pci_atomic_comp *cap;
->      g_autofree struct vfio_device_info *info =3D NULL;
-> +    struct vfio_info_cap_header *hdr;
-> +    struct vfio_device_info_cap_pci_atomic_comp *cap;
-> +    uint32_t mask =3D 0;
-> +
-> +    info =3D vfio_get_device_info(vdev->vbasedev.fd);
-> +    if (!info) {
-> +        return mask;
-> +    }
-> +
-> +    hdr =3D vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_PCI_ATOM=
-IC_COMP);
-> +    if (!hdr) {
-> +        return mask;
-> +    }
-> +
-> +    cap =3D (void *)hdr;
-> +    if (cap->flags & VFIO_PCI_ATOMIC_COMP32) {
-> +        mask |=3D PCI_EXP_DEVCAP2_ATOMIC_COMP32;
-> +    }
-> +    if (cap->flags & VFIO_PCI_ATOMIC_COMP64) {
-> +        mask |=3D PCI_EXP_DEVCAP2_ATOMIC_COMP64;
-> +    }
-> +    if (cap->flags & VFIO_PCI_ATOMIC_COMP128) {
-> +        mask |=3D PCI_EXP_DEVCAP2_ATOMIC_COMP128;
-> +    }
-> +
-> +    return mask;
-> +}
-> +
-> +/* Returns biggest subset of supported atomic ops of multifunction
-> +device */ static uint32_t vfio_get_multifunction_atomic_cap(VFIOPCIDevic=
-e *vdev,
-> +                                                    PCIBus *bus) {
-> +    PCIDevice *func_dev;
-> +    VFIOPCIDevice *func_vdev;
-> +    int slot =3D PCI_SLOT(vdev->pdev.devfn);
-> +    int target_devfn;
-> +    uint32_t common_mask =3D PCI_EXP_DEVCAP2_ATOMIC_COMP32 |
-> +                           PCI_EXP_DEVCAP2_ATOMIC_COMP64 |
-> +                           PCI_EXP_DEVCAP2_ATOMIC_COMP128;
-> +
-> +    for (int fn =3D 0; fn < PCI_FUNC_MAX; fn++) {
-> +        target_devfn =3D PCI_DEVFN(slot, fn);
-> +        func_dev =3D pci_find_device(bus, pci_bus_num(bus), target_devfn=
-);
-> +        uint32_t func_mask =3D 0;
-> +
-> +        if (!func_dev) {
-> +            continue;
-> +        }
-> +
-> +        func_vdev =3D (VFIOPCIDevice *)object_dynamic_cast(OBJECT(func_d=
-ev),
-> +                                                            TYPE_VFIO_PC=
-I);
-> +        if (!func_vdev) {
-> +            continue;
-> +        }
-
-Why is it justified to continue here?  It at least seems worthy of a commen=
-t why we can ignore non-vfio-pci devices relative to the advertised atomic =
-op support.
-
-> +
-> +        func_mask =3D vfio_get_atomic_cap(func_vdev);
-> +
-> +        common_mask &=3D func_mask;
-
-Factor out func_mask.
-
-> +    }
-> +
-> +    return common_mask;
-> +}
-> +
-> +static void vfio_pci_enable_rp_atomics(VFIOPCIDevice *vdev) {
->      PCIBus *bus =3D pci_get_bus(&vdev->pdev);
->      PCIDevice *parent =3D bus->parent_dev;
-> -    struct vfio_info_cap_header *hdr;
->      uint32_t mask =3D 0;
->      uint8_t *pos;
->
->      /*
->       * PCIe Atomic Ops completer support is only added automatically for=
- single
->       * function devices downstream of a root port supporting DEVCAP2.  S=
-upport
-> -     * is added during realize and, if added, removed during device exit=
-.  The
-> -     * single function requirement avoids conflicting requirements shoul=
-d a
-> -     * slot be composed of multiple devices with differing capabilities.
-> +     * is added during realize and, if added, removed during device exit=
-.
->       */
->      if (pci_bus_is_root(bus) || !parent || !parent->exp.exp_cap ||
->          pcie_cap_get_type(parent) !=3D PCI_EXP_TYPE_ROOT_PORT ||
->          pcie_cap_get_version(parent) !=3D PCI_EXP_FLAGS_VER2 ||
-> -        vdev->pdev.devfn ||
-> -        vdev->pdev.cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
-> +        vdev->pdev.devfn) {
->          return;
->      }
->
-> @@ -1934,25 +1994,15 @@ static void vfio_pci_enable_rp_atomics(VFIOPCIDev=
-ice *vdev)
->          return;
->      }
->
-> -    info =3D vfio_get_device_info(vdev->vbasedev.fd);
-> -    if (!info) {
-> -        return;
-> -    }
-> -
-> -    hdr =3D vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_PCI_ATOM=
-IC_COMP);
-> -    if (!hdr) {
-> -        return;
-> -    }
-> -
-> -    cap =3D (void *)hdr;
-> -    if (cap->flags & VFIO_PCI_ATOMIC_COMP32) {
-> -        mask |=3D PCI_EXP_DEVCAP2_ATOMIC_COMP32;
-> -    }
-> -    if (cap->flags & VFIO_PCI_ATOMIC_COMP64) {
-> -        mask |=3D PCI_EXP_DEVCAP2_ATOMIC_COMP64;
-> -    }
-> -    if (cap->flags & VFIO_PCI_ATOMIC_COMP128) {
-> -        mask |=3D PCI_EXP_DEVCAP2_ATOMIC_COMP128;
-
-Nit, it would have been cleaner to factor out this helper as a precursor to=
- multifunction support.  Thanks,
-
-Alex
-
-> +    if (vdev->pdev.cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
-> +        /*
-> +         * Only process the through the root function
-> +         * We get through here only on function 0,
-> +         * through check vdev->pdev.devfn
-> +         */
-> +        mask =3D vfio_get_multifunction_atomic_cap(vdev, bus);
-> +    } else {
-> +        mask =3D vfio_get_atomic_cap(vdev);
->      }
->
->      if (!mask) {
+> 
+> ChangeLog
+> ---------
+> v5:
+> - Add functional test case for AST1700 I2C
+> - Corrected the From attribution
+> - Fixed incorrect DRAM setting for SPI and I2C controllers
+> - Refine code structure
+> 
+> v4:
+> - Add missing Signed-off-by
+> - Fix checkpatch.pl warnings
+> - Refine code structure
+> - Enable AST1700 support only after all devices are ready
+> 
+> v3:
+> - Add PWM model
+> - Integrate the SGPIO model
+> - Fix I2C test case failure
+> - Refine code structure
+> 
+> v2:
+> - Separate the AST1700 model into a standalone implementation
+> - Refine the mechanism for assigning the AST1700 board number
+> 
+> v1:
+> - Initial version
+> ---
+> 
+> Cédric Le Goater (1):
+>    hw/misc: Add basic Aspeed PWM model
+> 
+> Kane-Chen-AS (21):
+>    hw/misc: Add LTPI controller
+>    hw/arm/aspeed: Attach LTPI controller to AST27X0 platform
+>    hw/arm/aspeed: Add AST1700 LTPI expander device model
+>    hw/arm/aspeed: Integrate AST1700 device into AST27X0
+>    hw/arm/aspeed: Integrate interrupt controller for AST1700
+>    hw/arm/aspeed: Attach LTPI controller to AST1700 model
+>    hw/arm/aspeed: Attach UART device to AST1700 model
+>    hw/arm/aspeed: Attach SRAM device to AST1700 model
+>    hw/arm/aspeed: Attach SPI device to AST1700 model
+>    hw/arm/aspeed: Attach ADC device to AST1700 model
+>    hw/arm/aspeed: Attach SCU device to AST1700 model
+>    hw/arm/aspeed: Attach GPIO device to AST1700 model
+>    hw/arm/aspeed: Introduce 'bus-label' property for AST1700 SoC
+>    hw/arm/aspeed: attach I2C device to AST1700 model
+>    hw/arm/aspeed: Attach WDT device to AST1700 model
+>    hw/arm/aspeed: Attach PWM device to AST1700 model
+>    hw/arm/aspeed: Attach SGPIOM device to AST1700 model
+>    hw/arm/aspeed: Model AST1700 I3C block as unimplemented device
+>    hw/arm/aspeed: Enable AST1700 IO expander support
+>    test/functional/aarch64: Parameterize I2C bus ID in AST2700 test
+>    test/functional/aarch64: Add I2C test for AST1700 IO expanders
+> 
+>   include/hw/arm/aspeed_ast1700.h               |  55 ++++
+>   include/hw/arm/aspeed_soc.h                   |  25 +-
+>   include/hw/intc/aspeed_intc.h                 |   2 +
+>   include/hw/misc/aspeed_ltpi.h                 |  33 +++
+>   include/hw/misc/aspeed_pwm.h                  |  31 ++
+>   hw/arm/aspeed_ast1700.c                       | 280 ++++++++++++++++++
+>   hw/arm/aspeed_ast27x0.c                       | 170 ++++++++++-
+>   hw/intc/aspeed_intc.c                         |  60 ++++
+>   hw/misc/aspeed_ltpi.c                         | 193 ++++++++++++
+>   hw/misc/aspeed_pwm.c                          | 121 ++++++++
+>   hw/arm/meson.build                            |   1 +
+>   hw/misc/meson.build                           |   2 +
+>   hw/misc/trace-events                          |   4 +
+>   .../functional/aarch64/test_aspeed_ast2700.py |  52 +++-
+>   14 files changed, 999 insertions(+), 30 deletions(-)
+>   create mode 100644 include/hw/arm/aspeed_ast1700.h
+>   create mode 100644 include/hw/misc/aspeed_ltpi.h
+>   create mode 100644 include/hw/misc/aspeed_pwm.h
+>   create mode 100644 hw/arm/aspeed_ast1700.c
+>   create mode 100644 hw/misc/aspeed_ltpi.c
+>   create mode 100644 hw/misc/aspeed_pwm.c
+> 
 
 
