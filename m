@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF43CCA5FA2
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 16:01:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22192CA5FA0
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 16:06:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viEAX-0007UE-Ux; Tue, 20 Jan 2026 11:01:27 -0500
+	id 1viEEe-0001gl-Rc; Tue, 20 Jan 2026 11:05:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Manojlo.Pekovic@amd.com>)
- id 1viEAR-0007Os-Qe
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 11:01:21 -0500
-Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ id 1viEEJ-0001YT-W8
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 11:05:26 -0500
+Received: from mail-northcentralusazon11013037.outbound.protection.outlook.com
+ ([40.107.201.37] helo=CH4PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Manojlo.Pekovic@amd.com>)
- id 1viEAN-0004wt-HU
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 11:01:17 -0500
+ id 1viEEE-0005jF-9f
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 11:05:17 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bcWfhmUa1+tIpdZDNMno7EnIPA/nI0X4zy+FxTsFQZ/rfKKAKWmobJXP2wD7Rv1cu9HvD+3o8WwVr2aeCvEZfctv+ftdRwxco6d+AyQZ+mYf9SnZ356TrDJcjl3ccyChxdgP82uI8wacnPAITRjZnjdSw7n+wRuny8LNTYEs85Xg7XNjrR9meKG9bXGhJCEcSlZKW218Kg/FuSm6A9L9f1amU7YmdrvChE1zI1vqg5tcp/gIGyZph0gm6s3x1HJXeNDet5ZJnG5NKHR6FHBHdQ5tzUbU02IpXgV9+Ohsfrpqm5vFshb1dxLp8pC+jDsyarX4xfQ9ikYamB2f/VhNZQ==
+ b=ERdrbFa4jNsvcnnepATx6Z/dYkFctUDznmxW6caGRlFZLe7b8UNi0fK6UdtQQXCKSPWgv1KTmKt9pPdH26mZJFwlYddP1hcepAguXhHwLLooo5jo4V6YP/jU4a+ReIS6k5qNX/kKlNbms5u0HiLdP32Okpc8GAWRFLbfWScFwr5wd+ub10rP5oHfzE6jHvCFJFvqsZiPZjocDhTTqcDa5KYx/xbPxTIQLuMlhohjBoT8CokvK620otp9NFBn42LN6tphC1QIP6FZWG0WmffXuxoDrMaMxDAV3/MgOC+qOvdorcD93FwhdgazOoVkdVRcJOMxUG9DF5dW1uSfaiIw6Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Fyuf0xGY5LALjOcw4DQPTZmdoA9C2X2CPnEozuvjGzU=;
- b=KZbGHtmoOU0Klqg/enjs2CWnskeVoUHkZe+v9QYUy0rdZOOE+nPAOIYBTTgj6pL4sP4xR2WKEpDY06CRjgwtjzK7eJLw1D8UJvy24nlkXaGUccysxoZwmjyP5GZVaD8XkgBfo5r0H+GJyV3L0bzGrWeG6Y2uTkYE/o+kTgvnkENQB9sR/T35wdCoNzz4NsfAV1iLRNPjgY999OB0b4zGlcKZHSBNAuqgK2mbcQhgjjusdJwt3pM2jAx1yLvDCO+wJssXrWzPtApQmYNrnTab+8g33j7+5NGmISssb+9AULNIdyoXWPpinnEii02Tb2R0/LnG7xYn+EObLQgfCFQ3og==
+ bh=yK2HQz92J3OJID8DiCXmFVqqxLyXGFJsX1PolIeByNs=;
+ b=D4XxJvhzpjuLMYtJVsZztkWsDIjpmSMDXADsQqeUH4HIvEoU+y2MwE5O9HXuAjGIgzhw8gONOeUTm8p/tkm2UIuXHdzXEitKQeQ686/C1+n4OgP72FASHn5Ad+JqxukwL4KmDPRN2iDtWosq1qEGXyuLsBPKfjhwosLonS93vphUoqLWGQwRK/oweJhuouNcplgePsOTuKrHuwoWXJGDilz1qLuqqVaU/6AShpyR2ldI3WOP1blp14vCaMjeQ9egB+RCI6yP6CZBX/dKLBEmTPYIeLQmw9vGGpxFW8gaIhaj7yG5q8nFtPV4RgWT1nal8NjFBtt7uz1LmkLWyXOtPw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Fyuf0xGY5LALjOcw4DQPTZmdoA9C2X2CPnEozuvjGzU=;
- b=dp3U6srPPKrE0fAAhQzbZc97aMlhA5Dp/FbJziOzq2l06qjAGCx66cTcs4m+zpG5P5olIdVysT7qc6/G6D7R76oTOBukHMpV0opt/ybsEMqqXgN2wOBzMOBChAO2j88J9VEzJ4cLl9y1PaaEWQ0jWe+pytame1tuMe1hCCga1CY=
+ bh=yK2HQz92J3OJID8DiCXmFVqqxLyXGFJsX1PolIeByNs=;
+ b=WcnpgZyQpocdK/Uj/g680dJCGwSZwXnMQp6uwGEI/4J0D0NTx1S+TKnCTUGYmTuDyRUNNoYlk59nKkN2Jb7CmfzM1rhj6csJO8e8lkWJ4bNKyEC3qcUeDlkS3gL4APeVYcpyahCLSfi6SNhkFiIASJEqO5Qp9Sn7OK1ZijcXhgs=
 Received: from CH0PR12MB5283.namprd12.prod.outlook.com (2603:10b6:610:d6::12)
- by SA5PPF7F0CA3746.namprd12.prod.outlook.com
- (2603:10b6:80f:fc04::8d1) with Microsoft SMTP Server (version=TLS1_2,
+ by PH8PR12MB7352.namprd12.prod.outlook.com (2603:10b6:510:214::16)
+ with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.12; Tue, 20 Jan
- 2026 16:01:12 +0000
+ 2026 16:00:05 +0000
 Received: from CH0PR12MB5283.namprd12.prod.outlook.com
  ([fe80::23f7:7362:bc2f:507d]) by CH0PR12MB5283.namprd12.prod.outlook.com
  ([fe80::23f7:7362:bc2f:507d%4]) with mapi id 15.20.9520.011; Tue, 20 Jan 2026
- 16:01:12 +0000
+ 16:00:05 +0000
 From: "Pekovic, Manojlo" <Manojlo.Pekovic@amd.com>
 To: Alex Williamson <alex@shazbot.org>, "qemu-devel@nongnu.org"
  <qemu-devel@nongnu.org>
@@ -52,14 +52,13 @@ CC: "Prica, Nikola" <Nikola.Prica@amd.com>, "Andjelkovic, Dejan"
  <clg@redhat.com>
 Subject: RE: [PATCH] vfio/pci: Enable atomic ops for multifunction devices
 Thread-Topic: [PATCH] vfio/pci: Enable atomic ops for multifunction devices
-Thread-Index: AQHcaRi2j570A1RdCkK75QZWVlfQIbVO63qAgAyNN7CAAACt0IAAACSg
-Date: Tue, 20 Jan 2026 16:01:12 +0000
-Message-ID: <CH0PR12MB52839D25259B76151B3002ABFA89A@CH0PR12MB5283.namprd12.prod.outlook.com>
+Thread-Index: AQHcaRi2j570A1RdCkK75QZWVlfQIbVO63qAgAyNN7CAAACt0A==
+Date: Tue, 20 Jan 2026 16:00:05 +0000
+Message-ID: <CH0PR12MB52830768E66CE6734381065EFA89A@CH0PR12MB5283.namprd12.prod.outlook.com>
 References: <20251209143250.714546-1-manojlo.pekovic@amd.com>
  <20260112091641.4d86d8e5@shazbot.org>
  <CH0PR12MB5283B2F97D090DA29776370FFA89A@CH0PR12MB5283.namprd12.prod.outlook.com>
- <CH0PR12MB52830768E66CE6734381065EFA89A@CH0PR12MB5283.namprd12.prod.outlook.com>
-In-Reply-To: <CH0PR12MB52830768E66CE6734381065EFA89A@CH0PR12MB5283.namprd12.prod.outlook.com>
+In-Reply-To: <CH0PR12MB5283B2F97D090DA29776370FFA89A@CH0PR12MB5283.namprd12.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -74,96 +73,97 @@ msip_labels: MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_Enabled=True;
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH0PR12MB5283:EE_|SA5PPF7F0CA3746:EE_
-x-ms-office365-filtering-correlation-id: 4fa30ea7-55cc-4001-1d64-08de583d2232
+x-ms-traffictypediagnostic: CH0PR12MB5283:EE_|PH8PR12MB7352:EE_
+x-ms-office365-filtering-correlation-id: acaf4646-a4f6-4fd6-1a69-08de583cfa54
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700021;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?0fhFaPxPZBSSO53UV8fr/zbrqZLXIv/okz7LFj5kFGEB/ouRlMwgN/Wnk7?=
- =?iso-8859-1?Q?xHsW3WBIfiLrJq/fZbtTybjdI+KJqgkDkZYXVUKaOXpoS8MlV3de6u8oU8?=
- =?iso-8859-1?Q?V5Wpxl6lqfC9EBwLKQfUgtv5gKH7PvXcF5NeBLHtqdQdoFHIKznxDFK4AG?=
- =?iso-8859-1?Q?IpRo09rfNzTBmkyY76DPevn1IbZqYpEerh2eLz/FcohY0TCu4gbhXKqD4U?=
- =?iso-8859-1?Q?IiP+oouXIyfWRkGyFjmkaGFdqDufM5Dz+PDXUvfd9xMxs1pjjRKBK5Woal?=
- =?iso-8859-1?Q?djAamEDWfuULVmvrD/5vm/j+jA8f9F9zrekebxSqrOfb3IGVFgwCn9+LsN?=
- =?iso-8859-1?Q?0PAbMMLjjTK83RjqlBFOTZ8pW0HJ9iWoXdohFSb9kHu8pMi1Iz9K718/33?=
- =?iso-8859-1?Q?7NAed6JNOiRl70ASznwylnPiUsQNB3co6kjiogDpIbEG+JJFaJNj0e6VKI?=
- =?iso-8859-1?Q?84nvwcxz+I3Q9HRKHyMEOPO/z0Jcc7RMMHpYIY6/UJcd5E+EudFg0+9Rm2?=
- =?iso-8859-1?Q?acQxEgpe8++0seyPd7Fz4phY9W144zjrxQ2IgQQYNkT+R6FaUJIk2MpaoH?=
- =?iso-8859-1?Q?69Ms4aNWrgHeQP+GxEUWC1onBto+dFgsWyFvnxTGheJjO9soZES+QMAJcR?=
- =?iso-8859-1?Q?R+YAiucKkKuLf6UZjdclUZxcoetMaXQNw7r+GvRyJNjeqnpGmGaxtKA4VC?=
- =?iso-8859-1?Q?fnUaT9c1aXfAEP7uXms04BbJYOxdOinE0yVGe6M7iauDi7sB7WcjId1clr?=
- =?iso-8859-1?Q?e18SmhMEjNyMp5Y6m4E2EuaKxtG5ewpLWBBZzOXEz+p9jlBRnB5SS/anYO?=
- =?iso-8859-1?Q?YkB2VA+xFmZ0UkvXUAZ68iz7HBT0zZ/lrF5iZbtGhmMDxzdsfg/A711wF2?=
- =?iso-8859-1?Q?G/Vl1wVrG5oPr0kmEzKN3gBbfQOAvUqmNnt/5nFadb1dl1PkWq9jmxRsQ6?=
- =?iso-8859-1?Q?h7A2+Uhnod3HF/jjY2/d9iCkJzRebC4q9Iaffigg/WwzQD0BazGR0kYGJ9?=
- =?iso-8859-1?Q?NRChWoxphdfTHe8vzOAG6lrb7rSjbq30igbP8Qh//noUHzere2yDophcGB?=
- =?iso-8859-1?Q?o2j2sv5sqqA13DOnQzOKoHsPmWbmh9tiadHps6JCyprT7PoaaLKqTYd+Zd?=
- =?iso-8859-1?Q?SByWaXoxLYM/RLOoTuy+xqrpmipv2g0Xhz1yA9ko+Gk0wI5Sd4cJ2C4RPL?=
- =?iso-8859-1?Q?umsSBgO3Ib1P0tG5GcYcsB83bK+AZc5G3rGUaRYJ59he501gcAVvdSzpVq?=
- =?iso-8859-1?Q?3mIbM0HKI/O1sslgVMWu7smpBe4QLoc4s1D29uS9XuB9GzLvYXK/hij2E+?=
- =?iso-8859-1?Q?1l/5uhjuctZ2uEHX1rnHJ2OX8jFASC/FFdA41i4tEHkXKxUI2AIBqJWuQy?=
- =?iso-8859-1?Q?YG8LzjB0nUkBlCC4OlYfwfo+rXfNu0sBQfljLi/vVxewWQ4zc2bvIFdCGR?=
- =?iso-8859-1?Q?embAoRXqIWWdv+DhqjjyY8nNlPUE5imENbzTkV5EAmxWtPAPgVj66Bh6db?=
- =?iso-8859-1?Q?7bENkBkOocK+6utIvbYS6YlRW9f2PfYU09bdlRJBoYQS2oqAHs5DYb/3aW?=
- =?iso-8859-1?Q?p5/4do+CX/Qtp5+W9ge1vuK0/YBqeud6EKohWU78+t13aoRK7mTwYUbFzC?=
- =?iso-8859-1?Q?iTs9pMkzs9ADMtE2YcCRtcKmUixRNYVCz64obKsP/ZZDJpuF8y9T9faAs6?=
- =?iso-8859-1?Q?zI7k4eWlXyFtnyKLQ0w=3D?=
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?PAQwZ7lO6zPOJNsq336DJ5kkkQaOU9tu48Xq5ciWCdAQxJiKtc9IIFt2zO?=
+ =?iso-8859-1?Q?BpAG2FQoDBCIgKC2nHu+P8UK2+3eGOC/8F3/oexzWmcJ4ZKzPkZXj6fkyd?=
+ =?iso-8859-1?Q?Rbx/8C3rKD41vFWgFuvZqhEwKPyy2AjoT9IKEidZcbLQ7Q65GMdmj9ppvl?=
+ =?iso-8859-1?Q?qOIV6fSnbQSo1rloQ/nTQiAaLzR4rAqRHXe7d1GCNnT0x65yc8B48fFohh?=
+ =?iso-8859-1?Q?Hhc5P7ub1FcHPfSHcEUzmPy7YF3GoLfbTtZvXpB3RX7MxxpUKJTM5JUbnr?=
+ =?iso-8859-1?Q?4D//EmvX53xLtW9cc28HlW1mI+h9pIJFIadp/cccuhN4iJf/yJ6t4bfwrq?=
+ =?iso-8859-1?Q?oZkP9cC6+aZaA2eZ0Km2zryB/87ZVkRT0FVEli/39hehuSPd8IlXg6+KbT?=
+ =?iso-8859-1?Q?3dSPl8/sXo9XFH39TKCyFAXK0bG95xAwmFFT+R3/HYdHYoZACktGuF8cZY?=
+ =?iso-8859-1?Q?OTTB8W9v9wCTNqSh9Jj0GtccqoEbce/drffbPGv3MFOuff6o/sIHfzuRpt?=
+ =?iso-8859-1?Q?obg3F9OXKnAsPaZy/GfIwv9kfashV2P+2Uk8n2ISvrtdlnzOgAxnWZ3dE6?=
+ =?iso-8859-1?Q?lvLJTxr07ky4TC+vEYZK4FjBZDMQKUnqIjSKTQ8GayKkBOVU6ZyG7osxce?=
+ =?iso-8859-1?Q?rC/KEy4CG9N5Yxc08DujGtqk1FkXx2A5kj3j5YmI6DSRLw4ATYTK5pL9DY?=
+ =?iso-8859-1?Q?fO2uCDEJCwkzO2/IE2P/MjiVJf9Ocz8GwIWunf7Vs9HU26DCMI/HboxYH0?=
+ =?iso-8859-1?Q?zdLYv1TS7RVsUAfU6bTh1K3cB679vsykkg/7R7dg6O4Rej1wKKNJvzRR2J?=
+ =?iso-8859-1?Q?890KCScxRyVBC8aDmvfXYk+GZ8vA02htuRggU3U79YPU9L67GA7Nr1pD6u?=
+ =?iso-8859-1?Q?9JVjf1/rpiSkqnJLrI3Cq3M4P2l2DcYZFtv00itUX4ifdQoQJKnuEBd/0z?=
+ =?iso-8859-1?Q?KtJpV+jP4FJs9n9COA9Oi4zlAJj3GBPzCvEkJHgcBZtchqkIPn0z1Kuytf?=
+ =?iso-8859-1?Q?+OCOcANbGL16cz4zSzSUjMajbhtcU8Pz5qkplRpACe6I2cLavyjD5vaG2X?=
+ =?iso-8859-1?Q?xsxD06/Z2ipg5jogKBKKTGQa3GWmKlrc8aGZm7m5FaclN6MDs7robvrqnr?=
+ =?iso-8859-1?Q?XsBCXO8ECYsIbntPJnkbv0nYHbvnv9jht+cNWzIPgW2iEaHbBAu6HtUwwM?=
+ =?iso-8859-1?Q?8eAQjxbWHGkBQP8EvbFC8BGmti9219lKh+5t6a+f26QdHsJ96TwyP2M7sX?=
+ =?iso-8859-1?Q?Aimyhw5zty9McK45B4v2iQBBp35gbMWZD4hPAqpajYcDFc0HA58tW89Owi?=
+ =?iso-8859-1?Q?O2x0OgsAV3CEBT7756fbuIbSuhUdkrbB1tAULAC65h9MIxGQU8qBU33kvT?=
+ =?iso-8859-1?Q?WYwv0dCD7jOaHU2SCDNodaSFla2bjc0YactyCtRw52M3yYVGMwj2AJwPDC?=
+ =?iso-8859-1?Q?Ju84idiFDukENr/wX0j8ls2ZLpJ/NJKZ/xhJTEThMYDMobOsmdqLlbtZgN?=
+ =?iso-8859-1?Q?qoSqOti+ZoUk/qQkZJOTez0UHkbxVL5tLRre6AWns/OxLTXyErVHDJKjkt?=
+ =?iso-8859-1?Q?fFuO0B0hk52EDHCAb/2cAaNEe98LN6yPSpzghpiGiYseB6bnA9QBhJOk3g?=
+ =?iso-8859-1?Q?6MrVpPK6aec9VCHeaL/gvJC9FhSAWIEN8IKzwHT4TKt1/Wa0mN10y6RBiw?=
+ =?iso-8859-1?Q?YRitacFs+ZVFCqBJVlQ=3D?=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH0PR12MB5283.namprd12.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(366016)(1800799024)(38070700021); DIR:OUT; SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?mjsccBdX28Y6GBCCuklmJokiip9vM/WwxwBDYAGJbNnZFKDDFw9LZNXq5j?=
- =?iso-8859-1?Q?zx3BLuGZpuFj+v4hLs+gPGPNQhijWBmqvnjAb/XEl0rvdWbFncz5JMi4+8?=
- =?iso-8859-1?Q?Y0Uvcvpe3CnJzpz30lrAPZDVA8lp3ui7xZCcQiyzW4TofOaphOpyZcfgct?=
- =?iso-8859-1?Q?uKGj6ZF/TS0kIBn1pOZv5LqbAhDePAFZ7wLf0qcWmVpCdVQENGxQZ1Smpx?=
- =?iso-8859-1?Q?afklTICcdSDGWbcqO2da+orvPTr2iXutKLknOVG3lpEGKJ+GIRfnbMQ9/X?=
- =?iso-8859-1?Q?eg6uIs/Ht0hVyhjqV1b8d+2QT97wrC4DsJxoIJuaDSetbNKz9tXK0XMm5s?=
- =?iso-8859-1?Q?lbloOCDwrEOOaLH/1GVBNP8jsM91MxxJ2E4UIjEHiF5FNtZYcORbzmrKLQ?=
- =?iso-8859-1?Q?72NoiWzkxEBmu2OlT7K7yFMZqHI/soIPhwO/F788zFyWvsFMsbT6xoUOtf?=
- =?iso-8859-1?Q?CEB7QRxh4FLWucsg45dQ8zsmiQBeZeETv7UFm10KmcqI4y4Zcp4km4/jQb?=
- =?iso-8859-1?Q?KTeVfIlZuE96yW/QMRx8NKWMkLUkFX1MHmNNS6qYSfGNr+GZ+kEjLGI5OE?=
- =?iso-8859-1?Q?8uNqXMh8p7/J12yMp/qVZtNMyv5QE9DSifzPEBLW75tJQ1/ht0hm3rypzb?=
- =?iso-8859-1?Q?8UZlzoLdsfD5OWtHXZxv0+murIIQTTvwkEGOUSi0SGqsm0d0Wi2Y+DPPGd?=
- =?iso-8859-1?Q?2LnjrTMWKzOhZRz7pnifsg3Z5WyxHXWI1MVcZCUttKnrqth+mnAGoEcN0I?=
- =?iso-8859-1?Q?3AcVEdGDUKhhWjfdFcWmTeuRj+Hkc3Gb3LGBP9+spuMhgWDoNM3C8KmhN0?=
- =?iso-8859-1?Q?jpm/fHhYVqPH6ah3ktHMUdwtigK6WAwlcVrnR7PNWJtkXvg3/MQPx0CAxe?=
- =?iso-8859-1?Q?YXKE82XXuUwijH4vg1vd1TwvDUlwatsqnVhXauJoTFecDQRzMHCaa+1PkA?=
- =?iso-8859-1?Q?F3CQDxjrkTu3DJtGPkLl6wRS1BpVC/GTCylH92IfPKY8yA9HOt2ID8oyK9?=
- =?iso-8859-1?Q?GxmzId5wvgGKCkr9UXDhZE8Y+4gKYdKdaamAb2Y1Dk5hMfP5GbYBS+Hv3h?=
- =?iso-8859-1?Q?33TfAJNDgKT4p+o8/1vOnpMOqFTfDc6tQGETjxvAp2vPsg+4zlANAnWKtR?=
- =?iso-8859-1?Q?s4OO42Z/8FsDOFXrDCEmvAe0pykWGOTqVstG+nRmF71lPEjZ/Uq8sT4HyG?=
- =?iso-8859-1?Q?HJ7F3UChLLoku5fdDguANpoxzRc2Fm6erxuEeOzMdziavwZGMeCoYA4co+?=
- =?iso-8859-1?Q?30Xzgwe7ZI4+vXwGRXpFd8067Dlp0i6tybw1c31sJLYBlGvQ+E6XvHRKCw?=
- =?iso-8859-1?Q?UaYr/FiWmXhj2FyCd3aLnILlvomCQirI0yCNRu3O/Wi73jdiLg29Dyb2mx?=
- =?iso-8859-1?Q?AUqts0VEgBpIskAiG6qDWFVDRzjZQPdqcI4M1NjBFo3o1DS7fF6KJwX2uC?=
- =?iso-8859-1?Q?6zMX+CkGt7hCsGGNRS/lkug8RnXoa0Fpb3hk4dXMfulFN+FAWf5lD+Smr/?=
- =?iso-8859-1?Q?GRnwnQ/ES7NEjOcyjcuPweCRmwaAZG8JTcXQmxAu8s1fu0Q0KJqgWRaCHT?=
- =?iso-8859-1?Q?PPQUpuXNoLn3Rm0osLWdIqVcFrNwUc5L7W4et5Ql9pgiWyTvficbdMkjFh?=
- =?iso-8859-1?Q?Q0+6+cIham20nOjnBs+WfvpbtV/we/VeGaQl4cAr/7rt6tX2EU0MOfnFHx?=
- =?iso-8859-1?Q?BiqJP54W6R5aZ2SteIdpOv7iPoWfiVAaMaoMdeQ6f1DKwsYii3kZ5Azw86?=
- =?iso-8859-1?Q?7dPNxbzt2xD6GNVMXgozQRczX7VPOmxwSduDv+RWVfeSyI?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?i1bZAvWjdlxrJMmodiImzFJmw5kh+0caA5nexGfddC51p24uRPdxupw2SM?=
+ =?iso-8859-1?Q?VCWxF44pWrSutkNufKgwN2HjMIWmqQIRr3GG5QmHx+i/3ijF+dBm5Co2r0?=
+ =?iso-8859-1?Q?cDpxEN9JYXT7kHH2egpFhCV5oLSA74xgTRp0KxQg7Ggm9czOeSGiN0UI0G?=
+ =?iso-8859-1?Q?eVfV+qnZ8DBT9rnqIbr1uLoPsuuCG1pbjVMDOafWuAybb+LpQ2RRlyDPnU?=
+ =?iso-8859-1?Q?TgbIxry5hrcX5a7doukllTUX4Xder0Atjehyu57g7Spuk2S++1Wi1vVnum?=
+ =?iso-8859-1?Q?PPrnivm23LxjvpvYyTg32rgrSEkantbF++Fbkn61M9Sk7nZYSd6OtDyvPK?=
+ =?iso-8859-1?Q?Q1/0lcHAuAQhpBSHnhGqym8lmveCJNVFjZwnhoFVkSNmrwVDt98at562GI?=
+ =?iso-8859-1?Q?rBzfxR2lL5UNTOyN1OI29rRpZY0lx6MHw7e7sV6cKEV6g118fYRveF4XyP?=
+ =?iso-8859-1?Q?ikO+xpH/9uIdsm6wTdWpg0TVrRqJWuJ7EznmumtMSzja03GLEGW7ehZgba?=
+ =?iso-8859-1?Q?igePDJaAdsUKD3O8q9aHwBjJ30KWpRPL+pTu7UPF+WMRjfz/6JCsg7Dax/?=
+ =?iso-8859-1?Q?TVsy8njL2OykaeAslYtbS8OmhOKwr5oUctBtx5XgA9r/a78Oa1NiFxTJwU?=
+ =?iso-8859-1?Q?A/+EvsAL4idClpxDOMK4fjTxiXexyHQVYbyHa5wncjuCXIdaZT+EMW+ogQ?=
+ =?iso-8859-1?Q?Idjtmy35NkmpW+S5x3rrZn5sgkuiw9qxq0H/YWSqwIRobNJeasEItu/Pih?=
+ =?iso-8859-1?Q?q2KuCmwB0ZdxO1a7oIK7FlIUkwer0eiy6FGCbrmmJn4zT01wWhINtn6iCd?=
+ =?iso-8859-1?Q?+5egC6eOgy+h3XaKtx9s9Wr+UW6NN42ncS568zuodNQsLPhLLhd7dsLCiw?=
+ =?iso-8859-1?Q?krJ9AlQkSVxiif9THP7ZouzHmBX96wJ/CLSnKY6CpYPzSMXIOGrCReEXhc?=
+ =?iso-8859-1?Q?ugec+WUyLFnAdFQuKe00t6zhsVkzmXPwOG7R7pNO7N5oSwhTkPNNxerL1+?=
+ =?iso-8859-1?Q?sLYtL3eQbO+hIayZCRsjrb7c/IOrtEmmOSC1trZV5oLkQKWEYjISEhCFnO?=
+ =?iso-8859-1?Q?Y3DMIQHoQ7MANiQJ6FY8yj7SH1wsEYbpy2E+kbUJx7DLc/sIzUHM8EE3GA?=
+ =?iso-8859-1?Q?Ax/dYTr1w633/MURySSHUc5Om9THZ174tHOiLOzWR9VP6gnJxie/lsE2wh?=
+ =?iso-8859-1?Q?IRESKjr8vlk/bnJ/b2Z2cl9/KQ5sUtMv4j9niCshQXqqxPf0Qj9HQFbKoC?=
+ =?iso-8859-1?Q?LYszkKocZcIfOD4pKmlYAUQ9LTD4riyVEVtCGEM5gooFt96eMdT+TIJZGB?=
+ =?iso-8859-1?Q?AbXuiuR4dJe3evop/r+1xFIvbatiF2h+24q+T8bS1PFdvuSWCz4ORGbBIo?=
+ =?iso-8859-1?Q?zHNfXGE0GtUAMKhRHUJziJ7y594OO5feNM5dZTi7I3/RvYvSvib+DpHloG?=
+ =?iso-8859-1?Q?ij3KRXFcF5Eq4QuCCI8HTFXL5WNoU9XZ5ORb/IYokxlPZzMiTUHMPd5iT7?=
+ =?iso-8859-1?Q?RslKJ/+M/4atXDJrw/uN8fptUE/INYOIIePixHXeyXxyIl/6U8bmVKXYGg?=
+ =?iso-8859-1?Q?77EpLA5CJuJdAXUaP8nXFBNEn3sU6hnb2v+UwOz7Kt5KriLiFQ1/LO3Ie8?=
+ =?iso-8859-1?Q?l8Saqc6E+263xrQchyUi36HKE2GjClK8uG3aZ1ZZcTfQS0I4lUnBZuFzkh?=
+ =?iso-8859-1?Q?c1K0XtEmKv7QQAVGO5qk8SwloLXRbqx19Qc7Mnuamgk1FfHSYfQoww3vyH?=
+ =?iso-8859-1?Q?MujuZOBeQTFvKe5oBgUujEws80An4iWA5uVVkVNINl6q6R?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: amd.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: CH0PR12MB5283.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4fa30ea7-55cc-4001-1d64-08de583d2232
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jan 2026 16:01:12.2631 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: acaf4646-a4f6-4fd6-1a69-08de583cfa54
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jan 2026 16:00:05.3127 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: uHoSFdoUpyafRQdUbULcS38NWbGHYppAv/YGDV8omAgSDHvCuOfaQt9R+rGtZX1Vsom85Qh8WrVpK5AVHU+gcw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA5PPF7F0CA3746
-Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
+X-MS-Exchange-CrossTenant-userprincipalname: efLn2JBntatsQx8g1KyaobB0JPhNILoKmKvqW3xItpwJ5aIZPseRoAEzl9wmzpttkpxhGuCr05tT/saeMfconA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7352
+Received-SPF: permerror client-ip=40.107.201.37;
  envelope-from=Manojlo.Pekovic@amd.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
+ helo=CH4PR04CU002.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -181,132 +181,6 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 [AMD Official Use Only - AMD Internal Distribution Only]
-
-Hi Alex,
-
-Here is the second part of the patch.
-I didn't take into consideration the non-vfio-device in my first patch.
-I fixed it by using standard that I saw in the code for getting vdev in thi=
-s scenario, hope that it is satisfactory now
-
-Previously, PCIe Atomic Ops support was only enabled for single function de=
-vices due to potential conflicting capabilities between functions.
-This patch enables atomic ops for multifunction devices by finding the comm=
-on subset of atomic capabilities supported by
-all functions.
-
-The implementation checks all functions on the same slot and
-advertises only the atomic operations supported by all of them, ensuring co=
-mpatibility across the multifunction device.
-
-Signed-off-by: Manojlo Pekovic <manojlo.pekovic@amd.com>
----
- hw/vfio/pci.c | 47 +++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 41 insertions(+), 6 deletions(-)
-
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 6a6c8f1807..a6723063ab 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -1931,6 +1931,34 @@ static uint32_t vfio_get_atomic_cap(VFIOPCIDevice *v=
-dev)
-     return mask;
- }
-
-+/* Returns biggest subset of supported atomic ops of multifunction device =
-*/
-+static uint32_t vfio_get_multifunction_atomic_cap(VFIOPCIDevice *vdev,
-+                                                    PCIBus *bus)
-+{
-+    PCIDevice *func_dev;
-+    VFIOPCIDevice *func_vdev;
-+    int slot =3D PCI_SLOT(vdev->pdev.devfn);
-+    int target_devfn;
-+    uint32_t common_mask =3D PCI_EXP_DEVCAP2_ATOMIC_COMP32 |
-+                           PCI_EXP_DEVCAP2_ATOMIC_COMP64 |
-+                           PCI_EXP_DEVCAP2_ATOMIC_COMP128;
-+
-+    for (int fn =3D 0; fn < PCI_FUNC_MAX; fn++) {
-+        target_devfn =3D PCI_DEVFN(slot, fn);
-+        func_dev =3D pci_find_device(bus, pci_bus_num(bus), target_devfn);
-+
-+        if (!func_dev) {
-+            continue;
-+        }
-+
-+        func_vdev =3D VFIO_PCI(func_dev);
-+
-+        common_mask &=3D vfio_get_atomic_cap(func_vdev);;
-+    }
-+
-+    return common_mask;
-+}
-+
- static void vfio_pci_enable_rp_atomics(VFIOPCIDevice *vdev)
- {
-     PCIBus *bus =3D pci_get_bus(&vdev->pdev);
-@@ -1941,15 +1969,12 @@ static void vfio_pci_enable_rp_atomics(VFIOPCIDevic=
-e *vdev)
-     /*
-      * PCIe Atomic Ops completer support is only added automatically for s=
-ingle
-      * function devices downstream of a root port supporting DEVCAP2.  Sup=
-port
--     * is added during realize and, if added, removed during device exit. =
- The
--     * single function requirement avoids conflicting requirements should =
-a
--     * slot be composed of multiple devices with differing capabilities.
-+     * is added during realize and, if added, removed during device exit.
-      */
-     if (pci_bus_is_root(bus) || !parent || !parent->exp.exp_cap ||
-         pcie_cap_get_type(parent) !=3D PCI_EXP_TYPE_ROOT_PORT ||
-         pcie_cap_get_version(parent) !=3D PCI_EXP_FLAGS_VER2 ||
--        vdev->pdev.devfn ||
--        vdev->pdev.cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
-+        vdev->pdev.devfn) {
-         return;
-     }
-
-@@ -1961,8 +1986,18 @@ static void vfio_pci_enable_rp_atomics(VFIOPCIDevice=
- *vdev)
-                              PCI_EXP_DEVCAP2_ATOMIC_COMP128)) {
-         return;
-     }
-+
-
--    mask =3D vfio_get_atomic_cap(vdev);
-+    if (vdev->pdev.cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
-+        /*
-+         * Only process the through the root function
-+         * We get through here only on function 0,
-+         * through check vdev->pdev.devfn
-+         */
-+        mask =3D vfio_get_multifunction_atomic_cap(vdev, bus);
-+    } else {
-+        mask =3D vfio_get_atomic_cap(vdev);
-+    }
-
-     if (!mask) {
-         return;
---
-2.43.0
-
-
-Thanks and Best Regards,
-Manojlo Pekovic
-Software Development Engineer 2
-Cloud Software Team
-
-
-
------Original Message-----
-From: Pekovic, Manojlo
-Sent: Tuesday, January 20, 2026 5:00 PM
-To: 'Alex Williamson' <alex@shazbot.org>; qemu-devel@nongnu.org
-Cc: Prica, Nikola <Nikola.Prica@amd.com>; Andjelkovic, Dejan <Dejan.Andjelk=
-ovic@amd.com>; C=E9dric Le Goater <clg@redhat.com>
-Subject: RE: [PATCH] vfio/pci: Enable atomic ops for multifunction devices
 
 + others, on accident
 
