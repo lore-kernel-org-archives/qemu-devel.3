@@ -4,95 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE39CA5FAC
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 16:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A482CA5FAD
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 16:40:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viEkr-0002B2-4i; Tue, 20 Jan 2026 11:38:57 -0500
+	id 1viEmU-0004AD-UB; Tue, 20 Jan 2026 11:40:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viEkl-00026V-L9
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 11:38:51 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viEkj-0004CC-O1
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 11:38:51 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-435903c4040so517157f8f.3
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 08:38:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1viEmM-00045l-Lb
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 11:40:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1viEmK-0004b7-UZ
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 11:40:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768927227;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J4bdzK+GQFc6FT9ZvTY7eJHAk92kiMIl8G2Ubr4qVZM=;
+ b=gCxpJS+7JyDArCiT2T7co+pcNAt6usyL7G01Ufhv6LN3mmLaCZh+wSu1RYLLxr6PbdVgw+
+ 9NppE/qn9peI6zDsR/d3/NiPfK9f3uJZg5TL9CyZYFVdYt5WPoCxj75EpNLYGMPEzsvaI7
+ cRdjtOwYvefNsj2rZKZfKKpAX00OMU0=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-374-gGZiuKjjOf-m9K5yb5HKlg-1; Tue, 20 Jan 2026 11:40:25 -0500
+X-MC-Unique: gGZiuKjjOf-m9K5yb5HKlg-1
+X-Mimecast-MFC-AGG-ID: gGZiuKjjOf-m9K5yb5HKlg_1768927225
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8c6a4c50fe5so186837185a.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 08:40:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768927126; x=1769531926; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IOQpS+7kpDE2DLN2Ov3GqiaZO45MI7IaTtWQAR7z5W8=;
- b=cRAYHxWe+BG159rMkqtrlN1b+RFEPYabX8ZbwXVkhDIZZPxy1u41wvieaNIvYpHCLi
- 1EvUE574LMUPJfNgUZ38JKDdW81Hn4iv2sV5yIWYnzFj7pYQv45ijdmCG8WA/u55luEO
- mNU0BU0+jyBtHC9jJraSPGk45oWRU1rZZXlzk9PKy/jxl60jLtBbdMvF1O4hBfIsFfY+
- J5W1XjfJhmypsvabZfPEPchSgdkpiSZjPkzA1V2r+4MaTBTmPgGn8eFPcMFeKiVcFnWy
- muSKe25EHXhMvoj1j8PwDftYqti2c1YUGVgRIUHcBf9xqc7sQkzjSX+4KvOnwRvk04mz
- mzNQ==
+ d=redhat.com; s=google; t=1768927225; x=1769532025; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=J4bdzK+GQFc6FT9ZvTY7eJHAk92kiMIl8G2Ubr4qVZM=;
+ b=Glol0YW8pXiRchTmHLkIVmen9F3uknR5AgRS7cUKGyjoGChDQX6saVokKdmaiKDge1
+ bvE+MPQdwrFONkpGKvxgvO3p7kTE9h5GTuYTkLyASFQiTWWdRYzrQWvxAo9sJ7/0KUdF
+ wcrs/0XR/Ydl1nFffm+cGEMMV6HV7gsGj7T6dMRjRoM2tEbPfIPipx/bOWqby/R2ucQe
+ jUkJ4WS1ZdSyxk8bvW6ByvCFQCQbM/6ztXcQIypUVshk9jfAZjNfFeoHW17/mNYpGuEg
+ klfTp+ZRCKYKvmKCbRS5+yDk3ZLONLWFw5YuAMe+0Ok1Cq35aCcDUVocD26szfCrjI8a
+ sDPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768927126; x=1769531926;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IOQpS+7kpDE2DLN2Ov3GqiaZO45MI7IaTtWQAR7z5W8=;
- b=fJNzxi0oLYb9C1UOhq3xhwih65FrH0Con/6ZOdIucenUKZoLXByA6M+diTAtPY7/Ej
- Of7d5gbOem760Tnx6D5AoURpmynr70BP+6XPg8dYW7IsmlVLIWnKAqn1DSczAg6WYp6B
- ZbYiwot+LATugZRetBlbN7vM77yFb8lPju1iTH55XJtLF55jqEwL0SU41Hs2knyKYoLc
- kADSB+7nLMekATBMRMjpAVvczEdn+dYVmgP96l7jbhino2EaFhyIy1ejC0KaGqwc6WUg
- f7FGtHHByZ6aehXB1xMDISHNuBqVZX5h0gHrBKw4Yv/uV6qsyobxfEZyapwaPvRUgk4P
- 7SFw==
-X-Gm-Message-State: AOJu0YwDFBT+sg/YjYznLMPalHywFbMD7F32Ods0xj/BJPGqNVNUa0ek
- ZDsj+IlVc2owwKuWwx7dWE691WNSCNNKhO83yxRNXESArWl3XPByTNmqjMR4D0T1hTY=
-X-Gm-Gg: AZuq6aJ1saghWmg4n8CN2r7ShdpUXaBkcFOP6W1E7SGIfzdH58VCcoTDlBzlSPz7FkM
- 2hLJgLK1dOzOgQFiYg1C41jXKcNOBelDCiwjgkV2p+eXRIRALV1Z5DVUxPuFK2QgzNFTY0Ld2tq
- dG1ECeXEaX6BozktsM/00EYDVjkATGiBseAk7MJSJvsfTUf1jvVlON94lTNhydvtA8wSA2FG8j5
- AN6ji+19Xf0qaz6boHmikVT8gzrvgI3maelMYSzPC2LH+9xgfQaF871BeMXi56UAbyeiOIDm+L+
- BhyOk0gpebEGQRwoR+rAPwZlCBpCKc3w6KqxllK7ywOkL0+b7O/gXwyEBQswD9PmDOa3gLhyXx3
- so6SyqhFzjjoEuUrBWdL2eexGYoJno2wKFfZN7muDAb+x6UrwniyvkPGh7LwnetDhMEJr9Qya+l
- Tv6wBYjilSdSmLWw0E9LwNMYU/nuT9fBpzIUReTswKhy3FlQYvXJiS0Q==
-X-Received: by 2002:a05:6000:288c:b0:430:fd60:940f with SMTP id
- ffacd0b85a97d-4356a02c594mr19440339f8f.14.1768927126355; 
- Tue, 20 Jan 2026 08:38:46 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43597719d1fsm703550f8f.23.2026.01.20.08.38.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Jan 2026 08:38:45 -0800 (PST)
-Message-ID: <a4135018-6673-4414-a900-7a35b5882aab@linaro.org>
-Date: Tue, 20 Jan 2026 17:38:44 +0100
+ d=1e100.net; s=20230601; t=1768927225; x=1769532025;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=J4bdzK+GQFc6FT9ZvTY7eJHAk92kiMIl8G2Ubr4qVZM=;
+ b=lCVNPmjVzyehTwduKVSxJ9V2yE67mH+NcnVDlJg6DL8jOcF/A+wIgH3UFDY29ZhNjH
+ HM27h90yysEm3eCTtgFOQ1W1Po1tZeGdiVNk9Uy4sbkE0/1OvI60CuwNpgAl+fvWO5YD
+ hh5wbAoAgeYbyyZe7qzzSpOagHzTn2Gp7PW4yK+tFjHgTmlvlF1PhG2bJuhjX208YuR5
+ PZJCmMkRH930PUfSx66VG/yG6qJm3zFnRbR5a5BGDnolWBA4qwNWKS0su5MRAZmy3mew
+ 60J3KKn7L7TPOOI/k8TXd/KGNktVNb9ABhMtR1kFrm1Dlo3tm9fiwrFALv8RXjDAhztn
+ trYA==
+X-Gm-Message-State: AOJu0Yy4giu8225vf1x5wsx/J3Mxk41AZB0zcCVQyiNjUneMN4cAgidT
+ qHkFAfuBBNGIO3TK0BtZqIuwlCdHZb4Fs50GhWKsXIXQOkZ2Fr1X4gyNrMmzwvftCvsCIKWMaQy
+ iUFxUhDJ3kYpU8zG8s7UmuWLfvm6noVCl1u0e4zcQM8QWSLHq7VR3OhRK
+X-Gm-Gg: AY/fxX5joxYVE0UEjOHAtV2IRCseE2xJhOB3XaY0VbdyHvpqImdIyj78a18UYu7V9ez
+ wQvY3BGr3U6ltP92jonWYUQOxY8HNCfDfMt1eBKztxfgGJBlxE1oAdi8M03pWi0hxVU/hX1nG1Z
+ 2OByX2Nj3Gilt5RH1NVJA5rddJYkJdQhFcHvGj6OT31mIgaJWY1ok47dEV8sJFTaMO/IJetCvYz
+ +4940ia4CLrMhjx0ZoKDCd5bAItBgIcKaK6jwKRn/bQG6UgJaU5d4XqQrhuS0rgxIiN+4CjF+iO
+ rQMW4L89KMHXYxemIyzmofSDKXSCb6kzgOvDFXuDOaG4oqgQKZLUmt8+gglK3zlYuup71IAOLA5
+ e1jY=
+X-Received: by 2002:a05:620a:480b:b0:8b2:f0dd:2a97 with SMTP id
+ af79cd13be357-8c6a690623bmr1882420885a.37.1768927224758; 
+ Tue, 20 Jan 2026 08:40:24 -0800 (PST)
+X-Received: by 2002:a05:620a:480b:b0:8b2:f0dd:2a97 with SMTP id
+ af79cd13be357-8c6a690623bmr1882407385a.37.1768927222930; 
+ Tue, 20 Jan 2026 08:40:22 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8c6a71c14a9sm1066419485a.22.2026.01.20.08.40.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Jan 2026 08:40:22 -0800 (PST)
+Date: Tue, 20 Jan 2026 11:40:21 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>, Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Prasad Pandit <ppandit@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Yury Kotov <yury-kotov@yandex-team.ru>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 08/13] migration: Thread-ify precopy vmstate load process
+Message-ID: <aW-v9YKkDO5bRKBQ@x1.local>
+References: <20251022192612.2737648-1-peterx@redhat.com>
+ <20251022192612.2737648-9-peterx@redhat.com>
+ <87y0m7df46.fsf@suse.de> <aWUYVvFVbhXCdVod@x1.local>
+ <871pju1wlv.fsf@suse.de> <aWVim4LDYb4gMQLk@x1.local>
+ <87fr89psu5.fsf@suse.de> <aWZ3q3NBBCl5KTYr@x1.local>
+ <87jyxhmdp6.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] tests/unit: add unit test for qemu_hexdump()
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- berrange@redhat.com
-Cc: qemu-devel@nongnu.org
-References: <20251113064935.342018-1-vsementsov@yandex-team.ru>
- <a40731d0-7add-4d09-9a89-902f75e2eede@linaro.org>
- <8259d920-32bc-41a7-94b9-cd1af9783b6e@yandex-team.ru>
- <05340117-a75b-4d64-98fe-8868b7bfb5c5@linaro.org>
- <1192488b-51d9-4024-8f76-3b2dd85b3d3c@yandex-team.ru>
- <0a7dfd69-26df-407e-a8cb-543dcefab685@linaro.org>
- <db1f4846-afef-42f5-9181-9c25406be863@yandex-team.ru>
- <e0a6625d-1b3d-4fd8-90d8-8bb996e2f259@linaro.org>
-In-Reply-To: <e0a6625d-1b3d-4fd8-90d8-8bb996e2f259@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87jyxhmdp6.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,116 +126,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/1/26 20:29, Philippe Mathieu-Daudé wrote:
-> On 19/1/26 20:18, Vladimir Sementsov-Ogievskiy wrote:
->> On 19.01.26 21:38, Philippe Mathieu-Daudé wrote:
->>> On 19/1/26 18:26, Vladimir Sementsov-Ogievskiy wrote:
->>>> On 19.01.26 19:31, Philippe Mathieu-Daudé wrote:
->>>>> On 19/1/26 16:42, Vladimir Sementsov-Ogievskiy wrote:
->>>>>> Hi! Isn't this patch lost?
->>>>>>
->>>>>> On 14.11.25 00:01, Philippe Mathieu-Daudé wrote:
->>>>>>> On 13/11/25 07:49, Vladimir Sementsov-Ogievskiy wrote:
->>>>>>>> Test, that fix in previous commit make sense.
->>>>>>>>
->>>>>>>> To not break compilation when we build without
->>>>>>>> 'block', move hexdump.c out of "if have_block"
->>>>>>>> in meson.build.
->>>>>>>>
->>>>>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex- 
->>>>>>>> team.ru>
->>>>>>>> ---
->>>>>>>>
->>>>>>>> v3: change meson.build to compile hexdump.c always
->>>>>>>>
->>>>>>>>   tests/unit/test-cutils.c | 43 ++++++++++++++++++++++++++++++++ 
->>>>>>>> + ++ +++++
->>>>>>>>   util/meson.build         |  2 +-
->>>>>>>>   2 files changed, 44 insertions(+), 1 deletion(-)
->>>>>>>>
->>>>>>>> diff --git a/tests/unit/test-cutils.c b/tests/unit/test-cutils.c
->>>>>>>> index 227acc5995..24fef16a7f 100644
->>>>>>>> --- a/tests/unit/test-cutils.c
->>>>>>>> +++ b/tests/unit/test-cutils.c
->>>>>>>> @@ -3626,6 +3626,44 @@ static void test_si_prefix(void)
->>>>>>>>       g_assert_cmpstr(si_prefix(18), ==, "E");
->>>>>>>>   }
->>>>>>>> +static void test_qemu_hexdump_alignment(void)
->>>>>>>> +{
->>>>>>>> +    /*
->>>>>>>> +     * Test that ASCII part is properly aligned for incomplete 
->>>>>>>> lines.
->>>>>>>> +     * This test catches the bug that was fixed in previous commit
->>>>>>>> +     * "util/hexdump: fix QEMU_HEXDUMP_LINE_WIDTH logic".
->>>>>>>> +     *
->>>>>>>> +     * We use data that is not aligned to 16 bytes, so last line
->>>>>>>> +     * is incomplete.
->>>>>>>> +     */
->>>>>>>> +    const uint8_t data[] = {
->>>>>>>> +        /* First line: 16 bytes */
->>>>>>>> +        0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x57, 0x6f,  /* 
->>>>>>>> "Hello Wo" */
->>>>>>>> +        0x72, 0x6c, 0x64, 0x21, 0x20, 0x54, 0x68, 0x69,  /* 
->>>>>>>> "rld! Thi" */
->>>>>>>> +        /* Second line: 5 bytes (incomplete) */
->>>>>>>> +        0x73, 0x20, 0x69, 0x73, 0x20                     /* "s 
->>>>>>>> is " */
->>>>>>>> +    };
->>>>>>>> +    char *output = NULL;
->>>>>>>> +    size_t size;
->>>>>>>> +    FILE *stream = open_memstream(&output, &size);
->>>>>>>> +
->>>>>>>> +    g_assert_nonnull(stream);
->>>>>>>> +
->>>>>>>> +    qemu_hexdump(stream, "test", data, sizeof(data));
->>>>>>>> +    fclose(stream);
->>>>>>>> +
->>>>>>>> +    g_assert_nonnull(output);
->>>>>>>> +
->>>>>>>> +    /* We expect proper alignment of "s is" part on the second 
->>>>>>>> line */
->>>>>>>> +    const char *expected =
->>>>>>>> +        "test: 0000: 48 65 6c 6c  6f 20 57 6f  72 6c 64 21  20 
->>>>>>>> 54 68 69   Hello World! Thi\n"
->>>>>>>> +        "test: 0010: 73 20 69 73 
->>>>>>>> 20                                      s is \n";
->>>>>>>
->>>>>>> Thanks, queued wrapping the long lines to pass checkpatch.pl,
->>>>>>> as in:
->>>>>>> https://lore.kernel.org/qemu-devel/20251031211518.38503-9- 
->>>>>>> philmd@linaro.org/
->>>>>
->>>>> I have it tagged but there is still a meson issue. I should revisit
->>>>> but it is low in my priority queue.
->>>
->>> Found it, see that pipeline:
->>> https://gitlab.com/philmd/qemu/-/pipelines/2238533614
->>
->> This build contains previous version of the patch. v3 should fix it.
+On Fri, Jan 16, 2026 at 06:48:21PM -0300, Fabiano Rosas wrote:
+> Another one for the pile:
 > 
-> Doh sorry, maybe I tested v2 then, I don't remember :(
-
-On MinGW (v3):
-
-../tests/unit/test-cutils.c: In function 'test_qemu_hexdump_alignment':
-../tests/unit/test-cutils.c:3648:20: error: implicit declaration of 
-function 'open_memstream' [-Wimplicit-function-declaration]
-  3648 |     FILE *stream = open_memstream(&output, &size);
-       |                    ^~~~~~~~~~~~~~
-
+> #5  0x00007f0beda4fb32 in __assert_fail (assertion=0x55b8c3ed8cb8 "mode >= 0 ...) at assert.c:103
+> #6  0x000055b8c3a1d7a9 in migrate_mode () at ../migration/options.c:882
+> #7  0x000055b8c3a1084e in fill_source_migration_info (info=0x55b8f1291650) at ../migration/migration.c:1322
+> #8  0x000055b8c3a10cae in qmp_query_migrate (errp=0x7fff5742ae80) at ../migration/migration.c:1438
+> #9  0x000055b8c3d4bc2a in qmp_marshal_query_migrate (args=0x55b8f11f2280, ret=0x7f0becd25da8, errp=0x7f0becd25da0) at qapi/qapi-commands-migration.c:48
+> #10 0x000055b8c3d9a13b in do_qmp_dispatch_bh (opaque=0x7f0becd25e40) at ../qapi/qmp-dispatch.c:128
+> #11 0x000055b8c3dc6366 in aio_bh_call (bh=0x55b8f12922d0) at ../util/async.c:173
+> #12 0x000055b8c3dc6482 in aio_bh_poll (ctx=0x55b8f10741e0) at ../util/async.c:220
+> #13 0x000055b8c3da9832 in aio_poll (ctx=0x55b8f10741e0, blocking=false) at ../util/aio-posix.c:719
+> #14 0x000055b8c3cea017 in monitor_cleanup () at ../monitor/monitor.c:676
+> #15 0x000055b8c39ef646 in qemu_cleanup (status=0) at ../system/runstate.c:999
+> #16 0x000055b8c3cec38e in qemu_default_main (opaque=0x0) at ../system/main.c:51
+> #17 0x000055b8c3cec430 in main (argc=33, argv=0x7fff5742b208) at
+> #../system/main.c:93
 > 
->>
->>>
->>> configuring with:  '../configure' ... '--disable-system'
->>> ...
->>> FAILED: tests/unit/test-cutils
->>> /usr/bin/ld: tests/unit/test-cutils.p/test-cutils.c.o: in function 
->>> `test_qemu_hexdump_alignment':
->>> test-cutils.c:(.text+0x71): undefined reference to `qemu_hexdump'
->>> collect2: error: ld returned 1 exit status
->>>
->>
->>
-> 
+> (gdb) p/x mode
+> $8 = 0xcccccccc
+
+What's the reproducer?  Is it easy to reproduce?
+
+I wonder if current_migration released already, or if monitor should still
+process any QMP handler if the VM is shutting down..
+
+Is this only happening after this series applied?  I can't yet see how the
+threadify affected it..
+
+-- 
+Peter Xu
 
 
