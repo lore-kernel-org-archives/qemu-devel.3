@@ -4,127 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94599D2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 11:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63430D2ED0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 11:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viA3F-0001N5-QT; Tue, 20 Jan 2026 06:37:37 -0500
+	id 1viAAg-0003bb-4X; Tue, 20 Jan 2026 06:45:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1viA3D-0001MO-DE
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 06:37:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1viAAW-0003Tf-2k; Tue, 20 Jan 2026 06:45:10 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1viA39-0000GT-SM
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 06:37:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768909050;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lXsAnxQEHE3y/76F1zw300Yl1/m0kQI+scHEhPa3/HI=;
- b=S8z6UXiBiFSD6t5Q9N35eQGzF8m6rJchZC2DS9ehD7zsGmGAtyM7xl4UcTS16bJZDQCyqU
- iSx5mlBFSULDlOB4YLzO5x822cXMHdlSPr7FRiJPx4+EQYVhBoUC3nNkQR+B6Y1Bbb5lcy
- m9+7VfwsgvcARZMP3LWMZJx1O+iyvLc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-308-XuMIQL40Pcy7Zl2FEJBgdA-1; Tue, 20 Jan 2026 06:37:29 -0500
-X-MC-Unique: XuMIQL40Pcy7Zl2FEJBgdA-1
-X-Mimecast-MFC-AGG-ID: XuMIQL40Pcy7Zl2FEJBgdA_1768909048
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-43284f60a8aso4502943f8f.3
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 03:37:28 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768909048; cv=none;
- d=google.com; s=arc-20240605;
- b=JXR/xk38XBb2kmAcRPH+s186z6cFunw55Yn7i31PWHizrwHdpeOJo+fQWgpfJeC3Wo
- WIdWAEYV3NBd1TLTekAluatg+Wgehs6dcgDhMgIiTnDE9dzk5iwHkNQnm4NiHhz58rFY
- sSeoeyh40WrdThWK7pTRtbv7hFB1fexSx1RYRcc77+SU2G25wcjsC+/cUiiIohC6s73R
- PNzWWPWV089YSr3YUoAixA+lj7sUoVhCyCzsCgPqhXGNyfODvZddvpseKYV2/9+jznX8
- IpR4Uv32MUvrndpfMtGIpLv2X8RTY5ttDq2/y+yBDQAepmUD35KMeg6BzwGuf1as9aul
- X70g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=lXsAnxQEHE3y/76F1zw300Yl1/m0kQI+scHEhPa3/HI=;
- fh=nzjBS48/fGEvhTwnCEPhQf+fF3B0V83pieQjyOEXTYs=;
- b=KlMwiY/KQWG5lC6A+z69u1BvpSf0+/063nERhD4snGnaIzk8kMnEhrTtbU2B1goNST
- W1q0Lg9dlu1fLTTEQCEdL2SKRNFu1D2hj9XoY80HhW3+9FilOVtg3ZDhre+lwoR/rvff
- CqtEJTWKLPh9bSn2p4RGUdrydbO6amYk2DJSvNbapnHBBc1BsHYf+JoYnFvyqalAO9m6
- cKQBls80Jo9XhMgcdE/JcTyu9hLC5egxylH7z14LxSHd315MXHcVsh2I21DBo2z69Ww/
- oMh8wsBHtZmGP7F+TCEnA/XcRh86AlHe9dz/UlwTJkFvSeecXBZxOViTPTMi7gje92zS
- Fy1g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768909048; x=1769513848; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lXsAnxQEHE3y/76F1zw300Yl1/m0kQI+scHEhPa3/HI=;
- b=q18MOM77IZ10bUZ2F1NNBfdOXrEz9wIqnLtuylczvgUzPWaPQepE1cTzI0g5QK0aOP
- yXtQMghPVSGAthrHkITgZFSgnPQqeh5JpI6kxSZVazyfgomttzKTiVxh1jjxXkgcT3AD
- byzUt+eNkWfLcsG03xGIrwayN/t2eFJ62G7ZlOheTGfor2MDPnYnmzqzTyyiB2mm/XaL
- yESOn0UktFM5pVZ8apZvfE60CdVgfRwaFPsvOwgYe+I07toFS4QOaBxO2by570isEEaa
- 4b3yaPc7LHVyI3esEhBxj1QNlpHEAkps+HiX0nswk8OHzl99eTqjfwf+X0bGsm3AOp5t
- ufiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768909048; x=1769513848;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lXsAnxQEHE3y/76F1zw300Yl1/m0kQI+scHEhPa3/HI=;
- b=JRWHQpWmqtVpFv+8rKdWtPq29goAGRKavtDHS+ECgRtggFW2GAz9ZCHeVh3tBr/1xB
- bkyHcgUzBrHGcv0K8B+N/tu7IxOLlB50GnMPGmyWXUgEP101LWCkOpQ3XQJO091BeOLC
- bFagtFrpJybu64qrGrXIpm0JvmiN+PcO+HZ1RQajDdjQgxBCgoxtCU7jjrEKv9GcSRmP
- Uzhw25MTH47Ziq0fCmNctk0QPZk7KqjIoey2z8hrt28I5yFWrimWNX1hP6Xumz2W3iXQ
- A1SK2GqhgnAnIhgm0qvYw3pr9tFE21076zjFfJmTf7r73Z9Sn5RVeQLVgZY98ZZf5KRH
- DlYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXVY/YO8I7KfI1bhmrIokYfXvKvNPNSR4yZaciAbk6vz9A1MzEC2cHAGb9wmQZWNnxsgsMDtJxg4zge@nongnu.org
-X-Gm-Message-State: AOJu0YzrQJtmhWFAgdbr0buiFi6HIWiytnO0I3Ta7b09A2ChcOP98nQw
- aBy9fisywMygEZcHfvOIxKPTIiZGQcux+HGenDZ3Qfr5/AAQkcElWmJzg25b7Qp4p1FGMHSRwGv
- +6TIbYRgFKI+12/NfjBzH6OsUVWVmS7k4aTFoymkp+LkzdKvOm1lpXPVevTiQ+EX6R8Fw3uhoPN
- e6vjvZQnxs4Fsdd2TDNcHFaJ9Apn5xuYA=
-X-Gm-Gg: AY/fxX5+7ILI/EizemM1uNVv9mI10+VaeWVssGXEJu74oQcDQL9TWadMLo1XvJRlmrW
- yecnkNcsFAYxrSdGjwmUVvAkE17PUPvvjWPm+m5mGGjNnI3Ok4jb96HPV1xjNPHaJ0rUEetxTkm
- 8sKCw+mygS7EDOoN9Dtr52+VhIaZqfg6JBO1sfrQooH591BaYEPxo9ikkBEX1G8sNLUwzyuxmfJ
- kkKrLecvVNAwWogNg7nY1b8tjDR23dsTJYBFx5CZVmyuPAwZYyJY50d
-X-Received: by 2002:a05:600c:4513:b0:477:9cdb:e337 with SMTP id
- 5b1f17b1804b1-4801e2fc2e3mr195882095e9.7.1768909047658; 
- Tue, 20 Jan 2026 03:37:27 -0800 (PST)
-X-Received: by 2002:a05:600c:4513:b0:477:9cdb:e337 with SMTP id
- 5b1f17b1804b1-4801e2fc2e3mr195881755e9.7.1768909047288; Tue, 20 Jan 2026
- 03:37:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1viAAT-00011E-8i; Tue, 20 Jan 2026 06:45:07 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dwQTd6Yk2zHnGdS;
+ Tue, 20 Jan 2026 19:44:21 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 944AB40572;
+ Tue, 20 Jan 2026 19:44:53 +0800 (CST)
+Received: from localhost (10.203.177.99) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Tue, 20 Jan
+ 2026 11:44:52 +0000
+Date: Tue, 20 Jan 2026 11:44:47 +0000
+To: Cornelia Huck <cohuck@redhat.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Eric Auger <eric.auger@redhat.com>,
+ <jonathan.cameron@huawei.com>
+Subject: Re: [PATCH RFC 0/3] arm: demuxed ID registers (CCSIDR_EL1)
+Message-ID: <20260120114447.00004699.alireza.sanaee@huawei.com>
+In-Reply-To: <20260119172732.140613-1-cohuck@redhat.com>
+References: <20260119172732.140613-1-cohuck@redhat.com>
+Organization: Huawei
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20260109124043.25019-1-farosas@suse.de>
- <20260109124043.25019-5-farosas@suse.de>
- <CAE8KmOw66B0Za=KA=TyxyWMPYSjFK=GBq7XhREevkCO4Vs+HYQ@mail.gmail.com>
- <aW9ixg59R8a90FIs@redhat.com>
-In-Reply-To: <aW9ixg59R8a90FIs@redhat.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 20 Jan 2026 17:07:10 +0530
-X-Gm-Features: AZwV_QjbsdPSxE3pAMz_VGpztWGm4zmiudJqC5HxZmXxa5I0UM2Zw4xazpqVG0c
-Message-ID: <CAE8KmOwdfWPkmV87DWGVvHj7=QEYEXoHJOsRV4+SW3M_-PXdCQ@mail.gmail.com>
-Subject: Re: [PATCH v3 04/25] migration: Cleanup TLS handshake hostname passing
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, peterx@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.99]
+X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,45 +66,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Mon, 19 Jan 2026 18:27:29 +0100
+Cornelia Huck <cohuck@redhat.com> wrote:
 
-On Tue, 20 Jan 2026 at 16:41, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
-> Normal default behaviour is that the hostname in the TLS certificate
-> MUST be validated against the hostname that is specified by the user
-> (or mgmt app) in the migration URI.
->
-> The 'tls-hostname' migration parameter is an optional override that
-> replaces the hostname from the migration URI, to be used in scenarios
-> such as:
->
->  * The URI is a UNIX socket. eg the UNIX socket points to a proxy
->    that is transporting data to the dest in some manner.  There is
->    no way to know the hostname from the URI, so 'tls-hostname' must
->    be provided
->
->  * The URI is pointing to a proxy that forwards to the real host.
->    eg perhaps you setup an SSH tunnel from localhost, to the real
->    target. QEMU must NOT validate the remote TLS cert against
->    'localhost', so 'tls-hostname' must be provided by the user
+Hi Cornelia,
 
-* I see, got it. Thank you for the explanation.
 
-> Whatever is usd to validate the TLS hostname, must be data that is
-> provided by the user in some manner.
->
-> TL:DR: always use 'tls-hostname' if it is provided by the user,
-> otherwise always use the hostname from the migration URI,
-> otherwise do not provide a hostname.
 
-* So when 'tls-hostname' is not defined, it could be set to
-'s->hostname', then migration_tls_hostname() stays unchanged.
+> Note: this is on top of <20260105154119.59853-1-cohuck@redhat.com>
+> ("[PATCH v3 0/2] arm: move DCZID_EL0 to idregs array")
+> 
+> While trying to move to an autogenerated cpu-sysregs.h.inc (so that we
+> may keep a common view on registers), we should first address the ID
+> registers that are still kept outside of ARMISARegisters. Other than
+> DCZID_EL0 (addressed by the series this one goes on top of), that's
+> the CCSIDR_EL1 values kept in cpu->cssidr[] (indexed via CSSELR_EL1.)
+> 
+> My idea was to provide {GET,SET}_IDREG_DEMUX helper that work similar
+> to {GET,SET}_IDREG and operate on a two-dimensional array. As a side
+> effect, this also allows to get the values KVM provides for CCSIDR_EL1
+> (which are virtualized as well.)
+> 
+> RFC because there are still some open questions:
+> - The demux array cannot easily be autogenerated. We can get rid of the
+>   ccsidr[] array, but we now have an autogenerated entry in the non-demux
+>   array that does nothing. Both are not that nice.
+> - I'm not sure if we need any compat handling for KVM (on TCG, everything
+>   should stay the same.) In theory, the KVM interface allows setting
+>   values from userspace (I didn't try.)
+> - There's a slight disagreement between the current code (providing 16
+>   entries for CCSIDR_EL1) and the KVM code (providing (7 cache levels) *
+>   (data/unified, instruction) = 14 entries.) With FEAT_MTE2, we might be
+>   needing 7 more entries.
+> 
+> Feedback appreciated.
+> 
+> Cornelia Huck (3):
+>   arm: handle demuxed ID registers
+>   arm: handle CCSIDR_EL1 as a demuxed register
+>   arm/kvm: get demuxed ID registers from kvm
+> 
+>  hw/intc/armv7m_nvic.c        |  2 +-
+>  target/arm/cpu-sysregs.h     |  6 ++++
+>  target/arm/cpu-sysregs.h.inc |  1 +
+>  target/arm/cpu.h             | 26 ++++++++++++----
+>  target/arm/cpu64.c           | 12 ++++----
+>  target/arm/helper.c          |  2 +-
+>  target/arm/kvm.c             | 33 ++++++++++++++++++++
+>  target/arm/tcg/cpu32.c       | 32 +++++++++----------
+>  target/arm/tcg/cpu64.c       | 60 ++++++++++++++++++------------------
+>  9 files changed, 114 insertions(+), 60 deletions(-)
+> 
 
-Thank you.
----
-  - Prasad
+This impacts my set https://lore.kernel.org/all/20260106155828.643-1-alireza.sanaee@huawei.com/
 
+I tested it with mine of course it required a few changes, but looks like working on TCG, didn't try KVM.
+
+Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
 
