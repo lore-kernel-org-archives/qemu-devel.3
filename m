@@ -4,90 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FCC2D2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 08:26:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A77CD2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 08:26:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi72O-0005Ow-6Q; Tue, 20 Jan 2026 03:24:32 -0500
+	id 1vi74a-0002ha-GY; Tue, 20 Jan 2026 03:26:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vi72M-0005Lf-9C
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:24:30 -0500
-Received: from mail-pj1-x1044.google.com ([2607:f8b0:4864:20::1044])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vi72K-00033m-D8
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:24:30 -0500
-Received: by mail-pj1-x1044.google.com with SMTP id
- 98e67ed59e1d1-34c2f52585fso2744557a91.1
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 00:24:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vi74Y-0002Zk-N3
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:26:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vi74W-0003Uv-MM
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:26:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768897602;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=yaGCCcueMKOPfz8JDv9ii1KfyFVAImDuKJg8upyv8FA=;
+ b=jQACRvkTUiMOBF6qadiJ9LfUryrPOrkNMsjPS8MZWr/O4ydazTXC8BfI9ZleUBUMi0FfY2
+ ubeiRnJcIezXgpRRAMQ2OZ4ZkYwN0M/FtN3BzploxzTBVo1e4yvH+EWUvXpL+RP0jMJLHI
+ 1iOlJkzD4Oc7NYOz6dvOnGhmTg+ZmRA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-563-Z1yaQIBcNUSlLSWOTDkJfA-1; Tue, 20 Jan 2026 03:26:40 -0500
+X-MC-Unique: Z1yaQIBcNUSlLSWOTDkJfA-1
+X-Mimecast-MFC-AGG-ID: Z1yaQIBcNUSlLSWOTDkJfA_1768897599
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-431026b6252so5166701f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 00:26:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1768897467; x=1769502267; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VPtyq2vpmISHFztA/nNK3WjvO8XBtF9mE2msAt6rqDc=;
- b=FfGjkLTzWlMhBiLw0oQe9tWZ3i5HsZKWEwi1R1NqpC77BvhEwxwpLY1jutx/5F+wGa
- ZUJFOWoY9wxxAdX50JlMkJNyfZSblBTdNDbPiEzvSrM19vx9St/LAFJtTSK3q5cZz624
- phzVszC0BrCNf+gOyAPZcWYX4Uk7knE6g4oByFf3QRnvkG9Ul9L8cChrc+qoAuFRlJo6
- R78pURF5Pf0qq6EJKu+93gUOXnSZjvg/9pCbYIsRk514/NPbbqBieyqC0pFjxHFtLiT1
- xhyUq2Wo8O/WBaW2DN8RoEU3Hvlh99jeqsFMZ9VKLb/iI5ZPOO1YDHoDBtCeJfjEQ8sH
- I5yA==
+ d=redhat.com; s=google; t=1768897599; x=1769502399; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=yaGCCcueMKOPfz8JDv9ii1KfyFVAImDuKJg8upyv8FA=;
+ b=EnAv2kIMu7dVbXG4jYf5h1DxoOBhgkhs2zo16OVAYRRU4K9GGAyfAwyvlARZ6DQNyw
+ T/I8weiPaB6oyg1qjmR3ctylQhJWGIbeU9uh2w0xopSUJrym+WLZtMEQ15M/FcbhxbTX
+ NsVKT18XawcGp9U6clER/Kt9eTLbe2ebLc4OcWvPYQGLOp7Q50FwJKoRlgVvDAOsyJaw
+ AgmBG7DI0pevpgUyd0u+4Vdl2wj3jju1RVL0gKxxA6eS9+CngopJyza/R8kdHpw9yuax
+ 4waXaWDwoPUtHnQ2YOiT81qxZK6bkvL4YyRR39hU5VFFqKPNKB6lC6E0jX+mTCVSS1uV
+ hT3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768897467; x=1769502267;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VPtyq2vpmISHFztA/nNK3WjvO8XBtF9mE2msAt6rqDc=;
- b=Hl/9HkXYqbGUbpu/FxRLvkFDPt90peiEIUHekPNSGuCARK5vHA6CWz9xnZoz4+GMVE
- fsyxSmk6mNkC1ouwbb65VPxOnp34hF09TPRQGYFrVBUktVsIraDIKW+scHY/lyuUFOGV
- Cgm5XrXLjUeDI2Yr5TSUwgUhGVxjrbMWt2qoD5yicIWqH5YO2MGecrlahQzYyLhUlLdw
- RCN1jGpRhoh20pEE80Q22kOLHnuLXJK6VOYOx/rjyMgpA+GKC+a8qCZh/DRJMVruIEzM
- r/PJvp8CuxpCDC002fNRmxWUFDRzn42IwXccS8q2phTMQs3LDcp9WrvESy5UYJIdGp/K
- Qgag==
-X-Gm-Message-State: AOJu0YxnBsa5RQwlkX3FkBLqSioGpZE5krar9EcPiGiQl/03wK5VAYi5
- 0bbYN6tM34VvQ//k0f51eK+vOoUfpVJq12YzFffft9d/xzi2FMmcQlOe
-X-Gm-Gg: AZuq6aKB0A1ZZvZxgA6tJoZXCN2eJPi41WBYO3skFiXuaIMlLtQMAJhSLkgaSojnPaS
- 1LmyFmX1UxltqIrwy01iCjJg8sRLM7JMlv8hdJp/abKuequJSrAu4Xm1pQmMr7qIcXh+OzI0XDq
- 0AB91NkM+nxJZsvQ7Bi/OXG8+IdTHjUckblTPWG6gmHzGmQR1tszoDEknvNfZssq4Ksgdh60ls+
- oELv8qIWXs8Y14wtglmxFHeP+VmGafGEyMEhn+SV7rR8qWyR/Bf/ZyzglbZ8dlRIoBLoYs+dy3o
- qHTDb/ivqDRbyIv66DgzKgxpBwIjUNGvlsFRzB7KCq0xNaYWrFKnmM+pSdQmob+/zmOmro2nzI2
- X/uhuN+LaBwnPWERGg20HxCif22TmHcBDjkcXfhZx1/XZEj9ga5wCaL6nRgqHNw2s5D3hXnZ5QN
- zT7Tx2kSdd+FAh7UtFWSJVmtLc0aio7lMSlxKUeurZRbqICgLANXgW/FtEJ2Jq0W2XloHC
-X-Received: by 2002:a17:90b:4d8d:b0:34a:e9b:26b1 with SMTP id
- 98e67ed59e1d1-35272fb86b4mr12881434a91.26.1768897466789; 
- Tue, 20 Jan 2026 00:24:26 -0800 (PST)
-Received: from ZEVORN-PC.bbrouter ([183.195.21.37])
+ d=1e100.net; s=20230601; t=1768897599; x=1769502399;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yaGCCcueMKOPfz8JDv9ii1KfyFVAImDuKJg8upyv8FA=;
+ b=re/EOE8zad7E6K+6Vxl7tu+EgP7Gvj3WWk3DiFLa/hMXVG+FP90qPKeGgJXeWUX2Ax
+ XGCJn48xLtboAEE68L0suOsdVke6GwSIaucKa27CuTSu3WCK+ydfM6V6S3PQ1fr7M4G3
+ qNYadbCUmZ6CKdklcyN1Ixka8E0K4xsh3Yhf2yLNsHbowQe8i8vuE70aaPwqw5BV610j
+ g8Q8MR0K/Bxw0L2H6LWEOabqhSUfdcoGX720HZbQ7NyAGiu+BoI373UmT3e1kZlx1cAt
+ 4QLuyNLydhfba1C7ZWcZHT8w1khiRldXJyi6bTGgKt+nme7sjxssV8vwqym36GoIFA/P
+ dm6w==
+X-Gm-Message-State: AOJu0YyqsJI0r4Ykm4PukHd1oxDFLf0e9z82GNCAEfZQXniiwDmwncjV
+ /4AWQuCpBxhSSdpUJ/fAHeXKMstcgr+6GWHVMSVhxeIzIKqgU7i8i6DZTQ8GVJPVqVrEQQ/ffwQ
+ kQXWzoao0YAAfQfo7zye40sYgGurlojQivuXlNfd4ISNN1RHcA1lCvRO/
+X-Gm-Gg: AZuq6aLLaXVhgUxmezryTqI7n/PhhDVbagqNnfS0XMmC7bnCYmx3nzdAhaK3pkmt/E6
+ AUbP3S2o7qEbyHSonx8jkS4J9t7OudUnOQYvnaFnlpGR5kzG7LG9TJXH0rFkUJtAbSDvaTOJBZc
+ L2646If4t9fnbDXautdFlGyvik1TWR2E0HnT9P+Khfa0dEyrHX2cod1MsY/WIELmxlf3mCyGnVq
+ IdNSHZ06WeR0LEZQuDSZUfa0XDGlalKw1h1KFusvoahkgh5FBnPthEZictl0k75QRN9CYswq3UL
+ N4RiNXTUFu3AHKvHuYZ3aTVfR7f5w4j06Wug0b4IvXAKHIBQMZAB7i752Ca1GLo7VMGwOtp2i7Z
+ 86m8EgQGfbv3mgc6w0g7nGdac8Xd1u/eU0hg=
+X-Received: by 2002:a05:6000:2f88:b0:430:fdfc:7dd0 with SMTP id
+ ffacd0b85a97d-4356a089943mr17532863f8f.63.1768897599011; 
+ Tue, 20 Jan 2026 00:26:39 -0800 (PST)
+X-Received: by 2002:a05:6000:2f88:b0:430:fdfc:7dd0 with SMTP id
+ ffacd0b85a97d-4356a089943mr17532836f8f.63.1768897598470; 
+ Tue, 20 Jan 2026 00:26:38 -0800 (PST)
+Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35274573a7esm4273592a91.11.2026.01.20.00.24.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Jan 2026 00:24:26 -0800 (PST)
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, wangjingwei@iscas.ac.cn,
- Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [RFC PATCH v2 3/7] target/riscv: add sdext Debug Mode helpers
-Date: Tue, 20 Jan 2026 16:23:59 +0800
-Message-ID: <d1be9116830ac8fd6798c229be2048ceab1b2b8d.1768892407.git.chao.liu.zevorn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <cover.1768892407.git.chao.liu.zevorn@gmail.com>
-References: <cover.1768892407.git.chao.liu.zevorn@gmail.com>
+ ffacd0b85a97d-435699271easm28165853f8f.14.2026.01.20.00.26.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Jan 2026 00:26:38 -0800 (PST)
+Message-ID: <e9a55c88-9442-4462-9d7d-21b1d0196401@redhat.com>
+Date: Tue, 20 Jan 2026 09:26:37 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1044;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pj1-x1044.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] tests/functional: Add a OS level migration test
+ for pseries
+To: Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20260109123519.28703-1-farosas@suse.de>
+ <20260109123519.28703-3-farosas@suse.de>
+ <CAE8KmOydo3r7x1AMWyO3hYEqrN5+XxHuz0y9OYNJc4nPMWq2DA@mail.gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAE8KmOydo3r7x1AMWyO3hYEqrN5+XxHuz0y9OYNJc4nPMWq2DA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,182 +167,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RISC-V Debug Specification:
-https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
+On 20/01/2026 08.56, Prasad Pandit wrote:
+> On Fri, 9 Jan 2026 at 18:06, Fabiano Rosas <farosas@suse.de> wrote:
+>> There's currently no OS level test for ppc64le. Add one such test by
+>> reusing the boot level tests that are already present.
+>>
+>> The test boots the source machine, waits for it to reach a mid-boot
+>> message, migrates and checks that the destination has reached the
+>> final boot message (VFS error due to no disk).
+>>
+>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>   tests/functional/ppc64/test_migration.py | 12 ++++++++
+>>   tests/functional/ppc64/test_pseries.py   | 35 ++++++++++++++++++++++++
+>>   2 files changed, 47 insertions(+)
+>>
+>> diff --git a/tests/functional/ppc64/test_migration.py b/tests/functional/ppc64/test_migration.py
+>> index 5dfdaaf709..a3b819680b 100755
+>> --- a/tests/functional/ppc64/test_migration.py
+>> +++ b/tests/functional/ppc64/test_migration.py
+>> @@ -4,6 +4,7 @@
+>>   #
+>>   # ppc migration test
+>>
+>> +from qemu_test.ports import Ports
+>>   from migration import MigrationTest
+>>
+>>
+>> @@ -21,6 +22,17 @@ def test_migration_with_exec(self):
+>>           self.set_machine('mac99')
+>>           self.migration_with_exec()
+>>
+>> +    def do_migrate_ppc64_linux(self, source_vm, dest_vm):
+>> +        with Ports() as ports:
+>> +            port = ports.find_free_port()
+>> +            if port is None:
+>> +                self.skipTest('Failed to find a free port')
+>> +            uri = 'tcp:localhost:%u' % port
+> 
+> * When port is None, shouldn't it return after the skipTest() call?
+> With port = None, uri will become -> 'tcp:localhost:None' OR maybe
+> port should have default value?
 
-Add helpers to enter/leave Debug Mode and to update dpc/dcsr.
-Model resume without a Debug Module by leaving Debug Mode at
-cpu_exec_enter and continuing from dpc.
+skipTest() aborts the test immediately, the remaining code after this 
+statement is not executed anymore. (I think it internally raises an 
+exception that is caught by the unittest code to mark the test as skipped, 
+but you might better ask a Python wizard if you want to know the gory 
+details. See 
+https://docs.python.org/3/library/unittest.html#unittest-skipping for example)
 
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
----
- target/riscv/cpu.h         |  3 ++
- target/riscv/cpu_helper.c  | 87 ++++++++++++++++++++++++++++++++++++++
- target/riscv/debug.c       |  5 +++
- target/riscv/tcg/tcg-cpu.c | 14 ++++++
- 4 files changed, 109 insertions(+)
-
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 2a265faae5..62732957a4 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -624,6 +624,9 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- char *riscv_isa_string(RISCVCPU *cpu);
- int riscv_cpu_max_xlen(RISCVCPUClass *mcc);
- bool riscv_cpu_option_set(const char *optname);
-+void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
-+                                uint32_t cause);
-+void riscv_cpu_leave_debug_mode(CPURISCVState *env);
- 
- #ifndef CONFIG_USER_ONLY
- void riscv_cpu_do_interrupt(CPUState *cpu);
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index dd6c861a90..05a991fccc 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -136,6 +136,93 @@ bool riscv_env_smode_dbltrp_enabled(CPURISCVState *env, bool virt)
- #endif
- }
- 
-+#ifndef CONFIG_USER_ONLY
-+static bool riscv_sdext_enabled(CPURISCVState *env)
-+{
-+    return riscv_cpu_cfg(env)->ext_sdext;
-+}
-+#endif
-+
-+void riscv_cpu_enter_debug_mode(CPURISCVState *env, target_ulong pc,
-+                                uint32_t cause)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    if (!riscv_sdext_enabled(env)) {
-+        return;
-+    }
-+#endif
-+    env->debug_mode = true;
-+    env->dpc = pc & get_xepc_mask(env);
-+    env->dcsr &= ~(DCSR_CAUSE_MASK | DCSR_PRV_MASK | DCSR_V);
-+    env->dcsr |= ((target_ulong)(cause & 0x7)) << DCSR_CAUSE_SHIFT;
-+    env->dcsr |= env->priv & DCSR_PRV_MASK;
-+    if (env->virt_enabled && riscv_has_ext(env, RVH)) {
-+        env->dcsr |= DCSR_V;
-+    }
-+#ifndef CONFIG_USER_ONLY
-+    if (env_archcpu(env)->cfg.ext_zicfilp) {
-+        if (env->elp) {
-+            env->dcsr |= DCSR_PELP;
-+        } else {
-+            env->dcsr &= ~DCSR_PELP;
-+        }
-+        env->elp = false;
-+    }
-+#endif
-+}
-+
-+void riscv_cpu_leave_debug_mode(CPURISCVState *env)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    if (!riscv_sdext_enabled(env)) {
-+        return;
-+    }
-+#endif
-+    target_ulong new_priv = env->dcsr & DCSR_PRV_MASK;
-+    bool new_virt = riscv_has_ext(env, RVH) && (env->dcsr & DCSR_V);
-+
-+    if (new_priv > PRV_M) {
-+        new_priv = PRV_M;
-+    }
-+    if (new_priv == PRV_M) {
-+        new_virt = false;
-+    }
-+#ifndef CONFIG_USER_ONLY
-+    if (new_priv == PRV_S && !riscv_has_ext(env, RVS)) {
-+        new_priv = PRV_M;
-+        new_virt = false;
-+    } else if (new_priv == PRV_U && !riscv_has_ext(env, RVU)) {
-+        new_priv = riscv_has_ext(env, RVS) ? PRV_S : PRV_M;
-+        new_virt = false;
-+    }
-+#endif
-+
-+    env->debug_mode = false;
-+    riscv_cpu_set_mode(env, new_priv, new_virt);
-+
-+#ifndef CONFIG_USER_ONLY
-+    if (env_archcpu(env)->cfg.ext_zicfilp) {
-+        env->elp = cpu_get_fcfien(env) && (env->dcsr & DCSR_PELP);
-+        env->dcsr &= ~DCSR_PELP;
-+    }
-+#endif
-+
-+    if (new_priv != PRV_M) {
-+        env->mstatus = set_field(env->mstatus, MSTATUS_MPRV, 0);
-+    }
-+#ifndef CONFIG_USER_ONLY
-+    if (env_archcpu(env)->cfg.ext_smdbltrp && new_priv != PRV_M) {
-+        env->mstatus = set_field(env->mstatus, MSTATUS_MDT, 0);
-+    }
-+    if (env_archcpu(env)->cfg.ext_ssdbltrp && (new_priv == PRV_U || new_virt)) {
-+        env->mstatus = set_field(env->mstatus, MSTATUS_SDT, 0);
-+        if (new_virt && new_priv == PRV_U) {
-+            env->vsstatus = set_field(env->vsstatus, MSTATUS_SDT, 0);
-+        }
-+    }
-+#endif
-+}
-+
- RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
- {
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 5664466749..5877a60c50 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -927,6 +927,11 @@ void riscv_cpu_debug_excp_handler(CPUState *cs)
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
- 
-+    /* Triggers must not match or fire while in Debug Mode. */
-+    if (env->debug_mode) {
-+        return;
-+    }
-+
-     if (cs->watchpoint_hit) {
-         if (cs->watchpoint_hit->flags & BP_CPU) {
-             do_trigger_action(env, DBG_ACTION_BP);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 1343f21d08..c6beac3d50 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -266,6 +266,19 @@ static vaddr riscv_pointer_wrap(CPUState *cs, int mmu_idx,
-     }
-     return extract64(result, 0, 64 - pm_len);
- }
-+
-+static void riscv_cpu_exec_enter(CPUState *cs)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(cs);
-+    CPURISCVState *env = &cpu->env;
-+
-+    if (!cpu->cfg.ext_sdext || !env->debug_mode) {
-+        return;
-+    }
-+    target_ulong pc = env->dpc;
-+    riscv_cpu_leave_debug_mode(env);
-+    env->pc = pc;
-+}
- #endif
- 
- const TCGCPUOps riscv_tcg_ops = {
-@@ -282,6 +295,7 @@ const TCGCPUOps riscv_tcg_ops = {
- #ifndef CONFIG_USER_ONLY
-     .tlb_fill = riscv_cpu_tlb_fill,
-     .pointer_wrap = riscv_pointer_wrap,
-+    .cpu_exec_enter = riscv_cpu_exec_enter,
-     .cpu_exec_interrupt = riscv_cpu_exec_interrupt,
-     .cpu_exec_halt = riscv_cpu_has_work,
-     .cpu_exec_reset = cpu_reset,
--- 
-2.52.0
+  HTH,
+   Thomas
 
 
