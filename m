@@ -4,80 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35385D2629E
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 21:12:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 412D6D262A0
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 21:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viJ0W-0007AM-SY; Tue, 20 Jan 2026 16:11:24 -0500
+	id 1viJ7j-00036k-Ej; Tue, 20 Jan 2026 16:18:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3d-9vaQwKCmgTGHONKYZKLGTMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--nabihestefan.bounces.google.com>)
- id 1viJ0V-0007A6-Ma
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 16:11:23 -0500
-Received: from mail-dl1-x124a.google.com ([2607:f8b0:4864:20::124a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3d-9vaQwKCmgTGHONKYZKLGTMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--nabihestefan.bounces.google.com>)
- id 1viJ0U-0003l8-4Q
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 16:11:23 -0500
-Received: by mail-dl1-x124a.google.com with SMTP id
- a92af1059eb24-123377038f9so557403c88.0
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 13:11:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1768943480; x=1769548280; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=o4RAqyXrLAo+0kHfcx+F4yi90mTR8p4gv7hKCzK+Od4=;
- b=Mrcl2c6mfRE+8IKr5/MNnHGufgvQiRhRLmlL/aJCGtm3UPEtrOvLJLDNxxKkpmJkuE
- m4+LkRSsJ513iJVfgGZoWNjv7yB/XWndOsIn6LuGMf+4DDQd76cYawS5H8kKLKGsQ7k1
- r+S584fjOoc08wOrP4lluvPFbDq/JC6ZgxadYUvyJET9RH98/NFxxHZeRfzAKZcAgPok
- 9mE2wupUo0IMWpD+oy1o526/qC9fg9aXNigiVBJM0qedh+83aI+9T/b8ewO2PJN2lKUA
- JI/UJAVSO/p8b1/E5icvJ5aLYettJ4OgdkUVYTvBsuUQD9MKR82FdGqX/sPbunv/TOrn
- okGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768943480; x=1769548280;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=o4RAqyXrLAo+0kHfcx+F4yi90mTR8p4gv7hKCzK+Od4=;
- b=u9SJGYZdAHMOJVZwoDZdD08zZghEE8KCNxM3GPYA+56v0JCH6/FGfOB2Zngl89r7aB
- 3K2WRcRYWAAhby/GnRjhYgVoqbN/4kW0aBGI+M1IuNJMXCrq1q+ptFB3+EM3Lph3Eqj8
- y5Q5c4f4/SQ3l5nhXqpg4rZUV5Zp5vGtVF+AYceVBBb535aEqPeXNFnk3wMtn6ycPTJ1
- /uBbhlIFo7SDcep8hmEK4x4di0eD8B188XnFCqaTt7Np4rXMclNKANGSvc0COC8yxCcA
- XCxLEN/k7ONmAW0QmkDqkt8X/PCnULbkUR7Rqgc7/43jdbyPgci7Dqf2MvZ+ifcCzru2
- sWJw==
-X-Gm-Message-State: AOJu0YzqOR/zLhVTZFHsWsiBeA9X4/G50xjhXgCCvqgWanxRmXgBd0Jw
- LRE2KtF8h9W1DM7fp6Rv3WK4BFnAmafzvGLpFKyvk24k+q0gHM1IuLRtNZKL1a1Z0yvP+j7Uj72
- 3pprPZZ3PVnpp1q94644NPdgbCxD0KC5FAXF3Hqq801r6I6SxO5pTamiSjNrlXTbRpJ+QFO8dbC
- 2Y2Wd9I/l7uCV+xylMcmyjH6foyMIr02Jm3Zov61Y9cQAVymO0Nt4hyEem0glKPF6Mtpg=
-X-Received: from dlbur6-n2.prod.google.com
- ([2002:a05:7022:ea46:20b0:119:78ff:fe0f])
- (user=nabihestefan job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:7022:f90:b0:123:2d4f:ef1d with SMTP id
- a92af1059eb24-1246aad1621mr2228767c88.30.1768943479968; 
- Tue, 20 Jan 2026 13:11:19 -0800 (PST)
-Date: Tue, 20 Jan 2026 21:11:16 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.52.0.457.g6b5491de43-goog
-Message-ID: <20260120211116.1367476-1-nabihestefan@google.com>
-Subject: [PATCH] hw/i2c/aspeed_i2c.c: Add a check for dma_read
-From: Nabih Estefan <nabihestefan@google.com>
-To: qemu-devel@nongnu.org
-Cc: clg@kaod.org, peter.maydell@linaro.org, steven_lee@aspeedtech.com, 
- leetroy@gmail.com, jamin_lin@aspeedtech.com, andrew@codeconstruct.com.au, 
- joel@jms.id.au, qemu-arm@nongnu.org, Nabih Estefan <nabihestefan@google.com>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1viJ7Z-000358-FU; Tue, 20 Jan 2026 16:18:43 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1viJ7W-0005Cj-Mx; Tue, 20 Jan 2026 16:18:41 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60KEkiMw019662;
+ Tue, 20 Jan 2026 21:18:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=BLji5a
+ 96jeOz79j/oKbXxdKjU2QVJZ9WogJMo7MbMfg=; b=QWpD4cg5DWYlmOcW22olYt
+ QfekJEpvsx31KHJjiXvaHo4DRRBmG6ZdktNyP27fG1cYGRnxiiG1Owpnvv0GEiLj
+ hj6KJutj6ckWf0cMshSz7VnEAnjKcv2JLrQGvN+bJRAWLHI4CkO8Ws1/cUELfOvr
+ RsGyu/O2If/Jw6AAZ0AYjPg/7HEYJsaIKfLScKTrVt/S2DIHr5QOk9xqIxqcdpM/
+ EpDZY/G/tYCG6+YTHgcFRW4qPANl3n9eJsAUP/zrSOr3LmGYZi43Le80dnPwuagd
+ ujtEWGYz9RVtBJ2BT6A21zco9M1nqO/fWGCv0qXePMCg2ubLn/vZdbfduqq+ENiA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br2560h9q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Jan 2026 21:18:31 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60KJJMgI006451;
+ Tue, 20 Jan 2026 21:18:30 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4brqf1fmwv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Jan 2026 21:18:30 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60KLIU2J25494052
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 20 Jan 2026 21:18:30 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 133B05805A;
+ Tue, 20 Jan 2026 21:18:30 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CD31C5803F;
+ Tue, 20 Jan 2026 21:18:28 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.131.235]) by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 20 Jan 2026 21:18:28 +0000 (GMT)
+Message-ID: <ef086589932b5f3bac39a46eae24cea8cc425945.camel@linux.ibm.com>
+Subject: Re: [PATCH v4 07/23] virtio-ccw: virtio_ccw_set_guest_notifier():
+ fix failure path
+From: Eric Farman <farman@linux.ibm.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, mst@redhat.com
+Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru, Cornelia Huck	
+ <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>, Thomas Huth	
+ <thuth@redhat.com>, Richard Henderson <richard.henderson@linaro.org>, Ilya
+ Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Christian Borntraeger	 <borntraeger@linux.ibm.com>, Matthew Rosato
+ <mjrosato@linux.ibm.com>, "open list:virtio-ccw" <qemu-s390x@nongnu.org>
+Date: Tue, 20 Jan 2026 16:18:28 -0500
+In-Reply-To: <20260119185228.203296-8-vsementsov@yandex-team.ru>
+References: <20260119185228.203296-1-vsementsov@yandex-team.ru>
+ <20260119185228.203296-8-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::124a;
- envelope-from=3d-9vaQwKCmgTGHONKYZKLGTMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--nabihestefan.bounces.google.com;
- helo=mail-dl1-x124a.google.com
-X-Spam_score_int: -97
-X-Spam_score: -9.8
-X-Spam_bar: ---------
-X-Spam_report: (-9.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.168,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIwMDE3OCBTYWx0ZWRfXyNm76T3IratU
+ bMw+ZgHxLXqmoGu5B5fcvEgKcBuLvpUQWPhC5hpGUjpTaIaBpCEbeWKiX4ZO7QrklO+Qp9DHnsX
+ GRfrxtmzyj/rAxzqLTMi2J3nrtgqCIr8OgHwm9Hu82Azkkfk1ZEyWIq6HE2Zu1S0CUkjfFfYV1t
+ KUF+Jb0nxgRe+pxI+WATQyJSYpX5h6EbYPvBJzGp+m4bf95jrp5c1n2OTPvL5j68Z3L0qzIx6qf
+ fKkjdJkSppJoPQUKQWI3ILHL21WM/SbcRrkRx/bU0n3W319vZO/7e308pYTasWenwQN/NSxC8Kt
+ PiMZegF8uZYHqQugo6C8W1DOv4LKkTp98fnKJ4t7QCYvJwwuBllP6BwEtEtmvoqfIkTWVjHGVcc
+ ZF7CCSJSRO8P0acGAeoBlQR1fHejnRnXo2oans1UHxylvhJB/YLH5Gia1TrfRz4zoT8ptTjZtS5
+ +j7KD2+bA6vgW+5I3eQ==
+X-Authority-Analysis: v=2.4 cv=BpSQAIX5 c=1 sm=1 tr=0 ts=696ff127 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=6R7veym_AAAA:8 a=VnNF1IyMAAAA:8 a=49E5kkUQfOZ3Knp8DMQA:9
+ a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10 a=ILCOIF4F_8SzUMnO7jNM:22
+X-Proofpoint-GUID: fArTHAy0BoNr68aUq1kfTqg-hIF05Bok
+X-Proofpoint-ORIG-GUID: fArTHAy0BoNr68aUq1kfTqg-hIF05Bok
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-20_06,2026-01-20_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 clxscore=1011 adultscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601200178
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,33 +128,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If aspeed_i2c_dma_read fails in aspeed_i2c_bus_send currently, we get
-stuck in an infinite retry loop. Add a check for the return value of
-aspeed_i2c_dma_read that will break us out of said loop.
+On Mon, 2026-01-19 at 21:52 +0300, Vladimir Sementsov-Ogievskiy wrote:
+> We leak notifier initialization on that failure path. Let's
+> cleanup it.
+>=20
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  hw/s390x/virtio-ccw.c | 1 +
+>  1 file changed, 1 insertion(+)
 
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
----
- hw/i2c/aspeed_i2c.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index 1b8ac561c3..3de72db652 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -272,7 +272,11 @@ static int aspeed_i2c_bus_send(AspeedI2CBus *bus)
-         }
-         while (bus->regs[reg_dma_len]) {
-             uint8_t data;
--            aspeed_i2c_dma_read(bus, &data);
-+            ret = aspeed_i2c_dma_read(bus, &data);
-+            /* Check that we were able to read the DMA */
-+            if (ret) {
-+                break;
-+            }
-             trace_aspeed_i2c_bus_send("DMA", bus->regs[reg_dma_len],
-                                       bus->regs[reg_dma_len], data);
-             ret = i2c_send(bus->bus, data);
--- 
-2.52.0.457.g6b5491de43-goog
-
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
