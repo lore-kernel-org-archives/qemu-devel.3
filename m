@@ -4,54 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5B2CA5FB8
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 18:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9483D26283
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 18:31:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viGSY-0006BB-6D; Tue, 20 Jan 2026 13:28:10 -0500
+	id 1viGVe-0001Jb-05; Tue, 20 Jan 2026 13:31:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1viGSW-00069X-1Y; Tue, 20 Jan 2026 13:28:08 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1viGST-0003mL-Cn; Tue, 20 Jan 2026 13:28:07 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E8C4B596A07;
- Tue, 20 Jan 2026 19:27:58 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id HNc79LQCno2M; Tue, 20 Jan 2026 19:27:56 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 8F255596A03; Tue, 20 Jan 2026 19:27:56 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8CC015969E4;
- Tue, 20 Jan 2026 19:27:56 +0100 (CET)
-Date: Tue, 20 Jan 2026 19:27:56 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org, 
- Guenter Roeck <linux@roeck-us.net>, Bin Meng <bmeng.cn@gmail.com>, 
- Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH 00/14] Freescale SDHCI Fixes
-In-Reply-To: <ae54581c-2a49-b6c2-cde1-d50bbde70a84@eik.bme.hu>
-Message-ID: <25c93133-a8a7-5456-5964-a7df9e1daf88@eik.bme.hu>
-References: <20260112145418.220506-1-shentey@gmail.com>
- <ae54581c-2a49-b6c2-cde1-d50bbde70a84@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGVc-0001Ih-U8
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:31:20 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGVa-0004mz-Vb
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:31:20 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-432755545fcso3299571f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 10:31:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768933877; x=1769538677; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8l7DjF7gyDSglpKq646fLnuvHs25JxjRrZEp3/D9DPQ=;
+ b=L5DVDaIQNfQEeEGHtBuqpJiCBM/DolmfJerTMcpC6g35yLaZinZG4mWLmbugh/jwVz
+ WLh8DH4vMrbqJZKGuON286k/ZYsrf/ub34GI+yi8f2oOrh7396qnsqPwNWEe2IqWf14i
+ jOfj7fPtJXCIyzQ0bcFerarLZK8M1rY3QHc9SiuTNeRazQ+zmZz6iNeGUoRGA1oiYlWP
+ Q1E4pjr8GkKDYi14PxeKm5Cfuj5aSWfFVShMBmU25OshvKPcI6t8N11Lnjo4NwN8zd8t
+ mYv5X7POdu76wsk0h7CAWqMTYMsLHzpCIhgcdr/HbvxPZDorJ7xBYotYoeeX6dNHQQJw
+ sHNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768933877; x=1769538677;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8l7DjF7gyDSglpKq646fLnuvHs25JxjRrZEp3/D9DPQ=;
+ b=R/S5kHVI1g9UrNylX7l1oKsruuMqLiYWuUBnz7xnt3sao15GJYdEY1tuk/7x79cwtG
+ ZhMm/+Z7S83fSFI3ObLloJMMqeSQGGInT1+yWO08ZG7I3hhu/Ws434kPOFSsmEtNsD39
+ GNmyeN20KJxS6GZ0KgUJw9JEnV2fdjtbVy3awI8b8AR04mLuxHUcF845M4AFKqWKAhyu
+ Q37bbh4sFW7OLIBnfwnU4Vdx7cXc9mx8+LdLGNB3G6DBFVWkNF592aWuioPdTQYC51dA
+ +F17txkQE255jD/Y10HZaKwvy97uYlqt/Udnt+ibiz0PNO6JkqNq67Zz9whuuTsq8brv
+ jVTQ==
+X-Gm-Message-State: AOJu0YwxsxQnIUVo6WaAwRA1eAjrLrD3p03s6lezlSphPEgusMK98e5Z
+ TE0ACLn57CADu5Jfk5mwRcdjjcfobrx9d9C0yRE897R/0xTthfoZmahCUU1z/BgeTgc=
+X-Gm-Gg: AZuq6aLpYqf41olTeSgft3GM78hgFQLJJhfg7l/fqi2yVvr1ELzI0xwZQuQOSB8pOxR
+ YTi364AGaEYY6qLuJoyIbWSgfVZ/HtsyOhLNDo9tYQxuCynLEFgcbG0ffRROdhrtrJH38ymd0K/
+ 75LfS9SIJJiw4GpRqI5G0Ar5xs2eGBe1S7k3wYPfwoK3KIfKdB5DUnBWTlmvfBYVDn+regMGoC/
+ ndWJ/S9o2sDCYxQdAgL9W1VckocT/Vez5iUD3sspTJz1L/wxCZm0APuG+5J25MgWxrZAZ9r56DE
+ KmGSzFpXxUYL1rpCV+MvuyETCuL+3eub4Pp0sHDH/1sFWvIRGrMgQ4ZrHr9XStivjVcb3YEbmFL
+ Yfnj96H34G8Y7+Z2kmXZ2o9ur8CruFH/739SFQddshk1F1hJcvTB5E15jnl2VDh6SEamFSfwjc3
+ xtyt7U5Z2MOhcHawlI/PZ7ViMMg+U22avMSuunVysfPPUGXjDWon1MuIuNnMIRjs7U
+X-Received: by 2002:a05:6000:2085:b0:435:907f:e439 with SMTP id
+ ffacd0b85a97d-435907fe6bfmr3786416f8f.18.1768933876915; 
+ Tue, 20 Jan 2026 10:31:16 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4356996dad0sm30652245f8f.27.2026.01.20.10.31.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Jan 2026 10:31:16 -0800 (PST)
+Message-ID: <c9308d86-889f-4ca3-8f67-eb6b253987da@linaro.org>
+Date: Tue, 20 Jan 2026 19:31:14 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v9 3/8] hw/misc: Introduce iommu-testdev for bare-metal
+ IOMMU testing
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>, Paolo Bonzini
+ <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+References: <20260119161112.3841386-1-tangtao1634@phytium.com.cn>
+ <20260119161112.3841386-4-tangtao1634@phytium.com.cn>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260119161112.3841386-4-tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,262 +110,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 20 Jan 2026, BALATON Zoltan wrote:
-> On Mon, 12 Jan 2026, Bernhard Beschow wrote:
->> This series splits TYPE_IMX_USDHC into three device models which fixes 
->> issues
->> in the ppce500 and some i.MX machines. In particular, it introduces uSDHC's
->> predecessor eSDHC in big and little endian variants. Once the eSDHCs are
->> split off, uSDHC emulation is improved which is a stepping stone towards
->> running u-boot on the i.MX8MP (not implemented yet).
->> 
->> In a way this series picks up previous efforts:
->> * 
->> https://lore.kernel.org/qemu-devel/20250310000620.70120-14-philmd@linaro.org
->> * 
->> https://lore.kernel.org/qemu-devel/20250310000620.70120-15-philmd@linaro.org
->> 
->> There is quite some code churn involved to fix all the issues addressed in
->> this series. Let me know if you have any better ideas to achieve the same.
->> 
->> Best regards,
->> Bernhard
->> 
->> Testing done:
->> * make check
->> * Boot https://www.qemu-advent-calendar.org/2018/download/day19.tar.xz in
->> ppce500
->> * Boot guest in imx8mp-evk
->
-> I've tried it with the A1222 U-Boot and it still works the same with this 
-> series as before so:
->
-> Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
->
-> Looks like after this series I can revert this change:
->
-> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> index 5d8dad7bba..c86dfa281f 100644
-> --- a/hw/sd/sdhci.c
-> +++ b/hw/sd/sdhci.c
-> @@ -614,11 +614,11 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState 
-> *s)
->      * XXX: Some sd/mmc drivers (for example, u-boot-slp) do not account for
->      * possible stop at page boundary if initial address is not page 
-> aligned,
->      * allow them to work properly
->      */
->     if ((s->sdmasysad % boundary_chk) == 0) {
-> -//        page_aligned = true;
-> +        page_aligned = true;
->     }
->
->     s->prnsts |= SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE;
->     if (s->trnmod & SDHC_TRNS_READ) {
->         s->prnsts |= SDHC_DOING_READ;
->
-> which needed to be commented out before but now works with or without this 
-> change. Is this XXX hack still needed?
->
-> Another change I see is that before it ended in:
->
-> SDHC wr_4b @0x44 <- 0x00000010 read-only
-> SDHC wr_4b @0x44 <- 0x00000010 read-only
->
-> repeated 18 times which now says:
->
-> SD: CMD12 in a wrong state: transfer (spec v3.01)
-> SD: CMD12 in a wrong state: transfer (spec v3.01)
->
-> repeated 17 times. But this fails after not finding a bootable device so I'm 
-> not sure this is not a bug in this U-Boot version. With more traces enabled 
-> it seems to do some transfer then get these errors when trying to continue 
-> reading:
+On 19/1/26 17:11, Tao Tang wrote:
+> Add a minimal PCI test device designed to exercise IOMMU translation
+> (such as ARM SMMUv3) without requiring guest firmware or OS. The device
+> provides MMIO registers to configure and trigger DMA operations with
+> controllable attributes (security state, address space), enabling
+> deterministic IOMMU testing.
+> 
+> Key features:
+> - Bare-metal IOMMU testing via simple MMIO interface
+> - Configurable DMA attributes for security states and address spaces
+> - Write-then-read verification pattern with automatic result checking
+> 
+> The device performs a deterministic DMA test pattern: write a known
+> value (0x12345678) to a configured GVA, read it back, and verify data
+> integrity. Results are reported through a dedicated result register,
+> eliminating the need for complex interrupt handling or driver
+> infrastructure in tests.
+> 
+> This is purely a test device and not intended for production use or
+> machine realism. It complements existing test infrastructure like
+> pci-testdev but focuses specifically on IOMMU translation path
+> validation.
+> 
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>   MAINTAINERS                     |   7 +
+>   docs/specs/index.rst            |   1 +
+>   docs/specs/iommu-testdev.rst    | 138 ++++++++++++++
+>   hw/misc/Kconfig                 |   5 +
+>   hw/misc/iommu-testdev.c         | 318 ++++++++++++++++++++++++++++++++
+>   hw/misc/meson.build             |   1 +
+>   hw/misc/trace-events            |  10 +
+>   include/hw/misc/iommu-testdev.h |  87 +++++++++
+>   8 files changed, 567 insertions(+)
+>   create mode 100644 docs/specs/iommu-testdev.rst
+>   create mode 100644 hw/misc/iommu-testdev.c
+>   create mode 100644 include/hw/misc/iommu-testdev.h
 
-In case that helps here's the beginning of this transfer that produces the 
-above messages after the first block:
 
-sdcard_read_data SD  READ_MULTIPLE_BLOCK/ CMD18 ofs 510 size 512 blklen  512
-sdbus_read @sd-bus value 0x00
-sdcard_read_data SD  READ_MULTIPLE_BLOCK/ CMD18 ofs 511 size 512 blklen 512
-sdbus_read @sd-bus value 0x00
-sdhci_end_transfer Automatically issue CMD12 0x00000000
-sdbus_command @sd-bus CMD12 arg 0x00000000
-sdcard_normal_command SD    STOP_TRANSMISSION/ CMD12 arg 0x00000000 (mode transfer, state sendingdata)
-sdcard_response RESP#1 (normal cmd) (sz:4)
-sdhci_access wr32: addr[0x000c] <- 0x123a0037 (305791031)
-sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
-sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
-sdhci_access rd32: addr[0x0010] -> 0x00000900 (2304)
-sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
-sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
-## Starting application at 0x00200000 ...
-Invalid read at addr 0xFFFE0F200, size 4, region '(null)', reason: rejected
-Invalid write at addr 0xFFFE0F200, size 4, region '(null)', reason: rejected
-Invalid read at addr 0xFFFE0F204, size 4, region '(null)', reason: rejected
-Invalid write at addr 0xFFFE0F204, size 4, region '(null)', reason: rejected
-Invalid read at addr 0xFFFE0F208, size 4, region '(null)', reason: rejected
-Invalid write at addr 0xFFFE0F208, size 4, region '(null)', reason: rejected
-sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
-sdbus_get_dat_lines @sd-bus dat_lines: 15
-sdbus_get_cmd_line @sd-bus cmd_line: 1
-sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-sdbus_get_dat_lines @sd-bus dat_lines: 15
-sdbus_get_cmd_line @sd-bus cmd_line: 1
-sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-sdbus_get_dat_lines @sd-bus dat_lines: 15
-sdbus_get_cmd_line @sd-bus cmd_line: 1
-sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-sdhci_access wr32: addr[0x0038] <- 0x00000000 (0)
-sdhci_access wr32: addr[0x0008] <- 0x00000200 (512)
-sdhci_send_command CMD16 ARG[0x00000200]
-sdbus_command @sd-bus CMD16 arg 0x00000200
-sdcard_normal_command SD         SET_BLOCKLEN/ CMD16 arg 0x00000200 (mode transfer, state transfer)
-sdcard_set_blocklen block len 0x200
-sdcard_response RESP#1 (normal cmd) (sz:4)
-sdhci_response4 RSPREG[31..0]=0x00000900
-sdhci_access wr32: addr[0x000c] <- 0x101a0037 (270139447)
-sdhci_access rd32: addr[0x0030] -> 0x00000001 (1)
-sdhci_access rd32: addr[0x0030] -> 0x00000001 (1)
-sdhci_access rd32: addr[0x0010] -> 0x00000900 (2304)
-sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
-sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
-sdbus_get_dat_lines @sd-bus dat_lines: 15
-sdbus_get_cmd_line @sd-bus cmd_line: 1
-sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-sdbus_get_dat_lines @sd-bus dat_lines: 15
-sdbus_get_cmd_line @sd-bus cmd_line: 1
-sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-sdbus_get_dat_lines @sd-bus dat_lines: 15
-sdbus_get_cmd_line @sd-bus cmd_line: 1
-sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-sdhci_access wr32: addr[0x0000] <- 0x79401de8 (2034245096)
-sdhci_access wr32: addr[0x0004] <- 0x00017200 (94720)
-sdhci_access rd32: addr[0x002c] -> 0x000b011f (721183)
-sdhci_access wr32: addr[0x002c] <- 0x000b011f (721183)
-sdhci_access wr32: addr[0x0038] <- 0x00000000 (0)
-sdhci_access wr32: addr[0x0008] <- 0x00000000 (0)
-sdhci_send_command CMD17 ARG[0x00000000]
-sdbus_command @sd-bus CMD17 arg 0x00000000
-sdcard_normal_command SD    READ_SINGLE_BLOCK/ CMD17 arg 0x00000000 (mode transfer, state transfer)
-sdcard_req_addr req 0x0 addr 0x0
-sdcard_read_block addr 0x0 size 0x200
-sdcard_response RESP#1 (normal cmd) (sz:4)
-sdhci_response4 RSPREG[31..0]=0x00000900
-sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 0 size 512 blklen 512
-sdbus_read @sd-bus value 0x00
-sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 1 size 512 blklen 512
-sdbus_read @sd-bus value 0x00
+> diff --git a/docs/specs/iommu-testdev.rst b/docs/specs/iommu-testdev.rst
+> new file mode 100644
+> index 0000000000..e15f9a55a7
+> --- /dev/null
+> +++ b/docs/specs/iommu-testdev.rst
+> @@ -0,0 +1,138 @@
 
-and so on with increasing ofs until:
+Squashing 'SPDX-License-Identifier: GPL-2.0-or-later' like .c & .h.
 
-> sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 509 size 512 blklen 512
-> sdbus_read @sd-bus value 0x00
-> sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 510 size 512 blklen 512
-> sdbus_read @sd-bus value 0x55
-> sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 511 size 512 blklen 512
-> sdbus_read @sd-bus value 0xaa
-> sdhci_end_transfer Automatically issue CMD12 0x00000000
-> sdbus_command @sd-bus CMD12 arg 0x00000000
-> sdcard_normal_command SD    STOP_TRANSMISSION/ CMD12 arg 0x00000000 (mode 
-> transfer, state transfer)
-> SD: CMD12 in a wrong state: transfer (spec v3.01)
-> sdcard_response ILLEGAL RESP (sz:0)
-> sdhci_access wr32: addr[0x000c] <- 0x113a0037 (289013815)
-> sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
-> sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
-> sdhci_access rd32: addr[0x0010] -> 0x00000900 (2304)
-> sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
-> sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
-> sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
-> sdbus_get_dat_lines @sd-bus dat_lines: 15
-> sdbus_get_cmd_line @sd-bus cmd_line: 1
-> sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-> sdbus_get_dat_lines @sd-bus dat_lines: 15
-> sdbus_get_cmd_line @sd-bus cmd_line: 1
-> sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-> sdbus_get_dat_lines @sd-bus dat_lines: 15
-> sdbus_get_cmd_line @sd-bus cmd_line: 1
-> sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-> sdhci_access wr32: addr[0x0038] <- 0x00000000 (0)
-> sdhci_access wr32: addr[0x0008] <- 0x00000200 (512)
-> sdhci_send_command CMD16 ARG[0x00000200]
-> sdbus_command @sd-bus CMD16 arg 0x00000200
-> sdcard_normal_command SD         SET_BLOCKLEN/ CMD16 arg 0x00000200 (mode 
-> transfer, state transfer)
-> sdcard_set_blocklen block len 0x200
-> sdcard_response RESP#1 (normal cmd) (sz:4)
-> sdhci_response4 RSPREG[31..0]=0x00400900
-> sdhci_access wr32: addr[0x000c] <- 0x101a0037 (270139447)
-> sdhci_access rd32: addr[0x0030] -> 0x00000001 (1)
-> sdhci_access rd32: addr[0x0030] -> 0x00000001 (1)
-> sdhci_access rd32: addr[0x0010] -> 0x00400900 (4196608)
-> sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
-> sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
-> sdbus_get_dat_lines @sd-bus dat_lines: 15
-> sdbus_get_cmd_line @sd-bus cmd_line: 1
-> sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-> sdbus_get_dat_lines @sd-bus dat_lines: 15
-> sdbus_get_cmd_line @sd-bus cmd_line: 1
-> sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-> sdbus_get_dat_lines @sd-bus dat_lines: 15
-> sdbus_get_cmd_line @sd-bus cmd_line: 1
-> sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-> sdhci_access wr32: addr[0x0000] <- 0x79401de8 (2034245096)
-> sdhci_access wr32: addr[0x0004] <- 0x00017200 (94720)
-> sdhci_access rd32: addr[0x002c] -> 0x000b011f (721183)
-> sdhci_access wr32: addr[0x002c] <- 0x000b011f (721183)
-> sdhci_access wr32: addr[0x0038] <- 0x00000000 (0)
-> sdhci_access wr32: addr[0x0008] <- 0x00000200 (512)
-> sdhci_send_command CMD17 ARG[0x00000200]
-> sdbus_command @sd-bus CMD17 arg 0x00000200
-> sdcard_normal_command SD    READ_SINGLE_BLOCK/ CMD17 arg 0x00000200 (mode 
-> transfer, state transfer)
-> sdcard_req_addr req 0x200 addr 0x200
-> sdcard_read_block addr 0x200 size 0x200
-> sdcard_response RESP#1 (normal cmd) (sz:4)
-> sdhci_response4 RSPREG[31..0]=0x00000900
-> sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 0 size 512 blklen 512
-> sdbus_read @sd-bus value 0x00
-> sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 1 size 512 blklen 512
-> sdbus_read @sd-bus value 0x00
->
-> Regards,
-> BALATON Zoltan
->
->> Bernhard Beschow (14):
->>  hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement sd-spec-version 3 by
->>    default
->>  hw/arm/fsl-imx6: Remove now redundant setting of "sd-spec-version"
->>    property
->>  hw/arm/fsl-imx6: Fix naming of SDHCI related constants and attributes
->>  hw/arm/fsl-imx25: Apply missing reset quirk
->>  Revert "hw/sd/sdhci: Rename ESDHC_* defines to USDHC_*"
->>  hw/sd/sdhci: Consolidate eSDHC constants
->>  hw/sd/sdhci: Rename usdhc_ functions
->>  hw/sd/sdhci: Add TYPE_FSL_ESDHC_BE
->>  hw/ppc/e500: Use TYPE_FSL_ESDHC_BE
->>  hw/arm/fsl-imx25: Extract TYPE_FSL_ESDHC_LE
->>  hw/sd/sdhci: Remove endianness property
->>  hw/sd/sdhci: Add uSDHC-specific quirk
->>  hw/sd/sdhci: Remove vendor property
->>  hw/sd/trace-events: Remove redundant "SWITCH " command name
->> 
->> hw/sd/sdhci-internal.h    |   3 -
->> include/hw/arm/fsl-imx6.h |   4 +-
->> include/hw/sd/sdhci.h     |   8 +-
->> hw/arm/fsl-imx25.c        |   5 +-
->> hw/arm/fsl-imx6.c         |  18 ++--
->> hw/ppc/e500.c             |  10 +-
->> hw/sd/sdhci.c             | 201 ++++++++++++++++++++++++--------------
->> hw/sd/trace-events        |   2 +-
->> 8 files changed, 146 insertions(+), 105 deletions(-)
->> 
->> --
->> 2.52.0
->> 
->> 
->> 
->
->
+> +iommu-testdev — IOMMU test device for bare-metal testing
+> +=========================================================
+> +
+> +Overview
+> +--------
+> +``iommu-testdev`` is a minimal, test-only PCI device designed to exercise
+> +IOMMU translation (such as ARM SMMUv3) without requiring firmware or a guest
+> +OS. Tests can populate IOMMU translation tables with known values and trigger
+> +DMA operations that flow through the IOMMU translation path. It is **not** a
+> +faithful PCIe endpoint and must be considered a QEMU-internal test vehicle.
+   ...
+
+> diff --git a/hw/misc/iommu-testdev.c b/hw/misc/iommu-testdev.c
+> new file mode 100644
+> index 0000000000..15eb6de78a
+> --- /dev/null
+> +++ b/hw/misc/iommu-testdev.c
+> @@ -0,0 +1,318 @@
+> +/*
+> + * A test device for IOMMU
+> + *
+> + * Copyright (c) 2026 Phytium Technology
+> + *
+> + * Author:
+> + *  Tao Tang <tangtao1634@phytium.com.cn>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+
+
+> diff --git a/include/hw/misc/iommu-testdev.h b/include/hw/misc/iommu-testdev.h
+> new file mode 100644
+> index 0000000000..338365947c
+> --- /dev/null
+> +++ b/include/hw/misc/iommu-testdev.h
+> @@ -0,0 +1,87 @@
+> +/*
+> + * A test device for IOMMU
+> + *
+> + * Copyright (c) 2026 Phytium Technology
+> + *
+> + * Author:
+> + *  Tao Tang <tangtao1634@phytium.com.cn>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 
