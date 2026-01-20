@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DB8ED26289
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 18:41:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E1F1D2628A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 18:41:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viGf9-00020p-Nz; Tue, 20 Jan 2026 13:41:13 -0500
+	id 1viGeJ-0000Bu-Lw; Tue, 20 Jan 2026 13:40:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGek-0001lJ-A0
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:40:52 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGdd-00087A-Vq
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:39:38 -0500
 Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGei-0006Lw-SQ
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:40:46 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGdc-00060b-Gb
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:39:37 -0500
 Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47ee301a06aso54007955e9.0
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 10:40:44 -0800 (PST)
+ 5b1f17b1804b1-47d59da3d81so976345e9.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 10:39:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768934443; x=1769539243; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768934374; x=1769539174; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8/8EVFYZXMFuk6VWmUP64vs2hU05CO6vz8Wwm+fVrOk=;
- b=TBsA9neE0MQGzM2TKRc+CzVvRRwtKirrmKxato5zKdpXv4JsD3VnxfwMbsOEWs4c3n
- yhto7VqYOmT359PI9N2K23/sb2po1CHdRtzV8ukixC+0mEjExyW+Mvg52bxkZnOWlx4L
- kwx16Ocyq24j+qzlKHqWJjp3xdbclggdM+/tFuLdYm6ODAvj7vQRrT+IQgfrNEb1RKGu
- ttunH7HiT4qw1zVSo+bfngtOGFMUi8gARzJciOrjcxm4b9HyHJiXK9wo1hDoBwj9w6Wi
- SqXcWzwex2wIQQiLY7EAkgQlGEui+l9PySGGfX3uJGzrtdc/lLYqpKnGoIGx+OeCOfQk
- dEig==
+ :reply-to; bh=bggCs3F8lakcGV/xgvsKOfncSaOjQlaK7c4RhIG7iho=;
+ b=CYomyB/SAaD25aQtjZ2m3QIvch0dRmj5uvo9+0wemloHn2/qOhJRySz8hDQjyXAzR5
+ TOAqIB3w/NqIGi3+3OKhTSYvmV/Cj1WbdzjPPKbAWdPJS/BdcNkbL1nUp+wzoHbSkneF
+ Agec+2/vZ5pD9VMlYLH6JYtojd4lw+c9324UlXoqDr430FosAz6xi/D7ZzlJ/zRJPFqg
+ hno3deyRoa4Dr2YflrZ9BgYx3K2r2yiD7U8Ro2RgFBSRWYmG7xDgxM/SLbASdkWt6IKD
+ GuR8t0YxsXoLckcfG/2rgue5JBH2saMnVnD6doGH/SGMpX4/+KK/mWZ2a2JWvTXMDJXC
+ 00UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768934443; x=1769539243;
+ d=1e100.net; s=20230601; t=1768934374; x=1769539174;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=8/8EVFYZXMFuk6VWmUP64vs2hU05CO6vz8Wwm+fVrOk=;
- b=b7iZxolVLf14Cxi+p9CdcCOhmaJuPCMNdhYuHo/gLSnSzdoxg4V5Cqcte7SjLfDW5+
- uGUgDiYe4AlPjng28DHrmUJNMGqGtdXBUML9Xfww3553mVKrnfTvFGcg/8vQEjVxJVhw
- uGS0rfXYwIcjsS0ul+XL5pF04/6uin+Q9Zu4ayz2Zhx6wSfBFJ/XWtQX3gUujGdvv8IX
- HpY7KODuEJYO9Xc53zJ6/4UKH82CziPVxAhUvmJT7Gi2XUGSLqOPDmiktvQevDVUe9k6
- JwfO15uY+68LvY/C9PHZFZiglmhWGPhvW6v4+pDYfeTrOirTAGCVDywOcsRzRJ1Bjaay
- QznQ==
-X-Gm-Message-State: AOJu0YyanjoHtWekqbXxBl1bPLflX+1EOOt0eSUTrqJtQN0nAoxYB7ni
- 2VnxcR/aojC0SfadeL3EG12kliYjateliff7k6By+J5+KGoXr6vE0u0qJ6B6rcDy2DACalWBkRJ
- T3mqy68U=
-X-Gm-Gg: AY/fxX4p731rz2Pgsa0dOTUQ5+cnvKt0rTHfxt8EFTyEVF/KrgmA33/26ZR2KVINxsT
- wXkJZXh7W4bd0HFzNspPCU6kYLQ84DhtoKTWXQKt8nDINksrPZzYPe5oUTDlgRCrSTT3R/hH7FH
- hYZ25E/bAOoFzjH4DpDMYxAnw5S7nj0wcFXZVp9XZUZGqYc6ZokriWchXlv7uv2zAWyY7GUk6Ye
- 77SZApd++spNm7GFxg7uGpQwnPHhvV+q4OR7dBUmXXGrjJ9S31NEGw2pJEZ4672tZVUWgqYw1hw
- Rm5jtICY/72/tawU2hiCsJiS8dtsMcNTRfqFaxHzxfLLnnAoT19j8//2swelHCSf84s6NzAU5J2
- L+zanJJgzWyhzKCpV7cG7e7OqKqs1IQ49Ibk5HBDkgf20CM2YestuIVegsL6j4YI9FymD+iWkIO
- FHh0NeEXVrUXz3vc7O67T/YzQEmp7pecrFUvvJUEgxwYLiULGhjzkHB3hjwnVvLKUIA9zE2Lk=
-X-Received: by 2002:a05:600c:1552:b0:47e:e946:3a72 with SMTP id
- 5b1f17b1804b1-4801eb0e021mr198656835e9.27.1768934443034; 
- Tue, 20 Jan 2026 10:40:43 -0800 (PST)
+ bh=bggCs3F8lakcGV/xgvsKOfncSaOjQlaK7c4RhIG7iho=;
+ b=Jf1iLnfOv2UVCZg72fAcCkCp0CMKqtt6kZ6NKbhJjl3Z9o3tDSqx8cLt/U0WmI76ZE
+ MH7AxaKk8zo0VZksmL++U0xmURP9Ez6EkVM8UWxixKI/kZE9gnN1Gtfsc+JbwEV1QFPe
+ vP6ukVDh1ppnm2+t9A5+WOGjhC/9LwCeBjUZAvRUbbSq9VXN2d5IcY96tbUxd1hjT03k
+ V2RnMN5WV1Y+AsppZPZH9AfpfMH0NqZ+XHvipqg5jD0p9L6soNRUo3TAzy69tdSCgmNw
+ WE9Q6r8tzmDijfc+T7PqI5SJGVfyidMeiplorXd8PsaPMOREBCH0HwoE4ATsIcQ3sTnG
+ F1yg==
+X-Gm-Message-State: AOJu0Yw8PQpcUaYpvy5ayA5D5BsQnLjSB9n5hRLXKZpreJH+KwU734uh
+ kgB1pRadIwTL1aA7ZfOUhDN8OQm4PpaV2tj9sTKfM/g+8pybFpLWuUrrJvaYoqLMf2z8fgBbMP8
+ o2BTdHro=
+X-Gm-Gg: AY/fxX5qYgq0HXFRg6UKfQ2/IEq/A5wVMCpfU7uy4FR9I8Rhgsg1pxTcQvhaELj7IG4
+ oagjA+GJhbsi6G3UA4liT0qRQF+E0TAKldo/rY6X6KzIhNOrK0L8Z6xr99f1FjpKpKF1CCWLUEb
+ I3bA2hDzTpcF/UHU9H0y2RpD9NA1FUEC0j5j7kKsW1xpcQXgbz4LwUkn3Jz9EVYLilsFJiPzMXC
+ pRenIu+2gEWkbE1qy3Zuh+eTUCHlvgGx9WQZFpKMuqFn7M5xNmN1qSbYIMIYo7d53+SFQZKft0W
+ +cK7JBsz1yhNle7gxoC66Ma/YgJiIp7Hkd3oOwoNu4ZU5+uq3rArO0Aj4YxTRBvGCCfS32rMc5z
+ tQXvSoakvNRAVkyHxHVd93WV61xw8Zd+T4pKiLTG6xwjnyyVhPCb7L2YPRgjiqd/S5/FwY1kV/B
+ TK7CsOamdaPug2FXcB1kUx6YLGK4MnxaYbaYNmBd0XRwRO+uksESTFRGcKU9W4
+X-Received: by 2002:a05:600c:1c24:b0:47e:e2b8:66e6 with SMTP id
+ 5b1f17b1804b1-4802590e305mr206894065e9.14.1768934374443; 
+ Tue, 20 Jan 2026 10:39:34 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e8c05c3sm254264795e9.11.2026.01.20.10.40.42
+ 5b1f17b1804b1-4801e8c0475sm310070555e9.10.2026.01.20.10.39.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 20 Jan 2026 10:40:42 -0800 (PST)
+ Tue, 20 Jan 2026 10:39:33 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/29] hw/sd/sdhci: Consolidate eSDHC constants
-Date: Tue, 20 Jan 2026 19:38:47 +0100
-Message-ID: <20260120183902.73845-15-philmd@linaro.org>
+Subject: [PULL 04/29] hw/arm/smmuv3-common: Add NSCFG bit definition for CD
+Date: Tue, 20 Jan 2026 19:38:37 +0100
+Message-ID: <20260120183902.73845-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260120183902.73845-1-philmd@linaro.org>
 References: <20260120183902.73845-1-philmd@linaro.org>
@@ -98,69 +98,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
 
-Drop the "IMX_" part of the names since these are actually {E,U}SDHC
-specific and apply for PowerPC-based SoCs as well. While at it
-consolidate all ESDHC constants into the ESDHC section.
+Add NSCFG bit definition for CD structure. This allows proper
+configuration of non-secure access settings in CD.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-ID: <20260112145418.220506-7-shentey@gmail.com>
+Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Message-ID: <20260119161112.3841386-5-tangtao1634@phytium.com.cn>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sdhci-internal.h | 1 -
- hw/sd/sdhci.c          | 9 +++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ include/hw/arm/smmuv3-common.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
-index 3e81821dd1e..f24532eed28 100644
---- a/hw/sd/sdhci-internal.h
-+++ b/hw/sd/sdhci-internal.h
-@@ -75,7 +75,6 @@
- #define SDHC_CMD_INHIBIT               0x00000001
- #define SDHC_DATA_INHIBIT              0x00000002
- #define SDHC_DAT_LINE_ACTIVE           0x00000004
--#define SDHC_IMX_CLOCK_GATE_OFF        0x00000080
- #define SDHC_DOING_WRITE               0x00000100
- #define SDHC_DOING_READ                0x00000200
- #define SDHC_SPACE_AVAILABLE           0x00000400
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index ccdfc59af85..779f411babe 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -1642,7 +1642,7 @@ static void sdhci_bus_class_init(ObjectClass *klass, const void *data)
- #define ESDHC_MIX_CTRL                  0x48
- 
- #define ESDHC_VENDOR_SPEC               0xc0
--#define ESDHC_IMX_FRC_SDCLK_ON          (1 << 8)
-+#define ESDHC_FRC_SDCLK_ON              (1 << 8)
- 
- #define ESDHC_DLL_CTRL                  0x60
- 
-@@ -1657,6 +1657,7 @@ static void sdhci_bus_class_init(ObjectClass *klass, const void *data)
- #define ESDHC_CTRL_8BITBUS              (0x2 << 1)
- 
- #define ESDHC_PRNSTS_SDSTB              (1 << 3)
-+#define ESDHC_PRNSTS_CLOCK_GATE_OFF     BIT(7)
- 
- static uint64_t usdhc_read(void *opaque, hwaddr offset, unsigned size)
- {
-@@ -1731,10 +1732,10 @@ usdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
- 
-     case ESDHC_VENDOR_SPEC:
-         s->vendor_spec = value;
--        if (value & ESDHC_IMX_FRC_SDCLK_ON) {
--            s->prnsts &= ~SDHC_IMX_CLOCK_GATE_OFF;
-+        if (value & ESDHC_FRC_SDCLK_ON) {
-+            s->prnsts &= ~ESDHC_PRNSTS_CLOCK_GATE_OFF;
-         } else {
--            s->prnsts |= SDHC_IMX_CLOCK_GATE_OFF;
-+            s->prnsts |= ESDHC_PRNSTS_CLOCK_GATE_OFF;
-         }
-         break;
- 
+diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
+index f0e1dd85715..e8e7746d1fa 100644
+--- a/include/hw/arm/smmuv3-common.h
++++ b/include/hw/arm/smmuv3-common.h
+@@ -123,11 +123,13 @@ REG32(CD_1, 4)
+     FIELD(CD_1, A, 14, 1)
+     FIELD(CD_1, ASID, 16, 16)
+ REG32(CD_2, 8)
++    FIELD(CD_2, NSCFG0, 0, 1)
+     FIELD(CD_2, HAD0, 1, 1)
+     FIELD(CD_2, TTB0_LO, 4, 28)
+ REG32(CD_3, 12)
+     FIELD(CD_3, TTB0_HI, 0, 20)
+ REG32(CD_4, 16)
++    FIELD(CD_4, NSCFG1, 0, 1)
+     FIELD(CD_4, HAD1, 1, 1)
+     FIELD(CD_4, TTB1_LO, 4, 28)
+ REG32(CD_5, 20)
+@@ -155,6 +157,9 @@ REG32(CD_5, 20)
+ #define CD_R(x)          FIELD_EX32((x)->word[1], CD_1, R)
+ #define CD_A(x)          FIELD_EX32((x)->word[1], CD_1, A)
+ #define CD_ASID(x)       FIELD_EX32((x)->word[1], CD_1, ASID)
++#define CD_NSCFG(x, sel) ((sel) ?                                         \
++    FIELD_EX32((x)->word[4], CD_4, NSCFG1) :                              \
++    FIELD_EX32((x)->word[2], CD_2, NSCFG0))
+ #define CD_HAD(x, sel)   ((sel) ?                                         \
+     FIELD_EX32((x)->word[4], CD_4, HAD1) :                                \
+     FIELD_EX32((x)->word[2], CD_2, HAD0))
 -- 
 2.52.0
 
