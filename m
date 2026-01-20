@@ -4,120 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D426DD2ED0F
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 10:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A05D2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 10:17:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi8mb-000538-7G; Tue, 20 Jan 2026 05:16:21 -0500
+	id 1vi8nU-0005Z3-P4; Tue, 20 Jan 2026 05:17:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vi8mY-00051u-BY
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 05:16:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vi8mU-0004UJ-74
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 05:16:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768904171;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yHi+AJBdIDQK4l972R4LZxcnS51eGST/FxiTej0nGfY=;
- b=OYEaAXNh/tPFld/pmxp9WSODoRwjM48sT1rjriCDbCr4sheaOhlBzqDck7sRPNQZsy++6I
- u1Xh22mICv89DAW7xY89YND9kTbPacdktccel5Fb16967+OORr2l/C2qYTxtgnFKCXmaY2
- OcQFW2n3T7UxowsJ3Jl5RMmv+tf8qAo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-459-o9adTfiONF2K93Vo6logiQ-1; Tue, 20 Jan 2026 05:16:10 -0500
-X-MC-Unique: o9adTfiONF2K93Vo6logiQ-1
-X-Mimecast-MFC-AGG-ID: o9adTfiONF2K93Vo6logiQ_1768904169
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4803b4e3b9eso7883865e9.3
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 02:16:10 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768904169; cv=none;
- d=google.com; s=arc-20240605;
- b=CqQgpOXX7CC4VCnRxUuLjPwYefbBq6ZXZilzY91Tc7SC6RWSyVJybtb/lZ53M0fVYz
- Z9TaULaUwHEDD70FNnhPhVhRG12e4ru6Wixj8phfzk7v7sZ3UbbLNzTefAi3oWwhBk3s
- L7s70CP8vKYHSsz70CgHTj3+Oluod346W1rPcVGAOQZbngAGPIt3Kva/7SzsCsgw9Ooo
- cRkXVOhXboFs+BuI6eQI9w+6nfdK8WClbCS0YwF85ItKJsRu6jI2uu4R0lFjQWW8HfhB
- fCjGpEdjvq9YyEEf4Z0XtCBKND9FmIDUJBpkpsVnJVfVUwooE9gX6FEpSxK9m+CEN1uZ
- q1tg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=yHi+AJBdIDQK4l972R4LZxcnS51eGST/FxiTej0nGfY=;
- fh=SJ3HPovJyRUvRbjEYgfW8f8/HsJC2a+l/HOVRBs3/Wg=;
- b=V64eCmgfdz0F1l2fkGY3pbc0rNkWyU4XewWujOyRoi0Td8EDajGLC8bz/8gJm6qK4S
- GMwrAlEjTwvMPffzonT02xCTRAyZV3+uddXSqueLuQpaNtEsfaqK8zzY9F2+XbBWkYjO
- tLeS1xxGEa/jYitjFQ6QgGExlhAoR8N5VnGTg53BZYlKPIONPHuJfeX1zTCuRNUqsLnp
- zu9GrOU3Ml9JxohfO25zi7VKKbQb5LnfacmcbMZ6PQehHpdtJN0vDrTfuhTsZB4XSfYa
- l5A3FWpkETcvegkxKvc72K8+t9kFKZOdLxoVuAWUQbARi18G1A22SOzP48aPyBo+lDSB
- fcuw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1vi8nA-0005Tv-AD
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 05:17:01 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1vi8n8-0004WL-Lv
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 05:16:56 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-64b58553449so9174328a12.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 02:16:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768904169; x=1769508969; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=yHi+AJBdIDQK4l972R4LZxcnS51eGST/FxiTej0nGfY=;
- b=bNLbkfSKnarsxFaEGxQZGiX9upagROzS2e2SBHUwtnEm3ErLlXBu30r2WDwpBH5+sm
- 9tIF6fNEiz4IjGkj7NjC5wcwxiCIKvmb5CiEDeMGpy1V9m2K2k9PJbqRG/7iH1Qluefh
- 1bRHKiqSdX6eRdKi8uSlWH6p6NJw7R7jiTN4pAZbd/PDKrr/aNkmHb7Dv7/zZr0jIkIX
- YB9jLc02OlRNNjwSczL0xJhqYoiWHqkE3Z7etdbSORGZcPoyrIF044HsAbBt3CR6fU37
- YEG3dqD+CqYErjxWy2PoQYgQP7R/hL7pBEKMRE4JUm0Muso28+9/G3G+3H3Grmo1NaYo
- TN9w==
+ d=gmail.com; s=20230601; t=1768904213; x=1769509013; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Ti4CxLamZiTDxXifFki32VmzGYVlkQanaZh5U5MfuLg=;
+ b=T+erJShk7MZCvgJmDz53PvqF7d8dGHiGW1CUJQAcn4pipkbsya3qp6DKjGXH03oTWo
+ UJb45CLLVgMyjuHeKFMuzn5Haw0a2UN16XZYtPcxLYYKgdjgE54utDYxGwY1VaeqMy+Q
+ wmdILWlo8XBcrJhzHryE2IFBxE3umnUumAPVjj0hC0ZS4FIRsY7Xgs5X+S7Kl6GDUSjq
+ IVx/iW+9PVHVgDDqLkYdW/Xo2dTcHPKI2F3o2JY9G4BY5EBajmPTGvUkZnN7b0c6bAtO
+ EOrYBYyJIf4pa2vZAarMuZNlX/IMl0l6EjOG0NsV1HpgPB5PxDexeGO2y5Gq2Fem96B/
+ qoWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768904169; x=1769508969;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yHi+AJBdIDQK4l972R4LZxcnS51eGST/FxiTej0nGfY=;
- b=I8gXCLgmrs8IqMqArwRDsnr7WveNdL5HPaU+fI6XbqLCHbv4jh4gKExwn2YiagLLR2
- CM8vlgLC8VLtzEAqDnywnGq0OMXLLxC1NwgbwXGOF+KOm7nmLVjSOwP05bTa43ItIB7x
- lNX1iQvuOxvJuecMdiuGOhXmSlIWx6psumpyTFRIpm7/aSZZAxRPw85E3AufpENTetOT
- 5qG77WsFWU53fpq4lAkZAZzrcIyy4BBf1C89i6FhYaNR9zlAR1PayVKY/7KBtPqb2KBy
- C+6TuphV7AEJXiKoq/BR5bozbmlWk2fvkEAAy00IgcqY+X2fTxTcKBLl/RtQu68KKNEG
- VvZQ==
-X-Gm-Message-State: AOJu0YzZIjL6YlN+DymzK+pk1OOZ+nmkkPT8bKt0wU1MoBqTmmVAKEb3
- Hkpy4cnu/u7Fb24am5GlqWCUml6Xw1aa1pZYiOTuqVirOWR+LwRjXfcciZIOADmRGDFXGKJ5NHd
- Keu0zV/UIYPG+ivEXCKAUYcc/SUC2BhuPfhfktm61ky316w/r8Y232NfscwE8sbYmShYZMb7bGs
- yZatj33RzNoxPY/OshE/es4ySZn/sr6kc=
-X-Gm-Gg: AY/fxX54HeIuqAKMRNKo581SmU5jkzaRGBL8Pu53HdrjdNsNWBA4hsMJSIRqgn//av8
- OTUQ7TrKJoKjaqShtyZuV1YndGp16NV5vIuNRPNLd+A/cP+K4/hgOnCpGCpV4pHtyX3joQIxzzV
- pTdYp79mLHotE1haVVrLP7wjciIZwg1MbXDEoMMBqIeRRpVmyntAYWaPeALf9XTc/LTkksWzpAk
- 5UxYIW4PXipiI8YPXwZIP+5YmOy7y9f0BpsdA5NlTis5fGxEUe4ZCEM
-X-Received: by 2002:a05:600c:1d28:b0:477:b734:8c41 with SMTP id
- 5b1f17b1804b1-4801eab51d5mr167826615e9.1.1768904168999; 
- Tue, 20 Jan 2026 02:16:08 -0800 (PST)
-X-Received: by 2002:a05:600c:1d28:b0:477:b734:8c41 with SMTP id
- 5b1f17b1804b1-4801eab51d5mr167826295e9.1.1768904168579; Tue, 20 Jan 2026
- 02:16:08 -0800 (PST)
-MIME-Version: 1.0
-References: <20260109124043.25019-1-farosas@suse.de>
- <20260109124043.25019-21-farosas@suse.de>
-In-Reply-To: <20260109124043.25019-21-farosas@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 20 Jan 2026 15:45:51 +0530
-X-Gm-Features: AZwV_Qj1nVIU5X_H3K0p8jnOpRw0MIPqz0KdqxtuXnrWILVXQ4T1mdVlycBx6zk
-Message-ID: <CAE8KmOzKkF2M0c4yresB+Y87XTXssbmvGp77C640tt33dbj37g@mail.gmail.com>
-Subject: Re: [PATCH v3 20/25] migration: Move channel parsing to channel.c
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com
+ d=1e100.net; s=20230601; t=1768904213; x=1769509013;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ti4CxLamZiTDxXifFki32VmzGYVlkQanaZh5U5MfuLg=;
+ b=RJBrfs5ECrrvfgSjIC/6jEe1xoziJkXiHJBzme8A8oJJLSBPsm52vWkLZF+BfhoBA6
+ wz3u3zrKgl5SNPeA9h6WJGexG6W6v7n7eBtXm/r5yqk5PVc9X4igOY1wium6t1nXIRLy
+ 69AZJY527lqscLIqxmOl+JfcjvNNp7jp0TmjhRaEa2qmE1/cY5iZBDC33qrfUYjiWEIG
+ hhHaJCI8prrupIMuwiWXYqeJmBflI+jO47c9mFCklLBOmzZ0V9PNOmEWhnrF5uwL3Azh
+ Uw3QXo//k8UbN6MNJl28shHpPkqLQsyc6PrORPIX0hSFjCZ+XoHYvvNRynHtlVUy0mRH
+ SwEQ==
+X-Gm-Message-State: AOJu0YxNmrtbzyds9Yn9DavLu5DpKlOdRL753LqEfTEwI5A5wrSaZT85
+ zd8oLi+03T9aTQySsvlRlVMHRW7tEtEOYv8EtyORTRS+v/vaRE9BN5Y/
+X-Gm-Gg: AZuq6aJ0f7Fls/WpIg9FQXiZVNEkL+6yojT4IJ50BEUqTM/i1duVkgjIUdo1Lg/Tm0V
+ /gIKXChsdvozhb4I+O4tIVaj0zXo38YnF4C2yLY89yMQOjEM6Aet9WkIaX8cyoP4dAOqp5UWNKF
+ tbAWiHsYDE5sIohtABN4J8wOzdzfcn2pWpoJkT8MsmU3yU83HymtRkQsCUFxUGC63N5T9ciC2Hm
+ beI9zRifX1vIRWkWdpCEGicXi0MZm1RTe7jE4QZIaGSqy1EHbgc4xQ2bGloSNEyHgW5eHezXbgR
+ k/gVb5/l3Q+L3LZtCjfwm74x93v8pgER8jhm3d303qrwsqkWRwYdYvySEDE+L3p7lqOrzf9+uxp
+ vqhHcIx37YjJGuHJ5C62AFnmNwaI1lSZdgRsQbXN8MOA2OVKwXpJDhzl6HZHpL+eKkuIepRN4El
+ kwVw05F+Lp0+A+YdAW0vr/YB2PWUMokjuMMINNFQtcbHd+iw==
+X-Received: by 2002:a17:907:6d1b:b0:b87:115c:4a2b with SMTP id
+ a640c23a62f3a-b8792f9be9fmr1396930266b.25.1768904212755; 
+ Tue, 20 Jan 2026 02:16:52 -0800 (PST)
+Received: from [10.33.80.40] (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b8795a43679sm1345881966b.70.2026.01.20.02.16.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Jan 2026 02:16:52 -0800 (PST)
+Message-ID: <af668f8b21c675fb3f735b1ae9617cc39c57813a.camel@gmail.com>
+Subject: Re: [PATCH v6 08/12] virtio-serial-bus: add terminal resize messages
+From: Filip Hejsek <filip.hejsek@gmail.com>
+To: "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	
+ <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Amit Shah <amit@kernel.org>, Markus Armbruster <armbru@redhat.com>, Eric
+ Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,  Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, Maximilian
+ Immanuel Brandtner	 <maxbr@linux.ibm.com>, Szymon Lukasz <noh4hss@gmail.com>
+Date: Tue, 20 Jan 2026 11:16:51 +0100
+In-Reply-To: <aW9UfOk04QKe6fZA@redhat.com>
+References: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
+ <20260119-console-resize-v6-8-33a7b0330a7a@gmail.com>
+ <6910accb5917c60e89801af1c3528187e732166f.camel@gmail.com>
+ <aW9Q62g60J6L4yuI@redhat.com>
+ <a7c9e66388d621b26c1e954c9a88ec19c7d88056.camel@gmail.com>
+ <aW9UfOk04QKe6fZA@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,252 +113,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 Jan 2026 at 18:14, Fabiano Rosas <farosas@suse.de> wrote:
-> Encapsulate the MigrationChannelList parsing in a new
-> migrate_channels_parse() located at channel.c.
->
-> This also makes the memory management of the MigrationAddress more
-> uniform. Previously, half the parsing code (uri parsing) would
-> allocate memory for the address while the other half (channel parsing)
-> would instead pass the original QAPI object along. After this patch,
-> the MigrationAddress is always QAPI_CLONEd, so the callers can use
-> g_autoptr(MigrationAddress) in all cases.
->
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/channel.c   | 45 ++++++++++++++++++++++++++++++++++++++
->  migration/channel.h   |  5 +++++
->  migration/migration.c | 50 ++++++++++++-------------------------------
->  3 files changed, 64 insertions(+), 36 deletions(-)
->
-> diff --git a/migration/channel.c b/migration/channel.c
-> index 56c80b5cdf..8b71b3f430 100644
-> --- a/migration/channel.c
-> +++ b/migration/channel.c
-> @@ -11,6 +11,7 @@
->   */
->
->  #include "qemu/osdep.h"
-> +#include "qemu/cutils.h"
->  #include "channel.h"
->  #include "exec.h"
->  #include "fd.h"
-> @@ -20,7 +21,9 @@
->  #include "migration.h"
->  #include "multifd.h"
->  #include "options.h"
-> +#include "qapi/clone-visitor.h"
->  #include "qapi/qapi-types-migration.h"
-> +#include "qapi/qapi-visit-migration.h"
->  #include "qapi/error.h"
->  #include "qemu-file.h"
->  #include "qemu/yank.h"
-> @@ -280,3 +283,45 @@ int migration_channel_read_peek(QIOChannel *ioc,
->
->      return 0;
->  }
-> +
-> +bool migrate_channels_parse(MigrationChannelList *channels,
-> +                            MigrationChannel **main_channelp,
-> +                            MigrationChannel **cpr_channelp,
-> +                            Error **errp)
-> +{
-> +    MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
-> +    bool single_channel = cpr_channelp ? false : true;
-> +
-> +    if (single_channel && channels->next) {
-> +        error_setg(errp, "Channel list must have only one entry, "
-> +                   "for type 'main'");
-> +        return false;
-> +    }
+On Tue, 2026-01-20 at 10:10 +0000, Daniel P. Berrang=C3=A9 wrote:
+> On Tue, Jan 20, 2026 at 11:07:16AM +0100, Filip Hejsek wrote:
+> > On Tue, 2026-01-20 at 09:54 +0000, Daniel P. Berrang=C3=A9 wrote:
+> > > On Tue, Jan 20, 2026 at 10:50:04AM +0100, Filip Hejsek wrote:
+> > > > On Mon, 2026-01-19 at 04:27 +0100, Filip Hejsek wrote:
+> > > > > Implement the part of the virtio spec that allows to notify the v=
+irtio
+> > > > > driver about terminal resizes. The virtio spec contains two metho=
+ds to
+> > > > > achieve that:
+> > > > >=20
+> > > > > For legacy drivers, we have only one port and we put the terminal=
+ size
+> > > > > in the config space and inject the config changed interrupt.
+> > > > >=20
+> > > > > For multiport devices, we use the control virtqueue to send a pac=
+ket
+> > > > > containing the terminal size. Note that old versions of the Linux=
+ kernel
+> > > > > used an incorrect order for the fields (rows then cols instead of=
+ cols
+> > > > > then rows), until it was fixed by commit 5326ab737a47278dbd16ed3e=
+e7380b26c7056ddd.
+> > > > >=20
+> > > > > As a result, when using a Linux kernel older than 6.15, the numbe=
+r of rows
+> > > > > and columns will be swapped.
+> > > > >=20
+> > > > > Based on a patch originally written by Szymon Lukasz <noh4hss@gma=
+il.com>,
+> > > > > but partially rewritten to fix various corner cases.
+> > > > >=20
+> > > > > Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+> > > > > Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+> > > > > ---
+> > > > >  hw/char/trace-events              |  1 +
+> > > > >  hw/char/virtio-serial-bus.c       | 76 +++++++++++++++++++++++++=
+++++++++++++--
+> > > > >  hw/core/machine.c                 |  4 ++-
+> > > > >  include/hw/virtio/virtio-serial.h |  5 +++
+> > > > >  4 files changed, 83 insertions(+), 3 deletions(-)
+> > > > >=20
+> > > > > [...]
+> > > > >=20
+> > > > > diff --git a/include/hw/virtio/virtio-serial.h b/include/hw/virti=
+o/virtio-serial.h
+> > > > > index 60641860bf..bda6d5312a 100644
+> > > > > --- a/include/hw/virtio/virtio-serial.h
+> > > > > +++ b/include/hw/virtio/virtio-serial.h
+> > > > > @@ -145,6 +145,9 @@ struct VirtIOSerialPort {
+> > > > >      bool host_connected;
+> > > > >      /* Do apps not want to receive data? */
+> > > > >      bool throttled;
+> > > > > +
+> > > > > +    /* Terminal size reported to the guest.  Only used for conso=
+les. */
+> > > > > +    uint16_t cols, rows;
+> > > > >  };
+> > > >=20
+> > > > I found a bug: after a migration, the guest is not informed about t=
+he
+> > > > new console size. I see two ways to fix this: either add the cols a=
+nd
+> > > > rows fields to the migration stream, or always send the console siz=
+e to
+> > > > the guest after migration, even if it might not have changed. Which=
+ do
+> > > > you prefer? Modifying the migration stream is somewhat annoying,
+> > > > because both versions will have to be supported, and also the devic=
+e
+> > > > still uses legacy save/load functions rather than VMState.
+> > >=20
+> > > On the backend side, I'd consider migration to be equivalent to closi=
+ng
+> > > and re-opening the backend character device. That should imply sendin=
+g
+> > > a resize event on  migration completion. I'm surprised the chardev on
+> > > the dst isn't already triggering that when it gets connected, but per=
+haps
+> > > that is too early & getting lost ?
+> >=20
+> > The virtio device caches the size and doesn't send a resize message if
+> > the size hasn't actually changed.
+>=20
+> If the size on the dest has not changed vs the size on the src, that's
+> fine surely ? We only need to tell the guest a new size if the dst
+> was different from the source after migration=20
 
-* Instead of the single_channel variable above, we could say
-(!cpr_channelp && channels->next)? and avoid the single_channel
-variable.
+The current size is compared against previous size on the *dst*. We
+don't know the size on the src, because it is not sent in the migration
+stream.
 
-> +    for ( ; channels; channels = channels->next) {
-> +        MigrationChannelType type;
-> +
-> +        type = channels->value->channel_type;
-> +        if (channelv[type]) {
-> +            error_setg(errp, "Channel list has more than one %s entry",
-> +                       MigrationChannelType_str(type));
-> +            return false;
-> +        }
-> +        channelv[type] = channels->value;
-> +    }
-> +
-> +    if (cpr_channelp) {
-> +        *cpr_channelp = QAPI_CLONE(MigrationChannel,
-> +                                   channelv[MIGRATION_CHANNEL_TYPE_CPR]);
-> +    }
-> +
-> +    *main_channelp = QAPI_CLONE(MigrationChannel,
-> +                                channelv[MIGRATION_CHANNEL_TYPE_MAIN]);
-> +
-> +    if (!(*main_channelp)->addr) {
-> +        error_setg(errp, "Channel list has no main entry");
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> diff --git a/migration/channel.h b/migration/channel.h
-> index 8264fe327d..5110fb45a4 100644
-> --- a/migration/channel.h
-> +++ b/migration/channel.h
-> @@ -42,4 +42,9 @@ bool migration_has_all_channels(void);
->  void migration_connect_outgoing(MigrationState *s, MigrationAddress *addr,
->                                  Error **errp);
->  void migration_connect_incoming(MigrationAddress *addr, Error **errp);
-> +
-> +bool migrate_channels_parse(MigrationChannelList *channels,
-> +                            MigrationChannel **main_channelp,
-> +                            MigrationChannel **cpr_channelp,
-> +                            Error **errp);
->  #endif
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 3c93fb23cc..98c1f38e8e 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -741,8 +741,7 @@ static void qemu_setup_incoming_migration(const char *uri, bool has_channels,
->                                            MigrationChannelList *channels,
->                                            Error **errp)
->  {
-> -    g_autoptr(MigrationChannel) channel = NULL;
-> -    MigrationAddress *addr = NULL;
-> +    g_autoptr(MigrationChannel) main_ch = NULL;
->      MigrationIncomingState *mis = migration_incoming_get_current();
->
->      /*
-> @@ -754,25 +753,20 @@ static void qemu_setup_incoming_migration(const char *uri, bool has_channels,
->      }
->
->      if (channels) {
-> -        /* To verify that Migrate channel list has only item */
-> -        if (channels->next) {
-> -            error_setg(errp, "Channel list must have only one entry, "
-> -                             "for type 'main'");
-> +        if (!migrate_channels_parse(channels, &main_ch, NULL, errp)) {
->              return;
->          }
-> -        addr = channels->value->addr;
->      }
->
->      if (uri) {
->          /* caller uses the old URI syntax */
-> -        if (!migrate_uri_parse(uri, &channel, errp)) {
-> +        if (!migrate_uri_parse(uri, &main_ch, errp)) {
->              return;
->          }
-> -        addr = channel->addr;
->      }
->
->      /* transport mechanism not suitable for migration? */
-> -    if (!migration_transport_compatible(addr, errp)) {
-> +    if (!migration_transport_compatible(main_ch->addr, errp)) {
->          return;
->      }
->
-> @@ -780,7 +774,7 @@ static void qemu_setup_incoming_migration(const char *uri, bool has_channels,
->          return;
->      }
->
-> -    migration_connect_incoming(addr, errp);
-> +    migration_connect_incoming(main_ch->addr, errp);
->
->      /* Close cpr socket to tell source that we are listening */
->      cpr_state_close();
-> @@ -2116,10 +2110,8 @@ void qmp_migrate(const char *uri, bool has_channels,
->                   bool has_resume, bool resume, Error **errp)
->  {
->      MigrationState *s = migrate_get_current();
-> -    g_autoptr(MigrationChannel) channel = NULL;
-> -    MigrationAddress *addr = NULL;
-> -    MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
-> -    MigrationChannel *cpr_channel = NULL;
-> +    g_autoptr(MigrationChannel) main_ch = NULL;
-> +    g_autoptr(MigrationChannel) cpr_ch = NULL;
->
->      /*
->       * Having preliminary checks for uri and channel
-> @@ -2130,38 +2122,24 @@ void qmp_migrate(const char *uri, bool has_channels,
->      }
->
->      if (channels) {
-> -        for ( ; channels; channels = channels->next) {
-> -            MigrationChannelType type = channels->value->channel_type;
-> -
-> -            if (channelv[type]) {
-> -                error_setg(errp, "Channel list has more than one %s entry",
-> -                           MigrationChannelType_str(type));
-> -                return;
-> -            }
-> -            channelv[type] = channels->value;
-> -        }
-> -        cpr_channel = channelv[MIGRATION_CHANNEL_TYPE_CPR];
-> -        addr = channelv[MIGRATION_CHANNEL_TYPE_MAIN]->addr;
-> -        if (!addr) {
-> -            error_setg(errp, "Channel list has no main entry");
-> +        if (!migrate_channels_parse(channels, &main_ch, &cpr_ch, errp)) {
->              return;
->          }
->      }
->
->      if (uri) {
->          /* caller uses the old URI syntax */
-> -        if (!migrate_uri_parse(uri, &channel, errp)) {
-> +        if (!migrate_uri_parse(uri, &main_ch, errp)) {
->              return;
->          }
-> -        addr = channel->addr;
->      }
->
->      /* transport mechanism not suitable for migration? */
-> -    if (!migration_transport_compatible(addr, errp)) {
-> +    if (!migration_transport_compatible(main_ch->addr, errp)) {
->          return;
->      }
->
-> -    if (migrate_mode() == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
-> +    if (migrate_mode() == MIG_MODE_CPR_TRANSFER && !cpr_ch) {
->          error_setg(errp, "missing 'cpr' migration channel");
->          return;
->      }
-
-* This check for (_CPR_TRANSFER && !cpr_ch) and error could be moved
-to migrate_channels_parse() as is done for the main_ch.
-
-> @@ -2178,7 +2156,7 @@ void qmp_migrate(const char *uri, bool has_channels,
->       */
->      Error *local_err = NULL;
->
-> -    if (!cpr_state_save(cpr_channel, &local_err)) {
-> +    if (!cpr_state_save(cpr_ch, &local_err)) {
->          goto out;
->      }
->
-> @@ -2194,10 +2172,10 @@ void qmp_migrate(const char *uri, bool has_channels,
->       */
->      if (migrate_mode() == MIG_MODE_CPR_TRANSFER) {
->          migrate_hup_add(s, cpr_state_ioc(), (GSourceFunc)qmp_migrate_finish_cb,
-> -                        QAPI_CLONE(MigrationAddress, addr));
-> +                        QAPI_CLONE(MigrationAddress, main_ch->addr));
->
->      } else {
-> -        qmp_migrate_finish(addr, errp);
-> +        qmp_migrate_finish(main_ch->addr, errp);
->      }
->
->  out:
-> --
-
-* Otherwise it looks okay.
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
-
-Thank you.
----
-  - Prasad
-
+Best regards,
+Filip
 
