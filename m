@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA6BD2628D
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 18:43:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F5CAD2628E
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 18:43:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viGeX-0001Bp-BJ; Tue, 20 Jan 2026 13:40:33 -0500
+	id 1viGgG-0007cO-JM; Tue, 20 Jan 2026 13:42:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGeQ-0000cm-RD
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:40:26 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGfv-00076q-Rg
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:42:00 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGeO-0006Je-JO
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:40:26 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-47ee07570deso40114365e9.1
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 10:40:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGfu-0006eX-8F
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:41:59 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-432d28870ddso3193145f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 10:41:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768934423; x=1769539223; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768934516; x=1769539316; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HMrUqacCaGVauSVeco7pmqIAM/xQRkgygcSUJ7ApSQw=;
- b=YguxEK1/BliAkuf5SQNyLI1yltJKRrP6VmwDXUYWly8zoGMCEn0AQRJmo6KjFhZrKN
- 8YSVyRlI+RHu6Itz0aHzAHdQQ96w3lso+q3KzVAbHHApvBo5Kccfe4E09RbkRNK5M+jI
- hgXfhTkToN/B0XVyS8/iPsTJNKGc4eSJfj7WMLAFeLH9tmgixhQ2QFaIugegIWKx1fmL
- Mnm40ZlLGT4iaRb7vCX1rRi/42Uix65BF5ZHvUsteWBFvqXTIt9dZB6q2mLRS8x+Z59s
- MpoY3bypGisufQf+NhgdIB9U612XQY1pPZY4w15CrWftuXQ1KfzrpBZPTbEOwYRQ9X4D
- qXCw==
+ :reply-to; bh=Ib53PlD3S0w6gRxWe/zwqKIeC2KiqAHtDoUd9k0AWPw=;
+ b=hV9wYq+C+dpBHl0P1a37f4kRrusH6CI+QFPP7JUJu3ADd3Mb3NW9ZxP0vkBVeHGGnz
+ zPWWwqH7blTWB1560rxphGDS/ADGZSuMkMLsamFvj0pJpMapoaoudJgM2JdUVskVtRqp
+ PYNiERssHIsKRpORlYcco0nmIjVrfGEB4TdSG+SqDQcMN3xb7efMKaZtJ8RP00HhAcSt
+ NYvXIMz0I5SyeGqEk1Dt0t6jlKZ2Q5AAISK7YSzKhmIr/ghYxWN5uPlpn5ymEOyQMZKk
+ LvOEvGKUQLmyKAxaQNSNfp3i5clop1vVCXrhaE9brlbYOYDIrMgaiMdzjVDm5Oot7BoO
+ gCJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768934423; x=1769539223;
+ d=1e100.net; s=20230601; t=1768934516; x=1769539316;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=HMrUqacCaGVauSVeco7pmqIAM/xQRkgygcSUJ7ApSQw=;
- b=XLM2Qu7DFpzEii18d1/MemhvTdLJXNw0Q7+cQ7VfjqnhxgwX97l6lgSFS34ynIu9gv
- dL2+fD++/FcGG9MkklXzOg8byN9VuuLI8TKFBE3GLJougxGKFGnNoAI7hl4gM2EkvAqm
- CzseRexbAL2diX1rMajB26ofDkqyHmZ1CTUHut2VTsoAlEtHWjkiBoGhSMwUu2tem3nN
- BdMv6m4bV3GevqwdZWjKpjIMTznf5gsHWM4zoLSVuyKLFdXHODC/ezBDSVKLG9O3UIHt
- mYred5fYIcFh6HITXByigmWoXqI9z0Yjpj77khwXto5WVyq9/DX9Ydx2KOH7vP2Le6oy
- B/UA==
-X-Gm-Message-State: AOJu0YwX+YaZZ5viBjwr8XcHIjo8FJxFOXF++U45OxKu3dmc1sA7BTGL
- kYezFABMzPHSHK93pYiUFvq0J4Uo/i7XKxlbo2+Wz0kPj3KxKAyFzEN8eTZPhxoakPTbMcXJfoQ
- A4zwmOM4=
-X-Gm-Gg: AY/fxX6NGn41mLmraB3diiXEzzeWcspF+Qb181EEwktZWcygGzGT63CUPqdOEkqPvi7
- R2E7VLXTdW0vIOlpDsFbQUlweS9ouJv6L9pPaQydT7Tr5f00xFBMqtI+8GDiXE1o2psRnk9G0tX
- yFTKgI3amvuDgJc+ALeUj4lQIJPzMNPFFCz7sS+hQDUn5D71qNxzHttN/tLnAoe3b1ubqZ77+YE
- SI9ucFXmP7nPWuDxkuCiQLgZonxR4uwNLeNkePEXqTLD9fF622LdJDFeP+C8gf9Oqhtm5soF77a
- n8DGqGcEdvnKdmFUgN1d8+GLygq/Cit0ZFhMCWFeXeKeyQS5e1lqBUo1b4wVNtp5w+bAlQHlzjM
- yJ7BMziWPZL+4sK6JPthzEeHzBGBfpapU/jBw64rQ19N5Nq7qqpp3t9ND1RFn/VDZOKC8DnDP+6
- 6ahQFzRKtQdb2sbCJdJj9oYDUwv9u0gjMx++92jJExuL4ADDzgDcUjiBcE2EClgmIw0qXdAHg=
-X-Received: by 2002:a05:600c:811a:b0:477:63db:c718 with SMTP id
- 5b1f17b1804b1-4801ead0fd1mr178347785e9.16.1768934422521; 
- Tue, 20 Jan 2026 10:40:22 -0800 (PST)
+ bh=Ib53PlD3S0w6gRxWe/zwqKIeC2KiqAHtDoUd9k0AWPw=;
+ b=iB3gomcF3oV5WEMYmQehnte48WDdcfdZD7DyiE32j6WoQXl6KRKGfc9ThhJMjreAQo
+ lJp7ACOz8bqiAMfisi6lk5koTERkNTHdgYaOgYe8m9PwgrW36qk2fNAQseX6uE2maZeK
+ gcslSd65YvB0Fj8KGwDJJdkPbdFUXiWHlB0SYeEbZ5oMyO4SWDixLcwcdk4cU9yX2PwF
+ Y9aEsX3t0bGvY/qNsvoJ2vJrYMWIfBZSuZ59mDMvIhCqnchTAwjF1Tsz/R9R5FHxWlJY
+ clhlD61tDVTk37AE92X1eOXPQUqrmu8xLLsk/hgEzVaBnSpyWPrwZY+le2XlQteBZqUQ
+ 64EQ==
+X-Gm-Message-State: AOJu0YwpJ+kV/mCGolWZSuwQ0x33HvmV0PCZLPjzGzRLD8zSY3lpKumo
+ WQF5l6zMmHx5TqVtCFKEXYfPTay+tWmO+nLPCyMc6Ctxq7/A1vxbzRsryguIXZNsM0+qhhVClxr
+ 9EA9HvUo=
+X-Gm-Gg: AZuq6aJ8mH+mVF4W5KLfWa7VapJOAykPkCucQGn9lNardgClsvX54R+3yS45IHmul5j
+ FpqJqAcMmMYKJoP6HWjjcYZIsLDMxl/oUk5GjVJLiAl2SfJOo2HBmqJu3UL7xLfxNTNSRkyV3bR
+ Kwavccy1g1TNvK3HMvYhzzsuNTv0CEY47O1aexCdxtJyd9C4pOVeKQggxBmaxdu622vusOwMAPr
+ 9FiTS2o1GOxPir4baMaKXeMoh4ORW/O9CvyA0JoBM5BmDwJ9ut9dBy8MrjJ5CwQptMN5iZNi3Q2
+ VqXi2XmRnZzoA9/l8QXi4O/U2SxhTsMWJ1fLJhbTLm/bGUyvlnOYI4MFRGgEHscQdUxdMigBqI/
+ PKve1j+DI/zhyyLitAojowtLSjjCHF8lmCMb3JIhZcI/kAp2TTI6jEJ2g0XAI050yuO/1ZNTgfZ
+ l3ZyhqdnaySlkT9yb/nI87cwaoFhyHfBk4s+FTPqnkv0EJ/OMPUhrdPEFEzpsWzUezutvtjrU=
+X-Received: by 2002:a5d:5887:0:b0:432:8504:8d5b with SMTP id
+ ffacd0b85a97d-43569bcb816mr19444229f8f.50.1768934516354; 
+ Tue, 20 Jan 2026 10:41:56 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e8795f1sm262937425e9.6.2026.01.20.10.40.21
+ ffacd0b85a97d-43597719d1fsm1267644f8f.23.2026.01.20.10.41.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 20 Jan 2026 10:40:21 -0800 (PST)
+ Tue, 20 Jan 2026 10:41:55 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/29] hw/arm/fsl-imx6: Fix naming of SDHCI related constants
- and attributes
-Date: Tue, 20 Jan 2026 19:38:44 +0100
-Message-ID: <20260120183902.73845-12-philmd@linaro.org>
+Subject: [PULL 25/29] hw/loader: Add support for zboot images compressed with
+ zstd
+Date: Tue, 20 Jan 2026 19:38:58 +0100
+Message-ID: <20260120183902.73845-26-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260120183902.73845-1-philmd@linaro.org>
 References: <20260120183902.73845-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,92 +99,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Daan De Meyer <daan.j.demeyer@gmail.com>
 
-The i.MX 6 SoC features uSDHC controllers which are the successors of eSDHC.
-Fix the naming to make this clear.
-
-Fixes: ec46eaa83a3c ("i.MX: Add i.MX6 SOC implementation.")
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-ID: <20260112145418.220506-4-shentey@gmail.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
+Message-ID: <20251124123521.1058183-5-daan.j.demeyer@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/arm/fsl-imx6.h |  4 ++--
- hw/arm/fsl-imx6.c         | 16 ++++++++--------
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ hw/core/loader.c | 30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/arm/fsl-imx6.h b/include/hw/arm/fsl-imx6.h
-index 5520473ba0b..bb866994dff 100644
---- a/include/hw/arm/fsl-imx6.h
-+++ b/include/hw/arm/fsl-imx6.h
-@@ -46,7 +46,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslIMX6State, FSL_IMX6)
- #define FSL_IMX6_NUM_EPITS 2
- #define FSL_IMX6_NUM_I2CS 3
- #define FSL_IMX6_NUM_GPIOS 7
--#define FSL_IMX6_NUM_ESDHCS 4
-+#define FSL_IMX6_NUM_USDHCS 4
- #define FSL_IMX6_NUM_ECSPIS 5
- #define FSL_IMX6_NUM_WDTS 2
- #define FSL_IMX6_NUM_USB_PHYS 2
-@@ -67,7 +67,7 @@ struct FslIMX6State {
-     IMXEPITState       epit[FSL_IMX6_NUM_EPITS];
-     IMXI2CState        i2c[FSL_IMX6_NUM_I2CS];
-     IMXGPIOState       gpio[FSL_IMX6_NUM_GPIOS];
--    SDHCIState         esdhc[FSL_IMX6_NUM_ESDHCS];
-+    SDHCIState         usdhc[FSL_IMX6_NUM_USDHCS];
-     IMXSPIState        spi[FSL_IMX6_NUM_ECSPIS];
-     IMX2WdtState       wdt[FSL_IMX6_NUM_WDTS];
-     IMXUSBPHYState     usbphy[FSL_IMX6_NUM_USB_PHYS];
-diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
-index 46967b74882..39667c4a49a 100644
---- a/hw/arm/fsl-imx6.c
-+++ b/hw/arm/fsl-imx6.c
-@@ -79,9 +79,9 @@ static void fsl_imx6_init(Object *obj)
-         object_initialize_child(obj, name, &s->gpio[i], TYPE_IMX_GPIO);
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index 4952443fe5d..5cbfba0a86d 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -68,6 +68,11 @@
+ 
+ #include <zlib.h>
+ 
++#ifdef CONFIG_ZSTD
++#include <zstd.h>
++#include <zstd_errors.h>
++#endif
++
+ static int roms_loaded;
+ 
+ /* return the size or -1 if error */
+@@ -916,14 +921,6 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ssize_t *size)
+         return 0;
      }
  
--    for (i = 0; i < FSL_IMX6_NUM_ESDHCS; i++) {
-+    for (i = 0; i < FSL_IMX6_NUM_USDHCS; i++) {
-         snprintf(name, NAME_SIZE, "sdhc%d", i + 1);
--        object_initialize_child(obj, name, &s->esdhc[i], TYPE_IMX_USDHC);
-+        object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
+-    if (strcmp(header->compression_type, "gzip") != 0) {
+-        fprintf(stderr,
+-                "unable to handle EFI zboot image with \"%.*s\" compression\n",
+-                (int)sizeof(header->compression_type) - 1,
+-                header->compression_type);
+-        return -1;
+-    }
+-
+     ploff = ldl_le_p(&header->payload_offset);
+     plsize = ldl_le_p(&header->payload_size);
+ 
+@@ -933,7 +930,22 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ssize_t *size)
      }
  
-     for (i = 0; i < FSL_IMX6_NUM_USB_PHYS; i++) {
-@@ -311,11 +311,11 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-     }
- 
-     /* Initialize all SDHC */
--    for (i = 0; i < FSL_IMX6_NUM_ESDHCS; i++) {
-+    for (i = 0; i < FSL_IMX6_NUM_USDHCS; i++) {
-         static const struct {
-             hwaddr addr;
-             unsigned int irq;
--        } esdhc_table[FSL_IMX6_NUM_ESDHCS] = {
-+        } esdhc_table[FSL_IMX6_NUM_USDHCS] = {
-             { FSL_IMX6_uSDHC1_ADDR, FSL_IMX6_uSDHC1_IRQ },
-             { FSL_IMX6_uSDHC2_ADDR, FSL_IMX6_uSDHC2_IRQ },
-             { FSL_IMX6_uSDHC3_ADDR, FSL_IMX6_uSDHC3_IRQ },
-@@ -323,13 +323,13 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
-         };
- 
-         /* UHS-I SDIO3.0 SDR104 1.8V ADMA */
--        object_property_set_uint(OBJECT(&s->esdhc[i]), "capareg",
-+        object_property_set_uint(OBJECT(&s->usdhc[i]), "capareg",
-                                  IMX6_ESDHC_CAPABILITIES, &error_abort);
--        if (!sysbus_realize(SYS_BUS_DEVICE(&s->esdhc[i]), errp)) {
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usdhc[i]), errp)) {
-             return;
-         }
--        sysbus_mmio_map(SYS_BUS_DEVICE(&s->esdhc[i]), 0, esdhc_table[i].addr);
--        sysbus_connect_irq(SYS_BUS_DEVICE(&s->esdhc[i]), 0,
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->usdhc[i]), 0, esdhc_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->usdhc[i]), 0,
-                            qdev_get_gpio_in(gic, esdhc_table[i].irq));
-     }
- 
+     data = g_malloc(max_bytes);
+-    bytes = gunzip(data, max_bytes, *buffer + ploff, plsize);
++
++    if (strcmp(header->compression_type, "gzip") == 0) {
++        bytes = gunzip(data, max_bytes, *buffer + ploff, plsize);
++#ifdef CONFIG_ZSTD
++    } else if (strcmp(header->compression_type, "zstd") == 0) {
++        size_t ret = ZSTD_decompress(data, max_bytes, *buffer + ploff, plsize);
++        bytes = ZSTD_isError(ret) ? -1 : (ssize_t) ret;
++#endif
++    } else {
++        fprintf(stderr,
++                "unable to handle EFI zboot image with \"%.*s\" compression\n",
++                (int)sizeof(header->compression_type) - 1,
++                header->compression_type);
++        return -1;
++    }
++
+     if (bytes < 0) {
+         fprintf(stderr, "failed to decompress EFI zboot image\n");
+         return -1;
 -- 
 2.52.0
 
