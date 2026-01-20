@@ -4,82 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9621AD2ED0F
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 10:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C35D2ED0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 10:54:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi9Iu-0001t8-Br; Tue, 20 Jan 2026 05:49:44 -0500
+	id 1vi9Mf-00059P-KK; Tue, 20 Jan 2026 05:53:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vi9Is-0001iq-Ql
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 05:49:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vi9Ir-0000fO-0T
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 05:49:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768906178;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ZM3K3Tbck9r3d+UwJrgrMb67JD1AdDh3wepHCi4qrmM=;
- b=XNfPHcdkXlyzwm7R0yQd4fdfP0FRvAHdxhiiN1VnndaIVNSbbPngczYTigP1+lcufvb8LJ
- P2QgfcEzrGDfMf3f8VkHFSLrcT0G8h3HdT2Rryz0qLFtHecnUERGa+aELHBfnYUvMG9yRb
- wxfpf6ySchZrJ8U0hXma0KhDBwR97oA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-599-Yq_2BwxwM6KvsAXwd5NNOg-1; Tue,
- 20 Jan 2026 05:49:35 -0500
-X-MC-Unique: Yq_2BwxwM6KvsAXwd5NNOg-1
-X-Mimecast-MFC-AGG-ID: Yq_2BwxwM6KvsAXwd5NNOg_1768906173
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB0DA1956050; Tue, 20 Jan 2026 10:49:33 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 30C2118004D8; Tue, 20 Jan 2026 10:49:33 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B89DA21E692D; Tue, 20 Jan 2026 11:49:30 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>,  qemu-devel@nongnu.org,  Phil
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Stefan Hajnoczi
- <stefanha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,  Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9?= <berrange@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Paolo
- Bonzini <pbonzini@redhat.com>,  John Snow <jsnow@redhat.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] MAINTAINERS: add maintainer for docs/
-In-Reply-To: <b33bfa26-5f41-4bad-9911-37d0b58618dd@linaro.org> (Pierrick
- Bouvier's message of "Mon, 19 Jan 2026 10:47:49 -0800")
-References: <20260115203529.2713193-1-pierrick.bouvier@linaro.org>
- <88cdd7fb-059b-4ce2-9db6-57700aad0571@redhat.com>
- <467c2bca-af39-4e00-b8ea-9e38c1f16e54@linaro.org>
- <dce4a763-d64a-4ef3-be05-9c24080c8003@redhat.com>
- <b33bfa26-5f41-4bad-9911-37d0b58618dd@linaro.org>
-Date: Tue, 20 Jan 2026 11:49:30 +0100
-Message-ID: <87o6moh83p.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vi9Me-000591-4E
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 05:53:36 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vi9Mc-0001GB-DT
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 05:53:35 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47ee2715254so24194015e9.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 02:53:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768906412; x=1769511212; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pBcHmEdlPnVHeisONRE0lAPw55NOu3KoN6EiEkZTRBM=;
+ b=UUQNt/RIhk2aKgSBQ5WM1YVa3ngkXVBNVhdb/KS3q0b/ZqcpKfsFGnXzfxRN5uxPFR
+ Mv/RipD9jn2KXRYICrH9mkEfJ/3/djUvZZoEhnX/SmoTTbBL/0ZMqaxxqMpLz81HK0ZU
+ +Pft4xv6VvfRxqeDmg8HiJRIASIrH7zRsFQ9HXCq0wrwBr7p/l3AFvWCx/EeETd6bwPe
+ juEa9SVtuJR1cijiykay3CnFWVTI43+eyWsHe2rsBwm/wVrkghAku0WM3AQtKD/z4OIZ
+ pD0pdb8clA3HvuiTTq8bxLVTujVG28sTgTBS9ubsMJleSL1g6sCvAvTGM8yHRBj9HL4X
+ lJgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768906412; x=1769511212;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pBcHmEdlPnVHeisONRE0lAPw55NOu3KoN6EiEkZTRBM=;
+ b=SagkBmlpyffr14srrSapJXAVyco56O5FJEXeEH7NvLRNGeUdP0o3HeVUbiF+QrsUPI
+ RCa/g512i0sXKjR1sJy8LLUGTgtymF1mrNFDcJOQJpFoU9MMt8vg8y4+VnkiwgGIBhvP
+ dL+ivFTrFKOTTRotyoUmBT6pvx6DJIc4c6Z/zTWVWaUsZB8/NucxJtPqJP1dEgAjLInf
+ qqqr/VVbvNk1GKQ3GtfzBCvCafxiNbqEfBPpD54uRUgNlLv854Z53paXvIDsYn7Y+QIN
+ wL7wiuNYXjTVbHO2BbfMcxYJTsjTWrZ8TDSbcxJxNZQ1mm0ZScqiQRFqZt61cOgrhOah
+ Yprw==
+X-Gm-Message-State: AOJu0YznhFE8EYCLILcKA3O/Dl1FlPVlgfgTvuuRGsv5pwMeWGOfENl/
+ OL9z93LyTxgU+ENjS/UFvsTlb7QDtppukMeO03BeiiXhLStOCn/o6XSeNTpQ/vUUN+w=
+X-Gm-Gg: AY/fxX4NPIOQl/ZUO2QoUHQA4atduAj0KH86pIXbHQ2XsMturLGiyYQZUmSZbMWEJFr
+ Ak11s2wGuonSoyYy41aCbHty9PoFOqEBwqyIrMf1sRCc02zmuEtslZIbNReUKXCSUoOuPVk1Acx
+ 93L8erPwAoEESMCj91slOrSeA30wkeXVQ4V+5e9yPogvDsA9oORzIX1t4kvos0YuPzuh5Z0pO00
+ +iQ1ekABCmXNoQteBfXQpNy5XP0B5TtErcQDFgSdfI/IlAak/hL5AW4ENaGww59qmx1nQRupbaE
+ 6Hfh1I3QaJAgLuUfkZedfiutoHGXscAOq+SOXwsxr3Y/aZni6+e0993BIumto0YirXf/o/rmsfw
+ GdW5P2azSnqsUSW89Hdg1JDEDIh0Epun/931itpQ0jNGsf6P44Qp/XVBVj52ypcO2d75zPQ4/k0
+ rSxFRFS2PhgmU2SFPW6+Dd1gdvtXnUoHi7AlvDcOlweP61DUEpm+0P8yLcJ3JtZP5D
+X-Received: by 2002:a05:600c:c105:b0:480:20f1:7aa6 with SMTP id
+ 5b1f17b1804b1-4803e7e8586mr16957585e9.21.1768906412414; 
+ Tue, 20 Jan 2026 02:53:32 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43569998240sm28206757f8f.43.2026.01.20.02.53.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Jan 2026 02:53:31 -0800 (PST)
+Message-ID: <31dfb73c-769f-49d2-9068-b8ac34180d77@linaro.org>
+Date: Tue, 20 Jan 2026 11:53:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] hvf/arm: expose FEAT_SME2 to guest if available
+Content-Language: en-US
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+References: <20260115-sme2-hvf-v2-0-2eca481bd7ee@linaro.org>
+ <20260115-sme2-hvf-v2-2-2eca481bd7ee@linaro.org>
+ <2c3bb870-0321-4799-b7ca-65b2772ddf2c@linaro.org>
+ <CAAjaMXabRsOX0OVXN202ev3A1sKqMmbDoeY6n7Z-EhmZWmL9Cg@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAAjaMXabRsOX0OVXN202ev3A1sKqMmbDoeY6n7Z-EhmZWmL9Cg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,17 +106,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 20/1/26 11:01, Manos Pitsidianakis wrote:
+> On Tue, Jan 20, 2026 at 11:50 AM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> On 15/1/26 12:20, Manos Pitsidianakis wrote:
+>>> Starting from M4 cores and MacOS 15.2 SDK, HVF can virtualise FEAT_SME2.
+>>>
+>>> Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>>> ---
+>>>    target/arm/cpu.c     |  4 +++-
+>>>    target/arm/cpu64.c   | 13 ++++++++++++-
+>>>    target/arm/hvf/hvf.c | 25 +++++++++++++------------
+>>>    3 files changed, 28 insertions(+), 14 deletions(-)
+>>>
+>>> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+>>> index caf7980b1fc5244c5c2f130e79ba869456c20c88..7f4ebfdf61217db6075495119c1b642bc2abf295 100644
+>>> --- a/target/arm/cpu.c
+>>> +++ b/target/arm/cpu.c
+>>> @@ -1577,7 +1577,9 @@ void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp)
+>>>             * assumes it, so if the user asked for sve=off then turn off SME also.
+>>>             * (KVM doesn't currently support SME at all.)
+>>>             */
+>>> -        if (cpu_isar_feature(aa64_sme, cpu) && !cpu_isar_feature(aa64_sve, cpu)) {
+>>> +        if (!hvf_enabled()
+>>
+>> In my experience "if(!accel)" is bug prone, maybe change to explicit "if
+>> (tcg_enabled() || kvm_enabled()"?
+> 
+> Shouldn't we list all accelerators instead of just tcg/kvm then?
 
-[...]
+Correct.
 
-> I tend to see series as an atomic change, expecting them to be pulled as a whole. Thus, I expect, maybe wrongly, that isolated doc patches will be pulled with the concerned series.
+> 
+> And why is if(!accel) bug prone?
 
-Your expectation matches how I work as overall QAPI schema maintainer.
-Most patch series modifying qapi/ aren't about the QAPI schema.  I
-routinely review just the QAPI part, and leave the remainder and the
-merging to the actual subject matter maintainers.
+I was thinking of f46f05b6d88 ("target/arm: Only allow disabling NEON
+when using TCG").
 
-[...]
+> 
+>>
+>>> +            && cpu_isar_feature(aa64_sme, cpu)
+>>> +            && !cpu_isar_feature(aa64_sve, cpu)) {
+>>>                object_property_set_bool(OBJECT(cpu), "sme", false, &error_abort);
+>>>            }
+>>>
+
+
+>>> @@ -1252,6 +1252,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+>>>                                  arm_cpu->isar.idregs[ID_AA64MMFR0_EL1_IDX]);
+>>>        assert_hvf_ok(ret);
+>>>
+>>> +    aarch64_add_sme_properties(OBJECT(cpu));
+>>
+>> Out of scope, those aarch64_add_FEAT_properties() should really take a
+>> ARMCPU *cpu argument IMHO.
+> 
+> You're just looking for new things to fix :D
+
+Correct!
+
+> 
+>>
+>>>        return 0;
+>>>    }
+>>>
+>>>
+>>
+> 
 
 
