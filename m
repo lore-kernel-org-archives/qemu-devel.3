@@ -4,114 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A407CA5FB8
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 18:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D7EACA5FB8
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 18:03:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viG3q-0005p8-GM; Tue, 20 Jan 2026 13:02:38 -0500
+	id 1viG4b-0006L5-Lq; Tue, 20 Jan 2026 13:03:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1viG30-0005bP-FM
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:01:54 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1viG4P-0006FH-Qx
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:03:21 -0500
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1viG2t-0000Mq-TJ
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:01:43 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id E195A5BCC9;
- Tue, 20 Jan 2026 18:01:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768932098; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wamJf03oRRDxw/jBEdntSEE91RebskpMw7IQAJsHGOw=;
- b=apvhigjBPMwqmqRoBo575MBvm7pll5IvUnshLs74BankL/V1LzlEEqi24FQxPDcLeo71uB
- N+Tk0VgVQ9cETna5tX+VvStKfXGnevP1IcDGHfaLWmZDSJEVx5CgNa/dX0abRcQJdDMA6J
- z7F+WiPt1/QtkuGKviJQ8PHFejw0nJI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768932098;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wamJf03oRRDxw/jBEdntSEE91RebskpMw7IQAJsHGOw=;
- b=AG1tj3vLT708etOzq5YFUjo8ZGWTVNhWv7vUMa5qEoEYJxpgPOAZMM7RbigxUZCGUcmc9R
- IOikuaEHcgAGyMBg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qbCOzNFo;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=W0WZ+w79
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1768932097; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wamJf03oRRDxw/jBEdntSEE91RebskpMw7IQAJsHGOw=;
- b=qbCOzNFowMzWB/HgBAY/RpNach9iV7AdQYgtq4euOUFT4d6YFHxDTzbPSR/faE3csl65tv
- eEux0ioPtpLoeXAHcQzsvWz9arCRJrubC1J5pC40oWqio1pQr4WLLVDwv0HC3xi3i7V3pQ
- u52RDhkaxtQfnFxZEUL/8EyBuNai/E8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1768932097;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wamJf03oRRDxw/jBEdntSEE91RebskpMw7IQAJsHGOw=;
- b=W0WZ+w793CPeYvreko9tkcbtB6Mi2G5SHGQ/dfNjq0yiLDqESadMf9KOA6x0ot2XctWPOO
- LQD8jphQQwEe95DQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 54AC93EA63;
- Tue, 20 Jan 2026 18:01:37 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id p7eIBAHDb2kBNAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 20 Jan 2026 18:01:37 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com
-Subject: Re: [PATCH v3 13/25] migration: Move setting of QEMUFile into
- migration_outgoing|incoming_setup
-In-Reply-To: <CAE8KmOz4_RAM1QgJUuEwk=68-jwgt25O7vfPNOkce2vvEOED0w@mail.gmail.com>
-References: <20260109124043.25019-1-farosas@suse.de>
- <20260109124043.25019-14-farosas@suse.de>
- <CAE8KmOz4_RAM1QgJUuEwk=68-jwgt25O7vfPNOkce2vvEOED0w@mail.gmail.com>
-Date: Tue, 20 Jan 2026 15:01:34 -0300
-Message-ID: <87ldhs88ox.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1viG4O-0000R1-2T
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:03:13 -0500
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-793ae293fadso48865997b3.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 10:03:11 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768932191; cv=none;
+ d=google.com; s=arc-20240605;
+ b=PLMTDGxiWOXeUR/XX9296kteUHbZEoUPr63IY0BzMki6dEdv8BOr+P0EecBCyB4ILR
+ CHKEGWtclx51hTAJSxVB47e3O9Lyayv2XoK+SlpU5LNxCtzy9Hrjr+MvGQZ1iIFhLcDc
+ dNlG/IPxDtEhPp64C+qrpYNNeXmxr6Ibw1ACfD8D3YJGnijZLrwEjWbcKxNkggBC9ysM
+ 268g0L75+MH/8sjHwE+SqEvgrWiIhsvNUKAyuMBQDX89QzRCz3nOHHz6u4UenGuz04It
+ KWtC/ch9iSkKs5lXazvGH/fEF6ZiqCQgCmy8m10lQG5sYdl0bCuiVoH2QmdNL0+OfYEH
+ PyVw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=NDi/W0I+/+kW+XukCQLUwooPVxYe/yxhyjh9j/z90ig=;
+ fh=h5XwtwbFZRZ1FUOtZRgdKZteGKilXmRo+GqhpTRH7tM=;
+ b=kNfnZpMbPqePAYtEqr5ZoYaQTKQuZE+fQuD6bAxSA+0tWhvBAsxuOK6Uu7hb3HaMk6
+ o1bIffk1zpEIK48DKj0ffinhOm83Ut/d2l158gEMARQ0pr5UVfOx8CFGW8gT3DgT4uYx
+ DZWW4tXPys3gYlRiwuy2+3NOhfK3bbg5WdmxFxsgmDcRaYnRMPGCfWGcfhiWhOlYKY6U
+ EEaLgWUAKfLdsNAqps9ZZPvWCnSdyIaoHKOUwP7NPLJQTz9VuBSgWSoYhBCSUHqGc5NG
+ GpbbrxUM20aqoC0dh1QV3JYjRo1Xvpz8x+vMhj5jY/o6heVTtSh/QJdmqWQKKYYNcGQP
+ J3Lw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768932191; x=1769536991; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=NDi/W0I+/+kW+XukCQLUwooPVxYe/yxhyjh9j/z90ig=;
+ b=yTMz9qq1t5fi8wud8fYcwfNd5izhGIMo1HrBSBF69v7o7M1Eg5SomI+FittlOQn5/d
+ oMLsau/nDhunAd3ZlxfmOA7w+ycRt4BtAm5gFTkLbZkwr9LzZRPGlq9vbJiAQnsYFNFB
+ ktIhIcakKkazO5UgiIo2bAjlj8fq+i4tu9foW/u39wtLkW/OV9dvChM1ixTn/6vWRuSf
+ NBU/uLX7Ia0H9PIx162TLr7W7lvckqRMAk6dD3VGSxHoaeUH5/RiS6wYNAAMGSoSwQZU
+ sZj6+kQCVr7lzRoEfjtEvdas1j/A6dwZ6NrBZIrpRtKTXNXSYq/HhwPlo9q70dOj/Om0
+ IFuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768932191; x=1769536991;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NDi/W0I+/+kW+XukCQLUwooPVxYe/yxhyjh9j/z90ig=;
+ b=o/i5psmFLQ6HYy4xD5CT5+aep9xdtE3nMGaZHZBIf1YN7wNYlPT1uxNIIoI28Zdg+K
+ CdeZ/8M6aXFhctw+r8dmwe9OKyq4nLZk6HjzSGbAm49DM8gbpPtF5UtJbJ7wCp26viPx
+ DHJMFKcLdmjwTmFl7Oc1fgYSVshVUmwy0yZDk58wODtovw22fPEeONYDWHiEV6apkxzx
+ ycr2uhZOfSHOM+jB6X51r0QeBwJF/noRZv2JO1KwZXsIszUS++tuB2KNGt21O5UN87E6
+ SnCwk8SxLemQwR2mTpbW7giz7MkIYViCiIMFfao5w5I2YKX1cc02LjbIAp8PRZdpADWN
+ AtbA==
+X-Gm-Message-State: AOJu0YxdB+Ot7B0BtVjzKbGxkodvVwRUenWljMXJBuvQ6HaTkyfuuumv
+ JZVMz1iiDRwDnym9UTiMj8y6Ig5oo/TugAm2bsiQ9qfDBT+E5Gp63T4QjehDFwRPxCw4nGa84Eg
+ b4AWPORY5+FaJeTlKUEeBTxMNATrS4QlmJJ55HEH8jg==
+X-Gm-Gg: AZuq6aK6w/uDDkkc4GnXnL3t3+74MGCWN0g86JUEHwQxbPwKo/YJVdZzWItO8WzLdxg
+ HwIA1qcwYkIMko05NuFq0wgzKRg5d1BQXkl5lAaX/wgdYdPBz5ZO+LS9YHjX7Hok/7n2JBI/9p2
+ tJnJYsyMpD8P/X4pP6UV1l/OBf/8AApZF3FnNqmNUfs5txG3kSNWN1wbUCb9g4y7g9XVWv4+PhM
+ E0lZ/LK/MC6zQodCRY90KxWmCu/mvWZWhvjJhFPnpONRHysleAcQVFujZhvaSxwmrRI9Q==
+X-Received: by 2002:a05:690c:5:b0:78f:a6e7:76fc with SMTP id
+ 00721157ae682-793c671d131mr116039317b3.24.1768932189149; Tue, 20 Jan 2026
+ 10:03:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[fedoraproject.org:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: E195A5BCC9
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260116135235.38092-1-mohamed@unpredictable.fr>
+ <20260116135235.38092-5-mohamed@unpredictable.fr>
+In-Reply-To: <20260116135235.38092-5-mohamed@unpredictable.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 20 Jan 2026 18:02:56 +0000
+X-Gm-Features: AZwV_QgsQqZLoqCe6lU68ohPxKsx5IohRR9xjA1qQRHSrALtyUvwTyacYdORsXY
+Message-ID: <CAFEAcA-3P6i_w3b7SaFTn4Zmwnot5vpDs89y+zpjcJ=-mEnP5w@mail.gmail.com>
+Subject: Re: [PATCH v16 04/26] hw/arm: virt: add GICv2m for the case when ITS
+ is not available
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Pedro Barbuda <pbarbuda@microsoft.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,268 +123,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prasad Pandit <ppandit@redhat.com> writes:
-
-> On Fri, 9 Jan 2026 at 18:12, Fabiano Rosas <farosas@suse.de> wrote:
->>
->> Centralize, on both sides of migration, the setting of the to_src_file
->> and from_dst_file QEMUFiles. This will clean up the interface with
->> channel.c and rdma.c, allowing those files to stop dealing with
->> QEMUFile themselves.
->>
->> (multifd_recv_new_channel was changed to return bool+errp for
->> convenience)
->>
->> Reviewed-by: Peter Xu <peterx@redhat.com>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  migration/channel.c   |  9 +----
->>  migration/migration.c | 84 ++++++++++++++++++++++++++-----------------
->>  migration/migration.h |  2 ++
->>  migration/multifd.c   |  8 +++--
->>  migration/multifd.h   |  2 +-
->>  5 files changed, 61 insertions(+), 44 deletions(-)
->>
->> diff --git a/migration/channel.c b/migration/channel.c
->> index 26cb7bf059..6acce7b2a2 100644
->> --- a/migration/channel.c
->> +++ b/migration/channel.c
->> @@ -14,7 +14,6 @@
->>  #include "channel.h"
->>  #include "tls.h"
->>  #include "migration.h"
->> -#include "qemu-file.h"
->>  #include "trace.h"
->>  #include "qapi/error.h"
->>  #include "io/channel-tls.h"
->> @@ -80,14 +79,8 @@ void migration_channel_connect(MigrationState *s, QIOChannel *ioc)
->>          return;
->>      }
->>
->> -    QEMUFile *f = qemu_file_new_output(ioc);
->> -
->>      migration_ioc_register_yank(ioc);
->> -
->> -    qemu_mutex_lock(&s->qemu_file_lock);
->> -    s->to_dst_file = f;
->> -    qemu_mutex_unlock(&s->qemu_file_lock);
->> -
->> +    migration_outgoing_setup(ioc);
->>      migration_connect(s);
->>  }
->>
->> diff --git a/migration/migration.c b/migration/migration.c
->> index 1ea6125454..b7367eb5cf 100644
->> --- a/migration/migration.c
->> +++ b/migration/migration.c
->> @@ -930,17 +930,56 @@ out:
->>      migrate_incoming_unref_outgoing_state();
->>  }
->>
->> -/**
->> - * migration_incoming_setup: Setup incoming migration
->> - * @f: file for main migration channel
->> +static bool migration_has_main_and_multifd_channels(void);
->> +
->> +/*
->> + * Returns whether all the necessary channels to proceed with the
->> + * incoming migration have been established without error.
->>   */
->> -static void migration_incoming_setup(QEMUFile *f)
->> +bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp)
->>  {
->>      MigrationIncomingState *mis = migration_incoming_get_current();
->> +    QEMUFile *f;
->>
->> -    assert(!mis->from_src_file);
->> -    mis->from_src_file = f;
->> -    qemu_file_set_blocking(f, false, &error_abort);
->> +    if (multifd_recv_setup(errp) != 0) {
->> +        return false;
->> +    }
->> +
->> +    switch (channel) {
->> +    case CH_MAIN:
->> +        f = qemu_file_new_input(ioc);
->> +        assert(!mis->from_src_file);
->> +        mis->from_src_file = f;
->> +        qemu_file_set_blocking(f, false, &error_abort);
->> +        break;
->> +
->> +    case CH_MULTIFD:
->> +        if (!multifd_recv_new_channel(ioc, errp)) {
->> +            return false;
->> +        }
->> +        break;
->> +
->> +    case CH_POSTCOPY:
->> +        assert(!mis->postcopy_qemufile_dst);
->> +        f = qemu_file_new_input(ioc);
->> +        postcopy_preempt_new_channel(mis, f);
->> +        return false;
->> +
->> +    default:
->> +        g_assert_not_reached();
->> +    }
->> +
->> +    return migration_has_main_and_multifd_channels();
->> +}
->> +
->> +void migration_outgoing_setup(QIOChannel *ioc)
->> +{
->> +    MigrationState *s = migrate_get_current();
->> +    QEMUFile *f = qemu_file_new_output(ioc);
->> +
->> +    qemu_mutex_lock(&s->qemu_file_lock);
->> +    s->to_dst_file = f;
->> +    qemu_mutex_unlock(&s->qemu_file_lock);
->>  }
+On Fri, 16 Jan 2026 at 13:52, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
 >
-> * Shouldn't migration_outgoing_setup() also return bool, to be
-> consistent with migration_incoming_setup() above?  OR make
-> migration_incoming_setup() return void.
+> On Hypervisor.framework for macOS and WHPX for Windows, the provided environment is a GICv3 without ITS.
 >
-
-That would be a change simply to make the signatures consistent. It's
-not indicative (granted, as it usually is) of a consistency in
-design. The reason migration_incoming_setup() returns bool is to follow
-the recommendation of returning whether errp is set. Here, there's no
-errp, so no need.
-
-(before multifd_send_setup moved to the migration thread, maybe we could
-still make both functions more analogous, but I'm not sure how much
-benefit that would have brought)
-
->>  /* Returns true if recovered from a paused migration, otherwise false */
->> @@ -988,7 +1027,11 @@ void migration_incoming_process(void)
->>
->>  void migration_fd_process_incoming(QEMUFile *f)
->>  {
->> -    migration_incoming_setup(f);
->> +    MigrationIncomingState *mis = migration_incoming_get_current();
->> +
->> +    assert(!mis->from_src_file);
->> +    mis->from_src_file = f;
->> +    qemu_file_set_blocking(f, false, &error_abort);
->>      migration_incoming_process();
->>  }
+> As such, support a GICv3 w/ GICv2m for that scenario.
 >
-> * Is it possible to move above mis->from_src_file = f part to
-> migration_incoming_setup()?
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 >
-
-Yes, patch 14.
-
->
->> @@ -1011,8 +1054,6 @@ static bool migration_has_main_and_multifd_channels(void)
->>  void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
->>  {
->>      MigrationIncomingState *mis = migration_incoming_get_current();
->> -    Error *local_err = NULL;
->> -    QEMUFile *f;
->>      uint8_t channel;
->>      uint32_t channel_magic = 0;
->>      int ret = 0;
->> @@ -1066,28 +1107,7 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
->>          channel = CH_POSTCOPY;
->>      }
->>
->> -    if (multifd_recv_setup(errp) != 0) {
->> -        return;
->> -    }
->> -
->> -    if (channel == CH_MAIN) {
->> -        f = qemu_file_new_input(ioc);
->> -        migration_incoming_setup(f);
->> -    } else if (channel == CH_MULTIFD) {
->> -        /* Multiple connections */
->> -        multifd_recv_new_channel(ioc, &local_err);
->> -        if (local_err) {
->> -            error_propagate(errp, local_err);
->> -            return;
->> -        }
->> -    } else if (channel == CH_POSTCOPY) {
->> -        assert(!mis->postcopy_qemufile_dst);
->> -        f = qemu_file_new_input(ioc);
->> -        postcopy_preempt_new_channel(mis, f);
->> -        return;
->> -    }
->> -
->> -    if (migration_has_main_and_multifd_channels()) {
->> +    if (migration_incoming_setup(ioc, channel, errp)) {
->>          migration_incoming_process();
->>      }
->>  }
->> diff --git a/migration/migration.h b/migration/migration.h
->> index d134881eaf..4dcf299719 100644
->> --- a/migration/migration.h
->> +++ b/migration/migration.h
->> @@ -530,6 +530,8 @@ void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
->>  void migration_fd_process_incoming(QEMUFile *f);
->>  void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp);
->>  void migration_incoming_process(void);
->> +bool migration_incoming_setup(QIOChannel *ioc, uint8_t channel, Error **errp);
->> +void migration_outgoing_setup(QIOChannel *ioc);
->>
->>  bool  migration_has_all_channels(void);
->>
->> diff --git a/migration/multifd.c b/migration/multifd.c
->> index 3fb1a07ba9..4980ed4f04 100644
->> --- a/migration/multifd.c
->> +++ b/migration/multifd.c
->> @@ -1521,7 +1521,7 @@ bool multifd_recv_all_channels_created(void)
->>   * Try to receive all multifd channels to get ready for the migration.
->>   * Sets @errp when failing to receive the current channel.
->>   */
->> -void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
->> +bool multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
->>  {
->>      MultiFDRecvParams *p;
->>      Error *local_err = NULL;
->> @@ -1536,7 +1536,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
->>                                      "failed to receive packet"
->>                                      " via multifd channel %d: ",
->>                                      qatomic_read(&multifd_recv_state->count));
->> -            return;
->> +            return false;
->>          }
->>          trace_multifd_recv_new_channel(id);
->>      } else {
->> @@ -1549,7 +1549,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
->>                     id);
->>          multifd_recv_terminate_threads(error_copy(local_err));
->>          error_propagate(errp, local_err);
->> -        return;
->> +        return false;
->>      }
->>      p->c = ioc;
->>      object_ref(OBJECT(ioc));
->> @@ -1558,4 +1558,6 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
->>      qemu_thread_create(&p->thread, p->name, multifd_recv_thread, p,
->>                         QEMU_THREAD_JOINABLE);
->>      qatomic_inc(&multifd_recv_state->count);
->> +
->> +    return true;
->>  }
->> diff --git a/migration/multifd.h b/migration/multifd.h
->> index 9b6d81e7ed..89a395aef2 100644
->> --- a/migration/multifd.h
->> +++ b/migration/multifd.h
->> @@ -42,7 +42,7 @@ int multifd_recv_setup(Error **errp);
->>  void multifd_recv_cleanup(void);
->>  void multifd_recv_shutdown(void);
->>  bool multifd_recv_all_channels_created(void);
->> -void multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
->> +bool multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
->>  void multifd_recv_sync_main(void);
->>  int multifd_send_sync_main(MultiFDSyncReq req);
->>  bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
->> --
->
-> * Change looks okay.
-> Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
->
-> Thank you.
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   - Prasad
+>  hw/arm/virt-acpi-build.c | 5 ++++-
+>  hw/arm/virt.c            | 8 ++++++++
+>  include/hw/arm/virt.h    | 2 ++
+>  3 files changed, 14 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 03b4342574..40ea6b6dd5 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -960,7 +960,10 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>              build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
+>              build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
+>          }
+> -    } else {
+> +    }
+> +
+> +    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && vms->its)
+> +     && !vms->no_gicv3_with_gicv2m) {
+>          const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
+>
+>          /* 5.2.12.16 GIC MSI Frame Structure */
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 4badc1a734..275f26d439 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -959,6 +959,8 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+>
+>      if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
+>          create_its(vms);
+> +    } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
+> +        create_v2m(vms);
+>      } else if (vms->gic_version == VIRT_GIC_VERSION_2) {
+>          create_v2m(vms);
+>      }
+> @@ -2449,6 +2451,8 @@ static void machvirt_init(MachineState *machine)
+>      vms->ns_el2_virt_timer_irq = ns_el2_virt_timer_present() &&
+>          !vmc->no_ns_el2_virt_timer_irq;
+>
+> +    vms->no_gicv3_with_gicv2m = vmc->no_gicv3_with_gicv2m;
+> +
+>      fdt_add_timer_nodes(vms);
+>      fdt_add_cpu_nodes(vms);
+>
+> @@ -3497,6 +3501,7 @@ static void virt_instance_init(Object *obj)
+>      vms->its = true;
+>      /* Allow ITS emulation if the machine version supports it */
+>      vms->tcg_its = !vmc->no_tcg_its;
+> +    vms->no_gicv3_with_gicv2m = false;
+>
+>      /* Default disallows iommu instantiation */
+>      vms->iommu = VIRT_IOMMU_NONE;
+> @@ -3549,7 +3554,10 @@ DEFINE_VIRT_MACHINE_AS_LATEST(11, 0)
+>
+>  static void virt_machine_10_2_options(MachineClass *mc)
+>  {
+> +    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
+> +
+>      virt_machine_11_0_options(mc);
+> +    vmc->no_gicv3_with_gicv2m = true;
+>      compat_props_add(mc->compat_props, hw_compat_10_2, hw_compat_10_2_len);
+>  }
+
+The MSI controller selection logic is already pretty confusing,
+and this is making it more complicated. I don't think we should
+need this machine back compatibility, because currently there
+is no setup where you can have a GICv3 that doesn't also have
+either an ITS or no MSI controller.
+
+I think also that we can make the code cleaner if we:
+(1) clean the existing "pick an MSI controller" logic up
+so that we do it up front, the same way we do "pick a GIC
+version"
+(2) add the new "msi" property and deprecate the old "its" one
+(3) then add the gicv3-with-gicv2m-on-hvf logic to that
+
+I see this series adds an "msi" property, but it also
+makes the old "its" property an OnOffAuto -- do we really
+need both ?
+
+I wrote some code for this this afternoon before I realised
+that you'd done the "msi" property in that series (so the
+duplication with your work is my fault). I'll send them
+out as an RFC to give an idea of what I have in mind.
+
+thanks
+-- PMM
 
