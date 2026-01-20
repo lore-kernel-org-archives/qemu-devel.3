@@ -4,50 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55178D2ECF9
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 05:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7088DD2ECF9
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 05:52:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi4F7-0003RF-0M; Tue, 20 Jan 2026 00:25:29 -0500
+	id 1vi4eI-0002qS-3l; Tue, 20 Jan 2026 00:51:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vi4Eu-0003G8-U3; Tue, 20 Jan 2026 00:25:17 -0500
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vi4Et-0005s1-3Z; Tue, 20 Jan 2026 00:25:16 -0500
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 20 Jan
- 2026 13:18:59 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 20 Jan 2026 13:18:59 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v5 00/22] hw/arm/aspeed: AST1700 LTPI support and device
- hookups
-Date: Tue, 20 Jan 2026 13:18:31 +0800
-Message-ID: <20260120051859.1920565-1-kane_chen@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vi4eD-0002mt-59
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 00:51:25 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vi4eB-0001bS-Fu
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 00:51:24 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43591b55727so96836f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 21:51:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768888281; x=1769493081; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RuAx6vQ4eYYTY2XSLXuy3bV53HSA5ndUJ3Iigery4v0=;
+ b=SODBLxH3w/2yMv8kJfzEvEu2x7C9bSgrYnRTyBQ8y9Fzv6krZ7BiqXQoZVlLBQznAq
+ UOQYMr3pLCSYRwNND8NE/zMDVT+tdFgjLwHu9s26Bhf/1r6il+lAhtIU0WcKvdv469gu
+ /+U5vNJDIRkg/ZVYMg65cezx/8ldlxKvDwWZzq+nbw/txbK0ZBlQtUsp6gL94boVWlOP
+ Ys1ANPf6qOvKktXPSCXTEv4QPGQsfOw2BSvghlFkmo6D9r+j1fc606PnM0mXiGdJLRz7
+ w6AA4tgahVLKnczZX/ijMB77E9R7uMmvX3BsXa/GDx4s4iL+YpCuRG5/G/D0K9VgCyWG
+ DmOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768888281; x=1769493081;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RuAx6vQ4eYYTY2XSLXuy3bV53HSA5ndUJ3Iigery4v0=;
+ b=qQFfR/hwUZwfDO/tPigL8pUjSBK4dle21N8Mt9Tj2+EHov2Hi1lKPkVaIbTGnYYesM
+ v9AYAIrSdfPKF3vfxhL4SMkFze9BFPJ9+gMoC8Ln0zozBo/tgggYja/OtcHrVck4t5TS
+ MLvgX8684fPfHgY3YJ2WYLnD97prxKaVPBeEGRXXSVnUGTkjXw5TlkCahAh8QWUXLof6
+ Y/ET9I78x+Lb1L2LT3CzJBx9zUWFGCT5PZyRpwYKBOWP5n+GnM440HU7qkw2DtkfaxkL
+ mus0cshyJ84SPPChCTZ2ulFBDjLi7+g+TDfc0VQ1sVF/l1J/yPzFqW3Xe6cfTP6gOwxF
+ sX4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU/AdTRGfp1lWXt9rcFhSkb1r6xSAYyIsyvu5Il5Ljf4v1nsu6XrhNkBBYg7X9smwkLOnjYVln2alzn@nongnu.org
+X-Gm-Message-State: AOJu0YyjoqZUyczwfzx0mhWcN1Gn+xq20J6v28N6X8LEx9VuuEN/ldtn
+ XEstAEOdsYaOrnfImqZ0I4Qd4A3vqyR4jNQEJVWNpa4xD4fI+CNOeHKA1bahH1QuT0U=
+X-Gm-Gg: AZuq6aKqSqLU6XOy3urJd60M+wQAC5ahYqiLPwcdvTI7rZaY0C4DxgvWhTttH4LYDPd
+ rcjPVuEBBtdQH5fQVYgdfCmAngq3mo82BjxfaBWTYs4F1yJ3MkHE5aN2UTdQp6I+AJTmDR0iyiz
+ 7nQULF+ZB1I8z5quAcnYiepMTI7bP1NABND1gSTYD5XftodfMXWpe7Sw0rALVzuHAKvFaqRquqW
+ t1VlsJzZKxWoLPARJbbgW/cCJupqSTpry+XnL/DdUcN4DZpekwUsSvNHf6NghAdV+jbsjTNCcpy
+ BKpciWEmT69VWMUcpZ//ViHOuIAYGQmBPfSVCqg45pn2jyEcVXpCwSOJGOeAnWeLFR4vilKgdkD
+ au/TJJMNQvTefVqpPbDjrIhpcl8PPqGgrYNSxhkekGRfMeSJ5en5l7K25ZPKUi75Y5c78LD44hZ
+ eQh9C2aQiz4qR4VGsGtD9j+q+5RAGbCbvtIyRIcRIv5C6nW+9wrWxbNw==
+X-Received: by 2002:a05:6000:2001:b0:432:aad5:320b with SMTP id
+ ffacd0b85a97d-4356a039a7fmr19656782f8f.23.1768888280998; 
+ Mon, 19 Jan 2026 21:51:20 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4359314bbc6sm299398f8f.12.2026.01.19.21.51.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Jan 2026 21:51:20 -0800 (PST)
+Message-ID: <f8b56912-7f64-49fd-a14c-948ca090bf26@linaro.org>
+Date: Tue, 20 Jan 2026 06:51:19 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/3] gdbstub: Export helper to use GDB errno values
+Content-Language: en-US
+To: Yodel Eldar <yodel.eldar@yodel.dev>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Dominik Disconnect3d Czarnota <dominik.b.czarnota@gmail.com>
+References: <20260116014612.226183-1-yodel.eldar@yodel.dev>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260116014612.226183-1-yodel.eldar@yodel.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,142 +102,15 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Kane Chen <kane_chen@aspeedtech.com>
-From:  Kane Chen via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+On 16/1/26 02:46, Yodel Eldar wrote:
 
-Hi all,
+> Yodel Eldar (3):
+>    include/gdbstub/syscalls: Add EIO and ENOSYS GDB File-I/O errno values
+>    gdbstub: Export host_to_gdb_errno File-I/O helper function
+>    gdbstub/user-target: Convert host errno to GDB File-I/O errno
 
-LTPI (LVDS Tunneling Protocol & Interface) is defined in the OCP DC-SCM
-2.0 specification (see Figure 2):
-https://www.opencompute.org/documents/ocp-dc-scm-2-0-ltpi-ver-1-0-pdf
-
-LTPI provides a protocol and physical interface for tunneling various
-low-speed signals between the Host Processor Module (HPM) and the
-Satellite Controller Module (SCM). In Figure 2 of the specification,
-the AST27x0 SoC (left) integrates two LTPI controllers, allowing it to
-connect to up to two AST1700 boards. On the other side, the AST1700
-consolidates HPM FPGA functions and multiple peripheral interfaces
-(GPIO, UART, I2C, I3C, etc.) onto a single board.
-
-Because the AST1700 exposes additional I/O interfaces (GPIO, I2C, I3C,
-and others), it acts as an I/O expander. Once connected over LTPI,
-the AST27x0 can control additional downstream devices through this link.
-
-This patch series is based on the aspeed_next branch and incorporates
-recent I2C bus label changes.
-Ref: https://patchwork.kernel.org/project/qemu-devel/patch/20260112083054.4151945-2-kane_chen@aspeedtech.com/
-
-It introduces a basic LTPI controller model and wires it into the
-AST27x0 SoC. The series also adds the AST1700-specific LTPI expander
-device and incrementally connects common peripherals on the AST1700
-model. For the I3C block, which may cause kernel crashes, its MMIO
-region is modeled as an unimplemented device to reserve address space
-and make the missing functionality explicit, ensuring stable guest
-probing.
-
-In the official release images, the AST1700 functions are not included
-by default. To test the AST1700-related functionality, please include
-the following DTS files for probing:
-https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm64/boot/dts/aspeed/aspeed-ltpi0.dtsi
-https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v6.6/arch/arm64/boot/dts/aspeed/aspeed-ltpi1.dtsi
-
-After including these DTS files in the BMC image, you can verify LTPI
-functionality using the following scenarios:
-
-1. In U-Boot:
-   Run the ltpi command to trigger the LTPI connection and display the
-   current connection status.
-2. In BMC Linux:
-   Run i2cdetect -y <16-38> to scan and test the I2C buses exposed by
-   the AST1700.
-
-Any feedback or suggestions are appreciated!
-
-Kane
-
----
-
-ChangeLog
----------
-v5:
-- Add functional test case for AST1700 I2C
-- Corrected the From attribution
-- Fixed incorrect DRAM setting for SPI and I2C controllers
-- Refine code structure
-
-v4:
-- Add missing Signed-off-by
-- Fix checkpatch.pl warnings
-- Refine code structure
-- Enable AST1700 support only after all devices are ready
-
-v3:
-- Add PWM model
-- Integrate the SGPIO model
-- Fix I2C test case failure
-- Refine code structure
-
-v2:
-- Separate the AST1700 model into a standalone implementation
-- Refine the mechanism for assigning the AST1700 board number
-
-v1:
-- Initial version
----
-
-Cédric Le Goater (1):
-  hw/misc: Add basic Aspeed PWM model
-
-Kane-Chen-AS (21):
-  hw/misc: Add LTPI controller
-  hw/arm/aspeed: Attach LTPI controller to AST27X0 platform
-  hw/arm/aspeed: Add AST1700 LTPI expander device model
-  hw/arm/aspeed: Integrate AST1700 device into AST27X0
-  hw/arm/aspeed: Integrate interrupt controller for AST1700
-  hw/arm/aspeed: Attach LTPI controller to AST1700 model
-  hw/arm/aspeed: Attach UART device to AST1700 model
-  hw/arm/aspeed: Attach SRAM device to AST1700 model
-  hw/arm/aspeed: Attach SPI device to AST1700 model
-  hw/arm/aspeed: Attach ADC device to AST1700 model
-  hw/arm/aspeed: Attach SCU device to AST1700 model
-  hw/arm/aspeed: Attach GPIO device to AST1700 model
-  hw/arm/aspeed: Introduce 'bus-label' property for AST1700 SoC
-  hw/arm/aspeed: attach I2C device to AST1700 model
-  hw/arm/aspeed: Attach WDT device to AST1700 model
-  hw/arm/aspeed: Attach PWM device to AST1700 model
-  hw/arm/aspeed: Attach SGPIOM device to AST1700 model
-  hw/arm/aspeed: Model AST1700 I3C block as unimplemented device
-  hw/arm/aspeed: Enable AST1700 IO expander support
-  test/functional/aarch64: Parameterize I2C bus ID in AST2700 test
-  test/functional/aarch64: Add I2C test for AST1700 IO expanders
-
- include/hw/arm/aspeed_ast1700.h               |  55 ++++
- include/hw/arm/aspeed_soc.h                   |  25 +-
- include/hw/intc/aspeed_intc.h                 |   2 +
- include/hw/misc/aspeed_ltpi.h                 |  33 +++
- include/hw/misc/aspeed_pwm.h                  |  31 ++
- hw/arm/aspeed_ast1700.c                       | 280 ++++++++++++++++++
- hw/arm/aspeed_ast27x0.c                       | 170 ++++++++++-
- hw/intc/aspeed_intc.c                         |  60 ++++
- hw/misc/aspeed_ltpi.c                         | 193 ++++++++++++
- hw/misc/aspeed_pwm.c                          | 121 ++++++++
- hw/arm/meson.build                            |   1 +
- hw/misc/meson.build                           |   2 +
- hw/misc/trace-events                          |   4 +
- .../functional/aarch64/test_aspeed_ast2700.py |  52 +++-
- 14 files changed, 999 insertions(+), 30 deletions(-)
- create mode 100644 include/hw/arm/aspeed_ast1700.h
- create mode 100644 include/hw/misc/aspeed_ltpi.h
- create mode 100644 include/hw/misc/aspeed_pwm.h
- create mode 100644 hw/arm/aspeed_ast1700.c
- create mode 100644 hw/misc/aspeed_ltpi.c
- create mode 100644 hw/misc/aspeed_pwm.c
-
--- 
-2.43.0
-
+Series fully reviewed.
 
