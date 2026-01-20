@@ -4,105 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7522CD2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 14:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EADA1D2ECE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 14:52:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viD4x-0001by-6N; Tue, 20 Jan 2026 09:51:35 -0500
+	id 1viD55-0001mQ-Ti; Tue, 20 Jan 2026 09:51:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1viD4T-0001Ow-28
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 09:51:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1viD4u-0001cL-AX; Tue, 20 Jan 2026 09:51:33 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1viD4Q-00007L-KL
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 09:51:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768920660;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yoACEDNkFlXzoChXLraeiX9PL89XSvoNlQcmvRvpFug=;
- b=OybAiJtAPTZLabuIDC1iBkT1Qq3CMRe5XsvGDz2iaQb8TI5Day27pTC5dvFvqEmHhSrVqy
- j3uZ2UsGA+il6P9aQWgcY9aNenVVxE1H/kcHAaooMtKQ06G/WjjoOSp3NPFGVImr9WMYKY
- R26Y2sCpAmE3cfIblvK56884FGuj5tk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-308-gSgW3csCPx2KMwDMDlGqvA-1; Tue, 20 Jan 2026 09:50:59 -0500
-X-MC-Unique: gSgW3csCPx2KMwDMDlGqvA-1
-X-Mimecast-MFC-AGG-ID: gSgW3csCPx2KMwDMDlGqvA_1768920658
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47d4029340aso50896035e9.3
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 06:50:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768920658; x=1769525458; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=yoACEDNkFlXzoChXLraeiX9PL89XSvoNlQcmvRvpFug=;
- b=ogpY+VXGRWN7jDnF/BOLMzDlc5D6gQBqn6OCjTpBWGMAZHGnJa87V2J96BqesbzhI2
- 0aZ3BR4Ylor69gr1H4NX+b8/pbx+K6ya2zl1e8khJerTli4wRoUfVNxV0LMK9V4KNcXa
- Z7YqZt3U9RlEvnzPSv76qClKdgXrqq1+rdK288Mk5L8D+4E0Qg3kJNzP/os0ABt57c5/
- AHQceajMYrJS+jFNqT6jSGj6s3DcRIcWaCBC2WD79wDwItU/FsCbqFP1WQlm8KH07GGW
- kfu2dBl+1F9XCjP6itp/uM1wLpL8Hvm3f2F/DxHZXJK/fJZStgYQ+SBZg9+HqWKrGZNr
- NCsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768920658; x=1769525458;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yoACEDNkFlXzoChXLraeiX9PL89XSvoNlQcmvRvpFug=;
- b=NeCJK5IRa5aZAUKovWqInmI/rv/TAkya7p9k70CTaLcX7Qh+oPUc1yXbh4g/RUA/l6
- TTeLTVv63nZcYFsAHCB2yEcKZ7xA50gnSOVHUDyCoTroL7AGoAoMI5ioxlul0DmT64EZ
- zz5TDSg5OM5GmtSXvEs1ivuJZ5Sm7kATnemBrB9j5Qcd6Z28aZ1ecdG7GvYLflkCkBjF
- w8QrgPo9eXqqj9mxfbMt5YYntumAZ970UELHZFVfa+dcZicl+wOjQ9gGmfAnMacEFm+h
- BHAKmY/d25V8B2jOsmaCMHvgiz4jZlEmjNC5zPhSMSpeKFDmWEXI0g9IMj7whTZoFdS4
- G/jQ==
-X-Gm-Message-State: AOJu0Yx5NusxfZCh/I/s1/OBEjgb7x9kqOhejYd6PIQDopRf3cLnYsQB
- CYf7mSe+L8fYsSw+8YQZfxuvVm4Gn4G25VJ+pfMj0745TGY/u/KQF4aFDdInLFi69Wo1dntyXQY
- SZ1LCdtvgjFJ49EH2nfU35ZxlX2YZ7Own1b62tQPxhreHivECkANgqN86
-X-Gm-Gg: AY/fxX4YG7LPgcCnVIdEfit+0FVoBC5oc1jgtfnyybGGjZ+6gDGk4nBrW7YuyYDY5up
- V7hKrzVOwp5giGS6vlcK8yFgSif/+HsGQ7Aw/6JCIGk1cLJfXGweoUpOU4rG5T19OU1X5zdK0FU
- qADXWaOkUz+ig821rw3J94CC8ZV6esykz0r7tEVcGH1rvN35S7iXc/bvFeAc3VaioI5c8n7tbFC
- ANGYOOQZI7EJ3fgrCLZ85I9vSXyCyhml9q+ZpxWRkRHvPDvwdpV/wR/udImzYGzmrQtrnaUHnpc
- c5y4KgggUBUHyrdTxemoixXuDc4MDSeTWRNlHWGHlLinT91I8sGNuTcLusctxys7YcceIJal4JX
- jiCgPENA5A8NoTK0=
-X-Received: by 2002:a05:600c:8b75:b0:477:9574:d641 with SMTP id
- 5b1f17b1804b1-4803e7e8531mr31560985e9.22.1768920657857; 
- Tue, 20 Jan 2026 06:50:57 -0800 (PST)
-X-Received: by 2002:a05:600c:8b75:b0:477:9574:d641 with SMTP id
- 5b1f17b1804b1-4803e7e8531mr31560775e9.22.1768920657406; 
- Tue, 20 Jan 2026 06:50:57 -0800 (PST)
-Received: from leonardi-redhat ([176.206.16.134])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356997df75sm29995689f8f.29.2026.01.20.06.50.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Jan 2026 06:50:57 -0800 (PST)
-Date: Tue, 20 Jan 2026 15:50:55 +0100
-From: Luigi Leonardi <leonardi@redhat.com>
-To: Jim MacArthur <jim.macarthur@linaro.org>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v2] docs/system/igvm.rst: Update external links
-Message-ID: <aW-V9HJspxXbQH7K@leonardi-redhat>
-References: <20260119-igvm-documentation-fix-v2-1-b2f6174e3f4f@linaro.org>
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1viD4q-0000ER-Ev; Tue, 20 Jan 2026 09:51:30 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60KEkgKL021340;
+ Tue, 20 Jan 2026 14:51:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=FQPJK3WQkPTrAwIUjNUS/Pz1rw3xj3GU6Tc0wD0UL
+ ZA=; b=LQy4/m2cqi9onnxDRrsvujF94QNHnYhI/BFTCTjhkTmouywlpdDRN2xck
+ tg3oJRmwh9KpsHncMuuOi07L6J+OPzBNeXo72bBszUMmCCjAjBSgtqFOF88nXz+6
+ qxOaLvUECruMhiJkIkInTYWj4AxwjukbtAQfmf5YaLM3Y9SoMFwlbG8CT+9U/zZY
+ 2i6Pn87Pf18Fxh4cwrROaACfp6YE2NlMnr42BRuW14qtH0sNFkF0w+1bAP6owygy
+ gTRIjnMLJ0Yyah1Ktgs3562zegCxrOEgWTZ0UX+rndEfq3aEbt/0syLAaJZ+WIFO
+ lGmz4Qm1iDPfpofxLQ79i6WtIHMbA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bt6121qps-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Jan 2026 14:51:24 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60KElQQn023130;
+ Tue, 20 Jan 2026 14:51:24 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bt6121qpp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Jan 2026 14:51:24 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60KEjBxk006415;
+ Tue, 20 Jan 2026 14:51:23 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4brqf1d5s7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Jan 2026 14:51:23 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60KEp3WB26345928
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 20 Jan 2026 14:51:03 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 77A5F58045;
+ Tue, 20 Jan 2026 14:51:21 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A8F9958050;
+ Tue, 20 Jan 2026 14:51:20 +0000 (GMT)
+Received: from gfwr532.rchland.ibm.com (unknown [9.10.239.133])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 20 Jan 2026 14:51:20 +0000 (GMT)
+From: Caleb Schlossin <calebs@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ milesg@linux.ibm.com, alistair@alistair23.me,
+ chalapathi.v@linux.ibm.com, harshpb@linux.ibm.com, calebs@linux.ibm.com
+Subject: [PATCH v2] hw/ssi/pnv_spi: Fix fifo8 memory leak on unrealize
+Date: Tue, 20 Jan 2026 08:51:17 -0600
+Message-ID: <20260120145117.602960-1-calebs@linux.ibm.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260119-igvm-documentation-fix-v2-1-b2f6174e3f4f@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: zduFe80b179cWf6Pe9aPXDodjUzuHdqU
+X-Authority-Analysis: v=2.4 cv=LaIxKzfi c=1 sm=1 tr=0 ts=696f966c cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
+ a=Q8LBFeAF4jmk_nWGM1UA:9
+X-Proofpoint-ORIG-GUID: 5gbfgP-J98cU0Ias761oFQY-eCAH23uT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIwMDEyMyBTYWx0ZWRfX3XHh5F5AqlJ/
+ kwpkwKdMSmEPqNBX7nqOyKrHnwDwHcCT1Yf+ZiVFg/SwgAos70QzBjBHpUl3ir5Q25eUDZr5+UM
+ nFcu+y2tR2I7cMdkvmYkTYMpYSdQbCBVCGnkx+rHKEmSA8J7xf19+Jtfwsp4l22lN54JlMwqcff
+ 2z8h/wFlUm44LeCRYSdSovQEG1J1W03S72CQfRA35gWgfH+Xhfb8gE9YRE6Jg5h2RZYJUUujJ1w
+ MPHoYbb0u/NPc3n4l6dApbTmLbZhIonurmKcSlDv+uA/IkYXAkxKGgl1DnqNxRU89cIB2WDTv0g
+ /nrlgWl2oTtLSMCxT4avDEJUvxkW/hIs9aGJjC2gghpW8WGKEKbVn5MRsSkPbDtvITlY6n7lQao
+ r6mjwhUEEy54v+LHL98+yUKs19UgsDE87LEJS42RiAe+FmyXaY7OuGPLLilAgXPjh55TTGEJdlc
+ i+BABHJHVo0AW8ga3kg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-20_04,2026-01-20_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601200123
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=calebs@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,54 +123,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 19, 2026 at 03:25:43PM +0000, Jim MacArthur wrote:
->* Fixes link to AMD64 Architecture Programmer's
->Manual and bumps version to 3.43.
->* Updates link to buildigvm to new home on GitLab.
->
->Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3247
->Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
->---
->Fixes broken links for the AMD64 Architecture Programmer's Manual and
->buildigvm.
->---
->Changes in v2:
->- Changed link to buildigvm as supplied by Stefano Garzarella
->  <sgarzare@redhat.com>
->- Link to v1: https://lore.kernel.org/qemu-devel/20251230-igvm-documentation-fix-v1-1-865750a66cc8@linaro.org
->---
-> docs/system/igvm.rst | 6 +++---
-> 1 file changed, 3 insertions(+), 3 deletions(-)
->
->diff --git a/docs/system/igvm.rst b/docs/system/igvm.rst
->index 79508d9588..9db8ae43d2 100644
->--- a/docs/system/igvm.rst
->+++ b/docs/system/igvm.rst
->@@ -166,8 +166,8 @@ References
-> ----------
->
-> [1] AMD64 Architecture Programmer's Manual, Volume 2: System Programming
->-  Rev 3.41
->-  https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/programmer-references/24593.pdf
->+  Rev 3.43
->+  https://docs.amd.com/v/u/en-US/24593_3.43
->
-> [2] ``buildigvm`` - A tool to build example IGVM files containing OVMF firmware
->-  https://github.com/roy-hopkins/buildigvm
->\ No newline at end of file
->+  https://gitlab.com/qemu-project/buildigvm
->
->---
->base-commit: c1c58cee16380f81f88fbde6b12f247b376839e2
->change-id: 20251230-igvm-documentation-fix-6a937c2cb9fc
->
->Best regards,
->-- 
->Jim MacArthur <jim.macarthur@linaro.org>
->
+unrealize should free the fifo8 memory that was allocated by realize.
 
-Thanks!
+Fixes: 17befecda85 ("hw/ssi/pnv_spi: Replace PnvXferBuffer with Fifo8 structure")
 
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Chalapathi V<chalapathi.v@linux.ibm.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
+---
+ hw/ssi/pnv_spi.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
+index 76304d26fc..f3add8cab9 100644
+--- a/hw/ssi/pnv_spi.c
++++ b/hw/ssi/pnv_spi.c
+@@ -1177,6 +1177,13 @@ static void pnv_spi_realize(DeviceState *dev, Error **errp)
+                           s, "xscom-spi", PNV10_XSCOM_PIB_SPIC_SIZE);
+ }
+ 
++static void pnv_spi_unrealize(DeviceState *dev)
++{
++    PnvSpi *s = PNV_SPI(dev);
++    fifo8_destroy(&s->tx_fifo);
++    fifo8_destroy(&s->rx_fifo);
++}
++
+ static int pnv_spi_dt_xscom(PnvXScomInterface *dev, void *fdt,
+                              int offset)
+ {
+@@ -1234,6 +1241,7 @@ static void pnv_spi_class_init(ObjectClass *klass, const void *data)
+ 
+     dc->desc = "PowerNV SPI";
+     dc->realize = pnv_spi_realize;
++    dc->unrealize = pnv_spi_unrealize;
+     device_class_set_legacy_reset(dc, do_reset);
+     dc->vmsd = &pnv_spi_vmstate;
+     device_class_set_props(dc, pnv_spi_properties);
+-- 
+2.47.3
 
 
