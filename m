@@ -4,104 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5FDBD2629C
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 19:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 120FAD2629E
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 20:13:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viHk4-0007rg-MK; Tue, 20 Jan 2026 14:50:20 -0500
+	id 1viI5y-0006Rl-Pv; Tue, 20 Jan 2026 15:12:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1viHk3-0007q4-3t
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 14:50:19 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1viI5x-0006RI-3H
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 15:12:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1viHjz-0008DR-OE
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 14:50:18 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1viI5v-00037y-Dj
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 15:12:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768938614;
+ s=mimecast20190719; t=1768939973;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=i3jjx0CIlBUPCqqzYjIepdIOMGu5t6mKIG7ztUv7WsA=;
- b=bvi0/0W+2Lc2cdOG41wDeZ2nujNcYnlSlobAmow3/uN3q3jvTvm/zFaqh5DUprV7jMyXmi
- kp5ZYMY/hREWkZHZHgomy3DG+0Y4Nt5Hhf0S9W/sQrqTSqJIuLCE9BE3GSxPOGqBwqFoIB
- +jdLMWMiKlvwkpav3CDur7MDWTD5yjU=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZCCPEnHyzdRlL9vQguqrxPQvHSShniYrUsasbOTX7oQ=;
+ b=XsIHvj6XifZivPeglZrXTMmFZRl4gbzak28OiXwqA0pODwVIqJ8jxiiqVhxVTSTj40wZi8
+ Jt0Zv+vGNHbGq5xpKHUlVuGlHfn4i5NbPbuEjcL9iV0X/qNm7A/n0X9bnSMgxs+2eb/TLg
+ kuvcZrEvnGcJkvMMI3o2exNep49NJoY=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-221-_fE27ExRO2m52Kqx1K8E_Q-1; Tue, 20 Jan 2026 14:50:12 -0500
-X-MC-Unique: _fE27ExRO2m52Kqx1K8E_Q-1
-X-Mimecast-MFC-AGG-ID: _fE27ExRO2m52Kqx1K8E_Q_1768938612
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8887c0d3074so149475406d6.2
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 11:50:12 -0800 (PST)
+ us-mta-55-viJL-AkAO1aW3I5247ZhuA-1; Tue, 20 Jan 2026 15:12:51 -0500
+X-MC-Unique: viJL-AkAO1aW3I5247ZhuA-1
+X-Mimecast-MFC-AGG-ID: viJL-AkAO1aW3I5247ZhuA_1768939971
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8c6a241b5cdso867514785a.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 12:12:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768938612; x=1769543412; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768939971; x=1769544771; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=i3jjx0CIlBUPCqqzYjIepdIOMGu5t6mKIG7ztUv7WsA=;
- b=ZGXLsIvHtnbCzrR9R1ORn6q706dtgLxuvM1ctYl0qlVioNQCHtPevCasasqJ42jU5H
- RVjl7MjWPYsWjjq6tcWoq/9QC0KE2eXs1Hm9tXAhAEGNx9b8AnUp0YV8WUFtEiamhBLP
- K3nnV/w7qAkQiVEUR6EQ20+oF/Gtny4aCILRJXRxCmspg7N3x+GcKkO/udJXzvr+AABL
- fFaRLxxnGvqIMZCGw0907tMj96kzddSljT54Um6hSzf+jdwUVwX0OgqWxdZWhWU+WT4+
- J9dwnqG8/lt75XCfdGRrLKyYXS1Jp2ZSF7WIgtZwgZ/gwRLS1NZ/82Hc8rTl0I4n6xj3
- MWrg==
+ bh=ZCCPEnHyzdRlL9vQguqrxPQvHSShniYrUsasbOTX7oQ=;
+ b=YfofZutJ5BBFfdisBkZI8TCdLlj/7KQ8jFpriH/IFHHDzvpgsLf78WlpWFBVe6Xo2z
+ KcB3wBdpv7m08tjIh9Xqptv0PggKkEywtl5/NoM9vdgmmmkDPAmpzZSLSLqwA9aruWOC
+ Ahf6YgEA1PGNGpYlKECz7lKC5xbKBwyYHjZIftr5ZubUY+nxWJ4U/QLslRNjgMWSQIRa
+ /Dsbu5D96Z/L0dE9z9dd7+HN4HC3+6cgb2pZgerARvsgBHvPQOfTH2ntvHMdwZFuMN4A
+ cgv05Hx3tLRkYwcm3NYB9y3i0TavE9uEFBd4Y7Z//59oy0fM6n8BSA+RDlz0BYunM3h8
+ B9Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768938612; x=1769543412;
+ d=1e100.net; s=20230601; t=1768939971; x=1769544771;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i3jjx0CIlBUPCqqzYjIepdIOMGu5t6mKIG7ztUv7WsA=;
- b=TR6G06uAl6xFuOrKCMgO1Cu6wU0icum86buzLGi0BqCCZ8OSDqdow+QWOXESojbd5I
- Q851SDopQBvvvmLfOilw4HkDhFG9lmM+ccBCcqRhmXcg0KMSsN7w8lfjXnQmlAKRoLqE
- bHcVMyJfvYCuu52J2mT6xIx61ewMtfa9Q2Pwq5bugZpDfe1x1ECAfNGqYs8WP3n7NfgE
- 2CepdOUB0w0S+I2eZjRLPqIzxxg/xHwOFwWMYKXfHjL7mQnWZ9KXDXdx5BUIfLYWqAns
- SgjRuyfzQqwvQ8s9dDWaAWsWa4VmupqbOsYR5d58NqXKIdWvU9muxezciZ1NAGaU5NfN
- xeWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUtW7FCCz8M4uEZ7z2LzlE+ONo6oeXM9jkSpUMe6rGlUgQxklnS8/huxDkwTX/LiI146SpK0LO90xFV@nongnu.org
-X-Gm-Message-State: AOJu0Yxgbh/IUcRHTQYNWVE3ehx/yxFeDEivTePVQfmEfQuBwDyBEUEK
- EC9/opahB6EPCJ8fL3V7eFO0zqjJb3GJBA5StDBZhsp/94XAb/WdnG3Frrm6EjRwU12q1+eiB8m
- ILMnQzUBD4xS1OZpibQi/TashO+67Lnd0DiGOFdk2kFtQ2JUODhThS9En
-X-Gm-Gg: AZuq6aLXryyK36M/44ei/O8hWCGYih618FJpzITfbgDEPZpjo41ZZndOh5xcaGf/pmH
- ekZ7E8ah6H5sUiTRk/kZf6+IoT1brG7DNmisk7H0yFWkTip+CMYy0iaXcFXXhz+L0qx6RmAHWmZ
- fc3Lee82T0HiuKAXblAq5qkEmbOlYfxAhWVvg5fsy0F9AOp1zg+di0xEN16Crkrk5DxFgptW9Iv
- irVv/nTr4Nw8QmZNo1rXw9I+mlBCN4/dNNRLn6oTmB8S60w4YbKncx8Qy3TzS5+jiXG7cz6SWtD
- jnAAnpxCTQ2dUceiTI1SJdGNWLFBhBwOJTd8LITianzssrdt+lUmjwMVepaYENvtsRRXhGvJpnQ
- hO3Q=
-X-Received: by 2002:a05:6214:e65:b0:890:6603:f258 with SMTP id
- 6a1803df08f44-89463837511mr41705406d6.12.1768938611772; 
- Tue, 20 Jan 2026 11:50:11 -0800 (PST)
-X-Received: by 2002:a05:6214:e65:b0:890:6603:f258 with SMTP id
- 6a1803df08f44-89463837511mr41704686d6.12.1768938610736; 
- Tue, 20 Jan 2026 11:50:10 -0800 (PST)
+ bh=ZCCPEnHyzdRlL9vQguqrxPQvHSShniYrUsasbOTX7oQ=;
+ b=QXfrFo9UF197C+dRONRVA/kUmK2uacu7zyVZ/RiqI311RObIOb2Zo5ui599YUs3hQ8
+ wtOVp74txL2F9WamEpOfUUYd36xbr0oXimZ5I0rv7f2UlJ6wq3HX8n6spl4b8UnQQB32
+ XoqzV1f//ZUswF4xRlSsxnytYJs3VJMfejBswh8fapiIujy1OAu1lYKI4050vj9IhbaM
+ fqc+HNMM8xluTzIUCRu5jJ/iiXIqYFW9UJB163F+PLuVhxHrCX85EmitnxqqDHhk41IG
+ GQtlumxPBu9R7KsU0ns15wQBm6+qpswrjFdRBJRyZ+hGXfOShtla3gvyrOjuvvB+3M4y
+ NmoA==
+X-Gm-Message-State: AOJu0YzzoAcPBicfg6J+9gDK2pLjF52XkDd95biBouHxGUw4WHrGNZTv
+ QOzjAC5uFJRfNQQVjksmrN4pMfND5CLIQvFvqyZ7cNoEuGp8zrl8UDKj7YT9S6CN7ucW2mkdous
+ q+7LIrbbgUYX0vRIhDHpS5SUHszs7svFYxCNutBkRSyPX7eO4MqY4JgOj
+X-Gm-Gg: AY/fxX6Sr/7PJv3r70gPr6UPkAQuSZhaoj24rHK3sIIxz9qGtLMN0cHuJrTgCyE9Q5J
+ rZzPNfEFUmM3cP169p8pE0XsBsaUvbKCvQcb+X67LXxhH/cc67LyWy3Xa2dluHrU9rh8pdBTYkg
+ ziRxDNUzDHysW1B/Ongne4+P6lrWhH9hGqGAUqxucvGaIJs+ZVPuP17qsisZL+hz7Pn4/sisOly
+ CEI7N1tlcydMb+4jvDdmp88JrU9wq2vPN4w7fx/mRwGtsRaPA8blSwfzxzo3W+D+Du0IXxWATHB
+ Hq+HeU5iR4CiJDSY9W5HU4/ZemV8pEjHyL4lC/qmxhVAd4QuKva12AQKQkTGqjwRiJnlcWDEvFM
+ 4Bfg=
+X-Received: by 2002:a05:620a:3910:b0:8c3:6f1e:21ef with SMTP id
+ af79cd13be357-8c6a6798f78mr2072307285a.83.1768939971276; 
+ Tue, 20 Jan 2026 12:12:51 -0800 (PST)
+X-Received: by 2002:a05:620a:3910:b0:8c3:6f1e:21ef with SMTP id
+ af79cd13be357-8c6a6798f78mr2072301885a.83.1768939970673; 
+ Tue, 20 Jan 2026 12:12:50 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c6a725eb16sm1106643485a.36.2026.01.20.11.50.09
+ af79cd13be357-8c6a72508f6sm1103131985a.34.2026.01.20.12.12.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Jan 2026 11:50:10 -0800 (PST)
-Date: Tue, 20 Jan 2026 14:50:08 -0500
+ Tue, 20 Jan 2026 12:12:50 -0800 (PST)
+Date: Tue, 20 Jan 2026 15:12:48 -0500
 From: Peter Xu <peterx@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
- Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>,
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>, Kevin Wolf <kwolf@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
- Juan Quintela <quintela@trasno.org>,
- Zhang Chen <zhangckid@gmail.com>, zhanghailiang@xfusion.com,
- Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
-Message-ID: <aW_ccMSY4xJlRVn2@x1.local>
-References: <aWf4i7EOXtpAljGX@x1.local> <20260115224929.616aab85@penguin>
- <aWlso1w39cQnEh2t@x1.local> <aWlxY9TWGT1aaMJz@gallifrey>
- <aWl6ixQpHaMJhV_E@x1.local> <20260117204913.584e1829@penguin>
- <aW6xNcsz3RIqHeE5@x1.local> <20260120110811.7df19a6c@penguin>
- <aW-mCye_eFmy5f4B@x1.local> <aW_Rqbc2Swg8vkXY@gallifrey>
+ Zhang Chen <zhangckid@gmail.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Prasad Pandit <ppandit@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Yury Kotov <yury-kotov@yandex-team.ru>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 08/13] migration: Thread-ify precopy vmstate load process
+Message-ID: <aW_hwEbY8Y3FyV7P@x1.local>
+References: <20251022192612.2737648-9-peterx@redhat.com>
+ <87y0m7df46.fsf@suse.de> <aWUYVvFVbhXCdVod@x1.local>
+ <871pju1wlv.fsf@suse.de> <aWVim4LDYb4gMQLk@x1.local>
+ <87fr89psu5.fsf@suse.de> <aWZ3q3NBBCl5KTYr@x1.local>
+ <87jyxhmdp6.fsf@suse.de> <aW-v9YKkDO5bRKBQ@x1.local>
+ <87cy34ktd0.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aW_Rqbc2Swg8vkXY@gallifrey>
+In-Reply-To: <87cy34ktd0.fsf@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -127,402 +126,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 20, 2026 at 07:04:09PM +0000, Dr. David Alan Gilbert wrote:
-> * Peter Xu (peterx@redhat.com) wrote:
-> > On Tue, Jan 20, 2026 at 12:48:47PM +0100, Lukas Straub wrote:
-> > > On Mon, 19 Jan 2026 17:33:25 -0500
-> > > Peter Xu <peterx@redhat.com> wrote:
-> > > 
-> > > > On Sat, Jan 17, 2026 at 08:49:13PM +0100, Lukas Straub wrote:
-> > > > > On Thu, 15 Jan 2026 18:38:51 -0500
-> > > > > Peter Xu <peterx@redhat.com> wrote:
-> > > > >   
-> > > > > > On Thu, Jan 15, 2026 at 10:59:47PM +0000, Dr. David Alan Gilbert wrote:  
-> > > > > > > * Peter Xu (peterx@redhat.com) wrote:    
-> > > > > > > > On Thu, Jan 15, 2026 at 10:49:29PM +0100, Lukas Straub wrote:    
-> > > > > > > > > Nack.
-> > > > > > > > > 
-> > > > > > > > > This code has users, as explained in my other email:
-> > > > > > > > > https://lore.kernel.org/qemu-devel/20260115224516.7f0309ba@penguin/T/#mc99839451d6841366619c4ec0d5af5264e2f6464    
-> > > > > > > > 
-> > > > > > > > Please then rework that series and consider include the following (I
-> > > > > > > > believe I pointed out a long time ago somewhere..):
-> > > > > > > >     
-> > > > > > >     
-> > > > > > > > - Some form of justification of why multifd needs to be enabled for COLO.
-> > > > > > > >   For example, in your cluster deployment, using multifd can improve XXX
-> > > > > > > >   by YYY.  Please describe the use case and improvements.    
-> > > > > > > 
-> > > > > > > That one is pretty easy; since COLO is regularly taking snapshots, the faster
-> > > > > > > the snapshoting the less overhead there is.    
-> > > > > > 
-> > > > > > Thanks for chiming in, Dave.  I can explain why I want to request for some
-> > > > > > numbers.
-> > > > > > 
-> > > > > > Firstly, numbers normally proves it's used in a real system.  It's at least
-> > > > > > being used and seriously tested.
-> > > > > > 
-> > > > > > Secondly, per my very limited understanding to COLO... the two VMs in most
-> > > > > > cases should be in-sync state already when both sides generate the same
-> > > > > > network packets.
-> > > > > > 
-> > > > > > Another sync (where multifd can start to take effect) is only needed when
-> > > > > > there're packets misalignments, but IIUC it should be rare.  I don't know
-> > > > > > how rare it is, it would be good if Lukas could introduce some of those
-> > > > > > numbers in his deployment to help us understand COLO better if we'll need
-> > > > > > to keep it.  
-> > > > > 
-> > > > > It really depends on the workload and if you want to tune for
-> > > > > throughput or latency.  
-> > > > 
-> > > > Thanks for all the answers from all of you.
-> > > > 
-> > > > If we decide to keep COLO, looks like I'll have no choice but understand it
-> > > > better, as long as it still has anything to do with migration..  I'll leave
-> > > > some more questions / comments at the end.
-> > > > 
-> > > > > 
-> > > > > You need to do a checkpoint eventually and the more time passes between
-> > > > > checkpoints the more dirty memory you have to transfer during the
-> > > > > checkpoint.
-> > > > > 
-> > > > > Also keep in mind that the guest is stopped during checkpoints. Because
-> > > > > even if we continue running the guest, we can not release the mismatched
-> > > > > packets since that would expose a state of the guest to the outside
-> > > > > world that is not yet replicated to the secondary.  
-> > > > 
-> > > > Yes this makes sense.  However it is also the very confusing part of COLO.
-> > > > 
-> > > > When I said "I was expecting migration to not be the hot path", one reason
-> > > > is I believe COLO checkpoint (or say, when migration happens) will
-> > > > introduce a larger downtime than normal migration, because this process
-> > > > transfers RAM with both VMs stopped.
-> > > > 
-> > > > You helped explain why that large downtime is needed, thanks.  However then
-> > > > it means either (1) packet misalignment, or (2) periodical timer kickoff,
-> > > > either of them will kickoff checkpoint..
-> > > 
-> > > Yes, it could be optimized so we don't stop the guest for the periodical
-> > > checkpoints.
-> > 
-> > Likely we must stop it at least to savevm on non-rams.  But I get your
-> > point.  Yes, I think it might be good idea to try to keep in sync even
-> > without an explicit checkpoint request, almost like what live precopy does
-> > with RAM to shrink the downtime.
-> > 
-> > > 
-> > > > 
-> > > > I don't know if COLO services care about such relatively large downtime,
-> > > > especially it is not happening once, but periodically for every tens of
-> > > > seconds at least (assuming when periodically then packet misalignment is
-> > > > rare).
-> > > > 
-> > > 
-> > > If you want to tune for latency you go for like 500ms checkpoint
-> > > interval.
-> > > 
-> > > 
-> > > The alternative way to do fault tolerance is micro checkpointing where
-> > > only the primary guest runs while you buffer all sent packets. Then
-> > > every checkpoint you transfer all ram and device state to the secondary
-> > > and only then release all network packets.
-> > > So in this approach every packet is delayed by checkpoint interval +
-> > > checkpoint downtime and you use a checkpoint interval of like 30-100ms.
-> > > 
-> > > Obviously, COLO is a much better approach because only few packets
-> > > observe a delay.
-> > > 
-> > > > > 
-> > > > > So the migration performance is actually the most important part in
-> > > > > COLO to keep the checkpoints as short as possible.  
-> > > > 
-> > > > IIUC when a heartbeat will be lost on PVM _during_ sync checkpoints, then
-> > > > SVM can only rollback to the last time checkpoint.  Would this be good
-> > > > enough in reality?  It means if there's a TCP transaction then it may broke
-> > > > anyway.  x-checkpoint-delay / periodic checkpoints definitely make this
-> > > > more possible to happen.
-> > > 
-> > > We only release the mismatched packets after the ram and device state
-> > > is fully sent to the secondary. Because then the secondary is in the
-> > > state that generated these mismatched packets and can take over.
-> > 
-> > My question was more about how COLO failover works (or work at all?) if a
-> > failure happens exactly during checkpointing (aka, migration happening).
-> > 
-> > First of all, if the failure happens on SVM, IIUC it's not a problem,
-> > because PVM has all the latest data.
-> > 
-> > The problem lies more in the case where the failure happened in PVM. In
-> > this case, SVM only contains the previous checkpoint results, maybe plus
-> > something on top of that snapshot, as SVM kept running after the previous
-> > checkpoint.
-> > 
-> > So the failure can happen at different spots:
-> > 
-> >   (1) Failure happens _before_ applying the new checkpoint, that is, while
-> >       receiving the checkpoint from src and for example the PVM host is
-> >       down, channel shutdown.
-> > 
-> >       This one looks "okay", IIUC what will happen is SVM will keep running
-> >       but then as I described above it only contains the previous version
-> >       of the PVM snapshot, plus something SVM updated which may not match
-> >       with PVM's data:
-> > 
-> >            (1.a) if checkpoint triggered because of x-checkpoint-delay,
-> >            lower risk, possibly still in sync with src
-> > 
-> >            (1.b) if checkpoint triggered by colo-compare notification of
-> >            packet misalignment, I believe this may cause service
-> >            interruptions and it means SVM will not be able to competely
+On Tue, Jan 20, 2026 at 03:54:19PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> No, that's ok - the colo-compare mismatch triggers the need for a checkpoint;
-> but if the PVM dies during the creation of that checkpoint, it's the same as
-> if the PVM had never started making the checkpoint; the SVM just takes over.
-> But the important thing is that the packet that caused the micompare can't
-> be released until after the hosts are in sync again.
+> > On Fri, Jan 16, 2026 at 06:48:21PM -0300, Fabiano Rosas wrote:
+> >> Another one for the pile:
+> >> 
+> >> #5  0x00007f0beda4fb32 in __assert_fail (assertion=0x55b8c3ed8cb8 "mode >= 0 ...) at assert.c:103
+> >> #6  0x000055b8c3a1d7a9 in migrate_mode () at ../migration/options.c:882
+> >> #7  0x000055b8c3a1084e in fill_source_migration_info (info=0x55b8f1291650) at ../migration/migration.c:1322
+> >> #8  0x000055b8c3a10cae in qmp_query_migrate (errp=0x7fff5742ae80) at ../migration/migration.c:1438
+> >> #9  0x000055b8c3d4bc2a in qmp_marshal_query_migrate (args=0x55b8f11f2280, ret=0x7f0becd25da8, errp=0x7f0becd25da0) at qapi/qapi-commands-migration.c:48
+> >> #10 0x000055b8c3d9a13b in do_qmp_dispatch_bh (opaque=0x7f0becd25e40) at ../qapi/qmp-dispatch.c:128
+> >> #11 0x000055b8c3dc6366 in aio_bh_call (bh=0x55b8f12922d0) at ../util/async.c:173
+> >> #12 0x000055b8c3dc6482 in aio_bh_poll (ctx=0x55b8f10741e0) at ../util/async.c:220
+> >> #13 0x000055b8c3da9832 in aio_poll (ctx=0x55b8f10741e0, blocking=false) at ../util/aio-posix.c:719
+> >> #14 0x000055b8c3cea017 in monitor_cleanup () at ../monitor/monitor.c:676
+> >> #15 0x000055b8c39ef646 in qemu_cleanup (status=0) at ../system/runstate.c:999
+> >> #16 0x000055b8c3cec38e in qemu_default_main (opaque=0x0) at ../system/main.c:51
+> >> #17 0x000055b8c3cec430 in main (argc=33, argv=0x7fff5742b208) at
+> >> #../system/main.c:93
+> >> 
+> >> (gdb) p/x mode
+> >> $8 = 0xcccccccc
+> >
+> > What's the reproducer?  Is it easy to reproduce?
+> >
 > 
-> > 
-> >   (2) Failure happens _after_ applying the new checkpoint, but _before_ the
-> >       whole checkpoint is applied.
-> > 
-> >       To be explicit, consider qemu_load_device_state() when the process of
-> >       colo_incoming_process_checkpoint() failed.  It means SVM applied
-> >       partial of PVM's checkpoint, I think it should mean PVM is completely
-> >       corrupted.
+> Just hammering some make check instances in parallel, as usual.
 > 
-> As long as the SVM has got the entire checkpoint, then it *can* apply it all
-> and carry on from that point.
-
-Does it mean we assert() that qemu_load_device_state() will always success
-for COLO syncs?
-
-Logically post_load() can invoke anything and I'm not sure if something can
-start to fail, but I confess I don't know an existing device that can
-trigger it.
-
-Lukas told me something was broken though with pc machine type, on
-post_load() not re-entrant.  I think it might be possible though when
-post_load() is relevant to some device states (that guest driver can change
-between two checkpoint loads), but that's still only theoretical.  So maybe
-we can indeed assert it here.
-
+> > I wonder if current_migration released already, or if monitor should still
+> > process any QMP handler if the VM is shutting down..
+> >
 > 
-> > Here either (1.b) or (2) seems fatal to me on the whole high level design.
-> > Periodical syncs with x-checkpoint-delay can make this easier to happen, so
-> > larger windows of critical failures.  That's also why I think it's
-> > confusing COLO prefers more checkpoints - while it helps sync things up, it
-> > enlarges high risk window and overall overhead.
+> monitor_cleanup says it will continue dispatching and just never send a
+> response to the command. It seems migration will need it's own way of
+> tracking this.
 > 
-> No, there should be no point at which a failure leaves the SVM without a checkpoint
-> that it can apply to take over.
+> Maybe as a first step we could clear current_migration at
+> migration_instance_finalize().
+> (I see device-introspect-test doesn't like it. I'll look into it)
 > 
-> > > > > I have quite a few more performance and cleanup patches on my hands,
-> > > > > for example to transfer dirty memory between checkpoints.
-> > > > >   
-> > > > > > 
-> > > > > > IIUC, the critical path of COLO shouldn't be migration on its own?  It
-> > > > > > should be when heartbeat gets lost; that normally should happen when two
-> > > > > > VMs are in sync.  In this path, I don't see how multifd helps..  because
-> > > > > > there's no migration happening, only the src recording what has changed.
-> > > > > > Hence I think some number with description of the measurements may help us
-> > > > > > understand how important multifd is to COLO.
-> > > > > > 
-> > > > > > Supporting multifd will cause new COLO functions to inject into core
-> > > > > > migration code paths (even if not much..). I want to make sure such (new)
-> > > > > > complexity is justified. I also want to avoid introducing a feature only
-> > > > > > because "we have XXX, then let's support XXX in COLO too, maybe some day
-> > > > > > it'll be useful".  
-> > > > > 
-> > > > > What COLO needs from migration at the low level:
-> > > > > 
-> > > > > Primary/Outgoing side:
-> > > > > 
-> > > > > Not much actually, we just need a way to incrementally send the
-> > > > > dirtied memory and the full device state.
-> > > > > Also, we ensure that migration never actually finishes since we will
-> > > > > never do a switchover. For example we never set
-> > > > > RAMState::last_stage with COLO.
-> > > > > 
-> > > > > Secondary/Incoming side:
-> > > > > 
-> > > > > colo cache:
-> > > > > Since the secondary always needs to be ready to take over (even during
-> > > > > checkpointing), we can not write the received ram pages directly to
-> > > > > the guest ram to prevent having half of the old and half of the new
-> > > > > contents.
-> > > > > So we redirect the received ram pages to the colo cache. This is
-> > > > > basically a mirror of the primary side ram.
-> > > > > It also simplifies the primary side since from it's point of view it's
-> > > > > just a normal migration target. So primary side doesn't have to care
-> > > > > about dirtied pages on the secondary for example.
-> > > > > 
-> > > > > Dirty Bitmap:
-> > > > > With COLO we also need a dirty bitmap on the incoming side to track
-> > > > > 1. pages dirtied by the secondary guest
-> > > > > 2. pages dirtied by the primary guest (incoming ram pages)
-> > > > > In the last step during the checkpointing, this bitmap is then used
-> > > > > to overwrite the guest ram with the colo cache so the secondary guest
-> > > > > is in sync with the primary guest.
-> > > > > 
-> > > > > All this individually is very little code as you can see from my
-> > > > > multifd patch. Just something to keep in mind I guess.
-> > > > > 
-> > > > > 
-> > > > > At the high level we have the COLO framework outgoing and incoming
-> > > > > threads which just tell the migration code to:
-> > > > > Send all ram pages (qemu_savevm_live_state()) on the outgoing side
-> > > > > paired with a qemu_loadvm_state_main on the incoming side.
-> > > > > Send the device state (qemu_save_device_state()) paired with writing
-> > > > > that stream to a buffer on the incoming side.
-> > > > > And finally flusing the colo cache and loading the device state on the
-> > > > > incoming side.
-> > > > > 
-> > > > > And of course we coordinate with the colo block replication and
-> > > > > colo-compare.  
-> > > > 
-> > > > Thank you.  Maybe you should generalize some of the explanations and put it
-> > > > into docs/devel/migration/ somewhere.  I think many of them are not
-> > > > mentioned in the doc on how COLO works internally.
-> > > > 
-> > > > Let me ask some more questions while I'm reading COLO today:
-> > > > 
-> > > > - For each of the checkpoint (colo_do_checkpoint_transaction()), COLO will
-> > > >   do the following:
-> > > > 
-> > > >     bql_lock()
-> > > >     vm_stop_force_state(RUN_STATE_COLO)     # stop vm
-> > > >     bql_unlock()
-> > > > 
-> > > >     ...
-> > > >   
-> > > >     bql_lock()
-> > > >     qemu_save_device_state()                # into a temp buffer fb
-> > > >     bql_unlock()
-> > > > 
-> > > >     ...
-> > > > 
-> > > >     qemu_savevm_state_complete_precopy()    # send RAM, directly to the wire
-> > > >     qemu_put_buffer(fb)                     # push temp buffer fb to wire
-> > > > 
-> > > >     ...
-> > > > 
-> > > >     bql_lock()
-> > > >     vm_start()                              # start vm
-> > > >     bql_unlock()
-> > > > 
-> > > >   A few questions that I didn't ask previously:
-> > > > 
-> > > >   - If VM is stopped anyway, why putting the device states into a temp
-> > > >     buffer, instead of using what we already have for precopy phase, or
-> > > >     just push everything directly to the wire?
-> > > 
-> > > Actually we only do that to get the size of the device state and send
-> > > the size out-of-band, since we can not use qemu_load_device_state()
-> > > directly on the secondary side and look for the in-band EOF.
-> > 
-> > I also don't understand why the size is needed..
-> > 
-> > Currently the streaming protocol for COLO is:
-> > 
-> >   - ...
-> >   - COLO_MESSAGE_VMSTATE_SEND
-> >   - RAM data
-> >   - EOF
-> >   - COLO_MESSAGE_VMSTATE_SIZE
-> >   - non-RAM data
-> >   - EOF
-> > 
-> > My question is about, why can't we do this instead?
-> > 
-> >   - ...
-> >   - COLO_MESSAGE_VMSTATE_SEND
-> >   - RAM data
-
-[1]
-
-> >   - non-RAM data
-> >   - EOF
-> > 
-> > If the VM is stoppped during the whole process anyway..
-> > 
-> > Here RAM/non-RAM data all are vmstates, and logically can also be loaded in
-> > one shot of a vmstate load loop.
+> > Is this only happening after this series applied?  I can't yet see how the
+> > threadify affected it..
 > 
-> You might be able to; in that case you would have to stream the 
-> entire thing into a buffer on the secondary rather than applying the
-> RAM updates to the colo cache.
+> No, sorry, I posted here because I think this affects this series'
+> assumptions about the BQL.
 
-I thought the colo cache is already such a buffering when receiving at [1]
-above?  Then we need to flush the colo cache (including scan the SVM bitmap
-and only flush those pages in colo cache) like before.
+Aha, you reminded me on this work, remember to check it out (I forgot most
+of it.. as usual..):
 
-If something went wrong (e.g. channel broken during receiving non-ram
-device states), SVM can directly drop all colo cache as the latest
-checkpoint isn't complete.
+https://lore.kernel.org/qemu-devel/20241029211607.2114845-8-peterx@redhat.com
 
-> 
-> > 
-> > > 
-> > > > 
-> > > >   - Above operation frequently releases BQL, why is it needed?  What
-> > > >     happens if (within the window where BQL released) someone invoked QMP
-> > > >     command "cont" and causing VM to start? Would COLO be broken with it?
-> > > >     Should we take BQL for the whole process to avoid it?
-> > > 
-> > > We need to release the BQL because block replication on the secondary side and
-> > > colo-compare and netfilters on the primary side need the main loop to
-> > > make progress.
-> > 
-> > Do we need it to make progress before vm_start(), though?  If we take BQL
-> > once and release it once only after vm_start(), would it work?
-> > 
-> > I didn't see anything being checked in colo_do_checkpoint_transaction(),
-> > after vm_stop() + replication_do_checkpoint_all(), and before vm_start()..
-> > 
-> > > 
-> > > Issuing a cont during a checkpoint will probably break it yes.
-> > 
-> > Feel free to send a patch if you think it's a concern.  Ok to me even if
-> > without, if mgmt has full control of it, so I'll leave it to you to decide
-> > as I'm not a colo user after all.
-> > 
-> > > 
-> > > > 
-> > > > - Does colo_cache has an limitation, or should we expect SVM to double
-> > > >   consume the guest RAM size?  As I didn't see where colo_cache will be
-> > > >   released during each sync (e.g. after colo_flush_ram_cache).  I am
-> > > >   expecting over time SVM will have most of the pages touched, then the
-> > > >   colo_cache can consume the same as guest mem on SVM.
-> > > 
-> > > Yes, the secondary side consumes twice the guest ram size. That is one
-> > > disadvantage of this approach.
-> > > 
-> > > I guess we could do some kind of copy on write mapping for the
-> > > secondary guest ram. But even then it's hard to make the ram overhead
-> > > bounded in size.
-> > 
-> > It's ok, though this sounds also like something good to be documented, it's
-> > a very high level knowledge an user should know when considering COLO as an
-> > HA solution.
-> 
-> The thought of using userfaultfd-write had floated around at some time
-> as ways to optimise this.
+I also recall besides the singleton idea, we can also take a mutex and
+release current_migration at finalize(), then fetch current_migration will
+instead need to take a refcount and also with mutex held.
 
-It's an interesting idea. Yes it looks working, but as Lukas said, it looks
-still unbounded.
-
-One idea to provide a strict bound:
-
-  - admin sets a proper buffer to limit the extra pages to remember on SVM,
-    should be much smaller than total guest mem, but admin should make sure
-    in 99.99% cases it won't hit the limit with a proper x-checkpoint-delay,
-
-  - if limit triggered, both VMs needs to pause (initiated by SVM), SVM
-    needs to explicitly request a checkpoint to src,
-
-  - VMs can only start again after two VMs sync again
-
-Thanks,
+Anyway, thanks for looking into it.  Now, it's all yours. :)
 
 -- 
 Peter Xu
