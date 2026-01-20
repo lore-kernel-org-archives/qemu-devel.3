@@ -4,122 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A07FD2ECF9
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 07:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C368D2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 08:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi6bT-0007ZF-Th; Tue, 20 Jan 2026 02:56:43 -0500
+	id 1vi6j3-0003PY-QB; Tue, 20 Jan 2026 03:04:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vi6bS-0007YK-5I
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 02:56:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vi6bP-0006gO-Q0
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 02:56:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768895798;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=l6adkZkyD2Tj5z9uefJ///44UUY51zMX0hMMapuY2rA=;
- b=ETqcm6G0ga/0j/q6hcao+/EW59In4VjaFIGOW5oyFZSW6CGK1pXCbm5DTJ2NaPLLCWYDZo
- ffNWRP4Y7fAstZnKn5W8NUsgxwQn3Q240QrwYxDGYU0yQoWmwjuZWw3OrhrT9DIjBX/ECA
- j7KJFHiEJNMuOOnEPAOJ/Hh8nFNlsfA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-78-mB-HrmjnMTikJ58_FLP_6g-1; Tue, 20 Jan 2026 02:56:36 -0500
-X-MC-Unique: mB-HrmjnMTikJ58_FLP_6g-1
-X-Mimecast-MFC-AGG-ID: mB-HrmjnMTikJ58_FLP_6g_1768895795
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47d4029340aso46917065e9.3
- for <qemu-devel@nongnu.org>; Mon, 19 Jan 2026 23:56:35 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768895795; cv=none;
- d=google.com; s=arc-20240605;
- b=iX1svRnFFt+5aYJ9nUy4XJKYAAzXTT8PWWip8eChNJPkVri2Ug9LLkSS97schiqRBr
- gk/csKRPsc376bszP2Owj55rfiOTJ6Ipaozc9EX+ngk1i7G2DETAXX2Lr3lzHtW9psej
- fzYA3Z0oZ+w0+4H7ic9rYyw70uuLCv44V4Az5+za2rS7vsHCYtqb72qT2/lqDvTHLrVG
- pm7G38cvW6VJplyvgNOPifKz2oHrWJboAxkDtVflqETwTosPb6OO/pvuTcKidA718uvK
- ZV1HIvOOvc5ixI4gn5Bk/qVUIoaiZcerruk97d7UF0be8i0ij22HyiJkKOpqTLrgAMT1
- IE/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=l6adkZkyD2Tj5z9uefJ///44UUY51zMX0hMMapuY2rA=;
- fh=ANMLY+vUlDJOw2PdV6/55gZrkEUXmI3oVt0AZ2Stn1s=;
- b=adbSleWwnEGCpB7X7RkSerWWefAcmPA2dHFWe71BYXhon6z9XA+t/e6Lf/0O4lv19Z
- QbEYlN9os2mBBs8juUbiGR/KhPbmWTI/qaDb+UwhgrGvwy+iKx5Gi60qDKDDB1z5wgBt
- sHlTvi/GjEUoX3jSDTNT9OLBqu5A5RaKVu+EaOCXDLcy596g6YYJNzG7fCBdcpQV66WS
- jk6mgJ+AHIDvBgECtE3ho92Wd1bM+kGfEsEa8ei3EH6X3h+zo9mNle7MQIQgTBWevnyL
- 2FPilSVL1L/7vT92EgrQH5BRqiNpKeEK1cfh8ZVZeADXy+r3Ljz9aWL9SKKHbdykanGS
- pxjw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1vi6j2-0003Mw-5S
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:04:32 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
+ id 1vi6j0-0007Wy-ET
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:04:31 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-b87dba51442so278981466b.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 00:04:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768895795; x=1769500595; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=l6adkZkyD2Tj5z9uefJ///44UUY51zMX0hMMapuY2rA=;
- b=lxZEwRnX/YHy6zOwll7mviuuofwUzP9/IlXtuSqrN4ra2c36vula+EtoD46p3lffMX
- nqT/TAQ6vThYszSA+z/GFp5XaCGufn6k6ZL6qw9nl8Ikq5EnClZSZD4HRwqRuyLGkWNK
- ksO20Ra/OZ9/VzQfiqRJ+fu/lasgjahnpUfCHZWm+yF0PCaHalzxjXtOQQvDyUaZsR37
- Cu8XCsXjZexTNXoY13VhCKnFhLWKhTZPTGAcT9uNp9WhkefLfFLtlYk9HvcY5hPuIqvg
- K2qd30kaEfmMZsEU8w1TuEK5zQa07BBJtmBhF0iNf8Q+JjABbRXMw7JU5GLzHRnF5LZc
- 2kUQ==
+ d=gmail.com; s=20230601; t=1768896268; x=1769501068; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=7Cr4864TJeA4DxA/v05JXmCXQA4LcL+Hru6DQNeSr/A=;
+ b=N9Em1wdELZwxQIomFEfXDgft1fes1qbDRNEzv59IxzBoDfV1URie1Pxeqd74QQeboU
+ 90J+N0I4PUcqs0Rg/5Bj5D1Qnx/EfAG5WbvyPEEV2L6bcI0Q2W/cvPpLsXXcPSEXQUoJ
+ zlc9DlCYqv4fp2cFKwA1OLBxQ/EuEvpCYCqW/qRHk/VU5UfyZGqSE/hyp8qhRVhCxguo
+ K6W8f6/x401jJG9DaneTOj2Wi8w+VfZXAPeQmgbU3zBuIpCPQvql5iW1q9BIKDBW9+Q+
+ B9zPOPvHXdQ8htSZVEWn7fDTOQoLwEJX1kekOJf7wdz9JNKeGY8OlgcYfANxpJ3nY2hu
+ t9xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768895795; x=1769500595;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=l6adkZkyD2Tj5z9uefJ///44UUY51zMX0hMMapuY2rA=;
- b=ZjQRA13BUBiMje3IJ0JP3Lp6UA4nBp4tA8oKktrvnmmk6cIubDow6NoR2OM6SIz2FP
- ybcM9WlC7L6h1Cn4jA1mPr/fb0ZAcAzPpoB+rVedv7No/tV8Dmg+scK/+EpkxEsjQJp4
- Vg7fm5KEVKyC09jWywtW+WDgL/qWBnnwQ1P59eqRi+uFs7LF6gT76zMJ+FBy8GuVN9Qy
- KpbrBYJ7XsDqOYCJWLg/5grVhFZ+sZ6BuPJJHjE4TTQizMFwfMMB6b0MlSDdtouZjTeO
- DOm9z8TkOtpUFCsRGrPFA9TrCnQtv0UX7xqE6YR+Fjj+eiv7RL+RA2k34IsTEBc/JpWx
- UuVw==
-X-Gm-Message-State: AOJu0Yxs2dDq6shd+z84qpcT+qdL+0USGrAiE6m+a3L6145+18pWObFr
- 04N/kGwYQVfBBuJsMgB4eMyg5kGU+JEuexkpoI2uIiKaRafNtwf1u/YZrhZ6cUf4wW31ZOpxl07
- +m6Dr0ub+XoIOX5PS1sKdWrbVY62PJCxeE1FYyZfgoDuVFjXpnu9HGShLNlbaCLdz6F3cerSgwm
- 61GM4JFo55piVpNHXDf5iv2uwqxKWkj6k=
-X-Gm-Gg: AY/fxX4YsFmbHUIJk8WLmhMCbsl9rycqzLXWIVd7z357lgJj3fGYwGg+3xa+LOT3VAw
- GarMO8si/xJSpw8g+Q2b3gP8TCNUIfTd2HQxXygLBXNgslO+RCxI58ndEpdRWy/fbJgkxvFO2Vy
- 1NCJiM/ruKI5FBdVIntwgAQauToYCT+HEltd9aGSojlzHHbxbNnEnvUShPPBt/eRYcURyT4NPZc
- pX3fxJK1Veyi10vtwT3jA/vaVlD/xalouYvV+O0F932lxDFYVu4zFRQ
-X-Received: by 2002:a05:600c:1990:b0:480:3b26:82c3 with SMTP id
- 5b1f17b1804b1-4803e7e819dmr10461595e9.20.1768895794776; 
- Mon, 19 Jan 2026 23:56:34 -0800 (PST)
-X-Received: by 2002:a05:600c:1990:b0:480:3b26:82c3 with SMTP id
- 5b1f17b1804b1-4803e7e819dmr10461435e9.20.1768895794318; Mon, 19 Jan 2026
- 23:56:34 -0800 (PST)
-MIME-Version: 1.0
-References: <20260109123519.28703-1-farosas@suse.de>
- <20260109123519.28703-3-farosas@suse.de>
-In-Reply-To: <20260109123519.28703-3-farosas@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 20 Jan 2026 13:26:17 +0530
-X-Gm-Features: AZwV_QhmFWYQ4fqsX-75-H_ASUIOel5Aacn4ubyz2hTnuOGE1EqtK-5UTmDnQvU
-Message-ID: <CAE8KmOydo3r7x1AMWyO3hYEqrN5+XxHuz0y9OYNJc4nPMWq2DA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] tests/functional: Add a OS level migration test
- for pseries
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, peterx@redhat.com, 
- Nicholas Piggin <npiggin@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
+ d=1e100.net; s=20230601; t=1768896268; x=1769501068;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7Cr4864TJeA4DxA/v05JXmCXQA4LcL+Hru6DQNeSr/A=;
+ b=VfVsf/q154todLT/MBf9ikmcD0iNs4F40aijuagTG3pYr7jow/PSkmGV+tvNDsqp5x
+ hY+PZe5H/U0fK3GOk88BT2kzyQqgICA9hRW0ZdKO6nYB7Eb3nFl+bbmKxQg+T29ALCpt
+ HL66sM1jsTrD3pJ27yLF3pzvs4T3fzweSswqpEc/vquNcnmhAvPxCPqBYHS3DF7rIQaH
+ PhjYVYiz73LY5gCUsxL6n/pWACjg3deQd0C3S2I1Eb5zTrM6+ozwPP5YZqfAcCW4dNxQ
+ drTLjySEfa8mhJsBcpzFxulhpeF0qppgCKTu+fxIvitalp5QXg9SUxm9aYjIN38jm/1p
+ EeWg==
+X-Gm-Message-State: AOJu0YzB2Y7PiwIWsrYjnwNGe0rCTc0iMLnKEa9MIyDA5L/l9z6yd72w
+ ss+6+/fGBzPZS1rdvl0LVJFEmKHLrf4CHsHmZLExJTR+074ntmuVsJiI
+X-Gm-Gg: AY/fxX6AeJuHyeGL89jgcCj/J2FB2raXkFihaw9yAFJLMQxuIgTDdDYFYhrp76syLZf
+ q9NGdn0LYfIeYOvtWAw58/ubOLlhI4LUkmWGQWvqOILYTr2Nj320w9Pn+BHgo0iQxIIVzHDOZDi
+ vTRitmr4Kvj2pfKCes6DtyGWYPRjajHlOmhaglL9RU/d7H6DlN/6xgrUgCUwSFQZdPKJNUHWRSQ
+ IFhA8KlrTpw4MhIlkLth7UZLyfG7LNn2R4iOEv9D3Pm9Ug3m9K773Gxs0u2aD3PnjBrAjIoCtUf
+ /61TjUnAESJqS7NC975B+hMNU1/U0TREJL/QLvR0XIJEBMux6jOaDw1MeTqsShEFHOxoH8FUirW
+ HIL7FmJK8XZR+/exxBw+V3s7GKsXCBTBx3Qbpg1JCT+ZZGC2t4bARdgnBDOSSktUeOZFZTFw1zS
+ gAXHZgArc0g5i06HFxebpynPg3xLwA+eym3Q+NagoaoiRDYA==
+X-Received: by 2002:a17:907:782:b0:b7f:f862:df26 with SMTP id
+ a640c23a62f3a-b8792d6d49amr1094522366b.14.1768896267724; 
+ Tue, 20 Jan 2026 00:04:27 -0800 (PST)
+Received: from [10.33.80.40] (mem-185.47.220.165.jmnet.cz. [185.47.220.165])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b87959fb973sm1297722266b.53.2026.01.20.00.04.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Jan 2026 00:04:26 -0800 (PST)
+Message-ID: <924c52d6089b3c0cfd3a235887579ae0322cffba.camel@gmail.com>
+Subject: Re: [PATCH v6 07/12] qmp: add chardev-window-size-changed command
+From: Filip Hejsek <filip.hejsek@gmail.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau	
+ <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Amit Shah <amit@kernel.org>, Eric Blake	 <eblake@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Marcel Apfelbaum	
+ <marcel.apfelbaum@gmail.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=	
+ <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu	
+ <zhao1.liu@intel.com>, Daniel =?ISO-8859-1?Q?P=2EBerrang=E9?=	
+ <berrange@redhat.com>, Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
+ Szymon Lukasz <noh4hss@gmail.com>
+Date: Tue, 20 Jan 2026 09:04:23 +0100
+In-Reply-To: <87jyxep08i.fsf@pond.sub.org>
+References: <20260119-console-resize-v6-0-33a7b0330a7a@gmail.com>
+ <20260119-console-resize-v6-7-33a7b0330a7a@gmail.com>
+ <87jyxep08i.fsf@pond.sub.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 
+MIME-Version: 1.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=filip.hejsek@gmail.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,114 +111,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 Jan 2026 at 18:06, Fabiano Rosas <farosas@suse.de> wrote:
-> There's currently no OS level test for ppc64le. Add one such test by
-> reusing the boot level tests that are already present.
->
-> The test boots the source machine, waits for it to reach a mid-boot
-> message, migrates and checks that the destination has reached the
-> final boot message (VFS error due to no disk).
->
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  tests/functional/ppc64/test_migration.py | 12 ++++++++
->  tests/functional/ppc64/test_pseries.py   | 35 ++++++++++++++++++++++++
->  2 files changed, 47 insertions(+)
->
-> diff --git a/tests/functional/ppc64/test_migration.py b/tests/functional/ppc64/test_migration.py
-> index 5dfdaaf709..a3b819680b 100755
-> --- a/tests/functional/ppc64/test_migration.py
-> +++ b/tests/functional/ppc64/test_migration.py
-> @@ -4,6 +4,7 @@
->  #
->  # ppc migration test
->
-> +from qemu_test.ports import Ports
->  from migration import MigrationTest
->
->
-> @@ -21,6 +22,17 @@ def test_migration_with_exec(self):
->          self.set_machine('mac99')
->          self.migration_with_exec()
->
-> +    def do_migrate_ppc64_linux(self, source_vm, dest_vm):
-> +        with Ports() as ports:
-> +            port = ports.find_free_port()
-> +            if port is None:
-> +                self.skipTest('Failed to find a free port')
-> +            uri = 'tcp:localhost:%u' % port
+On Mon, 2026-01-19 at 07:47 +0100, Markus Armbruster wrote:
+> Filip Hejsek <filip.hejsek@gmail.com> writes:
+>=20
+> > From: Szymon Lukasz <noh4hss@gmail.com>
+> >=20
+> > The managment software can use this command to notify QEMU about the
+> > size of the terminal connected to a chardev, QEMU can then forward this
+> > information to the guest if the chardev is connected to a virtio consol=
+e
+> > device.
+> >=20
+> > Signed-off-by: Szymon Lukasz <noh4hss@gmail.com>
+> > Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> > [Filip: rename command, change documentation]
+> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> > Acked-by: Markus Armbruster <armbru@redhat.com>
+> > Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
+>=20
+> [...]
+>=20
+> > diff --git a/qapi/char.json b/qapi/char.json
+> > index 140614f82c..bc08f0161a 100644
+> > --- a/qapi/char.json
+> > +++ b/qapi/char.json
+> > @@ -861,6 +861,37 @@
+> >  { 'command': 'chardev-send-break',
+> >    'data': { 'id': 'str' } }
+> > =20
+> > +##
+> > +# @chardev-window-size-changed:
+> > +#
+> > +# Notifies a chardev about the current size of the terminal connected
+> > +# to this chardev.  The information will be forwarded to the guest if
+> > +# the chardev is connected to a virtio console device.
+> > +#
+> > +# The initial size is 0x0, which should be interpreted as an unknown
+> > +# size.
+> > +#
+> > +# Some backends detect the terminal size automatically, in which case
+> > +# the size may unpredictably revert to the detected one at any time.
+> > +#
+> > +# @id: the chardev's ID, must exist
+>=20
+> Please drop ", must exist" for consistency with ID descriptions
+> elsewhere.
+>=20
 
-* When port is None, shouldn't it return after the skipTest() call?
-With port = None, uri will become -> 'tcp:localhost:None' OR maybe
-port should have default value?
+On Mon, 2025-09-22 at 11:38 +0200, Markus Armbruster wrote:
+> [...]
+> >> Let's drop ", must exist" for consistency with ID descriptions
+> >> elsewhere.
+> >
+> > All chardev @id parameters in qapi/char.json have ", must exist"
+> > (although you're right that nothing else has it).
+>=20
+> Right.  Feel free to stay locally consistent then.
 
-> +            dest_vm.qmp('migrate-incoming', uri=uri)
-> +            source_vm.qmp('migrate', uri=uri)
-> +            self.assert_migration(source_vm, dest_vm)
-> +
->
->  if __name__ == '__main__':
->      MigrationTest.main()
-> diff --git a/tests/functional/ppc64/test_pseries.py b/tests/functional/ppc64/test_pseries.py
-> index 7840c4e3ff..b45763c305 100755
-> --- a/tests/functional/ppc64/test_pseries.py
-> +++ b/tests/functional/ppc64/test_pseries.py
-> @@ -9,6 +9,7 @@
->
->  from qemu_test import QemuSystemTest, Asset
->  from qemu_test import wait_for_console_pattern
-> +from test_migration import PpcMigrationTest
->
->  class PseriesMachine(QemuSystemTest):
->
-> @@ -87,5 +88,39 @@ def test_ppc64_linux_big_boot(self):
->          wait_for_console_pattern(self, console_pattern, self.panic_message)
->          wait_for_console_pattern(self, self.good_message, self.panic_message)
->
-> +    def test_ppc64_linux_migration(self):
-> +        self.set_machine('pseries')
-> +
-> +        kernel_path = self.ASSET_KERNEL.fetch()
-> +        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
-> +
-> +        dest_vm = self.get_vm(name="dest-qemu")
-> +        dest_vm.add_args('-incoming', 'defer')
-> +        dest_vm.add_args('-smp', '4')
-> +        dest_vm.add_args('-nodefaults')
-> +        dest_vm.add_args('-kernel', kernel_path,
-> +                         '-append', kernel_command_line)
-> +        dest_vm.set_console()
-> +        dest_vm.launch()
-> +
-> +        source_vm = self.get_vm(name="source-qemu")
-> +        source_vm.add_args('-smp', '4')
-> +        source_vm.add_args('-nodefaults')
-> +        source_vm.add_args('-kernel', kernel_path,
-> +                           '-append', kernel_command_line)
-> +        source_vm.set_console()
-> +        source_vm.launch()
-> +
-> +        # ensure the boot has reached Linux
-> +        console_pattern = 'smp: Brought up 1 node, 4 CPUs'
-> +        wait_for_console_pattern(self, console_pattern, self.panic_message,
-> +                                 vm=source_vm)
-> +
-> +        PpcMigrationTest().do_migrate_ppc64_linux(source_vm, dest_vm);
-> +
-> +        # ensure the boot proceeds after migration
-> +        wait_for_console_pattern(self, self.good_message, self.panic_message,
-> +                                 vm=dest_vm)
-> +
->  if __name__ == '__main__':
->      QemuSystemTest.main()
-> --
+I'll drop it in next version, but all the other instances should be
+dropped too.
 
-* Looks okay.
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
-
-Thank you.
----
-  - Prasad
-
+> > +#
+> > +# @cols: the number of columns
+> > +#
+> > +# @rows: the number of rows
+> > +#
+> > +# Since: 11.0
+> > +#
+> > +# .. qmp-example::
+> > +#
+> > +#     -> { "execute": "chardev-window-size-changed", "arguments": { "i=
+d": "foo", "cols": 80, "rows": 24 } }
+> > +#     <- { "return": {} }
+> > +##
+> > +{ 'command': 'chardev-window-size-changed',
+> > +  'data': { 'id': 'str',
+> > +            'cols': 'uint16',
+> > +            'rows': 'uint16' } }
+> > +
+> >  ##
+> >  # @VSERPORT_CHANGE:
+> >  #
 
