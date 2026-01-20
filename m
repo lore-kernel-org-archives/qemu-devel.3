@@ -4,37 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0641D2ECE9
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 12:40:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6097D2ECE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 12:41:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viAzy-0002RV-1p; Tue, 20 Jan 2026 07:38:18 -0500
+	id 1viAze-0001ze-AZ; Tue, 20 Jan 2026 07:37:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1viAyl-0001Ux-S9; Tue, 20 Jan 2026 07:37:05 -0500
+ id 1viAzF-0001ez-Tl; Tue, 20 Jan 2026 07:37:35 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1viAyf-0002Ve-P1; Tue, 20 Jan 2026 07:37:02 -0500
+ id 1viAzA-0002YT-Pk; Tue, 20 Jan 2026 07:37:32 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AFA111802C1;
- Tue, 20 Jan 2026 15:21:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 055E11802C5;
+ Tue, 20 Jan 2026 15:21:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2D5A935174A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 801B035174E;
  Tue, 20 Jan 2026 15:21:51 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PULL 2/9] gdbstub: unlink the unix socket before bind()
-Date: Tue, 20 Jan 2026 15:21:39 +0300
-Message-ID: <20260120122150.2254321-3-mjt@tls.msk.ru>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 6/9] tests/qemu-iotests: Use "gsed" for expressions that
+ require GNU sed
+Date: Tue, 20 Jan 2026 15:21:43 +0300
+Message-ID: <20260120122150.2254321-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260120122150.2254321-1-mjt@tls.msk.ru>
 References: <20260120122150.2254321-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,29 +61,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is another variant of doing what v9.2.0-1561-gfccb744f41c6
-"gdbstub: Try unlinking the unix socket before binding" did, but
-that commit introduced dependency on qemu-sockets.c which is
-more problematic for statically-linked qemu-user binaries.
+From: Thomas Huth <thuth@redhat.com>
 
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+A bunch of tests are currently failing e.g. on FreeBSD like this:
+
+ 082   fail       [13:38:58] [13:38:59]   0.5s                 output
+  mismatch (see .../build/tests/qemu-iotests/scratch/qcow2-file-082/082.out.bad)
+ --- .../src/tests/qemu-iotests/082.out
+ +++ .../build/tests/qemu-iotests/scratch/qcow2-file-082/082.out.bad
+ @@ -17,7 +17,7 @@
+  cluster_size: 4096
+  Format specific information:
+      compat: 1.1
+ -    compression type: COMPRESSION_TYPE
+ +    compression type: zlib
+      lazy refcounts: true
+      refcount bits: 16
+      corrupt: false
+
+This happens because the sed statements require GNU sed. Let's use
+gsed in these spots to get it fixed.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- gdbstub/user.c | 1 +
- 1 file changed, 1 insertion(+)
+ tests/qemu-iotests/286       | 2 +-
+ tests/qemu-iotests/common.rc | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 5e920a9b51..a2327c6135 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -337,6 +337,7 @@ static int gdbserver_open_socket(const char *path)
+diff --git a/tests/qemu-iotests/286 b/tests/qemu-iotests/286
+index 38216c2a0e..cc6aacf022 100755
+--- a/tests/qemu-iotests/286
++++ b/tests/qemu-iotests/286
+@@ -62,7 +62,7 @@ wait=yes _cleanup_qemu
  
-     sockaddr.sun_family = AF_UNIX;
-     pstrcpy(sockaddr.sun_path, sizeof(sockaddr.sun_path) - 1, path);
-+    unlink(sockaddr.sun_path);
-     ret = bind(fd, (struct sockaddr *)&sockaddr, sizeof(sockaddr));
-     if (ret < 0) {
-         perror("bind socket");
+ echo 'Output structure:'
+ $QEMU_IMG snapshot -l "$TEST_IMG" | tail -n 1 | tr -s ' ' \
+-    | sed -e 's/\S\+/./g' \
++    | gsed -e 's/\S\+/./g' \
+     | sed -e 's/\./(snapshot ID)/' \
+           -e 's/\./(snapshot name)/' \
+           -e 's/\./(VM state size value)/' \
+diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
+index c0f8f0f8df..731e4b2b99 100644
+--- a/tests/qemu-iotests/common.rc
++++ b/tests/qemu-iotests/common.rc
+@@ -719,7 +719,7 @@ _img_info()
+     regex_json_spec_start='^ *"format-specific": \{'
+     regex_json_child_start='^ *"children": \['
+     $QEMU_IMG info $QEMU_IMG_EXTRA_ARGS "$@" "$TEST_IMG" 2>&1 | \
+-        sed -e "s#$REMOTE_TEST_DIR#TEST_DIR#g" \
++        gsed -e "s#$REMOTE_TEST_DIR#TEST_DIR#g" \
+             -e "s#$IMGPROTO:$TEST_DIR#TEST_DIR#g" \
+             -e "s#$TEST_DIR#TEST_DIR#g" \
+             -e "s#$SOCK_DIR/fuse-#TEST_DIR/#g" \
 -- 
 2.47.3
 
