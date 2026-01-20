@@ -4,139 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E55CA5FB8
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 17:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED4E8CA5FC1
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 17:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viFgP-0003hH-35; Tue, 20 Jan 2026 12:38:26 -0500
+	id 1viFug-0004sS-Li; Tue, 20 Jan 2026 12:53:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1viFgG-0003bn-CK
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 12:38:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1viFgE-0004tc-Hs
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 12:38:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768930693;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1viFuX-0004nB-Hd
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 12:53:02 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1viFuV-0007YC-GP
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 12:53:01 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 089D75BCCA;
+ Tue, 20 Jan 2026 17:52:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1768931576; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=l3QVUzz2HFfDGbd2p0l9VSyDygOkr+/Yh7SK4SY5Tfw=;
- b=dl/cdgPEl/4wl0ikT7acuXW/Ux1jm2+bbAr+emotBxw0t/+VjEERMd1b2BEVZLsAV5niD1
- us0gJSyB4EcTdtXY1AqVZbDR/mneqpMKF3SV+5WXo5tOGHny7CKRNgKm3mDK6NTumBsWRz
- FoieKg8Zwgsk8IjI70rjjGRuLlYzjd4=
-Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com
- [74.125.224.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-0OygHXcZMK-Rp3UIupfCxg-1; Tue, 20 Jan 2026 12:38:11 -0500
-X-MC-Unique: 0OygHXcZMK-Rp3UIupfCxg-1
-X-Mimecast-MFC-AGG-ID: 0OygHXcZMK-Rp3UIupfCxg_1768930691
-Received: by mail-yx1-f71.google.com with SMTP id
- 956f58d0204a3-6467b002cfeso9031159d50.3
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 09:38:11 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768930691; cv=none;
- d=google.com; s=arc-20240605;
- b=bXrQc18z/TUewdRJmyIMJ4aKE29cRS0pQjHFsWWlHQ/HVJDj0Epo1BUe4UsUWWecPB
- vWp/wJPs1dLUmcQBnrRA73x/rrWCgp17ERcvY63oltyjTRcA6WVFdOM5QSkyMoTAFDGe
- tklBc9UFMg8xYDU/Xsw9gPqNcefi/d1zFa2AmA9c6zefy1mxJNhTxNo6KfmeEh4igYRU
- Y9F5ZqFeyVnUHEx66GrpcljDexX/r1lVUJOOzCZnCNnMm8O4UdOwMez/BEvSdaeFXfIe
- dTzGAuOzQtoZB3s3nrzMAe8gMmJwn9PYzE8KCDHphrwdfo2wRjwyTL2EwvqnSHSuPSC7
- MjNA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=l3QVUzz2HFfDGbd2p0l9VSyDygOkr+/Yh7SK4SY5Tfw=;
- fh=ABFaPHFUGftIDeuiwfhdCvWwlDIqwEOXtW9ZV6M/MzU=;
- b=P0w+16xNP5y5AechP26Ha8gky1JqWv7X9SxB6USUvr+LUNvYyTWVPMzMWXddz+T2uD
- 0JAsEfm4vP9L4BGKhwMBzFEXs1u9HibiEnUoCqSY8RBGAgdWNeDYFEfSz0GKKltHachg
- ezoLLn6TcSWjTKrXxkVXj2eR/H+IKIj4GICeGJq9rR8SL/02WV+i3K9/4TPz/w1ERcS3
- T814OuuRjDrIouwdWNOF4FWqvxdwdXRkQZ1gntfb2KWog0/UPwQvPwlr5EWtxWCMETPa
- elB+K/9WVMrzjmWBbFud3d5hVgEx0fJl2oCcrgiIPevZqjFkq7Z3UfROB1gHOK4OS5ht
- KG/w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768930691; x=1769535491; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=l3QVUzz2HFfDGbd2p0l9VSyDygOkr+/Yh7SK4SY5Tfw=;
- b=e29OZNgTDGmZHgqys1Elldobl8nic1f+R+qCvt/slJFqDaduDWqHaaRqcaTGU7aoHo
- WhrC2tGfKdi4U+3tJmG4itzN2edUh8xb8Nbssmc3ImP1hQoJ6G9Wwc+EC+BBTy9XqzfQ
- DvWF0wPBFkWga3fkFTFMpty5+9zIVBr2ubCgAvR/BT0XPVXRMUrQ2lnRgDteXWVZ9Y71
- dX5F2evqKQND9t7uvP573cAIiMBkLpO3FoI74pYgno4f/70cU31DttomuajOyb8iqd7r
- GokSthSfJB639jbmkI3jLcEoTNblTjytp1KPGiH7Fd1keFUdaNtruDW0AJVmq3uk9z7D
- 50Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768930691; x=1769535491;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=l3QVUzz2HFfDGbd2p0l9VSyDygOkr+/Yh7SK4SY5Tfw=;
- b=q56rKfgLLQ4Hfj84La0FSya+USbW7vokhauekD1rokP3Y9CxddYrhs7Cz/sLOWZqNp
- COp02JFO1bWadCm9r7TRXtSKJgMQhedsN55ajK+tESFcrpCllZ+rry0qGgqLKhiXikYf
- eaxxC9ZGPwv1z43gqmKSY6iEoKWTko2JL0JGEzotLpAWyTQMwMPTDzFjrWMQd7QD6ftw
- Jv/pbElkwoWl8abNMhruRkxX20FsAZe87loiv5LFCAF9E7eXswHuD8ZlC+CkqI30utJR
- B3pCRwpdRESv8cVmxiizr5e8DZ5OoM8U7/YSJ6pegLOJdetsr+HhlXI7wuUzHbvwkv/B
- DHCw==
-X-Gm-Message-State: AOJu0YxDxCuzbxa2PLq516mUxL800NHoOSt0RSV0O6JoPTmIi2y+ik79
- /zMtMGhbXNd8y2bPzeMZP+tEIAhcF8+K7ki6AUMlFFrxSDOVxxy6SWMDBnHbsMdT+tvNSRoErQx
- uFHTR1hYoq8X2B7jQo2Xq7F0MrJfjfr+2NPiLTtX6QM03IlPwifupaLOAvEvFUvm/zX/90VSQCc
- BHMu7Mxoyv+R9SQZjbd6wcDnql7gcwlcw=
-X-Gm-Gg: AZuq6aI/0F86S3ERyCEx1fnnN906hwYlFA5levN3kkt9nVXtZJaxtLpoY1Ld0tYrzyC
- IcXI0SRqGVZXZ/fDCmTdxacXJFasoB6JEnstSxwS9gEzpJbmkqVATvJp8Fx6P3ad+dv22C04Wxl
- 45/+xaLOckdyDsUd9f1vQah4JCWY6tGXia5i76PTTqNtIdCYP9XUr+aO+Q/32hDcpkq6By/T/sA
- XKxvxvaLR8Y4AL/3BjcG4xyTQ==
-X-Received: by 2002:a05:690e:1447:b0:63e:30d0:61a0 with SMTP id
- 956f58d0204a3-6493c7f3aa7mr1885797d50.26.1768930690740; 
- Tue, 20 Jan 2026 09:38:10 -0800 (PST)
-X-Received: by 2002:a05:690e:1447:b0:63e:30d0:61a0 with SMTP id
- 956f58d0204a3-6493c7f3aa7mr1885764d50.26.1768930690228; Tue, 20 Jan 2026
- 09:38:10 -0800 (PST)
+ bh=rRsR6b5NNrt/FEP3jDslfQsJoyFvA62ojcim4VaxA0Y=;
+ b=Iz63dpQDNEjWUc1CiBE3+B41EMrxP9tNlnDe52Hj688Z81oDrFR4VnVVq1GKimRcRwcnW8
+ xOCz/utsxVYGXjnSecIBSBvXqC9EZAXg43UlyysRND13zScpGEMI1tLv1IevOBjTJcgFPv
+ jpCG0Fi7MKUxch32w7ENoimTK/fLh7Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1768931576;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rRsR6b5NNrt/FEP3jDslfQsJoyFvA62ojcim4VaxA0Y=;
+ b=l8SZOCTwCgq6X1NsGfph2JweAjGS6ZgNgYkaTAI2AvmV/FIOuI5tHmcwmKKrzcBQTqe7UQ
+ PZwP2aNST5f1vHAQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1768931576; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rRsR6b5NNrt/FEP3jDslfQsJoyFvA62ojcim4VaxA0Y=;
+ b=Iz63dpQDNEjWUc1CiBE3+B41EMrxP9tNlnDe52Hj688Z81oDrFR4VnVVq1GKimRcRwcnW8
+ xOCz/utsxVYGXjnSecIBSBvXqC9EZAXg43UlyysRND13zScpGEMI1tLv1IevOBjTJcgFPv
+ jpCG0Fi7MKUxch32w7ENoimTK/fLh7Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1768931576;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rRsR6b5NNrt/FEP3jDslfQsJoyFvA62ojcim4VaxA0Y=;
+ b=l8SZOCTwCgq6X1NsGfph2JweAjGS6ZgNgYkaTAI2AvmV/FIOuI5tHmcwmKKrzcBQTqe7UQ
+ PZwP2aNST5f1vHAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 70DC83EA63;
+ Tue, 20 Jan 2026 17:52:55 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ESdjC/fAb2mnKwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 20 Jan 2026 17:52:55 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, Mark
+ Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>
+Subject: Re: [PATCH v3 06/25] migration: Use migrate_mode() to query for
+ cpr-transfer
+In-Reply-To: <CAE8KmOyZQgJx=JUE1fg9SpM3NweRQB57E-BueTX2LX4qijy=XA@mail.gmail.com>
+References: <20260109124043.25019-1-farosas@suse.de>
+ <20260109124043.25019-7-farosas@suse.de>
+ <CAE8KmOyZQgJx=JUE1fg9SpM3NweRQB57E-BueTX2LX4qijy=XA@mail.gmail.com>
+Date: Tue, 20 Jan 2026 14:52:52 -0300
+Message-ID: <87o6mo893f.fsf@suse.de>
 MIME-Version: 1.0
-References: <20260119212744.1275455-1-jsnow@redhat.com>
- <20260119212744.1275455-6-jsnow@redhat.com>
- <aW9CkQul663wzsVd@redhat.com>
- <CAFn=p-bJ9utH13oKfxp3YFiQ0n3CPaY7dzA84gna-DG-SJK+Ow@mail.gmail.com>
- <aW-8aQPNysI45mYD@redhat.com>
-In-Reply-To: <aW-8aQPNysI45mYD@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 20 Jan 2026 12:37:59 -0500
-X-Gm-Features: AZwV_QhedPCz1enj3HjCmCZrIPuBZaOIwlIht5FX8etTlJ2U6aht7Wkg3lffrfI
-Message-ID: <CAFn=p-ZY2o5Dg+6NzuUp6==H-KYu+s=sE1DVh+PSBxh3bnfW9A@mail.gmail.com>
-Subject: Re: [PATCH v4 05/17] meson, mkvenv: add functests custom target
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, 
- Maksim Davydov <davydov-max@yandex-team.ru>, Li-Wen Hsu <lwhsu@freebsd.org>, 
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Hanna Reitz <hreitz@redhat.com>, 
- Cleber Rosa <crosa@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Yonggang Luo <luoyonggang@gmail.com>, Ed Maste <emaste@freebsd.org>,
- Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-block@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email,suse.de:mid,suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,115 +116,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 20, 2026 at 12:33=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
->
-> On Tue, Jan 20, 2026 at 12:27:01PM -0500, John Snow wrote:
-> > On Tue, Jan 20, 2026 at 3:53=E2=80=AFAM Daniel P. Berrang=C3=A9 <berran=
-ge@redhat.com> wrote:
-> > >
-> > > On Mon, Jan 19, 2026 at 04:27:31PM -0500, John Snow wrote:
-> > > > add the "pyvenv_functests_group" target to meson. This target will
-> > > > invoke mkvenv.py to install the associated dependency group to the
-> > > > build/pyvenv directory.
-> > > >
-> > > > A "pyvenv_tooling_group" is not included here as it is the plan to
-> > > > always install this group by default, so it will not need an on-dem=
-and
-> > > > trigger.
-> > > >
-> > > > Signed-off-by: John Snow <jsnow@redhat.com>
-> > > > ---
-> > > >  meson.build        |  1 +
-> > > >  pyvenv/meson.build | 28 ++++++++++++++++++++++++++++
-> > > >  2 files changed, 29 insertions(+)
-> > > >  create mode 100644 pyvenv/meson.build
-> > > >
-> > > > diff --git a/meson.build b/meson.build
-> > > > index 3108f01e887..245f1bc2ec9 100644
-> > > > --- a/meson.build
-> > > > +++ b/meson.build
-> > > > @@ -4551,6 +4551,7 @@ subdir('scripts')
-> > > >  subdir('tools')
-> > > >  subdir('pc-bios')
-> > > >  subdir('docs')
-> > > > +subdir('pyvenv')
-> > > >  # Tests are disabled on emscripten because they rely on host featu=
-res that aren't
-> > > >  # supported by emscripten (e.g. fork and unix socket).
-> > > >  if host_os !=3D 'emscripten'
-> > > > diff --git a/pyvenv/meson.build b/pyvenv/meson.build
-> > > > new file mode 100644
-> > > > index 00000000000..2bfddeb4a52
-> > > > --- /dev/null
-> > > > +++ b/pyvenv/meson.build
-> > > > @@ -0,0 +1,28 @@
-> > > > +# Note that this file only controls "optional" dependency groups; =
-groups
-> > > > +# *required* for the build are handled directly in configure inste=
-ad:
-> > > > +# namely, meson and sphinx.
-> > > > +
-> > > > +# NB: This command may or may not include the "--online" flag, dep=
-ending
-> > > > +# on the results of configure.
-> > > > +ensuregroup_cmd =3D config_host['MKVENV_ENSUREGROUP'].split()
-> > >
-> > > I'm confused because this implies that "ensuregroup_cmd" use of the
-> > > --online flag is supposed to be controlled by configure
-> > >
-> > >
-> > > > +
-> > > > +pyvenv_common_deps =3D files(
-> > > > +    meson.project_source_root() + '/pythondeps.toml',
-> > > > +    meson.project_source_root() + '/python/scripts/mkvenv.py'
-> > > > +)
-> > > > +pyvenv_wheel_dir =3D meson.project_source_root() + '/python/wheels=
-'
-> > > > +
-> > > > +
-> > > > +# This group is allowed to rely on internet, to fetch from PyPI.
-> > > > +# If --online was not passed to configure, this could fail.
-> > >
-> > > ...and this also suggests --online is supposed to be controlled
-> > > by configure, but...
-> > >
-> > > > +pyvenv_functests_group =3D custom_target(
-> > > > +    'pyvenv_functests_group',
-> > > > +    output: 'functests.group',
-> > > > +    input: pyvenv_common_deps,
-> > > > +    command: ensuregroup_cmd + [
-> > > > +        '--online',
-> > >
-> > > now we just go ahead and hardcode use of --online regardless.
-> >
-> > Whoops, leftover from when I had both groups. What is now the tooling
-> > group used to obey the flags, and I garbled the comments. My gut tells
-> > me that we should force --online here, and if it fails because we're
-> > actually in an isolated environment, then so be it.
-> >
-> > On the other hand, if we were configured offline, the error message
-> > you get from mkvenv might be better.
-> >
-> > Do you have an opinion?
->
-> IIUC, the later patch only adds pyvenv_functests_group to the thorough
-> functional tests, NOT the quick tests.  Given that the thorough tests
-> mandated online access to download assets, it feels reasonable to also
-> hardcode --online here for their code prereqs.
+Prasad Pandit <ppandit@redhat.com> writes:
 
-Works for me; will fix my mumbled comments.
-
+> Hi,
 >
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
-ge :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
-om :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
-ge :|
+> On Fri, 9 Jan 2026 at 18:12, Fabiano Rosas <farosas@suse.de> wrote:
+>> cpr_set_incoming_mode() is only called on the target side, so
+>> migrate_mode() on the source side is the same as s->parameters.mode.
+>
+> * This message is a little confusing, as the connection between
+> cpr_set_incoming_mode() and migrate_mode() is not evident. IIUC,
+> during CPR migration mode is not set explicitly on the source side, so
+> cpr_get_incoming_mode() returns none, so migrate_mode() sets it to
+> s->parameters.mode and returns it. Ideally it should be set to
+> s->parameters.mode.  /* I wonder why we need such differention between
+> incoming and outgoing modes. */
 >
 
+Good question. I had to go check. It's subtle and not properly
+documented: cpr_state_load() is called before current_migration
+exists. There is no parameters.mode at that point.
+
+>> Use the function to reduce explicit access to s->parameters, we have
+>> options.c for that.
+>>
+>> Cc: Mark Kanda <mark.kanda@oracle.com>
+>> Cc: Ben Chaney <bchaney@akamai.com>
+>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/cpr-exec.c  |  2 +-
+>>  migration/migration.c | 27 +++++++++++++--------------
+>>  migration/migration.h |  5 ++---
+>>  3 files changed, 16 insertions(+), 18 deletions(-)
+>>
+>> diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
+>> index da287d8031..e315a30f92 100644
+>> --- a/migration/cpr-exec.c
+>> +++ b/migration/cpr-exec.c
+>> @@ -164,7 +164,7 @@ static void cpr_exec_cb(void *opaque)
+>>      err = NULL;
+>>
+>>      /* Note, we can go from state COMPLETED to FAILED */
+>
+>  /* Going from COMPLETED -> FAILED says something not right here,
+> maybe we are prematurely moving to COMPLETED state. */
+>
+
+I agree there's a dissonance, but there is no "after" to counterpart
+this "prematurely".
+
+cpr-exec happens after migration completes, it needs to receive the
+MIG_EVENT_PRECOPY_DONE completion notifier. But then there's a slight
+chance that the execvp() may fail.
+
+If it fails, then migration is naturally FAILED and the
+MIG_EVENT_PRECOPY_FAILED notifiers are called below.
+
+If it succeeds, then it's another process image, s->state is no more.
+
+There might also be considerations from the management layer side in
+seeing the completion event and from the device migration code in seeing
+the completion notifier, I'm not sure.
+
+>> -    migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
+>> +    migration_call_notifiers(MIG_EVENT_PRECOPY_FAILED, NULL);
+>>
+>>      if (!migration_block_activate(&err)) {
+>>          /* error was already reported */
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index 4af5baad59..388e0be5a2 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -1534,7 +1534,7 @@ static void migration_cleanup(MigrationState *s)
+>>      }
+>>      type = migration_has_failed(s) ? MIG_EVENT_PRECOPY_FAILED :
+>>                                       MIG_EVENT_PRECOPY_DONE;
+>> -    migration_call_notifiers(s, type, NULL);
+>> +    migration_call_notifiers(type, NULL);
+>>      yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+>>  }
+>>
+>> @@ -1696,10 +1696,9 @@ void migration_remove_notifier(NotifierWithReturn *notify)
+>>      }
+>>  }
+>>
+>> -int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+>> -                             Error **errp)
+>> +int migration_call_notifiers(MigrationEventType type, Error **errp)
+>>  {
+>> -    MigMode mode = s->parameters.mode;
+>> +    MigMode mode = migrate_mode();
+>>      MigrationEvent e;
+>>      NotifierWithReturn *notifier;
+>>      GSList *elem, *next;
+>> @@ -1780,9 +1779,9 @@ bool migration_thread_is_self(void)
+>>      return qemu_thread_is_self(&s->thread);
+>>  }
+>>
+>> -bool migrate_mode_is_cpr(MigrationState *s)
+>> +bool migrate_mode_is_cpr(void)
+>>  {
+>> -    MigMode mode = s->parameters.mode;
+>> +    MigMode mode = migrate_mode();
+>>      return mode == MIG_MODE_CPR_REBOOT ||
+>>             mode == MIG_MODE_CPR_TRANSFER ||
+>>             mode == MIG_MODE_CPR_EXEC;
+>> @@ -2136,7 +2135,7 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+>>          }
+>>      }
+>>
+>> -    if (migrate_mode_is_cpr(s)) {
+>> +    if (migrate_mode_is_cpr()) {
+>>          const char *conflict = NULL;
+>>
+>>          if (migrate_postcopy()) {
+>> @@ -2252,7 +2251,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+>>          return;
+>>      }
+>>
+>> -    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
+>> +    if (migrate_mode() == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
+>>          error_setg(errp, "missing 'cpr' migration channel");
+>>          return;
+>>      }
+>> @@ -2277,7 +2276,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+>>       * in which case the target will not listen for the incoming migration
+>>       * connection, so qmp_migrate_finish will fail to connect, and then recover.
+>>       */
+>> -    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER) {
+>> +    if (migrate_mode() == MIG_MODE_CPR_TRANSFER) {
+>
+> * Shouldn't we use migrate_mode_is_cpr() to avoid this comparison?
+>
+
+There are other CPR modes that I don't think we want to match here, only
+cpr-transfer.
+
+>>          migrate_hup_add(s, cpr_state_ioc(), (GSourceFunc)qmp_migrate_finish_cb,
+>>                          QAPI_CLONE(MigrationAddress, addr));
+>>
+>> @@ -2852,7 +2851,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+>>       * at the transition to postcopy and after the device state; in particular
+>>       * spice needs to trigger a transition now
+>>       */
+>> -    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_DONE, NULL);
+>> +    migration_call_notifiers(MIG_EVENT_PRECOPY_DONE, NULL);
+>>
+>>      migration_downtime_end(ms);
+>>
+>> @@ -2901,7 +2900,7 @@ fail:
+>>          migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
+>>      }
+>>      migration_block_activate(NULL);
+>> -    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
+>> +    migration_call_notifiers(MIG_EVENT_PRECOPY_FAILED, NULL);
+>>      bql_unlock();
+>>      return -1;
+>>  }
+>> @@ -3003,7 +3002,7 @@ static int migration_completion_precopy(MigrationState *s)
+>>
+>>      bql_lock();
+>>
+>> -    if (!migrate_mode_is_cpr(s)) {
+>> +    if (!migrate_mode_is_cpr()) {
+>>          ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+>>          if (ret < 0) {
+>>              goto out_unlock;
+>> @@ -4049,7 +4048,7 @@ void migration_connect(MigrationState *s, Error *error_in)
+>>          rate_limit = migrate_max_bandwidth();
+>>
+>>          /* Notify before starting migration thread */
+>> -        if (migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
+>> +        if (migration_call_notifiers(MIG_EVENT_PRECOPY_SETUP, &local_err)) {
+>>              goto fail;
+>>          }
+>>      }
+>> @@ -4085,7 +4084,7 @@ void migration_connect(MigrationState *s, Error *error_in)
+>>          return;
+>>      }
+>>
+>> -    if (migrate_mode_is_cpr(s)) {
+>> +    if (migrate_mode_is_cpr()) {
+>>          ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+>>          if (ret < 0) {
+>>              error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+>> diff --git a/migration/migration.h b/migration/migration.h
+>> index ccc4e536a5..8b55d4741a 100644
+>> --- a/migration/migration.h
+>> +++ b/migration/migration.h
+>> @@ -538,8 +538,7 @@ bool migrate_has_error(MigrationState *s);
+>>
+>>  void migration_connect(MigrationState *s, Error *error_in);
+>>
+>> -int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+>> -                             Error **errp);
+>> +int migration_call_notifiers(MigrationEventType type, Error **errp);
+>>
+>>  int migrate_init(MigrationState *s, Error **errp);
+>>  bool migration_is_blocked(Error **errp);
+>> @@ -548,7 +547,7 @@ bool migration_in_postcopy(void);
+>>  bool migration_postcopy_is_alive(MigrationStatus state);
+>>  MigrationState *migrate_get_current(void);
+>>  bool migration_has_failed(MigrationState *);
+>> -bool migrate_mode_is_cpr(MigrationState *);
+>> +bool migrate_mode_is_cpr(void);
+>>
+>>  uint64_t ram_get_total_transferred_pages(void);
+>>
+>> --
+>
+> * Otherwise change looks okay. Needs minor fix above.
+> Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+>
+> Thank you.
+> ---
+>    - Prasad
 
