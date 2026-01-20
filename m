@@ -4,102 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EADA1D2ECE9
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 14:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 226ADD2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 15:02:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viD55-0001mQ-Ti; Tue, 20 Jan 2026 09:51:44 -0500
+	id 1viDEw-0008BL-Ok; Tue, 20 Jan 2026 10:01:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1viD4u-0001cL-AX; Tue, 20 Jan 2026 09:51:33 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1viDEs-00086U-Ip; Tue, 20 Jan 2026 10:01:51 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1viD4q-0000ER-Ev; Tue, 20 Jan 2026 09:51:30 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60KEkgKL021340;
- Tue, 20 Jan 2026 14:51:24 GMT
+ id 1viDEq-0002Og-HV; Tue, 20 Jan 2026 10:01:50 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60KEkhA0019532;
+ Tue, 20 Jan 2026 15:01:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=FQPJK3WQkPTrAwIUjNUS/Pz1rw3xj3GU6Tc0wD0UL
- ZA=; b=LQy4/m2cqi9onnxDRrsvujF94QNHnYhI/BFTCTjhkTmouywlpdDRN2xck
- tg3oJRmwh9KpsHncMuuOi07L6J+OPzBNeXo72bBszUMmCCjAjBSgtqFOF88nXz+6
- qxOaLvUECruMhiJkIkInTYWj4AxwjukbtAQfmf5YaLM3Y9SoMFwlbG8CT+9U/zZY
- 2i6Pn87Pf18Fxh4cwrROaACfp6YE2NlMnr42BRuW14qtH0sNFkF0w+1bAP6owygy
- gTRIjnMLJ0Yyah1Ktgs3562zegCxrOEgWTZ0UX+rndEfq3aEbt/0syLAaJZ+WIFO
- lGmz4Qm1iDPfpofxLQ79i6WtIHMbA==
+ :subject:to; s=pp1; bh=XHmLxOhq1Zu+hS6McA0MmCedUN2tXbkUoMUdSkhSS
+ Pw=; b=DnFq6+c7kYJjZccrqYDayTBJFAiVMspzG30qw4qxBDFxgCI99uk9pd98O
+ a/WGIOA+QsrHqg/tpelfxi0rDWmlV0MFuJEwqrHm+yJAjOh/zs0KRWVzb5CSPNpA
+ 0zGXAQ2ycH5hUPTKwLSvzfjS4bHA+gpnbfw9KCjF3++Yz1lyAB1cmom6mmsZLVig
+ u3F3yHZHQ8MssGhG0ihLURjJhuvrUf6bCeqnS8pdwEblKUep6Ow/ZYunLF5jl/DP
+ YUJWOhYxDfOjBoPeyuU5sYJ3OTCTSDidhJfp/1ZI0rpIeGnleK7mENNGZpFgltks
+ UJdhsJt66zhzfP9F102rcsqo9Xlbg==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bt6121qps-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br255xce1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 Jan 2026 14:51:24 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60KElQQn023130;
- Tue, 20 Jan 2026 14:51:24 GMT
+ Tue, 20 Jan 2026 15:01:46 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60KEvGXg007239;
+ Tue, 20 Jan 2026 15:01:46 GMT
 Received: from ppma11.dal12v.mail.ibm.com
  (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bt6121qpp-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br255xcdv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 Jan 2026 14:51:24 +0000 (GMT)
+ Tue, 20 Jan 2026 15:01:46 +0000 (GMT)
 Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60KEjBxk006415;
- Tue, 20 Jan 2026 14:51:23 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4brqf1d5s7-1
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60KEjB3i006415;
+ Tue, 20 Jan 2026 15:01:45 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4brqf1d7qh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 Jan 2026 14:51:23 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60KEp3WB26345928
+ Tue, 20 Jan 2026 15:01:45 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60KF1hau13632132
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 20 Jan 2026 14:51:03 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 77A5F58045;
- Tue, 20 Jan 2026 14:51:21 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A8F9958050;
- Tue, 20 Jan 2026 14:51:20 +0000 (GMT)
+ Tue, 20 Jan 2026 15:01:43 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 804A35805D;
+ Tue, 20 Jan 2026 15:01:43 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9B60158058;
+ Tue, 20 Jan 2026 15:01:42 +0000 (GMT)
 Received: from gfwr532.rchland.ibm.com (unknown [9.10.239.133])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 20 Jan 2026 14:51:20 +0000 (GMT)
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 20 Jan 2026 15:01:42 +0000 (GMT)
 From: Caleb Schlossin <calebs@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
- milesg@linux.ibm.com, alistair@alistair23.me,
+ milesg@linux.ibm.com, rathc@linux.ibm.com, fbarrat@linux.ibm.com,
  chalapathi.v@linux.ibm.com, harshpb@linux.ibm.com, calebs@linux.ibm.com
-Subject: [PATCH v2] hw/ssi/pnv_spi: Fix fifo8 memory leak on unrealize
-Date: Tue, 20 Jan 2026 08:51:17 -0600
-Message-ID: <20260120145117.602960-1-calebs@linux.ibm.com>
+Subject: [PATCH v2] ppc/pnv: Add a nest MMU model
+Date: Tue, 20 Jan 2026 09:01:39 -0600
+Message-ID: <20260120150139.714805-1-calebs@linux.ibm.com>
 X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: zduFe80b179cWf6Pe9aPXDodjUzuHdqU
-X-Authority-Analysis: v=2.4 cv=LaIxKzfi c=1 sm=1 tr=0 ts=696f966c cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIwMDEyMyBTYWx0ZWRfX4cZArcDVOt7V
+ wcWiN6Ito5CsPtnTCaCK02jFmZH3KkSBy6Y86zifE/fyduAbo5EG/TIXIrH8m0HR+86m2RKWky9
+ 3NdN3AsGS6G1xQvcaAdqN9ckPKjKyyYg55NB9gEM2wXpNBhKioQEAmTGBGmtco/3Wmvy3CLc/3W
+ z3aT9KIBk5JsD/GBKe4DoVQcNnFlXxT+xNYz/CjDliu/Ttc2qEGsMl6QeLr+dJ/rB/3WOWUxvhl
+ jmDIGy1HDow4xKgfMD8O7RXkG0M4EqfdXuJh1Vpp+CEvQWws2vdpZpDfIzynYUMiINFut4WQGyx
+ HcigqUiWE8YpX86NNhKqtrBW7oO2nHxo92jCG+OrA2oT29klvZ4lE6qnqFW1TcrjgxWNdfYffTZ
+ MSasdzRL7eek/YvOyhooMM7qB6LikPp2h5jRJQ8XZ7wFjn3rWn7/24oHKzaoE0AnbMqffvQDQMK
+ mJ0egp6v7haKqOyjxWw==
+X-Authority-Analysis: v=2.4 cv=BpSQAIX5 c=1 sm=1 tr=0 ts=696f98da cx=c_pps
  a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
- a=Q8LBFeAF4jmk_nWGM1UA:9
-X-Proofpoint-ORIG-GUID: 5gbfgP-J98cU0Ias761oFQY-eCAH23uT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIwMDEyMyBTYWx0ZWRfX3XHh5F5AqlJ/
- kwpkwKdMSmEPqNBX7nqOyKrHnwDwHcCT1Yf+ZiVFg/SwgAos70QzBjBHpUl3ir5Q25eUDZr5+UM
- nFcu+y2tR2I7cMdkvmYkTYMpYSdQbCBVCGnkx+rHKEmSA8J7xf19+Jtfwsp4l22lN54JlMwqcff
- 2z8h/wFlUm44LeCRYSdSovQEG1J1W03S72CQfRA35gWgfH+Xhfb8gE9YRE6Jg5h2RZYJUUujJ1w
- MPHoYbb0u/NPc3n4l6dApbTmLbZhIonurmKcSlDv+uA/IkYXAkxKGgl1DnqNxRU89cIB2WDTv0g
- /nrlgWl2oTtLSMCxT4avDEJUvxkW/hIs9aGJjC2gghpW8WGKEKbVn5MRsSkPbDtvITlY6n7lQao
- r6mjwhUEEy54v+LHL98+yUKs19UgsDE87LEJS42RiAe+FmyXaY7OuGPLLilAgXPjh55TTGEJdlc
- i+BABHJHVo0AW8ga3kg==
+ a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=r03UDPAKYrhx904b1scA:9
+X-Proofpoint-GUID: D4sTnvmJTVSC8aad11vLod5xAQOHSmGE
+X-Proofpoint-ORIG-GUID: nVJxE8WVVzA2MHzQue2r3Qe2Gfg4fvIZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
  definitions=2026-01-20_04,2026-01-20_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601200123
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=calebs@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ spamscore=0 bulkscore=0 clxscore=1015 adultscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601200123
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=calebs@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -123,44 +124,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-unrealize should free the fifo8 memory that was allocated by realize.
+The nest MMU is used for translations needed by I/O subsystems
+on Power10. The nest is the shared, on-chip infrastructure
+that connects CPU cores, memory controllers, and I/O.
 
-Fixes: 17befecda85 ("hw/ssi/pnv_spi: Replace PnvXferBuffer with Fifo8 structure")
+This patch sets up a basic skeleton with its xscom
+area, mapping both needed xscom regions. Support required
+for PowerVM bringup.
 
+Use Power9 property for device tree to allow OPAL to
+work with Power9 and Power10.
+
+Reviewed-by: Chalapathi V <chalapathi.v@linux.ibm.com>
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Reviewed-by: Chalapathi V<chalapathi.v@linux.ibm.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
+Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
 Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
 ---
- hw/ssi/pnv_spi.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/ppc/meson.build         |   1 +
+ hw/ppc/pnv.c               |  20 ++++++
+ hw/ppc/pnv_nmmu.c          | 132 +++++++++++++++++++++++++++++++++++++
+ include/hw/ppc/pnv_chip.h  |   3 +
+ include/hw/ppc/pnv_nmmu.h  |  28 ++++++++
+ include/hw/ppc/pnv_xscom.h |   4 ++
+ 6 files changed, 188 insertions(+)
+ create mode 100644 hw/ppc/pnv_nmmu.c
+ create mode 100644 include/hw/ppc/pnv_nmmu.h
 
-diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-index 76304d26fc..f3add8cab9 100644
---- a/hw/ssi/pnv_spi.c
-+++ b/hw/ssi/pnv_spi.c
-@@ -1177,6 +1177,13 @@ static void pnv_spi_realize(DeviceState *dev, Error **errp)
-                           s, "xscom-spi", PNV10_XSCOM_PIB_SPIC_SIZE);
- }
+diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+index f7dac87a2a..69e2fc34c4 100644
+--- a/hw/ppc/meson.build
++++ b/hw/ppc/meson.build
+@@ -56,6 +56,7 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
+   'pnv_pnor.c',
+   'pnv_nest_pervasive.c',
+   'pnv_n1_chiplet.c',
++  'pnv_nmmu.c'
+ ))
+ # PowerPC 4xx boards
+ ppc_ss.add(when: 'CONFIG_PPC405', if_true: files(
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 1513575b8f..f5cc44c407 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -2196,6 +2196,11 @@ static void pnv_chip_power10_instance_init(Object *obj)
+                                 TYPE_PNV_PHB5_PEC);
+     }
  
-+static void pnv_spi_unrealize(DeviceState *dev)
++    for (i = 0; i < PNV10_CHIP_MAX_NMMU; i++) {
++        object_initialize_child(obj, "nmmu[*]", &chip10->nmmu[i],
++                                TYPE_PNV_NMMU);
++    }
++
+     for (i = 0; i < pcc->i2c_num_engines; i++) {
+         object_initialize_child(obj, "i2c[*]", &chip10->i2c[i], TYPE_PNV_I2C);
+     }
+@@ -2410,6 +2415,21 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
+     pnv_xscom_add_subregion(chip, PNV10_XSCOM_N1_PB_SCOM_ES_BASE,
+                            &chip10->n1_chiplet.xscom_pb_es_mr);
+ 
++    /* nest0/1 MMU */
++    for (i = 0; i < PNV10_CHIP_MAX_NMMU; i++) {
++        object_property_set_int(OBJECT(&chip10->nmmu[i]), "nmmu_id",
++                                i , &error_fatal);
++        object_property_set_link(OBJECT(&chip10->nmmu[i]), "chip",
++                                 OBJECT(chip), &error_abort);
++        if (!qdev_realize(DEVICE(&chip10->nmmu[i]), NULL, errp)) {
++            return;
++        }
++    }
++    pnv_xscom_add_subregion(chip, PNV10_XSCOM_NEST0_MMU_BASE,
++                            &chip10->nmmu[0].xscom_regs);
++    pnv_xscom_add_subregion(chip, PNV10_XSCOM_NEST1_MMU_BASE,
++                            &chip10->nmmu[1].xscom_regs);
++
+     /* PHBs */
+     pnv_chip_power10_phb_realize(chip, &local_err);
+     if (local_err) {
+diff --git a/hw/ppc/pnv_nmmu.c b/hw/ppc/pnv_nmmu.c
+new file mode 100644
+index 0000000000..c1b00bac89
+--- /dev/null
++++ b/hw/ppc/pnv_nmmu.c
+@@ -0,0 +1,132 @@
++/*
++ * QEMU PowerPC nest MMU model
++ *
++ * Copyright (c) 2025, IBM Corporation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This code is licensed under the GPL version 2 or later. See the
++ * COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "hw/core/qdev-properties.h"
++
++#include "hw/ppc/pnv.h"
++#include "hw/ppc/pnv_xscom.h"
++#include "hw/ppc/pnv_nmmu.h"
++#include "hw/ppc/fdt.h"
++
++#include <libfdt.h>
++
++#define NMMU_XLAT_CTL_PTCR 0xb
++
++static uint64_t pnv_nmmu_xscom_read(void *opaque, hwaddr addr, unsigned size)
 +{
-+    PnvSpi *s = PNV_SPI(dev);
-+    fifo8_destroy(&s->tx_fifo);
-+    fifo8_destroy(&s->rx_fifo);
++    PnvNMMU *nmmu = PNV_NMMU(opaque);
++    int reg = addr >> 3;
++    uint64_t val;
++
++    if (reg == NMMU_XLAT_CTL_PTCR) {
++        val = nmmu->ptcr;
++    } else {
++        val = 0xffffffffffffffffull;
++        qemu_log_mask(LOG_UNIMP, "nMMU: xscom read at 0x%" PRIx32 "\n", reg);
++    }
++    return val;
 +}
 +
- static int pnv_spi_dt_xscom(PnvXScomInterface *dev, void *fdt,
-                              int offset)
- {
-@@ -1234,6 +1241,7 @@ static void pnv_spi_class_init(ObjectClass *klass, const void *data)
++static void pnv_nmmu_xscom_write(void *opaque, hwaddr addr,
++                                 uint64_t val, unsigned size)
++{
++    PnvNMMU *nmmu = PNV_NMMU(opaque);
++    int reg = addr >> 3;
++
++    if (reg == NMMU_XLAT_CTL_PTCR) {
++        nmmu->ptcr = val;
++    } else {
++        qemu_log_mask(LOG_UNIMP, "nMMU: xscom write at 0x%" PRIx32 "\n", reg);
++    }
++}
++
++static const MemoryRegionOps pnv_nmmu_xscom_ops = {
++    .read = pnv_nmmu_xscom_read,
++    .write = pnv_nmmu_xscom_write,
++    .valid.min_access_size = 8,
++    .valid.max_access_size = 8,
++    .impl.min_access_size = 8,
++    .impl.max_access_size = 8,
++    .endianness = DEVICE_BIG_ENDIAN,
++};
++
++static void pnv_nmmu_realize(DeviceState *dev, Error **errp)
++{
++    PnvNMMU *nmmu = PNV_NMMU(dev);
++
++    assert(nmmu->chip);
++
++    /* NMMU xscom region */
++    pnv_xscom_region_init(&nmmu->xscom_regs, OBJECT(nmmu),
++                          &pnv_nmmu_xscom_ops, nmmu,
++                          "xscom-nmmu",
++                          PNV10_XSCOM_NMMU_SIZE);
++}
++
++static int pnv_nmmu_dt_xscom(PnvXScomInterface *dev, void *fdt,
++                             int offset)
++{
++    PnvNMMU *nmmu = PNV_NMMU(dev);
++    char *name;
++    int nmmu_offset;
++    const char compat[] = "ibm,power9-nest-mmu";
++    uint32_t nmmu_pcba = PNV10_XSCOM_NEST0_MMU_BASE + nmmu->nmmu_id * 0x1000000;
++    uint32_t reg[2] = {
++        cpu_to_be32(nmmu_pcba),
++        cpu_to_be32(PNV10_XSCOM_NMMU_SIZE)
++    };
++
++    name = g_strdup_printf("nmmu@%x", nmmu_pcba);
++    nmmu_offset = fdt_add_subnode(fdt, offset, name);
++    _FDT(nmmu_offset);
++    g_free(name);
++
++    _FDT(fdt_setprop(fdt, nmmu_offset, "reg", reg, sizeof(reg)));
++    _FDT(fdt_setprop(fdt, nmmu_offset, "compatible", compat, sizeof(compat)));
++    return 0;
++}
++
++static const Property pnv_nmmu_properties[] = {
++    DEFINE_PROP_UINT32("nmmu_id", PnvNMMU, nmmu_id, 0),
++    DEFINE_PROP_LINK("chip", PnvNMMU, chip, TYPE_PNV_CHIP, PnvChip *),
++};
++
++static void pnv_nmmu_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    PnvXScomInterfaceClass *xscomc = PNV_XSCOM_INTERFACE_CLASS(klass);
++
++    xscomc->dt_xscom = pnv_nmmu_dt_xscom;
++
++    dc->desc = "PowerNV nest MMU";
++    dc->realize = pnv_nmmu_realize;
++    device_class_set_props(dc, pnv_nmmu_properties);
++}
++
++static const TypeInfo pnv_nmmu_info = {
++    .name          = TYPE_PNV_NMMU,
++    .parent        = TYPE_DEVICE,
++    .instance_size = sizeof(PnvNMMU),
++    .class_init    = pnv_nmmu_class_init,
++    .interfaces    = (InterfaceInfo[]) {
++        { TYPE_PNV_XSCOM_INTERFACE },
++        { }
++    }
++};
++
++static void pnv_nmmu_register_types(void)
++{
++    type_register_static(&pnv_nmmu_info);
++}
++
++type_init(pnv_nmmu_register_types);
+diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+index ea47c97dd3..8ef75fdcca 100644
+--- a/include/hw/ppc/pnv_chip.h
++++ b/include/hw/ppc/pnv_chip.h
+@@ -7,6 +7,7 @@
+ #include "hw/ppc/pnv_core.h"
+ #include "hw/ppc/pnv_homer.h"
+ #include "hw/ppc/pnv_n1_chiplet.h"
++#include "hw/ppc/pnv_nmmu.h"
+ #include "hw/ssi/pnv_spi.h"
+ #include "hw/ppc/pnv_lpc.h"
+ #include "hw/ppc/pnv_occ.h"
+@@ -126,6 +127,8 @@ struct Pnv10Chip {
+     PnvN1Chiplet     n1_chiplet;
+ #define PNV10_CHIP_MAX_PIB_SPIC 6
+     PnvSpi pib_spic[PNV10_CHIP_MAX_PIB_SPIC];
++#define PNV10_CHIP_MAX_NMMU 2
++    PnvNMMU      nmmu[PNV10_CHIP_MAX_NMMU];
  
-     dc->desc = "PowerNV SPI";
-     dc->realize = pnv_spi_realize;
-+    dc->unrealize = pnv_spi_unrealize;
-     device_class_set_legacy_reset(dc, do_reset);
-     dc->vmsd = &pnv_spi_vmstate;
-     device_class_set_props(dc, pnv_spi_properties);
+     uint32_t     nr_quads;
+     PnvQuad      *quads;
+diff --git a/include/hw/ppc/pnv_nmmu.h b/include/hw/ppc/pnv_nmmu.h
+new file mode 100644
+index 0000000000..d3ba46ecf4
+--- /dev/null
++++ b/include/hw/ppc/pnv_nmmu.h
+@@ -0,0 +1,28 @@
++/*
++ * QEMU PowerPC nest MMU model
++ *
++ * Copyright (c) 2025, IBM Corporation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This code is licensed under the GPL version 2 or later. See the
++ * COPYING file in the top-level directory.
++ */
++
++#ifndef PPC_PNV_NMMU_H
++#define PPC_PNV_NMMU_H
++
++#define TYPE_PNV_NMMU "pnv-nmmu"
++#define PNV_NMMU(obj) OBJECT_CHECK(PnvNMMU, (obj), TYPE_PNV_NMMU)
++
++typedef struct PnvNMMU {
++    DeviceState parent;
++
++    struct PnvChip *chip;
++
++    MemoryRegion xscom_regs;
++    uint32_t nmmu_id;
++    uint64_t ptcr;
++} PnvNMMU;
++
++#endif /*PPC_PNV_NMMU_H */
+diff --git a/include/hw/ppc/pnv_xscom.h b/include/hw/ppc/pnv_xscom.h
+index 610b075a27..6dab803d1f 100644
+--- a/include/hw/ppc/pnv_xscom.h
++++ b/include/hw/ppc/pnv_xscom.h
+@@ -196,6 +196,10 @@ struct PnvXScomInterfaceClass {
+ #define PNV10_XSCOM_N1_PB_SCOM_ES_BASE      0x3011300
+ #define PNV10_XSCOM_N1_PB_SCOM_ES_SIZE      0x100
+ 
++#define PNV10_XSCOM_NEST0_MMU_BASE      0x2010c40
++#define PNV10_XSCOM_NEST1_MMU_BASE      0x3010c40
++#define PNV10_XSCOM_NMMU_SIZE      0x20
++
+ #define PNV10_XSCOM_PEC_NEST_BASE  0x3011800 /* index goes downwards ... */
+ #define PNV10_XSCOM_PEC_NEST_SIZE  0x100
+ 
 -- 
 2.47.3
 
