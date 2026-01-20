@@ -4,107 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAAF9D2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 14:25:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F8AFD2ECE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 14:32:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viCf1-0004uM-04; Tue, 20 Jan 2026 09:24:47 -0500
+	id 1viClp-0002Wf-4t; Tue, 20 Jan 2026 09:31:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1viCez-0004rR-P7
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 09:24:45 -0500
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1viCey-00040F-AF
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 09:24:45 -0500
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-7927b1620ddso77086527b3.0
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 06:24:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768919083; cv=none;
- d=google.com; s=arc-20240605;
- b=feE05S82muVMG6x0h/cYTdJiSFQb7tCxvgM33mjWWW6JwBIfJ41tSlIqOuzXpe/p3R
- TixXKVy7Vn3CVV7tkkONj25RGcjwGI2wGpG3PFYsQ+MvL5EHUaiTA/wjDLAh2Hhw1d1V
- 8szqty1NBszT0rIZxQDrkjbU+9xGRJ6AblGnNhHXIkkK60cm5ZyuQY8RvTLRYZK+qY7Y
- 86KTBCw/5jZ+DJPEoOmTyh7Mfly3lIAMYEL3zgSeUHabJT2kCseqN2hG8x5R2CXUBgCQ
- /H8HcFwo+pM/h7IEug37V10MtUBABMlJAW3uAGVkfs6hAeXC1DydPcSx62Eyzhbj0EN3
- qzLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=jC5r4tunGuWaf7NoeOgcrPyqJzxy1AIdc+TYbWNUrCg=;
- fh=hoSnzboXrzcQ1unl97/Iib2OB2FXuwUu0q/0kzVS8Pg=;
- b=a0AtHw3RjDZ781wzRoBoj3EDtXjjjTW9rume1zVway980ZtcEu3Ee2ggK2WkLU38CM
- u6tSV+/zShMyJEobKbDTLGZ+7mKz39rojOjX1mh80qKvy0Jlql3YhpTZxSnxlqIIR7fM
- 16V92gSmciABENLrCkG1lLXHA1gfz0FpsxmCfgzzjXJZ5qf0Zle30oFt3A+mJyZpix0u
- HMgR4DPff23wAJtkuupQoqTo9gSwb2C2rE2FmzR1MmTkN151dMwXwfTRxIvcyT9giWdJ
- SDehR3zHw4yCEN2yKx7cZJv7RfEF6tCnxhxXFHEz++UkRcgru9naM+2yDFUl7IZT3V19
- 63oQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768919083; x=1769523883; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jC5r4tunGuWaf7NoeOgcrPyqJzxy1AIdc+TYbWNUrCg=;
- b=XyyZqzmMLtE7uKSL5+0vVORp0vnIqOHuVvnPLNY9UXiu7bEJm1xEpae4FbwZ+rU6eD
- fvMOByxDuKYPpB4BhFx24LvPFco4ZGufpuzMHpOARKzqkLmRxAfoHE2toYNcfWNXoeR1
- qNtLpO+CevHqw8Pv1jgs6Vr65GZAszZbK7/rBesfbGpYukzipRytIn2aSWNglMVYXXzJ
- cpPGwyOs3JKZ/3VABSUD9WVk/6toLWh8386MGrBWrpIpUUR6q3wCb6ZOVMVhQfwW8Z+G
- YwUyKmuAGRBpgQ0jSyz8QzUp3nUv7kA4+gNwZIh0ngJrCHzNmTSs6ZA3kqycKlWjdgi8
- ZZEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768919083; x=1769523883;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jC5r4tunGuWaf7NoeOgcrPyqJzxy1AIdc+TYbWNUrCg=;
- b=OZG4bYRj99b7FZeqGg1Fu/q9Ib0dtC5QsIL1jo+tFQbe+torIuxfphzSDBBVd9WNMF
- PuNjKODnt8tHECNzipLuhgEEofeKhpakTf0Va8jvMvY7E6sOBU/37mUr0HPIhfb7ZWmv
- lH4dLu8P851BCKlcqXSa8AjgHJsj1SOHJGZhoY/nZd7OVWrajBSNVchwdbTrL4FRwv8B
- uiMnUAbXj8Ii2yuIkLK3a077ruIp3c1MldulRPntP3VrxRiyj4Y1LCt5LZSacPfc79Kl
- CiESCBhnytXhjNFjyylxNoeyiMdevnx4qXUiQrosehYuGuly6Bu4x5Wt29/cX9q91iPb
- +6BA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVnt3OdXy1m9PkydIJAvBaZ1rLBYq+5eDEuR3Rt5JQSqruGfBs9e1BkBnREG5B6TVuzaAgasp55BZbF@nongnu.org
-X-Gm-Message-State: AOJu0YyJgash/4zDuqqBw3SN43REnXXIgqv5ewSJ8KjxzW2z/DlWgoJr
- AHz/elkWgRI4VdRU4S5WyO3b5tuHJBUD92ahieKr+rMnfZ+MVaw7r9dKznm2i0oPbd76AANItfD
- xpZSK6oIZPFWOEdAIxS6EPXkA5RE0iudMwQn/Lu16mw==
-X-Gm-Gg: AZuq6aINiOoZ7ngOy+Udd7S/YRyPJ5dduumIMpWON5QrireN1rL3xkOfIDabfk4otav
- ywKA09Oe25LJwur8xxZ0JA/kZuf6FG0FO425XohmRiKSDr+zGzQWQ2WWddvqLg84RaYKUbA2db/
- +z2HUPLschrQQzAmLRUHBfwbs0pzqscY594Wt3pBPfmGq9W77pJkR5y8ubXWG11Xrmlj0OA9vWk
- +t1fgw3gh+PI3/nu1mjxrWshnfVzBgmbHGI7fKOMOYW/ZUXExU3AVNDucw67g4JRBj20g==
-X-Received: by 2002:a05:690c:7108:b0:793:e57f:2249 with SMTP id
- 00721157ae682-793e57f22e4mr63373377b3.7.1768919082864; Tue, 20 Jan 2026
- 06:24:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1viClm-0002RW-Ax; Tue, 20 Jan 2026 09:31:46 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1viClk-0005FL-E2; Tue, 20 Jan 2026 09:31:46 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60K7XL7H001734;
+ Tue, 20 Jan 2026 14:31:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3aLiCi
+ iiGGwg7X5Wyz6Catjseq6MhPU6EcYxvts1tPY=; b=BNVZ2chLZYvjcnZ68kB13u
+ R0WRKCFq3Vb3VdbTJtShpMSNgRyDDIDV6RzHTr575CnXgcc9xFp/pEm/GJZR8sRX
+ cj8Yi9k4AYq6Gz9JDZQ55A64MdqVsHMZ4GHawgSIfT6mh8PZplTprADaWese8MYO
+ 2HYCFU55cAi1kSBlbRNgynaex7P1193ayu1p4/RUaTd9kC32NpfG1ULu+3N65ccu
+ KaoLgnskbun2jZorLe7Ow+RI2w90RtvedSUwQDRLQesQLm1HPyLN8WOsNIWJIRsS
+ 6J9LPY/BwHP1vo+K/4Hs0us+lu+gYT1ppSHoN+kdyph4Kt39+//B9e3Ll7yEO2aA
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br0ufdeax-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Jan 2026 14:31:41 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60KEDkno017336;
+ Tue, 20 Jan 2026 14:31:40 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br0ufdeat-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Jan 2026 14:31:40 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60KED6Pe009265;
+ Tue, 20 Jan 2026 14:31:40 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brp8k5a2v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Jan 2026 14:31:40 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60KEVKHY14680624
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 20 Jan 2026 14:31:20 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9F77058059;
+ Tue, 20 Jan 2026 14:31:38 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1CE8058053;
+ Tue, 20 Jan 2026 14:31:38 +0000 (GMT)
+Received: from [9.10.80.137] (unknown [9.10.80.137])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 20 Jan 2026 14:31:38 +0000 (GMT)
+Message-ID: <6072a537-e18c-4d46-9142-36e9c25bb11c@linux.ibm.com>
+Date: Tue, 20 Jan 2026 08:31:37 -0600
 MIME-Version: 1.0
-References: <20260120122108.131708-1-thuth@redhat.com>
- <CAFEAcA8nzm+CEN_Dp+X+AggcTg57wAt8D43x-7oixLeNH4TDdA@mail.gmail.com>
- <791eac72-f4d2-48b5-9973-c64006e8ce13@redhat.com>
-In-Reply-To: <791eac72-f4d2-48b5-9973-c64006e8ce13@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 20 Jan 2026 14:24:31 +0000
-X-Gm-Features: AZwV_Qi-nhyfIqRDBywfAotFoUlG1bfyXsXVaPJvMuSacLTD2jMGWLZeHMty9-o
-Message-ID: <CAFEAcA_0xM47w6tLgGSrXZO2v1S+ncq92N_h3U=HQENapzyU9Q@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm: Move the "arm-cpu" compat settings out of
- hw/core/machine.c
-To: Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-arm@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] ppc/pnv: Suppress some "pnv_chiptod unimplemented
+ register" messages
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: milesg@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ npiggin@gmail.com, chalapathi.v@linux.ibm.com
+References: <20251218200353.301866-1-calebs@linux.ibm.com>
+ <20251218200353.301866-2-calebs@linux.ibm.com>
+ <1fa38659565cf4dc1dfe24cc365d685554faecf0.camel@linux.ibm.com>
+ <5e13f2c3-2075-4d31-bddc-06dcc31f6eae@linux.ibm.com>
+ <aW3wVCdyn3WkeUoF@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Language: en-US
+From: Caleb Schlossin <calebs@linux.ibm.com>
+In-Reply-To: <aW3wVCdyn3WkeUoF@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: TedUwzfyA3wc4WduEp2CQYEmeZtnq-db
+X-Proofpoint-ORIG-GUID: ZpG9xfWc8y0mo7XnVNdejVXMyVDlTJUE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIwMDExOCBTYWx0ZWRfXwJ1DGzDSRwnl
+ OxXAZaeKPRbcmMTH4DSWPGrOluliUO7bX3FkHnDrD5uef4ifJYiXppEQKj6k9HTIqq4/zW8Ixbw
+ 1RcqTh5jvHat99XXzZuPxmymG2YH5AJoB9AyOMd/3cgyVOfJjOdESvEnm0xqrKOBATLy+/qWhqZ
+ 3SvxhsiQR/ErUlRdBmeIL6tgRz7SHsVZRT3Ujf+g4HFn1x2lORBhqxUGrN4MmGm39nXIghSNGGj
+ 6g/eF1kUAELoFF2Wk42RZOaaCblWLFxx159GeZFrh2LhmuyrXn60Dd8zWKk3cBKggXKAdn2GuTS
+ o00ZL+AFAIrjojwJCYmCzesaTHWORUuGr3MBdLzlI8pn83aoOQFpK3SNpLU8ZCeg1475oq+14qF
+ Hi73WrXLm+kxkxR5W6YcbFD/42Hx2sfkaJf9jO817+dgL9U8tNi8QdOqNtaL6rcXqQrFriyqMgc
+ YAunRS9WwBoLLiY9fbQ==
+X-Authority-Analysis: v=2.4 cv=bopBxUai c=1 sm=1 tr=0 ts=696f91cd cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=zemG__UicHLbtfz2P7kA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-20_03,2026-01-20_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 adultscore=0 suspectscore=0 impostorscore=0
+ phishscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601200118
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=calebs@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,40 +133,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 20 Jan 2026 at 14:15, Thomas Huth <thuth@redhat.com> wrote:
->
-> On 20/01/2026 13.55, Peter Maydell wrote:
-> > On Tue, 20 Jan 2026 at 12:21, Thomas Huth <thuth@redhat.com> wrote:
-> >>
-> >> From: Thomas Huth <thuth@redhat.com>
-> >>
-> >> The hw_compat_* arrays in hw/core/machine.c should be used for generic
-> >> compat settings that might affect all (or at least multiple) machines.
-> >> Target specific settings should rather go into the target specific
-> >> source files instead. For arm/aarch64, the virt machine is the only
-> >> one that cares about compat settings, so move the "arm-cpu" related
-> >> switches to hw/arm/virt.c now.
-> >
-> > I think it makes more sense for all the compat stuff to
-> > live in one place, rather than being scattered around,
-> > unless it is truly machine-specific (which this isn't).
->
-> It's only used by the arm virt machine, so it's IMHO machine specific.
-> If we will ever get other versionized arm machines, they won't use these
-> config knobs, so this never will be shared with another machine.
 
-It happens to be only used by the virt board, but that's just
-a coincidence that we only have one versioned arm board right
-now. The config knob itself is not at all board specific:
-it applies to a device object that is used by many boards and
-sets a behaviour that would usefully apply to all of them.
-If we ever did have more arm versioned machines in the future
-we'd end up with a weird split where compat properties of the CPU
-object that happened to pre-date the addition of that second
-machine type would be in one place in the source code, and
-properties that happened to post-date the second machine
-type would be somewhere else.
 
-thanks
--- PMM
+On 1/19/26 4:18 AM, Aditya Gupta wrote:
+> On 26/01/06 11:07AM, Caleb Schlossin wrote:
+>>
+>>
+>> On 1/6/26 10:49 AM, Miles Glenn wrote:
+>>> Hi Caleb.  I wonder if it makes sense to upstream this commit since I
+>>> suspect that most upstream users will not have the "unimp" log messages
+>>> enabled unless they are debugging a problem and in that case, we would
+>>> be erroneously masking these unimplemented registers from the logged
+>>> output.
+>>>
+>>> Thanks,
+>>>
+>>> Glenn
+>>
+>> I understand your point. Here are my thoughts:
+>> - Cleaning up these logs for valid accesses (PowerVM bringup and development) reduces the overall log output and helps find real errors
+>> - In the future, there may be a customer that wants to run PowerVM with upstream QEMU. The more we upstream, the easier that will be.
+>> - In the future, we are going to have a number of cases like this where we accept accesses and don't log for every unimp access (to clean up log output). If we choose to keep those patches private and don't upstream them it's going to increase the number of private patches we keep, making future rebasing more difficult.
+>> - I'd prefer to upstream more patches, and focus on keeping only the patches we need to private (for confidentiality or other reasons). To make future rebasing easier.
+> 
+> I agree with Glenn that we shouldn't mask these warnings for everyone.
+> 
+> Since a warning saying a feature is unimplemented is better than
+> silently not doing anything without any warnings.
+> 
+> Maybe the excessive warnings should only be masked for PowerMV
+> development work, rather than upstreaming, or we can always upstream
+> once those are implemented.
+> 
+> - Aditya G
+> 
+
+Ok. Would you like me to pull out this patch from the series and send out v2 containing only the approved patches?
+
+Thanks,
+Caleb
+
 
