@@ -4,94 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E722ED2ECE9
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 14:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25B7AD2ED0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 14:16:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viCRU-0004ZW-G4; Tue, 20 Jan 2026 09:10:48 -0500
+	id 1viCWC-0007fS-AB; Tue, 20 Jan 2026 09:15:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1viCRS-0004YK-2t
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 09:10:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1viCW8-0007e5-NP
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 09:15:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1viCRQ-0001mF-Ge
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 09:10:45 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1viCW7-0002Ug-AQ
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 09:15:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768918242;
+ s=mimecast20190719; t=1768918534;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=biEriWypYV8n7KXyRIJjtlJmi3bc+/LzQPT0u4Tvi7Y=;
- b=gMesvsnWWeSOyyIDZI6XqnL0R4jPXP+pOu21ni+f6gNkd/m9o142ix0/s2fUE6di/NgL8W
- nzFoWXgakp+GXrKqEwgSMi78pAcp/M6NDQMU2VLWucOFnfqDHxJqn/vrQeC+/da1EEcnAK
- 8IBnaj145aphC44/s/GTBeedfmxDwmQ=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4CuSSQ4Awm4TndAbQd6uDiLcUbniVehjpvOym9wDSL4=;
+ b=cfzA+8gzDv0Cfenr9GfpmSYH+kFdfFsO+EBDMs2atV00hGMjw0va+JeGzCRhMTmJbkzLoH
+ jnBaGK6zGXvwYFycD6B6knUYAht4EY+rHWo6o5sH3R3nLqhByTr1l1hhnbAkRMXFwJQnkn
+ 8NtK80yoHyiKU/4qwwwjayBPIB6sPAE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-C4tALEU-M06JiVwhJ73SKQ-1; Tue, 20 Jan 2026 09:10:39 -0500
-X-MC-Unique: C4tALEU-M06JiVwhJ73SKQ-1
-X-Mimecast-MFC-AGG-ID: C4tALEU-M06JiVwhJ73SKQ_1768918238
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-59b6a9bf5cbso4118231e87.2
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 06:10:38 -0800 (PST)
+ us-mta-652-TlkuvhDoP22VG_di2j9SFQ-1; Tue, 20 Jan 2026 09:15:32 -0500
+X-MC-Unique: TlkuvhDoP22VG_di2j9SFQ-1
+X-Mimecast-MFC-AGG-ID: TlkuvhDoP22VG_di2j9SFQ_1768918531
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-43284f60a8aso4621269f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 06:15:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768918237; x=1769523037; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768918531; x=1769523331; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=biEriWypYV8n7KXyRIJjtlJmi3bc+/LzQPT0u4Tvi7Y=;
- b=dwSR8Qhrgr7DgVn3lAk/C+4uDIq7bBQA+ldNGVSqdHsbtXMK5SRGt3F9h1cE47SaDq
- RqMOQ3ddDJO0Kxoeiro1G0vYVkh5/IhZGmbfHo7/WxuEVVqlofBu5dkyoeSCpNuGLR2n
- SKfd5AGYBP+c/b3oO4wkGzIGjRtIiUtlz4gTM0Nd6YOPwmjuFOxCMzLB2A1cSlbs3ha8
- cgEHoUnwg1fhSGfgg556AKP8sEsJjuCaGNMpnI0k0Arfj2FkiqkuVdIdVx0NRgn9CZcm
- RvyFHIVKisx9UY3Fne9t9Ih8d96w+eHW8Gk6mz8j5cV1T2rPObLt4fSF2rJGgn+1eHUE
- u00Q==
+ bh=4CuSSQ4Awm4TndAbQd6uDiLcUbniVehjpvOym9wDSL4=;
+ b=ZKklH2Jdsf7JfnQDjBOSWRmHIX53kzwmL1MnmIutRl9mkIl6duH2vxqQLiOmYq4YUO
+ 8Qlq20h7B0sg8m0iT4aXGFjwvvOnXxYPGCQW6dgwtPf1K1VoQ3dzUNLTR9BnrcJXsZ4y
+ 3tqmpwS5i0Csnbg6PQAR8B3fvhBm4TJDllHtTES6cLjkqOyestt4mvL0FrEvS+rAfqI2
+ TRk9IiV5mbhpeZVXV7e/8tFoAHUfxwDCWc+nyNFMrw6AuyRjqKwHO2A0dLuxhWy4pA5S
+ dlCQffetuR6iZupCzqNiecv1ZAicEFCB7S0+g1AaZdnyq52hl6XJDcdgveAb7wk+oq8i
+ hIhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768918237; x=1769523037;
+ d=1e100.net; s=20230601; t=1768918531; x=1769523331;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=biEriWypYV8n7KXyRIJjtlJmi3bc+/LzQPT0u4Tvi7Y=;
- b=SsYyTALsNA4CUm93C1GiUNxLmaPG8nHj7e8cU69GXSeGuHcHlcSPhIeesTGEw8oKEB
- J8aEn79Jht2036grDCwL/VRmSqijneNNaV83upeW9DdgYq3urcdJsltOYTB9ZXQEAbrm
- 8IWxeX3NWNEnxhdguYBOOiLaeScmwtvEx3pDkHQvJMntFZkVdx10xr0nox/H0PtXbpsO
- J6RSh0bGil+SXKo6MGUEiiKZi+yvMYUSuVIMny5CzGMQIwrHjOPqyPbYjsXRMg4nscAP
- D42psrv08eWMPHM/mUa8tLuCd8b3Jgw3Sz0Yv5Zga9ZjtX+c/qjew0t2c0rlbWMFp8nI
- 0qPQ==
-X-Gm-Message-State: AOJu0YxEP9YJnoszCJ3dFuRe6C1UMQNA4Sf1j5Ycm9yrJNVIytX8bH6X
- V8PhkVir5RwfLYis+5zwa1uCYlM3gABTBhqie0WvdGnZOHEKu5AcGja/qR8/l6NHlxUL+n+Akgi
- dmq72f6Y3M8JoEGFueIS1FyxgWq7TV9T1kW1P0mOhfSF+Y8XJOX8cMH9b
-X-Gm-Gg: AZuq6aIvCcaDRUl6pmAzxGS0r1uMcJddA6WzU04VXQQHs/NiZCi/LPQ+AAGW3/v7rVS
- ZxtFR+3G7e1A63d+05+ItPwBC2/sJ61KSvU1xICqwvbjQNcj33/nD7G8+veN014gV67wk4w6+sL
- W1b/nRPwLBoCFlFEM5rwz0Yn8KeFi3ny0c0TwKrWphdC0lf0pMBYmBgx4Ft6aXNcdHtze5VIJ9E
- 5Y1ltxo0Iz1CigVaw2m7NHrS0Tf+R4wt4sE5VV37aNIGz2eNqqBNMe4dtcQb6wiPB+Y/oddYp7X
- PcoFFGG0Dg9UgfK6biFkQglGZqbe2AP1TkcWU8AmNb5hlJEBmZip2odpRxFfVqwf9Sog6Pdivtx
- Ej8ahujQ=
-X-Received: by 2002:a05:6512:1246:b0:59b:8436:79da with SMTP id
- 2adb3069b0e04-59baffd6f05mr5287517e87.44.1768918237191; 
- Tue, 20 Jan 2026 06:10:37 -0800 (PST)
-X-Received: by 2002:a05:6512:1246:b0:59b:8436:79da with SMTP id
- 2adb3069b0e04-59baffd6f05mr5287507e87.44.1768918236769; 
- Tue, 20 Jan 2026 06:10:36 -0800 (PST)
+ bh=4CuSSQ4Awm4TndAbQd6uDiLcUbniVehjpvOym9wDSL4=;
+ b=Dfed+cOGl7Zdp40n0X3/jCBhx1Ct6FPF/040E8dj/WBZUwrU2j8NEpcJZDRH/dWLB2
+ 9WLFicCBSvqX5BJq5iL0tFYZt3Tk4p/F2eQjckrVXAl6Z4Xw1lcMdl/BFweu9Tu3zuNo
+ /ZIW26fksaZdXQNN3breFHwKB2RPEBYEiqNjfaA/GWB0ao8cKtqo4MFzKVqjqpwJaVEb
+ GJFY7H7ncgpncDYUDPLkLGcP2Lb1h1rdId0lWb/ZR+qEF1+BEmowyZRtBUCR3X41IYxf
+ 6rWwSAGkcxxyAIqSMsmDy/+6M5SPAUudc0QbiwcnLnyN0zOA4f6//xOmiXaCmDR8gahF
+ QuxA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXUdoK0zcmon0B/x/94Ty0wZf3y+4bf0+BQQju2f0ntGMAMVXskudXBlbWFdGvS5zWpI01C+lbWtvNa@nongnu.org
+X-Gm-Message-State: AOJu0Yz5RcY4x2ZRQyNwnvBcB5j0xZsi220OsH+Ek0TwkZejtLz5FapJ
+ 0DP3A7vu9EBmplZWKWvGwaA02zHy9xzDiRrvb357ce1s9UjIT9ZOSqDlkBuL2HK92fFIMcUv+Q/
+ ckmhbtn4CqzbFWWFy2oj/s2tAq9pZQwcf7kRsasqMbAbfYB9y2bV6Mj7m
+X-Gm-Gg: AZuq6aJ/B880Dh+cdpEBVm836xmnNhxTHN37bI9EolowIJaklviei8fEU2wobtahoFR
+ +tq6DDmOsF3+/RuXNuFD6R5bFvUn4Q4+dMlFCoIdGgGNJEZvwYDZon+/MO+HDTppRM1ZTrj6bjJ
+ UzsQWSXY12Gv/b6rqDxsIdxWZFMeQvuxGPtGRnytUmvCF+jCWKa0aajCbZ9t21IvZX87TA3hLkm
+ 91VGBHnKSSXhDHMD2ps9CX70U4cClUuegPS7CrYeBc5axBOtRQcnNzWGp33zbmKbB09UXSA2MbP
+ qZNxtf1kGg8z0PJSmWBXep23XFMCh2U5WqjKAQxxr7x5/JNS9OZLgIbfUfEshYoQaUOl3Kt1cgS
+ W7BHAQcg=
+X-Received: by 2002:a5d:5f94:0:b0:431:1d4:3a8a with SMTP id
+ ffacd0b85a97d-43569972d22mr18270632f8f.7.1768918530983; 
+ Tue, 20 Jan 2026 06:15:30 -0800 (PST)
+X-Received: by 2002:a5d:5f94:0:b0:431:1d4:3a8a with SMTP id
+ ffacd0b85a97d-43569972d22mr18270576f8f.7.1768918530408; 
+ Tue, 20 Jan 2026 06:15:30 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.112.255])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-59baf397672sm4220544e87.61.2026.01.20.06.10.35
+ ffacd0b85a97d-435924ae6f1sm3077820f8f.33.2026.01.20.06.15.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Jan 2026 06:10:36 -0800 (PST)
-Message-ID: <4bee294c-e529-4e05-9bdb-48533aeff4f9@redhat.com>
-Date: Tue, 20 Jan 2026 15:10:34 +0100
+ Tue, 20 Jan 2026 06:15:30 -0800 (PST)
+Message-ID: <791eac72-f4d2-48b5-9973-c64006e8ce13@redhat.com>
+Date: Tue, 20 Jan 2026 15:15:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scripts: Allow sha512 in clean_functional_cache.py, too
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260120121849.131604-1-thuth@redhat.com>
- <aW985Eq4d70yEPpH@redhat.com>
+Subject: Re: [PATCH] hw/arm: Move the "arm-cpu" compat settings out of
+ hw/core/machine.c
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ qemu-arm@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org
+References: <20260120122108.131708-1-thuth@redhat.com>
+ <CAFEAcA8nzm+CEN_Dp+X+AggcTg57wAt8D43x-7oixLeNH4TDdA@mail.gmail.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -136,17 +141,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <aW985Eq4d70yEPpH@redhat.com>
+In-Reply-To: <CAFEAcA8nzm+CEN_Dp+X+AggcTg57wAt8D43x-7oixLeNH4TDdA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -164,22 +169,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/01/2026 14.02, Daniel P. Berrangé wrote:
-> On Tue, Jan 20, 2026 at 01:18:49PM +0100, Thomas Huth wrote:
+On 20/01/2026 13.55, Peter Maydell wrote:
+> On Tue, 20 Jan 2026 at 12:21, Thomas Huth <thuth@redhat.com> wrote:
+>>
 >> From: Thomas Huth <thuth@redhat.com>
 >>
->> The functional testing frameworks also supports assets that are
->> identified by their sha512 checksum (instead of only using sha25),
->> and at least one of the tests (tests/functional/ppc64/test_fadump.py)
->> is already using such a checksum, so adjust the clean_functional_cache
->> script to support these checksums, too.
+>> The hw_compat_* arrays in hw/core/machine.c should be used for generic
+>> compat settings that might affect all (or at least multiple) machines.
+>> Target specific settings should rather go into the target specific
+>> source files instead. For arm/aarch64, the virt machine is the only
+>> one that cares about compat settings, so move the "arm-cpu" related
+>> switches to hw/arm/virt.c now.
 > 
-> I wrote this code to match what we had in Avocado, but now I'm really
-> struggling to justify why we should choose different checksum algorithms
-> per asset. With only 1 test diverging from sha256, I'd rather we just
-> dropped sha512 support
+> I think it makes more sense for all the compat stuff to
+> live in one place, rather than being scattered around,
+> unless it is truly machine-specific (which this isn't).
 
-Fine for me, too ... could you suggest a patch, or want me to do it?
+It's only used by the arm virt machine, so it's IMHO machine specific.
+If we will ever get other versionized arm machines, they won't use these 
+config knobs, so this never will be shared with another machine.
+
+> The hw/core arrays seem to be where we put compat
+> props which are related to a particular device rather
+> than a specific machine.
+
+IMHO it makes sense if multiple machines use such config knobs, but if it is 
+really only related to one machine ... not so much.
 
   Thomas
 
