@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AFACD2ECE9
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 12:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DEDED2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 12:47:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viAzV-0001oC-Je; Tue, 20 Jan 2026 07:37:49 -0500
+	id 1viAzV-0001oD-Jy; Tue, 20 Jan 2026 07:37:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1viAyy-0001X4-La; Tue, 20 Jan 2026 07:37:18 -0500
+ id 1viAye-0001SM-AZ; Tue, 20 Jan 2026 07:36:56 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1viAyu-0002X7-8X; Tue, 20 Jan 2026 07:37:13 -0500
+ id 1viAyc-0002Us-6V; Tue, 20 Jan 2026 07:36:55 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1C1B11802C6;
- Tue, 20 Jan 2026 15:21:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EC6131802C4;
+ Tue, 20 Jan 2026 15:21:33 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8D3D535174F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 67B0F35174D;
  Tue, 20 Jan 2026 15:21:51 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 7/9] MAINTAINERS: Add docs/system/i386/ to the general x86
- architecture section
-Date: Tue, 20 Jan 2026 15:21:44 +0300
-Message-ID: <20260120122150.2254321-8-mjt@tls.msk.ru>
+Subject: [PULL 5/9] configure: Set $PYTHON in the configuration of the
+ optionroms
+Date: Tue, 20 Jan 2026 15:21:42 +0300
+Message-ID: <20260120122150.2254321-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260120122150.2254321-1-mjt@tls.msk.ru>
 References: <20260120122150.2254321-1-mjt@tls.msk.ru>
@@ -63,31 +63,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-We've got a section for generic x86 architecture support in our
-MAINTAINERS file - this should cover the docs/system/i386/ folder, too.
+pc-bios/optionrom/Makefile uses $(PYTHON) for running a Python script,
+but this variable is never initialized here. So the script gets run
+via its shebang line - which fails if the "python3" binary is not
+available on the system. To fix this, write the PYTHON configuration
+to the config.mak file of the optionroms.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- MAINTAINERS | 1 +
+ configure | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c1e586c58f..81c013fea2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -143,6 +143,7 @@ S: Maintained
- F: configs/devices/i386-softmmu/default.mak
- F: configs/targets/i386-softmmu.mak
- F: configs/targets/x86_64-softmmu.mak
-+F: docs/system/i386/
- F: docs/system/target-i386*
- F: target/i386/*.[ch]
- F: target/i386/Kconfig
+diff --git a/configure b/configure
+index e69b3e474e..0d73eefc15 100755
+--- a/configure
++++ b/configure
+@@ -1632,6 +1632,7 @@ probe_target_compiler() {
+ }
+ 
+ write_target_makefile() {
++  echo "PYTHON=$python"
+   echo "EXTRA_CFLAGS=$target_cflags"
+   if test -z "$target_cc" && test -z "$target_as"; then
+     test -z "$container_image" && error_exit "Internal error: could not find cross compiler for $1?"
 -- 
 2.47.3
 
