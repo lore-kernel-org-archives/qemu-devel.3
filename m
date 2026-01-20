@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53CEFD2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 08:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A00D2ED0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 08:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi7Mx-0007mf-Ns; Tue, 20 Jan 2026 03:45:47 -0500
+	id 1vi7OB-0000ig-Pr; Tue, 20 Jan 2026 03:47:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vi7Mv-0007m2-M6
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:45:45 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vi7O9-0000fz-1U
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:47:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vi7Mt-0006ay-8t
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:45:44 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vi7O6-0006nQ-Bt
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 03:46:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768898742;
+ s=mimecast20190719; t=1768898817;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QgG7q0W10tQuzNuStZ7E7irM03N/F15g4y90H4yCy84=;
- b=gCxiXUIYnnvT1flw8I0eLLY6S/aK1AZrVEB3OZqqBpQWDvDVo8hsgnH4UfXM18ZsAbVtEL
- t6RuKT4PuzSOhhdCVHjRw5qaBLO0nXDq6Sv7mIP0YvmitLtlOpcEjVmKfq9UqOlIykEi1w
- Ag/vPy/R5ZOlP34+vVp/TU33k73tnGE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dI6LtlSV9UMySJmNwGZuinrpo8UN1BY+wxIsISW55e0=;
+ b=bpvsth+9hf+IvzLjetv3OHFkwaFt9KTPf8FBR4yUs6lTA2mJtcdYZ8DRdAGvUSJ7mtUlaj
+ raQqto3Lafs7YKwUWNe+k6xdsKASDED2ZAq/Nm14d3sjgIPYpHYX68w8hQ5fhFJu5egr+w
+ pYOQLQQZv5bOuwUxw+kDRh/UIsnAbDY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-570-pLytiIihO5O0ieSXCCDJ4Q-1; Tue, 20 Jan 2026 03:45:40 -0500
-X-MC-Unique: pLytiIihO5O0ieSXCCDJ4Q-1
-X-Mimecast-MFC-AGG-ID: pLytiIihO5O0ieSXCCDJ4Q_1768898739
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4801ad6e51cso44790965e9.2
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 00:45:39 -0800 (PST)
+ us-mta-52-D8_FnoeANa-ruvTAOcQlew-1; Tue, 20 Jan 2026 03:46:55 -0500
+X-MC-Unique: D8_FnoeANa-ruvTAOcQlew-1
+X-Mimecast-MFC-AGG-ID: D8_FnoeANa-ruvTAOcQlew_1768898814
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4802bb29400so38564185e9.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 00:46:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768898739; x=1769503539; darn=nongnu.org;
+ d=redhat.com; s=google; t=1768898814; x=1769503614; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=QgG7q0W10tQuzNuStZ7E7irM03N/F15g4y90H4yCy84=;
- b=nqIKaXW+CaCn8ynllbXJMwkkEaZ4PgbByNB71aeTE7s5RgyK2ghm6OaG1Oz7itWztz
- gRzY/xaScFN/60vLdfMuTTA53qMLS3LAtsF6mfgz3X3Q/UsNlh1bNbz1JLvxbCMJxmyg
- Pv0hhKsiDorG4BCDmBdSNma+kQeMKF8OvTmW5prorK4Q9ZTxa3GZvAiXgzwnyP4fjLA1
- SOGIuP0hU5lULZ0wexirxPuftBfxOb5PkjjCTopkUBAnBTqNupxCAkWxuggpZvKfGgmo
- 7FvDR5fpMeQKPI8a3D9yvR6rofCpDHWCLjWZXfCXuQYCy6Y6f7wke74Rwm1AfLlmrsWo
- QV7A==
+ bh=dI6LtlSV9UMySJmNwGZuinrpo8UN1BY+wxIsISW55e0=;
+ b=QU/NHjU7dpll6izjwwqTk2ocks4BU+p7MWzk7KCGOolOPdY3q1v12LF7MOdacwSxq+
+ isERNcSTv0Esp6SezK4ttfsPPvnF45w+HqbZ2RdKaXElidjjGXKkm2WeOzWDjxBYt+xL
+ a9N4kwJxmDL1eerkqJUcZTlqqfptXoNXb4wtheXCBzxnEmzlnmMNpS8uCUJJnNKklEhu
+ j7yZCBL0G99ot1JPhMwDEAbuXPpizqADVqJq1oxH08oTiQpNI4+H047x8hZ03J8lTqWf
+ zYYaL7C3K5YcUbj7uIjyP6oD8qXEDE5pJRFeyCGvTnazvFslVK2KOpMYITufgOJzYANv
+ lSUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768898739; x=1769503539;
+ d=1e100.net; s=20230601; t=1768898814; x=1769503614;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QgG7q0W10tQuzNuStZ7E7irM03N/F15g4y90H4yCy84=;
- b=mcCEQ5Gw5hZ66MdiSChXexSLc62aIC/N2+WXeBE7h82pk2ILoPBSZ79d1N/+3/BIFZ
- fceXFjOEFZ4SPBe9lVTQl2pPX9w9NUZXI8MUop7VxqATi5SIF+86Y0OlLGEy4poMjGDl
- jTPYqApmYbEFsB6NfGeHkchbOeGHpp6zU1L1BN5o77NF6GKs1B9uEIGrBVfT81ZSWfQR
- 6WSsvB8VSzUqn1H2oL8AZMv4+4bO0/4X/wzLyrVsEsiknVGOyO+J0O6+4C9OH4qRQVl2
- MkqRokWVLUR7f3E3Y2hmGURsAzskhK6PebvZ8nnITzg4sZzMBhw9VFqzI5vjocN7FAkN
- W7mA==
+ bh=dI6LtlSV9UMySJmNwGZuinrpo8UN1BY+wxIsISW55e0=;
+ b=qywbwPiJOHBPhu6vcF0vUhNroSMtCEV1ZoHE8zUo3bdq5Ync4DtFLNyC4o246gQyHx
+ K166y9quiAeJ90DO0mJPjeZGssxSFRYlOc6bne00Db9njBWw2LKOWt13e7pf4mQ2HdA2
+ 5ZLdYKRPTU4QrULYQYFo9XPe8Cnq/z2jRCzKUHQPF//wcxH7cxFA1GXQGo4g8tSUa7p3
+ UGaXvw9AIH3GhGtDGpz+DcPeyycbU0VWndGIbLdMqUB2anfMH0Ndis2bP0z/3cVL1//O
+ IKWX6AyVsa/CG+Kj3psKMOjnfEOdQubx62VPkqFjlxmAT7HOamnbQFdlxmO7kO48wEa9
+ c+Ag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWoGMBAaDkv2zfyz0/ZBs1NkmCI5SvFD/v5oc17nFYERkNUhZ+1YaLd0bCQfvS1nbssb709fUtUYI5/@nongnu.org
-X-Gm-Message-State: AOJu0Yw60ARNuJaCRrYXjZZg1T2w8zNE2Ldali5YxwVud2ZobXhBkduW
- LWNIe/9QqyLJ3ztOBJWjEjKAWNXJBbB1JRs+vC7HQSNdkbg1mgD2R0EnFtzn//u5XzEPkTj8hl5
- kYjzEOeoAF8rOaWV1p9lGM0rIG3LjMica8UAYSESZHva0SEcg0nddCNCa
-X-Gm-Gg: AY/fxX6gI3Yzdc6J/fAT1XeVttaeEBuNk+NAkRDcPK9OMydl31adG8RR3fb9t4PopIF
- Li1dv1o34S05wumKsxjQzjn38QSkt64QEASU4B1paeUfJIEZKlEx9qd+l5CX/MRRzQ0L51VTD1d
- qTsW2wKWW51W2Sv2gezSXFj10MrI0nI7/c4k8iapLMVKoNvkrnYmGLqfjl8J03yGSueHv8jA49Y
- iuzYc8mgmJx9wcaOZI00WJJMJ/D9mCDcqwniPmvRrnRBidGiTfIgUxETZjqrZpKzXVpC8e0aXnc
- VvSh98SDfYHjGC2orkvqiohqzgVRXqa/OKd2iwgNVnmyAUqMFo3K/g6b80mvKamzZGGcPwiDxuy
- Gp7iSx0hCQMWOAnD9296tsNmI1I3i+6MGugw=
-X-Received: by 2002:a05:600c:3b9c:b0:477:af07:dd1c with SMTP id
- 5b1f17b1804b1-4801e3495c1mr192966465e9.35.1768898738796; 
- Tue, 20 Jan 2026 00:45:38 -0800 (PST)
-X-Received: by 2002:a05:600c:3b9c:b0:477:af07:dd1c with SMTP id
- 5b1f17b1804b1-4801e3495c1mr192966025e9.35.1768898738345; 
- Tue, 20 Jan 2026 00:45:38 -0800 (PST)
+ AJvYcCUhh/HyGNxh/RqkyFABtCKLsPjGEtX7j1Pb55P9lj4pPA7lq/wXSfx6SLvnlVGHKjdMEkxJQA8ZWclQ@nongnu.org
+X-Gm-Message-State: AOJu0Yz/EWbF2wF0YBRtokihSx0gCUFVrfDTA8GAkE1CP4tyDUblRKkH
+ 3DSCK3Nzopq1DFfpoqKJppc1BKYs8oiqUgc8C0i0bBp2lHdi7qNW+rgX2+64NKlAb2bCVuDkSPa
+ X6JY/tLfdiiBn5CKj8Tsk5WumtELHpu57kCTHBnsRzA4f5QxDmJqv9mSO
+X-Gm-Gg: AZuq6aKBtcNEVKEYXIXV4S3/lBl5OVg09G8EGHJYUnot+3x+MtFpxOXc9WsvdiEmQzu
+ YaRaZJ0c1JqmmSglZISagp79caHHB9LjKVc5YpVPHRZoheSM4SX7sQb3Y/a+ANhMgY4D/Ys7GTY
+ 4v6KCqaxGiG77PAoZ1rktdHr+mG5fXTwU5wEmUkL3ZsyTDLlEhgftaIev4YDrd/NrH0DVC3KcdI
+ ip+AjB+G8z2NmGsL5CmkA6JOjciOd5ovlhXtPlEVR1H67rDChrzHnKTLXGGniY8fKHag0QZlq8r
+ Ev9xq508tcssQkCSQ/P4ixFR2HZHVKkhVlvdg83Y5i/f0aQlDSua622PkYwdHQ6fmnKSjaAIoFT
+ TSQ7OMPZPRNXuJo6hrgktj/+D+AIyKQeIR0M=
+X-Received: by 2002:a05:6000:26c2:b0:435:94c1:3714 with SMTP id
+ ffacd0b85a97d-43594c13c01mr413205f8f.0.1768898813865; 
+ Tue, 20 Jan 2026 00:46:53 -0800 (PST)
+X-Received: by 2002:a05:6000:26c2:b0:435:94c1:3714 with SMTP id
+ ffacd0b85a97d-43594c13c01mr413163f8f.0.1768898813480; 
+ Tue, 20 Jan 2026 00:46:53 -0800 (PST)
 Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e8c0475sm279443035e9.10.2026.01.20.00.45.37
+ ffacd0b85a97d-43569998240sm27568296f8f.43.2026.01.20.00.46.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Jan 2026 00:45:37 -0800 (PST)
-Message-ID: <33cba14c-d518-4191-b1dd-eccc3f3edbf2@redhat.com>
-Date: Tue, 20 Jan 2026 09:45:36 +0100
+ Tue, 20 Jan 2026 00:46:53 -0800 (PST)
+Message-ID: <2c6e3a76-02b0-4910-ac0d-50f7011716c7@redhat.com>
+Date: Tue, 20 Jan 2026 09:46:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 06/17] tests: Use configured python to run GitLab
- iotests
+Subject: Re: [PATCH v4 07/17] tests: use "run" script to execute
+ device-crash-test
 To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
@@ -104,7 +104,7 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-block@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20260119212744.1275455-1-jsnow@redhat.com>
- <20260119212744.1275455-7-jsnow@redhat.com>
+ <20260119212744.1275455-8-jsnow@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -149,7 +149,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260119212744.1275455-7-jsnow@redhat.com>
+In-Reply-To: <20260119212744.1275455-8-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -178,45 +178,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 19/01/2026 22.27, John Snow wrote:
-> use the configured python (and the pyvenv) to run iotests instead of the
-> system default python3 interpreter. Use the new "run" script in the
-> build directory to execute the command inside the meson developer
-> environment, templated in qemu.git/run.in.
+> Instead of invoking python from the configure venv manually, instruct
+> developers to use the "run" script instead. Change the test invocation
+> to be a good example going forward.
 > 
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->   .gitlab-ci.d/buildtest.yml | 18 +++++++++---------
->   1 file changed, 9 insertions(+), 9 deletions(-)
-> 
-> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> index e9b5b05e6e8..4c280dd29bc 100644
-> --- a/.gitlab-ci.d/buildtest.yml
-> +++ b/.gitlab-ci.d/buildtest.yml
-> @@ -350,15 +350,15 @@ build-tcg-disabled:
->       - make -j"$JOBS"
->       - make check-unit
->       - make check-qapi-schema
-> -    - cd tests/qemu-iotests/
-> -    - ./check -raw 001 002 003 004 005 008 009 010 011 012 021 025 032 033 048
-> -            052 063 077 086 101 104 106 113 148 150 151 152 157 159 160 163
-> -            170 171 184 192 194 208 221 226 227 236 253 277 image-fleecing
-> -    - ./check -qcow2 028 051 056 057 058 065 068 082 085 091 095 096 102 122
-> -            124 132 139 142 144 145 151 152 155 157 165 194 196 200 202
-> -            208 209 216 218 227 234 246 247 248 250 254 255 257 258
-> -            260 261 262 263 264 270 272 273 277 279 image-fleecing
-> -    - cd ../..
-> +    - ./run tests/qemu-iotests/check -raw 001 002 003 004 005 008 009
-> +            010 011 012 021 025 032 033 048 052 063 077 086 101 104 106
-> +            113 148 150 151 152 157 159 160 163 170 171 184 192 194 208
-> +            221 226 227 236 253 277 image-fleecing
-> +    - ./run tests/qemu-iotests/check -qcow2 028 051 056 057 058 065 068
-> +            082 085 091 095 096 102 122 124 132 139 142 144 145 151 152
-> +            155 157 165 194 196 200 202 208 209 216 218 227 234 246 247
-> +            248 250 254 255 257 258 260 261 262 263 264 270 272 273 277
-> +            279 image-fleecing
->       - make distclean
->   
->   build-user:
+>   .gitlab-ci.d/buildtest.yml | 6 +++---
+>   scripts/device-crash-test  | 2 +-
+>   2 files changed, 4 insertions(+), 4 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
