@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F223D2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 05:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 084C6D2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 05:21:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi49B-00049j-Eb; Tue, 20 Jan 2026 00:19:21 -0500
+	id 1vi4Ae-0007aw-KV; Tue, 20 Jan 2026 00:20:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vi499-000496-DE; Tue, 20 Jan 2026 00:19:19 -0500
+ id 1vi4AR-0006HM-OG; Tue, 20 Jan 2026 00:20:40 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vi494-0004ZS-Ev; Tue, 20 Jan 2026 00:19:19 -0500
+ id 1vi4AQ-0004v7-0m; Tue, 20 Jan 2026 00:20:39 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 20 Jan
- 2026 13:19:00 +0800
+ 2026 13:19:07 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 20 Jan 2026 13:19:00 +0800
+ Transport; Tue, 20 Jan 2026 13:19:07 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -34,9 +34,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
 CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>, Nabih Estefan
  <nabihestefan@google.com>
-Subject: [PATCH v5 01/22] hw/misc: Add LTPI controller
-Date: Tue, 20 Jan 2026 13:18:32 +0800
-Message-ID: <20260120051859.1920565-2-kane_chen@aspeedtech.com>
+Subject: [PATCH v5 19/22] hw/arm/aspeed: Model AST1700 I3C block as
+ unimplemented device
+Date: Tue, 20 Jan 2026 13:18:50 +0800
+Message-ID: <20260120051859.1920565-20-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260120051859.1920565-1-kane_chen@aspeedtech.com>
 References: <20260120051859.1920565-1-kane_chen@aspeedtech.com>
@@ -70,285 +71,168 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-LTPI (LVDS Tunneling Protocol & Interface) is defined in the OCP DC-SCM
-2.0 specification:
-https://www.opencompute.org/documents/ocp-dc-scm-2-0-ltpi-ver-1-0-pdf
+AST1700 exposes more I3C buses than the current dummy I3C model
+provides. When Linux probes the I3C devices on AST1700 this mismatch
+can trigger a kernel panic. Model the I3C block as an unimplemented
+device to make the missing functionality explicit and avoid unexpected
+side effects.
 
-LTPI is a protocol and physical interface for tunneling various low-speed
-signals between the HPM and SCM. As shown in Figure 2, the AST27x0 (left)
-integrates two LTPI controllers, allowing it to connect to up to two
-extended boards.
+This wires up the I3C interrupt lines for the IO expanders and adds the
+corresponding device entries for the AST1700 model.
 
-This commit introduces a simple device model for the ASPEED LTPI
-controller in QEMU.
-
-The model includes basic MMIO read/write operations and sets default
-register values during reset to emulate a link-up state.
-
-Implements register space with read/write callbacks.
+No functional I3C emulation is provided yet; this only prevents crashes and
+documents the missing piece.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Nabih Estefan <nabihestefan@google.com>
 Tested-by: Nabih Estefan <nabihestefan@google.com>
 ---
- include/hw/misc/aspeed_ltpi.h |  33 ++++++
- hw/misc/aspeed_ltpi.c         | 193 ++++++++++++++++++++++++++++++++++
- hw/misc/meson.build           |   1 +
- 3 files changed, 227 insertions(+)
- create mode 100644 include/hw/misc/aspeed_ltpi.h
- create mode 100644 hw/misc/aspeed_ltpi.c
+ include/hw/arm/aspeed_ast1700.h |  3 +++
+ include/hw/arm/aspeed_soc.h     |  2 ++
+ hw/arm/aspeed_ast1700.c         | 15 +++++++++++++++
+ hw/arm/aspeed_ast27x0.c         | 18 ++++++++++++++++--
+ 4 files changed, 36 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/misc/aspeed_ltpi.h b/include/hw/misc/aspeed_ltpi.h
-new file mode 100644
-index 0000000000..3330a49b05
---- /dev/null
-+++ b/include/hw/misc/aspeed_ltpi.h
-@@ -0,0 +1,33 @@
-+/*
-+ * ASPEED LTPI Controller
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef ASPEED_LTPI_H
-+#define ASPEED_LTPI_H
+diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast1700.h
+index c50987fc76..af2445f4cd 100644
+--- a/include/hw/arm/aspeed_ast1700.h
++++ b/include/hw/arm/aspeed_ast1700.h
+@@ -19,6 +19,7 @@
+ #include "hw/ssi/aspeed_smc.h"
+ #include "hw/watchdog/wdt_aspeed.h"
+ #include "hw/char/serial-mm.h"
++#include "hw/misc/unimp.h"
+ 
+ #define AST1700_SGPIO_NUM            2
+ #define AST1700_WDT_NUM              9
+@@ -47,6 +48,8 @@ struct AspeedAST1700SoCState {
+     AspeedI2CState i2c;
+     AspeedPWMState pwm;
+     AspeedWDTState wdt[AST1700_WDT_NUM];
 +
-+#include "hw/core/sysbus.h"
++    UnimplementedDeviceState i3c;
+ };
+ 
+ #endif /* ASPEED_AST1700_H */
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 4ea2521041..b185b04186 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -294,6 +294,8 @@ enum {
+     ASPEED_DEV_IOEXP1_I2C,
+     ASPEED_DEV_IOEXP0_INTCIO,
+     ASPEED_DEV_IOEXP1_INTCIO,
++    ASPEED_DEV_IOEXP0_I3C,
++    ASPEED_DEV_IOEXP1_I3C,
+ };
+ 
+ const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
+diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
+index 06c35a3a36..0b6fdee208 100644
+--- a/hw/arm/aspeed_ast1700.c
++++ b/hw/arm/aspeed_ast1700.c
+@@ -15,6 +15,7 @@
+ 
+ #define AST2700_SOC_LTPI_SIZE        0x01000000
+ #define AST1700_SOC_SRAM_SIZE        0x00040000
++#define AST1700_SOC_I3C_SIZE         0x00010000
+ 
+ enum {
+     ASPEED_AST1700_DEV_SPI0,
+@@ -26,6 +27,7 @@ enum {
+     ASPEED_AST1700_DEV_SGPIOM0,
+     ASPEED_AST1700_DEV_SGPIOM1,
+     ASPEED_AST1700_DEV_I2C,
++    ASPEED_AST1700_DEV_I3C,
+     ASPEED_AST1700_DEV_UART12,
+     ASPEED_AST1700_DEV_LTPI_CTRL,
+     ASPEED_AST1700_DEV_WDT,
+@@ -42,6 +44,7 @@ static const hwaddr aspeed_ast1700_io_memmap[] = {
+     [ASPEED_AST1700_DEV_SGPIOM0]   =  0x00C0C000,
+     [ASPEED_AST1700_DEV_SGPIOM1]   =  0x00C0D000,
+     [ASPEED_AST1700_DEV_I2C]       =  0x00C0F000,
++    [ASPEED_AST1700_DEV_I3C]       =  0x00C20000,
+     [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
+     [ASPEED_AST1700_DEV_LTPI_CTRL] =  0x00C34000,
+     [ASPEED_AST1700_DEV_WDT]       =  0x00C37000,
+@@ -181,6 +184,14 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+                         sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->wdt[i]), 0));
+     }
+ 
++    /* I3C */
++    qdev_prop_set_string(DEVICE(&s->i3c), "name", "ioexp-i3c");
++    qdev_prop_set_uint64(DEVICE(&s->i3c), "size", AST1700_SOC_I3C_SIZE);
++    sysbus_realize(SYS_BUS_DEVICE(&s->i3c), errp);
++    memory_region_add_subregion_overlap(&s->iomem,
++                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_I3C],
++                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i3c), 0),
++                        -1000);
+ }
+ 
+ static void aspeed_ast1700_instance_init(Object *obj)
+@@ -230,6 +241,10 @@ static void aspeed_ast1700_instance_init(Object *obj)
+                                 &s->wdt[i], "aspeed.wdt-ast2700");
+     }
+ 
++    /* I3C */
++    object_initialize_child(obj, "ioexp-i3c[*]", &s->i3c,
++                            TYPE_UNIMPLEMENTED_DEVICE);
 +
-+#define TYPE_ASPEED_LTPI "aspeed.ltpi-ctrl"
-+OBJECT_DECLARE_SIMPLE_TYPE(AspeedLTPIState, ASPEED_LTPI)
-+
-+#define ASPEED_LTPI_TOTAL_SIZE  0x900
-+#define ASPEED_LTPI_CTRL_SIZE   0x200
-+#define ASPEED_LTPI_PHY_SIZE    0x100
-+#define ASPEED_LTPI_TOP_SIZE    0x100
-+
-+struct AspeedLTPIState {
-+    SysBusDevice parent;
-+    MemoryRegion mmio;
-+    MemoryRegion mmio_ctrl;
-+    MemoryRegion mmio_phy;
-+    MemoryRegion mmio_top;
-+
-+    uint32_t ctrl_regs[ASPEED_LTPI_CTRL_SIZE >> 2];
-+    uint32_t phy_regs[ASPEED_LTPI_PHY_SIZE >> 2];
-+    uint32_t top_regs[ASPEED_LTPI_TOP_SIZE >> 2];
+     return;
+ }
+ 
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index ca35a11291..bad2028bc9 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -156,7 +156,9 @@ static const int aspeed_soc_ast2700a1_irqmap[] = {
+     [ASPEED_DEV_PECI]      = 197,
+     [ASPEED_DEV_SDHCI]     = 197,
+     [ASPEED_DEV_IOEXP0_I2C] = 198,
++    [ASPEED_DEV_IOEXP0_I3C] = 199,
+     [ASPEED_DEV_IOEXP1_I2C] = 200,
++    [ASPEED_DEV_IOEXP1_I3C] = 201,
+ };
+ 
+ /* GICINT 192 */
+@@ -219,12 +221,24 @@ static const int ast2700_gic198_intcmap[] = {
+     [ASPEED_DEV_IOEXP0_I2C]       = 0, /* 0 - 15 */
+ };
+ 
++/* Primary AST1700 Interrupts */
++/* A1: GINTC 199 */
++static const int ast2700_gic199_intcmap[] = {
++    [ASPEED_DEV_IOEXP0_I3C]       = 0, /* 0 - 15 */
 +};
 +
-+#endif /* ASPEED_LTPI_H */
-diff --git a/hw/misc/aspeed_ltpi.c b/hw/misc/aspeed_ltpi.c
-new file mode 100644
-index 0000000000..131cea9c6b
---- /dev/null
-+++ b/hw/misc/aspeed_ltpi.c
-@@ -0,0 +1,193 @@
-+/*
-+ * ASPEED LTPI Controller
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "migration/vmstate.h"
-+#include "hw/misc/aspeed_ltpi.h"
-+
-+#define ASPEED_LTPI_CTRL_BASE   0x000
-+#define ASPEED_LTPI_PHY_BASE    0x200
-+#define ASPEED_LTPI_TOP_BASE    0x800
-+
-+#define LTPI_CTRL_LINK_MNG 0x42
-+#define LTPI_PHY_MODE 0x0
-+
-+static uint64_t aspeed_ltpi_top_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    return s->top_regs[idx];
-+}
-+
-+static void aspeed_ltpi_top_write(void *opaque, hwaddr offset,
-+                              uint64_t val, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    switch (offset) {
-+    default:
-+        s->top_regs[idx] = (uint32_t)val;
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps aspeed_ltpi_top_ops = {
-+    .read = aspeed_ltpi_top_read,
-+    .write = aspeed_ltpi_top_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
+ /* Secondary AST1700 Interrupts */
+ /* A1: GINTC 200 */
+ static const int ast2700_gic200_intcmap[] = {
+     [ASPEED_DEV_IOEXP1_I2C]       = 0, /* 0 - 15 */
+ };
+ 
++/* Secondary AST1700 Interrupts */
++/* A1: GINTC 201 */
++static const int ast2700_gic201_intcmap[] = {
++    [ASPEED_DEV_IOEXP1_I3C]       = 0, /* 0 - 15 */
 +};
 +
-+static uint64_t aspeed_ltpi_phy_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    return s->phy_regs[idx];
-+}
-+
-+static void aspeed_ltpi_phy_write(void *opaque, hwaddr offset,
-+                              uint64_t val, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    switch (offset) {
-+    default:
-+        s->phy_regs[idx] = (uint32_t)val;
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps aspeed_ltpi_phy_ops = {
-+    .read = aspeed_ltpi_phy_read,
-+    .write = aspeed_ltpi_phy_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static uint64_t aspeed_ltpi_ctrl_read(void *opaque,
-+                                      hwaddr offset, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    return s->ctrl_regs[idx];
-+}
-+
-+static void aspeed_ltpi_ctrl_write(void *opaque, hwaddr offset,
-+                              uint64_t val, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    switch (offset) {
-+    default:
-+        s->ctrl_regs[idx] = (uint32_t)val;
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps aspeed_ltpi_ctrl_ops = {
-+    .read = aspeed_ltpi_ctrl_read,
-+    .write = aspeed_ltpi_ctrl_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void aspeed_ltpi_reset(DeviceState *dev)
-+{
-+    AspeedLTPIState *s = ASPEED_LTPI(dev);
-+
-+    memset(s->ctrl_regs, 0, sizeof(s->ctrl_regs));
-+    memset(s->phy_regs, 0, sizeof(s->phy_regs));
-+    memset(s->top_regs, 0, sizeof(s->top_regs));
-+    /* set default values */
-+    s->ctrl_regs[LTPI_CTRL_LINK_MNG] = 0x11900007;
-+    s->phy_regs[LTPI_PHY_MODE] = 0x2;
-+}
-+
-+
-+static const VMStateDescription vmstate_aspeed_ltpi = {
-+    .name = TYPE_ASPEED_LTPI,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(ctrl_regs, AspeedLTPIState,
-+                             ASPEED_LTPI_CTRL_SIZE >> 2),
-+        VMSTATE_UINT32_ARRAY(phy_regs, AspeedLTPIState,
-+                             ASPEED_LTPI_PHY_SIZE >> 2),
-+        VMSTATE_UINT32_ARRAY(top_regs, AspeedLTPIState,
-+                             ASPEED_LTPI_TOP_SIZE >> 2),
-+
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void aspeed_ltpi_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedLTPIState *s = ASPEED_LTPI(dev);
-+
-+    memory_region_init(&s->mmio, OBJECT(s), TYPE_ASPEED_LTPI,
-+                       ASPEED_LTPI_TOTAL_SIZE);
-+
-+    memory_region_init_io(&s->mmio_ctrl, OBJECT(s),
-+                          &aspeed_ltpi_ctrl_ops, s,
-+                          "aspeed-ltpi-ctrl", ASPEED_LTPI_CTRL_SIZE);
-+
-+    memory_region_init_io(&s->mmio_phy, OBJECT(s),
-+                          &aspeed_ltpi_phy_ops, s,
-+                          "aspeed-ltpi-phy", ASPEED_LTPI_PHY_SIZE);
-+
-+    memory_region_init_io(&s->mmio_top, OBJECT(s),
-+                          &aspeed_ltpi_top_ops, s,
-+                          "aspeed-ltpi-top", ASPEED_LTPI_TOP_SIZE);
-+
-+    memory_region_add_subregion(&s->mmio,
-+                                ASPEED_LTPI_CTRL_BASE, &s->mmio_ctrl);
-+    memory_region_add_subregion(&s->mmio,
-+                                ASPEED_LTPI_PHY_BASE, &s->mmio_phy);
-+    memory_region_add_subregion(&s->mmio,
-+                                ASPEED_LTPI_TOP_BASE, &s->mmio_top);
-+
-+    sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->mmio);
-+}
-+
-+static void aspeed_ltpi_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    dc->realize = aspeed_ltpi_realize;
-+    dc->vmsd = &vmstate_aspeed_ltpi;
-+    device_class_set_legacy_reset(dc, aspeed_ltpi_reset);
-+}
-+
-+static const TypeInfo aspeed_ltpi_info = {
-+    .name          = TYPE_ASPEED_LTPI,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(AspeedLTPIState),
-+    .class_init    = aspeed_ltpi_class_init,
-+};
-+
-+static void aspeed_ltpi_register_types(void)
-+{
-+    type_register_static(&aspeed_ltpi_info);
-+}
-+
-+type_init(aspeed_ltpi_register_types);
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index b1d8d8e5d2..45b16e7797 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -136,6 +136,7 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_hace.c',
-   'aspeed_i3c.c',
-   'aspeed_lpc.c',
-+  'aspeed_ltpi.c',
-   'aspeed_scu.c',
-   'aspeed_sbc.c',
-   'aspeed_sdmc.c',
+ /* GICINT 192 ~ 201 */
+ struct gic_intc_irq_info {
+     int irq;
+@@ -241,9 +255,9 @@ static const struct gic_intc_irq_info ast2700_gic_intcmap[] = {
+     {196, 1, 4, ast2700_gic196_intcmap},
+     {197, 1, 5, ast2700_gic197_intcmap},
+     {198, 2, 0, ast2700_gic198_intcmap},
+-    {199, 1, 7, NULL},
++    {199, 2, 1, ast2700_gic199_intcmap},
+     {200, 3, 0, ast2700_gic200_intcmap},
+-    {201, 1, 9, NULL},
++    {201, 3, 1, ast2700_gic201_intcmap},
+ };
+ 
+ static qemu_irq aspeed_soc_ast2700_get_irq(AspeedSoCState *s, int dev)
 -- 
 2.43.0
 
