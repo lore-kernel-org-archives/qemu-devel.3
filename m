@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE8BD2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 12:46:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AFACD2ECE9
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 12:47:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viAzZ-0001uj-Kt; Tue, 20 Jan 2026 07:37:53 -0500
+	id 1viAzV-0001oC-Je; Tue, 20 Jan 2026 07:37:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1viAyr-0001Vh-9v; Tue, 20 Jan 2026 07:37:14 -0500
+ id 1viAyy-0001X4-La; Tue, 20 Jan 2026 07:37:18 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1viAyi-0002Vo-8q; Tue, 20 Jan 2026 07:37:05 -0500
+ id 1viAyu-0002X7-8X; Tue, 20 Jan 2026 07:37:13 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A50D51802E0;
- Tue, 20 Jan 2026 15:30:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1C1B11802C6;
+ Tue, 20 Jan 2026 15:21:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2D5BC35175D;
- Tue, 20 Jan 2026 15:31:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8D3D535174F;
+ Tue, 20 Jan 2026 15:21:51 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-trivial@nongnu.org,
+Cc: Thomas Huth <thuth@redhat.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 10/10] bsd-user/syscall_defs.h: define STAT_TIME_T_EXT only for
- 32 bits
-Date: Tue, 20 Jan 2026 15:30:51 +0300
-Message-ID: <20260120123107.2255178-2-mjt@tls.msk.ru>
+Subject: [PULL 7/9] MAINTAINERS: Add docs/system/i386/ to the general x86
+ architecture section
+Date: Tue, 20 Jan 2026 15:21:44 +0300
+Message-ID: <20260120122150.2254321-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260120123107.2255178-1-mjt@tls.msk.ru>
-References: <20260120123107.2255178-1-mjt@tls.msk.ru>
+In-Reply-To: <20260120122150.2254321-1-mjt@tls.msk.ru>
+References: <20260120122150.2254321-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,47 +61,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-Commit 369c1ba2b changed the wrong conditional "#if defined(__i386__)" to
-"#if defined(TARGET_I386)".
-However, TARGET_I386 is defined for target x86_64 also.
+We've got a section for generic x86 architecture support in our
+MAINTAINERS file - this should cover the docs/system/i386/ folder, too.
 
-This commit fixes it by identifying correctly 32 bits target.
-
-Found with:
-$ ./build/qemu-x86_64 \
-  -plugin ./build/contrib/plugins/libstoptrigger,icount=1000000 \
-  -plugin ./build/tests/tcg/plugins/libinsn \
-  -d plugin \
-  ./build/qemu-system-x86_64 --version
-ld-elf.so.1: /lib/libz.so.6: invalid file format
-cpu 0 insns: 59746
-total insns: 59746
-
-Fixes: 369c1ba2b ("Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT")
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- bsd-user/syscall_defs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index c49be32bdc..cc4b484f3a 100644
---- a/bsd-user/syscall_defs.h
-+++ b/bsd-user/syscall_defs.h
-@@ -247,7 +247,7 @@ struct target_freebsd11_stat {
-     unsigned int:(8 / 2) * (16 - (int)sizeof(struct target_freebsd_timespec));
- } __packed;
- 
--#if defined(TARGET_I386)
-+#if defined(TARGET_I386) && !defined(TARGET_X86_64)
- #define TARGET_HAS_STAT_TIME_T_EXT       1
- #endif
- 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index c1e586c58f..81c013fea2 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -143,6 +143,7 @@ S: Maintained
+ F: configs/devices/i386-softmmu/default.mak
+ F: configs/targets/i386-softmmu.mak
+ F: configs/targets/x86_64-softmmu.mak
++F: docs/system/i386/
+ F: docs/system/target-i386*
+ F: target/i386/*.[ch]
+ F: target/i386/Kconfig
 -- 
 2.47.3
 
