@@ -4,121 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6A17D2ED0F
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 11:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA97D2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 11:33:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi9qv-0001GF-9E; Tue, 20 Jan 2026 06:24:53 -0500
+	id 1vi9yP-0006jX-40; Tue, 20 Jan 2026 06:32:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vi9ql-0001BW-WC
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 06:24:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vi9xt-0006Xm-R0; Tue, 20 Jan 2026 06:32:16 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1vi9qi-0006Fs-5j
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 06:24:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768908279;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=E90uUYdCYPLiZH2Zf2a3vtedkP8UqaTwoXr10fA1Kzs=;
- b=Vhc5GcR3Fn8O05x9+c5B/7cFoqmnPCo1/1h14wb8lqh89f/gjNZl0XT3HfOHR+qV+VHFR6
- 7ra+VN8ev6kskyO6iwagJQA81rFWylz853Yo5RO10lzbv/e47wVDydBICnmjeryBXE9pMU
- JBhXgVlXScEd7vUGN4eEYfOK2TzWvd4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-381-kj-qZi6qN4iO7Z25qxAtGg-1; Tue, 20 Jan 2026 06:24:37 -0500
-X-MC-Unique: kj-qZi6qN4iO7Z25qxAtGg-1
-X-Mimecast-MFC-AGG-ID: kj-qZi6qN4iO7Z25qxAtGg_1768908277
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-47ee056e5cfso44949095e9.1
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 03:24:37 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768908276; cv=none;
- d=google.com; s=arc-20240605;
- b=bT+mTpnG5rkmCx8Ia5LoDlqxu4+auH/MqixjEzfeyD97msStMyfNF4kX4JOmw2RJqQ
- gEfIfZIp7sorR6/8nLXU4wIHYhUcYQtTo6sTMTE8OGVBBZ1mjDg3BOEbmFozHFXw3ZEd
- r6k8Q0+NDw7QqTo1bLotBrFft7YBgpMntu/4KH4JFEBuwZDHw1ouolOwxRIrRvoSHkUh
- pnIVl2GBL5u64biDXaZAV7oMQgklfRiWjlojQqclfp7rdzzLsNgBu7PwY4c6G9mRowr4
- Nziy5qCODOZ2e8L5Sii8exdPi7WT+0id2aIGgsxlvki4yYZQnA4nbzlooE3eSENi9FX5
- GEmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=E90uUYdCYPLiZH2Zf2a3vtedkP8UqaTwoXr10fA1Kzs=;
- fh=jjq9sOgGRsbcm1AC8tD4S17WtZ06kUg+xzgdpLFYm5U=;
- b=bo8uwlDO1t99uaRXJLwUeJXVmv87K0xvisQL8ne3zpbZjgPfR8Ct6v/qgJPKFMaxhw
- bsU4Z+nXBcxYmq/TQf2xJAE5GiQkzZSdB10pPwPypxzpefquIdV2h7ZBiJTJ8qhYpT0q
- CvZAiUgTmjMxaaoa7DpVlVC65UwVvdYy6E+ZLO9c2GODYgfi6iRcuXk/mO9qgNYXqsg3
- cRAjm91FG4AIo3191DbAzE+B0XiNT4z4NYCwv2L+mtL4i7JUEIE2fA+nBKHeyKfKphps
- diLFk0ucQ1kcZaFUiRV9f0lf95x1Eh5Tj+bOyaBMN3gt6VyvbXe2XM/3/zsWq+5ucxjO
- 19Ig==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768908276; x=1769513076; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=E90uUYdCYPLiZH2Zf2a3vtedkP8UqaTwoXr10fA1Kzs=;
- b=IGGLObhK3sBkejrr60saJ3R0W5XQ5X/IGg/bYlWkBU9spt7di4teBqrRdhCidjPjP7
- S1076V0EhAvy+u6rRj3bmQYzTqug4zBGLZXurp64Qb3R8VOEhvRBOmC625mkE/bjnJ6l
- IZY8rOraRAmqPqDAsB17VrYmlE0QNiC/1XuZVq/hM3lBzQ7bbvYDR2xlespbD1UvW3dx
- pk99HO74Ss+qlWmtHrDVEhj3VznXMBfgZZvp+UfF3DdlfFNN40LtZvkoMPkbdtdZw4qX
- rtQlS81k1ZPg5mL1EoQnoDTrfDD2mv6E+N6Rhlh3SUSX4A6+iuOjXAMj9zoaqxBousSB
- PhlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768908276; x=1769513076;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=E90uUYdCYPLiZH2Zf2a3vtedkP8UqaTwoXr10fA1Kzs=;
- b=danLKo+www/x7vIxoZqe+ykRCzd2+mz/iCdfqOjhXm7GwrHFzfgdKhraV3h4ax+NH6
- 3FfIPCsUygF2zxcQjpnvOeA1ljC787B+lsSOQPy0S3+AtODpeJAugb6i/u5ZNAJe6Imo
- zZjlnRD/RiEiSyENySeUnQsPaX38rvch5XJkIElZnDHTkH9mVtF71DBXo/0mYgh3VbtC
- IwCTsxAH5qzCXdPoM85HzqqHB9xWYT6cLDjb6uoPxqLpKo5RM8KTDO9NPE6xeJrOXiP0
- lkFFDD2nKLNMFacERlVVJPBKszC/BGvqtMoJ5rZAL3Rxzu1Pit1jJ7/03EkF0a9xoSSM
- 6pog==
-X-Gm-Message-State: AOJu0Yw+8272hlsWUvkr8pIHmfXQDaOpVqKCj/jOXcwJzEnazH7YxNZD
- Rpr3iYkVqf/jjMFf/ZUciMs2WaP0D4ynQiCG7zh7WgVpCiza0U3KgOF76wdEZ2Q4TXfgYsETX3t
- nPw944uEP76Ff/9rzmk7Db1c3WUY6BdIFd/QrGo4lMxoCzpD/WavYYv94/cyx2dMKwZf86Swc1/
- l9krfqFRn9mJ64tr3OljHr35Vrh5jA0pD06eBCKlrQCg==
-X-Gm-Gg: AY/fxX5R1GvtJEMhyYekQu37kBNRD3EHA97yygquCvrgH0hLBzPquhJeiaBeI9MF5xW
- XH1RHnVK9ILBCVVrmCgYUeBk4OgpFAfBH3N9yzXjmKsqfgJnfcOWZzGeF7z6lwa+e/4cXHzstno
- CsvG6CCXO/fTWGQGWJ4P2f1tgTYLdJbxGaOs3Aiv3xunGjDJ+/+/5M8zagQT9FgeVzIIDyxCDbq
- jWPB9CfSpArFCNykBtaUfNR5PFMlr2/k7JO4Ua+khk2f/Ezp8kxR8Io
-X-Received: by 2002:a05:600c:3555:b0:47e:e20e:bb9c with SMTP id
- 5b1f17b1804b1-4801e2f8e63mr191581495e9.8.1768908275659; 
- Tue, 20 Jan 2026 03:24:35 -0800 (PST)
-X-Received: by 2002:a05:600c:3555:b0:47e:e20e:bb9c with SMTP id
- 5b1f17b1804b1-4801e2f8e63mr191581155e9.8.1768908275235; Tue, 20 Jan 2026
- 03:24:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vi9xq-00081L-1n; Tue, 20 Jan 2026 06:32:05 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 151B0180287;
+ Tue, 20 Jan 2026 14:31:33 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 65A653516D4;
+ Tue, 20 Jan 2026 14:31:50 +0300 (MSK)
+Message-ID: <bc463c63-ec0c-4666-a9ed-7c53e02a24c4@tls.msk.ru>
+Date: Tue, 20 Jan 2026 14:31:50 +0300
 MIME-Version: 1.0
-References: <20260109124043.25019-1-farosas@suse.de>
- <20260109124043.25019-24-farosas@suse.de>
-In-Reply-To: <20260109124043.25019-24-farosas@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 20 Jan 2026 16:54:18 +0530
-X-Gm-Features: AZwV_QioSfcROUgbJn2AXawhk8ODFOVZaCySj3iKezah77_fvtQHCB7CprXBwZg
-Message-ID: <CAE8KmOwv6+K5TzaXjmQ1Dz+72Mqjykr3ovhmqpFWLPHOepbkYA@mail.gmail.com>
-Subject: Re: [PATCH v3 23/25] migration: Move CPR HUP watch to cpr-transfer.c
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com, 
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.016,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] configure: Remove duplicated entry of --gdb in the help
+ text
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-trivial@nongnu.org, gustavo.romero@linaro.org
+References: <20260114155355.82096-1-thuth@redhat.com>
+ <878qe0jfgs.fsf@draig.linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <878qe0jfgs.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,157 +107,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 Jan 2026 at 18:19, Fabiano Rosas <farosas@suse.de> wrote:
-> Move this CPR-specific code into a cpr file. While here, give the
-> functions more significant names.
->
-> This makes the new idea (after cpr-transfer) of having two parts to
-> qmp_migrate slightly more obvious: either wait for the hangup or
-> continue directly.
->
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  include/migration/cpr.h  |  5 +++++
->  migration/cpr-transfer.c | 23 +++++++++++++++++++++++
->  migration/migration.c    | 27 +++------------------------
->  3 files changed, 31 insertions(+), 24 deletions(-)
->
-> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> index 027cb98073..5850fd1788 100644
-> --- a/include/migration/cpr.h
-> +++ b/include/migration/cpr.h
-> @@ -9,6 +9,7 @@
->  #define MIGRATION_CPR_H
->
->  #include "qapi/qapi-types-migration.h"
-> +#include "io/channel.h"
->  #include "qemu/queue.h"
->
->  #define MIG_MODE_NONE           -1
-> @@ -53,6 +54,10 @@ int cpr_get_fd_param(const char *name, const char *fdname, int index,
->  QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
->  QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
->
-> +void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
-> +                                void *opaque);
-> +void cpr_transfer_source_destroy(MigrationState *s);
-> +
->  void cpr_exec_init(void);
->  QEMUFile *cpr_exec_output(Error **errp);
->  QEMUFile *cpr_exec_input(Error **errp);
-> diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
-> index 00371d17c3..61d5c9dce2 100644
-> --- a/migration/cpr-transfer.c
-> +++ b/migration/cpr-transfer.c
-> @@ -6,7 +6,10 @@
->   */
->
->  #include "qemu/osdep.h"
-> +#include "qapi/clone-visitor.h"
->  #include "qapi/error.h"
-> +#include "qapi/qapi-visit-migration.h"
-> +#include "io/channel.h"
->  #include "io/channel-file.h"
->  #include "io/channel-socket.h"
->  #include "io/net-listener.h"
-> @@ -72,3 +75,23 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
->          return NULL;
->      }
->  }
-> +
-> +void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
-> +                                void *opaque)
-> +{
-> +    s->hup_source = qio_channel_create_watch(cpr_state_ioc(), G_IO_HUP);
-> +    g_source_set_callback(s->hup_source,
-> +                          (GSourceFunc)func,
-> +                          QAPI_CLONE(MigrationAddress, opaque),
-> +                          (GDestroyNotify)qapi_free_MigrationAddress);
-> +    g_source_attach(s->hup_source, NULL);
-> +}
-> +
-> +void cpr_transfer_source_destroy(MigrationState *s)
-> +{
-> +    if (s->hup_source) {
-> +        g_source_destroy(s->hup_source);
-> +        g_source_unref(s->hup_source);
-> +        s->hup_source = NULL;
-> +    }
-> +}
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 5167233f76..6be2849326 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -100,7 +100,6 @@ static bool migration_object_check(MigrationState *ms, Error **errp);
->  static bool migration_switchover_start(MigrationState *s, Error **errp);
->  static bool close_return_path_on_source(MigrationState *s);
->  static void migration_completion_end(MigrationState *s);
-> -static void migrate_hup_delete(MigrationState *s);
->
->  static void migration_downtime_start(MigrationState *s)
->  {
-> @@ -1297,7 +1296,7 @@ static void migration_cleanup(MigrationState *s)
->
->      qemu_savevm_state_cleanup();
->      cpr_state_close();
-> -    migrate_hup_delete(s);
-> +    cpr_transfer_source_destroy(s);
->
->      close_return_path_on_source(s);
->
-> @@ -1480,7 +1479,7 @@ void migration_cancel(void)
->          migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
->                            MIGRATION_STATUS_CANCELLED);
->          cpr_state_close();
-> -        migrate_hup_delete(s);
-> +        cpr_transfer_source_destroy(s);
->      }
->  }
->
-> @@ -2004,25 +2003,6 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
->
->  static void qmp_migrate_finish(MigrationAddress *addr, Error **errp);
->
-> -static void migrate_hup_add(MigrationState *s, QIOChannel *ioc, GSourceFunc cb,
-> -                            void *opaque)
-> -{
-> -    s->hup_source = qio_channel_create_watch(ioc, G_IO_HUP);
-> -    g_source_set_callback(s->hup_source, cb,
-> -                          QAPI_CLONE(MigrationAddress, opaque),
-> -                          (GDestroyNotify)qapi_free_MigrationAddress);
-> -    g_source_attach(s->hup_source, NULL);
-> -}
-> -
-> -static void migrate_hup_delete(MigrationState *s)
-> -{
-> -    if (s->hup_source) {
-> -        g_source_destroy(s->hup_source);
-> -        g_source_unref(s->hup_source);
-> -        s->hup_source = NULL;
-> -    }
-> -}
-> -
->  static gboolean qmp_migrate_finish_cb(QIOChannel *channel,
->                                        GIOCondition cond,
->                                        void *opaque)
-> @@ -2083,8 +2063,7 @@ void qmp_migrate(const char *uri, bool has_channels,
->       * connection, so qmp_migrate_finish will fail to connect, and then recover.
->       */
->      if (migrate_mode() == MIG_MODE_CPR_TRANSFER) {
-> -        migrate_hup_add(s, cpr_state_ioc(), (GSourceFunc)qmp_migrate_finish_cb,
-> -                        main_ch->addr);
-> +        cpr_transfer_add_hup_watch(s, qmp_migrate_finish_cb, main_ch->addr);
->
->      } else {
->          qmp_migrate_finish(main_ch->addr, errp);
-> --
+On 1/14/26 20:01, Alex Bennée wrote:
+> Thomas Huth <thuth@redhat.com> writes:
+> 
+>> From: Thomas Huth <thuth@redhat.com>
+>>
+>> Since --gdb has recently been added to meson_options.txt, the help
+>> text shows up twice in the output of "./configure --help":
+>>
+>>   $ ./configure --help | grep gdb
+>>     --gdb=GDB-path           gdb to use for gdbstub tests [/usr/bin/gdb]
+>>     --gdb=VALUE              Path to GDB
+> 
+> It's a shame to loose the default value - is there anyway for the meson
+> version to show the auto-detected value?
 
-* Looks okay.
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+Maybe we can drop this line from meson but keep it in ./configure?
 
-Thank you.
----
-  - Prasad
-
+/mjt
 
