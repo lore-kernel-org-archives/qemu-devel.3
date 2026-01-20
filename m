@@ -4,54 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EE30CA5FB7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 17:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F342CA5FB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 17:15:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viF9Z-0004GO-10; Tue, 20 Jan 2026 12:04:29 -0500
+	id 1viFJL-0003EO-4x; Tue, 20 Jan 2026 12:14:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1viF9L-0004Bg-NM; Tue, 20 Jan 2026 12:04:20 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1viFJI-0003D7-CH
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 12:14:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1viF9I-00083M-2X; Tue, 20 Jan 2026 12:04:15 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D01E9596ABC;
- Tue, 20 Jan 2026 18:04:06 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id e_JtQ4S0D29p; Tue, 20 Jan 2026 18:04:04 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6EC1B596ABB; Tue, 20 Jan 2026 18:04:04 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6CE28596A0D;
- Tue, 20 Jan 2026 18:04:04 +0100 (CET)
-Date: Tue, 20 Jan 2026 18:04:04 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Jean-Christophe Dubois <jcd@tribudubois.net>, qemu-arm@nongnu.org, 
- Guenter Roeck <linux@roeck-us.net>, Bin Meng <bmeng.cn@gmail.com>, 
- Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH 00/14] Freescale SDHCI Fixes
-In-Reply-To: <20260112145418.220506-1-shentey@gmail.com>
-Message-ID: <ae54581c-2a49-b6c2-cde1-d50bbde70a84@eik.bme.hu>
-References: <20260112145418.220506-1-shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1viFJG-00018X-R9
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 12:14:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768929269;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CoQDvc6A7+//zuquv8zn8ciw1M1QxQZNphCJsrqFf2g=;
+ b=ARzQbMgjhZEE0ndGq0tMruvk2wdrOKCsCLtAIaM3IUryTnnKq311luXTifFuUwbvWEdOWw
+ HtolCFqQR3Pu7dIsA1Jk67Jra3smDwxSGO/PPl+kpCni/gt6SPpbmGj0hMCLpRgAUeMsSh
+ mnStMzXrNFZdqZa/x+ypAqGosYIDKUM=
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-226-C3GswPvqOuiKUVPBUPWIZg-1; Tue, 20 Jan 2026 12:14:28 -0500
+X-MC-Unique: C3GswPvqOuiKUVPBUPWIZg-1
+X-Mimecast-MFC-AGG-ID: C3GswPvqOuiKUVPBUPWIZg_1768929267
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-2b6a8b32fa9so23101958eec.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 09:14:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1768929267; x=1769534067; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=CoQDvc6A7+//zuquv8zn8ciw1M1QxQZNphCJsrqFf2g=;
+ b=ZSq5bVdZNP/E0LySjoZyO7gZ6eyoU9y1sa4Vp00Bo+FhoIbOiQhJOnnFt1mHwPvk8W
+ LxghSjiRMZVjZcbWzvH6AENTWtx2mRrIGONY9JMvJn1Ms8vNTb/btLMNULaTRdGO1aMg
+ ZaHP9L+4ecVgSvJz9fnA5FGf8mR4rzFaecfXXjkNNdCMTXdalhWiNOu79JOXVRyAl5R6
+ gxJIv/nKtKcttM+NU4HX/iCFVhdNWgp98wuWrixBQo/IRJh5ob2qOsLvvZKY/AbSxtVY
+ +50LhrG+s8tiFDNDf0l6lfCASyFrFmoj+mN9di3BqSD6qwMF+K7m7T0KQqLxjFuruDhC
+ UxuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768929267; x=1769534067;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CoQDvc6A7+//zuquv8zn8ciw1M1QxQZNphCJsrqFf2g=;
+ b=cqP9+cjDvYEqKCA1w2LvWolpQChb8gSL4Ssn2WXFu3qklxH0CZvXUzXFxKp1fI8zwM
+ U8/1k9MG9TMya/ipv0iU+n6ce7myp/mD/Mwxb3bVCh+9R9NhfJ7D+zl43hXKdCkQpNEU
+ 0xCo8O36wNkqyKOuf75lm04meJvvjsVJBEDrStD8F+WEOpLPM2wPSDk2zJsuUrQt2Xcw
+ KTZKo8epnCVNHFQ1YgQD7AtyKq9wdCdWxBaMbEIpA6VEBTyX0vLiS2KTUb7cdYmCYBTK
+ oi5pCoXfNSCXS58bkcFtIqbvp5xDb38iaCya0xwqbAAcUuVY2yeLLyV3baY6K8U2oGAN
+ 33vQ==
+X-Gm-Message-State: AOJu0Yzqo6CL07yDECc2BncsflcsbMuVcMHKftj1bDM6gENFfr6iOsW9
+ HyV/3ISjeLl3kOIb7tq0odmv/Y47htsWTab0Qau0waTu9KF5YvIByKM70m/Zg9l2fArZZ0l10vG
+ Gxi2eKn5laMMoQKpixOdsu/ECMiXlnaFHRsLHw2QXjkrfZKyQYe2P9f/C
+X-Gm-Gg: AZuq6aJrCNX3PrdrgsI9wpeJUMBN3Q/c5kqFA4D3972eBjwMlCLMlYIt/nsGHe+1uz9
+ Qu8MCFdOjjXQL8SMAdsJbQ1sTnBm6Q9v+FGYeABiLyEpWJmp/6GrU15NL4Q9v+I3zxgcfIKux8V
+ RRMtTYRXSIqAbydZDBtUa2q0SP5OI6So7V6uzt5Cf3P+aHZvrarUT/OC0LfTsndE+7x63xYyTEs
+ 6VZLN07SjprWaDKUrCXRBhVmQYKhtZVCG7n5BWpK0k7NXtOtmz+80qZDyEJBzyE1S8DAjxIYnsv
+ gVi3GIftlp36QiqLrr+08gkIPXK5TO6syjArxFnW+uI7LfZjOC+lcth8G23v1gu6biBj+F7OjbG
+ QnO0=
+X-Received: by 2002:a05:7300:df4c:b0:2ac:1e9f:a0ed with SMTP id
+ 5a478bee46e88-2b6b40d9828mr14157060eec.25.1768929265781; 
+ Tue, 20 Jan 2026 09:14:25 -0800 (PST)
+X-Received: by 2002:a05:7300:df4c:b0:2ac:1e9f:a0ed with SMTP id
+ 5a478bee46e88-2b6b40d9828mr14156958eec.25.1768929263841; 
+ Tue, 20 Jan 2026 09:14:23 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2b6b364579csm17627802eec.23.2026.01.20.09.14.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Jan 2026 09:14:23 -0800 (PST)
+Date: Tue, 20 Jan 2026 12:14:15 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Lukas Straub <lukasstraub2@web.de>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2 3/8] Move ram state receive into
+ multifd_ram_state_recv()
+Message-ID: <aW-353Qwg_Qi_8yX@x1.local>
+References: <20260117-colo_unit_test_multifd-v2-0-ab521777fa51@web.de>
+ <20260117-colo_unit_test_multifd-v2-3-ab521777fa51@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260117-colo_unit_test_multifd-v2-3-ab521777fa51@web.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,175 +120,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 12 Jan 2026, Bernhard Beschow wrote:
-> This series splits TYPE_IMX_USDHC into three device models which fixes issues
-> in the ppce500 and some i.MX machines. In particular, it introduces uSDHC's
-> predecessor eSDHC in big and little endian variants. Once the eSDHCs are
-> split off, uSDHC emulation is improved which is a stepping stone towards
-> running u-boot on the i.MX8MP (not implemented yet).
->
-> In a way this series picks up previous efforts:
-> * https://lore.kernel.org/qemu-devel/20250310000620.70120-14-philmd@linaro.org
-> * https://lore.kernel.org/qemu-devel/20250310000620.70120-15-philmd@linaro.org
->
-> There is quite some code churn involved to fix all the issues addressed in
-> this series. Let me know if you have any better ideas to achieve the same.
->
-> Best regards,
-> Bernhard
->
-> Testing done:
-> * make check
-> * Boot https://www.qemu-advent-calendar.org/2018/download/day19.tar.xz in
-> ppce500
-> * Boot guest in imx8mp-evk
+On Sat, Jan 17, 2026 at 03:09:10PM +0100, Lukas Straub wrote:
+> This is in preparation for the next patch.
+> 
+> Signed-off-by: Lukas Straub <lukasstraub2@web.de>
 
-I've tried it with the A1222 U-Boot and it still works the same with this 
-series as before so:
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+-- 
+Peter Xu
 
-Looks like after this series I can revert this change:
-
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 5d8dad7bba..c86dfa281f 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -614,11 +614,11 @@ static void 
-sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
-       * XXX: Some sd/mmc drivers (for example, u-boot-slp) do not account for
-       * possible stop at page boundary if initial address is not page aligned,
-       * allow them to work properly
-       */
-      if ((s->sdmasysad % boundary_chk) == 0) {
--//        page_aligned = true;
-+        page_aligned = true;
-      }
-
-      s->prnsts |= SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE;
-      if (s->trnmod & SDHC_TRNS_READ) {
-          s->prnsts |= SDHC_DOING_READ;
-
-which needed to be commented out before but now works with or without 
-this change. Is this XXX hack still needed?
-
-Another change I see is that before it ended in:
-
-SDHC wr_4b @0x44 <- 0x00000010 read-only
-SDHC wr_4b @0x44 <- 0x00000010 read-only
-
-repeated 18 times which now says:
-
-SD: CMD12 in a wrong state: transfer (spec v3.01)
-SD: CMD12 in a wrong state: transfer (spec v3.01)
-
-repeated 17 times. But this fails after not finding a bootable device so 
-I'm not sure this is not a bug in this U-Boot version. With more traces 
-enabled it seems to do some transfer then get these errors when trying to 
-continue reading:
-
-sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 509 size 512 blklen 512
-sdbus_read @sd-bus value 0x00
-sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 510 size 512 blklen 512
-sdbus_read @sd-bus value 0x55
-sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 511 size 512 blklen 512
-sdbus_read @sd-bus value 0xaa
-sdhci_end_transfer Automatically issue CMD12 0x00000000
-sdbus_command @sd-bus CMD12 arg 0x00000000
-sdcard_normal_command SD    STOP_TRANSMISSION/ CMD12 arg 0x00000000 (mode transfer, state transfer)
-SD: CMD12 in a wrong state: transfer (spec v3.01)
-sdcard_response ILLEGAL RESP (sz:0)
-sdhci_access wr32: addr[0x000c] <- 0x113a0037 (289013815)
-sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
-sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
-sdhci_access rd32: addr[0x0010] -> 0x00000900 (2304)
-sdhci_access rd32: addr[0x0030] -> 0x0000000b (11)
-sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
-sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
-sdbus_get_dat_lines @sd-bus dat_lines: 15
-sdbus_get_cmd_line @sd-bus cmd_line: 1
-sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-sdbus_get_dat_lines @sd-bus dat_lines: 15
-sdbus_get_cmd_line @sd-bus cmd_line: 1
-sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-sdbus_get_dat_lines @sd-bus dat_lines: 15
-sdbus_get_cmd_line @sd-bus cmd_line: 1
-sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-sdhci_access wr32: addr[0x0038] <- 0x00000000 (0)
-sdhci_access wr32: addr[0x0008] <- 0x00000200 (512)
-sdhci_send_command CMD16 ARG[0x00000200]
-sdbus_command @sd-bus CMD16 arg 0x00000200
-sdcard_normal_command SD         SET_BLOCKLEN/ CMD16 arg 0x00000200 (mode transfer, state transfer)
-sdcard_set_blocklen block len 0x200
-sdcard_response RESP#1 (normal cmd) (sz:4)
-sdhci_response4 RSPREG[31..0]=0x00400900
-sdhci_access wr32: addr[0x000c] <- 0x101a0037 (270139447)
-sdhci_access rd32: addr[0x0030] -> 0x00000001 (1)
-sdhci_access rd32: addr[0x0030] -> 0x00000001 (1)
-sdhci_access rd32: addr[0x0010] -> 0x00400900 (4196608)
-sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
-sdhci_access wr32: addr[0x0030] <- 0xfffffeff (4294967039)
-sdbus_get_dat_lines @sd-bus dat_lines: 15
-sdbus_get_cmd_line @sd-bus cmd_line: 1
-sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-sdbus_get_dat_lines @sd-bus dat_lines: 15
-sdbus_get_cmd_line @sd-bus cmd_line: 1
-sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-sdbus_get_dat_lines @sd-bus dat_lines: 15
-sdbus_get_cmd_line @sd-bus cmd_line: 1
-sdhci_access rd32: addr[0x0024] -> 0x01ff0000 (33488896)
-sdhci_access wr32: addr[0x0000] <- 0x79401de8 (2034245096)
-sdhci_access wr32: addr[0x0004] <- 0x00017200 (94720)
-sdhci_access rd32: addr[0x002c] -> 0x000b011f (721183)
-sdhci_access wr32: addr[0x002c] <- 0x000b011f (721183)
-sdhci_access wr32: addr[0x0038] <- 0x00000000 (0)
-sdhci_access wr32: addr[0x0008] <- 0x00000200 (512)
-sdhci_send_command CMD17 ARG[0x00000200]
-sdbus_command @sd-bus CMD17 arg 0x00000200
-sdcard_normal_command SD    READ_SINGLE_BLOCK/ CMD17 arg 0x00000200 (mode transfer, state transfer)
-sdcard_req_addr req 0x200 addr 0x200
-sdcard_read_block addr 0x200 size 0x200
-sdcard_response RESP#1 (normal cmd) (sz:4)
-sdhci_response4 RSPREG[31..0]=0x00000900
-sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 0 size 512 blklen 512
-sdbus_read @sd-bus value 0x00
-sdcard_read_data SD    READ_SINGLE_BLOCK/ CMD17 ofs 1 size 512 blklen 512
-sdbus_read @sd-bus value 0x00
-
-Regards,
-BALATON Zoltan
-
-> Bernhard Beschow (14):
->  hw/sd/sdhci: Fix TYPE_IMX_USDHC to implement sd-spec-version 3 by
->    default
->  hw/arm/fsl-imx6: Remove now redundant setting of "sd-spec-version"
->    property
->  hw/arm/fsl-imx6: Fix naming of SDHCI related constants and attributes
->  hw/arm/fsl-imx25: Apply missing reset quirk
->  Revert "hw/sd/sdhci: Rename ESDHC_* defines to USDHC_*"
->  hw/sd/sdhci: Consolidate eSDHC constants
->  hw/sd/sdhci: Rename usdhc_ functions
->  hw/sd/sdhci: Add TYPE_FSL_ESDHC_BE
->  hw/ppc/e500: Use TYPE_FSL_ESDHC_BE
->  hw/arm/fsl-imx25: Extract TYPE_FSL_ESDHC_LE
->  hw/sd/sdhci: Remove endianness property
->  hw/sd/sdhci: Add uSDHC-specific quirk
->  hw/sd/sdhci: Remove vendor property
->  hw/sd/trace-events: Remove redundant "SWITCH " command name
->
-> hw/sd/sdhci-internal.h    |   3 -
-> include/hw/arm/fsl-imx6.h |   4 +-
-> include/hw/sd/sdhci.h     |   8 +-
-> hw/arm/fsl-imx25.c        |   5 +-
-> hw/arm/fsl-imx6.c         |  18 ++--
-> hw/ppc/e500.c             |  10 +-
-> hw/sd/sdhci.c             | 201 ++++++++++++++++++++++++--------------
-> hw/sd/trace-events        |   2 +-
-> 8 files changed, 146 insertions(+), 105 deletions(-)
->
-> --
-> 2.52.0
->
->
->
 
