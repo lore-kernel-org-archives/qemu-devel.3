@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13C67D2ED11
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 09:33:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D5ED2ED0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 09:33:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vi83l-0003Tk-1U; Tue, 20 Jan 2026 04:30:01 -0500
+	id 1vi83v-0003sC-Ls; Tue, 20 Jan 2026 04:30:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vi83i-0003Sj-Ty; Tue, 20 Jan 2026 04:29:58 -0500
+ id 1vi83u-0003pM-95; Tue, 20 Jan 2026 04:30:10 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vi83h-0005eG-AE; Tue, 20 Jan 2026 04:29:58 -0500
+ id 1vi83s-0005eG-Io; Tue, 20 Jan 2026 04:30:09 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 20 Jan
- 2026 17:29:40 +0800
+ 2026 17:29:41 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 20 Jan 2026 17:29:40 +0800
+ Transport; Tue, 20 Jan 2026 17:29:41 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,9 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 04/11] hw/arm/ast27x0: Add DRAM alias for SSP SDRAM remap
-Date: Tue, 20 Jan 2026 17:29:29 +0800
-Message-ID: <20260120092939.2708302-5-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 08/11] hw/misc/aspeed_scu: Add SCU support for SSP SDRAM
+ remap
+Date: Tue, 20 Jan 2026 17:29:33 +0800
+Message-ID: <20260120092939.2708302-9-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260120092939.2708302-1-jamin_lin@aspeedtech.com>
 References: <20260120092939.2708302-1-jamin_lin@aspeedtech.com>
@@ -66,184 +67,127 @@ From:  Jamin Lin via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds two MemoryRegion aliases to support PSP access to
-SSP SDRAM through shared memory remapping, as defined by the default SCU
-configuration.
+This commit adds SCU register support for SSP SDRAM remap control and runtime
+activation. It introduces logic for the PSP to dynamically configure the mapping
+of its own DRAM windows into SSP-visible SDRAM space, enabling shared memory
+communication via memory region aliases.
 
-The SSP exposes two DRAM aliases:
-  - remap1 maps PSP DRAM at 0x400000000 (32MB) to SSP SDRAM offset 0x2000000
-  - remap2 maps PSP DRAM at 0x42c000000 (32MB) to SSP SDRAM offset 0x0
+- coprocessor_sdram_remap[0]: maps PSP DRAM offset 0x400000000 (size: 32MB) to SSP SDRAM
+    offset 0x2000000
+- coprocessor_sdram_remap[0]: maps PSP DRAM offset 0x42c000000 (size: 32MB) to SSP SDRAM
+    offset 0x0
 
-These regions correspond to the default SCU register values, which control
-the mapping between PSP and coprocessor memory windows.
+The SCU registers AST2700_SCU_SSP_CTRL_1/2 and
+AST2700_SCU_SSP_REMAP_ADDR_{1,2} / REMAP_SIZE_{1,2} allow runtime reconfiguration
+of alias offset, base, and size.
 
-Set SSP CPUID 4 and bumps the SCU VMState version to 3.
+|------------------------------------------|         |----------------------------|
+|               PSP DRAM                   |         |        SSP SDRAM           |
+|------------------------------------------|         |----------------------------|
+| 0x4_0000_0000 (SCU_124 << 4)             |     --> | 0x0000_0000                |
+|   remap1 base                            |---| |   |  - SCU_150: target addr    |
+|   size: 32MB    (SCU_14C)                |   | |   |    remap2                  |
+|------------------------------------------|   | |   |----------------------------|
+|                                          |   | |   |                            |
+| 0x4_2C00_0000 (SCU_128 << 4)             |-----|   | 0x0200_0000                |
+|   remap2 base                            |   |     |  - SCU_148: target addr    |
+|   size: 32MB    (SCU_154)                |   |---> |    remap1                  |
+|------------------------------------------|         |----------------------------|
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- include/hw/misc/aspeed_scu.h |  5 +++++
- hw/arm/aspeed_ast27x0-fc.c   |  2 ++
- hw/arm/aspeed_ast27x0-ssp.c  |  6 ++++++
- hw/arm/aspeed_ast27x0.c      |  4 ++++
- hw/misc/aspeed_scu.c         | 38 ++++++++++++++++++++++++++++++++++--
- 5 files changed, 53 insertions(+), 2 deletions(-)
+ hw/misc/aspeed_scu.c | 50 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
-diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h
-index 9e28bd4d2e..6f7f7d2766 100644
---- a/include/hw/misc/aspeed_scu.h
-+++ b/include/hw/misc/aspeed_scu.h
-@@ -39,6 +39,10 @@ struct AspeedSCUState {
-     uint32_t hw_strap1;
-     uint32_t hw_strap2;
-     uint32_t hw_prot_key;
-+
-+    MemoryRegion dram_remap_alias[3];
-+    MemoryRegion *dram;
-+    int ssp_cpuid;
- };
- 
- #define AST2400_A0_SILICON_REV   0x02000303U
-@@ -73,6 +77,7 @@ struct AspeedSCUClass {
-     uint32_t nr_regs;
-     bool clkin_25Mhz;
-     const MemoryRegionOps *ops;
-+    void (*dram_remap)(AspeedSCUState *s);
- };
- 
- #define ASPEED_SCU_PROT_KEY      0x1688A8A8
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 0502a137f3..b788e6ca2a 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -101,6 +101,8 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-                             sc->uarts_num, serial_hd(1));
-     aspeed_soc_uart_set_chr(soc->uart, ASPEED_DEV_UART7, sc->uarts_base,
-                             sc->uarts_num, serial_hd(2));
-+    object_property_set_int(OBJECT(&s->ca35), "ssp-cpuid", 4,
-+                            &error_abort);
-     if (!qdev_realize(DEVICE(&s->ca35), NULL, errp)) {
-         return false;
-     }
-diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
-index cba59ae11a..cf1339e2c7 100644
---- a/hw/arm/aspeed_ast27x0-ssp.c
-+++ b/hw/arm/aspeed_ast27x0-ssp.c
-@@ -198,6 +198,12 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
-     memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SCU],
-                                 &s->scu_alias);
- 
-+    /* SDRAM remap alias used by PSP to access SSP SDRAM */
-+    memory_region_add_subregion(&s->sdram, 0, &s->scu->dram_remap_alias[1]);
-+    memory_region_add_subregion(&s->sdram,
-+            memory_region_size(&s->scu->dram_remap_alias[1]),
-+            &s->scu->dram_remap_alias[0]);
-+
-     /* INTC */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {
-         return;
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 74a004adca..ae8b22fc1c 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -389,6 +389,8 @@ static void aspeed_soc_ast2700_init(Object *obj)
-                               "hw-strap1");
-     object_property_add_alias(obj, "hw-prot-key", OBJECT(&s->scu),
-                               "hw-prot-key");
-+    object_property_add_alias(obj, "ssp-cpuid", OBJECT(&s->scu),
-+                              "ssp-cpuid");
- 
-     object_initialize_child(obj, "scuio", &s->scuio, TYPE_ASPEED_2700_SCUIO);
-     qdev_prop_set_uint32(DEVICE(&s->scuio), "silicon-rev",
-@@ -740,6 +742,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-                                 sc->memmap[ASPEED_DEV_VBOOTROM], &s->vbootrom);
- 
-     /* SCU */
-+    object_property_set_link(OBJECT(&s->scu), "dram", OBJECT(s->dram_mr),
-+                             &error_abort);
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
-         return;
-     }
 diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-index 6829efa2dc..4b74e5adcb 100644
+index 6aebdd630f..27591f53c4 100644
 --- a/hw/misc/aspeed_scu.c
 +++ b/hw/misc/aspeed_scu.c
-@@ -20,6 +20,7 @@
- #include "qemu/guest-random.h"
- #include "qemu/module.h"
- #include "trace.h"
-+#include "qemu/units.h"
+@@ -147,6 +147,12 @@
  
- #define TO_REG(offset) ((offset) >> 2)
- 
-@@ -602,12 +603,20 @@ static void aspeed_scu_realize(DeviceState *dev, Error **errp)
-                           TYPE_ASPEED_SCU, SCU_IO_REGION_SIZE);
- 
-     sysbus_init_mmio(sbd, &s->iomem);
-+
-+    if (asc->dram_remap) {
-+        if (!s->dram) {
-+            error_setg(errp, TYPE_ASPEED_SCU ": 'dram' link not set");
+ /* SSP TSP */
+ #define AST2700_SCU_SSP_CTRL_0          TO_REG(0x120)
++#define AST2700_SCU_SSP_CTRL_1          TO_REG(0x124)
++#define AST2700_SCU_SSP_CTRL_2          TO_REG(0x128)
++#define AST2700_SCU_SSP_REMAP_ADDR_1    TO_REG(0x148)
++#define AST2700_SCU_SSP_REMAP_SIZE_1    TO_REG(0x14C)
++#define AST2700_SCU_SSP_REMAP_ADDR_2    TO_REG(0x150)
++#define AST2700_SCU_SSP_REMAP_SIZE_2    TO_REG(0x154)
+ #define AST2700_SCU_TSP_CTRL_0          TO_REG(0x160)
+ #define AST2700_SSP_TSP_ENABLE          BIT(0)
+ #define AST2700_SSP_TSP_RST             BIT(1)
+@@ -993,6 +999,7 @@ static void aspeed_ast2700_scu_write(void *opaque, hwaddr offset,
+                                      uint64_t data64, unsigned size)
+ {
+     AspeedSCUState *s = ASPEED_SCU(opaque);
++    MemoryRegion *mr = NULL;
+     int reg = TO_REG(offset);
+     /* Truncate here so bitwise operations below behave as expected */
+     uint32_t data = data64;
+@@ -1050,6 +1057,37 @@ static void aspeed_ast2700_scu_write(void *opaque, hwaddr offset,
+         data &= ~AST2700_SSP_TSP_ENABLE;
+         s->regs[reg] = (s->regs[reg] & ~0xff) | (data & 0xff);
+         return;
++    case AST2700_SCU_SSP_CTRL_1:
++    case AST2700_SCU_SSP_CTRL_2:
++        mr = (reg == AST2700_SCU_SSP_CTRL_1) ?
++            &s->dram_remap_alias[0] : &s->dram_remap_alias[1];
++        if (s->ssp_cpuid < 0 || mr == NULL) {
 +            return;
 +        }
-+        asc->dram_remap(s);
-+    }
- }
++        data &= 0x7fffffff;
++        memory_region_set_alias_offset(mr,
++                                       ((uint64_t) data << 4) & 0x3ffffffff);
++        break;
++    case AST2700_SCU_SSP_REMAP_ADDR_1:
++    case AST2700_SCU_SSP_REMAP_ADDR_2:
++        mr = (reg == AST2700_SCU_SSP_REMAP_ADDR_1) ?
++            &s->dram_remap_alias[0] : &s->dram_remap_alias[1];
++        if (s->ssp_cpuid < 0 || mr == NULL) {
++            return;
++        }
++        data &= 0x3fffffff;
++        memory_region_set_address(mr, data);
++        break;
++    case AST2700_SCU_SSP_REMAP_SIZE_1:
++    case AST2700_SCU_SSP_REMAP_SIZE_2:
++        mr = (reg == AST2700_SCU_SSP_REMAP_SIZE_1) ?
++            &s->dram_remap_alias[0] : &s->dram_remap_alias[1];
++        if (s->ssp_cpuid < 0 || mr == NULL) {
++            return;
++        }
++        data &= 0x3fffffff;
++        memory_region_set_size(mr, data);
++        break;
+     case AST2700_SCU_SYS_RST_CTRL_1:
+         if (s->ssp_cpuid < 0) {
+             return;
+@@ -1120,6 +1158,12 @@ static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
+     [AST2700_HW_STRAP1_SEC2]        = 0x00000000,
+     [AST2700_HW_STRAP1_SEC3]        = 0x1000408F,
+     [AST2700_SCU_SSP_CTRL_0]        = 0x000007FE,
++    [AST2700_SCU_SSP_CTRL_1]        = 0x40000000,
++    [AST2700_SCU_SSP_CTRL_2]        = 0x42C00000,
++    [AST2700_SCU_SSP_REMAP_ADDR_1]  = 0x02000000,
++    [AST2700_SCU_SSP_REMAP_SIZE_1]  = 0x02000000,
++    [AST2700_SCU_SSP_REMAP_ADDR_2]  = 0x00000000,
++    [AST2700_SCU_SSP_REMAP_SIZE_2]  = 0x02000000,
+     [AST2700_SCU_TSP_CTRL_0]        = 0x000007FE,
+     [AST2700_SCU_SYS_RST_CTRL_1]    = 0xFFC37FDC,
+     [AST2700_SCU_SYS_RST_CTRL_2]    = 0x00001FFF,
+@@ -1151,6 +1195,12 @@ static void aspeed_ast2700_scu_reset(DeviceState *dev)
  
- static const VMStateDescription vmstate_aspeed_scu = {
-     .name = "aspeed.scu",
--    .version_id = 2,
--    .minimum_version_id = 2,
-+    .version_id = 3,
-+    .minimum_version_id = 3,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32_ARRAY(regs, AspeedSCUState, ASPEED_AST2600_SCU_NR_REGS),
-         VMSTATE_END_OF_LIST()
-@@ -619,6 +628,9 @@ static const Property aspeed_scu_properties[] = {
-     DEFINE_PROP_UINT32("hw-strap1", AspeedSCUState, hw_strap1, 0),
-     DEFINE_PROP_UINT32("hw-strap2", AspeedSCUState, hw_strap2, 0),
-     DEFINE_PROP_UINT32("hw-prot-key", AspeedSCUState, hw_prot_key, 0),
-+    DEFINE_PROP_INT32("ssp-cpuid", AspeedSCUState, ssp_cpuid, -1),
-+    DEFINE_PROP_LINK("dram", AspeedSCUState, dram, TYPE_MEMORY_REGION,
-+                     MemoryRegion *),
- };
+     if (s->ssp_cpuid > 0) {
+         arm_set_cpu_off(s->ssp_cpuid);
++        memory_region_set_address(&s->dram_remap_alias[0], 32 * MiB);
++        memory_region_set_alias_offset(&s->dram_remap_alias[0], 0);
++        memory_region_set_size(&s->dram_remap_alias[0], 32 * MiB);
++        memory_region_set_address(&s->dram_remap_alias[1], 0);
++        memory_region_set_alias_offset(&s->dram_remap_alias[1], 0x2c000000);
++        memory_region_set_size(&s->dram_remap_alias[1], 32 * MiB);
+     }
  
- static void aspeed_scu_class_init(ObjectClass *klass, const void *data)
-@@ -872,6 +884,27 @@ static const TypeInfo aspeed_2600_scu_info = {
-     .class_init = aspeed_2600_scu_class_init,
- };
- 
-+static void aspeed_2700_scu_dram_remap_alias_init(AspeedSCUState *s)
-+{
-+    if (s->ssp_cpuid > 0) {
-+        /*
-+         * The SSP coprocessor uses two memory aliases (remap1 and remap2)
-+         * to access shared memory regions in the PSP DRAM:
-+         *
-+         * - remap1 maps PSP DRAM at 0x400000000 (size: 32MB) to SSP SDRAM
-+         *   offset 0x2000000
-+         * - remap2 maps PSP DRAM at 0x42c000000 (size: 32MB) to SSP SDRAM
-+         *   offset 0x0
-+         */
-+        memory_region_init_alias(&s->dram_remap_alias[0], OBJECT(s),
-+                                 "ssp.dram.remap1", s->dram,
-+                                 0, 32 * MiB);
-+        memory_region_init_alias(&s->dram_remap_alias[1], OBJECT(s),
-+                                 "ssp.dram.remap2", s->dram,
-+                                 0x2c000000, 32 * MiB);
-+    }
-+}
-+
- static uint64_t aspeed_ast2700_scu_read(void *opaque, hwaddr offset,
-                                         unsigned size)
- {
-@@ -982,6 +1015,7 @@ static void aspeed_2700_scu_class_init(ObjectClass *klass, const void *data)
-     asc->nr_regs = ASPEED_AST2700_SCU_NR_REGS;
-     asc->clkin_25Mhz = true;
-     asc->ops = &aspeed_ast2700_scu_ops;
-+    asc->dram_remap = aspeed_2700_scu_dram_remap_alias_init;
- }
- 
- static uint64_t aspeed_ast2700_scuio_read(void *opaque, hwaddr offset,
+     if (s->tsp_cpuid > 0) {
 -- 
 2.43.0
 
