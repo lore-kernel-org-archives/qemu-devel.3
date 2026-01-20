@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14BC2D2ECE9
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 12:41:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE8BD2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 12:46:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viB00-0002W2-Pn; Tue, 20 Jan 2026 07:38:20 -0500
+	id 1viAzZ-0001uj-Kt; Tue, 20 Jan 2026 07:37:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1viAyv-0001WK-0i; Tue, 20 Jan 2026 07:37:14 -0500
+ id 1viAyr-0001Vh-9v; Tue, 20 Jan 2026 07:37:14 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1viAyn-0002Wc-Ak; Tue, 20 Jan 2026 07:37:10 -0500
+ id 1viAyi-0002Vo-8q; Tue, 20 Jan 2026 07:37:05 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D3E3C1802C3;
- Tue, 20 Jan 2026 15:21:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A50D51802E0;
+ Tue, 20 Jan 2026 15:30:50 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4F47235174C;
- Tue, 20 Jan 2026 15:21:51 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2D5BC35175D;
+ Tue, 20 Jan 2026 15:31:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>, qemu-trivial@nongnu.org,
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 4/9] tests: fix comment declaring runtime in rv64
- interruptedmemory test
-Date: Tue, 20 Jan 2026 15:21:41 +0300
-Message-ID: <20260120122150.2254321-5-mjt@tls.msk.ru>
+Subject: [PULL 10/10] bsd-user/syscall_defs.h: define STAT_TIME_T_EXT only for
+ 32 bits
+Date: Tue, 20 Jan 2026 15:30:51 +0300
+Message-ID: <20260120123107.2255178-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260120122150.2254321-1-mjt@tls.msk.ru>
-References: <20260120122150.2254321-1-mjt@tls.msk.ru>
+In-Reply-To: <20260120123107.2255178-1-mjt@tls.msk.ru>
+References: <20260120123107.2255178-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,37 +61,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Julian Ganz <neither@nut.email>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-The test attempts to trigger a regression for arount 30s. However, a
-comment just before the computation of the target wall clock time falsly
-declares the run time to be around 60s.
+Commit 369c1ba2b changed the wrong conditional "#if defined(__i386__)" to
+"#if defined(TARGET_I386)".
+However, TARGET_I386 is defined for target x86_64 also.
 
-This was the case already when we introduced the test in
+This commit fixes it by identifying correctly 32 bits target.
 
-    5241645c47a9987f4fcc65bab303a444966b7942
-    (tests: add test with interrupted memory accesses on rv64)
+Found with:
+$ ./build/qemu-x86_64 \
+  -plugin ./build/contrib/plugins/libstoptrigger,icount=1000000 \
+  -plugin ./build/tests/tcg/plugins/libinsn \
+  -d plugin \
+  ./build/qemu-system-x86_64 --version
+ld-elf.so.1: /lib/libz.so.6: invalid file format
+cpu 0 insns: 59746
+total insns: 59746
 
-Signed-off-by: Julian Ganz <neither@nut.email>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Fixes: 369c1ba2b ("Fix __i386__ test for TARGET_HAS_STAT_TIME_T_EXT")
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- tests/tcg/riscv64/interruptedmemory.S | 2 +-
+ bsd-user/syscall_defs.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/tcg/riscv64/interruptedmemory.S b/tests/tcg/riscv64/interruptedmemory.S
-index cd9073ee31..c154f93839 100644
---- a/tests/tcg/riscv64/interruptedmemory.S
-+++ b/tests/tcg/riscv64/interruptedmemory.S
-@@ -25,7 +25,7 @@ _start:
- 	li	a0, 0x03	# 8N1, DLAB=0
- 	sb	a0, 3(t1)
+diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+index c49be32bdc..cc4b484f3a 100644
+--- a/bsd-user/syscall_defs.h
++++ b/bsd-user/syscall_defs.h
+@@ -247,7 +247,7 @@ struct target_freebsd11_stat {
+     unsigned int:(8 / 2) * (16 - (int)sizeof(struct target_freebsd_timespec));
+ } __packed;
  
--	# Run test for around 60s
-+	# Run test for around 30s
- 	call	rtc_get
- 	li	t0, 30
- 	slli	t0, t0, 30 # Approx. 10e9 ns
+-#if defined(TARGET_I386)
++#if defined(TARGET_I386) && !defined(TARGET_X86_64)
+ #define TARGET_HAS_STAT_TIME_T_EXT       1
+ #endif
+ 
 -- 
 2.47.3
 
