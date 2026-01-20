@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6932D2ECF7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D000CC9830C
 	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 15:28:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viDdz-0001VJ-CG; Tue, 20 Jan 2026 10:27:47 -0500
+	id 1viDdk-0001QG-E9; Tue, 20 Jan 2026 10:27:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1viDdf-0001Ps-6d
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 10:27:29 -0500
+ id 1viDdc-0001Oy-H0
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 10:27:24 -0500
 Received: from
  mail-switzerlandwestazlp170100001.outbound.protection.outlook.com
  ([2a01:111:f403:c214::1] helo=GVAP278CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1viDdc-0006ub-WD
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 10:27:26 -0500
+ id 1viDdY-0006ub-Tb
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 10:27:24 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jJG4h+Cv15g7a+u5I5CLV/DHd6OJlvbqdLH2rbh3O6SyIntOnOM0pOAPWygXhFQHzj6HMmPfSNmVkiAW8ii8FQ1I4S2sGeJ2wgk9n6QDyEOpxRwSrJWlZJIc0r/meJ9x36/Fc4g/sFWDWH3ElHtsMGnxB0AH1eQA2rWWv8K+wr0WIZcBglbGVHjDzLHRttDoI3+mgSa53iL4qCun5s7E6Aj0skSHN1h0rlN4+STmbUrQjDhM3kOpTlCefS/gbxh4y8iwtexxs4SpyLY1bQ6++1FlQij64dvNQg+/KVW7VCFdizZZ4zcx2GwcPWZV0OnoEvoRFMamh0QEpxN6uFG9Aw==
+ b=UnAEZ7klIfCDi+8yK9vq6QZN8IESkfMIGg+yKX0BTg9aVsgUtNav3oJT9frU0C3C3+hE1q1FTG08Kvlrx2mPQzqVHjTvNIEl7VE/FhSpnmGY0pfparAR0jrmPAIK8KRHjfXFu9P+E1HRJXD9d5dWDNDYYGSIuGNKhP+35bEzrFHQG8zqg1m8wn/Xssu3nAocwv6zDXpzPkSJkSRxINC1kPxUMNyrh44PvRT7csWJCsUeoNd9ZHp1BY/+dNv4U9fnQa6hM2y9IiBpT0nOx7cHwesE0CeQs/3uB5x6zj2G+rZGj9XSJRCWiGeCbfalZEf56NxuQ4/V8ivKf/TwyvLgUQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=D0edcBvGjZ+YS6r3pWZcdliWp9pw3jOXoL89HS5uk+0=;
- b=qwv7zZ1kqNGd9SS+gdHlJ4C3PQ/vhFGydgC47dKzNGeRGNlR3rDT6pUyXXTx6X1xqhAIZHva14FOjCmMBRUhAjombFO3HgX70vuQkmPsfgcFhTic9PbY5G63E+FzmWAuikFP3F4yeOQ2SZ91rZiX22mQo2KxiDVCqWOUVGRk8P+CFVNejlxOQqjzEOgJ+5o0QAewrZvZB3orvM7ccF4NeoJO3f2Vi6SkPV3zt+W6s9MOmtBVF4WAlD3TAyNPhTZomYJyyqgnlP1g89577yP4ysyB7p4LQDZn1OnEcD5T7b63yQnrP+MYpX6qlfz+zwisiyQ2heEBTzIIP9uBkUdexg==
+ bh=G4ozX9lomEwJkrcrctKRBybQa/Z1DQ3HqgPmTisaxps=;
+ b=xcpHC0cZPaFfd2EzEJI0fm0S4QcyXRpb7BjIfWoimNKwhOQi7TUDJ3rH8RHwn8/Y2nF0Ojsy3/pGUAlBueFMcEbviTGHTrN8DwQek3njhbhc2Azi+8oNMRAcVEnDfrMfFetM+GnCaDg69aZ+TfAOOFzAjlVj1RoNh1e5TTcytGgDvEqHiXrjQQ54pdbKIXCvYi3nUu7xn5npzu0zTxuNM7JtRMC8UFL71UNDDP5dQFFoicZF/PSFsdu55tfkzYn6kuc1m4RbjOt9r6zQV2ltyl5sfcCpxTE0OyGWI7h7bxrqqkNVrPWHap48CNe0TWXVv5KmIO+kRIBPbB6gCXs7+g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
  header.d=epfl.ch; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=D0edcBvGjZ+YS6r3pWZcdliWp9pw3jOXoL89HS5uk+0=;
- b=YARdUZKX2KcIt35zVVJhJ9OlnxIj4Ts1K+/d4amYVNRDSJ8UU0KSujELIXcRX+QZlSOzjvpogtHE9g+gp9e78PzG7nT5/3AMtEOQdr5F39+zrGEnS4jDmpToInpGF0IiblY9VR/T8OwlAvOyNE7cWi/Go4DzIUI2THzkJdWsl80=
+ bh=G4ozX9lomEwJkrcrctKRBybQa/Z1DQ3HqgPmTisaxps=;
+ b=OyBaTuRer9XLHvQYySyDujNRhO3EbX5zpnBYrSArYGq8OdcHw3jOy7c3Iq8QiRhFx1X2v/gNUlK250WaLLjA4pcJockqIYz+Jg69ikAK1cja2/qJ6AsWn2brhbfGfYKEWHe7DIA3thCH4AseRelH6QXyAtJJ/uoDXvcwFemvKJ4=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=epfl.ch;
 Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
@@ -47,10 +47,10 @@ Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::ccdc:4b69:a4c:e1c1]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
  ([fe80::ccdc:4b69:a4c:e1c1%2]) with mapi id 15.20.9520.011; Tue, 20 Jan 2026
  15:27:12 +0000
-Message-ID: <81cc0e63-3215-4e82-ae09-e6aa8195111b@epfl.ch>
-Date: Tue, 20 Jan 2026 16:26:12 +0100
+Message-ID: <5bcbd1dd-b9b4-4822-8b35-6edd21b72383@epfl.ch>
+Date: Tue, 20 Jan 2026 16:24:45 +0100
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v3 5/5] tests/tcg/plugins: test register readonly feature
+Subject: [PATCH v3 4/5] tests/tcg: add test for qemu_plugin_set_pc API
 From: Florian Hofhammer <florian.hofhammer@epfl.ch>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, pierrick.bouvier@linaro.org,
@@ -111,101 +111,101 @@ X-ClientProxiedBy: GV0P278CA0017.CHEP278.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|ZR1PPFBC9E76CBE:EE_
-X-MS-Office365-Filtering-Correlation-Id: 20785857-668e-48d7-2d15-08de58386222
+X-MS-Office365-Filtering-Correlation-Id: 652d9ac1-c067-4519-1964-08de58386188
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|19092799006|376014|366016|1800799024|786006; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?T0RRdk5JWWJsd3dKMUoyVWJVSnVQLzRVdm52NG1xQXIxK1NFZ2dxSmFkaFFV?=
- =?utf-8?B?MzFLWkc5cmFVemtQNmhZRlVBMDZGLzc3V1BWRDkvQXZRRE52cVZkejZtbTE1?=
- =?utf-8?B?aDIvUEg5R3pjUDZ6UXNISmZNMFVFcWU4U2hrMlJ0SCs0K3NzaDlyczRQUmdC?=
- =?utf-8?B?K2poRWxhMU1kTVkwTU5UWDh2ekZDNnBEQndYTVFQNmtUQ09jMzhwTnY2dmdj?=
- =?utf-8?B?MTA1cklzS25tUDhMU2NLcmFJNXRZcHhzYnpWU1JUbU5reUZZcXJINkdLSnUz?=
- =?utf-8?B?Wks5ZFlwcVFkUFkwWHBPMzB2TXhFWlJ3WjB2YmJGblNpVGQ5dUFzQk9saXpB?=
- =?utf-8?B?emlxWkFqOHRLUHVaZ1NJVzZNYUNYOEpiTExLOVpWSTZjNjdMWi9TdnlkdzNN?=
- =?utf-8?B?RU5qSXdRV3YwYVBVeXJkS3F4eEhTTExnUSt0NnAvdUI4OHNpdmtFVEE3Y0lI?=
- =?utf-8?B?NFlaNUJIYko0VERWd1RBd1dXT2lJOXIzMGNyY01iWjFGOHk3V3lRTUdCbjhl?=
- =?utf-8?B?TVFZVHg5ZXlHZ2htNWIwM3FBZis1WHFPYkYzNEtteit0Q2wwUWRDTXMzVWxU?=
- =?utf-8?B?OERnaE5xTjdWZUVTeWpUbVFOSENVM0w0VDNXTjhKNFJxZStlSUMxejhZTW5k?=
- =?utf-8?B?d2lKQlp2ZkgwYlpFMmZicDAxd2lsNkR5Q1pUWm9WUUpVSVF1eWYyU0lya081?=
- =?utf-8?B?SXdjd2QrTWhoNXNVMzFjWEdiWkxVclJ3UHpmTzNUSWo1NjN1M2J4NHlpNzF5?=
- =?utf-8?B?MHN5b0d3c3dNQTZQN2lVOTlWMEp6U0todHEyU3doOGdnNW9JM3BHSURYNlh2?=
- =?utf-8?B?b1g3WDBGMWI1bHY4dzlNZkhuSUdxdDlEMmtwbzhmcUxpNXQvOVZ5cHU1Smd5?=
- =?utf-8?B?OWdidXVRbVpIREFWTnVCVjQ0bDhMTCtmZU4xamY1NzNHMHpRUTdsQU1tS08w?=
- =?utf-8?B?SVpKaktUYkI2V2R2Z1J4YWRRRGJ1enVCdlpaRDUyNmtGUG9ZZlEyOFlBRmxJ?=
- =?utf-8?B?UmtSdkFCVHZPRG5TR1IyWEhFbitLbVBpL2dpSU12NjF2K3Qya0xhYkg3c0Uy?=
- =?utf-8?B?c0pVSHBqL3Q5WENNT0srYmxReGJFRjU0S0VJRC9WUEh2clEwL0IwU1ZMUmpN?=
- =?utf-8?B?NkY3SjlhdE52TEttN1daY213amtOcG8xRS9NdXpOTFY5RnB0c1RLYVBBUSs0?=
- =?utf-8?B?OTdhMHZrdzVBZjIxVEV3U2NneVJqVkpXeEU4NVlCb1BRakk1c2tZRTNTRXN3?=
- =?utf-8?B?cTRjcGVUSkRuUFhyYmR6SzBoZGxudndRSXB4MVdQZENzaElsbGgrRzl3Q21T?=
- =?utf-8?B?dHZsSUNRV3Y3eEhXOE1xY1FDbWZXd2syNGgvZjVSVDF6U1dYUm13M0hISEhW?=
- =?utf-8?B?a1hJdFl2MmN2OU1ER0pRY0dBVXMxbndrc0RwTG55TGZQNVpQUkZjR01NcFN3?=
- =?utf-8?B?MmlrUW8wbE1McnhYeUljRmlFYVJZT1EwVFQ5NnlmL3ZkNDl4MkpKbEtYdE1o?=
- =?utf-8?B?VDc3UnNLSVh6TUxLaWtVQnhPbmRna1VvN3dVcjN0Zk84ZEsrcGM2bGZVbDR6?=
- =?utf-8?B?OUNHbVB4SU1rQ0UrQzA1WlltUVdSUms4NVpHMitVNm81UDd5aHIyMnFkUE5t?=
- =?utf-8?B?WVExM1ZDdHVmRHd3K1RsSnJ2Smh1MzNyYW5xRTUwYndWOUJMdlFTdmpkeU9j?=
- =?utf-8?B?RjZKVUl5NWRxV0NSM1ROaTZEZjl4U0R4UEk4SFF4OVJsa1d4b2NBMEp6MS84?=
- =?utf-8?B?R2FrWnpMVVI2dXpLWnprNHZtdUsvNXc2bDQrNzhueWpkRklBTzhmQ2hNSTlW?=
- =?utf-8?B?djVCc0wyVGJWWnhKaWVtUXFMcGNmMWNFZEVmajhNdlVxbnlHZlcydDgvWXhs?=
- =?utf-8?B?ais4K2NQOVI0MWhub3hxcVRWTkh2QkRhTk0rY2xaRUNQblBXK0pWSUZTZzdi?=
- =?utf-8?B?OXI2Sk9ZOGwvaTdKeFlQakFYNkJSZmxqVmZkb1FQUklGQkM0L1R4Wit1OTRB?=
- =?utf-8?B?WGphVitUNXk5K01KZ3QxQldFUVBkQ2ZsTzlGTE0vNitZYnVQeW5ubWhjeHEr?=
- =?utf-8?B?RmtpcUFaMkVpS2NVL1RMTytnRTJFa3lJd2swWDBHdXhEVVMwL1EvelFEWVdS?=
- =?utf-8?Q?rrhs=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?N2YxUTV5NWNvUHNicGNuOXZDWTFYdjA3TGZHMnlmM21nWktIVXBXYVIzSk9X?=
+ =?utf-8?B?UHNkSTRQZlBLUUpOR0NrRVVFUkpvK1lCSXBSeHNRVCtJeEFFNVlSS0FEL0ht?=
+ =?utf-8?B?c0pUUStOQzAzWkRudEh2RGdUaC9CY2l2OGNoSjNyZFI0d2ZjSWY4V3dyOEhT?=
+ =?utf-8?B?eTcwcGw3WDRUbzlsNHA0Z1puNlppRFhIVTlCN05SUXF6VjFmV0hUaFZzTkVz?=
+ =?utf-8?B?Rmp0eTg4c1A4citsMVBxZlBhL0NubndmRFVKT1FmN0doTndkMzRBTVoxb09k?=
+ =?utf-8?B?ZWNYNThSRTVtcmZpcVVLek5URnZHYkQrbHFqYUltZmM1T0JEM2FQeUdTQllU?=
+ =?utf-8?B?ZUYrNTRRaUJsUDJGL2VOUWovL0RxSzE2eW0vSW1NRkc4V1RuM2w2a0tBR3ZG?=
+ =?utf-8?B?bHNMajZwa3BQR1VLTE8vM2RRZXJ1TWNEMGEwTVg5TUdiRGo4UlZ4L0Eweklu?=
+ =?utf-8?B?L2lwamNsdFJDcDh1ZGdlT2pwVjJwbHIyM0xGRExWUGhQaHg1RWpUUTI1NkNj?=
+ =?utf-8?B?V0JNSkJWdlNJamxNTEdkUlhqR1N3N253SmxZYXVVSjlCQW5IS1oyb3ZRUFUr?=
+ =?utf-8?B?UnRPdUVSNHhkcW9HZ0NMUWM5eUVSaklQQTJhTkVxbXlKM0FUcDU5NmFVeE5Z?=
+ =?utf-8?B?M1BFQi9oMW5hd0dQS2lKekttazQwY2FNRkU2TG9zYlFkdUdQdGozSkEwa2V2?=
+ =?utf-8?B?eXpMRm9mbGoya2xCclpzdWNJT1VaS0VhZ3FYenUzOG9PbUFZYXJyWWNET3lR?=
+ =?utf-8?B?NzRHa00ycFRUT3ovQXQwT2x4WEk4V1JkQW9YNWdodGZ6aXo1QjJJd1E4WlBE?=
+ =?utf-8?B?MGd5dUFvUWc5R0xTUFRRSkFzZGt4QWxCSStiSXhZUkp6MURmMDFPODE4OGNF?=
+ =?utf-8?B?UDJkT3RuZXRzU2N3UVNGYUowaFV3cUlzbnV3ZHd2M2xGQk1iVkZCemlRbkhx?=
+ =?utf-8?B?SEM0L2N1RnR4cElmV2h5VG1EcDNZU2ZCWFozNmcrSGR3NHlWaThCWlhlMVBI?=
+ =?utf-8?B?a0N1TklqcjZwSm4zRmpYakgwMWdQU2lNY21pL2NNQ0VyN05RQ1ZoV1VnTUxJ?=
+ =?utf-8?B?aDJmNnJMR1Ird2hLZDhRTHZhVmFWOGFYZnQvdDVJcUtXU0xKS3FmRU1MOU5j?=
+ =?utf-8?B?OWJQSHo3UlM5M2I4cDc1WFdFdWlPRVhISzJIb0tQMGhHRTd0TnArUHZNUXV2?=
+ =?utf-8?B?RUZ5bUxtSndGbFo2N1FuT2lKSk05U2NYbi9lMDR0eHdWMUtmVzFRTExtTVpV?=
+ =?utf-8?B?RGcwb3BOVk44RFMwdFMwbXltckp4MEFvQ2ROSkhIOTlWeDZOcXcwOEJWRFM0?=
+ =?utf-8?B?Y05BdXYvUU0rUjZyaVVFa1NRdHRhVHFGaEkzZytPVHZzU2UvQnB2L2kyZ1VZ?=
+ =?utf-8?B?M1NGRmFGc3o3cEZ5OG96YzBCc1FRVG9IeEVtc3JES2k3Sm9KUkYzTXBRYzdm?=
+ =?utf-8?B?TDNxMUtnWkpXUy9WMVFSdXZxRU5qRlliMVdxdDFGblp6SWRoMkYwUDhyZlpH?=
+ =?utf-8?B?Uktpd2dzd1AzVXVmeWRUSGRKSUpOdzJTdjJTUmpoczI3ZHQ2dFpYOGVKV01m?=
+ =?utf-8?B?TTExYTNuS3VPR2EwRmtQK3JlNHZBUXJsa0k3UGhsQUhyUDNGTVc4ckh3QjRZ?=
+ =?utf-8?B?MmJYdDhPejlNTVJXMEY1cHFFMERsMFN4azVQR2dRM040ZENBbjFkd0RKWEts?=
+ =?utf-8?B?Mi92VlZjN29RSElnSlpBK1hGSWZYTTVCZm1oU0M2TkR0eHBNSEZjbXBaL3Z5?=
+ =?utf-8?B?U1BBRVJrNzc2dFNEbitqNUFZSTdHd1kvTTBGRjhwelZONExFR0RUbWlvV2Fs?=
+ =?utf-8?B?TEgzZ3JrcndnaWJ6bnBGMkk3djZxOU5hZGdBMmRFaFNCcGNFRzVlMWdQUmlO?=
+ =?utf-8?B?cGNqaVNMNkVBUzJiLyttVEJ3U3JTWWppVldrek92QTAvVnNsNVZJZk1pTm04?=
+ =?utf-8?B?RmV4VkNQOG5vTUd0aXlFMTArdStValRoSGxJSkJuTjhMT1NtK2pxTkIwUW42?=
+ =?utf-8?B?MnFybHBqTU5hcHZ1RzNMTG84NmpnakhCT09sU2pFalNkNks4a3M0VE9wM0xJ?=
+ =?utf-8?B?N1ZlZ2ZMUjdIM04wR3lkMDdQV3hXaVRaeXJBcUJLU0FuMDVBL0R2QndXREF5?=
+ =?utf-8?Q?4P10=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
  SFS:(13230040)(19092799006)(376014)(366016)(1800799024)(786006); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WGdOWUIxS1dpcnNRQVFhMXlNSnhPTHIwUDhOa0hLSmdkdm10dXFlNWpUR3du?=
- =?utf-8?B?aGptZXJtRXUveCtxUENsM2RQQmZoUlF6OVlUdnZ0ZkpYaHNZUW55dDV6QlRC?=
- =?utf-8?B?RVpWTlZQTUtLbmVPZGM5aXNTZStMZUJZN0liTTZiNFJWeHl1T0tCYWxxMDM4?=
- =?utf-8?B?dUdVTExweFZZbng4N1NXcUFLZHJJeTdXbUxpek9wK2RWTWUwNTNwMVdQbm45?=
- =?utf-8?B?dkNPUHFRWkhIMjJaTzZZZFViYjBOTVhGUkoyZzFHMktXL3krdHpEM0g2elp0?=
- =?utf-8?B?aWEzdUErdSsyMXRVbCtycEY1eEYwZnFHK2xPTmx2a0Y0ejNnL0Q5UmVIdkRl?=
- =?utf-8?B?RnQyYTIxTk9oTmhRQW80L0RaclM4K2NxZGJWL3VBcFNqcVYzN0lrcldiblRj?=
- =?utf-8?B?T0Z0aW56VDdiQnlnaHBxSkFqaUNjWUR3cllyRFlTMWZpbkdLSDlLNUw5OTRT?=
- =?utf-8?B?dU9LVUpaVlFZcnR2cDFyTE40Nys0cHF3clpac29SU1JHa2o4d3lMcDlwbE9i?=
- =?utf-8?B?OVRQUGVudFZzMGcrdUJneFlPdHRkUDAyN0lCT0tmMFRncW5UL2ZTbEZwQ0wz?=
- =?utf-8?B?aFRER0FPVzY0OHRXRThoUmR2d2ZFL1N1OTBnUVpJQzZMcDlwVUcyQ1Z1SnJq?=
- =?utf-8?B?VVcxeVVXZHRKeE9oR095NEZPRmNsdUc4Tm1NcldaSC93L0VoTkZ5c2lKQ3o5?=
- =?utf-8?B?c0JFa3NEOHBuSlpEbHYxUzRXY21uaWVJWXZlc2JKek50UXB3NHE3SExyeDVs?=
- =?utf-8?B?a2Q2aWh0Z0tvYWpYMmdyalFHOUROZENBdWozQ0YreHhlZWtzWGdQTjQ5Uzh6?=
- =?utf-8?B?SGUvVXV2MDRGSEJZQWZsSll0d2FiazUzZk1RSUdhWUhVazEwUkNHcnRjNGFn?=
- =?utf-8?B?eUpBZVh0K2R0d1phVEVNZmZrOHg0VkNPTFFQeGdUdGtscTBseTZuajZTaUxC?=
- =?utf-8?B?L3pNT1ZlbXZTbnljMlRaQW9NNmVSOUtYdWdMK1krVm0rSjBDOGp6angza2Qx?=
- =?utf-8?B?aGZ6M08xTExIZWVmRWlRTEdkZURLVWlTUEdiTGg0WkwrTlcxRzl4dFI4VEgr?=
- =?utf-8?B?dmJZMG1BODU2ci9OdzR3UHhPeU41Y0d3MDIyY0lObXVTVllqMVBSWVdjd0wr?=
- =?utf-8?B?SXZSVHoxcktTNUd0ZEErVHFFQjlwSE8zUFdyMGRiQTJJNDA4VC85YmIybWd0?=
- =?utf-8?B?TkY3WjhiQ3VxQmFwanpJVWlzcjMzWU13VEdEWEdVbDlQWExuRmlyNzNxbFhM?=
- =?utf-8?B?RVBXQXdmWEQrRnZHd1pGVnkrMyt6MFh6WGJINGZ6SS9EY09PcW94VEZLWVVU?=
- =?utf-8?B?am94Y1ZFbENZayt2cC9aVC9hVGxNVlllOXhpVmZXQ1dwVkNnd0owdGgraFdu?=
- =?utf-8?B?a3pHQTJmZkh1dHQyTGJFc2tQYUZ4UzdxUUllTXQva3Q3SGNNekcxQlNnYWx3?=
- =?utf-8?B?clByNmFSdzh4RXVOODJvcHNOaFRFc3RRQnJJemtwdUdEWFFPejRDeTBFYzJL?=
- =?utf-8?B?VklPeitVOUxkSHJmNlBGbTRSRU9DNUJzcnZISVFQRHQ0czRlMEZlSzg1cXFr?=
- =?utf-8?B?bWtFYzc5VDNQeUdxYU4vcVFZL2NUN28yQkZJa0JYK0dqWHI3VzJxVXM5a0pq?=
- =?utf-8?B?K0FoTHhGZXdBK3BSZmF6bjFPUlQ5bHl2MlFxbG1IRjIzQ3d4dkhPKy9jUmpS?=
- =?utf-8?B?RWJrdDlYWUEyNGNqeDFtRmRzNlZHTW1IYTdRMjUxeGdDM0RoMDl3enN1aE05?=
- =?utf-8?B?Q2ZWejAyQU80ZlR1RzM2YnlQbFVzUHovcUdTVHJucUp6UkRJY0NyY1F0akpu?=
- =?utf-8?B?eUQ1TlJIVFJ6Q1JzVis5ZnhnYkh1eGVUM0tSM1o3MEFVNE9UTWpYNGp2MDcx?=
- =?utf-8?B?WGU0M2lXVFBrc1IzS2FEbmJvajZHOG1aWjJKaTVoeUZqOWF5a1RNQWVnajdl?=
- =?utf-8?B?Y0RZRWNSY0dRVnFwWXJ0eW42Umh4RXdSKzlDMXBuL1FNNlFWMldFRGVNUHd2?=
- =?utf-8?B?OUtNZnJDRGYzcS9nc0ZFTUFsSjFuNHA4OUdDT1JmcXo3SzFreUVpTDljaHpQ?=
- =?utf-8?B?WHB0U1ZWMWN0aDJSQ2ZMZEtXNDBQWWJlRkpuK0R3RUpieXNHbjc5NXFnWWkv?=
- =?utf-8?B?eWF1WFpLVURmd2M0eFdnYTI4R2p2RSs2aGZ0RmM1bkVlbUdURkNqQXRwNWZM?=
- =?utf-8?B?VTliOVVjaENPejVZMEhGTU8zVit1eHp3YWViVVZKZ2pJVkY1MWdsUVZ3RGZ4?=
- =?utf-8?B?clZyUG1GNGkyOW5zR0pmd1RZeTU0azZZdG51VndaNGJsR2gyUVUwTVh5WGt3?=
- =?utf-8?B?N1Rma0R6T08ydDB2ZHJ3dkxPTWx1WXVxdmZ1amRkQ2EvWVExcUprT0t5MkFL?=
- =?utf-8?Q?VKpy2iDkUrdxz+Dc=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dkJCL2pRdDhxRFBaSDhjSm1iWUpsM2RZZnh5VTBReW13WGtzbnptcytGcUVF?=
+ =?utf-8?B?TzNCRi9kLzRETTJ2MitKSzJMVG5ZNExKZG1BcXhRM3dmODdUdDdIQjVqbWJk?=
+ =?utf-8?B?N3hQdkRHQ2ZoVXVpMkdLcXhudFRpemkzWFpheGZBSk16emxCVlhnQ1NmZ0tT?=
+ =?utf-8?B?YXNYYk9PNEhTbEVlNTJkUnFaYXY4WXRwb2YvRHYwdUdBeUoxUzkyMEkraUM2?=
+ =?utf-8?B?RXByZ01yUWlKU1F3MmxUTjZQUVhNMWVJMGE5NFVIK0NUZlhJOVNSMFRSejcw?=
+ =?utf-8?B?cHZ6Z09aSDhGdGJuS01MM0FxQkFwRXNpWWUyeVlDekhDYjNzK1RoMUQvbGFC?=
+ =?utf-8?B?dVAvdm5LTzFqRGNoMjFIUVhaUmtJTUpyMWF3ZkpBbWtnS1BFZ3FQQnRsMW00?=
+ =?utf-8?B?WXpyYU1oTWlTZEdVL3AwUk9RVG5yc0NwTExtM1d2bGxnOWFKbjQ1aXNCb2lT?=
+ =?utf-8?B?UndUaTBQYXlKM3ZHNmErVUwrRU82RDlRZTE5VzFueVZITkxVRG9mamtGQmFQ?=
+ =?utf-8?B?RHBBenZhdUxrRWVkWlVuY0Zsb0FCMDNlOEZBZ2FOTGZBczg4Q3VTOXM4ZWR6?=
+ =?utf-8?B?Z0hyU2xmTmQ0ajdJTUZBdjJ6NDU2ajZOMGgyQ2dDRlc4bkNaTklQZUR6NjlQ?=
+ =?utf-8?B?Z2xsWUQrM2E0dkx2NWFIZlNZcDRqNW0vVDRMVFNuQmE5OUlaeS9UVWkzYjJ0?=
+ =?utf-8?B?RlZyZDlacnB1QU9vdG13RGlhOUMrZ3J3RnBwd0FRUHNuV2xpS0Z5YWRBMFFp?=
+ =?utf-8?B?M2hWMkxmK0VwZ1FROEROaXc3SEZGUHFZTVl3d1VpRDJockZ0NjZzN0RYb0Ja?=
+ =?utf-8?B?TUFMSTUwLy9KbVlEaWFkK1cwdHRrSkZNTTJHRExubkZuVmFCcUloN1ZNeWoy?=
+ =?utf-8?B?TmhxU2RIMGpFRWZMSDA5S2NpQWlvS1dTNkRVd2VqVkIvejBYR3RXcUdDTE80?=
+ =?utf-8?B?cDArOWM5Q3Y2VjJXNm1XY1ZIRVpEeHNQNjZGcUNkRE5KY0RxdyttRC8rdDg2?=
+ =?utf-8?B?bWxSRXVaWGhFTWFFRkRIZTNONC8vNXFkSDZPc256OVlMeUFFZjdKeGRKTEdO?=
+ =?utf-8?B?N0lodXBtNCtpTkRvRk9oVG9lVzl2TFNubTVDZVIxV0ZRNFNiYS91OE1VbHE3?=
+ =?utf-8?B?S1J2NXpENFdJN29xTC9UWUtnZmt3Tml2MXNIZnVGYUJNZFRueGJwVEVPbHha?=
+ =?utf-8?B?amlHeCtRTllDdENDbW1GT2FPNkpoZlhxMHpWSk5kY2dHYjFreTFIN3dmeXlJ?=
+ =?utf-8?B?UEwrajRFVlovRmlkUlJFNEoyY0xDOU9CbCtXR3BNZW5GQzNDWGQ2ZUNJTk1L?=
+ =?utf-8?B?MTNwSG82Z3NUZXNDWUhkcVlhVlpZSTJwS0dHSUJpUWRVWGRTQ0o1ZUNiS2lt?=
+ =?utf-8?B?NlR6cThWNlJ5d2kzY0RwdEZYQnpCemsvalBCbnIwSExRZExqK0dJTUxjMjEx?=
+ =?utf-8?B?Z2hOdG02aHd6cFVhUzJMSXVkR2xObXBSNVZQM1RlRDIyclpqbGFyRlVvRU9V?=
+ =?utf-8?B?QWpkNDBHKzdSSHdqQUVONGlEZXVSZTA5WGxZOUc5NFpLYjJMMXIxQ1o0UlJi?=
+ =?utf-8?B?MlppdjJSY1BRT2haWVR3UTUrUmFpTEptL3VZKzRPM1VQdnN4dURPdlMwNVNh?=
+ =?utf-8?B?bDR2bXhZUFFOMGEwd3pjOWRWVVlnOWNvaTZIQXJEK2FZRjZDLzhsYktSZXFC?=
+ =?utf-8?B?MlFqVmQ0OFhWYnNwTUxUTUhlc2dkRndZOFRTZnRFYXZ5Vm5pR3kwRzFlQVc2?=
+ =?utf-8?B?b3FpaDdlZXRHS1U4azhxamRjMy9abkp3VVNKd0dLUXhvYTRZRGNHR0xtdzhK?=
+ =?utf-8?B?WGtSdGQ4MDQyc0dJdVFUdW5JZit1TEQzcVRUaW1KMy9VNkEzS3ZwNjFoV0lj?=
+ =?utf-8?B?QjFHbm5NWVdtQWdKQjZhQjUrTjltaUJIb0xYTDFFYVBaLzBGTGVFQW1IV0ho?=
+ =?utf-8?B?SmRWUHdSbks1S3BIMlA5aEszNklLWm9WUjRXZHNOWVppazZvK3k3aWRzRGcw?=
+ =?utf-8?B?RzdoTUR0VTdmVVVPS2lybHpjZXlNYzVuUm9ZLzNjUlBuUWRoL1ZkbWFHM3pS?=
+ =?utf-8?B?ZXpPZmFVeHQ5SWJzbjM3OEFpSkc1TkxrWERWV2gydDdsczBtTTVicGpkZHJH?=
+ =?utf-8?B?L0hHamlNNTgwaVlzYXdXeE5uSWw5aTBTVjJzVTU2TS9nSXB6aGVhOUFqRmo1?=
+ =?utf-8?B?VmZRNVYvMVhWVWc4UEVVM2l0U3Juc2NRWDhLVXpNLzJPMWJMenlNalNQblBN?=
+ =?utf-8?B?bW5NOVVXVmhoNWRGa2xoVEdUTUI5VktwNG4vT21RY2M1OTNTa1FmalF6YUJ1?=
+ =?utf-8?B?ekNabHVaNldaNVZsb2JOYTZnYW1TMUNqandDOXhrTVA0Ry84Q014TFJ3dnhN?=
+ =?utf-8?Q?EwRUqaOzWouj4nBg=3D?=
 X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: 20785857-668e-48d7-2d15-08de58386222
+X-MS-Exchange-CrossTenant-Network-Message-Id: 652d9ac1-c067-4519-1964-08de58386188
 X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jan 2026 15:27:12.2290 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jan 2026 15:27:11.1868 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ubIHTS9NVS8vYwyPt3RQajNEOmqjrgUPlHnyoGSeCQb1E6GYqpnrT5YcbrAQuLaS7JPkQ62oVVPf+T6V6XDLZRbSdKEcYxp4jAGbUsAh85c=
+X-MS-Exchange-CrossTenant-UserPrincipalName: UG0tr6lJ6gC3bsujMWCLMv9XK/NVv4PnHnMGllfHDPNBPLLBG5VTKTJgWF7sMnN1SGuRkHq0axGm22a8zwkwohfdbYUnKbs14yiIi6f1Q6c=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR1PPFBC9E76CBE
 Received-SPF: pass client-ip=2a01:111:f403:c214::1;
  envelope-from=florian.hofhammer@epfl.ch;
@@ -231,105 +231,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit tests the readonly feature for registers exposed via the
-plugin API introduced earlier in the patch series.
+The test executes a non-existent syscall, which the syscall plugin
+intercepts and redirects to a clean exit.
+Due to architecture-specific quirks, the architecture-specific Makefiles
+require setting specific compiler and linker flags in some cases.
 
 Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
 ---
- tests/tcg/plugins/meson.build |  2 +-
- tests/tcg/plugins/registers.c | 71 +++++++++++++++++++++++++++++++++++
- 2 files changed, 72 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/plugins/registers.c
+ tests/tcg/arm/Makefile.target                 |  6 +++++
+ tests/tcg/hexagon/Makefile.target             |  7 +++++
+ tests/tcg/mips/Makefile.target                |  6 ++++-
+ tests/tcg/mips64/Makefile.target              | 15 +++++++++++
+ tests/tcg/mips64el/Makefile.target            | 15 +++++++++++
+ tests/tcg/mipsel/Makefile.target              | 15 +++++++++++
+ tests/tcg/multiarch/Makefile.target           | 20 +++++++++++++-
+ .../{ => plugin}/check-plugin-output.sh       |  0
+ .../{ => plugin}/test-plugin-mem-access.c     |  0
+ .../plugin/test-plugin-skip-syscalls.c        | 26 +++++++++++++++++++
+ tests/tcg/plugins/syscall.c                   |  6 +++++
+ tests/tcg/sparc64/Makefile.target             | 16 ++++++++++++
+ 12 files changed, 130 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tcg/mips64/Makefile.target
+ create mode 100644 tests/tcg/mips64el/Makefile.target
+ create mode 100644 tests/tcg/mipsel/Makefile.target
+ rename tests/tcg/multiarch/{ => plugin}/check-plugin-output.sh (100%)
+ rename tests/tcg/multiarch/{ => plugin}/test-plugin-mem-access.c (100%)
+ create mode 100644 tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
+ create mode 100644 tests/tcg/sparc64/Makefile.target
 
-diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-index 561584159e..52831a75d4 100644
---- a/tests/tcg/plugins/meson.build
-+++ b/tests/tcg/plugins/meson.build
-@@ -1,6 +1,6 @@
- t = []
- if get_option('plugins')
--  foreach i : ['bb', 'discons', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
-+  foreach i : ['bb', 'discons', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch', 'registers']
-     if host_os == 'windows'
-       t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
-                         include_directories: '../../../include/qemu',
-diff --git a/tests/tcg/plugins/registers.c b/tests/tcg/plugins/registers.c
+diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
+index 6189d7a0e2..0d8be9cd80 100644
+--- a/tests/tcg/arm/Makefile.target
++++ b/tests/tcg/arm/Makefile.target
+@@ -78,4 +78,10 @@ sha512-vector: sha512.c
+ 
+ ARM_TESTS += sha512-vector
+ 
++ifeq ($(CONFIG_PLUGIN),y)
++# Require emitting arm32 instructions, otherwise the vCPU might accidentally
++# try to execute Thumb instructions in arm32 mode after qemu_plugin_set_pc()
++test-plugin-skip-syscalls: CFLAGS+=-marm
++endif
++
+ TESTS += $(ARM_TESTS)
+diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
+index e5182c01d8..428b0112e0 100644
+--- a/tests/tcg/hexagon/Makefile.target
++++ b/tests/tcg/hexagon/Makefile.target
+@@ -130,3 +130,10 @@ v73_scalar: CFLAGS += -Wno-unused-function
+ 
+ hvx_histogram: hvx_histogram.c hvx_histogram_row.S
+ 	$(CC) $(CFLAGS) $(CROSS_CC_GUEST_CFLAGS) $^ -o $@ $(LDFLAGS)
++
++ifeq ($(CONFIG_PLUGIN),y)
++# hexagon uses clang/lld which does not support -Ttext-segment but GNU ld does
++# not generally support --image-base. Therefore, the multiarch Makefile uses
++# the GNU ld flag and we special-case here for hexagon.
++override LDFLAG_TEXT_BASE = -Wl,--image-base=0x40000
++endif
+diff --git a/tests/tcg/mips/Makefile.target b/tests/tcg/mips/Makefile.target
+index 5d17c1706e..d08138f17b 100644
+--- a/tests/tcg/mips/Makefile.target
++++ b/tests/tcg/mips/Makefile.target
+@@ -9,11 +9,15 @@ MIPS_SRC=$(SRC_PATH)/tests/tcg/mips
+ VPATH 		+= $(MIPS_SRC)
+ 
+ # hello-mips is 32 bit only
+-ifeq ($(findstring 64,$(TARGET_NAME)),)
+ MIPS_TESTS=hello-mips
+ 
+ TESTS += $(MIPS_TESTS)
+ 
+ hello-mips: CFLAGS+=-mno-abicalls -fno-PIC -fno-stack-protector -mabi=32
+ hello-mips: LDFLAGS+=-nostdlib
++
++ifeq ($(CONFIG_PLUGIN),y)
++# qemu-mips(el) returns ENOSYS without triggering syscall plugin callbacks
++run-plugin-test-plugin-skip-syscalls-with-libsyscall.so:
++	$(call skip-test, $<, "qemu-mips does not execute invalid syscalls")
+ endif
+diff --git a/tests/tcg/mips64/Makefile.target b/tests/tcg/mips64/Makefile.target
 new file mode 100644
-index 0000000000..b738971551
+index 0000000000..5386855efc
 --- /dev/null
-+++ b/tests/tcg/plugins/registers.c
-@@ -0,0 +1,71 @@
++++ b/tests/tcg/mips64/Makefile.target
+@@ -0,0 +1,15 @@
++# -*- Mode: makefile -*-
++#
++# MIPS64 - included from tests/tcg/Makefile.target
++#
++
++MIPS64_SRC=$(SRC_PATH)/tests/tcg/mips64
++
++# Set search path for all sources
++VPATH += $(MIPS64_SRC)
++
++ifeq ($(CONFIG_PLUGIN),y)
++# Require no ABI calls to avoid $t9-relative .got address calculation on MIPS64
++test-plugin-skip-syscalls: CFLAGS+=-mno-abicalls -fno-pie
++test-plugin-skip-syscalls: LDFLAGS+=-no-pie
++endif
+diff --git a/tests/tcg/mips64el/Makefile.target b/tests/tcg/mips64el/Makefile.target
+new file mode 100644
+index 0000000000..77ac8815fe
+--- /dev/null
++++ b/tests/tcg/mips64el/Makefile.target
+@@ -0,0 +1,15 @@
++# -*- Mode: makefile -*-
++#
++# MIPS64EL - included from tests/tcg/Makefile.target
++#
++
++MIPS64EL_SRC=$(SRC_PATH)/tests/tcg/mips64el
++
++# Set search path for all sources
++VPATH += $(MIPS64EL_SRC)
++
++ifeq ($(CONFIG_PLUGIN),y)
++# Require no ABI calls to avoid $t9-relative .got address calculation on MIPS64
++test-plugin-skip-syscalls: CFLAGS+=-mno-abicalls -fno-pie
++test-plugin-skip-syscalls: LDFLAGS+=-no-pie
++endif
+diff --git a/tests/tcg/mipsel/Makefile.target b/tests/tcg/mipsel/Makefile.target
+new file mode 100644
+index 0000000000..bf1bdb56b3
+--- /dev/null
++++ b/tests/tcg/mipsel/Makefile.target
+@@ -0,0 +1,15 @@
++# -*- Mode: makefile -*-
++#
++# MIPSEL - included from tests/tcg/Makefile.target
++#
++
++MIPSEL_SRC=$(SRC_PATH)/tests/tcg/mipsel
++
++# Set search path for all sources
++VPATH += $(MIPSEL_SRC)
++
++ifeq ($(CONFIG_PLUGIN),y)
++# qemu-mips(el) returns ENOSYS without triggering syscall plugin callbacks
++run-plugin-test-plugin-skip-syscalls-with-libsyscall.so:
++	$(call skip-test, $<, "qemu-mipsel does not execute invalid syscalls")
++endif
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index f5b4d2b813..25df6e7211 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -14,6 +14,10 @@ ifeq ($(filter %-linux-user, $(TARGET)),$(TARGET))
+ VPATH 	       += $(MULTIARCH_SRC)/linux
+ MULTIARCH_SRCS += $(notdir $(wildcard $(MULTIARCH_SRC)/linux/*.c))
+ endif
++ifeq ($(CONFIG_PLUGIN),y)
++VPATH 	       += $(MULTIARCH_SRC)/plugin
++MULTIARCH_SRCS += $(notdir $(wildcard $(MULTIARCH_SRC)/plugin/*.c))
++endif
+ MULTIARCH_TESTS = $(MULTIARCH_SRCS:.c=)
+ 
+ #
+@@ -200,10 +204,24 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
+ 	PLUGIN_ARGS=$(COMMA)print-accesses=true
+ run-plugin-test-plugin-mem-access-with-libmem.so: \
+ 	CHECK_PLUGIN_OUTPUT_COMMAND= \
+-	$(SRC_PATH)/tests/tcg/multiarch/check-plugin-output.sh \
++	$(SRC_PATH)/tests/tcg/multiarch/plugin/check-plugin-output.sh \
+ 	$(QEMU) $<
+ 
+ EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so
++
++# Test plugin control flow redirection by skipping system calls
++LDFLAG_TEXT_BASE = -Wl,-Ttext-segment=0x40000
++test-plugin-skip-syscalls: LDFLAGS += $(LDFLAG_TEXT_BASE)
++test-plugin-skip-syscalls: LDFLAGS += -Wl,--section-start,.redirect=0x20000
++run-plugin-test-plugin-skip-syscalls-with-libsyscall.so:
++
++EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-skip-syscalls-with-libsyscall.so
++
++else # CONFIG_PLUGIN=n
++# Do not build the syscall skipping test if it's not tested with a plugin
++# because it will simply return an error and fail the test.
++MULTIARCH_TESTS := $(filter-out test-plugin-skip-syscalls, $(MULTIARCH_TESTS))
++
+ endif
+ 
+ # Update TESTS
+diff --git a/tests/tcg/multiarch/check-plugin-output.sh b/tests/tcg/multiarch/plugin/check-plugin-output.sh
+similarity index 100%
+rename from tests/tcg/multiarch/check-plugin-output.sh
+rename to tests/tcg/multiarch/plugin/check-plugin-output.sh
+diff --git a/tests/tcg/multiarch/test-plugin-mem-access.c b/tests/tcg/multiarch/plugin/test-plugin-mem-access.c
+similarity index 100%
+rename from tests/tcg/multiarch/test-plugin-mem-access.c
+rename to tests/tcg/multiarch/plugin/test-plugin-mem-access.c
+diff --git a/tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c b/tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
+new file mode 100644
+index 0000000000..1f5cbc3851
+--- /dev/null
++++ b/tests/tcg/multiarch/plugin/test-plugin-skip-syscalls.c
+@@ -0,0 +1,26 @@
 +/*
-+ * Copyright (C) 2026, Florian Hofhammer <florian.hofhammer@epfl.ch>
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * License: GNU GPL, version 2 or later.
-+ *   See the COPYING file in the top-level directory.
++ * This test attempts to execute an invalid syscall. The syscall test plugin
++ * should intercept this.
 + */
-+#include "glib.h"
-+#include <inttypes.h>
-+#include <assert.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <unistd.h>
++#include <stdint.h>
 +#include <stdio.h>
++#include <stdlib.h>
++#include <unistd.h>
 +
-+#include <qemu-plugin.h>
++void exit_success(void) __attribute__((section(".redirect"), noinline,
++                                       noreturn, used));
 +
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
++void exit_success(void) {
++    _exit(EXIT_SUCCESS);
++}
 +
-+/*
-+ * This callback is called when a vCPU is initialized. It tests whether we
-+ * successfully read from a register and write value back to it. It also tests
-+ * that read-only registers cannot be written to, i.e., we can read a read-only
-+ * register but writing to it fails.
-+ */
-+static void vcpu_init_cb(qemu_plugin_id_t id, unsigned int vcpu_index)
-+{
-+    g_autoptr(GArray) regs = qemu_plugin_get_registers();
-+    g_autoptr(GByteArray) buf = g_byte_array_sized_new(0);
-+    int sz = 0;
-+
-+    /* Make sure we can read and write an arbitrary register */
-+    qemu_plugin_reg_descriptor *reg_desc = &g_array_index(regs,
-+            qemu_plugin_reg_descriptor, 0);
-+    g_assert(reg_desc->is_readonly == false);
-+    sz = qemu_plugin_read_register(reg_desc->handle, buf);
-+    g_assert(sz > 0);
-+    g_assert(sz == buf->len);
-+    sz = qemu_plugin_write_register(reg_desc->handle, buf);
-+    g_assert(sz > 0);
-+    g_assert(sz == buf->len);
-+
-+    /*
-+     * Reset the buffer and find a read-only register. On each architecture, at
-+     * least the PC should be read-only because it's only supposed to be
-+     * modified via the qemu_plugin_set_pc() function.
-+     */
-+    g_byte_array_set_size(buf, 0);
-+    for (size_t i = 0; i < regs->len; i++) {
-+        reg_desc = &g_array_index(regs, qemu_plugin_reg_descriptor, i);
-+        if (reg_desc->is_readonly) {
-+            sz = qemu_plugin_read_register(reg_desc->handle, buf);
-+            g_assert(sz > 0);
-+            g_assert(sz == buf->len);
-+            break;
-+        } else {
-+            reg_desc = NULL;
-+        }
++int main(int argc, char *argv[]) {
++    long ret = syscall(0xc0deUL);
++    if (ret != 0L) {
++        perror("");
 +    }
-+    /* Make sure there is a read-only register and we cannot write to it */
-+    g_assert(reg_desc != NULL);
-+    sz = qemu_plugin_write_register(reg_desc->handle, buf);
-+    g_assert(sz == -1);
++    /* We should never get here */
++    return EXIT_FAILURE;
 +}
+diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
+index 42801f5c86..c5bac2d928 100644
+--- a/tests/tcg/plugins/syscall.c
++++ b/tests/tcg/plugins/syscall.c
+@@ -148,6 +148,12 @@ static void vcpu_syscall(qemu_plugin_id_t id, unsigned int vcpu_index,
+             fprintf(stderr, "Error reading memory from vaddr %"PRIu64"\n", a2);
+         }
+     }
 +
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info,
-+                                           int argc, char **argv)
-+{
-+    qemu_plugin_register_vcpu_init_cb(id, vcpu_init_cb);
-+    return 0;
-+}
++    if (num == 0xc0deUL) {
++        /* Special syscall to test the control flow redirection functionality. */
++        qemu_plugin_outs("Marker syscall detected, jump to clean exit\n");
++        qemu_plugin_set_pc(0x20000);
++    }
+ }
+ 
+ static void vcpu_syscall_ret(qemu_plugin_id_t id, unsigned int vcpu_idx,
+diff --git a/tests/tcg/sparc64/Makefile.target b/tests/tcg/sparc64/Makefile.target
+new file mode 100644
+index 0000000000..516927a3fc
+--- /dev/null
++++ b/tests/tcg/sparc64/Makefile.target
+@@ -0,0 +1,16 @@
++# -*- Mode: makefile -*-
++#
++# Sparc64 - included from tests/tcg/Makefile.target
++#
++
++SPARC64_SRC=$(SRC_PATH)/tests/tcg/sparc64
++
++# Set search path for all sources
++VPATH += $(SPARC64_SRC)
++
++ifeq ($(CONFIG_PLUGIN),y)
++# The defined addresses for the binary are not aligned correctly for sparc64
++# but adjusting them breaks other architectures, so just skip it on sparc64.
++run-plugin-test-plugin-skip-syscalls-with-libsyscall.so:
++	$(call skip-test, $<, "qemu-sparc64 does not allow mapping at our given fixed address")
++endif
 -- 
 2.52.0
 
