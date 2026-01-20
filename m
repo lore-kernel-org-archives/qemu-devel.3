@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B08CD2628A
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 18:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18598D2628A
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 18:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viGh6-0001Bg-Am; Tue, 20 Jan 2026 13:43:12 -0500
+	id 1viGeV-00013Q-JY; Tue, 20 Jan 2026 13:40:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGgI-0007mh-U1
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:42:25 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGeL-0000Ju-4R
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:40:23 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGgE-0006ga-It
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:42:21 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47ee974e230so45731325e9.2
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 10:42:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viGeJ-0006Id-JP
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 13:40:20 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-4327555464cso3010241f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 10:40:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768934536; x=1769539336; darn=nongnu.org;
+ d=linaro.org; s=google; t=1768934416; x=1769539216; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=vWVxlgIOIG3Jwz+arTzaCTiEQKHvN9ANQV0FaiHKLv4=;
- b=H9pbWtA4EfNcwVgTrgrYmkn0//bLBQsVFkAHfjWtr6AcYKvLE83ToitwlqDeB5fBWi
- ifzMrr+XrgM25+nzYi+h2/+3kOEFxMQnHF5PN6KMTKrMOWbePEKV8IeViBOdR6C+zlN9
- zf7raVQvhPT56Eyjxn8wd3PqooddqR388UCaX424g0x+H+1G5DrkfmbJoJ/kY8z+lvhN
- dPiJ/sWiMPIquyYnuXdG6J4lJivjSAQpLxGEP0qcSuDnL5VVS9rWEpbsPqAO49nWQrLB
- aqpw+mKKL13YqizgOLYMFNZRvGX8A+uUzOj9FtxWq6ZPT+SPS2vjwvPf5PclgMZgezWn
- Wv2A==
+ :reply-to; bh=9H+ku3kicwpTVsDL+ymVANL2vQb8RdWLt/npWzFJonM=;
+ b=WxiobAT7k2bfLR9wGulSeQHUvsqUXvY+vW2IFQWPE6Og2zn8pxMsyBdn4F8AArE1RC
+ yG/xEOxuWOFwB054cCVrb3V3zJ+Q65y2YaD33GGG7Wx8xkLXKcIx66CpKi8/VuzlgNvQ
+ 8W6qfSlrYuKLqxJXfZbKEsHQ7hj5tW7o97e/QLjM6tJE4KhpOJAXukfmtL4RXRlFGsuV
+ g/7ADaFU7z3nO/s4aVVBDs9vaO4qGowRlimR+RTXIDDKlTy2+Pgj6I4btkyF9m1mTPuC
+ ZQ2mcPlkSb+kj9zINIz3WZP16GbI/vzhst8qOfQS+SRAEGzLu5v+DUh6Ll1x5OPGJbQ2
+ TEew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768934536; x=1769539336;
+ d=1e100.net; s=20230601; t=1768934416; x=1769539216;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=vWVxlgIOIG3Jwz+arTzaCTiEQKHvN9ANQV0FaiHKLv4=;
- b=buWptM98rUcouOrIRsQScBjF8z8o11waSuXYqyl+2WJ7VoZmybJ4lE/4G7Tl3zhCI5
- v5cVqNuaEVC2tD4OuczDv1UyQKzl8WZRZ+qrbu+TRcrYRJT1RwLfzKByQEKTPWAPgSZu
- CIrK/8+GCobicuY+rhPitrjEil1+MGhJWCj7NklTewa+OAcjlK1SCLkp0q6Ldk1j8G8G
- ifJ+W2FNGF950gKZHDxE9Nr8aekED+7W8e4GbomN/R6ldBXOMnm2ol3XBLSnPVYYNq+f
- 6I8qMQLGhkY+CY8ffbMzQimoQd3AK95sCVoVG8wd/kJ7b4FbRh8SPvg5Z8aoQLPmdsw0
- Xt7g==
-X-Gm-Message-State: AOJu0Yxa6fvaN4bbOln4SwHuvrQOzPMFXGkSiilblPQEU/7O/51nJ4iu
- 4ly0i8xb2PoiUYEa5OSlvSHqRON3vJLPjGs5key9UItHCJgbgxSrCCuF0xu0al06Hto07UzzKBz
- 0Q7z3BmI=
-X-Gm-Gg: AY/fxX4d20lTKAPZROPFWiR7rLRQnP9Vo8GIDvLZsBmmkHgSnl7gNumku5vcDCGIA4+
- GKjLtcJbT5h73EH94rTalUWzVrJ7/Lyckclgzx8yWuyE5Fe1JEcLXOkxHyvF6RDAYChfWTvJfaE
- LD/+Uv44Bu5985QJqsmvNqNYJXOZDv+XMWjqopLAlYYlbc7YCR9SA+/3HGI9FEU/B3kIkCAg8wZ
- yQn73PbRuTPvyHgMDEUKLgjrd0rCnRCfySZjFvlFC/Xf2UUKr+GSvr8FZjzJYqq1aQCqPB/PIGy
- 9pxbtER1Y3T0HYEck9gdJnff4cU9isJJi5nR+W+wKB6yT5N8Yke5vYuCJBh4Gl1X5JpYoIboDHL
- gLUl99V/ejEPXTSvTJ+G0coFguusC2X6+0q+7W3NqTx8i0A+THpg4bk1TFSqp8G9N8Di6TjSxwA
- Yyac4s90AF226JYP+OFpF32v56B6dCTg/EzmoBBYGztetyl41AklijYh2f4jiw
-X-Received: by 2002:a05:600c:4fcb:b0:470:fe3c:a3b7 with SMTP id
- 5b1f17b1804b1-4803e79b805mr40526545e9.5.1768934536214; 
- Tue, 20 Jan 2026 10:42:16 -0800 (PST)
+ bh=9H+ku3kicwpTVsDL+ymVANL2vQb8RdWLt/npWzFJonM=;
+ b=jiXiEgRIA2xtwd70n6plp0wlZP70Fgcpir4MC7SVqyBKWeqgWNXuXNRl+5bpEseyXq
+ wGvdmXxBvKUtKM4Lzvp3kz8HJUObYx4mN8Ay0X1HeypSOobnReHrG7MnfOMC1gG5HdPq
+ m2rVsj130Tv6p+SgtAuCc5F0Vu23tT3xMJQCu1zMRAXclH9/xDR3x005Dk5nudN4aCFC
+ jAJ4JwssLoUQ8yePrjH2BWbyqX4Wagt0M2zh91Qld+Re3dZgmKssa7OGOnZ/MqrSX66d
+ oYvLvZFucglLaMLYZQl+3BNWEEzA7AkUC6PNSLpViXNmpmMQPJ2L7DCzB/lNs/5CZEpJ
+ Wm0g==
+X-Gm-Message-State: AOJu0Yz0Xd++2h5/f3Rtt5s/tn5JD/Lnvnsu7giv5dq31bSHlAsHU+jq
+ 0OOnzo99AEY5UI/RN2rqS2ZhT1Fz8zpu5bkqXouAe6hjyAsSn8iH1Qi+OWSbld3eXUbRpyW+QCj
+ hVvZjPJU=
+X-Gm-Gg: AZuq6aKUXbI09oaPlAnFW27+Dm5o4Y0ToxTzPO47QGOWonO0WD3szXtrr9K2XGGwP/J
+ BT50+GQEYMFXjlXaRxl/DyvIoQjMnz4CJH3Yd5BsWWMM/bw7LNwGIr8tcSFXUHFggu/PbOO46Lo
+ fLTiiaUjCNY8yjxS+bMMCkhmYp2AvuiqseBY6fhKsg10pZ7/oCP76+sCnIWdIfZvJ/BZu34V6Kf
+ Alwo+Vw2ZQXceSoCfz/B7b35EMIirLW9WY2X7IZJ/1bucTR5EsuXc/DzJt0YgOWD072HBbxihIW
+ k5ayfMN+eOghktxtzQbFlnFyf30yGuERn2aGHv5NmB58wsb+rrrmR+aB3EmY2kP2jjlxVE4zAIq
+ 73fzM7RRNIkk9KOQMA/RL5wVeUH3+7AGV1VP4V7mx6ILN+QbkeP2fLWh2708rbI3DKRSZJXk86W
+ E3L+3NUugZsDOBt9GTjaToxbYsXCVGxOaYWlUmoGNb/aJqnL/m3vGB7t7dDtnc
+X-Received: by 2002:a05:6000:40c9:b0:432:851d:35ef with SMTP id
+ ffacd0b85a97d-4359017478bmr4363207f8f.42.1768934415417; 
+ Tue, 20 Jan 2026 10:40:15 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4801e86c197sm262675095e9.1.2026.01.20.10.42.15
+ ffacd0b85a97d-43595609c8asm2869271f8f.34.2026.01.20.10.40.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 20 Jan 2026 10:42:15 -0800 (PST)
+ Tue, 20 Jan 2026 10:40:14 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 28/29] hw/virtio-nsm: include qemu/osdep.h
-Date: Tue, 20 Jan 2026 19:39:01 +0100
-Message-ID: <20260120183902.73845-29-philmd@linaro.org>
+Subject: [PULL 10/29] hw/arm/fsl-imx6: Remove now redundant setting of
+ "sd-spec-version" property
+Date: Tue, 20 Jan 2026 19:38:43 +0100
+Message-ID: <20260120183902.73845-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260120183902.73845-1-philmd@linaro.org>
 References: <20260120183902.73845-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,33 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-The file hw/virtio/cbor-helpers.c does not include our standard
-qemu/osdep.h header, add it.
+Now that TYPE_IMX_USDHC sets this property internally it is not needed
+on the SoC level any longer.
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Message-ID: <20260119120402.284985-1-pbonzini@redhat.com>
+Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+Message-ID: <20260112145418.220506-3-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/virtio/cbor-helpers.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/arm/fsl-imx6.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/hw/virtio/cbor-helpers.c b/hw/virtio/cbor-helpers.c
-index 49f55df3994..010454d5383 100644
---- a/hw/virtio/cbor-helpers.c
-+++ b/hw/virtio/cbor-helpers.c
-@@ -8,6 +8,7 @@
-  * top-level directory.
-  */
+diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
+index f3aa1d81501..46967b74882 100644
+--- a/hw/arm/fsl-imx6.c
++++ b/hw/arm/fsl-imx6.c
+@@ -323,8 +323,6 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
+         };
  
-+#include "qemu/osdep.h"
- #include "hw/virtio/cbor-helpers.h"
- 
- bool qemu_cbor_map_add(cbor_item_t *map, cbor_item_t *key, cbor_item_t *value)
+         /* UHS-I SDIO3.0 SDR104 1.8V ADMA */
+-        object_property_set_uint(OBJECT(&s->esdhc[i]), "sd-spec-version", 3,
+-                                 &error_abort);
+         object_property_set_uint(OBJECT(&s->esdhc[i]), "capareg",
+                                  IMX6_ESDHC_CAPABILITIES, &error_abort);
+         if (!sysbus_realize(SYS_BUS_DEVICE(&s->esdhc[i]), errp)) {
 -- 
 2.52.0
 
