@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17B4ED2ECF7
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 14:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91529D2ECF7
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Jan 2026 14:39:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viCre-0006sG-Do; Tue, 20 Jan 2026 09:37:50 -0500
+	id 1viCsQ-00009W-KT; Tue, 20 Jan 2026 09:38:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1viCrd-0006pd-D7; Tue, 20 Jan 2026 09:37:49 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1viCsN-0008O5-Oi; Tue, 20 Jan 2026 09:38:35 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1viCrb-0005uR-Lw; Tue, 20 Jan 2026 09:37:49 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60K8EUYB027782;
- Tue, 20 Jan 2026 14:37:46 GMT
+ id 1viCsK-00067Z-VG; Tue, 20 Jan 2026 09:38:34 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60K3bdNM030811;
+ Tue, 20 Jan 2026 14:38:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=DW2E5y
- /tAGsotUppqqK8WTcEpaQJpDzAV63txj1k+sM=; b=bKPxzPtfQj+/5qBKzll2uC
- BPxYtKuP+Vd2qc6w1Z/T/YRORdclfB2i7M7xOt/8e0h2chcrBq7fAPTQFQLQqYEL
- qHQPBAqKwK0iBK/z+slWH46wh6E4XuRLp84w6+Sr3dDGs5niikyPBfGbVuPZ6kGQ
- 4KP368AuoCxfpfpUTB5dgbtARQ/d0Q1zeUdjctBuzt0tAia4hvheguTfmTt5M6NV
- J4CSi6HP+UvcVFMuBKYY1CGBQf5jCIFNqAvvyej9kQGfoQ1JjSGn5lXoASmrbSt9
- 0/FMDf1W/TbE/u+hpQYdMHLyH4syvkkK/F+oKO8+tImXo7ISjXfgJZHan8knZPfA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=DL+6dR
+ dLL+gnyr87LC+XBanjuKkWH7OYZMal4/wH5iM=; b=UU2ZhG/Sv4feU/jrfDdRVt
+ 35yY7bvZZ4p8DPlcdJKkyHDASAfuTMaCWSV3VP95qaK5zB4iRICE772nK+u2S34A
+ KOUg/Fy1d7EjhgGNMVDVT2UxKT8++PgBQYF+p9rPJpAtK7M5ueC3odhicblkQ5qe
+ RLlIWvIhp6kPbj9dormdGrGxDZapQnMZ+dzcevEUQUlweN4EI9lul4ax1zWn2gWe
+ QKwUox2HHW7nrfPN5YdJhsfNykFF2m2SOzrBeOC5TZufJmRQ5BmT2/Xnm4EwOVss
+ JFHl4z4dwCBOJWaLE90/AWY6xsJ6TagiHVdGr9MjXTOy0CbDysJuwgZbEwBh2XeA
  ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bt6121nre-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br255x8u8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 Jan 2026 14:37:46 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60KEbj9R002954;
- Tue, 20 Jan 2026 14:37:45 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bt6121nr8-1
+ Tue, 20 Jan 2026 14:38:28 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60KEJGK1029312;
+ Tue, 20 Jan 2026 14:38:28 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br255x8u3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 Jan 2026 14:37:45 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60KBU9uK006424;
- Tue, 20 Jan 2026 14:37:44 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4brqf1d3qe-1
+ Tue, 20 Jan 2026 14:38:28 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60KEQQWS002002;
+ Tue, 20 Jan 2026 14:38:27 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4brpyjn6fb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 Jan 2026 14:37:44 +0000
+ Tue, 20 Jan 2026 14:38:27 +0000
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60KEbhZ432113350
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60KEcPHh32571888
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 20 Jan 2026 14:37:43 GMT
+ Tue, 20 Jan 2026 14:38:25 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3709458053;
- Tue, 20 Jan 2026 14:37:43 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 970705805D;
+ Tue, 20 Jan 2026 14:38:25 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 88F525805D;
- Tue, 20 Jan 2026 14:37:42 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 048E858043;
+ Tue, 20 Jan 2026 14:38:25 +0000 (GMT)
 Received: from [9.10.80.137] (unknown [9.10.80.137])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 20 Jan 2026 14:37:42 +0000 (GMT)
-Message-ID: <018b80f0-9e8c-47ac-afb5-2637645bcb73@linux.ibm.com>
-Date: Tue, 20 Jan 2026 08:37:42 -0600
+ Tue, 20 Jan 2026 14:38:24 +0000 (GMT)
+Message-ID: <9c85e853-2c43-48de-b433-99fc110247db@linux.ibm.com>
+Date: Tue, 20 Jan 2026 08:38:24 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/pnv: Add a nest MMU model
+Subject: Re: [PATCH] hw/ssi/pnv_spi: Fix fifo8 memory leak on unrealize
 To: Aditya Gupta <adityag@linux.ibm.com>
 Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
- milesg@linux.ibm.com, rathc@linux.ibm.com, fbarrat@linux.ibm.com,
- chalapathi.v@linux.ibm.com
-References: <20251223145919.2540097-1-calebs@linux.ibm.com>
- <aW3YurqVBVVOWR9D@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+ milesg@linux.ibm.com, alistair@alistair23.me, chalapathi.v@linux.ibm.com
+References: <20251216154503.2263755-1-calebs@linux.ibm.com>
+ <aW3VANPAcyejWJ4Y@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 Content-Language: en-US
 From: Caleb Schlossin <calebs@linux.ibm.com>
-In-Reply-To: <aW3YurqVBVVOWR9D@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+In-Reply-To: <aW3VANPAcyejWJ4Y@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ShMuHIBr6EVb7c3y4L2b5smC-VXEnL7f
-X-Authority-Analysis: v=2.4 cv=LaIxKzfi c=1 sm=1 tr=0 ts=696f933a cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIwMDExOCBTYWx0ZWRfXz8CBNSr518BR
+ JT6sfpbc7kBN4qhdPfzvafOCHvc+TgjGiQSw9SqtmX2x73mzUAXIy7+RF8EA8eEkQgUJGvP2sDU
+ zNWQeDw4h2uxahP7F9AtABhDxtW8/hLTK6C9z4oSUyZKxfr9eURSjTOkFGz/1s+b777YOrLtQQt
+ FE+Xr6NBztDlQjimKINmHafGTe+4e3YDL71KxT/8eM7aQKdVhhBk8XCr2oR7Or+7BuD+isaDXiK
+ Uswvwb2E2E5aRiZwXJMGJN448o0J8XTPZSdt+8Gz35xfmKEoVqQkoUHk+YX0M2usTpZrj8j6rBR
+ Znwg/ToLrsOtGFh6HfEyie/p4CNbMM1Q6ZOAc+1AHMjXdmCf/n9kfX4Hmvrg4zA/ZERhAf1pSl6
+ VjDfgqHTk10imlWaKsDqdviJ9U04R6PbtihJ7gFY2sGN1DaJryoWdvHVo2s+PeNFsexdvRwKXRM
+ fSIiKOqvvPpcs1zhwNg==
+X-Authority-Analysis: v=2.4 cv=BpSQAIX5 c=1 sm=1 tr=0 ts=696f9364 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=AbRaTJqPVgk_HY5UopYA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: i0_a7kwU-gmBLd-w1WG1qaZase5eR-w1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIwMDExOCBTYWx0ZWRfX6PrOo8olnvo7
- 1h9zbfS+7con8oj+HesXSIGYp1OpNlhN1N8e2sKgJ6oRX0CNrTBlkILAJIbZBG3wkrDxZMy9Eq1
- j1HgYKW6jmgq8kGL8k/oE55QuNoIl6UxH0vg/iCqvRT+zLipQId9SDojh0k2+J5igFHcbZPE7Ac
- +RiLheR8NIaUgrh2DxigGkAvggurY9/Zkb1sfTBlZ0hUyGvEQDXRumL86uOib2YS4thvKuP2pFL
- mk3LL3QGvzIHzo5FAUlQIJSHRsdxKlfT84K+TnMEti+MCwAFp7ST0q1Fpiaucf3RUP8i5kxYvk8
- CESONdGSCdbgZPwq1S5neFW9ztPahNUrKhOOuB8fiQxkP8QzdV0kqymWbkqDdrPkVCvK5O2VhY5
- eCKeSKYKwP5fCJNQyQ1UK/LKF58Pd9baPRU/x0sGx59+R+b4ow9/YSNAKewvI85lJBK/Q5UodyI
- BXNnnGAhAfoPMRDIgxg==
+ a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=dhUF3OugxwqxtIcJtT8A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: kdPv1HudR3oAD-pMqkGoUJgveiuSz1a3
+X-Proofpoint-ORIG-GUID: Vos_Zezgmm9wHSdOLUNquIelwjS7As1E
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
  definitions=2026-01-20_03,2026-01-20_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601200118
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=calebs@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ spamscore=0 bulkscore=0 clxscore=1015 adultscore=0 phishscore=0
+ malwarescore=0 impostorscore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601200118
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=calebs@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -131,92 +131,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 1/19/26 1:42 AM, Aditya Gupta wrote:
-> Thanks for adding Nest MMU, Caleb !
-> 
-> Currently seeing a build failure due to recent changes in upstream,
-> details and reviews below.
-> 
-> On 25/12/23 08:59AM, Caleb Schlossin wrote:
->> The nest MMU is used for translations needed by I/O subsystems
->> on Power10. The nest is the shared, on-chip infrastructure
->> that connects CPU cores, memory controllers, and I/O.
+On 1/19/26 12:57 AM, Aditya Gupta wrote:
+> On 25/12/16 09:45AM, Caleb Schlossin wrote:
+>> unrealize should free the fifo8 memory that was allocated by realize.
 >>
->> This patch sets up a basic skeleton with its xscom
->> area, mapping both needed xscom regions. Support required
->> for PowerVM bringup.
->>
->> Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
->> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+>> Fixes: 17befecda85 ("hw/ssi/pnv_spi: Replace PnvXferBuffer with Fifo8 structure")
+>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 >> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
->> ---
->>
->>> <...snip...>
->>
->> diff --git a/hw/ppc/pnv_nmmu.c b/hw/ppc/pnv_nmmu.c
->> new file mode 100644
->> index 0000000000..37c739b242
->> --- /dev/null
->> +++ b/hw/ppc/pnv_nmmu.c
->> @@ -0,0 +1,132 @@
->> +/*
->> + * QEMU PowerPC nest MMU model
->> + *
->> + * Copyright (c) 2025, IBM Corporation.
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + *
->> + * This code is licensed under the GPL version 2 or later. See the
->> + * COPYING file in the top-level directory.
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "qemu/log.h"
->> +#include "hw/qdev-properties.h"
 > 
-> With below commit, the header `hw/qdev-properties.h` has moved to
-> `hw/core/qdev-properties.h`
+> Hello Caleb,
 > 
-> This causes the compile to fail, can you rebase on upstream and send
-> this again as v2 ?
+> Sorry for the delayed review. The patch currently doesn't apply on
+> upstream, as there was a merge conflict with vmstate patch and this.
 > 
-> 	commit 78d45220b4e6385c6a90302fbc84fdacb415580c
-> 	Author: Paolo Bonzini <pbonzini@redhat.com>
-> 	Date:   Thu Nov 27 08:38:05 2025 +0100
-> 	
-> 	    include: move hw/qdev-properties.h to hw/core/
+> Can you send a v2, rebased on upstream ?
 > 
->>
->>> <...snip...>
-
-Yup, I'll get this fixed in v2.
-
->>
->> +static int pnv_nmmu_dt_xscom(PnvXScomInterface *dev, void *fdt,
->> +                             int offset)
->> +{
->> +    PnvNMMU *nmmu = PNV_NMMU(dev);
->> +    char *name;
->> +    int nmmu_offset;
->> +    const char compat[] = "ibm,power10-nest-mmu";
-> 
-> OPAL looks for compat property "ibm,power9-nest-mmu", as NMMU is treated
-> the same in Power9 and Power10 (atleast from opal's perspective)
-> 
-> The Linux kernel asks OPAL itself to do Nest MMU set ptcr, so kernel
-> doesn't care about the compat string.
-> 
-> Can we use same ibm,power9-nest-mmu compat string here too ? What do you
-> say ?
-> 
-> Other than above reviews, the code looks good to me, Thanks !
-> 
+> Thank you,
 > - Aditya G
 > 
 
-That should be fine, I'll make that update in v2.
+Yup, I'll rebase and fix in v2.
 
 Thanks,
 Caleb
+
+>> ---
+>>  hw/ssi/pnv_spi.c | 8 ++++++++
+>>  1 file changed, 8 insertions(+)
+>>
+>> diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
+>> index f40e8836b9..5db440be9a 100644
+>> --- a/hw/ssi/pnv_spi.c
+>> +++ b/hw/ssi/pnv_spi.c
+>> @@ -1176,6 +1176,13 @@ static void pnv_spi_realize(DeviceState *dev, Error **errp)
+>>                            s, "xscom-spi", PNV10_XSCOM_PIB_SPIC_SIZE);
+>>  }
+>>  
+>> +static void pnv_spi_unrealize(DeviceState *dev)
+>> +{
+>> +    PnvSpi *s = PNV_SPI(dev);
+>> +    fifo8_destroy(&s->tx_fifo);
+>> +    fifo8_destroy(&s->rx_fifo);
+>> +}
+>> +
+>>  static int pnv_spi_dt_xscom(PnvXScomInterface *dev, void *fdt,
+>>                               int offset)
+>>  {
+>> @@ -1208,6 +1215,7 @@ static void pnv_spi_class_init(ObjectClass *klass, const void *data)
+>>  
+>>      dc->desc = "PowerNV SPI";
+>>      dc->realize = pnv_spi_realize;
+>> +    dc->unrealize = pnv_spi_unrealize;
+>>      device_class_set_legacy_reset(dc, do_reset);
+>>      device_class_set_props(dc, pnv_spi_properties);
+>>  }
+>> -- 
+>> 2.47.3
+>>
 
 
