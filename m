@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D093FD262B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 07:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E902CD262B2
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 07:50:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viSy8-00054M-Mu; Wed, 21 Jan 2026 02:49:36 -0500
+	id 1viSy6-0004zM-LE; Wed, 21 Jan 2026 02:49:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1viSxx-0004l4-N5
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 02:49:26 -0500
+ id 1viSxs-0004ge-Tc
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 02:49:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1viSxv-0003WC-S6
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 02:49:25 -0500
+ id 1viSxr-0003Uo-Bt
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 02:49:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768981763;
+ s=mimecast20190719; t=1768981758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AQaL8UtBtvuIOFM3Tqxqj0ZQlm2ruMixoH3w6eLaJ6g=;
- b=ASmbM2hebwR9Nb/zk4+leyl+MnM/rmsz/4+ck9lopBi1dXGorsOEEV20/qewws0R4b9+SA
- j/is2wuY5UMROvMYWywISzm2oK5r8p9Rf+NY+xQd/+/m1mRFmmpUcqvYDxR2dlIT7IGd/m
- 6mnG1vv7tT6q2ZCxAGY58yFkB0K+5oo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=EAWMwNW8rH4kExpUCAWgFUYWjRVqEtltBNmkIe4rFLs=;
+ b=VPVv6O8Sj2QIibTFaftvcPUMAsv8Xj5qvhDgopaUjZDGSxBjWvGpF4nXsWzVhBCXv0LRZ2
+ 74fDfMsDhve0R6db644GOrNrNIO5LCoJqy7XoLOB+YJToNwcQm0GsWMC1sFRYkzu0CyMpg
+ r8U8SSg/B+htGRHnN3OcPpRn4n/+AHs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-318-oSgqSVMKMcub4dIeCFDXAw-1; Wed,
- 21 Jan 2026 02:49:18 -0500
-X-MC-Unique: oSgqSVMKMcub4dIeCFDXAw-1
-X-Mimecast-MFC-AGG-ID: oSgqSVMKMcub4dIeCFDXAw_1768981757
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-h1dBU5qHMoSVtVXNxOCE_A-1; Wed,
+ 21 Jan 2026 02:49:13 -0500
+X-MC-Unique: h1dBU5qHMoSVtVXNxOCE_A-1
+X-Mimecast-MFC-AGG-ID: h1dBU5qHMoSVtVXNxOCE_A_1768981752
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7616D1800350; Wed, 21 Jan 2026 07:49:17 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 975F819560A3; Wed, 21 Jan 2026 07:49:12 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.32.15])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1BC0D19560A2; Wed, 21 Jan 2026 07:49:12 +0000 (UTC)
+ id 4BBAE1955F67; Wed, 21 Jan 2026 07:49:08 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
  maz@kernel.org, oliver.upton@linux.dev, sebott@redhat.com,
  gshan@redhat.com, ddutile@redhat.com, peterx@redhat.com, philmd@linaro.org,
  pbonzini@redhat.com
-Subject: [PATCH v5 07/11] target/arm/cpu: Expose x-mig-hidden-regs and
- x-mig-safe-missing-regs properties
-Date: Wed, 21 Jan 2026 08:46:44 +0100
-Message-ID: <20260121074834.1900677-8-eric.auger@redhat.com>
+Subject: [PATCH v5 06/11] target/arm/cpu: Implement hide_reg callback()
+Date: Wed, 21 Jan 2026 08:46:43 +0100
+Message-ID: <20260121074834.1900677-7-eric.auger@redhat.com>
 In-Reply-To: <20260121074834.1900677-1-eric.auger@redhat.com>
 References: <20260121074834.1900677-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -64,14 +63,15 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,58 +87,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allows to set both array properties along with arm cpus. Their "x-" prefix
-reminds that those shall be used carefully for distro specific use cases
-to enable cross kernel migration.
-
-This will allow to define such compat machine props like:
-
-    static GlobalProperty arm_virt_kernel_compat_10_1[] = {
-        /* KVM_REG_ARM_VENDOR_HYP_BMAP_2 */
-        { TYPE_ARM_CPU, "x-mig-hidden-regs", "0x6030000000160003" },
-        { TYPE_ARM_CPU, "x-mig-safe-missing-regs",
-          /* TCR_EL1, PIRE0_EL1, PIR_EL1 */
-          "0x603000000013c103, 0x603000000013c512, 0x603000000013c513" },
-    }
-
-The first one means KVM_REG_ARM_VENDOR_HYP_BMAP_2 shall always
-be hidden for machine types older than 10.1. The second one means
-that along with 10.1 machine type we may receive in the incoming
-migration stream, 3 registers that are unknown on destination.
-
-Obviously, using the reg index as defined in
-linux/Documentation/virt/kvm/api.rst is not user friendly. However
-These options are supposed to be used to enable specific, rare cases,
-and in general, by people trying to configure distribution defaults
-familiar with those specific cases.
+Check if the register is hidden.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
 Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-
 ---
-
-v3 -> v4:
-- typo and rewording in the commit description (Connie)
----
- target/arm/cpu.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/arm/cpu.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 04a73254420..88a22453795 100644
+index 05fa3339b1a..04a73254420 100644
 --- a/target/arm/cpu.c
 +++ b/target/arm/cpu.c
-@@ -2249,6 +2249,11 @@ static const Property arm_cpu_properties[] = {
-     DEFINE_PROP_BOOL("backcompat-cntfrq", ARMCPU, backcompat_cntfrq, false),
-     DEFINE_PROP_BOOL("backcompat-pauth-default-use-qarma5", ARMCPU,
-                       backcompat_pauth_default_use_qarma5, false),
-+    DEFINE_PROP_ARRAY("x-mig-hidden-regs", ARMCPU,
-+                      nr_hidden_regs, hidden_regs, qdev_prop_uint64, uint64_t),
-+    DEFINE_PROP_ARRAY("x-mig-safe-missing-regs", ARMCPU,
-+                      nr_mig_safe_missing_regs, mig_safe_missing_regs,
-+                      qdev_prop_uint64, uint64_t),
+@@ -2370,6 +2370,11 @@ static const TCGCPUOps arm_tcg_ops = {
  };
+ #endif /* CONFIG_TCG */
  
- static const gchar *arm_gdb_arch_name(CPUState *cs)
++static inline bool arm_cpu_hide_reg(CPUState *s, uint64_t regidx)
++{
++    return arm_cpu_hidden_reg(ARM_CPU(s), regidx);
++}
++
+ static void arm_cpu_class_init(ObjectClass *oc, const void *data)
+ {
+     ARMCPUClass *acc = ARM_CPU_CLASS(oc);
+@@ -2398,6 +2403,7 @@ static void arm_cpu_class_init(ObjectClass *oc, const void *data)
+     cc->gdb_get_core_xml_file = arm_gdb_get_core_xml_file;
+     cc->gdb_stop_before_watchpoint = true;
+     cc->disas_set_info = arm_disas_set_info;
++    cc->hide_reg = arm_cpu_hide_reg;
+ 
+ #ifdef CONFIG_TCG
+     cc->tcg_ops = &arm_tcg_ops;
 -- 
 2.52.0
 
