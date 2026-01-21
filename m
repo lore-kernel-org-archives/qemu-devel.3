@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 959B5C44503
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACB07C44509
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 11:26:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viWLJ-0002wZ-0k; Wed, 21 Jan 2026 06:25:45 -0500
+	id 1viWLH-0002rx-4P; Wed, 21 Jan 2026 06:25:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1viWLC-0002oj-U2
+ id 1viWLA-0002mo-VG
  for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:38 -0500
 Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1viWL8-0007n8-1j
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:36 -0500
+ id 1viWL8-0007nA-1m
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:35 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 4F95F600AA;
+ by tor.source.kernel.org (Postfix) with ESMTP id 328AA60051;
  Wed, 21 Jan 2026 11:25:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF83FC2BC86;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB933C19422;
  Wed, 21 Jan 2026 11:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1768994724;
- bh=GxqXjU/gsmVVnItuvIwe8JVTgtQ4M8GaTVghV9hwIRI=;
+ bh=hwyWdnz7CG8TDTdys6cTh9QCw69st0xyx0awwfXMyL0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=S/emF1+Kp58gkPBbJCONcCHnP9gBF4xO5+UNZbmnn8MKcQj7Rq2HU4JGGQtgWDMql
- zeEv4PkjfHlj2Pl1rB51QYtiTYGSn8iWNKnPFv4vSt2yPZm0eqvSznIxUXIlyVLeNA
- MYsG3t3J4o6jLRkIAsj3jWltkrHS1ny+3iFR3tgx1ORCJSQ72i4kQF3gZ/Rngbpbbb
- mm8MmUFf7PsLH343A1VwWeJAq9PFspMfQODJD5VP6ATq17LwyOJsL437X3wQNOCzKO
- b44n51MGmDCPZTIMjW8cAcfpSzP+ll0ilqVaaWK8gxx+H8pRbGt3JxAr4LuhjPNlqa
- DViLelvGfJPdg==
+ b=GzcRoeY2pWYCzmYKm49hfVh59r7CKssBjYcWgYyxmGznKEFqTI08Z0n4O6M+KHDId
+ iv2LUeKJQ82XW1N/WrmaMocQiIPZxnLFxQqPgQusHPcRtfONVtP+S/S4xfiEb5lOpL
+ pQKFziQR3uuLd4GRsvv61kQXP2Px0KvrS2JRAJA/ry7m9eUgFEDpoyvKrx47PhclZz
+ XDzHYt2JEBusDDwRd2S2F2k7MEIYUb280VZixTKfvnqQcJMs+bNdULb5SlauMW7XK+
+ eW+7QaeNs4pE2uTFAU5dXKFphG2P5pXT8/puzwAiNiKal065LMvQn7HmUo5kU99Te/
+ DFe1XcHoJJJqQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.99)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1viWKx-00000003gJa-0TSq; Wed, 21 Jan 2026 12:25:23 +0100
+ id 1viWKx-00000003gJO-08r5; Wed, 21 Jan 2026 12:25:23 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Michael S Tsirkin <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -45,9 +45,9 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Igor Mammedov <imammedo@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 05/13] scripts/qmp_helper: fix raw_data logic
-Date: Wed, 21 Jan 2026 12:25:13 +0100
-Message-ID: <dbfa5c4c60c9f27a3f13ed9de7d510fa99ea536e.1768993993.git.mchehab+huawei@kernel.org>
+Subject: [PATCH 02/13] scripts/qmp_helper: add missing CXL UEFI GUID
+Date: Wed, 21 Jan 2026 12:25:10 +0100
+Message-ID: <f229d756fe76c34e6dfa48a98f1ee46f4325fc76.1768993993.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <cover.1768993993.git.mchehab+huawei@kernel.org>
 References: <cover.1768993993.git.mchehab+huawei@kernel.org>
@@ -78,123 +78,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According with UEFI 6.4 spec Table 18.11 Generic Error Status Block:
+The UEFI 2.11 - N.2.14. CXL Component Events Section states that
+XL events are described at CXL specification 3.2:
+        8.2.10.2.1 Event Records
 
-Raw Data Offset:	Offset in bytes from the beginning of the
-			Error Status Block to raw error data.
-			The raw data must follow any Generic Error
-			Data Entries.
-
-Data Length:		Length in bytes of the generic error data.
-
-So, basically, we have:
-
-	+----------+                 /
-	| GEBS     |                 |
-	+----------+   /             |
-        | GEDE     |   |             |
-        | header   |   |             +--> raw data
-	+----------+   +--> data     |    offset
-        | GEDE     |   |    length   |
-        | payload  |   |             |
-	+----------+   /             /
-	| Raw data |
-	+----------+
-
-where:
-
-- raw data offset is relative to the beginning of GEBS;
-- data length is only for GEDE header and payload.
-
-Fix the code to handle it the expected way.
+Add the GUIDs defined here to fuzzy logic error injection code.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- scripts/qmp_helper.py | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ scripts/qmp_helper.py | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
 diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
-index 51c8ad92a39d..40059cd105f6 100755
+index 249a8c7187d1..7e786c4adfd9 100755
 --- a/scripts/qmp_helper.py
 +++ b/scripts/qmp_helper.py
-@@ -411,6 +411,7 @@ def _connect(self):
-         "simulated":    util.bit(2),
-     }
- 
-+    GENERIC_ERROR_STATUS_SIZE = 20
-     GENERIC_DATA_SIZE = 72
- 
-     def argparse(parser):
-@@ -551,7 +552,7 @@ def send_cper_raw(self, cper_data):
- 
-         return False
- 
--    def get_gede(self, notif_type, cper_length):
-+    def get_gede(self, notif_type, payload_length):
-         """
-         Return a Generic Error Data Entry bytearray
-         """
-@@ -563,22 +564,27 @@ def get_gede(self, notif_type, cper_length):
-         util.data_add(gede, 0x300, 2)
-         util.data_add(gede, self.validation_bits, 1)
-         util.data_add(gede, self.flags, 1)
--        util.data_add(gede, cper_length, 4)
-+        util.data_add(gede, payload_length, 4)
-         gede.extend(self.fru_id)
-         gede.extend(self.fru_text)
-         gede.extend(self.timestamp)
- 
-         return gede
- 
--    def get_gebs(self, data_length):
-+    def get_gebs(self, payload_length):
-         """
-         Return a Generic Error Status Block bytearray
-         """
- 
-+        data_length = payload_length
-+        data_length += self.GENERIC_DATA_SIZE
+@@ -711,3 +711,28 @@ class cper_guid:
+     CPER_CXL_PROT_ERR = guid(0x80B9EFB4, 0x52B5, 0x4DE3,
+                              [0xA7, 0x77, 0x68, 0x78,
+                               0x4B, 0x77, 0x10, 0x48])
 +
-         gebs = bytearray()
- 
-         if self.raw_data:
--            raw_data_offset = len(gebs)
-+            raw_data_offset = payload_length
-+            raw_data_offset += self.GENERIC_ERROR_STATUS_SIZE
-+            raw_data_offset += self.GENERIC_DATA_SIZE
-         else:
-             raw_data_offset = 0
- 
-@@ -617,8 +623,7 @@ def send_cper(self, notif_type, payload,
-         if raw_data:
-             self.raw_data = raw_data
- 
--        cper_length = len(payload)
--        data_length = cper_length + len(self.raw_data) + self.GENERIC_DATA_SIZE
-+        payload_length = len(payload)
- 
-         if gede and len(gede) != 72:
-             print(f"Invalid Generic Error Data Entry length: {len(gede)}. Ignoring it")
-@@ -629,16 +634,16 @@ def send_cper(self, notif_type, payload,
-             gebs = None
- 
-         if not gede:
--            gede = self.get_gede(notif_type, cper_length)
-+            gede = self.get_gede(notif_type, payload_length)
- 
-         if not gebs:
--            gebs = self.get_gebs(data_length)
-+            gebs = self.get_gebs(payload_length)
- 
-         cper_data = bytearray()
-         cper_data.extend(gebs)
-         cper_data.extend(gede)
--        cper_data.extend(bytearray(self.raw_data))
-         cper_data.extend(bytearray(payload))
-+        cper_data.extend(bytearray(self.raw_data))
- 
-         if self.debug:
-             print(f"GUID: {notif_type}")
++    CPER_CXL_EVT_GEN_MEDIA = guid(0xFBCD0A77, 0xC260, 0x417F,
++                                  [0x85, 0xA9, 0x08, 0x8B,
++                                   0x16, 0x21, 0xEB, 0xA6])
++    CPER_CXL_EVT_DRAM = guid(0x601DCBB3, 0x9C06, 0x4EAB,
++                             [0xB8, 0xAF, 0x4E, 0x9B,
++                              0xFB, 0x5C, 0x96, 0x24])
++    CPER_CXL_EVT_MEM_MODULE = guid(0xFE927475, 0xDD59, 0x4339,
++                                   [0xA5, 0x86, 0x79, 0xBA,
++                                    0xB1, 0x13, 0xBC, 0x74])
++    CPER_CXL_EVT_MEM_SPARING = guid(0xE71F3A40, 0x2D29, 0x4092,
++                                    [0x8A, 0x39, 0x4D, 0x1C,
++                                     0x96, 0x6C, 0x7C, 0x65])
++    CPER_CXL_EVT_PHY_SW = guid(0x77CF9271, 0x9C02, 0x470B,
++                               [0x9F, 0xE4, 0xBC, 0x7B,
++                                0x75, 0xF2, 0xDA, 0x97])
++    CPER_CXL_EVT_VIRT_SW = guid(0x40D26425, 0x3396, 0x4C4D,
++                                [0xA5, 0xDA, 0x3D, 0x47,
++                                  0x2A, 0x63, 0xAF, 0x25])
++    CPER_CXL_EVT_MLD_PORT = guid(0x8DC44363, 0x0C96, 0x4710,
++                                 [0xB7, 0xBF, 0x04, 0xBB,
++                                  0x99, 0x53, 0x4C, 0x3F])
++    CPER_CXL_EVT_DYNA_CAP = guid(0xCA95AFA7, 0xF183, 0x4018,
++                                 [0x8C, 0x2F, 0x95, 0x26,
++                                  0x8E, 0x10, 0x1A, 0x2A])
 -- 
 2.52.0
 
