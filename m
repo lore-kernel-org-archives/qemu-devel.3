@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01CA0C4452E
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 14:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C71C4453B
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 14:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viYjn-0000GI-0X; Wed, 21 Jan 2026 08:59:11 -0500
+	id 1viYjn-0000Is-Km; Wed, 21 Jan 2026 08:59:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1viYjA-0008QE-QI
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:58:34 -0500
-Received: from p-west3-cluster6-host6-snip4-5.eps.apple.com ([57.103.75.118]
+ id 1viYjG-0008T5-R0
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:58:40 -0500
+Received: from p-west3-cluster6-host6-snip4-1.eps.apple.com ([57.103.75.114]
  helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1viYj8-0007FL-0v
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:58:31 -0500
+ id 1viYjF-0007IR-Ba
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:58:38 -0500
 Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-3a-100-percent-3 (Postfix) with ESMTPS id
- DA7FD18000DA; Wed, 21 Jan 2026 13:58:27 +0000 (UTC)
+ E5F4B18000DF; Wed, 21 Jan 2026 13:58:34 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1769003908; x=1771595908;
- bh=Aa0aax6vLouElVK3Aoyqarjh14m5hBAPqVICyrIsiYM=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=CQ1u5J+cwaLT3gazv1I01qXog5KaBm1cnnjJXGLbNUM35Sj+TKIgP+/Mp/l3E9QwPu/2y4IFbSh4PkhYuc6Wbfm60CpjTIZIpAJZLlVc+IY4DVeTyvjEnyMLFtfKEGHoCiAT+OPSg3d+Cg4fKvKmIb4YckBIT4Bl6k1bcjzaBxMoHSChR9P4lmSPD7J5PwZS8TvCV/niceyLMPG44iAXSShD22nmFYJRLfT6++83YrY/O2YxCuPzWUteau2VlXqFKF+GTJ7iwwpPUyIQt7kn/XlJvsAja/iuU7AD9KVkePJv+m6/xXGoxj8rc7wcWPR63BFV5Aw6DTZu4FC10sDIKw==
+ s=sig1; t=1769003916; x=1771595916;
+ bh=JtN7MHIsgv+ceQjjKvl5vfwGY1huIPCI7oU77OcjZvE=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
+ b=QJz+xihj01OGL8UV3EZu6RT2k9gqXssv0aZHBoNYx3szZwPVTVKo+EmxaQQr2c1pUREJye5RZ84DxJlb43TU/Ct9qD91Yua2LFZ0kZjG2uU0rVPvNgrx+xi4FBhVrAuvs5AgNdc4HgASFhudyQ4yDFtGVtgIhgjNwkjooOGBYG9bl5PXzXpYCzWgHC5d9xX3iwittRckFBFp4lGABpzBzaC9SXjw+2AASxd8LGQH4q60ajjEzp4gKsQfRGTKeHiB8s+IFRD5pBFyY2xD4Lnerxw+D04Bg+4NXNz8LSSaSbTxhD1LabBptQmdWtGIBCBYFH27xLa9x6Rgu6y186dnDg==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.154.37])
  by p00-icloudmta-asmtp-us-west-3a-100-percent-3 (Postfix) with ESMTPSA id
- CDBC2180107B; Wed, 21 Jan 2026 13:58:25 +0000 (UTC)
+ 8B7B31801066; Wed, 21 Jan 2026 13:58:32 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Cameron Esfahani <dirty@apple.com>, Alexander Graf <agraf@csgraf.de>,
  Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
  Roman Bolshakov <rbolshakov@ddn.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v8 03/11] hvf: save/restore Apple GIC state
-Date: Wed, 21 Jan 2026 14:58:08 +0100
-Message-ID: <20260121135816.21258-4-mohamed@unpredictable.fr>
+ qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v8 06/11] hvf: gate ARM_FEATURE_PMU register emulation behind
+ not being at EL2
+Date: Wed, 21 Jan 2026 14:58:11 +0100
+Message-ID: <20260121135816.21258-7-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260121135816.21258-1-mohamed@unpredictable.fr>
 References: <20260121135816.21258-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: gBSfEZEhHf66P8JeAhEvz6euUBXpELvu
-X-Authority-Info-Out: v=2.4 cv=AYy83nXG c=1 sm=1 tr=0 ts=6970db83
- cx=c_apl:c_apl_out:c_pps a=qkKslKyYc0ctBTeLUVfTFg==:117 a=vUbySO9Y5rIA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=x93Mgmjee4_3HhNPHesA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDExOCBTYWx0ZWRfX8P55KgiyuMuJ
- Ftnueob5x/VaAntIKLKGUKBeg2kusfCQkMulnV3XPFdjKnO8HatGaG1cm4w32q9+FLRxu0ntIef
- ARjoUotdh3MTPM4iW7b7yn3CLe7Iw75p2wEk43lw/vZYpwWDs2nR477yQT6w81ZIiAoXLQeaiRc
- C7t0nmul7OcNrBDnyKAGyrL56VeVMQqPBU4M1C+22t1v2sAznti71SEVkgJlzXsGZI3leDlXjNt
- yfcrUIf1WziDuPNOfNmcIT2kk7HCK3RJGdyUrkuEFzVUn52KfCrb7KeJvoWDWwrUEBvfVDKNNpB
- Mrp9r+y5bgwj3qj5WU6
-X-Proofpoint-ORIG-GUID: gBSfEZEhHf66P8JeAhEvz6euUBXpELvu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDExOCBTYWx0ZWRfXwkUDJ05LV/3j
+ ddo5sPatrxL/1HspvysKxpiYQxDQp/QhNrPI/tHxSBNqfKa4giA3oC+wceerNe3I6rMzJr1fl5o
+ Hyj65btC2tm3V2VE1z8ZrR62N2HxOyV1AFvB7p/5ClhJUAKe2c9dev+/dApBQSsHnIKidg1Yrt6
+ pxQqhROwgYmtcEksvxhVyGubennZq7bOuFbYIQE04Fbc9mIfwRzJi8qK5jEMkAc93xzSWFrF5t3
+ tcPg4oRC5N25hd8bKNMRuuq3eUhMEWAHEUfhw7ndp1iUYUwKSxKdiUgD4/SB8yYxjZv/lDo5S9c
+ kBJc9kqxVPxpdxckXpx
+X-Proofpoint-ORIG-GUID: bJcoDhlMRknG-altxBlfw_jmDemKsdXb
+X-Proofpoint-GUID: bJcoDhlMRknG-altxBlfw_jmDemKsdXb
+X-Authority-Info-Out: v=2.4 cv=K8ov3iWI c=1 sm=1 tr=0 ts=6970db8b
+ cx=c_apl:c_apl_out:c_pps a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
+ a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8
+ a=lOv7bB1OiAV5i3s2B4UA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
  definitions=2026-01-21_01,2026-01-20_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- bulkscore=0 phishscore=0 suspectscore=0 malwarescore=0 mlxscore=0 spamscore=0
- clxscore=1030 mlxlogscore=770 classifier=spam authscore=0 adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2510240001 definitions=main-2601210118
-X-JNJ: AAAAAAAB3E5isqdF7rPtIoJM02N0xX9ilsRV8SHIZAfB0XBcDTkpEWoK2dPRdPKojv5E63QoHt9wahbWkdr6HFC0F/QesXNZMhg9TfChJv2idO2VUw6hQdKefqReQKCP+CyqUmf7UATjrFOOikS8bIw2mWympEH71KQqQp2t+yHri6z9+zMPtmc+MEdCRhGVg2us6SdPCGPsEPlLFfejSueNK+4g0xR7et3dp/I1yNhXPKkZ4x+QbjtSV97VZ0Aosi9ZOy5DcvRtQIDSjLOlSFgpmc6cYPNGfYIzDCippupEFBSUu8X2nOk/8vxzsGbMZ837Tg5jQI4j7AOBSDc5K7g87aXsO3Hse7lFeS1vjnSWE3hPlipl0AJsqz9rUrD1Up96rGoTVRX5aEHVOQWI5I9+0VFf4sp8S1rUFc/fAhFx2dXKID10B7ZO9VFOsS1BvSUZ7IyiPMFwbU58OF9P4McX6EWL1kc6bk1wSgXJq45SZykQH4b5j6AFCyH5ixvs5vq5cxjx+YnP1jM04Oq0Ktk5RHWMAPJDuWDXXUsQNy33+wL7vw33uoOuiQU8Lp3/CyK6IIQkkzbD8PPIfesDWFb3xzEtPecf1P3f1ChTDZ27SZ2ZK9lnxo72yXf4smyz3+E1GLC7up/hin1euh0i94K9axEuF6BhupoiDAEP0eN3ogfQxWhO4M8jQNOhtlCCbvUoqd5+8bYyCfomrE5447T8CH5ykrS2xxiZZqtxw/+TRQ==
-Received-SPF: pass client-ip=57.103.75.118;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ mlxlogscore=768 clxscore=1030 spamscore=0 bulkscore=0 malwarescore=0
+ mlxscore=0 suspectscore=0 adultscore=0 classifier=spam authscore=0 adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601210118
+X-JNJ: AAAAAAABwv9/W0Ew+/1rWmzEYfyv+mBA3puUYqU6xp7DIaYL3nzdrjmSLzs9xomkax8UcM3nhJj/lX9LIOyBvjmm1+r2WuxRDO8maVTajt92U7OaT669tvXf+umjiGSgW6c/KZLxFBWJ6X41ZQqDdNkCR9foXg9TiHoKfXlOvwyVxIP8vUH/dLf4z9W/hplkNtD0OGHKRKBD5rdjX6gTgbqbUp5rhKEZgFmG2O5V/gA0jIIpOTqlPDqo8bIG6rDDQfHEGGSKSFpZJH4HDh/mHEo3tHRuptpB6pIxu4ofexN4TlE/RwmQcozmKGqg1rDh8RK++hl5WOce0NvmwnyIXdzNjCRb1ETLFGPkCjO9tOKYIp90NyYDz12AlozLCO6HU60eDjmOF2Gzg7+NlPPrnuS7+XK2pou/Vk7jjKpzUG61InlmMLSE+7beRFrRnJcVMsunCaYG51sibzZkspk6bs+8gvxw5xh2rDVktnr8PV44Mzce+XVsFlaWsdxWllxDKujAIovtNOJl02kuKctjLCO4vEGZAThkuC6vejHtRtb01FnIdJRy8U4Nt1lmOYlghoPtzsbJf0QqH1zPELmYUXVinnHwbgkOAz0a24Ag9Ab/PgRftXjzvFd4wmaUQHOIY8vPglhY4E/3rJGqMJYGhpniQBjKQtHfiOxY0WnIGnKara/fcUQYr3L6Ad8gZpNHH1vU264cI7AIe6t6CU93bPA=
+Received-SPF: pass client-ip=57.103.75.114;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,122 +97,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On HVF, some of the GIC state is in an opaque Apple-provided structure.
+From Apple documentation:
 
-Save/restore that state to be able to save/restore VMs.
+> When EL2 is disabled, PMU register accesses trigger "Trapped MSR, MRS, or
+> System Instruction" exceptions. When this happens, hv_vcpu_run() returns, and the
+>  hv_vcpu_exit_t object contains the information about this exception.
+
+> When EL2 is enabled, the handling of PMU register accesses is determined by the PMUVer
+> field of ID_AA64DFR0_EL1 register.
+> If the PMUVer field value is zero or is invalid, PMU register accesses generate "Undefined"
+> exceptions, which are sent to the guest.
+> If the PMUVer field value is non-zero and valid, PMU register accesses are emulated by the framework.
+> The ID_AA64DFR0_EL1 register can be modified via hv_vcpu_set_sys_reg API.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/hvf/hvf.c | 73 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 73 insertions(+)
+ target/arm/hvf/hvf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 74b6f5e7db..a220699077 100644
+index f6313d9afd..13836d6510 100644
 --- a/target/arm/hvf/hvf.c
 +++ b/target/arm/hvf/hvf.c
-@@ -22,6 +22,7 @@
- #include "cpu-sysregs.h"
+@@ -1239,7 +1239,7 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+     CPUARMState *env = &arm_cpu->env;
  
- #include <mach/mach_time.h>
-+#include <stdint.h>
+-    if (arm_feature(env, ARM_FEATURE_PMU)) {
++    if (!hvf_nested_virt_enabled() && arm_feature(env, ARM_FEATURE_PMU)) {
+         switch (reg) {
+         case SYSREG_PMCR_EL0:
+             *val = env->cp15.c9_pmcr;
+@@ -1531,7 +1531,7 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
+                            SYSREG_OP2(reg),
+                            val);
  
- #include "system/address-spaces.h"
- #include "system/memory.h"
-@@ -2069,15 +2070,83 @@ static const VMStateDescription vmstate_hvf_vtimer = {
-     },
- };
- 
-+/* Apple specific opaque state for the vGIC */
-+
-+typedef struct HVGICState {
-+    void *state;
-+    uint32_t size;
-+} HVGICState;
-+
-+static HVGICState gic;
-+
-+static int hvf_gic_opaque_state_get(void)
-+{
-+    hv_gic_state_t gic_state;
-+    hv_return_t err;
-+    size_t size;
-+
-+    gic_state = hv_gic_state_create();
-+    if (gic_state == NULL) {
-+        error_report("hvf: vgic: failed to create hv_gic_state_create.");
-+        return 1;
-+    }
-+    err = hv_gic_state_get_size(gic_state, &size);
-+    gic.size = size;
-+    if (err != HV_SUCCESS) {
-+        error_report("hvf: vgic: failed to get GIC state size.");
-+        return 1;
-+    }
-+    gic.state = malloc(gic.size);
-+    err = hv_gic_state_get_data(gic_state, gic.state);
-+    if (err != HV_SUCCESS) {
-+        error_report("hvf: vgic: failed to get GIC state.");
-+        return 1;
-+    }
-+    return 0;
-+}
-+
-+static int hvf_gic_opaque_state_set(void)
-+{
-+    hv_return_t err;
-+    if (!gic.size) {
-+        return 0;
-+    }
-+    err = hv_gic_set_state(gic.state, gic.size);
-+    if (err != HV_SUCCESS) {
-+        error_report("hvf: vgic: failed to restore GIC state.");
-+        return 1;
-+    }
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_hvf_gic = {
-+    .name = "hvf-gic",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(size, HVGICState),
-+        VMSTATE_VBUFFER_UINT32(state,
-+                                     HVGICState, 0, 0,
-+                                     size),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- static void hvf_vm_state_change(void *opaque, bool running, RunState state)
- {
-     HVFVTimer *s = opaque;
- 
-     if (running) {
-+        if (hvf_irqchip_in_kernel()) {
-+            hvf_gic_opaque_state_set();
-+        }
-         /* Update vtimer offset on all CPUs */
-         hvf_state->vtimer_offset = mach_absolute_time() - s->vtimer_val;
-         cpu_synchronize_all_states();
-     } else {
-+        if (hvf_irqchip_in_kernel()) {
-+            hvf_gic_opaque_state_get();
-+        }
-         /* Remember vtimer value on every pause */
-         s->vtimer_val = hvf_vtimer_val_raw();
-     }
-@@ -2087,6 +2156,10 @@ int hvf_arch_init(void)
- {
-     hvf_state->vtimer_offset = mach_absolute_time();
-     vmstate_register(NULL, 0, &vmstate_hvf_vtimer, &vtimer);
-+    if (hvf_irqchip_in_kernel()) {
-+        gic.size = 0;
-+        vmstate_register(NULL, 0, &vmstate_hvf_gic, &gic);
-+    }
-     qemu_add_vm_change_state_handler(hvf_vm_state_change, &vtimer);
- 
-     hvf_arm_init_debug();
+-    if (arm_feature(env, ARM_FEATURE_PMU)) {
++    if (!hvf_nested_virt_enabled() && arm_feature(env, ARM_FEATURE_PMU)) {
+         switch (reg) {
+         case SYSREG_PMCCNTR_EL0:
+             pmu_op_start(env);
 -- 
 2.50.1 (Apple Git-155)
 
