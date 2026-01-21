@@ -4,65 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91C3CD262B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 14:22:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC41DC44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 14:56:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viZ6Y-0006p9-8f; Wed, 21 Jan 2026 09:22:42 -0500
+	id 1viZWE-0007rk-HV; Wed, 21 Jan 2026 09:49:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1viZ6T-0006jb-4N; Wed, 21 Jan 2026 09:22:37 -0500
-Received: from apollo.dupie.be ([51.159.20.238])
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1viZVX-0007Dh-Hr
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 09:48:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1viZ6Q-0004dT-SE; Wed, 21 Jan 2026 09:22:36 -0500
-Received: from [IPV6:2a02:a03f:eaf9:5401:5fb3:a398:4351:5e57] (unknown
- [IPv6:2a02:a03f:eaf9:5401:5fb3:a398:4351:5e57])
- by apollo.dupie.be (Postfix) with ESMTPSA id 80F961520E01;
- Wed, 21 Jan 2026 15:22:28 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1769005348;
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1viZVV-0004e2-6G
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 09:48:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769006905;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lcFahGtTrSSofhgqL/xqxKFTUvTWOg8hcCMYycVIGTA=;
- b=iqaAr5utpqQtiBR7oABM/p751C80VNfpauOC5TNxJEFSm1BkFPNOFiDKws1d0MK3Fledok
- 0Qhdzgv1dqtrg/3lzSLI08bQFYVVudSgG1+KKudXMdrBlEJO6T4Jqnpfl9Gw28Xu1pQdma
- Hpm7VqicgpeMAmf9RDsC0RDBwLmXINfyzpwOqiimZw5EeCCGfExg/Gv5Ddwxu9HgdFRrO4
- 4rA3ldFcun5T94WIbUm/8HXMg7HjB9KC5EkGVI/pNDpLE67VW/OE/ZoEgJM5VoEl4Dk7rD
- rGMy4pDx18PV8x+CopRaZH1RJjnHfer/FCdBAA1ncTMSGVkR9cgj5JWv1zBpVA==
-Message-ID: <c2f9fc69-034b-4dc3-a92f-d43e13a5dfed@dupond.be>
-Date: Wed, 21 Jan 2026 15:22:28 +0100
+ bh=d1yEq8agaiClEjvop9wIX9ws+n9IYQVnAS+x1GnNwE0=;
+ b=QZxuuCBLkSxvI3uj32FC9wDCBsSaWlb2Qabq4ggBNaaO7o9Q6/itCf7XY9DxvgwmnAgGS4
+ ChYN1kH8VNZTSNvCGmkSGX8sQi5LNjU3Ilw/0dvrsUoiyzdl6RSDcvaP1Z7U6tT+fIqhOi
+ EtJaJjZ1w1J4snLUarGRIc9UGNh/kqY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-689-FmwPDO6YMqyJILc_4YUyyg-1; Wed, 21 Jan 2026 09:48:23 -0500
+X-MC-Unique: FmwPDO6YMqyJILc_4YUyyg-1
+X-Mimecast-MFC-AGG-ID: FmwPDO6YMqyJILc_4YUyyg_1769006903
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-432488a0ce8so5585609f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 06:48:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1769006902; x=1769611702; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=d1yEq8agaiClEjvop9wIX9ws+n9IYQVnAS+x1GnNwE0=;
+ b=WccFArJ+TNXIRor0tap1Dht5Wt5trbxxTTyvIqwp0FdktrSKoDFiN8vHbaDToA3cYM
+ Ct0JYbEmVRZPQRpSMiHFE8KmnT+qUk+2IMnildbNiIKV2c+pdHKQs0ubkry+ESR21ID7
+ x6tfEwWgAwuIsuvJ/bf/Npde2h+7wFtJSksaEQ3+uzvhOSNC3X2Tjh2i/TwCntdr/FfL
+ nXJPOXW/ARpcDVDjAzVrlsXYWmCLzLPw3VVx83THlbTDI4CRYv3XU+z8M2/qIf4l3hEi
+ BKADKnY5nNA86D7m+QnNx6dJJ1C/WUAs04J5GbYttU5EFHSsYUpxrtQFTF1ILPhzJYKW
+ pr1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769006902; x=1769611702;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=d1yEq8agaiClEjvop9wIX9ws+n9IYQVnAS+x1GnNwE0=;
+ b=YSohK/4z/uy6NMqiTrTaEVPu+Ffl925/jSjU93idVRZjNVMGROEIhlMiN5QjV+8CI/
+ oUz5C7gAR9yyufKcJ1QPkCZGo80tUO2rQIZNfkVGcIVowtEhKVVqxdDm66rpeUh7BUKL
+ go1fQrAwuIfFmC1U8HF0RtToUJ3b2AJEWeuexMf74ELaSoQblWtanFvnChhakp1uHLCe
+ Sb+eOawOIM/UuiOTPs9ci7y7X78y8IA4SIZRxctzD4bv0g+lzCIhhtKo6FejzcxgP0Kw
+ pmoY+qKxkhe8wkFYTL3aMmJgfvG1Z4nimP/vYKt0vooMpZK7VA63a5wDW4CT/GijxV6Q
+ L52A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUOPUwIN4TgRPosM6523Se92SyHv/nwepkXdJn5dHzA8GwSOGUwh3/BB5xCZwXIqZdYyq9hDI5JHbr6@nongnu.org
+X-Gm-Message-State: AOJu0Yzww5dgSVbYEX0DhCH1hCjec+dQ2EY5SmH/aprOQlbQwiHY3oDn
+ geUVzdyNQTd4b90uiz5gTO2Wi4I3xd4QGo9GI098XRTiyRCyo+TDuNcKvrElh4iDKPY93G/1HQi
+ LA//6gc/KbogjVsL3o7glVfPo+WzgipIwW21DxHzkT0L6LqJAs4uw6W+7
+X-Gm-Gg: AZuq6aKwZpH/rF1KcS9au5wCDzbGpb265svzzHmkoq5WioOT8LsY11tde3UKG3Yn8NP
+ QqrcWIoMwFZNaDxNE9eH35UaHqHxxLSbrvJ9DmG21fh1comQmB+vI9iqczUg60IkcSJEiKlZCSs
+ TmCy+Bmw267dEpOa40eGftmVr4quhEqT1kTBGt01Aa6pUBJoeJegBVgwGEXaqHMMAKQPvKnnC5O
+ oTqwlC+TofwXMwf1vDM0QA77ANt4B7MWwGiEU9Lha8j7LFd2Rn0g3Nz+STg0PDD7wrnxZ1ZcvWn
+ o9iyZ8l48Mq76Aj+jUmlRfpR280DblEz6PPOykG4s8M9KXqMtPdE511CGu1wTcCCi4isyX+NHpu
+ wCtKQ+gfzQarfkbOB5jPWQ+mHmDpVLNjLii7+v5paE4NWPfOwyYkxHSb4XS8=
+X-Received: by 2002:a05:6000:4210:b0:430:f68f:ee96 with SMTP id
+ ffacd0b85a97d-4358ff56807mr9143098f8f.36.1769006902610; 
+ Wed, 21 Jan 2026 06:48:22 -0800 (PST)
+X-Received: by 2002:a05:6000:4210:b0:430:f68f:ee96 with SMTP id
+ ffacd0b85a97d-4358ff56807mr9143051f8f.36.1769006902075; 
+ Wed, 21 Jan 2026 06:48:22 -0800 (PST)
+Received: from rh (p200300f6af31d00062ddfb9151537832.dip0.t-ipconnect.de.
+ [2003:f6:af31:d000:62dd:fb91:5153:7832])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43596b62700sm8490158f8f.42.2026.01.21.06.48.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 Jan 2026 06:48:21 -0800 (PST)
+Date: Wed, 21 Jan 2026 15:48:20 +0100 (CET)
+From: Sebastian Ott <sebott@redhat.com>
+To: Cornelia Huck <cohuck@redhat.com>
+cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Eric Auger <eric.auger@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 1/2] arm: add {get,set}_dczid_bs helpers
+In-Reply-To: <20260105154119.59853-2-cohuck@redhat.com>
+Message-ID: <6308d1a1-3e26-1eab-6fd6-0f855ae74911@redhat.com>
+References: <20260105154119.59853-1-cohuck@redhat.com>
+ <20260105154119.59853-2-cohuck@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block/qcow2-bitmap: remove inconsistent bitmaps when
- loading
-To: Polina Vishneva <polina.vishneva@virtuozzo.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- John Snow <jsnow@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Eric Blake <eblake@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Den Lunev <den@virtuozzo.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-References: <20260120171226.1042260-1-polina.vishneva@virtuozzo.com>
-Content-Language: en-US, en-GB, nl-BE
-From: Jean-Louis Dupond <jean-louis@dupond.be>
-In-Reply-To: <20260120171226.1042260-1-polina.vishneva@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
- helo=apollo.dupie.be
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,73 +121,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Would this also solve https://gitlab.com/qemu-project/qemu/-/issues/2909 
-perhaps?
-
-On 20/01/2026 18:20, Polina Vishneva wrote:
-> Marking the bitmaps that are found in_use in the image as inconsistent
-> works in the most cases. However, in some cases, like migration,
-> it's critical for bdrv_dirty_bitmap_check() to always pass.
+On Mon, 5 Jan 2026, Cornelia Huck wrote:
+> Most accesses to cpu->dcz_blocksize really care about
+> DCZID_EL0.BS (i.e. the part of the register that does not change at
+> different EL.) Wean them off directly dealing with cpu->dcz_blocksize
+> so that we can switch to handling DCZID_EL0 differently in a followup
+> patch.
 >
-> Instead of asking the user to manually request the deletion of
-> inconsistent bitmaps, delete them automatically if we can,
-> while respecting the possible edge cases like repairing an image with
-> overlaps.
->
-> Originally-by: Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>
-> Signed-off-by: Polina Vishneva <polina.vishneva@virtuozzo.com>
-> ---
->   block/qcow2-bitmap.c                          | 111 ++++++++++++++++--
->   block/qcow2.c                                 |   9 ++
->   block/qcow2.h                                 |   2 +
->   tests/qemu-iotests/tests/migrate-bitmaps-test |   2 +
->   tests/qemu-iotests/tests/qemu-img-bitmaps     |   2 +-
->   tests/qemu-iotests/tests/qemu-img-bitmaps.out |  36 +++---
->   .../qemu-iotests/tests/qemu-img-close-errors  |   3 +-
->   7 files changed, 132 insertions(+), 33 deletions(-)
->
-> diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
-> index 256ec99878..6ab857ad1a 100644
-> --- a/block/qcow2-bitmap.c
-> +++ b/block/qcow2-bitmap.c
-> @@ -1008,6 +1052,32 @@ qcow2_load_dirty_bitmaps(BlockDriverState *bs,
->               continue;
->           }
->   
-> +        if ((bm->flags & BME_FLAG_IN_USE) && can_write(bs) &&
-> +            !(s->flags & BDRV_O_CHECK))
-> +        {
-> +            /*
-> +             * Remove inconsistent bitmaps.
-> +             * This is to avoid errors on migrations, when
-> +             * whenbdrv_dirty_bitmap_check() could be called on a bitmap
-Small typo here btw :)
-> +             * marked as inconsistent, causing an error and requiring the user
-> +             * to manually request inconsistent bitmap deletion.
-> +             *
-> +             * In case we have a corrupted image, there's no guarantee that
-> +             * update_ext_header_and_dir() will succeed.
-> +             * This would render some images impossible to repair.
-> +             * Therefore, skip it on the image open if we're in the check mode
-> +             * (and do it later when the image is successfully repaired).
-> +             */
-> +            qemu_log("Removing inconsistent bitmap '%s' at image '%s'\n",
-> +                     bm->name, bs->filename);
-> +
-> +            QSIMPLEQ_REMOVE(bm_list, bm, Qcow2Bitmap, entry);
-> +            free_bitmap_clusters(bs, &bm->table);
-> +            bitmap_free(bm);
-> +            removed_persistent_bitmaps = true;
-> +            continue;
-> +        }
-> +
->           bitmap = load_bitmap(bs, bm, errp);
->           if (bitmap == NULL) {
->               goto fail;
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 
-
-Thanks
-Jean-Louis
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
 
 
