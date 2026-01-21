@@ -4,68 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B6FC44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 15:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 397A0C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 15:47:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viaMH-0007aN-P7; Wed, 21 Jan 2026 10:43:02 -0500
+	id 1viaPY-0003EP-Pf; Wed, 21 Jan 2026 10:46:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1viaMA-0007RD-Vk; Wed, 21 Jan 2026 10:42:55 -0500
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1viaM7-00028D-T4; Wed, 21 Jan 2026 10:42:54 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwA3PlL083Bp62BHAw--.11475S2;
- Wed, 21 Jan 2026 23:42:44 +0800 (CST)
-Received: from [192.168.31.151] (unknown [113.246.118.47])
- by mail (Coremail) with SMTP id AQAAfwCX8e7y83BpE38VAA--.44000S2;
- Wed, 21 Jan 2026 23:42:42 +0800 (CST)
-Message-ID: <014d8d81-cf3f-41bf-ac0b-e7746aed520f@phytium.com.cn>
-Date: Wed, 21 Jan 2026 23:42:41 +0800
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1viaPI-00031k-JL
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 10:46:14 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1viaPC-0003DQ-Ny
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 10:46:06 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 812DC600AA;
+ Wed, 21 Jan 2026 15:46:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F184C4CEF1;
+ Wed, 21 Jan 2026 15:46:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1769010360;
+ bh=+Om1I8Qh73iaFr4puT+0UxX0bwvNiUNtnSFTJht76Us=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=BlB0UTbmbX/ALr9HnC7x/Ui8r3gI1kyEjOvHLSwtaUm1zPRG0b8dr3lhFHrPhQRA3
+ fqKrr0BS89iArRJqufirE2+KGmC7lKcF1LkwH9wr8pwYT1r1FWkPuB5y7zZvV1K00B
+ A4e5ovbRZu8hA/mRqDFDObCFqPt8S5dBkoZgOB+FRbDdnjKR9CRDcDzRkjnKndXh5c
+ /7Stpc74x4K58bH1leGP0gTHDxF89o3YhA7CfBCkFXpQWGHBmT6So7VaDy7fpDAHFz
+ dYi8Q8ur0vLC9nPCBejjwgVFrJ1DBkFeksdRldvmNQwRUCGzxTKZZi93cYmzvKL9TK
+ lvLh3CxnumsvA==
+Received: from mchehab by mail.kernel.org with local (Exim 4.99)
+ (envelope-from <mchehab+huawei@kernel.org>)
+ id 1viaP8-00000003sfI-0t5r; Wed, 21 Jan 2026 16:45:58 +0100
+Date: Wed, 21 Jan 2026 16:45:58 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
+ Michael S Tsirkin <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-devel@nongnu.org, 
+ Igor Mammedov <imammedo@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH 02/13] scripts/qmp_helper: add missing CXL UEFI GUID
+Message-ID: <aXDx_N3YRACBmC4I@foz.lan>
+References: <cover.1768993993.git.mchehab+huawei@kernel.org>
+ <f229d756fe76c34e6dfa48a98f1ee46f4325fc76.1768993993.git.mchehab+huawei@kernel.org>
+ <20260121122604.00001609@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v9 3/8] hw/misc: Introduce iommu-testdev for bare-metal
- IOMMU testing
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mostafa Saleh <smostafa@google.com>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-References: <20260119161112.3841386-1-tangtao1634@phytium.com.cn>
- <20260119161112.3841386-4-tangtao1634@phytium.com.cn>
- <c9308d86-889f-4ca3-8f67-eb6b253987da@linaro.org>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <c9308d86-889f-4ca3-8f67-eb6b253987da@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwCX8e7y83BpE38VAA--.44000S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQACBWlv4X8GvAABsl
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxWr1rGF1xGrW7WFy5ur48JFb_yoWrWw4DpF
- ykGFWfKFW8JrWxCr1fZw18tFy5GF4kJw1jkr1xtF15Wr9xAry0qr1jgryjg348Gw4kZF10
- vw1Dta4Uuw4rZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260121122604.00001609@huawei.com>
+Received-SPF: pass client-ip=172.105.4.254;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,120 +79,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Jan 21, 2026 at 12:26:04PM +0000, Jonathan Cameron wrote:
+> On Wed, 21 Jan 2026 12:25:10 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > The UEFI 2.11 - N.2.14. CXL Component Events Section states that
+> > XL events are described at CXL specification 3.2:
+> CXL
+> 
+> >         8.2.10.2.1 Event Records
+> > 
+> > Add the GUIDs defined here to fuzzy logic error injection code.
+> 
+> +CC linux-cxl as more folk there who will be familiar with this
+> stuff.
+> 
+> Some of these won't be seen on a host. The same event
+> infrastructure is used for reporting on out of band interfaces
+> and some in band ones, but not ones that will turn up on the
+> mailboxes that firmware will be using to get info.
 
-On 2026/1/21 02:31, Philippe Mathieu-Daudé wrote:
-> On 19/1/26 17:11, Tao Tang wrote:
->> Add a minimal PCI test device designed to exercise IOMMU translation
->> (such as ARM SMMUv3) without requiring guest firmware or OS. The device
->> provides MMIO registers to configure and trigger DMA operations with
->> controllable attributes (security state, address space), enabling
->> deterministic IOMMU testing.
->>
->> Key features:
->> - Bare-metal IOMMU testing via simple MMIO interface
->> - Configurable DMA attributes for security states and address spaces
->> - Write-then-read verification pattern with automatic result checking
->>
->> The device performs a deterministic DMA test pattern: write a known
->> value (0x12345678) to a configured GVA, read it back, and verify data
->> integrity. Results are reported through a dedicated result register,
->> eliminating the need for complex interrupt handling or driver
->> infrastructure in tests.
->>
->> This is purely a test device and not intended for production use or
->> machine realism. It complements existing test infrastructure like
->> pci-testdev but focuses specifically on IOMMU translation path
->> validation.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Reviewed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
->> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>   MAINTAINERS                     |   7 +
->>   docs/specs/index.rst            |   1 +
->>   docs/specs/iommu-testdev.rst    | 138 ++++++++++++++
->>   hw/misc/Kconfig                 |   5 +
->>   hw/misc/iommu-testdev.c         | 318 ++++++++++++++++++++++++++++++++
->>   hw/misc/meson.build             |   1 +
->>   hw/misc/trace-events            |  10 +
->>   include/hw/misc/iommu-testdev.h |  87 +++++++++
->>   8 files changed, 567 insertions(+)
->>   create mode 100644 docs/specs/iommu-testdev.rst
->>   create mode 100644 hw/misc/iommu-testdev.c
->>   create mode 100644 include/hw/misc/iommu-testdev.h
->
->
->> diff --git a/docs/specs/iommu-testdev.rst b/docs/specs/iommu-testdev.rst
->> new file mode 100644
->> index 0000000000..e15f9a55a7
->> --- /dev/null
->> +++ b/docs/specs/iommu-testdev.rst
->> @@ -0,0 +1,138 @@
->
-> Squashing 'SPDX-License-Identifier: GPL-2.0-or-later' like .c & .h.
+Good to know, but UEFI 2.11 still mentions all of them as
+possible GUIDs:
 
-Hi Philippe,
+    https://uefi.org/specs/UEFI/2.11/Apx_N_Common_Platform_Error_Record.html#cxl-component-events-section
 
-Thanks for catching this. I’ll pay attention to this in the future.
+So, the UEFI 2.11 doesn't explicitly state they won't de delivered
+to OSPM. Quite contrary, they're listed as valid values for CPER,
+even if, in practice, they won't.
 
-Regards,
+This is just a small set of variables, that won't bring any major
+impact on the code. So, I prefer to keep them in sync with the spec.
+If they end removing the unused ones, we can update it in the future.
 
-Tao
+If you want, I can add a note at the next version with your
+comments about them.
 
+> 
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > ---
+> >  scripts/qmp_helper.py | 25 +++++++++++++++++++++++++
+> >  1 file changed, 25 insertions(+)
+> > 
+> > diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
+> > index 249a8c7187d1..7e786c4adfd9 100755
+> > --- a/scripts/qmp_helper.py
+> > +++ b/scripts/qmp_helper.py
+> > @@ -711,3 +711,28 @@ class cper_guid:
+> >      CPER_CXL_PROT_ERR = guid(0x80B9EFB4, 0x52B5, 0x4DE3,
+> >                               [0xA7, 0x77, 0x68, 0x78,
+> >                                0x4B, 0x77, 0x10, 0x48])
+> > +
+> > +    CPER_CXL_EVT_GEN_MEDIA = guid(0xFBCD0A77, 0xC260, 0x417F,
+> > +                                  [0x85, 0xA9, 0x08, 0x8B,
+> > +                                   0x16, 0x21, 0xEB, 0xA6])
+> > +    CPER_CXL_EVT_DRAM = guid(0x601DCBB3, 0x9C06, 0x4EAB,
+> > +                             [0xB8, 0xAF, 0x4E, 0x9B,
+> > +                              0xFB, 0x5C, 0x96, 0x24])
+> > +    CPER_CXL_EVT_MEM_MODULE = guid(0xFE927475, 0xDD59, 0x4339,
+> > +                                   [0xA5, 0x86, 0x79, 0xBA,
+> > +                                    0xB1, 0x13, 0xBC, 0x74])
+> > +    CPER_CXL_EVT_MEM_SPARING = guid(0xE71F3A40, 0x2D29, 0x4092,
+> > +                                    [0x8A, 0x39, 0x4D, 0x1C,
+> > +                                     0x96, 0x6C, 0x7C, 0x65])
+> 
+> The above are all fine I think.
+> 
+> From here on I think they will never come via a CPER record.
+> 
+> > +    CPER_CXL_EVT_PHY_SW = guid(0x77CF9271, 0x9C02, 0x470B,
+> > +                               [0x9F, 0xE4, 0xBC, 0x7B,
+> > +                                0x75, 0xF2, 0xDA, 0x97])
+> 
+> This is only going to surface over either out of band or switch CCI
+> I'd be very surprised to see a firmware anywhere near these.
+> More specifically they are only defined in the Fabric management
+> section of the spec, which strongly hints we'd not expect host firmware
+> to know anything about them. 
+> The events reported may well span bits of the topology currently
+> assigned to different hosts.
+> 
+> > +    CPER_CXL_EVT_VIRT_SW = guid(0x40D26425, 0x3396, 0x4C4D,
+> > +                                [0xA5, 0xDA, 0x3D, 0x47,
+> > +                                  0x2A, 0x63, 0xAF, 0x25])
+> 
+> Also a fabric management event.
+> 
+> > +    CPER_CXL_EVT_MLD_PORT = guid(0x8DC44363, 0x0C96, 0x4710,
+> > +                                 [0xB7, 0xBF, 0x04, 0xBB,
+> > +                                  0x99, 0x53, 0x4C, 0x3F])
+> 
+> Also a fabric management event.
+> 
+> > +    CPER_CXL_EVT_DYNA_CAP = guid(0xCA95AFA7, 0xF183, 0x4018,
+> > +                                 [0x8C, 0x2F, 0x95, 0x26,
+> > +                                  0x8E, 0x10, 0x1A, 0x2A])
+> These are never routed to firmware. They are part of the OS only
+> managed flows for dynamic capacity.
+> They have their own event log on the hardware and for this particular
+> set most relevant thing is in
+> CXL 4.0 Table 8-235 Set Event Interrupt Policy Input Payload
+> which controls whether a firmware interrupt or MSIX is used signal
+> the Dynamic Capacity Event Log Interrupt Settings only allows
+> for MSI/MSI-X, not FW interrupt (EFN VDM) like the other logs.
+> 
+> 
+> Jonathan
+> 
+> 
 
->
->> +iommu-testdev — IOMMU test device for bare-metal testing
->> +=========================================================
->> +
->> +Overview
->> +--------
->> +``iommu-testdev`` is a minimal, test-only PCI device designed to 
->> exercise
->> +IOMMU translation (such as ARM SMMUv3) without requiring firmware or 
->> a guest
->> +OS. Tests can populate IOMMU translation tables with known values 
->> and trigger
->> +DMA operations that flow through the IOMMU translation path. It is 
->> **not** a
->> +faithful PCIe endpoint and must be considered a QEMU-internal test 
->> vehicle.
->   ...
->
->> diff --git a/hw/misc/iommu-testdev.c b/hw/misc/iommu-testdev.c
->> new file mode 100644
->> index 0000000000..15eb6de78a
->> --- /dev/null
->> +++ b/hw/misc/iommu-testdev.c
->> @@ -0,0 +1,318 @@
->> +/*
->> + * A test device for IOMMU
->> + *
->> + * Copyright (c) 2026 Phytium Technology
->> + *
->> + * Author:
->> + *  Tao Tang <tangtao1634@phytium.com.cn>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->
->
->> diff --git a/include/hw/misc/iommu-testdev.h 
->> b/include/hw/misc/iommu-testdev.h
->> new file mode 100644
->> index 0000000000..338365947c
->> --- /dev/null
->> +++ b/include/hw/misc/iommu-testdev.h
->> @@ -0,0 +1,87 @@
->> +/*
->> + * A test device for IOMMU
->> + *
->> + * Copyright (c) 2026 Phytium Technology
->> + *
->> + * Author:
->> + *  Tao Tang <tangtao1634@phytium.com.cn>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
-
+-- 
+Thanks,
+Mauro
 
