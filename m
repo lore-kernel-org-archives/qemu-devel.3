@@ -4,102 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83903D4697D
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 22:22:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE509C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 22:22:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viga1-0007V1-PK; Wed, 21 Jan 2026 17:21:37 -0500
+	id 1viga4-0007Y6-6Q; Wed, 21 Jan 2026 17:21:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vigZw-0007Nt-PM; Wed, 21 Jan 2026 17:21:32 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1viga2-0007Vx-OS; Wed, 21 Jan 2026 17:21:38 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vigZv-0003hW-2v; Wed, 21 Jan 2026 17:21:32 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60LD05OU006258;
- Wed, 21 Jan 2026 22:21:26 GMT
+ id 1viga0-0003iT-Qy; Wed, 21 Jan 2026 17:21:38 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60LC5Ntw021755;
+ Wed, 21 Jan 2026 22:21:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=SZ6rjewYExYpU3EnA
- JJL8Qg2URw2/DN00ZZ6Galxmis=; b=ELwp1ioCQdHW5x0BNcL0L0/SRR0YTCV1o
- aHM8SYPoalKSDIfRs0zXHTcPfG5YBubRH8KmyLPF2rb+7P5I0HiGCm/ThhuwR26u
- F7F+YRYV+toezvwN8oYyBj5JSywF5Ivy32cOYOBD4tIhAdxZLrGQGeVymDbKGk/w
- Lej6QrqGCQCA1FpJtnNdBT5SNz2VOaZCte2w4601roKT7MqOJOIGDdBd9UiLP/wv
- Bg1N+cvGOxa2Txm6AuRbZIY3CPdP+MUmt4Sh6z2zHKD0GXBxLvCyVmOTMmUaPYaL
- hZTaR6X4Ljr87hiEj6p1Jklt7wFFjuV5PFhyxbbalo3t0/TXZjrlg==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br23s6tkt-1
+ :mime-version:references:subject:to; s=pp1; bh=o61UIlglVQoN4+A+A
+ XKsI3scxxbyQdcI5Nm+jXej0FY=; b=Lq9SDQz4MkRH5S/b96OpPmprgfkeEQgI4
+ POBT9vFOCKRlb6giH9rSXy+OZiZxOjqa4NvA6KyWUX3nCwPkSg2wjsIXdMtezeZu
+ T4jWlybhoVaqlG4LqEdsWe85RL/gMZwA/iCPvy5BG9vWrIEyoiLjrvgEOWWdJgKG
+ rhV33XrG/8r4pFWxz/UQQh1fp+X+P38vwz3e1N/9YH0YdPhwgvIoalyagOYH3+Fh
+ ADun3BueU1uIuNu/yWGMoPSYjkq66rST+wfrvq2g8lVaP8EW6GgsClDC6jUEeD3J
+ BrUGESO1dKlVbkoAOgJ12LGqMnZKhYKLJrS4kaT26bUcwY8Zd0A6g==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bt6129rry-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 Jan 2026 22:21:25 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60LMDnN4024634;
- Wed, 21 Jan 2026 22:21:24 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4brxarw57d-1
+ Wed, 21 Jan 2026 22:21:26 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60LJFk4t009295;
+ Wed, 21 Jan 2026 22:21:26 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brp8keres-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 Jan 2026 22:21:24 +0000
+ Wed, 21 Jan 2026 22:21:26 +0000
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60LMLNi834734558
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60LMLOQ852887954
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 21 Jan 2026 22:21:23 GMT
+ Wed, 21 Jan 2026 22:21:24 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1727920043;
+ by IMSVA (Postfix) with ESMTP id 3EEF120043;
+ Wed, 21 Jan 2026 22:21:24 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C358620040;
  Wed, 21 Jan 2026 22:21:23 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9247020040;
- Wed, 21 Jan 2026 22:21:22 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.87.153.49])
  by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 21 Jan 2026 22:21:22 +0000 (GMT)
+ Wed, 21 Jan 2026 22:21:23 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
  qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 1/3] target/s390x: Dump Floating-Point-Control Register
-Date: Wed, 21 Jan 2026 23:12:31 +0100
-Message-ID: <20260121222116.713325-2-iii@linux.ibm.com>
+Subject: [PATCH 3/3] tests/tcg/s390x: Test DIVIDE TO INTEGER
+Date: Wed, 21 Jan 2026 23:12:33 +0100
+Message-ID: <20260121222116.713325-4-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121222116.713325-1-iii@linux.ibm.com>
 References: <20260121222116.713325-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 5GQWqxmMCY3CbdpOuGvKd4e6rz2uQbYS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDE4NyBTYWx0ZWRfXy5oKLJKLeiaW
- HQgdxj09NKLDBUBSYXfiTAhersqMwEQPs11VFhTGpsEWd5bdAIfS3Q5rEPO1SIHEVzpLN+n3R1k
- HgqRrmdTwxRpzJGZKTHwYM/hAlXX83Ss1E8qXGu22Y8DlNd5yOwANJyGtIBZIyI99MEA10ufraw
- ot7eO2+P7gjTHXEvhf4ISxWvK1PxpQhFCpzIUGpCNASaedjiFJ3Oxtw9y+zFkNC5SrbAq3wFjbs
- S0N/RsSf/pxZL/P2rOAOvlni+bpcLBrjcSBxa6Pt2dWdaPJ39W1ogmdfAP1hxnWfCba0SYrPc2g
- g2YZeBnU5PZ3chu4E5RrI2PHhTW0GeABWJihIpGGkl2WKKW43E5B8YQ3+o4b7wNNA8fYmATKDNI
- IMNFUEyGWLL9X1EXRo+IYvCtUBPYiR5k3EEIB7VB3w+QzzpJUYPjWXxPTdWw3UNFgtcbHJdTc3p
- ylYcjWZtZVk6jHXcNdQ==
-X-Authority-Analysis: v=2.4 cv=J9SnLQnS c=1 sm=1 tr=0 ts=69715165 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-GUID: 0BRHvNcMWmjwpXemoVqSsHhAaJdTRLLl
+X-Authority-Analysis: v=2.4 cv=LaIxKzfi c=1 sm=1 tr=0 ts=69715166 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=cezZA3FWbPs5aIUPbxMA:9
-X-Proofpoint-ORIG-GUID: 5GQWqxmMCY3CbdpOuGvKd4e6rz2uQbYS
+ a=h_s7ELEApH8KyIyOhg4A:9
+X-Proofpoint-ORIG-GUID: 0BRHvNcMWmjwpXemoVqSsHhAaJdTRLLl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDE4NyBTYWx0ZWRfX/DZeGsrJiBHC
+ MY/xGI2dwIkUakK8+M8rbHBIn5Z0gOz3pWMcb4t+p9apV6WTnBu++fnwKw2fdZV0fu/RC27/QVR
+ CiJjHV1n+6grHv8TYrjgLtSXSi8y9dH9AGkkt9Atfo3QICavYDakJveUJDDUpiCG9TLFUORtahP
+ NbEVHxREGMVwKOFOpFP0Xem7xf0EHwNzlQpy5l2/+DJxW7ijhKVctBXnUWwZFdDle+SaxhyE5BW
+ sqKBan5CfRqzbIH6cV76mKetfWBfxPyIf71izyqrCqfkIJPVlQdIIKOQS0MqY/t49l+YeLDJoe2
+ 8uvonWEzvUFO66HosJ/AyIRYuV4vEgVGuWW4J/lIY4hydzMCl0J9586EvuKRV+GDZM/ZxRd2RFj
+ Hqq/XvY8MEA6K72wfX5Q8hbX5DSKlRh8On1qq/Gn18/9XAUMpzvIzh2woPZlcX6felarO8F8bwx
+ /gU3JqJAmKdlNIyY+pw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
  definitions=2026-01-21_04,2026-01-20_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 adultscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0
+ bulkscore=0 adultscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601210187
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -118,26 +118,260 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Knowing the value of this register is very useful for debugging
-floating-point code.
+Add a test to prevent regressions. Data is generated using a
+libFuzzer-based fuzzer and hopefully covers all the important corner
+cases.
 
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- target/s390x/cpu-dump.c | 1 +
- 1 file changed, 1 insertion(+)
+ tests/tcg/s390x/Makefile.target     |   3 +
+ tests/tcg/s390x/divide-to-integer.c | 215 ++++++++++++++++++++++++++++
+ 2 files changed, 218 insertions(+)
+ create mode 100644 tests/tcg/s390x/divide-to-integer.c
 
-diff --git a/target/s390x/cpu-dump.c b/target/s390x/cpu-dump.c
-index 869d3a4ad54..5b852928031 100644
---- a/target/s390x/cpu-dump.c
-+++ b/target/s390x/cpu-dump.c
-@@ -63,6 +63,7 @@ void s390_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-                              (i % 4) == 3 ? '\n' : ' ');
-             }
-         }
-+        qemu_fprintf(f, "FPC=%08" PRIx32 "\n", env->fpc);
-     }
+diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
+index da5fe71a407..d5ec01d04fd 100644
+--- a/tests/tcg/s390x/Makefile.target
++++ b/tests/tcg/s390x/Makefile.target
+@@ -49,14 +49,17 @@ TESTS+=cvd
+ TESTS+=cvb
+ TESTS+=ts
+ TESTS+=ex-smc
++TESTS+=divide-to-integer
  
- #ifndef CONFIG_USER_ONLY
+ cdsg: CFLAGS+=-pthread
+ cdsg: LDFLAGS+=-pthread
+ 
+ rxsbg: CFLAGS+=-O2
++divide-to-integer: CFLAGS+=-O2
+ 
+ cgebra: LDFLAGS+=-lm
+ clgebr: LDFLAGS+=-lm
++divide-to-integer: LDFLAGS+=-lm
+ 
+ include $(S390X_SRC)/pgm-specification.mak
+ $(PGM_SPECIFICATION_TESTS): pgm-specification-user.o
+diff --git a/tests/tcg/s390x/divide-to-integer.c b/tests/tcg/s390x/divide-to-integer.c
+new file mode 100644
+index 00000000000..49a18d07b31
+--- /dev/null
++++ b/tests/tcg/s390x/divide-to-integer.c
+@@ -0,0 +1,215 @@
++/*
++ * Test DIEBR and DIDBR instructions.
++ *
++ * Most inputs were discovered by fuzzing and exercise various corner cases in
++ * the helpers.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <signal.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <asm/ucontext.h>
++
++static void sigfpe_handler(int sig, siginfo_t *info, void *puc)
++{
++    struct ucontext *uc = puc;
++    unsigned short *xr_insn;
++    int r;
++
++    xr_insn = (unsigned short *)(uc->uc_mcontext.regs.psw.addr - 6);
++    r = *xr_insn & 0xf;
++    uc->uc_mcontext.regs.gprs[r] = sig;
++}
++
++#define DIVIDE_TO_INTEGER(name, floatN)                                        \
++static inline __attribute__((__always_inline__)) int                           \
++name(floatN *r1, floatN r2, floatN *r3, int m4, int *sig)                      \
++{                                                                              \
++    int cc;                                                                    \
++                                                                               \
++    asm(/* Make the initial CC predictable for suppression tests */            \
++        "xr %[sig],%[sig]\n"                                                   \
++        #name " %[r1],%[r3],%[r2],%[m4]\n"                                     \
++        "ipm %[cc]\n"                                                          \
++        "srl %[cc],28"                                                         \
++        /*                                                                     \
++         * Use earlyclobbers to prevent the compiler from reusing floating     \
++         * point registers. This instruction doesn't like it.                  \
++         */                                                                    \
++        : [r1] "+&f" (*r1), [r3] "+&f" (*r3), [sig] "=r" (*sig), [cc] "=d" (cc)\
++        : [r2] "f" (r2), [m4] "i" (m4)                                         \
++        : "cc");                                                               \
++                                                                               \
++    return cc;                                                                 \
++}
++
++DIVIDE_TO_INTEGER(diebr, float)
++DIVIDE_TO_INTEGER(didbr, double)
++
++#define TEST_DIVIDE_TO_INTEGER(name, intN, int_fmt, floatN, float_fmt)         \
++static inline __attribute__((__always_inline__)) int                           \
++test_ ## name(unsigned intN r1i, unsigned intN r2i, int m4, int fpc,           \
++              unsigned intN r1o, unsigned intN r3o, int cco, unsigned int fpco,\
++              int sigo)                                                        \
++{                                                                              \
++    union {                                                                    \
++        floatN f;                                                              \
++        unsigned intN i;                                                       \
++    } r1, r2, r3;                                                              \
++    int cc, err = 0, sig;                                                      \
++                                                                               \
++    r1.i = r1i;                                                                \
++    r2.i = r2i;                                                                \
++    r3.i = 0x12345678;                                                         \
++    printf("[ RUN      ] %" float_fmt "(0x%" int_fmt                           \
++           ") / %" float_fmt "(0x%" int_fmt ")\n", r1.f, r1.i, r2.f, r2.i);    \
++    asm volatile("sfpc %[fpc]" : : [fpc] "r" (fpc));                           \
++    cc = name(&r1.f, r2.f, &r3.f, m4, &sig);                                   \
++    asm volatile("stfpc %[fpc]" : [fpc] "=Q" (fpc));                           \
++    if (r1.i != r1o) {                                                         \
++        printf("[  FAILED  ] remainder 0x%" int_fmt                            \
++               " != expected 0x%" int_fmt "\n", r1.i, r1o);                    \
++        err += 1;                                                              \
++    }                                                                          \
++    if (r3.i != r3o) {                                                         \
++        printf("[  FAILED  ] quotient 0x%" int_fmt                             \
++               " != expected 0x%" int_fmt "\n", r3.i, r3o);                    \
++        err += 1;                                                              \
++    }                                                                          \
++    if (cc != cco) {                                                           \
++        printf("[  FAILED  ] cc %d != expected %d\n", cc, cco);                \
++        err += 1;                                                              \
++    }                                                                          \
++    if (fpc != fpco) {                                                         \
++        printf("[  FAILED  ] fpc 0x%x != expected 0x%x\n", fpc, fpco);         \
++        err += 1;                                                              \
++    }                                                                          \
++    if (sig != sigo) {                                                         \
++        printf("[  FAILED  ] signal 0x%x != expected 0x%x\n", sig, sigo);      \
++        err += 1;                                                              \
++    }                                                                          \
++                                                                               \
++    return err;                                                                \
++}
++
++TEST_DIVIDE_TO_INTEGER(diebr, int, "x", float, "f")
++TEST_DIVIDE_TO_INTEGER(didbr, long, "lx", double, "lf")
++
++int main(void)
++{
++    struct sigaction act = {
++        .sa_sigaction = sigfpe_handler,
++        .sa_flags = SA_SIGINFO,
++    };
++    int err = 0;
++
++    /* Set up SIG handler */
++    if (sigaction(SIGFPE, &act, NULL)) {
++        printf("[  FAILED  ] sigaction(SIGFPE) failed\n");
++        return EXIT_FAILURE;
++    }
++
++    /* 451 / 460 */
++    err += test_diebr(0x43e1f1f1, 0x43e61616, 7, 0,
++                      0x43e1f1f1, 0, 0, 0, 0);
++
++    /* 480 / 0 */
++    err += test_diebr(0x43f00000, 0, 0, 0,
++                      0x7fc00000, 0x7fc00000, 1, 0x800000, 0);
++
++    /* QNaN / QNaN */
++    err += test_diebr(0xffffffff, 0xffffffff, 0, 0,
++                      0xffffffff, 0xffffffff, 1, 0, 0);
++
++    /* -2.08E-8 / -2.08E-8 */
++    err += test_diebr(0xb2b2b2b2, 0xb2b2b2b2, 0, 0,
++                      0x80000000, 0x3f800000, 0, 0, 0);
++
++    /* 4.62E-2 / -7.94E-11 */
++    err += test_diebr(0x3d3d3d3d, 0xaeaeaeae, 0, 0,
++                      0x2f38b8c0, 0xce0aaaab, 2, 0, 0);
++
++    /* 1.07E-31 / 2.19 */
++    err += test_diebr(0x0c0c0c0c, 0x400c0c0c, 6, 0,
++                      0xc00c0c0c, 0x3f800000, 0, 0x80000, 0);
++
++    /* 2.98E+29 / -5.7E-29 */
++    err += test_diebr(0x7070ffff, 0x90909090, 0, 0,
++                      0x6431c0c0, 0xbf5562aa, 3, 0, 0);
++
++    /* -2.19E-5 / 2.58E-26 */
++    err += test_diebr(0xb7b7b7b7, 0x15000000, 7, 0,
++                      0x80000000, 0xe237b7b7, 0, 0, 0);
++
++    /* 0 / 0 */
++    err += test_diebr(0, 0, 1, 0,
++                      0x7fc00000, 0x7fc00000, 1, 0x800000, 0);
++
++    /* 4.3E-33 / -2.08E-8 with SIGFPE */
++    err += test_diebr(0x09b2b2b2, 0xb2b2b2b2, 0, 0xfc000007,
++                      0xb2b2b2b1, 0xbf800000, 0, 0xfc000807, SIGFPE);
++
++    /* 1.19E-39 / -1.28E-9 */
++    err += test_diebr(0x000d0100, 0xb0b0b0b0, 6, 0xfc000000,
++                      0x5ed01000, 0x80000000, 0, 0xfc001000, SIGFPE);
++
++    /* 5.35E+7 / -5.21E+20 */
++    err += test_diebr(0x4c4c4c4c, 0xe1e1e1e1, 0, 0xfc000007,
++                      0xe1e1e1e1, 0xbf800000, 0, 0xfc000c07, SIGFPE);
++
++    /* 0 / 0 with SIGFPE */
++    err += test_diebr(0, 0, 0, 0xfc000007,
++                      0, 0x12345678, 0, 0xfc008007, SIGFPE);
++
++    /* 5.76E-16 / 5.39E+34 */
++    err += test_diebr(0x26262626, 0x79262626, 6, 0,
++                      0xf9262626, 0x3f800000, 0, 0x80000, 0);
++
++    /* -4.97E+17 / 2.03E-38 */
++    err += test_diebr(0xdcdcdcdc, 0x00dcdcdc, 7, 0xfc000000,
++                      0x80000000, 0xbb800000, 1, 0xfc000000, 0);
++
++    /* -1.23E+17 / SNaN */
++    err += test_diebr(0xdbdb240b, 0xffac73ff, 4, 0,
++                      0xffec73ff, 0xffec73ff, 1, 0x800000, 0);
++
++    /* 2.34E-38 / 3.27E-33 with SIGFPE */
++    err += test_diebr(0x00ff0987, 0x0987c6f6, 6, 0x08000000,
++                      0x8987c6b6, 0x3f800000, 0, 0x8000800, SIGFPE);
++
++    /* -5.93E+11 / -2.7E+4 */
++    err += test_diebr(0xd30a0040, 0xc6d30a00, 0, 0xc4000000,
++                      0xc74a4400, 0x4ba766c6, 2, 0xc4000000, 0);
++
++    /* 9.86E-32 / -inf */
++    err += test_diebr(0x0c000029, 0xff800000, 0, 0,
++                      0xc000029, 0x80000000, 0, 0, 0);
++
++    /* QNaN / SNaN */
++    err += test_diebr(0xffff94ff, 0xff94ff24, 4, 7,
++                      0xffd4ff24, 0xffd4ff24, 1, 0x800007, 0);
++
++    /* 2.8E-43 / -inf */
++    err += test_diebr(0x000000c8, 0xff800000, 0, 0x7c000007,
++                      0x000000c8, 0x80000000, 0, 0x7c000007, 0);
++
++    /* -1.7E+38 / -inf */
++    err += test_diebr(0xff00003d, 0xff800000, 0, 0,
++                      0xff00003d, 0, 0, 0, 0);
++
++    /* 1.94E-304 / 1.94E-304 */
++    err += test_didbr(0x00e100e100e100e1, 0x00e100e100e100e1, 0, 1,
++                      0, 0x3ff0000000000000, 0, 1, 0);
++
++    /* 4.82E-299 / 5.29E-308 */
++    err += test_didbr(0x0200230200230200, 0x0023020023020023, 0, 0,
++                      0x8001a017d247b3f4, 0x41cb2aa05f000000, 0, 0, 0);
++
++    /* -1.38E-75 / -3.77E+208 */
++    err += test_didbr(0xb063eb3d63b063eb, 0xeb3d63b063eb3d63, 3, 0xe8000000,
++                      0x6b3d63b063eb3d63, 0x3ff0000000000000, 0, 0xe8000c00,
++                      SIGFPE);
++
++    return err ? EXIT_FAILURE : EXIT_SUCCESS;
++}
 -- 
 2.52.0
 
