@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70DA6C44532
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 13:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB6EC44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 13:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viYTt-0005vr-QK; Wed, 21 Jan 2026 08:42:45 -0500
+	id 1viYTr-0005i8-RZ; Wed, 21 Jan 2026 08:42:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1viYTa-0005CK-3x
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:42:28 -0500
-Received: from qs-2001c-snip4-11.eps.apple.com ([57.103.87.33]
+ id 1viYTE-00050l-PW
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:42:06 -0500
+Received: from qs-2001l-snip4-7.eps.apple.com ([57.103.87.120]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1viYTW-0001Oo-3c
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:42:25 -0500
+ id 1viYTD-0001IM-8l
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:42:04 -0500
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-60-percent-14 (Postfix) with ESMTPS id
- 5DFFC18000A3; Wed, 21 Jan 2026 13:42:15 +0000 (UTC)
+ B5EF5180009A; Wed, 21 Jan 2026 13:41:58 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1769002938; x=1771594938;
- bh=MAqqeKbQwR4WEZPLy9SVkmdTt6Yfi3jNZF5s19r1Uoo=;
+ s=sig1; t=1769002922; x=1771594922;
+ bh=HZFE5wKi/P+B2jYZ3RcbjRGS58KxloRLD04g+NruaBU=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=VOw3eY5OOPUGlZpgSqYFpofzNz+2h/xmgDXpvN14Clm8qgULw2M6AUkjjhwTxI1gGwFWHetenvnlu/Z6bGmPQ8A8p4/FfdxCxeQvxSa80UUrTawTUQA0DPxxLOIaWqS5urrNO+07EP5gZIpqoxenUeumqrqJSmeYHvv247qGHU0mWB/X+wS4Cs3HrCEwbX2R/vm0zK4NpFJXrvQNEvY4JZhLY3PAzxpbjM4Dc4ItUwR90vJXM+Q9vcSO1DYdDitGiOPAe2Z4gYxrLenyauk+l75R+yisaVIhSvsvb4we2l73JcFxpPnavuv7P3ccFefZAw7N3ZoFonexDOJ1b/WGLg==
+ b=c9z3TunsqH7Ez5PdhcavRE2gjgVhdEd5yCCL3oUEiAzPw3XxUL1c55P5gxrkmXQ5EFSNFp9U1j/D8FVnoosauHb/qbpO+93VAM0Vh1w0D9vZknFhUhillcCx1VBk6wECdmx7jSc5YSM2rAgJHtZniBQ3vmzNvyksAzp/7Nyc4GIk6XSY/26d5LLtXHvoQXuwWOlV6mHGCVNM7FUgTa8uvLE40UKH64y211oGNM0OVgl9j5Ei/QFK2ZJvSo77Q7gJBxKDJNvVs2KWor8sTLTcID19bUuTt6dwtZ/VriDV0L80vipC9lKOxfAI+DJKA4Na74lGN3n2yMqB52z1SewyOA==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-60-percent-14 (Postfix) with ESMTPSA id
- 2C2A61800164; Wed, 21 Jan 2026 13:42:12 +0000 (UTC)
+ 907B318001BA; Wed, 21 Jan 2026 13:41:55 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: mohamed@unpredictable.fr,
 	qemu-devel@nongnu.org
@@ -51,44 +51,43 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v17 20/21] whpx: enable arm64 builds
-Date: Wed, 21 Jan 2026 14:41:11 +0100
-Message-ID: <20260121134114.9781-21-mohamed@unpredictable.fr>
+Subject: [PATCH v17 14/21] target/arm: cpu: mark WHPX as supporting PSCI 1.3
+Date: Wed, 21 Jan 2026 14:41:05 +0100
+Message-ID: <20260121134114.9781-15-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260121134114.9781-1-mohamed@unpredictable.fr>
 References: <20260121134114.9781-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: JvrTvdahZglyIazG2fXNJw5fs1_MYdkh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDExNSBTYWx0ZWRfX3I3Kokvl+k44
- L9VgkiZc5y/lzPvdaibTvJ6ea7mUKz7LpYQbDCn1bPjVMrQcQ79DB26OyLjm2nbp5fDGrV1IcHt
- rUqeM4cS7BofO+NKBd6qieBbnEYC8xsu4agUajoMvf1MHTruFmDYSA0Hqp2exypp2frmycreqzE
- AUqpUVjf7FiZIXyNaOq6jdKcWHCHgbU7izhhZtrLRzo9m/PVndfM/H3SXLzhh7vGHefvAP6qpod
- 7r9TKdKBzwTFJpWM+0kteaml7DlNz47JK8gtvwPjY4HMz+NnX5xkzTW6I92zICMWWSeAHz0Dem8
- By95ilzDp3Ky7uCUqqN
-X-Authority-Info-Out: v=2.4 cv=EqzfbCcA c=1 sm=1 tr=0 ts=6970d7b9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDExNSBTYWx0ZWRfX/SHz/wEri24h
+ +XMTIUZS44M6UWvc66b9JjP8s3GJZkMuqrFBxpLIBhxMxImMxqWhj6kcPJBKvc2f90SnZz1sdWD
+ fw7W1wPY82EYlbZvPZ/2dB3t3cpW3oYfx+qyY0AERtZ7bofxmfDhTTKL8k9gA9IYnen1j1TRzQf
+ 57GTlwh9m0LBbCKbq4weMk3AqDYETWUYPBhm0vcYTqolOUXeYe5RZ65eRiaC6Cm9i+1KuEbLJcW
+ oharkQ+YEFcv5iGTLctkdsTmzYo4vXV+PRdVIBY5w6AymszIXZRAUrlHriqWyDZp+Xm1UBu7xyd
+ 5HNo6T/1zQsOfal7JoN
+X-Authority-Info-Out: v=2.4 cv=Du1bOW/+ c=1 sm=1 tr=0 ts=6970d7a8
  cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
  a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=Ck9h3XeVBPDugYI9Na4A:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: JvrTvdahZglyIazG2fXNJw5fs1_MYdkh
+ a=KKAkSRfTAAAA:8 a=emIkxkYSJqCgyAM8kcYA:9 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: zWVaTRwP8MgxpFEkgRxqJOj55X4DutZM
+X-Proofpoint-GUID: zWVaTRwP8MgxpFEkgRxqJOj55X4DutZM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
  definitions=2026-01-21_01,2026-01-20_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
- phishscore=0 malwarescore=0 bulkscore=0 mlxlogscore=924 suspectscore=0
- spamscore=0 adultscore=0 mlxscore=0 classifier=spam authscore=0 adjust=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=0 malwarescore=0 bulkscore=0 adultscore=0 clxscore=1030
+ mlxlogscore=999 phishscore=0 mlxscore=0 classifier=spam authscore=0 adjust=0
  reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601210115
-X-JNJ: AAAAAAABcAk2AlWzdXeE1biP/0NWWK6qfLrDdWhf12zNFbhNQk60sF2rxyffjlQ+LOL8l8jONWuf8o8hKcsp5sU7y5DogKam2YmsOZwtTSC6BIaCv+EUxZa7ZVTZ0DBH1zzz1n5X9ZVlCHsIYTqbh4j52Zk9wSKTqzLsRAAlLHmPnl8QDNl5i4SA4xUNIcTlugPw7eEZB89NmxRzS1NPW2jSjbZR7+X3/vcgAiuoXMrIF+0pNuSVSoaa+K1ZfMNfXtKD6PxODGJb1j37weHb4J5D+N8BVyFeVcav2VE5zBBZVi5oktqPGLA6wQX+F10WEYHcOKDxxJt1EiA805M0VN1aqbwS0PVxtdnTDiz6Hlhaa+wCk7Z14QL1hosEZzoFEV4qWiNHt60gTiXyjjQR+SMuSaq0nkuGd9AdTBdAG0WniUlj//QuamukwYDtln0INcjAeu9eRJO3AQd/Olg3JZ0jUe9ebi0wC0vYAHCMupxt0vR2vD/tD1B94dOLAYf5RSEEloIFLj5xJHo2saDGBtSnUZHFrI6Q7IKr7rIlT6CHKTFH5sXqlGzWLeFeTvQ368+grqSIERtEpRFF0x517nW1EFtO/o8m3aTchGU0C3f6wfEK0zP1UleqfI2l1Pk3QhzEru4o8j3FOoFo3k1PcMQNUgn4FVDdL62efreMaBSexfAxYTqu7jREqjXQsRVlqZHrF3iCu2a45l+DObXerHYxmbtXsqgEbWL/W+xbnX4x0+oHnH+mqzOpVnijI9AsOEfcJjMYYxrMNMZcU9vI7vhZWUiqSUoqhvRMidlNSdwVhlTT4Lmfe5i1nlr8lEG0cOgj2J2MHVANNnINCBfQ7lVfv3jTYlMoOysdQMYqMc/+tSLVaQ==
-Received-SPF: pass client-ip=57.103.87.33;
+X-JNJ: AAAAAAABNoBcZBvj8WeOQ91UcFaTWT8tmaIPx7/2l1iKgWb6H9z21AjXEA5O+SGDNIYWvmoWsWxZweoIqy2fNnut0awSfTMhVL+7gAe/irWi85euJijfzAFyGla1cGFtiPulXe0kbhp8pcFJPk/YLNMUEdQQfOJx+NDIYEF/Xu4ISEFraySIuS10UvfkW0Lgj4TXhWa1w7LKlw/c71XSXBHqZcprf8X52oxZ9qvsJpJchGXLtWah6Ykwv+KGSZMo2FdruB20Qgi5ZiF50f19gOSk3TcxwHMmIxrlHwQKgYjKPnNvmqpygnhoctcwHhEHIiOOezZPQOC7L5T2wfnZuw4So8CclCdmlBVcntH9hRhYb/UNZmrLn+x2STNHwhgv6KrIUGDzeXk2lFGqNkGzFNgdvWVRkI/cLtZo055bSyLkgLLR+rsrQWdYVry4tCO89yK6KJN+BqqpkXod/VjBH9WyPDRugblxRw2kqifkN5P52E8nXVIPVrMacLXxMAcI4YBlbUqFy5/6VfX7aTn6PTt7fMX+D1joFwuDmhlG4xe8meVzPuUESLVFd9KOX+XDF5m8a5cZeRVyLViUv4nNbje471KGhjOexeLNyAEmoUDSoxrtrTpfxAFbTI1d6xFyPy9I8OAGL6gBMixoFDxiVVQ+f2hZ2F6fOGW1tA1uODosbwYWKMD3MJ57a4bbCXxWrYb03YueSDoURHso4E9KJN0mMIIc5BXyvmuvmHrvyA0uWS0Uv8ENkk7OcxV8W8y0b1+/bhnzGk+GvywRPVt1FjcGAtg4bCUoEMFBo3S3422GH5AXKqIb76qoH2N5CIT4dGWz9eas1wubdYcGzDlQ348ff0SJ6EjEmjzTHEgxFy1Aga4/acGRoaoHCwSVBhBQmXc865fLu/iOGn8oxaK1kwEUE4iEx1i2QBE/spbVpXG5UA0=
+Received-SPF: pass client-ip=57.103.87.120;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,53 +103,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hyper-V supports PSCI 1.3, and that implementation is exposed through
+WHPX.
+
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- meson.build | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ target/arm/cpu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index a84f14258b..286afca4bb 100644
---- a/meson.build
-+++ b/meson.build
-@@ -300,7 +300,8 @@ accelerator_targets += { 'CONFIG_XEN': xen_targets }
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 05fa3339b1..fd1e3197ad 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -23,6 +23,7 @@
+ #include "qemu/timer.h"
+ #include "qemu/log.h"
+ #include "exec/page-vary.h"
++#include "system/whpx.h"
+ #include "target/arm/idau.h"
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+@@ -1143,6 +1144,8 @@ static void arm_cpu_initfn(Object *obj)
+     if (tcg_enabled() || hvf_enabled()) {
+         /* TCG and HVF implement PSCI 1.1 */
+         cpu->psci_version = QEMU_PSCI_VERSION_1_1;
++    } else if (whpx_enabled()) {
++        cpu->psci_version = QEMU_PSCI_VERSION_1_3;
+     }
+ }
  
- if cpu == 'aarch64'
-   accelerator_targets += {
--    'CONFIG_HVF': ['aarch64-softmmu']
-+    'CONFIG_HVF': ['aarch64-softmmu'],
-+    'CONFIG_WHPX': ['aarch64-softmmu']
-   }
- elif cpu == 'x86_64'
-   accelerator_targets += {
-@@ -856,13 +857,18 @@ if get_option('mshv').allowed() and host_os == 'linux'
- endif
- 
- if get_option('whpx').allowed() and host_os == 'windows'
--  if get_option('whpx').enabled() and host_machine.cpu() != 'x86_64'
--    error('WHPX requires 64-bit host')
--  elif cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
--       cc.has_header('winhvemulation.h', required: get_option('whpx'))
--    accelerators += 'CONFIG_WHPX'
-+  if cpu == 'i386'
-+    if get_option('whpx').enabled()
-+     error('WHPX requires 64-bit host')
-+    endif
-+   # Leave CONFIG_WHPX disabled
-+  else
-+    if cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
-+      cc.has_header('winhvemulation.h', required: get_option('whpx'))
-+      accelerators += 'CONFIG_WHPX'
-+    endif
-   endif
--endif
-+ endif
- 
- hvf = not_found
- if get_option('hvf').allowed()
 -- 
 2.50.1 (Apple Git-155)
 
