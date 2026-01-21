@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA8F4D262B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 06:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 697FAD262B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 06:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viRLM-0005f0-I9; Wed, 21 Jan 2026 01:05:28 -0500
+	id 1viRnS-0002TL-GH; Wed, 21 Jan 2026 01:34:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1viRLJ-0005cR-5X
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 01:05:26 -0500
-Received: from k62.kb8c70eb.use4.send.mailgun.net ([204.220.184.62])
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1viRnQ-0002Sh-PF
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 01:34:28 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1viRLH-0003SB-PV
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 01:05:24 -0500
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- ad984e3b7c1fb67b3201d2b3cae55ee4ae48cd1ee57ae2d425ce48d9ece0eaa6 with SMTP id
- 69706ca0834a10b0f0b20ee2; Wed, 21 Jan 2026 06:05:20 GMT
-X-Mailgun-Sending-Ip: 204.220.184.62
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1768975520;
- bh=2uLpPCtv3yWeD5g/1DCzPkza6sbprdnEcC7IXjllMpg=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
- Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
- References;
- b=BM7vH1jGKP2/m//nFsRgANI2kvmPKhIMcU/d4b5LGLPNeC/GLDLCEoQRMW/vn6qpP
- 6p2SlOCPHLoQsPLY61GqoP8EN3QQh/mgkVVbPjmIiwaBCbHf0mGFo/j5ShznnBqxOy
- X0e+SF+72xNVeHgMNAEfOFRvnadyMnVSjCJioo7KAW3gYLf/PMR2GOHxFvEpWxkqm1
- CnXR8ojuL/+swq2HHHhV+AxovPQqCgHx9Wfx45176EaZQzs/WVjKYlLkn/4IrfSXgo
- oC+11/BHvAKT0fmkIrJovAOI/Wl8GwVC4HEgtbYMjj/mjUAOiohc8M/auWe3cVslbi
- 4VpFF9CTVJIEw==
-Message-ID: <5218045e-7f20-4622-94d0-f6d76f5ade48@yodel.dev>
-Date: Wed, 21 Jan 2026 00:05:19 -0600
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1viRnP-0007vc-AN
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 01:34:28 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2a2ea96930cso36073175ad.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 22:34:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1768977265; x=1769582065; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZLyFU6JJzHSGb0nMOP/py68gFHq8tNFVvbuPdW4PqOk=;
+ b=I9tx8E9w99iMqDyj/sKmD//N8YxbiLcCs7wDOKt7VWx+g+Y5ZjFuqDvvSM1e3p/k/q
+ /MLFmdkxBAyUAJlXFeT2m3NW81H0hVGG3P77A1uuI/XFitwmbUGdKkbD9qGzEwarA3Oc
+ gsl3fZ1eDMN9Cy4v8E9Yq9bmuWiG39VK993H/fCC8xVreb3m+f0S8NOY2oiY3aJ+UImm
+ 4Pp7cB52O7Bj9u7IUM0FAkgSfZRlFFhP8bsPdPWHLZAF9/xQtbLaBn9+0TWYzRvw4tim
+ Vpn4SKwxkxttub6EF0xwFqhAQSZbvS3huYyDxGIACHVGDX8SkIYSfeuR6uihL1SJh8r/
+ YO7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768977265; x=1769582065;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZLyFU6JJzHSGb0nMOP/py68gFHq8tNFVvbuPdW4PqOk=;
+ b=ufEs0UtVogXk0GWnHwEeDvuxnKHLjGluefbweJmiuq6gSm4V9k9vNVKYkqrcus5R0I
+ d1h87wDzvSScgOBDyWh7orFf2N/eneUnpln2W3OwDm3svdMDB4RVyiCG76K79Gd/8pPR
+ SKOpL+wa3t9l1doBuBs8afGfBoNg9oFpwtv6IziHLJabRDxZiXGdIJKc43oqzqTdxFsC
+ 7EBLXddUa15OVWETXu3m9ikc63Zfb0YYPSNavcTvhX0QryFWCIhEOSZf8Gz/JO+zjh5t
+ KCPJ43+huqVHqtd72WCEJkmaBguuGSuKXZCJ5aHs0g5UnJAUjfiRN06R/fLTefy2x1ii
+ 3psw==
+X-Gm-Message-State: AOJu0Yx4ssCJvBEmE5UCgInEw3bGzlBOSbdRbomLLC245a+v5b5F14RF
+ BGAnEjK1hJrWEJ6SZtcr+1rblnID8aeN73am9KlC9gfKCb1sU8TiM5LUxDqPWtQU80OJnb72Fnw
+ ClcqfU2Ogz7F+TWGSfYnt+81ZxcxI9nNHCGlbw+5K6n/XtNBBRwZEHN5BD5qie5PbPrOD8ubA57
+ cMa/hIAH4brQuV4tfh4IKZLCuSKXcS4PWYbs8XgQ==
+X-Gm-Gg: AZuq6aIlM58Ky8oRhKOtRfg6l7Bm0Wm4KHsf6MyiIy48yedw0suCXsE8fkZrmk5BaIQ
+ SVq6jwgHX/LHyopxNbKpqmIAZR88IpUZgieqXRQZ4YX0A+VfBTE7LxhrX75PGpRBxnILg/oV1/x
+ BYHx43KAyOiNvOThL1t3+ACU251ixke+tCZM/yzPNFPka90iRw3194QLbdHdLR3klMtWDAhKE3Y
+ +G9oNNaf4Ebf/17q00+GSU6/yk7/ErPU6tuAcz1fnFmIUDXDLaazDGV8Wd/mgmJQMl9hY2mT5jT
+ 1jZYSQyUyhFju5THON2bvlJNZGfoQaagz3gDV5wGzBeioq1rUD4qGq83lGkTy50wOCz3CDGwaw0
+ 3Frf7B81y3s465DODXfbpjESr+z+CRthHWXhPKsWRbHbrX5zyVI33/E922HA5erz00FvVQZyubM
+ xNgsn1EFFm2NTUPdoXun+p2yiW5m1Kaod8
+X-Received: by 2002:a17:902:e5c4:b0:2a7:99c9:1086 with SMTP id
+ d9443c01a7336-2a799c9178emr17212235ad.47.1768977264731; 
+ Tue, 20 Jan 2026 22:34:24 -0800 (PST)
+Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a7193dbb7fsm143216645ad.64.2026.01.20.22.34.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Jan 2026 22:34:24 -0800 (PST)
+From: Jim Shu <jim.shu@sifive.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
+ Markus Armbruster <armbru@redhat.com>, Jim Shu <jim.shu@sifive.com>
+Subject: [PATCH] hw/vfio: cpr-iommufd: Fix wrong usage of
+ migrate_add_blocker_modes
+Date: Wed, 21 Jan 2026 14:34:18 +0800
+Message-ID: <20260121063418.2001326-1-jim.shu@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Subject: Re: [PATCH v3 0/3] gdbstub: Export helper to use GDB errno values
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- Dominik Disconnect3d Czarnota <dominik.b.czarnota@gmail.com>
-References: <20260116014612.226183-1-yodel.eldar@yodel.dev>
- <f8b56912-7f64-49fd-a14c-948ca090bf26@linaro.org>
-Content-Language: en-US
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
- xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
- I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
- AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
- Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
- 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
- imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
- TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
-In-Reply-To: <f8b56912-7f64-49fd-a14c-948ca090bf26@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=204.220.184.62;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=k62.kb8c70eb.use4.send.mailgun.net
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=jim.shu@sifive.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,20 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Philippe
+The return value of API is 0 for success and negative error code for
+failure. We'll check if the return value equals to 0.
+Also, the MIG_MODE should be CPR_TRANSFER and CPR_EXEC instead
+of 2 same bits.
 
-On 19/01/2026 23:51, Philippe Mathieu-Daudé wrote:
-> On 16/1/26 02:46, Yodel Eldar wrote:
-> 
->> Yodel Eldar (3):
->>    include/gdbstub/syscalls: Add EIO and ENOSYS GDB File-I/O errno values
->>    gdbstub: Export host_to_gdb_errno File-I/O helper function
->>    gdbstub/user-target: Convert host errno to GDB File-I/O errno
-> 
-> Series fully reviewed.
-> 
+The API usage is aligned with 'hw/vfio/cpr-legacy.c' after these 2
+changes.
 
-Thanks for reviewing the series.
+Fixes: 3ca0a0ab05c ("migration: Use bitset of MigMode instead of variable arguments")
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+---
+ hw/vfio/cpr-iommufd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Yodel
+diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
+index c244db88fbb..6758c73b6b9 100644
+--- a/hw/vfio/cpr-iommufd.c
++++ b/hw/vfio/cpr-iommufd.c
+@@ -159,8 +159,8 @@ bool vfio_iommufd_cpr_register_iommufd(IOMMUFDBackend *be, Error **errp)
+ 
+     if (!vfio_cpr_supported(be, cpr_blocker)) {
+         return migrate_add_blocker_modes(cpr_blocker,
+-                    BIT(MIG_MODE_CPR_TRANSFER) | BIT(MIG_MODE_CPR_TRANSFER),
+-                    errp);
++                    BIT(MIG_MODE_CPR_TRANSFER) | BIT(MIG_MODE_CPR_EXEC),
++                    errp) == 0;
+     }
+ 
+     vmstate_register(NULL, -1, &iommufd_cpr_vmstate, be);
+-- 
+2.43.0
+
 
