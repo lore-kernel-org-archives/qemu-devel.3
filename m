@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D689C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 13:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08208C44532
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 13:42:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viYSf-0004L6-Jn; Wed, 21 Jan 2026 08:41:29 -0500
+	id 1viYSq-0004d2-T6; Wed, 21 Jan 2026 08:41:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1viYSd-0004IE-QN
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:41:27 -0500
-Received: from p-east3-cluster5-host7-snip4-4.eps.apple.com ([57.103.86.195]
+ id 1viYSp-0004bC-NC
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:41:39 -0500
+Received: from qs-2003h-snip4-11.eps.apple.com ([57.103.86.83]
  helo=outbound.qs.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1viYSa-00019d-S0
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:41:27 -0500
+ id 1viYSo-0001Ci-2O
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:41:39 -0500
 Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-east-2d-60-percent-14 (Postfix) with ESMTPS id
- E87001800120; Wed, 21 Jan 2026 13:41:20 +0000 (UTC)
+ 5E616180017A; Wed, 21 Jan 2026 13:41:36 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1769002883; x=1771594883;
- bh=4cjYuahheRTHDHA+6eUjUj4UrBehWsjNu/xkb/ODd84=;
+ s=sig1; t=1769002897; x=1771594897;
+ bh=cLf1mPRjZV91P2OvpEcC0kLLM+MdbbjlqvarB0If30I=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=GmvJ/o847Z9Yt/FkXubQc/cYE1Gn0VMbyIoETDiz54JdehZvJ9lCu12MOPbcsq/cUeJMACKYaNJsE4ckatQYGxBISpY73Ju07sSUNB3k+9944NBUf9v7Owh7zFKJkIKQeYGUEc97Q7kWgZrwLlBu7fwmQrpWMlHV9y6aNp8ggPH/2mOJvK0Ll6iSYm0dk+PTVEJZhHg9yBuTcUFI7O80my9NwbEUJfHZlVwFcgC+rClF8g1RIKdJ2sJyb3lHk0sbLhanLUN3T6HnLq6rgCBMynHXFizYFay5e7sRDTa8DlQ26pCrXiBTc5PEQDtu99SOaUjCcBx27WIMKESOLwGW/g==
+ b=KLcq3UVO1jjqPIw/g+Az4naxejMXBqXxBzxAG5TbdLaEf6GfcMw9k3WWsN7yBJ9IoEG5q9PxtUziTaJCRQbtDZVsCLoRGijlyQpgCTmzukRdCEhVTqhMaYjYaz0pVrzWvYAGKLNtADXsgrz5JzZU/BcVcQn9PrwsghkLoS5PJWoPq7WvhU/DuXF5XUyWeDgrT4uv4n+6XYbYdXz7nCYIK/3Fvwg2AolDy3XAs7qE6yPfetVXqsFSfmyhSUpbraSvFBM+NF52ACfPmksLngO6JnLiHYzvlR8su5QgehU2ikFvHKuGSrS7HsixM2F6g6IWXVzY9MjGzqXLIQIbetflCQ==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.155.37])
  by p00-icloudmta-asmtp-us-east-2d-60-percent-14 (Postfix) with ESMTPSA id
- 5E3391800153; Wed, 21 Jan 2026 13:41:17 +0000 (UTC)
+ 850BD1800187; Wed, 21 Jan 2026 13:41:33 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: mohamed@unpredictable.fr,
 	qemu-devel@nongnu.org
@@ -49,45 +49,51 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
  Ani Sinha <anisinha@redhat.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: [PATCH v17 00/21] WHPX support for Arm
-Date: Wed, 21 Jan 2026 14:40:51 +0100
-Message-ID: <20260121134114.9781-1-mohamed@unpredictable.fr>
+ Yanan Wang <wangyanan55@huawei.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v17 06/21] whpx: Move around files before introducing AArch64
+ support
+Date: Wed, 21 Jan 2026 14:40:57 +0100
+Message-ID: <20260121134114.9781-7-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260121134114.9781-1-mohamed@unpredictable.fr>
+References: <20260121134114.9781-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=PcvyRyhd c=1 sm=1 tr=0 ts=6970d782
+X-Authority-Info-Out: v=2.4 cv=Vd36/Vp9 c=1 sm=1 tr=0 ts=6970d790
  cx=c_apl:c_apl_out:c_pps a=bsP7O+dXZ5uKcj+dsLqiMw==:117
  a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=mDV3o1hIAAAA:8
- a=2CSUmbMKgiS_FIm3Z54A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: thk9wvICh17GPsT0tDtL2WJJa6fgq56m
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDExNSBTYWx0ZWRfX+CkDb2W/JzEY
- FmRBLDRIRurbPnlDIEI5KKGXhG0RrTIoUFyNPfpHqmLS+j2MZXUMjf6Y4Yw+0ZVUeT57jxR+Kmq
- RctwX6DmP0FFL+iZx8XiowXEApsiDru+DT7xIhAbelQcmusmHtgo9o2tLB5v1jKAjpMfQUISl0B
- 3d54KxSDo6qHpqxVez6Cv23lS7K+BlWRU1eqsM68SvrhhMAALdF6vMnjyQim6atVTWqt4bHLK5M
- JZ8AUtSWTbJLEycCIS+b6CcIFT7yaT4evuxxVKR82RZksB0DCX8X10AUqAABUQLjQxG3ffr+SWf
- XUYKJr1qD7vrlqFQWI2
-X-Proofpoint-GUID: thk9wvICh17GPsT0tDtL2WJJa6fgq56m
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=yMhMjlubAAAA:8
+ a=5-iGLm-LtT_B5TT3xKgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: -YWwUkwuw_2cYH3A23i16b5YXicudHUn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDExNSBTYWx0ZWRfX8EVhpYJb47cC
+ EuXYgSy/cqcKrBND35Sp4xLp8ixdx1Bj75JSAsJ2ZZPlZzspWxayAGpnMvixfua5K1sJwiQyjVT
+ Prv/q+1tWxEKrwcTJ7AyWuvjLv746bQM7F43UnHfGwqiBbpAya9kTgI525DPpUN1OHxJQvUcVmi
+ FUifGQUGnDcs3okz58IRg1R86yKvCAf3DuyUT21r+gcJZbC9MfKX9sHPjhQIS0AdLTmH89ufEjn
+ x6a9nOdt/qVe4dWoSkv191/6Ec/jcDjMshqf5u1xqzeC2O1n5hYaqGt6qRBVo4yvipWJJfQRG1e
+ pSGYHNVGG1+DuHFj/+O
+X-Proofpoint-GUID: -YWwUkwuw_2cYH3A23i16b5YXicudHUn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
  definitions=2026-01-21_01,2026-01-20_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 mlxscore=0 spamscore=0 adultscore=0 suspectscore=0
- phishscore=0 clxscore=1030 mlxlogscore=999 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
- definitions=main-2601210115
-X-JNJ: AAAAAAAB8b7N1plv0JzvqYT4HK5UKglV9QZ6scRxumzwnCdtPqNc41B5NXEKSrqq+UHj5IR0k8vvcb6GVLD//QOowhgJ/Ffb8500epKvlHYOg6+xfosWnD2WjcjeOAfM6zEc0EClqomOqwshgrkH+KkP/qOsAIVgLKaS+iIT8duADbDCSs8l36AyzEDiCI99oGV7jG8l1aFHFkwEWr0+N2ZJWf45c6zVrbBrwE4IFA2tXfUywXOBQz0LethkQA1La0ImvjFk9NXtKhJQ1LHJkF3QdVClgVuL621dkWH+ntic9VPoOCiweM7OhXkWuDH0jrFmWiNxB2pZg/udLy9DG95+54qtCSlXeDfsbkxYQuhg9BzcYaWNLNGsJyUDLv61F3RR+PSLWXrcV9NZ0MoC911CfyXRzcHAFAiiA0uVDAQnFu0reP4glRiZ6gFs32EVN2LAFG2PhMObdkW+EG/oaYUndlWFe2yOaFhPet1l8iMqYizX0HSSnc+mjtsHDUkIAm2Q8uWgn2kgucwrSfnvwBHr0xti3fD5puoAoVsbd7Z9GLAQYw/N4hoq+v1EugkxqBed8oWa9hjgpqBFEsD3yT9QMu1DVFyJH2uyOYtRnku1wDZdC1MibI3XTb9UE+LXSGCy0V1MpPqP+BlerT3689BpKwhsM7rS1C/U93r4KGin10EscnMrrlUskdKLWExx0llhwFR0ZWqauWvRsc0LwZmLv4XpUUQsZhCBwYwz/MUKcbfg5/+MdnrDyJGrxT90f5erpqlPMWje09zjiWSljCpSRRbPveHs3RlHdK2YowCku4VWFUeMB9A9MKDru/aVJh8fOcgYUcMSLC14RFM4QL8r6ATcdUHWOFU4CcpVU0uZ9MGLqrVz08T7nxkVJg==
-Received-SPF: pass client-ip=57.103.86.195;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ adultscore=0 malwarescore=0 suspectscore=0
+ spamscore=0 mlxscore=0
+ clxscore=1030 phishscore=0 bulkscore=0 classifier=spam authscore=0 adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601210115
+X-JNJ: AAAAAAABU8+voHRh7p42JdWl974yV1UphmgjkGAeCTT7NlI3qd7yN2QIG0ktDfm+Mxnizc1AI3pef098NWzkk++VzFY658X6M1hOgRhpK98ziMvchdd01LLhKaIThYYURCf6uLLaQyR/BznvVF2D+Inyx+SQ6kFRtxrMexIZ3UByyokV6W3+amJURWQUZqDqce6kgwOR9IrMR22/5qX/QEAMzA6NksQ1EHWOxUHHwB8fywAhq4wivuKTduXYCwlFNBVQPsnGgygTX8B5WEy2IRc92S2zeo8W8teZQgxMKVF9j0bmNiqvb7ehncfANQM/pxmwj7u9Hi1GLTt9Dbk0yVnLcz1iw/WZ3PCV+hUrO8wLXydONzAtRGXPHgIQJUf5Y1Fh1LAEnT+tx1FST/gQ+TTxGjB9z0upYYVis7GCR5s2e3FTQM6TId/IMKQEJ/AjkpH0VPYCNT1w6UvEbZevh6IMndudaXk2y4hYJkkB5LWldVqeTEmDCZ8Wb4zuIYgl18KSx8Y59nVWm6Nvfz1WVyS1C18xxSerNik2zHUwwQmPFYI7+9LNEbdV8RcTIQPrFeekN10bjFbdvzNSKkpfWyw0jOtFjFv/q29xDWjOFOp0HIR9gs2lhx7q4OM1jt9UwuFwGnbld+HvT6cahzY2cUqmikTmvg++SMa44brkOXElh2ACat6QWUlkfAJMqoMEmJdFBea1QPYQT22Rerj2SZLdlIVeO4F0GaLc/k1k0wntqgk3uUI1YTAR5r5pPrhfeTUhExbDfWqCnCVinmF2VChKJNwbbdVF3QJUXOU3Pc9dFKkp/CtdQy4zwHnmMvFuuHJrLklxyonn7L8wV0kELXRnxi2JuIo/JiCntJOYOQP0vuHI4HhCQCkNEIfd8DIOL7t5Lg4114o4tSpCdxKdRO+5++g+ag==
+Received-SPF: pass client-ip=57.103.86.83;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,211 +109,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this submission: whpx-v18)
+Switch to a design where we can share whpx code between x86 and AArch64 when it makes sense to do so.
 
-Missing features:
-- VM save-restore: interrupt controller state notably
-- SVE register sync: I didn't have the time to test this on pre-release hardware with SVE2 support yet.
-So SVE2 is currently masked for VMs when running this.
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Known bugs:
-- U-Boot still doesn't work (hangs when trying to parse firmware) but EDK2 does.
-
-Note:
-
-"target/arm/kvm: add constants for new PSCI versions" taken from the mailing list.
-
-"accel/system: Introduce hwaccel_enabled() helper" taken from the mailing list, added here
-as part of this series to make it compilable as a whole.
-
-And another note:
-
-Seems that unlike HVF there isn't direct correspondence between WHv registers and the actual register layout,
-so didn't do changes there to a sysreg.inc.
-
-Updates for v17:
-- Reworking the MSI-X configuration patches
-- Accordingly, its= retains the same behavior as before, so add a test case for GICv3 + GICv2m.
-- Squashing "whpx: arm64: check for physical address width after WHPX availability"
-with "whpx: arm64: clamp down IPA size"
-- Not worthwhile to have a separate GICv3 + GICv2m patch, squash it into the "rework MSI-X
-configuration" patch
-- Address review comment on "whpx: arm64: gicv3: add migration blocker"
-
-Updates since v16:
-- Address some last review comments
-- Rebase with the latest origin/staging
-
-Updates since v15:
-- Some last tiny changes addressed.
-
-Updates since v14:
-- Working around https://gcc.gnu.org/bugzilla/show_bug.cgi?id=87950
-
-It turns out that we can't avoid default: in case with an enum on GCC without warnings,
-although Clang allows that behavior.
-
-Updates since v13:
-- Addressing review comments from Akihiko Odaki
-- Squash GICv2 ACPI workaround patch and have it documented as a separate function
-- Rebase with current origin/staging
-
-Updates since v12:
-- Address review comments and make sure that checkpatch shows no errors, make test also ran
-- Tested the Windows x86_64 build too in addition to Windows arm64 and macOS arm64
-- Hopefully the last revision, should be ready to merge.
-
-Updates since v11:
-- Address review comments
-- Rebase up to latest staging
-- Switch to assuming Qemu 11.0 as the newest machine model
-
-Updates since v10:
-- Bring forward to latest Qemu
-- Fix a typo in the GICv3+GICv2m PR
-
-Updates since v9:
-- Adding partition reset on the reboot side of things...
-
-Updates since v8:
-- v9 and v8 were not submitted properly because of my MTA not behaving, sorry for that.
-- v10 introduces a new argument, -M msi=, to handle MSI-X configuration more granularly.
-- That surfaced what I think is a bug (?), with vms->its=1 on GICv2 configurations... or I did understand everything wrong.
-- Oopsie due to email provider ratelimiting.
-
-Updates since v7:
-- Oops, fixing bug in "hw/arm: virt: cleanly fail on attempt to use the platform vGIC together with ITS".
-Other commits are unchanged.
-
-Updates since v6:
-- Rebasing
-- Fixing a bug in the GICv3+GICv2m case for ACPI table generation
-- getting rid of the slots infrastructure for memory management
-- Place the docs commit right after the "cleanly fail on attempt to run GICv3+GICv2m on an unsupported config" one
-as that's what switches ITS to a tristate.
-- Fixing a build issue when getting rid of the arch-specific arm64 hvf-stub.
-
-Updates since v5:
-- Rebasing
-- Address review comments
-- Rework ITS enablement to a tristate
-- On x86: move away from deprecated APIs to get/set APIC state
-
-Updates since v4:
-- Taking into account review comments
-- Add migration blocker in the vGICv3 code due to missing interrupt controller save/restore
-- Debug register sync
-
-Updates since v3:
-- Disabling SVE on WHPX
-- Taking into account review comments incl:
-
-- fixing x86 support
-- reduce the amount of __x86_64__ checks in common code to the minimum (winhvemulation)
-which can be reduced even further down the road.
-- generalize get_physical_address_range into something common between hvf and whpx
-
-Updates since v2:
-- Fixed up a rebase screwup for whpx-internal.h
-- Fixed ID_AA64ISAR1_EL1 and ID_AA64ISAR2_EL1 feature probe for -cpu host
-- Switched to ID_AA64PFR1_EL1/ID_AA64DFR0_EL1 instead of their non-AA64 variant
-
-Updates since v1:
-- Shutdowns and reboots
-- MPIDR_EL1 register sync
-- Fixing GICD_TYPER_LPIS value
-- IPA size clamping
-- -cpu host now implemented
-
-Mohamed Mediouni (19):
-  hw: arm: virt: rework MSI-X configuration
-  qtest: hw/arm: virt: add new test case for GICv3 + GICv2m
-  docs: arm: update virt machine model description
-  whpx: Move around files before introducing AArch64 support
-  whpx: reshuffle common code
-  whpx: ifdef out winhvemulation on non-x86_64
-  whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS define
-  hw, target, accel: whpx: change apic_in_platform to kernel_irqchip
-  whpx: interrupt controller support
-  whpx: add arm64 support
-  whpx: change memory management logic
-  target/arm: cpu: mark WHPX as supporting PSCI 1.3
-  whpx: arm64: clamp down IPA size
-  hw/arm, accel/hvf, whpx: unify get_physical_address_range between WHPX
-    and HVF
-  whpx: arm64: implement -cpu host
-  target/arm: whpx: instantiate GIC early
-  whpx: arm64: gicv3: add migration blocker
-  whpx: enable arm64 builds
-  whpx: arm64: add partition-wide reset on the reboot path
-
-Philippe Mathieu-Daudé (1):
-  accel/system: Introduce hwaccel_enabled() helper
-
-Sebastian Ott (1):
-  target/arm/kvm: add constants for new PSCI versions
-
- MAINTAINERS                                   |   6 +
- accel/hvf/hvf-all.c                           |   7 +-
- accel/meson.build                             |   1 +
- accel/stubs/whpx-stub.c                       |   1 +
- accel/whpx/meson.build                        |   7 +
- {target/i386 => accel}/whpx/whpx-accel-ops.c  |   6 +-
- accel/whpx/whpx-common.c                      | 536 ++++++++++
- docs/system/arm/virt.rst                      |  13 +-
- hw/arm/virt-acpi-build.c                      |  27 +-
- hw/arm/virt.c                                 | 160 ++-
- hw/i386/x86-cpu.c                             |   4 +-
- hw/intc/arm_gicv3_common.c                    |   3 +
- hw/intc/arm_gicv3_whpx.c                      | 247 +++++
- hw/intc/meson.build                           |   1 +
- include/hw/arm/virt.h                         |   8 +-
- include/hw/core/boards.h                      |   3 +-
- include/hw/intc/arm_gicv3_common.h            |   3 +
- include/system/hvf_int.h                      |   4 +
- include/system/hw_accel.h                     |  13 +
- .../whpx => include/system}/whpx-accel-ops.h  |   4 +-
- include/system/whpx-all.h                     |  20 +
- include/system/whpx-common.h                  |  26 +
- .../whpx => include/system}/whpx-internal.h   |  16 +-
- include/system/whpx.h                         |   5 +-
- meson.build                                   |  20 +-
- target/arm/cpu.c                              |   3 +
- target/arm/cpu64.c                            |  17 +-
- target/arm/hvf-stub.c                         |  20 -
- target/arm/hvf/hvf.c                          |   6 +-
- target/arm/hvf_arm.h                          |   3 -
- target/arm/kvm-consts.h                       |   2 +
- target/arm/meson.build                        |   2 +-
- target/arm/whpx/meson.build                   |   5 +
- target/arm/whpx/whpx-all.c                    | 985 ++++++++++++++++++
- target/arm/whpx/whpx-stub.c                   |  15 +
- target/arm/whpx_arm.h                         |  17 +
- target/i386/cpu-apic.c                        |   2 +-
- target/i386/hvf/hvf.c                         |  11 +
- target/i386/whpx/meson.build                  |   1 -
- target/i386/whpx/whpx-all.c                   | 569 +---------
- target/i386/whpx/whpx-apic.c                  |   2 +-
- tests/data/acpi/aarch64/virt/APIC.msi_gicv2m  | Bin 0 -> 188 bytes
- tests/data/acpi/aarch64/virt/IORT.msi_gicv2m  | Bin 0 -> 172 bytes
- tests/qtest/bios-tables-test.c                |  21 +
- 44 files changed, 2186 insertions(+), 636 deletions(-)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ MAINTAINERS                                           | 2 ++
+ accel/meson.build                                     | 1 +
+ accel/whpx/meson.build                                | 6 ++++++
+ {target/i386 => accel}/whpx/whpx-accel-ops.c          | 4 ++--
+ {target/i386/whpx => include/system}/whpx-accel-ops.h | 4 ++--
+ {target/i386/whpx => include/system}/whpx-internal.h  | 6 ++++--
+ target/i386/whpx/meson.build                          | 1 -
+ target/i386/whpx/whpx-all.c                           | 4 ++--
+ target/i386/whpx/whpx-apic.c                          | 2 +-
+ 9 files changed, 20 insertions(+), 10 deletions(-)
  create mode 100644 accel/whpx/meson.build
- rename {target/i386 => accel}/whpx/whpx-accel-ops.c (96%)
- create mode 100644 accel/whpx/whpx-common.c
- create mode 100644 hw/intc/arm_gicv3_whpx.c
+ rename {target/i386 => accel}/whpx/whpx-accel-ops.c (97%)
  rename {target/i386/whpx => include/system}/whpx-accel-ops.h (92%)
- create mode 100644 include/system/whpx-all.h
- create mode 100644 include/system/whpx-common.h
- rename {target/i386/whpx => include/system}/whpx-internal.h (95%)
- delete mode 100644 target/arm/hvf-stub.c
- create mode 100644 target/arm/whpx/meson.build
- create mode 100644 target/arm/whpx/whpx-all.c
- create mode 100644 target/arm/whpx/whpx-stub.c
- create mode 100644 target/arm/whpx_arm.h
- create mode 100644 tests/data/acpi/aarch64/virt/APIC.msi_gicv2m
- create mode 100644 tests/data/acpi/aarch64/virt/IORT.msi_gicv2m
+ rename {target/i386/whpx => include/system}/whpx-internal.h (97%)
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 36a2be3ddb..7365094cd7 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -565,9 +565,11 @@ WHPX CPUs
+ M: Pedro Barbuda <pbarbuda@microsoft.com>
+ M: Mohamed Mediouni <mohamed@unpredictable.fr>
+ S: Supported
++F: accel/whpx/
+ F: target/i386/whpx/
+ F: accel/stubs/whpx-stub.c
+ F: include/system/whpx.h
++F: include/system/whpx-accel-ops.h
+ 
+ MSHV
+ M: Magnus Kulke <magnus.kulke@linux.microsoft.com>
+diff --git a/accel/meson.build b/accel/meson.build
+index 983dfd0bd5..289b7420ff 100644
+--- a/accel/meson.build
++++ b/accel/meson.build
+@@ -6,6 +6,7 @@ user_ss.add(files('accel-user.c'))
+ subdir('tcg')
+ if have_system
+   subdir('hvf')
++  subdir('whpx')
+   subdir('qtest')
+   subdir('kvm')
+   subdir('xen')
+diff --git a/accel/whpx/meson.build b/accel/whpx/meson.build
+new file mode 100644
+index 0000000000..7b3d6f1c1c
+--- /dev/null
++++ b/accel/whpx/meson.build
+@@ -0,0 +1,6 @@
++whpx_ss = ss.source_set()
++whpx_ss.add(files(
++  'whpx-accel-ops.c',
++))
++
++specific_ss.add_all(when: 'CONFIG_WHPX', if_true: whpx_ss)
+diff --git a/target/i386/whpx/whpx-accel-ops.c b/accel/whpx/whpx-accel-ops.c
+similarity index 97%
+rename from target/i386/whpx/whpx-accel-ops.c
+rename to accel/whpx/whpx-accel-ops.c
+index f75886128d..c84a25c273 100644
+--- a/target/i386/whpx/whpx-accel-ops.c
++++ b/accel/whpx/whpx-accel-ops.c
+@@ -16,8 +16,8 @@
+ #include "qemu/guest-random.h"
+ 
+ #include "system/whpx.h"
+-#include "whpx-internal.h"
+-#include "whpx-accel-ops.h"
++#include "system/whpx-internal.h"
++#include "system/whpx-accel-ops.h"
+ 
+ static void *whpx_cpu_thread_fn(void *arg)
+ {
+diff --git a/target/i386/whpx/whpx-accel-ops.h b/include/system/whpx-accel-ops.h
+similarity index 92%
+rename from target/i386/whpx/whpx-accel-ops.h
+rename to include/system/whpx-accel-ops.h
+index 54cfc25a14..ed9d4c49f4 100644
+--- a/target/i386/whpx/whpx-accel-ops.h
++++ b/include/system/whpx-accel-ops.h
+@@ -7,8 +7,8 @@
+  * See the COPYING file in the top-level directory.
+  */
+ 
+-#ifndef TARGET_I386_WHPX_ACCEL_OPS_H
+-#define TARGET_I386_WHPX_ACCEL_OPS_H
++#ifndef SYSTEM_WHPX_ACCEL_OPS_H
++#define SYSTEM_WHPX_ACCEL_OPS_H
+ 
+ #include "system/cpus.h"
+ 
+diff --git a/target/i386/whpx/whpx-internal.h b/include/system/whpx-internal.h
+similarity index 97%
+rename from target/i386/whpx/whpx-internal.h
+rename to include/system/whpx-internal.h
+index 2dcad1f565..041fa958b4 100644
+--- a/target/i386/whpx/whpx-internal.h
++++ b/include/system/whpx-internal.h
+@@ -1,11 +1,13 @@
+-#ifndef TARGET_I386_WHPX_INTERNAL_H
+-#define TARGET_I386_WHPX_INTERNAL_H
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef SYSTEM_WHPX_INTERNAL_H
++#define SYSTEM_WHPX_INTERNAL_H
+ 
+ #include <windows.h>
+ #include <winhvplatform.h>
+ #include <winhvemulation.h>
+ 
+ #include "hw/i386/apic.h"
++#include "exec/vaddr.h"
+ 
+ typedef enum WhpxBreakpointState {
+     WHPX_BP_CLEARED = 0,
+diff --git a/target/i386/whpx/meson.build b/target/i386/whpx/meson.build
+index 9c54aaad39..c3aaaff9fd 100644
+--- a/target/i386/whpx/meson.build
++++ b/target/i386/whpx/meson.build
+@@ -1,5 +1,4 @@
+ i386_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
+   'whpx-all.c',
+   'whpx-apic.c',
+-  'whpx-accel-ops.c',
+ ))
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index db184e1b0d..cef31fc1a8 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -31,8 +31,8 @@
+ #include "accel/accel-cpu-target.h"
+ #include <winerror.h>
+ 
+-#include "whpx-internal.h"
+-#include "whpx-accel-ops.h"
++#include "system/whpx-internal.h"
++#include "system/whpx-accel-ops.h"
+ 
+ #include <winhvplatform.h>
+ #include <winhvemulation.h>
+diff --git a/target/i386/whpx/whpx-apic.c b/target/i386/whpx/whpx-apic.c
+index afcb25843b..b934fdcbe1 100644
+--- a/target/i386/whpx/whpx-apic.c
++++ b/target/i386/whpx/whpx-apic.c
+@@ -18,7 +18,7 @@
+ #include "hw/pci/msi.h"
+ #include "system/hw_accel.h"
+ #include "system/whpx.h"
+-#include "whpx-internal.h"
++#include "system/whpx-internal.h"
+ 
+ struct whpx_lapic_state {
+     struct {
 -- 
 2.50.1 (Apple Git-155)
 
