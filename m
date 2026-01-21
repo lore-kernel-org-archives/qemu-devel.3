@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E077C44526
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 13:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 159AEC4452E
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 13:28:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viYFs-000368-L2; Wed, 21 Jan 2026 08:28:16 -0500
+	id 1viYFj-00033t-PN; Wed, 21 Jan 2026 08:28:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1viYFn-000357-4Z
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:28:11 -0500
+ id 1viYFW-00031z-VD
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:27:55 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1viYFl-0005ft-NP
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:28:10 -0500
+ id 1viYFS-0005cT-Pz
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:27:54 -0500
 Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dx4kD37CCzHnH76;
- Wed, 21 Jan 2026 21:27:32 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dx4jt5cBPzJ46bG;
+ Wed, 21 Jan 2026 21:27:14 +0800 (CST)
 Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 39D4E40539;
- Wed, 21 Jan 2026 21:28:06 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id E4C2E40539;
+ Wed, 21 Jan 2026 21:27:40 +0800 (CST)
 Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
  (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 21 Jan
- 2026 13:28:05 +0000
-Date: Wed, 21 Jan 2026 13:28:04 +0000
+ 2026 13:27:40 +0000
+Date: Wed, 21 Jan 2026 13:27:38 +0000
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 CC: Michael S Tsirkin <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
  <qemu-devel@nongnu.org>, Igor Mammedov <imammedo@redhat.com>, Cleber Rosa
  <crosa@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH 08/13] scripts/ghes_inject: exit 1 if command was not sent
-Message-ID: <20260121132804.0000501d@huawei.com>
-In-Reply-To: <746cc65bbde60ebe2232b048d6448d19466601c5.1768993993.git.mchehab+huawei@kernel.org>
+Subject: Re: [PATCH 07/13] scripts/ghes_inject: add a logic to decode CPER
+Message-ID: <20260121132738.00001293@huawei.com>
+In-Reply-To: <71dc0f56a7856cc9fe9f0c9c915b56cd49d6f0bd.1768993993.git.mchehab+huawei@kernel.org>
 References: <cover.1768993993.git.mchehab+huawei@kernel.org>
- <746cc65bbde60ebe2232b048d6448d19466601c5.1768993993.git.mchehab+huawei@kernel.org>
+ <71dc0f56a7856cc9fe9f0c9c915b56cd49d6f0bd.1768993993.git.mchehab+huawei@kernel.org>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -73,43 +73,433 @@ From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 21 Jan 2026 12:25:16 +0100
+On Wed, 21 Jan 2026 12:25:15 +0100
 Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> add a return code to subparser func() and return 1 if the
-> command failed.
+> Add a decoder to help debugging injected CPERs. This is more
+> relevant when we add fuzzy-testing error inject, as the
+> decoder is helpful to identify what it packages will be sent
+> via QEMU to the firmware-fist logic.
+> 
+> By purpose, I opted to keep this completely independent from
+> the encoders implementation, as this can be used even when
+> there are no encoders for a certain GGUID type (except for a
+GGUID?
+
+> fuzzy logic test, which is pretty much independent of the
+> records meaning).
 > 
 > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+
+A few minor things inline.
+
+I checked the specs, so all that stuff is fine including the spec bug
+you mention (which I'm sure you've already reported :)
+
+Jonathan
 
 > ---
->  scripts/arm_processor_error.py | 2 +-
->  scripts/ghes_inject.py         | 3 ++-
->  2 files changed, 3 insertions(+), 2 deletions(-)
+>  MAINTAINERS            |    1 +
+>  scripts/ghes_decode.py | 1155 ++++++++++++++++++++++++++++++++++++++++
+>  scripts/qmp_helper.py  |    3 +
+>  3 files changed, 1159 insertions(+)
+>  create mode 100644 scripts/ghes_decode.py
 > 
-> diff --git a/scripts/arm_processor_error.py b/scripts/arm_processor_error.py
-> index 73d069f070d4..d9845adb0c0a 100644
-> --- a/scripts/arm_processor_error.py
-> +++ b/scripts/arm_processor_error.py
-> @@ -473,4 +473,4 @@ def send_cper(self, args):
->  
->          self.data = data
->  
-> -        qmp_cmd.send_cper(cper_guid.CPER_PROC_ARM, self.data)
-> +        return qmp_cmd.send_cper(cper_guid.CPER_PROC_ARM, self.data)
-> diff --git a/scripts/ghes_inject.py b/scripts/ghes_inject.py
-> index 9a235201418b..6ac917d0b5db 100755
-> --- a/scripts/ghes_inject.py
-> +++ b/scripts/ghes_inject.py
-> @@ -43,7 +43,8 @@ def main():
->  
->      args = parser.parse_args()
->      if "func" in args:
-> -        args.func(args)
-> +        if not args.func(args):
-> +            sys.exit(1)
->      else:
->          sys.exit(f"Please specify a valid command for {sys.argv[0]}")
->  
+
+> diff --git a/scripts/ghes_decode.py b/scripts/ghes_decode.py
+> new file mode 100644
+> index 000000000000..6c7fdfe84e3a
+> --- /dev/null
+> +++ b/scripts/ghes_decode.py
+> @@ -0,0 +1,1155 @@
+> +#!/usr/bin/env python3
+> +#
+> +# pylint: disable=R0903,R0912,R0913,R0915,R0917,R1713,E1121,C0302,W0613
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +#
+> +# Copyright (C) 2025 Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> +
+> +"""
+> +Helper classes to decode a generic error data entry.
+> +
+> +By purpose, the logic here is independent of the logic inside qmp_helper
+> +and other modules. With a different implementation, it is more likely to
+> +discover bugs at the error injection logic. Also, as this can be used to
+> +dump errors injected by reproducing an error mesage or for fuzzy error
+> +injection, it can't rely at the encoding logic inside each module of
+
+rely on the encoding logic
+
+> +ghes_inject.py.
+> +
+> +To make the decoder simple, the decode logic here is at field level, not
+> +trying to decode bitmaps.
+> +"""
+> +
+> +from typing import Optional
+
+
+> +class DecodeProcX86():
+> +    """
+> +    Class to decode an x86 Processor Error as defined at
+> +    UEFI 2.1 - N.2.2 Section Descriptor
+> +    """
+> +
+> +    # GUID for x86 Processor Error
+> +    guid = "dc3ea0b0-a144-4797-b95b-53fa242b6e1d"
+> +
+> +    pei_fields = [
+> +        ("Error Structure Type", 16, "guid"),
+> +        ("Validation Bits", 8, "int"),
+> +        ("Check Information", 8, "int"),
+> +        ("Target Identifier", 8, "int"),
+> +        ("Requestor Identifier", 8, "int"),
+> +        ("Responder Identifier", 8, "int"),
+> +        ("Instruction Pointer", 8, "int")
+> +    ]
+> +
+> +    def __init__(self, cper: DecodeField):
+> +        self.cper = cper
+> +
+> +    def decode(self, guid):
+> +        """Decode x86 Processor Error"""
+> +        print("x86 Processor Error")
+> +
+> +        val = self.cper.decode("Validation Bits", 8, "int")
+> +        try:
+> +            val_bits = int.from_bytes(val, byteorder='little')
+> +        except ValueError, TypeError:
+> +            val_bits = 0
+> +
+> +        error_info_num = (val_bits >> 2) & 0x3f    # bits 2-7
+> +        context_info_num = (val_bits >> 8) & 0xff  # bits 8-13
+> +
+> +        self.cper.decode("Local APIC_ID", 8, "int")
+> +        self.cper.decode("CPUID Info", 48, "int")
+> +
+> +        for pei in range(0, error_info_num):
+> +            if self.cper.past_end:
+> +                return
+> +
+> +            print()
+> +            print(f"Processor Error Info {pei}")
+> +            for name, size, ftype in self.pei_fields:
+> +                self.cper.decode(name, size, ftype)
+> +
+> +        for ctx in range(0, context_info_num):
+> +            if self.cper.past_end:
+> +                return
+> +
+> +            print()
+> +            print(f"Context {ctx}")
+> +
+> +            self.cper.decode("Register Context Type", 2, "int")
+> +
+> +            val = self.cper.decode("Register Array Size", 2, "int")
+> +            try:
+> +                context_size = int(int.from_bytes(val, byteorder='little') / 8)
+> +            except ValueError, TypeError:
+> +                context_size = 0
+> +
+> +            self.cper.decode("MSR Address", 4, "int")
+> +            self.cper.decode("MM Register Address", 8, "int")
+> +
+> +            for reg in range(0, context_size):
+> +                if self.cper.past_end:
+> +                    return
+> +                self.cper.decode(f"Register offset {reg:<3}", 8, "int")
+
+As for arm. Probably need sanity check it's the 8 byte version.
+And for giggles even on x86 some are 16 bytes ;)
+GDTR, IDTR
+
+Meh, I don't care about those 16 byte ones, but not presenting the 4 byte
+ones as 8 would be good.
+
+
+
+> +
+> +    @staticmethod
+> +    def decode_list():
+> +        """
+> +        Returns a tuple with the GUID and class
+> +        """
+> +        return [(DecodeProcX86.guid, DecodeProcX86)]
+
+> +class DecodeProcArm():
+> +    """
+> +    Class to decode an ARM Processor Error as defined at
+> +    UEFI 2.6 - N.2.2 Section Descriptor
+> +    """
+> +
+> +    # GUID for ARM Processor Error
+> +    guid = "e19e3d16-bc11-11e4-9caa-c2051d5d46b0"
+> +
+> +    arm_pei_fields = [
+> +        ("Version",              1, "int"),
+> +        ("Length",               1, "int"),
+> +        ("valid",                2, "int"),
+> +        ("type",                 1, "int"),
+> +        ("multiple-error",       2, "int"),
+> +        ("flags",                1, "int"),
+> +        ("error-info",           8, "int"),
+> +        ("virt-addr",            8, "int"),
+> +        ("phy-addr",             8, "int"),
+> +    ]
+> +
+> +    def __init__(self, cper: DecodeField):
+> +        self.cper = cper
+> +
+> +    def decode(self, guid):
+> +        """Decode Processor ARM"""
+> +
+> +        print("ARM Processor Error")
+> +
+> +        start = self.cper.pos
+> +
+> +        self.cper.decode("Valid", 4, "int")
+> +
+> +        val = self.cper.decode("Error Info num", 2, "int")
+> +        try:
+> +            error_info_num = int.from_bytes(val, byteorder='little')
+> +        except ValueError, TypeError:
+> +            error_info_num = 0
+> +
+> +        val = self.cper.decode("Context Info num", 2, "int")
+> +        try:
+> +            context_info_num = int.from_bytes(val, byteorder='little')
+> +        except ValueError, TypeError:
+> +            context_info_num = 0
+> +
+> +        val = self.cper.decode("Section Length", 4, "int")
+> +        try:
+> +            section_length = int.from_bytes(val, byteorder='little')
+> +        except ValueError, TypeError:
+> +            section_length = 0
+> +
+> +        self.cper.decode("Error affinity level", 1, "int")
+> +        self.cper.decode("Reserved", 3, "int")
+> +        self.cper.decode("MPIDR_EL1", 8, "int")
+> +        self.cper.decode("MIDR_EL1", 8, "int")
+> +        self.cper.decode("Running State", 4, "int")
+> +        self.cper.decode("PSCI State", 4, "int")
+> +
+> +        for pei in range(0, error_info_num):
+> +            if self.cper.past_end:
+> +                return
+> +
+> +            print()
+> +            print(f"Processor Error Info {pei}")
+> +            for name, size, ftype in self.arm_pei_fields:
+> +                self.cper.decode(name, size, ftype)
+> +
+> +        for ctx in range(0, context_info_num):
+> +            if self.cper.past_end:
+> +                return
+> +
+> +            print()
+> +            print(f"Context {ctx}")
+> +            self.cper.decode("Version", 2, "int")
+> +            self.cper.decode("Register Context Type", 2, "int")
+> +            val = self.cper.decode("Register Array Size", 4, "int")
+> +            try:
+> +                context_size = int(int.from_bytes(val, byteorder='little') / 8)
+> +            except ValueError:
+> +                context_size = 0
+> +
+> +            for reg in range(0, context_size):
+> +                if self.cper.past_end:
+> +                    return
+> +                self.cper.decode(f"Register {reg:<3}", 8, "int")
+
+Maybe check it's not a 32 bit context?  Don't decode it if it
+is but don't try to decode it as 64 bit.  Can get that from the
+Register Context Type.  Anything over 4 is fine.
+
+
+> +
+> +        remaining = max(section_length + start - self.cper.pos, 0)
+> +        if remaining:
+> +            print()
+> +            self.cper.decode("Vendor data", remaining, "int")
+> +
+> +    @staticmethod
+> +    def decode_list():
+> +        """
+> +        Returns a tuple with the GUID and class
+> +        """
+> +        return [(DecodeProcArm.guid, DecodeProcArm)]
+
+> +class DecodeDMAVT():
+> +    """
+> +    Class to decode a DMA Virtualization Technology Error as defined at
+> +    UEFI 2.2 - N.2.2 Section Descriptor
+As below. Feels like it should be 
+
+N2.11.2 Intel VT for Directed I/O specific DMAr Error Section Descriptor.
+Same for other places this comment exists.
+
+
+> +    """
+> +
+> +    # GUID for DMA VT Error
+> +    guid = "71761d37-32b2-45cd-a7d0-b0fedd93e8cf"
+
+> +class DecodeDMAIOMMU():
+> +    """
+> +    Class to decode an IOMMU DMA Error as defined at
+> +    UEFI 2.2 - N.2.2 Section Descriptor
+
+Odd reference choice.
+This stuff is in N2.11.3 IOMMU Specific DMAr Error Section
+in 2.11. I'm too lazy to find it in the older spec.
+
+> +    """
+> +
+> +    # GUID for IOMMU DMA Error
+
+Maybe call it the IOMMU Specific DMAr Error
+
+> +    guid = "036f84e1-7f37-428c-a79e-575fdfaa84ec"
+> +
+> +    fields = [
+
+> +class DecodeCXLCompEvent():
+> +    """
+> +    Class to decode a CXL Component Error as defined at
+> +    UEFI 2.9 - N.2.14. CXL Component Events Section
+> +
+> +    Currently, the decoder handles only the common fields, displaying
+> +    the CXL Component Event Log field in bytes.
+> +    """
+> +
+> +    # GUIDs, as defined at CXL specification 3.2: 8.2.10.2.1 Event Records
+> +    guids = [
+> +        ("General Media",              "fbcd0a77-c260-417f-85a9-088b1621eba6"),
+> +        ("DRAM",                       "601dcbb3-9c06-4eab-b8af-4e9bfb5c9624"),
+> +        ("Memory Module",              "fe927475-dd59-4339-a586-79bab113bc74"),
+> +        ("Memory Sparing",             "e71f3a40-2d29-4092-8a39-4d1c966c7c65"),
+> +        ("Physical Switch",            "77cf9271-9c02-470b-9fe4-bc7b75f2da97"),
+
+As per earlier patch review I'm not sure we care about this and the following.
+I don't think we'll ever see them in CPER records, unless going other something
+else that encapsulates that format.
+
+> +        ("Virtual Switch",             "40d26425-3396-4c4d-a5da-3d472a63af25"),
+> +        ("MDL Port",                   "8dc44363-0c96-4710-b7bf-04bb99534c3f"),
+MLD -> Multi-Logical Device
+
+> +        ("Dynamic Capabilities",       "ca95afa7-f183-4018-8c2f-95268e101a2a"),
+> +    ]
+> +
+> +    fields = [
+> +        ("Validation Bits", 8, "int"),
+> +        ("Device ID", 12, "int"),
+> +        ("Device Serial Number", 8, "int")
+> +    ]
+> +
+> +    def __init__(self, cper: DecodeField):
+> +        self.cper = cper
+> +
+> +    def decode(self, guid):
+> +        """Decode CXL Protocol Error"""
+> +        for name, guid_event in DecodeCXLCompEvent.guids:
+> +            if guid == guid_event:
+> +                print(f"CXL {name} Event Record")
+> +                break
+> +
+> +        val = self.cper.decode("Length", 4, "int")
+> +        try:
+> +            length = int.from_bytes(val, byteorder='little')
+> +        except ValueError, TypeError:
+> +            length = 0
+> +
+> +        for name, size, ftype in self.fields:
+> +            self.cper.decode(name, size, ftype)
+> +
+> +        length = max(0, length - self.cper.pos)
+> +
+> +        self.cper.decode("CXL Component Event Log", length, "int",
+> +                         show_incomplete=True)
+> +
+> +    @staticmethod
+> +    def decode_list():
+> +        """
+> +        Returns a tuple with the GUID and class
+> +        """
+> +
+> +        guid_list = []
+> +
+> +        for _, guid in DecodeCXLCompEvent.guids:
+> +            guid_list.append((guid, DecodeCXLCompEvent))
+> +
+> +        return guid_list
+
+
+...
+
+> +class DecodeGhesEntry():
+> +    """
+> +    Class to decode a GHESv2 element, as defined at:
+> +    ACPI 6.1: 18.3.2.8 Generic Hardware Error Source version 2
+> +    """
+> +
+> +    # Fields present on all CPER records
+> +    common_fields = [
+> +        # Generic Error Status Block fields
+> +        ("Block Status",           4, "int", None),
+> +        ("Raw Data Offset",        4, "int", "raw_data_offset"),
+> +        ("Raw Data Length",        4, "int", "raw_data_len"),
+> +        ("Data Length",            4, "int", None),
+> +        ("Error Severity",         4, "int", None),
+> +
+> +        # Generic Error Data Entry
+> +        ("Section Type",          16, "guid", "session_type"),
+
+Why session_type? Is idea it's the type of decode session we are
+doing? Feels a bit too much like a typo from section_type.
+
+
+> +        ("Error Severity",         4, "int", None),
+> +        ("Revision",               2, "int", None),
+> +        ("Validation Bits",        1, "int", None),
+> +        ("Flags",                  1, "int", None),
+> +        ("Error Data Length",      4, "int", None),
+> +        ("FRU Id",                16, "guid", None),
+> +        ("FRU Text",              20, "str", None),
+> +        ("Timestamp",              8, "bcd", None),
+> +    ]
+> +
+> +    def __init__(self, cper_data: bytearray):
+> +        """
+> +        Initializes a byte array, decoding it, printing results at the
+> +        screen.
+> +        """
+
+...
+
+> +
+> +        # Handle common types
+> +        cper = DecodeField(cper_data)
+> +
+> +        fields = {}
+> +        for name, size, ftype, var in self.common_fields:
+> +            val = cper.decode(name, size, ftype)
+> +
+> +            if ftype == "int":
+> +                try:
+> +                    val = int.from_bytes(val, byteorder='little')
+> +                except ValueError, TypeError:
+> +                    val = 0
+> +
+> +            if var is not None:
+> +                fields[var] = val
+> +
+> +        if fields["raw_data_len"]:
+> +            cper.decode("Raw Data", fields["raw_data_len"],
+> +                        "int", pos=fields["raw_data_offset"])
+> +
+> +        if not fields["session_type"]:
+> +            return
 
 
