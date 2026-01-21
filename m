@@ -4,91 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF8AD262B7
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 04:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33134D262B2
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 05:20:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viQ5W-0005ja-5q; Tue, 20 Jan 2026 23:45:02 -0500
+	id 1viQd6-0004IP-MJ; Wed, 21 Jan 2026 00:19:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1viQ5T-0005gq-Um
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 23:44:59 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1viQ5S-0006px-6M
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 23:44:59 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-81e9d0cd082so4760589b3a.0
- for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 20:44:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768970697; x=1769575497; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+Bf1Pd8Z9/BnT45YObIxltuEdos+6OIjVxfCqB2A3U4=;
- b=WjkhDHdP6u9ECKWGPy9QgsnVAeDvakke4Gq75BIKWAECe+lN9uXOP67Dhr35yINrMw
- FH+x4aQf0yaTBiHECWi/+dM4qBLeBbBX1Ahp2ePCXjULuirEKfkWy6b6mKBnnplNcz/0
- 4nD8u+fWhI1n+Wd+zgiyQqoD6NZaHQ4qkjIYz5KJW1ekdZif+UbrJBpE/MXTvLHFYUmc
- tEmBQAXKiHTzO6qi88VwxQkqgqurLxVu6GJkB5UJ816Oc8YNuIuuBhWApRWPLQA6r4af
- V97FuOOLjKdj13dz/pTx6f6iN2Gze7WEHha/8xv0yZDFINTekOoM2CZRyzRg6md6mBK6
- UmnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768970697; x=1769575497;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+Bf1Pd8Z9/BnT45YObIxltuEdos+6OIjVxfCqB2A3U4=;
- b=s4dhroMhTOb2jyJhhfNpeehXBHYjOY1moP58ccnhWJTkUyJEY+cHMoFeOmZif/tvyd
- nnbb60DKeWW8WrtPHnC579LsCHOn/iQrBrvnn4K1UZRTaHz2AB9B25zatPw1lCLDwicP
- b91ORuJ8NW53nzTxVuOjA2ODf8JBQoj71XwrrUh26a97mhOuwCbSxaTXJAvMCS9lKGQx
- WqsH6ijYTpxbFCE7lj53MuMHljUYFBovrs5eCqK73tFZ0kdXHqtWAFIirVY7pA9WUy9v
- DoDSIcg9qjWhzk0m9t8GiTMD9m7Ph/IeRyreyAg8JDqxmHWqdvFLlNjlnL2w4ed5zCis
- wEGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWsLl6/xiUFjFzi37csrVkukE+3UHY7+w741+gUQbz4nBu+O6kpwuDPIEoQ0ZedUvuUkD1gzrnq9K/o@nongnu.org
-X-Gm-Message-State: AOJu0Yzd4w5U4Rn5zW3HLh9E/8cYCt/6UmA4UWO9rkBnlfpUr9Wr6stg
- b6eUvnJwFznIK1c6Hhc4Us76m8cD6GX82W7Nss2rFtCsxOA+eCuq+UYlHt/lwpYcljg=
-X-Gm-Gg: AZuq6aIDrx9VwvZtYipIv1tGN5OZHjbAA2KUY24bUiW2j/Z3SKlYYitGcuo7Hwy94tn
- 9peedbE2daJclvWp7cff9jAKlyPvN7BfwaYJRv2T6qHYAnkdXDLj6wkEqr75svtgTxnBkpf7+x2
- RqEJ56e1UCDckLujtc25Z7FWlsgZipAh2FFDBeu+Mq+SXZPcaYQiGrVzarc+RW362YeF2qjc4TK
- XLBM1wFLGh+CZhxJAGAvlmJ07ZzHqql+1PlqkQTfNhXgYaEfNqNarlsiPuAzySOq+fyT5IqSfta
- KlOG5YL6KlAVzGQn20qqDebup4iByysQGl82s/MYxfaDJ/f+kUm14aJmc4IJgT6W49WveUCLBIu
- H/5z+VCDR2w1+vc6CGQfSyZOjMCslWLAFC4+svbgF7UEFhXKcbntmbHfU97iZME5DxyXcPnb1b4
- 24uWiGvAoIqGn/CxUNNSLnuZv8W7YvpF0Ep87rfzej
-X-Received: by 2002:a05:6a00:1ca2:b0:81f:3d13:e069 with SMTP id
- d2e1a72fcca58-81fa1780ecdmr12585804b3a.8.1768970696573; 
- Tue, 20 Jan 2026 20:44:56 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-81fa1291ca2sm13596151b3a.54.2026.01.20.20.44.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Jan 2026 20:44:56 -0800 (PST)
-Message-ID: <a5e70989-9733-4eee-aaf9-f72d507f11fc@linaro.org>
-Date: Wed, 21 Jan 2026 15:44:51 +1100
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1viQd4-0004IB-Lt
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 00:19:42 -0500
+Received: from mgamail.intel.com ([198.175.65.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1viQd2-0003ku-Hn
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 00:19:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1768972781; x=1800508781;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=36eUIuF0FMwRHHdfsmDn9x6uLIz/x6CIt7c8I/nawr4=;
+ b=lsJ1HVDD9ZCGojxVssluBEXRF4YgN89rq5RtV1Ir7xr4ggONLYE8nHPd
+ sMMfhDFCKU6AoWcURCkUm38hbG66NKe5BuiaieaIcXXb6V5mcwZJqwMKd
+ HbNnItdfjpFe2fPt/GGCp6MJKPn+iMMnDb5JjTdLvWTmd1M1qZxjB28rJ
+ 30059Zq3pBY2RYMkfl/5twjUkuMSjmfokUJ18WXLNn9/FCFwTRvK6KIc6
+ keUqKovap+WsNsSFgT71aZlKbaWhDhJCxXytrhvNPFhtlfjqQDyQBKxdu
+ Ey6AYkBEdXYDrAUH2NYlKvgBhRQwCNweT5NdbwXnC11XP3rTxDcKXdAK5 Q==;
+X-CSE-ConnectionGUID: TMLGyFFoQFWsMNwdyQ0BRQ==
+X-CSE-MsgGUID: EgJVBRYKTGGDgt6mb6FDvQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11677"; a="87606695"
+X-IronPort-AV: E=Sophos;i="6.21,242,1763452800"; d="scan'208";a="87606695"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Jan 2026 21:19:36 -0800
+X-CSE-ConnectionGUID: lx9zVxU/T6e1wqxPpYZklQ==
+X-CSE-MsgGUID: n5SLNxg+TUi9wrdEumSwog==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,242,1763452800"; d="scan'208";a="210788675"
+Received: from unknown (HELO [10.238.3.254]) ([10.238.3.254])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Jan 2026 21:19:33 -0800
+Message-ID: <c87ba875-5708-4ef9-8e75-5558d8b49b14@linux.intel.com>
+Date: Wed, 21 Jan 2026 13:19:31 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/29] Misc HW patches for 2026-01-20
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20260120183902.73845-1-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 6/7] target/i386: Make some PEBS features user-visible
+To: "Chen, Zide" <zide.chen@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Cc: xiaoyao.li@intel.com, Dongli Zhang <dongli.zhang@oracle.com>
+References: <20260117011053.80723-1-zide.chen@intel.com>
+ <20260117011053.80723-7-zide.chen@intel.com>
+ <56dd6056-e3e2-46cd-9426-87c7889bed49@linux.intel.com>
+ <513c6944-b80a-46f2-ad6c-4de77dac4b09@intel.com>
 Content-Language: en-US
-In-Reply-To: <20260120183902.73845-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <513c6944-b80a-46f2-ad6c-4de77dac4b09@intel.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.10;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,28 +89,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/21/26 05:38, Philippe Mathieu-Daudé wrote:
-> The following changes since commit 38879a667fbb4ef54c70de71494882615f600a64:
-> 
->    Merge tag 'pull-tcg-20260119' ofhttps://gitlab.com/rth7680/qemu into staging (2026-01-19 09:04:31 +1100)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/philmd/qemu.git tags/hw-misc-20260120
-> 
-> for you to fetch changes up to 84f82697f8294377224aad9f7cc499116ae0ec49:
-> 
->    meson: Do not try to build module for empty per-target hw/ directory (2026-01-20 19:34:44 +0100)
-> 
-> ----------------------------------------------------------------
-> Misc HW patches
-> 
-> - Generalized IOMMU test framework
-> - Fix Freescale SDHCI endianness issues
-> - Support for zboot images compressed with Zstd
-> - Pcap support to analyze UEFI firmware traffic
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
+On 1/21/2026 5:58 AM, Chen, Zide wrote:
+>
+> On 1/18/2026 7:30 PM, Mi, Dapeng wrote:
+>> On 1/17/2026 9:10 AM, Zide Chen wrote:
+>>> Populate selected PEBS feature names in FEAT_PERF_CAPABILITIES to make
+>>> the corresponding bits user-visible CPU feature knobs, allowing them to
+>>> be explicitly enabled or disabled via -cpu +/-<feature>.
+>>>
+>>> Once named, these bits become part of the guest CPU configuration
+>>> contract.  If a VM is configured with such a feature enabled, migration
+>>> to a destination that does not support the feature may fail, as the
+>>> destination cannot honor the guest-visible CPU model.
+>>>
+>>> The PEBS_FMT bits are intentionally not exposed. They are not meaningful
+>>> as user-visible features, and QEMU registers CPU features as boolean
+>>> QOM properties, which makes them unsuitable for representing and
+>>> checking numeric capabilities.
+>> Currently KVM supports user space sets PEBS_FMT (see vmx_set_msr()), but
+>> just requires the guest PEBS_FMT is identical with host PEBS_FMT.
+> My mistake — this is indeed problematic.
+>
+> There are four possible ways to expose pebs_fmt to the guest when
+> cpu->migratable = true:
+>
+> 1. Add a pebs_fmt option similar to lbr_fmt.
+> This may work, but is not user-friendly and adds unnecessary complexity.
+>
+> 2. Set feat_names[8] = feat_names[9] = ... = "pebs-fmt".
+> This violates the implicit rule that feat_names[] entries should be
+> unique, and target/i386 does not support numeric features.
+>
+> 3. Use feat_names[8..11] = "pebs-fmt[1/2/3/4]".
+> This has two issues:
+> - It exposes pebs-fmt[1/2/3/4] as independent features, which is
+> semantically incorrect.
+> - Migration may fail incorrectly; e.g., migrating from pebs_fmt=2 to a
+> more capable host (pebs_fmt=4) would be reported as missing pebs-fmt2.
+>
+> Given this, I propose the below changes. This may allow migration to a
+> less capable destination, which is not ideal, but it avoids false
+> “missing feature” bug and preserves the expectation that ensuring
+> destination compatibility is the responsibility of the management
+> application or the user.
+>
+> BTW, I am not proposing a generic “x86 CPU numeric feature” mechanism at
+> this time, as it is unclear whether lbr_fmt and pebs_fmt alone justify
+> such a change.
+>
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 015ba3fc9c7b..b6c95d5ceb31 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -1629,6 +1629,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+>          .msr = {
+>              .index = MSR_IA32_PERF_CAPABILITIES,
+>          },
+> +       .migratable_flags = PERF_CAP_PEBS_FMT,
+>      },
+>
+>      [FEAT_VMX_PROCBASED_CTLS] = {
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 1666eff65300..de4074d6baa7 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -421,6 +421,7 @@ typedef enum X86Seg {
+>
+>  #define MSR_IA32_PERF_CAPABILITIES      0x345
+>  #define PERF_CAP_LBR_FMT                0x3f
+> +#define PERF_CAP_PEBS_FMT               0xf00
+>  #define PERF_CAP_FULL_WRITE             (1U << 13)
+>  #define PERF_CAP_PEBS_BASELINE          (1U << 14)
 
-r~
+I can't say if this is the best way. Maybe @Zhao can give some comments.
+Thanks.
+
+
+>
+>
+>> IIRC, many places in KVM judges whether guest PEBS is enabled by checking
+>> the guest PEBS_FMT. If we don't expose PEBS_FMT to user space, how does KVM
+>> get the guest PEBS_FMT?
+>>
+>>
+>>> Co-developed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+>>> Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+>>> Signed-off-by: Zide Chen <zide.chen@intel.com>
+>>> ---
+>>>  target/i386/cpu.c | 6 +++---
+>>>  1 file changed, 3 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>>> index f1ac98970d3e..fc6a64287415 100644
+>>> --- a/target/i386/cpu.c
+>>> +++ b/target/i386/cpu.c
+>>> @@ -1618,10 +1618,10 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+>>>          .type = MSR_FEATURE_WORD,
+>>>          .feat_names = {
+>>>              NULL, NULL, NULL, NULL,
+>>> +            NULL, NULL, "pebs-trap", "pebs-arch-reg"
+>>>              NULL, NULL, NULL, NULL,
+>>> -            NULL, NULL, NULL, NULL,
+>>> -            NULL, "full-width-write", NULL, NULL,
+>>> -            NULL, NULL, NULL, NULL,
+>>> +            NULL, "full-width-write", "pebs-baseline", NULL,
+>>> +            NULL, "pebs-timing-info", NULL, NULL,
+>>>              NULL, NULL, NULL, NULL,
+>>>              NULL, NULL, NULL, NULL,
+>>>              NULL, NULL, NULL, NULL,
+>
 
