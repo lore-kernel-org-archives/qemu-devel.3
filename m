@@ -4,156 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 092E2C44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 09:20:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AA51C44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 09:28:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viULA-00028p-8T; Wed, 21 Jan 2026 04:17:28 -0500
+	id 1viUV8-0002tZ-R9; Wed, 21 Jan 2026 04:27:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1viUL8-00023V-CC
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 04:17:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1viUL6-0004cT-5D
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 04:17:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1768987042;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=FQrWhWpM75WasJ9TP3ohL3Ur0bYN4zciwHG2ype3POo=;
- b=GYgOxuy6tOP55KzLjcRD0rigKgBgF7mmGLnIhP/z0qN8DIPtGabBpmWl5vJTEOz68Ink0o
- Rvt9JTGGZG0ukP8AmcJar8iUqwDybvcCwszrWP7OR4Io2C1W0TJa1o1ZiSu7rpaimTQICd
- oENedPRoadFHie6v9p0FeSqlNS1/QUA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-7xl-jvz2M4O9Tfar7GLO3A-1; Wed, 21 Jan 2026 04:17:21 -0500
-X-MC-Unique: 7xl-jvz2M4O9Tfar7GLO3A-1
-X-Mimecast-MFC-AGG-ID: 7xl-jvz2M4O9Tfar7GLO3A_1768987040
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4803e8b6007so10563025e9.0
- for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 01:17:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1viUV1-0002kD-CA
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 04:27:40 -0500
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1viUUz-0007Jj-L6
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 04:27:38 -0500
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-78c66bdf675so55140787b3.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 01:27:36 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768987655; cv=none;
+ d=google.com; s=arc-20240605;
+ b=FzOOV09DqUSBNJePKmWHdXqIU4CzbRBZsRy9gWiKJ65Rc4/N1GUoOtJX5MzqTkDzyl
+ o7csuFqoRSPMMgYv+UDFPxd5drX77ASvGf56Nb8mBRbRh+1OpvPrKhyEdTS3a1kh30eR
+ kdBL0Gakb6s/BqcWgakAbC4tTmeqTr/oHym7rRki2M++XToGB2qNVqCLhkjt2ez0KFUX
+ ePEHhgxYlcILSk2nGhyN6aExqewFLNT4rnSD9EelMcyIiTctUWEEuTCta9GMrkC1fDZk
+ /mTPYdtPT2SnT3FXl39EZOHhvfNIrGk8kSW47vwldfSo4nGzTTgOGC7/e5HAxUZs/tfg
+ flRg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=OiRDwoLtTsknQ7PacWzNbXiZ/sHl5VJBOJ2/kVClTqw=;
+ fh=h5XwtwbFZRZ1FUOtZRgdKZteGKilXmRo+GqhpTRH7tM=;
+ b=iw/fbEwCNRU3fS/RhB+T4LDj76ZrUg4aB9Ek66chMA/DGTPw5ILBsbrFayEOWt5Stz
+ xjUH639ByjHJB4B350HKlxMzxha/Kdu/JWc3rMxnMbor1Su4ZeQqEq8jmd7nA0JprKGi
+ SJi1Z8DZNE0Zp69MmkjMy2IR6Dz8zFWeCjdOiRVlniBh/GJJN0shY5GMrorsPlLKdF76
+ S7+w3kqsKyHdZ7K8uR9bfD97c5hhia7UyhWDiFxh03eCNAOgGLX1LchqBxikkLhKCNc4
+ YLqWlnCC1yiWS7+kLTJaHDILPjBinVZ4PKqo0PEhbez92Gt3NGmwFxHn4jSLMRHOIobG
+ sZHw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1768987040; x=1769591840; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=FQrWhWpM75WasJ9TP3ohL3Ur0bYN4zciwHG2ype3POo=;
- b=pwMbfS1vOC4L+xv4snhGhvnRpKDITCu0IL1QQaYXdyP6OKPf+1Ngzvve2BJ1lj1+ZH
- XSGEwdFF292koULX3fguyn3k0KIm9WeTKKnJm1Ba2SMVg20oBJV6/YFm28UGODa12L7C
- zfP6Qh73aJAaODur2g8BR3CkADG6HM9z1XCO183FeEezb40Jvlh/BVdQ0ZL/3BHsSf6j
- 19Dpr8bTCE/B/B+WSd56IWr03KpSKM4ECfeIi4r0YwwuNdDxuZ0BJs3KP7e9n1dSp6dW
- uRUqrXzkiYs+Ggw3iyUWfBpa5lDwU+Jec2oHk4Z56x2ViC3E/7sLl7v+D9/c21eRnZ4G
- WyTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768987040; x=1769591840;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1768987655; x=1769592455; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FQrWhWpM75WasJ9TP3ohL3Ur0bYN4zciwHG2ype3POo=;
- b=rXV/sV0nva9qIVBLAX+Cpx0x29ssMy7SY6Jl5vuiGE4UZEG70aZ1dJv9vZLXml9zZX
- PuZwch/3mBUk6kJ407C/Mc3IfM/UPid8cMRYPFKNpUyQR3pYq4n8OAT/Vsy1dcHYyws7
- +Arju8umnMLPQn4HzmMMDmpvvhkeKZuqEZDpvPxHypqvcnDgPhCvVUGGFLkZvhPTxO0U
- qbvd0Aoh79jAqKAZS5qX1RiYqpnvpGImc2xmw08qkQXKLMjBEjfPiRiWJhHoOQOp8xJA
- 4YFzVXNFNUgdPBzHx0OkqnM97Cc8ZrXxvAyMORiYf7Q9q+lVN5qcFR4T2ZKfal17tXgB
- aEvg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXrNgkT2bOdw5yPIxtIGWljXJOiMwoiPXTx8k2ovJPsP0lSngCTKTTzLj5aAbKDfdwDxhOZ7SjmqgGe@nongnu.org
-X-Gm-Message-State: AOJu0YxHKWB3ZUyJb2BFXMHhv2uPU44T0TU0ms04VH1zSKbzS0zJmTJF
- dPy3gM7oJgAfoDxvJkyQsneueJjldxPfOQvGn+RqUXrt92AAg+pM6BGoknL6kiy9nOyJtifuyuq
- z/NlSeVtZ6HUczH1txcAJvzHOFJvvBnjgVdbqXQW4QClm6wifsWjTA7/p
-X-Gm-Gg: AZuq6aLSiKmBX4EnH+63BLccHMsePGUHpL/Vta08iDhbzLlUe5pXJNGjHLrRxFyAYGE
- /dKCsrEQC+lUgTxSJqt36wN5gvNPYa89HKiyn4d4xs9ilZy+aEznAEoIBGL3hXcH3XT5/2Diy4j
- XaAmZ5RmaI8yaEQFsPJVh8gkviBo+fClUxWr+VwjWx1GhtM1mlqYAdHcJq82JS+xK99r5Zfxwc4
- y4b1nIFHWFKitOU5AL7WVg//FxvO3o5UFSUb+Dv2xL2Oez6pH5v02H3cf7+x2BdvwGxnmNdyWHv
- ZraWpdhi+K0/rKAXShTptIQw/IHUi9IY21GScECxMW16YEAPJZ5/yMrNipvGQ0tcC1MiZ9rdCOi
- tIXRJJi0VQBVv2qcuVf2RyQlvprVpHltrIjetsarRZOmaLQ9H
-X-Received: by 2002:a05:600c:8b75:b0:477:b734:8c22 with SMTP id
- 5b1f17b1804b1-4803e79b7famr72660125e9.8.1768987039815; 
- Wed, 21 Jan 2026 01:17:19 -0800 (PST)
-X-Received: by 2002:a05:600c:8b75:b0:477:b734:8c22 with SMTP id
- 5b1f17b1804b1-4803e79b7famr72659735e9.8.1768987039361; 
- Wed, 21 Jan 2026 01:17:19 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47f42907141sm354931795e9.9.2026.01.21.01.17.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Jan 2026 01:17:18 -0800 (PST)
-Message-ID: <b2e3728d-90f7-4875-87f0-f55f2e44f0d0@redhat.com>
-Date: Wed, 21 Jan 2026 10:17:17 +0100
+ bh=OiRDwoLtTsknQ7PacWzNbXiZ/sHl5VJBOJ2/kVClTqw=;
+ b=pEYWHr5tKQxpDDnP+P7hpgbTRJK3WegyKYlsQPVekY7oX6Y+X/WcX14x0CXnlCoNcg
+ p5B88R/Ze4cJPWdcQ/gXDHL/82zhhXcrlG1kLbjsg/EyzMVLoFswSbqd/ZsQtArNIic2
+ S1vnOBlIJP9xFXhqlcd57WUM1d6fBTM3wLmOCfU0wQTzb7ueMjqcA2ZG1LwLffbLp+4z
+ HAitn6rbUM/Gq+b6oFt3HRvhKdjqkPsns6WJ8BOsdcTCAaKzxmsuwOZuVL1yNV7c1Wzs
+ msz8651ApWDxCWGyxvgt+NOQERoyvHXcUpP4jNwKJHDzx7w58p1UXtZgslNK+GQk7MpU
+ Bg6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768987655; x=1769592455;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OiRDwoLtTsknQ7PacWzNbXiZ/sHl5VJBOJ2/kVClTqw=;
+ b=jbbO7YF6U9jtKAgc02v8OCotC67EaYhisEKFXOCs4EpfxzDMN2AlT7cVY1wN3Hckz/
+ WkCMUn1/D//FkEmQue1F0SxEqfEmNn3jgwmUyi0Un6wRjSHaPO0YA0mW7jMLl6dVj2FZ
+ THj/aMJ4CKPxe699x+qbPQNlEJG2SZfst3Qupgi2OP1hD+9VbBTHsmOQ4s9T7sUpAWZz
+ 8m6LhKJ/OVjhhgdGdDXIIvUY+rN5FKiGCHz/79gv83nyI7MuRUQYMIdsD70RX1mtxpF4
+ tY9ptm1GwzXbBT/fqBV9ZqgxMNDK36VEa+nk2SZTBIT66GwAVaZS6sHR8rpiV6fWu76v
+ zRSw==
+X-Gm-Message-State: AOJu0YwIj39m9n2OiVfvM641dQ8C6uYEd0HqRzCN1CZo0zl7/7It4lJj
+ MOoKM0narSu75hrZSSt3B48oCVda/k5qcrA2/gM2lrqlHhgnHR+R3jj7fAtn1lS9x5nUG+wfK9U
+ x1AWAsPRRkQSK3wFjl+svOVvxrEYba9NOsxzb6HUmjw==
+X-Gm-Gg: AZuq6aL3uYcruOaA0mT0urOmGrjxkQH6+3Ozm4lgtgp07rJC42IWvbZs4zt31Ic09YJ
+ ozZ/1DQWKLvGV9NeiccUASvsSNSAhHuY2bNVNJgJITJ28Z1TpmK38ykq0PLypR6wAeUlQkWu1oN
+ eH8WSdiSSqw+LD50XkTyWr5/YgKPE7PPSWloQCBiMdr2Tans9SqPrMZSebKQ9aBLEXzIZcwMlnY
+ 1q6EoFHsDaZBFHz3yAixUjfMzDA5Hg+FBtYoAPTTaRI02lZXMjKZJMrqZninhPjjK6p7w==
+X-Received: by 2002:a05:690c:10c:b0:78c:5dfe:1b57 with SMTP id
+ 00721157ae682-7940a245084mr38019387b3.38.1768987655428; Wed, 21 Jan 2026
+ 01:27:35 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/vfio: cpr-iommufd: Fix wrong usage of
- migrate_add_blocker_modes
-To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Mark Kanda <mark.kanda@oracle.com>,
- Ben Chaney <bchaney@akamai.com>, Markus Armbruster <armbru@redhat.com>
-References: <20260121063418.2001326-1-jim.shu@sifive.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260121063418.2001326-1-jim.shu@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20260116135235.38092-1-mohamed@unpredictable.fr>
+ <20260116135235.38092-5-mohamed@unpredictable.fr>
+ <CAFEAcA-3P6i_w3b7SaFTn4Zmwnot5vpDs89y+zpjcJ=-mEnP5w@mail.gmail.com>
+ <8158CEFE-8EA2-40A4-970E-01B30BACC019@unpredictable.fr>
+In-Reply-To: <8158CEFE-8EA2-40A4-970E-01B30BACC019@unpredictable.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 21 Jan 2026 09:27:22 +0000
+X-Gm-Features: AZwV_QhbV9c8W4eGRYL96WaTovp4ICRNg0iXp8GbxBedwhmIWZiOBQd8zxtw9Wg
+Message-ID: <CAFEAcA9JC1HRboZ=722dsT7a4nDQNF_ECjLK+z84T5MJisfppg@mail.gmail.com>
+Subject: Re: [PATCH v16 04/26] hw/arm: virt: add GICv2m for the case when ITS
+ is not available
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Pedro Barbuda <pbarbuda@microsoft.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,42 +127,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/21/26 07:34, Jim Shu wrote:
-> The return value of API is 0 for success and negative error code for
-> failure. We'll check if the return value equals to 0.
-> Also, the MIG_MODE should be CPR_TRANSFER and CPR_EXEC instead
-> of 2 same bits.
-> 
-> The API usage is aligned with 'hw/vfio/cpr-legacy.c' after these 2
-> changes.
-> 
-> Fixes: 3ca0a0ab05c ("migration: Use bitset of MigMode instead of variable arguments")
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
-> ---
->   hw/vfio/cpr-iommufd.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
-> index c244db88fbb..6758c73b6b9 100644
-> --- a/hw/vfio/cpr-iommufd.c
-> +++ b/hw/vfio/cpr-iommufd.c
-> @@ -159,8 +159,8 @@ bool vfio_iommufd_cpr_register_iommufd(IOMMUFDBackend *be, Error **errp)
->   
->       if (!vfio_cpr_supported(be, cpr_blocker)) {
->           return migrate_add_blocker_modes(cpr_blocker,
-> -                    BIT(MIG_MODE_CPR_TRANSFER) | BIT(MIG_MODE_CPR_TRANSFER),
-> -                    errp);
-> +                    BIT(MIG_MODE_CPR_TRANSFER) | BIT(MIG_MODE_CPR_EXEC),
-> +                    errp) == 0;
->       }
->   
->       vmstate_register(NULL, -1, &iommufd_cpr_vmstate, be);
+On Tue, 20 Jan 2026 at 18:44, Mohamed Mediouni <mohamed@unpredictable.fr> w=
+rote:
+>
+>
+>
+> > On 20. Jan 2026, at 19:02, Peter Maydell <peter.maydell@linaro.org> wro=
+te:
+>
+>
+> > The MSI controller selection logic is already pretty confusing,
+> > and this is making it more complicated. I don't think we should
+> > need this machine back compatibility, because currently there
+> > is no setup where you can have a GICv3 that doesn't also have
+> > either an ITS or no MSI controller.
+> >
+> Hello,
+>
+> This was to replicate the =E2=80=9Cno_tcg_its=E2=80=9D where this was don=
+e when introducing TCG.
+> And for the purpose of VM save/restore on HVF with the older machine type=
+ continuing to work as expected.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+no_tcg_its is there for backwards compatibility: on older
+QEMU versions before we added the TCG ITS, if you said
+"-machine virt,gic-version=3D3 -accel tcg" you didn't get an
+ITS; we wanted to change the default in new machine versions,
+so we needed the back compat switch.
 
+What is the command line that works today and where we
+want to go from "default to GICv3 without ITS or v2m"
+to "default to GICv3 with v2m" ? I might have missed it
+but back last year when I was looking at the current
+configs I didn't think we had one.
 
-Thanks,
-
-C.
-
+thanks
+-- PMM
 
