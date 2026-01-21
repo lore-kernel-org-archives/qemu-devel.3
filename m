@@ -4,94 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16016C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 16:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC01C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 16:25:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viaey-0004Kb-SP; Wed, 21 Jan 2026 11:02:20 -0500
+	id 1vib0l-0004l6-V9; Wed, 21 Jan 2026 11:24:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1viaei-00049z-PQ
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 11:02:08 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1viaee-0007x8-Ae
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 11:02:04 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47edd9024b1so47382235e9.3
- for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 08:01:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769011318; x=1769616118; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cR5zNIGLc6jF31wai4UyLd4hZGb5cEinB/KIQx3lvoI=;
- b=FxS3YrXST6d/f1ub9OSBNto4pZLo5f45H7SJIVUaO/NbHdh/g5snDnkxEDZyPqLbvh
- JmVc9uDxUHRET1c8HXbvn42AgR+vZpfBQeInSy4hp4J/H0CCDLFKuDoyc9AcYYraFXaz
- PfzAqgUzmgBLMgUCSlkhVnBfpZl8tO8qmCFJqnMHkYnArArdzZD8pVYSQ9Kcy75iMv6W
- zlrII4ens4YmOSnuuHX4BkKLF/w6ICDBLjFgmGzmZ1TgwghajtiBRNf3pHhfaF4UDrSL
- 6eDLSAkcqG715mBa8QJFgZE/gkeIZT78MrL/93GdUT6nIIEpe0Q5NVig65Cdcd9yj0k3
- IRvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769011318; x=1769616118;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cR5zNIGLc6jF31wai4UyLd4hZGb5cEinB/KIQx3lvoI=;
- b=n9BN/D90jjxC/WjDzR9LWOv7k0EzdBMLelmTj557FG0YjP89snQ5kcx35tadJEU5CP
- CIlRdidNEUYS0rTUwwDvKvOjmcAT7cCLfyQ965cs3xTweejZQ1YEiEjkzahiMUzPNXHn
- GygRws459ZB/ezQiqrugXjJnUxuyDrJi6LAnXge9mAqISBex9NEE55fHxMrfixxCNH4T
- C7nVPKeZXxRU44pOtFpZ6G5TZyO7Rwm1d/CQeMwYY6YKLvcBNS5Jpo26NCtIHHFNXgvR
- 2GYh0VaP2ye1q4M5qS2AEyhVRg58xXbml3gZkds8I0JnrCfJgbRHH7a5WXT4JSPbVqmS
- gyhg==
-X-Gm-Message-State: AOJu0YwUcp1uXY1sUzpj4hvqPGiJGSSMjze1C8EmIvCFs41HmZOClW7N
- hIuKM/1SYZX5MbU5FfJ2Kh1aH/zqqenTKpnw46BWZ/ttue3nWYaNAxJQ+0BiAjH+cLc=
-X-Gm-Gg: AZuq6aL/0Srqx4eoJLeZy+6W5to0catvvuS5dLKrqG64YEdnhHZyAmoI39CSjhvQ48L
- ecLpOVKMw22/HOCSn3DGYq8qljD6VafR1j8ezeRmsgosQ5TS7VdrmZYImLmwJ9ViSe02M+OkHOK
- 8K0FPiJnVRDFWcVQ2Zgl+ebjizFBI/D1WHUzl7rv0Bk6F5nG9bqjzRKR9YIH88fu+AghEk8uzb6
- Dx4+206K+wcOeXGn/Ixx/1GFhzICr/o80Ks/R7T+eboRh5k7bufbHBCreQV/XExScjMCffRQVfm
- 7gr/wEZTJwkXp9d0698DR1a9nP65n7XkbDPnQC0CzYSEidXhyuxlgfTepJxxlR/L9B4mluXEZwU
- 5iuu8K8gbaS4G9KerMmmnPcdBydfgi7KmSClUFFR3O4qWyeLWM342ohKj+ek6BQXnF+kclQRHXr
- f1rfCsTg20F60n
-X-Received: by 2002:a05:600c:1c28:b0:45d:f81d:eae7 with SMTP id
- 5b1f17b1804b1-4801eb109e0mr247893785e9.28.1769011317611; 
- Wed, 21 Jan 2026 08:01:57 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43596291e0asm8772328f8f.15.2026.01.21.08.01.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Jan 2026 08:01:56 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C9F415FDE8;
- Wed, 21 Jan 2026 16:01:55 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Ashish Anand <ashish.a6@samsung.com>
-Cc: qemu-devel@nongnu.org,  peter.maydell@linaro.org,  qemu-arm@nongnu.org,
- saurabh@samsung.com,  vishwa.mg@samsung.com,  y.kaushal@samsung.com,
- ashish.anand202@gmail.com
-Subject: Re: [PATCH v2] target/arm: Implement WFE, SEV and SEVONPEND for
- Cortex-M
-In-Reply-To: <20260121132421.2220928-1-ashish.a6@samsung.com> (Ashish Anand's
- message of "Wed, 21 Jan 2026 18:54:21 +0530")
-References: <CGME20260121132716epcas5p1cab4021fbcd469b95d13ef4b4adc757f@epcas5p1.samsung.com>
- <20260121132421.2220928-1-ashish.a6@samsung.com>
-User-Agent: mu4e 1.12.15; emacs 30.1
-Date: Wed, 21 Jan 2026 16:01:55 +0000
-Message-ID: <875x8vosy4.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1vib0a-0004je-Ik
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 11:24:42 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1vib0W-0002QQ-RU
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 11:24:39 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 2E53160130;
+ Wed, 21 Jan 2026 16:24:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84774C4CEF1;
+ Wed, 21 Jan 2026 16:24:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1769012674;
+ bh=hzsMhai3Qf5qpFxmQ2bfSHLieOPGV76AdLJQZVg4J88=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=EWSEogrNicqCJ7zIyxMqYgjMPgw2/XNGuJN+x0GAkObt3G2o2bVjzKynIMuRrWwsQ
+ seQgvgwqznvYcW2m+L0oR89TON1qDkHxZ8zcKaiH7fqbb/olHGVlKD4tzJsxUWZM/8
+ PlbaxKPyGFzZROPvDJRCuRFZQy/h0CxUchKcn5kV9ilD4XDd7oW6Csx3hgk/+BlwdG
+ xhihAdnIHgc02C1OAiwTJlQgToPekklOkZL9syx/uMeQ0ONG7d/lytCw6NS/SBrctM
+ KrqubiWhl6fnABQQLkl6RdhufkKJ/Glf2072Azr6qOFWXG4C+UWz6z5n4pEHVzRx1k
+ zTKx1pFCv34tA==
+Received: from mchehab by mail.kernel.org with local (Exim 4.99)
+ (envelope-from <mchehab+huawei@kernel.org>)
+ id 1vib0S-00000003u5H-2Ixb; Wed, 21 Jan 2026 17:24:32 +0100
+Date: Wed, 21 Jan 2026 17:24:32 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
+ Michael S Tsirkin <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-devel@nongnu.org, 
+ Igor Mammedov <imammedo@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>
+Subject: Re: [PATCH 07/13] scripts/ghes_inject: add a logic to decode CPER
+Message-ID: <aXD4dXctHZSVW1_f@foz.lan>
+References: <cover.1768993993.git.mchehab+huawei@kernel.org>
+ <71dc0f56a7856cc9fe9f0c9c915b56cd49d6f0bd.1768993993.git.mchehab+huawei@kernel.org>
+ <20260121132738.00001293@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260121132738.00001293@huawei.com>
+Received-SPF: pass client-ip=172.105.4.254;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,306 +79,478 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ashish Anand <ashish.a6@samsung.com> writes:
+On Wed, Jan 21, 2026 at 01:27:38PM +0000, Jonathan Cameron wrote:
+> On Wed, 21 Jan 2026 12:25:15 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > Add a decoder to help debugging injected CPERs. This is more
+> > relevant when we add fuzzy-testing error inject, as the
+> > decoder is helpful to identify what it packages will be sent
+> > via QEMU to the firmware-fist logic.
+> > 
+> > By purpose, I opted to keep this completely independent from
+> > the encoders implementation, as this can be used even when
+> > there are no encoders for a certain GGUID type (except for a
+> GGUID?
+> 
+> > fuzzy logic test, which is pretty much independent of the
+> > records meaning).
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> 
+> A few minor things inline.
+> 
+> I checked the specs, so all that stuff is fine including the spec bug
+> you mention (which I'm sure you've already reported :)
+> 
+> Jonathan
+> 
+> > ---
+> >  MAINTAINERS            |    1 +
+> >  scripts/ghes_decode.py | 1155 ++++++++++++++++++++++++++++++++++++++++
+> >  scripts/qmp_helper.py  |    3 +
+> >  3 files changed, 1159 insertions(+)
+> >  create mode 100644 scripts/ghes_decode.py
+> > 
+> 
+> > diff --git a/scripts/ghes_decode.py b/scripts/ghes_decode.py
+> > new file mode 100644
+> > index 000000000000..6c7fdfe84e3a
+> > --- /dev/null
+> > +++ b/scripts/ghes_decode.py
+> > @@ -0,0 +1,1155 @@
+> > +#!/usr/bin/env python3
+> > +#
+> > +# pylint: disable=R0903,R0912,R0913,R0915,R0917,R1713,E1121,C0302,W0613
+> > +# SPDX-License-Identifier: GPL-2.0-or-later
+> > +#
+> > +# Copyright (C) 2025 Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > +
+> > +"""
+> > +Helper classes to decode a generic error data entry.
+> > +
+> > +By purpose, the logic here is independent of the logic inside qmp_helper
+> > +and other modules. With a different implementation, it is more likely to
+> > +discover bugs at the error injection logic. Also, as this can be used to
+> > +dump errors injected by reproducing an error mesage or for fuzzy error
+> > +injection, it can't rely at the encoding logic inside each module of
+> 
+> rely on the encoding logic
+> 
+> > +ghes_inject.py.
+> > +
+> > +To make the decoder simple, the decode logic here is at field level, not
+> > +trying to decode bitmaps.
+> > +"""
+> > +
+> > +from typing import Optional
+> 
+> 
+> > +class DecodeProcX86():
+> > +    """
+> > +    Class to decode an x86 Processor Error as defined at
+> > +    UEFI 2.1 - N.2.2 Section Descriptor
+> > +    """
+> > +
+> > +    # GUID for x86 Processor Error
+> > +    guid = "dc3ea0b0-a144-4797-b95b-53fa242b6e1d"
+> > +
+> > +    pei_fields = [
+> > +        ("Error Structure Type", 16, "guid"),
+> > +        ("Validation Bits", 8, "int"),
+> > +        ("Check Information", 8, "int"),
+> > +        ("Target Identifier", 8, "int"),
+> > +        ("Requestor Identifier", 8, "int"),
+> > +        ("Responder Identifier", 8, "int"),
+> > +        ("Instruction Pointer", 8, "int")
+> > +    ]
+> > +
+> > +    def __init__(self, cper: DecodeField):
+> > +        self.cper = cper
+> > +
+> > +    def decode(self, guid):
+> > +        """Decode x86 Processor Error"""
+> > +        print("x86 Processor Error")
+> > +
+> > +        val = self.cper.decode("Validation Bits", 8, "int")
+> > +        try:
+> > +            val_bits = int.from_bytes(val, byteorder='little')
+> > +        except ValueError, TypeError:
+> > +            val_bits = 0
+> > +
+> > +        error_info_num = (val_bits >> 2) & 0x3f    # bits 2-7
+> > +        context_info_num = (val_bits >> 8) & 0xff  # bits 8-13
+> > +
+> > +        self.cper.decode("Local APIC_ID", 8, "int")
+> > +        self.cper.decode("CPUID Info", 48, "int")
+> > +
+> > +        for pei in range(0, error_info_num):
+> > +            if self.cper.past_end:
+> > +                return
+> > +
+> > +            print()
+> > +            print(f"Processor Error Info {pei}")
+> > +            for name, size, ftype in self.pei_fields:
+> > +                self.cper.decode(name, size, ftype)
+> > +
+> > +        for ctx in range(0, context_info_num):
+> > +            if self.cper.past_end:
+> > +                return
+> > +
+> > +            print()
+> > +            print(f"Context {ctx}")
+> > +
+> > +            self.cper.decode("Register Context Type", 2, "int")
+> > +
+> > +            val = self.cper.decode("Register Array Size", 2, "int")
+> > +            try:
+> > +                context_size = int(int.from_bytes(val, byteorder='little') / 8)
+> > +            except ValueError, TypeError:
+> > +                context_size = 0
+> > +
+> > +            self.cper.decode("MSR Address", 4, "int")
+> > +            self.cper.decode("MM Register Address", 8, "int")
+> > +
+> > +            for reg in range(0, context_size):
+> > +                if self.cper.past_end:
+> > +                    return
+> > +                self.cper.decode(f"Register offset {reg:<3}", 8, "int")
+> 
+> As for arm. Probably need sanity check it's the 8 byte version.
+> And for giggles even on x86 some are 16 bytes ;)
+> GDTR, IDTR
+> 
+> Meh, I don't care about those 16 byte ones, but not presenting the 4 byte
+> ones as 8 would be good.
 
-> Currently, QEMU implements the 'Wait For Event' (WFE) instruction as a
-> simple yield. This causes high host CPU usage because guest
-> RTOS idle loops effectively become busy-wait loops.
->
-> To improve efficiency, this patch transitions WFE to use the architectural
-> 'Halt' state (EXCP_HLT) for M-profile CPUs. This allows the host thread
-> to sleep when the guest is idle.
->
-> To support this transition, we implement the full architectural behavior
-> required for WFE, specifically the 'Event Register', 'SEVONPEND' logic,
-> and 'R_BPBR' exception handling requirements defined in the ARM
-> Architecture Reference Manual.
->
-> This patch enables resource-efficient idle emulation for Cortex-M.
->
-> Signed-off-by: Ashish Anand <ashish.a6@samsung.com>
-> ---
-> Changes in v2:
-> 1. Added R_BPBR handling as required by the Armv8-M architecture.
-> 2. Unified pending-state updates to detect interrupt transitions for SEVO=
-NPEND.
-> 3. Moved the Event Register to the top-level ARM CPU state, since it is
->    architecturally shared between A-profile and M-profile CPUs.
-> 4. Updated migration handling to be profile-agnostic so the state can be
->    reused if A-profile WFE support is implemented in the future.=20
-> 5. Added CONFIG_USER_ONLY handling for WFE/SEV and tightened profile chec=
-ks.
-> 6. Addressed review comments and fixes raised during v1 discussion.=20
->
-> Link to v1 - https://lore.kernel.org/qemu-devel/20251223120012.541777-1-a=
-shish.a6@samsung.com/
->
->
-<snip>
->=20=20
-> +    /*
-> +     * The event register is shared by all ARM profiles (A/R/M),
-> +     * so it is stored in the top-level CPU state.
-> +     * WFE/SEV handling is currently implemented only for M-profile.
-> +     */
-> +    uint32_t event_register;
-> +
+As this decode is for debugging purposes, I tried to keep the code as simple
+as possible. So, I avoided adding too much details on it. What is important,
+IMO, is mainly to be able to quickly check if the Kernel report and rasdaemon
+are properly decoding the message.
 
-Looking at the Arm ARM for armv8m it says:
+Also, to be fair, even on 32 bit systems, the size of this register is
+8 bytes. Nothing prevent them to have values filled above 32-bits.
 
-  The Event register is a single-bit register for each PE in the system.
-  Software cannot read, and cannot write to, the Event register directly.
+In a matter of fact, when using the fuzzy-testing command, the logic
+there won't care about what is valid or not: right now, it will either:
 
-So I wonder if this could simply be a bool - and in that case some of
-the logic simplifies.
+    - place a random number;
+    - place 0, if used like:
+            ghes_inject.py fuzzy --zero
 
->      /* Fields up to this point are cleared by a CPU reset */
->      struct {} end_reset_fields;
->=20=20
-> diff --git a/target/arm/machine.c b/target/arm/machine.c
-> index 0befdb0b28..814a74745f 100644
-> --- a/target/arm/machine.c
-> +++ b/target/arm/machine.c
-> @@ -508,6 +508,24 @@ static const VMStateDescription vmstate_m_mve =3D {
->      },
->  };
->=20=20
-> +static bool event_needed(void *opaque)
-> +{
-> +    ARMCPU *cpu =3D opaque;
-> +    /* Only save the state if the event register is set (non-zero) */
-> +    return cpu->env.event_register !=3D 0;
-> +}
-> +
-> +static const VMStateDescription vmstate_event =3D {
-> +    .name =3D "cpu/event",
-> +    .version_id =3D 1,
-> +    .minimum_version_id =3D 1,
-> +    .needed =3D event_needed,
-> +    .fields =3D (const VMStateField[]) {
-> +        VMSTATE_UINT32(env.event_register, ARMCPU),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->  static const VMStateDescription vmstate_m =3D {
->      .name =3D "cpu/m",
->      .version_id =3D 4,
-> @@ -1210,6 +1228,7 @@ const VMStateDescription vmstate_arm_cpu =3D {
->          &vmstate_wfxt_timer,
->          &vmstate_syndrome64,
->          &vmstate_pstate64,
-> +        &vmstate_event,
->          NULL
->      }
->  };
-> diff --git a/target/arm/tcg/helper.h b/target/arm/tcg/helper.h
-> index 4636d1bc03..5a10a9fba3 100644
-> --- a/target/arm/tcg/helper.h
-> +++ b/target/arm/tcg/helper.h
-> @@ -60,6 +60,7 @@ DEF_HELPER_1(yield, void, env)
->  DEF_HELPER_1(pre_hvc, void, env)
->  DEF_HELPER_2(pre_smc, void, env, i32)
->  DEF_HELPER_1(vesb, void, env)
-> +DEF_HELPER_1(sev, void, env)
->=20=20
->  DEF_HELPER_3(cpsr_write, void, env, i32, i32)
->  DEF_HELPER_2(cpsr_write_eret, void, env, i32)
-> diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-> index 3fb24c7790..2a2224c996 100644
-> --- a/target/arm/tcg/m_helper.c
-> +++ b/target/arm/tcg/m_helper.c
-> @@ -962,7 +962,9 @@ static void v7m_exception_taken(ARMCPU *cpu, uint32_t=
- lr, bool dotailchain,
->       * Now we've done everything that might cause a derived exception
->       * we can go ahead and activate whichever exception we're going to
->       * take (which might now be the derived exception).
-> +     * Exception entry sets the event register (ARM ARM R_BPBR)
->       */
-> +    env->event_register =3D 1;
->      armv7m_nvic_acknowledge_irq(env->nvic);
->=20=20
->      /* Switch to target security state -- must do this before writing SP=
-SEL */
-> @@ -1906,6 +1908,9 @@ static void do_v7m_exception_exit(ARMCPU *cpu)
->      /* Otherwise, we have a successful exception exit. */
->      arm_clear_exclusive(env);
->      arm_rebuild_hflags(env);
-> +
-> +    /* Exception return sets the event register (ARM ARM R_BPBR) */
-> +    env->event_register =3D 1;
->      qemu_log_mask(CPU_LOG_INT, "...successful exception return\n");
->  }
->=20=20
-> diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-> index 4fbd219555..9f385dae6d 100644
-> --- a/target/arm/tcg/op_helper.c
-> +++ b/target/arm/tcg/op_helper.c
-> @@ -469,16 +469,58 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeou=
-t)
->  #endif
->  }
->=20=20
-> +void HELPER(sev)(CPUARMState *env)
-> +{
-> +    CPUState *cs =3D env_cpu(env);
-> +    CPU_FOREACH(cs) {
-> +        ARMCPU *target_cpu =3D ARM_CPU(cs);
-> +        if (arm_feature(&target_cpu->env, ARM_FEATURE_M)) {
-> +            target_cpu->env.event_register =3D 1;
-> +        }
-> +        if (!qemu_cpu_is_self(cs)) {
-> +            qemu_cpu_kick(cs);
-> +        }
-> +    }
-> +}
-> +
->  void HELPER(wfe)(CPUARMState *env)
->  {
-> -    /* This is a hint instruction that is semantically different
-> -     * from YIELD even though we currently implement it identically.
-> -     * Don't actually halt the CPU, just yield back to top
-> -     * level loop. This is not going into a "low power state"
-> -     * (ie halting until some event occurs), so we never take
-> -     * a configurable trap to a different exception level.
-> +#ifdef CONFIG_USER_ONLY
-> +    /*
-> +     * WFE in the user-mode emulator is a NOP. Real-world user-mode code
-> +     * shouldn't execute WFE, but if it does, we make it a NOP rather th=
-an
-> +     * aborting when we try to raise EXCP_HLT.
-> +     */
-> +    return;
-> +#else
-> +    /*
-> +     * WFE (Wait For Event) is a hint instruction.
-> +     * For Cortex-M (M-profile), we implement the strict architectural b=
-ehavior:
-> +     * 1. Check the Event Register (set by SEV or SEVONPEND).
-> +     * 2. If set, clear it and continue (consume the event).
->       */
-> -    HELPER(yield)(env);
-> +    if (arm_feature(env, ARM_FEATURE_M)) {
-> +        CPUState *cs =3D env_cpu(env);
-> +
-> +        if (env->event_register) {
-> +            env->event_register =3D 0;
-> +            return;
-> +        }
-> +
-> +        cs->exception_index =3D EXCP_HLT;
-> +        cs->halted =3D 1;
-> +        cpu_loop_exit(cs);
-> +    } else {
-> +        /*
-> +         * For A-profile and others, we rely on the existing "yield" beh=
-avior.
-> +         * Don't actually halt the CPU, just yield back to top
-> +         * level loop. This is not going into a "low power state"
-> +         * (ie halting until some event occurs), so we never take
-> +         * a configurable trap to a different exception level
-> +         */
-> +        HELPER(yield)(env);
-> +    }
-> +#endif
->  }
->=20=20
->  void HELPER(yield)(CPUARMState *env)
-> diff --git a/target/arm/tcg/t16.decode b/target/arm/tcg/t16.decode
-> index 646c74929d..778fbf1627 100644
-> --- a/target/arm/tcg/t16.decode
-> +++ b/target/arm/tcg/t16.decode
-> @@ -228,8 +228,9 @@ REVSH           1011 1010 11 ... ...            @rdm
->      WFE         1011 1111 0010 0000
->      WFI         1011 1111 0011 0000
->=20=20
-> -    # TODO: Implement SEV, SEVL; may help SMP performance.
-> -    # SEV       1011 1111 0100 0000
-> +    # M-profile SEV is implemented.
-> +    # TODO: Implement SEV for other profiles, and SEVL for all profiles;=
- may help SMP performance.
-> +    SEV         1011 1111 0100 0000
->      # SEVL      1011 1111 0101 0000
->=20=20
->      # The canonical nop has the second nibble as 0000, but the whole of =
-the
-> diff --git a/target/arm/tcg/t32.decode b/target/arm/tcg/t32.decode
-> index d327178829..49b8d0037e 100644
-> --- a/target/arm/tcg/t32.decode
-> +++ b/target/arm/tcg/t32.decode
-> @@ -369,8 +369,9 @@ CLZ              1111 1010 1011 ---- 1111 .... 1000 .=
-...      @rdm
->          WFE      1111 0011 1010 1111 1000 0000 0000 0010
->          WFI      1111 0011 1010 1111 1000 0000 0000 0011
->=20=20
-> -        # TODO: Implement SEV, SEVL; may help SMP performance.
-> -        # SEV    1111 0011 1010 1111 1000 0000 0000 0100
-> +        # M-profile SEV is implemented.
-> +        # TODO: Implement SEV for other profiles, and SEVL for all profi=
-les; may help SMP performance.
-> +        SEV      1111 0011 1010 1111 1000 0000 0000 0100
->          # SEVL   1111 0011 1010 1111 1000 0000 0000 0101
->=20=20
->          ESB      1111 0011 1010 1111 1000 0000 0001 0000
-> diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-> index 63735d9789..c90b0106f7 100644
-> --- a/target/arm/tcg/translate.c
-> +++ b/target/arm/tcg/translate.c
-> @@ -3241,14 +3241,30 @@ static bool trans_YIELD(DisasContext *s, arg_YIEL=
-D *a)
->      return true;
->  }
->=20=20
-> +static bool trans_SEV(DisasContext *s, arg_SEV *a)
-> +{
-> +    /*
-> +     * Currently SEV is a NOP for non-M-profile and in user-mode emulati=
-on.
-> +     * For system-mode M-profile, it sets the event register.
-> +     */
-> +#ifndef CONFIG_USER_ONLY
-> +    if (arm_dc_feature(s, ARM_FEATURE_M)) {
-> +        gen_helper_sev(tcg_env);
-> +    }
-> +#endif
-> +    return true;
-> +}
-> +
->  static bool trans_WFE(DisasContext *s, arg_WFE *a)
->  {
->      /*
->       * When running single-threaded TCG code, use the helper to ensure t=
-hat
-> -     * the next round-robin scheduled vCPU gets a crack.  In MTTCG mode =
-we
-> -     * just skip this instruction.  Currently the SEV/SEVL instructions,
-> -     * which are *one* of many ways to wake the CPU from WFE, are not
-> -     * implemented so we can't sleep like WFI does.
-> +     * the next round-robin scheduled vCPU gets a crack.
-> +     *
-> +     * For Cortex-M, we implement the architectural WFE behavior (sleepi=
-ng
-> +     * until an event occurs or the Event Register is set).
-> +     * For other profiles, we currently treat this as a NOP or yield,
-> +     * to preserve existing performance characteristics.
->       */
->      if (!(tb_cflags(s->base.tb) & CF_PARALLEL)) {
->          gen_update_pc(s, curr_insn_len(s));
-> @@ -6807,6 +6823,11 @@ static void arm_tr_tb_stop(DisasContextBase *dcbas=
-e, CPUState *cpu)
->              break;
->          case DISAS_WFE:
->              gen_helper_wfe(tcg_env);
-> +            /*
-> +             * The helper can return if the event register is set, so we
-> +             * must go back to the main loop to check for events.
-> +             */
-> +            tcg_gen_exit_tb(NULL, 0);
->              break;
->          case DISAS_YIELD:
->              gen_helper_yield(tcg_env);
+Btw, if I'm not mistaken, currently, RAS is only enabled in QEMU for arm64.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> 
+> 
+> 
+> > +
+> > +    @staticmethod
+> > +    def decode_list():
+> > +        """
+> > +        Returns a tuple with the GUID and class
+> > +        """
+> > +        return [(DecodeProcX86.guid, DecodeProcX86)]
+> 
+> > +class DecodeProcArm():
+> > +    """
+> > +    Class to decode an ARM Processor Error as defined at
+> > +    UEFI 2.6 - N.2.2 Section Descriptor
+> > +    """
+> > +
+> > +    # GUID for ARM Processor Error
+> > +    guid = "e19e3d16-bc11-11e4-9caa-c2051d5d46b0"
+> > +
+> > +    arm_pei_fields = [
+> > +        ("Version",              1, "int"),
+> > +        ("Length",               1, "int"),
+> > +        ("valid",                2, "int"),
+> > +        ("type",                 1, "int"),
+> > +        ("multiple-error",       2, "int"),
+> > +        ("flags",                1, "int"),
+> > +        ("error-info",           8, "int"),
+> > +        ("virt-addr",            8, "int"),
+> > +        ("phy-addr",             8, "int"),
+> > +    ]
+> > +
+> > +    def __init__(self, cper: DecodeField):
+> > +        self.cper = cper
+> > +
+> > +    def decode(self, guid):
+> > +        """Decode Processor ARM"""
+> > +
+> > +        print("ARM Processor Error")
+> > +
+> > +        start = self.cper.pos
+> > +
+> > +        self.cper.decode("Valid", 4, "int")
+> > +
+> > +        val = self.cper.decode("Error Info num", 2, "int")
+> > +        try:
+> > +            error_info_num = int.from_bytes(val, byteorder='little')
+> > +        except ValueError, TypeError:
+> > +            error_info_num = 0
+> > +
+> > +        val = self.cper.decode("Context Info num", 2, "int")
+> > +        try:
+> > +            context_info_num = int.from_bytes(val, byteorder='little')
+> > +        except ValueError, TypeError:
+> > +            context_info_num = 0
+> > +
+> > +        val = self.cper.decode("Section Length", 4, "int")
+> > +        try:
+> > +            section_length = int.from_bytes(val, byteorder='little')
+> > +        except ValueError, TypeError:
+> > +            section_length = 0
+> > +
+> > +        self.cper.decode("Error affinity level", 1, "int")
+> > +        self.cper.decode("Reserved", 3, "int")
+> > +        self.cper.decode("MPIDR_EL1", 8, "int")
+> > +        self.cper.decode("MIDR_EL1", 8, "int")
+> > +        self.cper.decode("Running State", 4, "int")
+> > +        self.cper.decode("PSCI State", 4, "int")
+> > +
+> > +        for pei in range(0, error_info_num):
+> > +            if self.cper.past_end:
+> > +                return
+> > +
+> > +            print()
+> > +            print(f"Processor Error Info {pei}")
+> > +            for name, size, ftype in self.arm_pei_fields:
+> > +                self.cper.decode(name, size, ftype)
+> > +
+> > +        for ctx in range(0, context_info_num):
+> > +            if self.cper.past_end:
+> > +                return
+> > +
+> > +            print()
+> > +            print(f"Context {ctx}")
+> > +            self.cper.decode("Version", 2, "int")
+> > +            self.cper.decode("Register Context Type", 2, "int")
+> > +            val = self.cper.decode("Register Array Size", 4, "int")
+> > +            try:
+> > +                context_size = int(int.from_bytes(val, byteorder='little') / 8)
+> > +            except ValueError:
+> > +                context_size = 0
+> > +
+> > +            for reg in range(0, context_size):
+> > +                if self.cper.past_end:
+> > +                    return
+> > +                self.cper.decode(f"Register {reg:<3}", 8, "int")
+> 
+> Maybe check it's not a 32 bit context?  Don't decode it if it
+> is but don't try to decode it as 64 bit.  Can get that from the
+> Register Context Type.  Anything over 4 is fine.
+
+I can, but see above: this can actually be a 64-bit number even
+when only 32-bits are valid (when used with fuzzy injector).
+
+> > +
+> > +        remaining = max(section_length + start - self.cper.pos, 0)
+> > +        if remaining:
+> > +            print()
+> > +            self.cper.decode("Vendor data", remaining, "int")
+> > +
+> > +    @staticmethod
+> > +    def decode_list():
+> > +        """
+> > +        Returns a tuple with the GUID and class
+> > +        """
+> > +        return [(DecodeProcArm.guid, DecodeProcArm)]
+> 
+> > +class DecodeDMAVT():
+> > +    """
+> > +    Class to decode a DMA Virtualization Technology Error as defined at
+> > +    UEFI 2.2 - N.2.2 Section Descriptor
+> As below. Feels like it should be 
+> 
+> N2.11.2 Intel VT for Directed I/O specific DMAr Error Section Descriptor.
+> Same for other places this comment exists.
+> 
+> 
+> > +    """
+> > +
+> > +    # GUID for DMA VT Error
+> > +    guid = "71761d37-32b2-45cd-a7d0-b0fedd93e8cf"
+> 
+> > +class DecodeDMAIOMMU():
+> > +    """
+> > +    Class to decode an IOMMU DMA Error as defined at
+> > +    UEFI 2.2 - N.2.2 Section Descriptor
+> 
+> Odd reference choice.
+> This stuff is in N2.11.3 IOMMU Specific DMAr Error Section
+> in 2.11. I'm too lazy to find it in the older spec.
+> 
+> > +    """
+> > +
+> > +    # GUID for IOMMU DMA Error
+> 
+> Maybe call it the IOMMU Specific DMAr Error
+> 
+> > +    guid = "036f84e1-7f37-428c-a79e-575fdfaa84ec"
+> > +
+> > +    fields = [
+> 
+> > +class DecodeCXLCompEvent():
+> > +    """
+> > +    Class to decode a CXL Component Error as defined at
+> > +    UEFI 2.9 - N.2.14. CXL Component Events Section
+> > +
+> > +    Currently, the decoder handles only the common fields, displaying
+> > +    the CXL Component Event Log field in bytes.
+> > +    """
+> > +
+> > +    # GUIDs, as defined at CXL specification 3.2: 8.2.10.2.1 Event Records
+> > +    guids = [
+> > +        ("General Media",              "fbcd0a77-c260-417f-85a9-088b1621eba6"),
+> > +        ("DRAM",                       "601dcbb3-9c06-4eab-b8af-4e9bfb5c9624"),
+> > +        ("Memory Module",              "fe927475-dd59-4339-a586-79bab113bc74"),
+> > +        ("Memory Sparing",             "e71f3a40-2d29-4092-8a39-4d1c966c7c65"),
+> > +        ("Physical Switch",            "77cf9271-9c02-470b-9fe4-bc7b75f2da97"),
+> 
+> As per earlier patch review I'm not sure we care about this and the following.
+> I don't think we'll ever see them in CPER records, unless going other something
+> else that encapsulates that format.
+
+As I commented on patch 2, UEFI 2.11 accepts those in CPERs. So, except if
+a new errata will drop them, from UEFI perspective, all those tyepes could
+be found on CPERs sent to OSPM.
+
+From my perspective, for fuzzy-testing, we'd like to be able to inject them
+as well, to check if those won't cause any troubles at OSPM implementation.
+
+See more below...
+
+> 
+> > +        ("Virtual Switch",             "40d26425-3396-4c4d-a5da-3d472a63af25"),
+> > +        ("MDL Port",                   "8dc44363-0c96-4710-b7bf-04bb99534c3f"),
+> MLD -> Multi-Logical Device
+> 
+> > +        ("Dynamic Capabilities",       "ca95afa7-f183-4018-8c2f-95268e101a2a"),
+> > +    ]
+> > +
+> > +    fields = [
+> > +        ("Validation Bits", 8, "int"),
+> > +        ("Device ID", 12, "int"),
+> > +        ("Device Serial Number", 8, "int")
+> > +    ]
+> > +
+> > +    def __init__(self, cper: DecodeField):
+> > +        self.cper = cper
+> > +
+> > +    def decode(self, guid):
+> > +        """Decode CXL Protocol Error"""
+> > +        for name, guid_event in DecodeCXLCompEvent.guids:
+> > +            if guid == guid_event:
+> > +                print(f"CXL {name} Event Record")
+> > +                break
+> > +
+> > +        val = self.cper.decode("Length", 4, "int")
+> > +        try:
+> > +            length = int.from_bytes(val, byteorder='little')
+> > +        except ValueError, TypeError:
+> > +            length = 0
+> > +
+> > +        for name, size, ftype in self.fields:
+> > +            self.cper.decode(name, size, ftype)
+> > +
+> > +        length = max(0, length - self.cper.pos)
+> > +
+> > +        self.cper.decode("CXL Component Event Log", length, "int",
+> > +                         show_incomplete=True)
+
+... here, we are not actually decoding the CXL-specific part of the
+message, but, instead, displaying as a byte sequence.
+
+When time comes and we implement "cxl" command(s) to the tool, we
+may want to decode the event log according with the CXL spec.
+
+For such purpose, we won't need to decode all types - just the ones
+that makes sense in practice.
+
+> > +
+> > +    @staticmethod
+> > +    def decode_list():
+> > +        """
+> > +        Returns a tuple with the GUID and class
+> > +        """
+> > +
+> > +        guid_list = []
+> > +
+> > +        for _, guid in DecodeCXLCompEvent.guids:
+> > +            guid_list.append((guid, DecodeCXLCompEvent))
+> > +
+> > +        return guid_list
+> 
+> 
+> ...
+> 
+> > +class DecodeGhesEntry():
+> > +    """
+> > +    Class to decode a GHESv2 element, as defined at:
+> > +    ACPI 6.1: 18.3.2.8 Generic Hardware Error Source version 2
+> > +    """
+> > +
+> > +    # Fields present on all CPER records
+> > +    common_fields = [
+> > +        # Generic Error Status Block fields
+> > +        ("Block Status",           4, "int", None),
+> > +        ("Raw Data Offset",        4, "int", "raw_data_offset"),
+> > +        ("Raw Data Length",        4, "int", "raw_data_len"),
+> > +        ("Data Length",            4, "int", None),
+> > +        ("Error Severity",         4, "int", None),
+> > +
+> > +        # Generic Error Data Entry
+> > +        ("Section Type",          16, "guid", "session_type"),
+> 
+> Why session_type? Is idea it's the type of decode session we are
+> doing? Feels a bit too much like a typo from section_type.
+> 
+> 
+> > +        ("Error Severity",         4, "int", None),
+> > +        ("Revision",               2, "int", None),
+> > +        ("Validation Bits",        1, "int", None),
+> > +        ("Flags",                  1, "int", None),
+> > +        ("Error Data Length",      4, "int", None),
+> > +        ("FRU Id",                16, "guid", None),
+> > +        ("FRU Text",              20, "str", None),
+> > +        ("Timestamp",              8, "bcd", None),
+> > +    ]
+> > +
+> > +    def __init__(self, cper_data: bytearray):
+> > +        """
+> > +        Initializes a byte array, decoding it, printing results at the
+> > +        screen.
+> > +        """
+> 
+> ...
+> 
+> > +
+> > +        # Handle common types
+> > +        cper = DecodeField(cper_data)
+> > +
+> > +        fields = {}
+> > +        for name, size, ftype, var in self.common_fields:
+> > +            val = cper.decode(name, size, ftype)
+> > +
+> > +            if ftype == "int":
+> > +                try:
+> > +                    val = int.from_bytes(val, byteorder='little')
+> > +                except ValueError, TypeError:
+> > +                    val = 0
+> > +
+> > +            if var is not None:
+> > +                fields[var] = val
+> > +
+> > +        if fields["raw_data_len"]:
+> > +            cper.decode("Raw Data", fields["raw_data_len"],
+> > +                        "int", pos=fields["raw_data_offset"])
+> > +
+> > +        if not fields["session_type"]:
+> > +            return
+> 
+
+-- 
+Thanks,
+Mauro
 
