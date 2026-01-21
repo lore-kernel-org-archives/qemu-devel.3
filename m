@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 067B1C44506
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F0B4D46962
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 18:04:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vicSd-0006Nc-Nv; Wed, 21 Jan 2026 12:57:43 -0500
+	id 1vicRK-0000N5-84; Wed, 21 Jan 2026 12:56:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vicSM-0005hB-Us; Wed, 21 Jan 2026 12:57:26 -0500
-Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ id 1vicR1-0008MJ-N9; Wed, 21 Jan 2026 12:56:07 -0500
+Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vicSK-00022I-KC; Wed, 21 Jan 2026 12:57:26 -0500
+ id 1vicR0-000158-8R; Wed, 21 Jan 2026 12:56:03 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DXKiTla62kvT1fzFQULHta95N+We/C8cfSSoDxOT7K8745pD3rdsMXATLcSSaCtYk46PTwqmplrHPz1WvvLl+a+SSkUGv7m5M1+nJMFmZNCiVhOr4pAXvjAE8R864YUUCX5zcoY4nzaUIBWyo+G1w5F178pSDeV6XoIjF8iIwxonrwXtaKoGMr3wJ7cT0O/89IBVmn6GAJ4SK0/QZz1faN83bTeyQ4Kg7GGDUjJwRWZUBeI5QrRirasGFp5ExOJAMwSYOfFveymvln+vHQTH8bxkZoBiysYYVNt5Gdko5hasSnjPJseue7VYXUOdHPbdjOAGXb+By0kGFwFbUiHwnQ==
+ b=b2nQWiNd2T2jP7ryldd8wBDLkDEVLOR4his0v+3feX/zD60DsWahGdgKQYQJrHQwSfaaPmtPCWlJzzCtNput+M3DzXIsAShxytb0uj1i7mfQS6xMkbEnxsHqgqukRSV8kmS6F5UWBCzcMjsQvaDyn6oxHEGcqpP8UzTQhOXmQjviFJys34iiiX58y7M1zj/GHwgaQzyc+L0bUbbSuBYJcJ6rpYqgBJPjOsU1EdNmGIgF4yvlDoLW4l6Fp9nm6rNbLkA0JfNy0kXb9lLsrzmIu5OztCl6WuRAI46w35Ss1IEGvG/0acSjngkgs1OpSpDGYZCC6DmLYdboSP4r9tQSTA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3S2YabeeZo3+GE/L5e9ZiNn70KgxEa2AlHPuQK2Ckfg=;
- b=SditZegvdKtwN4RDApS9BltxNzk/XjgT5SiygkCgmxZVZDDZE5tPACtj70U0iS7719ktDjyg8azQVklexeU74iF1//E95QWYUF0ptP8z0/EYIZBo1AbVd2dMQ0HIDvNBmsiF1UKcy88nGJy7hukAxUX5Ct1UyVGijIukTgb9XhFPkZO0WkCk5EFuGyzbpARbIMGwGom4J94ohkyiucAs24L/L4Bw7nyR4Iu1ymU/fpABZstn2g8TnYC6n29HAg+SqzIkXMXItd/Pp2aI45RgydPmdmbRQYMj+L/EOfIPpPO5EFTMiJAuIjTV6MOgvFtPh07dY7JpmZVHNGeifvxhJg==
+ bh=5zdsbSiBZWdnVa6W/nOPXnMkvGsScBnWnKlk/LxrCt4=;
+ b=LLV+DyJQO8JKU0Po7pLUbBg005cC4ydtv+aan0DvAGmLMmLMRACT2CK2xoNVF4YDEfOne5Ud0EWqtyz/UIQs90mF+TAwW76bPT/esAlYBxwamhc80DZSeeSxSWYlb6kfrd15BtVeiVTnfGkwBgsNglF3QQQjPu/onobpTv+kpPmVSvK0bLs23Q+U8Wt5wsSG/UfNxVW43DMFURKUZQ6ON07QCzmQW/QQqTvKG0TopTrVeZM/AdgayFbF1cmXpiGKHxm/hnQ7Ad8xrF2q+W9pUe0AaF1do2Bctrfc9CKO6NOS7/avHY1KDNasm4tKXPNa4fZjDA5t/BaQzUCOVobgWg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3S2YabeeZo3+GE/L5e9ZiNn70KgxEa2AlHPuQK2Ckfg=;
- b=nB7Lk3etm8g8l61fo2B8yv/Nj2RYwo6SsoIwAQygVcEUaVlW3O2mVo36W9c5AVg6wfXxMLKRz0f6avWpNfF8gBxxvZ5ZueLvkMmvHn7qYgVdxhqn42Bx4h9YUurecp9u+/54Hugt1EX4eS9JkumWO2YCDnnBs/qubTHIr4KS/kWK12C7ko+11ZjJNQXT51OrymNiZY9IYxUECzzBh4WL2zW+umagoehrJb1oTU6Q01TcNuCJRAnnAQLBBkRalvRv77QS0Y8n7zE7jNlWxyew+Pktvek2krq9ag4ed8TykDOqLsV9dE/ZqDHLhlliuZRM4BWN17HbUjIDSjaJlGoL+Q==
-Received: from BN9PR03CA0531.namprd03.prod.outlook.com (2603:10b6:408:131::26)
- by MN2PR12MB4142.namprd12.prod.outlook.com (2603:10b6:208:1dd::19)
+ bh=5zdsbSiBZWdnVa6W/nOPXnMkvGsScBnWnKlk/LxrCt4=;
+ b=pbBvXDqLlb4OqkZqptHZW0p8YRkI4+F6r0KhW1W3LzFNm1oapkkcdON2QFB/KnAjJrIgCK0lJmGrS+BOH9d8oQ0GbzKgU0QVX77DP69bEEZ9Sun26/YhuG3t6aJHvfKAmNJbw/SsUAIEmPCuIldGtWhLhUUSeMr/9sJJBL7CJsyYI/q748V2JzZEbsIMWdEWEK++ecVM+PEgAkxRu7LdNdsSx+QdgaHCBB45c9ttkL09K/9MiIIgdNTLNfuzAS9il+nBOWpHdSs8Zdtdky3HEZzjURLtXx11vzqIL5O/rPnf/fWJovX93LviIhugFDiJLjUWORZWrfwP0GXICp420w==
+Received: from BN1PR13CA0018.namprd13.prod.outlook.com (2603:10b6:408:e2::23)
+ by CH2PR12MB4086.namprd12.prod.outlook.com (2603:10b6:610:7c::19)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.10; Wed, 21 Jan
- 2026 17:57:18 +0000
-Received: from BN3PEPF0000B06A.namprd21.prod.outlook.com
- (2603:10b6:408:131:cafe::b5) by BN9PR03CA0531.outlook.office365.com
- (2603:10b6:408:131::26) with Microsoft SMTP Server (version=TLS1_3,
+ 2026 17:55:56 +0000
+Received: from BN2PEPF000044A6.namprd04.prod.outlook.com
+ (2603:10b6:408:e2:cafe::76) by BN1PR13CA0018.outlook.office365.com
+ (2603:10b6:408:e2::23) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.9 via Frontend Transport; Wed,
- 21 Jan 2026 17:57:13 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ 21 Jan 2026 17:55:56 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BN3PEPF0000B06A.mail.protection.outlook.com (10.167.243.69) with Microsoft
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BN2PEPF000044A6.mail.protection.outlook.com (10.167.243.100) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9564.0 via Frontend Transport; Wed, 21 Jan 2026 17:57:17 +0000
+ 15.20.9542.4 via Frontend Transport; Wed, 21 Jan 2026 17:55:56 +0000
 Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 21 Jan
- 2026 09:56:57 -0800
+ 2026 09:55:31 -0800
 Received: from NV-2Y5XW94.nvidia.com (10.126.231.35) by rnnvmail201.nvidia.com
  (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 21 Jan
- 2026 09:56:52 -0800
+ 2026 09:55:25 -0800
 From: Shameer Kolothum <skolothumtho@nvidia.com>
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
@@ -74,82 +74,73 @@ CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>,
  <kjaju@nvidia.com>, <skolothumtho@nvidia.com>, "Michael S . Tsirkin"
  <mst@redhat.com>
-Subject: [PATCH v8 22/37] hw/pci-host/gpex: Allow to generate preserve boot
- config DSM #5
-Date: Wed, 21 Jan 2026 17:52:27 +0000
-Message-ID: <20260121175248.87649-23-skolothumtho@nvidia.com>
+Subject: [PATCH v8 07/37] hw/pci/pci: Move pci_init_bus_master() after adding
+ device to bus
+Date: Wed, 21 Jan 2026 17:52:12 +0000
+Message-ID: <20260121175248.87649-8-skolothumtho@nvidia.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260121175248.87649-1-skolothumtho@nvidia.com>
 References: <20260121175248.87649-1-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.126.231.35]
 X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
  rnnvmail201.nvidia.com (10.129.68.8)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B06A:EE_|MN2PR12MB4142:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5f6a9954-b137-4639-9579-08de5916846f
+X-MS-TrafficTypeDiagnostic: BN2PEPF000044A6:EE_|CH2PR12MB4086:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8f2cc9f4-0323-4aad-c68f-08de591653e8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|7416014|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SGNrdHZobFhScCtTbmJtSkZwVkJMb1ExbU9PVDVjcmVpUHhKeWF5NWJLK0xF?=
- =?utf-8?B?RDVHR1pkUzN4dmxFT3BaNk9nR2prWkdPeTNUQWM4ak15WW5jTG05QlZ0N2lR?=
- =?utf-8?B?S1V4TG9LS2w5TG9zNnhZUXFQb1ozd0I0cEh2YlFCdng1RitQN3prTjNnYXRP?=
- =?utf-8?B?UXc3VnlmRlZHZDFGck5XS0VEWDIvM1lZM0MyOGo5ck13YzQ0MVJrTFpEMHdu?=
- =?utf-8?B?cVE4cWNHd20zM3VQSVB0S24xd2hFdlNLdm1lZEExbnlwaWhPeGxRM1lpbjI0?=
- =?utf-8?B?YktCZkFJZHJDRUJVQlAyUXBxeXU1QjhPV2QvcE5mOHpDcHpsZ1pHYVdxUmF1?=
- =?utf-8?B?Rm5udlg2OVY3Sm41RzhXRnZiNmtMNlZ2RkNRbVRZVFA0Q0YzcFFlTzlvSkda?=
- =?utf-8?B?YUhacUVuOUVQYkNGSmVJTXBxMjZsQ3NWVFJnaWI0ODdoVE43TzhmbkR3WnRW?=
- =?utf-8?B?WGFBTnpiVTFVTG8xMUo3MHorcTI5S2JLUEtBT1RrT2tvcTFhZGV0RDRxSnd0?=
- =?utf-8?B?SXpqM0o4U2Zsd0dKNUJjTFJ0dzNQZ0duWElSZ2tQMjI2eXZhRXFLS21wbmpY?=
- =?utf-8?B?Umt6M0lvRmRPVExOWEMyeEQ4ZkJDVktKZ2psbWMzbldtem9PYkRXUzVmclhK?=
- =?utf-8?B?aStsWURhL3EzcEIxV1QxOXZpNzdjRWR0S2s1d2pBaE5IVU81RUdtM0l0OTQ3?=
- =?utf-8?B?UExGckpuOHorUGpVbm95R3VPc1BKYzNBTm83TDhrellBZWh1V2MxRXNUZmQ1?=
- =?utf-8?B?OGRsY0hHV1A4MDdid0lyVW8vSTdZOGNhTlduRmJheUZvT3NpUy9IUzJIdFV2?=
- =?utf-8?B?QVNBc09lNG9sVEZXdnNrY2tGWkNPNGYySEx3YW03NE54NUs2UTVlN09aR0FJ?=
- =?utf-8?B?OFdmMEdmUThwYkQxcFpuejFhUWFXK1kzNlV3b1lOdVJuL3poeW5KVmVDdnFa?=
- =?utf-8?B?T1FZdGdCUER3UnVQUk9MbktNLzZ0ejV5bUQ2WlZlb1IwaGxkZG83bXp6T2lC?=
- =?utf-8?B?TEZPT2xaMjlCSFFEMm4rbGtENXdlLzQxNS9tSmdhaFdMcW5Bc1R4L0Q4cWlu?=
- =?utf-8?B?WUVKSXlNYVROcVZtQkVrN0FuWnZZM1dwMlQ0bkdjL2FuaDYvaURwYXpXS2Fa?=
- =?utf-8?B?OVpPeDlXZTVjSDJOdUtqMmNrUlpROGQ5UHpKU2ZLb2tzSTRVN1E4RjlDeFNW?=
- =?utf-8?B?ZnBsMWNLanF3bXZUMHhoakNmV1RYU1ZhayswUWZQa1JpcjhMSllXTG5qdjho?=
- =?utf-8?B?dWlaSHJCMkRocUhaL1NqU1pxZStGVkhWRWN2SExVc2ZIL3NDcWhnWVpCQ1Zx?=
- =?utf-8?B?SjRtY0dBQ1lLTjNEem8xNW5UNHlta3AybUVjbytDaHppRTNmUEJDTzBYeC9E?=
- =?utf-8?B?MHpIK1N6ZFFKSjdweHBTTzFZTUtGYXk0a3UwaUdSdmgwMDBsNmFZUXBVNEVu?=
- =?utf-8?B?YThyQTBmbTljV0FCVTZGMWRxTFdCd08rOXpvU25VcWdSVEZrS1pFOVdWWFhs?=
- =?utf-8?B?NDZ4dERrSGVWVFhGa0RjMm1DYnVsMW5CMzcwV2dZVzJJY1BSVlFzbk9NblZh?=
- =?utf-8?B?eGhMSitobWxRbXdhSmFoR0MrWHIvSXJES2U4NUdFTjRXWG1KczZ4Y3hBbVQz?=
- =?utf-8?B?ZURYQUEyZmVSYlF1NVdrZG1nN1FRMVMvVE1lemtGMmdYQ0t2MHRjeW1JQkJm?=
- =?utf-8?B?QlZRMUh2SWZ0cHZSaG13UnEzSmpYRmtpUmx4ZWRJc0RtdEZMeFZ4U1RWd3l5?=
- =?utf-8?B?Ykx2RndpaGpLOGtrZVc1eDVpOXhXMWRjWmNJMWR0ZWxaaTJCYnJSUGdxbzJW?=
- =?utf-8?B?R21tK0VPRHdNQ1lnVTc4dEd4eU5pUVlPaGcyditNeXhaYmpyVFZuVThLUUNy?=
- =?utf-8?B?bkRzSXltZGFjYlkwNjl3OEZqUmFTNEYvL3lqSGJVWXBZQ3JUQVV5M0dIaVgv?=
- =?utf-8?B?TVQ2QlBrdWVlN0FOcWhSQ2RtbGVGd2pJOXZVUXd5OTZBbjFabUdiNjJyWTQv?=
- =?utf-8?B?bkZGZ1JyallYQ0srWWZrTXBmYkFJcE9hMkc3RVlkN2pHUldGaDhIOGlIOG5K?=
- =?utf-8?B?WHdHcTFRb0FhQlVTd21sbHQyTVhoNmU2TldNZHZuSzJPMWFEVW5SSlpQUzMv?=
- =?utf-8?B?RG00Y3I4QnBBRDNHd0Z4a0RIN05BdCtDT0tuNjZVSElKYy8zT0RHT0hZa2ZH?=
- =?utf-8?B?ci95ZGFTQ3NYRU8zSE9tRy9JSHB1TVp3MjNRZUViT3d5WFloaDZoSDRVMjFh?=
- =?utf-8?B?OVZyWkdhOEJrcTVyR1F2K3oyTFd3PT0=?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(7416014)(36860700013)(1800799024); DIR:OUT;
+ ARA:13230040|1800799024|82310400026|36860700013|7416014|376014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Qgjh8ACI/+MIsKwAf4DM5YObNpmmNy2Q3Ad4n4LtQPQp+KocB/x46GsUemV3?=
+ =?us-ascii?Q?UBBYyiadEuiSYss+2FTc6yeDoLap1HA5fULQD8EwvMIm4108GqUNp+q5xOpd?=
+ =?us-ascii?Q?2biffUn6EJyyXiA/f8DJnum65XXfEOhlu4FrQaw6AGapfJIINa0gWYTru1YA?=
+ =?us-ascii?Q?ZVgmf+4jdihgKsVShymDZOIyvdFqqL1nFL3vKao20pKVwzhxWcLyaOOjMgVV?=
+ =?us-ascii?Q?dlE0/drJ5juFyuLit8ySNRFWooBhRfHZu/ig16pbSt95RL5YO8orSPbV7qDj?=
+ =?us-ascii?Q?3me1Rwkg/6MTXsVJ6oYPkxN9OMlwWV7I0ycab0KcF88IN3qIHPFiyXClwI8c?=
+ =?us-ascii?Q?X5ggmwxEoDkWdeCAFHYOOl9R9Z0zzdfqDL/25jLijYppey7/BKnXMHOsW3qb?=
+ =?us-ascii?Q?kuifKsWrbrOi2QnH6LurI1loGA9niePaqowOps3YHEEtWEBHEAWpuGC72zsB?=
+ =?us-ascii?Q?tibx5HfSozocNiS1pyoWVsw6sYYT8w5g2CmuoLS11pk+KW7NUKcq1vQSnjNR?=
+ =?us-ascii?Q?2vcbfmqVwbxBZG6oZIp/pjBBP6QqyhXm6kU8pKEx0ieWhmdo0zN3W0tDiCcn?=
+ =?us-ascii?Q?rGhsKfgofCswlqbG9rGthIfdsiQj1XuhbO8lkNEORdUwa20DjkCvVk8U0Bg+?=
+ =?us-ascii?Q?mEExRhGQetDp5jWwyEpK30EzDGmRnbr8V+sH5TOYIkQmTlBf9mM6IwXzauTZ?=
+ =?us-ascii?Q?qAZ0Yra4tRaIPvGoLTQjxb7L0b9UnG6WjHJXUbQYlCjxajTfsTSzYRiF/CB0?=
+ =?us-ascii?Q?G8ZWY9LIQQYDM149FgPG2fCiD7MuZuYqDO0YgZqc3R6TgrJHo/AbtKGXEjdA?=
+ =?us-ascii?Q?yCAPjY/K0XPGJ6mBjfC0BafT/wYa8ZSFvIVLCHSxws3IT+rhbg9v6Ek26hGI?=
+ =?us-ascii?Q?Q9f9xm14rYiULJu8FGerdb/9I4DHvoiVdmlZm1FSwyw726CXRAHEk17mmTb0?=
+ =?us-ascii?Q?ICtqA8JQihP1VLNv9yMxwdmFXsw56RlNQGkqM+YT10tB58qJ7eRTQMKqstYi?=
+ =?us-ascii?Q?z1sx/cJgNu/Ztm/9VCmmLvPuCM2+o8wSiIxBS6vE8vyO7T94be3GFxlN5mxF?=
+ =?us-ascii?Q?QUnLzDPIN9XIYZPzI8eB0l/OG87pQpnr8kAWEYvHWltJNQiHze18VGgtVbaw?=
+ =?us-ascii?Q?QGFU3t9D7rm7BmWQYY7jlG2oOirQLgan+bZKrI/lXMwIY5zlyUwrBza07PeJ?=
+ =?us-ascii?Q?RQmIDrSRJfgA76karOMAjyAQtbcTleVegI7J4YyFfySZCdfHRl5Kc+xbnacB?=
+ =?us-ascii?Q?trpeI0iq3D4FRsU4Nu9cTZCb23hi9Wy+X27u5XhG4IKdEMhXdRLyEXtq6RWB?=
+ =?us-ascii?Q?5Eu/QS1hsBoma226M9LQmORmyl6Eymr3Q8LrQHRzr94tav9ncqhI+xSFGv2p?=
+ =?us-ascii?Q?N11I+tPba23O981sxV5JP4/WkfhJoQ5NrdrBVvE6hItJAUYDFLcsjNSJ3nTh?=
+ =?us-ascii?Q?i25WrXjvIOZRg+sFHO6MkmMwcuoet59s+7uRyz7Wkpdi4bCpqolmKoYhqo6D?=
+ =?us-ascii?Q?yWmpfr9wF8pBEe+9eOZVLLMKy69Yv1TyICIuZlx/h0VZBHNr9F2sM9KqZYTW?=
+ =?us-ascii?Q?LCRB0i5V/v07JHLG0CpECro53js2YY8fn+phJ1Mih7VsHofrjsDNopV6EiQK?=
+ =?us-ascii?Q?77Wsc5TPNVz37ce1bi6p5zGEBIWUwUOpzHSlSpuq7GCvaFgFmLYfueCTkgEI?=
+ =?us-ascii?Q?dtZZ5g=3D=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(36860700013)(7416014)(376014); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jan 2026 17:57:17.7483 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5f6a9954-b137-4639-9579-08de5916846f
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jan 2026 17:55:56.3263 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8f2cc9f4-0323-4aad-c68f-08de591653e8
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B06A.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044A6.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4142
-Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4086
+Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
  envelope-from=skolothumtho@nvidia.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
+ helo=PH7PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -171,170 +162,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+During PCI hotplug, in do_pci_register_device(), pci_init_bus_master()
+is called before storing the pci_dev pointer in bus->devices[devfn].
 
-Add a 'preserve_config' field in struct GPEXConfig and, if set, generate
-the _DSM function #5 for preserving PCI boot configurations.
+This causes a problem if pci_init_bus_master() (via its
+get_address_space() callback) attempts to retrieve the device using
+pci_find_device(), since the PCI device is not yet visible on the bus.
 
-This will be used for SMMUv3 accel=on support in subsequent patch. When
-SMMUv3 acceleration (accel=on) is enabled, QEMU exposes IORT Reserved
-Memory Region (RMR) nodes to support MSI doorbell translations. As per
-the Arm IORT specification, using IORT RMRs mandates the presence of
-_DSM function #5 so that the OS retains the firmware-assigned PCI
-configuration. Hence, this patch adds conditional support for generating
-_DSM #5.
+Fix this by moving the pci_init_bus_master() call to after the device
+has been added to bus->devices[devfn].
 
-According to the ACPI Specification, Revision 6.6, Section 9.1.1 -
-“_DSM (Device Specific Method)”,
+This prepares for a subsequent patch where the accel SMMUv3
+get_address_space() callback retrieves the pci_dev to identify the
+attached device type.
 
-"
-If Function Index is zero, the return is a buffer containing one bit for
-each function index, starting with zero. Bit 0 indicates whether there
-is support for any functions other than function 0 for the specified
-UUID and Revision ID. If set to zero, no functions are supported (other
-than function zero) for the specified UUID and Revision ID. If set to
-one, at least one additional function is supported. For all other bits
-in the buffer, a bit is set to zero to indicate if that function index
-is not supported for the specific UUID and Revision ID. (For example,
-bit 1 set to 0 indicates that function index 1 is not supported for the
-specific UUID and Revision ID.)
-"
-
-Please refer PCI Firmware Specification, Revision 3.3, Section 4.6.5 —
-"_DSM for Preserving PCI Boot Configurations" for Function 5 of _DSM
-method.
-
-Also, while at it, move the byte_list declaration to the top of the
-function for clarity.
-
-At the moment, DSM generation is not yet enabled.
-
-The resulting AML when preserve_config=true is:
-
-    Method (_DSM, 4, NotSerialized)
-        {
-            If ((Arg0 == ToUUID ("e5c937d0-3553-4d7a-9117-ea4d19c3434d")))
-                {
-                    If ((Arg2 == Zero))
-                    {
-                        Return (Buffer (One)
-                        {
-                             0x21
-                        })
-                    }
-
-                    If ((Arg2 == 0x05))
-                    {
-                        Return (Zero)
-                    }
-                }
-         ...
-      }
+No functional change intended.
 
 Cc: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-[Shameer: Removed possible duplicate _DSM creations]
-Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Tested-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 ---
- hw/pci-host/gpex-acpi.c    | 29 +++++++++++++++++++++++------
- include/hw/pci-host/gpex.h |  1 +
- 2 files changed, 24 insertions(+), 6 deletions(-)
+ hw/pci/pci.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
-index 4587baeb78..d9820f9b41 100644
---- a/hw/pci-host/gpex-acpi.c
-+++ b/hw/pci-host/gpex-acpi.c
-@@ -51,10 +51,11 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
-     }
- }
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 8cbf5f5d70..229ea7cfb1 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -1381,9 +1381,6 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
+     pci_dev->bus_master_as.max_bounce_buffer_size =
+         pci_dev->max_bounce_buffer_size;
  
--static Aml *build_pci_host_bridge_dsm_method(void)
-+static Aml *build_pci_host_bridge_dsm_method(bool preserve_config)
- {
-     Aml *method = aml_method("_DSM", 4, AML_NOTSERIALIZED);
-     Aml *UUID, *ifctx, *ifctx1, *buf;
-+    uint8_t byte_list[1] = {0};
+-    if (phase_check(PHASE_MACHINE_READY)) {
+-        pci_init_bus_master(pci_dev);
+-    }
+     pci_dev->irq_state = 0;
+     pci_config_alloc(pci_dev);
  
-     /* PCI Firmware Specification 3.0
-      * 4.6.1. _DSM for PCI Express Slot Information
-@@ -64,10 +65,23 @@ static Aml *build_pci_host_bridge_dsm_method(void)
-     UUID = aml_touuid("E5C937D0-3553-4D7A-9117-EA4D19C3434D");
-     ifctx = aml_if(aml_equal(aml_arg(0), UUID));
-     ifctx1 = aml_if(aml_equal(aml_arg(2), aml_int(0)));
--    uint8_t byte_list[1] = {0};
-+    if (preserve_config) {
-+        /* support functions other than 0, specifically function 5 */
-+        byte_list[0] = 0x21;
+@@ -1427,6 +1424,9 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
+     pci_dev->config_write = config_write;
+     bus->devices[devfn] = pci_dev;
+     pci_dev->version_id = 2; /* Current pci device vmstate version */
++    if (phase_check(PHASE_MACHINE_READY)) {
++        pci_init_bus_master(pci_dev);
 +    }
-     buf = aml_buffer(1, byte_list);
-     aml_append(ifctx1, aml_return(buf));
-     aml_append(ifctx, ifctx1);
-+    if (preserve_config) {
-+        Aml *ifctx2 = aml_if(aml_equal(aml_arg(2), aml_int(5)));
-+        /*
-+         * 0 - The operating system must not ignore the PCI configuration that
-+         *     firmware has done at boot time.
-+         */
-+        aml_append(ifctx2, aml_return(aml_int(0)));
-+        aml_append(ifctx, ifctx2);
-+    }
-+
-     aml_append(method, ifctx);
- 
-     byte_list[0] = 0;
-@@ -77,12 +91,13 @@ static Aml *build_pci_host_bridge_dsm_method(void)
+     return pci_dev;
  }
  
- static void acpi_dsdt_add_host_bridge_methods(Aml *dev,
--                                              bool enable_native_pcie_hotplug)
-+                                              bool enable_native_pcie_hotplug,
-+                                              bool preserve_config)
- {
-     /* Declare an _OSC (OS Control Handoff) method */
-     aml_append(dev,
-                build_pci_host_bridge_osc_method(enable_native_pcie_hotplug));
--    aml_append(dev, build_pci_host_bridge_dsm_method());
-+    aml_append(dev, build_pci_host_bridge_dsm_method(preserve_config));
- }
- 
- void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
-@@ -152,7 +167,8 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
-                 build_cxl_osc_method(dev);
-             } else {
-                 /* pxb bridges do not have ACPI PCI Hot-plug enabled */
--                acpi_dsdt_add_host_bridge_methods(dev, true);
-+                acpi_dsdt_add_host_bridge_methods(dev, true,
-+                                                  cfg->preserve_config);
-             }
- 
-             aml_append(scope, dev);
-@@ -227,7 +243,8 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
-     }
-     aml_append(dev, aml_name_decl("_CRS", rbuf));
- 
--    acpi_dsdt_add_host_bridge_methods(dev, cfg->pci_native_hotplug);
-+    acpi_dsdt_add_host_bridge_methods(dev, cfg->pci_native_hotplug,
-+                                      cfg->preserve_config);
- 
-     Aml *dev_res0 = aml_device("%s", "RES0");
-     aml_append(dev_res0, aml_name_decl("_HID", aml_string("PNP0C02")));
-diff --git a/include/hw/pci-host/gpex.h b/include/hw/pci-host/gpex.h
-index 695886dedd..1da9c85bce 100644
---- a/include/hw/pci-host/gpex.h
-+++ b/include/hw/pci-host/gpex.h
-@@ -46,6 +46,7 @@ struct GPEXConfig {
-     int         irq;
-     PCIBus      *bus;
-     bool        pci_native_hotplug;
-+    bool        preserve_config;
- };
- 
- typedef struct GPEXIrq GPEXIrq;
 -- 
 2.43.0
 
