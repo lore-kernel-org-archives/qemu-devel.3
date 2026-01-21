@@ -4,208 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E04D3C44502
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 09:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C2ABC44502
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 09:49:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viUmp-0005e0-Hc; Wed, 21 Jan 2026 04:46:03 -0500
+	id 1viUpY-0000w4-Is; Wed, 21 Jan 2026 04:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tejus.gk@nutanix.com>)
- id 1viUmR-0005XZ-Op; Wed, 21 Jan 2026 04:45:49 -0500
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tejus.gk@nutanix.com>)
- id 1viUmN-0003ic-IX; Wed, 21 Jan 2026 04:45:37 -0500
-Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 60L2oXsg897528; Wed, 21 Jan 2026 01:45:27 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-id:content-transfer-encoding:content-type:date:from
- :in-reply-to:message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=YUFPRS9tKc0zCCTcFcES0v9PWDr4UwxkZ2B9A/tmV
- UA=; b=07A9GjLubXNyhiqtiNA2oOoLC9p/iAlRxGHPh8m6hUVlKs0UpY6Hrtvzr
- fZey/JaYMYikYLQBLeFlcO1UXcQ3MBkQBBHEugdtGk5yjPPXZ5s0sZ4USA6g5Psj
- ZdIUBYEEYz5JTfJCRGgCfjSuh33Pl6eHgf1xcpN9MospiN44KmaQXkKB3QFvF35L
- kaDXslbvovaw7EvjMcquL1q+tZB3ZiqYQzWFWVWGC9SuPqaQaOJNqPt+CJseOZsP
- twIPXu002vFZexDIqndEGQe2hqFkP9ZNl92b4FDO4YJDd0F37i3Xa0hU4Mzaf0PQ
- 6LprdW771Gzfu+uzx832OZ2Y20XDA==
-Received: from co1pr03cu002.outbound.protection.outlook.com
- (mail-westus2azon11020096.outbound.protection.outlook.com [52.101.46.96])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4btdde27gv-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 21 Jan 2026 01:45:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QduKCzcazLkLywZghY3HRAAVh/e9s4NIT7WlEu/WphnHUEg8z7ZELNPMJ8dv5fxafrmc9HtQxT9nWa/aEmTnwYA8vqDo0/E99jnTi8Xf/ca2GLoAM3DEAZ2+YugfK6uyic6gQtTJdDZnKSAml44xXyheYlukP68kZLDalfEGmspB4+8f+2aVLrl+Oh8iVV3MJW07q5lM8eCfEFL4a5DWDZBBnl5bciIcCXq30Kbw1zixVwzC9zw+iemGdYnyukq9kxdVStA+y4rjam/nBW1YM4DxFYIjRU+eDwXNUoAlSEOoiEMuOvxqFYnCkmN6dsulB7CKvVOWoLCPjM/Hlswv7A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YUFPRS9tKc0zCCTcFcES0v9PWDr4UwxkZ2B9A/tmVUA=;
- b=QnhQji0JM2cDnOV8cpcOIH+gUsbxz/PDQto2XKMCExuQuutnnhGzmQQyhi5BB2+Zgq69VXBw73BliYYYPeX2pmZUkITIFWh2SiioNXeXr+eWYGD4Ee3UnO4gwvuPK601yQswopUrhqlATAsel9QsAsDNKy/MCJ14h1L/Q2AvWB0Q/31+YR6bfW/XRu6xKnPKDUcQjhMBGVtx4eJQkbrqwsaCVVtaYhFYD8sw2xlBGYx1hzbxycAU0uicfCbCaZNQNrajxrAsERyo25i/6+RPUk9W4PgkLWbMAWc0SnOu1RL8U6XfuktFpO1SpIZdN4D6bGyQUaQst6Cfs/0Vbip0bQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YUFPRS9tKc0zCCTcFcES0v9PWDr4UwxkZ2B9A/tmVUA=;
- b=PjdLXZz3F7KCvI5Y0MuiHIMisegaoM7frbIJ2XST/gLAf4HypY757bhwhRX1NmGmKxSJpi3Kv0f+ytuoePOMJZghq4C6nOCUKh7rR13icKuIS5P3zL+cspZ+l7vWJztkguGMqPbfgHZ/lYrUpX5/v0Y6ZbhaUPlJeihUrxSn0d/bbMG+lsMKow3cg/MEmlnxU4zcV+y+dxlGp3uEDPzz1K7AJ5F/G9Y6jurmcawpFGlGHXyP9M7BSzDfC7J/RhaQLWI5ZrdcCSK+p7TORaIZffwPVlvl4B1LiZbNC3fUYFFmbaha9SfXPoBnBx7CiE+mCVqtH2t6/2gfnrE/I0BiLw==
-Received: from MW6PR02MB9817.namprd02.prod.outlook.com (2603:10b6:303:23b::15)
- by BL3PR02MB9034.namprd02.prod.outlook.com (2603:10b6:208:3bd::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.12; Wed, 21 Jan
- 2026 09:45:24 +0000
-Received: from MW6PR02MB9817.namprd02.prod.outlook.com
- ([fe80::86e5:3449:a3f7:ee4c]) by MW6PR02MB9817.namprd02.prod.outlook.com
- ([fe80::86e5:3449:a3f7:ee4c%5]) with mapi id 15.20.9542.008; Wed, 21 Jan 2026
- 09:45:24 +0000
-From: Tejus GK <tejus.gk@nutanix.com>
-To: Kevin Wolf <kwolf@redhat.com>, "hreitz@redhat.com" <hreitz@redhat.com>
-CC: "qemu-block@nongnu.org" <qemu-block@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, John Levon <levon@movementarian.org>
-Subject: Re: Deadlock with SATA CD I/O and eject
-Thread-Topic: Deadlock with SATA CD I/O and eject
-Thread-Index: AQHcirqqWwWXewfoL0yePE/IVKfopg==
-Date: Wed, 21 Jan 2026 09:45:24 +0000
-Message-ID: <EA024563-627F-4E9A-A051-AAE9A4645AB2@nutanix.com>
-References: <ZQiIxERjYmZb0v4l@movementarian.org>
-In-Reply-To: <ZQiIxERjYmZb0v4l@movementarian.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MW6PR02MB9817:EE_|BL3PR02MB9034:EE_
-x-ms-office365-filtering-correlation-id: 68bbc336-0f80-478e-f15a-08de58d1cce7
-x-proofpoint-crosstenant: true
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700021;
-x-microsoft-antispam-message-info: =?utf-8?B?RDJYOWVyYWk2QkhWckVaU0N4eVNhckhUSVc4bkxYRG9kU0Y5bG5Jdm9PVGsz?=
- =?utf-8?B?VzRTRXdNVWFRSHc4Qk50YlROejNSQ0tDaEI3em9XRW9xNytMWkdpQjhoMmh5?=
- =?utf-8?B?RmRBc0czdldBa0o4V3lCdC81MEFDS2NVSk5HQ21QZGlXK2dyMHJ4QlhZVlMr?=
- =?utf-8?B?Ui92SHZjT1E4RVZzOEpBNmhOUW1tbk9sMmNPY2FIMHFoUVhzL3J5NnNBejRQ?=
- =?utf-8?B?RXcrcDZPenR2N1NTWHdiZXFlM2FnUnlnUm56c3BlMk9mRndYRzEyeUF5WjhH?=
- =?utf-8?B?VnRBRkZ6L3B3UEMyck9WS3BEOVNaOG1iK0RuZ04zVmZUNWo3VWVHc0hJZGFj?=
- =?utf-8?B?UU5XWmlyTGFpZE9yWUF3SEpYTmgxcDZjNVE0RXZYNmt6K2lsRGV2b0ZtYTMv?=
- =?utf-8?B?SEJnWndULzFycjdybS85UDZ6Wi9qUkE0dzFqSEJDcVhMM2lnYWNuTE5KMWVx?=
- =?utf-8?B?NGRmSFN1K2drMHBxTU41ZWNnV3psb1Q4dDFmdlRncGtwOWMzQVRCcVpvM01w?=
- =?utf-8?B?T0wwZkZydmZoK29ZRERWYVY4UUQ4WXRlR240ZGdRb1Y2UnFlRnlkR1c1Wits?=
- =?utf-8?B?dU1qZGpaOTg4TkdNcXFFQVpnRktPSkhvVStKU3RUaDlvem80Q0RQeVBCVzJP?=
- =?utf-8?B?RWhvWW4vOUtyK0hnUlE3QjBzRCsvaTZvb0Vid1FzcmJ1SktjYm1rVGYvdEVE?=
- =?utf-8?B?M2Z3NnFlbi9xL0VvSk5jYTJmTjUva1dRcUdBRllvSDZ2UC9YMUF3RXNybTNW?=
- =?utf-8?B?YlBFRU1Od3krZGk4VzFJalZwdy82M0htTThlOGoyVWNYSjVMTGROVFpFZ0VR?=
- =?utf-8?B?blpTbk1JTkU2eXlydlBKby8zc3dYUzI5QnUrekZBMTFSZmdscElvdlNGRDhx?=
- =?utf-8?B?cUE1SUlOUzdBQ1RvajBURE0xK1dhTnB2cERSMlZ4VWVRM0RURVlvOXFRbE4x?=
- =?utf-8?B?MDFJbGlsMi84NktmaXQyNDRtOHF3MG9EQXJkLzJFcFVwYkhOdjdUbVF2YUxG?=
- =?utf-8?B?aktrRmdvTnVXVzFsUmx5aVVXRmMrcXYvQVUrRWJmUG5PZTB1NWlFVDZVYm1l?=
- =?utf-8?B?bFRsTmYzQ21Qc3g4V3M1OGwzT2QyTlFMeFZ6Skg3NjNQam8yTTd2QTJzZUpp?=
- =?utf-8?B?T1N0ZG9VaEQ5NWRMRmxLTTBqTVk0VDBjZUFsNC9pU1QzL3NQQzRJOHVZSEJs?=
- =?utf-8?B?MEU2bkh6ZmpjSDFMMDJ2OE9Ka0cxV0ZXZTYxbVBsa1hVWHhCRG9Hdzg2ZEwy?=
- =?utf-8?B?ZUJGVFExQmdaQWNUN3JCdXFaOElMb3dPbCsvV2hNYitpcVFoUldVeFY3VWJ0?=
- =?utf-8?B?cFlzTGV3dmlCd1hZVE5yb0F0Mnl3L0Fhb3R2MzNkSzlNWVhTS3BJQXBiQlJ4?=
- =?utf-8?B?MzYwQlpzZkVTTG9OdGRFTkhMc0R0TitIVDNwZWVWaXZ6MlFUR1dVN2xtUUlt?=
- =?utf-8?B?blZscjVUaUdXdXhUclRhSm1WVjhEOWR3VXJ4bGdZOUFHT1M5cm1lRnkrMCt2?=
- =?utf-8?B?ZXZjQ2tQcGpEcDFsVFBwUDZNaldGUFVQOVlNU2FHSURHWGloRHJ1Zm1LNWhs?=
- =?utf-8?B?QlRIMk5HSzh4T1VBRzFtVExTYnBRN3k3OVhTV2Jidk82NjgzQzVIdVVMZTdz?=
- =?utf-8?B?ZEhicWdteVVLSHB1Wm44czFIdlluWGxEOVc0TFpFcTM4WWZja2VhMy9vZXhL?=
- =?utf-8?B?NGttUURIMjlMNlR5WW5Fc3ZoOTlEQnJMUUNJQTh6bHpyZHY3bElJTHZqbWlZ?=
- =?utf-8?B?dzJSZGJCaFhFM05icEVVSnJYM21VbnRJU2xReUp4SjJCNnlFenI5aWExS1J0?=
- =?utf-8?B?TUJNckdaUURhQ2JndTJzaW14Nkk1MlY4TFVGUlhobTUwd2doR3Q5Q2c0VnZp?=
- =?utf-8?B?T1V1d0pRZ2d1ZTM0UFdYd2JydGxwYnJ0aFlKSFBzVUcxUE9BRnJnelJoNFlw?=
- =?utf-8?B?U1h0NUhxeUZ4OXp1RFk5UmNiMjhybW0veTNCSFNESTV5VFJ1ZlZaUGhId0ZR?=
- =?utf-8?B?ZUdNVU1LWlo1WmFSOHZUSVM5MVQvQVBLdHhEdVhrejVQR1djT0FqMncvSmVI?=
- =?utf-8?B?TDhhUVVURUxvYWJReVYzVngyVlE5Y0RmQlJGNFVwUFJ6aVdUbFBaVldrVVFa?=
- =?utf-8?B?ZTJwUmZjSEoweVBZcDRZMnNMNUdPU1NjRHk4TWtxOFNkL3loL3RQWkZjRkVD?=
- =?utf-8?Q?TNRAxWFhmxUHbTm8JM5yfGw=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW6PR02MB9817.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(38070700021); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?RTg0M3BRMUN4ZkZiM0FaK0t2NkdMeHE2U29wcUFDeVp3TnZ5bzRzdUw0V3F0?=
- =?utf-8?B?MXFkZ1RhVjZFK0Y3ZVhvTzdVZTEvQzlUTnRZYWVtR2FVVVBsSENDY0tyU0pT?=
- =?utf-8?B?UXU5MkV1Z0ZGY1M0RjhBSTZYcE05b01BdS82OGI0eXJWcW54VC96VGdKd3NN?=
- =?utf-8?B?YVJVcnd2ZUZnSWJlNzNiNUtzSk15aWV3Vm5velZCSCtkTnlOUWtpaEN4ZzRU?=
- =?utf-8?B?Rm9Dby9GTFZOSzFkWktOS2ljS0ZOOXk5M2hmN2xlUHRPSVJvWTUzeWhzOXhJ?=
- =?utf-8?B?UGllVUNkYkppdS9qUmNacW1tcFJQTXhrZ2lJemN1R3ZPRU0rT0VMQTJma3ZF?=
- =?utf-8?B?dEwwR2dYY3FwSFplZnJkTy80aEhiSGtxbWZVNnZJN0swdGoxR3NtRE9kVWQ5?=
- =?utf-8?B?TEtRMm5yekVmWmlKRklJRkMyL2J0Wllxcnc0KzlYbkFzVkVqSVlWbjN6MkJU?=
- =?utf-8?B?VkFHVW40YkFVVkxlcTNScHByZm9NOUNtUTNuZHZXRkQyb3BRV3NtdTJSb2pU?=
- =?utf-8?B?TkdkTmJVNUs1S21VSlZsNGd6REJvbVNlVDA3U1hCMll0bnByWDFIZVV1TThu?=
- =?utf-8?B?SHdjZDhRSXBXMkhVUnZCN0hIUU8rK1IyakVnWHkvVWMwZXVST1RhdVZONDY3?=
- =?utf-8?B?V1BVL0I5YUdKZUZ0a1JGOFdQWjB4VXRNQ1dPWlczWkRrNHJxQ1dkMksyY3Mv?=
- =?utf-8?B?TGRuK1F2YjJjemJreWRXT0RVRzJWbTJQQndjNzluNkVRcHdZOGQ5emJ5eWk2?=
- =?utf-8?B?YlFmc3VLZnAzV0x4Vm1hL2k1RS9YNldnbVU1OUVtZzh3ZklNcU1Eb2ZvR0Qy?=
- =?utf-8?B?ZXhwN3pmUVFwYXdnb2JLRkxUV25QUFR0N3VSUHBRazZwYjhLak5mVHI4Y2cr?=
- =?utf-8?B?dXRVUytMZi9MejFpZEtMTE5HbzNMS0JsbE1GUXIwQS96c1UweFFBZmJMNGpQ?=
- =?utf-8?B?dnZxZXlnbk1KYmxVaUs5MTd5UDRaaFozNmtNcFZDYTNSNWlkeXhFak0wTWl6?=
- =?utf-8?B?Z2JQME12dTBLWStYVkx0NzRjVVRSd0RsUXY4aXo1TGFWb0hGbnJKOEV4b2Va?=
- =?utf-8?B?eE16MENDaStnUGcrWk01dUgzNjlFRXFLVVpucjRqS0l0K2x6VzR5WXF5bnI1?=
- =?utf-8?B?eThYT1krWEFCT2xaSEp6NmUxU0hJL21jRGplK2NmVGhlTTRZSWZtV1pnM1NJ?=
- =?utf-8?B?dU1OMXJvWjdHYmNSNU91aFVoMmRrMTZ2RlptME0vWHIvMFBRLzlRY2xET0Nw?=
- =?utf-8?B?TjlQdVlCVGlwYTdOS3RJWHBEc0twOTdQbXViR2xjck80SUJwVFA1N0hRNEpx?=
- =?utf-8?B?enYvM0p6TDBaZmVlVS9UYUNBc2dUVXVKRVQyRzVjWTlmblF4Mm5ERWVob3k5?=
- =?utf-8?B?TVRHc0VRUEViemlURzBIck53WFRTM2c3QjFzOVMzVjhxZ2t4VDliVG1xTWVU?=
- =?utf-8?B?NkI4K21XVWJCQXBvS01vZzhGenBHNFlFUkFnMG9KUUZnWml1TEFjVXZlRG9X?=
- =?utf-8?B?RUI5VFJoQUN1VkhpOVpQTFE1ODBDUStzZmN0SmpncXlKSEdtTjNGSmlvMkdz?=
- =?utf-8?B?d21mZXJhTXR4MHE0eHp6M21RQ29qSllZbUc1S3ZpRStSVHZXM0M2NHQ1S2lt?=
- =?utf-8?B?MVVxdFd4YzN0K3dlRTZkc3FuYmVqeHdDQXc1NGVkc0o0OW1VV1QvZXpMM2Nw?=
- =?utf-8?B?by9aMmtRYzJycURuMTRVVTMyYStpZG1qOVZiT0NBdGg5QnRkM3hmakxNMjUy?=
- =?utf-8?B?cWhPMGdSUHlwYVVwbUY4alFNU2hBYXpzNXdYMkh6c3ByZG5RYkdaNExYM1NR?=
- =?utf-8?B?bEZCQUxlekhia1IvV3h1M1E5RmRxdFNENFFaWGxtWEwyNFhuMUlGQklIV240?=
- =?utf-8?B?TGY2M1VkaEdyZTFLYUVnUGk5OWp1T2RxSThyb1drR2pYWURrY0s0VVdJbmNK?=
- =?utf-8?B?M0l2WThZKzJiU2F6a2RPNjdVMWdFOVB2eXFaR1V1TmRjaSsvbmFjeGpyLy9I?=
- =?utf-8?B?Z3Q5NjBReHBsMWNGNjdvd2EyaitNMUVkblA1aHkxaUVCSWJvVUtIQ0xwYzVZ?=
- =?utf-8?B?UXdTcjUraWVBaGM1V3FJNHExUnVjdFZuTnAvSXpaYko3TmJ0ci9CMXJjcS9J?=
- =?utf-8?B?TmZRTjBjQUh0dkhZWW9pZ09qbXE4MmREaGdWNllxYVdmd3orQWR6WndrZW1P?=
- =?utf-8?B?MzlESm5pbjl0WjFsRkpUeUF2VHBQUDNWMXU2eFQ2dGlUNWxtRnJBaVZsbmll?=
- =?utf-8?B?UjZ2Kyt6K080MEhCdm5VYlZaKzFEc1RVY01xck5pVUF1NkxwNTVwR0FWcXB6?=
- =?utf-8?B?T0tabGcwMW5TMVpqOVU1VGZZQWVOclN2V0RZSm9GQk5nYlMvVEtxdz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <0C523CF42BC7CF4B91880C30D526750B@namprd02.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1viUpW-0000v8-Jp
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 04:48:50 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1viUpU-0004JL-Ki
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 04:48:50 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-655ae329d6bso9579046a12.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 01:48:48 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768988926; cv=none;
+ d=google.com; s=arc-20240605;
+ b=O5wN6j6it2h6czD6xr+EHBnoo1meYJ0y0mVZ9GzgPGNPBnRq2tbmMAEeJEmBm035vB
+ gOeRRMMW171YqnlyN4qNnALocNyYoUhz/9+/w0zl+6rHKCMd7KxOfoj1OnnP4RLIk1M3
+ pdax3ofCNUEipTXcG2vxMLEUJH8xIe8JCcFQ7d5rHu9PQFufFiJiKnqRoUYh/hCckwIi
+ fKdfiLYpJvlaXXzdDHPuaTyRZEYFq9J0J1dL+FiHHZVazj/xWk2Eda89GYpOMK7MSazb
+ q59OZYMIuEv22tyPROeQ5prgQ5QmvGFKxZ2oHJmloDDpf8kz6BZ3dFWriVKqifboHSKZ
+ 3bVw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Kyi9fncuN4cOT9Qwbze6uf3r3BG4aXoohtJV2Ki5cU0=;
+ fh=XIoO0Ux/SZ8W8McSemELDCpGv0yDhpljSyd3z1XJOS8=;
+ b=CI6ZYGx5mNLMYCMhOVV6DVxhY6V6fx5LdVSm9RuLT//7SyIV30RaD5pfHZHdGJi7e5
+ 49vE1W9BpaATdQT2FEGgkIwcGu6VB1XPwRlgw5d1IoDWaBPWE7NEeoFDpWjHtdagkgOi
+ XDNqWNRjzcUuTB7DKjm9CWfx9GdAeGeYlFABvpDztvBJMAZzVMpdDwWWdeA32hprFreB
+ pJhafGHEROFPv2NDDrU9h/WMrB4Np8yG0TyPu0kjy6h1GOPqM0up2g35Fllz1ZA9OQZm
+ cOhJPOo3ISrG2Bt5pC15brodOohcbtoP7iRxb6o8fTZ7+Jwvwhyv3EPG7dXMZqi80wwG
+ UcGQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1768988926; x=1769593726; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Kyi9fncuN4cOT9Qwbze6uf3r3BG4aXoohtJV2Ki5cU0=;
+ b=xh2Cj/zwFlZfGeb+vdJxqMaBmQbxtaLcmkCt0Jd1EbKukInNAW5jQPlT1ue1gkPUVd
+ wivJ9/ANq7FId56mnCNyPKB8VYKYstf7ziEue30dEfBKyMUv3jCYk6sDvAscQ5+mMNaV
+ +ZKK/KbuF3O1f6aeta/toFXxZ2KH6D26T8+u1EVTB7o4ByofA4Kcs9mz4Rv0erLr5LPX
+ dBVB7qNQFdm8IIq8qkf7wJEnGNm0xuMvoYFJ1Ix+1txvbN7rXK4UbAzXN9xVH2cPhGvd
+ wlDpOV9qwDIqmhJJ5zXWHsCAH4X0XyPuf2NG0Ocz0W1wT98Q1OB+Pb31CWXGI5otpqaw
+ xi/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768988926; x=1769593726;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Kyi9fncuN4cOT9Qwbze6uf3r3BG4aXoohtJV2Ki5cU0=;
+ b=rk0/MTUyIVNuoohydIiaCYv7F32LD+A6rX9yMtfzsi9pFWtQf8AStIQ8WIWtc9DMoy
+ jAnRHL7uJ8GRseVVSLwYR8f9eJsD+Bo3bWBoU5FXVnZ2cfVkKj9D+3bAibirkZMms9vM
+ 31F6M+mH5CjlFNMf15R+4YQ+Y+v/76puj9OY5ftWl3A8tgYPtlKIEz+XKGmbVnMaaOXD
+ 6Ii72+NvXEUBld+kXjJskgLg4sHAQ3/VuV7JDdL4ounyi+c+abY2lWU0dn+VscO6v6J0
+ 6Cfdu3SazzKtDa4zOH/2jEV1SYCwd5a+/cgib3IPDuuIq1wQ1ONkLyXGoM40AYs2NnEB
+ kUdw==
+X-Gm-Message-State: AOJu0YyxY4tJUwwwdFCYQaWd0S0/bG7pu4MM88aei1SMY66he+8rxJgx
+ hwmEYg/yCj6mXIRx4Hl2GGCU8m1fbjUFUZ3CqO4pCP1nF5BqKtkw5ymCWS2Pnp0ukZ3yXMKdmmF
+ Ggz0M16stEUA3zfxTYpPDngi0PcWEndk3LREOxbte9w==
+X-Gm-Gg: AZuq6aLEqXLXN3SAanCzFIyLDi4+x7srNTwb+ChI2rMtDyElvFdYdr4RLEG3GUcNSG3
+ eQHG2TRkVqYgJ7gaiqJf7cigt/SQL6W8mZGnpUzFaQitDLezLmAeCJvaKhYgawKKZhFgFpRLjwz
+ SPTY5aUKxEBmWuOL+6nm6OUqVCYH5wr0xzwl2JBmdEdhqxQ/AmD846Y5VsTWGLpKVAO9+WPVTrG
+ kcmGRBth0o2PJI7oUdG+KsdOF0x9ewOXF8+i6oncDpZE3gjrYQiSJZeDo5vJ8kQzeHNQg2vu82B
+ X1ejEZCjkPGS8Ghnc/2RLlTCmXW9n353c3os
+X-Received: by 2002:a17:907:7282:b0:b87:4c37:7fd8 with SMTP id
+ a640c23a62f3a-b8796b953bamr1452579966b.49.1768988925589; Wed, 21 Jan 2026
+ 01:48:45 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MW6PR02MB9817.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 68bbc336-0f80-478e-f15a-08de58d1cce7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Jan 2026 09:45:24.2106 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Vq+3dhgrqhzA7P2yXcB14l+mUqDm/84UWiSi4SArybxVWUfuofF1FrqLlAPvO/pyj1Y3BTkTBSXa0M3ri2uJBw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR02MB9034
-X-Proofpoint-ORIG-GUID: H3C8mBfCCoF5iXIAShaho2tEGm912Aps
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDA4MSBTYWx0ZWRfX+tk84HQCMfjU
- fxKCvufEp4gDLtmG02Xuew/NLvbHYGWh/ZO6EUHZpIPdLOwxruGqnXzyWAGkt5TkRD9u60SudiJ
- +9tKhiawDvNKIw1AjcHWH0WI8ZLg8vA7JB4i/2jjQKjHtl2jyg9f6AHL/P9JIoBZOVMMZqzt/hq
- cyfkJHuzTY1ismY2r5TxDgB1thV6VbU4l3bMuOy233PXvFIKLiMc9WF2Mg5egPPZI/T24xnHXD7
- EtC0mDx3eqCX6hEC+qhqA12B9XzGqSv79C2jfpgV2FXnSBdv12jHigveJS6FC50vyspN+TgXU4Q
- OYZFr6PQQL1nc5EzzcZQNraw3WF/azCGXSaYiZ7A5nDBnEjeEBLYmGqRvixFFXOHTBkhKVhqdQ4
- o4he5+tgC3ExEZwStELQome+qwDMiDtsMtAG0LOt4ajP+8VaZalkiFhGrwrwSSZdZPqNwm1uzJD
- 1ZGmfF5Tzpklo0w83Yw==
-X-Proofpoint-GUID: H3C8mBfCCoF5iXIAShaho2tEGm912Aps
-X-Authority-Analysis: v=2.4 cv=Oe2VzxTY c=1 sm=1 tr=0 ts=6970a037 cx=c_pps
- a=Xk0cAt2nCKMrkR9Vo+L1ow==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=vUbySO9Y5rIA:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RQZ_2NmkAAAA:8 a=qm3nO7GJCEGBN0PxYqMA:9 a=QEXdDO2ut3YA:10
- a=46pEW5UW3zrkaSsnLxuo:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-21_01,2026-01-20_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68; envelope-from=tejus.gk@nutanix.com;
- helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20260115-sme2-hvf-v2-0-2eca481bd7ee@linaro.org>
+ <20260115-sme2-hvf-v2-1-2eca481bd7ee@linaro.org>
+ <1b0bd534-dd41-4ace-b5b3-37d854ae3d31@linaro.org>
+In-Reply-To: <1b0bd534-dd41-4ace-b5b3-37d854ae3d31@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Wed, 21 Jan 2026 11:48:19 +0200
+X-Gm-Features: AZwV_QieMxmGOt5h_uUsgXx8uINFPJk2u-1YhanMM975plgOrem57jmfn9aUJG4
+Message-ID: <CAAjaMXbHe_zZ_dbz2VD95LAnfZzUkbFgZ2x4N39AEzWRssF7mw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] hvf/arm: handle FEAT_SME2 migration
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -221,133 +120,353 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gT24gMTggU2VwIDIwMjMsIGF0IDEwOjU44oCvUE0sIEpvaG4gTGV2b24gPGxldm9uQG1v
-dmVtZW50YXJpYW4ub3JnPiB3cm90ZToNCj4gDQo+IA0KPiBPYnNlcnZlZCB3aXRoIGJhc2Ugb2Yg
-cWVtdSA2LjIuMCwgYnV0IGZyb20gY29kZSBpbnNwZWN0aW9uIGl0IGxvb2tzIHRvIG1lIGxpa2UN
-Cj4gaXQncyBzdGlsbCBjdXJyZW50IGluIHVwc3RyZWFtIG1hc3Rlci4gQXBvbG9naWVzIGlmIEkg
-aGF2ZSBtaXNzZWQgYSBmaXggaW4gdGhpcw0KPiBhcmVhLg0KPiANCj4gU3ltcHRvbTogcnVuIGEg
-VUVGSS1ib290ZWQgU0FUQSBDRCBXaW5kb3dzIGluc3RhbGxlci4gV2hlbiBpdCBoaXRzICJMb2Fk
-aW5nDQo+IGZpbGVzLi4iIHNjcmVlbiwgcnVuIGFuIGVqZWN0IGUuZy4NCj4gDQo+IHZpcnNoIHFl
-bXUtbW9uaXRvci1jb21tYW5kIDY0YzZlMTkwLWVhN2YtNDllMi1iMmQ1LTZiYTE4MTRiMDBhZSAn
-eyJleGVjdXRlIjoiZWplY3QiLCAiYXJndW1lbnRzIjogeyAiaWQiOiAic2F0YTAtMC0wIiB9IH0n
-DQo+IA0KPiBxZW11IHdpbGwgZ2V0IHN0dWNrIGxpa2Ugc286DQo+IA0KPiBnZGIpIGJ0DQo+ICMw
-ICAweDAwMDA3ZjhiYTRiMTYwMzYgaW4gcHBvbGwgKCkgZnJvbSAvbGliNjQvbGliYy5zby42DQo+
-ICMxICAweDAwMDA1NjE4MTNjNDhlZDUgaW4gcHBvbGwgKF9fc3M9MHgwLCBfX3RpbWVvdXQ9MHg3
-ZmZjYmQ5ODFhNzAsIF9fbmZkcz08b3B0aW1pemVkIG91dD4sIF9fZmRzPTxvcHRpbWl6ZWQgb3V0
-PikgYXQgL3Vzci9pbmNsdWRlL2JpdHMvcG9sbDIuaDo2Mg0KPiAjMiAgcWVtdV9wb2xsX25zIChm
-ZHM9PG9wdGltaXplZCBvdXQ+LCBuZmRzPTxvcHRpbWl6ZWQgb3V0PiwgdGltZW91dD10aW1lb3V0
-QGVudHJ5PTk5OTg5NjEyOCkgYXQgLi4vdXRpbC9xZW11LXRpbWVyLmM6MzQ4DQo+ICMzICAweDAw
-MDA1NjE4MTNjMjliZTkgaW4gZmRtb25fcG9sbF93YWl0IChjdHg9MHg1NjE4MTUxNmUwNzAsIHJl
-YWR5X2xpc3Q9MHg3ZmZjYmQ5ODFhZjAsIHRpbWVvdXQ9OTk5ODk2MTI4KSBhdCAuLi91dGlsL2Zk
-bW9uLXBvbGwuYzo4MA0KPiAjNCAgMHgwMDAwNTYxODEzYzI5N2UxIGluIGFpb19wb2xsIChjdHg9
-Y3R4QGVudHJ5PTB4NTYxODE1MTZlMDcwLCBibG9ja2luZz1ibG9ja2luZ0BlbnRyeT10cnVlKSBh
-dCAuLi91dGlsL2Fpby1wb3NpeC5jOjYwNw0KPiAjNSAgMHgwMDAwNTYxODEzYWUyZmFkIGluIGJk
-cnZfZG9fZHJhaW5lZF9iZWdpbiAocG9sbD10cnVlLCBpZ25vcmVfYmRzX3BhcmVudHM9ZmFsc2Us
-IHBhcmVudD0weDAsIHJlY3Vyc2l2ZT1mYWxzZSwgYnM9MHg1NjE4MTUzM2ZjYzApIGF0IC4uL2Js
-b2NrL2lvLmM6NDgzDQo+ICM2ICBiZHJ2X2RvX2RyYWluZWRfYmVnaW4gKGJzPTB4NTYxODE1MzNm
-Y2MwLCByZWN1cnNpdmU9PG9wdGltaXplZCBvdXQ+LCBwYXJlbnQ9MHgwLCBpZ25vcmVfYmRzX3Bh
-cmVudHM9PG9wdGltaXplZCBvdXQ+LCBwb2xsPTxvcHRpbWl6ZWQgb3V0PikgYXQgLi4vYmxvY2sv
-aW8uYzo0NDYNCj4gIzcgIDB4MDAwMDU2MTgxM2FkOTk4MiBpbiBibGtfZHJhaW4gKGJsaz0weDU2
-MTgxNjFjMWYxMCkgYXQgLi4vYmxvY2svYmxvY2stYmFja2VuZC5jOjE3NDENCj4gIzggIDB4MDAw
-MDU2MTgxM2FkOWI4YyBpbiBibGtfcmVtb3ZlX2JzIChibGs9YmxrQGVudHJ5PTB4NTYxODE2MWMx
-ZjEwKSBhdCAuLi9ibG9jay9ibG9jay1iYWNrZW5kLmM6ODUyDQo+ICM5ICAweDAwMDA1NjE4MTM4
-MmI4YWIgaW4gYmxvY2tkZXZfcmVtb3ZlX21lZGl1bSAoaGFzX2RldmljZT08b3B0aW1pemVkIG91
-dD4sIGRldmljZT08b3B0aW1pemVkIG91dD4sIGhhc19pZD08b3B0aW1pemVkIG91dD4sIGlkPTxv
-cHRpbWl6ZWQgb3V0PiwgZXJycD0weDdmZmNiZDk4MWM3OCkgYXQgLi4vYmxvY2svcWFwaS1zeXNl
-bXUuYzoyMzINCj4gIzEwIDB4MDAwMDU2MTgxMzgyYmZiMSBpbiBxbXBfZWplY3QgKGhhc19kZXZp
-Y2U9PG9wdGltaXplZCBvdXQ+LCBkZXZpY2U9MHgwLCBoYXNfaWQ9PG9wdGltaXplZCBvdXQ+LCBp
-ZD0weDU2MTgxNWU2ZWZlMCAic2F0YTAtMC0wIiwgaGFzX2ZvcmNlPTxvcHRpbWl6ZWQgb3V0Piwg
-Zm9yY2U9PG9wdGltaXplZCBvdXQ+LCBlcnJwPTB4N2ZmY2JkOTgxYzc4KSBhdCAuLi9ibG9jay9x
-YXBpLXN5c2VtdS5jOjQ1DQo+IA0KPiBXZSBhcmUgc3R1Y2sgZm9yZXZlciBoZXJlOg0KPiANCj4g
-MzUxIHN0YXRpYyB2b2lkIGJkcnZfZG9fZHJhaW5lZF9iZWdpbihCbG9ja0RyaXZlclN0YXRlICpi
-cywgQmRydkNoaWxkICpwYXJlbnQsDQo+IDM1MiAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgYm9vbCBwb2xsKQ0KPiAuLi4NCj4gMzgwICAgICBpZiAocG9sbCkgew0KPiAzODEgICAg
-ICAgICBCRFJWX1BPTExfV0hJTEUoYnMsIGJkcnZfZHJhaW5fcG9sbF90b3BfbGV2ZWwoYnMsIHBh
-cmVudCkpOw0KPiAzODIgICAgIH0NCj4gDQo+IEJlY2F1c2UgdGhlIGJsayByb290J3MgLT5pbl9m
-bGlnaHQgaXMgMSwgYXMgdGVzdGVkIGJ5IHRoZSBjb25kaXRpb24NCj4gYmxrX3Jvb3RfZHJhaW5l
-ZF9wb2xsKCkuDQo+IA0KPiANCj4gT3VyIGJsay0+aW5fZmxpZ2h0IHVzZXIgaXMgc3R1Y2sgaGVy
-ZToNCj4gDQo+IDEyOTggc3RhdGljIHZvaWQgY29yb3V0aW5lX2ZuIGJsa193YWl0X3doaWxlX2Ry
-YWluZWQoQmxvY2tCYWNrZW5kICpibGspDQo+IC4uLg0KPiAxMzEwICAgICAgICAgYmxrX2RlY19p
-bl9mbGlnaHQoYmxrKTsNCj4gMTMxMSAgICAgICAgIHFlbXVfY29fcXVldWVfd2FpdCgmYmxrLT5x
-dWV1ZWRfcmVxdWVzdHMsICZibGstPnF1ZXVlZF9yZXF1ZXN0c19sb2NrKTsNCj4gMTMxMiAgICAg
-ICAgIGJsa19pbmNfaW5fZmxpZ2h0KGJsayk7DQo+IA0KPiBOb3RlIHRoYXQgYmVmb3JlIGVudGVy
-aW5nIHRoaXMgc3RhbnphLCBibGstPmluX2ZsaWdodCB3YXMgMi4gVGhpcyB0dXJucyBvdXQgdG8N
-Cj4gYmUgZHVlIHRvIHRoZSBpZGUgYXRhcGkgY29kZS4gSW4gcGFydGljdWxhciwgdGhlIGd1ZXN0
-IFZNIGlzIGdlbmVyYXRpbmcgbG90cyBvZg0KPiByZWFkIEkvTy4gVGhlICJmaXJzdCBJTyIgYXJy
-aXZlcyBpbnRvIGJsayB2aWE6DQo+IA0KPiBjZF9yZWFkX3NlY3RvcigpLT5pZGVfYnVmZmVyZWRf
-cmVhZHYoKS0+YmxrX2Fpb19wcmVhZHYoKQ0KPiANCj4gVGhpcyBpbml0aWFsIElPIGNvbXBsZXRl
-czoNCj4gDQo+IGJsa19haW9fcmVhZF9lbnRyeSgpLT5ibGtfYWlvX2NvbXBsZXRlKCkNCj4gDQo+
-IDE1NjAgc3RhdGljIHZvaWQgYmxrX2Fpb19jb21wbGV0ZShCbGtBaW9FbUFJT0NCICphY2IpDQo+
-IDE1NjEgew0KPiAxNTYyICAgICBpZiAoYWNiLT5oYXNfcmV0dXJuZWQpIHsNCj4gMTU2MyAgICAg
-ICAgIGFjYi0+Y29tbW9uLmNiKGFjYi0+Y29tbW9uLm9wYXF1ZSwgYWNiLT5yd2NvLnJldCk7DQo+
-IDE1NjQgICAgICAgICBibGtfZGVjX2luX2ZsaWdodChhY2ItPnJ3Y28uYmxrKTsNCj4gMTU2NSAg
-ICAgICAgIHFlbXVfYWlvX3VucmVmKGFjYik7DQo+IDE1NjYgICAgIH0NCj4gMTU2NyB9DQo+IA0K
-PiBMaW5lIDE1NjQgaXMgd2hhdCB3ZSBuZWVkIHRvIG1vdmUgYmxrLT5pbl9mbGlnaHQgZG93biB0
-byB6ZXJvLCBidXQgdGhhdCBpcyBuZXZlcg0KPiByZWFjaGVkISBUaGlzIGlzIGJlY2F1c2Ugb2Yg
-d2hhdCBoYXBwZW5zIGF0IDoxNTYzDQo+IA0KPiBhY20tPmNvbW1vbi5jYigpLT5jZF9yZWFkX3Nl
-Y3Rvcl9jYigpLT5pZGVfYXRhcGlfY21kX3JlcGx5X2VuZCgpLT5jZF9yZWFkX3NlY3Rvcl9zeW5j
-KCktPmJsa19wcmVhZCgpDQo+IA0KPiBUaGF0IGlzLCB0aGUgSU8gY2FsbGJhY2sgaW4gdGhlIGF0
-YXBpIGNvZGUgaXRzZWxmIHRyaWdnZXJzIG1vcmUgLSBzeW5jaHJvbm91cyAtIElPLg0KPiANCj4g
-SW4gdGhlIG1lYW50aW1lLCB3ZSBzdGFydCBwcm9jZXNzaW5nIHRoZSBibGtfZHJhaW4oKSBjb2Rl
-LCBzbyBieSB0aGUgdGltZSB0aGlzDQo+IGJsa19wcmVhZCgpIGFjdHVhbGx5IGdldHMgaGFuZGxl
-ZCwgcXVpZXNjZSBpcyBzZXQsIGFuZCB3ZSBnZXQgc3R1Y2sgaW4gdGhlDQo+IGJsa193YWl0X3do
-aWxlX2RyYWluZWQoKS4NCj4gDQo+IEkgZG9uJ3Qga25vdyB0aGUgcWVtdSBibG9jayBzdGFjayB3
-ZWxsIGVub3VnaCB0byBwcm9wb3NlIGFuIGFjdHVhbCBmaXguDQo+IA0KPiBFeHBlcmltZW50YWxs
-eSwgd2FpdGluZyBmb3IgLT5pbl9mbGlnaHQgdG8gZHJvcCB0byB6ZXJvICpiZWZvcmUqIHdlIHF1
-aWVzY2UgaW4NCj4gYmxrX3JlbW92ZV9icygpIHZpYSBhbiBBSU9fV0FJVF9XSElMRSgpIGF2b2lk
-cyB0aGUgc3ltcHRvbSwgYnV0IEknbSBwcmV0dHkgc3VyZQ0KPiB0aGF0J3MganVzdCBhIGJhbmQt
-YWlkIGluc3RlYWQgb2YgZml4aW5nIHRoZSBkZWFkbG9jay4NCj4gDQo+IEFueSBzdWdnZXN0aW9u
-cy9jbHVlcy90aG91Z2h0cz8NCj4gDQo+IHRoYW5rcw0KPiBqb2huDQo+IA0KPiANCg0KSGkgS2V2
-aW4sIEhhbm5hLiANCg0KRGlkIHdlIGV2ZXIgZW5kIHVwIGZpeGluZyB0aGlzPyBJIGFtIHNlZWlu
-ZyBhIHNpbWlsYXIgZGVhZGxvY2ssIG9uIFFFTVUgOS4xLjAsIHdoZW4gbWlncmF0aW5nIHRoZSBz
-YW1lIGtpbmQgb2YgVk0gZGVzY3JpYmVkIG9yaWdpbmFsbHkuIER1ZSB0byB0aGUgZGVhZGxvY2ss
-IHRoZSBWTSBvbiB0aGUgc291cmNlIGdvZXMgaW50byBhIHBhdXNlZCBzdGF0ZSwgYW5kIHN0YXlz
-IHRoZXJlIGluZGVmaW5pdGVseS4NCg0KUUVNVSBiYWNrdHJhY2U6DQpUaHJlYWQgMTQgKFRocmVh
-ZCAweDdmYzA3ZTdkNzY0MCAoTFdQIDY5Mzc0NykgIm1pZy9zcmMvbWFpbiIpOg0KIzAgIDB4MDAw
-MDdmYzA4NzMwMWZjZSBpbiBwcG9sbCAoKSBmcm9tIHRhcmdldDovbGliLy4uL2xpYjY0L2xpYmMu
-c28uNg0KIzEgIDB4MDAwMDU2MjRjMDdlY2I2MyBpbiBxZW11X3BvbGxfbnMgKGZkcz0weDdmYmU0
-NDExOGY5MCwgdGltZW91dD08b3B0aW1pemVkIG91dD4sIG5mZHM9PG9wdGltaXplZCBvdXQ+KSBh
-dCAuLi91dGlsL3FlbXUtdGltZXIuYzozMzkNCiMyICBmZG1vbl9wb2xsX3dhaXQgKGN0eD0weDU2
-MjRkN2ZlYTkwMCwgcmVhZHlfbGlzdD0weDdmYzA4NDA0N2Y3OCwgdGltZW91dD08b3B0aW1pemVk
-IG91dD4pIGF0IC4uL3V0aWwvZmRtb24tcG9sbC5jOjc5DQojMyAgMHgwMDAwNTYyNGMwN2ViZGI3
-IGluIGFpb19wb2xsIChjdHg9MHg1NjI0ZDdmZWE5MDAsIGJsb2NraW5nPTxvcHRpbWl6ZWQgb3V0
-PikgYXQgLi4vdXRpbC9haW8tcG9zaXguYzo2NzANCiM0ICAweDAwMDA1NjI0YzA0ZjViMDMgaW4g
-YmRydl9kcmFpbl9hbGxfYmVnaW4gKCkgYXQgLi4vYmxvY2svaW8uYzo1MzENCiM1ICAweDAwMDA1
-NjI0YzAxM2Y3YWIgaW4gYmRydl9kcmFpbl9hbGwgKCkgYXQgLi4vYmxvY2svaW8uYzo1NzYNCiM2
-ICBkb192bV9zdG9wIChzdGF0ZT08b3B0aW1pemVkIG91dD4sIHNlbmRfc3RvcD10cnVlKSBhdCAu
-Li9zeXN0ZW0vY3B1cy5jOjMwOA0KIzcgIDB4MDAwMDU2MjRjMDE0MGViZCBpbiB2bV9zdG9wIChz
-dGF0ZT08b3B0aW1pemVkIG91dD4pIGF0IC4uL3N5c3RlbS9jcHVzLmM6NzE1DQojOCAgdm1fc3Rv
-cF9mb3JjZV9zdGF0ZSAoc3RhdGU9PG9wdGltaXplZCBvdXQ+KSBhdCAuLi9zeXN0ZW0vY3B1cy5j
-Ojc4NA0KIzkgIDB4MDAwMDU2MjRjMDE4N2U4ZSBpbiBtaWdyYXRpb25fc3RvcF92bSAocz0weDU2
-MjRkN2ZjNjQ5MCwgc3RhdGU9UlVOX1NUQVRFX0ZJTklTSF9NSUdSQVRFKSBhdCAuLi9taWdyYXRp
-b24vbWlncmF0aW9uLmM6MjQzDQojMTAgbWlncmF0aW9uX2NvbXBsZXRpb25fcHJlY29weSAocz0w
-eDU2MjRkN2ZjNjQ5MCwgY3VycmVudF9hY3RpdmVfc3RhdGU9PG9wdGltaXplZCBvdXQ+KSBhdCAu
-Li9taWdyYXRpb24vbWlncmF0aW9uLmM6Mjc0Nw0KIzExIG1pZ3JhdGlvbl9jb21wbGV0aW9uIChz
-PTB4NTYyNGQ3ZmM2NDkwKSBhdCAuLi9taWdyYXRpb24vbWlncmF0aW9uLmM6MjgwMQ0KIzEyIG1p
-Z3JhdGlvbl9pdGVyYXRpb25fcnVuIChzPTB4NTYyNGQ3ZmM2NDkwKSBhdCAuLi9taWdyYXRpb24v
-bWlncmF0aW9uLmM6MzI0Ng0KIzEzIG1pZ3JhdGlvbl90aHJlYWQgKG9wYXF1ZT0weDU2MjRkN2Zj
-NjQ5MCkgYXQgLi4vbWlncmF0aW9uL21pZ3JhdGlvbi5jOjM1MTcNCiMxNCAweDAwMDA1NjI0YzA3
-ZjBiYWEgaW4gcWVtdV90aHJlYWRfc3RhcnQgKGFyZ3M9MHg1NjI0ZDgyZDdiYzApIGF0IC4uL3V0
-aWwvcWVtdS10aHJlYWQtcG9zaXguYzo1NDMNCiMxNSAweDAwMDA3ZmMwODcyOGExOWEgaW4gc3Rh
-cnRfdGhyZWFkICgpIGZyb20gdGFyZ2V0Oi9saWIvLi4vbGliNjQvbGliYy5zby42DQojMTYgMHgw
-MDAwN2ZjMDg3MzBlM2Y0IGluIGNsb25lICgpIGZyb20gdGFyZ2V0Oi9saWIvLi4vbGliNjQvbGli
-Yy5zby42DQoNClRoZSByZXN0IG9mIHRoZSBzeW1wdG9tcyBhcmUgcHJldHR5IG11Y2ggc2FtZSBh
-cyB0aGUgb3JpZ2luYWwgdGhyZWFkLiBUaGUgb25seSBkaWZmZXJlbmNlIHRoaXMgdGltZSBiZWlu
-ZyB0aGUgZmFjdCB0aGF0IHRoZSBkZWFkbG9jayBoaXR0aW5nIGluIHRoZSBtaWdyYXRpb24gdXNl
-LWNhc2UuDQoNCkkgd2FzIHdvbmRlcmluZyBpZiBpdHMgZmVhc2libGUgdG8gaW50cm9kdWNlIGEg
-d29ya2Fyb3VuZCBsaWtlIHRoaXM/IEVzc2VudGlhbGx5LCB3YWl0aW5nIGZvciBhbGwgaW4tZmxp
-Z2h0IElPcyB0byBmaW5pc2ggKmp1c3QqIGJlZm9yZSB3ZSBlbmFibGUgcXVpZXNjaW5nLiBTb21l
-dGhpbmcgbGlrZTogDQoNCmRpZmYgLS1naXQgYS9ibG9jay9ibG9jay1iYWNrZW5kLmMgYi9ibG9j
-ay9ibG9jay1iYWNrZW5kLmMNCmluZGV4IGJhN2RjNDQ5OTguLjQ1OTliZDQ4ZjIgMTAwNjQ0DQot
-LS0gYS9ibG9jay9ibG9jay1iYWNrZW5kLmMNCisrKyBiL2Jsb2NrL2Jsb2NrLWJhY2tlbmQuYw0K
-QEAgLTI4MjIsNiArMjgyMiw5IEBAIHN0YXRpYyB2b2lkIGJsa19yb290X2RyYWluZWRfYmVnaW4o
-QmRydkNoaWxkICpjaGlsZCkNCiAgICAgQmxvY2tCYWNrZW5kICpibGsgPSBjaGlsZC0+b3BhcXVl
-Ow0KICAgICBUaHJvdHRsZUdyb3VwTWVtYmVyICp0Z20gPSAmYmxrLT5wdWJsaWMudGhyb3R0bGVf
-Z3JvdXBfbWVtYmVyOw0KKyAgICBBSU9fV0FJVF9XSElMRShibGtfZ2V0X2Fpb19jb250ZXh0KGJs
-ayksDQorICAgICAgICAgICAgICAgICAgIHFhdG9taWNfbG9hZF9hY3F1aXJlKCZibGstPmluX2Zs
-aWdodCkgPiAwKTsNCisNCiAgICAgaWYgKHFhdG9taWNfZmV0Y2hfaW5jKCZibGstPnF1aWVzY2Vf
-Y291bnRlcikgPT0gMCkgew0KICAgICAgICAgaWYgKGJsay0+ZGV2X29wcyAmJiBibGstPmRldl9v
-cHMtPmRyYWluZWRfYmVnaW4pIHsNCiAgICAgICAgICAgICBibGstPmRldl9vcHMtPmRyYWluZWRf
-YmVnaW4oYmxrLT5kZXZfb3BhcXVlKTsgDQoNClRob3VnaHRzPyANCg0KDQpSZWdhcmRzLA0KVGVq
-dXMNCg0K
+On Tue, Jan 20, 2026 at 12:47=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Hi Manos,
+>
+> Mostly nitpicking comments :)
+>
+> On 15/1/26 12:20, Manos Pitsidianakis wrote:
+> > SME2 support adds the following state for HVF guests:
+> >
+> > - Vector registers Z0, ... , Z31 (introduced by FEAT_SVE but HVF does
+> >    not support it)
+> > - Predicate registers P0, .., P15 (also FEAT_SVE)
+> > - ZA register
+> > - ZT0 register
+> > - PSTATE.{SM,ZA} bits (SVCR pseudo-register)
+> > - SMPRI_EL1 which handles the PE's priority in the SMCU
+> > - TPIDR2_EL0 the thread local ID register for SME
+> >
+> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > ---
+> >   target/arm/hvf/hvf.c           | 285 ++++++++++++++++++++++++++++++++=
+++++++++-
+> >   target/arm/hvf/hvf_sme_stubs.h | 158 +++++++++++++++++++++++
+> >   target/arm/hvf/sysreg.c.inc    |   8 ++
+> >   target/arm/hvf_arm.h           |  41 ++++++
+> >   target/arm/machine.c           |   2 +-
+> >   5 files changed, 491 insertions(+), 3 deletions(-)
+>
+>
+> >   int hvf_arch_get_registers(CPUState *cpu)
+> >   {
+> > @@ -465,6 +698,10 @@ int hvf_arch_get_registers(CPUState *cpu)
+> >           uint64_t kvm_id =3D arm_cpu->cpreg_indexes[i];
+> >           int hvf_id =3D KVMID_TO_HVF(kvm_id);
+> >
+> > +        if (kvm_id =3D=3D HVF_TO_KVMID(SVCR)) {
+> > +            continue;
+> > +        }
+> > +
+> >           if (cpu->accel->guest_debug_enabled) {
+> >               /* Handle debug registers */
+> >               switch (hvf_id) {
+> > @@ -558,6 +795,11 @@ int hvf_arch_get_registers(CPUState *cpu)
+> >
+> >           arm_cpu->cpreg_values[i] =3D val;
+> >       }
+> > +    if (__builtin_available(macOS 15.2, *)) {
+> > +        if (cpu_isar_feature(aa64_sme, arm_cpu)) {
+> > +            hvf_arch_get_sme(cpu);
+> > +        }
+> > +    }
+>
+> What about:
+>
+>         if (cpu_isar_feature(aa64_sme, arm_cpu)) {
+>             if (__builtin_available(macOS 15.2, *)) {
+>                 hvf_arch_get_sme(cpu);
+>             } else {
+>                 g_assert_not_reached();
+>             }
+>         }
+>
+> ?
+
+Yes, that's definitely better.
+
+>
+> >       assert(write_list_to_cpustate(arm_cpu));
+> >
+> >       aarch64_restore_sp(env, arm_current_el(env));
+> > @@ -603,6 +845,10 @@ int hvf_arch_put_registers(CPUState *cpu)
+> >           uint64_t kvm_id =3D arm_cpu->cpreg_indexes[i];
+> >           int hvf_id =3D KVMID_TO_HVF(kvm_id);
+> >
+> > +        if (kvm_id =3D=3D HVF_TO_KVMID(SVCR)) {
+> > +            continue;
+> > +        }
+> > +
+> >           if (cpu->accel->guest_debug_enabled) {
+> >               /* Handle debug registers */
+> >               switch (hvf_id) {
+> > @@ -687,6 +933,11 @@ int hvf_arch_put_registers(CPUState *cpu)
+> >       ret =3D hv_vcpu_set_vtimer_offset(cpu->accel->fd, hvf_state->vtim=
+er_offset);
+> >       assert_hvf_ok(ret);
+> >
+> > +    if (__builtin_available(macOS 15.2, *)) {
+> > +        if (cpu_isar_feature(aa64_sme, arm_cpu)) {
+> > +            hvf_arch_put_sme(cpu);
+> > +        }
+> > +    }
+> >       return 0;
+> >   }
+> >
+> > @@ -909,6 +1160,18 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+> >       hv_return_t ret;
+> >       int i;
+> >
+> > +    if (__builtin_available(macOS 15.2, *)) {
+> > +        sregs_match_len +=3D ARRAY_SIZE(hvf_sreg_list_sme2) + 1;
+> > +
+> > +#define DEF_SYSREG_15_02(HVF_ID, ...) \
+> > +        g_assert(HVF_ID =3D=3D KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_=
+ARGS__)));
+> > +#define DEF_SYSREG(...)
+> > +
+> > +#include "sysreg.c.inc"
+> > +
+> > +#undef DEF_SYSREG
+> > +#undef DEF_SYSREG_15_02
+> > +    }
+> >       env->aarch64 =3D true;
+> >       asm volatile("mrs %0, cntfrq_el0" : "=3Dr"(arm_cpu->gt_cntfrq_hz)=
+);
+> >
+> > @@ -927,7 +1190,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+> >       memset(arm_cpu->cpreg_values, 0, sregs_match_len * sizeof(uint64_=
+t));
+> >
+> >       /* Populate cp list for all known sysregs */
+> > -    for (i =3D 0; i < sregs_match_len; i++) {
+> > +    for (i =3D 0; i < ARRAY_SIZE(hvf_sreg_list); i++) {
+> >           hv_sys_reg_t hvf_id =3D hvf_sreg_list[i];
+> >           uint64_t kvm_id =3D HVF_TO_KVMID(hvf_id);
+> >           uint32_t key =3D kvm_to_cpreg_id(kvm_id);
+> > @@ -938,6 +1201,24 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+> >               arm_cpu->cpreg_indexes[sregs_cnt++] =3D kvm_id;
+> >           }
+> >       }
+> > +    if (__builtin_available(macOS 15.2, *)) {
+> > +        for (i =3D 0; i < ARRAY_SIZE(hvf_sreg_list_sme2); i++) {
+> > +            hv_sys_reg_t hvf_id =3D hvf_sreg_list_sme2[i];
+> > +            uint64_t kvm_id =3D HVF_TO_KVMID(hvf_id);
+> > +            uint32_t key =3D kvm_to_cpreg_id(kvm_id);
+> > +            const ARMCPRegInfo *ri =3D get_arm_cp_reginfo(arm_cpu->cp_=
+regs, key);
+> > +
+> > +            if (ri) {
+> > +                assert(!(ri->type & ARM_CP_NO_RAW));
+> > +                arm_cpu->cpreg_indexes[sregs_cnt++] =3D kvm_id;
+> > +            }
+> > +        }
+> > +        /*
+> > +         * Add SVCR last. It is elsewhere assumed its index is after
+> > +         * hvf_sreg_list and hvf_sreg_list_sme2.
+> > +         */
+> > +        arm_cpu->cpreg_indexes[sregs_cnt++] =3D HVF_TO_KVMID(SVCR);
+> > +    }
+>
+> Could we add as a hvf_arch_init_sme() helper instead?
+>
+
+Will do in next revision
+
+> >       arm_cpu->cpreg_array_len =3D sregs_cnt;
+> >       arm_cpu->cpreg_vmstate_array_len =3D sregs_cnt;
+> >
+> > diff --git a/target/arm/hvf/hvf_sme_stubs.h b/target/arm/hvf/hvf_sme_st=
+ubs.h
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..9c679b711017448681e532b=
+88ce10a07ebfd5122
+> > --- /dev/null
+> > +++ b/target/arm/hvf/hvf_sme_stubs.h
+> > @@ -0,0 +1,158 @@
+> > +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> > +
+> > +typedef int32_t hv_return_t;
+> > +typedef uint64_t hv_vcpu_t;
+>
+> We certainly already have these.
+
+We don't, hvf sdk header provides these. If you include the hvf header
+here, there will be a bunch of definitions that are available and a
+bunch that are not (guarded by availability attribute) so it's far
+easier to just typedef these two in the stub header.
+
+>
+> > +
+> > +static inline bool hvf_arm_sme2_supported(void)
+> > +{
+> > +    return false;
+> > +}
+> > +
+> > +static inline uint32_t hvf_arm_sme2_get_svl(void)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > +
+> > +typedef enum hv_sme_p_reg_t {
+> > +    HV_SME_P_REG_0,
+> > +    HV_SME_P_REG_1,
+> > +    HV_SME_P_REG_2,
+> > +    HV_SME_P_REG_3,
+> > +    HV_SME_P_REG_4,
+> > +    HV_SME_P_REG_5,
+> > +    HV_SME_P_REG_6,
+> > +    HV_SME_P_REG_7,
+> > +    HV_SME_P_REG_8,
+> > +    HV_SME_P_REG_9,
+> > +    HV_SME_P_REG_10,
+> > +    HV_SME_P_REG_11,
+> > +    HV_SME_P_REG_12,
+> > +    HV_SME_P_REG_13,
+> > +    HV_SME_P_REG_14,
+> > +    HV_SME_P_REG_15,
+> > +} hv_sme_p_reg_t;
+> > +
+> > +typedef __attribute__((ext_vector_type(64))) uint8_t hv_sme_zt0_uchar6=
+4_t;
+> > +
+> > +typedef enum hv_sme_z_reg_t {
+> > +    HV_SME_Z_REG_0,
+> > +    HV_SME_Z_REG_1,
+> > +    HV_SME_Z_REG_2,
+> > +    HV_SME_Z_REG_3,
+> > +    HV_SME_Z_REG_4,
+> > +    HV_SME_Z_REG_5,
+> > +    HV_SME_Z_REG_6,
+> > +    HV_SME_Z_REG_7,
+> > +    HV_SME_Z_REG_8,
+> > +    HV_SME_Z_REG_9,
+> > +    HV_SME_Z_REG_10,
+> > +    HV_SME_Z_REG_11,
+> > +    HV_SME_Z_REG_12,
+> > +    HV_SME_Z_REG_13,
+> > +    HV_SME_Z_REG_14,
+> > +    HV_SME_Z_REG_15,
+> > +    HV_SME_Z_REG_16,
+> > +    HV_SME_Z_REG_17,
+> > +    HV_SME_Z_REG_18,
+> > +    HV_SME_Z_REG_19,
+> > +    HV_SME_Z_REG_20,
+> > +    HV_SME_Z_REG_21,
+> > +    HV_SME_Z_REG_22,
+> > +    HV_SME_Z_REG_23,
+> > +    HV_SME_Z_REG_24,
+> > +    HV_SME_Z_REG_25,
+> > +    HV_SME_Z_REG_26,
+> > +    HV_SME_Z_REG_27,
+> > +    HV_SME_Z_REG_28,
+> > +    HV_SME_Z_REG_29,
+> > +    HV_SME_Z_REG_30,
+> > +    HV_SME_Z_REG_31,
+> > +} hv_sme_z_reg_t;
+>
+> Hmm do we need those? Could we just define the typedef?
+
+Yes, they are used in the static const hvf_reg_match arrays.
+
+>
+>    typedef uint32_t hv_sme_p_reg_t;
+>    typedef uint32_t hv_sme_z_reg_t;
+>    typedef void *hv_sme_zt0_uchar64_t;
+>
+> > +
+> > +enum {
+> > +  HV_SYS_REG_SMCR_EL1,
+> > +  HV_SYS_REG_SMPRI_EL1,
+> > +  HV_SYS_REG_TPIDR2_EL0,
+> > +  HV_SYS_REG_ID_AA64ZFR0_EL1,
+> > +  HV_SYS_REG_ID_AA64SMFR0_EL1,
+> > +};
+> > +
+> > +typedef struct {
+> > +    bool streaming_sve_mode_enabled;
+> > +    bool za_storage_enabled;
+> > +} hv_vcpu_sme_state_t;
+> > +
+> > +static inline hv_return_t hv_sme_config_get_max_svl_bytes(size_t *valu=
+e)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > +
+> > +static inline hv_return_t hv_vcpu_get_sme_state(hv_vcpu_t vcpu,
+> > +                                                hv_vcpu_sme_state_t *s=
+me_state)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > +
+> > +static inline hv_return_t hv_vcpu_set_sme_state(hv_vcpu_t vcpu,
+> > +                                                const hv_vcpu_sme_stat=
+e_t *sme_state)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > +
+> > +static inline hv_return_t hv_vcpu_get_sme_z_reg(hv_vcpu_t vcpu,
+> > +                                                hv_sme_z_reg_t reg,
+> > +                                                uint8_t *value,
+> > +                                                size_t length)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > +
+> > +static inline hv_return_t hv_vcpu_set_sme_z_reg(hv_vcpu_t vcpu,
+> > +                                                hv_sme_z_reg_t reg,
+> > +                                                const uint8_t *value,
+> > +                                                size_t length)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > +
+> > +static inline hv_return_t hv_vcpu_get_sme_p_reg(hv_vcpu_t vcpu,
+> > +                                                hv_sme_p_reg_t reg,
+> > +                                                uint8_t *value,
+> > +                                                size_t length)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > +
+> > +static inline hv_return_t hv_vcpu_set_sme_p_reg(hv_vcpu_t vcpu,
+> > +                                                hv_sme_p_reg_t reg,
+> > +                                                const uint8_t *value,
+> > +                                                size_t length)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > +
+> > +static inline hv_return_t hv_vcpu_get_sme_za_reg(hv_vcpu_t vcpu,
+> > +                                                 uint8_t *value,
+> > +                                                 size_t length)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > +
+> > +static inline hv_return_t hv_vcpu_set_sme_za_reg(hv_vcpu_t vcpu,
+> > +                                                 const uint8_t *value,
+> > +                                                 size_t length)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > +
+> > +static inline hv_return_t hv_vcpu_get_sme_zt0_reg(hv_vcpu_t vcpu,
+> > +                                                  hv_sme_zt0_uchar64_t=
+ *value)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
+> > +
+> > +static inline hv_return_t hv_vcpu_set_sme_zt0_reg(hv_vcpu_t vcpu,
+> > +                                                  const hv_sme_zt0_uch=
+ar64_t *value)
+> > +{
+> > +    g_assert_not_reached();
+> > +}
 
