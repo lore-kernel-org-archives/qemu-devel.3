@@ -4,78 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A28E5C44506
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 22:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23EC8C44500
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 22:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vigHE-0001CA-V5; Wed, 21 Jan 2026 17:02:13 -0500
+	id 1vigM6-0003LV-JF; Wed, 21 Jan 2026 17:07:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1vif6e-0002Q4-4i
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 15:47:12 -0500
-Received: from anarch128.org ([2001:4801:7825:104:be76:4eff:fe10:52ae])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael@anarch128.org>)
- id 1vif6c-0001XS-80
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 15:47:11 -0500
-Received: from [192.168.1.3] (dynamic-cpe-pool.orcon.net.nz [121.99.116.25]
- (may be forged)) (authenticated bits=0)
- by anarch128.org (8.15.2/8.15.2/Debian-22+deb11u3) with ESMTPSA id
- 60LKkr7s2202517
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 20:46:56 GMT
-Authentication-Results: anarch128.org; dmarc=fail (p=reject dis=none)
- header.from=anarch128.org
-Authentication-Results: anarch128.org; arc=none
-ARC-Seal: i=1; a=rsa-sha256; d=anarch128.org; s=100003; t=1769028416; cv=none;
- b=R/KW937ozcY0AENnUyWuDPMWsR+ug7GoRE0P5r1+p2cxjuunaLB4TW8n4MxBopDuvXjcxHzh675rVtGPseAT6gFgQCsW/Slxa/4FQYoQzOyvr528hIrzYWIAtoOA8D8JG6g/PGeA9HsT9yGceyNtWBIk45XZLjM7CayrKDQGt9GIRfVS6QcNeqq6Gj2TzXkwt+Ypwz9/rd8FmY8SzbWU5m1LqRO7sHQ+2qw07tUGlG0tP+V1UifFBZmefrZzvRHu+9qP1tL1KWEQzBwqwEh7JvFmixwHcQIDABxrBVTF5GBh7e4oZiilTC8g7Upnhyfuxt4B8BDl9s0LZPZSQpae9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=anarch128.org; s=100003;
- t=1769028416; c=relaxed/simple;
- bh=s+FEDyij42DwGmbYKhAiuyT/g9zXE6lV26zbuKsoqJc=;
- h=DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:From:
- Subject:To:Content-Language:Content-Type:
- Content-Transfer-Encoding;
- b=mGdGp3MkZKVKpaGDgFQrM0OCYl6Bd2W2H1DdqCFQ/0KrrMLSaGXP8FQFgdngQUqM6bJn2EYbWO+s7OJCVPTVdh4kBYiRWND9NLNkcCdmAPYn3vstPDhWXmTYbX2Fw79A9jwv+gLqI32qwXHaL+q1PaqWsajQhK3hdlbN/I0k1QO9vYegNkNn1NvyvbqfZiMhNQhBMXlCFyTDVDhpVxCx8DdjF2szR+v8VqeCk2W23xIkjtuByQp2WaVfmtPlykpHSHTFRWJw28oiy58nTx4my4NT3S+VlnM2vnpnyR5eAb+p3/tVU4+ReAJbgUNkrpJfU8JxE4WqHTlp/ju4hEyWvA==
-ARC-Authentication-Results: i=1; anarch128.org; dkim=none (no signatures found);
- (null)=pass (MX Records found: mail.anarch128.org)
- smtp.domain=anarch128.org policy.is_org=yes; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=anarch128.org;
- s=100003; t=1769028416;
- bh=s+FEDyij42DwGmbYKhAiuyT/g9zXE6lV26zbuKsoqJc=;
- h=Date:From:Subject:To:From;
- b=fTci60pH/uekN2MhwKIQGdYM1PVbhk/gju4U3bDyBOU7PucXSNQ4Otlr2rN1vSJ5E
- miZsBNKv3DE8of0ZF+Ws5rrrO9FPku6V1uib0U+VUSlRxJu1Q7jtLbQ/h1vxdvC3/e
- V0RKHJRaaknuPBVKV/CDbFyeigAOfwPb4xKHE63Y/D43kfimWEnrGzKz+oEB8ezOdG
- NTV4NFeqFzqst16LZRDktnQHKeEygU1NnRX78MpiwctGPkpRc/c7yIJPlDC8Z6BmrZ
- WUvd2fL8x1dzfNRBRvZIh1NSvcP1wQ5QZQCiNhXHthbls0ITjxamFcbPv9+2SfKvjG
- fhmtIPcgimpiA==
-Authentication-Results: anarch128.org; auth=pass;
- dkim=none (no signatures found);
- x-return-mx=pass header.domain=anarch128.org policy.is_org=yes (MX Records
- found: mail.anarch128.org); 
- x-return-mx=pass smtp.domain=anarch128.org policy.is_org=yes (MX Records
- found: mail.anarch128.org)
-Message-ID: <997772af-8b58-4550-8b3b-1249d8ae0cb7@anarch128.org>
-Date: Thu, 22 Jan 2026 09:46:47 +1300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vigM4-0003FJ-Lw
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 17:07:12 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vigM3-0006VP-C7
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 17:07:12 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4801bc32725so2384035e9.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 14:07:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769033229; x=1769638029; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=54Czg5iL52ePXQoh62BByo3ZdrqoQXBt3xWFM9bWaqA=;
+ b=Ux4eqRlaOHaYW8DS00Xy50BG1R+rcaZEFAHR7iSfF7oUpMU7Y2UVJG93hEjnIh241r
+ oxGc0JYbVN1Io9J7S+zxHAuJicBeWqTHbWWCgw4pSjoDb9yHSOq3Jxw3QIuOO3DsqTv1
+ xFUgyvrxIfjBrdvUtCFZ9wdDETVfk/8cTXSXkH5Yesz2fNYjo9NhHFIheOEinOKaIBOg
+ 1e4tiat5q6R1Y2BCWJvhxiezTCxU/ImMRfp+WH/MtW43egh8HNTM0wpAGyNiK9cJcSsn
+ OW0FWmHALWrLc1/ouhUJJfzcsJuaCOa8ZBBTePBApyqzLTw2OYB2RwKBqIlG6jZlRKRU
+ om7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769033229; x=1769638029;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=54Czg5iL52ePXQoh62BByo3ZdrqoQXBt3xWFM9bWaqA=;
+ b=gP5A2079ussodJFEReTu3Z2Q1dursT9JwMTYlJvevUFQGE3EQ1VnuBAdeHrEzY0QT0
+ uP7KLdMUJHgEh37fLCOvZ/IPX61ZTbcUlLVd/2VSQvwPUgy1ooyDAKuYfBMZAUGd4T7l
+ XLPWak17k7dgUmt3AYr1h4Zk72iIiEmwwkyMOsi/tKCxOPUwz21w/uQ5kIOHo81U43tv
+ v7B/XyqbvJpt6tIm8XCUNt/oUtg2t0KDBpPZ8F44rpAtyYYuUcjoRq+znAFMRSBnoiAN
+ TcCVwRg8VdeA2YA895W+vvOfrs3hONbuQc2h5evOLlyxXPxMS12Iy1xsWNEiMCYaOi4A
+ Uacw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUoqQO6paOHn8e4I8jKRhLCzq5px84f/ZTfU6yvZTs8KblhdwNQXMdGUY9gVAeBbYh9hX2ZfW3iGcEH@nongnu.org
+X-Gm-Message-State: AOJu0Yz/vBw+z64SsU/uxbMX5WaeWnyT0BuZstEogvCE3Cb8RF39eXsY
+ 7w49dN+ZGN8hbAQhPdk17PZdf9Kg6B/xETUplkSnPZ3oQ52mU3+mRRCsN9r29WfcrMo=
+X-Gm-Gg: AZuq6aKClCL6W0rp1ZhSydFnhTuEc6MW5NefN41NR2V5aSRxsiBqSgF2zMXdeWWuGhO
+ +hRaPVhiNA6Fo0zHsPJ5/jHRBd9dQZgE1G3DJEEeM9uurjvAybwSC/+RT7pfzC3D1OOdo3i9kpP
+ kNEf7gkBWjzZZgKQcjrOnUL8AvcMLdDgA/3Rz83IJWixPN/YTx94p5qfrr1pF53Ms5dBTvyEZST
+ zPjWQ+bmzR6YmDptV5a17aW/3VKxedneZ/SA+WmAdKG8YW6bq9nc9w5HISOK0jKmBLPpTOKjEw1
+ Zg5r+6zp/nZEyJ9TWz79cPmQo5xrGQwT3Qf5OcbXZ8aMTMsXqqR8CfGu5nw41NHLoXTG2WKu/vC
+ dOWY0vxyMZmAmkrN+c+AIfARGtM8+TzYQCJfH+MbN7cewsahEhsdvXJSkzDMv3N70UOzd5jrfp6
+ +nj2/+uBShvq/V1TeQyT1skJmUnpEsm/YqJTD7Y2KAH9rJ9qBcmBNcGA==
+X-Received: by 2002:a05:600c:4748:b0:480:1c85:88bf with SMTP id
+ 5b1f17b1804b1-4801eb10a4amr267819785e9.27.1769033229343; 
+ Wed, 21 Jan 2026 14:07:09 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4359333b924sm12562224f8f.13.2026.01.21.14.07.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Jan 2026 14:07:08 -0800 (PST)
+Message-ID: <4f570256-d3dc-4d19-9a46-5120bb5e3831@linaro.org>
+Date: Wed, 21 Jan 2026 23:07:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: GLYPH Instruction Set Architecture
-To: qemu-devel <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 1/4] hw/intc: declare NVIC regions as little endian
 Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20260121105932.135676-1-alex.bennee@linaro.org>
+ <20260121105932.135676-2-alex.bennee@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260121105932.135676-2-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4801:7825:104:be76:4eff:fe10:52ae;
- envelope-from=michael@anarch128.org; helo=anarch128.org
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 21 Jan 2026 17:01:56 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,75 +101,26 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Michael Clark <michael@anarch128.org>
-From:  Michael Clark via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Folks,
+On 21/1/26 11:59, Alex Bennée wrote:
+> The NVIC should always be a little-endian device as big-endian
+> behaviour is a function of the current CPU configuration not the
+> system as a whole. Indeed the Armv8-M architecture reference manual
+> declares:
+> 
+>    All accesses to the Private Peripheral Bus (PPB) are always
+>    little-endian, which means that the PE assumes a little-endian
+>    arrangement of the PPB registers.
+> 
+> This should have no functional effect as the NVIC cannot be
+> instantiated on a BE system but will help the single binary efforts.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   hw/intc/armv7m_nvic.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-an update to the GLYPH ISA with specification of the vector registers:
-
-     latest: https://metaparadigm.com/~mclark/glyph-20260122.pdf
-     current: https://metaparadigm.com/~mclark/glyph.pdf
-     source: https://github.com/michaeljclark/glyph
-     source: https://github.com/michaeljclark/x86
-
-GLYPH has been designed from the perspective of an emulator developer.
-it has many features that make it ideal for emulation. it has twice as
-many registers as mainstream CPU architectures which means privileged
-state can be mapped to registers. it also has a software-defined MMU.
-
-GLYPH design
-
-GLYPH was designed after reflection on the combinatorial complexity of
-X86 instruction decode and the complexity of constant synthesis in
-RISC-V. the GLYPH ISA adopts an even simpler length decoding scheme than
-present-day RISC-V, at the expense of losing a bit of coding space in
-the 16-bit packet. the goal is that after quantitative evaluation, we
-can win back some density with more compact constant synthesis due to
-the "constant stream," which is analogous to push constants in Vulkan.
-
-GLYPH has 16/32/64-bit instruction packets. at present, only the 16-bit
-packet has been placed, and it has been placed based on analysis of
-common X86 prolog epilog codegen sequences seen in QEMU for X86-64,
-with special PC-relative loads and stores designed to fish pointers
-from .data sections and operations for register save/restore, pointer
-arithmetic, and loops. 16-bit instructions are presently limited to
-64-bit arithmetic except with sign-extended 32-bit constants. e.g.
-
-   MOVABS reg, imm64
-   MOV reg, imm32
-   ADD reg, imm32
-
-GLYPH evolution
-
-it is intended that the 64-bit instruction packet will contain Intel
-EVEX-like instructions for a 512-bit vector register file, plus the
-addition of an extended 4096-bit vector length (i32x128 and f32x128).
-there are no special mask registers because the scalar port is 128-bit.
-I intend to add 4-lane swizzle to common integer and floating-point
-vector operations: VFADD, VFSUB, VFMUL, VFDIV, VFMIN, VFMAX:
-
-     float swizzle bits = { x, y, z, w, 0, 1, -1, NaN }
-     int swizzle bits = { x, y, z, w, 0, 1, -1, 2 }
-
-this is so that we can reduce lane shuffle ops for common arithmetic.
-here is a 3D cross product, and it maps to current SPIR-V shader caps:
-
-   VFMUL   r4   r1.yzx_  r2.zxy_     ; (ay*bz, az*bx, ax*by)
-   VFMUL   r5   r1.zxy_  r2.yzx_     ; (az*by, ax*bz, ay*bx)
-   VFSUB   r3   r4       r5          ; cross product in r3
-
-GLYPH future
-
-one of the defining characteristics of the work is that we have tried,
-where possible, to use ARPA naming, and that distinguishes this work
-from many other instruction set architectures, not in any essential
-functional way, but primarily in comprehension. for example, instead
-of using topological and logical APIC IDs for IPI targets, we simply
-use "thread address" and "thread domain".
-
-Regards,
-Michael.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
