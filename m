@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D9ACC44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 11:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C5ECC44503
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 11:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viWLO-00032i-Ud; Wed, 21 Jan 2026 06:25:51 -0500
+	id 1viWLa-0003DJ-E4; Wed, 21 Jan 2026 06:26:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1viWLH-0002uW-Hf
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:44 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1viWLH-0002ty-9g
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:43 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1viWLE-0007q6-Tz
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:43 -0500
+ id 1viWLC-0007ow-LY
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:42 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 657D844288;
+ by tor.source.kernel.org (Postfix) with ESMTP id 90E2D60129;
  Wed, 21 Jan 2026 11:25:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC00C2BCB7;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066B9C4AF0D;
  Wed, 21 Jan 2026 11:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1768994725;
- bh=mJkwk0b1J+wBP6yJ8KSn8HC69LO+4cInAVMNTa0sJSQ=;
+ bh=Hu2Nuwxl05GDxOG3ScOICaIXDI/9+rYXUfgkR+kkZQ0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=fdXMd6iuwS9o37AXoWFTiXUjQWSRkwlXAE2HyMskisDVeGtXoNyj/O810l2v76OO6
- h++/G49w5zw43ZazQlqne6p/6aoG0Lf273D9SRsfHDtq0QY+/UmNuM5NAhBLUKbFtC
- Ru03AaEKbDQTNHgbX5MoR7E/64EZyrqdikYm1b8q5Sy8VSOhL7+WLUWbA1N6WUOSkY
- DnbKROB6eyxkHbQgSg7XYP3wq8uJLiuysHyBk4kP7X1EvKTNTeqXUUHtwYW2C6bfMF
- chlF625RRKh+3WrTXdXjRawhRZFLim/69mGPDoC/cFOZDa0ibTQDB8C+cT4lwathgY
- DWtZ5O0tTUWRg==
+ b=foVDdA/RGyJ26rskWO1o7EhNbpjRdT4l9uFLHC32ADEP4xwzjJ2cmedJ0otawVa7I
+ m+F6llD7hKcRahu/n6914X2lpS6YIj0cR+ZWtdQZzyohyCcRLOMmj62lhssOGunnPj
+ cRHhP5Wq2p7kc8jZrsdoxYI0GTtovmGY3qBbd3R6iGCdfbSsYuZ3nU2ZWLDD+ufRyL
+ DRyQOTb04ssAnIfZCv8kN799PRW58GcSDSoHphv+HglIS5j8Ici2mhKg6MxPWrI1ky
+ 86oXIOiu200WZMUwKcamuIwvO9J6rjZjX2GgVn0bILP3wH+NuJXsjkGB7APagmyabl
+ CHumBI6JwX9VQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.99)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1viWKx-00000003gK6-1MoO; Wed, 21 Jan 2026 12:25:23 +0100
+ id 1viWKx-00000003gJq-0vJd; Wed, 21 Jan 2026 12:25:23 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Michael S Tsirkin <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -45,18 +45,17 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Igor Mammedov <imammedo@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 13/13] scripts/ghes_inject: improve help message
-Date: Wed, 21 Jan 2026 12:25:21 +0100
-Message-ID: <5b4efacb92c898d5b345e6df1579756a79b586dc.1768993993.git.mchehab+huawei@kernel.org>
+Subject: [PATCH 09/13] scripts/ghes_inject: add a handler for PCIe bus error
+Date: Wed, 21 Jan 2026 12:25:17 +0100
+Message-ID: <c7db16aae93a98f3b0675e1010e59f6cefdaf1cd.1768993993.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <cover.1768993993.git.mchehab+huawei@kernel.org>
 References: <cover.1768993993.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -78,168 +77,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a one-liner help message for each type of error inject
-command, and use raw formatter to keep line breaks.
+Add a logic to do PCIe BUS error injection.
 
-While here, use a more uniform language.
+On Linux Kernel, despite CPER_SEC_PCI_X_BUS macro is defined for such
+event, ghes.c doesn't implement support for it yet:
 
-With that, "ghes_inject -h" will now show:
-
-  usage: ghes_inject.py [options]
-
-  Handles ACPI GHESv2 error injection via the QEMU QMP interface.
-
-  It uses UEFI BIOS APEI features to generate GHES records, which helps to
-  test CPER and GHES drivers on the guest OS and see how user‑space
-  applications on that guest handle such errors.
-
-  positional arguments:
-    {arm,pcie-bus,fuzzy-test,fuzzy,raw-error,raw}
-      arm                 Inject an ARM processor error CPER, compatible with
-                          UEFI 2.9A Errata.
-      pcie-bus            Inject a PCIe bus error CPER
-      fuzzy-test (fuzzy)  Inject fuzzy test CPER packets
-      raw-error (raw)     Inject CPER records from previously recorded ones.
-
-  options:
-    -h, --help            show this help message and exit
-
-  QEMU QMP socket options:
-    -H, --host HOST       host name (default: localhost)
-    -P, --port PORT       TCP port number (default: 4445)
-    -d, --debug           enable debug output (default: False)
+[16950.077494] {26}[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 1
+[16950.077866] {26}[Hardware Error]: event severity: recoverable
+[16950.078118] {26}[Hardware Error]:  Error 0, type: recoverable
+[16950.078444] {26}[Hardware Error]:   section type: unknown, c5753963-3b84-4095-bf78-eddad3f9c9dd
+[16950.078800] {26}[Hardware Error]:   section length: 0x48
+[16950.079069] {26}[Hardware Error]:   00000000: 00000000 00000000 00000000 00000000  ................
+[16950.079442] {26}[Hardware Error]:   00000010: 00000001 00000000 00000000 00000000  ................
+[16950.079811] {26}[Hardware Error]:   00000020: 00000000 00000000 00000000 00000000  ................
+[16950.080181] {26}[Hardware Error]:   00000030: 00000000 00000000 00000000 00000000  ................
+[16950.080538] {26}[Hardware Error]:   00000040: 00000000 00000000                    ........
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- scripts/arm_processor_error.py |  6 ++++--
- scripts/fuzzy_error.py         |  4 +++-
- scripts/ghes_inject.py         | 18 +++++++++---------
- scripts/pcie_bus_error.py      |  4 +++-
- scripts/raw_error.py           |  6 +++---
- 5 files changed, 22 insertions(+), 16 deletions(-)
+ MAINTAINERS               |   1 +
+ scripts/ghes_inject.py    |   2 +
+ scripts/pcie_bus_error.py | 146 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 149 insertions(+)
+ create mode 100644 scripts/pcie_bus_error.py
 
-diff --git a/scripts/arm_processor_error.py b/scripts/arm_processor_error.py
-index d9845adb0c0a..597382031ab8 100644
---- a/scripts/arm_processor_error.py
-+++ b/scripts/arm_processor_error.py
-@@ -122,7 +122,7 @@ class ArmProcessorEinj:
-     """
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a970c47dd089..48067a618523 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2228,6 +2228,7 @@ F: qapi/acpi-hest.json
+ F: scripts/ghes_decode.py
+ F: scripts/ghes_inject.py
+ F: scripts/arm_processor_error.py
++F: scripts/pcie_bus_error.py
+ F: scripts/qmp_helper.py
  
-     DESC = """
--    Generates an ARM processor error CPER, compatible with
-+    Inject an ARM processor error CPER, compatible with
-     UEFI 2.9A Errata.
-     """
- 
-@@ -169,7 +169,9 @@ def __init__(self, subparsers):
- 
-         self.data = bytearray()
- 
--        parser = subparsers.add_parser("arm", description=self.DESC)
-+        parser = subparsers.add_parser("arm",
-+                                       help=self.DESC,
-+                                       description=self.DESC)
- 
-         arm_valid_bits = ",".join(self.arm_valid_bits.keys())
-         flags = ",".join(self.pei_flags.keys())
-diff --git a/scripts/fuzzy_error.py b/scripts/fuzzy_error.py
-index 9f80abb72319..3ddb90f743a1 100644
---- a/scripts/fuzzy_error.py
-+++ b/scripts/fuzzy_error.py
-@@ -121,8 +121,10 @@ def __init__(self, subparsers):
-             },
-         }
- 
-+        DESC = "Inject fuzzy test CPER packets"
-+
-         parser = subparsers.add_parser("fuzzy-test", aliases=['fuzzy'],
--                                       description="Inject a fuzzy test CPER",
-+                                       help=DESC, description=DESC,
-                                        formatter_class=argparse.RawTextHelpFormatter)
-         g_fuzzy = parser.add_argument_group("Fuzz testing error inject")
- 
+ ppc4xx
 diff --git a/scripts/ghes_inject.py b/scripts/ghes_inject.py
-index 4028fdb15582..488d10ffcafd 100755
+index 6ac917d0b5db..29a6a57508cd 100755
 --- a/scripts/ghes_inject.py
 +++ b/scripts/ghes_inject.py
-@@ -17,28 +17,28 @@
- from raw_error import RawError
+@@ -12,6 +12,7 @@
+ import sys
+ 
+ from arm_processor_error import ArmProcessorEinj
++from pcie_bus_error import PcieBusError
  
  EINJ_DESC = """
--Handle ACPI GHESv2 error injection logic QEMU QMP interface.
-+Handles ACPI GHESv2 error injection via the QEMU QMP interface.
- 
--It allows using UEFI BIOS EINJ features to generate GHES records.
--
--It helps testing CPER and GHES drivers at the guest OS and how
--userspace applications at the guest handle them.
-+It uses UEFI BIOS APEI features to generate GHES records, which helps to
-+test CPER and GHES drivers on the guest OS and see how user‑space
-+applications on that guest handle such errors.
- """
- 
- def main():
-     """Main program"""
- 
-     # Main parser - handle generic args like QEMU QMP TCP socket options
--    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-                                      usage="%(prog)s [options]",
-                                      description=EINJ_DESC)
- 
-     g_options = parser.add_argument_group("QEMU QMP socket options")
-     g_options.add_argument("-H", "--host", default="localhost", type=str,
--                           help="host name")
-+                           help="host name (default: %(default)s)")
-     g_options.add_argument("-P", "--port", default=4445, type=int,
--                           help="TCP port number")
--    g_options.add_argument('-d', '--debug', action='store_true')
-+                           help="TCP port number (default: %(default)s)")
-+    g_options.add_argument('-d', '--debug', action='store_true',
-+                           help="enable debug output (default: %(default)s)")
- 
+ Handle ACPI GHESv2 error injection logic QEMU QMP interface.
+@@ -40,6 +41,7 @@ def main():
      subparsers = parser.add_subparsers()
  
+     ArmProcessorEinj(subparsers)
++    PcieBusError(subparsers)
+ 
+     args = parser.parse_args()
+     if "func" in args:
 diff --git a/scripts/pcie_bus_error.py b/scripts/pcie_bus_error.py
-index e8285b5dcc84..843ec09c7572 100644
---- a/scripts/pcie_bus_error.py
+new file mode 100644
+index 000000000000..e8285b5dcc84
+--- /dev/null
 +++ b/scripts/pcie_bus_error.py
-@@ -35,8 +35,10 @@ def __init__(self, subparsers):
- 
-         self.data = bytearray()
- 
-+        DESC = "Inject a PCIe bus error CPER"
+@@ -0,0 +1,146 @@
++#!/usr/bin/env python3
++#
++# pylint: disable=C0114,R0903
++# SPDX-License-Identifier: GPL-2.0
++#
++# Copyright (C) 2024 Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 +
-         parser = subparsers.add_parser("pcie-bus",
--                                       description="Generate PCIe bus error CPER")
-+                                       help=DESC, description=DESC)
-         g_pcie = parser.add_argument_group("PCIe bus error")
- 
-         valid_bits = ",".join(self.valid_bits.keys())
-diff --git a/scripts/raw_error.py b/scripts/raw_error.py
-index f5e77bdfcead..1e9eb1bcf15b 100644
---- a/scripts/raw_error.py
-+++ b/scripts/raw_error.py
-@@ -21,8 +21,8 @@ class RawError:
- 
-     SCRIPT_NAME = sys.argv[0]
- 
--    HELP=f"""
--    Inject a CPER record from a previously recorded one.
-+    HELP="Inject CPER records from previously recorded ones."
-+    DESC=HELP + f"""
- 
-     One or more CPER records can be recorded. The records to be
-     injected are read from an specified file or from stdin and should
-@@ -58,7 +58,7 @@ def __init__(self, subparsers):
-         self.size = 0
- 
-         parser = subparsers.add_parser("raw-error",  aliases=['raw'],
--                                       description=self.HELP,
-+                                       help=self.HELP, description=self.DESC,
-                                        formatter_class=argparse.RawTextHelpFormatter)
- 
-         parser.add_argument("-f", "--file",
++from qmp_helper import qmp, util, cper_guid
++
++class PcieBusError:
++    """
++    Implements PCI Express bus error injection via GHES
++    """
++
++    def __init__(self, subparsers):
++        """Initialize the error injection class and add subparser"""
++
++        # Valid values
++        self.valid_bits = {
++            "status": util.bit(0),
++            "type": util.bit(1),
++            "bus-id": util.bit(2),
++            "bus-addr": util.bit(3),
++            "bus-data": util.bit(4),
++            "command": util.bit(5),
++            "requestor-id": util.bit(6),
++            "completer-id": util.bit(7),
++            "target-id": util.bit(8),
++        }
++
++        self.bus_command_bits = {
++            "pci": 0,               # Bit 56 is zero
++            "pci-x": util.bit(56)
++        }
++
++        self.data = bytearray()
++
++        parser = subparsers.add_parser("pcie-bus",
++                                       description="Generate PCIe bus error CPER")
++        g_pcie = parser.add_argument_group("PCIe bus error")
++
++        valid_bits = ",".join(self.valid_bits.keys())
++        bus_command_bits = ",".join(self.bus_command_bits.keys())
++
++        g_pcie.add_argument("-v", "--valid",
++                            help=f"Valid bits: {valid_bits}")
++        g_pcie.add_argument("-s", "--error-status",
++                            type=lambda x: int(x, 0),
++                            help="Error Status")
++        g_pcie.add_argument("-t", "--error-type",
++                            type=lambda x: int(x, 0),
++                            help="Error type")
++        g_pcie.add_argument("-b", "--bus-number",
++                            type=lambda x: int(x, 0),
++                            help="Bus number")
++        g_pcie.add_argument("-S", "--segment-number",
++                            type=lambda x: int(x, 0),
++                            help="Segment number")
++        g_pcie.add_argument("-a", "--bus-address",
++                            type=lambda x: int(x, 0),
++                            help="Bus address")
++        g_pcie.add_argument("-d", "--bus-data",
++                            type=lambda x: int(x, 0),
++                            help="Bus data")
++        g_pcie.add_argument("-c", "--bus-command",
++                            help=f"bus-command: {bus_command_bits}")
++        g_pcie.add_argument("-r", "--bus-requestor",
++                            type=lambda x: int(x, 0),
++                            help="Bus requestor ID")
++        g_pcie.add_argument("-C", "--bus-completer",
++                            type=lambda x: int(x, 0),
++                            help="Bus completer ID")
++        g_pcie.add_argument("-i", "--target-id",
++                            type=lambda x: int(x, 0),
++                            help="Target ID")
++
++        parser.set_defaults(func=self.send_cper)
++
++    def send_cper(self, args):
++        """Parse subcommand arguments and send a CPER via QMP"""
++
++        qmp_cmd = qmp(args.host, args.port, args.debug)
++
++        cper = {}
++        arg = vars(args)
++
++        # Handle global parameters
++        if args.valid:
++            valid_init = False
++            cper["valid"] = util.get_choice(name="valid",
++                                            value=args.valid,
++                                            choices=self.valid_bits)
++        else:
++            cper["valid"] = 0
++            valid_init = True
++
++        if args.bus_command:
++            cper["bus-command"] = util.get_choice(name="bus-command",
++                                                    value=args.bus_command,
++                                                    choices=self.bus_command_bits)
++        if valid_init:
++            if args.error_status:
++                cper["valid"] |= self.valid_bits["status"]
++
++            if args.error_type:
++                cper["valid"] |= self.valid_bits["type"]
++
++            if args.bus_number and args.bus_segment:
++                cper["valid"] |= self.valid_bits["bus-id"]
++
++            if args.bus_address:
++                cper["valid"] |= self.valid_bits["bus-address"]
++
++            if args.bus_data:
++                cper["valid"] |= self.valid_bits["bus-data"]
++
++            if args.bus_requestor:
++                cper["valid"] |= self.valid_bits["requestor-id"]
++
++            if args.bus_completer:
++                cper["valid"] |= self.valid_bits["completer-id"]
++
++            if args.target_id:
++                cper["valid"] |= self.valid_bits["target-id"]
++
++        util.data_add(self.data, cper["valid"], 8)
++        util.data_add(self.data, arg.get("error-status", 0), 8)
++        util.data_add(self.data, arg.get("error-type", util.bit(0)), 2)
++
++        # Bus ID
++        util.data_add(self.data, arg.get("bus-number", 0), 1)
++        util.data_add(self.data, arg.get("segment-number", 0), 1)
++
++        # Reserved
++        util.data_add(self.data, 0, 4)
++
++        util.data_add(self.data, arg.get("bus-address", 0), 8)
++        util.data_add(self.data, arg.get("bus-data", 0), 8)
++
++        util.data_add(self.data, cper.get("bus-command", 0), 8)
++
++        util.data_add(self.data, arg.get("bus-requestor", 0), 8)
++        util.data_add(self.data, arg.get("bus-completer", 0), 8)
++        util.data_add(self.data, arg.get("target-id", 0), 8)
++
++        return qmp_cmd.send_cper(cper_guid.CPER_PCI_BUS, self.data)
 -- 
 2.52.0
 
