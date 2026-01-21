@@ -4,77 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1481C44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 19:20:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B43C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 19:28:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vidjR-00021A-CB; Wed, 21 Jan 2026 14:19:12 -0500
+	id 1vidrU-0000NV-P9; Wed, 21 Jan 2026 14:27:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vidjO-0001y8-4d
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 14:19:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vidrS-0000Kr-Rw
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 14:27:26 -0500
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vidjJ-00087l-Qf
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 14:19:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769023140;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XMJY5iC1duFjkV2vd+WTebKmxFCuajpUpMsosWqW08Y=;
- b=gGrCyrVvJC3wFkyGUoP9VMpv5VKFvQBTAW/7tYMwVtEYb6z2yhMtHYMVdfxpuyVKILwzsz
- bIYc/9E+PqR+UnRPeWd3L8riqsORWVhEV7NPeHME79Ey1FdxgiP8NlRzBb25XlIBp9Bxpx
- JdZDzeuuAmbiAB96mqq9VnZn4F32pa8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-2-CTXr3l4uM7uJJtJDTIKhZw-1; Wed,
- 21 Jan 2026 14:18:57 -0500
-X-MC-Unique: CTXr3l4uM7uJJtJDTIKhZw-1
-X-Mimecast-MFC-AGG-ID: CTXr3l4uM7uJJtJDTIKhZw_1769023136
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 266C8195605F; Wed, 21 Jan 2026 19:18:56 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.50])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1646719560A2; Wed, 21 Jan 2026 19:18:54 +0000 (UTC)
-Date: Wed, 21 Jan 2026 14:18:53 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hreitz@redhat.com,
- kwolf@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
- qemu-stable@nongnu.org, eblake@redhat.com
-Subject: Re: [PATCH] block/mirror: check range when setting zero bitmap for
- sync write
-Message-ID: <20260121191853.GB1009471@fedora>
-References: <20260112152544.261923-1-f.ebner@proxmox.com>
- <20260119201059.GA869317@fedora>
- <3e89208c-b0b9-44a8-beed-e122daabaf54@proxmox.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vidrP-0001lC-Q9
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 14:27:26 -0500
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id DFBFF80875;
+ Wed, 21 Jan 2026 22:27:19 +0300 (MSK)
+Received: from vsementsov-lin (unknown [2a02:6bf:8080:d28::1:34])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id HRhSvR2A7Os0-fvxFCzKV; Wed, 21 Jan 2026 22:27:19 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1769023639;
+ bh=LItUnuDeraR3gm/ZbDHan/5FGa6RPItYvRO+HzXG0+g=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=tKGifOW0k9Ec8ByfM0CpkmGsanPDBH9kqlmusk8l88DnysI4z5oVJD4gdDhXCtse9
+ l4zg6vVaQn+F7QlqXstt5xdDdZ0BhzckWrSvk32Qclh3RQjA6OzCIqrU3fhozw5gA+
+ krkYUqpGy/hoYVnoGV69tKH1Kt+Hd/NCRWeJyXq8=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: jasowang@redhat.com
+Cc: qemu-devel@nongnu.org,
+	vsementsov@yandex-team.ru
+Subject: [PATCH 3/3] net/tap: net_init_tap(): refactor parameter checking
+Date: Wed, 21 Jan 2026 22:27:13 +0300
+Message-ID: <20260121192713.133470-4-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260121192713.133470-1-vsementsov@yandex-team.ru>
+References: <20260121192713.133470-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="zoQPYqj3rZx2Wgq6"
-Content-Disposition: inline
-In-Reply-To: <3e89208c-b0b9-44a8-beed-e122daabaf54@proxmox.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,117 +74,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Unite duplicated checks of different code paths.
 
---zoQPYqj3rZx2Wgq6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ net/tap.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
-On Tue, Jan 20, 2026 at 09:57:42AM +0100, Fiona Ebner wrote:
-> Am 19.01.26 um 9:10 PM schrieb Stefan Hajnoczi:
-> > On Mon, Jan 12, 2026 at 04:23:51PM +0100, Fiona Ebner wrote:
-> >> Some Proxmox users reported an occasional assertion failure [0][1] in
-> >> busy VMs when using drive mirror with active mode. In particular, the
-> >> failure may occur for zero writes shorter than the job granularity:
-> >>
-> >>> #0  0x00007b421154b507 in abort ()
-> >>> #1  0x00007b421154b420 in ?? ()
-> >>> #2  0x0000641c582e061f in bitmap_set (map=3D0x7b4204014e00, start=3D1=
-4, nr=3D-1)
-> >>> #3  0x0000641c58062824 in do_sync_target_write (job=3D0x641c7e73d1e0,
-> >>>       method=3DMIRROR_METHOD_ZERO, offset=3D852480, bytes=3D4096, qio=
-v=3D0x0, flags=3D0)
-> >>> #4  0x0000641c58062250 in bdrv_mirror_top_do_write (bs=3D0x641c7e62e1=
-f0,
-> >>         method=3DMIRROR_METHOD_ZERO, copy_to_target=3Dtrue, offset=3D8=
-52480,
-> >>         bytes=3D4096, qiov=3D0x0, flags=3D0)
-> >>> #5  0x0000641c58061f31 in bdrv_mirror_top_pwrite_zeroes (bs=3D0x641c7=
-e62e1f0,
-> >>         offset=3D852480, bytes=3D4096, flags=3D0)
-> >>
-> >> The range for the dirty bitmap described by dirty_bitmap_offset and
-> >> dirty_bitmap_end is narrower than the original range and in fact,
-> >> dirty_bitmap_end might be smaller than dirty_bitmap_offset. There
-> >> already is a check for 'dirty_bitmap_offset < dirty_bitmap_end' before
-> >> resetting the dirty bitmap. Add such a check for setting the zero
-> >> bitmap too, which uses the same narrower range.
-> >>
-> >> [0]: https://forum.proxmox.com/threads/177981/
-> >> [1]: https://bugzilla.proxmox.com/show_bug.cgi?id=3D7222
-> >>
-> >> Cc: qemu-stable@nongnu.org
-> >> Fixes: 7e277545b9 ("mirror: Skip writing zeroes when target is already=
- zero")
-> >> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> >> ---
-> >>  block/mirror.c | 9 ++++++---
-> >>  1 file changed, 6 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/block/mirror.c b/block/mirror.c
-> >> index b344182c74..bc982cb99a 100644
-> >> --- a/block/mirror.c
-> >> +++ b/block/mirror.c
-> >> @@ -1514,9 +1514,12 @@ do_sync_target_write(MirrorBlockJob *job, Mirro=
-rMethod method,
-> >>          assert(!qiov);
-> >>          ret =3D blk_co_pwrite_zeroes(job->target, offset, bytes, flag=
-s);
-> >>          if (job->zero_bitmap && ret >=3D 0) {
-> >> -            bitmap_set(job->zero_bitmap, dirty_bitmap_offset / job->g=
-ranularity,
-> >> -                       (dirty_bitmap_end - dirty_bitmap_offset) /
-> >> -                       job->granularity);
-> >> +            if (dirty_bitmap_offset < dirty_bitmap_end) {
-> >> +                bitmap_set(job->zero_bitmap,
-> >> +                           dirty_bitmap_offset / job->granularity,
-> >> +                           (dirty_bitmap_end - dirty_bitmap_offset) /
-> >> +                           job->granularity);
-> >> +            }
-> >=20
-> > Why does this case clause use dirty_bitmap_offset and dirty_bitmap_end
-> > instead of zero_bitmap_offset and zero_bitmap_end like the other
-> > zero_bitmap operations in this switch statement?
-> >=20
-> >    if (job->zero_bitmap && ret >=3D 0) {
-> > -      bitmap_set(job->zero_bitmap, dirty_bitmap_offset / job->granular=
-ity,
-> > -                 (dirty_bitmap_end - dirty_bitmap_offset) /
-> > -                 job->granularity);
-> > +      bitmap_set(job->zero_bitmap, zero_bitmap_offset,
-> > +                 zero_bitmap_end - zero_bitmap_offset);
-> >    }
-> >=20
-> > I'm probably missing something, but it's not obvious to me :).
->=20
-> Sorry, I could've mentioned this in the commit message. There is a
-> comment explaining it further up in the function:
->=20
-> >     /*
-> >      * Tails are either clean or shrunk, so for dirty bitmap resetting
-> >      * we safely align the range narrower.  But for zero bitmap, round
-> >      * range wider for checking or clearing, and narrower for setting.
-> >      */
-
-Thanks!
-
-Stefan
-
---zoQPYqj3rZx2Wgq6
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmlxJp0ACgkQnKSrs4Gr
-c8j5MwgAsysV4s4EwnQzf/NEt1PT8Kh6aIEee1BrcgI5Lh+pt4UF1ggsAmnlG3Cg
-oWET/ZkmZ9Kj2jAdEDpJXHwdBXmf5KPRPN1+PHJWXZkhYoabqFmbFJfrFFjj61lq
-rOmXMflluNWFohS/6MjP2g11Nsrqk5RmpjCSKxFkO08fbRhih49+21QY0nbzp3WS
-tr6XSPWy4s3sxBCHowkKEBXX8hhoc1ar9NdjCbsO+UJR+e2eCxF55FviHAVreqKs
-6rZXUztx92PTMQTn2NSizIMqFXkxgfjB7c6IF1KSv+QDMXd9kox8Pu4nFZuB2w5B
-SkI8nnmsucTwAu3IkhF37yS6tBCBIw==
-=Dr5T
------END PGP SIGNATURE-----
-
---zoQPYqj3rZx2Wgq6--
+diff --git a/net/tap.c b/net/tap.c
+index 7a108f45e5..14f45bbb31 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -842,12 +842,17 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         return -1;
+     }
+ 
++    if ((tap->fd || tap->fds || tap->helper) &&
++        (tap->ifname || tap->script || tap->downscript ||
++         tap->has_vnet_hdr || tap->has_queues)) {
++        error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
++                   "queues=, are invalid with fd=/fds=/helper=");
++        return -1;
++    }
++
+     if (tap->fd) {
+-        if (tap->ifname || tap->script || tap->downscript ||
+-            tap->has_vnet_hdr || tap->helper || tap->has_queues ||
+-            tap->fds || tap->vhostfds) {
+-            error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
+-                       "helper=, queues=, fds=, and vhostfds= "
++        if (tap->helper || tap->fds || tap->vhostfds) {
++            error_setg(errp, "helper=, fds=, and vhostfds= "
+                        "are invalid with fd=");
+             return -1;
+         }
+@@ -879,12 +884,8 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         char **vhost_fds;
+         int nfds = 0, nvhosts = 0;
+ 
+-        if (tap->ifname || tap->script || tap->downscript ||
+-            tap->has_vnet_hdr || tap->helper || tap->has_queues ||
+-            tap->vhostfd) {
+-            error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
+-                       "helper=, queues=, and vhostfd= "
+-                       "are invalid with fds=");
++        if (tap->helper || tap->vhostfd) {
++            error_setg(errp, "helper= and vhostfd= are invalid with fds=");
+             return -1;
+         }
+ 
+@@ -947,10 +948,8 @@ free_fail:
+         g_free(vhost_fds);
+         return ret;
+     } else if (tap->helper) {
+-        if (tap->ifname || tap->script || tap->downscript ||
+-            tap->has_vnet_hdr || tap->has_queues || tap->vhostfds) {
+-            error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
+-                       "queues=, and vhostfds= are invalid with helper=");
++        if (tap->vhostfds) {
++            error_setg(errp, "vhostfds= is invalid with helper=");
+             return -1;
+         }
+ 
+-- 
+2.52.0
 
 
