@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9248DC44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 17:09:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DE1AC44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 17:13:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vibh8-0004X1-M2; Wed, 21 Jan 2026 12:08:38 -0500
+	id 1viblA-00081i-8W; Wed, 21 Jan 2026 12:12:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vibh7-0004Uy-7p
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 12:08:37 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1vibl6-00080n-Dx
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 12:12:44 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vibh5-0001ck-O8
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 12:08:36 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4801d7c72a5so712555e9.0
- for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 09:08:35 -0800 (PST)
+ id 1vibl4-0002IG-Uv
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 12:12:44 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-4359a316d89so48778f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 09:12:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769015313; x=1769620113; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769015561; x=1769620361; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hvoDqKMXdLPpXk2aD5zu/X3oBZskdZMH8hhgfIfhqwk=;
- b=ga43g42GEvG0UknPNlDzKK21pPWFxwYpkNR9mzarLiBj57j8jeNtp2yQr6ZKV3GoiF
- 4cfW7LrWiZqYkbqtNB3MBIBSlZAOVt/ESOLLL0bVWvYdn7JnOVxuC8/x+PH6uGeYrcfJ
- a0ddJtzHOQ/P5wm0M9AMEGYKb274t4Hu7OxMm2mFiBCqRfQQRq8hugD/4Tztxzm0fvN7
- WVcP7HdnTMWzMEasc/jTT4wYxYe2kvN/kkGf7PxTUD3P7Hh9eMn067dNqxZ7eJe9SJul
- 658E5ukYjCZbk/oUWmqEqdar3CFfXB9E5pCM5Vo/yJ/P9bvPeNF9iDCKnpNnw2q5wUz4
- GamA==
+ bh=x8+/TPhvJm+ZDETO1CkLHZFOTl+bHApch7y/qo2kvD4=;
+ b=V+YiBT9o63QqYKxqMyS5WhtJ+XnFec8bmLI1Hzd9UA0BswZDuhsU7c0yaS/EMxd7VJ
+ h2pyHEK8+x2i0Qmp6VEqI4X7o504GJHntUIuiTzyCzGKpL0MLMvx4mB7DAW3fG1jF1No
+ xQP1zqTgB7p6fvxOcuuy6AAUbjBhPxEt+7gTDuvw+9aMRZaXdhBGxnUZmUWRWJS28BAI
+ YqkEllEi3CovlvlC0WJMNc/hrRoOjCtt38pjbYNrWEWA2D1pVUo1MRCvP5lt7twqE5wm
+ wliTxAFxv1+xpfiPz5AN1xaZcYZfyIaQIDzfvmz80+3Q3/zN9Fg4kQ/wjgWoQvnUun98
+ AtBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769015313; x=1769620113;
+ d=1e100.net; s=20230601; t=1769015561; x=1769620361;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hvoDqKMXdLPpXk2aD5zu/X3oBZskdZMH8hhgfIfhqwk=;
- b=BdNV9cSA5uQgyyEO+cPrNQk48wqHFTkAf1jOGXQZcAREK/hYX3WOX62KFtsoLHXRy3
- LjuvjtqMQG16UeNjsAYLTi1pSFo0B9UdAo99jkpCbpIKlaJIw7chfTy5awv+ojEZCmbb
- mF3Z3mWrgGA0BxEeCEBMZxt8S+kq5MMtGZfWFJhHOimOkIgGM9Z9TMk3qbaLqWYMVm0z
- D2MKtCmfdzuqNewQPNZzPlsLkFbzeyan18FJBqHeyzU0wN/EZZ6FSW6SZGcBo9HNuG1l
- WwBcbeO4BYB3sKL18UFkgELg+2fb1afCb+EH8dWJOD8BLcaVfY1UvpN3z1mUoeo/FEoN
- QaHQ==
-X-Gm-Message-State: AOJu0Yz43oFlVXMSDfDYlpJqC1xoAK1Az0L9w9g38Clgf19c7sRIHBDV
- gG1LsyA9GKkR1Kmdv5cqjr2Y79zWk0gh2GwtF4hpgvX63/x6LbbKjEq5hI3S5cTWkPweEqE4iqT
- tHaQS0iY=
-X-Gm-Gg: AZuq6aLmYokxj8z/DG62pW2JGCljEGvQ7NAHnY1ispOLO8j3HN3Yyz6BsT8CfU+4rI8
- DKaA3C+GMbuXoiFpDvkXldarTA+IBCPoMDG7cjYS0gnV2s49YJkP27StuAd+1gT2tXXmTuAVamN
- 3Fsy0NXoJ5p2t2PoJ2sM7jdpjYndAcOXSKhLvwmSau1RbsTg9hSQ2fD/5klGZMqKpbN5OTEg/VS
- 3oK7vMDDSYzT8YGa5MbrKuEID9ELMcimmTa73myKO9QVqrAAxgrKlYAGuaZYXAhC0LfV7QrJ0Um
- 5quxJx0IRV39bfkWnc3c12G3mdgMPIf4n2o3XvLiZLtFTnufjBlVQS+gDS5HxjNk2FeCjOcGSjp
- zafcq2g3jW5Qv/jTkfKuLnPlz8UAwM78FpXi/GG/TKpB97cCeS/VxlvISGAiLDvc2RguABJ2wpj
- 6hyvC+wtGJ+gr/
-X-Received: by 2002:a05:600c:8b82:b0:471:114e:5894 with SMTP id
- 5b1f17b1804b1-4801eb0e5demr258730765e9.25.1769015313070; 
- Wed, 21 Jan 2026 09:08:33 -0800 (PST)
+ bh=x8+/TPhvJm+ZDETO1CkLHZFOTl+bHApch7y/qo2kvD4=;
+ b=o4tu6xWw1k9Zb1SowmLVshrDxsCszjGwIFFI0P1SBTUxzO2O5ZNTpgIbRU2bAyACLL
+ 0+V6KKCwLfkwQZ1WXW8ovSP09XVnO1XoRI7Ulivf1k7X8esnFeWgR7gak75srsMRsz4t
+ Hhssubtft6lan3Lp6kF9Y38GFJtb1hmAuxZlygptRnb6Z0wZ2zCLOg87tIGbEbKR277w
+ wCzxlzhsL2FoIBnzLCayFqGlFt6nKQBnhWtUWSV/lWO3JQwKTQYbKoun0s0mRrUSveaU
+ p2B5HS3L+iQbL8QNzGQUfEMyXEGywE2xq2w/ASvBAESVfQek0hJ5xKV8uuthrKQSDQtb
+ cJWA==
+X-Gm-Message-State: AOJu0YznL3JbDhXq319Ns49mGL0QlrpxWmFyLuHOuJT/4gO3RQNmAlAS
+ v1RVbiAJaLuEShOLfVE2K18bkgL5216d/v+SHZVzT+CO7490Kg2jxgWYPBmfFTrrh6k=
+X-Gm-Gg: AZuq6aJ7Xa+Hsa5L2Y9lAk/jWunWPNoxEdhUXAjWPDlQ1z6NelU6yaftGIMthEZ6bIo
+ L1cSHfKsqZJZmvFutoilbtSSJvmKKv06d0laLn+CGSb1mjBk99KfuRmiOmoLX4Os5Z5cpI/hXTV
+ O9tJFx+dmsovpIGInIWyVcrlxPAiG/u7K8hNAvIGyUP0M656TsCEww2BFVNxb7dFUD65Qxt79E/
+ crcJ1m15XqD68jFuRHnNOT6X7x9nrHS8BtY0F6qWEAqO53cvSCjAUjbA91uvW9LvZZtSCTd0Y34
+ x122QZ52vxMEe/mteIgY8CEJsOcq8YZ1SMNV6oUUfhGdq+DDDakcZTWaza+suH5zcv+qU5HG96Z
+ 8AS6FpNlyuXbC0fNwodd9fvG7slUHHB/8CBi0LnDzDiAcWsIKESa/iheU6zz8SKAKXQrhgNzTvU
+ FhjGca+bXQrdnJ
+X-Received: by 2002:a05:6000:230d:b0:432:e00b:8687 with SMTP id
+ ffacd0b85a97d-4358ff5683amr10493369f8f.31.1769015561037; 
+ Wed, 21 Jan 2026 09:12:41 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48046fba46dsm3224485e9.0.2026.01.21.09.08.32
+ ffacd0b85a97d-435a575c396sm969221f8f.9.2026.01.21.09.12.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Jan 2026 09:08:32 -0800 (PST)
+ Wed, 21 Jan 2026 09:12:40 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7D4745FDE8;
- Wed, 21 Jan 2026 17:08:31 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 3AE085FDE8;
+ Wed, 21 Jan 2026 17:12:39 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Mads Ynddal <mads@ynddal.dk>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] MAINTAINERS: remove myself as reviewer
-In-Reply-To: <20260121112725.40060-1-mads@ynddal.dk> (Mads Ynddal's message of
- "Wed, 21 Jan 2026 12:27:25 +0100")
-References: <20260121112725.40060-1-mads@ynddal.dk>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Phil =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Markus
+ Armbruster <armbru@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Stefan
+ Hajnoczi <stefanha@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  John Snow <jsnow@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH] MAINTAINERS: add maintainer for docs/
+In-Reply-To: <20260115203529.2713193-1-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Thu, 15 Jan 2026 12:35:29 -0800")
+References: <20260115203529.2713193-1-pierrick.bouvier@linaro.org>
 User-Agent: mu4e 1.12.15; emacs 30.1
-Date: Wed, 21 Jan 2026 17:08:31 +0000
-Message-ID: <87zf66opv4.fsf@draig.linaro.org>
+Date: Wed, 21 Jan 2026 17:12:39 +0000
+Message-ID: <87tsweopo8.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,11 +109,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mads Ynddal <mads@ynddal.dk> writes:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-> My work has changed focus, and I do not have the time to continue.
+> I would like to help maintaining qemu documentation and I've been
+> invited by Alex to apply as maintainer.
 >
-> Signed-off-by: Mads Ynddal <mads@ynddal.dk>
+> Files in docs/ that are already maintained will continue to be under
+> their respective maintainer. The goal here is to have someone that can
+> help on all other files that don't have an official maintainer.
 
 Queued to for-11.0/maintainers-update, thanks.
 
