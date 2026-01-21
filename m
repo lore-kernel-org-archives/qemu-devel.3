@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA4CD262AF
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 01:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6355D262AD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 01:23:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viMoO-0002WG-0I; Tue, 20 Jan 2026 20:15:10 -0500
+	id 1viMvb-0006ei-Bz; Tue, 20 Jan 2026 20:22:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1viMo2-0002QN-SD
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 20:14:46 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1viMvY-0006do-E9
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 20:22:32 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1viMnz-0006sR-DE
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 20:14:46 -0500
+ id 1viMvV-0007vW-9i
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 20:22:31 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EF80B596ABF;
- Wed, 21 Jan 2026 02:14:40 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 43449596AC1;
+ Wed, 21 Jan 2026 02:22:27 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id wVXNa3RLTC8g; Wed, 21 Jan 2026 02:14:38 +0100 (CET)
+ id aboNtQBbyTDA; Wed, 21 Jan 2026 02:22:25 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id EFE92596ABD; Wed, 21 Jan 2026 02:14:38 +0100 (CET)
+ id 4527C596ABD; Wed, 21 Jan 2026 02:22:25 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EE69F5969E4;
- Wed, 21 Jan 2026 02:14:38 +0100 (CET)
-Date: Wed, 21 Jan 2026 02:14:38 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 438995969E4;
+ Wed, 21 Jan 2026 02:22:25 +0100 (CET)
+Date: Wed, 21 Jan 2026 02:22:25 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Chad Jablonski <chad@jablonski.xyz>
 cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 10/12] ati-vga: Implement scissor rectangle clipping
- for 2D operations
-In-Reply-To: <20260116024258.1487173-11-chad@jablonski.xyz>
-Message-ID: <9fd1e0dd-a8e1-6548-d62b-cac163e621ce@eik.bme.hu>
+Subject: Re: [PATCH v5 11/12] ati-vga: Implement HOST_DATA register writes
+In-Reply-To: <20260116024258.1487173-12-chad@jablonski.xyz>
+Message-ID: <3d1cf407-dd57-edff-25fe-1dd56c1b5052@eik.bme.hu>
 References: <20260116024258.1487173-1-chad@jablonski.xyz>
- <20260116024258.1487173-11-chad@jablonski.xyz>
+ <20260116024258.1487173-12-chad@jablonski.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,55 +67,45 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 15 Jan 2026, Chad Jablonski wrote:
-> Use scissor registers to clip blit operations. This is required
-> for text rendering in X using the r128 driver. Without it overly-wide
-> glyphs are drawn and create all sorts of chaos.
+> Writing to any of the HOST_DATA0-7 registers pushes the written data
+> into a 128-bit accumulator. When the accumulator is full a flush is
+> triggered to copy it to the framebuffer. A final write to HOST_DATA_LAST
+> will also initiate a flush. The flush itself is left for the next patch.
 >
-> The visible destination rectangle (vis_dst) is the intersection of the
-> scissor rectangle and the destination rectangle (dst.rect).
->
-> The src also needs to be offset if clipped on the top and/or
-> left sides to ensure that src data is read correctly and appears
-> clipped when drawn rather than shifted.
+> Unaligned HOST_DATA* writes result in, from what I can tell, undefined
+> behavior on real hardware. A well-behaved driver shouldn't be doing this
+> anyway. For that reason they are not handled here at all.
 >
 > Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 > ---
-> hw/display/ati_2d.c | 81 ++++++++++++++++++++++++++++-----------------
-> 1 file changed, 50 insertions(+), 31 deletions(-)
+> hw/display/ati.c      | 32 ++++++++++++++++++++++++++++++++
+> hw/display/ati_dbg.c  |  9 +++++++++
+> hw/display/ati_int.h  |  8 ++++++++
+> hw/display/ati_regs.h |  9 +++++++++
+> 4 files changed, 58 insertions(+)
 >
-> diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-> index 691e0f0702..a5dc5ba98e 100644
-> --- a/hw/display/ati_2d.c
-> +++ b/hw/display/ati_2d.c
-> @@ -86,7 +86,8 @@ static void ati_2d_do_blt(ATIVGAState *s, const ATIBltSrc *src, ATIBltDst *dst)
->     /* rewritten but for now as a start just to get some output: */
->     DisplaySurface *ds = qemu_console_surface(s->vga.con);
->     uint8_t *end = s->vga.vram_ptr + s->vga.vram_size;
-> -    int dst_stride_words, src_stride_words;
-> +    int dst_stride_words, src_stride_words, vis_src_x, vis_src_y;
-> +    QemuRect scissor, vis_dst;
->
->     DPRINTF("%p %u ds: %p %d %d rop: %x\n", s->vga.vram_ptr,
->             s->vga.vbe_start_addr, surface_data(ds), surface_stride(ds),
-> @@ -108,14 +109,32 @@ static void ati_2d_do_blt(ATIVGAState *s, const ATIBltSrc *src, ATIBltDst *dst)
->         return;
+> diff --git a/hw/display/ati.c b/hw/display/ati.c
+> index 21339d7e26..e6868ddb8b 100644
+> --- a/hw/display/ati.c
+> +++ b/hw/display/ati.c
+> @@ -568,6 +568,13 @@ static inline void ati_reg_write_offs(uint32_t *reg, int offs,
 >     }
+> }
 >
-> +    qemu_rect_init(&scissor,
-> +                   s->regs.sc_left, s->regs.sc_top,
-> +                   s->regs.sc_right - s->regs.sc_left + 1,
-> +                   s->regs.sc_bottom - s->regs.sc_top + 1);
-> +    qemu_rect_intersect(&dst->rect, &scissor, &vis_dst);
+> +static void ati_host_data_reset(ATIHostDataState *hd)
+> +{
+> +    hd->next = 0;
+> +    hd->row = 0;
+> +    hd->col = 0;
+> +}
 
-Is there a bit somewhere that enables clipping that needs to be checked 
-here? Or are the sc regs always expected to have meaningful values and 
-clipping is always done?
-
-> +    if (!vis_dst.height || !vis_dst.width) {
-> +        /* Nothing to do, completely clipped */
-
-It's less clear what vis means so maybe this comment could clarify by 
-saying Nothing is visible, completely clipped.
+I wonder where the real chip keeps track of these. Isn't this where the 
+dst_x dst_y would be updated? Or it may have some internal state not 
+exposed as registers? Maybe if you can dump registers you could compare 
+their values during blits after each host data reg write and check how 
+they change to reveal if any of them are updated? (But only if you're 
+curious; it would do for emulation using this approach with a separate 
+state as well.)
 
 Regards,
 BALATON Zoltan
