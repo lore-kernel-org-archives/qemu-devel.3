@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8581C44503
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 11:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D9ACC44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 11:27:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viWLN-0002zp-MO; Wed, 21 Jan 2026 06:25:49 -0500
+	id 1viWLO-00032i-Ud; Wed, 21 Jan 2026 06:25:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1viWLE-0002qC-5I
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:40 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1viWLH-0002uW-Hf
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:44 -0500
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1viWLA-0007n7-Oz
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:39 -0500
+ id 1viWLE-0007q6-Tz
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:43 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 3493860097;
+ by sea.source.kernel.org (Postfix) with ESMTP id 657D844288;
  Wed, 21 Jan 2026 11:25:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7A7C19425;
- Wed, 21 Jan 2026 11:25:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC00C2BCB7;
+ Wed, 21 Jan 2026 11:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1768994724;
- bh=xmEiSuUa3wEa/j4Qrcz3mClFYl0VN4QyBX3akXF9gpk=;
+ s=k20201202; t=1768994725;
+ bh=mJkwk0b1J+wBP6yJ8KSn8HC69LO+4cInAVMNTa0sJSQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ffCwY8IjtDmK8YptyJVu2TMkJlHlE+cdOMcO0Ab1nK/qTi1QY/ZUOk2P4h6PaCnHW
- PZO8A+1IUToynsWMcPmPjH7g2mrD0UFzC681CiQhxMuqGqoGCW7d1myqlR27bHL0Kb
- iLM6t6wtlu5/WqfJ5iY9bKgGSgUx/EDPZ5hRPuz/KJNkUiMQVSOOaXI36qAlrICDOq
- 6I4OvDT+9YqoN8xA6ih0zbi6w4M9qJfqtFELL0daLm8V5W40z+CJm2R1if+e/I2UiD
- iy+CkHWclRCG1R4TQ0Bfl1eArysf9riDjUKZKJdznOE5SsC/V6tbbUt8opHl+ZzQaX
- Diwge2tzvhmFA==
+ b=fdXMd6iuwS9o37AXoWFTiXUjQWSRkwlXAE2HyMskisDVeGtXoNyj/O810l2v76OO6
+ h++/G49w5zw43ZazQlqne6p/6aoG0Lf273D9SRsfHDtq0QY+/UmNuM5NAhBLUKbFtC
+ Ru03AaEKbDQTNHgbX5MoR7E/64EZyrqdikYm1b8q5Sy8VSOhL7+WLUWbA1N6WUOSkY
+ DnbKROB6eyxkHbQgSg7XYP3wq8uJLiuysHyBk4kP7X1EvKTNTeqXUUHtwYW2C6bfMF
+ chlF625RRKh+3WrTXdXjRawhRZFLim/69mGPDoC/cFOZDa0ibTQDB8C+cT4lwathgY
+ DWtZ5O0tTUWRg==
 Received: from mchehab by mail.kernel.org with local (Exim 4.99)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1viWKx-00000003gJK-0266; Wed, 21 Jan 2026 12:25:23 +0100
+ id 1viWKx-00000003gK6-1MoO; Wed, 21 Jan 2026 12:25:23 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Michael S Tsirkin <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -45,17 +45,18 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Igor Mammedov <imammedo@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 01/13] scripts/qmp_helper: add a return code to send_cper
-Date: Wed, 21 Jan 2026 12:25:09 +0100
-Message-ID: <2aa2c3565ceec788bcf637ce64454b7946e7d20c.1768993993.git.mchehab+huawei@kernel.org>
+Subject: [PATCH 13/13] scripts/ghes_inject: improve help message
+Date: Wed, 21 Jan 2026 12:25:21 +0100
+Message-ID: <5b4efacb92c898d5b345e6df1579756a79b586dc.1768993993.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <cover.1768993993.git.mchehab+huawei@kernel.org>
 References: <cover.1768993993.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -77,59 +78,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When used inside a loop, it is interesting to have a return
-code to indicate weather a send cper command succedded or not.
+Add a one-liner help message for each type of error inject
+command, and use raw formatter to keep line breaks.
+
+While here, use a more uniform language.
+
+With that, "ghes_inject -h" will now show:
+
+  usage: ghes_inject.py [options]
+
+  Handles ACPI GHESv2 error injection via the QEMU QMP interface.
+
+  It uses UEFI BIOS APEI features to generate GHES records, which helps to
+  test CPER and GHES drivers on the guest OS and see how user‑space
+  applications on that guest handle such errors.
+
+  positional arguments:
+    {arm,pcie-bus,fuzzy-test,fuzzy,raw-error,raw}
+      arm                 Inject an ARM processor error CPER, compatible with
+                          UEFI 2.9A Errata.
+      pcie-bus            Inject a PCIe bus error CPER
+      fuzzy-test (fuzzy)  Inject fuzzy test CPER packets
+      raw-error (raw)     Inject CPER records from previously recorded ones.
+
+  options:
+    -h, --help            show this help message and exit
+
+  QEMU QMP socket options:
+    -H, --host HOST       host name (default: localhost)
+    -P, --port PORT       TCP port number (default: 4445)
+    -d, --debug           enable debug output (default: False)
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- scripts/qmp_helper.py | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ scripts/arm_processor_error.py |  6 ++++--
+ scripts/fuzzy_error.py         |  4 +++-
+ scripts/ghes_inject.py         | 18 +++++++++---------
+ scripts/pcie_bus_error.py      |  4 +++-
+ scripts/raw_error.py           |  6 +++---
+ 5 files changed, 22 insertions(+), 16 deletions(-)
 
-diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
-index c1e7e0fd80ce..249a8c7187d1 100755
---- a/scripts/qmp_helper.py
-+++ b/scripts/qmp_helper.py
-@@ -531,7 +531,11 @@ def __init__(self, host, port, debug=False):
-     # Socket QMP send command
-     #
-     def send_cper_raw(self, cper_data):
--        """Send a raw CPER data to QEMU though QMP TCP socket"""
-+        """
-+        Send a raw CPER data to QEMU though QMP TCP socket.
+diff --git a/scripts/arm_processor_error.py b/scripts/arm_processor_error.py
+index d9845adb0c0a..597382031ab8 100644
+--- a/scripts/arm_processor_error.py
++++ b/scripts/arm_processor_error.py
+@@ -122,7 +122,7 @@ class ArmProcessorEinj:
+     """
+ 
+     DESC = """
+-    Generates an ARM processor error CPER, compatible with
++    Inject an ARM processor error CPER, compatible with
+     UEFI 2.9A Errata.
+     """
+ 
+@@ -169,7 +169,9 @@ def __init__(self, subparsers):
+ 
+         self.data = bytearray()
+ 
+-        parser = subparsers.add_parser("arm", description=self.DESC)
++        parser = subparsers.add_parser("arm",
++                                       help=self.DESC,
++                                       description=self.DESC)
+ 
+         arm_valid_bits = ",".join(self.arm_valid_bits.keys())
+         flags = ",".join(self.pei_flags.keys())
+diff --git a/scripts/fuzzy_error.py b/scripts/fuzzy_error.py
+index 9f80abb72319..3ddb90f743a1 100644
+--- a/scripts/fuzzy_error.py
++++ b/scripts/fuzzy_error.py
+@@ -121,8 +121,10 @@ def __init__(self, subparsers):
+             },
+         }
+ 
++        DESC = "Inject fuzzy test CPER packets"
 +
-+        Return True on success, False otherwise.
-+        """
+         parser = subparsers.add_parser("fuzzy-test", aliases=['fuzzy'],
+-                                       description="Inject a fuzzy test CPER",
++                                       help=DESC, description=DESC,
+                                        formatter_class=argparse.RawTextHelpFormatter)
+         g_fuzzy = parser.add_argument_group("Fuzz testing error inject")
  
-         data = b64encode(bytes(cper_data)).decode('ascii')
+diff --git a/scripts/ghes_inject.py b/scripts/ghes_inject.py
+index 4028fdb15582..488d10ffcafd 100755
+--- a/scripts/ghes_inject.py
++++ b/scripts/ghes_inject.py
+@@ -17,28 +17,28 @@
+ from raw_error import RawError
  
-@@ -543,9 +547,16 @@ def send_cper_raw(self, cper_data):
+ EINJ_DESC = """
+-Handle ACPI GHESv2 error injection logic QEMU QMP interface.
++Handles ACPI GHESv2 error injection via the QEMU QMP interface.
  
-         if self.send_cmd("inject-ghes-v2-error", cmd_arg):
-             print("Error injected.")
-+            return True
-+
-+        return False
- 
-     def send_cper(self, notif_type, payload):
--        """Send commands to QEMU though QMP TCP socket"""
-+        """
-+        Send commands to QEMU though QMP TCP socket.
-+
-+        Return True on success, False otherwise.
-+        """
- 
-         # Fill CPER record header
- 
-@@ -599,8 +610,7 @@ def send_cper(self, notif_type, payload):
- 
-             util.dump_bytearray("Payload", payload)
- 
--        self.send_cper_raw(cper_data)
+-It allows using UEFI BIOS EINJ features to generate GHES records.
 -
-+        return self.send_cper_raw(cper_data)
+-It helps testing CPER and GHES drivers at the guest OS and how
+-userspace applications at the guest handle them.
++It uses UEFI BIOS APEI features to generate GHES records, which helps to
++test CPER and GHES drivers on the guest OS and see how user‑space
++applications on that guest handle such errors.
+ """
  
-     def search_qom(self, path, prop, regex):
-         """
+ def main():
+     """Main program"""
+ 
+     # Main parser - handle generic args like QEMU QMP TCP socket options
+-    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter,
++    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
+                                      usage="%(prog)s [options]",
+                                      description=EINJ_DESC)
+ 
+     g_options = parser.add_argument_group("QEMU QMP socket options")
+     g_options.add_argument("-H", "--host", default="localhost", type=str,
+-                           help="host name")
++                           help="host name (default: %(default)s)")
+     g_options.add_argument("-P", "--port", default=4445, type=int,
+-                           help="TCP port number")
+-    g_options.add_argument('-d', '--debug', action='store_true')
++                           help="TCP port number (default: %(default)s)")
++    g_options.add_argument('-d', '--debug', action='store_true',
++                           help="enable debug output (default: %(default)s)")
+ 
+     subparsers = parser.add_subparsers()
+ 
+diff --git a/scripts/pcie_bus_error.py b/scripts/pcie_bus_error.py
+index e8285b5dcc84..843ec09c7572 100644
+--- a/scripts/pcie_bus_error.py
++++ b/scripts/pcie_bus_error.py
+@@ -35,8 +35,10 @@ def __init__(self, subparsers):
+ 
+         self.data = bytearray()
+ 
++        DESC = "Inject a PCIe bus error CPER"
++
+         parser = subparsers.add_parser("pcie-bus",
+-                                       description="Generate PCIe bus error CPER")
++                                       help=DESC, description=DESC)
+         g_pcie = parser.add_argument_group("PCIe bus error")
+ 
+         valid_bits = ",".join(self.valid_bits.keys())
+diff --git a/scripts/raw_error.py b/scripts/raw_error.py
+index f5e77bdfcead..1e9eb1bcf15b 100644
+--- a/scripts/raw_error.py
++++ b/scripts/raw_error.py
+@@ -21,8 +21,8 @@ class RawError:
+ 
+     SCRIPT_NAME = sys.argv[0]
+ 
+-    HELP=f"""
+-    Inject a CPER record from a previously recorded one.
++    HELP="Inject CPER records from previously recorded ones."
++    DESC=HELP + f"""
+ 
+     One or more CPER records can be recorded. The records to be
+     injected are read from an specified file or from stdin and should
+@@ -58,7 +58,7 @@ def __init__(self, subparsers):
+         self.size = 0
+ 
+         parser = subparsers.add_parser("raw-error",  aliases=['raw'],
+-                                       description=self.HELP,
++                                       help=self.HELP, description=self.DESC,
+                                        formatter_class=argparse.RawTextHelpFormatter)
+ 
+         parser.add_argument("-f", "--file",
 -- 
 2.52.0
 
