@@ -4,114 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AA51C44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 09:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAA62C44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 09:40:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viUV8-0002tZ-R9; Wed, 21 Jan 2026 04:27:46 -0500
+	id 1viUgQ-0003NQ-Aw; Wed, 21 Jan 2026 04:39:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1viUV1-0002kD-CA
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 04:27:40 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1viUUz-0007Jj-L6
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 04:27:38 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-78c66bdf675so55140787b3.2
- for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 01:27:36 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768987655; cv=none;
- d=google.com; s=arc-20240605;
- b=FzOOV09DqUSBNJePKmWHdXqIU4CzbRBZsRy9gWiKJ65Rc4/N1GUoOtJX5MzqTkDzyl
- o7csuFqoRSPMMgYv+UDFPxd5drX77ASvGf56Nb8mBRbRh+1OpvPrKhyEdTS3a1kh30eR
- kdBL0Gakb6s/BqcWgakAbC4tTmeqTr/oHym7rRki2M++XToGB2qNVqCLhkjt2ez0KFUX
- ePEHhgxYlcILSk2nGhyN6aExqewFLNT4rnSD9EelMcyIiTctUWEEuTCta9GMrkC1fDZk
- /mTPYdtPT2SnT3FXl39EZOHhvfNIrGk8kSW47vwldfSo4nGzTTgOGC7/e5HAxUZs/tfg
- flRg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=OiRDwoLtTsknQ7PacWzNbXiZ/sHl5VJBOJ2/kVClTqw=;
- fh=h5XwtwbFZRZ1FUOtZRgdKZteGKilXmRo+GqhpTRH7tM=;
- b=iw/fbEwCNRU3fS/RhB+T4LDj76ZrUg4aB9Ek66chMA/DGTPw5ILBsbrFayEOWt5Stz
- xjUH639ByjHJB4B350HKlxMzxha/Kdu/JWc3rMxnMbor1Su4ZeQqEq8jmd7nA0JprKGi
- SJi1Z8DZNE0Zp69MmkjMy2IR6Dz8zFWeCjdOiRVlniBh/GJJN0shY5GMrorsPlLKdF76
- S7+w3kqsKyHdZ7K8uR9bfD97c5hhia7UyhWDiFxh03eCNAOgGLX1LchqBxikkLhKCNc4
- YLqWlnCC1yiWS7+kLTJaHDILPjBinVZ4PKqo0PEhbez92Gt3NGmwFxHn4jSLMRHOIobG
- sZHw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1768987655; x=1769592455; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OiRDwoLtTsknQ7PacWzNbXiZ/sHl5VJBOJ2/kVClTqw=;
- b=pEYWHr5tKQxpDDnP+P7hpgbTRJK3WegyKYlsQPVekY7oX6Y+X/WcX14x0CXnlCoNcg
- p5B88R/Ze4cJPWdcQ/gXDHL/82zhhXcrlG1kLbjsg/EyzMVLoFswSbqd/ZsQtArNIic2
- S1vnOBlIJP9xFXhqlcd57WUM1d6fBTM3wLmOCfU0wQTzb7ueMjqcA2ZG1LwLffbLp+4z
- HAitn6rbUM/Gq+b6oFt3HRvhKdjqkPsns6WJ8BOsdcTCAaKzxmsuwOZuVL1yNV7c1Wzs
- msz8651ApWDxCWGyxvgt+NOQERoyvHXcUpP4jNwKJHDzx7w58p1UXtZgslNK+GQk7MpU
- Bg6A==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1viUgO-0003N3-UR
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 04:39:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1viUgN-0001eH-5k
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 04:39:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1768988361;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=t2/xT8iPwxVBhXyFiskTxjU+UnFqiORTdZoi4L7IpKI=;
+ b=U37TlUUrrP15/sjXyEj2btYruaUPaIGK5UARPapHFfHXp52gxzO1r0sm41eVJiLLkCw49I
+ 6ggUWFF35VsPYhVgGzxmnEM6Mgf+XpIGF6NOGyQnzC3UZy4W8tlo1d2IGEHbEwgRiknA1n
+ mtQ56c/S6dpqTqTdV9p8n5PE7SyJP8I=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-311-Si88GEhzPzyEhT53B4z-TA-1; Wed, 21 Jan 2026 04:39:20 -0500
+X-MC-Unique: Si88GEhzPzyEhT53B4z-TA-1
+X-Mimecast-MFC-AGG-ID: Si88GEhzPzyEhT53B4z-TA_1768988359
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-47d3ba3a49cso63832255e9.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 01:39:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1768987655; x=1769592455;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OiRDwoLtTsknQ7PacWzNbXiZ/sHl5VJBOJ2/kVClTqw=;
- b=jbbO7YF6U9jtKAgc02v8OCotC67EaYhisEKFXOCs4EpfxzDMN2AlT7cVY1wN3Hckz/
- WkCMUn1/D//FkEmQue1F0SxEqfEmNn3jgwmUyi0Un6wRjSHaPO0YA0mW7jMLl6dVj2FZ
- THj/aMJ4CKPxe699x+qbPQNlEJG2SZfst3Qupgi2OP1hD+9VbBTHsmOQ4s9T7sUpAWZz
- 8m6LhKJ/OVjhhgdGdDXIIvUY+rN5FKiGCHz/79gv83nyI7MuRUQYMIdsD70RX1mtxpF4
- tY9ptm1GwzXbBT/fqBV9ZqgxMNDK36VEa+nk2SZTBIT66GwAVaZS6sHR8rpiV6fWu76v
- zRSw==
-X-Gm-Message-State: AOJu0YwIj39m9n2OiVfvM641dQ8C6uYEd0HqRzCN1CZo0zl7/7It4lJj
- MOoKM0narSu75hrZSSt3B48oCVda/k5qcrA2/gM2lrqlHhgnHR+R3jj7fAtn1lS9x5nUG+wfK9U
- x1AWAsPRRkQSK3wFjl+svOVvxrEYba9NOsxzb6HUmjw==
-X-Gm-Gg: AZuq6aL3uYcruOaA0mT0urOmGrjxkQH6+3Ozm4lgtgp07rJC42IWvbZs4zt31Ic09YJ
- ozZ/1DQWKLvGV9NeiccUASvsSNSAhHuY2bNVNJgJITJ28Z1TpmK38ykq0PLypR6wAeUlQkWu1oN
- eH8WSdiSSqw+LD50XkTyWr5/YgKPE7PPSWloQCBiMdr2Tans9SqPrMZSebKQ9aBLEXzIZcwMlnY
- 1q6EoFHsDaZBFHz3yAixUjfMzDA5Hg+FBtYoAPTTaRI02lZXMjKZJMrqZninhPjjK6p7w==
-X-Received: by 2002:a05:690c:10c:b0:78c:5dfe:1b57 with SMTP id
- 00721157ae682-7940a245084mr38019387b3.38.1768987655428; Wed, 21 Jan 2026
- 01:27:35 -0800 (PST)
+ d=1e100.net; s=20230601; t=1768988359; x=1769593159;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t2/xT8iPwxVBhXyFiskTxjU+UnFqiORTdZoi4L7IpKI=;
+ b=J2O/2xHqAS0Bq9LS2+XiMmUhKlKBQ+jw+m5QoB6hkB9RWqbsWLPnmWaovWuvL7lzct
+ OUpKQEpJN+7MZAnKpnIEdG9e0Rdajzf8aWd34U4y+Zfe26lASBFvdP6SgUhgT9xfoTpB
+ uNxDItX9AMrGDekr9vfYiKyHwDHGeGCLmVq52laSvqCVo56JTGnIKtuwbMCQbqkPo8U1
+ bVTssBPi+PJiDvtdTi8CtBvbKWRlMHgPYi9Q67fABNalxfo9bliwMxaQQFQrp9sAeHMk
+ oFb1l6Y2TSS7UNjPXTTKuVF9O1KYuWqgjvFqPYbKDN9zJGJ+4akJIKi9M6HyMOEpOlHm
+ 6S5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUBAvvvb6kh6n8E47eMVGlITSltUXCP2eEPfJ24RFIDCNOLwaAo/5zT8u1B0yNatMAOgni3Vsz+7aVQ@nongnu.org
+X-Gm-Message-State: AOJu0YwYguXExeNVXe9SwaUMXCmjDR9gEAHRM1TUj4iGWKrlMElLwGCi
+ HOrQEO+QgSeyebIi6XalTOQVJuP8MVBToHKEkzim46fbXWCVUMgXLI+BcAB2UDvMEe0WJ6KZnPu
+ LSrem7nS8XybP4mLFDiAoNyJEM1cZ77drHSnGZH+NWX19UTvRvHeYs6ov
+X-Gm-Gg: AZuq6aJcRfdIuXbFGFdjrMty5gJho42X5CJJTg83fo6dIvg3Y6kyBFSVxDAX/AAshJw
+ PS5dS5ITBlsH8BH5AM+OJjSB4X2COf+pUQRPQyaY3Y0ETotlOro5FLADJJ4c/QjHmvuUJrz0wx6
+ Sb2SO85jBm9OaiyQiCRQIn9hyBNuok2Ib/fzdyqmzZmW3RgRNwnx+XyXk+wPU3bXJ3I1NeQieXi
+ FWLYLs/E/PNVvd47tF7xLyfMhpUokm8q+es/BX5qGNPP7oPxAZGpB1jZtBXmTur9pnVtMkLDhFO
+ /+Q/9qEK4cG5rPoUPuVsAnUVUgaqTwjyn1E1ceO8ATCZ8YgRrjdzzmp2V51EDmi6nvtCaLWc1pi
+ pJqPWZ3cRCJ5c9rqkE6L7A1vm2yRiO65/e6QqLPHrmV1Ap3M3piTTAr2S2Q==
+X-Received: by 2002:a05:600c:37c8:b0:47e:e87f:4bba with SMTP id
+ 5b1f17b1804b1-4801eb0e1cfmr211975315e9.29.1768988358823; 
+ Wed, 21 Jan 2026 01:39:18 -0800 (PST)
+X-Received: by 2002:a05:600c:37c8:b0:47e:e87f:4bba with SMTP id
+ 5b1f17b1804b1-4801eb0e1cfmr211974895e9.29.1768988358401; 
+ Wed, 21 Jan 2026 01:39:18 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4804245245esm20022655e9.0.2026.01.21.01.39.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Jan 2026 01:39:17 -0800 (PST)
+Message-ID: <5fbdeab4-d8b2-487f-89e6-fb00037e5773@redhat.com>
+Date: Wed, 21 Jan 2026 10:39:16 +0100
 MIME-Version: 1.0
-References: <20260116135235.38092-1-mohamed@unpredictable.fr>
- <20260116135235.38092-5-mohamed@unpredictable.fr>
- <CAFEAcA-3P6i_w3b7SaFTn4Zmwnot5vpDs89y+zpjcJ=-mEnP5w@mail.gmail.com>
- <8158CEFE-8EA2-40A4-970E-01B30BACC019@unpredictable.fr>
-In-Reply-To: <8158CEFE-8EA2-40A4-970E-01B30BACC019@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 21 Jan 2026 09:27:22 +0000
-X-Gm-Features: AZwV_QhbV9c8W4eGRYL96WaTovp4ICRNg0iXp8GbxBedwhmIWZiOBQd8zxtw9Wg
-Message-ID: <CAFEAcA9JC1HRboZ=722dsT7a4nDQNF_ECjLK+z84T5MJisfppg@mail.gmail.com>
-Subject: Re: [PATCH v16 04/26] hw/arm: virt: add GICv2m for the case when ITS
- is not available
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Pedro Barbuda <pbarbuda@microsoft.com>, Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/2] arm: add kvm-psci-version vcpu property
+Content-Language: en-US
+To: Sebastian Ott <sebott@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ kvmarm@lists.linux.dev
+References: <20251202160853.22560-1-sebott@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251202160853.22560-1-sebott@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,43 +113,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 20 Jan 2026 at 18:44, Mohamed Mediouni <mohamed@unpredictable.fr> w=
-rote:
->
->
->
-> > On 20. Jan 2026, at 19:02, Peter Maydell <peter.maydell@linaro.org> wro=
-te:
->
->
-> > The MSI controller selection logic is already pretty confusing,
-> > and this is making it more complicated. I don't think we should
-> > need this machine back compatibility, because currently there
-> > is no setup where you can have a GICv3 that doesn't also have
-> > either an ITS or no MSI controller.
-> >
-> Hello,
->
-> This was to replicate the =E2=80=9Cno_tcg_its=E2=80=9D where this was don=
-e when introducing TCG.
-> And for the purpose of VM save/restore on HVF with the older machine type=
- continuing to work as expected.
+Hi Sebastian,
 
-no_tcg_its is there for backwards compatibility: on older
-QEMU versions before we added the TCG ITS, if you said
-"-machine virt,gic-version=3D3 -accel tcg" you didn't get an
-ITS; we wanted to change the default in new machine versions,
-so we needed the back compat switch.
+On 12/2/25 5:08 PM, Sebastian Ott wrote:
+> This series adds a vcpu knob to request a specific PSCI version
+> from KVM via the KVM_REG_ARM_PSCI_VERSION FW register.
+>
+> The use case for this is to support migration between host kernels
+> that differ in their default (a.k.a. most recent) PSCI version.
+>
+> Note: in order to support PSCI v0.1 we need to drop vcpu
+> initialization with KVM_CAP_ARM_PSCI_0_2 in that case.
+> Alternatively we could limit support to versions >=0.2 .
+>
+> Changes since V3 [3]:
+> * changed variable name as requested by Eric
+> * added R-B
+> Changes since V2 [2]:
+> * fix kvm_get_psci_version() when the prop is not specified - thanks Eric!
+> * removed the assertion in kvm_get_psci_version() so that this also works
+>   with a future kernel/psci version
+> * added R-B
+> Changes since V1 [1]:
+> * incorporated feedback from Peter and Eric
+>
+> [1] https://lore.kernel.org/kvmarm/20250911144923.24259-1-sebott@redhat.com/
+> [2] https://lore.kernel.org/kvmarm/20251030165905.73295-1-sebott@redhat.com/
+> [3] https://lore.kernel.org/kvmarm/20251112181357.38999-1-sebott@redhat.com/
+>
+> Sebastian Ott (2):
+>   target/arm/kvm: add constants for new PSCI versions
+>   target/arm/kvm: add kvm-psci-version vcpu property
+>
+>  docs/system/arm/cpu-features.rst |  5 +++
+>  target/arm/cpu.h                 |  6 +++
+>  target/arm/kvm-consts.h          |  2 +
+>  target/arm/kvm.c                 | 64 +++++++++++++++++++++++++++++++-
+>  4 files changed, 76 insertions(+), 1 deletion(-)
+>
+Feel free to add my
+Tested-by: Eric Auger <eric.auger@redhat.com>
 
-What is the command line that works today and where we
-want to go from "default to GICv3 without ITS or v2m"
-to "default to GICv3 with v2m" ? I might have missed it
-but back last year when I was looking at the current
-configs I didn't think we had one.
+I was able to migrate from a host featuring "KVM: arm64: Add support for
+PSCI v1.2 and v1.3" to an "old" one that doesn't using
+,kvm-psci-version=1.1
 
-thanks
--- PMM
+Thanks
+
+Eric
+
 
