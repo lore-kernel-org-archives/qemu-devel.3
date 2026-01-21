@@ -4,66 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D38C4C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 16:36:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8CE4C44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 16:55:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vibBp-0005Qv-Pn; Wed, 21 Jan 2026 11:36:19 -0500
+	id 1vibTV-0008Dq-9W; Wed, 21 Jan 2026 11:54:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vibBe-0005KR-PC
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 11:36:08 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vibBc-0005ZZ-6R
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 11:36:06 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id E188460135;
- Wed, 21 Jan 2026 16:36:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93512C4CEF1;
- Wed, 21 Jan 2026 16:36:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769013361;
- bh=gT9iaWg1pDgpPuXDDXehLXiITPDCN/gt1eQgSVRWHpc=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=p3xzy5jEuFPi9MUBm2eLbFeji/vy4hLZZ66Ntjucwnqf7mClQ0cfpvbWcAqTT/mi5
- WqVjyBDfuDcX+CXuXKfxNfm0da9Uio/3mImYy7TJVuWakUykJwUhfzMydgCVTgM+22
- O+7XwuMjE3ydR7EDQX0DZcK2Tiwelb1hZQKPWVqT1cjhGgksLJ31jq3h/TDCRPgsBp
- +S7+oV+/0ByHm+jWUnO3bdj0ntiU8l/VUQ73EM2mg5zAr7VmSZpF/ABpjLjUMizetK
- zsGJBnMQBceOkcd9fwt1aPMdDLn4IRLSXHoLGdVpmsZnW4W0COVDh5vFKCZFPndM33
- KzQeMxXBM+ngg==
-Received: from mchehab by mail.kernel.org with local (Exim 4.99)
- (envelope-from <mchehab+huawei@kernel.org>)
- id 1vibBX-00000003uS6-2nPz; Wed, 21 Jan 2026 17:35:59 +0100
-Date: Wed, 21 Jan 2026 17:35:59 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
- Michael S Tsirkin <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-devel@nongnu.org, 
- Igor Mammedov <imammedo@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH 10/13] scripts/ghes_inject: add support for fuzzy logic
- testing
-Message-ID: <aXD-R2CjXz-bOk8D@foz.lan>
-References: <cover.1768993993.git.mchehab+huawei@kernel.org>
- <5404a11d5fabe0757aaf24e0b355ba16c1f19a12.1768993993.git.mchehab+huawei@kernel.org>
- <20260121133710.00005780@huawei.com>
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1vibT1-00081R-Vz
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 11:54:07 -0500
+Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1vibSz-0004aD-Hw
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 11:54:02 -0500
+Received: by mail-qt1-x835.google.com with SMTP id
+ d75a77b69052e-5014acad6f2so115231cf.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 08:54:00 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769014439; cv=none;
+ d=google.com; s=arc-20240605;
+ b=HYM7lakgFLdp/umQlUcqLKLXRSSksieCrHvXZ89Z+kP3PtRo/TaID/N46i8Ci9AhSB
+ HtOylfqvOW38ppKe3IzgxAoj34C2hG8s0IiFxK661AJGaWQ1V3C93dW6R35djetfpqrp
+ 4PUS5HBqTYUdzwwhgRKTOVm84l6+U7sQxtn2+Q1S77YdVqD1cj9aKgt5aKGicWODUnhy
+ R/HSDcEN/jgG20ZzPVS7WZoFnUr2k+G+MdI70PQQHBwReaG8uiQsdlIjuUPByrMD5PZX
+ 77IL40LZu5pth/8Wddl0XEujAjss+kDHbxzXrzjge/0hcu9u4PkUG5qbgoc4sAiNoB11
+ LC+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=zVBXv97/W8tGi1TQadV2BmfMIlfNcnjKlrvG2zWQQpo=;
+ fh=OkdQJehu1hb4ktnQdUsz+z8b81gDf7F26/Q1A558pGQ=;
+ b=BbRmArQuJCLqVju4Lyiz4ut+XbuqpN59QEPEGwjpExLW0nfLRUoxXeuTJbDr5fJ1Nx
+ hIphBfS98w0QpV7va1Z4aJ7gAGQLj090bi0sWA96SqRKtDJsMSWrepuav6TiHz84KbBY
+ q8xbadmfXf949YOUBjLNZEUawkQu9en4M71b1yk1TceA1Qs2v2hX4D+Hsp3a32rcUnl1
+ ATScEeGcvpY2jz5SPCrJZ4Nl5Pzh5hAwzv1P/sTrmOBpBgbHaHMsrElx2AxKfE3mqMz+
+ UQZW+HDMIvofZ2DhW2VPMwytu2WdQEBnCLc4scZbRcyZ/vgjDOfqQUIY83gsMaAItjoZ
+ f0cw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1769014439; x=1769619239; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zVBXv97/W8tGi1TQadV2BmfMIlfNcnjKlrvG2zWQQpo=;
+ b=UW+E8ABvCoA5kYC3gxo3woGV76JyHGjav8SL/F7BaqBT0C72+JSnvvijoZTGkVro/7
+ jYjRf69MXBPVkMdx7EnAyZbxzLikb/IOhgEdtoa2+Jkaqoko5gx3riv6HHfCfUI7Sz2u
+ /oesFiN1XR7FLlyrn6Fx8yEulc1mgmAjRXdZzRR6tPtDXS66Mzmb6JvRg6G0zK6pSrXq
+ GcODieJ+hfCfso9pxo0otl1qmUvRJTwMxpA96YYAjXxmzfAnu4B8ya2WEZHhd/y3osp6
+ dIulTqpnhfhB0oGqWWBnYUNC35PdIsWSy4N2ar8kiLpPslzkem1yFuidtfQtET3634bj
+ MN/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769014439; x=1769619239;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=zVBXv97/W8tGi1TQadV2BmfMIlfNcnjKlrvG2zWQQpo=;
+ b=grjkonhrfaif+Hwyx/vCBE4e1WS8m2Cig90pVUz8ELZKiqHyfJFKEAv41XK3U8lz/3
+ 0nfvZ/ai+IhAW18KsgMZYIFLRkiPCZGagStJylv6yOv3fyzmwMQwqMyjwC7W3QrlKnbK
+ MAldnN6bWmvpPp8oDgvW40HjLdlNj+aFBGxPBlrv0CZgbfbUM/XiS1qz/87vouPrrEe7
+ LwyaRjS/Tn2sg701bzLyi8yJL8/sbxUQU4X1Lp1nwYXLi7tbgKBUpNhNsLZqOGsROB1W
+ Vfry2cYzHSa1FN1SnV0ki8sM0w5FnfFiU8foMEMWBEbqL+q0gowmLnZYMUpz3kWRgWIF
+ JgSQ==
+X-Gm-Message-State: AOJu0Yy2spOIVErX5/SbJmwpCSC4VDB07Gb1/1LJRQVHbw9LCysZwRrO
+ AmatPgns3yfcCMxkEl6XSHZKx1YWoLiTepGTcQD+XRYO2dXE/JEz6PCg/oac2pEIXzjPMPwfixs
+ L7ie0zOMupBa6Op6SePQWO5YlftVhViEziP3g+K+t
+X-Gm-Gg: AZuq6aLF9sBOvEGjRWYA16pMq9sZN9QxJDRbRh/Gv+bzvVILA1D8w4ZDPHTDPtxCFKS
+ E5G8V9jur9W9IcWc21fEzZ07exHhQpBSrcNYJM+4d7UnHHaRnaHd2zolEoUzva0ol5R5oeIWSV8
+ Hl63KtgQVdkjPpsI1Mvpxd9ZjRgn29S9x+N+eY1gudbd04kUeHDNGXMiFLDPq86V7LKlomBjWe1
+ n2xi4V6RWxjqA+47eKEu1xWmnyyYGcbbFB+bdM1MP7Ptj5Iy1kn2XcYm+nKY92t5wTB9h7vKAjb
+ TK966jcxQfwKoGqa/+8YW2TcEUB6LoNUWaZsHPXZ2dRQWPVSsv+6fymRKxljWGrHwGt5Gbj/UWt
+ oIhRIYjowRadLUqsiD6gr
+X-Received: by 2002:ac8:5a54:0:b0:4ff:bfdd:3f46 with SMTP id
+ d75a77b69052e-502e1a9caf0mr10764851cf.15.1769014438997; Wed, 21 Jan 2026
+ 08:53:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260121133710.00005780@huawei.com>
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
+References: <20260120211116.1367476-1-nabihestefan@google.com>
+ <98c165bb-3f39-4254-96f4-7965bba8fcf2@kaod.org>
+In-Reply-To: <98c165bb-3f39-4254-96f4-7965bba8fcf2@kaod.org>
+From: Nabih Estefan <nabihestefan@google.com>
+Date: Wed, 21 Jan 2026 08:53:46 -0800
+X-Gm-Features: AZwV_Qjg5CgB9KpdltIBMWSc1TH9TuPwv9maHpPYQ1QiQHbkSZZLVLCTvqugsIo
+Message-ID: <CA+QoejUoZkY8UgA7u0_gd2+ydFbefrC61qm3C_jUrOcjyuvdHw@mail.gmail.com>
+Subject: Re: [PATCH] hw/i2c/aspeed_i2c.c: Add a check for dma_read
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, steven_lee@aspeedtech.com,
+ leetroy@gmail.com, jamin_lin@aspeedtech.com, andrew@codeconstruct.com.au, 
+ joel@jms.id.au, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
+ envelope-from=nabihestefan@google.com; helo=mail-qt1-x835.google.com
+X-Spam_score_int: -177
+X-Spam_score: -17.8
+X-Spam_bar: -----------------
+X-Spam_report: (-17.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.182,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,92 +120,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 21, 2026 at 01:37:10PM +0000, Jonathan Cameron wrote:
-> On Wed, 21 Jan 2026 12:25:18 +0100
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> 
-> > Add a command to inject random errors for fuzzy logic testing.
-> > 
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Seems reasonable, but maybe some more text in the description on
-> what types of fuzzy records it generates?  I.e. what is constrained
-> or at least starts as being standard values vs what is entirely random
+On Tue, Jan 20, 2026 at 11:43=E2=80=AFPM C=C3=A9dric Le Goater <clg@kaod.or=
+g> wrote:
+>
+> On 1/20/26 22:11, Nabih Estefan wrote:
+> > If aspeed_i2c_dma_read fails in aspeed_i2c_bus_send currently, we get
+> > stuck in an infinite retry loop. Add a check for the return value of
+> > aspeed_i2c_dma_read that will break us out of said loop.
+>
+>
+> Have you ever encountered this kind of problem ?
 
-I'll improve at the next version. By default, it just randomly picks
-a valid GUID from the lis, and selects a default size that would be
-a valid choice.
+I did when testing the AST1700. In one of the patchsets we had the
+DRAM memory initialized but not the address space (v5 has this fixed)
+but it took me a while to figure out what was happening because
+instead of failing a `i2cdump` or `i2cget` command, it would just
+hang. Presumably it can only happen on misconfigured or failing
+devices that have some address space issue, but since aspeed_i2c_dma
+returns an error if its fails I figured checking it had no real
+downside.
 
-There is a parameter to force it to use an specific type:
+- Nabih
 
-    $ ghes_inject.py fuzzy -h
-
-    Inject fuzzy test CPER packets
-
-    options:
-      -h, --help            show this help message and exit
-
-    Fuzz testing error inject:
-      -T, --type TYPE       Type of the error: proc-generic,proc-x86,proc-itanium,proc-arm,platform-mem,platform-mem2,pcie,pci-bus,pci-dev,firmware-error,dma-generic,dma-vt,dma-iommu,ccix-per,cxl-prot-err,cxl-evt-media,cxl-evt-dram,cxl-evt-mem-module,cxl-evt-mem-sparing,cxl-evt-phy-sw,cxl-evt-virt-sw,cxl-evt-mdl-port,cxl-evt-dyna-cap,fru-mem-poison
-      --min-size MIN_SIZE   Minimal size of the CPER
-      --max-size MAX_SIZE   Maximal size of the CPER
-      -z, --zero            Zero all bytes of the CPER payload (default: False)
-      -t, --timeout TIMEOUT
-                            Specify timeout for CPER send retries (default: 30.0 seconds)
-      -d, --delay DELAY     Specify a delay between multiple CPER (default: 0)
-      -c, --count COUNT     Specify the number of CPER records to be sent (default: 1)
-
-and parameters to allow it to mangle with the payload size.
-
-When -T is not used, it randomly pics a valid GUID. When it is
-used, all injected packages will have the same type.
-
-Right now, the fuzzy-testing is mangling just with the CPER
-payload, so GUIDs are valid. see:
-
-
-  $ ghes_inject.py -d fuzzy
-  Injecting cxl-evt-dyna-cap with 64 bytes
-  GUID: ca95afa7-f183-4018-8c2f-95268e101a2a
-  Generic Error Status Block (20 bytes):
-      00000000  01 00 00 00 00 00 00 00 00 00 00 00 88 00 00 00   ................
-      00000010  00 00 00 00                                       ....
-
-  Generic Error Data Entry (72 bytes):
-      00000000  a7 af 95 ca 83 f1 18 40 8c 2f 95 26 8e 10 1a 2a   .......@./.&...*
-      00000010  00 00 00 00 00 03 00 00 40 00 00 00 00 00 00 00   ........@.......
-      00000020  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
-      00000030  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
-      00000040  00 00 00 00 00 00 00 00                           ........
-
-  Payload (64 bytes):
-      00000000  32 ba ed 9c 1f ea ac cd 8c 8f 44 7b ab 4b c1 8f   2.........D{.K..
-      00000010  68 32 8a c1 07 dd 0f 93 54 de 09 a8 42 79 80 1f   h2......T...By..
-      00000020  f4 e8 0c 85 02 2d 0b 7d f5 64 32 8e 3b d6 f1 6b   .....-.}.d2.;..k
-      00000030  73 39 97 00 54 30 aa e6 39 f0 5d 95 1c b1 cd 0f   s9..T0..9.].....
-
-The first two tables (GESB and GEDE) aren't randomized, and the GUID is always
-a valid one. Jus the payload contains either random numbers (default) or are 
-always zero:
-
-  $ ghes_inject.py -d fuzzy -z
-  Injecting cxl-evt-media with 32 bytes
-  GUID: fbcd0a77-c260-417f-85a9-088b1621eba6
-  Generic Error Status Block (20 bytes):
-      00000000  01 00 00 00 00 00 00 00 00 00 00 00 68 00 00 00   ............h...
-      00000010  00 00 00 00                                       ....
-
-  Generic Error Data Entry (72 bytes):
-      00000000  77 0a cd fb 60 c2 7f 41 85 a9 08 8b 16 21 eb a6   w...`..A.....!..
-      00000010  00 00 00 00 00 03 00 00 20 00 00 00 00 00 00 00   ........ .......
-      00000020  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
-      00000030  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
-      00000040  00 00 00 00 00 00 00 00                           ........
-
-  Payload (32 bytes):
-      00000000  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
-      00000010  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
-
--- 
-Thanks,
-Mauro
+>
+> > Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+> > ---
+> >   hw/i2c/aspeed_i2c.c | 6 +++++-
+> >   1 file changed, 5 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> > index 1b8ac561c3..3de72db652 100644
+> > --- a/hw/i2c/aspeed_i2c.c
+> > +++ b/hw/i2c/aspeed_i2c.c
+> > @@ -272,7 +272,11 @@ static int aspeed_i2c_bus_send(AspeedI2CBus *bus)
+> >           }
+> >           while (bus->regs[reg_dma_len]) {
+> >               uint8_t data;
+> > -            aspeed_i2c_dma_read(bus, &data);
+> > +            ret =3D aspeed_i2c_dma_read(bus, &data);
+> > +            /* Check that we were able to read the DMA */
+> > +            if (ret) {
+> > +                break;
+> > +            }
+> >               trace_aspeed_i2c_bus_send("DMA", bus->regs[reg_dma_len],
+> >                                         bus->regs[reg_dma_len], data);
+> >               ret =3D i2c_send(bus->bus, data);
+>
+>
+> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
+>
+>
+> Thanks,
+>
+> C.
 
