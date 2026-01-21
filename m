@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3FF4C44525
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 13:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB89C44525
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 13:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viXs3-0005lF-Bg; Wed, 21 Jan 2026 08:03:39 -0500
+	id 1viXtv-0006vT-8F; Wed, 21 Jan 2026 08:05:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1viXs0-0005kC-Pi
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:03:36 -0500
-Received: from mgamail.intel.com ([192.198.163.16])
+ id 1viXtr-0006td-Qa
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:05:31 -0500
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1viXry-0004vU-SI
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:03:36 -0500
+ id 1viXtm-0005Qa-Bx
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 08:05:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1769000615; x=1800536615;
+ t=1769000726; x=1800536726;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=hIL8zMa8hY5TMteGWocN2wSEkFwQBU/y01MYZGrbQfk=;
- b=FvaHC7eKIXLgJUHRF0MdFck5Chtewz3Z+QQbe76lOLIw/KyyfKLxqAZW
- ld2dSSyx3DwmzKJRMvAV9kT3n4xUOCyiDHlCeg123PK4yCPUbPFgv5ysY
- wn4IN/F0rVXarnd/V2R+g+nSWSZS9pxaRa6oghXDHmmx09z44MLPki1Cx
- pflVtQZOXjwWl/X16RF2BZ5qFPYp7hUXiCuDryR8WwkWZlboaXjfm9/ck
- rEr1L5TFlz+VLGIhSl/4BngrXeHyUo2STuzn6JYrqGzR1FACua1aLJhbo
- tIt4CsZkywbMM0R2706Pg+OjDi0tHM2JMeHTKdjr6uFOcvamsONwQRK2E g==;
-X-CSE-ConnectionGUID: K/DOeN2HSQeZsYfV4k4f/A==
-X-CSE-MsgGUID: fhvxa7qNRxS8d0wIgR5SYg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11677"; a="57787180"
-X-IronPort-AV: E=Sophos;i="6.21,242,1763452800"; d="scan'208";a="57787180"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jan 2026 05:03:33 -0800
-X-CSE-ConnectionGUID: 2DMRan3XTQusydQo611PHQ==
-X-CSE-MsgGUID: 8YR67kEBRNGggPLjfq1wfw==
+ bh=HcPdLMmqmzJhocHKNIBLY++HkHtBNmBg7ubrF2kJ9Zs=;
+ b=AoaNi8J+nTKMmiRP2pX1CgTrrw3q/ULlCj6fBIqJBcv3Nhbn3ipGSSiw
+ KPNcO0LZVayMh+HMmnr/4sHCZMUoEtYlLKlTHT+GThSpIg/q1mLLDqBlU
+ 2/UlK0PswKaC8tIYGUF6BKeut36oMlXJ1ZzuPvUXhb9WsI0+jG+c+IVXt
+ mPJrAxtcEjBDHjcYuQvL6c++tzdYpYYSfx0cVh0oMYhYWoMxf2wEyvn6P
+ d/jB4XFpw11hqd+wCgZtqSANxZl9JtDeHAn8bM5gtBwfGezO5ue4Tz4ae
+ vBZ58EWfiwrnQySLGpS0UODmlzyY82/zKMZZj6CWM6KBj/ILlPY6FxtXE A==;
+X-CSE-ConnectionGUID: p/nYVw0hS8KFIydZYEa/Yw==
+X-CSE-MsgGUID: 9mHX/7JYQIGpI/ahXlCpuw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11677"; a="80853318"
+X-IronPort-AV: E=Sophos;i="6.21,242,1763452800"; d="scan'208";a="80853318"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Jan 2026 05:05:25 -0800
+X-CSE-ConnectionGUID: THbKd6MhRA+G6eaUPXLLKw==
+X-CSE-MsgGUID: VZ5AvJ+mQ4ucs0Qfk/aGzg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,242,1763452800"; d="scan'208";a="205573176"
+X-IronPort-AV: E=Sophos;i="6.21,242,1763452800"; d="scan'208";a="206358813"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 21 Jan 2026 05:03:31 -0800
-Date: Wed, 21 Jan 2026 21:29:03 +0800
+ by fmviesa006.fm.intel.com with ESMTP; 21 Jan 2026 05:05:23 -0800
+Date: Wed, 21 Jan 2026 21:30:55 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, ewanhai@zhaoxin.com,
- cobechen@zhaoxin.com
-Subject: Re: [PATCH v3 3/3] target/i386: Fix FEAT_C000_0001_EDX comment in
- Yongfeng model
-Message-ID: <aXDUn6GY9YPCfq8D@intel.com>
-References: <20260109021028.83985-1-ewanhai-oc@zhaoxin.com>
- <20260109021028.83985-4-ewanhai-oc@zhaoxin.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: Re: [PATCH v2] tests/functional/x86_64: Limit the memlock test to
+ Linux hosts
+Message-ID: <aXDVD3YCN1U8Ey3c@intel.com>
+References: <20260121111140.99482-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260109021028.83985-4-ewanhai-oc@zhaoxin.com>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20260121111140.99482-1-thuth@redhat.com>
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -85,35 +86,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 08, 2026 at 09:10:28PM -0500, Ewan Hai wrote:
-> Date: Thu, 8 Jan 2026 21:10:28 -0500
-> From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-> Subject: [PATCH v3 3/3] target/i386: Fix FEAT_C000_0001_EDX comment in
->  Yongfeng model
-> X-Mailer: git-send-email 2.34.1
+On Wed, Jan 21, 2026 at 12:11:40PM +0100, Thomas Huth wrote:
+> Date: Wed, 21 Jan 2026 12:11:40 +0100
+> From: Thomas Huth <thuth@redhat.com>
+> Subject: [PATCH v2] tests/functional/x86_64: Limit the memlock test to
+>  Linux hosts
 > 
-> Update the comment for FEAT_C000_0001_EDX in YongFeng CPU model to
-> accurately list the missing features instead of the generic TODO message.
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> As background, current Zhaoxin CPUs implement several CPUID.(EAX=0xC0000001,
-> ECX=0):EDX feature bits that are not yet defined in the Linux kernel, for
-> example SM2/SM2_EN, SM3/SM4 and their enable bits, PARALLAX/PARALLAX_EN,
-> TM3/TM3_EN, RNG2/RNG2_EN, PHE2/PHE2_EN, and RSA/RSA_EN.
+> The memlock test analyzes /proc/*/status files and expects the layout
+> from Linux in there. However, these files also exist on NetBSD hosts
+> with a completely different layout, causing this test to fail. Thus
+> limit the test to Linux hosts now. We already have a decorator to
+> skip a test if it is running on a certain host system, but in this
+> case, we rather want to skip if we are not running on a specific
+> host system, so introduce a new @skipUnlessOperatingSystem decorator
+> for this job.
 > 
-> We previously tried to upstream all these extra feature bits in one patch
-> (https://lore.kernel.org/all/20230414095334.8743-1-TonyWWang-oc@zhaoxin.com/),
-> but the maintainer rejected it because there was no in-tree code using these
-> features yet. So our current plan is to add the CPUID bits together with real
-> kernel users step by step, Once full or partial in-tree implementations of
-> these features are merged, we will update these definitions accordingly and
-> potentially introduce corresponding support in QEMU.
-> 
-> Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  target/i386/cpu.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  v2: Check via a decorator, not via meson.build file
 
-Good cleanup,
+LGTM,
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
