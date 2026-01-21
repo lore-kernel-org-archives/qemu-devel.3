@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2BD9C44501
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 08:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E60EFC44501
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 08:57:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viTvw-0008Vs-Jy; Wed, 21 Jan 2026 03:51:24 -0500
+	id 1viU19-0002jD-Bb; Wed, 21 Jan 2026 03:56:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1viTvs-0008Ug-1L
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 03:51:20 -0500
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ id 1viU17-0002iu-B3
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 03:56:45 -0500
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1viTvp-00074t-PD
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 03:51:19 -0500
+ id 1viU14-0000Ga-Np
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 03:56:45 -0500
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 7F1D642045
- for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 08:51:11 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 03F2A40196
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 08:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1768985471;
- bh=4Sqfa2wUpVvJg1NRz7WrJKnxdF0ofiuJJ54vPoZJpOA=;
+ s=20210803; t=1768985800;
+ bh=p6vyizT5BF96Dp7acIZLc83hhxZVrgq3WR53dq1jRxQ=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=OxLsaDeMZjvESlSG0zc8JLJRlx5FdcnBcxdYiZf9LgYCr53K/QxHzCFTEsWMswDUT
- zZJ+S1hGt/MyviUMTCTBuN6oTna24YNl7R2RFpe/gqTZnpjuRq/1u9eBwatji6sAhb
- 96o+mwKrfTMlFW2gmcM1dfdR26zwKSrd25esHbZ6T9WOkH0NTSdQLxH9kxh9S5a/Ek
- 0BWMpUZVMlrDZ+9P9sqwVmBGYnwNf8T+5EUNPiT6pZw+WMrJwacbb2S8Ogh1g+uqe4
- YpFjT319cH3UkfcQFMfyMpHAVkpGKIUOIXIaKzsEn2JeLZcrFZY8s01n3R25I7yo2y
- BB9Cu7/dfzhTA==
+ b=Rt8zKu5CgHd1J64EkHHAHJ/NDxNHSJiqKGybuwTYxIVp5EAEUDGdez3NZdn8zk+Z2
+ Vy4HTdmV4BBEvqHzFLyECMMofINPckAJbxStwgJDmah3OeHV3x5wZdNZ/H7zSiK3xD
+ lhrWd9IMobwkX5YHdQmv7sJj78bx8zTn3fdOoYsc9h09dBl5j2e/rkXwYdMK6rmCyA
+ xU+0nUze6vNnEU1/cbmGWczqq2nPTQBE/SluadH6sn2eW02PNAymU1ZWBWmHVcaY/u
+ qbFXuTTp2eCYasU7siRYnLAbUADB/q/BizI+u5uvSUnFuKATXsWWCsmKAftE0woC7g
+ tQHk4NkXNMCcQ==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 63D017E5D3
- for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 08:51:11 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id DE0047E71C
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 08:56:39 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 21 Jan 2026 08:44:06 -0000
-From: Christian Ehrhardt <2133804@bugs.launchpad.net>
+Date: Wed, 21 Jan 2026 08:46:44 -0000
+From: Christian Ehrhardt <2133188@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
 X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
 X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
  milestone=ubuntu-26.04; status=Confirmed; importance=High; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Low; assignee=None; 
 X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=Confirmed; importance=High;
+ component=main; milestone=ubuntu-24.04.4; status=New; importance=Undecided;
  assignee=None; 
 X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Medium; assignee=None; 
+ component=main; status=Won't Fix; importance=Undecided; assignee=None; 
 X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium; assignee=None; 
+ component=main; status=New; importance=Undecided; assignee=None; 
 X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
  component=main; milestone=ubuntu-26.04; status=Confirmed; importance=High;
  assignee=None; 
 X-Launchpad-Bug-Information-Type: Public
 X-Launchpad-Bug-Private: no
 X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: paelzer utkarsh xypron
-X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
+X-Launchpad-Bug-Commenters: janitor paelzer qianqiu-2020 utkarsh xypron
+X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
 X-Launchpad-Bug-Modifier: Christian Ehrhardt (paelzer)
-References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <176898504640.3817889.6769269597129788553.malone@juju-98d295-prod-launchpad-2>
-Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
+References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
+Message-Id: <176898520458.3804449.6541613101442786110.malone@juju-98d295-prod-launchpad-3>
+Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
+ handler
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
 X-Launchpad-Message-For: qemu-devel-ml
 Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="9fcfff1971229ac997140f06b41a902ac8ec69f4";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: e437e425acbe6fbd286089156a8f32ad3a214494
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Launchpad-Hash: 8f2728d6f8745ab375aa3665728a3cde3247e271
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
@@ -98,80 +97,157 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
+Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sadly that has not yet fully concluded by now, patches got sent in
-https://mail.gnu.org/archive/html/qemu-devel/2026-01/msg00129.html but
-not yet fully merged. We need to re-check what we could merge along 10.2
-in the next few days.
-
-Or we merge 10.2 but add this as a test fix later but before 26.04 comes ou=
-t.
-That is ok for 26.04, but further delays the SRU of the same to older relea=
-ses which can affect running the new release there :-/
+Sadly this has gotten stuck upstream, there have been patches and people
+willing to test but nothing concluded. We will have to check if/what we
+can merge along 10.2 in the next few days or if it has to be a bug-fix
+upload afterwards but hopefully before 26.04 release.
 
 --=20
 You received this bug notification because you are a member of qemu-
 devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133804
+https://bugs.launchpad.net/bugs/2133188
 
 Title:
-  QEMU does not emulate IOCTL TCGETS2
+  [SRU] RISC-V vector state not restored by signal handler
 
 Status in QEMU:
   New
 Status in qemu package in Ubuntu:
   Confirmed
-Status in qemu source package in Jammy:
-  Confirmed
 Status in qemu source package in Noble:
-  Confirmed
+  New
 Status in qemu source package in Plucky:
   Won't Fix
 Status in qemu source package in Questing:
-  Confirmed
+  New
 Status in qemu source package in Resolute:
   Confirmed
 
 Bug description:
-  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
-  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
-  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
-  arm64, ...).
+  # Title
+  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
+et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
 
-  This leads to failures in containers for foreign architectures. E.g. no c=
-onsole prompt is displayed.=20
-  A detailed analysis is contained in LP #2133188.
+  ## Summary
+  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
+ 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
+gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
+ (core dumped)" or "died with signal 4". The illegal instruction is observe=
+d inside glibc's memset implementation at an instruction that uses RISC-V v=
+ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
+e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
+nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
+lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
+code generation / state corruption), not a cmake bug.
 
-  A proper implementation of the missing IOCTLs will include:
+  ## Affects
+  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
+untu3)
+  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
+qemu-user static interpreter
 
-  Functions:
+  ## Environment / Context
+  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
+  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
+  - Container image: ubuntu:26.04 for riscv64
+  - qemu package used:
+    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
+b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
+-user_10.0.6+ds-0+deb13u2).=20
+    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
+ost and registered via /proc/sys/fs/binfmt_misc/register
+  - CMake version used inside container (bootstrap/build may use system-pro=
+vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
+ggers crash)
+  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
+eral consecutive successes or failures)
+  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
+t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
+QEMU_STRACE also makes it much harder to reproduce.
+   =20
 
-  in linux-user/syscall.c:
-  host_to_target_termios2()
-  target_to_host_termios2()
-  print_termios2()
+  ## Full reproduction steps
+  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
+ry:
+     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
+uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
+     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
+-5ubuntu3_amd64
+     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
+in/qemu-riscv64-static
 
-  Definitions:
+  2. Register qemu-riscv64 with binfmt_misc:
+     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
+     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
+00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
+\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
+ >/proc/sys/fs/binfmt_misc/register
 
-  in linux-user/syscall.c
-  #define termios2 host_termios2
+  3. Start riscv64 ubuntu container:
+     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
+4 bash
+     docker exec -it ubuntu26 bash -i
 
-  in linux-user/syscall_types.h
-  STRUCT_SPECIAL(termios2)
+  4. Inside container:
+     apt update
+     apt install -y build-essential cmake
 
-  in linux-user/ioctls.h:
-  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  5. Reproducer 1:
+     cmake --system-information
+     -> Often fails with:
+        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
+        Illegal instruction (core dumped)
 
-  in linux-user/user-internals.h:
-  void print_termios2(void *arg);
+  6. Reproducer 2 (minimal C project):
+     Create test_cmake/CMakeLists.txt:
+     cmake_minimum_required(VERSION 3.10)
+     project(HelloCMake C)
+     add_executable(hello main.c)
+
+     Create test_cmake/main.c:
+     #include <stdio.h>
+     int main() {
+         printf("Hello, CMake!\n");
+         return 0;
+     }
+
+     cd test_cmake
+     cmake .
+     -> Crash with:
+        -- Detecting C compiler ABI info
+        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
+
+  7. Reproducer 3 (rebuild cmake from source inside container):
+     apt source cmake
+     cd cmake
+     apt-get build-dep .
+     dpkg-buildpackage -us -uc -b
+     -> Bootstrapping error:
+        Illegal instruction (core dumped)
+        Error when bootstrapping CMake:
+        Problem while running initial CMake
+
+  8. Observed crash location (from gdb/QEMU_STRACE when available):
+     - Illegal instruction is in memset@@GLIBC_2.27+0x52
+     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
+bit elements)
+
+
+  ## Workarounds
+  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
+ using vectorized memset.
+  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
+=E2=80=94 both make the failure much less likely.
+
+  Note: The same workload does not reproduce the crash when run under
+  qemu-system (full-system emulation). The issue appears specific to
+  qemu-user
 
 To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
+https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
 
 
