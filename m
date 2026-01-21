@@ -4,67 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6914ED46954
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 16:34:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D73EC44536
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 16:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vib40-00070r-Mk; Wed, 21 Jan 2026 11:28:16 -0500
+	id 1vib5g-000801-Ew; Wed, 21 Jan 2026 11:29:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vib2W-0005eW-Ha
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 11:26:43 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vib46-000736-RP
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 11:28:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vib2U-0003Oj-ED
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 11:26:39 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 6BBF343802;
- Wed, 21 Jan 2026 16:26:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F76EC4CEF1;
- Wed, 21 Jan 2026 16:26:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769012796;
- bh=fLylYEARCcMukST3MyB+TlKcZ2XozjvW++Y1+T24Tco=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=cF6kYRaZ7ZKgaaHQMm01eE4H8K9absBKkRR2erz5koJGIGMHMo7mTx2om6z7mFEw1
- Rj0MdZ/zKO3kJa0Ku8EtgNFBLaRwb4SdVqFqclxb1l1s+Uf0n9wBEYGIk5RE9sWmmp
- jfO4kHfGTkXmhKoR0BfOjkgWl1lFuLGLJ6I2GIzA+29xG3gaObXbpgvEiVKHRj7dUY
- VEDzsdCzRkbOqKpMKZy2WMqAIv2AjH/mt0RaqLTbgYlPV2K9cV5dqZqS5DpkryJuvO
- OzYjb8nLgsU3xWMMbiztpoZc16r0hYU45JbilwAdsS98Yg+lTcMfr7BDjXni/mtuSM
- I+icWB0cwOASA==
-Received: from mchehab by mail.kernel.org with local (Exim 4.99)
- (envelope-from <mchehab+huawei@kernel.org>)
- id 1vib2Q-00000003u9Y-0mOR; Wed, 21 Jan 2026 17:26:34 +0100
-Date: Wed, 21 Jan 2026 17:26:34 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
- Michael S Tsirkin <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-devel@nongnu.org, 
- Igor Mammedov <imammedo@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH 09/13] scripts/ghes_inject: add a handler for PCIe bus
- error
-Message-ID: <aXD9zxGctPoBuyhU@foz.lan>
-References: <cover.1768993993.git.mchehab+huawei@kernel.org>
- <c7db16aae93a98f3b0675e1010e59f6cefdaf1cd.1768993993.git.mchehab+huawei@kernel.org>
- <20260121133255.000018b1@huawei.com>
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vib44-0004Pj-Lh
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 11:28:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769012894;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=q2aEhM5SMkba1phfpRyBD/3sybNT84asY5s0cd0gCRA=;
+ b=cjmaIL5+ataSz0HY7LNhzDSqF2Z+gQsSq6fdhyOaa/KTvtWREPKfkqysI7b9+HGwDyCUL1
+ F8jt10HXOEkQfFAnbi1cVRtVkCmheg3donHkfDHA2i0yrjECy1raa1JejbG0+dQEpHRlDX
+ /WObiBTpUBkWgksT13qVCYEpmbz4FB4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-BnSZ7QsTOh28YNenxjnS4g-1; Wed,
+ 21 Jan 2026 11:28:12 -0500
+X-MC-Unique: BnSZ7QsTOh28YNenxjnS4g-1
+X-Mimecast-MFC-AGG-ID: BnSZ7QsTOh28YNenxjnS4g_1769012891
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 747E418005BF; Wed, 21 Jan 2026 16:28:10 +0000 (UTC)
+Received: from localhost (unknown [10.44.34.34])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFD5D1800577; Wed, 21 Jan 2026 16:28:09 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Peter Maydell
+ <peter.maydell@linaro.org>, Eric Auger <eric.auger@redhat.com>,
+ jonathan.cameron@huawei.com
+Subject: Re: [PATCH RFC 0/3] arm: demuxed ID registers (CCSIDR_EL1)
+In-Reply-To: <20260120114447.00004699.alireza.sanaee@huawei.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20260119172732.140613-1-cohuck@redhat.com>
+ <20260120114447.00004699.alireza.sanaee@huawei.com>
+User-Agent: Notmuch/0.39 (https://notmuchmail.org)
+Date: Wed, 21 Jan 2026 17:28:07 +0100
+Message-ID: <878qdrszfs.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260121133255.000018b1@huawei.com>
-Received-SPF: pass client-ip=172.234.252.31;
- envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,42 +89,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 21, 2026 at 01:32:55PM +0000, Jonathan Cameron wrote:
-> On Wed, 21 Jan 2026 12:25:17 +0100
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> 
-> > Add a logic to do PCIe BUS error injection.
-> > 
-> > On Linux Kernel, despite CPER_SEC_PCI_X_BUS macro is defined for such
-> > event, ghes.c doesn't implement support for it yet:
-> > 
-> > [16950.077494] {26}[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 1
-> > [16950.077866] {26}[Hardware Error]: event severity: recoverable
-> > [16950.078118] {26}[Hardware Error]:  Error 0, type: recoverable
-> > [16950.078444] {26}[Hardware Error]:   section type: unknown, c5753963-3b84-4095-bf78-eddad3f9c9dd
-> > [16950.078800] {26}[Hardware Error]:   section length: 0x48
-> > [16950.079069] {26}[Hardware Error]:   00000000: 00000000 00000000 00000000 00000000  ................
-> > [16950.079442] {26}[Hardware Error]:   00000010: 00000001 00000000 00000000 00000000  ................
-> > [16950.079811] {26}[Hardware Error]:   00000020: 00000000 00000000 00000000 00000000  ................
-> > [16950.080181] {26}[Hardware Error]:   00000030: 00000000 00000000 00000000 00000000  ................
-> > [16950.080538] {26}[Hardware Error]:   00000040: 00000000 00000000                    ........
-> > 
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> 
-> LGTM. Bit surprised Linux doesn't decode it but fair enough.
-> Seems a bit unlikely it ever will given this seems not to cover PCIe
-> which has it's own records.
+On Tue, Jan 20 2026, Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
 
-Yeah, me too. If I got it right from specs, this one is related to
-the PCIe bus controller, while the other one is for the PCIe device.
+> On Mon, 19 Jan 2026 18:27:29 +0100
+> Cornelia Huck <cohuck@redhat.com> wrote:
+>
+> Hi Cornelia,
+>
+>
+>
+>> Note: this is on top of <20260105154119.59853-1-cohuck@redhat.com>
+>> ("[PATCH v3 0/2] arm: move DCZID_EL0 to idregs array")
+>> 
+>> While trying to move to an autogenerated cpu-sysregs.h.inc (so that we
+>> may keep a common view on registers), we should first address the ID
+>> registers that are still kept outside of ARMISARegisters. Other than
+>> DCZID_EL0 (addressed by the series this one goes on top of), that's
+>> the CCSIDR_EL1 values kept in cpu->cssidr[] (indexed via CSSELR_EL1.)
+>> 
+>> My idea was to provide {GET,SET}_IDREG_DEMUX helper that work similar
+>> to {GET,SET}_IDREG and operate on a two-dimensional array. As a side
+>> effect, this also allows to get the values KVM provides for CCSIDR_EL1
+>> (which are virtualized as well.)
+>> 
+>> RFC because there are still some open questions:
+>> - The demux array cannot easily be autogenerated. We can get rid of the
+>>   ccsidr[] array, but we now have an autogenerated entry in the non-demux
+>>   array that does nothing. Both are not that nice.
+>> - I'm not sure if we need any compat handling for KVM (on TCG, everything
+>>   should stay the same.) In theory, the KVM interface allows setting
+>>   values from userspace (I didn't try.)
+>> - There's a slight disagreement between the current code (providing 16
+>>   entries for CCSIDR_EL1) and the KVM code (providing (7 cache levels) *
+>>   (data/unified, instruction) = 14 entries.) With FEAT_MTE2, we might be
+>>   needing 7 more entries.
+>> 
+>> Feedback appreciated.
+>> 
+>> Cornelia Huck (3):
+>>   arm: handle demuxed ID registers
+>>   arm: handle CCSIDR_EL1 as a demuxed register
+>>   arm/kvm: get demuxed ID registers from kvm
+>> 
+>>  hw/intc/armv7m_nvic.c        |  2 +-
+>>  target/arm/cpu-sysregs.h     |  6 ++++
+>>  target/arm/cpu-sysregs.h.inc |  1 +
+>>  target/arm/cpu.h             | 26 ++++++++++++----
+>>  target/arm/cpu64.c           | 12 ++++----
+>>  target/arm/helper.c          |  2 +-
+>>  target/arm/kvm.c             | 33 ++++++++++++++++++++
+>>  target/arm/tcg/cpu32.c       | 32 +++++++++----------
+>>  target/arm/tcg/cpu64.c       | 60 ++++++++++++++++++------------------
+>>  9 files changed, 114 insertions(+), 60 deletions(-)
+>> 
+>
+> This impacts my set https://lore.kernel.org/all/20260106155828.643-1-alireza.sanaee@huawei.com/
 
-Perhaps in practice vendors are using hardware-first approach for
-the PCI controller.
+Duh, that series had actually been sitting in my "to look at" queue...
 
-> 
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+>
+> I tested it with mine of course it required a few changes, but looks like working on TCG, didn't try KVM.
+>
+> Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
 
--- 
-Thanks,
-Mauro
+Thanks for testing! I'll also try to take a look at your series.
+
 
