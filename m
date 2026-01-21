@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C5ECC44503
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 11:27:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F1A1C44503
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 11:27:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viWLa-0003DJ-E4; Wed, 21 Jan 2026 06:26:02 -0500
+	id 1viWLN-00030M-V3; Wed, 21 Jan 2026 06:25:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1viWLH-0002ty-9g
+ id 1viWLH-0002tx-Ad
  for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:43 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1viWLC-0007ow-LY
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:42 -0500
+ id 1viWLB-0007ox-RY
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 06:25:41 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 90E2D60129;
+ by tor.source.kernel.org (Postfix) with ESMTP id 8DA0760128;
  Wed, 21 Jan 2026 11:25:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066B9C4AF0D;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013C3C4AF0C;
  Wed, 21 Jan 2026 11:25:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1768994725;
- bh=Hu2Nuwxl05GDxOG3ScOICaIXDI/9+rYXUfgkR+kkZQ0=;
+ bh=mRTiQT08l0TCnOryhluz+wDoZtjnsd9LqGsTC5w9rA0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=foVDdA/RGyJ26rskWO1o7EhNbpjRdT4l9uFLHC32ADEP4xwzjJ2cmedJ0otawVa7I
- m+F6llD7hKcRahu/n6914X2lpS6YIj0cR+ZWtdQZzyohyCcRLOMmj62lhssOGunnPj
- cRHhP5Wq2p7kc8jZrsdoxYI0GTtovmGY3qBbd3R6iGCdfbSsYuZ3nU2ZWLDD+ufRyL
- DRyQOTb04ssAnIfZCv8kN799PRW58GcSDSoHphv+HglIS5j8Ici2mhKg6MxPWrI1ky
- 86oXIOiu200WZMUwKcamuIwvO9J6rjZjX2GgVn0bILP3wH+NuJXsjkGB7APagmyabl
- CHumBI6JwX9VQ==
+ b=LpJ/jMlViZvbGeLmF+p0PPHz9xZBF+9o7zaEvIaMD8Dghpq/xNsV+IhNnOFdOP3tE
+ NHFlEQbMoWkNSpwxzb3TXDLkD2ty5W9UNJU+rDzUQnG+8oGyIVLocLY94F/vpysVuL
+ qiqDYnVyCF9tZPsJlbYCno9YoNOhAHTU5kz2My+letVbolXjzCMvTzDBcdrYD26lnY
+ z66VbwfNXFwUwcULOhH5B8f2K6O5YuCwmEqU/YfbliLnjrDsQPFB0OyGxWJGaDhbcD
+ NreJcz/C7/yE6Lz74jwOKdTdOdulG+GeozJjpwbjoGA6RMVvNii5VnVRkg18AuOoNG
+ rkjhvM4A98QgA==
 Received: from mchehab by mail.kernel.org with local (Exim 4.99)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1viWKx-00000003gJq-0vJd; Wed, 21 Jan 2026 12:25:23 +0100
+ id 1viWKx-00000003gJy-196j; Wed, 21 Jan 2026 12:25:23 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Michael S Tsirkin <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -45,22 +45,23 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Igor Mammedov <imammedo@redhat.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH 09/13] scripts/ghes_inject: add a handler for PCIe bus error
-Date: Wed, 21 Jan 2026 12:25:17 +0100
-Message-ID: <c7db16aae93a98f3b0675e1010e59f6cefdaf1cd.1768993993.git.mchehab+huawei@kernel.org>
+Subject: [PATCH 11/13] scripts/ghes_inject: add a raw error inject command
+Date: Wed, 21 Jan 2026 12:25:19 +0100
+Message-ID: <9e683379c26044ff0524b0f422b9b659162f9484.1768993993.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <cover.1768993993.git.mchehab+huawei@kernel.org>
 References: <cover.1768993993.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+Received-SPF: pass client-ip=172.105.4.254;
  envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.087,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,214 +78,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a logic to do PCIe BUS error injection.
+Add a command to repeat a raw CPER record.
 
-On Linux Kernel, despite CPER_SEC_PCI_X_BUS macro is defined for such
-event, ghes.c doesn't implement support for it yet:
+This helps to reproduce some condition that happened before.
 
-[16950.077494] {26}[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 1
-[16950.077866] {26}[Hardware Error]: event severity: recoverable
-[16950.078118] {26}[Hardware Error]:  Error 0, type: recoverable
-[16950.078444] {26}[Hardware Error]:   section type: unknown, c5753963-3b84-4095-bf78-eddad3f9c9dd
-[16950.078800] {26}[Hardware Error]:   section length: 0x48
-[16950.079069] {26}[Hardware Error]:   00000000: 00000000 00000000 00000000 00000000  ................
-[16950.079442] {26}[Hardware Error]:   00000010: 00000001 00000000 00000000 00000000  ................
-[16950.079811] {26}[Hardware Error]:   00000020: 00000000 00000000 00000000 00000000  ................
-[16950.080181] {26}[Hardware Error]:   00000030: 00000000 00000000 00000000 00000000  ................
-[16950.080538] {26}[Hardware Error]:   00000040: 00000000 00000000                    ........
+The input format of the file is identical to the hexadecimal
+dump generated by ghes_inject tool.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- MAINTAINERS               |   1 +
- scripts/ghes_inject.py    |   2 +
- scripts/pcie_bus_error.py | 146 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 149 insertions(+)
- create mode 100644 scripts/pcie_bus_error.py
+ MAINTAINERS            |   1 +
+ scripts/ghes_inject.py |   2 +
+ scripts/raw_error.py   | 175 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 178 insertions(+)
+ create mode 100644 scripts/raw_error.py
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index a970c47dd089..48067a618523 100644
+index e553f8252f14..9d74d057048e 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2228,6 +2228,7 @@ F: qapi/acpi-hest.json
- F: scripts/ghes_decode.py
- F: scripts/ghes_inject.py
- F: scripts/arm_processor_error.py
-+F: scripts/pcie_bus_error.py
+@@ -2231,6 +2231,7 @@ F: scripts/arm_processor_error.py
+ F: scripts/fuzzy_error.py
+ F: scripts/pcie_bus_error.py
  F: scripts/qmp_helper.py
++F: scripts/raw_error.py
  
  ppc4xx
+ L: qemu-ppc@nongnu.org
 diff --git a/scripts/ghes_inject.py b/scripts/ghes_inject.py
-index 6ac917d0b5db..29a6a57508cd 100755
+index 9b0a2443fc97..781b37cc68af 100755
 --- a/scripts/ghes_inject.py
 +++ b/scripts/ghes_inject.py
-@@ -12,6 +12,7 @@
- import sys
- 
+@@ -14,6 +14,7 @@
  from arm_processor_error import ArmProcessorEinj
-+from pcie_bus_error import PcieBusError
+ from pcie_bus_error import PcieBusError
+ from fuzzy_error import FuzzyError
++from raw_error import RawError
  
  EINJ_DESC = """
  Handle ACPI GHESv2 error injection logic QEMU QMP interface.
-@@ -40,6 +41,7 @@ def main():
-     subparsers = parser.add_subparsers()
- 
+@@ -44,6 +45,7 @@ def main():
      ArmProcessorEinj(subparsers)
-+    PcieBusError(subparsers)
+     PcieBusError(subparsers)
+     FuzzyError(subparsers)
++    RawError(subparsers)
  
      args = parser.parse_args()
      if "func" in args:
-diff --git a/scripts/pcie_bus_error.py b/scripts/pcie_bus_error.py
+diff --git a/scripts/raw_error.py b/scripts/raw_error.py
 new file mode 100644
-index 000000000000..e8285b5dcc84
+index 000000000000..f5e77bdfcead
 --- /dev/null
-+++ b/scripts/pcie_bus_error.py
-@@ -0,0 +1,146 @@
++++ b/scripts/raw_error.py
+@@ -0,0 +1,175 @@
 +#!/usr/bin/env python3
 +#
-+# pylint: disable=C0114,R0903
++# pylint: disable=C0114,R0903,R0912,R0914,R0915,R1732
 +# SPDX-License-Identifier: GPL-2.0
 +#
 +# Copyright (C) 2024 Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 +
-+from qmp_helper import qmp, util, cper_guid
++import argparse
++import os
++import re
++import sys
 +
-+class PcieBusError:
++from time import sleep
++
++from qmp_helper import qmp, guid
++
++class RawError:
 +    """
-+    Implements PCI Express bus error injection via GHES
++    Injects errors from a file containing raw data
++    """
++
++    SCRIPT_NAME = sys.argv[0]
++
++    HELP=f"""
++    Inject a CPER record from a previously recorded one.
++
++    One or more CPER records can be recorded. The records to be
++    injected are read from an specified file or from stdin and should
++    have the format produced by this script when using --debug, e.g.:
++
++    GUID: e19e3d16-bc11-11e4-9caa-c2051d5d46b0
++    CPER:
++        00000000  04 00 00 00 02 00 01 00 88 00 00 00 00 00 00 00   ................
++        00000010  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
++        00000020  00 00 00 00 00 00 00 00 00 20 05 00 08 02 00 03   ......... ......
++        00000030  ff 0f 46 d6 80 00 00 00 ef be ad de 00 00 00 00   ..F.............
++        00000040  ad 0b ba ab 00 00 00 00 00 20 04 00 04 01 00 03   ......... ......
++        00000050  7f 00 54 00 00 00 00 00 ef be ad de 00 00 00 00   ..T.............
++        00000060  ad 0b ba ab 00 00 00 00 00 00 05 00 18 00 00 00   ................
++        00000070  ef be ad de 00 00 00 00 ab ba ba ab 00 00 00 00   ................
++        00000080  00 00 00 00 00 00 00 00                           ........
++
++    Multiple such records can be used. On such case, a delay will
++    be introduced betewen them.
++
++    All lines that can't be parsed will be silently ignored.
++    As such, the output of this help can be piped to the raw-error
++    generator with:
++
++        {SCRIPT_NAME} -d raw-error -h | {SCRIPT_NAME} -d raw-error
 +    """
 +
 +    def __init__(self, subparsers):
 +        """Initialize the error injection class and add subparser"""
 +
-+        # Valid values
-+        self.valid_bits = {
-+            "status": util.bit(0),
-+            "type": util.bit(1),
-+            "bus-id": util.bit(2),
-+            "bus-addr": util.bit(3),
-+            "bus-data": util.bit(4),
-+            "command": util.bit(5),
-+            "requestor-id": util.bit(6),
-+            "completer-id": util.bit(7),
-+            "target-id": util.bit(8),
-+        }
++        self.payload = bytearray()
++        self.inj_type = None
++        self.size = 0
 +
-+        self.bus_command_bits = {
-+            "pci": 0,               # Bit 56 is zero
-+            "pci-x": util.bit(56)
-+        }
++        parser = subparsers.add_parser("raw-error",  aliases=['raw'],
++                                       description=self.HELP,
++                                       formatter_class=argparse.RawTextHelpFormatter)
 +
-+        self.data = bytearray()
-+
-+        parser = subparsers.add_parser("pcie-bus",
-+                                       description="Generate PCIe bus error CPER")
-+        g_pcie = parser.add_argument_group("PCIe bus error")
-+
-+        valid_bits = ",".join(self.valid_bits.keys())
-+        bus_command_bits = ",".join(self.bus_command_bits.keys())
-+
-+        g_pcie.add_argument("-v", "--valid",
-+                            help=f"Valid bits: {valid_bits}")
-+        g_pcie.add_argument("-s", "--error-status",
-+                            type=lambda x: int(x, 0),
-+                            help="Error Status")
-+        g_pcie.add_argument("-t", "--error-type",
-+                            type=lambda x: int(x, 0),
-+                            help="Error type")
-+        g_pcie.add_argument("-b", "--bus-number",
-+                            type=lambda x: int(x, 0),
-+                            help="Bus number")
-+        g_pcie.add_argument("-S", "--segment-number",
-+                            type=lambda x: int(x, 0),
-+                            help="Segment number")
-+        g_pcie.add_argument("-a", "--bus-address",
-+                            type=lambda x: int(x, 0),
-+                            help="Bus address")
-+        g_pcie.add_argument("-d", "--bus-data",
-+                            type=lambda x: int(x, 0),
-+                            help="Bus data")
-+        g_pcie.add_argument("-c", "--bus-command",
-+                            help=f"bus-command: {bus_command_bits}")
-+        g_pcie.add_argument("-r", "--bus-requestor",
-+                            type=lambda x: int(x, 0),
-+                            help="Bus requestor ID")
-+        g_pcie.add_argument("-C", "--bus-completer",
-+                            type=lambda x: int(x, 0),
-+                            help="Bus completer ID")
-+        g_pcie.add_argument("-i", "--target-id",
-+                            type=lambda x: int(x, 0),
-+                            help="Target ID")
++        parser.add_argument("-f", "--file",
++                            help="File name with the raw error data. '-' for stdin")
++        parser.add_argument("-d", "--delay", type=lambda x: int(x, 0),
++                            default=1,
++                            help="Specify a delay between multiple CPER. Default=1")
 +
 +        parser.set_defaults(func=self.send_cper)
 +
 +    def send_cper(self, args):
 +        """Parse subcommand arguments and send a CPER via QMP"""
 +
++        if not args.file:
++            args.file='-'
++
++        is_guid = re.compile(r"^\s*guid:\s*(\w+\-\w+\-\w+\-\w+-\w+)", re.I)
++        is_gesb = re.compile(r"^Generic Error Status Block.*:", re.I)
++        is_gede = re.compile(r"^Generic Error Data Entry.*:", re.I)
++        is_raw_data = re.compile(r"^Raw data.*:", re.I)
++        is_payload = re.compile(r"^(Payload|CPER).*:", re.I)
++        is_hexdump = re.compile(r"^(\s*[\da-f]........\s+)(.*)\s\s+.*", re.I)
++        is_hex = re.compile(r"\b([\da-f].)\b", re.I)
++
++        cper = []
++
++        if args.file == "-":
++            fp = sys.stdin
++            if os.isatty(0):
++                print("Using stdin. Press CTRL-D to finish input.")
++            else:
++                print("Reading from stdin pipe")
++        else:
++            try:
++                fp = open(args.file, encoding="utf-8")
++            except FileNotFoundError:
++                sys.exit('File Not Found')
++
++        guid_obj = None
++        gebs = bytearray()
++        gede = bytearray()
++        raw_data = bytearray()
++        payload = bytearray()
++        ln_used = 0
++        ln = 0
++
++        cur = payload
++
++        for ln, line in enumerate(fp):
++            if match := is_guid.search(line):
++                if guid_obj and payload:
++                    cper.append({"guid": guid_obj, "raw-data": payload})
++                    guid_obj = None
++                    payload = bytearray()
++                    gebs = bytearray()
++                    gede = bytearray()
++
++                guid_obj = guid.UUID(match.group(1))
++
++                ln_used += 1
++                continue
++
++            if match := is_gesb.match(line):
++                cur = gebs
++                continue
++
++            if match := is_gede.match(line):
++                cur = gede
++                continue
++
++            if match := is_payload.match(line):
++                cur = payload
++                continue
++
++            if match := is_raw_data.match(line):
++                cur = raw_data
++                continue
++
++            new = is_hexdump.sub(r"\2", line)
++            if new != line:
++                if match := is_hex.findall(new):
++                    for m in match:
++                        cur.extend(bytes.fromhex(m))
++                    ln_used += 1
++                    continue
++                continue
++
++        if guid_obj and payload:
++            cper.append({"guid": guid_obj,
++                         "payload": payload,
++                         "gede": gede,
++                         "gebs": gebs,
++                         "raw-data": raw_data})
++
++        print(f"{ln} lines read, {ln - ln_used} lines ignored.")
++
++        if fp is not sys.stdin:
++            fp.close()
++
 +        qmp_cmd = qmp(args.host, args.port, args.debug)
 +
-+        cper = {}
-+        arg = vars(args)
++        if not cper:
++            sys.exit("Format of the file not recognized.")
 +
-+        # Handle global parameters
-+        if args.valid:
-+            valid_init = False
-+            cper["valid"] = util.get_choice(name="valid",
-+                                            value=args.valid,
-+                                            choices=self.valid_bits)
-+        else:
-+            cper["valid"] = 0
-+            valid_init = True
++        for i, c in enumerate(cper):
++            if i:
++                sleep(args.delay)
 +
-+        if args.bus_command:
-+            cper["bus-command"] = util.get_choice(name="bus-command",
-+                                                    value=args.bus_command,
-+                                                    choices=self.bus_command_bits)
-+        if valid_init:
-+            if args.error_status:
-+                cper["valid"] |= self.valid_bits["status"]
++            ret = qmp_cmd.send_cper(c["guid"], c["payload"], gede=c["gede"],
++                                    gebs=c["gebs"], raw_data=c["raw-data"])
++            if not ret:
++                return ret
 +
-+            if args.error_type:
-+                cper["valid"] |= self.valid_bits["type"]
-+
-+            if args.bus_number and args.bus_segment:
-+                cper["valid"] |= self.valid_bits["bus-id"]
-+
-+            if args.bus_address:
-+                cper["valid"] |= self.valid_bits["bus-address"]
-+
-+            if args.bus_data:
-+                cper["valid"] |= self.valid_bits["bus-data"]
-+
-+            if args.bus_requestor:
-+                cper["valid"] |= self.valid_bits["requestor-id"]
-+
-+            if args.bus_completer:
-+                cper["valid"] |= self.valid_bits["completer-id"]
-+
-+            if args.target_id:
-+                cper["valid"] |= self.valid_bits["target-id"]
-+
-+        util.data_add(self.data, cper["valid"], 8)
-+        util.data_add(self.data, arg.get("error-status", 0), 8)
-+        util.data_add(self.data, arg.get("error-type", util.bit(0)), 2)
-+
-+        # Bus ID
-+        util.data_add(self.data, arg.get("bus-number", 0), 1)
-+        util.data_add(self.data, arg.get("segment-number", 0), 1)
-+
-+        # Reserved
-+        util.data_add(self.data, 0, 4)
-+
-+        util.data_add(self.data, arg.get("bus-address", 0), 8)
-+        util.data_add(self.data, arg.get("bus-data", 0), 8)
-+
-+        util.data_add(self.data, cper.get("bus-command", 0), 8)
-+
-+        util.data_add(self.data, arg.get("bus-requestor", 0), 8)
-+        util.data_add(self.data, arg.get("bus-completer", 0), 8)
-+        util.data_add(self.data, arg.get("target-id", 0), 8)
-+
-+        return qmp_cmd.send_cper(cper_guid.CPER_PCI_BUS, self.data)
++        return True
 -- 
 2.52.0
 
