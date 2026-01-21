@@ -4,66 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1DFBD262AF
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 01:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB59D262AD
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 02:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viMyq-0000ND-Dn; Tue, 20 Jan 2026 20:25:56 -0500
+	id 1viOAy-00059L-K4; Tue, 20 Jan 2026 21:42:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1viMyd-0000K5-SB
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 20:25:47 -0500
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1viMyX-0008EV-Tr
- for qemu-devel@nongnu.org; Tue, 20 Jan 2026 20:25:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=W+Q+U4frGgY6Ka9E31wVj8AxX5C3Peg1JvAnSg9yoB8=; b=rjzG9imMz1ABb2iV
- UvU/MbbVY56S6n97ENjomHKkbxztdGrvYjY5FxTovAHiuKQV+P3pEzVI3erv3IyoaJtrMPrD8qtvn
- fnq5UmCPeuf7ENZUBRrWqO8PkttaGd/Uf0nn/MnzDbeRhQa9FIskB/2qoYmGSuVjMGgkSRxvE31uD
- YQ2Jgt2ltZ4APYKYqK6p0O7zo7ntARgTwVh/+hznczVVp4IAEvb0qV5ASnB5JvZtucQeCRUiXq4Q+
- ze1HunKG/XcBa+q8b0OdXNCnfSswZAkQSTJxoEL0Hx43pwI2Rf9x+Kw0zUpPvssGi0jKACwert48o
- 2+b053YDvcuqvAjH6w==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1viMyS-0000000GE3T-3Odo;
- Wed, 21 Jan 2026 01:25:32 +0000
-Date: Wed, 21 Jan 2026 01:25:32 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Xu <peterx@redhat.com>
-Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
- Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
- Juan Quintela <quintela@trasno.org>,
- Zhang Chen <zhangckid@gmail.com>, zhanghailiang@xfusion.com,
- Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
-Message-ID: <aXArDHMRAohmUt51@gallifrey>
-References: <20260115224929.616aab85@penguin> <aWlso1w39cQnEh2t@x1.local>
- <aWlxY9TWGT1aaMJz@gallifrey> <aWl6ixQpHaMJhV_E@x1.local>
- <20260117204913.584e1829@penguin> <aW6xNcsz3RIqHeE5@x1.local>
- <20260120110811.7df19a6c@penguin> <aW-mCye_eFmy5f4B@x1.local>
- <aW_Rqbc2Swg8vkXY@gallifrey> <aW_ccMSY4xJlRVn2@x1.local>
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1viOAx-000594-RR
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 21:42:31 -0500
+Received: from mail-pj1-x1041.google.com ([2607:f8b0:4864:20::1041])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1viOAw-00032S-90
+ for qemu-devel@nongnu.org; Tue, 20 Jan 2026 21:42:31 -0500
+Received: by mail-pj1-x1041.google.com with SMTP id
+ 98e67ed59e1d1-352f60d6c2fso338441a91.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Jan 2026 18:42:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1768963348; x=1769568148; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Odr1n1qm+Qr2BCwhfBFs50K5fHu9QLRM5Rl0Pq0/hpI=;
+ b=mht2KuAUZE+SMZsWE4a5VWZ6V3VC6rbGfiK2kMOLjS4Uv0kR9lCkNbpuMj/niecXrx
+ XN3oz7oNMWJ+kZnkVAjsOcAwecFD9qWEbj7hXIRlQU7X9LE5R6HndxAobHaWB4fo3kVY
+ +nHpmPEUKwdrC8bp+9eHG0Gmz5P0p+W4OLWLajjYbvAq7mu5SVNj52V/4Pw0OxUvBTqz
+ Q60acPVxf3RboK2bUaRfrmqYbr0YNZzOA9vg6G3T0diHftr0fPbr6T+nAuEzRX7IrmgY
+ N70jSCEJ7tqQtzOjd4scKTgg8HrhbQNk31DoHQXKVYT+ofT2dfCybtkFXK9iqRacIJne
+ Mo4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1768963348; x=1769568148;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Odr1n1qm+Qr2BCwhfBFs50K5fHu9QLRM5Rl0Pq0/hpI=;
+ b=Agodqd20m2R2gDUfrRk5KEEiU3rTytKBZ/fO7xVqGk34c7VuifNxsHKesBsI/KYjrD
+ 7kjFpgyPqyB04cgjZLBkScduPfMWgRrAXOeNP4Xha4a0drhLOqVYAyq0EW6AtgBOTQAp
+ Pf/g3EkfUhrh20UqwyvtWI0mpduUoG8JdCF3YtAe84dVP36/vslqOh9e4J3h9MDJ4eT8
+ AFrcduIgTTIO3LCumyGWYVlmo4UjXHgBbhwvNXGfYEGZCL5+LSVez3Rc5YapxYcXmbMv
+ 9i03Z9Ex2wsi2EV2chkw36mNSNtUZ7JjbLsA0bMsA2vK8ngSJp3jviWT34et4YXKjm0r
+ Dd5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVWQ1UAQrq7yonvbK5GyevZC/URmy7PeD/skquc4byTigaqx3c5yrp08F+2y+ZNEmQ/a7rGhZqUD/y+@nongnu.org
+X-Gm-Message-State: AOJu0Yyk5rWAFV7SPu0kqI7S8BKx7GRRcw3QOdZetPE48Xxc2M7XKKv9
+ WvUXfMbOa6nIhwpghivK1YhFhm9OZ4l2EJRXw22LtXesfP4XyK5pzjFh
+X-Gm-Gg: AZuq6aKdsCImzKfQAHWm/F/8yPmso9e7KET8cORpM+2JCDsnDRQ68YLsW4pgWslPYop
+ 9Pup7KtFLC5eUwH38g5E3D4Cy6yos5GbT4SU5A6DHNfplpnujs2O2aCdmQRVq0LEWAuF91jtTqn
+ 02XftJz6UnA0HFvRlRqabJ1s7m4aRJ99aWLM27xFqqyTzKlZJzA5izi8Uq04xnYOAALFYBayfOX
+ A+kmcCoSiMKyUEEyjMrBdEvFuf7M/5LhcD5WPcvIiL3mhSlT8TtzYtXmOCrrxpKT+5rinddsHFh
+ qRGjncv9DT/MseF+qH+UePiBGydkmdrZBWOhV403Iw+xf35DU02u7u793OYpRKzG8GQi6MdSzbS
+ h75PQjlWF1kldyaCIvfXAEr2D1QAqsARh93m2GK3VX8dXadIAhX7C1ghRZ79eaQFUuMvspJRR7C
+ FLP/fMcACbpfqq2MEtjk4yRT39cFREVnDUwEJq0eATfFXK9/a0xUyXITZHkb0=
+X-Received: by 2002:a17:90a:dfcc:b0:340:ca7d:936a with SMTP id
+ 98e67ed59e1d1-352732547e9mr13129487a91.18.1768963348402; 
+ Tue, 20 Jan 2026 18:42:28 -0800 (PST)
+Received: from [127.0.0.1] ([218.81.29.112]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-352678ef77fsm15563990a91.17.2026.01.20.18.42.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Jan 2026 18:42:28 -0800 (PST)
+Message-ID: <3c1ed2bb-d089-4f85-8696-4027257de5f4@gmail.com>
+Date: Wed, 21 Jan 2026 10:42:23 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <aW_ccMSY4xJlRVn2@x1.local>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 01:07:56 up 86 days, 44 min,  2 users,  load average: 0.00, 0.01,
- 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional/riscv64: Silence warnings from Pylint in
+ the boston test
+To: Thomas Huth <thuth@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org
+Cc: Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
+ Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+References: <20260116095615.269199-1-thuth@redhat.com>
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+In-Reply-To: <20260116095615.269199-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1041;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pj1-x1041.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,236 +106,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Xu (peterx@redhat.com) wrote:
-> On Tue, Jan 20, 2026 at 07:04:09PM +0000, Dr. David Alan Gilbert wrote:
 
-<snip>
+Hi Thomas,
 
-> > >   (2) Failure happens _after_ applying the new checkpoint, but _before_ the
-> > >       whole checkpoint is applied.
-> > > 
-> > >       To be explicit, consider qemu_load_device_state() when the process of
-> > >       colo_incoming_process_checkpoint() failed.  It means SVM applied
-> > >       partial of PVM's checkpoint, I think it should mean PVM is completely
-> > >       corrupted.
-> > 
-> > As long as the SVM has got the entire checkpoint, then it *can* apply it all
-> > and carry on from that point.
+On 1/16/2026 5:56 PM, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> Does it mean we assert() that qemu_load_device_state() will always success
-> for COLO syncs?
-
-Not sure; I'd expect if that load fails then the SVM fails; if that happens
-on a periodic checkpoint then the PVM should carry on.
-
-> Logically post_load() can invoke anything and I'm not sure if something can
-> start to fail, but I confess I don't know an existing device that can
-> trigger it.
-
-Like a postcopy, it shouldn't fail unless there's an underlying failure
-(e.g. storage died)
-
-> Lukas told me something was broken though with pc machine type, on
-> post_load() not re-entrant.  I think it might be possible though when
-> post_load() is relevant to some device states (that guest driver can change
-> between two checkpoint loads), but that's still only theoretical.  So maybe
-> we can indeed assert it here.
-
-I don't understand that non re-entrant bit?
-
-> > 
-> > > Here either (1.b) or (2) seems fatal to me on the whole high level design.
-> > > Periodical syncs with x-checkpoint-delay can make this easier to happen, so
-> > > larger windows of critical failures.  That's also why I think it's
-> > > confusing COLO prefers more checkpoints - while it helps sync things up, it
-> > > enlarges high risk window and overall overhead.
-> > 
-> > No, there should be no point at which a failure leaves the SVM without a checkpoint
-> > that it can apply to take over.
-> > 
-> > > > > > I have quite a few more performance and cleanup patches on my hands,
-> > > > > > for example to transfer dirty memory between checkpoints.
-> > > > > >   
-> > > > > > > 
-> > > > > > > IIUC, the critical path of COLO shouldn't be migration on its own?  It
-> > > > > > > should be when heartbeat gets lost; that normally should happen when two
-> > > > > > > VMs are in sync.  In this path, I don't see how multifd helps..  because
-> > > > > > > there's no migration happening, only the src recording what has changed.
-> > > > > > > Hence I think some number with description of the measurements may help us
-> > > > > > > understand how important multifd is to COLO.
-> > > > > > > 
-> > > > > > > Supporting multifd will cause new COLO functions to inject into core
-> > > > > > > migration code paths (even if not much..). I want to make sure such (new)
-> > > > > > > complexity is justified. I also want to avoid introducing a feature only
-> > > > > > > because "we have XXX, then let's support XXX in COLO too, maybe some day
-> > > > > > > it'll be useful".  
-> > > > > > 
-> > > > > > What COLO needs from migration at the low level:
-> > > > > > 
-> > > > > > Primary/Outgoing side:
-> > > > > > 
-> > > > > > Not much actually, we just need a way to incrementally send the
-> > > > > > dirtied memory and the full device state.
-> > > > > > Also, we ensure that migration never actually finishes since we will
-> > > > > > never do a switchover. For example we never set
-> > > > > > RAMState::last_stage with COLO.
-> > > > > > 
-> > > > > > Secondary/Incoming side:
-> > > > > > 
-> > > > > > colo cache:
-> > > > > > Since the secondary always needs to be ready to take over (even during
-> > > > > > checkpointing), we can not write the received ram pages directly to
-> > > > > > the guest ram to prevent having half of the old and half of the new
-> > > > > > contents.
-> > > > > > So we redirect the received ram pages to the colo cache. This is
-> > > > > > basically a mirror of the primary side ram.
-> > > > > > It also simplifies the primary side since from it's point of view it's
-> > > > > > just a normal migration target. So primary side doesn't have to care
-> > > > > > about dirtied pages on the secondary for example.
-> > > > > > 
-> > > > > > Dirty Bitmap:
-> > > > > > With COLO we also need a dirty bitmap on the incoming side to track
-> > > > > > 1. pages dirtied by the secondary guest
-> > > > > > 2. pages dirtied by the primary guest (incoming ram pages)
-> > > > > > In the last step during the checkpointing, this bitmap is then used
-> > > > > > to overwrite the guest ram with the colo cache so the secondary guest
-> > > > > > is in sync with the primary guest.
-> > > > > > 
-> > > > > > All this individually is very little code as you can see from my
-> > > > > > multifd patch. Just something to keep in mind I guess.
-> > > > > > 
-> > > > > > 
-> > > > > > At the high level we have the COLO framework outgoing and incoming
-> > > > > > threads which just tell the migration code to:
-> > > > > > Send all ram pages (qemu_savevm_live_state()) on the outgoing side
-> > > > > > paired with a qemu_loadvm_state_main on the incoming side.
-> > > > > > Send the device state (qemu_save_device_state()) paired with writing
-> > > > > > that stream to a buffer on the incoming side.
-> > > > > > And finally flusing the colo cache and loading the device state on the
-> > > > > > incoming side.
-> > > > > > 
-> > > > > > And of course we coordinate with the colo block replication and
-> > > > > > colo-compare.  
-> > > > > 
-> > > > > Thank you.  Maybe you should generalize some of the explanations and put it
-> > > > > into docs/devel/migration/ somewhere.  I think many of them are not
-> > > > > mentioned in the doc on how COLO works internally.
-> > > > > 
-> > > > > Let me ask some more questions while I'm reading COLO today:
-> > > > > 
-> > > > > - For each of the checkpoint (colo_do_checkpoint_transaction()), COLO will
-> > > > >   do the following:
-> > > > > 
-> > > > >     bql_lock()
-> > > > >     vm_stop_force_state(RUN_STATE_COLO)     # stop vm
-> > > > >     bql_unlock()
-> > > > > 
-> > > > >     ...
-> > > > >   
-> > > > >     bql_lock()
-> > > > >     qemu_save_device_state()                # into a temp buffer fb
-> > > > >     bql_unlock()
-> > > > > 
-> > > > >     ...
-> > > > > 
-> > > > >     qemu_savevm_state_complete_precopy()    # send RAM, directly to the wire
-> > > > >     qemu_put_buffer(fb)                     # push temp buffer fb to wire
-> > > > > 
-> > > > >     ...
-> > > > > 
-> > > > >     bql_lock()
-> > > > >     vm_start()                              # start vm
-> > > > >     bql_unlock()
-> > > > > 
-> > > > >   A few questions that I didn't ask previously:
-> > > > > 
-> > > > >   - If VM is stopped anyway, why putting the device states into a temp
-> > > > >     buffer, instead of using what we already have for precopy phase, or
-> > > > >     just push everything directly to the wire?
-> > > > 
-> > > > Actually we only do that to get the size of the device state and send
-> > > > the size out-of-band, since we can not use qemu_load_device_state()
-> > > > directly on the secondary side and look for the in-band EOF.
-> > > 
-> > > I also don't understand why the size is needed..
-> > > 
-> > > Currently the streaming protocol for COLO is:
-> > > 
-> > >   - ...
-> > >   - COLO_MESSAGE_VMSTATE_SEND
-> > >   - RAM data
-> > >   - EOF
-> > >   - COLO_MESSAGE_VMSTATE_SIZE
-> > >   - non-RAM data
-> > >   - EOF
-> > > 
-> > > My question is about, why can't we do this instead?
-> > > 
-> > >   - ...
-> > >   - COLO_MESSAGE_VMSTATE_SEND
-> > >   - RAM data
+> Pylint complains:
 > 
-> [1]
+>  tests/functional/riscv64/test_boston.py:1:0: C0114:
+>   Missing module docstring (missing-module-docstring)
+>  tests/functional/riscv64/test_boston.py:95:8: C0415:
+>   Import outside toplevel (subprocess.run, subprocess.PIPE) (import-outside-toplevel)
+>  tests/functional/riscv64/test_boston.py:112:17: W1510:
+>   'subprocess.run' used without explicitly defining the value for 'check'. (subprocess-run-check)
+>  tests/functional/riscv64/test_boston.py:95:8: W0611:
+>   Unused PIPE imported from subprocess (unused-import)
 > 
-> > >   - non-RAM data
-> > >   - EOF
-> > > 
-> > > If the VM is stoppped during the whole process anyway..
-> > > 
-> > > Here RAM/non-RAM data all are vmstates, and logically can also be loaded in
-> > > one shot of a vmstate load loop.
-> > 
-> > You might be able to; in that case you would have to stream the 
-> > entire thing into a buffer on the secondary rather than applying the
-> > RAM updates to the colo cache.
+> Rework the code a little bit to make the linter happy.
 > 
-> I thought the colo cache is already such a buffering when receiving at [1]
-> above?  Then we need to flush the colo cache (including scan the SVM bitmap
-> and only flush those pages in colo cache) like before.
-> 
-> If something went wrong (e.g. channel broken during receiving non-ram
-> device states), SVM can directly drop all colo cache as the latest
-> checkpoint isn't complete.
+I tested this patch, and it works well :)
 
-Oh, I think I've remembered why it's necessary to split it into RAM and non-RAM;
-you can't parse a non-RAM stream and know when you've got an EOF flag in the stream;
-especially for stuff that's open coded (like some of virtio);   so there's
-no way to write a 'load until EOF' into a simple RAM buffer; you need to be
-given an explicit size to know how much to expect.
+Tested-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
-You could do it for the RAM, but you'd need to write a protocol parser
-to follow the stream to watch for the EOF.  It's actuallly harder with multifd;
-how would you make a temporary buffer with multiple streams like that?
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  tests/functional/riscv64/test_boston.py | 11 +++++++----
+>  1 file changed, 7 insertions(+), 4 deletions(-)
+> 
+> diff --git a/tests/functional/riscv64/test_boston.py b/tests/functional/riscv64/test_boston.py
+> index 385de6a61df..2582df96f21 100755
+> --- a/tests/functional/riscv64/test_boston.py
+> +++ b/tests/functional/riscv64/test_boston.py
+> @@ -1,11 +1,14 @@
+>  #!/usr/bin/env python3
+>  #
+> -# Boston board test for RISC-V P8700 processor by MIPS
+> -#
+>  # Copyright (c) 2025 MIPS
+>  #
+>  # SPDX-License-Identifier: GPL-2.0-or-later
+>  #
+> +"""
+> +Boston board test for RISC-V P8700 processor by MIPS
+> +"""
+> +
+> +from subprocess import run
+>  
+>  from qemu_test import QemuSystemTest, Asset
+>  from qemu_test import wait_for_console_pattern
+> @@ -92,7 +95,6 @@ def test_boston_invalid_cpu_count(self):
+>          """
+>          Test that 65 CPUs is rejected as invalid (negative test case)
+>          """
+> -        from subprocess import run, PIPE
+>  
+>          fw_payload_path = self.ASSET_FW_PAYLOAD.fetch()
+>          rootfs_path = self.ASSET_ROOTFS.fetch()
+> @@ -109,7 +111,8 @@ def test_boston_invalid_cpu_count(self):
+>          ]
+>  
+>          # Run QEMU and expect it to fail immediately.
+> -        result = run(cmd, capture_output=True, text=True, timeout=5)
+> +        result = run(cmd, capture_output=True, text=True, timeout=5,
+> +                     check=False)
+>  
+>          # Check that QEMU exited with error code 1
+>          self.assertEqual(result.returncode, 1,
 
-> > The thought of using userfaultfd-write had floated around at some time
-> > as ways to optimise this.
-> 
-> It's an interesting idea. Yes it looks working, but as Lukas said, it looks
-> still unbounded.
-> 
-> One idea to provide a strict bound:
-> 
->   - admin sets a proper buffer to limit the extra pages to remember on SVM,
->     should be much smaller than total guest mem, but admin should make sure
->     in 99.99% cases it won't hit the limit with a proper x-checkpoint-delay,
-> 
->   - if limit triggered, both VMs needs to pause (initiated by SVM), SVM
->     needs to explicitly request a checkpoint to src,
-> 
->   - VMs can only start again after two VMs sync again
-
-Right, that should be doable with a userfault-write.
-
-Dave
-
-> Thanks,
-> 
-> -- 
-> Peter Xu
-> 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
 
