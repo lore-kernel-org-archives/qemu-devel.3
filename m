@@ -4,94 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5FB8C44506
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 21:22:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84ED2C44506
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 21:30:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vifdX-0007W5-Dk; Wed, 21 Jan 2026 16:21:11 -0500
+	id 1viflw-0001xp-BL; Wed, 21 Jan 2026 16:29:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vifdV-0007Oe-HP
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 16:21:09 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vifdT-0006a2-T9
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 16:21:09 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47ee301a06aso3481645e9.0
- for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 13:21:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769030466; x=1769635266; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ORVjiz/m/2XsSeSwpvcyE8nim/jyoNM6xAv4uhQ5SJ0=;
- b=n1mmXott0L5i9K5fued09oB+m2KxaouwceXYSSw5wKy6u45iLs+9n4t2INfPv35UiW
- s1X7XeAAK9Lio3Xwbi8l7WJHfQeFmgIV8lPlLrjFu4x2SVe56BIYEnjkx1dDmxmNl9o0
- ZqgMiIEXdfXq9g63ogWI9yYcJFjMV5ZDfduB8yMpHqVeVUeWVILV7GfyLElMX1MTO9UA
- B7KTAFEjkhmZ9X6+avWcbtZxs7dIh16WvYu3S7GLIY/sev0Bz5rNR4RoraD8ts0grs2x
- jM7ftQNBNVDDIX776wPs1w/VkufEc0jytBFWfBZUuNVcqTNrtqJGs2bOj4FQTem9CSbq
- yZ0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769030466; x=1769635266;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ORVjiz/m/2XsSeSwpvcyE8nim/jyoNM6xAv4uhQ5SJ0=;
- b=r6R7AwtAykIe8zln0onvx+5czrsYQ+SNrlO/rvkTKLYIasK/6+1Ur4BWS4AUKv53jI
- jMIKVgcicyYnwgaw2YH7010k0mK5Mc0Q71No4Z6OzjBaiGmxCbTT1i0S5wMZvEWRGQGs
- DftA6RYdvMC4GKrrzdlvwkJOY+IgvY3PmUriOxd6tDeHxHm1QjRci4du8ncUK+Z6T9f6
- kw81QkSK1vPJLlb/xnHh4vjJcDFPh2Q71oN3C/VW8Vd4zk4ZAF5okilIRTKCZDQy8a3Q
- eNOSy/i/mV17FO6yG2B5PM2wWxGC4O5b3nd2PQMkJPC/efD1+F7BvFF/CvIJK2pVKVwk
- GeRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUrEPTKEijLsaBzHHNKfVhGlhEAaG8A5seiO2wxds/n+lSCJte1E9jCtHSwDEKGSI6gLtbPmLA8uEoC@nongnu.org
-X-Gm-Message-State: AOJu0Yy+b7oySBeaTJaADTUN6Y4LA2kfVA0uEQKgkkNUIdbS2c/SlfyL
- O8Sj2UHHP6yy5+ONzDRa4TxhVjulSjPMaDWVQbW0oTDcCCbBiZD4/wv8gcz7hOiLAJA=
-X-Gm-Gg: AZuq6aLvWw31RV+UC1DPnoS2LsjHTCBeZ6GpAusvwPoV9Gq7FLDEZX4IgF+3J0YQ11u
- 511yUXFaJGItjhhWGRd/eeATysyfc2VP/z5mrlHiuA26IoNt5w6TFv02sV/UeFq/TujAWvN5VtZ
- pK2b9hdQ7oGPIm8Trqr38l6FNTSJ6Vm55DyrQ3zuEcArWbEIQ5lzN9/OIxyOOqwZIhhTHI/c9FL
- Xh81XjovnOKVBTejok8W6GcrUeXGhRW+IEicihUXBFvWcwcKSiK6G2FZ4RcvPjXyRrGjw+DHxRb
- GxE3W1Pi1vomZquQXit/LuddQKnwVMTAbBf+BjL1KWDb3KyG22rk5Qjy8zMIw9GkLgJ+xUuMyeZ
- EfYZH7PGTMHSxamzUEfKSEKSlF4MdultjioieeC5GoFfozicyt6dmUqryVFSCmdOuna/RjQo9Eo
- +Y2OVAZKa0rMkQ69PxhvhxB4bCCyxGq9C+aOUm8jqmN8wWh55tBTBqotYFzgtbF1CY
-X-Received: by 2002:a05:600c:34d6:b0:47d:3ead:7440 with SMTP id
- 5b1f17b1804b1-4801eb131b2mr280552775e9.32.1769030465997; 
- Wed, 21 Jan 2026 13:21:05 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435924ae723sm12654862f8f.41.2026.01.21.13.21.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Jan 2026 13:21:05 -0800 (PST)
-Message-ID: <e32c09de-85f7-4b71-9d1f-1af9a51abd87@linaro.org>
-Date: Wed, 21 Jan 2026 22:21:04 +0100
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1viflv-0001wx-BR; Wed, 21 Jan 2026 16:29:51 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1viflt-0000h4-N8; Wed, 21 Jan 2026 16:29:51 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60LCU9ZA028524;
+ Wed, 21 Jan 2026 21:29:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ROwZ2i
+ 74gkv3uHwoF2HCWBwlxl3ru29UCpfUHCFvICA=; b=hftmPchOlpkF48WgN6v2yu
+ Br3GWxeRqug1HaCKZyIX7SIsOapWgNPfJ29EVpEz58g+PFR07+tHSXTw3r7TCL1k
+ ajxoF8R7iKOz+AgHinOdEwGA2uKEFQUFiGVV65LUuUMTyqoHTpkcM8NoPdu4NGSL
+ 4PFH+Sc8pEWFRef8xvXynJdcnnLLfJV2VZnwNvSeee2ug1wNNRaR9udd9dgo01GU
+ PGQqq/kYBwHcjIMWtVrJXIEepq7nrnqfvBhPadRzK1TPxYvuwPNOzUXgV46cYeS9
+ hdkmM2X7iTa0oZQMOSZ+7/K/a562ALi0B7eCMDbIwb87BW/JzLw33pgBDzcc3W6Q
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bt60et2kr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 21 Jan 2026 21:29:44 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60LJfZS8001441;
+ Wed, 21 Jan 2026 21:29:43 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4brpyjxcye-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 21 Jan 2026 21:29:43 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60LLTgPL20578886
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 21 Jan 2026 21:29:42 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6580458058;
+ Wed, 21 Jan 2026 21:29:42 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A6E0C5805D;
+ Wed, 21 Jan 2026 21:29:40 +0000 (GMT)
+Received: from [9.61.163.161] (unknown [9.61.163.161])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 21 Jan 2026 21:29:40 +0000 (GMT)
+Message-ID: <137ae89c-ddc0-44ae-a9bc-2b6cb0a62953@linux.ibm.com>
+Date: Wed, 21 Jan 2026 16:29:39 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] vmapple: making it work on the latest macOS host
- releases
+Subject: Re: [PATCH v7 13/29] pc-bios/s390-ccw: Introduce IPL Information
+ Report Block (IIRB)
+To: Collin Walling <walling@linux.ibm.com>, thuth@redhat.com,
+ berrange@redhat.com, richard.henderson@linaro.org, david@redhat.com,
+ jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ brueckner@linux.ibm.com
+Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
+References: <20251208213247.702569-1-zycai@linux.ibm.com>
+ <20251208213247.702569-14-zycai@linux.ibm.com>
+ <e5a34764-4fa2-40c8-af80-8bd5aefd1e63@linux.ibm.com>
 Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Cameron Esfahani <dirty@apple.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260114152220.89640-1-mohamed@unpredictable.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260114152220.89640-1-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <e5a34764-4fa2-40c8-af80-8bd5aefd1e63@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=WMdyn3sR c=1 sm=1 tr=0 ts=69714548 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=FoqJY8j909O2fm7tPbwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: HYXyaY37Tfbz3e-NwASjJq3-GqQjZ7Sf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDE3OCBTYWx0ZWRfXygRWiOw4JlcK
+ XgGILbNfAUHvb0Xm91pUA7SoUS3m/PAZzndgd0e9INj657s0Pm27yNbLQAmSLha3+nrhFD6Ygt1
+ MUBCz1aQE72EW90E9RUR+BrCmFmGDasG42HpDYryfE7IkfXHzOWaP5Pkr1TJaFLXB23DBwRpHJV
+ 9UT82t/8j9T+F9f6zckDYBjTmdIoEFpNEIucoiJMmJeMC/h8VTXMzSJS8lnkSQa6INiIAXgzbAY
+ 5+wW6oZ95HXtXM02X7WDDxS1uAZYJBEBwZz+W8UoxGpQ/0jlVr3SeA4N5uzVRNeYoNsV/vNOKN0
+ 59NCYEoQBlwf84pTCGAjziStCSQJRbLn202Gsp+FDwo9S7YlaE8pGc0puQ90y4829jsDzeKXPS0
+ f5vnYhkG+UMhKh+m5tLr0LLasDHoUEIBZsflUdlJu6ooYtk1jbcg4zvQqQs3mREcGayEP+Dma/h
+ 5QDJj40mD2WL34bN5bw==
+X-Proofpoint-ORIG-GUID: HYXyaY37Tfbz3e-NwASjJq3-GqQjZ7Sf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-21_03,2026-01-20_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 suspectscore=0 bulkscore=0 adultscore=0
+ impostorscore=0 spamscore=0 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601210178
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,33 +128,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing Akihiko
 
-On 14/1/26 16:22, Mohamed Mediouni wrote:
-> Support for newer guest OSes isn't part of this series.
+
+On 1/15/26 4:34 PM, Collin Walling wrote:
+> On 12/8/25 16:32, Zhuoying Cai wrote:
+>> The IPL information report block (IIRB) contains information used
+>> to locate IPL records and to report the results of signature verification
+>> of one or more secure components of the load device.
+>>
+>> IIRB is stored immediately following the IPL Parameter Block. Results on
+>> component verification in any case (failure or success) are stored.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+>>  docs/specs/s390x-secure-ipl.rst | 13 +++++++
+>>  pc-bios/s390-ccw/iplb.h         | 62 +++++++++++++++++++++++++++++++++
+>>  2 files changed, 75 insertions(+)
+>>
+>> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+>> index be98dc143d..29c5d59b99 100644
+>> --- a/docs/specs/s390x-secure-ipl.rst
+>> +++ b/docs/specs/s390x-secure-ipl.rst
+>> @@ -86,3 +86,16 @@ Subcode 1 - perform signature verification
+>>      * ``0x0302``: PKCS#7 format signature is invalid
+>>      * ``0x0402``: signature-verification failed
+>>      * ``0x0502``: length of Diag508SigVerifBlock is invalid
+>> +
+>> +IPL Information Report Block
+>> +----------------------------
+>> +
+>> +The IPL Parameter Block (IPLPB), utilized for IPL operation, is extended with an
+>> +IPL Information Report Block (IIRB), which contains the results from secure IPL
+>> +operations such as:
+>> +
+>> +* component data
+>> +* verification results
+>> +* certificate data
+>> +
+>> +The guest kernel will inspect the IIRB and build the keyring.
 > 
-> v4:
-> Rebase and resend without the RFC tag as I didn't get feedback.
-> Drop patch 1 (version I posted was incomplete anyways). Last patch isn't worth it too tbh.
+> This needs more elaboration.  Is the data listed above used in
+> the keyring?  Maybe rewording to "The guest's kernel will use this data
+> in the IIRB when building its keyring." ?
 > 
-> v2->v3:
-> Remove the Apple M4 support workaround part for now, to be part of another patchset perhaps
-> Address comments
-> 
-> v1->v2:
-> Remove some lines that shouldn't have been present...
-> 
-> Mohamed Mediouni (3):
->    vmapple: apple-gfx: make it work on the latest macOS release
->    Revert "hw/arm: Do not build VMapple machine by default"
->    vmapple: apple-gfx: move legacy memory management APIs away from
->      inline
-> 
->   configs/devices/aarch64-softmmu/default.mak |  1 -
->   hw/display/apple-gfx-mmio.m                 | 70 ++++++++++++++++-----
->   hw/display/apple-gfx.h                      | 13 ++++
->   hw/display/apple-gfx.m                      | 47 +++++++++++++-
->   4 files changed, 114 insertions(+), 17 deletions(-)
-> 
+
+Thanks for pointing this out. The data in the IIRB is not used to build
+the keyring. I'll update the text as:
+
+"When secure boot is enabled, the guest kernel will inspect the IIRB."
+
+[...]
 
 
