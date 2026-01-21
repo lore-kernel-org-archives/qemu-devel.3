@@ -4,105 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE509C44536
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 22:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E8B5C44500
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 22:22:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viga4-0007Y6-6Q; Wed, 21 Jan 2026 17:21:40 -0500
+	id 1vigbD-0001Lb-DR; Wed, 21 Jan 2026 17:22:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1viga2-0007Vx-OS; Wed, 21 Jan 2026 17:21:38 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vigbB-0001JT-Rg
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 17:22:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1viga0-0003iT-Qy; Wed, 21 Jan 2026 17:21:38 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60LC5Ntw021755;
- Wed, 21 Jan 2026 22:21:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=o61UIlglVQoN4+A+A
- XKsI3scxxbyQdcI5Nm+jXej0FY=; b=Lq9SDQz4MkRH5S/b96OpPmprgfkeEQgI4
- POBT9vFOCKRlb6giH9rSXy+OZiZxOjqa4NvA6KyWUX3nCwPkSg2wjsIXdMtezeZu
- T4jWlybhoVaqlG4LqEdsWe85RL/gMZwA/iCPvy5BG9vWrIEyoiLjrvgEOWWdJgKG
- rhV33XrG/8r4pFWxz/UQQh1fp+X+P38vwz3e1N/9YH0YdPhwgvIoalyagOYH3+Fh
- ADun3BueU1uIuNu/yWGMoPSYjkq66rST+wfrvq2g8lVaP8EW6GgsClDC6jUEeD3J
- BrUGESO1dKlVbkoAOgJ12LGqMnZKhYKLJrS4kaT26bUcwY8Zd0A6g==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bt6129rry-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 Jan 2026 22:21:26 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60LJFk4t009295;
- Wed, 21 Jan 2026 22:21:26 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brp8keres-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 Jan 2026 22:21:26 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60LMLOQ852887954
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 21 Jan 2026 22:21:24 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3EEF120043;
- Wed, 21 Jan 2026 22:21:24 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C358620040;
- Wed, 21 Jan 2026 22:21:23 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.87.153.49])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 21 Jan 2026 22:21:23 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 3/3] tests/tcg/s390x: Test DIVIDE TO INTEGER
-Date: Wed, 21 Jan 2026 23:12:33 +0100
-Message-ID: <20260121222116.713325-4-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260121222116.713325-1-iii@linux.ibm.com>
-References: <20260121222116.713325-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vigb9-0004Oi-6Z
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 17:22:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769034166;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mMxDlM9yUXOYKiCdeXwepCDs8XDjh+ewttYohU5KrKc=;
+ b=BLbzbhRYttqKhVZReJt2XkfR9Wz20tgjTlOzRSjGWYH1mXeNqyi8KCTjurfr6ky2DRZo3a
+ 9OmGMazyPiVYN+7/AYPO0Z2EsXts/ynXnHLti6HjIpTSjXnevXJGzVOL97NLPRLQEUhQqK
+ jF9d34kPUeDSYcRsMDnOjRgS0ye1yzc=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-522--cFw5vAyMLaZIOTSSHHc7w-1; Wed, 21 Jan 2026 17:22:44 -0500
+X-MC-Unique: -cFw5vAyMLaZIOTSSHHc7w-1
+X-Mimecast-MFC-AGG-ID: -cFw5vAyMLaZIOTSSHHc7w_1769034164
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8c6a87029b6so123688685a.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 14:22:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1769034164; x=1769638964; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=mMxDlM9yUXOYKiCdeXwepCDs8XDjh+ewttYohU5KrKc=;
+ b=FhPYGsB6SCnfbS7ZsNLvdBW9pLR//PGot4flXnuZKtOSkQ5XZCXY1QfPVhDekQfdAV
+ TLO3U4PqKFWVR385C+YhHkDK2WO0r+xYvYlWxd0fmW7JvjSS5eq1WAkQfUoRfV1mYhmy
+ OHKdQVGaC7Qut3F9V8Nziv4mPocYfAnZN76cJw3Z4R6mn4WE7C76K9cZXR6/3aUXXePs
+ V30WbA0OycU866qnqv7JLsWyAfApCp/zIHSNErK0UUIfhJ3P18aWG6nvlmFXMEzNWmrF
+ 7UOOc9E5FwTx8gc2mvxwuN/nm2GY8zN1m7eCzV18iKhM3PeL1Jnh3N6taQpsdPWoa48b
+ 7peQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769034164; x=1769638964;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mMxDlM9yUXOYKiCdeXwepCDs8XDjh+ewttYohU5KrKc=;
+ b=MsxqtrnXLPnk+/WwW97YrMX4hyn2QclFGob7PrXvnFbDBri6ZYLievae4oyzx1ufM3
+ NOYbDMy8wfsbu+Q+UD7GEawv9wkhXH64X6AOTFxBGFu3g39j6bjeLu22YsG76nbS0zxH
+ LXVrdXpON8IYsLij/geFfI67IoD2rVsAmX1JCzwZ8ZdcsQe2ayZACiRnmTJ1Bq0F5F0k
+ xKrm6RhFxsgcBKiMIDt/WvHNooUO4tR0Ej5MvNY71+LLsX0+I/fxiT9wH6esiaf0qWD5
+ Gc4CcK6Tq89rbrmt/vEelULe66erwUn4LAHm4zL9wAeNB7S3nh02tPanQ/0EycMS5wyw
+ 02TQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+9tQygzAFJXcgqC24aHyPALFuxVSbc3cUXJfmcWxn7BCHya094/m3NNuVm6KoH6tTiXcsCXwN92Nm@nongnu.org
+X-Gm-Message-State: AOJu0YwbNWoS6lEyucu+VBcRvu1FvXpXP192EByEOyhYv0tsZtb7UmUy
+ 9YZfW5X65vNA6VKffM+adgY3hUd2PFfECgWXSrBcILhLUuMQ60QsqFS+1q6CGyCaEKmz93XwPSG
+ 4bRlW1bCdqhuLp8TxGKnMd6xMfZ7Ibu6G+DpVnMmHo2xXQjFtqUH4yCst
+X-Gm-Gg: AZuq6aKhPL/Tq3Fw1LiNfhWAoyKAH+N7/BKqbAvAzSOod7C+XT0HP+PzknWLgrYIkXc
+ PRK0GJeU7xk0uZjbccr9dGg7zKKGOEuI08IozVRWBaEwOzMsGMowl0vtdmXjW4CIqxaI9oyYs6W
+ r2qhQOZxEsc74CXIILD9BixLdf+klKyivvQ7l8NiZdUTjiZG0ryuOW30SyqGg1EG1rnE1DNOBnT
+ jaRh7jQyTVqOT4pQZAPfHEwVhRYuAlahTylyrSn5XbK7fwD4o4inWuvuiEG21X2xD92aEywtVjj
+ HHHhV/wjVJS5LbKkqQOB5I8Q1BPQO3U1yxrgqmWGkDpZHdrI1ZlNLhkdr9ZrIU7deNzaT6pjGQ8
+ GgLc=
+X-Received: by 2002:a05:620a:4109:b0:8c5:33bf:524f with SMTP id
+ af79cd13be357-8c6cce50090mr880338585a.59.1769034164070; 
+ Wed, 21 Jan 2026 14:22:44 -0800 (PST)
+X-Received: by 2002:a05:620a:4109:b0:8c5:33bf:524f with SMTP id
+ af79cd13be357-8c6cce50090mr880336385a.59.1769034163647; 
+ Wed, 21 Jan 2026 14:22:43 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8c6a71ab272sm1375826085a.2.2026.01.21.14.22.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 Jan 2026 14:22:43 -0800 (PST)
+Date: Wed, 21 Jan 2026 17:22:41 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
+ Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
+ Juan Quintela <quintela@trasno.org>,
+ Zhang Chen <zhangckid@gmail.com>, zhanghailiang@xfusion.com,
+ Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH 1/3] migration/colo: Deprecate COLO migration framework
+Message-ID: <aXFRsTwcXRC8U0Fh@x1.local>
+References: <aW6xNcsz3RIqHeE5@x1.local> <20260120110811.7df19a6c@penguin>
+ <aW-mCye_eFmy5f4B@x1.local> <aW_Rqbc2Swg8vkXY@gallifrey>
+ <aW_ccMSY4xJlRVn2@x1.local> <aXArDHMRAohmUt51@gallifrey>
+ <aXEG73I8tJyhpn69@x1.local> <aXENdA6DP5j0ETIU@gallifrey>
+ <aXE1i9xJ81EWokYz@x1.local> <aXFFsfqusBQtd5DI@gallifrey>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 0BRHvNcMWmjwpXemoVqSsHhAaJdTRLLl
-X-Authority-Analysis: v=2.4 cv=LaIxKzfi c=1 sm=1 tr=0 ts=69715166 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=h_s7ELEApH8KyIyOhg4A:9
-X-Proofpoint-ORIG-GUID: 0BRHvNcMWmjwpXemoVqSsHhAaJdTRLLl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIxMDE4NyBTYWx0ZWRfX/DZeGsrJiBHC
- MY/xGI2dwIkUakK8+M8rbHBIn5Z0gOz3pWMcb4t+p9apV6WTnBu++fnwKw2fdZV0fu/RC27/QVR
- CiJjHV1n+6grHv8TYrjgLtSXSi8y9dH9AGkkt9Atfo3QICavYDakJveUJDDUpiCG9TLFUORtahP
- NbEVHxREGMVwKOFOpFP0Xem7xf0EHwNzlQpy5l2/+DJxW7ijhKVctBXnUWwZFdDle+SaxhyE5BW
- sqKBan5CfRqzbIH6cV76mKetfWBfxPyIf71izyqrCqfkIJPVlQdIIKOQS0MqY/t49l+YeLDJoe2
- 8uvonWEzvUFO66HosJ/AyIRYuV4vEgVGuWW4J/lIY4hydzMCl0J9586EvuKRV+GDZM/ZxRd2RFj
- Hqq/XvY8MEA6K72wfX5Q8hbX5DSKlRh8On1qq/Gn18/9XAUMpzvIzh2woPZlcX6felarO8F8bwx
- /gU3JqJAmKdlNIyY+pw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-21_04,2026-01-20_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601210187
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aXFFsfqusBQtd5DI@gallifrey>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,261 +127,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a test to prevent regressions. Data is generated using a
-libFuzzer-based fuzzer and hopefully covers all the important corner
-cases.
+On Wed, Jan 21, 2026 at 09:31:29PM +0000, Dr. David Alan Gilbert wrote:
+> * Peter Xu (peterx@redhat.com) wrote:
+> > On Wed, Jan 21, 2026 at 05:31:32PM +0000, Dr. David Alan Gilbert wrote:
+> > > Right that's true for postcopy; but then the only way to load the stream into
+> > > that buffer is to load it all at once because of the vmstate problem above.
+> > > (and because in the original postcopy we needed the original fd free
+> > > for page requests; you might be able to avoid that with multifd now)
+> > 
+> > Only until now, I recognized that COLO wants to make sure the checkpoint is
+> > either completely applied or none applied.
+> > 
+> > So the specialty is COLO does loadvm on top of a running VM, meanwhile COLO
+> > may decide to not loadvm afterwards if checkpoint wasn't correctly
+> > received.
+> 
+> Oh yes; because if your secondary is running happily, your primary could
+> fail while it was sending you a new snapshot - and then the secondary
+> has to be able to carry on.
+> 
+> > And yes, to cache all device states with current section header definition
+> > in the stream, we'll likely need a size.  We can still parse the stream as
+> > you pointed out previously, but I agree a special SIZE header still makes
+> > sense.
+> 
+> Well, *can't* parse the stream as I said; because of the get()/put() stuff
+> without rewriting that.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- tests/tcg/s390x/Makefile.target     |   3 +
- tests/tcg/s390x/divide-to-integer.c | 215 ++++++++++++++++++++++++++++
- 2 files changed, 218 insertions(+)
- create mode 100644 tests/tcg/s390x/divide-to-integer.c
+Ah, yes..
 
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index da5fe71a407..d5ec01d04fd 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -49,14 +49,17 @@ TESTS+=cvd
- TESTS+=cvb
- TESTS+=ts
- TESTS+=ex-smc
-+TESTS+=divide-to-integer
- 
- cdsg: CFLAGS+=-pthread
- cdsg: LDFLAGS+=-pthread
- 
- rxsbg: CFLAGS+=-O2
-+divide-to-integer: CFLAGS+=-O2
- 
- cgebra: LDFLAGS+=-lm
- clgebr: LDFLAGS+=-lm
-+divide-to-integer: LDFLAGS+=-lm
- 
- include $(S390X_SRC)/pgm-specification.mak
- $(PGM_SPECIFICATION_TESTS): pgm-specification-user.o
-diff --git a/tests/tcg/s390x/divide-to-integer.c b/tests/tcg/s390x/divide-to-integer.c
-new file mode 100644
-index 00000000000..49a18d07b31
---- /dev/null
-+++ b/tests/tcg/s390x/divide-to-integer.c
-@@ -0,0 +1,215 @@
-+/*
-+ * Test DIEBR and DIDBR instructions.
-+ *
-+ * Most inputs were discovered by fuzzing and exercise various corner cases in
-+ * the helpers.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <signal.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <asm/ucontext.h>
-+
-+static void sigfpe_handler(int sig, siginfo_t *info, void *puc)
-+{
-+    struct ucontext *uc = puc;
-+    unsigned short *xr_insn;
-+    int r;
-+
-+    xr_insn = (unsigned short *)(uc->uc_mcontext.regs.psw.addr - 6);
-+    r = *xr_insn & 0xf;
-+    uc->uc_mcontext.regs.gprs[r] = sig;
-+}
-+
-+#define DIVIDE_TO_INTEGER(name, floatN)                                        \
-+static inline __attribute__((__always_inline__)) int                           \
-+name(floatN *r1, floatN r2, floatN *r3, int m4, int *sig)                      \
-+{                                                                              \
-+    int cc;                                                                    \
-+                                                                               \
-+    asm(/* Make the initial CC predictable for suppression tests */            \
-+        "xr %[sig],%[sig]\n"                                                   \
-+        #name " %[r1],%[r3],%[r2],%[m4]\n"                                     \
-+        "ipm %[cc]\n"                                                          \
-+        "srl %[cc],28"                                                         \
-+        /*                                                                     \
-+         * Use earlyclobbers to prevent the compiler from reusing floating     \
-+         * point registers. This instruction doesn't like it.                  \
-+         */                                                                    \
-+        : [r1] "+&f" (*r1), [r3] "+&f" (*r3), [sig] "=r" (*sig), [cc] "=d" (cc)\
-+        : [r2] "f" (r2), [m4] "i" (m4)                                         \
-+        : "cc");                                                               \
-+                                                                               \
-+    return cc;                                                                 \
-+}
-+
-+DIVIDE_TO_INTEGER(diebr, float)
-+DIVIDE_TO_INTEGER(didbr, double)
-+
-+#define TEST_DIVIDE_TO_INTEGER(name, intN, int_fmt, floatN, float_fmt)         \
-+static inline __attribute__((__always_inline__)) int                           \
-+test_ ## name(unsigned intN r1i, unsigned intN r2i, int m4, int fpc,           \
-+              unsigned intN r1o, unsigned intN r3o, int cco, unsigned int fpco,\
-+              int sigo)                                                        \
-+{                                                                              \
-+    union {                                                                    \
-+        floatN f;                                                              \
-+        unsigned intN i;                                                       \
-+    } r1, r2, r3;                                                              \
-+    int cc, err = 0, sig;                                                      \
-+                                                                               \
-+    r1.i = r1i;                                                                \
-+    r2.i = r2i;                                                                \
-+    r3.i = 0x12345678;                                                         \
-+    printf("[ RUN      ] %" float_fmt "(0x%" int_fmt                           \
-+           ") / %" float_fmt "(0x%" int_fmt ")\n", r1.f, r1.i, r2.f, r2.i);    \
-+    asm volatile("sfpc %[fpc]" : : [fpc] "r" (fpc));                           \
-+    cc = name(&r1.f, r2.f, &r3.f, m4, &sig);                                   \
-+    asm volatile("stfpc %[fpc]" : [fpc] "=Q" (fpc));                           \
-+    if (r1.i != r1o) {                                                         \
-+        printf("[  FAILED  ] remainder 0x%" int_fmt                            \
-+               " != expected 0x%" int_fmt "\n", r1.i, r1o);                    \
-+        err += 1;                                                              \
-+    }                                                                          \
-+    if (r3.i != r3o) {                                                         \
-+        printf("[  FAILED  ] quotient 0x%" int_fmt                             \
-+               " != expected 0x%" int_fmt "\n", r3.i, r3o);                    \
-+        err += 1;                                                              \
-+    }                                                                          \
-+    if (cc != cco) {                                                           \
-+        printf("[  FAILED  ] cc %d != expected %d\n", cc, cco);                \
-+        err += 1;                                                              \
-+    }                                                                          \
-+    if (fpc != fpco) {                                                         \
-+        printf("[  FAILED  ] fpc 0x%x != expected 0x%x\n", fpc, fpco);         \
-+        err += 1;                                                              \
-+    }                                                                          \
-+    if (sig != sigo) {                                                         \
-+        printf("[  FAILED  ] signal 0x%x != expected 0x%x\n", sig, sigo);      \
-+        err += 1;                                                              \
-+    }                                                                          \
-+                                                                               \
-+    return err;                                                                \
-+}
-+
-+TEST_DIVIDE_TO_INTEGER(diebr, int, "x", float, "f")
-+TEST_DIVIDE_TO_INTEGER(didbr, long, "lx", double, "lf")
-+
-+int main(void)
-+{
-+    struct sigaction act = {
-+        .sa_sigaction = sigfpe_handler,
-+        .sa_flags = SA_SIGINFO,
-+    };
-+    int err = 0;
-+
-+    /* Set up SIG handler */
-+    if (sigaction(SIGFPE, &act, NULL)) {
-+        printf("[  FAILED  ] sigaction(SIGFPE) failed\n");
-+        return EXIT_FAILURE;
-+    }
-+
-+    /* 451 / 460 */
-+    err += test_diebr(0x43e1f1f1, 0x43e61616, 7, 0,
-+                      0x43e1f1f1, 0, 0, 0, 0);
-+
-+    /* 480 / 0 */
-+    err += test_diebr(0x43f00000, 0, 0, 0,
-+                      0x7fc00000, 0x7fc00000, 1, 0x800000, 0);
-+
-+    /* QNaN / QNaN */
-+    err += test_diebr(0xffffffff, 0xffffffff, 0, 0,
-+                      0xffffffff, 0xffffffff, 1, 0, 0);
-+
-+    /* -2.08E-8 / -2.08E-8 */
-+    err += test_diebr(0xb2b2b2b2, 0xb2b2b2b2, 0, 0,
-+                      0x80000000, 0x3f800000, 0, 0, 0);
-+
-+    /* 4.62E-2 / -7.94E-11 */
-+    err += test_diebr(0x3d3d3d3d, 0xaeaeaeae, 0, 0,
-+                      0x2f38b8c0, 0xce0aaaab, 2, 0, 0);
-+
-+    /* 1.07E-31 / 2.19 */
-+    err += test_diebr(0x0c0c0c0c, 0x400c0c0c, 6, 0,
-+                      0xc00c0c0c, 0x3f800000, 0, 0x80000, 0);
-+
-+    /* 2.98E+29 / -5.7E-29 */
-+    err += test_diebr(0x7070ffff, 0x90909090, 0, 0,
-+                      0x6431c0c0, 0xbf5562aa, 3, 0, 0);
-+
-+    /* -2.19E-5 / 2.58E-26 */
-+    err += test_diebr(0xb7b7b7b7, 0x15000000, 7, 0,
-+                      0x80000000, 0xe237b7b7, 0, 0, 0);
-+
-+    /* 0 / 0 */
-+    err += test_diebr(0, 0, 1, 0,
-+                      0x7fc00000, 0x7fc00000, 1, 0x800000, 0);
-+
-+    /* 4.3E-33 / -2.08E-8 with SIGFPE */
-+    err += test_diebr(0x09b2b2b2, 0xb2b2b2b2, 0, 0xfc000007,
-+                      0xb2b2b2b1, 0xbf800000, 0, 0xfc000807, SIGFPE);
-+
-+    /* 1.19E-39 / -1.28E-9 */
-+    err += test_diebr(0x000d0100, 0xb0b0b0b0, 6, 0xfc000000,
-+                      0x5ed01000, 0x80000000, 0, 0xfc001000, SIGFPE);
-+
-+    /* 5.35E+7 / -5.21E+20 */
-+    err += test_diebr(0x4c4c4c4c, 0xe1e1e1e1, 0, 0xfc000007,
-+                      0xe1e1e1e1, 0xbf800000, 0, 0xfc000c07, SIGFPE);
-+
-+    /* 0 / 0 with SIGFPE */
-+    err += test_diebr(0, 0, 0, 0xfc000007,
-+                      0, 0x12345678, 0, 0xfc008007, SIGFPE);
-+
-+    /* 5.76E-16 / 5.39E+34 */
-+    err += test_diebr(0x26262626, 0x79262626, 6, 0,
-+                      0xf9262626, 0x3f800000, 0, 0x80000, 0);
-+
-+    /* -4.97E+17 / 2.03E-38 */
-+    err += test_diebr(0xdcdcdcdc, 0x00dcdcdc, 7, 0xfc000000,
-+                      0x80000000, 0xbb800000, 1, 0xfc000000, 0);
-+
-+    /* -1.23E+17 / SNaN */
-+    err += test_diebr(0xdbdb240b, 0xffac73ff, 4, 0,
-+                      0xffec73ff, 0xffec73ff, 1, 0x800000, 0);
-+
-+    /* 2.34E-38 / 3.27E-33 with SIGFPE */
-+    err += test_diebr(0x00ff0987, 0x0987c6f6, 6, 0x08000000,
-+                      0x8987c6b6, 0x3f800000, 0, 0x8000800, SIGFPE);
-+
-+    /* -5.93E+11 / -2.7E+4 */
-+    err += test_diebr(0xd30a0040, 0xc6d30a00, 0, 0xc4000000,
-+                      0xc74a4400, 0x4ba766c6, 2, 0xc4000000, 0);
-+
-+    /* 9.86E-32 / -inf */
-+    err += test_diebr(0x0c000029, 0xff800000, 0, 0,
-+                      0xc000029, 0x80000000, 0, 0, 0);
-+
-+    /* QNaN / SNaN */
-+    err += test_diebr(0xffff94ff, 0xff94ff24, 4, 7,
-+                      0xffd4ff24, 0xffd4ff24, 1, 0x800007, 0);
-+
-+    /* 2.8E-43 / -inf */
-+    err += test_diebr(0x000000c8, 0xff800000, 0, 0x7c000007,
-+                      0x000000c8, 0x80000000, 0, 0x7c000007, 0);
-+
-+    /* -1.7E+38 / -inf */
-+    err += test_diebr(0xff00003d, 0xff800000, 0, 0,
-+                      0xff00003d, 0, 0, 0, 0);
-+
-+    /* 1.94E-304 / 1.94E-304 */
-+    err += test_didbr(0x00e100e100e100e1, 0x00e100e100e100e1, 0, 1,
-+                      0, 0x3ff0000000000000, 0, 1, 0);
-+
-+    /* 4.82E-299 / 5.29E-308 */
-+    err += test_didbr(0x0200230200230200, 0x0023020023020023, 0, 0,
-+                      0x8001a017d247b3f4, 0x41cb2aa05f000000, 0, 0, 0);
-+
-+    /* -1.38E-75 / -3.77E+208 */
-+    err += test_didbr(0xb063eb3d63b063eb, 0xeb3d63b063eb3d63, 3, 0xe8000000,
-+                      0x6b3d63b063eb3d63, 0x3ff0000000000000, 0, 0xe8000c00,
-+                      SIGFPE);
-+
-+    return err ? EXIT_FAILURE : EXIT_SUCCESS;
-+}
 -- 
-2.52.0
+Peter Xu
 
 
