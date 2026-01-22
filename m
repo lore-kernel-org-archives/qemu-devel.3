@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDC43C44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 11:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9AECC44536
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 11:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1visvJ-0004eC-Rh; Thu, 22 Jan 2026 06:32:25 -0500
+	id 1visvL-0004ex-9e; Thu, 22 Jan 2026 06:32:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1visv2-0004bf-Lv
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:32:12 -0500
+ id 1visvA-0004cK-W3
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:32:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1visv0-0007YT-Eh
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:32:08 -0500
+ id 1visv5-0007Yz-Pf
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:32:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769081525;
+ s=mimecast20190719; t=1769081531;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V1407Wz3mEKZXo8P5fsNSHuVxicWoIpB76YxaaIDnwI=;
- b=HQyarxUPi0bZlCv0ZNG0XSHgPLaqt7TASFji2/ArxMOzmIVM+4rc0c+CnejqtwXCGhtFfH
- SGWFOd3g5L0vdHBYAGasCrROc9eN57t+aQl/nl2lNC0e4TdO7s9ePaEvIiPgoebnJM0sou
- YLz6Oa2Wcla+bh5TmHwWRfqVeht8plc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=djthdnav+88HYBrzPOQFPUMPX/KCmxP41g/8I8VobCs=;
+ b=NOQX+8fWYA5TGC+B2icDDBSaV3CsKGOSTCGkW8ZLGySQXRutyJ9S2YuV5+MIsBMp6NQiVC
+ yTZmemT2vuUUW8xjsSvpfuvRicwOBEiYBb1nHuekwcfzkWTZ4N+mfnFVQYrBvRrD7BLalI
+ JBWUiDq7hGxpwUNsYeWcith6DOwC7qw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-K2WoyBpVNrqh2xTuXPJF0w-1; Thu,
- 22 Jan 2026 06:32:02 -0500
-X-MC-Unique: K2WoyBpVNrqh2xTuXPJF0w-1
-X-Mimecast-MFC-AGG-ID: K2WoyBpVNrqh2xTuXPJF0w_1769081521
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-602-2fWNiqSPMw-EDoErB8-MBw-1; Thu,
+ 22 Jan 2026 06:32:07 -0500
+X-MC-Unique: 2fWNiqSPMw-EDoErB8-MBw-1
+X-Mimecast-MFC-AGG-ID: 2fWNiqSPMw-EDoErB8-MBw_1769081527
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15D361800350; Thu, 22 Jan 2026 11:32:01 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EC8B31955D84; Thu, 22 Jan 2026 11:32:06 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CAD2F1958DC1; Thu, 22 Jan 2026 11:31:59 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AF06B1956095; Thu, 22 Jan 2026 11:32:05 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, richard.henderson@linaro.org
-Subject: [PATCH 2/4] ui/dbus: fix leak regression
-Date: Thu, 22 Jan 2026 15:31:41 +0400
-Message-ID: <20260122113144.2046899-3-marcandre.lureau@redhat.com>
+Subject: [PATCH 3/4] ui/dbus: fix Unix.Map proxy leak
+Date: Thu, 22 Jan 2026 15:31:42 +0400
+Message-ID: <20260122113144.2046899-4-marcandre.lureau@redhat.com>
 In-Reply-To: <20260122113144.2046899-1-marcandre.lureau@redhat.com>
 References: <20260122113144.2046899-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,28 +90,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-For some reason, during refactoring, an extra reference leak was introduced.
-
-Fixes: commit 7945576cf2 ("ui/dbus: factor out sending a scanout")
+Fixes: commit 48b7ef0f0 ("ui/dbus: implement Unix.Map")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/dbus-listener.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ ui/dbus-listener.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 52e041edb0f..407719fc1e0 100644
+index 407719fc1e0..46264839d86 100644
 --- a/ui/dbus-listener.c
 +++ b/ui/dbus-listener.c
-@@ -815,8 +815,7 @@ static void ddl_scanout(DBusDisplayListener *ddl)
-     qemu_dbus_display1_listener_call_scanout(
-         ddl->proxy, surface_width(ddl->ds), surface_height(ddl->ds),
-         surface_stride(ddl->ds), surface_format(ddl->ds), v_data,
--        G_DBUS_CALL_FLAGS_NONE, DBUS_DEFAULT_TIMEOUT, NULL, NULL,
--        g_object_ref(ddl));
-+        G_DBUS_CALL_FLAGS_NONE, DBUS_DEFAULT_TIMEOUT, NULL, NULL, NULL);
- }
- 
- static void dbus_gfx_update(DisplayChangeListener *dcl,
+@@ -960,8 +960,8 @@ dbus_display_listener_dispose(GObject *object)
+     g_clear_object(&ddl->conn);
+     g_clear_pointer(&ddl->bus_name, g_free);
+     g_clear_object(&ddl->proxy);
+-#ifdef WIN32
+     g_clear_object(&ddl->map_proxy);
++#ifdef WIN32
+     g_clear_object(&ddl->d3d11_proxy);
+     g_clear_pointer(&ddl->peer_process, CloseHandle);
+ #ifdef CONFIG_PIXMAN
 -- 
 2.52.0
 
