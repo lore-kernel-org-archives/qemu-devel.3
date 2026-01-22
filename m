@@ -4,95 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 060C2D3EE84
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 16:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6BB4D3EE89
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 16:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vixjW-0005Wq-Kc; Thu, 22 Jan 2026 11:40:35 -0500
+	id 1vixlw-0006dc-1Z; Thu, 22 Jan 2026 11:43:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vixjU-0005Vb-98
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 11:40:32 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vixjQ-00044B-33
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 11:40:30 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-47ee807a4c5so12496735e9.2
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 08:40:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769100026; x=1769704826; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BuQo2MpZVaFGdVJNbnqOFBzx3kz0oaqU0Fh8o5Y94cM=;
- b=epRtfAWsy5BG+tE9QwNseuOuE5Pau9Guw3Tvt7/vMbvO6ibEkHwEAvwIqhmfwWDiI+
- HmKAxts6pTctpvBMQnq9aEBZ8h/01f0ENi1rg8GpreLL5bjb8IGAR6NCTgmqM6bnJkKc
- FF07yay/FfN6NuQOQI5UO5ZjdKsOSZsHtffdYVlkSnae1L4/1xFs+4eZBu4Vlg3frDJJ
- lup2ulBIB93qyEuUHtjdSUR0Iw7c3wKX14Qx5+v+XIuHu7k7E6EIomK6hjddcYkVxPc2
- GxgKZx/VOZqeKjTRnEcltbYphg644/uHErAPuU0fk89orLS+xsBBVlvXRhLVFuG31qzJ
- aNvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769100026; x=1769704826;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BuQo2MpZVaFGdVJNbnqOFBzx3kz0oaqU0Fh8o5Y94cM=;
- b=MmHwGAb6nCoEJ9FTd4LAlQjA6m6gN9yj5kCMC5P1URyv8rtpaohY6KtwnUCTBhvgky
- yazy8w934g3HKorg8r0IykCzclNigL4jR148qpFW7Uwb2/pzXuRspxtZhi+aRZGhC467
- EixNbjqoOX/xr7W9l9ugETquXISXhH+nQgOBV3fAmSwNxC6skd8DtkjaqGGfVpbmkTWd
- SDYgpMS3S0OSUAYZMdyheXYscYIQsWr0/9JDs3jvT+UEBJWhCyucUIVOCQjGpzMPROpa
- lMjFhCjST54eSpTT8X0xHTgu3TpnilJdEFSIIvpRX3Zlufj8DQkkCJ1R2oBh8ySZ0boZ
- N/lA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWbv5XFbtGLtwJG9XmQiKdphcl2XELgmV3KwHKwygvUTjnxRnQjL57/xMm3ni+TqbvmBzj108LN4X+J@nongnu.org
-X-Gm-Message-State: AOJu0YytDTGUBwwk3EtWRsNcnHms0pOK/8v5fKqw0DLAzswWNiJNUuGy
- zvGXFRnOo6fhVXmntx5bFEvDhXC1fma99IdD05/DltVovbKe3r8JplQjOWNn/xMutMU=
-X-Gm-Gg: AZuq6aKxnDKSmGK13Z3+5ZQT5owksEY4MBRv21d7NshS80hte1PFFusq0vH3dcil0i9
- CU5yAPbkRm7xiW96IK5uyHGCINXFGmgAY3sp4/fLxqdM1uFICrwaUZ8274C63NY8IvQZ5pGc38Q
- Lr0sGtVPq1XTTMqH5KZY+g8YFqryRo3ZY2y5oIbSS+wSkrQdBqw2itbjdl0tuPG5DR9RJXiCGZJ
- AmlFTnpI8wSOOEw6ezEmDc0g/f5nLsDWXtrB8+tGQul+oiXuKfr/ZtoojmhvImuo9OhgmAknV3V
- tC1V8bpcoALR1GY+0ym4jLf0OmGHnLqYydu4xxXDVsm+lECGk4zTL9OjgOSKITEd90px6C/P6HT
- oEZRprNplj5JtoKDHTVqmGOespiWkFyEvNyktOhJbWA8OGd3tXHqJt571FY32kLEfjO+fsTiM57
- +lHQGyDaeQU081
-X-Received: by 2002:a05:600c:1c16:b0:480:1a3a:5ce6 with SMTP id
- 5b1f17b1804b1-4804c959d80mr3737215e9.14.1769100026140; 
- Thu, 22 Jan 2026 08:40:26 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4804d26ab25sm182035e9.3.2026.01.22.08.40.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Jan 2026 08:40:25 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A7ACB5F7C3;
- Thu, 22 Jan 2026 16:40:24 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Thomas Huth <thuth@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  David Hildenbrand <david@kernel.org>,
- qemu-s390x@nongnu.org,  qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/3] target/s390x: Dump Floating-Point-Control Register
-In-Reply-To: <20260121222116.713325-2-iii@linux.ibm.com> (Ilya Leoshkevich's
- message of "Wed, 21 Jan 2026 23:12:31 +0100")
-References: <20260121222116.713325-1-iii@linux.ibm.com>
- <20260121222116.713325-2-iii@linux.ibm.com>
-User-Agent: mu4e 1.12.15; emacs 30.1
-Date: Thu, 22 Jan 2026 16:40:24 +0000
-Message-ID: <87pl71mwhz.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1vixlC-0006Xz-80
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 11:42:20 -0500
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1vixlA-0004OY-LB
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 11:42:17 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 67FFE4095E;
+ Thu, 22 Jan 2026 16:42:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47066C116D0;
+ Thu, 22 Jan 2026 16:42:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1769100134;
+ bh=F78Elc2RaITbygNewNcHtQrS7mD9P39HTYw3TZLGnjw=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=nI/tGl/iokvmiT1DWeX2DKOXCdVz8q2xfO94f67YOlzaqAbzSXMLmDbtsbZgF/ohd
+ ev9ETRY6hn1VeQMdbp47/8QfGl1zH4owxvis+HBHvj4TVUhrh/fZ1qNeKWaslgJFZJ
+ HnwRDPHKjsF0o4j1hMKBztLx/h5HOR3AFsmcVZlD3eOfYPFXWmjFTrhGHz2oTEXn8q
+ 4us4x4p+XBnO/9WVWOzd7iStrFvRdzv9Bkckxk4eTg8i67m7tdzhaVAx1n9dWurIDj
+ x8HYsgmh6PV838B+T9bsVPev7uRpLi/q2X2Fc7UTjEwjW2WVXusbZ6C4zsT5ZU8/Qh
+ GNxlezRyuuwyw==
+Received: from localhost ([::1]) by mail.kernel.org with esmtp (Exim 4.99)
+ (envelope-from <mchehab+huawei@kernel.org>)
+ id 1vixl6-000000055Fi-1ZMj; Thu, 22 Jan 2026 17:42:12 +0100
+Date: Thu, 22 Jan 2026 17:42:11 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>, Michael S Tsirkin
+ <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>, Igor Mammedov
+ <imammedo@redhat.com>, Cleber Rosa <crosa@redhat.com>, John Snow
+ <jsnow@redhat.com>
+Subject: Re: [PATCH 09/13] scripts/ghes_inject: add a handler for PCIe bus
+ error
+Message-ID: <20260122174211.76831b4a@localhost>
+In-Reply-To: <20260121133255.000018b1@huawei.com>
+References: <cover.1768993993.git.mchehab+huawei@kernel.org>
+ <c7db16aae93a98f3b0675e1010e59f6cefdaf1cd.1768993993.git.mchehab+huawei@kernel.org>
+ <20260121133255.000018b1@huawei.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,16 +79,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ilya Leoshkevich <iii@linux.ibm.com> writes:
+On Wed, 21 Jan 2026 13:32:55 +0000
+Jonathan Cameron via qemu development <qemu-devel@nongnu.org> wrote:
 
-> Knowing the value of this register is very useful for debugging
-> floating-point code.
->
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> On Wed, 21 Jan 2026 12:25:17 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > Add a logic to do PCIe BUS error injection.
+> > 
+> > On Linux Kernel, despite CPER_SEC_PCI_X_BUS macro is defined for such
+> > event, ghes.c doesn't implement support for it yet:
+> > 
+> > [16950.077494] {26}[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 1
+> > [16950.077866] {26}[Hardware Error]: event severity: recoverable
+> > [16950.078118] {26}[Hardware Error]:  Error 0, type: recoverable
+> > [16950.078444] {26}[Hardware Error]:   section type: unknown, c5753963-3b84-4095-bf78-eddad3f9c9dd
+> > [16950.078800] {26}[Hardware Error]:   section length: 0x48
+> > [16950.079069] {26}[Hardware Error]:   00000000: 00000000 00000000 00000000 00000000  ................
+> > [16950.079442] {26}[Hardware Error]:   00000010: 00000001 00000000 00000000 00000000  ................
+> > [16950.079811] {26}[Hardware Error]:   00000020: 00000000 00000000 00000000 00000000  ................
+> > [16950.080181] {26}[Hardware Error]:   00000030: 00000000 00000000 00000000 00000000  ................
+> > [16950.080538] {26}[Hardware Error]:   00000040: 00000000 00000000                    ........
+> > 
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>  
+> 
+> LGTM. Bit surprised Linux doesn't decode it but fair enough.
+> Seems a bit unlikely it ever will given this seems not to cover PCIe
+> which has it's own records.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Yeah, I misread the spec when I wrote: this one is specific for
+PCI/PCI-X, and not PCIe. That probably explain why this was not
+implemented in practice yet.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I'll rename it.
+
+Still, it is good to test it, even not being implemented, as it
+helps to check how Linux reacts to a GUID it doesn't know about
+it.
+
+> 
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> 
 
