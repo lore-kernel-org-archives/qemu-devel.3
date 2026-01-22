@@ -4,91 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E99BFD6CFA6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1961D6CFAB
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 22:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vj2tx-0006Nn-JJ; Thu, 22 Jan 2026 17:11:42 -0500
+	id 1vj2th-0006EO-8Q; Thu, 22 Jan 2026 17:11:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vj2tr-0006Lt-Q6
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 17:11:36 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vj2tq-0003LA-EO
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 17:11:35 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4801c731d0aso12297285e9.1
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 14:11:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vj2tf-0006Ct-E5
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 17:11:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vj2td-0003Jd-IM
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 17:11:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769119878;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=PKtJn8c2MQEyJjk0IWT+l4K60Rh1a/2U2zxZXpc5Pls=;
+ b=Y+eLa4Kf92NWoXIvK8uJ1yoeMei9ci3Fc9VtXWIeRPiWh/8LmYDKBjtbgDiOPQevr82gMo
+ nb2+uvGHM0ir7l2BPAjOuiWQ4KzcpGwjRGQkKR/5p/+J4fyiIBYCCEhXzC2EDjaWv12ttf
+ 0IA0d/8VNS2J+/Ci5kJjn5jeMc6NUys=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-604-J6wBuahtMo6tC6gmT0NUfg-1; Thu, 22 Jan 2026 17:11:16 -0500
+X-MC-Unique: J6wBuahtMo6tC6gmT0NUfg-1
+X-Mimecast-MFC-AGG-ID: J6wBuahtMo6tC6gmT0NUfg_1769119876
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8946b186018so59729906d6.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 14:11:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769119889; x=1769724689; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tJ5PETmEZLmm3Y1gSNdqj1xhiHNr34HOHNL2IBd92JM=;
- b=lO8Y6gDsQoAjGtIB17JBDnBOtt5AHC/fIke/X1ij4EgV2pjZL7opEzyl7ezYI+o1pB
- EzMzK3q4HfvlllT+ZvNtgb62WPOkEizTR8GL9iGt2V3Mz3dv0w2V6KNOibqmuD3jjx0q
- l5X7L2FWC3diFKBsOlUSNxsHo8AI4lpE9V+No6D346sjlfHMOiQNA6JnvQo8YafEKIra
- 8MF2Vs47OPBvTy7W2jzzYboMU7cRwQNcYKdvRszTLI4ECTnPaQqp2+7X5oLJ1eEVe1hy
- BB8NYjkUNzNGfdfTZewb3a9jp3kURHxFmoOQ323MRwkIqBrROPiWLx3qBMVCT7ve6B+3
- CS3Q==
+ d=redhat.com; s=google; t=1769119876; x=1769724676; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=PKtJn8c2MQEyJjk0IWT+l4K60Rh1a/2U2zxZXpc5Pls=;
+ b=VqU+EjdVKDpdo6lCiyPmWuUPVvYJrY1ml+EiLWUIvD5VHcWtRB5i+d29AItoRNwaeD
+ Agk7CJ3DSvjnOmWrTPzwPLHFaGfmokMnT2zZd/3c79oD7nWB8+DXhVWxmaZjPbGDp0va
+ ygO8QHBBP66HesdP94SgE8jL5yiPzKZ9qB+UZC8vL25PjzivEHM0RUnb4M+Mzbuo0uVI
+ YjJsea/nhEVncWFQvzB39pMBMuj1gCtHC5ZZPMBAXCQQWHmmKCDgzc6dL23K0VBIZoOQ
+ IOyTqXmPL9gXP3wUI4puI9W+TzY93RBHGPXEoQgkAHV+oLgSn9AvQTtVmcziMo1eASC5
+ fcvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769119889; x=1769724689;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tJ5PETmEZLmm3Y1gSNdqj1xhiHNr34HOHNL2IBd92JM=;
- b=xN9Y/WujjrNswIWyJ7GWuNhNPV9GCfhO2HND09pYF43LQ0rN2Lmol0oZ8ZvmYi3pVU
- wrc4QJmEzeDtT87nlEx6OJvmCk/4uF9l6geyF+IzsoXQWjw5LATL8d5UE5+siHkqDNFp
- TQl9QhMa3ZkAIlOTNn/4BQUoBeGiwIaHjCs+Bg+8F5y7yARj5boQoboAAzesnHkIxHlZ
- 14mcdbHRWGOZbzInP7oWyAk/aNURXC9xMeh9i4dM955F9k+p3fe0whU0kC/s3i52UOR3
- 1e9RKiCu/fQ7paHDhkdYNi0KNeC0aycPjFbuWhzVdREXh0afDbTmnDyI5JZIMOt2JXfb
- zdHg==
-X-Gm-Message-State: AOJu0YweQxDk+7deiOEV6XCPV6NHy7wihzC0EIkcZLn21lO881+JztSP
- wgyTZsodzUNmSl8TCIE5N5S/wahco7OIfAbN+bKH+TcD3886Ipc6L320tjWrJluE3EnHLBo6GnV
- iNy/yyjs=
-X-Gm-Gg: AZuq6aKBZsyqpDUuBHowHFhBYlJX5o490Y3BjHAHQTRzrVoK7+/C5zgbeQozeLzn1YA
- opReAPM6R3jHTII8UYTlDrVfvhquL1SHDF2hSy8z4SvcnNy+4vnTaa3+Zl8UM4WCByUyDSN6pKV
- LBMXkaPiTHpfdDjJpMON3h3326W7OEFfQgz+Ka8KeqqVd3j8e/FlK+6HE5Qq5ILCujOgaiEVqIQ
- 1X0ITL/tlZaSSvhIXKXwMMRiCpmUBYZmmSl4vz5Bz4/RT9wN9G0nIOan+qrdnnVJH/WqoTp7/4/
- QzUphirmlGk4CrmL8QMFKWUYAKcNuEx/X7Ivkq0QP2vo+XnlDm3aUYLcpif+9aiSL0qYp81f8xC
- oxJYSH3unoFTWK8OlZaP2ZOmrs5iLyfULOA4JfMEv/3ZLtMHoWSsaPbF2n9XTuKPRZS8bwBnXO5
- 9e5d7wQpj0W4cWta8gQeO9ikwNnQRdbQeToWrahTo0Yr/W4Mx7XuKFEtzHtpZbfwAsPv/p7Eg=
-X-Received: by 2002:a05:600c:1d28:b0:47e:e4ff:e2ac with SMTP id
- 5b1f17b1804b1-4804c9d4fd2mr17080105e9.33.1769119889561; 
- Thu, 22 Jan 2026 14:11:29 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4804d85206fsm11486705e9.6.2026.01.22.14.11.28
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Jan 2026 14:11:28 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1769119876; x=1769724676;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PKtJn8c2MQEyJjk0IWT+l4K60Rh1a/2U2zxZXpc5Pls=;
+ b=UtUaIJanfFqb5JjrjJhBhBW9/LT9GZ4KN9pA/nGAGGtUcfzK4Cb65zddmFJckcNeYL
+ DXDM0k4q0xjjEiUcLoBpRtuXHZi27zeZhY/f+k4vOSQ142OL3U9004sCfAi4K5PH4q8f
+ hfx25M1mt7b4SYOkUO6U5bqMa78O3VeIMzbziq5iL7Fl6owRT3QyWyRypBDyPwT9MBKk
+ k18d6flE4IeObT9u2oPHVfMeMgQPrhBUZ11vRrV+bZ7rPEompQIPLNyZMdC3ob3Mq45L
+ VIjTJKtHJfLfWPkVBTdw68oBviYCuCB3RV1y0VnSHJESYF0Hk3Mfh7FrGgcVc2hjYrNH
+ TvqA==
+X-Gm-Message-State: AOJu0YzvX3wVf+wgbBV36NKH+B9Aixuos8uludgxbDjLtZJ54Oh7UAlw
+ IQlbhn4KyBqKJWwWl68Z2/cyBg4dBO1q7RRjTvLTILm6tn3kkLZ+TK4EtRS6KHCABH9HuE4FbpO
+ gn24RjJeKVk+EjtfXLlKk7lVDiY8Gl7Ba3VZvLDc5mG0qDMgAZLHOEHm+e20qSzWTWtp/NN9w4D
+ PQU+jObYhv6mfr46s9UMyDamyz6+li68+yeml7ug==
+X-Gm-Gg: AZuq6aKi200+R+C1AW+yH/0tu6rheU0/ODTxZE4M7SvIBLyMXBKX0aJ3O66ppHATL+O
+ 6T5l1+jUaiTX6TRmSJ/vMZEUvlsg6hhE1yncizkl/TQb8Nr9+raatK5M1oHeKbdnIABLfQ9Mee1
+ g8npiczJZDPB0ou+ph75wxTMzdl++FOaATf7eujqpW/j+Hq7LZWK2xfebkQIQ1L2P1bSoK7YDBl
+ BNCA8/jjfxNFaUn29MUpHr3E/S91+Qr3xgy4QcMREMf7MTwParZ7k+gf5jKua+Vd/vlzOlDVXRO
+ b7lqzYbHI2zvNUk3x20yEsLsciN/ea46cUNynubpN8VP3hifXREqM1VKS1gwUmz6an+umWZpSSH
+ H
+X-Received: by 2002:a05:6214:234d:b0:890:7328:7fdb with SMTP id
+ 6a1803df08f44-8949023c149mr15852936d6.53.1769119874244; 
+ Thu, 22 Jan 2026 14:11:14 -0800 (PST)
+X-Received: by 2002:a05:6214:234d:b0:890:7328:7fdb with SMTP id
+ 6a1803df08f44-8949023c149mr15852416d6.53.1769119873666; 
+ Thu, 22 Jan 2026 14:11:13 -0800 (PST)
+Received: from x1.com ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8949183f7cesm3663176d6.18.2026.01.22.14.11.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 Jan 2026 14:11:12 -0800 (PST)
+From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Anton Johansson <anjo@rev.ng>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 03/11] target/ppc: Inline cpu_ld/st_data_ra() calls in
- do_hash()
-Date: Thu, 22 Jan 2026 23:10:57 +0100
-Message-ID: <20260122221106.57184-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260122221106.57184-1-philmd@linaro.org>
-References: <20260122221106.57184-1-philmd@linaro.org>
+Cc: Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
+ peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>
+Subject: [PATCH] migration: Introduce migrate_use_return_path()
+Date: Thu, 22 Jan 2026 17:11:11 -0500
+Message-ID: <20260122221111.3538536-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,46 +114,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of removing the cpu_ld*_data_ra() and
-cpu_st*_data_ra() calls, inline them. No logical change
-intended.
+Introduce a helper to show if we want to enable return path.
 
-We note the page translation hash address is expected to
-be aligned, so the MO_UNALN flag is misleading. Next commit
-will remove it.
+We used to imply that for postcopy-ram, that's not normally how we add cap
+dependencies, however it has been like it for years.  Add some comment and
+stick with it.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- target/ppc/tcg-excp_helper.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ migration/migration.h |  1 +
+ migration/migration.c | 15 ++++++++++++++-
+ migration/rdma.c      |  8 +++-----
+ migration/tls.c       |  4 ++--
+ 4 files changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index edecfb85725..6f5d82af636 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -160,14 +160,18 @@ static void do_hash(CPUPPCState *env, target_ulong ea, target_ulong ra,
-                     target_ulong rb, uint64_t key, bool store)
- {
-     uint64_t calculated_hash = hash_digest(ra, rb, key), loaded_hash;
-+    unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
-+    MemOp op = MO_TE | MO_UQ | MO_UNALN;
-+    MemOpIdx oi = make_memop_idx(op, mmu_idx);
-+    uintptr_t retaddr = GETPC();
+diff --git a/migration/migration.h b/migration/migration.h
+index ccc4e536a5..32c2e70205 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -605,5 +605,6 @@ void migration_bitmap_sync_precopy(bool last_stage);
+ /* migration/block-dirty-bitmap.c */
+ void dirty_bitmap_mig_init(void);
+ bool should_send_vmdesc(void);
++bool migrate_use_return_path(void);
  
-     if (store) {
--        cpu_stq_data_ra(env, ea, calculated_hash, GETPC());
-+        cpu_stq_mmu(env, ea, calculated_hash, oi, retaddr);
-     } else {
--        loaded_hash = cpu_ldq_data_ra(env, ea, GETPC());
-+        loaded_hash = cpu_ldq_mmu(env, ea, oi, retaddr);
-         if (loaded_hash != calculated_hash) {
-             raise_exception_err_ra(env, POWERPC_EXCP_PROGRAM,
--                POWERPC_EXCP_TRAP, GETPC());
-+                                   POWERPC_EXCP_TRAP, retaddr);
-         }
+ #endif
+diff --git a/migration/migration.c b/migration/migration.c
+index 1bcde301f7..f550485ea5 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -109,6 +109,19 @@ static bool close_return_path_on_source(MigrationState *s);
+ static void migration_completion_end(MigrationState *s);
+ static void migrate_hup_delete(MigrationState *s);
+ 
++/*
++ * Postcopy-ram will imply return path.
++ *
++ * Normally we don't describe capability dependencies like this; we could
++ * have failed the migration request if postcopy-ram is selected withour
++ * return-path.  Said that, we had this as part of postcopy-ram capability
++ * ABI for years.. let's stick with it.
++ */
++bool migrate_use_return_path(void)
++{
++    return migrate_postcopy_ram() || migrate_return_path();
++}
++
+ static void migration_downtime_start(MigrationState *s)
+ {
+     trace_vmstate_downtime_checkpoint("src-downtime-start");
+@@ -4067,7 +4080,7 @@ void migration_connect(MigrationState *s, Error *error_in)
+      * precopy, only if user specified "return-path" capability would
+      * QEMU uses the return path.
+      */
+-    if (migrate_postcopy_ram() || migrate_return_path()) {
++    if (migrate_use_return_path()) {
+         open_return_path_on_source(s);
      }
- }
+ 
+diff --git a/migration/rdma.c b/migration/rdma.c
+index cced173379..a55c80908c 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -3186,8 +3186,7 @@ static int qemu_rdma_accept(RDMAContext *rdma)
+      * initialize the RDMAContext for return path for postcopy after first
+      * connection request reached.
+      */
+-    if ((migrate_postcopy() || migrate_return_path())
+-        && !rdma->is_return_path) {
++    if (migrate_use_return_path() && !rdma->is_return_path) {
+         rdma_return_path = qemu_rdma_data_init(isock, NULL);
+         if (rdma_return_path == NULL) {
+             rdma_ack_cm_event(cm_event);
+@@ -3265,8 +3264,7 @@ static int qemu_rdma_accept(RDMAContext *rdma)
+     }
+ 
+     /* Accept the second connection request for return path */
+-    if ((migrate_postcopy() || migrate_return_path())
+-        && !rdma->is_return_path) {
++    if (migrate_use_return_path() && !rdma->is_return_path) {
+         qemu_set_fd_handler(rdma->channel->fd, rdma_accept_incoming_migration,
+                             NULL,
+                             (void *)(intptr_t)rdma->return_path);
+@@ -3967,7 +3965,7 @@ void rdma_start_outgoing_migration(void *opaque,
+     }
+ 
+     /* RDMA postcopy need a separate queue pair for return path */
+-    if (migrate_postcopy() || migrate_return_path()) {
++    if (migrate_use_return_path()) {
+         rdma_return_path = qemu_rdma_data_init(host_port, errp);
+ 
+         if (rdma_return_path == NULL) {
+diff --git a/migration/tls.c b/migration/tls.c
+index 56b5d1cc90..7fb49ddd82 100644
+--- a/migration/tls.c
++++ b/migration/tls.c
+@@ -90,7 +90,7 @@ void migration_tls_channel_process_incoming(MigrationState *s,
+ 
+     trace_migration_tls_incoming_handshake_start();
+     qio_channel_set_name(QIO_CHANNEL(tioc), "migration-tls-incoming");
+-    if (migrate_postcopy_ram() || migrate_return_path()) {
++    if (migrate_use_return_path()) {
+         qio_channel_set_feature(QIO_CHANNEL(tioc),
+                                 QIO_CHANNEL_FEATURE_CONCURRENT_IO);
+     }
+@@ -154,7 +154,7 @@ void migration_tls_channel_connect(MigrationState *s,
+     trace_migration_tls_outgoing_handshake_start(hostname);
+     qio_channel_set_name(QIO_CHANNEL(tioc), "migration-tls-outgoing");
+ 
+-    if (migrate_postcopy_ram() || migrate_return_path()) {
++    if (migrate_use_return_path()) {
+         qio_channel_set_feature(QIO_CHANNEL(tioc),
+                                 QIO_CHANNEL_FEATURE_CONCURRENT_IO);
+     }
 -- 
-2.52.0
+2.50.1
 
 
