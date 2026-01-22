@@ -4,109 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E895DD3EE64
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 13:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B315D3EE64
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 13:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viuYO-0001g7-Ho; Thu, 22 Jan 2026 08:16:52 -0500
+	id 1viud4-0004Nj-Ct; Thu, 22 Jan 2026 08:21:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <martin.kroening@eonerc.rwth-aachen.de>)
- id 1viuXw-0001Sv-P9
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:16:26 -0500
-Received: from mail-out-4.itc.rwth-aachen.de ([2a00:8a60:1:e501::5:49])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <martin.kroening@eonerc.rwth-aachen.de>)
- id 1viuXt-0005Ve-9m
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:16:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=rwth-aachen.de; i=@rwth-aachen.de; q=dns/txt;
- s=20240516-RWTH; t=1769087781; x=1800623781;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=yF+LBeUaFzy3/tXuiXOTIZL3LYrn5NbzIcQoL35uCFU=;
- b=Cp1Ceah7T8EdSiwBZttkT7Iw7DJpZ6bGnDBh1sC9VaOX9lp/cTRRfnya
- Ip0VV+x+t7IuGnmH/5Ud/gopuIqo6H04GhFpOfBQ+hhyAPmCZoiECoZQz
- VMoI9WOAYb93wVzMbuNZvNRzgly/smYdUtKcu79dT5EXYluVBM4X6b44C
- kUsnjaDY7gVMIhSJcRXaqPVGs9CBwJVZO9vla8fuvWn0Pi7fU8VDgSSFX
- l0uDy4TP2gPBbbwcAa4UvwYxaCisoVVli86ytsFEjKl76h81w+KFEk4Na
- i740YdbS8uoHSMHjtT6bKcy5IOa/MgaPHA1gq5U7sBXR/tIXXXHwXc6pR w==;
-X-CSE-ConnectionGUID: uOQM46/qR4qxg5GddKbTZg==
-X-CSE-MsgGUID: L79OsCJ5QfOdX4sqT6h4xA==
-X-IPAS-Result: =?us-ascii?q?A2CgAgC2IXJp/54agoZaGwEBAQEBAQEBBQEBARIBAQEDA?=
- =?us-ascii?q?wEBAUCBUIVPAYQ5kXQDoBkPAQEBAQEBAQEBCAFRBAEBhQcCFoxyJzgTAQIEA?=
- =?us-ascii?q?QEBAQMCAwEBAQEBAQEBAQEBCwEBBgEBAQEBAQYFgSGGCVOGWwEEASMRRQULA?=
- =?us-ascii?q?gEIGgImAgICLxUQAgQOgweCTSewCIEygQHfAoEsFYEKLohTAYFvhACEeIIMQ?=
- =?us-ascii?q?4EVJwsDDYJoPoQaKReDRDqCLwSCIoEOgRKKTIIUhg8JSXh4LAFVExcLBwVhQ?=
- =?us-ascii?q?kMDgQYjSwUtHYEjIR0XEx9YGwcFEyMyBhkGHBICAwECAjpTDIF2AgIEghB7g?=
- =?us-ascii?q?gEPhwCBAAUubxoOIgJBNwRDAwttPTcUG0GTDEKBCklCWJcmjCejLweCOF2BC?=
- =?us-ascii?q?qFyBC+XYJMLLphYqRYCBAIEBQIYgX+BfnF5AYI9URcCD44tFsl5gTQCBwsBA?=
- =?us-ascii?q?QMJgjmPMWABgRwBAQ?=
-IronPort-Data: A9a23:IcOxw6iqI28Ca6RhKk1khoVPX161RhEKZh0ujC45NGQN5FlHY01je
- htvUWCGaP/YZDShfN9xPo+2908DupCGydZlQAo//y1mEC9jpJueD7x1DKtR0wC6c5efFhI3t
- 63yTvGacajYm1eF/k/F3oDJ9Cc6jefTAOKgVIYoAwgpLSd8UiAtlBl/rOAwh49skLCRDhiE0
- T/Ii5S31GSNhXguawr414rZ8Ekx5K2o4mtC1rADTakjUGH2xiF94K03ePnZw0vQGuF8AuO8T
- uDf+7C1lkux1wstEN6sjoHgeUQMRLPIVSDW4paBc/H/6vTqjnVaPpcTbJLwW28O49m6t4wZJ
- OF2iHCFYVxB0pvkxb5BCUkIS0mSCoUdkFPPCSDXXcV+VCQqeVO0qxllJBle0YH1Zo+bDEkWn
- cH0JgzhYTieoNuTnOz8U9Mwn9QscebnMKAVhkNvmGSx4fYOGfgvQo3w2uN48Qd1uZoLNLDEe
- NYZLDNjKhjNC/FNEg5MVNRnx7/u3Ce5KmAIwL6WjfNfD2z7yQVrzLnrdtnPfdGMRMNatkufo
- G/c9CLjHQ0acdWWwjqI9DSgi4cjmAuiB9NDS+fir5aGhnW3mT00EzY0CGK1hvWJ1lWnZ4xfd
- 1w9r39GQa8asRbDosPGdwW1vHOe+BsVStZdF+kS7ACLw7DTpQGDCQAsVj5AbNkqnMs3QzUw0
- RmOhdyBLSVitaDQRX+D+7O8qzS0Ni4Ia2gYakcsRA8I85/prYc1gx/nStdlGbSyyNrvFlnNL
- yuitjcih7gDyNFRkqz950/bg3elqt7FQ2bZ+znqY45s1SshDKbNWmBiwQKzASpoRGpBcmS8g
- Q==
-IronPort-HdrOrdr: A9a23:9YsRXqrzoOJ0r4A0PdU21N0aV5r5eYIsimQD101hICG9Kvbo8P
- xHnJwguiMdEF4qKQ0dcKO7Sc+9qBTnhOFICOgqTMqftWbdyQiVxe1ZgLcKhgeQfxEWldQtq5
- uIEZIOauEYZGIS5a2R3OD7KadE/DDtys6VbJLlr0uFOjsKV0gP1WtE402gYzRLrUF9dOIE/N
- D33Ls9m9OPQwVsUviG
-X-Talos-CUID: 9a23:0022uG9SmrGZxLJq+7mVv1MzI+V5LDrE9ivJM0DlJmpla7epe1DFrQ==
-X-Talos-MUID: 9a23:lD9waQXsNTNsmhbq/Buz1RZ5H+U12qqJBHBRiow65cnYJQUlbg==
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-AV: E=Sophos;i="6.21,246,1763420400"; d="scan'208";a="17997221"
-Received: from rwthex-w2-a.rwth-ad.de ([134.130.26.158])
- by mail-in-4.itc.rwth-aachen.de with ESMTP; 22 Jan 2026 14:16:15 +0100
-Received: from rwthex-s2-a.rwth-ad.de (2a00:8a60:1:e500::26:154) by
- RWTHEX-W2-A.rwth-ad.de (2a00:8a60:1:e500::26:158) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Thu, 22 Jan 2026 14:16:14 +0100
-Received: from rwthex-s2-a.rwth-ad.de ([fe80::9e0:8e94:8a31:2f0b]) by
- rwthex-s2-a.rwth-ad.de ([fe80::9e0:8e94:8a31:2f0b%4]) with mapi id
- 15.02.2562.035; Thu, 22 Jan 2026 14:16:14 +0100
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, =?utf-8?B?QWxleCBCZW5uw6ll?=
- <alex.bennee@linaro.org>
-Subject: Re: [PATCH 1/2] include/exec: Provide the cpu_tswap() functions
-Thread-Topic: [PATCH 1/2] include/exec: Provide the cpu_tswap() functions
-Thread-Index: AQHcfxJpX9kd3Z45hkeo12U1CBikfbVYdTOAgADUOID///aMgIAFBHUA
-Date: Thu, 22 Jan 2026 13:16:14 +0000
-Message-ID: <00BB587B-792D-4725-A42C-AE87A201C2E2@eonerc.rwth-aachen.de>
-References: <20260106-semihosting-cpu-tswap-v1-0-646576c25f56@eonerc.rwth-aachen.de>
- <20260106-semihosting-cpu-tswap-v1-1-646576c25f56@eonerc.rwth-aachen.de>
- <ee9a0216-0a1a-46ec-b647-64045c892af3@linaro.org>
- <FDDAA4F9-C389-4E63-8DEB-B0FBE38FE5CE@eonerc.rwth-aachen.de>
- <CAFEAcA-P2xqNO21rMyt2VA_tRf9yzWh8qtJFggGr4Mn-AWjj5g@mail.gmail.com>
-In-Reply-To: <CAFEAcA-P2xqNO21rMyt2VA_tRf9yzWh8qtJFggGr4Mn-AWjj5g@mail.gmail.com>
-Accept-Language: en-US, de-DE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/16.105.26011018
-x-originating-ip: [137.226.255.149]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <3E9290CA0D1D554D9B4FA1A550CA1ED1@rwth-ad.de>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1viucx-0004Mf-Lg
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:21:36 -0500
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1viucw-0007EK-24
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:21:35 -0500
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-7941578064bso6410357b3.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 05:21:33 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769088093; cv=none;
+ d=google.com; s=arc-20240605;
+ b=an0c5v4GqNQEYOOh/S73l8YIcot+RyKvQnBxRuDUGUsepg6ZayCH61pFddOx/p43o5
+ 1sDp1P69CH+jGazIiO16qqOoAqCQjIHsLSmIHWhp+kjy5SMvgE+c33vS4hqbC1fUD0AJ
+ dhxQ3lBbCLAfzGaltCPU02G4KcCS3GKI9GRWpPEYhaMqAoPdji+4UIkJHDFGdOM4Akb9
+ v5k38mte+gWldbShdoWm2+Ijh+qFFKuzGyrDMxWMm2qemLWs+XTpXmCtIMznMN2hVcaH
+ qx1SimYx3vI3A14osZtAlGS4HJ4Q2+1ynSqJgzCXXZWhH5SpovGXeFz0Oui7gCCEY/Pc
+ 9EDw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=KnwO9NheAJh+DNaX5x09u2jznRhjsocyW+YOHcf5s1I=;
+ fh=l34yKrB0yromHHDUji8ziQOfQo4HrJ0cM0LWNUDHuFA=;
+ b=F90QOLgJvWJJEm2Qn9Fun0HgzdCEcTKJctMflgNXesvRwqdT5wUR0hSt73KierWPS4
+ LMFLYEx/JI84ydAjh8f9JB3M5pJIRov/sQV18oPbE+zxj0I7TN/HsdWhW3psnbK4zcch
+ Hl9rxpoDRnQtHmgC47ceDeduKpupjU7d73F7bxoOK/ruFUCCf/jQVGduxQU72fJHyD+x
+ pvYzULQGnUpX3UYa8p6JrbdbSb9o9PwaUdd3E9nip1sPwi848OCH3v4Gh+MpXdAmFA5M
+ ILHHGHHqOkzBMoEQtXb++BrTSylogJKWEqj+57yjbFFAdRySxuKJ3LilXIO6B5fxPddN
+ 0btQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769088093; x=1769692893; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=KnwO9NheAJh+DNaX5x09u2jznRhjsocyW+YOHcf5s1I=;
+ b=kHCsWlW1tyov46t7iFOZJC+tzE6+Mr/AG/gHZFyQZulrl7W7boPjCrBleo3oyPcXHO
+ PcP1S9qb8x9t7W0pFFHbOyer2++H9wlDm6whwM+DJCtMqJ56n5a4eu3jFU0G7QLvoFq/
+ hFL/oKv2HJjtqFL3W1z0aaPT2jGBfNziB2M3RSxjJ3j70Gw6CHbi+ugxVRvjppqTd7g3
+ 4EjXPHWC5RCwB9Ulk7WfeWmFxNB2EwVrl/h041+tiiKbYq/DlUgxx67Wp8rhiyFYHH+L
+ 99aYLpQfFcZjRB+UnTGvTz7mHapmYWJVR//OljVvr48WKe2fHy0HnJtaQAKCHxEjRo9R
+ BpkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769088093; x=1769692893;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KnwO9NheAJh+DNaX5x09u2jznRhjsocyW+YOHcf5s1I=;
+ b=DfS/6UXmhZYLzWBiGJQpDQytbK25zIJpKpuqWLH4zAn7Cndf0Em4NGOKiaUGQfgIL3
+ 0TgVEGFLJIWBloQHhZSm7cOEBxiRdcGuFUIRd/qGv6MKrcF2N72TwTv7oKpWESrP9fXg
+ dVU+CSFkiCfYktolYwuRl6ByKrG3un4UnxPhyXeqWKKujCfIn0RkbmIlT+qMjjQsjAiu
+ iqqkBn57xFaA7p5vCX54/EqA7Ej9eknC7hwWzw6KwTJr9iTmkV9Tr677SBV24m/ktmIc
+ ij5kPBnFCaoN5yQhpDIhkfR3EPIqiBfhC4QFiDosuP/3fqG3FOjj+KvIP0XBSk46K/27
+ tSxg==
+X-Gm-Message-State: AOJu0YwomEc0oVHabSVVlceOr8xQyodbJtTpzek0WhqhhtN7SnKH0POe
+ JAtyQ3pI06csTr69D+W9YfOhYiDQLdP006EJehHM9D74hNxNF7nT8HqUOFZY7x+jlbpCl8OYiOb
+ TjqiD8StEmbkp5oIVrj/C2iF6Cme3ma1m8gKOFV86rw==
+X-Gm-Gg: AZuq6aLNqY+JO+eA70AZ2wmUjUfuutOsj9ndY/AR/PghfPeYeQViy7wZRM6lnEvmdgF
+ jp0E7J5KzPWPzPIn2hJDdh8yunVtb3t+ci/cjmcY5lIos0F9vPgWAOdVIhvbhtWzSHhfITuZshT
+ VEiHL2+BnfxqqzF1qazuD2N+BP8Yi20ixSi3wYTiGPwdBtg6tW0RvQysp8VyWtRpQxZzHI2RNaI
+ InoX62UaNqCJ3pcHSP+3XYiU3Nxfw4XT+xel0k8YfzK4Kl414DO0bjIvHXQQdqXl1n9cw==
+X-Received: by 2002:a05:690c:c4f1:b0:794:30a5:14d3 with SMTP id
+ 00721157ae682-79430a515c5mr9814377b3.42.1769088092578; Thu, 22 Jan 2026
+ 05:21:32 -0800 (PST)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:8a60:1:e501::5:49;
- envelope-from=martin.kroening@eonerc.rwth-aachen.de;
- helo=mail-out-4.itc.rwth-aachen.de
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20251223142959.1460293-1-peterx@redhat.com>
+ <20251223142959.1460293-18-peterx@redhat.com>
+In-Reply-To: <20251223142959.1460293-18-peterx@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 22 Jan 2026 13:21:21 +0000
+X-Gm-Features: AZwV_Qiuw-soIx2w07Sa4RFQixkh2SY7nEDVwVYOornHXgSwuZlI0Xuw66lBcr8
+Message-ID: <CAFEAcA9aU2aYCi1R8VkZntDrat3620jbJoZQm76mciM9+7+DCw@mail.gmail.com>
+Subject: Re: [PULL 17/31] migration: Add a qdev property for StrOrNull
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,47 +110,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  =?utf-8?B?S3LDtm5pbmcsIE1hcnRpbg==?=
- <martin.kroening@eonerc.rwth-aachen.de>
-From: martin.kroening--- via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTkuMDEuMjYsIDEwOjM5LCBQZXRlciBNYXlkZWxsIHdyb3RlOg0KDQo+IE9uICgyKToNCj4g
-DQo+ID4gQWxleCB3YXMgd29ycmllZCBhYm91dCBleHBhbmRpbmcgdGhlIHVzZSBvZiBgdmlydGlv
-X2lzX2JpZ19lbmRpYW5gOg0KPiA+DQo+ID4gPiBIbW0gbG9va2luZyBhdCB0aGUgZGVzY3JpcHRp
-b246DQo+ID4gPg0KPiA+ID4gLyoqDQo+ID4gPiAqIEB2aXJ0aW9faXNfYmlnX2VuZGlhbjogQ2Fs
-bGJhY2sgdG8gcmV0dXJuICV0cnVlIGlmIGEgQ1BVIHdoaWNoIHN1cHBvcnRzDQo+ID4gPiAqIHJ1
-bnRpbWUgY29uZmlndXJhYmxlIGVuZGlhbm5lc3MgaXMgY3VycmVudGx5IGJpZy1lbmRpYW4uDQo+
-ID4gPiAqIE5vbi1jb25maWd1cmFibGUgQ1BVcyBjYW4gdXNlIHRoZSBkZWZhdWx0IGltcGxlbWVu
-dGF0aW9uIG9mIHRoaXMgbWV0aG9kLg0KPiA+ID4gKiBUaGlzIG1ldGhvZCBzaG91bGQgbm90IGJl
-IHVzZWQgYnkgYW55IGNhbGxlcnMgb3RoZXIgdGhhbiB0aGUgcHJlLTEuMA0KPiA+ID4gKiB2aXJ0
-aW8gZGV2aWNlcy4NCj4gPiA+ICovDQo+ID4gPiBib29sICgqdmlydGlvX2lzX2JpZ19lbmRpYW4p
-KENQVVN0YXRlICpjcHUpOw0KPiA+ID4NCj4gPiA+IEknbSBub3Qgc3VyZSBpZiB3ZSB3YW50IHRv
-IGV4cGFuZCB0aGUgdXNhZ2Ugb2YgdGhpcyBoYWNrLiBJIHRoaW5rDQo+ID4gPiBQaGlsaXBwZSBp
-cyBob3BpbmcgdG8gZ2V0IHJpZCBvZiB0aGVzZSB3YXJ0cyBldmVudHVhbGx5LiBPZiBjb3Vyc2Ug
-d2UNCj4gPiA+IGNvdWxkIHJlbmFtZSB0aGUgbWV0aG9kIGFuZCBqdXN0IHByb3ZpZGUgYSB3YXkg
-dG8gZ2V0IHRoZSBjdXJyZW50DQo+ID4gPiBzeXN0ZW1zIGVuZGlhbmVzcy4NCj4gPg0KPiA+IFdo
-aWxlIG5vdCBiZWluZyB2ZXJ5IGZhbWlsaWFyIHdpdGggUUVNVSdzIHNvdXJjZSBjb2RlLCBzb21l
-dGhpbmcgbGlrZSB0aGlzDQo+ID4gc2VlbXMgbmVjZXNzYXJ5IHRvIG1lLiBJIGNhbiByZW5hbWUg
-YHZpcnRpb19pc19iaWdfZW5kaWFuYCB0byBgaXNfYmlnX2VuZGlhbmANCj4gPiBhbmQgYGNwdV92
-aXJ0aW9faXNfYmlnX2VuZGlhbmAgdG8gYGNwdV9pc19iaWdfZW5kaWFuYCBpZiB5b3UgcHJlZmVy
-IHRoYXQuDQo+IA0KPiBUaGUgcmVhc29uIGZvciBuYW1pbmcgdGhlc2UgZnVuY3Rpb25zIHRoZSB3
-YXkgd2UgaGF2ZSBub3cgaXMNCj4gdGhhdCB3ZSByZWFsbHkgZGlkbid0IHdhbnQgdGhlbSB0byBi
-ZSBhICJ0aGlzIGxvb2tzIGxpa2UgdGhlDQo+IHJpZ2h0IGZ1bmN0aW9uIHRvIHVzZSBmb3IgbXkg
-cHVycG9zZSIgZ2VuZXJhbCBuYW1lIGxpa2UNCj4gImlzX2JpZ19lbmRpYW4iLiBBbG1vc3Qgbm90
-aGluZyBpbiBRRU1VIG91dHNpZGUgdGhlIENQVSBpdHNlbGYNCj4gc2hvdWxkIG5lZWQgdG8ga25v
-dyBhYm91dCB0aGUgZGF0YSBlbmRpYW5uZXNzIG9mIHRoZSBDUFUsDQo+IGJlY2F1c2UgaW4gcmVh
-bCBoYXJkd2FyZSB0aGUgZGV2aWNlcyBjYW4ndCB0ZWxsIHdoYXQgdGhlIENQVQ0KPiBpcyBzZXQg
-dXAgYXMsIHRoZXkganVzdCBnZXQvc2VuZCBkYXRhLiBUaGUgZXhjZXB0aW9ucyBhcmUNCj4gbGVn
-YWN5IHZpcnRpbyAod2hpY2ggaXMgYSBtaXN0YWtlIHRoYXQgd2FzIG1hZGUgYmVjYXVzZSBub2Jv
-ZHkNCj4gd2FzIHRoaW5raW5nIGFib3V0IGl0IGluIHRoZSBvcmlnaW5hbCB2aXJ0aW8gZGV2aWNl
-IGRlc2lnbikNCj4gYW5kIHNvbWUgb2RkYmFsbCBpbnRlcmZhY2VzIGxpa2Ugc2VtaWhvc3Rpbmcu
-IFNvIHRoZSBuYW1lIGlzDQo+IGludGVuZGVkIHRvIHB1c2ggcGVvcGxlIGF3YXkgZnJvbSB1c2lu
-ZyBpdCAoYW5kIHRvd2FyZHMgZS5nLg0KPiB0YXJnZXRfYmlnX2VuZGlhbigpKS4NCg0KVGhhdCBt
-YWtlcyBzZW5zZS4gSG93IGFib3V0IHNvbWV0aGluZyBsaWtlIGBpbnRlcm5hbF9pc19iaWdfZW5k
-aWFuYCBhbmQgDQpgY3B1X2ludGVybmFsX2lzX2JpZ19lbmRpYW5gLCB0aGVuPyBJIGFtIGp1c3Qg
-bWFraW5nIHRoaW5ncyB1cCwgdGhvdWdoLg0KR2l2ZW4gbXkgbGltaXRlZCBleHBlcmllbmNlIHdp
-dGggUUVNVSBpbnRlcm5hbHMsIEkgYW0gbm90IHJlYWxseSBxdWFsaWZpZWQNCnRvIGNob29zZSBh
-bnkgbmFtZS4NCg0KQ2hlZXJzLA0KTWFydGluDQoNCg==
+On Tue, 23 Dec 2025 at 14:32, Peter Xu <peterx@redhat.com> wrote:
+>
+> From: Fabiano Rosas <farosas@suse.de>
+>
+> The MigrationState is a QOM object with TYPE_DEVICE as a parent. This
+> was done about eight years ago so the migration code could make use of
+> qdev properties to define the defaults for the migration parameters
+> and to be able to expose migration knobs for debugging via the
+> '-global migration' command line option.
+>
+> Due to unrelated historical reasons, three of the migration parameters
+> (TLS options) received different types when used via the
+> query-migrate-parameters QMP command than with the
+> migrate-set-parameters command. This has created a lot of duplication
+> in the migration code and in the QAPI documentation because the whole
+> of MigrationParameters had to be duplicated as well.
+>
+> The migration code is now being fixed to remove the duplication and
+> for that to happen the offending fields need to be reconciled into a
+> single type. The StrOrNull type is going to be used.
+>
+> To keep the command line compatibility, the parameters need to
+> continue being exposed via qdev properties accessible from the command
+> line. Introduce a qdev property StrOrNull just for that.
+>
+> Note that this code is being kept in migration/options.c as this
+> version of StrOrNull doesn't need to handle QNULL because it was never
+> a valid option in the previous command line, which took a string.
+>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Acked-by: Peter Xu <peterx@redhat.com>
+> Link: https://lore.kernel.org/r/20251215220041.12657-4-farosas@suse.de
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/options.c | 67 +++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 67 insertions(+)
+
+Hi; Coverity thinks there's a memory leak in this code
+(CID 1643919). Now I know Coverity gets easily confused about
+our visitor patterns, and I don't myself know the way they're
+supposed to handle ownership of memory, so this should be
+checked by somebody who does before adding any extra calls
+to free. That said:
+
+> +static void set_StrOrNull(Object *obj, Visitor *v, const char *name,
+> +                          void *opaque, Error **errp)
+> +{
+> +    const Property *prop = opaque;
+> +    StrOrNull **ptr = object_field_prop_ptr(obj, prop);
+> +    StrOrNull *str_or_null = g_new0(StrOrNull, 1);
+> +
+> +    /*
+> +     * Only str to keep compatibility, QNULL was never used via
+> +     * command line.
+> +     */
+> +    str_or_null->type = QTYPE_QSTRING;
+> +    if (!visit_type_str(v, name, &str_or_null->u.s, errp)) {
+> +        return;
+
+In this error-return code path, we don't seem to hand the
+"str_or_null" pointer on to anybody, and we don't free it
+either -- does this leak what we just allocated with g_new0() ?
+
+> +    }
+> +
+> +    qapi_free_StrOrNull(*ptr);
+> +    *ptr = str_or_null;
+> +}
+
+thanks
+-- PMM
 
