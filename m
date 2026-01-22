@@ -4,59 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D33C44536
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 10:53:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4334FC44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 10:55:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1visIm-00009y-Rz; Thu, 22 Jan 2026 05:52:37 -0500
+	id 1visL4-0002a6-7R; Thu, 22 Jan 2026 05:54:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1visIk-00006M-81
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:52:34 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1visIh-0004LB-0y
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:52:34 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dxdCx2k7gzHnH8N;
- Thu, 22 Jan 2026 18:51:41 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id E367440569;
- Thu, 22 Jan 2026 18:52:16 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 22 Jan
- 2026 10:52:16 +0000
-Date: Thu, 22 Jan 2026 10:52:14 +0000
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-CC: Michael S Tsirkin <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
- <qemu-devel@nongnu.org>, Igor Mammedov <imammedo@redhat.com>, Cleber Rosa
- <crosa@redhat.com>, John Snow <jsnow@redhat.com>, <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH 02/13] scripts/qmp_helper: add missing CXL UEFI GUID
-Message-ID: <20260122105214.00001cca@huawei.com>
-In-Reply-To: <aXDx_N3YRACBmC4I@foz.lan>
-References: <cover.1768993993.git.mchehab+huawei@kernel.org>
- <f229d756fe76c34e6dfa48a98f1ee46f4325fc76.1768993993.git.mchehab+huawei@kernel.org>
- <20260121122604.00001609@huawei.com> <aXDx_N3YRACBmC4I@foz.lan>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1visL3-0002YE-BL
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:54:57 -0500
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1visL1-0004Yb-Uc
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:54:57 -0500
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-790b7b3e594so8519117b3.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 02:54:55 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769079294; cv=none;
+ d=google.com; s=arc-20240605;
+ b=gPmwsu7z4xXDKCOiP9ypZ/YdHzEG5mfEVxCO54TtA57zjBOUfl5yzKlpEU0WfekXfE
+ I9/dpY9PmhS22vnWEKfLxquWaO4ZKHcgxwvWmWDDBv8UZj4g8OTgQbO30BFwa+YszppU
+ 2759lCfXUM3VeGnt4CeYaVqstCA+TB9MaumqqguuJ6rbA1Y5v9+cFt4FtNpB0AsFiPTB
+ rDeecG7e8SPHuHHgrfBCW9egQ3pKcccOoEsnCEd5qcIyNyeSOZ7L52DD1sxRtwOPnRbG
+ FABbgXGYDfadxT3FUamIHTZEstufvvkcUJV68vEt+sFcTYkS/a0wUV7DZZapv3EScsyZ
+ FOxA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=KBLZUlYPi9OL0gX4++Jxct32vanQpImbAVqWFhCNfPQ=;
+ fh=N+o+eq/4hPV1kfIhajX2ZrYDjGiRW7QZ0l8rzgjYU2A=;
+ b=fIRMD7a7eLoEc87/2kldVoQkSZATNGQQllMS7WO9YmhVNMyhyrsD/7yiOQtkwaY0VP
+ zJ/O9/yYeXDJPgFI8HT1rVwWlXIXvMyRaNT0Xj7E2covQmNKwr/taX3moBOY65YaG5+i
+ fmyzxYvrLrAIJvZt4fEaFvX0Twa3iiBo3k2Eu88jJnfBe+qxM8Vz+VeeKVM9k2rd5fse
+ 5Fng0Kk70Y6rrU86Ncnq9XIRSJkZXXzNtQOenarkPYkL4GiQTsSxFAlrBuu/M5B3PxeK
+ +pZEi5S72BtnfYmeqVi/Tc2/YKJ/vijCm6TUwRezKEE0zDT7bn/XBP71/ioXJpQ6AqT/
+ d2Kg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769079294; x=1769684094; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KBLZUlYPi9OL0gX4++Jxct32vanQpImbAVqWFhCNfPQ=;
+ b=uML74NAJEus15GUHmuxlQi+a5zIhHdhAwURehe1TZnuV2qdGBS/lDYaZBZNBXi0mgu
+ 7RyS5g5OBz01/b4rnL+HSWgwE17hP4wjXlwjm0691tQExX7Ot+BcP6qXbyqjGHTdt0Oe
+ 9YVMv4yPr6tUCNJiC8hu5YdOHGAkkMI/2QeJ8X5uYL66GMc45vkv+RudZMMcBwBASY1A
+ fjivYxzw74vUm845Oxt4CkUHmG6nOtbDZX3WVvarszqda+OcvtVHUQ/pQTiMAaaqKZAV
+ 7NCrC1HPc8z9b6CsXPXbsVtlqV9AyVHFcKnw6pxbF6bYop+tgygEsEXBNORd7XNPR6iZ
+ m6gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769079294; x=1769684094;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KBLZUlYPi9OL0gX4++Jxct32vanQpImbAVqWFhCNfPQ=;
+ b=sJ9ri05egx98+6xtvtq1pncjkACrM5Luelf2TRb2vwaUPtl3DfxtnZDqVC6jfRjFbY
+ pjGR0GSaiXsAcEmvgx6+g3b+YAz3U++2qeJQ+jVWcPQcS/FqIOhSVt8y/iJcv3Ayv+DT
+ bTWu2J9YgllqQjYnTtahUsCLfhfY12hobAbAobwEv+4CDvYVBM99OMCl5CjmnNKLPMMi
+ I1lNEGGvPOkT6iQ1jIVJXxiqoJeNIUaZKPBiP2sljjyYrxo9NgzKh0vPOfsd3Vfsd5M4
+ EXibOt3dtsOCJwTy4tzsM2mFFTHp6k0Jv+IikFlco/UVJ035hmQWZVsKVXhKji0Ez1tm
+ RMQA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX0y6rSKW6dZBAjmMLIYnIDg7VSHp6hWa9cN3SfO6N2hpCiJFgf6fGNQY/YgBemoMDYLebodwrD0qiN@nongnu.org
+X-Gm-Message-State: AOJu0Yx4cSzoX7tXhJl+lHn+lkEHncv3WkMNpCaivX8Cx7pkwcB5N3HA
+ wndXzWrshisSPUX7RbrZRtmiV0zdBK5EQGxu+TdlE9JjL84CYLEZzM69n+pXnaESUe4lc1JfDGh
+ L3PDyyaBi4xtgHvBpEDj3LPtCLxjS+LbVv/Dt7g0gWg==
+X-Gm-Gg: AZuq6aKwmJqjhUJL7mJQCMas+aEYx0YiONVU4njkD01sBc9TY5o8Skhaaxr7hq2MIoh
+ nNHhcoYfAOrhoCa7Lfusgcv6aDl1BMpfqndoTZiEndebV3iLr4r6aC1De7uUQLYkrkIVtbopFpE
+ Hk4ewdA5DDIT1hIuExcI39ym+8gdBV2gD4JMiV+5//9m/OqQT4fX+bupucmUV2DO1BY2Q8za9Vt
+ RN9XtXAe4LsrrUJnDaoJ98ZJ69ltC40vYiTfguP7K1ux6lXblNikKLP2aK0ShLhwgoO7g==
+X-Received: by 2002:a05:690c:6612:b0:78c:5c75:c4a4 with SMTP id
+ 00721157ae682-793c523afa0mr186863137b3.4.1769079294240; Thu, 22 Jan 2026
+ 02:54:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
+ <CAJSP0QVQNExn01ipcu4KTQJrmnXGVmvFyKzXe5m9P3_jQwJ6cA@mail.gmail.com>
+ <CAJSP0QW4bMO8-iYODO_6oaDn44efPeV6e00AfD5A42pQ9d+REQ@mail.gmail.com>
+ <aXH4PpkC4AtccsOE@redhat.com>
+ <CAMxuvaw04pDNzHyw5+Qcv_KfrhDTiyp+MNxpECp+HfTa5iLOGw@mail.gmail.com>
+ <aXH-TlzxZ1gDvPH2@redhat.com>
+In-Reply-To: <aXH-TlzxZ1gDvPH2@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 22 Jan 2026 10:54:42 +0000
+X-Gm-Features: AZwV_Qg8al33RpykEsKfUtlazBeorOsv3iS7Irhtzt5-pkGepdY89pm5xR88IRo
+Message-ID: <CAFEAcA_u6QUhs+6-cyYm_qttsDiV2zHbsc-_FbTb8QzWXk6+tw@mail.gmail.com>
+Subject: Re: Call for GSoC internship project ideas
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth <thuth@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>, 
+ Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ German Maglione <gmaglione@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alex Bennee <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ John Levon <john.levon@nutanix.com>, 
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,132 +134,26 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 21 Jan 2026 16:45:58 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On Thu, 22 Jan 2026 at 10:40, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+> Once we have written some scripts that can build gcc, binutils, linux,
+> busybox we've opened the door to be able to support every machine type
+> on every target, provided there has been a gcc/binutils/linux port at
+> some time (which covers practically everything). Adding new machines
+> becomes cheap then - just a matter of identifying the Linux Kconfig
+> settings, and everything else stays the same. Adding new targets means
+> adding a new binutils build target, which should again we relatively
+> cheap, and also infrequent. This has potential to be massively more
+> sustainable than a reliance on distros, and should put us on a pathway
+> that would let us cover almost everything we ship.
 
-> On Wed, Jan 21, 2026 at 12:26:04PM +0000, Jonathan Cameron wrote:
-> > On Wed, 21 Jan 2026 12:25:10 +0100
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> >   
-> > > The UEFI 2.11 - N.2.14. CXL Component Events Section states that
-> > > XL events are described at CXL specification 3.2:  
-> > CXL
-> >   
-> > >         8.2.10.2.1 Event Records
-> > > 
-> > > Add the GUIDs defined here to fuzzy logic error injection code.  
-> > 
-> > +CC linux-cxl as more folk there who will be familiar with this
-> > stuff.
-> > 
-> > Some of these won't be seen on a host. The same event
-> > infrastructure is used for reporting on out of band interfaces
-> > and some in band ones, but not ones that will turn up on the
-> > mailboxes that firmware will be using to get info.  
-> 
-> Good to know, but UEFI 2.11 still mentions all of them as
-> possible GUIDs:
-> 
->     https://uefi.org/specs/UEFI/2.11/Apx_N_Common_Platform_Error_Record.html#cxl-component-events-section
-> 
-> So, the UEFI 2.11 doesn't explicitly state they won't de delivered
-> to OSPM. Quite contrary, they're listed as valid values for CPER,
-> even if, in practice, they won't.
-> 
-> This is just a small set of variables, that won't bring any major
-> impact on the code. So, I prefer to keep them in sync with the spec.
-> If they end removing the unused ones, we can update it in the future.
-> 
-> If you want, I can add a note at the next version with your
-> comments about them.
-> 
-A note works for me.
+Isn't that essentially reimplementing half of buildroot, or the
+system image builder that Rob Landley uses to produce toybox
+test images ?
 
-As I understand it CPER records are getting adopted in other specs
-so it may make sense to document them, even if they  aren't a possibility
-via ACPI.
-
-However I'm not seeing them in the spec link you point at.  
-All I'm seeing is a cross reference the CXL spec Events Record Format.
-
-> >   
-> > > 
-> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > ---
-> > >  scripts/qmp_helper.py | 25 +++++++++++++++++++++++++
-> > >  1 file changed, 25 insertions(+)
-> > > 
-> > > diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
-> > > index 249a8c7187d1..7e786c4adfd9 100755
-> > > --- a/scripts/qmp_helper.py
-> > > +++ b/scripts/qmp_helper.py
-> > > @@ -711,3 +711,28 @@ class cper_guid:
-> > >      CPER_CXL_PROT_ERR = guid(0x80B9EFB4, 0x52B5, 0x4DE3,
-> > >                               [0xA7, 0x77, 0x68, 0x78,
-> > >                                0x4B, 0x77, 0x10, 0x48])
-> > > +
-> > > +    CPER_CXL_EVT_GEN_MEDIA = guid(0xFBCD0A77, 0xC260, 0x417F,
-> > > +                                  [0x85, 0xA9, 0x08, 0x8B,
-> > > +                                   0x16, 0x21, 0xEB, 0xA6])
-> > > +    CPER_CXL_EVT_DRAM = guid(0x601DCBB3, 0x9C06, 0x4EAB,
-> > > +                             [0xB8, 0xAF, 0x4E, 0x9B,
-> > > +                              0xFB, 0x5C, 0x96, 0x24])
-> > > +    CPER_CXL_EVT_MEM_MODULE = guid(0xFE927475, 0xDD59, 0x4339,
-> > > +                                   [0xA5, 0x86, 0x79, 0xBA,
-> > > +                                    0xB1, 0x13, 0xBC, 0x74])
-> > > +    CPER_CXL_EVT_MEM_SPARING = guid(0xE71F3A40, 0x2D29, 0x4092,
-> > > +                                    [0x8A, 0x39, 0x4D, 0x1C,
-> > > +                                     0x96, 0x6C, 0x7C, 0x65])  
-> > 
-> > The above are all fine I think.
-> > 
-> > From here on I think they will never come via a CPER record.
-> >   
-> > > +    CPER_CXL_EVT_PHY_SW = guid(0x77CF9271, 0x9C02, 0x470B,
-> > > +                               [0x9F, 0xE4, 0xBC, 0x7B,
-> > > +                                0x75, 0xF2, 0xDA, 0x97])  
-> > 
-> > This is only going to surface over either out of band or switch CCI
-> > I'd be very surprised to see a firmware anywhere near these.
-> > More specifically they are only defined in the Fabric management
-> > section of the spec, which strongly hints we'd not expect host firmware
-> > to know anything about them. 
-> > The events reported may well span bits of the topology currently
-> > assigned to different hosts.
-> >   
-> > > +    CPER_CXL_EVT_VIRT_SW = guid(0x40D26425, 0x3396, 0x4C4D,
-> > > +                                [0xA5, 0xDA, 0x3D, 0x47,
-> > > +                                  0x2A, 0x63, 0xAF, 0x25])  
-> > 
-> > Also a fabric management event.
-> >   
-> > > +    CPER_CXL_EVT_MLD_PORT = guid(0x8DC44363, 0x0C96, 0x4710,
-> > > +                                 [0xB7, 0xBF, 0x04, 0xBB,
-> > > +                                  0x99, 0x53, 0x4C, 0x3F])  
-> > 
-> > Also a fabric management event.
-> >   
-> > > +    CPER_CXL_EVT_DYNA_CAP = guid(0xCA95AFA7, 0xF183, 0x4018,
-> > > +                                 [0x8C, 0x2F, 0x95, 0x26,
-> > > +                                  0x8E, 0x10, 0x1A, 0x2A])  
-> > These are never routed to firmware. They are part of the OS only
-> > managed flows for dynamic capacity.
-> > They have their own event log on the hardware and for this particular
-> > set most relevant thing is in
-> > CXL 4.0 Table 8-235 Set Event Interrupt Policy Input Payload
-> > which controls whether a firmware interrupt or MSIX is used signal
-> > the Dynamic Capacity Event Log Interrupt Settings only allows
-> > for MSI/MSI-X, not FW interrupt (EFN VDM) like the other logs.
-> > 
-> > 
-> > Jonathan
-> > 
-> >   
-> 
-
+thanks
+-- PMM
 
