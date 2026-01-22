@@ -4,171 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21300C44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 11:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23E38C44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 11:17:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1visVG-0002n0-8M; Thu, 22 Jan 2026 06:05:31 -0500
+	id 1visgD-0002Rg-5X; Thu, 22 Jan 2026 06:16:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1visVA-0002iy-NN
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:05:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1visV8-0006T8-2A
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:05:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769079920;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=30noYZHuWAssSIqIEcBn/MiCq2hJ2f1fdsIQNRSpmKc=;
- b=ZbuhQ+SiMPg7CjIa7UimOd3o7wOF4Z+50ArYHGzDD/ocIW4P4kpYc0XNdktdT422/sADjs
- CfCEQI0aVWv8cNI3UR7AyX66Xfo2MQL7WI25qa9uYMwIwLALe4i+C1+AD/zLJCjFY699Dx
- RlpeEywyrB6zQVv+6M8MuOq8pJ/axqI=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-252-g5L4xWT9OJKAaQ-lkDwKhw-1; Thu, 22 Jan 2026 06:05:19 -0500
-X-MC-Unique: g5L4xWT9OJKAaQ-lkDwKhw-1
-X-Mimecast-MFC-AGG-ID: g5L4xWT9OJKAaQ-lkDwKhw_1769079918
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-477c49f273fso7797155e9.3
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 03:05:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1visgB-0002RC-4R
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:16:47 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1visg8-0001D2-8N
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:16:46 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4801bc328easo9261755e9.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 03:16:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769079918; x=1769684718; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=30noYZHuWAssSIqIEcBn/MiCq2hJ2f1fdsIQNRSpmKc=;
- b=iHZjsoD3hXalRAL01ihYu3GnG0RsgPcmjK8LLx28WiFsigDVES4CakhmftZFQYTVPB
- p4i8v6WMWL8Vx4YHLsC7/n2+8d2K7Z4pz0NzySXITCmzSUlBLNquwH07Sskv18kse0P4
- eGggCm0NzGzooiEKMtpe8L0+a1RyLs7mPHlA0Plzxnki/wAEM252qA10GVfxoFMZt03B
- HFL+qrphwjsL7b9VzUR0ZfZ42wqamAoY3oH5TRRsrFKxYOA/5MRBlBaKatz+aeufEOE0
- tR3uUdNC4n03llHVWqbOlsY+nYoUCfDCW/xweZ1NVkAA/LqgDialInPfZDseoc9QGMbv
- lsWw==
+ d=linaro.org; s=google; t=1769080602; x=1769685402; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=PMqN6lkh7yPZGXejYyNoGzoSMyNa3bSDLCOnAEkDrLk=;
+ b=sj/y1e/FKcXMI88MeoYKI75dJoSK98dMi8JoKNQtBhBphnMDSDozEdRm2f6vQy2vPA
+ 5OMy0LUdGjHHE30wmbW9WqCY/NZ1+E0mbZPFgyA5pfl2QOCo5QUuFTegCRBoUZbxsGE2
+ v4FIH2H1qH+uDRjxChq4HkClGOdAHGLhQlvAz5zrg0mVfpnIMvlOXtOeB8s+0J+LsmLX
+ k5vX5FzfYy9gW/71tsfndANGCGd9CVKXTFrqM0tR3T0CzmQb4+rl457BMloYs5YGqVyJ
+ PNOBXHFK1RtElk/5ZkIxfNyPOLqNBMrYHv44bV799UIvOv/UhifBx7rRnnvhA+OkVZUd
+ hfuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769079918; x=1769684718;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=30noYZHuWAssSIqIEcBn/MiCq2hJ2f1fdsIQNRSpmKc=;
- b=sqBUFn33xSewcrQZydXj2pMYm+pYhslc5BvTat+3ihhWJLV7UFDy6MdWOJqfAw/50I
- S+q0oUSLsm2qykMxnFUPEgDWiPdTjDGs3r2Rr9bRUgLfhqgo8f2gtU1XtllUvxafV5M4
- s9aQtbhCAAVDdNLh2/QHdZnpB7S/Es4eIWWmKRMB6tCjArTZqN7cWUY01Bb1hROtDQAA
- k2zrGDu/HR7Jo+M1vWr4Ia9sGwBP/YRKeutCrxir+dwZYyVpKvZ2laKaTxMK4s2xcx5K
- G5eXspq3ANs3gAAfy3d//4GkxWh/S4ld62QsTBf9Ej4ysLIlYADd595U1c5n73hbXhHv
- kmPA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlJT3SG76X1RTLPIWDLNhnvmxfquKJE8bV1V/OCiM8tRjpKSae2eLuu9AECnE4CZenOjBodjHA6gXg@nongnu.org
-X-Gm-Message-State: AOJu0Yz/QqUXvPYW+7MOvab6K48jNnVgVK6DS/zMINIZEiGlmzAFJwRO
- qyFETiIByofXgxdC8FzVcInKPlpuuuTKitw4n7tAtcIosGwQwGNe+sMCZt3GAne2U8jMaYBMrxy
- eFhf4H32g5Q0vTQFe21g+lhNEb3hhXOnIxHlOGF073bBwhyPDwBV22yF3
-X-Gm-Gg: AZuq6aIUwjxn+sW3znf5Ki7NanLhwblvbH9h9rF00fiIYdvG1iRWj8ZSXYH6bYk3fy3
- Ld7P4Rh4DXLEq/MIZGH/qzyctqRkXNRoHLdqIqD7jkOOYiJBVEHXG2P4Xjc6gFlUhWz4e2GYFSx
- Dby8m3f1DxquMEHqJ5CHR6kHvOjjO2+Dsz9cdrkYkYGTjLhYrG5lt296QG15KYB9ILDlo+oUGBU
- wjd4+zqGwTrHIElV4atN0G8D1iKCRvNKojrbDaQyHdHpG6njc5chKMG6eZBoF2nt2CY11416zCf
- ruTQYsoWXCpwqT9o9FJ5omCSb3VKcNMBhDNal4+Xi63h9TCJxo0VFk9nznLiB8tghTAbLxz5zMr
- e8jbmKks=
-X-Received: by 2002:a05:600c:1549:b0:46e:35a0:3587 with SMTP id
- 5b1f17b1804b1-48038b7872amr181948985e9.27.1769079917848; 
- Thu, 22 Jan 2026 03:05:17 -0800 (PST)
-X-Received: by 2002:a05:600c:1549:b0:46e:35a0:3587 with SMTP id
- 5b1f17b1804b1-48038b7872amr181948165e9.27.1769079917265; 
- Thu, 22 Jan 2026 03:05:17 -0800 (PST)
-Received: from [192.168.0.9] ([47.64.112.255])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48042c773e3sm48917535e9.20.2026.01.22.03.05.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Jan 2026 03:05:16 -0800 (PST)
-Message-ID: <995d4aaf-bbff-42be-9114-1f04bb51e37c@redhat.com>
-Date: Thu, 22 Jan 2026 12:05:14 +0100
+ d=1e100.net; s=20230601; t=1769080602; x=1769685402;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PMqN6lkh7yPZGXejYyNoGzoSMyNa3bSDLCOnAEkDrLk=;
+ b=MeIddPu38eDXZljmW5dBX/AG5q8YamH6T5V8sz7DU5sekGPGuTICCLqwzchx+fxbIq
+ ko7BdJmjkmO84cRIq+qnShyTYiW4SlVU5f3pfSJoT8pLFEuAbMqzLmO2iz8AJs73/mIa
+ Zy5oz0ig62W2kNoPBY7oMChS/y/YccviB/2aYL8SoW/evHgNGcVxR8HRVWwPJJLe6K72
+ lM5SVbRoO+FQA3Q4V1F37UdhbT18zhnnthT6i+MqjihZN0BU7N5Fn7EVSkMOIxUxFEQV
+ l+AKyWSW6GQ1kVh35J3Fvrw3/ZOQ0tUyQHA3Y5+BKpcxkkiEo9aXLNU2wTmhoVwVLEr7
+ 2L6A==
+X-Gm-Message-State: AOJu0YyvXEAQFa446asOjSZeWD2Bf5VFBNR9NtuttY84M4saGH02Wl7J
+ 8x0hUGdGAIuHZEMsoikmb62D0MQjkjz4lOrk6LkQ8j9ZPr28G9B9Epf1UKgZEnjh4q6Qcox8x4c
+ sPYtgQxM=
+X-Gm-Gg: AZuq6aJWpJPlN36g/RYUEo5ncKHAm8qVEK/f24tjKa2p3cP+VgRTL76l2P+B9k9XAut
+ 0NVmr+MxLwHl0H6aSb1U5rFzYb5FnxkX9ZsvmJXHFg7thQOrQDaqd0RM6U2O6VXxe0gpwZPefdw
+ QXoySiiB6pRzEVTm3FyDc6mGlSsuxMdjbkI8PsTMMsjQXCxuvgQWl/UC+yU123E34YlUSbAomnE
+ 0MrYl0hhOWO+8zFj/NPKIJdNkoxaAYfm36pm2uPd/pN4qxLuhNAXTcadDpCiJSOiu2fwM0dV+MM
+ e0/39wrUOpdA1y8icaiJpYpD5R2/G+3+Jtr0ADrYU4JUVUG7MbO1WKm/kJ5jjEu+KSANYHJ5KdV
+ r1UflOMGIL0+14nnpvEOljhCZk8/Z1nCwksp90QYCWv10ohZzn9VruKogTxMRhR55uS4+rGRUhL
+ J/zGwWK98ljPdaB+YwjZ901J0yccBEdkMaTr2EJt1m/H3w/yk4a5RB6dMpVao6
+X-Received: by 2002:a05:600c:8710:b0:471:14f5:126f with SMTP id
+ 5b1f17b1804b1-4801eb142famr282451095e9.33.1769080601429; 
+ Thu, 22 Jan 2026 03:16:41 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-480470cc278sm57319845e9.12.2026.01.22.03.16.40
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 22 Jan 2026 03:16:40 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL v2 00/37] Memory API patches for 2026-01-22
+Date: Thu, 22 Jan 2026 12:16:33 +0100
+Message-ID: <20260122111639.32346-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Call for GSoC internship project ideas
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>,
- Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, German Maglione <gmaglione@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alex Bennee <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
- <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
- <CAJSP0QVQNExn01ipcu4KTQJrmnXGVmvFyKzXe5m9P3_jQwJ6cA@mail.gmail.com>
- <CAJSP0QW4bMO8-iYODO_6oaDn44efPeV6e00AfD5A42pQ9d+REQ@mail.gmail.com>
- <aXH4PpkC4AtccsOE@redhat.com>
- <130b8f26-2369-48f5-bbd6-e27210707b9f@redhat.com>
- <aXIAmeEWMFjQM84o@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <aXIAmeEWMFjQM84o@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -184,56 +96,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/01/2026 11.48, Daniel P. Berrangé wrote:
-> On Thu, Jan 22, 2026 at 11:43:35AM +0100, Thomas Huth wrote:
->> On 22/01/2026 11.14, Daniel P. Berrangé wrote:
->>> On Tue, Jan 20, 2026 at 04:42:38PM -0500, Stefan Hajnoczi wrote:
->>>> Hi Marc-André,
->>>> I haven't seen discussion about the project ideas you posted, so I'll
->>>> try to kick it off here for the mkosi idea here.
->>>>
->>>> Thomas: Would you like to co-mentor the following project with
->>>> Marc-André? Also, do you have any concerns about the project idea from
->>>> the maintainer perspective?
->>
->> I'm fine with co-mentoring the project, but could you do me a favour and add
->> some wording about AI tools to
->> https://wiki.qemu.org/Google_Summer_of_Code_2026 to set the expectations
->> right? Since we don't allow AI generated code in QEMU, I'd appreciate if we
->> could state this in a prominent place here to avoid that some people think
->> they could get some quick money here by using AI tools, just to finally
->> discover that AI generated code is not allowed in the QEMU project. Thanks!
->>
->>> IMHO, our baseline for functional testing images ought to be
->>> a Linux Kconfig recipe used to build a dedicate kernel, plus
->>> a busybox build for the target.
->>
->> Not sure if we want to add kernel compilation time to the functional tests
->> (even if it's only done once during the initial build)...? That could easily
->> sum up to a couple of hours for a fresh checkout of QEMU...
-> 
-> That's absolutely *NOT* what I was suggesting.
-> 
-> We should have a 'qemu-test-images.git' repository that maintains all
-> the recipes, with CI jobs to build and publish them (along with corresponding
-> source). Those prebuilt images would be consumed by QEMU functional tests.
-> This would be quicker than what we have today, as the images downloaded by
-> functional tests could be an order of magnitude smaller, and boot more
-> quickly too.
+The following changes since commit 2339d0a1cfac6ecc667e6e062a593865c1541c35:
 
-Ah, sorry for getting that wrong!
+  Merge tag 'hw-misc-20260120' of https://github.com/philmd/qemu into staging (2026-01-21 07:39:57 +1100)
 
-Ok, so this sounds basically just like a gitlab-CI wrapper around what 
-buildroot.org already provides. ... not sure whether that's challenging 
-enough for a GSoC project?
+are available in the Git repository at:
 
-Also, adding this as a separate repository will easily burn your gitlab-CI 
-minutes if you don't have a dedicated runner for this, so developing this 
-feature might be no fun at all...
+  https://github.com/philmd/qemu.git tags/memory-api-20260122
 
-  Thomas
+for you to fetch changes up to 1280ec826e98342db4e7c35daf7680d09121bde6:
 
+  cpus: Allocate maximum number of ASes supported by the arch (2026-01-22 10:48:46 +0100)
 
-  Thomas
+----------------------------------------------------------------
+Memory API patches
+
+- Use explicit endianness for cpu_ld/st_data*() on some targets
+- Reduce 'qemu/bswap.h' uses
+- Introduce ldm_p/stm_p (MemOp) load/store helpers
+- Allow restricting the legacy 'native-endian' APIs
+- Forbid various targets to use legacy native endianness APIs
+- Simplify cpu_address_space_init() API
+----------------------------------------------------------------
+
+Deliberately ignored checkpatch.pl errors:
+
+ ERROR: DEVICE_NATIVE_ENDIAN is not allowed, use DEVICE_LITTLE_ENDIAN or DEVICE_BIG_ENDIAN instead
+ #314: FILE: system/memory_ldst.c.inc:448:
+ +#define DEVICE_ENDIANNESS       DEVICE_NATIVE_ENDIAN
+
+ ERROR: DEVICE_NATIVE_ENDIAN is not allowed, use DEVICE_LITTLE_ENDIAN or DEVICE_BIG_ENDIAN instead
+ #182: FILE: system/memory_ldst.c.inc:97:
+ +                                                    DEVICE_NATIVE_ENDIAN);
+
+ ERROR: DEVICE_NATIVE_ENDIAN is not allowed, use DEVICE_LITTLE_ENDIAN or DEVICE_BIG_ENDIAN instead
+ #332: FILE: system/memory_ldst.c.inc:171:
+ +                                             DEVICE_NATIVE_ENDIAN);
+
+ ERROR: DEVICE_NATIVE_ENDIAN is not allowed, use DEVICE_LITTLE_ENDIAN or DEVICE_BIG_ENDIAN instead
+ #34: FILE: include/system/memory.h:31:
+ +    DEVICE_NATIVE_ENDIAN = 0,
+
+False negative:
+
+  WARNING: added, moved or deleted file(s):
+
+    dump/win_dump-stubs.c
+    dump/win_dump-x86.c
+    dump/Kconfig
+
+  Does MAINTAINERS need updating?
+
+Gustavo Romero (3):
+  target/arm: Initialize AS 0 first
+  target/i386: Add a _MAX sentinel to X86ASIdx enum
+  target/arm: Add a _MAX sentinel to ARMASIdx enum
+
+Philippe Mathieu-Daudé (34):
+  target/i386: Use little-endian variant of cpu_ld/st_data*()
+  target/riscv: Use little-endian variant of cpu_ld/st_data*() for
+    vector
+  target/m68k: Use big-endian variant of cpu_ld/st_data*()
+  target/sparc: Use big-endian variant of cpu_ld/st_data*()
+  target/sh4: Replace cpu_stl_data() call in OCBI helper
+  target/ppc: Simplify endianness handling in Altivec opcodes
+  bswap: Include missing 'qemu/bswap.h' header
+  bswap: Use 'qemu/bswap.h' instead of 'qemu/host-utils.h'
+  bswap: Remove unnecessary 'qemu/bswap.h'
+  system/memory: Introduce ldm_p() and stm_p() load/store helpers
+  system/memory: Define address_space_ldst[W] endian variants via
+    template
+  system/memory: Define address_space_ldst[L] endian variants via
+    template
+  system/memory: Define address_space_ldst[Q] endian variants via
+    template
+  system/memory: Factor address_space_ldst[M]_internal() helper out
+  system/memory: Pass device_endian argument as MemOp bit
+  system/memory: Use ldm_p() and stm_p() helpers
+  system/memory: Directly call address_space_ldst[M]_internal() helper
+  system: Allow restricting the legacy ld/st_phys() 'native-endian' API
+  system: Allow restricting legacy address_space_ldst() native-endian
+    API
+  system: Allow restricting the legacy cpu_ld/st() 'native-endian' API
+  system: Allow restricting the legacy translator_ld() 'native-endian'
+    API
+  system: Allow restricting the legacy tswap() 'native-endian' API
+  system: Allow restricting the legacy MO_TE* 'native-endian'
+    definitions
+  system: Allow restricting the legacy DEVICE_NATIVE_ENDIAN definition
+  configs/targets: Forbid Hexagon to use legacy native endianness API
+  configs/targets: Forbid HPPA to use legacy native endianness APIs
+  configs/targets: Forbid LoongArch to use legacy native endianness APIs
+  configs/targets: Forbid OpenRISC to use legacy native endianness APIs
+  configs/targets: Forbid TriCore to use legacy native endianness API
+  configs/targets: Forbid Renesas RX to use legacy native endianness API
+  configs/targets: Forbid s390x to use legacy native endianness APIs
+  dump: Abort in create_win_dump() on non-x86 guests
+  dump: Build stubs once for non-x86 targets
+  cpus: Allocate maximum number of ASes supported by the arch
+
+ MAINTAINERS                                  |   1 +
+ configs/targets/hexagon-linux-user.mak       |   1 +
+ configs/targets/hppa-linux-user.mak          |   1 +
+ configs/targets/hppa-softmmu.mak             |   1 +
+ configs/targets/loongarch64-linux-user.mak   |   1 +
+ configs/targets/loongarch64-softmmu.mak      |   1 +
+ configs/targets/or1k-linux-user.mak          |   1 +
+ configs/targets/or1k-softmmu.mak             |   1 +
+ configs/targets/rx-softmmu.mak               |   1 +
+ configs/targets/s390x-linux-user.mak         |   1 +
+ configs/targets/s390x-softmmu.mak            |   1 +
+ configs/targets/tricore-softmmu.mak          |   1 +
+ block/qcow2.h                                |   1 +
+ include/accel/tcg/cpu-ldst.h                 |   2 +
+ include/exec/cpu-common.h                    |   4 -
+ include/exec/memop.h                         |   4 +
+ include/exec/translator.h                    |   5 +-
+ include/exec/tswap.h                         |   3 +
+ include/hw/core/cpu.h                        |   7 +-
+ include/qemu/bswap.h                         |  72 +++
+ include/qemu/host-utils.h                    |   1 -
+ include/qemu/int128.h                        |   2 -
+ include/system/memory.h                      |   8 +-
+ include/system/memory_cached.h               |   2 +
+ system/memory-internal.h                     |   2 +
+ target/arm/cpu.h                             |   1 +
+ target/i386/cpu.h                            |   1 +
+ target/i386/ops_sse.h                        |  12 +-
+ target/i386/tcg/seg_helper.h                 |  12 +-
+ include/system/memory_ldst.h.inc             |  52 +--
+ include/system/memory_ldst_endian.h.inc      |  33 ++
+ include/system/memory_ldst_phys.h.inc        | 113 +----
+ include/system/memory_ldst_phys_endian.h.inc |  57 +++
+ audio/audio.c                                |   1 +
+ block/blklogwrites.c                         |   1 +
+ block/export/vduse-blk.c                     |   1 +
+ block/export/vhost-user-blk-server.c         |   1 +
+ block/export/virtio-blk-handler.c            |   1 +
+ block/parallels-ext.c                        |   1 +
+ dump/win_dump-stubs.c                        |  21 +
+ dump/{win_dump.c => win_dump-x86.c}          |  20 +-
+ hw/9pfs/9p-local.c                           |   1 +
+ hw/block/cdrom.c                             |   1 +
+ hw/block/hd-geometry.c                       |   1 +
+ hw/core/cpu-common.c                         |   1 -
+ hw/core/cpu-system.c                         |   2 +-
+ hw/net/can/ctucan_core.c                     |   1 +
+ hw/nvram/xlnx-efuse.c                        |   1 +
+ hw/scsi/scsi-generic.c                       |   1 +
+ hw/sd/sd.c                                   |   1 +
+ hw/sd/ssi-sd.c                               |   1 +
+ linux-user/vm86.c                            |   4 +-
+ net/l2tpv3.c                                 |   1 +
+ qga/commands-linux.c                         |   1 +
+ scsi/pr-manager-helper.c                     |   1 +
+ system/cpus.c                                |   1 -
+ system/physmem.c                             |   8 +-
+ target/arm/cpu.c                             |  13 +-
+ target/arm/tcg/arith_helper.c                |   1 +
+ target/i386/cpu.c                            |   1 +
+ target/i386/kvm/kvm-cpu.c                    |   1 -
+ target/i386/tcg/mem_helper.c                 |   8 +-
+ target/i386/tcg/mpx_helper.c                 |  28 +-
+ target/i386/tcg/seg_helper.c                 |  16 +-
+ target/i386/tcg/system/excp_helper.c         |   8 +-
+ target/i386/tcg/system/svm_helper.c          |  69 +--
+ target/i386/tcg/system/tcg-cpu.c             |   1 -
+ target/m68k/fpu_helper.c                     |  12 +-
+ target/m68k/op_helper.c                      |  91 ++--
+ target/ppc/mem_helper.c                      |  31 +-
+ target/riscv/vector_helper.c                 |  12 +-
+ target/sh4/op_helper.c                       |   5 +-
+ target/sparc/ldst_helper.c                   |   6 +-
+ tests/qtest/acpi-utils.c                     |   1 +
+ tests/qtest/ahci-test.c                      |   2 +-
+ tests/qtest/aspeed-hace-utils.c              |   1 +
+ tests/qtest/bios-tables-test.c               |   1 +
+ tests/qtest/libqos/ahci.c                    |   2 +-
+ tests/qtest/libqos/generic-pcihost.c         |   2 +-
+ tests/qtest/libqos/igb.c                     |   1 +
+ tests/qtest/libqos/pci-spapr.c               |   2 +-
+ tests/qtest/libqos/virtio-9p-client.c        |   1 +
+ tests/qtest/migration/framework.c            |   1 +
+ tests/qtest/npcm7xx_emc-test.c               |   1 +
+ tests/qtest/tpm-emu.c                        |   1 +
+ tests/qtest/ufs-test.c                       |   1 +
+ tests/qtest/vmgenid-test.c                   |   1 +
+ tests/unit/test-hbitmap.c                    |   1 +
+ util/bitmap.c                                |   1 +
+ util/hbitmap.c                               |   2 +-
+ system/memory_ldst.c.inc                     | 449 ++-----------------
+ system/memory_ldst_endian.c.inc              |  70 +++
+ Kconfig                                      |   1 +
+ dump/Kconfig                                 |   6 +
+ dump/meson.build                             |   3 +-
+ scripts/make-config-poison.sh                |   1 +
+ 96 files changed, 566 insertions(+), 769 deletions(-)
+ create mode 100644 include/system/memory_ldst_endian.h.inc
+ create mode 100644 include/system/memory_ldst_phys_endian.h.inc
+ create mode 100644 dump/win_dump-stubs.c
+ rename dump/{win_dump.c => win_dump-x86.c} (97%)
+ create mode 100644 system/memory_ldst_endian.c.inc
+ create mode 100644 dump/Kconfig
+
+-- 
+2.52.0
 
 
