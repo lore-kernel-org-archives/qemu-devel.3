@@ -4,105 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F066C44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 11:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC7BC44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 11:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vitKn-0006JV-Pd; Thu, 22 Jan 2026 06:58:45 -0500
+	id 1vitKr-0006Km-EJ; Thu, 22 Jan 2026 06:58:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vitKe-0006F7-Fa
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:58:38 -0500
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vitKp-0006Jt-KR
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:58:47 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vitKb-00059C-Rp
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:58:35 -0500
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-4801d21c411so4616165e9.3
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 03:58:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vitKn-00059a-7e
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:58:46 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-430f2ee2f00so559343f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 03:58:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769083112; x=1769687912; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gHfdd3PqXR+pNd5kr/XcJwuBr+hhdfms2ANVE1n3ues=;
- b=SxTpnzT4PcmZQL5Dei9vC04FDj2CwEtvBOfGb0oDyGi4SUA4AjXirQLKuhBKwAxYZJ
- 1D9Z/VKckQUlXlqN881ANUclmqEilFMLk/I5r+mNrvxfTMPTQGkmzwF9hFoiMabpHOCO
- AXPRLX+myguyu6bUHe9IY/cxHm/psO3sAXyjbeQaoGTortZtOTbEOotqqrr7JqRkwflu
- hD/JyXjeupZ2hlOIOV2vPLDk28mpRBVVw+04DceZWA1yU0OE0ukIfJibQzkosoY6ppXh
- +NJ+fJ1RvHvL/aOuiU76abHBX456sJYCYUvC5xubeGDKN66gRhzAaW9DrbvntvCQpw5G
- sobQ==
+ d=linaro.org; s=google; t=1769083123; x=1769687923; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Spw04I2/n0gAv/QO2YXJeR75mEaBdXWF9Hf424f+8YE=;
+ b=GwaY4+cOA9FJocprdMucaX/OeG80We4kos8aIDE8zqxsWq2jQGo+DCYfJk+GxN86xm
+ V0SfnBWKxceg7OUaQuE5ROQKh+A+A/9JwjL+ZSxqunKRf3QmdmDwdtk1ZhBM9lAcEvEI
+ 0BqhZGS62hNOFyT9F6oJMdv9bfM3xFBAAKLM1XiOUCX3SsCOF0OfMEcBg2iJh5tYE5wY
+ y5BMLdG0H9E2QUrVtOxEd6R+RpFLfaCHf1ukAtrJb7K3ZOe4CeYdSuZem39yhUG1jGz3
+ jj49aKGQ+1f67FdzavWisGDL4W2P/HoLM/nxhcxMHx26xtrFIxoBPl4TmMk6J7K+pukl
+ 2Rmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769083112; x=1769687912;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gHfdd3PqXR+pNd5kr/XcJwuBr+hhdfms2ANVE1n3ues=;
- b=ij+erTRPba6AxbwFA6HZDU7RciFmfZ2gyjuy6iRgPfzur8DGl40GkSIWTeVHSWArZQ
- 0H30s4bC2bqauY9M1P19XKCwDckETF/BEV+0NA43oj3qyw5sczVR4IIFPfbskjHdxYTC
- ZQOTcbLY4EVzVxUFgTYmSJsCCTMIS3aw2pLHNKNfmazih0DFNMq0L95qNQtKiEwlGmUS
- sIVDA7K2Ob2V4tRS+62VoLHuxIs3D5kX1l0e4leCY0bN6cIrZQ39r4gDlibtl/a7WUaa
- nEUNYKTVslIHOQ1SuAVmdr/nwXvejy5i8ZUaMh/gUnNi0Ez4pj4YxS1o34MIbO0iHlL7
- MfPA==
+ d=1e100.net; s=20230601; t=1769083123; x=1769687923;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Spw04I2/n0gAv/QO2YXJeR75mEaBdXWF9Hf424f+8YE=;
+ b=ner6TRlCXXr73jTamhuXBz2HxuJYU0BT1ZWK+0256USpl6lo5tK0R1SdZd65wOL6ih
+ bYAWJevrmpKhHiQe7YBJXprofBFZSA8XvUPkTAqLVWV/Pt70Tyc6GoWphauL4GORVmOi
+ hwxLhX3yQb/64pFh95qYS4NEZXxaU5QlcvpTxLEQXqrnyKs/v18B7UoE326uTZp0uwuN
+ 7Ci5t0/jkz8k+4fmdG+oseXf+nv3NMoB7CqWovfM5DGBJage2d2AXqZnQfNb68xllED/
+ L2yU8S7czUJsbfUPVERkMvE8r63lRaDa8XmRyXsKkKM/Wp/Jf04L0MS4vwtegk00TEE0
+ gM4w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9hLbM1e6VwpDWmNYH97Wg9TZfhLl4RoweBnanaHBy9Hyyqkk3e7I4UO2cJOF3TGzl5Q3dSVnR2nqN@nongnu.org
-X-Gm-Message-State: AOJu0YxX6wRPBVl3jGFPGg0cbyaR+6gmkimK/MeyiinYugxkOcWVDLhT
- 1u5vc8yxdzuhjIU1k5D2UCwb1u1qBPko9V9MRxk+QpXYgS00bUmnjbpdDuK3jRa2Tzw=
-X-Gm-Gg: AZuq6aJ9+NRpQVEntaYb7WOEaTwXIlukOOnbtRQsvepoL/8tvC0+jmaFwmIHAJ+Eose
- FzNxMybD6BHvkC4Pbs3mzJURgM2VWlmb2xEtT8Sis0OnHqZUkbRJ+doBwZ77LpBM7/juJuCAPDn
- cg2yAqcXvEk2eMuZibrN6PbilPrr7Jv8kGtFsLYqcGCOmIO7xjVT6DwgOJygMRPEJavpkkjN7AB
- 63GEsTzIavY/q0UOkH4cHFn3wtaoqKeeNFY1NS+lijB9eRHKQGYv8ESsuZ5LAkdnbZ9EKuGDIpC
- QwWYcHqMLQghLaBKHOhE+HbTD4WuDKXnY9NPBb3UiRV3k+K5EpxJDCTCgwA8KTqAqy5URKfoPF0
- v4Pkp3VIHrQJEElZb1k10TsCbcTjcZ5c1YMUdjcv0qwrr4BKkvaM2Z0DhVOx4qxWu88kK4jzrv4
- 1g8xB6IlyEfqTUJBNA1XbqJG8=
-X-Received: by 2002:a05:600c:630e:b0:479:3a86:dc1e with SMTP id
- 5b1f17b1804b1-4801e34f6e7mr326379705e9.36.1769083111644; 
- Thu, 22 Jan 2026 03:58:31 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4804702fab2sm60597375e9.1.2026.01.22.03.58.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Jan 2026 03:58:31 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 51C8D5F7C3;
- Thu, 22 Jan 2026 11:58:30 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Stefan Hajnoczi
- <stefanha@gmail.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>,  kvm <kvm@vger.kernel.org>,  Helge
- Deller <deller@gmx.de>,  Oliver Steffen <osteffen@redhat.com>,  Stefano
- Garzarella <sgarzare@redhat.com>,  Matias Ezequiel Vara Larsen
- <mvaralar@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  German Maglione
- <gmaglione@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Mark
- Cave-Ayland <mark.cave-ayland@ilande.co.uk>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,  =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@redhat.com>
-Subject: Re: Call for GSoC internship project ideas
-In-Reply-To: <995d4aaf-bbff-42be-9114-1f04bb51e37c@redhat.com> (Thomas Huth's
- message of "Thu, 22 Jan 2026 12:05:14 +0100")
-References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
- <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
- <CAJSP0QVQNExn01ipcu4KTQJrmnXGVmvFyKzXe5m9P3_jQwJ6cA@mail.gmail.com>
- <CAJSP0QW4bMO8-iYODO_6oaDn44efPeV6e00AfD5A42pQ9d+REQ@mail.gmail.com>
- <aXH4PpkC4AtccsOE@redhat.com>
- <130b8f26-2369-48f5-bbd6-e27210707b9f@redhat.com>
- <aXIAmeEWMFjQM84o@redhat.com>
- <995d4aaf-bbff-42be-9114-1f04bb51e37c@redhat.com>
-User-Agent: mu4e 1.12.15; emacs 30.1
-Date: Thu, 22 Jan 2026 11:58:30 +0000
-Message-ID: <87a4y5oo49.fsf@draig.linaro.org>
+ AJvYcCXpacMmZv/I1b0rz1J/4kJOSFHowH+olceyCUOurAGzxJLRry8bssHLDqRghJsbdoR3U7XS59oOJpNq@nongnu.org
+X-Gm-Message-State: AOJu0YxYoeey5kft1fAboSxOTbA9AdGwBJ1fhDWvHnShVhPrTBf98SuS
+ hRaJ641TXueYA1OgdPe0Gi4M6C2dar/gJ5eARos2omWJ3lLNMJLSnTtp0sDEJ2gCVyI=
+X-Gm-Gg: AZuq6aJIPItAs80kVbciLIDJBBZ8lFJzqnkRcWh9s2yMk6qKnpnmHUzwU4WLVX8YQrV
+ 278o7TdNuyh8RitVXBOw/RLbuDcw55J87wLVnmkVLKa8e845aS3p5NImgnk7kv3dRcwvCgd3lzG
+ q6EsV0kZKqNQntYfbVAE0hb4INS9FqaPz2GpdYIMsrfDjyTU4fqIt6Aid1BI1jN8w2TJpGZ28YN
+ bkv3LB0gVXP007lZ0WWzxV+SXlhg1uJHRURkqu/Sx2ghq4DUAIlOzFyEyX8co6Zn9Zhwx7Y3VgA
+ XG5N2CSk63VhX1TX6th2FXRHpw0MLJ+05IXuxmI8umKDfU+Z0fayDyGSzMsASf8OrxZA6vemRUi
+ rOnzhoDQ45zFleFdwk0kgH3QQaU4f+B68XgvLHr9jrsz36eobWI9hIL1rM9XmfG0p0cmENzs/Kx
+ oKwg+IWptlA2Ac+ClY/mYyvqIhTP+5oftjM1tli1skPmcuefZsxOGW2w==
+X-Received: by 2002:a05:6000:2dc1:b0:435:ad51:ac82 with SMTP id
+ ffacd0b85a97d-435ad51ae7fmr2362144f8f.18.1769083123503; 
+ Thu, 22 Jan 2026 03:58:43 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4359314bbc6sm18566626f8f.12.2026.01.22.03.58.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Jan 2026 03:58:42 -0800 (PST)
+Message-ID: <24fbbfe1-f614-495a-a442-63ca376a595a@linaro.org>
+Date: Thu, 22 Jan 2026 12:58:41 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x341.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-11.0 v3 20/22] target/ppc: Inline cpu_ldl_data_ra()
+ calls in ICBI helper
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>
+References: <20251126202200.23100-1-philmd@linaro.org>
+ <20251126202200.23100-21-philmd@linaro.org>
+ <46a95197-4e21-4dda-8d1d-ea1c4e44c368@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <46a95197-4e21-4dda-8d1d-ea1c4e44c368@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,74 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+On 12/12/25 18:01, Richard Henderson wrote:
+> On 11/26/25 14:21, Philippe Mathieu-Daudé wrote:
+>> Inline the cpu_ldl_data_ra() call in preparation of
+>> removing it. Since the returned value is discarded,
+>> don't bother to set the access endianness.
+>>
+> 
+> Hah!  The previous patch could have used the same comment.
+> Or maybe moving that hunk here.
 
-> On 22/01/2026 11.48, Daniel P. Berrang=C3=A9 wrote:
->> On Thu, Jan 22, 2026 at 11:43:35AM +0100, Thomas Huth wrote:
->>> On 22/01/2026 11.14, Daniel P. Berrang=C3=A9 wrote:
->>>> On Tue, Jan 20, 2026 at 04:42:38PM -0500, Stefan Hajnoczi wrote:
->>>>> Hi Marc-Andr=C3=A9,
->>>>> I haven't seen discussion about the project ideas you posted, so I'll
->>>>> try to kick it off here for the mkosi idea here.
->>>>>
->>>>> Thomas: Would you like to co-mentor the following project with
->>>>> Marc-Andr=C3=A9? Also, do you have any concerns about the project ide=
-a from
->>>>> the maintainer perspective?
->>>
->>> I'm fine with co-mentoring the project, but could you do me a favour an=
-d add
->>> some wording about AI tools to
->>> https://wiki.qemu.org/Google_Summer_of_Code_2026 to set the expectations
->>> right? Since we don't allow AI generated code in QEMU, I'd appreciate i=
-f we
->>> could state this in a prominent place here to avoid that some people th=
-ink
->>> they could get some quick money here by using AI tools, just to finally
->>> discover that AI generated code is not allowed in the QEMU project. Tha=
-nks!
->>>
->>>> IMHO, our baseline for functional testing images ought to be
->>>> a Linux Kconfig recipe used to build a dedicate kernel, plus
->>>> a busybox build for the target.
->>>
->>> Not sure if we want to add kernel compilation time to the functional te=
-sts
->>> (even if it's only done once during the initial build)...? That could e=
-asily
->>> sum up to a couple of hours for a fresh checkout of QEMU...
->> That's absolutely *NOT* what I was suggesting.
->> We should have a 'qemu-test-images.git' repository that maintains
->> all
->> the recipes, with CI jobs to build and publish them (along with correspo=
-nding
->> source). Those prebuilt images would be consumed by QEMU functional test=
-s.
->> This would be quicker than what we have today, as the images downloaded =
-by
->> functional tests could be an order of magnitude smaller, and boot more
->> quickly too.
->
-> Ah, sorry for getting that wrong!
->
-> Ok, so this sounds basically just like a gitlab-CI wrapper around what
-> buildroot.org already provides. ... not sure whether that's
-> challenging enough for a GSoC project?
->
-> Also, adding this as a separate repository will easily burn your
-> gitlab-CI minutes if you don't have a dedicated runner for this, so
-> developing this feature might be no fun at all...
+Ah indeed, I wanted the helper_icbiep() hunk here, thanks.
 
-My intention was to get the test images as part of buildroots own
-testing setup and re-use them for QEMU.
+> 
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/ppc/mem_helper.c | 8 ++++++--
+>>   1 file changed, 6 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+>> index a43726d4223..cff385b6020 100644
+>> --- a/target/ppc/mem_helper.c
+>> +++ b/target/ppc/mem_helper.c
+>> @@ -344,14 +344,18 @@ void helper_dcbzl(CPUPPCState *env, target_ulong 
+>> addr)
+>>   void helper_icbi(CPUPPCState *env, target_ulong addr)
+>>   {
+>> +    unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
+>> +    MemOpIdx oi = make_memop_idx(MO_UL | MO_UNALN, mmu_idx);
+>> +
+>>       addr &= ~(env->dcache_line_size - 1);
+>>       /*
+>>        * Invalidate one cache line :
+>>        * PowerPC specification says this is to be treated like a load
+>>        * (not a fetch) by the MMU. To be sure it will be so,
+>> -     * do the load "by hand".
+>> +     * do the load "by hand". As the returned data is not consumed,
+>> +     * endianness is irrelevant.
+>>        */
+>> -    cpu_ldl_data_ra(env, addr, GETPC());
+>> +    cpu_ldl_mmu(env, addr, oi, GETPC());
+>>   }
+>>   void helper_icbiep(CPUPPCState *env, target_ulong addr)
+> 
 
->
->  Thomas
->
->
->  Thomas
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
