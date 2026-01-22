@@ -4,92 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81748D6CFA2
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 19:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D8BD6CFA3
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 19:56:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vj0gC-0007Hf-Nr; Thu, 22 Jan 2026 14:49:20 -0500
+	id 1vj0mR-0004WL-PG; Thu, 22 Jan 2026 14:55:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vj0gA-0006yR-H8
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 14:49:18 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vj0g9-0005GW-0V
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 14:49:18 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47ee76e8656so18941475e9.0
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 11:49:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769111354; x=1769716154; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=F2vNUwkEprWfk4ctU32pIZ3YEqWC6WP80tYmhsHPdBo=;
- b=tjw7kJDQNMaxAAh1LPKw3LFtFw3RAMjsMr44JGQE9UmS+CZM3AbUKJlKRjZZwyMrPz
- 7dirX3aLeeDKxY5YIXUf4hcSiP1Ge+FXtBAvsuh3g20Gh4q81msysegctVhBj9gvCjOx
- C6Rp4XDBoeDajaPcKWEy4+C77S6YFl197QLeCqVjFuUUngu926NGFoKnPbJr4R0Twp83
- eaE0PuqrO9ua90PBNn3CUFTTh3VOGj94E6r03pd8JmKT7jtvV/cZLR2pn8kUdL7CxPWx
- qEzFGyXUPUfWU0UwoO67zsHuix633KhMk18djSiaUeIw+3LoT9ZKP0efGxjWMrDpM/Ml
- ekrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769111354; x=1769716154;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=F2vNUwkEprWfk4ctU32pIZ3YEqWC6WP80tYmhsHPdBo=;
- b=UYuTFXxw1WXyA+A1RZczEqWhECVq8q2RvTemMd7/pe/hYJmbJuZd9ISthAVLzR2XAp
- kcLqA2BUXuAWzQDRd6mztsAAWlYNccPXTrK8kAZuHt5WYkVn4rVC8Sg38jRWFoFjd8i3
- HzE8Ei3Bdnli6dd6AB9zcEG7scqqujUwVrDQ6l4vO75vYskBr3GuC/4vKuSayuCiIiPD
- ED2vjZ1A1ATrQNV4vuGBOX/WUwLd4RQJ4rashdNvgLL3IMjycdc/b5v8XOVaEMcN/z5i
- sL8pYmCAGDVZ8JEv5kp42ABzBk8EMXE6RL5wKGlWZz2/8tJJhJenm1nPPoqiQrRyB63Y
- ziVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUal8y6G0eep6u5jl383SLqwz80BBfj6oDLyIKQ5zI5jq8Y9ycHRVn5nlnFUbk4FvItpGNdx5ULNkfo@nongnu.org
-X-Gm-Message-State: AOJu0YyX+OYLCd6+D1JbYADNiAcM6bgmdOojupzYGfzjd2mjwTxk443K
- gSthFWc5VGw0QQZXXt4+7FQoqlQvzz1BvyYaMB/khOiJQbq0wD+LO7P45PKXcQ7NfmI=
-X-Gm-Gg: AZuq6aJntpCDNc7g4XvnXb16QLSzHpMwqUdZDCwzsA3JPQchGBgYs3ijgdgqvuaJBDQ
- WWBsa2YfGGuy9vq0KVtVxpdzCW9lS6COvQoIUlbcoiiKgTcrUoVGgs4tInSdr0PxHyHRtxia78R
- 31YqSk51VkI9TTAfU608jeJGVVYcsZ7uoDe5DQeP9iNVER5fwGMIhEOMVbZDkvpdDYk1WSfVoWy
- PbEeiD6uecfY/RoSMYHQzfNXPI984QvhCXqwpRPw9xhdBepsskquvpGFpOgonWqO9toORE5x8Ny
- Ps1WEWOxHhqBpgKP+gcSh3cZL++HKaVQMqdjojou5YE1co+Vk7coBz3yfbKgGq0qZyFOvo0YTVe
- hwH6hUlJopxhSV/+rzydsCv/vIfB8/dssArT9Uy/SUcFcuTjAlY7gbgNTHDsKfWN26lqhBW8+Qn
- G2V65e7lQ1cXJ12Y0UKOKKD4ZE4QXT57Xv++YkBbYqUoVgDV/ykzZykg==
-X-Received: by 2002:a05:600c:8b04:b0:480:4a90:1af2 with SMTP id
- 5b1f17b1804b1-4804c9d0102mr14624075e9.35.1769111354273; 
- Thu, 22 Jan 2026 11:49:14 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4804703b59esm90736125e9.4.2026.01.22.11.49.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Jan 2026 11:49:13 -0800 (PST)
-Message-ID: <af2bfed2-de7f-41aa-a8b0-5c20b4d9f826@linaro.org>
-Date: Thu, 22 Jan 2026 20:49:12 +0100
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1vj0m5-000416-Vl; Thu, 22 Jan 2026 14:55:26 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1vj0m3-0006Dg-Sk; Thu, 22 Jan 2026 14:55:25 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60MEAb6V006258;
+ Thu, 22 Jan 2026 19:55:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ZzIxxc
+ pOowtP9Cg9xF65MExbWNwCiVP7l6k1dUO+xs0=; b=gN55gVT8kIprFLASY0JZPJ
+ J8yAVva0++VbcchtK49LcgGN9MO57Zumwwnja3Q8uH1+CgUBQGiaoWlK6mhtXhrf
+ daz63bGt+NIONV5UZzVkdVsxQp2d/pKYgdKDEekbtxJ3Y6CxknatwwXMqzV5ZJwJ
+ nNloThWCsXTj1LKvAHPN7kNlL0wqkMCNwgOhtYwdGB2XTOI5LDcka2hGhMKYqIF0
+ Piag3dY1EoZZj5i+uj8m3TWo/d3nCjkBlQ1VLpFnA90CPSRNT471fxW/1r3jFjWo
+ FCit2XYAA6+tqANjN9l7JqVkZ0jF65nrpwHwCwFqcML8W/lcK8XDAWLYZhQpGS1Q
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br23sbxf0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Jan 2026 19:55:15 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60MIAv33016636;
+ Thu, 22 Jan 2026 19:55:14 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brn4ycppv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Jan 2026 19:55:14 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60MJtCKo1704616
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 22 Jan 2026 19:55:13 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BDAEC58051;
+ Thu, 22 Jan 2026 19:55:12 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 584F358065;
+ Thu, 22 Jan 2026 19:55:11 +0000 (GMT)
+Received: from [9.61.19.244] (unknown [9.61.19.244])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 22 Jan 2026 19:55:11 +0000 (GMT)
+Message-ID: <61995f25-7589-48a1-b0bc-1ed027514ee8@linux.ibm.com>
+Date: Thu, 22 Jan 2026 14:55:10 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 4/4] hw/arm/virt: new "msi" property
+Subject: Re: [PATCH v7 13/29] pc-bios/s390-ccw: Introduce IPL Information
+ Report Block (IIRB)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: Collin Walling <walling@linux.ibm.com>, thuth@redhat.com,
+ berrange@redhat.com, richard.henderson@linaro.org, david@redhat.com,
+ jrossi@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ brueckner@linux.ibm.com
+Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
+References: <20251208213247.702569-1-zycai@linux.ibm.com>
+ <20251208213247.702569-14-zycai@linux.ibm.com>
+ <e5a34764-4fa2-40c8-af80-8bd5aefd1e63@linux.ibm.com>
+ <137ae89c-ddc0-44ae-a9bc-2b6cb0a62953@linux.ibm.com>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260120180339.1416328-1-peter.maydell@linaro.org>
- <20260120180339.1416328-5-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260120180339.1416328-5-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <137ae89c-ddc0-44ae-a9bc-2b6cb0a62953@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 15MSgKitybW3CQQ_VSa3X0RsqQl2_Zje
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIyMDE1MSBTYWx0ZWRfX4/lnRxxIx411
+ Cnv/ym+sB25/sb5IV/c2rNPKdFmzVoT95OEktH3kYi7UZGbY1Zu8klriyquGghY7zJh/F7SrdMN
+ k+7opgUUVciagv2QGk0sYjjUcG6EOOdUGD2jaJid4dCKa9Qwh6WNL9irYFFeM+UeJRUqbSZRCJ5
+ 0y13UC5LVkntwc33QHoQGGUkvVIsWR0RXag5lmwdLNafVQ7lI24GXRfpaNkCs4f+mP9IkFdAi1r
+ TA0Y3HKiPU4EE88Gzba/ys6EqsWVA43VPuJEehF7BymYBJ9ovI2wJhGXrGBL34NpHY71kiPH2dD
+ cacH1HVLUmHvKb7Dz4UwHYmeDWf5uRAW+X+wqLFTavoGaH4GT8l4VCK/t8nW+oKhL+qg3ZRgyqE
+ +WNEkjKnUAuqRVzElIqbcN7kn21D+2RDgpOhbRcDVIrcm9bR+2hH23ZAUAZnPdYf/x/Xdp0t7bY
+ fgk/PbLqwpMt3ULVU2Q==
+X-Authority-Analysis: v=2.4 cv=J9SnLQnS c=1 sm=1 tr=0 ts=697280a3 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=NGKnF7tViZnYGXs3alYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 15MSgKitybW3CQQ_VSa3X0RsqQl2_Zje
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-22_04,2026-01-22_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 adultscore=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601220151
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,91 +128,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/1/26 19:03, Peter Maydell wrote:
-> The virt board currently only supports either a GICv2 with a possible
-> GICv2m for handling MSI interrupts, or else a GICv3 with a possible
-> ITS for handling MSI interrupts.  There is one board property, which
-> lets you say "its=(off|on)" and controls only whether there is an ITS
-> or not.
+On 1/21/26 4:29 PM, Zhuoying Cai wrote:
 > 
-> This is awkward for macOS HVF, where you get a GICv3
-> without ITS and MSI handling needs a GICv2m.
 > 
-> Create a new board property "msi" which gives the user clearer
-> control over how MSI interrupts are handled:
+> On 1/15/26 4:34 PM, Collin Walling wrote:
+>> On 12/8/25 16:32, Zhuoying Cai wrote:
+>>> The IPL information report block (IIRB) contains information used
+>>> to locate IPL records and to report the results of signature verification
+>>> of one or more secure components of the load device.
+>>>
+>>> IIRB is stored immediately following the IPL Parameter Block. Results on
+>>> component verification in any case (failure or success) are stored.
+>>>
+>>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>>> ---
+>>>  docs/specs/s390x-secure-ipl.rst | 13 +++++++
+>>>  pc-bios/s390-ccw/iplb.h         | 62 +++++++++++++++++++++++++++++++++
+>>>  2 files changed, 75 insertions(+)
+>>>
+>>> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+>>> index be98dc143d..29c5d59b99 100644
+>>> --- a/docs/specs/s390x-secure-ipl.rst
+>>> +++ b/docs/specs/s390x-secure-ipl.rst
+>>> @@ -86,3 +86,16 @@ Subcode 1 - perform signature verification
+>>>      * ``0x0302``: PKCS#7 format signature is invalid
+>>>      * ``0x0402``: signature-verification failed
+>>>      * ``0x0502``: length of Diag508SigVerifBlock is invalid
+>>> +
+>>> +IPL Information Report Block
+>>> +----------------------------
+>>> +
+>>> +The IPL Parameter Block (IPLPB), utilized for IPL operation, is extended with an
+>>> +IPL Information Report Block (IIRB), which contains the results from secure IPL
+>>> +operations such as:
+>>> +
+>>> +* component data
+>>> +* verification results
+>>> +* certificate data
+>>> +
+>>> +The guest kernel will inspect the IIRB and build the keyring.
+>>
+>> This needs more elaboration.  Is the data listed above used in
+>> the keyring?  Maybe rewording to "The guest's kernel will use this data
+>> in the IIRB when building its keyring." ?
+>>
 > 
->   - msi=its : create an ITS
->   - msi=gicv2m : create a GICv2m
->   - msi=off : do not create any MSI handling device
->   - msi=auto : create the best MSI handling device available
->                for the GIC version and accelerator
+> Thanks for pointing this out. The data in the IIRB is not used to build
+> the keyring. I'll update the text as:
 > 
-> The default is 'auto'.
+> "When secure boot is enabled, the guest kernel will inspect the IIRB."
 > 
-> The existing 'its' property becomes a deprecated property
-> kept for compatibility. Existing users of "its=on" should
-> prefer "msi=auto"; users of "its=off" should use "msi=off".
+> [...]
 > 
-> The backwards compatibility cases we need to support are:
->   (1) TCG, virt-6.1 and earlier: no_tcg_its is set
->     -- you can have a gicv2 (always with a gicv2m)
->     -- if you specify gic-version=3 you get a GICv3 without ITS
->   (2) TCG, virt-6.2 and later:
->     -- gic-version=2 still has gicv2m
->     -- gic-version=3 by default gives you an ITS; if you also
->        say its=off you get GICv3 with no ITS
->     -- there is no case where we provide a GICv3 and are
->        unable to provide an ITS for it
->   (3) KVM (any version):
->     -- gic-version=2 has a gicv2m
->     -- gic-version=3 gives you an ITS by default; its=off
->        will remove it
->     -- there is no case where we provide a GICv3 and are
->        unable to provide an ITS for it
->   (4) HVF:
->     -- only gic-version=2 works, you get a gicv2m
 
-Thanks for this verbose enumeration. I suppose you started writting
-that down before your first line of code :)
+Apologies for my previous reply. I reviewed my notes and realized that
+the guest kernel uses the certificate data in the IIRB to build the
+keyring. I'll update the documentation accordingly.
 
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   docs/system/arm/virt.rst | 21 ++++++++++++-
->   hw/arm/virt.c            | 64 +++++++++++++++++++++++++++++++++++++++-
->   include/hw/arm/virt.h    |  1 +
->   3 files changed, 84 insertions(+), 2 deletions(-)
-
-
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index b65f571532..471852e4b1 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-
-
-> @@ -3454,7 +3507,13 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
->                                      virt_set_its);
->       object_class_property_set_description(oc, "its",
->                                             "Set on/off to enable/disable "
-> -                                          "ITS instantiation");
-> +                                          "ITS instantiation. Deprecated; "
-> +                                          "use the msi option instead");
-
-"use the msi= option instead"
-
-> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-> index 577b4b3362..53f1dc2199 100644
-> --- a/include/hw/arm/virt.h
-> +++ b/include/hw/arm/virt.h
-> @@ -103,6 +103,7 @@ typedef enum VirtMSIControllerType {
->       VIRT_MSI_CTRL_NONE,
->       VIRT_MSI_CTRL_GICV2M,
->       VIRT_MSI_CTRL_ITS,
-> +    VIRT_MSI_CTRL_NOSEL,
->   } VirtMSIControllerType;
-
-Pre-existing, no need to expose these, we should restrict to virt.c.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
