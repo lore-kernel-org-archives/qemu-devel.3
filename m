@@ -4,101 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEF10D3EE65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 13:28:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E42D3EE68
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 13:33:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viujK-0000vN-Np; Thu, 22 Jan 2026 08:28:10 -0500
+	id 1viunS-0004nL-Sh; Thu, 22 Jan 2026 08:32:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1viujJ-0000tS-9O
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:28:09 -0500
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1viujH-00087h-LC
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:28:09 -0500
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-78fc4425b6bso8495657b3.1
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 05:28:07 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769088486; cv=none;
- d=google.com; s=arc-20240605;
- b=FzvU/O+Zr3TgFxhoOC5aL6VG8BleDYTq0iH5VACJNYyeE5rQXBbUKWOsxLwbfm6WVD
- ZmStBJLkO9Ah3a0Dky569LQHAxEKH9uw1nCz+OFTbJpurZix0Epcc4wy83zdcKTPM+ek
- RuB8DSoLqP2reumJrkjPDby59y944ZDpZjtKO4yewZJQRLObp8gg0I67WSBryh+Y7KbA
- /jU9oo172uMfyrBeYtjDI9jBnvx8z9+iUaHnD3l9fYCCP5EG49Z1mH+3p+qkuXMg9dhu
- EXZtOV4X9gkvZpdT81rxHwdxiGFz0avvVz+uNdUpnaTiAQsSv3ukN0mAXDJaz2/aF24W
- OAhg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=XwqjWdVr1pKvISg7D4Yr5+KDapK8vVx3gmbKWFOSRvw=;
- fh=EVSR1hokHdkVDEVT2wFcm2YyX3tAP3Pm00g9OGLFlL8=;
- b=Ml2YWPhMMm3eoiZoKSkH9fJUjeKEviRbFR2QTOTBTDomUtdGf9H+jjj94D3HdFnRmQ
- 1GBBq0v91d4jHqgq3um31BQO6PtK7TvnKD+iAx3j2XugHfJ277i2RKUiROvMLEl8YJPK
- BGhkI+hMclapJ/xxPCBIyXmjQ8Y9Nwg2YgzlBDVlQqALt9U5y9iU2Uyq+weQO+J9u4do
- C2dUJQGZjMzhjOcQoN8vw5Rf8v8ZB6KoTF8ta1H2retDARu/XBzCNLDWSqI1r6tCzv8z
- x3A3X1ckEJv2/VYSp9xB5Nh83vfxsfqavLoU0HMQOqZE+y+XbOgFKvQtAGR5D9nWd1ob
- LsYw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769088486; x=1769693286; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XwqjWdVr1pKvISg7D4Yr5+KDapK8vVx3gmbKWFOSRvw=;
- b=MONpJhiNvMDEeWVeDMtGJHLWwSqMdmXvIHFI6xX+WTubmX0cE61x+8z9sO/zBgxRhl
- qABCcdXKR3aXfNHTKBd1YnwQ5keFyGQRvd4uHi3qheY571ZSGfi0HcMHePt6skT6Megm
- 1/ieCTMMVGMd/1VlysYYZfY6K+XsNxGo8LNd8CFI4v9g1bWWNac/NQJ6ahjPZ1fzlJSJ
- 1eEJ6a84UN2Fg9ZE50ShHXHjB43uIE8qTMuWyDavZT6W4rtTplxrjrBjVpRcQo1ZhAg3
- /5OhplagCRpTPd+otrsKN4r/jtDkBeEgXCPZ3tZpzaGx2e9+wOJRDAse+bI+py7K/0Pu
- Dbww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769088486; x=1769693286;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XwqjWdVr1pKvISg7D4Yr5+KDapK8vVx3gmbKWFOSRvw=;
- b=OGH/Y+16aXMb5F/xWntXD6avc3SwQrnHChyPTQrFn6FwaLzDDtp9GjkQajoGEMPo+6
- MhxT5JOXXJn5kyBT+d9UjoJSBQaDKiwFxAn4BfpdLSCvtE4IGUYnOB3820OH0Z83lBnS
- fs7+j679CxkX4NRhyMLGVFAB15q/JECgzn00RLORV9gUnqALqrOpzxqSYiS+6G+lv9no
- LrVZehic74wz0M0ynVTo/A+EEUJdf3KW4MTT8c2iTXSrcN37eKdpilX6j28/2NsGvOn3
- jKYpiGjlNrgDK1oiZfE9F60p0f2vZQ56kOWDyIx9OR92AzA/hit5W38J/AzaotJ6OTH4
- Z1pg==
-X-Gm-Message-State: AOJu0Ywg0ZfVWLmEkXyhtFpWjNtdLhxIlOhZusn13Zl9pJKD9aVToz5q
- niJG7ryyleNJdpw70OZnQ9Pl6jYlyn5+5lHx0WebfMNvvW9wMookkvfSYdUtYdusQ+1ZhgLD5QB
- RNNh3vK+7YU1qXQOM+WN/Eqy1DRwDtA1yxXGfSCxoOw==
-X-Gm-Gg: AZuq6aIEKI3pYUxvTfctmtgS5sBgqUe/4e5DVJVSkVBy6Q0uOJhPZwVDxATAr4jMp12
- 5nAWAzekseatN4+9n+xqe5hjsN8CiJ0juN3cDG2gaC8IolEzFcTLge6kEwkD/Vq+ormx3saBZIK
- icj/YdOfBdKqK2RAHJVaECczz5zT33YBeEfEfWurytGSBPWIZxMk2pz70JEujKp8SD/E+ZtuCY2
- w6QR6Udstd3XAXSiHeSdINc3fogwCnPwEp9aSfIDEu1k5r/xf5yzHtjJkkTr1RPR+pdMw==
-X-Received: by 2002:a05:690c:b06:b0:78f:afdb:ea41 with SMTP id
- 00721157ae682-7940a156388mr72860037b3.18.1769088486244; Thu, 22 Jan 2026
- 05:28:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1viunQ-0004if-1P; Thu, 22 Jan 2026 08:32:24 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1viunN-0000IK-FN; Thu, 22 Jan 2026 08:32:23 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dxhmR2M7jzJ46Zv;
+ Thu, 22 Jan 2026 21:31:35 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 1DC6940585;
+ Thu, 22 Jan 2026 21:32:03 +0800 (CST)
+Received: from localhost (10.203.177.99) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 22 Jan
+ 2026 13:32:02 +0000
+Date: Thu, 22 Jan 2026 13:31:55 +0000
+To: Cornelia Huck <cohuck@redhat.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Eric Auger <eric.auger@redhat.com>,
+ <jonathan.cameron@huawei.com>
+Subject: Re: [PATCH RFC 0/3] arm: demuxed ID registers (CCSIDR_EL1)
+Message-ID: <20260122133155.000068e4.alireza.sanaee@huawei.com>
+In-Reply-To: <878qdrszfs.fsf@redhat.com>
+References: <20260119172732.140613-1-cohuck@redhat.com>
+ <20260120114447.00004699.alireza.sanaee@huawei.com>
+ <878qdrszfs.fsf@redhat.com>
+Organization: Huawei
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20260116060315.65723-1-zhenzhong.duan@intel.com>
-In-Reply-To: <20260116060315.65723-1-zhenzhong.duan@intel.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Jan 2026 13:27:54 +0000
-X-Gm-Features: AZwV_Qjzl_NfdcLkX5RGf5TqJUmNooMIekWsU_E3bdmpmxd_Iukgmk-3s-tVUwM
-Message-ID: <CAFEAcA_LnfF-TqF2yKcPJOK4WHJnbt1RECk9svdRkRrvgRqqSQ@mail.gmail.com>
-Subject: Re: [PATCH] vfio/migration: Fix page size calculation
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Cc: qemu-devel@nongnu.org, alex@shazbot.org, clg@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.99]
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,53 +68,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Jan 2026 at 06:03, Zhenzhong Duan <zhenzhong.duan@intel.com> wro=
-te:
->
-> Coverity detected an issue of left shifting int by more than 31 bits lead=
-ing
-> to undefined behavior.
->
-> In practice bcontainer->dirty_pgsizes always have some common page sizes
-> when dirty tracking is supported.
->
-> Resolves: Coverity CID 1644186
-> Resolves: Coverity CID 1644187
-> Resolves: Coverity CID 1644188
-> Fixes: 46c763311419 ("vfio/migration: Add migration blocker if VM memory =
-is too large to cause unmap_bitmap failure").
-> Suggested-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  hw/vfio/migration.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index f857dc25ed..b4695030c7 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -1173,7 +1173,7 @@ static bool vfio_dirty_tracking_exceed_limit(VFIODe=
-vice *vbasedev)
->       * can also switch to use IOMMUFD backend if there is a need to migr=
-ate
->       * large VM.
->       */
-> -    page_size =3D 1 << ctz64(bcontainer->dirty_pgsizes);
-> +    page_size =3D 1ULL << ctz64(bcontainer->dirty_pgsizes);
->      max_size =3D bcontainer->max_dirty_bitmap_size * BITS_PER_BYTE * pag=
-e_size;
+On Wed, 21 Jan 2026 17:28:07 +0100
+Cornelia Huck <cohuck@redhat.com> wrote:
 
-This doesn't strictly speaking resolve CID 1644186, because
-what Coverity sees is that ctz64() returns 64 when dirty_pgsizes
-is zero. That is still UB even with the ULL suffix.
+> On Tue, Jan 20 2026, Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
+> 
+> > On Mon, 19 Jan 2026 18:27:29 +0100
+> > Cornelia Huck <cohuck@redhat.com> wrote:
+> >
+> > Hi Cornelia,
+> >
+> >
+> >  
+> >> Note: this is on top of <20260105154119.59853-1-cohuck@redhat.com>
+> >> ("[PATCH v3 0/2] arm: move DCZID_EL0 to idregs array")
+> >> 
+> >> While trying to move to an autogenerated cpu-sysregs.h.inc (so that we
+> >> may keep a common view on registers), we should first address the ID
+> >> registers that are still kept outside of ARMISARegisters. Other than
+> >> DCZID_EL0 (addressed by the series this one goes on top of), that's
+> >> the CCSIDR_EL1 values kept in cpu->cssidr[] (indexed via CSSELR_EL1.)
+> >> 
+> >> My idea was to provide {GET,SET}_IDREG_DEMUX helper that work similar
+> >> to {GET,SET}_IDREG and operate on a two-dimensional array. As a side
+> >> effect, this also allows to get the values KVM provides for CCSIDR_EL1
+> >> (which are virtualized as well.)
+> >> 
+> >> RFC because there are still some open questions:
+> >> - The demux array cannot easily be autogenerated. We can get rid of the
+> >>   ccsidr[] array, but we now have an autogenerated entry in the non-demux
+> >>   array that does nothing. Both are not that nice.
+> >> - I'm not sure if we need any compat handling for KVM (on TCG, everything
+> >>   should stay the same.) In theory, the KVM interface allows setting
+> >>   values from userspace (I didn't try.)
+> >> - There's a slight disagreement between the current code (providing 16
+> >>   entries for CCSIDR_EL1) and the KVM code (providing (7 cache levels) *
+> >>   (data/unified, instruction) = 14 entries.) With FEAT_MTE2, we might be
+> >>   needing 7 more entries.
+> >> 
+> >> Feedback appreciated.
+> >> 
+> >> Cornelia Huck (3):
+> >>   arm: handle demuxed ID registers
+> >>   arm: handle CCSIDR_EL1 as a demuxed register
+> >>   arm/kvm: get demuxed ID registers from kvm
+> >> 
+> >>  hw/intc/armv7m_nvic.c        |  2 +-
+> >>  target/arm/cpu-sysregs.h     |  6 ++++
+> >>  target/arm/cpu-sysregs.h.inc |  1 +
+> >>  target/arm/cpu.h             | 26 ++++++++++++----
+> >>  target/arm/cpu64.c           | 12 ++++----
+> >>  target/arm/helper.c          |  2 +-
+> >>  target/arm/kvm.c             | 33 ++++++++++++++++++++
+> >>  target/arm/tcg/cpu32.c       | 32 +++++++++----------
+> >>  target/arm/tcg/cpu64.c       | 60 ++++++++++++++++++------------------
+> >>  9 files changed, 114 insertions(+), 60 deletions(-)
+> >>   
+> >
+> > This impacts my set https://lore.kernel.org/all/20260106155828.643-1-alireza.sanaee@huawei.com/  
+> 
+> Duh, that series had actually been sitting in my "to look at" queue...
+> 
+> >
+> > I tested it with mine of course it required a few changes, but looks like working on TCG, didn't try KVM.
+> >
+> > Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>  
+> 
+> Thanks for testing! I'll also try to take a look at your series.
+> 
+> 
 
-But if we are enforcing somewhere that dirty_pgsizes is
-never zero, then this is fine and we can mark that Coverity
-issue as a false-positive.
-
-thanks
--- PMM
+Thanks Cornelia, that patch has been sitting there forever literally :)
 
