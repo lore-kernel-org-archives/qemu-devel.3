@@ -4,93 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D59D5C44508
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 01:05:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E187CC44536
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 01:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vij7a-0001P1-QU; Wed, 21 Jan 2026 20:04:26 -0500
+	id 1vijwZ-0006m9-Fg; Wed, 21 Jan 2026 20:57:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vij7X-0001Nh-4T
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 20:04:24 -0500
-Received: from mail-qk1-x72e.google.com ([2607:f8b0:4864:20::72e])
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1vijwY-0006la-7c
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 20:57:06 -0500
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vij7T-0005Z6-Ln
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 20:04:22 -0500
-Received: by mail-qk1-x72e.google.com with SMTP id
- af79cd13be357-8c6af798a83so43074685a.0
- for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 17:04:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1vijwW-0008EL-KP
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 20:57:05 -0500
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-59b7c2614f7so346722e87.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 17:57:03 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769047022; cv=none;
+ d=google.com; s=arc-20240605;
+ b=KEuvqCT0CuP1ZX3C81ZyN3ApbRgFlq/q0uq3btlioZMthA4xaqYoPmz+hSbyQRRDcL
+ ZAsS0fyHHjEsL6Q/0tLX8F9I4hxP+NIlcsuky6lCmxapEjwhjWWUguBLyIMkkMitpFXk
+ wU3VFdSsY3XrN6NIKpOv+bHFnePywUTNhwrhxbKjbaQo6zmb3Yz9O5I/9+5CzO/Y797I
+ Ml+8UNdWuxE1Hd52W11VjDbpODzNVhLWQVQPW3ae/XuBFgNXemda1doCAWyjfUva6L3c
+ BGXut8fGfp3KT0f+lyqvMuS+Bg5XnI03hzMGmUvfhvmtenzUoOgsrQLFQH8EYisVQXCm
+ 4TKw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=vkpk7pq3esGtWXbo5pS5jSpvXFYzcH1PyeC1ISOGftY=;
+ fh=CDJ1lgR9zxrlYhn6M/YD6N888voQP3h/TpqNJ56exCs=;
+ b=OQ8ZGBeu2xSpS7OSD2/dJvWvldAPB9sWbaW9jHN6IV1v0u0yg/cLjulb61/rCFbM5T
+ 4xURmjjtBP6cQbY0zhd3aj/f/0nLYVbu7nt9lY13ogJJqKwnV8pRwWtX23Ws/ZdVpsoz
+ +Ww+gojMWQthiuR/F/8OkTuNlfdPZRxbz4Tl1SCI01Anpmkj5KRrjJ6ZCifEHbvBlt5y
+ XKRVqPqlMgNSaUMjaszOX/UbZXXclzC0EogJqAyIx2Oi3kvHfc+9Ul52cTDW5q9p4LHo
+ ZK2g0QMCIohwpmS3WXN/AlZx37hvLwwNiFCOvoN41HsJZ/rgwN6N9KXx2rAl30Ox3dT8
+ QSFA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769043858; x=1769648658; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oJgz5/Tirme1OwVZTMI9gK3yyHV/veKxHLSX9HIx9lA=;
- b=lh2MJxZGYNEaWMJDm85WhaaQ7t6/dpYyS2g6GwjXHTBk26/3vU2Ddn0CLIBznc9zxu
- fDIKLMfKJ3icqJ+YM+g6hib/rt9hz2DpCnKwFrGFNGYRdfbLZquqJj2rt2FJUjSRMcdn
- 5CSzsu7fKcJauhvOGTs1qzjjT+c8cju6kGRGxMOuQqkUeeKvvkO6w0Mbct3WBSlpBy6R
- r1w6JqT5aHfYxsfuAgMX08SxfhmatpkuwsZ4Rc2rINXgKxZ0/Wxk5hYK2FoYJiWGLnaw
- 0ddWbz/+YqoQOlO7KEo+/zPMSa12fYN6rV3kv91LuRAvMDRmGOQinaW1BfHISv25icJZ
- rwIg==
+ d=linaro.org; s=google; t=1769047022; x=1769651822; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vkpk7pq3esGtWXbo5pS5jSpvXFYzcH1PyeC1ISOGftY=;
+ b=Ijc6N4M5gOHwMckZ8DwCSewkhlKbWUPfh0seFvZgIHLGKmAnzVkBDvDGZ2PRoKoZVP
+ N3H0rfHOQ4raB/m8GqmdJooDWv3KVkZaRr1NVBDADbThIvLQMHry5TMcIda0Nf2ZiRcp
+ BAgBnPou7a9AQNteXpLpTeRNte5o3IoUo4ZUQmrY9EAY7FypdyyOCBcQ/WiHIux9hsz5
+ SFyse9H35Mqy14TUKO9MsdOZwqChZNpmvD9DYJLIvvrLyw7fEMr6yl7FOXDtNR4sTxf7
+ 3Llz6rCT7agK6w6amd0WDspGXoh/8GHYsVQuiIEHRBhn9qAm0uhDlP3G5WYkrwkFcCg2
+ rDHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769043858; x=1769648658;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oJgz5/Tirme1OwVZTMI9gK3yyHV/veKxHLSX9HIx9lA=;
- b=dE/Wr4M/UZlkrm6r0tDuCyaRBiP85eindGaBDSYjMj4O7PjhArLzXKIfSmwH4hTumF
- F4Ook6kSaER708JrT03zFIaVgQbutbLq24lk73G+mE6bdoio4i59YhBFzBgt7YLuazb/
- oOvO0iwY+TGORypCi48fv7VLJA3Q4iiONbEr4RIErUgiOVnuVqIfVnq2K+Z/S/aoqD+q
- ZWzQae6Ah4nmqKNAL57RKzOBkIUTSX/75YeW/KotzE2UfSI9IVt4LS2rbG2TiSJ0sX76
- bFZ+ofE3RxeeUF7gBTAzs/C6Hv5v4WJrkT763gHaTUTwY0wUp0nSi/hQBZhktwPvnkXV
- +zaw==
+ d=1e100.net; s=20230601; t=1769047022; x=1769651822;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vkpk7pq3esGtWXbo5pS5jSpvXFYzcH1PyeC1ISOGftY=;
+ b=XLyGWCWVv9axueTBsFMR2IEZSzbapQy8xrAZX/rF6PC1P84SUQTZxtkoRKiNPd4FRl
+ IuwjESFmA5byHNz8C8E8NGoeY+amb4vllwjpQkxfDR003ejCjF+/StzcNBY0EuxuaDbk
+ lULVrQMTmE7UB2VFbrel6Hdb/QiqLvBi1Ld9VUz3M3EHHzPdmtQMAkGOV9Plgz6cVpg9
+ GhxzyWDrVGWmmJKf7mU7TUA+zntkXL3F0qC0mtZmRUN9NUu7GGIw4eDM6z7TJ1+5z7DC
+ Ru/cPMZKXcktJzY+uK1JrCMKvRdpJxxkOJK6uB9zCMqU5Mo4ZBbgj/AalUgoDE/bVGB7
+ +lEQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWLwptpmgF11StqsQ1oagrNFk4FVzM9qC3mb6YMJi4b7JpHrFC81hhgYRoOiNaSFcYZWea6wcM6r50X@nongnu.org
-X-Gm-Message-State: AOJu0Yz5JNYz11l8vKCZwYYGLS7eFMgL4sdBzQZLh/c8F2nR+LgB0Wqe
- hl78Dt3lnYgTQ90SR0qA+++jjKWRjcaETkoek+Qr/+WeprX947IXKkWnvBn8nVnexg4=
-X-Gm-Gg: AZuq6aIDMfyLz7GAJ7YoqIWPd/7aNrQDtYIfPMpcOuBPhkp1XsR7r1LyxHRrdOnofjn
- m56RdgfzUZHmZzVLTWOVoJ7ELdtPngcJueBPMYiXOtvVCCQ2yYiX5eyNFzBbYH6Kh2Mo610hxpU
- ULo7CwiYHoEySUJVqZ2HZwluEnDSzPM9pz6hbj0//7VpBOufgEVLd7wflktalGh8y/LScIm/TNi
- s7AMOnvXfu8vygE5PBxOOhv/wmb18q/j+fghTmdLXg7L7DFESrd6CkiSh6NRUXuwmxlreUb4fbX
- m3wEn+0KmYkWz9P5EaUb16Io+3DkBXXiWi1jpsXZcXk5qfM2pgZbLTwrMN4jTF3EbrCcrFMO07N
- DNn2PbfofQW9H3j08C0CGvKw7wqQuSo+9BYrpEzt/rFU0/hb42i/915gr2G5TCaZtnxMjGE/K5o
- e0e3cizBavN2lvUl2dsixcfhmsGnDJlY1PanDIACRW2/jSreBzZms=
-X-Received: by 2002:a05:620a:19a9:b0:8b2:f962:79aa with SMTP id
- af79cd13be357-8c6a678383dmr2506234585a.72.1769043857969; 
- Wed, 21 Jan 2026 17:04:17 -0800 (PST)
-Received: from [10.244.221.227] ([172.59.190.48])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c6a72508f6sm1353258385a.34.2026.01.21.17.04.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Jan 2026 17:04:17 -0800 (PST)
-Message-ID: <64d55baf-ab07-4870-8f2d-d9cf3b68c4f6@linaro.org>
-Date: Thu, 22 Jan 2026 12:04:07 +1100
+ AJvYcCWi8ZAqmidi2Lla3hJ9OaaEMLzz8o6qC0iyJHCXSBBtIsNH/xevWGOSc+FFKW+xH1gtSUaP+OqDxTcY@nongnu.org
+X-Gm-Message-State: AOJu0YzTAH5Lb/Q+N9Sn7f1L9DoKv2dD744wa9oe6Jsyohfhv8Xmdcmz
+ lOQiR30bf9BUXUrykrgUUgfXp+/RHL7Hi03lWBxh4hpjcXD30kOPhmGxFHYqnE8RBxapc82VqGJ
+ eDuhvIgAFoFbVer/PVq05a9sVSbfvpLNKCodUQCxbCA==
+X-Gm-Gg: AZuq6aKkmLUSe9F+x9X5J5wD+3XUI92YHEm5d1SttUUizImeO1adxvUDgHLs08SNWWc
+ /m2fZIlTutpeqawOBMomsvqn5Lag6wbCBgeCcT0XADy15uns6zo7TRCH2fnukl9hBDLAhqdYyaR
+ lyGI2ZtUTqymw2Aeu6NLAFQRu4XgEQLVrCl5+ZQR2wxtOvlhiR7skueZ+goAgvAPS2piOqsfKAP
+ Py+dvD4lzQIfbbJ3KHyBC0FS7tb5m/nmCmodiRX72WxzXfPsp1yp+GJq7sdOtv8DYFWuJMT
+X-Received: by 2002:a05:6512:12ca:b0:59d:d799:b7a0 with SMTP id
+ 2adb3069b0e04-59dd799ba84mr412298e87.36.1769047021637; Wed, 21 Jan 2026
+ 17:57:01 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target/s390x: Implement DIVIDE TO INTEGER
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
-Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260121222116.713325-1-iii@linux.ibm.com>
- <20260121222116.713325-3-iii@linux.ibm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260121222116.713325-3-iii@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72e;
- envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x72e.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260121175248.87649-1-skolothumtho@nvidia.com>
+In-Reply-To: <20260121175248.87649-1-skolothumtho@nvidia.com>
+From: Zhangfei Gao <zhangfei.gao@linaro.org>
+Date: Thu, 22 Jan 2026 09:56:50 +0800
+X-Gm-Features: AZwV_QiIi7rsl9-GyCN7J4E-LYjXFexVtzPMPuaGbmlle5snTHqoiqeRq16A9E8
+Message-ID: <CABQgh9G7Msyuto_S2nQdn6GHMzmD6OwL1eQQ9E_2CD5shGim0w@mail.gmail.com>
+Subject: Re: [PATCH v8 00/37] hw/arm/virt: Add support for user-creatable
+ accelerated SMMUv3
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com, 
+ peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com, 
+ ddutile@redhat.com, berrange@redhat.com, clg@redhat.com, alex@shazbot.org, 
+ nathanc@nvidia.com, mochs@nvidia.com, smostafa@google.com, 
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com, jonathan.cameron@huawei.com, 
+ zhenzhong.duan@intel.com, yi.l.liu@intel.com, kjaju@nvidia.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=zhangfei.gao@linaro.org; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,37 +122,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/22/26 09:12, Ilya Leoshkevich wrote:
-> +static bool float128_is_int(float128 x)
-> +{
-> +    return extract64(x.high, 0, 48) == 0 && x.low == 0;
-> +}
+On Thu, 22 Jan 2026 at 01:55, Shameer Kolothum <skolothumtho@nvidia.com> wr=
+ote:
+>
+> Hi,
+>
+> Changes since v7:
+>  https://lore.kernel.org/qemu-devel/20260111195508.106943-1-skolothumtho@=
+nvidia.com/
+>  -Addressed comments and collected R-by and T-by tags. Thanks!.
+>  -Rebased to latest master.
+>  -Reworked PASID support patches (patch #34, #36).
+>
+> I think this series is in good shape now and mature enough for inclusion.
+>
+> Patch organization:
+>
+> 1=E2=80=9328: Enable accelerated SMMUv3 with features aligned to the defa=
+ult QEMU
+> SMMUv3 implementation, including IORT RMR-based MSI support.
+>
+> 29=E2=80=9331: Add user-configurable options for RIL, ATS, and OAS featur=
+es.
+>
+> 32=E2=80=9337: Add PASID support, including required VFIO changes.
+>
+> Please take a look and let me know your feedback.
+>
+> Thanks,
+> Shameer
+>
+> A complete branch can be found here,
+> https://github.com/shamiali2008/qemu-master/tree/master-smmuv3-accel-v8-d=
+mabuf-v4
 
-This isn't testing for integer, it's testing for 1.0eNN,
-i.e. a power of two.
 
-> +        /* Compute precise quotient */                                         \
-> +        a128 = floatN ## _to_float128(a, &env->fpu_status);                    \
-> +        b128 = floatN ## _to_float128(b, &env->fpu_status);                    \
-> +        q128 = float128_div(a128, b128, &env->fpu_status);                     \
-> +                                                                               \
-> +        /* Final or partial case? */                                           \
-> +        is_q128_smallish = float128_get_exp(q128) < p;                         \
-> +        is_final = is_q128_smallish || float128_is_int(q128);                  \
+Thanks Shameer
 
-The language from the manual,
-
-# If the precise quotient is not an integer and the two
-# integers closest to this precise quotient cannot both
-# be represented exactly in the precision of the quotient ...
-
-does not appear to be what you are computing here.
-Certainly none of this relates to "precision of the quotient".
-
-I would imagine that all of this would be easier to accomplish if you did this in fpu/ 
-with FloatParts instead of continually swapping in and out of float128.
-
-
-r~
-
+Retested ok
+https://github.com/Linaro/qemu/tree/master-smmuv3-accel-v8
 
