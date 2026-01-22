@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B5F4D625F9
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:55:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A814C44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viqTC-0007yw-Pt; Thu, 22 Jan 2026 03:55:14 -0500
+	id 1viqT9-0007kK-Ki; Thu, 22 Jan 2026 03:55:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTA-0007qX-KC
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:12 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqSx-000699-Dx
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:54:59 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqT8-0006DT-VN
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:12 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-43596062728so1165875f8f.1
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:55:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqSv-0005zX-Qt
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:54:59 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-430f3ef2d37so558765f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:54:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769072109; x=1769676909; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769072096; x=1769676896; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=I0V93sKC3Sq6BpXvti4qFxTZI6OR3pXk2FZqId8VzaI=;
- b=itS9zYsS9IALtZRRvC/ggBtlb+fkm92vDVI3Qg5JOAbepTWdLDIzD2EJMYNOsR3254
- kg0T2To0hWi25mQKD/NcElb8joIXsZCbS78aGwrXbAOgkAg5mxXlyvuZgbG29Xl4MSKq
- ILb/coEmr/0r9amqF0d2iVaOHCqG6HvKp277i8mLxT+BbT+YwRoAIyOPawJfA2qtvyWr
- SXYrsZSkWV8jmKmDWsy8L7GynML3tbTSzGZj9DrOzAPEDWe9Doa0GCDA6Plnt6yYN5aV
- QqQhwuRMDW6NbNVDfX+/IOz8FyVFh3gEhLjFFhf6ZtdKNExTad36H383lFXyBpJlIva9
- 9uFQ==
+ :reply-to; bh=5yfy4tTsPf7LLb72q4HUijUvyIYzC7km6s9NiBtIj+w=;
+ b=vNIUc2ITDvhK0X5XtqSoH2q5FfmDJPFnIAq/IszvEmUF0FzmAmTZrwbaB+W1lyALjY
+ mAQ7JnQ0/7GOKOOYEcF7FzS+fgm9Mfm8312fiIiPNFMeDPTgip9w34yFIz/omjVWYcTR
+ ZNQatgWpXj/3csbkIbWM9NNYtqjetpSfgbVDV9btWvLSt94/DLtmvlyFCV96mfPue6bM
+ Jm58BcQ7s9NvsaV1Z0ccYMzM0OVoqmmbGcKMShJdJBQWvNvf9MF8m1i3kRHtCB7e0Y7C
+ ZJEF1kW/k7wSXyuyPMQ8nRF5sWsxGFPmJvJWXIFxOT5VSM8YxOdEWTxpkXtK295Jw8Dw
+ 53BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769072109; x=1769676909;
+ d=1e100.net; s=20230601; t=1769072096; x=1769676896;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=I0V93sKC3Sq6BpXvti4qFxTZI6OR3pXk2FZqId8VzaI=;
- b=X1Bs7hFlig9LoxDtiEO2KcCfwBru79JI6pVfnmFl+WDO+soYkF63aVqM3lU/LoM9jc
- si9Bg/OOenfILx8ZJH4qhP7bmOtIpHS7k9Igvgzak8hDKgMjAm3AsCEzLQ57oC6ORH2M
- DQIrelLCyfbpLAv85Qel+Ipb/LVfBSyxi9e1QHIONMzCkjttU5GdxlbrwGdrceo4V1Ud
- haS8+5ZNma469kSRk2sdCXTvYKrt+5X9p1Jhn6WIFhVQb8HNcCMgENA8dEyZVXXudUmy
- d+5BLfUOVoFxdPOXZOPYfWJ8XtGm8mDKtAOxpjfMt5f2d1dckupAkLGkkqeWat3XNGrl
- GgUw==
-X-Gm-Message-State: AOJu0Yya6tR6xcrSrP8vjXLYagm0KAa1umctmzCicOfPTbI9x0F/9lSd
- abs3KQZTfLZOgYrpDb+Lqg08iip/WSSrEREO3r3mnreAWR9UCin0ye6dFJeKjYNwe14vQSXJT0y
- gidzKZcg=
-X-Gm-Gg: AZuq6aKlsld3dyTJAvj+CtgCUkxTRbPLz/sJkT2X3UQqNGSkLnq8jX98EvYQ+x0w+Ng
- vnIhWFvDHz+rYkvujM/+KO6hyRewp60bpHRATnIFrvha1LRzplX32pdJfd6NHuIT9xmYMNypp/F
- FraKvyCflATjY44tfHtHHu4ZS92r7cEyXcX9XYuywin1T6rDV5TZ54Kax4NEQpV0YyRjWyscDli
- aJrKU8OLz7QFbUcTxZ/9LdUejF40gNzMHXZFp60LJZHGKMHJBbOnyCPp2ynhPanrUeQRcWqQIZU
- B2giT+vo4u9OIWOL+4n8iDS8gtz1xc7cyegd61TlmOvbpdfn8ZABBsPp09Xr+j8R6oxyYlpsLQp
- 3bpoeXJLu9Hvo7DnDXn+btHHm8aNqUaR8I8y+EC8rOTHB8SdAvsn4jQR3dJbrU/ZX38yUHCqYIB
- 5SAFOujITl49byqY9btcsjL/rbb5OzJqtXni5h6uJHc/XVFkfnoDv2JWlUefRh
-X-Received: by 2002:a05:6000:1acc:b0:430:f736:7cc with SMTP id
- ffacd0b85a97d-435a5f4d7a7mr3294633f8f.1.1769072108910; 
- Thu, 22 Jan 2026 00:55:08 -0800 (PST)
+ bh=5yfy4tTsPf7LLb72q4HUijUvyIYzC7km6s9NiBtIj+w=;
+ b=Cf95sJa4q7a3HuSwkld/ZvOSExoPZIttlqBtYLzFIi//CinE932IfI3wnL8GjFYOZp
+ +kRBtrStylf1vIfqGwawGKX/RpADOsjxT2hK25163ntYSfmK+kJdHXsp4+p+KYd6jAve
+ jFW2SWaI0+lY1MHtslSil+ITJ4/rG5Nvl+D377F5QHU0p4auwvYtbD8tDAm8tVpNXrs3
+ M247GgoB7qPaRAHpuArLGT6SjoGcYiMJhR9yjXNiF784XL2p3y9P90xkf9AezxfKlyAy
+ 0XsMfnZdBFSqX3YkoVkPn5USe0OULEvsLjfIVjd0TOal6hbzf6XO+UwseX7WklDYHbhT
+ zi/w==
+X-Gm-Message-State: AOJu0Yzt5H8cMLjn/Z2xnWvG23R144Tw8q0v+dBTiEu3zzKYTQrUtrsc
+ wI1y5BLGEWGd8/DRV1mFoXkaYl33ElJocOE3ucSsXAl5aDqS7z727qyaztnULwDlrQWr8beO9PR
+ B5aZYYAg=
+X-Gm-Gg: AZuq6aIXjVnBGMcMs3KvY7WrY0mCuUON6ogxsSydw08g0r2q9Lk3rIHildd086ECFAZ
+ DprhoaIVjLYMLVgFssnOEV2oypSpbjgGR5B+0PQ/UElxTPNgVj8pEaKZyFkGleuYgduMoICQHP8
+ vq02TgtklzDu66JCjgOvbBU1MRp5n+r3/TZ9r36I7aQbaYEC5G1dYVS2qDSQLlujkMuROmFhH5I
+ DtH4YyVtRXF6Qx2evQEq0/j2HwL1TzW3Hr9C1pWECL2xIsvTWHefaBSmWpJu2NYJhCWrf9XphLV
+ rGyFZujFBTujCtkIExptFXmhQSYzmwtrzaD0WtlbEanAd6dNJZiqZu2qORoXzE/xuTx6rUA730i
+ J3umtw0vX65MGiqbirjl64p8P17i4m9+MPUq7fG1F7dtyO8K6xZ0vG4c/2O/gZUAssm4WJZU7tI
+ 5MXV6QXzuqVqE8szG8vzc9fy7ZtXx+4WXqvavokPWpRlcJXkXE8JUYWnSO0nIG
+X-Received: by 2002:a05:6000:1ac7:b0:432:8667:51c7 with SMTP id
+ ffacd0b85a97d-4358ff613c9mr14470806f8f.44.1769072095812; 
+ Thu, 22 Jan 2026 00:54:55 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43569921dddsm44922484f8f.6.2026.01.22.00.55.08
+ ffacd0b85a97d-4359333b924sm16169363f8f.13.2026.01.22.00.54.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Jan 2026 00:55:08 -0800 (PST)
+ Thu, 22 Jan 2026 00:54:55 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/31] configs/targets: Forbid HPPA to use legacy native
- endianness APIs
-Date: Thu, 22 Jan 2026 09:52:43 +0100
-Message-ID: <20260122085255.95035-21-philmd@linaro.org>
+Subject: [PULL 18/31] system: Allow restricting the legacy
+ DEVICE_NATIVE_ENDIAN definition
+Date: Thu, 22 Jan 2026 09:52:41 +0100
+Message-ID: <20260122085255.95035-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260122085255.95035-1-philmd@linaro.org>
 References: <20260122085255.95035-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,51 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All HPPA-related binaries are buildable without a single use
-of the legacy "native endian" API. Set the transitional
-TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API definition to
-forbid further uses of the legacy API.
+Guard the native endian definition we want to remove by surrounding
+it with TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API #ifdef'ry.
+Assign values to the enumerators so they stay unchanged.
 
-Preliminary commits allowing this final change:
-
- . c77d0e90093 target/hppa: Use big-endian variant of cpu_ld/st_data*()
- . 75498b3f7b9 target/hppa: Use explicit big-endian LD/ST API
- . bcf5e5d3e33 target/hppa: Inline translator_ldl()
- . 7307ff95581 target/hppa: Replace MO_TE -> MO_BE
- . 6c1c734f786 target/hppa: Introduce mo_endian() helper
- . 64d1c178513 target/hppa: Conceal MO_TE within do_store_32/64()
- . 0807994a0cc target/hppa: Conceal MO_TE within do_store()
- . e3da4367117 target/hppa: Conceal MO_TE within do_load_32/64()
- . 4eef4dab502 target/hppa: Conceal MO_TE within do_load()
- . 714dd08fed1 target/hppa: Explode MO_TExx -> MO_TE | MO_xx
+Once a target gets cleaned we'll set the definition in the target
+config, then the target won't be able to use the legacy API anymore.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251229225517.45078-6-philmd@linaro.org>
+Message-ID: <20260109165058.59144-21-philmd@linaro.org>
 ---
- configs/targets/hppa-linux-user.mak | 1 +
- configs/targets/hppa-softmmu.mak    | 1 +
- 2 files changed, 2 insertions(+)
+ include/system/memory.h  | 8 +++++---
+ system/memory-internal.h | 2 ++
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/configs/targets/hppa-linux-user.mak b/configs/targets/hppa-linux-user.mak
-index 59190f63358..a0c7398d599 100644
---- a/configs/targets/hppa-linux-user.mak
-+++ b/configs/targets/hppa-linux-user.mak
-@@ -5,3 +5,4 @@ TARGET_SYSTBL=syscall.tbl
- TARGET_BIG_ENDIAN=y
- # Compromise to ease maintenance vs system mode
- TARGET_LONG_BITS=64
-+TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/hppa-softmmu.mak b/configs/targets/hppa-softmmu.mak
-index ea331107a08..003f9f46dcc 100644
---- a/configs/targets/hppa-softmmu.mak
-+++ b/configs/targets/hppa-softmmu.mak
-@@ -1,3 +1,4 @@
- TARGET_ARCH=hppa
- TARGET_BIG_ENDIAN=y
- TARGET_LONG_BITS=64
-+TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 92028dc7a4e..8f8725ea2d5 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -27,9 +27,11 @@
+ #include "qemu/rcu.h"
+ 
+ enum device_endian {
+-    DEVICE_NATIVE_ENDIAN,
+-    DEVICE_BIG_ENDIAN,
+-    DEVICE_LITTLE_ENDIAN,
++#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
++    DEVICE_NATIVE_ENDIAN = 0,
++#endif
++    DEVICE_BIG_ENDIAN = 1,
++    DEVICE_LITTLE_ENDIAN = 2,
+ };
+ 
+ #define RAM_ADDR_INVALID (~(ram_addr_t)0)
+diff --git a/system/memory-internal.h b/system/memory-internal.h
+index 46f758fa7e4..5f0524756eb 100644
+--- a/system/memory-internal.h
++++ b/system/memory-internal.h
+@@ -41,9 +41,11 @@ void mtree_print_dispatch(struct AddressSpaceDispatch *d,
+ /* returns true if end is big endian. */
+ static inline bool devend_big_endian(enum device_endian end)
+ {
++#ifndef TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API
+     if (end == DEVICE_NATIVE_ENDIAN) {
+         return target_big_endian();
+     }
++#endif
+     return end == DEVICE_BIG_ENDIAN;
+ }
+ 
 -- 
 2.52.0
 
