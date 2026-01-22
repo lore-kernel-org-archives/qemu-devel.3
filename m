@@ -4,110 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 618A5D46952
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 17:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBC2D46977
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 17:41:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viyXj-0005iL-Eb; Thu, 22 Jan 2026 12:32:27 -0500
+	id 1viyfo-0002Cg-PX; Thu, 22 Jan 2026 12:40:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1viyXe-0005h3-IQ
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 12:32:22 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1viyXb-00022b-Cm
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 12:32:22 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60MEIl64007813;
- Thu, 22 Jan 2026 17:32:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=ZRs5nBLUWQAxjQdfInWCrTbCym0jav
- hAOE79clxbbcU=; b=RLGAxGLHG4abLjtjnFbRUQq/M6pHqi198H7KNKFpHMMD1H
- jdkE0LR9QZMGbDXLR5iZcfCnIp4tM4uOvNvMhwQNDcyrkJjRnIfSK1yTWVaU08ha
- NIOCNX0NFjWtrNDqkOsgc0g6Bu5JgkjbHYqCZF6C/RuJOnbRpnelPuopMCM93SyN
- U5f8YE68vY8TVaKqjvSsAFXi2zbGWnmO0ps/KNuRx75bqpJOdTAPxoY+tZzwNn3g
- doIdVR4IK1IUkBbJUi4UbYX3hgUpjFj2Mzk3/sc32sGs8yjAO64yVOJJ9NWGekCu
- gZDNYoojhrhmIUOSXFIEAgWOnztGr3OieK4g0HnA==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bqyukhvq7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Jan 2026 17:32:16 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60MFf82j016636;
- Thu, 22 Jan 2026 17:32:15 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brn4ybtu9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Jan 2026 17:32:15 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60MHWCgT43450628
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Jan 2026 17:32:12 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F32732004E;
- Thu, 22 Jan 2026 17:32:11 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 876C020040;
- Thu, 22 Jan 2026 17:32:09 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.24.131]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 22 Jan 2026 17:32:09 +0000 (GMT)
-Date: Thu, 22 Jan 2026 23:02:06 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Sourabh Jain <sourabhjain@linux.ibm.com>
-Subject: Re: [PATCH] tests/functional: Enforce sha256 as hashsum algorithm
- for all tests
-Message-ID: <aXIcMAWfKXM_kBs3@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260121101957.82477-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viyfm-0001xE-7L
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 12:40:46 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viyfW-0003G4-J7
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 12:40:33 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-47edd9024b1so11183475e9.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 09:40:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769103626; x=1769708426; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=T18WTgJAP0KXw1fYxRcwzRoLfwi9bzmU2Fjs+7gqb5U=;
+ b=L8sxGimCXKNT0dsdT/uy00so61SC9UaAsChdHzAhRUFH0wlX/i3BieZIiL39Sj06VW
+ aKl1MCS5mywzEu1h0xPw2PQxYoaVzjBMKjQzSvlZWoL957aBW8xJFDiHmHygXlxlM7Le
+ XPRnm3XU1F9mkbpe5A+Uuf3UDWjeBfn0wYBWCIwrUq0zHEakLJ16NLkw1Y7DFIOrEyIG
+ ge+An8lHEFdSAdp9MdcdFz3E9ts/v+Rk1sR67wXvHECQ1kdwz2Od8k7JHcEDq96INrbO
+ xs14l9wKQgWMJXqOACoZ6JTRSvGwy8gwnpe0QTi48McvWqvPZH4TU7FlXk13wa+TR54r
+ gCig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769103626; x=1769708426;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=T18WTgJAP0KXw1fYxRcwzRoLfwi9bzmU2Fjs+7gqb5U=;
+ b=kt8uLc7P7sgr+Fq7pUXErw8okycpvRdUBTe/sICA6LM8XBbTRmRdj/+a3n22DB19Dy
+ GnxidReoGR2TDWZQKx9A+K6OJtmaEejv6mnFVSKUi4E3CImxJ1DBnS60m8NWT91q1i71
+ kcS/MAZ1irQ01vqJNgN+lscYMGNITz2UwOnW1AXrWw6d12nUz1Ltv5ajtVVw1WzAhHoV
+ oCpXs2LwKuTHe0L2462TEgu21zUr0HqHZnDtEHt+53w7SmqQ3Rs6Q0wwY/+Xf2PdG4Ae
+ cQH5V1i8L91SYrO04PM/uSHQ0cyi0G4KoxtoC2YnkqwZWMAxH9OhaqCDZ+f25Lk9QVds
+ Inlw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVunBRMZS/1IAPpjBxnngdphHqX0FjOuoaslj40jSB0zngRjTX1Y7XiIghobCBvoU2ADzFI2iRs14Yo@nongnu.org
+X-Gm-Message-State: AOJu0Yx0+pgu8uTLOFRXu685oo2Mjldxuxt9jX12PUVqFV9NPR7rtNZ9
+ DvuuatZD3I1fmarouxtoroS/jfNcXhIqG0b0O+ujnHyzPUk6RWUp21pB8RFYSzJwW9w=
+X-Gm-Gg: AZuq6aK/t4F0BmCMxXqHM/UKnuPkNLHr+OSeSQb4Id4zw89FrFUgAh+rU6DIBoBShT1
+ PzKjq62a1QAGZmnmF+viGZ7tSHaOCYVssjdM+8sM0QlbqgDkZZMIqWHS8fXbw6YtIjfAZd8rr7P
+ ZApEcMU0Una1zDkV8FuuoK5hvaqjnYcfEgXpMWiaQTFy2EGNSBlsrplq/ShSBNX1j6Mza20dYNY
+ xivUigbr4X1tR6eOaRWzdv6D1EgKb3fWHksrbWkQgiwsvLNjuvjni8CDd5QtXBjNQPZHMlAKWjO
+ TTgxSSAkHlPGxavfSlY7XI2UGBS7/XA0gc53FQA/zW7cHLrDLzMcPVGou0Izn3aYRyPPvFzLKZl
+ dfHTVkjMOvDSNciO+1fcGMCW2W3evFWCKZcTCxzf2UAVzNJOzC2tpnqnhqtNFGi8mDbeZ3kPNp2
+ S0NS8q0XEyZR5ql0vZ/t1tzbGhPpfQLpozCZ0njhNV3gZnq9EHV3rXtg==
+X-Received: by 2002:a05:600c:5298:b0:47e:e946:3a57 with SMTP id
+ 5b1f17b1804b1-4804c9d9f23mr6112405e9.36.1769103626359; 
+ Thu, 22 Jan 2026 09:40:26 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-480470403d3sm85824825e9.5.2026.01.22.09.40.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Jan 2026 09:40:25 -0800 (PST)
+Message-ID: <982f5122-56b4-432c-a83f-fab17f0cd644@linaro.org>
+Date: Thu, 22 Jan 2026 18:40:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260121101957.82477-1-thuth@redhat.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIyMDEzMSBTYWx0ZWRfX2NZxZEkDJ7up
- NBO9VSUODyP2ppyWrsVP9GYvp/JL59EbcWYm0OoVe5wr3LQsrLGDVGDTvuF/3VeuOuSQA2wnKCd
- /UHOoPW62pGKe0ykDOZ9JknyQrz7s4ZmCOzgpMqPKDGChUbQDovwgmHmjD7ECZerG3TyLxe+1N+
- yRYepHfx8Wt+VAYQJWPHsUdkt6XQlHQPlxyTfg6BnMsqV/aPTIrK9roOcV9kAUtQwn0KNeQBqGG
- PUo/FiO7YIe5ShjdKB4u+m8jBC42WsheO2tbLA4XMQ4spui3DQ9UxU2jB1g16cI+g/2b+GaK4sv
- ht1sN922hNLxEuGkDqqHeHQOZrc/IqTECufiD/ZMwe5TZWXU/BB+4uxSWQbosnTjUxIqmRKDXQG
- yL5cQmE3okFgWnhqcyrMeXELur05dLmGL9GOVhikEIhINtFI01Wmh2LDaxhp/X58dEg3Ob0c0g4
- f0JNPNAAcWgtKcEADRg==
-X-Authority-Analysis: v=2.4 cv=bsBBxUai c=1 sm=1 tr=0 ts=69725f20 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=uJKhRoVsQpQ1z33JokAA:9 a=CjuIK1q_8ugA:10
- a=ZXulRonScM0A:10
-X-Proofpoint-ORIG-GUID: wN7NgLwQbWpoO0bZm4THmk7DioeHlIuM
-X-Proofpoint-GUID: wN7NgLwQbWpoO0bZm4THmk7DioeHlIuM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-22_03,2026-01-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
- impostorscore=0 malwarescore=0 clxscore=1015 adultscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601220131
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-11.0 v3 18/22] target/ppc: Inline cpu_ld/st_data_ra()
+ calls in do_hash()
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>
+References: <20251126202200.23100-1-philmd@linaro.org>
+ <20251126202200.23100-19-philmd@linaro.org>
+ <f1a210ab-8d4a-4646-b358-81183a74c5b2@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <f1a210ab-8d4a-4646-b358-81183a74c5b2@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,28 +106,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/01/21 11:19AM, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 12/12/25 17:57, Richard Henderson wrote:
+> On 11/26/25 14:21, Philippe Mathieu-Daudé wrote:
+>> In preparation of removing the cpu_ld*_data_ra()
+>> and cpu_st*_data_ra() calls, inline them.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/ppc/tcg-excp_helper.c | 9 ++++++---
+>>   1 file changed, 6 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+>> index edecfb85725..244aeb23c16 100644
+>> --- a/target/ppc/tcg-excp_helper.c
+>> +++ b/target/ppc/tcg-excp_helper.c
+>> @@ -160,14 +160,17 @@ static void do_hash(CPUPPCState *env, 
+>> target_ulong ea, target_ulong ra,
+>>                       target_ulong rb, uint64_t key, bool store)
+>>   {
+>>       uint64_t calculated_hash = hash_digest(ra, rb, key), loaded_hash;
+>> +    unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
+>> +    MemOpIdx oi = make_memop_idx(MO_TE | MO_UQ | MO_UNALN, mmu_idx);
+>> +    uintptr_t retaddr = GETPC();
+>>       if (store) {
+>> -        cpu_stq_data_ra(env, ea, calculated_hash, GETPC());
+>> +        cpu_stq_mmu(env, ea, calculated_hash, oi, retaddr);
+>>       } else {
+>> -        loaded_hash = cpu_ldq_data_ra(env, ea, GETPC());
+>> +        loaded_hash = cpu_ldq_mmu(env, ea, oi, retaddr);
+>>           if (loaded_hash != calculated_hash) {
+>>               raise_exception_err_ra(env, POWERPC_EXCP_PROGRAM,
+>> -                POWERPC_EXCP_TRAP, GETPC());
+>> +                                   POWERPC_EXCP_TRAP, retaddr);
+>>           }
+>>       }
+>>   }
 > 
-> The functional testing framework currently supports both, sha256
-> and sha512 as hashsums for the assets. However, all but one test
-> currently only use sha256, which should also be sufficient according
-> to the current security standards. Having two algorithms around already
-> caused some confusion (e.g. the clean_functional_cache.py script only
-> supports sha256 right now), so standardize now on enforcing sha256
-> before more tests use a mix of the two algorithms.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  tests/functional/ppc64/test_fadump.py | 4 +---
->  tests/functional/qemu_test/asset.py   | 4 +---
->  2 files changed, 2 insertions(+), 6 deletions(-)
+> This is the page translation hash.  I suspect the actual address must be 
+> aligned, and probably forcibly so via computation.  The MO_UNALN is 
+> either wrong or misleading.
 
-Looks good to me.
-
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-
-Thanks,
-- Aditya G
+This is a faithful expansion of inlined helpers, showing the current
+logical state of the code. I'll remove MO_UNALN in a subsequent patch.
 
 
