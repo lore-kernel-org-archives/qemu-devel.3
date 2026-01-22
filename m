@@ -4,107 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1444ED3EE84
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 17:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73963D3EE95
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 17:15:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viy1g-0002Bg-Nj; Thu, 22 Jan 2026 11:59:20 -0500
+	id 1viyG6-0005hu-1x; Thu, 22 Jan 2026 12:14:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1viy1d-0002AH-KM; Thu, 22 Jan 2026 11:59:17 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1viyG4-0005go-9q
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 12:14:12 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1viy1a-0001AU-Rx; Thu, 22 Jan 2026 11:59:17 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60MCjvJR022334;
- Thu, 22 Jan 2026 16:59:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=XOvCnd
- vv7MSpLbAH47SprnQE85D8c2NuybyM0LZvmew=; b=TMP/zhE8St9xTsGF8cIFd+
- fLuzY24sF3RwjORGeOfcuBu0fq/xJcX+WOLZIXVr7Wf4wY5vh5CnmdZWVcaZfehd
- Jg9RB0fqgVZb52MxTqL5kKlEfVCn8gWzhYwBLuby5XOksZksMtGs2QCbkRUsrmmW
- Xecd4fvo6XGs36pQFiMFwxleLSR3xv/ZiMtDegoyhy8FD+QdvcqkfSooazBOdgGw
- 8o0xWq+6jyWoK6nMzG+IyKSa69cDxx+x9ZW5dKrnjbEMrHIHDhnxOs7rnSYIEYf4
- RrguZvJFBdJWQlugrTMO8LY7a8TiZgrWwI0e58fxr4ZNct1EmEG4+klCrNiVY2pQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bt612durs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Jan 2026 16:59:09 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60MEwtNn006427;
- Thu, 22 Jan 2026 16:59:08 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4brqf1u5ka-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Jan 2026 16:59:08 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60MGx6Ev30015746
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Jan 2026 16:59:06 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C8E5F20043;
- Thu, 22 Jan 2026 16:59:06 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6807020040;
- Thu, 22 Jan 2026 16:59:06 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.87.153.49])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 22 Jan 2026 16:59:06 +0000 (GMT)
-Message-ID: <c29ba170-d046-48b1-8cda-f0e4ada4f276@linux.ibm.com>
-Date: Thu, 22 Jan 2026 17:59:06 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1viyG1-0005A6-G8
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 12:14:12 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dxnhM6jjDzHnGgq;
+ Fri, 23 Jan 2026 01:13:23 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 02F8040584;
+ Fri, 23 Jan 2026 01:14:00 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 22 Jan
+ 2026 17:13:59 +0000
+Date: Thu, 22 Jan 2026 17:13:57 +0000
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+CC: Jonathan Cameron via qemu development <qemu-devel@nongnu.org>, "Michael S
+ Tsirkin" <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
+ Igor Mammedov
+ <imammedo@redhat.com>, Cleber Rosa <crosa@redhat.com>, John Snow
+ <jsnow@redhat.com>, <linux-cxl@vger.kernel.org>, John Groves
+ <jgroves@micron.com>
+Subject: Re: [PATCH 02/13] scripts/qmp_helper: add missing CXL UEFI GUID
+Message-ID: <20260122171357.00000747@huawei.com>
+In-Reply-To: <20260122160809.0a3acbb8@localhost>
+References: <cover.1768993993.git.mchehab+huawei@kernel.org>
+ <f229d756fe76c34e6dfa48a98f1ee46f4325fc76.1768993993.git.mchehab+huawei@kernel.org>
+ <20260121122604.00001609@huawei.com> <aXDx_N3YRACBmC4I@foz.lan>
+ <20260122105214.00001cca@huawei.com>
+ <20260122160809.0a3acbb8@localhost>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] tests/tcg/s390x: Test DIVIDE TO INTEGER
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260121222116.713325-1-iii@linux.ibm.com>
- <20260121222116.713325-4-iii@linux.ibm.com> <87jyx9mwcn.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <87jyx9mwcn.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: esgpjrJoR0l_RI_lKx5gZM2MSP2qE5Zb
-X-Authority-Analysis: v=2.4 cv=LaIxKzfi c=1 sm=1 tr=0 ts=6972575d cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=ggeJbR9Gv5eI8NL8StYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: esgpjrJoR0l_RI_lKx5gZM2MSP2qE5Zb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIyMDEyOSBTYWx0ZWRfX4JSSbQlwrjbx
- 2MBcN8MpexPw8ZmKbzHsMgvgZQNKafafMCi/wXD33DwlOEC8AIRIlHQU0/AhTUE7eLMxP8Vst+D
- SI6iAOuc/Y5KOV4vxAddOV5MJRvL2FKck73nMhn1O+zrtVBWaYCaPJ9w4CrOaGB6rtsI1/04LS4
- dIFbA4J1qTU1q+ywEZ9++EUh2ACBnqp8BUaGGiVnovViB0ZpPcmjC9EmNbzRE5FoRQIYUxxwh1X
- Rlm2eBAQXecemXo/qxs2+VZ1GNaJSlB90CeGuaxi/bWlG9WW957edxJW289PLn7PSfZaJs5deA2
- uVENqR0XsD7OhhlQtjj0BOaCJiuhWkj9hSiFU9C0hVylnx1VMKX4V9xCJrm++rVDg95XTMaRa1k
- 8DHocGN9UmDNWHlq5ZW3WCrLh3FM4OS7++BI1MXzaMKHw1vI9MPWiKI4l71Do7vOy6yqmdVIRLH
- LRGtA88TEg2Amsg3a/Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-22_03,2026-01-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601220129
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -120,46 +74,193 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 22 Jan 2026 16:08:09 +0100
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-On 1/22/26 17:43, Alex Bennée wrote:
-> Ilya Leoshkevich <iii@linux.ibm.com> writes:
->
->> Add a test to prevent regressions. Data is generated using a
->> libFuzzer-based fuzzer and hopefully covers all the important corner
->> cases.
->>
->> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
->> ---
->>   tests/tcg/s390x/Makefile.target     |   3 +
->>   tests/tcg/s390x/divide-to-integer.c | 215 ++++++++++++++++++++++++++++
->>   2 files changed, 218 insertions(+)
->>   create mode 100644 tests/tcg/s390x/divide-to-integer.c
->>
->> diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
->> index da5fe71a407..d5ec01d04fd 100644
->> --- a/tests/tcg/s390x/Makefile.target
->> +++ b/tests/tcg/s390x/Makefile.target
->> @@ -49,14 +49,17 @@ TESTS+=cvd
->>   TESTS+=cvb
->>   TESTS+=ts
->>   TESTS+=ex-smc
->> +TESTS+=divide-to-integer
->>   
->>   cdsg: CFLAGS+=-pthread
->>   cdsg: LDFLAGS+=-pthread
->>   
->>   rxsbg: CFLAGS+=-O2
->> +divide-to-integer: CFLAGS+=-O2
-> As we generally compile -O0 to make life easier for people debugging
-> behaviour via gdbstub could we have an explanation of why -O2 is needed
-> here? Is it the same reason as rxsbg?
->
-> <snip>
+> On Thu, 22 Jan 2026 10:52:14 +0000
+> Jonathan Cameron via qemu development <qemu-devel@nongnu.org> wrote:
+>=20
+> > On Wed, 21 Jan 2026 16:45:58 +0100
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> >  =20
+> > > On Wed, Jan 21, 2026 at 12:26:04PM +0000, Jonathan Cameron wrote:   =
+=20
+> > > > On Wed, 21 Jan 2026 12:25:10 +0100
+> > > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > > >      =20
+> > > > > The UEFI 2.11 - N.2.14. CXL Component Events Section states that
+> > > > > XL events are described at CXL specification 3.2:     =20
+> > > > CXL
+> > > >      =20
+> > > > >         8.2.10.2.1 Event Records
+> > > > >=20
+> > > > > Add the GUIDs defined here to fuzzy logic error injection code.  =
+   =20
+> > > >=20
+> > > > +CC linux-cxl as more folk there who will be familiar with this
+> > > > stuff.
+> > > >=20
+> > > > Some of these won't be seen on a host. The same event
+> > > > infrastructure is used for reporting on out of band interfaces
+> > > > and some in band ones, but not ones that will turn up on the
+> > > > mailboxes that firmware will be using to get info.     =20
+> > >=20
+> > > Good to know, but UEFI 2.11 still mentions all of them as
+> > > possible GUIDs:
+> > >=20
+> > >     https://uefi.org/specs/UEFI/2.11/Apx_N_Common_Platform_Error_Reco=
+rd.html#cxl-component-events-section
+> > >=20
+> > > So, the UEFI 2.11 doesn't explicitly state they won't de delivered
+> > > to OSPM. Quite contrary, they're listed as valid values for CPER,
+> > > even if, in practice, they won't.
+> > >=20
+> > > This is just a small set of variables, that won't bring any major
+> > > impact on the code. So, I prefer to keep them in sync with the spec.
+> > > If they end removing the unused ones, we can update it in the future.
+> > >=20
+> > > If you want, I can add a note at the next version with your
+> > > comments about them.
+> > >    =20
+> > A note works for me.
+> >=20
+> > As I understand it CPER records are getting adopted in other specs
+> > so it may make sense to document them, even if they  aren't a possibili=
+ty
+> > via ACPI.
+> >=20
+> > However I'm not seeing them in the spec link you point at. =20
+> > All I'm seeing is a cross reference the CXL spec Events Record Format. =
+=20
+>=20
+> Heh, true, I got confused with another field. Yet, at CXL spec 3.2,
+> it is said that:
+>=20
+>=20
+> 	8.2.10.2 Events
+> 	=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> 	This section defines the standard event record format that all CXL devic=
+es shall use
+> 	when reporting events to the host.
+>=20
+> 	...
+>=20
+> 	Table 8-55. Common Event Record Format (Sheet 1 of 2)
+>=20
+> 	------	--------	--------------------------------------------------------=
+--------------------
+> 	Byte	Length		Description
+> 	Offset	in Bytes
+> 	------	--------	--------------------------------------------------------=
+--------------------
+> 	00h	10h		Event Record Identifier: UUID representing the specific Event R=
+ecord format.
+> 				The following UUIDs are defined in this spec:
+> 				=E2=80=A2 fbcd0a77-c260-417f-85a9-088b1621eba6 =E2=80=93 General Medi=
+a Event Record
+> 				  (see Table 8-57)
+> 				=E2=80=A2 601dcbb3-9c06-4eab-b8af-4e9bfb5c9624 =E2=80=93 DRAM Event R=
+ecord (see
+> 				  Table 8-58)
+> 				=E2=80=A2 fe927475-dd59-4339-a586-79bab113b774 =E2=80=93 Memory Modul=
+e Event Record
+> 				  (see Table 8-59)
+> 				=E2=80=A2 e71f3a40-2d29-4092-8a39-4d1c966c7c65 - Memory Sparing Event=
+ Record
+> 				  (see Table 8-60)
+> 				=E2=80=A2 77cf9271-9c02-470b-9fe4-bc7b75f2da97 =E2=80=93 Physical Swi=
+tch Event Record
+> 				  (see Table 7-77)
+> 				=E2=80=A2 40d26425-3396-4c4d-a5da-3d47263af425 =E2=80=93 Virtual Swit=
+ch Event Record
+> 				  (see Table 7-78)
+> 				=E2=80=A2 8dc44363-0c96-4710-b7bf-04bb99534c3f =E2=80=93 MLD Port Eve=
+nt Record (see
+> 				  Table 7-79)
+> 				=E2=80=A2 ca95afa7-f183-4018-8c2f-95268e101a2a - Dynamic Capacity Eve=
+nt Record
+> 				  (see Table 8-62)
+> 	------	--------	--------------------------------------------------------=
+--------------------
+>=20
+> 	...
+>=20
+> So, CXL specs say they'll arrive at the host, and UEFI doesn't tell
+> they can't arrive the OSPM.
+>=20
 
-Yes, this is because inlining is mandatory for the mask argument, and 
--O0 does not honor always_inline.
+Fair point. Some of those we shouldn't see at a host. Something to tidy up
+in the spec.
+
++CC John Groves to make it his problem ;)
+
+Dynamic Capacity events go to the host (well some of the them anyway),
+but never to firmware, so there is  blurry boundary.
+Some values of the Event type for those state they are not sent to the host.
+"This event shall only be reported to the FM".
+
+J
+> In any case, it is easier to just pick the entire set with 8 GUIDs
+> and keep the scripts in sync with the specs than filtering what=20
+> shouldn't belong there and why, with the risk of eventually miss
+> something.
+>=20
+> I'll append the diff below to the relevant patches on this patchset.
+>=20
+> Regards,
+> Mauro
+>=20
+> ---
+>=20
+> diff --git a/scripts/ghes_decode.py b/scripts/ghes_decode.py
+> index 6c7fdfe84e3a..7bac7dbd6b3a 100644
+> --- a/scripts/ghes_decode.py
+> +++ b/scripts/ghes_decode.py
+> @@ -935,6 +935,10 @@ class DecodeCXLCompEvent():
+>      """
+> =20
+>      # GUIDs, as defined at CXL specification 3.2: 8.2.10.2.1 Event Recor=
+ds
+> +    # on Table 8-55. Common Event Record Format
+> +    #
+> +    # Please notice that, in practice, not all those events will be pass=
+ed
+> +    # to OSPM. Some may be handled internally.
+>      guids =3D [
+>          ("General Media",              "fbcd0a77-c260-417f-85a9-088b1621=
+eba6"),
+>          ("DRAM",                       "601dcbb3-9c06-4eab-b8af-4e9bfb5c=
+9624"),
+> diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
+> index 32baca17ce10..583f898f04ef 100755
+> --- a/scripts/qmp_helper.py
+> +++ b/scripts/qmp_helper.py
+> @@ -778,10 +778,14 @@ class cper_guid:
+>                           [0xA6, 0xA6, 0x88, 0xB7,
+>                            0x28, 0xCF, 0x75, 0xD7])
+> =20
+> +    # CXL GUIDs, as defined at CXL specification 3.2: 8.2.10.2.1 Event R=
+ecords
+> +    # on Table 8-55. Common Event Record Format
+> +    #
+> +    # Please notice that, in practice, not all those events will be pass=
+ed
+> +    # to OSPM. Some may be consumed internally
+>      CPER_CXL_PROT_ERR =3D guid(0x80B9EFB4, 0x52B5, 0x4DE3,
+>                               [0xA7, 0x77, 0x68, 0x78,
+>                                0x4B, 0x77, 0x10, 0x48])
+> -
+>      CPER_CXL_EVT_GEN_MEDIA =3D guid(0xFBCD0A77, 0xC260, 0x417F,
+>                                    [0x85, 0xA9, 0x08, 0x8B,
+>                                     0x16, 0x21, 0xEB, 0xA6])
+>=20
+>=20
+>=20
 
 
