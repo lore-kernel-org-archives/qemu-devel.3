@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3565EC44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 10:44:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABB85C44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 10:50:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1visAE-000303-U2; Thu, 22 Jan 2026 05:43:46 -0500
+	id 1visG3-0006Ok-BM; Thu, 22 Jan 2026 05:49:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1visAB-0002vs-Qu
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:43:44 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1visG0-0006KO-Iw
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:49:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1visAA-0007za-8f
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:43:43 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1visFz-0003To-5C
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:49:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769078621;
+ s=mimecast20190719; t=1769078982;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=LTltZq9+JCsUWsSmaaNgTGkB37YX5SdewpF/HCOajP4=;
- b=HCohk/ueHVpJt/CTGF+IenCYqHJnLVXCIhzENHhqVRwtSnhhipJdaAJcGAtw0kMYgE44e6
- IymgeTq7fceQsFnTa4TkMeo9zV1WnnbJRzQFBEAu5oWw2jyUe/jXGT59PNvFus2IzGKl+U
- R56QZYt1IT9Vj90v85YOgRLLhkGG2hE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jgIPM8OpxHeNCGRc0vlcUybvvkTGH2w92IIDkMB7o/4=;
+ b=EqhzdSoQ6sUxpio/6YAntji9VLkPjX0s5navw9CtskpfR/oQFpr21assim0Upmg3jEVbUi
+ cgfoBuh8jP9fmVkV8Jl6tb+mNbGPsz2Cxwa0zFqRk3kIJAqXuYkfXl0vTFotddogTXKdrs
+ VhDPT6xgXeTK22OceXq6i7MrQvr5v1k=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-168-hns4VqWFOoylT68bYltatQ-1; Thu, 22 Jan 2026 05:43:39 -0500
-X-MC-Unique: hns4VqWFOoylT68bYltatQ-1
-X-Mimecast-MFC-AGG-ID: hns4VqWFOoylT68bYltatQ_1769078618
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4801d21c280so5497695e9.1
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 02:43:38 -0800 (PST)
+ us-mta-232-55BWhaW6Of2bztg3yKhYpw-1; Thu, 22 Jan 2026 05:49:41 -0500
+X-MC-Unique: 55BWhaW6Of2bztg3yKhYpw-1
+X-Mimecast-MFC-AGG-ID: 55BWhaW6Of2bztg3yKhYpw_1769078980
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-43284f60a8aso581974f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 02:49:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769078618; x=1769683418; darn=nongnu.org;
+ d=redhat.com; s=google; t=1769078980; x=1769683780; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=LTltZq9+JCsUWsSmaaNgTGkB37YX5SdewpF/HCOajP4=;
- b=tuO7UJKxpRw1hsSdXxxGO198WTtTfmVmO6/ybZtPNXGj7DFB44j18RaOkngLlSLucA
- ikgfTERa00mSKKv99kPMfTZPabuOhSbKFfiJ7vvHaaU00jVcqpiPZROBPG8l4E5ar0to
- LGDAIYt/jwudv6k1XKDxyr8QApq4z7PH9Cvi33qE2g+noEIZv8robqGM/5Lu76h8hM/8
- Amvsj4XAPilbYbUn7UoLtAkV9l8jKoOU01uGokFu/J+W7ilyCCd6C+9UR7UQg0QZv58s
- 6z6dBaM7unwvfO1brJBXBVRjLRCL8kTF+5bsOXPAxhg3RNLzbIeLzgSbHqTbCrcLq67g
- 54Pg==
+ bh=jgIPM8OpxHeNCGRc0vlcUybvvkTGH2w92IIDkMB7o/4=;
+ b=UaR9DKW623AcQG+L60iO0ZFi1U94mKs80IIrbV5L4/ZSCij8mm1yg5418oSQ3/Bulg
+ OcwjzCIduwdL/UYODbkyCMAvlQBdNPx/qO6PJRg63zAU0fOfx6lip4BwJBd7lPRADbfI
+ 3HMhTTbkKdLjVIH+yqLx34y8U29GI9FYVa5rBC47cCYuq3k7327cnAPMri3nSjfXAMtv
+ 621bR/C28YF1Pn7sHaRwPxOCJva45wNsfBhYvGmMhltCld1IHZeRUx71vXThxT81dJn3
+ ZCpQokz4cpaDeKyE1FI9IiK95/IN2aZrpPOMOfjTOR3mpOHjxp73WZRTTB0b0foEcZoi
+ YELw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769078618; x=1769683418;
+ d=1e100.net; s=20230601; t=1769078980; x=1769683780;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LTltZq9+JCsUWsSmaaNgTGkB37YX5SdewpF/HCOajP4=;
- b=fwvl5M/FP89MK9OdMfMqy7Mbp6f07aITFopDDtG0gIP0vTEqe5Fv86BcfyNvE7SxJB
- IxHIm9Bpd5hb/HttmVEK3STCqL9wmAP0yXsPMmWOh250DwmSB38AplEgkQsJJypnF2bo
- uy3A5mZv6L1oRVgs76HH4ZvmPYA2jNvfpBtC1VMY8AZzdyXJFcrfohH2ZlO/YTZrt5Ef
- AOKWm9KYwaQrpb/8ZkVgLn2cB4QXOeoFCyY5mlwK8ZRHwuIP2HCZilPDVegdqOnzFzgQ
- kMHvk2UtBKgvTE9ysokiQxGSXRKCwC6KOR43eiVZ+xMjshFe47df5JOkAvycc70oMUAM
- fm1g==
+ bh=jgIPM8OpxHeNCGRc0vlcUybvvkTGH2w92IIDkMB7o/4=;
+ b=NU7fSU0DDaOWxj7gLhvhcDPtNd9ClsuiWQcJjDGOsutxIWzu3RKBiom7Ybwd4QQQ3Q
+ H6GdVViW7+bQp1L1UkkNMxucEeQuNk5z2dpsDP76urBeRBwF26vvIIzxWSb1UVq/BDGl
+ VCyEu6nAHlczluccjbhzx9OxmkxKLuQtNuueqflN4aoUdRylnGle49uZvfANTT9bG7QY
+ pgBy46bVSZmlRRtCktNxY7NWoh9l0qZMpXGov98tz80XW1Z6jbwxaBVv32u7CXbT7r14
+ bqH7zM3s4LUx0LnR+E7uBULPUPc3XOyKbjY9/Tst7gHoKokb2FtVTQxnn8v3RaDxkr7t
+ ptPQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0VNhWzVxbXGOwzLigWQbHrDmFADR6cDoCnFnW9rIu7IQ35+6bSqFagUAUtTqOLOgtzPZQ2zEciLiU@nongnu.org
-X-Gm-Message-State: AOJu0Yw274e1ZsZF3TtpkiFPOwdRu83Mt7OVGIl18K6XsvNcPaULPvmy
- T2o34ZSWRFBIm33XMrroxebZ2VqTVM48NtDYZuUwCOZL277pCDkA5DGMnlSKVYg2iXAW3ARMPSJ
- GSG1XWdnQdQkLmujCu9g9DQ5oUsQOyLDX+cy8u+PtQ0VF569MEd7cuE9J
-X-Gm-Gg: AZuq6aKNtyvviHC/3xudR9vQqip2BpA4/otHHTso1Re2xyEMhGuPPGCHgDBWYEQ24UH
- OiFzPFnDcC8p5qlzW0WyEqgDtDF7ZIPaHQh7nc2i3Hg2KzGl+jHJwsq5ZV1YWUrxlJxFnshHZhZ
- 67JNI8P5Or8T5PHjBz3QqtIBu2m/5oHd2/tVRiZf2/6FjMvx6Y2Gj6HL4jCmEzF0C2rgK2EtdE8
- ufyqUqysZTkGngtFRjeEJROtfW5XFMfMmHN9x5mZYMj92PF+e41Q5aBexfWIIgY9klDJ4lYYmk1
- PsY5c3JE+9K2qcnZBFSsHRssb/ZNdSuIivCivQ69bisl4k69q1S1Rq0g1/5by0gSth1DiY7aRJv
- z0u3QsxM=
-X-Received: by 2002:a05:600c:4e43:b0:477:73e9:dbe7 with SMTP id
- 5b1f17b1804b1-4801e358875mr290739805e9.35.1769078617735; 
- Thu, 22 Jan 2026 02:43:37 -0800 (PST)
-X-Received: by 2002:a05:600c:4e43:b0:477:73e9:dbe7 with SMTP id
- 5b1f17b1804b1-4801e358875mr290739265e9.35.1769078617247; 
- Thu, 22 Jan 2026 02:43:37 -0800 (PST)
+ AJvYcCUQczb5qNnto4L4544L4nmsBdmRaOWKnaAVbg/Xv+nrURFUnt4zBZ6n8bLdGaUbi0U9wImN9Q8ePf7e@nongnu.org
+X-Gm-Message-State: AOJu0Yz8fFi/N93B18wbqu4AwZD4E3iyFqpIJVJfOwZ5Nn9fFpZXx1Se
+ wPLb7jwfJ2sPEJWctf6xiqpCdpRbpwaHewJyiSy9EAw9ErqSXt/9JY1BuGr/fFONLHKQKGluplv
+ QUd6A9U4uJ4BHgMNbTtePtqId6TdFrnTuoiSdMPSyNcWwXgn0rv2nAtCC
+X-Gm-Gg: AZuq6aJEDs267KT9n8s50BTJUpL8qPWhm8ZV0bY8ubHz9H5sHEAVLDbzYxJBKIF3h3B
+ dlJFhxTL9eN74kqm+2WmAJj7s5uSYEPh+LICtfyAmtkGEDFvm3qWLiUub6CFe8uWqeSWoABqVnC
+ orB/x3PvPOoKNrVFxJwm80P0PjDdTH0PvJacSl7ZTTPANJbVF2BE+PsYy7dfIwIsVMv0rVEtwFO
+ sxX5MRkWCFslRA57Uf6/gcw++lgkYb62bwkZhiNHJXBSaYaHPPyx2DOl0kwv3aQfV2332EjQ+W2
+ 6Rx9ok7tPVe1uLtUUBI9ZiSCbS3+fDL3rYAA3qKZhSyxnLliVQyIg2ZjfMjbwDGmUQa8ucfCr9Y
+ BVWxVxJY=
+X-Received: by 2002:a05:6000:4021:b0:430:f1e8:ed86 with SMTP id
+ ffacd0b85a97d-43569972babmr29574152f8f.4.1769078979813; 
+ Thu, 22 Jan 2026 02:49:39 -0800 (PST)
+X-Received: by 2002:a05:6000:4021:b0:430:f1e8:ed86 with SMTP id
+ ffacd0b85a97d-43569972babmr29574099f8f.4.1769078979369; 
+ Thu, 22 Jan 2026 02:49:39 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.112.255])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4804252b02dsm49755985e9.5.2026.01.22.02.43.35
+ ffacd0b85a97d-43595609c8asm16397866f8f.34.2026.01.22.02.49.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Jan 2026 02:43:36 -0800 (PST)
-Message-ID: <130b8f26-2369-48f5-bbd6-e27210707b9f@redhat.com>
-Date: Thu, 22 Jan 2026 11:43:35 +0100
+ Thu, 22 Jan 2026 02:49:38 -0800 (PST)
+Message-ID: <05fd4f96-9a91-4459-9166-8af2e5db9539@redhat.com>
+Date: Thu, 22 Jan 2026 11:49:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: Call for GSoC internship project ideas
@@ -109,7 +109,7 @@ References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
  <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
  <CAJSP0QVQNExn01ipcu4KTQJrmnXGVmvFyKzXe5m9P3_jQwJ6cA@mail.gmail.com>
  <CAJSP0QW4bMO8-iYODO_6oaDn44efPeV6e00AfD5A42pQ9d+REQ@mail.gmail.com>
- <aXH4PpkC4AtccsOE@redhat.com>
+ <aW_4p65WIEuQO4UQ@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -154,7 +154,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <aXH4PpkC4AtccsOE@redhat.com>
+In-Reply-To: <aW_4p65WIEuQO4UQ@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -182,7 +182,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/01/2026 11.14, Daniel P. Berrangé wrote:
+On 20/01/2026 22.50, Daniel P. Berrangé wrote:
 > On Tue, Jan 20, 2026 at 04:42:38PM -0500, Stefan Hajnoczi wrote:
 >> Hi Marc-André,
 >> I haven't seen discussion about the project ideas you posted, so I'll
@@ -191,25 +191,21 @@ On 22/01/2026 11.14, Daniel P. Berrangé wrote:
 >> Thomas: Would you like to co-mentor the following project with
 >> Marc-André? Also, do you have any concerns about the project idea from
 >> the maintainer perspective?
-
-I'm fine with co-mentoring the project, but could you do me a favour and add 
-some wording about AI tools to 
-https://wiki.qemu.org/Google_Summer_of_Code_2026 to set the expectations 
-right? Since we don't allow AI generated code in QEMU, I'd appreciate if we 
-could state this in a prominent place here to avoid that some people think 
-they could get some quick money here by using AI tools, just to finally 
-discover that AI generated code is not allowed in the QEMU project. Thanks!
-
-> IMHO, our baseline for functional testing images ought to be
-> a Linux Kconfig recipe used to build a dedicate kernel, plus
-> a busybox build for the target.
-
-Not sure if we want to add kernel compilation time to the functional tests 
-(even if it's only done once during the initial build)...? That could easily 
-sum up to a couple of hours for a fresh checkout of QEMU...
+> 
+> The idea of being able to build test images is very attractive,
+> however, actual deployment of any impl will run into the same
+> constraint we've always had. If we host disk images, then we
+> have the responsibility to host the complete & corresponding
+> source. This is a significant undertaking that we've never been
+> wished to take on. IMHO publishing images in GitLab CI won't
+> satisfy the license requireemnts.
+I agree, and I think if we go ahead with this project, we should not use the 
+gitlab-CI to build and provide these images. It would be better to build the 
+images on the host that runs "make check", similar to the precaching for 
+assets that we currently do. The built images could then be stored in the 
+local asset cache so you don't have to rebuild them again the next time your 
+run "make check". Does that sound practicable to you?
 
   Thomas
-
-
 
 
