@@ -4,61 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0017BD3EE86
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 16:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E4AD3EE8A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 16:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vix7l-0003dp-5c; Thu, 22 Jan 2026 11:01:33 -0500
+	id 1vixAf-0005ct-5o; Thu, 22 Jan 2026 11:04:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vix7e-0003WQ-TO; Thu, 22 Jan 2026 11:01:27 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vix7b-0001MG-Ie; Thu, 22 Jan 2026 11:01:26 -0500
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:5c05:0:640:ff67:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 79B66808D9;
- Thu, 22 Jan 2026 19:01:17 +0300 (MSK)
-Received: from vsementsov-lin (unknown [2a02:6bf:8080:d28::1:34])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id F1fhdk2BPuQ0-JcHXz3a4; Thu, 22 Jan 2026 19:01:16 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1769097676;
- bh=EqZTO2opfswjr10U++lMVydcx+uDmaCEDlgZuqsfjsc=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=OMhQBmznbnHf0ZLy+g5d+DNcdZ8CNraH6412+zL1j8KvGU/w1fhRrJFzEgSdWtlsq
- cSpRfHpDwbzPfFCXS0DEKvySyaQwq6xO0PYn1PpqWlub7nOf3b0O+zEle0HUBq3jd8
- OaXV+mgL47Pid2ClHkQQKiopH9AJ6Gu/2ekoiSQo=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, eduardo@habkost.net, berrange@redhat.com,
- pbonzini@redhat.com, armbru@redhat.com, eblake@redhat.com,
- devel@lists.libvirt.org, hreitz@redhat.com, kwolf@redhat.com,
- vsementsov@yandex-team.ru
-Subject: [PATCH v11 8/8] deprecate names duplication between qdev,
- block-node and block-export
-Date: Thu, 22 Jan 2026 19:01:13 +0300
-Message-ID: <20260122160113.1147745-1-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260119144941.87936-1-vsementsov@yandex-team.ru>
-References: <20260119144941.87936-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vixA9-0005Th-H0
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 11:04:04 -0500
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vixA7-0001qJ-Fp
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 11:04:00 -0500
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-78fba1a1b1eso21942057b3.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 08:03:58 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769097838; cv=none;
+ d=google.com; s=arc-20240605;
+ b=NwOFRK862xNG7KZ2jAE4ZP180koxuFQHSSbleY5BaIAfWKwSTWmhkJR5dy7wVkO1tI
+ kWBiboQfKoSBUdDlsZ9cRKJIX7HRSEejnbM4slQkoAaT7vLp6JnXj0mAXc4ZRSoO9Frv
+ z6EHBtho3tX8vjcrQRV4o5QufjEtH1M2jGlXj2hgcSgTTRjdJ3DyM0l4cFPDP/jWlb0W
+ ep9wFT2gaTxUsTlWvpguitSJ43rlzwLc0yPw3Mhyw18ImHbk/eYpblC98T39ezeLQboH
+ v8j9GwNit6RX20zXWZ359tu+7xPMxN7zPtDaNMXD1iOmVhgJgTpztsJbVrdosWKRpnun
+ TE9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=V3h6BN0iHCZPqzNEsP8FQyIesF9/U03y4JkbzQWDoUQ=;
+ fh=oB2JmoVxJ19DCbyA6gPU0e5PzqljNWcUlt7edikwwyY=;
+ b=RqnsOYuOavjqGTnVAw07tJqvJAoELeYRbnhpctqUvy+ZPb3mZr+Y3Z0POqRVM8GU/E
+ ocOkkm8ArqEK2KnH3c4hqJZTTkkXo7P86ekEXzVq52yrPQWITyBFbb4u2urqQx3oH85z
+ KGkLSq5aSjoprH1p3biv3NBOqN6PXWio2J/A4bO9kNDchVVLgeFQRC4wU+HtlyPlLgGG
+ B1ejA8KruWgulx6//RubpT62ZNg8axtBDjI/PNnqhnhcnN7KnvKdT4FA1659YIvDvgiL
+ rKgw/v5QcrvWRLCYWhgovuMJXv/RutlLduFDQTKFqirbWBn+rEukj3htzWVq7z0Hj7Tx
+ p94A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769097838; x=1769702638; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=V3h6BN0iHCZPqzNEsP8FQyIesF9/U03y4JkbzQWDoUQ=;
+ b=HUshFFzEPGDj/Izr58DM8s03w3QJJJEQEjGf2GrSkbbDqm1wLkt36WIWgRlnKJYFd2
+ x+eGyKaawgpm03lrIKHYKmW6bwkaKqD2Cq92K38boukv9/DJda5Ixt/CdOdV8Pt2vUDG
+ DtYByu11cmUrYU0IgunnZe6VG/VM8sVhIz94xvbXVug+otLs0Gt9/ZWk4r8/tu+qPZYH
+ AAIeOav3rEinAYx/a2ywZwXq5GmN0FZFWerJrAZVbuxC4x1dsFAx6UI7KMaDXJlSRWwR
+ zIPtSIwdyHlW2llf5AmBy+GQ5Uzt2X9+CZEa/hXG55mfJxdAC35HtmXAfQJiPWoD8jUo
+ un/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769097838; x=1769702638;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=V3h6BN0iHCZPqzNEsP8FQyIesF9/U03y4JkbzQWDoUQ=;
+ b=r47PvmIvkw2vOEhy/+cV6S0ww9djcy8k9yXgD/O4MHrB2RLyRv5P03G8Vq3dS+67Hh
+ dkn08NocNH6FSLn7bsLI6t3h0f/pzYNH7hwRmmo4Of4096vyvlBq1Zu287UtAjGRYnA/
+ 8tW7fG56TLcEaTQdqe37PrOq0os6dsDlqvanhC42vVHSmiLzu2eLAzbsKMThV3Yocabg
+ e4+OFh/yN0ka+v9H5qbbVTGBdMObQj/TBUmKH0wRGGB2Azz6ijjUYHY7ZXCCnFvj8x1u
+ 3cMEk5oeaOLhCMrXYazrBN3hd8sQEgceYDreFCDyDZ9yueSJyKHJgpc2A75r53jz+wOy
+ CKbQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWD2g9xmRYbS1oHYP/CqXayQIWMCZ6Hu7/rnxMpve6RslwBHE9AMVcA+VZx0M4XqueR3CFvUrM5RtjP@nongnu.org
+X-Gm-Message-State: AOJu0YwwPAlo/GyD+aXAEee1+YQ2Mpy8Oe3typaGTiVu/PGgcoNpOmX3
+ 45ydVY0em5wu4C5RxAUoRMcDpVo5S25tJPCt0DF34aHUQExZ0TU3zW7vx497USuACKZU98ZnMdA
+ lzCYrD4rUaWOP6ghiJb2FtfsDbVJtYOeG6KSygtxmeg==
+X-Gm-Gg: AZuq6aKfxU6fN17OaquJwoO9WsGy5EQXudl2aIR8MkkGf958RfSjTI2o/JhZkt/jpt5
+ UxPSKr8VbrYwOGE+X0b/yUQIi672FL9R/CNUtLasXMwAvJYeFqEwwUU0/T7U9tX259yscaar84M
+ mfIn2IIW/YDQvuQ0ovMgFXonlf5ea/ugpaHO6hwcPGPOoX4YL5VOhozWc32GEJC0aWsGOHHABmU
+ J2mmxgY5NSZpOJrUNYu1MUFP2CK88LLB6ibf7DPFopiKGJ8tbt+Hn0nLhAmToFmtBav6w==
+X-Received: by 2002:a05:690c:f83:b0:793:ad45:8e8b with SMTP id
+ 00721157ae682-7942a7bbcafmr28334327b3.19.1769097837444; Thu, 22 Jan 2026
+ 08:03:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+References: <20260120180339.1416328-1-peter.maydell@linaro.org>
+ <c272a3dd-5f16-4821-bc38-5bd60369dfbf@linaro.org>
+In-Reply-To: <c272a3dd-5f16-4821-bc38-5bd60369dfbf@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 22 Jan 2026 16:03:45 +0000
+X-Gm-Features: AZwV_Qh4yk1EtsslVr_pCcfVXvOI6lH5QQPzWlqHkys3d92PVIAstcCZeDmkej4
+Message-ID: <CAFEAcA-xPER9Hedw=pnqDy-RYq8gEjo1fMt6bVzJVTHwHfgk7Q@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/4] hw/arm/virt: Deprecate 'its', introduce 'msi'
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,208 +116,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now we have blockdev-replace QMP command, which depend on a possibility
-to select any block parent (block node, block export, or qdev) by one
-unique name. The command fails, if name is ambiguous (i.e., match
-several parents of different types). In future we want to rid of this
-ambiguity.
+On Thu, 22 Jan 2026 at 15:51, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> On 1/20/26 10:03 AM, Peter Maydell wrote:
+> > This patchset is an RFC sketch of cleaning up the logic that we
+> > have for selecting the MSI controller, so we can add the handling
+> > for "hvf and whpx give you a GICv3 without an ITS" in a
+> > hopefully clear manner.
+> >
+> > thanks
+> > -- PMM
+> >
+> > Peter Maydell (4):
+> >    hw/arm/virt: Clean up MSI controller selection logic
+> >    hw/arm/virt: Don't use vms->tcg_its in create_gic()
+> >    hw/arm/virt: Drop VirtMachineState::tcg_its
+> >    hw/arm/virt: new "msi" property
+> >
+> >   docs/system/arm/virt.rst |  21 +++++++-
+> >   hw/arm/virt.c            | 108 +++++++++++++++++++++++++++++++++------
+> >   include/hw/arm/virt.h    |   2 +-
+> >   3 files changed, 114 insertions(+), 17 deletions(-)
+> >
+>
+> Maybe Mohamed could integrate this in his series, once you're happy with
+> the result Peter.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
+Yes; I have the latest version of that on my to-review queue.
 
-v11: rework separate warn_s into one common function
-     check_existing_parent_id().
-
- block.c                            |  6 ++++++
- block/export/export.c              |  6 ++++++
- blockdev.c                         | 21 +++++++++++++++++++++
- docs/about/deprecated.rst          | 10 ++++++++++
- include/block/block-global-state.h |  2 ++
- stubs/check-existing-parent-id.c   |  6 ++++++
- stubs/meson.build                  |  1 +
- system/qdev-monitor.c              | 20 ++++++++++++++++++++
- 8 files changed, 72 insertions(+)
- create mode 100644 stubs/check-existing-parent-id.c
-
-diff --git a/block.c b/block.c
-index 8254d57212..69674ad4ed 100644
---- a/block.c
-+++ b/block.c
-@@ -1618,6 +1618,7 @@ static void bdrv_assign_node_name(BlockDriverState *bs,
- {
-     char *gen_node_name = NULL;
-     GLOBAL_STATE_CODE();
-+    Error *local_err;
- 
-     if (!node_name) {
-         node_name = gen_node_name = id_generate(ID_BLOCK);
-@@ -1649,6 +1650,11 @@ static void bdrv_assign_node_name(BlockDriverState *bs,
-         goto out;
-     }
- 
-+    if (!check_existing_parent_id(node_name, &local_err)) {
-+        error_report_err(local_err);
-+        local_err = NULL;
-+    }
-+
-     /* copy node name into the bs and insert it into the graph list */
-     pstrcpy(bs->node_name, sizeof(bs->node_name), node_name);
-     QTAILQ_INSERT_TAIL(&graph_bdrv_states, bs, node_list);
-diff --git a/block/export/export.c b/block/export/export.c
-index 9169b43e13..174c86b4d2 100644
---- a/block/export/export.c
-+++ b/block/export/export.c
-@@ -96,6 +96,7 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-     AioContext *ctx;
-     uint64_t perm;
-     int ret;
-+    Error *local_err = NULL;
- 
-     GLOBAL_STATE_CODE();
- 
-@@ -108,6 +109,11 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-         return NULL;
-     }
- 
-+    if (!check_existing_parent_id(export->id, &local_err)) {
-+        error_report_err(local_err);
-+        local_err = NULL;
-+    }
-+
-     drv = blk_exp_find_driver(export->type);
-     if (!drv) {
-         error_setg(errp, "No driver found for the requested export type");
-diff --git a/blockdev.c b/blockdev.c
-index 3082a5763c..643b2132c9 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -3681,6 +3681,27 @@ out:
-     bdrv_drain_all_end();
- }
- 
-+
-+bool check_existing_parent_id(const char *id, Error **errp)
-+{
-+    if (bdrv_find_node(id)) {
-+        error_setg(errp, "block node with id '%s' already exist", id);
-+        return false;
-+    }
-+
-+    if (blk_by_qdev_id(id, NULL)) {
-+        error_setg(errp, "block device with id '%s' already exist", id);
-+        return false;
-+    }
-+
-+    if (blk_by_export_id(id, NULL)) {
-+        error_setg(errp, "block export with id '%s' already exist", id);
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
- void qmp_blockdev_replace(const char *parent, const char *child,
-                           const char *new_child, Error **errp)
- {
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 88efa3aa80..18bb1eeafc 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -551,3 +551,13 @@ command documentation for details on the ``fdset`` usage.
- 
- The ``zero-blocks`` capability was part of the block migration which
- doesn't exist anymore since it was removed in QEMU v9.1.
-+
-+Identifiers
-+-----------
-+
-+Possibility to intersect qdev ids/paths, block node names, and block
-+export names namespaces is deprecated. In future that would be
-+abandoned and all block exports, block nodes and devices will have
-+unique names. Now, reusing the name for another type of object (for
-+example, creating block-node with node-name equal to existing qdev
-+id) produce a warning.
-diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
-index ed89999f0f..5014324241 100644
---- a/include/block/block-global-state.h
-+++ b/include/block/block-global-state.h
-@@ -318,4 +318,6 @@ void bdrv_unregister_buf(BlockDriverState *bs, void *host, size_t size);
- 
- void bdrv_cancel_in_flight(BlockDriverState *bs);
- 
-+bool check_existing_parent_id(const char *id, Error **errp);
-+
- #endif /* BLOCK_GLOBAL_STATE_H */
-diff --git a/stubs/check-existing-parent-id.c b/stubs/check-existing-parent-id.c
-new file mode 100644
-index 0000000000..ef5ea3f26d
---- /dev/null
-+++ b/stubs/check-existing-parent-id.c
-@@ -0,0 +1,6 @@
-+#include "qemu/osdep.h"
-+#include "block/block-global-state.h"
-+
-+bool check_existing_parent_id(const char *id, Error **errp) {
-+    return true;
-+}
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 30536ec8fa..3bd8649bd1 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -16,6 +16,7 @@ if have_block
-   stub_ss.add(files('blk-commit-all.c'))
-   stub_ss.add(files('blk-exp-close-all.c'))
-   stub_ss.add(files('blk-by-qdev-id.c'))
-+  stub_ss.add(files('check-existing-parent-id.c'))
-   stub_ss.add(files('blk-exp-find-by-blk.c'))
-   stub_ss.add(files('blockdev-close-all-bdrv-states.c'))
-   stub_ss.add(files('change-state-handler.c'))
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index be18902bb2..ca14135191 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -593,6 +593,7 @@ static BusState *qbus_find(const char *path, Error **errp)
- const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
- {
-     ObjectProperty *prop;
-+    Error *local_err = NULL;
- 
-     assert(!dev->id && !dev->realized);
- 
-@@ -601,6 +602,18 @@ const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
-      * has no parent
-      */
-     if (id) {
-+        g_autofree char *fullpath = g_strdup_printf("/peripheral/%s", id);
-+
-+        if (!check_existing_parent_id(id, &local_err)) {
-+            error_report_err(local_err);
-+            local_err = NULL;
-+        }
-+
-+        if (!check_existing_parent_id(fullpath, &local_err)) {
-+            error_report_err(local_err);
-+            local_err = NULL;
-+        }
-+
-         prop = object_property_try_add_child(qdev_get_peripheral(), id,
-                                              OBJECT(dev), NULL);
-         if (prop) {
-@@ -613,6 +626,13 @@ const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
-     } else {
-         static int anon_count;
-         gchar *name = g_strdup_printf("device[%d]", anon_count++);
-+        g_autofree char *fullpath = g_strdup_printf("/peripheral-anon/%s", id);
-+
-+        if (!check_existing_parent_id(fullpath, &local_err)) {
-+            error_report_err(local_err);
-+            local_err = NULL;
-+        }
-+
-         prop = object_property_add_child(qdev_get_peripheral_anon(), name,
-                                          OBJECT(dev));
-         g_free(name);
--- 
-2.52.0
-
+-- PMM
 
