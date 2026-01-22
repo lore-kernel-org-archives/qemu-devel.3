@@ -4,90 +4,179 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED295C44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 12:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C30C44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 12:23:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vitgg-0002Ov-4L; Thu, 22 Jan 2026 07:21:22 -0500
+	id 1vitiz-0003hm-Le; Thu, 22 Jan 2026 07:23:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vitgd-0002Mn-Nw
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 07:21:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <polina.vishneva@virtuozzo.com>)
+ id 1vitiu-0003g9-Hk; Thu, 22 Jan 2026 07:23:41 -0500
+Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vitgb-0007sb-9H
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 07:21:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769084475;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BpiBtLOdWVTpWByhDHQeX1GcKZ4QfO/E5LS4cIHPAdU=;
- b=XX0k1/T8eD/vY2OTIkLLJxsqNvsLdH+KCVtuWkBSPEmwCJxmH/sXh1l4iz2V+N0tLzAt84
- EpdotHNBWk2BB0rMkvbXxws3FBhy4zjwLmA/GTfYbWdAFDmIdDn4a6Cbff6G3YJdL9jQ43
- vdafDW4RSK9LY/ojfzy9JzOgWPUEMfY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-194-pzs1tc67P7etDYwxpUwpiA-1; Thu,
- 22 Jan 2026 07:21:12 -0500
-X-MC-Unique: pzs1tc67P7etDYwxpUwpiA-1
-X-Mimecast-MFC-AGG-ID: pzs1tc67P7etDYwxpUwpiA_1769084470
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 796931955D97; Thu, 22 Jan 2026 12:21:10 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.63])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F43A30002D1; Thu, 22 Jan 2026 12:21:05 +0000 (UTC)
-Date: Thu, 22 Jan 2026 12:21:02 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Stefan Hajnoczi <stefanha@gmail.com>,
- qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>,
- Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, German Maglione <gmaglione@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alex Bennee <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: Modern HMP
-Message-ID: <aXIWLi656H8VbrPE@redhat.com>
-References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
- <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
- <871pjigf6z.fsf_-_@pond.sub.org> <aXH1ECZ1Nchui9ED@redhat.com>
- <87ikctg8a8.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <polina.vishneva@virtuozzo.com>)
+ id 1vitir-000863-LV; Thu, 22 Jan 2026 07:23:39 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VlxWUY2MbyB846IpKb/6qUFvF7lkDLeTzaO+lpoq2Oxqq67OeTbpd57WYjai9tBW4J2EzX9gt/LTR1tnPSfDf7ZzWP0FrJAGXHBZZ/KPYsM7K2EyDdAWSCEpV585zccgl2fbdvwJoOjv5uv4ee2Bz55LQnKU3eU8tn1mCA/4rzAA3K8ilDksfjnDRMNZaVZWXmP8j49Gd9gwHWMChiVy1R9upRjTvk1L5CopE2Qh4RzghDHHIDOSQ51kdsvIQ8c1PFnBR3qNqloRvKkWh0ttiPvi2LEkIbwEPTXpMGmfXR0tuj4MIu5+U4KtzT2FyGVOX1/3ZB8KcAnmQjy+qpL6QQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sCH13PiA039xDW8mM351GwNjJMV85uTm8ruXU3C1Lpg=;
+ b=ohpDBVV23HiHaP05OT3oNbwq0QwD9xUUkS0J6Xb5mmjzmRD+yoXzn4lND4gfNKJDVepV6KHj1T9KEYKgpnG90rgkeiUFZY7gaFP4l3VwvBOGMCeBrvD6EbR8Ppw9jehdfEdK6ozE3myEJOnww6HunuPmdaVMaMJ6H4vanATIecVKGAmwsJIc+oOQHC9LkKoDF3ZPh3AnPpIZx0AUwDw754NITz6WCpNstPxFGNfBN2uyg9ZlBBwCkt7eoHtv1YgCScSxOaw2Szzj9VjCMXCl6h/X1cQh66k7QBJNb8/jR5tZg2h92+hQyoF6di1+g+y/TXkaaG2G4CaodNSz2jhn1w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sCH13PiA039xDW8mM351GwNjJMV85uTm8ruXU3C1Lpg=;
+ b=L36VmSMBE3osyONqb8DOWdJ6rkZ5W89InKuzs93R47CwueegtVbK6YxKNYfDmIE0vsjNi+PQbSs1lJHh2jln9j/du2GVDPXnQXakeA7dG7ITfbkzuUfPbHYadMa0M+q5SlnLM0VZjeQSXbF3fRnrwfbbaSAFJoLM+T0ezhGCABrvNfl6Sort8KzZ9dUsyFbBwUx0Fe1220DwSn984KRISRGK2yARRc692ei2UOdPCiGndWLeX6POe8qq24f8m4wD0YQdX/72Lv3dVwsd08cWLWoaLtQfc7s3uJQaWQ3w2bnsID5mw+CfirHooD6mtUtg2N9+4zy19Z6X+ufcZogtsQ==
+Received: from DBBPR08MB10697.eurprd08.prod.outlook.com (2603:10a6:10:52a::5)
+ by AS4PR08MB7807.eurprd08.prod.outlook.com (2603:10a6:20b:51a::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.10; Thu, 22 Jan
+ 2026 12:23:30 +0000
+Received: from DBBPR08MB10697.eurprd08.prod.outlook.com
+ ([fe80::2318:7df7:a744:15d2]) by DBBPR08MB10697.eurprd08.prod.outlook.com
+ ([fe80::2318:7df7:a744:15d2%4]) with mapi id 15.20.9542.009; Thu, 22 Jan 2026
+ 12:23:30 +0000
+From: Polina Vishneva <polina.vishneva@virtuozzo.com>
+To: "jean-louis@dupond.be" <jean-louis@dupond.be>, "qemu-block@nongnu.org"
+ <qemu-block@nongnu.org>
+CC: "hreitz@redhat.com" <hreitz@redhat.com>, "jsnow@redhat.com"
+ <jsnow@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "vsementsov@yandex-team.ru" <vsementsov@yandex-team.ru>, "eblake@redhat.com"
+ <eblake@redhat.com>, "kwolf@redhat.com" <kwolf@redhat.com>, Den Lunev
+ <den@virtuozzo.com>, Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: Re: [PATCH] block/qcow2-bitmap: remove inconsistent bitmaps when
+ loading
+Thread-Topic: [PATCH] block/qcow2-bitmap: remove inconsistent bitmaps when
+ loading
+Thread-Index: AQHcijEBVEmfG+2NzEK88XM4OUkPjrVcrlsAgAFxF4A=
+Date: Thu, 22 Jan 2026 12:23:30 +0000
+Message-ID: <216bf3a35b02efe521d58e7cf4f22ba44ea22cb5.camel@virtuozzo.com>
+References: <20260120171226.1042260-1-polina.vishneva@virtuozzo.com>
+ <c2f9fc69-034b-4dc3-a92f-d43e13a5dfed@dupond.be>
+In-Reply-To: <c2f9fc69-034b-4dc3-a92f-d43e13a5dfed@dupond.be>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DBBPR08MB10697:EE_|AS4PR08MB7807:EE_
+x-ms-office365-filtering-correlation-id: 841bb739-5dce-455b-695c-08de59b10d6d
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700021;
+x-microsoft-antispam-message-info: =?utf-8?B?VU5TOER1TlF5SkhVZ29CcGRYSlBIMm5vbW91azJ5WXdtY1BxTU1PUDRoU0NL?=
+ =?utf-8?B?TnhrNC9vbUV4NTFCcVJoRHlPVm81ODNqZVFlSzJjQitxWlA2Wk9DRkVZRFpK?=
+ =?utf-8?B?TjFrNHUzdE9EMFNLUXgyQm5VSkIyV3FtMTRMMjhEbFAwVWNQWFdRT1RqWUhj?=
+ =?utf-8?B?V0R3aDZON1ZlODRKZVl5bTdEQW50S1JMdXpXTlZFYmticy9EclZrRk9OdXo1?=
+ =?utf-8?B?S2hlTURHVWZCblFzdmRzeDkyRGJneDNqZG1UM3JSQ3NpMy9UV094WEJyd3Vs?=
+ =?utf-8?B?UzVrTGlIM0VzZG1nT2JBcFBUTHVZSDZKN2p6SGxQaE1RWkp6MDlzQ0hmbUov?=
+ =?utf-8?B?Y1prUVFKNDBubkVZeGhGbmNta2NMUHFqQmRuekhDV1VaWEdpd1RUOVZYZkxJ?=
+ =?utf-8?B?THlWd2dqNVM4NGdCcyt0eXNzMGNPVkFsZDdtMXlSUGVNWjM3bkZYUmdxYXJN?=
+ =?utf-8?B?RkVFUnF5c0pnVXY1ZEFhckhTa0FHaDlYZjhIUGtSZnRCMzBqaEJNdVNidHlH?=
+ =?utf-8?B?RW5iTEFyOGJmWGZXZ2Q5b0JDN2ZKRHdhRVZ6R0l0RGlkc0t1QUs5YjNMcFRX?=
+ =?utf-8?B?dEFPenJXS2Z5NEsxdUxBYlR4THZMUitJTzZ0QzF2akZZYkxpdTVoOTN2MW5S?=
+ =?utf-8?B?RlBmaGx3TFpPWjFuNmdZTHUzVXdyaG5qQUtyNmYvRWhHZldoaGpuaVVRWlVS?=
+ =?utf-8?B?R0lCQ2M3ZmpTWjdKMDVmSFRiVFpLbDIrTm1QWWlacSs1RVBFNVl3NUduQVdt?=
+ =?utf-8?B?L3hCZDhIcVl4SGFGZFVEVHBaSUVPYlZDdVl0cG9OelpLT093TXRhL1ZtM202?=
+ =?utf-8?B?Rkg0eW1XQ0lqSGxVc2pheWVaLzBsRXExcXIySFlUekQwYW8xRHJGSUlTOGN5?=
+ =?utf-8?B?QjVod2tlN3N6ejZ0WGUza1FaaTZBcTFWMnJMYXZJUy84RTluTTZxUjVWVTFC?=
+ =?utf-8?B?QnF6VFFSYjBEUkJ0Rm5qM1BtVlAySC9TbWhmeVdVMzhWREJKVUwwUGZXSzJn?=
+ =?utf-8?B?UW02SHBjRXVRSTNDa1lsZTBxZEg4N01pblVYYXdaQmk0ZU1aRFMvdmlXQ3Ju?=
+ =?utf-8?B?Nlh4QWNMYkMyQmo2eGczeVFPbExkWEhBVVRvU3hCNmJOaE5DMXBENzFYYU5V?=
+ =?utf-8?B?R1NJbkNsa01xVGx2akJnRlZ5MzA1MU1LQ2c4MWJyZmUxT2tQbWdoNkdwZGl4?=
+ =?utf-8?B?WTk5WHROc2VmNlpNYUJ0bDUyNkV2c09Pc3crVFl1QUlBSyttbVRiUWlTbitZ?=
+ =?utf-8?B?L2ZZRkRZOUVjZzVZZ3ROcVVIaTRaamJhbWNjNEFNSFloM1A2VW5lZXgzTjNq?=
+ =?utf-8?B?VzEzMGVrSXVxYTFZMWt3d0VwOHhGOEQ5eEtMTzdGV0xDWUFtbXZJVXB1dmRB?=
+ =?utf-8?B?b1cvN3FHN29ibHYxa3YySjU1cXJzL0lFalhqalp2T1ZCWkRETWdwclYwVUU1?=
+ =?utf-8?B?aUVQQmE4WXM2aTBPMXlPclE2cWpTNHJvcVcxSmNCdkRZU0o5WTI3V0gzemIv?=
+ =?utf-8?B?UlAvTWdSTFdFSjBsMC9QUC9qTlJNR0xPanVSWUw3NzVXQmRYWk9nZ0szK1RT?=
+ =?utf-8?B?ajNpYWNPMWZmQ1d4Q09GZEpGT2VSK0ZnUUk5UjU3Zk9ISStWbm9uSiszNC9i?=
+ =?utf-8?B?WW1BOEpLaEFkd0MyVzd5bzNQb0FZUEJ3NFpXYktpWXJ0WEpsc0l0bGtGcnA3?=
+ =?utf-8?B?Y21wVlJwWTNmVUl6aFdYTy96eVJLbDI3VTBQUlBLWE1aQi9IMGZJclVEeVZn?=
+ =?utf-8?B?c01yUUhsZjN0WnFtK21jNkQyVVA1c2pkS2g0bzQ2Rjh3S2w5UElWamorWWZ5?=
+ =?utf-8?B?LzFBNVRheEtDRVRSd3JPWFJGY1dLeE9OSlAwRmhwdFhxRFc4dlZaN05teC80?=
+ =?utf-8?B?bno3eTZtbE1USHpyUkRJUXhCYnFIbjVwRVpQUXhLdUoycGprWDM4WnNRY3ZI?=
+ =?utf-8?B?NXpPZlVWSis3UktFd2ZqUWxHWHBhZDgvQlc5dWlwUnpYL21KcWZzb3BEQ005?=
+ =?utf-8?B?Z3BpMDMrTFM2NVhNNGN4Z09HZFpZZ1JZamJLK3h1QVk1UXBpUUFIbTlsOUdW?=
+ =?utf-8?B?UmFVRGVVQTZraWNINWVQVE1kQWFHTGp3Vmt4ZFdOZTM4cVplZ3Q0clZvQ2tR?=
+ =?utf-8?B?WEl0V2VMN0RPSEFaYmozWElDZ0N3UzQwSCtPQXVFS3ppM1Z1Yi9KeW1SRDZZ?=
+ =?utf-8?Q?yP9mRtYOkuKeAT70yrz4J3M=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DBBPR08MB10697.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(38070700021); DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?a1g0WW1VWm04a1VhQnA3TlBRWjBvakpIa3RjUDBxTWFuVFhqbWpLT3dkbjd1?=
+ =?utf-8?B?YWFSaDRoN2xGaGM3WVZMUGg5akFRUkVXY2lFTElEVWpieXdlTU5IVW1EeVdK?=
+ =?utf-8?B?MmwzaTVKaVlYSnBZa0g4REp3YzJHQ2FiS0s3UGU1M2ZRbjJraVhEaU9LcW91?=
+ =?utf-8?B?WHpHc2h3YjhYaC9nb3ZDeGtvdDZ1cnNYNWJzV25HL2tsS1ZEYWRjNVpWQk1i?=
+ =?utf-8?B?dUJBMEhqa2ZnK2FQay9RUkgwUTBsTWhXZXVMU25RZmFNaHRheXNkS3hSSkNO?=
+ =?utf-8?B?Um1yajgrNTRoQldYRmcxenNUOXVPcXZmT0lUT2NYVlhkalhuWWU1RFNrbUky?=
+ =?utf-8?B?Qy9CYTVyMElhbllEeWdZM2J4V0xRUldTb1lVSlE0QjBoWUt1T0FYVk5Wa3BH?=
+ =?utf-8?B?SS9NSHpkL0ZqSnZoUGNLQXRYM01hMHd6OW5lOCtFUi9WN2J4K291R0NHMkl0?=
+ =?utf-8?B?SWJUYm15NHMzSU0yeXhUYkw0OVl3UmZTSWhicS9XNVpIS0ZzaUlFSlRvdFZF?=
+ =?utf-8?B?ZWYwWEZKVy9RWkpCdUk1TnVYNU9xS21EREh6dFZIN3NEQXlXcjVlV014SGVv?=
+ =?utf-8?B?MlVPNkNmdmZ5SnRkQkR6SWFNTHNGc2NETXNSOGg1ZWZ3RnVwNGRaVGdLNUEx?=
+ =?utf-8?B?bkE4VGxkRmorNVFablBoUWk0QWwzWER2aXE2MFlsMTBXWkVtT2x4QUhrMkRY?=
+ =?utf-8?B?dzdLRmw0MEZrekRzUFJucVpaWkI5TXpHNG5OMGsxR3NNSGFkcnRkY3FUaTln?=
+ =?utf-8?B?YVhzdFpIMUN4V1hSWjFkcG5ldW56dFNwSVFDM2JvY0s0MjdmK2xQbHhmbW9w?=
+ =?utf-8?B?ZEpocW9OZEVvcDZGK29VNlA3dDNrbURGU1ZPN2Y3bmhJV3VYZk9vZDNlRGtl?=
+ =?utf-8?B?RnVVb3Y1OVBKOTVraU5JVkxTYlBUNE5jREwrRDN0ZmhjNEhrRU1HS0FVamdr?=
+ =?utf-8?B?dkdoNW5WclZMV09mQmFsMFl1ai9ESSswOGJ0ZEJzVFNVcW8vdEl3U29RdDJT?=
+ =?utf-8?B?dUJEeTd6bzBVVWZsVzI3VytFb0w1UkxEbDNIcTcxOXNqUlBIZFVkRCs5Tld6?=
+ =?utf-8?B?QzhHR0tTYk9UQjhocmJZWVJSck5xL2hyUkJ2V3RuMFB3UnZpVElKMkRMc2Yr?=
+ =?utf-8?B?cS9kMUpjVTBrOVBSNkpHZUpwdURya3FCK29TbGovNnlJS0ZWaXI1L1k2SXpo?=
+ =?utf-8?B?U21DNDh0RndtT2ZGMGgyK1FIbEM3bnNDVm5xRlYyM09SZDNJbzNhSU1oKytl?=
+ =?utf-8?B?YWpBTUNTbUV3elNyam5Sem5USVdYTFlsMG9RRS9iU3NYTTNkV2RwVFVzelNG?=
+ =?utf-8?B?eEFDN2QwQlUwU0hFSkpuK1BkVUpkRlhsb1hCOVRIUWhtU3ZGSWxZSFA1TTVO?=
+ =?utf-8?B?SzhIVGZnTzVvUDZXa1lWOHhiZXFTeExpWnFHa1k3Q3VXQXFFS3k1WWNGNnZT?=
+ =?utf-8?B?azRVMVZ3YnlsVDRQcHZhQURWN0VPTmxqN3I3cmY2eHFBQlgyOUg4Y1VIOGk0?=
+ =?utf-8?B?RzloVEMwZkVzWHpMQ1FvdkVHZkVGeVJHdm00Z01WRG5tT3lBNXQ1TjJRdktO?=
+ =?utf-8?B?YUhTNTNOQnNYaHcvY29ZOUdyYU5OdlFCQjM4b1IxNmpqS3JZdGxRbzZPTFZN?=
+ =?utf-8?B?K2tVTjhBVWZwTm5HbGlUSkxjRW5nOVgvNHJvWlVLQjdjSzBmTG52b0JSSGwx?=
+ =?utf-8?B?TERiczBXR1hjOWYrbFFrUlVVMTh3a0xlME1nWVg0Q2owY2RPRU9Hb0xyajNM?=
+ =?utf-8?B?Nzd6Ukd1M0JucVgvb3g5VEVvOEgwdTFWbXBmZmdlN1U1NWwrSlVLZ0IvWmJE?=
+ =?utf-8?B?SUkzbXY1SkNpNngySytSVTF2Snh5bEVEYWV3MHZ6Y0UwSis5SElxeUdNWEF1?=
+ =?utf-8?B?YkxzVTRVaytnU0RaMzl2RGxqMWxIL29CQThBRERPbmZFR1ZDazRoVUVrdDdP?=
+ =?utf-8?B?NStxUHp3MnZnMnBnRU5BMDFMUzl0dDNzUjlWa3RkVUxvTndBRTBpV3VtTC9E?=
+ =?utf-8?B?ZTlnRTFSL0UxUllzc0xtaUJmWmwwSUttTm5HSXMxNHRLMUNHblczQXRyZzU2?=
+ =?utf-8?B?bXlFSXBTdkt5RWFRYy9wUjB5UWJLWjY3c25FQS90MU1xem5yci9LTS9MaE11?=
+ =?utf-8?B?ZExEaDlyUVJTY05JZXcza0kvWDJ0M1lIZlhlZU5lOG5vYU82OWdTM0xuUi8r?=
+ =?utf-8?B?bDYxOTRHaExZYVVjMUl6akJJUlZDU2pYbkVVcytKN0VqZVl3T0hIYURTQWhw?=
+ =?utf-8?B?V2laeUwzRFFsUll5TFdHOE1xa096YzF3Vk5IZnJwVDUvT2JDTHlJRi9ORUxU?=
+ =?utf-8?B?Q3FGcWNqSkh3QUxUbXVEU1RoT3IySzZoN0JYVkx1QlA3YmpWanR4SDJyKzFn?=
+ =?utf-8?Q?9mIMvCRAV9Ha9fNg=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <C7B69469826AA4479FE5FE4A6856375A@eurprd08.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87ikctg8a8.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DBBPR08MB10697.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 841bb739-5dce-455b-695c-08de59b10d6d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Jan 2026 12:23:30.1961 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: vsWVAUKavnDRJGbU7uTStGwF781r8K4GzsS5NMD41rjux4D5D22CucOc/WfeCYTm8ZFi6PSwAZuRUBm2M7Cbnpb3/7hP394TQJyKDtHe4RY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR08MB7807
+Received-SPF: pass client-ip=2a01:111:f403:c201::1;
+ envelope-from=polina.vishneva@virtuozzo.com;
+ helo=AM0PR83CU005.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,162 +189,18 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 22, 2026 at 01:07:43PM +0100, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > On Thu, Jan 22, 2026 at 10:38:28AM +0100, Markus Armbruster wrote:
-> >> Let's start the discussion with your nicely written Wiki page:
-> >> 
-> >>     === External HMP Implementation via QMP ===
-> >> 
-> >>     '''Summary:''' Implement a standalone HMP-compatible monitor as an
-> >>     external binary (Python or Rust) that communicates with QEMU
-> >>     exclusively through QMP, enabling future decoupling of the built-in
-> >>     HMP from QEMU core.
-> >> 
-> >>     QEMU provides two monitor interfaces:
-> >>     * '''QMP''' (QEMU Machine Protocol): A JSON-based machine-readable
-> >>       protocol for programmatic control
-> >>     * '''HMP''' (Human Monitor Protocol): A text-based interactive
-> >>       interface for human operators
-> >> 
-> >>     Currently, HMP is tightly integrated into QEMU, with commands
-> >>     defined in `hmp-commands.hx` and `hmp-commands-info.hx`. Most HMP
-> >>     commands already delegate to QMP internally (e.g., `hmp_quit()`
-> >>     calls `qmp_quit()`), but HMP parsing, formatting, and command
-> >>     dispatch are compiled into the QEMU binary.
-> >
-> > First of all, I love the idea. An external HMP impl that consumes
-> > QMP from outside QEMU so a concept I've suggested many times over
-> > 10+ years hoping someone would take the bait and impl it :-)
-> >
-> >> Also line editing and completion.
-> >> 
-> >> Most HMP commands cleanly wrap around QMP command handlers such as
-> >> qmp_quit().  Wrapping them around QMP commands instead is a
-> >> straightforward problem.  I'm more concerned about HMP stuff that uses
-> >> other internal interfaces.  Replacing them may require new QMP
-> >> interfaces, or maybe a careful culling of inessential HMP features.
-> >> Known such stuff: completion does not wrap around QMP command handlers.
-> >> It is provided by the HMP core.
-> >> 
-> >> Risk: this can easily become the 10% that take the other 90% of the
-> >> time, or even the 5% that sink the project.
-> >
-> > IMHO this is essentially guaranteed.
-> >
-> > 4 years ago I tried to move us closer to this world by introducing
-> > "HumanReadableText" and documenting that all remaining & future
-> > "info xxx" commands should be backed by a QMP command that just
-> > returns human formatted text. The intent was to eliminate the
-> > roadblock of having to define formal QAPI types for all the
-> > complex data.
-> >
-> > I converted a bunch of commands, but that indeed became do 90%
-> > of the work, leave the other 90% of the work for later victim^H^H^H
-> > contributor.
-> >
-> > None of this means that the GSoc project idea is invalid. We just
-> > have to figure out a credible end goal is for the project, ideally
-> > with staged delivery.
-> 
-> Makes sense.
-> 
-> If we see the GSoC project as a first step towards replacing the
-> built-in HMP by an standalone program talking QMP ("Modern HMP"), we
-> better scope it carefully, so it (1) has achievable success criteria,
-> and (2) makes real progress towards the actual finish line.
-> 
-> >> Risk: serious code duplication until we can get rid of built-in HMP.
-> >> Fine if the goal is to explore and learn by building a prototype, and we
-> >> simply throw away the prototype afterwards.
-> >
-> > IMHO that isn't a risk, that's a guarantee. I can't imagine converting
-> > all remaining HMP commands to have a QMP backing, AND doing an external
-> > HMP impl all within the GSoc timeline.  That's two largely independent
-> > projects, each of which are probably longer than the GSoC time wnidow.
-> >
-> > Again that doesn't mean the idea is invalid for GSoc, just that we must
-> > be honest about likely deliverables, and how follow up work will happen
-> > after GSoc to maximise benefit for QEMU.
-> >
-> > What I would not want to see is a bunch of work done that is then
-> > abandoned because it couldn't get used as it wasn't feature complete.
-> > Whatever subset is achieved ought to be intended as a stepping stone
-> > we can integrate and carry on working with.
-> 
-> Does the GSoC project make sense without a firm commitment to followup
-> work to finish the job?
-> 
-> Specifically, commitment by whom to do what?
-> 
-> >>     '''Add `CONFIG_HMP` build option''':
-> >>     * Create a new Meson configuration option to disable built-in HMP
-> >>     * Allow QEMU to be built without HMP
-> >>     * Facilitate testing of external HMP as a replacement
-> >> 
-> >>     '''Create an external HMP implementation''' in Python or Rust that:
-> >>     * Connects to QEMU via QMP socket
-> >>     * Parses HMP command syntax and translates to QMP calls
-> >>     * Formats QMP responses as human-readable HMP output
-> >>     * Supports command completion and help text
-> >> 
-> >>     '''Use `hmp-commands.hx` for code generation''':
-> >>     * Parse the existing `.hx` files to extract command definitions
-> >>     * Generate boilerplate code (command tables, argument parsing, help
-> >>       text)
-> >>     * Produce a report of implemented vs. unimplemented commands
-> >>     * Enable tracking of HMP/QMP parity
-> >> 
-> >> .hx is C source code with ReST snippets.  scripts/hxtool strips out the
-> >> ReST.  docs/sphinx/hxtool.py ignores the C source code, and processes
-> >> the ReST.  It works.  Not a fan.
-> >> 
-> >> If we succeed in replacing built-in HMP by an external one, and the
-> >> external one isn't written in C, then having C source code in .hx no
-> >> longer makes sense.  Parsing it will be wasted effort.  It may still
-> >> make sense initially.
-> >
-> > Indeed, we should clarify language intended as it would influence
-> > the approach for the project.  If it is a clean room Rust impl,
-> > then it would be completely independent of existing HMP C code.
-> > More work initially to ensure we retain the same data formatting
-> > of each command, but likely nicer long term, and saying Rust will
-> > probably attract more candidates to the idea.
-> 
-> In theory, we could make the same HMP code work in both contexts,
-> built-in HMP and standaline HMP.  I doubt this is feasible, at least not
-> at reasonable cost.  Too much disentangling.  I could be wrong.
-> 
-> If we use separate HMP code, i.e. accept code duplication until we
-> retire built-in HMP, then picking a different language for the new copy
-> won't add all that much to the bother of having to maintain two copies.
-> 
-> HMP is not a stable interface.  We make reasonable efforts not to change
-> the output without a good reason.  I don't think identical data
-> formatting is a requirement.  Just make a reasonable effort.
-> 
-> Marc-André proposed Python or Rust.  Anyone got a preference backed by
-> reasons?
-
-My suggestion would be Rust, as it allows the possibility to embed
-that Rust impl inside the current QEMU binaries, to fully replace
-the C code and retain broadly the same functionality.
-
-We might never do it, but it feels like a good idea to keep the
-door option.  Python rules that out entirely meaning we keep the
-current C code forever, unless we do a full break with command
-line compatibility at some point.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+T24gV2VkLCAyMDI2LTAxLTIxIGF0IDE1OjIyICswMTAwLCBKZWFuLUxvdWlzIER1cG9uZCB3cm90
+ZToNCj4gV291bGQgdGhpcyBhbHNvIHNvbHZlIGh0dHBzOi8vZ2l0bGFiLmNvbS9xZW11LXByb2pl
+Y3QvcWVtdS8tL2lzc3Vlcy8yOTA5IA0KPiBwZXJoYXBzPw0KDQpVbmZvcnR1bmF0ZWx5LCBpdCB3
+b24ndCwgYmVjYXVzZSBpbiB5b3VyIGNhc2UgdGhlIGVycm9yIGhhcHBlbnMgaW4NCmluIGJpdG1h
+cF9saXN0X2xvYWQoKSwgYmVmb3JlIHdlIGV2ZW4gc3RhcnQgdHJhdmVyc2luZyB0aGUgYml0bWFw
+cy4NCkFsc28gdGhlc2UgY2hhbmdlcyBvbmx5IGFmZmVjdCBpbl91c2UgYml0bWFwcywgaWYgdGhl
+eSBhcmUgY29ycnVwdGVkDQppbiBzb21lIG90aGVyIHdheSwgbm90aGluZyB3aWxsIGNoYW5nZS4N
+Cg0KPg0KPiBPbiAyMC8wMS8yMDI2IDE4OjIwLCBQb2xpbmEgVmlzaG5ldmEgd3JvdGU6DQo+ID4g
+KyAgICAgICAgICAgICAqIHdoZW5iZHJ2X2RpcnR5X2JpdG1hcF9jaGVjaygpIGNvdWxkIGJlIGNh
+bGxlZCBvbiBhIGJpdG1hcA0KPiBTbWFsbCB0eXBvIGhlcmUgYnR3IDopDQoNClRoYW5rcyENCg0K
+QmVzdCByZWdhcmRzLA0KUG9saW5hLg0K
 
