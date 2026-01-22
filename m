@@ -4,126 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D11D3EE64
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 13:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 208FAD3EE65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 13:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viud3-0004N6-3v; Thu, 22 Jan 2026 08:21:41 -0500
+	id 1viuf8-00062D-4O; Thu, 22 Jan 2026 08:23:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1viucm-0004FM-PD
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:21:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1viuck-0007Du-TR
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:21:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769088080;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0kUV4rCKnBi2lpJKIqkTwfs8IRe11j7i2llKyzWWeBw=;
- b=KsX8e6sqhrjRxapNXobfEffGktpns8LpvGpU/UsFCWhMMaFqIwtsKxCVpMgKnk3jcRRbUs
- CHquxifLE+imHGkIBbX4fEFVXFpZcOY/Jk50zEYNv3FZCOUZdXRqUxCroS+1AtqDowqOdH
- YseP2I3etuG7DxJRQS2bQMeSMD+WRBw=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-524-vJGb-RFbNRGwPURmZ1hWjw-1; Thu, 22 Jan 2026 08:21:19 -0500
-X-MC-Unique: vJGb-RFbNRGwPURmZ1hWjw-1
-X-Mimecast-MFC-AGG-ID: vJGb-RFbNRGwPURmZ1hWjw_1769088078
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-435ab907109so345994f8f.3
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 05:21:19 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769088078; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1viuf6-0005yj-2q
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:23:48 -0500
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1viuf4-0007MV-D9
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:23:47 -0500
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-79028cb7f92so8671507b3.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 05:23:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769088225; cv=none;
  d=google.com; s=arc-20240605;
- b=XEEsSrFSFb79+BoCA4Utv99NCIdyNWLWGrayT8lY0vAm2tNkISA5EBuVIyScsTqRTk
- rEw/5RIxR5BR2c/CjLh5CivT0epbUGfP/BTbos1mBypBfyYb/adTy7GmrLVxuyUag42G
- v66W0peqG5dG7pLrLSwfrS28tp1dE0IPGLQYg5cjr/t+puacZnexjfn8PtVLoFqMXcDE
- LHcM9xFR7bD6qjMtMPKmKHFX2jofsi1jJj0lmj1psxDMqYb1jnCZGE/RdUqBHoGCT0qt
- 6kmx0EzjOqEBH6BF9EPCgdPbGKe+B72FeyXhdKcs6NZnaHQD9ZE6cuWVn4fhlD/TGM1/
- uNNQ==
+ b=FYI/GXEma7wkeGFN1qJCKB2OnrFUApAyaDSeFQgWhdFEBMJh6e2dKM6Xw6ARpIMpRS
+ n8bh5nhwK6EwbdBDzNb/8Kkzv9QmypM2eR47eWinjjwh2AvYEvAyaVw7Rpdvyr7BL4Bl
+ LiiIcpU5F7cjmfCNX5lB5iX9HQiTu0ww3OlX8jm4SoRU3XmOjyz1qWxAgpSfJvXPXU0T
+ Nwu/ouhctbiW+F2LPg4WcFiHs4rnTNwWKbCkkN5dLtnt9//b/LJ9NVuJkgJ6TGnIzK1f
+ BQXSMwWTy1A12dvqQx+XodR042JClQXuLvnV7yxt4R/ZBGHghX858pN+HqRWDTITmIwq
+ gR7g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=0kUV4rCKnBi2lpJKIqkTwfs8IRe11j7i2llKyzWWeBw=;
- fh=ToTffMuwnwZHKaF/Tl/6PmsBkVZ/Gonnv+9Gz9JXbJQ=;
- b=CAJiGxjvZPY+OD2hYdVSC1aXtluTFrI5icgZXbUhTtSPYuQDxkTs9NEzJ4UTp0C0ih
- 9XOW+jWWVyes258XGtfAeFtPmNnzecbKKo1zvdo9c7HapK9/4+T9c9/j8mi/284Wjyc+
- QYnBdiN6sENJnqpFgGemLQsMBmp64032HzA3rFREw/SU0nFEeJamLfYRhLisKcknUtfA
- QEUGz0VJr9iBdKk+W1WeUKHWJ8xqKSz/p0LgpPOLHx79O9hkxhVQeRcU1Di5C/UGQGQB
- O45A1Q3VpEUfOLgi/8swvc/oPCJaCIG006OQkoNOTpvRwDFAZsQ21OjAIIb3TB/AXUzo
- Nk4g==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=jnBqA/cCAD7oPixGvH9Y2ugbwS+WZr2smMQ6aAuVXvE=;
+ fh=l34yKrB0yromHHDUji8ziQOfQo4HrJ0cM0LWNUDHuFA=;
+ b=kXzjTgvSgJVXr/JeGAOdskQlsZDpfeJWMzXpPYrESG7Qu+x2HsbsgZh+2BY1NbWMz6
+ naunNy9tszeW/rvWoQIbiZ+CnxXnSQf8nb35/L+ZgKZbKujDLILw00EOW0au5XBwN/hA
+ +N7X3ixenZu4WS7CHH0oICas4K+mNmKmvmZXcrW7KhdvagYKjxDUld7ThAOmvCNi0uka
+ TIpxRHFWtF43XI/0LpEnAjAgdz5ViAE0HdNhNZ+5hKunw+la/RKxUAB7H0yTECrAHzpH
+ qdym0IkkCIUZ9PPuNXAc9CgrQfm8Zl77/OKRKj7Up6KRW7fsl79Tx8MVALeKdh7jXI2Y
+ 3BNg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769088078; x=1769692878; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0kUV4rCKnBi2lpJKIqkTwfs8IRe11j7i2llKyzWWeBw=;
- b=KCdzQzgrVxGW6meU6lIfAEgGrMOyR0QS8wfluU3o+13cXLLLciyLuqgsV5jwkcM9Pp
- tZrn9hLkUEFdasjPhMMPniZOHcWpzFpBppt6GlltWaXnWRK5F5wkUUptZLi4l15mNBk/
- fOCjKJu+oXdCYs3Q82A+PHd6B2BUbE4CpuGRhhf2tWJ2T+vZJIaljC9gvFWjTnssM8rp
- CsMMizbtehUIzrTv+jN/0TwWPadKtEcu8Hex2Ubk6mQKZJdJ4jmeAhrwNvLKMyFGBrPF
- mgzklji//tRTvKTndBgb6zD9FF8I7bfo7zA3S26zB+wW9MZjqmFH7mDpP8hhgI2NARJO
- Fi3Q==
+ d=linaro.org; s=google; t=1769088225; x=1769693025; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=jnBqA/cCAD7oPixGvH9Y2ugbwS+WZr2smMQ6aAuVXvE=;
+ b=hIau9SNK7X80A14XjFawm2vrNeeCjNyI0/fC9lkrPGYi7DF8GcKMvhQLs84DDdBswh
+ iZyRIzkv8jgcXwcbl+DSOXfzZVE9WNSgbRUjApH3uGPcUjMZCoUvkmpj+DUNMH1p/K4F
+ MupHAJxsRyi53vFc89kIpHEjKAePRlJAa7lg8vJsNGEnz0BGjC5t36SYNXxS+d8Vt0Tn
+ QPn0Z4ZLiVb/m+TYUvWGcRaXvH58sZ/b8kb5ofApua7EB6sFwhyCc9hEfldIxo9FFfbp
+ NagjFNRYLOMB38WmWorvOy4N7/1NkK+WNON9xw/XTI425P0C3lvCii7fHp452iENRurv
+ o9Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769088078; x=1769692878;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0kUV4rCKnBi2lpJKIqkTwfs8IRe11j7i2llKyzWWeBw=;
- b=lMY3ZNLkjk1CtHreOc6u6Wvb7Lb0LVfvvnaA4NCbUf9Z2Y11TPw1PYAXq4bDqe2y81
- 70herzV+uXfKbTAFWu37pKSOGRop4sKF6BuGhbsQtERoWFuFEc8N2qeV7lmrFv4OtT1J
- +gxmAIWOTCoQ/Fp9VUcCzmOyAr7X+v2vSNF86jbRbeOykCIIBKbUtSOlTympf1tovqc9
- C+4XiDtYE8iKCPB6fhOzG9Q0blECsBxs+HlaoK549jRhd/32aFkA13SfRYfYp4cVvrLe
- IY8Vo+D0W3h7cAh1I+UgSLhjAo0Mk1t4vx9IoS1o7N8PCc0tVXGERe8B4hkHaUBX4tj5
- RPKA==
-X-Gm-Message-State: AOJu0YwEAOiYvh09Su9sEgn/evrrvQ5OtjgGSMk6M3YBbqcvInAROp+/
- yWyba7aOWrAurrZj4d3Ja8hZ5ig+qyRUg66gfHlbf/Davm8G8zQxRrik11YLBgDgF0pK+BTWgRM
- mkaqEU31IA6U6QmJhhIek5kmihl3IhVTaMCilANzmD4C+LyZh7Ep9KqmAcl6944BRmeijDqSl15
- jrpYzFC018ee5ehQO61Ujx7JiK7uXWN+Y=
-X-Gm-Gg: AZuq6aJvlNfnnDQLRF7U2RCLwnHksVh7gU6HtVIzto3iKARjAxT8o8Mga2FM3eTh4TC
- xH275l2gUp/zttQOmGutuO/54m9XmXWu5wzageRhiHU/xVJuXXjxv+J0qWUIGou83E3/d7Uif4m
- uDs8h9pUKztuqJQZMpqokIWVrExtHXiC6yXFGrLQJg6FC/isHV7VuqtlxEI0Hajn82tlF+MyhBr
- UFaitMdvppaMilDFjiHPrlQCk+BMS2BIftz5LcfD6xuRtqGgcEtSNXdzaBYsGB+NI9ijA==
-X-Received: by 2002:a5d:64c3:0:b0:42b:3131:5437 with SMTP id
- ffacd0b85a97d-43569bc17f6mr27926743f8f.34.1769088078303; 
- Thu, 22 Jan 2026 05:21:18 -0800 (PST)
-X-Received: by 2002:a5d:64c3:0:b0:42b:3131:5437 with SMTP id
- ffacd0b85a97d-43569bc17f6mr27926712f8f.34.1769088077955; Thu, 22 Jan 2026
- 05:21:17 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769088225; x=1769693025;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jnBqA/cCAD7oPixGvH9Y2ugbwS+WZr2smMQ6aAuVXvE=;
+ b=MD2q6dAgSBWL2jrHdLbq8RoU1Ra+dtBzWAi+5Vsz9a5b98ndzepBOzPZhgaUyDEM/i
+ ihdNp2IRGjLoZQc3Jv2IX4JMfWUKOJnfLfd338N/i7BbAAAteuIBPPDWlY/6yCc1IpSJ
+ e3wvvLhYgbpTjpu7XIgfqu0o++p/bV8DLkZFmMRMfpSbEImX+YRlyhPG597cxQRkIE0+
+ Xnnj49k30nbFpt+NG3YYKA7b9r2Zm0Y+h8RPExc/bEb4QenMCQLT0U4qSXZqhfRx5+IA
+ mExGCDTriUkU+kH9ehFdlJx2b1c11xoT6orQ4jOIyXXCkWgbd/8JziiGtWDRKVlEX9Fx
+ I3wA==
+X-Gm-Message-State: AOJu0YzYV9KD/Dbn+Eswtg7Ed2gqpG3zYd/QcSmsgMg0cOiMoROv25s2
+ 63RMoJaPbJeILg2EqzkyuL/nrRgpKVKp04/LfLwSy35WWB7O19YZZVi6sYJUFAEKEDsjah/kZb2
+ gOMreMCYy1f+gDciLFToiNBop3S/jLLQKuNalT90ubQ==
+X-Gm-Gg: AZuq6aJYwIFPFeOmMgk49tI9IyAOylo5trIiS3RrNwZVcbE0XntJhMu5uNvLvZ046gc
+ 5QWQZ0UnUyfkqCMvb7PJ7XP/QGZ82ju5CMeyUQeYLvpgOVsShMmDkATVcCAyrlaCnJVMH5zspum
+ 5iPkCgvZ04OiG09lv5jf2fMz4xEOLOmxQnE0p2NZ57sypMhY/9ttpznBVwN+eYwtD4frOVw0fcE
+ GOoX+LWbMAah5e4eROp5v7/UKJV+wqQPikVRd7JejPax9/CvgcCyflJB5/mqB/1PvySBQ==
+X-Received: by 2002:a05:690c:6c8c:b0:794:1811:32ad with SMTP id
+ 00721157ae682-79418113bf3mr48774207b3.51.1769088224861; Thu, 22 Jan 2026
+ 05:23:44 -0800 (PST)
 MIME-Version: 1.0
-References: <20251227091622.20725-1-pbonzini@redhat.com>
- <20251227094759.35658-7-pbonzini@redhat.com>
- <CAFEAcA8fjzx49c=Xe37PtMNCbN22h2UQ48kzPgWVYx6jBBXYog@mail.gmail.com>
-In-Reply-To: <CAFEAcA8fjzx49c=Xe37PtMNCbN22h2UQ48kzPgWVYx6jBBXYog@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 22 Jan 2026 14:21:06 +0100
-X-Gm-Features: AZwV_QiVq9ws3I7Oovn55qsaH14YXNnD-nPRRnQjLIillPyVKtmibovtui8kOPM
-Message-ID: <CABgObfZFd6xHt++XJHbCPwZU0x5chu8SYE0OFVbs_pk5McAJ9Q@mail.gmail.com>
-Subject: Re: [PULL 081/153] i386/cpu: Fix supervisor xstate initialization
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- Farrah Chen <farrah.chen@intel.com>, Zide Chen <zide.chen@intel.com>, 
- Xiaoyao Li <xiaoyao.li@intel.com>, Chao Gao <chao.gao@intel.com>
+References: <20251223142959.1460293-1-peterx@redhat.com>
+ <20251223142959.1460293-18-peterx@redhat.com>
+In-Reply-To: <20251223142959.1460293-18-peterx@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 22 Jan 2026 13:23:33 +0000
+X-Gm-Features: AZwV_QhTWgtk4oHFVdFM32-LFKHztfzWJ7_CcFgC_2koWV8qHmRAzJhGfFfP0FM
+Message-ID: <CAFEAcA89vswCip53OAPFzLwz5EMnWBtsM61YD0Nc_kYrM4NuCw@mail.gmail.com>
+Subject: Re: [PULL 17/31] migration: Add a qdev property for StrOrNull
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,30 +113,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 22, 2026 at 2:16=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
-> >          supported_xcr0 =3D
-> > -            ((uint64_t) x86_cpu_get_supported_feature_word(NULL, FEAT_=
-XSAVE_XCR0_HI) << 32) |
-> > +            x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XCR0_H=
-I) << 32 |
-> >              x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XCR0_L=
-O);
-> > +        supported_xss =3D
-> > +            x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XSS_HI=
-) << 32 |
-> > +            x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XSS_LO=
-);
+On Tue, 23 Dec 2025 at 14:32, Peter Xu <peterx@redhat.com> wrote:
 >
-> x86_cpu_get_supported_feature_word() returns a 64 bit value
-> which may have bits set in the top half (notably it returns
-> ~0 for some cases), but the shift by 32 throws away those
-> top bits, so Coverity complains about a possible overflow.
+> From: Fabiano Rosas <farosas@suse.de>
 >
-> Is this an actual problem, or a "can't-happen" false positive?
+> The MigrationState is a QOM object with TYPE_DEVICE as a parent. This
+> was done about eight years ago so the migration code could make use of
+> qdev properties to define the defaults for the migration parameters
+> and to be able to expose migration knobs for debugging via the
+> '-global migration' command line option.
+>
+> Due to unrelated historical reasons, three of the migration parameters
+> (TLS options) received different types when used via the
+> query-migrate-parameters QMP command than with the
+> migrate-set-parameters command. This has created a lot of duplication
+> in the migration code and in the QAPI documentation because the whole
+> of MigrationParameters had to be duplicated as well.
+>
+> The migration code is now being fixed to remove the duplication and
+> for that to happen the offending fields need to be reconciled into a
+> single type. The StrOrNull type is going to be used.
+>
+> To keep the command line compatibility, the parameters need to
+> continue being exposed via qdev properties accessible from the command
+> line. Introduce a qdev property StrOrNull just for that.
+>
+> Note that this code is being kept in migration/options.c as this
+> version of StrOrNull doesn't need to handle QNULL because it was never
+> a valid option in the previous command line, which took a string.
+>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Acked-by: Peter Xu <peterx@redhat.com>
+> Link: https://lore.kernel.org/r/20251215220041.12657-4-farosas@suse.de
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-These four are 32-bit, indeed.
+Coverity also suspects a leak in the get function (CID 1643920):
 
-Paolo
+> +static void get_StrOrNull(Object *obj, Visitor *v, const char *name,
+> +                          void *opaque, Error **errp)
+> +{
+> +    const Property *prop = opaque;
+> +    StrOrNull **ptr = object_field_prop_ptr(obj, prop);
+> +    StrOrNull *str_or_null = *ptr;
+> +
+> +    if (!str_or_null) {
+> +        str_or_null = g_new0(StrOrNull, 1);
 
+We allocate memory here, but we never pass this pointer
+on to anybody else, and we don't free it either.
+
+> +        str_or_null->type = QTYPE_QSTRING;
+> +        str_or_null->u.s = g_strdup("");
+> +    } else {
+> +        /* the setter doesn't allow QNULL */
+> +        assert(str_or_null->type != QTYPE_QNULL);
+> +    }
+> +    visit_type_str(v, name, &str_or_null->u.s, errp);
+> +}
+> +
+
+thanks
+-- PMM
 
