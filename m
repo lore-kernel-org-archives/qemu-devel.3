@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E61A5C44536
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 11:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F066C44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 11:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vitIW-00050r-5t; Thu, 22 Jan 2026 06:56:25 -0500
+	id 1vitKn-0006JV-Pd; Thu, 22 Jan 2026 06:58:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vitI2-0004p1-QA
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:55:55 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1vitKe-0006F7-Fa
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:58:38 -0500
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vitI0-0004zg-SL
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:55:54 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4801bbbdb4aso13935205e9.1
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 03:55:51 -0800 (PST)
+ id 1vitKb-00059C-Rp
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:58:35 -0500
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-4801d21c411so4616165e9.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 03:58:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769082951; x=1769687751; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769083112; x=1769687912; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=A6oGl/jXKU2kaAGjfLnWtURe0DlEwbhNcb1dp4D+EUk=;
- b=yiIShRbrTKBaCJUoot0KgrmNFCgXx4NG7dpcd2wwbkkw/wwjnLwWA/nppUtbClxmKU
- 7JZkN3/ZbO/kuDdiIhxYU/T3IRQey/DdHDdpwUPKdtD3gMQKonJZrrfxCrSfYLOuvFUQ
- U9YtMBU62JFgtuJ5dgLou9FdsYq/dEGTBPnVS4lLdJPO/+LIhJnBxXncuX2mF5jFrpLe
- nr9k3w/FrWtRiFjivqYqUE4avSQmwZQo0lX1X0nCa3XXJnR2tWyK/XjdIxMoCjVJfhHX
- jPm+bVGyNtDKKLA6z724A+klc6a2yB8/gnljV2mBxVu0AUVYR0/yowtIcGBEKr4I3Ta4
- ZRKA==
+ bh=gHfdd3PqXR+pNd5kr/XcJwuBr+hhdfms2ANVE1n3ues=;
+ b=SxTpnzT4PcmZQL5Dei9vC04FDj2CwEtvBOfGb0oDyGi4SUA4AjXirQLKuhBKwAxYZJ
+ 1D9Z/VKckQUlXlqN881ANUclmqEilFMLk/I5r+mNrvxfTMPTQGkmzwF9hFoiMabpHOCO
+ AXPRLX+myguyu6bUHe9IY/cxHm/psO3sAXyjbeQaoGTortZtOTbEOotqqrr7JqRkwflu
+ hD/JyXjeupZ2hlOIOV2vPLDk28mpRBVVw+04DceZWA1yU0OE0ukIfJibQzkosoY6ppXh
+ +NJ+fJ1RvHvL/aOuiU76abHBX456sJYCYUvC5xubeGDKN66gRhzAaW9DrbvntvCQpw5G
+ sobQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769082951; x=1769687751;
+ d=1e100.net; s=20230601; t=1769083112; x=1769687912;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=A6oGl/jXKU2kaAGjfLnWtURe0DlEwbhNcb1dp4D+EUk=;
- b=GdY59j99mVoMleIFcFBhNxItVjnUq3md+AWHTJhXVwXBvCiG2r5X2hvM3ymDfX+FGu
- QqIh9SAFkqeE+glTZi3gnoDEhR08KpkSd6tH2FuCc1ZSJGqw9eQzwvxr89zVghzVWci7
- 1/FAR7LBrZvdG617+Ar4FFCd8/hRMf0zk42lOGHHUKFtHnBm1dpqUSnsG5LvhfRGGIw9
- nvw7WmnywlaGegMRf9QV4S5pjgTGMH8IWIYyn9cRGaDTgYbuPVNtJK8fchJ/M6EMF395
- kisNN3P/9kP41nQjEqepgYV2Y2GBfnN5syE3QXnpSpO0PlWLpJsXCpLsTSh5SuctAP4o
- /R/w==
+ bh=gHfdd3PqXR+pNd5kr/XcJwuBr+hhdfms2ANVE1n3ues=;
+ b=ij+erTRPba6AxbwFA6HZDU7RciFmfZ2gyjuy6iRgPfzur8DGl40GkSIWTeVHSWArZQ
+ 0H30s4bC2bqauY9M1P19XKCwDckETF/BEV+0NA43oj3qyw5sczVR4IIFPfbskjHdxYTC
+ ZQOTcbLY4EVzVxUFgTYmSJsCCTMIS3aw2pLHNKNfmazih0DFNMq0L95qNQtKiEwlGmUS
+ sIVDA7K2Ob2V4tRS+62VoLHuxIs3D5kX1l0e4leCY0bN6cIrZQ39r4gDlibtl/a7WUaa
+ nEUNYKTVslIHOQ1SuAVmdr/nwXvejy5i8ZUaMh/gUnNi0Ez4pj4YxS1o34MIbO0iHlL7
+ MfPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUV1htXZJTZA7tvwmN26nvGM6xhx6TaxSAYiLhGfi9BPSGuqCI100q8Wo0W5lqQOB2el+H62ihFCAUT@nongnu.org
-X-Gm-Message-State: AOJu0YwZTRAaIGkHe10UNVMKxY+M0uz91zuNSK09Zc7ujmTRnZUnE3lD
- Y6WmamvcdkNBLFKtmxELV2iOBEVtiodwdtH3nwQUMLjx3z5+rwW6Wlwle9aV0rzEw5A=
-X-Gm-Gg: AZuq6aLUFUigXwEXLBoZDLtO+J8AqgW1zzHaB3905jcP/FhRzG1fYIJlBjmT7Nw/fKi
- kaMo18cLpsJG4NOUQj3wXpLZslo24S+tT5bqi2u8Pz+1FMsCQeka0MgdwCGj0iz3sQu/IlSjYyr
- Q5JOh2K+w3aPI6m3VrrLEZtjLtRqxqspvzPxbxdzHoPy7t7r0Dlp9Gsvbgo3zQg0RwPEdFTHORS
- 44LKC9Ef4yEARLuoSY/cicN0OZzQfycf1C8BKzdbJA3i3xe42XOhjQ9Sn2CO9CfVFyvRNMgITZi
- wuFwl/YfaV/PzixkPZUj7mFXr3H4KVwEZdTwP//XqBR/iyUyY2/21zyMuKfLELu3eo8cJN6mwFK
- +7NmO8CRnzdUwC1hKAYYsy0XnRybImPrT9tXXe/CF7vj3DFn4WgFuJZqDh7ZSmQMLXk5/anqXp1
- N5Ng5Ot/d+UbW4
-X-Received: by 2002:a05:600c:4f4a:b0:46e:59bd:f7e2 with SMTP id
- 5b1f17b1804b1-48047087235mr49595895e9.11.1769082950567; 
- Thu, 22 Jan 2026 03:55:50 -0800 (PST)
+ AJvYcCW9hLbM1e6VwpDWmNYH97Wg9TZfhLl4RoweBnanaHBy9Hyyqkk3e7I4UO2cJOF3TGzl5Q3dSVnR2nqN@nongnu.org
+X-Gm-Message-State: AOJu0YxX6wRPBVl3jGFPGg0cbyaR+6gmkimK/MeyiinYugxkOcWVDLhT
+ 1u5vc8yxdzuhjIU1k5D2UCwb1u1qBPko9V9MRxk+QpXYgS00bUmnjbpdDuK3jRa2Tzw=
+X-Gm-Gg: AZuq6aJ9+NRpQVEntaYb7WOEaTwXIlukOOnbtRQsvepoL/8tvC0+jmaFwmIHAJ+Eose
+ FzNxMybD6BHvkC4Pbs3mzJURgM2VWlmb2xEtT8Sis0OnHqZUkbRJ+doBwZ77LpBM7/juJuCAPDn
+ cg2yAqcXvEk2eMuZibrN6PbilPrr7Jv8kGtFsLYqcGCOmIO7xjVT6DwgOJygMRPEJavpkkjN7AB
+ 63GEsTzIavY/q0UOkH4cHFn3wtaoqKeeNFY1NS+lijB9eRHKQGYv8ESsuZ5LAkdnbZ9EKuGDIpC
+ QwWYcHqMLQghLaBKHOhE+HbTD4WuDKXnY9NPBb3UiRV3k+K5EpxJDCTCgwA8KTqAqy5URKfoPF0
+ v4Pkp3VIHrQJEElZb1k10TsCbcTjcZ5c1YMUdjcv0qwrr4BKkvaM2Z0DhVOx4qxWu88kK4jzrv4
+ 1g8xB6IlyEfqTUJBNA1XbqJG8=
+X-Received: by 2002:a05:600c:630e:b0:479:3a86:dc1e with SMTP id
+ 5b1f17b1804b1-4801e34f6e7mr326379705e9.36.1769083111644; 
+ Thu, 22 Jan 2026 03:58:31 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4804704b89bsm59759895e9.9.2026.01.22.03.55.49
+ 5b1f17b1804b1-4804702fab2sm60597375e9.1.2026.01.22.03.58.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Jan 2026 03:55:49 -0800 (PST)
+ Thu, 22 Jan 2026 03:58:31 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2184E5F7C3;
- Thu, 22 Jan 2026 11:55:49 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 51C8D5F7C3;
+ Thu, 22 Jan 2026 11:58:30 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>,  Thomas Huth <thuth@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel
- <qemu-devel@nongnu.org>,  kvm <kvm@vger.kernel.org>,  Helge Deller
- <deller@gmx.de>,  Oliver Steffen <osteffen@redhat.com>,  Stefano
+To: Thomas Huth <thuth@redhat.com>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Stefan Hajnoczi
+ <stefanha@gmail.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ qemu-devel <qemu-devel@nongnu.org>,  kvm <kvm@vger.kernel.org>,  Helge
+ Deller <deller@gmx.de>,  Oliver Steffen <osteffen@redhat.com>,  Stefano
  Garzarella <sgarzare@redhat.com>,  Matias Ezequiel Vara Larsen
  <mvaralar@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  German Maglione
  <gmaglione@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Paolo Bonzini
@@ -85,22 +85,24 @@ Cc: Stefan Hajnoczi <stefanha@gmail.com>,  Thomas Huth <thuth@redhat.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,  =?utf-8?Q?C=C3=A9dric?= Le
  Goater <clg@redhat.com>
 Subject: Re: Call for GSoC internship project ideas
-In-Reply-To: <aXH4PpkC4AtccsOE@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Thu, 22 Jan 2026 10:14:09 +0000")
+In-Reply-To: <995d4aaf-bbff-42be-9114-1f04bb51e37c@redhat.com> (Thomas Huth's
+ message of "Thu, 22 Jan 2026 12:05:14 +0100")
 References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
  <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
  <CAJSP0QVQNExn01ipcu4KTQJrmnXGVmvFyKzXe5m9P3_jQwJ6cA@mail.gmail.com>
  <CAJSP0QW4bMO8-iYODO_6oaDn44efPeV6e00AfD5A42pQ9d+REQ@mail.gmail.com>
  <aXH4PpkC4AtccsOE@redhat.com>
+ <130b8f26-2369-48f5-bbd6-e27210707b9f@redhat.com>
+ <aXIAmeEWMFjQM84o@redhat.com>
+ <995d4aaf-bbff-42be-9114-1f04bb51e37c@redhat.com>
 User-Agent: mu4e 1.12.15; emacs 30.1
-Date: Thu, 22 Jan 2026 11:55:49 +0000
-Message-ID: <87ikctoo8q.fsf@draig.linaro.org>
+Date: Thu, 22 Jan 2026 11:58:30 +0000
+Message-ID: <87a4y5oo49.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,92 +125,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Thomas Huth <thuth@redhat.com> writes:
 
-> On Tue, Jan 20, 2026 at 04:42:38PM -0500, Stefan Hajnoczi wrote:
->> Hi Marc-Andr=C3=A9,
->> I haven't seen discussion about the project ideas you posted, so I'll
->> try to kick it off here for the mkosi idea here.
->>=20
->> Thomas: Would you like to co-mentor the following project with
->> Marc-Andr=C3=A9? Also, do you have any concerns about the project idea f=
-rom
->> the maintainer perspective?
->>=20
->> =3D=3D=3D Reproducible Test Image Building with mkosi =3D=3D=3D
+> On 22/01/2026 11.48, Daniel P. Berrang=C3=A9 wrote:
+>> On Thu, Jan 22, 2026 at 11:43:35AM +0100, Thomas Huth wrote:
+>>> On 22/01/2026 11.14, Daniel P. Berrang=C3=A9 wrote:
+>>>> On Tue, Jan 20, 2026 at 04:42:38PM -0500, Stefan Hajnoczi wrote:
+>>>>> Hi Marc-Andr=C3=A9,
+>>>>> I haven't seen discussion about the project ideas you posted, so I'll
+>>>>> try to kick it off here for the mkosi idea here.
+>>>>>
+>>>>> Thomas: Would you like to co-mentor the following project with
+>>>>> Marc-Andr=C3=A9? Also, do you have any concerns about the project ide=
+a from
+>>>>> the maintainer perspective?
+>>>
+>>> I'm fine with co-mentoring the project, but could you do me a favour an=
+d add
+>>> some wording about AI tools to
+>>> https://wiki.qemu.org/Google_Summer_of_Code_2026 to set the expectations
+>>> right? Since we don't allow AI generated code in QEMU, I'd appreciate i=
+f we
+>>> could state this in a prominent place here to avoid that some people th=
+ink
+>>> they could get some quick money here by using AI tools, just to finally
+>>> discover that AI generated code is not allowed in the QEMU project. Tha=
+nks!
+>>>
+>>>> IMHO, our baseline for functional testing images ought to be
+>>>> a Linux Kconfig recipe used to build a dedicate kernel, plus
+>>>> a busybox build for the target.
+>>>
+>>> Not sure if we want to add kernel compilation time to the functional te=
+sts
+>>> (even if it's only done once during the initial build)...? That could e=
+asily
+>>> sum up to a couple of hours for a fresh checkout of QEMU...
+>> That's absolutely *NOT* what I was suggesting.
+>> We should have a 'qemu-test-images.git' repository that maintains
+>> all
+>> the recipes, with CI jobs to build and publish them (along with correspo=
+nding
+>> source). Those prebuilt images would be consumed by QEMU functional test=
+s.
+>> This would be quicker than what we have today, as the images downloaded =
+by
+>> functional tests could be an order of magnitude smaller, and boot more
+>> quickly too.
 >
->> This project proposes using mkosi to build minimal, reproducible test
->> images directly from distribution packages. mkosi is a tool for
->> building clean OS images from distribution packages, with excellent
->> support for Fedora and other distributions. It should be able to
->> produces deterministic outputs.
+> Ah, sorry for getting that wrong!
 >
-> Aside from what I mentioned already, the other issue I anticipate
-> with mkosi is the mismatch between what hardware QEMU needs to be
-> able to cover, vs what hardware the distros actually support.
+> Ok, so this sounds basically just like a gitlab-CI wrapper around what
+> buildroot.org already provides. ... not sure whether that's
+> challenging enough for a GSoC project?
 >
-> Fedora in particular is pretty narrow in its coverage. Debian is
-> considerably broader.
->
-> Neither will support all the QEMU targets, let alone all the
-> machine types within the target.
->
->
-> While there is value in testing a full blown OS image, IMHO,
-> for most of what we need it is considerable overkill, and
-> thus makes functional tests slower than they would otherwise
-> need to be.
->
-> IMHO, our baseline for functional testing images ought to be
-> a Linux Kconfig recipe used to build a dedicate kernel, plus
-> a busybox build for the target.
->
-> This would let us create either a self contained initrd, or
-> a tiny root disk, both of which would reliably boot in a
-> barely more than a second or two, even under TCG.
+> Also, adding this as a separate repository will easily burn your
+> gitlab-CI minutes if you don't have a dedicated runner for this, so
+> developing this feature might be no fun at all...
 
-This is why I've been building my iamges with buildroot. It provides for
-a lean user-space with exactly what you want and it can create a
-software BOM for the whole thing.
+My intention was to get the test images as part of buildroots own
+testing setup and re-use them for QEMU.
 
-But it also allows me to bring in more complex things if I need to like
-the vkmark tests for example.
-
-> This would have a number of other benefits
 >
->  * Not dependent on distros supporting the given QEMU
->    target and machine type. As long as a Linux port
->    exists and busybox compiles, we can test it
->=20=20
->  * Identical test image functionality for every single
->    target and machine type. No hodge-podge of different
->    3rd party guest OS.
->
->  * Stable forever, with all changes entirely under
->    our own control. No distro changes that arbitrarily
->    break our CI.
->
->  * Easier to debug when it breaks, since there would
->    be a small well defined set of logic running in
->    the guest userspace
->
->  * Fairly easy for QEMU to provide the complete and
->    corresponding source for any binary images, since
->    we've built it all from scratch
->
->  * Tiny & fast downloads of pre-built images.
+>  Thomas
 >
 >
-> This would not eliminate the need for testing real OS images,
-> but would significantly downgrade their importance.
->
-> Functional tests could be in three groups - 'quick', as today,
-> 'slow' the smoke tests with our miny kernel+busybox, 'thorough'
-> the full OS images.
->
->
-> With regards,
-> Daniel
+>  Thomas
 
 --=20
 Alex Benn=C3=A9e
