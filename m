@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70E52D625F9
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:55:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E93A0D625F9
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:55:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viqT5-00078a-OV; Thu, 22 Jan 2026 03:55:07 -0500
+	id 1viqTq-0003Em-Bf; Thu, 22 Jan 2026 03:55:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqSk-0005c5-0C
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:54:51 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTo-00039H-Nk
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:52 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqSi-0005xs-Fx
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:54:45 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-47edd6111b4so7218695e9.1
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:54:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTn-0006JC-83
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:52 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-42fbc544b09so481007f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:55:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769072083; x=1769676883; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769072149; x=1769676949; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=CZwMmcCwari3wv2IxDtkxCCsWu1wof68pvdYYbNPhbA=;
- b=mlfsaoq7MbKwcXjXS4kbJKZrlN/7M3vDYF5mIqPYOgzlSBLObbikHlqxTVplkgNjus
- Dal16EBMclmmqXb28Hk+lBeVdwFk7+wDbCeIf7aoUmzkX1W82G3X1GnTXNZLRPsyt3OA
- mlCOZvUXN8zsl9VIOv/TFAzAycJQ//eOJqb+xCgRM0AQoGL6iRqa8LCXEkVx1OFjykPa
- FPgfOwVdVRiNvuJy6k+WAHGP+PlNSe3lDPsvnhy5FcT0abeu2LPbFxEN/q4KKakSQELZ
- +S/xGmDJlKkQlh9GgtMnnrFTxuDK++aR1tSy7jByfa0x9D+dGi212lrNlgKM5rlJxYkq
- yo8Q==
+ :reply-to; bh=TuJu/lqEa4HSpg8bNNxgbevMWPfOzV/4hLPmHRwlUV8=;
+ b=R03WgIbNGZUNhwDSHd0ha13kp9B6xDVnCFzMDR2rGWHLWuX25VVf5IcbfYZU/fbCMT
+ shmyyfDuO0YlpqIhivj6CItTUH0WrQFqSh+VTMvjPu1EvSyz6nvv/U+r9aS7ZU/nSu8B
+ 3PvJXVJIC3JLlpsArBx1nyBBNTn2ptH3hDGdognVxN4hwBZezaP7vGBU4RAe06n/X8Ok
+ fb8K4imcqZDii8NEGp1u1/t7Ggebtx7p+tyqQFwLRmjxCrbN5ZtuPRy63uS7MtbzTXVi
+ Qn8a5viTIp0yZFKChBIuPfmjUB8svSmgCc4m8W4dE/zsuCWJD3tsxGgzk0aljqDF6mSf
+ 1BCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769072083; x=1769676883;
+ d=1e100.net; s=20230601; t=1769072149; x=1769676949;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=CZwMmcCwari3wv2IxDtkxCCsWu1wof68pvdYYbNPhbA=;
- b=P2hG2+YcIxl80vuakC8f+eCXSuJ9CC+6JPI2qq2YQbqIJvO6BaA6O6k8sgYzSlxSiJ
- rSJ639GFig7reruFA597SfMauVDH9K/GydF/7DYoCLRKT6Hc56etlTCqmQG7QjvdDA6v
- dEtxo/rW+6qSwIVZOI6TTxvzItYzk5pkjGgqkxXUSziGZzYbjBiDCIzfCTNRJBwNNuqf
- WYWI0TyMrsYv9nCQeUue45HK3zUpf63l9f3QiJtvNuLAVCScRtEAAD5aY5KyCkWFWTrq
- xjSxkk7KSwdTzA/io0FNrK6SJ/lISr34mSPgGfkFydFxOgDdY0jUUBS1vyWzbgTHsQio
- bgUQ==
-X-Gm-Message-State: AOJu0YzWG0IcixH7BKavNQv8PqSiAsdBt5vIb/8G4lh2jP8lhOL5wiD0
- v1JnmAPLpxFuqGMO/b/3yT4mACRBoB3OIBgbJn1ObJHnmvnau8KL0EKUCV+3VpNDyyDZaNqsxV5
- 99MFHl7U=
-X-Gm-Gg: AZuq6aJJkEGuoGO2t5o7P9XSwDSq0vs77tGT55r6ybwkgcKILSU3SyZJ4eCRwIeXHE2
- Si3AL5SNhgu8XDF5gMTeGaW9khNB6HweHSIn70yhCpTHtjjTlUMs1e1FcGmHulDbghJHBNcRA4F
- a5BCXKMJKcptVqLSaZZI1prck1AcBQ4rsbJcoOubhQ+46CaKIF3xVp9DJff6vPRFtGSegClQlRz
- fDUenzdFHjIQxgj3j1rN2h8LvkBvwa3PGN+AcqP2fzuVJkKxR5nMxN574bRyi2/BRfVb35/FOFu
- RzHR266QGRMvVtuBjqbryWtPad33CTaSk7iCFcPOaVSxq11vheHPZhXcCxFBZPIoPUDdXkrZkYi
- oq6TcCtuZ6BRX2gc/xZ5dB7Plxhtf+ojNDT05gmgrLf088+5aUFU4Zb0Ix4YeEI6tWXKzNHSUR7
- TdpfAsFnFwnDejXO+5beaua8quy8RiAUbsrCIT9PA8AL1C0fzhE7DIEBziJe6b
-X-Received: by 2002:a05:600c:5486:b0:477:5af7:6fa with SMTP id
- 5b1f17b1804b1-4801e3484ddmr265886405e9.32.1769072082689; 
- Thu, 22 Jan 2026 00:54:42 -0800 (PST)
+ bh=TuJu/lqEa4HSpg8bNNxgbevMWPfOzV/4hLPmHRwlUV8=;
+ b=mhNecn0D138lOOkDDt2JDgPOBsVDDvYiHWnI02apAxEgEMFOqgUm1Dw78lzuieNQLw
+ D9JOa0c/bzb1t82J9c0F5u1fNbakQ+o9J19hpxNWlJ37A05eL1wZj0fcvWU+4hagZjf3
+ rW+tmcjj3dvSTXW2AI0finhKYtVj2OdzXXyeRXfDlyXDegiOKZ3tbvJTE7j4G8CEGXsq
+ 2AUw5Sup9zLvDYG+6jT+FspDN1GoEu4M2xCpUiBRAx9+jeSP6mcSjNvYptF6Hz+D3IrK
+ gfZYx0SHfPcFgPClSumQlzA7dO3ugRjMzX39GQOeynBEsOfxMemolJ+ypjNagaLNwW2A
+ Rlbg==
+X-Gm-Message-State: AOJu0YxacFHPbanYwWgfxFCMeLHF3mk3nbcJgisyPOzBvtE2QeRupHix
+ ve/+AvPkaN9AmFTbtA3pMsoPF09wcywFnPSKDYZB0q9V1HRceGgr0y1xeru63lF7JCVxyrOtuaK
+ NXImf9lY=
+X-Gm-Gg: AZuq6aJDcA30I7zEC+LOfqNfSRphsYcz/o+tzjH33sGcAhM2tEfJE1YnjW6WkeaaNXZ
+ G6Dw7vjQbSlWmznnyfkk8p1GcTb/wItlLKZERMOmzpDoyAptt02qtT0B8EGLqYIHGMHhs6fqNdx
+ plz6t4lQHO/M6utsNEJiIGzqAg0cDc895xbKGOBehMLhfc+RNPxyBWI1gV030RVMwRZ7X1R5KFm
+ n7NCMH4tpUqrYoNPWdFZmwM94uVtwtJGQKbpDsHBweJmxx48zHrWEvQv8PPnTImAFgA2tWzGrOn
+ WDQLMO00S4o9OqqCKHr0fljW/mA40YMCuuJV8KVdKTdgeFnPYqyO5Z0hqydhnlxfYx/h5/q6JQ+
+ kVF8EiNFWHjwHww7aIXaOvq1Q/4iO8fioQy/o3S3pgYQQSR2e9CoDOvO+DuMLEwAKQiVK4FwZVE
+ ADXejmj1tNJFwUCyXgjxaDDcV9+7LcQdE1hkNbotXHo5NZjvn7FnDouXxjjp7p
+X-Received: by 2002:a05:6000:2dc5:b0:435:8f1b:bb28 with SMTP id
+ ffacd0b85a97d-4358fe9d0fcmr11814655f8f.0.1769072148935; 
+ Thu, 22 Jan 2026 00:55:48 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4804704087asm49261705e9.6.2026.01.22.00.54.41
+ ffacd0b85a97d-43597ae9f37sm13662525f8f.8.2026.01.22.00.55.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Jan 2026 00:54:42 -0800 (PST)
+ Thu, 22 Jan 2026 00:55:48 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/31] system: Allow restricting the legacy tswap()
- 'native-endian' API
-Date: Thu, 22 Jan 2026 09:52:39 +0100
-Message-ID: <20260122085255.95035-17-philmd@linaro.org>
+Subject: [PULL 26/31] dump: Abort in create_win_dump() on non-x86 guests
+Date: Thu, 22 Jan 2026 09:52:49 +0100
+Message-ID: <20260122085255.95035-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260122085255.95035-1-philmd@linaro.org>
 References: <20260122085255.95035-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,40 +98,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guard the native endian APIs we want to remove by surrounding
-them with TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API #ifdef'ry.
+qmp_dump_guest_memory() checks win_dump_available()
+before calling create_win_dump(). On non-x86 targets
+calling it would be a programming error, so abort.
 
-Once a target gets cleaned we'll set the definition in the
-target config, then the target won't be able to use the legacy
-API anymore.
-
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260109165058.59144-19-philmd@linaro.org>
+Message-Id: <20260121215622.92966-2-philmd@linaro.org>
 ---
- include/exec/tswap.h | 3 +++
- 1 file changed, 3 insertions(+)
+ dump/win_dump.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/exec/tswap.h b/include/exec/tswap.h
-index 72219e2c431..9e94fa0021c 100644
---- a/include/exec/tswap.h
-+++ b/include/exec/tswap.h
-@@ -21,6 +21,8 @@
- #define target_needs_bswap()  (HOST_BIG_ENDIAN != target_big_endian())
- #endif /* COMPILING_PER_TARGET */
+diff --git a/dump/win_dump.c b/dump/win_dump.c
+index 3162e8bd487..6e07913dfb4 100644
+--- a/dump/win_dump.c
++++ b/dump/win_dump.c
+@@ -489,7 +489,7 @@ bool win_dump_available(Error **errp)
  
-+#if defined(CONFIG_USER_ONLY) \
-+    || !defined(TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API)
- static inline uint16_t tswap16(uint16_t s)
+ void create_win_dump(DumpState *s, Error **errp)
  {
-     if (target_needs_bswap()) {
-@@ -68,5 +70,6 @@ static inline void tswap64s(uint64_t *s)
-         *s = bswap64(*s);
-     }
+-    win_dump_available(errp);
++    g_assert_not_reached();
  }
-+#endif
  
- #endif  /* TSWAP_H */
+ #endif
 -- 
 2.52.0
 
