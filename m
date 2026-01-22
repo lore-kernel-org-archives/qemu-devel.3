@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE92C44536
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13498C44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viqUJ-0003p4-Rf; Thu, 22 Jan 2026 03:56:26 -0500
+	id 1viqT0-0006WU-7S; Thu, 22 Jan 2026 03:55:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTv-0003Wz-NJ
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:56:01 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqSE-0005RA-WE
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:54:24 -0500
 Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTt-0006K8-PS
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:59 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqSB-0005v6-LI
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:54:13 -0500
 Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-432d28870ddso397251f8f.3
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:55:57 -0800 (PST)
+ ffacd0b85a97d-42fbc305914so596637f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:54:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769072156; x=1769676956; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769072050; x=1769676850; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JRmPUs0ajk0K+cVHrH+IMdZaakrlwGHZLGfwrs1xfgo=;
- b=eize3+13qnOZMuMmFMlOuN5lSXor9AC5HKLnWA3JipNo3hDHdoSpfmwonXGKCzoDNC
- qvgSppxBDWRMKlE9QijJHhpF7mwzXo9hLeKAB5azYY7S/aNh9I8ZFJkyJCc9nJs6nzyy
- Pt9Z+/U9Wbci3D4aYTBHGTyWADpoL9s8Vzdl7YfpdcM7B4rA2exwYHl9R2yC6vgLvLjU
- nb7zyLsGnWqDdQBFcMAps8qPIluJYBW+3wRP2+ykRQqbOccC7TpJuwKcNWKa3hc//piK
- M8QVtTKHbtWVXmcduVDXLBkOflInxsOO19fzaxVWXXucgJ0GVAHoNQxqzVlEOZhbPAVd
- +c4g==
+ :reply-to; bh=J3ImZqKAxXQfXZh2R+QhWoGeV+YfwlonfOq/Eg7p398=;
+ b=kjrSFQd+8YCrxUNoSAaY9WekI4ZEpCQJzFS+ZONpwAEUw5SLoHpGsW4NzYz1pc/abZ
+ IZy59P/+0XT3+cS5CkbahS7IlDR4Pkl2CrTf77DlG5nRtnYyHmz/iNtEGnU5kQYzAcFF
+ 808DL05v1Zyh+kPuTUqctmb+PFUvbLpLaeF185T44RitMiNvw/Da11yuigBvhWzXN5eL
+ MZMKxy3h4YkjbI9irwJMxVhj3LU8kQ098E/3V7TU28lGRJ8vnOTKXvU+k1BKmvvKKKVB
+ 5TkTFhaNU7Hw4jsopLITGa1H1kN+mIVS8pOHL5PEAZebb6MPDEKoebnqJ0xhpAtN5VaM
+ W6Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769072156; x=1769676956;
+ d=1e100.net; s=20230601; t=1769072050; x=1769676850;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=JRmPUs0ajk0K+cVHrH+IMdZaakrlwGHZLGfwrs1xfgo=;
- b=w4rahSmuyu/p/JzhvTN7TSEdcaiZXoNIFN1DshpR+6Fzrn5uUD7I8xj4a5e3OXVVz9
- d4yMrgeH3fRbJU8bwaAC5l/Og0a2IoUIqu8ecxRQFjlh/zfoxZInJy0OBDruK8dkr5v3
- erN1S/Nmam/hp+Rq45hNk25xaM4TTV2ms43vovmuK5cVj43Wsbbl1+iQU8/BaEydwgSn
- 1JB4FB6lS86W9WMN37dAoWxW0S8oX5WNSNt0Xd4z+v/k/y0BdSi7AIyY6cKsBDFCcld9
- 4qsSvpcjjPxn7DvD1W5g6px8WGgfOMhJEuhJAJwbD5qxu7nG8usbKH/GQRNAkEMJmgtA
- qoSA==
-X-Gm-Message-State: AOJu0YwSbQkvL/T+JyJbtpAQG0g0JdGWEW9dNEs1fKW/7okhAusCzRFw
- zdp7pGNv/4kVKAAvlttS9gmu4aCW9DuYvEixnO52Tb5772KDBKkKmfxoZ4inzcbE0f+wCvBHLBH
- nov9iwuA=
-X-Gm-Gg: AZuq6aIbO5yFovwaJzrqzc7NFgh7/6UCH8FBkn1FvMcMcAwNAbeJqSLGqW0dh4arIy2
- mnk3rlH6r+oP8IQil5IfUEfMyM8SKdg9bWhaKozcdxGyZffKFxtF0pqVE73XdK3mw1eFcMsSwLW
- +CXR61dnuZoI/90C/31MhZKKfkSF00FBCiz00bfbz4uKpFktB+nKLY9iG0OhbZTkg3AjZUbP7KO
- XuT9598Ca4VU6IiKFCqILgPwYn5HfsPTRSzlQitWELXl5NwIcHLcz0Sms/XWBvQtYaS09rI1wDj
- tFEqBqrQOTjC0q7wH65SX7xV7gyVTZeh3qn9Wx422khZ+JcPV2e9HjixFs17lfPb0TIddFKYIda
- mUeeTSVp1Zi2nM3gHrrBRN7Pto7mBJoZUzy9CM6bTyZYpMq2+AZgQd1qBOnwFFMQSJvtiN4Qv5j
- Oi4yV46bf4+3KASLs8yx02IY6EzjQGb1QCH5kM3OI1m5fPeq095J/5O2HsANYp
-X-Received: by 2002:a5d:5f96:0:b0:435:9770:9eb6 with SMTP id
- ffacd0b85a97d-4359770a259mr11505855f8f.53.1769072155543; 
- Thu, 22 Jan 2026 00:55:55 -0800 (PST)
+ bh=J3ImZqKAxXQfXZh2R+QhWoGeV+YfwlonfOq/Eg7p398=;
+ b=dYsSSwRQhsnhA9oEVx9VDpYHLUcVtzjWUMR0h+i5sASCTqn+Jfz7++0xM5yEDLYxih
+ 8HsTpHnPy3Zmr/PRyr+9OFQbXEKLUiadoIciMRj7YEYJrtaxXf7K+t3Bc4JRbC/RVbkP
+ laYQzwieq8coNQ6+3yjNObQzHEpc1cmFOaO9hHR+vMU8yyfQIGJsO9nkEDf4WwKyydPf
+ Y7r5nrQWy9Tr+gjNZQnmxU8EunfLzhZkEkQbKju5M+Bs1acZaZW6c5EtevcWM/PS8Set
+ 6wJRzKbD3btr01YfdO1nIGcWBGn+YHQkPYOhZwO3vIXEKs30N8m9F8v6ize9rPLYo4Az
+ E13Q==
+X-Gm-Message-State: AOJu0YwC3oljnV6k5BY2n7GFyYBxJnfXLZUBcGWDw3QMCpC8asSwAw5f
+ uF0fwk0+pCeZiYTo51u53qyVhTNorRYolw5Vb/A4sgMyxrR6DViuIfNjRs/P0iKhiC5mf8cw2NH
+ zhW6RrB4=
+X-Gm-Gg: AZuq6aKf0spRpGQq6bOC906ABuYPMWw7cJGRCrat1INTlzeDZZRWVfCOuOtFzqzuSo1
+ 4w/k7IClv4n8fdoKL84NN4tSmEYFrzo3KXkg5NXTlAGatbY1GD7Tda75Oq7CzQZkS19Mb6V7qbf
+ AocrHI8Z0wdDVB27AAif4rwdk1FPXTdYp8sGJSfvuKlEURz6mGzMuW/q0Nx3N7Xqv2Z74pd1zIj
+ aQGObZuREuT8b3suqTsktzJ188Z6osV+LX/a7szklQvOU2O+NUdr9E2iZKnUslJV+C6Kj4252I5
+ EQ7t+o9tx4yOjmlwnV9mLy3466mHBIdrug71frMiVp+PPlWcPHlPU2a+aZvCGSYZxTp2PpSp7Hl
+ QHlzeN+iPF6nT4SzLOiNsEpuWDZXu02I3vkKw8JhDtkvON4Jn0D1OZx0DxKpQlnt9775H+BUhfg
+ pjU49S9hUiNmKQdME/KrQQ5HoQBjRt6/Snu5oiJMzdtmHUdaNpzpFfuiq/iI92
+X-Received: by 2002:a05:6000:4383:b0:433:24c7:880e with SMTP id
+ ffacd0b85a97d-4358ff26a86mr14159359f8f.33.1769072049572; 
+ Thu, 22 Jan 2026 00:54:09 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435a575c396sm6759296f8f.9.2026.01.22.00.55.54
+ ffacd0b85a97d-4356997ed8bsm44071485f8f.36.2026.01.22.00.54.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Jan 2026 00:55:55 -0800 (PST)
+ Thu, 22 Jan 2026 00:54:09 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/31] dump: Build stubs once for non-x86 targets
-Date: Thu, 22 Jan 2026 09:52:50 +0100
-Message-ID: <20260122085255.95035-28-philmd@linaro.org>
+Subject: [PULL 11/31] system/memory: Directly call
+ address_space_ldst[M]_internal() helper
+Date: Thu, 22 Jan 2026 09:52:34 +0100
+Message-ID: <20260122085255.95035-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260122085255.95035-1-philmd@linaro.org>
 References: <20260122085255.95035-1-philmd@linaro.org>
@@ -98,135 +99,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than compiling the same content for all targets (unused
-most of the time, i.e. qemu-system-avr ...), extract the non
-x86 specific parts to a stub file and build it once for all
-non-x86 targets.
-
-Add a Kconfig symbol to only select the target-specific file
-with the x86 target (rename this file with '-x86' suffix).
-
-Since Kconfig symbols aren't evaluated for user emulation,
-the file unit is only built for system emulation.
+Inline internal address_space_ld/st[L,D,Q] helpers,
+directly calling address_space_ldst[M]_internal().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260121215622.92966-3-philmd@linaro.org>
+Message-ID: <20260109165058.59144-14-philmd@linaro.org>
 ---
- dump/win_dump-stubs.c               | 21 +++++++++++++++++++++
- dump/{win_dump.c => win_dump-x86.c} | 20 +-------------------
- Kconfig                             |  1 +
- dump/Kconfig                        |  6 ++++++
- dump/meson.build                    |  3 ++-
- 5 files changed, 31 insertions(+), 20 deletions(-)
- create mode 100644 dump/win_dump-stubs.c
- rename dump/{win_dump.c => win_dump-x86.c} (97%)
- create mode 100644 dump/Kconfig
+ system/memory_ldst.c.inc        | 47 ---------------------------------
+ system/memory_ldst_endian.c.inc | 12 ++++-----
+ 2 files changed, 6 insertions(+), 53 deletions(-)
 
-diff --git a/dump/win_dump-stubs.c b/dump/win_dump-stubs.c
-new file mode 100644
-index 00000000000..96c1095c4e1
---- /dev/null
-+++ b/dump/win_dump-stubs.c
-@@ -0,0 +1,21 @@
-+/*
-+ * Windows crashdump stubs
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "win_dump.h"
-+
-+bool win_dump_available(Error **errp)
-+{
-+    error_setg(errp, "x86-64 Windows guest dump not built-in");
-+
-+    return false;
-+}
-+
-+void create_win_dump(DumpState *s, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/dump/win_dump.c b/dump/win_dump-x86.c
-similarity index 97%
-rename from dump/win_dump.c
-rename to dump/win_dump-x86.c
-index 6e07913dfb4..d893dea7f19 100644
---- a/dump/win_dump.c
-+++ b/dump/win_dump-x86.c
-@@ -1,5 +1,5 @@
- /*
-- * Windows crashdump (target specific implementations)
-+ * Windows crashdump (x86 specific implementations)
-  *
-  * Copyright (c) 2018 Virtuozzo International GmbH
-  *
-@@ -18,8 +18,6 @@
- #include "win_dump.h"
- #include "cpu.h"
- 
--#if defined(TARGET_X86_64)
--
- bool win_dump_available(Error **errp)
- {
-     return true;
-@@ -477,19 +475,3 @@ out_free:
- out_cr3:
-     first_x86_cpu->env.cr[3] = saved_cr3;
+diff --git a/system/memory_ldst.c.inc b/system/memory_ldst.c.inc
+index d51c5feddf7..ebb441f1a66 100644
+--- a/system/memory_ldst.c.inc
++++ b/system/memory_ldst.c.inc
+@@ -57,22 +57,6 @@ uint64_t glue(address_space_ldm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
+     return val;
  }
--
--#else /* !TARGET_X86_64 */
--
--bool win_dump_available(Error **errp)
+ 
+-/* warning: addr must be aligned */
+-static inline uint32_t glue(address_space_ldl_internal, SUFFIX)(ARG1_DECL,
+-    MemOp mop, hwaddr addr, MemTxAttrs attrs, MemTxResult *result)
 -{
--    error_setg(errp, "Windows dump is only available for x86-64");
--
--    return false;
+-    return glue(address_space_ldm_internal, SUFFIX)(ARG1, mop | MO_32, addr,
+-                                                    attrs, result);
 -}
 -
--void create_win_dump(DumpState *s, Error **errp)
+-/* warning: addr must be aligned */
+-static inline uint64_t glue(address_space_ldq_internal, SUFFIX)(ARG1_DECL,
+-    MemOp mop, hwaddr addr, MemTxAttrs attrs, MemTxResult *result)
 -{
--    g_assert_not_reached();
+-    return glue(address_space_ldm_internal, SUFFIX)(ARG1, mop | MO_64, addr,
+-                                                    attrs, result);
 -}
 -
--#endif
-diff --git a/Kconfig b/Kconfig
-index 63ca7f46df7..26388c12838 100644
---- a/Kconfig
-+++ b/Kconfig
-@@ -1,6 +1,7 @@
- source Kconfig.host
- source backends/Kconfig
- source accel/Kconfig
-+source dump/Kconfig
- source target/Kconfig
- source hw/Kconfig
- source semihosting/Kconfig
-diff --git a/dump/Kconfig b/dump/Kconfig
-new file mode 100644
-index 00000000000..4b59dbb5fce
---- /dev/null
-+++ b/dump/Kconfig
-@@ -0,0 +1,6 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+config WINDUMP
-+    bool
-+    default y if X86_64
-+    depends on X86_64
-diff --git a/dump/meson.build b/dump/meson.build
-index 4277ce9328a..26e1561ed48 100644
---- a/dump/meson.build
-+++ b/dump/meson.build
-@@ -1,2 +1,3 @@
- system_ss.add([files('dump.c', 'dump-hmp-cmds.c'), snappy, lzo])
--specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: files('win_dump.c'))
-+specific_ss.add(when: 'CONFIG_WINDUMP', if_true: files('win_dump-x86.c'))
-+system_ss.add(when: 'CONFIG_WINDUMP', if_false: files('win_dump-stubs.c'))
+ uint8_t glue(address_space_ldub, SUFFIX)(ARG1_DECL, hwaddr addr,
+                                          MemTxAttrs attrs, MemTxResult *result)
+ {
+@@ -80,14 +64,6 @@ uint8_t glue(address_space_ldub, SUFFIX)(ARG1_DECL, hwaddr addr,
+                                                     attrs, result);
+ }
+ 
+-/* warning: addr must be aligned */
+-static inline uint16_t glue(address_space_lduw_internal, SUFFIX)(ARG1_DECL,
+-    MemOp mop, hwaddr addr, MemTxAttrs attrs, MemTxResult *result)
+-{
+-    return glue(address_space_ldm_internal, SUFFIX)(ARG1, mop | MO_16, addr,
+-                                                    attrs, result);
+-}
+-
+ /* warning: addr must be aligned */
+ static inline
+ void glue(address_space_stm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
+@@ -122,14 +98,6 @@ void glue(address_space_stm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
+     RCU_READ_UNLOCK();
+ }
+ 
+-/* warning: addr must be aligned */
+-static inline void glue(address_space_stl_internal, SUFFIX)(ARG1_DECL,
+-    MemOp mop, hwaddr addr, uint32_t val, MemTxAttrs attrs, MemTxResult *result)
+-{
+-    glue(address_space_stm_internal, SUFFIX)(ARG1, mop | MO_32, addr, val,
+-                                             attrs, result);
+-}
+-
+ void glue(address_space_stb, SUFFIX)(ARG1_DECL, hwaddr addr, uint8_t val,
+                                      MemTxAttrs attrs, MemTxResult *result)
+ {
+@@ -137,21 +105,6 @@ void glue(address_space_stb, SUFFIX)(ARG1_DECL, hwaddr addr, uint8_t val,
+                                              attrs, result);
+ }
+ 
+-/* warning: addr must be aligned */
+-static inline void glue(address_space_stw_internal, SUFFIX)(ARG1_DECL,
+-    MemOp mop, hwaddr addr, uint16_t val, MemTxAttrs attrs, MemTxResult *result)
+-{
+-    glue(address_space_stm_internal, SUFFIX)(ARG1, mop | MO_16, addr, val,
+-                                             attrs, result);
+-}
+-
+-static inline void glue(address_space_stq_internal, SUFFIX)(ARG1_DECL,
+-    MemOp mop, hwaddr addr, uint64_t val, MemTxAttrs attrs, MemTxResult *result)
+-{
+-    glue(address_space_stm_internal, SUFFIX)(ARG1, mop | MO_64, addr, val,
+-                                             attrs, result);
+-}
+-
+ #define ENDIANNESS
+ #define MO_ENDIAN               (target_big_endian() ? MO_BE : MO_LE)
+ #include "memory_ldst_endian.c.inc"
+diff --git a/system/memory_ldst_endian.c.inc b/system/memory_ldst_endian.c.inc
+index 9cf36017135..fb933de11f8 100644
+--- a/system/memory_ldst_endian.c.inc
++++ b/system/memory_ldst_endian.c.inc
+@@ -22,42 +22,42 @@
+ uint16_t ADDRESS_SPACE_LD(uw)(ARG1_DECL, hwaddr addr,
+                               MemTxAttrs attrs, MemTxResult *result)
+ {
+-    return ADDRESS_SPACE_LD_INTERNAL(uw)(ARG1, MO_ENDIAN,
++    return ADDRESS_SPACE_LD_INTERNAL(m)(ARG1, MO_ENDIAN | MO_16,
+                                         addr, attrs, result);
+ }
+ 
+ uint32_t ADDRESS_SPACE_LD(l)(ARG1_DECL, hwaddr addr,
+                              MemTxAttrs attrs, MemTxResult *result)
+ {
+-    return ADDRESS_SPACE_LD_INTERNAL(l)(ARG1, MO_ENDIAN,
++    return ADDRESS_SPACE_LD_INTERNAL(m)(ARG1, MO_ENDIAN | MO_32,
+                                         addr, attrs, result);
+ }
+ 
+ uint64_t ADDRESS_SPACE_LD(q)(ARG1_DECL, hwaddr addr,
+                              MemTxAttrs attrs, MemTxResult *result)
+ {
+-    return ADDRESS_SPACE_LD_INTERNAL(q)(ARG1, MO_ENDIAN,
++    return ADDRESS_SPACE_LD_INTERNAL(m)(ARG1, MO_ENDIAN | MO_64,
+                                         addr, attrs, result);
+ }
+ 
+ void ADDRESS_SPACE_ST(w)(ARG1_DECL, hwaddr addr, uint16_t val,
+                          MemTxAttrs attrs, MemTxResult *result)
+ {
+-    ADDRESS_SPACE_ST_INTERNAL(w)(ARG1, MO_ENDIAN,
++    ADDRESS_SPACE_ST_INTERNAL(m)(ARG1, MO_ENDIAN | MO_16,
+                                  addr, val, attrs, result);
+ }
+ 
+ void ADDRESS_SPACE_ST(l)(ARG1_DECL, hwaddr addr, uint32_t val,
+                          MemTxAttrs attrs, MemTxResult *result)
+ {
+-    ADDRESS_SPACE_ST_INTERNAL(l)(ARG1, MO_ENDIAN,
++    ADDRESS_SPACE_ST_INTERNAL(m)(ARG1, MO_ENDIAN | MO_32,
+                                  addr, val, attrs, result);
+ }
+ 
+ void ADDRESS_SPACE_ST(q)(ARG1_DECL, hwaddr addr, uint64_t val,
+                          MemTxAttrs attrs, MemTxResult *result)
+ {
+-    ADDRESS_SPACE_ST_INTERNAL(q)(ARG1, MO_ENDIAN,
++    ADDRESS_SPACE_ST_INTERNAL(m)(ARG1, MO_ENDIAN | MO_64,
+                                  addr, val, attrs, result);
+ }
+ 
 -- 
 2.52.0
 
