@@ -4,72 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46563C44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:51:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A84CC44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viqPM-000333-6j; Thu, 22 Jan 2026 03:51:16 -0500
+	id 1viqRG-0004WW-VI; Thu, 22 Jan 2026 03:53:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1viqPJ-0002zN-0y
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:51:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1viqPH-0005aq-6w
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:51:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769071869;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=E8Jc1QOWL6iUotbwLC20csta9iLeBwR6U68lhti3PzM=;
- b=e7Uzu+cgCKgZY4IfL48+BOO7g+ZvN8Dnw7IAp2VepJtBOEWzI+aSL62TlGR9504dCB9XYh
- P2RsCeeNt0R+czwvBCkIeXnXinIoun+OaLzEYuFJ3rsAysO8XjY1eth8FSNpRRbtGT+pRZ
- dGaICzzNc3vaKzKJ/OF69KRLv54CAls=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-55-d1fSDcL-PqS0MrkssqDsVQ-1; Thu,
- 22 Jan 2026 03:51:05 -0500
-X-MC-Unique: d1fSDcL-PqS0MrkssqDsVQ-1
-X-Mimecast-MFC-AGG-ID: d1fSDcL-PqS0MrkssqDsVQ_1769071865
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95CFC18005AF; Thu, 22 Jan 2026 08:51:04 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.63])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF68218004D8; Thu, 22 Jan 2026 08:51:02 +0000 (UTC)
-Date: Thu, 22 Jan 2026 08:50:59 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Wei Wang <wei.wang@smartx.com>
-Cc: qemu-devel@nongnu.org, kkostiuk@redhat.com, michael.roth@amd.com
-Subject: Re: [PATCH] qga: Fix crash due to redundant error setting in
- qmp_guest_file_open()
-Message-ID: <aXHk8wPrQe6VLW-C@redhat.com>
-References: <20260122040430.51001-1-wei.wang@smartx.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqRF-0004WB-To
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:53:13 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqRE-0005oR-EZ
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:53:13 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4801d7c72a5so5229025e9.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:53:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769071990; x=1769676790; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=bo35Dd0AhLNc2UVgpDKnkNtO0kfipxtX6eZZir4zmO8=;
+ b=HIUU8ls8IVPJsfZOHNDzE8zF4CSnDy5R35Al/vh8d2f7I2406DEuXGGz6i8/E/LBaJ
+ UFydDDhkjxNcFegxZwhABsXDxQ51Evl5kSaG6CjLRckkHURz8bO3yChDsuOe40K4dFdB
+ mRk7+3uVqBC8N9AnBMyTN98xOXbc4HyAsJZsqGknxRsl0IMHSn1Q6E0KM7Sh4Iw8XzHT
+ QaUhXXB5ZyYSBGQ5S/fjeSslP9is0wZZC7wZMgvHjAH9ICTfIHguetk8zzlLc1EVEJZO
+ SbCTCttu9Tv+5oVLP4+3iRegLoaleBxkIppWbqgOM0XXsRAZzU37Klbc14lC6J1grwAq
+ +qlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769071990; x=1769676790;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=bo35Dd0AhLNc2UVgpDKnkNtO0kfipxtX6eZZir4zmO8=;
+ b=n4LvwA3zT1BBLR9H3OcgjSvoSwNPYD1XlFXEEcRGXEJvBhVAuY2QOGrmCgYkSwA7E7
+ pqmo3zXL2KgOCgM0tNqdNXzZN6UPHn569j8Aa3jKTUck03H04PKDUDhKsc+bNT9A4MYi
+ QN41tuGKC9p1AhrB9UDLykXIXVhhiO7La4h5+ZU/NjLEDnL8O3Ka7ONVfembRewT0hAR
+ MObFbMzBEyDylOJpSs6x9CWlLpXmwKng2JkB8/F3XWAcs2OMOMeRZP+nppXfxJJHejI+
+ SdOUDGN6dFz6kkRnsNGiNiprfA8j1RS2FY2/a7aet2QSNd/VPHoKSRtttvqHjIYwg2U4
+ aVmw==
+X-Gm-Message-State: AOJu0YxFPsM4V0WpCZJMbjGuoaPxSlaI9GaVN9yH3k+gzMDq9P5mzbzT
+ tqsQX3w43vN3BnD44XWTJHZPjvivbIr1jKpzO3cfoZcIQabg263hmY29rSNtGnRAatbwJgOVcel
+ EFkwj3iY=
+X-Gm-Gg: AZuq6aLRt2NQJvHGNm5G/foWvSQzFs2xcnSz//GsoJOh3WspE2ydOw8Wtn/eVlHBxIl
+ xcQcmirlU4o98VPichQhZUd0fZO5E89JY0oDQTz6IRCH/aa7smqFpdWhy33+6qmE5xyW5mMynYL
+ y/dBiyN9LoTnFL0o0bcw22GSFDgCyU8dIM4LUxdmhbMyJ/R2pl3zp3RjNDbT3C1AwtKu47XiJzy
+ aQAhThpqNcY0YVSgJD3rf+dF5S6LcFnxFsazq4ZHmHK2RDL/KCvEgq+zL5hdJQ5iSRwYau9M/39
+ yhsY0kOYAMJS0lNW9CeJgCiDde2CQmkIwW4JL8sh2lyZ4dP3bS4zEJZxsq0VRa4VIojcnOfPwrS
+ ypzwtgDnx4J4kZgf+NAXcMPYrpLVsz/MfxkEWPd9urStk+fwIKz638nKqGDEdzTHdhL1EqfOJpl
+ prSi1NfmO1SUTmAbZd4m0/Bl9LwQ+wcUuYGaG4dA9rq9aQn/8TkhOyd9fznAEU
+X-Received: by 2002:a05:600c:3509:b0:47a:94fc:d057 with SMTP id
+ 5b1f17b1804b1-4801eab54e2mr245091055e9.2.1769071990310; 
+ Thu, 22 Jan 2026 00:53:10 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48046fba46dsm51433645e9.0.2026.01.22.00.53.09
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 22 Jan 2026 00:53:09 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 02/31] bswap: Use 'qemu/bswap.h' instead of 'qemu/host-utils.h'
+Date: Thu, 22 Jan 2026 09:52:25 +0100
+Message-ID: <20260122085255.95035-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260122085255.95035-1-philmd@linaro.org>
+References: <20260122085255.95035-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260122040430.51001-1-wei.wang@smartx.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,44 +95,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 22, 2026 at 12:04:30PM +0800, Wei Wang wrote:
-> Avoid setting GError multiple times in qmp_guest_file_open() by checking
-> if errp is already set.
-> This prevents crash caused by repeated error handling calls.
-> 
-> Signed-off-by: Wei Wang <wei.wang@smartx.com>
-> ---
->  qga/commands-win32.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-> index 0fd0c966e4..8c45ca5004 100644
-> --- a/qga/commands-win32.c
-> +++ b/qga/commands-win32.c
-> @@ -263,7 +263,9 @@ int64_t qmp_guest_file_open(const char *path, const char *mode, Error **errp)
->      fd = guest_file_handle_add(fh, errp);
->      if (fd < 0) {
->          CloseHandle(fh);
-> -        error_setg(errp, "failed to add handle to qmp handle table");
-> +        if (!*errp) {
-> +            error_setg(errp, "failed to add handle to qmp handle table");
-> +        }
+These files only require "qemu/bswap.h", not "qemu/host-utils.h".
 
-guest_file_handle_add() only returns -1 when qga_get_fd_handle
-returns -1, and qga_get_fd_handle always sets errp.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260109163730.57087-2-philmd@linaro.org>
+---
+ tests/qtest/ahci-test.c              | 2 +-
+ tests/qtest/libqos/ahci.c            | 2 +-
+ tests/qtest/libqos/generic-pcihost.c | 2 +-
+ tests/qtest/libqos/pci-spapr.c       | 2 +-
+ util/hbitmap.c                       | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-Therefore, your new conditional call to error_setg will never be
-executed; remove it entirely.
-
-With regards,
-Daniel
+diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
+index e8aabfc13f5..5c32ff20029 100644
+--- a/tests/qtest/ahci-test.c
++++ b/tests/qtest/ahci-test.c
+@@ -31,7 +31,7 @@
+ #include "libqos/pci-pc.h"
+ 
+ #include "qobject/qdict.h"
+-#include "qemu/host-utils.h"
++#include "qemu/bswap.h"
+ 
+ #include "hw/pci/pci_ids.h"
+ #include "hw/pci/pci_regs.h"
+diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
+index 34a75b7f43b..0621a6c4775 100644
+--- a/tests/qtest/libqos/ahci.c
++++ b/tests/qtest/libqos/ahci.c
+@@ -28,7 +28,7 @@
+ #include "ahci.h"
+ #include "pci-pc.h"
+ 
+-#include "qemu/host-utils.h"
++#include "qemu/bswap.h"
+ 
+ #include "hw/pci/pci_ids.h"
+ #include "hw/pci/pci_regs.h"
+diff --git a/tests/qtest/libqos/generic-pcihost.c b/tests/qtest/libqos/generic-pcihost.c
+index 4bbeb5ff508..b77617524ca 100644
+--- a/tests/qtest/libqos/generic-pcihost.c
++++ b/tests/qtest/libqos/generic-pcihost.c
+@@ -15,7 +15,7 @@
+ #include "generic-pcihost.h"
+ #include "qobject/qdict.h"
+ #include "hw/pci/pci_regs.h"
+-#include "qemu/host-utils.h"
++#include "qemu/bswap.h"
+ 
+ #include "qemu/module.h"
+ 
+diff --git a/tests/qtest/libqos/pci-spapr.c b/tests/qtest/libqos/pci-spapr.c
+index 0f1023e4a73..3723cbb38db 100644
+--- a/tests/qtest/libqos/pci-spapr.c
++++ b/tests/qtest/libqos/pci-spapr.c
+@@ -13,7 +13,7 @@
+ 
+ #include "hw/pci/pci_regs.h"
+ 
+-#include "qemu/host-utils.h"
++#include "qemu/bswap.h"
+ #include "qemu/module.h"
+ 
+ /*
+diff --git a/util/hbitmap.c b/util/hbitmap.c
+index d9a1dabc630..3525bf7751a 100644
+--- a/util/hbitmap.c
++++ b/util/hbitmap.c
+@@ -10,8 +10,8 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/bswap.h"
+ #include "qemu/hbitmap.h"
+-#include "qemu/host-utils.h"
+ #include "trace.h"
+ #include "crypto/hash.h"
+ 
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.52.0
 
 
