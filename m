@@ -4,68 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 478A1C44536
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 09:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A32F8C44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 09:35:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vir1p-0006bb-Fx; Thu, 22 Jan 2026 04:31:01 -0500
+	id 1vir5X-000878-Tr; Thu, 22 Jan 2026 04:34:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vir1e-0006SR-Kv
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 04:30:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vir1c-0003UF-He
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 04:30:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769074247;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=T+HrDQpWBb9saMP0oMhRTFdzP6FpR34iTVurd48EWrc=;
- b=NTioozbGqKnUGgKx82com3ZpyyOLVL6tyd35ZK/o1B6S+kYmFZfMxhTypywg3k3MOcp25q
- HZNoBMgvRJXIEj0vYoA1fff+6bAl/Lwv3m5jVoV78EH6gUl+jsrQvd5DvtZVLmVC5eF0bO
- 1uQC3bEMQaTvSuwiD2lS0GHWMo7pW4M=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-uChk8bcEMNKHilS4Yea8bg-1; Thu,
- 22 Jan 2026 04:30:41 -0500
-X-MC-Unique: uChk8bcEMNKHilS4Yea8bg-1
-X-Mimecast-MFC-AGG-ID: uChk8bcEMNKHilS4Yea8bg_1769074241
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CEE7B18005B0; Thu, 22 Jan 2026 09:30:40 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.32.255])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1BD591800577; Thu, 22 Jan 2026 09:30:37 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- kallisti5@unixzen.com
-Subject: [PATCH] tests/vm: Make the haiku VM usable again
-Date: Thu, 22 Jan 2026 10:30:36 +0100
-Message-ID: <20260122093036.16085-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vir5V-00086V-Qe
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 04:34:49 -0500
+Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vir5U-0003rv-D5
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 04:34:49 -0500
+Received: by mail-pf1-x441.google.com with SMTP id
+ d2e1a72fcca58-823075fed75so314354b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 01:34:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1769074486; x=1769679286; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bmpkKNXFsi/JNiNEI4JwRCKu7E90Bq7GpVrJkexggcU=;
+ b=jflWqPqWVjOaJScU2DD5j/OITCZhlED+IO5S7kvlsXiURb1kxiImYn1s+i/Fmaz++7
+ PFv/VXMIATpGYmIOuEjhsoHMrVkJhrV1vRaSPdcbyQAgcuE76RuZpagd/9vbsGGQg0aa
+ VrfZeL8WSw/2OxHs47kPF0N3KIqaGy1WBjHC01b1RVZGhoD5A+8qnORORIc4taHJAG0J
+ Y7YM+AaAZXSnnI45wYbT8Mwx/MU2ChxRsE+APZr0rUI2Fmk4Bms75Q6fY9i3vbePenal
+ 8qyAj+PKVuqANTL5fUgftuFaP191AY9WULL/O7HXil49xBsfxLiPgXpZiBOUuYuJQWll
+ gOHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769074486; x=1769679286;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bmpkKNXFsi/JNiNEI4JwRCKu7E90Bq7GpVrJkexggcU=;
+ b=wu4RztWaKOUKuXQh2ohn0Kx+6q9vkKnnjYShda35So681VjbvW9u0mYl76scp5h9pj
+ J8SThGzx0lpCKrqwdNgly3CtB6YDNlef23rXqEisqaqKEMvB/8STnlvVH5ZkofeODsAb
+ 27g/ajZA9e5fI6x7/Y/3ZPr3cQqzY3JSBhmAt4f/Lzjrb3ZL6mGBR8Og81keoI3Gtleg
+ uZVNFw8XHim4HVFeym/LtKl/skcJyQHRO3PawZF7aQJBcwWNCN/1UYMxtOYcZGjnFY5n
+ NCPVT57MWNS1Apxj6xlfmWH2FOyyHdctPzkl6DTmej97fz3AgwgppGPovCV0rdiai9A/
+ qcPw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXl23wTiGQX9jZvQTEbiIqztgU93WdMY0smwsgXJe+gcSNeR8bud6MGeOKG0Gktx8NKF3Bzt55N5cH6@nongnu.org
+X-Gm-Message-State: AOJu0Yxv+n+CgKF7QAVThi0IKUyzEPsh0Zic/40B869XQMU+puBlLW8Z
+ R9Ak8fw/YoXjZEU4HDSHMVgPbnyPLsbufwswtD6CxsdABK5hDQfs5SbH
+X-Gm-Gg: AZuq6aJgmBZtkUmmA2L0IlstGPYf38efQqeWKCGNdFwjbcAt/SP8GvCzIR+UWudYGaG
+ Elr3M26HRScvdZPvdnLIaT6+1XdqdrhlLgAXn4lAGbJRonJgJhsJZtKBrqkOdXCMz960bpVGMBr
+ c/W/4ITdvf7u3CLDAVkRAXiMQCfqo6JjosVBiG67TqRk8TGB+tiTfj19PToRe51f+Pk6p9Kx54d
+ CdeFOqPQR9GWjZoa509lOVAOc0nhnEkuHxqfxPQD6A4r/k6iakW3t+6JtzHTb09/lHvzlVFjNU/
+ +8BiFf8brHtkFRgwHvFKFEf+5j+uXYHj4o37v1Op3I/w0qdkhU4LpC5Wkxbpe73Tixv3H8yxOO1
+ iOOC1nhntmtE53ZdmbYDMdl5jvKIp37fWKMe83j53dONTZGzH6d4ZltoQmTrgEW/PC+pE+V1oUJ
+ 59ZjsjMgQNUITXZc8H05giQnNnWukeSXy02uUmKppjMCord8o13V/ETkJQ+Wk=
+X-Received: by 2002:a05:6a00:2192:b0:81e:7734:9e85 with SMTP id
+ d2e1a72fcca58-8219ede8a64mr1837819b3a.20.1769074486487; 
+ Thu, 22 Jan 2026 01:34:46 -0800 (PST)
+Received: from [127.0.0.1] ([61.173.116.33]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-823098cb1basm1296587b3a.32.2026.01.22.01.34.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Jan 2026 01:34:46 -0800 (PST)
+Message-ID: <2f0a2b88-445a-4b73-bf91-df7fa83d9e47@gmail.com>
+Date: Thu, 22 Jan 2026 17:34:38 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/5] hw/riscv: add k230 board initial support
+To: Peng Jiang <3160104094@zju.edu.cn>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, wangjingwei@iscas.ac.cn, Chao Liu <chao.liu@zevorn.cn>
+References: <cover.1768884546.git.chao.liu.zevorn@gmail.com>
+ <ad3c378976034be5cf80282048aafd002e725105.1768884546.git.chao.liu.zevorn@gmail.com>
+ <651b1d38.63ab7.19be50b4721.Coremail.3160104094@zju.edu.cn>
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+In-Reply-To: <651b1d38.63ab7.19be50b4721.Coremail.3160104094@zju.edu.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pf1-x441.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,76 +107,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
 
-The haiku VM bitrotted in the course of time. Make sure to use the
-latest version of the repositories here and install missing pieces
-like "pip" and "tomli" now.
+Hi Peng:
+On 1/22/2026 5:31 PM, Peng Jiang wrote:
+> Hi Chao,
+> 
+> I found a small issue in the reset_rom implementation in hw/riscv/k230.c.
+> 
+>> +static void k230_machine_done(Notifier *notifier, void *data)
+>> +{
+>> +    ...
+>> +    /* Mask ROM reset vector */
+>> +    uint32_t reset_vec[] = {
+>> +        /* 0x91200000: auipc  t0, 0x0              */ 0x00000297,
+>> +        /* 0x91200004: addi   t0, t0, 36 # <trap>  */ 0x02428293,
+>> +        /* 0x91200008: csrw   mtvec, t0            */ 0x30529073,
+>> +        ...
+>> +        /* trap:                                   */
+>> +        /* 0x91200030: j      0x91200030 # <trap>  */ 0x0000006f,
+>> +    };
+>> +
+>> +    /* copy in the reset vector in little_endian byte order */
+>> +    for (int i = 0; i < sizeof(reset_vec) >> 2; i++) {
+>> +        reset_vec[i] = cpu_to_le32(reset_vec[i]);
+>> +    }
+>> +    rom_add_blob_fixed_as("mrom.reset", reset_vec, sizeof(reset_vec),
+>> +                          memmap[K230_DEV_BOOTROM].base, &address_space_memory);
+>> ...
+>> +}
+> 
+> It seems the offset for the trap handler is incorrect.
+> 
+> The instruction at 0x91200004 is addi t0, t0, 36. After the auipc at 0x91200000, this sets the value of t0 to 0x91200000 + 36 (0x91200024), which is then written to the mtvec register.
+> 
+> However, the actual trap: label is located at offset 0x30 (0x91200030).
+> 
+> The immediate value in the addi instruction should probably be 48 (0x30) instead of 36 (0x24) to point to the correct trap handler address.
+> 
+> Best regards,
+> Panda Jiang
+Thank you for reporting this bug. I will fix it in v5. :)
 
-We also have to add a little "hack" to our configure script: For some
-weird reasons, the meson binary shows up as pyvenv/non-packaged/bin/meson
-here, and not in the expected location pyvenv/bin/meson. Use a symlink
-to fix it.
-
-For this new version, we also have to compile with "-pie", otherwise
-the linker complains about bad relocations in the object files, so
-allow compiling with PIE in the configure script now.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- configure             | 8 +++++++-
- tests/vm/haiku.x86_64 | 4 ++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/configure b/configure
-index 9d7fd13a98b..587cd2a2fe6 100755
---- a/configure
-+++ b/configure
-@@ -967,6 +967,12 @@ mkvenv="$python ${source_path}/python/scripts/mkvenv.py"
- $mkvenv ensuregroup --dir "${source_path}/python/wheels" \
-      ${source_path}/pythondeps.toml meson || exit 1
- 
-+# For some unknown reason, the meson binary shows up in the wrong
-+# folder on Haiku. Use a symlink to fix it.
-+if test "$host_os" = "haiku" && test ! -e pyvenv/bin/meson ; then
-+    ln -s "$PWD"/pyvenv/non-packaged/bin/meson pyvenv/bin/meson
-+fi
-+
- # At this point, we expect Meson to be installed and available.
- # We expect mkvenv or pip to have created pyvenv/bin/meson for us.
- # We ignore PATH completely here: we want to use the venv's Meson
-@@ -1068,7 +1074,7 @@ static THREAD int tls_var;
- int main(void) { return tls_var; }
- EOF
- 
--if test "$host_os" = windows || test "$host_os" = haiku; then
-+if test "$host_os" = windows ; then
-   if test "$pie" = "yes"; then
-     error_exit "PIE not available due to missing OS support"
-   fi
-diff --git a/tests/vm/haiku.x86_64 b/tests/vm/haiku.x86_64
-index 71cf75a9a3e..529283c39f6 100755
---- a/tests/vm/haiku.x86_64
-+++ b/tests/vm/haiku.x86_64
-@@ -78,6 +78,8 @@ class HaikuVM(basevm.BaseVM):
-         "devel:libusb_1.0",
-         "devel:libz",
-         "ninja",
-+        "pip",
-+        "tomli_python310",
-     ]
- 
-     BUILD_SCRIPT = """
-@@ -109,6 +111,8 @@ class HaikuVM(basevm.BaseVM):
-         self.wait_ssh(wait_root=True, cmd="exit 0")
- 
-         # Install packages
-+        self.ssh_root("echo yes | pkgman add-repo https://eu.hpkg.haiku-os.org/haiku/r1beta5/$(getarch)/current")
-+        self.ssh_root("echo yes | pkgman add-repo https://eu.hpkg.haiku-os.org/haikuports/r1beta5/$(getarch)/current")
-         self.ssh_root("pkgman install -y %s" % " ".join(self.requirements))
-         self.graceful_shutdown()
- 
--- 
-2.52.0
-
+Thanks,
+Chao
 
