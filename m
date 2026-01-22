@@ -4,122 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E546AC44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 10:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8183C44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 10:21:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1virj3-0008Jb-QE; Thu, 22 Jan 2026 05:15:41 -0500
+	id 1viroE-00025M-KN; Thu, 22 Jan 2026 05:21:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1viriy-0008IY-L9
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:15:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1viroB-00024R-F5
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:20:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1viriu-0008MU-NZ
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:15:36 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1viro9-0000n4-7C
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:20:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769076929;
+ s=mimecast20190719; t=1769077255;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6rlEAygC1h9mczR1y0+mi8VH3UsiAelRgmF+YEFh3nM=;
- b=Lj7+LXcXoznypvz0EC8z9HGGbknlOA6N+6WHCcPOiYykHM/Y/fOUTr0J67d+a4XVDHYM5a
- 3W3JhG7a2+RH0MtR/NfXiEd+rbVJ8XbBMVvRTCWXEbpdvs+dacW0/ulvcQMJOAJRIpHUk9
- P+9biwN/wk+K2OtjHmtHoQzXOdkDsWQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=tPfYmGzEXirxtwkfATh3Dk9U8JU6CQPXfb1UZsbWegc=;
+ b=BY4gG/73IHjKlOfGL3yUME8AIpz4ElswBZwE6Ksq1/mXCEfpfR9/iQnSQuEZP8UpEhYGk0
+ wjgPqyg1cJhZDvr/3r1XYJoaNuSKsNQn6HSm6rxzYofb2BojbtBYmPe/bgVnHTiBAAqgp6
+ iveM6fpnWB3t/yZ6GWIqxIPA8yKMjAg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-435-cX8whe-qNTCbd-NwToqu5A-1; Thu, 22 Jan 2026 05:15:28 -0500
-X-MC-Unique: cX8whe-qNTCbd-NwToqu5A-1
-X-Mimecast-MFC-AGG-ID: cX8whe-qNTCbd-NwToqu5A_1769076927
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47ee432070aso6165375e9.1
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 02:15:28 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769076927; cv=none;
- d=google.com; s=arc-20240605;
- b=SdLB5NDDORYkuIpKGNckM79uvKgHFjEeZAcyS12i20wIewJthZUdI14hQDZvoQ3RjO
- XOOljBtVd4obY/bGyoBWXCwvSiZBgFj+IzyCgWGOYQ3wg3i+DdbLHXjQ9u4xafWvmkpg
- iRP0weaofRFuD4VqdaK5z0OR2z9RsDJl408ilc+s0RdfFzQokAaqSNfGLNRaYdaYrfQj
- ubWtnGaQAwqdkqa/jPj+pvW9ZsW9HHQ0wSY0luFIbXA8gq/JItJ7cooFlj6xD+IdHcN7
- f6GKq/PHKPYlFxQPodn+GdDMxk9jgFLXBPodrWxn7BjIz+vN8ZeRmVKc/oIrEdbAKUMq
- 3u7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=6rlEAygC1h9mczR1y0+mi8VH3UsiAelRgmF+YEFh3nM=;
- fh=Yi0vBjmsTj1dYaJTvBfK7+gaEfwkSzLXsVfqapRpNiI=;
- b=WnXnHnKDMpVHKzdpp3VL8Crj2v7HDnhEnsfM0q1Qb8BFzCaCgmoaTG1awDvq4WqKBi
- s+oNk2kuUEDala3mUsOC+SohzqXP1AO25mphUoX167DuiUjVpszL0X7tOE01B0wJkizu
- xDCldK9y2PQJvdhnYelZyEofaBllh/Uhs4lgJZr5SmXrn+QGvVp+JHQ/ib/ci6VKB91n
- ZLZJQqP+nqtFt6K3C7bDzRlfqRSEP2qYqFw0iLLg5Y9rQUapor1ob1Uw/gUxGFllEX9r
- TfFva8CCArUY2egK17LGTJnKLjRD4zUsRpilrpVUhPV/Wbv2hmvi+1NP9H7lfgMcaiYZ
- a2Hg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ us-mta-610-1P_xKNaFPYWPeDPSKGgHCw-1; Thu, 22 Jan 2026 05:20:54 -0500
+X-MC-Unique: 1P_xKNaFPYWPeDPSKGgHCw-1
+X-Mimecast-MFC-AGG-ID: 1P_xKNaFPYWPeDPSKGgHCw_1769077253
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4803b4e3b9eso6421605e9.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 02:20:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769076927; x=1769681727; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=6rlEAygC1h9mczR1y0+mi8VH3UsiAelRgmF+YEFh3nM=;
- b=rZI2J5c+hIkCTZOUXzLM072r1ejMf5diu2sWIbpHtpuf840ocjHuz0bYoOqGB6aBLH
- 3NzZMnnfHRvHatmLJMuYx9t6LGyTLlewly0xGKAwp54yx7XOCcDPX4OjDn4OSZ9WDwNV
- uSK6px9JD1+xCUl7rUi5H0EG12CHD+uNaMLIU4UhEhUXbcIXBnN8JQPCWSMIynr/wA8E
- 6BzcNkITY4lODi7SxobUG/BCpQfVUi6tIkn62XLEakebKUfwzUC16LmgC3GJKHZj9b1z
- DUX22cokQJjU6tVK+O82ZYvZCK6haDMjd8LTqTqTsQR1bkspzwPWWhrhaEWQxqrKtTMM
- snlA==
+ d=redhat.com; s=google; t=1769077253; x=1769682053; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=tPfYmGzEXirxtwkfATh3Dk9U8JU6CQPXfb1UZsbWegc=;
+ b=bdAqLY+s71PwS2/Xvz+hJRUDNP6MNbMDzXz10JcfMxy8/qeC7ET7lyqPGBEfO5T4jC
+ rGKfnmY0JiDBJE14m5V6PNzaoIqmHkq2lVndejP5owoYvdorIT8BII0sP+i/0KL5jMdi
+ gGP97wABimnPVFbiGPtygE81BeoDDxx2gu745JS/hUpDFv1U8o6Mqv6fj75hyzvOxVp3
+ hx+dwmmhB/zVzLAiflMrT7Nw0aAMTrB9LgwdwHFDVqdzGDWBHfWI6je7dG62dbPwZOxf
+ fuoMbibSPtxXlNUXMGFQmmBM/e+s7IZ/7//wEsnEWbvmocLe+MIWIfMjNHWfOBq9D+Kn
+ uYAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769076927; x=1769681727;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1769077253; x=1769682053;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6rlEAygC1h9mczR1y0+mi8VH3UsiAelRgmF+YEFh3nM=;
- b=arDuL+znVZV1DXwN25A/orCufpriiPW9gybMPzisR7N6cbve9CJlsyIhfxz69WbCKN
- uXKRqLRvgC7fuUWP+zVPxeTXd/IEp7eu6RMUZXiZigtGHWsV+lQWQXT25hL7+VFsq6BX
- oGRoFArVs8DnB/bhYVDcgUvCWxrJvJU6gjrzVHM8xWTy0G5zS+yN3XpL6CAPT2uj0RbJ
- UmNB1Kjolq/pqT5hmSMhLi9C/I1I+qMvBqli+lW2Df1RsUEn0H8n0fGmDhqBlAxVjdwq
- VqZvJ8C1ch/d9KVXwnLTcoRKuxp3mz6RZx5Gp222P0YFqZ83KjOiEnthIMulkxuCYewv
- EzyQ==
-X-Gm-Message-State: AOJu0Yyzdx3FLZU5PbjIb+F9m1wlI8hS3KyoDQVD9VZhMgI5Cofzb8mc
- EWZNwdWS4xoDS2srOTFxSK1XNcUE2kZN85BvWv79JTkaFkW6oaNCvOIpzzFjTw8vDn8WKFR7lPZ
- z6WtkuttvKMcHw4Ise2lRPUsQJVCp2/b8dtxgT7nJjLpjqg/j53ko619xSPT7dMZXj7BijwAcV+
- 91kZOcI/lKHtBxZkoX31u/ROBI5mfnLDs=
-X-Gm-Gg: AZuq6aJqc9TmXH6cJowEY92IaIPoh9o9L3M/Q4HvxX8m42qNrn3NA/GAb6wj+EhhpiN
- Jg2B2NaRtMkKXwBmt3+zWMTeZLxqvQjIKUhn2Z0AhEged7L72qSZ6EDkszQ62E6MG/KNwS8wupc
- mGskxU+iTKAtSA1N9GNfmmwHjH+wy0MZ75g0VXg4TmFbE8e+i1O+0DpUujbV3B7rTd+aKW/DFl1
- 5wH1hSrHsbV1oP7zrAgkcD7+PIeuT8NOUIMEseG5cq8dBm0zo/uKH1k
-X-Received: by 2002:a05:600c:608a:b0:477:2f7c:314f with SMTP id
- 5b1f17b1804b1-48025ccb812mr262118345e9.10.1769076926933; 
- Thu, 22 Jan 2026 02:15:26 -0800 (PST)
-X-Received: by 2002:a05:600c:608a:b0:477:2f7c:314f with SMTP id
- 5b1f17b1804b1-48025ccb812mr262117935e9.10.1769076926489; Thu, 22 Jan 2026
- 02:15:26 -0800 (PST)
+ bh=tPfYmGzEXirxtwkfATh3Dk9U8JU6CQPXfb1UZsbWegc=;
+ b=lFe/+JUB2PPCOa8JT+/GCtSWlm5fD94c31f4LsJFL3s0XAlIHkNOG6cFCRp3nx0XYj
+ yvUUfpprTrpRNcUPsmCdTrm5gt7zethMY5T2RWdzdpMDCWQotkKOcRkdOpjzS//YZR4y
+ mPXsKbKG2GtUEaeVWnvVdHC3fiu8SVnwRG4MOjAf7iVjhtmqFOUL2zZpKdmVDfs4gPvO
+ jOwqEL/w89JoXlWAqtOMDLoSq6bEDAy/Yd3FzUZW/qyGnRxCGsG/qDuOct4+fftL85CH
+ 7RVD5Bh4AqkY7AgyS/bPoeYENDkj/q2lyVvbUFDNzzgrv3/ka5Z4NAXA1HeUOhFspHnT
+ B2Ng==
+X-Gm-Message-State: AOJu0YyqmV0EmLe9VkYK5m2BrAh/0VCVZxOpdVmcuCoubj42V6kU+Zjs
+ 1gpyhTAf1dPiMvd1R0Ng8RQfQpdNgUK3+D2nzugt5JuP0uW9CWVetp44pUiv9Y8+zOSQsAyhM6r
+ WxG5F/ddesz3Cs12Ogn04Tms8m2YFjLeNbtMd+ds7lcoBQNLQP9M2aVCR
+X-Gm-Gg: AZuq6aKiegHzorvom7ihgl+n4PKMUqhNBYrXh+dJDtrJkbxzQ4b5fJEsUFJmLUTIbBC
+ SmMflBAZ43ZlhcRFWrKg04QYKoDtXRKizPuAgdoBnbjdho5YQ4ca2+CCjY4YqVgC2H7JBQJ+vxX
+ Avwqe4RdPbqYL6s018iZLQo/9mKAtMg48IxIbBj+EHUdawrJksQdrS6h5XRcQiGmGMAMxZRyoge
+ FkTRQoe1JhuH7usP5nkhi28pgZuE27+DCvY/0Nvdi/hhp2gWQwQ2pYD/qN6vOobr91K8vVz7DJ9
+ DPqb0jkwYCDO6e1qfN+QNJzCFKg0ABPrzjKAU89B9Wf+C0YeJg/lZUPoL4pAvK5cWgfC3eeMjlc
+ FbakSTtg=
+X-Received: by 2002:a05:600c:1554:b0:480:4b5d:9ec with SMTP id
+ 5b1f17b1804b1-4804b5d0a5bmr6991825e9.33.1769077252725; 
+ Thu, 22 Jan 2026 02:20:52 -0800 (PST)
+X-Received: by 2002:a05:600c:1554:b0:480:4b5d:9ec with SMTP id
+ 5b1f17b1804b1-4804b5d0a5bmr6991405e9.33.1769077252251; 
+ Thu, 22 Jan 2026 02:20:52 -0800 (PST)
+Received: from [192.168.0.9] ([47.64.112.255])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4356997e664sm39650775f8f.30.2026.01.22.02.20.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Jan 2026 02:20:51 -0800 (PST)
+Message-ID: <832432e2-1f02-443d-8708-95ed5d7882bb@redhat.com>
+Date: Thu, 22 Jan 2026 11:20:50 +0100
 MIME-Version: 1.0
-References: <20260122093036.16085-1-thuth@redhat.com>
-In-Reply-To: <20260122093036.16085-1-thuth@redhat.com>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 22 Jan 2026 15:45:09 +0530
-X-Gm-Features: AZwV_QiVZFNvJvo__5UZlQv8jcuU4eI09xllUl0PFyaGQFSKnk3i1jpcyNed6EI
-Message-ID: <CAE8KmOxyA107Uc-E8rDXGJ7wXcMXwirNtdUM8dytPMw=6j+1YA@mail.gmail.com>
-Subject: Re: [PATCH] tests/vm: Make the haiku VM usable again
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- kallisti5@unixzen.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Replace CONFIG_WIN32 with CONFIG_WIN64
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-trivial@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>
+References: <20260122090352.9901-1-thuth@redhat.com>
+ <aXHtxBfuIRsJ3P_M@redhat.com>
+ <CAMxuvaygPAOJiZcRCZ=W+Ly=b8Nq9L1y2sRtraz_+hfiXwLVvQ@mail.gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAMxuvaygPAOJiZcRCZ=W+Ly=b8Nq9L1y2sRtraz_+hfiXwLVvQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,91 +169,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 22 Jan 2026 at 15:01, Thomas Huth <thuth@redhat.com> wrote:
-> The haiku VM bitrotted in the course of time. Make sure to use the
-> latest version of the repositories here and install missing pieces
-> like "pip" and "tomli" now.
->
-> We also have to add a little "hack" to our configure script: For some
-> weird reasons, the meson binary shows up as pyvenv/non-packaged/bin/meson
-> here, and not in the expected location pyvenv/bin/meson. Use a symlink
-> to fix it.
+On 22/01/2026 11.11, Marc-André Lureau wrote:
+> Hi
+> 
+> On Thu, Jan 22, 2026 at 1:28 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+>>
+>> On Thu, Jan 22, 2026 at 10:03:52AM +0100, Thomas Huth wrote:
+>>> From: Thomas Huth <thuth@redhat.com>
+>>>
+>>> We stopped supported 32-bit Windows hosts a while ago already, so
+>>> let's rename CONFIG_WIN32 to CONFIG_WIN64 now to make it clear
+>>> that this switch is not about 32-bit Windows anymore.
+>>>
+>>> The patch has been created with a simple sed statement:
+>>>
+>>>   sed -i s/CONFIG_WIN32/CONFIG_WIN64/g $(grep -rl CONFIG_WIN32 *)
+>>>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   meson.build           |  2 +-
+>>>   qapi/char.json        |  4 +--
+>>>   qapi/misc.json        |  2 +-
+>>>   qga/qapi-schema.json  | 76 +++++++++++++++++++++----------------------
+>>>   include/qemu/futex.h  |  2 +-
+>>>   include/qemu/xattr.h  |  2 +-
+>>>   hw/usb/host-libusb.c  | 18 +++++-----
+>>>   io/channel-watch.c    | 10 +++---
+>>>   ui/gtk.c              |  2 +-
+>>>   util/cacheflush.c     |  4 +--
+>>>   util/sys_membarrier.c |  2 +-
+>>>   scripts/checkpatch.pl |  2 +-
+>>>   12 files changed, 63 insertions(+), 63 deletions(-)
+>>>
+>>> diff --git a/meson.build b/meson.build
+>>> index a84f14258b0..01b9a5c22ce 100644
+>>> --- a/meson.build
+>>> +++ b/meson.build
+>>> @@ -2422,7 +2422,7 @@ config_host_data.set('CONFIG_GCOV', get_option('b_coverage'))
+>>>   config_host_data.set('CONFIG_LIBUDEV', libudev.found())
+>>>   config_host_data.set('CONFIG_LINUX', host_os == 'linux')
+>>>   config_host_data.set('CONFIG_POSIX', host_os != 'windows')
+>>> -config_host_data.set('CONFIG_WIN32', host_os == 'windows')
+>>> +config_host_data.set('CONFIG_WIN64', host_os == 'windows')
+>>
+>> While relevant to qapi file conditions, from a C code pov all of these
+>> are redundant as the compiler has all these facts built-in
+>>
+>>    #ifdef CONFIG_LINUX =>    #ifdef __linux__
+>>    #ifdef CONFIG_POSIX =>    #if !defined(_WIN32)
+>>    #ifdef CONFIG_WIN32 =>    #ifdef _WIN32
+>>
+>> NB,  _WIN32 *is* set on 64-bit Windows platforms too, so using
+>> _WIN64 is only needed if you have a code path that is exclusively
+>> 64-bit only, so there's little need for us to use _WIN64.
+>>
+>> And of course we are horribly inconsistent in what we use:
+>>
+>> $ git grep -E '#if.*_WIN32' | wc -l
+>> 284
+>>
+>> $ git grep -E '#if.*__linux__' | wc -l
+>> 90
+>>
+>> $ git grep -E '#if.*CONFIG_LINUX' | wc -l
+>> 142
+>> $ git grep -E '#if.*CONFIG_WIN' | wc -l
+>> 16
+>>
+> 
+> There is also G_OS_*
+> $ git grep G_OS_UNIX | wc -l
+> 15
+> $ git grep G_OS_WIN32 | wc -l
+> 23
+> 
+> Replacing WIN32 with WIN64 doesn't make much sense. It should be
+> either WINDOWS or WIN32.
+> 
+> The Windows API is still called that way, even on 64-bit systems:
+> https://learn.microsoft.com/en-us/windows/win32/
 
-   -> https://github.com/haiku/haiku/blob/master/docs/user/storage/storageintro.dox
+Oh, ok! Then I'll simply drop this patch (and let others come up with a 
+patch in case they want to replace CONFIG_WIN32 with _WIN32 or G_OS_WIN32 or 
+whatever).
 
-* Packages not available in the HPKG format are installed under the
-"/non-packaged/" directory, it seems.
-
-> For this new version, we also have to compile with "-pie", otherwise
-> the linker complains about bad relocations in the object files, so
-> allow compiling with PIE in the configure script now.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  configure             | 8 +++++++-
->  tests/vm/haiku.x86_64 | 4 ++++
->  2 files changed, 11 insertions(+), 1 deletion(-)
->
-> diff --git a/configure b/configure
-> index 9d7fd13a98b..587cd2a2fe6 100755
-> --- a/configure
-> +++ b/configure
-> @@ -967,6 +967,12 @@ mkvenv="$python ${source_path}/python/scripts/mkvenv.py"
->  $mkvenv ensuregroup --dir "${source_path}/python/wheels" \
->       ${source_path}/pythondeps.toml meson || exit 1
->
-> +# For some unknown reason, the meson binary shows up in the wrong
-> +# folder on Haiku. Use a symlink to fix it.
-> +if test "$host_os" = "haiku" && test ! -e pyvenv/bin/meson ; then
-> +    ln -s "$PWD"/pyvenv/non-packaged/bin/meson pyvenv/bin/meson
-> +fi
-> +
->  # At this point, we expect Meson to be installed and available.
->  # We expect mkvenv or pip to have created pyvenv/bin/meson for us.
->  # We ignore PATH completely here: we want to use the venv's Meson
-> @@ -1068,7 +1074,7 @@ static THREAD int tls_var;
->  int main(void) { return tls_var; }
->  EOF
->
-> -if test "$host_os" = windows || test "$host_os" = haiku; then
-> +if test "$host_os" = windows ; then
->    if test "$pie" = "yes"; then
->      error_exit "PIE not available due to missing OS support"
->    fi
-> diff --git a/tests/vm/haiku.x86_64 b/tests/vm/haiku.x86_64
-> index 71cf75a9a3e..529283c39f6 100755
-> --- a/tests/vm/haiku.x86_64
-> +++ b/tests/vm/haiku.x86_64
-> @@ -78,6 +78,8 @@ class HaikuVM(basevm.BaseVM):
->          "devel:libusb_1.0",
->          "devel:libz",
->          "ninja",
-> +        "pip",
-> +        "tomli_python310",
->      ]
->
->      BUILD_SCRIPT = """
-> @@ -109,6 +111,8 @@ class HaikuVM(basevm.BaseVM):
->          self.wait_ssh(wait_root=True, cmd="exit 0")
->
->          # Install packages
-> +        self.ssh_root("echo yes | pkgman add-repo https://eu.hpkg.haiku-os.org/haiku/r1beta5/$(getarch)/current")
-> +        self.ssh_root("echo yes | pkgman add-repo https://eu.hpkg.haiku-os.org/haikuports/r1beta5/$(getarch)/current")
->          self.ssh_root("pkgman install -y %s" % " ".join(self.requirements))
->          self.graceful_shutdown()
->
-> --
-
-* Instead of creating a symlink for meson, could we add
-'/non-packaged/' directory to an appropriate PATH variable, so that
-all such binaries are accessible from 'non-packaged/bin/' directory?
-That way we avoid creating symlinks for many /non-packaged/ binaries.
-
-* Otherwise change looks okay.
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
-
-Thank you.
----
-  - Prasad
+  Thomas
 
 
