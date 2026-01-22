@@ -4,109 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13F55D3EE65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 13:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E0ABD3EE65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 13:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viuWu-0000PF-N2; Thu, 22 Jan 2026 08:15:20 -0500
+	id 1viuYR-0001jr-FG; Thu, 22 Jan 2026 08:16:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1viuWZ-0000MQ-7Q
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:14:59 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1viuWX-0003cs-33
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:14:58 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60MCxhQV021363;
- Thu, 22 Jan 2026 13:14:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=49S9cI
- bU95i7YtyrqFfsmozSG41Pw8ggN//tIiR6jBo=; b=XESIXW4YdRZ1u0sxcyodaL
- Z43yq1Re+PLSzLa+B8yK4iFy8xbnC+eq37Oco2uxPe/h93oQxjdeZ01IU0BQWp9L
- K4iYHGzeyUSS50buTpbxOVAJ4eWmIXB4Tn8hgdsk3re6dvMapDsfj8pOWoa/OEZj
- /iREYvZp/qXU+B93PboATKCsaGF7mTqkG0ADrn0C4Nuct07xUKlUhcWTtTep99eA
- u763+bxrIeRIjj0wxWDXB9vxweBwsOzewIc+84s+OpUw4Ewyj+fXVX3miAF83xoh
- ZPyVc9cmDqkcWgyrHTR7HOR+NrB7ULRgtCWlS57vitL3+vLMA/GaUfLoSBr6dfuQ
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bt612crrv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Jan 2026 13:14:52 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60MAFJG0016627;
- Thu, 22 Jan 2026 13:14:52 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brn4yaf2v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Jan 2026 13:14:52 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60MDEowo37421400
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Jan 2026 13:14:50 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0FA7A2004B;
- Thu, 22 Jan 2026 13:14:50 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B14A62004D;
- Thu, 22 Jan 2026 13:14:49 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.87.153.49])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 22 Jan 2026 13:14:49 +0000 (GMT)
-Message-ID: <956b1abe-009e-4f39-8549-425c02be47ea@linux.ibm.com>
-Date: Thu, 22 Jan 2026 14:14:49 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1viuYB-0001c9-HY
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:16:47 -0500
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1viuY7-0005mD-Bn
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:16:37 -0500
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-794265fb73bso8976467b3.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 05:16:33 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769087793; cv=none;
+ d=google.com; s=arc-20240605;
+ b=QoIA7Zn6pCYnQapTe0mggjiN6nQZyRWL7K5SDwiuIr1Zf00sbccdRcHPfMxz8qNrk1
+ /DH76sLkat1Bf/M6FvwZsjo4SOkL7dY0E+8HfzHbaSHlNtjKRwN2UfezNWWW+vqs2yAX
+ DCsQBIm4UJKpm0duGLpTIryRu/ruf+ei0cKWLpZRw4vO5+LIB4v08jcpwVU69H+OhcF+
+ 5RXkxww/tsf7Eoh8rwSpJErgTMhrROpNOHu29UUg84reWANrseduj4ZmroY7bxz8pmxW
+ L7RCrjSSrByKOsxADNSYPOAtOe+j4l/MClVVLfv70xBX67FzHbLJFm/oEcxjlxk8kQ8Y
+ xB8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=3T2gonBDdiMSEwQ+eAWXA/c1umAF3XqunyAE5u1qwqg=;
+ fh=jR7LVOBmK1jCkse7+hfFO0RVRlDhN6P9giU4wahz+Vw=;
+ b=HXnyFV6qiTt7xJMNcLt4XOodgoV1URIme2DY/8PbLa04JfLTgzfSe8taJhJWRZlaOv
+ FK07CWQzJUOsSQw+euf7mZ5QVIe94oheByBsVCl/cBQPFKEKNvAGJEMUClgSiiLruUR8
+ vPgc6hx+vXN86roJTfaDv+CwnJ7Gdxbj5JFJizNwPHfxzd16+w/94ZerVmG/QRg1NApS
+ wj7ZpuScacNvwlJ7qb/3m9JeXfQWvsu6c5ppAOlOLUuwXCUXGDGYgxkP6NxO3dsvbusM
+ LpUjpAJWmXKkjWnjCL6TNAJEirjS/YbSeasFFrbo4VdWqiePznyIisNaH/yWPylG6e/f
+ O7FA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769087793; x=1769692593; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3T2gonBDdiMSEwQ+eAWXA/c1umAF3XqunyAE5u1qwqg=;
+ b=godQ8tluUCsr2jOd3lyyWVxmavFaeGQsgISWhNmSSHF92QlK7mCYHalGZmzdnqaUAp
+ 6g9itoAQ/4bF2jGWbn4bbPHAf2fNx76z3iGxLXerrMaJjLgC5RCIDWpa4e6ugpYi05O5
+ k+33ja8XXTDAkHA1INgZaXLt8lVsKjQjSECRhwaYXfc+pTCXQnOhH5YwPcJApsNg5hZo
+ k99GXKcULK4smNB9/Ev110abNSeVP8W9i72QlQ+YPNmXwlodxEtSs7mr0GUPNzTSr2VF
+ j9UsFo3Lw9ff2Jm1Xu41GzHOX3DLlhU4tNqW5wfcx7bdNqP100GTxgO8ufoXVosLxTxj
+ EXvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769087793; x=1769692593;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3T2gonBDdiMSEwQ+eAWXA/c1umAF3XqunyAE5u1qwqg=;
+ b=U+ekVZJwZJSC7ACufhODvqaSjcAStrt32RLwXxxEzpmGLLQ/SP4HAAXdtHIoISC7VZ
+ rR3tZUmrs5bPAWrJR5hCjujI3fZSR6A5/ClincJQL8WXIw+2o55CFDHEiiW2555UHcCq
+ NhquDjk0o8ulzjFEicpu3ENB0+sW6hQ+wtqEc1dFMV/Ax0SJYPAUmFwYOMm9VPtyMGIG
+ fQBk3f/HdLMzPcMzdw2MCjO7LLVKWNmVfOqmj9w2/VUSq6cT9r//ubmF31jSfHiVrWhi
+ BY1hjV94KaxlphH0fCvpFQERdPUDDKp/ML+M+hoXOh8q8Ix02dtjBCS8DTzf76o1R99O
+ ykdQ==
+X-Gm-Message-State: AOJu0YzzaJ5XEwFfx+wtaEuiHgENrCMCFxqY10PMtjdBIr9OaiM7h1c3
+ 6Pv/a+GN/2J7r9TdDvyCYXb48mWp7XNUetwxfptzwG80IkKNKVQtavFdNO7yLDnTg666KBxt8+n
+ t+r37w6revkSP4H8zKcWM2UFpFHPZigSbhBFyIEHI1+xFpKC4z1JP
+X-Gm-Gg: AZuq6aIQHYsdtupZEKQ2dBiPGzpjFZ8naYPAtYSsqSu5MGL76ZbAdxvym02nyKosHax
+ BJ25Y797XoiISjuyP9mnJkhQRQHgd20Vx0PeC9FRrS2x8l7YrCyEo+yjcvcZqSz4hSLoc6dRULR
+ +b1qEFGrINhNU5tKFP2yplFf4ord8CmUhp76WN1q/JRvX7Yb/oOuTPcmPW6EAzCMd2ztcQztGd8
+ jNVbTXgJWEvgTEL+Uz+NokB6aAEmOr0yz6xC7LI1i2iOm0PJF6XCZS9KLIJJ9dJOg36MFdzHyuu
+ crHk
+X-Received: by 2002:a05:690c:6d91:b0:78f:a5c4:7923 with SMTP id
+ 00721157ae682-793c683b02dmr154574197b3.56.1769087792913; Thu, 22 Jan 2026
+ 05:16:32 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target/s390x: Implement DIVIDE TO INTEGER
-To: Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@kernel.org>, qemu-devel@nongnu.org
-References: <20260121222116.713325-1-iii@linux.ibm.com>
- <20260121222116.713325-3-iii@linux.ibm.com>
- <64d55baf-ab07-4870-8f2d-d9cf3b68c4f6@linaro.org>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <64d55baf-ab07-4870-8f2d-d9cf3b68c4f6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: VYrgpny1jTGSs-9A29eEvfyao9UqJFLl
-X-Authority-Analysis: v=2.4 cv=LaIxKzfi c=1 sm=1 tr=0 ts=697222cc cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=iQxaVk6170P_nYVoegwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: VYrgpny1jTGSs-9A29eEvfyao9UqJFLl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIyMDA5NSBTYWx0ZWRfXxAw2Ta7ESx/H
- EsDrQS59SWcKZ/phIpyRIu2wKxZT0HmbANLnJ/HOVC2Jg5y3RZS7sfznG4zgAMGbYlMZaA9ct3Q
- /l916p88+eDX+Mj2cFGw/g5Cmyf+kMqN0ShW0gM49cesY6p46f+ZzjmNJ1pnfN+aupR61v8ejiX
- ZCx/p7i4YWgvrSobo72d8cyqwkjhUwDnFZ1Hpz7Qrg5eZ7j6TYfjsj7RX508XSa9IQ1kkcS6ztW
- M7wTmO+CyC9AWzK23EU+dL23MHMAef6cbfz3R8MU3kD3rAhlIvQKvweUw9RLAT2TSeB/pzVm1Gy
- HnYwytty0+vYL0s07pgZsG/vqxioz3IxVMZ9PJ1r9I+3yCTWDDPONtPRekvFljCwnVN1w3cwaka
- 329h3t0g9m48iAM5keK7K6sknjS2IaDizGFbl7sFOg8yNkrOG6rDkQTm6+Dpk3F6a05b22eF7eq
- 6xo6v/hqGe47Kyc9S8Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-22_01,2026-01-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601220095
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20251227091622.20725-1-pbonzini@redhat.com>
+ <20251227094759.35658-7-pbonzini@redhat.com>
+In-Reply-To: <20251227094759.35658-7-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 22 Jan 2026 13:16:20 +0000
+X-Gm-Features: AZwV_QidkpDWzjezVOlwT7gSUe9fz8EOfdYaIKBn5tt8t40m8GBPF-ssgUO8cY0
+Message-ID: <CAFEAcA8fjzx49c=Xe37PtMNCbN22h2UQ48kzPgWVYx6jBBXYog@mail.gmail.com>
+Subject: Re: [PULL 081/153] i386/cpu: Fix supervisor xstate initialization
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
+ Farrah Chen <farrah.chen@intel.com>, Zide Chen <zide.chen@intel.com>, 
+ Xiaoyao Li <xiaoyao.li@intel.com>, Chao Gao <chao.gao@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,60 +116,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/22/26 02:04, Richard Henderson wrote:
-> On 1/22/26 09:12, Ilya Leoshkevich wrote:
->> +static bool float128_is_int(float128 x)
->> +{
->> +    return extract64(x.high, 0, 48) == 0 && x.low == 0;
->> +}
+On Sat, 27 Dec 2025 at 09:53, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> This isn't testing for integer, it's testing for 1.0eNN,
-> i.e. a power of two.
-
-Whoops. Not sure what I was thinking here.
-
-
->> +        /* Compute precise quotient 
->> */                                         \
->> +        a128 = floatN ## _to_float128(a, 
->> &env->fpu_status);                    \
->> +        b128 = floatN ## _to_float128(b, 
->> &env->fpu_status);                    \
->> +        q128 = float128_div(a128, b128, 
->> &env->fpu_status);                     \
->> + \
->> +        /* Final or partial case? 
->> */                                           \
->> +        is_q128_smallish = float128_get_exp(q128) < 
->> p;                         \
->> +        is_final = is_q128_smallish || 
->> float128_is_int(q128);                  \
+> From: Chao Gao <chao.gao@intel.com>
 >
-> The language from the manual,
+> Arch lbr is a supervisor xstate, but its area is not covered in
+> x86_cpu_init_xsave().
 >
-> # If the precise quotient is not an integer and the two
-> # integers closest to this precise quotient cannot both
-> # be represented exactly in the precision of the quotient ...
+> Fix it by checking supported xss bitmap.
 >
-> does not appear to be what you are computing here.
-> Certainly none of this relates to "precision of the quotient".
+> In addition, drop the (uint64_t) type casts for supported_xcr0 since
+> x86_cpu_get_supported_feature_word() returns uint64_t so that the cast
+> is not needed. Then ensure line length is within 90 characters.
+>
+> Tested-by: Farrah Chen <farrah.chen@intel.com>
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Chao Gao <chao.gao@intel.com>
+> Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> Link: https://lore.kernel.org/r/20251211060801.3600039-10-zhao1.liu@intel.com
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  target/i386/cpu.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
 
-I was rather following the tables, I think they are more precise w.r.t. 
-what needs to be checked.
+Hi: Coverity reports a possible issue with this change
+(CID 1643918):
 
-float128_is_int(q128) was supposed to replace the r=0 check, but it's 
-probably unnecessary here altogether, because if the division result is 
-precise, it doesn't matter which way we round. And I'm explicitly 
-checking for r=0 in other places.
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 5ba4d49dc35..e9ef8b992fd 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -9711,20 +9711,23 @@ static void x86_cpu_post_initfn(Object *obj)
+>  static void x86_cpu_init_xsave(void)
+>  {
+>      static bool first = true;
+> -    uint64_t supported_xcr0;
+> +    uint64_t supported_xcr0, supported_xss;
+>      int i;
+>
+>      if (first) {
+>          first = false;
+>
+>          supported_xcr0 =
+> -            ((uint64_t) x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XCR0_HI) << 32) |
+> +            x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XCR0_HI) << 32 |
+>              x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XCR0_LO);
+> +        supported_xss =
+> +            x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XSS_HI) << 32 |
+> +            x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XSS_LO);
 
+x86_cpu_get_supported_feature_word() returns a 64 bit value
+which may have bits set in the top half (notably it returns
+~0 for some cases), but the shift by 32 throws away those
+top bits, so Coverity complains about a possible overflow.
 
-> I would imagine that all of this would be easier to accomplish if you 
-> did this in fpu/ with FloatParts instead of continually swapping in 
-> and out of float128.
+Is this an actual problem, or a "can't-happen" false positive?
 
-That sounds good, I think I will also be able to reuse pick_nan and 
-simplify exponent manipulations then. I will give it a try.
+>
+>          for (i = XSTATE_SSE_BIT + 1; i < XSAVE_STATE_AREA_COUNT; i++) {
+>              ExtSaveArea *esa = &x86_ext_save_areas[i];
+>
+> -            if (!(supported_xcr0 & (1 << i))) {
+> +            if (!((supported_xcr0 | supported_xss) & (1 << i))) {
+>                  esa->size = 0;
+>              }
+>          }
 
-
-> r~ 
+thanks
+-- PMM
 
