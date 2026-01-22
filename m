@@ -4,84 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94A69D3EE66
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 14:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F05F0D3EE74
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 15:09:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vivlJ-00048d-1o; Thu, 22 Jan 2026 09:34:17 -0500
+	id 1viwIM-00059z-Rk; Thu, 22 Jan 2026 10:08:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <3160104094@zju.edu.cn>)
- id 1vir2P-0007W5-73; Thu, 22 Jan 2026 04:31:37 -0500
-Received: from zg8tmja2lje4os4yms4ymjma.icoremail.net ([206.189.21.223])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <3160104094@zju.edu.cn>)
- id 1vir2M-0003Yh-6l; Thu, 22 Jan 2026 04:31:36 -0500
-Received: from zju.edu.cn (unknown [183.129.171.42])
- by mtasvr (Coremail) with SMTP id _____wC3fM1p7nFpUEQqAA--.13055S3;
- Thu, 22 Jan 2026 17:31:22 +0800 (CST)
-Received: from 3160104094$zju.edu.cn ( [183.129.171.42] ) by
- ajax-webmail-mail-app1 (Coremail) ; Thu, 22 Jan 2026 17:31:20 +0800
- (GMT+08:00)
-X-Originating-IP: [183.129.171.42]
-Date: Thu, 22 Jan 2026 17:31:20 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: "Peng Jiang" <3160104094@zju.edu.cn>
-To: "Chao Liu" <chao.liu.zevorn@gmail.com>
-Cc: "Alistair Francis" <alistair.francis@wdc.com>,
- "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>,
- "Palmer Dabbelt" <palmer@dabbelt.com>, "Weiwei Li" <liwei1518@gmail.com>,
- "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, wangjingwei@iscas.ac.cn,
- "Chao Liu" <chao.liu@zevorn.cn>
-Subject: Re: [PATCH v4 2/5] hw/riscv: add k230 board initial support
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.3-cmXT6 build
- 20250620(94335109) Copyright (c) 2002-2026 www.mailtech.cn zju.edu.cn
-In-Reply-To: <ad3c378976034be5cf80282048aafd002e725105.1768884546.git.chao.liu.zevorn@gmail.com>
-References: <cover.1768884546.git.chao.liu.zevorn@gmail.com>
- <ad3c378976034be5cf80282048aafd002e725105.1768884546.git.chao.liu.zevorn@gmail.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1viwIK-00059I-Un
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:08:24 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1viwII-0004D2-S1
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:08:24 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 2953960053;
+ Thu, 22 Jan 2026 15:08:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4031C116C6;
+ Thu, 22 Jan 2026 15:08:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1769094491;
+ bh=sXXf/xC54+Br9F9u40E7CEc1By0ggWyQhwFQ+Tia+JA=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=kQMvxu/6RDDQqoJctAhstYl+d/hezqeIGuS48rkxYfTqiOKKKIbqdTxJMWEeWegJy
+ tBFLAqI9L1kZZ3V/bQtZ7D5E1OKfRYOcdy3tRB0NrSMz6HvFGkdkHQxYKEHXMwyzIV
+ KnlxDfnksUA36KcRMNVBkMsXV5l2l3/3OJhH3RBVEQgzTONB7uwpjuW1b2wsKAEPwG
+ MRGMMeXcUO8J2/jg+CUosUcTTKPtCu0WvdfpSkFsDebMA0luAb143cFjKw9VdNe/3B
+ 7xDBMirZra9XbovTgIFf/i0jhvnRaXKteCK9p3/1TZ1XiPaokvxRiRoM+n9/peKoi0
+ klwVJ7ZBfob6A==
+Received: from localhost ([::1]) by mail.kernel.org with esmtp (Exim 4.99)
+ (envelope-from <mchehab+huawei@kernel.org>)
+ id 1viwI5-000000051Xh-3Zgn; Thu, 22 Jan 2026 16:08:09 +0100
+Date: Thu, 22 Jan 2026 16:08:09 +0100
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>, Michael S Tsirkin
+ <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>, Igor Mammedov
+ <imammedo@redhat.com>, Cleber Rosa <crosa@redhat.com>, John Snow
+ <jsnow@redhat.com>, <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH 02/13] scripts/qmp_helper: add missing CXL UEFI GUID
+Message-ID: <20260122160809.0a3acbb8@localhost>
+In-Reply-To: <20260122105214.00001cca@huawei.com>
+References: <cover.1768993993.git.mchehab+huawei@kernel.org>
+ <f229d756fe76c34e6dfa48a98f1ee46f4325fc76.1768993993.git.mchehab+huawei@kernel.org>
+ <20260121122604.00001609@huawei.com> <aXDx_N3YRACBmC4I@foz.lan>
+ <20260122105214.00001cca@huawei.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Message-ID: <651b1d38.63ab7.19be50b4721.Coremail.3160104094@zju.edu.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: yy_KCgDHG9dp7nFpTce7BQ--.51530W
-X-CM-SenderInfo: qtrwiiiquqmko62m3hxhgxhubq/1tbiAwYEE2ldZYQWEAAGsH
-X-CM-DELIVERINFO: =?B?2pMVHAXKKxbFmtjJiESix3B1w3sL8hBMFUTpd3cX36+dE6DPAN7iCt/gLhxLJ5hnLg
- KjdepiEoGTxNXUHXvT72tDVr0xxMbZmRTA+tlqjP51nBqFnxem/dISYeM4+CTS/PTXCDmg
- bO/+NUOASBVCZTB9DJ00cDnoJM4sLbhixt0VqUCXXUt+rSuguHkySIGnzGEwVg==
-X-Coremail-Antispam: 1Uk129KBj93XoWruryrZFykZw13tw4kXry3ZFc_yoW8JF17pF
- y5tFsxGFs5Xr47KF4fGw4UA3yYyrWrKa1DCws3C3y8Ca1agwn0vFZ8trZ0qFWUGr18uryU
- KanrAw4Yva1DAabCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUHFb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AK
- xVW0oVCq3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc804V
- CY07AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AK
- xVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48Icx
- kI7VAKI48JM4x0Y48IcxkI7VAKI48G6xCjnVAKz4kxM4xvF2IEb7IF0Fy264kE64k0F24l
- FcxC0VAYjxAxZF0Ex2IqxwACI402YVCY1x02628vn2kIc2xKxwCF04k20xvY0x0EwIxGrw
- CFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE
- 14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2
- IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxK
- x2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI
- 0_Jr0_Gr1l6VACY4xI67k04243AbIYCTnIWIevJa73UjIFyTuYvjxU7RpPUUUUU
-Received-SPF: pass client-ip=206.189.21.223;
- envelope-from=3160104094@zju.edu.cn;
- helo=zg8tmja2lje4os4yms4ymjma.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 22 Jan 2026 09:34:13 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,31 +79,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ2hhbywKCkkgZm91bmQgYSBzbWFsbCBpc3N1ZSBpbiB0aGUgcmVzZXRfcm9tIGltcGxlbWVu
-dGF0aW9uIGluIGh3L3Jpc2N2L2syMzAuYy4KCj4gK3N0YXRpYyB2b2lkIGsyMzBfbWFjaGluZV9k
-b25lKE5vdGlmaWVyICpub3RpZmllciwgdm9pZCAqZGF0YSkKPiArewo+ICsgICAgLi4uCj4gKyAg
-ICAvKiBNYXNrIFJPTSByZXNldCB2ZWN0b3IgKi8KPiArICAgIHVpbnQzMl90IHJlc2V0X3ZlY1td
-ID0gewo+ICsgICAgICAgIC8qIDB4OTEyMDAwMDA6IGF1aXBjICB0MCwgMHgwICAgICAgICAgICAg
-ICAqLyAweDAwMDAwMjk3LAo+ICsgICAgICAgIC8qIDB4OTEyMDAwMDQ6IGFkZGkgICB0MCwgdDAs
-IDM2ICMgPHRyYXA+ICAqLyAweDAyNDI4MjkzLAo+ICsgICAgICAgIC8qIDB4OTEyMDAwMDg6IGNz
-cncgICBtdHZlYywgdDAgICAgICAgICAgICAqLyAweDMwNTI5MDczLAo+ICsgICAgICAgIC4uLgo+
-ICsgICAgICAgIC8qIHRyYXA6ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAqLwo+
-ICsgICAgICAgIC8qIDB4OTEyMDAwMzA6IGogICAgICAweDkxMjAwMDMwICMgPHRyYXA+ICAqLyAw
-eDAwMDAwMDZmLAo+ICsgICAgfTsKPiArCj4gKyAgICAvKiBjb3B5IGluIHRoZSByZXNldCB2ZWN0
-b3IgaW4gbGl0dGxlX2VuZGlhbiBieXRlIG9yZGVyICovCj4gKyAgICBmb3IgKGludCBpID0gMDsg
-aSA8IHNpemVvZihyZXNldF92ZWMpID4+IDI7IGkrKykgewo+ICsgICAgICAgIHJlc2V0X3ZlY1tp
-XSA9IGNwdV90b19sZTMyKHJlc2V0X3ZlY1tpXSk7Cj4gKyAgICB9Cj4gKyAgICByb21fYWRkX2Js
-b2JfZml4ZWRfYXMoIm1yb20ucmVzZXQiLCByZXNldF92ZWMsIHNpemVvZihyZXNldF92ZWMpLAo+
-ICsgICAgICAgICAgICAgICAgICAgICAgICAgIG1lbW1hcFtLMjMwX0RFVl9CT09UUk9NXS5iYXNl
-LCAmYWRkcmVzc19zcGFjZV9tZW1vcnkpOwo+IC4uLgo+ICt9CgpJdCBzZWVtcyB0aGUgb2Zmc2V0
-IGZvciB0aGUgdHJhcCBoYW5kbGVyIGlzIGluY29ycmVjdC4KClRoZSBpbnN0cnVjdGlvbiBhdCAw
-eDkxMjAwMDA0IGlzIGFkZGkgdDAsIHQwLCAzNi4gQWZ0ZXIgdGhlIGF1aXBjIGF0IDB4OTEyMDAw
-MDAsIHRoaXMgc2V0cyB0aGUgdmFsdWUgb2YgdDAgdG8gMHg5MTIwMDAwMCArIDM2ICgweDkxMjAw
-MDI0KSwgd2hpY2ggaXMgdGhlbiB3cml0dGVuIHRvIHRoZSBtdHZlYyByZWdpc3Rlci4KCkhvd2V2
-ZXIsIHRoZSBhY3R1YWwgdHJhcDogbGFiZWwgaXMgbG9jYXRlZCBhdCBvZmZzZXQgMHgzMCAoMHg5
-MTIwMDAzMCkuCgpUaGUgaW1tZWRpYXRlIHZhbHVlIGluIHRoZSBhZGRpIGluc3RydWN0aW9uIHNo
-b3VsZCBwcm9iYWJseSBiZSA0OCAoMHgzMCkgaW5zdGVhZCBvZiAzNiAoMHgyNCkgdG8gcG9pbnQg
-dG8gdGhlIGNvcnJlY3QgdHJhcCBoYW5kbGVyIGFkZHJlc3MuCgpCZXN0IHJlZ2FyZHMsClBhbmRh
-IEppYW5nCg==
+On Thu, 22 Jan 2026 10:52:14 +0000
+Jonathan Cameron via qemu development <qemu-devel@nongnu.org> wrote:
+
+> On Wed, 21 Jan 2026 16:45:58 +0100
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+>=20
+> > On Wed, Jan 21, 2026 at 12:26:04PM +0000, Jonathan Cameron wrote: =20
+> > > On Wed, 21 Jan 2026 12:25:10 +0100
+> > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > >    =20
+> > > > The UEFI 2.11 - N.2.14. CXL Component Events Section states that
+> > > > XL events are described at CXL specification 3.2:   =20
+> > > CXL
+> > >    =20
+> > > >         8.2.10.2.1 Event Records
+> > > >=20
+> > > > Add the GUIDs defined here to fuzzy logic error injection code.   =
+=20
+> > >=20
+> > > +CC linux-cxl as more folk there who will be familiar with this
+> > > stuff.
+> > >=20
+> > > Some of these won't be seen on a host. The same event
+> > > infrastructure is used for reporting on out of band interfaces
+> > > and some in band ones, but not ones that will turn up on the
+> > > mailboxes that firmware will be using to get info.   =20
+> >=20
+> > Good to know, but UEFI 2.11 still mentions all of them as
+> > possible GUIDs:
+> >=20
+> >     https://uefi.org/specs/UEFI/2.11/Apx_N_Common_Platform_Error_Record=
+.html#cxl-component-events-section
+> >=20
+> > So, the UEFI 2.11 doesn't explicitly state they won't de delivered
+> > to OSPM. Quite contrary, they're listed as valid values for CPER,
+> > even if, in practice, they won't.
+> >=20
+> > This is just a small set of variables, that won't bring any major
+> > impact on the code. So, I prefer to keep them in sync with the spec.
+> > If they end removing the unused ones, we can update it in the future.
+> >=20
+> > If you want, I can add a note at the next version with your
+> > comments about them.
+> >  =20
+> A note works for me.
+>=20
+> As I understand it CPER records are getting adopted in other specs
+> so it may make sense to document them, even if they  aren't a possibility
+> via ACPI.
+>=20
+> However I'm not seeing them in the spec link you point at. =20
+> All I'm seeing is a cross reference the CXL spec Events Record Format.
+
+Heh, true, I got confused with another field. Yet, at CXL spec 3.2,
+it is said that:
+
+
+	8.2.10.2 Events
+	=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+	This section defines the standard event record format that all CXL devices=
+ shall use
+	when reporting events to the host.
+
+	...
+
+	Table 8-55. Common Event Record Format (Sheet 1 of 2)
+
+	------	--------	----------------------------------------------------------=
+------------------
+	Byte	Length		Description
+	Offset	in Bytes
+	------	--------	----------------------------------------------------------=
+------------------
+	00h	10h		Event Record Identifier: UUID representing the specific Event Rec=
+ord format.
+				The following UUIDs are defined in this spec:
+				=E2=80=A2 fbcd0a77-c260-417f-85a9-088b1621eba6 =E2=80=93 General Media =
+Event Record
+				  (see Table 8-57)
+				=E2=80=A2 601dcbb3-9c06-4eab-b8af-4e9bfb5c9624 =E2=80=93 DRAM Event Rec=
+ord (see
+				  Table 8-58)
+				=E2=80=A2 fe927475-dd59-4339-a586-79bab113b774 =E2=80=93 Memory Module =
+Event Record
+				  (see Table 8-59)
+				=E2=80=A2 e71f3a40-2d29-4092-8a39-4d1c966c7c65 - Memory Sparing Event R=
+ecord
+				  (see Table 8-60)
+				=E2=80=A2 77cf9271-9c02-470b-9fe4-bc7b75f2da97 =E2=80=93 Physical Switc=
+h Event Record
+				  (see Table 7-77)
+				=E2=80=A2 40d26425-3396-4c4d-a5da-3d47263af425 =E2=80=93 Virtual Switch=
+ Event Record
+				  (see Table 7-78)
+				=E2=80=A2 8dc44363-0c96-4710-b7bf-04bb99534c3f =E2=80=93 MLD Port Event=
+ Record (see
+				  Table 7-79)
+				=E2=80=A2 ca95afa7-f183-4018-8c2f-95268e101a2a - Dynamic Capacity Event=
+ Record
+				  (see Table 8-62)
+	------	--------	----------------------------------------------------------=
+------------------
+
+	...
+
+So, CXL specs say they'll arrive at the host, and UEFI doesn't tell
+they can't arrive the OSPM.
+
+In any case, it is easier to just pick the entire set with 8 GUIDs
+and keep the scripts in sync with the specs than filtering what=20
+shouldn't belong there and why, with the risk of eventually miss
+something.
+
+I'll append the diff below to the relevant patches on this patchset.
+
+Regards,
+Mauro
+
+---
+
+diff --git a/scripts/ghes_decode.py b/scripts/ghes_decode.py
+index 6c7fdfe84e3a..7bac7dbd6b3a 100644
+--- a/scripts/ghes_decode.py
++++ b/scripts/ghes_decode.py
+@@ -935,6 +935,10 @@ class DecodeCXLCompEvent():
+     """
+=20
+     # GUIDs, as defined at CXL specification 3.2: 8.2.10.2.1 Event Records
++    # on Table 8-55. Common Event Record Format
++    #
++    # Please notice that, in practice, not all those events will be passed
++    # to OSPM. Some may be handled internally.
+     guids =3D [
+         ("General Media",              "fbcd0a77-c260-417f-85a9-088b1621eb=
+a6"),
+         ("DRAM",                       "601dcbb3-9c06-4eab-b8af-4e9bfb5c96=
+24"),
+diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
+index 32baca17ce10..583f898f04ef 100755
+--- a/scripts/qmp_helper.py
++++ b/scripts/qmp_helper.py
+@@ -778,10 +778,14 @@ class cper_guid:
+                          [0xA6, 0xA6, 0x88, 0xB7,
+                           0x28, 0xCF, 0x75, 0xD7])
+=20
++    # CXL GUIDs, as defined at CXL specification 3.2: 8.2.10.2.1 Event Rec=
+ords
++    # on Table 8-55. Common Event Record Format
++    #
++    # Please notice that, in practice, not all those events will be passed
++    # to OSPM. Some may be consumed internally
+     CPER_CXL_PROT_ERR =3D guid(0x80B9EFB4, 0x52B5, 0x4DE3,
+                              [0xA7, 0x77, 0x68, 0x78,
+                               0x4B, 0x77, 0x10, 0x48])
+-
+     CPER_CXL_EVT_GEN_MEDIA =3D guid(0xFBCD0A77, 0xC260, 0x417F,
+                                   [0x85, 0xA9, 0x08, 0x8B,
+                                    0x16, 0x21, 0xEB, 0xA6])
+
 
 
