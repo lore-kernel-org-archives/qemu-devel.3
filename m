@@ -4,77 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECC5FD3EE66
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 14:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96190D3EE6A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 14:13:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vivPz-0000ZF-Tk; Thu, 22 Jan 2026 09:12:16 -0500
+	id 1vivQd-0000lL-GW; Thu, 22 Jan 2026 09:12:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zengzhijin@linux.spacemit.com>)
- id 1vivPw-0000Yz-JE; Thu, 22 Jan 2026 09:12:12 -0500
-Received: from smtpbg150.qq.com ([18.132.163.193])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vivQb-0000jg-Fr; Thu, 22 Jan 2026 09:12:53 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zengzhijin@linux.spacemit.com>)
- id 1vivPq-0002iN-38; Thu, 22 Jan 2026 09:12:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
- s=mxsw2412; t=1769091106;
- bh=q6KJildkzXHvPB5BlReLg3muY+4KdW4Nfh5FYbfjhnk=;
- h=From:To:Subject:Date:Message-ID:MIME-Version;
- b=kZ3q2Xql2ONuQT/XwT1B6kp1l0VEUS5vyZhoprXwedmVVVfKYPVSrYQuKkMvzBpqa
- 73NcZLcEOF1L9zymMXAelN2ulCPoF656pDCqq8C8EevZ6pmt85ImOaSSk3hbwPmuzP
- 2Hjc810K9doj1pTKpPCgaZzSUQJiokWdhjt1KQgI=
-X-QQ-mid: esmtpgz15t1769091100t5540b49a
-X-QQ-Originating-IP: ChQUmlOV2i4RzQqv2FmXs/auGUNWZVzWhqkiOx3F1jE=
-Received: from ZhijinZeng.localdomain ( [27.42.97.15])
- by bizesmtp.qq.com (ESMTP) with 
- id ; Thu, 22 Jan 2026 22:11:38 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 15019275036717591452
-EX-QQ-RecipientCnt: 5
-From: Zhijin Zeng <zengzhijin@linux.spacemit.com>
-To: qemu-riscv@nongnu.org
-Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, qemu-devel@nongnu.org,
- Zhijin Zeng <zengzhijin@linux.spacemit.com>
-Subject: [PATCH] tcg/riscv: Fix fractional LMUL constraint check error
-Date: Thu, 22 Jan 2026 22:11:36 +0800
-Message-ID: <D95DCA3EC325E4A4+20260122141136.2276-1-zengzhijin@linux.spacemit.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vivQZ-0002mk-4E; Thu, 22 Jan 2026 09:12:53 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id A4FF3404A3;
+ Thu, 22 Jan 2026 15:12:40 +0100 (CET)
+Message-ID: <9901305b-fbdf-4893-8e80-3bc0d1d645b0@proxmox.com>
+Date: Thu, 22 Jan 2026 15:12:39 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:linux.spacemit.com:qybglogicsvrgz:qybglogicsvrgz5b-2
-X-QQ-XMAILINFO: N23nuY4pfFF+TvT4h3MeKZ6MAYfkd1QxSSONzccU0QkXeOMNVfJ/fv6d
- oiqBDPPSqE6I8I2mmeh+LfJJX/mnZLwYQcVLH9TREvHrGEnYBcmPehu9ggj6GaRLUdIgWDa
- EsYA/CibJ/qua9wopNcfZHabqCsHZATCWO5KBLroF/3/2gol5lLEOHdkW/FiysFt0zZEnPB
- pi9CKqWoE8c41jXJYeaZeM/682UC98mhwZ9nPHiZnqenS8HTZ3zwyQmshZTPjTf5n1uv6R1
- CmbVyXPi2NfG5z0IdgTWT+FPH7PbX5arU/lxjx70qAZ4lcZaqv+e2d+AthfCDGNv6PMCl1z
- eHOB2o8xB+iUKdxKHI3HL+F+EUaZnBAbJGaM3HcF4ZHJFR1P3OWfGc/mhwLqeAAABwIHspR
- ov0bytMZjItn4jzEYotU4yoxyeSXin/Y/go7loiERLTAeis0BeOtwoGul7FTtkHVM5XmbBl
- MNgx92+dTlyWtE0c7+oqmDDTr9bQVFZ5ZfAHZ/vGEM0rUQFwC9IAmn35Vab8+lN0BXZqpl/
- jhMARLDJbLvcQVmGuxbFPpW0MvH485G2Q0sm3b5t1vHbp9VOjxY6GZbnWL49wFfM4yFK9i7
- wkx9z3kbWFvj/AzrLreIxhzz3RbqcMrrvvPefR3LYvXa3J8q3fu8cYdYC0YtTJQVgeGL8au
- Z8Iq4bniZmzP9IMEWWKBW8m02DGwDzuQUcsXbFMY+dAnnmlw589aWyoomLiDxvunI2bb9mt
- sCtL2JRD7+bQGP3I1p1+HsPgbLhDdZQuzqp/h4eu3uj1utM51hnk0ZvWaUCC4Zd1gPm0TQ3
- i06XmFzQlzjICpYD98LfIk4WY6oUt7/5WoXOKuVfodf+mNpNBACca89vdnnFonCkzkCgRxA
- zwWVfZYUmlgbNlJxqxU5f3HNbmdUWfmvqS+xTPPBzVnrbzSJ4Ru2NJ+HJiYcl7cCibeOfv8
- HpiIJ06+NysR10FMNUTtfJJ/2Mmo8KJ3SMA8Hqqamae4PBoqKjJwlm6hJfA1pDBo8zBoW0Z
- YqGS410TikkxH+PZ8JZzk4DYPb+K1JnNjpFZRFXBIQ0Z+mpNnFxUspXdhcnPxpcb2OS+G4q
- pdpMCHkG3LRvgB4bF10XEJe2Zw+djr5dYvPvO78ACrm/QRHHFICqNA=
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
-X-QQ-RECHKSPAM: 0
-Received-SPF: none client-ip=18.132.163.193;
- envelope-from=zengzhijin@linux.spacemit.com; helo=smtpbg150.qq.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 14/15] block/io_uring: use aio_add_sqe()
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, eblake@redhat.com,
+ Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ hibriansong@gmail.com
+References: <20251104022933.618123-1-stefanha@redhat.com>
+ <20251104022933.618123-15-stefanha@redhat.com>
+ <57bc5da0-5889-43dd-ab53-635363583b5c@proxmox.com>
+Content-Language: en-US
+In-Reply-To: <57bc5da0-5889-43dd-ab53-635363583b5c@proxmox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1769091101638
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,47 +64,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to RVV Spec Section 3.4.2, the correct constraint for fractional LMUL
-is `SEWMIN <= sew <= LMUL * ELEN`, not `SEWMIN <= sew <= LMUL * VLEN`.
+Am 16.01.26 um 5:44 PM schrieb Fiona Ebner:
+> Hi,
+> 
+> Am 04.11.25 um 5:11 AM schrieb Stefan Hajnoczi:
+>> AioContext has its own io_uring instance for file descriptor monitoring.
+>> The disk I/O io_uring code was developed separately. Originally I
+>> thought the characteristics of file descriptor monitoring and disk I/O
+>> were too different, requiring separate io_uring instances.
+>>
+>> Now it has become clear to me that it's feasible to share a single
+>> io_uring instance for file descriptor monitoring and disk I/O. We're not
+>> using io_uring's IOPOLL feature or anything else that would require a
+>> separate instance.
+>>
+>> Unify block/io_uring.c and util/fdmon-io_uring.c using the new
+>> aio_add_sqe() API that allows user-defined io_uring sqe submission. Now
+>> block/io_uring.c just needs to submit readv/writev/fsync and most of the
+>> io_uring-specific logic is handled by fdmon-io_uring.c.
+>>
+>> There are two immediate advantages:
+>> 1. Fewer system calls. There is no need to monitor the disk I/O io_uring
+>>    ring fd from the file descriptor monitoring io_uring instance. Disk
+>>    I/O completions are now picked up directly. Also, sqes are
+>>    accumulated in the sq ring until the end of the event loop iteration
+>>    and there are fewer io_uring_enter(2) syscalls.
+>> 2. Less code duplication.
+>>
+>> Note that error_setg() messages are not supposed to end with
+>> punctuation, so I removed a '.' for the non-io_uring build error
+>> message.
+>>
+>> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+>> Reviewed-by: Eric Blake <eblake@redhat.com>
+> 
+> after commit 047dabef97 ("block/io_uring: use aio_add_sqe()") using
+> 'aio=io_uring' for an 'ide-hd' drive becomes prohibitively slow: for me,
+> a Debian 12 guest [0] won't even reach the GRUB menu after multiple
+> minutes. Using aio=threads makes the issue go away, as does building
+> from the previous commit, i.e. 1eebdab3c3 ("aio-posix: add aio_add_sqe()
+> API for user-defined io_uring requests"). The issue still exists on
+> current master.
+> 
+> There are lots and lots of 512 byte read requests. MAX_BUFFERED_REQS in
+> ide_buffered_readv() is only 16, maybe that has something to do with it?
+> Haven't had the time to dig into the issue yet, and wasn't able to
+> reproduce with 'qemu-img bench' or something other than 'ide-hd'.
 
-When parsing the instructions
-`vsetivli zero, 2, e64, mf2, ta, mu; vmv.s.x v24, s3` with riscv_zve64x, an
-illegal instruction exception should be reported but isn't. This patch fixes
-the issue.
+I did some more experimentation and tracing and found the likely issue.
+The old implementation had in its ioq_submit():
 
-Signed-off-by: Zhijin Zeng <zengzhijin@linux.spacemit.com>
----
- target/riscv/vector_helper.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+>     if (s->io_q.in_flight) {
+>         /*
+>          * We can try to complete something just right away if there are
+>          * still requests in-flight.
+>          */
+>         luring_process_completions(s);
+>     }
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 2de3358ee8..f0315629ec 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -47,18 +47,17 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-     target_ulong reserved = s2 &
-                             MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
-                                             xlen - 1 - R_VTYPE_RESERVED_SHIFT);
--    uint16_t vlen = cpu->cfg.vlenb << 3;
-     int8_t lmul;
- 
-     if (vlmul & 4) {
-         /*
-          * Fractional LMUL, check:
-          *
--         * VLEN * LMUL >= SEW
--         * VLEN >> (8 - lmul) >= sew
--         * (vlenb << 3) >> (8 - lmul) >= sew
-+         * ELEN * LMUL >= SEW
-+         * ELEN >> (8 - lmul) >= sew
-+         * (cpu->cfg.elen) >> (8 - lmul) >= sew
-          */
--        if (vlmul == 4 || (vlen >> (8 - vlmul)) < sew) {
-+        if (vlmul == 4 || (cpu->cfg.elen >> (8 - vlmul)) < sew) {
-             vill = true;
-         }
-     }
--- 
-2.43.0
+and thus at the end of luring_co_submit()
+
+>     if (luringcb.ret == -EINPROGRESS) {
+>         qemu_coroutine_yield();
+>     }
+>     return luringcb.ret;
+
+all those small one-sector requests will already be completed right away
+and the coroutine won't yield.
+
+But for the new implementation, that doesn't happen and the coroutine
+yields for every single request in my testing.
+
+The following patch restores the speed and the coroutine doesn't yield
+for all those one-sector requests anymore:
+
+> diff --git a/util/aio-posix.c b/util/aio-posix.c
+> index e24b955fd9..acaed8cec3 100644
+> --- a/util/aio-posix.c
+> +++ b/util/aio-posix.c
+> @@ -813,5 +813,6 @@ void aio_add_sqe(void (*prep_sqe)(struct io_uring_sqe *sqe, void *opaque),
+>  {
+>      AioContext *ctx = qemu_get_current_aio_context();
+>      ctx->fdmon_ops->add_sqe(ctx, prep_sqe, opaque, cqe_handler);
+> +    aio_poll(ctx, false);
+>  }
+>  #endif /* CONFIG_LINUX_IO_URING */
+
+Does the approach make sense? Might it be better to do this on the call
+sites instead? Or add a flag to aio_add_sqe() to control whether it is done?
+
+> 
+> Best Regards,
+> Fiona
+> 
+> [0]:
+>> ./qemu-system-x86_64 \
+>>   -accel kvm \
+>>   -chardev 'socket,id=qmp,path=/var/run/qemu-server/500.qmp,server=on,wait=off' \
+>>   -mon 'chardev=qmp,mode=control' \
+>>   -pidfile /var/run/qemu-server/500.pid \
+>>   -nodefaults \
+>>   -vnc 'unix:/var/run/qemu-server/500.vnc,password=on' \
+>>   -m 4096 \
+>>   -device 'VGA,id=vga,bus=pci.0,addr=0x2' \
+>>   -drive 'file=/mnt/pve/dir/images/500/vm-500-disk-0.raw,if=none,id=drive-ide0,format=raw,aio=io_uring' \
+>>   -device 'ide-hd,bus=ide.0,unit=0,drive=drive-ide0,id=ide0'
+> 
+> 
+> 
+> 
+
 
 
