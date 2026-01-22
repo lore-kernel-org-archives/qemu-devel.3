@@ -4,58 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DC8C44536
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 04:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEAB2C44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 05:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vimMV-000674-Tl; Wed, 21 Jan 2026 23:32:03 -0500
+	id 1vingz-0000uT-3B; Thu, 22 Jan 2026 00:57:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vimMU-000657-Fl
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 23:32:02 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vimMS-0003b5-6g
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 23:32:02 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1ADC1596A38;
- Thu, 22 Jan 2026 05:31:59 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id kyVwbRH6xbWX; Thu, 22 Jan 2026 05:31:56 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A717C596A13; Thu, 22 Jan 2026 05:31:56 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A1808596A03;
- Thu, 22 Jan 2026 05:31:56 +0100 (CET)
-Date: Thu, 22 Jan 2026 05:31:56 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <wei.wang@smartx.com>)
+ id 1vilw4-0000J0-Pj
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 23:04:44 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wei.wang@smartx.com>)
+ id 1vilw2-0003L6-80
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 23:04:44 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-29f2676bb21so5187265ad.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 20:04:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1769054679; x=1769659479;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tovPbYy3IcvNFqI0uQBzYWZzR3BR5HehgRBLgrUCJd8=;
+ b=pkRoI1zAE9mF25bwD5x8zHgNQdi0tLlaIpGMy66bRyPkYDMQXxgKrYo1++GB1gBjgT
+ GMxz+0bijOdFbA/vF3kVMHnELIqPogyhmdZ5KHL0CdTTvewr68Fp8Prp8PBXFKtFktiM
+ GCT3lKC3bkNZcomTCtGhW14wzKb8IuRz0/mGw2mHFtHPGKDiyZQpTri+y+uScdXi7Voh
+ yJTvzv+654vwH7sjfZy7A3mZutxta6O3n12+Y7TpkRmGo3lTkGGJZ6xIL95l0LEdxo4+
+ r5sSZD/6bwjNiiI0oHUCZXoQMIu9lxFLm0+Q/sJC8sLR0dhpzrOjvXpENPJOE0jQYQuA
+ 1tPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769054679; x=1769659479;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tovPbYy3IcvNFqI0uQBzYWZzR3BR5HehgRBLgrUCJd8=;
+ b=Up+VMfQxyCpe95m81vK8knR9kHEhqDdySqh3iZ3H3NbARW1DdL4WlZBp6WZZ9b1Avm
+ pxpye+o0O4xhBjugGaZ6Tj9A598J/BqiXnlv2IyCwfY32i9KH+3/liYUbhiHau4pMKHn
+ tbNq9ER0Y4AOdRy7G4E06lihA2d/KhA13hqpHFRsaE0Y+lBtTBT31iFEFzSorEKDpKRd
+ qmZrmO7l/K2Lm6S82xnDQNqPZ1ngtDqvmJAbzVaDJ0Q8DTtdfg3DH2j8f4C0M1/gXr/D
+ h4MTmkVhUmKHsAZlkiibGcmEiRQsXWQAblvGqVU7fGxtpdMpFvQLYadgiKJ9ZVazOSJj
+ cRfw==
+X-Gm-Message-State: AOJu0Yw/aNd/u1EsmD7efnKa68USbTPoLKJIyeavWekH+RA7B3mcmS7j
+ 3PQTqDtqm5o9vEdWmkyi97YgO53NX/Z9TBw+ihH3c3AZOwPNy3EbzpK3CcVty+f4XA2erOahtbI
+ B9VisOGY5eHa4N5qk+MqC+ItqDo0fKCRmZJY1+8qsEfe6/wKzTfb1wmLF90zZJS8PdKRy
+X-Gm-Gg: AZuq6aIe9A8VADGhR5HBiY4+jD5ic+95CVasmkSqSgy4/b9fVk+JUsNukZd4WkYtMOK
+ fknz57qaVX/sHzYxY22ur9jtfM3tKUhVBUclgqHPO6LNX0rREA6h1hv3Nhk4Tp9lWHeHyiQJidC
+ xXyYs0WXOfdxrxzhiKgCu6dCvqNJvyvSO1qsTcZdgz4iQOs2oLX+PiQ7d1S9iOQcoBTxRRQWMxr
+ uIXVT60mx25sK+WmaXeeeA0uzreBjFq1v9pa67/PtDqvCmjkalTUFKbRlh7zjWc89Ip07a8RnyB
+ UZVdDS04mvj9SZ7VyhuPKsRl8LR0ZGgZgUO6v9iyH/AySIdHMak7NlEopJ8iMmccmMI4Y4NPsb1
+ MJ5o7syiby4HJxll7aGZ7Cm9SZeffvFC5qzt6XODGeGz4dQTqVYTruqhL5IE7xpUejZr8c4c2WJ
+ g8g0xt
+X-Received: by 2002:a17:902:f788:b0:29e:9387:f2b7 with SMTP id
+ d9443c01a7336-2a7188577d1mr195215335ad.11.1769054678958; 
+ Wed, 21 Jan 2026 20:04:38 -0800 (PST)
+Received: from localhost.localdomain ([2a14:7dc0:201:e15::416])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a75889f594sm66256565ad.85.2026.01.21.20.04.36
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 21 Jan 2026 20:04:38 -0800 (PST)
+From: Wei Wang <wei.wang@smartx.com>
 To: qemu-devel@nongnu.org
-cc: kraxel@redhat.com, marcandre.lureau@redhat.com, philmd@linaro.org, 
- Chad Jablonski <chad@jablonski.xyz>
-Subject: Re: [PATCH v4 1/1] ati-vga: Fix framebuffer mapping by using
- hardware-correct aperture sizes
-In-Reply-To: <dd997180-1c43-f637-2945-ac39e85deeed@eik.bme.hu>
-Message-ID: <6eccdbaf-bb51-73be-fcfb-ac18ec79b868@eik.bme.hu>
-References: <20251017155117.1953708-1-chad@jablonski.xyz>
- <20251017155117.1953708-2-chad@jablonski.xyz>
- <d49a9ae5-1042-7e8b-2c09-4a8a39e08eb3@eik.bme.hu>
- <d7377434-9c58-9f63-68dc-74b485148310@eik.bme.hu>
- <dd997180-1c43-f637-2945-ac39e85deeed@eik.bme.hu>
+Cc: kkostiuk@redhat.com, michael.roth@amd.com, Wei Wang <wei.wang@smartx.com>
+Subject: [PATCH] qga: Fix crash due to redundant error setting in
+ qmp_guest_file_open()
+Date: Thu, 22 Jan 2026 12:04:30 +0800
+Message-Id: <20260122040430.51001-1-wei.wang@smartx.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=wei.wang@smartx.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 22 Jan 2026 00:57:14 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,163 +99,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 7 Jan 2026, BALATON Zoltan wrote:
-> On Wed, 29 Oct 2025, BALATON Zoltan wrote:
->> On Thu, 23 Oct 2025, BALATON Zoltan wrote:
->>> On Fri, 17 Oct 2025, Chad Jablonski wrote:
->>>> Rage 128 cards always request 64MB for their linear (framebuffer)
->>>> aperture and R100 cards always request 128MB. This is regardless
->>>> of the amount of physical VRAM on the board. The following are results
->>>> from real hardware tests:
->>>> 
->>>> Card                              VRAM    PCI BAR0   CONFIG_MEMSIZE 
->>>> CONFIG_APER_SIZE  AGP_APER_OFFSET
->>>> -----------------------           ----    --------   -------------- 
->>>> ----------------  ---------------
->>>> Rage 128 Pro Ultra TF             32MB     64MB       0x02000000 
->>>> 0x02000000        0x02000000
->>>> Rage 128 RF/SG AGP                16MB     64MB       0x01000000 
->>>> 0x02000000        0x02000000
->>>> Radeon R100 QD [Radeon 7200]      64MB    128MB       0x04000000 
->>>> 0x04000000        N/A
->>>> Radeon RV100 QY [Radeon 7000/VE]  32MB    128MB       0x02000000 
->>>> 0x04000000        N/A
->>>> 
->>>> Previously the linear aperture (BAR0) would match the VRAM size.
->>>> This discrepancy caused issues with the X.org and XFree86 r128 drivers.
->>>> These drivers apply a mask of 0xfc000000 (2^26 = 64MB) to the linear
->>>> aperture address. If that address is not on a 64MB boundary the
->>>> framebuffer points to an incorrect memory location.
->>>> 
->>>> Testing shows that the Radeon R100 also has a BAR0 larger than VRAM
->>>> (128MB in this case) and the X.org radeon driver also masks to 64MB.
->>>> 
->>>> For Rage 128, CONFIG_APER_SIZE also differs from the previous value and
->>>> the behavior stated in the documentation. The Rage 128 register guide
->>>> states that it should contain the size of the VRAM + AGP memory. The 
->>>> cards
->>>> tested above show that this isn't the case. These tests also included
->>>> enabling/disabling AGP with 8MB of memory. It didn't change the
->>>> contents of CONFIG_APER_SIZE.
->>>> 
->>>> For both Rage 128 and R100 the CONFIG_APER_SIZE is half of the PCI BAR0 
->>>> size.
->>> 
->>> Ping?
->> 
->> Ping^2
->
-> Ping^3
+Avoid setting GError multiple times in qmp_guest_file_open() by checking
+if errp is already set.
+This prevents crash caused by repeated error handling calls.
 
-Chad,
+Signed-off-by: Wei Wang <wei.wang@smartx.com>
+---
+ qga/commands-win32.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Can you please include this patch in the next version of the host data 
-series? It does not seem to get merged on its own and would need a rebase 
-so while it's not related it's simplest to be included in the series so 
-it's not lost and can be merged together eventually.
+diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+index 0fd0c966e4..8c45ca5004 100644
+--- a/qga/commands-win32.c
++++ b/qga/commands-win32.c
+@@ -263,7 +263,9 @@ int64_t qmp_guest_file_open(const char *path, const char *mode, Error **errp)
+     fd = guest_file_handle_add(fh, errp);
+     if (fd < 0) {
+         CloseHandle(fh);
+-        error_setg(errp, "failed to add handle to qmp handle table");
++        if (!*errp) {
++            error_setg(errp, "failed to add handle to qmp handle table");
++        }
+         goto done;
+     }
+ 
+-- 
+2.39.5 (Apple Git-154)
 
-Regards,
-BALATON Zoltan
-
-> This also had a R-b from Philippe I think but patchew only seems to picked up 
-> the cover letter not the patch for some reason. Will somebody merge this or 
-> should it be included with the other ati patch series to be merged together 
-> later when that's ready?
->
-> Regards,
-> BALATON Zoltan
->
->>>> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
->>>> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>> ---
->>>> hw/display/ati.c     | 16 ++++++++++++++--
->>>> hw/display/ati_int.h |  5 +++++
->>>> 2 files changed, 19 insertions(+), 2 deletions(-)
->>>> 
->>>> diff --git a/hw/display/ati.c b/hw/display/ati.c
->>>> index f7c0006a87..0b4298d078 100644
->>>> --- a/hw/display/ati.c
->>>> +++ b/hw/display/ati.c
->>>> @@ -361,7 +361,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr 
->>>> addr, unsigned int size)
->>>>                                       PCI_BASE_ADDRESS_0, size) & 
->>>> 0xfffffff0;
->>>>         break;
->>>>     case CONFIG_APER_SIZE:
->>>> -        val = s->vga.vram_size / 2;
->>>> +        val = memory_region_size(&s->linear_aper) / 2;
->>>>         break;
->>>>     case CONFIG_REG_1_BASE:
->>>>         val = pci_default_read_config(&s->dev,
->>>> @@ -952,6 +952,7 @@ static void ati_vga_realize(PCIDevice *dev, Error 
->>>> **errp)
->>>> {
->>>>     ATIVGAState *s = ATI_VGA(dev);
->>>>     VGACommonState *vga = &s->vga;
->>>> +    uint64_t aper_size;
->>>> 
->>>> #ifndef CONFIG_PIXMAN
->>>>     if (s->use_pixman != 0) {
->>>> @@ -1011,7 +1012,18 @@ static void ati_vga_realize(PCIDevice *dev, Error 
->>>> **errp)
->>>>     /* io space is alias to beginning of mmregs */
->>>>     memory_region_init_alias(&s->io, OBJECT(s), "ati.io", &s->mm, 0, 
->>>> 0x100);
->>>> 
->>>> -    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, &vga->vram);
->>>> +    /*
->>>> +     * The framebuffer is at the beginning of the linear aperture. For
->>>> +     * Rage128 the upper half of the aperture is reserved for an AGP
->>>> +     * window (which we do not emulate.)
->>>> +     */
->>>> +    aper_size = s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF ?
->>>> +                ATI_RAGE128_LINEAR_APER_SIZE : 
->>>> ATI_R100_LINEAR_APER_SIZE;
->>>> +    memory_region_init(&s->linear_aper, OBJECT(dev), 
->>>> "ati-linear-aperture0",
->>>> +                       aper_size);
->>>> +    memory_region_add_subregion(&s->linear_aper, 0, &vga->vram);
->>>> +
->>>> +    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, 
->>>> &s->linear_aper);
->>>>     pci_register_bar(dev, 1, PCI_BASE_ADDRESS_SPACE_IO, &s->io);
->>>>     pci_register_bar(dev, 2, PCI_BASE_ADDRESS_SPACE_MEMORY, &s->mm);
->>>> 
->>>> diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
->>>> index f5a47b82b0..708cc1dd3a 100644
->>>> --- a/hw/display/ati_int.h
->>>> +++ b/hw/display/ati_int.h
->>>> @@ -10,6 +10,7 @@
->>>> #define ATI_INT_H
->>>> 
->>>> #include "qemu/timer.h"
->>>> +#include "qemu/units.h"
->>>> #include "hw/pci/pci_device.h"
->>>> #include "hw/i2c/bitbang_i2c.h"
->>>> #include "vga_int.h"
->>>> @@ -29,6 +30,9 @@
->>>> /* Radeon RV100 (VE) */
->>>> #define PCI_DEVICE_ID_ATI_RADEON_QY 0x5159
->>>> 
->>>> +#define ATI_RAGE128_LINEAR_APER_SIZE (64 * MiB)
->>>> +#define ATI_R100_LINEAR_APER_SIZE (128 * MiB)
->>>> +
->>>> #define TYPE_ATI_VGA "ati-vga"
->>>> OBJECT_DECLARE_SIMPLE_TYPE(ATIVGAState, ATI_VGA)
->>>> 
->>>> @@ -97,6 +101,7 @@ struct ATIVGAState {
->>>>     QEMUCursor *cursor;
->>>>     QEMUTimer vblank_timer;
->>>>     bitbang_i2c_interface bbi2c;
->>>> +    MemoryRegion linear_aper;
->>>>     MemoryRegion io;
->>>>     MemoryRegion mm;
->>>>     ATIVGARegs regs;
->>>> 
->>> 
->>> 
->> 
->> 
->
->
 
