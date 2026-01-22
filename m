@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23E38C44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 11:17:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0455C44536
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 11:17:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1visgD-0002Rg-5X; Thu, 22 Jan 2026 06:16:49 -0500
+	id 1visgL-0002Sj-RX; Thu, 22 Jan 2026 06:16:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1visgB-0002RC-4R
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:16:47 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1visgH-0002SL-JZ
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:16:54 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1visg8-0001D2-8N
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:16:46 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4801bc328easo9261755e9.3
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 03:16:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1visgE-0001G2-Vv
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:16:53 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-47ee0291921so7316935e9.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 03:16:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769080602; x=1769685402; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=PMqN6lkh7yPZGXejYyNoGzoSMyNa3bSDLCOnAEkDrLk=;
- b=sj/y1e/FKcXMI88MeoYKI75dJoSK98dMi8JoKNQtBhBphnMDSDozEdRm2f6vQy2vPA
- 5OMy0LUdGjHHE30wmbW9WqCY/NZ1+E0mbZPFgyA5pfl2QOCo5QUuFTegCRBoUZbxsGE2
- v4FIH2H1qH+uDRjxChq4HkClGOdAHGLhQlvAz5zrg0mVfpnIMvlOXtOeB8s+0J+LsmLX
- k5vX5FzfYy9gW/71tsfndANGCGd9CVKXTFrqM0tR3T0CzmQb4+rl457BMloYs5YGqVyJ
- PNOBXHFK1RtElk/5ZkIxfNyPOLqNBMrYHv44bV799UIvOv/UhifBx7rRnnvhA+OkVZUd
- hfuQ==
+ d=linaro.org; s=google; t=1769080609; x=1769685409; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=qxI/V4nM0OyKfQl/BR+ILU6HhAdx/CkcXqqKlGomX3s=;
+ b=Pe35jTmKwcHMbhLGUHrfeU8CvJRm2kuvVCZWl06UT4QCSZyo/8CD1/ovt39/ROPxK7
+ iWTnjfUkeB/shbEfL5YkvwK6eLI1+qWFl1P97vXEo0PsWPXKhwjtEL+l0m3rxLYJlaru
+ c22rPjg/DYgks+uE8on9DxvxqvcFekY0TGuaKVXCjJfmLsiv+HRsy0c/ND3cYpS2gQoz
+ fD9QrunU9KrbbtvJ8lBKnia3sTIIedUTZkkeBix6KvfwSXO7dITR9NZ2ilKu1dylGJm5
+ /7pI6QwaVZbpK14SiHSzRAvfS1alk6cjmfYVEEE7qsrqBC+92F2QQdJG7VSVmGqkMZ63
+ bpVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769080602; x=1769685402;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PMqN6lkh7yPZGXejYyNoGzoSMyNa3bSDLCOnAEkDrLk=;
- b=MeIddPu38eDXZljmW5dBX/AG5q8YamH6T5V8sz7DU5sekGPGuTICCLqwzchx+fxbIq
- ko7BdJmjkmO84cRIq+qnShyTYiW4SlVU5f3pfSJoT8pLFEuAbMqzLmO2iz8AJs73/mIa
- Zy5oz0ig62W2kNoPBY7oMChS/y/YccviB/2aYL8SoW/evHgNGcVxR8HRVWwPJJLe6K72
- lM5SVbRoO+FQA3Q4V1F37UdhbT18zhnnthT6i+MqjihZN0BU7N5Fn7EVSkMOIxUxFEQV
- l+AKyWSW6GQ1kVh35J3Fvrw3/ZOQ0tUyQHA3Y5+BKpcxkkiEo9aXLNU2wTmhoVwVLEr7
- 2L6A==
-X-Gm-Message-State: AOJu0YyvXEAQFa446asOjSZeWD2Bf5VFBNR9NtuttY84M4saGH02Wl7J
- 8x0hUGdGAIuHZEMsoikmb62D0MQjkjz4lOrk6LkQ8j9ZPr28G9B9Epf1UKgZEnjh4q6Qcox8x4c
- sPYtgQxM=
-X-Gm-Gg: AZuq6aJWpJPlN36g/RYUEo5ncKHAm8qVEK/f24tjKa2p3cP+VgRTL76l2P+B9k9XAut
- 0NVmr+MxLwHl0H6aSb1U5rFzYb5FnxkX9ZsvmJXHFg7thQOrQDaqd0RM6U2O6VXxe0gpwZPefdw
- QXoySiiB6pRzEVTm3FyDc6mGlSsuxMdjbkI8PsTMMsjQXCxuvgQWl/UC+yU123E34YlUSbAomnE
- 0MrYl0hhOWO+8zFj/NPKIJdNkoxaAYfm36pm2uPd/pN4qxLuhNAXTcadDpCiJSOiu2fwM0dV+MM
- e0/39wrUOpdA1y8icaiJpYpD5R2/G+3+Jtr0ADrYU4JUVUG7MbO1WKm/kJ5jjEu+KSANYHJ5KdV
- r1UflOMGIL0+14nnpvEOljhCZk8/Z1nCwksp90QYCWv10ohZzn9VruKogTxMRhR55uS4+rGRUhL
- J/zGwWK98ljPdaB+YwjZ901J0yccBEdkMaTr2EJt1m/H3w/yk4a5RB6dMpVao6
-X-Received: by 2002:a05:600c:8710:b0:471:14f5:126f with SMTP id
- 5b1f17b1804b1-4801eb142famr282451095e9.33.1769080601429; 
- Thu, 22 Jan 2026 03:16:41 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769080609; x=1769685409;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=qxI/V4nM0OyKfQl/BR+ILU6HhAdx/CkcXqqKlGomX3s=;
+ b=J5d1k/DF1+qqcumpMlpilw9FDLXKWS+z3HsRYABtB/2lit0rMi7oluE/4Zn6lomCYg
+ Mnf3ekVtUA/PZyNstbUY+HeF/uW+/Lq8J0mY5xA4PJkmbIEaQ1KqdtoKxYR15ZdZD6UP
+ U7H2KCZwCYyzLrWoWqKOr1s6WyA5PYgeYK2iRrmZwt+u2Fc1e8yG1loYpKS2lTCc2i+e
+ mQwjKMQL3/zXJiqNvab+Q5nCKof+x/GPfXxXuuXKMDOoT0sp2yCyJgL+AC+kjiBtuTNZ
+ vgGgHlEIW8AfFjRQWO7eBPCA2sNBtMA3aDtYBSnOBF/4bNjk2nm2lHUqGsHpKgiB6tfX
+ QaXg==
+X-Gm-Message-State: AOJu0YxJ/pIUN2TgaQbzpsJMjDt3bbmPlHQl7WB7Y5xcBz+3orZbxRlW
+ 0eDf+YVEFlDeoA+Pv6JbvNwbT4PptdwccBlHb/7nTLogn6fRyKCBxw7REA5UGVM/uDAhj34GkP7
+ fuhVRixU=
+X-Gm-Gg: AZuq6aL5tbpzbZrN00BQz2HtU37lnSIXiL0r79OGAmWmp3GCrtM8h2IuViXEW4Vvtsf
+ 2tVL97nmCoGKM0V/TpbGWCZQ7IqJ5O5LpAhBzNudlTQmCDEOk+h03V5ofePa+m177hQTJOdB0Yq
+ x7UcZAOEGF02frxTMH9rey5UucelMHbsmbpZx/GB2Vivm7hcKHboEQthEiy68xPk/k/lNBdeIOZ
+ lf9EwgeFfaOfCvHboKkNSnvaNECu3xF2BcC01XvK1B7ab8LHUo0ADf1wN+blsCIekAPSCgoVle7
+ 58OZsn49gvTPcPGWA8L4BTaUn1/nPUJdutDRJqJk8gYuNPwnoVgytI1dup9/NMzeDKtlG7v0edn
+ z0wPC0Fm3Jqpc8cwgzftP7pnqR/n1EBA3fpl4kZze5F682o0vXiH7YWxN5WRaY8ny++W5dTffjH
+ mllnwVQ1f9FddAIw/lJDbpooxN/uN8EYHvPPrSyaWuhVwMCrp6cYvv+i12FQf1
+X-Received: by 2002:a05:600c:a009:b0:475:dd9a:f791 with SMTP id
+ 5b1f17b1804b1-4801eb0ef0bmr248983935e9.28.1769080608540; 
+ Thu, 22 Jan 2026 03:16:48 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-480470cc278sm57319845e9.12.2026.01.22.03.16.40
+ 5b1f17b1804b1-4804249c6b5sm54236065e9.1.2026.01.22.03.16.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Jan 2026 03:16:40 -0800 (PST)
+ Thu, 22 Jan 2026 03:16:47 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL v2 00/37] Memory API patches for 2026-01-22
-Date: Thu, 22 Jan 2026 12:16:33 +0100
-Message-ID: <20260122111639.32346-1-philmd@linaro.org>
+Subject: [PULL v2 01/37] target/i386: Use little-endian variant of
+ cpu_ld/st_data*()
+Date: Thu, 22 Jan 2026 12:16:34 +0100
+Message-ID: <20260122111639.32346-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260122111639.32346-1-philmd@linaro.org>
+References: <20260122111639.32346-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,209 +99,481 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 2339d0a1cfac6ecc667e6e062a593865c1541c35:
+We only build the X86 targets using little endianness order,
+therefore the cpu_ld/st_data*() definitions expand to the little
+endian declarations. Use the explicit little-endian variants.
 
-  Merge tag 'hw-misc-20260120' of https://github.com/philmd/qemu into staging (2026-01-21 07:39:57 +1100)
+Mechanical change running:
 
-are available in the Git repository at:
+  $ tgt=i386; \
+    end=le; \
+    for op in data mmuidx_ra; do \
+      for ac in uw sw l q; do \
+        sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+      for ac in w l q; do \
+        sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+    done
 
-  https://github.com/philmd/qemu.git tags/memory-api-20260122
+Then adapting indentation in helper_vmload() to pass checkpatch.pl.
 
-for you to fetch changes up to 1280ec826e98342db4e7c35daf7680d09121bde6:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20251126202200.23100-3-philmd@linaro.org>
+---
+ target/i386/ops_sse.h                | 12 ++---
+ target/i386/tcg/seg_helper.h         | 12 ++---
+ linux-user/vm86.c                    |  4 +-
+ target/i386/tcg/mem_helper.c         |  8 ++--
+ target/i386/tcg/mpx_helper.c         | 28 +++++------
+ target/i386/tcg/seg_helper.c         | 16 +++----
+ target/i386/tcg/system/excp_helper.c |  8 ++--
+ target/i386/tcg/system/svm_helper.c  | 69 +++++++++++++++-------------
+ 8 files changed, 80 insertions(+), 77 deletions(-)
 
-  cpus: Allocate maximum number of ASes supported by the arch (2026-01-22 10:48:46 +0100)
-
-----------------------------------------------------------------
-Memory API patches
-
-- Use explicit endianness for cpu_ld/st_data*() on some targets
-- Reduce 'qemu/bswap.h' uses
-- Introduce ldm_p/stm_p (MemOp) load/store helpers
-- Allow restricting the legacy 'native-endian' APIs
-- Forbid various targets to use legacy native endianness APIs
-- Simplify cpu_address_space_init() API
-----------------------------------------------------------------
-
-Deliberately ignored checkpatch.pl errors:
-
- ERROR: DEVICE_NATIVE_ENDIAN is not allowed, use DEVICE_LITTLE_ENDIAN or DEVICE_BIG_ENDIAN instead
- #314: FILE: system/memory_ldst.c.inc:448:
- +#define DEVICE_ENDIANNESS       DEVICE_NATIVE_ENDIAN
-
- ERROR: DEVICE_NATIVE_ENDIAN is not allowed, use DEVICE_LITTLE_ENDIAN or DEVICE_BIG_ENDIAN instead
- #182: FILE: system/memory_ldst.c.inc:97:
- +                                                    DEVICE_NATIVE_ENDIAN);
-
- ERROR: DEVICE_NATIVE_ENDIAN is not allowed, use DEVICE_LITTLE_ENDIAN or DEVICE_BIG_ENDIAN instead
- #332: FILE: system/memory_ldst.c.inc:171:
- +                                             DEVICE_NATIVE_ENDIAN);
-
- ERROR: DEVICE_NATIVE_ENDIAN is not allowed, use DEVICE_LITTLE_ENDIAN or DEVICE_BIG_ENDIAN instead
- #34: FILE: include/system/memory.h:31:
- +    DEVICE_NATIVE_ENDIAN = 0,
-
-False negative:
-
-  WARNING: added, moved or deleted file(s):
-
-    dump/win_dump-stubs.c
-    dump/win_dump-x86.c
-    dump/Kconfig
-
-  Does MAINTAINERS need updating?
-
-Gustavo Romero (3):
-  target/arm: Initialize AS 0 first
-  target/i386: Add a _MAX sentinel to X86ASIdx enum
-  target/arm: Add a _MAX sentinel to ARMASIdx enum
-
-Philippe Mathieu-Daudé (34):
-  target/i386: Use little-endian variant of cpu_ld/st_data*()
-  target/riscv: Use little-endian variant of cpu_ld/st_data*() for
-    vector
-  target/m68k: Use big-endian variant of cpu_ld/st_data*()
-  target/sparc: Use big-endian variant of cpu_ld/st_data*()
-  target/sh4: Replace cpu_stl_data() call in OCBI helper
-  target/ppc: Simplify endianness handling in Altivec opcodes
-  bswap: Include missing 'qemu/bswap.h' header
-  bswap: Use 'qemu/bswap.h' instead of 'qemu/host-utils.h'
-  bswap: Remove unnecessary 'qemu/bswap.h'
-  system/memory: Introduce ldm_p() and stm_p() load/store helpers
-  system/memory: Define address_space_ldst[W] endian variants via
-    template
-  system/memory: Define address_space_ldst[L] endian variants via
-    template
-  system/memory: Define address_space_ldst[Q] endian variants via
-    template
-  system/memory: Factor address_space_ldst[M]_internal() helper out
-  system/memory: Pass device_endian argument as MemOp bit
-  system/memory: Use ldm_p() and stm_p() helpers
-  system/memory: Directly call address_space_ldst[M]_internal() helper
-  system: Allow restricting the legacy ld/st_phys() 'native-endian' API
-  system: Allow restricting legacy address_space_ldst() native-endian
-    API
-  system: Allow restricting the legacy cpu_ld/st() 'native-endian' API
-  system: Allow restricting the legacy translator_ld() 'native-endian'
-    API
-  system: Allow restricting the legacy tswap() 'native-endian' API
-  system: Allow restricting the legacy MO_TE* 'native-endian'
-    definitions
-  system: Allow restricting the legacy DEVICE_NATIVE_ENDIAN definition
-  configs/targets: Forbid Hexagon to use legacy native endianness API
-  configs/targets: Forbid HPPA to use legacy native endianness APIs
-  configs/targets: Forbid LoongArch to use legacy native endianness APIs
-  configs/targets: Forbid OpenRISC to use legacy native endianness APIs
-  configs/targets: Forbid TriCore to use legacy native endianness API
-  configs/targets: Forbid Renesas RX to use legacy native endianness API
-  configs/targets: Forbid s390x to use legacy native endianness APIs
-  dump: Abort in create_win_dump() on non-x86 guests
-  dump: Build stubs once for non-x86 targets
-  cpus: Allocate maximum number of ASes supported by the arch
-
- MAINTAINERS                                  |   1 +
- configs/targets/hexagon-linux-user.mak       |   1 +
- configs/targets/hppa-linux-user.mak          |   1 +
- configs/targets/hppa-softmmu.mak             |   1 +
- configs/targets/loongarch64-linux-user.mak   |   1 +
- configs/targets/loongarch64-softmmu.mak      |   1 +
- configs/targets/or1k-linux-user.mak          |   1 +
- configs/targets/or1k-softmmu.mak             |   1 +
- configs/targets/rx-softmmu.mak               |   1 +
- configs/targets/s390x-linux-user.mak         |   1 +
- configs/targets/s390x-softmmu.mak            |   1 +
- configs/targets/tricore-softmmu.mak          |   1 +
- block/qcow2.h                                |   1 +
- include/accel/tcg/cpu-ldst.h                 |   2 +
- include/exec/cpu-common.h                    |   4 -
- include/exec/memop.h                         |   4 +
- include/exec/translator.h                    |   5 +-
- include/exec/tswap.h                         |   3 +
- include/hw/core/cpu.h                        |   7 +-
- include/qemu/bswap.h                         |  72 +++
- include/qemu/host-utils.h                    |   1 -
- include/qemu/int128.h                        |   2 -
- include/system/memory.h                      |   8 +-
- include/system/memory_cached.h               |   2 +
- system/memory-internal.h                     |   2 +
- target/arm/cpu.h                             |   1 +
- target/i386/cpu.h                            |   1 +
- target/i386/ops_sse.h                        |  12 +-
- target/i386/tcg/seg_helper.h                 |  12 +-
- include/system/memory_ldst.h.inc             |  52 +--
- include/system/memory_ldst_endian.h.inc      |  33 ++
- include/system/memory_ldst_phys.h.inc        | 113 +----
- include/system/memory_ldst_phys_endian.h.inc |  57 +++
- audio/audio.c                                |   1 +
- block/blklogwrites.c                         |   1 +
- block/export/vduse-blk.c                     |   1 +
- block/export/vhost-user-blk-server.c         |   1 +
- block/export/virtio-blk-handler.c            |   1 +
- block/parallels-ext.c                        |   1 +
- dump/win_dump-stubs.c                        |  21 +
- dump/{win_dump.c => win_dump-x86.c}          |  20 +-
- hw/9pfs/9p-local.c                           |   1 +
- hw/block/cdrom.c                             |   1 +
- hw/block/hd-geometry.c                       |   1 +
- hw/core/cpu-common.c                         |   1 -
- hw/core/cpu-system.c                         |   2 +-
- hw/net/can/ctucan_core.c                     |   1 +
- hw/nvram/xlnx-efuse.c                        |   1 +
- hw/scsi/scsi-generic.c                       |   1 +
- hw/sd/sd.c                                   |   1 +
- hw/sd/ssi-sd.c                               |   1 +
- linux-user/vm86.c                            |   4 +-
- net/l2tpv3.c                                 |   1 +
- qga/commands-linux.c                         |   1 +
- scsi/pr-manager-helper.c                     |   1 +
- system/cpus.c                                |   1 -
- system/physmem.c                             |   8 +-
- target/arm/cpu.c                             |  13 +-
- target/arm/tcg/arith_helper.c                |   1 +
- target/i386/cpu.c                            |   1 +
- target/i386/kvm/kvm-cpu.c                    |   1 -
- target/i386/tcg/mem_helper.c                 |   8 +-
- target/i386/tcg/mpx_helper.c                 |  28 +-
- target/i386/tcg/seg_helper.c                 |  16 +-
- target/i386/tcg/system/excp_helper.c         |   8 +-
- target/i386/tcg/system/svm_helper.c          |  69 +--
- target/i386/tcg/system/tcg-cpu.c             |   1 -
- target/m68k/fpu_helper.c                     |  12 +-
- target/m68k/op_helper.c                      |  91 ++--
- target/ppc/mem_helper.c                      |  31 +-
- target/riscv/vector_helper.c                 |  12 +-
- target/sh4/op_helper.c                       |   5 +-
- target/sparc/ldst_helper.c                   |   6 +-
- tests/qtest/acpi-utils.c                     |   1 +
- tests/qtest/ahci-test.c                      |   2 +-
- tests/qtest/aspeed-hace-utils.c              |   1 +
- tests/qtest/bios-tables-test.c               |   1 +
- tests/qtest/libqos/ahci.c                    |   2 +-
- tests/qtest/libqos/generic-pcihost.c         |   2 +-
- tests/qtest/libqos/igb.c                     |   1 +
- tests/qtest/libqos/pci-spapr.c               |   2 +-
- tests/qtest/libqos/virtio-9p-client.c        |   1 +
- tests/qtest/migration/framework.c            |   1 +
- tests/qtest/npcm7xx_emc-test.c               |   1 +
- tests/qtest/tpm-emu.c                        |   1 +
- tests/qtest/ufs-test.c                       |   1 +
- tests/qtest/vmgenid-test.c                   |   1 +
- tests/unit/test-hbitmap.c                    |   1 +
- util/bitmap.c                                |   1 +
- util/hbitmap.c                               |   2 +-
- system/memory_ldst.c.inc                     | 449 ++-----------------
- system/memory_ldst_endian.c.inc              |  70 +++
- Kconfig                                      |   1 +
- dump/Kconfig                                 |   6 +
- dump/meson.build                             |   3 +-
- scripts/make-config-poison.sh                |   1 +
- 96 files changed, 566 insertions(+), 769 deletions(-)
- create mode 100644 include/system/memory_ldst_endian.h.inc
- create mode 100644 include/system/memory_ldst_phys_endian.h.inc
- create mode 100644 dump/win_dump-stubs.c
- rename dump/{win_dump.c => win_dump-x86.c} (97%)
- create mode 100644 system/memory_ldst_endian.c.inc
- create mode 100644 dump/Kconfig
-
+diff --git a/target/i386/ops_sse.h b/target/i386/ops_sse.h
+index 853196b2bbd..99c4728ec81 100644
+--- a/target/i386/ops_sse.h
++++ b/target/i386/ops_sse.h
+@@ -2326,7 +2326,7 @@ void glue(helper_vpmaskmovd_st, SUFFIX)(CPUX86State *env,
+ 
+     for (i = 0; i < (2 << SHIFT); i++) {
+         if (v->L(i) >> 31) {
+-            cpu_stl_data_ra(env, a0 + i * 4, s->L(i), GETPC());
++            cpu_stl_le_data_ra(env, a0 + i * 4, s->L(i), GETPC());
+         }
+     }
+ }
+@@ -2338,7 +2338,7 @@ void glue(helper_vpmaskmovq_st, SUFFIX)(CPUX86State *env,
+ 
+     for (i = 0; i < (1 << SHIFT); i++) {
+         if (v->Q(i) >> 63) {
+-            cpu_stq_data_ra(env, a0 + i * 8, s->Q(i), GETPC());
++            cpu_stq_le_data_ra(env, a0 + i * 8, s->Q(i), GETPC());
+         }
+     }
+ }
+@@ -2369,7 +2369,7 @@ void glue(helper_vpgatherdd, SUFFIX)(CPUX86State *env,
+         if (v->L(i) >> 31) {
+             target_ulong addr = a0
+                 + ((target_ulong)(int32_t)s->L(i) << scale);
+-            d->L(i) = cpu_ldl_data_ra(env, addr & amask, GETPC());
++            d->L(i) = cpu_ldl_le_data_ra(env, addr & amask, GETPC());
+         }
+         v->L(i) = 0;
+     }
+@@ -2383,7 +2383,7 @@ void glue(helper_vpgatherdq, SUFFIX)(CPUX86State *env,
+         if (v->Q(i) >> 63) {
+             target_ulong addr = a0
+                 + ((target_ulong)(int32_t)s->L(i) << scale);
+-            d->Q(i) = cpu_ldq_data_ra(env, addr & amask, GETPC());
++            d->Q(i) = cpu_ldq_le_data_ra(env, addr & amask, GETPC());
+         }
+         v->Q(i) = 0;
+     }
+@@ -2397,7 +2397,7 @@ void glue(helper_vpgatherqd, SUFFIX)(CPUX86State *env,
+         if (v->L(i) >> 31) {
+             target_ulong addr = a0
+                 + ((target_ulong)(int64_t)s->Q(i) << scale);
+-            d->L(i) = cpu_ldl_data_ra(env, addr & amask, GETPC());
++            d->L(i) = cpu_ldl_le_data_ra(env, addr & amask, GETPC());
+         }
+         v->L(i) = 0;
+     }
+@@ -2415,7 +2415,7 @@ void glue(helper_vpgatherqq, SUFFIX)(CPUX86State *env,
+         if (v->Q(i) >> 63) {
+             target_ulong addr = a0
+                 + ((target_ulong)(int64_t)s->Q(i) << scale);
+-            d->Q(i) = cpu_ldq_data_ra(env, addr & amask, GETPC());
++            d->Q(i) = cpu_ldq_le_data_ra(env, addr & amask, GETPC());
+         }
+         v->Q(i) = 0;
+     }
+diff --git a/target/i386/tcg/seg_helper.h b/target/i386/tcg/seg_helper.h
+index ea98e1a98ed..20ce47d62d9 100644
+--- a/target/i386/tcg/seg_helper.h
++++ b/target/i386/tcg/seg_helper.h
+@@ -40,18 +40,18 @@ int cpu_mmu_index_kernel(CPUX86State *env);
+  * and use *_mmuidx_ra directly.
+  */
+ #define cpu_lduw_kernel_ra(e, p, r) \
+-    cpu_lduw_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
++    cpu_lduw_le_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
+ #define cpu_ldl_kernel_ra(e, p, r) \
+-    cpu_ldl_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
++    cpu_ldl_le_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
+ #define cpu_ldq_kernel_ra(e, p, r) \
+-    cpu_ldq_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
++    cpu_ldq_le_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
+ 
+ #define cpu_stw_kernel_ra(e, p, v, r) \
+-    cpu_stw_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
++    cpu_stw_le_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
+ #define cpu_stl_kernel_ra(e, p, v, r) \
+-    cpu_stl_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
++    cpu_stl_le_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
+ #define cpu_stq_kernel_ra(e, p, v, r) \
+-    cpu_stq_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
++    cpu_stq_le_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
+ 
+ #define cpu_lduw_kernel(e, p)    cpu_lduw_kernel_ra(e, p, 0)
+ #define cpu_ldl_kernel(e, p)     cpu_ldl_kernel_ra(e, p, 0)
+diff --git a/linux-user/vm86.c b/linux-user/vm86.c
+index 5091d53fb84..4e120875a06 100644
+--- a/linux-user/vm86.c
++++ b/linux-user/vm86.c
+@@ -44,7 +44,7 @@ static inline int is_revectored(int nr, struct target_revectored_struct *bitmap)
+ static inline void vm_putw(CPUX86State *env, uint32_t segptr,
+                            unsigned int reg16, unsigned int val)
+ {
+-    cpu_stw_data(env, segptr + (reg16 & 0xffff), val);
++    cpu_stw_le_data(env, segptr + (reg16 & 0xffff), val);
+ }
+ 
+ void save_v86_state(CPUX86State *env)
+@@ -157,7 +157,7 @@ static void do_int(CPUX86State *env, int intno)
+                                        &ts->vm86plus.int21_revectored))
+         goto cannot_handle;
+     int_addr = (intno << 2);
+-    segoffs = cpu_ldl_data(env, int_addr);
++    segoffs = cpu_ldl_le_data(env, int_addr);
+     if ((segoffs >> 16) == TARGET_BIOSSEG)
+         goto cannot_handle;
+     LOG_VM86("VM86: emulating int 0x%x. CS:IP=%04x:%04x\n",
+diff --git a/target/i386/tcg/mem_helper.c b/target/i386/tcg/mem_helper.c
+index 9e7c2d80293..c15a32d60ad 100644
+--- a/target/i386/tcg/mem_helper.c
++++ b/target/i386/tcg/mem_helper.c
+@@ -30,8 +30,8 @@ void helper_boundw(CPUX86State *env, target_ulong a0, int v)
+ {
+     int low, high;
+ 
+-    low = cpu_ldsw_data_ra(env, a0, GETPC());
+-    high = cpu_ldsw_data_ra(env, a0 + 2, GETPC());
++    low = cpu_ldsw_le_data_ra(env, a0, GETPC());
++    high = cpu_ldsw_le_data_ra(env, a0 + 2, GETPC());
+     v = (int16_t)v;
+     if (v < low || v > high) {
+         if (env->hflags & HF_MPX_EN_MASK) {
+@@ -45,8 +45,8 @@ void helper_boundl(CPUX86State *env, target_ulong a0, int v)
+ {
+     int low, high;
+ 
+-    low = cpu_ldl_data_ra(env, a0, GETPC());
+-    high = cpu_ldl_data_ra(env, a0 + 4, GETPC());
++    low = cpu_ldl_le_data_ra(env, a0, GETPC());
++    high = cpu_ldl_le_data_ra(env, a0 + 4, GETPC());
+     if (v < low || v > high) {
+         if (env->hflags & HF_MPX_EN_MASK) {
+             env->bndcs_regs.sts = 0;
+diff --git a/target/i386/tcg/mpx_helper.c b/target/i386/tcg/mpx_helper.c
+index fa8abcc4820..73d33bf5e4a 100644
+--- a/target/i386/tcg/mpx_helper.c
++++ b/target/i386/tcg/mpx_helper.c
+@@ -44,7 +44,7 @@ static uint64_t lookup_bte64(CPUX86State *env, uint64_t base, uintptr_t ra)
+     }
+ 
+     bde = (extract64(base, 20, 28) << 3) + (extract64(bndcsr, 20, 44) << 12);
+-    bt = cpu_ldq_data_ra(env, bde, ra);
++    bt = cpu_ldq_le_data_ra(env, bde, ra);
+     if ((bt & 1) == 0) {
+         env->bndcs_regs.sts = bde | 2;
+         raise_exception_ra(env, EXCP05_BOUND, ra);
+@@ -64,7 +64,7 @@ static uint32_t lookup_bte32(CPUX86State *env, uint32_t base, uintptr_t ra)
+     }
+ 
+     bde = (extract32(base, 12, 20) << 2) + (bndcsr & TARGET_PAGE_MASK);
+-    bt = cpu_ldl_data_ra(env, bde, ra);
++    bt = cpu_ldl_le_data_ra(env, bde, ra);
+     if ((bt & 1) == 0) {
+         env->bndcs_regs.sts = bde | 2;
+         raise_exception_ra(env, EXCP05_BOUND, ra);
+@@ -79,9 +79,9 @@ uint64_t helper_bndldx64(CPUX86State *env, target_ulong base, target_ulong ptr)
+     uint64_t bte, lb, ub, pt;
+ 
+     bte = lookup_bte64(env, base, ra);
+-    lb = cpu_ldq_data_ra(env, bte, ra);
+-    ub = cpu_ldq_data_ra(env, bte + 8, ra);
+-    pt = cpu_ldq_data_ra(env, bte + 16, ra);
++    lb = cpu_ldq_le_data_ra(env, bte, ra);
++    ub = cpu_ldq_le_data_ra(env, bte + 8, ra);
++    pt = cpu_ldq_le_data_ra(env, bte + 16, ra);
+ 
+     if (pt != ptr) {
+         lb = ub = 0;
+@@ -96,9 +96,9 @@ uint64_t helper_bndldx32(CPUX86State *env, target_ulong base, target_ulong ptr)
+     uint32_t bte, lb, ub, pt;
+ 
+     bte = lookup_bte32(env, base, ra);
+-    lb = cpu_ldl_data_ra(env, bte, ra);
+-    ub = cpu_ldl_data_ra(env, bte + 4, ra);
+-    pt = cpu_ldl_data_ra(env, bte + 8, ra);
++    lb = cpu_ldl_le_data_ra(env, bte, ra);
++    ub = cpu_ldl_le_data_ra(env, bte + 4, ra);
++    pt = cpu_ldl_le_data_ra(env, bte + 8, ra);
+ 
+     if (pt != ptr) {
+         lb = ub = 0;
+@@ -113,9 +113,9 @@ void helper_bndstx64(CPUX86State *env, target_ulong base, target_ulong ptr,
+     uint64_t bte;
+ 
+     bte = lookup_bte64(env, base, ra);
+-    cpu_stq_data_ra(env, bte, lb, ra);
+-    cpu_stq_data_ra(env, bte + 8, ub, ra);
+-    cpu_stq_data_ra(env, bte + 16, ptr, ra);
++    cpu_stq_le_data_ra(env, bte, lb, ra);
++    cpu_stq_le_data_ra(env, bte + 8, ub, ra);
++    cpu_stq_le_data_ra(env, bte + 16, ptr, ra);
+ }
+ 
+ void helper_bndstx32(CPUX86State *env, target_ulong base, target_ulong ptr,
+@@ -125,9 +125,9 @@ void helper_bndstx32(CPUX86State *env, target_ulong base, target_ulong ptr,
+     uint32_t bte;
+ 
+     bte = lookup_bte32(env, base, ra);
+-    cpu_stl_data_ra(env, bte, lb, ra);
+-    cpu_stl_data_ra(env, bte + 4, ub, ra);
+-    cpu_stl_data_ra(env, bte + 8, ptr, ra);
++    cpu_stl_le_data_ra(env, bte, lb, ra);
++    cpu_stl_le_data_ra(env, bte + 4, ub, ra);
++    cpu_stl_le_data_ra(env, bte + 8, ptr, ra);
+ }
+ 
+ void helper_bnd_jmp(CPUX86State *env)
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 227336c4ef2..58aac720119 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -65,20 +65,20 @@ typedef struct StackAccess
+ static void pushw(StackAccess *sa, uint16_t val)
+ {
+     sa->sp -= 2;
+-    cpu_stw_mmuidx_ra(sa->env, sa->ss_base + (sa->sp & sa->sp_mask),
++    cpu_stw_le_mmuidx_ra(sa->env, sa->ss_base + (sa->sp & sa->sp_mask),
+                       val, sa->mmu_index, sa->ra);
+ }
+ 
+ static void pushl(StackAccess *sa, uint32_t val)
+ {
+     sa->sp -= 4;
+-    cpu_stl_mmuidx_ra(sa->env, sa->ss_base + (sa->sp & sa->sp_mask),
++    cpu_stl_le_mmuidx_ra(sa->env, sa->ss_base + (sa->sp & sa->sp_mask),
+                       val, sa->mmu_index, sa->ra);
+ }
+ 
+ static uint16_t popw(StackAccess *sa)
+ {
+-    uint16_t ret = cpu_lduw_mmuidx_ra(sa->env,
++    uint16_t ret = cpu_lduw_le_mmuidx_ra(sa->env,
+                                       sa->ss_base + (sa->sp & sa->sp_mask),
+                                       sa->mmu_index, sa->ra);
+     sa->sp += 2;
+@@ -87,7 +87,7 @@ static uint16_t popw(StackAccess *sa)
+ 
+ static uint32_t popl(StackAccess *sa)
+ {
+-    uint32_t ret = cpu_ldl_mmuidx_ra(sa->env,
++    uint32_t ret = cpu_ldl_le_mmuidx_ra(sa->env,
+                                      sa->ss_base + (sa->sp & sa->sp_mask),
+                                      sa->mmu_index, sa->ra);
+     sa->sp += 4;
+@@ -905,12 +905,12 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+ static void pushq(StackAccess *sa, uint64_t val)
+ {
+     sa->sp -= 8;
+-    cpu_stq_mmuidx_ra(sa->env, sa->sp, val, sa->mmu_index, sa->ra);
++    cpu_stq_le_mmuidx_ra(sa->env, sa->sp, val, sa->mmu_index, sa->ra);
+ }
+ 
+ static uint64_t popq(StackAccess *sa)
+ {
+-    uint64_t ret = cpu_ldq_mmuidx_ra(sa->env, sa->sp, sa->mmu_index, sa->ra);
++    uint64_t ret = cpu_ldq_le_mmuidx_ra(sa->env, sa->sp, sa->mmu_index, sa->ra);
+     sa->sp += 8;
+     return ret;
+ }
+@@ -1887,7 +1887,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+                 pushl(&sa, env->segs[R_SS].selector);
+                 pushl(&sa, env->regs[R_ESP]);
+                 for (i = param_count - 1; i >= 0; i--) {
+-                    val = cpu_ldl_data_ra(env,
++                    val = cpu_ldl_le_data_ra(env,
+                                           old_ssp + ((env->regs[R_ESP] + i * 4) & old_sp_mask),
+                                           GETPC());
+                     pushl(&sa, val);
+@@ -1896,7 +1896,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+                 pushw(&sa, env->segs[R_SS].selector);
+                 pushw(&sa, env->regs[R_ESP]);
+                 for (i = param_count - 1; i >= 0; i--) {
+-                    val = cpu_lduw_data_ra(env,
++                    val = cpu_lduw_le_data_ra(env,
+                                            old_ssp + ((env->regs[R_ESP] + i * 2) & old_sp_mask),
+                                            GETPC());
+                     pushw(&sa, val);
+diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
+index f622b5d588e..d7ea77c8558 100644
+--- a/target/i386/tcg/system/excp_helper.c
++++ b/target/i386/tcg/system/excp_helper.c
+@@ -90,7 +90,7 @@ static inline uint32_t ptw_ldl(const PTETranslate *in, uint64_t ra)
+     if (likely(in->haddr)) {
+         return ldl_p(in->haddr);
+     }
+-    return cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
++    return cpu_ldl_le_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
+ }
+ 
+ static inline uint64_t ptw_ldq(const PTETranslate *in, uint64_t ra)
+@@ -98,7 +98,7 @@ static inline uint64_t ptw_ldq(const PTETranslate *in, uint64_t ra)
+     if (likely(in->haddr)) {
+         return ldq_p(in->haddr);
+     }
+-    return cpu_ldq_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
++    return cpu_ldq_le_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
+ }
+ 
+ /*
+@@ -116,9 +116,9 @@ static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
+     cpu_exec_end(cpu);
+     /* Does x86 really perform a rmw cycle on mmio for ptw? */
+     start_exclusive();
+-    cmp = cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
++    cmp = cpu_ldl_le_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
+     if (cmp == old) {
+-        cpu_stl_mmuidx_ra(in->env, in->gaddr, new, in->ptw_idx, 0);
++        cpu_stl_le_mmuidx_ra(in->env, in->gaddr, new, in->ptw_idx, 0);
+     }
+     end_exclusive();
+     cpu_exec_start(cpu);
+diff --git a/target/i386/tcg/system/svm_helper.c b/target/i386/tcg/system/svm_helper.c
+index 524b3620d56..d5ffabc2f4d 100644
+--- a/target/i386/tcg/system/svm_helper.c
++++ b/target/i386/tcg/system/svm_helper.c
+@@ -30,13 +30,13 @@
+ static void svm_save_seg(CPUX86State *env, int mmu_idx, hwaddr addr,
+                          const SegmentCache *sc)
+ {
+-    cpu_stw_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, selector),
++    cpu_stw_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, selector),
+                       sc->selector, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, base),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, base),
+                       sc->base, mmu_idx, 0);
+-    cpu_stl_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, limit),
++    cpu_stl_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, limit),
+                       sc->limit, mmu_idx, 0);
+-    cpu_stw_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, attrib),
++    cpu_stw_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, attrib),
+                       ((sc->flags >> 8) & 0xff)
+                       | ((sc->flags >> 12) & 0x0f00),
+                       mmu_idx, 0);
+@@ -58,16 +58,16 @@ static void svm_load_seg(CPUX86State *env, int mmu_idx, hwaddr addr,
+     unsigned int flags;
+ 
+     sc->selector =
+-        cpu_lduw_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, selector),
++        cpu_lduw_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, selector),
+                            mmu_idx, 0);
+     sc->base =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, base),
++        cpu_ldq_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, base),
+                           mmu_idx, 0);
+     sc->limit =
+-        cpu_ldl_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, limit),
++        cpu_ldl_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, limit),
+                           mmu_idx, 0);
+     flags =
+-        cpu_lduw_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, attrib),
++        cpu_lduw_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, attrib),
+                            mmu_idx, 0);
+     sc->flags = ((flags & 0xff) << 8) | ((flags & 0x0f00) << 12);
+ 
+@@ -507,32 +507,35 @@ void helper_vmload(CPUX86State *env, int aflag)
+ 
+ #ifdef TARGET_X86_64
+     env->kernelgsbase =
+-        cpu_ldq_mmuidx_ra(env,
+-                          addr + offsetof(struct vmcb, save.kernel_gs_base),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env,
++                             addr + offsetof(struct vmcb, save.kernel_gs_base),
++                             mmu_idx, 0);
+     env->lstar =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.lstar),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.lstar),
++                             mmu_idx, 0);
+     env->cstar =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.cstar),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.cstar),
++                             mmu_idx, 0);
+     env->fmask =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sfmask),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sfmask),
++                             mmu_idx, 0);
+     svm_canonicalization(env, &env->kernelgsbase);
+ #endif
+     env->star =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.star),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.star),
++                             mmu_idx, 0);
+     env->sysenter_cs =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_cs),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env,
++                             addr + offsetof(struct vmcb, save.sysenter_cs),
++                             mmu_idx, 0);
+     env->sysenter_esp =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_esp),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env,
++                             addr + offsetof(struct vmcb, save.sysenter_esp),
++                             mmu_idx, 0);
+     env->sysenter_eip =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_eip),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env,
++                             addr + offsetof(struct vmcb, save.sysenter_eip),
++                             mmu_idx, 0);
+ }
+ 
+ void helper_vmsave(CPUX86State *env, int aflag)
+@@ -567,22 +570,22 @@ void helper_vmsave(CPUX86State *env, int aflag)
+                  &env->ldt);
+ 
+ #ifdef TARGET_X86_64
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.kernel_gs_base),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.kernel_gs_base),
+                       env->kernelgsbase, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.lstar),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.lstar),
+                       env->lstar, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.cstar),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.cstar),
+                       env->cstar, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sfmask),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sfmask),
+                       env->fmask, mmu_idx, 0);
+ #endif
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.star),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.star),
+                       env->star, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_cs),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_cs),
+                       env->sysenter_cs, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_esp),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_esp),
+                       env->sysenter_esp, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_eip),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_eip),
+                       env->sysenter_eip, mmu_idx, 0);
+ }
+ 
 -- 
 2.52.0
 
