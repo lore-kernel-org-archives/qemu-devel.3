@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3BE5C44536
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:56:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79D89D625FD
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:56:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viqTK-0000GO-8C; Thu, 22 Jan 2026 03:55:22 -0500
+	id 1viqTj-0002li-D9; Thu, 22 Jan 2026 03:55:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTI-00009B-TB
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:20 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTi-0002fh-3o
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:46 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTF-0006EK-Qz
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:20 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4801eb2c0a5so7007165e9.3
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:55:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTg-0006IV-66
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:45 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-47fedb7c68dso6926805e9.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:55:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769072116; x=1769676916; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769072142; x=1769676942; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JuUfx+y6OuCiabH5jy3bbyweJaTYApNAgj7UULpRRAA=;
- b=fczXYn50hGNC/M5KAvGIHyFIml/TQlzYplZzexrl8KfH3+JJk3/qxe9Njg2XpreeHU
- ImUX6iiMEgaEXBHcJzU3kRqE7GyuevnEwfB8/VCQUHKhJRYfY1+PcehiazttXYXpEYRH
- UdvqPOrZFnzA8KocW7o/Wmh/gX6Dq9lisIRVlYr6esGn8Tesfpb5aHwW1CMuBR+DCNjj
- U3wCtneCQz6BtOB6gNuX4rkmhVErRNic+0xNJBlRyhPgNcutbg0TEFkHjhN2E59IrHQz
- 88VXLsVm8aw1nIXKte/TrUYu2AQuUBotHohG7GYwdAnvFCRMlUBx7k8kpP/LZpXrhKH6
- 6VAg==
+ :reply-to; bh=bs1mcONeiLTXcC9NFaJnqYFDkgsdBFopUmqMHml2a5g=;
+ b=QQpd5pIXP8l8w+7ay8Xr3IwFGtJ6T6g4h3geesknAQkqXcI4fEHR71xenO/a0Z/yje
+ jwesKLVe+Nz2/bgLXKzRYFsVxqliRdktejCIY68NgUG7EkppZy7elUGG1CN6L3VCxKwA
+ MuiYxwv3JhP4DCdS+dgR4TwHa30vuMkc38jeN3JNGtoukzCzTEL3rxdcDDLgOp0BC/+D
+ ADireYskGTpfWC7uNlpbQFDKeOZP2kduAMLposbooEPoc4d4s5K+yg22qGnabn4Q46iF
+ WUs3+Ej17a8yy1zN0qr2YyvFLsfrU+4VLdFZ2a9JjSBS7q03RVEgQJ8BP8S50LkIGMnZ
+ iheQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769072116; x=1769676916;
+ d=1e100.net; s=20230601; t=1769072142; x=1769676942;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=JuUfx+y6OuCiabH5jy3bbyweJaTYApNAgj7UULpRRAA=;
- b=H9xWaqnIvBbCVNSlyFXmlL0ybbJfh6DGBDCDCWBJ0u1/NBNbyk1dQqo0RryIHbbvrI
- TpH6J+GuO8qICTub4IOMMEegb+Zz8FJ1GFAU1a0SPebfJWuzs85ykXESzdMnWAMBE1fp
- IOcwmOvlAYfzT4TLdtzxuv0Ygy0aNss8XfOSgHKeFzokvFApdmeH//icvmtGI1IwSI3a
- a++kSKTMUIrK4BdW50pFkzAvADRsXBqovY8Y/TEoWG2X/6jhsbd6/kO69yRg76bm/vMY
- KywN/G0MFwtNuyt0Y2q4CpoFHnvmsvFQ15GPssev77SarIR1QBFyaZnrg5Yj9KaT0YZk
- yZ+w==
-X-Gm-Message-State: AOJu0YzjNQ289mQcrbI2rodF+J9s5KOlKO53UTYdMGTU9YbIHKZBjITp
- 6mH0MHeFivy3lyjXKrIQquGSRFYCj4OR/7VSnKbvC4CsDVDgl47ztu7KBKHGfIN6X3mStYjJCN2
- T/OdagMI=
-X-Gm-Gg: AZuq6aJ8SShutqXR65OQArTrqj22Zds5Qz6IUqBTPGvhk0wsNAQMOt1rDUZOQWy9j32
- YzjvpZKRKw96+Cc76tldzR0/Px/omDadkpYWrIpEdDx+iBU1K5cMfe7ctgB3nkIPXI4w3zeOZw8
- OK7VhT70UmSNaz0XdPUHsGtwUV/tUhtYPJQzhg1yCiQFs9RHR6gTcfoNtcvU60NPJUPnvNldiPk
- m+cXoQzqArAg9ELiXPPSfLXvoIAZjkyeETsEdeleH9tQB8Uh4zJlTg8vCZC9Cy+lxlR94lF/qCq
- CQHm+bC38F+tqW1foLAgKdPjr+kMEYFjtFdpafhGK4vCamk4OEL5d2n1eDi8SOK0/en6fgq8Qb8
- 5JtTJEJ+fnfUhTIJ/QA2qe/qQVfyxGRSwtLGakBzYoRbEPrHE7PEJPsfwWRIp+GsMdU3VlrhULs
- UjcyENpEPreyMlRdEl5MBVOoX34zh9Iks7nLqRAXDKE2PFKPXVBJfSX7tgGoa7
-X-Received: by 2002:a05:600c:4692:b0:480:3338:2939 with SMTP id
- 5b1f17b1804b1-480349dfa7dmr189483925e9.26.1769072115627; 
- Thu, 22 Jan 2026 00:55:15 -0800 (PST)
+ bh=bs1mcONeiLTXcC9NFaJnqYFDkgsdBFopUmqMHml2a5g=;
+ b=E4mS5BQW7Vy1iGwLsjwodgwzGIflsp6kWRoke6fVhPyy3/mvMCe/TIQ6Fmk0+N+jDO
+ hhc0blL7v2MEV1pLujn8YJy7mZaYknwbCViGllMe+2CVUJjxoTEnMKHylCCDYKwUHBSV
+ 5OvESkJy262RmiLlwDLCOxPb6m1KU8Vux6fVD5nlgMwTfu8KS6mR3ciwQ6IY+iU6Wguj
+ XvyLXYcruOc9adtw3cS/fYTkAVFlNKhEQXgJiTk/7OGIoZrMx+kLgwbP2plzpHMnJOxH
+ N1Sje0NtTQlSrgYZEIQkAHiCDHgsi9QkECWay13BaPbZVmtzT1hlHvgYcdJu7n6eZ6PC
+ AIUw==
+X-Gm-Message-State: AOJu0Yxm6HvHys3PPavNRXPk4dHZFKxr6ThNuF4ymbMinGHCayptLEyQ
+ hv2m62Q3zjKATbVV8yvLNCTB7x86BMSRKxvtC1rn9gbahNUr8waCnMlSimRI5EVlRPDGkIA/iP3
+ WhoQ5M8Y=
+X-Gm-Gg: AZuq6aLZgmaDDH9jFRMpuk0yGWLwN3C+HfHZzIvjTsA+nfg2TWYa+12Pn8bjDVVoPIt
+ y1cwibkuX2BYQ3KasOVbCu/bNrSQpjj8249y2rA4XZnYb6Ib51mTF8lMqqwHFM98l5nxkkOmb6q
+ sVn4gedGfUABDqHA6EjgRgxjZ9/9YLB5pU0uPlZO1Qi9wqKBOjcYLegvAsXBV+9Pu8+ijc0YSRq
+ zr+43FcNJ9+y+3Ina2AGViDP+WAfae8O34U28Hc+8H9d1ubgknrRQwJziI+m0JK9nY7YwMluc4E
+ LqbVKelUIItFzbKhqxbI5k0SNxuOvGIdyvdlMjn168gVYbK7z03Jt11lbMJQtj2ZyXLvXW1mrYg
+ M9rvfKMi4Zg5cz94EBkVyDhPkes6EGmWA3F3bwsTKTpsBkMN7t5u1A+PQKZPwheBhoa3qobi8Hq
+ bvDh4Ur8PJrHgOESIA3AbCPfnblcaJ7tcyelHU2FXebHJFGmHoT2ZL+QYJO/ZV
+X-Received: by 2002:a05:600c:458d:b0:47f:f952:d207 with SMTP id
+ 5b1f17b1804b1-4801e341e2emr242656545e9.19.1769072142358; 
+ Thu, 22 Jan 2026 00:55:42 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356992c6f2sm41490928f8f.19.2026.01.22.00.55.14
+ 5b1f17b1804b1-4804706f14fsm52452845e9.13.2026.01.22.00.55.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Jan 2026 00:55:15 -0800 (PST)
+ Thu, 22 Jan 2026 00:55:41 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/31] configs/targets: Forbid LoongArch to use legacy native
+Subject: [PULL 25/31] configs/targets: Forbid s390x to use legacy native
  endianness APIs
-Date: Thu, 22 Jan 2026 09:52:44 +0100
-Message-ID: <20260122085255.95035-22-philmd@linaro.org>
+Date: Thu, 22 Jan 2026 09:52:48 +0100
+Message-ID: <20260122085255.95035-26-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260122085255.95035-1-philmd@linaro.org>
 References: <20260122085255.95035-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,42 +99,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All LoongArch-related binaries are buildable without a single
+All s390x-related binaries are buildable without a single
 use of the legacy "native endian" API. Set the transitional
 TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API definition to forbid
 further uses of the legacy API.
 
 Preliminary commits allowing this final change:
 
- . 6b4c30465c0 target/loongarch: Inline translator_ldl()
- . f9a03787c7f target/loongarch: Use explicit little-endian LD/ST API
- . 91312a6d046 target/loongarch: Inline cpu_ldl_code() call in cpu_do_interrupt()
- . 492b2799c64 target/loongarch: Replace MO_TE -> MO_LE
+ . f0853c25862 target/s390x: Inline translator_lduw() and translator_ldl()
+ . ee4dae6a332 target/s390x: Use big-endian variant of cpu_ld/st_data*()
+ . 381a1fda5bf target/s390x: Inline cpu_ld{uw, l}_code() calls in EX opcode helper
+ . 69da23130f2 target/s390x: Replace MO_TE -> MO_BE
+ . 0fb6ad781cc target/s390x: Replace gdb_get_regl() -> gdb_get_reg64()
+ . 409cbb1a619 target/s390x: Use explicit big-endian LD/ST API
+ . 6d9dad71265 target/s390x: Replace HOST_BIG_ENDIAN #ifdef with if() check
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20251224161456.89707-9-philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20251224162036.90404-9-philmd@linaro.org>
 ---
- configs/targets/loongarch64-linux-user.mak | 1 +
- configs/targets/loongarch64-softmmu.mak    | 1 +
+ configs/targets/s390x-linux-user.mak | 1 +
+ configs/targets/s390x-softmmu.mak    | 1 +
  2 files changed, 2 insertions(+)
 
-diff --git a/configs/targets/loongarch64-linux-user.mak b/configs/targets/loongarch64-linux-user.mak
-index 249a26a798c..4ea12794705 100644
---- a/configs/targets/loongarch64-linux-user.mak
-+++ b/configs/targets/loongarch64-linux-user.mak
-@@ -5,3 +5,4 @@ TARGET_XML_FILES=gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/
- TARGET_SYSTBL=syscall.tbl
- TARGET_SYSTBL_ABI=common,64
+diff --git a/configs/targets/s390x-linux-user.mak b/configs/targets/s390x-linux-user.mak
+index 68c2f288724..e3723f5dc54 100644
+--- a/configs/targets/s390x-linux-user.mak
++++ b/configs/targets/s390x-linux-user.mak
+@@ -4,3 +4,4 @@ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+ TARGET_XML_FILES= gdb-xml/s390x-core64.xml gdb-xml/s390-acr.xml gdb-xml/s390-fpr.xml gdb-xml/s390-vx.xml gdb-xml/s390-cr.xml gdb-xml/s390-virt.xml gdb-xml/s390-virt-kvm.xml gdb-xml/s390-gs.xml
  TARGET_LONG_BITS=64
 +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
-index fc44c54233d..38c0f68ddbc 100644
---- a/configs/targets/loongarch64-softmmu.mak
-+++ b/configs/targets/loongarch64-softmmu.mak
-@@ -5,3 +5,4 @@ TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-
- # all boards require libfdt
- TARGET_NEED_FDT=y
+diff --git a/configs/targets/s390x-softmmu.mak b/configs/targets/s390x-softmmu.mak
+index 76dd5de6584..544657cfe2d 100644
+--- a/configs/targets/s390x-softmmu.mak
++++ b/configs/targets/s390x-softmmu.mak
+@@ -3,3 +3,4 @@ TARGET_BIG_ENDIAN=y
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_XML_FILES= gdb-xml/s390x-core64.xml gdb-xml/s390-acr.xml gdb-xml/s390-fpr.xml gdb-xml/s390-vx.xml gdb-xml/s390-cr.xml gdb-xml/s390-virt.xml gdb-xml/s390-virt-kvm.xml gdb-xml/s390-gs.xml
  TARGET_LONG_BITS=64
 +TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
 -- 
