@@ -4,97 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92DC7D3EE7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 15:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A939D3EE86
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 15:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viwnm-0005hK-BO; Thu, 22 Jan 2026 10:40:54 -0500
+	id 1viwrQ-00012L-0p; Thu, 22 Jan 2026 10:44:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1viwnV-0005Qa-1i
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:40:38 -0500
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1viwrO-00010q-21
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:44:38 -0500
+Received: from p-west1-cluster6-host4-snip4-4.eps.apple.com ([57.103.67.57]
+ helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1viwnT-0003WB-10
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:40:36 -0500
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 24A0642E23
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 15:40:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1769096433;
- bh=420zqJJ3FxmmtBy8ScWLVJH4yI53omA/XGDlE9pt3ls=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=aww5lHXbz8xsxzLXOMtYYP53qnmwnOlxEJysHtdd9wAR5dFRwzh4xz5ZVZRJfWITm
- /vpDPRrwByM3nXTQUcxkZ/unFg9zBLXpzjYw9tRnFlaLvUj3siSPwdg0tZ4+/RazcC
- rP36HqBTzis5sNuTvqhu0yBG/AX9CftYaMPER0a5Y13SZaT6ajOXcDLcDLojTVSNZA
- S3Ph8R2+RaRQigIkwKFulZa9K/CQCd+FVTkC1CCvHI84+6tORCfDZo46PWgUCxkHCc
- WDPK2BZMyI9tyx17FWBFDbdY8KnAEK+hVDr3ZG6OwlJLOkql9A+0pPxAFw8zdSvBZD
- /h7sq6RCx4BKw==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 12A8B7E6CF
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 15:40:33 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1viwrL-0004B9-WA
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:44:37 -0500
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-1a-60-percent-4 (Postfix) with ESMTPS id
+ C1D46180050C; Thu, 22 Jan 2026 15:44:29 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1769096672; x=1771688672;
+ bh=hKvvqd46hba0/mqnaxz/ijvE405oIW2CS4k+iwInPC4=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=RDVxG4aG7aVRU+V+VZUGVDYeUML/dLQX7N9AgZQMZOY5o7HZhLG+4EBHTCwrB5cyRPP/K+NkAkXZOQXePITyFtUfER0SRfbXjdFuIjXfWRVwo967trIDwo9V6I649SvdzvCI0lEMjzUCTGOMxEIMrxJSBqeUxh/SDvzeuJ+NUf1Jwb8RiQ37sRcLiwAfu8BDU7XlooIeuiUsBoHkwBoEozmxLTGgCF7eV8uwWxJpOi7P0luiwsDKqc/EtoPzrt/JpjNppesjkFKMRTITBlJ2xoEad6z7YUsLwYOof5mZDdJQgKsdYJfmk7uCr6j2CBB/8wGNKH5IGaQx24HTHDdlmA==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.56.9.36])
+ by p00-icloudmta-asmtp-us-west-1a-60-percent-4 (Postfix) with ESMTPSA id
+ EC72118007D5; Thu, 22 Jan 2026 15:44:27 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [RFC PATCH 2/4] hw/arm/virt: Don't use vms->tcg_its in
+ create_gic()
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260120180339.1416328-3-peter.maydell@linaro.org>
+Date: Thu, 22 Jan 2026 16:44:15 +0100
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 22 Jan 2026 15:31:15 -0000
-From: Marc Deslauriers <2138885@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Unknown; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- status=Fix Released; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=trusty; sourcepackage=qemu;
- component=main; status=New; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=xenial; sourcepackage=qemu;
- component=main; status=New; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=bionic; sourcepackage=qemu;
- component=main; status=New; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=focal; sourcepackage=qemu;
- component=main; status=New; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=New; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; status=New; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=Fix Released; importance=Undecided; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; status=Fix Released; importance=Undecided; assignee=None; 
-X-Launchpad-Bug-Information-Type: Public Security
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: yes
-X-Launchpad-Bug-Commenters: mdeslaur
-X-Launchpad-Bug-Reporter: Marc Deslauriers (mdeslaur)
-X-Launchpad-Bug-Modifier: Marc Deslauriers (mdeslaur)
-References: <176909579593.2793718.4382485579874417264.malonedeb@juju-98d295-prod-launchpad-7>
-Message-Id: <176909587541.2820476.631317090379173336.malone@juju-98d295-prod-launchpad-4>
-Subject: [Bug 2138885] Re: iret security issue
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="9fcfff1971229ac997140f06b41a902ac8ec69f4";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: 7caddcdcb8992dc083680ca8d4acd01fb26c3548
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+Message-Id: <D52D655C-4204-4DD3-814F-1330B675AA00@unpredictable.fr>
+References: <20260120180339.1416328-1-peter.maydell@linaro.org>
+ <20260120180339.1416328-3-peter.maydell@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-Authority-Info-Out: v=2.4 cv=fbKgCkQF c=1 sm=1 tr=0 ts=697245de
+ cx=c_apl:c_apl_out:c_pps a=azHRBMxVc17uSn+fyuI/eg==:117
+ a=azHRBMxVc17uSn+fyuI/eg==:17 a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=WmESvH20LQ8JE5vgt2wA:9
+ a=CjuIK1q_8ugA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: nQ7VCVd1fFMbTbS1ylv6pfJhgq9Cs0Zi
+X-Proofpoint-GUID: nQ7VCVd1fFMbTbS1ylv6pfJhgq9Cs0Zi
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIyMDEyMCBTYWx0ZWRfX6Ws8A/K64xwt
+ nkqV7zIyrzUzi9lmhLxUaUVyRX3YVWWaiLINsaenCsZhc8logWDLbPQ6LaXGYzy7LCqzRm3PFRw
+ 8R9pdHXA5YwmjB8q74obOtXkf0rNAag5wRtlNpFv6ZD+uGIROXL0lt5d9z7P+8LaaYLRFcj2YHB
+ doQ8CtLDumy0v38KKGOXC5/YEykB8yUCm/F3NrshiZL5dkwZDowDb+noPubmoKCEW9hFAvW7vHh
+ s2H0irLA85Kg+OHl8df1a/vtH6ghajkkmHTDW7nWeXzhMEPbvmaNSWwCPu/Ice7SXWz+ge3aoDN
+ V1oT2gsvGeQzpp0r3Ev
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-22_02,2026-01-22_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ adultscore=0 bulkscore=0 clxscore=1030 suspectscore=0 spamscore=0 mlxscore=0
+ mlxlogscore=986 malwarescore=0 classifier=spam authscore=0 adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601220120
+X-JNJ: AAAAAAABbTpIWZxqV/mzxHemZqYl5W1R0xVWkR8UB4AHWhBvMe0uI43JMiOu9RROIkUlpQrbFLGZ0WI5YWVPMB1jLhUFbVeQlHQsjy8aXwWrJXB1mVP7nJQ5XZmU/zcqNXNX/AcHVIfNdmjq7xut0NwoW2M/qWhZfSSHXUM+1zCgV+AfK36yN+C7PsTKV5VsYyy/scEMW0Q0MgcS4zoDqCrAZy2mFNAlEVx6Ef8HD9calDcKDZS2AyxLbAKISA2mrLJq/smAo1SVCwncvz+ODoV4RmBeQHcKS8W9r6RglcNdvalOljxqh3RBvVFyhlljs9DS/to+JUPYVY8S/OVSW8qnTDVxQGQ4VFL0AAZGkH8YiTFo9Gu+O8w/ae78IY+ncmXJZ+R0GmoqIHtEiqg6TIvEJGTfaWDyW/Se/wfomqbRwFYyxsTiesvPNskGqKAbFV61jbDUPn7K1y97up0sLKgWHoqeJmzXP0OJvcGVLigitWoqSq/BtQrIpaYwiPH8Xw76PVyhpmiMHmSQlptMHxw55h3f4om7jk8WuQi88eqLgUFAkxUDT4dJplg45crTTvDk4qfxT94lZWlZn9ivTfVNxezCNyRNeC1Z2ZpK/5Igwzh/qNAHWTdW3pc3pmObIotzFm1/AykmOA==
+Received-SPF: pass client-ip=57.103.67.57;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -103,90 +91,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2138885 <2138885@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Original LP bug before migration to gitlab:
-https://bugs.launchpad.net/qemu/+bug/1866892
 
-** Also affects: qemu (Ubuntu Questing)
-   Importance: Undecided
-       Status: New
 
-** Also affects: qemu (Ubuntu Focal)
-   Importance: Undecided
-       Status: New
+> On 20. Jan 2026, at 19:03, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> The create_gic() function needs to know whether the GIC
+> has a TCG ITS attached, as it should set the "sysmem" and
+> "has-lpi" properties of the GICv3 only in that case.
+> Currently it does this with
+> (!kvm_irqchip_in_kernel() && vms->tcg_its)
+> which implicitly relies on knowing that the only case
+> where we aren't using a KVM GIC and we don't have an ITS
+> is where we suppressed the TCG ITS because of the
+> board-version-compatibility no_tcg_its setting.
+>=20
+> We can avoid direct use of vms->tcg_its now that we
+> can identify what MSI controller we are using from the
+> vms->msi_controller field.
+>=20
+> This means that the only use of vms->tcg_its is in
+> the logic in finalize_msi_controller().
+>=20
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> hw/arm/virt.c | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index b55297455f..a231aef268 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -851,7 +851,7 @@ static void create_gic(VirtMachineState *vms, =
+MemoryRegion *mem)
+>                             redist_region_count);
+>=20
+>         if (!kvm_irqchip_in_kernel()) {
+> -            if (vms->tcg_its) {
+> +            if (vms->msi_controller =3D=3D VIRT_MSI_CTRL_ITS) {
+>                 object_property_set_link(OBJECT(vms->gic), "sysmem",
+>                                          OBJECT(mem), &error_fatal);
+>                 qdev_prop_set_bit(vms->gic, "has-lpi", true);
+> --=20
+> 2.47.3
+>=20
+>=20
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-** Also affects: qemu (Ubuntu Xenial)
-   Importance: Undecided
-       Status: New
-
-** Also affects: qemu (Ubuntu Bionic)
-   Importance: Undecided
-       Status: New
-
-** Also affects: qemu (Ubuntu Trusty)
-   Importance: Undecided
-       Status: New
-
-** Also affects: qemu (Ubuntu Resolute)
-   Importance: Undecided
-       Status: New
-
-** Also affects: qemu (Ubuntu Noble)
-   Importance: Undecided
-       Status: New
-
-** Also affects: qemu (Ubuntu Jammy)
-   Importance: Undecided
-       Status: New
-
-** Changed in: qemu (Ubuntu Questing)
-       Status: New =3D> Fix Released
-
-** Changed in: qemu (Ubuntu Resolute)
-       Status: New =3D> Fix Released
-
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2138885
-
-Title:
-  iret security issue
-
-Status in QEMU:
-  Unknown
-Status in qemu package in Ubuntu:
-  Fix Released
-Status in qemu source package in Trusty:
-  New
-Status in qemu source package in Xenial:
-  New
-Status in qemu source package in Bionic:
-  New
-Status in qemu source package in Focal:
-  New
-Status in qemu source package in Jammy:
-  New
-Status in qemu source package in Noble:
-  New
-Status in qemu source package in Questing:
-  Fix Released
-Status in qemu source package in Resolute:
-  Fix Released
-
-Bug description:
-  iret security issue. See here:
-
-  https://kqx.io/post/qemu-nday/
-
-  Upstream fix:
-  https://gitlab.com/qemu-project/qemu/-/commit/0bd385e7e3c33e987d7a8879918=
-be6df7b111ac4
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2138885/+subscriptions
 
 
