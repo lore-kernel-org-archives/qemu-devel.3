@@ -4,131 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 826D8D3EE75
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 15:48:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F8BD3EE8A
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 15:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viwvJ-0003WR-OV; Thu, 22 Jan 2026 10:48:41 -0500
+	id 1viwxt-0005hB-Cd; Thu, 22 Jan 2026 10:51:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1viwua-0003M2-Ao
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:48:06 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1viwxm-0005YW-5C
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:51:15 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1viwuY-0004nL-0A
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:47:55 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id BB37F5BCD3;
- Thu, 22 Jan 2026 15:47:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769096870; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BpxyDjvnhTGZD1UGyN78pEBg0d5ITPh/BmizeskZCjk=;
- b=1exX3P/m3ycRcu6n3K6QZU9e+5Hz1bypUNwV2VqC8A2mnjVMHtkL7ydqxd8CjZ0Usbt3lI
- blB6KnG4HWrhAUZAVZAsWviw9lT4iPOINSGg1eefuueoJF89Expaya0aD7/dasmJLhN+b9
- aKFdnZopMV9JirF3mC26CCW/8SaR824=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769096870;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BpxyDjvnhTGZD1UGyN78pEBg0d5ITPh/BmizeskZCjk=;
- b=LC5deoz6GgCNBUp3TEQwj+bs0CtJg65GfVs0I2epXxj/hcANGzsH/0j7Y9qYFgf2nHP0mO
- vsSIgL6e4VNzQeBQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="1exX3P/m";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=LC5deoz6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769096870; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BpxyDjvnhTGZD1UGyN78pEBg0d5ITPh/BmizeskZCjk=;
- b=1exX3P/m3ycRcu6n3K6QZU9e+5Hz1bypUNwV2VqC8A2mnjVMHtkL7ydqxd8CjZ0Usbt3lI
- blB6KnG4HWrhAUZAVZAsWviw9lT4iPOINSGg1eefuueoJF89Expaya0aD7/dasmJLhN+b9
- aKFdnZopMV9JirF3mC26CCW/8SaR824=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769096870;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BpxyDjvnhTGZD1UGyN78pEBg0d5ITPh/BmizeskZCjk=;
- b=LC5deoz6GgCNBUp3TEQwj+bs0CtJg65GfVs0I2epXxj/hcANGzsH/0j7Y9qYFgf2nHP0mO
- vsSIgL6e4VNzQeBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2120F13533;
- Thu, 22 Jan 2026 15:47:49 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 2jrINKVGcmk5dAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 22 Jan 2026 15:47:49 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Markus
- Armbruster <armbru@redhat.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, Stefan
- Hajnoczi <stefanha@gmail.com>, qemu-devel <qemu-devel@nongnu.org>, kvm
- <kvm@vger.kernel.org>, Helge Deller <deller@gmx.de>, Oliver Steffen
- <osteffen@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, Matias
- Ezequiel Vara Larsen <mvaralar@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- German Maglione <gmaglione@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>, Thomas Huth <thuth@redhat.com>, Mark Cave-Ayland
- <mark.cave-ayland@ilande.co.uk>, Alex Bennee <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: Modern HMP
-In-Reply-To: <aXIWLi656H8VbrPE@redhat.com>
-References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
- <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
- <871pjigf6z.fsf_-_@pond.sub.org> <aXH1ECZ1Nchui9ED@redhat.com>
- <87ikctg8a8.fsf@pond.sub.org> <aXIWLi656H8VbrPE@redhat.com>
-Date: Thu, 22 Jan 2026 12:47:47 -0300
-Message-ID: <87ikctk5ss.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1viwxj-0006wx-KC
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:51:13 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-8231061d234so370303b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 07:51:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769097070; x=1769701870; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CKWPP/4IjGgDhV888ZfsyVS+d1eV29rcL0kR8zkb/LE=;
+ b=rFnnqHwz+azI82GnCT/CYY8AX1jeooMiWc150l8Iwho7fK6hDn09NjZ4bKZb2Z3wE/
+ 9zWIa0sUqIlVJd5hfTZbwKui51YDUeAz7A/izMzpaetgTpCOrKoROPiP0hMsKsnrFkRg
+ aP6/quOT19IgJxm9dw5EsMBqH6SxoCiZNmFiz/58xXN3um0INs9v52zEug+aEgqpNM6S
+ +mi33ORt8tD4fbJs6crd96IEWAlkpxg2iK1Ci9rQ3QRNAIy3R0Vf4lF6dehmFxJv6L5V
+ HNrGQg37vaeS1qCNKZJdNRckn5P/gnnvVmv6FfzjtXzY3X6YPZbtjNQc1OqKhPcno/lo
+ 8i1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769097070; x=1769701870;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CKWPP/4IjGgDhV888ZfsyVS+d1eV29rcL0kR8zkb/LE=;
+ b=aNeKgoB41VOeShB5OBh7/bu/Qpo6BNlbegFib2WDxD88U4zCcchmM/6keoWVYU6pYv
+ 6yTsO0H1VP+El47jPnUzT86TN/YOQMKgn4NwtC211qUxI1Rv3PPB9PnlPhf9GEGxsLD2
+ wmXWEz/IrgfMJiaPzNtlxkNTqWybZLcZ6FitenNWj3aWdavsHqKM8TN5hm+UKAH2sXok
+ vvm2+NsgOveuq4jOhOziNBA8JmKqaUDf65d4hdya6uiJwfVZgAmBSCgbBXIuzZIKEOFx
+ 9TBsV+zV19LQDANeoNwwj2XKyPglo0geI38MLeIUDX0jGNrsKkotU5Zjlgwd3fF4+0aM
+ YQeQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCXsD7MwsnXupMQU7km4H4OMZW88QvIMunxyloTM6wdRjPaMUbEJPwFjJp6k4Yi+nCVhHF4pACnKAb@nongnu.org
+X-Gm-Message-State: AOJu0Ywmke4IjMnbnunDBWceBNTtWvIP5hOSJUoqHGqTHUZahShME8lv
+ 1XwXx10bR2NjK0aha8IwZBMiaIcVNkcAUfpocgFcCMyem63GU0VYD7Zprj74sSIYpfs=
+X-Gm-Gg: AZuq6aI6C4TRzSfiGFmHnF4bH6XrC0WhVGqqOgDEwOND3IVX9PcbcFt+UudS7kxuhVr
+ 6xUd4wOEu6YXEL3YXfM16JFR1c425CQbHbxFC90D+woyHB98e4NpwEdMn1Mj9s6SG47oXtj2n1F
+ MG3NM1hs2+UFpI8U0+tWq7mKTCnBUn0iBoWumYcxugnAf8JJzjoJHFV9uS7xUMv0bjCMCPr1U5L
+ QCL/o8Lgki/qWDcxBzggLWUMe72zRpHJuWYOhfTSPg5iknsevEusPIjgvH55WnMjkNZMmMf94Dx
+ /0uvPnKJRAI6HcYy93Ogd02lcNYzlcFho2NRPb1xcAhyZSEV0/HCjytJJQAOkAILz3G2mgl9Vns
+ Xkovp78kto0+D0Wr7cgl/ihyJ4E4/1gQDe6h+HmYWR1XEb6L6G+mYgUI+rr/rV3LXzxwmdKxR14
+ XNW1tpAPhgPYx3JswVPU55M5nH5jHw4wD/hYt6U1E66eceoRAHAHo+c05E
+X-Received: by 2002:a05:6a00:3491:b0:81f:9bf3:6deb with SMTP id
+ d2e1a72fcca58-81fe87d8e3fmr9404252b3a.15.1769097069587; 
+ Thu, 22 Jan 2026 07:51:09 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-81fa12b2bb2sm18477429b3a.59.2026.01.22.07.51.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Jan 2026 07:51:09 -0800 (PST)
+Message-ID: <c272a3dd-5f16-4821-bc38-5bd60369dfbf@linaro.org>
+Date: Thu, 22 Jan 2026 07:51:08 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
- TO_DN_ALL(0.00)[];
- URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCPT_COUNT_TWELVE(0.00)[19]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,nongnu.org,vger.kernel.org,gmx.de,linaro.org,ilande.co.uk];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Queue-Id: BB37F5BCD3
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/4] hw/arm/virt: Deprecate 'its', introduce 'msi'
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
+References: <20260120180339.1416328-1-peter.maydell@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260120180339.1416328-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -145,168 +139,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 1/20/26 10:03 AM, Peter Maydell wrote:
+> This patchset is an RFC sketch of cleaning up the logic that we
+> have for selecting the MSI controller, so we can add the handling
+> for "hvf and whpx give you a GICv3 without an ITS" in a
+> hopefully clear manner.
+> 
+> thanks
+> -- PMM
+> 
+> Peter Maydell (4):
+>    hw/arm/virt: Clean up MSI controller selection logic
+>    hw/arm/virt: Don't use vms->tcg_its in create_gic()
+>    hw/arm/virt: Drop VirtMachineState::tcg_its
+>    hw/arm/virt: new "msi" property
+> 
+>   docs/system/arm/virt.rst |  21 +++++++-
+>   hw/arm/virt.c            | 108 +++++++++++++++++++++++++++++++++------
+>   include/hw/arm/virt.h    |   2 +-
+>   3 files changed, 114 insertions(+), 17 deletions(-)
+> 
 
-> On Thu, Jan 22, 2026 at 01:07:43PM +0100, Markus Armbruster wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->> > On Thu, Jan 22, 2026 at 10:38:28AM +0100, Markus Armbruster wrote:
->> >> Let's start the discussion with your nicely written Wiki page:
->> >>=20
->> >>     =3D=3D=3D External HMP Implementation via QMP =3D=3D=3D
->> >>=20
->> >>     '''Summary:''' Implement a standalone HMP-compatible monitor as an
->> >>     external binary (Python or Rust) that communicates with QEMU
->> >>     exclusively through QMP, enabling future decoupling of the built-=
-in
->> >>     HMP from QEMU core.
->> >>=20
->> >>     QEMU provides two monitor interfaces:
->> >>     * '''QMP''' (QEMU Machine Protocol): A JSON-based machine-readable
->> >>       protocol for programmatic control
->> >>     * '''HMP''' (Human Monitor Protocol): A text-based interactive
->> >>       interface for human operators
->> >>=20
->> >>     Currently, HMP is tightly integrated into QEMU, with commands
->> >>     defined in `hmp-commands.hx` and `hmp-commands-info.hx`. Most HMP
->> >>     commands already delegate to QMP internally (e.g., `hmp_quit()`
->> >>     calls `qmp_quit()`), but HMP parsing, formatting, and command
->> >>     dispatch are compiled into the QEMU binary.
->> >
->> > First of all, I love the idea. An external HMP impl that consumes
->> > QMP from outside QEMU so a concept I've suggested many times over
->> > 10+ years hoping someone would take the bait and impl it :-)
->> >
->> >> Also line editing and completion.
->> >>=20
->> >> Most HMP commands cleanly wrap around QMP command handlers such as
->> >> qmp_quit().  Wrapping them around QMP commands instead is a
->> >> straightforward problem.  I'm more concerned about HMP stuff that uses
->> >> other internal interfaces.  Replacing them may require new QMP
->> >> interfaces, or maybe a careful culling of inessential HMP features.
->> >> Known such stuff: completion does not wrap around QMP command handler=
-s.
->> >> It is provided by the HMP core.
->> >>=20
->> >> Risk: this can easily become the 10% that take the other 90% of the
->> >> time, or even the 5% that sink the project.
->> >
->> > IMHO this is essentially guaranteed.
->> >
->> > 4 years ago I tried to move us closer to this world by introducing
->> > "HumanReadableText" and documenting that all remaining & future
->> > "info xxx" commands should be backed by a QMP command that just
->> > returns human formatted text. The intent was to eliminate the
->> > roadblock of having to define formal QAPI types for all the
->> > complex data.
->> >
->> > I converted a bunch of commands, but that indeed became do 90%
->> > of the work, leave the other 90% of the work for later victim^H^H^H
->> > contributor.
->> >
->> > None of this means that the GSoc project idea is invalid. We just
->> > have to figure out a credible end goal is for the project, ideally
->> > with staged delivery.
->>=20
->> Makes sense.
->>=20
->> If we see the GSoC project as a first step towards replacing the
->> built-in HMP by an standalone program talking QMP ("Modern HMP"), we
->> better scope it carefully, so it (1) has achievable success criteria,
->> and (2) makes real progress towards the actual finish line.
->>=20
->> >> Risk: serious code duplication until we can get rid of built-in HMP.
->> >> Fine if the goal is to explore and learn by building a prototype, and=
- we
->> >> simply throw away the prototype afterwards.
->> >
->> > IMHO that isn't a risk, that's a guarantee. I can't imagine converting
->> > all remaining HMP commands to have a QMP backing, AND doing an external
->> > HMP impl all within the GSoc timeline.  That's two largely independent
->> > projects, each of which are probably longer than the GSoC time wnidow.
->> >
->> > Again that doesn't mean the idea is invalid for GSoc, just that we must
->> > be honest about likely deliverables, and how follow up work will happen
->> > after GSoc to maximise benefit for QEMU.
->> >
->> > What I would not want to see is a bunch of work done that is then
->> > abandoned because it couldn't get used as it wasn't feature complete.
->> > Whatever subset is achieved ought to be intended as a stepping stone
->> > we can integrate and carry on working with.
->>=20
->> Does the GSoC project make sense without a firm commitment to followup
->> work to finish the job?
->>=20
->> Specifically, commitment by whom to do what?
->>=20
->> >>     '''Add `CONFIG_HMP` build option''':
->> >>     * Create a new Meson configuration option to disable built-in HMP
->> >>     * Allow QEMU to be built without HMP
->> >>     * Facilitate testing of external HMP as a replacement
->> >>=20
->> >>     '''Create an external HMP implementation''' in Python or Rust tha=
-t:
->> >>     * Connects to QEMU via QMP socket
->> >>     * Parses HMP command syntax and translates to QMP calls
->> >>     * Formats QMP responses as human-readable HMP output
->> >>     * Supports command completion and help text
->> >>=20
->> >>     '''Use `hmp-commands.hx` for code generation''':
->> >>     * Parse the existing `.hx` files to extract command definitions
->> >>     * Generate boilerplate code (command tables, argument parsing, he=
-lp
->> >>       text)
->> >>     * Produce a report of implemented vs. unimplemented commands
->> >>     * Enable tracking of HMP/QMP parity
->> >>=20
->> >> .hx is C source code with ReST snippets.  scripts/hxtool strips out t=
-he
->> >> ReST.  docs/sphinx/hxtool.py ignores the C source code, and processes
->> >> the ReST.  It works.  Not a fan.
->> >>=20
->> >> If we succeed in replacing built-in HMP by an external one, and the
->> >> external one isn't written in C, then having C source code in .hx no
->> >> longer makes sense.  Parsing it will be wasted effort.  It may still
->> >> make sense initially.
->> >
->> > Indeed, we should clarify language intended as it would influence
->> > the approach for the project.  If it is a clean room Rust impl,
->> > then it would be completely independent of existing HMP C code.
->> > More work initially to ensure we retain the same data formatting
->> > of each command, but likely nicer long term, and saying Rust will
->> > probably attract more candidates to the idea.
->>=20
->> In theory, we could make the same HMP code work in both contexts,
->> built-in HMP and standaline HMP.  I doubt this is feasible, at least not
->> at reasonable cost.  Too much disentangling.  I could be wrong.
->>=20
->> If we use separate HMP code, i.e. accept code duplication until we
->> retire built-in HMP, then picking a different language for the new copy
->> won't add all that much to the bother of having to maintain two copies.
->>=20
->> HMP is not a stable interface.  We make reasonable efforts not to change
->> the output without a good reason.  I don't think identical data
->> formatting is a requirement.  Just make a reasonable effort.
->>=20
->> Marc-Andr=C3=A9 proposed Python or Rust.  Anyone got a preference backed=
- by
->> reasons?
->
-> My suggestion would be Rust, as it allows the possibility to embed
-> that Rust impl inside the current QEMU binaries, to fully replace
-> the C code and retain broadly the same functionality.
->
-
-One question I have is what exactly gets (eventually) removed from QEMU
-and what benefits we expect from it. Is it the entire "manual"
-interaction that's undesirable? Or just that to maintain HMP there is a
-certain amount of duplication? Or even the less-than-perfect
-readline/completion aspects?
-
-Does the new program becomes basically an external project unrelated to
-QEMU, that simply talks to QMP like libvirt does?
-
-I wonder how close to tools like qmp-shell, qmp-tui, etc that would
-become and whether we might actually be looking at a substitute of
-qemu.qmp.
+Maybe Mohamed could integrate this in his series, once you're happy with 
+the result Peter.
 
