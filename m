@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5179DC44508
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Jan 2026 23:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0BD9C44508
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 00:47:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vihiX-0007Ef-TL; Wed, 21 Jan 2026 18:34:29 -0500
+	id 1viiqX-0000s1-7f; Wed, 21 Jan 2026 19:46:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vihiV-0007BE-8Z
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 18:34:27 -0500
-Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ id 1viiqT-0000pd-Qv
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 19:46:45 -0500
+Received: from mail-qv1-xf2f.google.com ([2607:f8b0:4864:20::f2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vihiT-0007T3-0C
- for qemu-devel@nongnu.org; Wed, 21 Jan 2026 18:34:26 -0500
-Received: by mail-qk1-x732.google.com with SMTP id
- af79cd13be357-8c52c1d2a7bso161982785a.0
- for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 15:34:24 -0800 (PST)
+ id 1viiqS-0007yG-6P
+ for qemu-devel@nongnu.org; Wed, 21 Jan 2026 19:46:45 -0500
+Received: by mail-qv1-xf2f.google.com with SMTP id
+ 6a1803df08f44-89478e429afso4267116d6.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Jan 2026 16:46:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769038463; x=1769643263; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769042803; x=1769647603; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=qj+DHUzATLnjvXIrRWInk4yoR/8+YxjLr7gtSEauKmY=;
- b=fK2FL55GMvGktQVe2OjfDF62TFc58jeqaX5ipD2D/yTr6DcqXDYMgDivvWzXMGXaEo
- NQWyuGhdx0Koq2G15mA5ayMbp/k8sSuV0Lu1JF4P6NLaiXnARbAudQTfzVXjWbgAioRm
- y/f+sMuaMSyMF5kcA5GWr0MmTBsv7rEakzflKG00tSOPgIgWBVeFGqIRZZ/Z82lzrL6X
- 9+YTPD+Xu7jFMoDOIwJqnRVeO+KJqIionj85r0Bfh0oS3LQMeuGl83B4fz3h5URHve/x
- c9vlkWvH6Qm/E1TlIgLIWWiBjmhcr1SIfoUMBZjYcbe3bnxlBGzHBN6dW7Dpdxcv9Bup
- ZoDA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VqQ/xZFoDNA9FieRufJr3k/e+n1fRTWfDWxGQ300gG4=;
+ b=gk377BRGERYaDPTaja4Y+i74FVjIm0FrFXrIBpP2aH0dt1KgYS+ReLiCI9qg2eD47N
+ E5i3wSy0AqcAYsV1S1szFZlf8MG7Lol03wsuSTpRilKxFioQCSCiwpb6NPhBdmyVZq6U
+ vxSK+7AaDjqo8xT6NSO0BUUB1VfC3lU28boElNUpYnJEfHOcbr+pV4u+Ew7R2SEYHzxY
+ Ld4ChkCiEUO+Qd8EDr1ap/7RePehoq/m3YLxnvyekklvPN1B4NQi/tA2ZHSTdXaF6Khx
+ UumB08A9JUxpp4vQk5Nj30bscxWgW/EZUwY15mTU0Q2s7/J5mUTWf8yPGJ8P2p5f5MFz
+ 572A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769038463; x=1769643263;
+ d=1e100.net; s=20230601; t=1769042803; x=1769647603;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qj+DHUzATLnjvXIrRWInk4yoR/8+YxjLr7gtSEauKmY=;
- b=ev7qfo4c38xJyt3R/R4EU0N9pDPfM7vEyzYymRMaoPlG0pxNpFIDELPu/NwOIR0h8B
- vQLJyq4DxVS0d18BOgYXy6eViZ1jJ8fRiYEqTVzFsDUs/1QjskKhSB0e+2gkfYt6wRmB
- lmtUntN5zQPnMPuWjfEGqDdBNhulpwBRTYb9AmXUS64/pTZt1zvDtd9y26edHndGg4rK
- Xl1k6kijweWYtcjTqIeTzrJCkT2f7BFeuYQT4kmww2V+G87biIlJL00vQUnogDCLU8zv
- jSN1asoMoXm6vj+1QEuT4th3BE1oQKHOf7kEOGt5VP90q7z1TW2vdLLqjNv5BWFTlK3+
- tUSg==
-X-Gm-Message-State: AOJu0YzB3oqsilcnNQ4C1YFJUDWNa85kWMWwEnlV0hwQzc5G1STHMT4b
- XH79gVgCTVGsBuWbUrIKkgoKa1yUOoDUdWz+ha4QijPZy0/2sXU8BcSO/C+U61HuF8l6eKExR1G
- OCdT8XLs=
-X-Gm-Gg: AZuq6aKaVCndJ08sUJAN8T6SG6i1HR9RmKHbT3suur9/Ze8c/Edcub7Xnoqxmcrpoh0
- k9B2U99BzgbFGUCYNz23170pvbCebKpe2I5bni/NBdhefBi98F7gpEDj0CBkR9vnpGknDQV6s+6
- MgXe41kXk5DDH27CWhJZALfvyVHAPMCfiqV0L9cNdN8jqBO3AZS06tOgm4zZXhL+ansbBt9Pyjz
- 7xEhCfDbuTDfCHfPRS9SzurW1YVChC6n/9dSr8eOyKIfIq002uWM9ZjuG31aTmzv5UwSlL1TKJh
- vFNm2Eac+yRWKoTVFkKzV/rheY/L4jPZbjgTWRyaqDVhGL9wnPBH2BHnifU3sAImATiuurWGaOQ
- wmsSHyTYD0VrX7zIc4X9ixiyYalF1+dLfuPntd9NkV84QfkXojbcUVPUOUWYISWxplmL5Xmx+g8
- 1oCG+giPr5JHRrbt42XR7a896XYttFCrFlh5rpmJInMpF0pNm2xqE=
-X-Received: by 2002:a05:620a:7105:b0:891:7008:f2e0 with SMTP id
- af79cd13be357-8c6da876333mr176661785a.8.1769038463324; 
- Wed, 21 Jan 2026 15:34:23 -0800 (PST)
+ bh=VqQ/xZFoDNA9FieRufJr3k/e+n1fRTWfDWxGQ300gG4=;
+ b=isHpKac5egGya4an5e0gSI2j/a8vUL9zIbqzW1hFnn0DBvGQChganhCcQAkyW65ynq
+ Rua7uSo1ckHCxwDy9ztEiwhlxNH/NN2m5eH5oKg2mG2qrCW+3M2zbBDQ64JPVlffw57K
+ YZA+b55j3efnAPdyeYMr+x10/4woYyhA/q8BkDyTedeQJdl+dUHo3A4gHi01n+mnLb/f
+ dl1p4kR3ECYESguzMq0qVktffsdqncRMFE1C045nkHwsDpxPWzF3AfhKfoB7D3CST80j
+ miRdgozgdq58Hyk13fUKWc+2CxNVthmtWdxKgsK61s7zSdA/scz4zGuO6epPRzJ/S2P8
+ Os1w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVUD4Ul5VM/BvbToWoIbmMLhRkPDFTrQrITgDfSyDZZiRLQkGWdxwStkpAwgBuyeCWEdLj/O4c5v5/Z@nongnu.org
+X-Gm-Message-State: AOJu0Yw3iBg422GYn+Wg4lftDkpN5a1W0Emo4HnvkdJTm2/eiWxmt/2g
+ d2H9660txWuJq96Mqz1QS8z/FbGCNIwO/gPVDJgV1QDpiJmKgRQj0KD+qgLRiv8gDNY=
+X-Gm-Gg: AZuq6aIAsdtdDJ2zM/alQFAJQCNi7wHxvS7Gca7VGdWkAQfQDso+dSumo/Bt6PZa8ER
+ eEX/S87DIX2B0wpqLfmVRcsHoDm6nTUr1DiQCHDzCKFIzdorcngivcIaB1XH8zgWcI7HmlJ/1tp
+ R72tvGO/k5BteXDPaA+F5kINbED2aDQzDynvZM2OajKV1FpysZtuFVNdPadppgmBuuM3zpt0b57
+ +VqVHqx+rT7zbIG62JZHMMfO87vR7jhTrDOfXhoq4T7QxUe/aT8eTeQjjFbH12NXYNLaYhsVjn1
+ 53lkWXEMFtxPaE4be+pBRhZ8UO4l6qYpz1Vqcf8tAEQ2zP5itI2uUyBuhxBSm8SuPRXjCjk3dmV
+ gZjh6JBUfeSzRxHDu34jyS5gcEZpxU18a2QjnlTHeQlN60h+ocdogUzJtqagL96+PF/KuwIId7R
+ OYig4kfVXShqJW5SnQj4/MXWTzSUAYAcCLtXx62kcUZcZo2R1g+yA=
+X-Received: by 2002:ad4:5ce8:0:b0:894:2f28:54b9 with SMTP id
+ 6a1803df08f44-894638a19c3mr101092756d6.27.1769042802419; 
+ Wed, 21 Jan 2026 16:46:42 -0800 (PST)
 Received: from [10.244.221.227] ([172.59.190.48])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c6b22bb7cbsm1060075485a.39.2026.01.21.15.34.21
- for <qemu-devel@nongnu.org>
+ af79cd13be357-8c6a71c0759sm1306803985a.14.2026.01.21.16.46.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Jan 2026 15:34:22 -0800 (PST)
-Message-ID: <d3070a83-10fe-4682-8270-c0af21eff144@linaro.org>
-Date: Thu, 22 Jan 2026 10:34:16 +1100
+ Wed, 21 Jan 2026 16:46:42 -0800 (PST)
+Message-ID: <5f2a4c6c-6434-4e4c-8cc3-42994521c0e4@linaro.org>
+Date: Thu, 22 Jan 2026 11:46:31 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Enforce sha256 as hashsum algorithm for
- all tests
-To: qemu-devel@nongnu.org
-References: <20260121101957.82477-1-thuth@redhat.com>
+Subject: Re: [PATCH v3 0/2] dump/win_dump: Build almost once
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260121215622.92966-1-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260121101957.82477-1-thuth@redhat.com>
+In-Reply-To: <20260121215622.92966-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
- envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x732.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf2f.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,22 +106,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/21/26 21:19, Thomas Huth wrote:
-> From: Thomas Huth<thuth@redhat.com>
+On 1/22/26 08:56, Philippe Mathieu-Daudé wrote:
+> v3:
+> - Dropped Nikolai patches, rebased again
 > 
-> The functional testing framework currently supports both, sha256
-> and sha512 as hashsums for the assets. However, all but one test
-> currently only use sha256, which should also be sufficient according
-> to the current security standards. Having two algorithms around already
-> caused some confusion (e.g. the clean_functional_cache.py script only
-> supports sha256 right now), so standardize now on enforcing sha256
-> before more tests use a mix of the two algorithms.
+> v2:
+> - Rebase on Nikolai patches (included) to avoid rebase
+> - Add Kconfig symbol to only build for x86 targets
 > 
-> Signed-off-by: Thomas Huth<thuth@redhat.com>
-> ---
->   tests/functional/ppc64/test_fadump.py | 4 +---
->   tests/functional/qemu_test/asset.py   | 4 +---
->   2 files changed, 2 insertions(+), 6 deletions(-)
+> Philippe Mathieu-Daudé (2):
+>    dump: Abort in create_win_dump() on non-x86 guests
+>    dump: Build stubs once for non-x86 targets
+> 
+>   dump/win_dump-stubs.c               | 21 +++++++++++++++++++++
+>   dump/{win_dump.c => win_dump-x86.c} | 20 +-------------------
+>   Kconfig                             |  1 +
+>   dump/Kconfig                        |  4 ++++
+>   dump/meson.build                    |  3 ++-
+>   5 files changed, 29 insertions(+), 20 deletions(-)
+>   create mode 100644 dump/win_dump-stubs.c
+>   rename dump/{win_dump.c => win_dump-x86.c} (97%)
+>   create mode 100644 dump/Kconfig
+> 
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
