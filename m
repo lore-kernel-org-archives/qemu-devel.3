@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBC2D46977
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 17:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFF56D6CFA1
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 18:11:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viyfo-0002Cg-PX; Thu, 22 Jan 2026 12:40:48 -0500
+	id 1viz7H-000818-Fq; Thu, 22 Jan 2026 13:09:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viyfm-0001xE-7L
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 12:40:46 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1viz7F-00080C-WC
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 13:09:10 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viyfW-0003G4-J7
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 12:40:33 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-47edd9024b1so11183475e9.3
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 09:40:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1viz7E-0003FM-Cq
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 13:09:09 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-47edd9024b1so11399645e9.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 10:09:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769103626; x=1769708426; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=T18WTgJAP0KXw1fYxRcwzRoLfwi9bzmU2Fjs+7gqb5U=;
- b=L8sxGimCXKNT0dsdT/uy00so61SC9UaAsChdHzAhRUFH0wlX/i3BieZIiL39Sj06VW
- aKl1MCS5mywzEu1h0xPw2PQxYoaVzjBMKjQzSvlZWoL957aBW8xJFDiHmHygXlxlM7Le
- XPRnm3XU1F9mkbpe5A+Uuf3UDWjeBfn0wYBWCIwrUq0zHEakLJ16NLkw1Y7DFIOrEyIG
- ge+An8lHEFdSAdp9MdcdFz3E9ts/v+Rk1sR67wXvHECQ1kdwz2Od8k7JHcEDq96INrbO
- xs14l9wKQgWMJXqOACoZ6JTRSvGwy8gwnpe0QTi48McvWqvPZH4TU7FlXk13wa+TR54r
- gCig==
+ d=linaro.org; s=google; t=1769105347; x=1769710147; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SyjlxxNBFLSr45ZnDAu4wyegtPNWUVAW01YnKBsvvhE=;
+ b=lyGMD6NVm+BKUd8wqtEjVls6fpaN7rqrVTxBgkg6psXrV0qu/OSalgLuXACQ0p4Kmr
+ i4zyr/5ebADOHY2x2gPVkXd7zhKv5isadx5spwPaQuKdeQeJG1V67OYcRiYy+sxlbjnn
+ z3Q9d2Sq0kkIoR02yo0iiiVWEjrbggAk5AZla9GBjB+QJ46wJ3FCkvm9K5rGMpZmq4Pu
+ S3CgxOwX35kUuJMDcUOoypu0KI40cVR9fXNxpL6XVIVVy67GFEP+WN3QUh9dxWyoMNZA
+ 3aj7Zn1z6JxR8X/8fKcDEGOV2htFJerK2Mb4e89Uv+ttM11ptPNz16ihfBB+BHR2Dn+Z
+ iKyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769103626; x=1769708426;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=T18WTgJAP0KXw1fYxRcwzRoLfwi9bzmU2Fjs+7gqb5U=;
- b=kt8uLc7P7sgr+Fq7pUXErw8okycpvRdUBTe/sICA6LM8XBbTRmRdj/+a3n22DB19Dy
- GnxidReoGR2TDWZQKx9A+K6OJtmaEejv6mnFVSKUi4E3CImxJ1DBnS60m8NWT91q1i71
- kcS/MAZ1irQ01vqJNgN+lscYMGNITz2UwOnW1AXrWw6d12nUz1Ltv5ajtVVw1WzAhHoV
- oCpXs2LwKuTHe0L2462TEgu21zUr0HqHZnDtEHt+53w7SmqQ3Rs6Q0wwY/+Xf2PdG4Ae
- cQH5V1i8L91SYrO04PM/uSHQ0cyi0G4KoxtoC2YnkqwZWMAxH9OhaqCDZ+f25Lk9QVds
- Inlw==
+ d=1e100.net; s=20230601; t=1769105347; x=1769710147;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SyjlxxNBFLSr45ZnDAu4wyegtPNWUVAW01YnKBsvvhE=;
+ b=rksyOcSC6uapOWzrfETA6AqZrwiUy0Ifnezm02CGTM505lYUBGHH/L9mV11TQQeY7r
+ Je6jlLgsdySJ9qO36d3lb8q4knQtQssmKCcgs+NsTXm2bpAXn018UsRKZGaFn5uoFqoR
+ 5frMgf8x8R/rL0CEF2OypVeOJcHD86HAJMWQFJHeQ7BCnUIM61JP+jILWprqPZ8prreb
+ VUCAkJlO4oYoZ0F/OI1D25gkFhcaFGmrR+Ar7nKE9oglzs7lnvEdVLsU/a3+QIFHwCOu
+ BwFmYW/usG4WI5QcuWHpZrMvlA46WfP1wzdijJsHgGHsK39MtJ3LB05ufaaMR28tSS1A
+ VW4g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVunBRMZS/1IAPpjBxnngdphHqX0FjOuoaslj40jSB0zngRjTX1Y7XiIghobCBvoU2ADzFI2iRs14Yo@nongnu.org
-X-Gm-Message-State: AOJu0Yx0+pgu8uTLOFRXu685oo2Mjldxuxt9jX12PUVqFV9NPR7rtNZ9
- DvuuatZD3I1fmarouxtoroS/jfNcXhIqG0b0O+ujnHyzPUk6RWUp21pB8RFYSzJwW9w=
-X-Gm-Gg: AZuq6aK/t4F0BmCMxXqHM/UKnuPkNLHr+OSeSQb4Id4zw89FrFUgAh+rU6DIBoBShT1
- PzKjq62a1QAGZmnmF+viGZ7tSHaOCYVssjdM+8sM0QlbqgDkZZMIqWHS8fXbw6YtIjfAZd8rr7P
- ZApEcMU0Una1zDkV8FuuoK5hvaqjnYcfEgXpMWiaQTFy2EGNSBlsrplq/ShSBNX1j6Mza20dYNY
- xivUigbr4X1tR6eOaRWzdv6D1EgKb3fWHksrbWkQgiwsvLNjuvjni8CDd5QtXBjNQPZHMlAKWjO
- TTgxSSAkHlPGxavfSlY7XI2UGBS7/XA0gc53FQA/zW7cHLrDLzMcPVGou0Izn3aYRyPPvFzLKZl
- dfHTVkjMOvDSNciO+1fcGMCW2W3evFWCKZcTCxzf2UAVzNJOzC2tpnqnhqtNFGi8mDbeZ3kPNp2
- S0NS8q0XEyZR5ql0vZ/t1tzbGhPpfQLpozCZ0njhNV3gZnq9EHV3rXtg==
-X-Received: by 2002:a05:600c:5298:b0:47e:e946:3a57 with SMTP id
- 5b1f17b1804b1-4804c9d9f23mr6112405e9.36.1769103626359; 
- Thu, 22 Jan 2026 09:40:26 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-480470403d3sm85824825e9.5.2026.01.22.09.40.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Jan 2026 09:40:25 -0800 (PST)
-Message-ID: <982f5122-56b4-432c-a83f-fab17f0cd644@linaro.org>
-Date: Thu, 22 Jan 2026 18:40:24 +0100
+ AJvYcCVtZGgKoeqayxKXuntQl0IwYuq1PPoU9GnQvsvslNGzFsLFU2X+GKXKAZPF54ACgQhNRal9rTA3I5j+@nongnu.org
+X-Gm-Message-State: AOJu0YyMqk7fhHAP0nZxkYfX9D+rq1wMrwbumyh/lA35dauezI0kqn8c
+ bS/oQAE4K2zoeYv9en4i4HK+VXBx8JF8+ILulkTJgvEr9hUTdodJTNXpTLDbBWiZFRo=
+X-Gm-Gg: AZuq6aLCXmEvFoLua//nAPL7l3yPwLDnobbXAZEmDcJ9EfSREjmlLk/0Jn5Ko10COo4
+ lFXmTimZq3Joce6aFJbIDbCmPQT8cpeP2CXtzBEDSzHSOmcARsshqqb9CgyKxuMVDKT398ZRVJH
+ p5Eei1Q3pbgXLoPijnWYJAsc4j7fvgE7AjOmrzY3CNtzbGlNqlLv44IhLvNYX2qH294dWjotqjY
+ eMK90mYCYkGQZ/hykBrwzuxOnBWzfsm0Le/8q/3fkVbOmIfDn63LM247UK+NWdq9c9Bc/sso2+p
+ MucQD6pHGa9Cz+qCIBR4kKy0Kg8j9QakljaudfqD3eveBb7WgWcXV1KShp54iXSbb8iBWjZIiVt
+ lWAkgxZ0RAABppRtLd4ic1zr34UPIVR8K5ziWfHIkBk9en5Kiq/YWFtzZqj7kxW+uoCmrvtx/iT
+ skVfssAtxG2M7Y
+X-Received: by 2002:a05:600c:3e15:b0:47d:885d:d2ff with SMTP id
+ 5b1f17b1804b1-4804c9bff75mr8213805e9.29.1769105346560; 
+ Thu, 22 Jan 2026 10:09:06 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-480470cc278sm78933085e9.12.2026.01.22.10.09.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 Jan 2026 10:09:05 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C27F25F7C3;
+ Thu, 22 Jan 2026 18:09:04 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Thomas Huth <thuth@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  David Hildenbrand <david@kernel.org>,
+ qemu-s390x@nongnu.org,  qemu-devel@nongnu.org
+Subject: Re: [PATCH 3/3] tests/tcg/s390x: Test DIVIDE TO INTEGER
+In-Reply-To: <c29ba170-d046-48b1-8cda-f0e4ada4f276@linux.ibm.com> (Ilya
+ Leoshkevich's message of "Thu, 22 Jan 2026 17:59:06 +0100")
+References: <20260121222116.713325-1-iii@linux.ibm.com>
+ <20260121222116.713325-4-iii@linux.ibm.com>
+ <87jyx9mwcn.fsf@draig.linaro.org>
+ <c29ba170-d046-48b1-8cda-f0e4ada4f276@linux.ibm.com>
+User-Agent: mu4e 1.12.15; emacs 30.1
+Date: Thu, 22 Jan 2026 18:09:04 +0000
+Message-ID: <87ecnhmse7.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0 v3 18/22] target/ppc: Inline cpu_ld/st_data_ra()
- calls in do_hash()
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>
-References: <20251126202200.23100-1-philmd@linaro.org>
- <20251126202200.23100-19-philmd@linaro.org>
- <f1a210ab-8d4a-4646-b358-81183a74c5b2@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <f1a210ab-8d4a-4646-b358-81183a74c5b2@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,47 +110,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/25 17:57, Richard Henderson wrote:
-> On 11/26/25 14:21, Philippe Mathieu-Daudé wrote:
->> In preparation of removing the cpu_ld*_data_ra()
->> and cpu_st*_data_ra() calls, inline them.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/ppc/tcg-excp_helper.c | 9 ++++++---
->>   1 file changed, 6 insertions(+), 3 deletions(-)
->>
->> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
->> index edecfb85725..244aeb23c16 100644
->> --- a/target/ppc/tcg-excp_helper.c
->> +++ b/target/ppc/tcg-excp_helper.c
->> @@ -160,14 +160,17 @@ static void do_hash(CPUPPCState *env, 
->> target_ulong ea, target_ulong ra,
->>                       target_ulong rb, uint64_t key, bool store)
->>   {
->>       uint64_t calculated_hash = hash_digest(ra, rb, key), loaded_hash;
->> +    unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
->> +    MemOpIdx oi = make_memop_idx(MO_TE | MO_UQ | MO_UNALN, mmu_idx);
->> +    uintptr_t retaddr = GETPC();
->>       if (store) {
->> -        cpu_stq_data_ra(env, ea, calculated_hash, GETPC());
->> +        cpu_stq_mmu(env, ea, calculated_hash, oi, retaddr);
->>       } else {
->> -        loaded_hash = cpu_ldq_data_ra(env, ea, GETPC());
->> +        loaded_hash = cpu_ldq_mmu(env, ea, oi, retaddr);
->>           if (loaded_hash != calculated_hash) {
->>               raise_exception_err_ra(env, POWERPC_EXCP_PROGRAM,
->> -                POWERPC_EXCP_TRAP, GETPC());
->> +                                   POWERPC_EXCP_TRAP, retaddr);
->>           }
->>       }
->>   }
-> 
-> This is the page translation hash.  I suspect the actual address must be 
-> aligned, and probably forcibly so via computation.  The MO_UNALN is 
-> either wrong or misleading.
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
-This is a faithful expansion of inlined helpers, showing the current
-logical state of the code. I'll remove MO_UNALN in a subsequent patch.
+> On 1/22/26 17:43, Alex Benn=C3=A9e wrote:
+>> Ilya Leoshkevich <iii@linux.ibm.com> writes:
+>>
+>>> Add a test to prevent regressions. Data is generated using a
+>>> libFuzzer-based fuzzer and hopefully covers all the important corner
+>>> cases.
+>>>
+>>> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>>> ---
+>>>   tests/tcg/s390x/Makefile.target     |   3 +
+>>>   tests/tcg/s390x/divide-to-integer.c | 215 ++++++++++++++++++++++++++++
+>>>   2 files changed, 218 insertions(+)
+>>>   create mode 100644 tests/tcg/s390x/divide-to-integer.c
+>>>
+>>> diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile=
+.target
+>>> index da5fe71a407..d5ec01d04fd 100644
+>>> --- a/tests/tcg/s390x/Makefile.target
+>>> +++ b/tests/tcg/s390x/Makefile.target
+>>> @@ -49,14 +49,17 @@ TESTS+=3Dcvd
+>>>   TESTS+=3Dcvb
+>>>   TESTS+=3Dts
+>>>   TESTS+=3Dex-smc
+>>> +TESTS+=3Ddivide-to-integer
+>>>     cdsg: CFLAGS+=3D-pthread
+>>>   cdsg: LDFLAGS+=3D-pthread
+>>>     rxsbg: CFLAGS+=3D-O2
+>>> +divide-to-integer: CFLAGS+=3D-O2
+>> As we generally compile -O0 to make life easier for people debugging
+>> behaviour via gdbstub could we have an explanation of why -O2 is needed
+>> here? Is it the same reason as rxsbg?
+>>
+>> <snip>
+>
+> Yes, this is because inlining is mandatory for the mask argument, and
+> -O0 does not honor always_inline.
 
+Could we add a comment to that effect in the Makefile. Otherwise looks
+fine to me:
+
+Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
