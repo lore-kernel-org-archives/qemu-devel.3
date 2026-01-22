@@ -4,86 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B129C44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:58:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B02C44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 09:01:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viqUR-0004M7-6w; Thu, 22 Jan 2026 03:56:31 -0500
+	id 1viqZN-0002zM-2I; Thu, 22 Jan 2026 04:01:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqUL-0003wD-Vy
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:56:26 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqUK-0006MY-10
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:56:25 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4801ea9bafdso2699675e9.3
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:56:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1viqZL-0002ye-2t
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 04:01:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1viqZJ-0007Lc-2W
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 04:01:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769072492;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mF5Kw0tJ/JaDynDKNn2r+DF4VV4EH0HLjp0Hsb1jQV8=;
+ b=cw/qNkKb9zyLzVC7RwcR1PEze3Fu/ZPUF9YpONrDb4XzgVEPH7HNxJgXsBFoxi+bqnW38Z
+ jbWextGSkquobb98btCvJQH/Y26sXJrZ0JQP2XQe6/wh7u1t2u3c1Minh0D/VfNXnaWzZk
+ nrtozwI1UU1LwHOHV84G5KgzlsIQlzk=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-263--9jlZbZ4OJmhvC0qoVbWIw-1; Thu, 22 Jan 2026 04:01:30 -0500
+X-MC-Unique: -9jlZbZ4OJmhvC0qoVbWIw-1
+X-Mimecast-MFC-AGG-ID: -9jlZbZ4OJmhvC0qoVbWIw_1769072490
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8c6a69b7813so191184385a.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 01:01:30 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769072490; cv=none;
+ d=google.com; s=arc-20240605;
+ b=FHWSmOGimtDE0f4UMRQYb1uFXgxC1008AE1wY1TavJASyTdGczgFdvd+rl59+eLabW
+ TofqEOvmzwIGi/9MUd015kqK/CFitpk6skA+cjkzoDx3UrdFB9b9jiS2qtGPyZAmGf1y
+ NpluPjK+ROayyGfeHqO50qqt9kGHtS65v/8CsUkoHSA8QW0x/ldMVvbYa3CqoX+cRt0U
+ 1criHSe0jyrlQNqvlf6889Gu2d2cdGY/BzRXS4+ZIhYVe8Mwar/v7q35Boa8Wxv3xRgW
+ NWLPZbdC25zz5pK3l4h8Bim3P+hL0UJfuBQ9LSML6IuQGYXgNqOi2yYQp7al9QtQ4/zo
+ 5CDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=mF5Kw0tJ/JaDynDKNn2r+DF4VV4EH0HLjp0Hsb1jQV8=;
+ fh=RQb6/9sMnP4wQOnMcErtFVCxILJK7yBnLmhI9F6/Gd0=;
+ b=XxcAN6yA600hT5EClbbXCTdvXJYCH8YtpenZttvlMqyRaHxnAVtbBxvF0q7F0OWSmg
+ mLVUQXKmohUasjDenqrO+t/vC1gbHPdRoejITsD+HOg4s2wasvZM7bRQSBuNFqRPjCnP
+ JclZZ5yFp6pCPTLf0OHCRi7HDI4MW/Ke/tRNX155syO9uG4/suoBhe6V9BiquVM9oEt0
+ 34WnCHRCQcVeLi80WJlHVsafMRq7IkPcIspYqwWfNG4skV+T1iDxlONQ0FHbidwL7Xfp
+ XVJz5cDj1NO0BdSsICB7mQWx+ftFm07bG9yYatKgFCmiUZsq8TXnauFxxC3lO5I/nzge
+ sSpg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769072182; x=1769676982; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=UlYQhM307T6PicxGrT5ytshKgfYODSEDN2EV8KGcc6I=;
- b=WfDVmOUwunVGBl1VdejnmltBcJjh8IDccw/dpLpSbFGTOtRtQ0NAUW5zBfPGWE0xN5
- pRqHBoqxMFAI8xtKNQp6sm9mD9ng4kN84JL51ZVPQMUQ3bv9gUSNPy5FjF//XfbS6xl8
- mhg8aRQvEcdahsa53yAwr+3J/vIIhWXNi2+tZnFw8/Jp17ly1L1sRag37f+KhsDN8YGM
- q/eu8yey0rsH4LuG5aCDXK60hfn3i3K/D6pFRH2kPe5rwY3ZjSa1iOg3HN00xrOG2f39
- AojrcA+sJYEpFj76H76Az8oYKULKkGvOAZNwBNm5LckqqTbq//IITSkTeOABb6Vn5Z+u
- sudA==
+ d=redhat.com; s=google; t=1769072490; x=1769677290; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=mF5Kw0tJ/JaDynDKNn2r+DF4VV4EH0HLjp0Hsb1jQV8=;
+ b=Yi+ZGrAq8AzstE38JvOGG+x9GmBQJUdKaWSX8/EmUTR+rp3oEm9yd+5nnA745yCF//
+ EyzbS5ltC9v2E16aHdHg6LMCAOJDaC8xBSRKI2uEW4skWbZ2BQA8wJa9InWrRrta/gfX
+ Wcdzi8aNz5GljAvhucSiN2k1AUbH1M5FSRG/uoCyJdmv2aNI9CNHp1fLt9rUVbnBSNGE
+ wMghywTAwuwkKKeSYunxW/GXt9XfqomI/A+nnF1CwlaZyBXF29YATyNny8SVKicY2PfP
+ 5HbYS85m6UInbxmz22oXHzraYeUglWhrijpV0Rd/q7f4+WURegzKmeUnGnrVFwggrmE1
+ rePQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769072182; x=1769676982;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=UlYQhM307T6PicxGrT5ytshKgfYODSEDN2EV8KGcc6I=;
- b=dL0lxDNR0GE2OKb7DQ6pbFvJaAFRN1qbB2djXvECRQrIWjszvpPDfnauq/XPWU0Veg
- ENg1QyXoZGtEd7QUOj6pDnMgLSl4la0VPjxvvAIZIzhvHHrZyVGlcYMbB91AUVZA2Dlj
- 4KY8FyLuiXNv8BbYPPbGW8vUZtl8KD8mpySxcoDmZIa7JCqHDoWXiVFU86tZqDPsOHGy
- 3vgZr7c2pW6S6Ueo9OOJleicl29jPqgk6S6ZxnxSzUikbXHvAUSd70tXMoHO98KPFPHe
- rEpfu59HV+NP1ShXQyW2xy2px5ZKD/IstgvDnvVYw3rb0A8qhXYhGkCEPxtquj5jlXWu
- 7bwg==
-X-Gm-Message-State: AOJu0Yy2e2VODy6qRaMROVf7u6OC8B5vh7U87jTg6CyLRJcr89z6HfQJ
- 4aPsEspETm/Z8QaVgkVMjBQOtMCmHn3Yag87mSK+PPuEkaplo2YshoUuBoFZ1ECCAwBsLDWX/ab
- AWdj+H2M=
-X-Gm-Gg: AZuq6aLiULSyzLWHC2cmFgS44l2xAQpH77t4OWxku0jfQpdxtHMlQKR7DSxRSGtcKOp
- UtnryZ4mQhlO6sd/+pebXNmZyoJeJXuPbfLJx8xg9WtFEetLa7KngeWyD7fdvf+a/XbN1AdSRrr
- 77qqJkZZAG6WBTY0MMqyycU4AFMV4ChG+kniWKzWNAmC5BuQrPispBKPUqwTBpkNTnicKRX+e1E
- /Vpl2RMqbEJ1OoE9J7j5kwYS0KCAIHdahbxrFHYJYQ6PJzpOb86E3/FeK4Sw97EUEQqLS8wFUFZ
- 3eUC/qtXNGuOwDBGC5RPFFiyJNZIgW59hsJmUpOrL70rDDQnIo+jUGeZcXiHQcnwvCLzQo7nXK4
- 0JfuDuYB7bqAaOOQ6Pg1QlmNSS2i6wVE0Yc0WRdbvEdqWTpC4V+gz3kH5xzmDuGBYNtzry7A9MQ
- GMEtc1RrJ5JsgFy45TMYxbfmAS4wmTq7eDIWfYo/0XGa/dZufGz7oe8EYEHm4dHaBq6K8aOJU=
-X-Received: by 2002:a05:600c:8b27:b0:46e:32dd:1b1a with SMTP id
- 5b1f17b1804b1-48022668fd4mr279349775e9.7.1769072181958; 
- Thu, 22 Jan 2026 00:56:21 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48048b49880sm38355065e9.11.2026.01.22.00.56.21
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Jan 2026 00:56:21 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 31/31] cpus: Allocate maximum number of ASes supported by the
- arch
-Date: Thu, 22 Jan 2026 09:52:54 +0100
-Message-ID: <20260122085255.95035-32-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260122085255.95035-1-philmd@linaro.org>
-References: <20260122085255.95035-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1769072490; x=1769677290;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mF5Kw0tJ/JaDynDKNn2r+DF4VV4EH0HLjp0Hsb1jQV8=;
+ b=T1nWS3QpZAktz7Y2ttWQ/fIlzEmQITgTrREkrdcPF0rBpYWFcB1t9T0oyzrJs5rU3i
+ Yi2djdCUxFhPArK3zuvbysVFjycJn/XQVficR8SB2TNNaLLgP4DNmYLHK+iHv3b6w+Bd
+ Ewnv/tb8Tm71doxgnpqf4sMypprGTH1fiokCzguC1XJ26SZ5/SCTrIeeXWt26e92r6ea
+ ReI3q5INhVseTAwp58SS4wqYnvWdqyA8JgGwNN1V1FaC4qUlr5HdPMJGlFZDnBIMIAJB
+ xptAvmUv7MHDaBq8ydkG2B91FLv726frR7esBqMaYbTF/hzzXxCMOGa83DcumJDQ65s6
+ 51aw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVRWXPy4KwR5391dnZSYbLlp2PtcLiKeWUIwb7st41qHeJ3sNpdNFxAJdLDZVjko/3fTVjF0+4rWgRG@nongnu.org
+X-Gm-Message-State: AOJu0YyPGYPaBhl6WjdXit2GQgIbujyxcVB/DT0WcSJaOps8bewfpA0O
+ RQZyK7wjksZBjTACLePNJdphYjT8k0b9CQcN6GQf9i/V/IvH/8y4+xkhZeJTpIWCEvqvhkXPdCz
+ 6GqvkEmpl05p1NOnTqPHjCqfIxPWCM/0DDjCSIS5NPI9XIs6T7Yj7DGvFlcisGTvf+MOv/PCtgD
+ 882RjjYhs0fLwHpFQ1XyqCA3xzB47Th+k=
+X-Gm-Gg: AZuq6aKi2LAaXL2hetI2uxQbFUPBXO1OQ5dSxAYcI+wuCeVz4VWiBjzD5mKHvEVel58
+ tsE3Jb+i+NqM+ecpwQNpCCLr5oBeug/pNbRScweQU/ecG0RLmxOVRWa+i1fHCzHAtgZDoEt1GSK
+ zjuAZ5NUAjmipZmVYytrL3tC2uMDrkw5S2jNkeVFhclOVEi3thx0M19kupIKjjjtZlIfJg
+X-Received: by 2002:a05:620a:3727:b0:8b2:faa3:4c77 with SMTP id
+ af79cd13be357-8c6a67fae4emr2814434185a.0.1769072489771; 
+ Thu, 22 Jan 2026 01:01:29 -0800 (PST)
+X-Received: by 2002:a05:620a:3727:b0:8b2:faa3:4c77 with SMTP id
+ af79cd13be357-8c6a67fae4emr2814432085a.0.1769072489366; Thu, 22 Jan 2026
+ 01:01:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260122040430.51001-1-wei.wang@smartx.com>
+ <87cy32gh42.fsf@pond.sub.org>
+In-Reply-To: <87cy32gh42.fsf@pond.sub.org>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Date: Thu, 22 Jan 2026 11:01:18 +0200
+X-Gm-Features: AZwV_QhWDFWYP0R_ESQ7Jn9IsaUZuQhaTl-NXDueVzWzjk_0LgJhberxED4V4ws
+Message-ID: <CAPMcbCqVQtOxHPrsmVC316nV4sK11ERAGj2DXwdtyHVBabUvmw@mail.gmail.com>
+Subject: Re: [PATCH] qga: Fix crash due to redundant error setting in
+ qmp_guest_file_open()
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Wei Wang <wei.wang@smartx.com>, qemu-devel@nongnu.org, michael.roth@amd.com
+Content-Type: multipart/alternative; boundary="0000000000004f9c740648f6499a"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,218 +135,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of computing the number of address spaces used for a given
-architecture, machine, and CPU configuration, simplify the code by
-always allocating the maximum number of CPUAddressSpaces supported
-by the architecture.
+--0000000000004f9c740648f6499a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260116185814.108560-5-gustavo.romero@linaro.org>
----
- include/exec/cpu-common.h        |  4 ----
- include/hw/core/cpu.h            |  7 +++++--
- hw/core/cpu-common.c             |  1 -
- hw/core/cpu-system.c             |  2 +-
- system/cpus.c                    |  1 -
- system/physmem.c                 |  8 ++++----
- target/arm/cpu.c                 | 11 +----------
- target/i386/cpu.c                |  1 +
- target/i386/kvm/kvm-cpu.c        |  1 -
- target/i386/tcg/system/tcg-cpu.c |  1 -
- 10 files changed, 12 insertions(+), 25 deletions(-)
+On Thu, Jan 22, 2026 at 10:57=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
+om>
+wrote:
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index b2e02c60d4a..1eb28734601 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -51,10 +51,6 @@ void tcg_iommu_free_notifier_list(CPUState *cpu);
-  * The target-specific code which registers ASes is responsible
-  * for defining what semantics address space 0, 1, 2, etc have.
-  *
-- * Before the first call to this function, the caller must set
-- * cpu->num_ases to the total number of address spaces it needs
-- * to support.
-- *
-  * Note that with KVM only one address space is supported.
-  */
- void cpu_address_space_init(CPUState *cpu, int asidx,
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index f6f17df9e64..61da2ea4331 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -145,6 +145,9 @@ struct SysemuCPUOps;
-  * address before attempting to match it against watchpoints.
-  * @deprecation_note: If this CPUClass is deprecated, this field provides
-  *                    related information.
-+ * @max_as: Maximum valid index used to refer to the address spaces supported by
-+ *          the architecture, i.e., to refer to CPUAddressSpaces in
-+ *          CPUState::cpu_ases.
-  *
-  * Represents a CPU family or model.
-  */
-@@ -195,6 +198,8 @@ struct CPUClass {
-     int reset_dump_flags;
-     int gdb_num_core_regs;
-     bool gdb_stop_before_watchpoint;
-+
-+    int max_as;
- };
- 
- /*
-@@ -443,7 +448,6 @@ struct qemu_work_item;
-  * @icount_extra: Instructions until next timer event.
-  * @cpu_ases: Pointer to array of CPUAddressSpaces (which define the
-  *            AddressSpaces this CPU has)
-- * @num_ases: number of CPUAddressSpaces in @cpu_ases
-  * @as: Pointer to the first AddressSpace, for the convenience of targets which
-  *      only have a single AddressSpace
-  * @gdb_regs: Additional GDB registers.
-@@ -516,7 +520,6 @@ struct CPUState {
-     QSIMPLEQ_HEAD(, qemu_work_item) work_list;
- 
-     struct CPUAddressSpace *cpu_ases;
--    int num_ases;
-     AddressSpace *as;
-     MemoryRegion *memory;
- 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 6d54c12a778..e314f916f84 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -310,7 +310,6 @@ static void cpu_common_initfn(Object *obj)
-     cpu->cpu_index = UNASSIGNED_CPU_INDEX;
-     cpu->cluster_index = UNASSIGNED_CLUSTER_INDEX;
-     cpu->as = NULL;
--    cpu->num_ases = 0;
-     /* user-mode doesn't have configurable SMP topology */
-     /* the default value is changed by qemu_init_vcpu() for system-mode */
-     cpu->nr_threads = 1;
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 48c8ddf4b15..4a91c3e8ece 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -86,7 +86,7 @@ int cpu_asidx_from_attrs(CPUState *cpu, MemTxAttrs attrs)
- 
-     if (cpu->cc->sysemu_ops->asidx_from_attrs) {
-         ret = cpu->cc->sysemu_ops->asidx_from_attrs(cpu, attrs);
--        assert(ret < cpu->num_ases && ret >= 0);
-+        assert(ret <= cpu->cc->max_as && ret >= 0);
-     }
-     return ret;
- }
-diff --git a/system/cpus.c b/system/cpus.c
-index 49deeb9468a..bded87feb1c 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -718,7 +718,6 @@ void qemu_init_vcpu(CPUState *cpu)
-         /* If the target cpu hasn't set up any address spaces itself,
-          * give it the default one.
-          */
--        cpu->num_ases = 1;
-         cpu_address_space_init(cpu, 0, "cpu-memory", cpu->memory);
-     }
- 
-diff --git a/system/physmem.c b/system/physmem.c
-index 9a7aba9521d..b0311f45312 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -786,8 +786,8 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
-     address_space_init(as, mr, as_name);
-     g_free(as_name);
- 
--    /* Target code should have set num_ases before calling us */
--    assert(asidx < cpu->num_ases);
-+    /* Target code should have set max_as before calling us */
-+    assert(asidx <= cpu->cc->max_as);
- 
-     if (asidx == 0) {
-         /* address space 0 gets the convenience alias */
-@@ -795,7 +795,7 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
-     }
- 
-     if (!cpu->cpu_ases) {
--        cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
-+        cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->cc->max_as + 1);
-     }
- 
-     newas = &cpu->cpu_ases[asidx];
-@@ -819,7 +819,7 @@ void cpu_destroy_address_spaces(CPUState *cpu)
-     /* convenience alias just points to some cpu_ases[n] */
-     cpu->as = NULL;
- 
--    for (asidx = 0; asidx < cpu->num_ases; asidx++) {
-+    for (asidx = 0; asidx <= cpu->cc->max_as; asidx++) {
-         cpuas = &cpu->cpu_ases[asidx];
-         if (!cpuas->as) {
-             /* This index was never initialized; no deinit needed */
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 8d5987397ad..6e1cbf3d614 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2149,16 +2149,6 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-     unsigned int smp_cpus = ms->smp.cpus;
-     bool has_secure = cpu->has_el3 || arm_feature(env, ARM_FEATURE_M_SECURITY);
- 
--    /*
--     * We must set cs->num_ases to the final value before
--     * the first call to cpu_address_space_init.
--     */
--    if (cpu->tag_memory != NULL) {
--        cs->num_ases = 3 + has_secure;
--    } else {
--        cs->num_ases = 1 + has_secure;
--    }
--
-     cpu_address_space_init(cs, ARMASIdx_NS, "cpu-memory", cs->memory);
- 
-     if (has_secure) {
-@@ -2392,6 +2382,7 @@ static void arm_cpu_class_init(ObjectClass *oc, const void *data)
-     cc->gdb_read_register = arm_cpu_gdb_read_register;
-     cc->gdb_write_register = arm_cpu_gdb_write_register;
- #ifndef CONFIG_USER_ONLY
-+    cc->max_as = ARMASIdx_MAX;
-     cc->sysemu_ops = &arm_sysemu_ops;
- #endif
-     cc->gdb_arch_name = arm_gdb_arch_name;
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 0b8cca7cecf..45f0b80deb0 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -10616,6 +10616,7 @@ static void x86_cpu_common_class_init(ObjectClass *oc, const void *data)
-     cc->get_arch_id = x86_cpu_get_arch_id;
- 
- #ifndef CONFIG_USER_ONLY
-+    cc->max_as = X86ASIdx_MAX;
-     cc->sysemu_ops = &i386_sysemu_ops;
- #endif /* !CONFIG_USER_ONLY */
- #ifdef CONFIG_TCG
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index 33a8c26bc27..c34d9f15c7e 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -98,7 +98,6 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
-      * Only initialize address space 0 here, the second one for SMM is
-      * initialized at register_smram_listener() after machine init done.
-      */
--    cs->num_ases = x86_machine_is_smm_enabled(X86_MACHINE(current_machine)) ? 2 : 1;
-     cpu_address_space_init(cs, X86ASIdx_MEM, "cpu-memory", cs->memory);
- 
-     return true;
-diff --git a/target/i386/tcg/system/tcg-cpu.c b/target/i386/tcg/system/tcg-cpu.c
-index 7255862c244..b74e025b3e7 100644
---- a/target/i386/tcg/system/tcg-cpu.c
-+++ b/target/i386/tcg/system/tcg-cpu.c
-@@ -73,7 +73,6 @@ bool tcg_cpu_realizefn(CPUState *cs, Error **errp)
-     memory_region_add_subregion_overlap(cpu->cpu_as_root, 0, cpu->cpu_as_mem, 0);
-     memory_region_set_enabled(cpu->cpu_as_mem, true);
- 
--    cs->num_ases = 2;
-     cpu_address_space_init(cs, X86ASIdx_MEM, "cpu-memory", cs->memory);
-     cpu_address_space_init(cs, X86ASIdx_SMM, "cpu-smm", cpu->cpu_as_root);
- 
--- 
-2.52.0
+> Wei Wang <wei.wang@smartx.com> writes:
+>
+> > Avoid setting GError multiple times in qmp_guest_file_open() by checkin=
+g
+> > if errp is already set.
+> > This prevents crash caused by repeated error handling calls.
+> >
+> > Signed-off-by: Wei Wang <wei.wang@smartx.com>
+> > ---
+> >  qga/commands-win32.c | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+> > index 0fd0c966e4..8c45ca5004 100644
+> > --- a/qga/commands-win32.c
+> > +++ b/qga/commands-win32.c
+> > @@ -263,7 +263,9 @@ int64_t qmp_guest_file_open(const char *path, const
+> char *mode, Error **errp)
+> >      fd =3D guest_file_handle_add(fh, errp);
+> >      if (fd < 0) {
+> >          CloseHandle(fh);
+> > -        error_setg(errp, "failed to add handle to qmp handle table");
+> > +        if (!*errp) {
+> > +            error_setg(errp, "failed to add handle to qmp handle
+> table");
+> > +        }
+> >          goto done;
+> >      }
+>
+> Can guest_file_handle_add() fail without setting an error?
+>
+
+I checked the code, and it looks like guest_file_handle_add always
+set error if fail
+
+
+>
+> If yes, that's the bug that needs fixing.
+>
+> If no, the error_setg() here is wrong and needs to be deleted.
+>
+>
+
+--0000000000004f9c740648f6499a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jan 22,=
+ 2026 at 10:57=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@re=
+dhat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">Wei Wang &lt;<a href=3D"mailto:wei.wang@smartx.c=
+om" target=3D"_blank">wei.wang@smartx.com</a>&gt; writes:<br>
+<br>
+&gt; Avoid setting GError multiple times in qmp_guest_file_open() by checki=
+ng<br>
+&gt; if errp is already set.<br>
+&gt; This prevents crash caused by repeated error handling calls.<br>
+&gt;<br>
+&gt; Signed-off-by: Wei Wang &lt;<a href=3D"mailto:wei.wang@smartx.com" tar=
+get=3D"_blank">wei.wang@smartx.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 qga/commands-win32.c | 4 +++-<br>
+&gt;=C2=A0 1 file changed, 3 insertions(+), 1 deletion(-)<br>
+&gt;<br>
+&gt; diff --git a/qga/commands-win32.c b/qga/commands-win32.c<br>
+&gt; index 0fd0c966e4..8c45ca5004 100644<br>
+&gt; --- a/qga/commands-win32.c<br>
+&gt; +++ b/qga/commands-win32.c<br>
+&gt; @@ -263,7 +263,9 @@ int64_t qmp_guest_file_open(const char *path, cons=
+t char *mode, Error **errp)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 fd =3D guest_file_handle_add(fh, errp);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (fd &lt; 0) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 CloseHandle(fh);<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;failed to add hand=
+le to qmp handle table&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!*errp) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;fail=
+ed to add handle to qmp handle table&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto done;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+<br>
+Can guest_file_handle_add() fail without setting an error?<br></blockquote>=
+<div><br></div><div>I checked the code, and it looks like=C2=A0guest_file_h=
+andle_add always set=C2=A0error if fail</div><div>=C2=A0</div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">
+<br>
+If yes, that&#39;s the bug that needs fixing.<br>
+<br>
+If no, the error_setg() here is wrong and needs to be deleted.<br>
+<br>
+</blockquote></div></div>
+
+--0000000000004f9c740648f6499a--
 
 
