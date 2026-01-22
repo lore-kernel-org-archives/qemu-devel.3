@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C22D6CFA6
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 22:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ACCCD6CFA6
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 22:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vj2u6-0006WM-Vx; Thu, 22 Jan 2026 17:11:51 -0500
+	id 1vj2ug-0007nL-O6; Thu, 22 Jan 2026 17:12:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vj2u3-0006Ug-5u
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 17:11:47 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vj2uV-0007bW-Cg
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 17:12:15 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vj2u1-0003MC-FN
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 17:11:46 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47d63594f7eso13511225e9.0
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 14:11:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vj2uT-0003Ts-JM
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 17:12:15 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-42fbc305552so1337067f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 14:12:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769119903; x=1769724703; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769119932; x=1769724732; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kyIWXld1FWQ8hHXOqbk/6iIga1BTq5Gc5Yz2aOFOv/8=;
- b=LapB3KYP56rCbNxMHUaaPeQKvVsYZZrUNZffNtcF8GOaAZotSUDmNBd5NAI6mqUCr1
- oT8yCsduZQs3mXGwYrArf1Yi4YwuzyQ3cSt0nidn3iZ3/3aPNipVeZzkSqvL0yFCm3ex
- KHKgvBqUTQrur4D/mJM/xuTAe0nndJsd5HjX0jguLJ3WmRAAFKCQdHrnWDFzRQts7ryJ
- PaDn/m8yIYjcv1N/OnjiJnvmgMaHsFxKHl7HK2FShosj/1+2OmyzVWPAEErtJ+oM9pTx
- t0pjEdFwSigZPdMdLrpAsKRDIDfPutW9MFTjdKjQLq9dQnj+DHAqGUPMEUYxLs75B4O5
- Xokw==
+ bh=VXuSVtUqeSVJiLqCyCxZODoojrbZ2viLxGKE5qbD3lQ=;
+ b=NKeK7COlE4BTyN1erGDwdFRNFrWL1kiqqIWtvdpkxJx9Qhvw76G2NfbJRK/YoceZem
+ SkoU0wgvyig0hySz5fKjkAloiDco1Gylraceg4XobrN8OHt7oJUuDPwH6KFppu1uL3SM
+ 12WGmxO/QkecOYlRnVaW+9zAFAjYTTPJg5E7wt0f+MYmvljli8K2yD+PBmt69BXWN2JX
+ yU/RxcxjvQKHfRNlnwZRn/Yfzn9rChxCan/ehlnTbIVXVhcpZNhqaqitgk4yCFyHjWfl
+ K1xui2xgQrqK2KmfLowELdIyv3QXXl/m3/gZaOqnIKkZK8Q3cmwefR2B9uvVFnUFmTwt
+ sICQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769119903; x=1769724703;
+ d=1e100.net; s=20230601; t=1769119932; x=1769724732;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=kyIWXld1FWQ8hHXOqbk/6iIga1BTq5Gc5Yz2aOFOv/8=;
- b=Wi2r6nmEseiF8CIkmQqyaBHnx8lM3kLwuq+s6HHyCZMClLdHOrG2i3yZtDtuP5FJO5
- 3K88LW/1ch/h9DLLBaW7V+ApJrFqRBY9+GLpsk1Ymc9VbyFgt2PP0zUjpl/3CSKGmM2+
- 7zw+4wRFXvyraMU6mGDvCEeUGK9LmCyc82m5KNBE5UA0Cft+vh4ay57CNSMSmMpevk8m
- N3DbpIH7lsghyJN0pbPIzqISB/Szs29MtEqPjEY35+guyWMX33nu4ZsAnoHtHZqqM9vI
- lQKbBUms+O6wP5wdT/OjGTwbkCKJdDagnxGPZRNRJvtGc3yNwAnwJlQne/MuUeTwl4rW
- T4Qg==
-X-Gm-Message-State: AOJu0YzC/15mp/fFDiRmleCa4CGz7K8rucj4kYGfGqYd3uSoaLCOtXoS
- rx11anMA0dSJ+zY8BzCR6WlOFh2xYf/lIsf3zR6Xrb2fhF+vGwrF/qQMy7MtMFz4KIGC2a2Kjck
- dhtHm2bU=
-X-Gm-Gg: AZuq6aLweI1+abvgfE6bt4faqrPYPXBwnjP45G/1Hy65dSL2KrgJv41FQ+MgIIYLNVy
- mwEQWFQ3Cq81eLKJDsTEqpQ+H5Mxuw4sghzYV1Gb6R+QFcGlCPLKyrhSsR21U+d5U1AScbGn6RN
- tUKpFN1tAvTUz8ATZL3zQokoWjshzQA2/0W/416sBXKxvWJvKOv6+1aHRvnxto+8LBjke3IV+IC
- EMbodaHehJYcbNHicGXD6G/hP5YE6bU28/I72u174DjjgNlVLQlKNTxcJMKhn7PIem6W1Qda+Ca
- bN2ugJXY9/VCAbocTJwovqcPhIAQzqWaz1sSZaXp1W0tGtzARfxQeor8Zf6L51z1oA3JnHaI2qw
- 3YpN/NIvrgpdTqo+7jwqmFgv/eSquib17pCYyuIuN9ANH1Z62LJxAL1u9kKNwW7PQ81T6Rz/pvo
- F4sAfDz6uC+fbzGNLVVfDLVRFD6xlEowq2O2n/RP88Yr6riqchbYAqPSk2q28megx204RCw3A=
-X-Received: by 2002:a05:600c:3b0d:b0:477:76cb:4812 with SMTP id
- 5b1f17b1804b1-4804c8e9508mr16430795e9.0.1769119903562; 
- Thu, 22 Jan 2026 14:11:43 -0800 (PST)
+ bh=VXuSVtUqeSVJiLqCyCxZODoojrbZ2viLxGKE5qbD3lQ=;
+ b=fP6lXFrNQ8ohpYVRAk+gHMtKsdhj+HC83beATiH2sAQiF5rWlW8KIL/BC7iQnQ1h2r
+ P9HonG9o2+kuS7cgN1tkUn2FVgX6Rpeyj0Zqd8QweaEEQYtzIIk0uHvmCCtbF94fMrBP
+ rZm8WKA4pTTIUDYgU/sDgyrzgdZWjQHnMbrlbXl1IeZKLZ1F73Ip7lwXoPmEx3rwEjik
+ GUKDFbjHlU+kgll3Nw6py9fgI3chWGZdUya+EwzLoSKGIyYaKom1XK3YygDvqFyJC7Zt
+ PMDQf5c2njPU9MhnBwIyoN1dVWG0Vnx7bYpoj7Dtoe8VmfswyyQPL7aJFeVa6/6GH5wI
+ +oCA==
+X-Gm-Message-State: AOJu0YwQK1vTFHWBv6WgHl/O6VDd6HspybGRI2ASFc6P+9NdoNcvY33N
+ r6oZqRPmYg8QsIk0L/XPcQBwZIfdIXcwZ/1KYa2zF3mjrNHdl3kS5F6hBnJ0ujdTu+nyqe1raLx
+ 9ZbCrZII=
+X-Gm-Gg: AZuq6aKzn6uis9jLpjUQw1OOs2YBJvP3mttfFrxtY+KmIOT2Q7dCzaHlZwiQTlpbLIG
+ 9uJNM173Fo8IS2PyDVaDGtQhb0YinoniEg96xshZaJZ0ubq1dwgQanQOlZsMunnKEqqOQZaSlbQ
+ 07UVRQtlklpsG9wHOsmn/DXVOu6o6iMuKp7A+WtjX1rU1x2Jb1zBFrjxQwxXj8TwsEwL5Wknktb
+ HOb6P+YnIlDt9DdtisbCOdEuq5+bXUd8mE+kb+ce+XNJcA2RBPvAcwefi300YcSBf7jfrOfUP2y
+ UHU4PxQW8hoW35EsKhwJ7k16qeM4n/aFwk1U4Rvhekwn0z3JsqGFZUAg5lDTDaYLO0sug829G2R
+ NIiGz09i2KpLgI7sql7+/XsiUw82ln7v8LkMGzIGN8CgF9r9Ux5YDE1WdV2FyRbZuTG/KXHJWxo
+ 6DCQxnABz4Lz6gKa6YsePtfSLBwCIVCJJN7E70E8k5c+yZQEmzE6i5FIaLPB6A48jwE00J52g=
+X-Received: by 2002:a5d:5d0e:0:b0:431:369:e7b with SMTP id
+ ffacd0b85a97d-435b159cbc2mr1650539f8f.18.1769119931542; 
+ Thu, 22 Jan 2026 14:12:11 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4804d84ebb9sm9777315e9.4.2026.01.22.14.11.42
+ ffacd0b85a97d-435b1c02dd4sm1609429f8f.5.2026.01.22.14.12.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Jan 2026 14:11:43 -0800 (PST)
+ Thu, 22 Jan 2026 14:12:10 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -70,17 +70,18 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Anton Johansson <anjo@rev.ng>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 05/11] target/ppc: Introduce the mo_endian_env() helper
-Date: Thu, 22 Jan 2026 23:10:59 +0100
-Message-ID: <20260122221106.57184-6-philmd@linaro.org>
+Subject: [PATCH v5 09/11] target/ppc: Introduce ppc_env_is_little_endian()
+ helper
+Date: Thu, 22 Jan 2026 23:11:03 +0100
+Message-ID: <20260122221106.57184-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260122221106.57184-1-philmd@linaro.org>
 References: <20260122221106.57184-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,129 +104,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce mo_endian_env() which returns the endian MemOp
-from the vCPU env pointer. Keep it hardcoded as MO_TE.
+Centralize endianness check on MSR via a common helper.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/ppc/internal.h        |  6 ++++++
- target/ppc/mem_helper.c      | 18 +++++++++---------
- target/ppc/tcg-excp_helper.c |  2 +-
- 3 files changed, 16 insertions(+), 10 deletions(-)
+ target/ppc/internal.h   | 5 +++++
+ target/ppc/cpu_init.c   | 9 +++------
+ target/ppc/gdbstub.c    | 2 +-
+ target/ppc/mem_helper.c | 8 ++++----
+ 4 files changed, 13 insertions(+), 11 deletions(-)
 
 diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-index 58f315ffcf5..09333bed342 100644
+index 09333bed342..714629079b5 100644
 --- a/target/ppc/internal.h
 +++ b/target/ppc/internal.h
-@@ -19,10 +19,16 @@
- #define PPC_INTERNAL_H
- 
- #include "exec/breakpoint.h"
-+#include "exec/memop.h"
- #include "hw/core/registerfields.h"
+@@ -24,6 +24,11 @@
  #include "exec/page-protection.h"
  #include "accel/tcg/tb-cpu-state.h"
  
-+static inline MemOp mo_endian_env(const CPUPPCState *env)
++static inline bool ppc_env_is_little_endian(const CPUPPCState *env)
 +{
-+    return MO_TE;
++    return FIELD_EX64(env->msr, MSR, LE);
 +}
 +
- /* PM instructions */
- typedef enum {
-     PPC_PM_DOZE,
+ static inline MemOp mo_endian_env(const CPUPPCState *env)
+ {
+     return MO_TE;
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 0808284b722..c5cec7c2ed9 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7364,7 +7364,7 @@ static bool ppc_cpu_is_big_endian(CPUState *cs)
+ {
+     cpu_synchronize_state(cs);
+ 
+-    return !FIELD_EX64(cpu_env(cs)->msr, MSR, LE);
++    return !ppc_env_is_little_endian(cpu_env(cs));
+ }
+ 
+ static bool ppc_get_irq_stats(InterruptStatsProvider *obj,
+@@ -7456,11 +7456,8 @@ static void ppc_disas_set_info(CPUState *cs, disassemble_info *info)
+ {
+     CPUPPCState *env = cpu_env(cs);
+ 
+-    if ((env->msr >> MSR_LE) & 1) {
+-        info->endian = BFD_ENDIAN_LITTLE;
+-    } else {
+-        info->endian = BFD_ENDIAN_BIG;
+-    }
++    info->endian = ppc_env_is_little_endian(env) ? BFD_ENDIAN_LITTLE
++                                                 : BFD_ENDIAN_BIG;
+     info->mach = env->bfd_mach;
+     if (!env->bfd_mach) {
+ #ifdef TARGET_PPC64
+diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
+index 3b28d4e21c7..b19c0f1ea9c 100644
+--- a/target/ppc/gdbstub.c
++++ b/target/ppc/gdbstub.c
+@@ -84,7 +84,7 @@ static int ppc_gdb_register_len(int n)
+ void ppc_maybe_bswap_register(CPUPPCState *env, uint8_t *mem_buf, int len)
+ {
+ #ifndef CONFIG_USER_ONLY
+-    if (!FIELD_EX64(env->msr, MSR, LE)) {
++    if (!ppc_env_is_little_endian(env)) {
+         /* do nothing */
+     } else if (len == 4) {
+         bswap32s((uint32_t *)mem_buf);
 diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-index 90546967593..89718441310 100644
+index 89718441310..31057c6440a 100644
 --- a/target/ppc/mem_helper.c
 +++ b/target/ppc/mem_helper.c
-@@ -88,7 +88,7 @@ void helper_lmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
-         }
-     } else {
-         /* Slow path -- at least some of the operation requires i/o.  */
--        MemOp op = MO_TE | MO_UL | MO_UNALN;
-+        MemOp op = mo_endian_env(env) | MO_UL | MO_UNALN;
-         MemOpIdx oi = make_memop_idx(op, mmu_idx);
- 
-         for (; reg < 32; reg++) {
-@@ -114,7 +114,7 @@ void helper_stmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
-     } else {
-         /* Slow path -- at least some of the operation requires i/o.  */
-         for (; reg < 32; reg++) {
--            MemOp op = MO_TE | MO_UL | MO_UNALN;
-+            MemOp op = mo_endian_env(env) | MO_UL | MO_UNALN;
-             MemOpIdx oi = make_memop_idx(op, mmu_idx);
- 
-             cpu_stl_mmu(env, addr, env->gpr[reg], oi, raddr);
-@@ -158,7 +158,7 @@ static void do_lsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
-             break;
-         }
-     } else {
--        MemOp op = MO_TE | MO_UL | MO_UNALN;
-+        MemOp op = mo_endian_env(env) | MO_UL | MO_UNALN;
-         MemOpIdx oi = make_memop_idx(op, mmu_idx);
- 
-         /* Slow path -- at least some of the operation requires i/o.  */
-@@ -174,12 +174,12 @@ static void do_lsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
-             val = cpu_ldub_mmuidx_ra(env, addr, mmu_idx, raddr) << 24;
-             break;
-         case 2:
--            op = MO_TE | MO_UW | MO_UNALN;
-+            op = mo_endian_env(env) | MO_UW | MO_UNALN;
-             oi = make_memop_idx(op, mmu_idx);
-             val = cpu_ldw_mmu(env, addr, oi, raddr) << 16;
-             break;
-         case 3:
--            op = MO_TE | MO_UW | MO_UNALN;
-+            op = mo_endian_env(env) | MO_UW | MO_UNALN;
-             oi = make_memop_idx(op, mmu_idx);
-             val = cpu_ldw_mmu(env, addr, oi, raddr) << 16;
-             addr = addr_add(env, addr, 2);
-@@ -254,7 +254,7 @@ void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
-             break;
-         }
-     } else {
--        MemOp op = MO_TE | MO_UL | MO_UNALN;
-+        MemOp op = mo_endian_env(env) | MO_UL | MO_UNALN;
-         MemOpIdx oi = make_memop_idx(op, mmu_idx);
- 
-         for (; nb > 3; nb -= 4) {
-@@ -268,12 +268,12 @@ void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
-             cpu_stb_mmuidx_ra(env, addr, val >> 24, mmu_idx, raddr);
-             break;
-         case 2:
--            op = MO_TE | MO_UW | MO_UNALN;
-+            op = mo_endian_env(env) | MO_UW | MO_UNALN;
-             oi = make_memop_idx(op, mmu_idx);
-             cpu_stw_mmu(env, addr, val >> 16, oi, raddr);
-             break;
-         case 3:
--            op = MO_TE | MO_UW | MO_UNALN;
-+            op = mo_endian_env(env) | MO_UW | MO_UNALN;
-             oi = make_memop_idx(op, mmu_idx);
-             cpu_stw_mmu(env, addr, val >> 16, oi, raddr);
-             addr = addr_add(env, addr, 2);
-@@ -304,7 +304,7 @@ static void dcbz_common(CPUPPCState *env, target_ulong addr,
-     haddr = probe_write(env, addr, dcbz_size, mmu_idx, retaddr);
-     if (unlikely(!haddr)) {
-         /* Slow path */
--        MemOp op = MO_TE | MO_UQ | MO_UNALN;
-+        MemOp op = mo_endian_env(env) | MO_UQ | MO_UNALN;
-         MemOpIdx oi = make_memop_idx(op, mmu_idx);
- 
-         for (int i = 0; i < dcbz_size; i += 8) {
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index a8c67364669..77d21523a5b 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -161,7 +161,7 @@ static void do_hash(CPUPPCState *env, target_ulong ea, target_ulong ra,
- {
-     uint64_t calculated_hash = hash_digest(ra, rb, key), loaded_hash;
-     unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
--    MemOp op = MO_TE | MO_UQ;
-+    MemOp op = mo_endian_env(env) | MO_UQ;
-     MemOpIdx oi = make_memop_idx(op, mmu_idx);
-     uintptr_t retaddr = GETPC();
- 
+@@ -420,7 +420,7 @@ target_ulong helper_lscbx(CPUPPCState *env, target_ulong addr, uint32_t reg,
+         int adjust = HI_IDX * (n_elems - 1);                    \
+         int sh = sizeof(r->element[0]) >> 1;                    \
+         int index = (addr & 0xf) >> sh;                         \
+-        bool byteswap = FIELD_EX64(env->msr, MSR, LE);          \
++        bool byteswap = ppc_env_is_little_endian(env);          \
+                                                                 \
+         if (byteswap) {                                         \
+             index = n_elems - index - 1;                        \
+@@ -446,7 +446,7 @@ LVE(LVEWX, cpu_ldl_be_data_ra, bswap32, u32)
+         int adjust = HI_IDX * (n_elems - 1);                            \
+         int sh = sizeof(r->element[0]) >> 1;                            \
+         int index = (addr & 0xf) >> sh;                                 \
+-        bool byteswap = FIELD_EX64(env->msr, MSR, LE);                  \
++        bool byteswap = ppc_env_is_little_endian(env);                  \
+                                                                         \
+         if (byteswap) {                                                 \
+             index = n_elems - index - 1;                                \
+@@ -479,7 +479,7 @@ void helper_##name(CPUPPCState *env, target_ulong addr,                 \
+     t.s128 = int128_zero();                                             \
+     if (nb) {                                                           \
+         nb = (nb >= 16) ? 16 : nb;                                      \
+-        if (FIELD_EX64(env->msr, MSR, LE) && !lj) {                     \
++        if (ppc_env_is_little_endian(env) && !lj) {                     \
+             for (i = 16; i > 16 - nb; i--) {                            \
+                 t.VsrB(i - 1) = cpu_ldub_data_ra(env, addr, GETPC());   \
+                 addr = addr_add(env, addr, 1);                          \
+@@ -510,7 +510,7 @@ void helper_##name(CPUPPCState *env, target_ulong addr,           \
+     }                                                             \
+                                                                   \
+     nb = (nb >= 16) ? 16 : nb;                                    \
+-    if (FIELD_EX64(env->msr, MSR, LE) && !lj) {                   \
++    if (ppc_env_is_little_endian(env) && !lj) {                   \
+         for (i = 16; i > 16 - nb; i--) {                          \
+             cpu_stb_data_ra(env, addr, xt->VsrB(i - 1), GETPC()); \
+             addr = addr_add(env, addr, 1);                        \
 -- 
 2.52.0
 
