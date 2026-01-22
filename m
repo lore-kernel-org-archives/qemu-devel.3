@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785CAC44536
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 10:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C4C1C44536
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 10:08:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1virUZ-0007pg-AA; Thu, 22 Jan 2026 05:00:43 -0500
+	id 1virb5-0004n3-Gt; Thu, 22 Jan 2026 05:07:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1virUX-0007ow-GG
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:00:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1virUO-0004I7-En
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:00:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769076029;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=pGhk+w0kGWyRlhhUpTewmMtuW7XgjwyQnqJ6BcUJeMY=;
- b=jSuU4sLIa+KwbKpy/UFzbEHsO4uCAvsLSvok28hYx3ymanzVEgRZaWaPyWeKkFyBX3jELw
- UuHW9Yud9WPQ/9eTgjntPgakCvSI9EwohMV574vTgWhojp/5kRMOUFhdEYK2q4mv4brUJc
- rY4dLrjgz3bwIuIc3R/ykW1LUitTWuI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-4Eo-VuhWP_if6qQX-EYUZg-1; Thu,
- 22 Jan 2026 05:00:26 -0500
-X-MC-Unique: 4Eo-VuhWP_if6qQX-EYUZg-1
-X-Mimecast-MFC-AGG-ID: 4Eo-VuhWP_if6qQX-EYUZg_1769076025
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C7DB61944DFF; Thu, 22 Jan 2026 10:00:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.63])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 137DD1800285; Thu, 22 Jan 2026 10:00:19 +0000 (UTC)
-Date: Thu, 22 Jan 2026 10:00:17 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Stefan Hajnoczi <stefanha@gmail.com>,
- qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>,
- Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, German Maglione <gmaglione@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alex Bennee <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: Modern HMP (was: Call for GSoC internship project ideas)
-Message-ID: <aXH1ECZ1Nchui9ED@redhat.com>
-References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
- <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
- <871pjigf6z.fsf_-_@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viraY-0004gR-2i
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:06:54 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viraV-0006Yc-Li
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:06:53 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-47ee974e230so6978515e9.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 02:06:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769076410; x=1769681210; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7ryXn2iL1QShQqA0FrFJvskhO30HC2CRBKZgbR2o4KA=;
+ b=EPueJzlHHI1n+YMngl72ljwIYtv9NOvjAJ5z4RXYO13S/OzfPomymwWbrb1w3RxfkA
+ N7mw04r4jTwsN+ZMAZXDHNRsKFN0EiI5JI7JI9+fUf/spVogfNjIVpcAX5hiE6x9W/pK
+ m54Uhqtix2+0YYAoKJskjP5DKuFW6ONL3K/j01L9/WPjby8DvgWKMsA3JJwNmPoiMORs
+ FwLCVMc/pgdGv/GZ4PILk6i3h1esr2p5Ar48SPC5MgDrbUVKDVJ3t5LPaop3LHc7Hn+k
+ 7nFD+G5L81M2Vr5czg8LBI/wi3OyBHDS7/vp/HiCtOsRQkbywo6AmgeLc+5OsLDnoQWu
+ u2yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769076410; x=1769681210;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7ryXn2iL1QShQqA0FrFJvskhO30HC2CRBKZgbR2o4KA=;
+ b=P94DetWyOb4ezaB0w6lMtHuDTd49UNbkT2evtPc/aU+2FGMWApCo0fKKNyOIXV3ykN
+ J2gciTLh8YGueZXsJCM73rRlO69VJIdG/qk6niV/QKOJkxrQO8N9Y/B/NgEUABFUAl6A
+ zw2R7ahEV7kAk8p3gbG3lcjX772mn1umK08ZV+DYnVxwDHvY6UtY78ZEXAJt2vHQ4qKP
+ WBqzz8G5k8t0s5UY8n6SHRBgr4jOGLzzYRV2mwoF3/l2WTF2dbRuq+tbFUBdeZazB4J/
+ W7apqtHfMNPmoDHFtOk0XjA3NNMMXdzc4MW93QkNOZuzpnZD35iNBA2dSKlAofZvR1wM
+ vXxg==
+X-Gm-Message-State: AOJu0YxbMD498OpF8Py5HIv+BdF5Ebl2nOLXPCNO4y2cmwbiOIFJMm9C
+ nVx1HDJPyNc0ut8pwugIjk55KgaX6WEX05+a6q95FIps2WPX8NwgnOifVneapnMXLMJa1IZjszr
+ F1fKVOC4=
+X-Gm-Gg: AZuq6aLmPkdhC9UyFsND65o7qs8xD8jTSRCT+C/b0gTnonc9sjH2DdNyZfPh2c4tl7N
+ 7yYwq+gFxHIEh4k3u9WHzTy0BxVNjQQT+TshUFt9pLKyKeT8MZYIRVbQKprVdAABXiNyDeQuF/A
+ VyB6Wl159m95MD6W23YlrVFLHyIGab26deD8UpaZO6KjJFieF4dEvWhPIANyLee15k1xYiuLZB1
+ JQzQkwazBR+S+SDu7fFJxYCW8fAnItad6kQL/Q8mt35dW4f+JbIfCLAK+YgO+RGgFVdXTHJi9o1
+ hpTbO8vodNdiurwXPxEdFwvuM3ebZGhNWilOcSNoUzqgtkSrwljfCGCidXVnWK3aGGELowRa8f7
+ BiwVDG4lnjZZoXx32lXC0w4XnQUCaN83+kNG5g279deWwHFPNu24sfLn+Jzk8bqGUXtsoUv8+/K
+ F6q+NwrCK6di6Px4gAjNkBfQrU0deQmDmIeMjCsWnDRg8TeG3axqOv6w==
+X-Received: by 2002:a05:600c:4692:b0:46f:d682:3c3d with SMTP id
+ 5b1f17b1804b1-4803e7a4b90mr111035445e9.13.1769076409635; 
+ Thu, 22 Jan 2026 02:06:49 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48042c1e381sm47648305e9.11.2026.01.22.02.06.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Jan 2026 02:06:48 -0800 (PST)
+Message-ID: <181a4d15-fcdb-43b1-bb14-3d9f99ce9a04@linaro.org>
+Date: Thu, 22 Jan 2026 11:06:47 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <871pjigf6z.fsf_-_@pond.sub.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-11.0 v3 00/22] accel/tcg: Remove most MO_TE uses in
+ cpu_ld/st_data()
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ qemu-riscv@nongnu.org, qemu-ppc@nongnu.org
+References: <20251126202200.23100-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251126202200.23100-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,125 +100,23 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 22, 2026 at 10:38:28AM +0100, Markus Armbruster wrote:
-> Let's start the discussion with your nicely written Wiki page:
-> 
->     === External HMP Implementation via QMP ===
-> 
->     '''Summary:''' Implement a standalone HMP-compatible monitor as an
->     external binary (Python or Rust) that communicates with QEMU
->     exclusively through QMP, enabling future decoupling of the built-in
->     HMP from QEMU core.
-> 
->     QEMU provides two monitor interfaces:
->     * '''QMP''' (QEMU Machine Protocol): A JSON-based machine-readable
->       protocol for programmatic control
->     * '''HMP''' (Human Monitor Protocol): A text-based interactive
->       interface for human operators
-> 
->     Currently, HMP is tightly integrated into QEMU, with commands
->     defined in `hmp-commands.hx` and `hmp-commands-info.hx`. Most HMP
->     commands already delegate to QMP internally (e.g., `hmp_quit()`
->     calls `qmp_quit()`), but HMP parsing, formatting, and command
->     dispatch are compiled into the QEMU binary.
+On 26/11/25 21:21, Philippe Mathieu-Daudé wrote:
 
-First of all, I love the idea. An external HMP impl that consumes
-QMP from outside QEMU so a concept I've suggested many times over
-10+ years hoping someone would take the bait and impl it :-)
+> Philippe Mathieu-Daudé (22):
+>    target/hexagon: Use little-endian variant of cpu_ld/st_data*()
+>    target/i386: Use little-endian variant of cpu_ld/st_data*()
+>    target/riscv: Use little-endian variant of cpu_ld/st_data*() for
+>      vector
+>    target/rx: Use little-endian variant of cpu_ld/st_data*()
+>    target/tricore: Use little-endian variant of cpu_ld/st_data*()
+>    target/hppa: Use big-endian variant of cpu_ld/st_data*()
+>    target/m68k: Use big-endian variant of cpu_ld/st_data*()
+>    target/s390x: Use big-endian variant of cpu_ld/st_data*()
+>    target/sparc: Use big-endian variant of cpu_ld/st_data*()
+>    target/sh4: Replace cpu_stl_data() call in OCBI helper
 
-> Also line editing and completion.
-> 
-> Most HMP commands cleanly wrap around QMP command handlers such as
-> qmp_quit().  Wrapping them around QMP commands instead is a
-> straightforward problem.  I'm more concerned about HMP stuff that uses
-> other internal interfaces.  Replacing them may require new QMP
-> interfaces, or maybe a careful culling of inessential HMP features.
-> Known such stuff: completion does not wrap around QMP command handlers.
-> It is provided by the HMP core.
-> 
-> Risk: this can easily become the 10% that take the other 90% of the
-> time, or even the 5% that sink the project.
-
-IMHO this is essentially guaranteed.
-
-4 years ago I tried to move us closer to this world by introducing
-"HumanReadableText" and documenting that all remaining & future
-"info xxx" commands should be backed by a QMP command that just
-returns human formatted text. The intent was to eliminate the
-roadblock of having to define formal QAPI types for all the
-complex data.
-
-I converted a bunch of commands, but that indeed became do 90%
-of the work, leave the other 90% of the work for later victim^H^H^H
-contributor.
-
-None of this means that the GSoc project idea is invalid. We just
-have to figure out a credible end goal is for the project, ideally
-with staged delivery.
-
-> Risk: serious code duplication until we can get rid of built-in HMP.
-> Fine if the goal is to explore and learn by building a prototype, and we
-> simply throw away the prototype afterwards.
-
-IMHO that isn't a risk, that's a guarantee. I can't imagine converting
-all remaining HMP commands to have a QMP backing, AND doing an external
-HMP impl all within the GSoc timeline.  That's two largely independent
-projects, each of which are probably longer than the GSoC time wnidow.
-
-Again that doesn't mean the idea is invalid for GSoc, just that we must
-be honest about likely deliverables, and how follow up work will happen
-after GSoc to maximise benefit for QEMU.
-
-What I would not want to see is a bunch of work done that is then
-abandoned because it couldn't get used as it wasn't feature complete.
-Whatever subset is achieved ought to be intended as a stepping stone
-we can integrate and carry on working with.
-
-
->     '''Add `CONFIG_HMP` build option''':
->     * Create a new Meson configuration option to disable built-in HMP
->     * Allow QEMU to be built without HMP
->     * Facilitate testing of external HMP as a replacement
-> 
->     '''Create an external HMP implementation''' in Python or Rust that:
->     * Connects to QEMU via QMP socket
->     * Parses HMP command syntax and translates to QMP calls
->     * Formats QMP responses as human-readable HMP output
->     * Supports command completion and help text
-> 
->     '''Use `hmp-commands.hx` for code generation''':
->     * Parse the existing `.hx` files to extract command definitions
->     * Generate boilerplate code (command tables, argument parsing, help
->       text)
->     * Produce a report of implemented vs. unimplemented commands
->     * Enable tracking of HMP/QMP parity
-> 
-> .hx is C source code with ReST snippets.  scripts/hxtool strips out the
-> ReST.  docs/sphinx/hxtool.py ignores the C source code, and processes
-> the ReST.  It works.  Not a fan.
-> 
-> If we succeed in replacing built-in HMP by an external one, and the
-> external one isn't written in C, then having C source code in .hx no
-> longer makes sense.  Parsing it will be wasted effort.  It may still
-> make sense initially.
-
-Indeed, we should clarify language intended as it would influence
-the approach for the project.  If it is a clean room Rust impl,
-then it would be completely independent of existing HMP C code.
-More work initially to ensure we retain the same data formatting
-of each command, but likely nicer long term, and saying Rust will
-probably attract more candidates to the idea.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Queueing reviewed patches to shorten v4.
 
