@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A30D3EE74
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 15:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1F78D3EE74
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 15:33:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viwYF-0001eD-MJ; Thu, 22 Jan 2026 10:24:51 -0500
+	id 1viwZy-0002YX-N6; Thu, 22 Jan 2026 10:26:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viwYE-0001dM-Dc
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:24:50 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viwZx-0002XZ-Ik
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:26:37 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viwYC-0007cK-TR
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:24:50 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4801c731d0aso9221105e9.1
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 07:24:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viwZw-00005b-4k
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:26:37 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-b872cf905d3so166515166b.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 07:26:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769095487; x=1769700287; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769095594; x=1769700394; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=d9NZQMaKjw/9PZ8DPzJVFbLPhmGM1hoSma/eUU87F38=;
- b=HwjV+o5D6nivz3F6xdEPQw3AZU8pl1RQTMDga3jqXUx6/x4XBVn7B7O2y4+1tek6BB
- GGlnAAx44uC9QuuhJ7buSzCBBICQ9J/GAFCo5cJn1o6CQVwN2QCdbqLIFsGudrIIor1A
- tenKBTcSOHZiHCcAyktwf5Q2OB/KWxQjR6eFpc/300jhXDAArbTaGLlR1uryC8CicjY0
- kCRb+OzIzhd2IzoTENoCMTRU6szizHCv7+MbvD4s30AVYvyX7ESNzr/qCsd7rPx2+tE6
- TRHH4jR/EWV1PRbKDybF8+ncNjgik9mtPDlwbtAomkRKlQF1Z7hIKCrlxx+4NAKk04h8
- zUWg==
+ bh=lJnc7kBoipKDrnnn2FeG4648XrAxL/dkWvIlbY7J8ys=;
+ b=A8TL+IPaH4FxmBH4EvcHrrFBrMo2qOuj8/IXpdd5xT34HAJ267BbMvnP5UG1PnrjE/
+ 3lAtRA8VckV4DQ6PkEAhf2iWLQ+PeZ6COAGJl4AHb4mxUsH5QM5W2gWvIjYoRaYvIVI8
+ PcxQoKhe4917PORY77Uln3OWBwWQM++dKH7m1XmVPY9w7O8tYqjJsYbvRbvoeSNqYDon
+ eNUV7MEHXse44G7nvPCeCsbKF47Dd3BqClB0RDaoGhFSNeCSkjdzb4zWB7axxMSLALWt
+ iTDVqLs+NIV36ohcOsu+sU6wXetrkwutQk0xuS0ZqNirrxtXhjYDC5+3oGLa7R6IpC1M
+ 7kRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769095487; x=1769700287;
+ d=1e100.net; s=20230601; t=1769095594; x=1769700394;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=d9NZQMaKjw/9PZ8DPzJVFbLPhmGM1hoSma/eUU87F38=;
- b=UTs2bCy4yg3evDsEnL9kEwXHN+TMQ/OT5ZfxbERCFCc6X67ZxHT59UyMNDCGAJ+mF9
- fngETvIz012FVeMyrB6mO6eDk7uafwqe4yx1Iabd9txJhw12Z79PjbnYzGfPc6hYas8M
- A0NfBYsuQbbZbQ2ueyBRP5vtdKQyu9k2WX/knnsInoE55HSM6aEp4EezbgeRn0uACxbt
- RS9+qXmCb1ywnRlY1GTwnyF+JOTVJRj5X5LoA6HYlyLoG7leYjDbR+n8oECsYH+namRI
- 1ZSX721A1s5KCf0nP4jaYBL9LxCAJm6XyHpsulV/QrQSUCBVW27ql0+gEaO3HmaWa9pE
- Oktg==
+ bh=lJnc7kBoipKDrnnn2FeG4648XrAxL/dkWvIlbY7J8ys=;
+ b=HhWfz0ESNj3XGHpW0prwhhsYhAlcwSKd7QZY2MhFm6/yU37dokKTpwys5dRvzgajES
+ HXXkOlHEGceJMNbJ0TkqPzLmnYNr13nIVT89HnPDIM4XxOaJ9qy3Tv1dw0fJbL9vDJ3C
+ fqwJrsJ/QqdbTd3HhPuFoT8up59KbI2TAkEy2NYeMsc6X43C/zjwf9YosgiGhXhuV/Yv
+ xNPisuRk0jocwFKYkAx9oZRVKJDK6MHWQRBAUwJ6S28mpa8Q4aEm7u/RILx+Uf1WJB9x
+ 9sEiwL7qjXsJMwe8PA4eGjIzJw+CXDSPWP4TA6QSY9f0I7Icosd+Od6GBBkU/ZdVr9Zh
+ TICQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXUDUFRuEZ6gSW0hmohw37hrjGOrOR+WGVsQhVD7szkeej10hTodt1b58b9dbi+nfL5I8et5sq2UyoT@nongnu.org
-X-Gm-Message-State: AOJu0Ywg4XNJyvREnZVDNvJ7YCcKmWxxh2i+Ajw0P05HkQeH70V9EPlA
- ybGFJEcWrDimzWXYvq7rfqg3Us6hPjJ6IUSSe+a4WXVr6PvwnG2BlBAHb2v2wznA31ICN56gF4m
- LPuLnrBU=
-X-Gm-Gg: AZuq6aIUH5b6Kxh4/TuPCm6pIy9WwYFLyxR8PjGgRBca95LvgKwK66QFV2/Zq6dyUeu
- Gi8cppVNkpv7nQczPJ7CeGUVRWrmIlq0xT5jaN0WEf32aynMGYQncmWjjHhXw460zHRbyW7LhjX
- K5oAuxq9mJnXmy+0tRIBH0JlNsv+EGkUag1HZ8CS+zhDOIoeGlTZUe40P52r5tnSsiprK6+hORW
- gdYMmXYiYAxIMKoL40g/9clH0MTC0rPA7CH1J+mNkE78hgZzkjZ9lHE54NKmuRs/5/5TZ2ulVre
- n42B6sqfdny8w44e3Ls94WkTSSYF9tbeDgUvqo3Ev69SK4SWfddXYuZBt1RpX8nKHgTdlbIMFVI
- /4uLQdO1XdOz+Uq81CSLBVbOj+feUTJIp/3BRW0VO5jTczUC1vcyoorvP5mSTMU84zD9GIrnlKa
- UOdpZ/RnFY1tQNQR4BIJd7Qgj3MvPMwbkDkcPacem2prCHJGpvZm2akQ==
-X-Received: by 2002:a05:600c:19cd:b0:479:3a89:121d with SMTP id
- 5b1f17b1804b1-4801e359031mr315662795e9.36.1769095486935; 
- Thu, 22 Jan 2026 07:24:46 -0800 (PST)
+ AJvYcCU3WBWPA4VPaOncCzSqdBOUMVRghfqWMhv/rfJNA4f7/oZmYOxpOquwDqKjUdRXfmj6Vm929Z4gwwir@nongnu.org
+X-Gm-Message-State: AOJu0YyjoPpN+XmjYm138TVDtEPTlqMaTSUF7L6d5ovjYom+8q0Z55ae
+ Tro5eZBp7n7sugSSto4gB7SDllP+GgNIDH4ei74cQ04Vxg1GBf9dlN7wsNfNxrxCKY0=
+X-Gm-Gg: AZuq6aIUt066bZ1Ld4Qn2AW2Eu52+2GpqvW6A3EqkEHh6MnkUG4yY2ykpYZUPWoVz0M
+ gntyd0UX1qlcMFBEn0pfOqq+GX0aINdHdT6mP2mzDivPBolDkG4d8CVKETvX2teu8+7AYcHfn+v
+ GuBgQ+nGXF7Zxzwh/ig8Zsma0F/p3ohD2HbUEU+P4yaUYkJRPxHFBgmIFN1qECICgy0G9WmQM21
+ 9frL6G+dJRaa8FuYPSIIhgUfAzmjlJE9XxarhGA5LO67OLexmEtaePQj61Bmy4hMPbvwB4z0Ey1
+ 8xS8qrNbYXw4eTLI6NCJD5BC4CQ3HldInKSJrn0BHsQynDtPnac2a8238sgG56n0I8f2h+iAOj3
+ BKwiBY8MBrk5XGJEH1iQa8HtyE9lT65ojvVDMBrPMMk4EEC4KNHAB73Eo3wjL6Kl9unKOHrEW2f
+ BNOwIekPxhUgyuKuNQinStN2h2pZQxMsTZgpr3+4vSRXZW1ErzzHYF7w==
+X-Received: by 2002:a17:907:94c4:b0:b87:7485:b4bf with SMTP id
+ a640c23a62f3a-b87965c103amr1791489266b.0.1769095594511; 
+ Thu, 22 Jan 2026 07:26:34 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48042c1011esm56382575e9.6.2026.01.22.07.24.45
+ a640c23a62f3a-b8846fb359fsm68538466b.25.2026.01.22.07.26.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Jan 2026 07:24:46 -0800 (PST)
-Message-ID: <a1fdb977-b43a-40a4-9371-6b36ed7bc848@linaro.org>
-Date: Thu, 22 Jan 2026 16:24:45 +0100
+ Thu, 22 Jan 2026 07:26:33 -0800 (PST)
+Message-ID: <a19e26e9-4097-4028-854c-daa14652e93b@linaro.org>
+Date: Thu, 22 Jan 2026 16:26:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/4] hw/arm/virt: Clean up MSI controller selection
- logic
+Subject: Re: [RFC PATCH 3/4] hw/arm/virt: Drop VirtMachineState::tcg_its
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20260120180339.1416328-1-peter.maydell@linaro.org>
- <20260120180339.1416328-2-peter.maydell@linaro.org>
+ <20260120180339.1416328-4-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260120180339.1416328-2-peter.maydell@linaro.org>
+In-Reply-To: <20260120180339.1416328-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,28 +106,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/1/26 19:03, Peter Maydell wrote:
-> The virt board might have multiple different ways to handle MSI
-> interrupts: via an ITS, via the GICv2M device, or not at all.  The
-> logic to select which of these we use is confusing because it is
-> controlled by a mix of versioned-board compatibility flags, board
-> option flags, and open-coded logic inside the create_gic() and
-> create_its() functions.
-> 
-> Currently we set VirtMachineState::msi_controller as the very last
-> part of this, inside create_its() or create_gicv2m().  This field is
-> then used only in the hotplug pre-plug callback function.
-> 
-> As a first step in making this clearer to understand, move the logic
-> into a single finalize_msi_controller() function, which sets
-> VirtMachineState::msi_controller.  The actual machine creation code
-> can then look only at that field.  (This is a parallel to what we do
-> with the GIC, where finalize_gic_version() sets the
-> VirtMachineState::gic_version field.)
+> We now use VirtMachineState::tcg_its only in the
+> finalize_msi_controller() function, and it is always the inverse of
+> the VirtMachineClass::no_tcg_its class field.  We can simplify to use
+> no_tcg_its and drop the VirtMachineState field entirely.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/arm/virt.c | 38 +++++++++++++++++++++++++++-----------
->   1 file changed, 27 insertions(+), 11 deletions(-)
+>   hw/arm/virt.c         | 6 +++---
+>   include/hw/arm/virt.h | 1 -
+>   2 files changed, 3 insertions(+), 4 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
