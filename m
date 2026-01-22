@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C96B6D6CFA5
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 21:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44395D6CFA2
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 21:02:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vj1oD-0002yf-95; Thu, 22 Jan 2026 16:01:41 -0500
+	id 1vj1oi-0003Re-VF; Thu, 22 Jan 2026 16:02:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vj1o0-0002pb-KY
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 16:01:39 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vj1oY-0003Ld-KD
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 16:02:06 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vj1nz-0005Fb-6R
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 16:01:28 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47ee937ecf2so13195565e9.0
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 13:01:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vj1oW-0005JD-U0
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 16:02:02 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-47ee3a63300so16448305e9.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 13:02:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769115685; x=1769720485; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769115719; x=1769720519; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tJ5PETmEZLmm3Y1gSNdqj1xhiHNr34HOHNL2IBd92JM=;
- b=HO60b6GKvPmzaQ41ZGd1kqVBytquOsuRUlkM6FSenK8KGHzuacLWl00tYNW+VVRWlB
- h4h5eEAtrJJlnJP/0V5HmLPJm1chsIL344ApI96LzU4XLAR3OjPp3OY/Fc3XVbCKGM6J
- NaO+eUKnfZOLv65Zlo+FsOY6CZXXx/+kZY+Qy10r8B8ySLbBaddgcKa6FqTw0Mp54521
- opoBrhLVk4cgJeJlRML9kP1+sK0auIrHSwRziz1GdLEkBHD/GR79i4L+vkjseu2rGolY
- 9bX3p5k5Qu6xX8nFnfbdNCK51F6tsgS3KgfyCiYy7t30qzmuzPRS1DgBEVvuuiKdUWAd
- +DAQ==
+ bh=pZixBBXw9pW9Lb2/N+W+Mo89Bf4jJ5ucu9PIzWSFCxg=;
+ b=uKWlzzYOaOONYCGfOyy9FabVkzqH35t8G1khL1j0MrGOJCiLkKc9d9AT2B9eyqiB2f
+ XnoLvosYP2Wylr+ztx3WacEADRJTrxyyxrr28knRd6VeKxOqcC7qDv9nrKGyspQsC0EG
+ zO90yfaqUyLo39MccOQ7g4Iz2rPVpRcSDavpvMR+HPsNmMNKiyVGrAvAHwNzoSO7qKkH
+ lN3wxTFMtsYGbsupOcPlvG4PvLdKgEDotheMCAsMnkuQEnWlPF0JF39zg7pXD2nnk10Q
+ 8DepJu51yuf37Pb7gvIbzqGU/fhiT4Vp2bxE3MFif7+wUvx96wXV1wjo0C6A+/f2/uUs
+ HhSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769115685; x=1769720485;
+ d=1e100.net; s=20230601; t=1769115719; x=1769720519;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=tJ5PETmEZLmm3Y1gSNdqj1xhiHNr34HOHNL2IBd92JM=;
- b=GoLluTHsbWeXG1gRWxkTly1L0aGG6R0ZnjkKFpG4TkBFIFXJkIsxX4nEAZKNifw/92
- rKuJPcwuSIaXTkS5GBztgoM49JPy/IWgQmiCDsVUEyVtjdjhQFIbeoLBbUfzbGLcc1RB
- CBWAKU/8ux26TYiwuAGWqxEw36N0v0tumvKBQOvc8KJ33Vr6GY49wYlTalRfHNNUH3I7
- 4zP8JxlwmG6CCM+SuBp2uhcCTsEyeo32v9FnmARrYl7TrUHX0lCznjfbfq4WZeudWkbL
- Z6Aoqqi41L5bRNymAd7n1lIwgfvMWFJCacmKBXPXWDGzgWUtgga7Xvwm8sR+MgzaiITx
- 5m5A==
-X-Gm-Message-State: AOJu0YwiRERalE9wfUmQkwskN3cHf4WEtX5+sQdIuJYiGjmRCbSjPLPf
- lUwF7hKqQ87f/0a5UgNJpi5ArFzw7zWSg8R3oJSFG0Wdseax9y0z4GzPF01gGZZLvH5lFDwYH5A
- esA/yEWA=
-X-Gm-Gg: AZuq6aLJ4qH9I4DGuK7a1KAwkasm7kUZfDw5BwtOapeM0CDgBMzCGOQLXEmIl2qy26Z
- m7MQ/AYqk+fRict8AMmY45+2hyPqzO9QmLxVbANAe5j0RNK29t3mcAnYvAdtzeS9slxzQnNxkl7
- hn/ox+aqKtS5yHyav2EcR56v/MerFMM+G3guokg+FDnyT64lenhQwt1/YV3DPbfdR0m2NM9GSzV
- wIShPKUvKnSb3P7BSXOsOYPI85iJEnbF/mn2QVmfKHmP3DVQCBYXhDW+YnEttlxrdVyJwL/EfWR
- S4DEY1jQBybyqML7k7Edvh3JuBaa9eYZslA3jtqWsTxwreypz89aCaZg7K/2DiglGHT8foINDaU
- dDNSCwWo75u00y/Tvc6rTe9TyGLjf04wWFAjVsrOTjnY67uajtKwnXtHAdj8tRrrvxVZQwvPHmf
- FU8ue4HDW+3qfKALCIAYFTjxVWM4UpUKB8fHsZnBQBbZO6fD6vLm2nXAsexGH0
-X-Received: by 2002:a05:600c:3e0e:b0:46f:a2ba:581f with SMTP id
- 5b1f17b1804b1-4804d307b0cmr11534505e9.16.1769115684917; 
- Thu, 22 Jan 2026 13:01:24 -0800 (PST)
+ bh=pZixBBXw9pW9Lb2/N+W+Mo89Bf4jJ5ucu9PIzWSFCxg=;
+ b=wp5cECxXXptVfMO7wiMWOtWkAafx1J/V09Wo3P2JiKBSFxibNGUMJs+a1QhGTb2zKM
+ xJTSsOwPtwWuLCNyx7HrhWW4GIve4heBy50X5rs+Uvmp4zU8OvdYu7rCzb8ljMSRgxZo
+ OBwKXyieDNVSSTcHxgnkqUjcJyxaKPn2xYEU8NL6TGMj/BlvpYgCbfjGSCEIsBHgz8h7
+ sLTcFV9fWDQRK0wxY9rLQIOLgI2wAbJQgLpmRw8s7ONouhcsQSS9bTJcJaptUWohI7rw
+ Ih9lsifvJCwNiS+qlc0XYry7X6odLiUoEBsK62QgdAgUXxa+up13x2fD7K5N8phJAtKu
+ Yvmg==
+X-Gm-Message-State: AOJu0YyyNbLIUFDqHkABUFu3xXh73zztfayPYrfTdYJdZSPoqzORgE5Q
+ u7rihCe5T1jNn/LJya/hByc0w5UfJv93/WiMX5vyx9zXC9U2M56DBFs9vk8lWtlMYIQd232C9fw
+ 0ExkmbmuWZw==
+X-Gm-Gg: AZuq6aIWbTLDt6ZFcR0gaVW8peKzobBiOmXZGhtCtrAX5/V0FIl8wBKezgl8vMAVSbG
+ j/8e1aAcoe2C3qTvEMyrn3vFhAjv9N04UxvypRh+oVp4qLpy6eos95bwKImE//yeYV8Gqzpx22+
+ guD8XMOmVEv/0phkfW6N/dCSwvUbmRk+FbUP0gKpOYDj1h64KyKkfqPQn6IBAslW0UxKCH9pl1n
+ I2YYkJ36RzORYZudgocymy6zXtlEOl/EpnaB1DAM0KgaT87pZNz8lgXqaXGrfPLwJ5HUtMm7124
+ /LEWQpz3FD0o5s55bXt0PYTi3Y8t5X5lhc26E4k/9QfE2J1U6fCWKCkHAzHtZ+PZI3/+dYWOXG0
+ oRtSHFw9RSzuJCyQefrSSiNlNLLk8J4OkLXMbFFdaBqMgRQuKMjPb0qD/5lbknuwbkPMwMkhEst
+ yasNEB12TWtovk19EsLv4AZlbhbk0Cvit9DO3dvH33+hLHvEtXWpQvUf08TLv9
+X-Received: by 2002:a05:600c:6217:b0:477:9fcf:3fe3 with SMTP id
+ 5b1f17b1804b1-4804d664990mr8920045e9.0.1769115719013; 
+ Thu, 22 Jan 2026 13:01:59 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-480470bfe42sm89260495e9.9.2026.01.22.13.01.23
+ 5b1f17b1804b1-4804d8a5b2dsm8310935e9.9.2026.01.22.13.01.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Jan 2026 13:01:24 -0800 (PST)
+ Thu, 22 Jan 2026 13:01:58 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -70,18 +70,18 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 03/11] target/ppc: Inline cpu_ld/st_data_ra() calls in
- do_hash()
-Date: Thu, 22 Jan 2026 22:00:53 +0100
-Message-ID: <20260122210101.55358-4-philmd@linaro.org>
+Subject: [PATCH v4 08/11] target/ppc: Check endianness via env in
+ ppc_disas_set_info()
+Date: Thu, 22 Jan 2026 22:00:58 +0100
+Message-ID: <20260122210101.55358-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260122210101.55358-1-philmd@linaro.org>
 References: <20260122210101.55358-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,45 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of removing the cpu_ld*_data_ra() and
-cpu_st*_data_ra() calls, inline them. No logical change
-intended.
-
-We note the page translation hash address is expected to
-be aligned, so the MO_UNALN flag is misleading. Next commit
-will remove it.
+disas_set_info() shouldn't bother with env->hflags,
+access env->msr directly.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/ppc/tcg-excp_helper.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ target/ppc/cpu_init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index edecfb85725..6f5d82af636 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -160,14 +160,18 @@ static void do_hash(CPUPPCState *env, target_ulong ea, target_ulong ra,
-                     target_ulong rb, uint64_t key, bool store)
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 58816c51a74..0808284b722 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7456,7 +7456,7 @@ static void ppc_disas_set_info(CPUState *cs, disassemble_info *info)
  {
-     uint64_t calculated_hash = hash_digest(ra, rb, key), loaded_hash;
-+    unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
-+    MemOp op = MO_TE | MO_UQ | MO_UNALN;
-+    MemOpIdx oi = make_memop_idx(op, mmu_idx);
-+    uintptr_t retaddr = GETPC();
+     CPUPPCState *env = cpu_env(cs);
  
-     if (store) {
--        cpu_stq_data_ra(env, ea, calculated_hash, GETPC());
-+        cpu_stq_mmu(env, ea, calculated_hash, oi, retaddr);
+-    if ((env->hflags >> MSR_LE) & 1) {
++    if ((env->msr >> MSR_LE) & 1) {
+         info->endian = BFD_ENDIAN_LITTLE;
      } else {
--        loaded_hash = cpu_ldq_data_ra(env, ea, GETPC());
-+        loaded_hash = cpu_ldq_mmu(env, ea, oi, retaddr);
-         if (loaded_hash != calculated_hash) {
-             raise_exception_err_ra(env, POWERPC_EXCP_PROGRAM,
--                POWERPC_EXCP_TRAP, GETPC());
-+                                   POWERPC_EXCP_TRAP, retaddr);
-         }
-     }
- }
+         info->endian = BFD_ENDIAN_BIG;
 -- 
 2.52.0
 
