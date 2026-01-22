@@ -4,106 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4799D6CFAB
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 23:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33794D6CFAA
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 23:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vj3iM-0004z6-Pm; Thu, 22 Jan 2026 18:03:46 -0500
+	id 1vj3iI-0004vD-A8; Thu, 22 Jan 2026 18:03:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vj3iK-0004xx-VB
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 18:03:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vj3iH-0004uf-GA
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 18:03:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vj3iJ-0007Vm-As
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 18:03:44 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vj3iF-0007RS-75
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 18:03:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769123022;
+ s=mimecast20190719; t=1769123017;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pDiedGlQr/KQRJYDxCSC/2kq29zJ5agXHeHdCKxHIMw=;
- b=AL3L4WbafSlk5v8+QLGn5FbCUgpXXyfDqtYfWcE+YQs3w/CzOxFlrWQrCzln77fbFdXAD9
- mjZkHISZRnm9GMq3pCcu7V4lRNJdvskxRp8Aox+ME1lv1HJRloRNW1uRojSvdZEE4/xH/F
- VaJRniwx+QYNRjeVNEay9pcCmddnNoc=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Ij5tWyLXqZYPkX6tkFNcKvOiNQ6HcqzkeC/Xiocs4c0=;
+ b=YkThbGfVcIJU6pAf9lC+b4Ez5tYMPFCBlcuCf+Q9hd2J7PY/8N5sMCc7Rov1AS+vA/Xwxr
+ pfSIZs4tKgUaCRQoNmKRa5KsH0NiDs3IG5t+iYviQ/dZov/LKt+2wyuvQ0gW6y+MT84QHj
+ we6bZzGf72Nx8moZPxLnVDj+s7BnWys=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-N2QfMRgcPAOw3uWylK4rUg-1; Thu, 22 Jan 2026 18:03:40 -0500
-X-MC-Unique: N2QfMRgcPAOw3uWylK4rUg-1
-X-Mimecast-MFC-AGG-ID: N2QfMRgcPAOw3uWylK4rUg_1769123020
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8c52fd47227so250002285a.2
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 15:03:40 -0800 (PST)
+ us-mta-609-m3X1PjBcOO20rTl7GDx1mA-1; Thu, 22 Jan 2026 18:03:35 -0500
+X-MC-Unique: m3X1PjBcOO20rTl7GDx1mA-1
+X-Mimecast-MFC-AGG-ID: m3X1PjBcOO20rTl7GDx1mA_1769123015
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8c53919fbfcso349760585a.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 15:03:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769123019; x=1769727819; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pDiedGlQr/KQRJYDxCSC/2kq29zJ5agXHeHdCKxHIMw=;
- b=l0CxvEcWYqpY2ht7W62nlbtVJ0TCrDRe1e9s/Q2LVmYCTwGt+NYbbgp241KLq9D9RD
- WJ8UXKKzHpHecQq4aRcY1t0rCw6MIY+fyUlC5fano9ZxZFMCcSTKvYMv2O75HiBtxxKo
- u2xaMRRe08zLw6pdsCdIbrg/XbuBWE7H4L4+2knYYFhMRNinj4yVdm3YgyI+xAZn0C5N
- 0+LLjMf3lLynY19Umo4v2mXMegou9vdp/C2E9iszCRVOWnHRNmqJg9ylVhtMzriJsIyJ
- lQoQSa7lXOSm1IdjDk0+b/5KXbhnsXZGuoNcqXZhcHbOF8Ln5DuNjrXwxu4AJAiFMN03
- Q1ag==
+ d=redhat.com; s=google; t=1769123014; x=1769727814; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ij5tWyLXqZYPkX6tkFNcKvOiNQ6HcqzkeC/Xiocs4c0=;
+ b=gvGbRbniggpht6/VwFOcSakel5ctt4KHfMzIXYQvh1nEvIZy/9W5Y0LhcbJpjHyNK8
+ VVYHipKPIRLtUMVLsbx0CuA9P/6wIPS8uhFsLLXpBkPh5qky2JdLQSbVgM7zjOR7k8mv
+ N1RKGnR/Iuqqsm61t1fhZgKMvR6C5WcOWMTuv654durmvRfc0r8950+dxQ/J7cZqxJtr
+ wiUptxzUQDI38UlqGjIMogwHS6pgDBqsba1t1DpcfqoUZH3zoFD2uHOowVLFA1ITRzLy
+ rEatvzmEtjbvQczFwxfvr7cOhWE3pQf5JY/l3Eu5tBucj9wGMCgTqmpi2lVtGHeYkiVh
+ iibw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769123019; x=1769727819;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=pDiedGlQr/KQRJYDxCSC/2kq29zJ5agXHeHdCKxHIMw=;
- b=tAWL3wLLwSQ1aVstB0xinufKPaKS997ktJSWRH+AoN+kF7qwhq4Z+U8D5z5GAHAmIg
- uIYOn+Y1HsTkbnKvOOIHCIIIKfPiU5mq38g82gvnYJXdxcVSNnoRVjaBbbk01DFH8j0e
- /OcDCz0rr7UWPZZLvSLnt+8GnkEbOJCFM8EgdMeIlrAUnToro82rlbaCO2+PPkznOcIW
- SGV8gaawYfFeGhQ3VdLQ0+81KBzZBvdJo9feAOfYUaOIE1fLrjhrAHRB6+1QJi7BesQP
- GJH0bQHcxRIEFDWofNOh5mO44YtmnHBCRgsdgtdDhJEgutJeUA7BdcEds56ZFqJu48Lq
- h8Rg==
-X-Gm-Message-State: AOJu0YzDLI7mm4BzLjlDBLxr7WrlBFtX/MWe0el90OtLq2HVmn+XKlFI
- KmvXdpoEdf9xUO6CpV9wHHCc6is6xyiwGE6U33aHnPQpDG9xNr88nEt8hFFOvmefGO60WE8V6QM
- LVrKEnP0w8OsEcbbtJSJUccpbjzK74Z/rPpAJqGTKuBSWewEbXGXFWjtF7DNNjCigMC7cHyDp7h
- 9gWYLxyt0GWtUfr3DHwwKSt/3Nk4XbOFmoreCSPA==
-X-Gm-Gg: AZuq6aK9cVqZ86X6x1S62UHMFa26imov2o6pg+Jkb0yGu0KHntVVChtP4lX7S7OR0ZT
- oRgOajYHN4N0IUWUERYmprG7P0/1TMg73wx5Z+0I+Jq7UZDfW9gp/bB0DcMaWzEA38EszF2cX3l
- 1PXlvMjbw11orWqIanqwmYsWFRCMrQvcH64l13FKrXtbdHorbK4ZN56PLqstLWPN8/EtPK+sRFB
- 4Tzvybe80itw4dm8MMZT+JdbBEN4fJHCcinM1I1CXKbxhELhvUExsR/RW/rYkx0+nBYHBOO6BcD
- g8ssbElJdoU4OEPFpL44vyGBHaRCiBGF5iKXvu733tY4AeOKTzkABfX2qcMRcuGZSBvfbsvS2Zv
- r
-X-Received: by 2002:a05:620a:45a4:b0:8c2:e8b3:7c3a with SMTP id
- af79cd13be357-8c6e2e5ced7mr148903885a.87.1769123019404; 
- Thu, 22 Jan 2026 15:03:39 -0800 (PST)
-X-Received: by 2002:a05:620a:45a4:b0:8c2:e8b3:7c3a with SMTP id
- af79cd13be357-8c6e2e5ced7mr148898385a.87.1769123018730; 
- Thu, 22 Jan 2026 15:03:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769123014; x=1769727814;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ij5tWyLXqZYPkX6tkFNcKvOiNQ6HcqzkeC/Xiocs4c0=;
+ b=MuJbHEChqJAnaemEiV1ljxu1INRJYw6EX0gLgbM+17DUdmi7OwrwQgyq5+y5hvIUHN
+ bvd/jmL1A6Kzq/pIRYdpQM6tjK5GE9RYjNIGrSGItxyvN20zOAfUBblyijGdlCpEuuaa
+ lFjvPYD6AvmLdoQBG6uZGmmF+6AjUNe/CB9iT6h/Wz379iCx2bjUshPLuq3avde6A09o
+ v+jWpVE8Midl24t4CuNf6tG8Z4fqb27tPv4f4W05OAY+DU4LhXENaX7XwXHnUHRUW65f
+ KE5ZEsbG1dJbR4SnFyXHxUwA1Bgpu557O6NxA5lQwBkXUO8RURjOrF1Q0jffZS/zcxZU
+ afww==
+X-Gm-Message-State: AOJu0YwXln1F5YfIQHPdIiZa+yOBFAIddxB5Z3rDLhCs3SmKEonJuVtt
+ eXKuYSjMCUgQ5XnpvziM03fnCnZNtrZzGD19l0U8KcWnnBUT7lWg8jAjVjY3UuGimVVTzPV3Ddl
+ R73em4XRFBYVFod6h42+rrQNu0eXbFn/ZGNzQk8o352QFR0p7YFPPkNrtRs7Uv38ERB2ARR3XD1
+ ylkctzhwJ4oS7Y2uNIlmSS2Mj/0ooAFGbtx4r+Ug==
+X-Gm-Gg: AZuq6aIQtIvLgWH8yxaeLK8FlAMEZRFP9YwC97qU68qupwJ553T4sWt2timaXAgFQvS
+ OTrE507jAIA17NLScsT8lpq7Z/UN9td/Vmcpj/OWOjqQj+gjk0SVG2Diy1Z1ywbmsHPpquNfHVv
+ sfi895Cm6zoj9k7ssnesTmpeSrzisaJrpoguRZEktZh1QIbDFF93Lw7dI9Yk1CV9ywWZMCHwnpe
+ nId/M8tyy9eJgaAjrdbBcR4aJsFnAyCOBPqQ1A7ht8P9e7n6j+IxO9qpdDI1ddPLor9wvpCpqB/
+ kvzlC2DjU3EhAF469VUJa8dgeCbQOUyiksIjF5SWHlgHnqI65ZsrGBBjYGDK5/Zr5yRQS72qXHF
+ 3
+X-Received: by 2002:a05:620a:400e:b0:8b2:64b1:692c with SMTP id
+ af79cd13be357-8c6e2db03cfmr153752785a.29.1769123014556; 
+ Thu, 22 Jan 2026 15:03:34 -0800 (PST)
+X-Received: by 2002:a05:620a:400e:b0:8b2:64b1:692c with SMTP id
+ af79cd13be357-8c6e2db03cfmr153748185a.29.1769123014046; 
+ Thu, 22 Jan 2026 15:03:34 -0800 (PST)
 Received: from x1.com ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c6e37d2a56sm41032785a.20.2026.01.22.15.03.36
+ af79cd13be357-8c6e37d2a56sm41032785a.20.2026.01.22.15.03.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Jan 2026 15:03:37 -0800 (PST)
+ Thu, 22 Jan 2026 15:03:33 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
- peterx@redhat.com, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 3/5] migration: Notify migration FAILED before starting VM
-Date: Thu, 22 Jan 2026 18:03:29 -0500
-Message-ID: <20260122230331.3543312-4-peterx@redhat.com>
+ peterx@redhat.com
+Subject: [PATCH 0/5] migration: Notifier fixes for 11.0
+Date: Thu, 22 Jan 2026 18:03:26 -0500
+Message-ID: <20260122230331.3543312-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260122230331.3543312-1-peterx@redhat.com>
-References: <20260122230331.3543312-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,107 +116,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Devices may opt-in migration FAILED notifiers to be invoked when migration
-fails.  Currently, the notifications happen in migration_cleanup().  It is
-normally fine, but maybe not ideal if there's dependency of the fallback
-v.s. VM starts.
+CI: https://gitlab.com/peterx/qemu/-/pipelines/2280356561
 
-This patch moves the FAILED notification earlier, so that if the failure
-happened during switchover, it'll notify before VM restart.
+Two major goals for this small series:
 
-After walking over all existing FAILED notifier users, I got the conclusion
-that this should also be a cleaner approach at least from design POV.
+- Fix postcopy issue where DONE and FAILED notifiers will be invoked twice
 
-We have these notifier users, where the first two do not need to trap
-FAILED:
+- Move FAILED notifier to be before vm_start() if the failure happens
+  during switchover (where we will stop the VM first)
 
-|----------------------------+-------------------------------------+---------------------|
-| device                     | handler                             | events needed       |
-|----------------------------+-------------------------------------+---------------------|
-| gicv3                      | kvm_arm_gicv3_notifier              | DONE                |
-| vfio_iommufd / vfio_legacy | vfio_cpr_reboot_notifier            | SETUP               |
-| cpr-exec                   | cpr_exec_notifier                   | FAILED, DONE        |
-| virtio-net                 | virtio_net_migration_state_notifier | SETUP, FAILED       |
-| vfio                       | vfio_migration_state_notifier       | FAILED              |
-| vdpa                       | vdpa_net_migration_state_notifier   | SETUP, FAILED       |
-| spice [*]                  | migration_state_notifier            | SETUP, FAILED, DONE |
-|----------------------------+-------------------------------------+---------------------|
+The 2nd goal will be needed by Stefan's ongoing work on block persistent
+reservations, where a fallback should be required on src to happen before
+vm_start().  Instead of introducing another FAILED_BEFORE_START, this
+patchset should make FAILED work instead.
 
-For cpr-exec, it tries to cleanup some cpr-exec specific fd or env
-variables.  This should be fine either way, as long as before
-migration_cleanup().
+Patch 1 adds a tracepoint for me to verify this fix.
 
-For virtio-net, we need to re-plug the primary device back to guest in the
-failover mode.  Likely benign.
+Patch 2-3 are the real changes of above two.
 
-VFIO needs to re-start the device if FAILED.  IIUC it should do it before
-vm_start(), if the VFIO device can be put into a STOPed state due to
-migration, we should logically make it running again before vCPUs run.
+Patch 3-4 are some cleanups alone the context that we can do, hence
+attached at the end.
 
-VDPA will disable SVQ when migration is FAILED.  Likely benign too, but
-looks better if we can do it before resuming vCPUs.
+More details in commit logs individually.  Comments welcomed, thanks.
 
-For spice, we should rely on "spice_server_migrate_end(false)" to retake
-the ownership.  Benign, but looks more reasonable if the spice client does
-it before VM runs again.
+Peter Xu (5):
+  migration: Add a tracepoint for invoking migration notifiers
+  migration: Fix double notification of DONE/FAIL for postcopy
+  migration: Notify migration FAILED before starting VM
+  migration: Drop explicit block activation in postcopy fail path
+  migration: Rename MIG_EVENT_PRECOPY_* to MIG_EVENT_*
 
-Note that this change may introduce slightly more downtime, if the
-migration failed exactly at the switchover phase.  But that's very rare,
-and even if it happens, none of above expects a long delay, but a short
-one, likely will be buried in the total downtime even if failed.
+ include/migration/misc.h | 15 ++++++++-------
+ hw/intc/arm_gicv3_kvm.c  |  2 +-
+ hw/net/virtio-net.c      |  4 ++--
+ hw/vfio/cpr-legacy.c     |  2 +-
+ hw/vfio/cpr.c            |  8 ++++----
+ hw/vfio/migration.c      |  4 ++--
+ migration/cpr-exec.c     |  6 +++---
+ migration/migration.c    | 30 +++++++++++++++++++++---------
+ net/vhost-vdpa.c         |  4 ++--
+ ui/spice-core.c          |  7 ++++---
+ migration/trace-events   |  1 +
+ 11 files changed, 49 insertions(+), 34 deletions(-)
 
-Cc: Cédric Le Goater <clg@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/migration.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
-
-diff --git a/migration/migration.c b/migration/migration.c
-index 91775f8472..1d9a2fc068 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1481,7 +1481,6 @@ static void migration_cleanup_json_writer(MigrationState *s)
- 
- static void migration_cleanup(MigrationState *s)
- {
--    MigrationEventType type;
-     QEMUFile *tmp = NULL;
- 
-     trace_migration_cleanup();
-@@ -1535,9 +1534,15 @@ static void migration_cleanup(MigrationState *s)
-         /* It is used on info migrate.  We can't free it */
-         error_report_err(error_copy(s->error));
-     }
--    type = migration_has_failed(s) ? MIG_EVENT_PRECOPY_FAILED :
--                                     MIG_EVENT_PRECOPY_DONE;
--    migration_call_notifiers(s, type, NULL);
-+
-+    /*
-+     * FAILED notification should have already happened.  Notify DONE if
-+     * migration completed successfully.
-+     */
-+    if (!migration_has_failed(s)) {
-+        migration_call_notifiers(s, MIG_EVENT_PRECOPY_DONE, NULL);
-+    }
-+
-     yank_unregister_instance(MIGRATION_YANK_INSTANCE);
- }
- 
-@@ -3589,6 +3594,13 @@ static void migration_iteration_finish(MigrationState *s)
-             error_free(local_err);
-             break;
-         }
-+
-+        /*
-+         * Notify FAILED before starting VM, so that devices can invoke
-+         * necessary fallbacks before vCPUs run again.
-+         */
-+        migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
-+
-         if (runstate_is_live(s->vm_old_state)) {
-             if (!runstate_check(RUN_STATE_SHUTDOWN)) {
-                 vm_start();
 -- 
 2.50.1
 
