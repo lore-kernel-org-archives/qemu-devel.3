@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38778C44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 11:18:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9911BC44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 11:25:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1visgT-0002Uv-BA; Thu, 22 Jan 2026 06:17:05 -0500
+	id 1visns-0001Z0-HK; Thu, 22 Jan 2026 06:24:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1visgP-0002Ti-Lh
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:17:02 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1visgM-0001Ig-Fe
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:17:00 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-432d2c96215so701031f8f.3
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 03:16:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769080616; x=1769685416; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ofJOOkHWkj0n80LafpXMa3XYu3HjN97maY6o0XA2DWI=;
- b=GN8WqJtsligOBUeO2KEceF6N+4EYQN0otFZmI+mUS9FT4on95tgO6w+VY1W1AXXPv2
- ueESeIgkeDUJR94U6L+D/j3qHXL+x5qDwfp5/syhGUIOs0uq/hmIIZkwFvMWuDi2VX04
- ern+buC6FJONKPQOs0FWJ6jCeCWUQREMDhlosvgQZuU14ScAQUoaTOn4a+ifzFvb7N21
- AVD4mStXQuVPrql6NL4cUaDNPf6O2mWrEzaeJjJbKBKmEUmWPqL8ckrcIABBPmV3GsGT
- oIyZ3xXvLvMAorSLCnqyzHKpDqTNHN/MjODIOIoDdBIvmUoPHptZEvECS2/V2G/fXhUU
- XLOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769080616; x=1769685416;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ofJOOkHWkj0n80LafpXMa3XYu3HjN97maY6o0XA2DWI=;
- b=v4QAPtGKCwIt5SD8WU+WmymyhK97zj1WRoxLyikJh+KLpvD8Iuhsw3WCDrSXAXut7U
- sJm6Hl4KHXPDKpDkJJrPpCQR991KogM76cC1GUp8WMkxfBMoYHW6thFOORZ8vOs9xkXy
- NBak21H+LafrdlQUIs1oQ/txx2yuLZWOhxd8nAyHEJiqIdI8HkLHbSun8+YSgfm1gXxX
- iWBjVXcGDIJv86R2K4bz/adHOf9ZwMlgFGCDeBAflkpdrugWrOFISu5AQMeI8EtVRJG9
- 9IveijYaf5b3F8Yb0AoPHwxN7ZrgW1kGn3nudxV4l0/gUNM8TFaO0DQJhCWdgbVe2blC
- qRUQ==
-X-Gm-Message-State: AOJu0YwyWKZjgYXkknN1rXY5L22/KNAIw+61J2zHLOmBz0V50vzWNLXF
- qfZ11YTa1aj/RyRpf0YL5chf+feb1VmMXKKDy2yR5owKfaZ+qP5WxM84EuzFegUA+lSxFQkveV8
- ArwqgAqQ=
-X-Gm-Gg: AZuq6aLHc5fgoSYNPV/3yBmeWUUnEKfUcj+DngxAduUPppZ6CZV8F6zgaE9YSNF+rC7
- /ZdWW8G4S2+3SzqQhNWpzB2v2jNg+mFvbJiIZeaRHyHt+BNIsfalZIbtGLfENoYpLM1UCB2FNOH
- 7Xlbd/cI45G/b0UqSpLmvbWbkHjRQxO7GD0CqoPhi9Rr4yWX0zTF+5pw91ztNWrZwIeMk3UC565
- ZcPxhC7lsLFLRSLaf9Z+Suq1DJ+r8ha/6p/FMCLp5TDDMmxakEiIU9TDEkeHatnVhDZmibJEJaM
- dRcaY452i0aMp1oHGHmUUjEAHAew+pQ0JFsJ1KFlxEgSWRaPd6l19Ys+Au0++sEdqDW1xJyWwEb
- IVqLhceHIDE0DW0ykaBqbXiWh9Vrzxq94IKUjFZCD0u2SPtKnqi09IXH6jKzbdKnFUfwlAhLCdG
- TqKSu3ryhTu/exo5lPLvmTFF0yj/mSQN21EgZjEfHx+JdQxw8sFbJ6reQZTMNNC3AWTDnFEFA=
-X-Received: by 2002:adf:e848:0:b0:435:9ce0:f935 with SMTP id
- ffacd0b85a97d-4359ce0fab4mr7702212f8f.31.1769080616471; 
- Thu, 22 Jan 2026 03:16:56 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435966322a2sm15025269f8f.38.2026.01.22.03.16.55
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Jan 2026 03:16:55 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL v2 02/37] target/riscv: Use little-endian variant of
- cpu_ld/st_data*() for vector
-Date: Thu, 22 Jan 2026 12:16:35 +0100
-Message-ID: <20260122111639.32346-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260122111639.32346-1-philmd@linaro.org>
-References: <20260122111639.32346-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1visnr-0001Y8-7f
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:24:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1visnp-0005G9-Ai
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 06:24:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769081080;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9NgMyyWJCfzd8YQ/Mm3GEt0/9k5YoUbFP0YSsx5ZSgg=;
+ b=YhcbbhoIpwdx4XRU+px7IIXmetoA4Kq4t/BdqGS7CAmikjVxiQD83SCgWE2/YWfVLJaI15
+ JLDGLJyYKoG5Wq+tewo+n4/mwqNXQmqXgwbapQe1Qhe/aBl+enGYzJPsvtP5JS92LRCbvw
+ NbeNp/1C/Djq2mVtXryxsEXAFDShYdE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-261-7nFwJM6DOSO-uDud0z3tKQ-1; Thu,
+ 22 Jan 2026 06:24:36 -0500
+X-MC-Unique: 7nFwJM6DOSO-uDud0z3tKQ-1
+X-Mimecast-MFC-AGG-ID: 7nFwJM6DOSO-uDud0z3tKQ_1769081075
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0AAC218003FC; Thu, 22 Jan 2026 11:24:35 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.63])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 648C31800109; Thu, 22 Jan 2026 11:24:27 +0000 (UTC)
+Date: Thu, 22 Jan 2026 11:24:24 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>,
+ Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, German Maglione <gmaglione@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alex Bennee <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: Call for GSoC internship project ideas
+Message-ID: <aXII6EfQ3D4fkWLg@redhat.com>
+References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
+ <CAJSP0QVQNExn01ipcu4KTQJrmnXGVmvFyKzXe5m9P3_jQwJ6cA@mail.gmail.com>
+ <CAJSP0QW4bMO8-iYODO_6oaDn44efPeV6e00AfD5A42pQ9d+REQ@mail.gmail.com>
+ <aXH4PpkC4AtccsOE@redhat.com>
+ <130b8f26-2369-48f5-bbd6-e27210707b9f@redhat.com>
+ <aXIAmeEWMFjQM84o@redhat.com>
+ <995d4aaf-bbff-42be-9114-1f04bb51e37c@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <995d4aaf-bbff-42be-9114-1f04bb51e37c@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,55 +105,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RISC-V vector "elements are simply packed in order from
-the least-signicant to most-signicant bits of the vector
-register" [*] which is little endianness, therefore the
-cpu_ld/st_data*() definitions expand to the little endian
-declarations. Use the explicit little-endian variants.
+On Thu, Jan 22, 2026 at 12:05:14PM +0100, Thomas Huth wrote:
+> On 22/01/2026 11.48, Daniel P. Berrangé wrote:
+> > On Thu, Jan 22, 2026 at 11:43:35AM +0100, Thomas Huth wrote:
+> > > On 22/01/2026 11.14, Daniel P. Berrangé wrote:
+> > > > On Tue, Jan 20, 2026 at 04:42:38PM -0500, Stefan Hajnoczi wrote:
+> > > > > Hi Marc-André,
+> > > > > I haven't seen discussion about the project ideas you posted, so I'll
+> > > > > try to kick it off here for the mkosi idea here.
+> > > > > 
+> > > > > Thomas: Would you like to co-mentor the following project with
+> > > > > Marc-André? Also, do you have any concerns about the project idea from
+> > > > > the maintainer perspective?
+> > > 
+> > > I'm fine with co-mentoring the project, but could you do me a favour and add
+> > > some wording about AI tools to
+> > > https://wiki.qemu.org/Google_Summer_of_Code_2026 to set the expectations
+> > > right? Since we don't allow AI generated code in QEMU, I'd appreciate if we
+> > > could state this in a prominent place here to avoid that some people think
+> > > they could get some quick money here by using AI tools, just to finally
+> > > discover that AI generated code is not allowed in the QEMU project. Thanks!
+> > > 
+> > > > IMHO, our baseline for functional testing images ought to be
+> > > > a Linux Kconfig recipe used to build a dedicate kernel, plus
+> > > > a busybox build for the target.
+> > > 
+> > > Not sure if we want to add kernel compilation time to the functional tests
+> > > (even if it's only done once during the initial build)...? That could easily
+> > > sum up to a couple of hours for a fresh checkout of QEMU...
+> > 
+> > That's absolutely *NOT* what I was suggesting.
+> > 
+> > We should have a 'qemu-test-images.git' repository that maintains all
+> > the recipes, with CI jobs to build and publish them (along with corresponding
+> > source). Those prebuilt images would be consumed by QEMU functional tests.
+> > This would be quicker than what we have today, as the images downloaded by
+> > functional tests could be an order of magnitude smaller, and boot more
+> > quickly too.
+> 
+> Ah, sorry for getting that wrong!
+> 
+> Ok, so this sounds basically just like a gitlab-CI wrapper around what
+> buildroot.org already provides. ... not sure whether that's challenging
+> enough for a GSoC project?
 
-[*] RISC-V "V" Vector Extension v1.0
+Given the number of machines we have, it is certainly time consuming
+enough to figure out the build for each one, and integrate it with
+the functional test. Not massively mentally challenging, but that's
+not a bad thing for GSoC.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-Id: <20251126202200.23100-4-philmd@linaro.org>
----
- target/riscv/vector_helper.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+> Also, adding this as a separate repository will easily burn your gitlab-CI
+> minutes if you don't have a dedicated runner for this, so developing this
+> feature might be no fun at all...
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 2de3358ee86..caa8dd9c125 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -193,9 +193,9 @@ void NAME##_host(void *vd, uint32_t idx, void *host)        \
- }
- 
- GEN_VEXT_LD_ELEM(lde_b, uint8_t,  H1, ldub)
--GEN_VEXT_LD_ELEM(lde_h, uint16_t, H2, lduw)
--GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl)
--GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq)
-+GEN_VEXT_LD_ELEM(lde_h, uint16_t, H2, lduw_le)
-+GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl_le)
-+GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq_le)
- 
- #define GEN_VEXT_ST_ELEM(NAME, ETYPE, H, STSUF)             \
- static inline QEMU_ALWAYS_INLINE                            \
-@@ -214,9 +214,9 @@ void NAME##_host(void *vd, uint32_t idx, void *host)        \
- }
- 
- GEN_VEXT_ST_ELEM(ste_b, uint8_t,  H1, stb)
--GEN_VEXT_ST_ELEM(ste_h, uint16_t, H2, stw)
--GEN_VEXT_ST_ELEM(ste_w, uint32_t, H4, stl)
--GEN_VEXT_ST_ELEM(ste_d, uint64_t, H8, stq)
-+GEN_VEXT_ST_ELEM(ste_h, uint16_t, H2, stw_le)
-+GEN_VEXT_ST_ELEM(ste_w, uint32_t, H4, stl_le)
-+GEN_VEXT_ST_ELEM(ste_d, uint64_t, H8, stq_le)
- 
- static inline QEMU_ALWAYS_INLINE void
- vext_continuous_ldst_tlb(CPURISCVState *env, vext_ldst_elem_fn_tlb *ldst_tlb,
+I'd expect most of the work would be on a local machine to construct and
+test images for all the different machines and validate them in functional
+tests. The integration into GitLab CI is a small-ish part which could be
+validated with just a couple of images, so you'd only burn major CI credits
+towards the end when needing to do a full run across all images.
+
+With regards,
+Daniel
 -- 
-2.52.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
