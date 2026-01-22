@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 208FAD3EE65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 13:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEF10D3EE65
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 13:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viuf8-00062D-4O; Thu, 22 Jan 2026 08:23:50 -0500
+	id 1viujK-0000vN-Np; Thu, 22 Jan 2026 08:28:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1viuf6-0005yj-2q
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:23:48 -0500
+ id 1viujJ-0000tS-9O
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:28:09 -0500
 Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1viuf4-0007MV-D9
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:23:47 -0500
+ id 1viujH-00087h-LC
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:28:09 -0500
 Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-79028cb7f92so8671507b3.2
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 05:23:45 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769088225; cv=none;
+ 00721157ae682-78fc4425b6bso8495657b3.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 05:28:07 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769088486; cv=none;
  d=google.com; s=arc-20240605;
- b=FYI/GXEma7wkeGFN1qJCKB2OnrFUApAyaDSeFQgWhdFEBMJh6e2dKM6Xw6ARpIMpRS
- n8bh5nhwK6EwbdBDzNb/8Kkzv9QmypM2eR47eWinjjwh2AvYEvAyaVw7Rpdvyr7BL4Bl
- LiiIcpU5F7cjmfCNX5lB5iX9HQiTu0ww3OlX8jm4SoRU3XmOjyz1qWxAgpSfJvXPXU0T
- Nwu/ouhctbiW+F2LPg4WcFiHs4rnTNwWKbCkkN5dLtnt9//b/LJ9NVuJkgJ6TGnIzK1f
- BQXSMwWTy1A12dvqQx+XodR042JClQXuLvnV7yxt4R/ZBGHghX858pN+HqRWDTITmIwq
- gR7g==
+ b=FzvU/O+Zr3TgFxhoOC5aL6VG8BleDYTq0iH5VACJNYyeE5rQXBbUKWOsxLwbfm6WVD
+ ZmStBJLkO9Ah3a0Dky569LQHAxEKH9uw1nCz+OFTbJpurZix0Epcc4wy83zdcKTPM+ek
+ RuB8DSoLqP2reumJrkjPDby59y944ZDpZjtKO4yewZJQRLObp8gg0I67WSBryh+Y7KbA
+ /jU9oo172uMfyrBeYtjDI9jBnvx8z9+iUaHnD3l9fYCCP5EG49Z1mH+3p+qkuXMg9dhu
+ EXZtOV4X9gkvZpdT81rxHwdxiGFz0avvVz+uNdUpnaTiAQsSv3ukN0mAXDJaz2/aF24W
+ OAhg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=jnBqA/cCAD7oPixGvH9Y2ugbwS+WZr2smMQ6aAuVXvE=;
- fh=l34yKrB0yromHHDUji8ziQOfQo4HrJ0cM0LWNUDHuFA=;
- b=kXzjTgvSgJVXr/JeGAOdskQlsZDpfeJWMzXpPYrESG7Qu+x2HsbsgZh+2BY1NbWMz6
- naunNy9tszeW/rvWoQIbiZ+CnxXnSQf8nb35/L+ZgKZbKujDLILw00EOW0au5XBwN/hA
- +N7X3ixenZu4WS7CHH0oICas4K+mNmKmvmZXcrW7KhdvagYKjxDUld7ThAOmvCNi0uka
- TIpxRHFWtF43XI/0LpEnAjAgdz5ViAE0HdNhNZ+5hKunw+la/RKxUAB7H0yTECrAHzpH
- qdym0IkkCIUZ9PPuNXAc9CgrQfm8Zl77/OKRKj7Up6KRW7fsl79Tx8MVALeKdh7jXI2Y
- 3BNg==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=XwqjWdVr1pKvISg7D4Yr5+KDapK8vVx3gmbKWFOSRvw=;
+ fh=EVSR1hokHdkVDEVT2wFcm2YyX3tAP3Pm00g9OGLFlL8=;
+ b=Ml2YWPhMMm3eoiZoKSkH9fJUjeKEviRbFR2QTOTBTDomUtdGf9H+jjj94D3HdFnRmQ
+ 1GBBq0v91d4jHqgq3um31BQO6PtK7TvnKD+iAx3j2XugHfJ277i2RKUiROvMLEl8YJPK
+ BGhkI+hMclapJ/xxPCBIyXmjQ8Y9Nwg2YgzlBDVlQqALt9U5y9iU2Uyq+weQO+J9u4do
+ C2dUJQGZjMzhjOcQoN8vw5Rf8v8ZB6KoTF8ta1H2retDARu/XBzCNLDWSqI1r6tCzv8z
+ x3A3X1ckEJv2/VYSp9xB5Nh83vfxsfqavLoU0HMQOqZE+y+XbOgFKvQtAGR5D9nWd1ob
+ LsYw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769088225; x=1769693025; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jnBqA/cCAD7oPixGvH9Y2ugbwS+WZr2smMQ6aAuVXvE=;
- b=hIau9SNK7X80A14XjFawm2vrNeeCjNyI0/fC9lkrPGYi7DF8GcKMvhQLs84DDdBswh
- iZyRIzkv8jgcXwcbl+DSOXfzZVE9WNSgbRUjApH3uGPcUjMZCoUvkmpj+DUNMH1p/K4F
- MupHAJxsRyi53vFc89kIpHEjKAePRlJAa7lg8vJsNGEnz0BGjC5t36SYNXxS+d8Vt0Tn
- QPn0Z4ZLiVb/m+TYUvWGcRaXvH58sZ/b8kb5ofApua7EB6sFwhyCc9hEfldIxo9FFfbp
- NagjFNRYLOMB38WmWorvOy4N7/1NkK+WNON9xw/XTI425P0C3lvCii7fHp452iENRurv
- o9Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769088225; x=1769693025;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1769088486; x=1769693286; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jnBqA/cCAD7oPixGvH9Y2ugbwS+WZr2smMQ6aAuVXvE=;
- b=MD2q6dAgSBWL2jrHdLbq8RoU1Ra+dtBzWAi+5Vsz9a5b98ndzepBOzPZhgaUyDEM/i
- ihdNp2IRGjLoZQc3Jv2IX4JMfWUKOJnfLfd338N/i7BbAAAteuIBPPDWlY/6yCc1IpSJ
- e3wvvLhYgbpTjpu7XIgfqu0o++p/bV8DLkZFmMRMfpSbEImX+YRlyhPG597cxQRkIE0+
- Xnnj49k30nbFpt+NG3YYKA7b9r2Zm0Y+h8RPExc/bEb4QenMCQLT0U4qSXZqhfRx5+IA
- mExGCDTriUkU+kH9ehFdlJx2b1c11xoT6orQ4jOIyXXCkWgbd/8JziiGtWDRKVlEX9Fx
- I3wA==
-X-Gm-Message-State: AOJu0YzYV9KD/Dbn+Eswtg7Ed2gqpG3zYd/QcSmsgMg0cOiMoROv25s2
- 63RMoJaPbJeILg2EqzkyuL/nrRgpKVKp04/LfLwSy35WWB7O19YZZVi6sYJUFAEKEDsjah/kZb2
- gOMreMCYy1f+gDciLFToiNBop3S/jLLQKuNalT90ubQ==
-X-Gm-Gg: AZuq6aJYwIFPFeOmMgk49tI9IyAOylo5trIiS3RrNwZVcbE0XntJhMu5uNvLvZ046gc
- 5QWQZ0UnUyfkqCMvb7PJ7XP/QGZ82ju5CMeyUQeYLvpgOVsShMmDkATVcCAyrlaCnJVMH5zspum
- 5iPkCgvZ04OiG09lv5jf2fMz4xEOLOmxQnE0p2NZ57sypMhY/9ttpznBVwN+eYwtD4frOVw0fcE
- GOoX+LWbMAah5e4eROp5v7/UKJV+wqQPikVRd7JejPax9/CvgcCyflJB5/mqB/1PvySBQ==
-X-Received: by 2002:a05:690c:6c8c:b0:794:1811:32ad with SMTP id
- 00721157ae682-79418113bf3mr48774207b3.51.1769088224861; Thu, 22 Jan 2026
- 05:23:44 -0800 (PST)
+ bh=XwqjWdVr1pKvISg7D4Yr5+KDapK8vVx3gmbKWFOSRvw=;
+ b=MONpJhiNvMDEeWVeDMtGJHLWwSqMdmXvIHFI6xX+WTubmX0cE61x+8z9sO/zBgxRhl
+ qABCcdXKR3aXfNHTKBd1YnwQ5keFyGQRvd4uHi3qheY571ZSGfi0HcMHePt6skT6Megm
+ 1/ieCTMMVGMd/1VlysYYZfY6K+XsNxGo8LNd8CFI4v9g1bWWNac/NQJ6ahjPZ1fzlJSJ
+ 1eEJ6a84UN2Fg9ZE50ShHXHjB43uIE8qTMuWyDavZT6W4rtTplxrjrBjVpRcQo1ZhAg3
+ /5OhplagCRpTPd+otrsKN4r/jtDkBeEgXCPZ3tZpzaGx2e9+wOJRDAse+bI+py7K/0Pu
+ Dbww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769088486; x=1769693286;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XwqjWdVr1pKvISg7D4Yr5+KDapK8vVx3gmbKWFOSRvw=;
+ b=OGH/Y+16aXMb5F/xWntXD6avc3SwQrnHChyPTQrFn6FwaLzDDtp9GjkQajoGEMPo+6
+ MhxT5JOXXJn5kyBT+d9UjoJSBQaDKiwFxAn4BfpdLSCvtE4IGUYnOB3820OH0Z83lBnS
+ fs7+j679CxkX4NRhyMLGVFAB15q/JECgzn00RLORV9gUnqALqrOpzxqSYiS+6G+lv9no
+ LrVZehic74wz0M0ynVTo/A+EEUJdf3KW4MTT8c2iTXSrcN37eKdpilX6j28/2NsGvOn3
+ jKYpiGjlNrgDK1oiZfE9F60p0f2vZQ56kOWDyIx9OR92AzA/hit5W38J/AzaotJ6OTH4
+ Z1pg==
+X-Gm-Message-State: AOJu0Ywg0ZfVWLmEkXyhtFpWjNtdLhxIlOhZusn13Zl9pJKD9aVToz5q
+ niJG7ryyleNJdpw70OZnQ9Pl6jYlyn5+5lHx0WebfMNvvW9wMookkvfSYdUtYdusQ+1ZhgLD5QB
+ RNNh3vK+7YU1qXQOM+WN/Eqy1DRwDtA1yxXGfSCxoOw==
+X-Gm-Gg: AZuq6aIEKI3pYUxvTfctmtgS5sBgqUe/4e5DVJVSkVBy6Q0uOJhPZwVDxATAr4jMp12
+ 5nAWAzekseatN4+9n+xqe5hjsN8CiJ0juN3cDG2gaC8IolEzFcTLge6kEwkD/Vq+ormx3saBZIK
+ icj/YdOfBdKqK2RAHJVaECczz5zT33YBeEfEfWurytGSBPWIZxMk2pz70JEujKp8SD/E+ZtuCY2
+ w6QR6Udstd3XAXSiHeSdINc3fogwCnPwEp9aSfIDEu1k5r/xf5yzHtjJkkTr1RPR+pdMw==
+X-Received: by 2002:a05:690c:b06:b0:78f:afdb:ea41 with SMTP id
+ 00721157ae682-7940a156388mr72860037b3.18.1769088486244; Thu, 22 Jan 2026
+ 05:28:06 -0800 (PST)
 MIME-Version: 1.0
-References: <20251223142959.1460293-1-peterx@redhat.com>
- <20251223142959.1460293-18-peterx@redhat.com>
-In-Reply-To: <20251223142959.1460293-18-peterx@redhat.com>
+References: <20260116060315.65723-1-zhenzhong.duan@intel.com>
+In-Reply-To: <20260116060315.65723-1-zhenzhong.duan@intel.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Jan 2026 13:23:33 +0000
-X-Gm-Features: AZwV_QhTWgtk4oHFVdFM32-LFKHztfzWJ7_CcFgC_2koWV8qHmRAzJhGfFfP0FM
-Message-ID: <CAFEAcA89vswCip53OAPFzLwz5EMnWBtsM61YD0Nc_kYrM4NuCw@mail.gmail.com>
-Subject: Re: [PULL 17/31] migration: Add a qdev property for StrOrNull
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Date: Thu, 22 Jan 2026 13:27:54 +0000
+X-Gm-Features: AZwV_Qjzl_NfdcLkX5RGf5TqJUmNooMIekWsU_E3bdmpmxd_Iukgmk-3s-tVUwM
+Message-ID: <CAFEAcA_LnfF-TqF2yKcPJOK4WHJnbt1RECk9svdRkRrvgRqqSQ@mail.gmail.com>
+Subject: Re: [PATCH] vfio/migration: Fix page size calculation
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Cc: qemu-devel@nongnu.org, alex@shazbot.org, clg@redhat.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
  envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
 X-Spam_score_int: -20
@@ -113,64 +114,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Dec 2025 at 14:32, Peter Xu <peterx@redhat.com> wrote:
+On Fri, 16 Jan 2026 at 06:03, Zhenzhong Duan <zhenzhong.duan@intel.com> wro=
+te:
 >
-> From: Fabiano Rosas <farosas@suse.de>
+> Coverity detected an issue of left shifting int by more than 31 bits lead=
+ing
+> to undefined behavior.
 >
-> The MigrationState is a QOM object with TYPE_DEVICE as a parent. This
-> was done about eight years ago so the migration code could make use of
-> qdev properties to define the defaults for the migration parameters
-> and to be able to expose migration knobs for debugging via the
-> '-global migration' command line option.
+> In practice bcontainer->dirty_pgsizes always have some common page sizes
+> when dirty tracking is supported.
 >
-> Due to unrelated historical reasons, three of the migration parameters
-> (TLS options) received different types when used via the
-> query-migrate-parameters QMP command than with the
-> migrate-set-parameters command. This has created a lot of duplication
-> in the migration code and in the QAPI documentation because the whole
-> of MigrationParameters had to be duplicated as well.
+> Resolves: Coverity CID 1644186
+> Resolves: Coverity CID 1644187
+> Resolves: Coverity CID 1644188
+> Fixes: 46c763311419 ("vfio/migration: Add migration blocker if VM memory =
+is too large to cause unmap_bitmap failure").
+> Suggested-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  hw/vfio/migration.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> The migration code is now being fixed to remove the duplication and
-> for that to happen the offending fields need to be reconciled into a
-> single type. The StrOrNull type is going to be used.
->
-> To keep the command line compatibility, the parameters need to
-> continue being exposed via qdev properties accessible from the command
-> line. Introduce a qdev property StrOrNull just for that.
->
-> Note that this code is being kept in migration/options.c as this
-> version of StrOrNull doesn't need to handle QNULL because it was never
-> a valid option in the previous command line, which took a string.
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> Acked-by: Peter Xu <peterx@redhat.com>
-> Link: https://lore.kernel.org/r/20251215220041.12657-4-farosas@suse.de
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index f857dc25ed..b4695030c7 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -1173,7 +1173,7 @@ static bool vfio_dirty_tracking_exceed_limit(VFIODe=
+vice *vbasedev)
+>       * can also switch to use IOMMUFD backend if there is a need to migr=
+ate
+>       * large VM.
+>       */
+> -    page_size =3D 1 << ctz64(bcontainer->dirty_pgsizes);
+> +    page_size =3D 1ULL << ctz64(bcontainer->dirty_pgsizes);
+>      max_size =3D bcontainer->max_dirty_bitmap_size * BITS_PER_BYTE * pag=
+e_size;
 
-Coverity also suspects a leak in the get function (CID 1643920):
+This doesn't strictly speaking resolve CID 1644186, because
+what Coverity sees is that ctz64() returns 64 when dirty_pgsizes
+is zero. That is still UB even with the ULL suffix.
 
-> +static void get_StrOrNull(Object *obj, Visitor *v, const char *name,
-> +                          void *opaque, Error **errp)
-> +{
-> +    const Property *prop = opaque;
-> +    StrOrNull **ptr = object_field_prop_ptr(obj, prop);
-> +    StrOrNull *str_or_null = *ptr;
-> +
-> +    if (!str_or_null) {
-> +        str_or_null = g_new0(StrOrNull, 1);
-
-We allocate memory here, but we never pass this pointer
-on to anybody else, and we don't free it either.
-
-> +        str_or_null->type = QTYPE_QSTRING;
-> +        str_or_null->u.s = g_strdup("");
-> +    } else {
-> +        /* the setter doesn't allow QNULL */
-> +        assert(str_or_null->type != QTYPE_QNULL);
-> +    }
-> +    visit_type_str(v, name, &str_or_null->u.s, errp);
-> +}
-> +
+But if we are enforcing somewhere that dirty_pgsizes is
+never zero, then this is fine and we can mark that Coverity
+issue as a false-positive.
 
 thanks
 -- PMM
