@@ -4,156 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8183C44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 10:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E6B3C44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 10:23:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viroE-00025M-KN; Thu, 22 Jan 2026 05:21:02 -0500
+	id 1virpv-00037q-Jc; Thu, 22 Jan 2026 05:22:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1viroB-00024R-F5
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:20:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1virpt-00036e-OK
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:22:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1viro9-0000n4-7C
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:20:59 -0500
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1virpr-0000wI-Ry
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:22:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769077255;
+ s=mimecast20190719; t=1769077362;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tPfYmGzEXirxtwkfATh3Dk9U8JU6CQPXfb1UZsbWegc=;
- b=BY4gG/73IHjKlOfGL3yUME8AIpz4ElswBZwE6Ksq1/mXCEfpfR9/iQnSQuEZP8UpEhYGk0
- wjgPqyg1cJhZDvr/3r1XYJoaNuSKsNQn6HSm6rxzYofb2BojbtBYmPe/bgVnHTiBAAqgp6
- iveM6fpnWB3t/yZ6GWIqxIPA8yKMjAg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=ezjGRqnwh8UBX/MyJADTM84jfekKwYTF3SiVD/emT8s=;
+ b=Uuvxs9DUghnR2wU6gywLkwfSc+YkURpXj7+2rCqhgtTYTntaHuWYR8LMejFboTtsYQQVEs
+ wFJONRb4XiU/huEPL+qG4yn1SfpsZTE+Tv7MVxQRZ8yNzuR4MrO4nVJlyiuYIFr7LKx/WF
+ DcK+mxDMEFaSfxxE/RrCBiysMq98h6U=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-1P_xKNaFPYWPeDPSKGgHCw-1; Thu, 22 Jan 2026 05:20:54 -0500
-X-MC-Unique: 1P_xKNaFPYWPeDPSKGgHCw-1
-X-Mimecast-MFC-AGG-ID: 1P_xKNaFPYWPeDPSKGgHCw_1769077253
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4803b4e3b9eso6421605e9.3
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 02:20:53 -0800 (PST)
+ us-mta-3-bLC5z0oIN0u5fxIszyHb1g-1; Thu, 22 Jan 2026 05:22:40 -0500
+X-MC-Unique: bLC5z0oIN0u5fxIszyHb1g-1
+X-Mimecast-MFC-AGG-ID: bLC5z0oIN0u5fxIszyHb1g_1769077360
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-c617e59845dso507645a12.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 02:22:40 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769077360; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ddZFBRhGfdCrtKMaTHHFvhvl6KkJpTJkKJXJv0wg4+I8dEFUNVnCVnkXWbHdGAltqe
+ faqyfCncMCRBCLks6v1vQTSfm0VAfylp6HkKDaF1Z3jvmVig1BZ7bdk/aIl0UrBUYpiQ
+ hZJfWy7710IP8Zc4M0MFwZTQWnNY8HHRodAWVn7tPBQzLuSZLSOTn6Ot6v2vhvP0238W
+ 2NhWKBdQiW34Q7fLFClS+SHgbj6/OBFNbgN70WuYHdK6XymCHWqtvVgATRi3gtVtCrn0
+ bQFTCdhqVTzS1EnS7iBqQjLuCVS2xAJSjKntDJT8Ml2eZkzRZMN/krX87NJH9bYVvfJL
+ IHqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ezjGRqnwh8UBX/MyJADTM84jfekKwYTF3SiVD/emT8s=;
+ fh=OCpsmp602vbHAupKnujCex6Dt2ggq+uQd8F1QCdSeDs=;
+ b=EUsnPk1ok4ZJjb2Vld6UhCDWXPexpUjvB546V775+pV+qhqYB6TVSnvOGIq+PEsBNm
+ 2tnc0vCLbvdIi8S2dAbA3XBjtk5rnH3JuWJoUoQZ4uxAuKBhZbwTj8IFmZ3j/ZvfLMQO
+ yrZhUtMfX78wKjRnQtupOyY+2ZiXZKtyCfU4eWGZtNW2GBCq26/FJP/keZKBMh4WZ0De
+ x7DUw06E1aGLsI4Dhwa6d5SxkcM3dDmScelBRg+ZXPBY6vzfBntH0Wr64Y5ngNlpBUQ1
+ reLoGHJ8WNcmCOm6/25zxCIaXOGiJrxLibXP7mFR9dQj2IhuMlxubvqgErfnLNkLJWF8
+ KAgw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769077253; x=1769682053; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=tPfYmGzEXirxtwkfATh3Dk9U8JU6CQPXfb1UZsbWegc=;
- b=bdAqLY+s71PwS2/Xvz+hJRUDNP6MNbMDzXz10JcfMxy8/qeC7ET7lyqPGBEfO5T4jC
- rGKfnmY0JiDBJE14m5V6PNzaoIqmHkq2lVndejP5owoYvdorIT8BII0sP+i/0KL5jMdi
- gGP97wABimnPVFbiGPtygE81BeoDDxx2gu745JS/hUpDFv1U8o6Mqv6fj75hyzvOxVp3
- hx+dwmmhB/zVzLAiflMrT7Nw0aAMTrB9LgwdwHFDVqdzGDWBHfWI6je7dG62dbPwZOxf
- fuoMbibSPtxXlNUXMGFQmmBM/e+s7IZ/7//wEsnEWbvmocLe+MIWIfMjNHWfOBq9D+Kn
- uYAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769077253; x=1769682053;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1769077360; x=1769682160; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tPfYmGzEXirxtwkfATh3Dk9U8JU6CQPXfb1UZsbWegc=;
- b=lFe/+JUB2PPCOa8JT+/GCtSWlm5fD94c31f4LsJFL3s0XAlIHkNOG6cFCRp3nx0XYj
- yvUUfpprTrpRNcUPsmCdTrm5gt7zethMY5T2RWdzdpMDCWQotkKOcRkdOpjzS//YZR4y
- mPXsKbKG2GtUEaeVWnvVdHC3fiu8SVnwRG4MOjAf7iVjhtmqFOUL2zZpKdmVDfs4gPvO
- jOwqEL/w89JoXlWAqtOMDLoSq6bEDAy/Yd3FzUZW/qyGnRxCGsG/qDuOct4+fftL85CH
- 7RVD5Bh4AqkY7AgyS/bPoeYENDkj/q2lyVvbUFDNzzgrv3/ka5Z4NAXA1HeUOhFspHnT
- B2Ng==
-X-Gm-Message-State: AOJu0YyqmV0EmLe9VkYK5m2BrAh/0VCVZxOpdVmcuCoubj42V6kU+Zjs
- 1gpyhTAf1dPiMvd1R0Ng8RQfQpdNgUK3+D2nzugt5JuP0uW9CWVetp44pUiv9Y8+zOSQsAyhM6r
- WxG5F/ddesz3Cs12Ogn04Tms8m2YFjLeNbtMd+ds7lcoBQNLQP9M2aVCR
-X-Gm-Gg: AZuq6aKiegHzorvom7ihgl+n4PKMUqhNBYrXh+dJDtrJkbxzQ4b5fJEsUFJmLUTIbBC
- SmMflBAZ43ZlhcRFWrKg04QYKoDtXRKizPuAgdoBnbjdho5YQ4ca2+CCjY4YqVgC2H7JBQJ+vxX
- Avwqe4RdPbqYL6s018iZLQo/9mKAtMg48IxIbBj+EHUdawrJksQdrS6h5XRcQiGmGMAMxZRyoge
- FkTRQoe1JhuH7usP5nkhi28pgZuE27+DCvY/0Nvdi/hhp2gWQwQ2pYD/qN6vOobr91K8vVz7DJ9
- DPqb0jkwYCDO6e1qfN+QNJzCFKg0ABPrzjKAU89B9Wf+C0YeJg/lZUPoL4pAvK5cWgfC3eeMjlc
- FbakSTtg=
-X-Received: by 2002:a05:600c:1554:b0:480:4b5d:9ec with SMTP id
- 5b1f17b1804b1-4804b5d0a5bmr6991825e9.33.1769077252725; 
- Thu, 22 Jan 2026 02:20:52 -0800 (PST)
-X-Received: by 2002:a05:600c:1554:b0:480:4b5d:9ec with SMTP id
- 5b1f17b1804b1-4804b5d0a5bmr6991405e9.33.1769077252251; 
- Thu, 22 Jan 2026 02:20:52 -0800 (PST)
-Received: from [192.168.0.9] ([47.64.112.255])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4356997e664sm39650775f8f.30.2026.01.22.02.20.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Jan 2026 02:20:51 -0800 (PST)
-Message-ID: <832432e2-1f02-443d-8708-95ed5d7882bb@redhat.com>
-Date: Thu, 22 Jan 2026 11:20:50 +0100
+ bh=ezjGRqnwh8UBX/MyJADTM84jfekKwYTF3SiVD/emT8s=;
+ b=mI8fPzo7qoNEiEcHZIYu9LcQGl18JO3MQwqTF2mMfqS/4o9sLiLi41K7OWsD1zgu84
+ rg/8/LHowl5DQ/nidTXiKhXJVDd3XUUqmYSiRsCbZlQnZ5JK4JOVyZ6qu92L4Sx6hV9k
+ l6ppYJHJ/yN6wPPz6P5WF0xvUIetz+vZu/o6yyUfHj51zqEYBdSLfKVrb+oz9AeELaHM
+ GYNY2cL7sIHosBgwSxJCLtRboOriJm9h39cnaAkD2Lcbwmt6c58bejhhoZSrV6lrDr/Z
+ guEgjjFzx9KNY54f69+ECcmOAEKx+ygbj9N/0DuM/QAZFB16lF9gZH6YTxJFNc909/hy
+ h4MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769077360; x=1769682160;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ezjGRqnwh8UBX/MyJADTM84jfekKwYTF3SiVD/emT8s=;
+ b=mn96+10Gv+cInv4fYpl2OsRaQA2AyMU8F77iP1OgS9Kn/8jCgocdXzdNdoA3AslIei
+ av9dT/rUsCAbbvYTort3ajyLWu9o2bqP4CN1nMJEg/jsFFFUr2232Z3J6aC6rA0utyy9
+ iCJYArPHIYhH5lqMk+KzbUiw+uqmrTsTmYCYu/ERdCTACYYS94+dhak1EFfswgkGJI0g
+ Z7+rh090fvyEcJeGmGd3TTvRLpjc1KSkbLpLu0B7N1tISnLPp/8ttOfJ5SlP4zJQeAx1
+ 7iEdejnzUj5W3MHxD+/dmHMQ1Ufu0gSrGfiyILM97H4Mv9EMayazgfJoP8Rvtm+FUXA+
+ ospQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXFfDbjWEjVIrBlrMbW17Tu2XHeIckzzHYtEkyDS4ZpXypz0dsV3NRm1JBuP9dqozKLcWdsBTBmNZ0t@nongnu.org
+X-Gm-Message-State: AOJu0Yw1mhUC2t4gd6Evr6f8WRi2PgEZXWspmqAdT7zOzRdW3r1TqpHf
+ u4ePbad/iH+MpZgM2ZshhSq+B8cx8NDpJ2AleBSUXlrM7A7kF6Tjq9kahIBGYKxqzkvOeNYnUSF
+ LIvl8wWqcDa6rhIKUgXeOKEvRd878/sp3N5mktOuDSKE25YLGUGnGhjB6MjTA0zfDjpUlvUqxDR
+ ccY5KImL+FWfKeUhk71MaSXoBlzuTyhnM=
+X-Gm-Gg: AZuq6aIb+cy7VSaG2AEPMEeq+skIJjOZTXIz9Pm+BkqmygGwD0jcwIgxRAUr2TyhqP4
+ eEliFF6h/q/azY1B/M+OsN7S882zuoSs51aMCj4eGF196ws08HRB+XxOVpWZIPvx4qIEmfZ6cen
+ Q14bN7FgA9p+7eoIgG4RSHZ8tdSdMcJmgIK17SgntpruRtu+PuH/wXGMZNAu7fbLnB3JYu4hLcX
+ vjD/JyUmJ2Sskg85/If47f9mg==
+X-Received: by 2002:a05:6a20:258d:b0:38d:f8e6:fc9c with SMTP id
+ adf61e73a8af0-38e45e74cc0mr8748304637.69.1769077359837; 
+ Thu, 22 Jan 2026 02:22:39 -0800 (PST)
+X-Received: by 2002:a05:6a20:258d:b0:38d:f8e6:fc9c with SMTP id
+ adf61e73a8af0-38e45e74cc0mr8748267637.69.1769077359366; Thu, 22 Jan 2026
+ 02:22:39 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Replace CONFIG_WIN32 with CONFIG_WIN64
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-trivial@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>
-References: <20260122090352.9901-1-thuth@redhat.com>
- <aXHtxBfuIRsJ3P_M@redhat.com>
- <CAMxuvaygPAOJiZcRCZ=W+Ly=b8Nq9L1y2sRtraz_+hfiXwLVvQ@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAMxuvaygPAOJiZcRCZ=W+Ly=b8Nq9L1y2sRtraz_+hfiXwLVvQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
+ <CAJSP0QVQNExn01ipcu4KTQJrmnXGVmvFyKzXe5m9P3_jQwJ6cA@mail.gmail.com>
+ <CAJSP0QW4bMO8-iYODO_6oaDn44efPeV6e00AfD5A42pQ9d+REQ@mail.gmail.com>
+ <aXH4PpkC4AtccsOE@redhat.com>
+In-Reply-To: <aXH4PpkC4AtccsOE@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 22 Jan 2026 14:22:28 +0400
+X-Gm-Features: AZwV_QgYEFY_8Rekw5y_i2n3QwOvUQb0Z0m14eEZj4MAt05iu2O89z-ReaZSpP0
+Message-ID: <CAMxuvaw04pDNzHyw5+Qcv_KfrhDTiyp+MNxpECp+HfTa5iLOGw@mail.gmail.com>
+Subject: Re: Call for GSoC internship project ideas
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth <thuth@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>, 
+ Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ German Maglione <gmaglione@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alex Bennee <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ John Levon <john.levon@nutanix.com>, 
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,90 +155,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/01/2026 11.11, Marc-André Lureau wrote:
-> Hi
-> 
-> On Thu, Jan 22, 2026 at 1:28 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
->>
->> On Thu, Jan 22, 2026 at 10:03:52AM +0100, Thomas Huth wrote:
->>> From: Thomas Huth <thuth@redhat.com>
->>>
->>> We stopped supported 32-bit Windows hosts a while ago already, so
->>> let's rename CONFIG_WIN32 to CONFIG_WIN64 now to make it clear
->>> that this switch is not about 32-bit Windows anymore.
->>>
->>> The patch has been created with a simple sed statement:
->>>
->>>   sed -i s/CONFIG_WIN32/CONFIG_WIN64/g $(grep -rl CONFIG_WIN32 *)
->>>
->>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>> ---
->>>   meson.build           |  2 +-
->>>   qapi/char.json        |  4 +--
->>>   qapi/misc.json        |  2 +-
->>>   qga/qapi-schema.json  | 76 +++++++++++++++++++++----------------------
->>>   include/qemu/futex.h  |  2 +-
->>>   include/qemu/xattr.h  |  2 +-
->>>   hw/usb/host-libusb.c  | 18 +++++-----
->>>   io/channel-watch.c    | 10 +++---
->>>   ui/gtk.c              |  2 +-
->>>   util/cacheflush.c     |  4 +--
->>>   util/sys_membarrier.c |  2 +-
->>>   scripts/checkpatch.pl |  2 +-
->>>   12 files changed, 63 insertions(+), 63 deletions(-)
->>>
->>> diff --git a/meson.build b/meson.build
->>> index a84f14258b0..01b9a5c22ce 100644
->>> --- a/meson.build
->>> +++ b/meson.build
->>> @@ -2422,7 +2422,7 @@ config_host_data.set('CONFIG_GCOV', get_option('b_coverage'))
->>>   config_host_data.set('CONFIG_LIBUDEV', libudev.found())
->>>   config_host_data.set('CONFIG_LINUX', host_os == 'linux')
->>>   config_host_data.set('CONFIG_POSIX', host_os != 'windows')
->>> -config_host_data.set('CONFIG_WIN32', host_os == 'windows')
->>> +config_host_data.set('CONFIG_WIN64', host_os == 'windows')
->>
->> While relevant to qapi file conditions, from a C code pov all of these
->> are redundant as the compiler has all these facts built-in
->>
->>    #ifdef CONFIG_LINUX =>    #ifdef __linux__
->>    #ifdef CONFIG_POSIX =>    #if !defined(_WIN32)
->>    #ifdef CONFIG_WIN32 =>    #ifdef _WIN32
->>
->> NB,  _WIN32 *is* set on 64-bit Windows platforms too, so using
->> _WIN64 is only needed if you have a code path that is exclusively
->> 64-bit only, so there's little need for us to use _WIN64.
->>
->> And of course we are horribly inconsistent in what we use:
->>
->> $ git grep -E '#if.*_WIN32' | wc -l
->> 284
->>
->> $ git grep -E '#if.*__linux__' | wc -l
->> 90
->>
->> $ git grep -E '#if.*CONFIG_LINUX' | wc -l
->> 142
->> $ git grep -E '#if.*CONFIG_WIN' | wc -l
->> 16
->>
-> 
-> There is also G_OS_*
-> $ git grep G_OS_UNIX | wc -l
-> 15
-> $ git grep G_OS_WIN32 | wc -l
-> 23
-> 
-> Replacing WIN32 with WIN64 doesn't make much sense. It should be
-> either WINDOWS or WIN32.
-> 
-> The Windows API is still called that way, even on 64-bit systems:
-> https://learn.microsoft.com/en-us/windows/win32/
+Hi
 
-Oh, ok! Then I'll simply drop this patch (and let others come up with a 
-patch in case they want to replace CONFIG_WIN32 with _WIN32 or G_OS_WIN32 or 
-whatever).
+On Thu, Jan 22, 2026 at 2:14=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Tue, Jan 20, 2026 at 04:42:38PM -0500, Stefan Hajnoczi wrote:
+> > Hi Marc-Andr=C3=A9,
+> > I haven't seen discussion about the project ideas you posted, so I'll
+> > try to kick it off here for the mkosi idea here.
+> >
+> > Thomas: Would you like to co-mentor the following project with
+> > Marc-Andr=C3=A9? Also, do you have any concerns about the project idea =
+from
+> > the maintainer perspective?
+> >
+> > =3D=3D=3D Reproducible Test Image Building with mkosi =3D=3D=3D
+>
+> > This project proposes using mkosi to build minimal, reproducible test
+> > images directly from distribution packages. mkosi is a tool for
+> > building clean OS images from distribution packages, with excellent
+> > support for Fedora and other distributions. It should be able to
+> > produces deterministic outputs.
+>
+> Aside from what I mentioned already, the other issue I anticipate
+> with mkosi is the mismatch between what hardware QEMU needs to be
+> able to cover, vs what hardware the distros actually support.
+>
+> Fedora in particular is pretty narrow in its coverage. Debian is
+> considerably broader.
+>
+> Neither will support all the QEMU targets, let alone all the
+> machine types within the target.
 
-  Thomas
+
+That's right, the goal here is not to cover all possible images though.
+
+I picked Fedora here as an example, because it is the best supported
+distribution in mkosi.
+
+
+>
+>
+> While there is value in testing a full blown OS image, IMHO,
+> for most of what we need it is considerable overkill, and
+> thus makes functional tests slower than they would otherwise
+> need to be.
+
+mkosi can produce initrd images, which can be small enough and
+customizable. Although I lack the details of what is possible, this is
+part of the project research.
+
+Imho, building all images from scratch cannot be sustainable.
 
 
