@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A6FD3EE7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 15:41:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92DC7D3EE7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 15:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viwnk-0005dC-Ty; Thu, 22 Jan 2026 10:40:53 -0500
+	id 1viwnm-0005hK-BO; Thu, 22 Jan 2026 10:40:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1viwnS-0005PZ-9v
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:40:37 -0500
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ id 1viwnV-0005Qa-1i
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:40:38 -0500
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1viwnP-0003Ui-VJ
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:40:34 -0500
+ id 1viwnT-0003WB-10
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 10:40:36 -0500
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 9B09042898
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 15:40:27 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 24A0642E23
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 15:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1769096427;
- bh=HoY+m/PkYLSYnBXrX+Wuh/YjQd+5b6rdK8Hp5SxGAAk=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:Message-Id:
- Subject;
- b=uhP/bwgdESXnCvjNhJ6XrQojfdSJOEz/bkLsl5TsxkpGVOvuXy2cn0ZQk2MUmBPxM
- 65wbchtLxgi/jDDyWMxdrbSpfrAVQZoRpiy/zkEXZTi1t9ab0PMD7xpu1+FYc3ZbtE
- LZdO3EsMo0yG+enkIn0Fqhxka+g6xEm5paWx7f2ke2QFv+9KVS797ecnFxC1lXvy4i
- cykzy/YbWjvcQ3wMYqSGfijgOoma4GyOwtYuDOMUKKnFULLIXcIrKYHbjoFEMRg2A5
- qitoe4X/3L6QAJKv20ecMDFTqPuSBOnoX1hy1LEMepEnUopYgv3Ngt7oXnwFw4Jd+e
- 3JuDWzYs5m2FQ==
+ s=20210803; t=1769096433;
+ bh=420zqJJ3FxmmtBy8ScWLVJH4yI53omA/XGDlE9pt3ls=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=aww5lHXbz8xsxzLXOMtYYP53qnmwnOlxEJysHtdd9wAR5dFRwzh4xz5ZVZRJfWITm
+ /vpDPRrwByM3nXTQUcxkZ/unFg9zBLXpzjYw9tRnFlaLvUj3siSPwdg0tZ4+/RazcC
+ rP36HqBTzis5sNuTvqhu0yBG/AX9CftYaMPER0a5Y13SZaT6ajOXcDLcDLojTVSNZA
+ S3Ph8R2+RaRQigIkwKFulZa9K/CQCd+FVTkC1CCvHI84+6tORCfDZo46PWgUCxkHCc
+ WDPK2BZMyI9tyx17FWBFDbdY8KnAEK+hVDr3ZG6OwlJLOkql9A+0pPxAFw8zdSvBZD
+ /h7sq6RCx4BKw==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 904467E6DD
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 15:40:27 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 12A8B7E6CF
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 15:40:33 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 22 Jan 2026 15:29:55 -0000
+Date: Thu, 22 Jan 2026 15:31:15 -0000
 From: Marc Deslauriers <2138885@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -73,17 +73,18 @@ X-Launchpad-Bug-Security-Vulnerability: yes
 X-Launchpad-Bug-Commenters: mdeslaur
 X-Launchpad-Bug-Reporter: Marc Deslauriers (mdeslaur)
 X-Launchpad-Bug-Modifier: Marc Deslauriers (mdeslaur)
-Message-Id: <176909579593.2793718.4382485579874417264.malonedeb@juju-98d295-prod-launchpad-7>
-Subject: [Bug 2138885] [NEW] iret security issue
+References: <176909579593.2793718.4382485579874417264.malonedeb@juju-98d295-prod-launchpad-7>
+Message-Id: <176909587541.2820476.631317090379173336.malone@juju-98d295-prod-launchpad-4>
+Subject: [Bug 2138885] Re: iret security issue
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
 X-Launchpad-Message-For: qemu-devel-ml
 Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="9fcfff1971229ac997140f06b41a902ac8ec69f4";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: 2168dcafc8ba8787de2516a494455ca932bbc09a
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Launchpad-Hash: 7caddcdcb8992dc083680ca8d4acd01fb26c3548
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
@@ -106,65 +107,46 @@ Reply-To: Bug 2138885 <2138885@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-*** This bug is a security vulnerability ***
+Original LP bug before migration to gitlab:
+https://bugs.launchpad.net/qemu/+bug/1866892
 
-Public security bug reported:
+** Also affects: qemu (Ubuntu Questing)
+   Importance: Undecided
+       Status: New
 
-iret security issue. See here:
+** Also affects: qemu (Ubuntu Focal)
+   Importance: Undecided
+       Status: New
 
-https://kqx.io/post/qemu-nday/
+** Also affects: qemu (Ubuntu Xenial)
+   Importance: Undecided
+       Status: New
 
-Upstream fix:
-https://gitlab.com/qemu-project/qemu/-/commit/0bd385e7e3c33e987d7a8879918be=
-6df7b111ac4
+** Also affects: qemu (Ubuntu Bionic)
+   Importance: Undecided
+       Status: New
 
-** Affects: qemu
-     Importance: Unknown
-         Status: Unknown
+** Also affects: qemu (Ubuntu Trusty)
+   Importance: Undecided
+       Status: New
 
-** Affects: qemu (Ubuntu)
-     Importance: Undecided
-         Status: Fix Released
+** Also affects: qemu (Ubuntu Resolute)
+   Importance: Undecided
+       Status: New
 
-** Affects: qemu (Ubuntu Trusty)
-     Importance: Undecided
-         Status: New
+** Also affects: qemu (Ubuntu Noble)
+   Importance: Undecided
+       Status: New
 
-** Affects: qemu (Ubuntu Xenial)
-     Importance: Undecided
-         Status: New
+** Also affects: qemu (Ubuntu Jammy)
+   Importance: Undecided
+       Status: New
 
-** Affects: qemu (Ubuntu Bionic)
-     Importance: Undecided
-         Status: New
+** Changed in: qemu (Ubuntu Questing)
+       Status: New =3D> Fix Released
 
-** Affects: qemu (Ubuntu Focal)
-     Importance: Undecided
-         Status: New
-
-** Affects: qemu (Ubuntu Jammy)
-     Importance: Undecided
-         Status: New
-
-** Affects: qemu (Ubuntu Noble)
-     Importance: Undecided
-         Status: New
-
-** Affects: qemu (Ubuntu Questing)
-     Importance: Undecided
-         Status: Fix Released
-
-** Affects: qemu (Ubuntu Resolute)
-     Importance: Undecided
-         Status: Fix Released
-
-** Bug watch added: gitlab.com/qemu-project/qemu/-/issues #249
-   https://gitlab.com/qemu-project/qemu/-/issues/249
-
-** Also affects: qemu via
-   https://gitlab.com/qemu-project/qemu/-/issues/249
-   Importance: Unknown
-       Status: Unknown
+** Changed in: qemu (Ubuntu Resolute)
+       Status: New =3D> Fix Released
 
 --=20
 You received this bug notification because you are a member of qemu-
