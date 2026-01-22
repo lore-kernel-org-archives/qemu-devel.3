@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E409C44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:53:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED54AD625F9
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:54:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viqRb-0004hd-82; Thu, 22 Jan 2026 03:53:35 -0500
+	id 1viqRf-0004pb-A2; Thu, 22 Jan 2026 03:53:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqRQ-0004dk-OI
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:53:26 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqRT-0004eW-G5
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:53:27 -0500
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqRM-0005pl-Bf
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:53:23 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqRR-0005ql-Ui
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:53:27 -0500
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4801d24d91bso7404915e9.2
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:53:18 -0800 (PST)
+ 5b1f17b1804b1-47edd9024b1so5416195e9.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:53:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769071997; x=1769676797; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769072003; x=1769676803; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=S6Q4N8pgL/r8PL8EYgfB+22RaEEU0dVwVDGEGQYw+j0=;
- b=CRKV4Pmjfge0Ztme49GBNeDnTqL8OV0YAuZodzex004diSoDk+P61obzKwql5xNvTU
- sFQcbAg9vLEfQ8xvan/MPxFH+p9Gp4NJ6KrCq+HCvw86U/7x7J8WWvVAd5ld1SnXJLuR
- MVOl5l6xhQhKnQc5xiTjoPlBQ+Vn1vgCNJx+GuuPd6AWMj/RDqL9hQ+Klqsz/6egkohv
- UvdcM7fYWdrf2jSSybxmwhbglftGy+Q4NjsFYvhhZ2UiljBeUp5Zvt+u5pnLYAI6WicV
- 9KaPpz+GZrB+F7JefvmYu1tVndi/3C4p08gHqV+4sZhOQuVBNcFjZ8wGtLrIuaXeLoMj
- vxBQ==
+ :reply-to; bh=VPFM2Gvq6dkLfo8iUWwpn+/VGm21qBkTKu0qqpqcOPU=;
+ b=XirM+jSBeB1cvYW0qsHe1skynOoZN2PymGLJ9Jg//4/fOAIcXt+Pnb0C/SVj3gKx7G
+ Qq0+vHTgrYnY231ro1lyjG3TGti+G90YSghw8YHtazt/tS3dKaJFNZej/j2eYPiGR6t9
+ vUlX7h47Ox1lVCQjkjYjbiP15Kv7InaN9FDhj/LU+r2ob3/sBftxOhW6oCdYSGHxPsIw
+ jaMmZjzUnEzwEdI1M26wkKMTNFFpThMTyapdYz3f01PxyKwjn236EVkh+Qhy3vMZ0hbu
+ YYfUcmxrYijv/FDmewQ4H7e6ydW6PQXdot7leBtGGAcRRBZVlj+BzWLI/Qk+xQNXeKue
+ uyaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769071997; x=1769676797;
+ d=1e100.net; s=20230601; t=1769072003; x=1769676803;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=S6Q4N8pgL/r8PL8EYgfB+22RaEEU0dVwVDGEGQYw+j0=;
- b=dn8pwtLYtiPlhk3M3kxUvEWOp3+TyvG53sZJ0HGVs1v8idmYUFIDC1vCGGKdI4mkPd
- riB4Pk8uxmGO8LF0fT1LuaPyun7WuqTfpASTYtwhIUyn79CTRXgUx67YV7RngEyAomGS
- wkEu5u4jsvI8RsGbA4Uav9PntjwVU8nh/IAhpQMoZyYj1y36J//xIK5l/tZXDfcH47f8
- CK53uD+0ivBTGHmH1XmxNlbmmtNRXzkCLI/6I+fBaFAOjJWlPmtG+ZuJmM4x4882EMOT
- xKhketl4sfAsrgdZm/o2KoIaEs1zFWQ+liG9NE9celvBCpPgJ/pe/PGzSP9TBhpP3jZj
- k6qw==
-X-Gm-Message-State: AOJu0YxtWfUml+Vx1Vq3hiU/ajf7yEZ29hZAUc+6Kw0ZUa7CBjCbVIIU
- odWRTUYZunSXnMvBNC/gLPbmXOsTJb9vEmUZM8x/r5ZnctoKmtJ7lRecif+AHHJGJ8FgBe50l4s
- 4x0ru5Y0=
-X-Gm-Gg: AZuq6aJtl9wmqR9/oL/OFfOogI6nlCk03xlApTgD9myuALW2r7nwkVA+NbmCGnXFEPf
- 6g/IfbaUbAo0Ms7/UNgWJX0kO/3392eB8qUq9ptOqIb4ZQs0c7rctjbDc6trrOWn/Mq9NCo8X9D
- mZEU6jnUCd3OgHS2WH2sEdNbhfs0wYog9eo2YvQWJO40fEZFnFgq4kVeLq009CbmghBcvq3AcSs
- KN7cmtHyjqQ27pSYXPL0o9/pTSikQiKTO9eiNrzR1cImv5vUAxuyJ2zeWJCbsyXBJM3s000m6LD
- gjEWif43yZ9TPzpsxabsDZbm1merhY9H3qIFxq1u/hDsQsI4SYx/7ACL1m84vOSm6yILQpCIt8l
- 8sZ/kT5q3+p/DNb4yNIsyi5HDw1r+vbvCrh6N/Hul1oMlSUza+VD5edkA2To/zpqqrOM96ZP+ck
- 1yOdhp2Dmt4Vx51HUG6IGpjgByzfAey+2WqLHwRt8nL8LROeSCOwaCshbP7oB+
-X-Received: by 2002:a05:600c:608b:b0:479:1b0f:dfff with SMTP id
- 5b1f17b1804b1-4803e7a2cc0mr135787615e9.10.1769071996945; 
- Thu, 22 Jan 2026 00:53:16 -0800 (PST)
+ bh=VPFM2Gvq6dkLfo8iUWwpn+/VGm21qBkTKu0qqpqcOPU=;
+ b=KCUZGNT/Rb+El9Nu6EML6jdl9u/RSyDJlDpXrctqcQKx7gIg4i6SPM1tkeEx0hBnJU
+ PLHxhx80UlrPhZtGHbJs5fVbWLbDn9W1CSU8VOOL5Cdds9eRfELZIk+B0Xiw/a9mg6vA
+ ZWxFJxBthC+nwrjF1NYlOZRe53/ferQAutX7v5Matlk4ekr2qUepbfgy8DdSFmEUdVJJ
+ N9SP33GBfYzAWX/MeWBM5FLIoPQiwCNV5VBdlZt+02lnjMP8sgB1X7w7K5lbLIRrSp62
+ aGGD6C9OYE8k6NYPR87xUCG3CqpPXMN24E6qtXjNpAYMsEkTI5TbbJGUFzP9neri1/8+
+ Dizw==
+X-Gm-Message-State: AOJu0YxB6Elrke6ng/LYAd00WPs2V2R1RnXE1E2rIaUPdv18Lx8xnpdM
+ Vj45ipsSUL6jAJh6Xxof/EBuwWHJRr1U8d7+TdqRxQwdB+dNcxUW6PIAhvLVp6Nqa2diDfVeYPO
+ fr6JO3T4=
+X-Gm-Gg: AZuq6aIG2rSHDaeQLJOvwjcvOH9LajJcH17FnovKPhrS973uHBIuNFRFxaI3Ibsuy0m
+ C90BlL9H+Kkz5Or0lNUh7awLerN6h4OMo2emGUKfiBi3OG9coU3XjNohtc/WDvPwv5MktVEsN13
+ Ez+lapg6EK2c4ydBZIwAkGzJVjvN+fgt45sLdPkuz9GsPH4gknuo/CcAGfSdvCjuxHILqFXYZXT
+ cUifpMLUWBQcL6GDGbB4x+CYfYOgcYKchua5rKgVarc+DHcZFts/zqrjsO1KwWL8BhqgmVkHGZn
+ G2oangZOb4zar0dOScriTZG2i3xGQMun8DNk4LYMekduoueBFAMHRvaO+e+DGFqWVZcV9+Xq48g
+ xldRLLzkk7FlGMiZZWr40fTUbEbezKuCb2ugCtnxAZ/mlxNPV36mpZQyLAk27A8NyxgFVqvNBpO
+ wRiYOgyNfV5fT4CzvA0XtpfAkbl+DgA8J+oL24K9gOdedrzd2CdBX7LgyUZyct
+X-Received: by 2002:a05:600c:8886:b0:47e:e946:3a57 with SMTP id
+ 5b1f17b1804b1-4802168de81mr249676625e9.36.1769072003510; 
+ Thu, 22 Jan 2026 00:53:23 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-480424b64a8sm50291845e9.3.2026.01.22.00.53.16
+ ffacd0b85a97d-4356999810bsm43062601f8f.40.2026.01.22.00.53.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Jan 2026 00:53:16 -0800 (PST)
+ Thu, 22 Jan 2026 00:53:23 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/31] bswap: Remove unnecessary 'qemu/bswap.h'
-Date: Thu, 22 Jan 2026 09:52:26 +0100
-Message-ID: <20260122085255.95035-4-philmd@linaro.org>
+Subject: [PULL 04/31] system/memory: Introduce ldm_p() and stm_p() load/store
+ helpers
+Date: Thu, 22 Jan 2026 09:52:27 +0100
+Message-ID: <20260122085255.95035-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260122085255.95035-1-philmd@linaro.org>
 References: <20260122085255.95035-1-philmd@linaro.org>
@@ -98,44 +99,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"qemu/host-utils.h" and "qemu/int128.h" are included a lot in
-the tree, and don't use any definition from "qemu/bswap.h"...
-Since it contains a lot of inlined functions, remove it to
-reduce pointless compilation cycles.
+Introduce load/store helpers which take a MemOp argument.
 
+Inspired-by: Paolo Bonzini <pbonzini@redhat.com>
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260118193509.42923-4-philmd@linaro.org>
+Message-Id: <20260118193509.42923-5-philmd@linaro.org>
 ---
- include/qemu/host-utils.h | 1 -
- include/qemu/int128.h     | 2 --
- 2 files changed, 3 deletions(-)
+ include/qemu/bswap.h | 72 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 72 insertions(+)
 
-diff --git a/include/qemu/host-utils.h b/include/qemu/host-utils.h
-index 0777a2bb60e..181d026b6c7 100644
---- a/include/qemu/host-utils.h
-+++ b/include/qemu/host-utils.h
-@@ -30,7 +30,6 @@
- #ifndef HOST_UTILS_H
- #define HOST_UTILS_H
+diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
+index 65a1b3634f4..387d65c0b0b 100644
+--- a/include/qemu/bswap.h
++++ b/include/qemu/bswap.h
+@@ -2,6 +2,7 @@
+ #define BSWAP_H
  
--#include "qemu/bswap.h"
- #include "qemu/int128.h"
+ #include "qemu/target-info.h"
++#include "exec/memop.h"
  
- #ifdef CONFIG_INT128
-diff --git a/include/qemu/int128.h b/include/qemu/int128.h
-index 2b8dd4dec9f..7b3b071c512 100644
---- a/include/qemu/int128.h
-+++ b/include/qemu/int128.h
-@@ -1,8 +1,6 @@
- #ifndef INT128_H
- #define INT128_H
+ #undef  bswap16
+ #define bswap16(_x) __builtin_bswap16(_x)
+@@ -375,6 +376,77 @@ static inline void stq_be_p(void *ptr, uint64_t v)
+     stq_he_p(ptr, be_bswap(v, 64));
+ }
  
--#include "qemu/bswap.h"
--
- /*
-  * With TCI, we need to use libffi for interfacing with TCG helpers.
-  * But libffi does not support __int128_t, and therefore cannot pass
++
++/**
++ * ldm_p: Load value from host memory (byteswapping if necessary)
++ *
++ * @ptr: the host pointer to be accessed
++ * @mop: #MemOp mask containing access size and optional byteswapping
++ *
++ * Convert the value stored at @ptr in host memory and byteswap if necessary.
++ *
++ * Returns: the converted value.
++ */
++static inline uint64_t ldm_p(const void *ptr, MemOp mop)
++{
++    switch (mop & (MO_SIZE | MO_BSWAP)) {
++    case MO_8:
++        return ldub_p(ptr);
++    case MO_16 | MO_LE:
++        return lduw_le_p(ptr);
++    case MO_16 | MO_BE:
++        return lduw_be_p(ptr);
++    case MO_32 | MO_LE:
++        return ldl_le_p(ptr);
++    case MO_32 | MO_BE:
++        return ldl_be_p(ptr);
++    case MO_64 | MO_LE:
++        return ldq_le_p(ptr);
++    case MO_64 | MO_BE:
++        return ldq_be_p(ptr);
++    default:
++        g_assert_not_reached();
++    }
++}
++
++/**
++ * stm_p: Store value to host memory (byteswapping if necessary)
++ *
++ * @ptr: the host pointer to be accessed
++ * @mop: #MemOp mask containing access size and optional byteswapping
++ * @val: the value to store
++ *
++ * Convert the value (byteswap if necessary) and store at @ptr in host memory.
++ */
++static inline void stm_p(void *ptr, MemOp mop, uint64_t val)
++{
++    switch (mop & (MO_SIZE | MO_BSWAP)) {
++    case MO_8:
++        stb_p(ptr, val);
++        break;
++    case MO_16 | MO_LE:
++        stw_le_p(ptr, val);
++        break;
++    case MO_16 | MO_BE:
++        stw_be_p(ptr, val);
++        break;
++    case MO_32 | MO_LE:
++        stl_le_p(ptr, val);
++        break;
++    case MO_32 | MO_BE:
++        stl_be_p(ptr, val);
++        break;
++    case MO_64 | MO_LE:
++        stq_le_p(ptr, val);
++        break;
++    case MO_64 | MO_BE:
++        stq_be_p(ptr, val);
++        break;
++    default:
++        g_assert_not_reached();
++    }
++}
++
+ /* Store v to p as a sz byte value in host order */
+ #define DO_STN_LDN_P(END) \
+     static inline void stn_## END ## _p(void *ptr, int sz, uint64_t v)  \
 -- 
 2.52.0
 
