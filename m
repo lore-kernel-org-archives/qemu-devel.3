@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E93A0D625F9
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3BE5C44536
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 08:56:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viqTq-0003Em-Bf; Thu, 22 Jan 2026 03:55:54 -0500
+	id 1viqTK-0000GO-8C; Thu, 22 Jan 2026 03:55:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTo-00039H-Nk
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:52 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTI-00009B-TB
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:20 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTn-0006JC-83
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:52 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-42fbc544b09so481007f8f.1
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:55:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1viqTF-0006EK-Qz
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 03:55:20 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4801eb2c0a5so7007165e9.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 00:55:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769072149; x=1769676949; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769072116; x=1769676916; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TuJu/lqEa4HSpg8bNNxgbevMWPfOzV/4hLPmHRwlUV8=;
- b=R03WgIbNGZUNhwDSHd0ha13kp9B6xDVnCFzMDR2rGWHLWuX25VVf5IcbfYZU/fbCMT
- shmyyfDuO0YlpqIhivj6CItTUH0WrQFqSh+VTMvjPu1EvSyz6nvv/U+r9aS7ZU/nSu8B
- 3PvJXVJIC3JLlpsArBx1nyBBNTn2ptH3hDGdognVxN4hwBZezaP7vGBU4RAe06n/X8Ok
- fb8K4imcqZDii8NEGp1u1/t7Ggebtx7p+tyqQFwLRmjxCrbN5ZtuPRy63uS7MtbzTXVi
- Qn8a5viTIp0yZFKChBIuPfmjUB8svSmgCc4m8W4dE/zsuCWJD3tsxGgzk0aljqDF6mSf
- 1BCg==
+ :reply-to; bh=JuUfx+y6OuCiabH5jy3bbyweJaTYApNAgj7UULpRRAA=;
+ b=fczXYn50hGNC/M5KAvGIHyFIml/TQlzYplZzexrl8KfH3+JJk3/qxe9Njg2XpreeHU
+ ImUX6iiMEgaEXBHcJzU3kRqE7GyuevnEwfB8/VCQUHKhJRYfY1+PcehiazttXYXpEYRH
+ UdvqPOrZFnzA8KocW7o/Wmh/gX6Dq9lisIRVlYr6esGn8Tesfpb5aHwW1CMuBR+DCNjj
+ U3wCtneCQz6BtOB6gNuX4rkmhVErRNic+0xNJBlRyhPgNcutbg0TEFkHjhN2E59IrHQz
+ 88VXLsVm8aw1nIXKte/TrUYu2AQuUBotHohG7GYwdAnvFCRMlUBx7k8kpP/LZpXrhKH6
+ 6VAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769072149; x=1769676949;
+ d=1e100.net; s=20230601; t=1769072116; x=1769676916;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=TuJu/lqEa4HSpg8bNNxgbevMWPfOzV/4hLPmHRwlUV8=;
- b=mhNecn0D138lOOkDDt2JDgPOBsVDDvYiHWnI02apAxEgEMFOqgUm1Dw78lzuieNQLw
- D9JOa0c/bzb1t82J9c0F5u1fNbakQ+o9J19hpxNWlJ37A05eL1wZj0fcvWU+4hagZjf3
- rW+tmcjj3dvSTXW2AI0finhKYtVj2OdzXXyeRXfDlyXDegiOKZ3tbvJTE7j4G8CEGXsq
- 2AUw5Sup9zLvDYG+6jT+FspDN1GoEu4M2xCpUiBRAx9+jeSP6mcSjNvYptF6Hz+D3IrK
- gfZYx0SHfPcFgPClSumQlzA7dO3ugRjMzX39GQOeynBEsOfxMemolJ+ypjNagaLNwW2A
- Rlbg==
-X-Gm-Message-State: AOJu0YxacFHPbanYwWgfxFCMeLHF3mk3nbcJgisyPOzBvtE2QeRupHix
- ve/+AvPkaN9AmFTbtA3pMsoPF09wcywFnPSKDYZB0q9V1HRceGgr0y1xeru63lF7JCVxyrOtuaK
- NXImf9lY=
-X-Gm-Gg: AZuq6aJDcA30I7zEC+LOfqNfSRphsYcz/o+tzjH33sGcAhM2tEfJE1YnjW6WkeaaNXZ
- G6Dw7vjQbSlWmznnyfkk8p1GcTb/wItlLKZERMOmzpDoyAptt02qtT0B8EGLqYIHGMHhs6fqNdx
- plz6t4lQHO/M6utsNEJiIGzqAg0cDc895xbKGOBehMLhfc+RNPxyBWI1gV030RVMwRZ7X1R5KFm
- n7NCMH4tpUqrYoNPWdFZmwM94uVtwtJGQKbpDsHBweJmxx48zHrWEvQv8PPnTImAFgA2tWzGrOn
- WDQLMO00S4o9OqqCKHr0fljW/mA40YMCuuJV8KVdKTdgeFnPYqyO5Z0hqydhnlxfYx/h5/q6JQ+
- kVF8EiNFWHjwHww7aIXaOvq1Q/4iO8fioQy/o3S3pgYQQSR2e9CoDOvO+DuMLEwAKQiVK4FwZVE
- ADXejmj1tNJFwUCyXgjxaDDcV9+7LcQdE1hkNbotXHo5NZjvn7FnDouXxjjp7p
-X-Received: by 2002:a05:6000:2dc5:b0:435:8f1b:bb28 with SMTP id
- ffacd0b85a97d-4358fe9d0fcmr11814655f8f.0.1769072148935; 
- Thu, 22 Jan 2026 00:55:48 -0800 (PST)
+ bh=JuUfx+y6OuCiabH5jy3bbyweJaTYApNAgj7UULpRRAA=;
+ b=H9xWaqnIvBbCVNSlyFXmlL0ybbJfh6DGBDCDCWBJ0u1/NBNbyk1dQqo0RryIHbbvrI
+ TpH6J+GuO8qICTub4IOMMEegb+Zz8FJ1GFAU1a0SPebfJWuzs85ykXESzdMnWAMBE1fp
+ IOcwmOvlAYfzT4TLdtzxuv0Ygy0aNss8XfOSgHKeFzokvFApdmeH//icvmtGI1IwSI3a
+ a++kSKTMUIrK4BdW50pFkzAvADRsXBqovY8Y/TEoWG2X/6jhsbd6/kO69yRg76bm/vMY
+ KywN/G0MFwtNuyt0Y2q4CpoFHnvmsvFQ15GPssev77SarIR1QBFyaZnrg5Yj9KaT0YZk
+ yZ+w==
+X-Gm-Message-State: AOJu0YzjNQ289mQcrbI2rodF+J9s5KOlKO53UTYdMGTU9YbIHKZBjITp
+ 6mH0MHeFivy3lyjXKrIQquGSRFYCj4OR/7VSnKbvC4CsDVDgl47ztu7KBKHGfIN6X3mStYjJCN2
+ T/OdagMI=
+X-Gm-Gg: AZuq6aJ8SShutqXR65OQArTrqj22Zds5Qz6IUqBTPGvhk0wsNAQMOt1rDUZOQWy9j32
+ YzjvpZKRKw96+Cc76tldzR0/Px/omDadkpYWrIpEdDx+iBU1K5cMfe7ctgB3nkIPXI4w3zeOZw8
+ OK7VhT70UmSNaz0XdPUHsGtwUV/tUhtYPJQzhg1yCiQFs9RHR6gTcfoNtcvU60NPJUPnvNldiPk
+ m+cXoQzqArAg9ELiXPPSfLXvoIAZjkyeETsEdeleH9tQB8Uh4zJlTg8vCZC9Cy+lxlR94lF/qCq
+ CQHm+bC38F+tqW1foLAgKdPjr+kMEYFjtFdpafhGK4vCamk4OEL5d2n1eDi8SOK0/en6fgq8Qb8
+ 5JtTJEJ+fnfUhTIJ/QA2qe/qQVfyxGRSwtLGakBzYoRbEPrHE7PEJPsfwWRIp+GsMdU3VlrhULs
+ UjcyENpEPreyMlRdEl5MBVOoX34zh9Iks7nLqRAXDKE2PFKPXVBJfSX7tgGoa7
+X-Received: by 2002:a05:600c:4692:b0:480:3338:2939 with SMTP id
+ 5b1f17b1804b1-480349dfa7dmr189483925e9.26.1769072115627; 
+ Thu, 22 Jan 2026 00:55:15 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43597ae9f37sm13662525f8f.8.2026.01.22.00.55.48
+ ffacd0b85a97d-4356992c6f2sm41490928f8f.19.2026.01.22.00.55.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Jan 2026 00:55:48 -0800 (PST)
+ Thu, 22 Jan 2026 00:55:15 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 26/31] dump: Abort in create_win_dump() on non-x86 guests
-Date: Thu, 22 Jan 2026 09:52:49 +0100
-Message-ID: <20260122085255.95035-27-philmd@linaro.org>
+Subject: [PULL 21/31] configs/targets: Forbid LoongArch to use legacy native
+ endianness APIs
+Date: Thu, 22 Jan 2026 09:52:44 +0100
+Message-ID: <20260122085255.95035-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260122085255.95035-1-philmd@linaro.org>
 References: <20260122085255.95035-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,31 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qmp_dump_guest_memory() checks win_dump_available()
-before calling create_win_dump(). On non-x86 targets
-calling it would be a programming error, so abort.
+All LoongArch-related binaries are buildable without a single
+use of the legacy "native endian" API. Set the transitional
+TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API definition to forbid
+further uses of the legacy API.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Preliminary commits allowing this final change:
+
+ . 6b4c30465c0 target/loongarch: Inline translator_ldl()
+ . f9a03787c7f target/loongarch: Use explicit little-endian LD/ST API
+ . 91312a6d046 target/loongarch: Inline cpu_ldl_code() call in cpu_do_interrupt()
+ . 492b2799c64 target/loongarch: Replace MO_TE -> MO_LE
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260121215622.92966-2-philmd@linaro.org>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Message-Id: <20251224161456.89707-9-philmd@linaro.org>
 ---
- dump/win_dump.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ configs/targets/loongarch64-linux-user.mak | 1 +
+ configs/targets/loongarch64-softmmu.mak    | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/dump/win_dump.c b/dump/win_dump.c
-index 3162e8bd487..6e07913dfb4 100644
---- a/dump/win_dump.c
-+++ b/dump/win_dump.c
-@@ -489,7 +489,7 @@ bool win_dump_available(Error **errp)
- 
- void create_win_dump(DumpState *s, Error **errp)
- {
--    win_dump_available(errp);
-+    g_assert_not_reached();
- }
- 
- #endif
+diff --git a/configs/targets/loongarch64-linux-user.mak b/configs/targets/loongarch64-linux-user.mak
+index 249a26a798c..4ea12794705 100644
+--- a/configs/targets/loongarch64-linux-user.mak
++++ b/configs/targets/loongarch64-linux-user.mak
+@@ -5,3 +5,4 @@ TARGET_XML_FILES=gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_SYSTBL_ABI=common,64
+ TARGET_LONG_BITS=64
++TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
+index fc44c54233d..38c0f68ddbc 100644
+--- a/configs/targets/loongarch64-softmmu.mak
++++ b/configs/targets/loongarch64-softmmu.mak
+@@ -5,3 +5,4 @@ TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-
+ # all boards require libfdt
+ TARGET_NEED_FDT=y
+ TARGET_LONG_BITS=64
++TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
 -- 
 2.52.0
 
