@@ -4,109 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B4CC44536
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 09:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785CAC44536
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 10:01:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1virPX-0004Dw-R3; Thu, 22 Jan 2026 04:55:31 -0500
+	id 1virUZ-0007pg-AA; Thu, 22 Jan 2026 05:00:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1virPU-0004BL-KE
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 04:55:28 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1virPS-0002HK-WD
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 04:55:28 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-b884d5c787bso7369766b.0
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 01:55:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769075725; cv=none;
- d=google.com; s=arc-20240605;
- b=Pk2hdcXNlXp2pRHud//OkuQk1rUoKFpJLwV9SIcq96HM46LgONRZ1iAlLcIatxv5xS
- If4sJ0pK4gcu2DZmzvHMLM/NgM7lM44bYCLG5ASGJ3Yz9YHtk7hmMQ0DxIHeuIscCPXx
- YoBG21MK+kKLDwBJJzB3INO9Kj6gysTPMP6sbyIAYrQYC32pqEeeMH/nBbET7rsb9YNT
- xEzXKT+SX8vVIUQHeHVnXiCpqD1iUl92JxpITwPSIbBpaCBl5BrBn7o/0P5B+h8ZbF1R
- toa4gje7EUzPIJ3OoMAxa9D0AbF2GgGnQ8WaKeCan7QXhCjfSiLXR2zKnW9Xsm4GLgeM
- w9lQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=fqMiuFxFDrLsB2MyxctX3Vcy58t6wRGH486n+ABBGas=;
- fh=PsHUvoRLEZVs1fHqUS8bkGMiUYk7SAywQazIyFCl0Ok=;
- b=SCEvuToxdg0Bg51styJ0kUMXh3pa/PfZArCGNgbgpht6ut3Q/V1y54r3Y9iT/LZfnC
- of8CQXB7yMOysmOHdFg4pA/lcVYjINhgyfi1Dt1dgY1Szyr979sJ+G93fxPGsFyVHWRU
- srY2ptooqghaWKVGFymCvIVNz7a06HID6COMchi/3Au55Vyu56BQybzdHW1+seMWDXtt
- 4zmI/VrubJ8mYOY3Lcx5OyVlGl6M2ampCmEKyiqGfbGBDE2lPfrdHyR/i7bg7tGHG06T
- tJNkoXc/3swwPjuxjLOdGwImWrNk5R2NxUTG8nXDifajvmsT84GTDfkMKPNRKOyqEiLo
- a/vg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769075725; x=1769680525; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fqMiuFxFDrLsB2MyxctX3Vcy58t6wRGH486n+ABBGas=;
- b=jf6mdP3eCwieSnEFRLoH6VxQFi1VrJHyyKICdCoGEmg/nb+e6x+QBATfpV/1PYB3w5
- mUZIKEH5BmFCpDpSA99hsVr/N+XzAHi6pBOIXfwScQrfCZwm8oNulPC1TTd0KRVl0jly
- JfNfMcrZ3KdBRj/nnkkJ6jTy1yYot0uuAeabQ9TD0S0ZA0nourlNLs4/hh+D0VnSZaso
- NQ8qT3LhS9rns1thRZu8/E6sfTCRjqjSeeiJDInbbgpOxy69iPt6BCKL209vVycSPufV
- /JFJ/8aTMS8vfWCMupxJTa4Mi9V2sJ/WZmac4L9msZj+cp5LBk4HfsvJGMVasexkkqM5
- DRAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769075725; x=1769680525;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fqMiuFxFDrLsB2MyxctX3Vcy58t6wRGH486n+ABBGas=;
- b=Z4iSg4mZYIAlzheJGgFr0Sjsiw94S91kLoueqMWOytcuCLaxBnK9wJkR8jJeRrnGIx
- IaSHXJZi6hznVfZqsw56YWef7hhoV7BnP0RId/hlykWn9feqoRac4/oApBtNyLSJXdNP
- jfKAuID6QsyMTobmK4mXjTig7rTzj+4p7r3yyPcKrKDAnTxusQ0aAW//4JX07h2RmD2w
- HzII0+c9sRRK5Y51MFbHCZ5/01cONqrG4vH/HgB1DSbDZf2nWmOnMqo1b2C2is5Hofhl
- U85fjBS0JvvUYx97R+7NYMJfU5MdbsEwO8rJgUJ+baroFCx4BRTui1nLucojzhietEEu
- 8aJg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVY2ZlxdyMP+ZXYcsfhe1ImNek26KM2vUn2aRVz5n9vSevVbdcWAYRPXGNb9/fiYU1lTop1QFCcqej3@nongnu.org
-X-Gm-Message-State: AOJu0Yz3HVbPdDx55neTtKo2js2YrT8Hao2JMemuUHY5cfoOh4essLJq
- jO2IkqVd2rBHaE4KuzI/AskLFayio0GFSkO79wtqGl2oZbPSd6mBmnYhxcdQRO8cJSeN7w8flMB
- muNIageYWdBDLQUNJusbbjbR6oFEEpPg=
-X-Gm-Gg: AZuq6aI4Q2A6C1F5q4lfwmHi0QBL+cj4dbAGUOqOpCUwh1TwaFFCA+DCM5uC6GvFS6a
- Bc+HT5lat1O+yFH8m0mOIFbgCLoEA4i1ZerUmq5P2MpB3Lg5n012EVTQrg/5PPhS/GcKEje4mnG
- doHwhoxzAUbB+rsjb7r7K2kE99aHhR5tOHTjFK223eBhLY/TE+QbNv5iLO/vmyGJm1bA/Vcbbvh
- +lDT7e8ImG9ba7/pV73IVGdBqsvp5htMVV895b+Fc7dbRwqOkpvVLSHNg3kGW9Rw+NHWB4=
-X-Received: by 2002:a17:907:1c96:b0:b87:e58:e37d with SMTP id
- a640c23a62f3a-b8796b7dfb7mr1826221266b.48.1769075724602; Thu, 22 Jan 2026
- 01:55:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1virUX-0007ow-GG
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:00:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1virUO-0004I7-En
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 05:00:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769076029;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=pGhk+w0kGWyRlhhUpTewmMtuW7XgjwyQnqJ6BcUJeMY=;
+ b=jSuU4sLIa+KwbKpy/UFzbEHsO4uCAvsLSvok28hYx3ymanzVEgRZaWaPyWeKkFyBX3jELw
+ UuHW9Yud9WPQ/9eTgjntPgakCvSI9EwohMV574vTgWhojp/5kRMOUFhdEYK2q4mv4brUJc
+ rY4dLrjgz3bwIuIc3R/ykW1LUitTWuI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-4Eo-VuhWP_if6qQX-EYUZg-1; Thu,
+ 22 Jan 2026 05:00:26 -0500
+X-MC-Unique: 4Eo-VuhWP_if6qQX-EYUZg-1
+X-Mimecast-MFC-AGG-ID: 4Eo-VuhWP_if6qQX-EYUZg_1769076025
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7DB61944DFF; Thu, 22 Jan 2026 10:00:24 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.63])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 137DD1800285; Thu, 22 Jan 2026 10:00:19 +0000 (UTC)
+Date: Thu, 22 Jan 2026 10:00:17 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>,
+ qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>,
+ Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, German Maglione <gmaglione@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alex Bennee <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: Modern HMP (was: Call for GSoC internship project ideas)
+Message-ID: <aXH1ECZ1Nchui9ED@redhat.com>
+References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
+ <871pjigf6z.fsf_-_@pond.sub.org>
 MIME-Version: 1.0
-References: <20260117-colo_unit_test_multifd-v2-0-ab521777fa51@web.de>
- <20260117-colo_unit_test_multifd-v2-2-ab521777fa51@web.de>
- <aW-8QNQJ3PvBD35r@x1.local>
-In-Reply-To: <aW-8QNQJ3PvBD35r@x1.local>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Thu, 22 Jan 2026 17:54:48 +0800
-X-Gm-Features: AZwV_Qgsfqo9Hs8wX2IE3HKECNtulveOPancMWHMc3lu8msKIfKtAVDoDsC0_tI
-Message-ID: <CAK3tnvL3=0HtFb+0Yx0B+sf4-2LMtBN2dfkmHa8e6TaOc3egmw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/8] MAINTAINERS: Remove Hailiang Zhang from COLO
- migration framework
-To: Peter Xu <peterx@redhat.com>
-Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Hailiang Zhang <zhanghailiang@xfusion.com>,
- Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <871pjigf6z.fsf_-_@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,24 +96,125 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 21, 2026 at 1:33=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
->
-> On Sat, Jan 17, 2026 at 03:09:09PM +0100, Lukas Straub wrote:
-> > His last email to the mailing list is from December 2021:
-> > https://lore.kernel.org/qemu-devel/20211214075424.6920-1-zhanghailiang@=
-xfusion.com/
-> >
-> > Signed-off-by: Lukas Straub <lukasstraub2@web.de>
->
-> Reviewed-by: Peter Xu <peterx@redhat.com>
->
+On Thu, Jan 22, 2026 at 10:38:28AM +0100, Markus Armbruster wrote:
+> Let's start the discussion with your nicely written Wiki page:
+> 
+>     === External HMP Implementation via QMP ===
+> 
+>     '''Summary:''' Implement a standalone HMP-compatible monitor as an
+>     external binary (Python or Rust) that communicates with QEMU
+>     exclusively through QMP, enabling future decoupling of the built-in
+>     HMP from QEMU core.
+> 
+>     QEMU provides two monitor interfaces:
+>     * '''QMP''' (QEMU Machine Protocol): A JSON-based machine-readable
+>       protocol for programmatic control
+>     * '''HMP''' (Human Monitor Protocol): A text-based interactive
+>       interface for human operators
+> 
+>     Currently, HMP is tightly integrated into QEMU, with commands
+>     defined in `hmp-commands.hx` and `hmp-commands-info.hx`. Most HMP
+>     commands already delegate to QMP internally (e.g., `hmp_quit()`
+>     calls `qmp_quit()`), but HMP parsing, formatting, and command
+>     dispatch are compiled into the QEMU binary.
 
-Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+First of all, I love the idea. An external HMP impl that consumes
+QMP from outside QEMU so a concept I've suggested many times over
+10+ years hoping someone would take the bait and impl it :-)
 
-> --
-> Peter Xu
->
+> Also line editing and completion.
+> 
+> Most HMP commands cleanly wrap around QMP command handlers such as
+> qmp_quit().  Wrapping them around QMP commands instead is a
+> straightforward problem.  I'm more concerned about HMP stuff that uses
+> other internal interfaces.  Replacing them may require new QMP
+> interfaces, or maybe a careful culling of inessential HMP features.
+> Known such stuff: completion does not wrap around QMP command handlers.
+> It is provided by the HMP core.
+> 
+> Risk: this can easily become the 10% that take the other 90% of the
+> time, or even the 5% that sink the project.
+
+IMHO this is essentially guaranteed.
+
+4 years ago I tried to move us closer to this world by introducing
+"HumanReadableText" and documenting that all remaining & future
+"info xxx" commands should be backed by a QMP command that just
+returns human formatted text. The intent was to eliminate the
+roadblock of having to define formal QAPI types for all the
+complex data.
+
+I converted a bunch of commands, but that indeed became do 90%
+of the work, leave the other 90% of the work for later victim^H^H^H
+contributor.
+
+None of this means that the GSoc project idea is invalid. We just
+have to figure out a credible end goal is for the project, ideally
+with staged delivery.
+
+> Risk: serious code duplication until we can get rid of built-in HMP.
+> Fine if the goal is to explore and learn by building a prototype, and we
+> simply throw away the prototype afterwards.
+
+IMHO that isn't a risk, that's a guarantee. I can't imagine converting
+all remaining HMP commands to have a QMP backing, AND doing an external
+HMP impl all within the GSoc timeline.  That's two largely independent
+projects, each of which are probably longer than the GSoC time wnidow.
+
+Again that doesn't mean the idea is invalid for GSoc, just that we must
+be honest about likely deliverables, and how follow up work will happen
+after GSoc to maximise benefit for QEMU.
+
+What I would not want to see is a bunch of work done that is then
+abandoned because it couldn't get used as it wasn't feature complete.
+Whatever subset is achieved ought to be intended as a stepping stone
+we can integrate and carry on working with.
+
+
+>     '''Add `CONFIG_HMP` build option''':
+>     * Create a new Meson configuration option to disable built-in HMP
+>     * Allow QEMU to be built without HMP
+>     * Facilitate testing of external HMP as a replacement
+> 
+>     '''Create an external HMP implementation''' in Python or Rust that:
+>     * Connects to QEMU via QMP socket
+>     * Parses HMP command syntax and translates to QMP calls
+>     * Formats QMP responses as human-readable HMP output
+>     * Supports command completion and help text
+> 
+>     '''Use `hmp-commands.hx` for code generation''':
+>     * Parse the existing `.hx` files to extract command definitions
+>     * Generate boilerplate code (command tables, argument parsing, help
+>       text)
+>     * Produce a report of implemented vs. unimplemented commands
+>     * Enable tracking of HMP/QMP parity
+> 
+> .hx is C source code with ReST snippets.  scripts/hxtool strips out the
+> ReST.  docs/sphinx/hxtool.py ignores the C source code, and processes
+> the ReST.  It works.  Not a fan.
+> 
+> If we succeed in replacing built-in HMP by an external one, and the
+> external one isn't written in C, then having C source code in .hx no
+> longer makes sense.  Parsing it will be wasted effort.  It may still
+> make sense initially.
+
+Indeed, we should clarify language intended as it would influence
+the approach for the project.  If it is a clean room Rust impl,
+then it would be completely independent of existing HMP C code.
+More work initially to ensure we retain the same data formatting
+of each command, but likely nicer long term, and saying Rust will
+probably attract more candidates to the idea.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
