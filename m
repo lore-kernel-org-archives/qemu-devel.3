@@ -4,123 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBEECC44500
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 09:25:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF4D6C44500
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 09:30:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viqvq-0004C5-G4; Thu, 22 Jan 2026 04:24:50 -0500
+	id 1viqzo-0005KA-8l; Thu, 22 Jan 2026 04:28:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1viqvj-0004B5-Tu
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 04:24:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1viqzk-0005JM-OO
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 04:28:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1viqvh-0007pq-Lp
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 04:24:43 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1viqzi-0001JQ-O1
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 04:28:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769073879;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hwuaBABAuNLZcFhAMKw/NMyW/4spMARCLe3BYjcq00o=;
- b=DYKHqPxSvbFw1absNVe/1bv1jNuWi9J0AWCxcJjMqdz3oYhJoVVSv+8JSsgrnX3GcP0yNI
- HGEKW/44nL5JBnuy3F8WokS+advHbWJ2683V+O7LTz747fSxC9LsOIYJACswlKjmS3oWYH
- IBkWHF8PJfl5BJz+BZQ/bBA/ELfvVU4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-lAri8eM-OOuSyY_lSRt3pw-1; Thu, 22 Jan 2026 04:24:37 -0500
-X-MC-Unique: lAri8eM-OOuSyY_lSRt3pw-1
-X-Mimecast-MFC-AGG-ID: lAri8eM-OOuSyY_lSRt3pw_1769073876
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47fff4fd76dso5733285e9.3
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 01:24:37 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769073876; cv=none;
- d=google.com; s=arc-20240605;
- b=czZ9y7z92JczKrIfuYKg0CQoHjL4AP0DvLsTRkrM+8p/nrxuV0TlQ0baPXa5rsgBGg
- yTBkxDam7eJOZ/LwyF894gUdkbuBz3DY6c4ag96GR7MM2YKj5IgXMxjukmcr992DMjNu
- WAHyPPIjrOMW6DxMoJ4G/xR7FQA9l5NmPOmwOnYeNV+bK8xIOXZ8Zk5yE651QFQItgzH
- XNkuxXEBaApmnK8nYwHHcNWoXkJJWJnQwQorkom+0VpEWsuJU0rBBZljYSxh7J4lZRwD
- 6j+sPCkwPqrLSbMgpEy8DOP5mNxzv+z2gyBtdXc4L1Z0mpmttqKaOdpjiItEDdy+H7BS
- PdhQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=hwuaBABAuNLZcFhAMKw/NMyW/4spMARCLe3BYjcq00o=;
- fh=0RzcIwFimfBkgnFHDXsRN51GKRJBbsoa2EXtpgq3n8k=;
- b=R9UbLOZrdq28glaVzFTdgBRYQf7AegPZe3GngGe19UxLemUkRM/OOc7hqOmRd6YpoE
- P/o1erqVaiTNzxrXkfanaPrn4bQXZCMqcOFgucmJ3B3fccbMl0e2kEQTLwUpQrBhBd48
- 54Jma+aTaIvc4xGf0WkwdocUy0yuHTJ1ToGaJhuavsnQWWzHVTls/6cnilb0KiGg/Kpx
- P1DPE9ljJ8lYFn1zX6Pt2DwKgFYxg7qvYXf+sR0dyHCz8Nym1HKY9miZ1SERo0mN3xN6
- CbKmcYo9XQwW4c/qEsri9xJoW2iSga0GBjlOygBa9TapFhk5X1eXTb2rvRJIsdlPIlAk
- PY8w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769073876; x=1769678676; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=hwuaBABAuNLZcFhAMKw/NMyW/4spMARCLe3BYjcq00o=;
- b=KXIdWam6WF6QRD0LTcJD1mTAPD03HFUnpD+WZaPVSuaH2C7zliZ5mN7dSAza+4+p01
- nvX0eHPfr+1u78kQxIE8zz4Y8IzNZkrxRSxhycn+1mO8Fk76dXgyMf0S4RNOJeomBNwG
- qOa1nrGEmRHCMGlajqPFHhEmQ1R8FfOBAwJUvM84Mz1dXQAfJFS8SeFnD/EKMqBvFGdC
- IrxCcOyRxwN+7nmzEqm4LoMb/2wzxapMcqaLUn9fEwyARNaDHx0rSVccNftHwfr8Z+i0
- n47vCQ+LVOijGCu+S4mvsjJYkc/HF0LNIuLkXXzCMuY1gHROxNHt9Mf8yHVHLEpnrms8
- OsLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769073876; x=1769678676;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hwuaBABAuNLZcFhAMKw/NMyW/4spMARCLe3BYjcq00o=;
- b=KNA/KX/TKLjz/nngnBKhTRGYkoJvnu/GdBM52hs3zbNqD5ZnfvyhZJf3HrcJ9Mokku
- HFPTa9ESp1YqGd7gDI0qVgM3KIHiPY7TT/FK8Imr5oaT0F6ZNayW1KgnadxnTX/7y/gN
- sTbTCHqVbXLfJjTJDguDjyUiEfYExSvQ6mpKNc0u19PsBoFjHpo3+YMVz+2GBxXI2d7a
- u4xAAp1n1S1sskNrB3BOOnMn1jcibfNNPdeloi/BraBgFmfa0PR6ZzMHfOk0w2uXtJDg
- x6pc9FnYOaM+dCTJCojXAb2hTYNhvf4cpPuj8Fh247wnrUVnpQ8WXN088q3eAdU5fZjD
- ptXQ==
-X-Gm-Message-State: AOJu0YwpHD+oX4BWdQ+gXYIZ1tG0pZCRs6HYuYGl9Sxxfgw/UuaxIYZ+
- 2Qke6+NrHNoGBfyiiM+N8llb2Io27by5tHzm0AwENjT+tfXM75/fn7FQM7xeBtr7itlT3aAG3rL
- qRQb1HHTOV3lh7uoQZQ5l4cAPOznW8EOzbbXQflFdebj1XvD3zTERmUZiD4fwvi+oHvpFJl9+Cw
- tQj7C0NvBrqrbzcklMHYiyrCn6/4Mp+Cc=
-X-Gm-Gg: AZuq6aIAoAWKzul5pRvvh2M1CbYZGyxlhMWTMKBTurgxRTLluyY7SZlv+6nj/P/Lqhh
- Dg4W5pOU1SUOM+6bT3q9EsX80hAXbMmUj6b1cuemYybyOWQZaxoBjgNPeA+zni+Lja8sr11xial
- /r6a9IetNGyQ86sm6R9GQjOUdQdcXQb7TTPO48XT5918SRbhFPYZk6of6l+IlLwZPgYkVfQMvN8
- /M6RMJapziO+tD4/wCclHI/WIceXobtd9qq6xTaYnLPtKAoo5HFyLlC
-X-Received: by 2002:a05:600c:528f:b0:480:4a4f:c36f with SMTP id
- 5b1f17b1804b1-4804a4fc5c2mr13942595e9.21.1769073875994; 
- Thu, 22 Jan 2026 01:24:35 -0800 (PST)
-X-Received: by 2002:a05:600c:528f:b0:480:4a4f:c36f with SMTP id
- 5b1f17b1804b1-4804a4fc5c2mr13942245e9.21.1769073875577; Thu, 22 Jan 2026
- 01:24:35 -0800 (PST)
+ s=mimecast20190719; t=1769074128;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=0jOG+YPBvaCOvd+Y8leO6cvLt/wJLd500IWopbxcG5w=;
+ b=IoTIXJ8ihWDX2eno3hBKbteq/YkBHEa+Cr+ETlVaMsaar2pKK1eKZaeTpFOqb/wMjapG7R
+ g7k2q2EbaYPUdEv56j616I+SnfVV4QM4Rt+6ToEK+DhJqvnjCRGOgJDfGK6AaS+YgMtCyp
+ DPa3k5H7CgZmOIU3/Yv1SZwpNh8+AqY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-b4MmxChjNqu0pi5BU9DRlw-1; Thu,
+ 22 Jan 2026 04:28:45 -0500
+X-MC-Unique: b4MmxChjNqu0pi5BU9DRlw-1
+X-Mimecast-MFC-AGG-ID: b4MmxChjNqu0pi5BU9DRlw_1769074124
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C5C461955DB7; Thu, 22 Jan 2026 09:28:43 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.63])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 344E11800993; Thu, 22 Jan 2026 09:28:39 +0000 (UTC)
+Date: Thu, 22 Jan 2026 09:28:36 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-trivial@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Subject: Re: [PATCH] Replace CONFIG_WIN32 with CONFIG_WIN64
+Message-ID: <aXHtxBfuIRsJ3P_M@redhat.com>
+References: <20260122090352.9901-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20260114132309.5832-1-farosas@suse.de>
- <20260114132309.5832-6-farosas@suse.de>
- <CAE8KmOxNPToj2r__BNGMxm=ckGLwbMD2t6_3h=-KVCQxV8RVxw@mail.gmail.com>
- <874ioelip2.fsf@suse.de>
-In-Reply-To: <874ioelip2.fsf@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 22 Jan 2026 14:54:17 +0530
-X-Gm-Features: AZwV_Qiqm4DA5Wh3dTsmvNKrblXmoTREDbkEJAfbTmoSbar1YQTd0FbGgz2ZSlc
-Message-ID: <CAE8KmOwGXSXpmFhLod57R8LE6fPEg0rgbOPki7LQ3FAWnCD3gg@mail.gmail.com>
-Subject: Re: [PATCH 5/5] migration/options: Use QAPI_MERGE in
- migrate_params_test_apply
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, armbru@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260122090352.9901-1-thuth@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.069,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,159 +87,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Thu, Jan 22, 2026 at 10:03:52AM +0100, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> We stopped supported 32-bit Windows hosts a while ago already, so
+> let's rename CONFIG_WIN32 to CONFIG_WIN64 now to make it clear
+> that this switch is not about 32-bit Windows anymore.
+> 
+> The patch has been created with a simple sed statement:
+> 
+>  sed -i s/CONFIG_WIN32/CONFIG_WIN64/g $(grep -rl CONFIG_WIN32 *)
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  meson.build           |  2 +-
+>  qapi/char.json        |  4 +--
+>  qapi/misc.json        |  2 +-
+>  qga/qapi-schema.json  | 76 +++++++++++++++++++++----------------------
+>  include/qemu/futex.h  |  2 +-
+>  include/qemu/xattr.h  |  2 +-
+>  hw/usb/host-libusb.c  | 18 +++++-----
+>  io/channel-watch.c    | 10 +++---
+>  ui/gtk.c              |  2 +-
+>  util/cacheflush.c     |  4 +--
+>  util/sys_membarrier.c |  2 +-
+>  scripts/checkpatch.pl |  2 +-
+>  12 files changed, 63 insertions(+), 63 deletions(-)
+> 
+> diff --git a/meson.build b/meson.build
+> index a84f14258b0..01b9a5c22ce 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -2422,7 +2422,7 @@ config_host_data.set('CONFIG_GCOV', get_option('b_coverage'))
+>  config_host_data.set('CONFIG_LIBUDEV', libudev.found())
+>  config_host_data.set('CONFIG_LINUX', host_os == 'linux')
+>  config_host_data.set('CONFIG_POSIX', host_os != 'windows')
+> -config_host_data.set('CONFIG_WIN32', host_os == 'windows')
+> +config_host_data.set('CONFIG_WIN64', host_os == 'windows')
 
-On Thu, 22 Jan 2026 at 03:41, Fabiano Rosas <farosas@suse.de> wrote:
-> See if the following looks better to you. It's not one single function,
-> but I folded what I could while keeping the distinct function names.
->
-> static void migrate_params_apply(MigrationParameters *new, Error **errp)
-> {
->     MigrationState *s = migrate_get_current();
->     MigrationParameters *cur = &s->parameters;
->     MigrationParameters *tmp = QAPI_CLONE(MigrationParameters, cur);
->
->     QAPI_MERGE(MigrationParameters, tmp, new);
->
->     if (!migrate_params_check(tmp, errp)) {
->         return;
->     }
->
->     migrate_ptr_opts_free(cur);
->
->     /* mark all present, so they're all copied */
->     migrate_mark_all_params_present(params);
->     QAPI_CLONE_MEMBERS(MigrationParameters, cur, params);
->
->     migrate_post_update_params(new, errp);
-> }
->
-> void qmp_migrate_set_parameters(MigrationParameters *new, Error **errp)
-> {
->     /*
->      * Convert QTYPE_QNULL and NULL to the empty string (""). Even
->      * though NULL is cleaner to deal with in C code, that would force
->      * query-migrate-parameters to convert it once more to the empty
->      * string, so avoid that. The migrate_tls_*() helpers that expose
->      * the options to the rest of the migration code already use
->      * return NULL when the empty string is found.
->      */
->     tls_opt_to_str(new->tls_creds);
->     tls_opt_to_str(new->tls_hostname);
->     tls_opt_to_str(new->tls_authz);
->
->     migrate_params_apply(new, errp);
-> }
->
+While relevant to qapi file conditions, from a C code pov all of these
+are redundant as the compiler has all these facts built-in
 
-* I'm thinking as:
-===
-v0:
+  #ifdef CONFIG_LINUX =>    #ifdef __linux__
+  #ifdef CONFIG_POSIX =>    #if !defined(_WIN32) 
+  #ifdef CONFIG_WIN32 =>    #ifdef _WIN32
 
-void qmp_migrate_set_parameters(MigrationParameters *new, Error **errp)
-{
-    /*
-     * Convert QTYPE_QNULL and NULL to the empty string (""). Even
-     * though NULL is cleaner to deal with in C code, that would force
-     * query-migrate-parameters to convert it once more to the empty
-     * string, so avoid that. The migrate_tls_*() helpers that expose
-     * the options to the rest of the migration code already use
-     * return NULL when the empty string is found.
-     */
-    tls_opt_to_str(new->tls_creds);
-    tls_opt_to_str(new->tls_hostname);
-    tls_opt_to_str(new->tls_authz);
+NB,  _WIN32 *is* set on 64-bit Windows platforms too, so using
+_WIN64 is only needed if you have a code path that is exclusively
+64-bit only, so there's little need for us to use _WIN64.
 
-    MigrationState *s = migrate_get_current();
-    MigrationParameters *cur = &s->parameters;
-    MigrationParameters *tmp = QAPI_CLONE(MigrationParameters, cur);
+And of course we are horribly inconsistent in what we use:
 
-    QAPI_MERGE(MigrationParameters, tmp, new);
+$ git grep -E '#if.*_WIN32' | wc -l
+284
 
-    if (!migrate_params_check(tmp, errp)) {
-        return;
-    }
-    migrate_ptr_opts_free(cur);
+$ git grep -E '#if.*__linux__' | wc -l
+90
 
-    /* mark all present, so they're all copied */
-    migrate_mark_all_params_present(tpm);
-    QAPI_CLONE_MEMBERS(MigrationParameters, cur, tmp);
+$ git grep -E '#if.*CONFIG_LINUX' | wc -l
+142
+$ git grep -E '#if.*CONFIG_WIN' | wc -l
+16
 
-    migrate_post_update_params(cur, errp);
-}
-===
-v1:
+I'm inclined to posion all these from the C source though, and only
+these them from non-C locations.
 
-void qmp_migrate_set_parameters(MigrationParameters *new, Error **errp)
-{
-    /*
-     * Convert QTYPE_QNULL and NULL to the empty string (""). Even
-     * though NULL is cleaner to deal with in C code, that would force
-     * query-migrate-parameters to convert it once more to the empty
-     * string, so avoid that. The migrate_tls_*() helpers that expose
-     * the options to the rest of the migration code already use
-     * return NULL when the empty string is found.
-     */
-    tls_opt_to_str(new->tls_creds);
-    tls_opt_to_str(new->tls_hostname);
-    tls_opt_to_str(new->tls_authz);
+Also IMHO  CONFIG_WIN  or CONFIG_WINDOWS is preferrable - we don't
+add '32' or '64' suffixes to CONFIG_LINUX or CONFIG_POSIX, so I don't
+see a reason to keep doing it for Windows.
 
-    MigrationState *s = migrate_get_current();
-    MigrationParameters *cur = &s->parameters;
-    MigrationParameters *tmp = QAPI_CLONE(MigrationParameters, cur);      ...[1]
-
-    QAPI_MERGE(MigrationParameters, tmp, new);
-                 ...[2]
-
-    if (!migrate_params_check(tmp, errp)) {
-        return;
-    }
-    migrate_ptr_opts_free(cur);
-
-    /* mark all present, so they're all copied */
-    migrate_mark_all_params_present(tpm);
-    QAPI_CLONE_MEMBERS(MigrationParameters, cur, tmp);
-       ...[3]
-
-    /* update MigrationState after parameters change */
-                     ...[4]
-    if (cur->has_max_bandwidth) {
-        if (s->to_dst_file && !migration_in_postcopy()) {
-            migration_rate_set(cur->max_bandwidth);
-        }
-    }
-    if (cur->has_x_checkpoint_delay) {
-        colo_checkpoint_delay_set();
-    }
-    if (cur->has_xbzrle_cache_size) {
-        xbzrle_cache_resize(cur->xbzrle_cache_size, errp);
-    }
-    if (cur->has_max_postcopy_bandwidth) {
-        if (s->to_dst_file && migration_in_postcopy()) {
-            migration_rate_set(cur->max_postcopy_bandwidth);
-        }
-    }
-}
-===
-
-* I'd go with v1 above.
-* Reasons for folding migrate_params_apply() and migrate_post_update_params():
-   - Both static functions are called _only_ from
-qmp_migrate_set_parameters(). They are not reusable from elsewhere.
-   - Earlier migrate_params_apply() was quite long due to  if...else
-conditionals, so it made sense to break one long function into 2-3
-smaller ones.
-   - Now with QAPI_CLONE/MERGE changes qmp_migrate_set_parameters() is
-concise and easy to follow.
-   - Reader can see all steps (1,2,3,4 above) together in one function.
-
-* Just sharing my thoughts. You pick what you think is best.
-
-Thank you.
----
-  - Prasad
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
