@@ -4,103 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E0ABD3EE65
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 13:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E895DD3EE64
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Jan 2026 13:17:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1viuYR-0001jr-FG; Thu, 22 Jan 2026 08:16:55 -0500
+	id 1viuYO-0001g7-Ho; Thu, 22 Jan 2026 08:16:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1viuYB-0001c9-HY
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:16:47 -0500
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1viuY7-0005mD-Bn
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:16:37 -0500
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-794265fb73bso8976467b3.1
- for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 05:16:33 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769087793; cv=none;
- d=google.com; s=arc-20240605;
- b=QoIA7Zn6pCYnQapTe0mggjiN6nQZyRWL7K5SDwiuIr1Zf00sbccdRcHPfMxz8qNrk1
- /DH76sLkat1Bf/M6FvwZsjo4SOkL7dY0E+8HfzHbaSHlNtjKRwN2UfezNWWW+vqs2yAX
- DCsQBIm4UJKpm0duGLpTIryRu/ruf+ei0cKWLpZRw4vO5+LIB4v08jcpwVU69H+OhcF+
- 5RXkxww/tsf7Eoh8rwSpJErgTMhrROpNOHu29UUg84reWANrseduj4ZmroY7bxz8pmxW
- L7RCrjSSrByKOsxADNSYPOAtOe+j4l/MClVVLfv70xBX67FzHbLJFm/oEcxjlxk8kQ8Y
- xB8g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=3T2gonBDdiMSEwQ+eAWXA/c1umAF3XqunyAE5u1qwqg=;
- fh=jR7LVOBmK1jCkse7+hfFO0RVRlDhN6P9giU4wahz+Vw=;
- b=HXnyFV6qiTt7xJMNcLt4XOodgoV1URIme2DY/8PbLa04JfLTgzfSe8taJhJWRZlaOv
- FK07CWQzJUOsSQw+euf7mZ5QVIe94oheByBsVCl/cBQPFKEKNvAGJEMUClgSiiLruUR8
- vPgc6hx+vXN86roJTfaDv+CwnJ7Gdxbj5JFJizNwPHfxzd16+w/94ZerVmG/QRg1NApS
- wj7ZpuScacNvwlJ7qb/3m9JeXfQWvsu6c5ppAOlOLUuwXCUXGDGYgxkP6NxO3dsvbusM
- LpUjpAJWmXKkjWnjCL6TNAJEirjS/YbSeasFFrbo4VdWqiePznyIisNaH/yWPylG6e/f
- O7FA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769087793; x=1769692593; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3T2gonBDdiMSEwQ+eAWXA/c1umAF3XqunyAE5u1qwqg=;
- b=godQ8tluUCsr2jOd3lyyWVxmavFaeGQsgISWhNmSSHF92QlK7mCYHalGZmzdnqaUAp
- 6g9itoAQ/4bF2jGWbn4bbPHAf2fNx76z3iGxLXerrMaJjLgC5RCIDWpa4e6ugpYi05O5
- k+33ja8XXTDAkHA1INgZaXLt8lVsKjQjSECRhwaYXfc+pTCXQnOhH5YwPcJApsNg5hZo
- k99GXKcULK4smNB9/Ev110abNSeVP8W9i72QlQ+YPNmXwlodxEtSs7mr0GUPNzTSr2VF
- j9UsFo3Lw9ff2Jm1Xu41GzHOX3DLlhU4tNqW5wfcx7bdNqP100GTxgO8ufoXVosLxTxj
- EXvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769087793; x=1769692593;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3T2gonBDdiMSEwQ+eAWXA/c1umAF3XqunyAE5u1qwqg=;
- b=U+ekVZJwZJSC7ACufhODvqaSjcAStrt32RLwXxxEzpmGLLQ/SP4HAAXdtHIoISC7VZ
- rR3tZUmrs5bPAWrJR5hCjujI3fZSR6A5/ClincJQL8WXIw+2o55CFDHEiiW2555UHcCq
- NhquDjk0o8ulzjFEicpu3ENB0+sW6hQ+wtqEc1dFMV/Ax0SJYPAUmFwYOMm9VPtyMGIG
- fQBk3f/HdLMzPcMzdw2MCjO7LLVKWNmVfOqmj9w2/VUSq6cT9r//ubmF31jSfHiVrWhi
- BY1hjV94KaxlphH0fCvpFQERdPUDDKp/ML+M+hoXOh8q8Ix02dtjBCS8DTzf76o1R99O
- ykdQ==
-X-Gm-Message-State: AOJu0YzzaJ5XEwFfx+wtaEuiHgENrCMCFxqY10PMtjdBIr9OaiM7h1c3
- 6Pv/a+GN/2J7r9TdDvyCYXb48mWp7XNUetwxfptzwG80IkKNKVQtavFdNO7yLDnTg666KBxt8+n
- t+r37w6revkSP4H8zKcWM2UFpFHPZigSbhBFyIEHI1+xFpKC4z1JP
-X-Gm-Gg: AZuq6aIQHYsdtupZEKQ2dBiPGzpjFZ8naYPAtYSsqSu5MGL76ZbAdxvym02nyKosHax
- BJ25Y797XoiISjuyP9mnJkhQRQHgd20Vx0PeC9FRrS2x8l7YrCyEo+yjcvcZqSz4hSLoc6dRULR
- +b1qEFGrINhNU5tKFP2yplFf4ord8CmUhp76WN1q/JRvX7Yb/oOuTPcmPW6EAzCMd2ztcQztGd8
- jNVbTXgJWEvgTEL+Uz+NokB6aAEmOr0yz6xC7LI1i2iOm0PJF6XCZS9KLIJJ9dJOg36MFdzHyuu
- crHk
-X-Received: by 2002:a05:690c:6d91:b0:78f:a5c4:7923 with SMTP id
- 00721157ae682-793c683b02dmr154574197b3.56.1769087792913; Thu, 22 Jan 2026
- 05:16:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <martin.kroening@eonerc.rwth-aachen.de>)
+ id 1viuXw-0001Sv-P9
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:16:26 -0500
+Received: from mail-out-4.itc.rwth-aachen.de ([2a00:8a60:1:e501::5:49])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <martin.kroening@eonerc.rwth-aachen.de>)
+ id 1viuXt-0005Ve-9m
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 08:16:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=rwth-aachen.de; i=@rwth-aachen.de; q=dns/txt;
+ s=20240516-RWTH; t=1769087781; x=1800623781;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=yF+LBeUaFzy3/tXuiXOTIZL3LYrn5NbzIcQoL35uCFU=;
+ b=Cp1Ceah7T8EdSiwBZttkT7Iw7DJpZ6bGnDBh1sC9VaOX9lp/cTRRfnya
+ Ip0VV+x+t7IuGnmH/5Ud/gopuIqo6H04GhFpOfBQ+hhyAPmCZoiECoZQz
+ VMoI9WOAYb93wVzMbuNZvNRzgly/smYdUtKcu79dT5EXYluVBM4X6b44C
+ kUsnjaDY7gVMIhSJcRXaqPVGs9CBwJVZO9vla8fuvWn0Pi7fU8VDgSSFX
+ l0uDy4TP2gPBbbwcAa4UvwYxaCisoVVli86ytsFEjKl76h81w+KFEk4Na
+ i740YdbS8uoHSMHjtT6bKcy5IOa/MgaPHA1gq5U7sBXR/tIXXXHwXc6pR w==;
+X-CSE-ConnectionGUID: uOQM46/qR4qxg5GddKbTZg==
+X-CSE-MsgGUID: L79OsCJ5QfOdX4sqT6h4xA==
+X-IPAS-Result: =?us-ascii?q?A2CgAgC2IXJp/54agoZaGwEBAQEBAQEBBQEBARIBAQEDA?=
+ =?us-ascii?q?wEBAUCBUIVPAYQ5kXQDoBkPAQEBAQEBAQEBCAFRBAEBhQcCFoxyJzgTAQIEA?=
+ =?us-ascii?q?QEBAQMCAwEBAQEBAQEBAQEBCwEBBgEBAQEBAQYFgSGGCVOGWwEEASMRRQULA?=
+ =?us-ascii?q?gEIGgImAgICLxUQAgQOgweCTSewCIEygQHfAoEsFYEKLohTAYFvhACEeIIMQ?=
+ =?us-ascii?q?4EVJwsDDYJoPoQaKReDRDqCLwSCIoEOgRKKTIIUhg8JSXh4LAFVExcLBwVhQ?=
+ =?us-ascii?q?kMDgQYjSwUtHYEjIR0XEx9YGwcFEyMyBhkGHBICAwECAjpTDIF2AgIEghB7g?=
+ =?us-ascii?q?gEPhwCBAAUubxoOIgJBNwRDAwttPTcUG0GTDEKBCklCWJcmjCejLweCOF2BC?=
+ =?us-ascii?q?qFyBC+XYJMLLphYqRYCBAIEBQIYgX+BfnF5AYI9URcCD44tFsl5gTQCBwsBA?=
+ =?us-ascii?q?QMJgjmPMWABgRwBAQ?=
+IronPort-Data: A9a23:IcOxw6iqI28Ca6RhKk1khoVPX161RhEKZh0ujC45NGQN5FlHY01je
+ htvUWCGaP/YZDShfN9xPo+2908DupCGydZlQAo//y1mEC9jpJueD7x1DKtR0wC6c5efFhI3t
+ 63yTvGacajYm1eF/k/F3oDJ9Cc6jefTAOKgVIYoAwgpLSd8UiAtlBl/rOAwh49skLCRDhiE0
+ T/Ii5S31GSNhXguawr414rZ8Ekx5K2o4mtC1rADTakjUGH2xiF94K03ePnZw0vQGuF8AuO8T
+ uDf+7C1lkux1wstEN6sjoHgeUQMRLPIVSDW4paBc/H/6vTqjnVaPpcTbJLwW28O49m6t4wZJ
+ OF2iHCFYVxB0pvkxb5BCUkIS0mSCoUdkFPPCSDXXcV+VCQqeVO0qxllJBle0YH1Zo+bDEkWn
+ cH0JgzhYTieoNuTnOz8U9Mwn9QscebnMKAVhkNvmGSx4fYOGfgvQo3w2uN48Qd1uZoLNLDEe
+ NYZLDNjKhjNC/FNEg5MVNRnx7/u3Ce5KmAIwL6WjfNfD2z7yQVrzLnrdtnPfdGMRMNatkufo
+ G/c9CLjHQ0acdWWwjqI9DSgi4cjmAuiB9NDS+fir5aGhnW3mT00EzY0CGK1hvWJ1lWnZ4xfd
+ 1w9r39GQa8asRbDosPGdwW1vHOe+BsVStZdF+kS7ACLw7DTpQGDCQAsVj5AbNkqnMs3QzUw0
+ RmOhdyBLSVitaDQRX+D+7O8qzS0Ni4Ia2gYakcsRA8I85/prYc1gx/nStdlGbSyyNrvFlnNL
+ yuitjcih7gDyNFRkqz950/bg3elqt7FQ2bZ+znqY45s1SshDKbNWmBiwQKzASpoRGpBcmS8g
+ Q==
+IronPort-HdrOrdr: A9a23:9YsRXqrzoOJ0r4A0PdU21N0aV5r5eYIsimQD101hICG9Kvbo8P
+ xHnJwguiMdEF4qKQ0dcKO7Sc+9qBTnhOFICOgqTMqftWbdyQiVxe1ZgLcKhgeQfxEWldQtq5
+ uIEZIOauEYZGIS5a2R3OD7KadE/DDtys6VbJLlr0uFOjsKV0gP1WtE402gYzRLrUF9dOIE/N
+ D33Ls9m9OPQwVsUviG
+X-Talos-CUID: 9a23:0022uG9SmrGZxLJq+7mVv1MzI+V5LDrE9ivJM0DlJmpla7epe1DFrQ==
+X-Talos-MUID: 9a23:lD9waQXsNTNsmhbq/Buz1RZ5H+U12qqJBHBRiow65cnYJQUlbg==
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-AV: E=Sophos;i="6.21,246,1763420400"; d="scan'208";a="17997221"
+Received: from rwthex-w2-a.rwth-ad.de ([134.130.26.158])
+ by mail-in-4.itc.rwth-aachen.de with ESMTP; 22 Jan 2026 14:16:15 +0100
+Received: from rwthex-s2-a.rwth-ad.de (2a00:8a60:1:e500::26:154) by
+ RWTHEX-W2-A.rwth-ad.de (2a00:8a60:1:e500::26:158) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Thu, 22 Jan 2026 14:16:14 +0100
+Received: from rwthex-s2-a.rwth-ad.de ([fe80::9e0:8e94:8a31:2f0b]) by
+ rwthex-s2-a.rwth-ad.de ([fe80::9e0:8e94:8a31:2f0b%4]) with mapi id
+ 15.02.2562.035; Thu, 22 Jan 2026 14:16:14 +0100
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, =?utf-8?B?QWxleCBCZW5uw6ll?=
+ <alex.bennee@linaro.org>
+Subject: Re: [PATCH 1/2] include/exec: Provide the cpu_tswap() functions
+Thread-Topic: [PATCH 1/2] include/exec: Provide the cpu_tswap() functions
+Thread-Index: AQHcfxJpX9kd3Z45hkeo12U1CBikfbVYdTOAgADUOID///aMgIAFBHUA
+Date: Thu, 22 Jan 2026 13:16:14 +0000
+Message-ID: <00BB587B-792D-4725-A42C-AE87A201C2E2@eonerc.rwth-aachen.de>
+References: <20260106-semihosting-cpu-tswap-v1-0-646576c25f56@eonerc.rwth-aachen.de>
+ <20260106-semihosting-cpu-tswap-v1-1-646576c25f56@eonerc.rwth-aachen.de>
+ <ee9a0216-0a1a-46ec-b647-64045c892af3@linaro.org>
+ <FDDAA4F9-C389-4E63-8DEB-B0FBE38FE5CE@eonerc.rwth-aachen.de>
+ <CAFEAcA-P2xqNO21rMyt2VA_tRf9yzWh8qtJFggGr4Mn-AWjj5g@mail.gmail.com>
+In-Reply-To: <CAFEAcA-P2xqNO21rMyt2VA_tRf9yzWh8qtJFggGr4Mn-AWjj5g@mail.gmail.com>
+Accept-Language: en-US, de-DE
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Microsoft-MacOutlook/16.105.26011018
+x-originating-ip: [137.226.255.149]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <3E9290CA0D1D554D9B4FA1A550CA1ED1@rwth-ad.de>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20251227091622.20725-1-pbonzini@redhat.com>
- <20251227094759.35658-7-pbonzini@redhat.com>
-In-Reply-To: <20251227094759.35658-7-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Jan 2026 13:16:20 +0000
-X-Gm-Features: AZwV_QidkpDWzjezVOlwT7gSUe9fz8EOfdYaIKBn5tt8t40m8GBPF-ssgUO8cY0
-Message-ID: <CAFEAcA8fjzx49c=Xe37PtMNCbN22h2UQ48kzPgWVYx6jBBXYog@mail.gmail.com>
-Subject: Re: [PULL 081/153] i386/cpu: Fix supervisor xstate initialization
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- Farrah Chen <farrah.chen@intel.com>, Zide Chen <zide.chen@intel.com>, 
- Xiaoyao Li <xiaoyao.li@intel.com>, Chao Gao <chao.gao@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:8a60:1:e501::5:49;
+ envelope-from=martin.kroening@eonerc.rwth-aachen.de;
+ helo=mail-out-4.itc.rwth-aachen.de
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,76 +119,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  =?utf-8?B?S3LDtm5pbmcsIE1hcnRpbg==?=
+ <martin.kroening@eonerc.rwth-aachen.de>
+From: martin.kroening--- via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 27 Dec 2025 at 09:53, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> From: Chao Gao <chao.gao@intel.com>
->
-> Arch lbr is a supervisor xstate, but its area is not covered in
-> x86_cpu_init_xsave().
->
-> Fix it by checking supported xss bitmap.
->
-> In addition, drop the (uint64_t) type casts for supported_xcr0 since
-> x86_cpu_get_supported_feature_word() returns uint64_t so that the cast
-> is not needed. Then ensure line length is within 90 characters.
->
-> Tested-by: Farrah Chen <farrah.chen@intel.com>
-> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Chao Gao <chao.gao@intel.com>
-> Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> Link: https://lore.kernel.org/r/20251211060801.3600039-10-zhao1.liu@intel.com
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  target/i386/cpu.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-
-Hi: Coverity reports a possible issue with this change
-(CID 1643918):
-
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 5ba4d49dc35..e9ef8b992fd 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -9711,20 +9711,23 @@ static void x86_cpu_post_initfn(Object *obj)
->  static void x86_cpu_init_xsave(void)
->  {
->      static bool first = true;
-> -    uint64_t supported_xcr0;
-> +    uint64_t supported_xcr0, supported_xss;
->      int i;
->
->      if (first) {
->          first = false;
->
->          supported_xcr0 =
-> -            ((uint64_t) x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XCR0_HI) << 32) |
-> +            x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XCR0_HI) << 32 |
->              x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XCR0_LO);
-> +        supported_xss =
-> +            x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XSS_HI) << 32 |
-> +            x86_cpu_get_supported_feature_word(NULL, FEAT_XSAVE_XSS_LO);
-
-x86_cpu_get_supported_feature_word() returns a 64 bit value
-which may have bits set in the top half (notably it returns
-~0 for some cases), but the shift by 32 throws away those
-top bits, so Coverity complains about a possible overflow.
-
-Is this an actual problem, or a "can't-happen" false positive?
-
->
->          for (i = XSTATE_SSE_BIT + 1; i < XSAVE_STATE_AREA_COUNT; i++) {
->              ExtSaveArea *esa = &x86_ext_save_areas[i];
->
-> -            if (!(supported_xcr0 & (1 << i))) {
-> +            if (!((supported_xcr0 | supported_xss) & (1 << i))) {
->                  esa->size = 0;
->              }
->          }
-
-thanks
--- PMM
+T24gMTkuMDEuMjYsIDEwOjM5LCBQZXRlciBNYXlkZWxsIHdyb3RlOg0KDQo+IE9uICgyKToNCj4g
+DQo+ID4gQWxleCB3YXMgd29ycmllZCBhYm91dCBleHBhbmRpbmcgdGhlIHVzZSBvZiBgdmlydGlv
+X2lzX2JpZ19lbmRpYW5gOg0KPiA+DQo+ID4gPiBIbW0gbG9va2luZyBhdCB0aGUgZGVzY3JpcHRp
+b246DQo+ID4gPg0KPiA+ID4gLyoqDQo+ID4gPiAqIEB2aXJ0aW9faXNfYmlnX2VuZGlhbjogQ2Fs
+bGJhY2sgdG8gcmV0dXJuICV0cnVlIGlmIGEgQ1BVIHdoaWNoIHN1cHBvcnRzDQo+ID4gPiAqIHJ1
+bnRpbWUgY29uZmlndXJhYmxlIGVuZGlhbm5lc3MgaXMgY3VycmVudGx5IGJpZy1lbmRpYW4uDQo+
+ID4gPiAqIE5vbi1jb25maWd1cmFibGUgQ1BVcyBjYW4gdXNlIHRoZSBkZWZhdWx0IGltcGxlbWVu
+dGF0aW9uIG9mIHRoaXMgbWV0aG9kLg0KPiA+ID4gKiBUaGlzIG1ldGhvZCBzaG91bGQgbm90IGJl
+IHVzZWQgYnkgYW55IGNhbGxlcnMgb3RoZXIgdGhhbiB0aGUgcHJlLTEuMA0KPiA+ID4gKiB2aXJ0
+aW8gZGV2aWNlcy4NCj4gPiA+ICovDQo+ID4gPiBib29sICgqdmlydGlvX2lzX2JpZ19lbmRpYW4p
+KENQVVN0YXRlICpjcHUpOw0KPiA+ID4NCj4gPiA+IEknbSBub3Qgc3VyZSBpZiB3ZSB3YW50IHRv
+IGV4cGFuZCB0aGUgdXNhZ2Ugb2YgdGhpcyBoYWNrLiBJIHRoaW5rDQo+ID4gPiBQaGlsaXBwZSBp
+cyBob3BpbmcgdG8gZ2V0IHJpZCBvZiB0aGVzZSB3YXJ0cyBldmVudHVhbGx5LiBPZiBjb3Vyc2Ug
+d2UNCj4gPiA+IGNvdWxkIHJlbmFtZSB0aGUgbWV0aG9kIGFuZCBqdXN0IHByb3ZpZGUgYSB3YXkg
+dG8gZ2V0IHRoZSBjdXJyZW50DQo+ID4gPiBzeXN0ZW1zIGVuZGlhbmVzcy4NCj4gPg0KPiA+IFdo
+aWxlIG5vdCBiZWluZyB2ZXJ5IGZhbWlsaWFyIHdpdGggUUVNVSdzIHNvdXJjZSBjb2RlLCBzb21l
+dGhpbmcgbGlrZSB0aGlzDQo+ID4gc2VlbXMgbmVjZXNzYXJ5IHRvIG1lLiBJIGNhbiByZW5hbWUg
+YHZpcnRpb19pc19iaWdfZW5kaWFuYCB0byBgaXNfYmlnX2VuZGlhbmANCj4gPiBhbmQgYGNwdV92
+aXJ0aW9faXNfYmlnX2VuZGlhbmAgdG8gYGNwdV9pc19iaWdfZW5kaWFuYCBpZiB5b3UgcHJlZmVy
+IHRoYXQuDQo+IA0KPiBUaGUgcmVhc29uIGZvciBuYW1pbmcgdGhlc2UgZnVuY3Rpb25zIHRoZSB3
+YXkgd2UgaGF2ZSBub3cgaXMNCj4gdGhhdCB3ZSByZWFsbHkgZGlkbid0IHdhbnQgdGhlbSB0byBi
+ZSBhICJ0aGlzIGxvb2tzIGxpa2UgdGhlDQo+IHJpZ2h0IGZ1bmN0aW9uIHRvIHVzZSBmb3IgbXkg
+cHVycG9zZSIgZ2VuZXJhbCBuYW1lIGxpa2UNCj4gImlzX2JpZ19lbmRpYW4iLiBBbG1vc3Qgbm90
+aGluZyBpbiBRRU1VIG91dHNpZGUgdGhlIENQVSBpdHNlbGYNCj4gc2hvdWxkIG5lZWQgdG8ga25v
+dyBhYm91dCB0aGUgZGF0YSBlbmRpYW5uZXNzIG9mIHRoZSBDUFUsDQo+IGJlY2F1c2UgaW4gcmVh
+bCBoYXJkd2FyZSB0aGUgZGV2aWNlcyBjYW4ndCB0ZWxsIHdoYXQgdGhlIENQVQ0KPiBpcyBzZXQg
+dXAgYXMsIHRoZXkganVzdCBnZXQvc2VuZCBkYXRhLiBUaGUgZXhjZXB0aW9ucyBhcmUNCj4gbGVn
+YWN5IHZpcnRpbyAod2hpY2ggaXMgYSBtaXN0YWtlIHRoYXQgd2FzIG1hZGUgYmVjYXVzZSBub2Jv
+ZHkNCj4gd2FzIHRoaW5raW5nIGFib3V0IGl0IGluIHRoZSBvcmlnaW5hbCB2aXJ0aW8gZGV2aWNl
+IGRlc2lnbikNCj4gYW5kIHNvbWUgb2RkYmFsbCBpbnRlcmZhY2VzIGxpa2Ugc2VtaWhvc3Rpbmcu
+IFNvIHRoZSBuYW1lIGlzDQo+IGludGVuZGVkIHRvIHB1c2ggcGVvcGxlIGF3YXkgZnJvbSB1c2lu
+ZyBpdCAoYW5kIHRvd2FyZHMgZS5nLg0KPiB0YXJnZXRfYmlnX2VuZGlhbigpKS4NCg0KVGhhdCBt
+YWtlcyBzZW5zZS4gSG93IGFib3V0IHNvbWV0aGluZyBsaWtlIGBpbnRlcm5hbF9pc19iaWdfZW5k
+aWFuYCBhbmQgDQpgY3B1X2ludGVybmFsX2lzX2JpZ19lbmRpYW5gLCB0aGVuPyBJIGFtIGp1c3Qg
+bWFraW5nIHRoaW5ncyB1cCwgdGhvdWdoLg0KR2l2ZW4gbXkgbGltaXRlZCBleHBlcmllbmNlIHdp
+dGggUUVNVSBpbnRlcm5hbHMsIEkgYW0gbm90IHJlYWxseSBxdWFsaWZpZWQNCnRvIGNob29zZSBh
+bnkgbmFtZS4NCg0KQ2hlZXJzLA0KTWFydGluDQoNCg==
 
