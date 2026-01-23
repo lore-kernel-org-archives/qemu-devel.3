@@ -4,59 +4,161 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42E6CD74ED3
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:23:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3797D74EDA
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:28:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjI4m-00035y-AN; Fri, 23 Jan 2026 09:23:52 -0500
+	id 1vjI8H-0005FR-JG; Fri, 23 Jan 2026 09:27:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vjI4R-0002hY-Qh
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:23:33 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vjI7H-0004vm-GY
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:26:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vjI4N-0004jv-Rr
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:23:31 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DDAE3596ADB;
- Fri, 23 Jan 2026 15:23:21 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id Q-uV95R6rhTw; Fri, 23 Jan 2026 15:23:19 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D1146596ADF; Fri, 23 Jan 2026 15:23:19 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id CEEF5596AE0;
- Fri, 23 Jan 2026 15:23:19 +0100 (CET)
-Date: Fri, 23 Jan 2026 15:23:19 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-cc: qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>
-Subject: Re: [PATCH 21/37] audio: add QOM module-objects for each backend
-In-Reply-To: <20260123074945.2563196-22-marcandre.lureau@redhat.com>
-Message-ID: <3f0d41b1-dbce-80ba-c1e2-a8d73d1c6caf@eik.bme.hu>
-References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
- <20260123074945.2563196-22-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vjI7F-0005Zq-BJ
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:26:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769178384;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=WXZMIzdKQ+iy4z2UMliFk5YffFd1hnsFlNk4138V7xE=;
+ b=DPtWGMNPuFxgWSr+eWedX08cNE1gbQYCRhZpNLwu0SGpotPMrFXzKF5Pl0FxrAo4V4GaNc
+ rzZNS7ktYB+A4jafu2BGKi91gODYlXEQ8sT/9teBQ4C6aeQMrsz2WSGxhHoTtUS7KSGJ/o
+ kpHyR9zMyepAtlVlI6SKjjFvs/efiY4=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-222-Jk8paOXZM4Wf9xhc8d_6_g-1; Fri, 23 Jan 2026 09:26:22 -0500
+X-MC-Unique: Jk8paOXZM4Wf9xhc8d_6_g-1
+X-Mimecast-MFC-AGG-ID: Jk8paOXZM4Wf9xhc8d_6_g_1769178381
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-430fcf10287so2020310f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:26:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1769178381; x=1769783181; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=WXZMIzdKQ+iy4z2UMliFk5YffFd1hnsFlNk4138V7xE=;
+ b=AmYU5IakwyLvzYv6YSMHl1PYf3ObAS71fLTzuaixu0YRzSubYNohMjFYimPZi2+s+j
+ RYtuwdQi1pc0R0jEi79iNxMUfE/hYDvAfsv4dAJzlmzP/1CAX3wJfGcZ/2+oIaDUKtzX
+ SuLlSZPViyJgBuahFWavy7HAOqEvmv4KRj9zwm2H2gw6I+N0NVfTyihoWkDJnYoc1rEC
+ hsodLg8dNFzj+Twb+xKLpySPdCeuQNk4PmH6NO5CEYClpRuQVlQqvKqNZwTspBgkbO/3
+ mwkTT3pzIGOSSsdd2r7WQSHGXJR9PKsGTb3uQqddm5B1Dl4ZQI5dCImE4yfTgfUtwrr4
+ af8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769178381; x=1769783181;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WXZMIzdKQ+iy4z2UMliFk5YffFd1hnsFlNk4138V7xE=;
+ b=ltydiPPrBBB16BR3wi0/9Y7baRNZplug5wjgmYHbPCfWULiBcY9x8jYTmh31GMRkWX
+ Ze39EaMtXwYfq1bCJk55J07WJe+eZM5/i32LfL9lI9dpw/9mA4KB/VvPnwfb48/s35Yu
+ 3uK8seiH2GPzgIkM9rgAZeXPA2cqOu7+fousvDdFbb4DNpfxuC54TA0oazz60kVFn64d
+ 1LG/NMgmpO74on3O2tDeIP1Uqvp8TK6M8RjQaHM736FOR8LzGvJygE59mGgT72MrQQoP
+ vq6xEvO4FuMhPeqwUoSu0MSZLcCKAwutdLqoqw5BzOOW6mX0UJGcmlrZ0XSuGKtTihrV
+ EdeA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUh0kS03YTq0hLk+k2ca+Cqc5aFK3nMuIyRUoVpY8nQB2qlqI6uBXcDtWNIYBRUuHYDSTKxQvNTCZzK@nongnu.org
+X-Gm-Message-State: AOJu0YwoCnjD0gLAwRT8Dkbqb7F2lyYv69B5gjeCzWLMQkdrChedPgAP
+ 1hTTPwZ0mgijT63OBMMwaJ76nNqU/rG2wnsW1QezzDTxNcYmPuI4QDIdRoZjw6pjSKi/h6/tZpk
+ xqdhq7tqs0nrDqQFfRpFIwvHWm9u5orjnLGXdhlQb28bKLjh/QLy4PCKZ
+X-Gm-Gg: AZuq6aIEPwLQAQbG1alLs4wRD1iwukf7wBdW9yMWsINPiZRDk5W7G3K5Bu6FFZQSBVZ
+ vFAcXGx9o9tQqamag87O8Jx7R9f/T16paRezLvM03y94OM73A9whrCl2W9WqNHW4gEUGwKU/j5p
+ m6JJuHNh58timTnLpHF4bA9Az+YIMR+j9bFWPNHh+aKF7kAZ8BhVkMMb00hwzxKBF7RfGXMWjKo
+ GtCQ9EkPPYI/baCd4VGDlYfBcvvTpubFoEV3pYwgf57gDzzOf/wFqn2yImrI1j4GVbeHVr17Dx4
+ C2fPZd3K+tdZ9BcLQqkpYFk2GE7GTwVCEdZCw0fSBXUXcvLRqD0QLBI25GSW+X0Z7cgmXKjSvUj
+ OCMxu2Ce7jU2qqagMtz3IwcpJqA4gUffiip5U4de2fSb9KTDy
+X-Received: by 2002:a05:6000:2383:b0:435:b020:30ab with SMTP id
+ ffacd0b85a97d-435b1593f32mr5950923f8f.15.1769178380815; 
+ Fri, 23 Jan 2026 06:26:20 -0800 (PST)
+X-Received: by 2002:a05:6000:2383:b0:435:b020:30ab with SMTP id
+ ffacd0b85a97d-435b1593f32mr5950873f8f.15.1769178380257; 
+ Fri, 23 Jan 2026 06:26:20 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435b1b6e2besm7277481f8f.0.2026.01.23.06.26.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 Jan 2026 06:26:19 -0800 (PST)
+Message-ID: <58df52dc-66a1-4df9-9e39-c441dfc2a3e6@redhat.com>
+Date: Fri, 23 Jan 2026 15:26:18 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-375026873-1769178199=:60220"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/3] linux-headers: Update to Linux v6.19-rc1
+To: Jason Gunthorpe <jgg@nvidia.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, eric.auger@redhat.com, alex@shazbot.org,
+ cohuck@redhat.com, mst@redhat.com, nicolinc@nvidia.com, nathanc@nvidia.com,
+ mochs@nvidia.com, jonathan.cameron@huawei.com, zhenzhong.duan@intel.com,
+ vivek.kasireddy@intel.com, kjaju@nvidia.com, Jason Wang <jasowang@redhat.com>
+References: <20260121114111.34045-1-skolothumtho@nvidia.com>
+ <20260121114111.34045-2-skolothumtho@nvidia.com>
+ <53a51440-c7a6-49f9-bf2f-b71c8e9f32ed@redhat.com>
+ <CAFEAcA9+kp7K4cGeMx2PTGp1V3SkKoqyHEOZhFD-QQ2Y4WZHPQ@mail.gmail.com>
+ <20260121171248.GH1134360@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260121171248.GH1134360@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,114 +174,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 1/21/26 18:12, Jason Gunthorpe wrote:
+> On Wed, Jan 21, 2026 at 02:21:17PM +0000, Peter Maydell wrote:
+>> But it looks to me like this is a bug in the Linux headers:
+>> they seem to have changed in a non-backwards compatible way,
+>> and possibly even in a way that makes it not possible for
+>> userspace code to use ifdefs to handle "maybe the header
+>> is the old version or the new version".
+> 
+> Technically Linux doesn't provide an API guarentee, just an ABI
+> guarentee.
+> 
+> Ie we don't guarentee all old userspace compiles with the new headers,
+> we just guarentee that once compiled it keeps working..
+> 
+> You need to use something like configure and compile trial tests to
+> figure things out.
+> 
+> IMHO this happens rarely enough that what is proposed here as a single
+> patch is the best option.
 
---3866299591-375026873-1769178199=:60220
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+If no more objections, I will send a PR with these changes early
+next week then.
 
-On Fri, 23 Jan 2026, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->
-> This will allow to use QOM and the dynamic object module loading.
->
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
-> audio/audio_int.h   |  2 ++
-> audio/alsaaudio.c   | 27 +++++++++++++++++++++++++++
-> audio/dbusaudio.c   | 26 ++++++++++++++++++++++++++
-> audio/dsoundaudio.c | 26 ++++++++++++++++++++++++++
-> audio/jackaudio.c   | 26 ++++++++++++++++++++++++++
-> audio/noaudio.c     | 26 ++++++++++++++++++++++++++
-> audio/ossaudio.c    | 26 ++++++++++++++++++++++++++
-> audio/paaudio.c     | 26 ++++++++++++++++++++++++++
-> audio/pwaudio.c     | 26 ++++++++++++++++++++++++++
-> audio/sdlaudio.c    | 26 ++++++++++++++++++++++++++
-> audio/sndioaudio.c  | 26 ++++++++++++++++++++++++++
-> audio/spiceaudio.c  | 26 ++++++++++++++++++++++++++
-> audio/wavaudio.c    | 26 ++++++++++++++++++++++++++
-> audio/coreaudio.m   | 26 ++++++++++++++++++++++++++
-> 14 files changed, 341 insertions(+)
->
-> diff --git a/audio/audio_int.h b/audio/audio_int.h
-> index 06f5160e8df..29f5864be69 100644
-> --- a/audio/audio_int.h
-> +++ b/audio/audio_int.h
-> @@ -241,6 +241,8 @@ struct SWVoiceCap {
->
-> struct AudioMixengBackendClass {
->     AudioBackendClass parent_class;
-> +
-> +    audio_driver *driver;
-> };
->
-> struct AudioMixengBackend {
-> diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
-> index 814820e2864..881f3d0349d 100644
-> --- a/audio/alsaaudio.c
-> +++ b/audio/alsaaudio.c
-> @@ -27,6 +27,7 @@
-> #include "qemu/main-loop.h"
-> #include "qemu/module.h"
-> #include "qemu/audio.h"
-> +#include "qom/object.h"
-> #include "trace.h"
->
-> #pragma GCC diagnostic ignored "-Waddress"
-> @@ -36,6 +37,22 @@
->
-> #define DEBUG_ALSA 0
->
-> +#define TYPE_AUDIO_ALSA "audio-alsa"
-> +OBJECT_DECLARE_SIMPLE_TYPE(AudioALSA, AUDIO_ALSA)
-> +
-> +struct AudioALSA {
-> +    AudioMixengBackend parent;
-> +};
+Thanks,
 
-If you have nothing to put here only the parent you don't need to declare 
-the state struct...
+C.
 
-> +
-> +static struct audio_driver alsa_audio_driver;
-> +
-> +static void audio_alsa_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-> +
-> +    k->driver = &alsa_audio_driver;
-> +}
-> +
-> struct pollhlp {
->     snd_pcm_t *handle;
->     struct pollfd *pfds;
-> @@ -945,8 +962,18 @@ static struct audio_driver alsa_audio_driver = {
->     .voice_size_in  = sizeof (ALSAVoiceIn)
-> };
->
-> +static const TypeInfo audio_alsa_info = {
-> +    .name = TYPE_AUDIO_ALSA,
-> +    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-> +    .instance_size = sizeof(AudioALSA),
-
-...and can set instance_size of the parent so I think you can drop the 
-struct above everywhere where no other fields are needed other than the 
-parent. (See e.g. via_mc97_info)
-
-Regards,
-BALATON Zoltan
-
-> +    .class_init = audio_alsa_class_init,
-> +};
-> +
-> +
-> static void register_audio_alsa(void)
-> {
->     audio_driver_register(&alsa_audio_driver);
-> +    type_register_static(&audio_alsa_info);
-> }
-> type_init(register_audio_alsa);
-> +module_obj(TYPE_AUDIO_ALSA);
---3866299591-375026873-1769178199=:60220--
 
