@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C5A5D74EF3
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:52:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF261D74EED
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:57:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjJSZ-0007zQ-1y; Fri, 23 Jan 2026 10:52:31 -0500
+	id 1vjJWa-00038n-UQ; Fri, 23 Jan 2026 10:56:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjJSQ-0007x1-6W
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:52:24 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ id 1vjJWX-00036H-3b
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:56:38 -0500
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjJSO-0004X0-PV
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:52:21 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-7927261a3acso26223897b3.0
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:52:20 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769183539; cv=none;
+ id 1vjJWV-000550-GW
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:56:36 -0500
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-790992528f6so22668267b3.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:56:33 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769183793; cv=none;
  d=google.com; s=arc-20240605;
- b=Q0Y4vCcAzX27TkJFDkgwYyl0uHTIC8HYoj5ZtJkM1PIh1j1wr2ucJ+t/Ge8g2bxPHH
- TLHo/bSWFhG9iPt79wD1GoOAz/QsXcT6XKumWqOOTY0iksRcjHGUA47rgCf6gKMIfrX3
- EvdcnO80+ROpKQTkIzvD/QBYGdO4CaFZqNz1oyaDprEa//yZOrRkNj0R3oj+URd/ioqf
- bjHXWXDjw6OxRCacryY/oKfkaFP3Sn025XcnKUxH4oLbG8zS0f5wLxj01uCf6dExV2y+
- xzmePnjUMnOte/1yl+xx5kE8f2UZpkuZIOJiyS51q8xiDlQ1KWemtC3guaE9vfHLvbsH
- NPHw==
+ b=QjnAUuUHWGFBDaetgDazxmivfNkPnysjBmcxRivjKizijcLcxffpN1BK2jqB7r6mZi
+ 4lW+LWvogzyTjiQ3y8HCwylTCddEDhYviBuwdSYVBIlybrbqfBi2gDDYgO9P5akElzBX
+ YDYBV1xc5CWLMGzNngzmioClon0VyskJAJKprZHgJbBiNwHUVioSqOY7rbgZvhwdF1i2
+ GDw79nyih6a9ijet3GgYXP9AzpvLnFmZh+PEQVaqAHjeB63fC7KlDp5uZijUUEFNo4Kq
+ zNwiU13qDLNCGgjUvsi0bBTF7taivBol4vQsuu4ajYf5VzsRIKNvlWPZprOEn0MO65dp
+ U6yQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=Py6OOOe03sGrUA6aLICoMpiuus4jx7uTMb7a4QEH98Q=;
- fh=vlPiiGePwvhUEOSQUmpdTQQ6CFGVwDWhikjqNfuem50=;
- b=NrcwTMzSLmXmK9HF5JF/47Z8euczt3W9Tj69vDDqTJTJ92iBQuI50O8VJhny7jSU5w
- DaFZe0oZYsOltp/QP0gDGwmiY3v7LWhHv4lTZdj7mnMwAEZE9UdPbH/MY0Lw8hRoOKeN
- 1sBXA9vQoAHig5V+fIqsDotOGUqakZfsDv6utGhllTrrK9wHkCzPhuZNscxq/YjvFRp0
- 33dKjX5Eukusv5Rp7MVo7qxjp6a0V3j2WHdwLjVu6WtpNsftgVEB5hKvxFRI3uLlsvbS
- fAHScHvAVzO5a7Yamw6TwZN/9CnisT2LcOpVuqk19GDVoO4k6Fvmo956SPeeZLcM23LH
- Fs9Q==; darn=nongnu.org
+ bh=Q19Lt6qTHHvQk100RngOWuE6NSsbJSzvksHMg4joRqQ=;
+ fh=IhYtUYV/suwyKA3jDIsz05sLs0xMqitg26tC8cbRvl8=;
+ b=cwUtyHXY4/xzURkKomaajlO5hOJ8ziym9ENhehgNgLjb+4XVq3JZiJ8At/cuyAXgdI
+ 6T6jengb8klvwsZLZG9Hw7bfgLeV914cZ3LP8C7TBO2kfgewGurTx6ibsRxTXlBtAb4l
+ HI7ziWzTGoU3UhCQdaPNifbl2k0/AaPpihSli25Adb40fKyTo1533CCIdk+jV+cc9qQA
+ wb7B8AakfSYTApb9svAGoQOF/VdRbtqYZrx0uFxDzN458Kr5Q4wR9B8PojwOpUdy4C4O
+ JUBpEhVub3o0xMJTbFFTsGOKoT+G8kPhkWKe8m1gHuXcUvXbZ+Lp2xgOLcg5t3RB4yU5
+ vRBw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769183539; x=1769788339; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769183793; x=1769788593; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Py6OOOe03sGrUA6aLICoMpiuus4jx7uTMb7a4QEH98Q=;
- b=q4N8PEroPOdn74yZ0wZshRfD5kwc9tsMJ44O13AzSmRTWshxcnQb9yAeYTazQe3heq
- oMvvpK9QddXXO+R1Kt3+k/lbhtw0vKfk44O163PAV7OQ1poTGyWrHJEK+G/1Lj0tnZn3
- wQixGoGsHzvfp5KT6VvS1Y5T/TuD4cmTYMtccKyGreOEqfy66yOexe8he4hC4nrMNg0O
- H+FSgsk5VKrnyPh9H6H5o8HgDbC6dByI5mZjSbGCQTnta9kLuJoN5ZAEobeIN8ENdNQJ
- jK+b5zc/64eOc9yCH3ATevA1Nm9LPcYp3s2o7sjJqxOfMzdmnn65G1EKZ8VDML7lhjX4
- ezGA==
+ bh=Q19Lt6qTHHvQk100RngOWuE6NSsbJSzvksHMg4joRqQ=;
+ b=GtsSJps6hsrjMeQKAqk+tGwPZWR3YVNVTCZ70DsM4KRqIgMJFXsX5XD4LBOJkM4izm
+ dkk3jpvc0kpIax29323VzNvbMovpqseEz0y8tfDQ7aaDV4vYdwqlYuTrl4Cn3vP5XpID
+ 1SM4OuI9Tv8sGWAOirQML5iZD2+hbBQRZKdi5nTKVOGmFvdFuH0I5IXTUnN+L9Qj/nP+
+ GmZ/9fXS4pZUgQkXHnvaA9UREHSlsYE4Slzi+4Yf9otqRLvXJ0r0YwmfProGa1cGHYhK
+ EpkVMhMiXDoPH6tYrZY+6jk4+sY2av4xnTi8FVnAQWQHOiCxCOLR6N23ZRGBVEV/+dKx
+ Zj1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769183539; x=1769788339;
+ d=1e100.net; s=20230601; t=1769183793; x=1769788593;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Py6OOOe03sGrUA6aLICoMpiuus4jx7uTMb7a4QEH98Q=;
- b=QzRgGe6kOSu+wBYPd8LN/zfK6ZB6DjIHQ8TTskY+WTbWabncPRaEkeyTSeuE/g2FQy
- Os54DajPjH8Q0m2U9RdEXaeW+eh96+KSZkI++69e6R3TvZuww2sp02Wvsr+pA9HwU1GB
- WgFaRHRt3FxH40UdEfxSh4A8b0KQT+t7viljNbYhbfTw3GH7E36VauB+tAZjg1bIwKtp
- sv1nw0IqcHScfh5KoRPwoCbCciVNI+AXFQUerHpcCG+dLsWElB8/edT7U4Y8+hTvqyIy
- 9CRnXpHbAOsFz6wv/tyTJ62Qt4m3V69R6P/VhuwFtr40BzbJ7MtrKUu1zfykcCKNJVZY
- Hv1Q==
+ bh=Q19Lt6qTHHvQk100RngOWuE6NSsbJSzvksHMg4joRqQ=;
+ b=ahtyluXBDyZrNd2tnZOzVF5T4oLzEwH95FwmhYQKs2AkqmJQXS5/9LhIYEh/WVXoHt
+ XE1BPobiL1cgBh1zFLVLbu+51RkhSVfZkQEKGWy7im4tTRTXXnViyfYnzCC/+tcxdgFM
+ dtJo3dRB3ViWPPZ+vHcm8swwR22W1wPnejlImBPeFXbwjb6zyEftoUYStIg8m1u+aJE/
+ D0cq0GTOsH1TKtP90HZhAntqdpCnR5b3QjnVz4aSRdXCLI+r5IRO0Qm++5FmyIaMdo+U
+ PnceaScGBQZH9PEq8oQ8NQ/qzDnn3r4xzSIxzYMLrcrsj7cmZ2H3Ab7TqaTFinxMuneS
+ Rtiw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV0HGASl4PBruu4TBdZ3OB5XeQLr1JILMQxZPUUZ/rQCNy5ik4Hukst5d2duwVCT029zM4EsGIUHlHD@nongnu.org
-X-Gm-Message-State: AOJu0Ywp89LkPMFZleuQx0jyGiXpaeVHAS+atWKytzIE+gIkn520hKAD
- cif0FOg4UaiAeg7V/W9vq/Tr/967fL6mUaHQrQB78GnYMph+hc8G4/12litUC838dQUJf6d7FRO
- BisnLYuaLZrL0djq6NvndoF66eYERwP5g2CCUz44ccw==
-X-Gm-Gg: AZuq6aLLM6e1UoZ+d6587N7LCejggov7DGjZWEXjj9CZpGnyPGu+ORAsjcqhlaL45+E
- wf0zXQhD/pZeT9LJEltpf0dJMsRM2pitNhh3dKdiRkTDh6s4XAMDvJ+m+h8rN20T09x5o8zFk0B
- LUYvHahYlxgKovtiJeJzaLgHu//X/98moNeO77g3RBJZRiqCOZN1TnVpH4bP69jxg60ypcLibon
- ng70yWjYcyZHizXLnq9WR4I5aiCO8NisNf617G6rzWf3I06Kv1773Hx3P00levVYIK5kQ==
-X-Received: by 2002:a05:690c:f15:b0:794:1f9d:4004 with SMTP id
- 00721157ae682-794398e5c9bmr27889207b3.16.1769183539562; Fri, 23 Jan 2026
- 07:52:19 -0800 (PST)
+ AJvYcCVBf62LPXwuOphVA01IFrV4Cy2WKDy6pqCzBiR247LMwHGhIS0YNO4sxUVhZPquXSYHvoOSlfCqVWlR@nongnu.org
+X-Gm-Message-State: AOJu0YxH/sEVlzUMbMNxyuIami9cwFBa9wzVMR535L3h8eV+9AGhRskQ
+ fC1XX8p73cCW2NfO3ddemdQwwK2DwGA9S8f8T6FO6WMVe9xOgkLJsSelWzoCaJYYgzseS+ZrUoA
+ nurk8yRvpGUW8QzOuj8ltIQj+bvu0H0zVRUBu6nD30Q==
+X-Gm-Gg: AZuq6aKOX2srdDwqGaqO7GunDKfKl/XvwjKlTfBmrrps+3zaV4DpdyPR0BvtifSU8S+
+ Z2YJzvVKkyujjT1F3DFf1TtJAJNJQ8xtjhnsMDM5wleybedcsCBFvtWNBI16MNiJwiQSYmiIyae
+ Wbz9W9VZBhW7A4SarNlOcgnHDqBGhCsjPD9FTpmwMZ1IdA4+SOsQoclsNcJSFV+u1vYyky9ry9J
+ CXwkSDoZN9aZpJ+/Faqaf3dO0DqWd8Hwz8UXia7jReecJmUUTn3J17SamK6dlbLi/txyw==
+X-Received: by 2002:a05:690c:4b0b:b0:793:995f:25f9 with SMTP id
+ 00721157ae682-794398e5c16mr28525327b3.28.1769183792801; Fri, 23 Jan 2026
+ 07:56:32 -0800 (PST)
 MIME-Version: 1.0
 References: <20260123150921.17891-1-deller@kernel.org>
- <20260123150921.17891-2-deller@kernel.org>
-In-Reply-To: <20260123150921.17891-2-deller@kernel.org>
+ <20260123150921.17891-3-deller@kernel.org>
+In-Reply-To: <20260123150921.17891-3-deller@kernel.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 23 Jan 2026 15:52:07 +0000
-X-Gm-Features: AZwV_Qg0D1Y6bDG1U8vQSxU0T_RSjdIasmdpZd613AeIS5rLt_scGTSmkKXoG5w
-Message-ID: <CAFEAcA8ZjW7y4nueS_UHs=jPqE5SWUhnXk-kECZnmdZcLen98A@mail.gmail.com>
-Subject: Re: [PATCH 1/3] linux-user: strace: Fix 5th argument of futex syscall
+Date: Fri, 23 Jan 2026 15:56:20 +0000
+X-Gm-Features: AZwV_QhpALjz0klmyo8XYHR0oIMsCON8Q_nSkkprGFy565nPdCdQUtG9JVPaC8E
+Message-ID: <CAFEAcA9cvvM8SAYQGNwah+7C3Uq_27LDXk6_X0rMPtmJVjy8_w@mail.gmail.com>
+Subject: Re: [PATCH 2/3] linux-user: val3 parameter of futex() syscall needs
+ endianess swapping
 To: deller@kernel.org
 Cc: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org,
  Helge Deller <deller@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,39 +117,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 23 Jan 2026 at 15:16, <deller@kernel.org> wrote:
+On Fri, 23 Jan 2026 at 15:11, <deller@kernel.org> wrote:
 >
 > From: Helge Deller <deller@gmx.de>
 >
-> The 5th argument isn't printed, but instead the 4th argument is shown twice.
-> Fix this, and print the FUTEX_BITSET_MATCH_ANY string constant instead of -1
-> if the op is FUTEX_WAIT_BITSET or FUTEX_WAKE_BITSET.
+> The FUTEX_WAIT_BITSET and FUTEX_WAKE_BITSET operations use a val3
+> parameter for comparism. Even if this 32-bit parameter is in most cases
+> 0xffffffff, ensure that we do a required endianess swapping if host and
+> guest endianess differ.
 >
 > Signed-off-by: Helge Deller <deller@gmx.de>
 > ---
->  linux-user/strace.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
+>  linux-user/syscall.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
 >
-> diff --git a/linux-user/strace.c b/linux-user/strace.c
-> index 18bc6c800c..ca67cfd09d 100644
-> --- a/linux-user/strace.c
-> +++ b/linux-user/strace.c
-> @@ -4150,7 +4150,12 @@ print_futex(CPUArchState *cpu_env, const struct syscallname *name,
->              break;
->      }
->      print_pointer(arg4, 0);
-> -    print_raw_param("%d", arg4, 1);
-> +    if ((op == FUTEX_WAIT_BITSET || (op == FUTEX_WAKE_BITSET)) &&
-> +        (arg5 == FUTEX_BITSET_MATCH_ANY)) {
-> +        qemu_log("FUTEX_BITSET_MATCH_ANY");
-> +    } else {
-> +        print_raw_param("%#x", arg5, 1);
-> +    }
->      print_syscall_epilogue(name);
->  }
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index c0a9a86529..7cb9de97e9 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -8106,7 +8106,10 @@ static int do_futex(CPUState *cpu, bool time64, target_ulong uaddr,
 >  #endif
+>      switch (base_op) {
+>      case FUTEX_WAIT:
+> +        val = tswap32(val);
+> +        break;
+>      case FUTEX_WAIT_BITSET:
+> +        val3 = tswap32(val3);
+>          val = tswap32(val);
+>          break;
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+I see why we need to swap the "val" for these operations:
+it is the value that the host kernel will be comparing
+against the in-memory value. It's currently in host
+order but it will be in memory in guest order, so we
+must swap it.
+
+But why do we need to swap the bitmask in val3 ? That
+is in host order now and I would have thought the
+host kernel also wants it in host order.
 
 thanks
 -- PMM
