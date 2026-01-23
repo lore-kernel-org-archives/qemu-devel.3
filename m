@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B9C8D778AF
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 19:57:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94E0FD778AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 19:57:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjNEi-00023W-P0; Fri, 23 Jan 2026 14:54:28 -0500
+	id 1vjNEu-0002Ck-W5; Fri, 23 Jan 2026 14:54:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjNEh-00022X-6i
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 14:54:27 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjNEt-00029W-IX
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 14:54:39 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjNEf-0003Uu-FT
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 14:54:26 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjNEr-0003X6-PE
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 14:54:39 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id B9F1633863;
- Fri, 23 Jan 2026 19:54:08 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E3F9933865;
+ Fri, 23 Jan 2026 19:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769198048; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769198055; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zxddm5U6APu7XOwfsBVhki7+UpshfKnR0yF/8exGvAk=;
- b=fuMF/NMQkntSUOEBvQR2WUsH2Xk6Sh4Qgy5vbz5OgTwki1swuVy3U+qH05PDXrP73Ub54t
- ytffRDsF+BPz7R5c987yB4MLMOG8ISdANfJ1xsTKcnw3z4ntNTq6MGoMROFQUTfxW7jNZN
- S3cJvtLZ5jZOgslbCOzX4GyAfcsRAoU=
+ bh=PdPVU7dy7nYLNsiolxyE299cuedhXP9PrZceedfWPn4=;
+ b=XsD8t3ZIfZy3ECnTqJ1Mi9Oy0fuREhTlWVZv5xSJIjQ7RkQUXhAWXWuska1URitCHQJy48
+ seEsor0un84fEzTUheOqaSeney5Gu/Z7su7uAKE2CDHV1jk4KM7T47DQs7vOHLN2R3WZdQ
+ w0i/EoLJuWoN8bGnlgdn7XdRtOjrTT0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769198048;
+ s=susede2_ed25519; t=1769198055;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zxddm5U6APu7XOwfsBVhki7+UpshfKnR0yF/8exGvAk=;
- b=G6Sl7wULl1cmgDCxHO1/OdInEDVNpzEZQ5nwalWuPhsBldymIJYe9Xixpf6dlsKDPpgljq
- w+uG8lf+OPWffgAg==
+ bh=PdPVU7dy7nYLNsiolxyE299cuedhXP9PrZceedfWPn4=;
+ b=yd/zT56wxJ2ztDo0VaYnykZuAUHnO8mH8vZqcLG9lSnXmxOWu++PmkoDOesw9iQt5oEGhw
+ kVrZufghpmyey5Cw==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769198048; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769198055; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zxddm5U6APu7XOwfsBVhki7+UpshfKnR0yF/8exGvAk=;
- b=fuMF/NMQkntSUOEBvQR2WUsH2Xk6Sh4Qgy5vbz5OgTwki1swuVy3U+qH05PDXrP73Ub54t
- ytffRDsF+BPz7R5c987yB4MLMOG8ISdANfJ1xsTKcnw3z4ntNTq6MGoMROFQUTfxW7jNZN
- S3cJvtLZ5jZOgslbCOzX4GyAfcsRAoU=
+ bh=PdPVU7dy7nYLNsiolxyE299cuedhXP9PrZceedfWPn4=;
+ b=XsD8t3ZIfZy3ECnTqJ1Mi9Oy0fuREhTlWVZv5xSJIjQ7RkQUXhAWXWuska1URitCHQJy48
+ seEsor0un84fEzTUheOqaSeney5Gu/Z7su7uAKE2CDHV1jk4KM7T47DQs7vOHLN2R3WZdQ
+ w0i/EoLJuWoN8bGnlgdn7XdRtOjrTT0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769198048;
+ s=susede2_ed25519; t=1769198055;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zxddm5U6APu7XOwfsBVhki7+UpshfKnR0yF/8exGvAk=;
- b=G6Sl7wULl1cmgDCxHO1/OdInEDVNpzEZQ5nwalWuPhsBldymIJYe9Xixpf6dlsKDPpgljq
- w+uG8lf+OPWffgAg==
+ bh=PdPVU7dy7nYLNsiolxyE299cuedhXP9PrZceedfWPn4=;
+ b=yd/zT56wxJ2ztDo0VaYnykZuAUHnO8mH8vZqcLG9lSnXmxOWu++PmkoDOesw9iQt5oEGhw
+ kVrZufghpmyey5Cw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5EA891395E;
- Fri, 23 Jan 2026 19:54:07 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 90B1F1395E;
+ Fri, 23 Jan 2026 19:54:14 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id qNb7B9/Rc2lFZQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 19:54:07 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id mHokFObRc2lFZQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 19:54:14 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PULL 07/36] qemu-file: qemu_file_get_fd(): improve interface
-Date: Fri, 23 Jan 2026 16:53:22 -0300
-Message-ID: <20260123195352.12850-8-farosas@suse.de>
+	Prasad Pandit <ppandit@redhat.com>
+Subject: [PULL 11/36] migration: Remove fd: support on files
+Date: Fri, 23 Jan 2026 16:53:26 -0300
+Message-ID: <20260123195352.12850-12-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260123195352.12850-1-farosas@suse.de>
 References: <20260123195352.12850-1-farosas@suse.de>
@@ -93,13 +93,15 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
  RCPT_COUNT_THREE(0.00)[3]; FROM_EQ_ENVFROM(0.00)[];
  RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,91 +118,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Peter Xu <peterx@redhat.com>
 
-Make it symmetrical with qemu_file_put_fd() and simplify callers.
+This feature was deprecated in 9.1.  Remove it in this release (11.0).
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+We also need to remove one unit test (/migration/precopy/fd/file) that
+covers the fd: file migration, because it'll stop working now.
+
+Reviewed-by: Prasad Pandit <ppandit@redhat.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/qemu-devel/20260114064710.176268-6-vsementsov@yandex-team.ru
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260115225503.3083355-3-peterx@redhat.com
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/qemu-file.c     |  9 ++++-----
- migration/qemu-file.h     |  2 +-
- migration/vmstate-types.c | 10 +---------
- 3 files changed, 6 insertions(+), 15 deletions(-)
+ docs/about/deprecated.rst             | 14 ---------
+ docs/about/removed-features.rst       |  9 ++++++
+ migration/fd.c                        | 11 ++++---
+ tests/qtest/migration/precopy-tests.c | 41 ---------------------------
+ 4 files changed, 16 insertions(+), 59 deletions(-)
 
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index 8fdb6c87ea..9cf7dc3bd5 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -385,9 +385,8 @@ int qemu_file_put_fd(QEMUFile *f, int fd)
-     return ret;
- }
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index ae9a3b8aea..1d5c4f3707 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -518,17 +518,3 @@ If the user requests a modern x86 CPU model (i.e. not one of ``486``,
+ ``athlon``, ``kvm32``, ``pentium``, ``pentium2``, ``pentium3``or ``qemu32``)
+ a warning will be displayed until a future QEMU version when such CPUs will
+ be rejected.
+-
+-Migration
+----------
+-
+-``fd:`` URI when used for file migration (since 9.1)
+-''''''''''''''''''''''''''''''''''''''''''''''''''''
+-
+-The ``fd:`` URI can currently provide a file descriptor that
+-references either a socket or a plain file. These are two different
+-types of migration. In order to reduce ambiguity, the ``fd:`` URI
+-usage of providing a file descriptor to a plain file has been
+-deprecated in favor of explicitly using the ``file:`` URI with the
+-file descriptor being passed as an ``fdset``. Refer to the ``add-fd``
+-command documentation for details on the ``fdset`` usage.
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 92f80a32e4..41bec8b8e3 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -716,6 +716,15 @@ Use blockdev-mirror with NBD instead. See "QMP invocation for live
+ storage migration with ``blockdev-mirror`` + NBD" in
+ docs/interop/live-block-operations.rst for a detailed explanation.
  
--int qemu_file_get_fd(QEMUFile *f)
-+int qemu_file_get_fd(QEMUFile *f, int *fd)
++``migrate`` command with file-based ``fd:`` URI (removed in 11.0)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++In order to reduce ambiguity, the ``fd:`` URI usage of providing a
++file descriptor to a plain file has been removed in favor of
++explicitly using the ``file:`` URI with the file descriptor being
++passed as an ``fdset``. Refer to the ``add-fd`` command documentation
++for details on the ``fdset`` usage.
++
+ ``migrate-set-capabilities`` ``block`` option (removed in 9.1)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+diff --git a/migration/fd.c b/migration/fd.c
+index 9bf9be6acb..fdeece2101 100644
+--- a/migration/fd.c
++++ b/migration/fd.c
+@@ -24,6 +24,7 @@
+ #include "qemu/sockets.h"
+ #include "io/channel-util.h"
+ #include "trace.h"
++#include "qapi/error.h"
+ 
+ static bool fd_is_pipe(int fd)
  {
--    int fd = -1;
-     FdEntry *fde;
-     Error *err = NULL;
-     int service_byte;
-@@ -410,12 +409,12 @@ int qemu_file_get_fd(QEMUFile *f)
-         goto fail;
+@@ -58,8 +59,9 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
      }
  
--    fd = fde->fd;
-+    *fd = fde->fd;
-     QTAILQ_REMOVE(&f->fds, fde, entry);
-     g_free(fde);
+     if (!migration_fd_valid(fd)) {
+-        warn_report("fd: migration to a file is deprecated."
+-                    " Use file: instead.");
++        error_setg(errp, "fd: migration to a file is not supported."
++                   " Use file: instead.");
++        return;
+     }
  
--    trace_qemu_file_get_fd(f->ioc->name, fd);
--    return fd;
-+    trace_qemu_file_get_fd(f->ioc->name, *fd);
-+    return 0;
+     trace_migration_fd_outgoing(fd);
+@@ -92,8 +94,9 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
+     }
  
- fail:
-     error_report_err(error_copy(err));
-diff --git a/migration/qemu-file.h b/migration/qemu-file.h
-index c13c967167..a8e9bb2ccb 100644
---- a/migration/qemu-file.h
-+++ b/migration/qemu-file.h
-@@ -82,6 +82,6 @@ size_t qemu_get_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+     if (!migration_fd_valid(fd)) {
+-        warn_report("fd: migration to a file is deprecated."
+-                    " Use file: instead.");
++        error_setg(errp, "fd: migration to a file is not supported."
++                   " Use file: instead.");
++        return;
+     }
  
- QIOChannel *qemu_file_get_ioc(QEMUFile *file);
- int qemu_file_put_fd(QEMUFile *f, int fd);
--int qemu_file_get_fd(QEMUFile *f);
-+int qemu_file_get_fd(QEMUFile *f, int *fd);
+     trace_migration_fd_incoming(fd);
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index 0283da43e3..a5423ca33c 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -289,45 +289,6 @@ static void test_precopy_fd_socket(char *name, MigrateCommon *args)
  
+     test_precopy_common(args);
+ }
+-
+-static void *migrate_hook_start_precopy_fd_file(QTestState *from,
+-                                                QTestState *to)
+-{
+-    g_autofree char *file = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
+-    int src_flags = O_CREAT | O_RDWR;
+-    int dst_flags = O_CREAT | O_RDWR;
+-    int fds[2];
+-
+-    fds[0] = open(file, src_flags, 0660);
+-    assert(fds[0] != -1);
+-
+-    fds[1] = open(file, dst_flags, 0660);
+-    assert(fds[1] != -1);
+-
+-
+-    qtest_qmp_fds_assert_success(to, &fds[0], 1,
+-                                 "{ 'execute': 'getfd',"
+-                                 "  'arguments': { 'fdname': 'fd-mig' }}");
+-
+-    qtest_qmp_fds_assert_success(from, &fds[1], 1,
+-                                 "{ 'execute': 'getfd',"
+-                                 "  'arguments': { 'fdname': 'fd-mig' }}");
+-
+-    close(fds[0]);
+-    close(fds[1]);
+-
+-    return NULL;
+-}
+-
+-static void test_precopy_fd_file(char *name, MigrateCommon *args)
+-{
+-    args->listen_uri = "defer";
+-    args->connect_uri = "fd:fd-mig";
+-    args->start_hook = migrate_hook_start_precopy_fd_file;
+-    args->end_hook = migrate_hook_end_fd;
+-
+-    test_file_common(args, true);
+-}
+ #endif /* _WIN32 */
+ 
+ /*
+@@ -1255,8 +1216,6 @@ void migration_test_add_precopy(MigrationTestEnv *env)
+ #ifndef _WIN32
+     migration_test_add("/migration/precopy/fd/tcp",
+                        test_precopy_fd_socket);
+-    migration_test_add("/migration/precopy/fd/file",
+-                       test_precopy_fd_file);
  #endif
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index e34bf4486e..89cb211472 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -321,7 +321,6 @@ const VMStateInfo vmstate_info_uint64 = {
- static int get_fd(QEMUFile *f, void *pv, size_t size,
-                   const VMStateField *field)
- {
--    int fd;
-     int32_t *v = pv;
  
-     if (migrate_mode() == MIG_MODE_CPR_EXEC) {
-@@ -329,14 +328,7 @@ static int get_fd(QEMUFile *f, void *pv, size_t size,
-         return 0;
-     }
- 
--    fd = qemu_file_get_fd(f);
--    if (fd < 0) {
--        return -1;
--    }
--
--    *v = fd;
--
--    return 0;
-+    return qemu_file_get_fd(f, v);
- }
- 
- static int put_fd(QEMUFile *f, void *pv, size_t size,
+     /*
 -- 
 2.51.0
 
