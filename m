@@ -4,105 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD647D74ED8
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:19:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A2CD74ED8
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:19:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjHz8-0000X6-Nf; Fri, 23 Jan 2026 09:18:02 -0500
+	id 1vjHys-0000IC-TT; Fri, 23 Jan 2026 09:17:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHyj-00008O-0l
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:38 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHyK-0008RP-Hm
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:20 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHyg-0003eh-VD
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:36 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHyI-0003cG-RY
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:12 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id E5F5A33810;
- Fri, 23 Jan 2026 14:17:15 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 1DEBC33809;
+ Fri, 23 Jan 2026 14:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769177836; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769177828; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M/QZtDu7HIJudsDmcYL8xgjjE+4D+oJrXIclJ+By0XI=;
- b=DVm/xHo26Ccj4+nQ1dKqIyyeTLVa9yFE7x/FeTf15o7vprWw1zzjDe9cBit8jyfdIqR2ZW
- EQojseovSc7NzjniFruxppqzOxfXJXNZSNfm1DpTlni4JCeufN0Rs4PK3oYsZ8+dwGK17H
- 1vX1hYJn6oEoyw8M8MCnr/75mOQ3J6A=
+ bh=o6O8CgAPCa2Wh5i/Qy/d9wgRT5etJvIyx4G3pi36YK8=;
+ b=kGhq4JsVCeSuRA7HZdMhH11ZVBE4anZxKUXkaS4Nuhs0cFYgnxXglnhOr4zDJPF4GsuSv+
+ zVuSi6QDcTodKh8FO5tZRelyFCNhL3bd8wR5hPZaZ/OCh+9syX03F9ChPwmMbDMS2eQIfV
+ ziQsLqTBvMoalGTACyjVjasNS0al2EQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769177836;
+ s=susede2_ed25519; t=1769177828;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M/QZtDu7HIJudsDmcYL8xgjjE+4D+oJrXIclJ+By0XI=;
- b=pwfpffhSTaCd9S2GyWjMuPek9OQC9/mYcTmSVUupCdBkf3jmNVI6jfIz0Y1QmWPPgboVE2
- mEbz9l0SI96DkVAg==
+ bh=o6O8CgAPCa2Wh5i/Qy/d9wgRT5etJvIyx4G3pi36YK8=;
+ b=MyAHLx+KNHsb4Cfu9gkLCpUyvdJv5FJEGtZBniuIgIuO1MXs8oxxkyw5q9T27EHDrlHVfQ
+ XsNn1yOTWwstD4BQ==
 Authentication-Results: smtp-out1.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=kGhq4JsV;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=MyAHLx+K
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769177835; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769177828; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M/QZtDu7HIJudsDmcYL8xgjjE+4D+oJrXIclJ+By0XI=;
- b=RsZXmGtAiij9XUezOui4KPMBf/Dow7+UuGRB/MMW8g7EPbW5tk3yGQBjtkqk4JZEXYR3SE
- TAVoZ549xby8qAqxqAaCrWITs5fpD3C/hSLe/FI6tFtfIPA+bxfBjmH4KtnPAZkr2snDNI
- G9nnH+Whpp+FA/O/iF3/NlKbWuhvgvw=
+ bh=o6O8CgAPCa2Wh5i/Qy/d9wgRT5etJvIyx4G3pi36YK8=;
+ b=kGhq4JsVCeSuRA7HZdMhH11ZVBE4anZxKUXkaS4Nuhs0cFYgnxXglnhOr4zDJPF4GsuSv+
+ zVuSi6QDcTodKh8FO5tZRelyFCNhL3bd8wR5hPZaZ/OCh+9syX03F9ChPwmMbDMS2eQIfV
+ ziQsLqTBvMoalGTACyjVjasNS0al2EQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769177835;
+ s=susede2_ed25519; t=1769177828;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M/QZtDu7HIJudsDmcYL8xgjjE+4D+oJrXIclJ+By0XI=;
- b=1AKqzg/pWrthh9eYu37Yi6C0x4jMtFTvqqcPX8/QUEPA0bJmYD6PhYp9cX3+60CYa3gnOS
- XAVsPb3OERUAEUBw==
+ bh=o6O8CgAPCa2Wh5i/Qy/d9wgRT5etJvIyx4G3pi36YK8=;
+ b=MyAHLx+KNHsb4Cfu9gkLCpUyvdJv5FJEGtZBniuIgIuO1MXs8oxxkyw5q9T27EHDrlHVfQ
+ XsNn1yOTWwstD4BQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8FD8C1395E;
- Fri, 23 Jan 2026 14:17:13 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3FED91395E;
+ Fri, 23 Jan 2026 14:17:06 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id AJ8vE+mCc2m8HAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 14:17:13 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 4HOwAOKCc2m8HAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 14:17:06 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, berrange@redhat.com, ppandit@redhat.com,
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
  Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v4 06/25] migration: Use migrate_mode() to query for
- cpr-transfer
-Date: Fri, 23 Jan 2026 11:16:36 -0300
-Message-ID: <20260123141656.6765-7-farosas@suse.de>
+Subject: [PATCH v4 03/25] migration/tls: Remove unused parameter
+Date: Fri, 23 Jan 2026 11:16:33 -0300
+Message-ID: <20260123141656.6765-4-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260123141656.6765-1-farosas@suse.de>
 References: <20260123141656.6765-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email,suse.de:mid,suse.de:email,fedoraproject.org:email,imap1.dmz-prg2.suse.org:helo];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCPT_COUNT_SEVEN(0.00)[7];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+ FROM_EQ_ENVFROM(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 1DEBC33809
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,169 +130,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cpr_set_incoming_mode() is only called on the target side, so
-migrate_mode() on the source side is the same as s->parameters.mode.
+The MigrationState parameter is not used at
+migration_tls_channel_process_incoming().
 
-Use the function to reduce explicit access to s->parameters, we have
-options.c for that.
+The last usage was removed by commit 3f461a0c0b ("migration: Drop
+unused parameter for migration_tls_get_creds()")
 
-Cc: Mark Kanda <mark.kanda@oracle.com>
-Cc: Ben Chaney <bchaney@akamai.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/cpr-exec.c  |  2 +-
- migration/migration.c | 27 +++++++++++++--------------
- migration/migration.h |  5 ++---
- 3 files changed, 16 insertions(+), 18 deletions(-)
+ migration/channel.c | 3 +--
+ migration/tls.c     | 4 +---
+ migration/tls.h     | 4 +---
+ 3 files changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
-index da287d8031..e315a30f92 100644
---- a/migration/cpr-exec.c
-+++ b/migration/cpr-exec.c
-@@ -164,7 +164,7 @@ static void cpr_exec_cb(void *opaque)
-     err = NULL;
- 
-     /* Note, we can go from state COMPLETED to FAILED */
--    migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
-+    migration_call_notifiers(MIG_EVENT_PRECOPY_FAILED, NULL);
- 
-     if (!migration_block_activate(&err)) {
-         /* error was already reported */
-diff --git a/migration/migration.c b/migration/migration.c
-index a0b50873ca..16085eb8d6 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1534,7 +1534,7 @@ static void migration_cleanup(MigrationState *s)
-     }
-     type = migration_has_failed(s) ? MIG_EVENT_PRECOPY_FAILED :
-                                      MIG_EVENT_PRECOPY_DONE;
--    migration_call_notifiers(s, type, NULL);
-+    migration_call_notifiers(type, NULL);
-     yank_unregister_instance(MIGRATION_YANK_INSTANCE);
- }
- 
-@@ -1694,10 +1694,9 @@ void migration_remove_notifier(NotifierWithReturn *notify)
-     }
- }
- 
--int migration_call_notifiers(MigrationState *s, MigrationEventType type,
--                             Error **errp)
-+int migration_call_notifiers(MigrationEventType type, Error **errp)
+diff --git a/migration/channel.c b/migration/channel.c
+index 4768c71455..b4ab676048 100644
+--- a/migration/channel.c
++++ b/migration/channel.c
+@@ -32,7 +32,6 @@
+  */
+ void migration_channel_process_incoming(QIOChannel *ioc)
  {
--    MigMode mode = s->parameters.mode;
-+    MigMode mode = migrate_mode();
-     MigrationEvent e;
-     NotifierWithReturn *notifier;
-     GSList *elem, *next;
-@@ -1778,9 +1777,9 @@ bool migration_thread_is_self(void)
-     return qemu_thread_is_self(&s->thread);
+-    MigrationState *s = migrate_get_current();
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     Error *local_err = NULL;
+ 
+@@ -40,7 +39,7 @@ void migration_channel_process_incoming(QIOChannel *ioc)
+         ioc, object_get_typename(OBJECT(ioc)));
+ 
+     if (migrate_channel_requires_tls_upgrade(ioc)) {
+-        migration_tls_channel_process_incoming(s, ioc, &local_err);
++        migration_tls_channel_process_incoming(ioc, &local_err);
+     } else {
+         migration_ioc_register_yank(ioc);
+         migration_ioc_process_incoming(ioc, &local_err);
+diff --git a/migration/tls.c b/migration/tls.c
+index 56b5d1cc90..1df31bdcbb 100644
+--- a/migration/tls.c
++++ b/migration/tls.c
+@@ -71,9 +71,7 @@ static void migration_tls_incoming_handshake(QIOTask *task,
+     object_unref(OBJECT(ioc));
  }
  
--bool migrate_mode_is_cpr(MigrationState *s)
-+bool migrate_mode_is_cpr(void)
+-void migration_tls_channel_process_incoming(MigrationState *s,
+-                                            QIOChannel *ioc,
+-                                            Error **errp)
++void migration_tls_channel_process_incoming(QIOChannel *ioc, Error **errp)
  {
--    MigMode mode = s->parameters.mode;
-+    MigMode mode = migrate_mode();
-     return mode == MIG_MODE_CPR_REBOOT ||
-            mode == MIG_MODE_CPR_TRANSFER ||
-            mode == MIG_MODE_CPR_EXEC;
-@@ -2134,7 +2133,7 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
-         }
-     }
+     QCryptoTLSCreds *creds;
+     QIOChannelTLS *tioc;
+diff --git a/migration/tls.h b/migration/tls.h
+index 58b25e1228..7607cfe803 100644
+--- a/migration/tls.h
++++ b/migration/tls.h
+@@ -24,9 +24,7 @@
+ #include "io/channel.h"
+ #include "io/channel-tls.h"
  
--    if (migrate_mode_is_cpr(s)) {
-+    if (migrate_mode_is_cpr()) {
-         const char *conflict = NULL;
+-void migration_tls_channel_process_incoming(MigrationState *s,
+-                                            QIOChannel *ioc,
+-                                            Error **errp);
++void migration_tls_channel_process_incoming(QIOChannel *ioc, Error **errp);
  
-         if (migrate_postcopy()) {
-@@ -2250,7 +2249,7 @@ void qmp_migrate(const char *uri, bool has_channels,
-         return;
-     }
- 
--    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
-+    if (migrate_mode() == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
-         error_setg(errp, "missing 'cpr' migration channel");
-         return;
-     }
-@@ -2275,7 +2274,7 @@ void qmp_migrate(const char *uri, bool has_channels,
-      * in which case the target will not listen for the incoming migration
-      * connection, so qmp_migrate_finish will fail to connect, and then recover.
-      */
--    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER) {
-+    if (migrate_mode() == MIG_MODE_CPR_TRANSFER) {
-         migrate_hup_add(s, cpr_state_ioc(), (GSourceFunc)qmp_migrate_finish_cb,
-                         QAPI_CLONE(MigrationAddress, addr));
- 
-@@ -2850,7 +2849,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-      * at the transition to postcopy and after the device state; in particular
-      * spice needs to trigger a transition now
-      */
--    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_DONE, NULL);
-+    migration_call_notifiers(MIG_EVENT_PRECOPY_DONE, NULL);
- 
-     migration_downtime_end(ms);
- 
-@@ -2899,7 +2898,7 @@ fail:
-         migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
-     }
-     migration_block_activate(NULL);
--    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
-+    migration_call_notifiers(MIG_EVENT_PRECOPY_FAILED, NULL);
-     bql_unlock();
-     return -1;
- }
-@@ -3001,7 +3000,7 @@ static int migration_completion_precopy(MigrationState *s)
- 
-     bql_lock();
- 
--    if (!migrate_mode_is_cpr(s)) {
-+    if (!migrate_mode_is_cpr()) {
-         ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
-         if (ret < 0) {
-             goto out_unlock;
-@@ -4047,7 +4046,7 @@ void migration_connect(MigrationState *s, Error *error_in)
-         rate_limit = migrate_max_bandwidth();
- 
-         /* Notify before starting migration thread */
--        if (migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
-+        if (migration_call_notifiers(MIG_EVENT_PRECOPY_SETUP, &local_err)) {
-             goto fail;
-         }
-     }
-@@ -4083,7 +4082,7 @@ void migration_connect(MigrationState *s, Error *error_in)
-         return;
-     }
- 
--    if (migrate_mode_is_cpr(s)) {
-+    if (migrate_mode_is_cpr()) {
-         ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
-         if (ret < 0) {
-             error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
-diff --git a/migration/migration.h b/migration/migration.h
-index ccc4e536a5..8b55d4741a 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -538,8 +538,7 @@ bool migrate_has_error(MigrationState *s);
- 
- void migration_connect(MigrationState *s, Error *error_in);
- 
--int migration_call_notifiers(MigrationState *s, MigrationEventType type,
--                             Error **errp);
-+int migration_call_notifiers(MigrationEventType type, Error **errp);
- 
- int migrate_init(MigrationState *s, Error **errp);
- bool migration_is_blocked(Error **errp);
-@@ -548,7 +547,7 @@ bool migration_in_postcopy(void);
- bool migration_postcopy_is_alive(MigrationStatus state);
- MigrationState *migrate_get_current(void);
- bool migration_has_failed(MigrationState *);
--bool migrate_mode_is_cpr(MigrationState *);
-+bool migrate_mode_is_cpr(void);
- 
- uint64_t ram_get_total_transferred_pages(void);
- 
+ QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
+                                            const char *hostname,
 -- 
 2.51.0
 
