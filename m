@@ -4,58 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB3FD74EFA
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 16:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FA71D74EEC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 16:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjJqz-0005qB-8L; Fri, 23 Jan 2026 11:17:45 -0500
+	id 1vjJrO-0006MA-TO; Fri, 23 Jan 2026 11:18:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vjJqi-0005mm-5c
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 11:17:37 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vjJqf-0001Fm-0g
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 11:17:27 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dyNNX6CwqzHnGkJ;
- Sat, 24 Jan 2026 00:16:44 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id CE7A740563;
- Sat, 24 Jan 2026 00:17:22 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 23 Jan
- 2026 16:17:22 +0000
-Date: Fri, 23 Jan 2026 16:17:20 +0000
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-CC: "Michael S. Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>, "Cleber
- Rosa" <crosa@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH v2 06/13] scripts/qmp_helper: add support for a timeout
- logic
-Message-ID: <20260123161720.000063ea@huawei.com>
-In-Reply-To: <3633cf168519ef0ad02c7e493865b0a20257b695.1769175069.git.mchehab+huawei@kernel.org>
-References: <cover.1769175069.git.mchehab+huawei@kernel.org>
- <3633cf168519ef0ad02c7e493865b0a20257b695.1769175069.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vjJrM-0006L0-St
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 11:18:09 -0500
+Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vjJrL-0001K2-3V
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 11:18:08 -0500
+Received: by mail-wm1-x344.google.com with SMTP id
+ 5b1f17b1804b1-4801d7c72a5so17634035e9.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 08:18:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769185085; x=1769789885; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EsFNPBIC82pPzUE5zwRKpQZDQ8bjdKNzb5p6ZiAYcII=;
+ b=j0GpSj/4qPWB5JpCF9zcO5jAiAcsr/Y9UlhJ+28yW3xmzTbJHhQH7qnt1QqBq+sUaj
+ PhhIvWHaVQoA6/hvoAEK/0WduO5h20Fw+sverAsgmM20j51T9pu2KaX54FIxw4JRawBD
+ l1gGJc2WRYne1P9KLTLj4p7s3lXqt6Zq9CgHZwoRCgKWtsBalyiM9WGsBSSMHqmwfD/W
+ cz8DzuWGphThWzhMEK1F+/SaOs+uPK0WFgVUaezZcpyP+9hMGtg+FUeDy8dxVE4+p3oY
+ 2d47veiNgbEoZJjpmryHejHZr15qE6aSudbFk9Mr4kRBBmegH4AJ1l7MClP4NJjuF0Oh
+ ryqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769185085; x=1769789885;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EsFNPBIC82pPzUE5zwRKpQZDQ8bjdKNzb5p6ZiAYcII=;
+ b=tq+nSxsn69b+Xx7ovH2LTPilMPwiDBVchx1X0A+st9OYZep4SOQwaa1K7wPF5uCZA2
+ rZQVecQBYqPednupeByO73G3NRpNNGBWt766Nv3a9vsspT/TUd0Y2q5Vt7KZlNEo1VW0
+ OBM4qNBw6bLBbBeD5Q5TpJ7MG89OF4J19MMPiAflkTvLD2gRAiyrhW7HRFtiYH1c5oVu
+ 6EsBYpbJ33ocshhXv7DyZ1uzuqFlf7xcSbWhe15l5pMK14zuZBucZWRsXWgbCO1wEoVz
+ iqdKrbbAAe8xGdPTLoiodhrQdLk2xeFjWFHuivqgzRSdsKoar9u3inbmiAJHVAs+hxTS
+ RFSA==
+X-Gm-Message-State: AOJu0YzJAD4v9QvMGaB+zmUnV84EFNR+wi5tX/aR84P+GBHEwWlb8/C9
+ WK95Qmm86CRbte/0vKHHdjyRTJbQc4HgnLVB46Dwsg7pcQ1XuHLswCJ3ECFVWmK5SNi25OF/xBH
+ DyyByoDmJUw==
+X-Gm-Gg: AZuq6aIOth2e7qlbAWdHb7FqH1Nokzz9A2SFmbRpahEYW5gC+2K3KYNV6BZMON1cHj2
+ dR0/9rSiFRif8wAn1Bx0+sE59ynnGVuG7K9mUopkQSOIJ0C3bYecmMLYEHAZwjazjM5JdQ3URYa
+ dwPMooDMsLdmLMXcTcZc7dtVsMgX3RmUuk/UfQ+tvx7rmu5/Lbi0WhNrBQxc0/Xuvdw1s3D2KTJ
+ DVXGuFhQtDYtle2Nr/2VXNrNsBw9iilKGX8xR1BLCWGuQptrLbALViX/Ce7x3Hub5cAJEngb0Ex
+ vHrwjHJKS1KPVWbFAvnp0P8L9lJZRoJv/tkSQovrqUGvtFGsPaFsX56aZ+2nUlj1mPfa2ZCasEW
+ qCVhIyPnBLkXdVS9FykcI7dpQdyb489wBpTNDpVB0jAcyvnLI3ppE0es8bt3lR4Ecug+N5oEb8w
+ 8bxQyhGKwELTAul1vgJckdZ20=
+X-Received: by 2002:a05:600c:3e19:b0:47f:1a8d:4f30 with SMTP id
+ 5b1f17b1804b1-4804c9b8e6fmr56757225e9.26.1769185085406; 
+ Fri, 23 Jan 2026 08:18:05 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-480470cc278sm140296995e9.12.2026.01.23.08.18.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 23 Jan 2026 08:18:03 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DF50D5F7B3;
+ Fri, 23 Jan 2026 16:18:02 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Cleber Rosa
+ <crosa@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Mauro
+ Carvalho Chehab <mchehab+huawei@kernel.org>,  Joe Perches
+ <joe@perches.com>,  John Snow <jsnow@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [RFC PATCH v2 00/16] MAINTAINER updates plus conversion of
+ get_maintainers.pl to python
+In-Reply-To: <7b42bd50-937d-4a67-8438-777be9ce3764@linaro.org> (Pierrick
+ Bouvier's message of "Fri, 23 Jan 2026 07:42:59 -0800")
+References: <20260123145750.1200879-1-alex.bennee@linaro.org>
+ <7b42bd50-937d-4a67-8438-777be9ce3764@linaro.org>
+User-Agent: mu4e 1.12.15; emacs 30.1
+Date: Fri, 23 Jan 2026 16:18:02 +0000
+Message-ID: <87qzrgl2v9.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::344;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x344.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,85 +108,70 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 23 Jan 2026 14:35:20 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-> We can't inject a new GHES record to the same source before
-> it has been acked. There is an async mechanism to verify when
-> the Kernel is ready, which is implemented at QEMU's ghes
-> driver.
->=20
-> If error inject is too fast, QEMU may return an error. When
-> such errors occur, implement a retry mechanism, based on a
-> maximum timeout.
->=20
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-One comment where I think you intended to make a comment clearer.
+> On 1/23/26 6:57 AM, Alex Benn=C3=A9e wrote:
+>> I wanted to look at adding gitlab tags to MAINTAINERS and baulked
+>> slightly at figuring out what I would need to change in the perl
+>> script to cleanly handle it.
+>> While we imported the perl script from the kernel I'm fairly sure we
+>> don't use half the features it has and as us grey beards age out less
+>> people will be willing to tweak it. Consider this a proof-of-concept
+>> for discussion about if it is worth perusing this path.
+>> For v2:
+>>    - added the missing K: keyword support
+>>    - added basic --git fallback support
+>>    - picked up a few more MAINTAINER updates from list
+>>    - updated entries for Arm and *-user
+>> I've CC'd the kernel maintainers for the script to see if they are
+>> interested in this work.
+>> While the python script is still cooking I will send a PR on Monday
+>> with just the MAINTAINER updates which are reviewed/acked.
+>> Alex.
+>> Alex Benn=C3=A9e (13):
+>>    MAINTAINERS: fix missing names
+>>    MAINTAINERS: fix libvirt entry
+>>    MAINTAINERS: regularise the status fields
+>>    MAINTAINERS: update Arm to Supported status
+>>    MAINTAINERS: be realistic about *-user
+>>    scripts/get_maintainer.py: minimal argument parsing
+>>    scripts/get_maintainer.py: resolve the source path
+>>    scripts/get_maintainer.py: initial parsing of MAINTAINERS
+>>    scripts/get_maintainer.py: add support for -f
+>>    scripts/get_maintainer.py: add support reading patch files
+>>    scripts/get_maintainer.py: add keyword (K:) support
+>>    scripts/get_maintainer.py: implement basic git fallback support
+>>    gitlab: add a check-maintainers task
+>> Mads Ynddal (1):
+>>    MAINTAINERS: remove myself as reviewer
+>> Pierrick Bouvier (2):
+>>    MAINTAINERS: add maintainer for docs/
+>>    MAINTAINERS: add reviewer for linux-user
+>>   MAINTAINERS                    |  31 +-
+>>   .gitlab-ci.d/static_checks.yml |   9 +
+>>   scripts/get_maintainer.py      | 499 +++++++++++++++++++++++++++++++++
+>>   3 files changed, 525 insertions(+), 14 deletions(-)
+>>   create mode 100755 scripts/get_maintainer.py
+>>=20
+>
+> Hi Alex,
+>
+> it seems like you forgot to pull this patch also:
+> https://lore.kernel.org/qemu-devel/20260115202511.2709767-1-pierrick.bouv=
+ier@linaro.org/
+>
+> Could you please include it in the current series to avoid an
+> additional month of round trip?
 
-Not important though
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Hmm I did so a sweep and I didn't catch it, pulled now.
+>
+> Thanks,
+> Pierrick
 
-> ---
->  scripts/qmp_helper.py | 47 +++++++++++++++++++++++++++++++------------
->  1 file changed, 34 insertions(+), 13 deletions(-)
->=20
-> diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
-> index 1587492807fe..d5ffd51f161e 100755
-> --- a/scripts/qmp_helper.py
-> +++ b/scripts/qmp_helper.py
-> @@ -14,6 +14,7 @@
-> =20
->  from datetime import datetime
->  from os import path as os_path
-> +from time import sleep
-> =20
->  try:
->      qemu_dir =3D os_path.abspath(os_path.dirname(os_path.dirname(__file_=
-_)))
-> @@ -324,7 +325,8 @@ class qmp:
->      Opens a connection and send/receive QMP commands.
->      """
-> =20
-> -    def send_cmd(self, command, args=3DNone, may_open=3DFalse, return_er=
-ror=3DTrue):
-> +    def send_cmd(self, command, args=3DNone, may_open=3DFalse, return_er=
-ror=3DTrue,
-> +                 timeout=3DNone):
->          """Send a command to QMP, optinally opening a connection"""
-> =20
->          if may_open:
-> @@ -336,12 +338,31 @@ def send_cmd(self, command, args=3DNone, may_open=
-=3DFalse, return_error=3DTrue):
->          if args:
->              msg['arguments'] =3D args
-> =20
-> -        try:
-> -            obj =3D self.qmp_monitor.cmd_obj(msg)
-> -        # Can we use some other exception class here?
-> -        except Exception as e:                         # pylint: disable=
-=3DW0718
-> -            print(f"Command: {command}")
-> -            print(f"Failed to inject error: {e}.")
-> +        if timeout and timeout > 0:
-> +            attempts =3D int(timeout * 10)
-> +        else:
-> +            attempts =3D 1
-> +
-> +        # Try up to attempts
-=46rom v1 thread:
-https://lore.kernel.org/qemu-devel/20260122171357.00000747@huawei.com/T/#m5=
-e70aed9fca30a24106ca39196bcf935da745722
-
-I thought plan was to update this message?
-
-> +        for i in range(0, attempts):
-> +            try:
-> +                obj =3D self.qmp_monitor.cmd_obj(msg)
-
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
