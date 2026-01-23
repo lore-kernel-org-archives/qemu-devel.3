@@ -4,65 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62E94D3EE9A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 06:46:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F6CD72348
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:50:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjAvW-0007FJ-5o; Fri, 23 Jan 2026 01:45:50 -0500
+	id 1vjBw5-0002oI-C6; Fri, 23 Jan 2026 02:50:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vjAvT-0007DN-3X
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 01:45:47 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vjBvk-0002fR-1u
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:50:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vjAvR-0005el-26
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 01:45:46 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60N6jeaH019321
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 23 Jan 2026 15:45:42 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=JJwR3g49tg51hHq9QqsrKtMPuywTujjrFBqXZr0Y9L0=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1769150742; v=1;
- b=bnTub9ab5wyGZ3QXdOAi3Oa8kpP/+FrY5htaHJsH+BhTC4Y27c4+erNrjyXAvIMa
- wD4Mtn6AXCJLk2vAtvzI4ugqn9p13OJ5TZqZ1Uod25cn1mFINDb+xNJgyZpO1sac
- 4F63+JNSgVDg9IGIjTP9R7OCurNCPgct0X6QKOZ9mKQcCJyc82WNhAl63xbt4W9a
- Yd4/3IzJAe9gflaM8Rpn10a+G5jm9VIUzXuFrAn6IZaBnsOA5CVgU7rXdwhMqa7V
- xcotqRYmqSSbEisNza48Q64ApSm9bK9sQesf3RwuR2/hCQnZbjWTHnZeTnsTBLab
- VFPp+SjMj2udzT6LGW9mdA==
-Message-ID: <0d57e3df-3ae6-496f-b621-8d979e2ab3f8@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 23 Jan 2026 15:45:39 +0900
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vjBvg-000217-LA
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:50:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769154603;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+Cj/bw4qDmmlXzoSIRtDAt+6VfD0KQ8QNUsb/YNDCvQ=;
+ b=TWi7Du29dVXK/kVPe2zf7DtPfk4TOBa4CsGdU/XdLXFmW2NcxN13359G3W8G1408iW37VO
+ q0Rv0ogwsSnrt1GtSjw6yRxsBIslcQBlre1Xl9YyPzcyAq7WYnFNSWXa6v+b0qySX+HO0p
+ JjAsiheCFmpcgPisLvf6lazZZpAZPGE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-ImBu0YZpNWODDp4RgMSgRA-1; Fri,
+ 23 Jan 2026 02:49:59 -0500
+X-MC-Unique: ImBu0YZpNWODDp4RgMSgRA-1
+X-Mimecast-MFC-AGG-ID: ImBu0YZpNWODDp4RgMSgRA_1769154598
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 94D8719775A7; Fri, 23 Jan 2026 07:49:58 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.5])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1654E1956095; Fri, 23 Jan 2026 07:49:56 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH 01/37] audio: remove obsolete/obscure functions
+Date: Fri, 23 Jan 2026 11:49:04 +0400
+Message-ID: <20260123074945.2563196-2-marcandre.lureau@redhat.com>
+In-Reply-To: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
+References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/8] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20260123062042.568703-1-vivek.kasireddy@intel.com>
- <20260123062042.568703-3-vivek.kasireddy@intel.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260123062042.568703-3-vivek.kasireddy@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,85 +89,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/01/23 15:17, Vivek Kasireddy wrote:
-> If the Guest provides a DMA address that is associated with a ram
-> device (such as a PCI device region and not its system memory),
-> then we can obtain the hva (host virtual address) by invoking
-> address_space_translate() followed by memory_region_get_ram_ptr().
-> 
-> This is because the ram device's address space is not accessible
-> to virtio-gpu directly and hence dma_memory_map() cannot be used.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-This description is a bit confusing.
+AUD_init_time_stamp_{in,out} and AUD_get_elapsed_usec_{in,out} are only
+used by the adlib device. The result isn't actually being used since
+ADLIB_KILL_TIMERS was set some 20y ago. Let's drop this dead code now.
 
-The first problem is with the phrase "the ram device's address space". 
-The address space we are dealing with is always 
-VIRTIO_DEVICE(g)->dma_as. More precisely it is a memory region, not 
-address space.
+Drop QEMUAudioTimeStamp as well as reported by Akihiko Odaki.
 
-The second problem is that it says the ram device's memory region is not 
-directly accessible. It is usually true, but here we are directly 
-accessing it anyway because the guest knows how to do so.
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ audio/audio_template.h                        | 34 -------------------
+ include/qemu/audio.h                          | 10 ------
+ hw/audio/adlib.c                              | 18 +---------
+ .../codeconverter/test_regexps.py             |  1 -
+ 4 files changed, 1 insertion(+), 62 deletions(-)
 
-Regards,
-Akihiko Odaki
-
-> Therefore, we first need to identify the memory region associated
-> with the DMA address and add the offset to the pointer returned
-> from memory_region_get_ram_ptr() to obtain the host address.
-> 
-> Note that we take a reference on the memory region but we would
-> still eventually call dma_memory_unmap() (to unref the mr).
-> 
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Cc: Alex Williamson <alex@shazbot.org>
-> Cc: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> ---
->   hw/display/virtio-gpu.c | 21 ++++++++++++++++++---
->   1 file changed, 18 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 3d58cebf4b..9930a21317 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -798,6 +798,23 @@ static void virtio_gpu_set_scanout_blob(VirtIOGPU *g,
->                                 &fb, res, &ss.r, &cmd->error);
->   }
->   
-> +static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
-> +                                       struct virtio_gpu_ctrl_command *cmd,
-> +                                       uint64_t a, hwaddr *len)
-> +{
-> +    MemoryRegion *mr;
-> +    hwaddr xlat;
-> +
-> +    mr = address_space_translate(VIRTIO_DEVICE(g)->dma_as, a, &xlat, len,
-> +                                 DMA_DIRECTION_TO_DEVICE,
-> +                                 MEMTXATTRS_UNSPECIFIED);
-> +    if (memory_region_is_ram(mr)) {
-> +        memory_region_ref(mr);
-> +        return memory_region_get_ram_ptr(mr) + xlat;
-> +    }
-> +    return NULL;
-> +}
-> +
->   int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
->                                     uint32_t nr_entries, uint32_t offset,
->                                     struct virtio_gpu_ctrl_command *cmd,
-> @@ -839,9 +856,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
->   
->           do {
->               len = l;
-> -            map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
-> -                                 DMA_DIRECTION_TO_DEVICE,
-> -                                 MEMTXATTRS_UNSPECIFIED);
-> +            map = virtio_gpu_dma_memory_map(g, cmd, a, &len);
->               if (!map) {
->                   qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
->                                 " element %d\n", __func__, e);
+diff --git a/audio/audio_template.h b/audio/audio_template.h
+index 7a8c431f2d7..1ab3c47fd76 100644
+--- a/audio/audio_template.h
++++ b/audio/audio_template.h
+@@ -569,40 +569,6 @@ bool glue(AUD_is_active_, TYPE)(SW *sw)
+     return sw ? sw->active : 0;
+ }
+ 
+-void glue (AUD_init_time_stamp_, TYPE) (SW *sw, QEMUAudioTimeStamp *ts)
+-{
+-    if (!sw) {
+-        return;
+-    }
+-
+-    ts->old_ts = sw->hw->ts_helper;
+-}
+-
+-uint64_t glue (AUD_get_elapsed_usec_, TYPE) (SW *sw, QEMUAudioTimeStamp *ts)
+-{
+-    uint64_t delta, cur_ts, old_ts;
+-
+-    if (!sw) {
+-        return 0;
+-    }
+-
+-    cur_ts = sw->hw->ts_helper;
+-    old_ts = ts->old_ts;
+-    /* dolog ("cur %" PRId64 " old %" PRId64 "\n", cur_ts, old_ts); */
+-
+-    if (cur_ts >= old_ts) {
+-        delta = cur_ts - old_ts;
+-    } else {
+-        delta = UINT64_MAX - old_ts + cur_ts;
+-    }
+-
+-    if (!delta) {
+-        return 0;
+-    }
+-
+-    return muldiv64 (delta, sw->hw->info.freq, 1000000);
+-}
+-
+ #undef TYPE
+ #undef HW
+ #undef SW
+diff --git a/include/qemu/audio.h b/include/qemu/audio.h
+index a92e0b70ef0..a1a64ad340d 100644
+--- a/include/qemu/audio.h
++++ b/include/qemu/audio.h
+@@ -50,10 +50,6 @@ struct AudioBackendClass {
+ 
+ typedef struct AudioBackend AudioBackend;
+ 
+-typedef struct QEMUAudioTimeStamp {
+-    uint64_t old_ts;
+-} QEMUAudioTimeStamp;
+-
+ bool AUD_backend_check(AudioBackend **be, Error **errp);
+ 
+ SWVoiceOut *AUD_open_out (
+@@ -71,9 +67,6 @@ int  AUD_get_buffer_size_out (SWVoiceOut *sw);
+ void AUD_set_active_out(SWVoiceOut *sw, bool on);
+ bool AUD_is_active_out(SWVoiceOut *sw);
+ 
+-void     AUD_init_time_stamp_out (SWVoiceOut *sw, QEMUAudioTimeStamp *ts);
+-uint64_t AUD_get_elapsed_usec_out (SWVoiceOut *sw, QEMUAudioTimeStamp *ts);
+-
+ #define AUDIO_MAX_CHANNELS 16
+ typedef struct Volume {
+     bool mute;
+@@ -112,9 +105,6 @@ size_t AUD_read (SWVoiceIn *sw, void *pcm_buf, size_t size);
+ void AUD_set_active_in(SWVoiceIn *sw, bool on);
+ bool AUD_is_active_in(SWVoiceIn *sw);
+ 
+-void     AUD_init_time_stamp_in (SWVoiceIn *sw, QEMUAudioTimeStamp *ts);
+-uint64_t AUD_get_elapsed_usec_in (SWVoiceIn *sw, QEMUAudioTimeStamp *ts);
+-
+ void audio_cleanup(void);
+ 
+ typedef struct st_sample st_sample;
+diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
+index 8b9fe53e17b..efab5107a4c 100644
+--- a/hw/audio/adlib.c
++++ b/hw/audio/adlib.c
+@@ -34,8 +34,6 @@
+ 
+ #define DEBUG 0
+ 
+-#define ADLIB_KILL_TIMERS 1
+-
+ #define ADLIB_DESC "Yamaha YM3812 (OPL2)"
+ 
+ #if DEBUG
+@@ -71,7 +69,6 @@ struct AdlibState {
+     uint64_t dexp[2];
+     SWVoiceOut *voice;
+     int left, pos, samples;
+-    QEMUAudioTimeStamp ats;
+     FM_OPL *opl;
+     PortioList port_list;
+ };
+@@ -88,19 +85,7 @@ static void adlib_kill_timers (AdlibState *s)
+ 
+     for (i = 0; i < 2; ++i) {
+         if (s->ticking[i]) {
+-            uint64_t delta;
+-
+-            delta = AUD_get_elapsed_usec_out (s->voice, &s->ats);
+-            ldebug (
+-                "delta = %f dexp = %f expired => %d",
+-                delta / 1000000.0,
+-                s->dexp[i] / 1000000.0,
+-                delta >= s->dexp[i]
+-                );
+-            if (ADLIB_KILL_TIMERS || delta >= s->dexp[i]) {
+-                adlib_stop_opl_timer (s, i);
+-                AUD_init_time_stamp_out (s->voice, &s->ats);
+-            }
++            adlib_stop_opl_timer(s, i);
+         }
+     }
+ }
+@@ -149,7 +134,6 @@ static void timer_handler (void *opaque, int c, double interval_Sec)
+ #endif
+ 
+     s->dexp[n] = interval_Sec * 1000000.0;
+-    AUD_init_time_stamp_out (s->voice, &s->ats);
+ }
+ 
+ static int write_audio (AdlibState *s, int samples)
+diff --git a/scripts/codeconverter/codeconverter/test_regexps.py b/scripts/codeconverter/codeconverter/test_regexps.py
+index b00e9ef15b2..1ab3fa1699f 100644
+--- a/scripts/codeconverter/codeconverter/test_regexps.py
++++ b/scripts/codeconverter/codeconverter/test_regexps.py
+@@ -202,7 +202,6 @@ def test_struct_re():
+     uint64_t dexp[2];
+     SWVoiceOut *voice;
+     int left, pos, samples;
+-    QEMUAudioTimeStamp ats;
+     FM_OPL *opl;
+     PortioList port_list;
+ } AdlibState;
+-- 
+2.52.0
 
 
