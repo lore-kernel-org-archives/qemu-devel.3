@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E2DBD72343
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A01D72343
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:54:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjBxk-0004bT-FX; Fri, 23 Jan 2026 02:52:12 -0500
+	id 1vjBzC-00075h-Hu; Fri, 23 Jan 2026 02:53:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vjBxi-0004Kp-Cu
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:52:10 -0500
+ id 1vjByJ-0006GD-Hu
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:52:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vjBxg-0002Cg-7Y
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:52:10 -0500
+ id 1vjByC-0002FG-Ss
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:52:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769154727;
+ s=mimecast20190719; t=1769154760;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PYqCzAEYgYsXqsp1A3ZV7mI1PDi7X6MKDgKgGnpgIUw=;
- b=jVinFnI/w/A0V/gkiYOXeD4IMkgXXEbwZarUi7GrkQLsyL2nPtOe+i2wemnEmyFmxFbh1t
- YypEJSvizOjg1Zi47KyEE1mcMKsZfEwaK4YUXFUTgSMPGhqpxSAN5jBPsgnKwBBitygBLM
- 4t/y0cytNZVAYcXu+6Fxls4S96e2SWk=
+ bh=JHpCONBOn3m4p4Px9HLQxtWjsmsFgh8w7Blb7cYv1bk=;
+ b=aIryY19/chti/LUYX+zqUR/u/fKJnD/4FIlW1cAMgj2xJdnBrKIyUgu2KMCTYIS60jopXK
+ WaYSZzjgv68vukIHmXd9KXf8HDu0ub84EHPODUeQCEARHuWVm2oSnRaymPWyBpjVD71U0+
+ zdf01aFZZ0MDaPYV5VjMpYbulIiYRMI=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-vJln_J_AMUy7pEkww5cWYg-1; Fri,
- 23 Jan 2026 02:52:06 -0500
-X-MC-Unique: vJln_J_AMUy7pEkww5cWYg-1
-X-Mimecast-MFC-AGG-ID: vJln_J_AMUy7pEkww5cWYg_1769154725
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-250-3kQuk5HpOt2uTLaX0C6ycw-1; Fri,
+ 23 Jan 2026 02:52:36 -0500
+X-MC-Unique: 3kQuk5HpOt2uTLaX0C6ycw-1
+X-Mimecast-MFC-AGG-ID: 3kQuk5HpOt2uTLaX0C6ycw_1769154755
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4EEF918003FD; Fri, 23 Jan 2026 07:52:05 +0000 (UTC)
+ id 5820F18005AE; Fri, 23 Jan 2026 07:52:35 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E10E31958DC1; Fri, 23 Jan 2026 07:52:03 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 467D3180049F; Fri, 23 Jan 2026 07:52:33 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 22/37] audio: remove set_dbus_server from audio_driver
-Date: Fri, 23 Jan 2026 11:49:25 +0400
-Message-ID: <20260123074945.2563196-23-marcandre.lureau@redhat.com>
+Subject: [PATCH 27/37] audio: make list type declaration private
+Date: Fri, 23 Jan 2026 11:49:30 +0400
+Message-ID: <20260123074945.2563196-28-marcandre.lureau@redhat.com>
 In-Reply-To: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
 References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -89,137 +89,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Use the QOM class vtable only instead.
+No need to share in a common header.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio_int.h | 10 ----------
- audio/audio.c     | 29 +++--------------------------
- audio/dbusaudio.c | 17 +++++++++--------
- 3 files changed, 12 insertions(+), 44 deletions(-)
+ audio/audio_int.h | 7 -------
+ audio/audio.c     | 7 +++++++
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/audio/audio_int.h b/audio/audio_int.h
-index 29f5864be69..0b97c8edee3 100644
+index 446ba1d52c6..08d07b17557 100644
 --- a/audio/audio_int.h
 +++ b/audio/audio_int.h
-@@ -33,10 +33,6 @@
- #include "qemu/audio-capture.h"
- #include "mixeng.h"
+@@ -306,13 +306,6 @@ static inline size_t audio_ring_posb(size_t pos, size_t dist, size_t len)
+ #define ldebug(fmt, ...) (void)0
+ #endif
  
--#ifdef CONFIG_GIO
--#include <gio/gio.h>
--#endif
+-typedef struct AudiodevListEntry {
+-    Audiodev *dev;
+-    QSIMPLEQ_ENTRY(AudiodevListEntry) next;
+-} AudiodevListEntry;
 -
- void G_GNUC_PRINTF(2, 0)
- AUD_vlog(const char *cap, const char *fmt, va_list ap);
- 
-@@ -145,12 +141,6 @@ struct audio_driver {
-     const char *name;
-     void *(*init) (Audiodev *, Error **);
-     void (*fini) (void *);
--#ifdef CONFIG_GIO
--    bool (*set_dbus_server)(AudioBackend *be,
--                            GDBusObjectManagerServer *manager,
--                            bool p2p,
--                            Error **errp);
--#endif
-     struct audio_pcm_ops *pcm_ops;
-     int max_voices_out;
-     int max_voices_in;
+-typedef QSIMPLEQ_HEAD(, AudiodevListEntry) AudiodevListHead;
+-
+ void audio_create_pdos(Audiodev *dev);
+ AudiodevPerDirectionOptions *audio_get_pdo_in(Audiodev *dev);
+ AudiodevPerDirectionOptions *audio_get_pdo_out(Audiodev *dev);
 diff --git a/audio/audio.c b/audio/audio.c
-index 323608ea0d5..7e23a63d401 100644
+index 53b3ad09bf9..8aa071f4580 100644
 --- a/audio/audio.c
 +++ b/audio/audio.c
-@@ -1639,31 +1639,11 @@ static const char *audio_mixeng_backend_get_id(AudioBackend *be)
-     return AUDIO_MIXENG_BACKEND(be)->dev->id;
- }
- 
--#ifdef CONFIG_GIO
--static bool audio_mixeng_backend_set_dbus_server(AudioBackend *be,
--                                                 GDBusObjectManagerServer *manager,
--                                                 bool p2p,
--                                                 Error **errp)
--{
--    AudioMixengBackend *d = AUDIO_MIXENG_BACKEND(be);
--
--    if (!d->drv->set_dbus_server) {
--        return false;
--    }
--
--    return d->drv->set_dbus_server(be, manager, p2p, errp);
--}
--
--#endif
--
- static void audio_mixeng_backend_class_init(ObjectClass *klass, const void *data)
- {
-     AudioBackendClass *be = AUDIO_BACKEND_CLASS(klass);
- 
-     be->get_id = audio_mixeng_backend_get_id;
--#ifdef CONFIG_GIO
--    be->set_dbus_server = audio_mixeng_backend_set_dbus_server;
--#endif
- }
- 
- static void audio_mixeng_backend_init(Object *obj)
-@@ -2263,12 +2243,9 @@ AudioBackend *audio_be_by_name(const char *name, Error **errp)
- #ifdef CONFIG_GIO
- bool audio_be_can_set_dbus_server(AudioBackend *be)
- {
--    /*
--     * TODO:
--     * AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
--     * return klass->set_dbus_server != NULL;
--     */
--    return AUDIO_MIXENG_BACKEND(be)->drv->set_dbus_server != NULL;
-+    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
-+
-+    return klass->set_dbus_server != NULL;
- }
- 
- bool audio_be_set_dbus_server(AudioBackend *be,
-diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-index 789d72f6903..9b25269a2d9 100644
---- a/audio/dbusaudio.c
-+++ b/audio/dbusaudio.c
-@@ -54,13 +54,6 @@ struct AudioDbus {
- 
- static struct audio_driver dbus_audio_driver;
- 
--static void audio_dbus_class_init(ObjectClass *klass, const void *data)
--{
--    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
--
--    k->driver = &dbus_audio_driver;
--}
--
- typedef struct DBusAudio {
-     Audiodev *dev;
-     GDBusObjectManagerServer *server;
-@@ -720,7 +713,6 @@ static struct audio_driver dbus_audio_driver = {
-     .name            = "dbus",
-     .init            = dbus_audio_init,
-     .fini            = dbus_audio_fini,
--    .set_dbus_server = dbus_audio_set_server,
-     .pcm_ops         = &dbus_pcm_ops,
-     .max_voices_out  = INT_MAX,
-     .max_voices_in   = INT_MAX,
-@@ -728,6 +720,15 @@ static struct audio_driver dbus_audio_driver = {
-     .voice_size_in   = sizeof(DBusVoiceIn)
+@@ -67,6 +67,13 @@ const char *audio_prio_list[] = {
+     NULL
  };
  
-+static void audio_dbus_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++typedef struct AudiodevListEntry {
++    Audiodev *dev;
++    QSIMPLEQ_ENTRY(AudiodevListEntry) next;
++} AudiodevListEntry;
 +
-+    b->set_dbus_server = dbus_audio_set_server;
-+    k->driver = &dbus_audio_driver;
-+}
++typedef QSIMPLEQ_HEAD(, AudiodevListEntry) AudiodevListHead;
 +
- static const TypeInfo audio_dbus_info = {
-     .name = TYPE_AUDIO_DBUS,
-     .parent = TYPE_AUDIO_MIXENG_BACKEND,
+ static AudiodevListHead audiodevs =
+     QSIMPLEQ_HEAD_INITIALIZER(audiodevs);
+ static AudiodevListHead default_audiodevs =
 -- 
 2.52.0
 
