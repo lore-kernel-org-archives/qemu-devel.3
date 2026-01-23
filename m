@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 107A7D74EE7
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D67D74EE4
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:16:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIoA-0007ml-HG; Fri, 23 Jan 2026 10:10:48 -0500
+	id 1vjIob-0008Qj-97; Fri, 23 Jan 2026 10:11:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInW-00078P-4d
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:14 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1vjInP-00077M-UV
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:05 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInT-00037j-S7
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:05 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48039fdc8aeso12306225e9.3
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:10:03 -0800 (PST)
+ id 1vjInM-00035d-Mq
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:59 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-4359a16a400so2160824f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769181002; x=1769785802; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769180995; x=1769785795; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=/fXCaA5bXzHvSSDa/5l0SGDQ+8xhd8q1UpBSEVCLj+c=;
- b=a6Xw2ju8Fd7ER1PiQFzfNVNntF15C++7EJq/NIo/XLuKqzzVyrp1NhnDVwtyhpBQOb
- sT2tfmnDBnkVghsUC5iGN7rjm94HVwsHKJw0pnWZhoaPhYpCo0glI0oVczSlt+yYPZJE
- XVFeAqgbC19WwKfXHotbgk++tI7s7Fe4BHIk4s5COJdPukBtAWgzoi7b3KDLo9Hp5BKG
- g2zm4MBtbLekA3e3Apu7F/LzwZHIOuRo4AT4Md3tdKLy2IWLRy97Q/Hrlom6/SSIoz0P
- m+QoKlnjRxolUk2yIeztXhj+rC/QTH7DGpYHnBvu2aH4Y7bkW0GT5MIYkSxS49LwXnZU
- lnBA==
+ :reply-to; bh=B4a7e8a1Ek2vHXva6lSoEeVRPpCC/Zyr9kF8XLCIMcc=;
+ b=D4GkSk9IHsXhGU5XdVh6Rz8dmbM3eCGz7+Zpi/BOVerSGYDJkJJrqfMYQmsycrKy60
+ G2XPHNHM8h2Zqft4Pjz7xQQKPlF6D43AD34yCTNgRBg+7U3u1QUPvtjL9ob207LfFfw0
+ AOFIEj3CeKMMCEcHj6v4H1c6TSgZGAP/swsooy3OOaTwHEen/6z7Jc83UIwWZC28Mhfw
+ pexOpAvHk85omTf4PGQk8wdclXKqiHJhxMJNoJrMM9ormFKKBWAbbKCGK5XK2ro/SOzC
+ 5ldIt9LUQjBIPFTRgc8DXjOSD/3ZdLC+oMT23yV5Xexmrnk4UDuziy9OuCMxS4w5dSKW
+ DB/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769181002; x=1769785802;
+ d=1e100.net; s=20230601; t=1769180995; x=1769785795;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=/fXCaA5bXzHvSSDa/5l0SGDQ+8xhd8q1UpBSEVCLj+c=;
- b=GHL/2bPygGZeIzlsVNKj94Wj4OvnH04GVRymntm0f8C7NHMXx1Bq53UlaaekeDrVNy
- tnWEp1Ll6wzkpqT0FhvrzJYNeFX3zNZUeaGs9+b8IuWs8oDOck+pi5C5emrcv15Wa+30
- oJUitPOT/h5/wuffZkEONwZ4LS62RrHM6T9oze767iBQKQxLPF67HAS5AAuUkrebVDxt
- wu8+y+V0SLUGmSHEN92pmQnSX5ZoTzcWXr4ihdLAsKpQxq+ZgWv7DzB5gcP0ERlseaD8
- zLsSiprmvMn8/LmwFhWDMIht1tXxvUMYyWWfycariIGjOJ3Y38zGiC4CMMZlGBltRopp
- hy5g==
-X-Gm-Message-State: AOJu0Yxhi0Lmd73TaRJBTQwAqSO1v6jUuJ/Wzma+AW/FKv5WEhk/TWfq
- CLYLvv2IKuCAlbDGL7wHFyzFPqVhVU5xu2TUkLYT/ovZ/X7JmfFyo2XhfBT2lWekYJa1LKHgA9d
- qOfj0h70=
-X-Gm-Gg: AZuq6aLtwVQDZLM1m54WlNh6P0oEZixWK2g0MYvSmj6nG9gVA2pat0mlhHmN2Hi8/c4
- kIxDPTFwDlZvPTWkIIZUxSrCCtQhLgOLrVF+vgWxq7S/rlI4Dd+YV+mJ9uUh6DreHzaMJG3w/Vn
- r+UxIrnU75/NMnQXBkjhIvAvNNQG/Y2zbR+/IS0JSY+/OIqheGeoU8uTAN+KvLC0vP5VpNpgPam
- gCou1K9zlgCzZNOizBktXB3pESQ8wIr3a0QrpyZBfPhG/thV7mjnSXEBjeaPGrSC7Qj4GTwTUjv
- GtKQsTfe5FMCPnQ9f6Tg4nlWrV+juHYHHMASAKc7WjXt2alQasCk8g3kok9S6UZKYChuYrHYwF7
- 23vgNrziZBV5MuhdmN2NASHnDLCx2ncEb69Q+tHsiUgrv8lenczCSLBqEvOpvI1tUqQPae2o6Q5
- fFBCDJvDiaykL5Tu2B+P6D+SPbDdHgPAgPzyLMpWHXp4Asu5IUKlse
-X-Received: by 2002:a05:600c:6814:b0:480:46c6:bf4b with SMTP id
- 5b1f17b1804b1-4804c943ea3mr54058645e9.5.1769181002041; 
- Fri, 23 Jan 2026 07:10:02 -0800 (PST)
+ bh=B4a7e8a1Ek2vHXva6lSoEeVRPpCC/Zyr9kF8XLCIMcc=;
+ b=bBZRof/Oufx0qK6ioCi6Z6uH0qfK6ebRSlTGxdTmnN0nFIMtTum0bqz7wDZvvf2bnr
+ HrQ0qQb5Dn4cG+BaQBHuRmr17Vv/rFV8Y2OQ1BHYNRbIU05/9SQ700hsWgzA8KndpKbn
+ yqMsYjT5EppVRKHzu3SVqgnokjJyI0AwgxZP6Vk8L3b+2DADiyA0fOg3sxSn+yQmXCCf
+ DZ2ypM4ngA6FAJyLhma7L9XE9c3sfuyI5J9TuJmBErTP2XGmp+GlruWBeta4VJ5epZhS
+ amUdJ+rMLOIV4dGhMb1g3TWP7R9Y0PYy2/uk5FgDKucMKK7g5LqleiwjTZ9by9nY2TVK
+ +Vgg==
+X-Gm-Message-State: AOJu0YynoKcSqVZwWNtRtfKUPk+TSDRxrjkQ2MyhpBFOyDUafsYmeMGK
+ HYWgdreVk0BkA89Dx135e21mq5qz42IUv6tdZ2wfGCz/3HTEzvfQyWkitvw5aMSbdJPtXbBBO0g
+ wcFgE1QY=
+X-Gm-Gg: AZuq6aKhMV2MSELEoGy+eiYA6TeztMnGPP8c4XsGhxh7dNrE7cqHkA2/zSxq51BT1hB
+ H96L65WV/uVfnwlesNXitYAsPVkr9JEwkJ1jnf+yu+qBOpisVOIGyyDxWOmTCbdNKYeygekaZY/
+ hQX80l7FQfpy8qOUKTbCkHu6NgfxPybEYcRRI0jR947krcsyYSwANhdmAV01PNZrTD8/k7sDR89
+ JSHeRojlYITaOpBXvBRxd5SngMxE38k85+V0oXtWkVnwjl/rSIehTZ5l7ujbJbQI85X6mxAdE1A
+ Q7jd1utwPz71dAujZH15VZ5UOar/zH1r2nZwjCgngSQOAFmsGQzjq3K4pyfGHPpnf/C3CYAztCn
+ bT7Oi1L0oE1pBbjrcrUgK2zC7to8QAIpu9tMM/hTbEUf3165qs0y/tLb7glmHa1oQAJtP+oudST
+ cHW/hGmRf4k7VLFweZU6XgDkcDn113R1o8zWv84D20HiZrL688410m
+X-Received: by 2002:a05:6000:184f:b0:435:a287:82c with SMTP id
+ ffacd0b85a97d-435b1589573mr5616219f8f.1.1769180994882; 
+ Fri, 23 Jan 2026 07:09:54 -0800 (PST)
 Received: from mnementh.archaic.org.uk (mnementh.archaic.org.uk.
  [81.2.115.146]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.10.01
+ ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 07:10:01 -0800 (PST)
+ Fri, 23 Jan 2026 07:09:54 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/22] qemu-options.hx: Drop uses of @var
-Date: Fri, 23 Jan 2026 15:09:39 +0000
-Message-ID: <20260123150941.1877768-22-peter.maydell@linaro.org>
+Subject: [PULL 13/22] misc: Clean up includes
+Date: Fri, 23 Jan 2026 15:09:31 +0000
+Message-ID: <20260123150941.1877768-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260123150941.1877768-1-peter.maydell@linaro.org>
 References: <20260123150941.1877768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,90 +100,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A few entries in qemu-options.hx use the syntax "my-option=@var{name}"
-(or @var{} with no name specified) when documenting an option that takes
-an argument. This syntax isn't consistently used, and the documentation
-generation has no support for it: it just appears literally in the
-HTML output.
+This commit deals with various .c files that included system
+headers that are already pulled in by osdep.h, where the .c
+file includes osdep.h already itself.
 
-Switch these uses to the more common "my-option=<name>". This also
-doesn't have any particular support in the documentation generation
-and so appears literally in the output, but it is a little less odd
-looking to the end-user.
+This commit was created with scripts/clean-includes:
+ ./scripts/clean-includes '--git' 'misc' 'hw/core' 'semihosting' 'target/arm' 'target/i386/kvm/kvm.c' 'target/loongarch' 'target/riscv' 'tools' 'util'
 
-The other common pattern we have is "my-option=name" with no marking
-at all that the right hand side of the '=' is not literal text;
-using <> seems preferable to me, as it makes it more distinct from
-cases where the right hand side is documenting that only certain
-values are permitted, as in "my-option=on|off". This patch doesn't
-do anything about existing uses of this pattern (except in one case
-which was so confused as to use "my-option=@var{}" in the --help
-output and "my-option=" in the RST output, where we change both
-for consistency), but prefers not to add more of them.
+All .c should include qemu/osdep.h first.  The script performs three
+related cleanups:
 
-We don't change the uses of @var in the colo-compare documentation,
-as that part deserves a slightly more wide-ranging overhaul that
-is better in its own commit.
+* Ensure .c files include qemu/osdep.h first.
+* Including it in a .h is redundant, since the .c  already includes
+  it.  Drop such inclusions.
+* Likewise, including headers qemu/osdep.h includes is redundant.
+  Drop these, too.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Zhang Chen <zhangckid@gmail.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260115142629.665319-4-peter.maydell@linaro.org
+Message-id: 20260116125830.926296-4-peter.maydell@linaro.org
 ---
- qemu-options.hx | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ hw/core/machine-qmp-cmds.c         | 1 -
+ semihosting/arm-compat-semi-stub.c | 1 -
+ target/arm/cpu32-stubs.c           | 1 -
+ target/i386/kvm/kvm.c              | 1 -
+ target/loongarch/csr.c             | 1 -
+ target/riscv/csr.c                 | 1 -
+ tools/i386/qemu-vmsr-helper.c      | 1 -
+ util/cpuinfo-aarch64.c             | 1 -
+ 8 files changed, 8 deletions(-)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 455b8be890..862b6c7661 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -36,7 +36,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
-     "                dea-key-wrap=on|off controls support for DEA key wrapping (default=on)\n"
-     "                suppress-vmdesc=on|off disables self-describing migration (default=off)\n"
-     "                nvdimm=on|off controls NVDIMM support (default=off)\n"
--    "                memory-encryption=@var{} memory encryption object to use (default=none)\n"
-+    "                memory-encryption=<id> memory encryption object to use (default=none)\n"
-     "                hmat=on|off controls ACPI HMAT support (default=off)\n"
-     "                spcr=on|off controls ACPI SPCR support (default=on)\n"
- #ifdef CONFIG_POSIX
-@@ -100,7 +100,7 @@ SRST
-     ``nvdimm=on|off``
-         Enables or disables NVDIMM support. The default is off.
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 79cbcdd63e..e62cb4ec88 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -30,7 +30,6 @@
+ #include "system/runstate.h"
+ #include "system/system.h"
+ #include "hw/s390x/storage-keys.h"
+-#include <sys/stat.h>
  
--    ``memory-encryption=``
-+    ``memory-encryption=<id>``
-         Memory encryption object to use. The default is none.
+ /*
+  * QMP query for enabled and present accelerators
+diff --git a/semihosting/arm-compat-semi-stub.c b/semihosting/arm-compat-semi-stub.c
+index bfa3681e26..40199c9842 100644
+--- a/semihosting/arm-compat-semi-stub.c
++++ b/semihosting/arm-compat-semi-stub.c
+@@ -6,7 +6,6 @@
  
-     ``hmat=on|off``
-@@ -180,7 +180,7 @@ SRST
+ #include "qemu/osdep.h"
+ #include "semihosting/semihost.h"
+-#include <glib.h>
  
-             -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
+ bool semihosting_arm_compatible(void)
+ {
+diff --git a/target/arm/cpu32-stubs.c b/target/arm/cpu32-stubs.c
+index f0ce159572..9e50bb1b0b 100644
+--- a/target/arm/cpu32-stubs.c
++++ b/target/arm/cpu32-stubs.c
+@@ -3,7 +3,6 @@
+ #include "qemu/osdep.h"
+ #include "target/arm/cpu.h"
+ #include "target/arm/internals.h"
+-#include <glib.h>
  
--    ``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
-+    ``sgx-epc.0.memdev=<memid>,sgx-epc.0.node=<numaid>``
-         Define an SGX EPC section.
+ void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
+ {
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 7b9b740a8e..0c940d4b64 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -21,7 +21,6 @@
+ #include <sys/utsname.h>
+ #include <sys/syscall.h>
+ #include <sys/resource.h>
+-#include <sys/time.h>
  
-     ``smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel``
-@@ -4530,7 +4530,7 @@ DEF("compat", HAS_ARG, QEMU_OPTION_compat,
-     "                Policy for handling unstable management interfaces\n",
-     QEMU_ARCH_ALL)
- SRST
--``-compat [deprecated-input=@var{input-policy}][,deprecated-output=@var{output-policy}]``
-+``-compat [deprecated-input=<input-policy>][,deprecated-output=<output-policy>]``
-     Set policy for handling deprecated management interfaces (experimental):
+ #include <linux/kvm.h>
+ #include <linux/kvm_para.h>
+diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+index 332a1396cc..fff2312f87 100644
+--- a/target/loongarch/csr.c
++++ b/target/loongarch/csr.c
+@@ -2,7 +2,6 @@
+ /*
+  * Copyright (c) 2025 Loongson Technology Corporation Limited
+  */
+-#include <stddef.h>
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "csr.h"
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 05c7ec8352..5064483917 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -31,7 +31,6 @@
+ #include "qapi/error.h"
+ #include "tcg/insn-start-words.h"
+ #include "internals.h"
+-#include <stdbool.h>
  
-     ``deprecated-input=accept`` (default)
-@@ -4546,7 +4546,7 @@ SRST
+ /* CSR function table public API */
+ void riscv_get_csr_ops(int csrno, riscv_csr_operations *ops)
+diff --git a/tools/i386/qemu-vmsr-helper.c b/tools/i386/qemu-vmsr-helper.c
+index 6c0f4fe870..f12fd3c3e8 100644
+--- a/tools/i386/qemu-vmsr-helper.c
++++ b/tools/i386/qemu-vmsr-helper.c
+@@ -20,7 +20,6 @@
  
-     Limitation: covers only syntactic aspects of QMP.
+ #include "qemu/osdep.h"
+ #include <getopt.h>
+-#include <stdbool.h>
+ #include <sys/ioctl.h>
+ #ifdef CONFIG_LIBCAP_NG
+ #include <cap-ng.h>
+diff --git a/util/cpuinfo-aarch64.c b/util/cpuinfo-aarch64.c
+index 57468890c3..288074c08f 100644
+--- a/util/cpuinfo-aarch64.c
++++ b/util/cpuinfo-aarch64.c
+@@ -26,7 +26,6 @@
+ #if defined(__OpenBSD__) && !defined(CONFIG_ELF_AUX_INFO)
+ # include <machine/armreg.h>
+ # include <machine/cpu.h>
+-# include <sys/types.h>
+ # include <sys/sysctl.h>
+ #endif
  
--``-compat [unstable-input=@var{input-policy}][,unstable-output=@var{output-policy}]``
-+``-compat [unstable-input=<input-policy>][,unstable-output=<output-policy>]``
-     Set policy for handling unstable management interfaces (experimental):
- 
-     ``unstable-input=accept`` (default)
 -- 
 2.47.3
 
