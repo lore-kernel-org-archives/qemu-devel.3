@@ -4,120 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ED98D74ED8
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42E6CD74ED3
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:23:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjHzd-0002Mv-UJ; Fri, 23 Jan 2026 09:18:34 -0500
+	id 1vjI4m-00035y-AN; Fri, 23 Jan 2026 09:23:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHz2-0000XB-SK
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:58 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHz0-0003hD-6R
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:55 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D24815BCCE;
- Fri, 23 Jan 2026 14:17:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769177859; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sf/q+I9m/iBsplwkpebQXtUgYZICo5nq9TuGlY03gRQ=;
- b=drQXzkZJ1z+vW2yQBBm91fQVZEJ6SUrvbL44vP1q3RkEfLjnY06gs8Y9InSmKsKnJkfO1M
- xbYg+gTSN8dSzT8mTfunC+WF+kxtsEUHtPCVT04BxDZJQhcdHrrCwv0C0/HoJFn+YTitPL
- JLAYVcluXdzwAOQC7gtV7HIDO3Rxm2A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769177859;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sf/q+I9m/iBsplwkpebQXtUgYZICo5nq9TuGlY03gRQ=;
- b=t3A4iYz8iOopmPjSftyRg73BZHAtyo95Y8i+E24iz1jmcmOlzk7B9e4ip4WyLxuVebsQ6j
- 0qdU5mUlIncwS9AQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=drQXzkZJ;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=t3A4iYz8
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769177859; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sf/q+I9m/iBsplwkpebQXtUgYZICo5nq9TuGlY03gRQ=;
- b=drQXzkZJ1z+vW2yQBBm91fQVZEJ6SUrvbL44vP1q3RkEfLjnY06gs8Y9InSmKsKnJkfO1M
- xbYg+gTSN8dSzT8mTfunC+WF+kxtsEUHtPCVT04BxDZJQhcdHrrCwv0C0/HoJFn+YTitPL
- JLAYVcluXdzwAOQC7gtV7HIDO3Rxm2A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769177859;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sf/q+I9m/iBsplwkpebQXtUgYZICo5nq9TuGlY03gRQ=;
- b=t3A4iYz8iOopmPjSftyRg73BZHAtyo95Y8i+E24iz1jmcmOlzk7B9e4ip4WyLxuVebsQ6j
- 0qdU5mUlIncwS9AQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 010B01395E;
- Fri, 23 Jan 2026 14:17:37 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uOqyLAGDc2m8HAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 14:17:37 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, berrange@redhat.com, ppandit@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v4 16/25] migration/channel: Rename migration_channel_connect
-Date: Fri, 23 Jan 2026 11:16:46 -0300
-Message-ID: <20260123141656.6765-17-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260123141656.6765-1-farosas@suse.de>
-References: <20260123141656.6765-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vjI4R-0002hY-Qh
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:23:33 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vjI4N-0004jv-Rr
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:23:31 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DDAE3596ADB;
+ Fri, 23 Jan 2026 15:23:21 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id Q-uV95R6rhTw; Fri, 23 Jan 2026 15:23:19 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id D1146596ADF; Fri, 23 Jan 2026 15:23:19 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id CEEF5596AE0;
+ Fri, 23 Jan 2026 15:23:19 +0100 (CET)
+Date: Fri, 23 Jan 2026 15:23:19 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+cc: qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>
+Subject: Re: [PATCH 21/37] audio: add QOM module-objects for each backend
+In-Reply-To: <20260123074945.2563196-22-marcandre.lureau@redhat.com>
+Message-ID: <3f0d41b1-dbce-80ba-c1e2-a8d73d1c6caf@eik.bme.hu>
+References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
+ <20260123074945.2563196-22-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- R_RATELIMIT(0.00)[to_ip_from(RL3zxdrj4h6o64essgck3rrntz)];
- DBL_BLOCKED_OPENRESOLVER(0.00)[fedoraproject.org:email, suse.de:dkim,
- suse.de:mid, suse.de:email, imap1.dmz-prg2.suse.org:rdns,
- imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: D24815BCCE
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-375026873-1769178199=:60220"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,122 +72,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename migration_channel_connect to indicate this is the source
-side. Future patches will do similar changes to the incoming side and
-this will avoid inconsistencies in naming.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/channel.c | 9 +--------
- migration/channel.h | 2 +-
- migration/exec.c    | 2 +-
- migration/fd.c      | 2 +-
- migration/file.c    | 2 +-
- migration/socket.c  | 2 +-
- migration/tls.c     | 2 +-
- 7 files changed, 7 insertions(+), 14 deletions(-)
+--3866299591-375026873-1769178199=:60220
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-diff --git a/migration/channel.c b/migration/channel.c
-index b8d757c17b..f41333adcc 100644
---- a/migration/channel.c
-+++ b/migration/channel.c
-@@ -61,14 +61,7 @@ out:
-     }
- }
- 
--
--/**
-- * @migration_channel_connect - Create new outgoing migration channel
-- *
-- * @s: Current migration state
-- * @ioc: Channel to which we are connecting
-- */
--void migration_channel_connect(MigrationState *s, QIOChannel *ioc)
-+void migration_channel_connect_outgoing(MigrationState *s, QIOChannel *ioc)
- {
-     trace_migration_set_outgoing_channel(ioc, object_get_typename(OBJECT(ioc)));
- 
-diff --git a/migration/channel.h b/migration/channel.h
-index b361e1c838..574bfec65c 100644
---- a/migration/channel.h
-+++ b/migration/channel.h
-@@ -28,7 +28,7 @@ typedef enum {
- 
- void migration_channel_process_incoming(QIOChannel *ioc);
- 
--void migration_channel_connect(MigrationState *s, QIOChannel *ioc);
-+void migration_channel_connect_outgoing(MigrationState *s, QIOChannel *ioc);
- 
- int migration_channel_read_peek(QIOChannel *ioc,
-                                 const char *buf,
-diff --git a/migration/exec.c b/migration/exec.c
-index d83a07435a..d1629944dc 100644
---- a/migration/exec.c
-+++ b/migration/exec.c
-@@ -55,7 +55,7 @@ void exec_start_outgoing_migration(MigrationState *s, strList *command,
-     }
- 
-     qio_channel_set_name(ioc, "migration-exec-outgoing");
--    migration_channel_connect(s, ioc);
-+    migration_channel_connect_outgoing(s, ioc);
-     object_unref(OBJECT(ioc));
- }
- 
-diff --git a/migration/fd.c b/migration/fd.c
-index 0144a70742..150b236fbf 100644
---- a/migration/fd.c
-+++ b/migration/fd.c
-@@ -70,7 +70,7 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
-     }
- 
-     qio_channel_set_name(ioc, "migration-fd-outgoing");
--    migration_channel_connect(s, ioc);
-+    migration_channel_connect_outgoing(s, ioc);
-     object_unref(OBJECT(ioc));
- }
- 
-diff --git a/migration/file.c b/migration/file.c
-index 7bb9c1c79f..935402f36b 100644
---- a/migration/file.c
-+++ b/migration/file.c
-@@ -122,7 +122,7 @@ void file_start_outgoing_migration(MigrationState *s,
-         return;
-     }
-     qio_channel_set_name(ioc, "migration-file-outgoing");
--    migration_channel_connect(s, ioc);
-+    migration_channel_connect_outgoing(s, ioc);
- }
- 
- static gboolean file_accept_incoming_migration(QIOChannel *ioc,
-diff --git a/migration/socket.c b/migration/socket.c
-index 676fe26712..f94959828f 100644
---- a/migration/socket.c
-+++ b/migration/socket.c
-@@ -73,7 +73,7 @@ static void socket_outgoing_migration(QIOTask *task,
-     }
- 
-     trace_migration_socket_outgoing_connected();
--    migration_channel_connect(data->s, sioc);
-+    migration_channel_connect_outgoing(data->s, sioc);
-     return;
- fail:
-     trace_migration_socket_outgoing_error(error_get_pretty(err));
-diff --git a/migration/tls.c b/migration/tls.c
-index 837b08294f..89ba52de02 100644
---- a/migration/tls.c
-+++ b/migration/tls.c
-@@ -114,7 +114,7 @@ static void migration_tls_outgoing_handshake(QIOTask *task,
-     }
- 
-     trace_migration_tls_outgoing_handshake_complete();
--    migration_channel_connect(s, ioc);
-+    migration_channel_connect_outgoing(s, ioc);
- }
- 
- QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
--- 
-2.51.0
+On Fri, 23 Jan 2026, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+>
+> This will allow to use QOM and the dynamic object module loading.
+>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+> audio/audio_int.h   |  2 ++
+> audio/alsaaudio.c   | 27 +++++++++++++++++++++++++++
+> audio/dbusaudio.c   | 26 ++++++++++++++++++++++++++
+> audio/dsoundaudio.c | 26 ++++++++++++++++++++++++++
+> audio/jackaudio.c   | 26 ++++++++++++++++++++++++++
+> audio/noaudio.c     | 26 ++++++++++++++++++++++++++
+> audio/ossaudio.c    | 26 ++++++++++++++++++++++++++
+> audio/paaudio.c     | 26 ++++++++++++++++++++++++++
+> audio/pwaudio.c     | 26 ++++++++++++++++++++++++++
+> audio/sdlaudio.c    | 26 ++++++++++++++++++++++++++
+> audio/sndioaudio.c  | 26 ++++++++++++++++++++++++++
+> audio/spiceaudio.c  | 26 ++++++++++++++++++++++++++
+> audio/wavaudio.c    | 26 ++++++++++++++++++++++++++
+> audio/coreaudio.m   | 26 ++++++++++++++++++++++++++
+> 14 files changed, 341 insertions(+)
+>
+> diff --git a/audio/audio_int.h b/audio/audio_int.h
+> index 06f5160e8df..29f5864be69 100644
+> --- a/audio/audio_int.h
+> +++ b/audio/audio_int.h
+> @@ -241,6 +241,8 @@ struct SWVoiceCap {
+>
+> struct AudioMixengBackendClass {
+>     AudioBackendClass parent_class;
+> +
+> +    audio_driver *driver;
+> };
+>
+> struct AudioMixengBackend {
+> diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
+> index 814820e2864..881f3d0349d 100644
+> --- a/audio/alsaaudio.c
+> +++ b/audio/alsaaudio.c
+> @@ -27,6 +27,7 @@
+> #include "qemu/main-loop.h"
+> #include "qemu/module.h"
+> #include "qemu/audio.h"
+> +#include "qom/object.h"
+> #include "trace.h"
+>
+> #pragma GCC diagnostic ignored "-Waddress"
+> @@ -36,6 +37,22 @@
+>
+> #define DEBUG_ALSA 0
+>
+> +#define TYPE_AUDIO_ALSA "audio-alsa"
+> +OBJECT_DECLARE_SIMPLE_TYPE(AudioALSA, AUDIO_ALSA)
+> +
+> +struct AudioALSA {
+> +    AudioMixengBackend parent;
+> +};
 
+If you have nothing to put here only the parent you don't need to declare 
+the state struct...
+
+> +
+> +static struct audio_driver alsa_audio_driver;
+> +
+> +static void audio_alsa_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
+> +
+> +    k->driver = &alsa_audio_driver;
+> +}
+> +
+> struct pollhlp {
+>     snd_pcm_t *handle;
+>     struct pollfd *pfds;
+> @@ -945,8 +962,18 @@ static struct audio_driver alsa_audio_driver = {
+>     .voice_size_in  = sizeof (ALSAVoiceIn)
+> };
+>
+> +static const TypeInfo audio_alsa_info = {
+> +    .name = TYPE_AUDIO_ALSA,
+> +    .parent = TYPE_AUDIO_MIXENG_BACKEND,
+> +    .instance_size = sizeof(AudioALSA),
+
+...and can set instance_size of the parent so I think you can drop the 
+struct above everywhere where no other fields are needed other than the 
+parent. (See e.g. via_mc97_info)
+
+Regards,
+BALATON Zoltan
+
+> +    .class_init = audio_alsa_class_init,
+> +};
+> +
+> +
+> static void register_audio_alsa(void)
+> {
+>     audio_driver_register(&alsa_audio_driver);
+> +    type_register_static(&audio_alsa_info);
+> }
+> type_init(register_audio_alsa);
+> +module_obj(TYPE_AUDIO_ALSA);
+--3866299591-375026873-1769178199=:60220--
 
