@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EBECD72347
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F03EDD72343
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjBxM-0003sq-4m; Fri, 23 Jan 2026 02:51:55 -0500
+	id 1vjBwC-0002p7-1m; Fri, 23 Jan 2026 02:50:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vjBx6-0003iz-UA
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:51:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vjBvw-0002md-IX
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:50:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vjBx4-00029q-Si
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:51:32 -0500
+ id 1vjBvs-00025k-Fi
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:50:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769154684;
+ s=mimecast20190719; t=1769154615;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lnM88Co+Lf7DhIMBFvo41zCXkmmPSmVmNVe4dV95egM=;
- b=W4SSZvZXPkTelQiiF8SY6JOgYUwILmspmYWJ8GOl6uZTwHUZK85vNBBf2RiQZOtDAicQow
- GqAbl3SkfJ8jbBATuCLZmNvQdP6Xve9FY9fqBPYoUyl55RKzkrfrRl3hgv3AL33kZgrMKE
- NmizE9mJ7Wlu37rJvyxqGkDvQ8xMj9E=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=xT/svcaycthrtYjttjerEmcMjeFzYfsVokU+AyHNNzA=;
+ b=JJdlQ8tK6Q6D2guSUBoKwVSPCec5Mx1ozy7BpIffjlC+ZX1ddKufF8LnTZ2QW5RH6ov/Lc
+ DMOOAOJ6wWTVEoIwsKxmHJdNpQ8heEf8yx7/7mvZ75qO1+Fp9Gf7WS6kFfsZaonUDx2soA
+ LbOEK4Jw8lQC1VaGnt8bzdrr1yUP72A=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-lSOgFSrqP3aBic6BEjDgiw-1; Fri,
- 23 Jan 2026 02:51:22 -0500
-X-MC-Unique: lSOgFSrqP3aBic6BEjDgiw-1
-X-Mimecast-MFC-AGG-ID: lSOgFSrqP3aBic6BEjDgiw_1769154682
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-LoOpbmDuOumI3fBwfuzPjQ-1; Fri,
+ 23 Jan 2026 02:50:11 -0500
+X-MC-Unique: LoOpbmDuOumI3fBwfuzPjQ-1
+X-Mimecast-MFC-AGG-ID: LoOpbmDuOumI3fBwfuzPjQ_1769154610
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DF21F1956050; Fri, 23 Jan 2026 07:51:21 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6479118003FD; Fri, 23 Jan 2026 07:50:10 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C0A521800993; Fri, 23 Jan 2026 07:51:19 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 216C3180049F; Fri, 23 Jan 2026 07:50:08 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Subject: [PATCH 15/37] scripts/modinfo: add --skip-missing-deps
-Date: Fri, 23 Jan 2026 11:49:18 +0400
-Message-ID: <20260123074945.2563196-16-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 03/37] audio/adlib: drop ts_helper HWVoice field
+Date: Fri, 23 Jan 2026 11:49:06 +0400
+Message-ID: <20260123074945.2563196-4-marcandre.lureau@redhat.com>
 In-Reply-To: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
 References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,154 +89,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Add --skip-missing-deps flag that prints warnings for missing
-dependencies but continues without exiting with error code 1.
+Previous commits made this dead code.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- scripts/modinfo-generate.py | 94 ++++++++++++++++++++++++++++---------
- 1 file changed, 71 insertions(+), 23 deletions(-)
+ audio/audio_int.h | 2 --
+ audio/audio.c     | 2 --
+ 2 files changed, 4 deletions(-)
 
-diff --git a/scripts/modinfo-generate.py b/scripts/modinfo-generate.py
-index e7d35242414..e231c129196 100644
---- a/scripts/modinfo-generate.py
-+++ b/scripts/modinfo-generate.py
-@@ -34,7 +34,8 @@ def parse_line(line: str) -> tuple[str, str]:
-             continue
-     return (kind, data)
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index b2b8002477c..20b4c87b0b6 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -77,7 +77,6 @@ typedef struct HWVoiceOut {
+     struct audio_pcm_info info;
  
--def generate(name: str, lines: list[str], enabled: set[str]) -> Optional[set[str]]:
-+def parse_modinfo(name: str, lines: list[str], enabled: set[str]) -> Optional[dict]:
-+    """Parse a modinfo file and return module metadata, or None if disabled."""
-     arch = ""
-     objs = []
-     deps = []
-@@ -54,21 +55,39 @@ def generate(name: str, lines: list[str], enabled: set[str]) -> Optional[set[str
-                 # don't add a module which dependency is not enabled
-                 # in kconfig
-                 if data.strip() not in enabled:
--                    print(f"    /* module {data.strip()} isn't enabled in Kconfig. */")
--                    print("/* },{ */")
-                     return None
-             else:
-                 print("unknown:", kind)
-                 exit(1)
+     f_sample *clip;
+-    uint64_t ts_helper;
  
--    print(f'    .name = "{name}",')
--    if arch != "":
--        print(f"    .arch = {arch},")
--    print_array("objs", objs)
--    print_array("deps", deps)
--    print_array("opts", opts)
-+    return {
-+        'name': name,
-+        'arch': arch,
-+        'objs': objs,
-+        'deps': deps,
-+        'opts': opts,
-+        'dep_names': {dep.strip('" ') for dep in deps}
-+    }
-+
-+def generate(modinfo: str, mod: Optional[dict],
-+             skip_reason: Optional[str]) -> None:
-+    """Generate C code for a module."""
-+    print(f"    /* {modinfo} */")
-+    if mod is None:
-+        if skip_reason == "missing_deps":
-+            print("    /* module has missing dependencies. */")
-+        else:
-+            print("    /* module isn't enabled in Kconfig. */")
-+        print("/* },{ */")
-+        return
-+
-+    print(f'    .name = "{mod["name"]}",')
-+    if mod['arch'] != "":
-+        print(f"    .arch = {mod['arch']},")
-+    print_array("objs", mod['objs'])
-+    print_array("deps", mod['deps'])
-+    print_array("opts", mod['opts'])
-     print("},{")
--    return {dep.strip('" ') for dep in deps}
+     STSampleBuffer mix_buf;
+     void *buf_emul;
+@@ -99,7 +98,6 @@ typedef struct HWVoiceIn {
+     t_sample *conv;
  
- def print_pre() -> None:
-     print("/* generated by scripts/modinfo-generate.py */")
-@@ -86,6 +105,8 @@ def main() -> None:
-     )
-     parser.add_argument('--devices',
-                         help='path to config-device.mak')
-+    parser.add_argument('--skip-missing-deps', action='store_true',
-+                        help='warn if a dependency is missing and continue')
-     parser.add_argument('modinfo', nargs='+',
-                         help='modinfo files to process')
-     args = parser.parse_args()
-@@ -99,27 +120,54 @@ def main() -> None:
-                 if config[1].rstrip() == 'y':
-                     enabled.add(config[0][7:])  # remove CONFIG_
+     size_t total_samples_captured;
+-    uint64_t ts_helper;
  
--    deps = set()
--    modules = set()
--    print_pre()
-+    # all_modules: modinfo path -> (basename, parsed module or None, skip_reason)
-+    all_modules = {}
-     for modinfo in args.modinfo:
-         with open(modinfo) as f:
-             lines = f.readlines()
--        print(f"    /* {modinfo} */")
-         (basename, _) = os.path.splitext(modinfo)
--        moddeps = generate(basename, lines, enabled)
--        if moddeps is not None:
--            modules.add(basename)
--            deps.update(moddeps)
--    print_post()
-+        mod = parse_modinfo(basename, lines, enabled)
-+        skip_reason = "kconfig" if mod is None else None
-+        all_modules[modinfo] = (basename, mod, skip_reason)
-+
-+    # Collect all available module names
-+    available = {basename for basename, mod, _ in all_modules.values()
-+                 if mod is not None}
+     STSampleBuffer conv_buf;
+     void *buf_emul;
+diff --git a/audio/audio.c b/audio/audio.c
+index 86e674410ab..e5841d7f0e6 100644
+--- a/audio/audio.c
++++ b/audio/audio.c
+@@ -1239,7 +1239,6 @@ static void audio_run_out(AudioBackend *s)
+ #endif
  
--    error = False
--    for dep in deps.difference(modules):
-+    # Collect all dependencies
-+    all_deps = set()
-+    for basename, mod, _ in all_modules.values():
-+        if mod is not None:
-+            all_deps.update(mod['dep_names'])
-+
-+    # Check for missing dependencies
-+    missing = all_deps.difference(available)
-+    for dep in missing:
-         print(f"Dependency {dep} cannot be satisfied", file=sys.stderr)
--        error = True
+         if (played) {
+-            hw->ts_helper += played;
+             audio_capture_mix_and_clear (hw, prev_rpos, played);
+         }
  
--    if error:
-+    if missing and not args.skip_missing_deps:
-         exit(1)
+@@ -1319,7 +1318,6 @@ static void audio_run_in(AudioBackend *s)
  
-+    # When skipping missing deps, iteratively remove modules with
-+    # unsatisfiable dependencies
-+    if args.skip_missing_deps and missing:
-+        changed = True
-+        while changed:
-+            changed = False
-+            for modinfo, (basename, mod, skip_reason) in list(all_modules.items()):
-+                if mod is None:
-+                    continue
-+                if not mod['dep_names'].issubset(available):
-+                    available.discard(basename)
-+                    all_modules[modinfo] = (basename, None, "missing_deps")
-+                    changed = True
-+
-+    # generate output
-+    print_pre()
-+    for modinfo in args.modinfo:
-+        (basename, mod, skip_reason) = all_modules[modinfo]
-+        generate(modinfo, mod, skip_reason)
-+    print_post()
-+
- if __name__ == "__main__":
-     main()
+         min = audio_pcm_hw_find_min_in (hw);
+         hw->total_samples_captured += captured - min;
+-        hw->ts_helper += captured;
+ 
+         for (sw = hw->sw_head.lh_first; sw; sw = sw->entries.le_next) {
+             sw->total_hw_samples_acquired -= min;
 -- 
 2.52.0
 
