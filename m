@@ -4,140 +4,205 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA31BD6CFB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 02:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A75D6CFBA
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 03:38:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vj79N-0000Yt-R3; Thu, 22 Jan 2026 21:43:53 -0500
+	id 1vj7zr-0003vM-0h; Thu, 22 Jan 2026 22:38:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1vj79G-0000Rj-W0
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 21:43:48 -0500
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vj7zp-0003v5-Tc
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 22:38:06 -0500
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1vj79E-0006pL-DN
- for qemu-devel@nongnu.org; Thu, 22 Jan 2026 21:43:46 -0500
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vj7zn-0002QO-Ao
+ for qemu-devel@nongnu.org; Thu, 22 Jan 2026 22:38:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1769139483; x=1800675483;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=jhz4Mi3drtnv2cfDmcUK9g1mrL7UPbOzoiK3a6DAE9Y=;
+ b=IUH+6EhjNUBclsz3VMjbwSKcB48SzbqC/ICHGu3fukrlyBWnfiMDFGx1
+ saScROlovgt/aPIRlG8IyrkNOlHBm5mM3uUe/SmOTw22kWWM66wkF3tuZ
+ zhvwEy6h+c7Zh1TqDZQlB3nfs8aFu2ZL3omTW6QxG/EAVlgtIAB43KK4p
+ pPwxuCPVdlI8yD8pjxgldIa0XuLmevuwEtnBdB8l34OR7AshlE5qLYFgb
+ 020dVp9Dc9UhyyPYSEKK4A05yCGzYIy8cJDD5BfVLthm9tZ5DOg7YVH2t
+ R4cdsIsYWYeRMEcMaHgv7CSskZWPd64sejFA/NggtKA6WGgXWp/01Q2Dg Q==;
+X-CSE-ConnectionGUID: qlZAWXG1SsWBSwJ2cYkEuQ==
+X-CSE-MsgGUID: HK2IWbNhTYmZ7uESiCH0Vw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11679"; a="74251879"
+X-IronPort-AV: E=Sophos;i="6.21,247,1763452800"; d="scan'208";a="74251879"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jan 2026 19:37:59 -0800
+X-CSE-ConnectionGUID: xorDIzTDRXqEv4bV2PvGeA==
+X-CSE-MsgGUID: pCfd5ZVkS62dorSTY85cew==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,247,1763452800"; d="scan'208";a="206820625"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Jan 2026 19:37:58 -0800
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Thu, 22 Jan 2026 19:37:57 -0800
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35 via Frontend Transport; Thu, 22 Jan 2026 19:37:57 -0800
+Received: from DM5PR21CU001.outbound.protection.outlook.com (52.101.62.48) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Thu, 22 Jan 2026 19:37:57 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SnSRKKCMKtxxEf1oU/EuQbJyofmf8dy4Zts5d5JsjAE7+0zVCXcdrkffS/fjABjhpfYkkJpxyBR+MwEXi61o0fMFhlWgdRxrSqL7h9yOP03MIR4vYY9Q5Zrd8i921ud3v4CZXN9MSkZ8wtjByqBSFzF5d/3RrIhhhUZY7Ltpqxjh78PFjikbji++lyuO3D6HvOB3u3+pKs+LBVVy0LOS176HTgdoDPMGlYtFS/UBw7znY46CPpDn8pQLJMgu16PzzWJa3CUtxrYfGkayLhcK+Std8uGt5mxXq/i2PorSSMVNZdh8wPXcMQwPy8JUbNZPVj8F+kyZNHXtqVIAYTuryw==
+ b=AgpLAzlFCvwUQtawEDX1rO5h1fge5WMkKPfdQUK75cPdiUW/Jym9UOd0EX483c84aK4pJ+0wULHvPL4Hu05KlcMhC3HCGwaBrCujwaOBTT8v/e9FTDexNPEuPxbbRbvi9d1g5gDz7i6fF8Oquhoz1EH/EcW2GkHSZWbobeN5IgFUaG2HNoz9x3eE9eLObv9ZrYrY25qfGg+lPUQ9ta15Dfn+x8IbNqZoS12dW+O+ZWD5XWO1Pn9Vpbl7DJq9Ltkq6iyH6t/FWs0vhTtVxiYcrltnwkKVsEO7M7uGFaQCOxTDtQyFeRkITaR90q7nT9d3KocPRZ2ew3U1KNT2Ua6roQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9AkZnO5y1yZi6qDZi9Ayqyu+QhI1BMDDwRLoeWb81Es=;
- b=gD+KW/B0/+M61Dd0t+cLBtv9Oe2JaxrXcVovFekZrpdRZfvUmIoJQKoBP6AsuiG8BkEmyIID7rzSA+ADrfyofwGzmWBaixD6x8cvzbdFH1PcVStE8li1KicaYBSeg6dSu4KgdmI4lfcdS2QqQ4WFGkJCzwVJDbWya0N7H+gy7WbZiwRzIPSp3pXqd6tAJljlCMYqY5E9/Jo4QcIkNys07G9XfVBUpUZqxYOnfh/YDsbITQW3rsUbChZe1Som0an68oNy75XKvSPE6CPYlI8OqxXD8542srqysZ+Dpsa8eP+LCXwCgb48mFlQVS6ls8A0AYzE+nvbVqoCJVaw5WVDig==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9AkZnO5y1yZi6qDZi9Ayqyu+QhI1BMDDwRLoeWb81Es=;
- b=BF/wnC5Mc+1Kng/Pp+yzMYyEjTIju9ltE5INFHw7GYVxJH7FjkBNat+hgTQWp+5XHre7E8XadxLJ1GZXfGxRG8z/uM7kX5XNhhnBbndFsIp7ZXUPgLEDWi43xWiZwiZWrbcKyiaal9pQIU2NapdfLB4NZhUSH2Ujk3B0sUo80ys=
-Received: from BYAPR02CA0031.namprd02.prod.outlook.com (2603:10b6:a02:ee::44)
- by DM4PR12MB6256.namprd12.prod.outlook.com (2603:10b6:8:a3::7) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9542.11; Fri, 23 Jan 2026 02:43:34 +0000
-Received: from MWH0EPF000A672E.namprd04.prod.outlook.com
- (2603:10b6:a02:ee:cafe::67) by BYAPR02CA0031.outlook.office365.com
- (2603:10b6:a02:ee::44) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.11 via Frontend Transport; Fri,
- 23 Jan 2026 02:43:36 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- MWH0EPF000A672E.mail.protection.outlook.com (10.167.249.20) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9564.3 via Frontend Transport; Fri, 23 Jan 2026 02:43:34 +0000
-Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 22 Jan
- 2026 20:43:29 -0600
-From: fanhuang <FangSheng.Huang@amd.com>
-To: <qemu-devel@nongnu.org>, <david@redhat.com>, <imammedo@redhat.com>,
- <gourry@gourry.net>, <jonathan.cameron@huawei.com>
-CC: <apopple@nvidia.com>, <dan.j.williams@intel.com>, <Zhigang.Luo@amd.com>,
- <Lianjie.Shi@amd.com>, fanhuang <FangSheng.Huang@amd.com>
-Subject: [PATCH v5 1/1] numa: add 'memmap-type' option for memory type
- configuration
-Date: Fri, 23 Jan 2026 10:43:12 +0800
-Message-ID: <20260123024312.1601732-2-FangSheng.Huang@amd.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260123024312.1601732-1-FangSheng.Huang@amd.com>
-References: <20260123024312.1601732-1-FangSheng.Huang@amd.com>
+ bh=jhz4Mi3drtnv2cfDmcUK9g1mrL7UPbOzoiK3a6DAE9Y=;
+ b=hr+8JuHel3OyzY37GJ6D7PqfCBxWu43jxSe342v9MXnw/W6gTjSJwRKXc1J9Vj5ynzVfcGznIQHzqxw8XT4xPORyMWC7nkzm/69j4pB24JeHeC6NR5hw7ZHN7L/Xwzxl8UNqdCrAJVaUZRUm/7ixo19dpzXqpYcFJYazR2mReB53NTBkBsfa0qf/wVhiTpCCC9FvNobFZmQ9ABlFHsxk6Nzthy60IB3geH8d5Jwjz11yytAFUm6crHDtDpXZP1k7BoiS2Ecb4bUjp05LfbRXbw2lxtcKyM6WsY9Qs0S0auVUuE/W9wnA5R5j7fAubhma0y5IiMwRk/xEN6U19IQ3Tw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by SJ5PPFC0624F2CA.namprd11.prod.outlook.com
+ (2603:10b6:a0f:fc02::850) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.9; Fri, 23 Jan
+ 2026 03:37:52 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%7]) with mapi id 15.20.9542.008; Fri, 23 Jan 2026
+ 03:37:52 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "alex@shazbot.org"
+ <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>
+Subject: RE: [PATCH] vfio/migration: Fix page size calculation
+Thread-Topic: [PATCH] vfio/migration: Fix page size calculation
+Thread-Index: AQHchq3c/YuhchgyOE6hxPeJ682D4rVeOHgAgADq1EA=
+Date: Fri, 23 Jan 2026 03:37:51 +0000
+Message-ID: <IA3PR11MB913691468156580EB53424129294A@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20260116060315.65723-1-zhenzhong.duan@intel.com>
+ <CAFEAcA_LnfF-TqF2yKcPJOK4WHJnbt1RECk9svdRkRrvgRqqSQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA_LnfF-TqF2yKcPJOK4WHJnbt1RECk9svdRkRrvgRqqSQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|SJ5PPFC0624F2CA:EE_
+x-ms-office365-filtering-correlation-id: 8211c393-c9f6-44b4-0ac2-08de5a30c98c
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700021;
+x-microsoft-antispam-message-info: =?utf-8?B?RXJIRjNUNzEwcjU5Mnc1SlNZc3c5UHdTM2hpVk1zYmJpNENxdnc3VVBwODVR?=
+ =?utf-8?B?WDYyelZrOGlITEo1MTh4N1dOTG5QWDdmZ3ZMSFRsK3Vra201NGMwYm4wZ0ph?=
+ =?utf-8?B?Y3h3UlVSK2ZnUjlEVFg4aDF1TE9kMEJ3dVBOcEN0M0pNVFpLNW5EWm5haXpC?=
+ =?utf-8?B?NitzUm16T2NGRG9WdElQRXhpT2JBWWgzMFNGdDdXRUdmQVA5bThRMFNwYnVs?=
+ =?utf-8?B?SzhLSEtCSXBqei8ycnFyVE5mYTd2UHEyN1hpZHk2K2FubFEzb2NMWC9rU3p1?=
+ =?utf-8?B?eGFNSzVVVnVicGprTExPK2FZd3ROQk1YeFY0a01yNmF6YUJsaG9HWllKR0Fr?=
+ =?utf-8?B?c1lVYmpiMnlPRjQ2UjdVN1dJcXg5eFBob2ZpN2xvdG1NeVVNanBmOXErUzJG?=
+ =?utf-8?B?Z1E2c0Q0dHVxWThpQkdIUTVodU96NXBCRWlVbnlwQ2pVT1k0U2ZWWjJveFNu?=
+ =?utf-8?B?aGpyWXlDT29nblFsaERDblBaWWk5eXZtMk5xTG5vejVyaFkrbW1lMitMUGhJ?=
+ =?utf-8?B?MkduaHpINW56eFZCNzYzczIrU1lhSXNHa04vNExJYUgwV3o2SW9FNEVGS3lV?=
+ =?utf-8?B?RWp6MW9SbUFsbVNBUWhUWndoTGNIT04ySFp4UXEvMjQxSnkycDR0eVdXTFhX?=
+ =?utf-8?B?M2pBREpwTC93V2VvZVJiR21JM3AxWkZ6K3VQTG5rWEtsb3ZVR1R6SUhoSm40?=
+ =?utf-8?B?ZFlZbWVvVGp1V2d0UUpIeklpWS95aWVrVW9UOGk5WlB0Y2c1Y21ZdWhWam5v?=
+ =?utf-8?B?VUcwM2c5UXg1L1h4dkpoZTZPVGdBV0ttRDdBOFpzT0piVndRNnJEMzZuYnlL?=
+ =?utf-8?B?M3NTYjkzVmIyekxqRy9DSUwwc2U2eE5mRkc5L213QlUvRUtOOEdtUjhFVS9u?=
+ =?utf-8?B?Z0crdXZGRENPTVFhRWFzWGlNamwvbExuMkNHZTlZd3BRYWxoVG1WU3FCRkI5?=
+ =?utf-8?B?QjVMcW9WWDMwMkhpczM1RnBTZnNZR0cxRURhY3d2WWR0djQzV1hQU1ZRWC9T?=
+ =?utf-8?B?b3cvdW5JaGVvVzhTNHRiR0lSVFpxeWNqN2gwYUc2Ujgwd0ZQWHE1L0hIYlI4?=
+ =?utf-8?B?LzhSaFVNSlRXWndEQUpVNFBaREhkbW1VK3J0cGx1Z05mRXAyQ2RIRmFvckV6?=
+ =?utf-8?B?K2VPeHdBMTFJZjhPY2krTHNHUDROMUlxZ0dGYVBmNDArd2JndWNOcWR5M0M2?=
+ =?utf-8?B?dDQ4QnhKSElhUWNSSUVrMEFwSXluTzR5dFhCbEhXV0VMWTgybVd3bUcwMmZN?=
+ =?utf-8?B?UVR3NEZaZXJ6WUF0M0Rjb3A1WHhZc3ZQeGdiZW1tY0tyeG9JVkRkTVZQR1FS?=
+ =?utf-8?B?NlJJQisxaEp5L0ZTK091YkhNeFZKUGk2SWRUczFVYlN4MkphSko3d2lJZDBQ?=
+ =?utf-8?B?OFRTanIvaWNDbFFITVA4NG1DRDFLWEI1c05JUDdaK2VLVmdpNE5TNG4yRnVs?=
+ =?utf-8?B?NzlxK0EycGwzWHFmYmkwSndKRDZYZ3JTM2gxa1lwQkNoa2tYeEFObHpGTEpW?=
+ =?utf-8?B?bWl4NlFMWFhPMGVsVC9QeEhtT3hucnN2ZzQvdDBBdko3Ti9NeUJSako1MVVZ?=
+ =?utf-8?B?L3Q2V2h2a1VJRVUrMjRSL2RkdHZNbk1VMlNCcEI1bGV4aXBvcU1iNkRWTnpT?=
+ =?utf-8?B?dTNFRFkxbTgvZEM5VDV6eTBGNUZhcy9ReWtPdE1lajRhWEZkSk5UYWtRSHZ4?=
+ =?utf-8?B?RHVqd2w2ZUFuV3VaaVJiNHhUa1NkVWVaSkNxcWxWaUhUdzVhTFlDMUN2VnpK?=
+ =?utf-8?B?Q2tGTGovVUdhVExvbTFkeXVwdmhTUS8rOFcxYmRFdU8xT3p6SjZCRDNsUHEw?=
+ =?utf-8?B?MWNIY1UxeTJZK0FqV1VuT1J4NDRoQ2FLNFd6QkxOT1NJS0V1VUVPUTdlMmk5?=
+ =?utf-8?B?Y29BUG9paEVSSnZsdFlaQmR2VlNlanphbGRmSXhyQVBZWmNLR3JTeXZxSjdX?=
+ =?utf-8?B?NWEvTXdXQy9NYnR3NVlrK25oWWtpdjJ4QWJOVDEybFEwNWlJaXZkTkJ1RDcy?=
+ =?utf-8?B?MkpYZk9GN2F1dUFpVGlkS3c3eXd5WWxMcG9lL01zYjBxSU0yRXFCQzNkalRa?=
+ =?utf-8?B?dXdzTmtsSWN0SzVINjQ1NkdBYUVKelduNWFndjcvMVBzMEl5eEVuN01aRkdC?=
+ =?utf-8?B?UnJNRkMzRFM4ZVZwVzVTc2dPQ0h0dC9GbEZzbTdKL0wzS0lYTTM5M2U4eVpC?=
+ =?utf-8?Q?THHav47Q3yLhu5XfEvgXmuM=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UE1EK1FTcHY3L1hSL0c1NlNLNnZHbS9KRnhYbkM5MEs5VHFRcGduNVRXWkFH?=
+ =?utf-8?B?M21uRHdvaVB1UGZWMU9UMENKRlk2VGczRHJHZks4MjU1eG5TZFI1RzhsTkgy?=
+ =?utf-8?B?NW5Fdk9PZS9KYTQxZER3Qk1seDFsemg0RXc0SDVPdmd6cEtpeEVRNUQ2SGpu?=
+ =?utf-8?B?emJwLzlXQlUrNy9VZ1dCWDJ1M2xYdExzUzFkV2xuZUg1Y0dnT2tHcjdpZzcy?=
+ =?utf-8?B?dUptRnZYbjZmeHJSSUF4VGNNM1Jaakl6VURxTDZMdU5WU3I3eTFCaUdUR21Q?=
+ =?utf-8?B?S3BEQlJ0L0Q1RzB5VzZjU3ErZnZubGJZdEU0OS82eFNsdEpTVnh5bHoxdU9S?=
+ =?utf-8?B?ZlVOMFpsaDBUSEhRcUxFYjBGWStsRndMWHhHaURMNTQwQlZVd1cxOGxEY3dz?=
+ =?utf-8?B?TG1lUnFObjRINjF5ZTMrSjgwVjJOcHhJbzc0bW9pOWxsMG9NaWRMeXRhRlJz?=
+ =?utf-8?B?M0JlNjdXV2Z5Z3FDUlZYL1ZoaXNsdHNxcExxYkhra1RsMzhVanVrUFhPOU5O?=
+ =?utf-8?B?anJmVGtzY0VBUmgwamRYUjQ2RWdzNi9GY3BVeVBrdm9mRHF2bVltTkF3YkxW?=
+ =?utf-8?B?ODBGN0thSXR2UDZZUEVud2tVYmpiTVh0YjEwN1lVb2pkd2FHcnRXZzloSjRZ?=
+ =?utf-8?B?RDg2Y0ZCbkhJbVJ1RW51bm1SV09GY3JSM1FGcnRKdGlyOGxZZzVjQWx3U3d4?=
+ =?utf-8?B?ZkRQZlZzZWRuOU1ydmpSUEpISzBUdzJUNE1qeDVLWk1VM0plSkE1c2lUN2tl?=
+ =?utf-8?B?b1A0RWZ1NnNOS3Vua2h5NFIxOWFUdExwTmJrRUtzdFJxSk81ZkxvTVFOcGQz?=
+ =?utf-8?B?SXRIM0daWlZqOTAvYUhXRlRxeTM3MWV5QXF0bzk3TmxTMzNORVVLQUFnSnR2?=
+ =?utf-8?B?Qk9XUVFDS3V0UlVObTFHeXY5eDBINUo2K3phaU96djFUNmg3d0tJeEtjVjhP?=
+ =?utf-8?B?d3AyV0ZCSzBCY3BrTHNXVjdWaGxiV3lRUzFSV3cwSTdBRGc2YktxSUROQ244?=
+ =?utf-8?B?MFZnM3MxakoxVEVXdWg3YXNPZUJmYjRIT09oZk9PTCtRM3JURzJVbml1eDZo?=
+ =?utf-8?B?SVhFTUlMT0xld2FCSHJQUENxcStzcmdJMnU4OTJWVnk1eHVtbkNnaEhIa1dw?=
+ =?utf-8?B?VlpKaUVkQzRiVDVHb3R4V1I4L1Z6Qm4zSE1LcmoxcUpQNm5ja1MwNlF5K1Q1?=
+ =?utf-8?B?OUhKOEkvdFdSQVVPblVFU0VEa3YyWDdNSXJnNUpvUi9DalpTSld5akNXR05R?=
+ =?utf-8?B?YzQ2TmJ5UmwwRkR3L0ZpcjJUTk5tSlVxM28wb3hlQ0U0NjBsSmZEdTVwY1BK?=
+ =?utf-8?B?V3lEZGl4TVFmSkt6L0JmdHhmeURPeGlhdkVUZ3FEMDVHT0hVeEc1c2luT0kv?=
+ =?utf-8?B?TzlvS1ArYUtHMVZDRm9rWHFsU3o5ZVA2OHd3M1h6UE42R0kyNzZMQlY4cmtU?=
+ =?utf-8?B?Z1VHVnRXQXJHRFpQcTgvalJuQjYwbndDQkJvMWdkaXRsV2prZkdLQzhubkk4?=
+ =?utf-8?B?TUp6ZDhtRDVIbjlPem9VUHl6TFlaSjRpNnIzbE1EcHYzR29zQm1jUGd2YjZ4?=
+ =?utf-8?B?UmU1L0lpZmp6WXVib0lvdmtQOXdZaUxxcE84MHRjamlzTmZoQjFZRWJXdWdF?=
+ =?utf-8?B?b29JMEJYWjVFOFBnREhpSE04Uk5oS2VRWnNwWGM1cTVGYk9FKzFobEpLVU9k?=
+ =?utf-8?B?ajR6WXN0ckFZaE5vZG5wUnZzOVRtRjc3aDRMMkxtWHRtV21OSHNnY0RoVkwz?=
+ =?utf-8?B?cmp1MTJESzNKakVPUURvTG5Wcy9GZ083eHpmWm5CQk9oRkRNa3AzQk9UYy8v?=
+ =?utf-8?B?UTlGdzdiM1ZWdVVNMjA2ZC9yT3BsOVM1MVg5VG9sRExpMVgzeGxsYXE5L0VV?=
+ =?utf-8?B?RUJvbUQzNm0wSVRyT0VHd05IU3B5WFRaOGVDUm5ybDVEb3lJOWNkY0ZjN2dP?=
+ =?utf-8?B?RXdLS0ZzQ0VGRW81OTNhUHJrdkE1dUdGZEd5S2V2QUhmN1JiMVdmazdSTFNn?=
+ =?utf-8?B?c1VFNEV4c0tFaURUWEZLSkkrZ2t1QWh5WmhIK3M4TXhxQWk3dHJ5ZG04M0VN?=
+ =?utf-8?B?MFpCM2xiMmwxbXlMS1NmcTgrYUNJSGR0aXlkVkoyNlBYK0R1Q1lHQTBwajhs?=
+ =?utf-8?B?d0VMa2FNek1lWGJ2RC9UUStSYUhIZEZNZ0MxK1RvbW55VCtHclNZR0lPY3Bs?=
+ =?utf-8?B?ZmpEVlFWcDhhbTAwRWNCUktwaEorcHBFVnBVSm9WdGs0VjVOM2x2cnpsUmpu?=
+ =?utf-8?B?emhYNjQyZGJyN3Q3c0V4OXl2aUZRS0tGZTk1ZDArNE9WT01yRWduWjNBcUlH?=
+ =?utf-8?B?ZjIxTFIxZmdVSGs3RXp2VHN3R3lPZXJzSE9adGFUVUE3b3JvRmhWQT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000A672E:EE_|DM4PR12MB6256:EE_
-X-MS-Office365-Filtering-Correlation-Id: 045d95b4-a6af-414e-b8cc-08de5a2933be
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|1800799024|36860700013|43062017; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?W+R1/7/9Mst+PTivSRtNW8x+o5UQDIeReBPiqU0t4ex2tjWsSyPrbn2KjCMI?=
- =?us-ascii?Q?xGkIJ/7mgh0P+q/uJx/TwbOPxE0g5bbZvxzFQwYH2hR1k5c1+WeCdhmHGr/U?=
- =?us-ascii?Q?H8jL7kr9Oa+cBSLLXY3qaazoRJVD5BNrSykY2aL9XVPRdvzEqgwv4dRCz6zb?=
- =?us-ascii?Q?mLLuoeXWEeaP/h2lbJMZRmBZDa+2kqC792FGZzi30TgmbjSTdXzvC1JzlUKc?=
- =?us-ascii?Q?KLWD6EeFgZsJmoMMy+e7SxgZI7WMcM5UUWfxNyXuMFw2aLaHnGENmDEPARNA?=
- =?us-ascii?Q?0AjEVcFREtBzQArqweZStlnHxGhSHfAFvLdLE91b4+9Wp+6i2fokTOCVvvDe?=
- =?us-ascii?Q?3dkNLQgJW4goVM8JEC539ZaPLzKJkLuLqSDSpFDhJ1LHEpCLYr7MJ8GkVXDR?=
- =?us-ascii?Q?G13eXvUs8C7W+FdS3tv5T2keMiRizYFDqhA14Y7YFHlk6yjrJGwQXg0uTEIR?=
- =?us-ascii?Q?w5Oa//LsXRLYwSCHQPZXNr71lD7j3Dd4oTg3moHran1+RdUVNal+b7xkLrmo?=
- =?us-ascii?Q?fMJGeHwi5nuT0TkT3E+LQLVZZl59iJ6hg/5refw2UI8wVCOTaK6uNZQXvgNj?=
- =?us-ascii?Q?jcpQdtsbh5akbDJpfEeN2mTrCQW6wFbYykID44umSAHDyZVLkFA9MkuK4plj?=
- =?us-ascii?Q?R/7yaDjo17vMmAYGz8q89OFWe8Edky6GDQaZZQxIRRFSYnoqXagoNoQWX4+4?=
- =?us-ascii?Q?kCBF4J2ffOrCCoQwJp0mSeprS1itAtY46jWm7ghAvhXG+Lb4lLnoF0T2sMXM?=
- =?us-ascii?Q?eRWJ8Us56rSCG0ZejZLxup2XNoD38x3k8S6V365qDT0YxXoqX7SSNHb2wVMh?=
- =?us-ascii?Q?X96KvKZ8QEwxrBCTLjELsJIcHqBaYqE29rgIPeU/dISfoJ+mntkhR7/MRdUx?=
- =?us-ascii?Q?EO391j9KjFdYswXcMllrz4J1EdJ8MozSjwTnkf5fj/YIeVctu4obLs9IXZ8b?=
- =?us-ascii?Q?ss/IssVCSWP0cO1uUiReWwSQU5QUZfTmNN8o3f8h40ji01r12gJLi9VCP9o3?=
- =?us-ascii?Q?F3d8hehAkBW/Dtzm1V97QioWAGpe0uDkTLXbjkgbSCa3NDcfCCQmgtaf42zA?=
- =?us-ascii?Q?ZvSEpjXrnQJpdLBYpcoI96rIqhUWC+MOccJGLb6fOPR4VYo6E4cUg8YwUDpK?=
- =?us-ascii?Q?ErlVoSeA8+ZLGBrrgMYYybyIy5Mhy8SOt5/AAiB1yq3YuWVJnsrrWsn7Kl4Y?=
- =?us-ascii?Q?v/SfH+8AnaGwOcELHNXIC3R/6xu7pzJwrT10tTeIr48Narv/y7LPVlu6fcL+?=
- =?us-ascii?Q?NAQa+JEwpHWLnePXJczYmmfPbdaBeMx5k0vDmVXMQz1iOdPNkFAUpuBjItPh?=
- =?us-ascii?Q?cWtFe+eKICABv+ca4M2v5T4x4g7/Tu5D+aw/lVurSX46ryxA/bXjGnWSyj1B?=
- =?us-ascii?Q?h/2N2D6Btr6bDIlQIHpWLn+/4yxYhruyheK6KsLUuweqAiAk942LUbMiAxrz?=
- =?us-ascii?Q?vsiq5zDiatv0kIv/oaxKStiuNyjAo3pZUXHH42NM6Vk8zbCkegGKbLYO/MFP?=
- =?us-ascii?Q?mStXmrt4zMHWTka+G91lSYEO4ttCAs9nRNgGyvx9z36tMe88HryWkxoaJYYu?=
- =?us-ascii?Q?nEQ9T/4CA+ROU/MJ9L9nzl5IsRX5GP/5jAJPkjTHDBZv1uVk7wdz78JhNOjG?=
- =?us-ascii?Q?h+wGI1QY1c/HNZhZB29Q6oX/O+gmzK6eRMzu1xgtBZWFks6TzyEmZXf9RiYZ?=
- =?us-ascii?Q?uppqXclw7xOwOQdxsVMdID3p6lE=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(1800799024)(36860700013)(43062017);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jan 2026 02:43:34.0130 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 045d95b4-a6af-414e-b8cc-08de5a2933be
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A672E.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6256
-Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
- envelope-from=FangSheng.Huang@amd.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8211c393-c9f6-44b4-0ac2-08de5a30c98c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jan 2026 03:37:51.9046 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 0uNeskZFFKuP2qraXgytvcDbrzQRojYia+pWYVL1DpYKiB6gchy6PocHYIigVFYGQgdB9BtTyphXPfbzVS/E6F1/4vCLIoA62xEcq+Loy2I=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPFC0624F2CA
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.12;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,372 +219,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a 'memmap-type' option to NUMA node configuration that allows
-specifying the memory type for a NUMA node.
-
-Supported values:
-  - normal:   Regular system RAM (E820 type 1, default)
-  - spm:      Specific Purpose Memory (E820 type 0xEFFFFFFF)
-  - reserved: Reserved memory (E820 type 2)
-
-The 'spm' type indicates Specific Purpose Memory - a hint to the guest
-that this memory might be managed by device drivers based on guest policy.
-The 'reserved' type marks memory as not usable as RAM.
-
-Note: This option is only supported on x86 platforms.
-
-Usage:
-  -numa node,nodeid=1,memdev=m1,memmap-type=spm
-
-Signed-off-by: fanhuang <FangSheng.Huang@amd.com>
----
- hw/core/numa.c               | 19 ++++++++++
- hw/i386/e820_memory_layout.c | 72 ++++++++++++++++++++++++++++++++++++
- hw/i386/e820_memory_layout.h | 12 +++---
- hw/i386/pc.c                 | 61 ++++++++++++++++++++++++++++++
- include/system/numa.h        |  7 ++++
- qapi/machine.json            | 24 ++++++++++++
- qemu-options.hx              | 14 ++++++-
- 7 files changed, 202 insertions(+), 7 deletions(-)
-
-diff --git a/hw/core/numa.c b/hw/core/numa.c
-index f462883c87..409b2e2bb9 100644
---- a/hw/core/numa.c
-+++ b/hw/core/numa.c
-@@ -38,6 +38,7 @@
- #include "hw/mem/pc-dimm.h"
- #include "hw/core/boards.h"
- #include "hw/mem/memory-device.h"
-+#include "hw/i386/x86.h"
- #include "qemu/option.h"
- #include "qemu/config-file.h"
- #include "qemu/cutils.h"
-@@ -164,6 +165,24 @@ static void parse_numa_node(MachineState *ms, NumaNodeOptions *node,
-         numa_info[nodenr].node_memdev = MEMORY_BACKEND(o);
-     }
- 
-+    if (node->has_memmap_type && node->memmap_type != NUMA_MEMMAP_TYPE_NORMAL) {
-+        if (!object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
-+            error_setg(errp, "memmap-type=%s is only supported on x86 machines",
-+                       NumaMemmapType_str(node->memmap_type));
-+            return;
-+        }
-+        switch (node->memmap_type) {
-+        case NUMA_MEMMAP_TYPE_SPM:
-+            numa_info[nodenr].memmap_type = NUMA_MEMMAP_SPM;
-+            break;
-+        case NUMA_MEMMAP_TYPE_RESERVED:
-+            numa_info[nodenr].memmap_type = NUMA_MEMMAP_RESERVED;
-+            break;
-+        default:
-+            break;
-+        }
-+    }
-+
-     numa_info[nodenr].present = true;
-     max_numa_nodeid = MAX(max_numa_nodeid, nodenr + 1);
-     ms->numa_state->num_nodes++;
-diff --git a/hw/i386/e820_memory_layout.c b/hw/i386/e820_memory_layout.c
-index 3e848fb69c..4c62b5ddea 100644
---- a/hw/i386/e820_memory_layout.c
-+++ b/hw/i386/e820_memory_layout.c
-@@ -46,3 +46,75 @@ bool e820_get_entry(int idx, uint32_t type, uint64_t *address, uint64_t *length)
-     }
-     return false;
- }
-+
-+bool e820_update_entry_type(uint64_t start, uint64_t length, uint32_t new_type)
-+{
-+    uint64_t end = start + length;
-+    assert(!e820_done);
-+
-+    /* For E820_SOFT_RESERVED, validate range is within E820_RAM */
-+    if (new_type == E820_SOFT_RESERVED) {
-+        bool range_in_ram = false;
-+
-+        for (size_t j = 0; j < e820_entries; j++) {
-+            uint64_t ram_start = le64_to_cpu(e820_table[j].address);
-+            uint64_t ram_end = ram_start + le64_to_cpu(e820_table[j].length);
-+            uint32_t ram_type = le32_to_cpu(e820_table[j].type);
-+
-+            if (ram_type == E820_RAM && ram_start <= start && ram_end >= end) {
-+                range_in_ram = true;
-+                break;
-+            }
-+        }
-+        if (!range_in_ram) {
-+            return false;
-+        }
-+    }
-+
-+    /* Find entry that contains the target range and update it */
-+    for (size_t i = 0; i < e820_entries; i++) {
-+        uint64_t entry_start = le64_to_cpu(e820_table[i].address);
-+        uint64_t entry_length = le64_to_cpu(e820_table[i].length);
-+        uint64_t entry_end = entry_start + entry_length;
-+
-+        if (entry_start <= start && entry_end >= end) {
-+            uint32_t original_type = e820_table[i].type;
-+
-+            /* Remove original entry */
-+            memmove(&e820_table[i], &e820_table[i + 1],
-+                    (e820_entries - i - 1) * sizeof(struct e820_entry));
-+            e820_entries--;
-+
-+            /* Add split parts inline */
-+            if (entry_start < start) {
-+                e820_table = g_renew(struct e820_entry, e820_table,
-+                                     e820_entries + 1);
-+                e820_table[e820_entries].address = cpu_to_le64(entry_start);
-+                e820_table[e820_entries].length =
-+                    cpu_to_le64(start - entry_start);
-+                e820_table[e820_entries].type = original_type;
-+                e820_entries++;
-+            }
-+
-+            e820_table = g_renew(struct e820_entry, e820_table,
-+                                 e820_entries + 1);
-+            e820_table[e820_entries].address = cpu_to_le64(start);
-+            e820_table[e820_entries].length = cpu_to_le64(length);
-+            e820_table[e820_entries].type = cpu_to_le32(new_type);
-+            e820_entries++;
-+
-+            if (end < entry_end) {
-+                e820_table = g_renew(struct e820_entry, e820_table,
-+                                     e820_entries + 1);
-+                e820_table[e820_entries].address = cpu_to_le64(end);
-+                e820_table[e820_entries].length = cpu_to_le64(entry_end - end);
-+                e820_table[e820_entries].type = original_type;
-+                e820_entries++;
-+            }
-+
-+            return true;
-+        }
-+    }
-+
-+    return false;
-+}
-diff --git a/hw/i386/e820_memory_layout.h b/hw/i386/e820_memory_layout.h
-index b50acfa201..a85b4fd14c 100644
---- a/hw/i386/e820_memory_layout.h
-+++ b/hw/i386/e820_memory_layout.h
-@@ -10,11 +10,12 @@
- #define HW_I386_E820_MEMORY_LAYOUT_H
- 
- /* e820 types */
--#define E820_RAM        1
--#define E820_RESERVED   2
--#define E820_ACPI       3
--#define E820_NVS        4
--#define E820_UNUSABLE   5
-+#define E820_RAM            1
-+#define E820_RESERVED       2
-+#define E820_ACPI           3
-+#define E820_NVS            4
-+#define E820_UNUSABLE       5
-+#define E820_SOFT_RESERVED  0xEFFFFFFF
- 
- struct e820_entry {
-     uint64_t address;
-@@ -26,5 +27,6 @@ void e820_add_entry(uint64_t address, uint64_t length, uint32_t type);
- bool e820_get_entry(int index, uint32_t type,
-                     uint64_t *address, uint64_t *length);
- int e820_get_table(struct e820_entry **table);
-+bool e820_update_entry_type(uint64_t start, uint64_t length, uint32_t new_type);
- 
- #endif
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 5cb074c0a0..d2230966f9 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -794,6 +794,64 @@ static hwaddr pc_max_used_gpa(PCMachineState *pcms, uint64_t pci_hole64_size)
-     return pc_above_4g_end(pcms) - 1;
- }
- 
-+/*
-+ * Update E820 entries for NUMA nodes with non-default memory types.
-+ */
-+static void pc_update_numa_memory_types(X86MachineState *x86ms)
-+{
-+    MachineState *ms = MACHINE(x86ms);
-+    uint64_t addr = 0;
-+
-+    for (int i = 0; i < ms->numa_state->num_nodes; i++) {
-+        NodeInfo *numa_info = &ms->numa_state->nodes[i];
-+        uint64_t node_size = numa_info->node_mem;
-+
-+        /* Process non-normal memory types */
-+        if (numa_info->memmap_type != NUMA_MEMMAP_NORMAL &&
-+            numa_info->node_memdev) {
-+            uint64_t guest_addr;
-+            uint32_t e820_type;
-+
-+            switch (numa_info->memmap_type) {
-+            case NUMA_MEMMAP_SPM:
-+                e820_type = E820_SOFT_RESERVED;
-+                break;
-+            case NUMA_MEMMAP_RESERVED:
-+                e820_type = E820_RESERVED;
-+                break;
-+            default:
-+                goto next;
-+            }
-+
-+            /* Calculate guest physical address accounting for PCI hole */
-+            if (addr < x86ms->below_4g_mem_size) {
-+                if (addr + node_size <= x86ms->below_4g_mem_size) {
-+                    guest_addr = addr;
-+                } else {
-+                    error_report("NUMA node %d with memmap-type spans across "
-+                                 "4GB boundary, not supported", i);
-+                    exit(EXIT_FAILURE);
-+                }
-+            } else {
-+                guest_addr = 0x100000000ULL +
-+                            (addr - x86ms->below_4g_mem_size);
-+            }
-+
-+            if (!e820_update_entry_type(guest_addr, node_size, e820_type)) {
-+                warn_report("Failed to update E820 entry for node %d "
-+                           "at 0x%" PRIx64 " length 0x%" PRIx64,
-+                           i, guest_addr, node_size);
-+            }
-+        }
-+
-+next:
-+        /* Accumulate address for next node */
-+        if (numa_info->node_memdev) {
-+            addr += node_size;
-+        }
-+    }
-+}
-+
- /*
-  * AMD systems with an IOMMU have an additional hole close to the
-  * 1Tb, which are special GPAs that cannot be DMA mapped. Depending
-@@ -910,6 +968,9 @@ void pc_memory_init(PCMachineState *pcms,
-         e820_add_entry(pcms->sgx_epc.base, pcms->sgx_epc.size, E820_RESERVED);
-     }
- 
-+    /* Update E820 for NUMA nodes with special memory types */
-+    pc_update_numa_memory_types(x86ms);
-+
-     if (!pcmc->has_reserved_memory &&
-         (machine->ram_slots ||
-          (machine->maxram_size > machine->ram_size))) {
-diff --git a/include/system/numa.h b/include/system/numa.h
-index 1044b0eb6e..64e8f63736 100644
---- a/include/system/numa.h
-+++ b/include/system/numa.h
-@@ -35,12 +35,19 @@ enum {
- 
- #define UINT16_BITS       16
- 
-+typedef enum {
-+    NUMA_MEMMAP_NORMAL = 0,
-+    NUMA_MEMMAP_SPM,
-+    NUMA_MEMMAP_RESERVED,
-+} NumaMemmapTypeInternal;
-+
- typedef struct NodeInfo {
-     uint64_t node_mem;
-     struct HostMemoryBackend *node_memdev;
-     bool present;
-     bool has_cpu;
-     bool has_gi;
-+    NumaMemmapTypeInternal memmap_type;
-     uint8_t lb_info_provided;
-     uint16_t initiator;
-     uint8_t distance[MAX_NODES];
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 907cb25f75..b7fc8c564f 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -464,6 +464,22 @@
- { 'enum': 'NumaOptionsType',
-   'data': [ 'node', 'dist', 'cpu', 'hmat-lb', 'hmat-cache' ] }
- 
-+##
-+# @NumaMemmapType:
-+#
-+# Memory mapping type for a NUMA node.
-+#
-+# @normal: Normal system RAM (E820 type 1)
-+#
-+# @spm: Specific Purpose Memory (E820 type 0xEFFFFFFF)
-+#
-+# @reserved: Reserved memory (E820 type 2)
-+#
-+# Since: 10.2
-+##
-+{ 'enum': 'NumaMemmapType',
-+  'data': ['normal', 'spm', 'reserved'] }
-+
- ##
- # @NumaOptions:
- #
-@@ -500,6 +516,13 @@
- # @memdev: memory backend object.  If specified for one node, it must
- #     be specified for all nodes.
- #
-+# @memmap-type: specifies the memory type for this NUMA node.
-+#     'normal' (default) is regular system RAM.
-+#     'spm' is Specific Purpose Memory - a hint to the guest that
-+#     this memory might be managed by device drivers based on policy.
-+#     'reserved' is reserved memory, not usable as RAM.
-+#     Currently only supported on x86.  (since 10.2)
-+#
- # @initiator: defined in ACPI 6.3 Chapter 5.2.27.3 Table 5-145, points
- #     to the nodeid which has the memory controller responsible for
- #     this NUMA node.  This field provides additional information as
-@@ -514,6 +537,7 @@
-    '*cpus':   ['uint16'],
-    '*mem':    'size',
-    '*memdev': 'str',
-+   '*memmap-type': 'NumaMemmapType',
-    '*initiator': 'uint16' }}
- 
- ##
-diff --git a/qemu-options.hx b/qemu-options.hx
-index ec92723f10..4da17cbefb 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -433,7 +433,7 @@ ERST
- 
- DEF("numa", HAS_ARG, QEMU_OPTION_numa,
-     "-numa node[,mem=size][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=node]\n"
--    "-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=node]\n"
-+    "-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=node][,memmap-type=normal|spm|reserved]\n"
-     "-numa dist,src=source,dst=destination,val=distance\n"
-     "-numa cpu,node-id=node[,socket-id=x][,core-id=y][,thread-id=z]\n"
-     "-numa hmat-lb,initiator=node,target=node,hierarchy=memory|first-level|second-level|third-level,data-type=access-latency|read-latency|write-latency[,latency=lat][,bandwidth=bw]\n"
-@@ -442,7 +442,7 @@ DEF("numa", HAS_ARG, QEMU_OPTION_numa,
- SRST
- ``-numa node[,mem=size][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=initiator]``
-   \ 
--``-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=initiator]``
-+``-numa node[,memdev=id][,cpus=firstcpu[-lastcpu]][,nodeid=node][,initiator=initiator][,memmap-type=type]``
-   \
- ``-numa dist,src=source,dst=destination,val=distance``
-   \ 
-@@ -510,6 +510,16 @@ SRST
-     largest bandwidth) to this NUMA node. Note that this option can be
-     set only when the machine property 'hmat' is set to 'on'.
- 
-+    '\ ``memmap-type``\ ' specifies the memory type for this NUMA node:
-+
-+    - ``normal`` (default): Regular system RAM (E820 type 1)
-+    - ``spm``: Specific Purpose Memory (E820 type 0xEFFFFFFF). This is a
-+      hint to the guest that the memory might be managed by device drivers
-+      based on guest policy.
-+    - ``reserved``: Reserved memory (E820 type 2), not usable as RAM.
-+
-+    This option is only supported on x86 platforms.
-+
-     Following example creates a machine with 2 NUMA nodes, node 0 has
-     CPU. node 1 has only memory, and its initiator is node 0. Note that
-     because node 0 has CPU, by default the initiator of node 0 is itself
--- 
-2.34.1
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IFBldGVyIE1heWRlbGwgPHBl
+dGVyLm1heWRlbGxAbGluYXJvLm9yZz4NCj5TdWJqZWN0OiBSZTogW1BBVENIXSB2ZmlvL21pZ3Jh
+dGlvbjogRml4IHBhZ2Ugc2l6ZSBjYWxjdWxhdGlvbg0KPg0KPk9uIEZyaSwgMTYgSmFuIDIwMjYg
+YXQgMDY6MDMsIFpoZW56aG9uZyBEdWFuIDx6aGVuemhvbmcuZHVhbkBpbnRlbC5jb20+DQo+d3Jv
+dGU6DQo+Pg0KPj4gQ292ZXJpdHkgZGV0ZWN0ZWQgYW4gaXNzdWUgb2YgbGVmdCBzaGlmdGluZyBp
+bnQgYnkgbW9yZSB0aGFuIDMxIGJpdHMgbGVhZGluZw0KPj4gdG8gdW5kZWZpbmVkIGJlaGF2aW9y
+Lg0KPj4NCj4+IEluIHByYWN0aWNlIGJjb250YWluZXItPmRpcnR5X3Bnc2l6ZXMgYWx3YXlzIGhh
+dmUgc29tZSBjb21tb24gcGFnZSBzaXplcw0KPj4gd2hlbiBkaXJ0eSB0cmFja2luZyBpcyBzdXBw
+b3J0ZWQuDQo+Pg0KPj4gUmVzb2x2ZXM6IENvdmVyaXR5IENJRCAxNjQ0MTg2DQo+PiBSZXNvbHZl
+czogQ292ZXJpdHkgQ0lEIDE2NDQxODcNCj4+IFJlc29sdmVzOiBDb3Zlcml0eSBDSUQgMTY0NDE4
+OA0KPj4gRml4ZXM6IDQ2Yzc2MzMxMTQxOSAoInZmaW8vbWlncmF0aW9uOiBBZGQgbWlncmF0aW9u
+IGJsb2NrZXIgaWYgVk0gbWVtb3J5DQo+aXMgdG9vIGxhcmdlIHRvIGNhdXNlIHVubWFwX2JpdG1h
+cCBmYWlsdXJlIikuDQo+PiBTdWdnZXN0ZWQtYnk6IEPDqWRyaWMgTGUgR29hdGVyIDxjbGdAcmVk
+aGF0LmNvbT4NCj4+IFNpZ25lZC1vZmYtYnk6IFpoZW56aG9uZyBEdWFuIDx6aGVuemhvbmcuZHVh
+bkBpbnRlbC5jb20+DQo+PiAtLS0NCj4+ICBody92ZmlvL21pZ3JhdGlvbi5jIHwgMiArLQ0KPj4g
+IDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKQ0KPj4NCj4+IGRp
+ZmYgLS1naXQgYS9ody92ZmlvL21pZ3JhdGlvbi5jIGIvaHcvdmZpby9taWdyYXRpb24uYw0KPj4g
+aW5kZXggZjg1N2RjMjVlZC4uYjQ2OTUwMzBjNyAxMDA2NDQNCj4+IC0tLSBhL2h3L3ZmaW8vbWln
+cmF0aW9uLmMNCj4+ICsrKyBiL2h3L3ZmaW8vbWlncmF0aW9uLmMNCj4+IEBAIC0xMTczLDcgKzEx
+NzMsNyBAQCBzdGF0aWMgYm9vbA0KPnZmaW9fZGlydHlfdHJhY2tpbmdfZXhjZWVkX2xpbWl0KFZG
+SU9EZXZpY2UgKnZiYXNlZGV2KQ0KPj4gICAgICAgKiBjYW4gYWxzbyBzd2l0Y2ggdG8gdXNlIElP
+TU1VRkQgYmFja2VuZCBpZiB0aGVyZSBpcyBhIG5lZWQgdG8NCj5taWdyYXRlDQo+PiAgICAgICAq
+IGxhcmdlIFZNLg0KPj4gICAgICAgKi8NCj4+IC0gICAgcGFnZV9zaXplID0gMSA8PCBjdHo2NChi
+Y29udGFpbmVyLT5kaXJ0eV9wZ3NpemVzKTsNCj4+ICsgICAgcGFnZV9zaXplID0gMVVMTCA8PCBj
+dHo2NChiY29udGFpbmVyLT5kaXJ0eV9wZ3NpemVzKTsNCj4+ICAgICAgbWF4X3NpemUgPSBiY29u
+dGFpbmVyLT5tYXhfZGlydHlfYml0bWFwX3NpemUgKiBCSVRTX1BFUl9CWVRFICoNCj5wYWdlX3Np
+emU7DQo+DQo+VGhpcyBkb2Vzbid0IHN0cmljdGx5IHNwZWFraW5nIHJlc29sdmUgQ0lEIDE2NDQx
+ODYsIGJlY2F1c2UNCj53aGF0IENvdmVyaXR5IHNlZXMgaXMgdGhhdCBjdHo2NCgpIHJldHVybnMg
+NjQgd2hlbiBkaXJ0eV9wZ3NpemVzDQo+aXMgemVyby4gVGhhdCBpcyBzdGlsbCBVQiBldmVuIHdp
+dGggdGhlIFVMTCBzdWZmaXguDQoNCkhtbSwgbWF5YmUsIEkgZGlkbid0IGZpbmQgZWFzeSB3YXkg
+dG8gdmVyaWZ5IGl0IHdpdGggQ292ZXJpdHkgdGVzdC4NCkluIGZhY3QsIHRoaXMgY29kZSBpcyBn
+dWFyZGVkIGJ5IGJlbG93IGNoZWNrOg0KDQogICAgaWYgKCFiY29udGFpbmVyLT5kaXJ0eV9wYWdl
+c19zdXBwb3J0ZWQpIHsNCiAgICAgICAgcmV0dXJuIGZhbHNlOw0KICAgIH0NCg0KSWYgdGhlIGNo
+ZWNrIHBhc3MsIHdlIGFyZSBzdXJlIGRpcnR5X3Bnc2l6ZXMgaGFzIGhvc3QgcGFnZSBzaXplIGJp
+dCBzZXQgYXQgbGVhc3Q6DQoNCiAgICBpZiAoY2FwX21pZy0+cGdzaXplX2JpdG1hcCAmIHFlbXVf
+cmVhbF9ob3N0X3BhZ2Vfc2l6ZSgpKSB7DQogICAgICAgIGJjb250YWluZXItPmRpcnR5X3BhZ2Vz
+X3N1cHBvcnRlZCA9IHRydWU7DQogICAgICAgIGJjb250YWluZXItPm1heF9kaXJ0eV9iaXRtYXBf
+c2l6ZSA9IGNhcF9taWctPm1heF9kaXJ0eV9iaXRtYXBfc2l6ZTsNCiAgICAgICAgYmNvbnRhaW5l
+ci0+ZGlydHlfcGdzaXplcyA9IGNhcF9taWctPnBnc2l6ZV9iaXRtYXA7DQogICAgfQ0KDQo+DQo+
+QnV0IGlmIHdlIGFyZSBlbmZvcmNpbmcgc29tZXdoZXJlIHRoYXQgZGlydHlfcGdzaXplcyBpcw0K
+Pm5ldmVyIHplcm8sIHRoZW4gdGhpcyBpcyBmaW5lIGFuZCB3ZSBjYW4gbWFyayB0aGF0IENvdmVy
+aXR5DQo+aXNzdWUgYXMgYSBmYWxzZS1wb3NpdGl2ZS4NCg0KTWF5IEkgYXNrIGhvdyB0byBtYXJr
+IGl0Pw0KTWF5YmUgQ292ZXJpdHkgdGVzdCBpcyBzbWFydCBlbm91Z2ggdG8gbm90IHJlcG9ydCBp
+biB0aGlzIGNhc2Xwn5iKDQoNClRoYW5rcw0KWmhlbnpob25nDQo=
 
