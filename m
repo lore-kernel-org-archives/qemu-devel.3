@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DEFFD6CFDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 06:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB2E6D6CFBD
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 06:08:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjAHP-0002B8-QQ; Fri, 23 Jan 2026 01:04:23 -0500
+	id 1vjAGz-00021X-8R; Fri, 23 Jan 2026 01:03:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vjAHJ-00028n-6f
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 01:04:17 -0500
-Received: from 4.mo552.mail-out.ovh.net ([178.33.43.201])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vjAGx-00020j-5y
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 01:03:55 -0500
+Received: from 8.mo552.mail-out.ovh.net ([46.105.37.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vjAHG-0005bA-Tc
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 01:04:16 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.0.143])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4dy6nm4SMNz5vsQ;
- Fri, 23 Jan 2026 06:04:12 +0000 (UTC)
-Received: from kaod.org (37.59.142.99) by DAG3EX1.mxp5.local (172.16.2.21)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vjAGs-0005Zb-8L
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 01:03:54 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.198])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4dy6nF3ysrz5vsQ;
+ Fri, 23 Jan 2026 06:03:45 +0000 (UTC)
+Received: from kaod.org (37.59.142.113) by DAG3EX1.mxp5.local (172.16.2.21)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 23 Jan
- 2026 07:04:11 +0100
+ 2026 07:03:44 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-99G003c1e9ba3a-0cc7-48ac-9981-d3dcdc36fdef,
+ (GARM-113S0077d16767b-c68f-43de-b00e-9f54b0f6f3ba,
  88219A6A09002B04CA457146787233274B47D02B) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <a5329b71-d15c-4b1b-a6f0-42fdd19b1ec3@kaod.org>
-Date: Fri, 23 Jan 2026 07:04:11 +0100
+Message-ID: <ccf7e1e6-f7fb-483e-b69c-32ab15a9ce0a@kaod.org>
+Date: Fri, 23 Jan 2026 07:03:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5 00/22] hw/arm/aspeed: AST1700 LTPI support and device
  hookups
-To: Kane Chen <kane_chen@aspeedtech.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>, Steven
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen
+ <kane_chen@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>, Steven
  Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
  <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
@@ -45,7 +45,6 @@ CC: Troy Lee <troy_lee@aspeedtech.com>
 References: <20260120051859.1920565-1-kane_chen@aspeedtech.com>
  <1433fb86-bb1b-41f7-b7ec-45560e52146a@kaod.org>
  <SE3PR06MB81997150B11579509E3B31C1FC96A@SE3PR06MB8199.apcprd06.prod.outlook.com>
- <SI6PR06MB7631D05FD47182EF34BE9FA6F794A@SI6PR06MB7631.apcprd06.prod.outlook.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -90,27 +89,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <SI6PR06MB7631D05FD47182EF34BE9FA6F794A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+In-Reply-To: <SE3PR06MB81997150B11579509E3B31C1FC96A@SE3PR06MB8199.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.99]
-X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG3EX1.mxp5.local
+X-Originating-IP: [37.59.142.113]
+X-ClientProxiedBy: DAG7EX2.mxp5.local (172.16.2.62) To DAG3EX1.mxp5.local
  (172.16.2.21)
-X-Ovh-Tracer-GUID: c8e2de93-b6b2-46fc-a35e-a2a85bf7a186
-X-Ovh-Tracer-Id: 1106759609694915506
+X-Ovh-Tracer-GUID: 588f27e6-cd40-400c-af9a-90de1120ed09
+X-Ovh-Tracer-Id: 1099159787659299762
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFc+aAc70wUpftNZBdMUmIGXqEgqPwLifD4IBItgFnTvMHYUDrJW5PHFo0wVrKQGL5/tAV5VwIxViJW7vykWwFFXAfDsgJFiqKedvle0CECLidBP6kHBmZJDHBK7/ndLgJbXjUrySm366GAwwyWyzKef7D+qY3Ca7ZiN8iua7sqdlcjzFg0vDqB84vwbGgqm2Vtrmlh1dUXw7FE9emSoRGocSjaZdpnBT5gzTeVPm6Y4bk7+M6ImR9CONBmbXKObZXhbDQW0qfGAi+JXkb2dVnEx5HIZmjd9tnzrCfuahhe4Nauf5zkPg+OcoEV+H5yAHOLu7JC4eNrtE3o5agaDi3jOrs/2FdeUNDdRZgYE9d3rkJhuuI7lZ7DCTuTJjJBk/wTGZpBbuck+E6qQ5VsNg2aztH+gmTZajBiK8v2BrFTDS0/+lyIgPF2eFSd0eO40VIvh88LkJfE4DBTjX77tCi6q+NkTiXFmFRoxgvvNXaEVVgvktq03Fkzhdo6/HMqGHLuKEMLVZPIKAKBdlOZrgDJ1N/HSjs0rl5fIeCSIGjJqui4YIjjaXHgxTuhv9B27ku2yG0cNfPyf1+FCLh26rRtiYS77uKSEw/hN/wU+cUvzwZAmI+PkJrwkGKRV0k8/q4HP3MncI9ZlpSfYnAyno0SblDVQTNnaEewVXBby/YQJg
-DKIM-Signature: a=rsa-sha256; bh=r9olGMqEUaw6hGunaXcK6C91ATQRZp6BGhKFYqs59dc=; 
+X-VR-SPAMCAUSE: dmFkZTG4sRvJkso2oXPBfPqhmxAq6Nf+dGDozv+K+HGqKppFUSVhjrElhsNbe05pWEKlPNfPPjEDmiGf5bsveZKqGRYqMDjNfizZb96qmwnj2tXXRE26bZ7xWyZZJhujd/I6bZALLACZv64kkZ7w92eju3Moc2cgSJtiZhYzxfeURMt0zf4+Z5nDm7AIG8TkKa3v3SDh4QfxKhZgjp0ySphlWWYwGS/O2VSHLIb0eDVwEIUwyZh48Gj0iJrldkHrvC8NrU5hDvGXnGrpGR47wKRnXCG4NGaAffhQRF+qQAbCmwJETLJqqPirNbWqe+3n9pW8ywExOJaNaUtIE0B7f8BYSiG9mW6anzYBSpd6KKrnSoSbETSAOzBX6DF+KMunL4YBVxwepLuQob1hU5LNrW+qu6oKHjWZxvdP3g4E9kDeu+JBGBuSOVowJw0MwoyyjD7lR5fXqhlVt2ySpL0QED24W9S60mxfLKfIh84jAqJlUAwIZ7/l52I6Tt09RTM36yHi8UE60ez0Gr631YtpcwYPij1qJqFFCl355uFHm4y7nT6BYjoBMDbOyNNbl6JmEj7+od7Bt92EqxBGJaVoMJzmVQnKLKPzsjj3B2zFy2jQh2COM83hT37oPbRNScy3MipFKXFFxQQgIPrP+eXqWfp48vel8zd+ZxhPFBmK2VzLZIFdIQ
+DKIM-Signature: a=rsa-sha256; bh=VYCQ4uDsRZ9IZUFDbHgwVhIhLMznUNAr7+yo4p+V0gs=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1769148252; v=1;
- b=RLDER8sm2qqBc/QzzEgnQkVFi1j+/n3HRJAh4hI/Hr9NfjAWfVPUZkEdx9wXbFb7MosuKcNu
- xSQy7QiFGV9S8J61xi4xuAkH4eXTbk1rZ2IGHwMZ1SVvTzC0ACuR4d+3RMwh23AEI9VXUBRhNFL
- 8M/J3uleAs7wTGECf2PgCYjbqHHs+ftGm9ybe968ULLExPbRTNpocsbpQhXJOqYsMr9qkhH8JFQ
- zotzfzCzFhLk+VfqbGRmXuI7hj+vhC8XhLx/pZj4/yw5c4D0/HGgvJG5dKO8KbwQrko0keUvFEa
- UCIpIYj9aoZ3pm/hk5vV8SDKClMZIInI2TUXDlGbgoVMg==
-Received-SPF: pass client-ip=178.33.43.201; envelope-from=clg@kaod.org;
- helo=4.mo552.mail-out.ovh.net
+ t=1769148226; v=1;
+ b=f7saoDxibuZv4arH1dDUPNxNBSvmZa+dJHABrvcpiQPIh73wgeXLC5FoOZwLpP+wgeJ6Bi5O
+ ESYWDsucOTsCjbMGD1DhFidNxvFqYhxySRyr6t8Ga2DtMgZuLVevv4DRooz6xwasUf6xcTJu+iG
+ blgg1uUr3dpQqxiyal/I/yjcTnoSoywCgNbTCI0abTCyR7BtFHPz5dpWJDycMmusNZUgFGPVYxD
+ cn7e34900PIo59pkQ9+sbajgylvry5/kvHf15ryAbIW+ES5HEfcUpMeY+FLyDNLoa3GWfVwhOOO
+ F+OtnRF0liwfuxIJ2bxW/FGYkDrl6OK7GzFwSO/NQxZvQ==
+Received-SPF: pass client-ip=46.105.37.156; envelope-from=clg@kaod.org;
+ helo=8.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,7 +117,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,17 +133,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/23/26 06:51, Kane Chen wrote:
-> Hi Cédric,
+Hello Jamin,
+
+On 1/21/26 01:56, Jamin Lin wrote:
+> Hi Cédric
 > 
-> I worked with our IT team to investigate the mail delivery issue. We
-> identified that the mail server used for sending the patch series was
-> missing DKIM (DomainKeys Identified Mail) signatures. We believe this
-> is why the emails were being flagged as [SPAM].
-> 
-> We are currently enabling DKIM on the server and expect this to
-> resolve the issue once the configuration is complete.
-Thanks for looking !
+>> From: Cédric Le Goater <clg@kaod.org>
+>> Sent: Wednesday, January 21, 2026 12:09 AM
+>> To: Kane Chen <kane_chen@aspeedtech.com>; Peter Maydell
+>> <peter.maydell@linaro.org>; Steven Lee <steven_lee@aspeedtech.com>; Troy
+>> Lee <leetroy@gmail.com>; Jamin Lin <jamin_lin@aspeedtech.com>; Andrew
+>> Jeffery <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>; open
+>> list:ASPEED BMCs <qemu-arm@nongnu.org>; open list:All patches CC here
+>> <qemu-devel@nongnu.org>
+>> Cc: Troy Lee <troy_lee@aspeedtech.com>
+>> Subject: Re: [PATCH v5 00/22] hw/arm/aspeed: AST1700 LTPI support and
+>> device hookups
+>>
+>> Kane, Jamin,
+>>
+>> For some reason, I don't receive your proposals anymore. My provider seems
+>> to drop silently these emails. Have you changed anything recently ?
+>>
+
+Thanks for the info.
+
+> The following patch series are ready for review.
+> [v1,00/11] Add SSP/TSP power control and DRAM remap support for AST2700
+> https://patchwork.kernel.org/project/qemu-devel/cover/20260120092939.2708302-1-jamin_lin@aspeedtech.com/
+
+I am seeing a 'make check' issue with this one. A 'dram' property
+link is missing.
+
+> [v5,00/22] hw/arm/aspeed: AST1700 LTPI support and device hookups
+> https://patchwork.kernel.org/project/qemu-devel/cover/20260120051859.1920565-1-kane_chen@aspeedtech.com/
+
+There is a discussion in progress about the bus naming. Not a
+blocker but it's worth a bit of thinking.
+
+> [PULL,SUBSYSTEM,vbootrom,v3,0/1] Update vbootrom image to commit 1c8e9510b22c
+> https://patchwork.kernel.org/project/qemu-devel/patch/20260116093249.443307-1-jamin_lin@aspeedtech.com/
+> [PULL,1/1] pc-bios: Update vbootrom image to commit 1c8e9510b22c
+> https://patchwork.kernel.org/project/qemu-devel/patch/20260116093249.443307-2-jamin_lin@aspeedtech.com/
+
+The above 3 series I plan to include in the next Aspeed PR.
+
+What about the I3C series ? Could you take ownership ?
+
+Thanks,
 
 C.
 
