@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35E2DD74EDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:51:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F252FD74EDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:58:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIV6-0007kp-E7; Fri, 23 Jan 2026 09:51:06 -0500
+	id 1vjIbq-0004Aa-24; Fri, 23 Jan 2026 09:58:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIV0-0007j6-U4
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:50:59 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1vjIbo-00047z-Qg
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:00 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIUy-0005kO-R7
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:50:58 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-435a11957f6so1923334f8f.0
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:50:52 -0800 (PST)
+ id 1vjIbn-0007kt-2C
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:00 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-4327790c4e9so1481195f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:57:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769179851; x=1769784651; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1769180277; x=1769785077; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WyADWa78snf3kwHRYWGSohegbl1R3iIqto1n5mMiUwc=;
- b=ebou0TssHVNv2vJCHizXgPGEahXZhBXevFZN4Z3mgHw1SUfZ5Oh9562Nhl2gXDAWoU
- ps60l39keL+m5HDdwtJ1X6LqQs5Ylq3KAQtaTdBP3BKgrv1tWGJ4JT311PhFeJB2ZZJG
- IdnK/rTkjhaZPcWLczkBLy1rNFz3V8Zk/Q2RMDuh3sBbrDnzjqIzfn2LPVnrIarb7QtS
- uIuAMlOQWzMBkqqHVndLn3YrRe0RSYtgMYFvT45snYoojwOTwxa4o6TOSRK/32Pu7/Gw
- OjaS+qMBi26TZs2BnwNB/D1yb52bws0Xvon5bK6DYVmfMVuT4cypJqqshnQnKBNgeTVN
- 0g4w==
+ bh=nT3H45Zvi+rSAkwTxllxj0xxmzYQm/YC35tgToRHJLg=;
+ b=OU9OMe3PliXOsxqyCnfHpxQBBdacFlxuBOs251aLYW1yVDdP+kO97I75+V+9Lx1/OM
+ HThUA3Zgwe/VHsKLab9kLQwOoooBWiIcsJvg/ripXbGWs63cjZAlI9Y5OVDfhmL+xCU2
+ wldvpAsN7G3503en/lHxEW/QQeT1J8aA+atQ1VvrZZaigrn2+Nwn5k+WYz0iXyWjoTCh
+ itkikLNNXi/sNOnwh/lDWUJbPt/RjOomlJZTNuxS7v6eSiD0MPy29HEvZx/1PBUPIghJ
+ 31PWtTd1WqKY8KAgh9/rb+1Mjl8nxoyLoowZ5j0/JzWFeAFr0F6mGJZQQjBaGV5z2V++
+ X7EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769179851; x=1769784651;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WyADWa78snf3kwHRYWGSohegbl1R3iIqto1n5mMiUwc=;
- b=rd31i2U7O0c74ukcLorZGuVzR1wDQxfJX8GeKH7s+ias0F/MoFmPkhHVDmPLjpvx8/
- avAltNVt8Qyti361GHVVpzgrXTG1XxZgGBdXMAPRLtMOygohtV8JvNFcC+zFsmhfoF4d
- Y9o0INAVNGQmbha2ySyEgIm3uGmRUB0ohHsqLHiOBnT4QH3O9UXzViuzyjEVCoPjd+jT
- bLhXcJ3IoLMSLUWty2YkXJUOHw0aOh+3ECMguQOB56wPNM+LuUitM79XZ9JxIt7akdSa
- bOeHfW+ffqAEAmTn1v4rSVEs+QT3BEJy9tJt0TvGjbOOko4odtc1fRi+/ZBdvbQJAefg
- A0Lg==
-X-Gm-Message-State: AOJu0YxvfQrlmZAPGPnKqBo1+ynOzlaF9htZiZm92vFP/pFwIpwISkFG
- xOcfmPusR6WCJSnV9S49YBzW1lSk96mnFDwekTzzDvxQJuyiKjc7Fp4nXD3p+ljr4nQ=
-X-Gm-Gg: AZuq6aL6FfFpFTPa0YcucdLYDxRc65+lsuWsKKxqMIgkil4FP1e2690mfRiHhMvGe0T
- b+Bmqh0go1PREdeIKfq7hpL3uZO/0jD6/C8HlE3zgdSO5zzUSYf+B/N+6w8ggViI+s6kEM4sC1D
- +n5tnwy67Xgrl707aM80LTiO5CYOqmTyizjLIwpBj+VAw0EJkum2TRp0yNQHFzAT1xVDeo0+RDe
- 5flcKabVseIdBKxYOBGWZig5Gj1GlrY9tzbPktTligVBYUoRVpKk3lEm1igE2qycwqeKj5GUDCL
- I70tyR6k8uqyTsgiXeoQwLya+HheZvMS/IAh4vdm2iZ9My5bAFrBByHWIynj0oe6iIueOXBBiYw
- bnQ0fMXWIs4RFq3t8iU423nQVZVpN7HmLiRJmWSR0qTZ85Vwq0r4asVgWiCQeFJpW49rgzQvCBB
- 5Nznqs8myfIvyd
-X-Received: by 2002:a05:6000:144a:b0:42f:b690:6788 with SMTP id
- ffacd0b85a97d-435b1587ca8mr5470394f8f.10.1769179851237; 
- Fri, 23 Jan 2026 06:50:51 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769180277; x=1769785077;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nT3H45Zvi+rSAkwTxllxj0xxmzYQm/YC35tgToRHJLg=;
+ b=UQSDmA6S9Dg6rnxS+7zLVeFDV9vRi6Pr7fyxA/21HT1ZTTPnZhPljNk/McZ4wSG4mz
+ qeMHAWIMjA8kC8L6nATh6qCC+1wXVMpePWqzkKypxHDiWaREQXXvG+ouWyncEqCIskSr
+ SXSHGyTejcn7b1Rji2s7aPLLQt6b/VOt81K+EUXaC2PwDO1e9mmvkhTCIxOuhi1si31N
+ g149NtwzidKrHM+pJC9CzE2DKlpNXbWAl7SCobBYsr5gjcGPnwa6D6BWM8rxOsasTCFD
+ 7/T5WqhGiYeCSvqWRA70ZIZ3ezf9lHyg8iNYvSSqz7obrT8Dyl7apyTzsOHvqRFZi+/C
+ 0CwQ==
+X-Gm-Message-State: AOJu0YyS2wwhPqrr7uGPvIfsfjAG0IHlJRpICEC3sucNq5fwIZoW4dXR
+ byC/loNPZ4UqzJAw0WBSqBcI1NHclTtex2qmwKUHr3SutGy6gMfqLdSJ6wibrwmykE0=
+X-Gm-Gg: AZuq6aIjyqlYx3IWRD6plzMxIIY0wBBMcVH+UkRNwOIw6ftzUwYFClD6nUw6clQ0xLU
+ fZt1+Tx72W1TSjbPZiuJDBEaqfF3u+IuCmSyhyRIjxUpiMQNNX/PNlNo+Pj0KM+m9kAJXHASpEo
+ uYDbmgwc/F+tmBIkjpHJxiky5C4Oy3VISFKcpY/+cHs6MZqXXDWdADzLj4xrRJtB04+hurPrLmn
+ 3GAvR+AN6womVa0x+8zpRqyI2BJ9Xgf5g/mYmzECW/mc1WbD63B1hgUe38V5Q1Gwgzo2NDkz7yn
+ 3C1v/TiCHZ335MtcFaTYE7YunqIqDm4UvBWnorx+3baaTbitrd3pS5oCICUl+y3UCxA6KM0+IXq
+ sjOtV1LMS0CCCW1iZFQYsKjO72x3QAomj3j7WO4ChTvN35p1yVOdWCqYDGWLsAeo2Y+lW4KKo9d
+ ZYyQy+jyY70xow
+X-Received: by 2002:a05:6000:220e:b0:432:c05b:d8c7 with SMTP id
+ ffacd0b85a97d-435b160e067mr6041511f8f.49.1769180277495; 
+ Fri, 23 Jan 2026 06:57:57 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1f7c269sm7651291f8f.43.2026.01.23.06.50.49
+ ffacd0b85a97d-435b1f745c5sm7857952f8f.32.2026.01.23.06.57.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 06:50:49 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BA1E35F7B3;
- Fri, 23 Jan 2026 14:50:48 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Anton Johansson <anjo@rev.ng>,  Gustavo Bueno
- Romero <gustavo.romero@linaro.org>,  Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,  Michael Tokarev
- <mjt@tls.msk.ru>,  Brian Cain <brian.cain@oss.qualcomm.com>,  Phil
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH] MAINTAINERS: add reviewer for linux-user
-In-Reply-To: <20260115201712.2706663-1-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Thu, 15 Jan 2026 12:17:12 -0800")
-References: <20260115201712.2706663-1-pierrick.bouvier@linaro.org>
-User-Agent: mu4e 1.12.15; emacs 30.1
-Date: Fri, 23 Jan 2026 14:50:48 +0000
-Message-ID: <878qdomlh3.fsf@draig.linaro.org>
+ Fri, 23 Jan 2026 06:57:54 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id BF5BA5F8C7;
+ Fri, 23 Jan 2026 14:57:50 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>
+Subject: [RFC PATCH v2 04/16] MAINTAINERS: remove myself as reviewer
+Date: Fri, 23 Jan 2026 14:57:37 +0000
+Message-ID: <20260123145750.1200879-5-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260123145750.1200879-1-alex.bennee@linaro.org>
+References: <20260123145750.1200879-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,14 +107,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+From: Mads Ynddal <mads@ynddal.dk>
 
-> I had interest in this area for some time, and would like to help
-> reviewing it.
+My work has changed focus, and I do not have the time to continue.
 
-Queued to for-11.0/maintainers-update, thanks.
+Signed-off-by: Mads Ynddal <mads@ynddal.dk>
+Message-ID: <20260121112725.40060-1-mads@ynddal.dk>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ MAINTAINERS | 3 ---
+ 1 file changed, 3 deletions(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 851fa3b3d69..3604422f8b4 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -536,7 +536,6 @@ F: system/cpus.c
+ 
+ Apple Silicon HVF CPUs
+ M: Alexander Graf <agraf@csgraf.de>
+-R: Mads Ynddal <mads@ynddal.dk>
+ S: Maintained
+ F: target/arm/hvf/
+ F: target/arm/hvf-stub.c
+@@ -553,7 +552,6 @@ HVF
+ M: Cameron Esfahani <dirty@apple.com>
+ M: Roman Bolshakov <rbolshakov@ddn.com>
+ R: Phil Dennis-Jordan <phil@philjordan.eu>
+-R: Mads Ynddal <mads@ynddal.dk>
+ W: https://wiki.qemu.org/Features/HVF
+ S: Maintained
+ F: accel/hvf/
+@@ -3655,7 +3653,6 @@ F: stubs/
+ 
+ Tracing
+ M: Stefan Hajnoczi <stefanha@redhat.com>
+-R: Mads Ynddal <mads@ynddal.dk>
+ S: Maintained
+ F: trace/
+ F: trace-events
+-- 
+2.47.3
+
 
