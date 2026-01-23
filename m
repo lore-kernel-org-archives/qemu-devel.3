@@ -4,66 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28D35D72348
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BD07D72347
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjBxl-0004p5-MS; Fri, 23 Jan 2026 02:52:14 -0500
+	id 1vjBwd-00030p-Rx; Fri, 23 Jan 2026 02:51:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vjBxf-0004E3-PQ
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:52:08 -0500
+ id 1vjBwb-00030L-PQ
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:51:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vjBxd-0002CK-Ev
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:52:07 -0500
+ id 1vjBwR-00028O-8o
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:50:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769154724;
+ s=mimecast20190719; t=1769154650;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qu3ZtIKi9hjE4G+Gyz1nvbsrWLy3IhQkyEMeGTEyDno=;
- b=Z80FYlKZwWZ1SKIGIfFzkDyKePz2WUfQY5mkst+JnTO74SVmVW2vdXyVyLvkvZJEv9WNdI
- rzPhReLJh+5bmtazuah0sIF2VYeoJ4lnaa4u8u4YF0rXvgXq3RdVE6Xc/wes2sC6DtgWZ7
- KaZQeVgPi9bEM9WcDRgrl0URTR8CTdA=
+ bh=JL6HUral7IkUeWVqgh1yt9ruYUTsgHkfKpJv8dEU2jM=;
+ b=AaJvuSN6WIuy7G3mklC2xl0JJ054qlKpluPpXNx4+uypr+u1xUICTIkUkefMg1VYJ2Gp32
+ yTvxwZulTqgBncOGtPi60pNNBcvhWGtustZbnq0SmJZXGRVm39Kj6U/NgbR9refmYzYeJf
+ v790k91/qtZFgKIyPJnLi2QwKk+hbyk=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-f6RMVR-cN3SJEqJXY46JxA-1; Fri,
- 23 Jan 2026 02:52:01 -0500
-X-MC-Unique: f6RMVR-cN3SJEqJXY46JxA-1
-X-Mimecast-MFC-AGG-ID: f6RMVR-cN3SJEqJXY46JxA_1769154720
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-ZPo7TGEkOv6Qw37yT6VMSw-1; Fri,
+ 23 Jan 2026 02:50:46 -0500
+X-MC-Unique: ZPo7TGEkOv6Qw37yT6VMSw-1
+X-Mimecast-MFC-AGG-ID: ZPo7TGEkOv6Qw37yT6VMSw_1769154645
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15C051956094; Fri, 23 Jan 2026 07:51:59 +0000 (UTC)
+ id BD47D195608D; Fri, 23 Jan 2026 07:50:45 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CF40B1958DC1; Fri, 23 Jan 2026 07:51:56 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3E7231954199; Fri, 23 Jan 2026 07:50:43 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>
-Subject: [PATCH 21/37] audio: add QOM module-objects for each backend
-Date: Fri, 23 Jan 2026 11:49:24 +0400
-Message-ID: <20260123074945.2563196-22-marcandre.lureau@redhat.com>
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Subject: [PATCH 09/37] scripts/modinfo: add type annotations
+Date: Fri, 23 Jan 2026 11:49:12 +0400
+Message-ID: <20260123074945.2563196-10-marcandre.lureau@redhat.com>
 In-Reply-To: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
 References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -93,725 +91,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-This will allow to use QOM and the dynamic object module loading.
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio_int.h   |  2 ++
- audio/alsaaudio.c   | 27 +++++++++++++++++++++++++++
- audio/dbusaudio.c   | 26 ++++++++++++++++++++++++++
- audio/dsoundaudio.c | 26 ++++++++++++++++++++++++++
- audio/jackaudio.c   | 26 ++++++++++++++++++++++++++
- audio/noaudio.c     | 26 ++++++++++++++++++++++++++
- audio/ossaudio.c    | 26 ++++++++++++++++++++++++++
- audio/paaudio.c     | 26 ++++++++++++++++++++++++++
- audio/pwaudio.c     | 26 ++++++++++++++++++++++++++
- audio/sdlaudio.c    | 26 ++++++++++++++++++++++++++
- audio/sndioaudio.c  | 26 ++++++++++++++++++++++++++
- audio/spiceaudio.c  | 26 ++++++++++++++++++++++++++
- audio/wavaudio.c    | 26 ++++++++++++++++++++++++++
- audio/coreaudio.m   | 26 ++++++++++++++++++++++++++
- 14 files changed, 341 insertions(+)
+ scripts/modinfo-generate.py | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index 06f5160e8df..29f5864be69 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -241,6 +241,8 @@ struct SWVoiceCap {
+diff --git a/scripts/modinfo-generate.py b/scripts/modinfo-generate.py
+index aaf23544c46..5a8abcae5d3 100644
+--- a/scripts/modinfo-generate.py
++++ b/scripts/modinfo-generate.py
+@@ -2,14 +2,16 @@
  
- struct AudioMixengBackendClass {
-     AudioBackendClass parent_class;
-+
-+    audio_driver *driver;
- };
+ import os
+ import sys
++from typing import Optional
  
- struct AudioMixengBackend {
-diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
-index 814820e2864..881f3d0349d 100644
---- a/audio/alsaaudio.c
-+++ b/audio/alsaaudio.c
-@@ -27,6 +27,7 @@
- #include "qemu/main-loop.h"
- #include "qemu/module.h"
- #include "qemu/audio.h"
-+#include "qom/object.h"
- #include "trace.h"
+-def print_array(name, values):
++
++def print_array(name: str, values: list[str]) -> None:
+     if len(values) == 0:
+         return
+     list = ", ".join(values)
+     print("    .%s = ((const char*[]){ %s, NULL })," % (name, list))
  
- #pragma GCC diagnostic ignored "-Waddress"
-@@ -36,6 +37,22 @@
+-def parse_line(line):
++def parse_line(line: str) -> tuple[str, str]:
+     kind = ""
+     data = ""
+     get_kind = False
+@@ -31,7 +33,7 @@ def parse_line(line):
+             continue
+     return (kind, data)
  
- #define DEBUG_ALSA 0
+-def generate(name, lines, enabled):
++def generate(name: str, lines: list[str], enabled: set[str]) -> Optional[set[str]]:
+     arch = ""
+     objs = []
+     deps = []
+@@ -68,17 +70,17 @@ def generate(name, lines, enabled):
+     print("},{")
+     return {dep.strip('" ') for dep in deps}
  
-+#define TYPE_AUDIO_ALSA "audio-alsa"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioALSA, AUDIO_ALSA)
-+
-+struct AudioALSA {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver alsa_audio_driver;
-+
-+static void audio_alsa_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &alsa_audio_driver;
-+}
-+
- struct pollhlp {
-     snd_pcm_t *handle;
-     struct pollfd *pfds;
-@@ -945,8 +962,18 @@ static struct audio_driver alsa_audio_driver = {
-     .voice_size_in  = sizeof (ALSAVoiceIn)
- };
+-def print_pre():
++def print_pre() -> None:
+     print("/* generated by scripts/modinfo-generate.py */")
+     print("#include \"qemu/osdep.h\"")
+     print("#include \"qemu/module.h\"")
+     print("const QemuModinfo qemu_modinfo[] = {{")
  
-+static const TypeInfo audio_alsa_info = {
-+    .name = TYPE_AUDIO_ALSA,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioALSA),
-+    .class_init = audio_alsa_class_init,
-+};
-+
-+
- static void register_audio_alsa(void)
- {
-     audio_driver_register(&alsa_audio_driver);
-+    type_register_static(&audio_alsa_info);
- }
- type_init(register_audio_alsa);
-+module_obj(TYPE_AUDIO_ALSA);
-diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-index 96d4fa3f471..789d72f6903 100644
---- a/audio/dbusaudio.c
-+++ b/audio/dbusaudio.c
-@@ -26,6 +26,7 @@
- #include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "qemu/dbus.h"
-+#include "qom/object.h"
+-def print_post():
++def print_post() -> None:
+     print("    /* end of list */")
+     print("}};")
  
- #ifdef G_OS_UNIX
- #include <gio/gunixfdlist.h>
-@@ -44,6 +45,22 @@
- 
- #define DBUS_DEFAULT_AUDIO_NSAMPLES 480
- 
-+#define TYPE_AUDIO_DBUS "audio-dbus"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioDbus, AUDIO_DBUS)
-+
-+struct AudioDbus {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver dbus_audio_driver;
-+
-+static void audio_dbus_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &dbus_audio_driver;
-+}
-+
- typedef struct DBusAudio {
-     Audiodev *dev;
-     GDBusObjectManagerServer *server;
-@@ -711,10 +728,19 @@ static struct audio_driver dbus_audio_driver = {
-     .voice_size_in   = sizeof(DBusVoiceIn)
- };
- 
-+static const TypeInfo audio_dbus_info = {
-+    .name = TYPE_AUDIO_DBUS,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioDbus),
-+    .class_init = audio_dbus_class_init,
-+};
-+
- static void register_audio_dbus(void)
- {
-     audio_driver_register(&dbus_audio_driver);
-+    type_register_static(&audio_dbus_info);
- }
- type_init(register_audio_dbus);
- 
- module_dep("ui-dbus")
-+module_obj(TYPE_AUDIO_DBUS)
-diff --git a/audio/dsoundaudio.c b/audio/dsoundaudio.c
-index 7a03d1dad86..f1902e55262 100644
---- a/audio/dsoundaudio.c
-+++ b/audio/dsoundaudio.c
-@@ -33,6 +33,7 @@
- #include "audio_int.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
-+#include "qom/object.h"
- 
- #include <windows.h>
- #include <mmsystem.h>
-@@ -41,6 +42,22 @@
- 
- #include "audio_win_int.h"
- 
-+#define TYPE_AUDIO_DSOUND "audio-dsound"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioDsound, AUDIO_DSOUND)
-+
-+struct AudioDsound {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver dsound_audio_driver;
-+
-+static void audio_dsound_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &dsound_audio_driver;
-+}
-+
- /* #define DEBUG_DSOUND */
- 
- typedef struct {
-@@ -694,8 +711,17 @@ static struct audio_driver dsound_audio_driver = {
-     .voice_size_in  = sizeof (DSoundVoiceIn)
- };
- 
-+static const TypeInfo audio_dsound_info = {
-+    .name = TYPE_AUDIO_DSOUND,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioDsound),
-+    .class_init = audio_dsound_class_init,
-+};
-+
- static void register_audio_dsound(void)
- {
-     audio_driver_register(&dsound_audio_driver);
-+    type_register_static(&audio_dsound_info);
- }
- type_init(register_audio_dsound);
-+module_obj(TYPE_AUDIO_DSOUND);
-diff --git a/audio/jackaudio.c b/audio/jackaudio.c
-index 7a3fcaedbae..48a466ed532 100644
---- a/audio/jackaudio.c
-+++ b/audio/jackaudio.c
-@@ -27,6 +27,7 @@
- #include "qemu/atomic.h"
- #include "qemu/main-loop.h"
- #include "qemu/audio.h"
-+#include "qom/object.h"
- 
- #define AUDIO_CAP "jack"
- #include "audio_int.h"
-@@ -34,6 +35,22 @@
- #include <jack/jack.h>
- #include <jack/thread.h>
- 
-+#define TYPE_AUDIO_JACK "audio-jack"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioJack, AUDIO_JACK)
-+
-+struct AudioJack {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver jack_driver;
-+
-+static void audio_jack_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &jack_driver;
-+}
-+
- struct QJack;
- 
- typedef enum QJackState {
-@@ -691,10 +708,18 @@ static void qjack_info(const char *msg)
-     dolog("I: %s\n", msg);
- }
- 
-+static const TypeInfo audio_jack_info = {
-+    .name = TYPE_AUDIO_JACK,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioJack),
-+    .class_init = audio_jack_class_init,
-+};
-+
- static void register_audio_jack(void)
- {
-     qemu_mutex_init(&qjack_shutdown_lock);
-     audio_driver_register(&jack_driver);
-+    type_register_static(&audio_jack_info);
- #if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-     jack_set_thread_creator(qjack_thread_creator);
- #endif
-@@ -702,3 +727,4 @@ static void register_audio_jack(void)
-     jack_set_info_function(qjack_info);
- }
- type_init(register_audio_jack);
-+module_obj(TYPE_AUDIO_JACK);
-diff --git a/audio/noaudio.c b/audio/noaudio.c
-index 4ed9d2156c5..e6e8bfd3323 100644
---- a/audio/noaudio.c
-+++ b/audio/noaudio.c
-@@ -25,10 +25,27 @@
- #include "qemu/osdep.h"
- #include "qemu/module.h"
- #include "qemu/audio.h"
-+#include "qom/object.h"
- 
- #define AUDIO_CAP "noaudio"
- #include "audio_int.h"
- 
-+#define TYPE_AUDIO_NONE "audio-none"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioNone, AUDIO_NONE)
-+
-+struct AudioNone {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver no_audio_driver;
-+
-+static void audio_none_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &no_audio_driver;
-+}
-+
- typedef struct NoVoiceOut {
-     HWVoiceOut hw;
-     RateCtl rate;
-@@ -138,8 +155,17 @@ static struct audio_driver no_audio_driver = {
-     .voice_size_in  = sizeof (NoVoiceIn)
- };
- 
-+static const TypeInfo audio_none_info = {
-+    .name = TYPE_AUDIO_NONE,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioNone),
-+    .class_init = audio_none_class_init,
-+};
-+
- static void register_audio_none(void)
- {
-     audio_driver_register(&no_audio_driver);
-+    type_register_static(&audio_none_info);
- }
- type_init(register_audio_none);
-+module_obj(TYPE_AUDIO_NONE);
-diff --git a/audio/ossaudio.c b/audio/ossaudio.c
-index 6ad20ab1876..eb98cc62e9c 100644
---- a/audio/ossaudio.c
-+++ b/audio/ossaudio.c
-@@ -30,11 +30,28 @@
- #include "qemu/host-utils.h"
- #include "qapi/error.h"
- #include "qemu/audio.h"
-+#include "qom/object.h"
- #include "trace.h"
- 
- #define AUDIO_CAP "oss"
- #include "audio_int.h"
- 
-+#define TYPE_AUDIO_OSS "audio-oss"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioOss, AUDIO_OSS)
-+
-+struct AudioOss {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver oss_audio_driver;
-+
-+static void audio_oss_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &oss_audio_driver;
-+}
-+
- #if defined OSS_GETVERSION && defined SNDCTL_DSP_POLICY
- #define USE_DSP_POLICY
- #endif
-@@ -772,8 +789,17 @@ static struct audio_driver oss_audio_driver = {
-     .voice_size_in  = sizeof (OSSVoiceIn)
- };
- 
-+static const TypeInfo audio_oss_info = {
-+    .name = TYPE_AUDIO_OSS,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioOss),
-+    .class_init = audio_oss_class_init,
-+};
-+
- static void register_audio_oss(void)
- {
-     audio_driver_register(&oss_audio_driver);
-+    type_register_static(&audio_oss_info);
- }
- type_init(register_audio_oss);
-+module_obj(TYPE_AUDIO_OSS);
-diff --git a/audio/paaudio.c b/audio/paaudio.c
-index 0c06a397195..cf67a9f7593 100644
---- a/audio/paaudio.c
-+++ b/audio/paaudio.c
-@@ -4,12 +4,29 @@
- #include "qemu/module.h"
- #include "qemu/audio.h"
- #include "qapi/error.h"
-+#include "qom/object.h"
- 
- #include <pulse/pulseaudio.h>
- 
- #define AUDIO_CAP "pulseaudio"
- #include "audio_int.h"
- 
-+#define TYPE_AUDIO_PA "audio-pa"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioPa, AUDIO_PA)
-+
-+struct AudioPa {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver pa_audio_driver;
-+
-+static void audio_pa_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &pa_audio_driver;
-+}
-+
- typedef struct PAConnection {
-     char *server;
-     int refcount;
-@@ -931,8 +948,17 @@ static struct audio_driver pa_audio_driver = {
-     .voice_size_in  = sizeof (PAVoiceIn),
- };
- 
-+static const TypeInfo audio_pa_info = {
-+    .name = TYPE_AUDIO_PA,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioPa),
-+    .class_init = audio_pa_class_init,
-+};
-+
- static void register_audio_pa(void)
- {
-     audio_driver_register(&pa_audio_driver);
-+    type_register_static(&audio_pa_info);
- }
- type_init(register_audio_pa);
-+module_obj(TYPE_AUDIO_PA);
-diff --git a/audio/pwaudio.c b/audio/pwaudio.c
-index 30f717ccacf..3c2fbccaea4 100644
---- a/audio/pwaudio.c
-+++ b/audio/pwaudio.c
-@@ -13,6 +13,7 @@
- #include "qemu/audio.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-+#include "qom/object.h"
- #include <spa/param/audio/format-utils.h>
- #include <spa/utils/ringbuffer.h>
- #include <spa/utils/result.h>
-@@ -27,6 +28,22 @@
- 
- #include "audio_int.h"
- 
-+#define TYPE_AUDIO_PW "audio-pipewire"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioPw, AUDIO_PW)
-+
-+struct AudioPw {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver pw_audio_driver;
-+
-+static void audio_pw_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &pw_audio_driver;
-+}
-+
- typedef struct pwvolume {
-     uint32_t channels;
-     float values[SPA_AUDIO_MAX_CHANNELS];
-@@ -847,10 +864,19 @@ static struct audio_driver pw_audio_driver = {
-     .voice_size_in = sizeof(PWVoiceIn),
- };
- 
-+static const TypeInfo audio_pw_info = {
-+    .name = TYPE_AUDIO_PW,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioPw),
-+    .class_init = audio_pw_class_init,
-+};
-+
- static void
- register_audio_pw(void)
- {
-     audio_driver_register(&pw_audio_driver);
-+    type_register_static(&audio_pw_info);
- }
- 
- type_init(register_audio_pw);
-+module_obj(TYPE_AUDIO_PW);
-diff --git a/audio/sdlaudio.c b/audio/sdlaudio.c
-index 707110973ac..cc05c1d4531 100644
---- a/audio/sdlaudio.c
-+++ b/audio/sdlaudio.c
-@@ -28,6 +28,7 @@
- #include "qemu/module.h"
- #include "qapi/error.h"
- #include "qemu/audio.h"
-+#include "qom/object.h"
- 
- #ifndef _WIN32
- #ifdef __sun__
-@@ -40,6 +41,22 @@
- #define AUDIO_CAP "sdl"
- #include "audio_int.h"
- 
-+#define TYPE_AUDIO_SDL "audio-sdl"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioSdl, AUDIO_SDL)
-+
-+struct AudioSdl {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver sdl_audio_driver;
-+
-+static void audio_sdl_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &sdl_audio_driver;
-+}
-+
- typedef struct SDLVoiceOut {
-     HWVoiceOut hw;
-     int exit;
-@@ -491,8 +508,17 @@ static struct audio_driver sdl_audio_driver = {
-     .voice_size_in  = sizeof(SDLVoiceIn),
- };
- 
-+static const TypeInfo audio_sdl_info = {
-+    .name = TYPE_AUDIO_SDL,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioSdl),
-+    .class_init = audio_sdl_class_init,
-+};
-+
- static void register_audio_sdl(void)
- {
-     audio_driver_register(&sdl_audio_driver);
-+    type_register_static(&audio_sdl_info);
- }
- type_init(register_audio_sdl);
-+module_obj(TYPE_AUDIO_SDL);
-diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
-index 8197b8b0b47..6a3d93efd51 100644
---- a/audio/sndioaudio.c
-+++ b/audio/sndioaudio.c
-@@ -20,10 +20,27 @@
- #include "qemu/main-loop.h"
- #include "qemu/audio.h"
- #include "trace.h"
-+#include "qom/object.h"
- 
- #define AUDIO_CAP "sndio"
- #include "audio_int.h"
- 
-+#define TYPE_AUDIO_SNDIO "audio-sndio"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioSndio, AUDIO_SNDIO)
-+
-+struct AudioSndio {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver sndio_audio_driver;
-+
-+static void audio_sndio_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &sndio_audio_driver;
-+}
-+
- /* default latency in microseconds if no option is set */
- #define SNDIO_LATENCY_US   50000
- 
-@@ -555,9 +572,18 @@ static struct audio_driver sndio_audio_driver = {
-     .voice_size_in  = sizeof(SndioVoice)
- };
- 
-+static const TypeInfo audio_sndio_info = {
-+    .name = TYPE_AUDIO_SNDIO,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioSndio),
-+    .class_init = audio_sndio_class_init,
-+};
-+
- static void register_audio_sndio(void)
- {
-     audio_driver_register(&sndio_audio_driver);
-+    type_register_static(&audio_sndio_info);
- }
- 
- type_init(register_audio_sndio);
-+module_obj(TYPE_AUDIO_SNDIO);
-diff --git a/audio/spiceaudio.c b/audio/spiceaudio.c
-index 7db2d1f0dfd..bfa249b18c4 100644
---- a/audio/spiceaudio.c
-+++ b/audio/spiceaudio.c
-@@ -24,11 +24,28 @@
- #include "qemu/timer.h"
- #include "qapi/error.h"
- #include "ui/qemu-spice.h"
-+#include "qom/object.h"
- 
- #define AUDIO_CAP "spice"
- #include "qemu/audio.h"
- #include "audio_int.h"
- 
-+#define TYPE_AUDIO_SPICE "audio-spice"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioSpice, AUDIO_SPICE)
-+
-+struct AudioSpice {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver spice_audio_driver;
-+
-+static void audio_spice_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &spice_audio_driver;
-+}
-+
- #if SPICE_INTERFACE_PLAYBACK_MAJOR > 1 || SPICE_INTERFACE_PLAYBACK_MINOR >= 3
- #define LINE_OUT_SAMPLES (480 * 4)
- #else
-@@ -325,10 +342,19 @@ static struct audio_driver spice_audio_driver = {
-     .voice_size_in  = sizeof (SpiceVoiceIn),
- };
- 
-+static const TypeInfo audio_spice_info = {
-+    .name = TYPE_AUDIO_SPICE,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioSpice),
-+    .class_init = audio_spice_class_init,
-+};
-+
- static void register_audio_spice(void)
- {
-     audio_driver_register(&spice_audio_driver);
-+    type_register_static(&audio_spice_info);
- }
- type_init(register_audio_spice);
-+module_obj(TYPE_AUDIO_SPICE);
- 
- module_dep("ui-spice-core");
-diff --git a/audio/wavaudio.c b/audio/wavaudio.c
-index 46460a5d573..480da5048fa 100644
---- a/audio/wavaudio.c
-+++ b/audio/wavaudio.c
-@@ -25,10 +25,27 @@
- #include "qemu/osdep.h"
- #include "qemu/module.h"
- #include "qemu/audio.h"
-+#include "qom/object.h"
- 
- #define AUDIO_CAP "wav"
- #include "audio_int.h"
- 
-+#define TYPE_AUDIO_WAV "audio-wav"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioWav, AUDIO_WAV)
-+
-+struct AudioWav {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver wav_audio_driver;
-+
-+static void audio_wav_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &wav_audio_driver;
-+}
-+
- typedef struct WAVVoiceOut {
-     HWVoiceOut hw;
-     FILE *f;
-@@ -214,8 +231,17 @@ static struct audio_driver wav_audio_driver = {
-     .voice_size_in  = 0
- };
- 
-+static const TypeInfo audio_wav_info = {
-+    .name = TYPE_AUDIO_WAV,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioWav),
-+    .class_init = audio_wav_class_init,
-+};
-+
- static void register_audio_wav(void)
- {
-     audio_driver_register(&wav_audio_driver);
-+    type_register_static(&audio_wav_info);
- }
- type_init(register_audio_wav);
-+module_obj(TYPE_AUDIO_WAV);
-diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-index 997017a1e96..882e47f8c25 100644
---- a/audio/coreaudio.m
-+++ b/audio/coreaudio.m
-@@ -29,10 +29,27 @@
- #include "qemu/main-loop.h"
- #include "qemu/module.h"
- #include "qemu/audio.h"
-+#include "qom/object.h"
- 
- #define AUDIO_CAP "coreaudio"
- #include "audio_int.h"
- 
-+#define TYPE_AUDIO_COREAUDIO "audio-coreaudio"
-+OBJECT_DECLARE_SIMPLE_TYPE(AudioCoreaudio, AUDIO_COREAUDIO)
-+
-+struct AudioCoreaudio {
-+    AudioMixengBackend parent;
-+};
-+
-+static struct audio_driver coreaudio_audio_driver;
-+
-+static void audio_coreaudio_class_init(ObjectClass *klass, const void *data)
-+{
-+    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
-+
-+    k->driver = &coreaudio_audio_driver;
-+}
-+
- typedef struct coreaudioVoiceOut {
-     HWVoiceOut hw;
-     pthread_mutex_t buf_mutex;
-@@ -673,8 +690,17 @@ static void coreaudio_audio_fini (void *opaque)
-     .voice_size_in  = 0
- };
- 
-+static const TypeInfo audio_coreaudio_info = {
-+    .name = TYPE_AUDIO_COREAUDIO,
-+    .parent = TYPE_AUDIO_MIXENG_BACKEND,
-+    .instance_size = sizeof(AudioCoreaudio),
-+    .class_init = audio_coreaudio_class_init,
-+};
-+
- static void register_audio_coreaudio(void)
- {
-     audio_driver_register(&coreaudio_audio_driver);
-+    type_register_static(&audio_coreaudio_info);
- }
- type_init(register_audio_coreaudio);
-+module_obj(TYPE_AUDIO_COREAUDIO);
+-def main(args):
++def main(args: list[str]) -> None:
+     if len(args) < 3 or args[0] != '--devices':
+         print('Expected: modinfo-generate.py --devices '
+               'config-device.mak [modinfo files]', file=sys.stderr)
 -- 
 2.52.0
 
