@@ -4,115 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B4B3D74EC5
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 13:06:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F776D74EC2
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 13:07:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjGrA-0004oX-0m; Fri, 23 Jan 2026 08:05:44 -0500
+	id 1vjGsA-0005k6-3x; Fri, 23 Jan 2026 08:06:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjGoN-0002ig-Ch
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:02:51 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjGoK-0006fP-UD
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:02:50 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vjGrz-0005U5-U6
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:06:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vjGrx-0007A9-5g
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:06:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769173592;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=H+h8BpOsnTajvQuhMGpvF2odyCe1bnvrkW+Smuwz1xc=;
+ b=gaURCGiG4mUOj4OK3dIOvIrSYS/pLslQYViiTm7tSSQPiXc2oCXoCviIzXxLjg4Yi6e5po
+ zGZMA5LptXFcxJovb6YpLFGGUXYovHwX/Q3hZeTTVdb85WhdggNCSo0PMB9F76+8xSge/F
+ c/AWAEGqBQgikStffC0RngZCLAy5Ta4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-nCCokQP1ObS8JI72RtLyKw-1; Fri,
+ 23 Jan 2026 08:06:28 -0500
+X-MC-Unique: nCCokQP1ObS8JI72RtLyKw-1
+X-Mimecast-MFC-AGG-ID: nCCokQP1ObS8JI72RtLyKw_1769173588
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id EB14F5BCD3;
- Fri, 23 Jan 2026 13:02:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769173367; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IYE0i37PMwK0Z+Elj/UHs+ejh5ugRz5WPd5tHZIDRnQ=;
- b=H8x8O9UVsNWx4iPry26mYSOtMT6xb8z7Yg9SnINa//9k+nnw/pOEj3YklbfJHqbnWcqURn
- alu2nFvG0/KXG7UyBl6Xs+7CzWyR0WX9cPX6N4ZQ0joL2I6JchYeLIgGUQNrOe+EPh8kBW
- cMiwN/DZLb88i14bdk7Jdt4it2EUXeQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769173367;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IYE0i37PMwK0Z+Elj/UHs+ejh5ugRz5WPd5tHZIDRnQ=;
- b=6IZFby+p74NbwwlGvNJsorm6XA5VidwkszVG3MQNAqaOIcnqgMaf5vZ1NJWutdocJNPQlL
- cccLQUNXkr9MF+Aw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=MCjTzZT0;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="z/XylgQY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769173366; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IYE0i37PMwK0Z+Elj/UHs+ejh5ugRz5WPd5tHZIDRnQ=;
- b=MCjTzZT0nH+Scss9Gz4QcFpW6TbI4Qeex/omZ/HiQl2i69yiE2Va/+DJSpGtX5jJrThrUC
- EmKoLAVdDIB534x2UzYzhKbQYDEocEMYIyX6HQFcpP+vHp06xjQX6rhWHVUk9NnFhR98c5
- wadmnqhV+7JRmObHI1FpL9JaH5QGph8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769173366;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IYE0i37PMwK0Z+Elj/UHs+ejh5ugRz5WPd5tHZIDRnQ=;
- b=z/XylgQYGauqKNn6XoHjeY+KjjvQqSXBedSl7JkiQMF8k0GyGL90f/7QB65U3EvAaAnclB
- FPAQ8cyCyCiBQMBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5E6E5136AA;
- Fri, 23 Jan 2026 13:02:46 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id AVmjB3Zxc2nQUAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 13:02:46 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi
- <stefanha@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- peterx@redhat.com
-Subject: Re: [PATCH 5/5] migration: Rename MIG_EVENT_PRECOPY_* to MIG_EVENT_*
-In-Reply-To: <20260122230331.3543312-6-peterx@redhat.com>
-References: <20260122230331.3543312-1-peterx@redhat.com>
- <20260122230331.3543312-6-peterx@redhat.com>
-Date: Fri, 23 Jan 2026 10:02:43 -0300
-Message-ID: <87y0loiirw.fsf@suse.de>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E89751956096; Fri, 23 Jan 2026 13:06:27 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E3FD1958DC1; Fri, 23 Jan 2026 13:06:27 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D5FF021E692D; Fri, 23 Jan 2026 14:06:24 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH 3/3] qapi: Add thread_status flag for iothreads
+In-Reply-To: <CAK3tnvK=hyrVhwyEHfAOaDNStG=C9irPK39ua=g=Upep6f8g6g@mail.gmail.com>
+ (Zhang Chen's message of "Fri, 16 Jan 2026 16:41:21 +0800")
+References: <20251229103859.98777-1-zhangckid@gmail.com>
+ <20251229103859.98777-3-zhangckid@gmail.com>
+ <877bts8fsa.fsf@pond.sub.org>
+ <CAK3tnvJuoin17F9FDnYJA+vXeUeGpMv3R=2vrOBFUotjRCymfQ@mail.gmail.com>
+ <87wm1irmvw.fsf@pond.sub.org>
+ <CAK3tnvK=hyrVhwyEHfAOaDNStG=C9irPK39ua=g=Upep6f8g6g@mail.gmail.com>
+Date: Fri, 23 Jan 2026 14:06:24 +0100
+Message-ID: <87jyx8a373.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: EB14F5BCD3
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,276 +92,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Zhang Chen <zhangckid@gmail.com> writes:
 
-> All three events are shared between precopy and postcopy, rather than
-> precopy specific.
+> On Fri, Jan 16, 2026 at 4:18=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>> Zhang Chen <zhangckid@gmail.com> writes:
+>>
+>> > On Thu, Jan 8, 2026 at 8:12=E2=80=AFPM Markus Armbruster <armbru@redha=
+t.com> wrote:
+>> >>
+>> >> Zhang Chen <zhangckid@gmail.com> writes:
+>> >>
+>> >> > The thread_status depends on struct IOThreadInfo's
+>> >> > 'attached': 'bool'. Show in the qmp/hmp CMD with
+>> >> > 'attached' or 'detached'.
+>> >> >
+>> >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+>> >> > ---
+>> >> >  iothread.c         | 1 +
+>> >> >  monitor/hmp-cmds.c | 2 ++
+>> >> >  qapi/misc.json     | 6 ++++++
+>> >> >  3 files changed, 9 insertions(+)
+>> >> >
+>> >> > diff --git a/iothread.c b/iothread.c
+>> >> > index 38e38fb44d..fb4898e491 100644
+>> >> > --- a/iothread.c
+>> >> > +++ b/iothread.c
+>> >> > @@ -358,6 +358,7 @@ static int query_one_iothread(Object *object, v=
+oid *opaque)
+>> >> >      info =3D g_new0(IOThreadInfo, 1);
+>> >> >      info->id =3D iothread_get_id(iothread);
+>> >> >      info->thread_id =3D iothread->thread_id;
+>> >> > +    info->attached =3D iothread->attached;
+>> >> >      info->poll_max_ns =3D iothread->poll_max_ns;
+>> >> >      info->poll_grow =3D iothread->poll_grow;
+>> >> >      info->poll_shrink =3D iothread->poll_shrink;
+>> >> > diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+>> >> > index 33a88ce205..84b01737cf 100644
+>> >> > --- a/monitor/hmp-cmds.c
+>> >> > +++ b/monitor/hmp-cmds.c
+>> >> > @@ -197,6 +197,8 @@ void hmp_info_iothreads(Monitor *mon, const QDi=
+ct *qdict)
+>> >> >          value =3D info->value;
+>> >> >          monitor_printf(mon, "%s:\n", value->id);
+>> >> >          monitor_printf(mon, "  thread_id=3D%" PRId64 "\n", value->=
+thread_id);
+>> >> > +        monitor_printf(mon, "  thread_status=3D%s" "\n",
+>> >> > +                       value->attached ? "attached" : "detached");
+>> >> >          monitor_printf(mon, "  poll-max-ns=3D%" PRId64 "\n", value=
+->poll_max_ns);
+>> >> >          monitor_printf(mon, "  poll-grow=3D%" PRId64 "\n", value->=
+poll_grow);
+>> >> >          monitor_printf(mon, "  poll-shrink=3D%" PRId64 "\n", value=
+->poll_shrink);
+>> >> > diff --git a/qapi/misc.json b/qapi/misc.json
+>> >> > index 6153ed3d04..2eea920bd2 100644
+>> >> > --- a/qapi/misc.json
+>> >> > +++ b/qapi/misc.json
+>> >> > @@ -76,6 +76,9 @@
+>> >> >  #
+>> >> >  # @thread-id: ID of the underlying host thread
+>> >> >  #
+>> >> > +# @attached: flag to show current iothread attached status
+>> >>
+>> >> What does "attached status" actually mean?
+>> >
+>> > This flag means weather the "-object iothread" already been used by a
+>> > real device.
+>> > In hotplug scenario, user can add multiple "-object iothread" and
+>> > multiple devices (like virtio-blk).
+>> > When user hotunplug the devices can keep the iothreads as a thread
+>> > pool, following the new
+>> > hotplug devices can attach to the released iothread.
+>>
+>> Why would a management application or human user want to know this?
 >
-> For example, both precopy and postcopy will go through a SETUP process.
->
-> Meanwhile, both FAILED and DONE notifiers will be notified for either
-> precopy or postcopy on completions / failures.
->
-> Rename them to make them match what they do, and shorter.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  include/migration/misc.h | 14 +++++++-------
->  hw/intc/arm_gicv3_kvm.c  |  2 +-
->  hw/net/virtio-net.c      |  4 ++--
->  hw/vfio/cpr-legacy.c     |  2 +-
->  hw/vfio/cpr.c            |  8 ++++----
->  hw/vfio/migration.c      |  4 ++--
->  migration/cpr-exec.c     |  6 +++---
->  migration/migration.c    |  8 ++++----
->  net/vhost-vdpa.c         |  4 ++--
->  ui/spice-core.c          |  6 +++---
->  10 files changed, 29 insertions(+), 29 deletions(-)
->
-> diff --git a/include/migration/misc.h b/include/migration/misc.h
-> index b002466e10..766de998cb 100644
-> --- a/include/migration/misc.h
-> +++ b/include/migration/misc.h
-> @@ -60,10 +60,10 @@ bool migration_is_running(void);
->  bool migration_thread_is_self(void);
->  
->  typedef enum MigrationEventType {
-> -    MIG_EVENT_PRECOPY_SETUP,
-> -    MIG_EVENT_PRECOPY_DONE,
-> -    MIG_EVENT_PRECOPY_FAILED,
-> +    MIG_EVENT_SETUP,
->      MIG_EVENT_POSTCOPY_START,
-> +    MIG_EVENT_DONE,
-> +    MIG_EVENT_FAILED,
->      MIG_EVENT_MAX
->  } MigrationEventType;
->  
-> @@ -73,7 +73,7 @@ typedef struct MigrationEvent {
->  
->  /*
->   * A MigrationNotifyFunc may return an error code and an Error object,
-> - * but only when @e->type is MIG_EVENT_PRECOPY_SETUP.  The code is an int
-> + * but only when @e->type is MIG_EVENT_SETUP.  The code is an int
->   * to allow for different failure modes and recovery actions.
->   */
->  typedef int (*MigrationNotifyFunc)(NotifierWithReturn *notify,
-> @@ -83,9 +83,9 @@ typedef int (*MigrationNotifyFunc)(NotifierWithReturn *notify,
->   * Register the notifier @notify to be called when a migration event occurs
->   * for MIG_MODE_NORMAL, as specified by the MigrationEvent passed to @func.
->   * Notifiers may receive events in any of the following orders:
-> - *    - MIG_EVENT_PRECOPY_SETUP -> MIG_EVENT_PRECOPY_DONE
-> - *    - MIG_EVENT_PRECOPY_SETUP -> MIG_EVENT_PRECOPY_FAILED
-> - *    - MIG_EVENT_PRECOPY_FAILED
-> + *    - MIG_EVENT_SETUP -> MIG_EVENT_DONE
-> + *    - MIG_EVENT_SETUP -> MIG_EVENT_FAILED
-> + *    - MIG_EVENT_FAILED
->   */
->  void migration_add_notifier(NotifierWithReturn *notify,
->                              MigrationNotifyFunc func);
-> diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
-> index 6f311e37ef..fddeefa26f 100644
-> --- a/hw/intc/arm_gicv3_kvm.c
-> +++ b/hw/intc/arm_gicv3_kvm.c
-> @@ -774,7 +774,7 @@ static void vm_change_state_handler(void *opaque, bool running,
->  static int kvm_arm_gicv3_notifier(NotifierWithReturn *notifier,
->                                    MigrationEvent *e, Error **errp)
->  {
-> -    if (e->type == MIG_EVENT_PRECOPY_DONE) {
-> +    if (e->type == MIG_EVENT_DONE) {
->          GICv3State *s = container_of(notifier, GICv3State, cpr_notifier);
->          return kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CTRL,
->                                   KVM_DEV_ARM_VGIC_SAVE_PENDING_TABLES,
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 317f1ad23b..3e2dc30da6 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -3786,7 +3786,7 @@ static void virtio_net_handle_migration_primary(VirtIONet *n, MigrationEvent *e)
->  
->      should_be_hidden = qatomic_read(&n->failover_primary_hidden);
->  
-> -    if (e->type == MIG_EVENT_PRECOPY_SETUP && !should_be_hidden) {
-> +    if (e->type == MIG_EVENT_SETUP && !should_be_hidden) {
->          if (failover_unplug_primary(n, dev)) {
->              vmstate_unregister(VMSTATE_IF(dev), qdev_get_vmsd(dev), dev);
->              qapi_event_send_unplug_primary(dev->id);
-> @@ -3794,7 +3794,7 @@ static void virtio_net_handle_migration_primary(VirtIONet *n, MigrationEvent *e)
->          } else {
->              warn_report("couldn't unplug primary device");
->          }
-> -    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-> +    } else if (e->type == MIG_EVENT_FAILED) {
->          /* We already unplugged the device let's plug it back */
->          if (!failover_replug_primary(n, dev, &err)) {
->              if (err) {
-> diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
-> index 7c03ddb961..033a546c30 100644
-> --- a/hw/vfio/cpr-legacy.c
-> +++ b/hw/vfio/cpr-legacy.c
-> @@ -137,7 +137,7 @@ static int vfio_cpr_fail_notifier(NotifierWithReturn *notifier,
->          container_of(notifier, VFIOLegacyContainer, cpr.transfer_notifier);
->      VFIOContainer *bcontainer = VFIO_IOMMU(container);
->  
-> -    if (e->type != MIG_EVENT_PRECOPY_FAILED) {
-> +    if (e->type != MIG_EVENT_FAILED) {
->          return 0;
->      }
->  
-> diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-> index 998230d271..ffa4f8e099 100644
-> --- a/hw/vfio/cpr.c
-> +++ b/hw/vfio/cpr.c
-> @@ -18,7 +18,7 @@
->  int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
->                               MigrationEvent *e, Error **errp)
->  {
-> -    if (e->type == MIG_EVENT_PRECOPY_SETUP &&
-> +    if (e->type == MIG_EVENT_SETUP &&
->          !runstate_check(RUN_STATE_SUSPENDED) && !vm_get_suspended()) {
->  
->          error_setg(errp,
-> @@ -186,7 +186,7 @@ static int vfio_cpr_kvm_close_notifier(NotifierWithReturn *notifier,
->                                         MigrationEvent *e,
->                                         Error **errp)
->  {
-> -    if (e->type == MIG_EVENT_PRECOPY_DONE) {
-> +    if (e->type == MIG_EVENT_DONE) {
->          vfio_kvm_device_close();
->      }
->      return 0;
-> @@ -272,9 +272,9 @@ static int vfio_cpr_pci_notifier(NotifierWithReturn *notifier,
->      VFIOPCIDevice *vdev =
->          container_of(notifier, VFIOPCIDevice, cpr.transfer_notifier);
->  
-> -    if (e->type == MIG_EVENT_PRECOPY_SETUP) {
-> +    if (e->type == MIG_EVENT_SETUP) {
->          return vfio_cpr_set_msi_virq(vdev, errp, false);
-> -    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-> +    } else if (e->type == MIG_EVENT_FAILED) {
->          return vfio_cpr_set_msi_virq(vdev, errp, true);
->      }
->      return 0;
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index f857dc25ed..76a902b79c 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -917,10 +917,10 @@ static int vfio_migration_state_notifier(NotifierWithReturn *notifier,
->  
->      trace_vfio_migration_state_notifier(vbasedev->name, e->type);
->  
-> -    if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-> +    if (e->type == MIG_EVENT_FAILED) {
->          /*
->           * MigrationNotifyFunc may not return an error code and an Error
-> -         * object for MIG_EVENT_PRECOPY_FAILED. Hence, report the error
-> +         * object for MIG_EVENT_FAILED. Hence, report the error
->           * locally and ignore the errp argument.
->           */
->          ret = vfio_migration_set_state_or_reset(vbasedev,
-> diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
-> index da287d8031..18a71828c3 100644
-> --- a/migration/cpr-exec.c
-> +++ b/migration/cpr-exec.c
-> @@ -164,7 +164,7 @@ static void cpr_exec_cb(void *opaque)
->      err = NULL;
->  
->      /* Note, we can go from state COMPLETED to FAILED */
-> -    migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
-> +    migration_call_notifiers(s, MIG_EVENT_FAILED, NULL);
->  
->      if (!migration_block_activate(&err)) {
->          /* error was already reported */
-> @@ -182,12 +182,12 @@ static int cpr_exec_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
->  {
->      MigrationState *s = migrate_get_current();
->  
-> -    if (e->type == MIG_EVENT_PRECOPY_DONE) {
-> +    if (e->type == MIG_EVENT_DONE) {
->          QEMUBH *cpr_exec_bh = qemu_bh_new(cpr_exec_cb, NULL);
->          assert(s->state == MIGRATION_STATUS_COMPLETED);
->          qemu_bh_schedule(cpr_exec_bh);
->          qemu_notify_event();
-> -    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-> +    } else if (e->type == MIG_EVENT_FAILED) {
->          cpr_exec_unpersist_state();
->      }
->      return 0;
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 5bef14ea99..7ba37afb27 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1540,7 +1540,7 @@ static void migration_cleanup(MigrationState *s)
->       * migration completed successfully.
->       */
->      if (!migration_has_failed(s)) {
-> -        migration_call_notifiers(s, MIG_EVENT_PRECOPY_DONE, NULL);
-> +        migration_call_notifiers(s, MIG_EVENT_DONE, NULL);
->      }
->  
->      yank_unregister_instance(MIGRATION_YANK_INSTANCE);
-> @@ -1720,7 +1720,7 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
->          notifier = (NotifierWithReturn *)elem->data;
->          ret = notifier->notify(notifier, &e, errp);
->          if (ret) {
-> -            assert(type == MIG_EVENT_PRECOPY_SETUP);
-> +            assert(type == MIG_EVENT_SETUP);
->              return ret;
->          }
->      }
-> @@ -3598,7 +3598,7 @@ static void migration_iteration_finish(MigrationState *s)
->           * Notify FAILED before starting VM, so that devices can invoke
->           * necessary fallbacks before vCPUs run again.
->           */
-> -        migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
-> +        migration_call_notifiers(s, MIG_EVENT_FAILED, NULL);
->  
->          if (runstate_is_live(s->vm_old_state)) {
->              if (!runstate_check(RUN_STATE_SHUTDOWN)) {
-> @@ -4064,7 +4064,7 @@ void migration_connect(MigrationState *s, Error *error_in)
->          rate_limit = migrate_max_bandwidth();
->  
->          /* Notify before starting migration thread */
-> -        if (migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
-> +        if (migration_call_notifiers(s, MIG_EVENT_SETUP, &local_err)) {
->              goto fail;
->          }
->      }
-> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-> index 74d26a9497..f4b1f0e9e0 100644
-> --- a/net/vhost-vdpa.c
-> +++ b/net/vhost-vdpa.c
-> @@ -378,9 +378,9 @@ static int vdpa_net_migration_state_notifier(NotifierWithReturn *notifier,
->  {
->      VhostVDPAState *s = container_of(notifier, VhostVDPAState, migration_state);
->  
-> -    if (e->type == MIG_EVENT_PRECOPY_SETUP) {
-> +    if (e->type == MIG_EVENT_SETUP) {
->          vhost_vdpa_net_log_global_enable(s, true);
-> -    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-> +    } else if (e->type == MIG_EVENT_FAILED) {
->          vhost_vdpa_net_log_global_enable(s, false);
->      }
->      return 0;
-> diff --git a/ui/spice-core.c b/ui/spice-core.c
-> index ce3c2954e3..ee13ecc4a5 100644
-> --- a/ui/spice-core.c
-> +++ b/ui/spice-core.c
-> @@ -583,13 +583,13 @@ static int migration_state_notifier(NotifierWithReturn *notifier,
->          return 0;
->      }
->  
-> -    if (e->type == MIG_EVENT_PRECOPY_SETUP) {
-> +    if (e->type == MIG_EVENT_SETUP) {
->          spice_server_migrate_start(spice_server);
-> -    } else if (e->type == MIG_EVENT_PRECOPY_DONE ||
-> +    } else if (e->type == MIG_EVENT_DONE ||
->                 e->type == MIG_EVENT_POSTCOPY_START) {
->          spice_server_migrate_end(spice_server, true);
->          spice_have_target_host = false;
-> -    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-> +    } else if (e->type == MIG_EVENT_FAILED) {
->          spice_server_migrate_end(spice_server, false);
->          spice_have_target_host = false;
->      }
+> Because some usercases already been changed.
+> This demand comes from Cloud Native ecosystem.
+> User want to manage resources more flexible like containers (Kata contain=
+er).
+> The real workload maybe changed(runc) in the VM without VM reboot,
+> It may need hotplug/unplug different multi disks with multi iothreads to =
+meet
+> high level scheduler's needs(like K8s).
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+In your v2, you added a (broken) PATCH 4 that describes @attached as
+follows:
+
+    The ``attached`` parameter is a flag to show whether the iothread
+    is attached to an actual device(for example virtio-blk). In hotplug
+    scenario, user can add multiple "-object iothread" and multiple
+    devices (like virtio-blk). When user hotunplug the devices can keep
+    the iothreads as a thread pool, following the new hotplug devices can
+    attach to the released iothread.
+
+Should this information go into the QAPI schema, too?
+
+>> The answer should lead us to better doc text.
+>>
+>
+> OK, I will add it in next version.
+
+[...]
+
 
