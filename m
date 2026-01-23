@@ -4,63 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 606A9D74ECF
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 13:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E65FFD74ED9
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 13:51:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjHKl-0007q3-Uk; Fri, 23 Jan 2026 08:36:19 -0500
+	id 1vjHY4-0000e9-AZ; Fri, 23 Jan 2026 08:50:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vjHKV-0007fM-3b
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:36:06 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vjHKR-0004eG-43
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:36:02 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id E1C5960010;
- Fri, 23 Jan 2026 13:35:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760F9C4CEF1;
- Fri, 23 Jan 2026 13:35:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769175357;
- bh=EmQeFY0Ph0iY+ei/fVP2lTzsVgetZHcMU/ameqRXywY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=FknLJb34Jfz6cXQYDQPhyJTsZmbkWaPmqWu0TfwxOO7NNHx0h0vsiSBVeNagIIUft
- e6XyhmJCLGI+mIUI8Zvt+3OTioCI9lCeAJ3zhNDO5qg9PMSpZJS9OV4ze0VfJAIRNj
- l34hy84iwSn5JE6mwVLbJdsk/b3qG7r7gvOf8VAhaBeGqTMNqntTJ44qlOtwpDUHG/
- kGXiBshnfnmCebRYGxZuQYZ6OFXbH46bBRowyqyyMwAtYUMbVs9A257jc3l1WwflE2
- 7ksa12GCya3Rvjr0mtsHjxhhGziyGIEUeiJy0X2BykQRvMj1FpD/cgiyMB9BoLorne
- MDBE1rVEOIfGw==
-Received: from localhost ([::1]) by mail.kernel.org with esmtp (Exim 4.99.1)
- (envelope-from <mchehab+huawei@kernel.org>)
- id 1vjHKK-000000063K7-0NUl; Fri, 23 Jan 2026 14:35:55 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-devel@nongnu.org,
- Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH v2 09/13] scripts/ghes_inject: add a handler for PCI/PCI-X bus
- error
-Date: Fri, 23 Jan 2026 14:35:23 +0100
-Message-ID: <35c61dd959e8d2687fa282c44471a9de5ef50ad5.1769175070.git.mchehab+huawei@kernel.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <cover.1769175069.git.mchehab+huawei@kernel.org>
-References: <cover.1769175069.git.mchehab+huawei@kernel.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHXY-0000W5-74
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:49:33 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHXU-0006r3-J5
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:49:29 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 373B45BCD4;
+ Fri, 23 Jan 2026 13:49:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1769176159; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0r4urskwgU6ZULrRWh2a1kwo4IgLlfRVUh0cFr6iRqc=;
+ b=ke++E27m+lTJCDDxDuj3nSN6S9KB+6w2qbOqiHqNxwl3bKKxAYObSEvgynEj5oFWh1rqxo
+ ps9YHor6mdBvX4R6Qvs43H2esUxC2h/4ZLHPxk/p/5kl8hgbKiTOmsE9kZEcp4q6qpCyC1
+ 2lUY3bAmDaAM+q2MhvjHP+Uk4Dhb2/Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1769176159;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0r4urskwgU6ZULrRWh2a1kwo4IgLlfRVUh0cFr6iRqc=;
+ b=uO6zqziUqEf3tuckPyxKPbEwMpxn8Y9b7685nYoRcVJiq5Z/ejeUOyqA0Sb3ksW/IGYoXz
+ ZogG0QHH+/cfHoDQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1769176159; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0r4urskwgU6ZULrRWh2a1kwo4IgLlfRVUh0cFr6iRqc=;
+ b=ke++E27m+lTJCDDxDuj3nSN6S9KB+6w2qbOqiHqNxwl3bKKxAYObSEvgynEj5oFWh1rqxo
+ ps9YHor6mdBvX4R6Qvs43H2esUxC2h/4ZLHPxk/p/5kl8hgbKiTOmsE9kZEcp4q6qpCyC1
+ 2lUY3bAmDaAM+q2MhvjHP+Uk4Dhb2/Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1769176159;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0r4urskwgU6ZULrRWh2a1kwo4IgLlfRVUh0cFr6iRqc=;
+ b=uO6zqziUqEf3tuckPyxKPbEwMpxn8Y9b7685nYoRcVJiq5Z/ejeUOyqA0Sb3ksW/IGYoXz
+ ZogG0QHH+/cfHoDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9D66A1395E;
+ Fri, 23 Jan 2026 13:49:18 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id rkpjF158c2mxfwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 13:49:18 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Prasad Pandit <ppandit@redhat.com>, Lukas Straub <lukasstraub2@web.de>,
+ Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com
+Subject: Re: [PATCH 06/10] migration/colo: Remove call to send switchover
+ start event
+In-Reply-To: <20260121223336.3381912-7-peterx@redhat.com>
+References: <20260121223336.3381912-1-peterx@redhat.com>
+ <20260121223336.3381912-7-peterx@redhat.com>
+Date: Fri, 23 Jan 2026 10:49:15 -0300
+Message-ID: <87a4y4igmc.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ FREEMAIL_ENVRCPT(0.00)[web.de]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,web.de]; RCVD_TLS_ALL(0.00)[];
+ MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,216 +120,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a logic to do PCIe BUS error injection.
+Peter Xu <peterx@redhat.com> writes:
 
-On Linux Kernel, despite CPER_SEC_PCI_X_BUS macro is defined for such
-event, ghes.c doesn't implement support for it yet:
+> COLO (in case of periodically checkpointing) already have switchover
+> happened before hand.  This switchover_start feature never applies to COLO.
+> Remove it.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/colo.c | 2 --
+>  1 file changed, 2 deletions(-)
+>
+> diff --git a/migration/colo.c b/migration/colo.c
+> index e05736ecf0..c344943173 100644
+> --- a/migration/colo.c
+> +++ b/migration/colo.c
+> @@ -453,8 +453,6 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
+>          goto out;
+>      }
+>  
+> -    qemu_savevm_maybe_send_switchover_start(s->to_dst_file);
+> -
+>      /* Note: device state is saved into buffer */
+>      ret = qemu_save_device_state(fb);
 
-[16950.077494] {26}[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 1
-[16950.077866] {26}[Hardware Error]: event severity: recoverable
-[16950.078118] {26}[Hardware Error]:  Error 0, type: recoverable
-[16950.078444] {26}[Hardware Error]:   section type: unknown, c5753963-3b84-4095-bf78-eddad3f9c9dd
-[16950.078800] {26}[Hardware Error]:   section length: 0x48
-[16950.079069] {26}[Hardware Error]:   00000000: 00000000 00000000 00000000 00000000  ................
-[16950.079442] {26}[Hardware Error]:   00000010: 00000001 00000000 00000000 00000000  ................
-[16950.079811] {26}[Hardware Error]:   00000020: 00000000 00000000 00000000 00000000  ................
-[16950.080181] {26}[Hardware Error]:   00000030: 00000000 00000000 00000000 00000000  ................
-[16950.080538] {26}[Hardware Error]:   00000040: 00000000 00000000                    ........
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
----
- MAINTAINERS              |   1 +
- scripts/ghes_inject.py   |   2 +
- scripts/pci_bus_error.py | 146 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 149 insertions(+)
- create mode 100644 scripts/pci_bus_error.py
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a970c47dd089..1e62064a8672 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2228,6 +2228,7 @@ F: qapi/acpi-hest.json
- F: scripts/ghes_decode.py
- F: scripts/ghes_inject.py
- F: scripts/arm_processor_error.py
-+F: scripts/pci_bus_error.py
- F: scripts/qmp_helper.py
- 
- ppc4xx
-diff --git a/scripts/ghes_inject.py b/scripts/ghes_inject.py
-index 6ac917d0b5db..be2384a59b3e 100755
---- a/scripts/ghes_inject.py
-+++ b/scripts/ghes_inject.py
-@@ -12,6 +12,7 @@
- import sys
- 
- from arm_processor_error import ArmProcessorEinj
-+from pci_bus_error import PciBusError
- 
- EINJ_DESC = """
- Handle ACPI GHESv2 error injection logic QEMU QMP interface.
-@@ -40,6 +41,7 @@ def main():
-     subparsers = parser.add_subparsers()
- 
-     ArmProcessorEinj(subparsers)
-+    PciBusError(subparsers)
- 
-     args = parser.parse_args()
-     if "func" in args:
-diff --git a/scripts/pci_bus_error.py b/scripts/pci_bus_error.py
-new file mode 100644
-index 000000000000..5abfdf11c868
---- /dev/null
-+++ b/scripts/pci_bus_error.py
-@@ -0,0 +1,146 @@
-+#!/usr/bin/env python3
-+#
-+# pylint: disable=C0114,R0903
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# Copyright (C) 2024 Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-+
-+from qmp_helper import qmp, util, cper_guid
-+
-+class PciBusError:
-+    """
-+    Implements PCI Express bus error injection via GHES
-+    """
-+
-+    def __init__(self, subparsers):
-+        """Initialize the error injection class and add subparser"""
-+
-+        # Valid values
-+        self.valid_bits = {
-+            "status": util.bit(0),
-+            "type": util.bit(1),
-+            "bus-id": util.bit(2),
-+            "bus-addr": util.bit(3),
-+            "bus-data": util.bit(4),
-+            "command": util.bit(5),
-+            "requestor-id": util.bit(6),
-+            "completer-id": util.bit(7),
-+            "target-id": util.bit(8),
-+        }
-+
-+        self.bus_command_bits = {
-+            "pci": 0,               # Bit 56 is zero
-+            "pci-x": util.bit(56)
-+        }
-+
-+        self.data = bytearray()
-+
-+        parser = subparsers.add_parser("pci-bus",
-+                                       description="Generate PCI/PCI-X bus error CPER")
-+        g_pci = parser.add_argument_group("PCI/PCI-X bus error")
-+
-+        valid_bits = ",".join(self.valid_bits.keys())
-+        bus_command_bits = ",".join(self.bus_command_bits.keys())
-+
-+        g_pci.add_argument("-v", "--valid",
-+                            help=f"Valid bits: {valid_bits}")
-+        g_pci.add_argument("-s", "--error-status",
-+                            type=lambda x: int(x, 0),
-+                            help="Error Status")
-+        g_pci.add_argument("-t", "--error-type",
-+                            type=lambda x: int(x, 0),
-+                            help="Error type")
-+        g_pci.add_argument("-b", "--bus-number",
-+                            type=lambda x: int(x, 0),
-+                            help="Bus number")
-+        g_pci.add_argument("-S", "--segment-number",
-+                            type=lambda x: int(x, 0),
-+                            help="Segment number")
-+        g_pci.add_argument("-a", "--bus-address",
-+                            type=lambda x: int(x, 0),
-+                            help="Bus address")
-+        g_pci.add_argument("-d", "--bus-data",
-+                            type=lambda x: int(x, 0),
-+                            help="Bus data")
-+        g_pci.add_argument("-c", "--bus-command",
-+                            help=f"bus-command: {bus_command_bits}")
-+        g_pci.add_argument("-r", "--bus-requestor",
-+                            type=lambda x: int(x, 0),
-+                            help="Bus requestor ID")
-+        g_pci.add_argument("-C", "--bus-completer",
-+                            type=lambda x: int(x, 0),
-+                            help="Bus completer ID")
-+        g_pci.add_argument("-i", "--target-id",
-+                            type=lambda x: int(x, 0),
-+                            help="Target ID")
-+
-+        parser.set_defaults(func=self.send_cper)
-+
-+    def send_cper(self, args):
-+        """Parse subcommand arguments and send a CPER via QMP"""
-+
-+        qmp_cmd = qmp(args.host, args.port, args.debug)
-+
-+        cper = {}
-+        arg = vars(args)
-+
-+        # Handle global parameters
-+        if args.valid:
-+            valid_init = False
-+            cper["valid"] = util.get_choice(name="valid",
-+                                            value=args.valid,
-+                                            choices=self.valid_bits)
-+        else:
-+            cper["valid"] = 0
-+            valid_init = True
-+
-+        if args.bus_command:
-+            cper["bus-command"] = util.get_choice(name="bus-command",
-+                                                    value=args.bus_command,
-+                                                    choices=self.bus_command_bits)
-+        if valid_init:
-+            if args.error_status:
-+                cper["valid"] |= self.valid_bits["status"]
-+
-+            if args.error_type:
-+                cper["valid"] |= self.valid_bits["type"]
-+
-+            if args.bus_number and args.bus_segment:
-+                cper["valid"] |= self.valid_bits["bus-id"]
-+
-+            if args.bus_address:
-+                cper["valid"] |= self.valid_bits["bus-address"]
-+
-+            if args.bus_data:
-+                cper["valid"] |= self.valid_bits["bus-data"]
-+
-+            if args.bus_requestor:
-+                cper["valid"] |= self.valid_bits["requestor-id"]
-+
-+            if args.bus_completer:
-+                cper["valid"] |= self.valid_bits["completer-id"]
-+
-+            if args.target_id:
-+                cper["valid"] |= self.valid_bits["target-id"]
-+
-+        util.data_add(self.data, cper["valid"], 8)
-+        util.data_add(self.data, arg.get("error-status", 0), 8)
-+        util.data_add(self.data, arg.get("error-type", util.bit(0)), 2)
-+
-+        # Bus ID
-+        util.data_add(self.data, arg.get("bus-number", 0), 1)
-+        util.data_add(self.data, arg.get("segment-number", 0), 1)
-+
-+        # Reserved
-+        util.data_add(self.data, 0, 4)
-+
-+        util.data_add(self.data, arg.get("bus-address", 0), 8)
-+        util.data_add(self.data, arg.get("bus-data", 0), 8)
-+
-+        util.data_add(self.data, cper.get("bus-command", 0), 8)
-+
-+        util.data_add(self.data, arg.get("bus-requestor", 0), 8)
-+        util.data_add(self.data, arg.get("bus-completer", 0), 8)
-+        util.data_add(self.data, arg.get("target-id", 0), 8)
-+
-+        return qmp_cmd.send_cper(cper_guid.CPER_PCI_BUS, self.data)
--- 
-2.52.0
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
