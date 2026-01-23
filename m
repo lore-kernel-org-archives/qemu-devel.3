@@ -4,95 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B9AD74EDE
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:00:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED04D74EDE
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:10:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIbt-0004E2-4X; Fri, 23 Jan 2026 09:58:05 -0500
+	id 1vjIhq-0004z8-TG; Fri, 23 Jan 2026 10:04:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbr-0004C4-5b
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:03 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjIho-0004xr-Vr
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:04:13 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbp-0007lj-GV
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:02 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47ee76e8656so31715865e9.0
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180280; x=1769785080; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tPLtmm0thKhhqV9CGriELJNIRIeHkZeX7nNkrCOg7E0=;
- b=GY5i03lqA9cqn/SiLhUtjW775NAmOs+YcwkYgckuvlrF+XMon/sr1oWGs7xLIpSL6g
- WTdTb4E46q9S6WIF2SgC67G+i9mySzl9V5wlkmFzCXyb3QfF+C37OR+4KnSJKmBoRHey
- ddqgdQgrFKZj7bz832eeeV0Q158GtNeYfy+3IRx0iHYh5cdNmGKidTbYE8+BtDT5WNsl
- AIS6bkDAbuy7oIKQrTVGz9Uc8JbqhMZ8B0OIr2AgKiEQhCM03jBhIyaNpfk9pwby1b2L
- UltlcSpTqx72lozUst0f5BKtJyeMODW92Y9jK/wdn9Z95/bNH1+BQyBffG/mX1JVKJYS
- kz5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180280; x=1769785080;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tPLtmm0thKhhqV9CGriELJNIRIeHkZeX7nNkrCOg7E0=;
- b=WpjGPScWYaK2YYuzpZUE0Atm3YtIJ7YG3f1cS7ADlAxKn/4vlLLk+ruHhzy0kZyKml
- gaupdnLel4Od9zQaxrSHIm0xBMUrAQv+FzuSBGI3E9uxz802o7L1/d0J+ioTPvVq/VVu
- uzbCr3VgvQeJ8KOqVAUSWnaSnohrfzYxtakjMlDdAJNRp9PbPj0HtpIjrQq6g1554/hz
- zaYOuGcyM9Pq7VaEk3DDMCILQda8c6sMwPSvg1cdKUCNaGfspdp3pj3D3KBAVCED3dWX
- LHHkSa1mKVawbzbUE8Cw7bSciBo1ysgx4obuGZ+EwVqX0QKgzGxtvvQRguF64GYwHqk+
- MzMg==
-X-Gm-Message-State: AOJu0YyApZJrn8ofcyf0rZl+Ls+tbyD7kH/iX9HaSHnGZEftTKmXXgvn
- 7cFHJsFaFvCq+MQW7hY5bi6lVy3t5LZENB/mNMPkZ2cg9iKawldjzdag0XNdFPUzzlY=
-X-Gm-Gg: AZuq6aKMdexJq8vK/4EkvMQWx93FfPAEChNBdDbH5lvg2LXmItWQ5JHOo2eiMN4++F9
- x/Fwd70IxQ0Qe3uW/MC/LoOx4zIfIDLJKtUIjrVIYfImS5JiZqr9h0Wmm2AaOFRla16R8NN7SjL
- cM7g45lES2u7wsoJ6gSAbCrI26xgIRdbRZlMrRlrmOl81oMINZY647Av6gT4BqHFSQBexVZyUyc
- QcdOGB7SC/4CqRtO46MdDjTHCFlF3fFFuBaqOP6xp1v9AyEGqC3onPGga4N/SJ2jeK60xi6w2/O
- bbM50CIoglvVwoErsnQIEbYKIMxy5FPgoSJQwoWNtPB79HVshr4R8Y4GMxHAY63OFheL8y+ZpMd
- 4fc40yHQe6ZNevlVrayFgF9JhWmiK+K8kM7kIwN0xtAd9RDAIAHVUT6vgnb+hlK5s9pvNs+WYYY
- 9qhvQaTTW8Ya9A
-X-Received: by 2002:a05:600c:1994:b0:480:19ed:7efa with SMTP id
- 5b1f17b1804b1-4804c9d4e9fmr54061545e9.36.1769180280006; 
- Fri, 23 Jan 2026 06:58:00 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4804d85206fsm62321345e9.6.2026.01.23.06.57.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 06:57:57 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0FA465F8F3;
- Fri, 23 Jan 2026 14:57:51 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjIhm-0000yn-SA
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:04:12 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6FE1C337CC;
+ Fri, 23 Jan 2026 15:04:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1769180649; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ju7ZV4KOaJm0bozZI2biasXE2VkfUqJgrNJCI1i2xVw=;
+ b=Ushc/mD7yrWhjMMd0uVHhJToQFcFBBlUjfEKYVuIUGBEHGnKMgJSMqcQyl2fuShQxCatFc
+ GWJ3QXb5D7bQolbp1e0BeRApYDw8IFPAsiwX2zT8+NKYAS6E27/LZJlMk/ALFsXbiHwcFp
+ w9K/IUg6WP698QJLvkZEETB1/tYJI/g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1769180649;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ju7ZV4KOaJm0bozZI2biasXE2VkfUqJgrNJCI1i2xVw=;
+ b=LCkpQz+V1NVQ382T4quJoOVsFUC+Mv4r3frKBCikpzB0Dohv18P86SmYF8LFFSuiL2qvDg
+ J6X2tMF7cWZgbkCg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1769180648; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ju7ZV4KOaJm0bozZI2biasXE2VkfUqJgrNJCI1i2xVw=;
+ b=Cbbm1RF8tzqz0OeMIK4Xy5OpiZrOkJzYI2AwyjKaQhL40ooz2Z5F9pghnRIEzU01bMKhig
+ CduhD6N0+XOOaBN15r2XnV7zeg5R3LeH70rnHtKxdFjvkG0jCXyGtupsLycYf7jAF3SVgO
+ hkzSHg9Nt9cxJ4YC6Ajq7QHHtb/+9I0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1769180648;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ju7ZV4KOaJm0bozZI2biasXE2VkfUqJgrNJCI1i2xVw=;
+ b=Vq2N60GNqQHn5A4axNFVwiWBvkxIhvnmKNn1cW/eHuiQbRkdztyBA0SYZBWdPQBabasLki
+ Th170OxggcX80vAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3D2C0136AA;
+ Fri, 23 Jan 2026 15:04:07 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id YSo7AOeNc2nTTAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 15:04:06 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [RFC PATCH v2 07/16] MAINTAINERS: add reviewer for linux-user
-Date: Fri, 23 Jan 2026 14:57:40 +0000
-Message-ID: <20260123145750.1200879-8-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260123145750.1200879-1-alex.bennee@linaro.org>
-References: <20260123145750.1200879-1-alex.bennee@linaro.org>
+Cc: peterx@redhat.com, berrange@redhat.com, ppandit@redhat.com
+Subject: Re: [PATCH v4 00/25] migration: Cleanup early connection code
+In-Reply-To: <20260123141656.6765-1-farosas@suse.de>
+References: <20260123141656.6765-1-farosas@suse.de>
+Date: Fri, 23 Jan 2026 12:04:04 -0300
+Message-ID: <87v7gsgyl7.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_NONE(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,34 +113,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Fabiano Rosas <farosas@suse.de> writes:
 
-I had interest in this area for some time, and would like to help
-reviewing it.
+> Rebased on master and adjusted a few commit messages. Also a minor
+> change patch 20.
+>
+> CI run: https://gitlab.com/farosas/qemu/-/pipelines/2274889063
+>
+> v3:
+> https://lore.kernel.org/r/20260109124043.25019-1-farosas@suse.de
+>
+> v2:
+> https://lore.kernel.org/r/20260105190644.14072-1-farosas@suse.de
+>
+> Removed some extra changes that were not adding much to the series,
+> left multifd_recv_setup() call where it was; stopped merging the
+> connection code at the end of the series.
+>
+> Added further cleanup to CPR code in qmp_migrate and moved it to
+> cpr-transfer.c.
+>
+> v1 (rfc):
+> https://lore.kernel.org/r/20251226211930.27565-1-farosas@suse.de
+>
+> Address some of the issues that make the early connection code a bit
+> too idiosyncratic. By "early connection" I mean from
+> qmp_migrate[_incoming] until the start of the migration
+> thread|coroutine.
+>
+> (IOW, the whole dance of going into socket code, starting an async
+> routine, calling back to migration code, checking TLS, going back
+> again, coming back once more, etc. All while passing an error_in and
+> hostname string that eventually gets (maybe) ignored in tls code,
+> along with some is_resume checks along the way)
+>
+> This series is mostly inspired by the work Markus and Peter did
+> recently in organizing some of the error handling code. The new
+> migration_connect_error_propagate() function seems like a good place
+> to centralize the error handling and call migration_cleanup() during
+> this early connection phase when everything is still fairly
+> linear. (apologies if I'm dirtying your design =)
+>
+> Aside from the initial patches that are a bit disruptive, most of the
+> series is just refactoring to make the code easier to navigate, names
+> more consistent and some general cleanups.
+>
+> - patches 1-8:
+>
+> General cleanups, could be applied standalone, although they are
+> prerequisites for the rest of the series.
+>
+> - patches 9-12:
+>
+> Changes to allow calling migration_cleanup() from
+> migration_connect_error_propagate().
+>
+> The idea here is to make sure error propagation and cleanup happen
+> when the error is detected, without calling into non-error-path
+> functions.
+>
+> This is the more risky change because it will cause cleanup to run in
+> places where it didn't before.
+>
+> - patch 13 & 19:
+>
+> The main change of this series, simplifying the
+> qmp-migrate --> migration_connect path. Stops calling the connection
+> functions when an error happens in the transport code, adds
+> clarification around which paths have asynchronous completion and
+> makes the synchronous path return to their caller to start the
+> migration instead of initiating it themselves.
+>
+> - patches 14-18, 20-22:
+>
+> Moves code out of migration.c and into channel.c. Now that the code is
+> more compartmentalized, move it to a more appropriate source file.
+>
+> - patches 23-25:
+>
+> BONUS CONTENT, wrap the uri/channels parsing and move it to channel.c
+> as well.
+>
+> - future work?
+>
+> I think we could move all QMP command functions to a QAPI-specific
+> file, but I don't see any standardization in the tree, there's
+> block/qapi.c, various instances of foo-qmp-cmds.c and many more just
+> laying along with the rest of the code. So I left this for another
+> moment.
+>
+> CI run: https://gitlab.com/farosas/qemu/-/pipelines/2233810778
+>
+> Fabiano Rosas (25):
+>   migration: Remove redundant state change
+>   migration: Fix state change at migration_channel_process_incoming
+>   migration/tls: Remove unused parameter
+>   migration: Cleanup TLS handshake hostname passing
+>   migration: Move postcopy_try_recover into migration_incoming_process
+>   migration: Use migrate_mode() to query for cpr-transfer
+>   migration: Free the error earlier in the resume case
+>   migration: Move error reporting out of migration_cleanup
+>   migration: Expand migration_connect_error_propagate to cover
+>     cancelling
+>   migration: yank: Move register instance earlier
+>   migration: Fold migration_cleanup() into
+>     migration_connect_error_propagate()
+>   migration: Handle error in the early async paths
+>   migration: Move setting of QEMUFile into
+>     migration_outgoing|incoming_setup
+>   migration/rdma: Use common connection paths
+>   migration: Start incoming from channel.c
+>   migration/channel: Rename migration_channel_connect
+>   migration: Rename instances of start
+>   migration: Move channel code to channel.c
+>   migration: Move transport connection code into channel.c
+>   migration: Move channel parsing to channel.c
+>   migration: Move URI parsing to channel.c
+>   migration: Free cpr-transfer MigrationAddress along with gsource
+>   migration: Move CPR HUP watch to cpr-transfer.c
+>   migration: Remove qmp_migrate_finish
+>   migration/channel: Centralize calling
+>     migration_channel_connect_outgoing
+>
+>  include/migration/cpr.h  |   5 +
+>  migration/channel.c      | 374 ++++++++++++++++++++++----
+>  migration/channel.h      |  27 +-
+>  migration/cpr-exec.c     |   2 +-
+>  migration/cpr-transfer.c |  23 ++
+>  migration/exec.c         |  11 +-
+>  migration/exec.h         |   8 +-
+>  migration/fd.c           |  15 +-
+>  migration/fd.h           |   9 +-
+>  migration/file.c         |  20 +-
+>  migration/file.h         |   7 +-
+>  migration/migration.c    | 562 ++++++++++-----------------------------
+>  migration/migration.h    |  15 +-
+>  migration/multifd.c      |  17 +-
+>  migration/multifd.h      |   2 +-
+>  migration/options.c      |   5 +
+>  migration/postcopy-ram.c |   2 +-
+>  migration/rdma.c         |  46 ++--
+>  migration/rdma.h         |   6 +-
+>  migration/socket.c       |  30 +--
+>  migration/socket.h       |   6 +-
+>  migration/tls.c          |  33 +--
+>  migration/tls.h          |   9 +-
+>  migration/trace-events   |  20 +-
+>  24 files changed, 642 insertions(+), 612 deletions(-)
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Laurent Vivier <laurent@vivier.eu>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260115201712.2706663-1-pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 87ec6f3595b..ee64a528c7f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4033,6 +4033,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-user bsd-user-rebase-3.1
- 
- Linux user
- M: Laurent Vivier <laurent@vivier.eu>
-+R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
- S: Maintained
- F: linux-user/
- F: configs/targets/*linux-user.mak
--- 
-2.47.3
-
+Queued, let me know if there's any objections.
 
