@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B03CD74EDE
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:59:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40771D74EDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIbv-0004FF-Fi; Fri, 23 Jan 2026 09:58:07 -0500
+	id 1vjIc4-0004Lp-UD; Fri, 23 Jan 2026 09:58:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbs-0004DO-H6
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:04 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1vjIbx-0004HP-Al
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:09 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbq-0007m2-J6
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:04 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4801c2fae63so18468135e9.2
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:02 -0800 (PST)
+ id 1vjIbt-0007nH-TV
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:08 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48039fdc8aeso12235355e9.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180281; x=1769785081; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769180284; x=1769785084; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uRjnKlHaglM5KNRL34gnS1g5I/h03KmLN/ZqQyvVsXQ=;
- b=S02vzy5RdiT6T4dBbJ+x2p8/WqSlsWzd2CQ61tIJFLo2lbntHp/3b32IzXeJUlSesL
- Vzx1lpHRq2UN9mPGXBXMfg7xAhsuFlq9pFaSuy8P5aR3FgjDWHq20NMq5dQXLEKp1Jpy
- 787vArqiwbuSqQai9GzvU5iZ8SboZssEtA1VbFbTN5TvIsQM3qb+/lqUGAEP7Wa1JLJm
- E6P9yEl1Noe9cN+OnZMaE+nhZ17nsYUxOnWjhZ0nPLIbsLWKttHFaxglkwN1TXrMtlyB
- echCsGY8M0fj1sAXi7SApPLo+ZqS3wDC1iMQAQQxDJ2tbAwIT4GgiVoXjqrpHmsq2TIQ
- hbQA==
+ bh=fVSKpNPUZ7Pn8NvtgX597pdEcglY2QSI3FLRYMr2zlE=;
+ b=IPppnvoqDgf1+GdoaI+idsrvDrMcJnLKePJEbd3P7/IVCo7T8Qc8NfkdCFCTNxQcTn
+ kxTjRL+PCHrg6HAJJFI7nu3sZK3fPo3qGDRmFmqWxGy/gqXvEK33TeSI5S3Xza91R7Z9
+ eC4WASw+/xkP3rbuzKgSFY4ySOWFeyP6Oh7LgCPRwAPv1IzxEAQGApqjvkPk5IVvguVL
+ JCrdg02gDgvuCwoW+k96pjbuZE/6VCtaV77ueiNAcePdVeeq6KJ+oc9VBWx65Kf/C61D
+ ImZXoDCSrFTkx/ANqwB70ANicYjHzmozbTasc4xeGbib6QZSdX9nlVlrFdXIWgtrOCo3
+ Q6yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180281; x=1769785081;
+ d=1e100.net; s=20230601; t=1769180284; x=1769785084;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=uRjnKlHaglM5KNRL34gnS1g5I/h03KmLN/ZqQyvVsXQ=;
- b=Y77h3pr1MNfgFjgdxJYedg9X2Zz8C3nMX7+YFY04H9ppEBeLY+Ju2Y+OsWAivOlsSx
- WE+eS5I1d6ZLiIxrH9GXd/oEIlVZ+KhdTfwQYj5W5g3m4B43cMJ88sVC/fgD4XIyWM9L
- +HxKmozPcaCG54TRilpLSHWbLtD2rbXd1iFPKPbfUOT67DJ+Z+TVlabws16mcmm00jsN
- fTHyIXkqKxeOchwQet1cv66MRJpu5E4SSxQBir6jAuOgXQfNHvcv2rf+1H95nmtNxCUU
- PHINtigM19b76b9luMTcXJjBkgNxiIHtz+X0zBbmVqP9Kc/xnVwb7JyUQKUJmVCAdvFa
- 3pXA==
-X-Gm-Message-State: AOJu0YyI/NYnmwTDgdEYUHUj+IHTA+T4QuqfVylEYBgnPio4rYT782+5
- /FjUxbh5DvSl4tBEdLSHnrNamRP1mTwpCz3nkh+S6WOaxY3o0Y8+RI21eX3/jQZgBgI=
-X-Gm-Gg: AZuq6aKdEwTvRU5oYwO7CYuirmES+HRiYDXRbC8Q0w1mk6DXNEywj98eNFEsG5pN8IH
- 5GwQKAgP0K5KjTLE8yVAHjKz5KVw2Geoli9Ka/Fg9luU8pH5mk3vHXBdILjzdbe81T29uz5AbOx
- +Mzg/eyyLolDPDWaZ+X/zZXwIjZ7ncMuoIdFWjgH/UvSgir2uqVLYHXEoqnTRRdMPhCITtjQI4E
- q8AkSO8iQoi2DCytYAT9347CDTd+0GmcRAr18KFzN1PlcCkUmG0pFfgh7jknE6/LHBya0R8LhZF
- As1Q3aPbMlSA9gd0c1KNei6ITnVSy8UA/CPvAf5Q7XZHHh7eYj/2s656kpSlPeIvr1yR6cwWN7X
- /5YRem1BujoxC5mXP+1rhnmr46vEpEYD5AWYZ/Z3TxrxL0IhQvm6CWQBNKMKVPUiVWUcpMq2he6
- WPUkAxzFqzh8QG
-X-Received: by 2002:a05:6000:4201:b0:435:96c3:da87 with SMTP id
- ffacd0b85a97d-435b15fb1a4mr5140355f8f.30.1769180280765; 
- Fri, 23 Jan 2026 06:58:00 -0800 (PST)
+ bh=fVSKpNPUZ7Pn8NvtgX597pdEcglY2QSI3FLRYMr2zlE=;
+ b=Nmqqr6JTbhq2M66/YZPBFobggj0QMMoCJkHqZ5vehQDaWKpjH0adMimtj9B6VHJ7Gm
+ U4WOLJl52h2/0Cv4Zia1Q//XlV7nlFR9ol7aK/YDy5AMLrs0OiMXe6FH4C1Li668/TCf
+ 0utcyomFPRqKbfNVUA7QLbqY494iPlQkQD6PiTLtc7xhXZ2iP6N4ecFlsXVvqQnq4LfF
+ ClFUoT8FiO43vtt3BIoGK0FTKrb0hjMEIBFLaZ1TXvAzE7OolJ4UTlP2OLr4si/GcCgE
+ pIyHfRSwkzZQrPXcksMew6PE6h129xxE6p41M81lVEXISCwD1Mt+0/7wAbcMcJz+6aPX
+ txIA==
+X-Gm-Message-State: AOJu0YwCz2R5XjWaJpQF4AbKVWZLqacznqyWcaKgdPt7WFd7aOvUU/M3
+ tfzeZ9/BtM501Gy/QsdVEAD+rV4ypYjgLtLFrjjs3A7C2WJB8QT/0BauWa8yEtXSthM=
+X-Gm-Gg: AZuq6aKXCklxe0N/ts0HhS92Dm0AJSfPS0eVuww6Y9vV0q7zvud0koLFczBMfUHML4h
+ 4HPWmcdUV3EjZ3HgolqpRZ9e6qetrnN/A1uK/ztmePYwm7WY4eG/CYl3eEPXXK0VHpn0Ikm5SGO
+ z80k+ovHaepiVTMjPkoR2zqPrh2qAgvZVh1jXtDmj0QbwI6M1Tg0RzPamkpuM3GEvb1rTIKXUv8
+ itWA+BtKs9yVEpSutSHug3QYKANjNCPCp1mOy2/5PAdJ0zv9LG0N7bER9zma0WzcGZYcqlFF7/g
+ wQ+1Fvwoj0xsTbHzjCgBBpCUgj8VWFIzxW7QjprTxg5QV/YJ+3C5BKZegMgTjO5Z0D4tekkjbPw
+ uzN/znSxi/hrFRR9kivtm27vj11O61ZqdvzfDQeh+6ScDAGNyPnheEQFcRL+mjQ/QB9FLLqpKn2
+ pOuVdi6wgtvM2P
+X-Received: by 2002:a05:600c:6085:b0:477:7ab8:aba with SMTP id
+ 5b1f17b1804b1-4804c943cecmr53610645e9.1.1769180284358; 
+ Fri, 23 Jan 2026 06:58:04 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1f745e6sm7259112f8f.33.2026.01.23.06.57.54
+ 5b1f17b1804b1-4804dbaa3ecsm22969465e9.10.2026.01.23.06.57.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 23 Jan 2026 06:57:57 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 26EB45F915;
+ by draig.lan (Postfix) with ESMTP id 55D2F5F92E;
  Fri, 23 Jan 2026 14:57:51 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -73,17 +73,18 @@ Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH v2 08/16] MAINTAINERS: be realistic about *-user
-Date: Fri, 23 Jan 2026 14:57:41 +0000
-Message-ID: <20260123145750.1200879-9-alex.bennee@linaro.org>
+Subject: [RFC PATCH v2 10/16] scripts/get_maintainer.py: resolve the source
+ path
+Date: Fri, 23 Jan 2026 14:57:43 +0000
+Message-ID: <20260123145750.1200879-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260123145750.1200879-1-alex.bennee@linaro.org>
 References: <20260123145750.1200879-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,80 +107,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Looking at the merges for the last year:
-
-  $ git shortlog --merges --since "last year" *-user/ accel/tcg/user-exec* hw/core/cpu-user.c include/user/ scripts/qemu-binfmt-conf.sh scripts/update-syscalltbl.sh scripts/update-mips-syscall-args.sh tests/functional/arm/test_bflt.py tests/vm/*bsd
-
-  Richard Henderson (4):
-        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
-        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
-        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
-        Merge tag 'pull-tcg-20251019' of https://gitlab.com/rth7680/qemu into staging
-
-  Stefan Hajnoczi (12):
-        Merge tag 'linux-user-fix-gupnp-pull-request' of https://github.com/hdeller/qemu-hppa into staging
-        Merge tag 'pull-10.0-testing-and-gdstub-updates-100225-1' of https://gitlab.com/stsquad/qemu into staging
-        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
-        Merge tag 'pull-loongarch-20250424' of https://github.com/gaosong715/qemu into staging
-        Merge tag 'pull-misc-2025-04-24' of https://repo.or.cz/qemu/armbru into staging
-        Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging
-        Merge tag 'hppa-fpe-fixup-pull-request' of https://github.com/hdeller/qemu-hppa into staging
-        Merge tag 'pull-target-arm-20250704' of https://gitlab.com/pm215/qemu into staging
-        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
-        Merge tag 'pull-10.1-rc0-maintainer-140725-1' of https://gitlab.com/stsquad/qemu into staging
-        Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging
-        Merge tag 'accel-20250715' of https://github.com/philmd/qemu into staging
-
-None of the pull requests have come through the maintainers and while
-there are a fair number of commits overall they have been mostly bug
-fixes, re-factoring clean-ups and the occasional new syscall/ioctl
-handling.
-
-We should reflect the current status so users don't have unrealistic
-expectations of how quickly things can get reviewed and merged.
+We will need this to automagically find MAINTAINERS. Use the same
+logic as the perl script by looking for expected files and
+directories.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
 ---
-
-[AJB] I realise this is a slightly provocative patch but given how
-widely used *-user is downstream we should be clear about the current
-state and hopefully encourage those who rely on it to step-up.
+v2
+  - don't hack add_argument twice just to display default
+  - whitespace fix
+  - don't default to required
 ---
- MAINTAINERS | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ scripts/get_maintainer.py | 74 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 74 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ee64a528c7f..1f313bba84f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4016,7 +4016,7 @@ Usermode Emulation
- ------------------
- Overall usermode emulation
- M: Riku Voipio <riku.voipio@iki.fi>
--S: Maintained
-+S: Odd Fixes
- F: accel/tcg/user-exec*.c
- F: hw/core/cpu-user.c
- F: include/user/
-@@ -4025,7 +4025,7 @@ F: common-user/
- BSD user
- M: Warner Losh <imp@bsdimp.com>
- R: Kyle Evans <kevans@freebsd.org>
--S: Maintained
-+S: Odd Fixes
- F: bsd-user/
- F: configs/targets/*-bsd-user.mak
- F: tests/vm/*bsd
-@@ -4034,7 +4034,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-user bsd-user-rebase-3.1
- Linux user
- M: Laurent Vivier <laurent@vivier.eu>
- R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
--S: Maintained
-+S: Odd Fixes
- F: linux-user/
- F: configs/targets/*linux-user.mak
- F: scripts/qemu-binfmt-conf.sh
+diff --git a/scripts/get_maintainer.py b/scripts/get_maintainer.py
+index 2b8fc7ae9ee..c02bf4f5b0e 100755
+--- a/scripts/get_maintainer.py
++++ b/scripts/get_maintainer.py
+@@ -15,6 +15,60 @@
+ from pathlib import Path
+ 
+ 
++#
++# Helper functions for dealing with the source path
++#
++
++
++def is_qemu_src_root(directory):
++    """
++    Checks if the given path appears to be the root of a QEMU source tree,
++    based on the presence of key files and directories.
++    """
++    if not path.isdir(directory):
++        return False
++
++    required_files = ['COPYING', 'MAINTAINERS', 'Makefile', 'VERSION']
++    required_dirs = ['docs', 'linux-user', 'system']
++
++    for f in required_files:
++        if not path.isfile(path.join(directory, f)):
++            return False
++    for d in required_dirs:
++        if not path.isdir(path.join(directory, d)):
++            return False
++    return True
++
++
++def find_src_root():
++    """
++    Walks up the directory tree from the script's location
++    to find the QEMU source root.
++    Returns the absolute path of the root directory if found, or None.
++    """
++    script_dir = path.dirname(path.abspath(__file__))
++    current_dir = script_dir
++
++    while True:
++        if is_qemu_src_root(current_dir):
++            return current_dir
++
++        # Move up to the parent directory
++        parent_dir = path.dirname(current_dir)
++
++        # If we reached the filesystem root and haven't found it, stop
++        if parent_dir == current_dir:
++            break
++
++        current_dir = parent_dir
++
++    return None
++
++#
++# Argument validation
++#
++
++
+ def valid_file_path(arg):
+     """
+     Checks if arg exists and is a regular file or raises ArgumentTypeError.
+@@ -26,7 +80,21 @@ def valid_file_path(arg):
+     return Path(path.abspath(arg))
+ 
+ 
++def valid_src_root(arg):
++    """
++    Checks if arg is a valid QEMU source root or raise ArgumentTypeError.
++    """
++    abs_path = path.abspath(arg)
++    if not is_qemu_src_root(abs_path):
++        raise ArgumentTypeError(f"Path '{arg}' is not a valid QEMU source tree")
++    return abs_path
++
++
+ def main():
++    """
++    Main entry point for the script.
++    """
++
+     parser = ArgumentParser(description='Extract maintainer information. ')
+ 
+     # We can either specify patches or an individual file
+@@ -36,6 +104,12 @@ def main():
+     group.add_argument('-f', '--file', type=valid_file_path,
+                        help='path to source file')
+ 
++    # We need to know or be told where the root of the source tree is
++    src = find_src_root()
++
++    parser.add_argument('--src', type=valid_src_root, default=src,
++                        help=f'Root of QEMU source tree{" (default: " + src + ")" if src else ""}')
++
+     args = parser.parse_args()
+ 
+ 
 -- 
 2.47.3
 
