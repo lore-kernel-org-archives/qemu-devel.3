@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEAACD74EDC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:14:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 822D8D74EDE
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIpD-0001SZ-W7; Fri, 23 Jan 2026 10:11:52 -0500
+	id 1vjInp-0007SL-4W; Fri, 23 Jan 2026 10:10:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInT-000781-7f
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:09 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1vjInL-00075q-Lv
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:56 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInR-00036i-4z
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:02 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-42fbbc3df8fso1509609f8f.2
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:10:00 -0800 (PST)
+ id 1vjInK-00034o-2F
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:55 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-432d28870ddso1272918f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180999; x=1769785799; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769180993; x=1769785793; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VYPv2joWEy7NQbj1wDZIlmJyo9qqTDgvEnE16RTvAgs=;
- b=w620DCyzyR6e0krcDkUKmOg5jNCsoszq6Vep0ZM06tWPzdLteeZpi+upLmoBYYd3n6
- GlQ4IGBrluozhl7wDrYnizNgtJjyIoG/OHPGHuFAxWDNP3YsBDxBXbhAhbdvTWJC3yqk
- tEecHwXotBPh0bS0VrgiCEQ5YYXh0UBUdpdG0PsuFcxZR1R+uNtKo6nH/GX4sCjyYVvL
- L8Yneio+yIbvQxthDAYUSYFTMibKdni6dzNg1D9TiHyDGm6fgcAv+eMqEIJPI0L+KiBb
- 5d/Iknw4LgQGy4OTxNOHbSzcFNPX9gAOy/iGS2Vl0N/w4iQyzAsyz7oPnYbZX/krrR91
- FSkA==
+ :reply-to; bh=oDxdvyymPUYfJ1YVYQgwZ0tgWpDlX8YBdNsrFKEuuxM=;
+ b=cQSYnY54a2WwgFHQWqVRyzFbF0QaEoZ9/FxzMl9JL/efBl7GGSqjOkX5KuXjzdBVfo
+ lo7bYvR4lM/a4Rfw0R82YEA3jZ+qgcKh0pGZA0QC+zdBi+LCI8qfyM8z3dS4nuH12BQN
+ 3h457K5/ykzFgj+ELxjghpgYdjHSS9AqyyM9JOova2gbEnutbF5t+4XOEmSls5Z0VViu
+ erevzOh/Og5JJh9FYSFS3wnXgL8wzVywloVRhJ02LF/me47PzQkUNb61LV9HfDZ7+aC2
+ dzHEPbIC3q0mq3wRak+JTHjdKKCzBzPbTFyuoLa74hEC9v3SjCEWj1P1TC9heb2Kqs/4
+ bXxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769181000; x=1769785800;
+ d=1e100.net; s=20230601; t=1769180993; x=1769785793;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=VYPv2joWEy7NQbj1wDZIlmJyo9qqTDgvEnE16RTvAgs=;
- b=ZiTjIX51ggErosIEHRbY6PAkXUxZQZkyQHfCERIFcf/hZ4TSdmmw1tPx/mU1XQ4tsg
- M9dMvbvKexrhFZIXiVzsiyMpRN41mHwFPqb8t1c7isBUZM+RHyTIr9aOqrofPoFkugWq
- rRRdk9xv4G4tGtg7bMPPoWJynRXV7VY5SRgIipaClXyhbfm72nY2SP0cwPzNf3F1nzCa
- R8BzlVaqtneKg1MIrsER2MvTejLWA7jOe1b2k+Q1dJ9BxG93AdcAm05RD79tM/XoIU4J
- cgJpEhGSjiSlSoVqfIG4aqYsTXUai8AT4CEjKFHpPfy0bRuuqFWu/1RB0OB43NTupeRa
- JI8A==
-X-Gm-Message-State: AOJu0YyB0YR3XYNegSsKZNjS8BeoUQf/T+QzqTk7x0H87v4rbk10oD5n
- K77/XSQwr43KOrE8hGJzU0Qzm9gm1XCj82vqW37xJSBWWqv70FQFwdxt/LBm4sKTLtU3LVPHvN7
- UyMOkS5g=
-X-Gm-Gg: AZuq6aJCaWD2OQTJe5Zug4BB6lmlDxyqoWcA5Qr16RSGXvE9CmkwWkB+OdNxv1tFIPG
- MrESrBc+TkJJGoJStoKjJ8+hYnCBdBScKUH4I3QxYxZ221APb6basDPkTftNd7htpEeIWjgBQ4t
- +gGHGJI1qGKKohbyvSbjLJN/wPErLZIct917ceK4i44piBLFrSIo78rQK7nenYo2DT5CqtfVE35
- dlGp49Kjp7Lj218MnWlArTuV4UBJ2ltJQA3LPvU7hFk0AoZPJsJGSCzSALF9BnqZwcJfjoKZYjK
- huzxcQo80wAcbXJhIxxbF0VN6rfYP0dTnLFJJiOo7B12cJ0EqJwjVLOJoKAiekaz9+aST7fTG+c
- W9PSTSDypI/0pOXEkaXVhOL9PbmaJKM2MHQq8+IuqsCkAq04Dm21rwp++bmP+Blmr5vm8g35xlw
- V7q2sgPuBgDDP3v+CXBLMF4zUk6gQEtce2MMjirY8i1K0qtYQYQDy9hFbpnJuv4Ls=
-X-Received: by 2002:a5d:5d0d:0:b0:435:a2f8:150d with SMTP id
- ffacd0b85a97d-435b1750380mr4795804f8f.59.1769180999399; 
- Fri, 23 Jan 2026 07:09:59 -0800 (PST)
+ bh=oDxdvyymPUYfJ1YVYQgwZ0tgWpDlX8YBdNsrFKEuuxM=;
+ b=SQPNEtrzZlSArWEQJG3GRBSfo6I/bOvkq6JQjIs3Oh3zO7ee161I6eN3fz69m0+xEc
+ 0l6/yw9BTrC8YRrXA8CFmMdRXeWAzbjFvsOrO4QR4AN0gSToKFTw1vJ7uWCuI/1AvG0Q
+ 2uJUg0wZxA6/xEfkvUpevdG3P91H/12z9wPCntyKePKHG2PEJZTgEA3kqby0qokmQoQB
+ zF/dy3wLiiOMJlHZ6Z+XzVhw2xV7RUFPg7KAplEJxVbjw+2DKPTRWDhUjR9+Mu5NzpTh
+ ANsCVp39m5sq9M6gECpiHSYdgEefhKO6+wSM94QC5YXpkMLwBN4qFy6jJA6Skc50739P
+ tzwQ==
+X-Gm-Message-State: AOJu0YyphVSN4ZKG6ze9awQxiS3NNJ3G/FXkZMoVaiJU2TSzGnrC8C9p
+ 2usRdAaobiFHjW+YUtSZ0ExCV/WmchXtQQ9a626CZ2AX8p+3VxCnk4+7hVa0b1slX7ouJdvzwo5
+ EXF6upYU=
+X-Gm-Gg: AZuq6aLuJIBlvzzLmkGo8L6c6j+EjrRFaEdNUL0Vt3b4pf+PIve64aZakenyDJu/h8O
+ ii9l8yHjOJk0e4lDHRE7GnONVUjzF9XEliuN/FztXESeTxVAWf3A8O/SByodtwh3jKpcPpDM4NI
+ Ho+HyhVGjpBVyobWp1oR3XE2l1DEc9Lo+MVrq9vOsgJmj7J6oziCWvzI/9pQyys+feqPJ47/xlg
+ J/tmIZYJg6QHjNg3rWihahfKEZDnzaDf0CMMbXrgsLBWMo/UVxe5JUCgDWidXP5upapZGrKSAsD
+ hcyi63GVBUd0zl15nQE7WbtwfTOcMAQwtVgBVE5yajn7h55wvodzw3JSd45KtKTutFmTBE+bPTk
+ gbz85gCMMJhuk65XhWQNqP3CNmp7M3H3FSL84ZSpPVPA7Dqwh2UP2+PdqdrZeDREyxonCxvGia8
+ UtLyVhbiV2p+pj0GQ3ieH/n7LUnqXxPixsmP+k0Q+tXk2j276+Cff5
+X-Received: by 2002:a05:6000:200f:b0:435:b6ab:6c1a with SMTP id
+ ffacd0b85a97d-435b966a98fmr2988462f8f.49.1769180992424; 
+ Fri, 23 Jan 2026 07:09:52 -0800 (PST)
 Received: from mnementh.archaic.org.uk (mnementh.archaic.org.uk.
  [81.2.115.146]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.58
+ ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 07:09:58 -0800 (PST)
+ Fri, 23 Jan 2026 07:09:51 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/22] hw/intc: avoid byte swap fiddling in gicv3 its path
-Date: Fri, 23 Jan 2026 15:09:36 +0000
-Message-ID: <20260123150941.1877768-19-peter.maydell@linaro.org>
+Subject: [PULL 11/22] mshv: Clean up includes
+Date: Fri, 23 Jan 2026 15:09:29 +0000
+Message-ID: <20260123150941.1877768-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260123150941.1877768-1-peter.maydell@linaro.org>
 References: <20260123150941.1877768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,49 +100,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+This commit was created with scripts/clean-includes:
+ ./scripts/clean-includes '--git' 'mshv' 'accel/mshv' 'target/i386/mshv' 'include/system/mshv.h'
 
-This allows us to keep the MSI data in plain host order all the way
-from the MemoryRegionOps write method to the final KVM_SIGNAL_MSI
-ioctl. This fixes a theoretical bug on big-endian hosts because we
-were using different size byte swaps which would have truncated the data.
+All .c should include qemu/osdep.h first.  The script performs three
+related cleanups:
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260121105932.135676-5-alex.bennee@linaro.org
-Cc: qemu-stable@nongnu.org
+* Ensure .c files include qemu/osdep.h first.
+* Including it in a .h is redundant, since the .c  already includes
+  it.  Drop such inclusions.
+* Likewise, including headers qemu/osdep.h includes is redundant.
+  Drop these, too.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260116125830.926296-2-peter.maydell@linaro.org
 ---
- hw/intc/arm_gicv3_its_common.c | 2 +-
- hw/intc/arm_gicv3_its_kvm.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ accel/mshv/irq.c            | 3 +--
+ accel/mshv/mshv-all.c       | 1 -
+ include/system/mshv.h       | 1 -
+ target/i386/mshv/mshv-cpu.c | 1 -
+ target/i386/mshv/x86.c      | 1 -
+ 5 files changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/hw/intc/arm_gicv3_its_common.c b/hw/intc/arm_gicv3_its_common.c
-index 9fc51ad1e0..60a5abd8d3 100644
---- a/hw/intc/arm_gicv3_its_common.c
-+++ b/hw/intc/arm_gicv3_its_common.c
-@@ -81,7 +81,7 @@ static MemTxResult gicv3_its_trans_write(void *opaque, hwaddr offset,
-     if (offset == 0x0040 && ((size == 2) || (size == 4))) {
-         GICv3ITSState *s = ARM_GICV3_ITS_COMMON(opaque);
-         GICv3ITSCommonClass *c = ARM_GICV3_ITS_COMMON_GET_CLASS(s);
--        int ret = c->send_msi(s, le64_to_cpu(value), attrs.requester_id);
-+        int ret = c->send_msi(s, value, attrs.requester_id);
+diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
+index adf8f337d9..3c238c33c3 100644
+--- a/accel/mshv/irq.c
++++ b/accel/mshv/irq.c
+@@ -10,8 +10,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
  
-         if (ret <= 0) {
-             qemu_log_mask(LOG_GUEST_ERROR,
-diff --git a/hw/intc/arm_gicv3_its_kvm.c b/hw/intc/arm_gicv3_its_kvm.c
-index ae12d41eee..a8d6d4fb54 100644
---- a/hw/intc/arm_gicv3_its_kvm.c
-+++ b/hw/intc/arm_gicv3_its_kvm.c
-@@ -58,7 +58,7 @@ static int kvm_its_send_msi(GICv3ITSState *s, uint32_t value, uint16_t devid)
+-#include "linux/mshv.h"
+ #include "qemu/osdep.h"
++#include "linux/mshv.h"
+ #include "qemu/error-report.h"
+ #include "hw/hyperv/hvhdk_mini.h"
+ #include "hw/hyperv/hvgdk_mini.h"
+@@ -20,7 +20,6 @@
+ #include "system/mshv.h"
+ #include "system/mshv_int.h"
+ #include "trace.h"
+-#include <stdint.h>
+ #include <sys/ioctl.h>
  
-     msi.address_lo = extract64(s->gits_translater_gpa, 0, 32);
-     msi.address_hi = extract64(s->gits_translater_gpa, 32, 32);
--    msi.data = le32_to_cpu(value);
-+    msi.data = value;
-     msi.flags = KVM_MSI_VALID_DEVID;
-     msi.devid = devid;
-     memset(msi.pad, 0, sizeof(msi.pad));
+ #define MSHV_IRQFD_RESAMPLE_FLAG (1 << MSHV_IRQFD_BIT_RESAMPLE)
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 4675cb886f..bed0fa298e 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -41,7 +41,6 @@
+ #include "system/reset.h"
+ #include "trace.h"
+ #include <err.h>
+-#include <stdint.h>
+ #include <sys/ioctl.h>
+ 
+ #define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 8b1fc20c80..75286baf16 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -14,7 +14,6 @@
+ #ifndef QEMU_MSHV_H
+ #define QEMU_MSHV_H
+ 
+-#include "qemu/osdep.h"
+ #include "qemu/accel.h"
+ #include "hw/hyperv/hyperv-proto.h"
+ #include "hw/hyperv/hvhdk.h"
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 1c3db02188..586383b882 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -13,7 +13,6 @@
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+ #include "qemu/memalign.h"
+-#include "qemu/typedefs.h"
+ 
+ #include "system/mshv.h"
+ #include "system/mshv_int.h"
+diff --git a/target/i386/mshv/x86.c b/target/i386/mshv/x86.c
+index d574b3bc52..0700cc05ef 100644
+--- a/target/i386/mshv/x86.c
++++ b/target/i386/mshv/x86.c
+@@ -13,7 +13,6 @@
+ #include "cpu.h"
+ #include "emulate/x86_decode.h"
+ #include "emulate/x86_emu.h"
+-#include "qemu/typedefs.h"
+ #include "qemu/error-report.h"
+ #include "system/mshv.h"
+ 
 -- 
 2.47.3
 
