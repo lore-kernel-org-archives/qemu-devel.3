@@ -4,110 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48273D74ED3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD647D74ED8
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:19:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjHzZ-0001fR-2S; Fri, 23 Jan 2026 09:18:29 -0500
+	id 1vjHz8-0000X6-Nf; Fri, 23 Jan 2026 09:18:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHzK-000164-Md
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:18:20 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHyj-00008O-0l
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:38 -0500
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHzI-0003jk-1j
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:18:13 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHyg-0003eh-VD
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:36 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id C4B2333810;
- Fri, 23 Jan 2026 14:17:51 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E5F5A33810;
+ Fri, 23 Jan 2026 14:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769177871; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769177836; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=juq5rqgwVkbNkLwCcrdqt1RPQcNkTZVsPjQMORVfBiQ=;
- b=YsngfzNgpx8Pu1NIqrJX5ThzF9yVZ9Ns3PPzCZD4eDzGkk4/HI22OfrxkaaSWIKOdO42Q+
- 4wrOE9ARwC9+0W0b7oYLrUOImWwTKldrwf+y2boagn+CIysitNm/If0YvgQjlKkJSmBvGw
- BX64cXZuvZyzC6E22AveWIpX8O4abuo=
+ bh=M/QZtDu7HIJudsDmcYL8xgjjE+4D+oJrXIclJ+By0XI=;
+ b=DVm/xHo26Ccj4+nQ1dKqIyyeTLVa9yFE7x/FeTf15o7vprWw1zzjDe9cBit8jyfdIqR2ZW
+ EQojseovSc7NzjniFruxppqzOxfXJXNZSNfm1DpTlni4JCeufN0Rs4PK3oYsZ8+dwGK17H
+ 1vX1hYJn6oEoyw8M8MCnr/75mOQ3J6A=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769177871;
+ s=susede2_ed25519; t=1769177836;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=juq5rqgwVkbNkLwCcrdqt1RPQcNkTZVsPjQMORVfBiQ=;
- b=q695qmer293vhrsB8npyMLUnn9TTtFKOXnopHdFTGB/t/1DnMqriqi+Egokow0xMMDTkwU
- Ezpy8IvCiVdEMZDQ==
+ bh=M/QZtDu7HIJudsDmcYL8xgjjE+4D+oJrXIclJ+By0XI=;
+ b=pwfpffhSTaCd9S2GyWjMuPek9OQC9/mYcTmSVUupCdBkf3jmNVI6jfIz0Y1QmWPPgboVE2
+ mEbz9l0SI96DkVAg==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=YsngfzNg;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=q695qmer
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769177871; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769177835; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=juq5rqgwVkbNkLwCcrdqt1RPQcNkTZVsPjQMORVfBiQ=;
- b=YsngfzNgpx8Pu1NIqrJX5ThzF9yVZ9Ns3PPzCZD4eDzGkk4/HI22OfrxkaaSWIKOdO42Q+
- 4wrOE9ARwC9+0W0b7oYLrUOImWwTKldrwf+y2boagn+CIysitNm/If0YvgQjlKkJSmBvGw
- BX64cXZuvZyzC6E22AveWIpX8O4abuo=
+ bh=M/QZtDu7HIJudsDmcYL8xgjjE+4D+oJrXIclJ+By0XI=;
+ b=RsZXmGtAiij9XUezOui4KPMBf/Dow7+UuGRB/MMW8g7EPbW5tk3yGQBjtkqk4JZEXYR3SE
+ TAVoZ549xby8qAqxqAaCrWITs5fpD3C/hSLe/FI6tFtfIPA+bxfBjmH4KtnPAZkr2snDNI
+ G9nnH+Whpp+FA/O/iF3/NlKbWuhvgvw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769177871;
+ s=susede2_ed25519; t=1769177835;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=juq5rqgwVkbNkLwCcrdqt1RPQcNkTZVsPjQMORVfBiQ=;
- b=q695qmer293vhrsB8npyMLUnn9TTtFKOXnopHdFTGB/t/1DnMqriqi+Egokow0xMMDTkwU
- Ezpy8IvCiVdEMZDQ==
+ bh=M/QZtDu7HIJudsDmcYL8xgjjE+4D+oJrXIclJ+By0XI=;
+ b=1AKqzg/pWrthh9eYu37Yi6C0x4jMtFTvqqcPX8/QUEPA0bJmYD6PhYp9cX3+60CYa3gnOS
+ XAVsPb3OERUAEUBw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EDD031395E;
- Fri, 23 Jan 2026 14:17:49 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8FD8C1395E;
+ Fri, 23 Jan 2026 14:17:13 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id YH0fKw2Dc2m8HAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 14:17:49 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id AJ8vE+mCc2m8HAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 14:17:13 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, berrange@redhat.com, ppandit@redhat.com,
+ Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
  Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v4 21/25] migration: Move URI parsing to channel.c
-Date: Fri, 23 Jan 2026 11:16:51 -0300
-Message-ID: <20260123141656.6765-22-farosas@suse.de>
+Subject: [PATCH v4 06/25] migration: Use migrate_mode() to query for
+ cpr-transfer
+Date: Fri, 23 Jan 2026 11:16:36 -0300
+Message-ID: <20260123141656.6765-7-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260123141656.6765-1-farosas@suse.de>
 References: <20260123141656.6765-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:email,suse.de:mid,suse.de:email,fedoraproject.org:email,imap1.dmz-prg2.suse.org:helo];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; RCPT_COUNT_SEVEN(0.00)[7];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- R_RATELIMIT(0.00)[to_ip_from(RL3zxdrj4h6o64essgck3rrntz)];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim, suse.de:email,
- fedoraproject.org:email, imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Queue-Id: C4B2333810
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
  envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
@@ -131,268 +119,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The migrate_uri_parse function is responsible for converting the URI
-string into a MigrationChannel for consumption by the rest of the
-code. Move it to channel.c and add a wrapper that calls both URI and
-channels parsing.
+cpr_set_incoming_mode() is only called on the target side, so
+migrate_mode() on the source side is the same as s->parameters.mode.
 
+Use the function to reduce explicit access to s->parameters, we have
+options.c for that.
+
+Cc: Mark Kanda <mark.kanda@oracle.com>
+Cc: Ben Chaney <bchaney@akamai.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/channel.c   | 82 +++++++++++++++++++++++++++++++++++--
- migration/channel.h   |  9 ++--
- migration/migration.c | 95 ++-----------------------------------------
- 3 files changed, 86 insertions(+), 100 deletions(-)
+ migration/cpr-exec.c  |  2 +-
+ migration/migration.c | 27 +++++++++++++--------------
+ migration/migration.h |  5 ++---
+ 3 files changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/migration/channel.c b/migration/channel.c
-index 433d67fba0..1e4778455d 100644
---- a/migration/channel.c
-+++ b/migration/channel.c
-@@ -284,10 +284,10 @@ int migration_channel_read_peek(QIOChannel *ioc,
-     return 0;
- }
+diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
+index da287d8031..e315a30f92 100644
+--- a/migration/cpr-exec.c
++++ b/migration/cpr-exec.c
+@@ -164,7 +164,7 @@ static void cpr_exec_cb(void *opaque)
+     err = NULL;
  
--bool migrate_channels_parse(MigrationChannelList *channels,
--                            MigrationChannel **main_channelp,
--                            MigrationChannel **cpr_channelp,
--                            Error **errp)
-+static bool migrate_channels_parse(MigrationChannelList *channels,
-+                                   MigrationChannel **main_channelp,
-+                                   MigrationChannel **cpr_channelp,
-+                                   Error **errp)
- {
-     MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
+     /* Note, we can go from state COMPLETED to FAILED */
+-    migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
++    migration_call_notifiers(MIG_EVENT_PRECOPY_FAILED, NULL);
  
-@@ -329,3 +329,77 @@ bool migrate_channels_parse(MigrationChannelList *channels,
- 
-     return true;
- }
-+
-+bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
-+                       Error **errp)
-+{
-+    g_autoptr(MigrationChannel) val = g_new0(MigrationChannel, 1);
-+    g_autoptr(MigrationAddress) addr = g_new0(MigrationAddress, 1);
-+    InetSocketAddress *isock = &addr->u.rdma;
-+    strList **tail = &addr->u.exec.args;
-+
-+    if (strstart(uri, "exec:", NULL)) {
-+        addr->transport = MIGRATION_ADDRESS_TYPE_EXEC;
-+#ifdef WIN32
-+        QAPI_LIST_APPEND(tail, g_strdup(exec_get_cmd_path()));
-+        QAPI_LIST_APPEND(tail, g_strdup("/c"));
-+#else
-+        QAPI_LIST_APPEND(tail, g_strdup("/bin/sh"));
-+        QAPI_LIST_APPEND(tail, g_strdup("-c"));
-+#endif
-+        QAPI_LIST_APPEND(tail, g_strdup(uri + strlen("exec:")));
-+    } else if (strstart(uri, "rdma:", NULL)) {
-+        if (inet_parse(isock, uri + strlen("rdma:"), errp)) {
-+            qapi_free_InetSocketAddress(isock);
-+            return false;
-+        }
-+        addr->transport = MIGRATION_ADDRESS_TYPE_RDMA;
-+    } else if (strstart(uri, "tcp:", NULL) ||
-+                strstart(uri, "unix:", NULL) ||
-+                strstart(uri, "vsock:", NULL) ||
-+                strstart(uri, "fd:", NULL)) {
-+        addr->transport = MIGRATION_ADDRESS_TYPE_SOCKET;
-+        SocketAddress *saddr = socket_parse(uri, errp);
-+        if (!saddr) {
-+            return false;
-+        }
-+        addr->u.socket.type = saddr->type;
-+        addr->u.socket.u = saddr->u;
-+        /* Don't free the objects inside; their ownership moved to "addr" */
-+        g_free(saddr);
-+    } else if (strstart(uri, "file:", NULL)) {
-+        addr->transport = MIGRATION_ADDRESS_TYPE_FILE;
-+        addr->u.file.filename = g_strdup(uri + strlen("file:"));
-+        if (file_parse_offset(addr->u.file.filename, &addr->u.file.offset,
-+                              errp)) {
-+            return false;
-+        }
-+    } else {
-+        error_setg(errp, "unknown migration protocol: %s", uri);
-+        return false;
-+    }
-+
-+    val->channel_type = MIGRATION_CHANNEL_TYPE_MAIN;
-+    val->addr = g_steal_pointer(&addr);
-+    *channel = g_steal_pointer(&val);
-+    return true;
-+}
-+
-+bool migration_channel_parse_input(const char *uri,
-+                                   MigrationChannelList *channels,
-+                                   MigrationChannel **main_channelp,
-+                                   MigrationChannel **cpr_channelp,
-+                                   Error **errp)
-+{
-+    if (!uri == !channels) {
-+        error_setg(errp, "need either 'uri' or 'channels' argument");
-+        return false;
-+    }
-+
-+    if (channels) {
-+        return migrate_channels_parse(channels, main_channelp, cpr_channelp,
-+                                      errp);
-+    } else {
-+        return migrate_uri_parse(uri, main_channelp, errp);
-+    }
-+}
-diff --git a/migration/channel.h b/migration/channel.h
-index 5110fb45a4..a7d0d29058 100644
---- a/migration/channel.h
-+++ b/migration/channel.h
-@@ -43,8 +43,9 @@ void migration_connect_outgoing(MigrationState *s, MigrationAddress *addr,
-                                 Error **errp);
- void migration_connect_incoming(MigrationAddress *addr, Error **errp);
- 
--bool migrate_channels_parse(MigrationChannelList *channels,
--                            MigrationChannel **main_channelp,
--                            MigrationChannel **cpr_channelp,
--                            Error **errp);
-+bool migration_channel_parse_input(const char *uri,
-+                                   MigrationChannelList *channels,
-+                                   MigrationChannel **main_channelp,
-+                                   MigrationChannel **cpr_channelp,
-+                                   Error **errp);
- #endif
+     if (!migration_block_activate(&err)) {
+         /* error was already reported */
 diff --git a/migration/migration.c b/migration/migration.c
-index 09dfc27323..ebe4222640 100644
+index a0b50873ca..16085eb8d6 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -15,7 +15,6 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/ctype.h"
--#include "qemu/cutils.h"
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
- #include "migration/blocker.h"
-@@ -659,61 +658,6 @@ bool migrate_is_uri(const char *uri)
-     return *uri == ':';
+@@ -1534,7 +1534,7 @@ static void migration_cleanup(MigrationState *s)
+     }
+     type = migration_has_failed(s) ? MIG_EVENT_PRECOPY_FAILED :
+                                      MIG_EVENT_PRECOPY_DONE;
+-    migration_call_notifiers(s, type, NULL);
++    migration_call_notifiers(type, NULL);
+     yank_unregister_instance(MIGRATION_YANK_INSTANCE);
  }
  
--bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
--                       Error **errp)
--{
--    g_autoptr(MigrationChannel) val = g_new0(MigrationChannel, 1);
--    g_autoptr(MigrationAddress) addr = g_new0(MigrationAddress, 1);
--    InetSocketAddress *isock = &addr->u.rdma;
--    strList **tail = &addr->u.exec.args;
--
--    if (strstart(uri, "exec:", NULL)) {
--        addr->transport = MIGRATION_ADDRESS_TYPE_EXEC;
--#ifdef WIN32
--        QAPI_LIST_APPEND(tail, g_strdup(exec_get_cmd_path()));
--        QAPI_LIST_APPEND(tail, g_strdup("/c"));
--#else
--        QAPI_LIST_APPEND(tail, g_strdup("/bin/sh"));
--        QAPI_LIST_APPEND(tail, g_strdup("-c"));
--#endif
--        QAPI_LIST_APPEND(tail, g_strdup(uri + strlen("exec:")));
--    } else if (strstart(uri, "rdma:", NULL)) {
--        if (inet_parse(isock, uri + strlen("rdma:"), errp)) {
--            qapi_free_InetSocketAddress(isock);
--            return false;
--        }
--        addr->transport = MIGRATION_ADDRESS_TYPE_RDMA;
--    } else if (strstart(uri, "tcp:", NULL) ||
--                strstart(uri, "unix:", NULL) ||
--                strstart(uri, "vsock:", NULL) ||
--                strstart(uri, "fd:", NULL)) {
--        addr->transport = MIGRATION_ADDRESS_TYPE_SOCKET;
--        SocketAddress *saddr = socket_parse(uri, errp);
--        if (!saddr) {
--            return false;
--        }
--        addr->u.socket.type = saddr->type;
--        addr->u.socket.u = saddr->u;
--        /* Don't free the objects inside; their ownership moved to "addr" */
--        g_free(saddr);
--    } else if (strstart(uri, "file:", NULL)) {
--        addr->transport = MIGRATION_ADDRESS_TYPE_FILE;
--        addr->u.file.filename = g_strdup(uri + strlen("file:"));
--        if (file_parse_offset(addr->u.file.filename, &addr->u.file.offset,
--                              errp)) {
--            return false;
--        }
--    } else {
--        error_setg(errp, "unknown migration protocol: %s", uri);
--        return false;
--    }
--
--    val->channel_type = MIGRATION_CHANNEL_TYPE_MAIN;
--    val->addr = g_steal_pointer(&addr);
--    *channel = g_steal_pointer(&val);
--    return true;
--}
--
- static bool
- migration_incoming_state_setup(MigrationIncomingState *mis, Error **errp)
+@@ -1694,10 +1694,9 @@ void migration_remove_notifier(NotifierWithReturn *notify)
+     }
+ }
+ 
+-int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+-                             Error **errp)
++int migration_call_notifiers(MigrationEventType type, Error **errp)
  {
-@@ -744,27 +688,10 @@ static void qemu_setup_incoming_migration(const char *uri, bool has_channels,
-     g_autoptr(MigrationChannel) main_ch = NULL;
-     MigrationIncomingState *mis = migration_incoming_get_current();
+-    MigMode mode = s->parameters.mode;
++    MigMode mode = migrate_mode();
+     MigrationEvent e;
+     NotifierWithReturn *notifier;
+     GSList *elem, *next;
+@@ -1778,9 +1777,9 @@ bool migration_thread_is_self(void)
+     return qemu_thread_is_self(&s->thread);
+ }
  
--    /*
--     * Having preliminary checks for uri and channel
--     */
--    if (!uri == !channels) {
--        error_setg(errp, "need either 'uri' or 'channels' argument");
-+    if (!migration_channel_parse_input(uri, channels, &main_ch, NULL, errp)) {
+-bool migrate_mode_is_cpr(MigrationState *s)
++bool migrate_mode_is_cpr(void)
+ {
+-    MigMode mode = s->parameters.mode;
++    MigMode mode = migrate_mode();
+     return mode == MIG_MODE_CPR_REBOOT ||
+            mode == MIG_MODE_CPR_TRANSFER ||
+            mode == MIG_MODE_CPR_EXEC;
+@@ -2134,7 +2133,7 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+         }
+     }
+ 
+-    if (migrate_mode_is_cpr(s)) {
++    if (migrate_mode_is_cpr()) {
+         const char *conflict = NULL;
+ 
+         if (migrate_postcopy()) {
+@@ -2250,7 +2249,7 @@ void qmp_migrate(const char *uri, bool has_channels,
          return;
      }
  
--    if (channels) {
--        if (!migrate_channels_parse(channels, &main_ch, NULL, errp)) {
--            return;
--        }
--    }
--
--    if (uri) {
--        /* caller uses the old URI syntax */
--        if (!migrate_uri_parse(uri, &main_ch, errp)) {
--            return;
--        }
--    }
--
-     /* transport mechanism not suitable for migration? */
-     if (!migration_transport_compatible(main_ch->addr, errp)) {
+-    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
++    if (migrate_mode() == MIG_MODE_CPR_TRANSFER && !cpr_channel) {
+         error_setg(errp, "missing 'cpr' migration channel");
          return;
-@@ -2111,27 +2038,11 @@ void qmp_migrate(const char *uri, bool has_channels,
-     g_autoptr(MigrationChannel) main_ch = NULL;
-     g_autoptr(MigrationChannel) cpr_ch = NULL;
+     }
+@@ -2275,7 +2274,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+      * in which case the target will not listen for the incoming migration
+      * connection, so qmp_migrate_finish will fail to connect, and then recover.
+      */
+-    if (s->parameters.mode == MIG_MODE_CPR_TRANSFER) {
++    if (migrate_mode() == MIG_MODE_CPR_TRANSFER) {
+         migrate_hup_add(s, cpr_state_ioc(), (GSourceFunc)qmp_migrate_finish_cb,
+                         QAPI_CLONE(MigrationAddress, addr));
  
--    /*
--     * Having preliminary checks for uri and channel
--     */
--    if (!uri == !channels) {
--        error_setg(errp, "need either 'uri' or 'channels' argument");
-+    if (!migration_channel_parse_input(uri, channels, &main_ch, &cpr_ch,
-+                                       errp)) {
+@@ -2850,7 +2849,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+      * at the transition to postcopy and after the device state; in particular
+      * spice needs to trigger a transition now
+      */
+-    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_DONE, NULL);
++    migration_call_notifiers(MIG_EVENT_PRECOPY_DONE, NULL);
+ 
+     migration_downtime_end(ms);
+ 
+@@ -2899,7 +2898,7 @@ fail:
+         migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
+     }
+     migration_block_activate(NULL);
+-    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
++    migration_call_notifiers(MIG_EVENT_PRECOPY_FAILED, NULL);
+     bql_unlock();
+     return -1;
+ }
+@@ -3001,7 +3000,7 @@ static int migration_completion_precopy(MigrationState *s)
+ 
+     bql_lock();
+ 
+-    if (!migrate_mode_is_cpr(s)) {
++    if (!migrate_mode_is_cpr()) {
+         ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+         if (ret < 0) {
+             goto out_unlock;
+@@ -4047,7 +4046,7 @@ void migration_connect(MigrationState *s, Error *error_in)
+         rate_limit = migrate_max_bandwidth();
+ 
+         /* Notify before starting migration thread */
+-        if (migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
++        if (migration_call_notifiers(MIG_EVENT_PRECOPY_SETUP, &local_err)) {
+             goto fail;
+         }
+     }
+@@ -4083,7 +4082,7 @@ void migration_connect(MigrationState *s, Error *error_in)
          return;
      }
  
--    if (channels) {
--        if (!migrate_channels_parse(channels, &main_ch, &cpr_ch, errp)) {
--            return;
--        }
--    }
--
--    if (uri) {
--        /* caller uses the old URI syntax */
--        if (!migrate_uri_parse(uri, &main_ch, errp)) {
--            return;
--        }
--    }
--
-     /* transport mechanism not suitable for migration? */
-     if (!migration_transport_compatible(main_ch->addr, errp)) {
-         return;
+-    if (migrate_mode_is_cpr(s)) {
++    if (migrate_mode_is_cpr()) {
+         ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+         if (ret < 0) {
+             error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+diff --git a/migration/migration.h b/migration/migration.h
+index ccc4e536a5..8b55d4741a 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -538,8 +538,7 @@ bool migrate_has_error(MigrationState *s);
+ 
+ void migration_connect(MigrationState *s, Error *error_in);
+ 
+-int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+-                             Error **errp);
++int migration_call_notifiers(MigrationEventType type, Error **errp);
+ 
+ int migrate_init(MigrationState *s, Error **errp);
+ bool migration_is_blocked(Error **errp);
+@@ -548,7 +547,7 @@ bool migration_in_postcopy(void);
+ bool migration_postcopy_is_alive(MigrationStatus state);
+ MigrationState *migrate_get_current(void);
+ bool migration_has_failed(MigrationState *);
+-bool migrate_mode_is_cpr(MigrationState *);
++bool migrate_mode_is_cpr(void);
+ 
+ uint64_t ram_get_total_transferred_pages(void);
+ 
 -- 
 2.51.0
 
