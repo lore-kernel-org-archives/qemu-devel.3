@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5472DD74EDE
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CCEED74EDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:58:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIc9-0004P1-P5; Fri, 23 Jan 2026 09:58:21 -0500
+	id 1vjIc8-0004OE-R4; Fri, 23 Jan 2026 09:58:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbz-0004IJ-Ke
+ id 1vjIbz-0004II-HD
  for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:12 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbx-0007oa-UU
+ id 1vjIby-0007on-2u
  for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:11 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-42fb5810d39so1443337f8f.2
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4801c731d0aso18267115e9.1
  for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180288; x=1769785088; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769180289; x=1769785089; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HHNWNw6bOL9uCXfJx/sXdBgGZyGqUJ5RbKAUe0K/1PU=;
- b=SbHhoe6NL0k5fkKeLvgNOlVx+jFthxJaKQCJVVltfjERlxZQDzFlJJ8AgMEqU1Vtyd
- ruzbmfqlp31ZTJ9I8u4MOcMMsV7zjvo9s6NLKWcbVThmdYJv1SIkQGIzF3xS8WniWd5d
- boe+rr63ooBgZielZ6n2QmM/F6jBhVc9a94wYwRPGZPyoPJCAzIe8ewbLJa/w9QSH0E2
- PNCNDsppPcGH1CrBZcZfh0jM6FZNAhME8sIOTBp4zqmtfMZQETMxqrabwAPmLUxDtwN2
- Wgir6p7no9/sfOwuISyIxXlovfA1CkRKOzj+sETc3VlwcwMPwXRJFzPe3dNlcg4DBfZ2
- UOFw==
+ bh=IlUfoKCtrzpDxxKvD3ZWXZavaxQbw25a3orNPzaQiEk=;
+ b=iBFnD60PbE5n0mhYQA+23r7QKw1JrB0bSl54KsboyzgSYjRMmUxzCfEWYDju42OlRB
+ Czs4lI1GSnmT2UsILkMt+KvHC05f1IFv0o2yUOy+ii4KZoWkaPc0Sz4U4Zi9ZSTGIXPx
+ iuJL+d0Sv6ZaSgumsEZEx7pNKVkplg2QWgs4BBxJIH/O7e3tlF3KgvvUD/Cb7NyWFOo5
+ LAH0sVysH2kORs8fuA7nXfcENPOpc38CGxQXmo4VxsNT73wy1pVPbxOz8A2c87DJH/D+
+ mE1YALbTyOvhR7+15XuZCgLG63u/hxvpTM9mus609b7OlHuJdZv6lqV8NR/IC1oCedPP
+ zOzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180288; x=1769785088;
+ d=1e100.net; s=20230601; t=1769180289; x=1769785089;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HHNWNw6bOL9uCXfJx/sXdBgGZyGqUJ5RbKAUe0K/1PU=;
- b=X8YfAaRAiIFZwvPA6mQIsww0Fw6S998vtvlOZUqBDRuBmS6RApnNTle7Cm/cZjQGbl
- D2lxdEF95fLtyZZEfZNxuNikxZuWqIq/9wgKMnAgS25CcBZwny2/uYpsz9C50ium+3zS
- ougxkup/FlH+uqIkxl4GYMZYy7hQadVYnhbRvI0zXtqbarCThy7mEJRf7GCufyXuPcmV
- gTRCV/rf81Uu5c8d/+yxVtdRXuiAP5jxDBKyeOX/gsa33QUMcXT4yhzpoHYtLMzn/aPX
- BSb+lKTtL/8ZXrC4FuY6cjTb0ZAfcdNx4PPX3/m5LHYopUbZaB+0/F2Em4vFKXjKx/wN
- o7uw==
-X-Gm-Message-State: AOJu0YxkpdFJJAByfTgnNw2RCMhM/9rmGDVIYIzAF+y4q4qioQhZrK4x
- katj58YapEGH4qARQDEak0t2LV7O9QZwtGx6PieDgOhboDSXZBuPs9gW5Z9yAqHCucg=
-X-Gm-Gg: AZuq6aK6HdP7W0H9ZVAJzgQO+i4XbKOkIHjlFApsQr7bzXSF6nUHAOSgQ6+AT/MahBB
- KUedxrHxq1AUsQLSiMTwsuHxnQse+aF6o57Ruso/3TtZaXUBHgnhBMHKKi46oWTl1ht7PN31Dbr
- G+UZHFym9CcYE7D3Je7Jofwid941kgcQ48hCLN2cckDCqQr6vB2Bl5+KwyYA9lcZXn/48w5wmQ5
- KD2UGCQkA9FqEF/NNrEn5KjrgjWaHbL6oE9BHjio0nTcNkzVClF8BE6Vg2ksEtMkIV8V6CcMkKb
- vjLhA0atCRbrb/BHAvxyveDyzw3yeRaClcHE9gLcM9rCXfVb4VvxVEcXesNiD5VIrJsT6gYvuc+
- xFjjbFobqFhTUU7vL62ihPR8ZUyZCM7XMRHl25bhBu8Yb5zghKdG6s+NJz0e01owudcER3s0DEQ
- NjGbp4pUmjmEXM
-X-Received: by 2002:a05:6000:402a:b0:435:9882:2342 with SMTP id
- ffacd0b85a97d-435b1604b2bmr5159948f8f.33.1769180288143; 
+ bh=IlUfoKCtrzpDxxKvD3ZWXZavaxQbw25a3orNPzaQiEk=;
+ b=JFyGjPPtw8ZVirkgrPqmma3Zruek6OC6cK6b34alSYpHnJW4C4YpNw5sGj0MrXLuD0
+ i6LZlTclnw0plwxrJyHlis7uMIepNqyXjYREieAM1JqSk6NzWoDQkme7v8XBfRQ9RyWT
+ nKWFKN2GldGPFPL9wv8r8tv/4zXhBUG1WfWmmlBeC0X1F/aPs8X1ZydgAQGdqcmu2ReI
+ wGt2HdX0H0q62ydefkT/qEjvuzPc7PntLKnkAHymBxUWN5UyKAfFIdx+SCeVf0tUMIei
+ MSz8t+XXU+E7i1+RaulvwJ2QdC1aOdI7H1q5Qwsw4AUyjFWr73EhE6BdUaNc+Er7aOno
+ DA7g==
+X-Gm-Message-State: AOJu0YykM8KZhNBQv/UzuICrsoy7ZK06FybWsiii53YkyBgrY9fIEQfS
+ D7PBEN52G2470UTBPcc/Xv7zCanAao43dZFH2Kv3Lp3+ay+JrsIs5BC06My4NoZdR1E=
+X-Gm-Gg: AZuq6aI139Szv1CAzMAFUH3yvmvpMtPfu5WX1d1KVmC0P6KE8iqePA3Fnj5lVp2FPYQ
+ qhjQHDFuBZdx6cRqT1EW5NS4BABzI3d5kYbOduFUqrIRk3yxL3xAm02yxkYpIRJcCR676yKnDmB
+ B/vcOQBpknc+9JUtlG2v39plItYntioiPgf3hfrIUdkU9sljo11EU0vAU/l71EdhnlxGRFKls+N
+ Ijv/uGMkaX2c7ZmmXlf0Zso4WBMTnKi79qitYqEsOIBzv9SaqJ4HlTjR4SpA/Ogt5H19lrG4NWl
+ Q2SBCmXKCq2uw4vlWHZUrgwnas6BA1lpdih1dyE/Ij4H7X6IH7OC14xjWMMoTNOPlj4D2VIGzJH
+ 2Op01iA5t8tKPt/Ca+V7d2qAGOkQ6eLMlIsHi/td1yedpzJ2zWZpsY1NbcT4e3bqj3kY6qyOlif
+ ANZmVtq2lBObaq
+X-Received: by 2002:a05:600c:8b05:b0:480:49ce:42cc with SMTP id
+ 5b1f17b1804b1-480511f3c12mr25788675e9.9.1769180288629; 
  Fri, 23 Jan 2026 06:58:08 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1c24a6fsm7165060f8f.16.2026.01.23.06.57.59
+ 5b1f17b1804b1-4804d3ae17esm27238715e9.0.2026.01.23.06.57.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 23 Jan 2026 06:58:04 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C55AC5FADA;
+ by draig.lan (Postfix) with ESMTP id DA3DC5FC68;
  Fri, 23 Jan 2026 14:57:51 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -73,18 +73,17 @@ Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH v2 15/16] scripts/get_maintainer.py: implement basic git
- fallback support
-Date: Fri, 23 Jan 2026 14:57:48 +0000
-Message-ID: <20260123145750.1200879-16-alex.bennee@linaro.org>
+Subject: [RFC PATCH v2 16/16] gitlab: add a check-maintainers task
+Date: Fri, 23 Jan 2026 14:57:49 +0000
+Message-ID: <20260123145750.1200879-17-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260123145750.1200879-1-alex.bennee@linaro.org>
 References: <20260123145750.1200879-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,178 +106,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the basic --git fallback support which also needs
---git-since and the various knobs to control the minimum and maximum
-signatures to look for.
+Now we have a more flexible get_maintainer script we can use it to
+validate MAINTAINERS.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- scripts/get_maintainer.py | 125 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 125 insertions(+)
+ .gitlab-ci.d/static_checks.yml | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/scripts/get_maintainer.py b/scripts/get_maintainer.py
-index b41f5342876..de229a20bc2 100755
---- a/scripts/get_maintainer.py
-+++ b/scripts/get_maintainer.py
-@@ -11,12 +11,16 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/.gitlab-ci.d/static_checks.yml b/.gitlab-ci.d/static_checks.yml
+index 61fe2fa39ab..c74698ad948 100644
+--- a/.gitlab-ci.d/static_checks.yml
++++ b/.gitlab-ci.d/static_checks.yml
+@@ -23,6 +23,15 @@ check-dco:
+   before_script:
+     - apk -U add git
  
- from argparse import ArgumentParser, ArgumentTypeError, BooleanOptionalAction
-+from dataclasses import dataclass
- from os import path
- from pathlib import Path
- from enum import StrEnum, auto
- from re import compile as re_compile
- from re import sub as re_sub
-+from re import IGNORECASE
- from regex import compile as prec_compile
-+from git import Repo
-+from collections import Counter
- 
- #
- # Subsystem MAINTAINER entries
-@@ -230,6 +234,96 @@ def process_patch_file(patchfile):
- 
-     return (msg, file_list)
- 
-+#
-+# Helpers for querying git
-+#
++check-maintainers:
++  extends: .base_job_template
++  stage: build
++  image: python:3.10-alpine
++  needs: []
++  script: scripts/get_maintainer.py --validate
++  variables:
++    GIT_DEPTH: 1
 +
-+
-+@dataclass
-+class GitOptions:
-+    repo: Repo
-+    singers: bool
-+    since: str
-+    min_sig: int
-+    max_maint: int
-+    min_percent: int
-+
-+
-+def rank_signers(git_opts, all_signers, total_commits):
-+    """
-+    Counts signer occurrences and returns a list of (Person, count, percent).
-+    """
-+    if total_commits == 0:
-+        return []
-+
-+    # Count by email to handle duplicates/mailmap issues
-+    counts = Counter(s.email for s in all_signers)
-+
-+    # Keep a map of email -> Person object for the most recent name used
-+    email_to_person = {p.email: p for p in all_signers}
-+
-+    ranked_results = []
-+
-+    # Sort by count descending, then take the top N
-+    for email, count in counts.most_common(git_opts.max_maint):
-+        percent = min(100.0, (count / total_commits) * 100)
-+        if percent >= git_opts.min_percent:
-+            person = email_to_person[email]
-+            ranked_results.append((person, count, percent))
-+
-+    return ranked_results
-+
-+
-+# regex to extract name/email from *-by: tags
-+sig_line_re = re_compile(r"^\s*[\w-]+-by:\s*(?P<person_info>.*)", IGNORECASE)
-+
-+
-+def extract_signers(commit_message):
-+    """
-+    Return a list of Persons found in commit.
-+    """
-+    signers = []
-+    for line in commit_message.splitlines():
-+        match = sig_line_re.match(line)
-+        if match:
-+            try:
-+                p = Person(match.group('person_info'))
-+                signers.append(p)
-+            except BadPerson:
-+                continue
-+    return signers
-+
-+
-+def extract_from_git(git_opts, src_file):
-+    """
-+    Extract 'maintainers' from examining the git history of a file.
-+    Return an array of Person/role tuples.
-+    """
-+    repo = git_opts.repo
-+
-+    # use the porcelain to fetch the log
-+    hashes = repo.git.log('--follow', f"--since={git_opts.since}",
-+                          "--format=%H", '--', src_file).splitlines()
-+
-+    if len(hashes) <= 0:
-+        return []
-+
-+    commits = [repo.commit(h) for h in hashes]
-+
-+    all_signers = []
-+
-+    for c in commits:
-+        all_signers.extend(extract_signers(f"{c.message}"))
-+
-+    ranked = rank_signers(git_opts, all_signers, len(commits))
-+    results = []
-+
-+    for person, count, percent in ranked:
-+        role = f"commit_signer: {count}/{len(commits)}={percent:.0f}%"
-+        results.append((person, role))
-+
-+    return results
-+
- #
- # Helper functions for dealing with the source path
- #
-@@ -331,6 +425,22 @@ def main():
-     parser.add_argument('--src', type=valid_src_root, default=src,
-                         help=f'Root of QEMU source tree{" (default: " + src + ")" if src else ""}')
- 
-+    # Git Options
-+    parser.add_argument('--git', action=BooleanOptionalAction,
-+                        default=False,
-+                        help="Include recent git *-by: signers (default: don't)")
-+    parser.add_argument('--git-since', default="1-year-ago",
-+                        help='git history to use when falling back (default: 1-year-ago)')
-+    parser.add_argument('--git-fallback',
-+                        action=BooleanOptionalAction, default=True,
-+                        help='use git when no exact MAINTAINERS pattern (default: fallback)')
-+    parser.add_argument('--git-min-signatures', default=1,
-+                        help='number of signatures required (default: 1)')
-+    parser.add_argument('--git-max-maintainers', default=5,
-+                        help='maximum number of git derived maintainers to add (default: 5)')
-+    parser.add_argument('--git-min-percent', default=5,
-+                        help='minimum percentage of commits to tagged as a maintainer (default: 5)')
-+
-     args = parser.parse_args()
- 
-     try:
-@@ -369,6 +479,21 @@ def main():
-     for rm in maintained:
-         print(str(rm))
- 
-+    # Git fallback
-+    if args.git or (args.git_fallback and len(maintained) == 0):
-+        repo = Repo(src)
-+        git_opts = GitOptions(repo=repo, singers=args.git,
-+                              since=args.git_since,
-+                              min_sig=args.git_min_signatures,
-+                              max_maint=args.git_max_maintainers,
-+                              min_percent=args.git_min_percent)
-+
-+        for f in files:
-+            gmaint = extract_from_git(git_opts, f)
-+
-+            for (person, role) in gmaint:
-+                print(f"{person} ({role})")
-+
- 
- if __name__ == '__main__':
-     main()
+ check-python-minreqs:
+   extends: .base_job_template
+   stage: test
 -- 
 2.47.3
 
