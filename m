@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FDBCD74EDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:59:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AEB0D74EDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIc0-0004I1-8Q; Fri, 23 Jan 2026 09:58:12 -0500
+	id 1vjIc6-0004MM-WB; Fri, 23 Jan 2026 09:58:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbv-0004FT-EV
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:07 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1vjIby-0004I4-72
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:11 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbs-0007mm-Ir
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:06 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-42fbc544b09so1781152f8f.1
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:04 -0800 (PST)
+ id 1vjIbv-0007nQ-7Z
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:09 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-42fbc305882so1401183f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180283; x=1769785083; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769180285; x=1769785085; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YOI5elt6Aar3cBSUkuqN78QLlyhofCVDFs+1c8kJcJA=;
- b=LtPbl06RpP/qrRzduZdMZuiKiMPtaMUZEm9NkoQuxAMo5ViuQOJOfl9OsgFlkCt+If
- 8VVVHTjjcwY8dltk10rUCBu+W1qmPmffT4dJwk6GxjR3XkLe2erLfwzp56wKqhGlj6nZ
- aHSCg3+L96aYPB2E7s9uIuc2krsW9km0O+4tVEHhi3oDJ1NDeZF8yG4K+FpuC8K4b+gn
- 1b0DvbJ1tLcaD19j4O4zNadD6KzzDQgTX9pm9HdoL9OA00oSc1Km45JuBS7x3kf5/FNX
- jlZkO3qwimPRBLlKmfuDBLugftLC+0TiGRT7Kk68Wqg0TncjTCOi9/RUh3wpOLzDOyYd
- VmZw==
+ bh=hoccyFN4VSFNY3IFMb9lpWrE3hrQlhyVLovZvI9LP+I=;
+ b=rHule8hSpdeS+CGe95GaOtlSrUrqjLfFc90j9NxUZMrCmygC5zsu1vMfOPxhP9MWoK
+ HeCLl2E7kEkmD00IYauw+buSV/W37jp6WMvDGTVbORRiiH7drmpD9e3oU0N948OJBXR1
+ h0Evze3qrSPf36miZDYc3Ucs9JsDskIiDUO8jGFsh0O12xgZSyO7Nq9GB6H4FMQqfy69
+ pRfMdSDld2YuEekGAdjz/OJ6LiArIE8uHWupygzRRv5w2jxbaaMx+6dQcbe3DPADJowj
+ 7cSCEnrNzmxjnGvmXdsBMZpFb13cjC7Y3UtgnbDPo7Ya2xNZ70Y2/BoryopgkWR+LM4j
+ zU/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180283; x=1769785083;
+ d=1e100.net; s=20230601; t=1769180285; x=1769785085;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=YOI5elt6Aar3cBSUkuqN78QLlyhofCVDFs+1c8kJcJA=;
- b=M9BxMkLVxWyiajyXO/x6EZJOyFbOs4jurpBOCXk6zNfzT2JehwySsFf7iMQsK7AVhP
- bxUKFWdGB/pKRALgb6Q+cLd/mA8KS5b090qkn4+5bKCGQPVp2A/4INxBX77u85Aro8Dx
- IOTPXE/cWNgVKI8fe2tQCRFqGrvk3Vy+SQSdc873Dq5NVCShInxQYZcQgTjgn3OSvxnu
- SrBqaQL0VNyy6hiouZsNtA+g4VXLvgB79lU09NZhi9h2fS4DjyrU5bolAWZCIoPLXnlu
- 7dqbdHjRZrQ6piocqbHxvQAaepKmtITFY8bMXEWLWMgnVMQ1i6OWVCi8qYvxDP0q1Fau
- SnnQ==
-X-Gm-Message-State: AOJu0YwLiKD934K1cFJ95peG/F7d7JanBYT+/u/83MG/u/o42LCw1Mvc
- sYmh+rz+gQ1RASWZgCH/OS8fx0g3NXF8m0QEN+F5GP9kmqFQdYjM1OjiEJxS1GRUIsg=
-X-Gm-Gg: AZuq6aJLN689kKt0AVbvo7d0b5UGvzLZkimVz6GZbw7Qe75luAq5bmn9NgOY0II4OJg
- lWHd6PME1Sp4W4hRysogJcwnKJf9yA2wkowwDyCTDUbENFinCYrCD/4X3EiYnDcmXZQ026eQpmK
- Uwn4P9bdTl6hkQtaXOxDI2b2eFiURwuz6NCV38Bo1WlfCQto6dZCNqBGymEMktPyFzR1CqBoKFo
- p1aJGj5iEHDiHM84h7vf5dyjE2UKJxoHJgH2/8J1fMomoEuXFQNN0GtPtZADomeiIjp22Hk04M+
- HafU9Iy+1/InR5N5JAlI8XW5+4qsC0DtIpJ28yFkgeFZptNcA/+FiQdCtUpQaJfHjfoCYOuaGLN
- 5cmnCtHK96FMLGt0cRMP2pN5jIGA4gkvtilemqxFiYGSfcWOSgNV4Jlvcrj26MKOr4wYPbKSSlC
- JNZP2aIYkso1j/
-X-Received: by 2002:a05:6000:26ce:b0:42f:ba58:6599 with SMTP id
- ffacd0b85a97d-435b15f7ef8mr5277780f8f.35.1769180283065; 
- Fri, 23 Jan 2026 06:58:03 -0800 (PST)
+ bh=hoccyFN4VSFNY3IFMb9lpWrE3hrQlhyVLovZvI9LP+I=;
+ b=H19Dg7OG9sfEJDafhOV9Xbg9wHCucrN4sEa7HSQAYqWDOUONEqZs0M2w+2b0uT1g/n
+ ZVxP9UytRo7uSb9JIkU/5TQ1jfmddaYmyQoSPZLOvUQnb3OZshbLJE0wou+yvoqj3Xh5
+ nhIz/SOEm6VGLZH7WHVBa6Xytp4+MCQ58qxfFfJmc3s52Yp1M/rG1lIxvw/t5EFoAj76
+ GBkTP2yZ5WOR5vOyGDkI4u76WMr2BFUuN4QWvlmA4K3qGs/a+TJbuBlxV2AJQQ1iNQTL
+ NjnZwV3m8SoaFUHD3kr96t/JJxEtmreCLCpnCfr/wiKg8CmwHYPhPQpeU8csFJ4vLsMj
+ jA6w==
+X-Gm-Message-State: AOJu0YyeUi0+Dx7jtlqrxqbJT777L8c8NE5QNHJ2bJF56fQsgD52NQzc
+ 43fmsA/c8P64Ho6aFYCxlA8nBfOh7vtE+GKvmSGdFK9oCB3LknKcWp90trCZp9CM3VA=
+X-Gm-Gg: AZuq6aKCfX4Jjdg741b7KwB69jnVWbcKcl6lABzb1cMp69jgjUjKyMR+cRFhl0QWHXb
+ R3x8uPRjNMDujuELu11KBi88AMCkqYlqr6u3WBn2Ke2ehaFd71XRonxm5L3/Gn8a9vpzFGcvAmj
+ zICU/Jh+etpMkN1W/ECqC57BzGL11BUZYP2ZVQAcV3b0alZLWI7UpKFJEDzsSVPiSmRYiYCA3yJ
+ Ado242bWlASYGNf6XT6uPB9BnfVqHjTYTZLu7EC4Rl8OSEsmxItuM4kHBbL+DzEJvO8n+XVwFZa
+ YtQEWBOYSBKxnhdB7mgffzAfVDU3jsFR9zG9AD5KPn4HyqTvVSDRJeUTaty0q7JYHk0TWAuUQoj
+ 24dX5dU4xU3b2/+dsnL2vsz7RNiYxQdBp48inkxgzwCX20XJKp+dzEZNexMp6U4C2PjzJC701+t
+ 7gvzVdFiE1n+ZR
+X-Received: by 2002:a05:6000:2913:b0:430:fbe1:3822 with SMTP id
+ ffacd0b85a97d-435b1621b48mr6927553f8f.54.1769180284807; 
+ Fri, 23 Jan 2026 06:58:04 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1c02f71sm7717001f8f.6.2026.01.23.06.57.56
+ ffacd0b85a97d-435b1f742d6sm7017768f8f.30.2026.01.23.06.57.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 23 Jan 2026 06:57:57 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8006E5F9F4;
+ by draig.lan (Postfix) with ESMTP id 6AF4C5F94A;
  Fri, 23 Jan 2026 14:57:51 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -73,17 +73,18 @@ Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH v2 12/16] scripts/get_maintainer.py: add support for -f
-Date: Fri, 23 Jan 2026 14:57:45 +0000
-Message-ID: <20260123145750.1200879-13-alex.bennee@linaro.org>
+Subject: [RFC PATCH v2 11/16] scripts/get_maintainer.py: initial parsing of
+ MAINTAINERS
+Date: Fri, 23 Jan 2026 14:57:44 +0000
+Message-ID: <20260123145750.1200879-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260123145750.1200879-1-alex.bennee@linaro.org>
 References: <20260123145750.1200879-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,68 +107,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now we have our sections we can add support for checking each file
-against the maintainer list and gathering the ones we want. Finally we
-can print the list out.
+Add the basic infrastructure to parse MAINTAINERS and generate a list
+of MaintainerSection objects we can use later.
+
+Add a --validate argument so we can use the script to ensure
+MAINTAINERS is always parse-able in our CI.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+
 ---
- scripts/get_maintainer.py | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+v2
+  - add __str__ function for formatting Person
+---
+ scripts/get_maintainer.py | 168 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 167 insertions(+), 1 deletion(-)
 
 diff --git a/scripts/get_maintainer.py b/scripts/get_maintainer.py
-index 696a5b55d8d..96875255b11 100755
+index c02bf4f5b0e..696a5b55d8d 100755
 --- a/scripts/get_maintainer.py
 +++ b/scripts/get_maintainer.py
-@@ -132,6 +132,32 @@ def __init__(self, section, entries):
-             else:
-                 raise UnhandledTag(f"'{tag}' is not understood.")
+@@ -10,9 +10,159 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
-+    def __str__(self) -> str:
-+        entries = []
+-from argparse import ArgumentParser, ArgumentTypeError
++from argparse import ArgumentParser, ArgumentTypeError, BooleanOptionalAction
+ from os import path
+ from pathlib import Path
++from enum import StrEnum, auto
++from re import compile as re_compile
 +
-+        for m in self.maintainers:
-+            entries.append(f"{m.name} <{m.email}> (maintainer: {self.section})")
++#
++# Subsystem MAINTAINER entries
++#
++# The MAINTAINERS file is an unstructured text file where the
++# important information is in lines that follow the form:
++#
++# X: some data
++#
++# where X is a documented tag and the data is variously an email,
++# path, regex or link. Other lines should be ignored except the
++# preceding non-blank or underlined line which represents the name of
++# the "subsystem" or general area of the project.
++#
++# A blank line denominates the end of a section.
++#
 +
-+        for r in self.reviewers:
-+            entries.append(f"{r.name} <{r.email}> (reviewer: {self.section})")
++tag_re = re_compile(r"^([A-Z]):")
 +
-+        for l in self.lists:
-+            entries.append(f"{l} (open list: {self.section})")
 +
-+        return "\n".join(entries)
++class UnhandledTag(Exception):
++    "Exception for unhandled tags"
 +
-+    def is_file_covered(self, filename):
-+        "Is filename covered by this maintainer section"
 +
-+        for fx in self.files_exclude:
-+            if filename.match(fx):
-+                return False
++class BadStatus(Exception):
++    "Exception for unknown status"
 +
-+        for f in self.files:
-+            if filename.match(f):
-+                return True
 +
-+        return False
++class Status(StrEnum):
++    "Maintenance status"
++
++    UNKNOWN = auto()
++    SUPPORTED = 'Supported'
++    MAINTAINED = 'Maintained'
++    ODD_FIXES = 'Odd Fixes'
++    ORPHAN = 'Orphan'
++    OBSOLETE = 'Obsolete'
++
++    @classmethod
++    def _missing_(cls, value):
++        # _missing_ is only invoked by the enum machinery if 'value' does not
++        # match any existing enum member's value.
++        # So, if we reach this point, 'value' is inherently invalid for this enum.
++        raise BadStatus(f"'{value}' is not a valid maintenance status.")
++
++
++person_re = re_compile(r"^(?P<name>[^<]+?)\s*<(?P<email>[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})>\s*(?:@(?P<handle>\w+))?$")
++
++
++class BadPerson(Exception):
++    "Exception for un-parsable person"
++
++
++class Person:
++    "Class representing a maintainer or reviewer and their details"
++
++    def __init__(self, info):
++        match = person_re.search(info)
++
++        if match is None:
++            raise BadPerson(f"Failed to parse {info}")
++
++        self.name = match.group('name')
++        self.email = match.group('email')
++
++    def __str__(self):
++        return f"{self.name} <{self.email}>"
++
++
++class MaintainerSection:
++    "Class representing a section of MAINTAINERS"
++
++    def _expand(self, pattern):
++        if pattern.endswith("/"):
++            return f"{pattern}*"
++        return pattern
++
++    def __init__(self, section, entries):
++        self.section = section
++        self.status = Status.UNKNOWN
++        self.maintainers = []
++        self.reviewers = []
++        self.files = []
++        self.files_exclude = []
++        self.trees = []
++        self.lists = []
++        self.web = []
++        self.keywords = []
++
++        for e in entries:
++            (tag, data) = e.split(": ", 2)
++
++            if tag == "M":
++                person = Person(data)
++                self.maintainers.append(person)
++            elif tag == "R":
++                person = Person(data)
++                self.reviewers.append(person)
++            elif tag == "S":
++                self.status = Status(data)
++            elif tag == "L":
++                self.lists.append(data)
++            elif tag == 'F':
++                pat = self._expand(data)
++                self.files.append(pat)
++            elif tag == 'W':
++                self.web.append(data)
++            elif tag == 'K':
++                self.keywords.append(data)
++            elif tag == 'T':
++                self.trees.append(data)
++            elif tag == 'X':
++                pat = self._expand(data)
++                self.files_exclude.append(pat)
++            else:
++                raise UnhandledTag(f"'{tag}' is not understood.")
++
++
++
++def read_maintainers(src):
++    """
++    Read the MAINTAINERS file, return a list of MaintainerSection objects.
++    """
++
++    mfile = path.join(src, 'MAINTAINERS')
++    entries = []
++
++    section = None
++    fields = []
++
++    with open(mfile, 'r', encoding='utf-8') as f:
++        for line in f:
++            if not line.strip():  # Blank line found, potential end of a section
++                if section:
++                    new_section = MaintainerSection(section, fields)
++                    entries.append(new_section)
++                    # reset for next section
++                    section = None
++                    fields = []
++            elif tag_re.match(line):
++                fields.append(line.strip())
++            else:
++                if line.startswith("-") or line.startswith("="):
++                    continue
++
++                section = line.strip()
++
++    return entries
  
  
- def read_maintainers(src):
-@@ -279,6 +305,15 @@ def main():
-         print(f"loaded {len(maint_sections)} from MAINTAINERS")
-         exit(0)
+ #
+@@ -104,6 +254,12 @@ def main():
+     group.add_argument('-f', '--file', type=valid_file_path,
+                        help='path to source file')
  
-+    relevent_maintainers = None
++    # Validate MAINTAINERS
++    parser.add_argument('--validate',
++                        action=BooleanOptionalAction,
++                        default=None,
++                        help="Just validate MAINTAINERS file")
 +
-+    if args.file:
-+        relevent_maintainers = [ms for ms in maint_sections if
-+                                ms.is_file_covered(args.file)]
+     # We need to know or be told where the root of the source tree is
+     src = find_src_root()
+ 
+@@ -112,6 +268,16 @@ def main():
+ 
+     args = parser.parse_args()
+ 
++    try:
++        # Now we start by reading the MAINTAINERS file
++        maint_sections = read_maintainers(args.src)
++    except Exception as e:
++        print(f"Error: {e}")
++        exit(-1)
 +
-+    for rm in relevent_maintainers:
-+        print(rm)
-+
++    if args.validate:
++        print(f"loaded {len(maint_sections)} from MAINTAINERS")
++        exit(0)
+ 
  
  if __name__ == '__main__':
-     main()
 -- 
 2.47.3
 
