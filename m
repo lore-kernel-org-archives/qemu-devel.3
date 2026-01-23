@@ -4,73 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AAA0D7237F
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281E6D7237F
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:26:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjGAd-0005BM-Fp; Fri, 23 Jan 2026 07:21:47 -0500
+	id 1vjGA4-0004jX-2h; Fri, 23 Jan 2026 07:21:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vjGAD-0004z0-5K
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vjGAB-00051G-Ov
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769170879;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cKqukgA4xLz4LCaAwon0HAS7jLqYicKn6A+YO2XVudU=;
- b=ZgJxueMwpkosxmcJVciRUdOKu1Rp1dZ0dQI/ziMYQyw05kXKxW+l0WCy1uYt51d3Fw28/I
- OLvxXvf9y3t1pdAwuhaBnK7i4ZhnNfFLXAaWm1vZgvFmQkgs1Iae03fYieiW0mjwQ7TYG2
- jng9rqsFL8pCNMq7EBOLxKX0cJiXn5U=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-dAaIsS79OR6vXjqRVDmaDw-1; Fri,
- 23 Jan 2026 07:21:15 -0500
-X-MC-Unique: dAaIsS79OR6vXjqRVDmaDw-1
-X-Mimecast-MFC-AGG-ID: dAaIsS79OR6vXjqRVDmaDw_1769170875
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjGA2-0004f1-8k
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:10 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjGA0-0004z0-GQ
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:09 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 607271944B0C; Fri, 23 Jan 2026 12:21:14 +0000 (UTC)
-Received: from localhost.localdomain (unknown [10.72.112.7])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5613230002DC; Fri, 23 Jan 2026 12:21:10 +0000 (UTC)
-From: Jason Wang <jasowang@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Jason Wang <jasowang@redhat.com>
-Subject: [PULL 02/13] net/tap: net_init_tap_one(): drop extra error propagation
-Date: Fri, 23 Jan 2026 20:20:51 +0800
-Message-ID: <20260123122102.51422-3-jasowang@redhat.com>
-In-Reply-To: <20260123122102.51422-1-jasowang@redhat.com>
-References: <20260123122102.51422-1-jasowang@redhat.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 05CB85BCCD;
+ Fri, 23 Jan 2026 12:21:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1769170865; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZLwZq+m5IdIPWNnlD4SufYzC1U17Ewc/DumQCLLGkUw=;
+ b=AJh4bt36wtByvWbrslK8fIxho4iYH7uOTnoon5gd3AlnQnrYvuyhylH0/+uXAjy1mVuIt+
+ xxsFvRYORJbucR9q8hb+7C6l7X/af+uv0z5iSYGs5flG35gw9ID8YLLtrYhPDFKJQnXe8p
+ 5buRCwu3jbla7OrHkH0YIoduF5g1izc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1769170865;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZLwZq+m5IdIPWNnlD4SufYzC1U17Ewc/DumQCLLGkUw=;
+ b=mBi4g9msfVokej2EGQHJR1i7GvtwbZqxTZU+Fm3MjUPLuexe4gYU0KmsyRZTPF7TQUQOim
+ g+soTEBJ2I4r/0AQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=1MowCCrZ;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=MvOt3tNr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1769170864; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZLwZq+m5IdIPWNnlD4SufYzC1U17Ewc/DumQCLLGkUw=;
+ b=1MowCCrZSacy5PpqYdd+JmbwKDjDvX67FeXVLcgAE4N3x+tg07uVEkJOXvjGHvk2QnBwh6
+ zHByxypyr1OfLYCbXMjg3glXbFyBLpTXYn/4Tt+svoIoUkk4s2E6QWlOgdSTE712uEK2sh
+ W4lYPaj1PF/XwawIQHN1Q/6ksDy0sT8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1769170864;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZLwZq+m5IdIPWNnlD4SufYzC1U17Ewc/DumQCLLGkUw=;
+ b=MvOt3tNrqfFiEymggfddknt6f9PW5jnAhSi/wo9bXoPUgHDY9MQ2QpB9R9A3pnj7uI44Gm
+ aHGX6s8V/RBModAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6DC57136AA;
+ Fri, 23 Jan 2026 12:21:03 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id l03kC69nc2mmJwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 12:21:03 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, armbru@redhat.com, Peter
+ Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] migration/options: Fix leaks in StrOrNull accessors
+In-Reply-To: <CAE8KmOyAYnB8a-AsZvjCFGrX+xwbCjV3Wv2ybVLoBQu7RofOqA@mail.gmail.com>
+References: <20260122232456.12722-1-farosas@suse.de>
+ <CAE8KmOyAYnB8a-AsZvjCFGrX+xwbCjV3Wv2ybVLoBQu7RofOqA@mail.gmail.com>
+Date: Fri, 23 Jan 2026 09:21:00 -0300
+Message-ID: <87fr7wjz9v.fsf@suse.de>
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 05CB85BCCD
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,31 +125,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Prasad Pandit <ppandit@redhat.com> writes:
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
----
- net/tap.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+> On Fri, 23 Jan 2026 at 04:56, Fabiano Rosas <farosas@suse.de> wrote:
+>> Fix a couple of leaks detected by Coverity. Both are currently
+>> harmless because the visitor in the setter can never fail and the
+>> whole of the getter is unused, it's only purpose at the moment is to
+>
+> * unused, it's -> unused. Its
+>
 
-diff --git a/net/tap.c b/net/tap.c
-index bfba3fd7a7..c162523a03 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -736,9 +736,8 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-         }
- 
-         if (vhostfdname) {
--            vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, &err);
-+            vhostfd = monitor_fd_param(monitor_cur(), vhostfdname, errp);
-             if (vhostfd == -1) {
--                error_propagate(errp, err);
-                 goto failed;
-             }
-             if (!qemu_set_blocking(vhostfd, false, errp)) {
--- 
-2.42.0
+Thanks
 
+>> provide a complete implementation of the StrOrNull property.
+>>
+>> Fixes: CID 1643919
+>> Fixes: CID 1643920
+>> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>> CI run: https://gitlab.com/farosas/qemu/-/pipelines/2280325023
+>> ---
+>>  migration/options.c | 2 ++
+>>  1 file changed, 2 insertions(+)
+>>
+>> diff --git a/migration/options.c b/migration/options.c
+>> index 9a5a39c886..9dc44a3736 100644
+>> --- a/migration/options.c
+>> +++ b/migration/options.c
+>> @@ -225,6 +225,7 @@ static void get_StrOrNull(Object *obj, Visitor *v, const char *name,
+>>          str_or_null = g_new0(StrOrNull, 1);
+>>          str_or_null->type = QTYPE_QSTRING;
+>>          str_or_null->u.s = g_strdup("");
+>> +        *ptr = str_or_null;
+>>      } else {
+>>          /* the setter doesn't allow QNULL */
+>>          assert(str_or_null->type != QTYPE_QNULL);
+>> @@ -245,6 +246,7 @@ static void set_StrOrNull(Object *obj, Visitor *v, const char *name,
+>>       */
+>>      str_or_null->type = QTYPE_QSTRING;
+>
+> * Do we need to add:  str_or_null->u.s = g_strdup("");  here?
+>
+
+It would leak, the visitor will allocate new memory for it below.
+
+>>      if (!visit_type_str(v, name, &str_or_null->u.s, errp)) {
+>> +        qapi_free_StrOrNull(str_or_null);
+>>          return;
+>>      }
+>>
+>> --
+>
+> * visit_type_str() failure is handled in set_StrOrNull, but not in
+> get_StrOrNull? Do we need to add qapi_free_StrOrNull(str_or_null) in
+> get_StrOrNull()?
+>
+
+I'd rather leave to the caller. The errp will be set, I think it's
+enough. Looking at the other instances of visit_type_str in qdev, they
+all simply return without any handling. I think in practice it's
+unlikely that the string visitors will ever set errp because they are
+just a g_strdup() usually.
+
+> * Otherwise it looks okay.
+> Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+>
+> Thank you.
+> ---
+>   - Prasad
 
