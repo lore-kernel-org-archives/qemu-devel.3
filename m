@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F4DD74EDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D95FBD74EE2
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:15:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIor-0000sH-8p; Fri, 23 Jan 2026 10:11:32 -0500
+	id 1vjIp8-0001L8-4h; Fri, 23 Jan 2026 10:11:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInS-00077y-31
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:09 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1vjInY-00078T-1d
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:14 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInQ-00036H-2Y
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:01 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47edd9024b1so19556895e9.3
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:59 -0800 (PST)
+ id 1vjInU-000383-NK
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:07 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-42fbc305914so2028365f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:10:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180998; x=1769785798; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769181003; x=1769785803; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pO2f6DBNywpKXf5TNbSH8YRsyqs1ZqsJjw5WvM1u2rE=;
- b=N/tfKVopmCYmShLSsfxOaPwVo9S/W1f6MlY90Q7bxPkTdgb/DJ02Uo830yY/VW1709
- 5xp3l9vo6da5tzLqL0gxD46zOJUKktWP1qkQwk2nV5WJBA+78O2gqQFa66yMywoXGcgI
- 5btoHvrsceFOO215pYGx95STV1GPF1j5iekXaFDB3vEjJJOsK5HZqzWtyA26b+vFxdjw
- ob/rS0kbQK3d11pKTNAzTPn+2Df8NcXnIwj5KjbLdYN4q4Sk5imMnC9hG2rYi53rGXlZ
- mQ24rK3GTNAnA28f+F20rjZ1GxJIAD3Gh20KbSqmnpIfxrMEVKOk6c63tk8kY69shm1W
- palg==
+ :reply-to; bh=yGwNzjlczVKCMAyj5rVvNgbSDpwbzU8o5quzCmk6erU=;
+ b=pfXdrGX3bHgW2A8ykwCIxXqMSlz7HVFq/LhPxejiAXp0PQj0GGDOGu55iPTU+CwK17
+ TVXdgGUD/htopV0R0mb/V21tEajzgSKSzu8jFm8pnRkLGHLiC0ze71++ZtDl3lFLmAtF
+ DcOEQD90r3L/gK6T0pmgieSbKfmO/YBzVEHFJYp9lU7w5QWLUtL88u5PyiLWXEHLthVR
+ iXDkTD0WA3qOnKTsknTuZIfSOpcsnmPeKGzMS0m4T8jIa1eEtjOGm5k5e/6OMo8GMwep
+ RkaLa8Xe6h8BRqRSGxvTkez9JxY5R0pX0Fdb9ibErM92SAh+THtX5PMuP49azufN7Vi9
+ APDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180998; x=1769785798;
+ d=1e100.net; s=20230601; t=1769181003; x=1769785803;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=pO2f6DBNywpKXf5TNbSH8YRsyqs1ZqsJjw5WvM1u2rE=;
- b=oojKsECy1fwjk11QCoNeKfqxYX3M9x5kvVcKGUmlY3YVd2azpzf3wh4OLWFEGs9UqK
- NxU8h7iZPUFCwocDOhnwroguXdAK6kpCQwdykl+uGks9fWmKVgYMBrgRVW77jae7LcEE
- cD1maUYg6lPcBHv7M1BrP/7RBpHVHW2Wkp+aSX6iHI+qTWVFTC80Se+zAoymHbnbf6xf
- 5duFW/Q+2e5QJG1bXKesHmL65U50Ok7fIXTyn0GikKIaaZ3KLW789UytGI5yP8fGjgdQ
- dh9ueGJmf23rjbEWcOc2V692lpNzNFJY7YYfqpr4YilstMNkc8mWNmMzP5NIbCb91H7o
- i9jA==
-X-Gm-Message-State: AOJu0Yz6ideGjTdykafOKI7Hckr13Y+LsViXGKGQtvG2WyMhMlotklu3
- Rklh1cn3fMhBeZ7Y7+RwxNHinjsyUKoEgonnE0khVd/ok0xVljuyB7/A5z2OAutZ9PRD7rvIl9A
- VwB3Z1M0=
-X-Gm-Gg: AZuq6aJ/ILvJsK+t2LoTwIfe5+ZqUyQrpS1gfpX1ZoLB9uYkKTyyKBZel+mWhoLHppD
- m5slt+r9b8FWaQrcdCCEa4foTD8dbzsrN6GfyqokfL3HG7D47oVoXmwjCl3h8lo2EtGCfqwVSQv
- 4oOJajJzqmmt8GEhFrnz4BKq5gSzM+lc5OWEU85XMfIOK3DsHik2M1+UEOgQ07CEaluAV6FwAqd
- G+Ty75KMR0oSZcYzLGumM8eisycKH2sMTZbBMRbOPmDmHzA8mLfVvgl4Njon7bQmyg/UOVsHrv1
- ZXKiaAcAhA2ZJ+BUMEaly+TS9tNSVlFely1xxWIRGSsyb4A1CNUIgYJOf+8RVjiERatG+4+SPBo
- j1EKZWKtuQ7fd4ZYDxWq8rjZpkiVGgucDMmp7DZ4aDo0LBKLEtKIbQ6YMUdfMDgDGxJ7qnw3H/l
- EhP6vvMW2M3K7Eq/yuE0YrGNrhTAmr1WMAWSC1BwqPxdgWjSpCmuQI
-X-Received: by 2002:a05:600c:1d2a:b0:477:2f7c:314f with SMTP id
- 5b1f17b1804b1-4804c959823mr54621575e9.10.1769180998265; 
- Fri, 23 Jan 2026 07:09:58 -0800 (PST)
+ bh=yGwNzjlczVKCMAyj5rVvNgbSDpwbzU8o5quzCmk6erU=;
+ b=AoMmA/iZSn8fntlIlheRFYdQeLSMa+4G/y+6lCJMaEH8ht6nKPQ1maUszSUiMr2/ae
+ CiuzA0cZRBhCPAZUOkQNbwu4dQGu8Xi6kL7bz/O8+BV18SPYHTqdajJrIMD1CyE+E8pt
+ 5UIngxl+sbSIFH4A3U8bATCi8vpylE6xRfXAN5B+/baw9OvQfwh9g0dLGAatHNt2HvCy
+ y26sZNNaN/cCP0Q6l1Ylr4GnxUPxWlCCGHJe8csMZtg4O0iP4upU/Bjnrq7o9rZjcz3Q
+ 7J7JKiMleuJO5SGczJX/HYdP01yXKevC+kXKpYFeVfcNKU3Iz/924Hwe2gzdu/4PqCBo
+ UKAw==
+X-Gm-Message-State: AOJu0YwaeRpmS2oFduqaccjssqqrQvsreYND7IeQWj/D7uLVqfZ0wxNv
+ 9fkZ8bul/+nKpj4Q46z7UrEHa6Cc04sY0g3sdG57+pkfGTdcNc2W1xWzy6jaEBv4aHKntMq0I1P
+ K8myuV4g=
+X-Gm-Gg: AZuq6aK3zycJ1V/CfGRhFs6FOWw5d8WPSlwDH4lfZWurHYZHmmA4ZiA66z/l6J6pheQ
+ nhw1oQ29WCy/EXeLLjVoFFkuU/amoXAT+Janj4qyhIBfgjBAR0NzHmJEHc7A2eONkqD/fNFpA72
+ sagmsHTjRTA+001AYTy0EbwHpu+bJyL9W4FlvxC1HiJOnly1uxN4RmyukDidA0gxWbIX+t1037G
+ SqYtr7NlvElXaUQHZiaDVpEPpG38ETf29xQDBuZvISgYFP2zc6L76TZKmHsz6x9jR4Oe2l+z7RP
+ CSpXKEizXgRa6ZqP8MpkRD7UIJfHdqhkqld2C9QTKs+K6oKXlGezTUisQBr06XFSRVq3Es5kA+7
+ fCKU4KuRxdj69l3pn6rvF2STV6Sjo3ua3wkDg5SNxYDQFVKhklyqjuWCaafbM5Ff/5Hhj94fAdR
+ c6g/+1m/4TfjOlaDbnjFsZ2k46aoXdzTqgskhT9vO2eNzYcbm1AD3T
+X-Received: by 2002:a05:6000:2211:b0:435:9691:d525 with SMTP id
+ ffacd0b85a97d-435b1588264mr5100058f8f.13.1769181002929; 
+ Fri, 23 Jan 2026 07:10:02 -0800 (PST)
 Received: from mnementh.archaic.org.uk (mnementh.archaic.org.uk.
  [81.2.115.146]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.57
+ ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.10.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 07:09:57 -0800 (PST)
+ Fri, 23 Jan 2026 07:10:02 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/22] hw/intc: declare GICv3 regions as little endian
-Date: Fri, 23 Jan 2026 15:09:35 +0000
-Message-ID: <20260123150941.1877768-18-peter.maydell@linaro.org>
+Subject: [PULL 22/22] qemu-options.hx: Improve formatting in colo-compare docs
+Date: Fri, 23 Jan 2026 15:09:40 +0000
+Message-ID: <20260123150941.1877768-23-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260123150941.1877768-1-peter.maydell@linaro.org>
 References: <20260123150941.1877768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,82 +100,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+The colo-compare option documentation has some formatting issues: it
+uses a "@var{...}" syntax which is not used elsewhere and which is
+rendered literally into the HTML documentation.  The bare "@" sign
+also results in an unintended 'mailto:' hyperlink.
 
-The GIC should always be a little-endian device as big-endian
-behaviour is a function of the current CPU configuration not the
-system as a whole. This should have no functional effect as the GIC
-cannot be instantiated on a BE system but will help the single binary
-efforts.
+Rewrite this into the style we seem to use most in the rest of
+the command line options, where an option which takes an argument
+is written as "my-option=<thing>".
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260121105932.135676-4-alex.bennee@linaro.org
+We take the opportunity to make the documentation a little clearer
+by splitting up the long paragraph and using preformatted-text
+markup for the names of the suboptions.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260115142629.665319-5-peter.maydell@linaro.org
 ---
- hw/intc/arm_gicv3.c            | 4 ++--
- hw/intc/arm_gicv3_its.c        | 4 ++--
- hw/intc/arm_gicv3_its_common.c | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ qemu-options.hx | 41 +++++++++++++++++++++++++----------------
+ 1 file changed, 25 insertions(+), 16 deletions(-)
 
-diff --git a/hw/intc/arm_gicv3.c b/hw/intc/arm_gicv3.c
-index 6059ce926a..542f81ea49 100644
---- a/hw/intc/arm_gicv3.c
-+++ b/hw/intc/arm_gicv3.c
-@@ -417,7 +417,7 @@ static const MemoryRegionOps gic_ops[] = {
-     {
-         .read_with_attrs = gicv3_dist_read,
-         .write_with_attrs = gicv3_dist_write,
--        .endianness = DEVICE_NATIVE_ENDIAN,
-+        .endianness = DEVICE_LITTLE_ENDIAN,
-         .valid.min_access_size = 1,
-         .valid.max_access_size = 8,
-         .impl.min_access_size = 1,
-@@ -426,7 +426,7 @@ static const MemoryRegionOps gic_ops[] = {
-     {
-         .read_with_attrs = gicv3_redist_read,
-         .write_with_attrs = gicv3_redist_write,
--        .endianness = DEVICE_NATIVE_ENDIAN,
-+        .endianness = DEVICE_LITTLE_ENDIAN,
-         .valid.min_access_size = 1,
-         .valid.max_access_size = 8,
-         .impl.min_access_size = 1,
-diff --git a/hw/intc/arm_gicv3_its.c b/hw/intc/arm_gicv3_its.c
-index cce3486d74..b639c03b67 100644
---- a/hw/intc/arm_gicv3_its.c
-+++ b/hw/intc/arm_gicv3_its.c
-@@ -1906,7 +1906,7 @@ static const MemoryRegionOps gicv3_its_control_ops = {
-     .valid.max_access_size = 8,
-     .impl.min_access_size = 4,
-     .impl.max_access_size = 8,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 862b6c7661..bd014a3244 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -5972,22 +5972,31 @@ SRST
+         stored. The file format is libpcap, so it can be analyzed with
+         tools such as tcpdump or Wireshark.
  
- static const MemoryRegionOps gicv3_its_translation_ops = {
-@@ -1916,7 +1916,7 @@ static const MemoryRegionOps gicv3_its_translation_ops = {
-     .valid.max_access_size = 4,
-     .impl.min_access_size = 2,
-     .impl.max_access_size = 4,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
+-    ``-object colo-compare,id=id,primary_in=chardevid,secondary_in=chardevid,outdev=chardevid,iothread=id[,vnet_hdr_support][,notify_dev=id][,compare_timeout=@var{ms}][,expired_scan_cycle=@var{ms}][,max_queue_size=@var{size}]``
+-        Colo-compare gets packet from primary\_in chardevid and
+-        secondary\_in, then compare whether the payload of primary packet
+-        and secondary packet are the same. If same, it will output
+-        primary packet to out\_dev, else it will notify COLO-framework to do
+-        checkpoint and send primary packet to out\_dev. In order to
+-        improve efficiency, we need to put the task of comparison in
+-        another iothread. If it has the vnet\_hdr\_support flag,
+-        colo compare will send/recv packet with vnet\_hdr\_len.
+-        The compare\_timeout=@var{ms} determines the maximum time of the
+-        colo-compare hold the packet. The expired\_scan\_cycle=@var{ms}
+-        is to set the period of scanning expired primary node network packets.
+-        The max\_queue\_size=@var{size} is to set the max compare queue
+-        size depend on user environment.
+-        If user want to use Xen COLO, need to add the notify\_dev to
+-        notify Xen colo-frame to do checkpoint.
++    ``-object colo-compare,id=<id>,primary_in=<chardevid>,secondary_in=<chardevid>,outdev=<chardevid>,iothread=<id>[,vnet_hdr_support][,notify_dev=<id>][,compare_timeout=<time_ms>][,expired_scan_cycle=<time_ms>][,max_queue_size=<maxsize>]``
++        Colo-compare gets packets from the chardev backends specified by
++        ``primary_in`` and ``secondary_in``, and compares whether the payloads
++        of the primary packet and the secondary packet are the same.
++        If they match, it will output the primary packet to the chardev
++        backend specified by ``outdev``; otherwise it will notify COLO-framework
++        to do a checkpoint and send the primary packet to ``outdev``.
++
++        In order to improve efficiency, we need to put the task of comparison in
++        another iothread; the ``iothread`` option specifies that iothread object
++        (which your commandline should create).
++
++        The ``vnet_hdr_support`` flag tells
++        colo compare to pass the vnet header length when it sends and receives packets.
++
++        The ``compare_timeout`` option sets the maximum time that
++        colo-compare will hold the packet for, in ms.
++
++        The ``expired_scan_cycle`` option sets the period of scanning expired
++        primary node network packets, in ms.
++
++        The ``max_queue_size`` option sets the max compare queue size.
++
++        If you want to use Xen COLO, you need to specify ``notify_dev`` to
++        tell colo-compare how to notify Xen colo-frame to do a checkpoint.
  
- static void gicv3_arm_its_realize(DeviceState *dev, Error **errp)
-diff --git a/hw/intc/arm_gicv3_its_common.c b/hw/intc/arm_gicv3_its_common.c
-index e946e3fb87..9fc51ad1e0 100644
---- a/hw/intc/arm_gicv3_its_common.c
-+++ b/hw/intc/arm_gicv3_its_common.c
-@@ -97,7 +97,7 @@ static MemTxResult gicv3_its_trans_write(void *opaque, hwaddr offset,
- static const MemoryRegionOps gicv3_its_trans_ops = {
-     .read_with_attrs = gicv3_its_trans_read,
-     .write_with_attrs = gicv3_its_trans_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
- void gicv3_its_init_mmio(GICv3ITSState *s, const MemoryRegionOps *ops,
+         COLO-compare must be used with the help of filter-mirror,
+         filter-redirector and filter-rewriter.
 -- 
 2.47.3
 
