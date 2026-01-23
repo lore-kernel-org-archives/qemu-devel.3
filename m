@@ -4,98 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2B16D74EFC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 16:16:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92224D74EFA
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 16:16:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjJoe-0003qP-CZ; Fri, 23 Jan 2026 11:15:20 -0500
+	id 1vjJph-0004G1-Jq; Fri, 23 Jan 2026 11:16:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjJob-0003oo-AZ
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 11:15:17 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjJoZ-0000ql-Hf
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 11:15:17 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47ff94b46afso19769415e9.1
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 08:15:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769184914; x=1769789714; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=St6WiDlN5y3/67x6/i4DWB3p/o72JYEaip1j9p8qdas=;
- b=GLKhb0vGsDus7so8esZ5pvTVMVwL0vHcKKpWM1Vmrh7jZtZBJ5e2l72ewZzV/Rzifa
- b9nFCrzkG6Fuy8J/YEPWjHvRQg56PnbPPQCJ6jxWBbEX5gaTV477dm3k6c58mop4QrOU
- QKSSNOJnF3SyNlIHquQlTbnwA8257V8h6QYnNSt0JGutNFBoRjSFyKItbExn2bDYHgNH
- SYi/J/FXiWlNNdM0DtzZ7GYUQjsF9EP+Y8BhGLnVjchkwZE+EXiLyvKsJlktZM0zy6JF
- 011WSQmi06MNLY88RsEWJfjKVTNTUGeWcgYrHWulKNqPlhFIIj6x+olMUGQ7i609m4TO
- wd4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769184914; x=1769789714;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=St6WiDlN5y3/67x6/i4DWB3p/o72JYEaip1j9p8qdas=;
- b=vs0fcQrHrU0h+BaW2F+aBqnR1X1tdIMl4/Dts6tD821yuM/5wDJZwcif6z7LfscWv1
- KeDi0K9aNqPXntnqWG+X6pMjZJlURyOXlmc3vR/6pBsNeLTr4b5Vt53wGdPLge189oDq
- KKQ1N6nGIKfi6kZbkbCgd3sMe9tO6K1ZiCsgIzs8YSh6PDMTy47Z63wU4YF3JY3NdkMa
- aQ4ps1Eu1miOx3XdCggVy1Zi7XtJ1oDIIx8IpKFugeAwuWtHIBdVc15S3BO0IzL57jYY
- YDAonHTwHZxZotaoSzUrPI1hVPDXmK1pRJSzXqs0R/RT7mF4DvMgzv3lhS2V7092PkCR
- PTVQ==
-X-Gm-Message-State: AOJu0YzBeg0gRj1l8RDc3OzO0Es3W2VWWWvkpcJCZ899nmZMdh3+NYEE
- r1CDXiyDQb/pQ+U8CayVKnQPK8W/Y/lq1cTHyjxuLFQdGlw8TdAUF2ugjV6ozyF8/7g=
-X-Gm-Gg: AZuq6aIvWnJ5LGYXz2KYmgxlpHVanFMPLyH2cp6Cg5jaEQkYgRmzFoi96uY/b+Ey6Ls
- dAhc8tuJy9JSNlNeseUFeBw41LZ5QERKWXh86NTz+FDjAKMGTnHrOHTcQwGfuM5hzllsFxQTqxD
- co8InZZ06JTTGCNSFFjUI1zHz6rIxl94qHUSKxnkzbx//TpyajkFqwMHAn7jzbSsmbNBRZLDcBO
- NJ/0jaWQif0ly7tBOf2uziqTfBtbguqlxqdnf8/4EIvxCVr8ZdaarbOZg/oH6sAMdvvJonZFPUg
- MLkb6REQRucIEOsJqLwaBa0dIMSe+asxeCuY4yPOyf/DPaHIynFjOxtLxHB1MNgXKmfKnUECNUR
- 71IU6f+c37WFDQP+mDiWO54jxecb8uA0/IUwhMy+XMyO+Q+5vaJTWs63KRvT8SF5odC3kQa40aD
- 6jRLMQm1r0iOoz
-X-Received: by 2002:a05:600d:644a:20b0:47e:e38b:a83 with SMTP id
- 5b1f17b1804b1-48047068f88mr88207525e9.7.1769184913068; 
- Fri, 23 Jan 2026 08:15:13 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-480470287c3sm159293055e9.3.2026.01.23.08.15.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 08:15:10 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E1EB75F7B3;
- Fri, 23 Jan 2026 16:15:09 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Warner Losh <imp@bsdimp.com>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Cleber Rosa
- <crosa@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Mauro
- Carvalho Chehab <mchehab+huawei@kernel.org>,  Joe Perches
- <joe@perches.com>,  John Snow <jsnow@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>, Peter
- Maydell <peter.maydell@linaro.org>
-Subject: Re: [RFC PATCH v2 08/16] MAINTAINERS: be realistic about *-user
-In-Reply-To: <CANCZdfo3yz=aC-EOxd2LYBX=tf=RQTY6ibCpj-fCfGHZtH6WTw@mail.gmail.com>
- (Warner Losh's message of "Fri, 23 Jan 2026 08:12:33 -0700")
-References: <20260123145750.1200879-1-alex.bennee@linaro.org>
- <20260123145750.1200879-9-alex.bennee@linaro.org>
- <CANCZdfo3yz=aC-EOxd2LYBX=tf=RQTY6ibCpj-fCfGHZtH6WTw@mail.gmail.com>
-User-Agent: mu4e 1.12.15; emacs 30.1
-Date: Fri, 23 Jan 2026 16:15:09 +0000
-Message-ID: <87343wmhki.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vjJpV-0004Eo-H5
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 11:16:14 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1vjJpS-00014u-1o
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 11:16:13 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dyNMD0xRvzJ468L;
+ Sat, 24 Jan 2026 00:15:36 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id B5FBD40563;
+ Sat, 24 Jan 2026 00:16:05 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 23 Jan
+ 2026 16:16:05 +0000
+Date: Fri, 23 Jan 2026 16:16:03 +0000
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+CC: Michael S Tsirkin <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
+ <qemu-devel@nongnu.org>, Igor Mammedov <imammedo@redhat.com>, Cleber Rosa
+ <crosa@redhat.com>, John Snow <jsnow@redhat.com>
+Subject: Re: [PATCH 06/13] scripts/qmp_helper: add support for a timeout logic
+Message-ID: <20260123161603.00006b0d@huawei.com>
+In-Reply-To: <aXD1Nb4MU2XYI0HL@foz.lan>
+References: <cover.1768993993.git.mchehab+huawei@kernel.org>
+ <2539e524dd467af51f8286bd1b201feaad06c81e.1768993993.git.mchehab+huawei@kernel.org>
+ <20260121123927.00001daa@huawei.com> <aXD1Nb4MU2XYI0HL@foz.lan>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,83 +69,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Warner Losh <imp@bsdimp.com> writes:
 
-(Cc sniping Paolo/Peter/Markus for AI discussion)
+> >   
+> > > +        for i in range(0, attempts):
+> > > +            try:
+> > > +                obj = self.qmp_monitor.cmd_obj(msg)
+> > > +
+> > > +                if obj and "return" in obj and not obj["return"]:
+> > > +                    break
+> > > +
+> > > +            except Exception as e:                     # pylint: disable=W0718
+> > > +                print(f"Command: {command}")
+> > > +                print(f"Failed to inject error: {e}.")
+> > > +                obj = None
+> > > +
+> > > +            if attempts > 1:
+> > > +                print(f"Error inject attempt {i + 1}/{attempts} failed.")
+> > > +
+> > > +            if i + 1 < attempts:
+> > > +                sleep(0.1)  
+> 
+> ... and here, we sleep for 0.1 seconds.
+> 
+> > 
+> > Do we care about a sleep at the end?  Feels like a micro optimization that
+> > isn't needed.  
+> 
+> This is not a micro-optimization. It is more to ensure that we won't
+> respin it too fast.
+> 
+> What happens is that QMP interface asks the BIOS to send an async
+> message to OSPM, cleaning an ack register. When the OSPM reads the
+> error, it writes 1 to the ack register.
+> 
+> If we send messages too fast, the logic at ghes.c will detect that
+> the ack didn't happen, imediately returning an errocr code.
+> 
+> On such case, we sleep for 100ms before trying again.
+I was suggesting the opposite.  Just sleep one more time at the end
+before timing out.
+So instead of
+	if i + 1 < attempts
+		sleep(0.1)
 
-> On Fri, Jan 23, 2026 at 8:00=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@lin=
-aro.org> wrote:
->
->  We should reflect the current status so users don't have unrealistic
->  expectations of how quickly things can get reviewed and merged.
->
->  Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
-> Reviewed-by: Warner Losh <imp@bsdimp.com>
->=20=20
->  ---
->
->  [AJB] I realise this is a slightly provocative patch but given how
->  widely used *-user is downstream we should be clear about the current
->  state and hopefully encourage those who rely on it to step-up.
->
-> For the bsd-user case this is likely correct. We run hot and cold about b=
-eing
-> proactive at fixing things, and we've been somewhat cold for a while now.
->
-> Part of the problem is that this submission process is very very heavywei=
-ght
-> compared to other projects I contribute to. Not sure what to do about tha=
-t since
-> there's a reluctance to move away from it. Or alternatively, I'm somehow =
-making
-> it too hard.
+simply
+	sleep(0.1)
 
-We have discussed in the past allowing maintainers to directly submit
-their PRs via GitLab which would be beneficial from a testing point of
-view. To move this forward someone needs to propose the changes to our
-policy documents so it can be discussed and merged.
 
-However we still expect patches to go onto the mailing list for
-review. The greybeards (like myself ;-) are very wedded to the inline
-email workflow but if we could keep that interface while making use of
-the GitLab UI for those that grew up knowing only the web maybe we could
-make the project more friendly to new contributors.
 
-I'd be interested in knowing where the pain points are for you because
-modern tools like b4 make some of the grind (collecting tags and
-applying patches from ML) a lot easier.
+> 
+> In practice, on my Ryzen 9 machines with QEMU emulating ARM,
+> even under massive error injection, 99% of the time no retries
+> happen. The worse case scenario I got here is that sometimes
+> Kernel got stuck and took between 5s to 10s to accept the error
+> submission.
+> 
+> >   
+> > > +
+> > > +        if not obj:
+> > >              return None  
+> > 
+> >   
+> 
 
-Usually the most difficult thing is getting email setup so you can
-git-send-email or git-publish.
-
-> A lot of the upstreaming work that's stalled would be ideal to tell claud=
-e to do,
-> but I'm unsure the project's stance on using claude to move code, and git=
- log
-> 5 different trees to get the original author(s) of the code and make triv=
-ial compile
-> tweaks.
-
-There was some discussion at the maintainers summit about relaxing the
-rules on AI submission for "mechanical" changes but it ran into the
-weeds without any firm conclusion. We could certainly revisit it.
-
-I think the concern about potential license pollution is a valid one but
-this is more of a concern for "novel" changes made by AI. I've been more
-relaxed on my personal FLOSS projects where I have allowed AI
-contributions but made it clear that the submitter is expected to
-understand whats going on. But being personal projects they are less
-likely to be spammed to death by AI slop PRs which seems to be a growing
-problem in the wider ecosystem.
-
->
-> Warner=20
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
