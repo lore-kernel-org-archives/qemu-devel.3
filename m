@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 822D8D74EDE
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09756D74EDC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:14:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjInp-0007SL-4W; Fri, 23 Jan 2026 10:10:25 -0500
+	id 1vjIoP-00080S-IQ; Fri, 23 Jan 2026 10:11:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInL-00075q-Lv
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:56 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1vjInK-00074h-Ss
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:55 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInK-00034o-2F
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:55 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-432d28870ddso1272918f8f.3
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:53 -0800 (PST)
+ id 1vjInJ-00034U-8n
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:54 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-435a517be33so1441102f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180993; x=1769785793; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769180992; x=1769785792; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oDxdvyymPUYfJ1YVYQgwZ0tgWpDlX8YBdNsrFKEuuxM=;
- b=cQSYnY54a2WwgFHQWqVRyzFbF0QaEoZ9/FxzMl9JL/efBl7GGSqjOkX5KuXjzdBVfo
- lo7bYvR4lM/a4Rfw0R82YEA3jZ+qgcKh0pGZA0QC+zdBi+LCI8qfyM8z3dS4nuH12BQN
- 3h457K5/ykzFgj+ELxjghpgYdjHSS9AqyyM9JOova2gbEnutbF5t+4XOEmSls5Z0VViu
- erevzOh/Og5JJh9FYSFS3wnXgL8wzVywloVRhJ02LF/me47PzQkUNb61LV9HfDZ7+aC2
- dzHEPbIC3q0mq3wRak+JTHjdKKCzBzPbTFyuoLa74hEC9v3SjCEWj1P1TC9heb2Kqs/4
- bXxw==
+ :reply-to; bh=/RF6pl6Z24KJwErQfhxFPKK9HJeqT7Vndl2qEdlgPW0=;
+ b=CmiNpXMker+Yw9RGURhvQKSgkRp5sRzEEUMlnvrcKn0vfAPqBl5gBRT/mZcDrTl6Qc
+ bTEY6XtxiXJzY6cD7zSCaxqimXkuZ0pc1G0WvzjJESAuIRZ8aYtLpq1bj8VGQbjJfL7o
+ bXhCXBs6+0TP8k+XOD6GJ78zUcS3OmFGV+T0FJRH+cIKp6bYz12zTkE+vBxQKx52KHQC
+ WDEdcTg1WjdJfvFOIF4otoEQnFHynhVFezOlforlXDwlZogN1DGswNY67GwGloP+1JQ3
+ PncWoA2B60wKIgwY/7y2ek5OSx4VJX1YaYr0dyLBSDCOWCxegpcSTXWPwChqgF9de7n3
+ srLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180993; x=1769785793;
+ d=1e100.net; s=20230601; t=1769180992; x=1769785792;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=oDxdvyymPUYfJ1YVYQgwZ0tgWpDlX8YBdNsrFKEuuxM=;
- b=SQPNEtrzZlSArWEQJG3GRBSfo6I/bOvkq6JQjIs3Oh3zO7ee161I6eN3fz69m0+xEc
- 0l6/yw9BTrC8YRrXA8CFmMdRXeWAzbjFvsOrO4QR4AN0gSToKFTw1vJ7uWCuI/1AvG0Q
- 2uJUg0wZxA6/xEfkvUpevdG3P91H/12z9wPCntyKePKHG2PEJZTgEA3kqby0qokmQoQB
- zF/dy3wLiiOMJlHZ6Z+XzVhw2xV7RUFPg7KAplEJxVbjw+2DKPTRWDhUjR9+Mu5NzpTh
- ANsCVp39m5sq9M6gECpiHSYdgEefhKO6+wSM94QC5YXpkMLwBN4qFy6jJA6Skc50739P
- tzwQ==
-X-Gm-Message-State: AOJu0YyphVSN4ZKG6ze9awQxiS3NNJ3G/FXkZMoVaiJU2TSzGnrC8C9p
- 2usRdAaobiFHjW+YUtSZ0ExCV/WmchXtQQ9a626CZ2AX8p+3VxCnk4+7hVa0b1slX7ouJdvzwo5
- EXF6upYU=
-X-Gm-Gg: AZuq6aLuJIBlvzzLmkGo8L6c6j+EjrRFaEdNUL0Vt3b4pf+PIve64aZakenyDJu/h8O
- ii9l8yHjOJk0e4lDHRE7GnONVUjzF9XEliuN/FztXESeTxVAWf3A8O/SByodtwh3jKpcPpDM4NI
- Ho+HyhVGjpBVyobWp1oR3XE2l1DEc9Lo+MVrq9vOsgJmj7J6oziCWvzI/9pQyys+feqPJ47/xlg
- J/tmIZYJg6QHjNg3rWihahfKEZDnzaDf0CMMbXrgsLBWMo/UVxe5JUCgDWidXP5upapZGrKSAsD
- hcyi63GVBUd0zl15nQE7WbtwfTOcMAQwtVgBVE5yajn7h55wvodzw3JSd45KtKTutFmTBE+bPTk
- gbz85gCMMJhuk65XhWQNqP3CNmp7M3H3FSL84ZSpPVPA7Dqwh2UP2+PdqdrZeDREyxonCxvGia8
- UtLyVhbiV2p+pj0GQ3ieH/n7LUnqXxPixsmP+k0Q+tXk2j276+Cff5
-X-Received: by 2002:a05:6000:200f:b0:435:b6ab:6c1a with SMTP id
- ffacd0b85a97d-435b966a98fmr2988462f8f.49.1769180992424; 
- Fri, 23 Jan 2026 07:09:52 -0800 (PST)
+ bh=/RF6pl6Z24KJwErQfhxFPKK9HJeqT7Vndl2qEdlgPW0=;
+ b=F5fPDkn2iq7cJPiDdRFsNpU82djb08VA+V6kUz6RexV4taXZA4vkSTyaCd1A6eWMx4
+ tSY6BI43CKhvk6qpy6fKhUO/S3Q/JsG/CpIzQ9LCuZpXo7TFaafAYFDM4Pd+YpMPTM9e
+ bPT2Ry8m/q0u40VWmruw8dhzW0If2NkVa1RQTi3noIPAVWRZjS41jZnfwLXqkednn9oi
+ or8USTTp/OXq0WcCh/hEHTvJlvSGH2Vfrw8WDYRszuQA47e66ncLL7HmckVhXO3dzSL8
+ +gxsNHeRw4Lq7xunKOh8229alggIBa5Gyzv3aknZEjRa8Bpyf2yknGUWeY2OJnkuyN9w
+ je1A==
+X-Gm-Message-State: AOJu0YyYG5amlO8jBjIAqgd1ONsIhCGgB7xHaaL/EHosrwqKRpVPuj47
+ F8b1NX+OFBr3PS/UKWN4P8oSwB2KguZaMQWCNp7CfwhAIwG1KP6oTbOvfOJzbXpkBUb//ojw7hV
+ aoWrKvGU=
+X-Gm-Gg: AZuq6aKU/QNJugJYmMDrd8NCV7wVvYP9pgtXs6xxWwxKopRk6QumwBRilD2f6GGiiYs
+ 9ft9ZS1BorOHvDujZ6/C5kb8jnKTjoSqY1xgJR3dAMyx+Q6IzKRnRwlry0MQGYoDTbyEZHDNeUb
+ BRwnzhoka97oVq8v8ImgSJDg1Y8TRLntNEzwqdr9BhkirEbY+tuUsqLQulJlInveZCDVZJzl8mb
+ GbWGjqMbt3wEaTLooeDOkhVztW2Yxiol6qqo+xI4XdiO8/qlyST/RZDCr/1DJnS+P2TShMXrAF8
+ 0HCQl2p/6bDNFAEQHKPXlD1Jju3c5HDO3NqNZjv48mOl8PSNmdr7r6frvsh0G7cIQK3QY7eO0kL
+ YA5oVCqhCbJHevnqeWNFw9wzk/WclxTXQYKo92lsJLsRAZM9Uof/kXoQHCkiz4ESIYcdrZnxhlj
+ OcJBEiuJmalvhzaOVpCmpi+BIN2l2Y40xnn9lzDlkHVp8ANMG10lWg
+X-Received: by 2002:a05:6000:4210:b0:431:104:6dc2 with SMTP id
+ ffacd0b85a97d-435b158d740mr4706845f8f.8.1769180991597; 
+ Fri, 23 Jan 2026 07:09:51 -0800 (PST)
 Received: from mnementh.archaic.org.uk (mnementh.archaic.org.uk.
  [81.2.115.146]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.51
+ ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 07:09:51 -0800 (PST)
+ Fri, 23 Jan 2026 07:09:50 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/22] mshv: Clean up includes
-Date: Fri, 23 Jan 2026 15:09:29 +0000
-Message-ID: <20260123150941.1877768-12-peter.maydell@linaro.org>
+Subject: [PULL 10/22] scripts/clean-includes: Update exclude list
+Date: Fri, 23 Jan 2026 15:09:28 +0000
+Message-ID: <20260123150941.1877768-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260123150941.1877768-1-peter.maydell@linaro.org>
 References: <20260123150941.1877768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,99 +99,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit was created with scripts/clean-includes:
- ./scripts/clean-includes '--git' 'mshv' 'accel/mshv' 'target/i386/mshv' 'include/system/mshv.h'
-
-All .c should include qemu/osdep.h first.  The script performs three
-related cleanups:
-
-* Ensure .c files include qemu/osdep.h first.
-* Including it in a .h is redundant, since the .c  already includes
-  it.  Drop such inclusions.
-* Likewise, including headers qemu/osdep.h includes is redundant.
-  Drop these, too.
+Remove from the exclude list:
+ * tests/plugin, which is a non-existent directory. This was
+   probably intended to exclude tests/tcg/plugins/, which is caught
+   by the tests/tcg exclude pattern anyway
+Add to the exclude list:
+ * rust/ -- the headers in here are purely for input to bindgen
+ * target/hexagon has some standalone tools used at build time
+ * linux-user/gen-vsdo.c -- another standalone tool
+ * linux-user/mips64/elfload.c just includes mips/elfload.c
+ * scripts/xen-detect.c is feature-detection code used by meson.build
+ * tests/tracetool/simple.c is autogenerated
+ * tests/unit/ has some "C file just includes another one" files
+ * include/system/os-wasm.h is like os-posix.h and os-win32.h and
+   shouldn't be adjusted
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260116125830.926296-2-peter.maydell@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260116124005.925382-7-peter.maydell@linaro.org
 ---
- accel/mshv/irq.c            | 3 +--
- accel/mshv/mshv-all.c       | 1 -
- include/system/mshv.h       | 1 -
- target/i386/mshv/mshv-cpu.c | 1 -
- target/i386/mshv/x86.c      | 1 -
- 5 files changed, 1 insertion(+), 6 deletions(-)
+ scripts/clean-includes | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/accel/mshv/irq.c b/accel/mshv/irq.c
-index adf8f337d9..3c238c33c3 100644
---- a/accel/mshv/irq.c
-+++ b/accel/mshv/irq.c
-@@ -10,8 +10,8 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
+diff --git a/scripts/clean-includes b/scripts/clean-includes
+index 064e532037..874dfd0974 100755
+--- a/scripts/clean-includes
++++ b/scripts/clean-includes
+@@ -113,10 +113,12 @@ trap 'rm -f -- "$COCCIFILE" "$REGEXFILE"' INT TERM HUP EXIT
+ # Comments starting with '#' are permitted
+ grep -v '^#' >"$REGEXFILE" <<EOT
+ # These tests are generally standalone binaries
+-^tests/(tcg|multiboot|fp|plugin|uefi-test-tools)
++^tests/(tcg|multiboot|fp|uefi-test-tools|qtest/migration/s390x)
+ # BIOS sources and third-party subprojects don't follow our rules
+ ^pc-bios
+ ^subprojects
++# headers under rust are only used for input to bindgen
++^rust
+ # plugin binaries are standalone
+ ^contrib/plugins
+ # the ebpf tool is standalone, and the skeleton header is autogenerated
+@@ -124,15 +126,28 @@ grep -v '^#' >"$REGEXFILE" <<EOT
+ ^ebpf/rss.bpf.skeleton.h
+ # These files just include some other .c file and have no content themselves
+ ^linux-user/(mips64|x86_64)/(cpu_loop|signal).c
++^linux-user/mips64/elfload.c
+ # These are autogenerated headers
+ ^include/standard-headers/
+ # osdep.h itself and its friends are expected to include system headers
+ ^include/qemu/osdep.h
+ ^include/qemu/compiler.h
+ ^include/glib-compat.h
+-^include/system/os-(posix|win32).h
++^include/system/os-(posix|win32|wasm).h
+ # This is for use by plugins, which are standalone binaries
+ ^include/qemu/qemu-plugin.h
++# standalone tools used in building the hexagon target code
++^target/hexagon/(idef-parser|gen_semantics.c|gen_dectree_import.c)
++# standalone tool
++^target/s390x/gen-features.c
++# gen-vdso is a standalone tool
++^linux-user/gen-vdso.c
++# feature-detection code used by meson.bulid
++^scripts/xen-detect.c
++# autogenerated by tracetool
++^tests/tracetool/simple.c
++# these just include another C file
++^tests/unit/test-rcu-(simpleq|slist|tailq).c
+ EOT
  
--#include "linux/mshv.h"
- #include "qemu/osdep.h"
-+#include "linux/mshv.h"
- #include "qemu/error-report.h"
- #include "hw/hyperv/hvhdk_mini.h"
- #include "hw/hyperv/hvgdk_mini.h"
-@@ -20,7 +20,6 @@
- #include "system/mshv.h"
- #include "system/mshv_int.h"
- #include "trace.h"
--#include <stdint.h>
- #include <sys/ioctl.h>
- 
- #define MSHV_IRQFD_RESAMPLE_FLAG (1 << MSHV_IRQFD_BIT_RESAMPLE)
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 4675cb886f..bed0fa298e 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -41,7 +41,6 @@
- #include "system/reset.h"
- #include "trace.h"
- #include <err.h>
--#include <stdint.h>
- #include <sys/ioctl.h>
- 
- #define TYPE_MSHV_ACCEL ACCEL_CLASS_NAME("mshv")
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 8b1fc20c80..75286baf16 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -14,7 +14,6 @@
- #ifndef QEMU_MSHV_H
- #define QEMU_MSHV_H
- 
--#include "qemu/osdep.h"
- #include "qemu/accel.h"
- #include "hw/hyperv/hyperv-proto.h"
- #include "hw/hyperv/hvhdk.h"
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 1c3db02188..586383b882 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -13,7 +13,6 @@
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
- #include "qemu/memalign.h"
--#include "qemu/typedefs.h"
- 
- #include "system/mshv.h"
- #include "system/mshv_int.h"
-diff --git a/target/i386/mshv/x86.c b/target/i386/mshv/x86.c
-index d574b3bc52..0700cc05ef 100644
---- a/target/i386/mshv/x86.c
-+++ b/target/i386/mshv/x86.c
-@@ -13,7 +13,6 @@
- #include "cpu.h"
- #include "emulate/x86_decode.h"
- #include "emulate/x86_emu.h"
--#include "qemu/typedefs.h"
- #include "qemu/error-report.h"
- #include "system/mshv.h"
- 
+ # We assume there are no files in the tree with spaces in their name
 -- 
 2.47.3
 
