@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E195D778B2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF52D778B3
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 20:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjO92-0000OT-C6; Fri, 23 Jan 2026 15:52:40 -0500
+	id 1vjO9A-0000UP-2b; Fri, 23 Jan 2026 15:52:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjO91-0000Mm-0F
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 15:52:39 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjO97-0000T0-Vf
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 15:52:45 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjO8z-0006x8-HX
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 15:52:38 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjO96-0006yR-7i
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 15:52:45 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id EF644400FA;
- Fri, 23 Jan 2026 20:52:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649FEC19423;
- Fri, 23 Jan 2026 20:52:34 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 9C2F460053;
+ Fri, 23 Jan 2026 20:52:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE922C116D0;
+ Fri, 23 Jan 2026 20:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769201555;
- bh=HqPNF33+yuQjENJAc4XJjvbKHOUTbEiw7SICOVHDfOc=;
+ s=k20201202; t=1769201563;
+ bh=NJv17dN8UjS2swj0/1r+JeA0+SCs4smJ1SvO5+Yv6R4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=XphwfxJMa/V50owd0o/8oA4qU6JvpxqpD1lgdimUllKrJ7luKnsGYE9P0mIAzh/sn
- u8fgSbn+J1+VfzvhVF/HvTgo5usm9VmBteN+v+YAvKlCio+BKi6WUrjbZ0BgbANPjH
- 1DJIbnEvC9o2DK8H5CCiYvm8sP+7YnCuVuNLpIrNe3dVLuUqmZ3JWXkVtYaA4zZNUe
- 1OLGBbe66NoJzL9Cg7p3TwUondL+sWpjp2MLj4ap0gcFdpnf+lD4WIOnrsRl+jwSJl
- MLJtKiRtSr9k5ErT3ff0BaWnH8fVBvTXcAzQVyia58zdBwJJc8gc0hj+d9S88J16wK
- RhGqlmdvKvL3A==
+ b=HLqd1MCxR+m51SHik8BPaE1v9QBzN4T/N2GYbPGe9D8me7BVLr2EouIcU3kv14pQW
+ WJnrXv86BJoF4y1a/sS+x0GjxWykOTsdqgGTg+Fwu9V+O96AlSkuavTQn2c4o14mvM
+ /j2GVZqTYqZoBvY3mXmg2oDyZPG901cF+lzy8jo+No9Co/eta/yy7BCGjc2fSLxC93
+ duj9GwDM2Np7E9JCthFJc9SZXbO4/80S6lNdlR553z/rkuX2piM02/th+Xl2VK/doC
+ vQY3CFJxSVXSQlgdLMqjm1lApWs0AUZLjJneq2qA1Zcqy5Ew/pMYRJRC5y1Qxu+VrU
+ 0Ps8E68OXhjlg==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  deller@gmx.de,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/11] linux-user: update statx emulation
-Date: Fri, 23 Jan 2026 21:52:20 +0100
-Message-ID: <20260123205230.33541-2-deller@kernel.org>
+Subject: [PULL 05/11] linux-user: Add termios2 support to mips target
+Date: Fri, 23 Jan 2026 21:52:24 +0100
+Message-ID: <20260123205230.33541-6-deller@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260123205230.33541-1-deller@kernel.org>
 References: <20260123205230.33541-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -71,47 +71,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andreas Schwab <schwab@suse.de>
+From: Luca Bonissi <qemu@bonslack.org>
 
-Signed-off-by: Andreas Schwab <schwab@suse.de>
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Luca Bonissi <qemu@bonslack.org>
+Link: https://lore.kernel.org/qemu-devel/361aa9c5-4464-4d27-8a2c-9ab767324530@bonslack.org
+Reviewed-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/syscall.c      | 3 +++
- linux-user/syscall_defs.h | 6 +++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ linux-user/mips/termbits.h | 31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 3601715769..24046c7eeb 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -7882,6 +7882,9 @@ static inline abi_long host_to_target_statx(struct target_statx *host_stx,
-     __put_user(host_stx->stx_rdev_minor, &target_stx->stx_rdev_minor);
-     __put_user(host_stx->stx_dev_major, &target_stx->stx_dev_major);
-     __put_user(host_stx->stx_dev_minor, &target_stx->stx_dev_minor);
-+    __put_user(host_stx->stx_mnt_id, &target_stx->stx_mnt_id);
-+    __put_user(host_stx->stx_dio_mem_align, &target_stx->stx_dio_mem_align);
-+    __put_user(host_stx->stx_dio_offset_align, &target_stx->stx_dio_offset_align);
- 
-     unlock_user_struct(target_stx, target_addr, 1);
- 
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index cd9ff709b8..6ae6e1fa13 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2734,7 +2734,11 @@ struct target_statx {
-     abi_uint stx_dev_major; /* ID of device containing file [uncond] */
-     abi_uint stx_dev_minor;
-     /* 0x90 */
--    abi_ullong __spare2[14]; /* Spare space for future expansion */
-+    abi_ullong stx_mnt_id;
-+    abi_uint stx_dio_mem_align;
-+    abi_uint stx_dio_offset_align;
-+    /* 0xa0 */
-+    abi_ullong __spare2[12]; /* Spare space for future expansion */
-     /* 0x100 */
+diff --git a/linux-user/mips/termbits.h b/linux-user/mips/termbits.h
+index e8b4b58d87..27610f7c4d 100644
+--- a/linux-user/mips/termbits.h
++++ b/linux-user/mips/termbits.h
+@@ -18,6 +18,29 @@ struct target_termios {
+     target_cc_t c_cc[TARGET_NCCS];         /* control characters */
  };
  
++struct target_termios2 {
++    target_tcflag_t c_iflag;       /* input mode flags */
++    target_tcflag_t c_oflag;       /* output mode flags */
++    target_tcflag_t c_cflag;       /* control mode flags */
++    target_tcflag_t c_lflag;       /* local mode flags */
++    target_cc_t c_line;            /* line discipline */
++    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
++    target_speed_t c_ispeed;       /* input speed */
++    target_speed_t c_ospeed;       /* output speed */
++};
++
++struct target_ktermios {
++    target_tcflag_t c_iflag;       /* input mode flags */
++    target_tcflag_t c_oflag;       /* output mode flags */
++    target_tcflag_t c_cflag;       /* control mode flags */
++    target_tcflag_t c_lflag;       /* local mode flags */
++    target_cc_t c_line;            /* line discipline */
++    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
++    target_speed_t c_ispeed;       /* input speed */
++    target_speed_t c_ospeed;       /* output speed */
++};
++
++
+ /* c_iflag bits */
+ #define TARGET_IGNBRK  0000001
+ #define TARGET_BRKINT  0000002
+@@ -227,10 +250,10 @@ struct target_termios {
+ #define TARGET_TIOCSBRK	0x5427  /* BSD compatibility */
+ #define TARGET_TIOCCBRK	0x5428  /* BSD compatibility */
+ #define TARGET_TIOCGSID	0x7416  /* Return the session ID of FD */
+-#define TARGET_TCGETS2          TARGET_IOR('T', 0x2A, struct termios2)
+-#define TARGET_TCSETS2          TARGET_IOW('T', 0x2B, struct termios2)
+-#define TARGET_TCSETSW2         TARGET_IOW('T', 0x2C, struct termios2)
+-#define TARGET_TCSETSF2         TARGET_IOW('T', 0x2D, struct termios2)
++#define TARGET_TCGETS2          TARGET_IOR('T', 0x2A, struct target_termios2)
++#define TARGET_TCSETS2          TARGET_IOW('T', 0x2B, struct target_termios2)
++#define TARGET_TCSETSW2         TARGET_IOW('T', 0x2C, struct target_termios2)
++#define TARGET_TCSETSF2         TARGET_IOW('T', 0x2D, struct target_termios2)
+ #define TARGET_TIOCGRS485       TARGET_IOR('T', 0x2E, struct serial_rs485)
+ #define TARGET_TIOCSRS485       TARGET_IOWR('T', 0x2F, struct serial_rs485)
+ #define TARGET_TIOCGPTN	TARGET_IOR('T',0x30, unsigned int) /* Get Pty Number (of pty-mux device) */
 -- 
 2.52.0
 
