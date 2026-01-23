@@ -4,56 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB5ACD74EDE
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 428C7D74EDC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:11:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjInM-000750-Aa; Fri, 23 Jan 2026 10:09:58 -0500
+	id 1vjIns-0007XZ-96; Fri, 23 Jan 2026 10:10:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjInE-0006zT-PT
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:49 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjInD-0002xD-8c
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:48 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 9698A4369D;
- Fri, 23 Jan 2026 15:09:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96323C19421;
- Fri, 23 Jan 2026 15:09:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769180978;
- bh=nJH+oIWdTGUsif757j8ogUbsj4cBfw0Vn03rJ5LhvTw=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=rTLrzOPIobqoyAdg3Oc/BA0hVob15CZjqzn2BjACs04ZzkQGFULM0F6t9CO6jvvcy
- +Vx3hELa7B3U9fH/XSLomzkljKz/g59YSNRkWzqZt4qdIXdgq388P0e/NUC5iDJDcd
- N9tfbw2O6FtcTX0254Yc9uaYQ/HoBAua14O82Xc73QzSVtCKYd3wH9Nl30Kud7gVTa
- m318HUcnFAMfWUP923QGw5mTWAACDP/nXUiZsXd/zB1JOjLGemTuRneUYtyQEAERDd
- 7i4OWkkvWc2GgEnA23pGfuxlszti+9k/Vv0BKPJo7u2Q/9P14nQW+BchBk3dP7XINp
- VURe137KzMEOw==
-From: deller@kernel.org
-To: Laurent Vivier <laurent@vivier.eu>,
-	qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-Subject: [PATCH 2/3] linux-user: val3 parameter of futex() syscall needs
- endianess swapping
-Date: Fri, 23 Jan 2026 16:07:59 +0100
-Message-ID: <20260123150921.17891-3-deller@kernel.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260123150921.17891-1-deller@kernel.org>
-References: <20260123150921.17891-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vjInR-00077k-3X
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:09 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vjInO-000364-CF
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:00 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-47ee07570deso17973475e9.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769180997; x=1769785797; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=h9XoevUjmVvgSA/1RTS8XxR8NPila3khvNmpvFgd9i8=;
+ b=bGuH4Qe1PiYunZkwZO5pjYoaE0Uot1/xZc/TmcFAtGnNZpDfb9hVdLusV756RO/VXX
+ WXoupXJfXWzFmrH8uxGp7l9AQ2M3/iH3Ie1pO+/JvdRso0RHpHeLAYly9x18SzBD4NcI
+ 7TBFEIT1y/wy6P4v0JBhk1oyJBaN2zsJzKoQWnl9hMZLFTAzhjcqN0T9rJmhZtVLjTMS
+ /dHnqMeJBoae7IQC5YqAOkIQcF2d2TN04FI0tuHdZzm7QHAiQv2DCyz0EuuB9jzEz37c
+ ZjTHmMa9i67bSU1JchwJl19MKSkG57i1Craa0loLIy/wi55brY9lOap3Rsx0b5HqSemk
+ 7V8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769180997; x=1769785797;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=h9XoevUjmVvgSA/1RTS8XxR8NPila3khvNmpvFgd9i8=;
+ b=U1M8W2NsabFR1MjGSvXfx+7KUCxmZaFBe2n7ssWlhbgnYxi0UY2MO6l4hDfWn8A5U6
+ 8JIoNfHAZ6J97C5oxJ02/LLu6Akxqzw31Q5jcsaiGyyJ1YD27MUTPVaQdOi5fnoHYKAe
+ 9P/S9TLWPpbC252cG9WBgD2Zk3/0SfDxBfhFYuC9CyVsqwCFPSim9DBhQPocuYvvE9PF
+ WcHmxAf119dlpv4b0VKZolwjIu3mNQK7qIYmlVXFWnICAtQQiOC+Kvgz3G7pIsvuI6qF
+ yERyGanxDj7bjCg4svRRTG7N3aSYMZcpeW3XRkIlJDYgfm04LRUuXgCessSyesLclCtY
+ HP4Q==
+X-Gm-Message-State: AOJu0YwkzVGYxSO2bs8fAGLIzAX5Re8+lo/P4djlG2lJ1XHu8vlmwWmg
+ AvozMJ4f9sFBFHdpPnV1jUDponTzfxy0PoxibWQ46At4mhbkkm3Awxh5HygDjqoCHX8gJUwN8Oa
+ Lknnd8SA=
+X-Gm-Gg: AZuq6aI0/PpVPnCHYq3kKIt1y7Q0zfJOuW8rUCUZ3bbyPqh7ggyXezI6QR/kY6XJyj/
+ BsUGtSYJDh3VvXFXg5xsebb0hsGp/ENN/Dth+g8P6N0Ft7yieYXDNbcGe49IpBjSpJChJuJ5ec6
+ q9EUZnLLflnqu06291/LfcbJ4rGwppwCllgmAvKv2lrztgrXFfP/QxqvWwtejuKttPyyKKHTtWn
+ YxBxtUbkx0whp59Vkp9BqVX0dh025XNEhDJD+HFawvHPQd5JxzNDzyWUZHb+fvySnzewq61vNDN
+ RUgpSui+u+UV/WgNro0n12esHdgxXwXq4HOjc+rIGGk9ZvslCVtBy2505TybE3DrtJKQCNjN/dE
+ AO2rCSXGaYNTHlsPyPXOfQr8xZwW0eFG4f7i9KoXf2wuKPNClej3Y6F3KXO4/kndtYkTgpXKIW8
+ uQeZHnhK981NqwmS4WP6GytcKU9fSm+SBDzc7egx+7mlz6I+u5+GDK
+X-Received: by 2002:a05:600c:8b6d:b0:47d:586e:2fea with SMTP id
+ 5b1f17b1804b1-4804c95caa1mr61219255e9.15.1769180996657; 
+ Fri, 23 Jan 2026 07:09:56 -0800 (PST)
+Received: from mnementh.archaic.org.uk (mnementh.archaic.org.uk.
+ [81.2.115.146]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.55
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 23 Jan 2026 07:09:56 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 15/22] hw/intc: declare NVIC regions as little endian
+Date: Fri, 23 Jan 2026 15:09:33 +0000
+Message-ID: <20260123150941.1877768-16-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260123150941.1877768-1-peter.maydell@linaro.org>
+References: <20260123150941.1877768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,47 +100,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-The FUTEX_WAIT_BITSET and FUTEX_WAKE_BITSET operations use a val3
-parameter for comparism. Even if this 32-bit parameter is in most cases
-0xffffffff, ensure that we do a required endianess swapping if host and
-guest endianess differ.
+The NVIC should always be a little-endian device as big-endian
+behaviour is a function of the current CPU configuration not the
+system as a whole. Indeed the Armv8-M architecture reference manual
+declares:
 
-Signed-off-by: Helge Deller <deller@gmx.de>
+  All accesses to the Private Peripheral Bus (PPB) are always
+  little-endian, which means that the PE assumes a little-endian
+  arrangement of the PPB registers.
+
+This should have no functional effect as the NVIC cannot be
+instantiated on a BE system but will help the single binary efforts.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260121105932.135676-2-alex.bennee@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- linux-user/syscall.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ hw/intc/armv7m_nvic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index c0a9a86529..7cb9de97e9 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8106,7 +8106,10 @@ static int do_futex(CPUState *cpu, bool time64, target_ulong uaddr,
- #endif
-     switch (base_op) {
-     case FUTEX_WAIT:
-+        val = tswap32(val);
-+        break;
-     case FUTEX_WAIT_BITSET:
-+        val3 = tswap32(val3);
-         val = tswap32(val);
-         break;
-     case FUTEX_WAIT_REQUEUE_PI:
-@@ -8116,8 +8119,11 @@ static int do_futex(CPUState *cpu, bool time64, target_ulong uaddr,
-     case FUTEX_LOCK_PI:
-     case FUTEX_LOCK_PI2:
-         break;
--    case FUTEX_WAKE:
-     case FUTEX_WAKE_BITSET:
-+        val3 = tswap32(val3);
-+        timeout = 0;
-+        break;
-+    case FUTEX_WAKE:
-     case FUTEX_TRYLOCK_PI:
-     case FUTEX_UNLOCK_PI:
-         timeout = 0;
+diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
+index 3a31eb56f3..28b34e9944 100644
+--- a/hw/intc/armv7m_nvic.c
++++ b/hw/intc/armv7m_nvic.c
+@@ -2467,7 +2467,7 @@ static MemTxResult nvic_sysreg_write(void *opaque, hwaddr addr,
+ static const MemoryRegionOps nvic_sysreg_ops = {
+     .read_with_attrs = nvic_sysreg_read,
+     .write_with_attrs = nvic_sysreg_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
+ static int nvic_post_load(void *opaque, int version_id)
 -- 
-2.52.0
+2.47.3
 
 
