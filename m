@@ -4,104 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281E6D7237F
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A117DD6261A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjGA4-0004jX-2h; Fri, 23 Jan 2026 07:21:12 -0500
+	id 1vjGEB-0003oy-48; Fri, 23 Jan 2026 07:25:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjGA2-0004f1-8k
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:10 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjGDy-00039V-L4
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:25:15 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjGA0-0004z0-GQ
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:09 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjGDw-0005mw-MC
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:25:14 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 05CB85BCCD;
- Fri, 23 Jan 2026 12:21:04 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B94A2337CF;
+ Fri, 23 Jan 2026 12:25:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769170865; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769171111; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ZLwZq+m5IdIPWNnlD4SufYzC1U17Ewc/DumQCLLGkUw=;
- b=AJh4bt36wtByvWbrslK8fIxho4iYH7uOTnoon5gd3AlnQnrYvuyhylH0/+uXAjy1mVuIt+
- xxsFvRYORJbucR9q8hb+7C6l7X/af+uv0z5iSYGs5flG35gw9ID8YLLtrYhPDFKJQnXe8p
- 5buRCwu3jbla7OrHkH0YIoduF5g1izc=
+ bh=J9xh2Ckof6x18TbtUIrfSd4bW4SF1PyNpYpxCE1175o=;
+ b=fEUegdRSkzwWHBEyD+DcP9irYmZ1AX3Qmuc6voB3vkCnAWz2nD/ICMaaVRimtrFiD8FhmP
+ 1rbBCbg7KsHKhWoYlZI1WEkPsdDW0roFshRYGWfAgYt2xttn8ld2Xxa2CNYP58ZTHpAUyq
+ v+zgQ8akEgMZ3MZK9vG1oNcfxU056+8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769170865;
+ s=susede2_ed25519; t=1769171111;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ZLwZq+m5IdIPWNnlD4SufYzC1U17Ewc/DumQCLLGkUw=;
- b=mBi4g9msfVokej2EGQHJR1i7GvtwbZqxTZU+Fm3MjUPLuexe4gYU0KmsyRZTPF7TQUQOim
- g+soTEBJ2I4r/0AQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=1MowCCrZ;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=MvOt3tNr
+ bh=J9xh2Ckof6x18TbtUIrfSd4bW4SF1PyNpYpxCE1175o=;
+ b=hdbkPkoNR1E7TkTa+6AptzeAp8x60WmToykEe/z6HsW8rJ8RN9PoPItxteV8GStuUEL0XA
+ zm0yrcaptJMZS5CQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769170864; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769171110; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ZLwZq+m5IdIPWNnlD4SufYzC1U17Ewc/DumQCLLGkUw=;
- b=1MowCCrZSacy5PpqYdd+JmbwKDjDvX67FeXVLcgAE4N3x+tg07uVEkJOXvjGHvk2QnBwh6
- zHByxypyr1OfLYCbXMjg3glXbFyBLpTXYn/4Tt+svoIoUkk4s2E6QWlOgdSTE712uEK2sh
- W4lYPaj1PF/XwawIQHN1Q/6ksDy0sT8=
+ bh=J9xh2Ckof6x18TbtUIrfSd4bW4SF1PyNpYpxCE1175o=;
+ b=I7YF+TellJ6gSR8Rz35U88/Q/GipL2qppgUZOsZoeYQ6jvtjLn1feXyvjqB1IKpNsPcv7v
+ N3P/+xYJzPwAA/Nx6XvSKjY6WJD2OSjhveviCd/X+cYnJIWTMYaN+e3WLJMQn08+XCZf1U
+ sIJT5T7xA7g/HWkwmToFukMGxnZ8a8Q=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769170864;
+ s=susede2_ed25519; t=1769171110;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ZLwZq+m5IdIPWNnlD4SufYzC1U17Ewc/DumQCLLGkUw=;
- b=MvOt3tNrqfFiEymggfddknt6f9PW5jnAhSi/wo9bXoPUgHDY9MQ2QpB9R9A3pnj7uI44Gm
- aHGX6s8V/RBModAg==
+ bh=J9xh2Ckof6x18TbtUIrfSd4bW4SF1PyNpYpxCE1175o=;
+ b=OrefgE3SVCx2EXIuU5YoI0vs8kUrJoV8Yo3Jsbc4R1oJx6ziVqjPwpQInc4r7q5pPxtD0g
+ N1prI1+dcC7qUeCg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6DC57136AA;
- Fri, 23 Jan 2026 12:21:03 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 28FF0136AA;
+ Fri, 23 Jan 2026 12:25:09 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id l03kC69nc2mmJwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 12:21:03 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id EjNiNqVoc2nnKwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 12:25:09 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, armbru@redhat.com, Peter
- Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH] migration/options: Fix leaks in StrOrNull accessors
-In-Reply-To: <CAE8KmOyAYnB8a-AsZvjCFGrX+xwbCjV3Wv2ybVLoBQu7RofOqA@mail.gmail.com>
-References: <20260122232456.12722-1-farosas@suse.de>
- <CAE8KmOyAYnB8a-AsZvjCFGrX+xwbCjV3Wv2ybVLoBQu7RofOqA@mail.gmail.com>
-Date: Fri, 23 Jan 2026 09:21:00 -0300
-Message-ID: <87fr7wjz9v.fsf@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi
+ <stefanha@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
+ peterx@redhat.com
+Subject: Re: [PATCH 1/5] migration: Add a tracepoint for invoking migration
+ notifiers
+In-Reply-To: <20260122230331.3543312-2-peterx@redhat.com>
+References: <20260122230331.3543312-1-peterx@redhat.com>
+ <20260122230331.3543312-2-peterx@redhat.com>
+Date: Fri, 23 Jan 2026 09:25:07 -0300
+Message-ID: <87cy30jz30.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
  FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 05CB85BCCD
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -125,73 +119,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prasad Pandit <ppandit@redhat.com> writes:
+Peter Xu <peterx@redhat.com> writes:
 
-> On Fri, 23 Jan 2026 at 04:56, Fabiano Rosas <farosas@suse.de> wrote:
->> Fix a couple of leaks detected by Coverity. Both are currently
->> harmless because the visitor in the setter can never fail and the
->> whole of the getter is unused, it's only purpose at the moment is to
->
-> * unused, it's -> unused. Its
->
-
-Thanks
-
->> provide a complete implementation of the StrOrNull property.
->>
->> Fixes: CID 1643919
->> Fixes: CID 1643920
->> Reported-by: Peter Maydell <peter.maydell@linaro.org>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->> CI run: https://gitlab.com/farosas/qemu/-/pipelines/2280325023
->> ---
->>  migration/options.c | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/migration/options.c b/migration/options.c
->> index 9a5a39c886..9dc44a3736 100644
->> --- a/migration/options.c
->> +++ b/migration/options.c
->> @@ -225,6 +225,7 @@ static void get_StrOrNull(Object *obj, Visitor *v, const char *name,
->>          str_or_null = g_new0(StrOrNull, 1);
->>          str_or_null->type = QTYPE_QSTRING;
->>          str_or_null->u.s = g_strdup("");
->> +        *ptr = str_or_null;
->>      } else {
->>          /* the setter doesn't allow QNULL */
->>          assert(str_or_null->type != QTYPE_QNULL);
->> @@ -245,6 +246,7 @@ static void set_StrOrNull(Object *obj, Visitor *v, const char *name,
->>       */
->>      str_or_null->type = QTYPE_QSTRING;
->
-> * Do we need to add:  str_or_null->u.s = g_strdup("");  here?
->
-
-It would leak, the visitor will allocate new memory for it below.
-
->>      if (!visit_type_str(v, name, &str_or_null->u.s, errp)) {
->> +        qapi_free_StrOrNull(str_or_null);
->>          return;
->>      }
->>
->> --
->
-> * visit_type_str() failure is handled in set_StrOrNull, but not in
-> get_StrOrNull? Do we need to add qapi_free_StrOrNull(str_or_null) in
-> get_StrOrNull()?
->
-
-I'd rather leave to the caller. The errp will be set, I think it's
-enough. Looking at the other instances of visit_type_str in qdev, they
-all simply return without any handling. I think in practice it's
-unlikely that the string visitors will ever set errp because they are
-just a g_strdup() usually.
-
-> * Otherwise it looks okay.
-> Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
->
-> Thank you.
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->   - Prasad
+>  migration/migration.c  | 2 ++
+>  migration/trace-events | 1 +
+>  2 files changed, 3 insertions(+)
+>
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 1bcde301f7..47d9189aaf 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1706,6 +1706,8 @@ int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+>      GSList *elem, *next;
+>      int ret;
+>  
+> +    trace_migration_call_notifiers(type);
+> +
+>      e.type = type;
+>  
+>      for (elem = migration_state_notifiers[mode]; elem; elem = next) {
+> diff --git a/migration/trace-events b/migration/trace-events
+> index bf11b62b17..f437f0a784 100644
+> --- a/migration/trace-events
+> +++ b/migration/trace-events
+> @@ -198,6 +198,7 @@ process_incoming_migration_co_end(int ret) "ret=%d"
+>  process_incoming_migration_co_postcopy_end_main(void) ""
+>  postcopy_preempt_enabled(bool value) "%d"
+>  migration_precopy_complete(void) ""
+> +migration_call_notifiers(int type) "type=%d"
+>  
+>  # migration-stats
+>  migration_transferred_bytes(uint64_t qemu_file, uint64_t multifd, uint64_t rdma) "qemu_file %" PRIu64 " multifd %" PRIu64 " RDMA %" PRIu64
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
