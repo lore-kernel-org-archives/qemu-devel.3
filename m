@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E4CED74EDE
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEAACD74EDC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:14:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIpH-00025G-Fv; Fri, 23 Jan 2026 10:11:55 -0500
+	id 1vjIpD-0001SZ-W7; Fri, 23 Jan 2026 10:11:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInU-00078G-DV
+ id 1vjInT-000781-7f
  for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:09 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInR-00036v-Ts
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:04 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-42fb4eeb482so1581491f8f.0
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:10:01 -0800 (PST)
+ id 1vjInR-00036i-4z
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:02 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-42fbbc3df8fso1509609f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:10:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769181000; x=1769785800; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769180999; x=1769785799; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mP+whJkVyK+SSs6Mqc5tBKekpoTk7ckeOTEMEVQCY7c=;
- b=NDRk5GDKkxY3hWkbfcRfxV+cGZvu+X/mfIZnqMsbJXIKLQmDoXQz3bHqKtrl3/11/U
- hvXzcK8EYEpN3ym1W8Ne9DO+H0WCQ4Z/lPN53hOOmWElhZ8Vsto3o91ILr8RmChBaXcn
- xXpE/SGnQa0C7vk5TfQQbQoQ8rlmfcxcef7VEsOF3r7p55yG+hzx9+7sRcml6q+rG1pI
- GZ90KKCIKD8K5g64AQnolHHj+xDr98ySyTo303b9t+hmNAFC8vOiApxaQ3vvOj6R87in
- 0re/h/R7td1sDMaK3yUpPrYe8bEBdgcq3yA227WpO6eIelxe8Gk42acRH0kv6N+xdSlZ
- JZrQ==
+ :reply-to; bh=VYPv2joWEy7NQbj1wDZIlmJyo9qqTDgvEnE16RTvAgs=;
+ b=w620DCyzyR6e0krcDkUKmOg5jNCsoszq6Vep0ZM06tWPzdLteeZpi+upLmoBYYd3n6
+ GlQ4IGBrluozhl7wDrYnizNgtJjyIoG/OHPGHuFAxWDNP3YsBDxBXbhAhbdvTWJC3yqk
+ tEecHwXotBPh0bS0VrgiCEQ5YYXh0UBUdpdG0PsuFcxZR1R+uNtKo6nH/GX4sCjyYVvL
+ L8Yneio+yIbvQxthDAYUSYFTMibKdni6dzNg1D9TiHyDGm6fgcAv+eMqEIJPI0L+KiBb
+ 5d/Iknw4LgQGy4OTxNOHbSzcFNPX9gAOy/iGS2Vl0N/w4iQyzAsyz7oPnYbZX/krrR91
+ FSkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1769181000; x=1769785800;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=mP+whJkVyK+SSs6Mqc5tBKekpoTk7ckeOTEMEVQCY7c=;
- b=vFR9ok9mjZN/vPjE6MNJO/V617VEeXqhheYLwunGClahpReVrJVq/uGo1RxtO9eTid
- Eohqa0zzrezU0MaS4P+amwnf1aLJENllnL0xWvSEwFt0S5CYo4USsyLGE74qHFkf48GV
- fT+K6igw3GO0ALiw3CBYNBR/Pbo6YPItnWci+WD93k76U9uKWqrHEfcclldijP7hMncb
- X9bLJGDQfQdDq9wXIue71NbsEXdtxy1JWzLzvrbdpfII0PgLIYrz0fJS42N9qxUl0a62
- C+CdSftOoZflsd0+CoTUrian7ShOMETu5kYNUv2zVoxyTdblEho0rcZf+SSRxj/WaFtg
- FYOA==
-X-Gm-Message-State: AOJu0YwPoVG1FFWTT+JKHN5k/Wl0mXlD/MVWhxh3o/Cq9Wj3kx8eHRy1
- zgBMWrNAJUgeFZZEyct9MuM3m4/y7wh61xSs+dpz06xLhlhIWWuLdKtsBgekSIACetUQxdWOV5p
- okXM15PU=
-X-Gm-Gg: AZuq6aKDynzbotTbfKHdgLTS7gTuEoAbfO1Bo/PfeXtzuh2HDRMUnO1Q5D0XP3SOV9z
- iFuHbJfgRxTkQtK8SgB7J0X3/3Y0bQhfSMBuWi5C6UgY1twOZcuEeDedQorsN2c60Ejjp6XbtZ2
- 2eGIF/6XGiIZ9wQL1cv7Fw7CwQHz8RhyRFlNPpF/DoD6hTOjwMogy0R9UXQ9GS8yI3UJVLI91BV
- Q/cF835o4kvWOyBRRfv4q8ItwY2YVTJTbDaD4xmUKV/KwJS+OquP3Ycz8v6V8RqKzBjcbpGWAPF
- vH84Iyjbf5xZdfnV39gU/m2vzQ/A121p8fP+tX6z9ymDFe84hN/XfQG7nqHoEQ6RqSIZeY2/SXy
- fYax1Q8o/GbDIRPPJN8dBUxwuAu/W6/BkBNyDS184Nl+9mTGr9JMjE1k5v7boHwiumy0w+jFEpo
- N2S1zZUYZnhBJw4W0jw4vRhhN4JAZ7jCU9izJMN0UisoRDFRoLobSn
-X-Received: by 2002:a05:6000:288c:b0:430:fd60:93fb with SMTP id
- ffacd0b85a97d-435b160378dmr5408499f8f.32.1769181000246; 
- Fri, 23 Jan 2026 07:10:00 -0800 (PST)
+ bh=VYPv2joWEy7NQbj1wDZIlmJyo9qqTDgvEnE16RTvAgs=;
+ b=ZiTjIX51ggErosIEHRbY6PAkXUxZQZkyQHfCERIFcf/hZ4TSdmmw1tPx/mU1XQ4tsg
+ M9dMvbvKexrhFZIXiVzsiyMpRN41mHwFPqb8t1c7isBUZM+RHyTIr9aOqrofPoFkugWq
+ rRRdk9xv4G4tGtg7bMPPoWJynRXV7VY5SRgIipaClXyhbfm72nY2SP0cwPzNf3F1nzCa
+ R8BzlVaqtneKg1MIrsER2MvTejLWA7jOe1b2k+Q1dJ9BxG93AdcAm05RD79tM/XoIU4J
+ cgJpEhGSjiSlSoVqfIG4aqYsTXUai8AT4CEjKFHpPfy0bRuuqFWu/1RB0OB43NTupeRa
+ JI8A==
+X-Gm-Message-State: AOJu0YyB0YR3XYNegSsKZNjS8BeoUQf/T+QzqTk7x0H87v4rbk10oD5n
+ K77/XSQwr43KOrE8hGJzU0Qzm9gm1XCj82vqW37xJSBWWqv70FQFwdxt/LBm4sKTLtU3LVPHvN7
+ UyMOkS5g=
+X-Gm-Gg: AZuq6aJCaWD2OQTJe5Zug4BB6lmlDxyqoWcA5Qr16RSGXvE9CmkwWkB+OdNxv1tFIPG
+ MrESrBc+TkJJGoJStoKjJ8+hYnCBdBScKUH4I3QxYxZ221APb6basDPkTftNd7htpEeIWjgBQ4t
+ +gGHGJI1qGKKohbyvSbjLJN/wPErLZIct917ceK4i44piBLFrSIo78rQK7nenYo2DT5CqtfVE35
+ dlGp49Kjp7Lj218MnWlArTuV4UBJ2ltJQA3LPvU7hFk0AoZPJsJGSCzSALF9BnqZwcJfjoKZYjK
+ huzxcQo80wAcbXJhIxxbF0VN6rfYP0dTnLFJJiOo7B12cJ0EqJwjVLOJoKAiekaz9+aST7fTG+c
+ W9PSTSDypI/0pOXEkaXVhOL9PbmaJKM2MHQq8+IuqsCkAq04Dm21rwp++bmP+Blmr5vm8g35xlw
+ V7q2sgPuBgDDP3v+CXBLMF4zUk6gQEtce2MMjirY8i1K0qtYQYQDy9hFbpnJuv4Ls=
+X-Received: by 2002:a5d:5d0d:0:b0:435:a2f8:150d with SMTP id
+ ffacd0b85a97d-435b1750380mr4795804f8f.59.1769180999399; 
+ Fri, 23 Jan 2026 07:09:59 -0800 (PST)
 Received: from mnementh.archaic.org.uk (mnementh.archaic.org.uk.
  [81.2.115.146]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.59
+ ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.58
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 07:09:59 -0800 (PST)
+ Fri, 23 Jan 2026 07:09:58 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/22] docs/system/arm/xlnx-zynq.rst: Improve docs rendering
-Date: Fri, 23 Jan 2026 15:09:37 +0000
-Message-ID: <20260123150941.1877768-20-peter.maydell@linaro.org>
+Subject: [PULL 18/22] hw/intc: avoid byte swap fiddling in gicv3 its path
+Date: Fri, 23 Jan 2026 15:09:36 +0000
+Message-ID: <20260123150941.1877768-19-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260123150941.1877768-1-peter.maydell@linaro.org>
 References: <20260123150941.1877768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,97 +100,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make some minor improvements to the rendering of the docs for
-the xlnx-zynq-a9 board:
+From: Alex Bennée <alex.bennee@linaro.org>
 
- * use a proper hyperlink rather than a bare URL for the
-   link to the reference manual
- * drop the hex address of the SMC SRAM: the bare '@' is
-   rendered as bogus mailto: hyperlink, and the information
-   is not very interesting to the user anyway
- * expand out the abbreviations in the list of Cortex-A9
-   per-CPU devices
- * correct the bullet-point list markup so it doesn't render
-   with odd highlighted lines
- * capitalize 'Arm' correctly
+This allows us to keep the MSI data in plain host order all the way
+from the MemoryRegionOps write method to the final KVM_SIGNAL_MSI
+ioctl. This fixes a theoretical bug on big-endian hosts because we
+were using different size byte swaps which would have truncated the data.
 
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260121105932.135676-5-alex.bennee@linaro.org
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Zhang Chen <zhangckid@gmail.com>
-Message-id: 20260115142629.665319-2-peter.maydell@linaro.org
 ---
- docs/system/arm/xlnx-zynq.rst | 51 ++++++++++++++++++-----------------
- 1 file changed, 27 insertions(+), 24 deletions(-)
+ hw/intc/arm_gicv3_its_common.c | 2 +-
+ hw/intc/arm_gicv3_its_kvm.c    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/system/arm/xlnx-zynq.rst b/docs/system/arm/xlnx-zynq.rst
-index ade18a3fe1..aa37df2926 100644
---- a/docs/system/arm/xlnx-zynq.rst
-+++ b/docs/system/arm/xlnx-zynq.rst
-@@ -4,32 +4,35 @@ The Zynq 7000 family is based on the AMD SoC architecture. These products
- integrate a feature-rich dual or single-core Arm Cortex-A9 MPCore based
- processing system (PS) and AMD programmable logic (PL) in a single device.
+diff --git a/hw/intc/arm_gicv3_its_common.c b/hw/intc/arm_gicv3_its_common.c
+index 9fc51ad1e0..60a5abd8d3 100644
+--- a/hw/intc/arm_gicv3_its_common.c
++++ b/hw/intc/arm_gicv3_its_common.c
+@@ -81,7 +81,7 @@ static MemTxResult gicv3_its_trans_write(void *opaque, hwaddr offset,
+     if (offset == 0x0040 && ((size == 2) || (size == 4))) {
+         GICv3ITSState *s = ARM_GICV3_ITS_COMMON(opaque);
+         GICv3ITSCommonClass *c = ARM_GICV3_ITS_COMMON_GET_CLASS(s);
+-        int ret = c->send_msi(s, le64_to_cpu(value), attrs.requester_id);
++        int ret = c->send_msi(s, value, attrs.requester_id);
  
--More details here:
--https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Zynq-7000-SoC-Technical-Reference-Manual
--
--QEMU xilinx-zynq-a9 board supports following devices:
--    - A9 MPCORE
--        - cortex-a9
--        - GIC v1
--        - Generic timer
--        - wdt
--    - OCM 256KB
--    - SMC SRAM@0xe2000000 64MB
--    - Zynq SLCR
--    - SPI x2
--    - QSPI
--    - UART
--    - TTC x2
--    - Gigabit Ethernet Controller x2
--    - SD Controller x2
--    - XADC
--    - Arm PrimeCell DMA Controller
--    - DDR Memory
--    - USB 2.0 x2
-+The SoC is documented in the
-+`Zynq 7000 Technical Reference manual <https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Zynq-7000-SoC-Technical-Reference-Manual>`__.
-+
-+The QEMU xilinx-zynq-a9 board supports the following devices:
-+
-+- Arm Cortex-A9 MPCore CPU
-+
-+  - Cortex-A9 CPUs
-+  - GIC v1 interrupt controller
-+  - Generic timer
-+  - Watchdog timer
-+
-+- OCM 256KB
-+- SMC SRAM 64MB
-+- Zynq SLCR
-+- SPI x2
-+- QSPI
-+- UART
-+- TTC x2
-+- Gigabit Ethernet Controller x2
-+- SD Controller x2
-+- XADC
-+- Arm PrimeCell DMA Controller
-+- DDR Memory
-+- USB 2.0 x2
+         if (ret <= 0) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+diff --git a/hw/intc/arm_gicv3_its_kvm.c b/hw/intc/arm_gicv3_its_kvm.c
+index ae12d41eee..a8d6d4fb54 100644
+--- a/hw/intc/arm_gicv3_its_kvm.c
++++ b/hw/intc/arm_gicv3_its_kvm.c
+@@ -58,7 +58,7 @@ static int kvm_its_send_msi(GICv3ITSState *s, uint32_t value, uint16_t devid)
  
- Running
- """""""
--Direct Linux boot of a generic ARM upstream Linux kernel:
-+Direct Linux boot of a generic Arm upstream Linux kernel:
- 
- .. code-block:: bash
- 
-@@ -44,4 +47,4 @@ For configuring the boot-mode provide the following on the command line:
- 
-    -machine boot-mode=qspi
- 
--Supported values are jtag, sd, qspi, nor.
-+Supported values are ``jtag``, ``sd``, ``qspi`` and ``nor``.
+     msi.address_lo = extract64(s->gits_translater_gpa, 0, 32);
+     msi.address_hi = extract64(s->gits_translater_gpa, 32, 32);
+-    msi.data = le32_to_cpu(value);
++    msi.data = value;
+     msi.flags = KVM_MSI_VALID_DEVID;
+     msi.devid = devid;
+     memset(msi.pad, 0, sizeof(msi.pad));
 -- 
 2.47.3
 
