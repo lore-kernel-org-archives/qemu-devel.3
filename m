@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2BB1D6CFDC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 06:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B297CD6CFD5
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 06:22:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjAYj-000398-67; Fri, 23 Jan 2026 01:22:17 -0500
+	id 1vjAYj-00039a-Rm; Fri, 23 Jan 2026 01:22:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vjAYg-00037w-QF
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 01:22:14 -0500
+ id 1vjAYi-00038Q-7I
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 01:22:16 -0500
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vjAYf-0000rq-9S
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 01:22:14 -0500
+ id 1vjAYg-0000sJ-JT
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 01:22:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1769149333; x=1800685333;
+ t=1769149335; x=1800685335;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=BU+2P8UJQiCNZ6B+Dn1fq51GInHfsJ6cD01Wea2i1DY=;
- b=g7L88dEWwGYX9nLN0FUd4/lKTpqx4nW1rY/fa9Yflvsmg3JWioW275wG
- USXKxaDU5pSnG13OjE1c38n1D19/IY3FzXs3tiKDLep1PU2PIU7aXjmrs
- 4PVOcF6VBReYCv2zrmV4XpFasmxfusceWoakud9QzG3Ov/JRhAxVmYfD5
- NXO8StAmbaX2AendAm6rA+CyG0yji33Ze84wyo3/xcCwnEEWdG+l803Ky
- IsfaLyNDnANh3kf7GMjhmMwilA3TQ63IVvEYNxljroW8/oqYny2eMtr92
- LGzMpk3XMy23C+GddT/eUES6zR+F8fGSiJY35fYDXlwoDliwf/sFxeLDH w==;
-X-CSE-ConnectionGUID: YOVSj1+zR6WG0dEIgBnXFA==
-X-CSE-MsgGUID: G6qjtix6Qn+gofB05iFhOw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11679"; a="74254182"
-X-IronPort-AV: E=Sophos;i="6.21,247,1763452800"; d="scan'208";a="74254182"
+ bh=NrMNznHBXX3uPZveNVk1de9YgIFmAWj4A/wgBBPFYng=;
+ b=OKmE9/iSJYFRi3pGmmqTczzc9vBalrf00FDyqli1I1AJgGSf3BeXh7Ky
+ RRNQm4RVWx9WGlzyahXhdl7TUzuP4W9NLEjqvfsk4IeOwyPWTxKE9848Q
+ dYK93w+HxlE0TtTML9+Z8fzHFG+zYAHCCael3eL3wg816/t6kG0oU1s2P
+ iJkq6jJhh9vyoO6vTPRNkavaOTohSUOapNqGsv/BAkY0VbxW6PiUF1qQn
+ GGeGulPS5aNkwOxucDldzXoCmA/kJU4imuMvccoAhc9jeDVZQQ4cNqELd
+ IeGy1og4NdmK/t5atd+iat8vYmgIgcFHca2ucRDAk93xYBXKhqH20qv14 Q==;
+X-CSE-ConnectionGUID: 4/oSv9P9TzWz2agJtOT5rg==
+X-CSE-MsgGUID: ungv5YWvRo+QkRq5BTVnOQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11679"; a="74254189"
+X-IronPort-AV: E=Sophos;i="6.21,247,1763452800"; d="scan'208";a="74254189"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Jan 2026 22:22:05 -0800
-X-CSE-ConnectionGUID: Ijso7S6YTBWtypbx9ohbuQ==
-X-CSE-MsgGUID: ZpdkPEXZRxKvSTs83IKxmg==
+ 22 Jan 2026 22:22:06 -0800
+X-CSE-ConnectionGUID: lQ1fkWnRQ165DyMlAyaZIw==
+X-CSE-MsgGUID: p69W0Cm6TmCk9j7ETCgGgQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,247,1763452800"; d="scan'208";a="207287399"
+X-IronPort-AV: E=Sophos;i="6.21,247,1763452800"; d="scan'208";a="207287402"
 Received: from unknown (HELO vkasired-desk2.fm.intel.com) ([10.105.128.132])
  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  22 Jan 2026 22:22:04 -0800
@@ -55,10 +55,10 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 1/8] virtio-gpu: Recreate the resource's dmabuf if new
- backing is attached
-Date: Thu, 22 Jan 2026 22:17:40 -0800
-Message-ID: <20260123062042.568703-2-vivek.kasireddy@intel.com>
+Subject: [PATCH v4 2/8] virtio-gpu: Find hva for Guest's DMA addr associated
+ with a ram device
+Date: Thu, 22 Jan 2026 22:17:41 -0800
+Message-ID: <20260123062042.568703-3-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260123062042.568703-1-vivek.kasireddy@intel.com>
 References: <20260123062042.568703-1-vivek.kasireddy@intel.com>
@@ -90,10 +90,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are cases when a blob resource's backing might get detached
-and re-attached again such as when the underlying object is getting
-migrated in the Guest. In these situations, we need to obtain a new
-dmabuf fd, which can be done by calling virtio_gpu_init_udmabuf().
+If the Guest provides a DMA address that is associated with a ram
+device (such as a PCI device region and not its system memory),
+then we can obtain the hva (host virtual address) by invoking
+address_space_translate() followed by memory_region_get_ram_ptr().
+
+This is because the ram device's address space is not accessible
+to virtio-gpu directly and hence dma_memory_map() cannot be used.
+Therefore, we first need to identify the memory region associated
+with the DMA address and add the offset to the pointer returned
+from memory_region_get_ram_ptr() to obtain the host address.
+
+Note that we take a reference on the memory region but we would
+still eventually call dma_memory_unmap() (to unref the mr).
 
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Alex Bennée <alex.bennee@linaro.org>
@@ -101,27 +110,50 @@ Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/display/virtio-gpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/display/virtio-gpu.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
 diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index f23eec6862..3d58cebf4b 100644
+index 3d58cebf4b..9930a21317 100644
 --- a/hw/display/virtio-gpu.c
 +++ b/hw/display/virtio-gpu.c
-@@ -937,6 +937,10 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
-         cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-         return;
-     }
-+
-+    if (res->blob_size) {
-+        virtio_gpu_init_udmabuf(res);
-+    }
+@@ -798,6 +798,23 @@ static void virtio_gpu_set_scanout_blob(VirtIOGPU *g,
+                               &fb, res, &ss.r, &cmd->error);
  }
  
- static void
++static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
++                                       struct virtio_gpu_ctrl_command *cmd,
++                                       uint64_t a, hwaddr *len)
++{
++    MemoryRegion *mr;
++    hwaddr xlat;
++
++    mr = address_space_translate(VIRTIO_DEVICE(g)->dma_as, a, &xlat, len,
++                                 DMA_DIRECTION_TO_DEVICE,
++                                 MEMTXATTRS_UNSPECIFIED);
++    if (memory_region_is_ram(mr)) {
++        memory_region_ref(mr);
++        return memory_region_get_ram_ptr(mr) + xlat;
++    }
++    return NULL;
++}
++
+ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+                                   uint32_t nr_entries, uint32_t offset,
+                                   struct virtio_gpu_ctrl_command *cmd,
+@@ -839,9 +856,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+ 
+         do {
+             len = l;
+-            map = dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
+-                                 DMA_DIRECTION_TO_DEVICE,
+-                                 MEMTXATTRS_UNSPECIFIED);
++            map = virtio_gpu_dma_memory_map(g, cmd, a, &len);
+             if (!map) {
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map MMIO memory for"
+                               " element %d\n", __func__, e);
 -- 
 2.50.1
 
