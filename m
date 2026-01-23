@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 083FAD74EDE
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4910ED74EE2
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:11:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIo6-0007es-9j; Fri, 23 Jan 2026 10:10:46 -0500
+	id 1vjIno-0007Qy-TV; Fri, 23 Jan 2026 10:10:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInR-00077s-C8
+ id 1vjInR-00077r-At
  for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:09 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInO-00035q-CD
+ id 1vjInP-00036A-3j
  for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:01 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-47f3b7ef761so16493615e9.0
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:57 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4801d7c72a5so17096085e9.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180996; x=1769785796; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769180998; x=1769785798; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lT9cpKsejMrXAad2lZ8Jg34cGKKa9EKIzdv2dgEDJFo=;
- b=aJTbYKhlv9av8OFfBIXQli/Efy0cyp+J8B72LiEfE/SgPDbhfFoVgmPKXRDv4vnNuR
- Dq32cgjH0xlKRV/kxJQ5mWr9NItjBpQa9JhLL5/y7ZJm+rYj9FNkitKc6+5y7ZTyj19m
- wCGpfdPgw20dJaQAPaFwBxrnHFjXm+Rijp3RmgaKZp0mszjQLgJW6TKLEn0aExb4eUDV
- D3UKjfvDLDckPNgpVexLQPeKknrA9KlGM6LXvV2lZR5PeYdvGq9n5YkBpGc5r1Mx19kb
- mX0mkDJhnDZGIDFmVAXzKIMEZ4X76+2ssFXHwluv4/ld7FQ4HwdZ8d7hODvtCZafsIPA
- RpUQ==
+ :reply-to; bh=Zd1I64gLFEX+HyqWTrjp/BrmEmETb82V0nNznQxNN2w=;
+ b=Vzw68KQGVFFqNZtscHGehMm2/OgjLjAnBx1VW03pRqQfCZ5HGD2J1gggx3QxPP34iU
+ Bc4WMD1UTLyW0EkrEdKXLL5FENXY487K7kNlf0BDkGE/td2Iw6UlZhOM7Prpvi6or3lR
+ yf6ITegc2qbkDPfz+0XNY37Bvib/k85msvo9RhH/VS1ds1iqURMzv+0ugsNzmL1j5Mjc
+ dC+2Bo/ll1lRup+XwgNH8owocBun+GDX2j2dskmsAA30tourptxZDd7w3hSwe3LxRvJv
+ oxQ8UOfMdZ7hUF4uXUimzQipItS38MZo9xb3l7iLBD6T6GPqwt0zCTBlDbFcQ9DaVvZm
+ f6TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180996; x=1769785796;
+ d=1e100.net; s=20230601; t=1769180998; x=1769785798;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=lT9cpKsejMrXAad2lZ8Jg34cGKKa9EKIzdv2dgEDJFo=;
- b=wYYvrDqVrsWMlr/3YuEIa7qsjHuz+MohYb9UIURS7hA0LQOIYn3pYIukGG/WZTs74x
- mcTVrkb3hYIc72zQWREbnAviZZeuvpzTgHGyRv90uUxD5nkVCZCueqWCbfX3DYzplBpk
- PGsFQZncdA0n4f38QDhN3r/UXZ1M4O6bukn1qKAcIyWcL68slDeZfWxXisL90PmvvJk1
- 1iPgW8s1PCebnm09lZwn7JL7gYrk/V2HyXCQUBlYWliX4g+vx0FLLMZMvrlOBnUIznaa
- Ab6mS0ka77OyZcnQRgvJR8qULZ+1NOiwstWk2jxD3lup28fQinBrznXwdRF11uVD6A2G
- 3Wew==
-X-Gm-Message-State: AOJu0YyLF9Qlg+a40SXMysJ1JooMeuLEq+i3Y6HIALcAElZ7ZVX60scz
- ypjnDWVO8OyK76vDsDM7OiyNNdsESb6ATkS2ZAg19WqTqcYwo/NOn/9O7XVdD2bp4P3rGd4rdRl
- kH1bRt0Q=
-X-Gm-Gg: AZuq6aIv7BTNhiGsl9G9scOq9ukFInkBLkvlBmX9+Jr/eSl3Ldz89ynSIoir53bNAuR
- kxEtZhJjZyKVqIfSkH9KwLGtBndso6iUKoZ8ZO58YhRRz7/4wGEfPFx8UalIxjhgeDKn3kABqHD
- HSw/rsW7WRm3PwekbXmPqG/COWUZkeG3zQK8hfmI10mYHF5kASt6uktVDhS3Qtdhjc/Kg1Zd/JA
- cZn/nyo5O0q16losuxQvVZwMtytefcF+WUux6aaJfDCd2+2j23ZTt9gKsHUEQ1omecuZfavfaDm
- /PblN88Evgzgqjm0iggEW2zxkYrQBZnSdJoWC8bFVq56f2KEwbNwzF0DQBeB/lgT/TDsNJTM1ZL
- aadI1VcNVSlxz3kyw/gGQ7uiM/kxoWP6Ineiahpnn7mmrfgy/CEBaybsCBKRSN0vELwTqzBkXQe
- 2dAD0Ujs/7Br380WmoxbDKCqjLYPiSWVQ+WcV4ReiS1d5+2hWr+GJN
-X-Received: by 2002:a05:600c:8707:b0:480:3338:292d with SMTP id
- 5b1f17b1804b1-4804c9b7c19mr55064795e9.31.1769180995834; 
- Fri, 23 Jan 2026 07:09:55 -0800 (PST)
+ bh=Zd1I64gLFEX+HyqWTrjp/BrmEmETb82V0nNznQxNN2w=;
+ b=h1bqcqhEYUU9BwjiXQOg+b0She1Ahd7+avnZjn4GJtWG9C2Kvu3Nsoan5gVn0+leov
+ h+ogdFsiyOtJqQIU2Y8owTLCEp5+XxP3jMFBwBCK9tju1xNyvP+BWRs3Y1Iup1MvUdUA
+ YHJxz/SAihfzIkH9ZodR7entxgsA6yZoOBwIXTeCXH/7tafzIwLQmErPtVXH2yS/xYZ4
+ FKy6VSjMPq1moRTR528r9SuCRYFqjnGDoBOmVXjysHSIAkYUJOLXt33yEFd2LK3nEiZo
+ 8BDvz/AASvr1Pvu50iA4UWby+CSzcv2VBwt2POF0/ahXixTsFkXo88iEyHZqRxKLZSNb
+ ksOA==
+X-Gm-Message-State: AOJu0Yz3VczlY0MmZ9a1lgKOgpsOmns2kLruXu+EPx+C8VCac17XNuYJ
+ Mtm9nQcm8N27mJ9v+teU1K+DcMt1do3ySwfzyNTfBGxdvjUYLaOpA+DdyLMU5qCNgjRboMtYS9/
+ jNl3Qxp0=
+X-Gm-Gg: AZuq6aJHQQGH3NSObEGMbC7wtMw3MmMXU14Rkj/A6jbj/ecrPJ4B2Nd1gOSSSC/VYtE
+ vZPkLJidqg1tZnMuxikgPEbYFvjfQJZU/lx+uNgIZ+fRh9d7H+cadECBBaXbBUQHrkLWQvt1JBb
+ rTVlZXoCSBoRZvfgfU1wcqMBXvcg0sYuvaxVe245+1zUpSD8yF8ktBfG489M0oNGjfukkYtidFe
+ lLbdsws3ZF5fkUEZhwBeai1pqaZZvKpNkTBjxJCdfdNZpDqBMw8o554bvBxh2QWJSLeTYU4cbZi
+ w4AST9hwPF2urrVBOVAdjE6+JaE5BomNnMAEK2vHoKWwHRaiTapiQyis2zR7Nl2rRpD5V8HL70D
+ g2gexlPigJWtSvZXvG7L5vjberfHhRhl96bkoW1iczxv1gNthW/GEhANjqjkqv9Wu6QH8S9K8Hk
+ NrxVijXpEAaOKQ7Yf8PhsWS06daYYMYQkysSJSCPGsWPA2y4Q88OCIkndvVvQ9RXs=
+X-Received: by 2002:a05:600c:524d:b0:480:3a72:5c10 with SMTP id
+ 5b1f17b1804b1-4804c95c6e0mr61071695e9.16.1769180997455; 
+ Fri, 23 Jan 2026 07:09:57 -0800 (PST)
 Received: from mnementh.archaic.org.uk (mnementh.archaic.org.uk.
  [81.2.115.146]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.55
+ ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 07:09:55 -0800 (PST)
+ Fri, 23 Jan 2026 07:09:56 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/22] all: Clean up includes
-Date: Fri, 23 Jan 2026 15:09:32 +0000
-Message-ID: <20260123150941.1877768-15-peter.maydell@linaro.org>
+Subject: [PULL 16/22] hw/intc: declare GIC regions as little endian
+Date: Fri, 23 Jan 2026 15:09:34 +0000
+Message-ID: <20260123150941.1877768-17-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260123150941.1877768-1-peter.maydell@linaro.org>
 References: <20260123150941.1877768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,172 +100,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit was created with scripts/clean-includes:
- ./scripts/clean-includes '--git' 'all' '--all'
+From: Alex Bennée <alex.bennee@linaro.org>
 
-and manually edited to remove one change to hw/virtio/cbor-helpers.c.
-All these changes are header files that include osdep.h or some
-system header that osdep.h pulls in; they don't need to do this.
+The GIC should always be a little-endian device as big-endian
+behaviour is a function of the current CPU configuration not the
+system as a whole. This should have no functional effect as the GIC
+cannot be instantiated on a BE system but will help the single binary
+efforts.
 
-All .c should include qemu/osdep.h first.  The script performs three
-related cleanups:
-
-* Ensure .c files include qemu/osdep.h first.
-* Including it in a .h is redundant, since the .c  already includes
-  it.  Drop such inclusions.
-* Likewise, including headers qemu/osdep.h includes is redundant.
-  Drop these, too.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260116125830.926296-5-peter.maydell@linaro.org
+Message-id: 20260121105932.135676-3-alex.bennee@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/scsi/lasi_ncr710.h          | 1 -
- hw/scsi/ncr53c710.h            | 1 -
- include/hw/core/loader.h       | 1 -
- include/hw/i386/tdvf.h         | 1 -
- include/hw/ppc/spapr_fadump.h  | 1 -
- include/hw/riscv/iommu.h       | 1 -
- include/system/accel-irq.h     | 1 -
- linux-user/alpha/target_proc.h | 1 -
- qga/commands-windows-ssh.h     | 1 -
- qga/vss-win32/vss-debug.h      | 1 -
- target/i386/kvm/vmsr_energy.h  | 2 --
- 11 files changed, 12 deletions(-)
+ hw/intc/arm_gic.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/hw/scsi/lasi_ncr710.h b/hw/scsi/lasi_ncr710.h
-index 99be001fc3..450fb7e1c3 100644
---- a/hw/scsi/lasi_ncr710.h
-+++ b/hw/scsi/lasi_ncr710.h
-@@ -15,7 +15,6 @@
- #define HW_LASI_NCR710_H
+diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+index 4d0cb125a6..4d4b79e6f3 100644
+--- a/hw/intc/arm_gic.c
++++ b/hw/intc/arm_gic.c
+@@ -2062,38 +2062,38 @@ static const MemoryRegionOps gic_ops[2] = {
+     {
+         .read_with_attrs = gic_dist_read,
+         .write_with_attrs = gic_dist_write,
+-        .endianness = DEVICE_NATIVE_ENDIAN,
++        .endianness = DEVICE_LITTLE_ENDIAN,
+     },
+     {
+         .read_with_attrs = gic_thiscpu_read,
+         .write_with_attrs = gic_thiscpu_write,
+-        .endianness = DEVICE_NATIVE_ENDIAN,
++        .endianness = DEVICE_LITTLE_ENDIAN,
+     }
+ };
  
- #include "hw/core/sysbus.h"
--#include "qemu/osdep.h"
- #include "exec/memattrs.h"
- #include "hw/scsi/scsi.h"
- #include "hw/scsi/ncr53c710.h"
-diff --git a/hw/scsi/ncr53c710.h b/hw/scsi/ncr53c710.h
-index a8dc92f4ef..00b6a01577 100644
---- a/hw/scsi/ncr53c710.h
-+++ b/hw/scsi/ncr53c710.h
-@@ -15,7 +15,6 @@
- #ifndef HW_NCR53C710_H
- #define HW_NCR53C710_H
+ static const MemoryRegionOps gic_cpu_ops = {
+     .read_with_attrs = gic_do_cpu_read,
+     .write_with_attrs = gic_do_cpu_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+ };
  
--#include "qemu/osdep.h"
- #include "hw/core/sysbus.h"
- #include "hw/scsi/scsi.h"
- #include "qemu/fifo8.h"
-diff --git a/include/hw/core/loader.h b/include/hw/core/loader.h
-index dd22cbb5e8..d9431e8a8d 100644
---- a/include/hw/core/loader.h
-+++ b/include/hw/core/loader.h
-@@ -1,7 +1,6 @@
- #ifndef LOADER_H
- #define LOADER_H
- #include "hw/nvram/fw_cfg.h"
--#include "qemu/typedefs.h"
+ static const MemoryRegionOps gic_virt_ops[2] = {
+     {
+         .read_with_attrs = gic_thiscpu_hyp_read,
+         .write_with_attrs = gic_thiscpu_hyp_write,
+-        .endianness = DEVICE_NATIVE_ENDIAN,
++        .endianness = DEVICE_LITTLE_ENDIAN,
+     },
+     {
+         .read_with_attrs = gic_thisvcpu_read,
+         .write_with_attrs = gic_thisvcpu_write,
+-        .endianness = DEVICE_NATIVE_ENDIAN,
++        .endianness = DEVICE_LITTLE_ENDIAN,
+     }
+ };
  
- /* loader.c */
- /**
-diff --git a/include/hw/i386/tdvf.h b/include/hw/i386/tdvf.h
-index e75c8d1acc..4d7362ad65 100644
---- a/include/hw/i386/tdvf.h
-+++ b/include/hw/i386/tdvf.h
-@@ -9,7 +9,6 @@
- #ifndef HW_I386_TDVF_H
- #define HW_I386_TDVF_H
+ static const MemoryRegionOps gic_viface_ops = {
+     .read_with_attrs = gic_do_hyp_read,
+     .write_with_attrs = gic_do_hyp_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+ };
  
--#include "qemu/osdep.h"
- 
- #define TDVF_SECTION_TYPE_BFV               0
- #define TDVF_SECTION_TYPE_CFV               1
-diff --git a/include/hw/ppc/spapr_fadump.h b/include/hw/ppc/spapr_fadump.h
-index fde2830e94..82681fb9a6 100644
---- a/include/hw/ppc/spapr_fadump.h
-+++ b/include/hw/ppc/spapr_fadump.h
-@@ -6,7 +6,6 @@
- #ifndef PPC_SPAPR_FADUMP_H
- #define PPC_SPAPR_FADUMP_H
- 
--#include "qemu/osdep.h"
- #include "cpu.h"
- 
- /* Fadump commands */
-diff --git a/include/hw/riscv/iommu.h b/include/hw/riscv/iommu.h
-index 25f1a8b159..999384fc89 100644
---- a/include/hw/riscv/iommu.h
-+++ b/include/hw/riscv/iommu.h
-@@ -19,7 +19,6 @@
- #ifndef HW_RISCV_IOMMU_H
- #define HW_RISCV_IOMMU_H
- 
--#include "qemu/osdep.h"
- #include "qom/object.h"
- 
- #define TYPE_RISCV_IOMMU "riscv-iommu"
-diff --git a/include/system/accel-irq.h b/include/system/accel-irq.h
-index 671fb7dfdb..a2caa06f54 100644
---- a/include/system/accel-irq.h
-+++ b/include/system/accel-irq.h
-@@ -12,7 +12,6 @@
- #ifndef SYSTEM_ACCEL_IRQ_H
- #define SYSTEM_ACCEL_IRQ_H
- #include "hw/pci/msi.h"
--#include "qemu/osdep.h"
- #include "system/kvm.h"
- #include "system/mshv.h"
- 
-diff --git a/linux-user/alpha/target_proc.h b/linux-user/alpha/target_proc.h
-index 6b491ffa3a..71949d380d 100644
---- a/linux-user/alpha/target_proc.h
-+++ b/linux-user/alpha/target_proc.h
-@@ -6,7 +6,6 @@
- #ifndef ALPHA_TARGET_PROC_H
- #define ALPHA_TARGET_PROC_H
- 
--#include "qemu/osdep.h"
- #include "target/alpha/cpu.h"
- 
- static uint8_t alpha_phys_addr_space_bits(CPUAlphaState *env)
-diff --git a/qga/commands-windows-ssh.h b/qga/commands-windows-ssh.h
-index 40ac67c4d9..c35d945a89 100644
---- a/qga/commands-windows-ssh.h
-+++ b/qga/commands-windows-ssh.h
-@@ -11,7 +11,6 @@
-  */
- 
- #include <glib/gstrfuncs.h>
--#include <stdbool.h>
- typedef struct WindowsUserInfo {
-     char *sshDirectory;
-     char *authorizedKeyFile;
-diff --git a/qga/vss-win32/vss-debug.h b/qga/vss-win32/vss-debug.h
-index 7800457392..506cee6698 100644
---- a/qga/vss-win32/vss-debug.h
-+++ b/qga/vss-win32/vss-debug.h
-@@ -10,7 +10,6 @@
-  * See the COPYING file in the top-level directory.
-  */
- 
--#include "qemu/osdep.h"
- #include <vss-handles.h>
- 
- #ifndef VSS_DEBUG_H
-diff --git a/target/i386/kvm/vmsr_energy.h b/target/i386/kvm/vmsr_energy.h
-index 151bcbd642..415d64f51c 100644
---- a/target/i386/kvm/vmsr_energy.h
-+++ b/target/i386/kvm/vmsr_energy.h
-@@ -14,8 +14,6 @@
- #ifndef VMSR_ENERGY_H
- #define VMSR_ENERGY_H
- 
--#include <stdint.h>
--#include "qemu/osdep.h"
- #include "io/channel-socket.h"
- #include "hw/i386/topology.h"
- 
+ static void arm_gic_realize(DeviceState *dev, Error **errp)
 -- 
 2.47.3
 
