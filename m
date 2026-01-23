@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18967D7237D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:24:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E48DFD7237D
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:24:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjGAf-0005IS-SQ; Fri, 23 Jan 2026 07:21:50 -0500
+	id 1vjGB1-0005nn-J6; Fri, 23 Jan 2026 07:22:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vjGAU-00056H-SH
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:41 -0500
+ id 1vjGAj-0005LD-5s
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vjGAT-00054K-92
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:38 -0500
+ id 1vjGAg-00056T-4P
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769170896;
+ s=mimecast20190719; t=1769170909;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wdoZHqK9EzUwe62USeHMhpcpxmGDMPzgP9NSzBkvJ7o=;
- b=Ukgi8skXdWwFlQ2lHrMRi6E4Nbm/HZAmcWN7xklRhdpzhiQH52W5uTgJJFQyJHfw0KHqEb
- 2fZPori8ZjKZKh2rC8ftDd4jyChb9oVkrk2uPAJsqoQFuec77RwNNtPqCcoT4qnOarJYHO
- dpBvYxyaj2t/7PUtYoEyAuu0AVHbFTo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=feH2FujmpRO46VbJB4z/pcE4jUNKzw/fe/zu4QkB8Qw=;
+ b=Z8eBe9bVV9AhSHQnEugjAOWgq3HoTLF7epdPOXUbcEQQZrcJ1xXkH74rlpmlB54pKLsnhP
+ 4VO6YdJ5T502SqdhYWemJBo+RIGCL7iWPwJRou1V9Fc7/URs/R3+lIxXORQuuhSvdN9bRo
+ dzskXVT3LC+FQUgmravZSK2OYZA4YxA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-118-bMa0Awr6PNyStzAsU60wAg-1; Fri,
- 23 Jan 2026 07:21:34 -0500
-X-MC-Unique: bMa0Awr6PNyStzAsU60wAg-1
-X-Mimecast-MFC-AGG-ID: bMa0Awr6PNyStzAsU60wAg_1769170894
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-80-4mTFS3kHNBuDXSF8LBAnRA-1; Fri,
+ 23 Jan 2026 07:21:46 -0500
+X-MC-Unique: 4mTFS3kHNBuDXSF8LBAnRA-1
+X-Mimecast-MFC-AGG-ID: 4mTFS3kHNBuDXSF8LBAnRA_1769170905
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB5671944B15; Fri, 23 Jan 2026 12:21:33 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3E625180047F; Fri, 23 Jan 2026 12:21:45 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.7])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4335030002D1; Fri, 23 Jan 2026 12:21:30 +0000 (UTC)
+ id E389230002D1; Fri, 23 Jan 2026 12:21:40 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Jason Wang <jasowang@redhat.com>
-Subject: [PULL 07/13] net/tap: tap_set_sndbuf(): add return value
-Date: Fri, 23 Jan 2026 20:20:56 +0800
-Message-ID: <20260123122102.51422-8-jasowang@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>, Zhang Chen <zhangckid@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PULL 10/13] tests/qtest: add test for filter-buffer interval change
+Date: Fri, 23 Jan 2026 20:20:59 +0800
+Message-ID: <20260123122102.51422-11-jasowang@redhat.com>
 In-Reply-To: <20260123122102.51422-1-jasowang@redhat.com>
 References: <20260123122102.51422-1-jasowang@redhat.com>
 MIME-Version: 1.0
@@ -63,15 +62,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,124 +85,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Add test_change_interval_timer to verify that modifying the 'interval'
+property of filter-buffer at runtime takes effect immediately.
 
-Follow common recommendations in include/qapi/error.h of having
-a return value together with errp. This allows to avoid error propagation.
+The test uses socket backend and filter-redirector to verify timer behavior:
+- Creates filter-buffer with a very long interval (1000 seconds)
+- Sends a packet which gets buffered
+- Advances virtual clock by 1 second, verifies packet is still buffered
+- Changes interval to 1ms via qom-set (timer should be rescheduled)
+- Advances virtual clock by 2ms, verifies packet is now released
+- This proves the timer was rescheduled immediately when interval changed
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
+The test uses filter-redirector to observe when packets are released
+by filter-buffer, providing end-to-end verification of the timer
+rescheduling behavior.
+
+Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- net/tap-bsd.c     | 3 ++-
- net/tap-linux.c   | 5 ++++-
- net/tap-solaris.c | 3 ++-
- net/tap-stub.c    | 3 ++-
- net/tap.c         | 5 +----
- net/tap_int.h     | 2 +-
- 6 files changed, 12 insertions(+), 9 deletions(-)
+ tests/qtest/meson.build          |   1 +
+ tests/qtest/test-filter-buffer.c | 169 +++++++++++++++++++++++++++++++
+ 2 files changed, 170 insertions(+)
+ create mode 100644 tests/qtest/test-filter-buffer.c
 
-diff --git a/net/tap-bsd.c b/net/tap-bsd.c
-index 3fd300d46f..0e62530aaa 100644
---- a/net/tap-bsd.c
-+++ b/net/tap-bsd.c
-@@ -206,8 +206,9 @@ error:
- }
- #endif /* __FreeBSD__ */
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index a8b09d065f..dfb83650c6 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -46,6 +46,7 @@ qtests_cxl = \
+ #        for the availability of the default NICs in the tests
+ qtests_filter = \
+   (get_option('default_devices') and slirp.found() ? ['test-netfilter'] : []) + \
++  (get_option('default_devices') and host_os != 'windows' ? ['test-filter-buffer'] : []) + \
+   (get_option('default_devices') and host_os != 'windows' ? ['test-filter-mirror'] : []) + \
+   (get_option('default_devices') and host_os != 'windows' ? ['test-filter-redirector'] : [])
  
--void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp)
-+bool tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp)
- {
-+    return true;
- }
- 
- int tap_probe_vnet_hdr(int fd, Error **errp)
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index 54de3cd06b..2b2d75a823 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -145,7 +145,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
-  */
- #define TAP_DEFAULT_SNDBUF 0
- 
--void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp)
-+bool tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp)
- {
-     int sndbuf;
- 
-@@ -159,7 +159,10 @@ void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp)
- 
-     if (ioctl(fd, TUNSETSNDBUF, &sndbuf) == -1 && tap->has_sndbuf) {
-         error_setg_errno(errp, errno, "TUNSETSNDBUF ioctl failed");
-+        return false;
-     }
+diff --git a/tests/qtest/test-filter-buffer.c b/tests/qtest/test-filter-buffer.c
+new file mode 100644
+index 0000000000..441cbb975c
+--- /dev/null
++++ b/tests/qtest/test-filter-buffer.c
+@@ -0,0 +1,169 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * QTest testcase for filter-buffer
++ *
++ * Copyright (c) 2025 Red Hat, Inc.
++ * Author: Jason Wang <jasowang@redhat.com>
++ */
 +
-+    return true;
- }
- 
- int tap_probe_vnet_hdr(int fd, Error **errp)
-diff --git a/net/tap-solaris.c b/net/tap-solaris.c
-index faf7922ea8..049b551ae1 100644
---- a/net/tap-solaris.c
-+++ b/net/tap-solaris.c
-@@ -208,8 +208,9 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
-     return fd;
- }
- 
--void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp)
-+bool tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp)
- {
-+    return true;
- }
- 
- int tap_probe_vnet_hdr(int fd, Error **errp)
-diff --git a/net/tap-stub.c b/net/tap-stub.c
-index f7a5e0c163..86d7d38e0f 100644
---- a/net/tap-stub.c
-+++ b/net/tap-stub.c
-@@ -33,8 +33,9 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
-     return -1;
- }
- 
--void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp)
-+bool tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp)
- {
-+    return true;
- }
- 
- int tap_probe_vnet_hdr(int fd, Error **errp)
-diff --git a/net/tap.c b/net/tap.c
-index 5af157164e..07a450e68d 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -709,13 +709,10 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-                              const char *downscript, const char *vhostfdname,
-                              int vnet_hdr, int fd, Error **errp)
- {
--    Error *err = NULL;
-     TAPState *s = net_tap_fd_init(peer, model, name, fd, vnet_hdr);
-     int vhostfd;
- 
--    tap_set_sndbuf(s->fd, tap, &err);
--    if (err) {
--        error_propagate(errp, err);
-+    if (!tap_set_sndbuf(s->fd, tap, errp)) {
-         goto failed;
-     }
- 
-diff --git a/net/tap_int.h b/net/tap_int.h
-index b76a05044b..7963dd6aae 100644
---- a/net/tap_int.h
-+++ b/net/tap_int.h
-@@ -34,7 +34,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
- 
- ssize_t tap_read_packet(int tapfd, uint8_t *buf, int maxlen);
- 
--void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp);
-+bool tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp);
- int tap_probe_vnet_hdr(int fd, Error **errp);
- int tap_probe_has_ufo(int fd);
- int tap_probe_has_uso(int fd);
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "qobject/qdict.h"
++#include "qemu/iov.h"
++#include "qemu/sockets.h"
++
++/*
++ * Test that changing interval at runtime affects packet release timing.
++ *
++ * Traffic flow with filter-buffer and filter-redirector:
++ *
++ * test side                        | qemu side
++ *                                  |
++ * +--------+                       | +---------+
++ * |  send  +------------------------>| backend |
++ * | sock[0]|                       | +----+----+
++ * +--------+                       |      |
++ *                                  | +----v----+
++ *                                  | |  fbuf0  | filter-buffer (queue=tx)
++ *                                  | +----+----+
++ *                                  |      |
++ *                                  | +----v----+  +----------+
++ *                                  | |   rd0   +->| chardev0 |
++ *                                  | +---------+  +----+-----+
++ *                                  |                   |
++ * +--------+                       |                   |
++ * |  recv  |<--------------------------------------+
++ * |  sock  |                       |
++ * +--------+                       |
++ *
++ * The test verifies that when interval is changed via qom-set, the timer
++ * is rescheduled immediately, causing buffered packets to be released
++ * at the new interval rather than waiting for the old interval to elapse.
++ */
++static void test_change_interval_timer(void)
++{
++    QTestState *qts;
++    QDict *response;
++    int backend_sock[2], recv_sock;
++    int ret;
++    char send_buf[] = "Hello filter-buffer!";
++    char recv_buf[128];
++    char sock_path[] = "filter-buffer-test.XXXXXX";
++    uint32_t size = sizeof(send_buf);
++    uint32_t len;
++
++    size = htonl(size);
++
++    ret = socketpair(PF_UNIX, SOCK_STREAM, 0, backend_sock);
++    g_assert_cmpint(ret, !=, -1);
++
++    ret = mkstemp(sock_path);
++    g_assert_cmpint(ret, !=, -1);
++
++    /*
++     * Start QEMU with:
++     * - socket backend connected to our socketpair
++     * - filter-buffer with a very long interval (1000 seconds)
++     * - filter-redirector to send released packets to a chardev socket
++     *
++     * queue=tx intercepts packets going from backend to the guest,
++     * i.e., data we send from the test side.
++     */
++    qts = qtest_initf(
++        "-nic socket,id=qtest-bn0,fd=%d "
++        "-chardev socket,id=chardev0,path=%s,server=on,wait=off "
++        "-object filter-buffer,id=fbuf0,netdev=qtest-bn0,"
++        "queue=tx,interval=1000000000 "
++        "-object filter-redirector,id=rd0,netdev=qtest-bn0,"
++        "queue=tx,outdev=chardev0",
++        backend_sock[1], sock_path);
++
++    /* Connect to the chardev socket to receive redirected packets */
++    recv_sock = unix_connect(sock_path, NULL);
++    g_assert_cmpint(recv_sock, !=, -1);
++
++    /* Send a QMP command to ensure chardev connection is established */
++    qtest_qmp_assert_success(qts, "{ 'execute' : 'query-status'}");
++
++    /*
++     * Send a packet from the test side.
++     * It should be buffered by filter-buffer.
++     */
++    struct iovec iov[] = {
++        {
++            .iov_base = &size,
++            .iov_len = sizeof(size),
++        }, {
++            .iov_base = send_buf,
++            .iov_len = sizeof(send_buf),
++        },
++    };
++
++    ret = iov_send(backend_sock[0], iov, 2, 0, sizeof(size) + sizeof(send_buf));
++    g_assert_cmpint(ret, ==, sizeof(send_buf) + sizeof(size));
++
++    /*
++     * Advance virtual clock by 1 second (1,000,000,000 ns).
++     * This is much less than the 1000 second interval, so the packet
++     * should still be buffered.
++     */
++    qtest_clock_step(qts, 1000000000LL);
++
++    /* Try to receive with non-blocking - should fail (packet still buffered) */
++    ret = recv(recv_sock, recv_buf, sizeof(recv_buf), MSG_DONTWAIT);
++    g_assert_cmpint(ret, ==, -1);
++    g_assert(errno == EAGAIN || errno == EWOULDBLOCK);
++
++    /*
++     * Now change the interval to 1000 us (1ms) via qom-set.
++     * This should reschedule the timer to fire in 1ms from now.
++     */
++    response = qtest_qmp(qts,
++                         "{'execute': 'qom-set',"
++                         " 'arguments': {"
++                         "   'path': 'fbuf0',"
++                         "   'property': 'interval',"
++                         "   'value': 1000"
++                         "}}");
++    g_assert(response);
++    g_assert(!qdict_haskey(response, "error"));
++    qobject_unref(response);
++
++    /*
++     * Advance virtual clock by 2ms (2,000,000 ns).
++     * This exceeds the new 1ms interval, so the timer should fire
++     * and release the buffered packet.
++     *
++     * If the interval change didn't take effect immediately, we would
++     * still be waiting for the original 1000 second interval to elapse,
++     * and the packet would not be released.
++     */
++    qtest_clock_step(qts, 2000000LL);
++
++    /*
++     * Now we should be able to receive the packet through the redirector.
++     * The packet was released by filter-buffer and sent to filter-redirector,
++     * which forwarded it to the chardev socket.
++     */
++    ret = recv(recv_sock, &len, sizeof(len), 0);
++    g_assert_cmpint(ret, ==, sizeof(len));
++    len = ntohl(len);
++    g_assert_cmpint(len, ==, sizeof(send_buf));
++
++    ret = recv(recv_sock, recv_buf, len, 0);
++    g_assert_cmpint(ret, ==, len);
++    g_assert_cmpstr(recv_buf, ==, send_buf);
++
++    close(recv_sock);
++    close(backend_sock[0]);
++    unlink(sock_path);
++    qtest_quit(qts);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++    qtest_add_func("/netfilter/change_interval_timer",
++                   test_change_interval_timer);
++    return g_test_run();
++}
 -- 
 2.42.0
 
