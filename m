@@ -4,106 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99DED778AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 19:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AAB2D778AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 19:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjNEh-00022Z-9D; Fri, 23 Jan 2026 14:54:27 -0500
+	id 1vjNEH-0001tl-Jg; Fri, 23 Jan 2026 14:54:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjNEf-0001zf-HC
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 14:54:25 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjNEG-0001tP-5a
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 14:54:00 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjNEd-0003Uh-Mo
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 14:54:25 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjNEE-0003RM-Af
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 14:53:59 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 23BD75BCCF;
- Fri, 23 Jan 2026 19:54:14 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 2ACA93385F;
+ Fri, 23 Jan 2026 19:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769198054; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EMTf0uhPWrpw0qFSweSfrNMabonCrvDY5bWvqbymo7w=;
- b=Umz8XOMJ5KJK7QUVvPoLMtYlkwHYzmFNL8Vt6SOi+NoIsKgn12wDt6v1C75l1bnhs0h+od
- OA+Y0m6zXNlx6nEVQf5Iqyho3FdvruZqK7UIgFJL7fMmOmwvbej2W+mXj7RVnKBsHeJbjc
- sCSmWYzHN7onWkAKctopGWUMo6XE8Cw=
+ t=1769198036; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=eb0h5KN16q9E68NeEgTRQS1lm1IUkESVgo+A1w46jE0=;
+ b=BBM7RrSex3X0o0EFdhulq6Sn9XE61P5LE+RIeGLL+ISMge3wgmInXq1rDqQ2A3dN5pWPtc
+ pCwGgHB6gp4cikJ9xFoiCjjm6wlz1R5BQRiKrdyA7PBEmaXlzDPB4hT7JqPMTQ3+4u+Kx3
+ WRLqRnly9ESMI8VGq3YSN0u+BpQ+CK8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769198054;
+ s=susede2_ed25519; t=1769198036;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EMTf0uhPWrpw0qFSweSfrNMabonCrvDY5bWvqbymo7w=;
- b=sl2TdwB/ITuC/5/A/UxebuwdkNWWMNlR4Vey8z+HCE/1blgpPI+8HdIiPA0qWsGrXX332+
- mIv6I2VZH3hwF8CA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Umz8XOMJ;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="sl2TdwB/"
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=eb0h5KN16q9E68NeEgTRQS1lm1IUkESVgo+A1w46jE0=;
+ b=AZE4pmfDVNO1wu8AMLl2LStNgfduXojkubIHW4wk8xKEUsMAWv8IHw23B+H6Tpt29lpqW8
+ 4vb7vDDAsxO5qXAg==
+Authentication-Results: smtp-out1.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769198054; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EMTf0uhPWrpw0qFSweSfrNMabonCrvDY5bWvqbymo7w=;
- b=Umz8XOMJ5KJK7QUVvPoLMtYlkwHYzmFNL8Vt6SOi+NoIsKgn12wDt6v1C75l1bnhs0h+od
- OA+Y0m6zXNlx6nEVQf5Iqyho3FdvruZqK7UIgFJL7fMmOmwvbej2W+mXj7RVnKBsHeJbjc
- sCSmWYzHN7onWkAKctopGWUMo6XE8Cw=
+ t=1769198036; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=eb0h5KN16q9E68NeEgTRQS1lm1IUkESVgo+A1w46jE0=;
+ b=BBM7RrSex3X0o0EFdhulq6Sn9XE61P5LE+RIeGLL+ISMge3wgmInXq1rDqQ2A3dN5pWPtc
+ pCwGgHB6gp4cikJ9xFoiCjjm6wlz1R5BQRiKrdyA7PBEmaXlzDPB4hT7JqPMTQ3+4u+Kx3
+ WRLqRnly9ESMI8VGq3YSN0u+BpQ+CK8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769198054;
+ s=susede2_ed25519; t=1769198036;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EMTf0uhPWrpw0qFSweSfrNMabonCrvDY5bWvqbymo7w=;
- b=sl2TdwB/ITuC/5/A/UxebuwdkNWWMNlR4Vey8z+HCE/1blgpPI+8HdIiPA0qWsGrXX332+
- mIv6I2VZH3hwF8CA==
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=eb0h5KN16q9E68NeEgTRQS1lm1IUkESVgo+A1w46jE0=;
+ b=AZE4pmfDVNO1wu8AMLl2LStNgfduXojkubIHW4wk8xKEUsMAWv8IHw23B+H6Tpt29lpqW8
+ 4vb7vDDAsxO5qXAg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C1B041395E;
- Fri, 23 Jan 2026 19:54:12 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0F9D81395E;
+ Fri, 23 Jan 2026 19:53:54 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id gEYPIOTRc2lFZQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 19:54:12 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iQ+qL9LRc2lFZQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 19:53:54 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 10/36] migration: Remove zero-blocks capability
-Date: Fri, 23 Jan 2026 16:53:25 -0300
-Message-ID: <20260123195352.12850-11-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Subject: [PULL 00/36] Migration patches for 2026-01-23
+Date: Fri, 23 Jan 2026 16:53:15 -0300
+Message-ID: <20260123195352.12850-1-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260123195352.12850-1-farosas@suse.de>
-References: <20260123195352.12850-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_COUNT_TWO(0.00)[2]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_TWO(0.00)[2];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 23BD75BCCF
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -127,118 +108,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+The following changes since commit 2339d0a1cfac6ecc667e6e062a593865c1541c35:
 
-It was declared deprecated since 9.2.
+  Merge tag 'hw-misc-20260120' of https://github.com/philmd/qemu into staging (2026-01-21 07:39:57 +1100)
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260115225503.3083355-2-peterx@redhat.com
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- docs/about/deprecated.rst       |  6 ------
- docs/about/removed-features.rst |  7 +++++++
- migration/options.c             |  5 -----
- qapi/migration.json             | 12 ------------
- 4 files changed, 7 insertions(+), 23 deletions(-)
+are available in the Git repository at:
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 4595cc2db5..ae9a3b8aea 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -532,9 +532,3 @@ usage of providing a file descriptor to a plain file has been
- deprecated in favor of explicitly using the ``file:`` URI with the
- file descriptor being passed as an ``fdset``. Refer to the ``add-fd``
- command documentation for details on the ``fdset`` usage.
--
--``zero-blocks`` capability (since 9.2)
--''''''''''''''''''''''''''''''''''''''
--
--The ``zero-blocks`` capability was part of the block migration which
--doesn't exist anymore since it was removed in QEMU v9.1.
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index ebdfb696ed..92f80a32e4 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -723,6 +723,13 @@ Block migration has been removed. For a replacement, see "QMP
- invocation for live storage migration with ``blockdev-mirror`` + NBD"
- in docs/interop/live-block-operations.rst.
- 
-+``migrate-set-capabilities`` ``zero-blocks`` option (removed in 11.0)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+The ``zero-blocks`` capability was accidentally left behind when
-+block migration capability got removed in 9.1.  Removed with no
-+replacement.
-+
- ``migrate-set-parameter`` ``compress-level`` option (removed in 9.1)
- ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
-diff --git a/migration/options.c b/migration/options.c
-index 9a5a39c886..68a4536150 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -188,7 +188,6 @@ const Property migration_properties[] = {
-     DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
-     DEFINE_PROP_MIG_CAP("x-rdma-pin-all", MIGRATION_CAPABILITY_RDMA_PIN_ALL),
-     DEFINE_PROP_MIG_CAP("x-auto-converge", MIGRATION_CAPABILITY_AUTO_CONVERGE),
--    DEFINE_PROP_MIG_CAP("x-zero-blocks", MIGRATION_CAPABILITY_ZERO_BLOCKS),
-     DEFINE_PROP_MIG_CAP("x-events", MIGRATION_CAPABILITY_EVENTS),
-     DEFINE_PROP_MIG_CAP("x-postcopy-ram", MIGRATION_CAPABILITY_POSTCOPY_RAM),
-     DEFINE_PROP_MIG_CAP("x-postcopy-preempt",
-@@ -576,10 +575,6 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
-     ERRP_GUARD();
-     MigrationIncomingState *mis = migration_incoming_get_current();
- 
--    if (new_caps[MIGRATION_CAPABILITY_ZERO_BLOCKS]) {
--        warn_report("zero-blocks capability is deprecated");
--    }
--
- #ifndef CONFIG_REPLICATION
-     if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
-         error_setg(errp, "QEMU compiled without replication module"
-diff --git a/qapi/migration.json b/qapi/migration.json
-index c99ae433e0..f925e5541b 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -440,13 +440,6 @@
- #     footprint is mlock()'d on demand or all at once.  Refer to
- #     docs/rdma.txt for usage.  Disabled by default.  (since 2.0)
- #
--# @zero-blocks: During storage migration encode blocks of zeroes
--#     efficiently.  This essentially saves 1MB of zeroes per block on
--#     the wire.  Enabling requires source and target VM to support
--#     this feature.  To enable it is sufficient to enable the
--#     capability on the source VM.  The feature is disabled by
--#     default.  (since 1.6)
--#
- # @events: generate events for each migration state change (since 2.4)
- #
- # @auto-converge: If enabled, QEMU will automatically throttle down
-@@ -531,14 +524,10 @@
- #
- # @unstable: Members @x-colo and @x-ignore-shared are experimental.
- #
--# @deprecated: Member @zero-blocks is deprecated as being part of
--#     block migration which was already removed.
--#
- # Since: 1.2
- ##
- { 'enum': 'MigrationCapability',
-   'data': ['xbzrle', 'rdma-pin-all', 'auto-converge',
--           { 'name': 'zero-blocks', 'features': [ 'deprecated' ] },
-            'events', 'postcopy-ram',
-            { 'name': 'x-colo', 'features': [ 'unstable' ] },
-            'release-ram',
-@@ -595,7 +584,6 @@
- #           {"state": false, "capability": "xbzrle"},
- #           {"state": false, "capability": "rdma-pin-all"},
- #           {"state": false, "capability": "auto-converge"},
--#           {"state": false, "capability": "zero-blocks"},
- #           {"state": true, "capability": "events"},
- #           {"state": false, "capability": "postcopy-ram"},
- #           {"state": false, "capability": "x-colo"}
+  https://gitlab.com/farosas/qemu.git tags/migration-20260123-pull-request
+
+for you to fetch changes up to 03a680c9782ecbbdf2a604918326413527d69322:
+
+  migration/channel: Centralize calling migration_channel_connect_outgoing (2026-01-23 11:34:25 -0300)
+
+----------------------------------------------------------------
+Migration pull request
+
+- Removal of deprecated query-migrationthreads command
+- Removal of deprecated QMP migrate argument 'detach'
+- Removal of deprecated zero-blocks capability
+- Removal of deprecated migration to file using fd: URI
+- Improvements to fd handling in QEMUFile
+- Cleanups to postcopy tests
+- Cleanup of migration channel connection code
+
+----------------------------------------------------------------
+
+Fabiano Rosas (25):
+  migration: Remove redundant state change
+  migration: Fix state change at migration_channel_process_incoming
+  migration/tls: Remove unused parameter
+  migration: Cleanup TLS handshake hostname passing
+  migration: Move postcopy_try_recover into migration_incoming_process
+  migration: Use migrate_mode() to query for cpr-transfer
+  migration: Free the error earlier in the resume case
+  migration: Move error reporting out of migration_cleanup
+  migration: Expand migration_connect_error_propagate to cover
+    cancelling
+  migration: yank: Move register instance earlier
+  migration: Fold migration_cleanup() into
+    migration_connect_error_propagate()
+  migration: Handle error in the early async paths
+  migration: Move setting of QEMUFile into
+    migration_outgoing|incoming_setup
+  migration/rdma: Use common connection paths
+  migration: Start incoming from channel.c
+  migration/channel: Rename migration_channel_connect
+  migration: Rename instances of start
+  migration: Move channel code to channel.c
+  migration: Move transport connection code into channel.c
+  migration: Move channel parsing to channel.c
+  migration: Move URI parsing to channel.c
+  migration: Free cpr-transfer MigrationAddress along with gsource
+  migration: Move CPR HUP watch to cpr-transfer.c
+  migration: Remove qmp_migrate_finish
+  migration/channel: Centralize calling
+    migration_channel_connect_outgoing
+
+Markus Armbruster (2):
+  migration: Drop deprecated QMP command query-migrationthreads
+  migration: Drop deprecated QMP migrate argument @detach
+
+Peter Xu (4):
+  tests/migration-test: Remove postcopy_data from MigrateCommon
+  tests/migration-test: Remove postcopy_recovery_fail_stage from
+    MigrateCommon
+  migration: Remove zero-blocks capability
+  migration: Remove fd: support on files
+
+Vladimir Sementsov-Ogievskiy (5):
+  vmstate-types: get_fd(): handle qemu_file_get_fd() failure
+  qemu-file: qemu_file_get_fd(): fail if no expected fd come
+  qemu-file: qemu_file_get_fd(): get byte in one shot
+  qemu-file: qemu_file_get_fd(): check service byte itself
+  qemu-file: qemu_file_get_fd(): improve interface
+
+ docs/about/deprecated.rst              |  33 --
+ docs/about/removed-features.rst        |  30 ++
+ include/migration/cpr.h                |   5 +
+ migration/channel.c                    | 374 ++++++++++++++--
+ migration/channel.h                    |  27 +-
+ migration/cpr-exec.c                   |   2 +-
+ migration/cpr-transfer.c               |  23 +
+ migration/exec.c                       |  11 +-
+ migration/exec.h                       |   8 +-
+ migration/fd.c                         |  26 +-
+ migration/fd.h                         |   9 +-
+ migration/file.c                       |  20 +-
+ migration/file.h                       |   7 +-
+ migration/meson.build                  |   1 -
+ migration/migration-hmp-cmds.c         |   2 +-
+ migration/migration.c                  | 570 ++++++-------------------
+ migration/migration.h                  |  15 +-
+ migration/multifd.c                    |  22 +-
+ migration/multifd.h                    |   2 +-
+ migration/options.c                    |  10 +-
+ migration/postcopy-ram.c               |   2 +-
+ migration/qemu-file.c                  |  41 +-
+ migration/qemu-file.h                  |   2 +-
+ migration/rdma.c                       |  46 +-
+ migration/rdma.h                       |   6 +-
+ migration/socket.c                     |  30 +-
+ migration/socket.h                     |   6 +-
+ migration/threadinfo.c                 |  64 ---
+ migration/threadinfo.h                 |  25 --
+ migration/tls.c                        |  33 +-
+ migration/tls.h                        |   9 +-
+ migration/trace-events                 |  20 +-
+ migration/vmstate-types.c              |   5 +-
+ qapi/migration.json                    |  50 ---
+ tests/qtest/migration/framework.c      |  25 +-
+ tests/qtest/migration/framework.h      |   7 +-
+ tests/qtest/migration/postcopy-tests.c |  12 +-
+ tests/qtest/migration/precopy-tests.c  |  41 --
+ tests/qtest/migration/tls-tests.c      |   8 +-
+ 39 files changed, 734 insertions(+), 895 deletions(-)
+ delete mode 100644 migration/threadinfo.c
+ delete mode 100644 migration/threadinfo.h
+
 -- 
 2.51.0
 
