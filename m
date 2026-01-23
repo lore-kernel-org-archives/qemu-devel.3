@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE60CD74ECF
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 13:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10428D74ED0
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 13:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjHKI-0007TL-BW; Fri, 23 Jan 2026 08:35:50 -0500
+	id 1vjHKL-0007V1-Cu; Fri, 23 Jan 2026 08:35:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vjHKG-0007Sa-OX
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:35:48 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1vjHKK-0007UR-8o
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:35:52 -0500
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vjHKF-0004cr-4E
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:35:48 -0500
+ id 1vjHKI-0004dI-Sg
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:35:52 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 65BEE60010;
- Fri, 23 Jan 2026 13:35:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C77CC4CEF1;
- Fri, 23 Jan 2026 13:35:46 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 07955419B6;
+ Fri, 23 Jan 2026 13:35:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC574C4CEF1;
+ Fri, 23 Jan 2026 13:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769175346;
- bh=NSF4+GKR0V5cB7F6q50hhNhNi8+rvzQwctVgiwbj0n8=;
+ s=k20201202; t=1769175349;
+ bh=df1SQyLPe1AgLmzuzWGgw1GL4THVwDBvScVE5vk9mvo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Lw+XpFyfAm9NmkFJ4sLFhb5Yr4qsQqgRT2cgF6e+cD64TjXSv+00DQyHUsLW6bI9w
- 708x5LvLJNDrxlNrRxWKBWEHlDfB6IuqZyf7XyKa2Wr78Iy7K24E1XlyhffEfsn25L
- hqa61UiBy/+/7BC4o3RESFkk5wKo0K57PbmRFD9svr67YfC/ZYpo7WnXGIHBmBtpVR
- /3Es2EYAmZzVi2+j4vPEoCuiLg01+FDOvEOveSCIu6dzqOZ+IJ8L4Dd/7lHS9kPty4
- FgvLJA2uZ220tJZcbiG5KZ9It/0aXlr826DEtOzmh7vn/f3mNlNx9BwCNpqf+jrZp6
- Ya7C9AgRNenpw==
+ b=gQRksBFKHXQNbBkP7ZMbZOZYb96eJ/gIPhrkyLMeqlrYuuEHi3MBsWkk1Y90jYiuu
+ EXOiaB3Wz06aAKXnIvy4ZV9ESXA/lFWS/gLP2Ky79Yo+M5+L2A+6FemLGHREvoayXA
+ Y/hqSMM7oYWRnbzcnNApqvKaiVKVuJn36ITdOD+AeDJA5NSAyk0CX6L2eomyKy0meR
+ YlJCJdecrA26FixckDufwYwzn1X1FBfZ5Jy6bo7x8vG4MDuTZTXce9CqnrQwtVT3gU
+ jNMkOVtBUi+Raoe0/v7hf8/fGQf09r+oWBmJmCJnqiX8qg4oFMqciLqoMn2jjx9BTR
+ xN679LODWV0Jw==
 Received: from localhost ([::1]) by mail.kernel.org with esmtp (Exim 4.99.1)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1vjHKC-000000063Jq-00lE; Fri, 23 Jan 2026 14:35:44 +0100
+ id 1vjHKF-000000063K1-2tqd; Fri, 23 Jan 2026 14:35:48 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-devel@nongnu.org,
  Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
  Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH v2 05/13] scripts/qmp_helper: fix raw_data logic
-Date: Fri, 23 Jan 2026 14:35:19 +0100
-Message-ID: <20b027d157808867689d1f9a8ecc6f10559d90c6.1769175069.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v2 08/13] scripts/ghes_inject: exit 1 if command was not sent
+Date: Fri, 23 Jan 2026 14:35:22 +0100
+Message-ID: <33f73ccf18dd1cf7cb7dbf54e72c81581eb7c84c.1769175070.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <cover.1769175069.git.mchehab+huawei@kernel.org>
 References: <cover.1769175069.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254;
- envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,132 +75,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According with UEFI 6.4 spec Table 18.11 Generic Error Status Block:
-
-Raw Data Offset:	Offset in bytes from the beginning of the
-			Error Status Block to raw error data.
-			The raw data must follow any Generic Error
-			Data Entries.
-
-Data Length:		Length in bytes of the generic error data.
-
-So, basically, we have:
-
-        +----------+                 /
-        | GEBS     |                 |
-        +----------+   /             |
-        | GEDE     |   |             |
-        | header   |   |             +--> raw data
-        +----------+   +--> data     |    offset
-        | GEDE     |   |    length   |
-        | payload  |   |             |
-        +----------+   /             /
-        | Raw data |
-        +----------+
-
-where:
-
-- raw data offset is relative to the beginning of GEBS;
-- data length is only for GEDE header and payload.
-
-The previous code was not calculating it right, as it was
-filling it with the size of GEBS and placing raw data before
-payload.
-
-This is not a problem with default values, as they set raw data
-length to zero, but, at the moment raw data is filled, the
-generated CPERs becomes invalid.
-
-Fix the code to calculate the offset according with the specs.
+add a return code to subparser func() and return 1 if the
+command failed.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 ---
- scripts/qmp_helper.py | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ scripts/arm_processor_error.py | 2 +-
+ scripts/ghes_inject.py         | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
-index ac3abc794c69..1587492807fe 100755
---- a/scripts/qmp_helper.py
-+++ b/scripts/qmp_helper.py
-@@ -411,6 +411,7 @@ def _connect(self):
-         "simulated":    util.bit(2),
-     }
+diff --git a/scripts/arm_processor_error.py b/scripts/arm_processor_error.py
+index 73d069f070d4..d9845adb0c0a 100644
+--- a/scripts/arm_processor_error.py
++++ b/scripts/arm_processor_error.py
+@@ -473,4 +473,4 @@ def send_cper(self, args):
  
-+    GENERIC_ERROR_STATUS_SIZE = 20
-     GENERIC_DATA_SIZE = 72
+         self.data = data
  
-     def argparse(parser):
-@@ -551,7 +552,7 @@ def send_cper_raw(self, cper_data):
+-        qmp_cmd.send_cper(cper_guid.CPER_PROC_ARM, self.data)
++        return qmp_cmd.send_cper(cper_guid.CPER_PROC_ARM, self.data)
+diff --git a/scripts/ghes_inject.py b/scripts/ghes_inject.py
+index 9a235201418b..6ac917d0b5db 100755
+--- a/scripts/ghes_inject.py
++++ b/scripts/ghes_inject.py
+@@ -43,7 +43,8 @@ def main():
  
-         return False
+     args = parser.parse_args()
+     if "func" in args:
+-        args.func(args)
++        if not args.func(args):
++            sys.exit(1)
+     else:
+         sys.exit(f"Please specify a valid command for {sys.argv[0]}")
  
--    def get_gede(self, notif_type, cper_length):
-+    def get_gede(self, notif_type, payload_length):
-         """
-         Return a Generic Error Data Entry bytearray
-         """
-@@ -563,22 +564,27 @@ def get_gede(self, notif_type, cper_length):
-         util.data_add(gede, 0x300, 2)
-         util.data_add(gede, self.validation_bits, 1)
-         util.data_add(gede, self.flags, 1)
--        util.data_add(gede, cper_length, 4)
-+        util.data_add(gede, payload_length, 4)
-         gede.extend(self.fru_id)
-         gede.extend(self.fru_text)
-         gede.extend(self.timestamp)
- 
-         return gede
- 
--    def get_gebs(self, data_length):
-+    def get_gebs(self, payload_length):
-         """
-         Return a Generic Error Status Block bytearray
-         """
- 
-+        data_length = payload_length
-+        data_length += self.GENERIC_DATA_SIZE
-+
-         gebs = bytearray()
- 
-         if self.raw_data:
--            raw_data_offset = len(gebs)
-+            raw_data_offset = payload_length
-+            raw_data_offset += self.GENERIC_ERROR_STATUS_SIZE
-+            raw_data_offset += self.GENERIC_DATA_SIZE
-         else:
-             raw_data_offset = 0
- 
-@@ -617,8 +623,7 @@ def send_cper(self, notif_type, payload,
-         if raw_data:
-             self.raw_data = raw_data
- 
--        cper_length = len(payload)
--        data_length = cper_length + len(self.raw_data) + self.GENERIC_DATA_SIZE
-+        payload_length = len(payload)
- 
-         if gede and len(gede) != 72:
-             print(f"Invalid Generic Error Data Entry length: {len(gede)}. Ignoring it")
-@@ -629,16 +634,16 @@ def send_cper(self, notif_type, payload,
-             gebs = None
- 
-         if not gede:
--            gede = self.get_gede(notif_type, cper_length)
-+            gede = self.get_gede(notif_type, payload_length)
- 
-         if not gebs:
--            gebs = self.get_gebs(data_length)
-+            gebs = self.get_gebs(payload_length)
- 
-         cper_data = bytearray()
-         cper_data.extend(gebs)
-         cper_data.extend(gede)
--        cper_data.extend(bytearray(self.raw_data))
-         cper_data.extend(bytearray(payload))
-+        cper_data.extend(bytearray(self.raw_data))
- 
-         if self.debug:
-             print(f"GUID: {notif_type}")
 -- 
 2.52.0
 
