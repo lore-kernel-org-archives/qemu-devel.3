@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144E6D72379
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 11:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4321D7236C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 11:40:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjFTs-0000yb-Ky; Fri, 23 Jan 2026 06:37:36 -0500
+	id 1vjFVz-0002ZN-Rn; Fri, 23 Jan 2026 06:39:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vjFTq-0000xA-GQ; Fri, 23 Jan 2026 06:37:34 -0500
+ id 1vjFVw-0002Y9-QE; Fri, 23 Jan 2026 06:39:44 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vjFTo-0005eH-Vg; Fri, 23 Jan 2026 06:37:34 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dyG9d0lrTzHnHJC;
- Fri, 23 Jan 2026 19:36:53 +0800 (CST)
+ id 1vjFVu-00060G-Po; Fri, 23 Jan 2026 06:39:44 -0500
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dyGDB4LNXzJ46XN;
+ Fri, 23 Jan 2026 19:39:06 +0800 (CST)
 Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id A447D40571;
- Fri, 23 Jan 2026 19:37:30 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id DDE164056A;
+ Fri, 23 Jan 2026 19:39:35 +0800 (CST)
 Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
  (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 23 Jan
- 2026 11:37:29 +0000
-Date: Fri, 23 Jan 2026 11:37:28 +0000
+ 2026 11:39:34 +0000
+Date: Fri, 23 Jan 2026 11:39:33 +0000
 To: Shameer Kolothum <skolothumtho@nvidia.com>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
  <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
@@ -36,12 +36,13 @@ CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
  <alex@shazbot.org>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
  <smostafa@google.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
  <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>,
- <kjaju@nvidia.com>
-Subject: Re: [PATCH v8 18/37] hw/arm/virt: Set msi-gpa property
-Message-ID: <20260123113728.000057af@huawei.com>
-In-Reply-To: <20260121175248.87649-19-skolothumtho@nvidia.com>
+ <kjaju@nvidia.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v8 34/37] hw/pci: Add helper to insert PCIe extended
+ capability at a fixed offset
+Message-ID: <20260123113933.00003456@huawei.com>
+In-Reply-To: <20260121175248.87649-35-skolothumtho@nvidia.com>
 References: <20260121175248.87649-1-skolothumtho@nvidia.com>
- <20260121175248.87649-19-skolothumtho@nvidia.com>
+ <20260121175248.87649-35-skolothumtho@nvidia.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -75,58 +76,27 @@ From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 21 Jan 2026 17:52:23 +0000
+On Wed, 21 Jan 2026 17:52:39 +0000
 Shameer Kolothum <skolothumtho@nvidia.com> wrote:
 
-> Set the MSI doorbell GPA property for accelerated SMMUv3 devices for use
-> by KVM MSI setup. Also, since any meaningful use of vfio-pci devices with
-> an accelerated SMMUv3 requires both KVM and a kernel irqchip, ensure
-> those are specified when accel=on is selected.
+> Add pcie_insert_capability(), a helper to insert a PCIe extended
+> capability into an existing extended capability list at a caller
+> specified offset.
 > 
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Unlike pcie_add_capability(), which always appends a capability to the
+> end of the list, this helper preserves the existing list ordering while
+> allowing insertion at an arbitrary offset.
+> 
+> The helper only validates that the insertion does not overwrite an
+> existing PCIe extended capability header, since corrupting a header
+> would break the extended capability linked list. Validation of overlaps
+> with other configuration space registers or capability-specific
+> register blocks is left to the caller.
+> 
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
 > Tested-by: Eric Auger <eric.auger@redhat.com>
 > Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-
-Formatting issue I think. With that fixed up
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-
-> ---
->  hw/arm/virt.c | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 4badc1a734..1bbc5d94db 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -3061,6 +3061,26 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->              object_property_set_link(OBJECT(dev), "secure-memory",
->                                       OBJECT(vms->secure_sysmem), NULL);
->          }
-> +        if (object_property_find(OBJECT(dev), "accel") &&
-> +            object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
-> +            hwaddr db_start = 0;
-> +
-> +            if (!kvm_enabled() || !kvm_irqchip_in_kernel()) {
-> +                error_setg(errp, "SMMUv3 accel=on requires KVM with "
-> +                           "kernel-irqchip=on support");
-> +                    return;
-What happened here width indent?
-
-> +            }
-> +
-> +            if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
-> +                /* GITS_TRANSLATER page + offset */
-> +                db_start = base_memmap[VIRT_GIC_ITS].base + 0x10000 + 0x40;
-> +            } else if (vms->msi_controller == VIRT_MSI_CTRL_GICV2M) {
-> +                /* MSI_SETSPI_NS page + offset */
-> +                db_start = base_memmap[VIRT_GIC_V2M].base + 0x40;
-> +            }
-> +            object_property_set_uint(OBJECT(dev), "msi-gpa", db_start,
-> +                                     &error_abort);
-> +        }
->      }
->  }
->  
-
 
