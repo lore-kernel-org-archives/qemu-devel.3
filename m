@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65B44D7237D
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:23:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75F44D6261A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjGAC-0004wi-C6; Fri, 23 Jan 2026 07:21:20 -0500
+	id 1vjGAf-0005Fe-0s; Fri, 23 Jan 2026 07:21:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vjGA7-0004rf-B6
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:15 -0500
+ id 1vjGAO-00053Z-Es
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:34 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vjGA5-0004zx-TI
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:15 -0500
+ id 1vjGAL-00052V-Ly
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769170873;
+ s=mimecast20190719; t=1769170888;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zmQ4kVlin0c8KBX0FvJaXZrddy4do6mTePX6ZqOzRJw=;
- b=f0uwKJ/07uu3F0HHdiGzsheV5Wpv+5/BSCJRIyT/ROpzMpw9VzKN3Lq4J2s+8IZFvBm/r+
- jwcc06L9wzokrGwo5Ter/+Xmx3MBdR/i4ePEFoNKG2MkIk8vbDGm5ts+Lo/kvhVUBl61WP
- RH4Qz+I61oPsi6zKuBGDdX+ISkSP+xI=
+ bh=X4Dq+fUO8dxbp9hG+7gZc96RrwC1q1Qc8B/brKxVYUs=;
+ b=YFrrRRB4o+24apeEw7ntl6l8IIpyUNvhYp3S3+M+OkXq8CU1E5TYa2CVDNsyyahweUOHQw
+ 4xR3nC6tN3oZenll+2sPa4cITn5pXyMEDJMlKY0pQvYsmU701hp8BU40BDA/qc+BVINdw6
+ UF3fMBhxklOnUBxIQBgfxM8fx8W9/ZI=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-279-SVcLalIYOtuC5Vq_RBN9ZQ-1; Fri,
- 23 Jan 2026 07:21:11 -0500
-X-MC-Unique: SVcLalIYOtuC5Vq_RBN9ZQ-1
-X-Mimecast-MFC-AGG-ID: SVcLalIYOtuC5Vq_RBN9ZQ_1769170870
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-491-9gdjj7vOMX-GHC9piksX5Q-1; Fri,
+ 23 Jan 2026 07:21:26 -0500
+X-MC-Unique: 9gdjj7vOMX-GHC9piksX5Q-1
+X-Mimecast-MFC-AGG-ID: 9gdjj7vOMX-GHC9piksX5Q_1769170885
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 812B719775AB
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 12:21:10 +0000 (UTC)
+ id 44CF8195608D; Fri, 23 Jan 2026 12:21:25 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.7])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6276230002D1; Fri, 23 Jan 2026 12:21:07 +0000 (UTC)
+ id 8025D30002D1; Fri, 23 Jan 2026 12:21:22 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: "Houqi (Nick) Zuo" <hzuo@redhat.com>,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PULL 01/13] net/tap-linux.c: avoid abort when setting invalid fd
-Date: Fri, 23 Jan 2026 20:20:50 +0800
-Message-ID: <20260123122102.51422-2-jasowang@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Maksim Davydov <davydov-max@yandex-team.ru>,
+ Jason Wang <jasowang@redhat.com>
+Subject: [PULL 05/13] net/tap: rework scripts handling
+Date: Fri, 23 Jan 2026 20:20:54 +0800
+Message-ID: <20260123122102.51422-6-jasowang@redhat.com>
 In-Reply-To: <20260123122102.51422-1-jasowang@redhat.com>
 References: <20260123122102.51422-1-jasowang@redhat.com>
 MIME-Version: 1.0
@@ -86,53 +86,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Houqi (Nick) Zuo" <hzuo@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-This patch removes abort() call in the tap_fd_set_vnet_hdr_len()
-function. If the fd is found to be in a bad state (e.g., EBADFD
- or ENODEV), the function will print an error message.
+Simplify handling scripts: parse all these "no" and '\0' once, and
+then keep simpler logic for net_tap_open() and net_init_tap_one(): NULL
+means no script to run, otherwise run script.
 
-When QEMU creates a tap device automatically and the tap device is
-manually removed from the host while the guest is running, the tap
-device file descriptor becomes invalid. Later, when the guest executes
-shutdown, the tap_fd_set_vnet_hdr_len() function may be called and
-abort QEMU with a core dump when attempting to use the invalid fd.
-The expected behavior for this negative test case is that QEMU should
-report an error but continue running rather than aborting.
-
-Testing:
-- Start QEMU with automatically created tap device
-- Manually remove the tap device on the host
-- Execute shutdown in the guest
-- Verify QEMU reports an error but does not abort
-
-Fixes: 0caed25cd171 ("virtio: Call set_features during reset")
-Signed-off-by: Houqi (Nick) Zuo <hzuo@redhat.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- net/tap-linux.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/tap.c | 46 ++++++++++++++++++++++++++--------------------
+ 1 file changed, 26 insertions(+), 20 deletions(-)
 
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index 909c4f1fcf..54de3cd06b 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -214,10 +214,11 @@ bool tap_probe_has_tunnel(int fd)
+diff --git a/net/tap.c b/net/tap.c
+index 8182f39851..c7d8e1a3be 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -91,6 +91,21 @@ static void launch_script(const char *setup_script, const char *ifname,
+ static void tap_send(void *opaque);
+ static void tap_writable(void *opaque);
  
- void tap_fd_set_vnet_hdr_len(int fd, int len)
- {
--    if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
--        fprintf(stderr, "TUNSETVNETHDRSZ ioctl() failed: %s. Exiting.\n",
--                strerror(errno));
--        abort();
-+    int ret;
++static char *tap_parse_script(const char *script_arg, const char *default_path)
++{
++    g_autofree char *res = g_strdup(script_arg);
 +
-+    ret = ioctl(fd, TUNSETVNETHDRSZ, &len);
-+    if (ret != 0) {
-+        error_report("TUNSETVNETHDRSZ ioctl() failed: %s.", strerror(errno));
++    if (!res) {
++        res = get_relocated_path(default_path);
++    }
++
++    if (res[0] == '\0' || strcmp(res, "no") == 0) {
++        return NULL;
++    }
++
++    return g_steal_pointer(&res);
++}
++
+ static void tap_update_fd_handler(TAPState *s)
+ {
+     qemu_set_fd_handler(s->fd,
+@@ -676,9 +691,7 @@ static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
+         return -1;
      }
- }
  
+-    if (setup_script &&
+-        setup_script[0] != '\0' &&
+-        strcmp(setup_script, "no") != 0) {
++    if (setup_script) {
+         launch_script(setup_script, ifname, fd, &err);
+         if (err) {
+             error_propagate(errp, err);
+@@ -714,9 +727,9 @@ static void net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         qemu_set_info_str(&s->nc, "helper=%s", tap->helper);
+     } else {
+         qemu_set_info_str(&s->nc, "ifname=%s,script=%s,downscript=%s", ifname,
+-                          script, downscript);
++                          script ?: "no", downscript ?: "no");
+ 
+-        if (strcmp(downscript, "no") != 0) {
++        if (downscript) {
+             snprintf(s->down_script, sizeof(s->down_script), "%s", downscript);
+             snprintf(s->down_script_arg, sizeof(s->down_script_arg),
+                      "%s", ifname);
+@@ -970,23 +983,16 @@ free_fail:
+             return -1;
+         }
+     } else {
+-        const char *script = tap->script;
+-        const char *downscript = tap->downscript;
+-        g_autofree char *default_script = NULL;
+-        g_autofree char *default_downscript = NULL;
++        g_autofree char *script =
++            tap_parse_script(tap->script, DEFAULT_NETWORK_SCRIPT);
++        g_autofree char *downscript =
++            tap_parse_script(tap->downscript, DEFAULT_NETWORK_DOWN_SCRIPT);
++
+         if (tap->vhostfds) {
+             error_setg(errp, "vhostfds= is invalid if fds= wasn't specified");
+             return -1;
+         }
+ 
+-        if (!script) {
+-            script = default_script = get_relocated_path(DEFAULT_NETWORK_SCRIPT);
+-        }
+-        if (!downscript) {
+-            downscript = default_downscript =
+-                                 get_relocated_path(DEFAULT_NETWORK_DOWN_SCRIPT);
+-        }
+-
+         if (tap->ifname) {
+             pstrcpy(ifname, sizeof ifname, tap->ifname);
+         } else {
+@@ -994,7 +1000,7 @@ free_fail:
+         }
+ 
+         for (i = 0; i < queues; i++) {
+-            fd = net_tap_init(tap, &vnet_hdr, i >= 1 ? "no" : script,
++            fd = net_tap_init(tap, &vnet_hdr, i >= 1 ? NULL : script,
+                               ifname, sizeof ifname, queues > 1, errp);
+             if (fd == -1) {
+                 return -1;
+@@ -1009,8 +1015,8 @@ free_fail:
+             }
+ 
+             net_init_tap_one(tap, peer, "tap", name, ifname,
+-                             i >= 1 ? "no" : script,
+-                             i >= 1 ? "no" : downscript,
++                             i >= 1 ? NULL : script,
++                             i >= 1 ? NULL : downscript,
+                              vhostfdname, vnet_hdr, fd, &err);
+             if (err) {
+                 error_propagate(errp, err);
 -- 
 2.42.0
 
