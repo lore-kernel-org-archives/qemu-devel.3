@@ -4,57 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33991D74ED9
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E44D74ED8
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:17:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjHtq-000578-FH; Fri, 23 Jan 2026 09:12:34 -0500
+	id 1vjHyM-0008QJ-QD; Fri, 23 Jan 2026 09:17:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vjHto-000559-2d
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:12:32 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vjHth-00034Z-9e
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:12:31 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dyKc54bdyzHnH8X;
- Fri, 23 Jan 2026 22:11:33 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 6D4CE40570;
- Fri, 23 Jan 2026 22:12:11 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 23 Jan
- 2026 14:12:10 +0000
-Date: Fri, 23 Jan 2026 14:12:09 +0000
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-CC: "Michael S. Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>, "Cleber
- Rosa" <crosa@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH v2 02/13] scripts/qmp_helper: add missing CXL UEFI GUID
-Message-ID: <20260123141209.00007326@huawei.com>
-In-Reply-To: <a1dde4d9549539af805ac171a5ed76c8fd859acf.1769175069.git.mchehab+huawei@kernel.org>
-References: <cover.1769175069.git.mchehab+huawei@kernel.org>
- <a1dde4d9549539af805ac171a5ed76c8fd859acf.1769175069.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHyD-0008Nu-J8
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:05 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHyB-0003bf-9T
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:05 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6140733809;
+ Fri, 23 Jan 2026 14:17:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1769177821; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ovdB0kOBzaamRhVtp/VLYoKyFg6qgCYXG6S0CSDOrO8=;
+ b=wrSMKPvmEl4s5bybOGlIxcT/472YWMvcbSlzQB5+5Iscr3ttBPJaBr3ea2QtURjtYMQxk3
+ sRflDb8mRVvrIcd/6gB+/g37lr0BI75XrNQdvAXFX5ElJo7VJnp7oOZReIc6qa4vmLOpXZ
+ AIo9UNJxmyuYL8GNvIWQ3jE/4twJAoc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1769177821;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ovdB0kOBzaamRhVtp/VLYoKyFg6qgCYXG6S0CSDOrO8=;
+ b=LAhDLVraWV6TWkA35pntyn8LyYbS/w4mbT58Rv4ImgHCsAKqWIDnM1tGvsDp/Hwzss//eQ
+ NGWRaWO9UMvn2DCA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1769177821; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ovdB0kOBzaamRhVtp/VLYoKyFg6qgCYXG6S0CSDOrO8=;
+ b=wrSMKPvmEl4s5bybOGlIxcT/472YWMvcbSlzQB5+5Iscr3ttBPJaBr3ea2QtURjtYMQxk3
+ sRflDb8mRVvrIcd/6gB+/g37lr0BI75XrNQdvAXFX5ElJo7VJnp7oOZReIc6qa4vmLOpXZ
+ AIo9UNJxmyuYL8GNvIWQ3jE/4twJAoc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1769177821;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ovdB0kOBzaamRhVtp/VLYoKyFg6qgCYXG6S0CSDOrO8=;
+ b=LAhDLVraWV6TWkA35pntyn8LyYbS/w4mbT58Rv4ImgHCsAKqWIDnM1tGvsDp/Hwzss//eQ
+ NGWRaWO9UMvn2DCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C18DF1395E;
+ Fri, 23 Jan 2026 14:16:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aDvKH9uCc2m8HAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 14:16:59 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com,
+	berrange@redhat.com,
+	ppandit@redhat.com
+Subject: [PATCH v4 00/25] migration: Cleanup early connection code
+Date: Fri, 23 Jan 2026 11:16:30 -0300
+Message-ID: <20260123141656.6765-1-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FROM_EQ_ENVFROM(0.00)[]; TO_DN_NONE(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ gitlab.com:url]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,36 +109,156 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 23 Jan 2026 14:35:16 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+Rebased on master and adjusted a few commit messages. Also a minor
+change patch 20.
 
-> The UEFI 2.11 - N.2.14. CXL Component Events Section states that
-> CXL events are described at CXL specification 3.2:
->         8.2.10.2.1 Event Records
-> 	Table 8-55. Common Event Record Format
-> 
-> Add the GUIDs defined here to fuzzy logic error injection code.
-> 
-> It should be noticed that, while the section states that:
-> 
-> 	"This section defines the standard event record format
-> 	 that all CXL devices shall use when reporting events
-> 	 to the host."
-> 
-> And the field at byte offset 0 has all the GUIDs below, in practice,
-> not all those events will reach the OSPM, as some are fabric
-> management events and OS management flows for dynamic capacity.
-> 
-> Yet, it is easier to keep the table in sync with the specs than to
-> filter them out and justify why they won't need within CPER scope.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/2274889063
 
+v3:
+https://lore.kernel.org/r/20260109124043.25019-1-farosas@suse.de
+
+v2:
+https://lore.kernel.org/r/20260105190644.14072-1-farosas@suse.de
+
+Removed some extra changes that were not adding much to the series,
+left multifd_recv_setup() call where it was; stopped merging the
+connection code at the end of the series.
+
+Added further cleanup to CPR code in qmp_migrate and moved it to
+cpr-transfer.c.
+
+v1 (rfc):
+https://lore.kernel.org/r/20251226211930.27565-1-farosas@suse.de
+
+Address some of the issues that make the early connection code a bit
+too idiosyncratic. By "early connection" I mean from
+qmp_migrate[_incoming] until the start of the migration
+thread|coroutine.
+
+(IOW, the whole dance of going into socket code, starting an async
+routine, calling back to migration code, checking TLS, going back
+again, coming back once more, etc. All while passing an error_in and
+hostname string that eventually gets (maybe) ignored in tls code,
+along with some is_resume checks along the way)
+
+This series is mostly inspired by the work Markus and Peter did
+recently in organizing some of the error handling code. The new
+migration_connect_error_propagate() function seems like a good place
+to centralize the error handling and call migration_cleanup() during
+this early connection phase when everything is still fairly
+linear. (apologies if I'm dirtying your design =)
+
+Aside from the initial patches that are a bit disruptive, most of the
+series is just refactoring to make the code easier to navigate, names
+more consistent and some general cleanups.
+
+- patches 1-8:
+
+General cleanups, could be applied standalone, although they are
+prerequisites for the rest of the series.
+
+- patches 9-12:
+
+Changes to allow calling migration_cleanup() from
+migration_connect_error_propagate().
+
+The idea here is to make sure error propagation and cleanup happen
+when the error is detected, without calling into non-error-path
+functions.
+
+This is the more risky change because it will cause cleanup to run in
+places where it didn't before.
+
+- patch 13 & 19:
+
+The main change of this series, simplifying the
+qmp-migrate --> migration_connect path. Stops calling the connection
+functions when an error happens in the transport code, adds
+clarification around which paths have asynchronous completion and
+makes the synchronous path return to their caller to start the
+migration instead of initiating it themselves.
+
+- patches 14-18, 20-22:
+
+Moves code out of migration.c and into channel.c. Now that the code is
+more compartmentalized, move it to a more appropriate source file.
+
+- patches 23-25:
+
+BONUS CONTENT, wrap the uri/channels parsing and move it to channel.c
+as well.
+
+- future work?
+
+I think we could move all QMP command functions to a QAPI-specific
+file, but I don't see any standardization in the tree, there's
+block/qapi.c, various instances of foo-qmp-cmds.c and many more just
+laying along with the rest of the code. So I left this for another
+moment.
+
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/2233810778
+
+Fabiano Rosas (25):
+  migration: Remove redundant state change
+  migration: Fix state change at migration_channel_process_incoming
+  migration/tls: Remove unused parameter
+  migration: Cleanup TLS handshake hostname passing
+  migration: Move postcopy_try_recover into migration_incoming_process
+  migration: Use migrate_mode() to query for cpr-transfer
+  migration: Free the error earlier in the resume case
+  migration: Move error reporting out of migration_cleanup
+  migration: Expand migration_connect_error_propagate to cover
+    cancelling
+  migration: yank: Move register instance earlier
+  migration: Fold migration_cleanup() into
+    migration_connect_error_propagate()
+  migration: Handle error in the early async paths
+  migration: Move setting of QEMUFile into
+    migration_outgoing|incoming_setup
+  migration/rdma: Use common connection paths
+  migration: Start incoming from channel.c
+  migration/channel: Rename migration_channel_connect
+  migration: Rename instances of start
+  migration: Move channel code to channel.c
+  migration: Move transport connection code into channel.c
+  migration: Move channel parsing to channel.c
+  migration: Move URI parsing to channel.c
+  migration: Free cpr-transfer MigrationAddress along with gsource
+  migration: Move CPR HUP watch to cpr-transfer.c
+  migration: Remove qmp_migrate_finish
+  migration/channel: Centralize calling
+    migration_channel_connect_outgoing
+
+ include/migration/cpr.h  |   5 +
+ migration/channel.c      | 374 ++++++++++++++++++++++----
+ migration/channel.h      |  27 +-
+ migration/cpr-exec.c     |   2 +-
+ migration/cpr-transfer.c |  23 ++
+ migration/exec.c         |  11 +-
+ migration/exec.h         |   8 +-
+ migration/fd.c           |  15 +-
+ migration/fd.h           |   9 +-
+ migration/file.c         |  20 +-
+ migration/file.h         |   7 +-
+ migration/migration.c    | 562 ++++++++++-----------------------------
+ migration/migration.h    |  15 +-
+ migration/multifd.c      |  17 +-
+ migration/multifd.h      |   2 +-
+ migration/options.c      |   5 +
+ migration/postcopy-ram.c |   2 +-
+ migration/rdma.c         |  46 ++--
+ migration/rdma.h         |   6 +-
+ migration/socket.c       |  30 +--
+ migration/socket.h       |   6 +-
+ migration/tls.c          |  33 +--
+ migration/tls.h          |   9 +-
+ migration/trace-events   |  20 +-
+ 24 files changed, 642 insertions(+), 612 deletions(-)
+
+-- 
+2.51.0
 
 
