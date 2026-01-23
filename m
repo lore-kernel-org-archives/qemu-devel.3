@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79129D74EDE
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9331ED74EE3
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIbp-00049D-Ka; Fri, 23 Jan 2026 09:58:01 -0500
+	id 1vjIbw-0004Gd-2h; Fri, 23 Jan 2026 09:58:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbm-00046D-PL
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:57:59 -0500
-Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ id 1vjIbs-0004DX-M8
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:04 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbl-0007k6-40
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:57:58 -0500
-Received: by mail-wr1-x442.google.com with SMTP id
- ffacd0b85a97d-435a11957f6so1928678f8f.0
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:57:56 -0800 (PST)
+ id 1vjIbr-0007mB-5j
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:04 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4801bbbdb4aso23957205e9.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180274; x=1769785074; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=pqWj7e9H0VZffi7592hwo9AGcQ1WEnpnJ0TigrnC4EQ=;
- b=BQBHeY6VIIQ9yB9vGtwyLFtIoo/z5eqaPW+jy1UuMXTZwa4CuoOw5ptP0leb0nUtiU
- 4U+mgtm//MDXkjbVOewpWg4lnKg0cpcOo+TvbkbacBWhBAhNSji+Rkhol9amlvY39wkx
- ugV+qFuoGzZWgIR8AYT+61z3nJ/UsouBt8hjqVXMLY9Umxx/0qNKJJmb8RY+siRyokU7
- 4J9a0DDX6VJ2gbtJyag3M6PRl1eStdGXeJRbMbw/1/HeJ7THxbrcySIVZQO9Mic+mbq0
- T0KzxTyjzNNqyjoDDoWUkzG7QHlMMxCHaij/abopPwcFGF6cCgDdjGNAWx5Db5/z7I+Y
- i3Kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180274; x=1769785074;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1769180282; x=1769785082; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pqWj7e9H0VZffi7592hwo9AGcQ1WEnpnJ0TigrnC4EQ=;
- b=bHQF35XD0KlY8HjM1UYK6RIN0DHCU3CpJ4Dn17mFzLP8/eIEhEjCABBgzov8jbMfst
- WwE1CP3kXQYyf6pBENjaoaaQcajLe/vqfuy2vNhYNJDRu1QxwhXSTYIbJZTu/rMs/n7D
- c8+jGG2n0NGjmepFcvvJ46N8XkFm2iv3i1LhqqhTC+PlnSZM1hV6IHZzC2EbMFViArEE
- XeeQP32lflbq9PeNULQIzWTr0KVjYBwPTcfadLR3hPpUBcKtNDVreQ1czUyBJxDThWJe
- FYl7KfviN6pA348JznEFmsw80ua6eQn0Fsgbp7WU5pD2HjxKj6zTz0qSYmTdF7IijQKd
- wMQw==
-X-Gm-Message-State: AOJu0Yw2dRn4ifYm1slEfSlLvBw1Y/JKlrEm8O0jxFoJGDOafTy2NmD0
- 1eM4MVz40WcXCCFfEpBTpOUeMBpTCzwmseTEZSzLJ2Uirn6YEtTjC7W41PVJJ+jSRLQ=
-X-Gm-Gg: AZuq6aKMdYSFVWE5B2gnJrWoXiS296XLD8gUP/h8kRq4Vp4jYjjYAUsXMJN28PgQrXP
- PfJTGJzdoQZorwo5cWfO+xq7HN1AlPRRkM9b0/1OgQfactg5hdq6uhbkGpCdUcKxAPTzbcAwStW
- rbpqkIX42U/fT6Do7Wu85u097CVwbBlVmUKJGy32GJQUXFRKIPnoZDlYtH97YLz7DhjBiu9qCSw
- l/rEPeAJBKcv3IfIuBVyR/f5ixydJ6xPKT6C9YbeE8xj0CO+HfZpJ4XMwROr/ZF7J+C3D+1kHhF
- f/BbLmRhOF54E3bOxFg5+5BsuN2aLeKt3wT03R6XZRAzn+sr5vDGfMKbLrs68dXn4DbvZuJJvHO
- mCWt3dzMz+CyHAM6oU0J5qR2HAoM2ShhzTwbdafX62y6B7Bh6J3ubpLrmkKK4pfOpY4A9rihWKZ
- e6DmiCUc1vzqUl
-X-Received: by 2002:a5d:63ce:0:b0:435:bcbe:d104 with SMTP id
- ffacd0b85a97d-435bcbed11amr430310f8f.34.1769180274269; 
- Fri, 23 Jan 2026 06:57:54 -0800 (PST)
+ bh=PKDjyRCg+cd8tsWJxtS527dnA8ZjwwQ9JRmbvue6S9g=;
+ b=zJIlFQ1a0W2Mulz9RX9OCnGQliFXwyWHTDM94tDdI1dCmar2UazZI8HATbQgY15ksK
+ Jfyr808MZ+yIIsUO0EM1IHG9NhUouH6oJR2SWcFAOofCWvGosmUmgKbHmGuU0Qh8ssrZ
+ pu0B3ltGV50LQNuRVVbxMhAUuHoHI7OSop1ZVT+MsCPKI5mWYnibweBsRB2GtI9PTDXx
+ ZxD2tzHveylEmGQhAMgc6fTYhmg2WVwkqyDg71a5WebO6QgtvXbefjA2IMWJitHGfkgb
+ LlyZazx1Dg62xXe9OxIivMKu9dbe4+LZbBV/cabdeMwzPukwlJBRpzFMJPNzXDjGUIR6
+ FQnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769180282; x=1769785082;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PKDjyRCg+cd8tsWJxtS527dnA8ZjwwQ9JRmbvue6S9g=;
+ b=El760eP3QOdkd/Spo2NHWYu2lK0pGy6kMndFLN7nqQ+hAo+Cz0qMbmHpgNcP3Ohj/4
+ UsT43HS4V0tu5Z8kC8q0Zqf5X3VSFsujS1Q6gaU+9bZXmQzQmx6JUnPQzJPDePzzAZDK
+ eBX0XWsiwxehRsEi1yXjtDk1JKMJ46Kesn+jjsOdmlXV6OgTebkZNJVXuwA3JjJXVr8O
+ HqXh3BdZeomjwX89L6harwGVUs+DrO0+RbizNcvWQEUz0MD1Ctnx6VTRXZKfIDGdyins
+ ZmkYHokQJKzo8BZoRHLWUKu+lWhRdrZIS8Dzm8pVvjgswsOjN58r1LmCEufaN7cxBaki
+ dQ3w==
+X-Gm-Message-State: AOJu0Yx5BHTbwbyffdBO+J8AFin0N8BNVQCsDf9qEaFimRsxgP+OENfI
+ 3SwXTE5nUB0arJwWEkosh5g881iojWfCj5+yaDLnCKm5g5emCl4pfaLITnDjvMWUtYA=
+X-Gm-Gg: AZuq6aK4LDXdxarOukFBZwUVu4yft6tZXFORZFTVbC5YecuEDj8XACQQgG1I8zkNXbH
+ oS7TPeNZhIqe2D+3LERDvnawtJp5w8+zd3wfyW6aXzZoZhJYpBZ0yfxETL16EaLT4Ijtol54e4O
+ p9l/VhNoOh5cIusY/eaZOg/M5wz19HCL8UI02QFUlDxbcJ1lK+ElNNlMWsqDqYZKK1b9fOCCaOZ
+ eBR6T3jsLFWiyjiznqT4wsZnLMdtOTlhW0J6fvf7/QLjMR0ofnbg0zhu6OSpBR+niXCkTHocSCR
+ 3xobqMfz779hGeeC+ytrDow4s3D+1Zs35zdOXxAp7+K4uK1jsDdeB2cQbaptf9rSLDLge+m3nQR
+ R1S/lr4kU5QBUZsGuIAI3Pzja9US+ZdNRoUu+AG+NIkA3EWOXO3OVUX3PpPHGFhxTC6Veu2ZwM7
+ EjmJ+i0qaKqi/r
+X-Received: by 2002:a05:600c:8691:b0:47d:7004:f488 with SMTP id
+ 5b1f17b1804b1-480470b7d42mr70391195e9.10.1769180281646; 
+ Fri, 23 Jan 2026 06:58:01 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1c02c91sm7384541f8f.9.2026.01.23.06.57.51
+ 5b1f17b1804b1-4804d8c0aebsm60924395e9.15.2026.01.23.06.57.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 06:57:51 -0800 (PST)
+ Fri, 23 Jan 2026 06:57:57 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 681495F7B3;
+ by draig.lan (Postfix) with ESMTP id D54EB5F8DF;
  Fri, 23 Jan 2026 14:57:50 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -71,17 +72,21 @@ Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH v2 00/16] MAINTAINER updates plus conversion of
- get_maintainers.pl to python
-Date: Fri, 23 Jan 2026 14:57:33 +0000
-Message-ID: <20260123145750.1200879-1-alex.bennee@linaro.org>
+ Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [RFC PATCH v2 05/16] MAINTAINERS: add maintainer for docs/
+Date: Fri, 23 Jan 2026 14:57:38 +0000
+Message-ID: <20260123145750.1200879-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260123145750.1200879-1-alex.bennee@linaro.org>
+References: <20260123145750.1200879-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::442;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x442.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,58 +109,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I wanted to look at adding gitlab tags to MAINTAINERS and baulked
-slightly at figuring out what I would need to change in the perl
-script to cleanly handle it.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-While we imported the perl script from the kernel I'm fairly sure we
-don't use half the features it has and as us grey beards age out less
-people will be willing to tweak it. Consider this a proof-of-concept
-for discussion about if it is worth perusing this path.
+I would like to help maintaining qemu documentation and I've been
+invited by Alex to apply as maintainer.
 
-For v2:
+Files in docs/ that are already maintained will continue to be under
+their respective maintainer. The goal here is to have someone that can
+help on all other files that don't have an official maintainer.
 
-  - added the missing K: keyword support
-  - added basic --git fallback support
-  - picked up a few more MAINTAINER updates from list
-  - updated entries for Arm and *-user
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+Acked-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20260115203529.2713193-1-pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ MAINTAINERS | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-I've CC'd the kernel maintainers for the script to see if they are
-interested in this work.
-
-While the python script is still cooking I will send a PR on Monday
-with just the MAINTAINER updates which are reviewed/acked.
-
-Alex.
-
-Alex Bennée (13):
-  MAINTAINERS: fix missing names
-  MAINTAINERS: fix libvirt entry
-  MAINTAINERS: regularise the status fields
-  MAINTAINERS: update Arm to Supported status
-  MAINTAINERS: be realistic about *-user
-  scripts/get_maintainer.py: minimal argument parsing
-  scripts/get_maintainer.py: resolve the source path
-  scripts/get_maintainer.py: initial parsing of MAINTAINERS
-  scripts/get_maintainer.py: add support for -f
-  scripts/get_maintainer.py: add support reading patch files
-  scripts/get_maintainer.py: add keyword (K:) support
-  scripts/get_maintainer.py: implement basic git fallback support
-  gitlab: add a check-maintainers task
-
-Mads Ynddal (1):
-  MAINTAINERS: remove myself as reviewer
-
-Pierrick Bouvier (2):
-  MAINTAINERS: add maintainer for docs/
-  MAINTAINERS: add reviewer for linux-user
-
- MAINTAINERS                    |  31 +-
- .gitlab-ci.d/static_checks.yml |   9 +
- scripts/get_maintainer.py      | 499 +++++++++++++++++++++++++++++++++
- 3 files changed, 525 insertions(+), 14 deletions(-)
- create mode 100755 scripts/get_maintainer.py
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3604422f8b4..a691e3511c9 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4511,6 +4511,11 @@ Incompatible changes
+ L: devel@lists.libvirt.org
+ F: docs/about/deprecated.rst
+ 
++General Documentation
++M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
++S: Maintained
++F: docs/
++
+ Build System
+ ------------
+ Meson
 -- 
 2.47.3
 
