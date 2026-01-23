@@ -4,78 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D01D72347
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB27D72349
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjByl-0006fd-9x; Fri, 23 Jan 2026 02:53:19 -0500
+	id 1vjC3M-0003o2-5L; Fri, 23 Jan 2026 02:58:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vjBy0-00061E-1w
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:52:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vjC11-00018x-Nj
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:55:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vjBxy-0002E1-3J
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:52:27 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vjC0x-0003Ki-4K
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:55:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769154745;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1769154926;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RW/O1UJIcKyzztYX2VLIxTSDBqXtVxvkWI+R0qeqHfg=;
- b=aioM7loJXk++IP6qFWgFxW/KY3hac/YILxnZQTRTHJ3NIzLXHAhMrSoVpeXug7R2vqOLWB
- qfeL37dxEI9SI3e9fnOQZlfRja6l28rQb+iqcb1Vj6db9C09x2iIysMJ9XgLH0uNcfGJ5U
- 6Hn/yZP7hBCUxrOfcu86aW78mhoKBUw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-gHj_yycZPzeQRroM7mwfsA-1; Fri,
- 23 Jan 2026 02:52:21 -0500
-X-MC-Unique: gHj_yycZPzeQRroM7mwfsA-1
-X-Mimecast-MFC-AGG-ID: gHj_yycZPzeQRroM7mwfsA_1769154739
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CC5CE19373FC; Fri, 23 Jan 2026 07:52:18 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.5])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A095030002D8; Fri, 23 Jan 2026 07:52:16 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>
-Subject: [PATCH 24/37] audio: drop audio driver registration
-Date: Fri, 23 Jan 2026 11:49:27 +0400
-Message-ID: <20260123074945.2563196-25-marcandre.lureau@redhat.com>
-In-Reply-To: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
-References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
+ bh=MhvbLy8fs130JJiPG7sVG+BnMVxDdAUEPqvbqFmmcX0=;
+ b=c/0kMC1WsR5oV+5sobCsGjzsZpqrs8TpO4fQsnpS7gArEhA8xAOYTBOAiUp3+joDemjMt3
+ JyPVx36oPXI39lqxvbQ2QKuGIB+mp6/MRm4Xxu7s7b07oBXnxAuLbGVHI+B+o5GEXYly8t
+ gsY+26e1Jy/4Jo+ts9SRZtBnE5FrFfo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-9-g-vMJVJRMH6JVVg43U6XjQ-1; Fri, 23 Jan 2026 02:55:23 -0500
+X-MC-Unique: g-vMJVJRMH6JVVg43U6XjQ-1
+X-Mimecast-MFC-AGG-ID: g-vMJVJRMH6JVVg43U6XjQ_1769154922
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4801e3aab32so9015185e9.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Jan 2026 23:55:22 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769154922; x=1769759722;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MhvbLy8fs130JJiPG7sVG+BnMVxDdAUEPqvbqFmmcX0=;
+ b=ZCK5b379fm35O8DlBen7fdqb9FTSD8wa0OP96eR0j4odAAEeiSorDAj65RMvQjvCsQ
+ rtpt2QPWNkVVHXPNQUah3X9iTqdzs4WjWzQ9fAUwsmy8cPjc0aim6RQNX9Pcn/TUIapw
+ KhPhLgcjIugaoOsHHoCt72XQy7hIvkqZnp3qHrgwLQ4x82h/qY9ad8O9QqHrqAyDEKBx
+ 53JDdyvqyNtWPYfjjgYX6E1Om/hZZ+O8nvKQibJ9KOWFYvAOJFOWuzgL9C+0QqCJvrZe
+ ISj8OOmAwdq/tSsHTrptRjhl1akmmo3UkmzH0tlEUtoXcfuSeO7+boXhO/0yZCZR1YU+
+ WKJw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWIdge0H7o0qaKrRLHZVArIf4rmCjpfgIG8b41gjYpgD3wkjYj13tZ2s6sPmJnc4ORRZ/ioA2xFdmWZ@nongnu.org
+X-Gm-Message-State: AOJu0YzNL3/S3wXSXs4riy156jqXiess/ENqD8/B8o9qS7GMrBvPvHRv
+ 1kBMnsVIl1/KJby/qyaq+IE4aG5WpT/vhZqdGGU/2e5KKsFvYu31ACeRRxFcig/Ow2cQ3Nt05xj
+ K04LwfLSqFOeMOQfb617Vkdh9G0A7O5Qt1BMdviVZLgwB/VmFhOhONKK2
+X-Gm-Gg: AZuq6aLNiKlKVk6zThIpciuCrBkkFGrhzPg2K7Eg3v3K+BItdr+ARn4rguXA1MwmZwF
+ boVpbyq65Af7MhybK2VznEMqfMbFUDNpJvNtqnL+zUOVFRkjuB6TJbmYpP3mnHP53ax0e12p5hM
+ YhmUM7jrPdhV099ajGz1zvaGvwXRRj963Q4u4OrU3cADl/Pp88lmrie1gMtipBRbXbpXZpDmr4q
+ d9eQ9AeIHajzXfOwRCOI6K2Cj0y4nPALQR7xFi2bPg5zhfuGm4bzkTYbWjHUtEB6bQa+/jUPges
+ OG/7gF9Dd0k8qgY5E+HljqEl4u7Xt1ts4euyoVwkQsvUCCVIGGfMDxG242QyubYlOCbYLMe9PS6
+ I88ewjOKzCOy/Snloy49Byq3OGu4MUFgfykOFeSXrBCpNvkt9L1VQEN6BDg==
+X-Received: by 2002:a05:600c:6095:b0:480:39ad:3b7c with SMTP id
+ 5b1f17b1804b1-4804c9624f5mr38523015e9.16.1769154921782; 
+ Thu, 22 Jan 2026 23:55:21 -0800 (PST)
+X-Received: by 2002:a05:600c:6095:b0:480:39ad:3b7c with SMTP id
+ 5b1f17b1804b1-4804c9624f5mr38522605e9.16.1769154921325; 
+ Thu, 22 Jan 2026 23:55:21 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4804d5fee94sm17081625e9.1.2026.01.22.23.55.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Jan 2026 23:55:20 -0800 (PST)
+Message-ID: <4d1a883b-5465-45af-8dcc-eb905f552c29@redhat.com>
+Date: Fri, 23 Jan 2026 08:55:18 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 00/37] hw/arm/virt: Add support for user-creatable
+ accelerated SMMUv3
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: jgg@nvidia.com, nicolinc@nvidia.com, ddutile@redhat.com,
+ berrange@redhat.com, clg@redhat.com, alex@shazbot.org, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
+ zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
+ kjaju@nvidia.com
+References: <20260121175248.87649-1-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260121175248.87649-1-skolothumtho@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,279 +119,202 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Hi Peter, Richard,
 
-module_object_class_by_name() handles loading the module providing the
-requested object.
+On 1/21/26 6:52 PM, Shameer Kolothum wrote:
+> Hi,
+>
+> Changes since v7:
+>  https://lore.kernel.org/qemu-devel/20260111195508.106943-1-skolothumtho@nvidia.com/
+>  -Addressed comments and collected R-by and T-by tags. Thanks!.
+>  -Rebased to latest master.
+>  -Reworked PASID support patches (patch #34, #36).
+>
+> I think this series is in good shape now and mature enough for inclusion.
+>
+> Patch organization:
+>
+> 1–28: Enable accelerated SMMUv3 with features aligned to the default QEMU
+> SMMUv3 implementation, including IORT RMR-based MSI support.
+>
+> 29–31: Add user-configurable options for RIL, ATS, and OAS features.
+>
+> 32–37: Add PASID support, including required VFIO changes.
+>
+> Please take a look and let me know your feedback.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- audio/audio_int.h   |  2 --
- audio/alsaaudio.c   |  1 -
- audio/audio.c       | 43 +++++++++++++------------------------------
- audio/dbusaudio.c   |  1 -
- audio/dsoundaudio.c |  1 -
- audio/jackaudio.c   |  1 -
- audio/noaudio.c     |  1 -
- audio/ossaudio.c    |  1 -
- audio/paaudio.c     |  1 -
- audio/pwaudio.c     |  1 -
- audio/sdlaudio.c    |  1 -
- audio/sndioaudio.c  |  1 -
- audio/spiceaudio.c  |  1 -
- audio/wavaudio.c    |  1 -
- audio/coreaudio.m   |  1 -
- 15 files changed, 13 insertions(+), 45 deletions(-)
+This big series collected R-b's and T-bs for all patches I think. Please
+could you consider pulling it?
 
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index 0b97c8edee3..446ba1d52c6 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -259,8 +259,6 @@ extern const struct mixeng_volume nominal_volume;
- 
- extern const char *audio_prio_list[];
- 
--void audio_driver_register(audio_driver *drv);
--
- void audio_pcm_init_info (struct audio_pcm_info *info, const struct audsettings *as);
- void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len);
- 
-diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
-index 881f3d0349d..e8541e1a2a3 100644
---- a/audio/alsaaudio.c
-+++ b/audio/alsaaudio.c
-@@ -972,7 +972,6 @@ static const TypeInfo audio_alsa_info = {
- 
- static void register_audio_alsa(void)
- {
--    audio_driver_register(&alsa_audio_driver);
-     type_register_static(&audio_alsa_info);
- }
- type_init(register_audio_alsa);
-diff --git a/audio/audio.c b/audio/audio.c
-index f6896229cfb..53b3ad09bf9 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -67,40 +67,21 @@ const char *audio_prio_list[] = {
-     NULL
- };
- 
--static QLIST_HEAD(, audio_driver) audio_drivers;
- static AudiodevListHead audiodevs =
-     QSIMPLEQ_HEAD_INITIALIZER(audiodevs);
- static AudiodevListHead default_audiodevs =
-     QSIMPLEQ_HEAD_INITIALIZER(default_audiodevs);
- 
--
--void audio_driver_register(audio_driver *drv)
--{
--    QLIST_INSERT_HEAD(&audio_drivers, drv, next);
--}
--
--static audio_driver *audio_driver_lookup(const char *name)
-+static AudioBackendClass *audio_be_class_by_name(const char *name)
- {
--    struct audio_driver *d;
--    Error *local_err = NULL;
--    int rv;
-+    g_autofree char *tname = g_strconcat("audio-", name, NULL);
-+    ObjectClass *oc = module_object_class_by_name(tname);
- 
--    QLIST_FOREACH(d, &audio_drivers, next) {
--        if (strcmp(name, d->name) == 0) {
--            return d;
--        }
--    }
--    rv = audio_module_load(name, &local_err);
--    if (rv > 0) {
--        QLIST_FOREACH(d, &audio_drivers, next) {
--            if (strcmp(name, d->name) == 0) {
--                return d;
--            }
--        }
--    } else if (rv < 0) {
--        error_report_err(local_err);
-+    if (!oc || !object_class_dynamic_cast(oc, TYPE_AUDIO_BACKEND)) {
-+        return NULL;
-     }
--    return NULL;
-+
-+    return AUDIO_BACKEND_CLASS(oc);
- }
- 
- static AudioBackend *default_audio_be;
-@@ -1763,7 +1744,7 @@ static const VMStateDescription vmstate_audio = {
- void audio_create_default_audiodevs(void)
- {
-     for (int i = 0; audio_prio_list[i]; i++) {
--        if (audio_driver_lookup(audio_prio_list[i])) {
-+        if (audio_be_class_by_name(audio_prio_list[i]) != NULL) {
-             QDict *dict = qdict_new();
-             Audiodev *dev = NULL;
-             Visitor *v;
-@@ -2128,9 +2109,11 @@ void audio_help(void)
-     printf("Available audio drivers:\n");
- 
-     for (i = 0; i < AUDIODEV_DRIVER__MAX; i++) {
--        audio_driver *driver = audio_driver_lookup(AudiodevDriver_str(i));
--        if (driver) {
--            printf("%s\n", driver->name);
-+        const char *name = AudiodevDriver_str(i);
-+        AudioBackendClass *be = audio_be_class_by_name(name);
-+
-+        if (be) {
-+            printf("%s\n", name);
-         }
-     }
- }
-diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-index 9b25269a2d9..2e76d650df1 100644
---- a/audio/dbusaudio.c
-+++ b/audio/dbusaudio.c
-@@ -738,7 +738,6 @@ static const TypeInfo audio_dbus_info = {
- 
- static void register_audio_dbus(void)
- {
--    audio_driver_register(&dbus_audio_driver);
-     type_register_static(&audio_dbus_info);
- }
- type_init(register_audio_dbus);
-diff --git a/audio/dsoundaudio.c b/audio/dsoundaudio.c
-index f1902e55262..3de6a3dee9c 100644
---- a/audio/dsoundaudio.c
-+++ b/audio/dsoundaudio.c
-@@ -720,7 +720,6 @@ static const TypeInfo audio_dsound_info = {
- 
- static void register_audio_dsound(void)
- {
--    audio_driver_register(&dsound_audio_driver);
-     type_register_static(&audio_dsound_info);
- }
- type_init(register_audio_dsound);
-diff --git a/audio/jackaudio.c b/audio/jackaudio.c
-index 48a466ed532..dc86724d28f 100644
---- a/audio/jackaudio.c
-+++ b/audio/jackaudio.c
-@@ -718,7 +718,6 @@ static const TypeInfo audio_jack_info = {
- static void register_audio_jack(void)
- {
-     qemu_mutex_init(&qjack_shutdown_lock);
--    audio_driver_register(&jack_driver);
-     type_register_static(&audio_jack_info);
- #if !defined(WIN32) && defined(CONFIG_PTHREAD_SETNAME_NP_W_TID)
-     jack_set_thread_creator(qjack_thread_creator);
-diff --git a/audio/noaudio.c b/audio/noaudio.c
-index e6e8bfd3323..fe649523e88 100644
---- a/audio/noaudio.c
-+++ b/audio/noaudio.c
-@@ -164,7 +164,6 @@ static const TypeInfo audio_none_info = {
- 
- static void register_audio_none(void)
- {
--    audio_driver_register(&no_audio_driver);
-     type_register_static(&audio_none_info);
- }
- type_init(register_audio_none);
-diff --git a/audio/ossaudio.c b/audio/ossaudio.c
-index eb98cc62e9c..013958e1344 100644
---- a/audio/ossaudio.c
-+++ b/audio/ossaudio.c
-@@ -798,7 +798,6 @@ static const TypeInfo audio_oss_info = {
- 
- static void register_audio_oss(void)
- {
--    audio_driver_register(&oss_audio_driver);
-     type_register_static(&audio_oss_info);
- }
- type_init(register_audio_oss);
-diff --git a/audio/paaudio.c b/audio/paaudio.c
-index cf67a9f7593..941f75f25e8 100644
---- a/audio/paaudio.c
-+++ b/audio/paaudio.c
-@@ -957,7 +957,6 @@ static const TypeInfo audio_pa_info = {
- 
- static void register_audio_pa(void)
- {
--    audio_driver_register(&pa_audio_driver);
-     type_register_static(&audio_pa_info);
- }
- type_init(register_audio_pa);
-diff --git a/audio/pwaudio.c b/audio/pwaudio.c
-index 3c2fbccaea4..ed48a9754fe 100644
---- a/audio/pwaudio.c
-+++ b/audio/pwaudio.c
-@@ -874,7 +874,6 @@ static const TypeInfo audio_pw_info = {
- static void
- register_audio_pw(void)
- {
--    audio_driver_register(&pw_audio_driver);
-     type_register_static(&audio_pw_info);
- }
- 
-diff --git a/audio/sdlaudio.c b/audio/sdlaudio.c
-index cc05c1d4531..1a5e3f8a969 100644
---- a/audio/sdlaudio.c
-+++ b/audio/sdlaudio.c
-@@ -517,7 +517,6 @@ static const TypeInfo audio_sdl_info = {
- 
- static void register_audio_sdl(void)
- {
--    audio_driver_register(&sdl_audio_driver);
-     type_register_static(&audio_sdl_info);
- }
- type_init(register_audio_sdl);
-diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
-index 6a3d93efd51..2fa519e3eab 100644
---- a/audio/sndioaudio.c
-+++ b/audio/sndioaudio.c
-@@ -581,7 +581,6 @@ static const TypeInfo audio_sndio_info = {
- 
- static void register_audio_sndio(void)
- {
--    audio_driver_register(&sndio_audio_driver);
-     type_register_static(&audio_sndio_info);
- }
- 
-diff --git a/audio/spiceaudio.c b/audio/spiceaudio.c
-index bfa249b18c4..db9158284ce 100644
---- a/audio/spiceaudio.c
-+++ b/audio/spiceaudio.c
-@@ -351,7 +351,6 @@ static const TypeInfo audio_spice_info = {
- 
- static void register_audio_spice(void)
- {
--    audio_driver_register(&spice_audio_driver);
-     type_register_static(&audio_spice_info);
- }
- type_init(register_audio_spice);
-diff --git a/audio/wavaudio.c b/audio/wavaudio.c
-index 480da5048fa..50b0fb93936 100644
---- a/audio/wavaudio.c
-+++ b/audio/wavaudio.c
-@@ -240,7 +240,6 @@ static const TypeInfo audio_wav_info = {
- 
- static void register_audio_wav(void)
- {
--    audio_driver_register(&wav_audio_driver);
-     type_register_static(&audio_wav_info);
- }
- type_init(register_audio_wav);
-diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-index 882e47f8c25..710ef0fe6ba 100644
---- a/audio/coreaudio.m
-+++ b/audio/coreaudio.m
-@@ -699,7 +699,6 @@ static void coreaudio_audio_fini (void *opaque)
- 
- static void register_audio_coreaudio(void)
- {
--    audio_driver_register(&coreaudio_audio_driver);
-     type_register_static(&audio_coreaudio_info);
- }
- type_init(register_audio_coreaudio);
--- 
-2.52.0
+Thank you in advance
+
+Eric
+>
+> Thanks,
+> Shameer
+>
+> A complete branch can be found here,
+> https://github.com/shamiali2008/qemu-master/tree/master-smmuv3-accel-v8-dmabuf-v4
+>
+> Testing:
+>  Basic sanity testing was performed on an NVIDIA Grace platform with GPU
+>  device assignment. A CUDA test application was used to validate the SVA
+>  use case. Additional testing and feedback are welcome.
+>
+> Eg: Qemu Cmd line:
+>
+> qemu-system-aarch64 -machine virt,gic-version=3,highmem-mmio-size=2T \
+> -cpu host -smp cpus=4 -m size=16G,slots=2,maxmem=66G -nographic \
+> -bios QEMU_EFI.fd -object iommufd,id=iommufd0 -enable-kvm \
+> -object memory-backend-ram,size=8G,id=m0 \
+> -object memory-backend-ram,size=8G,id=m1 \
+> -numa node,memdev=m0,cpus=0-3,nodeid=0 -numa node,memdev=m1,nodeid=1 \
+> -numa node,nodeid=2 -numa node,nodeid=3 -numa node,nodeid=4 -numa node,nodeid=5 \
+> -numa node,nodeid=6 -numa node,nodeid=7 -numa node,nodeid=8 -numa node,nodeid=9 \
+> -device pxb-pcie,id=pcie.1,bus_nr=1,bus=pcie.0 \
+> -device arm-smmuv3,primary-bus=pcie.1,id=smmuv3.0,accel=on,ats=on,ril=off,ssidsize=20,oas=48 \
+> -device pcie-root-port,id=pcie.port1,bus=pcie.1,chassis=1,pref64-reserve=512G,id=dev0 \
+> -device vfio-pci,host=0019:06:00.0,rombar=0,id=dev0,iommufd=iommufd0,bus=pcie.port1,x-vpasid-cap-offset=0xff8 \
+> -object acpi-generic-initiator,id=gi0,pci-dev=dev0,node=2 \
+> ...
+> -object acpi-generic-initiator,id=gi7,pci-dev=dev0,node=9 \
+> -device pxb-pcie,id=pcie.2,bus_nr=8,bus=pcie.0 \
+> -device arm-smmuv3,primary-bus=pcie.2,id=smmuv3.1,accel=on,ats=on,ril=off,ssidsize=20,oas=48 \
+> -device pcie-root-port,id=pcie.port2,bus=pcie.2,chassis=2,pref64-reserve=512G \
+> -device vfio-pci,host=0018:06:00.0,rombar=0,id=dev1,iommufd=iommufd0,bus=pcie.port2,x-vpasid-cap-offset=0xff8 \
+> -device virtio-blk-device,drive=fs \
+> -drive file=image.qcow2,index=0,media=disk,format=qcow2,if=none,id=fs \
+> -net none \
+> -nographic
+>
+> Details from RFCv3 Cover letter:
+> -------------------------------
+> https://lore.kernel.org/qemu-devel/20250714155941.22176-1-shameerali.kolothum.thodi@huawei.com/
+>
+> This patch series introduces initial support for a user-creatable,
+> accelerated SMMUv3 device (-device arm-smmuv3,accel=on) in QEMU.
+>
+> This is based on the user-creatable SMMUv3 device series [0].
+>
+> Why this is needed:
+>
+> On ARM, to enable vfio-pci pass-through devices in a VM, the host SMMUv3
+> must be set up in nested translation mode (Stage 1 + Stage 2), with
+> Stage 1 (S1) controlled by the guest and Stage 2 (S2) managed by the host.
+>
+> This series introduces an optional accel property for the SMMUv3 device,
+> indicating that the guest will try to leverage host SMMUv3 features for
+> acceleration. By default, enabling accel configures the host SMMUv3 in
+> nested mode to support vfio-pci pass-through.
+>
+> This new accelerated, user-creatable SMMUv3 device lets you:
+>
+>  -Set up a VM with multiple SMMUv3s, each tied to a different physical SMMUv3
+>   on the host. Typically, you’d have multiple PCIe PXB root complexes in the
+>   VM (one per virtual NUMA node), and each of them can have its own SMMUv3.
+>   This setup mirrors the host's layout, where each NUMA node has its own
+>   SMMUv3, and helps build VMs that are more aligned with the host's NUMA
+>   topology.
+>
+>  -The host–guest SMMUv3 association results in reduced invalidation broadcasts
+>   and lookups for devices behind different physical SMMUv3s.
+>
+>  -Simplifies handling of host SMMUv3s with differing feature sets.
+>
+>  -Lays the groundwork for additional capabilities like vCMDQ support.
+> -------------------------------
+>
+> Eric Auger (2):
+>   hw/pci-host/gpex: Allow to generate preserve boot config DSM #5
+>   hw/arm/virt-acpi-build: Add IORT RMR regions to handle MSI nested
+>     binding
+>
+> Nicolin Chen (4):
+>   backends/iommufd: Introduce iommufd_backend_alloc_viommu
+>   backends/iommufd: Introduce iommufd_backend_alloc_vdev
+>   hw/arm/smmuv3-accel: Add set/unset_iommu_device callback
+>   hw/arm/smmuv3-accel: Add nested vSTE install/uninstall support
+>
+> Shameer Kolothum (31):
+>   hw/arm/smmu-common: Factor out common helper functions and export
+>   hw/arm/smmu-common: Make iommu ops part of SMMUState
+>   hw/arm/smmuv3-accel: Introduce smmuv3 accel device
+>   hw/arm/smmuv3-accel: Initialize shared system address space
+>   hw/pci/pci: Move pci_init_bus_master() after adding device to bus
+>   hw/pci/pci: Add optional supports_address_space() callback
+>   hw/pci-bridge/pci_expander_bridge: Move TYPE_PXB_PCIE_DEV to header
+>   hw/arm/smmuv3-accel: Restrict accelerated SMMUv3 to vfio-pci endpoints
+>     with iommufd
+>   hw/arm/smmuv3: Implement get_viommu_cap() callback
+>   hw/arm/smmuv3: propagate smmuv3_cmdq_consume() errors to caller
+>   hw/arm/smmuv3-accel: Install SMMUv3 GBPA based hwpt
+>   hw/pci/pci: Introduce a callback to retrieve the MSI doorbell GPA
+>     directly
+>   hw/arm/smmuv3-accel: Implement get_msi_direct_gpa callback
+>   hw/arm/virt: Set msi-gpa property
+>   hw/arm/smmuv3-accel: Add support to issue invalidation cmd to host
+>   hw/arm/smmuv3: Initialize ID registers early during realize()
+>   hw/arm/smmuv3-accel: Get host SMMUv3 hw info and validate
+>   hw/arm/virt: Set PCI preserve_config for accel SMMUv3
+>   tests/qtest/bios-tables-test: Prepare for IORT revison upgrade
+>   tests/qtest/bios-tables-test: Update IORT blobs after revision upgrade
+>   hw/arm/smmuv3: Block migration when accel is enabled
+>   hw/arm/smmuv3: Add accel property for SMMUv3 device
+>   hw/arm/smmuv3-accel: Add a property to specify RIL support
+>   hw/arm/smmuv3-accel: Add support for ATS
+>   hw/arm/smmuv3-accel: Add property to specify OAS bits
+>   backends/iommufd: Retrieve PASID width from
+>     iommufd_backend_get_device_info()
+>   backends/iommufd: Add get_pasid_info() callback
+>   hw/pci: Add helper to insert PCIe extended capability at a fixed
+>     offset
+>   hw/pci: Factor out common PASID capability initialization
+>   hw/vfio/pci: Synthesize PASID capability for vfio-pci devices
+>   hw/arm/smmuv3-accel: Make SubstreamID support configurable
+>
+>  backends/iommufd.c                            |  76 +-
+>  backends/trace-events                         |   2 +
+>  hw/arm/Kconfig                                |   5 +
+>  hw/arm/meson.build                            |   3 +-
+>  hw/arm/smmu-common.c                          |  51 +-
+>  hw/arm/smmuv3-accel.c                         | 768 ++++++++++++++++++
+>  hw/arm/smmuv3-accel.h                         |  88 ++
+>  hw/arm/smmuv3-internal.h                      |   1 +
+>  hw/arm/smmuv3.c                               | 227 +++++-
+>  hw/arm/trace-events                           |   6 +
+>  hw/arm/virt-acpi-build.c                      | 127 ++-
+>  hw/arm/virt.c                                 |  39 +-
+>  hw/pci-bridge/pci_expander_bridge.c           |   1 -
+>  hw/pci-host/gpex-acpi.c                       |  29 +-
+>  hw/pci/pci.c                                  |  43 +-
+>  hw/pci/pcie.c                                 |  88 +-
+>  hw/vfio/iommufd.c                             |   6 +-
+>  hw/vfio/pci.c                                 |  75 ++
+>  hw/vfio/pci.h                                 |   1 +
+>  hw/vfio/trace-events                          |   1 +
+>  include/hw/arm/smmu-common.h                  |   7 +
+>  include/hw/arm/smmuv3-common.h                |  27 +-
+>  include/hw/arm/smmuv3.h                       |  10 +
+>  include/hw/arm/virt.h                         |   1 +
+>  include/hw/core/iommu.h                       |   1 +
+>  include/hw/pci-host/gpex.h                    |   1 +
+>  include/hw/pci/pci.h                          |  36 +
+>  include/hw/pci/pci_bridge.h                   |   1 +
+>  include/hw/pci/pcie.h                         |   4 +
+>  include/system/host_iommu_device.h            |  20 +
+>  include/system/iommufd.h                      |  29 +-
+>  target/arm/kvm.c                              |  18 +-
+>  tests/data/acpi/aarch64/virt/IORT             | Bin 128 -> 128 bytes
+>  tests/data/acpi/aarch64/virt/IORT.its_off     | Bin 172 -> 172 bytes
+>  tests/data/acpi/aarch64/virt/IORT.smmuv3-dev  | Bin 364 -> 364 bytes
+>  .../data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 276 -> 276 bytes
+>  36 files changed, 1692 insertions(+), 100 deletions(-)
+>  create mode 100644 hw/arm/smmuv3-accel.c
+>  create mode 100644 hw/arm/smmuv3-accel.h
+>
 
 
