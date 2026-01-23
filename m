@@ -4,60 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A123DD778BC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 22:33:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA936D778B1
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 23:07:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjPiI-0006RL-Rx; Fri, 23 Jan 2026 17:33:11 -0500
+	id 1vjQEk-0008Mc-UE; Fri, 23 Jan 2026 18:06:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vjPiE-0006P3-0M
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 17:33:06 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1vjQEi-0008LI-UM; Fri, 23 Jan 2026 18:06:40 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vjPiB-0007Y3-NN
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 17:33:05 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A1406596ADB;
- Fri, 23 Jan 2026 23:32:58 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 9xdzoE4SgACh; Fri, 23 Jan 2026 23:32:56 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 8AA6C596ADA; Fri, 23 Jan 2026 23:32:56 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 888A0596A03;
- Fri, 23 Jan 2026 23:32:56 +0100 (CET)
-Date: Fri, 23 Jan 2026 23:32:56 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@gmail.com>
-cc: qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>
-Subject: Re: [PATCH 21/37] audio: add QOM module-objects for each backend
-In-Reply-To: <CAJ+F1CLt0XsLXf2D87LnFBDcrvFFn2mv8K7UyChzFtBidLCXGA@mail.gmail.com>
-Message-ID: <883cf392-50bb-b8ee-e5d4-0828afec6d9c@eik.bme.hu>
-References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
- <20260123074945.2563196-22-marcandre.lureau@redhat.com>
- <3f0d41b1-dbce-80ba-c1e2-a8d73d1c6caf@eik.bme.hu>
- <CAJ+F1CLt0XsLXf2D87LnFBDcrvFFn2mv8K7UyChzFtBidLCXGA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1vjQEh-000634-49; Fri, 23 Jan 2026 18:06:40 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60NDlpUS028523;
+ Fri, 23 Jan 2026 23:06:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3A3ApC
+ 7PGO87cPJ12Ggi8C6pHUyTTZ+fHnYm4GAcAuI=; b=b58cQeRwZhqkQKNV8wOhTF
+ 8v/OVad2gUVFdvaTa2IzgmJaun/N3Mlb5OZzRajPZm25SPPkx6mvoAL0xA3B1IQd
+ ePzY92ZfFx+FCDYSAm0P+TnSU3RiNONxw5YGPWHaHcW5reoBLy4yry6YnOyv50di
+ j5q2shTTY04cYKiDuEu9LEvpN3HUoe+Ob5cxbCi1Nxysl06NKK20tn1NZAjJjmRe
+ WvNGHBYb8ZNdFz0UJA2uRsJpNVlFBMvjJ+i1a7tQXDO96bnDS1TIiltv46Tv9cAU
+ pootL7vmxb0VRWmmCqQ/kG9PtWOW+XQUrkvjtsB7om9B+jJpEjfSo0Pz5PPSGWbg
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bt60f6ern-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 23 Jan 2026 23:06:32 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60NK2gfh027233;
+ Fri, 23 Jan 2026 23:06:31 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brnrnknak-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 23 Jan 2026 23:06:31 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60NN6RA541746726
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 23 Jan 2026 23:06:27 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 40C3E20043;
+ Fri, 23 Jan 2026 23:06:27 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2D53F20040;
+ Fri, 23 Jan 2026 23:06:26 +0000 (GMT)
+Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.111.3.233])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Fri, 23 Jan 2026 23:06:26 +0000 (GMT)
+Date: Sat, 24 Jan 2026 00:06:24 +0100
+From: Halil Pasic <pasic@linux.ibm.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: mst@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net,
+ qemu-devel@nongnu.org, yc-core@yandex-team.ru,
+ d-tatianin@yandex-team.ru, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>, Ilya Leoshkevich
+ <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>, Thomas Huth
+ <thuth@redhat.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org (open
+ list:virtio-ccw), Halil Pasic <pasic@linux.ibm.com>
+Subject: Re: [PATCH v4 08/23] virtio: move common part of
+ _set_guest_notifier to generic code
+Message-ID: <20260124000624.1bd7c9c1.pasic@linux.ibm.com>
+In-Reply-To: <20260119185228.203296-9-vsementsov@yandex-team.ru>
+References: <20260119185228.203296-1-vsementsov@yandex-team.ru>
+ <20260119185228.203296-9-vsementsov@yandex-team.ru>
+Organization: IBM
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1721331925-1769207576=:11662"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=WMdyn3sR c=1 sm=1 tr=0 ts=6973fef8 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=6R7veym_AAAA:8 a=49PAtOYawd9SfLlgKsUA:9 a=CjuIK1q_8ugA:10
+ a=ILCOIF4F_8SzUMnO7jNM:22
+X-Proofpoint-GUID: 1juvDvL5_fkgi0lblD-mdpr27E5vvBtw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIzMDE3NyBTYWx0ZWRfX1sCKxMIGmXVC
+ gMjo4RcQ322b1yjRMQDn4oX69/OqWZ3j9n6qIR0XrVad8dvkWj90C7J9DFr52WQQNAl6gCDkfqT
+ uKAiG9WxH4Utkzoq0fBLxmMqNtmEgI+0AqCI8w/2LW6yVcw1rm6aBbsAehZxCwWbAA3QPSooy6K
+ NVcp2zYd9dzK/VtZimdVj9NeRFNawIkcx3Mx4ctbjVMYEroC9J1KeADRbFmzSQlYG0kDVmN+rXL
+ krMuk3ypHdOgQhonP4PWCXsnx06TZWYUNH7C5jHrfeWFeVePLYCPT5ZfTiJyHtvC7DQl48h+ryJ
+ wuyErMAAi6+riwTPCTwf8zk34nGK0osnC5Zz1OguRFMckQvpR0UY3NhQqq4bYMq9TZNqijk9FiG
+ lEq+B8Sc9K/k+itNf/jwCBAzyLNw2JwzbI+tP8Ku6g/3Omiy6yYzbmDWkwtk2WBBED0OiKlV0HM
+ jT8aZAMHREgbvCuA3nw==
+X-Proofpoint-ORIG-GUID: 1juvDvL5_fkgi0lblD-mdpr27E5vvBtw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-23_04,2026-01-22_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 suspectscore=0 bulkscore=0 adultscore=0
+ impostorscore=0 spamscore=0 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601230177
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=pasic@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,114 +131,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, 19 Jan 2026 21:52:12 +0300
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> wrote:
 
---3866299591-1721331925-1769207576=:11662
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+> virtio-pci, virtio-mmio and virtio-ccw handle config notifier equally
+> but with different code (mmio adds a separate function, when pci use
+> common function). Let's chose the more compact way (pci) and reuse it
+> for mmio.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-On Fri, 23 Jan 2026, Marc-André Lureau wrote:
-> On Fri, Jan 23, 2026 at 6:24 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>
->> On Fri, 23 Jan 2026, marcandre.lureau@redhat.com wrote:
->>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>
->>> This will allow to use QOM and the dynamic object module loading.
->>>
->>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> ---
->>> audio/audio_int.h   |  2 ++
->>> audio/alsaaudio.c   | 27 +++++++++++++++++++++++++++
->>> audio/dbusaudio.c   | 26 ++++++++++++++++++++++++++
->>> audio/dsoundaudio.c | 26 ++++++++++++++++++++++++++
->>> audio/jackaudio.c   | 26 ++++++++++++++++++++++++++
->>> audio/noaudio.c     | 26 ++++++++++++++++++++++++++
->>> audio/ossaudio.c    | 26 ++++++++++++++++++++++++++
->>> audio/paaudio.c     | 26 ++++++++++++++++++++++++++
->>> audio/pwaudio.c     | 26 ++++++++++++++++++++++++++
->>> audio/sdlaudio.c    | 26 ++++++++++++++++++++++++++
->>> audio/sndioaudio.c  | 26 ++++++++++++++++++++++++++
->>> audio/spiceaudio.c  | 26 ++++++++++++++++++++++++++
->>> audio/wavaudio.c    | 26 ++++++++++++++++++++++++++
->>> audio/coreaudio.m   | 26 ++++++++++++++++++++++++++
->>> 14 files changed, 341 insertions(+)
->>>
->>> diff --git a/audio/audio_int.h b/audio/audio_int.h
->>> index 06f5160e8df..29f5864be69 100644
->>> --- a/audio/audio_int.h
->>> +++ b/audio/audio_int.h
->>> @@ -241,6 +241,8 @@ struct SWVoiceCap {
->>>
->>> struct AudioMixengBackendClass {
->>>     AudioBackendClass parent_class;
->>> +
->>> +    audio_driver *driver;
->>> };
->>>
->>> struct AudioMixengBackend {
->>> diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
->>> index 814820e2864..881f3d0349d 100644
->>> --- a/audio/alsaaudio.c
->>> +++ b/audio/alsaaudio.c
->>> @@ -27,6 +27,7 @@
->>> #include "qemu/main-loop.h"
->>> #include "qemu/module.h"
->>> #include "qemu/audio.h"
->>> +#include "qom/object.h"
->>> #include "trace.h"
->>>
->>> #pragma GCC diagnostic ignored "-Waddress"
->>> @@ -36,6 +37,22 @@
->>>
->>> #define DEBUG_ALSA 0
->>>
->>> +#define TYPE_AUDIO_ALSA "audio-alsa"
->>> +OBJECT_DECLARE_SIMPLE_TYPE(AudioALSA, AUDIO_ALSA)
->>> +
->>> +struct AudioALSA {
->>> +    AudioMixengBackend parent;
->>> +};
->>
->> If you have nothing to put here only the parent you don't need to declare
->> the state struct...
->>
->>> +
->>> +static struct audio_driver alsa_audio_driver;
->>> +
->>> +static void audio_alsa_class_init(ObjectClass *klass, const void *data)
->>> +{
->>> +    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
->>> +
->>> +    k->driver = &alsa_audio_driver;
->>> +}
->>> +
->>> struct pollhlp {
->>>     snd_pcm_t *handle;
->>>     struct pollfd *pfds;
->>> @@ -945,8 +962,18 @@ static struct audio_driver alsa_audio_driver = {
->>>     .voice_size_in  = sizeof (ALSAVoiceIn)
->>> };
->>>
->>> +static const TypeInfo audio_alsa_info = {
->>> +    .name = TYPE_AUDIO_ALSA,
->>> +    .parent = TYPE_AUDIO_MIXENG_BACKEND,
->>> +    .instance_size = sizeof(AudioALSA),
->>
->> ...and can set instance_size of the parent so I think you can drop the
->> struct above everywhere where no other fields are needed other than the
->> parent. (See e.g. via_mc97_info)
->
-> True, although the pending patches to finish the conversion to QOM will
-> add fields there. This is an intermediary step, but yes, I can drop
-> the "empty" structs for now.
+Ultimately is up to Michael to decide, but I'm not sure patch makes
+things cleaner. I would even say, its current form, it does not.
 
-No need to drop it if you will add class specific fields to these structs, 
-just this series didn't add any so I thought the structs aren't needed and 
-could avoid some boiler plate code. If you'd add it back shortly in 
-subsequent patches then it's OK to add them here.
+I do like the idea of getting rid of duplicated logic though.
+
+
+> ---
+>  hw/s390x/virtio-ccw.c          | 35 ++++++++++++-------------
+>  hw/virtio/virtio-mmio.c        | 41 +++++------------------------
+>  hw/virtio/virtio-pci.c         | 34 +++---------------------
+>  hw/virtio/virtio.c             | 48 +++++++++++++++++++++++++++++++---
+>  include/hw/virtio/virtio-pci.h |  3 ---
+>  include/hw/virtio/virtio.h     | 16 +++++++++---
+>  6 files changed, 84 insertions(+), 93 deletions(-)
+[..]
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 3dc9423eae..ea43ea620c 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+[..]
+> +static void virtio_pci_set_guest_notifier_fd_handler(VirtIODevice *vdev,
+
+Function name says 'pci' but it actually is not PCI specific.
+
+> +                                                     VirtQueue *vq,
+> +                                                     int n, bool assign,
+> +                                                     bool with_irqfd)
+> +{
+> +    if (n == VIRTIO_CONFIG_IRQ_IDX) {
+> +        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
+> +    } else {
+> +        virtio_queue_set_guest_notifier_fd_handler(vq, assign, with_irqfd);
+> +    }
+> +}
+> +
+[..]
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index 27cd98d2fe..25ef7c9dff 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -420,8 +420,6 @@ void virtio_queue_update_used_idx(VirtIODevice *vdev, int n);
+>  VirtQueue *virtio_get_queue(VirtIODevice *vdev, int n);
+>  uint16_t virtio_get_queue_index(VirtQueue *vq);
+>  EventNotifier *virtio_queue_get_guest_notifier(VirtQueue *vq);
+> -void virtio_queue_set_guest_notifier_fd_handler(VirtQueue *vq, bool assign,
+> -                                                bool with_irqfd);
+>  int virtio_device_start_ioeventfd(VirtIODevice *vdev);
+>  int virtio_device_grab_ioeventfd(VirtIODevice *vdev);
+>  void virtio_device_release_ioeventfd(VirtIODevice *vdev);
+> @@ -435,8 +433,18 @@ void virtio_queue_aio_detach_host_notifier(VirtQueue *vq, AioContext *ctx);
+>  VirtQueue *virtio_vector_first_queue(VirtIODevice *vdev, uint16_t vector);
+>  VirtQueue *virtio_vector_next_queue(VirtQueue *vq);
+>  EventNotifier *virtio_config_get_guest_notifier(VirtIODevice *vdev);
+> -void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
+> -                                                 bool assign, bool with_irqfd);
+> +
+> +/**
+> + * virtio_queue_set_guest_notifier - set/unset queue or config guest
+> + *     notifier
+> + *
+> + * @vdev: the VirtIO device
+> + * @n: queue number, or VIRTIO_CONFIG_IRQ_IDX to set config notifer
+
+Semantically are mixing queue numbers and interrupt indexes here.
+
+> + * @assign: true to set notifier, false to unset
+> + * @with_irqfd: irqfd enabled
+> + */
+> +int virtio_queue_set_guest_notifier(VirtIODevice *vdev, int n, bool assign,
+> +                                    bool with_irqfd);
+
+The name says 'queue' but it is not always queue any more.
 
 Regards,
-BALATON Zoltan
---3866299591-1721331925-1769207576=:11662--
+Halil
 
