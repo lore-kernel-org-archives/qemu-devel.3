@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14979D6261A
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1BB3D6261A
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjGAn-0005KQ-Oy; Fri, 23 Jan 2026 07:21:57 -0500
+	id 1vjGB3-0005vA-V1; Fri, 23 Jan 2026 07:22:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vjGAL-00051j-TQ
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vjGAj-0005LE-67
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vjGAI-00052J-Nk
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:27 -0500
+ id 1vjGAh-00056X-Ar
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:21:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769170886;
+ s=mimecast20190719; t=1769170910;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=O0Tiy4KOQPJNfeInfzeqJzVHUyBwoqqHu8MQ5hZPthA=;
- b=MhiFQ126XUjr56Rj9gYO9Vz1iFcmK2MBSZ1Em4PF0Gp+cVheCp+uelo/Y1thybNtJYYJ28
- ZH5BqhmI96XhLhPiJAx7Cfu43Cc40S7H2spEN4FHzbOddHRJqmN6mryBybdNRwV0APPo0q
- F1K/JVABbx0ZVdIbvQgA/zFLIwMEcSI=
+ bh=vaPMnSfoRztdHHij+NJ9O+nGEqaIxYFd+PHUxdtCIXI=;
+ b=ZTTckaCMZBx5vvcrLPFwZB8SPjLz3aH+/8LYQiF44XmXFxcU1bzuJwy7GwMg+oQGFtQqd9
+ Ro6HpCGIyuz6JShcO+r6fjJo1k8N1leLV/3zDm5a+FoamW2i10oC95OPFrcnvuViGwnqEp
+ 37V5xPjztLtRuaSqIR7y83+9ANM40dg=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-0-IPeOV1PrWcKfA8UtEisw-1; Fri,
- 23 Jan 2026 07:21:22 -0500
-X-MC-Unique: 0-IPeOV1PrWcKfA8UtEisw-1
-X-Mimecast-MFC-AGG-ID: 0-IPeOV1PrWcKfA8UtEisw_1769170881
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-138-tNTOyCYFPIC-0Gz-wqlhAw-1; Fri,
+ 23 Jan 2026 07:21:48 -0500
+X-MC-Unique: tNTOyCYFPIC-0Gz-wqlhAw-1
+X-Mimecast-MFC-AGG-ID: tNTOyCYFPIC-0Gz-wqlhAw_1769170907
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADDDB1955F2C; Fri, 23 Jan 2026 12:21:21 +0000 (UTC)
+ id C7C8419775A8
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 12:21:47 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.7])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E804D30002D1; Fri, 23 Jan 2026 12:21:18 +0000 (UTC)
+ id 0F4FF30002DC; Fri, 23 Jan 2026 12:21:45 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Jason Wang <jasowang@redhat.com>
-Subject: [PULL 04/13] net/tap: pass NULL to net_init_tap_one() in cases when
- scripts are NULL
-Date: Fri, 23 Jan 2026 20:20:53 +0800
-Message-ID: <20260123122102.51422-5-jasowang@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Subject: [PULL 11/13] net/filter-redirector: add support for dynamic status
+ on/off switching
+Date: Fri, 23 Jan 2026 20:21:00 +0800
+Message-ID: <20260123122102.51422-12-jasowang@redhat.com>
 In-Reply-To: <20260123122102.51422-1-jasowang@redhat.com>
 References: <20260123122102.51422-1-jasowang@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,76 +87,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Currently, filter-redirector does not implement the status_changed
+callback, which means the 'status' property cannot be used to
+dynamically enable/disable the filter at runtime. When status is
+set to 'off' via QMP/HMP, the filter still receives data from the
+indev chardev because the chardev handlers remain registered.
 
-Directly pass NULL in cases where we report an error if script or
-downscript are set.
+This patch adds proper support for the 'status' property:
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
+1. Implement filter_redirector_status_changed() callback:
+   - When status changes to 'off': remove chardev read handlers
+   - When status changes to 'on': re-register chardev handlers
+     (only if chardev is already open)
+
+2. Update filter_redirector_setup() to respect initial status:
+   - If filter is created with status=off, do not register handlers
+   - This allows creating disabled filters via command line or QMP
+
+3. Handle chardev OPENED/CLOSED events to re-arm handlers on reconnect:
+   - Keep the chr_event callback installed on CLOSE so a later OPENED
+     can re-register the read handlers when nf->on
+   - Use qemu_chr_fe_set_handlers_full(..., set_open=false, sync_state=false)
+     instead of qemu_chr_fe_set_handlers() because the latter forces
+     sync_state=true and may emit CHR_EVENT_OPENED for an already-open
+     backend. Doing that from inside the chr_event callback would cause
+     recursive/re-entrant OPENED handling.
+
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- net/tap.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ net/filter-mirror.c | 38 +++++++++++++++++++++++++++++++++-----
+ 1 file changed, 33 insertions(+), 5 deletions(-)
 
-diff --git a/net/tap.c b/net/tap.c
-index abeee6be11..8182f39851 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -807,8 +807,6 @@ int net_init_tap(const Netdev *netdev, const char *name,
-     const NetdevTapOptions *tap;
-     int fd, vnet_hdr = 0, i = 0, queues;
-     /* for the no-fd, no-helper case */
--    const char *script;
--    const char *downscript;
-     Error *err = NULL;
-     const char *vhostfdname;
-     char ifname[128];
-@@ -818,8 +816,6 @@ int net_init_tap(const Netdev *netdev, const char *name,
-     tap = &netdev->u.tap;
-     queues = tap->has_queues ? tap->queues : 1;
-     vhostfdname = tap->vhostfd;
--    script = tap->script;
--    downscript = tap->downscript;
+diff --git a/net/filter-mirror.c b/net/filter-mirror.c
+index d2bfde42e8..6ac28067a2 100644
+--- a/net/filter-mirror.c
++++ b/net/filter-mirror.c
+@@ -179,9 +179,16 @@ static void redirector_chr_event(void *opaque, QEMUChrEvent event)
+     MirrorState *s = FILTER_REDIRECTOR(nf);
  
-     /* QEMU hubs do not support multiqueue tap, in this case peer is set.
-      * For -netdev, peer is always NULL. */
-@@ -860,7 +856,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+     switch (event) {
++    case CHR_EVENT_OPENED:
++        if (nf->on) {
++            qemu_chr_fe_set_handlers_full(&s->chr_in, redirector_chr_can_read,
++                                          redirector_chr_read, redirector_chr_event,
++                                          NULL, nf, NULL, false, false);
++        }
++        break;
+     case CHR_EVENT_CLOSED:
+-        qemu_chr_fe_set_handlers(&s->chr_in, NULL, NULL, NULL,
+-                                 NULL, NULL, NULL, true);
++        qemu_chr_fe_set_handlers_full(&s->chr_in, NULL, NULL, redirector_chr_event,
++                                      NULL, nf, NULL, false, false);
+         break;
+     default:
+         break;
+@@ -306,9 +313,11 @@ static void filter_redirector_setup(NetFilterState *nf, Error **errp)
+             return;
          }
  
-         net_init_tap_one(tap, peer, "tap", name, NULL,
--                         script, downscript,
-+                         NULL, NULL,
-                          vhostfdname, vnet_hdr, fd, &err);
-         if (err) {
-             error_propagate(errp, err);
-@@ -921,7 +917,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-             }
+-        qemu_chr_fe_set_handlers(&s->chr_in, redirector_chr_can_read,
+-                                 redirector_chr_read, redirector_chr_event,
+-                                 NULL, nf, NULL, true);
++        if (nf->on) {
++            qemu_chr_fe_set_handlers(&s->chr_in, redirector_chr_can_read,
++                                     redirector_chr_read, redirector_chr_event,
++                                     NULL, nf, NULL, true);
++        }
+     }
  
-             net_init_tap_one(tap, peer, "tap", name, ifname,
--                             script, downscript,
-+                             NULL, NULL,
-                              tap->vhostfds ? vhost_fds[i] : NULL,
-                              vnet_hdr, fd, &err);
-             if (err) {
-@@ -966,7 +962,7 @@ free_fail:
-         }
+     if (s->outdev) {
+@@ -324,6 +333,24 @@ static void filter_redirector_setup(NetFilterState *nf, Error **errp)
+     }
+ }
  
-         net_init_tap_one(tap, peer, "bridge", name, ifname,
--                         script, downscript, vhostfdname,
-+                         NULL, NULL, vhostfdname,
-                          vnet_hdr, fd, &err);
-         if (err) {
-             error_propagate(errp, err);
-@@ -974,6 +970,8 @@ free_fail:
-             return -1;
-         }
-     } else {
-+        const char *script = tap->script;
-+        const char *downscript = tap->downscript;
-         g_autofree char *default_script = NULL;
-         g_autofree char *default_downscript = NULL;
-         if (tap->vhostfds) {
++static void filter_redirector_status_changed(NetFilterState *nf, Error **errp)
++{
++    MirrorState *s = FILTER_REDIRECTOR(nf);
++
++    if (!s->indev) {
++        return;
++    }
++
++    if (nf->on) {
++        qemu_chr_fe_set_handlers(&s->chr_in, redirector_chr_can_read,
++                                 redirector_chr_read, redirector_chr_event,
++                                 NULL, nf, NULL, true);
++    } else {
++        qemu_chr_fe_set_handlers(&s->chr_in, NULL, NULL, NULL,
++                                 NULL, NULL, NULL, true);
++    }
++}
++
+ static char *filter_redirector_get_indev(Object *obj, Error **errp)
+ {
+     MirrorState *s = FILTER_REDIRECTOR(obj);
+@@ -440,6 +467,7 @@ static void filter_redirector_class_init(ObjectClass *oc, const void *data)
+     nfc->setup = filter_redirector_setup;
+     nfc->cleanup = filter_redirector_cleanup;
+     nfc->receive_iov = filter_redirector_receive_iov;
++    nfc->status_changed = filter_redirector_status_changed;
+ }
+ 
+ static void filter_mirror_init(Object *obj)
 -- 
 2.42.0
 
