@@ -4,124 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C128DD74EEC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:43:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 540CBD74EED
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:49:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjJJV-00037q-8A; Fri, 23 Jan 2026 10:43:09 -0500
+	id 1vjJP2-0006GZ-SE; Fri, 23 Jan 2026 10:48:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vjJJR-00035D-Aw
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:43:05 -0500
-Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vjJOn-0006EU-2X
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:48:37 -0500
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vjJJP-0001uj-JL
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:43:05 -0500
-Received: by mail-pf1-x444.google.com with SMTP id
- d2e1a72fcca58-81f4f4d4822so1261434b3a.3
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:43:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vjJOk-0003h9-VQ
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:48:36 -0500
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-79274e0e56bso23191817b3.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:48:34 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769183314; cv=none;
+ d=google.com; s=arc-20240605;
+ b=NpuWLb/MpuJpN8QZK0Gh6yAc/rxCkvINNQnuHHlT9QHMI6uNDwYQQkAYjJhnspA6tp
+ kbN37yYT/ozrpcUDno54H+g8rTdKMBuPm3/vOzsDlf54zgE1wZ1LdjwanwvK1k0c0TVO
+ qJcX82XdR2SsVzkk3wwgYCdv1XCx5nofMx2J+X0BTdQnvLS1/UaqmkqhyUWzxrhSVgrn
+ Yfq3ZVMi4eydOh6Ooi7u8wGJzZMxdt6WOhnazgKtenmdvLJWBnjbWte00rNzmUtqHMef
+ mdn9MspTUi/75LUXhEPnvkpGHk1C2g/nrVrAvtIduMPUdw3IL5AFZL3/OTBFGMwPCmp2
+ YF1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=k064vq3zFzCawpV6EY4a+ObDGzA7njkSR3kCyquwJ9k=;
+ fh=YU5VccQnxnOyziVLI1RljJs1BpzVhDnreyvFmqkvdYQ=;
+ b=XdDlEy0poVJE55tiEr/ZY+CHATc+aPwWRi92tRKaEeGstWX63KvnDB+fhz3wi5PKTg
+ uxRN0Ms4Kszns451aFvcBwGW5h8f+B1QoliixdjHqhbTAG4OrFd08MACJl/zfRGwBT86
+ 44VP2sbmcuwYohUQhCHsa1BU8mKPTWNcBdvVIkc/O2NPPZVavIGIQWcmutgqBZ5RJ4cX
+ Tu+7koAN3EWjyBHA/96hpB5V0iS8hwZy00BSTVik9/zWNdCE0mvlnhslbGZeErAruond
+ n7ICNomTEBa7DR3vQxNqtvtRk7cSJPy0emTG8oHVN7zIMgmUlQpGuJDuOT3rIBMcZ75Z
+ k92A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769182981; x=1769787781; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ls5KuSHg540P9+YktrIq8/MzLgKvdhlCHUQ+nYx7Ib0=;
- b=ibvyel5QF+dJE4A7JaMjgfIbFndOD776R/BxR/91NGZEkN2NoXpCRMjFukXvO1pb9k
- Cn6KjLICv/T7e+jApT/37bmcE7bdxTsBMzuI0063MH9Rst2suGyt9kSvdMupKTBADHo3
- JVLqlBl5F2/V+R/MNPSU9vpv8zqsRiP2wrXJp04T1PFL1IYJ3h0fmetlxzKz4WJcnwPO
- y5vAgrlqkytSwhFbGuxQ5hZzowlYShui8fiQiPLQmbBXpm1iEcw8ffMFAeHeyUpfxko9
- QHy/Jv7pMaXXCaTOR9vZE7R0lZwB/viapL2rx+FkqRv0xl9gk89NsZtH+wDdwc2QBLkK
- VdIg==
+ d=linaro.org; s=google; t=1769183314; x=1769788114; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k064vq3zFzCawpV6EY4a+ObDGzA7njkSR3kCyquwJ9k=;
+ b=NoJ4KDbVaLe3lRxBk6wRlMBiQzCpS1NKjTGD6n7J98FdzCtL7vhDgx2TaOmuzIOxYz
+ 8eoctmEddLL1wNYnNAQvrAWTVJpDZp/xYnhxusOol67S/NcuHdzUOjBiLQNokDOceSoo
+ m5ojlflc/PF0lgBamMBoRM1jYOubU/vsM/atkEb4G2o/myTZ+KeFvmxFjtA5evKX2xDS
+ WUAmJbGABIDYno6o1sxbyZXrbfEE64anfELh+1qLJEJxWdMU5L8NQN+XhvelpZ6PxXgw
+ PblcZJs9jBieBasZMlO1sJMl+2Itm9QPTMLtKuL2+QB35p18eqkh6A3mcQUrkv/vaCWp
+ fHEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769182981; x=1769787781;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ls5KuSHg540P9+YktrIq8/MzLgKvdhlCHUQ+nYx7Ib0=;
- b=lLCC+he1VvaS39i/fU3Ty+1nHSjQiaouxCOJ5lNxBmopNrTZulqGoOd3NP5zOgJRA5
- zd2L6mHlTK0GwT+3L14B8kUfE1Eu3j1ScfUXWv99Dmoil7b/3IzGuJEgKGiLEWAzRsyK
- Ko53AZhtKdBmj6UZphw5OH1rCyzIaXdIJH1Grz//v5D+y5bI4DAVenW51kx3Q6Wto4UC
- hGD2YYtwvcgn0rv/w7+O5ijwJk1rd2K7HWJs1H+oMfvaoElN86WZPvh7zzkc4gs+ydVZ
- CnNboa/fwDVHXZP9x2atiGLIWHNDyDgdyc7Y5A7mquc4WbLXMyE1ATca6GFzeQp1ohG1
- xm2Q==
+ d=1e100.net; s=20230601; t=1769183314; x=1769788114;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=k064vq3zFzCawpV6EY4a+ObDGzA7njkSR3kCyquwJ9k=;
+ b=XUGLk0hE7Xi4smF2/JcydqSWr+ix0Goi/z19tJV0b0Z0Ocko7EKN1tkJ6WM98E80wm
+ Wv1Ygm3d9xhH4fUPwddIaQ9lb5aAUqLU6O4uRtL6wlt8bCCU7bs+owekCnS65egK1iF6
+ g/KaH1RhOKV/8nnpA49kcFd5l8jtFjlUF1tNdi+1nwPHK2MHbzJaekQfNfU/I6jhwtuC
+ h3fnFBVxGM4St3XBCNQhHKAMJi1lmS3+mIkGDnIvhiaSjIBdEdA7ec5cZ58FQnNa7RVL
+ 3bwxlp1dcALyeKqeQWPAf1PudloQ8DHy46dWzMGHzK62VkPGI7Ixmu7o9ST4Z25iPeVB
+ DIng==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8bHT0anMjp7Y1yFAzLBcH8LBHsIjR2zwCSSW4Hp9DU4u6ccjZ4TRSRTA0/VuFp4f8Q9JrpPcjAuh1@nongnu.org
-X-Gm-Message-State: AOJu0YyqpnAEO0Sf1BgA0Qhj6rD+PJ1bM75BHqG9DTfBrNJCEit3wD05
- lE546t+IccCToY+lyyOqzkJgaltdNk6d94qSCLCVmFB8qa8RzyZ4jFUnIeZATkuV8Wc=
-X-Gm-Gg: AZuq6aLCFaEoetL+kz8K66yTib908oVe+A9n4cxaIXcrYvPR7TJOj4cmovLS+KfKzC0
- JtkDQYaqeArNHdsZsP5mSG/X3tliK31wxQ1z+XVuWXs5UPH++zgg1M5uy08O93WEbihGt+nhlsl
- ttlZsQrABNFlCRKGXLlnF/STzX81NxsuEKzVktvldCTury6nJlQBleqaPD7HWMs3L4OE3FfCRRv
- qgWpsKC3H3OaIf7hfkY8Fz0PhsLlrGrrujHMHvN1T3WS+etg/fLXkmTrNusaU6FV5NufDkprhO5
- 6XDJ5heD3a/vPdkMfcF/E39QBrqPi2uh23YVkJq0nPTS/QEM0wWHeMNY2CZhHreH/KtNRTUzdeQ
- Idklys78lgTRlgI6ZUyZ9IE3XmQpVeUzZ6uIbW8kS91NFA1fiKGsgfhEbHbPb4b8ggMS5xs91U1
- mSS3S/yNLX6kgU7JoPAG/VJM5BYPzyRhCH+W4Vth3yJjECVpuwcaS0NxkE
-X-Received: by 2002:a05:6a20:549b:b0:38b:ecae:6713 with SMTP id
- adf61e73a8af0-38e6f7114cemr3810284637.19.1769182981201; 
- Fri, 23 Jan 2026 07:43:01 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c635a14453asm2486906a12.9.2026.01.23.07.43.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Jan 2026 07:43:00 -0800 (PST)
-Message-ID: <7b42bd50-937d-4a67-8438-777be9ce3764@linaro.org>
-Date: Fri, 23 Jan 2026 07:42:59 -0800
+ AJvYcCXd3WQKf/c1lt5P98LLPggEYhXy2k6BJumA3gpbutsg4ljaXqYEvGWa4+ap8UXZWNMoCCQgzB4XxMrV@nongnu.org
+X-Gm-Message-State: AOJu0YzxNanIQ87aK03AUwhpVaj1O6zKlG2A5PZ6IQ1yX9KE5+jMEpjv
+ ONX1642pzaBniTXSM+IRxBygSXu9MLpcDKjFZyjEeT/WZAqY8pNLricVXN4Z+edeSoZ6epTlt5/
+ vspuRmPXf5ezoZOUXbK+QcES7oJd4tXDsL34frF7FaQ==
+X-Gm-Gg: AZuq6aLWLLljOtGYoYQD6ePKnl4QnJN6YPp98v0ci2eNPgSveWWsbjTccI8eMaTnKzr
+ ENxbJQxi4i8eJOBbCtYQS4TQI1jo0PzbgdS4uoku+L6Tf0uKPIm9jXawQ4qu7U6gbXdvzNoTQ95
+ Gy0H4+8rQLXw+K5eSTZO2nDgXLBOfHOpMW9miFl4IaO/ATgjbQAdC5lTB9RAvbM5GK/tOUAoFIr
+ Qe7ibaJFYgSjE7uRLMKWHFV+0ObMdrFiYXYEp0x3V1ABbQ8+GZBcKpG5cICyzfZCTPhMnakT3eW
+ 7nxC
+X-Received: by 2002:a05:690c:6e12:b0:787:cad1:bdb2 with SMTP id
+ 00721157ae682-79439a1b2damr27274667b3.69.1769183313763; Fri, 23 Jan 2026
+ 07:48:33 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 00/16] MAINTAINER updates plus conversion of
- get_maintainers.pl to python
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260123145750.1200879-1-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260123145750.1200879-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x444.google.com
+References: <20260121175248.87649-1-skolothumtho@nvidia.com>
+ <4d1a883b-5465-45af-8dcc-eb905f552c29@redhat.com>
+ <20260123114149.000065c5@huawei.com>
+ <CAFEAcA8RFqO-U5ayU2u=dNhjHCj=1mJiAv26QihfqNfqQVq1Lg@mail.gmail.com>
+ <CH3PR12MB75480D0CDE889070E1F4C448AB94A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <CAFEAcA_8Zd1_C+94wj2c+pJk3ebFT5_Zgt1Ww0qxzFqW=F98xA@mail.gmail.com>
+ <CH3PR12MB75482DA817149816D5CD485EAB94A@CH3PR12MB7548.namprd12.prod.outlook.com>
+In-Reply-To: <CH3PR12MB75482DA817149816D5CD485EAB94A@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 23 Jan 2026 15:48:22 +0000
+X-Gm-Features: AZwV_Qjovq_ENmuJV73kXm_AGzypC9i2UOYvNWpfa3IF8IH6DGpAzY9Y7EphmtU
+Message-ID: <CAFEAcA_w=+RHygwsSQVvE6XU44d6+hgKy=bqdD08aBM5_xyn=Q@mail.gmail.com>
+Subject: Re: [PATCH v8 00/37] hw/arm/virt: Add support for user-creatable
+ accelerated SMMUv3
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Eric Auger <eric.auger@redhat.com>, 
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jason Gunthorpe <jgg@nvidia.com>, 
+ Nicolin Chen <nicolinc@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>, 
+ "berrange@redhat.com" <berrange@redhat.com>, "clg@redhat.com" <clg@redhat.com>,
+ "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen <nathanc@nvidia.com>,
+ Matt Ochs <mochs@nvidia.com>, "smostafa@google.com" <smostafa@google.com>,
+ "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>, 
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>, 
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>, 
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>, 
+ Krishnakant Jaju <kjaju@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -144,68 +139,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/23/26 6:57 AM, Alex Bennée wrote:
-> I wanted to look at adding gitlab tags to MAINTAINERS and baulked
-> slightly at figuring out what I would need to change in the perl
-> script to cleanly handle it.
-> 
-> While we imported the perl script from the kernel I'm fairly sure we
-> don't use half the features it has and as us grey beards age out less
-> people will be willing to tweak it. Consider this a proof-of-concept
-> for discussion about if it is worth perusing this path.
-> 
-> For v2:
-> 
->    - added the missing K: keyword support
->    - added basic --git fallback support
->    - picked up a few more MAINTAINER updates from list
->    - updated entries for Arm and *-user
-> 
-> I've CC'd the kernel maintainers for the script to see if they are
-> interested in this work.
-> 
-> While the python script is still cooking I will send a PR on Monday
-> with just the MAINTAINER updates which are reviewed/acked.
-> 
-> Alex.
-> 
-> Alex Bennée (13):
->    MAINTAINERS: fix missing names
->    MAINTAINERS: fix libvirt entry
->    MAINTAINERS: regularise the status fields
->    MAINTAINERS: update Arm to Supported status
->    MAINTAINERS: be realistic about *-user
->    scripts/get_maintainer.py: minimal argument parsing
->    scripts/get_maintainer.py: resolve the source path
->    scripts/get_maintainer.py: initial parsing of MAINTAINERS
->    scripts/get_maintainer.py: add support for -f
->    scripts/get_maintainer.py: add support reading patch files
->    scripts/get_maintainer.py: add keyword (K:) support
->    scripts/get_maintainer.py: implement basic git fallback support
->    gitlab: add a check-maintainers task
-> 
-> Mads Ynddal (1):
->    MAINTAINERS: remove myself as reviewer
-> 
-> Pierrick Bouvier (2):
->    MAINTAINERS: add maintainer for docs/
->    MAINTAINERS: add reviewer for linux-user
-> 
->   MAINTAINERS                    |  31 +-
->   .gitlab-ci.d/static_checks.yml |   9 +
->   scripts/get_maintainer.py      | 499 +++++++++++++++++++++++++++++++++
->   3 files changed, 525 insertions(+), 14 deletions(-)
->   create mode 100755 scripts/get_maintainer.py
-> 
+On Fri, 23 Jan 2026 at 15:33, Shameer Kolothum <skolothumtho@nvidia.com> wr=
+ote:
+>
+>
+>
+> > -----Original Message-----
+> > From: Peter Maydell <peter.maydell@linaro.org>
+> > Sent: 23 January 2026 15:06
+> > To: Shameer Kolothum <skolothumtho@nvidia.com>
+> > Cc: Jonathan Cameron <jonathan.cameron@huawei.com>; Eric Auger
+> > <eric.auger@redhat.com>; qemu-arm@nongnu.org; qemu-
+> > devel@nongnu.org; Richard Henderson <richard.henderson@linaro.org>;
+> > Jason Gunthorpe <jgg@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>;
+> > ddutile@redhat.com; berrange@redhat.com; clg@redhat.com;
+> > alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
+> > <mochs@nvidia.com>; smostafa@google.com; wangzhou1@hisilicon.com;
+> > jiangkunkun@huawei.com; zhangfei.gao@linaro.org;
+> > zhenzhong.duan@intel.com; yi.l.liu@intel.com; Krishnakant Jaju
+> > <kjaju@nvidia.com>
+> > Subject: Re: [PATCH v8 00/37] hw/arm/virt: Add support for user-creatab=
+le
+> > accelerated SMMUv3
+> >
+> > External email: Use caution opening links or attachments
+> >
+> >
+> > On Fri, 23 Jan 2026 at 12:04, Shameer Kolothum
+> > <skolothumtho@nvidia.com> wrote:
+> > > > From: Peter Maydell <peter.maydell@linaro.org>
+> > > > I can fix that up when I queue it into target-arm.next.
+> > > >
+> > > > Thanks to everybody who helped with code review on this series:
+> > > > not having to do that myself has been a big help for my personal wo=
+rkload
+> > :-)
+> > >
+> > > Thanks for sorting it while queuing.
+> >
+> > Unfortunately I had to drop this from target-arm.next,
+> > because it caused one of the gitlab CI jobs to fail:
+> > https://nam11.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fgit=
+la
+> > b.com%2Fpm215%2Fqemu%2F-
+> > %2Fjobs%2F12839040278&data=3D05%7C02%7Cskolothumtho%40nvidia.co
+> > m%7Ce64f88e5ebe54c10a77008de5a90f12d%7C43083d15727340c1b7db
+> > 39efd9ccc17a%7C0%7C0%7C639047775811752760%7CUnknown%7CTWF
+> > pbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW
+> > 4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3Dr2cFx
+> > te6tcUSLjTTpMKMvmU4g7FgrhMTatELkP4sJXo%3D&reserved=3D0
+> > (Not an intermittent -- the job failed the same way
+> > on retry, and passes with my target-arm queue without
+> > this series in it.)
+> >
+> > I'm not sure exactly what's going on here, because
+> > the bios-tables-test test passes on my local machine.
+>
+> I tried on both my ARM64 and x86 machine and no failure.
+>
+> > Could you investigate, please?
+> >
+> > 1/457 qemu:qtest+qtest-x86_64 / qtest-x86_64/bios-tables-test OK
+> > 83.58s 55 subtests passed
+> > =E2=96=B6 2/457 /aarch64/acpi/virt/its_off -
+>
+> This is the one failing apparently.
+>
+> > ERROR:../tests/qtest/bios-tables-test.c:554:test_acpi_asl: assertion
+> > failed: (all_tables_match) FAIL
+> > =E2=96=B6 2/457 ERROR
+> > 2/457 qemu:qtest+qtest-aarch64 / qtest-aarch64/bios-tables-test ERROR
+> > 25.86s killed by signal 6 SIGABRT
+> > >>>
+> > MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1:p=
+rint
+> > _stacktrace=3D1 PYTHON=3D/builds/pm215/qemu/build/pyvenv/bin/python3.11
+> > UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1:=
+print
+> > _stacktrace=3D1 QTEST_QEMU_IMG=3D./qemu-img
+> > QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-
+> > storage-daemon
+> > ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1
+> > RUST_BACKTRACE=3D1 MESON_TEST_ITERATION=3D1
+> > G_TEST_DBUS_DAEMON=3D/builds/pm215/qemu/tests/dbus-vmstate-
+> > daemon.sh MALLOC_PERTURB_=3D162 QTEST_QEMU_BINARY=3D./qemu-system-
+> > aarch64 /builds/pm215/qemu/build/tests/qtest/bios-tables-test --tap -k
+> > =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95
+> > =E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80
+> > =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95
+> > =E2=80=95=E2=80=95=E2=80=95=E2=80=95
+> > stderr:
+> > acpi-test: Warning! IORT binary file mismatch. Actual
+> > [aml:/tmp/aml-7QQVJ3], Expected
+> > [aml:tests/data/acpi/aarch64/virt/IORT.its_off].
+>
+> Any way to retrieve these files?
 
-Hi Alex,
+They aren't in the "job artifacts", but you can probably do
+a patch to tweak the CI job to add them, push to your own
+gitlab fork of QEMU to have it run the CI, and then look at
+the results.
 
-it seems like you forgot to pull this patch also:
-https://lore.kernel.org/qemu-devel/20260115202511.2709767-1-pierrick.bouvier@linaro.org/
-
-Could you please include it in the current series to avoid an additional 
-month of round trip?
-
-Thanks,
-Pierrick
+thanks
+-- PMM
 
