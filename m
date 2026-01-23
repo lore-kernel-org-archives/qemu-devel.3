@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA1E8D74EF8
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 16:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2B16D74EFC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 16:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjJeC-0006wY-2R; Fri, 23 Jan 2026 11:04:32 -0500
+	id 1vjJoe-0003qP-CZ; Fri, 23 Jan 2026 11:15:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vjJdo-0006qC-Nh
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 11:04:10 -0500
-Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vjJob-0003oo-AZ
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 11:15:17 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1vjJdl-0006G4-6P
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 11:04:07 -0500
-Received: by mail-qk1-x72b.google.com with SMTP id
- af79cd13be357-8c5349ba802so253508385a.1
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 08:04:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vjJoZ-0000ql-Hf
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 11:15:17 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-47ff94b46afso19769415e9.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 08:15:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gourry.net; s=google; t=1769184242; x=1769789042; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=1kQmBSg+tA8MLRBzDeZG0ZWkb9fuamq1qYDJiutcxtM=;
- b=XZ3nXKd28JhBW1PXnQLAEl2Fqe3J3q2HaOO9IWdWK3LiJmw/qjeJe5xZCBzcZQQjDy
- kimE1hs6S1+hYhPfUkO2l4tMsg1VZXRnbMJsf2/8NdcongAad+Xrio+lV8r0zbS7XNAb
- JvM4catDRyw9ZWKFCrmYUZS462uCv0IMxsKk8I9kJikB+s8R0Kh0B7Fia5v1L8wWcsCz
- Obe4W9NkwALiB0mHi6DvnKNTQkKGk7AIL1PjXjX5qLpMbIoB/DQkUyL4wzXOcHAuNX6e
- KEx3WK7s6wT1f+qn9D4Dwl1PPyaRLEnY1W726kipNA9eE1IK+svnUI3lTEUCoqZDb9iS
- pslg==
+ d=linaro.org; s=google; t=1769184914; x=1769789714; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=St6WiDlN5y3/67x6/i4DWB3p/o72JYEaip1j9p8qdas=;
+ b=GLKhb0vGsDus7so8esZ5pvTVMVwL0vHcKKpWM1Vmrh7jZtZBJ5e2l72ewZzV/Rzifa
+ b9nFCrzkG6Fuy8J/YEPWjHvRQg56PnbPPQCJ6jxWBbEX5gaTV477dm3k6c58mop4QrOU
+ QKSSNOJnF3SyNlIHquQlTbnwA8257V8h6QYnNSt0JGutNFBoRjSFyKItbExn2bDYHgNH
+ SYi/J/FXiWlNNdM0DtzZ7GYUQjsF9EP+Y8BhGLnVjchkwZE+EXiLyvKsJlktZM0zy6JF
+ 011WSQmi06MNLY88RsEWJfjKVTNTUGeWcgYrHWulKNqPlhFIIj6x+olMUGQ7i609m4TO
+ wd4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769184242; x=1769789042;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1kQmBSg+tA8MLRBzDeZG0ZWkb9fuamq1qYDJiutcxtM=;
- b=O7LIK46f06KotaEMQslhNrjaTJef7YNUMju+ost/m9dvKMNLZ8YgXN9NWRUCdrrTaE
- SrsoIwwS8bPwCcTScBBBoxXLvA5U3QV0bgA5lVn7M4b3qhtNutlYbsF+9X4AqqrRS2uP
- gDNAQJC+VZWaR9rhT5VLAeJZmgeiXa4Ccip0pBwQ4Oo0SJx0l7uytdiyn6Jg/4UQyits
- xmLrtWbjRPDVw5acqYF1TKuGXUxhWuB+ttZ+wlN42lOCIDrhwcTHmjqZfjMojFK97O7A
- UoHeDRr4UFUfzLotJLF6Ndh1oX3cTCSpWasn7JrGViivEQfghYiUMUbGwO8ToCywOixJ
- SLHQ==
-X-Gm-Message-State: AOJu0YyKgVU2baghA21AY1jZhJ7kGqCg7ntLBWPTnn2W4fKohLm0xisT
- Sh3aQocFBzKwCUwHzfjcS/6RW0tMz3G7PKmwjigBi5ci4WHeldsA8bxGUKh2p6qRok0=
-X-Gm-Gg: AZuq6aKUzhe8MFQPHR/enAz1pnbTDJOOo5wjECj2gUtIB609LfCTJUbJ0whyesLRTkT
- HAk//IkH2paaprSqa1G4q8QM7SI3zKWzjy19FwCcg6bK2LoT0A/lUbYnhfmiPhenUcyoTaJbsGh
- /wzjDb9fXcplpWDXcbbXx0xUqM8wdRqVFZL/rVj5QlKeWEjRx+turMchFmzjNYtsjZ+ZnUtiHd1
- HPbU4hYddcf7PbdXdnFCoe5hmog8hjzkZEmqmrAXmADbnXN50s4g687r5cFYXBDuNXxlh1Mpe1k
- CVMzV6Dnt6DmmphKM+o+8B19dUdwD/cMTmedvMyb59G2gxDWYvJzhsvhWxWvDo0LofJQ2/r9+0H
- M5UbEtZtFjFPiikhkD7SoI0ZcQXLHee3jgMXWvIPrgkuxpoQrmyDBhZ7ATXNRONDT0siUeop4Hx
- cYJAPqtii59RoMQ2l8F0zc0fFDVDv+GvLcOu7ihXq58BtoaOOVkkZalaAJGax5Yr2O4+dw6w==
-X-Received: by 2002:a05:620a:468f:b0:8c5:38ff:d4e1 with SMTP id
- af79cd13be357-8c6e91224f2mr173041585a.23.1769184242169; 
- Fri, 23 Jan 2026 08:04:02 -0800 (PST)
-Received: from gourry-fedora-PF4VCD3F
- (pool-96-255-20-138.washdc.ftas.verizon.net. [96.255.20.138])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c6e383a95fsm202381485a.31.2026.01.23.08.04.01
+ d=1e100.net; s=20230601; t=1769184914; x=1769789714;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=St6WiDlN5y3/67x6/i4DWB3p/o72JYEaip1j9p8qdas=;
+ b=vs0fcQrHrU0h+BaW2F+aBqnR1X1tdIMl4/Dts6tD821yuM/5wDJZwcif6z7LfscWv1
+ KeDi0K9aNqPXntnqWG+X6pMjZJlURyOXlmc3vR/6pBsNeLTr4b5Vt53wGdPLge189oDq
+ KKQ1N6nGIKfi6kZbkbCgd3sMe9tO6K1ZiCsgIzs8YSh6PDMTy47Z63wU4YF3JY3NdkMa
+ aQ4ps1Eu1miOx3XdCggVy1Zi7XtJ1oDIIx8IpKFugeAwuWtHIBdVc15S3BO0IzL57jYY
+ YDAonHTwHZxZotaoSzUrPI1hVPDXmK1pRJSzXqs0R/RT7mF4DvMgzv3lhS2V7092PkCR
+ PTVQ==
+X-Gm-Message-State: AOJu0YzBeg0gRj1l8RDc3OzO0Es3W2VWWWvkpcJCZ899nmZMdh3+NYEE
+ r1CDXiyDQb/pQ+U8CayVKnQPK8W/Y/lq1cTHyjxuLFQdGlw8TdAUF2ugjV6ozyF8/7g=
+X-Gm-Gg: AZuq6aIvWnJ5LGYXz2KYmgxlpHVanFMPLyH2cp6Cg5jaEQkYgRmzFoi96uY/b+Ey6Ls
+ dAhc8tuJy9JSNlNeseUFeBw41LZ5QERKWXh86NTz+FDjAKMGTnHrOHTcQwGfuM5hzllsFxQTqxD
+ co8InZZ06JTTGCNSFFjUI1zHz6rIxl94qHUSKxnkzbx//TpyajkFqwMHAn7jzbSsmbNBRZLDcBO
+ NJ/0jaWQif0ly7tBOf2uziqTfBtbguqlxqdnf8/4EIvxCVr8ZdaarbOZg/oH6sAMdvvJonZFPUg
+ MLkb6REQRucIEOsJqLwaBa0dIMSe+asxeCuY4yPOyf/DPaHIynFjOxtLxHB1MNgXKmfKnUECNUR
+ 71IU6f+c37WFDQP+mDiWO54jxecb8uA0/IUwhMy+XMyO+Q+5vaJTWs63KRvT8SF5odC3kQa40aD
+ 6jRLMQm1r0iOoz
+X-Received: by 2002:a05:600d:644a:20b0:47e:e38b:a83 with SMTP id
+ 5b1f17b1804b1-48047068f88mr88207525e9.7.1769184913068; 
+ Fri, 23 Jan 2026 08:15:13 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-480470287c3sm159293055e9.3.2026.01.23.08.15.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 08:04:01 -0800 (PST)
-Date: Fri, 23 Jan 2026 11:03:59 -0500
-From: Gregory Price <gourry@gourry.net>
-To: fanhuang <FangSheng.Huang@amd.com>
-Cc: qemu-devel@nongnu.org, david@redhat.com, imammedo@redhat.com,
- jonathan.cameron@huawei.com, apopple@nvidia.com,
- dan.j.williams@intel.com, Zhigang.Luo@amd.com, Lianjie.Shi@amd.com
-Subject: Re: [PATCH v5 1/1] numa: add 'memmap-type' option for memory type
- configuration
-Message-ID: <aXOb7xOKNR62d7oy@gourry-fedora-PF4VCD3F>
-References: <20260123024312.1601732-1-FangSheng.Huang@amd.com>
- <20260123024312.1601732-2-FangSheng.Huang@amd.com>
+ Fri, 23 Jan 2026 08:15:10 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E1EB75F7B3;
+ Fri, 23 Jan 2026 16:15:09 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Warner Losh <imp@bsdimp.com>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Cleber Rosa
+ <crosa@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Mauro
+ Carvalho Chehab <mchehab+huawei@kernel.org>,  Joe Perches
+ <joe@perches.com>,  John Snow <jsnow@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>, Peter
+ Maydell <peter.maydell@linaro.org>
+Subject: Re: [RFC PATCH v2 08/16] MAINTAINERS: be realistic about *-user
+In-Reply-To: <CANCZdfo3yz=aC-EOxd2LYBX=tf=RQTY6ibCpj-fCfGHZtH6WTw@mail.gmail.com>
+ (Warner Losh's message of "Fri, 23 Jan 2026 08:12:33 -0700")
+References: <20260123145750.1200879-1-alex.bennee@linaro.org>
+ <20260123145750.1200879-9-alex.bennee@linaro.org>
+ <CANCZdfo3yz=aC-EOxd2LYBX=tf=RQTY6ibCpj-fCfGHZtH6WTw@mail.gmail.com>
+User-Agent: mu4e 1.12.15; emacs 30.1
+Date: Fri, 23 Jan 2026 16:15:09 +0000
+Message-ID: <87343wmhki.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260123024312.1601732-2-FangSheng.Huang@amd.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
- envelope-from=gourry@gourry.net; helo=mail-qk1-x72b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,90 +111,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 23, 2026 at 10:43:12AM +0800, fanhuang wrote:
-> +bool e820_update_entry_type(uint64_t start, uint64_t length, uint32_t new_type)
-> +{
-> +    uint64_t end = start + length;
-> +    assert(!e820_done);
-> +
-> +    /* For E820_SOFT_RESERVED, validate range is within E820_RAM */
-> +    if (new_type == E820_SOFT_RESERVED) {
-> +        bool range_in_ram = false;
-> +
-> +        for (size_t j = 0; j < e820_entries; j++) {
-> +            uint64_t ram_start = le64_to_cpu(e820_table[j].address);
-> +            uint64_t ram_end = ram_start + le64_to_cpu(e820_table[j].length);
-> +            uint32_t ram_type = le32_to_cpu(e820_table[j].type);
-> +
-> +            if (ram_type == E820_RAM && ram_start <= start && ram_end >= end) {
-> +                range_in_ram = true;
-> +                break;
-> +            }
-> +        }
-> +        if (!range_in_ram) {
-> +            return false;
-> +        }
-> +    }
+Warner Losh <imp@bsdimp.com> writes:
 
-------- nit --------
-this can be shortened: (j == e820_entries) implies not found.
+(Cc sniping Paolo/Peter/Markus for AI discussion)
 
-    if (new_type == E820_SOFT_RESERVED) {
-        for (size_t j = 0; j < e820_entries; j++) {
-            uint64_t ram_start = le64_to_cpu(e820_table[j].address);
-            uint64_t ram_end = ram_start + le64_to_cpu(e820_table[j].length);
-            uint32_t ram_type = le32_to_cpu(e820_table[j].type);
+> On Fri, Jan 23, 2026 at 8:00=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@lin=
+aro.org> wrote:
+>
+>  We should reflect the current status so users don't have unrealistic
+>  expectations of how quickly things can get reviewed and merged.
+>
+>  Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+> Reviewed-by: Warner Losh <imp@bsdimp.com>
+>=20=20
+>  ---
+>
+>  [AJB] I realise this is a slightly provocative patch but given how
+>  widely used *-user is downstream we should be clear about the current
+>  state and hopefully encourage those who rely on it to step-up.
+>
+> For the bsd-user case this is likely correct. We run hot and cold about b=
+eing
+> proactive at fixing things, and we've been somewhat cold for a while now.
+>
+> Part of the problem is that this submission process is very very heavywei=
+ght
+> compared to other projects I contribute to. Not sure what to do about tha=
+t since
+> there's a reluctance to move away from it. Or alternatively, I'm somehow =
+making
+> it too hard.
 
-            if (ram_type == E820_RAM && ram_start <= start && ram_end >= end)
-                break;
-        }
-        if j == e820_entries: /* Not found */
-            return false;
-    }
+We have discussed in the past allowing maintainers to directly submit
+their PRs via GitLab which would be beneficial from a testing point of
+view. To move this forward someone needs to propose the changes to our
+policy documents so it can be discussed and merged.
 
-Haven't looked at the surrounding code, this seems like you might define
+However we still expect patches to go onto the mailing list for
+review. The greybeards (like myself ;-) are very wedded to the inline
+email workflow but if we could keep that interface while making use of
+the GitLab UI for those that grew up knowing only the web maybe we could
+make the project more friendly to new contributors.
 
-   static bool e820_has_ram_region(start, end) { /* above code */ }
+I'd be interested in knowing where the pain points are for you because
+modern tools like b4 make some of the grind (collecting tags and
+applying patches from ML) a lot easier.
 
-then the 820_update_entry_type lines can just be
+Usually the most difficult thing is getting email setup so you can
+git-send-email or git-publish.
 
-    if (new_type == E820_SOFT_RESERVED &&
-        !e820_has_ram_region(start, end))
-        return false;
+> A lot of the upstreaming work that's stalled would be ideal to tell claud=
+e to do,
+> but I'm unsure the project's stance on using claude to move code, and git=
+ log
+> 5 different trees to get the original author(s) of the code and make triv=
+ial compile
+> tweaks.
 
-only worth it if e820_has_ram_region() deduplicates other stuff.
--------------------
+There was some discussion at the maintainers summit about relaxing the
+rules on AI submission for "mechanical" changes but it ran into the
+weeds without any firm conclusion. We could certainly revisit it.
 
-I don't see anything else immediately concerning and the above is more
-of a nit than anything.  
+I think the concern about potential license pollution is a valid one but
+this is more of a concern for "novel" changes made by AI. I've been more
+relaxed on my personal FLOSS projects where I have allowed AI
+contributions but made it clear that the submitter is expected to
+understand whats going on. But being personal projects they are less
+likely to be spammed to death by AI slop PRs which seems to be a growing
+problem in the wider ecosystem.
 
-I haven't tested this, you might at least add the OS-facing results to
-the changelog so someone can replicate your setup.
+>
+> Warner=20
 
-For example the early-boot print showing E820 and ACPI SRAT data.
-
-   [reasonable memdev definitions]
-   -numa node,nodeid=0,memdev=m0
-   -numa node,nodeid=1,memdev=m1,memmap-type=spm
-   -numa node,nodeid=2,memdev=m2,memmap-type=reserved
-
-resulting in:
-[    0.000000] BIOS-provided physical RAM map:
-[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x00000000afffffff] usable
-[    0.000000] BIOS-e820: [mem 0x0000000100000000-0x000000c04fffffff] usable
-[    0.000000] BIOS-e820: [mem 0x000000c050000000-0x000001004fffffff] soft reserved
-[    0.000000] BIOS-e820: [mem 0x0000010050000000-0x000001006fffffff] reserved
-
-[    0.003409] ACPI: SRAT: Node 0 PXM 0 [mem 0x00000000-0xafffffff]
-[    0.003410] ACPI: SRAT: Node 0 PXM 0 [mem 0x100000000-0xc04fffffff]
-[    0.003411] ACPI: SRAT: Node 1 PXM 1 [mem 0xc050000000-0x1004fffffff] hotplug
-[    0.003411] ACPI: SRAT: Node 2 PXM 2 [mem 0x10050000000-0x1006fffffff] hotplug
-
-  (fake entries above)
-  (i don't actually know if RESERVED gets added to SRAT)
-
-This would at least show the node-association and the types are correct.
-
-Thanks,
-~Gregory
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
