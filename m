@@ -4,118 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD9A4D77897
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 17:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07992D7789E
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 17:55:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjL65-0007h9-B5; Fri, 23 Jan 2026 12:37:25 -0500
+	id 1vjLMq-0005Iq-C2; Fri, 23 Jan 2026 12:54:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjL5J-00071w-95
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 12:36:40 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjL5H-0000pp-GS
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 12:36:37 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 170215BCCC;
- Fri, 23 Jan 2026 17:36:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769189792; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UZ7tF3fB62oAJFQ8+SsjlsY97x/QZzcmp3J+hdiJWqo=;
- b=AaeH74/nOCftvPFjriT9ch0NUIk4BXiQVtlpUm2V6fnm13QSyptPn1udOur5vEKGW0WM4C
- EZcQIt0Ld+B6Pw8IymewwVMoofdwJeOgb7aoLsJsxYPrpkOSVSjjqP1tl1oNbbXO/3XN+m
- CrRHGkHHHGUL4kjKILUH2pDOnEebJiM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769189792;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UZ7tF3fB62oAJFQ8+SsjlsY97x/QZzcmp3J+hdiJWqo=;
- b=NPH0ObqA46zZP1YeEk6wnCxEHvcNVCh4hgFsToxbv9/848H52Ii6wd8vyzHsPAXEa8gDJl
- JiU9OP2vjrDdSWBw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="AaeH74/n";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=NPH0ObqA
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769189792; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UZ7tF3fB62oAJFQ8+SsjlsY97x/QZzcmp3J+hdiJWqo=;
- b=AaeH74/nOCftvPFjriT9ch0NUIk4BXiQVtlpUm2V6fnm13QSyptPn1udOur5vEKGW0WM4C
- EZcQIt0Ld+B6Pw8IymewwVMoofdwJeOgb7aoLsJsxYPrpkOSVSjjqP1tl1oNbbXO/3XN+m
- CrRHGkHHHGUL4kjKILUH2pDOnEebJiM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769189792;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UZ7tF3fB62oAJFQ8+SsjlsY97x/QZzcmp3J+hdiJWqo=;
- b=NPH0ObqA46zZP1YeEk6wnCxEHvcNVCh4hgFsToxbv9/848H52Ii6wd8vyzHsPAXEa8gDJl
- JiU9OP2vjrDdSWBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 804E7136AA;
- Fri, 23 Jan 2026 17:36:31 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 5sVcEJ+xc2mqYwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 17:36:31 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, Stefan
- Hajnoczi <stefanha@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?=
- Le Goater <clg@redhat.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 3/5] migration: Notify migration FAILED before starting VM
-In-Reply-To: <aXOWgOAWqjy7rHV7@x1.local>
-References: <20260122230331.3543312-1-peterx@redhat.com>
- <20260122230331.3543312-4-peterx@redhat.com> <874iocjxhk.fsf@suse.de>
- <aXOWgOAWqjy7rHV7@x1.local>
-Date: Fri, 23 Jan 2026 14:36:28 -0300
-Message-ID: <87sebwgrj7.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <joe@perches.com>) id 1vjLMo-0005FB-QO
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 12:54:42 -0500
+Received: from smtprelay0015.hostedemail.com ([216.40.44.15]
+ helo=relay.hostedemail.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <joe@perches.com>) id 1vjLMn-0003rK-96
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 12:54:42 -0500
+Received: from omf18.hostedemail.com (a10.router.float.18 [10.200.18.1])
+ by unirelay04.hostedemail.com (Postfix) with ESMTP id 82CBB1A04FF;
+ Fri, 23 Jan 2026 17:54:38 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by
+ omf18.hostedemail.com (Postfix) with ESMTPA id E119037; 
+ Fri, 23 Jan 2026 17:54:35 +0000 (UTC)
+Message-ID: <18c9df0128a437af4043a5d4978ee09843da7d75.camel@perches.com>
+Subject: Re: [RFC PATCH v2 00/16] MAINTAINER updates plus conversion of
+ get_maintainers.pl to python
+From: Joe Perches <joe@perches.com>
+To: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?=	 <philmd@linaro.org>, Mauro Carvalho
+ Chehab <mchehab+huawei@kernel.org>, John Snow <jsnow@redhat.com>, Florian
+ Mickler <florian@mickler.org>
+Date: Fri, 23 Jan 2026 09:54:34 -0800
+In-Reply-To: <20260123145750.1200879-1-alex.bennee@linaro.org>
+References: <20260123145750.1200879-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[7]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 170215BCCC
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Stat-Signature: recapgbzyw9ef5zkabatsrimn986k9ji
+X-Rspamd-Server: rspamout01
+X-Rspamd-Queue-Id: E119037
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Session-ID: U2FsdGVkX1+6gKviBaomqFLDCp19QLPtNrArxqXme7M=
+X-HE-Tag: 1769190875-411237
+X-HE-Meta: U2FsdGVkX1+mX/eXUw1hDLs8+HyIa9WvduI8zQltnxSbiA1DuW7r4sTR4kG1K7tOUu+aVgTSGKMo2KhjSeDEhOEXdZspKf4bUinK/6OkC44zFLhuFqTNSSxK2QND1xdzdYSzQdMtiv+1Gjak6EaxXfB45a9mAyTAQS6gYUTpa9QaJldEvtNNg6OaVzmZDhVALfdaXJkKa0PY6usLLqQd79hCd3olsbi6tmEKfPbaEhokS7CFb4HlCmInpxzgVM4wQp1+DNLa37cjXAS2lVC/Fp7mtYjhIfzihZ0RfuIZWIPqPCd07CyWtS9pDSQfhBV8
+Received-SPF: pass client-ip=216.40.44.15; envelope-from=joe@perches.com;
+ helo=relay.hostedemail.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,58 +74,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Fri, 2026-01-23 at 14:57 +0000, Alex Benn=E9e wrote:
+> I wanted to look at adding gitlab tags to MAINTAINERS and baulked
+> slightly at figuring out what I would need to change in the perl
+> script to cleanly handle it.
+>=20
+> While we imported the perl script from the kernel I'm fairly sure we
+> don't use half the features it has and as us grey beards age out less
+> people will be willing to tweak it. Consider this a proof-of-concept
+> for discussion about if it is worth perusing this path.
+>=20
+> For v2:
+>=20
+>   - added the missing K: keyword support
+>   - added basic --git fallback support
+>   - picked up a few more MAINTAINER updates from list
+>   - updated entries for Arm and *-user
+>=20
+> I've CC'd the kernel maintainers for the script to see if they are
+> interested in this work.
 
-> On Fri, Jan 23, 2026 at 09:59:35AM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > Devices may opt-in migration FAILED notifiers to be invoked when migration
->> > fails.  Currently, the notifications happen in migration_cleanup().  It is
->> > normally fine, but maybe not ideal if there's dependency of the fallback
->> > v.s. VM starts.
->> >
->> > This patch moves the FAILED notification earlier, so that if the failure
->> > happened during switchover, it'll notify before VM restart.
->> >
->> 
->> The change to FAILED in patch 2 should come to this patch to avoid
->> having a window where the notification only happens at the end.
->
-> Hmm.. Isn't that expected?  Even after patch 2, we still notify FAILED at
-> the end for precopy.  It's the same for postcopy.
->
+I think rewrites aren't particularly useful but, your time, your choices.
 
-Sorry, I meant: s/at the end/after vm_start/.
+Perhaps the --interactive bit of the script isn't necessary to convert.
+I don't know that anyone uses it.
 
-> For a failed postcopy we have following behavior:
->
-> Before patch 2
-> ==============
->
->   - notify FAILED (during switchover)
->   - vm_start()
->   - notify FAILED (during migration_cleanup)
->
-> After patch 2 
-> =============
->
->   - vm_start()
->   - notify FAILED (during migration_cleanup)
->
-> So patch 2 fixes the duplicate issue, and only fixes that.
->
-> After patch 3
-> =============
->
->   - notify FAILED (during migration_iteration_finish)
->   - vm_start()
->
-> Patch 3 changes the place of FAILED notification so that it happens always
-> before vm_start(), for both precopy and postcopy.
-
-Right, my point is that with patch 3 we're establishing that the correct
-place to notify is before vm_start(). But after patch 2, *if* any driver
-actually depends on being informed of failure *before* starting the VM,
-that will not happen. I think both changes could be made at once so that
-this intermediate state never exists.
+Adding Florian Mickler who wrote the --interactive code to cc's
+(15+ years ago now)
 
