@@ -4,111 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 245E5D74EC2
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB03FD74EC3
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:58:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjGga-0005yc-GN; Fri, 23 Jan 2026 07:54:52 -0500
+	id 1vjGjX-0000TV-NS; Fri, 23 Jan 2026 07:57:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjGgB-0005nW-0Z
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:54:24 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjGg8-0004xF-TO
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:54:22 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vjGjV-0000Sh-6l
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:57:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vjGjS-0005Jn-ID
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:57:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769173064;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=v7zsUW+m9oy0DUbPCbypiXzO4zGs/eg9ahh4TGxtfWs=;
+ b=UoTivuLneN6BeYUmzTgSgFzi5clt178MSOm+RLA477Lar0YSFTeF7XD8fUQvPdvxTPc683
+ Bg5noYCqFMeNLWfSazngWpoE2WqwpxfC5o1DjznBOUU4g4ro1j+9AndQxEdV1O5z3FGfl1
+ X7vFDNdz+mmhogEmRtc8ixkISV6IM5M=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-L1DOAd7yPYC7mLp65xwrLA-1; Fri,
+ 23 Jan 2026 07:57:41 -0500
+X-MC-Unique: L1DOAd7yPYC7mLp65xwrLA-1
+X-Mimecast-MFC-AGG-ID: L1DOAd7yPYC7mLp65xwrLA_1769173060
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 23B6E5BCCD;
- Fri, 23 Jan 2026 12:54:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769172858; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=V3OD4DI/iwuN17fdCMij0y2Oxx+4P9uWLuVdFoEBM9o=;
- b=OqXvH/AzS35sKXXcLl3sYKGqjglKQojdlN9stg/Xzs4XxaSDTlH6l3nbPW0xNNavn8eh4R
- /WvStzwuZGTCpyAOO3Y4VsroxqUELc7tdFbPeu5jdfFVeRScOs0Bz1sreBs3unAER+Juf6
- gRVr8wu56mAxDHG00AeBP5Uzu2wh6vg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769172858;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=V3OD4DI/iwuN17fdCMij0y2Oxx+4P9uWLuVdFoEBM9o=;
- b=HY3g6zTOsGSYb7qTiTXBWA4zbegS1E5SrVcNbRiZSx2bPK/dqvQZC1KgduTKCSOKvMGkTT
- w3bnctVagtS0p4Ag==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769172858; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=V3OD4DI/iwuN17fdCMij0y2Oxx+4P9uWLuVdFoEBM9o=;
- b=OqXvH/AzS35sKXXcLl3sYKGqjglKQojdlN9stg/Xzs4XxaSDTlH6l3nbPW0xNNavn8eh4R
- /WvStzwuZGTCpyAOO3Y4VsroxqUELc7tdFbPeu5jdfFVeRScOs0Bz1sreBs3unAER+Juf6
- gRVr8wu56mAxDHG00AeBP5Uzu2wh6vg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769172858;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=V3OD4DI/iwuN17fdCMij0y2Oxx+4P9uWLuVdFoEBM9o=;
- b=HY3g6zTOsGSYb7qTiTXBWA4zbegS1E5SrVcNbRiZSx2bPK/dqvQZC1KgduTKCSOKvMGkTT
- w3bnctVagtS0p4Ag==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 87EBA136AA;
- Fri, 23 Jan 2026 12:54:17 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id VxIREnlvc2ktSAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 12:54:17 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi
- <stefanha@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- peterx@redhat.com, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH 2/5] migration: Fix double notification of DONE/FAIL for
- postcopy
-In-Reply-To: <87a4y4jxtc.fsf@suse.de>
-References: <20260122230331.3543312-1-peterx@redhat.com>
- <20260122230331.3543312-3-peterx@redhat.com> <87a4y4jxtc.fsf@suse.de>
-Date: Fri, 23 Jan 2026 09:54:14 -0300
-Message-ID: <877bt8jxqh.fsf@suse.de>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 623551955D9A; Fri, 23 Jan 2026 12:57:40 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 08FF21800240; Fri, 23 Jan 2026 12:57:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 908E021E692D; Fri, 23 Jan 2026 13:57:37 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  Markus Armbruster
+ <armbru@redhat.com>
+Subject: Re: [PATCH V2 3/4] qapi: Add attached flag for iothread
+In-Reply-To: <20260121064110.28760-3-zhangckid@gmail.com> (Zhang Chen's
+ message of "Wed, 21 Jan 2026 14:41:09 +0800")
+References: <20260121064110.28760-1-zhangckid@gmail.com>
+ <20260121064110.28760-3-zhangckid@gmail.com>
+Date: Fri, 23 Jan 2026 13:57:37 +0100
+Message-ID: <87qzrga3lq.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,142 +87,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+Zhang Chen <zhangckid@gmail.com> writes:
 
-> Peter Xu <peterx@redhat.com> writes:
+> The attached flag depends on struct IOThreadInfo's
+> 'attached': 'bool'. It can show whether the iothread
+> is attached to an actual device. Show in the qmp/hmp
+> CMD with "attached": true/false.
 >
->> Migration notifiers will notify at any of three places: (1) SETUP
->> phase, (2) migration completes, (3) migration fails.
->>
->> There's actually a special case for spice: one can refer to
->> b82fc321bf ("Postcopy+spice: Pass spice migration data earlier").  It
->> doesn't need another 4th event because in commit 9d9babf78d ("migration:
->> MigrationEvent for notifiers") we merged it together with the DONE event.
->>
->> The merge makes some sense if we treat "switchover" of postcopy as "DONE=
-",
->> however that also means for postcopy we'll notify DONE twice..  The other
->> one at the end of postcopy when migration_cleanup().
->>
->> In reality, the current code base will also notify FAILED for postcopy
->> twice.  It's because an (maybe accidental) change in commit
->> 4af667f87c ("migration: notifier error checking").
->>
->> First of all, we still need that notification when switchover as stated =
-in
->> Dave's commit, however that's only needed for spice.  To fix it, introdu=
-ce
->> POSTCOPY_START event to differenciate it from DONE.  Use that instead in
->> postcopy_start().  Then spice will need to capture this event too.
->>
->> Then we remove the extra FAILED notification in postcopy_start().
->>
->> If one wonder if other DONE users should also monitor POSTCOPY_START
->> event.. We have two more DONE users:
->>
->>   - kvm_arm_gicv3_notifier
->>   - cpr_exec_notifier
->>
->> Both of them do not need a notification for POSTCOPY_START, but only when
->> migration completed.  Actually, both of them are used in CPR, which does=
-n't
->> support postcopy.
->>
->> I didn't attach Fixes: because I am not aware of any real bug on such
->> double reporting.  I'm wildly guessing the 2nd notify might be silently
->> ignored in many cases.  However this is still worth fixing.
->>
->> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->> Cc: Dr. David Alan Gilbert <dave@treblig.org>
->> Signed-off-by: Peter Xu <peterx@redhat.com>
->> ---
->>  include/migration/misc.h | 1 +
->>  migration/migration.c    | 3 +--
->>  ui/spice-core.c          | 3 ++-
->>  3 files changed, 4 insertions(+), 3 deletions(-)
->>
->> diff --git a/include/migration/misc.h b/include/migration/misc.h
->> index e26d418a6e..b002466e10 100644
->> --- a/include/migration/misc.h
->> +++ b/include/migration/misc.h
->> @@ -63,6 +63,7 @@ typedef enum MigrationEventType {
->>      MIG_EVENT_PRECOPY_SETUP,
->>      MIG_EVENT_PRECOPY_DONE,
->>      MIG_EVENT_PRECOPY_FAILED,
->> +    MIG_EVENT_POSTCOPY_START,
->>      MIG_EVENT_MAX
->>  } MigrationEventType;
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> ---
+>  iothread.c         | 1 +
+>  monitor/hmp-cmds.c | 2 ++
+>  qapi/misc.json     | 6 ++++++
+>  3 files changed, 9 insertions(+)
 >
-> With the new state there's a doc text to update at
-> migration_add_notifier below.
->
->>=20=20
->> diff --git a/migration/migration.c b/migration/migration.c
->> index 47d9189aaf..91775f8472 100644
->> --- a/migration/migration.c
->> +++ b/migration/migration.c
->> @@ -2857,7 +2857,7 @@ static int postcopy_start(MigrationState *ms, Erro=
-r **errp)
->>       * at the transition to postcopy and after the device state; in par=
-ticular
->>       * spice needs to trigger a transition now
->>       */
->> -    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_DONE, NULL);
->> +    migration_call_notifiers(ms, MIG_EVENT_POSTCOPY_START, NULL);
->>=20=20
->>      migration_downtime_end(ms);
->>=20=20
->> @@ -2906,7 +2906,6 @@ fail:
->>          migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILE=
-D);
->>      }
->>      migration_block_activate(NULL);
->> -    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
->
-> Does anything consuming the FAILED event expects it to be issued before
-> the vm_start() at migration_iteration_finish?
->
-> migration_iteration_finish:
->
-> bql_lock();
-> switch (s->state) {
-> case MIGRATION_STATUS_FAILED:
->     if (!migration_block_activate(&local_err)) {
->         error_free(local_err);
->         break;
->     }
->     if (runstate_is_live(s->vm_old_state)) {
->         if (!runstate_check(RUN_STATE_SHUTDOWN)) {
->             vm_start();
->         }
->     } else {
->         if (runstate_check(RUN_STATE_FINISH_MIGRATE)) {
->             runstate_set(s->vm_old_state);
->         }
->     }
->
-> The extra migration_block_activate() in postcopy_start() also seems
-> wrong, no?
->
+> diff --git a/iothread.c b/iothread.c
+> index 38e38fb44d..fb4898e491 100644
+> --- a/iothread.c
+> +++ b/iothread.c
+> @@ -358,6 +358,7 @@ static int query_one_iothread(Object *object, void *opaque)
+>      info = g_new0(IOThreadInfo, 1);
+>      info->id = iothread_get_id(iothread);
+>      info->thread_id = iothread->thread_id;
+> +    info->attached = iothread->attached;
+>      info->poll_max_ns = iothread->poll_max_ns;
+>      info->poll_grow = iothread->poll_grow;
+>      info->poll_shrink = iothread->poll_shrink;
+> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> index 5a673cddb2..7463f34bf5 100644
+> --- a/monitor/hmp-cmds.c
+> +++ b/monitor/hmp-cmds.c
+> @@ -202,6 +202,8 @@ void hmp_info_iothreads(Monitor *mon, const QDict *qdict)
+>          value = info->value;
+>          monitor_printf(mon, "%s:\n", value->id);
+>          monitor_printf(mon, "  thread_id=%" PRId64 "\n", value->thread_id);
+> +        monitor_printf(mon, "  attached=%s" "\n",
+> +                       value->attached ? "true" : "false");
+>          monitor_printf(mon, "  poll-max-ns=%" PRId64 "\n", value->poll_max_ns);
+>          monitor_printf(mon, "  poll-grow=%" PRId64 "\n", value->poll_grow);
+>          monitor_printf(mon, "  poll-shrink=%" PRId64 "\n", value->poll_shrink);
+> diff --git a/qapi/misc.json b/qapi/misc.json
+> index e87994c9d9..99ffd45ce5 100644
+> --- a/qapi/misc.json
+> +++ b/qapi/misc.json
+> @@ -76,6 +76,9 @@
+>  #
+>  # @thread-id: ID of the underlying host thread
+>  #
+> +# @attached: flag to show current iothread attach to device status
+> +#     (since 12.0)
 
-Heh, nevermind...
+We started to talk about improving the description in review of v1.
+Let's continue there.
 
->>      bql_unlock();
->>      return -1;
->>  }
->> diff --git a/ui/spice-core.c b/ui/spice-core.c
->> index 8a6050f4ae..ce3c2954e3 100644
->> --- a/ui/spice-core.c
->> +++ b/ui/spice-core.c
->> @@ -585,7 +585,8 @@ static int migration_state_notifier(NotifierWithRetu=
-rn *notifier,
->>=20=20
->>      if (e->type =3D=3D MIG_EVENT_PRECOPY_SETUP) {
->>          spice_server_migrate_start(spice_server);
->> -    } else if (e->type =3D=3D MIG_EVENT_PRECOPY_DONE) {
->> +    } else if (e->type =3D=3D MIG_EVENT_PRECOPY_DONE ||
->> +               e->type =3D=3D MIG_EVENT_POSTCOPY_START) {
->>          spice_server_migrate_end(spice_server, true);
->>          spice_have_target_host =3D false;
->>      } else if (e->type =3D=3D MIG_EVENT_PRECOPY_FAILED) {
+> +#
+>  # @poll-max-ns: maximum polling time in ns, 0 means polling is
+>  #     disabled (since 2.9)
+>  #
+> @@ -93,6 +96,7 @@
+>  { 'struct': 'IOThreadInfo',
+>    'data': {'id': 'str',
+>             'thread-id': 'int',
+> +           'attached': 'bool',
+>             'poll-max-ns': 'int',
+>             'poll-grow': 'int',
+>             'poll-shrink': 'int',
+> @@ -118,6 +122,7 @@
+>  #              {
+>  #                 "id":"iothread0",
+>  #                 "thread-id":3134,
+> +#                 "attached":false",
+
+Invalid JSON.  Drop the last ".
+
+>  #                 'poll-max-ns':32768,
+>  #                 "poll-grow":0,
+>  #                 "poll-shrink":0,
+> @@ -126,6 +131,7 @@
+>  #              {
+>  #                 "id":"iothread1",
+>  #                 "thread-id":3135,
+> +#                 "attached":true",
+
+Likewise.
+
+>  #                 'poll-max-ns':32768,
+>  #                 "poll-grow":0,
+>  #                 "poll-shrink":0,
+
 
