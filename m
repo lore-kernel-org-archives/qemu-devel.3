@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74AC1D72343
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE066D72343
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:58:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjBxj-0004Qx-7g; Fri, 23 Jan 2026 02:52:11 -0500
+	id 1vjC0A-00084U-D9; Fri, 23 Jan 2026 02:54:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vjBxP-00043D-Lr
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:52:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vjByz-00070e-Q0
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:53:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vjBxO-0002BV-5x
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:51:51 -0500
+ id 1vjByw-0002PU-Uy
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:53:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769154709;
+ s=mimecast20190719; t=1769154806;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cwGRy9Jua8gvlaj+rp/+4kYdLFQt3exlDWb6Dlo1oQo=;
- b=LRq2L2PQ2AYsemG6deiLqM2epIkmvtG0+FXfbV7y+X6Iv5CwPgHfFqk4DZapwfef3NX9cA
- itndjl3xX+gIByvHPln/r76SsqIeK5Eq9fWdYEmwS8FyuKA/Va/RetRcPLU8VkpQUooc8E
- M0I/+00POF+OmlhLv9A3EimOKsRTA1M=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=jutf5aEZ5197WphUOXGocHtyASAQTk41exOt/HWZPxc=;
+ b=aiBAryEg5tlKDIq0ml+0mc1Rk8uCUpr0HWlw6MdH7iX8AwqitE0jjOANe7GKMSmBy5yTir
+ TKfdV/L8gL7Kxx6EhZLaLnfGl7kr+0o7mP2KEgRT5tLBBK3GWOm6Vr6iD7b4b8/RRmWBiY
+ 7006ZxO+iZ3SRhi9bdecKVXkKofTJ64=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-362-SWU5LLwmP2mccOF7QX8X6g-1; Fri,
- 23 Jan 2026 02:51:46 -0500
-X-MC-Unique: SWU5LLwmP2mccOF7QX8X6g-1
-X-Mimecast-MFC-AGG-ID: SWU5LLwmP2mccOF7QX8X6g_1769154706
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-191-T8k8CJz9O2mnem_zW7thng-1; Fri,
+ 23 Jan 2026 02:53:22 -0500
+X-MC-Unique: T8k8CJz9O2mnem_zW7thng-1
+X-Mimecast-MFC-AGG-ID: T8k8CJz9O2mnem_zW7thng_1769154801
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EB28C1955D80; Fri, 23 Jan 2026 07:51:45 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71F1F18005AF; Fri, 23 Jan 2026 07:53:21 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DEFCB1800285; Fri, 23 Jan 2026 07:51:44 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 84C6C1956095; Fri, 23 Jan 2026 07:53:19 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 19/37] audio: simplify audio_init()
-Date: Fri, 23 Jan 2026 11:49:22 +0400
-Message-ID: <20260123074945.2563196-20-marcandre.lureau@redhat.com>
+Subject: [PATCH 34/37] audio-be: add common pre-conditions
+Date: Fri, 23 Jan 2026 11:49:37 +0400
+Message-ID: <20260123074945.2563196-35-marcandre.lureau@redhat.com>
 In-Reply-To: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
 References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,126 +89,216 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Factorize looking up the driver in audio_driver_init()
+assert() on valid values, and handle acceptable NULL arguments
+gracefully.
+
+Note audio_driver_write() and audio_driver_read() used to return
+size (with a "XXX: Consider options") when sw was NULL. Imho, it is more
+correct to not pretend to have read/written anything by default in the
+AudioBackend base abstract class.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio.c | 66 ++++++++++++++++++++++-----------------------------
- 1 file changed, 29 insertions(+), 37 deletions(-)
+ audio/audio-be.c         | 61 ++++++++++++++++++++++++++++++++++++++++
+ tests/audio/test-audio.c |  8 ++----
+ 2 files changed, 64 insertions(+), 5 deletions(-)
 
-diff --git a/audio/audio.c b/audio/audio.c
-index 1c83dd4ce6d..2a067075b0c 100644
---- a/audio/audio.c
-+++ b/audio/audio.c
-@@ -1561,11 +1561,18 @@ size_t audio_generic_read(HWVoiceIn *hw, void *buf, size_t size)
-     return total;
+diff --git a/audio/audio-be.c b/audio/audio-be.c
+index 37e3eb0909d..b3fa8d9c549 100644
+--- a/audio/audio-be.c
++++ b/audio/audio-be.c
+@@ -29,6 +29,10 @@ SWVoiceIn *audio_be_open_in(
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    assert(name != NULL);
++    assert(callback_fn != NULL);
++    assert(as != NULL);
++
+     return klass->open_in(be, sw, name, callback_opaque, callback_fn, as);
  }
  
--static bool audio_driver_do_init(AudioMixengBackend *s, struct audio_driver *drv,
--                                 Audiodev *dev, Error **errp)
-+static bool audio_driver_do_init(AudioMixengBackend *d, Error **errp)
+@@ -42,6 +46,10 @@ SWVoiceOut *audio_be_open_out(
  {
--    s->drv_opaque = drv->init(dev, errp);
--    if (!s->drv_opaque) {
-+    const char *drvname = AudiodevDriver_str(d->dev->driver);
-+    struct audio_driver *drv = audio_driver_lookup(drvname);
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    assert(name != NULL);
++    assert(callback_fn != NULL);
++    assert(as != NULL);
 +
-+    if (!drv) {
-+        error_setg(errp, "Unknown audio driver `%s'", drvname);
+     return klass->open_out(be, sw, name, callback_opaque, callback_fn, as);
+ }
+ 
+@@ -49,6 +57,10 @@ void audio_be_close_out(AudioBackend *be, SWVoiceOut *sw)
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return;
++    }
++
+     return klass->close_out(be, sw);
+ }
+ 
+@@ -56,6 +68,10 @@ void audio_be_close_in(AudioBackend *be, SWVoiceIn *sw)
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return;
++    }
++
+     return klass->close_in(be, sw);
+ }
+ 
+@@ -63,6 +79,10 @@ bool audio_be_is_active_out(AudioBackend *be, SWVoiceOut *sw)
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
 +        return false;
 +    }
 +
-+    d->drv_opaque = drv->init(d->dev, errp);
-+    if (!d->drv_opaque) {
-         return false;
-     }
- 
-@@ -1578,14 +1585,14 @@ static bool audio_driver_do_init(AudioMixengBackend *s, struct audio_driver *drv
-         drv->pcm_ops->put_buffer_out = audio_generic_put_buffer_out;
-     }
- 
--    audio_init_nb_voices_out(s, drv, 1);
--    audio_init_nb_voices_in(s, drv, 0);
--    s->drv = drv;
-+    audio_init_nb_voices_out(d, drv, 1);
-+    audio_init_nb_voices_in(d, drv, 0);
-+    d->drv = drv;
- 
--    if (dev->timer_period <= 0) {
--        s->period_ticks = 1;
-+    if (d->dev->timer_period <= 0) {
-+        d->period_ticks = 1;
-     } else {
--        s->period_ticks = dev->timer_period * (int64_t)SCALE_US;
-+        d->period_ticks = d->dev->timer_period * (int64_t)SCALE_US;
-     }
- 
-     return true;
-@@ -1785,24 +1792,12 @@ void audio_create_default_audiodevs(void)
-  */
- static AudioBackend *audio_init(Audiodev *dev, Error **errp)
- {
--    int done = 0;
--    const char *drvname;
--    AudioMixengBackend *s;
--    struct audio_driver *driver;
-+    AudioMixengBackend *d;
- 
--    s = AUDIO_MIXENG_BACKEND(object_new(TYPE_AUDIO_MIXENG_BACKEND));
--
--    if (dev) {
--        /* -audiodev option */
--        s->dev = dev;
--        drvname = AudiodevDriver_str(dev->driver);
--        driver = audio_driver_lookup(drvname);
--        if (driver) {
--            done = audio_driver_do_init(s, driver, dev, errp);
--        } else {
--            error_setg(errp, "Unknown audio driver `%s'", drvname);
--        }
--        if (!done) {
-+    d = AUDIO_MIXENG_BACKEND(object_new(TYPE_AUDIO_MIXENG_BACKEND));
-+    d->dev = dev;
-+    if (d->dev) {
-+        if (!audio_driver_do_init(d, errp)) {
-             goto out;
-         }
-     } else {
-@@ -1813,27 +1808,24 @@ static AudioBackend *audio_init(Audiodev *dev, Error **errp)
-                 error_setg(errp, "no default audio driver available");
-                 goto out;
-             }
--            s->dev = dev = e->dev;
-+            d->dev = e->dev;
-             QSIMPLEQ_REMOVE_HEAD(&default_audiodevs, next);
-             g_free(e);
--            drvname = AudiodevDriver_str(dev->driver);
--            driver = audio_driver_lookup(drvname);
--            if (audio_driver_do_init(s, driver, dev, NULL)) {
-+            if (audio_driver_do_init(d, NULL)) {
-                 break;
-             }
--            qapi_free_Audiodev(dev);
--            s->dev = NULL;
-         }
-     }
- 
--    if (!object_property_try_add_child(get_audiodevs_root(), dev->id, OBJECT(s), errp)) {
-+    if (!object_property_try_add_child(get_audiodevs_root(),
-+                                       d->dev->id, OBJECT(d), errp)) {
-         goto out;
-     }
--    object_unref(s);
--    return AUDIO_BACKEND(s);
-+    object_unref(d);
-+    return AUDIO_BACKEND(d);
- 
- out:
--    object_unref(s);
-+    object_unref(d);
-     return NULL;
+     return klass->is_active_out(be, sw);
  }
  
+@@ -70,6 +90,10 @@ bool audio_be_is_active_in(AudioBackend *be, SWVoiceIn *sw)
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return false;
++    }
++
+     return klass->is_active_in(be, sw);
+ }
+ 
+@@ -77,6 +101,10 @@ size_t audio_be_write(AudioBackend *be, SWVoiceOut *sw, void *buf, size_t size)
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return 0;
++    }
++
+     return klass->write(be, sw, buf, size);
+ }
+ 
+@@ -84,6 +112,10 @@ size_t audio_be_read(AudioBackend *be, SWVoiceIn *sw, void *buf, size_t size)
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return 0;
++    }
++
+     return klass->read(be, sw, buf, size);
+ }
+ 
+@@ -91,6 +123,10 @@ int audio_be_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return 0;
++    }
++
+     return klass->get_buffer_size_out(be, sw);
+ }
+ 
+@@ -98,6 +134,10 @@ void audio_be_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on)
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return;
++    }
++
+     return klass->set_active_out(be, sw, on);
+ }
+ 
+@@ -105,6 +145,10 @@ void audio_be_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return;
++    }
++
+     return klass->set_active_in(be, sw, on);
+ }
+ 
+@@ -112,6 +156,10 @@ void audio_be_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol)
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return;
++    }
++
+     klass->set_volume_out(be, sw, vol);
+ }
+ 
+@@ -119,6 +167,10 @@ void audio_be_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol)
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!sw) {
++        return;
++    }
++
+     klass->set_volume_in(be, sw, vol);
+ }
+ 
+@@ -130,6 +182,9 @@ CaptureVoiceOut *audio_be_add_capture(
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    assert(as != NULL);
++    assert(ops != NULL);
++
+     return klass->add_capture(be, as, ops, cb_opaque);
+ }
+ 
+@@ -137,6 +192,10 @@ void audio_be_del_capture(AudioBackend *be, CaptureVoiceOut *cap, void *cb_opaqu
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    if (!cap) {
++        return;
++    }
++
+     klass->del_capture(be, cap, cb_opaque);
+ }
+ 
+@@ -155,6 +214,8 @@ bool audio_be_set_dbus_server(AudioBackend *be,
+ {
+     AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+ 
++    assert(server != NULL);
++
+     if (!audio_be_can_set_dbus_server(be)) {
+         error_setg(errp, "Audiodev '%s' is not compatible with DBus",
+                    audio_be_get_id(be));
+diff --git a/tests/audio/test-audio.c b/tests/audio/test-audio.c
+index 812ee187e8f..e403f11f093 100644
+--- a/tests/audio/test-audio.c
++++ b/tests/audio/test-audio.c
+@@ -480,11 +480,9 @@ static void test_audio_null_handling(void)
+     /* audio_be_get_buffer_size_out(NULL) should return 0 */
+     g_assert_cmpint(audio_be_get_buffer_size_out(be, NULL), ==, 0);
+ 
+-    /* audio_be_write/read(NULL, ...) should return size (no-op) */
+-    g_assert_cmpuint(audio_be_write(be, NULL, buffer, sizeof(buffer)), ==,
+-                     sizeof(buffer));
+-    g_assert_cmpuint(audio_be_read(be, NULL, buffer, sizeof(buffer)), ==,
+-                     sizeof(buffer));
++    /* audio_be_write/read(NULL, ...) should return 0 */
++    g_assert_cmpuint(audio_be_write(be, NULL, buffer, sizeof(buffer)), ==, 0);
++    g_assert_cmpuint(audio_be_read(be, NULL, buffer, sizeof(buffer)), ==, 0);
+ 
+     /* These should not crash */
+     audio_be_set_active_out(be, NULL, true);
 -- 
 2.52.0
 
