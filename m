@@ -4,102 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AF2CD74EDB
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:15:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F4DD74EDB
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:15:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIrh-00065f-Oc; Fri, 23 Jan 2026 10:14:26 -0500
+	id 1vjIor-0000sH-8p; Fri, 23 Jan 2026 10:11:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vjIqB-0004B5-KU
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:13:02 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vjInS-00077y-31
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:09 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vjIq9-0003t0-2o
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:12:51 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c05d66dbab2so1651361a12.0
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:12:48 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769181167; cv=none;
- d=google.com; s=arc-20240605;
- b=ROJawBUEUB3JUkUxIgusYEmJWUWI3MHWqJl2Oc0p0crJiWkL+8w2R1GBrHo/ynGycx
- 402MashmqruaIaehNsyQrArQr3hwmQqiUGYoX1P+mMrT37IeNdsl8PPI+VE1bdpgQcxw
- gHWx0XzRDoTAMteVyGJPNi9MotdPxOY8Eqmg9a82muxCwpmCWTDRItCdXURIvzVpcwgZ
- 1SdG8cPIWFwjvHnkwtJgLkMLv/mQkU7s7t8CTMNgB2mO33RDdpZZ7o3eVXeYiLBEdUXB
- +PkwVAwXeOL0q0OD9zDu+rQHXQiltcvOX25T1f1iCOleJBjs+EwbNVn0azFTUVpv1sBD
- KCVQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=2BN9GJ3u9ttyITJk7gDAzuCbKreGEx8ZxbU0p6ZmdDQ=;
- fh=U0PKPYUS6jsP4tvNmd2bvHW3s0S9j6WgkStXJ0+FYuM=;
- b=INbBUVjjX5jYIWeMXtyTJlL8f9h4GLEycUSp1IvlYPk93yIwDLx5iXdhPHppAMLUcM
- Z8uCHddE5CS9fDekSuJipysMb2hx0ocStvCeI+9DDulImKb1eQdx6gbwY8F2xcCCgqBK
- PgH2x4irL3x3nkULIxzkkd7/jLbk6JsNPMlrOJEOqSQQF1vRYwo4BaPLju2fm2wy2wt6
- jRjBZXpoXejXstGXEMZDGlXBBEsC3BsWBSzhO08RO4smONh1s8Ox4fkTUeFMc6yvx1RT
- BD+8W5FCtz2LNXTS7FYHwghWuP4RUC6DnjVTqmeH/ZSzUk+N/Ggxdunmcp0rq0M4WD23
- Qcbw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vjInQ-00036H-2Y
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:01 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-47edd9024b1so19556895e9.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1769181167; x=1769785967;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2BN9GJ3u9ttyITJk7gDAzuCbKreGEx8ZxbU0p6ZmdDQ=;
- b=0j6RBCgaGu3U1S1RCsuynGoSmmhrUuLjSjDf/J7VVDJplNZ9huuVFypPfn5u8SrN2b
- 3LHM21mkyCDktaMb39ZAPUgDgSiO68NCplLszhpYtzBwx4836rGMpnsCx8/iDlppjkqy
- DExK7983S2l42p33EghdfVFJCfOGCiWxJg/PYjF1Bd4Oz+8Uvqj5z3bRiI9eDVV/c9m/
- vQdP8cIzsA8yQcc3mASaU8vRCfHBIQ84AQFJwrzCB0pZihkF19paaTdxLn5W0ccM0L01
- zd5nlTgyWJDgJhvSHwIEN3sWVVOrHCTltFCAnpyIFHf4yleMSjj5ZywYjIVrk4sBumpW
- hfPw==
+ d=linaro.org; s=google; t=1769180998; x=1769785798; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=pO2f6DBNywpKXf5TNbSH8YRsyqs1ZqsJjw5WvM1u2rE=;
+ b=N/tfKVopmCYmShLSsfxOaPwVo9S/W1f6MlY90Q7bxPkTdgb/DJ02Uo830yY/VW1709
+ 5xp3l9vo6da5tzLqL0gxD46zOJUKktWP1qkQwk2nV5WJBA+78O2gqQFa66yMywoXGcgI
+ 5btoHvrsceFOO215pYGx95STV1GPF1j5iekXaFDB3vEjJJOsK5HZqzWtyA26b+vFxdjw
+ ob/rS0kbQK3d11pKTNAzTPn+2Df8NcXnIwj5KjbLdYN4q4Sk5imMnC9hG2rYi53rGXlZ
+ mQ24rK3GTNAnA28f+F20rjZ1GxJIAD3Gh20KbSqmnpIfxrMEVKOk6c63tk8kY69shm1W
+ palg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769181167; x=1769785967;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2BN9GJ3u9ttyITJk7gDAzuCbKreGEx8ZxbU0p6ZmdDQ=;
- b=SRbm8SX9izOV9CnW9gmsLuQuTs8d22tT8QY4vdq6q+oRhhEhQWIgQwn3rKgXdAN23c
- klE5UGhx/sfj8wZA95DY4c+7CxlksS+TH+cB3Yqecqowz8ULRfDGI2nij92OxXSognU4
- pw1QWnrG4L7CU19s/X++F/H58tckBn1/3zNAo4dPxeceQMty3fOvcrAPdGj2E30nB2wD
- jo/gMZVHqv+yzM6GSxVal2eVFdKMUaGCyHPaarhzWW+Lln11quVtrU7KcGJRteY1/GvE
- QJNg9acYAO8+oTG+zVjpKPYhNJnqVG5NYth7PexvqbHMwisNTDNdjyuEfocx+misJ7hW
- a5dg==
-X-Gm-Message-State: AOJu0YwhMnLtFRveZQFV1VMdaTViZyB8LZdUUhg+rRwiav+mWxrBLkIx
- dMBFoLcQeDS//6Tkoy2qvOJdEaEy+1mIvThzs1O+cfY0Zg9RqgbyFyUYKzSbTCIbYUNw35F9Qx/
- L6hk3cqfAIC62WLoOCX2VdmDWXHGWfUSLyOffBojeQQ==
-X-Gm-Gg: AZuq6aIbRZYxxtL0m019G2pFPRG10m8LmGlsu9+MlzPsG2DFRRYkDQz5EximAtxDiLc
- MWKk+ZNcAUeA9P4jMuB8T92z7e/VW2Zf+V2CFW+dKv0r4FzNmDsZWHzjksOvXJIB4slzIuYNWeN
- A+v5uTduWRL3zHK508jv7qZSGVIt0LMeqAZCXi05JVbYQPXiZ97jTYMd4p6g4XuuntyWqoPyfF2
- NXxr50UVdWbwSbdkwjDH/KkSvNBjoAYv8Z0oZe9+dGP78lMJIdHGQxqhKUtiA/8ZEG5LmQ=
-X-Received: by 2002:a17:90b:2711:b0:340:c179:3657 with SMTP id
- 98e67ed59e1d1-35368f29af6mr2833436a91.33.1769181166781; Fri, 23 Jan 2026
- 07:12:46 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769180998; x=1769785798;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=pO2f6DBNywpKXf5TNbSH8YRsyqs1ZqsJjw5WvM1u2rE=;
+ b=oojKsECy1fwjk11QCoNeKfqxYX3M9x5kvVcKGUmlY3YVd2azpzf3wh4OLWFEGs9UqK
+ NxU8h7iZPUFCwocDOhnwroguXdAK6kpCQwdykl+uGks9fWmKVgYMBrgRVW77jae7LcEE
+ cD1maUYg6lPcBHv7M1BrP/7RBpHVHW2Wkp+aSX6iHI+qTWVFTC80Se+zAoymHbnbf6xf
+ 5duFW/Q+2e5QJG1bXKesHmL65U50Ok7fIXTyn0GikKIaaZ3KLW789UytGI5yP8fGjgdQ
+ dh9ueGJmf23rjbEWcOc2V692lpNzNFJY7YYfqpr4YilstMNkc8mWNmMzP5NIbCb91H7o
+ i9jA==
+X-Gm-Message-State: AOJu0Yz6ideGjTdykafOKI7Hckr13Y+LsViXGKGQtvG2WyMhMlotklu3
+ Rklh1cn3fMhBeZ7Y7+RwxNHinjsyUKoEgonnE0khVd/ok0xVljuyB7/A5z2OAutZ9PRD7rvIl9A
+ VwB3Z1M0=
+X-Gm-Gg: AZuq6aJ/ILvJsK+t2LoTwIfe5+ZqUyQrpS1gfpX1ZoLB9uYkKTyyKBZel+mWhoLHppD
+ m5slt+r9b8FWaQrcdCCEa4foTD8dbzsrN6GfyqokfL3HG7D47oVoXmwjCl3h8lo2EtGCfqwVSQv
+ 4oOJajJzqmmt8GEhFrnz4BKq5gSzM+lc5OWEU85XMfIOK3DsHik2M1+UEOgQ07CEaluAV6FwAqd
+ G+Ty75KMR0oSZcYzLGumM8eisycKH2sMTZbBMRbOPmDmHzA8mLfVvgl4Njon7bQmyg/UOVsHrv1
+ ZXKiaAcAhA2ZJ+BUMEaly+TS9tNSVlFely1xxWIRGSsyb4A1CNUIgYJOf+8RVjiERatG+4+SPBo
+ j1EKZWKtuQ7fd4ZYDxWq8rjZpkiVGgucDMmp7DZ4aDo0LBKLEtKIbQ6YMUdfMDgDGxJ7qnw3H/l
+ EhP6vvMW2M3K7Eq/yuE0YrGNrhTAmr1WMAWSC1BwqPxdgWjSpCmuQI
+X-Received: by 2002:a05:600c:1d2a:b0:477:2f7c:314f with SMTP id
+ 5b1f17b1804b1-4804c959823mr54621575e9.10.1769180998265; 
+ Fri, 23 Jan 2026 07:09:58 -0800 (PST)
+Received: from mnementh.archaic.org.uk (mnementh.archaic.org.uk.
+ [81.2.115.146]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.57
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 23 Jan 2026 07:09:57 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 17/22] hw/intc: declare GICv3 regions as little endian
+Date: Fri, 23 Jan 2026 15:09:35 +0000
+Message-ID: <20260123150941.1877768-18-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260123150941.1877768-1-peter.maydell@linaro.org>
+References: <20260123150941.1877768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <20260123145750.1200879-1-alex.bennee@linaro.org>
- <20260123145750.1200879-9-alex.bennee@linaro.org>
-In-Reply-To: <20260123145750.1200879-9-alex.bennee@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 23 Jan 2026 08:12:33 -0700
-X-Gm-Features: AZwV_QjYjgXKQMtx5nfk9pUq7hZcrOYwTAobAljvzaW3ZlFlqobWYBbuGpO13hU
-Message-ID: <CANCZdfo3yz=aC-EOxd2LYBX=tf=RQTY6ibCpj-fCfGHZtH6WTw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 08/16] MAINTAINERS: be realistic about *-user
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000fd568106490f96e7"
-Received-SPF: none client-ip=2607:f8b0:4864:20::530;
- envelope-from=wlosh@bsdimp.com; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,87 +100,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fd568106490f96e7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Alex Bennée <alex.bennee@linaro.org>
 
-On Fri, Jan 23, 2026 at 8:00=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
+The GIC should always be a little-endian device as big-endian
+behaviour is a function of the current CPU configuration not the
+system as a whole. This should have no functional effect as the GIC
+cannot be instantiated on a BE system but will help the single binary
+efforts.
 
-> We should reflect the current status so users don't have unrealistic
-> expectations of how quickly things can get reviewed and merged.
->
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260121105932.135676-4-alex.bennee@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/intc/arm_gicv3.c            | 4 ++--
+ hw/intc/arm_gicv3_its.c        | 4 ++--
+ hw/intc/arm_gicv3_its_common.c | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+diff --git a/hw/intc/arm_gicv3.c b/hw/intc/arm_gicv3.c
+index 6059ce926a..542f81ea49 100644
+--- a/hw/intc/arm_gicv3.c
++++ b/hw/intc/arm_gicv3.c
+@@ -417,7 +417,7 @@ static const MemoryRegionOps gic_ops[] = {
+     {
+         .read_with_attrs = gicv3_dist_read,
+         .write_with_attrs = gicv3_dist_write,
+-        .endianness = DEVICE_NATIVE_ENDIAN,
++        .endianness = DEVICE_LITTLE_ENDIAN,
+         .valid.min_access_size = 1,
+         .valid.max_access_size = 8,
+         .impl.min_access_size = 1,
+@@ -426,7 +426,7 @@ static const MemoryRegionOps gic_ops[] = {
+     {
+         .read_with_attrs = gicv3_redist_read,
+         .write_with_attrs = gicv3_redist_write,
+-        .endianness = DEVICE_NATIVE_ENDIAN,
++        .endianness = DEVICE_LITTLE_ENDIAN,
+         .valid.min_access_size = 1,
+         .valid.max_access_size = 8,
+         .impl.min_access_size = 1,
+diff --git a/hw/intc/arm_gicv3_its.c b/hw/intc/arm_gicv3_its.c
+index cce3486d74..b639c03b67 100644
+--- a/hw/intc/arm_gicv3_its.c
++++ b/hw/intc/arm_gicv3_its.c
+@@ -1906,7 +1906,7 @@ static const MemoryRegionOps gicv3_its_control_ops = {
+     .valid.max_access_size = 8,
+     .impl.min_access_size = 4,
+     .impl.max_access_size = 8,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
+ static const MemoryRegionOps gicv3_its_translation_ops = {
+@@ -1916,7 +1916,7 @@ static const MemoryRegionOps gicv3_its_translation_ops = {
+     .valid.max_access_size = 4,
+     .impl.min_access_size = 2,
+     .impl.max_access_size = 4,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
+ static void gicv3_arm_its_realize(DeviceState *dev, Error **errp)
+diff --git a/hw/intc/arm_gicv3_its_common.c b/hw/intc/arm_gicv3_its_common.c
+index e946e3fb87..9fc51ad1e0 100644
+--- a/hw/intc/arm_gicv3_its_common.c
++++ b/hw/intc/arm_gicv3_its_common.c
+@@ -97,7 +97,7 @@ static MemTxResult gicv3_its_trans_write(void *opaque, hwaddr offset,
+ static const MemoryRegionOps gicv3_its_trans_ops = {
+     .read_with_attrs = gicv3_its_trans_read,
+     .write_with_attrs = gicv3_its_trans_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
+ void gicv3_its_init_mmio(GICv3ITSState *s, const MemoryRegionOps *ops,
+-- 
+2.47.3
 
-
-> ---
->
-> [AJB] I realise this is a slightly provocative patch but given how
-> widely used *-user is downstream we should be clear about the current
-> state and hopefully encourage those who rely on it to step-up.
->
-
-For the bsd-user case this is likely correct. We run hot and cold about
-being
-proactive at fixing things, and we've been somewhat cold for a while now.
-
-Part of the problem is that this submission process is very very heavyweigh=
-t
-compared to other projects I contribute to. Not sure what to do about that
-since
-there's a reluctance to move away from it. Or alternatively, I'm somehow
-making
-it too hard.
-
-A lot of the upstreaming work that's stalled would be ideal to tell claude
-to do,
-but I'm unsure the project's stance on using claude to move code, and git
-log
-5 different trees to get the original author(s) of the code and make
-trivial compile
-tweaks.
-
-Warner
-
---000000000000fd568106490f96e7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jan 23,=
- 2026 at 8:00=E2=80=AFAM Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee=
-@linaro.org">alex.bennee@linaro.org</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">We should reflect the current status so =
-users don&#39;t have unrealistic<br>
-expectations of how quickly things can get reviewed and merged.<br>
-<br>
-Signed-off-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.or=
-g" target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br></blockquote><div><b=
-r></div><div>Reviewed-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com"=
->imp@bsdimp.com</a>&gt;</div><div>=C2=A0</div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
-4);padding-left:1ex">
----<br>
-<br>
-[AJB] I realise this is a slightly provocative patch but given how<br>
-widely used *-user is downstream we should be clear about the current<br>
-state and hopefully encourage those who rely on it to step-up.<br></blockqu=
-ote><div><br></div><div>For the bsd-user case this is likely correct. We ru=
-n hot and cold about being</div><div>proactive at fixing things, and we&#39=
-;ve been somewhat cold for a while now.</div><div><br></div><div>Part of th=
-e problem is that this submission process is very very heavyweight</div><di=
-v>compared to other projects I contribute to. Not sure what to do about tha=
-t since</div><div>there&#39;s a reluctance to move=C2=A0away from it. Or al=
-ternatively, I&#39;m somehow making</div><div>it too hard.</div><div><br></=
-div><div>A lot of the upstreaming work that&#39;s stalled would be ideal to=
- tell claude to do,</div><div>but I&#39;m unsure the project&#39;s stance o=
-n using claude to move code, and git log</div><div>5 different trees to get=
- the original author(s) of the code and make trivial compile</div><div>twea=
-ks.</div><div><br></div><div>Warner=C2=A0</div></div></div>
-
---000000000000fd568106490f96e7--
 
