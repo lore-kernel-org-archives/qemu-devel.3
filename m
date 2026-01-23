@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBACBD74ED8
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E44D0D74ED8
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:18:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjHyu-0000Kl-Cr; Fri, 23 Jan 2026 09:17:48 -0500
+	id 1vjHzA-0000iI-TT; Fri, 23 Jan 2026 09:18:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHyd-0008VG-7M
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:32 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHyp-0000GL-C4
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:44 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHya-0003dl-Cd
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:30 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjHym-0003fK-QR
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:17:42 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id E5CE55BCCE;
- Fri, 23 Jan 2026 14:17:22 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 41E8A33813;
+ Fri, 23 Jan 2026 14:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769177843; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769177838; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5uw7EwYvc2vbCK46LCxyZnB1rCGkQfOwE0fpg6avZbc=;
- b=M/GOEv4+wdTT4SeGQRBBX1pt/+QLM9WWjrAG5rMkNhVgz3EvMd1c6cZwiyJe/z8aG7xpqM
- ocBJF+uWcvXdIK7EaIDuIx1eF+6qNl/+KGGt1B96lVU/H5DXcoaBB+2yLQdRoYUT6C98XY
- TZGv/1n2ULWTgXTav5uPa26cKQH6lEs=
+ bh=kuqbPH569qjHJCkNk6NglGi2HTTW+35tRNlJ1R5Lm2o=;
+ b=xN7m7ngdFpM1Th2WnE/AfsL9DmfRmMGg9U2akuqGqf1au8dp6ucLWQ4Raqd15lYGQu4SXp
+ LfHVvqHhkdQ6EsSFMUGs2Pn5S6tm8ZxCLzbAtU2W3N7xzaxkoBS8BhM/yQtimC0TRGR6lY
+ 4cFWmp0onCq7q2wmE3ucCPJaQ80MNL4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769177843;
+ s=susede2_ed25519; t=1769177838;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5uw7EwYvc2vbCK46LCxyZnB1rCGkQfOwE0fpg6avZbc=;
- b=7IyMxbJfVfVSUA2TGjpgWAi7BfvVC6je4KCcF8P3V3xHlPzlEbR3XkbvjGEVnM+f0BCj9/
- 7jLSPsPZcJzr1zAg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=KSWOsE2y;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=iJp5VBQV
+ bh=kuqbPH569qjHJCkNk6NglGi2HTTW+35tRNlJ1R5Lm2o=;
+ b=Pfile7aQcrDlRtgBfB+DW6TgFU6j8Df0yREjYspL7poVKH+QoFE4suqGSDGkcUhU/ZwJgn
+ pkK8zQOP4UoQzpAw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=xN7m7ngd;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Pfile7aQ
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769177842; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769177838; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5uw7EwYvc2vbCK46LCxyZnB1rCGkQfOwE0fpg6avZbc=;
- b=KSWOsE2yLr7zluN3UiGv+yNxIldJihZUMYC+5dncrmEQ4mkvgI37unKeSsOCM6vgFgDIPq
- /DFrrnWhypmkMwRQBFoCOhTNeCYlv1v7b7yUs8xvFLUx9aZpmw7LFXTvOF7Mko/0CA+t/b
- wiQVcL66xo1bDjHXd2qr53N2QclgEjc=
+ bh=kuqbPH569qjHJCkNk6NglGi2HTTW+35tRNlJ1R5Lm2o=;
+ b=xN7m7ngdFpM1Th2WnE/AfsL9DmfRmMGg9U2akuqGqf1au8dp6ucLWQ4Raqd15lYGQu4SXp
+ LfHVvqHhkdQ6EsSFMUGs2Pn5S6tm8ZxCLzbAtU2W3N7xzaxkoBS8BhM/yQtimC0TRGR6lY
+ 4cFWmp0onCq7q2wmE3ucCPJaQ80MNL4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769177842;
+ s=susede2_ed25519; t=1769177838;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5uw7EwYvc2vbCK46LCxyZnB1rCGkQfOwE0fpg6avZbc=;
- b=iJp5VBQVeaAauCKqUpTJc9yaruduhuCpRkA8QmzPSBqDATCHTiTedO9eQrYk6tfGLW+WgO
- 6M7c/nsiBR0JwCDg==
+ bh=kuqbPH569qjHJCkNk6NglGi2HTTW+35tRNlJ1R5Lm2o=;
+ b=Pfile7aQcrDlRtgBfB+DW6TgFU6j8Df0yREjYspL7poVKH+QoFE4suqGSDGkcUhU/ZwJgn
+ pkK8zQOP4UoQzpAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 145331395E;
- Fri, 23 Jan 2026 14:17:20 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 636831395E;
+ Fri, 23 Jan 2026 14:17:16 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uLULMfCCc2m8HAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 14:17:20 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id OJxjCeyCc2m8HAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 14:17:16 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, berrange@redhat.com, ppandit@redhat.com,
  Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v4 09/25] migration: Expand migration_connect_error_propagate
- to cover cancelling
-Date: Fri, 23 Jan 2026 11:16:39 -0300
-Message-ID: <20260123141656.6765-10-farosas@suse.de>
+Subject: [PATCH v4 07/25] migration: Free the error earlier in the resume case
+Date: Fri, 23 Jan 2026 11:16:37 -0300
+Message-ID: <20260123141656.6765-8-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260123141656.6765-1-farosas@suse.de>
 References: <20260123141656.6765-1-farosas@suse.de>
@@ -95,7 +94,7 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
  MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
  RCVD_VIA_SMTP_AUTH(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[];
@@ -103,17 +102,15 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  DKIM_TRACE(0.00)[suse.de:+]
 X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: E5CE55BCCE
+X-Rspamd-Queue-Id: 41E8A33813
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,74 +127,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cover the CANCELLING state in migration_connect_error_propagate() and
-use it to funnel errors from migrate_prepare() until the end of
-migration_connect().
+Freeing the error at migration_connect() is redundant in the normal
+migration case. The freeing already happened at migrate_init():
+
+qmp_migrate()
+-> migrate_prepare()
+   -> migrate_init()
+-> qmp_migrate_finish()
+   -> *_start_outgoing_migration()
+   -> migration_channel_connect()
+      -> migration_connect()
+
+For the resume case, migrate_prepare() returns early and doesn't reach
+migrate_init(). Move the extra migrate_error_free() call to
+migrate_prepare() along with the resume check.
+
+Also change migrate_init() to use migrate_error_free(), so it's easier
+to see where are the places the error gets freed.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ migration/migration.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/migration/migration.c b/migration/migration.c
-index 1bb59b8305..36b14a1b56 100644
+index 16085eb8d6..913e2b9921 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -1573,18 +1573,25 @@ static void migrate_error_free(MigrationState *s)
- static void migration_connect_error_propagate(MigrationState *s, Error *error)
- {
-     MigrationStatus current = s->state;
--    MigrationStatus next;
--
--    assert(s->to_dst_file == NULL);
-+    MigrationStatus next = MIGRATION_STATUS_NONE;
+@@ -1809,8 +1809,8 @@ int migrate_init(MigrationState *s, Error **errp)
+     s->setup_time = 0;
+     s->start_postcopy = false;
+     s->migration_thread_running = false;
+-    error_free(s->error);
+-    s->error = NULL;
++
++    migrate_error_free(s);
  
-     switch (current) {
-     case MIGRATION_STATUS_SETUP:
-         next = MIGRATION_STATUS_FAILED;
-         break;
-+
-     case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
-         /* Never fail a postcopy migration; switch back to PAUSED instead */
-         next = MIGRATION_STATUS_POSTCOPY_PAUSED;
-         break;
-+
-+    case MIGRATION_STATUS_CANCELLING:
+     if (should_send_vmdesc()) {
+         s->vmdesc = json_writer_new(false);
+@@ -2085,6 +2085,13 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+         migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_PAUSED,
+                           MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+ 
 +        /*
-+         * Don't move out of CANCELLING, the only valid transition is to
-+         * CANCELLED, at migration_cleanup().
++         * If there's a previous error, free it and prepare for
++         * another one. For the non-resume case, this happens at
++         * migrate_init() below.
 +         */
-+        break;
++        migrate_error_free(s);
 +
-     default:
-         /*
-          * This really shouldn't happen. Just be careful to not crash a VM
-@@ -1595,7 +1602,10 @@ static void migration_connect_error_propagate(MigrationState *s, Error *error)
-         return;
+         /* This is a resume, skip init status */
+         return true;
      }
+@@ -4013,13 +4020,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+     bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+     int ret;
  
--    migrate_set_state(&s->state, current, next);
-+    if (next) {
-+        migrate_set_state(&s->state, current, next);
-+    }
-+
-     migrate_error_propagate(s, error);
- }
- 
-@@ -4104,10 +4114,7 @@ void migration_connect(MigrationState *s, Error *error_in)
-     return;
- 
- fail:
--    migrate_error_propagate(s, error_copy(local_err));
--    if (s->state != MIGRATION_STATUS_CANCELLING) {
--        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
--    }
-+    migration_connect_error_propagate(s, local_err);
-     migration_cleanup(s);
-     if (s->error) {
-         error_report_err(error_copy(s->error));
+-    /*
+-     * If there's a previous error, free it and prepare for another one.
+-     * Meanwhile if migration completes successfully, there won't have an error
+-     * dumped when calling migration_cleanup().
+-     */
+-    migrate_error_free(s);
+-
+     s->expected_downtime = migrate_downtime_limit();
+     if (error_in) {
+         migration_connect_error_propagate(s, error_in);
 -- 
 2.51.0
 
