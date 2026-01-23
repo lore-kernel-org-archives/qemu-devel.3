@@ -4,73 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7825D74EC0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C997ED74EC2
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:53:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjGeh-0003rr-BZ; Fri, 23 Jan 2026 07:52:51 -0500
+	id 1vjGet-0003x7-Up; Fri, 23 Jan 2026 07:53:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vjGdW-0003cf-SZ
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:51:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vjGdV-0004gB-1e
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:51:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769172694;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FQ4tdyHZHrsOgl8Erq0YAbnFKmPfSpxntf9kNS8EhEg=;
- b=DGA+IbVUIR7n1OrKS9FdCRf1f5S3bM19HNW8gODUr1soCoSMMvO0TMLoF8UrVgcTSzejUy
- VMYtyiv7KJnxSktOMv7DlT6a1iQYohZv7ZMqjekbwboPTkGlczNuvttOjX9vYZj514qNa9
- HramkSfhnpvOtRM6kpZWvzg+UwOvqzA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-EpEIqqGhNGmt5t13q71CuQ-1; Fri,
- 23 Jan 2026 07:51:33 -0500
-X-MC-Unique: EpEIqqGhNGmt5t13q71CuQ-1
-X-Mimecast-MFC-AGG-ID: EpEIqqGhNGmt5t13q71CuQ_1769172692
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjGeY-0003pJ-BM
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:52:43 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vjGeU-0004jE-9T
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:52:41 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 30F8A19775A5; Fri, 23 Jan 2026 12:51:32 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8B42F1958DC1; Fri, 23 Jan 2026 12:51:31 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 242CD21E692D; Fri, 23 Jan 2026 13:51:29 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>, qemu-stable@nongnu.org
-Subject: Re: [PATCH V2 1/4] qapi/misc: Fix missed query-iothreads items
-In-Reply-To: <20260121064110.28760-1-zhangckid@gmail.com> (Zhang Chen's
- message of "Wed, 21 Jan 2026 14:41:07 +0800")
-References: <20260121064110.28760-1-zhangckid@gmail.com>
-Date: Fri, 23 Jan 2026 13:51:29 +0100
-Message-ID: <871pjgbige.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 4AB185BCD7;
+ Fri, 23 Jan 2026 12:52:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1769172755; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=D2vU9kgtvYDyn++YoG+ib6qRrGWJlBxyg2UOXOhLZGk=;
+ b=fXfzYS6UphE9kuH4pIEGIg/w16UAaYnuv8dADp8n7IJ61I6I5mKjUuFAAWxq+C57UF1LZc
+ qOKcziWQjCXKVz4fL6IPi+lr/vAtVydqKo8yfr+BgWOnMxigJ534frjK0EmaP95A3kFjNQ
+ RTb8PIsjKhYluLeEWyFy1lvZ5EKAPCc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1769172755;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=D2vU9kgtvYDyn++YoG+ib6qRrGWJlBxyg2UOXOhLZGk=;
+ b=NjRCwhYIU9D/Tl3I/xCl15oT6uedsIjqVVQp/0YHQ1GOxzVcoRNn4RkeMKx5254vVzrZen
+ Xd79RM1r55kk0fCg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=fXfzYS6U;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=NjRCwhYI
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1769172755; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=D2vU9kgtvYDyn++YoG+ib6qRrGWJlBxyg2UOXOhLZGk=;
+ b=fXfzYS6UphE9kuH4pIEGIg/w16UAaYnuv8dADp8n7IJ61I6I5mKjUuFAAWxq+C57UF1LZc
+ qOKcziWQjCXKVz4fL6IPi+lr/vAtVydqKo8yfr+BgWOnMxigJ534frjK0EmaP95A3kFjNQ
+ RTb8PIsjKhYluLeEWyFy1lvZ5EKAPCc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1769172755;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=D2vU9kgtvYDyn++YoG+ib6qRrGWJlBxyg2UOXOhLZGk=;
+ b=NjRCwhYIU9D/Tl3I/xCl15oT6uedsIjqVVQp/0YHQ1GOxzVcoRNn4RkeMKx5254vVzrZen
+ Xd79RM1r55kk0fCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AEBD4136AA;
+ Fri, 23 Jan 2026 12:52:34 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id H3xQGxJvc2mZRgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 23 Jan 2026 12:52:34 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi
+ <stefanha@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
+ peterx@redhat.com, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH 2/5] migration: Fix double notification of DONE/FAIL for
+ postcopy
+In-Reply-To: <20260122230331.3543312-3-peterx@redhat.com>
+References: <20260122230331.3543312-1-peterx@redhat.com>
+ <20260122230331.3543312-3-peterx@redhat.com>
+Date: Fri, 23 Jan 2026 09:52:31 -0300
+Message-ID: <87a4y4jxtc.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[8];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 4AB185BCD7
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,53 +134,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+Peter Xu <peterx@redhat.com> writes:
 
-> The example is incomplete: it misses members @poll-max-ns, @poll-grow,
-> @poll-shrink, @aio-max-batch.  Messed up in commit 5fc00480ab1
-> (monitor: add poll-* properties into query-iothreads result) and
-> commit 1793ad0247c (iothread: add aio-max-batch parameter).
+> Migration notifiers will notify at any of three places: (1) SETUP
+> phase, (2) migration completes, (3) migration fails.
 >
-> cc: qemu-stable@nongnu.org
+> There's actually a special case for spice: one can refer to
+> b82fc321bf ("Postcopy+spice: Pass spice migration data earlier").  It
+> doesn't need another 4th event because in commit 9d9babf78d ("migration:
+> MigrationEvent for notifiers") we merged it together with the DONE event.
 >
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> The merge makes some sense if we treat "switchover" of postcopy as "DONE",
+> however that also means for postcopy we'll notify DONE twice..  The other
+> one at the end of postcopy when migration_cleanup().
+>
+> In reality, the current code base will also notify FAILED for postcopy
+> twice.  It's because an (maybe accidental) change in commit
+> 4af667f87c ("migration: notifier error checking").
+>
+> First of all, we still need that notification when switchover as stated in
+> Dave's commit, however that's only needed for spice.  To fix it, introduce
+> POSTCOPY_START event to differenciate it from DONE.  Use that instead in
+> postcopy_start().  Then spice will need to capture this event too.
+>
+> Then we remove the extra FAILED notification in postcopy_start().
+>
+> If one wonder if other DONE users should also monitor POSTCOPY_START
+> event.. We have two more DONE users:
+>
+>   - kvm_arm_gicv3_notifier
+>   - cpr_exec_notifier
+>
+> Both of them do not need a notification for POSTCOPY_START, but only when
+> migration completed.  Actually, both of them are used in CPR, which doesn=
+'t
+> support postcopy.
+>
+> I didn't attach Fixes: because I am not aware of any real bug on such
+> double reporting.  I'm wildly guessing the 2nd notify might be silently
+> ignored in many cases.  However this is still worth fixing.
+>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Cc: Dr. David Alan Gilbert <dave@treblig.org>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  qapi/misc.json | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
+>  include/migration/misc.h | 1 +
+>  migration/migration.c    | 3 +--
+>  ui/spice-core.c          | 3 ++-
+>  3 files changed, 4 insertions(+), 3 deletions(-)
 >
-> diff --git a/qapi/misc.json b/qapi/misc.json
-> index 28c641fe2f..e87994c9d9 100644
-> --- a/qapi/misc.json
-> +++ b/qapi/misc.json
-> @@ -117,11 +117,19 @@
->  #     <- { "return": [
->  #              {
->  #                 "id":"iothread0",
-> -#                 "thread-id":3134
-> +#                 "thread-id":3134,
-> +#                 'poll-max-ns':32768,
+> diff --git a/include/migration/misc.h b/include/migration/misc.h
+> index e26d418a6e..b002466e10 100644
+> --- a/include/migration/misc.h
+> +++ b/include/migration/misc.h
+> @@ -63,6 +63,7 @@ typedef enum MigrationEventType {
+>      MIG_EVENT_PRECOPY_SETUP,
+>      MIG_EVENT_PRECOPY_DONE,
+>      MIG_EVENT_PRECOPY_FAILED,
+> +    MIG_EVENT_POSTCOPY_START,
+>      MIG_EVENT_MAX
+>  } MigrationEventType;
 
-Double quotes, please.
+With the new state there's a doc text to update at
+migration_add_notifier below.
 
-> +#                 "poll-grow":0,
-> +#                 "poll-shrink":0,
-> +#                 "aio-max-batch":0
->  #              },
->  #              {
->  #                 "id":"iothread1",
-> -#                 "thread-id":3135
-> +#                 "thread-id":3135,
-> +#                 'poll-max-ns':32768,
+>=20=20
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 47d9189aaf..91775f8472 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -2857,7 +2857,7 @@ static int postcopy_start(MigrationState *ms, Error=
+ **errp)
+>       * at the transition to postcopy and after the device state; in part=
+icular
+>       * spice needs to trigger a transition now
+>       */
+> -    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_DONE, NULL);
+> +    migration_call_notifiers(ms, MIG_EVENT_POSTCOPY_START, NULL);
+>=20=20
+>      migration_downtime_end(ms);
+>=20=20
+> @@ -2906,7 +2906,6 @@ fail:
+>          migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED=
+);
+>      }
+>      migration_block_activate(NULL);
+> -    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
 
-Likewise.
+Does anything consuming the FAILED event expects it to be issued before
+the vm_start() at migration_iteration_finish?
 
-> +#                 "poll-grow":0,
-> +#                 "poll-shrink":0,
-> +#                 "aio-max-batch":0
->  #              }
->  #           ]
->  #        }
+migration_iteration_finish:
 
-Easiest way to avoid such mistakes is to copy actual QMP output.
+bql_lock();
+switch (s->state) {
+case MIGRATION_STATUS_FAILED:
+    if (!migration_block_activate(&local_err)) {
+        error_free(local_err);
+        break;
+    }
+    if (runstate_is_live(s->vm_old_state)) {
+        if (!runstate_check(RUN_STATE_SHUTDOWN)) {
+            vm_start();
+        }
+    } else {
+        if (runstate_check(RUN_STATE_FINISH_MIGRATE)) {
+            runstate_set(s->vm_old_state);
+        }
+    }
 
+The extra migration_block_activate() in postcopy_start() also seems
+wrong, no?
+
+>      bql_unlock();
+>      return -1;
+>  }
+> diff --git a/ui/spice-core.c b/ui/spice-core.c
+> index 8a6050f4ae..ce3c2954e3 100644
+> --- a/ui/spice-core.c
+> +++ b/ui/spice-core.c
+> @@ -585,7 +585,8 @@ static int migration_state_notifier(NotifierWithRetur=
+n *notifier,
+>=20=20
+>      if (e->type =3D=3D MIG_EVENT_PRECOPY_SETUP) {
+>          spice_server_migrate_start(spice_server);
+> -    } else if (e->type =3D=3D MIG_EVENT_PRECOPY_DONE) {
+> +    } else if (e->type =3D=3D MIG_EVENT_PRECOPY_DONE ||
+> +               e->type =3D=3D MIG_EVENT_POSTCOPY_START) {
+>          spice_server_migrate_end(spice_server, true);
+>          spice_have_target_host =3D false;
+>      } else if (e->type =3D=3D MIG_EVENT_PRECOPY_FAILED) {
 
