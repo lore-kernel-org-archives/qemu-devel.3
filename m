@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39521D778B0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C517D778B1
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 20:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjO97-0000SP-Hn; Fri, 23 Jan 2026 15:52:45 -0500
+	id 1vjO91-0000NM-Ni; Fri, 23 Jan 2026 15:52:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjO96-0000Ri-9d
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 15:52:44 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjO8z-0000LR-Kx
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 15:52:37 -0500
 Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjO94-0006y8-Ly
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 15:52:44 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjO8x-0006wd-TW
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 15:52:37 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id B954A600C4;
- Fri, 23 Jan 2026 20:52:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C2AC4CEF1;
- Fri, 23 Jan 2026 20:52:39 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 4D81E600C4;
+ Fri, 23 Jan 2026 20:52:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8385EC4CEF1;
+ Fri, 23 Jan 2026 20:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769201561;
- bh=2DPbdaJU6UDf5C6vyomBjWuc5uRYEy2/lrhRQR3D+Ak=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=WBfdzgxfeORGhV7P6Xo/y78mz+KPWlfW6pLDBSbVIZYJfecykTx0poBEwkh10/1ZV
- tTPKIwdFr4lVFOZPt5qoiKxb7LATbEe5pJhyJRtSKi4ArYK8bC8OIyJPw1LAzaLj1w
- FbKeeuwbCZr95T8sthqWaCNOLGyJwCEZdUaYb3U+1Aoav71bVnKe552ze3A1DKJwVD
- aonWs5ENQPnoJZwpF4W5Jk15SLz1hRgazB+rdfYI/2ih2s5xEFY78SQ/x8vGmlQOGk
- sQ/UvReRhaOO6sQG9JwT3Z4dK0SdnZ2+exYEStkFGnVVhelgGImw5bBDePa0GaTdu3
- kVkvbvM7itjBQ==
+ s=k20201202; t=1769201553;
+ bh=TCmSDK3idDdMCekR47cWU1V2rwgmV/WCyeLE8hqdZDU=;
+ h=From:To:Cc:Subject:Date:From;
+ b=lmsM17jTJ9qAyjwHdQhAsBso4PEPvrYGfk7z0lDuuo9mA84QVoRlAo0PYX0+Bhtup
+ YWtP3iaqDr9IzfZdPR5JsTS0JNWodQv94eQ2FCEXTVQrS3zoXyWr4wl0/2dyNynB1d
+ +6+/XhayhddBn3jEWDu7rT4DYYYaAi8Z3V6iyLk/wsqf602asQ6ytG4FMkW4Mz0/Y6
+ 6LxMbQf8+VeN9Uxl8YIezZjZOPkf5tLGHEVad9zEEMm/pHSTU7jSDleyML+wn/KLwO
+ KvA55bvLNoGlSChJmLO+F8XNMOkLX1WFf6GYxC/a8mGmSWu+BBesnmk54ggRTipiFF
+ Pu7DuDfn3JlbQ==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  deller@gmx.de,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 04/11] linux-user: Add termios2 support to hppa target
-Date: Fri, 23 Jan 2026 21:52:23 +0100
-Message-ID: <20260123205230.33541-5-deller@kernel.org>
+Subject: [PULL 00/11] Linux user for v11 patches
+Date: Fri, 23 Jan 2026 21:52:19 +0100
+Message-ID: <20260123205230.33541-1-deller@kernel.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260123205230.33541-1-deller@kernel.org>
-References: <20260123205230.33541-1-deller@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
@@ -71,62 +70,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Luca Bonissi <qemu@bonslack.org>
+From: Helge Deller <deller@gmx.de>
 
-Signed-off-by: Luca Bonissi <qemu@bonslack.org>
-Link: https://lore.kernel.org/qemu-devel/ccf1be5c-9e2e-46f6-b303-d29888371fb0@bonslack.org
-Reviewed-by: Helge Deller <deller@gmx.de>
----
- linux-user/hppa/termbits.h | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+The following changes since commit 2339d0a1cfac6ecc667e6e062a593865c1541c35:
 
-diff --git a/linux-user/hppa/termbits.h b/linux-user/hppa/termbits.h
-index 11fd4eed62..645f17bf63 100644
---- a/linux-user/hppa/termbits.h
-+++ b/linux-user/hppa/termbits.h
-@@ -18,6 +18,29 @@ struct target_termios {
-     target_cc_t c_cc[TARGET_NCCS];         /* control characters */
- };
- 
-+struct target_termios2 {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-+struct target_ktermios {
-+    target_tcflag_t c_iflag;       /* input mode flags */
-+    target_tcflag_t c_oflag;       /* output mode flags */
-+    target_tcflag_t c_cflag;       /* control mode flags */
-+    target_tcflag_t c_lflag;       /* local mode flags */
-+    target_cc_t c_line;            /* line discipline */
-+    target_cc_t c_cc[TARGET_NCCS]; /* control characters */
-+    target_speed_t c_ispeed;       /* input speed */
-+    target_speed_t c_ospeed;       /* output speed */
-+};
-+
-+
- /* c_iflag bits */
- #define TARGET_IGNBRK  0000001
- #define TARGET_BRKINT  0000002
-@@ -190,6 +213,12 @@ struct target_termios {
- #define TARGET_TIOCSBRK         0x5427 /* BSD compatibility */
- #define TARGET_TIOCCBRK         0x5428 /* BSD compatibility */
- #define TARGET_TIOCGSID         TARGET_IOR('T', 20, int)
-+#define TARGET_TCGETS2          TARGET_IOR('T', 0x2A, struct target_termios2)
-+#define TARGET_TCSETS2          TARGET_IOW('T', 0x2B, struct target_termios2)
-+#define TARGET_TCSETSW2         TARGET_IOW('T', 0x2C, struct target_termios2)
-+#define TARGET_TCSETSF2         TARGET_IOW('T', 0x2D, struct target_termios2)
-+#define TARGET_TIOCGRS485       TARGET_IOR('T', 0x2E, struct serial_rs485)
-+#define TARGET_TIOCSRS485       TARGET_IOWR('T', 0x2F, struct serial_rs485)
- #define TARGET_TIOCGPTN         TARGET_IOR('T', 0x30, unsigned int)
-         /* Get Pty Number (of pty-mux device) */
- #define TARGET_TIOCSPTLCK       TARGET_IOW('T', 0x31, int)
+  Merge tag 'hw-misc-20260120' of https://github.com/philmd/qemu into staging (2026-01-21 07:39:57 +1100)
+
+are available in the Git repository at:
+
+  https://github.com/hdeller/qemu-hppa.git tags/linux-user-for-v11-pull-request
+
+for you to fetch changes up to 3829bb3f187598501051b582053bed693aced988:
+
+  linux-user: Fix MADV_XXX constants on hppa target (2026-01-23 20:40:15 +0100)
+
+----------------------------------------------------------------
+linux-user: statx() syscall, termios2 support and futext() syscall fixes
+
+Please pull if no obvious breakages happen in the testsuite.
+
+Thanks!
+Helge
+
+----------------------------------------------------------------
+
+Andreas Schwab (1):
+  linux-user: update statx emulation
+
+Helge Deller (2):
+  linux-user: strace: Fix 5th argument of futex syscall
+  linux-user: Fix MADV_XXX constants on hppa target
+
+Icenowy Zheng (1):
+  linux-user: fixup termios2 related things on PowerPC
+
+Luca Bonissi (6):
+  linux-user: Add termios2 support
+  linux-user: Add termios2 support to alpha target
+  linux-user: Add termios2 support to hppa target
+  linux-user: Add termios2 support to mips target
+  linux-user: Add termios2 support to sh4 target
+  linux-user: Add termios2 support to sparc target
+
+Vivian Wang (1):
+  linux-user: Add missing termios baud rates
+
+ linux-user/alpha/termbits.h   |  30 +++++
+ linux-user/generic/termbits.h |   2 +-
+ linux-user/hppa/termbits.h    |  45 +++++++-
+ linux-user/ioctls.h           |   6 +
+ linux-user/mips/termbits.h    |  35 +++++-
+ linux-user/ppc/termbits.h     |   1 +
+ linux-user/sh4/termbits.h     |  51 ++++++---
+ linux-user/sparc/termbits.h   |  33 +++++-
+ linux-user/strace.c           |  76 ++++++++++++-
+ linux-user/syscall.c          | 199 ++++++++++++++++++++++++++++++----
+ linux-user/syscall_defs.h     |   6 +-
+ linux-user/syscall_types.h    |   3 +
+ linux-user/user-internals.h   |   3 +
+ 13 files changed, 447 insertions(+), 43 deletions(-)
+
 -- 
 2.52.0
 
