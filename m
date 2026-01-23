@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9331ED74EE3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADBC4D74EEB
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIbw-0004Gd-2h; Fri, 23 Jan 2026 09:58:08 -0500
+	id 1vjIc8-0004OJ-Va; Fri, 23 Jan 2026 09:58:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbs-0004DX-M8
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:04 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1vjIby-0004Hy-0f
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:11 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbr-0007mB-5j
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:04 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4801bbbdb4aso23957205e9.1
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:02 -0800 (PST)
+ id 1vjIbw-0007nx-72
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:09 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-4359a302794so1492836f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180282; x=1769785082; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769180287; x=1769785087; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PKDjyRCg+cd8tsWJxtS527dnA8ZjwwQ9JRmbvue6S9g=;
- b=zJIlFQ1a0W2Mulz9RX9OCnGQliFXwyWHTDM94tDdI1dCmar2UazZI8HATbQgY15ksK
- Jfyr808MZ+yIIsUO0EM1IHG9NhUouH6oJR2SWcFAOofCWvGosmUmgKbHmGuU0Qh8ssrZ
- pu0B3ltGV50LQNuRVVbxMhAUuHoHI7OSop1ZVT+MsCPKI5mWYnibweBsRB2GtI9PTDXx
- ZxD2tzHveylEmGQhAMgc6fTYhmg2WVwkqyDg71a5WebO6QgtvXbefjA2IMWJitHGfkgb
- LlyZazx1Dg62xXe9OxIivMKu9dbe4+LZbBV/cabdeMwzPukwlJBRpzFMJPNzXDjGUIR6
- FQnA==
+ bh=IT3Cl5TxUGOEN1KCEW5Qrx+OBPZ2zVw+Msa0gwSUxR0=;
+ b=OggqncRYBUfP4c1e0OwDkRn1CqQTqSqjs8soK73D6sfbfT/c683zEMzF85iQeDDtE2
+ CJdHX/0vUY+A6ZDlZ2gw3DKXI2YyhkviOCt5tNB7KRYIpDm9mG1Sk03e+YKKCr/7UztQ
+ XyrtL4boYcWxtTyzkI+Gxa8tvMaWRJ+IeEATRDu8x34rxJoLaCqR+tjAEkBH82usr/YP
+ DGbzhkW/MQjbuqDAGlYN/9gCHRmdosRKK4xL25+h+jIpsH/qpDEBbX32Gufi/GUfImd4
+ gic1DqnDtV/fgtDlXUEXucE0njGzrdLwAn6L/v7SwI6k0rBQtNuizH9sh/WEhqi5NVPX
+ l/NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180282; x=1769785082;
+ d=1e100.net; s=20230601; t=1769180287; x=1769785087;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=PKDjyRCg+cd8tsWJxtS527dnA8ZjwwQ9JRmbvue6S9g=;
- b=El760eP3QOdkd/Spo2NHWYu2lK0pGy6kMndFLN7nqQ+hAo+Cz0qMbmHpgNcP3Ohj/4
- UsT43HS4V0tu5Z8kC8q0Zqf5X3VSFsujS1Q6gaU+9bZXmQzQmx6JUnPQzJPDePzzAZDK
- eBX0XWsiwxehRsEi1yXjtDk1JKMJ46Kesn+jjsOdmlXV6OgTebkZNJVXuwA3JjJXVr8O
- HqXh3BdZeomjwX89L6harwGVUs+DrO0+RbizNcvWQEUz0MD1Ctnx6VTRXZKfIDGdyins
- ZmkYHokQJKzo8BZoRHLWUKu+lWhRdrZIS8Dzm8pVvjgswsOjN58r1LmCEufaN7cxBaki
- dQ3w==
-X-Gm-Message-State: AOJu0Yx5BHTbwbyffdBO+J8AFin0N8BNVQCsDf9qEaFimRsxgP+OENfI
- 3SwXTE5nUB0arJwWEkosh5g881iojWfCj5+yaDLnCKm5g5emCl4pfaLITnDjvMWUtYA=
-X-Gm-Gg: AZuq6aK4LDXdxarOukFBZwUVu4yft6tZXFORZFTVbC5YecuEDj8XACQQgG1I8zkNXbH
- oS7TPeNZhIqe2D+3LERDvnawtJp5w8+zd3wfyW6aXzZoZhJYpBZ0yfxETL16EaLT4Ijtol54e4O
- p9l/VhNoOh5cIusY/eaZOg/M5wz19HCL8UI02QFUlDxbcJ1lK+ElNNlMWsqDqYZKK1b9fOCCaOZ
- eBR6T3jsLFWiyjiznqT4wsZnLMdtOTlhW0J6fvf7/QLjMR0ofnbg0zhu6OSpBR+niXCkTHocSCR
- 3xobqMfz779hGeeC+ytrDow4s3D+1Zs35zdOXxAp7+K4uK1jsDdeB2cQbaptf9rSLDLge+m3nQR
- R1S/lr4kU5QBUZsGuIAI3Pzja9US+ZdNRoUu+AG+NIkA3EWOXO3OVUX3PpPHGFhxTC6Veu2ZwM7
- EjmJ+i0qaKqi/r
-X-Received: by 2002:a05:600c:8691:b0:47d:7004:f488 with SMTP id
- 5b1f17b1804b1-480470b7d42mr70391195e9.10.1769180281646; 
- Fri, 23 Jan 2026 06:58:01 -0800 (PST)
+ bh=IT3Cl5TxUGOEN1KCEW5Qrx+OBPZ2zVw+Msa0gwSUxR0=;
+ b=SEk4pHtJGwk7QY/LgDtSU2reHzQlgPT61kquzsD2ti/p81oLqjYm2Mc/iQVxNNX0Jn
+ ceBruLPkkYIker82K6TgdiZV8jdOyOTRKbCvN2LAPaMRkan88x1PLUuh115jxKCMxLcQ
+ LsolGnONFuw0+eDHCnNbdpuw9j+ov0HBDRpJilK0oUa8yFmnjwQh4OHpBozSqJAgEo9b
+ XleOVZ4DPTW54gxF9gGLiq3kG/oNgnY5TJNB4mOXWKtvE8utA0H1+ol8/pONAkUC6+tO
+ qrCaj4KoP1CK5m9n4i+HLZRqiacdJIeCzy4ncx37OHui4OaFB54xHC2+wz6fz1Zs8iob
+ gI8A==
+X-Gm-Message-State: AOJu0YzFJHW6LnnSbNOCLL0PJBQnuZj9U1PqXfdsdYy406trmB+9YciX
+ b71buhn7tIxfepdqziZMHklVIpvvKDjQW9RI86+HfVxkE4p1WA1dd99tZsK3b6BnzvI=
+X-Gm-Gg: AZuq6aIxVcsxPLrxBq2Ssa0xd5GA0w1dpePbW/LtiNlC/NfrfMd4gbcP93oyxSV7jYr
+ 9Htq+71XszgtLahI43lXRjOG7ROabmzax24T1eX81C2Bi5goNRvz3C4Jv8EJaqCbepGYjDFnSEI
+ 3JbZfh/za6htmf94jE7jNwWhUIET+2n2Z4l4Cy0efY386NsAIhFwugGF7Fx/h5TesT95dq1AI2h
+ mBKbGvr55/iF5svjHmMcbP2+xJowy62lprOVeLuIbrssK9giCk/dTiW8BpOsxhHHvZLTMKngczO
+ Tg0FQv0aipsyaRw2MRUPI2VbbZ5Pg/KoiOcdiF13lrQmy5npJQLddkB+llMxOnWke1tBsO58JvN
+ WombGgv/P7PuCB0HTSi62pzahwE+JwHEJdzamFRlJe/CCFymL+hO1cfOKF0F4vqpxl9XejLZUdE
+ 7R27224el45Lsf
+X-Received: by 2002:a05:6000:601:b0:430:fdc8:8bbd with SMTP id
+ ffacd0b85a97d-435b16039damr5434643f8f.41.1769180286534; 
+ Fri, 23 Jan 2026 06:58:06 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4804d8c0aebsm60924395e9.15.2026.01.23.06.57.54
+ ffacd0b85a97d-435b1f7b41asm7647730f8f.39.2026.01.23.06.57.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 06:57:57 -0800 (PST)
+ Fri, 23 Jan 2026 06:58:04 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D54EB5F8DF;
- Fri, 23 Jan 2026 14:57:50 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id AE8F95FAD9;
+ Fri, 23 Jan 2026 14:57:51 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [RFC PATCH v2 05/16] MAINTAINERS: add maintainer for docs/
-Date: Fri, 23 Jan 2026 14:57:38 +0000
-Message-ID: <20260123145750.1200879-6-alex.bennee@linaro.org>
+ Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>
+Subject: [RFC PATCH v2 14/16] scripts/get_maintainer.py: add keyword (K:)
+ support
+Date: Fri, 23 Jan 2026 14:57:47 +0000
+Message-ID: <20260123145750.1200879-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260123145750.1200879-1-alex.bennee@linaro.org>
 References: <20260123145750.1200879-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,42 +107,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+We use the regex module to stay compatible with the Perl compatible
+regex used in the MAINTAINERS file.
 
-I would like to help maintaining qemu documentation and I've been
-invited by Alex to apply as maintainer.
-
-Files in docs/ that are already maintained will continue to be under
-their respective maintainer. The goal here is to have someone that can
-help on all other files that don't have an official maintainer.
-
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Daniel P. Berrangé <berrange@redhat.com>
-Acked-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260115203529.2713193-1-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- MAINTAINERS | 5 +++++
- 1 file changed, 5 insertions(+)
+ scripts/get_maintainer.py | 36 +++++++++++++++++++++++++++---------
+ 1 file changed, 27 insertions(+), 9 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3604422f8b4..a691e3511c9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4511,6 +4511,11 @@ Incompatible changes
- L: devel@lists.libvirt.org
- F: docs/about/deprecated.rst
+diff --git a/scripts/get_maintainer.py b/scripts/get_maintainer.py
+index f46d8f6e073..b41f5342876 100755
+--- a/scripts/get_maintainer.py
++++ b/scripts/get_maintainer.py
+@@ -16,6 +16,7 @@
+ from enum import StrEnum, auto
+ from re import compile as re_compile
+ from re import sub as re_sub
++from regex import compile as prec_compile
  
-+General Documentation
-+M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+S: Maintained
-+F: docs/
+ #
+ # Subsystem MAINTAINER entries
+@@ -124,7 +125,8 @@ def __init__(self, section, entries):
+             elif tag == 'W':
+                 self.web.append(data)
+             elif tag == 'K':
+-                self.keywords.append(data)
++                match = prec_compile(data)
++                self.keywords.append(match)
+             elif tag == 'T':
+                 self.trees.append(data)
+             elif tag == 'X':
+@@ -160,6 +162,15 @@ def is_file_covered(self, filename):
+ 
+         return False
+ 
++    def patch_contains_keyword(self, patch_lines):
++        "Does patch contain keyword covered by this maintainer section"
 +
- Build System
- ------------
- Meson
++        for l in patch_lines:
++            for k in self.keywords:
++                if k.findall(l):
++                    return True
++
++        return False
+ 
+ def read_maintainers(src):
+     """
+@@ -194,18 +205,22 @@ def read_maintainers(src):
+ #
+ # Helper functions for dealing with patch files
+ #
++
++
+ patchfile_re = re_compile(r"\+\+\+\s+(\S+)")
+ 
+-#TODO: also return a list of keyword hits for K:?
+-def extract_filenames_from_patch(patchfile):
++
++def process_patch_file(patchfile):
+     """
+-    Read a patchfile and return a list of files which are modified by
++    Read a patchfile and return the message as a string and a list of files which are modified by
+     the patch.
+     """
+     file_list = []
++    msg = []
+ 
+     with open(patchfile, 'r', encoding='utf-8') as f:
+         for line in f:
++            msg.append(line)
+             m = patchfile_re.match(line)
+             if m:
+                 # strip leading [ab]/
+@@ -213,7 +228,7 @@ def extract_filenames_from_patch(patchfile):
+                 as_path = Path(path.abspath(stripped))
+                 file_list.append(as_path)
+ 
+-    return file_list
++    return (msg, file_list)
+ 
+ #
+ # Helper functions for dealing with the source path
+@@ -335,13 +350,16 @@ def main():
+     if args.file:
+         files.append(args.file)
+ 
++    # unique set of maintainer sections
++    maintained: set[MaintainerSection] = set()
++
+     if args.patch:
+         for p in args.patch:
+-            pfiles = extract_filenames_from_patch(p)
++            (msg, pfiles) = process_patch_file(p)
+             files.extend(pfiles)
+-
+-    # unique set of maintainer sections
+-    maintained: set[MaintainerSection] = set()
++            kmaint = [ms for ms in maint_sections if ms.patch_contains_keyword(msg)]
++            for m in kmaint:
++                maintained.add(m)
+ 
+     for f in files:
+         fmaint = [ms for ms in maint_sections if ms.is_file_covered(f)]
 -- 
 2.47.3
 
