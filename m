@@ -4,110 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 419F7D74EDE
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B03CD74EDE
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 14:59:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIcB-0004Qz-En; Fri, 23 Jan 2026 09:58:23 -0500
+	id 1vjIbv-0004FF-Fi; Fri, 23 Jan 2026 09:58:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vjIc9-0004ON-3u
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vjIc6-0007rs-Va
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769180296;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0A2r04mGgySsdu0VVAiYh5kUP3A3RivRpKS+DVUacgk=;
- b=d7NU/qsrjziL5evRNjnmgwiyUO4/YIaKw3IePPqlALp9xUgmoPGGhzNRLG8LHPTjQJR8dy
- Xlz0dY8HDvTQ9DHJEX3OFy3ZO7fSyGeQzl5Jt/XVx6B3gLnK+9iZ8n1XX+6Pk39ZM2pWsy
- NpFvh4C+/4vLbjWQpBBYe3OCOOZ+x+8=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-163-LLsVYSLgP0GL2uG-9dAHSw-1; Fri, 23 Jan 2026 09:58:15 -0500
-X-MC-Unique: LLsVYSLgP0GL2uG-9dAHSw-1
-X-Mimecast-MFC-AGG-ID: LLsVYSLgP0GL2uG-9dAHSw_1769180294
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8c52c921886so258220585a.2
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vjIbs-0004DO-H6
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:04 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vjIbq-0007m2-J6
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:04 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4801c2fae63so18468135e9.2
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769180294; x=1769785094; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=0A2r04mGgySsdu0VVAiYh5kUP3A3RivRpKS+DVUacgk=;
- b=JlkO9UYI39cthld3wxVEUNbzdKSwRyDpEFJ7N+W8R95f07hJ2Us3xcHlFXQq4OfH0x
- ypxecnNW+dEvqlB4lCYLxvPErTYw7RkyY5pS5ZS67zgYKWGzvV/ZhUK8uGELwyGaUCHv
- cLPG8CycyitE/UTagCiUIvUsNdBjt/3ZbuP/Sggcte19IwNFay+cLZcu5QewGIeL/AG6
- U6huPRO6I8NdknyLjUGq/HtRWJDEqimPAN60HV2F/hFjxSg5Gx0ijdCHbMUC7jBux2Sr
- 2CYi6ZCLHAH38oPVtwRdddsm+REypogFZCekzoPsEYA5ESeY02YlRfVmQBs+5iFRp/uu
- bBAw==
+ d=linaro.org; s=google; t=1769180281; x=1769785081; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uRjnKlHaglM5KNRL34gnS1g5I/h03KmLN/ZqQyvVsXQ=;
+ b=S02vzy5RdiT6T4dBbJ+x2p8/WqSlsWzd2CQ61tIJFLo2lbntHp/3b32IzXeJUlSesL
+ Vzx1lpHRq2UN9mPGXBXMfg7xAhsuFlq9pFaSuy8P5aR3FgjDWHq20NMq5dQXLEKp1Jpy
+ 787vArqiwbuSqQai9GzvU5iZ8SboZssEtA1VbFbTN5TvIsQM3qb+/lqUGAEP7Wa1JLJm
+ E6P9yEl1Noe9cN+OnZMaE+nhZ17nsYUxOnWjhZ0nPLIbsLWKttHFaxglkwN1TXrMtlyB
+ echCsGY8M0fj1sAXi7SApPLo+ZqS3wDC1iMQAQQxDJ2tbAwIT4GgiVoXjqrpHmsq2TIQ
+ hbQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180294; x=1769785094;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0A2r04mGgySsdu0VVAiYh5kUP3A3RivRpKS+DVUacgk=;
- b=Yj6NUqiw4gORNVdcBfFD0euwi3bT8tBDMI4/BT74ffnZOrc06VJaC5eXiAqOW45Ofc
- 0XI4rjmJ7wPxFCxoCGhLl1jl0/PqiymWc6kIy/0w+aN5dSWziiIcirUyEsDYJOEmJZM/
- h1W6p8jYf6lxBd9aB831S0tWTRr0ZXgSsZLCPT97441vewiLo4qkvk7Azum6OfSK4g1G
- UU97jdybKdN9jeNFh8Ydk52/0Ycu1p1Ion6p82XWo7qdDzI8/5OvWRQlQLig17H49erK
- a+OfgtVBcqz2l7DfnAZz40R5x5ADr/I5LPSsKhCKoWtIbeij2WLyfeYpEkWPxlVUI5g8
- zzwA==
-X-Gm-Message-State: AOJu0YzncqYhQambsM3Mn8349Re+PuNs4oHI77UKnhdnPijInmb/63HZ
- TCZNG0KIIVUmNG4womXpzY3P/98zk35YBZgvAZ7pWIQfeJmQ/vsl4ic0v/TjxpeG39cNZ5mtK71
- bDqOgVwb1370r3Sml7ygf2+v1OcaN9Q0Rto5IOk36DaNuJipu1FXQT1HT
-X-Gm-Gg: AZuq6aIwsgrvF1Rcuu9v3WM/mMg+STx6xbGAmQFn5jPM74pQTDU/ah9gYzN5uOA9H79
- ZYbJTj/fSSXIJYfkAXmQ98lZs5YxZguYqXXwVEkIosvfRBpvIKJm8z9chhu9axWooEtaReyojzJ
- QYmazzP3N6rss45FwI5Da5F4Ht00pfwE9z/sxetLksnL8U//GPoIwQEEqxASr4OqK+IN9sr4E1n
- Do88ON2Jn7PNuOnJklL5V87BrlKxFPJ8yVE6+4MtoDI5dwF0tNzEsCFANm8yajQwZ1kGK98Jtrt
- jMP67FWGwwKU0gbhtVTkgsfMZgOhKo1/xmpB6jS+RyUfZyNoeiPjw57rqTiM6AiRXE7wXaCkTEY
- IdWA=
-X-Received: by 2002:a05:620a:2990:b0:8c6:a487:6add with SMTP id
- af79cd13be357-8c6e2d96222mr396160485a.22.1769180294229; 
- Fri, 23 Jan 2026 06:58:14 -0800 (PST)
-X-Received: by 2002:a05:620a:2990:b0:8c6:a487:6add with SMTP id
- af79cd13be357-8c6e2d96222mr396157485a.22.1769180293622; 
- Fri, 23 Jan 2026 06:58:13 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c6e37c823bsm199075785a.2.2026.01.23.06.58.12
+ d=1e100.net; s=20230601; t=1769180281; x=1769785081;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=uRjnKlHaglM5KNRL34gnS1g5I/h03KmLN/ZqQyvVsXQ=;
+ b=Y77h3pr1MNfgFjgdxJYedg9X2Zz8C3nMX7+YFY04H9ppEBeLY+Ju2Y+OsWAivOlsSx
+ WE+eS5I1d6ZLiIxrH9GXd/oEIlVZ+KhdTfwQYj5W5g3m4B43cMJ88sVC/fgD4XIyWM9L
+ +HxKmozPcaCG54TRilpLSHWbLtD2rbXd1iFPKPbfUOT67DJ+Z+TVlabws16mcmm00jsN
+ fTHyIXkqKxeOchwQet1cv66MRJpu5E4SSxQBir6jAuOgXQfNHvcv2rf+1H95nmtNxCUU
+ PHINtigM19b76b9luMTcXJjBkgNxiIHtz+X0zBbmVqP9Kc/xnVwb7JyUQKUJmVCAdvFa
+ 3pXA==
+X-Gm-Message-State: AOJu0YyI/NYnmwTDgdEYUHUj+IHTA+T4QuqfVylEYBgnPio4rYT782+5
+ /FjUxbh5DvSl4tBEdLSHnrNamRP1mTwpCz3nkh+S6WOaxY3o0Y8+RI21eX3/jQZgBgI=
+X-Gm-Gg: AZuq6aKdEwTvRU5oYwO7CYuirmES+HRiYDXRbC8Q0w1mk6DXNEywj98eNFEsG5pN8IH
+ 5GwQKAgP0K5KjTLE8yVAHjKz5KVw2Geoli9Ka/Fg9luU8pH5mk3vHXBdILjzdbe81T29uz5AbOx
+ +Mzg/eyyLolDPDWaZ+X/zZXwIjZ7ncMuoIdFWjgH/UvSgir2uqVLYHXEoqnTRRdMPhCITtjQI4E
+ q8AkSO8iQoi2DCytYAT9347CDTd+0GmcRAr18KFzN1PlcCkUmG0pFfgh7jknE6/LHBya0R8LhZF
+ As1Q3aPbMlSA9gd0c1KNei6ITnVSy8UA/CPvAf5Q7XZHHh7eYj/2s656kpSlPeIvr1yR6cwWN7X
+ /5YRem1BujoxC5mXP+1rhnmr46vEpEYD5AWYZ/Z3TxrxL0IhQvm6CWQBNKMKVPUiVWUcpMq2he6
+ WPUkAxzFqzh8QG
+X-Received: by 2002:a05:6000:4201:b0:435:96c3:da87 with SMTP id
+ ffacd0b85a97d-435b15fb1a4mr5140355f8f.30.1769180280765; 
+ Fri, 23 Jan 2026 06:58:00 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435b1f745e6sm7259112f8f.33.2026.01.23.06.57.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 06:58:13 -0800 (PST)
-Date: Fri, 23 Jan 2026 09:58:12 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH 2/5] migration: Fix double notification of DONE/FAIL for
- postcopy
-Message-ID: <aXOMhI2tP8IK6juv@x1.local>
-References: <20260122230331.3543312-1-peterx@redhat.com>
- <20260122230331.3543312-3-peterx@redhat.com>
- <87a4y4jxtc.fsf@suse.de>
+ Fri, 23 Jan 2026 06:57:57 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 26EB45F915;
+ Fri, 23 Jan 2026 14:57:51 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>
+Subject: [RFC PATCH v2 08/16] MAINTAINERS: be realistic about *-user
+Date: Fri, 23 Jan 2026 14:57:41 +0000
+Message-ID: <20260123145750.1200879-9-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260123145750.1200879-1-alex.bennee@linaro.org>
+References: <20260123145750.1200879-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a4y4jxtc.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,82 +106,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 23, 2026 at 09:52:31AM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > Migration notifiers will notify at any of three places: (1) SETUP
-> > phase, (2) migration completes, (3) migration fails.
-> >
-> > There's actually a special case for spice: one can refer to
-> > b82fc321bf ("Postcopy+spice: Pass spice migration data earlier").  It
-> > doesn't need another 4th event because in commit 9d9babf78d ("migration:
-> > MigrationEvent for notifiers") we merged it together with the DONE event.
-> >
-> > The merge makes some sense if we treat "switchover" of postcopy as "DONE",
-> > however that also means for postcopy we'll notify DONE twice..  The other
-> > one at the end of postcopy when migration_cleanup().
-> >
-> > In reality, the current code base will also notify FAILED for postcopy
-> > twice.  It's because an (maybe accidental) change in commit
-> > 4af667f87c ("migration: notifier error checking").
-> >
-> > First of all, we still need that notification when switchover as stated in
-> > Dave's commit, however that's only needed for spice.  To fix it, introduce
-> > POSTCOPY_START event to differenciate it from DONE.  Use that instead in
-> > postcopy_start().  Then spice will need to capture this event too.
-> >
-> > Then we remove the extra FAILED notification in postcopy_start().
-> >
-> > If one wonder if other DONE users should also monitor POSTCOPY_START
-> > event.. We have two more DONE users:
-> >
-> >   - kvm_arm_gicv3_notifier
-> >   - cpr_exec_notifier
-> >
-> > Both of them do not need a notification for POSTCOPY_START, but only when
-> > migration completed.  Actually, both of them are used in CPR, which doesn't
-> > support postcopy.
-> >
-> > I didn't attach Fixes: because I am not aware of any real bug on such
-> > double reporting.  I'm wildly guessing the 2nd notify might be silently
-> > ignored in many cases.  However this is still worth fixing.
-> >
-> > Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  include/migration/misc.h | 1 +
-> >  migration/migration.c    | 3 +--
-> >  ui/spice-core.c          | 3 ++-
-> >  3 files changed, 4 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/include/migration/misc.h b/include/migration/misc.h
-> > index e26d418a6e..b002466e10 100644
-> > --- a/include/migration/misc.h
-> > +++ b/include/migration/misc.h
-> > @@ -63,6 +63,7 @@ typedef enum MigrationEventType {
-> >      MIG_EVENT_PRECOPY_SETUP,
-> >      MIG_EVENT_PRECOPY_DONE,
-> >      MIG_EVENT_PRECOPY_FAILED,
-> > +    MIG_EVENT_POSTCOPY_START,
-> >      MIG_EVENT_MAX
-> >  } MigrationEventType;
-> 
-> With the new state there's a doc text to update at
-> migration_add_notifier below.
+Looking at the merges for the last year:
 
-Yeh I noticed it, I didn't do it as I found POSTCOPY_START is special in
-this case marking an optional phase for postcopy-only.
+  $ git shortlog --merges --since "last year" *-user/ accel/tcg/user-exec* hw/core/cpu-user.c include/user/ scripts/qemu-binfmt-conf.sh scripts/update-syscalltbl.sh scripts/update-mips-syscall-args.sh tests/functional/arm/test_bflt.py tests/vm/*bsd
 
-I can still update it, though..  Then it'll look like:
+  Richard Henderson (4):
+        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
+        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
+        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
+        Merge tag 'pull-tcg-20251019' of https://gitlab.com/rth7680/qemu into staging
 
-   - MIG_EVENT_SETUP [-> MIG_EVENT_POSTCOPY_START] -> MIG_EVENT_DONE
-   - MIG_EVENT_SETUP [-> MIG_EVENT_POSTCOPY_START] -> MIG_EVENT_FAILED
-   - MIG_EVENT_FAILED
+  Stefan Hajnoczi (12):
+        Merge tag 'linux-user-fix-gupnp-pull-request' of https://github.com/hdeller/qemu-hppa into staging
+        Merge tag 'pull-10.0-testing-and-gdstub-updates-100225-1' of https://gitlab.com/stsquad/qemu into staging
+        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
+        Merge tag 'pull-loongarch-20250424' of https://github.com/gaosong715/qemu into staging
+        Merge tag 'pull-misc-2025-04-24' of https://repo.or.cz/qemu/armbru into staging
+        Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging
+        Merge tag 'hppa-fpe-fixup-pull-request' of https://github.com/hdeller/qemu-hppa into staging
+        Merge tag 'pull-target-arm-20250704' of https://gitlab.com/pm215/qemu into staging
+        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
+        Merge tag 'pull-10.1-rc0-maintainer-140725-1' of https://gitlab.com/stsquad/qemu into staging
+        Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging
+        Merge tag 'accel-20250715' of https://github.com/philmd/qemu into staging
 
-I'll also move it above the enum instead if no objections.
+None of the pull requests have come through the maintainers and while
+there are a fair number of commits overall they have been mostly bug
+fixes, re-factoring clean-ups and the occasional new syscall/ioctl
+handling.
 
+We should reflect the current status so users don't have unrealistic
+expectations of how quickly things can get reviewed and merged.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+
+---
+
+[AJB] I realise this is a slightly provocative patch but given how
+widely used *-user is downstream we should be clear about the current
+state and hopefully encourage those who rely on it to step-up.
+---
+ MAINTAINERS | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ee64a528c7f..1f313bba84f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4016,7 +4016,7 @@ Usermode Emulation
+ ------------------
+ Overall usermode emulation
+ M: Riku Voipio <riku.voipio@iki.fi>
+-S: Maintained
++S: Odd Fixes
+ F: accel/tcg/user-exec*.c
+ F: hw/core/cpu-user.c
+ F: include/user/
+@@ -4025,7 +4025,7 @@ F: common-user/
+ BSD user
+ M: Warner Losh <imp@bsdimp.com>
+ R: Kyle Evans <kevans@freebsd.org>
+-S: Maintained
++S: Odd Fixes
+ F: bsd-user/
+ F: configs/targets/*-bsd-user.mak
+ F: tests/vm/*bsd
+@@ -4034,7 +4034,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-user bsd-user-rebase-3.1
+ Linux user
+ M: Laurent Vivier <laurent@vivier.eu>
+ R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+-S: Maintained
++S: Odd Fixes
+ F: linux-user/
+ F: configs/targets/*linux-user.mak
+ F: scripts/qemu-binfmt-conf.sh
 -- 
-Peter Xu
+2.47.3
 
 
