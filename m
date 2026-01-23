@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4AB7D74EDC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:00:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B9AD74EDE
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIbv-0004Fq-N8; Fri, 23 Jan 2026 09:58:07 -0500
+	id 1vjIbt-0004E2-4X; Fri, 23 Jan 2026 09:58:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbt-0004Ed-KZ
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:06 -0500
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ id 1vjIbr-0004C4-5b
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:03 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vjIbs-0007mc-1m
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:05 -0500
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-430f2ee2f00so1442897f8f.3
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:03 -0800 (PST)
+ id 1vjIbp-0007lj-GV
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 09:58:02 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-47ee76e8656so31715865e9.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 06:58:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180282; x=1769785082; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769180280; x=1769785080; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+y4zgoD+f0fN2QJ3KEy8mPHZuzX+JykDpAucVMG5uT4=;
- b=iofirigK3gY9wOn3lPafn4QXC16BjhXckwdskO8b4x5yDOixmYSPdqfl9XHW/PVQFG
- 5e+UYqtfNcBu6sDCKvkCP+sRsztwGXwl7jbld4yqCC/au2TuZM5BNvN5Eqoj7QTmtpCD
- +oLaDsTCjwZKqFG3N0D0IHKUBv5D5IDuNr0tAr0dDuIGy7jMZT6XZeG7QNsRlRcZTHTC
- U3cRSquFPIZzwvAnJj5wFo5JNNZsldggA5vib5776D1yBxcFU/+R6Ka8HezxixMEKLjk
- Afqths040aMKIJNr6hsipTbmoGxXMEuROoEZsmkAUAccgQZIGMHdT6HPTDJqJmWZazoz
- f5sA==
+ bh=tPLtmm0thKhhqV9CGriELJNIRIeHkZeX7nNkrCOg7E0=;
+ b=GY5i03lqA9cqn/SiLhUtjW775NAmOs+YcwkYgckuvlrF+XMon/sr1oWGs7xLIpSL6g
+ WTdTb4E46q9S6WIF2SgC67G+i9mySzl9V5wlkmFzCXyb3QfF+C37OR+4KnSJKmBoRHey
+ ddqgdQgrFKZj7bz832eeeV0Q158GtNeYfy+3IRx0iHYh5cdNmGKidTbYE8+BtDT5WNsl
+ AIS6bkDAbuy7oIKQrTVGz9Uc8JbqhMZ8B0OIr2AgKiEQhCM03jBhIyaNpfk9pwby1b2L
+ UltlcSpTqx72lozUst0f5BKtJyeMODW92Y9jK/wdn9Z95/bNH1+BQyBffG/mX1JVKJYS
+ kz5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180282; x=1769785082;
+ d=1e100.net; s=20230601; t=1769180280; x=1769785080;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+y4zgoD+f0fN2QJ3KEy8mPHZuzX+JykDpAucVMG5uT4=;
- b=eyPJK03Nugp76uBZL32Q/s5kDVB4BeJltMZHN2/1MwtkdIJeQK1CK/+u4mUenjzoIY
- aLEnkvo/CXVF7iB1HmZnQ/p3X3bIwGUoPYL3s2dQwibxq8LYeC/XFyr8EDdewkbBsu+g
- h2HkF3ezn2+5EqVsOytT4Mnkc/mFZYQswuxBhobUwHmBvCw9Yi0uSQkfxR8Pmk3S2aIr
- yoq6/tYYZ/eYMimSSYF9Hu7VT8Soi3YvvdPuvBMgbvd33ZrD0+BAcgklfJUt6zNorMHW
- zIqbx8nV7jwtmsUir5OO2eLiyCrDlp/g/2PczsJol3exifxZHcqGfbceg/uGvqsu82B3
- +GqA==
-X-Gm-Message-State: AOJu0Yyu5Ag9x9nNA9cxNxz9srsCC46EIrV3GEZghs0zzQtpHOeZVnjM
- hV3d9L45cucuGmj9CAdLMC46Dzd/DiSEGncjIAT19OuNMImWpZyeFEB08i4NzOPRrlU=
-X-Gm-Gg: AZuq6aKJ8e8MnP99Uxh0ix9JQY7p7TZoBHvKq3perD38wEPKR+dW3jciO/J2bT3STuM
- 0/LPt6BXgAfmyn7V0fkl5GgGDu5kyWon1mUjSupvdB1D1uOOTI9/Tz1/EuWXnrMu/gVXbLrfinC
- pJSwTaId4t2u+1FgjtYThzjfwCpMWOD508ieIESkKvmy88qnYX+M+JtqakvTqNPOiWkp6nV+oCR
- Q/L2YeK7BKjlBkP6cHw2iDlXn0JAE/x7OAKLFBuOLgWYr7aV5D63loHO8R/Z3aXl/SUbWNA3mye
- FwiYSL8d45d7kPAAe+Oa//fc6PwNMwBpagVzfAHQGaWMmBkLkuLQia7Tu7xO5GPZIosMGwc55cC
- TC3VhX848xidQtrqlbDLelEzkxHUia9BMvG0I0VO8jiiQfFpzfKMslaKLudKwWwMK931DzJhU8J
- ZBhsU0u/B3qUm/
-X-Received: by 2002:a05:6000:1861:b0:432:851d:35ef with SMTP id
- ffacd0b85a97d-435b163ecb2mr5832145f8f.42.1769180282436; 
- Fri, 23 Jan 2026 06:58:02 -0800 (PST)
+ bh=tPLtmm0thKhhqV9CGriELJNIRIeHkZeX7nNkrCOg7E0=;
+ b=WpjGPScWYaK2YYuzpZUE0Atm3YtIJ7YG3f1cS7ADlAxKn/4vlLLk+ruHhzy0kZyKml
+ gaupdnLel4Od9zQaxrSHIm0xBMUrAQv+FzuSBGI3E9uxz802o7L1/d0J+ioTPvVq/VVu
+ uzbCr3VgvQeJ8KOqVAUSWnaSnohrfzYxtakjMlDdAJNRp9PbPj0HtpIjrQq6g1554/hz
+ zaYOuGcyM9Pq7VaEk3DDMCILQda8c6sMwPSvg1cdKUCNaGfspdp3pj3D3KBAVCED3dWX
+ LHHkSa1mKVawbzbUE8Cw7bSciBo1ysgx4obuGZ+EwVqX0QKgzGxtvvQRguF64GYwHqk+
+ MzMg==
+X-Gm-Message-State: AOJu0YyApZJrn8ofcyf0rZl+Ls+tbyD7kH/iX9HaSHnGZEftTKmXXgvn
+ 7cFHJsFaFvCq+MQW7hY5bi6lVy3t5LZENB/mNMPkZ2cg9iKawldjzdag0XNdFPUzzlY=
+X-Gm-Gg: AZuq6aKMdexJq8vK/4EkvMQWx93FfPAEChNBdDbH5lvg2LXmItWQ5JHOo2eiMN4++F9
+ x/Fwd70IxQ0Qe3uW/MC/LoOx4zIfIDLJKtUIjrVIYfImS5JiZqr9h0Wmm2AaOFRla16R8NN7SjL
+ cM7g45lES2u7wsoJ6gSAbCrI26xgIRdbRZlMrRlrmOl81oMINZY647Av6gT4BqHFSQBexVZyUyc
+ QcdOGB7SC/4CqRtO46MdDjTHCFlF3fFFuBaqOP6xp1v9AyEGqC3onPGga4N/SJ2jeK60xi6w2/O
+ bbM50CIoglvVwoErsnQIEbYKIMxy5FPgoSJQwoWNtPB79HVshr4R8Y4GMxHAY63OFheL8y+ZpMd
+ 4fc40yHQe6ZNevlVrayFgF9JhWmiK+K8kM7kIwN0xtAd9RDAIAHVUT6vgnb+hlK5s9pvNs+WYYY
+ 9qhvQaTTW8Ya9A
+X-Received: by 2002:a05:600c:1994:b0:480:19ed:7efa with SMTP id
+ 5b1f17b1804b1-4804c9d4e9fmr54061545e9.36.1769180280006; 
+ Fri, 23 Jan 2026 06:58:00 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71730sm7663882f8f.26.2026.01.23.06.57.56
+ 5b1f17b1804b1-4804d85206fsm62321345e9.6.2026.01.23.06.57.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 23 Jan 2026 06:57:57 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3EB475F91C;
+ by draig.lan (Postfix) with ESMTP id 0FA465F8F3;
  Fri, 23 Jan 2026 14:57:51 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -72,19 +72,21 @@ Cc: Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH v2 09/16] scripts/get_maintainer.py: minimal argument
- parsing
-Date: Fri, 23 Jan 2026 14:57:42 +0000
-Message-ID: <20260123145750.1200879-10-alex.bennee@linaro.org>
+ Joe Perches <joe@perches.com>, John Snow <jsnow@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [RFC PATCH v2 07/16] MAINTAINERS: add reviewer for linux-user
+Date: Fri, 23 Jan 2026 14:57:40 +0000
+Message-ID: <20260123145750.1200879-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260123145750.1200879-1-alex.bennee@linaro.org>
 References: <20260123145750.1200879-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x444.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,62 +109,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
+I had interest in this area for some time, and would like to help
+reviewing it.
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Laurent Vivier <laurent@vivier.eu>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260115201712.2706663-1-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- scripts/get_maintainer.py | 44 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
- create mode 100755 scripts/get_maintainer.py
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/scripts/get_maintainer.py b/scripts/get_maintainer.py
-new file mode 100755
-index 00000000000..2b8fc7ae9ee
---- /dev/null
-+++ b/scripts/get_maintainer.py
-@@ -0,0 +1,44 @@
-+#!/usr/bin/env python
-+#
-+# get_maintainer.py: Print selected MAINTAINERS information
-+#
-+# usage: scripts/get_maintainer.py [OPTIONS] <patch>
-+#        scripts/get_maintainer.py [OPTIONS] -f <file>
-+#
-+# (c) 2025, Alex Bennée <alex.bennee@linaro.org>
-+#           based on get_maintainers.pl
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from argparse import ArgumentParser, ArgumentTypeError
-+from os import path
-+from pathlib import Path
-+
-+
-+def valid_file_path(arg):
-+    """
-+    Checks if arg exists and is a regular file or raises ArgumentTypeError.
-+    """
-+    if not path.exists(arg):
-+        raise ArgumentTypeError(f"File '{arg}' does not exist.")
-+    if not path.isfile(arg):
-+        raise ArgumentTypeError(f"Path '{arg}' is not a regular file.")
-+    return Path(path.abspath(arg))
-+
-+
-+def main():
-+    parser = ArgumentParser(description='Extract maintainer information. ')
-+
-+    # We can either specify patches or an individual file
-+    group = parser.add_mutually_exclusive_group()
-+    group.add_argument('patch', nargs='*', type=valid_file_path,
-+                       help='path to patch file')
-+    group.add_argument('-f', '--file', type=valid_file_path,
-+                       help='path to source file')
-+
-+    args = parser.parse_args()
-+
-+
-+
-+if __name__ == '__main__':
-+    main()
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 87ec6f3595b..ee64a528c7f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4033,6 +4033,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-user bsd-user-rebase-3.1
+ 
+ Linux user
+ M: Laurent Vivier <laurent@vivier.eu>
++R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ S: Maintained
+ F: linux-user/
+ F: configs/targets/*linux-user.mak
 -- 
 2.47.3
 
