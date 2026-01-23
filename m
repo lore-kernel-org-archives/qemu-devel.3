@@ -4,105 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06D5BD7237B
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 11:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A02B8D7237B
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 11:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjFad-0005dh-Ad; Fri, 23 Jan 2026 06:44:35 -0500
+	id 1vjFoS-00014y-Ck; Fri, 23 Jan 2026 06:58:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1vjFZS-00050O-0R; Fri, 23 Jan 2026 06:43:24 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1vjFZN-0006xO-SB; Fri, 23 Jan 2026 06:43:21 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60N2qUEK006209;
- Fri, 23 Jan 2026 11:43:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=I6s6euSKtjv3qriJF
- eYyiM2bE1vBTsywb6iIQZFRvUA=; b=knZy9HFkrxL3hfaJmMDAAOXgPc1IesWO0
- kHMSz28w1d9Uq7sEBNJ+WH9WwtZbvSoKvjKpKPOyN6kGPR7YxWJqngGNNT+OU7Qx
- cdNmihAApeKIEtFGyx8dtTPs3VQX2ECQ6HWrPQ7HQz29+EzMVTblW0zdvudTslVF
- DnECu22wzfdTrKJSLy9gEPLi0xuSG4XBW8CP0HZb7D5fIuRxDMALVKdMLUI9wRaJ
- K3weS/Y+EVUWnday2ZNkMX7cAGbh40XsMXLP8bHbRRYGQRrwjaBcIVvpFYDh+Nfd
- R6I6H0g/Y+9fGFLKcxSD0X0xKzJIhv0O6pWf30Bf44I5fx0YdOMwg==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4br23sfqs1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 23 Jan 2026 11:43:14 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60N8QP2Z006399;
- Fri, 23 Jan 2026 11:43:13 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4brqf20gcw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 23 Jan 2026 11:43:13 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60NBh9oQ29557500
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 23 Jan 2026 11:43:09 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 485CA20040;
- Fri, 23 Jan 2026 11:43:09 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2ECBD2004D;
- Fri, 23 Jan 2026 11:43:09 +0000 (GMT)
-Received: from funtu2.ibm.com (unknown [9.111.163.22])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 23 Jan 2026 11:43:09 +0000 (GMT)
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: pbonzini@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, borntraeger@linux.ibm.com,
- frankja@linux.ibm.com
-Subject: [PATCH v3 04/14] target/s390x: Support AES ECB for cpacf km
- instruction
-Date: Fri, 23 Jan 2026 12:42:58 +0100
-Message-ID: <20260123114308.19401-5-freude@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260123114308.19401-1-freude@linux.ibm.com>
-References: <20260123114308.19401-1-freude@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vjFoP-000123-3a
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 06:58:49 -0500
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vjFoN-000199-A3
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 06:58:48 -0500
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-78fc3572431so20271787b3.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 03:58:46 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769169526; cv=none;
+ d=google.com; s=arc-20240605;
+ b=GwVNQ9XNhG3vEtUAsra8avbmZxs5n3YGMoMD9CKD1IUVPAU8du9XxyNLzB5RVIBAf9
+ LXAKGOJs9aDR8FK20EQ0tSZLjQW8hLYlHSoW709i0elu3WsEBvkKbNzJ2zVQuTijqMQi
+ pBWVRNf1z+dSQd2DGwGdGfHbS807YbqgO71NJh/uNmSSl+xBEZPUyR25sAXKRevTztLy
+ CSWFwwFTkbxxDGv/QRMYeSGtnGkoY0y3IQnfpfDNqGWHB48veg+zBkoXMulrzhCh7YQP
+ Db+0STOWCvtvsO3EyZCGH48/fRQdz9PugSR1sEbN2EA5wwN0rxPf/6I09L5thqbFwrKz
+ Ld0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=O+kYNhCktaG6qohxbKdIw5yol+32W9ziCx/YJX3RCnk=;
+ fh=4yIqWIZ7rt9TB2gJaNAvVkJPFL4XWWJSRI+nhORgXGc=;
+ b=BoM2ba6MJjHLr8meGlQBjVpJMZE3K9IjA6uHhnpNTsGINRKRi61ZauE7ghqyJe/Yfj
+ jEbx/6HkMk56K3oeX14fJgj8BPy8VYqCc0ix8DU5MhcT37AXeRM83SxFtxh051spofvP
+ d6omOwWVlUDkXDMalfsDCuPHN+SIWb7nZGig988vJLeEPkkgY6mzVNKUi8FwpmXg7vev
+ Mqjka+LgNSNUgsWjYwkI8Laz9O2srbvzd57VFoz4XLbcn9jopU9og4I4KBvvrSPNiPKb
+ t9e0E9ps42amjTrcubms52zqjaFYoLOsNsxwXHfCDesisCqYi+jMsXcP8tjh0NfDY5k3
+ 2U8g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769169526; x=1769774326; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=O+kYNhCktaG6qohxbKdIw5yol+32W9ziCx/YJX3RCnk=;
+ b=Ef/1HZXHKs35L8Vu5Syn1ToRsQmURsaYVn38fu1Qcg8BFlPVaC/17Xg3NgnjG+k9vp
+ XeU96zH/ZvTsNs7ljNLiYYBYpwTq4OV71BmDBzD0QxUoyWpkkYDfdLeQso9DtPDIESNC
+ vjhI7eZMLIUFK4ONiaceXvDwvdT7iOWj141dWm9sSqR64VcsKEpBxIeb7bvBIvWTxepU
+ zV9k2q3jFfvvZcu174FGEvOcg4KpPrF6xG6QqmZJlmYC6UxEkhRnFz24C6s4bL2YrFmh
+ 2LN9oQlhhdMDaTouwo6/QChTs7qwDVdi34waBfz1mWmZBmLWNOP2Hw2S7AcnBFArsBnr
+ GJTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769169526; x=1769774326;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=O+kYNhCktaG6qohxbKdIw5yol+32W9ziCx/YJX3RCnk=;
+ b=b00Z1snr2600TcasFR5xcgLhMb9PF5JzlBantrQ1t7ouYAPFQ2HWyYvTbvOy50w4GS
+ iR2G9nghFSJYsdaCA5eDlwP+0ZqEb9evXJL3mwqyfvwzArm6zf2125pQWRySIJt7zvt9
+ ukbQU/WtFpcIL346moV/QHRvHzFwyWDj2+7qjWBSMVQSp0yXFJHTuRN9gSCWXy2BRf37
+ PtgEYr2edZXEEeKDuwZKms5tjKTZdVdj7hAArUWVqvxFBP2eRnQKQFDvumOoEASKtbet
+ PVm0iOEycQK2EJ3Gs7J20ZrOfpMy4lFfifrHhaWVGxSTz1XDnMc+uBnPGr95BtZKSnhD
+ 7jOw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVC/ozsGUsKFGz1PxiwWxVqQiczwU/xF5qSX3lC1NAuuTepTB+zGMJpWL+9K8MtlkoFKl0m/fif0/qs@nongnu.org
+X-Gm-Message-State: AOJu0Yw0VngulXDxgjs5HaLDY5Hx8Eurhh99Ek+GLbcW11PqouW9x1Y8
+ 0hXA0RfuxyqEH55tJ23yls5Gi+mMI50l5EARhW5VOJN/ujgcGKcyM9TwdcVcvzy1FXVs4X7S2+h
+ N7nNtAXw20+u/wR6+Mv+54LP7ya5+uaEUHQNixpX8Qg==
+X-Gm-Gg: AZuq6aKEuBnzPVSg5qFGmSkQlYs5xVgsuNN0wSRTPxSRi0mMd5cJeWCpWik4wRqPt1N
+ jna/lAa3n8pWJfpOzqBL+Iw/j7F3CIRgvwiqssVQVIeQSxJGXqJ5raykQ8sPDVAQgcNbQ3Yv4bE
+ HlLvgIkBmQu+Zu2JnoZI0hoSdoTwISa7py/BD3CQjEU39ktRn63MIC/u0pCflB4ChcPYMKWF5os
+ 6Eg/i8ihM/BwhUi3iEnjQ9qjOb33aYA0T1j5pzv9ms9cDQhGYD3FzLpJewK9TjhMtCF99kqHRln
+ UpDk
+X-Received: by 2002:a05:690c:e05:b0:788:b84:d4f9 with SMTP id
+ 00721157ae682-794399f84famr18964537b3.57.1769169526071; Fri, 23 Jan 2026
+ 03:58:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: sao7lPK0zXx8CHzs8tqZEJzgDjWp33WR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTIzMDA5MiBTYWx0ZWRfX5Brmw5EqN4xp
- TMSyCLfJkCFdDyhL73pz50gV12mZe1wXeGPJfQQrz9BWzIv3n6beZR0tvsgAPV0dNu7/Pvnw/0l
- CZEPs6U+xZrF5Klbw/Cv8fxkdqO/Hg3CGZUeZeYpnv553iIZNan+sMS00SDbfgRwNDfthWQ3KQB
- 4UVxJ0305UHnSbvzKbeLhbIVa/i/y37DBx/Zs6Vw7phMGBnzfb3IWJAa0v4ZlJ52VyN3B6L6QsV
- ajMM+bAUKkn8HigJGJ3FM6pLK56leyUNTgZoGEHoM3UzlJE7QA3lqzU3i9QFGlN+HkeuhB3nSwc
- KMhoHF72Zd06hBmxzlGGAxodsPlERArbyYgYj0lFmo5WSWf6/e9GybxHw480McmQIeu1K2VGo2D
- Skeqd4+7U9RI6xKHm8eErYXJB7xPizKBqevSuMUpaHmd+nejj09R7Az0pH62cYe0U2/OOP35Hnz
- sYKQH34ihrgCczBB5dw==
-X-Authority-Analysis: v=2.4 cv=J9SnLQnS c=1 sm=1 tr=0 ts=69735ed2 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=2jo1MQRKDEzzzhCldZQA:9
-X-Proofpoint-ORIG-GUID: sao7lPK0zXx8CHzs8tqZEJzgDjWp33WR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-23_02,2026-01-22_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 adultscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1011 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601230092
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260121175248.87649-1-skolothumtho@nvidia.com>
+ <4d1a883b-5465-45af-8dcc-eb905f552c29@redhat.com>
+ <20260123114149.000065c5@huawei.com>
+In-Reply-To: <20260123114149.000065c5@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 23 Jan 2026 11:58:33 +0000
+X-Gm-Features: AZwV_QgT8BYnogVp90DI71Fb6xW1aIXYZVtm1aHpBqsYXOGEvUr8F6wWkQX93Lc
+Message-ID: <CAFEAcA8RFqO-U5ayU2u=dNhjHCj=1mJiAv26QihfqNfqQVq1Lg@mail.gmail.com>
+Subject: Re: [PATCH v8 00/37] hw/arm/virt: Add support for user-creatable
+ accelerated SMMUv3
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org, 
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ jgg@nvidia.com, 
+ nicolinc@nvidia.com, ddutile@redhat.com, berrange@redhat.com, clg@redhat.com, 
+ alex@shazbot.org, nathanc@nvidia.com, mochs@nvidia.com, smostafa@google.com, 
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com, zhangfei.gao@linaro.org, 
+ zhenzhong.duan@intel.com, yi.l.liu@intel.com, kjaju@nvidia.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,215 +127,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support the subfunctions CPACF_KM_AES_128, CPACF_KM_AES_192
-and CPACF_KM_AES_256 for the cpacf km instruction.
+On Fri, 23 Jan 2026 at 11:41, Jonathan Cameron
+<jonathan.cameron@huawei.com> wrote:
+>
+> On Fri, 23 Jan 2026 08:55:18 +0100
+> Eric Auger <eric.auger@redhat.com> wrote:
+>
+> > Hi Peter, Richard,
+> >
+> > On 1/21/26 6:52 PM, Shameer Kolothum wrote:
+> > > Hi,
+> > >
+> > > Changes since v7:
+> > >  https://lore.kernel.org/qemu-devel/20260111195508.106943-1-skolothum=
+tho@nvidia.com/
+> > >  -Addressed comments and collected R-by and T-by tags. Thanks!.
+> > >  -Rebased to latest master.
+> > >  -Reworked PASID support patches (patch #34, #36).
+> > >
+> > > I think this series is in good shape now and mature enough for inclus=
+ion.
+> > >
+> > > Patch organization:
+> > >
+> > > 1=E2=80=9328: Enable accelerated SMMUv3 with features aligned to the =
+default QEMU
+> > > SMMUv3 implementation, including IORT RMR-based MSI support.
+> > >
+> > > 29=E2=80=9331: Add user-configurable options for RIL, ATS, and OAS fe=
+atures.
+> > >
+> > > 32=E2=80=9337: Add PASID support, including required VFIO changes.
+> > >
+> > > Please take a look and let me know your feedback.
+> >
+> > This big series collected R-b's and T-bs for all patches I think. Pleas=
+e
+> > could you consider pulling it?
+>
+> I definitely support getting this merged now.
+>
+> I'm seeing an indent snafu in patch 18 though which either Shameer needs
+> to tidy up in a v9 or it needs a bit of hand tweaking by the person
+> queuing this up for a pull request.
 
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
----
- target/s390x/gen-features.c      |   3 +
- target/s390x/tcg/cpacf.h         |   5 ++
- target/s390x/tcg/cpacf_aes.c     | 108 +++++++++++++++++++++++++++++++
- target/s390x/tcg/crypto_helper.c |  24 +++++++
- target/s390x/tcg/meson.build     |   1 +
- 5 files changed, 141 insertions(+)
- create mode 100644 target/s390x/tcg/cpacf_aes.c
+I can fix that up when I queue it into target-arm.next.
 
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 5cf5b92c37..a35d1fd2f9 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -921,6 +921,9 @@ static uint16_t qemu_MAX[] = {
-     S390_FEAT_KLMD_SHA_256,
-     S390_FEAT_KLMD_SHA_512,
-     S390_FEAT_PRNO_TRNG,
-+    S390_FEAT_KM_AES_128,
-+    S390_FEAT_KM_AES_192,
-+    S390_FEAT_KM_AES_256,
- };
- 
- /****** END FEATURE DEFS ******/
-diff --git a/target/s390x/tcg/cpacf.h b/target/s390x/tcg/cpacf.h
-index 79f05e1e14..06423abc00 100644
---- a/target/s390x/tcg/cpacf.h
-+++ b/target/s390x/tcg/cpacf.h
-@@ -16,4 +16,9 @@ int cpacf_sha256(CPUS390XState *env, uintptr_t ra, uint64_t param_addr,
- int cpacf_sha512(CPUS390XState *env, uintptr_t ra, uint64_t param_addr,
-                  uint64_t *message_reg, uint64_t *len_reg, uint32_t type);
- 
-+/* from crypto_aes.c */
-+int cpacf_aes_ecb(CPUS390XState *env, uintptr_t ra, uint64_t param_addr,
-+                  uint64_t *dst_ptr, uint64_t *src_ptr, uint64_t *src_len,
-+                  uint32_t type, uint8_t fc, uint8_t mod);
-+
- #endif
-diff --git a/target/s390x/tcg/cpacf_aes.c b/target/s390x/tcg/cpacf_aes.c
-new file mode 100644
-index 0000000000..6d234d8ce9
---- /dev/null
-+++ b/target/s390x/tcg/cpacf_aes.c
-@@ -0,0 +1,108 @@
-+/*
-+ *  s390 cpacf aes
-+ *
-+ *  Authors:
-+ *   Harald Freudenberger <freude@linux.ibm.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "s390x-internal.h"
-+#include "tcg_s390x.h"
-+#include "accel/tcg/cpu-ldst.h"
-+#include "crypto/aes.h"
-+#include "cpacf.h"
-+
-+static void aes_read_block(CPUS390XState *env, uint64_t addr,
-+                           uint8_t *a, uintptr_t ra)
-+{
-+    uint64_t _addr;
-+    int i;
-+
-+    for (i = 0; i < AES_BLOCK_SIZE; i++, addr += 1) {
-+        _addr = wrap_address(env, addr);
-+        a[i] = cpu_ldub_data_ra(env, _addr, ra);
-+    }
-+}
-+
-+static void aes_write_block(CPUS390XState *env, uint64_t addr,
-+                            uint8_t *a, uintptr_t ra)
-+{
-+    uint64_t _addr;
-+    int i;
-+
-+    for (i = 0; i < AES_BLOCK_SIZE; i++, addr += 1) {
-+        _addr = wrap_address(env, addr);
-+        cpu_stb_data_ra(env, _addr, a[i], ra);
-+    }
-+}
-+
-+int cpacf_aes_ecb(CPUS390XState *env, uintptr_t ra, uint64_t param_addr,
-+                  uint64_t *dst_ptr, uint64_t *src_ptr, uint64_t *src_len,
-+                  uint32_t type, uint8_t fc, uint8_t mod)
-+{
-+    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
-+    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
-+    uint64_t addr, len = *src_len, processed = 0;
-+    int i, keysize, data_reg_len = 64;
-+    uint8_t key[32];
-+    AES_KEY exkey;
-+
-+    g_assert(type == S390_FEAT_TYPE_KM);
-+    switch (fc) {
-+    case 0x12: /* CPACF_KM_AES_128 */
-+        keysize = 16;
-+        break;
-+    case 0x13: /* CPACF_KM_AES_192 */
-+        keysize = 24;
-+        break;
-+    case 0x14: /* CPACF_KM_AES_256 */
-+        keysize = 32;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    if (!(env->psw.mask & PSW_MASK_64)) {
-+        len = (uint32_t)len;
-+        data_reg_len = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
-+    }
-+
-+    /* length has to be properly aligned. */
-+    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
-+        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-+    }
-+
-+    /* fetch key from param block */
-+    for (i = 0; i < keysize; i++) {
-+        addr = wrap_address(env, param_addr + i);
-+        key[i] = cpu_ldub_data_ra(env, addr, ra);
-+    }
-+
-+    /* expand key */
-+    if (mod) {
-+        AES_set_decrypt_key(key, keysize * 8, &exkey);
-+    } else {
-+        AES_set_encrypt_key(key, keysize * 8, &exkey);
-+    }
-+
-+    /* process up to MAX_BLOCKS_PER_RUN aes blocks */
-+    for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) {
-+        aes_read_block(env, *src_ptr + processed, in, ra);
-+        if (mod) {
-+            AES_decrypt(in, out, &exkey);
-+        } else {
-+            AES_encrypt(in, out, &exkey);
-+        }
-+        aes_write_block(env, *dst_ptr + processed, out, ra);
-+        len -= AES_BLOCK_SIZE, processed += AES_BLOCK_SIZE;
-+    }
-+
-+    *src_ptr = deposit64(*src_ptr, 0, data_reg_len, *src_ptr + processed);
-+    *dst_ptr = deposit64(*dst_ptr, 0, data_reg_len, *dst_ptr + processed);
-+    *src_len -= processed;
-+
-+    return !len ? 0 : 3;
-+}
-diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
-index b69dbb61a6..dff119176e 100644
---- a/target/s390x/tcg/crypto_helper.c
-+++ b/target/s390x/tcg/crypto_helper.c
-@@ -87,6 +87,27 @@ static int cpacf_klmd(CPUS390XState *env, const uintptr_t ra,
-     return rc;
- }
- 
-+
-+static int cpacf_km(CPUS390XState *env, uintptr_t ra, uint32_t r1,
-+                    uint32_t r2, uint32_t r3, uint8_t fc, uint8_t mod)
-+{
-+    int rc = 0;
-+
-+    switch (fc) {
-+    case 0x12: /* CPACF_KM_AES_128 */
-+    case 0x13: /* CPACF_KM_AES_192 */
-+    case 0x14: /* CPACF_KM_AES_256 */
-+        rc = cpacf_aes_ecb(env, ra, env->regs[1],
-+                           &env->regs[r1], &env->regs[r2], &env->regs[r2 + 1],
-+                           S390_FEAT_TYPE_KM, fc, mod);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    return rc;
-+}
-+
- static int cpacf_ppno(CPUS390XState *env, uintptr_t ra,
-                       uint32_t r1, uint32_t r2, uint32_t r3, uint8_t fc)
- {
-@@ -151,6 +172,9 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-     case S390_FEAT_TYPE_PPNO:
-         rc = cpacf_ppno(env, ra, r1, r2, r3, fc);
-         break;
-+    case S390_FEAT_TYPE_KM:
-+        rc = cpacf_km(env, ra, r1, r2, r3, fc, mod);
-+        break;
-     default:
-         g_assert_not_reached();
-     }
-diff --git a/target/s390x/tcg/meson.build b/target/s390x/tcg/meson.build
-index 4115f4c704..da948471ea 100644
---- a/target/s390x/tcg/meson.build
-+++ b/target/s390x/tcg/meson.build
-@@ -1,5 +1,6 @@
- s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'cc_helper.c',
-+  'cpacf_aes.c',
-   'cpacf_sha256.c',
-   'cpacf_sha512.c',
-   'crypto_helper.c',
--- 
-2.43.0
+Thanks to everybody who helped with code review on this series:
+not having to do that myself has been a big help for my personal
+workload :-)
 
+-- PMM
 
