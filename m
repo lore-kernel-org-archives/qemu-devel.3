@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C517D778B1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E195D778B2
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 20:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjO91-0000NM-Ni; Fri, 23 Jan 2026 15:52:39 -0500
+	id 1vjO92-0000OT-C6; Fri, 23 Jan 2026 15:52:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjO8z-0000LR-Kx
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 15:52:37 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjO91-0000Mm-0F
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 15:52:39 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjO8x-0006wd-TW
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 15:52:37 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjO8z-0006x8-HX
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 15:52:38 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 4D81E600C4;
+ by sea.source.kernel.org (Postfix) with ESMTP id EF644400FA;
+ Fri, 23 Jan 2026 20:52:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649FEC19423;
  Fri, 23 Jan 2026 20:52:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8385EC4CEF1;
- Fri, 23 Jan 2026 20:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769201553;
- bh=TCmSDK3idDdMCekR47cWU1V2rwgmV/WCyeLE8hqdZDU=;
- h=From:To:Cc:Subject:Date:From;
- b=lmsM17jTJ9qAyjwHdQhAsBso4PEPvrYGfk7z0lDuuo9mA84QVoRlAo0PYX0+Bhtup
- YWtP3iaqDr9IzfZdPR5JsTS0JNWodQv94eQ2FCEXTVQrS3zoXyWr4wl0/2dyNynB1d
- +6+/XhayhddBn3jEWDu7rT4DYYYaAi8Z3V6iyLk/wsqf602asQ6ytG4FMkW4Mz0/Y6
- 6LxMbQf8+VeN9Uxl8YIezZjZOPkf5tLGHEVad9zEEMm/pHSTU7jSDleyML+wn/KLwO
- KvA55bvLNoGlSChJmLO+F8XNMOkLX1WFf6GYxC/a8mGmSWu+BBesnmk54ggRTipiFF
- Pu7DuDfn3JlbQ==
+ s=k20201202; t=1769201555;
+ bh=HqPNF33+yuQjENJAc4XJjvbKHOUTbEiw7SICOVHDfOc=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=XphwfxJMa/V50owd0o/8oA4qU6JvpxqpD1lgdimUllKrJ7luKnsGYE9P0mIAzh/sn
+ u8fgSbn+J1+VfzvhVF/HvTgo5usm9VmBteN+v+YAvKlCio+BKi6WUrjbZ0BgbANPjH
+ 1DJIbnEvC9o2DK8H5CCiYvm8sP+7YnCuVuNLpIrNe3dVLuUqmZ3JWXkVtYaA4zZNUe
+ 1OLGBbe66NoJzL9Cg7p3TwUondL+sWpjp2MLj4ap0gcFdpnf+lD4WIOnrsRl+jwSJl
+ MLJtKiRtSr9k5ErT3ff0BaWnH8fVBvTXcAzQVyia58zdBwJJc8gc0hj+d9S88J16wK
+ RhGqlmdvKvL3A==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  deller@gmx.de,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/11] Linux user for v11 patches
-Date: Fri, 23 Jan 2026 21:52:19 +0100
-Message-ID: <20260123205230.33541-1-deller@kernel.org>
+Subject: [PULL 01/11] linux-user: update statx emulation
+Date: Fri, 23 Jan 2026 21:52:20 +0100
+Message-ID: <20260123205230.33541-2-deller@kernel.org>
 X-Mailer: git-send-email 2.52.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260123205230.33541-1-deller@kernel.org>
+References: <20260123205230.33541-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -70,66 +71,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Andreas Schwab <schwab@suse.de>
 
-The following changes since commit 2339d0a1cfac6ecc667e6e062a593865c1541c35:
+Signed-off-by: Andreas Schwab <schwab@suse.de>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/syscall.c      | 3 +++
+ linux-user/syscall_defs.h | 6 +++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-  Merge tag 'hw-misc-20260120' of https://github.com/philmd/qemu into staging (2026-01-21 07:39:57 +1100)
-
-are available in the Git repository at:
-
-  https://github.com/hdeller/qemu-hppa.git tags/linux-user-for-v11-pull-request
-
-for you to fetch changes up to 3829bb3f187598501051b582053bed693aced988:
-
-  linux-user: Fix MADV_XXX constants on hppa target (2026-01-23 20:40:15 +0100)
-
-----------------------------------------------------------------
-linux-user: statx() syscall, termios2 support and futext() syscall fixes
-
-Please pull if no obvious breakages happen in the testsuite.
-
-Thanks!
-Helge
-
-----------------------------------------------------------------
-
-Andreas Schwab (1):
-  linux-user: update statx emulation
-
-Helge Deller (2):
-  linux-user: strace: Fix 5th argument of futex syscall
-  linux-user: Fix MADV_XXX constants on hppa target
-
-Icenowy Zheng (1):
-  linux-user: fixup termios2 related things on PowerPC
-
-Luca Bonissi (6):
-  linux-user: Add termios2 support
-  linux-user: Add termios2 support to alpha target
-  linux-user: Add termios2 support to hppa target
-  linux-user: Add termios2 support to mips target
-  linux-user: Add termios2 support to sh4 target
-  linux-user: Add termios2 support to sparc target
-
-Vivian Wang (1):
-  linux-user: Add missing termios baud rates
-
- linux-user/alpha/termbits.h   |  30 +++++
- linux-user/generic/termbits.h |   2 +-
- linux-user/hppa/termbits.h    |  45 +++++++-
- linux-user/ioctls.h           |   6 +
- linux-user/mips/termbits.h    |  35 +++++-
- linux-user/ppc/termbits.h     |   1 +
- linux-user/sh4/termbits.h     |  51 ++++++---
- linux-user/sparc/termbits.h   |  33 +++++-
- linux-user/strace.c           |  76 ++++++++++++-
- linux-user/syscall.c          | 199 ++++++++++++++++++++++++++++++----
- linux-user/syscall_defs.h     |   6 +-
- linux-user/syscall_types.h    |   3 +
- linux-user/user-internals.h   |   3 +
- 13 files changed, 447 insertions(+), 43 deletions(-)
-
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 3601715769..24046c7eeb 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -7882,6 +7882,9 @@ static inline abi_long host_to_target_statx(struct target_statx *host_stx,
+     __put_user(host_stx->stx_rdev_minor, &target_stx->stx_rdev_minor);
+     __put_user(host_stx->stx_dev_major, &target_stx->stx_dev_major);
+     __put_user(host_stx->stx_dev_minor, &target_stx->stx_dev_minor);
++    __put_user(host_stx->stx_mnt_id, &target_stx->stx_mnt_id);
++    __put_user(host_stx->stx_dio_mem_align, &target_stx->stx_dio_mem_align);
++    __put_user(host_stx->stx_dio_offset_align, &target_stx->stx_dio_offset_align);
+ 
+     unlock_user_struct(target_stx, target_addr, 1);
+ 
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index cd9ff709b8..6ae6e1fa13 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -2734,7 +2734,11 @@ struct target_statx {
+     abi_uint stx_dev_major; /* ID of device containing file [uncond] */
+     abi_uint stx_dev_minor;
+     /* 0x90 */
+-    abi_ullong __spare2[14]; /* Spare space for future expansion */
++    abi_ullong stx_mnt_id;
++    abi_uint stx_dio_mem_align;
++    abi_uint stx_dio_offset_align;
++    /* 0xa0 */
++    abi_ullong __spare2[12]; /* Spare space for future expansion */
+     /* 0x100 */
+ };
+ 
 -- 
 2.52.0
 
