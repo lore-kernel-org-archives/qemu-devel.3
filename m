@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D300D72347
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FBF6D72343
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 07:51:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjBwC-0002pj-Qd; Fri, 23 Jan 2026 02:50:36 -0500
+	id 1vjBwj-000343-Rk; Fri, 23 Jan 2026 02:51:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vjBw4-0002o6-No
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:50:29 -0500
+ id 1vjBwh-000323-Ba
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:51:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vjBw2-00026w-Pk
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:50:28 -0500
+ id 1vjBwd-00028d-Bp
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 02:51:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769154626;
+ s=mimecast20190719; t=1769154655;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=niKJoW42UvF6S3yHHY6MGGsXQgFqzv6Dc+f9b8Z2hno=;
- b=LGPCINBokpTAlJEKjpoK/3lJCug1wVZ/pXR6Q/D6NVfCoqJzpmjsIoQq4nUiLkKU84imO4
- kJKSDpwY3PHuS+9ZYig2myk+4lAsd2LA6Un/jawMnwWceLsvPXKIdGhu/MuL5YZ+B5oLx3
- TdY+mZPmz3Y7eu1RcGy7SKFzBbdpnpU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=K9uFDlOB6akmpvaB+Ebir83w/nTqZWsBLQJ6x98FQis=;
+ b=eY+6KGp8cmtWgoeLVmd7VtKG8h9aDdraEzeGFtf36c+tAtVBStakful0qwxK3xs9sDZsVH
+ 9Q6uK/1J07SvDRMUzzeKdowpGt1WKg6CkoM9PxzyIVrNKNONxn5or1p9H9WzMwUeYjE7Zj
+ SVfAYBl701XDOqzUwclnQzcIuMR6qZE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-zJjQEsjKM_6_eJV6z4m_Pw-1; Fri,
- 23 Jan 2026 02:50:23 -0500
-X-MC-Unique: zJjQEsjKM_6_eJV6z4m_Pw-1
-X-Mimecast-MFC-AGG-ID: zJjQEsjKM_6_eJV6z4m_Pw_1769154622
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-303-7dAnWZeJNySyk17-bfB1Qw-1; Fri,
+ 23 Jan 2026 02:50:52 -0500
+X-MC-Unique: 7dAnWZeJNySyk17-bfB1Qw-1
+X-Mimecast-MFC-AGG-ID: 7dAnWZeJNySyk17-bfB1Qw_1769154652
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9359C1956094; Fri, 23 Jan 2026 07:50:22 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 105F21955D93; Fri, 23 Jan 2026 07:50:52 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.5])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4D3941800993; Fri, 23 Jan 2026 07:50:20 +0000 (UTC)
+ id 7A37E1800999; Fri, 23 Jan 2026 07:50:50 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 05/37] qemu-options.hx: clarify default audio backend selection
-Date: Fri, 23 Jan 2026 11:49:08 +0400
-Message-ID: <20260123074945.2563196-6-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Subject: [PATCH 10/37] scripts/modinfo: remove trailing ;
+Date: Fri, 23 Jan 2026 11:49:13 +0400
+Message-ID: <20260123074945.2563196-11-marcandre.lureau@redhat.com>
 In-Reply-To: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
 References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -91,49 +92,22 @@ From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- qemu-options.hx | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ scripts/modinfo-generate.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 455b8be8903..732934a6fa8 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -896,11 +896,16 @@ DEF("audiodev", HAS_ARG, QEMU_OPTION_audiodev,
-     QEMU_ARCH_ALL)
- SRST
- ``-audiodev [driver=]driver,id=id[,prop[=value][,...]]``
--    Adds a new audio backend driver identified by id. There are global
--    and driver specific properties. Some values can be set differently
--    for input and output, they're marked with ``in|out.``. You can set
--    the input's property with ``in.prop`` and the output's property with
--    ``out.prop``. For example:
-+    Adds a new audio backend driver identified by id.
-+
-+    If no audio backend is specified, QEMU will attempt to select a
-+    default one. The ``-display`` option may influence which backend is
-+    selected.
-+
-+    There are global and driver specific properties. Some values can be
-+    set differently for input and output, they're marked with ``in|out.``.
-+    You can set the input's property with ``in.prop`` and the output's
-+    property with ``out.prop``. For example:
- 
-     ::
- 
-@@ -2172,8 +2177,11 @@ DEF("display", HAS_ARG, QEMU_OPTION_display,
-     , QEMU_ARCH_ALL)
- SRST
- ``-display type``
--    Select type of display to use. Use ``-display help`` to list the available
--    display types. Valid values for type are
-+    Select type of display to use. This may also influence the default
-+    audio backend selection.
-+
-+    Use ``-display help`` to list the available display types. Valid values
-+    for type are
- 
-     ``spice-app[,gl=on|off]``
-         Start QEMU as a Spice server and launch the default Spice client
+diff --git a/scripts/modinfo-generate.py b/scripts/modinfo-generate.py
+index 5a8abcae5d3..83ffa4a7c52 100644
+--- a/scripts/modinfo-generate.py
++++ b/scripts/modinfo-generate.py
+@@ -48,7 +48,7 @@ def generate(name: str, lines: list[str], enabled: set[str]) -> Optional[set[str
+             elif kind == 'opts':
+                 opts.append(data)
+             elif kind == 'arch':
+-                arch = data;
++                arch = data
+             elif kind == 'kconfig':
+                 # don't add a module which dependency is not enabled
+                 # in kconfig
 -- 
 2.52.0
 
