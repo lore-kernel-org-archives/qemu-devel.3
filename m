@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FD4AD74EDC
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 083FAD74EDE
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:11:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjIoN-0007wv-Rw; Fri, 23 Jan 2026 10:11:00 -0500
+	id 1vjIo6-0007es-9j; Fri, 23 Jan 2026 10:10:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInJ-000732-Ov
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:53 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1vjInR-00077s-C8
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:09 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInI-000347-7a
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:53 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-42fbc305914so2028193f8f.0
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:51 -0800 (PST)
+ id 1vjInO-00035q-CD
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:10:01 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-47f3b7ef761so16493615e9.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180991; x=1769785791; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769180996; x=1769785796; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Gs7ODs1UnR7WI5J2KyYg/zU1R/LCdmQqHDFDVqt5Yp0=;
- b=EFAhuKBY0WYsd9OOts51jcqf4NPifzzC15I4vwPrRX9p6N+8dU/6HJQM5Pzpedsucf
- FdkYjo8Omyg11InSC0eZDMv7D+2OrjH0qz9y72LxB62ipEnkbOaAPGx6VBu+Okf962UI
- fMqik4YVcpOUrru3iVbSFINvHsyNPnvTRKoN1HYZLYijfv3gOzGxP9/WE0fksJCt5FSn
- vSyb9JYWhLFUZgtwZrM+dtxCsRCiq6WfRusg1N0BLfvW6QLWa53hb1tB+Dmmhfs6Se7k
- C04kMxqq+ASoJxbhqTGXKpjzj2Q65qEWGFuq9piITfJlX9aASgiTWdB44ezwR+w95YVA
- XL9A==
+ :reply-to; bh=lT9cpKsejMrXAad2lZ8Jg34cGKKa9EKIzdv2dgEDJFo=;
+ b=aJTbYKhlv9av8OFfBIXQli/Efy0cyp+J8B72LiEfE/SgPDbhfFoVgmPKXRDv4vnNuR
+ Dq32cgjH0xlKRV/kxJQ5mWr9NItjBpQa9JhLL5/y7ZJm+rYj9FNkitKc6+5y7ZTyj19m
+ wCGpfdPgw20dJaQAPaFwBxrnHFjXm+Rijp3RmgaKZp0mszjQLgJW6TKLEn0aExb4eUDV
+ D3UKjfvDLDckPNgpVexLQPeKknrA9KlGM6LXvV2lZR5PeYdvGq9n5YkBpGc5r1Mx19kb
+ mX0mkDJhnDZGIDFmVAXzKIMEZ4X76+2ssFXHwluv4/ld7FQ4HwdZ8d7hODvtCZafsIPA
+ RpUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180991; x=1769785791;
+ d=1e100.net; s=20230601; t=1769180996; x=1769785796;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Gs7ODs1UnR7WI5J2KyYg/zU1R/LCdmQqHDFDVqt5Yp0=;
- b=JAs4e2NZxHnY7vZ9aHI/6Kz/G83olUMOz88Qm0xroWKi30IeN10RMa508Q3fnBcg7Q
- Z5hBaYZ4y14SpYAUjniyYQ6RmJJYkUvTN8FQkR25tQwQg7ISUXviJc495GU3Hlgb8mHC
- DxfjdUELpec9Nhzc7lHZbHg+kHXKWWjryGx0WgHBu6PCEAqbMAp/f0M1pb52TZvNQTF5
- XYvUPAaPksr1uC0lcLSG4UqlSiA/idmengR8QuN1RUEt6YlExkQFO5J+ufPljuMY6nUn
- NqDj8R9SCg/8oNqohcgGU16dbp7PKh663U9lm4Jp++zzDZV+PGKF6VEzuTxqQC5CUArJ
- 08KA==
-X-Gm-Message-State: AOJu0Yx8Dx690lnUujvhbsQJmqcNlw13JdNnHG+oLYL0s0Wd24UPf897
- 0X95Sxg41iLUHmocsXsyhUcl35KW+JBAjzj8bJWPzrISRJfXJWJA096lIt+HC/S2tAvhJYBLGPj
- lfqfypOs=
-X-Gm-Gg: AZuq6aItjVhvB9eCBdowPZjGomOdEgbh0MV4nD/oVXx1QUh5iju8eHft9KjPMwV9hj+
- UO67+ub5gJRwNjgqYzImD0xissH745tQMze6s6XJhpuujobJjxSl3bkHpv6GRMOWIkezi1PR5Fh
- +u8vrF0AJyNhdSoAHCVliMRWr9Hl0yFsJOVHu6uI9wWaKyOkI6s5fwVJok/PgV9XfGuLayF+vtw
- MQMsJ8if9ap74wT/6PCsVQT263cR9vlJIp7sGJQHKoUoAp1Wr4Wq4MTVeMRTv2ax0MdNxxvJ9u3
- fD2Hw3wx8OBKKFEjJG9zJ2zkXUUylUvuxxtg3M0+VHM//vh7nnl/YI9NwDWtbunXokJnFFhwK34
- ay3nnG6ojF83MJs0p5TPFtzeq36pOhCO3IDpiwRdPfkJHs+fp0ZMBB+kBOI5t7g0skvJWDGmHlA
- Se7tXdE8lSRzB5Z27GeMRe7nbvsjEmxk2X9m0caHu5GWqgJBPBDvjH
-X-Received: by 2002:a05:6000:2404:b0:435:9882:234e with SMTP id
- ffacd0b85a97d-435b161ffa3mr4872275f8f.59.1769180990654; 
- Fri, 23 Jan 2026 07:09:50 -0800 (PST)
+ bh=lT9cpKsejMrXAad2lZ8Jg34cGKKa9EKIzdv2dgEDJFo=;
+ b=wYYvrDqVrsWMlr/3YuEIa7qsjHuz+MohYb9UIURS7hA0LQOIYn3pYIukGG/WZTs74x
+ mcTVrkb3hYIc72zQWREbnAviZZeuvpzTgHGyRv90uUxD5nkVCZCueqWCbfX3DYzplBpk
+ PGsFQZncdA0n4f38QDhN3r/UXZ1M4O6bukn1qKAcIyWcL68slDeZfWxXisL90PmvvJk1
+ 1iPgW8s1PCebnm09lZwn7JL7gYrk/V2HyXCQUBlYWliX4g+vx0FLLMZMvrlOBnUIznaa
+ Ab6mS0ka77OyZcnQRgvJR8qULZ+1NOiwstWk2jxD3lup28fQinBrznXwdRF11uVD6A2G
+ 3Wew==
+X-Gm-Message-State: AOJu0YyLF9Qlg+a40SXMysJ1JooMeuLEq+i3Y6HIALcAElZ7ZVX60scz
+ ypjnDWVO8OyK76vDsDM7OiyNNdsESb6ATkS2ZAg19WqTqcYwo/NOn/9O7XVdD2bp4P3rGd4rdRl
+ kH1bRt0Q=
+X-Gm-Gg: AZuq6aIv7BTNhiGsl9G9scOq9ukFInkBLkvlBmX9+Jr/eSl3Ldz89ynSIoir53bNAuR
+ kxEtZhJjZyKVqIfSkH9KwLGtBndso6iUKoZ8ZO58YhRRz7/4wGEfPFx8UalIxjhgeDKn3kABqHD
+ HSw/rsW7WRm3PwekbXmPqG/COWUZkeG3zQK8hfmI10mYHF5kASt6uktVDhS3Qtdhjc/Kg1Zd/JA
+ cZn/nyo5O0q16losuxQvVZwMtytefcF+WUux6aaJfDCd2+2j23ZTt9gKsHUEQ1omecuZfavfaDm
+ /PblN88Evgzgqjm0iggEW2zxkYrQBZnSdJoWC8bFVq56f2KEwbNwzF0DQBeB/lgT/TDsNJTM1ZL
+ aadI1VcNVSlxz3kyw/gGQ7uiM/kxoWP6Ineiahpnn7mmrfgy/CEBaybsCBKRSN0vELwTqzBkXQe
+ 2dAD0Ujs/7Br380WmoxbDKCqjLYPiSWVQ+WcV4ReiS1d5+2hWr+GJN
+X-Received: by 2002:a05:600c:8707:b0:480:3338:292d with SMTP id
+ 5b1f17b1804b1-4804c9b7c19mr55064795e9.31.1769180995834; 
+ Fri, 23 Jan 2026 07:09:55 -0800 (PST)
 Received: from mnementh.archaic.org.uk (mnementh.archaic.org.uk.
  [81.2.115.146]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.49
+ ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 07:09:50 -0800 (PST)
+ Fri, 23 Jan 2026 07:09:55 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/22] scripts/clean-includes: Give the args in git commit
- messages
-Date: Fri, 23 Jan 2026 15:09:27 +0000
-Message-ID: <20260123150941.1877768-10-peter.maydell@linaro.org>
+Subject: [PULL 14/22] all: Clean up includes
+Date: Fri, 23 Jan 2026 15:09:32 +0000
+Message-ID: <20260123150941.1877768-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260123150941.1877768-1-peter.maydell@linaro.org>
 References: <20260123150941.1877768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,59 +100,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If clean-includes is creating a git commit for its changes,
-currently it says only "created with scripts/clean-includes".
-Add the command line arguments the user passed us, as useful
-extra information.
+This commit was created with scripts/clean-includes:
+ ./scripts/clean-includes '--git' 'all' '--all'
+
+and manually edited to remove one change to hw/virtio/cbor-helpers.c.
+All these changes are header files that include osdep.h or some
+system header that osdep.h pulls in; they don't need to do this.
+
+All .c should include qemu/osdep.h first.  The script performs three
+related cleanups:
+
+* Ensure .c files include qemu/osdep.h first.
+* Including it in a .h is redundant, since the .c  already includes
+  it.  Drop such inclusions.
+* Likewise, including headers qemu/osdep.h includes is redundant.
+  Drop these, too.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-id: 20260116124005.925382-6-peter.maydell@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260116125830.926296-5-peter.maydell@linaro.org
 ---
- scripts/clean-includes | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ hw/scsi/lasi_ncr710.h          | 1 -
+ hw/scsi/ncr53c710.h            | 1 -
+ include/hw/core/loader.h       | 1 -
+ include/hw/i386/tdvf.h         | 1 -
+ include/hw/ppc/spapr_fadump.h  | 1 -
+ include/hw/riscv/iommu.h       | 1 -
+ include/system/accel-irq.h     | 1 -
+ linux-user/alpha/target_proc.h | 1 -
+ qga/commands-windows-ssh.h     | 1 -
+ qga/vss-win32/vss-debug.h      | 1 -
+ target/i386/kvm/vmsr_energy.h  | 2 --
+ 11 files changed, 12 deletions(-)
 
-diff --git a/scripts/clean-includes b/scripts/clean-includes
-index a45421d2ff..064e532037 100755
---- a/scripts/clean-includes
-+++ b/scripts/clean-includes
-@@ -42,6 +42,26 @@
- GIT=no
- DUPHEAD=no
+diff --git a/hw/scsi/lasi_ncr710.h b/hw/scsi/lasi_ncr710.h
+index 99be001fc3..450fb7e1c3 100644
+--- a/hw/scsi/lasi_ncr710.h
++++ b/hw/scsi/lasi_ncr710.h
+@@ -15,7 +15,6 @@
+ #define HW_LASI_NCR710_H
  
-+# Save the original arguments in case we want to put them in
-+# a git commit message, quoted for the shell so that we handle
-+# args with spaces/metacharacters correctly.
-+# The quote_sh() function is the same one we use in configure.
-+
-+quote_sh() {
-+    printf "%s" "$1" | sed "s,','\\\\'',g; s,.*,'&',"
-+}
-+
-+quote_args() {
-+    while [ $# -gt 0 ]; do
-+        printf "%s" "$(quote_sh "$1")"
-+        shift
-+        if [ $# -gt 0 ]; then
-+            printf " "
-+        fi
-+    done
-+}
-+
-+QUOTEDARGS="$(quote_args "$@")"
+ #include "hw/core/sysbus.h"
+-#include "qemu/osdep.h"
+ #include "exec/memattrs.h"
+ #include "hw/scsi/scsi.h"
+ #include "hw/scsi/ncr53c710.h"
+diff --git a/hw/scsi/ncr53c710.h b/hw/scsi/ncr53c710.h
+index a8dc92f4ef..00b6a01577 100644
+--- a/hw/scsi/ncr53c710.h
++++ b/hw/scsi/ncr53c710.h
+@@ -15,7 +15,6 @@
+ #ifndef HW_NCR53C710_H
+ #define HW_NCR53C710_H
  
- while true
- do
-@@ -198,7 +218,8 @@ if [ "$GIT" = "yes" ]; then
-     git commit --signoff -F - <<EOF
- $GITSUBJ: Clean up includes
+-#include "qemu/osdep.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/scsi/scsi.h"
+ #include "qemu/fifo8.h"
+diff --git a/include/hw/core/loader.h b/include/hw/core/loader.h
+index dd22cbb5e8..d9431e8a8d 100644
+--- a/include/hw/core/loader.h
++++ b/include/hw/core/loader.h
+@@ -1,7 +1,6 @@
+ #ifndef LOADER_H
+ #define LOADER_H
+ #include "hw/nvram/fw_cfg.h"
+-#include "qemu/typedefs.h"
  
--This commit was created with scripts/clean-includes.
-+This commit was created with scripts/clean-includes:
-+ ./scripts/clean-includes $QUOTEDARGS
+ /* loader.c */
+ /**
+diff --git a/include/hw/i386/tdvf.h b/include/hw/i386/tdvf.h
+index e75c8d1acc..4d7362ad65 100644
+--- a/include/hw/i386/tdvf.h
++++ b/include/hw/i386/tdvf.h
+@@ -9,7 +9,6 @@
+ #ifndef HW_I386_TDVF_H
+ #define HW_I386_TDVF_H
  
- All .c should include qemu/osdep.h first.  The script performs three
- related cleanups:
+-#include "qemu/osdep.h"
+ 
+ #define TDVF_SECTION_TYPE_BFV               0
+ #define TDVF_SECTION_TYPE_CFV               1
+diff --git a/include/hw/ppc/spapr_fadump.h b/include/hw/ppc/spapr_fadump.h
+index fde2830e94..82681fb9a6 100644
+--- a/include/hw/ppc/spapr_fadump.h
++++ b/include/hw/ppc/spapr_fadump.h
+@@ -6,7 +6,6 @@
+ #ifndef PPC_SPAPR_FADUMP_H
+ #define PPC_SPAPR_FADUMP_H
+ 
+-#include "qemu/osdep.h"
+ #include "cpu.h"
+ 
+ /* Fadump commands */
+diff --git a/include/hw/riscv/iommu.h b/include/hw/riscv/iommu.h
+index 25f1a8b159..999384fc89 100644
+--- a/include/hw/riscv/iommu.h
++++ b/include/hw/riscv/iommu.h
+@@ -19,7 +19,6 @@
+ #ifndef HW_RISCV_IOMMU_H
+ #define HW_RISCV_IOMMU_H
+ 
+-#include "qemu/osdep.h"
+ #include "qom/object.h"
+ 
+ #define TYPE_RISCV_IOMMU "riscv-iommu"
+diff --git a/include/system/accel-irq.h b/include/system/accel-irq.h
+index 671fb7dfdb..a2caa06f54 100644
+--- a/include/system/accel-irq.h
++++ b/include/system/accel-irq.h
+@@ -12,7 +12,6 @@
+ #ifndef SYSTEM_ACCEL_IRQ_H
+ #define SYSTEM_ACCEL_IRQ_H
+ #include "hw/pci/msi.h"
+-#include "qemu/osdep.h"
+ #include "system/kvm.h"
+ #include "system/mshv.h"
+ 
+diff --git a/linux-user/alpha/target_proc.h b/linux-user/alpha/target_proc.h
+index 6b491ffa3a..71949d380d 100644
+--- a/linux-user/alpha/target_proc.h
++++ b/linux-user/alpha/target_proc.h
+@@ -6,7 +6,6 @@
+ #ifndef ALPHA_TARGET_PROC_H
+ #define ALPHA_TARGET_PROC_H
+ 
+-#include "qemu/osdep.h"
+ #include "target/alpha/cpu.h"
+ 
+ static uint8_t alpha_phys_addr_space_bits(CPUAlphaState *env)
+diff --git a/qga/commands-windows-ssh.h b/qga/commands-windows-ssh.h
+index 40ac67c4d9..c35d945a89 100644
+--- a/qga/commands-windows-ssh.h
++++ b/qga/commands-windows-ssh.h
+@@ -11,7 +11,6 @@
+  */
+ 
+ #include <glib/gstrfuncs.h>
+-#include <stdbool.h>
+ typedef struct WindowsUserInfo {
+     char *sshDirectory;
+     char *authorizedKeyFile;
+diff --git a/qga/vss-win32/vss-debug.h b/qga/vss-win32/vss-debug.h
+index 7800457392..506cee6698 100644
+--- a/qga/vss-win32/vss-debug.h
++++ b/qga/vss-win32/vss-debug.h
+@@ -10,7 +10,6 @@
+  * See the COPYING file in the top-level directory.
+  */
+ 
+-#include "qemu/osdep.h"
+ #include <vss-handles.h>
+ 
+ #ifndef VSS_DEBUG_H
+diff --git a/target/i386/kvm/vmsr_energy.h b/target/i386/kvm/vmsr_energy.h
+index 151bcbd642..415d64f51c 100644
+--- a/target/i386/kvm/vmsr_energy.h
++++ b/target/i386/kvm/vmsr_energy.h
+@@ -14,8 +14,6 @@
+ #ifndef VMSR_ENERGY_H
+ #define VMSR_ENERGY_H
+ 
+-#include <stdint.h>
+-#include "qemu/osdep.h"
+ #include "io/channel-socket.h"
+ #include "hw/i386/topology.h"
+ 
 -- 
 2.47.3
 
