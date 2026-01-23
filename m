@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04D04D74ED4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A00ED74ED5
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 13:37:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjHKm-0007rY-NT; Fri, 23 Jan 2026 08:36:20 -0500
+	id 1vjHKl-0007nj-5C; Fri, 23 Jan 2026 08:36:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vjHKc-0007jV-Ni
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:36:11 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1vjHKY-0007gI-NW
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:36:08 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vjHKa-0004iM-Cc
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:36:10 -0500
+ id 1vjHKT-0004fw-Kw
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 08:36:04 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 9D6B3438D8;
- Fri, 23 Jan 2026 13:36:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6A3C19423;
- Fri, 23 Jan 2026 13:36:06 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id E76B260135;
+ Fri, 23 Jan 2026 13:36:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75928C4CEF1;
+ Fri, 23 Jan 2026 13:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769175366;
- bh=lxhwQKIzlrcBI4tFlx1FpaWq7baQO6Do2qGzPtxkNXc=;
+ s=k20201202; t=1769175360;
+ bh=Hq0k9nQ+3YTLX7MeUDpF/YKj4jUzRbJabQ9UNor/cDk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=BP5DRs0IFROwchpOHK53AIvkYFlUugHqFfqJLpi4JcpO0doq0IoCqEeJZC8iknWWZ
- dxhI8m48qRw6hCabzV2bAk9U7rqoF6MP2pG/LAfEFtUn43XTXLiDPTAZbBkv0TQgyt
- 9ssnZgTFCLCgRpzGVWD8W1xdKRIIEHs+ciHhIM8qfOEohE+w8CAdeOPvYbjcxNvc3X
- sgFg3OOsl+Or2d6pdE+9YfRauI5Uh3Mo+0C9oFacuu1/xtWl82+A2zWvmPtWPIo74Q
- HPTSCsWHPNs9m7nYGz7bEhJF+ruSbM8bwAnyXM3nyhrz7oA5IOblq5oSIU67AUKM0A
- iQfIBfTRxzTQA==
+ b=j9ME++wJvVqNwfjVKaQLl8aGAM6scEfZf/Xeg6QeSuI//eZQOvfs5TnrJ7sBl/9NL
+ YXqjBADk3ClWPygk2pfsflXoPb5Ml8v8cZD8Q2E7/YfzQlO7YUGJCyKhkJf0+kZz9N
+ 4JU1zj47XeZELPCv8u0iUuoJuDL3iDujSoDSOUZ0ZkJTRDT3F5Sm4thQHPQTxTRVxJ
+ 2vFQR/QIcS1f/w64FRWbdqbBYwGm5mVc8qHOPqb4V6KraDWkmGdAeD8QVvI0M3H4BF
+ RN8B8EGsaW83KV+qfi35tB9kQLlQWQxpfNBwFnGUq0vZ9ax7GnkHebEAFnbqVPTG2w
+ u/q4KFxYKDX8A==
 Received: from localhost ([::1]) by mail.kernel.org with esmtp (Exim 4.99.1)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1vjHKV-000000063Kt-2Ax1; Fri, 23 Jan 2026 14:36:04 +0100
+ id 1vjHKP-000000063KX-1l7q; Fri, 23 Jan 2026 14:35:58 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, qemu-devel@nongnu.org,
  Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
  Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PATCH v2 13/13] scripts/ghes_inject: improve help message
-Date: Fri, 23 Jan 2026 14:35:27 +0100
-Message-ID: <56c9b3c8010ecc446d2ed2fd9fd5b5337c1f89c3.1769175070.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v2 11/13] scripts/ghes_inject: add a raw error inject command
+Date: Fri, 23 Jan 2026 14:35:25 +0100
+Message-ID: <8a8d1f55bc592c8f367fe948d4954dfefe59253d.1769175070.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <cover.1769175069.git.mchehab+huawei@kernel.org>
 References: <cover.1769175069.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -76,169 +75,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a one-liner help message for each type of error inject
-command, and use raw formatter to keep line breaks.
+Add a command to repeat a raw CPER record.
 
-While here, use a more uniform language.
+This helps to reproduce some condition that happened before.
 
-With that, "ghes_inject -h" will now show:
-
-  usage: ghes_inject.py [options]
-
-  Handles ACPI GHESv2 error injection via the QEMU QMP interface.
-
-  It uses UEFI BIOS APEI features to generate GHES records, which helps to
-  test CPER and GHES drivers on the guest OS and see how user‑space
-  applications on that guest handle such errors.
-
-  positional arguments:
-    {arm,pci-bus,fuzzy-test,fuzzy,raw-error,raw}
-      arm                 Inject an ARM processor error CPER, compatible with
-                          UEFI 2.9A Errata.
-      pci-bus             Inject a PCI/PCI-X bus error CPER
-      fuzzy-test (fuzzy)  Inject fuzzy test CPER packets
-      raw-error (raw)     Inject CPER records from previously recorded ones.
-
-  options:
-    -h, --help            show this help message and exit
-
-  QEMU QMP socket options:
-    -H, --host HOST       host name (default: localhost)
-    -P, --port PORT       TCP port number (default: 4445)
-    -d, --debug           enable debug output (default: False)
+The input format of the file is identical to the hexadecimal
+dump generated by ghes_inject tool.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 ---
- scripts/arm_processor_error.py |  6 ++++--
- scripts/fuzzy_error.py         |  4 +++-
- scripts/ghes_inject.py         | 18 +++++++++---------
- scripts/pci_bus_error.py       |  4 +++-
- scripts/raw_error.py           |  6 +++---
- 5 files changed, 22 insertions(+), 16 deletions(-)
+ MAINTAINERS            |   1 +
+ scripts/ghes_inject.py |   2 +
+ scripts/raw_error.py   | 175 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 178 insertions(+)
+ create mode 100644 scripts/raw_error.py
 
-diff --git a/scripts/arm_processor_error.py b/scripts/arm_processor_error.py
-index d9845adb0c0a..597382031ab8 100644
---- a/scripts/arm_processor_error.py
-+++ b/scripts/arm_processor_error.py
-@@ -122,7 +122,7 @@ class ArmProcessorEinj:
-     """
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 967aafc35a92..2e48df7abfb5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2231,6 +2231,7 @@ F: scripts/arm_processor_error.py
+ F: scripts/fuzzy_error.py
+ F: scripts/pci_bus_error.py
+ F: scripts/qmp_helper.py
++F: scripts/raw_error.py
  
-     DESC = """
--    Generates an ARM processor error CPER, compatible with
-+    Inject an ARM processor error CPER, compatible with
-     UEFI 2.9A Errata.
-     """
- 
-@@ -169,7 +169,9 @@ def __init__(self, subparsers):
- 
-         self.data = bytearray()
- 
--        parser = subparsers.add_parser("arm", description=self.DESC)
-+        parser = subparsers.add_parser("arm",
-+                                       help=self.DESC,
-+                                       description=self.DESC)
- 
-         arm_valid_bits = ",".join(self.arm_valid_bits.keys())
-         flags = ",".join(self.pei_flags.keys())
-diff --git a/scripts/fuzzy_error.py b/scripts/fuzzy_error.py
-index 9f80abb72319..3ddb90f743a1 100644
---- a/scripts/fuzzy_error.py
-+++ b/scripts/fuzzy_error.py
-@@ -121,8 +121,10 @@ def __init__(self, subparsers):
-             },
-         }
- 
-+        DESC = "Inject fuzzy test CPER packets"
-+
-         parser = subparsers.add_parser("fuzzy-test", aliases=['fuzzy'],
--                                       description="Inject a fuzzy test CPER",
-+                                       help=DESC, description=DESC,
-                                        formatter_class=argparse.RawTextHelpFormatter)
-         g_fuzzy = parser.add_argument_group("Fuzz testing error inject")
- 
+ ppc4xx
+ L: qemu-ppc@nongnu.org
 diff --git a/scripts/ghes_inject.py b/scripts/ghes_inject.py
-index dd2b34a64f15..21cdea774f17 100755
+index bcbfffc586e1..63a8b28002e7 100755
 --- a/scripts/ghes_inject.py
 +++ b/scripts/ghes_inject.py
-@@ -17,28 +17,28 @@
- from raw_error import RawError
+@@ -14,6 +14,7 @@
+ from arm_processor_error import ArmProcessorEinj
+ from pci_bus_error import PciBusError
+ from fuzzy_error import FuzzyError
++from raw_error import RawError
  
  EINJ_DESC = """
--Handle ACPI GHESv2 error injection logic QEMU QMP interface.
-+Handles ACPI GHESv2 error injection via the QEMU QMP interface.
+ Handle ACPI GHESv2 error injection logic QEMU QMP interface.
+@@ -44,6 +45,7 @@ def main():
+     ArmProcessorEinj(subparsers)
+     PciBusError(subparsers)
+     FuzzyError(subparsers)
++    RawError(subparsers)
  
--It allows using UEFI BIOS EINJ features to generate GHES records.
--
--It helps testing CPER and GHES drivers at the guest OS and how
--userspace applications at the guest handle them.
-+It uses UEFI BIOS APEI features to generate GHES records, which helps to
-+test CPER and GHES drivers on the guest OS and see how user‑space
-+applications on that guest handle such errors.
- """
- 
- def main():
-     """Main program"""
- 
-     # Main parser - handle generic args like QEMU QMP TCP socket options
--    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-                                      usage="%(prog)s [options]",
-                                      description=EINJ_DESC)
- 
-     g_options = parser.add_argument_group("QEMU QMP socket options")
-     g_options.add_argument("-H", "--host", default="localhost", type=str,
--                           help="host name")
-+                           help="host name (default: %(default)s)")
-     g_options.add_argument("-P", "--port", default=4445, type=int,
--                           help="TCP port number")
--    g_options.add_argument('-d', '--debug', action='store_true')
-+                           help="TCP port number (default: %(default)s)")
-+    g_options.add_argument('-d', '--debug', action='store_true',
-+                           help="enable debug output (default: %(default)s)")
- 
-     subparsers = parser.add_subparsers()
- 
-diff --git a/scripts/pci_bus_error.py b/scripts/pci_bus_error.py
-index 5abfdf11c868..87d1f7c95dd2 100644
---- a/scripts/pci_bus_error.py
-+++ b/scripts/pci_bus_error.py
-@@ -35,8 +35,10 @@ def __init__(self, subparsers):
- 
-         self.data = bytearray()
- 
-+        DESC = "Inject a PCI/PCI-X bus error CPER"
-+
-         parser = subparsers.add_parser("pci-bus",
--                                       description="Generate PCI/PCI-X bus error CPER")
-+                                       help=DESC, description=DESC)
-         g_pci = parser.add_argument_group("PCI/PCI-X bus error")
- 
-         valid_bits = ",".join(self.valid_bits.keys())
+     args = parser.parse_args()
+     if "func" in args:
 diff --git a/scripts/raw_error.py b/scripts/raw_error.py
-index f5e77bdfcead..1e9eb1bcf15b 100644
---- a/scripts/raw_error.py
+new file mode 100644
+index 000000000000..f5e77bdfcead
+--- /dev/null
 +++ b/scripts/raw_error.py
-@@ -21,8 +21,8 @@ class RawError:
- 
-     SCRIPT_NAME = sys.argv[0]
- 
--    HELP=f"""
--    Inject a CPER record from a previously recorded one.
-+    HELP="Inject CPER records from previously recorded ones."
-+    DESC=HELP + f"""
- 
-     One or more CPER records can be recorded. The records to be
-     injected are read from an specified file or from stdin and should
-@@ -58,7 +58,7 @@ def __init__(self, subparsers):
-         self.size = 0
- 
-         parser = subparsers.add_parser("raw-error",  aliases=['raw'],
--                                       description=self.HELP,
-+                                       help=self.HELP, description=self.DESC,
-                                        formatter_class=argparse.RawTextHelpFormatter)
- 
-         parser.add_argument("-f", "--file",
+@@ -0,0 +1,175 @@
++#!/usr/bin/env python3
++#
++# pylint: disable=C0114,R0903,R0912,R0914,R0915,R1732
++# SPDX-License-Identifier: GPL-2.0
++#
++# Copyright (C) 2024 Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
++
++import argparse
++import os
++import re
++import sys
++
++from time import sleep
++
++from qmp_helper import qmp, guid
++
++class RawError:
++    """
++    Injects errors from a file containing raw data
++    """
++
++    SCRIPT_NAME = sys.argv[0]
++
++    HELP=f"""
++    Inject a CPER record from a previously recorded one.
++
++    One or more CPER records can be recorded. The records to be
++    injected are read from an specified file or from stdin and should
++    have the format produced by this script when using --debug, e.g.:
++
++    GUID: e19e3d16-bc11-11e4-9caa-c2051d5d46b0
++    CPER:
++        00000000  04 00 00 00 02 00 01 00 88 00 00 00 00 00 00 00   ................
++        00000010  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
++        00000020  00 00 00 00 00 00 00 00 00 20 05 00 08 02 00 03   ......... ......
++        00000030  ff 0f 46 d6 80 00 00 00 ef be ad de 00 00 00 00   ..F.............
++        00000040  ad 0b ba ab 00 00 00 00 00 20 04 00 04 01 00 03   ......... ......
++        00000050  7f 00 54 00 00 00 00 00 ef be ad de 00 00 00 00   ..T.............
++        00000060  ad 0b ba ab 00 00 00 00 00 00 05 00 18 00 00 00   ................
++        00000070  ef be ad de 00 00 00 00 ab ba ba ab 00 00 00 00   ................
++        00000080  00 00 00 00 00 00 00 00                           ........
++
++    Multiple such records can be used. On such case, a delay will
++    be introduced betewen them.
++
++    All lines that can't be parsed will be silently ignored.
++    As such, the output of this help can be piped to the raw-error
++    generator with:
++
++        {SCRIPT_NAME} -d raw-error -h | {SCRIPT_NAME} -d raw-error
++    """
++
++    def __init__(self, subparsers):
++        """Initialize the error injection class and add subparser"""
++
++        self.payload = bytearray()
++        self.inj_type = None
++        self.size = 0
++
++        parser = subparsers.add_parser("raw-error",  aliases=['raw'],
++                                       description=self.HELP,
++                                       formatter_class=argparse.RawTextHelpFormatter)
++
++        parser.add_argument("-f", "--file",
++                            help="File name with the raw error data. '-' for stdin")
++        parser.add_argument("-d", "--delay", type=lambda x: int(x, 0),
++                            default=1,
++                            help="Specify a delay between multiple CPER. Default=1")
++
++        parser.set_defaults(func=self.send_cper)
++
++    def send_cper(self, args):
++        """Parse subcommand arguments and send a CPER via QMP"""
++
++        if not args.file:
++            args.file='-'
++
++        is_guid = re.compile(r"^\s*guid:\s*(\w+\-\w+\-\w+\-\w+-\w+)", re.I)
++        is_gesb = re.compile(r"^Generic Error Status Block.*:", re.I)
++        is_gede = re.compile(r"^Generic Error Data Entry.*:", re.I)
++        is_raw_data = re.compile(r"^Raw data.*:", re.I)
++        is_payload = re.compile(r"^(Payload|CPER).*:", re.I)
++        is_hexdump = re.compile(r"^(\s*[\da-f]........\s+)(.*)\s\s+.*", re.I)
++        is_hex = re.compile(r"\b([\da-f].)\b", re.I)
++
++        cper = []
++
++        if args.file == "-":
++            fp = sys.stdin
++            if os.isatty(0):
++                print("Using stdin. Press CTRL-D to finish input.")
++            else:
++                print("Reading from stdin pipe")
++        else:
++            try:
++                fp = open(args.file, encoding="utf-8")
++            except FileNotFoundError:
++                sys.exit('File Not Found')
++
++        guid_obj = None
++        gebs = bytearray()
++        gede = bytearray()
++        raw_data = bytearray()
++        payload = bytearray()
++        ln_used = 0
++        ln = 0
++
++        cur = payload
++
++        for ln, line in enumerate(fp):
++            if match := is_guid.search(line):
++                if guid_obj and payload:
++                    cper.append({"guid": guid_obj, "raw-data": payload})
++                    guid_obj = None
++                    payload = bytearray()
++                    gebs = bytearray()
++                    gede = bytearray()
++
++                guid_obj = guid.UUID(match.group(1))
++
++                ln_used += 1
++                continue
++
++            if match := is_gesb.match(line):
++                cur = gebs
++                continue
++
++            if match := is_gede.match(line):
++                cur = gede
++                continue
++
++            if match := is_payload.match(line):
++                cur = payload
++                continue
++
++            if match := is_raw_data.match(line):
++                cur = raw_data
++                continue
++
++            new = is_hexdump.sub(r"\2", line)
++            if new != line:
++                if match := is_hex.findall(new):
++                    for m in match:
++                        cur.extend(bytes.fromhex(m))
++                    ln_used += 1
++                    continue
++                continue
++
++        if guid_obj and payload:
++            cper.append({"guid": guid_obj,
++                         "payload": payload,
++                         "gede": gede,
++                         "gebs": gebs,
++                         "raw-data": raw_data})
++
++        print(f"{ln} lines read, {ln - ln_used} lines ignored.")
++
++        if fp is not sys.stdin:
++            fp.close()
++
++        qmp_cmd = qmp(args.host, args.port, args.debug)
++
++        if not cper:
++            sys.exit("Format of the file not recognized.")
++
++        for i, c in enumerate(cper):
++            if i:
++                sleep(args.delay)
++
++            ret = qmp_cmd.send_cper(c["guid"], c["payload"], gede=c["gede"],
++                                    gebs=c["gebs"], raw_data=c["raw-data"])
++            if not ret:
++                return ret
++
++        return True
 -- 
 2.52.0
 
