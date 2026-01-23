@@ -4,128 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9B2CD72352
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 08:49:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6002D72357
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 09:00:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjCmb-0005ra-CU; Fri, 23 Jan 2026 03:44:45 -0500
+	id 1vjD1B-0003lq-Jv; Fri, 23 Jan 2026 03:59:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vjCmZ-0005rA-Nu
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 03:44:43 -0500
-Received: from mail-qv1-xf2c.google.com ([2607:f8b0:4864:20::f2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vjCmY-0004sn-28
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 03:44:43 -0500
-Received: by mail-qv1-xf2c.google.com with SMTP id
- 6a1803df08f44-894723da7dfso35162946d6.1
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 00:44:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769157880; cv=none;
- d=google.com; s=arc-20240605;
- b=N25mwiuUWZP5CQ1ZUBU/WbpfoVz9I4H+3VRBn8ehgxjtJwoTjAzMhzIOCmxPdxGejh
- RwLgGmEx59pa2TWK7ideHrbu8Dwo57CEF5SKCoWv46y9/tN5Rbx5iFe5gIaCUZqlI1bV
- ompi6vsi4BffOECcK4qaYj5PEh8IQ+gxsseU4fjS+mFo8M+RDms0imeEB2jMp2l+i5ct
- OSGSc7WpMAgGdcU3NHENYjI1k89HIFRJrVPV9HTSHCElcGQJJSWRZpQc0Tg4ITulgbtX
- ymY8qu2jH2XggslQdKV/gpG6PLM52hm70ZajtT6la4WmaYg9Kg2bL+qRQu9T+nZSrMhu
- 27OA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=q0ix+xmFBGS5x5j4yOBrivR5GZGMnHUrvI1gZx8ZGr4=;
- fh=2ek7+lne5rfb/XZ/rEQsybJjFQjXlCtfB2gP/hpHFw0=;
- b=U+654IhHkb2YSO2t0sNhyY00ze/BZzgMbwnBQBvrw3pc4yNXf2iAV7SB61CN+Y+p+f
- pt9nEDcALEwatPejlRUCo15A2El9TsxeY4S+3+g/kcVs1DIYDt/5rTd7dOZgFKi4x7vi
- TaNXysIUGa0wSUDrKPH5aNBxw2dwp/l6UZo4jjekHlIVwEbncvpgQTXTcwj3gIhb3xgL
- zTvI4rg57Cc/QdF0ht9Vivyfj9YIX0FxY3vHK/FSAWn9uiDRq+E7ZajOK+l24giJ+9S1
- DpO2eVjlVuXGBD072JJACGfX/6PeRPXrPvGpFlq80VkeUmSopG3P5u/59M7zdR3o9NC1
- qaPQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769157880; x=1769762680; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q0ix+xmFBGS5x5j4yOBrivR5GZGMnHUrvI1gZx8ZGr4=;
- b=AMITazmtD4eTcf8ZC29pAKh3+Sll9y+S0iRmB+HidmhkaPmSgyR0EkbF0myFIvBo6v
- FD7LJY3BRjNa1afnhBGCtIGbRB1ikk6aqF2XOTAyFvyC2yvcGntgHRZFKn9U189tFqBB
- MEWt0j3NhgfqERWU0LGSUQN3N6Kw0RnUqWYKJQBrSE1V9rk0omHup4sCJEa+m1DN7ANd
- jXrgze/6IwdVMOS2LI2wR+J43O9Rzlz7lg8GVm1DgMSFQtdv/zfXS0OSVdZjtsxf8pLs
- x6UTyAbUACbpB/3tkH81YxCoIwsSJ6FtMtCfBJfhOMgnOLaUUeMHc3D6MQHzIwjHowj2
- eSfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769157880; x=1769762680;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=q0ix+xmFBGS5x5j4yOBrivR5GZGMnHUrvI1gZx8ZGr4=;
- b=lFXdVK1lXgvwESh7pE33wIS7oKsxwxBAJofYQ4G9v34djjdGfnnZIHazPnPpLjFf/n
- kbhDF2ES2l7vIOaSUXm0si2rYtwSNnoLe94GPOTnQr3wX35m5bZGvoKNWHm09Xu4n0ZU
- HVWqNB9w8FuUjRewfziY7/Q28UvwkcfJ19JXkpeI1ei5whWMvmBFurXwbchWIXLd6gBD
- xEW9eTFxpIv/wlepIYFHBby38MoYhVQbSz4ZpSs34AMWqehu5/ZRNlsGlmFJV1pt97aU
- qUE/HFgAvDONT57hYHiYsAUfO3sBz5wQof2HsVaxBRJYO4CzuxvyYN7S2xxqVkwLAw5M
- FGKw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWHqZ9Do5TayijCg7cokkf7tx6KqTQep8Q7huiSkr5kV7oghWJZOCFIp6ENM3rqEiZp3H6tCV4M2r3s@nongnu.org
-X-Gm-Message-State: AOJu0Yyu2s8Z1Mw81/4RO2GCSXJmMr/3Z8vOy+stjGyQiNq0Z/mkncwM
- iitKvL+dkN64xwe3X2D4eUWFn8yJQJ5nYZEslriSnB050fGIDx2RInj9KyLdaxIlh+SjIpXizX/
- ryqAyMFbrJOY4LHfhoG2tUqxorfamqTQ=
-X-Gm-Gg: AZuq6aJbiero49peroxHTsDr8qoyLNRG4TQgDQ4KSYBiThFH26onK/yzgqy1UyLc5J2
- Vuh1LTPuAGkjg/IGjVJlIYfXPCqrv8Fb9FSTEWCKdLml8dCcXSsSQf81rhgd/8RpAQfeVYqygSJ
- Wmtx8X7Fzo/yceLvty3/kWrbaTIRAeVW/FCF5A0F4du+2asPGGULrbmbGBfiQmntCwsgrZViJ5K
- kwBdN+Dw9rDBXPUccIUDiCY7oW1K7cljW7ekpcshRF/Q+X60ACK2/lZi4yleTibU+vYLxRupxiy
- /EGX5jW2J7/89AX5Cbhj+ZGYS88=
-X-Received: by 2002:a05:622a:1a93:b0:501:498e:5c29 with SMTP id
- d75a77b69052e-502f77d4a37mr30458991cf.59.1769157880449; Fri, 23 Jan 2026
- 00:44:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vjD12-0003iz-5t
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 03:59:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vjD0w-000881-My
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 03:59:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769158770;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=oYsjFvTz/Xmwb4jexeDknAg9qP172YNbZjmLLVTfc1I=;
+ b=dgel5puZ7HS0OteAMbSRO9dcb3wzcHd9mXvc75oTCdwWC4H2Gy0SVI8Y1Rvj5NrlebY6rV
+ rY4+GM+OFUAugO0CCZDVKWpM4VGNMh9ycwsB0DF/lTc+PZvClSJLb72TCMJ57DtCX1xn3o
+ XefshdeaOQTxbqN6VNpHyvw07vq+1Xc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-182-94AHuVJDNpSHOXmloNY6jA-1; Fri,
+ 23 Jan 2026 03:59:28 -0500
+X-MC-Unique: 94AHuVJDNpSHOXmloNY6jA-1
+X-Mimecast-MFC-AGG-ID: 94AHuVJDNpSHOXmloNY6jA_1769158767
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6BF2718005BB; Fri, 23 Jan 2026 08:59:27 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2567D1958DC9; Fri, 23 Jan 2026 08:59:27 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 7545A21E692D; Fri, 23 Jan 2026 09:59:24 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
+ stefanha@redhat.com
+Subject: [PATCH] qdev-monitor: Fix qdev ID validation regression
+Date: Fri, 23 Jan 2026 09:59:24 +0100
+Message-ID: <20260123085924.1392134-1-armbru@redhat.com>
 MIME-Version: 1.0
-References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
- <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
- <CAJSP0QVQNExn01ipcu4KTQJrmnXGVmvFyKzXe5m9P3_jQwJ6cA@mail.gmail.com>
- <CAJSP0QW4bMO8-iYODO_6oaDn44efPeV6e00AfD5A42pQ9d+REQ@mail.gmail.com>
- <aXH4PpkC4AtccsOE@redhat.com>
- <CAMxuvaw04pDNzHyw5+Qcv_KfrhDTiyp+MNxpECp+HfTa5iLOGw@mail.gmail.com>
- <aXH-TlzxZ1gDvPH2@redhat.com>
- <CAFEAcA_u6QUhs+6-cyYm_qttsDiV2zHbsc-_FbTb8QzWXk6+tw@mail.gmail.com>
- <aXICpFZuNM9GG4Kv@redhat.com>
- <CAMxuvawgOvQbwoyCzFBLw++JqR0vFbVUhbv1AJWU6VqK1MM_Og@mail.gmail.com>
- <82f74c82-c572-4ab9-b527-11ea287056d1@linaro.org>
-In-Reply-To: <82f74c82-c572-4ab9-b527-11ea287056d1@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Fri, 23 Jan 2026 12:44:28 +0400
-X-Gm-Features: AZwV_Qi1gRi5xeDyNeB35CIP8lzUToeOVoLKCjAlrhjdcWtWqqH7vcnQjXP73Kc
-Message-ID: <CAJ+F1CJtrv9YgDbiekVmDD2yT+6nUe39nLwLsKxvFOtMc1kUGA@mail.gmail.com>
-Subject: Re: Call for GSoC internship project ideas
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Stefan Hajnoczi <stefanha@gmail.com>,
- Thomas Huth <thuth@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- kvm <kvm@vger.kernel.org>, 
- Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
- Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- German Maglione <gmaglione@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alex Bennee <alex.bennee@linaro.org>, John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2c;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.07,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,89 +81,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+User-created qdevs with ID show up at /machine/peripheral/ID.
 
-On Thu, Jan 22, 2026 at 7:46=E2=80=AFPM Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> On 1/22/26 3:28 AM, Marc-Andr=C3=A9 Lureau wrote:
-> > Hi
-> >
-> > On Thu, Jan 22, 2026 at 2:57=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
-ge@redhat.com> wrote:
-> >>
-> >> On Thu, Jan 22, 2026 at 10:54:42AM +0000, Peter Maydell wrote:
-> >>> On Thu, 22 Jan 2026 at 10:40, Daniel P. Berrang=C3=A9 <berrange@redha=
-t.com> wrote:
-> >>>> Once we have written some scripts that can build gcc, binutils, linu=
-x,
-> >>>> busybox we've opened the door to be able to support every machine ty=
-pe
-> >>>> on every target, provided there has been a gcc/binutils/linux port a=
-t
-> >>>> some time (which covers practically everything). Adding new machines
-> >>>> becomes cheap then - just a matter of identifying the Linux Kconfig
-> >>>> settings, and everything else stays the same. Adding new targets mea=
-ns
-> >>>> adding a new binutils build target, which should again we relatively
-> >>>> cheap, and also infrequent. This has potential to be massively more
-> >>>> sustainable than a reliance on distros, and should put us on a pathw=
-ay
-> >>>> that would let us cover almost everything we ship.
-> >>>
-> >>> Isn't that essentially reimplementing half of buildroot, or the
-> >>> system image builder that Rob Landley uses to produce toybox
-> >>> test images ?
-> >>
-> >> If we can use existing tools to achieve this, that's fine.
-> >>
-> >
-> > Imho, both approaches are complementary. Building images from scratch,
-> > like toybox, to cover esoteric minimal systems. And more complete and
-> > common OSes with mkosi which allows you to have things like python,
-> > mesa, networking, systemd, tpm tools, etc for testing.. We don't want
-> > to build that from scratch, do we?
-> >
->
-> I ran into this need recently, and simply used podman (or docker) for
-> this purpose.
->
-> $ podman build -t rootfs - < Dockerfile
-> $ container=3D$(podman create rootfs)
-> $ podman export -o /dev/stdout $container |
-> /sbin/mke2fs -t ext4 -d - out.ext4 10g
-> $ podman rm -f $container
->
-> It allows to create image for any distro (used it for alpine and
-> debian), as long as they publish a docker container. As well, it gives
-> flexibility to have a custom init, skipping a lengthy emulated boot with
-> a full system. As a bonus, it's quick to build, and does not require
-> recompiling the world to get something.
->
-> You can debug things too by running the container on your host machine,
-> which is convenient.
->
+When we restricted QemOpts IDs to letters, digits, '-', '.', '_',
+starting with a letter in commit b560a9ab9be: (qemu-option: Reject
+anti-social IDs) a long time ago, this also covered qdev IDs.  Looks
+like this:
 
-Very nice! I didn't realize you could export and reuse a container that way=
-.
+    (qemu) device_add usb-mouse,id=/
+    qemu-system-x86_64: Parameter 'id' expects an identifier
+    Identifiers consist of letters, digits, '-', '.', '_', starting with a letter.
+    Try "help device_add" for more information
 
-I wonder how this workflow can be extended and compare to mkosi
-(beside the limitation to produce tar/fs image)
+QMP, however:
 
-For qemu VM testing, it would fit better along with our Dockerfile &
-lcitool usage.
+    {"execute": "device_add", "arguments": {"driver": "usb-mouse", "id": "/"}}
+    {"return": {}}
 
-I wish a tool would help to (cross) create & boot such (reproducible)
-images & vm easily.
+This creates a device with canonical path "/machine/peripheral//".
+That way is madness.
 
+We accidentally bypassed qdev ID validation for QMP when we cut the
+detour through QemuOpts in commit b30d8054642.
 
-> I took a look at bootc, but was not really convinced of what it added
-> for my use case compared to the 4 commands above.
->
+Fix by validating IDs one layer down, in qdev_set_id().
 
-Having a regular VM bootable image could be desirable for some cases
-(tpm, secure boot testing for ex).
+Arguably, QOM should protect itself from QOM path components
+containing '/', but let's just fix the regression for now.
 
---
-Marc-Andr=C3=A9 Lureau
+Fixes: be93fd53723c (qdev-monitor: avoid QemuOpts in QMP device_add)
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ system/qdev-monitor.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index be18902bb2..e9e1fbe3b7 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -34,6 +34,7 @@
+ #include "qemu/config-file.h"
+ #include "qemu/error-report.h"
+ #include "qemu/help_option.h"
++#include "qemu/id.h"
+ #include "qemu/option.h"
+ #include "qemu/qemu-print.h"
+ #include "qemu/option_int.h"
+@@ -601,14 +602,17 @@ const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
+      * has no parent
+      */
+     if (id) {
++        if (!id_wellformed(id)) {
++            error_setg(errp, "Invalid qdev ID '%s'", id);
++            goto err;
++        }
+         prop = object_property_try_add_child(qdev_get_peripheral(), id,
+                                              OBJECT(dev), NULL);
+         if (prop) {
+             dev->id = id;
+         } else {
+             error_setg(errp, "Duplicate device ID '%s'", id);
+-            g_free(id);
+-            return NULL;
++            goto err;
+         }
+     } else {
+         static int anon_count;
+@@ -619,6 +623,10 @@ const char *qdev_set_id(DeviceState *dev, char *id, Error **errp)
+     }
+ 
+     return prop->name;
++
++err:
++    g_free(id);
++    return NULL;
+ }
+ 
+ BusState *qdev_find_default_bus(DeviceClass *dc, Error **errp)
+-- 
+2.52.0
+
 
