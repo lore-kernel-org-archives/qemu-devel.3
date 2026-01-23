@@ -4,65 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB03FD74EC3
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 12:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 829F5D74EC2
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 13:00:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjGjX-0000TV-NS; Fri, 23 Jan 2026 07:57:51 -0500
+	id 1vjGla-0001Hn-RL; Fri, 23 Jan 2026 08:00:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vjGjV-0000Sh-6l
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:57:49 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vjGkU-0000zM-6d
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:58:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vjGjS-0005Jn-ID
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:57:48 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vjGkQ-0005OG-OR
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 07:58:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769173064;
+ s=mimecast20190719; t=1769173125;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=v7zsUW+m9oy0DUbPCbypiXzO4zGs/eg9ahh4TGxtfWs=;
- b=UoTivuLneN6BeYUmzTgSgFzi5clt178MSOm+RLA477Lar0YSFTeF7XD8fUQvPdvxTPc683
- Bg5noYCqFMeNLWfSazngWpoE2WqwpxfC5o1DjznBOUU4g4ro1j+9AndQxEdV1O5z3FGfl1
- X7vFDNdz+mmhogEmRtc8ixkISV6IM5M=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=cPedSskjk4A/BdgStfVAlbU/IKfMuyDAhEG33N5YC+M=;
+ b=HwQONknhWTz5anfQUvsT0aRMdOzxM+lerThF64NTwKvd3ZzDdqZdmQM0K87IrXF3T+qBdv
+ KavwwOInV9IlztpEkLECdKPzP5DJE9vVCAUceWwhXUe8eknUvOQMjGLm63wRsuXxVanVjH
+ YsZYysuwzCkITEmUNf3U4RIzABe8UII=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-L1DOAd7yPYC7mLp65xwrLA-1; Fri,
- 23 Jan 2026 07:57:41 -0500
-X-MC-Unique: L1DOAd7yPYC7mLp65xwrLA-1
-X-Mimecast-MFC-AGG-ID: L1DOAd7yPYC7mLp65xwrLA_1769173060
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-353XMA3JPgarGA3BUYfLVg-1; Fri,
+ 23 Jan 2026 07:58:42 -0500
+X-MC-Unique: 353XMA3JPgarGA3BUYfLVg-1
+X-Mimecast-MFC-AGG-ID: 353XMA3JPgarGA3BUYfLVg_1769173122
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 623551955D9A; Fri, 23 Jan 2026 12:57:40 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 08FF21800240; Fri, 23 Jan 2026 12:57:40 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 908E021E692D; Fri, 23 Jan 2026 13:57:37 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  Markus Armbruster
- <armbru@redhat.com>
-Subject: Re: [PATCH V2 3/4] qapi: Add attached flag for iothread
-In-Reply-To: <20260121064110.28760-3-zhangckid@gmail.com> (Zhang Chen's
- message of "Wed, 21 Jan 2026 14:41:09 +0800")
-References: <20260121064110.28760-1-zhangckid@gmail.com>
- <20260121064110.28760-3-zhangckid@gmail.com>
-Date: Fri, 23 Jan 2026 13:57:37 +0100
-Message-ID: <87qzrga3lq.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D89E219775AC; Fri, 23 Jan 2026 12:58:41 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.180])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 34E011958DC1; Fri, 23 Jan 2026 12:58:41 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 0180A18003AA; Fri, 23 Jan 2026 13:58:38 +0100 (CET)
+Date: Fri, 23 Jan 2026 13:58:38 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Oliver Steffen <osteffen@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ Luigi Leonardi <leonardi@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ Kashyap Chamarthy <kchamart@redhat.com>
+Subject: Re: [PATCH 3/3] docs/interop: Add firmware digests to schema
+Message-ID: <aXNslKemURR1tvE7@sirius.home.kraxel.org>
+References: <20260123083204.999920-1-osteffen@redhat.com>
+ <20260123083204.999920-4-osteffen@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260123083204.999920-4-osteffen@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -87,92 +89,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+  Hi,
 
-> The attached flag depends on struct IOThreadInfo's
-> 'attached': 'bool'. It can show whether the iothread
-> is attached to an actual device. Show in the qmp/hmp
-> CMD with "attached": true/false.
->
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> ---
->  iothread.c         | 1 +
->  monitor/hmp-cmds.c | 2 ++
->  qapi/misc.json     | 6 ++++++
->  3 files changed, 9 insertions(+)
->
-> diff --git a/iothread.c b/iothread.c
-> index 38e38fb44d..fb4898e491 100644
-> --- a/iothread.c
-> +++ b/iothread.c
-> @@ -358,6 +358,7 @@ static int query_one_iothread(Object *object, void *opaque)
->      info = g_new0(IOThreadInfo, 1);
->      info->id = iothread_get_id(iothread);
->      info->thread_id = iothread->thread_id;
-> +    info->attached = iothread->attached;
->      info->poll_max_ns = iothread->poll_max_ns;
->      info->poll_grow = iothread->poll_grow;
->      info->poll_shrink = iothread->poll_shrink;
-> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> index 5a673cddb2..7463f34bf5 100644
-> --- a/monitor/hmp-cmds.c
-> +++ b/monitor/hmp-cmds.c
-> @@ -202,6 +202,8 @@ void hmp_info_iothreads(Monitor *mon, const QDict *qdict)
->          value = info->value;
->          monitor_printf(mon, "%s:\n", value->id);
->          monitor_printf(mon, "  thread_id=%" PRId64 "\n", value->thread_id);
-> +        monitor_printf(mon, "  attached=%s" "\n",
-> +                       value->attached ? "true" : "false");
->          monitor_printf(mon, "  poll-max-ns=%" PRId64 "\n", value->poll_max_ns);
->          monitor_printf(mon, "  poll-grow=%" PRId64 "\n", value->poll_grow);
->          monitor_printf(mon, "  poll-shrink=%" PRId64 "\n", value->poll_shrink);
-> diff --git a/qapi/misc.json b/qapi/misc.json
-> index e87994c9d9..99ffd45ce5 100644
-> --- a/qapi/misc.json
-> +++ b/qapi/misc.json
-> @@ -76,6 +76,9 @@
->  #
->  # @thread-id: ID of the underlying host thread
->  #
-> +# @attached: flag to show current iothread attach to device status
-> +#     (since 12.0)
-
-We started to talk about improving the description in review of v1.
-Let's continue there.
-
+> +##
+> +# @AmdSevSnpLaunchHashAlg:
 > +#
->  # @poll-max-ns: maximum polling time in ns, 0 means polling is
->  #     disabled (since 2.9)
->  #
-> @@ -93,6 +96,7 @@
->  { 'struct': 'IOThreadInfo',
->    'data': {'id': 'str',
->             'thread-id': 'int',
-> +           'attached': 'bool',
->             'poll-max-ns': 'int',
->             'poll-grow': 'int',
->             'poll-shrink': 'int',
-> @@ -118,6 +122,7 @@
->  #              {
->  #                 "id":"iothread0",
->  #                 "thread-id":3134,
-> +#                 "attached":false",
+> +# Hash algorithms used for AMD SEV-SNP launch digests.
+> +#
+> +# @sha384: SHA-384
+> +##
+> +{ 'enum': 'AmdSevSnpLaunchHashAlg',
+> +  'data': [ 'sha384' ] }
 
-Invalid JSON.  Drop the last ".
+Hmm.  When it comes to extending this:  Do we want be very strict, like
+this, and have a per-type list of digests?
 
->  #                 'poll-max-ns':32768,
->  #                 "poll-grow":0,
->  #                 "poll-shrink":0,
-> @@ -126,6 +131,7 @@
->  #              {
->  #                 "id":"iothread1",
->  #                 "thread-id":3135,
-> +#                 "attached":true",
+One possible extension which comes to mind is the 'platform-code' digest
+measured into TPMs (pcr0).  The possible hash algorithms here are
+everything supported by the TPM, i.e. sha1, sha256, sha384, sha512.
+I think for something new introduced in 2026 we can ignore sha1,
+leaving the other three on the table.
 
-Likewise.
+So one option would be to add a TPMHashAlg enum for this (sticking to
+the theme).
 
->  #                 'poll-max-ns':32768,
->  #                 "poll-grow":0,
->  #                 "poll-shrink":0,
+The alternative approach would be to have a common 'FirmwareHashAlg' for
+all types.  Would make the structs below a bit simpler, the
+AmdSevSnpLaunchDigest is not needed then and FirmwareDigest can be a
+simple struct instead of a union.  On the other hand it would allow some
+invalid combinations such as sha256 for amd-snp launch digest.
+
+Opinions?
+
+take care,
+  Gerd
 
 
