@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48513D74EDE
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A348D74EDC
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 15:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjInG-00071N-U2; Fri, 23 Jan 2026 10:09:50 -0500
+	id 1vjIoy-000162-QA; Fri, 23 Jan 2026 10:11:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInD-0006yK-GY
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:47 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1vjInE-0006zM-H2
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:49 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjInB-000300-8O
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:47 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-47ee301a06aso26760515e9.0
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:44 -0800 (PST)
+ id 1vjInB-00030H-Vf
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 10:09:48 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4801d1daf53so26645765e9.2
+ for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 07:09:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769180983; x=1769785783; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=QKaeC79SyRNtTwshchvmwU1mfm3otynKDkSTOxM6SeI=;
- b=NtLnUjnc1DmpJNQMPWSjE39tmhF7Eo2AxpR7xaUU7cYQgSLDmM7ao4FutVKw396kIE
- u/rN2A8xolIeYM14CXuhv2MrBewW2j0dHIDh8tLpeGacPFEWt8EVr5mYBAiCOiLT2goM
- jXA9wXr0UkTl0B+Feq5a/b/SLyKv8GZPp3xKnhn6HSHVIHoexepB+CocI8LemJH2cksy
- Mj7gmkzPHEI946Je3jfiNdUzQ1ynJXmz/ZE/mo99AoUNkhwe8ILDwPbHoN36M64NCpgh
- /Oyx2LHpDZpDpAqyZgjvpxyAVuwkqFeBkoDeI+869mLSKFHYW8Rii4VswVVPOaGPTubr
- nUSw==
+ d=linaro.org; s=google; t=1769180984; x=1769785784; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=M1oVYxqoM8J9nRz2MCulkkHN20WO4j52vl4dcwX6S6s=;
+ b=kcFZlwjf78Rr73jes8P2nGksCoi3wZycOT2QJtzcIzNJ1eR2mPdXIGWnxX83h0o2xx
+ C/eTUpgnOgl+/+PnBCVWUGCmRwWrmYJGKfWdoZSSL3fGn8kvc6GDnvGwuN29X1slDBnV
+ 8wdlsnwkT1cuC59EOgiaT+yBaUGg351mge/wNcedj67CQgu+YN0V5B+6oi7Ap54zI5fc
+ oVSWvkMcnyOm9PKXvLQZdOnKSZ4JvBcpfOhdS/2GtYWJzXBBhdtD3b7ZDtKnyQaRvDhc
+ jTvH5CMLC4ES2PzG5BiiZRJV4ICzEveQuhTwOzhOUQ6GlYurPbpVOmykKQ/7xkJ3K5Jp
+ 4blg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769180983; x=1769785783;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QKaeC79SyRNtTwshchvmwU1mfm3otynKDkSTOxM6SeI=;
- b=AmfdPC4KWY6xy/Kr+tM6zQerT7Xzt1lfxqW5Mm/N7YCGnTXQEkStJrT27pxQjcceLt
- CgiBXPR4utdEQZiiyDxBTFhapSqGpfM35+gucgUCOuvcQTzPuIeKBmqPYbhZnyaXY8jj
- oE95nMC33T3wf/7434HtJkJ83VQ4JMQXmBISfCu3Gne9HJ8n25OuaEOnb8u3v7pYQSfT
- P8d8fiuw7xsoQgp/QJdBXI5UVRY+RtNtui/36fjdDXnlWRRBi4wD4zKsijLaQFNWCJmL
- VrfNqSBYtNjXpEBaAEBtuZ3b4KWBZaNI136Taj0iYm+hOSSnypzG6mv5dy/0zuaIexue
- MMRg==
-X-Gm-Message-State: AOJu0Ywo12zN9xwcylFu2PFlRL2a/hgQwNw1dXHZjW2dn6506LRkxa/X
- 5QqsfYPkABodsarhBf3nCBOE6goF+EDNbw4mtU/8tDZSAjYr7t/vZbSDJXkKi6O2jM0QfrkXjHW
- K4TY8cfs=
-X-Gm-Gg: AZuq6aJFvD5ZAJWPLEWjpgOG+XzyaCvuWtu/giKuHfisZ0H2vW641Y7SLV8QW9tWtfr
- 705HLWmX5CXkAxTEaChyuzqtFCF2nGSAq/kjyeEz39rNyfOSZ31hU7UjP3jC5aSEhmPtse39xzU
- VP0tJ77aCOlvDR7rPZmVMUd7zdVrjqZ+gTyG1Nf9pdYFrYH2DW88vTwjLSkvjfaLmriC0PXbMT6
- DXg+spbcGe2/VulZ5mnRu6Ve567MFqfdQc/zW+ECVAxif6kbE6Od3IV9SkkKp2zVfJemFeJQPX5
- /BBjn95CONQI7f+XoHslzEwXDmN/CrdwDLcaVI9t5lWYFIGepcn+KOFgO89EGWsrjAs7YB8vVXJ
- 0KlmMBQRV3licth6gt4UrljVHhezEexy+8FYVCb7O7f/2z3ll0FvePLncOAB9zhNOVzrTWSLUYP
- FqU9cO8YHIHtKwaYLkpQ7YfUslCrs7EtWKc1zAI4lP88Mb0ubKl7lg
-X-Received: by 2002:a05:600c:1388:b0:480:4a4f:c363 with SMTP id
- 5b1f17b1804b1-4804c958615mr50064385e9.9.1769180982581; 
- Fri, 23 Jan 2026 07:09:42 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769180984; x=1769785784;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=M1oVYxqoM8J9nRz2MCulkkHN20WO4j52vl4dcwX6S6s=;
+ b=N6YQnU2H6Srk8sgnFmMxVDoZ6CMhHwHRD2DcAbP51gYziYFNcIcNAf5mBzjD1RjH9t
+ AyND9P+g/IOuHHCzLUtLkvD+8a1K8s+rslpua5uY1xQl/llkAziZ3x4QbChaJ6+0Veke
+ Zr35Pgf2/poZKnbuVf8P7dyHWQ9RixZinWcRP0FXYV3jg5HibVKBgTlgm7l8QFGQsEQ/
+ rumqdAiGnw/JaWjyF2gzyLH3uxE279UVG5tr9nslnw7qVUZ173ykQQfuwinTYBSYV5qI
+ 5jcZDkggEgP1OpFFO/FNOW8Sz7WpcTU712y77AM8W/LMqRGQB47U54JAcnWmvM2Jb9fE
+ +8Sw==
+X-Gm-Message-State: AOJu0Yzmjace+OnZoTN4j+Y1NU/p2nKzY8RfHvZSOU0zHpUuTh8nn/vx
+ aj0R1w47WKvzWyKzkbgWFQAfzntxBS3L/W6QrjaQG+zpP+yejWvPCJL7Mv0a/uHwU9XJB4vePS3
+ IbWKoADI=
+X-Gm-Gg: AZuq6aJAjdr79aBZrYV5fNyoYjFiGUqV6oUMKyosQx8KJENKtLETzo4b5b6rxInRlGg
+ m87KHlTIeZ4qZFr3/QRpyggFkLT4KMZ1L54Y6hbIBhSXQK/hpn/iIrs0VgynJ5no/fyZk1kU8lc
+ Mbxkzrl949iNUdzYxYzk2OUD7aQ5J+/7TfX/toWzCbtDtkvmx2OzRkklwfSJudarDvHpsH5NvzJ
+ suOeCwxbMxBpSh59QUeZxPojwjkh/hre+sG7mQMk2Yx8xmBooi/swGT+0jJKZjh/wUFtOCfUI7U
+ GFlZx6/Uj/OkXZ0wcQxfeCy/9DcAD6SkKznkRIF2aPQTg4suK2zJ0eKTjs5miMWk6GS19Jgbbjz
+ 3rgPYg3pOju6o5dOWaOUOF29GIJ6AxcjuIjTXOOkv8yYyjlDKcYFMROWBp/R9/fv0ua1NprQFN3
+ IWv4QWPtJTnfWtcK163b9HQTTWPfbChg0Dpye9I40UAoJAGZVzdnYp
+X-Received: by 2002:a05:600c:45c8:b0:47e:d943:ec08 with SMTP id
+ 5b1f17b1804b1-48053b17da3mr3208555e9.28.1769180984292; 
+ Fri, 23 Jan 2026 07:09:44 -0800 (PST)
 Received: from mnementh.archaic.org.uk (mnementh.archaic.org.uk.
  [81.2.115.146]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.41
+ ffacd0b85a97d-435b1e71503sm8255641f8f.25.2026.01.23.07.09.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Jan 2026 07:09:41 -0800 (PST)
+ Fri, 23 Jan 2026 07:09:43 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/22] target-arm queue
-Date: Fri, 23 Jan 2026 15:09:18 +0000
-Message-ID: <20260123150941.1877768-1-peter.maydell@linaro.org>
+Subject: [PULL 02/22] docs/system/arm/imx8mp-evk: Avoid suggesting redundant
+ CLI parameters
+Date: Fri, 23 Jan 2026 15:09:20 +0000
+Message-ID: <20260123150941.1877768-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260123150941.1877768-1-peter.maydell@linaro.org>
+References: <20260123150941.1877768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,125 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's a target-arm pullreq. Most of the patches in it
-are actually docs and similar tidyups, though...
+From: Bernhard Beschow <shentey@gmail.com>
 
-thanks
--- PMM
+Commit 094fd7d36f2a ("hw/arm/imx8mp-evk: Add KVM support") introduced KVM
+support for the imx8mp-evk machine. KVM only works with the "host" CPU type
+such that it has been made the default CPU type for KVM. No need to repeat
+that on the command line.
 
-The following changes since commit 2339d0a1cfac6ecc667e6e062a593865c1541c35:
+Fixes: 094fd7d36f2a ("hw/arm/imx8mp-evk: Add KVM support")
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-id: 20260114213227.3812-3-shentey@gmail.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ docs/system/arm/imx8mp-evk.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  Merge tag 'hw-misc-20260120' of https://github.com/philmd/qemu into staging (2026-01-21 07:39:57 +1100)
+diff --git a/docs/system/arm/imx8mp-evk.rst b/docs/system/arm/imx8mp-evk.rst
+index 79600cf39a..e60a422824 100644
+--- a/docs/system/arm/imx8mp-evk.rst
++++ b/docs/system/arm/imx8mp-evk.rst
+@@ -66,7 +66,7 @@ KVM Acceleration
+ ----------------
+ 
+ To enable hardware-assisted acceleration via KVM, append
+-``-accel kvm -cpu host`` to the command line. While this speeds up performance
++``-accel kvm`` to the command line. While this speeds up performance
+ significantly, be aware of the following limitations:
+ 
+ * The ``imx8mp-evk`` machine is not included under the "virtualization use case"
+-- 
+2.47.3
 
-are available in the Git repository at:
-
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260123
-
-for you to fetch changes up to 62580edc02ae16ba520d220f6fd7556999504a84:
-
-  qemu-options.hx: Improve formatting in colo-compare docs (2026-01-23 14:08:57 +0000)
-
-----------------------------------------------------------------
-target-arm queue:
- * hw/arm/imx8mp-evk: Provide some defaults matching real hardware
- * hw/intc: endianness fixes
- * various: Clean up includes
- * kernel-doc.py: sync with upstream Kernel v6.19-rc4
- * scripts/clean-includes: Minor improvements; exclude list update
- * docs/system/arm/imx8mp-evk: Avoid suggesting redundant CLI parameters
- * docs/system/arm/xlnx-zynq.rst: Improve docs rendering
- * docs: Be consistent about capitalization of 'Arm' (again)
- * docs: Avoid unintended mailto: hyperlinks
- * qemu-options.hx: Drop uses of @var
- * qemu-options.hx: Improve formatting in colo-compare docs
-
-----------------------------------------------------------------
-Alex Bennée (4):
-      hw/intc: declare NVIC regions as little endian
-      hw/intc: declare GIC regions as little endian
-      hw/intc: declare GICv3 regions as little endian
-      hw/intc: avoid byte swap fiddling in gicv3 its path
-
-Bernhard Beschow (2):
-      hw/arm/imx8mp-evk: Provide some defaults matching real hardware
-      docs/system/arm/imx8mp-evk: Avoid suggesting redundant CLI parameters
-
-Mauro Carvalho Chehab (1):
-      kernel-doc.py: sync with upstream Kernel v6.19-rc4
-
-Peter Maydell (15):
-      docs: Be consistent about capitalization of 'Arm' (again)
-      scripts/clean-includes: Allow directories on command line
-      scripts/clean-includes: Remove outdated comment
-      scripts/clean-includes: Make ignore-regexes one per line
-      scripts/clean-includes: Do all our exclusions with REGEXFILE
-      scripts/clean-includes: Give the args in git commit messages
-      scripts/clean-includes: Update exclude list
-      mshv: Clean up includes
-      bsd-user: Clean up includes
-      misc: Clean up includes
-      all: Clean up includes
-      docs/system/arm/xlnx-zynq.rst: Improve docs rendering
-      docs: avoid unintended mailto: hyperlinks
-      qemu-options.hx: Drop uses of @var
-      qemu-options.hx: Improve formatting in colo-compare docs
-
- accel/mshv/irq.c                      |   3 +-
- accel/mshv/mshv-all.c                 |   1 -
- bsd-user/bsd-mem.h                    |   3 -
- bsd-user/bsd-proc.c                   |   1 -
- bsd-user/freebsd/os-proc.h            |   2 -
- bsd-user/qemu-bsd.h                   |   1 -
- docs/devel/submitting-a-patch.rst     |   2 +-
- docs/devel/testing/qgraph.rst         |   8 +-
- docs/devel/vfio-iommufd.rst           |   2 +-
- docs/specs/fsi.rst                    |   2 +-
- docs/system/arm/aspeed.rst            |   6 +-
- docs/system/arm/b-l475e-iot01a.rst    |   2 +-
- docs/system/arm/imx8mp-evk.rst        |   4 +-
- docs/system/arm/nrf.rst               |   4 +-
- docs/system/arm/stm32.rst             |  12 +-
- docs/system/arm/xlnx-versal-virt.rst  |  16 +-
- docs/system/arm/xlnx-zynq.rst         |  51 +-
- docs/system/device-url-syntax.rst.inc |   4 +-
- docs/system/guest-loader.rst          |   2 +-
- docs/system/replay.rst                |   2 +-
- docs/system/vnc-security.rst          |   6 +-
- hw/arm/imx8mp-evk.c                   |   2 +
- hw/core/machine-qmp-cmds.c            |   1 -
- hw/intc/arm_gic.c                     |  12 +-
- hw/intc/arm_gicv3.c                   |   4 +-
- hw/intc/arm_gicv3_its.c               |   4 +-
- hw/intc/arm_gicv3_its_common.c        |   4 +-
- hw/intc/arm_gicv3_its_kvm.c           |   2 +-
- hw/intc/armv7m_nvic.c                 |   2 +-
- hw/scsi/lasi_ncr710.h                 |   1 -
- hw/scsi/ncr53c710.h                   |   1 -
- include/hw/core/loader.h              |   1 -
- include/hw/i386/tdvf.h                |   1 -
- include/hw/ppc/spapr_fadump.h         |   1 -
- include/hw/riscv/iommu.h              |   1 -
- include/system/accel-irq.h            |   1 -
- include/system/mshv.h                 |   1 -
- linux-user/alpha/target_proc.h        |   1 -
- qemu-options.hx                       |  51 +-
- qga/commands-windows-ssh.h            |   1 -
- qga/vss-win32/vss-debug.h             |   1 -
- scripts/clean-includes                | 103 ++--
- scripts/lib/kdoc/kdoc_files.py        |  11 +-
- scripts/lib/kdoc/kdoc_item.py         |   3 +-
- scripts/lib/kdoc/kdoc_output.py       |  93 +++-
- scripts/lib/kdoc/kdoc_parser.py       | 901 +++++++++++++++++-----------------
- scripts/lib/kdoc/kdoc_re.py           |  24 +-
- semihosting/arm-compat-semi-stub.c    |   1 -
- target/arm/cpu32-stubs.c              |   1 -
- target/i386/kvm/kvm.c                 |   1 -
- target/i386/kvm/vmsr_energy.h         |   2 -
- target/i386/mshv/mshv-cpu.c           |   1 -
- target/i386/mshv/x86.c                |   1 -
- target/loongarch/csr.c                |   1 -
- target/riscv/csr.c                    |   1 -
- tools/i386/qemu-vmsr-helper.c         |   1 -
- util/cpuinfo-aarch64.c                |   1 -
- 57 files changed, 738 insertions(+), 635 deletions(-)
 
