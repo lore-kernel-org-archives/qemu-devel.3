@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5722BD72372
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 11:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF76D72379
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 11:30:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjFLQ-0004aX-Ib; Fri, 23 Jan 2026 06:28:53 -0500
+	id 1vjFMZ-0005Uw-C5; Fri, 23 Jan 2026 06:30:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vjFLO-0004Xu-9s; Fri, 23 Jan 2026 06:28:50 -0500
+ id 1vjFMX-0005SY-4x; Fri, 23 Jan 2026 06:30:01 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vjFLL-0004W8-Ne; Fri, 23 Jan 2026 06:28:50 -0500
+ id 1vjFMV-0004ZZ-Kr; Fri, 23 Jan 2026 06:30:00 -0500
 Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dyFzT4Mb2zJ46YH;
- Fri, 23 Jan 2026 19:28:05 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4dyG0t1t6TzHnH3h;
+ Fri, 23 Jan 2026 19:29:18 +0800 (CST)
 Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id D7FDF40569;
- Fri, 23 Jan 2026 19:28:34 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id CA0EB40572;
+ Fri, 23 Jan 2026 19:29:55 +0800 (CST)
 Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
  (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 23 Jan
- 2026 11:28:33 +0000
-Date: Fri, 23 Jan 2026 11:28:32 +0000
+ 2026 11:29:54 +0000
+Date: Fri, 23 Jan 2026 11:29:53 +0000
 To: Shameer Kolothum <skolothumtho@nvidia.com>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
  <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
@@ -37,12 +37,12 @@ CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
  <smostafa@google.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
  <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>,
  <kjaju@nvidia.com>
-Subject: Re: [PATCH v8 13/37] hw/arm/smmuv3: propagate smmuv3_cmdq_consume()
- errors to caller
-Message-ID: <20260123112832.0000092e@huawei.com>
-In-Reply-To: <20260121175248.87649-14-skolothumtho@nvidia.com>
+Subject: Re: [PATCH v8 15/37] hw/arm/smmuv3-accel: Install SMMUv3 GBPA based
+ hwpt
+Message-ID: <20260123112953.00004187@huawei.com>
+In-Reply-To: <20260121175248.87649-16-skolothumtho@nvidia.com>
 References: <20260121175248.87649-1-skolothumtho@nvidia.com>
- <20260121175248.87649-14-skolothumtho@nvidia.com>
+ <20260121175248.87649-16-skolothumtho@nvidia.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -76,20 +76,17 @@ From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 21 Jan 2026 17:52:18 +0000
+On Wed, 21 Jan 2026 17:52:20 +0000
 Shameer Kolothum <skolothumtho@nvidia.com> wrote:
 
-> smmuv3_cmdq_consume() is updated to return detailed errors via errp.
+> On guest reboot or on GBPA update, attach a nested HWPT based on the
+> GPBA.ABORT bit which either aborts all incoming transactions or bypasses
+> them.
 > 
-> Although this is currently a no-op, it prepares the ground for accel
-> SMMUv3 specific command handling where proper error reporting will be
-> useful.
-> 
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 > Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 > Tested-by: Eric Auger <eric.auger@redhat.com>
 > Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-
 
