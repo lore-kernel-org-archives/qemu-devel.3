@@ -4,109 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75476D778AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 18:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08F70D778AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Jan 2026 18:45:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjLyb-0008Hz-O2; Fri, 23 Jan 2026 13:33:45 -0500
+	id 1vjM9S-0005yO-92; Fri, 23 Jan 2026 13:44:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vjLyZ-0008HL-HH
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 13:33:43 -0500
-Received: from mail-qv1-xf2d.google.com ([2607:f8b0:4864:20::f2d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vjLyY-000253-0e
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 13:33:43 -0500
-Received: by mail-qv1-xf2d.google.com with SMTP id
- 6a1803df08f44-89461ccc46eso48603096d6.2
- for <qemu-devel@nongnu.org>; Fri, 23 Jan 2026 10:33:41 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769193220; cv=none;
- d=google.com; s=arc-20240605;
- b=DJCkk4l4z9kSNE1Wx6mWTrA7EXBjPQGLImjjEOQcGWfu2zAd7GpUV7r9dwswtJwl+T
- K9ETrKLtlV08zm+b3ltdz6qXeHr1KsrJjMVmt49hJkpuAKRE0/y2E6DK2hZin8vj82Jd
- Jy2WnMI9928g8fgSCFuUGK7GQ12AhkbefbMXLgTJnnxhUyjc1zAUOxPomOYf21+8HKLt
- rkXzbf3l7tpvVLhg7s+fa3FI5QuWX00+dhyfhGtJYtdwKHSs4M7YbGnfKzmfv+eocPUy
- nJGTMhN77IMqyF8e0r4iSi4GhHKHpCEII6Qhr9lG0inYVNr9Jo+v39xqdhBRvL1xXvef
- +CwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=RIslNiyhnRSCxvEP/82cF8P8duDA4OhirrnLIM0FQzw=;
- fh=gVbkJjOVoRTC1auWeOj2FcKpAUYmr7UxHVRJCTXBxGY=;
- b=YpQAKMUouHQ61pebZp3XXEorwmL8DWyWulbTPBeaYeydlYz8/0B91BsVD30DcltO1I
- nNJfnwmve40iNZyz741IdDN8QSjDnZ9ijpluLqvuv9tuzLg9PTvOdl2pLiblvdGM4kDB
- esMCgKmvK2JISIZPOsEIixU8gFCOMEoB9+1m1TlZhHlO/C+CZean66iFEy3mod0B/zOg
- Z3nuuKeYREYNbqFcH+g3YXhQ+kPGuiOlLxa0tJGtIzcsjBaZZRB7QZhGwZbXLhWZ0Jtk
- VvgNhLxt7gAiLlrmQUXmuLe+tXU5gF8mhImNG6D36ihhPFCtdML9bFILGAsfKC36uks6
- 3TsA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769193220; x=1769798020; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RIslNiyhnRSCxvEP/82cF8P8duDA4OhirrnLIM0FQzw=;
- b=gagiYkgMVjoicXj9OqSWB2hcIRPv7O6VqHThc6G8PM1NuHw4P1dFJ0b3SLJmg4og+L
- Js9LWSgpu1vLiK8uDlqp5XOhM0H+wp/+au7f1KmB5Fgvvz6e/X8v2R5EARAacNPY8m2G
- HJGBdFVAOSoKExXLFRpoJRN5/99602DO6NkId4znxjHGD+5mYkDUUJ8fZhx4i8l0XxMP
- RSu7JvBbi7lnJPy1lcgj4z+z6PtwTV27OvcA5N5ZJd+NLpzel9QHNioPBDcQ92/EsYM9
- Jylp4VjKYJwyomEUJhFHT6nwiPH4kz6/Cs65PLHQJY1BpBWoecq61cjmyxO4kK6OwcjN
- mOZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769193220; x=1769798020;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RIslNiyhnRSCxvEP/82cF8P8duDA4OhirrnLIM0FQzw=;
- b=jBng5j/IkEvzPNlteM0PcgC1n/u0B9ALGWtsosMhjyoahye8Wl662T+aQy/jGDwoiF
- PH4eugWTNak4FqxKb30mmjoNbD00pkJAAjUr4BNAC2OiucRpltUn48s0uMT7y+1Hyh9A
- gFqQYs5gOHS+nSewbyns//lHhDy6jxp06aYxVURA9SB9jL2eWgperZ9VFqYs/ZuqSNM9
- dyhwGML/20UZ+PaojK9nn2YphX7MeE/zbBMN7t1KHaSjF4QuCsTjaOupJTUmOUXGdrgR
- KX9pnlCl4qWVNe1zPfmMxCpZFOWxekqGAzzKGvFh9FcLirneFoCUbz8VFPgecizn0GY5
- yR1A==
-X-Gm-Message-State: AOJu0Yz78rHl001NcYHXIZifmRDpN3hWpewVayOfNI6b4HFrWjl3iv03
- Wmmj9JyvFHNZ8tzpW2tWzwN8xb6UXrsVVPyMi6bJpBMIJ9TRjhy4LMxl79SIGVZvxOrrkNqnghr
- K/uIqL0/2eU1X+XxgpDZog5cVEYOenyY=
-X-Gm-Gg: AZuq6aIK17o/dZx3qfu09ci7CREMGQ6zwW9kF/kZKvlqAg/S5fN0bId9o+m2pb5fESd
- SkQbVkVh2tiJ9t8JTpGvLatBhMAPYuLzR4pyqvAThoGGSh4WJVXPxv2Grfygzd5/H0+tnDVRWoj
- 6aHKoLrjEyji0AjxR6y3NHFzgjnCGgF7Hhj5NfSfOCKNZ+1PwSOuXRUh7hqve1vbfV/RR6d8Piy
- 7Fdc1hpT9bDYixL/ixYaNIp5ymBSaOervY1832whkTNURZKCa8brFnWtrUpA0oDTZXoJVwGSTqD
- k5hHaWGrTA+kmQG+HpikJztfqjmtEGD8hmjx7g==
-X-Received: by 2002:a05:622a:1b91:b0:502:a06a:fe5a with SMTP id
- d75a77b69052e-502f77bd5ccmr54207741cf.51.1769193219645; Fri, 23 Jan 2026
- 10:33:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vjM9K-0005rZ-QK
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 13:44:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vjM9G-00051q-Ow
+ for qemu-devel@nongnu.org; Fri, 23 Jan 2026 13:44:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769193881;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=M5qvspvGpqArNdGdvsDr4MxSxK/KhdRiStszzeno6DI=;
+ b=SngUfJ5ge8y9ovIGpvs2GbRNvjlWv0lw4sbZKcLGZV3r/o05rE05WSpDkzUfys03IMDjVV
+ 4XZTbK686NmssXY9ZMjUXXP0OtKreL4mXSjYGIpn0m6tJbZMLJCifIE3N4UQuW0d89Sn7A
+ +0qgBzTtNzLOpbjzYOTZ3JTLJdIMFZ4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-N8T84F2hMYmMnDV7s-oQYw-1; Fri,
+ 23 Jan 2026 13:44:35 -0500
+X-MC-Unique: N8T84F2hMYmMnDV7s-oQYw-1
+X-Mimecast-MFC-AGG-ID: N8T84F2hMYmMnDV7s-oQYw_1769193874
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C4AD51956094; Fri, 23 Jan 2026 18:44:33 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.224.22])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1D0091958DC4; Fri, 23 Jan 2026 18:44:30 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ kallisti5@unixzen.com, Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH v2] tests/vm: Make the haiku VM usable again
+Date: Fri, 23 Jan 2026 19:44:29 +0100
+Message-ID: <20260123184429.5278-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
- <20260123074945.2563196-22-marcandre.lureau@redhat.com>
- <3f0d41b1-dbce-80ba-c1e2-a8d73d1c6caf@eik.bme.hu>
-In-Reply-To: <3f0d41b1-dbce-80ba-c1e2-a8d73d1c6caf@eik.bme.hu>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Fri, 23 Jan 2026 22:33:28 +0400
-X-Gm-Features: AZwV_QhQ0n4fS-zt4GVgf6AdJNp-AI8E2LrpE6vyJKLaUUz_KdXswcwAjZ_6jNY
-Message-ID: <CAJ+F1CLt0XsLXf2D87LnFBDcrvFFn2mv8K7UyChzFtBidLCXGA@mail.gmail.com>
-Subject: Re: [PATCH 21/37] audio: add QOM module-objects for each backend
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Thomas Huth <huth@tuxfamily.org>,
- Alexandre Ratchov <alex@caoua.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2d;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf2d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.079,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,123 +82,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+From: Thomas Huth <thuth@redhat.com>
 
-On Fri, Jan 23, 2026 at 6:24=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu>=
- wrote:
->
-> On Fri, 23 Jan 2026, marcandre.lureau@redhat.com wrote:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > This will allow to use QOM and the dynamic object module loading.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> > audio/audio_int.h   |  2 ++
-> > audio/alsaaudio.c   | 27 +++++++++++++++++++++++++++
-> > audio/dbusaudio.c   | 26 ++++++++++++++++++++++++++
-> > audio/dsoundaudio.c | 26 ++++++++++++++++++++++++++
-> > audio/jackaudio.c   | 26 ++++++++++++++++++++++++++
-> > audio/noaudio.c     | 26 ++++++++++++++++++++++++++
-> > audio/ossaudio.c    | 26 ++++++++++++++++++++++++++
-> > audio/paaudio.c     | 26 ++++++++++++++++++++++++++
-> > audio/pwaudio.c     | 26 ++++++++++++++++++++++++++
-> > audio/sdlaudio.c    | 26 ++++++++++++++++++++++++++
-> > audio/sndioaudio.c  | 26 ++++++++++++++++++++++++++
-> > audio/spiceaudio.c  | 26 ++++++++++++++++++++++++++
-> > audio/wavaudio.c    | 26 ++++++++++++++++++++++++++
-> > audio/coreaudio.m   | 26 ++++++++++++++++++++++++++
-> > 14 files changed, 341 insertions(+)
-> >
-> > diff --git a/audio/audio_int.h b/audio/audio_int.h
-> > index 06f5160e8df..29f5864be69 100644
-> > --- a/audio/audio_int.h
-> > +++ b/audio/audio_int.h
-> > @@ -241,6 +241,8 @@ struct SWVoiceCap {
-> >
-> > struct AudioMixengBackendClass {
-> >     AudioBackendClass parent_class;
-> > +
-> > +    audio_driver *driver;
-> > };
-> >
-> > struct AudioMixengBackend {
-> > diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
-> > index 814820e2864..881f3d0349d 100644
-> > --- a/audio/alsaaudio.c
-> > +++ b/audio/alsaaudio.c
-> > @@ -27,6 +27,7 @@
-> > #include "qemu/main-loop.h"
-> > #include "qemu/module.h"
-> > #include "qemu/audio.h"
-> > +#include "qom/object.h"
-> > #include "trace.h"
-> >
-> > #pragma GCC diagnostic ignored "-Waddress"
-> > @@ -36,6 +37,22 @@
-> >
-> > #define DEBUG_ALSA 0
-> >
-> > +#define TYPE_AUDIO_ALSA "audio-alsa"
-> > +OBJECT_DECLARE_SIMPLE_TYPE(AudioALSA, AUDIO_ALSA)
-> > +
-> > +struct AudioALSA {
-> > +    AudioMixengBackend parent;
-> > +};
->
-> If you have nothing to put here only the parent you don't need to declare
-> the state struct...
->
-> > +
-> > +static struct audio_driver alsa_audio_driver;
-> > +
-> > +static void audio_alsa_class_init(ObjectClass *klass, const void *data=
-)
-> > +{
-> > +    AudioMixengBackendClass *k =3D AUDIO_MIXENG_BACKEND_CLASS(klass);
-> > +
-> > +    k->driver =3D &alsa_audio_driver;
-> > +}
-> > +
-> > struct pollhlp {
-> >     snd_pcm_t *handle;
-> >     struct pollfd *pfds;
-> > @@ -945,8 +962,18 @@ static struct audio_driver alsa_audio_driver =3D {
-> >     .voice_size_in  =3D sizeof (ALSAVoiceIn)
-> > };
-> >
-> > +static const TypeInfo audio_alsa_info =3D {
-> > +    .name =3D TYPE_AUDIO_ALSA,
-> > +    .parent =3D TYPE_AUDIO_MIXENG_BACKEND,
-> > +    .instance_size =3D sizeof(AudioALSA),
->
-> ...and can set instance_size of the parent so I think you can drop the
-> struct above everywhere where no other fields are needed other than the
-> parent. (See e.g. via_mc97_info)
+The haiku VM bitrotted in the course of time. Make sure to use the
+latest version of the repositories here and install missing pieces
+like "pip" and "tomli" now.
 
-True, although the pending patches to finish the conversion to QOM will
-add fields there. This is an intermediary step, but yes, I can drop
-the "empty" structs for now.
+Since we nowadays also install our own version of meson in our venv,
+this also requires a change to our configure script: On Haiku, the
+meson binary shows up as pyvenv/non-packaged/bin/meson here, and not
+in the expected location pyvenv/bin/meson. Adjust the "meson" variable
+to point to that Haiku-specific location to fix this issue. See also:
+https://github.com/haiku/haiku/blob/r1beta5/docs/user/storage/storageintro.dox
 
+And finally, with the new toolchain from the beta 5, we also have to
+compile with "-pie", otherwise the linker complains about bad relocations
+in the object files, so allow compiling with PIE in the configure script
+now.
 
->
-> Regards,
-> BALATON Zoltan
->
-> > +    .class_init =3D audio_alsa_class_init,
-> > +};
-> > +
-> > +
-> > static void register_audio_alsa(void)
-> > {
-> >     audio_driver_register(&alsa_audio_driver);
-> > +    type_register_static(&audio_alsa_info);
-> > }
-> > type_init(register_audio_alsa);
-> > +module_obj(TYPE_AUDIO_ALSA);
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ v2: Reword the sentences about "non-packaged" location, and change
+     the meson variable instead of using a symlink.
+     Prasad, I kept your Reviewed-by, if it's not ok, please complain!
 
+ configure             | 8 +++++++-
+ tests/vm/haiku.x86_64 | 4 ++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
+diff --git a/configure b/configure
+index 9d7fd13a98b..78cae5513ad 100755
+--- a/configure
++++ b/configure
+@@ -986,6 +986,12 @@ if [ -f "$meson$EXESUF" ]; then
+   meson="$meson$EXESUF"
+ fi
+ 
++# On Haiku, meson might show up in a "non-packaged" subfolder instead, see
++# https://github.com/haiku/haiku/blob/r1beta5/docs/user/storage/storageintro.dox
++if test "$host_os" = "haiku" && test ! -e "$meson" ; then
++    meson="$(cd pyvenv/non-packaged/bin; get_pwd)/meson"
++fi
++
+ # Conditionally ensure Sphinx is installed.
+ 
+ mkvenv_online_flag=""
+@@ -1068,7 +1074,7 @@ static THREAD int tls_var;
+ int main(void) { return tls_var; }
+ EOF
+ 
+-if test "$host_os" = windows || test "$host_os" = haiku; then
++if test "$host_os" = windows ; then
+   if test "$pie" = "yes"; then
+     error_exit "PIE not available due to missing OS support"
+   fi
+diff --git a/tests/vm/haiku.x86_64 b/tests/vm/haiku.x86_64
+index 71cf75a9a3e..529283c39f6 100755
+--- a/tests/vm/haiku.x86_64
++++ b/tests/vm/haiku.x86_64
+@@ -78,6 +78,8 @@ class HaikuVM(basevm.BaseVM):
+         "devel:libusb_1.0",
+         "devel:libz",
+         "ninja",
++        "pip",
++        "tomli_python310",
+     ]
+ 
+     BUILD_SCRIPT = """
+@@ -109,6 +111,8 @@ class HaikuVM(basevm.BaseVM):
+         self.wait_ssh(wait_root=True, cmd="exit 0")
+ 
+         # Install packages
++        self.ssh_root("echo yes | pkgman add-repo https://eu.hpkg.haiku-os.org/haiku/r1beta5/$(getarch)/current")
++        self.ssh_root("echo yes | pkgman add-repo https://eu.hpkg.haiku-os.org/haikuports/r1beta5/$(getarch)/current")
+         self.ssh_root("pkgman install -y %s" % " ".join(self.requirements))
+         self.graceful_shutdown()
+ 
+-- 
+2.52.0
 
---
-Marc-Andr=C3=A9 Lureau
 
