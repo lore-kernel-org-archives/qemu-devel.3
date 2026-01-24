@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D8F5D715EE
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 18:30:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718B2D715E3
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 18:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjiOF-0004Q9-Bu; Sat, 24 Jan 2026 13:29:43 -0500
+	id 1vjiO7-0004L0-07; Sat, 24 Jan 2026 13:29:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vjiOC-0004OU-Ih
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 13:29:40 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1vjiO5-0004KR-Ml
+ for qemu-devel@nongnu.org; Sat, 24 Jan 2026 13:29:33 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vjiOB-0003it-2H
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 13:29:40 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-8230c2d3128so1252883b3a.0
- for <qemu-devel@nongnu.org>; Sat, 24 Jan 2026 10:29:38 -0800 (PST)
+ id 1vjiO3-0003cM-Vw
+ for qemu-devel@nongnu.org; Sat, 24 Jan 2026 13:29:33 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-81e8b1bdf0cso1785885b3a.3
+ for <qemu-devel@nongnu.org>; Sat, 24 Jan 2026 10:29:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769279378; x=1769884178; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BAwgkxcCnnqe9jCM08ttRZ7hAqumVGJ7T0ER05F6LwQ=;
- b=O956HxEZfSPx8GCvnPSsJwJxxHSVmLD/iYV6cRktl32P2eBBI44CVs89BAqeLF49tc
- sA7gaUCFXz4+/wwHZ711hJfnsFztrvh9A8PjhwtLLkx9a7fHmV5B8gBcHh8t51p+lTKu
- uODrRjGauh2T27X5Cn0V+qrNA3HBfXFUyi/Us2ymOPVNFYlT5s4S30qp+aCdMzC9D+Os
- SWBAI0d8xfXWORgQ4dSr8b4T3kf4tjtjCjptwY3oHR1bYYAObK6/lS6JgY19QSohyN88
- WJHPurmA9RcFIJwyazqDNH4iAmCn2eCQU1WpZ6Y/nYNJ+Db7sx2gvVdrLgfHey477aQ/
- +hVA==
+ d=linaro.org; s=google; t=1769279369; x=1769884169; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6/3SCHzxa6OHH2ekb2alqt7GMnbKXy8REhsKJuShvps=;
+ b=RPULwDq/Nbsd5l7Ql8Bl9TUxPWftjPbU1L33RJstVqrCLr7yMVe5BdioTLpDxrIlaa
+ 22N1Z8JkvuN9qfd7SIUP0tUCT/wabcMQmTrgxdCN9Fw6TWGf/BSVf/LWo6DhJ76lZF6+
+ gv8Vc5pi83ksjLy7xepx2flvsp2M2hauPSKKSUMESlA/CUP7qcc7t0L/iePv4InDV5Xc
+ 9SxpQpsteSpj8OdqiPeQtS20bSbc4MW6qucnSbBQzIv1G7kNqHW90Pl65DB+yCcyCXWW
+ wa55dP7B6WzYG8W+WVI4ASGhnZK/GlKuMXjdX05K2J9T5sO/kfFKrDazUpUMu21MiPTg
+ 2qJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769279378; x=1769884178;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BAwgkxcCnnqe9jCM08ttRZ7hAqumVGJ7T0ER05F6LwQ=;
- b=imhLPWWodiXLW8VaWGhEQ9okPpER7OvRG2SeMbiTISuQvnXE8j4X4Fu+3FuuFwATiM
- C7Fcpum9eP5fJZo8XkgUn7YRUFd83+3HGg9KQVOsbWVwe1F07wRBPqTlOdUfruKmXshp
- IhWvrevmOIi/boCpTzRE5SJGKyJGQlGccVrJv1I/EiiAGX4MnrqkMc5V6R6XiW8Vsz5Q
- j24oTUmIh0N7vV9mApdT3YMNECGQxjZiwL/pubyWIrEFSmLkLuZMbM8D/ctRUFPSm9iF
- XGtaux9tsGnMEKuSI01nZEZb+tj545ZD+p4Ro+B9LPJ3DNg2AnuWJoedwyanmOE6BMGE
- pnrw==
-X-Gm-Message-State: AOJu0Yyy5nnfMdEgLyDTTtl4EPChmDZAD/9ZStr813Xr3decBo4ObyEk
- LP73WZd9uHx6BAgexh5a2kKaedTmS1AjLQ6LB/R0VymUTlov/e02/H4xwYPwNiTa6w0mR+fmgbY
- isnpAygc=
-X-Gm-Gg: AZuq6aLVzxM7eKCwYXd9OZtUG0NkNpzXIykwA8JYmAzuCywSZzRxqwhsNuj4AyCNazN
- uKQR7JeBc9xZP1SY+OMkZSC5Qoi7KMRpoMh/z/P5/tffHt7AvwwZmmjVh7oREWNYlDa99nf95T4
- KyD/kRQn4BneLAgdhfUTYWfc/IjEHaD4LD+/FzcHcGPwTa91UcdDJRi+8gesiOaWZq13cfhnL1F
- QXduy56Ev+WJ8CNVswgt/5QT5VgaegHZAJ+EvkSc6brXLdSmzN4wB3+uySEBeOeOR1JY4JMJEdA
- qWQ0fpY90guKnWy6rOEfZ9mEdcquUKIZ+QdcZ43znT5F8gyexLXNP80qG3AaTQMNePlVKLObtYb
- oBNAh5z57bbJjbqi01ZQsKqxKtOTJC37aRspb3oZ8EyGXY36tOqkIHfg/Zqr7/RwBkM2HyslWin
- +kjsK4TsGankiBVkRMBqgf6U20N2ctuiBh9wyq1bA8ZKrHJgS7fSH0ZyBEvawuXE7/
-X-Received: by 2002:a05:6a00:800e:b0:81f:7db2:89cf with SMTP id
- d2e1a72fcca58-82317ea4fafmr5626890b3a.39.1769279377703; 
- Sat, 24 Jan 2026 10:29:37 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769279369; x=1769884169;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6/3SCHzxa6OHH2ekb2alqt7GMnbKXy8REhsKJuShvps=;
+ b=gadRqP0cTMTFwF7qSHP09O2spTifE86/3jG8SOgjKucz5toZux5q4j8YzjLFjrvnR4
+ PhiFtjSumE1f1l052aog+vyuXO87EvewDsmJrbqMDazhkieyM/QZyiX8br1se5zoln7v
+ rI9mDaELTii5/HyqPA+1Zjc3H419JorARdskABs0Xu/AukY+sWJuUEpZBVwpKwo6YM+8
+ DrTgQJG4H6uyMGRWi9Fp27TySsZDMsImVDIIKAgDHe9qcSQ51gjF8De3ZXQg62fH5WZE
+ cSy3eF+lZWxbaa5vWdxVkfFTU2O5TARU3QKYHAaapkA+G3vYi/2Efb3sfOKwhK7FJiDJ
+ s7tQ==
+X-Gm-Message-State: AOJu0Yx2ms2UGtKf5a89GwTo5vF9wzhHWBCmcu/0p/aDuwP/bpf5kZ30
+ +kJCVppuRecQWmCwVoLO1YGsVcDHdfKU5h3rhBeYwrpqMp1u5izCx3D7hFuKVQ3fO4SaaiOcVGu
+ UmhB0o9M=
+X-Gm-Gg: AZuq6aLYuS2X3C37AS/9LdrbK8brdJejYB0oieP1dRQDPDGAv7aFPTsA38pgWY/vKNt
+ 1v2f+WNkrcwlnuF9UfF1CMIYbQNIclgFX1aq/irZ8t6sdjMIbgGLcBMLobR6BNFgKytVjOUV/TV
+ B35oM6l/XelMRDuZ2mf5VPztHhdRupemUquel4exLwWpDVPHQ2jyExx05HZuWTbXrF+oSOqsIj4
+ S7KLJhjoCiOhXtNMruXUrwrRFWaqA8aDtE0nIOEvpMOO5cHm7+w0YA00vZC8DAMPvpQ4i8B9Cg0
+ XyYyQu/tA99SyEKLeiMtY3VAyOfoqmeUwOgUxzdEjp73EdmKVp1n7XdxoRuLwLQBePo0fm2gf1E
+ DOriGMXeYxDTOInLDF1piCVYt66uO3hhJoC8df2hYwOTO5fvcM1uEQSEtvLn/ZPFi+6S6dR8V+r
+ CtDgQPmDTxWLDyTzuvZr7cm0NlKzS0XuLPxVbq5s6pi/0V3P3vR7OjJVtmz3Zm4jSw
+X-Received: by 2002:a05:6a00:4b43:b0:817:9a85:54af with SMTP id
+ d2e1a72fcca58-82317e00603mr5959621b3a.43.1769279369535; 
+ Sat, 24 Jan 2026 10:29:29 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8231871d432sm5296485b3a.42.2026.01.24.10.29.36
+ d2e1a72fcca58-8231871d432sm5296485b3a.42.2026.01.24.10.29.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 24 Jan 2026 10:29:37 -0800 (PST)
+ Sat, 24 Jan 2026 10:29:29 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
@@ -80,16 +79,15 @@ Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Alexandre Iooss <erdnaxe@crans.org>
-Subject: [PATCH v4 09/11] qga/vss-win32: fix clang warning with C++20
-Date: Sat, 24 Jan 2026 10:29:19 -0800
-Message-ID: <20260124182921.531562-10-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 00/11] plugins: enable C++ plugins
+Date: Sat, 24 Jan 2026 10:29:10 -0800
+Message-ID: <20260124182921.531562-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260124182921.531562-1-pierrick.bouvier@linaro.org>
-References: <20260124182921.531562-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,37 +110,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-C++20 deprecated such constructs.
+Writing plugins in C can be sometimes tedious, especially when using Glib to
+keep track of execution state. We can directly use the same C API but write our
+plugin in C++, benefiting from its great standard library offering strings,
+smart pointers, data structures and synchronization mechanisms.
 
-../qga/vss-win32/requester.cpp:380:32: error: bitwise operation between different enumeration types ('_VSS_SNAPSHOT_CONTEXT' and '_VSS_VOLUME_SNAPSHOT_ATTRIBUTES') is deprecated [-Werror,-Wdeprecated-enum-enum-conversion]
-  380 |     ctx = VSS_CTX_APP_ROLLBACK | VSS_VOLSNAP_ATTR_TRANSPORTABLE |
+It's common for downstream QEMU forks to provide C++ for plugins, like this:
+- https://github.com/panda-re/panda/tree/dev/panda/plugins
+- https://github.com/FlorentRevest/DejaView/tree/main/src/qemu_plugin
 
-This is a false positive, since VSS_CTX_APP_ROLLBACK is not a value
-defined in _VSS_VOLUME_SNAPSHOT_ATTRIBUTES enum.
+Hopefully this will help more people to use upstream QEMU, and as a benefit, get
+their contribution back and help to develop plugins ecosystem upstream directly.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- qga/vss-win32/requester.cpp | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+This series first cleans up build system for plugins, factorizing details
+between contrib/plugins and tests/tcg/plugins folders.
+Then, we perform codebase cleanups to fix conflicts between existing headers
+and C++ headers.
+After that, we can update the C++ standard used by QEMU, to benefit fully
+from latest updates of the language.
+Finally, we define an empty C++ plugin, making sure we can keep track of
+possible regression in qemu-plugin header.
 
-diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
-index 5615955b6f3..74489fcd0ae 100644
---- a/qga/vss-win32/requester.cpp
-+++ b/qga/vss-win32/requester.cpp
-@@ -377,8 +377,10 @@ void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
-      * To prevent the final commit (which requires to write to snapshots),
-      * ATTR_NO_AUTORECOVERY and ATTR_TRANSPORTABLE are specified here.
-      */
--    ctx = VSS_CTX_APP_ROLLBACK | VSS_VOLSNAP_ATTR_TRANSPORTABLE |
--        VSS_VOLSNAP_ATTR_NO_AUTORECOVERY | VSS_VOLSNAP_ATTR_TXF_RECOVERY;
-+    ctx = VSS_CTX_APP_ROLLBACK;
-+    ctx |= VSS_VOLSNAP_ATTR_TRANSPORTABLE |
-+           VSS_VOLSNAP_ATTR_NO_AUTORECOVERY |
-+           VSS_VOLSNAP_ATTR_TXF_RECOVERY;
-     hr = vss_ctx.pVssbc->SetContext(ctx);
-     if (hr == (HRESULT)VSS_E_UNSUPPORTED_CONTEXT) {
-         /* Non-server version of Windows doesn't support ATTR_TRANSPORTABLE */
+Note: This series is *not* a trojan horse to bring C++ in QEMU
+codebase, nor to define an alternative C++ API for plugins. It's just enabling
+more users to get the most out of existing C plugin API.
+
+CI: https://gitlab.com/pbo-linaro/qemu/-/pipelines/2242427013
+
+v4
+--
+
+rebase on top of master (new conflict with ./scripts/clean-includes)
+
+v3
+--
+
+- fix indentation in patch 2
+
+v2
+--
+
+- drop coroutine.h rename patch as it's not needed
+- drop ctype.h rename patch, and move qemu-plugin.h to include/plugins
+- fix mem.c to not depend on other QEMU headers
+
+Pierrick Bouvier (11):
+  plugins: move win32_linker.c file to plugins directory
+  plugins: factorize plugin dependencies and library details
+  plugins: use complete filename for defining plugins sources
+  plugins: define plugin API symbols as extern "C" when compiling in C++
+  tests/tcg/plugins/mem.c: remove dependency on qemu headers
+  plugins: move qemu-plugin.h to include/plugins/
+  meson: fix supported compiler arguments in other languages than C
+  meson: enable cpp (optionally) for plugins
+  qga/vss-win32: fix clang warning with C++20
+  meson: update C++ standard to C++23
+  contrib/plugins: add empty cpp plugin
+
+ docs/devel/tcg-plugins.rst                  |   4 +-
+ meson.build                                 |  26 +++--
+ include/{qemu => plugins}/qemu-plugin.h     |  11 +-
+ include/qemu/plugin.h                       |   2 +-
+ plugins/core.c                              |   2 +-
+ {contrib/plugins => plugins}/win32_linker.c |   0
+ tests/tcg/plugins/mem.c                     |  59 ++++------
+ contrib/plugins/cpp.cpp                     | 119 ++++++++++++++++++++
+ contrib/plugins/meson.build                 |  25 ++--
+ plugins/meson.build                         |  17 ++-
+ qga/vss-win32/requester.cpp                 |   6 +-
+ tests/tcg/plugins/meson.build               |  18 +--
+ 12 files changed, 203 insertions(+), 86 deletions(-)
+ rename include/{qemu => plugins}/qemu-plugin.h (99%)
+ rename {contrib/plugins => plugins}/win32_linker.c (100%)
+ create mode 100644 contrib/plugins/cpp.cpp
+
 -- 
 2.47.3
 
