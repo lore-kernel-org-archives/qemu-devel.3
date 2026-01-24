@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D558D715EB
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 14:29:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EECF1D715EC
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 14:31:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjecf-0001n1-2q; Sat, 24 Jan 2026 09:28:21 -0500
+	id 1vjef8-0002r7-Eg; Sat, 24 Jan 2026 09:30:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjecc-0001m8-V7
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 09:28:18 -0500
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ id 1vjef0-0002pk-0F
+ for qemu-devel@nongnu.org; Sat, 24 Jan 2026 09:30:47 -0500
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjecb-00014S-BY
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 09:28:18 -0500
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-64931bbf70cso2729569d50.0
- for <qemu-devel@nongnu.org>; Sat, 24 Jan 2026 06:28:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769264896; cv=none;
+ id 1vjeey-0001bC-Fi
+ for qemu-devel@nongnu.org; Sat, 24 Jan 2026 09:30:45 -0500
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-79420190633so30418147b3.0
+ for <qemu-devel@nongnu.org>; Sat, 24 Jan 2026 06:30:43 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769265042; cv=none;
  d=google.com; s=arc-20240605;
- b=gg7gxByEflCEcJeOLt3umRVL1eg//DsliMZ5CxwT3Pjey0AgBXmYtQhLMcy7fXc4sn
- JokTnvHNwj8q22XOIbQszRKr3Q4z6q1czX8hUYzHjnavARYFNC1QMTp6AeOXBvPqgvnV
- nuWf+hw90a/mfe2f7r5efGL2WbfBwBRjvGqBPFg7pYPby2Jlu94/cSHoRvB22SeBVQwQ
- wWGpyGL5/EpzSN/AF82RE4Uh3//CyoP/hzPheeSpC6u4FkKXHC9Ntd3yRPiot35LJEfQ
- AzOmblQk6hkRZLh69EB4GBs5U8vA6oKnN+JkK1P6a3Ohh5YOGIQnWxHzOqgE7wpqknPL
- m1gg==
+ b=hzkd4OdahSbzXZEWT73vj5Du6KgUeYJMGwViSQ2StA+n23DN8hbo/xOTh1FYps0cbc
+ W3PPTuEPexCOVBSRXfFPiowV10xSC6xoSKqI5E+bS0QD/D/kO9rx1p6NiF1CA4dgo2LD
+ B4kgIMqmSRKrI7gWRn78ICzjvd1hUX5z7i+ZbGRN2yXsJaz21phdsqKm92JYJr3MblVW
+ m6cP3eNuxJebNQaLYEj3UYiMhqy6Rt2FVGbwxmmZL4d9rYQA4kfbu0y7jl3yEBE5+LW1
+ 8tMf0SmhquS521ycKVyxDTfhm1OyydDrf+91gwsPWvNb4pDyiIijnAff2hDVaAuhB4iJ
+ rurA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=peM3wtjXqPtiFGqCKVXz8Hi31hxFxpjgxlpaGNE2yQY=;
- fh=nf5FhO+RmFJAV0QNfK+CKqdkuCXrZWyW41hpO/euKMA=;
- b=YMQavVm5UoiUQLb3F4KU14nwHD3YLw/momKq3PCSVRoyDUCZXlYPHURrtbJBWn/fgb
- eaFLMlKm8hv2FSGOPnoKMD0m6Q4NZygQ4Uy7CkuEwyxbObTtR9o2yOk3MBf/GVYFWqZt
- mZEtdfIKZ9AtVz0/kzQl6WENLdWZlqVv509q5HjyQlf8WW9cRR+5RI7Fv8BuAR67czP2
- xhkR2NKt7BjLjmE5ECw2sz16FNox3cUPV22+3MO2Rp7QGkEd37TLTi0IS7tsK5WQrURV
- mhZtfGp2fupH8uDbWVeRH7Y7ZpjRsNODTjypIl8UzYnPs8+lJwNRO3Y/PjxvHiwJRzAT
- 7/XA==; darn=nongnu.org
+ bh=DhJ/UdAQLCRU+RscUv9toppMvl7eN/qqmC7TQ5GfHHw=;
+ fh=ZydQy//n0U/S7R2L18eAX372JrTfha8Z683DjmYt4Jw=;
+ b=XGIZIedJvnVLIyhm7Zwbr0hqysgFlMMLH6yGkRgzOFhAhnWyWIuqqsE72ad6jRnDWK
+ +e/6R+cmRzdrCPHnBhuJfcIh7OcL3zsGjJYmLuu5xnVwrkVFDadEMC1fWluiR8sFBjC1
+ GbJB/9ggjhCXOHMRPpC8nVdUSxVy/7vkTzzvPU8c0BLj+nSoCqUnLAJFYzLcwDwt3YdF
+ OQBpWFYBJ9HBacgFISimygpct7ff7bwd2992lCHqEVq6dmrSMa6RhMQ01aC3mIc/O6Av
+ 0moYU3Rcc+hTVf4cfqoM343G0YW39auFy1tLNLsEkBXpSWrjtYAdXANb+0QIC6tGnOqL
+ Ovkw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769264896; x=1769869696; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769265042; x=1769869842; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=peM3wtjXqPtiFGqCKVXz8Hi31hxFxpjgxlpaGNE2yQY=;
- b=caxzskNp2aj/Ol5mpUYmz21IcvGG5/bRptyncrk1/TavlkiBp9++2eDqpIBn51Hv3e
- W2AGO6aj/UPC7Ylc6TiTOPxQ+HYLrkqHXahKwQPTvExO2reRYcYZ7Dks2J1RQ1hREZDc
- Id6C50hgytyAOZ9nMcFkhzPGUM2SLdbd/iETTJO4qoLUqroN8y0jtIHHt5USHwBcDkdY
- cWwBGN3FFAnFMmMKjl7lMku5bS0YkhR3YKe24Ve2Whzk2T51rMyUe/xmfpqAox+1OYRU
- jFqejApja4Et2SAE0hdulTvW8wrjzp+mJThMH8bc6TzJIl9TStTP7zHgI+v8w21v6fvc
- i9Lw==
+ bh=DhJ/UdAQLCRU+RscUv9toppMvl7eN/qqmC7TQ5GfHHw=;
+ b=Eo7KcugyUPJhweHg44WMqQPdFK7O/NxPu0OtmzKX/6IW1Ao1H+TUpwpEIauzbZMowx
+ LMtxppmvT3n/DIV+9fxrCLatt4R1e4Du3QPQvxMeki7BZO94/k+MwGzjcSjq1cnBVGT6
+ jGgPz/zoAlyjnr0WcZCQPiI8l8qha6JseY9ZZju+Q8fXIdRl0t83nwiupS5MHLallGXv
+ K6/6JqM5E95/d2JfmnFBD2Dk/rFVdZmmuSTJmz69TVfMfUb4VFMkTmlgx7SB7FWUdM5e
+ NJ4Raj7rxakGS3gcjPHvZF8SBov2h0lOQ0kvtusPMpp6Em0Cs94KiUc7ZjJztYTF+dFV
+ alPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769264896; x=1769869696;
+ d=1e100.net; s=20230601; t=1769265042; x=1769869842;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=peM3wtjXqPtiFGqCKVXz8Hi31hxFxpjgxlpaGNE2yQY=;
- b=XSij5jRhkhJDRaF/Up8JJAzSYKNHI9eKa8fh4uW6snSRWjx++IcsElEClxYBH7bNJI
- v9cICvKVXi7eZ8OxQeq2Hp85Q7q0CHMCUaU0QjbrcC3APFgGAhlHiibyQhW4x6OvMMZS
- 1ngsaja6bMZwiC6O4jTM9CYVTAB94uoFxAmvdBm4cQHoEmJEHy9fr4zq9sgYFOkJK6ew
- BwJLE7ctrvSD2CT6kKUz5HUtc7vU6nMq7uCdPguKtRFz5VDZxhtRJ9c+N6ooqlF0NSsF
- IB5iRKztdptQHqsdUH8v+WVW5IO7/9n7e/mQGxK1Cn2GfflQjkbaGjb35YbKL7/m/9wU
- 6GFw==
-X-Gm-Message-State: AOJu0Yw3Ng42TRbP0+Ms0Z25KPPQ/eDJ/WW5mVOqd0rVx3JgNrU3x/g0
- xQIC/zijkcbE2+0jsgg+x1/10NvsreDIZNI5UXB3wyhN9YONA8h4wYCkSST8XxcdF+9F1FSDYh5
- Th5e1nwcyflXdk2L0XJUtohQGcX6EmAu/Cp21qyYZgyTHOcD40Oi4S/I=
-X-Gm-Gg: AZuq6aKdGrAl1MgT0+oMJCm0TuIOBJmAIHjKI+yu3LPreC+hbXxOQTiXlI/+JOasr0q
- mpRSeBPEV+RBVBMXoqcfIc0RF4pNoFUuqFUOA2l9a0rqRWM3TwPaDjoGsSj4pq9WgTL6CjbEOg4
- SGQz3HCiDpylTTIL/A7b5GLKGevaSRtq55tDeVD3ChCi+R8mSdV9KWiEw1FyIf3kQgqA8l+E32I
- u+YHoZ1Bb+2On2twCikRfmpGtNe12yIyf/JGeD2gkor+xnUHIO9p97Sp3i3p1ZnXUmFpw==
-X-Received: by 2002:a05:690c:f81:b0:786:62bb:f6f5 with SMTP id
- 00721157ae682-794398c9740mr108331217b3.17.1769264895829; Sat, 24 Jan 2026
- 06:28:15 -0800 (PST)
+ bh=DhJ/UdAQLCRU+RscUv9toppMvl7eN/qqmC7TQ5GfHHw=;
+ b=dYR0gcK3byZrGSg7O1CIQAX4Pm3j8DzGbeWhODfxjBPpkV2P4TzCxb3oRNCn/6K9Qa
+ JI/eg1jX5VCB2AXCg6sEF7kH5O54BGVS1g2z17VQOddd0MzLhhFdTtwjLbA2bSM7Duvc
+ lT1BJ3pAVMuWEdlmUvq+D05NS7SXptFaYUd3auQIN2DPiBeRbbu9MQrXnKCulVh5AOWG
+ oMqNwPA7knF4mDmWtVfeH4XI6k8+PE7LC+tN7tC+2YvCxQYcK1sl9gdztUB7yyLabqoL
+ bALfMl9kUiTgGy9e6daWh7tKh2MbTXmGMh7K3ajgA7/X6sYOSnh3NHYLC1Nd0j5uoJgb
+ HzpQ==
+X-Gm-Message-State: AOJu0Yz3ijsZ4v1Ac8mJrnE2BEktFhJ/fCIHMLpbm6Cme0SzMnTTWWH8
+ 3K7pqoc46u99kgp0rjtPCTMT9EIN78zXpWIe500PB0Rl27FUpG5VRbtqWA1y2kF/uiY0kEk0UHN
+ kMEaQzLj0Nb43p6/IDcvZSpt28m6DEH0IagyUKpDmMw==
+X-Gm-Gg: AZuq6aLZzk+WHZ68ZN90rpe119hJwLS+rILFjLtxOJzQfs5ngYf2M3OIA9wDODNXqCF
+ cOCSkFBxi0dpDR4RGosKShKFiqn51J2ZX4eYntT7TrW3Y3ABvD2MiNBwTP0S5xCPbQqADhtJnS0
+ DVkWWJWa0vrHF9ITw7pIdtHAoGkKS9X8qT8nqo2kTE4W60w2a4JUpB6MmVfAy38RCOGrxo9gmMF
+ 8Q/PiuuLnW8dOYcazeVNNiXttgPoRtu627HW2KhUeExX5LCfF1gJpYYWLYvkapPemPdrQ==
+X-Received: by 2002:a05:690e:13c5:b0:644:402a:8d3b with SMTP id
+ 956f58d0204a3-6495bed2ec7mr5816189d50.10.1769265041940; Sat, 24 Jan 2026
+ 06:30:41 -0800 (PST)
 MIME-Version: 1.0
-References: <20260124032121.84D2B47CD74@orions-MacBook-Air.local>
-In-Reply-To: <20260124032121.84D2B47CD74@orions-MacBook-Air.local>
+References: <20260124131537.78942-1-AlanoSong@163.com>
+In-Reply-To: <20260124131537.78942-1-AlanoSong@163.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 24 Jan 2026 14:28:04 +0000
-X-Gm-Features: AZwV_QiKQTAcNRwnuih3DmRhCP7ThcOGsMZMYRrMPTvR92vDnjgOFEPrM9HoT1o
-Message-ID: <CAFEAcA9RpYmHB=Fh2H8+Zbe2nWR_GnNpieR9VYTfBWFkUzDrfw@mail.gmail.com>
-Subject: Re: [PATCH] hw/net/rtl8139: Fix integer overflow in
- rtl8139_write_buffer
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, orionhubble@163.com
+Date: Sat, 24 Jan 2026 14:30:30 +0000
+X-Gm-Features: AZwV_QgCywjbwXj4LCpFuaqxYFa5HjDQhPJvVuhP7pkLrBc2H7kpyu6Pwe7hc8c
+Message-ID: <CAFEAcA9=xMfeGzUZikdBmiqYU_VOow5+Efhg7g2fWeN-fjG0dw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/1] hw/i2c/dw: Add DesignWare I2C controller emulator
+To: AlanoSong@163.com
+Cc: qemu-devel@nongnu.org, crauer@google.com, joel@jms.id.au, 
+ jonathan.cameron@huawei.com, philmd@linaro.org, ani@anisinha.ca, 
+ cminyard@mvista.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,84 +114,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 24 Jan 2026 at 06:10, orion cai <orion@orions-macbook-air.local> wrote:
+On Sat, 24 Jan 2026 at 13:16, <AlanoSong@163.com> wrote:
 >
-> From d1781652dc7039b2ac92fa80695091b97dbf1918 Mon Sep 17 00:00:00 2001
-> From: orion cai <orion@orions-MacBook-Air.local>
-> Date: Sat, 24 Jan 2026 11:19:17 +0800
-> Subject: [PATCH] hw/net/rtl8139: Fix integer overflow in rtl8139_write_buffer
-
-Hi; thanks for this bug report and patch.
-
-> Fix integer overflow vulnerability in rtl8139_write_buffer() that could allow
-> a malicious guest to bypass DMA bounds checks and write to arbitrary memory
-> locations.
-
-For clarity, this is an arbitrary write to guest memory,
-not to host (QEMU) memory, since we're doing a pci_dma_write(),
-correct ?
-
-That renders it a bit less critical, because if you can
-program the RTL8139 then you almost certainly already
-have kernel level privilege in the guest and can write
-to arbitrary guest memory directly if you want...
-
-> - RxBufAddr is near UINT_MAX (e.g., 0xFFFF0000)
-
-How can this happen? RxBufAddr is the device's
-"Current Buffer Address" register, which is supposed to
-be a 16-bit read-only register indicating the total
-received byte count in the buffer. If it has ever got
-larger than the size of the buffer, then I think we have
-a bug somewhere else, and the correct fix is to make
-sure we are not letting it get set incorrectly (with
-perhaps an assertion in case of other bugs).
-
-Do you have a repro case that triggers this bug? The
-ideal here is a qtest repro case which gives the set
-of memory writes etc needed to trigger it; for an example
-of what that looks like see e.g. this bug:
-https://gitlab.com/qemu-project/qemu/-/issues/2777
-A guest binary that shows the problem would be OK too.
-
-> diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-> index 9fd00574d2..41b8407acc 100644
-> --- a/hw/net/rtl8139.c
-> +++ b/hw/net/rtl8139.c
-> @@ -745,9 +745,16 @@ static void rtl8139_write_buffer(RTL8139State *s, const void *buf, int size)
->  {
->      PCIDevice *d = PCI_DEVICE(s);
+> v1: Initial version:
+>     1) Add DesignWare I2C controller according to DesignWare
+>        I2C databook v2.01a.
+>     2) Confirmed under v6.18 kernel driver.
+>     3) The slave mode is not implemented, cause this feature
+>        is usually not used.
+>     4) The 10 bit slave address is not implemented, cause
+>        this feature is usually not used, and not supported
+>        by qemu I2C core bus currently.
+> v2: Refine according to review comments:
+>     1) Define registers by using registerfields.
+>     2) Use SPDX license.
+>     3) Confirmed under v6.18 kernel driver.
 >
-> -    if (s->RxBufAddr + size > s->RxBufferSize)
-> +    if (size < 0 || s->RxBufAddr > s->RxBufferSize - (uint32_t)size)
+> ------
+>
+> This patch seems to be a duplicate of Joel & Chris's work:
+> https://lore.kernel.org/qemu-devel/20260109123211.368869-1-joel@jms.id.au/
+>
+> It's just a coincidence, :)
+> But it's okay even if it not been merged, I just want share it and hope
+> it can help others.
 
-Is it possible to get here with a negative size ?
-This is supposed to be the packet size, so if we get here
-and it is negative something has gone badly wrong in the
-caller. I think it would be better to assert that size >= 0
-at the top of the function.
+Please can everybody who is interested in the designware i2c
+model get together and figure out what they want to do as
+a forward path for it?
 
->      {
-> -        int wrapped = MOD2(s->RxBufAddr + size, s->RxBufferSize);
-> +        /* Calculate wrapped position safely without overflow.
-> +         * Use modulo on each term to prevent overflow.
-> +         * RxBufferSize is always a power of 2, so MOD2 is safe. */
-> +        int wrapped = MOD2((uint32_t)s->RxBufAddr, s->RxBufferSize) +
-> +                    MOD2((uint32_t)size, s->RxBufferSize);
-> +        if (wrapped >= s->RxBufferSize) {
-> +            wrapped -= s->RxBufferSize;
-> +        }
-
-When does this produce a different result to the existing code,
-given that RxBufferSize is a power of 2 ? (For QEMU, we
-always use -fwrapv, so we do not need to worry about a
-signed integer calculation overflowing, as long as it
-still produces the right answer, which I think it does here
-if I'm not getting confused.)
-
->          /* write packet data */
->          if (wrapped && !(s->RxBufferSize < 65536 && rtl8139_RxWrap(s)))
-> --
+I am not going to review any of these patches until you have
+collectively determined which is the best base for doing it.
 
 thanks
 -- PMM
