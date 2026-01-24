@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FBE9D715C7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81AE6D715CC
 	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 06:10:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjWZP-0001E3-IJ; Sat, 24 Jan 2026 00:52:27 -0500
+	id 1vjWZP-0001FM-RR; Sat, 24 Jan 2026 00:52:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <orion@orions-MacBook-Air.local>)
- id 1vjUPH-0006ts-Rb
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 22:33:51 -0500
+ id 1vjUPH-0006tC-BO; Fri, 23 Jan 2026 22:33:51 -0500
 Received: from [115.206.96.218] (helo=orions-MacBook-Air.local)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <orion@orions-MacBook-Air.local>) id 1vjUPF-0000c0-NL
- for qemu-devel@nongnu.org; Fri, 23 Jan 2026 22:33:51 -0500
+ (envelope-from <orion@orions-MacBook-Air.local>)
+ id 1vjUPF-0000br-Bz; Fri, 23 Jan 2026 22:33:50 -0500
 Received: by orions-MacBook-Air.local (Postfix, from userid 501)
- id BB51747D39A; Sat, 24 Jan 2026 11:33:45 +0800 (CST)
+ id 84D2B47CD74; Sat, 24 Jan 2026 11:21:21 +0800 (CST)
 To: qemu-devel@nongnu.org
 Subject: [PATCH] hw/net/rtl8139: Fix integer overflow in rtl8139_write_buffer
-Message-Id: <20260124033346.BB51747D39A@orions-MacBook-Air.local>
-Date: Sat, 24 Jan 2026 11:33:45 +0800 (CST)
+Cc: qemu-stable@nongnu.org
+Message-Id: <20260124032121.84D2B47CD74@orions-MacBook-Air.local>
+Date: Sat, 24 Jan 2026 11:21:21 +0800 (CST)
 From: orion@orions-MacBook-Air.local (orion cai)
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.206.96.218 (failed)
 Received-SPF: none client-ip=115.206.96.218;
@@ -37,7 +37,7 @@ X-Spam_report: (3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_ADSP_NXDOMAIN=0.9,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 24 Jan 2026 00:52:24 -0500
+X-Mailman-Approved-At: Sat, 24 Jan 2026 00:52:21 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
