@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B59BD715D6
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 08:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA998D715D6
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 08:54:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjZOf-00023q-53; Sat, 24 Jan 2026 03:53:33 -0500
+	id 1vjZOQ-0001pj-Sg; Sat, 24 Jan 2026 03:53:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjZOd-00022I-I8
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 03:53:31 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjZON-0001mG-O0
+ for qemu-devel@nongnu.org; Sat, 24 Jan 2026 03:53:15 -0500
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjZOc-0002Tk-8d
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 03:53:31 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjZOM-0002PP-F1
+ for qemu-devel@nongnu.org; Sat, 24 Jan 2026 03:53:15 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 265BB43FA2;
- Sat, 24 Jan 2026 08:53:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B90C116D0;
- Sat, 24 Jan 2026 08:53:27 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 6FE2860053;
+ Sat, 24 Jan 2026 08:53:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3754C19422;
+ Sat, 24 Jan 2026 08:53:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769244809;
- bh=Jf62z9nlMLpALlcWZJZDbVgTeJxR/J8Rcqx9XgcCPa0=;
+ s=k20201202; t=1769244792;
+ bh=HqPNF33+yuQjENJAc4XJjvbKHOUTbEiw7SICOVHDfOc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=WpAsM1uOWX6nttushE3OiRM97m9Sl2tYRjsCvc2iIyz0TDYo9LlWBzdhWDvjkBzZp
- 0AmXhrk3J8d4jovB7b+SKQBOOhlbywdudBdwPj3vqZ6mT6K+RCDOf2i26zWJcgCwTR
- goYOLerd25T4Q8Y3BAgJb91NTRCYpvDQd6PwcYaF+XZHz8T9cLoOUdAS1jjm51x40E
- OnLKtUdId02uM8WsyviVUMP/wyq6CA8Skyni+MDw33WX1YJjHHCSMxzPGuDmLaxcoV
- v/jDh1mt/Y+v55p97FFzzEYSQNkGkZA1Sa291q0+ZI/rFFX7ye90SAWbcSai82v2Ww
- tZG0+yDepekAQ==
+ b=d0RM2Y+GwFl4G6Qp0F4Atnf6YgjnQBLvUR2tOsA3vz824rQF40Lr3iEBY5Z//ZFwe
+ MXhkll/k0iB6kSdEcJgyBqLER7mlKNn15BJCASXiebHdUsqogZSQVedbRB4WFhwB9k
+ NQHXEwHNAhxJ+YSIhmtjtgPHgWczTmAnipjUtBi0/TA0+WTm9Db6PfjyBKTQLQgHGV
+ brGmltrfa5zHf8wfcYtoiD4ci0+CRLXd2GQmF3VpgksmX87JeuhzRTeq3c3N2883s/
+ 1mVgaLZZcVPVpI6qjTNTR8BAClTSUK6AL3+NnsLxIPyu8MJA6FAvNkMqeBzNQG3D9J
+ fN0tZfTlNAeRw==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, deller@gmx.de,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PULL v2 10/11] linux-user: strace: Fix 5th argument of futex syscall
-Date: Sat, 24 Jan 2026 09:53:05 +0100
-Message-ID: <20260124085306.3996-11-deller@kernel.org>
+Subject: [PULL v2 01/11] linux-user: update statx emulation
+Date: Sat, 24 Jan 2026 09:52:56 +0100
+Message-ID: <20260124085306.3996-2-deller@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260124085306.3996-1-deller@kernel.org>
 References: <20260124085306.3996-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -71,36 +71,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Andreas Schwab <schwab@suse.de>
 
-The 5th argument isn't printed, but instead the 4th argument is shown twice.
-Fix this, and print the FUTEX_BITSET_MATCH_ANY string constant instead of -1
-if the op is FUTEX_WAIT_BITSET or FUTEX_WAKE_BITSET.
-
+Signed-off-by: Andreas Schwab <schwab@suse.de>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- linux-user/strace.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ linux-user/syscall.c      | 3 +++
+ linux-user/syscall_defs.h | 6 +++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 18bc6c800c..ca67cfd09d 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -4150,7 +4150,12 @@ print_futex(CPUArchState *cpu_env, const struct syscallname *name,
-             break;
-     }
-     print_pointer(arg4, 0);
--    print_raw_param("%d", arg4, 1);
-+    if ((op == FUTEX_WAIT_BITSET || (op == FUTEX_WAKE_BITSET)) &&
-+        (arg5 == FUTEX_BITSET_MATCH_ANY)) {
-+        qemu_log("FUTEX_BITSET_MATCH_ANY");
-+    } else {
-+        print_raw_param("%#x", arg5, 1);
-+    }
-     print_syscall_epilogue(name);
- }
- #endif
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 3601715769..24046c7eeb 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -7882,6 +7882,9 @@ static inline abi_long host_to_target_statx(struct target_statx *host_stx,
+     __put_user(host_stx->stx_rdev_minor, &target_stx->stx_rdev_minor);
+     __put_user(host_stx->stx_dev_major, &target_stx->stx_dev_major);
+     __put_user(host_stx->stx_dev_minor, &target_stx->stx_dev_minor);
++    __put_user(host_stx->stx_mnt_id, &target_stx->stx_mnt_id);
++    __put_user(host_stx->stx_dio_mem_align, &target_stx->stx_dio_mem_align);
++    __put_user(host_stx->stx_dio_offset_align, &target_stx->stx_dio_offset_align);
+ 
+     unlock_user_struct(target_stx, target_addr, 1);
+ 
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index cd9ff709b8..6ae6e1fa13 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -2734,7 +2734,11 @@ struct target_statx {
+     abi_uint stx_dev_major; /* ID of device containing file [uncond] */
+     abi_uint stx_dev_minor;
+     /* 0x90 */
+-    abi_ullong __spare2[14]; /* Spare space for future expansion */
++    abi_ullong stx_mnt_id;
++    abi_uint stx_dio_mem_align;
++    abi_uint stx_dio_offset_align;
++    /* 0xa0 */
++    abi_ullong __spare2[12]; /* Spare space for future expansion */
+     /* 0x100 */
+ };
+ 
 -- 
 2.52.0
 
