@@ -4,107 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3676D715C6
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 12:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 711D1D715C4
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 12:14:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjcQi-0001OA-TL; Sat, 24 Jan 2026 07:07:52 -0500
+	id 1vjcWY-0006KQ-7Z; Sat, 24 Jan 2026 07:13:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vjcQg-0001NQ-VJ; Sat, 24 Jan 2026 07:07:50 -0500
+ id 1vjcWV-0006DD-IT; Sat, 24 Jan 2026 07:13:51 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vjcQf-0000hk-EV; Sat, 24 Jan 2026 07:07:50 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60OBOQQO009131;
- Sat, 24 Jan 2026 12:07:48 GMT
+ id 1vjcWT-0001iM-U5; Sat, 24 Jan 2026 07:13:51 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60O4vNsc003250;
+ Sat, 24 Jan 2026 12:13:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=bybDDtTOH7sedwGrpLp3To3sRmZjl1
- sKskDVhrvJZ40=; b=eBVbmTWxJ7CO2NGvMp++jvk4Ld3VGcroFCPTwezLOFvpRI
- 1xOE7OXZJKX1YXWo1g5g6CB6VDSkmX3VDDbXsnX3ZBT1A2NExtEbZcodb0irYadw
- 0zJMolxGvCD5AakwYDIKlmjLK/9pbqrLMpsxy0SVEamoDY0UaXaQHL0oHdK95UE5
- AsTm21auYdXbf6bNqA5z5xRIEGiN+jSjTB2/UKdxr9mukC+4Ai8K+eotcE4vcogz
- 96CElfLsrtpYk2qjT0iV4ykx4KRzVThGwFJoe4YaM/NRgnFzxy9FgdEypw6MDqNf
- uQ3W4Af+X3JY2AoyE/GzzYwXoMV5U3qCKwnUHG/g==
+ :references:subject:to; s=pp1; bh=ojrkbnWsiwwbjNEKmmmaT9XAuwTjSk
+ aP5qIcKHeZN5c=; b=AAX1+jzQUaci9QSVjJZoh2NeCBy3OO0eu37Sivd/XzooJy
+ qi2LJGFlkisv72GfxQadRz7MJxcpsbVd0GNlc3d9dfWDNLsrQvzW0fG3buw9oNLr
+ Aj9BWcPVjoWpWGXnpe5OygX1gBWJTi4loatpWEyVHE+A6tdkEUv0pYUeEMvAxWIS
+ iNw/agXzrZUl1QN9IwrH45BvpVE8821asfY597DHky6DJyiyVrSw8WAHnlU4HIVU
+ WKjb+8ZwDXRx/WM0vkTKo/v3H8VtaoS6tbsQcS7K35x6NwFM0RltcL1lbXsgcoqI
+ C/FtWaZm01SK3j1m6hav4JUcP20Cw3oBMbPgTgKQ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnr5s1kr-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvkgm9bbq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 24 Jan 2026 12:07:48 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60OC3BNF011806;
- Sat, 24 Jan 2026 12:07:47 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnr5s1kp-1
+ Sat, 24 Jan 2026 12:13:47 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60OCDl3F024995;
+ Sat, 24 Jan 2026 12:13:47 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvkgm9bbn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 24 Jan 2026 12:07:47 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60O70EpY024610;
- Sat, 24 Jan 2026 12:07:46 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4brxasbskf-1
+ Sat, 24 Jan 2026 12:13:47 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60O7M6jw027233;
+ Sat, 24 Jan 2026 12:13:46 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4brnrnng06-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 24 Jan 2026 12:07:46 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60OC7hg746596490
+ Sat, 24 Jan 2026 12:13:46 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60OCDgBc50331910
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 24 Jan 2026 12:07:43 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1583020043;
- Sat, 24 Jan 2026 12:07:43 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4E5FB20040;
- Sat, 24 Jan 2026 12:07:40 +0000 (GMT)
+ Sat, 24 Jan 2026 12:13:42 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7831E20043;
+ Sat, 24 Jan 2026 12:13:42 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B25CE20040;
+ Sat, 24 Jan 2026 12:13:39 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.25.49]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Sat, 24 Jan 2026 12:07:39 +0000 (GMT)
-Date: Sat, 24 Jan 2026 17:37:37 +0530
+ [9.39.25.49]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Sat, 24 Jan 2026 12:13:39 +0000 (GMT)
+Date: Sat, 24 Jan 2026 17:43:36 +0530
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: Caleb Schlossin <calebs@linux.ibm.com>
-Cc: milesg@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- npiggin@gmail.com, chalapathi.v@linux.ibm.com
-Subject: Re: [PATCH 1/4] ppc/pnv: Suppress some "pnv_chiptod unimplemented
- register" messages
-Message-ID: <aXS1oRLD55eczjg0@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
+ milesg@linux.ibm.com, chalapathi.v@linux.ibm.com
+Subject: Re: [PATCH 4/4] ppc/pnv: Add OCC FLAG registers
+Message-ID: <aXS2ePO8_CIenfjr@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 References: <20251218200353.301866-1-calebs@linux.ibm.com>
- <20251218200353.301866-2-calebs@linux.ibm.com>
- <1fa38659565cf4dc1dfe24cc365d685554faecf0.camel@linux.ibm.com>
- <5e13f2c3-2075-4d31-bddc-06dcc31f6eae@linux.ibm.com>
- <aW3wVCdyn3WkeUoF@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
- <6072a537-e18c-4d46-9142-36e9c25bb11c@linux.ibm.com>
+ <20251218200353.301866-5-calebs@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6072a537-e18c-4d46-9142-36e9c25bb11c@linux.ibm.com>
+In-Reply-To: <20251218200353.301866-5-calebs@linux.ibm.com>
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI0MDA5NCBTYWx0ZWRfX77ccB8Icvqgs
- bjsYSabM/UtS1dSK+8fotQTNWjT448ql2sgR0JqqKTYsrv6zjqRMxdXARmTwCC2arVb0aAcHgTN
- lQx06bsjQVlrTRAyq24giw/vpCQP4LxfJbQlHdZxTsNFosbrqMzy+KpgjgHutRjJZE3WjZTO9Hf
- 103dPPMfR+ZVlnVC+GVCysEWXk3Wgxnt+46yxToFq+k71kdU8lv9IbFuxDW6tKPuft8YuWRjbBh
- pUHTe0mWA2d5pccyQ1eTXYBdoHfvAgjE5wiqWCkXdqCZ2DAuvZcwoqP+TPmfUF6NLaBSTBMLKj1
- iVdJ8+8vUrru87ghYyqVP/5RPxD0b6CyFy/74+zQ2259cbxrIZsO+7zrdMzPwU/wgVrsgxzETSf
- cy11zx0QkESgOnsDPyz5y+DMGeAkI8QnuoM/E4/TE4jqzIYS6jKfuY/gc2hBiQAPBwC8O077Pli
- lwX6KFUatZB4uvL2j5A==
-X-Proofpoint-GUID: SvSy1sKpVG98wT6KJC9zncnpBHEbTVwj
-X-Proofpoint-ORIG-GUID: jplxo0QGOAQ3h3SHewFb-KAy5Co6QrGt
-X-Authority-Analysis: v=2.4 cv=X+Vf6WTe c=1 sm=1 tr=0 ts=6974b614 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Authority-Analysis: v=2.4 cv=Gr1PO01C c=1 sm=1 tr=0 ts=6974b77c cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=zemG__UicHLbtfz2P7kA:9 a=CjuIK1q_8ugA:10
+ a=VnNF1IyMAAAA:8 a=Zrd1y-tnNs1JRDnTYlYA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: yCArJ0F_5gG7P0WA2bGMothoL6-xd92j
+X-Proofpoint-ORIG-GUID: uBq7of47Ge3LSp5s0D7fU7kz9jDWmTnn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI0MDA5NCBTYWx0ZWRfXzA+krRtBSlPo
+ hxJtK/XAT/CtIGJYOiRmAAj95+C95Dt0RsZSkz/jAFweQ1bUeXwaiFf3o/TZmdbyLhAtjqzUfcw
+ oEYSGev6D2LYvhsT1ayrs/WpDsoO0qbYvNV4Coy+L3kNYsZbz+fF6zHcfI2eaS6j3+V01PWfw4d
+ oTslF/Rpl8tRzGOrkt5MaUMLlmVGFrU7BHiQUTb1xxvQLPwowQ3rhxGPOZOrt048KUoMgncWkkS
+ pWA1JkfLyiDFT+RHpvrq/7m4b6A3lJ29ERPxUjg2vP4wJ8moQYG8RKY4n7KY1e9cJJzIIe9s10A
+ muup+KRWaeHGxm664QPJsSbMcFhk1QJkSpUCuv7z40GuSnJdzg3rKdTmQ8Pm3aoX6fCt0BtLSva
+ TIUktRnYm5XrpkDtFDxgDfU+S3+iKaIJUm93qBIQkUBZBdlP6sBp2K2Ptb0sH2MKSs9ZJtS4IeN
+ jROL/5njq1Rr/ML2H4w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
  definitions=2026-01-24_02,2026-01-22_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1015 spamscore=0 adultscore=0 malwarescore=0 bulkscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ priorityscore=1501 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 malwarescore=0 adultscore=0 spamscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
  definitions=main-2601240094
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
@@ -131,50 +126,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/01/20 08:31AM, Caleb Schlossin wrote:
+On 25/12/18 02:03PM, Caleb Schlossin wrote:
+> OCCFLG are scratch registers that can be shared with OCC firmware.
+> Log reads and writes to the registers as a reminder when we run
+> into more OCC code.
 > 
+> Add RW, WO_CLEAR and WO_OR SCOM Type enums in pnv_occ.c
 > 
-> On 1/19/26 4:18 AM, Aditya Gupta wrote:
-> > On 26/01/06 11:07AM, Caleb Schlossin wrote:
-> >>
-> >>
-> >> On 1/6/26 10:49 AM, Miles Glenn wrote:
-> >>> Hi Caleb.  I wonder if it makes sense to upstream this commit since I
-> >>> suspect that most upstream users will not have the "unimp" log messages
-> >>> enabled unless they are debugging a problem and in that case, we would
-> >>> be erroneously masking these unimplemented registers from the logged
-> >>> output.
-> >>>
-> >>> Thanks,
-> >>>
-> >>> Glenn
-> >>
-> >> I understand your point. Here are my thoughts:
-> >> - Cleaning up these logs for valid accesses (PowerVM bringup and development) reduces the overall log output and helps find real errors
-> >> - In the future, there may be a customer that wants to run PowerVM with upstream QEMU. The more we upstream, the easier that will be.
-> >> - In the future, we are going to have a number of cases like this where we accept accesses and don't log for every unimp access (to clean up log output). If we choose to keep those patches private and don't upstream them it's going to increase the number of private patches we keep, making future rebasing more difficult.
-> >> - I'd prefer to upstream more patches, and focus on keeping only the patches we need to private (for confidentiality or other reasons). To make future rebasing easier.
-> > 
-> > I agree with Glenn that we shouldn't mask these warnings for everyone.
-> > 
-> > Since a warning saying a feature is unimplemented is better than
-> > silently not doing anything without any warnings.
-> > 
-> > Maybe the excessive warnings should only be masked for PowerMV
-> > development work, rather than upstreaming, or we can always upstream
-> > once those are implemented.
-> > 
-> > - Aditya G
-> > 
+> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
+> ---
+>  hw/ppc/pnv_occ.c         | 55 +++++++++++++++++++++++++++++++++++++---
+>  include/hw/ppc/pnv_occ.h |  4 +++
+>  2 files changed, 56 insertions(+), 3 deletions(-)
 > 
-> Ok. Would you like me to pull out this patch from the series and send out v2 containing only the approved patches?
+> diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
+> index 24b789c191..e605ae0fbc 100644
+> --- a/hw/ppc/pnv_occ.c
+> +++ b/hw/ppc/pnv_occ.c
+> @@ -195,6 +195,49 @@ static const TypeInfo pnv_occ_power8_type_info = {
+>  #define P9_OCB_OCI_OCCMISC_CLEAR        0x6081
+>  #define P9_OCB_OCI_OCCMISC_OR           0x6082
+>  
+> +/* OCC scratch registers for flag setting */
+> +#define P9_OCCFLG0                      0x60ac
+> +#define P9_OCCFLG7_OR                   0x60c3
+> +
+> +enum ScomType {
+> +    SCOM_TYPE_RW          = 0,
+> +    SCOM_TYPE_WO_CLEAR    = 1,
+> +    SCOM_TYPE_WO_OR       = 2,
+> +};
+> +
+> +static void rw_occ_flag_regs(PnvOCC *occ, uint32_t offset, bool read,
+> +        uint64_t *val)
+> +{
+> +    int flag_num;
+> +    int flag_type;
+> +
+> +    /*
+> +     * Each OCCFLG register has SCOM0 - RW, SCOM1 - WO_CLEAR, SCOM2 - WO_OR
+> +     * hence devide by 3 to get flag index and mod 3 to get SCOM type.
 
-Yes Caleb, thanks for understanding.
+nitpick: s/devide/divide
 
+> +     */
+> +    flag_num = (offset - P9_OCCFLG0) / 3;
+> +    flag_type = (offset - P9_OCCFLG0) % 3;
+
+flag_num can be negative if offset is invalid, but since the function
+is static, the current usage ensure that never happens. So, it's okay
+with me.
+
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+
+Thanks,
 - Aditya G
 
-> 
-> Thanks,
-> Caleb
-> 
 
