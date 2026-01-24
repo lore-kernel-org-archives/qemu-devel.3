@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1301CD715D6
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 08:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21909D715D6
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 08:54:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjZOg-00024h-I7; Sat, 24 Jan 2026 03:53:34 -0500
+	id 1vjZOW-0001v1-8d; Sat, 24 Jan 2026 03:53:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjZOf-00023r-7j
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 03:53:33 -0500
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjZOR-0001q2-Sh
+ for qemu-devel@nongnu.org; Sat, 24 Jan 2026 03:53:20 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjZOd-0002Tw-Rd
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 03:53:33 -0500
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vjZOO-0002Pn-Or
+ for qemu-devel@nongnu.org; Sat, 24 Jan 2026 03:53:19 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 06F4B41AA3;
- Sat, 24 Jan 2026 08:53:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73171C116D0;
- Sat, 24 Jan 2026 08:53:29 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 316B760018;
+ Sat, 24 Jan 2026 08:53:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CA1C116D0;
+ Sat, 24 Jan 2026 08:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1769244810;
- bh=Zlew345yXRVgAr6Uar4LjRiTWs09Vw/bnpXL9OCbrTw=;
+ s=k20201202; t=1769244795;
+ bh=lV35+r7Y6skWBMC6Qb1tVaTfuXguC//8hOkdEiew6PY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=XRQZuTSO1GgkxTTL5hdaLFcFVaPr9lwopK1mrkq/cysIK8YQkQY6GyF7lyjuczaFH
- MBL0CVMsH6PBfutU3psmZehuxYuhW+XIvIzj7wbVWNNtZaaqCULpX1iF8prhEABCVe
- c/HLvUxN9JQvpVr4DVwKb8q9fvw5c/AvXgYX6tTPOc39fiYqXdUdsfcCzycmJfbKib
- rsNbkhG2YgRJGzUvJnJE1bTXs1WpQ5wDdy9wauAmLHTJ3M2VECzAj4+xXphVJzQrrM
- p7OweklsR6HFZEqn2U6f3thWRTf1kbPgi5501KGGHzPCRlu/eAPhDpajULDSrihXO6
- rbtrkVjqRpnDA==
+ b=Sbtfc4J5CNXcMJ8dGmToNce5Vxhsq8xpcL7xtJNFGQZpbp5NVkDY2/jpo1+40541F
+ 9Qt4OAN1c2MI9+5mqdMLjS6TmjG65i5lC8mlGuY7KuwuP9n02cmLQbYqimvTANfUEC
+ /AM9go3TFu7aTJSw/tZdGzOmxpWqE9hgPb6jigsdmBUK3S4pXHDh6sqI3WyYlgV8/a
+ E68wOQkPFvXDEm+qsjnhn7BBW5uKySxGAJAPKoes6aFsuLCSjrOTk+eCl82m1/JVd3
+ dSStI/+/Lya+FPYfPwS7XJa77ypYKnDJasTkUbb8B87Ei5tCbLZ9e4IUrfVGLGI31u
+ +I+B2FP9cPNEw==
 From: deller@kernel.org
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, deller@gmx.de,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PULL v2 11/11] linux-user: Fix MADV_XXX constants on hppa target
-Date: Sat, 24 Jan 2026 09:53:06 +0100
-Message-ID: <20260124085306.3996-12-deller@kernel.org>
+Subject: [PULL v2 03/11] linux-user: Add termios2 support to alpha target
+Date: Sat, 24 Jan 2026 09:52:58 +0100
+Message-ID: <20260124085306.3996-4-deller@kernel.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260124085306.3996-1-deller@kernel.org>
 References: <20260124085306.3996-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -70,45 +70,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Luca Bonissi <qemu@bonslack.org>
 
-Older hppa binaries may still use the old MADV_XXX constants for the
-madivise() syscall. Fix it up in the same manner as it's done in the
-Linux kernel in the parisc_madvise() function.
-
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Luca Bonissi <qemu@bonslack.org>
+Link: https://lore.kernel.org/qemu-devel/02dba951-1bcf-4c74-8a6a-f4f4aa5ce909@bonslack.org
+Reviewed-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/syscall.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ linux-user/alpha/termbits.h | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 64a2f1cbb2..3944004568 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -12922,6 +12922,22 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+diff --git a/linux-user/alpha/termbits.h b/linux-user/alpha/termbits.h
+index 4a4b1e96f2..b7be23ea13 100644
+--- a/linux-user/alpha/termbits.h
++++ b/linux-user/alpha/termbits.h
+@@ -17,6 +17,29 @@ struct target_termios {
+ 	target_speed_t c_ospeed;		/* output speed */
+ };
  
- #ifdef TARGET_NR_madvise
-     case TARGET_NR_madvise:
-+#ifdef TARGET_HPPA
-+        /* Emulate old hppa mapping of MADV_xxx constants. */
-+        switch (arg3) {
-+        case 65: arg3 = MADV_MERGEABLE;     break;
-+        case 66: arg3 = MADV_UNMERGEABLE;   break;
-+        case 67: arg3 = MADV_HUGEPAGE;      break;
-+        case 68: arg3 = MADV_NOHUGEPAGE;    break;
-+        case 69: arg3 = MADV_DONTDUMP;      break;
-+        case 70: arg3 = MADV_DODUMP;        break;
-+        case 71: arg3 = MADV_WIPEONFORK;    break;
-+        case 72: arg3 = MADV_KEEPONFORK;    break;
-+        #ifdef MADV_COLLAPSE
-+        case 73: arg3 = MADV_COLLAPSE;      break;
-+        #endif
-+        }
-+#endif /* TARGET_HPPA */
-         return target_madvise(arg1, arg2, arg3);
- #endif
- #ifdef TARGET_NR_fcntl64
++struct target_termios2 {
++	target_tcflag_t c_iflag;		/* input mode flags */
++	target_tcflag_t c_oflag;		/* output mode flags */
++	target_tcflag_t c_cflag;		/* control mode flags */
++	target_tcflag_t c_lflag;		/* local mode flags */
++	target_cc_t c_cc[TARGET_NCCS];		/* control characters */
++	target_cc_t c_line;			/* line discipline (== c_cc[19]) */
++	target_speed_t c_ispeed;		/* input speed */
++	target_speed_t c_ospeed;		/* output speed */
++};
++
++struct target_ktermios {
++	target_tcflag_t c_iflag;		/* input mode flags */
++	target_tcflag_t c_oflag;		/* output mode flags */
++	target_tcflag_t c_cflag;		/* control mode flags */
++	target_tcflag_t c_lflag;		/* local mode flags */
++	target_cc_t c_cc[TARGET_NCCS];		/* control characters */
++	target_cc_t c_line;			/* line discipline (== c_cc[19]) */
++	target_speed_t c_ispeed;		/* input speed */
++	target_speed_t c_ospeed;		/* output speed */
++};
++
++
+ /* c_cc characters */
+ #define TARGET_VEOF 0
+ #define TARGET_VEOL 1
+@@ -247,6 +270,12 @@ struct target_termios {
+ #define TARGET_TIOCSBRK	0x5427  /* BSD compatibility */
+ #define TARGET_TIOCCBRK	0x5428  /* BSD compatibility */
+ #define TARGET_TIOCGSID	0x5429  /* Return the session ID of FD */
++#define TARGET_TCGETS2		TARGET_IOR('T', 0x2A, struct target_termios2)
++#define TARGET_TCSETS2		TARGET_IOW('T', 0x2B, struct target_termios2)
++#define TARGET_TCSETSW2	TARGET_IOW('T', 0x2C, struct target_termios2)
++#define TARGET_TCSETSF2	TARGET_IOW('T', 0x2D, struct target_termios2)
++#define TARGET_TIOCGRS485	TARGET_IOR('T', 0x2E, struct serial_rs485)
++#define TARGET_TIOCSRS485	TARGET_IOWR('T', 0x2F, struct serial_rs485)
+ #define TARGET_TIOCGPTN	TARGET_IOR('T',0x30, unsigned int) /* Get Pty Number (of pty-mux device) */
+ #define TARGET_TIOCSPTLCK	TARGET_IOW('T',0x31, int)  /* Lock/unlock Pty */
+ #define TARGET_TIOCGPTPEER      TARGET_IO('T', 0x41) /* Safely open the slave */
 -- 
 2.52.0
 
