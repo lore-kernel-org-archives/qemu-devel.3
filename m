@@ -4,101 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EECF1D715EC
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 14:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D06ED715E4
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 17:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjef8-0002r7-Eg; Sat, 24 Jan 2026 09:30:54 -0500
+	id 1vjhrS-0007aM-RP; Sat, 24 Jan 2026 12:55:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjef0-0002pk-0F
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 09:30:47 -0500
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vjeey-0001bC-Fi
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 09:30:45 -0500
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-79420190633so30418147b3.0
- for <qemu-devel@nongnu.org>; Sat, 24 Jan 2026 06:30:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769265042; cv=none;
- d=google.com; s=arc-20240605;
- b=hzkd4OdahSbzXZEWT73vj5Du6KgUeYJMGwViSQ2StA+n23DN8hbo/xOTh1FYps0cbc
- W3PPTuEPexCOVBSRXfFPiowV10xSC6xoSKqI5E+bS0QD/D/kO9rx1p6NiF1CA4dgo2LD
- B4kgIMqmSRKrI7gWRn78ICzjvd1hUX5z7i+ZbGRN2yXsJaz21phdsqKm92JYJr3MblVW
- m6cP3eNuxJebNQaLYEj3UYiMhqy6Rt2FVGbwxmmZL4d9rYQA4kfbu0y7jl3yEBE5+LW1
- 8tMf0SmhquS521ycKVyxDTfhm1OyydDrf+91gwsPWvNb4pDyiIijnAff2hDVaAuhB4iJ
- rurA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=DhJ/UdAQLCRU+RscUv9toppMvl7eN/qqmC7TQ5GfHHw=;
- fh=ZydQy//n0U/S7R2L18eAX372JrTfha8Z683DjmYt4Jw=;
- b=XGIZIedJvnVLIyhm7Zwbr0hqysgFlMMLH6yGkRgzOFhAhnWyWIuqqsE72ad6jRnDWK
- +e/6R+cmRzdrCPHnBhuJfcIh7OcL3zsGjJYmLuu5xnVwrkVFDadEMC1fWluiR8sFBjC1
- GbJB/9ggjhCXOHMRPpC8nVdUSxVy/7vkTzzvPU8c0BLj+nSoCqUnLAJFYzLcwDwt3YdF
- OQBpWFYBJ9HBacgFISimygpct7ff7bwd2992lCHqEVq6dmrSMa6RhMQ01aC3mIc/O6Av
- 0moYU3Rcc+hTVf4cfqoM343G0YW39auFy1tLNLsEkBXpSWrjtYAdXANb+0QIC6tGnOqL
- Ovkw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769265042; x=1769869842; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=DhJ/UdAQLCRU+RscUv9toppMvl7eN/qqmC7TQ5GfHHw=;
- b=Eo7KcugyUPJhweHg44WMqQPdFK7O/NxPu0OtmzKX/6IW1Ao1H+TUpwpEIauzbZMowx
- LMtxppmvT3n/DIV+9fxrCLatt4R1e4Du3QPQvxMeki7BZO94/k+MwGzjcSjq1cnBVGT6
- jGgPz/zoAlyjnr0WcZCQPiI8l8qha6JseY9ZZju+Q8fXIdRl0t83nwiupS5MHLallGXv
- K6/6JqM5E95/d2JfmnFBD2Dk/rFVdZmmuSTJmz69TVfMfUb4VFMkTmlgx7SB7FWUdM5e
- NJ4Raj7rxakGS3gcjPHvZF8SBov2h0lOQ0kvtusPMpp6Em0Cs94KiUc7ZjJztYTF+dFV
- alPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769265042; x=1769869842;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DhJ/UdAQLCRU+RscUv9toppMvl7eN/qqmC7TQ5GfHHw=;
- b=dYR0gcK3byZrGSg7O1CIQAX4Pm3j8DzGbeWhODfxjBPpkV2P4TzCxb3oRNCn/6K9Qa
- JI/eg1jX5VCB2AXCg6sEF7kH5O54BGVS1g2z17VQOddd0MzLhhFdTtwjLbA2bSM7Duvc
- lT1BJ3pAVMuWEdlmUvq+D05NS7SXptFaYUd3auQIN2DPiBeRbbu9MQrXnKCulVh5AOWG
- oMqNwPA7knF4mDmWtVfeH4XI6k8+PE7LC+tN7tC+2YvCxQYcK1sl9gdztUB7yyLabqoL
- bALfMl9kUiTgGy9e6daWh7tKh2MbTXmGMh7K3ajgA7/X6sYOSnh3NHYLC1Nd0j5uoJgb
- HzpQ==
-X-Gm-Message-State: AOJu0Yz3ijsZ4v1Ac8mJrnE2BEktFhJ/fCIHMLpbm6Cme0SzMnTTWWH8
- 3K7pqoc46u99kgp0rjtPCTMT9EIN78zXpWIe500PB0Rl27FUpG5VRbtqWA1y2kF/uiY0kEk0UHN
- kMEaQzLj0Nb43p6/IDcvZSpt28m6DEH0IagyUKpDmMw==
-X-Gm-Gg: AZuq6aLZzk+WHZ68ZN90rpe119hJwLS+rILFjLtxOJzQfs5ngYf2M3OIA9wDODNXqCF
- cOCSkFBxi0dpDR4RGosKShKFiqn51J2ZX4eYntT7TrW3Y3ABvD2MiNBwTP0S5xCPbQqADhtJnS0
- DVkWWJWa0vrHF9ITw7pIdtHAoGkKS9X8qT8nqo2kTE4W60w2a4JUpB6MmVfAy38RCOGrxo9gmMF
- 8Q/PiuuLnW8dOYcazeVNNiXttgPoRtu627HW2KhUeExX5LCfF1gJpYYWLYvkapPemPdrQ==
-X-Received: by 2002:a05:690e:13c5:b0:644:402a:8d3b with SMTP id
- 956f58d0204a3-6495bed2ec7mr5816189d50.10.1769265041940; Sat, 24 Jan 2026
- 06:30:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1vjhrP-0007a1-3M; Sat, 24 Jan 2026 12:55:47 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1vjhrN-0002Ms-Cn; Sat, 24 Jan 2026 12:55:46 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id B7C8660055;
+ Sat, 24 Jan 2026 17:55:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32716C116D0;
+ Sat, 24 Jan 2026 17:55:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1769277336;
+ bh=h1MaTzcBmyRjlL1Vme76HVwVGSrQKPurVRH/gUj2nqc=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=SyAgu04p8nyqSxOT2qttO+nM50GNd95TxXg/0BW18fnFbVbEmp6u6E9zzYJgG/NBx
+ /qtqhw4w68igfgBs7iDS0rc2qYW15tEgQep1cxz+UA5QyK+o87Hjtw6TpTEATsfb3X
+ x/ksbTvGOxzRNcAMdcZKEx6SaSW1D3enX7T2QwiE+DnFArZ1iyUuiiHfMc8POj/PEx
+ A7M7kDPZDVio7o9AHubMB+WN6zuYd3u+yjcBgSCecGGxavet73D9ApInEh/ibFbQpn
+ jbX09ELjRg4pdGjBIM6j0ZJ7ZizVS2rpPffBifhaG0OGS8XfKeXEYG7UbSfPDBHSix
+ TnAsIhv0RSg/w==
+Date: Sat, 24 Jan 2026 09:55:34 -0800
+From: Drew Fustini <fustini@kernel.org>
+To: Radim =?utf-8?B?S3LEjW3DocWZ?= <radim.krcmar@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Nicolas Pitre <npitre@baylibre.com>,
+ Kornel =?utf-8?Q?Dul=C4=99ba?= <mindal@semihalf.com>,
+ Atish Kumar Patra <atishp@rivosinc.com>,
+ Atish Patra <atish.patra@linux.dev>,
+ Vasudevan Srinivasan <vasu@rivosinc.com>,
+ Radim =?utf-8?B?S3LEjW3DocWZ?= <rkrcmar@ventanamicro.com>,
+ yunhui cui <cuiyunhui@bytedance.com>,
+ Chen Pei <cp0613@linux.alibaba.com>, guo.wenjia23@zte.com.cn,
+ liu.qingtao2@zte.com.cn
+Subject: Re: [PATCH v4 3/6] hw/riscv: implement CBQRI capacity controller
+Message-ID: <aXUHls5y7WCo80e9@x1>
+References: <20260105-riscv-ssqosid-cbqri-v4-0-9ad7671dde78@kernel.org>
+ <20260105-riscv-ssqosid-cbqri-v4-3-9ad7671dde78@kernel.org>
+ <DFQ6PDOR5QOS.6B2ASHZOJ0U7@oss.qualcomm.com>
 MIME-Version: 1.0
-References: <20260124131537.78942-1-AlanoSong@163.com>
-In-Reply-To: <20260124131537.78942-1-AlanoSong@163.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 24 Jan 2026 14:30:30 +0000
-X-Gm-Features: AZwV_QgCywjbwXj4LCpFuaqxYFa5HjDQhPJvVuhP7pkLrBc2H7kpyu6Pwe7hc8c
-Message-ID: <CAFEAcA9=xMfeGzUZikdBmiqYU_VOow5+Efhg7g2fWeN-fjG0dw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/1] hw/i2c/dw: Add DesignWare I2C controller emulator
-To: AlanoSong@163.com
-Cc: qemu-devel@nongnu.org, crauer@google.com, joel@jms.id.au, 
- jonathan.cameron@huawei.com, philmd@linaro.org, ani@anisinha.ca, 
- cminyard@mvista.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <DFQ6PDOR5QOS.6B2ASHZOJ0U7@oss.qualcomm.com>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=fustini@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.082,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,38 +84,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 24 Jan 2026 at 13:16, <AlanoSong@163.com> wrote:
->
-> v1: Initial version:
->     1) Add DesignWare I2C controller according to DesignWare
->        I2C databook v2.01a.
->     2) Confirmed under v6.18 kernel driver.
->     3) The slave mode is not implemented, cause this feature
->        is usually not used.
->     4) The 10 bit slave address is not implemented, cause
->        this feature is usually not used, and not supported
->        by qemu I2C core bus currently.
-> v2: Refine according to review comments:
->     1) Define registers by using registerfields.
->     2) Use SPDX license.
->     3) Confirmed under v6.18 kernel driver.
->
-> ------
->
-> This patch seems to be a duplicate of Joel & Chris's work:
-> https://lore.kernel.org/qemu-devel/20260109123211.368869-1-joel@jms.id.au/
->
-> It's just a coincidence, :)
-> But it's okay even if it not been merged, I just want share it and hope
-> it can help others.
+On Fri, Jan 16, 2026 at 05:20:00PM +0000, Radim Krčmář wrote:
+> Sorry, I changed emails, and this series flew under my radar, since
+> qemu-riscv lore public inbox has been silent for a month and I was
+> happily oblivious that it's a bug on their side.
+> 
+> I'm addressing only the access size issue in this mail and I'll look at
+> the rest next week.
+> 
+> 2026-01-05T13:54:21-08:00, Drew Fustini <fustini@kernel.org>:
+> > From: Nicolas Pitre <npitre@baylibre.com>
+> >
+> > Implement a capacity controller according to the Capacity and Bandwidth
+> > QoS Register Interface (CBQRI) which supports these capabilities:
+> >
+> >   - Number of access types: 2 (code and data)
+> >   - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
+> >   - Event IDs supported: None, Occupancy
+> >   - Capacity allocation ops: CONFIG_LIMIT, READ_LIMIT, FLUSH_RCID
+> >
+> > Link: https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
+> > Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+> > [fustini: add fields introduced in the ratified spec: cunits, rpfx, p]
+> > Signed-off-by: Drew Fustini <fustini@kernel.org>
+> > ---
+> > diff --git a/hw/riscv/cbqri_capacity.c b/hw/riscv/cbqri_capacity.c
+> > +static const MemoryRegionOps riscv_cbqri_cc_ops = {
+> > +    .read = riscv_cbqri_cc_read,
+> > +    .write = riscv_cbqri_cc_write,
+> > +    .endianness = DEVICE_LITTLE_ENDIAN,
+> > +    .valid.min_access_size = 4,
+> > +    .valid.max_access_size = 8,
+> > +    .impl.min_access_size = 8,
+> 
+> The .impl.min_access_size should be 4, since access_with_adjusted_size
+> doesn't seem to do what we want.
 
-Please can everybody who is interested in the designware i2c
-model get together and figure out what they want to do as
-a forward path for it?
+Ok, thanks.
 
-I am not going to review any of these patches until you have
-collectively determined which is the best base for doing it.
+> > +    .impl.max_access_size = 8,
+> 
+> I think we can reuse the current 8 byte iplementation by adding
+> something like the following hack for 4 byte accesses:
+> 
+>   static uint64_t riscv_cbqri_cc_read_wrapper(void *opaque, hwaddr addr,
+>                                               unsigned size)
+>   {
+>       uint64_t value = riscv_cbqri_br_read(opaque, addr & ~0x7UL, 8);
+>       if (size == 4) {
+>           if (addr & 0x7) {
+>               return value >> 32;
+>           } else {
+>               return value & 0xffffffff;
+>           }
+>       }
+>       return value;
+>   }
+> 
+> read has no side-effects, so the wrapper should be conceptually correct.
 
-thanks
--- PMM
+Thank you very much for the suggestion. I'll try it out and get a new
+revision ready.
+
+> 
+> 
+>   static uint64_t riscv_cbqri_cc_write_wrapper(void *opaque, hwaddr addr,
+>                                                uint64_t value, unsigned size)
+>   {
+>       if (size == 4) {
+>           uint64_t reg = riscv_cbqri_br_read(opaque, addr & ~0x7UL, 8);
+>           if (addr & 0x7) {
+>               value = value << 32 | reg & 0xffffffff;
+>           } else {
+>               value = value | reg & ~0xffffffffUL;
+>           }
+>       }
+> 
+>       riscv_cbqri_cc_write(opaque, addr & ~0x7UL, value, 8);
+>   }
+>  
+> The control registers will execute an operation on a write to the upper
+> half as well, which doesn't seem desirable, but it's unspecified afaik.
+> The upper half of control registers has no fields that software would
+> ever want to write, so I think it's not really a practical issue,
+> especially since we're basically a skeleton implementation.
+
+Thanks for the suggestion, I think that is an acceptable solution. The
+main point of the Qemu implementation is to exercise the Linux kernel
+code ahead of silicon that implements CBQRI.
+
+> Another solution would be to implement just 4 byte registers, and handle
+> 8 byte writes as a combination of two 4 byte -- the spec hints that this
+> is an expected implementation, but with all registers being defined as 8
+> byte, I think my hack would need "clarifications" to make it incorrect.
+
+Thanks for also suggesting this. I agree that the previous suggestion is
+sufficent.
+
+-Drew
 
