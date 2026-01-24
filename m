@@ -4,132 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AE1FD715E3
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 18:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6B72D715FE
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 23:42:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjiSk-0002VR-HT; Sat, 24 Jan 2026 13:34:22 -0500
+	id 1vjnFt-00014l-Hk; Sat, 24 Jan 2026 18:41:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vjiSY-0002O9-Dr
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 13:34:13 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vjnFr-00014c-LX
+ for qemu-devel@nongnu.org; Sat, 24 Jan 2026 18:41:23 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vjiSV-0004ag-Bq
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 13:34:09 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2a7a9b8ed69so36332125ad.2
- for <qemu-devel@nongnu.org>; Sat, 24 Jan 2026 10:34:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1vjnFp-00067t-UE
+ for qemu-devel@nongnu.org; Sat, 24 Jan 2026 18:41:23 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-34f2a0c4574so2997068a91.1
+ for <qemu-devel@nongnu.org>; Sat, 24 Jan 2026 15:41:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769298080; cv=none;
+ d=google.com; s=arc-20240605;
+ b=FLRW9oEhjHljFFv4flglh+SlBjyXl3i3tXV7/D4zpxhN2/RcNTQNnMyzdNew2GyeRC
+ hwdsOZg6Eg7R9Yh4dz83zSinlR2TJZGHIWou1LpkCbRUItJzaXci3i+YOmKzaeF+7Id0
+ El/UXqAo/w+XHZnTYHa5noTZndWmdz9vM0mij/ScHGLlwLcRecwvNKnMH6vNQ/i7zhRG
+ r4T4mStPEIJh8HGs7uW+yPfeUA6iyk86sJs1BzOYOREtt0hXuZzJqQ4jxTcMQDQCmN7D
+ jgelK3ygKao0jB74oz2qt4JZxsXTjxve6k3JkblkYcAsgo1ZVOipK1wOC5EYugdq0q9Z
+ NDtg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=nuYpJT9Cz0+xIPhvU/sIFsUeybzJju0YRNabfECE94c=;
+ fh=HMorgUNBgejytIvOYdxrAsrIoD5WoaQ4S7Oaqtzu/uU=;
+ b=e4Eyc2YJcO71AZCFyNywG2oiODla4upvoZnLsV7S2gtpu603JbsZYZa8ipjIr451RF
+ 4OC8Xf6I7UkUFFR2YuDgtQGc5iMYIy/EFnnxvBSTETS1CZNHaJO6Unr7rUPcVzmHzA8d
+ R925RFmpAOqojR67zq+0JAcwgDmoWXaJK31qq3WJ23K2FXOhdFCic1JhB1s+0G6TSsWG
+ xqijYlI+Zs55yyfI14kiFnfqzEvp3xa6BcQ+X7qv2HBU+GTJI4s+44dMOooS5bclI3mf
+ VWdn924WdpfP9I3K0uZ/0RStX2ggX75hTW9nW8hrz6Ndx5pUF2lxcygq8zFKUiSXBwe0
+ tX3A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769279644; x=1769884444; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=gXxvm3cC6ZLthl5NMKCepcTo0S8Gup7/o7pXdPyg4Bo=;
- b=E8e09xt9xjF6SWTSXHmTZayus8R8IuW+VhYgnY08HJmzH7k3g4DJEOPIZLxT2gxuml
- a8zJH30HZeg81LI/stee/I0+2egP5qU+JDHExeNDtHyPjvdwz7O/VivrwHCV4I0YRVkM
- bCFYvByx62MyFoWhg4qktcsmdY1ie5vi7SF3lqX94VPtHOmv2RfwUIXiBzOD+4cNmbcx
- NLy3wONEkz81usQxB8zUFVWfND9QpM66GLhCLrg2ZCKhIUI7HIBZlNTDjYrZZntla3Q9
- w1dFrx0wjm/EEPLyb3XJQluQU1BoDS8pZvmya+HxaNTVy4Uw4TDQfI0NrLG6STZFE9Gu
- YwnQ==
+ d=gmail.com; s=20230601; t=1769298080; x=1769902880; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nuYpJT9Cz0+xIPhvU/sIFsUeybzJju0YRNabfECE94c=;
+ b=aSjdigpA9+V0/KciikbZlrzhNATd/dIzWqAqSY2CMbLdoDLBvrB2VKir4ClkPJ/Z4B
+ nF6e0ofIiAnTIaNrqqfPCEtCcLEZiwuh9yQtUBvcz7sy5ojeAt9psRz/6rRkwk2Rncch
+ 4kqWhGjVi4z2bPNuH335VJVtVvEhnANC0G53QnlzaV8QhThYIvKQ5+jieqaGJysTnAcj
+ 7dZPktkshP5wHUZAsKmPji+/O6Y5t3FIClcJK/e5n9k11B5i+1eZJVfB+HssKWAEvRgT
+ SR1K+17QPQPihAWiRhiQkhZjSsPR8Cv4zdkskCm6sz/GBieARPTZ75rMICYhTG1GFIZW
+ RM4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769279644; x=1769884444;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1769298080; x=1769902880;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gXxvm3cC6ZLthl5NMKCepcTo0S8Gup7/o7pXdPyg4Bo=;
- b=djH9zk8F9cPqJpfQzbykhp2yMhufm7O4ZtinwOvmg8vv1wtyLJQigGFi7fCUMcEDLX
- 8LwDNZFZmv6q2mIML+UykRHteg3cfRjH0xs/uic5o+YIVwJMAmrBrfK26Wt6pjEWnpUd
- wiAmMXghTYKib8tj8wxmk1qi3tDZfaIIYTDc0vu+ZFgAbmaPztPbN6pTNEu9ZCkRYAbv
- Oq80aWMkZTbKgAdl9wMn3P8+LCqa3BkvxC2w7hC2G1FmV9TcNqcBpgk9urFx90MmX6DC
- cmwAwcHdO2fjRR47M7pG1sbRwgyNj0acVmwB82BZb9bSZY1pNqWwbcHXF/EyUDH/mMQv
- ALjA==
-X-Gm-Message-State: AOJu0YxlT2Muvo8yLVVOxquIGFgOhmjzehfLkFNrlK6fggYTYGasN1FF
- 0bF2vB84bTrKdF/1aJD1reXZMDnVGBKLqhTompL2aJbfSySuIf4RgJGQscPg5tm+iV/KMsAfUAl
- 9Z+rnbAY=
-X-Gm-Gg: AZuq6aLH8wLbeAS0bGQT8aLyHSedb6D3xIaIqbOtuHCjJNqbwRkhoH4nV5vrvlidMJ3
- HW6Vbn3HemGk/4egAXk3ZTK251TWtQkMTyoUD0gPkHdtZCvVZlJ4uyeHpJ+s58fhhzPgeFz70xb
- CS+9YlMB+tqbkmBSyd63B7mOZIf8IUGO9j5pM1DkakdjGNhOMtDyvammGfmb4uGnIWt941On+Ew
- IveYYS3oIuPEzeknWjzGakQw/XH/A2faKNKvBsbjNtyU7TwJObSPieWjO9ldQtav2O0s3LOUVxc
- GvMz/Jf8T4FMtpQRaZ8Nrl/ObMuDYwrUv40bMcjuqNvDlBirYTaqsUyU2hmTKtuadvwQhsxpjqa
- IGQORVpMzKbwNbYaysmmTEHbkt7hocmN6JW252ng9vJhEriSmyK0GLRuXCmKJHz6HaVBpuna6J0
- MMSeFIBtCLg6YEjpf+BHMgFj31m9zIuFeAhRpRTu9s7zksRiL4ZXVenR82
-X-Received: by 2002:a17:902:f54f:b0:2a7:3daa:5822 with SMTP id
- d9443c01a7336-2a7fe77dd97mr57784675ad.60.1769279643796; 
- Sat, 24 Jan 2026 10:34:03 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a802dcd97bsm51264715ad.35.2026.01.24.10.34.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 Jan 2026 10:34:03 -0800 (PST)
-Message-ID: <30f15d71-2965-4094-9950-e27dd1d01a6a@linaro.org>
-Date: Sat, 24 Jan 2026 10:34:02 -0800
+ bh=nuYpJT9Cz0+xIPhvU/sIFsUeybzJju0YRNabfECE94c=;
+ b=Domx76LFkk3j3JLEYxZdeSUuW3wnQw99jYU4jo1VummxdrxQuMSIMed3WC0EYQwcV2
+ 9lwfq43TydITXGGz0gJLSzqHsWpOK3fsr3NcK/RILiy0Dpfkfo9k67NS+xgIHRve/Sm2
+ f5Rw1rkR2Tkao4JMaSYfFTrnF6krQM6d69LXcj7wttty/uizODMIVnku2O3bThncN7n5
+ ovMI46hI6EGrtQNb3y7E+M7PO0v9xPjkSZ0dI714ZWGlsAZon5l0MwUbMKfCuCtmQ7gf
+ 62GHmpLUs1Jo3ySNF6yuU2Kcsv6dTU6pSaytHKxWoM2ZC2e22Han50eQX8L0sU/QQ8F+
+ g41A==
+X-Gm-Message-State: AOJu0YwV4H9N+cnK4dhOnV4BwwEi32tn8M44ydexqbU6wB9ePki8IF6i
+ EgEZOyiG8QrUy2CpbKDbXPTW0bGzYngNatxmSIkZCSQerZI/BmAefriNj95sdf2/dYnh3xiKGPc
+ o9RvKOFahzGd20N8lVwagZ5LpQn7GUBbjKA==
+X-Gm-Gg: AZuq6aJf4W5AE39/x+b74lsMz2K/SVWC2hwNqMQla582bm/2ROe7hkbhVYYXd7ZlB3k
+ W6ygfBTb1uen2KVCLIQBeQ49aDnxajCUqSibC5VgHi/EozDmaJdiWnu6ouuLEcvs6gr0bZHDKmc
+ hyVFuP2/fMVqDLinfC05B1T7PDi2wZVihRRfJoFbumRdC3HJVXf7TQJDwjDLhuLmiGvo76QuX7F
+ cTLrRSONsduDgjX3ySiN2z5wXSHnU8xMjOVkMwDsUzHTMBG/qEyCYM3bX8LLqzyE4H1yOFD65sD
+ hsQQeiv7QmBD+vcBs+QHzfO/oz4=
+X-Received: by 2002:a17:90b:2d8e:b0:340:ad5e:cb with SMTP id
+ 98e67ed59e1d1-353c40b7edemr201045a91.8.1769298079803; Sat, 24 Jan 2026
+ 15:41:19 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/11] plugins: enable C++ plugins
-To: qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>, Michael Roth
- <michael.roth@amd.com>, Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260119191138.811069-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
- eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
- CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
- gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
- qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
- 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
- L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
- IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
- dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
- AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
- tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
- PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
- F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
- HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
- CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
- UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
- uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
- vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
- FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
- I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
- oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
- TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
- y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
- /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
- YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
- DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
- v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
- 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
- 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
- dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
- 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
- X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260119191138.811069-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+References: <20260122223423.1076448-1-marco.liebel@oss.qualcomm.com>
+In-Reply-To: <20260122223423.1076448-1-marco.liebel@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Sat, 24 Jan 2026 16:41:08 -0700
+X-Gm-Features: AZwV_QhVA0S8UISB2K2i1OBFqT_u2QpHZ886vHVXWhUrCiIOypoGYGSW3vNbpco
+Message-ID: <CAATN3NoZiPj5wfVm6+4MGEnrVX4sdZhnS4Wj7-_0SUe5u0wZ5w@mail.gmail.com>
+Subject: Re: [PATCH] target/hexagon: Change DisasContext packet type
+To: Marco Liebel <marco.liebel@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com, 
+ sid.manning@oss.qualcomm.com, Brian Cain <brian.cain@oss.qualcomm.com>
+Content-Type: multipart/alternative; boundary="0000000000008c6bf806492acf76"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,78 +114,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/19/26 11:11 AM, Pierrick Bouvier wrote:
-> Writing plugins in C can be sometimes tedious, especially when using Glib to
-> keep track of execution state. We can directly use the same C API but write our
-> plugin in C++, benefiting from its great standard library offering strings,
-> smart pointers, data structures and synchronization mechanisms.
-> 
-> It's common for downstream QEMU forks to provide C++ for plugins, like this:
-> - https://github.com/panda-re/panda/tree/dev/panda/plugins
-> - https://github.com/FlorentRevest/DejaView/tree/main/src/qemu_plugin
-> 
-> Hopefully this will help more people to use upstream QEMU, and as a benefit, get
-> their contribution back and help to develop plugins ecosystem upstream directly.
-> 
-> This series first cleans up build system for plugins, factorizing details
-> between contrib/plugins and tests/tcg/plugins folders.
-> Then, we perform codebase cleanups to fix conflicts between existing headers
-> and C++ headers.
-> After that, we can update the C++ standard used by QEMU, to benefit fully
-> from latest updates of the language.
-> Finally, we define an empty C++ plugin, making sure we can keep track of
-> possible regression in qemu-plugin header.
-> 
-> Note: This series is *not* a trojan horse to bring C++ in QEMU
-> codebase, nor to define an alternative C++ API for plugins. It's just enabling
-> more users to get the most out of existing C plugin API.
-> 
-> CI: https://gitlab.com/pbo-linaro/qemu/-/pipelines/2242427013
-> 
-> v3
-> --
-> 
-> - fix indentation in patch 2
-> 
-> v2
-> --
-> 
-> - drop coroutine.h rename patch as it's not needed
-> - drop ctype.h rename patch, and move qemu-plugin.h to include/plugins
-> - fix mem.c to not depend on other QEMU headers
-> 
-> Pierrick Bouvier (11):
->    plugins: move win32_linker.c file to plugins directory
->    plugins: factorize plugin dependencies and library details
->    plugins: use complete filename for defining plugins sources
->    plugins: define plugin API symbols as extern "C" when compiling in C++
->    tests/tcg/plugins/mem.c: remove dependency on qemu headers
->    plugins: move qemu-plugin.h to include/plugins/
->    meson: fix supported compiler arguments in other languages than C
->    meson: enable cpp (optionally) for plugins
->    qga/vss-win32: fix clang warning with C++20
->    meson: update C++ standard to C++23
->    contrib/plugins: add empty cpp plugin
-> 
->   docs/devel/tcg-plugins.rst                  |   4 +-
->   meson.build                                 |  26 +++--
->   include/{qemu => plugins}/qemu-plugin.h     |  11 +-
->   include/qemu/plugin.h                       |   2 +-
->   plugins/core.c                              |   2 +-
->   {contrib/plugins => plugins}/win32_linker.c |   0
->   tests/tcg/plugins/mem.c                     |  59 ++++------
->   contrib/plugins/cpp.cpp                     | 119 ++++++++++++++++++++
->   contrib/plugins/meson.build                 |  25 ++--
->   plugins/meson.build                         |  17 ++-
->   qga/vss-win32/requester.cpp                 |   6 +-
->   scripts/clean-includes                      |   2 +-
->   tests/tcg/plugins/meson.build               |  18 +--
->   13 files changed, 204 insertions(+), 87 deletions(-)
->   rename include/{qemu => plugins}/qemu-plugin.h (99%)
->   rename {contrib/plugins => plugins}/win32_linker.c (100%)
->   create mode 100644 contrib/plugins/cpp.cpp
-> 
+--0000000000008c6bf806492acf76
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-sent v4 (fixed conflict with master):
-https://lore.kernel.org/qemu-devel/20260124182921.531562-1-pierrick.bouvier@linaro.org/T/#t
+On Thu, Jan 22, 2026 at 3:34=E2=80=AFPM Marco Liebel <marco.liebel@oss.qual=
+comm.com>
+wrote:
+
+> The pkt variable inside DisasContext is of type Packet * and gets
+> assigned to a local variable in decode_and_translate_packet. Right now
+> there seems to be no problem with it but future changes to e.g.
+> hexagon_tr_transalte_packet are potentially dangerous if pkt is accessed
+> after the local variable goes out of scope.
+>
+> Since packets are being translated one at a time, the type of pkt can be
+> changed to just Packet to avoid risk of having a dangling pointer.
+>
+> Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+> ---
+>  target/hexagon/gen_tcg.h        |   2 +-
+>  target/hexagon/macros.h         |   6 +-
+>  target/hexagon/translate.h      |   2 +-
+>  target/hexagon/decode.c         |   8 +--
+>  target/hexagon/genptr.c         |  14 ++--
+>  target/hexagon/translate.c      | 111 ++++++++++++++------------------
+>  target/hexagon/gen_tcg_funcs.py |   2 +-
+>  target/hexagon/hex_common.py    |   4 +-
+>  8 files changed, 65 insertions(+), 84 deletions(-)
+>
+>
+> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+> index a0102b6cbd..ffbfc3ac0e 100644
+> --- a/target/hexagon/translate.h
+> +++ b/target/hexagon/translate.h
+> @@ -28,7 +28,7 @@
+>
+>  typedef struct DisasContext {
+>      DisasContextBase base;
+> -    Packet *pkt;
+> +    Packet pkt;
+>
+
+This patch would be alot smaller if you kept pkt as-is and added a new
+member
+Packet packet;
+
+
+>      Insn *insn;
+>      uint32_t next_PC;
+>      uint32_t mem_idx;
+> diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
+> index b5ece60450..c2516d927d 100644
+> --- a/target/hexagon/decode.c
+> +++ b/target/hexagon/decode.c
+> @@ -748,14 +748,12 @@ int disassemble_hexagon(uint32_t *words, int nwords=
+,
+> bfd_vma pc,
+>                          GString *buf)
+>  {
+>      DisasContext ctx;
+> -    Packet pkt;
+>
+>      memset(&ctx, 0, sizeof(DisasContext));
+> -    ctx.pkt =3D &pkt;
+>
+> Then, this line would be
+ctx.pkt =3D &ctx.packet;
+
+
+@@ -930,7 +915,6 @@ static void decode_and_translate_packet(CPUHexagonState
+> *env, DisasContext *ctx)
+>  {
+>      uint32_t words[PACKET_WORDS_MAX];
+>      int nwords;
+> -    Packet pkt;
+>      int i;
+>
+>      nwords =3D read_packet_words(env, ctx, words);
+> @@ -939,16 +923,15 @@ static void
+> decode_and_translate_packet(CPUHexagonState *env, DisasContext *ctx)
+>          return;
+>      }
+>
+> -    ctx->pkt =3D &pkt;
+>
+
+Ditto
+
+Thanks,
+Taylor
+
+--0000000000008c6bf806492acf76
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jan 22,=
+ 2026 at 3:34=E2=80=AFPM Marco Liebel &lt;<a href=3D"mailto:marco.liebel@os=
+s.qualcomm.com">marco.liebel@oss.qualcomm.com</a>&gt; wrote:<br></div><bloc=
+kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
+1px solid rgb(204,204,204);padding-left:1ex">The pkt variable inside DisasC=
+ontext is of type Packet * and gets<br>
+assigned to a local variable in decode_and_translate_packet. Right now<br>
+there seems to be no problem with it but future changes to e.g.<br>
+hexagon_tr_transalte_packet are potentially dangerous if pkt is accessed<br=
+>
+after the local variable goes out of scope.<br>
+<br>
+Since packets are being translated one at a time, the type of pkt can be<br=
+>
+changed to just Packet to avoid risk of having a dangling pointer.<br>
+<br>
+Signed-off-by: Marco Liebel &lt;<a href=3D"mailto:marco.liebel@oss.qualcomm=
+.com" target=3D"_blank">marco.liebel@oss.qualcomm.com</a>&gt;<br>
+---<br>
+=C2=A0target/hexagon/gen_tcg.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A02 +=
+-<br>
+=C2=A0target/hexagon/macros.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=
+=A06 +-<br>
+=C2=A0target/hexagon/translate.h=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A02 +-<br>
+=C2=A0target/hexagon/decode.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=
+=A08 +--<br>
+=C2=A0target/hexagon/genptr.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 14 +=
++--<br>
+=C2=A0target/hexagon/translate.c=C2=A0 =C2=A0 =C2=A0 | 111 ++++++++++++++--=
+----------------<br>
+=C2=A0target/hexagon/gen_tcg_funcs.py |=C2=A0 =C2=A02 +-<br>
+=C2=A0target/hexagon/hex_common.py=C2=A0 =C2=A0 |=C2=A0 =C2=A04 +-<br>
+=C2=A08 files changed, 65 insertions(+), 84 deletions(-)<br>
+<br><br>
+diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h<br>
+index a0102b6cbd..ffbfc3ac0e 100644<br>
+--- a/target/hexagon/translate.h<br>
++++ b/target/hexagon/translate.h<br>
+@@ -28,7 +28,7 @@<br>
+<br>
+=C2=A0typedef struct DisasContext {<br>
+=C2=A0 =C2=A0 =C2=A0DisasContextBase base;<br>
+-=C2=A0 =C2=A0 Packet *pkt;<br>
++=C2=A0 =C2=A0 Packet pkt;<br></blockquote><div><br></div><div>This patch w=
+ould be alot smaller if you kept pkt as-is and added a new member</div><div=
+>Packet packet;</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
+ng-left:1ex">
+=C2=A0 =C2=A0 =C2=A0Insn *insn;<br>
+=C2=A0 =C2=A0 =C2=A0uint32_t next_PC;<br>
+=C2=A0 =C2=A0 =C2=A0uint32_t mem_idx;<br>
+diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c<br>
+index b5ece60450..c2516d927d 100644<br>
+--- a/target/hexagon/decode.c<br>
++++ b/target/hexagon/decode.c<br>
+@@ -748,14 +748,12 @@ int disassemble_hexagon(uint32_t *words, int nwords, =
+bfd_vma pc,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0GString *buf)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0DisasContext ctx;<br>
+-=C2=A0 =C2=A0 Packet pkt;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0memset(&amp;ctx, 0, sizeof(DisasContext));<br>
+-=C2=A0 =C2=A0 ctx.pkt =3D &amp;pkt;<br>
+<br></blockquote><div>Then, this line would be</div><div>ctx.pkt =3D &amp;c=
+tx.packet;</div><div><br></div><div><br></div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex">
+@@ -930,7 +915,6 @@ static void decode_and_translate_packet(CPUHexagonState=
+ *env, DisasContext *ctx)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0uint32_t words[PACKET_WORDS_MAX];<br>
+=C2=A0 =C2=A0 =C2=A0int nwords;<br>
+-=C2=A0 =C2=A0 Packet pkt;<br>
+=C2=A0 =C2=A0 =C2=A0int i;<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0nwords =3D read_packet_words(env, ctx, words);<br>
+@@ -939,16 +923,15 @@ static void decode_and_translate_packet(CPUHexagonSta=
+te *env, DisasContext *ctx)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+-=C2=A0 =C2=A0 ctx-&gt;pkt =3D &amp;pkt;<br></blockquote><div><br></div><di=
+v>Ditto</div><div>=C2=A0</div><div>Thanks,</div><div>Taylor</div><div><br><=
+/div></div></div>
+
+--0000000000008c6bf806492acf76--
 
