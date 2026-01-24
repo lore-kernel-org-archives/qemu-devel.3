@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED161D715EE
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 18:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D8F5D715EE
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Jan 2026 18:30:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjiO9-0004Ma-NL; Sat, 24 Jan 2026 13:29:37 -0500
+	id 1vjiOF-0004Q9-Bu; Sat, 24 Jan 2026 13:29:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vjiO8-0004Ls-CE
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 13:29:36 -0500
-Received: from mail-pf1-x442.google.com ([2607:f8b0:4864:20::442])
+ id 1vjiOC-0004OU-Ih
+ for qemu-devel@nongnu.org; Sat, 24 Jan 2026 13:29:40 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vjiO6-0003hV-Vp
- for qemu-devel@nongnu.org; Sat, 24 Jan 2026 13:29:36 -0500
-Received: by mail-pf1-x442.google.com with SMTP id
- d2e1a72fcca58-8217f2ad01eso2940728b3a.2
- for <qemu-devel@nongnu.org>; Sat, 24 Jan 2026 10:29:34 -0800 (PST)
+ id 1vjiOB-0003it-2H
+ for qemu-devel@nongnu.org; Sat, 24 Jan 2026 13:29:40 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-8230c2d3128so1252883b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 24 Jan 2026 10:29:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769279373; x=1769884173; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769279378; x=1769884178; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UvR1Snlpk2uTlHbA8GXZk1IgzFIJTiP7/Ri0kDL87U4=;
- b=hTwqKdgE+sg7yNjIj2ghvoComDFbl7zuY6MW88cNHlPblEUgS/2BLalxfzU5lOIHj4
- ne7PEIAvZRD0/aW+0GEna18XuPbj13E53lmg1LaWcCzoYsIrl/qRc6KRylagYs7RqJQZ
- qJrOgpuKkUHcXhO9N3m2xzTY926NOj4g3HJfmDm3sV/uYNjMA9Rbr7CAhx37fNzMiAEV
- 5bHZNTh3OdMrPYtGjSUFOevCeHtwnHjTMLfNryUrKSFZLvhIkD81Kp3KUequtqyBSqaU
- EZZZp+pQ1GBZt3tqxtri0C169tDCtwLNH4tarZ8W5MI3uPQuVulZCeS/+N11CUuL/YRE
- fy9g==
+ bh=BAwgkxcCnnqe9jCM08ttRZ7hAqumVGJ7T0ER05F6LwQ=;
+ b=O956HxEZfSPx8GCvnPSsJwJxxHSVmLD/iYV6cRktl32P2eBBI44CVs89BAqeLF49tc
+ sA7gaUCFXz4+/wwHZ711hJfnsFztrvh9A8PjhwtLLkx9a7fHmV5B8gBcHh8t51p+lTKu
+ uODrRjGauh2T27X5Cn0V+qrNA3HBfXFUyi/Us2ymOPVNFYlT5s4S30qp+aCdMzC9D+Os
+ SWBAI0d8xfXWORgQ4dSr8b4T3kf4tjtjCjptwY3oHR1bYYAObK6/lS6JgY19QSohyN88
+ WJHPurmA9RcFIJwyazqDNH4iAmCn2eCQU1WpZ6Y/nYNJ+Db7sx2gvVdrLgfHey477aQ/
+ +hVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769279373; x=1769884173;
+ d=1e100.net; s=20230601; t=1769279378; x=1769884178;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UvR1Snlpk2uTlHbA8GXZk1IgzFIJTiP7/Ri0kDL87U4=;
- b=kVbmO16jodk2YQdrlVAk9lUCxvFXSRrWKuDegoZD6knXO5gzy6pp6JP+vOxaDzkqYA
- 0T/pGFkPQ3vIeLMva0jOfzB2KjLCjd5Ij8z/4HKW7oo3MHUASCj3GY4Nob9ZF0nMfZqn
- t8ognwDB+yBK+pbB4C34ypRK8gzluBk0WKmkqcBRect4tMwxiDEYKg45Ljbu7N95eK18
- Qe1u5Qsh+9Y4yQRf+rl24/C0uUS7lAq7njfw8ffByQru7AwvCODsoBeMfIkLPJDhrNu9
- Qvhdlc2lOCUfafYcgUQ0EpA5blHiTi+gfE4H2HvvcWY2ExoEiPYBVshQvXgmFxqT5eCo
- uwKQ==
-X-Gm-Message-State: AOJu0Yzrk34G9K34wO/xOqyAloTj7g93ec3rEzVd7AdIJ/WK7mSyONRU
- 643Gv34r6Xc3yGwRGF8Pn4MVR3PsWyvVmdaodlsYPkoTJAeU5lJLnL83Z1jB4Sx6pEglRiPqaES
- 2Okkn9B0Zqg==
-X-Gm-Gg: AZuq6aJCgZfDyRA9mRsqXSUS+vUTucS/cURmx82ob2JljSDz5ydTY83rjbj4X0tTup7
- eMXrtTcVWTnuUFnF8Fp3bGH8YjmbicvnFjNn4zwku6Pu/SJMkZIR617n2Bsiz7VTXeuItXmeQ2F
- vkAyHsROiMWPpZwJa0ytIEcfYtJzpM0baNdYgOPveRDEcAKJe+56hwFgWOiONApClHH7y6F6Gfc
- 5pPFTo/2BEITjFGeTy0iwZ/B9wJBhWgBvwQCuZQZcAPVTlvHgZs7g4PlT/m/n8AUdkofBmjis9B
- w8jQU8yzq0g1hsKRV3HB+fy6V/637GwZpniIQ0YTK9Uv9ZxmJ/H0/bcq3eASBeV9hDrNb3lv5Lb
- kqBjB5EdT6DiL+udvGM7rIO44Z2/xsqnENIgJUTail+Bed+KDiGiz9sPOk9MWUp+xt9UsGv2jx7
- HKu5ogwZ76BQz1TnjJAHJdcUYif9LOJhUt/S6SdZqjLoG9JweSwpDJTlTcKhcx3/BhuAONzZyAH
- 14=
-X-Received: by 2002:a05:6a00:4b0c:b0:81f:3f88:89f3 with SMTP id
- d2e1a72fcca58-82317d9e2c3mr6655965b3a.3.1769279373492; 
- Sat, 24 Jan 2026 10:29:33 -0800 (PST)
+ bh=BAwgkxcCnnqe9jCM08ttRZ7hAqumVGJ7T0ER05F6LwQ=;
+ b=imhLPWWodiXLW8VaWGhEQ9okPpER7OvRG2SeMbiTISuQvnXE8j4X4Fu+3FuuFwATiM
+ C7Fcpum9eP5fJZo8XkgUn7YRUFd83+3HGg9KQVOsbWVwe1F07wRBPqTlOdUfruKmXshp
+ IhWvrevmOIi/boCpTzRE5SJGKyJGQlGccVrJv1I/EiiAGX4MnrqkMc5V6R6XiW8Vsz5Q
+ j24oTUmIh0N7vV9mApdT3YMNECGQxjZiwL/pubyWIrEFSmLkLuZMbM8D/ctRUFPSm9iF
+ XGtaux9tsGnMEKuSI01nZEZb+tj545ZD+p4Ro+B9LPJ3DNg2AnuWJoedwyanmOE6BMGE
+ pnrw==
+X-Gm-Message-State: AOJu0Yyy5nnfMdEgLyDTTtl4EPChmDZAD/9ZStr813Xr3decBo4ObyEk
+ LP73WZd9uHx6BAgexh5a2kKaedTmS1AjLQ6LB/R0VymUTlov/e02/H4xwYPwNiTa6w0mR+fmgbY
+ isnpAygc=
+X-Gm-Gg: AZuq6aLVzxM7eKCwYXd9OZtUG0NkNpzXIykwA8JYmAzuCywSZzRxqwhsNuj4AyCNazN
+ uKQR7JeBc9xZP1SY+OMkZSC5Qoi7KMRpoMh/z/P5/tffHt7AvwwZmmjVh7oREWNYlDa99nf95T4
+ KyD/kRQn4BneLAgdhfUTYWfc/IjEHaD4LD+/FzcHcGPwTa91UcdDJRi+8gesiOaWZq13cfhnL1F
+ QXduy56Ev+WJ8CNVswgt/5QT5VgaegHZAJ+EvkSc6brXLdSmzN4wB3+uySEBeOeOR1JY4JMJEdA
+ qWQ0fpY90guKnWy6rOEfZ9mEdcquUKIZ+QdcZ43znT5F8gyexLXNP80qG3AaTQMNePlVKLObtYb
+ oBNAh5z57bbJjbqi01ZQsKqxKtOTJC37aRspb3oZ8EyGXY36tOqkIHfg/Zqr7/RwBkM2HyslWin
+ +kjsK4TsGankiBVkRMBqgf6U20N2ctuiBh9wyq1bA8ZKrHJgS7fSH0ZyBEvawuXE7/
+X-Received: by 2002:a05:6a00:800e:b0:81f:7db2:89cf with SMTP id
+ d2e1a72fcca58-82317ea4fafmr5626890b3a.39.1769279377703; 
+ Sat, 24 Jan 2026 10:29:37 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8231871d432sm5296485b3a.42.2026.01.24.10.29.32
+ d2e1a72fcca58-8231871d432sm5296485b3a.42.2026.01.24.10.29.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 24 Jan 2026 10:29:33 -0800 (PST)
+ Sat, 24 Jan 2026 10:29:37 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
@@ -81,18 +80,16 @@ Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Alexandre Iooss <erdnaxe@crans.org>
-Subject: [PATCH v4 04/11] plugins: define plugin API symbols as extern "C"
- when compiling in C++
-Date: Sat, 24 Jan 2026 10:29:14 -0800
-Message-ID: <20260124182921.531562-5-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 09/11] qga/vss-win32: fix clang warning with C++20
+Date: Sat, 24 Jan 2026 10:29:19 -0800
+Message-ID: <20260124182921.531562-10-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260124182921.531562-1-pierrick.bouvier@linaro.org>
 References: <20260124182921.531562-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::442;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x442.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,37 +112,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+C++20 deprecated such constructs.
+
+../qga/vss-win32/requester.cpp:380:32: error: bitwise operation between different enumeration types ('_VSS_SNAPSHOT_CONTEXT' and '_VSS_VOLUME_SNAPSHOT_ATTRIBUTES') is deprecated [-Werror,-Wdeprecated-enum-enum-conversion]
+  380 |     ctx = VSS_CTX_APP_ROLLBACK | VSS_VOLSNAP_ATTR_TRANSPORTABLE |
+
+This is a false positive, since VSS_CTX_APP_ROLLBACK is not a value
+defined in _VSS_VOLUME_SNAPSHOT_ATTRIBUTES enum.
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/qemu/qemu-plugin.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ qga/vss-win32/requester.cpp | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 60de4fdd3fa..e44f863d839 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -16,6 +16,10 @@
- #include <stdbool.h>
- #include <stddef.h>
- 
-+#ifdef __cplusplus
-+extern "C" {
-+#endif
-+
- /*
-  * For best performance, build the plugin with -fvisibility=hidden so that
-  * QEMU_PLUGIN_LOCAL is implicit. Then, just mark qemu_plugin_install with
-@@ -1210,4 +1214,8 @@ void qemu_plugin_u64_set(qemu_plugin_u64 entry, unsigned int vcpu_index,
- QEMU_PLUGIN_API
- uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry);
- 
-+#ifdef __cplusplus
-+} /* extern "C" */
-+#endif
-+
- #endif /* QEMU_QEMU_PLUGIN_H */
+diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
+index 5615955b6f3..74489fcd0ae 100644
+--- a/qga/vss-win32/requester.cpp
++++ b/qga/vss-win32/requester.cpp
+@@ -377,8 +377,10 @@ void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
+      * To prevent the final commit (which requires to write to snapshots),
+      * ATTR_NO_AUTORECOVERY and ATTR_TRANSPORTABLE are specified here.
+      */
+-    ctx = VSS_CTX_APP_ROLLBACK | VSS_VOLSNAP_ATTR_TRANSPORTABLE |
+-        VSS_VOLSNAP_ATTR_NO_AUTORECOVERY | VSS_VOLSNAP_ATTR_TXF_RECOVERY;
++    ctx = VSS_CTX_APP_ROLLBACK;
++    ctx |= VSS_VOLSNAP_ATTR_TRANSPORTABLE |
++           VSS_VOLSNAP_ATTR_NO_AUTORECOVERY |
++           VSS_VOLSNAP_ATTR_TXF_RECOVERY;
+     hr = vss_ctx.pVssbc->SetContext(ctx);
+     if (hr == (HRESULT)VSS_E_UNSUPPORTED_CONTEXT) {
+         /* Non-server version of Windows doesn't support ATTR_TRANSPORTABLE */
 -- 
 2.47.3
 
