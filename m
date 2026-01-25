@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D14BEE63CA3
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 18:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7817AE63CAC
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 18:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vk4wG-0006iR-4L; Sun, 25 Jan 2026 13:34:20 -0500
+	id 1vk4wF-0006hr-Jv; Sun, 25 Jan 2026 13:34:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vk4wD-0006fx-TS
+ id 1vk4wD-0006f8-L1
  for qemu-devel@nongnu.org; Sun, 25 Jan 2026 13:34:17 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vk4wA-0002nH-Gx
+ id 1vk4wA-0002nG-GX
  for qemu-devel@nongnu.org; Sun, 25 Jan 2026 13:34:17 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 5DC8A5974F8;
+ by zero.eik.bme.hu (Postfix) with ESMTP id 755FA5974FE;
  Sun, 25 Jan 2026 19:34:10 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id FZ4sAf4sXUly; Sun, 25 Jan 2026 19:34:08 +0100 (CET)
+ id v_y9rsM8YZvB; Sun, 25 Jan 2026 19:34:08 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0F0745974D0; Sun, 25 Jan 2026 18:51:05 +0100 (CET)
-Message-ID: <7005aea5c5a6d750e172ae0d3183578f066ac268.1769362313.git.balaton@eik.bme.hu>
+ id 03ED05974CF; Sun, 25 Jan 2026 18:51:04 +0100 (CET)
+Message-ID: <af15b75b51efc18d0415ba8fa865d6a21502ebb3.1769362313.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1769362313.git.balaton@eik.bme.hu>
 References: <cover.1769362313.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 09/10] hw/pci-host/articia: Map PCI memory windows in
- realize
+Subject: [PATCH v2 08/10] hw/ide/sii3112: Use memory_region_new to avoid
+ leaking regions
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -42,15 +42,14 @@ To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Paolo Bonzini <pbonzini@redhat.com>, Michael S. Tsirkin <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Sun, 25 Jan 2026 18:51:05 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Sun, 25 Jan 2026 18:51:04 +0100 (CET)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,158 +65,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These memory windows are a result of the address decoding in the
-Articia S north bridge so better model it there and not in board code.
+Memory regions created with memory_region_init are not freed with
+their owner. Use memory_region_new instead to let QOM manage the
+lifetime of the memory regions.
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/pci-host/articia.c | 14 +++++++++++++-
- hw/ppc/amigaone.c     | 28 +++++-----------------------
- hw/ppc/pegasos.c      | 13 -------------
- 3 files changed, 18 insertions(+), 37 deletions(-)
+ hw/ide/sii3112.c | 30 ++++++++++++------------------
+ 1 file changed, 12 insertions(+), 18 deletions(-)
 
-diff --git a/hw/pci-host/articia.c b/hw/pci-host/articia.c
-index 1881e03d58..6e14604311 100644
---- a/hw/pci-host/articia.c
-+++ b/hw/pci-host/articia.c
-@@ -22,6 +22,11 @@
-  * Most features are missing but those are not needed by firmware and guests.
-  */
+diff --git a/hw/ide/sii3112.c b/hw/ide/sii3112.c
+index 9b28c691fd..d2dcfc3830 100644
+--- a/hw/ide/sii3112.c
++++ b/hw/ide/sii3112.c
+@@ -31,7 +31,7 @@ typedef struct SiI3112Regs {
  
-+#define PCI_HIGH_ADDR 0x80000000
-+#define PCI_HIGH_SIZE 0x7d000000
-+#define PCI_LOW_ADDR  0xfd000000
-+#define PCI_LOW_SIZE   0x1000000
+ struct SiI3112PCIState {
+     PCIIDEState i;
+-    MemoryRegion mmio;
 +
- OBJECT_DECLARE_SIMPLE_TYPE(ArticiaState, ARTICIA)
+     SiI3112Regs regs[2];
+ };
  
- OBJECT_DECLARE_SIMPLE_TYPE(ArticiaHostState, ARTICIA_PCI_HOST)
-@@ -169,6 +174,7 @@ static void articia_realize(DeviceState *dev, Error **errp)
+@@ -249,39 +249,33 @@ static void sii3112_reset(DeviceState *dev)
+ 
+ static void sii3112_pci_realize(PCIDevice *dev, Error **errp)
  {
-     ArticiaState *s = ARTICIA(dev);
-     PCIHostState *h = PCI_HOST_BRIDGE(dev);
-+    MemoryRegion *mr;
-     PCIDevice *pdev;
+-    SiI3112PCIState *d = SII3112_PCI(dev);
+     PCIIDEState *s = PCI_IDE(dev);
+     DeviceState *ds = DEVICE(dev);
+-    MemoryRegion *mr;
+-    int i;
++    Object *o = OBJECT(dev);
++    MemoryRegion *mmio, *mr;
  
-     bitbang_i2c_init(&s->smbus, i2c_init_bus(dev, "smbus"));
-@@ -181,6 +187,13 @@ static void articia_realize(DeviceState *dev, Error **errp)
-                           TYPE_ARTICIA, 0x1000000);
-     memory_region_add_subregion_overlap(&s->reg, 0, &s->io, 1);
+     pci_config_set_interrupt_pin(dev->config, 1);
+     pci_set_byte(dev->config + PCI_CACHE_LINE_SIZE, 8);
  
-+    mr = memory_region_new_alias(OBJECT(dev), "pci-mem-low", &s->mem, 0,
-+                                 PCI_LOW_SIZE);
-+    memory_region_add_subregion(get_system_memory(), PCI_LOW_ADDR, mr);
-+    mr = memory_region_new_alias(OBJECT(dev), "pci-mem-high", &s->mem,
-+                                 PCI_HIGH_ADDR, PCI_HIGH_SIZE);
-+    memory_region_add_subregion(get_system_memory(), PCI_HIGH_ADDR, mr);
-+
-     /* devfn_min is 8 that matches first PCI slot in AmigaOne */
-     h->bus = pci_register_root_bus(dev, NULL, articia_pcihost_set_irq,
-                                    amigaone_pcihost_bus0_map_irq, dev, &s->mem,
-@@ -191,7 +204,6 @@ static void articia_realize(DeviceState *dev, Error **errp)
-     pci_create_simple(h->bus, PCI_DEVFN(0, 1), TYPE_ARTICIA_PCI_BRIDGE);
+     /* BAR5 is in PCI memory space */
+-    memory_region_init_io(&d->mmio, OBJECT(d), &sii3112_reg_ops, d,
+-                         "sii3112.bar5", 0x200);
+-    pci_register_bar(dev, 5, PCI_BASE_ADDRESS_SPACE_MEMORY, &d->mmio);
++    mmio = memory_region_new_io(o, &sii3112_reg_ops, SII3112_PCI(dev),
++                                "sii3112.bar5", 0x200);
++    pci_register_bar(dev, 5, PCI_BASE_ADDRESS_SPACE_MEMORY, mmio);
  
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->reg);
--    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mem);
-     qdev_init_gpio_out(dev, s->irq, ARRAY_SIZE(s->irq));
- }
- 
-diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-index 8074713fbe..17deacab44 100644
---- a/hw/ppc/amigaone.c
-+++ b/hw/ppc/amigaone.c
-@@ -35,13 +35,6 @@
- #define INITRD_MIN_ADDR 0x600000
- #define INIT_RAM_ADDR 0x40000000
- 
--#define PCI_HIGH_ADDR 0x80000000
--#define PCI_HIGH_SIZE 0x7d000000
--#define PCI_LOW_ADDR  0xfd000000
--#define PCI_LOW_SIZE  0xe0000
--
--#define ARTICIA_ADDR 0xfe000000
--
- /*
-  * Firmware binary available at
-  * https://www.hyperion-entertainment.com/index.php/downloads?view=files&parent=28
-@@ -267,7 +260,7 @@ static void amigaone_init(MachineState *machine)
- {
-     PowerPCCPU *cpu;
-     CPUPPCState *env;
--    MemoryRegion *rom, *pci_mem, *mr;
-+    MemoryRegion *rom, *mr;
-     ssize_t sz;
-     PCIBus *pci_bus;
-     Object *via;
-@@ -308,8 +301,8 @@ static void amigaone_init(MachineState *machine)
-         qdev_prop_set_drive(dev, "drive", blk_by_legacy_dinfo(di));
-     }
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
--    memory_region_add_subregion(get_system_memory(), NVRAM_ADDR,
--                                sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
-+    mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-+    memory_region_add_subregion_overlap(get_system_memory(), NVRAM_ADDR, mr, 1);
- 
-     /* allocate and load firmware */
-     rom = g_new(MemoryRegion, 1);
-@@ -329,8 +322,8 @@ static void amigaone_init(MachineState *machine)
-     }
- 
-     /* Articia S */
--    dev = sysbus_create_simple(TYPE_ARTICIA, ARTICIA_ADDR, NULL);
--
-+    dev = sysbus_create_simple(TYPE_ARTICIA, 0xfe000000, NULL);
-+    pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci.0"));
-     i2c_bus = I2C_BUS(qdev_get_child_bus(dev, "smbus"));
-     if (machine->ram_size > 512 * MiB) {
-         spd_data = spd_data_generate(SDR, machine->ram_size / 2);
-@@ -343,17 +336,6 @@ static void amigaone_init(MachineState *machine)
-         smbus_eeprom_init_one(i2c_bus, 0x52, spd_data);
-     }
- 
--    pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
+     /* BAR0-BAR4 are PCI I/O space aliases into BAR5 */
 -    mr = g_new(MemoryRegion, 1);
--    memory_region_init_alias(mr, OBJECT(dev), "pci-mem-low", pci_mem,
--                             0, PCI_LOW_SIZE);
--    memory_region_add_subregion(get_system_memory(), PCI_LOW_ADDR, mr);
+-    memory_region_init_alias(mr, OBJECT(d), "sii3112.bar0", &d->mmio, 0x80, 8);
++    mr = memory_region_new_alias(o, "sii3112.bar0", mmio, 0x80, 8);
+     pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_IO, mr);
 -    mr = g_new(MemoryRegion, 1);
--    memory_region_init_alias(mr, OBJECT(dev), "pci-mem-high", pci_mem,
--                             PCI_HIGH_ADDR, PCI_HIGH_SIZE);
--    memory_region_add_subregion(get_system_memory(), PCI_HIGH_ADDR, mr);
--    pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci.0"));
--
-     /* VIA VT82c686B South Bridge (multifunction PCI device) */
-     via = OBJECT(pci_create_simple_multifunction(pci_bus, PCI_DEVFN(7, 0),
-                                                  TYPE_VT82C686B_ISA));
-diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
-index ac9fc5a654..e0e2e8815d 100644
---- a/hw/ppc/pegasos.c
-+++ b/hw/ppc/pegasos.c
-@@ -213,23 +213,10 @@ static void pegasos_init(MachineState *machine)
-     /* north bridge */
-     switch (pm->type) {
-     case PEGASOS1:
--    {
--        MemoryRegion *pci_mem, *mr;
--
-         /* Articia S */
-         pm->nb = DEVICE(sysbus_create_simple(TYPE_ARTICIA, 0xfe000000, NULL));
--        pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 1);
--        mr = g_new(MemoryRegion, 1);
--        memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-low", pci_mem,
--                                 0, 0x1000000);
--        memory_region_add_subregion(get_system_memory(), 0xfd000000, mr);
--        mr = g_new(MemoryRegion, 1);
--        memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-high", pci_mem,
--                                 0x80000000, 0x7d000000);
--        memory_region_add_subregion(get_system_memory(), 0x80000000, mr);
-         pci_bus = PCI_BUS(qdev_get_child_bus(pm->nb, "pci.0"));
-         break;
--    }
-     case PEGASOS2:
-         /* Marvell Discovery II system controller */
-         pm->nb = DEVICE(sysbus_create_simple(TYPE_MV64361, -1,
+-    memory_region_init_alias(mr, OBJECT(d), "sii3112.bar1", &d->mmio, 0x88, 4);
++    mr = memory_region_new_alias(o, "sii3112.bar1", mmio, 0x88, 4);
+     pci_register_bar(dev, 1, PCI_BASE_ADDRESS_SPACE_IO, mr);
+-    mr = g_new(MemoryRegion, 1);
+-    memory_region_init_alias(mr, OBJECT(d), "sii3112.bar2", &d->mmio, 0xc0, 8);
++    mr = memory_region_new_alias(o, "sii3112.bar2", mmio, 0xc0, 8);
+     pci_register_bar(dev, 2, PCI_BASE_ADDRESS_SPACE_IO, mr);
+-    mr = g_new(MemoryRegion, 1);
+-    memory_region_init_alias(mr, OBJECT(d), "sii3112.bar3", &d->mmio, 0xc8, 4);
++    mr = memory_region_new_alias(o, "sii3112.bar3", mmio, 0xc8, 4);
+     pci_register_bar(dev, 3, PCI_BASE_ADDRESS_SPACE_IO, mr);
+-    mr = g_new(MemoryRegion, 1);
+-    memory_region_init_alias(mr, OBJECT(d), "sii3112.bar4", &d->mmio, 0, 16);
++    mr = memory_region_new_alias(o, "sii3112.bar4", mmio, 0, 16);
+     pci_register_bar(dev, 4, PCI_BASE_ADDRESS_SPACE_IO, mr);
+ 
+     qdev_init_gpio_in(ds, sii3112_set_irq, 2);
+-    for (i = 0; i < 2; i++) {
++    for (int i = 0; i < 2; i++) {
+         ide_bus_init(&s->bus[i], sizeof(s->bus[i]), ds, i, 1);
+         ide_bus_init_output_irq(&s->bus[i], qdev_get_gpio_in(ds, i));
+ 
 -- 
 2.41.3
 
