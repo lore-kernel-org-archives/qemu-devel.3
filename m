@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78077E63CAF
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 16:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53AABE63CB1
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 16:59:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vk3PO-0000v6-2o; Sun, 25 Jan 2026 11:56:18 -0500
+	id 1vk3Rs-0002oo-6m; Sun, 25 Jan 2026 11:58:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vk3PL-0000tu-Qd
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 11:56:15 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vk3Ri-0002lW-Ts
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 11:58:44 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vk3PJ-0003b5-Mv
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 11:56:15 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-47eddddcdcfso22026925e9.1
- for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 08:56:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vk3Rg-0003kN-Qp
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 11:58:42 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-43284ed32a0so2294270f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 08:58:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769360171; x=1769964971; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1769360319; x=1769965119; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1zEOLLwIHKsHu+Kcrl6K9wXm03RRA72WMEjVjBc2dck=;
- b=nNV3FHNFzq3e8cX5rKQFOJTPTtYm4Iii/rRnFBGZjRDjoEBBpTgPG5PDYizWpLORAQ
- A2dh+5/rseGrwx+cNvhrXD85vrk9apD+Y9fUjQZr2vxA1IWbvVy3NUB2BmmxEq2djuwz
- XQ+dosgCaVmgVUBv1oSjqG8VGWRVON7ZF2YR+KGFoSqkB/U3WJ5JhCgYPxJbWf/HyQIa
- 8nOjUcshcHbBjBme0HHWu8KO1gzQiKePxraLRv9cvfNMUy5xLfsSnipUBDfDs23wIn8C
- hYvhlk9iCPrKWlGpl6ebit6hinZeRt4Qc2QxsMzCElyDKn1S6YBXyd2vMSVEAlBlPatY
- DeCA==
+ bh=0bBIlOV2tGYeFA5Ylr+lmNzjjtlhCVDAfjOTKukUTXc=;
+ b=sQiPKeI5NapTzMuRIzQShe5MqT02CxesXSmAKoxNeLl9VcifexCFK2WR5XTiQR1fc0
+ Ubv3ydDbru5nHhdMFs2UADdutuLGN6L+w/wPBKia5KBoMTDvKzwujDb46vOM01WfQh4z
+ QlJNU9z4NKeyfZlzuxhgxuyI8sPYji1+rNoiBKdBguNKQp0KapOr2FNv+RAsEhdm2BuJ
+ PcWWOux3iUnQJQ0KlY+0E+YSCny2+axax4fG9upKAarfHlzrPGRUkoyHnWebyH8FcjXR
+ UtdamOw3gCmpmzllsi8RUlbjWZvYHEjxuPx7mxmEuX/hm0Al2WOxRId6nM0LE8UByvMe
+ TWLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769360171; x=1769964971;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1769360319; x=1769965119;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1zEOLLwIHKsHu+Kcrl6K9wXm03RRA72WMEjVjBc2dck=;
- b=kbX/lxF4fiD9CTNljQ1ip4IzNTXMpzUXGRM5ktz8ecpQL9gHglK4NVlqzJIqa16yZM
- Ozg/OvR5Wkq21Ly2LZ6mg5LMcbhK7aezuyXAmB8gshHf3Su/+wPMtQGg+keXDgUARL2/
- qhfuz0iYxE7lhnyOdZJCDM1lQSORjfHm7E48fUPsZ8cY4PJSiOmwpwf2LYJfY9V2eJuT
- 3ORtyogTukx8omL2pgB5Ck9RgvsI51jP6t1+nRGpKC5XBNx1KTvklemLkm2MVz/iIb91
- I1L5PNmDLDhAT0fw5G53U9mca3nnC5dAtrFOWQKcTHUNhE43RrotEPn4frL/KXRW57iX
- JnPA==
+ bh=0bBIlOV2tGYeFA5Ylr+lmNzjjtlhCVDAfjOTKukUTXc=;
+ b=s3qbefywTnIPfUUvJrk1fPob3cLys5h03jRso/RWBrY6gc0LG2AHXK4wMtdgxqywZc
+ W1bEyg92Oue0aSMRyITIPo7h4n2RHBsk8dCY3NsQg/LZfNzPflbljl9acaLsUaGIltN3
+ F/U3zsUxXBoJKxU4H7mmGaOwp0GYB/1q8Vy7bX3v7gFU/8wZlbEOOQkgOwkxZ55QtzTk
+ kuuAOsb+cDJfbALCNwP6X2npAS/lyZtWMDFa0EgaUJ7if/5uu8oe9x9f3krIuT11nAHn
+ EG1ktgtQcKoPQpbZCzRk3bhkIi/EKd4zfSbh7kWONLqLsYlGg60knnQW3yFmD53MeHs/
+ JOpA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5jbJO40zTVObm29VB9fzpNcxfDF2mun2Nl1PMkaKRbsfLthAHmlSISsPZcHmnVB4iT4z5NpXwdaQd@nongnu.org
-X-Gm-Message-State: AOJu0YwHRevY63jwHMTFWhxEU+y9mXZXDO4JeiQaWSe58LzsLwRWqhy7
- 3rB2DEy3O5aTRtSV++91Ndol2LfUpZmhqCyZGa9eFp+6fdSeji4lvS6KRk5rYbr0uvk=
-X-Gm-Gg: AZuq6aKO++D5Jmb+JTnw2eDYsOK2esmElT9oOKTD3mJ2JYzriaOCVvZeCdwX/9kJkQf
- TFpyKG8extag6oX2xOah3CnVre+MqGH3sjcIZ+7ppjw+ducI5Yrtb6k7kUEhKpUWPJ4/syHOdQj
- 3kMnVRPoO7n/KdvaHfuf3VT7W8yeM7DQcxsTr+Z51WPX2fE0DH4kqb1ucz9JSjGlxKAOfLr0raK
- l6L0ojSRwKand+ut1VY6ewtKeDXKLQHm86cujKIYLVlzEas0apPIJMBhOB5Qt1uoXpZH427EHzW
- 2f6ggDDj3D3fWhvNL0nQIGimrBnp0BmKcDTOfYoqu17XtX73BNyDoj7NPfzR71lUHZqgATgbTGI
- bqDX4NPSKVZAq0Z6vUM9sa2Icr05j1y1L0kQc6On0PYZRft1uCLy8gYoIB/DbflJGi4ewrFHGyM
- ub1/cYBC09KogqujdSbqi2tY11k7B9jlYW+5gJf9hoiy/qiOsGCD3C9A==
-X-Received: by 2002:a05:600c:3e18:b0:477:a219:cdb7 with SMTP id
- 5b1f17b1804b1-48060ad816fmr6474525e9.0.1769360171221; 
- Sun, 25 Jan 2026 08:56:11 -0800 (PST)
+ AJvYcCXy++ulzFyeNoZPK+qoskmJHH6UcL1g+A/csS4aqKdj4E5sJMs3/ufwapLA+/F7HetHrZsRT3j0RjIe@nongnu.org
+X-Gm-Message-State: AOJu0YxucZegeTixAq+/qKnEbEyCJslPHdkGsTP8hXbXBEtJv/6xgcG5
+ K5IbprjeYUFEICwXlo+tw8dXSPodIHFDcnCNv4a6a5cEs2+YYQOxW7mQJsp0feBjTlI=
+X-Gm-Gg: AZuq6aLI1nuSM2r6ib0SScM92WmrOGe64K8BVars0nR+QXLj/5DWCJegcva44o+jb9b
+ 2CFwt1vQNMPZ1DwVHvuGNFVheCDFLqVe02TIssgya+K2q6Fx4jBvnY2cvZEsJ+M6FIen+wJyW0S
+ bDhdUfD1D7sgYo4kS4yotWRNYL2GircY4NUh20kGpL/KUzxBL2iBUR1EMSH0Te61fsePjXzhuIC
+ j+tjGI9kk/0U2hM7GalX000HdTvDi8dN93kk/g3zPFP2K0d/Qaqx7/YoYAuZHjvM44zSyEogNzw
+ 8vRuFPpSEsbm9rmBVI81G5zEZtPylQ/pA1obkQZI2ImpMjwfVWqUuIc4mJaW7SVwt6BDnmc0HWo
+ HnkmXar+cLBdxvB23E/QGSh1Kx7GI3ucSTNfsXRPSMW2Lr4uekso/+WnrDxJ/d0HSqYfMEXqL07
+ fcUsgYkwgqIRET4UzoDRraaAaRnMC0q0ruma8NZgTGr4jBNsuimmgFPw==
+X-Received: by 2002:a05:6000:310e:b0:435:a370:2d71 with SMTP id
+ ffacd0b85a97d-435ca191606mr3603174f8f.33.1769360318890; 
+ Sun, 25 Jan 2026 08:58:38 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1c02cf6sm24284939f8f.7.2026.01.25.08.56.09
+ ffacd0b85a97d-435b1e717cbsm23387051f8f.24.2026.01.25.08.58.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 Jan 2026 08:56:10 -0800 (PST)
-Message-ID: <d74ef37a-b423-457a-b2c1-31989243b1a8@linaro.org>
-Date: Sun, 25 Jan 2026 17:56:09 +0100
+ Sun, 25 Jan 2026 08:58:38 -0800 (PST)
+Message-ID: <ff71da32-360a-4e13-8033-dc461b85915a@linaro.org>
+Date: Sun, 25 Jan 2026 17:58:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] hw/nvme: Fix bootindex suffix use-after-free
+Subject: Re: [PATCH 1/5] contrib/elf2dmp: Grow PDB URL buffer
+Content-Language: en-US
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
 Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
  Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
@@ -80,14 +81,13 @@ Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
  Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
  Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
 References: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
- <20260125-nvme-v1-5-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
+ <20260125-nvme-v1-1-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260125-nvme-v1-5-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260125-nvme-v1-1-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,18 +111,72 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 25/1/26 07:42, Akihiko Odaki wrote:
-> The bootindex suffix can be used as long as the property is alive.
-
-True, so:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-But maybe it shouldn't (we should g_strdup it like other QOM fields).
-
+> The buffers used to construct a PDB URL overflow when the "age" property
+> is greater than 0xf, so grow it. This also simplifies the logic of the
+> URL construction to use one buffer instead of two to avoid the chore to
+> synchronize the sizes of two buffers.
 > 
 > Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > ---
->   hw/nvme/nvme.h | 1 +
->   hw/nvme/ns.c   | 7 +++----
->   2 files changed, 4 insertions(+), 4 deletions(-)
+>   contrib/elf2dmp/main.c | 27 ++++++++++-----------------
+>   1 file changed, 10 insertions(+), 17 deletions(-)
+> 
+> diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
+> index d046a72ae67f..83ddc57dd9ee 100644
+> --- a/contrib/elf2dmp/main.c
+> +++ b/contrib/elf2dmp/main.c
+> @@ -494,18 +494,6 @@ static bool pe_check_pdb_name(uint64_t base, void *start_addr,
+>       return !strcmp(pdb_name, PDB_NAME);
+>   }
+>   
+> -static void pe_get_pdb_symstore_hash(OMFSignatureRSDS *rsds, char *hash)
+> -{
+> -    sprintf(hash, "%.08x%.04x%.04x%.02x%.02x", rsds->guid.a, rsds->guid.b,
+> -            rsds->guid.c, rsds->guid.d[0], rsds->guid.d[1]);
+> -    hash += 20;
+> -    for (unsigned int i = 0; i < 6; i++, hash += 2) {
+> -        sprintf(hash, "%.02x", rsds->guid.e[i]);
+> -    }
+> -
+> -    sprintf(hash, "%.01x", rsds->age);
+> -}
+> -
+>   int main(int argc, char *argv[])
+>   {
+>       int err = 1;
+> @@ -517,9 +505,7 @@ int main(int argc, char *argv[])
+>       uint64_t KernBase;
+>       void *nt_start_addr = NULL;
+>       WinDumpHeader64 header;
+> -    char pdb_hash[34];
+> -    char pdb_url[] = SYM_URL_BASE PDB_NAME
+> -        "/0123456789ABCDEF0123456789ABCDEFx/" PDB_NAME;
+> +    char pdb_url[sizeof(SYM_URL_BASE PDB_NAME PDB_NAME) + 42];
+>       struct pdb_reader pdb;
+>       uint64_t KdDebuggerDataBlock;
+>       KDDEBUGGER_DATA64 *kdbg;
+> @@ -583,9 +569,16 @@ int main(int argc, char *argv[])
+>       printf("KernBase = 0x%016"PRIx64", signature is \'%.2s\'\n", KernBase,
+>               (char *)nt_start_addr);
+>   
+> -    pe_get_pdb_symstore_hash(&rsds, pdb_hash);
+
+I'd rather use g_autofree + g_strdup_printf and drop the _NAME definitions.
+
+> +    sprintf(pdb_url,
+> +            "%s%.08x%.04x%.04x"
+> +            "%.02x%.02x"
+> +            "%.02x%.02x%.02x%.02x%.02x%.02x"
+> +            "%.01x%s",
+> +            SYM_URL_BASE PDB_NAME "/", rsds.guid.a, rsds.guid.b, rsds.guid.c,
+> +            rsds.guid.d[0], rsds.guid.d[1],
+> +            rsds.guid.e[0], rsds.guid.e[1], rsds.guid.e[2], rsds.guid.e[3], rsds.guid.e[4], rsds.guid.e[5],
+> +            rsds.age, "/" PDB_NAME);
+>   
+> -    sprintf(pdb_url, "%s%s/%s/%s", SYM_URL_BASE, PDB_NAME, pdb_hash, PDB_NAME);
+>       printf("PDB URL is %s\n", pdb_url);
+>   
+>       if (!download_url(PDB_NAME, pdb_url)) {
+> 
+
 
