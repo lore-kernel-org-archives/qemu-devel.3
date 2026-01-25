@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAAECE63CA3
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 18:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D14BEE63CA3
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 18:35:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vk4wn-0007I0-LM; Sun, 25 Jan 2026 13:34:53 -0500
+	id 1vk4wG-0006iR-4L; Sun, 25 Jan 2026 13:34:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vk4wl-0007FD-Uz
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 13:34:51 -0500
+ id 1vk4wD-0006fx-TS
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 13:34:17 -0500
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vk4wk-0002rg-Ed
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 13:34:51 -0500
+ id 1vk4wA-0002nH-Gx
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 13:34:17 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4C0585974BD;
- Sun, 25 Jan 2026 19:34:49 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 5DC8A5974F8;
+ Sun, 25 Jan 2026 19:34:10 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id Gub-2KzC4SUV; Sun, 25 Jan 2026 19:34:47 +0100 (CET)
+ id FZ4sAf4sXUly; Sun, 25 Jan 2026 19:34:08 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 1AFF85974D1; Sun, 25 Jan 2026 18:51:06 +0100 (CET)
-Message-ID: <7fda963bf82cad6c2854f648c4205156f56cec4a.1769362313.git.balaton@eik.bme.hu>
+ id 0F0745974D0; Sun, 25 Jan 2026 18:51:05 +0100 (CET)
+Message-ID: <7005aea5c5a6d750e172ae0d3183578f066ac268.1769362313.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1769362313.git.balaton@eik.bme.hu>
 References: <cover.1769362313.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 10/10] hw/pci-host/articia: Add variable for common type
- cast
+Subject: [PATCH v2 09/10] hw/pci-host/articia: Map PCI memory windows in
+ realize
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -42,7 +42,7 @@ To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Paolo Bonzini <pbonzini@redhat.com>, Michael S. Tsirkin <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Sun, 25 Jan 2026 18:51:06 +0100 (CET)
+Date: Sun, 25 Jan 2026 18:51:05 +0100 (CET)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -66,51 +66,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We need the device casted to OBJECT often enough in realize to store
-it in a local variable that also makes function calls more readable.
+These memory windows are a result of the address decoding in the
+Articia S north bridge so better model it there and not in board code.
 
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/pci-host/articia.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ hw/pci-host/articia.c | 14 +++++++++++++-
+ hw/ppc/amigaone.c     | 28 +++++-----------------------
+ hw/ppc/pegasos.c      | 13 -------------
+ 3 files changed, 18 insertions(+), 37 deletions(-)
 
 diff --git a/hw/pci-host/articia.c b/hw/pci-host/articia.c
-index 6e14604311..e418d3dac3 100644
+index 1881e03d58..6e14604311 100644
 --- a/hw/pci-host/articia.c
 +++ b/hw/pci-host/articia.c
-@@ -174,24 +174,24 @@ static void articia_realize(DeviceState *dev, Error **errp)
+@@ -22,6 +22,11 @@
+  * Most features are missing but those are not needed by firmware and guests.
+  */
+ 
++#define PCI_HIGH_ADDR 0x80000000
++#define PCI_HIGH_SIZE 0x7d000000
++#define PCI_LOW_ADDR  0xfd000000
++#define PCI_LOW_SIZE   0x1000000
++
+ OBJECT_DECLARE_SIMPLE_TYPE(ArticiaState, ARTICIA)
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(ArticiaHostState, ARTICIA_PCI_HOST)
+@@ -169,6 +174,7 @@ static void articia_realize(DeviceState *dev, Error **errp)
  {
      ArticiaState *s = ARTICIA(dev);
      PCIHostState *h = PCI_HOST_BRIDGE(dev);
-+    Object *o = OBJECT(dev);
-     MemoryRegion *mr;
++    MemoryRegion *mr;
      PCIDevice *pdev;
  
      bitbang_i2c_init(&s->smbus, i2c_init_bus(dev, "smbus"));
--    memory_region_init_io(&s->gpio_reg, OBJECT(s), &articia_gpio_ops, s,
-+    memory_region_init_io(&s->gpio_reg, o, &articia_gpio_ops, s,
-                           TYPE_ARTICIA, 4);
- 
--    memory_region_init(&s->mem, OBJECT(dev), "pci-mem", UINT64_MAX);
--    memory_region_init(&s->io, OBJECT(dev), "pci-io", 0xc00000);
--    memory_region_init_io(&s->reg, OBJECT(s), &articia_reg_ops, s,
-+    memory_region_init(&s->mem, o, "pci-mem", UINT64_MAX);
-+    memory_region_init(&s->io, o, "pci-io", 0xc00000);
-+    memory_region_init_io(&s->reg, o, &articia_reg_ops, s,
+@@ -181,6 +187,13 @@ static void articia_realize(DeviceState *dev, Error **errp)
                            TYPE_ARTICIA, 0x1000000);
      memory_region_add_subregion_overlap(&s->reg, 0, &s->io, 1);
  
--    mr = memory_region_new_alias(OBJECT(dev), "pci-mem-low", &s->mem, 0,
--                                 PCI_LOW_SIZE);
-+    mr = memory_region_new_alias(o, "pci-mem-low", &s->mem, 0, PCI_LOW_SIZE);
-     memory_region_add_subregion(get_system_memory(), PCI_LOW_ADDR, mr);
--    mr = memory_region_new_alias(OBJECT(dev), "pci-mem-high", &s->mem,
--                                 PCI_HIGH_ADDR, PCI_HIGH_SIZE);
-+    mr = memory_region_new_alias(o, "pci-mem-high", &s->mem, PCI_HIGH_ADDR,
-+                                 PCI_HIGH_SIZE);
-     memory_region_add_subregion(get_system_memory(), PCI_HIGH_ADDR, mr);
- 
++    mr = memory_region_new_alias(OBJECT(dev), "pci-mem-low", &s->mem, 0,
++                                 PCI_LOW_SIZE);
++    memory_region_add_subregion(get_system_memory(), PCI_LOW_ADDR, mr);
++    mr = memory_region_new_alias(OBJECT(dev), "pci-mem-high", &s->mem,
++                                 PCI_HIGH_ADDR, PCI_HIGH_SIZE);
++    memory_region_add_subregion(get_system_memory(), PCI_HIGH_ADDR, mr);
++
      /* devfn_min is 8 that matches first PCI slot in AmigaOne */
+     h->bus = pci_register_root_bus(dev, NULL, articia_pcihost_set_irq,
+                                    amigaone_pcihost_bus0_map_irq, dev, &s->mem,
+@@ -191,7 +204,6 @@ static void articia_realize(DeviceState *dev, Error **errp)
+     pci_create_simple(h->bus, PCI_DEVFN(0, 1), TYPE_ARTICIA_PCI_BRIDGE);
+ 
+     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->reg);
+-    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mem);
+     qdev_init_gpio_out(dev, s->irq, ARRAY_SIZE(s->irq));
+ }
+ 
+diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+index 8074713fbe..17deacab44 100644
+--- a/hw/ppc/amigaone.c
++++ b/hw/ppc/amigaone.c
+@@ -35,13 +35,6 @@
+ #define INITRD_MIN_ADDR 0x600000
+ #define INIT_RAM_ADDR 0x40000000
+ 
+-#define PCI_HIGH_ADDR 0x80000000
+-#define PCI_HIGH_SIZE 0x7d000000
+-#define PCI_LOW_ADDR  0xfd000000
+-#define PCI_LOW_SIZE  0xe0000
+-
+-#define ARTICIA_ADDR 0xfe000000
+-
+ /*
+  * Firmware binary available at
+  * https://www.hyperion-entertainment.com/index.php/downloads?view=files&parent=28
+@@ -267,7 +260,7 @@ static void amigaone_init(MachineState *machine)
+ {
+     PowerPCCPU *cpu;
+     CPUPPCState *env;
+-    MemoryRegion *rom, *pci_mem, *mr;
++    MemoryRegion *rom, *mr;
+     ssize_t sz;
+     PCIBus *pci_bus;
+     Object *via;
+@@ -308,8 +301,8 @@ static void amigaone_init(MachineState *machine)
+         qdev_prop_set_drive(dev, "drive", blk_by_legacy_dinfo(di));
+     }
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+-    memory_region_add_subregion(get_system_memory(), NVRAM_ADDR,
+-                                sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
++    mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
++    memory_region_add_subregion_overlap(get_system_memory(), NVRAM_ADDR, mr, 1);
+ 
+     /* allocate and load firmware */
+     rom = g_new(MemoryRegion, 1);
+@@ -329,8 +322,8 @@ static void amigaone_init(MachineState *machine)
+     }
+ 
+     /* Articia S */
+-    dev = sysbus_create_simple(TYPE_ARTICIA, ARTICIA_ADDR, NULL);
+-
++    dev = sysbus_create_simple(TYPE_ARTICIA, 0xfe000000, NULL);
++    pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci.0"));
+     i2c_bus = I2C_BUS(qdev_get_child_bus(dev, "smbus"));
+     if (machine->ram_size > 512 * MiB) {
+         spd_data = spd_data_generate(SDR, machine->ram_size / 2);
+@@ -343,17 +336,6 @@ static void amigaone_init(MachineState *machine)
+         smbus_eeprom_init_one(i2c_bus, 0x52, spd_data);
+     }
+ 
+-    pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
+-    mr = g_new(MemoryRegion, 1);
+-    memory_region_init_alias(mr, OBJECT(dev), "pci-mem-low", pci_mem,
+-                             0, PCI_LOW_SIZE);
+-    memory_region_add_subregion(get_system_memory(), PCI_LOW_ADDR, mr);
+-    mr = g_new(MemoryRegion, 1);
+-    memory_region_init_alias(mr, OBJECT(dev), "pci-mem-high", pci_mem,
+-                             PCI_HIGH_ADDR, PCI_HIGH_SIZE);
+-    memory_region_add_subregion(get_system_memory(), PCI_HIGH_ADDR, mr);
+-    pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci.0"));
+-
+     /* VIA VT82c686B South Bridge (multifunction PCI device) */
+     via = OBJECT(pci_create_simple_multifunction(pci_bus, PCI_DEVFN(7, 0),
+                                                  TYPE_VT82C686B_ISA));
+diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
+index ac9fc5a654..e0e2e8815d 100644
+--- a/hw/ppc/pegasos.c
++++ b/hw/ppc/pegasos.c
+@@ -213,23 +213,10 @@ static void pegasos_init(MachineState *machine)
+     /* north bridge */
+     switch (pm->type) {
+     case PEGASOS1:
+-    {
+-        MemoryRegion *pci_mem, *mr;
+-
+         /* Articia S */
+         pm->nb = DEVICE(sysbus_create_simple(TYPE_ARTICIA, 0xfe000000, NULL));
+-        pci_mem = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 1);
+-        mr = g_new(MemoryRegion, 1);
+-        memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-low", pci_mem,
+-                                 0, 0x1000000);
+-        memory_region_add_subregion(get_system_memory(), 0xfd000000, mr);
+-        mr = g_new(MemoryRegion, 1);
+-        memory_region_init_alias(mr, OBJECT(pm->nb), "pci-mem-high", pci_mem,
+-                                 0x80000000, 0x7d000000);
+-        memory_region_add_subregion(get_system_memory(), 0x80000000, mr);
+         pci_bus = PCI_BUS(qdev_get_child_bus(pm->nb, "pci.0"));
+         break;
+-    }
+     case PEGASOS2:
+         /* Marvell Discovery II system controller */
+         pm->nb = DEVICE(sysbus_create_simple(TYPE_MV64361, -1,
 -- 
 2.41.3
 
