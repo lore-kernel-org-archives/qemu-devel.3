@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4189E63C82
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 06:44:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 416E5E63C85
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 06:45:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjtqt-0003Ph-7q; Sun, 25 Jan 2026 01:44:03 -0500
+	id 1vjtqm-0003Gg-1M; Sun, 25 Jan 2026 01:43:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vjtqb-00037P-Q8; Sun, 25 Jan 2026 01:43:47 -0500
+ id 1vjtqb-000373-Gk; Sun, 25 Jan 2026 01:43:45 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vjtqX-0001OF-Lt; Sun, 25 Jan 2026 01:43:45 -0500
+ id 1vjtqX-0001OB-JC; Sun, 25 Jan 2026 01:43:45 -0500
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60P6h74c079417
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60P6h74d079417
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Sun, 25 Jan 2026 15:43:17 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=FS6haBok9vnF/9HFHaX9cWdGhWMcNaaTBU46LJlzpus=; 
+DKIM-Signature: a=rsa-sha256; bh=6oD1SgDIum0e6/mODyNZwlTNufZA5BPZ4Wu9oa12wug=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
  s=rs20250326; t=1769323397; v=1;
- b=H5qGQA565BOxwdz/ICrTdLTg1Lz+amAMiFXvGXUbl4CUafw8DDUQip69/LzwFkj4
- Ky6X8Vw8he5Um7zC2quLZ1rt0FcwlPUUaXyQXXg7ASiRmtdbW6TMCHidegmq252o
- 4h5p/Jeg3QuFD+HCkZK4zxgN/3wkpmxxEj84fJKJU+GtEdQknohUb2k2RGcpZ+RK
- vA8FHnSkl71DeO2laWNMwLhxhxuAh4nsgAe3k2ykRqalb8osImGvFwk3+GXAv94U
- othQiLioVZQjgc6Z65gBoAgb2HhKDlzvX4bJ6w2aknond/1jl3+RR5hPS9gkTGx4
- 3TcMRjvAz67YYEpTAoiFHA==
+ b=vsz25Nz1O5eXyf2Vq+d/byB5ivFTTlkDKkWmH3ckHy0tWar9EPSkpbmd5g2nWQFA
+ Y1Y08KQqnUn4bM1o/oIQVrddv7p2HWEiJM+ELQGpCuqWNPJIfFMV+mt5AC4pRDaE
+ TjiybavNJouBS08kloBKdRZjdwp9RvFz3t9QHvte5U9A7kzrvRiJ6c7Z8Adh/pFJ
+ UgjrLWnysE/q6rePUj2dwZEyd0pELnzH4lqkOGNQAWJjllSnGmde3ELDUhXS8a6K
+ Fucnvw5yZgmLGzYITfn/gv3l0UXgYJxR8N3G4CU/09GooPvP8X/z+hnBKkZDmSDw
+ Bt5GK0iO8gKyYzxO/C4SJQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 25 Jan 2026 15:42:43 +0900
-Subject: [PATCH 1/5] contrib/elf2dmp: Grow PDB URL buffer
+Date: Sun, 25 Jan 2026 15:42:44 +0900
+Subject: [PATCH 2/5] vfio/pci: Grow buffer in vfio_pci_host_match()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260125-nvme-v1-1-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260125-nvme-v1-2-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -80,69 +80,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The buffers used to construct a PDB URL overflow when the "age" property
-is greater than 0xf, so grow it. This also simplifies the logic of the
-URL construction to use one buffer instead of two to avoid the chore to
-synchronize the sizes of two buffers.
+Ensure the buffer in vfio_pci_host_match() will not overflow even when
+an invalid addr parameter is provided.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- contrib/elf2dmp/main.c | 27 ++++++++++-----------------
- 1 file changed, 10 insertions(+), 17 deletions(-)
+ hw/vfio/pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
-index d046a72ae67f..83ddc57dd9ee 100644
---- a/contrib/elf2dmp/main.c
-+++ b/contrib/elf2dmp/main.c
-@@ -494,18 +494,6 @@ static bool pe_check_pdb_name(uint64_t base, void *start_addr,
-     return !strcmp(pdb_name, PDB_NAME);
- }
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index c73447272141..3338c4d7b528 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -2673,7 +2673,7 @@ void vfio_pci_post_reset(VFIOPCIDevice *vdev)
  
--static void pe_get_pdb_symstore_hash(OMFSignatureRSDS *rsds, char *hash)
--{
--    sprintf(hash, "%.08x%.04x%.04x%.02x%.02x", rsds->guid.a, rsds->guid.b,
--            rsds->guid.c, rsds->guid.d[0], rsds->guid.d[1]);
--    hash += 20;
--    for (unsigned int i = 0; i < 6; i++, hash += 2) {
--        sprintf(hash, "%.02x", rsds->guid.e[i]);
--    }
--
--    sprintf(hash, "%.01x", rsds->age);
--}
--
- int main(int argc, char *argv[])
+ bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name)
  {
-     int err = 1;
-@@ -517,9 +505,7 @@ int main(int argc, char *argv[])
-     uint64_t KernBase;
-     void *nt_start_addr = NULL;
-     WinDumpHeader64 header;
--    char pdb_hash[34];
--    char pdb_url[] = SYM_URL_BASE PDB_NAME
--        "/0123456789ABCDEF0123456789ABCDEFx/" PDB_NAME;
-+    char pdb_url[sizeof(SYM_URL_BASE PDB_NAME PDB_NAME) + 42];
-     struct pdb_reader pdb;
-     uint64_t KdDebuggerDataBlock;
-     KDDEBUGGER_DATA64 *kdbg;
-@@ -583,9 +569,16 @@ int main(int argc, char *argv[])
-     printf("KernBase = 0x%016"PRIx64", signature is \'%.2s\'\n", KernBase,
-             (char *)nt_start_addr);
+-    char tmp[13];
++    char tmp[36];
  
--    pe_get_pdb_symstore_hash(&rsds, pdb_hash);
-+    sprintf(pdb_url,
-+            "%s%.08x%.04x%.04x"
-+            "%.02x%.02x"
-+            "%.02x%.02x%.02x%.02x%.02x%.02x"
-+            "%.01x%s",
-+            SYM_URL_BASE PDB_NAME "/", rsds.guid.a, rsds.guid.b, rsds.guid.c,
-+            rsds.guid.d[0], rsds.guid.d[1],
-+            rsds.guid.e[0], rsds.guid.e[1], rsds.guid.e[2], rsds.guid.e[3], rsds.guid.e[4], rsds.guid.e[5],
-+            rsds.age, "/" PDB_NAME);
- 
--    sprintf(pdb_url, "%s%s/%s/%s", SYM_URL_BASE, PDB_NAME, pdb_hash, PDB_NAME);
-     printf("PDB URL is %s\n", pdb_url);
- 
-     if (!download_url(PDB_NAME, pdb_url)) {
+     sprintf(tmp, "%04x:%02x:%02x.%1x", addr->domain,
+             addr->bus, addr->slot, addr->function);
 
 -- 
 2.52.0
