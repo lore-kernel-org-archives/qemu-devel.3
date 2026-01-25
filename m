@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F77E63C8F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D6F1E63C90
 	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 05:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjsy8-00058S-Kq; Sun, 25 Jan 2026 00:47:28 -0500
+	id 1vjsyB-0005Cq-3C; Sun, 25 Jan 2026 00:47:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vjsy7-00056R-FY; Sun, 25 Jan 2026 00:47:27 -0500
+ id 1vjsy9-00059l-5S; Sun, 25 Jan 2026 00:47:29 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vjsy3-0008LC-D1; Sun, 25 Jan 2026 00:47:26 -0500
+ id 1vjsy3-0008LE-D0; Sun, 25 Jan 2026 00:47:28 -0500
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60P5kwTh058986
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60P5kwTi058986
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Sun, 25 Jan 2026 14:47:10 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=gSy2fthNAgLFtO7DqQtljHu8OBiOWiA9vcKLW39U2fY=; 
+DKIM-Signature: a=rsa-sha256; bh=9faYZf2uKxGbwPG+EvmEfAxr5du7fkvsDZyeoRJ1SOg=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
  s=rs20250326; t=1769320030; v=1;
- b=er+KdPfdOp1KCl4xnXYF4VOLUDJooC0k3lb2mTh4Q1Vrb9234Bmq1ev1EU+4vT7+
- ygdjPhC3QOveT9yMH/94rrb40Cd/KA8229ncoVcrwPw2uz8BRVK43cSxbnMa+hTd
- zlE8HXou5vpPt7S011/A4X8NlOrUE/jYc1LECXdbtYrzi93S5RVYAIZqEAZBGsOA
- IdTfwWFPcIEDTKvadTsJX8UTf8SDxlxOllq3Jn4vmojtOBXwMweE+gwFmZAmBOCm
- dobKzW9WbHu+4Kc06p1nVm9KuXSeRUoRLjr2lxvlwAAy1smw51DzXcwiJGzN3qNZ
- FdFLZc3mWv9FufJ1c0dM5w==
+ b=uo5bL0JleaK3ico5BrWfUIPnLJGQ9H+7u04DxRHs06RwR3J9ciYrgzOaFumTdk3L
+ o0p4MOjxXcAEAw1+CNpfg/sdIThnF/vGNw3j+3uy8c3PLK05Gtd6pLXGC/Uxfuom
+ 86zppM0R6/NxtC7/CO7WH11nhjBVd5GY14e0vgQy11aXLHJTuq/6y9uN4F0ClF9+
+ AKrwE1tbrd/7xghtEoaRYaTJ1DuO4Jsvko+qIrGZ4OtlNtGJv78pacPkwFQPEUMu
+ InfWy3cAPnCtx6J3kjNW9jYO8zC07UJupxwCUe47tWZg//WWEc5pUP5wp554XMsN
+ MPY1oDNVAdmIQFolbRiLZw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 25 Jan 2026 14:46:57 +0900
-Subject: [PATCH v4 2/3] hw/arm/virt: Remove the lower bound of HighMem IO
- Regions
+Date: Sun, 25 Jan 2026 14:46:58 +0900
+Subject: [PATCH v4 3/3] test/acpi: aarch64/virt: Update golden masters for
+ DSDT and MCFG
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260125-virt-v4-2-00d726b27224@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260125-virt-v4-3-00d726b27224@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260125-virt-v4-0-00d726b27224@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260125-virt-v4-0-00d726b27224@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -55,13 +55,13 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
 X-Mailer: b4 0.15-dev-179e8
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
  DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,122 +77,1601 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the lower bound of the Highmem IO Regions' addresses for the
-latest machine version to increase the chance to fit the regions in the
-PA space.
+@@ -1,36 +1,36 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/MCFG
++ * Disassembly of /tmp/aml-EFVEJ3
+  *
+  * ACPI Data Table [MCFG]
+  *
+  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
+  */
 
-The lower bound was especially problematic when using virt-install on
-Apple M2. virt-install 5.0.0 adds multiple pcie-root-port devices that
-require sufficient space in the ECAM region. However, the Highmem ECAM
-region did not fit in the limited PA space on the hardware, and the ECAM
-region size was limited to 16 MiB. If virt-install had added more than
-16 devices to the root bridge, the region overflowed, which prevented
-edk2-stable202505 from scanning PCI devices, including the boot disk,
-causing boot failures.
+ [000h 0000 004h]                   Signature : "MCFG"    [Memory Mapped Configuration Table]
+ [004h 0004 004h]                Table Length : 0000003C
+ [008h 0008 001h]                    Revision : 01
+-[009h 0009 001h]                    Checksum : EC
++[009h 0009 001h]                    Checksum : AC
+ [00Ah 0010 006h]                      Oem ID : "BOCHS "
+ [010h 0016 008h]                Oem Table ID : "BXPC    "
+ [018h 0024 004h]                Oem Revision : 00000001
+ [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+ [020h 0032 004h]       Asl Compiler Revision : 00000001
 
-Ideally, a virtual machine with more than 16 devices added to the root
-bridge should just work so that users and management layers do not have
-to care whether they use constrained hardware.
+ [024h 0036 008h]                    Reserved : 0000000000000000
 
-The base address of the Highmem IO Regions was fixed when commit
-f90747c4e8fb ("hw/arm/virt: GICv3 DT node with one or two redistributor
-regions") added the first Highmem IO Region. Later, commit 957e32cffa57
-("hw/arm/virt: Dynamic memory map depending on RAM requirements")
-allowed moving the Highmem IO Regions to higher addresses to accommodate
-RAM more than 255 GiB, but the lower bound remained to keep the legacy
-memory map.
+-[02Ch 0044 008h]                Base Address : 0000004010000000
++[02Ch 0044 008h]                Base Address : 0000000090000000
+ [034h 0052 002h]        Segment Group Number : 0000
+ [036h 0054 001h]            Start Bus Number : 00
+ [037h 0055 001h]              End Bus Number : FF
+ [038h 0056 004h]                    Reserved : 00000000
 
-Remove the lower bound for the latest machine version to accommodate
-more devices with the root bridge. Keeping the lower bound for the old
-machine versions ensures the compatibility is still maintained.
+ Raw Table Data: Length 60 (0x3C)
 
-The hardcoded memory map in tests/qtest/libqos/generic-pcihost.c is also
-updated.
+-    0000: 4D 43 46 47 3C 00 00 00 01 EC 42 4F 43 48 53 20  // MCFG<.....BOCHS
++    0000: 4D 43 46 47 3C 00 00 00 01 AC 42 4F 43 48 53 20  // MCFG<.....BOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+-    0020: 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 10  // ................
+-    0030: 40 00 00 00 00 00 00 FF 00 00 00 00              // @...........
++    0020: 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 90  // ................
++    0030: 00 00 00 00 00 00 00 FF 00 00 00 00              // ............
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT
++ * Disassembly of /tmp/aml-5GVEJ3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x000014D9 (5337)
++ *     Length           0x000014D5 (5333)
+  *     Revision         0x02
+- *     Checksum         0xA5
++ *     Checksum         0xF7
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -1751,33 +1751,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x90000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x00FF,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0100,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -1840,34 +1840,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000090000000, // Range Minimum
++                        0x000000009FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt
++ * Disassembly of /tmp/aml-HQ03I3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x0000152F (5423)
++ *     Length           0x0000152B (5419)
+  *     Revision         0x02
+- *     Checksum         0x70
++ *     Checksum         0xB3
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -1769,33 +1769,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x90000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x00FF,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0100,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -1858,34 +1858,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000090000000, // Range Minimum
++                        0x000000009FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.topology
++ * Disassembly of /tmp/aml-UC05I3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x000015A3 (5539)
++ *     Length           0x0000159F (5535)
+  *     Revision         0x02
+- *     Checksum         0x99
++ *     Checksum         0xEB
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -1793,33 +1793,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x90000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x00FF,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0100,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -1882,34 +1882,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000090000000, // Range Minimum
++                        0x000000009FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT
++ * Disassembly of /tmp/aml-TZRGJ3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x000014D9 (5337)
++ *     Length           0x000014D5 (5333)
+  *     Revision         0x02
+- *     Checksum         0xA5
++ *     Checksum         0xF7
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -1751,33 +1751,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x90000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x00FF,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0100,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -1840,34 +1840,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000090000000, // Range Minimum
++                        0x000000009FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT
++ * Disassembly of /tmp/aml-9EZ4I3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x000014D9 (5337)
++ *     Length           0x000014D5 (5333)
+  *     Revision         0x02
+- *     Checksum         0xA5
++ *     Checksum         0xF7
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -1751,33 +1751,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x90000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x00FF,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0100,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -1840,34 +1840,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000090000000, // Range Minimum
++                        0x000000009FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.memhp
++ * Disassembly of /tmp/aml-32Q9I3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+  *     Length           0x00001A2A (6698)
+  *     Revision         0x02
+- *     Checksum         0xD4
++ *     Checksum         0x11
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     External (_SB_.NVDR, UnknownObj)
+
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+@@ -1753,33 +1753,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x0000000190000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x00FF,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0100,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -1842,34 +1842,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000190000000, // Range Minimum
++                        0x000000019FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.acpipcihp
++ * Disassembly of /tmp/aml-DCVWI3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x00001866 (6246)
++ *     Length           0x00001862 (6242)
+  *     Revision         0x02
+- *     Checksum         0x71
++ *     Checksum         0xC3
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -1751,33 +1751,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x90000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x00FF,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0100,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -1840,34 +1840,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000090000000, // Range Minimum
++                        0x000000009FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
++ * Disassembly of /tmp/aml-KHOBJ3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x0000150F (5391)
++ *     Length           0x0000150B (5387)
+  *     Revision         0x02
+- *     Checksum         0x4C
++ *     Checksum         0x9E
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -1751,33 +1751,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x90000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x00FF,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0100,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -1840,34 +1840,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000090000000, // Range Minimum
++                        0x000000009FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.pxb
++ * Disassembly of /tmp/aml-FHLGJ3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x00001E84 (7812)
++ *     Length           0x00001E80 (7808)
+  *     Revision         0x02
+- *     Checksum         0x15
++ *     Checksum         0x67
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -2936,33 +2936,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x90000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x007F,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0080,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -3025,34 +3025,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000090000000, // Range Minimum
++                        0x000000009FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT
++ * Disassembly of /tmp/aml-BP7DJ3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x000014D9 (5337)
++ *     Length           0x000014D5 (5333)
+  *     Revision         0x02
+- *     Checksum         0xA5
++ *     Checksum         0xF7
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -1751,33 +1751,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x90000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x00FF,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0100,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -1840,34 +1840,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000090000000, // Range Minimum
++                        0x000000009FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.viot
++ * Disassembly of /tmp/aml-ARLYI3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x000014EA (5354)
++ *     Length           0x000014E6 (5350)
+  *     Revision         0x02
+- *     Checksum         0x47
++ *     Checksum         0x99
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -1751,33 +1751,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x90000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x00FF,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0100,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -1840,34 +1840,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000090000000, // Range Minimum
++                        0x000000009FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
++ * Disassembly of /tmp/aml-XDBZI3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x00002822 (10274)
++ *     Length           0x0000281E (10270)
+  *     Revision         0x02
+- *     Checksum         0xAB
++ *     Checksum         0xFD
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -4121,33 +4121,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x90000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x000F,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0010,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -4210,34 +4210,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000090000000, // Range Minimum
++                        0x000000009FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
+
+@@ -1,30 +1,30 @@
+ /*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20240322 (64-bit version)
+  * Copyright (c) 2000 - 2023 Intel Corporation
+  *
+  * Disassembling to symbolic ASL+ operators
+  *
+- * Disassembly of tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
++ * Disassembly of /tmp/aml-OB0ZI3
+  *
+  * Original Table Header:
+  *     Signature        "DSDT"
+- *     Length           0x00002822 (10274)
++ *     Length           0x0000281E (10270)
+  *     Revision         0x02
+- *     Checksum         0xAB
++ *     Checksum         0xFD
+  *     OEM ID           "BOCHS "
+  *     OEM Table ID     "BXPC    "
+  *     OEM Revision     0x00000001 (1)
+  *     Compiler ID      "BXPC"
+  *     Compiler Version 0x00000001 (1)
+  */
+ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
+ {
+     Scope (\_SB)
+     {
+         Device (C000)
+         {
+             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
+             Name (_UID, Zero)  // _UID: Unique ID
+         }
+
+@@ -4121,33 +4121,33 @@
+                     0x001FFFFF,
+                     0x02,
+                     L001,
+                     Zero
+                 },
+
+                 Package (0x04)
+                 {
+                     0x001FFFFF,
+                     0x03,
+                     L002,
+                     Zero
+                 }
+             })
+             Method (_CBA, 0, NotSerialized)  // _CBA: Configuration Base Address
+             {
+-                Return (0x0000004010000000)
++                Return (0x90000000)
+             }
+
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 WordBusNumber (ResourceProducer, MinFixed, MaxFixed, PosDecode,
+                     0x0000,             // Granularity
+                     0x0000,             // Range Minimum
+                     0x000F,             // Range Maximum
+                     0x0000,             // Translation Offset
+                     0x0010,             // Length
+                     ,, )
+                 DWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                     0x00000000,         // Granularity
+                     0x10000000,         // Range Minimum
+                     0x3EFEFFFF,         // Range Maximum
+                     0x00000000,         // Translation Offset
+@@ -4210,34 +4210,34 @@
+                     }
+                 }
+
+                 Return (Buffer (One)
+                 {
+                      0x00                                             // .
+                 })
+             }
+
+             Device (RES0)
+             {
+                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
+                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+                 {
+                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
+                         0x0000000000000000, // Granularity
+-                        0x0000004010000000, // Range Minimum
+-                        0x000000401FFFFFFF, // Range Maximum
++                        0x0000000090000000, // Range Minimum
++                        0x000000009FFFFFFF, // Range Maximum
+                         0x0000000000000000, // Translation Offset
+                         0x0000000010000000, // Length
+                         ,, , AddressRangeMemory, TypeStatic)
+                 })
+             }
+         }
+
+         Device (\_SB.GED)
+         {
+             Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
+             Name (_UID, "GED")  // _UID: Unique ID
+             Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+             {
+                 Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+                 {
+                     0x00000029,
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
- include/hw/arm/virt.h                |  1 +
- hw/arm/virt.c                        | 16 ++++++++++++----
- tests/qtest/libqos/generic-pcihost.c |  2 +-
- 3 files changed, 14 insertions(+), 5 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h      |  11 -----------
+ tests/data/acpi/aarch64/virt/DSDT                | Bin 5337 -> 5333 bytes
+ tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt   | Bin 5423 -> 5419 bytes
+ tests/data/acpi/aarch64/virt/DSDT.acpipcihp      | Bin 6246 -> 6242 bytes
+ tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex | Bin 5391 -> 5387 bytes
+ tests/data/acpi/aarch64/virt/DSDT.memhp          | Bin 6698 -> 6698 bytes
+ tests/data/acpi/aarch64/virt/DSDT.pxb            | Bin 7812 -> 7808 bytes
+ tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev     | Bin 10274 -> 10270 bytes
+ tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy  | Bin 10274 -> 10270 bytes
+ tests/data/acpi/aarch64/virt/DSDT.topology       | Bin 5539 -> 5535 bytes
+ tests/data/acpi/aarch64/virt/DSDT.viot           | Bin 5354 -> 5350 bytes
+ tests/data/acpi/aarch64/virt/MCFG                | Bin 60 -> 60 bytes
+ tests/data/acpi/aarch64/virt/MCFG.memhp          | Bin 0 -> 60 bytes
+ 13 files changed, 11 deletions(-)
 
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 8694aaa4e2a6..213792a01b65 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -121,6 +121,7 @@ typedef enum VirtGICType {
- 
- struct VirtMachineClass {
-     MachineClass parent;
-+    hwaddr min_highmem_base;
-     bool no_tcg_its;
-     bool no_highmem_compact;
-     bool no_kvm_steal_time;
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 9d0568a7d56e..6b124172b1bf 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1935,6 +1935,7 @@ static void virt_set_high_memmap(VirtMachineState *vms,
- static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
- {
-     MachineState *ms = MACHINE(vms);
-+    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
-     hwaddr base, device_memory_base, device_memory_size, memtop;
-     int i;
- 
-@@ -1961,8 +1962,7 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
-     /*
-      * We compute the base of the high IO region depending on the
-      * amount of initial and device memory. The device memory start/size
--     * is aligned on 1GiB. We never put the high IO region below 256GiB
--     * so that if maxram_size is < 255GiB we keep the legacy memory map.
-+     * is aligned on 1GiB.
-      * The device region size assumes 1GiB page max alignment per slot.
-      */
-     device_memory_base =
-@@ -1980,8 +1980,8 @@ static void virt_set_memmap(VirtMachineState *vms, int pa_bits)
-         error_report("maxmem/slots too huge");
-         exit(EXIT_FAILURE);
-     }
--    if (base < vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES) {
--        base = vms->memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
-+    if (base < vmc->min_highmem_base) {
-+        base = vmc->min_highmem_base;
-     }
- 
-     /* We know for sure that at least the memory fits in the PA space */
-@@ -3547,9 +3547,17 @@ DEFINE_VIRT_MACHINE(10, 2)
- 
- static void virt_machine_10_1_options(MachineClass *mc)
- {
-+    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
-+
-     virt_machine_10_2_options(mc);
-     mc->smbios_memory_device_size = 2047 * TiB;
-     compat_props_add(mc->compat_props, hw_compat_10_1, hw_compat_10_1_len);
-+
-+    /*
-+     * Do not put the high IO region below 256GiB so that if maxram_size is
-+     * < 255GiB we keep the legacy memory map.
-+     */
-+    vmc->min_highmem_base = base_memmap[VIRT_MEM].base + LEGACY_RAMLIMIT_BYTES;
- }
- DEFINE_VIRT_MACHINE(10, 1)
- 
-diff --git a/tests/qtest/libqos/generic-pcihost.c b/tests/qtest/libqos/generic-pcihost.c
-index 4bbeb5ff508e..01d698a2490d 100644
---- a/tests/qtest/libqos/generic-pcihost.c
-+++ b/tests/qtest/libqos/generic-pcihost.c
-@@ -210,7 +210,7 @@ void qpci_init_generic(QGenericPCIBus *qpci, QTestState *qts,
-     qpci->bus.pio_limit = 0x10000;
-     qpci->bus.mmio_alloc_ptr = 0x10000000;
-     qpci->bus.mmio_limit = 0x2eff0000;
--    qpci->ecam_alloc_ptr = 0x4010000000;
-+    qpci->ecam_alloc_ptr = 0x90000000;
- 
-     qpci->obj.get_driver = qpci_generic_get_driver;
- }
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index efb00724d09f..dfb8523c8bf4 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,12 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/DSDT",
+-"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
+-"tests/data/acpi/aarch64/virt/DSDT.acpipcihp",
+-"tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex",
+-"tests/data/acpi/aarch64/virt/DSDT.memhp",
+-"tests/data/acpi/aarch64/virt/DSDT.pxb",
+-"tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev",
+-"tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy",
+-"tests/data/acpi/aarch64/virt/DSDT.topology",
+-"tests/data/acpi/aarch64/virt/DSDT.viot",
+-"tests/data/acpi/aarch64/virt/MCFG",
+diff --git a/tests/data/acpi/aarch64/virt/DSDT b/tests/data/acpi/aarch64/virt/DSDT
+index 35a862e44714d26ded01d40dc147e76cc73a1c84..649b1e78d57748d3d941c9b79d7d30cfb43ec7ca 100644
+GIT binary patch
+delta 65
+zcmV-H0KWg(Db*<oL{mgm)f4~#0{4*$8v%*2CPxYZMzd}Tp$7~MUqeDc0Hh26005A)
+X9}-ys3XlK*00960|DOP}f)iH(cgzzn
+
+delta 69
+zcmcbrc~g_iCD<k8rU(NA)6$7t(u}<u)!exly*B4@Eo2uEh<A2!WLUz-z`!8jz`($;
+WSz0KPkqgZH|Np<d!{$2Sa7F-)LJ}(g
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt b/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt
+index 7ce35f0d8606d17f3ddb9aa090c97c7ac9a38982..aa813cbcc4e8ac8ba7c68c3aac590eaa0eb90a28 100644
+GIT binary patch
+delta 66
+zcmV-I0KNaODyu3AL{mgmD-{3$0<)0{8v>6<u_v4g0Y<aL3ZVxK3|~V+K>(x-0001x
+Yvvm?#0Sb@+00030|Nox=v)B_?0cSN6mH+?%
+
+delta 70
+zcmZ3jwO)(MCD<iIUzCA?sbC_PG*h$3M)f&dj9#0Ma4lpP5Qukna%5P-$H2fK;K0DZ
+Xu(?nul93C{{Qv*Iyu;=z!r_bndzTWD
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpipcihp b/tests/data/acpi/aarch64/virt/DSDT.acpipcihp
+index 6d1765c31017dede80d1d87f8fa7c6dd055d1839..5bd4a06dd193f065e2b9d2686bb371ebb3bfc620 100644
+GIT binary patch
+delta 65
+zcmV-H0KWg`Fyb%@L{mgmVi*7b0>hCC8v%#0CPxYZMzd}Tp$7~MUqeDc0Hh26005A)
+X9}-ys3XlK*00960|DOP}f)nHfU)K{t
+
+delta 69
+zcmaE4@XUbACD<h-O@e`esc<5fG-LNhHFqvXug!T}3)uw(;+>rw8J6%dFfa%>FfcG|
+WmKKU+<N`DQ|Nk%Vu(?k72@3#oSrR?~
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex b/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
+index 61cce30c7471faa4a9b7e3562dcb4ab9b3519a21..ec8ebbfdafabdd790297ec8728e9922c24c1b132 100644
+GIT binary patch
+delta 65
+zcmeCz>ek|N33dtL7G+>ynm3V4nz3`EnmZSx+vYs3h3q^$@y<?;3`=+z7#JpOmKTa-
+V<eI?1z`*eT|Nr?6o127t837go5wQRO
+
+delta 69
+zcmeCy>eu3O33dtL7iC~z@|nmb&Dgt9&7F(UYjYmgLUsXxcxNX^h9!Iq3=9Ge3=9mL
+WrG+9Hxxmc-|NqN7Y_1dTWdr~us1U6H
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.memhp b/tests/data/acpi/aarch64/virt/DSDT.memhp
+index ffc5f1c0d1090582672c60ade3eb1bc41acc5ef7..8a6cafac00d406077d6a369747c6e383d94a0786 100644
+GIT binary patch
+delta 43
+zcmZ2wvdV<ZCD<iIONxPkNpK^VfDqFJ#?3N9F^pUj7#SEC{{R0!pK)`O@Cr5n?UM{C
+
+delta 43
+zcmZ2wvdV<ZCD<iIONxPk>B>ef0U;&<hs`oVF^pUS4h#$o|NsA&ci7w{yn+n?_kav3
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.pxb b/tests/data/acpi/aarch64/virt/DSDT.pxb
+index f98dcbfc6b823bce6d5710e8056a4e260fb92a02..356e610fdffb6fea0a763517b62df0ed0c64ab97 100644
+GIT binary patch
+delta 65
+zcmV-H0KWf(J%Bw5L{mgmfF1w<0%ws58v%x~Ce#xFMzi}9p$7~MUqeDc0Hh26005A)
+XtQ%PY3XlK*00960|DOP}4;^&@V;K`h
+
+delta 69
+zcmZp$ZL#HY33dr-kz-(B5}n8;&Dgb3?TRp?*XG~C3)uw(;+>rw8J6%dFfa%>FfcG|
+WULhUH$OUHp|Nmd!VKcXEDI)-PzY;<K
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev
+index 6c12a7aaf8a6315bac968a685f5b6673e7248817..f1419cbda7167ed5a36410f71c52e3d2a22218fe 100644
+GIT binary patch
+delta 73
+zcmV-P0Ji_4P@Yf<L{mgm9w-0+0{xK+8v%o{CSe@~Mv_oNNt6E*AG50+eg_N;UqeDc
+f0Hh26005A)IVD*E3XlK*00960|DOP}oF;|=B@-5f
+
+delta 77
+zcmbOiuqc4bCD<iINrQobY4t=dX~y=AYKgL}UXucxJtzMcmfyTuwvJsuAl})@kzolR
+f0|SGA0|NuYW>eKjMlLY(|NsB;4x4AFwJ`z!LyZ-I
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy
+index 6c12a7aaf8a6315bac968a685f5b6673e7248817..f1419cbda7167ed5a36410f71c52e3d2a22218fe 100644
+GIT binary patch
+delta 73
+zcmV-P0Ji_4P@Yf<L{mgm9w-0+0{xK+8v%o{CSe@~Mv_oNNt6E*AG50+eg_N;UqeDc
+f0Hh26005A)IVD*E3XlK*00960|DOP}oF;|=B@-5f
+
+delta 77
+zcmbOiuqc4bCD<iINrQobY4t=dX~y=AYKgL}UXucxJtzMcmfyTuwvJsuAl})@kzolR
+f0|SGA0|NuYW>eKjMlLY(|NsB;4x4AFwJ`z!LyZ-I
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.topology b/tests/data/acpi/aarch64/virt/DSDT.topology
+index 208a3163a6bf2a59cf421418dcb16ad1156285c6..33a9c4c397ca498f5b3fbcc7e7e446fe8ac0b125 100644
+GIT binary patch
+delta 65
+zcmV-H0KWgDE1xS0L{mgmpA`TA0_%|q8v%o{CJ_q(Mzc5zp$7~MUqeDc0Hh26005A)
+X=@MB13XlK*00960|DOP}OcYlEOyd%(
+
+delta 69
+zcmbQQy;z&eCD<iou_yxr)69un(v0mJ)daa2y*68LFJu=Gh<A2!WLUz-z`!8jz`($;
+W`KeGOBNv$Y|Nnn^hs_=$;fw%X^%184
+
+diff --git a/tests/data/acpi/aarch64/virt/DSDT.viot b/tests/data/acpi/aarch64/virt/DSDT.viot
+index f81e3e6cc794d77ea66b7e27b1afe56e248132b6..625ce32b13706b83d4400548dcf8b81485dba965 100644
+GIT binary patch
+delta 65
+zcmV-H0KWg~Dds5(L{mgm<`e(`0-2Et8v%*2CPxYZMzd}Tp$7~MUqeDc0Hh26005A)
+X9}-ys3XlK*00960|DOP}f)i)~acmP6
+
+delta 69
+zcmaE+`AU<^CD<k8l?Vd^llw$2X~y1-YVKT&UYql{7P1Qn#5+4VGA!X^U|<k%U|?X_
+WEG-nt$OUHp|Nmd!VRM~u1|tB5HWCp4
+
+diff --git a/tests/data/acpi/aarch64/virt/MCFG b/tests/data/acpi/aarch64/virt/MCFG
+index f4ae3203a4e9258a397c9912332178640209637b..99e75f326c3c7fc3be5154c4667f34995e33dbc2 100644
+GIT binary patch
+delta 30
+ecmcDq;qrBMbGKn&U|?J`kxP|#0s{p62T=f4aRlW6
+
+delta 30
+fcmcDq;qrBMbGKn&U|@VRkxP|Vz<~h_{)0#WS8)X8
+
+diff --git a/tests/data/acpi/aarch64/virt/MCFG.memhp b/tests/data/acpi/aarch64/virt/MCFG.memhp
+new file mode 100644
+index 0000000000000000000000000000000000000000..360f1dbbea17e4857f1c26a172ff533eef446823
+GIT binary patch
+literal 60
+ucmeZuc5}C3U|?We?d0$55v<@85#X$#prF9Wz`y`vgJ>i$0m}am5(5A*-UtBz
+
+literal 0
+HcmV?d00001
+
 
 -- 
 2.52.0
