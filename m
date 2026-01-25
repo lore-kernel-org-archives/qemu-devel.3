@@ -4,47 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6392DE63C85
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 06:44:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4EB9E63C82
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 06:44:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjtqp-0003KI-F6; Sun, 25 Jan 2026 01:43:59 -0500
+	id 1vjtqq-0003MS-0K; Sun, 25 Jan 2026 01:44:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vjtqb-00037R-QC; Sun, 25 Jan 2026 01:43:47 -0500
+ id 1vjtqb-00037Q-Ps; Sun, 25 Jan 2026 01:43:47 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vjtqX-0001OU-Lr; Sun, 25 Jan 2026 01:43:45 -0500
+ id 1vjtqX-0001OE-Ko; Sun, 25 Jan 2026 01:43:45 -0500
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60P6h74b079417
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60P6h74e079417
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Sun, 25 Jan 2026 15:43:17 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=UmucyWBCzLPpnX2a0Igo3zYoHzAzYhL78HxlJTj7R0w=; 
+DKIM-Signature: a=rsa-sha256; bh=0eOoY+bahv1rBrpsObIe62WwWG/nlXutLsg7rdcWLMA=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Subject:Date:Message-Id:To;
- s=rs20250326; t=1769323397; v=1;
- b=uSGvURE58ooe5EWMxYkSVNTx5mA/2Giqa16810fRLYSAGJNhopwjFeZJEPsJBOFu
- q+0p26/sC6v5GV/lirUjfmFOJLwC6OsM+g+LYAEE191y0EZFoyvfz0mF7RstJXH/
- M/kbPrqoh891Bd3DMXcAAZukj9al1o9cJ7y8QSjpWkxaXlODMXcnzLCJxpHqBn9H
- PqG1ixkYhHMPABArNZZ6kXXC4NLXVgPICdVt0ev4OAswMZtKBMCeSkGR8XAOEmd2
- N4Wi++1xDL8aGfMx67u3fJc2gQqS2hBt0Vm5Lsg30OjyWd5sGXoEHki9gM6K1M68
- uXyN3lNS2KX6BnqKrZHEVQ==
+ h=From:Date:Subject:Message-Id:To;
+ s=rs20250326; t=1769323398; v=1;
+ b=gJNVg7LKzDYz5jrrlbFVHgHxv5luQq6GPwG66I+QG31UNrnDOWrcum15sVHHVwEm
+ uGw8T+ddZh3zsjqnjXzFsF+J58dktw5LxpGsIpmkZ/x1asrQkg4TkiA0ONesBy0z
+ vxlmIFiOjAKZnig8lPpt64vOoVWd1avWnYPhH/17zDyzi8b8yIVFosWAOzWvbhZo
+ a813LwgvhskgH7w19TLo/cy7xXdatj6agGxYpbnb6q1+djDyg1BephldTUQ+uSj3
+ ju8Q7yCL4jarCmd9qlTrO90OXyKKQwXk5x+Mgh/utWoHy9GrQXlZol2feoM2ODME
+ n/INioWrgCMAeMr7i7m8sA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH 0/5] Fix use-after-free and make format overflow more difficult
-Date: Sun, 25 Jan 2026 15:42:42 +0900
-Message-Id: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 25 Jan 2026 15:42:45 +0900
+Subject: [PATCH 3/5] tests: Grow buffers for double string
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAGK7dWkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDQyNT3byy3FTdJBMzM8NUg0QTA8tUJaDSgqLUtMwKsDHRsbW1AHiSjkl
- WAAAA
-X-Change-ID: 20260125-nvme-b4661e0a409e
+Message-Id: <20260125-nvme-v1-3-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
 Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
  Alex Williamson <alex@shazbot.org>,
@@ -82,43 +80,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-nvme-ns has a use-after-free of a formatted string, so fix it by
-embedding a fixed-length buffer to the object. Embedding a buffer lets
-me avoid a chore to add a function to call g_free().
-
-But I don't want to worry about a buffer overflow, so let the compiler
-check that the buffer won't overflow; C is so restrictive that it cannot
-enforce the existence of g_free(). Compilers can check the length of
-formatted string on the other hand.
-
-Then GCC started complaining about buffer overflow, so let's treat them.
-Fortunately, the potential buffer overflows it detected are not
-user-facing or very subtle. Treating them by growing buffers can improve
-robustness with practically no cost.
+A string that represents a double can be long if it is an exponentially
+large number.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
-Akihiko Odaki (5):
-      contrib/elf2dmp: Grow PDB URL buffer
-      vfio/pci: Grow buffer in vfio_pci_host_match()
-      tests: Grow buffers for double string
-      meson: Add -Wformat-overflow=2
-      hw/nvme: Fix bootindex suffix use-after-free
+ tests/unit/test-qobject-input-visitor.c  | 2 +-
+ tests/unit/test-qobject-output-visitor.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
- meson.build                              |  1 +
- hw/nvme/nvme.h                           |  1 +
- contrib/elf2dmp/main.c                   | 27 ++++++++++-----------------
- hw/nvme/ns.c                             |  7 +++----
- hw/vfio/pci.c                            |  2 +-
- tests/unit/test-qobject-input-visitor.c  |  2 +-
- tests/unit/test-qobject-output-visitor.c |  2 +-
- 7 files changed, 18 insertions(+), 24 deletions(-)
----
-base-commit: d03c3e522eb0696dcfc9c2cf643431eaaf51ca0f
-change-id: 20260125-nvme-b4661e0a409e
+diff --git a/tests/unit/test-qobject-input-visitor.c b/tests/unit/test-qobject-input-visitor.c
+index 84bdcdf702e0..baff9243313c 100644
+--- a/tests/unit/test-qobject-input-visitor.c
++++ b/tests/unit/test-qobject-input-visitor.c
+@@ -583,7 +583,7 @@ static void test_visitor_in_list_struct(TestInputVisitorData *data,
+ 
+     i = 0;
+     for (num_list = arrs->number; num_list; num_list = num_list->next) {
+-        char expected[32], actual[32];
++        char expected[318], actual[318];
+ 
+         sprintf(expected, "%.6f", (double)i / 3);
+         sprintf(actual, "%.6f", num_list->value);
+diff --git a/tests/unit/test-qobject-output-visitor.c b/tests/unit/test-qobject-output-visitor.c
+index 407ab9ed505a..ae05a726f775 100644
+--- a/tests/unit/test-qobject-output-visitor.c
++++ b/tests/unit/test-qobject-output-visitor.c
+@@ -571,7 +571,7 @@ static void test_visitor_out_list_struct(TestOutputVisitorData *data,
+     i = 0;
+     QLIST_FOREACH_ENTRY(qlist, e) {
+         QNum *qvalue = qobject_to(QNum, qlist_entry_obj(e));
+-        char expected[32], actual[32];
++        char expected[318], actual[318];
+ 
+         g_assert(qvalue);
+         sprintf(expected, "%.6f", (double)i / 3);
 
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+-- 
+2.52.0
 
 
