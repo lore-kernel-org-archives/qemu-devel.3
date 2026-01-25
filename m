@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 033FBD7237B
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 22:15:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9547BE63CA4
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 22:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vk8Np-0006WW-H4; Sun, 25 Jan 2026 17:15:01 -0500
+	id 1vk8RP-0000NK-6M; Sun, 25 Jan 2026 17:18:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vk8Nn-0006Vd-R7
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 17:14:59 -0500
+ id 1vk8RM-0000Kz-BD
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 17:18:40 -0500
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vk8Nm-0004BZ-35
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 17:14:59 -0500
+ id 1vk8RK-0004ma-RD
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 17:18:40 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EAE025969F2;
- Sun, 25 Jan 2026 23:14:54 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id E88155969F2;
+ Sun, 25 Jan 2026 23:18:36 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id dMnqtDSBaP6l; Sun, 25 Jan 2026 23:14:52 +0100 (CET)
+ id ku47iOSYBbTx; Sun, 25 Jan 2026 23:18:34 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 996625969F1; Sun, 25 Jan 2026 23:14:52 +0100 (CET)
+ id A1E9C5969F1; Sun, 25 Jan 2026 23:18:34 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 93CC45969F0;
- Sun, 25 Jan 2026 23:14:52 +0100 (CET)
-Date: Sun, 25 Jan 2026 23:14:52 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9CFC85969F0;
+ Sun, 25 Jan 2026 23:18:34 +0100 (CET)
+Date: Sun, 25 Jan 2026 23:18:34 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: orion cai <orion@orions-MacBook-Air.local>
 cc: qemu-devel@nongnu.org
 Subject: Re: [PATCH v2 0/2] Fix integer overflow in RTL8139 rx buffer handling
-In-Reply-To: <20260125133335.F176349BB78@orions-MacBook-Air.local>
-Message-ID: <508a4710-4d2c-59a0-b7b0-fdbc0a7dfcda@eik.bme.hu>
+In-Reply-To: <508a4710-4d2c-59a0-b7b0-fdbc0a7dfcda@eik.bme.hu>
+Message-ID: <bb30b895-8f4f-8482-0c0f-9fbce7318329@eik.bme.hu>
 References: <20260125133335.F176349BB78@orions-MacBook-Air.local>
+ <508a4710-4d2c-59a0-b7b0-fdbc0a7dfcda@eik.bme.hu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
@@ -64,29 +65,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 25 Jan 2026, orion cai wrote:
-> From bee06612dae03a07dd5a9fa407d3a834fad4c635 Mon Sep 17 00:00:00 2001
-> From: Orion <orionhubble@163.com>
-> Date: Sun, 25 Jan 2026 21:30:22 +0800
-> Subject: [PATCH v2 0/2] Fix integer overflow in RTL8139 rx buffer handling
+On Sun, 25 Jan 2026, BALATON Zoltan wrote:
+> On Sun, 25 Jan 2026, orion cai wrote:
+>> From bee06612dae03a07dd5a9fa407d3a834fad4c635 Mon Sep 17 00:00:00 2001
+>> From: Orion <orionhubble@163.com>
+>> Date: Sun, 25 Jan 2026 21:30:22 +0800
+>> Subject: [PATCH v2 0/2] Fix integer overflow in RTL8139 rx buffer handling
+>> 
+>> This series fixes an integer overflow vulnerability in the RTL8139
 >
-> This series fixes an integer overflow vulnerability in the RTL8139
+> It's not a series but a single patch, cover letter not needed but if you have
 
-It's not a series but a single patch, cover letter not needed but if you 
-have cover it should be separate message with patch being a reply to it 
-not in one message.
+Sorry there was a second patch that adds test case but it's hard to see as 
+it's all in one message. The patches in series should be separate messages 
+with the patches referencing the cover letter so they are grouped 
+together.
 
-> network device emulation that could allow a malicious guest to
-> bypass DMA bounds checks.
+> cover it should be separate message with patch being a reply to it not in one 
+> message.
 >
-> The vulnerability occurs in rtl8139_write_buffer() when RxBufAddr
-> accumulates to a high value after receiving many packets. The bounds
-> check using addition (RxBufAddr + size) can overflow, bypassing the
-> check.
-
-v2 should not be against v1 but against QEMU master as if v1 never 
-happened.
-
-Regards,
-BALATON Zoltan
+>> network device emulation that could allow a malicious guest to
+>> bypass DMA bounds checks.
+>> 
+>> The vulnerability occurs in rtl8139_write_buffer() when RxBufAddr
+>> accumulates to a high value after receiving many packets. The bounds
+>> check using addition (RxBufAddr + size) can overflow, bypassing the
+>> check.
+>
+> v2 should not be against v1 but against QEMU master as if v1 never happened.
+>
+> Regards,
+> BALATON Zoltan
+>
+>
 
