@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E99DE63C85
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 06:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24EE5E63C82
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 06:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjtqm-0003HT-O3; Sun, 25 Jan 2026 01:43:56 -0500
+	id 1vjtqt-0003Qo-IT; Sun, 25 Jan 2026 01:44:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vjtqa-00035A-FT; Sun, 25 Jan 2026 01:43:45 -0500
+ id 1vjtqa-00035B-IK; Sun, 25 Jan 2026 01:43:45 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vjtqX-0001OD-JF; Sun, 25 Jan 2026 01:43:44 -0500
+ id 1vjtqX-0001OS-GM; Sun, 25 Jan 2026 01:43:44 -0500
 Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.205]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60P6h74g079417
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60P6h74f079417
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Sun, 25 Jan 2026 15:43:18 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=V6Tcy99VmbiSxXOyzt3hsil73wVMmCmWdx3HXcW6znc=; 
+DKIM-Signature: a=rsa-sha256; bh=M9F2sZaB7aqOtDg+UNTfUW8uDb8IF/ASvhYO4a8TRSw=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
  s=rs20250326; t=1769323398; v=1;
- b=tXP0iVUau7d6jUrJm2mpd5UjB0NodHGa53u0HcORjJwnuOzWicEHYNszSTN8Z+z2
- tzYCtGTiPjSEirBtPV1QnjJc73Skt77lSmAEGaWXzL+9wcF61lz/qncHsbqPzdqm
- RjqfSnY/BUJS51ZfTWsRdDLQ+3IR8ymuDfzx7qbhjaWAfBl751RZmHgIHz4+GxS1
- c2yMBuu49YSmdfN61jHl4w0mdhSW305miOk4j4Dd9pjAjmadcvZV8dtwET9xdmNf
- Ln/EFt5KCZrAzPfvOdgC+JmjV9foFi6xQZL55hx06jNzYYTPSchmKqe07pcGu4Q6
- Oorqc39yUr46mR1sGiHO0Q==
+ b=jFy8+Oinb5O7oymyHbxZ+bpEek20DwR/AJBp66Vk2PdG+MvWNcvafYr78bO0V7ih
+ s+w3q1wl3BD49IzoLH6d+IdcgtgcxMe0AwaifZxiymLPLkQVcTndNyDthiRrOXcU
+ 2myoS46FPnh2ZKfoO4Wi8LSEnM8SU0vyPDMpRpDgHGWhUFVpZZOxS6lzCKPWM1or
+ 1RlHOr5QApz+HT3YCt55hi4iI+n9NX+IG9ZDfk36Ugnr5uB289I1jzUVpPLtkCqe
+ gDXuWIPGLaWJ2LDckSC07gGKiVZIIOQ++JETP50wEaXms1C28zDHe76Z2JdLx1QH
+ 1WBKlXg8T3KgsDueY5naag==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 25 Jan 2026 15:42:47 +0900
-Subject: [PATCH 5/5] hw/nvme: Fix bootindex suffix use-after-free
+Date: Sun, 25 Jan 2026 15:42:46 +0900
+Subject: [PATCH 4/5] meson: Add -Wformat-overflow=2
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260125-nvme-v1-5-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260125-nvme-v1-4-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -80,46 +80,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The bootindex suffix can be used as long as the property is alive.
+https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Warning-Options.html
+> Level 2 warns also about calls that might overflow the destination
+> buffer given an argument of sufficient length or magnitude. At level
+> 2, unknown numeric arguments are assumed to have the minimum
+> representable value for signed types with a precision greater than 1,
+> and the maximum representable value otherwise. Unknown string
+> arguments whose length cannot be assumed to be bounded either by the
+> directive’s precision, or by a finite set of string literals they may
+> evaluate to, or the character array they may point to, are assumed to
+> be 1 character long.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/nvme/nvme.h | 1 +
- hw/nvme/ns.c   | 7 +++----
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 8f8c78c85036..d66f7dc82d5c 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -239,6 +239,7 @@ typedef struct NvmeNamespace {
-     DeviceState  parent_obj;
-     BlockConf    blkconf;
-     int32_t      bootindex;
-+    char         bootindex_suffix[24];
-     int64_t      size;
-     int64_t      moff;
-     NvmeIdNs     id_ns;
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index 58800b3414a3..38f86a17268f 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -944,12 +944,11 @@ static void nvme_ns_class_init(ObjectClass *oc, const void *data)
- static void nvme_ns_instance_init(Object *obj)
- {
-     NvmeNamespace *ns = NVME_NS(obj);
--    char *bootindex = g_strdup_printf("/namespace@%d,0", ns->params.nsid);
- 
--    device_add_bootindex_property(obj, &ns->bootindex, "bootindex",
--                                  bootindex, DEVICE(obj));
-+    sprintf(ns->bootindex_suffix, "/namespace@%" PRIu32 ",0", ns->params.nsid);
- 
--    g_free(bootindex);
-+    device_add_bootindex_property(obj, &ns->bootindex, "bootindex",
-+                                  ns->bootindex_suffix, DEVICE(obj));
- }
- 
- static const TypeInfo nvme_ns_info = {
+diff --git a/meson.build b/meson.build
+index c58007291a8c..a7ccb7011f0a 100644
+--- a/meson.build
++++ b/meson.build
+@@ -729,6 +729,7 @@ warn_flags = [
+   '-Wempty-body',
+   '-Wendif-labels',
+   '-Wexpansion-to-defined',
++  '-Wformat-overflow=2',
+   '-Wformat-security',
+   '-Wformat-y2k',
+   '-Wignored-qualifiers',
 
 -- 
 2.52.0
