@@ -4,161 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E24E63C98
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 10:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2054DE63C9C
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 11:59:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjxGw-0003pM-Oc; Sun, 25 Jan 2026 05:23:11 -0500
+	id 1vjyiO-0006LJ-EY; Sun, 25 Jan 2026 06:55:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vjxGl-0003lk-IP
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 05:23:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vjyiK-0006KD-0V; Sun, 25 Jan 2026 06:55:32 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vjxGj-0000p3-6h
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 05:22:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769336574;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9SfLMbmRhbRBKSOYQqgkjnAglmKrS56DD6MY/KyFC9k=;
- b=Hh7Th4ccLRurltGvT3vUyhTNi6Nm8VLHgdtA3qYjogjjkS5wj1Btz0arYofh7Rn3e4dWAC
- aGAWt3GPGjkqsndtGLZ3Of43vLe98oqvAQ11epJG4Om4p517HZXtfLLv16sCnJ61xpX1F9
- gt2inhBUGpoEdWmnsYtfaf/doHgxEK8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-yonrFilTPsqGQeKWweoUNA-1; Sun, 25 Jan 2026 05:22:52 -0500
-X-MC-Unique: yonrFilTPsqGQeKWweoUNA-1
-X-Mimecast-MFC-AGG-ID: yonrFilTPsqGQeKWweoUNA_1769336572
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4801e3aab32so17042635e9.3
- for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 02:22:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769336571; x=1769941371; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=9SfLMbmRhbRBKSOYQqgkjnAglmKrS56DD6MY/KyFC9k=;
- b=cnxw9KpAB/X1kPHwLH4Oi2EbxEszVAcQL6+rztzlRTWr2yeuwAD1clq0N1OYcVdOyD
- bhfLzBTRMotjOUajw5BSlFWz4eR9Bf0LGIpVCdkm+vAwsOeTQ7FGHX0kzvaxNhR+bFJM
- 6eh7uiKeusBTFmV1nB8CuKVIaloVnC0qGbCutEmhtFEiODnr42h7u5e3Dz12/9Cmdhfc
- aJwKNGdov6b7d+Ss2AZeQUb+0sa3x2IaFMxAuoWyrCnA6veEaUdmStE6U8KagnQv7FO+
- TKT8IhU+KM45XBtSWY/qdq/sgDcwHjk1btYj/C6i4yERdqdThrBDdzRs5INoAxKn6ZBF
- ZOHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769336571; x=1769941371;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9SfLMbmRhbRBKSOYQqgkjnAglmKrS56DD6MY/KyFC9k=;
- b=eITLVyO3EePoitkqfEvAGfPTrmQw2RNkplFc50sSO0ZJt9GFh64nNyeWSoWrtFuVZ1
- GmgwTlNz5L/bqJ4Xll4iu0CqcY4F0SG/g3Aw8X9tTjz6Qh99c9QaAbfZwMv0f1iaHnok
- WlboMR78lOas7wsFNvJ/PNKS0ZteCYQ9L32PYBmaLEgHcICBOfjsWwyGjtrn0hhn+gtZ
- y3zKVSj4+mV19H3wXJpiU/wN0iqeBGrG975Asv7buDe/Gqd97DnALbNhha9phLpWacT8
- p8YleMadHu1F2zOaENWQOnFRp8w+z2nMvOA5W0D85O+vXW9BPAsh44u6f6vS7hwrt/K6
- D/rA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/yjSDtJbe5/mJLA3Fw5cpZ2Tizs3eaYjiEst/3lhzz26jiVPGKp4mh796emJpCj7cPToBt5xBA3kY@nongnu.org
-X-Gm-Message-State: AOJu0Yz9HDRMTqeQtVDZQTsmFD1u0OvhVa+6yAdnsJfi0rE8qKeZjQ4c
- RYh5I9h4+de8HT8v2BGIrB71FNbW/yl3tSkmamewcvUmyJmDH+yHPf8aPY/w+1KYDeGwjTbuUCL
- PBc3lrpljVtZH87EUgZNomkWjUJMuIQTZ8XIzZBkVyJEDlk+NSBunM05U
-X-Gm-Gg: AZuq6aI8CUIif++eLLfX4soIgc4Rx/AZcotdzwCdyvaYu8ssq49XABsy5gckU5GpgLZ
- ilTTzLr6Xs5UOsScQtcIPRKjdgMcb4Wsd6SMe91yekm/z0Zl7Zvzh553HC2PRCOXjb/kNOHgF5J
- nF3givcyryh3P0qb+puj3OC3s/701Q1MvC4I6fsaRj4ZdB06qgVSXTkUpzWINTA7NbckIxPWLe/
- 6HWFxmh7LPq7KizSls3vPgp2Q5ZCCVH0tW4SP4y9vrDR/VD/ihstIbF1F4B7HzTjlp9hLzq+BLM
- sR+kuITXnv1u93Ezoth/h/7WfAuBapBuxq6EOeLn1nHvKHOa5aB/3E0+FdxHO9pb7ISLMCGuB2D
- h4bt0SmOEPj6g/6dMiLaSEqcuADD1nkKJgAs5atbYFVr24k20
-X-Received: by 2002:a05:600c:1d28:b0:479:3a86:dc1f with SMTP id
- 5b1f17b1804b1-4805d069bc8mr20358565e9.37.1769336571588; 
- Sun, 25 Jan 2026 02:22:51 -0800 (PST)
-X-Received: by 2002:a05:600c:1d28:b0:479:3a86:dc1f with SMTP id
- 5b1f17b1804b1-4805d069bc8mr20358295e9.37.1769336571223; 
- Sun, 25 Jan 2026 02:22:51 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4804d61f1f8sm74156955e9.5.2026.01.25.02.22.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 Jan 2026 02:22:49 -0800 (PST)
-Message-ID: <4ad2cafe-9518-4cda-9b25-228cee136c1c@redhat.com>
-Date: Sun, 25 Jan 2026 11:22:47 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] vfio/pci: Grow buffer in vfio_pci_host_match()
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
- Alex Williamson <alex@shazbot.org>, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vjyiH-0008E9-Sq; Sun, 25 Jan 2026 06:55:31 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 15343597470;
+ Sun, 25 Jan 2026 12:55:24 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id BvJcKia4KFog; Sun, 25 Jan 2026 12:55:20 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id EE30F59746F; Sun, 25 Jan 2026 12:55:20 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id EADE9597476;
+ Sun, 25 Jan 2026 12:55:20 +0100 (CET)
+Date: Sun, 25 Jan 2026 12:55:20 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+cc: qemu-devel@nongnu.org, Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
+ Alex Williamson <alex@shazbot.org>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
  Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+Subject: Re: [PATCH 0/5] Fix use-after-free and make format overflow more
+ difficult
+In-Reply-To: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
+Message-ID: <7e064157-1e88-dbfc-f7f6-97591222fb6c@eik.bme.hu>
 References: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
- <20260125-nvme-v1-2-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260125-nvme-v1-2-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.082,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -174,41 +73,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/25/26 07:42, Akihiko Odaki wrote:
-> Ensure the buffer in vfio_pci_host_match() will not overflow even when
-> an invalid addr parameter is provided.
-> 
+On Sun, 25 Jan 2026, Akihiko Odaki wrote:
+> nvme-ns has a use-after-free of a formatted string, so fix it by
+> embedding a fixed-length buffer to the object. Embedding a buffer lets
+> me avoid a chore to add a function to call g_free().
+
+Isn't that where g_autofree would help?
+
+> But I don't want to worry about a buffer overflow, so let the compiler
+> check that the buffer won't overflow; C is so restrictive that it cannot
+> enforce the existence of g_free(). Compilers can check the length of
+> formatted string on the other hand.
+>
+> Then GCC started complaining about buffer overflow, so let's treat them.
+> Fortunately, the potential buffer overflows it detected are not
+> user-facing or very subtle. Treating them by growing buffers can improve
+> robustness with practically no cost.
+
+This is useful but maybe there's a better fix for some of these than 
+arbitrarily enlarging buffers but I don't care enough about these to 
+judge.
+
+Regards,
+BALATON Zoltan
+
 > Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > ---
->   hw/vfio/pci.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index c73447272141..3338c4d7b528 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2673,7 +2673,7 @@ void vfio_pci_post_reset(VFIOPCIDevice *vdev)
->   
->   bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name)
->   {
-> -    char tmp[13];
-> +    char tmp[36];
->   
->       sprintf(tmp, "%04x:%02x:%02x.%1x", addr->domain,
->               addr->bus, addr->slot, addr->function);
-> 
-
-Using a g_autofree variable seems possible too :
-
-     g_autofree char *tmp =
-         g_strdup_printf("%04x:%02x:%02x.%1x", addr->domain, addr->bus,
-                         addr->slot, addr->function);
-
-vfio_pci_host_match() could be moved under container-legacy.c, with
-an assert on addr too.
-
-Thanks,
-
-C.
-
+> Akihiko Odaki (5):
+>      contrib/elf2dmp: Grow PDB URL buffer
+>      vfio/pci: Grow buffer in vfio_pci_host_match()
+>      tests: Grow buffers for double string
+>      meson: Add -Wformat-overflow=2
+>      hw/nvme: Fix bootindex suffix use-after-free
+>
+> meson.build                              |  1 +
+> hw/nvme/nvme.h                           |  1 +
+> contrib/elf2dmp/main.c                   | 27 ++++++++++-----------------
+> hw/nvme/ns.c                             |  7 +++----
+> hw/vfio/pci.c                            |  2 +-
+> tests/unit/test-qobject-input-visitor.c  |  2 +-
+> tests/unit/test-qobject-output-visitor.c |  2 +-
+> 7 files changed, 18 insertions(+), 24 deletions(-)
+> ---
+> base-commit: d03c3e522eb0696dcfc9c2cf643431eaaf51ca0f
+> change-id: 20260125-nvme-b4661e0a409e
+>
+> Best regards,
+> --
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>
+>
+>
 
