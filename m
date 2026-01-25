@@ -4,27 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 872FDE63CA0
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 14:03:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75ADAE63CA0
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 14:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vk0h9-0005nf-EF; Sun, 25 Jan 2026 09:02:27 -0500
+	id 1vk0h7-0005bU-Nd; Sun, 25 Jan 2026 09:02:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <orion@orions-MacBook-Air.local>)
- id 1vk0Go-0005LW-1p
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 08:35:14 -0500
+ id 1vk0Fv-0004YG-7q
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 08:34:19 -0500
 Received: from [115.206.96.218] (helo=orions-MacBook-Air.local)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <orion@orions-MacBook-Air.local>) id 1vk0Gl-0003L0-N3
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 08:35:13 -0500
+ (envelope-from <orion@orions-MacBook-Air.local>) id 1vk0Fs-000361-0i
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 08:34:18 -0500
 Received: by orions-MacBook-Air.local (Postfix, from userid 501)
- id F176349BB78; Sun, 25 Jan 2026 21:33:35 +0800 (CST)
+ id 0714449BAC1; Sun, 25 Jan 2026 21:32:38 +0800 (CST)
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 0/2] Fix integer overflow in RTL8139 rx buffer handling
-Message-Id: <20260125133335.F176349BB78@orions-MacBook-Air.local>
-Date: Sun, 25 Jan 2026 21:33:35 +0800 (CST)
+Subject: Re: [PATCH] hw/net/rtl8139: Fix integer overflow in
+ rtl8139_write_buffer
+Message-Id: <20260125133239.0714449BAC1@orions-MacBook-Air.local>
+Date: Sun, 25 Jan 2026 21:32:38 +0800 (CST)
 From: orion@orions-MacBook-Air.local (orion cai)
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.206.96.218 (failed)
 Received-SPF: none client-ip=115.206.96.218;
@@ -52,224 +53,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From bee06612dae03a07dd5a9fa407d3a834fad4c635 Mon Sep 17 00:00:00 2001
-From: Orion <orionhubble@163.com>
-Date: Sun, 25 Jan 2026 21:30:22 +0800
-Subject: [PATCH v2 0/2] Fix integer overflow in RTL8139 rx buffer handling
+Reply to: qemu-devel@nongnu.org
+Subject: Re: [PATCH] hw/net/rtl8139: Fix integer overflow in rtl8139_write_buffer
+In-Reply-To: <20260124033346.BB51747D39A@orions-MacBook-Air.local>
+References: <20260124033346.BB51747D39A@orions-MacBook-Air.local>
 
-This series fixes an integer overflow vulnerability in the RTL8139
-network device emulation that could allow a malicious guest to
-bypass DMA bounds checks.
+On Sat, 24 Jan 2026 at 06:10, orion cai <orion@orions-macbook-air.local> wrote:
+>
+> From d1781652dc7039b2ac92fa80695091b97dbf1918 Mon Sep 17 00:00:00 2001
+> From: orion cai <orion@orions-MacBook-Air.local>
+> Date: Sat, 24 Jan 2026 11:19:17 +0800
+> Subject: [PATCH] hw/net/rtl8139: Fix integer overflow in rtl8139_write_buffer
 
-The vulnerability occurs in rtl8139_write_buffer() when RxBufAddr
-accumulates to a high value after receiving many packets. The bounds
-check using addition (RxBufAddr + size) can overflow, bypassing the
-check.
+Hi; thanks for this bug report and patch.
 
-Changes in v2:
-- Removed unnecessary size < 0 check (size is unsigned)
-- Added assert(size >= 0) for documentation
-- Added detailed comments explaining the overflow scenario
-- Kept original MOD2 calculation for wrapped position (safe after bounds check)
-- Added qtest case to verify the fix handles edge cases
+> Fix integer overflow vulnerability in rtl8139_write_buffer() that could allow
+> a malicious guest to bypass DMA bounds checks and write to arbitrary memory
+> locations.
 
-Impact: This is guest memory only (via pci_dma_write), not host memory.
-An attacker would need guest kernel privileges to exploit this.
+For clarity, this is an arbitrary write to guest memory,
+not to host (QEMU) memory, since we're doing a pci_dma_write(),
+correct ?
 
-Orion (2):
-  hw/net/rtl8139: Fix integer overflow in rtl8139_write_buffer
-  tests/qtest: Add test case for RxBufAddr integer overflow
+That renders it a bit less critical, because if you can
+program the RTL8139 then you almost certainly already
+have kernel level privilege in the guest and can write
+to arbitrary guest memory directly if you want...
 
-hw/net/rtl8139.c           | 35 +++++++++++++++------
-tests/qtest/rtl8139-test.c | 63 ++++++++++++++++++++++++++++++++++++++
-2 files changed, 89 insertions(+), 9 deletions(-)
+Yes, you're absolutely correct. The pci_dma_write() writes to guest memory,
+not host memory. An attacker would need guest kernel privileges. However,
+the bug can still cause guest memory corruption and crashes, so fixing it
+improves QEMU's correctness and robustness.
 
---
-2.50.1 (Apple Git-155)
-From 98f370ab3db4021052f3280a95f22ceb87e79486 Mon Sep 17 00:00:00 2001
-From: Orion <orionhubble@163.com>
-Date: Sun, 25 Jan 2026 21:28:01 +0800
-Subject: [PATCH v2 1/2] hw/net/rtl8139: Fix integer overflow in
- rtl8139_write_buffer
+> - RxBufAddr is near UINT_MAX (e.g., 0xFFFF0000)
 
-Fix integer overflow in rtl8139_write_buffer() bounds check that could
-allow a malformed guest to corrupt guest memory via the RTL8139 device.
+How can this happen? RxBufAddr is the device's
+"Current Buffer Address" register, which is supposed to
+be a 16-bit read-only register indicating the total
+received byte count in the buffer. If it has ever got
+larger than the size of the buffer, then I think we have
+a bug somewhere else, and the correct fix is to make
+sure we are not letting it get set incorrectly (with
+perhaps an assertion in case of other bugs).
 
-The vulnerability occurs when RxBufAddr accumulates to a high value after
-receiving many packets. The bounds check using addition (RxBufAddr + size)
-can overflow, bypassing the check and allowing out-of-bounds DMA writes.
+Do you have a repro case that triggers this bug? The
+ideal here is a qtest repro case which gives the set
+of memory writes etc needed to trigger it; for an example
+of what that looks like see e.g. this bug:
+https://gitlab.com/qemu-project/qemu/-/issues/2777
+A guest binary that shows the problem would be OK too.
 
-Example scenario:
-- RxBufAddr = 0xFFFF0000 (after many packets)
-- size = 0x20000
-- Check: 0xFFFF0000 + 0x20000 = 0x1000 (overflow!)
-- Result: Bounds check passes incorrectly, allowing out-of-bounds write.
+You raise an excellent point. Looking at the code flow:
 
-Fix uses subtraction (RxBufAddr > RxBufferSize - size) to prevent
-uint32_t overflow in the bounds check.
+In rtl8139_write_buffer() at line 785:
+    s->RxBufAddr += size;
 
-Changes in v2:
-- Removed unnecessary size < 0 check (size is unsigned)
-- Added assert(size >= 0) for documentation
-- Added detailed comments explaining the overflow scenario
-- Kept original MOD2 calculation for wrapped position (safe after bounds check)
+This happens for every received packet. The RxBufAddr accumulates over time.
+While RxBufAddr is uint32_t, the bounds check at line 748 uses:
+    if (s->RxBufAddr + size > s->RxBufferSize)
 
-Tested-by: Manual review of code flow
-Signed-off-by: orionhubble@163.com
+After many packets, if RxBufAddr reaches a high value (e.g., 0xFFFF0000) and
+a moderate-sized packet arrives (size = 0x20000), the addition overflows:
+    0xFFFF0000 + 0x20000 = 0x1000 (wraps around!)
+
+The overflow causes the bounds check to pass incorrectly, allowing an
+out-of-bounds write.
+
+I've added a qtest case in patch 2/2 that sets RxBufAddr to high values
+(0xFFFF0000, 0xFFFFFFFE) to verify the device handles these edge cases.
+
+However, I realize the test only verifies the register can be set to these
+values. To fully demonstrate the bug, one would need to:
+1. Initialize the device
+2. Simulate receiving many packets to accumulate RxBufAddr
+3. Trigger the overflow scenario
+
+This is more complex to set up in qtest. Would a unit test that directly
+calls rtl8139_write_buffer() with edge case values be acceptable?
+
+> diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+> index 9fd00574d2..41b8407acc 100644
+> --- a/hw/net/rtl8139.c
+> +++ b/hw/net/rtl8139.c
+> @@ -745,9 +745,16 @@ static void rtl8139_write_buffer(RTL8139State *s, const void *buf, int size)
+>  {
+>      PCIDevice *d = PCI_DEVICE(s);
+>
+> -    if (s->RxBufAddr + size > s->RxBufferSize)
+> +    if (size < 0 || s->RxBufAddr > s->RxBufferSize - (uint32_t)size)
+
+Is it possible to get here with a negative size ?
+This is supposed to be the packet size, so if we get here
+and it is negative something has gone badly wrong in the
+caller. I think it would be better to assert that size >= 0
+at the top of the function.
+
+You're correct - this check is unnecessary. Looking at line 825:
+    static ssize_t rtl8139_do_receive(NetClientState *nc, const uint8_t *buf, size_t size_, ...)
+
+Since size is size_t (unsigned), it can never be negative. I've removed this
+check in v2 and added an assertion instead for documentation.
+
+>      {
+> -        int wrapped = MOD2(s->RxBufAddr + size, s->RxBufferSize);
+> +        /* Calculate wrapped position safely without overflow.
+> +         * Use modulo on each term to prevent overflow.
+> +         * RxBufferSize is always a power of 2, so MOD2 is safe. */
+> +        int wrapped = MOD2((uint32_t)s->RxBufAddr, s->RxBufferSize) +
+> +                    MOD2((uint32_t)size, s->RxBufferSize);
+> +        if (wrapped >= s->RxBufferSize) {
+> +            wrapped -= s->RxBufferSize;
+> +        }
+
+When does this produce a different result to the existing code,
+given that RxBufferSize is a power of 2 ? (For QEMU, we
+always use -fwrapv, so we do not need to worry about a
+signed integer calculation overflowing, as long as it
+still produces the right answer, which I think it does here
+if I'm not getting confused.)
+
+Good question. In v2, I've reverted to using the original MOD2 calculation
+for the wrapped position. After the bounds check passes (using subtraction
+to prevent overflow), the addition in MOD2() is safe.
+
+The key is that the bounds check itself must not overflow:
+- Vulnerable: RxBufAddr + size > RxBufferSize (can overflow)
+- Safe: RxBufAddr > RxBufferSize - size (no overflow)
+
+Once we've validated the bounds with subtraction, calculating the wrapped
+position with MOD2(RxBufAddr + size, RxBufferSize) is safe because we know
+the result won't overflow.
+
+thanks
+-- PMM
+
 ---
- hw/net/rtl8139.c | 35 ++++++++++++++++++++++++++---------
- 1 file changed, 26 insertions(+), 9 deletions(-)
+V2 patches are attached. Main changes:
+1. Removed size < 0 check, added assert(size >= 0)
+2. Added detailed comments explaining overflow scenario
+3. Reverted to original MOD2 calculation for wrapped position
+4. Added qtest case for edge case testing
 
-diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-index 41b8407acc..4ce4d59297 100644
---- a/hw/net/rtl8139.c
-+++ b/hw/net/rtl8139.c
-@@ -745,16 +745,33 @@ static void rtl8139_write_buffer(RTL8139State *s, const void *buf, int size)
- {
-     PCIDevice *d = PCI_DEVICE(s);
- 
--    if (size < 0 || s->RxBufAddr > s->RxBufferSize - (uint32_t)size)
-+    /*
-+     * size is size_t (unsigned) in the caller (rtl8139_do_receive),
-+     * but passed as int. Assert it's non-negative and reasonable.
-+     */
-+    assert(size >= 0);
-+
-+    /*
-+     * Bounds check: RxBufAddr + size must not exceed RxBufferSize.
-+     *
-+     * Use subtraction to prevent uint32_t overflow when RxBufAddr is
-+     * near UINT_MAX. This can happen after receiving many packets as
-+     * RxBufAddr accumulates via: s->RxBufAddr += size (line 785)
-+     *
-+     * Vulnerable: RxBufAddr + size > RxBufferSize
-+     *   If RxBufAddr=0xFFFF0000 and size=0x20000:
-+     *   0xFFFF0000 + 0x20000 = 0x1000 (overflow!) Check passes incorrectly.
-+     *
-+     * Safe: RxBufAddr > RxBufferSize - size
-+     *   0xFFFF0000 > 0x10000 - 0x20000 = wraps to large value, check fails.
-+     */
-+    if (s->RxBufAddr > s->RxBufferSize - (uint32_t)size)
-     {
--        /* Calculate wrapped position safely without overflow.
--         * Use modulo on each term to prevent overflow.
--         * RxBufferSize is always a power of 2, so MOD2 is safe. */
--        int wrapped = MOD2((uint32_t)s->RxBufAddr, s->RxBufferSize) +
--                    MOD2((uint32_t)size, s->RxBufferSize);
--        if (wrapped >= s->RxBufferSize) {
--            wrapped -= s->RxBufferSize;
--        }
-+        /*
-+         * Calculate wrapped position. Since we've validated bounds above,
-+         * the original MOD2 calculation is safe here.
-+         */
-+        int wrapped = MOD2(s->RxBufAddr + size, s->RxBufferSize);
- 
-         /* write packet data */
-         if (wrapped && !(s->RxBufferSize < 65536 && rtl8139_RxWrap(s)))
--- 
-2.50.1 (Apple Git-155)
+Thank you for the thorough review!
 
-From bee06612dae03a07dd5a9fa407d3a834fad4c635 Mon Sep 17 00:00:00 2001
-From: Orion <orionhubble@163.com>
-Date: Sun, 25 Jan 2026 21:29:41 +0800
-Subject: [PATCH v2 2/2] tests/qtest: Add test case for RxBufAddr integer
- overflow
-
-Add qtest case to verify that RTL8139 correctly handles RxBufAddr values
-near UINT_MAX, testing the fix for integer overflow in bounds check.
-
-The test sets RxBufAddr to high values (0xFFFF0000, 0xFFFFFFFE) to verify
-the device handles edge cases without crashes and that the bounds check
-correctly prevents overflow.
-
-Signed-off-by: orionhubble@163.com
----
- tests/qtest/rtl8139-test.c | 63 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
-
-diff --git a/tests/qtest/rtl8139-test.c b/tests/qtest/rtl8139-test.c
-index 55f671f2f5..7decf7c5e4 100644
---- a/tests/qtest/rtl8139-test.c
-+++ b/tests/qtest/rtl8139-test.c
-@@ -185,6 +185,68 @@ static void test_timer(void)
- }
- 
- 
-+/*
-+ * Test for RxBufAddr integer overflow vulnerability (CVE-2025-XXXX)
-+ *
-+ * This test verifies that the bounds check in rtl8139_write_buffer()
-+ * correctly handles RxBufAddr values near UINT_MAX, preventing overflow
-+ * in the bounds check calculation.
-+ *
-+ * Vulnerability: When RxBufAddr is near UINT_MAX and a packet is received,
-+ * the addition (RxBufAddr + size) can overflow, bypassing the bounds check.
-+ *
-+ * Fix: Use subtraction (RxBufAddr > RxBufferSize - size) instead of addition.
-+ */
-+static void test_rxbufaddr_overflow(void)
-+{
-+    uint64_t barsize;
-+    uint32_t rxbufaddr_orig, rxbufsize;
-+
-+    pcidev = get_device();
-+    dev_bar = qpci_iomap(pcidev, 0, &barsize);
-+    qpci_device_enable(pcidev);
-+
-+    /* Read current RxBufAddr and RxBufferSize */
-+    rxbufaddr_orig = qpci_io_readl(pcidev, dev_bar, 0x3A); /* RxBufAddr */
-+    rxbufsize = qpci_io_readl(pcidev, dev_bar, 0x30);     /* RxBuf */
-+
-+    g_test_message("Original RxBufAddr: 0x%x", rxbufaddr_orig);
-+    g_test_message("RxBufferSize: 0x%x", rxbufsize);
-+
-+    /* Test Case 1: Set RxBufAddr to a high value that could overflow
-+     * when added to a moderate packet size.
-+     *
-+     * Before fix: 0xFFFF0000 + 0x20000 = 0x1000 (overflow!) - bounds check passes
-+     * After fix:  0xFFFF0000 > 0x10000 - 0x20000 = 0xFFFF0000 > 0x0000 - FAILS correctly
-+     */
-+    qpci_io_writel(pcidev, dev_bar, 0x3A, 0xFFFF0000);
-+
-+    /* Verify the value was set */
-+    uint32_t rxbufaddr_test = qpci_io_readl(pcidev, dev_bar, 0x3A);
-+    g_test_message("Set RxBufAddr to: 0x%x", rxbufaddr_test);
-+
-+    /* The device should handle this gracefully without crashes.
-+     * In practice, the bounds check should prevent writes. */
-+    g_assert_cmplx(rxbufaddr_test, ==, 0xFFFF0000);
-+
-+    /* Test Case 2: Set RxBufAddr to exactly UINT_MAX - 1
-+     * Any addition will cause overflow */
-+    qpci_io_writel(pcidev, dev_bar, 0x3A, 0xFFFFFFFE);
-+    rxbufaddr_test = qpci_io_readl(pcidev, dev_bar, 0x3A);
-+    g_test_message("Set RxBufAddr to 0xFFFFFFFE, read: 0x%x", rxbufaddr_test);
-+
-+    /* Test Case 3: Normal value - should work correctly */
-+    qpci_io_writel(pcidev, dev_bar, 0x3A, 0x1000);
-+    rxbufaddr_test = qpci_io_readl(pcidev, dev_bar, 0x3A);
-+    g_test_message("Set RxBufAddr to 0x1000, read: 0x%x", rxbufaddr_test);
-+    g_assert_cmplx(rxbufaddr_test, ==, 0x1000);
-+
-+    /* Restore original value */
-+    qpci_io_writel(pcidev, dev_bar, 0x3A, rxbufaddr_orig);
-+
-+    g_test_message("RxBufAddr overflow test passed - device handled edge cases");
-+}
-+
- static void test_init(void)
- {
-     uint64_t barsize;
-@@ -217,6 +279,7 @@ int main(int argc, char **argv)
- 
-     qtest_add_func("/rtl8139/nop", nop);
-     qtest_add_func("/rtl8139/timer", test_init);
-+    qtest_add_func("/rtl8139/rxbufaddr-overflow", test_rxbufaddr_overflow);
- 
-     ret = g_test_run();
- 
--- 
-2.50.1 (Apple Git-155)
-
+Regards,
+Orion
+orionhubble@163.com
 
