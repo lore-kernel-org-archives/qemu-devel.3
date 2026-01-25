@@ -4,37 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57386E63CAC
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 18:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA1AE63CA3
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 18:36:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vk4wH-0006kC-Md; Sun, 25 Jan 2026 13:34:21 -0500
+	id 1vk4wO-0006q7-O7; Sun, 25 Jan 2026 13:34:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vk4wD-0006en-IJ
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 13:34:17 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1vk4wN-0006pA-Gs
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 13:34:27 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vk4wA-0002nQ-H8
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 13:34:17 -0500
+ id 1vk4wM-0002pk-0M
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 13:34:27 -0500
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 077995974D7;
- Sun, 25 Jan 2026 19:34:12 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id E307B597507;
+ Sun, 25 Jan 2026 19:34:24 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 00wLJb8PK9Nr; Sun, 25 Jan 2026 19:34:10 +0100 (CET)
+ id Eg98KeEz_oQ5; Sun, 25 Jan 2026 19:34:23 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 953F45974BC; Sun, 25 Jan 2026 18:50:56 +0100 (CET)
-Message-ID: <107f31d3312c79f46c9f4baeb247ac5120a6c6aa.1769362313.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1769362313.git.balaton@eik.bme.hu>
-References: <cover.1769362313.git.balaton@eik.bme.hu>
+ id 88F765974BA; Sun, 25 Jan 2026 18:50:55 +0100 (CET)
+Message-ID: <cover.1769362313.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 01/10] memory: Add internal memory_region_set_ops helper
- function
+Subject: [PATCH v2 00/10] Implement memory_region_new_* functions
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -42,15 +39,14 @@ To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Paolo Bonzini <pbonzini@redhat.com>, Michael S. Tsirkin <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Sun, 25 Jan 2026 18:50:56 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Sun, 25 Jan 2026 18:50:55 +0100 (CET)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,68 +62,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a common operation used at multiple places, add a helper
-function for it.
+Our documentation says that memory regions are automatically freed
+when the owner dies and the reference counting to do this is also
+implemented. However this relies on the QOM free funtion that can only
+be set by creating objects with object_new but memory API only
+provides constructors that call object_initialize which clears the
+free function that prevents QOM to manage the memory region lifetime.
+Implement corresponding memory_region_new_* functions that do the same
+as the memory_region_init_* functions but create the memory region
+with object_new so the lifetime can be automatically managed by QOM as
+documented. The memory_region_init functions are kept because they are
+useful for memory regions embedded in other object or managed
+externally and not by QOM for some reason.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- system/memory.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+v2:
+- rebase on master
+- update documentation
+- use these function to fix some leaks (there may be more, e.g. in
+hw/pci-host/bonito but I leave that for later and/or others)
 
-diff --git a/system/memory.c b/system/memory.c
-index 4bf00d82bc..86742557a1 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1559,6 +1559,15 @@ MemTxResult memory_region_dispatch_write(MemoryRegion *mr,
-     }
- }
- 
-+static void memory_region_set_ops(MemoryRegion *mr,
-+                                  const MemoryRegionOps *ops,
-+                                  void *opaque)
-+{
-+    mr->ops = ops ?: &unassigned_mem_ops;
-+    mr->opaque = opaque;
-+    mr->terminates = true;
-+}
-+
- void memory_region_init_io(MemoryRegion *mr,
-                            Object *owner,
-                            const MemoryRegionOps *ops,
-@@ -1567,9 +1576,7 @@ void memory_region_init_io(MemoryRegion *mr,
-                            uint64_t size)
- {
-     memory_region_init(mr, owner, name, size);
--    mr->ops = ops ? ops : &unassigned_mem_ops;
--    mr->opaque = opaque;
--    mr->terminates = true;
-+    memory_region_set_ops(mr, ops, opaque);
- }
- 
- bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
-@@ -1710,10 +1717,8 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr,
- {
-     memory_region_init(mr, owner, name, size);
-     mr->ram = true;
--    mr->terminates = true;
-     mr->ram_device = true;
--    mr->ops = &ram_device_mem_ops;
--    mr->opaque = mr;
-+    memory_region_set_ops(mr, &ram_device_mem_ops, mr);
-     mr->destructor = memory_region_destructor_ram;
- 
-     /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
-@@ -1759,9 +1764,7 @@ bool memory_region_init_rom_device_nomigrate(MemoryRegion *mr,
-     Error *err = NULL;
-     assert(ops);
-     memory_region_init(mr, owner, name, size);
--    mr->ops = ops;
--    mr->opaque = opaque;
--    mr->terminates = true;
-+    memory_region_set_ops(mr, ops, opaque);
-     mr->rom_device = true;
-     mr->destructor = memory_region_destructor_ram;
-     mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
+BALATON Zoltan (10):
+  memory: Add internal memory_region_set_ops helper function
+  memory: Factor out common ram region initialization
+  memory: Factor out more common ram region initialization
+  memory: Shorten memory_region_init_rom_nomigrate
+  memory: Add internal memory_region_register_ram function
+  memory: Add memory_region_new* functions
+  memory: Update documentation for memory_region_new*()
+  hw/ide/sii3112: Use memory_region_new to avoid leaking regions
+  hw/pci-host/articia: Map PCI memory windows in realize
+  hw/pci-host/articia: Add variable for common type cast
+
+ docs/devel/memory.rst   |  21 +-
+ hw/ide/sii3112.c        |  30 +--
+ hw/pci-host/articia.c   |  22 +-
+ hw/ppc/amigaone.c       |  28 +--
+ hw/ppc/pegasos.c        |  13 --
+ include/system/memory.h | 360 ++++++++++++++++++++++++++++++
+ system/memory.c         | 484 +++++++++++++++++++++++++---------------
+ 7 files changed, 713 insertions(+), 245 deletions(-)
+
 -- 
 2.41.3
 
