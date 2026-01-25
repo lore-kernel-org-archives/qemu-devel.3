@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3C29E63CBF
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 20:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D57E4D72369
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 20:42:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vk6ue-0006yz-VB; Sun, 25 Jan 2026 15:40:48 -0500
+	id 1vk6ue-0006yG-HO; Sun, 25 Jan 2026 15:40:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
- id 1vk6ud-0006y5-U5
+ id 1vk6ud-0006xs-9w
  for qemu-devel@nongnu.org; Sun, 25 Jan 2026 15:40:47 -0500
-Received: from mout.web.de ([212.227.17.12])
+Received: from mout.web.de ([212.227.17.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
- id 1vk6uc-0006Cv-9x
+ id 1vk6ub-0006Cn-Qx
  for qemu-devel@nongnu.org; Sun, 25 Jan 2026 15:40:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
- s=s29768273; t=1769373644; x=1769978444; i=lukasstraub2@web.de;
- bh=aOvpBKvuQu7w4pl2aOeHOdeK2Xv4HGosQpxJEOLDGSU=;
+ s=s29768273; t=1769373643; x=1769978443; i=lukasstraub2@web.de;
+ bh=le+nLiERzrnlm19tGPVw4LccaOtcc2jCGxhjGVm2kDI=;
  h=X-UI-Sender-Class:From:Date:Subject:MIME-Version:Content-Type:
  Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
  cc:content-transfer-encoding:content-type:date:from:message-id:
  mime-version:reply-to:subject:to;
- b=KWH6rgvJr2cYFeifhWiOHM6DYi5SycG87Cfs8bWPTSS3OPe39Y9aAQJYHDA3zsHg
- b758WsivezQGZflIrASSNW5vsnJliaOsSiNxCOmW2fH/N4Rpw8XJZukv70FrkjxHc
- iWdLojuFhhnwJAu8fFgGFm3EhE6HmLxX4G6JGmo14gXUs4pA9qZrBqodUABSySuyy
- GN/T/RBSqH3B9P13WFhvzadgMwk5o71B10Vwi6NPkDmcbH1JD2KwUegovkNEYVau/
- 0ijxVCuM+0SU2fdV6/hFemrFg3HgzM0h9yIh3RVy5Rn+4RyuI9/tfz2iOqV4AEeYk
- kMt2O0or+BCg1EWtiQ==
+ b=niE1Gs3ZZUC316b2iDiFi3HGsKhysopqBG22hQ0GMSvuR2LCtIWBY0/7RpGXHCgV
+ oWBin8HPTPnlBWAzsA3FyTe0ANoX6E4IF23c/o2Ary6AjjfRvTKChTFqjWL8Dff9P
+ xdmD2uQGYcHCagyzQOtqjrSv86BJxpRptZwJ55TuS/OAIofWEPBPuoqRRvshBYGzB
+ XZqAzPbmqp8KF8qegXXA89HcG3TWbj1evBoPHzgYsXvhmisCGurilhEIVHTDKQNWe
+ SAejoDJMvC1sVbU9tQVw8s7bBOEzqJXSZ36dUVI3WabObsbvvsU6TaMW7c4AU/3TA
+ q0jtsrpMPfkq2XpgrQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [127.0.1.1] ([217.247.97.172]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MYu1C-1vFByG2anI-00MP7w; Sun, 25
- Jan 2026 21:40:44 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M7ux6-1vf8pt0e1q-00E38s; Sun, 25
+ Jan 2026 21:40:43 +0100
 From: Lukas Straub <lukasstraub2@web.de>
-Date: Sun, 25 Jan 2026 21:40:14 +0100
-Subject: [PATCH v3 09/10] qemu-colo.rst: Add my copyright
+Date: Sun, 25 Jan 2026 21:40:10 +0100
+Subject: [PATCH v3 05/10] colo: Fix crash during device vmstate load
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20260125-colo_unit_test_multifd-v3-9-ae926ccd8eae@web.de>
+Message-Id: <20260125-colo_unit_test_multifd-v3-5-ae926ccd8eae@web.de>
 References: <20260125-colo_unit_test_multifd-v3-0-ae926ccd8eae@web.de>
 In-Reply-To: <20260125-colo_unit_test_multifd-v3-0-ae926ccd8eae@web.de>
 To: qemu-devel@nongnu.org
@@ -55,100 +55,102 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  "Dr. David Alan Gilbert" <dave@treblig.org>, 
  Lukas Straub <lukasstraub2@web.de>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=861; i=lukasstraub2@web.de;
- h=from:subject:message-id; bh=T71DG3fEVTcTLwOHOcb6Prrz95/6+WhpFwEqvfzYkdU=;
- b=owEBbQKS/ZANAwAKATWrCyicXbJYAcsmYgBpdn/GRDTFfO3tMp2NeWaKhe+Hjb5hcMeOslQ9N
- NJGOGvk86+JAjMEAAEKAB0WIQSD+rFYoNm4+3Jij6Q1qwsonF2yWAUCaXZ/xgAKCRA1qwsonF2y
- WK6iEACM3rwzqUVmcxaD9t//vttjuK05pA6uSkIj5aUAxj+pac8SA4M91QYeqDeRs/iIhgqZUWU
- bDXjNNHLLdufZ8MSXvcv/jK1rMHPXjFc6IbrZnoD6J6/crpjQBlEd4pcPj+l4TrByIxDCq3QzOL
- BVhex2w1u7afvT6VD/yS49KmYwKVH33UvMYgRjnMZ1Fl+l0lemGlmhenZtLOTdcQmshOF3cEN2h
- TCg+gFu/EAADV2clZg0EKdLFr+GlhOoU3U6dbTf4ONBJRosBwBVhY53AvfUTMw5zX1HVq+LacYU
- g2WoVGLGM1GUkWmhN/IrZdhdhV8fD6mXjGZiwkt2c7RPll2MiWNnM+9XXrpEgn3XPkyCa1XTskd
- /NUoxNxtufexq0t3yXRKWIc/cIBxeE2SMaDBa8hMmkjKag/LQzuiwOdoAPJc7SleKgnpNdUe5fX
- 21ERUpcezGX3f3bqiE3QDM6xPzfvR7OIM2ve1JBV+LkVN/yk/4grW/yOSDb1xYKduSv+XtaPGtg
- ECbXN45IbePta88lwHE2kAVUlJ+fl1+7sTQ9EVh0y9N+P6YtAnEvqE5SfZYsAgJjOkZCYT4NuPY
- CTMq+W7o6CXfb9a4BVSTkA8d8wdf9ZdtrVV4IzTQvHu3fQvAmvmQvU+jBzsY/kfCEcuTGeS2TRt
- tpMLRoOuB4tggIQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=867; i=lukasstraub2@web.de;
+ h=from:subject:message-id; bh=zWjKFO5Ycx7AzQX5X33F44lkl1z+MO7MkWEZu8sryXs=;
+ b=owEBbQKS/ZANAwAKATWrCyicXbJYAcsmYgBpdn/F4YV4P63fSgHzeKK63BXPnYVzdxTUwrhDe
+ 0QVmWuOVpKJAjMEAAEKAB0WIQSD+rFYoNm4+3Jij6Q1qwsonF2yWAUCaXZ/xQAKCRA1qwsonF2y
+ WNfgD/sGCrU7h6S8w1bIa3JIT2/fM2oWUvVdI8My3XW/Ea7UJhmgWrsztADcB5CAxTJUDM1M1D3
+ beXkN96gft0rf1EaXfeG1mpa7nvtwxNfuETzwqzvOsg4UevlJVXS8CQFA/HIGv/kjCTYOlp2Q3u
+ P/E50be9IPJWv5liGzPx7iStckj7w6fyJRSN8ob0kD+Ltk7+tNHVS/Opyl6PNsI5/54boGLs0q+
+ xU23RFdJNKCrk5kfVsRKZH7howXTqE26QDP58F0GnEiP4uS3dU+adRB+rGqr6+FSR1FiOCcrgvJ
+ bBoCugGrUy0v5tgktS3wNFmWrGq0jqXfuiiTi27A4tMl9rlSGV0pxRZKKfxBZkDNUgxWHly1bre
+ FzPkVx6vgQ4FoslgU6p9EiqgRjS9qXKuP66bDmuN9ezhbiV0wahZMiwpm/ldxTLW2na0LlxXPdS
+ TzaARl0EscHjWrKJzFTMQp7juw+VZxOSYGORIlaWFFmhflCOK3cfEdMU6kTyLx98TrzwZGyITAx
+ 5qKU0qM4W9LsCsC9Daa9Ak752wWZtZAtMbht5QIYcevd3zdVQ1XI0G6xUj5csu0XYCA6tj3wiak
+ /IMUFJ1+HTU6wATuOcL+ZvzZsL1Z0oqecnLp5v7IVgWLGO8KjzPdVSJjzqvI+003HQJWgUsAN3P
+ bgBwghNr1YCCk3w==
 X-Developer-Key: i=lukasstraub2@web.de; a=openpgp;
  fpr=83FAB158A0D9B8FB72628FA435AB0B289C5DB258
-X-Provags-ID: V03:K1:6vVKJ63Fp9ZXVagD4J4ToHYwOgmDit91qBL5h2w1AzxfRI8Vdxa
- jHAQRPJPHZCmTo16TbrrLxpcpij8qicAoFGGAfnmvuCDIRUesL4J3tM6OEEQ+PDy2RZaTkh
- I2DlOQj+JCDWqrVnCURNGnGtg2xP+iHeTapePsXN/3eYpwOOqtF6+NHMopw0UpVNTKLxOl1
- FSm3+hUlUPYCQxD2eg/BQ==
-UI-OutboundReport: notjunk:1;M01:P0:u4wlhnTfur0=;9Tgw5NBwHC3sgM81fTSMkNg2hub
- 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
- UfQM+7WIxwFnZa62gBa8ZBb24CBVWBm0WQTeoH
-Received-SPF: pass client-ip=212.227.17.12; envelope-from=lukasstraub2@web.de;
+X-Provags-ID: V03:K1:BsfnpUIO+Sks9HKwP6Cpg+/493WqXXkvHATuZD9UA/bZQNY+kD+
+ bN7mo6A267lQnIDWCIfB2/5rs2muPy6XVFVGNAOFWEna0TfuPPzzBuGw8o/s0ILMA7MYguG
+ XKsS+Kp0luVZrQ57z/4PyfOnX3KTwq7qVunQ5WVTM8Ve+FhU4ZjMB/rdd1kffp7twy76mwY
+ 5c+Nh4+LaF2d5LlbECMhw==
+UI-OutboundReport: notjunk:1;M01:P0:m8TcFpZ/l9I=;iYSc0rktE9EJVrqBQWrHIuj+O8c
+ wyiXjGTM8hlJm5+LB1vl1xDhv44cz0MKLSBQ/Jlu4PF8AOwalI4CyfHS0RFS+HEeh/HdpU1AN
+ 694+fIMsPMJsCNRCLEXqZPmH2qQwhnkN4EAD4Gv/h9xXOm/htzV+SvGFxPLCYu2dV7Bnk5XyT
+ h7E3I5S6K9gVXniE5yQ8PECzPqyexBmY4BsC6gO3P6ahbll5lNI2viEtBCkGWre/LEi4C2yHx
+ AwMEUjcxbGY8PESopoCOjBPL5CEmDNrXxTykV7CE1GgQ1+VPDQrPAti99edigY/T8o+hyzcJf
+ RljApFWsvf+oeJx3L5jwAGv/5IW5c0hmHbleoxCszp2fHcgMhVYm/2RPAcg+qcnjbJIAsaYv1
+ JgweExPaiSf+4aKBiigFbOHWvJzAPzGwksSfaO3bPCdKRuvXI6tMVvo3371+PeXUd43Rq9FrI
+ bskjkOWwHkNBO/KynCX630Sgkb4Fkkq27S5PVzDe5pavQVkeIzBvV32LDfFfiUDm3qA8aXJSG
+ jz1HiCotlsrNDagyNINwvPQz3XF5NsrsZTcWhq+EtRpD75StSFLY5UKZ82uWyuMALec8NOnSd
+ VMWpkOodD0fMvSincvNlfsz3mgSOu8B6w+KI2fAO7b6MKto2NDdSZfYpiZm9Jw/ZUEiSNoTkV
+ vj68/8BdmOujqdejWsoIFVUQiCOLR+gb2bXNzvOIGClisZr4nkaQ67W1Upm5OUuWNbb4JaUs6
+ yXM26QC3kw2pUq6qhOG4uuGhcnatnif104YVQ9vOX71TkL1XFRBwX9xPDarNQyViJnmRnZBr+
+ VzQfy9DfY51/8kWrZeiBKRkYmfNlqESYCdHLRuGfhqe+JEsslABW1EkeaHvG6ZzCMA83Jciu5
+ redIIXkk8hOoiHUwXElPw/r6dLc9F1HjkfDwEfTleu3FKDZ5aH9z06LXG/7sj0BghdbkaXcZU
+ wU/4X8/fUrd1FIGoZ1a+mV9pEg4AjWsbW2piazsIdRVA1KdgQ8d9dPR6nBYfD+CuDcxcUswN4
+ 534aGV3n8lVihxIVOgCWaMGNuKvUxpWHLj+dSeT5OrOxKWjBkpdEuJjVA7jzWnpOzR5g5o1CO
+ p30WPOaPrG3JvJFgCbrywKqfEyWQSQx+sglKzuZpU14VYXBO7b1rd7b0+EV9VMU8TG13k9jp9
+ /m1c04mwsC2F4eKNzO0zcUC7bwrdVi6C/TVEas3cNA8PhezNcFvl9/dt1XHRYM+3PjKbJKcbs
+ KV6LUfo8VGkML3r/ajgAsNtva/OppYrQ4XzxboCk6u4Fn4eGEmdrszG6XNrpORThpyMSExWgr
+ BExk/vPFA8mUxU8IwYogxy44WKRERpgKtD1J8bbEF/e6roe9RG/PgHK9VSgyHTb4AF7FF59uy
+ mvS9kDnbS0QLt33Mv/vZEn+CG2VTvEuL1uCqhKsMHDp2rJjtz5LBIklxwJ2PTt231ZmQCPyFU
+ XsENWkFiETIDy+wZClshAZNfyw1I6Jrk1ru9Jg9JaYX5c1oKwt0RzT0fpnc1Qp8kNrnHgRmHR
+ EWt7YAD4GHVQAQa17GfOJ1UfOvD6YhBWVjcxwhJLhvzD5kgn5KjRl4II4/Wj3EvWFEIh5FCeR
+ eGsOrXJgh/kXT3AKEhbuYPLmhyzKY5PsHtazxDBjqTcJfuATmx1ZjHVjoYy+VXSAwXwND9unm
+ Dh2g5oIVBD/n3+zYcnZ/2Sp4ZqSeHhEt6jaoXxVJ/ybGRYeBPJsYym6V/uS5IsTN9NZptwuQ6
+ P0TGN0VSDWnfIqhbGrwf+EwYOsq4JL8OTVHoOVONM8E5oekwObNibGysIKJbBl6wzXTigZClk
+ qehO0VPYPFu5V090X9h65DzLpWVk9yJIhX+GyB/X+2L/yFjFq+CmCnNJNtz7cebqrrwCmzR5D
+ eQNODUiWxNfE6+yzVvo+YIqzIe/Q9ARhcTb1tWB9IjtsBH/NWwP9OsuHarjFki8CGKW5bmsEI
+ b3/p3AlXm+jMDeBI7ZFREjNGv4wz9hSmkCl/TTuIOxNDvz7oVK0cZsoFw35Sd0cCPk77i4c7X
+ sdk2ZkR6ffiDpxNYGGf6XIquZvbHBFe7mOXEb0hSMFKPcwUgiqD9n/vkHSYvPGnd4IG3TBnLP
+ 9AeSWww0Fx02LOh4AIYLT4lcYLKXR28AHKykON4lFPRvfHJ5Uje+jl5wQPmOSjra9GBJYLycQ
+ c7kjP0a8HyHbMl1JvKgovwvCEK88e0QzlV1+z8dcuVk7nnHUA1lSKoEm1IrfwSN5iLlbAKEZw
+ HfxEse7aq1v996IdLw7AhpTrpCdkrgOzj81JyId0h9UMF+HBgV/MrKzSrHF4BnFoYFMYDU7EA
+ boO676tkYs/jWaVzLqOPznfAFjzMFaKr5o6K/qngcyCtvJIS8jRcItcJ9AmK1CuR3Zutx7rtH
+ ISkiceN1BYi1cthA5u28HrK/NIJ6bmV7VczYmHVaMAmit6umHFAUgId7dz9u0aQxlSynsEZiL
+ Xrqa3eweiKK0uwnDgL6znt1/phXlL6Q7BNGM5NiIegEwPSAFXXFbT5WmSvLyU0mDE/Lv6QfC4
+ 8sYoFBVgLC09znKCmDPsdaIIphhZCV6KlTU+YO9iX+hyPXiBqaDt5SDBi+VsoLzR+JpXhQHPM
+ LSXJ/X5AvZjnp2ECMSICVmE3v5Rj//fnrwtmxgwoZmh7HZkJAsWkbnVaMGPrnRFLxeQz1OY/5
+ 9y8zUwBTLBF6K1rWYyfCDPY7CocQJvxibnIKZ677gNRt28ZudqvtpkxSYL55v+eUZyASZVRlC
+ 6QGagmheAopHfGp6tbvDjyhiVdrnC7ncU/K6EWRPigfye0o8W9rHSOluAuwGOwFOZI6oaYSyK
+ DXgd0evrMbhj9E3gJBy4zW3HHkdS3rMuArjsCHfTiWVQf2meg7cEWyCsSP9JAjm59fBsySF7G
+ 9fhYWtKhGK+eJvalIgCxrCilqE6e9AvCJc0COZZ17JlWGqGbxOWq7Mvt9OREFIBT5DUecNaQX
+ Vq6VONNRvITiCf6NlsuIr6+yMRojiLxL7f5VhXn0FO0LzIX1o8IXpOC7F7g+07p1yr26sb8sy
+ fC+R8UTt+MH7z3x2EoKwVNIQAOgSuyBS7C6n5cDay3tyYobXWeCEKmxR/HSaC7V4temVUzDKm
+ d7MmJPYu6uCdb641CfIx1+gSE5GNq5EHlSXLWJTtkCSRorngUnm0lxehVB5lqShsMgeI8/StP
+ M/b/tcPQwgZyiyuSmkMoXBdPuorIAUdjpcdrW6crrfOySXtVu7tV4sUG6s7QPO9mkIIOkJlMW
+ vppQ+/d7YKmhlJALDLgVmuEmbQDThHGqN2R4hHJZ3NBV4L+bulDoa4mL8mf24koGRXU6rpV+m
+ VXzd2USaFHq4BBwSw5T8C4M8Yu60kyRjO2+gFKA6q2qgXT7ixnmEtrBzoVkJ175vndZYp+Jbk
+ c0X95DEzYUvOJnkBk3fjyefkK8A630JsbaYSgQCzFlhkDKWydm3h5qs50obCTeaxMR1KuTDFM
+ ilsyO02wC16sy3l33s2ammwueTJ/nUXjrEDAbTWSP+6HKZ5n9nZlSPmywgIiarFbRJjOD7Fj9
+ ntRuEVltmafeUN6YVCVCafIQFyETcqg738N4jj8MpMoYFNjfEdGmSjTAGIPdrXlPjAPLNtX/T
+ cZ1YoVbdzDtTZ8mLqJOXbm5fwHHUmLRbuJ3GJEeDOwR+FHex82WomIA4OE3CdFV7XEkt+lVPl
+ www0Mr9cARrfFSZXKaxRqYM/PHerXiNnxeLCSfgbJAriahALStIY0ZMGXlbTKcwEo48R2vEiW
+ EkMLM25iD3lGrKIfcMQ8hes/7/wYs4vqgKplHucO0YLb/uiaGj5M6hCw77bYnPDaELhVtXLti
+ HDXXgoZNkeMK6YkvS5Lna5ZSn8jTHtctO8nC4NoBPQdRo2JMkqsgS6xDEBgpgkv9ZNZ9aPJLR
+ FDw9WX5UPJAHm+71jZMHHkAyY152HIMr6DR9hDyqZAhUTMnNQAVN6An6OACpYwBIaI4Ms5lP4
+ OkH1amMT5DBPVI1xkCcgcVqYKpX4XO5EBMtUNZXv9OqwADOWuayc/fv1FdufPNU7IWiWCRBkT
+ A3Dspqo1cdQJ5/QI27AFFQRIqNdzvYWk23VzndDr5Q+bsCwTXQ2z/1mkyJPN93wUWCj1aTnel
+ Wrf6LON3ImGe8XsX657IjFFhtmYCm9xUiFM1FwwDUzh5Ah3gHCiWZUxFCeFaeedfiWVMj8TJt
+ Y54R1WpdqZMb+hqkIhlF0squ8RQLSaB7At/RMsHGv9+MAgDn13WQq5www3EaCWXJLH4J/bd1x
+ 6210ldF1N9j1JPrWvAIA1+lIv4UWgg7buLqAhoMyio0tPFkhaUTxUuWjL7AdLOUIXt58tmdjp
+ zon5UR02AsLo/8zNuGx12qY41jZrX4FhUlyfxdLgSYhFGpPhoZy8qIM+koFl46MjqBY0x3Izj
+ 61wINCLZNfSxpQUVUIseQ/ayX/9X3FMETmbiVzSsWynaWh+seg05CCVmYI7J8ZtZ4SuJQp3K7
+ YDKMj8+ttYI9ziuUwSIBVZCZTJnTiwO6yktU58M66uBh5Oy6uFqFsX8GCTD5LAtlToLVrPAgZ
+ 6T4qomZqlXHWBJBW6ePReCWJMp2+GvZXuhqud2Zs6Nzv+WB5JuSesCQO4HgYko4hT629vbuX/
+ vcKPImQCfCbEUaTlUGCwuoYq90vrI+6T5X7LHNWQ4Nk9+LkR3tz4JQfArvYd6kHK0wRaNJ2+h
+ oUiCv34Te6A9F28+M6fX618WxlZEZysdfKQ9t+R1xZuBgI5KMxBnmEQjJM9jWT51rEZKWVXnu
+ pUeVzJqZi6AObUilvhRr8NxsMi07QYJa1WbpY9tI0pq1jqruU3p9Px+lDEg612xyoRGs5NNYZ
+ 1jcJ12SGeRo5MUymmBp5rbUlAw4rAQjFmg4e+8DCvMtIrV2mXbM92VkpfPP09M+pDmPEd5vtl
+ ZLnBGsvZBdzcG/0o2gh5YyzwyVk6oGvOZEotz0VZSpDQ3TeAn8sh/mRgAZ13BGOKoP10tQW0H
+ hu2YrGGrvFka+2rr4ilhYtlWq+tS85p6VMTw/kxoqzYmdvMMTmV1g6xRCNTH5ZSUNCkZv5IkX
+ IflmETDnt3h8iHvuqTrhEQ4sgr0i6TLavRKS/KscSlFS9XXdqQkbjvb5ZocLGARqGxF1vNnx7
+ QOsteXwUQfgDTOIHMDNXORhrGFEcKcx6eOLuQjE142ws5HfSqGPfP/lCHD17lbG1SiZlAh5R7
+ XYuKaQSl5n/qGz64DalB50XdblXWzbiaN4fz9NDUHOMbpk/O2JxfB7bopwm7Qz3Zqce3oTH0/
+ n4Vh26087ocM5/gWBwso
+Received-SPF: pass client-ip=212.227.17.11; envelope-from=lukasstraub2@web.de;
  helo=mout.web.de
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -174,27 +176,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I have so far contributed 61 commits to the colo project, waranting
-the addition of my copyright to this file.
+With colo we load device vmstate during each checkpoint, on top of
+a vm that was already running. Some devices expect a reset before
+loading vmstate on such a previously running vm.
+
+This fixes a crash when using COLO with Q35 machine.
 
 Signed-off-by: Lukas Straub <lukasstraub2@web.de>
 =2D--
- docs/system/qemu-colo.rst | 1 +
+ migration/colo.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/docs/system/qemu-colo.rst b/docs/system/qemu-colo.rst
-index a70e61aa09391cda933031535fa982d27cf6654b..75abbd80298df79223cb8e7006=
-4a5dc83d70f4eb 100644
-=2D-- a/docs/system/qemu-colo.rst
-+++ b/docs/system/qemu-colo.rst
-@@ -356,6 +356,7 @@ Wait until disk is synced, then::
- | Copyright (c) 2016 Intel Corporation
- | Copyright (c) 2016 HUAWEI TECHNOLOGIES CO., LTD.
- | Copyright (c) 2016 Fujitsu, Corp.
-+| Copyright (c) 2026 Lukas Straub <lukasstraub2@web.de>
+diff --git a/migration/colo.c b/migration/colo.c
+index db783f6fa77500386d923dd97e522883027e71d8..627b3706687036554eda3909b4=
+194116a7640493 100644
+=2D-- a/migration/colo.c
++++ b/migration/colo.c
+@@ -727,6 +727,7 @@ static void colo_incoming_process_checkpoint(Migration=
+IncomingState *mis,
 =20
- This work is licensed under the terms of the GNU GPL, version 2 or later.
- See the COPYING file in the top-level directory.
+     bql_lock();
+     vmstate_loading =3D true;
++    qemu_system_reset(SHUTDOWN_CAUSE_SNAPSHOT_LOAD);
+     colo_flush_ram_cache();
+     ret =3D qemu_load_device_state(fb, errp);
+     if (ret < 0) {
 
 =2D-=20
 2.39.5
