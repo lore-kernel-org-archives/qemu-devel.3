@@ -4,41 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75ADAE63CA0
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 14:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3044EE63CA0
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 14:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vk0h7-0005bU-Nd; Sun, 25 Jan 2026 09:02:25 -0500
+	id 1vk0h9-0005l0-6Z; Sun, 25 Jan 2026 09:02:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <orion@orions-MacBook-Air.local>)
- id 1vk0Fv-0004YG-7q
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 08:34:19 -0500
-Received: from [115.206.96.218] (helo=orions-MacBook-Air.local)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <orion@orions-MacBook-Air.local>) id 1vk0Fs-000361-0i
- for qemu-devel@nongnu.org; Sun, 25 Jan 2026 08:34:18 -0500
-Received: by orions-MacBook-Air.local (Postfix, from userid 501)
- id 0714449BAC1; Sun, 25 Jan 2026 21:32:38 +0800 (CST)
+ (Exim 4.90_1) (envelope-from <khurana.ridham222@gmail.com>)
+ id 1vjvzi-0002tM-LF
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 04:01:31 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <khurana.ridham222@gmail.com>)
+ id 1vjvzg-0002sZ-Dz
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 04:01:18 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-81dab89f286so1767931b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 01:01:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1769331668; x=1769936468; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CgY292WfjndhIqO+oMRoE9wZRdTpGDDfjPVXqtL+d6c=;
+ b=aXLEy1J7pIU5mlH6u787VEIl5+7Mt+FMuNkHXdTffkJCLBORigZPmXgw91q11BTWvp
+ 9uRSYaPoI2tbyFgOOgjlD68+OEsTs6FJbP/dNEWUwdD1GhMoz0h+afNx2ZD+02k7fM4w
+ gd0dyMmVcFfoAb73WVA1sBZJ3Sj10uExyf/PkbO+XzIL58rlcIf8EqjnyPSR5fWSp0+w
+ mUSZ5w4kaEjHtLPGI6sWGuD6HOCGwSOr4WrdPbsN+LF35v5KhoiGq9ZqZE6ryV2n9eKs
+ Up24oRdXLMAjN/lXUJqNCCJulBqMw5IFX6BG1xxu1ZeHjdlZ6G3UbK1s+AIps0LV7lTA
+ XYJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769331668; x=1769936468;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CgY292WfjndhIqO+oMRoE9wZRdTpGDDfjPVXqtL+d6c=;
+ b=pNQGsZg0NrfaukcFrpuUj+3jm4CkwFqw0xre/2X05zx+btv2jRSYNevpTaFgE1ZWo/
+ 1VRfmUqDm09feonqxdoHsfsMfHEkAs8QC0Xcyn01asrMHFgYsZAVXoiXR+ICHoY/CpYf
+ Oqb5UeSwTwGiiX+3Gyxp6VcDuFjvmhhivPPccaF6sOfQuPHz9EIMxYhaxpm49SvrnQU5
+ Vg9aFN/5JoughIRVKsb0u4yQcOijHSXVp3WGFpcQlcfBnSJqJENRkZ4xphKwewThizFH
+ agfqLr+npsgHSD6ieQmk/5RfuJ/RQmd2kjN3Kd2+JnpZDBSJWaG10feZqtQEKUkdJWzB
+ Yt+Q==
+X-Gm-Message-State: AOJu0YzAnZL0eegD/2bvFPjktsJdPLh8fKuiFsxNGylsXovLT5QMyo5T
+ 8sphUjjfL5FmptE3aY0q/mdyzUudpjrTJFqAUhC91xE4tVpa2RfJlxHj40JhZQ==
+X-Gm-Gg: AZuq6aLZ22l+9ZoVOhoqlBJ8ORM5yeHjw14E2L9AfTdWDBiJ93WC0aqayMyVcL1ZGDw
+ SXocxOG6fRLu8ZoL5G+IpF1UzN5HgZURZD9W8kcbnV97jywky8Ygeag3BmBIMDAnIaQlefOOc5Z
+ 4BbfpyKXSeHO6JDIWVR0CRMW7kR9bZJQ9hvQCgs+DRziwvPSIixup2AAf+a6gr2er1+s6NmNUjS
+ qVrJjAPmf5MciYpPGKlmbvkjertKb7tZtEV5FOSwvVpVhmgqBOt58RpYClFvOhvRGz/3KljbNIN
+ +joITUCkUyMOckWtjanpRAwDxvRE0Dy75LN1DzXILsjycWGNQxWzBPxVCJ2NG90O703PI43Nqp3
+ IcbhjBDiI5kDqlescBnqnLErtngrlHcgDr88bfLbcQPej6gUcSARsA9i/iOtU6G055MA9XA0+Iw
+ nHgKjCjo0lP0XFU00yweFjAQvvhDI9kOYIPh9ui185xw==
+X-Received: by 2002:a05:6a00:9096:b0:817:9a85:54af with SMTP id
+ d2e1a72fcca58-823412a396cmr973014b3a.43.1769331668177; 
+ Sun, 25 Jan 2026 01:01:08 -0800 (PST)
+Received: from fedora.. ([2409:40f0:1023:4bd9:3113:58d5:ddb0:62b9])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82339095c85sm1912676b3a.67.2026.01.25.01.01.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 25 Jan 2026 01:01:07 -0800 (PST)
+From: Ridham Khurana <khurana.ridham222@gmail.com>
 To: qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/net/rtl8139: Fix integer overflow in
- rtl8139_write_buffer
-Message-Id: <20260125133239.0714449BAC1@orions-MacBook-Air.local>
-Date: Sun, 25 Jan 2026 21:32:38 +0800 (CST)
-From: orion@orions-MacBook-Air.local (orion cai)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.206.96.218 (failed)
-Received-SPF: none client-ip=115.206.96.218;
- envelope-from=orion@orions-MacBook-Air.local; helo=orions-MacBook-Air.local
-X-Spam_score_int: 31
-X-Spam_score: 3.1
-X-Spam_bar: +++
-X-Spam_report: (3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_ADSP_NXDOMAIN=0.9,
- NO_DNS_FOR_FROM=0.001, RCVD_IN_PBL=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Cc: Ridham Khurana <khurana.ridham222@gmail.com>
+Subject: [PATCH] riscv: correct fractional LMUL legality check in vsetvl
+Date: Sun, 25 Jan 2026 14:29:34 +0530
+Message-ID: <20260125085958.47957-1-khurana.ridham222@gmail.com>
+X-Mailer: git-send-email 2.49.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=khurana.ridham222@gmail.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 25 Jan 2026 09:02:06 -0500
+X-Mailman-Approved-At: Sun, 25 Jan 2026 09:02:07 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,150 +99,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reply to: qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/net/rtl8139: Fix integer overflow in rtl8139_write_buffer
-In-Reply-To: <20260124033346.BB51747D39A@orions-MacBook-Air.local>
-References: <20260124033346.BB51747D39A@orions-MacBook-Air.local>
-
-On Sat, 24 Jan 2026 at 06:10, orion cai <orion@orions-macbook-air.local> wrote:
->
-> From d1781652dc7039b2ac92fa80695091b97dbf1918 Mon Sep 17 00:00:00 2001
-> From: orion cai <orion@orions-MacBook-Air.local>
-> Date: Sat, 24 Jan 2026 11:19:17 +0800
-> Subject: [PATCH] hw/net/rtl8139: Fix integer overflow in rtl8139_write_buffer
-
-Hi; thanks for this bug report and patch.
-
-> Fix integer overflow vulnerability in rtl8139_write_buffer() that could allow
-> a malicious guest to bypass DMA bounds checks and write to arbitrary memory
-> locations.
-
-For clarity, this is an arbitrary write to guest memory,
-not to host (QEMU) memory, since we're doing a pci_dma_write(),
-correct ?
-
-That renders it a bit less critical, because if you can
-program the RTL8139 then you almost certainly already
-have kernel level privilege in the guest and can write
-to arbitrary guest memory directly if you want...
-
-Yes, you're absolutely correct. The pci_dma_write() writes to guest memory,
-not host memory. An attacker would need guest kernel privileges. However,
-the bug can still cause guest memory corruption and crashes, so fixing it
-improves QEMU's correctness and robustness.
-
-> - RxBufAddr is near UINT_MAX (e.g., 0xFFFF0000)
-
-How can this happen? RxBufAddr is the device's
-"Current Buffer Address" register, which is supposed to
-be a 16-bit read-only register indicating the total
-received byte count in the buffer. If it has ever got
-larger than the size of the buffer, then I think we have
-a bug somewhere else, and the correct fix is to make
-sure we are not letting it get set incorrectly (with
-perhaps an assertion in case of other bugs).
-
-Do you have a repro case that triggers this bug? The
-ideal here is a qtest repro case which gives the set
-of memory writes etc needed to trigger it; for an example
-of what that looks like see e.g. this bug:
-https://gitlab.com/qemu-project/qemu/-/issues/2777
-A guest binary that shows the problem would be OK too.
-
-You raise an excellent point. Looking at the code flow:
-
-In rtl8139_write_buffer() at line 785:
-    s->RxBufAddr += size;
-
-This happens for every received packet. The RxBufAddr accumulates over time.
-While RxBufAddr is uint32_t, the bounds check at line 748 uses:
-    if (s->RxBufAddr + size > s->RxBufferSize)
-
-After many packets, if RxBufAddr reaches a high value (e.g., 0xFFFF0000) and
-a moderate-sized packet arrives (size = 0x20000), the addition overflows:
-    0xFFFF0000 + 0x20000 = 0x1000 (wraps around!)
-
-The overflow causes the bounds check to pass incorrectly, allowing an
-out-of-bounds write.
-
-I've added a qtest case in patch 2/2 that sets RxBufAddr to high values
-(0xFFFF0000, 0xFFFFFFFE) to verify the device handles these edge cases.
-
-However, I realize the test only verifies the register can be set to these
-values. To fully demonstrate the bug, one would need to:
-1. Initialize the device
-2. Simulate receiving many packets to accumulate RxBufAddr
-3. Trigger the overflow scenario
-
-This is more complex to set up in qtest. Would a unit test that directly
-calls rtl8139_write_buffer() with edge case values be acceptable?
-
-> diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-> index 9fd00574d2..41b8407acc 100644
-> --- a/hw/net/rtl8139.c
-> +++ b/hw/net/rtl8139.c
-> @@ -745,9 +745,16 @@ static void rtl8139_write_buffer(RTL8139State *s, const void *buf, int size)
->  {
->      PCIDevice *d = PCI_DEVICE(s);
->
-> -    if (s->RxBufAddr + size > s->RxBufferSize)
-> +    if (size < 0 || s->RxBufAddr > s->RxBufferSize - (uint32_t)size)
-
-Is it possible to get here with a negative size ?
-This is supposed to be the packet size, so if we get here
-and it is negative something has gone badly wrong in the
-caller. I think it would be better to assert that size >= 0
-at the top of the function.
-
-You're correct - this check is unnecessary. Looking at line 825:
-    static ssize_t rtl8139_do_receive(NetClientState *nc, const uint8_t *buf, size_t size_, ...)
-
-Since size is size_t (unsigned), it can never be negative. I've removed this
-check in v2 and added an assertion instead for documentation.
-
->      {
-> -        int wrapped = MOD2(s->RxBufAddr + size, s->RxBufferSize);
-> +        /* Calculate wrapped position safely without overflow.
-> +         * Use modulo on each term to prevent overflow.
-> +         * RxBufferSize is always a power of 2, so MOD2 is safe. */
-> +        int wrapped = MOD2((uint32_t)s->RxBufAddr, s->RxBufferSize) +
-> +                    MOD2((uint32_t)size, s->RxBufferSize);
-> +        if (wrapped >= s->RxBufferSize) {
-> +            wrapped -= s->RxBufferSize;
-> +        }
-
-When does this produce a different result to the existing code,
-given that RxBufferSize is a power of 2 ? (For QEMU, we
-always use -fwrapv, so we do not need to worry about a
-signed integer calculation overflowing, as long as it
-still produces the right answer, which I think it does here
-if I'm not getting confused.)
-
-Good question. In v2, I've reverted to using the original MOD2 calculation
-for the wrapped position. After the bounds check passes (using subtraction
-to prevent overflow), the addition in MOD2() is safe.
-
-The key is that the bounds check itself must not overflow:
-- Vulnerable: RxBufAddr + size > RxBufferSize (can overflow)
-- Safe: RxBufAddr > RxBufferSize - size (no overflow)
-
-Once we've validated the bounds with subtraction, calculating the wrapped
-position with MOD2(RxBufAddr + size, RxBufferSize) is safe because we know
-the result won't overflow.
-
-thanks
--- PMM
-
 ---
-V2 patches are attached. Main changes:
-1. Removed size < 0 check, added assert(size >= 0)
-2. Added detailed comments explaining overflow scenario
-3. Reverted to original MOD2 calculation for wrapped position
-4. Added qtest case for edge case testing
+ target/riscv/vector_helper.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-Thank you for the thorough review!
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 2de3358ee8..eff349841a 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -47,18 +47,12 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+     target_ulong reserved = s2 &
+                             MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
+                                             xlen - 1 - R_VTYPE_RESERVED_SHIFT);
+-    uint16_t vlen = cpu->cfg.vlenb << 3;
+     int8_t lmul;
+ 
+     if (vlmul & 4) {
+-        /*
+-         * Fractional LMUL, check:
+-         *
+-         * VLEN * LMUL >= SEW
+-         * VLEN >> (8 - lmul) >= sew
+-         * (vlenb << 3) >> (8 - lmul) >= sew
+-         */
+-        if (vlmul == 4 || (vlen >> (8 - vlmul)) < sew) {
++        /* fractional LMUL legality check: LMUL × ELEN ≥ SEW */
++        int divisor = 1 << (8 - vlmul); /* converts encoding into divisor for fractional LMUL */
++        if (vlmul == 4 || cpu->cfg.elen < sew * divisor) {
+             vill = true;
+         }
+     }
+-- 
+2.49.0
 
-Regards,
-Orion
-orionhubble@163.com
 
