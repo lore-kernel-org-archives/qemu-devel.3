@@ -4,66 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15BE7E63C82
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 07:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B210E63C82
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Jan 2026 08:13:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vjubM-0005YJ-U2; Sun, 25 Jan 2026 02:32:09 -0500
+	id 1vjvF8-0003uR-IU; Sun, 25 Jan 2026 03:13:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vjuam-0005Sv-S3; Sun, 25 Jan 2026 02:31:28 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vjvF4-0003pr-Mx
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 03:13:06 -0500
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vjuaj-0001P0-HX; Sun, 25 Jan 2026 02:31:28 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60P7UJSV095233
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 25 Jan 2026 16:31:17 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=ETrxvUBb90UyOUZ6fmRCwlaHHAs1kRBDCwLaLAZpmpY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1769326277; v=1;
- b=F/OjnEbwbPyL4kz34Sz5kNxAvzk1KSY5B5sMj6b+9eFp/s5RI08U0lqFqEmyUiG1
- Z1iHdCL/Bohu5Cy26DKzK1L7Vld5xFcFCevynwpLd6N0io6GTEes6Xt3trKJIcx/
- WeHoubv8yJW97I7E5mwKWjJJWtWL9jzzXFtRLKIxXEmfwxDX0uTTQU5/r7PhwZHj
- eCA+OBVwBzTnGCrMwmHhE69K1JqYlHjW32TsGOqnmJDhJKwsYk7WuNVw5qH40JSb
- 2qguY3vm1GOZRbsaraOJQy6GDjzv5d8BYtmJuKjxz5L0p27LlWyKoIx4efUMHPbX
- WybZ06nuFXo71dPhk4VVkw==
-Message-ID: <52384324-11dc-4ee6-a059-c1dd245753d0@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 25 Jan 2026 16:30:19 +0900
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vjvF1-0001gE-Rl
+ for qemu-devel@nongnu.org; Sun, 25 Jan 2026 03:13:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1769328784; x=1800864784;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=Jn8uqfx7qSGHxVBxgUF6hCOAJlmyJYwvFLs0epqJEVI=;
+ b=A2eZFzP/YTuYM2v4remBC3j9tGY2k/KUN5iY5BqcUmnApFb60SQL2Cw/
+ OyHe4mIiEHQsrkG0J+beH5SHWGlKuNUCxOFCRwo+C+yPsXWZuM+4z1+kR
+ DGPci1l7UicyrxfpxLbVvwTgXHB1S/R1priQ1oGEJ9nN3w/D8HrLRbXPS
+ lLDniA7UmZ7vXPc1Dd/uV2Gjrw1GoP1lJBfKHdNYj9hNNW38OJ8sLDlWo
+ xWdxSwdJCjsYU6otN7Lw7HnFCh/cYSy1eCBC9qME8+6Os2PuLlqaEu/Se
+ gjmDgzkYt9W265q+syHL3NMkVEoaXStTAEpuHMP1p9VkV/3HcdKIL8g4X Q==;
+X-CSE-ConnectionGUID: uAez5h0ST0S1HBzJy1Wirg==
+X-CSE-MsgGUID: aIK+HYSARHq1197lYgl5EA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11681"; a="73114046"
+X-IronPort-AV: E=Sophos;i="6.21,252,1763452800"; d="scan'208";a="73114046"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Jan 2026 00:12:59 -0800
+X-CSE-ConnectionGUID: ZGNQJYr6S9ijwnHjVJpHAQ==
+X-CSE-MsgGUID: 6TvzgI8YR9iGQ+vdvlFsiQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,252,1763452800"; d="scan'208";a="207303516"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa006.fm.intel.com with ESMTP; 25 Jan 2026 00:12:57 -0800
+Date: Sun, 25 Jan 2026 16:38:30 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: "Chen, Zide" <zide.chen@intel.com>,
+ "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, xiaoyao.li@intel.com,
+ Dongli Zhang <dongli.zhang@oracle.com>
+Subject: Re: [PATCH 6/7] target/i386: Make some PEBS features user-visible
+Message-ID: <aXXWhqUuPQaxDKCV@intel.com>
+References: <20260117011053.80723-1-zide.chen@intel.com>
+ <20260117011053.80723-7-zide.chen@intel.com>
+ <56dd6056-e3e2-46cd-9426-87c7889bed49@linux.intel.com>
+ <513c6944-b80a-46f2-ad6c-4de77dac4b09@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/3] hw/arm/virt: Remove the lower bound of HighMem IO
- Regions
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- Andrew Jones <ajones@ventanamicro.com>, "Michael S. Tsirkin"
- <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260125-virt-v4-0-00d726b27224@rsg.ci.i.u-tokyo.ac.jp>
- <11A957F3-794E-40DD-8E39-4DB8589B1657@unpredictable.fr>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <11A957F3-794E-40DD-8E39-4DB8589B1657@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
+In-Reply-To: <513c6944-b80a-46f2-ad6c-4de77dac4b09@intel.com>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.082,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,69 +90,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/01/25 16:23, Mohamed Mediouni wrote:
-> 
-> 
->> On 25. Jan 2026, at 06:46, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->>
->> Remove the lower bound of the Highmem IO Regions' addresses for the
->> latest machine version to increase the chance to fit the regions in the
->> PA space.
->>
->> The lower bound was especially problematic when using virt-install on
->> Apple M2. virt-install 5.0.0 adds multiple pcie-root-port devices that
->> require sufficient space in the ECAM region. However, the Highmem ECAM
->> region did not fit in the limited PA space on the hardware, and the ECAM
->> region size was limited to 16 MiB. If virt-install had added more than
->> 16 devices to the root bridge, the region overflowed, which prevented
->> edk2-stable202505 from scanning PCI devices, including the boot disk,
->> causing boot failures.
->>
->> Ideally, a virtual machine with more than 16 devices added to the root
->> bridge should just work so that users and management layers do not have
->> to care whether they use constrained hardware.
->>
->> The base address of the Highmem IO Regions was fixed when commit
->> f90747c4e8fb ("hw/arm/virt: GICv3 DT node with one or two redistributor
->> regions") added the first Highmem IO Region. Later, commit 957e32cffa57
->> ("hw/arm/virt: Dynamic memory map depending on RAM requirements")
->> allowed moving the Highmem IO Regions to higher addresses to accommodate
->> RAM more than 255 GiB, but the lower bound remained to keep the legacy
->> memory map.
->>
->> Remove the lower bound for the latest machine version to accommodate
->> more devices with the root bridge. Keeping the lower bound for the old
->> machine versions ensures the compatibility is still maintained.
->>
->> The hardcoded memory map in tests/qtest/libqos/generic-pcihost.c is also
->> updated.
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> ---
->> Changes in v4:
->> - Rebased.
->> - Edited the patch message to avoid confusing git am.
->> - Link to v3: https://lore.kernel.org/qemu-devel/20251027-virt-v3-0-fa2a2f37e32d@rsg.ci.i.u-tokyo.ac.jp
->>
->> Changes in v3:
->> - Fixed test failures reported by Peter Maydell.
->> - Link to v2: https://lore.kernel.org/qemu-devel/20250901-virt-v2-1-ac2379402c80@rsg.ci.i.u-tokyo.ac.jp
->>
->> Changes in v2:
->> - Rebased.
->> - Link to v1: https://lore.kernel.org/qemu-devel/20250728-virt-v1-1-0ab9682262c8@rsg.ci.i.u-tokyo.ac.jp
->>
->> ---
->> Akihiko Odaki (3):
->>       test/acpi: aarch64/virt: Allow DSDT and MCFG changes
->>       hw/arm/virt: Remove the lower bound of HighMem IO Regions
->>       test/acpi: aarch64/virt: Update golden masters for DSDT and MCFG
-> Hi,
-> 
-> Would it be a good idea to have a new test configuration that keeps the old memory map? To make sure that older machine versions don’t regress
+Hi Zide & Dapeng,
 
-It is a nice suggestion. I will add one with the next version.
+> On 1/18/2026 7:30 PM, Mi, Dapeng wrote:
+> > 
+> > On 1/17/2026 9:10 AM, Zide Chen wrote:
+> >> Populate selected PEBS feature names in FEAT_PERF_CAPABILITIES to make
+> >> the corresponding bits user-visible CPU feature knobs, allowing them to
+> >> be explicitly enabled or disabled via -cpu +/-<feature>.
+> >>
+> >> Once named, these bits become part of the guest CPU configuration
+> >> contract.  If a VM is configured with such a feature enabled, migration
+> >> to a destination that does not support the feature may fail, as the
+> >> destination cannot honor the guest-visible CPU model.
+> >>
+> >> The PEBS_FMT bits are intentionally not exposed. They are not meaningful
+> >> as user-visible features, and QEMU registers CPU features as boolean
+> >> QOM properties, which makes them unsuitable for representing and
+> >> checking numeric capabilities.
+> > 
+> > Currently KVM supports user space sets PEBS_FMT (see vmx_set_msr()), but
+> > just requires the guest PEBS_FMT is identical with host PEBS_FMT.
+> 
+> My mistake — this is indeed problematic.
+> 
+> There are four possible ways to expose pebs_fmt to the guest when
+> cpu->migratable = true:
+> 
+> 1. Add a pebs_fmt option similar to lbr_fmt.
+> This may work, but is not user-friendly and adds unnecessary complexity.
+> 
+> 2. Set feat_names[8] = feat_names[9] = ... = "pebs-fmt".
+> This violates the implicit rule that feat_names[] entries should be
+> unique, and target/i386 does not support numeric features.
+> 
+> 3. Use feat_names[8..11] = "pebs-fmt[1/2/3/4]".
+> This has two issues:
+> - It exposes pebs-fmt[1/2/3/4] as independent features, which is
+> semantically incorrect.
+> - Migration may fail incorrectly; e.g., migrating from pebs_fmt=2 to a
+> more capable host (pebs_fmt=4) would be reported as missing pebs-fmt2.
 
-Regards,
-Akihiko Odaki
+For 2) & 3), I think if it's necessary, maybe it's time to re-consider
+the previous multi-bits property:
+
+https://lore.kernel.org/qemu-devel/20230106083826.5384-4-lei4.wang@intel.com/
+
+But as for now, I think 1) is also okay. Since lbr-fmt seems very
+similar to pebs-fmt, it's best to have them handle these fmt things in a
+similar manner, otherwise it can make code maintenance troublesome.
+
+> Given this, I propose the below changes. This may allow migration to a
+> less capable destination, which is not ideal, but it avoids false
+> “missing feature” bug and preserves the expectation that ensuring
+> destination compatibility is the responsibility of the management
+> application or the user.
+> 
+> BTW, I am not proposing a generic “x86 CPU numeric feature” mechanism at
+> this time, as it is unclear whether lbr_fmt and pebs_fmt alone justify
+> such a change.
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 015ba3fc9c7b..b6c95d5ceb31 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -1629,6 +1629,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+>          .msr = {
+>              .index = MSR_IA32_PERF_CAPABILITIES,
+>          },
+> +       .migratable_flags = PERF_CAP_PEBS_FMT,
+
+About the migration issue, I wonder whether it's necessary to migrate
+pebs-fmt? IIUC, it seems not necessary: the guest's pebs-fmt depends on
+host's pebs-fmt, but I'm sure what will happens when guest migrates to
+a mahince with different pebs-fmt.
+
+note, lbr-fmt seems not be migrated.
+
+Thanks,
+Zhao
+
 
