@@ -4,107 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF702D13C2D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 15:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A3AD13C2E
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 15:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkOBj-0007Ve-No; Mon, 26 Jan 2026 10:07:35 -0500
+	id 1vkOGT-0005Qk-5c; Mon, 26 Jan 2026 10:12:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vkOBc-0007V2-W2
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:07:30 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vkOGP-00058Q-T9
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:12:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vkOBX-0004RI-NZ
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:07:26 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vkOGO-0004s5-HC
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:12:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769440041;
+ s=mimecast20190719; t=1769440343;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SzF30LqMjmjkwQgFJzaV/fhHegBqs3vq8YW299x8FEM=;
- b=QN+N1Ivop9qttWeGImw2vxnzhzcZx7GKzOox3SrLq7emvor1a+QlrpWLXs9lM7xVnKgkGr
- IvbHCsuSXnV+AkM2t/EXDITsBAbbQceCTEE9AsO0iO6ulFfGnFa/Yk2xbjgZ6AvcXldvf0
- eSGay+RMaQ9FKLR5hc7iY7mQzPzXs5o=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=NLuDrpnLGk4fWT1M5aZGriu0wX7dz7elXXhxjAzk0b4=;
+ b=bcRBIAnJ2zQhFlj7Sm5lZRKAZgEX2mwBfUdm3JdIX2P9spTj7KXm7dnjieedVeF6JEBBzG
+ GKCG9i2QUYM4KzJCrskHvZTZC+dZAkvH6aJdZamM0pWL+HnLLJuHS4hCO7v2c/q/4FpNDc
+ VIXwdQ/L8tUswe4aRzEGZsBfP3FFR2k=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-TJTu7GewMRmIPT9Celcjcw-1; Mon, 26 Jan 2026 10:07:19 -0500
-X-MC-Unique: TJTu7GewMRmIPT9Celcjcw-1
-X-Mimecast-MFC-AGG-ID: TJTu7GewMRmIPT9Celcjcw_1769440039
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4801d21c280so30252395e9.1
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 07:07:19 -0800 (PST)
+ us-mta-556-6JYc9ND_OGCBzNVjzipaUA-1; Mon, 26 Jan 2026 10:12:22 -0500
+X-MC-Unique: 6JYc9ND_OGCBzNVjzipaUA-1
+X-Mimecast-MFC-AGG-ID: 6JYc9ND_OGCBzNVjzipaUA_1769440341
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-47ee432070aso41695405e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 07:12:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769440038; x=1770044838; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SzF30LqMjmjkwQgFJzaV/fhHegBqs3vq8YW299x8FEM=;
- b=tlrx+u37rEwIbzYLkIRGQOOMvpl2Lf4Z9oQRRDuyZmj8kouve56tvuElhKEW3auB2p
- F9q59EhF586tFsr6oJHtA4ciebodEMU25wDi8y2m7PnRCXEYWa4kSycrUS7G/bgnChTq
- +l3nfg/dRlMA8TbbjD+OzrwLtaXWv3a5JGJRm4B4rhUEwvcP0RjVqlRE1S04jpAFtleX
- RsUpBbH9AI8WMaiUr2XjKf2qM8/I47nj9zSbZeB0U5D40vqxh4rcMSODlj69MnFJToBe
- EnxXuCLcSZpYG2TAJQI/fXHuC1jTVk897mKm/jMTimaV4IkBxUdzNdQSuLmomN+SWXha
- OlYA==
+ d=redhat.com; s=google; t=1769440341; x=1770045141; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=NLuDrpnLGk4fWT1M5aZGriu0wX7dz7elXXhxjAzk0b4=;
+ b=n++eqejEkrJIC7sxot46k1q19nl6N4qXltvpk6I2Mb6fMHuIwQ9clAhQFhN3exg7eF
+ buQIs0hOyD7RfD3uHz2/Gqvt2r+R7FkkGoLQmLdgDP71S8Zib8kMbbnVg9eMphd6oCpU
+ 30MhgncazZiacI7nXIPaUApc5DgGgUH1BpqiD36I5FBfvlcVEToqYFn3fcSsZcaMW5sZ
+ 5WjOlxtvXeNy8KX44AZTk5/9/gKN3WfsyX8OPK0mDzMoiAEjAUhSRoZuxtPWmbUAwVT6
+ pG1hRO4gTiB8rjgiQlvagBbO92kELw9H14lpzy3rJlhKJpf3sSvDtUVk/3uFPMXqeT6x
+ pUKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769440038; x=1770044838;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SzF30LqMjmjkwQgFJzaV/fhHegBqs3vq8YW299x8FEM=;
- b=N59VIYBEelENW3z7L9NpsGgAMp2KX1Ra5xLQTP4fM/7lTKA6YIArOHIG7IExvPSEiM
- RVYinV7o80gI7GmKedjjR3/0xHCcrMw9lOUQKLvBBUcpKFSQcZr0HcgAZ3fLmKOUVpFY
- YhXUcU8qOSd1rGOkbwyGCwl+fwZdfS6XGIv/5ZbUDP+nLx8Wo7klSACjLGQkbTvSNbx3
- E0/GudYR6tqYF9qrl2sB5PaEeSBHDxiKP4E0VbsWZOaQqWJz/DZmkse0/y0UX99ZUOcs
- AHzZREdJVVyyanPtnuKPdHVJqP+4KVYUHjwAuV5sF3MeyTWZ6GaWKLR6Bfle4bIocsGU
- Ecqg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXin2QGHaIfvIvHjFmq1vzsJ87D/FWutVS2Nnb8taEPHYn3G3vhGfqcX4i+DKIlH+dZZbcISUVVuonR@nongnu.org
-X-Gm-Message-State: AOJu0YyJ5pS3KuAa29jnWSyrKocKnkwx2sXiNJJNMogUbu9/L8iGhIn8
- zgk8q/XlEUlHftbyA177wZfLCuQneDDGtyulEC6dxfxqFzT4MBIAzK8A1luGqHsWx3YsvlhqP8g
- hlR3NBxHDZwsc/Ri7e1IeKs4+B7owyEjRbadtkTrGpHe9h4jiYdFvuATW
-X-Gm-Gg: AZuq6aJ3eAZ4X3TMHtt+bUofyumPKRc1GwhPSt3fTTVmWy1Ew8CbVJk+rDCvQHLy8kQ
- mpiYvoTxNle+1+OoxVmO10rvSwR9Ky+0dsreGe9QS3L1vW4exE+kk9tKqWGZdRcPRCYL9+p21no
- LaMNReFHY25RsaAwx5T3z0hCoBzoZnZYxUQDIQN5ZN9ub60RAp94P+hEyv4ZkK+jszW3B9/9Frt
- v3h+nRV1+Wzg5EV9toaOvzuXThHR90DRUWUZOk8rdUBssEQgRcyGoY7metljM7N2D/Zv/8iJiJt
- LTPC72hUAVb9VU0xip+JBSt7/5UYSFF7/YQTMQ/qsGtZTuoZUU047QJ5xN6TwkyfZbN9IuyjhCN
- 4DYyXCMp+QSGJASc8VB4v04XNM5P7B9aHKfPplUIREgbL3cO3djnJOHfWm4deRVJpBalt6sioXQ
- /DMNqM88zprN84sz0F4dcJQIuwxUB1orM5xP9NCrY=
-X-Received: by 2002:a05:600c:6290:b0:477:89d5:fdb2 with SMTP id
- 5b1f17b1804b1-4805ce3f888mr71361375e9.14.1769440038458; 
- Mon, 26 Jan 2026 07:07:18 -0800 (PST)
-X-Received: by 2002:a05:600c:6290:b0:477:89d5:fdb2 with SMTP id
- 5b1f17b1804b1-4805ce3f888mr71361035e9.14.1769440038014; 
- Mon, 26 Jan 2026 07:07:18 -0800 (PST)
-Received: from ?IPV6:2003:cf:d737:d0a2:11c1:c888:c8a3:a8c7?
- (p200300cfd737d0a211c1c888c8a3a8c7.dip0.t-ipconnect.de.
- [2003:cf:d737:d0a2:11c1:c888:c8a3:a8c7])
+ d=1e100.net; s=20230601; t=1769440341; x=1770045141;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NLuDrpnLGk4fWT1M5aZGriu0wX7dz7elXXhxjAzk0b4=;
+ b=Aei5g/wWH0dhtltbf4d52Zvh2CTCqo7O1Z+CSl1vH0ypnHHB2Xn6yRxgsbUjxcrcJz
+ gAzizmxDrRy0Qj+I+vIZxFwnIEgVi/SfiCln8JgzSEeQqCEvjStdvGfExFn937kBAV9d
+ WPbYHjdPxuCVIo2a06XSFYa1eMSuhE9sjABMTvu2un1o0O8oewopkcwWfwvdxyaiJAaL
+ MS62MLQfb5hCtPGVmcYahppEz6aOGYjmRYuG0iAHrGZjfCJ72Yha6mghxXLJOPgyUHA7
+ 3mhrEDkcbKGhj3grHZ2+0H7m1dnV1DbQHNHrWA8Mygo8SXNTlP92RCfYUw4ogbTohJCl
+ NRfw==
+X-Gm-Message-State: AOJu0YwqlxyOdiRFq2d4yr1BS28F8zD8aFzhlJ/lnwvNDL1zVuo7LNU8
+ +gOypp5MkLvioECjY32lZeOjIs8yYdMwQBzhQp3UzI8Cn8/2FAVGiSFB+o2zVEodUEdIH79fY8/
+ cM21XmxbSJzbPQIk+NB7wnURDyxXJUrn8TnUKWDeuHZGe3axE0CNzIKqv
+X-Gm-Gg: AZuq6aKiNBpzQGxAQ2M6RwIiFvCU3rb3x7sxFa6rYmeT0wk604tjjdDDEV/hw8taFdA
+ JNLCJ0gCGLtqJB20ft5tzSRyOhZscRCwlPk75v3df1Jfmlz2Nbzqen4nFDJ/MInVRYlPrgd5jZG
+ qRd9gDiT/NqnX2w9q6Z9ZUOssSFKiBKGJ5jSpY9FNGUN3TmNalX6OiWWK2c5u0C475HiNNQVFRX
+ LMpw1PL46wdYG/O8G5zYQp/QRYuZUkn0iG59j4q/nRFt6JsLI+vPZ4WmOYy7Ihfs73iWNvxajN+
+ f3vfado3FM683Wqs87KpI8dCzYCZ8RM3a27FL5mR3cLkicKCnJbHoR5yVA8AA1d+uUzTKrDqBM4
+ Kwmc38U9SDgJUaCc5oBl/QNbJsH4TRKqYF2ddilKYNYl7POn2
+X-Received: by 2002:a05:600c:8b55:b0:47a:814c:ee95 with SMTP id
+ 5b1f17b1804b1-4805ce3f9bdmr76997575e9.12.1769440340830; 
+ Mon, 26 Jan 2026 07:12:20 -0800 (PST)
+X-Received: by 2002:a05:600c:8b55:b0:47a:814c:ee95 with SMTP id
+ 5b1f17b1804b1-4805ce3f9bdmr76997215e9.12.1769440340429; 
+ Mon, 26 Jan 2026 07:12:20 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4804d8c0aebsm278984125e9.15.2026.01.26.07.07.16
+ 5b1f17b1804b1-4804dbc8424sm107447445e9.7.2026.01.26.07.12.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Jan 2026 07:07:16 -0800 (PST)
-Message-ID: <f3736856-2dc8-45b0-9c20-b49799aa8d35@redhat.com>
-Date: Mon, 26 Jan 2026 16:07:15 +0100
+ Mon, 26 Jan 2026 07:12:19 -0800 (PST)
+Message-ID: <e8a6032d-cf06-46e5-a7d5-c2e9b8d248ef@redhat.com>
+Date: Mon, 26 Jan 2026 16:12:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] block: move bdrv_advance_flush_gen() earlier from
- bdrv_co_write_req_finish
-To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Kevin Wolf <kwolf@redhat.com>
-References: <20251229161740.758800-1-den@openvz.org>
- <20251229161740.758800-3-den@openvz.org>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20251229161740.758800-3-den@openvz.org>
+Subject: Re: [PATCH] hw/adc: Fix out-of-bounds write in Aspeed ADC model
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Elhrj Saad <saadelhrj@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+References: <20260126141820.719492-1-clg@redhat.com>
+ <CAFEAcA8xQmUa7DyR7+Nw255e_DW=uzZ-gQT5G6cd-uuWgQBaUg@mail.gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <CAFEAcA8xQmUa7DyR7+Nw255e_DW=uzZ-gQT5G6cd-uuWgQBaUg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -129,46 +169,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.12.25 17:07, Denis V. Lunev wrote:
-> This helper is mandatory to be called before bdrv_co_flush(). In the
-> other case bdrv_co_flush() will be noop. This helper should be called
-> after actual write is completed for subsequent flush to perform some
-> work.
->
-> Actually this change is important, without it BDRV_REQ_FUA semantics is
-> broken completely. flush() is not called. This smells like potential
-> data loss if somebody relies on BDRV_REQ_FUA.
->
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> CC: Kevin Wolf <kwolf@redhat.com>
-> CC: Hanna Reitz <hreitz@redhat.com>
-> ---
->   block/io.c | 20 ++++++++++++++------
->   1 file changed, 14 insertions(+), 6 deletions(-)
+On 1/26/26 15:30, Peter Maydell wrote:
+> On Mon, 26 Jan 2026 at 14:18, Cédric Le Goater <clg@redhat.com> wrote:
+>>
+>> The 'regs' array has ASPEED_ADC_NR_REGS (52) elements, while the
+>> memory region covers offsets 0x00-0xFC. The aspeed_adc_engine_write()
+>> function has an out-of-bounds write vulnerability when accessing
+>> unimplemented registers.
+>>
+>> Fix this by using 'return' instead of 'break' in the default case,
+>> which prevents execution from reaching the s->regs[reg] assignment for
+>> unimplemented registers.
+>>
+>> Reported-by: Elhrj Saad <saadelhrj@gmail.com>
+>> Fixes: 5857974d5d11 ("hw/adc: Add basic Aspeed ADC model")
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> 
+> Seems like a good candidate for Cc: qemu-stable@nongnu.org ?
+Yes.
 
-Definitely an improvement, but if possible, I would still prefer keeping 
-the increment it in bdrv_co_write_req_finish(), because that is where 
-all write requests eventually end up in, and that’s also where dirty 
-bitmaps are handled.  It seems slightly error-prone to manually have to 
-call this every time the BDS data is modified.
+Cc: qemu-stable@nongnu.org
 
-Can we maybe instead pull the FUA emulation out into 
-bdrv_aligned_pwritev(), after bdrv_co_write_req_finish()?
+Thanks,
 
-I think we can only pull out the flush, not the FUA emulation detection 
-because for write-zeroes, we have to check either supported_zero_flags 
-or supported_write_flags, depending on whether we fall back or not.  But 
-bdrv_driver_pwritev() and bdrv_co_do_pwrite_zeroes() could return an 
-need_emulate_fua flag via pointer parameter, and if set, 
-bdrv_aligned_pwritev() can then do the flush after 
-bdrv_co_write_req_finish().  (This would also allow dropping both “only 
-flush once at the end” blocks.)
-
-Maybe it would then also make sense to move the bdrv_co_flush() into 
-bdrv_co_write_req_finish(), and add a need_flush parameter to it, so 
-that it can see whether the whole request (write + flush) was successful.
-
-Hanna
+C.
 
 
