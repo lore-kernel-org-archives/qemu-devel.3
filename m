@@ -4,108 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDA12D13C2D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 14:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF702D13C2D
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 15:08:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkO1e-0006VT-J9; Mon, 26 Jan 2026 09:57:11 -0500
+	id 1vkOBj-0007Ve-No; Mon, 26 Jan 2026 10:07:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vkO1b-0006Ok-FP
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 09:57:07 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vkO1Z-0001Hs-NL
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 09:57:07 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-78fc174ada4so36623727b3.2
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 06:57:05 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769439424; cv=none;
- d=google.com; s=arc-20240605;
- b=gz+GFJ1gV9zKNtu7Xn1YXg9Zc9ePE8rIu6XrzqKuRDaRkzo0WFEgdEbxqUlHoi5dvp
- Kjk37NZ87wla7tpfdy1LOTqxPgVHSK7ga7mTwPcC6Vv700Uw52sZMuNfgwCJsaNWDKnO
- aICVdmqJORtsAqYdapt7xFmbbHyFI9E12ZxLtdaBaDb3S0/gVRERi93v0MrpR18ooPPb
- Btb1CkgQdO7a9+abE7OFTDk6+hJ9rMJh913TVhaEydIICVMe76CPewNltEERrpQ/ii9F
- /bLsPRLOKrw2AWZHs2Cl8oV/fbZcm5RuS+ok/urL4pZI8jOQzD3TwVLvITQdAozzZD/g
- YbIg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=XvPngEILyd1XfkneDIt9fB/fYr3v3mP0gtY1lU/Qjt4=;
- fh=rut37jt3OBNO2qfenfC4LhyDRPHcFN8f+EHl+oHP3zE=;
- b=hMhcWdUPiaN9rXsoKFpaMOgCdDpyfV+yJE4qNMglQ+0EE77wIdVMkOeukVUzHbWDpb
- Ox1pwk2vaelvSwPu5LupvGCEaIuZZSwSp9Wocpns5Dz3tLqpxukkvLrhHSJXe1qF3quf
- cDXN6z3DneHRl3QXlmegev2IPFJgter1OUdH0rXGgAPZzscmrnbSv23cld5hnSIt4nq/
- 46pECXu4u8moiRx4XFGp8SOHdCJS9nD7tyoXr1dRGE374hKVQeLs3jp/vMcIAne12hYi
- s+6oR9hCDTpze0eCmpt5KS2JWvF6dWb2UZXvJaubV/Dir2R0Z9DnNTMSdm9ArYI+eceq
- Q1dw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vkOBc-0007V2-W2
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:07:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vkOBX-0004RI-NZ
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:07:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769440041;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SzF30LqMjmjkwQgFJzaV/fhHegBqs3vq8YW299x8FEM=;
+ b=QN+N1Ivop9qttWeGImw2vxnzhzcZx7GKzOox3SrLq7emvor1a+QlrpWLXs9lM7xVnKgkGr
+ IvbHCsuSXnV+AkM2t/EXDITsBAbbQceCTEE9AsO0iO6ulFfGnFa/Yk2xbjgZ6AvcXldvf0
+ eSGay+RMaQ9FKLR5hc7iY7mQzPzXs5o=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-562-TJTu7GewMRmIPT9Celcjcw-1; Mon, 26 Jan 2026 10:07:19 -0500
+X-MC-Unique: TJTu7GewMRmIPT9Celcjcw-1
+X-Mimecast-MFC-AGG-ID: TJTu7GewMRmIPT9Celcjcw_1769440039
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4801d21c280so30252395e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 07:07:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769439424; x=1770044224; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XvPngEILyd1XfkneDIt9fB/fYr3v3mP0gtY1lU/Qjt4=;
- b=WzE4vjvx/YwO0S4xSgzSXPyozAFhJXp/E1x5TL9zjvt+3S9fv/cHQrFLvI4D66J0xb
- 5QoS9GGDm9h+eBt7zuyL9MvW5oMxFRlZkeF63upFGcRBMfCDRTrFmdiss7U9S2l3X5cY
- 5GnF4q5E/IZWrAbOEs/zsKnUaiatHn2o8OrjjCKmLIdChh8Gy6tmhdvIQhGuLYXzL4GR
- ZerpHw8fBoNY/xVglnDNl2ZckyN3MOmumSdfML10R8tVAWZMeh9KT3ABWzx00HMX/Mi6
- eKdCgbQ/FwGXEE0lQpHBik8vgV1v25CxWXEwaIqoAr+hx0bUP3SS8Dacoy5+mNH9JyAb
- qdUg==
+ d=redhat.com; s=google; t=1769440038; x=1770044838; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SzF30LqMjmjkwQgFJzaV/fhHegBqs3vq8YW299x8FEM=;
+ b=tlrx+u37rEwIbzYLkIRGQOOMvpl2Lf4Z9oQRRDuyZmj8kouve56tvuElhKEW3auB2p
+ F9q59EhF586tFsr6oJHtA4ciebodEMU25wDi8y2m7PnRCXEYWa4kSycrUS7G/bgnChTq
+ +l3nfg/dRlMA8TbbjD+OzrwLtaXWv3a5JGJRm4B4rhUEwvcP0RjVqlRE1S04jpAFtleX
+ RsUpBbH9AI8WMaiUr2XjKf2qM8/I47nj9zSbZeB0U5D40vqxh4rcMSODlj69MnFJToBe
+ EnxXuCLcSZpYG2TAJQI/fXHuC1jTVk897mKm/jMTimaV4IkBxUdzNdQSuLmomN+SWXha
+ OlYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769439424; x=1770044224;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XvPngEILyd1XfkneDIt9fB/fYr3v3mP0gtY1lU/Qjt4=;
- b=myxn8zR5oyGXNOxtZPEUU+TpujWoE+OfbfbtWw4FySdTFET7j72dI2sEwSoGCrOdqF
- t+6aOB5aXrC9isWDUNiJCEoZk/JoBFRDU15pe7xmJzrxZxNpAbvxxOW/m/bOhuOziUT9
- Sg5/lyR0TtfCMWG78cdPxZ9T8Y0U4fqC06EPRX9dDQGrk1QjbGitqsImUb0v52KNMmna
- 9LjE/PGuL6aukOXtmsHm3uj8A7+FKnI7GOTyXS/aYh4mpU2frSwietHcDqf+k8Ykx4iv
- d5DXTNhD1DfYZm+MYnN5WfbnxWUx3ZarWau/hxmVU/l45TDYFNisIndR3eJQYAqd0v17
- DJ3A==
+ d=1e100.net; s=20230601; t=1769440038; x=1770044838;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SzF30LqMjmjkwQgFJzaV/fhHegBqs3vq8YW299x8FEM=;
+ b=N59VIYBEelENW3z7L9NpsGgAMp2KX1Ra5xLQTP4fM/7lTKA6YIArOHIG7IExvPSEiM
+ RVYinV7o80gI7GmKedjjR3/0xHCcrMw9lOUQKLvBBUcpKFSQcZr0HcgAZ3fLmKOUVpFY
+ YhXUcU8qOSd1rGOkbwyGCwl+fwZdfS6XGIv/5ZbUDP+nLx8Wo7klSACjLGQkbTvSNbx3
+ E0/GudYR6tqYF9qrl2sB5PaEeSBHDxiKP4E0VbsWZOaQqWJz/DZmkse0/y0UX99ZUOcs
+ AHzZREdJVVyyanPtnuKPdHVJqP+4KVYUHjwAuV5sF3MeyTWZ6GaWKLR6Bfle4bIocsGU
+ Ecqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0ky8u38X6rywgUbL/dZhiolLABYd9QCML+/2QV8wVxD29rL8NwMCv3Ce4pV2BS3CRIRdsPTzXETRn@nongnu.org
-X-Gm-Message-State: AOJu0YyQOiyGuR1yVL56XnRuM3O+Iqp29+M5soGGVRlxp8cnwPcSqyrW
- gdNbq+XjWVCseDyJUnmrP2Y5iT7OSsluWi9T8kbJOYATJAezLqWHExnzltuWFkcfYXk8sOw1gtb
- Nz1oCbjtBEa/5kAhbmo75+2CxGMfzY+c9coXZQYPJ3A==
-X-Gm-Gg: AZuq6aL0kC44Oh8R1Cmq1I3DR60imxpucRgAkd8n3HMFOxni8HxtWJzVUJK+B50YETh
- MTfIkmv9GaQUn0IX1+T5EKx0+ShtwIFvLNHrJBe90XgaqVoSBAMK8s/e58zNefH32NM2KbJ5BY5
- D9r52FgKr3II6ZRGqo7n1lyxekghH0NL7uBKqR9Hgf8c/n6LUWDR7LjP0U3lJfcAwc3P7AYVApt
- wgJSFGrlvqYwueM6Hjdqnuwi1hntcJpjYRbeEJkqCqUDdVSV0N6mfjDYvpmebCgobNzSTQqB34i
- oIo2
-X-Received: by 2002:a05:690c:d92:b0:793:d0ae:d8ed with SMTP id
- 00721157ae682-7945a863d52mr36472867b3.18.1769439424307; Mon, 26 Jan 2026
- 06:57:04 -0800 (PST)
+ AJvYcCXin2QGHaIfvIvHjFmq1vzsJ87D/FWutVS2Nnb8taEPHYn3G3vhGfqcX4i+DKIlH+dZZbcISUVVuonR@nongnu.org
+X-Gm-Message-State: AOJu0YyJ5pS3KuAa29jnWSyrKocKnkwx2sXiNJJNMogUbu9/L8iGhIn8
+ zgk8q/XlEUlHftbyA177wZfLCuQneDDGtyulEC6dxfxqFzT4MBIAzK8A1luGqHsWx3YsvlhqP8g
+ hlR3NBxHDZwsc/Ri7e1IeKs4+B7owyEjRbadtkTrGpHe9h4jiYdFvuATW
+X-Gm-Gg: AZuq6aJ3eAZ4X3TMHtt+bUofyumPKRc1GwhPSt3fTTVmWy1Ew8CbVJk+rDCvQHLy8kQ
+ mpiYvoTxNle+1+OoxVmO10rvSwR9Ky+0dsreGe9QS3L1vW4exE+kk9tKqWGZdRcPRCYL9+p21no
+ LaMNReFHY25RsaAwx5T3z0hCoBzoZnZYxUQDIQN5ZN9ub60RAp94P+hEyv4ZkK+jszW3B9/9Frt
+ v3h+nRV1+Wzg5EV9toaOvzuXThHR90DRUWUZOk8rdUBssEQgRcyGoY7metljM7N2D/Zv/8iJiJt
+ LTPC72hUAVb9VU0xip+JBSt7/5UYSFF7/YQTMQ/qsGtZTuoZUU047QJ5xN6TwkyfZbN9IuyjhCN
+ 4DYyXCMp+QSGJASc8VB4v04XNM5P7B9aHKfPplUIREgbL3cO3djnJOHfWm4deRVJpBalt6sioXQ
+ /DMNqM88zprN84sz0F4dcJQIuwxUB1orM5xP9NCrY=
+X-Received: by 2002:a05:600c:6290:b0:477:89d5:fdb2 with SMTP id
+ 5b1f17b1804b1-4805ce3f888mr71361375e9.14.1769440038458; 
+ Mon, 26 Jan 2026 07:07:18 -0800 (PST)
+X-Received: by 2002:a05:600c:6290:b0:477:89d5:fdb2 with SMTP id
+ 5b1f17b1804b1-4805ce3f888mr71361035e9.14.1769440038014; 
+ Mon, 26 Jan 2026 07:07:18 -0800 (PST)
+Received: from ?IPV6:2003:cf:d737:d0a2:11c1:c888:c8a3:a8c7?
+ (p200300cfd737d0a211c1c888c8a3a8c7.dip0.t-ipconnect.de.
+ [2003:cf:d737:d0a2:11c1:c888:c8a3:a8c7])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4804d8c0aebsm278984125e9.15.2026.01.26.07.07.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Jan 2026 07:07:16 -0800 (PST)
+Message-ID: <f3736856-2dc8-45b0-9c20-b49799aa8d35@redhat.com>
+Date: Mon, 26 Jan 2026 16:07:15 +0100
 MIME-Version: 1.0
-References: <20260126104342.253965-1-skolothumtho@nvidia.com>
-In-Reply-To: <20260126104342.253965-1-skolothumtho@nvidia.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 26 Jan 2026 14:56:53 +0000
-X-Gm-Features: AZwV_Qh5MV5xhvYVTM94g3pYpzo8WGWvwmk4TmBCljGeLV9ip9t35OvTT3k7Uns
-Message-ID: <CAFEAcA_ziaNu_xdDVcLb8s8Jb7YnyBF=Sda5=Q-Dk7gNhRVvHg@mail.gmail.com>
-Subject: Re: [PATCH v9 00/37] hw/arm/virt: Add support for user-creatable
- accelerated SMMUv3
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com, 
- jgg@nvidia.com, nicolinc@nvidia.com, ddutile@redhat.com, berrange@redhat.com, 
- clg@redhat.com, alex@shazbot.org, nathanc@nvidia.com, mochs@nvidia.com, 
- smostafa@google.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com, 
- jonathan.cameron@huawei.com, zhangfei.gao@linaro.org, 
- zhenzhong.duan@intel.com, yi.l.liu@intel.com, kjaju@nvidia.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] block: move bdrv_advance_flush_gen() earlier from
+ bdrv_co_write_req_finish
+To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Kevin Wolf <kwolf@redhat.com>
+References: <20251229161740.758800-1-den@openvz.org>
+ <20251229161740.758800-3-den@openvz.org>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20251229161740.758800-3-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,18 +129,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 26 Jan 2026 at 10:44, Shameer Kolothum <skolothumtho@nvidia.com> wrote:
+On 29.12.25 17:07, Denis V. Lunev wrote:
+> This helper is mandatory to be called before bdrv_co_flush(). In the
+> other case bdrv_co_flush() will be noop. This helper should be called
+> after actual write is completed for subsequent flush to perform some
+> work.
 >
-> Hi,
+> Actually this change is important, without it BDRV_REQ_FUA semantics is
+> broken completely. flush() is not called. This smells like potential
+> data loss if somebody relies on BDRV_REQ_FUA.
 >
-> Changes from v8:
->  https://lore.kernel.org/qemu-devel/20260121175248.87649-1-skolothumtho@nvidia.com/
->  - Collected R-b tags. Thanks!.
->  - Initialise the AcpiIortSMMUv3Dev struct(patch #25) to fix the reported
->    CI test failure[0]. Please find the latest CI run results here[1].
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> CC: Kevin Wolf <kwolf@redhat.com>
+> CC: Hanna Reitz <hreitz@redhat.com>
+> ---
+>   block/io.c | 20 ++++++++++++++------
+>   1 file changed, 14 insertions(+), 6 deletions(-)
 
-Thanks for investigating the CI failure -- I've applied this version
-to target-arm.next.
+Definitely an improvement, but if possible, I would still prefer keeping 
+the increment it in bdrv_co_write_req_finish(), because that is where 
+all write requests eventually end up in, and that’s also where dirty 
+bitmaps are handled.  It seems slightly error-prone to manually have to 
+call this every time the BDS data is modified.
 
--- PMM
+Can we maybe instead pull the FUA emulation out into 
+bdrv_aligned_pwritev(), after bdrv_co_write_req_finish()?
+
+I think we can only pull out the flush, not the FUA emulation detection 
+because for write-zeroes, we have to check either supported_zero_flags 
+or supported_write_flags, depending on whether we fall back or not.  But 
+bdrv_driver_pwritev() and bdrv_co_do_pwrite_zeroes() could return an 
+need_emulate_fua flag via pointer parameter, and if set, 
+bdrv_aligned_pwritev() can then do the flush after 
+bdrv_co_write_req_finish().  (This would also allow dropping both “only 
+flush once at the end” blocks.)
+
+Maybe it would then also make sense to move the bdrv_co_flush() into 
+bdrv_co_write_req_finish(), and add a need_flush parameter to it, so 
+that it can see whether the whole request (write + flush) was successful.
+
+Hanna
+
 
