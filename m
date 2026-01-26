@@ -4,90 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78C3CD19502
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA9BD19511
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:51:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkQd4-0001Z6-C7; Mon, 26 Jan 2026 12:43:58 -0500
+	id 1vkQf5-0003pP-PM; Mon, 26 Jan 2026 12:46:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQcs-0001Qm-H7
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:48 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQcq-000094-JY
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:46 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-4359a302794so2972911f8f.1
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1vkQep-0003XA-01
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:45:47 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1vkQem-0000fX-Jh
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:45:46 -0500
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 60QErWaL171886
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 17:45:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=eHQH2qlb584cCx0W0bYp51ye5L+3R6gAlqp
+ qn0dCSbE=; b=ebmBRqNa87cwD8nHFk/MtxX0MlWkPxAMYylUiH8W+uGl9WsNuuK
+ h+w/z99FBqWeq49CSlFQnipwHMuMFCGKlyF/0RTMEHHAA5XDoYKUUCNDWL31I9pU
+ w30gbMC2PbOv9xevvKHVvYdX+D6/KuVprfge+KiWFCoLTegKsRBi4I562QuDpJL6
+ 8cGxbDtJSH2hai7tJ5FuQ/Qp6b9MDc7omUdfaxMxyrHFdUJTWybrvKjd4h8lycw/
+ twYidt4WM3kGs2kzErdrqYVpTd8KDvN0xUCdgT6TolESzmyJ7QmxC/U2tCyKAeWG
+ 9kDQjD0ZQ0K3Y4jOXlbvlaqcvujNeZ1xhdg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bxadprh3a-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 17:45:41 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8c277fe676eso1366989385a.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:45:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769449422; x=1770054222; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+7ZOgBJTZuLhg69aGiSHD6L4SYNtfGCSvu0hKB10ga8=;
- b=En5jYSkOIBIzzY0ICGzVC0BsQMgAgGYo/nNckN+aYaRfAj1T0t7z++K5q2Z7kMGBPA
- qUBguzqiuzzjrJ/ru2Cn1l7ZyYC4DE04Np40XKOT6h792b2rlA0ZLEd595u67kztufK8
- qwJr8irr2HTrrVOiPvK55A/Ar4nmSegsbuBaKLOUAIT6JCVB1uuzDpTXWSb5j2KW4fV8
- iS5DbB6q7BducadOOY5QPPmQPgkDQXSvp+UHVvzJDTNg1nmwlUsp/asZtErwtk6RtJoX
- CfO40tJRiiucz3MN1uVMfT7yiWKUmkS8ghE6JfW/ry2qTN2gDCZANZSqLiXrku6VwjYm
- bNPw==
+ d=oss.qualcomm.com; s=google; t=1769449540; x=1770054340; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=eHQH2qlb584cCx0W0bYp51ye5L+3R6gAlqpqn0dCSbE=;
+ b=c4Iwl8EnwLaCIz473qca3+I8NzS/O0e6hUgngdFSpKQuUAYXkVhqPfJ4jT//vJ/w4a
+ Nk/8ltYQMl2cttgc53ktKF3RO3aEBTIb2HsLaNZeAKKIV6Ga8ynaUImjFa9em93YArz8
+ bgr+dOdPkjQKpcl5ff9Kz2w6T6NQZF6JkUHTHXXnG0GST8jYvR9c1ViliO4bFCJpgQcp
+ 4ZAPXUVnbUrJHfYxvoEmPFZhgXzCy/1Nhirg/Lf51BqeDNKECAoUVBpN5W4/9kdMVHOk
+ 2dfx32Yk6mtL6Kl2+ZxTD4pmvdPUINjy56s6MaUfsK7nEqn4ErCBq0XGZAWW8OtxZn6c
+ w1Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769449422; x=1770054222;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+7ZOgBJTZuLhg69aGiSHD6L4SYNtfGCSvu0hKB10ga8=;
- b=Km8jNFix6o8VROZBJ+UpdT4qeDN3yrJ88WIFY0vUaRpXfnzndD7JPPwbtSnNknHdTj
- hE4aSJfhgo4qY1gdquIYddILaedxWLcB90YJ3IVI3h7UqM2BBFJb/4VP9TuRpkzXp26S
- LSokyIfcMga4SAkCVjMM5j+vduy8DhqJKRV9//uwA8Ib3gzxtNpvNT8i4GdDEHLOY5OX
- 1oGKODurbL1kNFQsAvQ0rWlN+tZbkAPVHIu3fg94pSEqprpH0yLW5WyV/fB185WDSLqQ
- 2CZuNqjUV7VNyw+H0XcU6Ebcn3sZ6IYjUGfclypVd5RL34rrrxsdJTR8yQ1ye1uqerfb
- 5PHg==
-X-Gm-Message-State: AOJu0YwtzYAeoIr/uuxig7eAML17FsXgGqZ8TDx8rl03cgFndvV0LsrO
- QrKgNvqPI84EYImX7BPWOVYlMbSwgomgsGBtwCbq5Vq4l2Dv2p4hdzZJ/BPIze8G
-X-Gm-Gg: AZuq6aJF4GVnOG1Bnqu2YrXvpAFGxRtXeiu4uMheKZt5VqSwayi6GQ9CzP2uxuFOd33
- CdmUNZ3je0c6PwhgM/75OQLv/izKvujdW0TNc1UGZW/acMqkEFVmCep5nclyU9BnjqRT/7dnSc0
- hliuffJVHx23o2Rb3jNZPkn2XITE5CjEDGNhY9Qdz6lvpw47YY5+9dn9oilfrLO0sucoGKDhYwj
- L2LX68b4zKLyJzyWdwY0XAhO4vgnfEp6GWH/n/84te8SrnpHbz/bIN9lU2mKRN75Negm9uxk4bJ
- 276qUVa2wE846AbBadMTe49VLsF6MjYsYdzg3aE+liPqrTWe+vOAtQ4CPToEtRzSKITcqRlhpWt
- s/JJ3br6mCdHZ2QTsFWiszbTnM2YhLlPHO2pHt6yDtyvXsD/LwgfczEwv2fWnh0opWiBylXGc88
- T+4lT6So8sO1fTA1JkOxDSyID0dEaqz6/lRV4IGBE/a4dJrOgU8pU14Q==
-X-Received: by 2002:a5d:5d13:0:b0:435:7154:2a7 with SMTP id
- ffacd0b85a97d-435ca0f7b44mr6872588f8f.6.1769449421838; 
- Mon, 26 Jan 2026 09:43:41 -0800 (PST)
-Received: from thinkpad-t470s.. (93-143-71-105.adsl.net.t-com.hr.
- [93.143.71.105]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.40
+ d=1e100.net; s=20230601; t=1769449540; x=1770054340;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eHQH2qlb584cCx0W0bYp51ye5L+3R6gAlqpqn0dCSbE=;
+ b=Ci9AIbvw1Yhp3jaPKOtDU3QRKfauA9EuNIHvA/+wDxvtGSxP2rEhmBr4XfhMvb560z
+ gWNYrOBglh4i23CGIDfba+URt5uT3zHRG6MML9H2/HXoy1GqrAJoFQKl68h45ia/VCky
+ w7lU8Kil8ippb64GZ0FstaTgocblB8AGBITQC/RNn/mWyqlNDl2+NBbeiy2Ha00RRSx/
+ QQkpiCswXNh/beejOch2MTzxwk0sAZ3YFRbk1B6I0mQWNrO7OFU5Sid9mRRKU767mkOF
+ Qjv2TmnBqOAFyPPnrqemNMcbyL/VD8LCtd23Gu/I6GR05FsD+Gi2Kd8ZsktBhFl9i+pK
+ 2AFQ==
+X-Gm-Message-State: AOJu0YxKJ2QNHqd4WJE2p7SJLDJI+QnrrvWcttknepdICAasLidURmRg
+ 9SdqWJ5duptns0pRVRRmeFFt6wAkPj2znW+h1zOLbdk/UqW1aUrYgLWb+25E4oGkVyvP3uFzKHD
+ jn0HW/wMfK6oxdC5oRdJ7NaT2YrnU+W/fgrLdxVga6JAsnzEGwkUPG/t4l4O80ZgryA==
+X-Gm-Gg: AZuq6aKPqDaNVkptvxj6nE+AdqAOUhtQOysxWHTB36kJq4KD2nSFo4ZPG1lHaXMD+rK
+ 3355TDXBOQ+YfNQ5mrpZqV8JwS8ofyEAPdm+w8+nnP0ddeWwIiC7lQiRf4xs7iRs91rYAXDv9fh
+ t9w3494LZjjTOD/oxnH1GMi9LBS/X2Nq/4GSebRE8V5CchhqaF0tIFgIBv4rCTbOtKfZYw+GJzO
+ G24DNzQNbwdqUSiod2TH0ozswtlY14+jbMXSFwgdjdcllMirUGmn/mtU87SyTktiIkX5YjtIQ1X
+ D0UMjJ0bGedPcjO3vUGJzT9U0Do2qReGEOwKAfSsuqMyil4DoBQhmuHDxcjgnHYuSmdd/YyYfOB
+ MPLLZ9jX5xgyV+m2KcMYBkdFJEPQWk9f4lAh1OYoc1h78AN4=
+X-Received: by 2002:a05:620a:4109:b0:8b2:64b1:692c with SMTP id
+ af79cd13be357-8c6f95c6e74mr631951785a.29.1769449540369; 
+ Mon, 26 Jan 2026 09:45:40 -0800 (PST)
+X-Received: by 2002:a05:620a:4109:b0:8b2:64b1:692c with SMTP id
+ af79cd13be357-8c6f95c6e74mr631946885a.29.1769449539892; 
+ Mon, 26 Jan 2026 09:45:39 -0800 (PST)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([152.234.122.35])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8c6e37c61ffsm1075788885a.7.2026.01.26.09.45.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 09:43:41 -0800 (PST)
-From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+ Mon, 26 Jan 2026 09:45:39 -0800 (PST)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
- volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Ruslan_Ruslichenko@epam.com, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 18/27] hw/core/machine: add '-hw-dtb' option for machine
-Date: Mon, 26 Jan 2026 18:43:04 +0100
-Message-ID: <20260126174313.1418150-19-ruslichenko.r@gmail.com>
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
+ djordje.todorovic@htecgroup.com, thuth@redhat.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH] riscv64/test_boston.py: fix intermitent test timeout
+Date: Mon, 26 Jan 2026 14:45:34 -0300
+Message-ID: <20260126174534.9860-1-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
-References: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-ORIG-GUID: 6BoncDmjOJYp3LaTFK7UKOATHuJnCipE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI2MDE1MSBTYWx0ZWRfX0G1B1eSwt7jW
+ bJh2EIyi1utpAVYqvooP66KXobMKihMIVOfW5GEuLxgQLskDp+40FBdRCtz5Jpxed9IcaDdpago
+ zd8HnT5pbS9ChrRxKTUhuyWJey+lAMsAUyKvWfSOLO9TYIxk4a/Nrwx+8+dPVMZ8PDU6o93iquG
+ Em+hwJ5rYdqy/EH4LlLTgGI6jDR4wggHeqvTlg/Na1KIoDbAUMlRCd2DYRO5dn0eqjFOS8EozoN
+ obDXPB5t5Wku8W8JTpJAruo0wktm/VWG7JkFJk2T9oF5IMhJl42C9oQkz4WiAwmdwdOWYr8PQyR
+ yXqusa7Mtk9qm7WV3iZO3QFORgs1C2K7GOOCGAkxe8HuB+Dr1qRbACSMp+bH4LXpIicUSixOjGf
+ R9menMHiGctIVEdMOVZMr/uDragWbo/JkghLV3z0ldA0bgp9Dnt5hq4gA2XrfP+iqAA/KkrjNuR
+ h1j6jQneOQUXDgWyKwQ==
+X-Authority-Analysis: v=2.4 cv=GvdPO01C c=1 sm=1 tr=0 ts=6977a845 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=DAX9FfZ9XxEyxcLR5JSMEA==:17
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=QEW72FK1AuS7OZBB5Y8A:9 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-GUID: 6BoncDmjOJYp3LaTFK7UKOATHuJnCipE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-26_04,2026-01-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 priorityscore=1501 malwarescore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 clxscore=1015 bulkscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601260151
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,105 +143,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+The recently added Boston MIPS board selftest times out consistently in a
+machine running 'make check-functional' with -j 16:
 
-Add new '-hw-dtb' command-line option and corresponding
-MachineState property.
-The 'hw-dtb' option allows to specify a Device tree
-binary with hardware description which Qemu should
-emulate.
+18/18 func-thorough+func-riscv64-thorough+thorough - qemu:func-riscv64-boston
+      TIMEOUT        120.09s   killed by signal 15 SIGTERM
 
-Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+The reason is quite boring: it is testing too much stuff.
+
+Note that functional tests aren't supposed to be used as stress tests,
+e.g. it doesn't have to test every single corner case that might hit the
+board. It is supposed to catch most common user ooopsies. A timeout, in
+this context, is most likely to be considered something abnormal slowing
+down the emulation, not a lack of CPU horsepower to run all the tests
+before timeout.
+
+Some of the tests claim to test odd CPU SMP numbers to either "ensures
+proper core distribution across clusters" or "validating proper handling
+of larger asymmetric SMP configurations". But there's no SMP/NUMA check
+made anywhere after boot, so in the end we're just testing whether the
+board is able to boot with 7/35 CPUs. As far as these tests are concerned
+we could have a completely broken, but bootable, SMP topology with 7/35
+CPUS, and we're oblivious about it.
+
+Remove the 7 and 35 SMP tests, keeping the minimal CPUs (2) and maximum
+(64) tests. With these changes we're now able to run the test with a
+good TIMEOUT margin:
+
+17/18 func-thorough+func-riscv64-thorough+thorough - qemu:func-riscv64-boston
+      OK              61.28s   3 subtests passed
+
+Fixes: e71111e26b ("test/functional: Add test for boston-aia board")
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- hw/core/machine.c        | 19 +++++++++++++++++++
- include/hw/core/boards.h |  1 +
- qemu-options.hx          |  9 +++++++++
- system/vl.c              |  3 +++
- 4 files changed, 32 insertions(+)
+ tests/functional/riscv64/test_boston.py | 19 -------------------
+ 1 file changed, 19 deletions(-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 6411e68856..fc04cf75c0 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -378,6 +378,20 @@ static void machine_set_dtb(Object *obj, const char *value, Error **errp)
-     ms->dtb = g_strdup(value);
- }
+diff --git a/tests/functional/riscv64/test_boston.py b/tests/functional/riscv64/test_boston.py
+index 385de6a61d..13c44ca3e3 100755
+--- a/tests/functional/riscv64/test_boston.py
++++ b/tests/functional/riscv64/test_boston.py
+@@ -63,25 +63,6 @@ def test_boston_boot_linux_min_cpus(self):
+         """
+         self._boot_linux_test(smp_count=2)
  
-+static char *machine_get_hw_dtb(Object *obj, Error **errp)
-+{
-+    MachineState *ms = MACHINE(obj);
-+
-+    return g_strdup(ms->hw_dtb);
-+}
-+
-+static void machine_set_hw_dtb(Object *obj, const char *value, Error **errp)
-+{
-+    MachineState *ms = MACHINE(obj);
-+
-+    ms->hw_dtb = g_strdup(value);
-+}
-+
- static char *machine_get_dumpdtb(Object *obj, Error **errp)
- {
-     MachineState *ms = MACHINE(obj);
-@@ -1287,6 +1301,11 @@ static void machine_initfn(Object *obj)
-     ms->ram_size = mc->default_ram_size;
-     ms->maxram_size = mc->default_ram_size;
- 
-+    object_property_add_str(obj, "hw-dtb",
-+                            machine_get_hw_dtb, machine_set_hw_dtb);
-+    object_property_set_description(obj, "hw-dtb",
-+                    "A device tree used to describe the hardware to QEMU.");
-+
-     if (mc->nvdimm_supported) {
-         ms->nvdimms_state = g_new0(NVDIMMState, 1);
-         object_property_add_bool(obj, "nvdimm",
-diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-index 07f8938752..c28c505bb6 100644
---- a/include/hw/core/boards.h
-+++ b/include/hw/core/boards.h
-@@ -402,6 +402,7 @@ struct MachineState {
- 
-     void *fdt;
-     char *dtb;
-+    char *hw_dtb;
-     char *dumpdtb;
-     int phandle_start;
-     char *dt_compatible;
-diff --git a/qemu-options.hx b/qemu-options.hx
-index bd014a3244..6dd3e04e38 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4492,6 +4492,15 @@ SRST(initrd)
- 
- ERST
- 
-+DEF("hw-dtb", HAS_ARG, QEMU_OPTION_hw_dtb, \
-+    "-hw-dtb file    use 'file' as device tree image\n", QEMU_ARCH_ALL)
-+SRST
-+``-hw-dtb file``
-+    Use <file> as a device tree binary (dtb) image used to create the
-+    emulated machine. This dtb will not be passed to the kernel, use -dtb
-+    for that.
-+ERST
-+
- DEF("dtb", HAS_ARG, QEMU_OPTION_dtb, \
-     "-dtb    file    use 'file' as device tree image\n", QEMU_ARCH_ALL)
- SRST
-diff --git a/system/vl.c b/system/vl.c
-index aa9a155041..c890da586c 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -3020,6 +3020,9 @@ void qemu_init(int argc, char **argv)
-             case QEMU_OPTION_dtb:
-                 qdict_put_str(machine_opts_dict, "dtb", optarg);
-                 break;
-+            case QEMU_OPTION_hw_dtb:
-+                qdict_put_str(machine_opts_dict, "hw-dtb", optarg);
-+                break;
-             case QEMU_OPTION_cdrom:
-                 drive_add(IF_DEFAULT, 2, optarg, CDROM_OPTS);
-                 break;
+-    def test_boston_boot_linux_7_cpus(self):
+-        """
+-        Test Linux kernel boot with 7 CPUs
+-
+-        7 CPUs is a special configuration that tests odd CPU count
+-        handling and ensures proper core distribution across clusters.
+-        """
+-        self._boot_linux_test(smp_count=7)
+-
+-    def test_boston_boot_linux_35_cpus(self):
+-        """
+-        Test Linux kernel boot with 35 CPUs
+-
+-        35 CPUs is a special configuration that tests a non-power-of-2
+-        CPU count above 32, validating proper handling of larger
+-        asymmetric SMP configurations.
+-        """
+-        self._boot_linux_test(smp_count=35)
+-
+     def test_boston_boot_linux_max_cpus(self):
+         """
+         Test Linux kernel boot with maximum supported CPU count (64)
 -- 
 2.43.0
 
