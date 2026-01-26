@@ -4,117 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B22D13C3E
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 15:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB169D13C3E
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 15:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkOp1-0007Bk-GN; Mon, 26 Jan 2026 10:48:11 -0500
+	id 1vkOwc-00019z-B4; Mon, 26 Jan 2026 10:56:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vkOox-00079W-Pu
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:48:07 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vkOow-00036Z-B6
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:48:07 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vkOwU-00014i-Qp
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:55:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vkOwN-0003b9-0y
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:55:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769442810;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iox1kQun4RXA/qjl5BnOQ6ng4WgJ+hRB09OuUtTgjg0=;
+ b=Ot8mXA0Rxb6ebDxTEVcUHCqEG+Gva7h+WiVOB6Dj/S4TXzsY/pjLf0dEqusOeZgxOLOMgg
+ 8RTB+Mc16FRdA77Pd2iq9VBv6YQa7e+wcGj/hRLF7tWqICtWIeDOwkf+CtMUJiOSD5EXzz
+ hhaoIYOUHw8O/dTcUjbWbzm/syelvHo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-37-7GZXZAn4MPK5FLNr6nN-_w-1; Mon,
+ 26 Jan 2026 10:53:26 -0500
+X-MC-Unique: 7GZXZAn4MPK5FLNr6nN-_w-1
+X-Mimecast-MFC-AGG-ID: 7GZXZAn4MPK5FLNr6nN-_w_1769442804
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 6734233712;
- Mon, 26 Jan 2026 15:48:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769442484; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=F2g50OiKgG/Zj/V7v5fwTN1iGkryNxd4nmKL7VqClk4=;
- b=XjhBOJI6qyPeJwFiGp118E633jpd4YFzbP51Cv/bUlcXb7w3a49WD8qM6isuqUppGtqaWr
- I5HDxjtZYfAhBqi6iGtvMjYbszwUc/m3WI4xD0c3ZQaX+tVtv48HFGlYne6Iv0m5k369yj
- lTyAaAinrXtwQbcmyhgOHZWGUG866vE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769442484;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=F2g50OiKgG/Zj/V7v5fwTN1iGkryNxd4nmKL7VqClk4=;
- b=9QFnw48e38ejQSzs9ahLgCS+AhYUevk2R/CF95iiWTYJRT/C0ZNLo4ZqsEFZJgspty679F
- yYy3WbmNGgEYbvAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=XjhBOJI6;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=9QFnw48e
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769442484; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=F2g50OiKgG/Zj/V7v5fwTN1iGkryNxd4nmKL7VqClk4=;
- b=XjhBOJI6qyPeJwFiGp118E633jpd4YFzbP51Cv/bUlcXb7w3a49WD8qM6isuqUppGtqaWr
- I5HDxjtZYfAhBqi6iGtvMjYbszwUc/m3WI4xD0c3ZQaX+tVtv48HFGlYne6Iv0m5k369yj
- lTyAaAinrXtwQbcmyhgOHZWGUG866vE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769442484;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=F2g50OiKgG/Zj/V7v5fwTN1iGkryNxd4nmKL7VqClk4=;
- b=9QFnw48e38ejQSzs9ahLgCS+AhYUevk2R/CF95iiWTYJRT/C0ZNLo4ZqsEFZJgspty679F
- yYy3WbmNGgEYbvAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CD452139E9;
- Mon, 26 Jan 2026 15:48:03 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id bqnUIrOMd2lwbgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 26 Jan 2026 15:48:03 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Peter Xu
- <peterx@redhat.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 821671944DF2; Mon, 26 Jan 2026 15:53:24 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.149])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DCC3D19560B2; Mon, 26 Jan 2026 15:53:21 +0000 (UTC)
+Date: Mon, 26 Jan 2026 15:53:18 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
 Subject: Re: [REPORT] Double deletion of output directory in functional test
-In-Reply-To: <652b1544-e008-441d-8d15-b31856b0359d@linux.ibm.com>
+Message-ID: <aXeN7nEeOFCchT1E@redhat.com>
 References: <aXOGKb88Yho2jb_o@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
  <652b1544-e008-441d-8d15-b31856b0359d@linux.ibm.com>
-Date: Mon, 26 Jan 2026 12:48:00 -0300
-Message-ID: <87h5s8gytr.fsf@suse.de>
+ <87h5s8gytr.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[7]; RCVD_TLS_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 6734233712
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87h5s8gytr.fsf@suse.de>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,57 +89,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Aditya Gupta <adityag@linux.ibm.com> writes:
+On Mon, Jan 26, 2026 at 12:48:00PM -0300, Fabiano Rosas wrote:
+> Aditya Gupta <adityag@linux.ibm.com> writes:
+> 
+> > +harsh
+> >
+> > On 23/01/26 20:07, Aditya Gupta wrote:
+> >
+> >> Hello,
+> >>
+> >> I notice a test failure with ppc64 functional tests, which only occurs when
+> >> tests are run in parallel ('make check-functional-ppc64 -j8').
+> >>
+> >> I believe the issue might be with the generic migration testcase. The following
+> >> backtrace happens on error:
+> >>
+> >> 	Traceback (most recent call last):
+> >> 	  File "<SRC_DIR>/tests/functional/qemu_test/testcase.py", line 421, in tearDown
+> >> 	    super().tearDown()
+> >> 	  File "<SRC_DIR>/tests/functional/qemu_test/testcase.py", line 238, in tearDown
+> >> 	    shutil.rmtree(self.workdir)
+> >> 	  File "/usr/lib64/python3.11/shutil.py", line 742, in rmtree
+> >> 	    onerror(os.lstat, path, sys.exc_info())
+> >> 	  File "/usr/lib64/python3.11/shutil.py", line 740, in rmtree
+> >> 	    orig_st = os.lstat(path, dir_fd=dir_fd)
+> >> 	              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> >> 	FileNotFoundError: [Errno 2] No such file or directory: '<SRC_DIR>/build/tests/functional/ppc64/test_migration.PpcMigrationTest.test_migration_with_exec/scratch'
+> >
+> > Git bisect points to this:
+> >
+> >
+> >      f4e34d0fd56c25dd0c90722ed80a83a175160a6c is the first bad commit
+> >      commit f4e34d0fd56c25dd0c90722ed80a83a175160a6c
+> >      Date:   Fri Jan 9 09:35:19 2026 -0300
+> >
+> >          tests/functional: Add a OS level migration test for pseries
+> >
+> 
+> I see, the test I added imports PpcMigrationTest which causes it to be
+> instantiated by unittest and the setup method races with another test
+> that uses the same class. I'll send a patch.
 
-> +harsh
->
-> On 23/01/26 20:07, Aditya Gupta wrote:
->
->> Hello,
->>
->> I notice a test failure with ppc64 functional tests, which only occurs w=
-hen
->> tests are run in parallel ('make check-functional-ppc64 -j8').
->>
->> I believe the issue might be with the generic migration testcase. The fo=
-llowing
->> backtrace happens on error:
->>
->> 	Traceback (most recent call last):
->> 	  File "<SRC_DIR>/tests/functional/qemu_test/testcase.py", line 421, in=
- tearDown
->> 	    super().tearDown()
->> 	  File "<SRC_DIR>/tests/functional/qemu_test/testcase.py", line 238, in=
- tearDown
->> 	    shutil.rmtree(self.workdir)
->> 	  File "/usr/lib64/python3.11/shutil.py", line 742, in rmtree
->> 	    onerror(os.lstat, path, sys.exc_info())
->> 	  File "/usr/lib64/python3.11/shutil.py", line 740, in rmtree
->> 	    orig_st =3D os.lstat(path, dir_fd=3Ddir_fd)
->> 	              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->> 	FileNotFoundError: [Errno 2] No such file or directory: '<SRC_DIR>/buil=
-d/tests/functional/ppc64/test_migration.PpcMigrationTest.test_migration_wit=
-h_exec/scratch'
->
-> Git bisect points to this:
->
->
->  =C2=A0 =C2=A0 f4e34d0fd56c25dd0c90722ed80a83a175160a6c is the first bad =
-commit
->  =C2=A0 =C2=A0 commit f4e34d0fd56c25dd0c90722ed80a83a175160a6c
->  =C2=A0 =C2=A0 Date:=C2=A0 =C2=A0Fri Jan 9 09:35:19 2026 -0300
->
->  =C2=A0 =C2=A0 =C2=A0 =C2=A0 tests/functional: Add a OS level migration t=
-est for pseries
->
+While looking at the issues in mail, I noticed another minor bug in
+tests/functional/migration.py.  It is directly using the TemporaryDirectory
+class to create a dir for UNIX sockets, when it should use  self.socket_dir()
+so we get consistent dir prefixes.
 
-I see, the test I added imports PpcMigrationTest which causes it to be
-instantiated by unittest and the setup method races with another test
-that uses the same class. I'll send a patch.
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
->
-> - Aditya G
 
