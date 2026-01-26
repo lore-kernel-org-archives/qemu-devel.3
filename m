@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E255D1950F
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC652D19502
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:49:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkQdA-0001fr-HA; Mon, 26 Jan 2026 12:44:04 -0500
+	id 1vkQd2-0001Xr-Cx; Mon, 26 Jan 2026 12:43:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQd0-0001Vr-H2
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:54 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1vkQcj-0001Lt-UY
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:40 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQcz-0000Gr-2j
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:54 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-42fb2314f52so2766756f8f.0
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:52 -0800 (PST)
+ id 1vkQch-00004r-Sv
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:37 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-430f3ef2d37so4213773f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769449431; x=1770054231; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769449414; x=1770054214; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wlscyxPY8xEICFQvh9NAzy5egnUtRHu9+/Su9mVanbI=;
- b=TJpz6NMXyAjDxSjdJOZpFlTVhfmvHIFsagDsvI46hDPLvMceA/AZAaRAdQNqSTQeVL
- 1MRcpUtznLUEuvwQcnceMhoV8jnLCeLEhKhCxf1TZbTqY/V9Xmc0KeBA4Owh73cW0+27
- 4cZjzZQ6OHzUJjKKkR6lF0H1zOvqJ+458nz8KrMq/Z2vmoLD391sRNhUuS2DLsxwvAwj
- CN9lj2hqYw0N0jpOxyemGcm7+5fnZEoVaOq8NEI2wzSBDE3wKrIqn2GYe70cGAboq/nY
- 7CSVX3IC1G9WI23wMA/0G02xxfFc/otZMogNNbJ1ME2UzWuyvGx0oW9QgJZS/Kfik+kU
- YI4w==
+ bh=xooLCZtH0ZC3/iJjGv3DYg/vTW0gVjlRUxdeK15JZ+0=;
+ b=cV58PGDpO4wvlGzywNssRzq6xRQ4jTWTXQfAanxzjRO0AP8YxcdCjrsh/QMELiZ9ZJ
+ ZeRwrkcewRV0u0r4KmcfsVVJjxyEiAjsOVaaSt40KCNfLeg1tgF58yIoLtX+1zGdixJe
+ hO5hA5matTA7UUXFEW8P1WK/njddnYHGtHyiTWFCSJ4sEZEO6V4P1b+6qaTyjkFFwtp9
+ XYYUwGIvyULckfRX6m8qXqTF7SnrZtEHp9g1STQQ/ajaoe9TDfHw1eft3fCX04Q0XeYQ
+ pLuJMxiWA5lB/2LpfLow9jd5daHEJWUTmxwpF2p59hgk1acwayY7Yp5WtYOeaZiQKfQY
+ 7tzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769449431; x=1770054231;
+ d=1e100.net; s=20230601; t=1769449414; x=1770054214;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=wlscyxPY8xEICFQvh9NAzy5egnUtRHu9+/Su9mVanbI=;
- b=O0pOSCGxAcQoTVWmzFR27Bnroxg3EKv8gwVha8oZWdP2fZCKYSv/UpAUomA+sQVUSo
- gJayZiOxlUygcQIH/y2e0A5jqXVdKsv9ikf5Fc01P/YeQHeotW0WrAS9ry7ACa1W6EaV
- TdMq/S5MYv6XFUbddFU7H/VwZmQyul7JY34hkSxBzB1HgYqYdcHTrG3sfWuH1tgIpMGf
- KRRE25+YCCkkN3IR5utypEnWtWoMh48j/YBCbmRuTfLPQNk5UfpmGgw8wVtyAamDw4eO
- wkx4L0qKxRkp/SSACBIZEh+gdRZnR9tUWNaVHWEJdv55TuTG8xxJZ+eyDZnXNQHmVbq3
- fl2g==
-X-Gm-Message-State: AOJu0Yxx00tHGgb5OmbsHQpSfXhhyyQfBPxGzO7riAqAwx8TnI7YhM+E
- VzCH1WWmFFgW/s55eJplAjDNqhp41B0tUZ4HAeVRLa5LYY6QfglLVZCY3fm0xbz5
-X-Gm-Gg: AZuq6aJF3S6HJ2jdwBvP4QCED9lUYhHFfht9kinEsPyco1Qi9+hFe4r+SqRmo3UGd64
- 4lgoSwbmEtOcMUHGpRgbTX7nWB6AGo6+AKX7U8F3Yf+fSoSdznCN478/6j2PCM8KZixXNX2/StV
- D4N5Rz59nnOSlCZvsKow2eRupIVF5snm0qExhoZbyIXyxR7DTm0Kg4kwFTLtkBJagjKAdw7Zzhr
- zjjxq9S6SDd6b8TwWUPrEDQbW4SeXNQ2frw9hTr2RWLR5WBbTVUWqhlFEoLGixjg7RUEX6PXXlD
- /jZt0QKMH9+F9sBVomSluYCE3FlfC99CfLfofPBY9PXe5gpYHdfZITjkGuVcQeX21TU4FdGJC4D
- ApTOACG3uE5SoluNN4NZM2OQgabjVDqaY0goUk6zPPl9lDnnB/M8FqwMtsSXS16FccjsRHl5Pi8
- rFmvtxm+jiiXTXj/Ios3Tr/Y3vwAWx0ccAX6tnZTjky7HOF+4xhEfmZuc9Ap/k5R4x
-X-Received: by 2002:a5d:5850:0:b0:435:a258:76e with SMTP id
- ffacd0b85a97d-435ca3a93d0mr8805063f8f.60.1769449431352; 
- Mon, 26 Jan 2026 09:43:51 -0800 (PST)
+ bh=xooLCZtH0ZC3/iJjGv3DYg/vTW0gVjlRUxdeK15JZ+0=;
+ b=dleH31tID5x1sdYzcXN0eHBA3K0TUCTNpMRK+RVUc0YIL3EA+Yq+tkrKMv9AeOk++4
+ dqr8MHpNZQRDWr3wXxoQVCE3tvjUaNlMH/h2LMK2B2Z1kYnaIGFQueI3eYZ8HXq3rIwX
+ anr0yHzT5winDpAf4DPIG4pKvNH3ZOn5E4kzHHWRvkCzG0U2JWUNGaBfBBJTRpfPuU8z
+ zySTQi+yj0ePTL4BUVZxO67Y5jHnE5gf9BbcSilNvfMxJualFaAy0fSCiGABH14Kvg9l
+ sCmYj9pWEeBqVro8bPYCK1hAtkJ+NsRLxRQmEUJhaJDlxCfFWu3AsL91PytXNEIgopah
+ 9vPw==
+X-Gm-Message-State: AOJu0YyvbchLdZKdzsxWXRZ+ibsn4hF6uK2C8SXrjAqE9ftXM/VSgrE4
+ ZH1cNKFaLtkkaQ3esMevYwPwD33p9DDULTWUVhMvFxLHa4Tw4QwonKC0SFL2yw6j
+X-Gm-Gg: AZuq6aI4kn/Wm/XW6+hjfMLOx40TNawMx6EH4O2bI2HXbLTGCufUq9wd+qcZnJXHKLE
+ SLo++cNxrc9B+VGNxnVt73lUkB1ksev86clnHBg6NZqPpa++lnp61CTAkmoNFvcXC/Hlz5KUkFc
+ KNn8vFqMM6dyzUCTlhkQS+sC7zQ2bQ54tuqGz1dV+bo1kynENb/qsXCEJgZNwyzrvMywlLIBwrq
+ PhAHY+Ke8IOVn3y20WpDwPDAz4GQf5kzP5Y5rBc31ms6scY6zzkOwHmcnr75GVhJ1H0Rz0PM/u2
+ d3iwSZdfcPcLautcHdGxPopzGLBz4TfMg4I/Q/T35H1//IAxZ6LCcIjBGNTbvAmVRmIuIG9uZ6T
+ VTutowP5BDMYYdEtdQMFyo9oYEbutbwFW4OQw1fEkWhIACjcNj5h857FMQOiItOyMAyEC8S2JkJ
+ 6KE2+EZ6ZDFTanFCXgtEbtfUqFa4wajcnosYr8p6OOw+fskvakGi/jHdfjIfj1dTNH
+X-Received: by 2002:a5d:64e3:0:b0:430:fdb8:8510 with SMTP id
+ ffacd0b85a97d-435ca071e29mr8186664f8f.24.1769449414157; 
+ Mon, 26 Jan 2026 09:43:34 -0800 (PST)
 Received: from thinkpad-t470s.. (93-143-71-105.adsl.net.t-com.hr.
  [93.143.71.105]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.50
+ ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 09:43:51 -0800 (PST)
+ Mon, 26 Jan 2026 09:43:33 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Ruslan_Ruslichenko@epam.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 27/27] system/memory: add QOM aliases for fdt support
-Date: Mon, 26 Jan 2026 18:43:13 +0100
-Message-ID: <20260126174313.1418150-28-ruslichenko.r@gmail.com>
+ Ruslan_Ruslichenko@epam.com
+Subject: [PATCH 10/27] hw/core/fdt_generic_util: actually realize device
+Date: Mon, 26 Jan 2026 18:42:56 +0100
+Message-ID: <20260126174313.1418150-11-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 References: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,53 +104,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-The patch registers FDT compatibility handlers and
-QOM aliases of memory subsystem, so that memory
-regions can be created from a device tree model.
-
-The alias 'qemu:system-memory' could be used to attach
-subregion to root address space.
-
-Also 'qemu-memory-region' types can be used to create
-new memory regions.
+Actually realize objects with TYPE_DEVICE after main
+allocations done and properties set for qdev.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- system/memory.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ hw/core/fdt_generic_util.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/system/memory.c b/system/memory.c
-index 866c741973..867228922b 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -4077,3 +4077,27 @@ static void memory_register_types(void)
- }
+diff --git a/hw/core/fdt_generic_util.c b/hw/core/fdt_generic_util.c
+index c1d6ed9105..2c3f4d6b09 100644
+--- a/hw/core/fdt_generic_util.c
++++ b/hw/core/fdt_generic_util.c
+@@ -741,6 +741,26 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
+         fdt_init_qdev_scalar_prop(OBJECT(dev), p, fdti, node_path, prop);
+     }
  
- type_init(memory_register_types)
++    if (object_dynamic_cast(dev, TYPE_DEVICE)) {
++        const char *short_name = qemu_devtree_get_node_name(fdti->fdt,
++                                                            node_path);
 +
-+static int sysmem_fdt_init(char *node_path, FDTMachineInfo *fdti,
-+                           void *priv)
-+{
-+    fdt_init_set_opaque(fdti, node_path, OBJECT(get_system_memory()));
-+    return 0;
-+}
++        /* Regular TYPE_DEVICE houskeeping */
++        DB_PRINT_NP(0, "Short naming node: %s\n", short_name);
++        (DEVICE(dev))->id = g_strdup(short_name);
 +
-+fdt_register_compatibility(sysmem_fdt_init, "compatible:qemu:system-memory");
-+
-+static const TypeInfo fdt_qom_aliases[] = {
-+    {   .name = "qemu-memory-region",       .parent = "memory-region"  },
-+};
-+
-+static void fdt_memory_types(void)
-+{
-+    int i;
-+
-+    for (i = 0; i < ARRAY_SIZE(fdt_qom_aliases); ++i) {
-+        type_register_static(&fdt_qom_aliases[i]);
++        if (object_dynamic_cast(dev, TYPE_CPU_CLUSTER)) {
++            /*
++             * CPU clusters must be realized at the end to make sure all child
++             * CPUs are parented.
++             */
++            fdt_init_register_user_cpu_cluster(fdti, OBJECT(dev));
++        } else {
++            object_property_set_bool(OBJECT(dev), "realized", true,
++                                     &error_fatal);
++        }
 +    }
-+}
 +
-+type_init(fdt_memory_types)
+     g_free(dev_type);
+ 
+     return 0;
 -- 
 2.43.0
 
