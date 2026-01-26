@@ -4,102 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4920D19501
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 16:28:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B09D19502
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 16:31:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkPRH-0003i7-PY; Mon, 26 Jan 2026 11:27:43 -0500
+	id 1vkPUZ-0005Sm-2e; Mon, 26 Jan 2026 11:31:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkPRG-0003hr-0I
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 11:27:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkPRE-00026T-57
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 11:27:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769444858;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CLGAalpr1BOvNDsXKZ3un1OQRRPheBpFMA7ID+WNbe4=;
- b=Ks3RFLLv3uFQtohFzlvT4QpYblI1in9QLSZo1WpkDGDhpuVyfP1kVIKh9X6+aeCrOAq62y
- HPrSw88edzCgafquMyOOLDnuTPrIo0zbscZjsPwlKMi5xxhwSmrdEVR7vdKLXHwXhYq/6K
- 1UEX7ZUh6HERcnszn+YkWITUAAzT9U8=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-551-PpG0IBt9Nju1upRPo5EcYQ-1; Mon, 26 Jan 2026 11:27:37 -0500
-X-MC-Unique: PpG0IBt9Nju1upRPo5EcYQ-1
-X-Mimecast-MFC-AGG-ID: PpG0IBt9Nju1upRPo5EcYQ_1769444856
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-88a2e9e09e6so219833836d6.2
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 08:27:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vkPUU-0005Ou-9j
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 11:31:03 -0500
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vkPUS-0002rl-Ew
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 11:31:01 -0500
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-6496b6903c9so1543657d50.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 08:30:59 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769445059; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ScVEeX+A2vvM3+K/inc3fuVemX2neLtFGSXNjfgwgflJhs1VnF2YxdBpguxGIFumrk
+ jDgDencsiauFH+av50VvKbXb4jf2tmxZIQQ4htAKPlCWmXRbEyxGfkYqRGntjQvSdAFX
+ LANcne7jISIOAy55ABfSyaHInPp+sFC0Y2PwQyyiLN8QawSDz9byG+eW1ZwbeH5da3P2
+ m9mdzp7s0A1aWiI0y9TyhZ1vizpnnLU/h5rfNbT2t9ndSRDNDldkHzrC0pzSRor3NfnT
+ MjKLPKqL+YXQ3FHrmfx8EKsbiFayUb2F31JpO32apnT+BEdAkX6EHLRaNbE0EqNa6lLj
+ giSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=SJdN8YqOKVZnoH45L7Yca+qemo5Cv3GF9Wlj1rml74Q=;
+ fh=WmfeiV+KUQ1s2JsGrYuD8oSZodfTC6aOTSis/ROTgCQ=;
+ b=KxktIWDpLwE2ABBWTho/Ejm2IWO9tDisRXa52tt0M2TdvKfZ9PTt4M+yFaj5Xd5Wio
+ o0yTBjmkEVLg7HdAWiRw648euiN13j58tq8ONTfPePSi9wJQ7HZS5aX4MTkS2raa4llG
+ RUZgVO9gBWqxX0QR7wE8GLIFHAb9GReW22ikVJylqxRpsyfEosmaMJZYrBXTs6w1KrTt
+ DySZzmJ0ACelQaiWJWLh26EmZykMrcWR0Ch7kkvImpbRkcO4duwMuNaIKDsdzHQ+qGRD
+ HhFWx1+6NOgYk6jCQQJ0H7mBr8YUPImHnOqBm1BjF8EeMJqcvqx0QcxZtXjQ+byqg0YH
+ 1uRw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769444856; x=1770049656; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=CLGAalpr1BOvNDsXKZ3un1OQRRPheBpFMA7ID+WNbe4=;
- b=Tlth3jLH3c2JevHNdb6MBlyYSMMY+p2gXjYzHBcsnjTZnbDVDQZBLLNJfAjhfVFRCD
- i0H4ZffaEzZzjNzHbYLgkZ+FndhCzn+cx59lDJ8nijjB9nFLZEDlmm/YOh+wUpdIHj9G
- 2oHOil3R+SA6Kh/rLlbKXcUtUhnTp07G0LnT+InE9X4buVdPUTFmqhd8fQK2o8kEVT01
- MVX/XVwl9ONqO4ruQF02MCIeDkNOAbMyhtD/FA4IDGo4hN/Vm+MyRxZ4v96JW1ZTUsDS
- MclCUEGaLBwtVJS+9YCvVhk9naxnog+OauiSSXXTSXTYpDXafVSi2cPthdIncqMmeHcD
- l1iw==
+ d=linaro.org; s=google; t=1769445059; x=1770049859; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SJdN8YqOKVZnoH45L7Yca+qemo5Cv3GF9Wlj1rml74Q=;
+ b=Q+pbtP12o8pxL9qv1HVdgYZB2U1qRkb15e/9JgNs0HBCKWie1NqxGelB090gOS6QbY
+ CUYp+Bl4BNRGTDtmIkxp+nRQR6ni/urWXhIK4OExMwGUAres+rDRkf+U8WCjeBkjWiAp
+ PwP//0d4ZKlrA3Mv3bW61D7ji3pzZXxAiojPJkXQvv8c5+X3EIyX078aAKB0xqKRWOg+
+ bQteVE/aQeZs8ypaJsLKc3if5DWrpD/xVWosZR9LsQDlG8m/BNVCmlxq87HoIUJNuq5I
+ p4yQYV+OJa+Px6aw0//kQMvm3SVPjxxcGkcmPmCmLqYzim2xdDef8jRCp/GTtDXPTnZW
+ Z+mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769444856; x=1770049656;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CLGAalpr1BOvNDsXKZ3un1OQRRPheBpFMA7ID+WNbe4=;
- b=TcdNuLw/RMMTkrAyMlHyMKazlCfbtnVPmhZydukbWDBoBePqCZhv9IxHrt2y33sdhV
- aKR8KxSMSis+kQgZecERnA0/ycUwqgddTVy7roGaidtSBk8HFrKifwXOrwPxeumGl6o3
- BDXtp81zgBOnAgOwbYeRE4pqxk0z++U9LQAmm4Yi+QVDmBPvoxzcam+k6x0+GUdI4xoy
- CR9yBV5iNfeg6VlzeN3RmG2XZXDOkTyLojFIO719vr5/IyTbHEtRVlxOrfnNM2uJjqje
- O6h9Rj3Ldv3DdlVYwupFSxXTJGfFfyVIHe3JBr0a16eNa9cwDHPAtjLZCBs4QDbkQHE3
- XTYQ==
-X-Gm-Message-State: AOJu0Yz4q/8/0fk9JqTAbcnr8g6UXpY7tjTjFM3ciTuZC3zQDHNryOWW
- +tQUKXc8MK18JKSDIridwj4hTOPeht9Zw4wt1MlXLBhDlxyiHH4jF4Ek9yoqinOSspo9gYDkERg
- pEDTarEd86/P5V1a0yAVM1OH9cl8h7hLN034paKtmNOo8+VpUUr446ZjG
-X-Gm-Gg: AZuq6aI2qOwH9layOH13YpXadx2pN/6rD1j5EZ+nA6P5rFqE92fsGXeOXCItzCANIQa
- gx5NjpaKftthxsSkqWLEysAkJMIrZ++a2wWHQhZWqOuwMy6UFsDshRqYwCzurRkXXis4jsq5pUR
- o+6/fi4bvq2sDxmrbcv/b1ymAl83JnnvZJbKYhhpDcVURbru74fz780DIuS4/gRwJhsdYvF6I77
- +ZXoElv3G3ZmU99IxUZz1uycpnAI6SemzhHEeAgv3tKU1sdxG7eB/ArQzvkLAWJH3IXJQgziOYe
- L6Hy6FAZchYCtWoboIq8GZBb1uzJF0Y1r/2HmzZZs50qbJkI+JMAtgcqyHp4BHhph4qxZixI22V
- niio=
-X-Received: by 2002:a05:6214:1c4c:b0:894:3c27:1765 with SMTP id
- 6a1803df08f44-894b06cb1d8mr72607556d6.6.1769444856366; 
- Mon, 26 Jan 2026 08:27:36 -0800 (PST)
-X-Received: by 2002:a05:6214:1c4c:b0:894:3c27:1765 with SMTP id
- 6a1803df08f44-894b06cb1d8mr72607086d6.6.1769444855854; 
- Mon, 26 Jan 2026 08:27:35 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-894918b1436sm100656686d6.35.2026.01.26.08.27.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 08:27:35 -0800 (PST)
-Date: Mon, 26 Jan 2026 11:27:33 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH] migration/options: Fix leaks in StrOrNull accessors
-Message-ID: <aXeV9fpBm_kKNi6t@x1.local>
-References: <20260122232456.12722-1-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1769445059; x=1770049859;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SJdN8YqOKVZnoH45L7Yca+qemo5Cv3GF9Wlj1rml74Q=;
+ b=hhBFfMwtmolNskQGG9GKTTXgeSGVB1vPepU6kFOpLnYpHKcPzX39OoCoZ4eoO+iXkK
+ N3mu+IW3lcypPf2YmZIoVpezCSrt41/qxuQxRfHmKLVEIR6YNnFFLTTLxxvpScANqUXI
+ U+K1Yxp2ceNRTKoNpAa+AUEIeL/AYQHYzxT+HmqphLxr3OzekehHB0fKIBn/JCKcdbAi
+ fQAywWwH0faYQmn0g6FeFtJH4G0HusaXiVc6Y/T1o8kYuKbpbVg68yCLInPhOG3YGSZ0
+ b5V2o4/sYNJifVlCy3LET5pgBOiAJLI6xf2WxLa5Z/bwCbhTBBiAqF4GKD12fj+Reul+
+ FzRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUGMRH7vEQu+0QkcZ7J8msTaFKG4Fiiad1yzZNZJLom+zXxgP9dC3YdwjDz509s9wB3r+zppWz5hxA5@nongnu.org
+X-Gm-Message-State: AOJu0Yz3amstQSo4H41Gu6kH6g9xmoEaDXpsWTSpM2HBaqaH6iqfN09b
+ mtRqvfE5I7DmesqeqZkx1vlT5gO4ztx0rz9XEHlzFZqZLJfGHTl4JOzfXSIRl5D0HDp0NXWmBVW
+ WPiLFGUAT8wdgWcWbtP8Li/C9FRgq3G9dglN0bxeXvg==
+X-Gm-Gg: AZuq6aL//0hAnEKlSJ+0+Cd6XmF706hsxQ71pMjMp15PHFPgcpFsrnQdLOP0tt3xj7Z
+ IrI5/EMUGGLbFS+uU2s7foVKYj/yhzyMr5oYGJkCiDrvSsihi4VHDvT/LmY/0s5Hgt0iXCw+SLd
+ X+1oq5VPtshulpowg1XRUYtBV9BMwQfY47ikYvE44+FR84kjPDJN6ZagI0sj3yyDuZbDTLWFdJG
+ Ziuv1a3bWv01yoNecqsQfzFaavrtmclK91Ay8+t901j2h01vU0BB7P8kZ0VYRDEjLwoXQ==
+X-Received: by 2002:a05:690e:1906:b0:640:cc09:b7c8 with SMTP id
+ 956f58d0204a3-64970bc55e0mr3166942d50.23.1769445058838; Mon, 26 Jan 2026
+ 08:30:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260122232456.12722-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260126151612.2176451-1-sergeev0xef@gmail.com>
+ <87a4y0e58a.fsf@draig.linaro.org>
+In-Reply-To: <87a4y0e58a.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 26 Jan 2026 16:30:47 +0000
+X-Gm-Features: AZwV_QginKckNUGGEgDh-a-DtHsfobiM_6H392CnSQPTs1zNvQUMIwpNVoJtW1E
+Message-ID: <CAFEAcA-=zZO=Gq8gmDEBvnaxLJ3k9YpB+o-A7V3WxxQJPrJiXg@mail.gmail.com>
+Subject: Re: [PATCH] linux-user/syscall.c: Prevent acquiring clone_lock while
+ fork()
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Aleksandr Sergeev <sergeev0xef@gmail.com>, qemu-devel@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,64 +120,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jan 22, 2026 at 08:24:56PM -0300, Fabiano Rosas wrote:
-> Fix a couple of leaks detected by Coverity. Both are currently
-> harmless because the visitor in the setter can never fail and the
-> whole of the getter is unused, it's only purpose at the moment is to
-> provide a complete implementation of the StrOrNull property.
-> 
-> Fixes: CID 1643919
-> Fixes: CID 1643920
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
-> CI run: https://gitlab.com/farosas/qemu/-/pipelines/2280325023
-> ---
->  migration/options.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/migration/options.c b/migration/options.c
-> index 9a5a39c886..9dc44a3736 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -225,6 +225,7 @@ static void get_StrOrNull(Object *obj, Visitor *v, const char *name,
->          str_or_null = g_new0(StrOrNull, 1);
->          str_or_null->type = QTYPE_QSTRING;
->          str_or_null->u.s = g_strdup("");
-> +        *ptr = str_or_null;
+On Mon, 26 Jan 2026 at 16:02, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> Aleksandr Sergeev <sergeev0xef@gmail.com> writes:
+>
+> (Adding Paolo/Richard to Cc for exclusive discussion)
+>
+> > By the spec, fork() copies only the thread which executes it.
+> > So it may happen, what while one thread is doing a fork,
+> > another thread is holding `clone_lock` mutex
+> > (e.g. doing a `fork()` or `exit()`).
+> > So the child process is born with the mutex being held,
+> > and there are nobody to release it.
+> >
+> > As the thread executing do_syscall() is not considered running,
+> > start_exclusive() does not protect us from the case.
 
-Yep, fixes the leak.
+> >
+> > +void clone_fork_start(void)
+> > +{
+> > +    pthread_mutex_lock(&clone_lock);
+> > +}
+> > +
+> > +void clone_fork_end(bool child)
+> > +{
+> > +    if (child) {
+> > +        pthread_mutex_init(&clone_lock, NULL);
+> > +    } else {
+> > +        pthread_mutex_unlock(&clone_lock);
+> > +    }
+> > +}
+> > +
+>
+> This looks like it should just be open-coded in the:
+>
+>   if (flags & CLONE_VM) {
+>
+>   }
+>
+> leg of do_fork()?
+>
+> Or maybe I'm missing the subtly of the race condition?
 
-However does it then mean a get() can internally update this Property?  It
-used to be NULL, now it's QTYPE_STRING "".
+It's a general thing with fork() -- we need to make sure
+we hold all the mutexes in QEMU before forking, so that when
+we do the fork we know the state of the data structures they
+are protecting. Then after the fork the parent unlocks the
+mutexes again and the child can re-init the mutex.
 
-It may make slightly more sense to me to have zero side effect on a get()
-call. Say, keeping *ptr==NULL after get() returns (as before), while we can
-use a temp string ("") for the visitor.
+We don't want to open-code this because there are quite a
+lot of things to handle and do_fork() isalready pretty long
+and complicated. Instead we have the fork_start() and fork_end()
+functions which sequence all the things that need to be handled
+across the fork, including the mutex lock/unlock stuff.
 
-I randomly checked another get() provider, e.g. get_drive() does that.
-Should we follow?
+I think this patch is doing it the right way, by adding this
+mutex to the set of things to be handled across fork. Compare
+mmap_fork_start() and mmap_fork_end() which do this for the
+mmap_mutex.
 
->      } else {
->          /* the setter doesn't allow QNULL */
->          assert(str_or_null->type != QTYPE_QNULL);
-> @@ -245,6 +246,7 @@ static void set_StrOrNull(Object *obj, Visitor *v, const char *name,
->       */
->      str_or_null->type = QTYPE_QSTRING;
->      if (!visit_type_str(v, name, &str_or_null->u.s, errp)) {
-> +        qapi_free_StrOrNull(str_or_null);
-
-This looks correct.  Or, simpler way is we only do g_new0() after the
-visit_type_str() successfully returned (and pass a temp char* into it).
-
->          return;
->      }
->  
-> -- 
-> 2.51.0
-> 
-
--- 
-Peter Xu
-
+-- PMM
 
