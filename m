@@ -4,84 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 598F4D1951A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 21:54:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20483D1951A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 21:55:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkUXC-0004xn-OX; Mon, 26 Jan 2026 16:54:10 -0500
+	id 1vkUYW-0005kK-6T; Mon, 26 Jan 2026 16:55:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vkUX5-0004wu-Kv
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 16:54:04 -0500
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1vkUYN-0005eF-Uh
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 16:55:24 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vkUX3-00073I-B9
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 16:54:03 -0500
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-c62239decbeso1744514a12.2
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 13:54:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1vkUYM-0007rd-0T
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 16:55:23 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-6581af9c94aso9681293a12.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 13:55:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769464519; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fdbM9XBnEZFdU95K8fOyoDL/BFogzzRsrssMsr2n9y1wGxHwRXqCxu2MwHosFBKEeT
+ r96ia/jCwDHBf06WIMrgN5fIhaRml9aF/4NBx2mM86ctU+4XHetEUVJbNwEKs1qb4ulF
+ +LqSIgr6dG7B95Q1W5pk8CBl5yndGoGCDjz4FziDemRjlLAXlmqSzYaYfQEj1AnMFjc4
+ 6ApM2lEUl6Rawovc7chyPomTPzjFJd/u4hW2GZR/Pr5slmDVxwpYJKsSuVBmaxFhkFnw
+ g/hPGbWLMiFVYBN+h3oApeUKUUmw+lu94vIKzx+nZGluVh7O1w8wlntHIyMQuflmyHOB
+ k2xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=bN2QWkDXfnVp0J5V2HN2f3kdqztG6bUn5ToUfLMWtAU=;
+ fh=ymp3ym9ZolWldcADhdcYCzabqwYRs/WtRt4dU3+13dM=;
+ b=HGhc7J4rc+41tjj4cX5EWCx3yYNHSaMbCod5cCHtkKrnVFswY5KN4XRT7OCoD/bwRo
+ UgeLrsP6oRNCwjlAIs3UNfOl3VzAdXSIa9ozQtTtj6+diTJkpIt1K4Kl4BksmRuMoMaa
+ wL3VMHhnfllNWc6X0aDjfRPydOb2gxfloyu0FoLgVSB0E2ngwJysoWBzBR9QH0idFilk
+ /T8kbfSCyKiigct2tBmCMQeO2kAc6fwo6LKtco/CF6xjrY0pGN4W6M1W4WLHcTRxI4E9
+ 9+N9clnYwjaFaorDTip42Lviar6RSGd9JoOPNwryCZiUGVZApISe8VcgTnhYMb3DN8rU
+ ZOdQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769464439; x=1770069239; darn=nongnu.org;
- h=content-transfer-encoding:subject:cc:to:content-language:from
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0kvaWFokiXHFG5TwNo8wBkyjCwHfHhk1JtyVsSNRUhI=;
- b=VS632oGBSCMGCIRMp1vwxHD5sehkOUdFulpheVPWlA+vFlBOoMvimplMrIBSecmkPv
- 8yLXyWZwV++EHIwlZqNfyxNuDfSuX4w7dNssia/jdl7v37dxSLDK1QwoDkQ6jlgPBFzu
- 0+wz/X4vAOcLtc3VcG72+888tOb3jPJdnSWQ4uXxFTai0EKnrpJvxUggIsrqfd/iyZXl
- TX9Ne9qkBxjeJi3YZ4FiWDgmZo7UAB5VNl7craZKuSGO8GlJ9Pj3d0FM+X0mwek0Ga/j
- feVxWz15omg5dAjbmjZG7Ya2gXBZBUU5fF1wuVNb13sHEBkTaH49NMFDahQYFjf9lJo3
- ZFyA==
+ d=gmail.com; s=20230601; t=1769464519; x=1770069319; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bN2QWkDXfnVp0J5V2HN2f3kdqztG6bUn5ToUfLMWtAU=;
+ b=ihuHeMfDNm07Ur/JLzvau/Zk39JrQqPTRZzKLUpDHazGif98Qw2spJ7oqpcQOxzUPZ
+ breTV0Fg4rcQFKHU4PR1BSmHneiv5Uxfhd2YtuKOYDaJsdUpsErPmcli8tfTwyEGxMqp
+ g/rX0WpDV5emeKpOOaVB+CVRVB5RTWjCDEkFNbdJSQJJe9kwlkCmjYreVDnWQ+tTqEJQ
+ cKLJ4pOKx9PFQyxBOtfazJilDe0WbY0gBAarafWm+ZZkbfimxbonq3aC5b8xLkZ7WKBl
+ GapTes6MMnTISPS7p9aswvmM3Jh9nQZmhngcz5SHdPJ1fO2DrL4BDZYppJz43gvPTzfG
+ ZaMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769464439; x=1770069239;
- h=content-transfer-encoding:subject:cc:to:content-language:from
- :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0kvaWFokiXHFG5TwNo8wBkyjCwHfHhk1JtyVsSNRUhI=;
- b=aBXDNful4qaLXUD28pvWJLMBNZq9aK4f5ku3a4p6e3dW1w6VeeXFomBeuXhigG2jTO
- twFc67NOTWw1YczmjJl94ZIEPDZXhULmzB1u6UIEA2LRBplTE9iIpufgA16uKL6f80hY
- 0Rp7FsAK1kTnEPNJqry1aPYHtHRj2WIw8VzeNrrDzNlwV/D719Wz142rOPKx/iMHDPi+
- wliWzFH8X7xk6r5Sr8XsT5Bf3xj+NY8NUOmfxsnxEkyEeGvfkgOVzVh+y24mEIyjE7Z8
- 1IyiL8MIFZJgtcZx24Asny3XcXkIVM1KU8YcitXhJvL94hK3O4o2zm4JyLDZTp3NDgbU
- sldA==
-X-Gm-Message-State: AOJu0Yw8LdbiMa9pEQnD79jOwnqwmI0IQkZMnIjQo8+60UJPJjb2IaXy
- 7Rc1bF2taTu8IWq5NyRCays1BC101Oi08dYE0UEdjcHwceFC40ZaX/WqVXPNLvGixGo=
-X-Gm-Gg: AZuq6aL5WJooiOUT8hJp2CeMZnajojG/l8+gyHseVJVj6inuA3WliBKg+QcQQ3zTgIV
- OPaXZVO+HHQqM5iJlxxUveV+enp5DE+eUEltHdWvtm1ZIfHzvNeLIr/Mh5b/poFTCylG1HAlM3D
- YOf5MZVf8PZPB7lF9PlOK0K14bENCKpeUVoiblS2MsvdAvuRb+3dbHhWgFT5IVGaW3A6j0l4t4f
- Z2U2WefBKnCRQgyucj5DS4xuzJbcHPMI73viXTvybTGZQ0cTR9GmjvFxXl6hRxkpRmvbhgbeteg
- 94sBuIoeP/sYSTgOLSUnaMMF50gWmFXvk4S6p3Xn8QotVSqJKXxJdJCcdeNLb3bShft77igMYwG
- R0Q9EgFjuHTIOiblAuDbEFJ190+XyhE28wTFVC+E90EAnlwl+EPz6eUTSIh3RsrmhxoatizBcV5
- IfqNnktNOhUhlRbH+2BZBJUpnY5l9aCLBZcyNxHklf
-X-Received: by 2002:a17:90b:2c86:b0:34a:8c77:d37b with SMTP id
- 98e67ed59e1d1-353c40c6914mr5217649a91.16.1769464438754; 
- Mon, 26 Jan 2026 13:53:58 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-353f6126220sm411264a91.7.2026.01.26.13.53.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Jan 2026 13:53:58 -0800 (PST)
-Message-ID: <da1443a0-5bf8-4ec0-9910-fd06beb42552@linaro.org>
-Date: Tue, 27 Jan 2026 08:53:53 +1100
+ d=1e100.net; s=20230601; t=1769464519; x=1770069319;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bN2QWkDXfnVp0J5V2HN2f3kdqztG6bUn5ToUfLMWtAU=;
+ b=O/z8TJV6SkuzKSrRMEAeUUd11tua0yJ/cvOUpBt2PBr+BRo7RUs08MP8aeWmEuozsK
+ ZQCYokZW5/jP+w22wnGAzMQd17tvWdYtZDL2O2DP3p8J3COhr+eH2GxrnLB66CMtkqzE
+ MhErtTk9EyPYgLCDzaLOkSzXzoIVTIoJQb20WmQ2lYf3IEUE/wHGcHX+ThxRTHpo0f97
+ jRmhyjFwK4wmXsf8HKW/eV24KR3MLmzjvthvr+roIsW/03iVrBi27rYftp6Au563gseG
+ u+kxv30+iG/nPikNOc3VjnvWYO/iKqsQlSOrNMlkZ7NgvFp/PPgiWUUwVPYpSVND/gxK
+ Am/w==
+X-Gm-Message-State: AOJu0YyQ2c4QPu+F3OLiv8ZRadpWbbBx2TQF/6ffMg9PvY80ydLAHyTi
+ Z04NS6b+jicHBBx3VPV2NwFJlJdQKKIwSmS8MHxGzmgMcZnhhX5n20ehXQl+0ZYsd12UhRR1ULv
+ EujsXSdIZi/F7ZFOhasO4ws+dkTaGlls=
+X-Gm-Gg: AZuq6aKUp8TjRWF+t/efzwTKtDJB63YCyqwpO5m5CR3rRGGLwj0COjL784HAuJu/sri
+ G/NojWsiqnpDa3keq8iug0tWpYYYDQVLfQ+pw1DqS96Wd9sQ/66ZPXiHfNvIVEwzD29eWIvrVGX
+ 3F4g/xt9IXN/w2XPitL5KsVHlMjTQ4aq2xAUvULGIdPXk3bI4ocH83hIXTIc4kDCKkyWMrYVx00
+ gpvjYDohr5gTUPIsF7fz5tgkzUjW/2PktJwGSahFiGr8WN7MpPzABOVHaKVMoee8wRwDPI9b5e2
+ Fjzi
+X-Received: by 2002:a05:6402:13cd:b0:64d:2822:cf71 with SMTP id
+ 4fb4d7f45d1cf-658706d7cadmr3493672a12.29.1769464519244; Mon, 26 Jan 2026
+ 13:55:19 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Subject: gitlab docker registries
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+References: <20260126194735.46167-1-stefanha@redhat.com>
+In-Reply-To: <20260126194735.46167-1-stefanha@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 26 Jan 2026 16:55:07 -0500
+X-Gm-Features: AZwV_QjRsHTpKi3SSwwtIfhwnCLO03_2zVuJmJ2_Chlh6T3PKvX7-mAj2IGhOUc
+Message-ID: <CAJSP0QVJDkvZeDLLumcRrDoqDYj82TZopw86tESAxVfbXE9_KA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] scsi: persistent reservation live migration
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, pkrempa@redhat.com, 
+ Paolo Bonzini <pbonzini@redhat.com>, Alberto Faria <afaria@redhat.com>,
+ Hannes Reinecke <hare@suse.de>, 
+ Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, Qing Wang <qinwang@redhat.com>, 
+ Yanan Wang <wangyanan55@huawei.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,21 +121,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hiya,
+This series requires Peter Xu's "[PATCH v2 0/5] migration: Notifier
+fixes for 11.0" to ensure that the rollback operation happens before
+the guest resumes on the migration source.
+https://lore.kernel.org/qemu-devel/20260126213614.3815900-1-peterx@redhat.com/T/#t
 
-I noticed this today, wondering why the daily scheduled builds are failing:
-
-https://gitlab.com/qemu-project/qemu/-/jobs/12868286187
-
-time="2026-01-26T17:34:06Z" level=fatal msg="Error parsing image name 
-\"docker://registry.gitlab.com/qemu-project/qemu/qemu/emsdk-wasm-cross\": reading manifest 
-latest in registry.gitlab.com/qemu-project/qemu/qemu/emsdk-wasm-cross: manifest unknown"
-make: *** [tests/docker/Makefile.include:54: docker-verify-emsdk-wasm-cross] Error 2
-
-I'm not really sure what the error message means. Do we need to push a built version of 
-emsdk-wasm-cross to gitlab, so that a manifest is present? Which doesn't make much sense, 
-since the job is all about a weekly rebuild of the containers.
-
-
-r~
+Stefan
 
