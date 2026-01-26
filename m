@@ -4,93 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427E0D19519
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 20:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91FC1D19519
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 20:45:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkTFi-0003e3-3J; Mon, 26 Jan 2026 15:32:02 -0500
+	id 1vkTS4-00029Q-PM; Mon, 26 Jan 2026 15:44:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vkTFV-0003cA-R0
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 15:31:57 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vkTFT-0006fL-TC
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 15:31:49 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-47edd9024b1so41070315e9.3
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 12:31:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkTS0-00027u-Pf
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 15:44:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkTRy-0001tk-9A
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 15:44:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769460281;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cZVAnHt9mHF48fKkDLpgRAT+I+jRACvGkHTaXgd+PTw=;
+ b=S4t4e3DMApams1G/upI8XRu0TYZGvM1ISdbJdtJs4v/0m3IPKkr+BpaJ/6z4O3xAnQSzpG
+ lbCo0WzNcPJ4Cok6S1M02WykmEtuc+o2X3LPchZimVU1VDXhArKgQ6vEjX2UUugVpKiDDe
+ Gi00lE8cH+cIv5fvfz9On2jzpY1JOe0=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-16-qeOgpQerOjiwtW3K46b54w-1; Mon, 26 Jan 2026 15:44:39 -0500
+X-MC-Unique: qeOgpQerOjiwtW3K46b54w-1
+X-Mimecast-MFC-AGG-ID: qeOgpQerOjiwtW3K46b54w_1769460279
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-502a341e0e3so139599491cf.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 12:44:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769459505; x=1770064305; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EOo7nqX/GPAdyn4aiSWZvKt4xp4MYueso7b5pMpApTY=;
- b=akVtWVXPttAkmnAeTQVeiVVVb/tqzqEf4O6DveDQAQl/ChazQhGWPjaysYmjNPoAOw
- a/KqqBAvLoJRqZByG2n4UugT2aLYePdF8bQ/jvdcb3nQPGjmyRtRLHJ9USljkh1lEW/9
- uqN1u2EioO1wuG9hzv1IyaOLr+hnwRpDTG4hmfHrqe+AIJr0NbMeiUjDoIZZn6ciOzHY
- qr2JCxoKzUUeO2DxRiXv94/UttMzUxIqg0WGqj/puNf+aKnyLe+f1Lt1ZZhP7p2fAd6m
- /4aAA8Px+ztXULjSjmc7KYTpoRyXx/xPdHgHcpxIsrOb/6rFnBZxtJcWLgj0FAKK79oP
- LsQg==
+ d=redhat.com; s=google; t=1769460279; x=1770065079; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=cZVAnHt9mHF48fKkDLpgRAT+I+jRACvGkHTaXgd+PTw=;
+ b=YFn5J5EeWtiKUzNdcL4rNECh/XVFjy1eotNG3neaqZxnJ2Itv4DCWYYskw4ocmy1Gu
+ oRssk9zTr0tZHkbs59qt72WwpHIwWUqQdgzctqEcn0VcPHsaNFE6FgF2aegjA+ugGRdj
+ aciLoZHlpYk6/IY/5ZE2DmZtoodNYv4b0cpynOlKvNPEjUGsgRpF3Kju98VqccG1fAJh
+ jmEX3/t9mfT7d3mtl91H5VTx69p25hCTj/gJAVA0znVET2bKr7rMVKuE3rpktDVgjUOC
+ 4/Oxt4spAgEezA4d3Hsvem1KvevGMC3vnPyOOTCMC7HSD8PPVIWKq7cxktPJcPpbihxu
+ GXzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769459505; x=1770064305;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EOo7nqX/GPAdyn4aiSWZvKt4xp4MYueso7b5pMpApTY=;
- b=i1/QA4MCIP/BO+PsM15f4awOf+rJmdIxPpCxV2vk+LgnubZvrLIU7MBNu8QJ/sCEWp
- N0ekzpEfxBrw2H4PPP6fY1XnvoXQhbFgY6gUCVM+Ghf0Pm6aNJ5KVQnfYDZhLBrEqKzT
- kAhenY4E/LqbSCNkxY5O4wX86JDUgcC9s335j0/XbjzycY1SO0NwPzv0AAFBlbytf6bX
- wQ8wn0tiQaW58M2wQmgNh9bl3sx2JwioQAEEBNtL/m4uJYJzxF+aTtxm+V7r4Bd/X31a
- erdf1Ft10ZPUgwxM3ez0pNMJK5L/45IHTAQNqIfYYhpMEZapregy4PbIFcJqquVBuKyE
- 5Pkg==
-X-Gm-Message-State: AOJu0YwHgGtNKWXMh0+wMQ5CUFH6MlcdM/vsUVt0lUz/5tomq9nLF0C6
- JCFJVsaR0DXKvV8qvBJ0eP1FhY2wu5DVMzykg49Nqa2xVCKOBkSemoj7ap+/Yz5qNrk=
-X-Gm-Gg: AZuq6aJzF++nsM4sW7WVq056d5h+K7oqxGz0K3CUNNtWo8R1tURMqu8Uaq/vahiKJDP
- ylnyHDktJab7W/Dn9TvDJGFn85v1tCArt9WJUHiErYhdAstQF8DlVu+ikTjc/NotYVuCIo3wEKu
- 8osb4Dtzfb8AKAjD41bbV6yTilSITbKQIda9RlQqR8yJCP3HtNvwBxWV+YoswerXXdxCCK0Br8a
- 8EbLQo8iwB9hA/kkrOluAR+8pPOXmbAIJ52AnRPICOq6uqvseZw2ai02fJLieI6XabGLWXR5SZW
- z8s6L9Yo4RLF5RPOUFx2x0Fajp2ZPmPVvbQr2YQfcJxViAxELHoXzPozJ0WnzPlEJ+kt8QD+Uy9
- CSdRprYQrqAYcUBSzsQ1s+BEgybBs2MPsC+IH+PbKS8t5lwZnbQ+G07Q50Ps0KSluq1GDx6sZN2
- jB3OKWMB1AidGk
-X-Received: by 2002:a05:600c:3b27:b0:47e:e20e:bbb7 with SMTP id
- 5b1f17b1804b1-4805cf669a7mr91239925e9.25.1769459505235; 
- Mon, 26 Jan 2026 12:31:45 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48066aaf30esm13147695e9.0.2026.01.26.12.31.44
+ d=1e100.net; s=20230601; t=1769460279; x=1770065079;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cZVAnHt9mHF48fKkDLpgRAT+I+jRACvGkHTaXgd+PTw=;
+ b=R97xin7bkokOzB7FbaWy0oZAIeZ4qu3mz0XGOuvA1AK/qU+NampfLU1rLUd9b3qxl6
+ SHPZb2BbrKcaZGgTFrHnc8NjJo++6I7EFTxvDHfNVLQnqFRmlnL9WEFen4m7OGgoOSBz
+ q1ugJtCBvqruqHs9jgDfDx3L/+ZXLaVlmwN+fNSQqtSRvBBh17qUvF3+c4qdrM4i++HJ
+ FHo3RyGoNFvN+zpWvDkRZR/iQZfbHAZqaUPjr8mYwHy2PjPncgnJEAEMa6QMqtk5q5a/
+ WVILG/CwuNtHjp1AY2St5lnkm5s4GrbriOaM03vyXjfkQGT/JtqejUfxiT9wBkYH5K0E
+ v8Cg==
+X-Gm-Message-State: AOJu0YzHzDGnylq4io3vr7Q4HyNcvijRDSsq36fCcQGWNis8p/oyiM0N
+ zU4cH2xRAFjzWFcsGWMkPzFormuJk9jUyZNA+3fao+TKsbCsYcfjSELt1dC4UuDBFFC3d2usT5Y
+ eex1fNkgS0ldZHOhk5qgN0JvWY/rx8ISfOcPePCckbYhZPTaUFHOMrrKI
+X-Gm-Gg: AZuq6aKEtV1FuvJbamVFoZ314ZkoFM0qLqheWZM+kO6JsWqqA/R8mbT7WfmT+F03TQY
+ gVKrhNYaG/Q7yvL/v1t57CRIh9rdtdG/04PIpls3ZsiHRScV0B3+W9Pbf2VldAkHOUSxqktjryP
+ euFuetr5VvcRsN83fHdqFSjrJp3NZjngJvsrbrSLVQm5+3zSd/LcobkoDNHI6Nv1/fswx6Da8ll
+ 4Q7KGT2KP/XjzH3S12zxoVeuT57nbRBH7rUDbRZzBNJepIdZYbbns8TjLkki8PQqGcbejkxTuTF
+ mciDFXJBO839kNw8q2plaiBPXX2TL0Q+q+FDJDchp5jpXRHMFYwIKWYbUrOMX9/LOb9PGT61R+N
+ vLvQ=
+X-Received: by 2002:ac8:5707:0:b0:4ed:ba76:a008 with SMTP id
+ d75a77b69052e-50314ccd5b4mr70419171cf.73.1769460279105; 
+ Mon, 26 Jan 2026 12:44:39 -0800 (PST)
+X-Received: by 2002:ac8:5707:0:b0:4ed:ba76:a008 with SMTP id
+ d75a77b69052e-50314ccd5b4mr70418871cf.73.1769460278659; 
+ Mon, 26 Jan 2026 12:44:38 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-502f7f72352sm88591821cf.21.2026.01.26.12.44.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 12:31:44 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CD83C5F80B;
- Mon, 26 Jan 2026 20:31:43 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,
- richard.henderson@linaro.org,  laurent@vivier.eu,  imp@bsdimp.com,
- berrange@redhat.com
-Subject: Re: [PATCH v3 1/5] plugins: add PC diversion API function
-In-Reply-To: <019586c9-94a0-4bcb-8a8b-4605c32754ed@epfl.ch> (Florian
- Hofhammer's message of "Tue, 20 Jan 2026 16:22:00 +0100")
-References: <ef60bfbb-cc12-4411-acc1-8c131726f22e@epfl.ch>
- <019586c9-94a0-4bcb-8a8b-4605c32754ed@epfl.ch>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Mon, 26 Jan 2026 20:31:43 +0000
-Message-ID: <87v7gocdzk.fsf@draig.linaro.org>
+ Mon, 26 Jan 2026 12:44:38 -0800 (PST)
+Date: Mon, 26 Jan 2026 15:44:36 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Prasad Pandit <ppandit@redhat.com>,
+ Lukas Straub <lukasstraub2@web.de>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 05/10] migration/colo: Unwrap qemu_savevm_live_state()
+Message-ID: <aXfSNCVljE4XJ-e4@x1.local>
+References: <20260121223336.3381912-1-peterx@redhat.com>
+ <20260121223336.3381912-6-peterx@redhat.com>
+ <87cy30igmy.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+Content-Disposition: inline
+In-Reply-To: <87cy30igmy.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,198 +117,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
+On Fri, Jan 23, 2026 at 10:48:53AM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > It's only used in COLO path and only contains two calls.  Unwrap the
+> > function.  It paves way for further reduce special COLO paths on sync.
+> >
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  migration/savevm.h | 1 -
+> >  migration/colo.c   | 3 ++-
+> >  migration/savevm.c | 7 -------
+> >  3 files changed, 2 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/migration/savevm.h b/migration/savevm.h
+> > index 5d815af742..528607f09e 100644
+> > --- a/migration/savevm.h
+> > +++ b/migration/savevm.h
+> > @@ -64,7 +64,6 @@ void qemu_savevm_send_postcopy_ram_discard(QEMUFile *f, const char *name,
+> >                                             uint64_t *start_list,
+> >                                             uint64_t *length_list);
+> >  void qemu_savevm_send_colo_enable(QEMUFile *f);
+> > -void qemu_savevm_live_state(QEMUFile *f);
+> >  int qemu_save_device_state(QEMUFile *f);
+> >  
+> >  int qemu_loadvm_state(QEMUFile *f, Error **errp);
+> > diff --git a/migration/colo.c b/migration/colo.c
+> > index db783f6fa7..e05736ecf0 100644
+> > --- a/migration/colo.c
+> > +++ b/migration/colo.c
+> > @@ -471,7 +471,8 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
+> >       * TODO: We may need a timeout mechanism to prevent COLO process
+> >       * to be blocked here.
+> >       */
+> > -    qemu_savevm_live_state(s->to_dst_file);
+> > +    qemu_savevm_state_complete_precopy(s->to_dst_file, true);
+> 
+> Could maybe drop this complete from the name eventually.
 
-> This patch adds a plugin API function that allows diverting the program
-> counter during execution. A potential use case for this functionality is
-> to skip over parts of the code, e.g., by hooking into a specific
-> instruction and setting the PC to the next instruction in the callback.
->
-> Redirecting control flow via cpu_loop_exit() works fine in callbacks
-> that are triggered during code execution due to cpu_exec_setjmp() still
-> being part of the call stack. If we want to use the new API in syscall
-> callbacks, cpu_exec_setjmp() already returned and the longjmp()
-> triggered by cpu_loop_exit() is undefined behavior. For this reason, we
-> introduce a new return constant QEMU_ESETPC and do another setjmp()
-> before executing syscall plugin callbacks and potentially the syscall
-> itself.
+Maybe it's good to keep it?  As it describes it's in completion phase.  For
+instance, for iterable devices we invoke different hooks when it's
+completing (save_complete()) v.s. iterating (save_iterate()).
 
-I think we want to split this up into:
+> 
+> > +    qemu_put_byte(s->to_dst_file, QEMU_VM_EOF);
+> >  
+> >      qemu_fflush(fb);
+> >  
+> > diff --git a/migration/savevm.c b/migration/savevm.c
+> > index f1cd8c913d..529cf310e0 100644
+> > --- a/migration/savevm.c
+> > +++ b/migration/savevm.c
+> > @@ -1854,13 +1854,6 @@ cleanup:
+> >      return ret;
+> >  }
+> >  
+> > -void qemu_savevm_live_state(QEMUFile *f)
+> > -{
+> > -    /* save QEMU_VM_SECTION_END section */
+> > -    qemu_savevm_state_complete_precopy(f, true);
+> > -    qemu_put_byte(f, QEMU_VM_EOF);
+> > -}
+> > -
+> >  /* Is a save state entry iterable (e.g. RAM)? */
+> >  static bool qemu_savevm_se_iterable(SaveStateEntry *se)
+> >  {
+> 
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
-  - introduce the flags
-  - re-factor the linux-user to use an inline helper (qemu_syscall_finalize=
-_pc(ret)?)
-  - implement the api call, tweak qemu_finalize_pc
+I took this. :)
 
->
-> Link: https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg00656.h=
-tml
-> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
-> ---
->  include/qemu/qemu-plugin.h         | 15 +++++++++++++++
->  linux-user/aarch64/cpu_loop.c      |  2 +-
->  linux-user/alpha/cpu_loop.c        |  2 +-
->  linux-user/arm/cpu_loop.c          |  2 +-
->  linux-user/hexagon/cpu_loop.c      |  2 +-
->  linux-user/hppa/cpu_loop.c         |  4 ++++
->  linux-user/i386/cpu_loop.c         |  8 +++++---
->  linux-user/include/special-errno.h |  8 ++++++++
->  linux-user/loongarch64/cpu_loop.c  |  5 +++--
->  linux-user/m68k/cpu_loop.c         |  2 +-
->  linux-user/microblaze/cpu_loop.c   |  2 +-
->  linux-user/mips/cpu_loop.c         |  5 +++--
->  linux-user/openrisc/cpu_loop.c     |  2 +-
->  linux-user/ppc/cpu_loop.c          |  6 ++++--
->  linux-user/riscv/cpu_loop.c        |  2 +-
->  linux-user/s390x/cpu_loop.c        |  2 +-
->  linux-user/sh4/cpu_loop.c          |  2 +-
->  linux-user/sparc/cpu_loop.c        |  4 +++-
->  linux-user/syscall.c               |  8 ++++++++
->  linux-user/xtensa/cpu_loop.c       |  3 +++
->  plugins/api.c                      | 17 ++++++++++++++++-
->  plugins/core.c                     | 25 ++++++++++++++-----------
->  22 files changed, 96 insertions(+), 32 deletions(-)
->
-> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-> index 60de4fdd3f..f976b62030 100644
-> --- a/include/qemu/qemu-plugin.h
-> +++ b/include/qemu/qemu-plugin.h
-> @@ -321,11 +321,14 @@ typedef struct {
->   * @QEMU_PLUGIN_CB_NO_REGS: callback does not access the CPU's regs
->   * @QEMU_PLUGIN_CB_R_REGS: callback reads the CPU's regs
->   * @QEMU_PLUGIN_CB_RW_REGS: callback reads and writes the CPU's regs
-> + * @QEMU_PLUGIN_CB_RW_REGS_PC: callback reads and writes the CPU's
-> + *                             regs and updates the PC
->   */
->  enum qemu_plugin_cb_flags {
->      QEMU_PLUGIN_CB_NO_REGS,
->      QEMU_PLUGIN_CB_R_REGS,
->      QEMU_PLUGIN_CB_RW_REGS,
-> +    QEMU_PLUGIN_CB_RW_REGS_PC,
->  };
+-- 
+Peter Xu
 
-Hmm should we consider making this an enum? or...
-
->=20=20
-<snip>
-> diff --git a/plugins/core.c b/plugins/core.c
-> index b4b783008f..9e9a066669 100644
-> --- a/plugins/core.c
-> +++ b/plugins/core.c
-> @@ -395,15 +395,16 @@ void plugin_register_dyn_cb__udata(GArray **arr,
->                                     enum qemu_plugin_cb_flags flags,
->                                     void *udata)
->  {
-> -    static TCGHelperInfo info[3] =3D {
-> +    static TCGHelperInfo info[4] =3D {
->          [QEMU_PLUGIN_CB_NO_REGS].flags =3D TCG_CALL_NO_RWG,
->          [QEMU_PLUGIN_CB_R_REGS].flags =3D TCG_CALL_NO_WG,
->          [QEMU_PLUGIN_CB_RW_REGS].flags =3D 0,
-> +        [QEMU_PLUGIN_CB_RW_REGS_PC].flags =3D 0,
->          /*
->           * Match qemu_plugin_vcpu_udata_cb_t:
->           *   void (*)(uint32_t, void *)
->           */
-> -        [0 ... 2].typemask =3D (dh_typemask(void, 0) |
-> +        [0 ... 3].typemask =3D (dh_typemask(void, 0) |
->                                dh_typemask(i32, 1) |
->                                dh_typemask(ptr, 2))
-
-...are we effectively ordering callback types here?
-
->      };
-> @@ -425,15 +426,16 @@ void plugin_register_dyn_cond_cb__udata(GArray **ar=
-r,
->                                          uint64_t imm,
->                                          void *udata)
->  {
-> -    static TCGHelperInfo info[3] =3D {
-> +    static TCGHelperInfo info[4] =3D {
->          [QEMU_PLUGIN_CB_NO_REGS].flags =3D TCG_CALL_NO_RWG,
->          [QEMU_PLUGIN_CB_R_REGS].flags =3D TCG_CALL_NO_WG,
->          [QEMU_PLUGIN_CB_RW_REGS].flags =3D 0,
-> +        [QEMU_PLUGIN_CB_RW_REGS_PC].flags =3D 0,
->          /*
->           * Match qemu_plugin_vcpu_udata_cb_t:
->           *   void (*)(uint32_t, void *)
->           */
-> -        [0 ... 2].typemask =3D (dh_typemask(void, 0) |
-> +        [0 ... 3].typemask =3D (dh_typemask(void, 0) |
->                                dh_typemask(i32, 1) |
->                                dh_typemask(ptr, 2))
->      };
-> @@ -464,15 +466,16 @@ void plugin_register_vcpu_mem_cb(GArray **arr,
->          !__builtin_types_compatible_p(qemu_plugin_meminfo_t, uint32_t) &&
->          !__builtin_types_compatible_p(qemu_plugin_meminfo_t, int32_t));
->=20=20
-> -    static TCGHelperInfo info[3] =3D {
-> +    static TCGHelperInfo info[4] =3D {
->          [QEMU_PLUGIN_CB_NO_REGS].flags =3D TCG_CALL_NO_RWG,
->          [QEMU_PLUGIN_CB_R_REGS].flags =3D TCG_CALL_NO_WG,
->          [QEMU_PLUGIN_CB_RW_REGS].flags =3D 0,
-> +        [QEMU_PLUGIN_CB_RW_REGS_PC].flags =3D 0,
->          /*
->           * Match qemu_plugin_vcpu_mem_cb_t:
->           *   void (*)(uint32_t, qemu_plugin_meminfo_t, uint64_t, void *)
->           */
-> -        [0 ... 2].typemask =3D
-> +        [0 ... 3].typemask =3D
->              (dh_typemask(void, 0) |
->               dh_typemask(i32, 1) |
->               (__builtin_types_compatible_p(qemu_plugin_meminfo_t, uint32=
-_t)
-> @@ -534,7 +537,7 @@ qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, =
-uint64_t a1, uint64_t a2,
->      QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
->          qemu_plugin_vcpu_syscall_cb_t func =3D cb->f.vcpu_syscall;
->=20=20
-> -        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-> +        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
->          func(cb->ctx->id, cpu->cpu_index, num, a1, a2, a3, a4, a5, a6, a=
-7, a8);
->          qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
->      }
-> @@ -558,7 +561,7 @@ void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int6=
-4_t num, int64_t ret)
->      QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
->          qemu_plugin_vcpu_syscall_ret_cb_t func =3D cb->f.vcpu_syscall_re=
-t;
->=20=20
-> -        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-> +        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
->          func(cb->ctx->id, cpu->cpu_index, num, ret);
->          qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
->      }
-> @@ -568,7 +571,7 @@ void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
->  {
->      /* idle and resume cb may be called before init, ignore in this case=
- */
->      if (cpu->cpu_index < plugin.num_vcpus) {
-> -        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-> +        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
->          plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_IDLE);
->          qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
->      }
-> @@ -577,7 +580,7 @@ void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
->  void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
->  {
->      if (cpu->cpu_index < plugin.num_vcpus) {
-> -        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-> +        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
->          plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_RESUME);
->          qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
->      }
-> @@ -848,6 +851,6 @@ enum qemu_plugin_cb_flags tcg_call_to_qemu_plugin_cb_=
-flags(int flags)
->      } else if (flags & TCG_CALL_NO_WG) {
->          return QEMU_PLUGIN_CB_R_REGS;
->      } else {
-> -        return QEMU_PLUGIN_CB_RW_REGS;
-> +        return QEMU_PLUGIN_CB_RW_REGS_PC;
->      }
->  }
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
