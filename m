@@ -4,155 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B44B1C88E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 07:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40693C88E6B
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 07:57:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkH7n-0004w0-Gh; Mon, 26 Jan 2026 02:35:03 -0500
+	id 1vkHSc-0000C6-Gz; Mon, 26 Jan 2026 02:56:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vkGy7-0003Pk-TP
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:25:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1vkHSL-00009u-W7
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:56:19 -0500
+Received: from mail-westus2azon11012041.outbound.protection.outlook.com
+ ([52.101.48.41] helo=MW6PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vkGy6-0007PG-78
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:25:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769412300;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=5phl15O/Wo8tMH3pRsKVPcDEhul8zW1nDTaNBC1Z5mI=;
- b=Pzwd5w394Tk/cx7LKR985rsKg5cUjgvomTstDnPd7RNqp4J9zdKtDeEAh4NJIfCuaXP3mI
- N/19FpzuF3Fu//C9cScK3VeK+iggE6EY7nJW85Dwdbbf+GDudRYW9+HfMdn24JfrvRR1iF
- 5SE0YcmHJ62dNq+DiCFOyVbXMY1rmEQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-83-Tjo6COQUOAO55rZxiMPQXg-1; Mon, 26 Jan 2026 02:24:58 -0500
-X-MC-Unique: Tjo6COQUOAO55rZxiMPQXg-1
-X-Mimecast-MFC-AGG-ID: Tjo6COQUOAO55rZxiMPQXg_1769412297
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47ee3dd7fc8so45297015e9.3
- for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 23:24:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769412297; x=1770017097; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=5phl15O/Wo8tMH3pRsKVPcDEhul8zW1nDTaNBC1Z5mI=;
- b=XQb9mQE5lxaMutLXLhcW/IsF8G6MfcaspCoxkXRVHPyvCWWIkGW1h3Xa/AIAumCd5l
- DOHaEAGTYQZMVG5BAcIz3J0PQqgLST8y69s4kaTkQeVJXsINsJihHndE3SYkVx/jGnf6
- MfmwDyTMiq7DUhU+8CVN8bl6DUvDwG/8MURvIKSGOB7OwqPCfpk9gwnSH9tbrR9jVkk0
- /ESJT9BSrF1olv6DFNDCTw3w8QeH5CM5g3qCJ9xODX8iixemu+sEbZJ0/7+nAVludC5n
- +vxGErUQTrsfa+WJjDF7Z+3ErxSc/5yYu1BndM7qQZqw+PZj+m9ztweRhPWoEKflGIW1
- CWtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769412297; x=1770017097;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5phl15O/Wo8tMH3pRsKVPcDEhul8zW1nDTaNBC1Z5mI=;
- b=KFlmvlLLub2XWBylnS73el4OwpHJ9lH5O3DJb4e0FJEYNyqBWOsor0M2H3FlSh/M/j
- IVZXTxzrESZ25X28E8cTLdzKcw/MJlN6IfnykPkx8Fwnizrrc0YqVgYah2FcuL+Xg8of
- jTiVGMFp2XEVyocAgRiIb0RBAzbVF+4gcCMdvC3Dr9e6izYK8O9621O3jaiESz3qubR7
- cWaMpqMA8b37ycQ2npIlyv+ikcvZsEBuue8zcFPV7+2hUKV1U4auEAjwfgTJ4Q/utlXs
- lhmpE4EhJ/RzLBw0NCVdxA//Bs4scHwjCpoun5v1zB0+Cu1+x0cWuCoAE7Eyhwdhwnbt
- 1rww==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVQaTKhdJsHnoGy6p5ghNR417HraqiPAfiqjiYiM4HAGKsE8ZRjl87UBVF7TwltKKzy7h9X+uWPG+Mx@nongnu.org
-X-Gm-Message-State: AOJu0Yye1ZMWsSD9MvndhshHqmORUnCBKpW55IL4+icBAzqDYC1j9u8k
- JOEqKk2lnbm7vGBsS3i5eixoc27q9UjNJV3p2ZByrKAPOUePS4qtitpEXMt8mCicrhgfzbqJAHt
- laYnjyWGqH4DTB3rFrHzJdsbmmWPOv5cp7UAqaMMA6fwjunHYT2M44UPe
-X-Gm-Gg: AZuq6aKOIkEljRpacH2HBP/CpUkGtYPksm/VeXVamTCMuGKxMDyx5ET+IPTmLrkayvX
- IzpV/jQsu2XxwwwyXC4MzHqJ6kzVclI7C9A+uK6wxPeKPPypPES+hgdEzcBpsPe/JxLArf5RmBr
- ShfED2f+EIKD9UFQLG4y7JIE6egospZ7Cf5g0nB5AGyNg8E6DKjpsNDc9AbG/hwNfEp/Izq/PeD
- jbaxNucIm8RWFHCEu4Uq/ZlnI8vgfTPpSe69/bxuIQsPpJ5PoDN8PSbyoQW6709iwKAHsH1P4Px
- 9doaCMBzaYELf9UCA795/ghiShN9xVGu8zPQG4QGrkql/Ks7o5IxwqwafSk2B47qwj3g/lW85J/
- nKerkAsRNgiafunwNgKlsY6Wms6zHCv+nS323nZ3W4wQEhq/l
-X-Received: by 2002:a05:600c:1d02:b0:480:1c10:5633 with SMTP id
- 5b1f17b1804b1-4805cf66b45mr60219105e9.26.1769412297364; 
- Sun, 25 Jan 2026 23:24:57 -0800 (PST)
-X-Received: by 2002:a05:600c:1d02:b0:480:1c10:5633 with SMTP id
- 5b1f17b1804b1-4805cf66b45mr60218785e9.26.1769412296975; 
- Sun, 25 Jan 2026 23:24:56 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1f7b4d8sm26612786f8f.38.2026.01.25.23.24.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 Jan 2026 23:24:56 -0800 (PST)
-Message-ID: <c4e4310d-0247-46af-93cc-c1b7cfa58057@redhat.com>
-Date: Mon, 26 Jan 2026 08:24:55 +0100
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1vkHSJ-000659-Vd
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:56:17 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WaiAN30OhLBURzySQ8EPBQDDbXHJXyCkhTOklU0BcYC0zFur3c4d43o1Gr8binsKdybb7KyqWsf0Q88ANMkZRMYLzcfkkQu57CQ/DdjhHXu2bdMUQoZSc5qEMuWEPYjnMVViqWwuMfZMByzkExyZgyo2+6XbP9mY1FsV+8STUAQaA1xR9ovNX9CXjd2jt0hSiGTXys37xgvrOjW5Y8CErTDB0kRObzNILBGRC4jv3Acch2PLmZJoT5165wIehPeMG5DKfxetzYqSoshiKN9+titdvg4DfCojF/C0wOtEyZicqNY8N0jO2rnOy1VqQhSqH48Y6ysR6zXdXFNYfo7Lfg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eUnHz+LiInqXVib4hJSP5YIyy7XCfxdUvTbGc3fVpfg=;
+ b=Ko0DwcqOff8KlYJaPqiNWtTM551s094Tc+gjy34LE+6cUgcjp3D75MM8c06zaxPLYzZQkgQKVOh0jn+YHHuIUsgvchx3i+ueX+LPLfC1WynByEEowXzPu+E7o4Ko0ZjvGxZu4AWXUs26i09hDDqkk7OhwUShu7gtqQut5F8NNFWsjjGpsbkLC2rSSWwxLRUuoj/ZJszpgW3zqkqRADLScs+Kq8prQqsw/x30FblRRkzCmTFsDb0fLzMJo2YTWV6ovJPzrJ9J9mQvePhQUiBcmMk/dA6uJYtBwGM4w8hLAcHLFyV5LfWT2VA8hlsfQGlgD8fupDL9XuZWvFIsuqzsJQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eUnHz+LiInqXVib4hJSP5YIyy7XCfxdUvTbGc3fVpfg=;
+ b=MRSqxcm+jmZDbb4jAxtHpWYVWJ0YJ/2tSXHBIWCoiPDm9SfMRcx7nIwS80iWUbIP0BMkoOpFDbkp5v/+iAphaQ2CjzmirJJP3NLW1o1vlq0FvYgPpQhkcDJW3aCF/nATPGHYjLVQFuzS1JIhMx9999bueaUtK6X4UVrpL8tv82E=
+Received: from BN9PR03CA0542.namprd03.prod.outlook.com (2603:10b6:408:138::7)
+ by BL4PR12MB9533.namprd12.prod.outlook.com (2603:10b6:208:58f::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.15; Mon, 26 Jan
+ 2026 07:51:09 +0000
+Received: from BN2PEPF000044AC.namprd04.prod.outlook.com
+ (2603:10b6:408:138:cafe::7e) by BN9PR03CA0542.outlook.office365.com
+ (2603:10b6:408:138::7) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.15 via Frontend Transport; Mon,
+ 26 Jan 2026 07:50:33 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ BN2PEPF000044AC.mail.protection.outlook.com (10.167.243.107) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9564.3 via Frontend Transport; Mon, 26 Jan 2026 07:51:08 +0000
+Received: from SATLEXMB04.amd.com (10.181.40.145) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.17; Mon, 26 Jan
+ 2026 01:51:08 -0600
+Received: from satlexmb08.amd.com (10.181.42.217) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 26 Jan
+ 2026 01:51:07 -0600
+Received: from [10.65.98.30] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Mon, 26 Jan 2026 01:51:05 -0600
+Message-ID: <a3447b39-a317-4aa5-ae8a-dd6a441a6a70@amd.com>
+Date: Mon, 26 Jan 2026 15:51:05 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] vfio/pci: Grow buffer in vfio_pci_host_match()
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
- Alex Williamson <alex@shazbot.org>, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-References: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
- <20260125-nvme-v1-2-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
- <4ad2cafe-9518-4cda-9b25-228cee136c1c@redhat.com>
- <9c4707fb-8e7f-4d4c-ae22-0b5ad6f05cdd@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <9c4707fb-8e7f-4d4c-ae22-0b5ad6f05cdd@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Subject: Re: [PATCH v5 0/1] numa: add 'memmap-type' option for memory type
+ configuration
+To: <qemu-devel@nongnu.org>, <david@redhat.com>, <imammedo@redhat.com>,
+ <gourry@gourry.net>, <jonathan.cameron@huawei.com>
+CC: <apopple@nvidia.com>, <dan.j.williams@intel.com>, <Zhigang.Luo@amd.com>,
+ <Lianjie.Shi@amd.com>
+References: <20260123024312.1601732-1-FangSheng.Huang@amd.com>
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+In-Reply-To: <20260123024312.1601732-1-FangSheng.Huang@amd.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: None (SATLEXMB04.amd.com: FangSheng.Huang@amd.com does not
+ designate permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF000044AC:EE_|BL4PR12MB9533:EE_
+X-MS-Office365-Filtering-Correlation-Id: 47a8fbf8-c964-4171-1441-08de5cafaaf1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|82310400026|36860700013|376014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Z0RyNG9zQUtwcGZObjFBS0VSektOako2Y2lWdVF0eWVlREZRODQ3em94eUVF?=
+ =?utf-8?B?QlhYQk03akY0TCtZdXBqMDhsKzIrWjRtVWQ1WGpGTjZzR091TndDcEdEanhW?=
+ =?utf-8?B?Z1NBMGwrOVdNcktBUW9EMmtpd2dFVjBSUFowY2VvaWZRMVNiaURwUlcvanNr?=
+ =?utf-8?B?dDIzSWttQ3RmTzlCSGx5K1pvMzkydllnYWlzOGRmRFlwRDBNdkVpckxaNTVW?=
+ =?utf-8?B?K3lEVlFTTkJkQ3JWV0VpbVp3czJZa0YwVkNuQW5UQVdScHg1N0hFeEgvSzQr?=
+ =?utf-8?B?NEJEUHlPZ25JWHpCTm5yeUkxYllsQi9kTXRxWjdxOWRBUXc5R2FGdk16TFc1?=
+ =?utf-8?B?NHllWkpTQ3BYelIxVWxOdndGbVNUYUl2b3JXNWdCT2ZpeCsyNmRFWDBrYlVq?=
+ =?utf-8?B?ayt2TWQxd0E2WTd4bWhOeFd5ZDJ2VGZ0QXFtVEdGWW9hYk1Ga2tSOWNvaXAx?=
+ =?utf-8?B?RzBtSnBuejNibTFnYm1VQ003dHJOQXUwNUY3d1VrWkRwQnlxcVlvZVBMbnpG?=
+ =?utf-8?B?SGJNVXU1d3gxMzUxenJoVkY1TkhYaVpEaEpLcUdpY3ZFclR2QXdreUJkZUR4?=
+ =?utf-8?B?OG5iNGo4V2REcmFIdmh4VzZiV3NlSS9tK2VQb2MwSDBiaUduVnZwNGZtQ0Qz?=
+ =?utf-8?B?RWx5ZFkwdWkwdkQ3WHVmMnZEME45czNRZEViTjdDdThSenZRNXhOM2NiUnZQ?=
+ =?utf-8?B?WEY5enRCM0JEcFZhZk9aclZMWXlxRnVUdjUzS3U1RWhBNXBvRWRhdUppa21r?=
+ =?utf-8?B?eTg1c09SMk9QUGEvZlVkZnBaZ0xOWjB4R3o5ekxKdnVrbnpVNHN5MEtBRGFM?=
+ =?utf-8?B?cDZwTTh3c0U5OVVtMzVLUWpJaWRXT3lKdlpVeWs4R2VndlFkT1hWZHlhK0tq?=
+ =?utf-8?B?NHFYb0pUdXducjdRRjUvYld6R0ZrR1J4QWRRRXdjUndOYk5HNHFpd3dEbmla?=
+ =?utf-8?B?dHh5M2ovUWhPVXRURlRETzM4S05oeVk5elN0Z2VrVDl2RndlMU1qYkxtSTNp?=
+ =?utf-8?B?ZERjZHB5TUVIT2xsQWtnN2FibFowQU5xRGd6UHp3TVYwWkpkYW9ha3JkVXYr?=
+ =?utf-8?B?UThnVFAwRldzaUVhM2xMbm45UGgyMGNEeFhmMlRRTVpRSzRIWGJLMmRTZmE4?=
+ =?utf-8?B?Uk5lQmRScmNCaU1nZDVTV0lXSzMyV05XTGJjT2x5NWFDQ0RpcTZPL0NBcHZG?=
+ =?utf-8?B?eHQxSCttRDF0NnEwK2tSNHpmdDZ4b04yYXBkQUNWVmlOZ29kSnl6UGh0aWQ5?=
+ =?utf-8?B?RkdUbS9qc01GQjMxRmZSc2V0ZTdBdHRTNDlmaXlYNGZwb2lybmR0aENKZmt1?=
+ =?utf-8?B?dmZYUUdmLzA5dTNmd2ptM01vZmFDTXlQVkVMWjZYMnM0ZkhOTjRrQmt5bWll?=
+ =?utf-8?B?WlRWaXYzUitMQk1MdUYzVVJGQXJYUmVIT0ZDVjQxSVpXRWVYNWQxNVNNbzVM?=
+ =?utf-8?B?SE5zb0tVS0dndkxQSnNrcDZaVkQ3WXErMTZYc3hOejd6S0FCSW1jWUQ3U3Rt?=
+ =?utf-8?B?M2dCWEF2VHFGeGo4WUVlWnV5NnQ5MDRBVHBSak1Va0ZCd3RwRHRoS1ppVTVG?=
+ =?utf-8?B?OWlJcU0xcVpIamdWdnJKZU9abHNHVXQwMjhLWEdmbE4yMnZNNmhWN2V6anhB?=
+ =?utf-8?B?T0hKMnpxdTNGeVNlS1BQcDBxc1RyRzF3UWxSY2R6RHBIblRzaEh1RzhHd2p6?=
+ =?utf-8?B?Ny9iZTNzL0d2cmtLbUlNRVV5TjNsSWFsOWlFclRCNWY0QXgwczRDR05LRGdo?=
+ =?utf-8?B?R3JZRnBSZGRwdVJna1lyOENOK1pvZ0Q1VDR3OUhRbDlncFp2dHp3QUhRRGY1?=
+ =?utf-8?B?Yms0Z0tJYk1aNHVOUnp3S2tKMlRubWVEK25LeERNdWxXcE9iM1VJSHBjQ2Za?=
+ =?utf-8?B?WUxqZFdxN0xJMnN5L1NhN2RYTUlQTFE1SFloYmlrTzZDTTRtQjN6VE1qajNV?=
+ =?utf-8?B?NDVmRGtKZmlBZkh4ZE15MUdwWHlSaDI0MnNWZkV1VDNpaWtOVDNZd1FEeE1q?=
+ =?utf-8?B?a2p6bVh1VTVwejlsRFFnYlFPMStUR0JiOHJEdGpoOTFyT05UMTRWSEE0WXZS?=
+ =?utf-8?B?a3pnRzNjY0lPc2RNTHBZc0VpV1BBMzNkcHRjNzhOQmFkUTkrdkxHU0N6LzJC?=
+ =?utf-8?B?MjZYejNRa1EyWWNOaXdSdVFlTUlrY2RIREFOaDlRam54UmdDclRWZjRIdHVs?=
+ =?utf-8?B?empGd3YvSlZkeFpnelFFT1NxUG8zK2JDbXdNbU96Q3RjeFRldWp2ZDc1bWxK?=
+ =?utf-8?B?YWs1RytJd0s2SlZDTlZYd0FqUTdRPT0=?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jan 2026 07:51:08.9716 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 47a8fbf8-c964-4171-1441-08de5cafaaf1
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044AC.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL4PR12MB9533
+Received-SPF: permerror client-ip=52.101.48.41;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=MW6PR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -160,7 +154,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -176,47 +170,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/26/26 03:37, Akihiko Odaki wrote:
-> On 2026/01/25 19:22, Cédric Le Goater wrote:
->> On 1/25/26 07:42, Akihiko Odaki wrote:
->>> Ensure the buffer in vfio_pci_host_match() will not overflow even when
->>> an invalid addr parameter is provided.
->>>
->>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>> ---
->>>   hw/vfio/pci.c | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>> index c73447272141..3338c4d7b528 100644
->>> --- a/hw/vfio/pci.c
->>> +++ b/hw/vfio/pci.c
->>> @@ -2673,7 +2673,7 @@ void vfio_pci_post_reset(VFIOPCIDevice *vdev)
->>>   bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name)
->>>   {
->>> -    char tmp[13];
->>> +    char tmp[36];
->>>       sprintf(tmp, "%04x:%02x:%02x.%1x", addr->domain,
->>>               addr->bus, addr->slot, addr->function);
->>>
->>
->> Using a g_autofree variable seems possible too :
->>
->>      g_autofree char *tmp =
->>          g_strdup_printf("%04x:%02x:%02x.%1x", addr->domain, addr->bus,
->>                          addr->slot, addr->function);
->>
->> vfio_pci_host_match() could be moved under container-legacy.c, with
->> an assert on addr too.
+
+On 1/23/2026 10:43 AM, fanhuang wrote:
+> Hi all,
 > 
-> I have another idea for improvement: replace slot and function with devfn. It will limit the range of slot and function, and is better aligned with Linux UAPI (c.f., vfio_legacy_pci_hot_reset()).
+> This is v5 of the SPM (Specific Purpose Memory) patch. Thank you for
+> the feedback on v4.
 > 
-> In any case, I intend to limit the scope of this series to fix the overflow. Further improvements like moving the code to container-legacy.c may be done later.
+> Changes in v5:
+> - Renamed 'spm=on|off' to 'memmap-type=normal|spm|reserved' enum
+>    (per Gregory's suggestion for better extensibility)
+> - Updated QAPI schema with new NumaMemmapType enum
+> - Updated documentation to describe SPM as a policy hint
+>    (per Jonathan's feedback)
+> 
+> Use case:
+> This feature allows marking NUMA node memory as Specific Purpose Memory
+> (SPM) or reserved in the E820 table. SPM serves as a hint to the guest
+> that this memory might be managed by device drivers based on guest policy
+> 
+> Example usage:
+>    -object memory-backend-ram,size=8G,id=m0
+>    -object memory-backend-memfd,size=8G,id=m1
+>    -numa node,nodeid=0,memdev=m0
+>    -numa node,nodeid=1,memdev=m1,memmap-type=spm
+> 
+> Supported memmap-type values:
+>    - normal:   Regular system RAM (E820 type 1, default)
+>    - spm:      Specific Purpose Memory (E820 type 0xEFFFFFFF), a hint
+>                that this memory might be managed by device drivers
+>    - reserved: Reserved memory (E820 type 2), not usable as RAM
+> 
+> Please review. Thanks!
+> 
+> Best regards,
+> Jerry Huang
+> 
+Hi all,
 
-Sure.
+Here are the OS-facing test results showing E820 and ACPI SRAT data for
+different memmap-type configurations:
 
-Thanks,
+1. memmap-type=spm
+~~~~~~~~~~~~~~~~~~
 
-C.
+   -numa node,cpus=4-7,nodeid=1,memdev=m1,memmap-type=spm
 
+Guest dmesg output:
+
+   [    0.000000] BIOS-e820: [mem 0x0000000100000000-0x000000027fffffff] 
+usable
+   [    0.000000] BIOS-e820: [mem 0x0000000280000000-0x000000047fffffff] 
+soft reserved
+   [    0.000000] BIOS-e820: [mem 0x000000fd00000000-0x000000ffffffffff] 
+reserved
+
+   [    0.042578] ACPI: SRAT: Node 0 PXM 0 [mem 0x00000000-0x0009ffff]
+   [    0.042580] ACPI: SRAT: Node 0 PXM 0 [mem 0x00100000-0x7fffffff]
+   [    0.042581] ACPI: SRAT: Node 0 PXM 0 [mem 0x100000000-0x27fffffff]
+   [    0.042582] ACPI: SRAT: Node 1 PXM 1 [mem 0x280000000-0x47fffffff]
+
+2. memmap-type=reserved
+~~~~~~~~~~~~~~~~~~~~~~~
+
+   -numa node,cpus=4-7,nodeid=1,memdev=m1,memmap-type=reserved
+
+Guest dmesg output:
+
+   [    0.000000] BIOS-e820: [mem 0x0000000100000000-0x000000027fffffff] 
+usable
+   [    0.000000] BIOS-e820: [mem 0x0000000280000000-0x000000047fffffff] 
+reserved
+   [    0.000000] BIOS-e820: [mem 0x000000fd00000000-0x000000ffffffffff] 
+reserved
+
+   [    0.042728] ACPI: SRAT: Node 0 PXM 0 [mem 0x00000000-0x0009ffff]
+   [    0.042729] ACPI: SRAT: Node 0 PXM 0 [mem 0x00100000-0x7fffffff]
+   [    0.042731] ACPI: SRAT: Node 0 PXM 0 [mem 0x100000000-0x27fffffff]
+   [    0.042732] ACPI: SRAT: Node 1 PXM 1 [mem 0x280000000-0x47fffffff]
+
+3. normal (default, no memmap-type specified)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   -numa node,cpus=4-7,nodeid=1,memdev=m1
+
+Guest dmesg output:
+
+   [    0.000000] BIOS-e820: [mem 0x0000000100000000-0x000000047fffffff] 
+usable
+   [    0.000000] BIOS-e820: [mem 0x000000fd00000000-0x000000ffffffffff] 
+reserved
+
+   [    0.042413] ACPI: SRAT: Node 0 PXM 0 [mem 0x00000000-0x0009ffff]
+   [    0.042414] ACPI: SRAT: Node 0 PXM 0 [mem 0x00100000-0x7fffffff]
+   [    0.042416] ACPI: SRAT: Node 0 PXM 0 [mem 0x100000000-0x27fffffff]
+   [    0.042417] ACPI: SRAT: Node 1 PXM 1 [mem 0x280000000-0x47fffffff]
+
+The results show:
+- Node association is correct (Node 1 at 0x280000000-0x47fffffff)
+- E820 types are correctly applied (usable/soft reserved/reserved)
+- SRAT entries are generated for all configurations
 
