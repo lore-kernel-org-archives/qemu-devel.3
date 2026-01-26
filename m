@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D7F1D19510
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 19:49:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE97AD1950F
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 19:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkSZG-0005f2-5P; Mon, 26 Jan 2026 14:48:10 -0500
+	id 1vkSZG-0005eh-2w; Mon, 26 Jan 2026 14:48:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vkSZ4-0005b3-RT
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 14:47:58 -0500
+ id 1vkSZ7-0005bX-F1
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 14:48:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vkSZ2-0007M1-V8
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 14:47:58 -0500
+ id 1vkSZ4-0007MK-6Q
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 14:48:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769456876;
+ s=mimecast20190719; t=1769456877;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8L+ipkTc17x7R9pbnT1zpaXz8xXRskivY+dkTLSmUGg=;
- b=O7ksVTeKJvH4MoHGNnb5ZB00EEVD5cFbz8kJsZiZe8n+KBugbsImXRnI24aqkDj9jyL7lH
- HtBzzGKQN+FAHwfz3H8sVFu9DQX06mu314A3W4XgYxfn2JVa5v6YqCD+eMEf+90ZIA+9qz
- PAaDWhHHjVoJH4z/QgMoDIpTQ2HtHNA=
+ bh=bXo7TE9lgY2LHGA8TtPBPussVWBIuo/5t6TBvHNrzJg=;
+ b=LUaG32lgYrCmtnh0ft3OF361AnfLu2ERu1TgqUakaxmdpLkQJ0FcqoGrd2Kyow/SnN9ZKd
+ 5fFVCRNFv5PC57GUn7p25oT6pMzAyZRqxVYU+ZU1TSbQgIjuqDSzNzR9MAAAD0i8e43m48
+ 1LzQ6nDgy87cVcam7zosim/YnqxJOFM=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-274-lZGAyoVOO72_F1pzSJq5yQ-1; Mon,
- 26 Jan 2026 14:47:53 -0500
-X-MC-Unique: lZGAyoVOO72_F1pzSJq5yQ-1
-X-Mimecast-MFC-AGG-ID: lZGAyoVOO72_F1pzSJq5yQ_1769456871
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-N5K15jboMxabXcuqYleMAQ-1; Mon,
+ 26 Jan 2026 14:47:55 -0500
+X-MC-Unique: N5K15jboMxabXcuqYleMAQ-1
+X-Mimecast-MFC-AGG-ID: N5K15jboMxabXcuqYleMAQ_1769456874
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 36C0D1955D80; Mon, 26 Jan 2026 19:47:51 +0000 (UTC)
+ id D58A61955D97; Mon, 26 Jan 2026 19:47:53 +0000 (UTC)
 Received: from localhost (unknown [10.2.17.0])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D265530001A8; Mon, 26 Jan 2026 19:47:49 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0A0491955F66; Mon, 26 Jan 2026 19:47:52 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: pkrempa@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,14 +58,14 @@ Cc: pkrempa@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v2 3/5] scsi: track SCSI reservation state for live migration
-Date: Mon, 26 Jan 2026 14:47:33 -0500
-Message-ID: <20260126194735.46167-4-stefanha@redhat.com>
+Subject: [PATCH v2 4/5] scsi: save/load SCSI reservation state
+Date: Mon, 26 Jan 2026 14:47:34 -0500
+Message-ID: <20260126194735.46167-5-stefanha@redhat.com>
 In-Reply-To: <20260126194735.46167-1-stefanha@redhat.com>
 References: <20260126194735.46167-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,312 +91,305 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SCSI Persistent Reservations are stateful and external to the guest. In
-order to transparently move reservations to the destination host during
-live migration, it is necessary to track the state built up on the
-source host before migration. Only then can the destination host ensure
-an equivalent state is restored upon migration.
+Add a vmstate subsection to SCSIDiskState so that scsi-block devices can
+transfer their reservation state during live migration. Upon loading the
+subsection, the destination QEMU invokes the PERSISTENT RESERVE OUT
+command's PREEMPT service action to atomically move the reservation from
+the source I_T nexus to the destination I_T nexus. This results in
+transparent live migration of SCSI reservations.
 
-Snoop on successful PERSISTENT RESERVE OUT commands and save the
-reservation key and reservation type. This will allow registered keys
-and reservations to be migrated.
+This approach is incomplete since SCSI reservations are cooperative and
+other hosts could interfere. Neither the source QEMU nor the destination
+QEMU are aware of changes made by other hosts. The assumption is that
+reservation is not taken over by a third host without cooperation from
+the source host.
 
-Also patch PERSISTENT RESERVE IN replies with the REPORT CAPABILITIES
-service action since features that involve the physical SCSI bus target
-ports must not be exposed to the guest (it sees a virtual SCSI bus).
-
-Usually this plays out as follows:
-1. The guest invokes the REGISTER service action to register a
-   reservation key on its I_T nexus.
-2. The guest invokes the RESERVE service action to create a reservation
-   using the previously-registered key.
-
-This commit implements the snooping and stores the reservation key and
-type (if any) for each LUN. The snooped PR state and the migrate_pr flag
-to enable PR migration will be used in later commits.
+I considered adding the vmstate subsection to SCSIDevice instead of
+SCSIDiskState, since reservations are part of the SCSI Primary Commands
+that other devices apart from disks could support. However, due to
+fragility of migrating reservations, we will probably limit support to
+scsi-block and maybe scsi-disk in the future. In the end, I think it
+makes sense to place this within scsi-disk.c.
 
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- include/hw/scsi/scsi.h   |  10 +++
- include/scsi/constants.h |  21 +++++
- hw/scsi/scsi-bus.c       |   3 +
- hw/scsi/scsi-generic.c   | 160 +++++++++++++++++++++++++++++++++++++++
- hw/scsi/trace-events     |   1 +
- 5 files changed, 195 insertions(+)
+ include/hw/scsi/scsi.h |  1 +
+ hw/core/machine.c      |  4 ++-
+ hw/scsi/scsi-disk.c    | 81 ++++++++++++++++++++++++++++++++++++++++-
+ hw/scsi/scsi-generic.c | 82 ++++++++++++++++++++++++++++++++++++++++++
+ hw/scsi/trace-events   |  1 +
+ 5 files changed, 167 insertions(+), 2 deletions(-)
 
 diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index 89b1ed6258..c5ec58089b 100644
+index c5ec58089b..a3e246dbd9 100644
 --- a/include/hw/scsi/scsi.h
 +++ b/include/hw/scsi/scsi.h
-@@ -57,6 +57,13 @@ struct SCSIRequest {
-     QTAILQ_ENTRY(SCSIRequest) next;
+@@ -253,6 +253,7 @@ SCSIDevice *scsi_device_get(SCSIBus *bus, int channel, int target, int lun);
+ 
+ /* scsi-generic.c. */
+ extern const SCSIReqOps scsi_generic_req_ops;
++bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp);
+ 
+ /* scsi-disk.c */
+ #define SCSI_DISK_QUIRK_MODE_PAGE_APPLE_VENDOR             0
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 6411e68856..16134f8ce5 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -38,7 +38,9 @@
+ #include "hw/acpi/generic_event_device.h"
+ #include "qemu/audio.h"
+ 
+-GlobalProperty hw_compat_10_2[] = {};
++GlobalProperty hw_compat_10_2[] = {
++    { "scsi-block", "migrate-pr", "off" },
++};
+ const size_t hw_compat_10_2_len = G_N_ELEMENTS(hw_compat_10_2);
+ 
+ GlobalProperty hw_compat_10_1[] = {
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 76fe5f085b..8845ab1192 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -28,6 +28,7 @@
+ #include "qemu/hw-version.h"
+ #include "qemu/memalign.h"
+ #include "hw/scsi/scsi.h"
++#include "migration/misc.h"
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
+ #include "hw/scsi/emulation.h"
+@@ -122,6 +123,7 @@ struct SCSIDiskState {
+      */
+     uint16_t rotation_rate;
+     bool migrate_emulated_scsi_request;
++    NotifierWithReturn migration_notifier;
  };
  
-+/* Per-SCSIDevice Persistent Reservation state */
-+typedef struct {
-+    QemuMutex mutex;   /* protects all fields (e.g. from multiple IOThreads) */
-+    uint64_t key;      /* 0 if no registered key */
-+    uint8_t resv_type; /* 0 if no reservation */
-+} SCSIPRState;
-+
- #define TYPE_SCSI_DEVICE "scsi-device"
- OBJECT_DECLARE_TYPE(SCSIDevice, SCSIDeviceClass, SCSI_DEVICE)
- 
-@@ -97,6 +104,9 @@ struct SCSIDevice
-     uint32_t io_timeout;
-     bool needs_vpd_bl_emulation;
-     bool hba_supports_iothread;
-+
-+    bool migrate_pr;
-+    SCSIPRState pr_state;
- };
- 
- extern const VMStateDescription vmstate_scsi_device;
-diff --git a/include/scsi/constants.h b/include/scsi/constants.h
-index 9b98451912..cb97bdb636 100644
---- a/include/scsi/constants.h
-+++ b/include/scsi/constants.h
-@@ -319,4 +319,25 @@
- #define IDENT_DESCR_TGT_DESCR_SIZE 32
- #define XCOPY_BLK2BLK_SEG_DESC_SIZE 28
- 
-+/*
-+ * PERSISTENT RESERVATION IN service action codes
-+ */
-+#define PRI_READ_KEYS           0x00
-+#define PRI_READ_RESERVATION    0x01
-+#define PRI_REPORT_CAPABILITIES 0x02
-+#define PRI_READ_FULL_STATUS    0x03
-+
-+/*
-+ * PERSISTENT RESERVATION OUT service action codes
-+ */
-+#define PRO_REGISTER                            0x00
-+#define PRO_RESERVE                             0x01
-+#define PRO_RELEASE                             0x02
-+#define PRO_CLEAR                               0x03
-+#define PRO_PREEMPT                             0x04
-+#define PRO_PREEMPT_AND_ABORT                   0x05
-+#define PRO_REGISTER_AND_IGNORE_EXISTING_KEY    0x06
-+#define PRO_REGISTER_AND_MOVE                   0x07
-+#define PRO_REPLACE_LOST_RESERVATION            0x08
-+
- #endif
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index f310ddafb9..9b8656dd83 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -393,6 +393,7 @@ static void scsi_qdev_realize(DeviceState *qdev, Error **errp)
-     }
- 
-     qemu_mutex_init(&dev->requests_lock);
-+    qemu_mutex_init(&dev->pr_state.mutex);
-     QTAILQ_INIT(&dev->requests);
-     scsi_device_realize(dev, &local_err);
-     if (local_err) {
-@@ -417,6 +418,8 @@ static void scsi_qdev_unrealize(DeviceState *qdev)
- 
-     scsi_device_unrealize(dev);
- 
-+    qemu_mutex_destroy(&dev->pr_state.mutex);
-+
-     blockdev_mark_auto_del(dev->conf.blk);
+ static void scsi_free_request(SCSIRequest *req)
+@@ -2737,6 +2739,25 @@ static SCSIRequest *scsi_new_request(SCSIDevice *d, uint32_t tag, uint32_t lun,
  }
  
-diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-index 2af8803644..392647e2b2 100644
---- a/hw/scsi/scsi-generic.c
-+++ b/hw/scsi/scsi-generic.c
-@@ -265,6 +265,160 @@ static int scsi_generic_emulate_block_limits(SCSIGenericReq *r, SCSIDevice *s)
-     return r->buflen;
- }
- 
+ #ifdef __linux__
 +/*
-+ * Patch persistent reservation capabilities that are not emulated.
++ * Preempt on the SCSI Persistent Reservation on the source when migration
++ * fails because the destination may have already preempted and we need to get
++ * the reservation back.
 + */
-+static void scsi_handle_persistent_reserve_in_reply(SCSIGenericReq *r,
-+                                                    SCSIDevice *s)
++static int scsi_block_migration_notifier(NotifierWithReturn *notifier,
++                                         MigrationEvent *e, Error **errp)
 +{
-+    uint8_t service_action = r->req.cmd.buf[1] & 0x1f;
++    if (e->type == MIG_EVENT_PRECOPY_FAILED) {
++        SCSIDiskState *s =
++            container_of(notifier, SCSIDiskState, migration_notifier);
++        SCSIDevice *d = &s->qdev;
 +
-+    if (!s->migrate_pr) {
-+        return; /* when migration is disabled there is no need for patching */
-+    }
-+
-+    if (service_action == PRI_REPORT_CAPABILITIES) {
-+        assert(r->buflen >= 3);
-+
-+        /*
-+         * Clear specify initiator ports capable (SIP_C) and all target ports
-+         * capable (ATC_C).
-+         *
-+         * SPEC_I_PT is not supported because the guest sees an emulated SCSI
-+         * bus and does not have the underlying transport IDs needed to use
-+         * SPEC_I_PT.
-+         *
-+         * ALL_TG_PT is not supported because we only track the state of this
-+         * emulated I_T nexus, not the underlying device's target ports.
-+         */
-+        r->buf[2] &= ~0xc;
-+    }
-+}
-+
-+static int scsi_generic_read_reservation(SCSIDevice *s, uint64_t *key,
-+        uint8_t *resv_type, Error **errp)
-+{
-+    uint8_t cmd[10] = {};
-+    uint8_t buf[24] = {};
-+    uint32_t additional_length;
-+    int ret;
-+
-+    *key = 0;
-+    *resv_type = 0;
-+
-+    cmd[0] = PERSISTENT_RESERVE_IN;
-+    cmd[1] = PRI_READ_RESERVATION;
-+    cmd[8] = sizeof(buf);
-+
-+    ret = scsi_SG_IO(s->conf.blk, SG_DXFER_FROM_DEV, cmd, sizeof(cmd),
-+                     buf, sizeof(buf), s->io_timeout, errp);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    memcpy(&additional_length, &buf[4], sizeof(additional_length));
-+    be32_to_cpus(&additional_length);
-+
-+    if (additional_length >= 0x10) {
-+        memcpy(key, &buf[8], sizeof(*key));
-+        be64_to_cpus(key);
-+
-+        *resv_type = buf[21] & 0xf;
++        /* MIG_EVENT_PRECOPY_FAILED cannot fail, so ignore errors */
++        scsi_generic_pr_state_preempt(d, NULL);
 +    }
 +    return 0;
 +}
 +
-+/*
-+ * Snoop changes to registered keys and reservations so that this information
-+ * can be transferred during live migration.
-+ */
-+static void scsi_handle_persistent_reserve_out_reply(
-+        SCSIGenericReq *r,
-+        SCSIDevice *s)
+ static int get_device_type(SCSIDiskState *s)
+ {
+     uint8_t cmd[16];
+@@ -2815,6 +2836,16 @@ static void scsi_block_realize(SCSIDevice *dev, Error **errp)
+ 
+     scsi_realize(&s->qdev, errp);
+     scsi_generic_read_device_inquiry(&s->qdev);
++
++    migration_add_notifier(&s->migration_notifier,
++                           scsi_block_migration_notifier);
++}
++
++static void scsi_block_unrealize(SCSIDevice *dev)
++{
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, dev);
++
++    migration_remove_notifier(&s->migration_notifier);
+ }
+ 
+ typedef struct SCSIBlockReq {
+@@ -3209,6 +3240,46 @@ static const Property scsi_hd_properties[] = {
+     DEFINE_BLOCK_CHS_PROPERTIES(SCSIDiskState, qdev.conf),
+ };
+ 
++#ifdef __linux__
++static bool scsi_disk_pr_state_post_load_errp(void *opaque, int version_id, Error **errp)
++{
++    SCSIDiskState *s = opaque;
++    SCSIDevice *dev = &s->qdev;
++
++    return scsi_generic_pr_state_preempt(dev, errp);
++}
++
++static bool scsi_disk_pr_state_needed(void *opaque)
++{
++    SCSIDiskState *s = opaque;
++    SCSIPRState *pr_state = &s->qdev.pr_state;
++    bool ret;
++
++    if (!s->qdev.migrate_pr) {
++        return false;
++    }
++
++    /* A reservation requires a key, so checking this field is enough */
++    WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
++        ret = pr_state->key;
++    }
++    return ret;
++}
++
++static const VMStateDescription vmstate_scsi_disk_pr_state = {
++    .name = "scsi-disk/pr",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .post_load_errp = scsi_disk_pr_state_post_load_errp,
++    .needed = scsi_disk_pr_state_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(qdev.pr_state.key, SCSIDiskState),
++        VMSTATE_UINT8(qdev.pr_state.resv_type, SCSIDiskState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++#endif /* __linux__ */
++
+ static const VMStateDescription vmstate_scsi_disk_state = {
+     .name = "scsi-disk",
+     .version_id = 1,
+@@ -3221,7 +3292,13 @@ static const VMStateDescription vmstate_scsi_disk_state = {
+         VMSTATE_BOOL(tray_open, SCSIDiskState),
+         VMSTATE_BOOL(tray_locked, SCSIDiskState),
+         VMSTATE_END_OF_LIST()
+-    }
++    },
++    .subsections = (const VMStateDescription * const []) {
++#ifdef __linux__
++        &vmstate_scsi_disk_pr_state,
++#endif
++        NULL
++    },
+ };
+ 
+ static void scsi_hd_class_initfn(ObjectClass *klass, const void *data)
+@@ -3301,6 +3378,7 @@ static const Property scsi_block_properties[] = {
+                       -1),
+     DEFINE_PROP_UINT32("io_timeout", SCSIDiskState, qdev.io_timeout,
+                        DEFAULT_IO_TIMEOUT),
++    DEFINE_PROP_BOOL("migrate-pr", SCSIDiskState, qdev.migrate_pr, true),
+ };
+ 
+ static void scsi_block_class_initfn(ObjectClass *klass, const void *data)
+@@ -3310,6 +3388,7 @@ static void scsi_block_class_initfn(ObjectClass *klass, const void *data)
+     SCSIDiskClass *sdc = SCSI_DISK_BASE_CLASS(klass);
+ 
+     sc->realize      = scsi_block_realize;
++    sc->unrealize    = scsi_block_unrealize;
+     sc->alloc_req    = scsi_block_new_request;
+     sc->parse_cdb    = scsi_block_parse_cdb;
+     sdc->dma_readv   = scsi_block_dma_readv;
+diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
+index 392647e2b2..e44979faeb 100644
+--- a/hw/scsi/scsi-generic.c
++++ b/hw/scsi/scsi-generic.c
+@@ -419,6 +419,88 @@ static void scsi_handle_persistent_reserve_out_reply(
+     }
+ }
+ 
++static bool scsi_generic_pr_register(SCSIDevice *s, uint64_t key, Error **errp)
++{
++    uint8_t cmd[10] = {};
++    uint8_t buf[24] = {};
++    uint64_t key_be = cpu_to_be64(key);
++    int ret;
++
++    cmd[0] = PERSISTENT_RESERVE_OUT;
++    cmd[1] = PRO_REGISTER;
++    cmd[8] = sizeof(buf);
++    memcpy(&buf[8], &key_be, sizeof(key_be));
++
++    ret = scsi_SG_IO(s->conf.blk, SG_DXFER_TO_DEV, cmd, sizeof(cmd),
++                     buf, sizeof(buf), s->io_timeout, errp);
++    if (ret < 0) {
++        error_prepend(errp, "PERSISTENT RESERVE OUT with REGISTER");
++        return false;
++    }
++    return true;
++}
++
++static bool scsi_generic_pr_preempt(SCSIDevice *s, uint64_t key, uint8_t resv_type, Error **errp)
++{
++    uint8_t cmd[10] = {};
++    uint8_t buf[24] = {};
++    uint64_t key_be = cpu_to_be64(key);
++    int ret;
++
++    cmd[0] = PERSISTENT_RESERVE_OUT;
++    cmd[1] = PRO_PREEMPT;
++    cmd[2] = resv_type & 0xf;
++    cmd[8] = sizeof(buf);
++    memcpy(&buf[0], &key_be, sizeof(key_be));
++    memcpy(&buf[8], &key_be, sizeof(key_be));
++
++    ret = scsi_SG_IO(s->conf.blk, SG_DXFER_TO_DEV, cmd, sizeof(cmd),
++                     buf, sizeof(buf), s->io_timeout, errp);
++    if (ret < 0) {
++        error_prepend(errp, "PERSISTENT RESERVE OUT with PREEMPT");
++        return false;
++    }
++    return true;
++}
++
++/* Register keys and preempt reservations after live migration */
++bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp)
 +{
 +    SCSIPRState *pr_state = &s->pr_state;
-+    uint8_t service_action = r->req.cmd.buf[1] & 0x1f;
-+    uint8_t resv_type = r->req.cmd.buf[2] & 0xf;
-+    uint64_t old_key;
-+    uint64_t new_key;
++    uint64_t key;
++    uint8_t resv_type;
 +
-+    assert(r->buflen >= 16);
-+    memcpy(&old_key, &r->buf[0], sizeof(old_key));
-+    memcpy(&new_key, &r->buf[8], sizeof(new_key));
-+    be64_to_cpus(&old_key);
-+    be64_to_cpus(&new_key);
-+
-+    trace_scsi_generic_persistent_reserve_out_reply(service_action, resv_type,
-+                                                    old_key, new_key);
-+
-+    switch (service_action) {
-+    case PRO_REGISTER: /* fallthrough */
-+    case PRO_REGISTER_AND_IGNORE_EXISTING_KEY:
-+        if (service_action == PRO_REGISTER && old_key == 0 && new_key == 0) {
-+            /* Do nothing */
-+        } else {
-+            WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-+                pr_state->key = new_key;
-+                if (new_key == 0) {
-+                    pr_state->resv_type = 0; /* release reservation */
-+                }
-+            }
-+        }
-+        break;
-+
-+    case PRO_RESERVE:
-+        WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-+            pr_state->resv_type = resv_type;
-+        }
-+        break;
-+
-+    case PRO_RELEASE:
-+        WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-+            pr_state->resv_type = 0;
-+        }
-+        break;
-+
-+    case PRO_CLEAR:
-+        WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-+            pr_state->key = 0;
-+            pr_state->resv_type = 0;
-+        }
-+        break;
-+
-+    case PRO_REPLACE_LOST_RESERVATION:
-+        WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-+            pr_state->key = new_key;
-+            pr_state->resv_type = resv_type;
-+        }
-+        break;
-+
-+    case PRO_PREEMPT: /* fallthrough */
-+    case PRO_PREEMPT_AND_ABORT: {
-+        uint64_t dev_key;
-+        uint8_t dev_resv_type;
-+
-+        /* Not enough information to know actual state, ask the device */
-+        if (!scsi_generic_read_reservation(s, &dev_key, &dev_resv_type, NULL)) {
-+            WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
-+                if (pr_state->key == dev_key) {
-+                    pr_state->resv_type = dev_resv_type;
-+                } else {
-+                    pr_state->resv_type = 0;
-+                }
-+            }
-+        }
-+        break;
++    WITH_QEMU_LOCK_GUARD(&pr_state->mutex) {
++        key = pr_state->key;
++        resv_type = pr_state->resv_type;
 +    }
 +
-+    /*
-+     * PRO_REGISTER_AND_MOVE cannot be implemented since it involves the
-+     * physical SCSI bus target ports.
-+     */
-+    default:
-+        break; /* do nothing */
++    trace_scsi_generic_pr_state_preempt(key, resv_type);
++
++    if (key) {
++        if (!scsi_generic_pr_register(s, key, errp)) {
++            return false;
++        }
++
++        /*
++         * Two cases:
++         *
++         * 1. There is no reservation (resv_type is 0) and the other I_T nexus
++         *    will be unregistered. This is important so the source host does
++         *    not leak registered keys across live migration.
++         *
++         * 2. There is a reservation (resv_type is not 0) and the other I_T
++         *    nexus will be unregistered and its reservation is atomically
++         *    taken over by us. This is the scenario where a reservation is
++         *    migrated along with the guest.
++         */
++        if (!scsi_generic_pr_preempt(s, key, resv_type, errp)) {
++            return false;
++        }
 +    }
++    return true;
 +}
 +
  static void scsi_read_complete(void * opaque, int ret)
  {
      SCSIGenericReq *r = (SCSIGenericReq *)opaque;
-@@ -347,6 +501,9 @@ static void scsi_read_complete(void * opaque, int ret)
-     if (r->req.cmd.buf[0] == INQUIRY) {
-         len = scsi_handle_inquiry_reply(r, s, len);
-     }
-+    if (r->req.cmd.buf[0] == PERSISTENT_RESERVE_IN) {
-+        scsi_handle_persistent_reserve_in_reply(r, s);
-+    }
- 
- req_complete:
-     scsi_req_data(&r->req, len);
-@@ -396,6 +553,9 @@ static void scsi_write_complete(void * opaque, int ret)
-         s->blocksize = (r->buf[9] << 16) | (r->buf[10] << 8) | r->buf[11];
-         trace_scsi_generic_write_complete_blocksize(s->blocksize);
-     }
-+    if (r->req.cmd.buf[0] == PERSISTENT_RESERVE_OUT) {
-+        scsi_handle_persistent_reserve_out_reply(r, s);
-+    }
- 
-     scsi_command_complete_noio(r, ret);
- }
 diff --git a/hw/scsi/trace-events b/hw/scsi/trace-events
-index 3e81f44dad..ff92fff7c5 100644
+index ff92fff7c5..a8ac1e7f1d 100644
 --- a/hw/scsi/trace-events
 +++ b/hw/scsi/trace-events
-@@ -390,3 +390,4 @@ scsi_generic_realize_blocksize(int blocksize) "block size %d"
- scsi_generic_aio_sgio_command(uint32_t tag, uint8_t cmd, uint32_t timeout) "generic aio sgio: tag=0x%x cmd=0x%x timeout=%u"
+@@ -391,3 +391,4 @@ scsi_generic_aio_sgio_command(uint32_t tag, uint8_t cmd, uint32_t timeout) "gene
  scsi_generic_ioctl_sgio_command(uint8_t cmd, uint32_t timeout) "generic ioctl sgio: cmd=0x%x timeout=%u"
  scsi_generic_ioctl_sgio_done(uint8_t cmd, int ret, uint8_t status, uint8_t host_status) "generic ioctl sgio: cmd=0x%x ret=%d status=0x%x host_status=0x%x"
-+scsi_generic_persistent_reserve_out_reply(uint8_t service_action, uint8_t resv_type, uint64_t old_key, uint64_t new_key) "persistent reserve out reply service_action=%u resv_type=%u old_key=0x%" PRIx64 " new_key=0x%" PRIx64
+ scsi_generic_persistent_reserve_out_reply(uint8_t service_action, uint8_t resv_type, uint64_t old_key, uint64_t new_key) "persistent reserve out reply service_action=%u resv_type=%u old_key=0x%" PRIx64 " new_key=0x%" PRIx64
++scsi_generic_pr_state_preempt(uint64_t key, uint8_t resv_type) "key=0x%" PRIx64 " resv_type=%u"
 -- 
 2.52.0
 
