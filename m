@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F25C2C88E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 07:25:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 804BAC88E5A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 07:26:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkGtH-0005Ep-BO; Mon, 26 Jan 2026 02:20:03 -0500
+	id 1vkGtG-0005CP-4d; Mon, 26 Jan 2026 02:20:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vkGg2-00038O-9o
+ id 1vkGg2-00038S-Aa
  for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:06:30 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vkGfs-0004S4-QY
+ id 1vkGfs-0004OX-VQ
  for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:06:16 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-81f4f4d4822so2135027b3a.3
- for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 23:06:00 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-352c414bbbeso3581952a91.0
+ for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 23:05:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769411160; x=1770015960; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769411124; x=1770015924; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=31758oVt+UsNtiVkJ/ZaHor2xPA47heR/D/TsozA2Cg=;
- b=HMh42XkbbPUzHMLDSA3SvEhjNoHQ1ydpFYRJ8nOOX4sxsSNq4iHcO/9ojCAfaNcCWp
- ZmxadJVEjxBQXy0Vc4XAxi8Fga+wBk3yIta+yCbUogCSGojbskM6vUjppS6VJXshe4w/
- e42+W/xwbdNyNqe7JUKfmA2X0O3eX5tif1czW/2GaXRi+xdJHtD3Z+Y99+QZbBA3VqWn
- XjOkPqVkim3YDgz/I4S2Gb5EIXYV0QSsGYtEqWJdHC5QKTbv8DwqZ1v3uQ3UoW9/bKny
- rqu6POuutvGaAmSV1pyFDkIdoRtcI91vU+Z4NmEiHVwLFs/S9PgCW0YMTJ8+2bP7yig+
- 1PVA==
+ bh=hRvv9p8AjfI6p8OdF3uHIM8PWJAgRGM7ioj0JHvJIuU=;
+ b=GiJlcjRjpl3teIDCQHzRXE5BOClZuQ/8A6syb9Lie8cwrrwW+M94R8PGoZdCdO8GVV
+ pZbAh4uCHLkfdPpjorgrE15Yl5qj9rvh4hrIAQmpcMVuPQ4Izz3U8jcbc0fPt23dT7KM
+ ua1WkW62h6BgS8MT3PbDQjelRnChECEAxi8xFu04D2nnEL9x8XAJwXCpadU5tACk8j+R
+ Ufj6IUJDSWaRIsV6WX2He5OcHgSQBvhZ0Xvziq3ZJdaiejYdlHAr4qPgHy7QxpNpFIR2
+ q/ntj5gGOcEa80gtF8ca5tuK8bmyH55YaSzHVxCb6yndpCGMFCLxbWQLS2u47zO/Mg3l
+ tSDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769411160; x=1770015960;
+ d=1e100.net; s=20230601; t=1769411124; x=1770015924;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=31758oVt+UsNtiVkJ/ZaHor2xPA47heR/D/TsozA2Cg=;
- b=kP13+pBXO/Q5L1oBLMx2SIkcn5nH927EJmRp16O60GosIb/1dMv7nbvN9hxIsumo48
- /FGnbWTMlEKeZd3uf31YF9MBNwVrrV4lP88zrmJeJCqnxM7xHnLr5O5zUA8Q94T/S/pJ
- bYjWebkG9q41RfAl+mOfRS/91imiX5Xjl5poOa2AJyvsvnnGCT2MyameqjINYyjowjN4
- 0yMXOCiXyEtpbRT1+Syh0hzWchbzMTFFPuvaJeLkQ6jAsr8Ni7xToy1DRexjwIEl2xdR
- uibdUaWjaHhqPlsmn8DqNq0KzQyenj0qUsUp8fH8CskY5kvVg4TyMbSoI/PTN2HetPpJ
- 2IMw==
-X-Gm-Message-State: AOJu0YwpYdSrbTVD9ma3w095uX+rZe0vnLnvmZU27zc/0tXuv65QkV60
- ozhJJqL/XWo/d+sZC9ln+uJ0nq1HNQjE1+5/4mcam1PMZzlGkSdNolR9797PTY41
-X-Gm-Gg: AZuq6aI6gX7bDr4ZbWP+RBNnmm6zJ2++myXhZ8o/N4MuxZWfUu0cRxBK633hRkY6DLA
- VTY32kxYAZ1prByg7Ht9lzYma3i+mzBJumpaBFFJCC7FYaJKzAAPTbzUdMMK9/sCGvVmY7de60I
- Iu7yX/VmBQAtNqjkQXZISlO0JvopuAO+VKd/n1N0LA9ZQx1gxvnAEqDx4vtWQO9JIvR2xKadcHv
- MG/1Ui1IqrqR5S74mW29ynw8fLbMFFmaUUL6iEG93eNZ01zN36h10Cqp7RNjGIQ7ut42SJiWBZY
- St7Sm3fLfRQ7nruyf71+34UzQqv0Ct89ORKmQu3hsf8NyKHOmm3Y489MWpw5DcipsNYFjAwIZ9U
- p4CjHScnYMxtWRk/qS1gDgDX6vm7ThIi2MTj7V3XLwVffuMm05qgGpxEvFkV69Usf2InXEoMjRg
- xwcH2En6qEP5Hl3jg7bLDhjweZzP9rdvpD6XAmzi5g6g==
-X-Received: by 2002:a05:6a00:94c8:b0:81f:4dfe:dddf with SMTP id
- d2e1a72fcca58-823411a0098mr3193586b3a.3.1769411159634; 
- Sun, 25 Jan 2026 23:05:59 -0800 (PST)
+ bh=hRvv9p8AjfI6p8OdF3uHIM8PWJAgRGM7ioj0JHvJIuU=;
+ b=uEsfAxRC47w/xlSDjYIbaWbP1vz2NDTNx+uHTXHRmOP8m89Jr0kcJPNCe9EMno1M6y
+ JSjqO7gIVPM6X3yVx2b1lueEhw6wz03ARVNsSh8DOXgpBrzLU2+V1QmAUFL8to0gZIOp
+ ZN/YpMWAU3kgFng8u5zUZSOVwage7KqTiWyajdChfM24ktvzdjBT9zcITTn17Kc6b+FH
+ FuA6/oeM5seovWukmUGwN3CinUhG1dPSf6ouKw7ztGVDLTILakLi1UXXqne2nYU7WtLE
+ K28RPKZ5VZzSH7mmAGEifEWelKNQObLwcAIGn/RmI3hY4hPel2E/Ye/ivM9/fiYbFXf8
+ mULA==
+X-Gm-Message-State: AOJu0YwzxTrzpQ1FalwA+eF7jyaB22Fpw6OOY5hWb/GKgnOwL27mMssK
+ JkfEUmpYUR3ph0n+4KN2AUykuKfuxQzpMqeAMAeVD9ipERivTutNBRQWRSksd2oO
+X-Gm-Gg: AZuq6aKhms78InBPCDurOaOuXDHvGLyPoqUy/kIJ5+YyhS+SejK4WhUWcslj7V3E8Ib
+ 2xF3n3ms+G2armm/XXOgoYVmSUEf9ZY7HpvGnR0M6mjp5/LQ3gvIqA/YN50lzZ6dQdpduerABme
+ n/vhYp6EfQiCkZkB4xZDs4krKyUajiDxRm2HjWBeTsZYpi9oMFiojA1l36FMnNd91qcedxU5UMH
+ n7tbaT2fkVjqYlwwbmYWhUK3GjV7f7Jz4Kiv0yfpxrjqVZbw2moeXlZWuWQ9Rg91CBWWEmd0tSL
+ 8macd8Y0bnfmVcW0B49lKQyGhYGStZ6JJlIdIiv2wOu1OsA0J1pMyoi1rQ8gftooQ5pes+JrFKI
+ +i48KpM8veGRuQ1mK2mxjh6RryyXG8RI94B7ZSnByix4qdZ/OO0JRrG9+ZcltNWieEKsysiVgc4
+ Cm99LTY6cRdFW0gSgjnQbIaHq1T6Ermb1MctVkH4KWPA==
+X-Received: by 2002:a17:90a:d88b:b0:340:bfcd:6af9 with SMTP id
+ 98e67ed59e1d1-353c446c8d2mr2783226a91.3.1769411123864; 
+ Sun, 25 Jan 2026 23:05:23 -0800 (PST)
 Received: from brahms.. (fp93c00990.tkyc601.ap.nuro.jp. [147.192.9.144])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-823187716ebsm8661487b3a.66.2026.01.25.23.05.55
+ d2e1a72fcca58-823187716ebsm8661487b3a.66.2026.01.25.23.05.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Jan 2026 23:05:59 -0800 (PST)
+ Sun, 25 Jan 2026 23:05:23 -0800 (PST)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -79,16 +79,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-arm@nongnu.org,
  qemu-riscv@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 25/33] tcg/wasm64: Allow switching coroutine from a helper
-Date: Mon, 26 Jan 2026 07:03:38 +0000
-Message-ID: <8917febfda7824f56867d7f227311eeb568d3d0d.1769407033.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v4 17/33] tcg/wasm64: Add exit_tb/goto_tb/goto_ptr instructions
+Date: Mon, 26 Jan 2026 07:03:30 +0000
+Message-ID: <3d4437590a984eea62ed4ae809087de6531fc643.1769407033.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1769407033.git.ktokunaga.mail@gmail.com>
 References: <cover.1769407033.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,235 +111,288 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Emscripten's Fiber coroutine implements coroutine switching using Asyncify's
-stack unwinding and rewinding features [1]. When a coroutine yields
-(i.e. switches out), Asyncify unwinds the stack, returning control to
-Emscripten's JS code (Fiber.trampoline()). Then execution resumes in the
-target coroutine by rewinding the stack. Stack unwinding is implemented by a
-sequence of immediate function returns, while rewinding re-enters the
-functions in the call stack, skipping any code between the function's entry
-point and the original call position [2].
+In the Wasm backend, each TB is compiled to a separeted Wasm module. Control
+transfer between TBs (i.e. from one Wasm module to another) is handled by
+the caller of the module.
 
-This commit updates the TB's Wasm module to allow helper functions to
-trigger coroutine switching. Particaully, the TB handles the unwinding and
-rewinding flows as follows:
+The goto_tb and goto_ptr operations are implemented by returning control to
+the caller using the return instruction. The destination TB's pointer is
+passed to the caller via a shared WasmContext structure which is accessible
+from both the Wasm module and the caller. This WasmContext must be provided
+to the module as an argument.
 
-- The TB check the Asyncify.state JS object after each helper call. If
-  unwinding is in progress, the TB immediately returns to the caller so that
-  the unwinding can continue.
-- Each function call is preceded by a block boundary and an update of the
-  BLOCK_IDX variable. This enables rewinding to skip any code between the
-  function's entry point and the original call position.
+If the destination TB is the current TB itself, there is no need to return
+control to the caller. Instead, execution can jump directly to the top of
+the loop within the TB.
 
-Additionally, this commit introduces WasmContext.do_init which is a flag
-indicating whether the TB should reset the BLOCK_IDX variable to 0
-(i.e. start from the beginning). call_wasm_tb is a newly introduced wrapper
-function for the Wasm module's entrypoint and this sets "do_init = 1" to
-ensure normal TB execution begins at the first block. During a rewinding,
-the C code does not set do_init to 1, allowing the TB to preserve the
-BLOCK_IDX value from the previous unwinding and correctly resume execution
-from the last unwound block.
+The exit_tb operation sets the pointer in WasmContext to 0, indicating that
+there is no destination TB.
 
-[1] https://emscripten.org/docs/api_reference/fiber.h.html
-[2] https://kripken.github.io/blog/wasm/2019/07/16/asyncify.html#new-asyncify
+TCI instructions are also generated in the same way as the original TCI
+backend.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- tcg/wasm64.c                |  3 ++
- tcg/wasm64.h                | 11 +++++++
- tcg/wasm64/tcg-target.c.inc | 58 ++++++++++++++++++++++++++++++++++++-
- 3 files changed, 71 insertions(+), 1 deletion(-)
+ MAINTAINERS                 |   1 +
+ tcg/wasm64.c                |  20 ++++++
+ tcg/wasm64.h                |  15 ++++
+ tcg/wasm64/tcg-target.c.inc | 136 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 172 insertions(+)
+ create mode 100644 tcg/wasm64.h
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 30e468f290..40aae1fc8e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4112,6 +4112,7 @@ M: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+ S: Maintained
+ F: tcg/wasm64/
+ F: tcg/wasm64.c
++F: tcg/wasm64.h
+ 
+ Block drivers
+ -------------
 diff --git a/tcg/wasm64.c b/tcg/wasm64.c
-index 41898ff867..7ae976d9eb 100644
+index ca67436192..c54c5c5b2c 100644
 --- a/tcg/wasm64.c
 +++ b/tcg/wasm64.c
-@@ -44,6 +44,9 @@ EM_JS_PRE(void*, instantiate_wasm, (void *wasm_begin,
-     const wasm = HEAP8.subarray(DEC_PTR(wasm_begin),
-                                 DEC_PTR(wasm_begin) + wasm_size);
-     var helper = {};
-+    helper.u = () => {
-+        return (Asyncify.state != Asyncify.State.Unwinding) ? 1 : 0;
-+    };
-     for (var i = 0; i < import_vec_size / 8; i++) {
-         const idx = memory_v.getBigInt64(
-             DEC_PTR(import_vec_begin) + i * 8, true);
-diff --git a/tcg/wasm64.h b/tcg/wasm64.h
-index b5d9ce75da..fdde908557 100644
---- a/tcg/wasm64.h
-+++ b/tcg/wasm64.h
-@@ -30,11 +30,22 @@ struct WasmContext {
-      * Pointer to a stack array.
-      */
-     uint64_t *stack;
-+
-+    /*
-+     * Flag indicating whether to initialize the block index(1) or not(0).
-+     */
-+    uint32_t do_init;
- };
+@@ -28,6 +28,11 @@ static void tci_args_l(uint32_t insn, const void *tb_ptr, void **l0)
+     *l0 = diff ? (void *)tb_ptr + diff : NULL;
+ }
  
- /* Instantiated Wasm function of a TB */
- typedef uintptr_t (*wasm_tb_func)(struct WasmContext *);
- 
-+static inline uintptr_t call_wasm_tb(wasm_tb_func f, struct WasmContext *ctx)
++static void tci_args_r(uint32_t insn, TCGReg *r0)
 +{
-+    ctx->do_init = 1; /* reset the block index (rewinding will skip this) */
-+    return f(ctx);
++    *r0 = extract32(insn, 8, 4);
 +}
 +
- /*
-  * A TB of the Wasm backend starts from a header which contains pointers for
-  * each data stored in the following region in the TB.
+ static void tci_args_rl(uint32_t insn, const void *tb_ptr,
+                         TCGReg *r0, void **l1)
+ {
+@@ -413,6 +418,21 @@ static uintptr_t tcg_qemu_tb_exec_tci(CPUArchState *env, const void *v_tb_ptr)
+                 tb_ptr = ptr;
+             }
+             break;
++        case INDEX_op_exit_tb:
++            tci_args_l(insn, tb_ptr, &ptr);
++            return (uintptr_t)ptr;
++        case INDEX_op_goto_tb:
++            tci_args_l(insn, tb_ptr, &ptr);
++            tb_ptr = *(void **)ptr;
++            break;
++        case INDEX_op_goto_ptr:
++            tci_args_r(insn, &r0);
++            ptr = (void *)regs[r0];
++            if (!ptr) {
++                return 0;
++            }
++            tb_ptr = ptr;
++            break;
+         default:
+             g_assert_not_reached();
+         }
+diff --git a/tcg/wasm64.h b/tcg/wasm64.h
+new file mode 100644
+index 0000000000..9da38e4d0e
+--- /dev/null
++++ b/tcg/wasm64.h
+@@ -0,0 +1,15 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef TCG_WASM_H
++#define TCG_WASM_H
++
++/*
++ * WasmContext is a data shared among QEMU and wasm modules.
++ */
++struct WasmContext {
++    /*
++     * Pointer to the TB to be executed.
++     */
++    void *tb_ptr;
++};
++
++#endif
 diff --git a/tcg/wasm64/tcg-target.c.inc b/tcg/wasm64/tcg-target.c.inc
-index 9854f5538c..ad9e5a43b5 100644
+index 3fe0ae2381..ff1151390b 100644
 --- a/tcg/wasm64/tcg-target.c.inc
 +++ b/tcg/wasm64/tcg-target.c.inc
-@@ -152,7 +152,8 @@ static const uint8_t tcg_target_reg_index[TCG_TARGET_NB_REGS] = {
- #define CTX_IDX 0
+@@ -26,6 +26,7 @@
+  */
  
- /* Function index */
--#define HELPER_IDX_START 0 /* The first index of helper functions */
-+#define CHECK_UNWINDING_IDX 0 /* A function to check the Asyncify status */
-+#define HELPER_IDX_START 1 /* The first index of helper functions */
+ #include "qemu/queue.h"
++#include "../wasm64.h"
  
- #define PTR_TYPE 0x7e
+ typedef uint32_t tcg_insn_unit_tci;
  
-@@ -169,6 +170,7 @@ typedef enum {
+@@ -139,6 +140,9 @@ static const uint8_t tcg_target_reg_index[TCG_TARGET_NB_REGS] = {
+ /* Global variable used for storing the current block index */
+ #define BLOCK_IDX 16
+ 
++/* Local variable pointing to WasmContext */
++#define CTX_IDX 0
++
+ typedef enum {
+     OPC_UNREACHABLE = 0x00,
+     OPC_LOOP = 0x03,
+@@ -146,6 +150,8 @@ typedef enum {
+     OPC_ELSE = 0x05,
+     OPC_END = 0x0b,
+     OPC_BR = 0x0c,
++    OPC_RETURN = 0x0f,
++    OPC_LOCAL_GET = 0x20,
      OPC_GLOBAL_GET = 0x23,
      OPC_GLOBAL_SET = 0x24,
  
-+    OPC_I32_LOAD = 0x28,
-     OPC_I64_LOAD = 0x29,
-     OPC_I64_LOAD8_S = 0x30,
-     OPC_I64_LOAD8_U = 0x31,
-@@ -176,6 +178,7 @@ typedef enum {
-     OPC_I64_LOAD16_U = 0x33,
-     OPC_I64_LOAD32_S = 0x34,
-     OPC_I64_LOAD32_U = 0x35,
-+    OPC_I32_STORE = 0x36,
-     OPC_I64_STORE = 0x37,
-     OPC_I64_STORE8 = 0x3c,
-     OPC_I64_STORE16 = 0x3d,
-@@ -1116,6 +1119,17 @@ static int64_t get_helper_idx(TCGContext *s, intptr_t helper_idx_on_qemu)
-     return -1;
+@@ -751,6 +757,81 @@ static void tcg_wasm_out_brcond(TCGContext *s, TCGType type,
+     tcg_wasm_out_br_to_label(s, l, true);
  }
  
-+static void tcg_wasm_out_handle_unwinding(TCGContext *s)
++#define CTX_OFFSET(f) offsetof(struct WasmContext, f)
++
++static intptr_t tcg_wasm_out_get_ctx(TCGContext *s, intptr_t off)
 +{
-+    tcg_wasm_out_op_idx(s, OPC_CALL, CHECK_UNWINDING_IDX);
-+    tcg_wasm_out_op(s, OPC_I32_EQZ);
++    tcg_wasm_out_op_idx(s, OPC_LOCAL_GET, CTX_IDX);
++    return tcg_wasm_out_norm_ptr(s, off);
++}
++
++static void tcg_wasm_out_exit_tb(TCGContext *s, uintptr_t arg)
++{
++    intptr_t ofs;
++
++    /* Store ctx.tb_ptr = 0 which indicates there is no next TB */
++    ofs = tcg_wasm_out_get_ctx(s, CTX_OFFSET(tb_ptr));
++    tcg_wasm_out_op_const(s, OPC_I64_CONST, 0);
++    tcg_wasm_out_op_ldst(s, OPC_I64_STORE, 0, ofs);
++
++    /* Return the control to the caller */
++    tcg_wasm_out_op_const(s, OPC_I64_CONST, arg);
++    tcg_wasm_out_op(s, OPC_RETURN);
++}
++
++static void tcg_wasm_out_goto(TCGContext *s, TCGReg target, int block_depth)
++{
++    intptr_t ofs;
++
++    /* Check if the target TB is the same as the current TB */
++    tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(target));
++    ofs = tcg_wasm_out_get_ctx(s, CTX_OFFSET(tb_ptr));
++    tcg_wasm_out_op_ldst(s, OPC_I64_LOAD, 0, ofs);
++    tcg_wasm_out_op(s, OPC_I64_EQ);
++
++    /*
++     * If the target TB is the same as the current TB, no need to return to the
++     * caller. Just branch to the top of the current TB.
++     */
 +    tcg_wasm_out_op_block(s, OPC_IF, BLOCK_NORET);
 +    tcg_wasm_out_op_const(s, OPC_I64_CONST, 0);
-+    /* returns if unwinding */
++    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, BLOCK_IDX);
++    tcg_wasm_out_op_idx(s, OPC_BR, block_depth); /* br to the top of loop */
++    tcg_wasm_out_op(s, OPC_END);
++
++    /* Store the target TB to ctx.tb_ptr and return */
++    ofs = tcg_wasm_out_get_ctx(s, CTX_OFFSET(tb_ptr));
++    tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(target));
++    tcg_wasm_out_op_ldst(s, OPC_I64_STORE, 0, ofs);
++    tcg_wasm_out_op_const(s, OPC_I64_CONST, 0);
 +    tcg_wasm_out_op(s, OPC_RETURN);
++}
++
++static void tcg_wasm_out_goto_ptr(TCGContext *s, TCGReg arg)
++{
++    tcg_wasm_out_goto(s, arg, 2);
++}
++
++static void tcg_wasm_out_goto_tb(
++    TCGContext *s, int which, uintptr_t cur_reset_ptr)
++{
++    intptr_t ofs;
++
++    /* Set the target TB in the tmp variable. */
++    tcg_wasm_out_op_const(s, OPC_I64_CONST, get_jmp_target_addr(s, which));
++    ofs = tcg_wasm_out_norm_ptr(s, 0);
++    tcg_wasm_out_op_ldst(s, OPC_I64_LOAD, 0, ofs);
++    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(TCG_REG_TMP));
++
++    /* Goto the target TB if it's registered. */
++    tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(TCG_REG_TMP));
++    tcg_wasm_out_op_const(s, OPC_I64_CONST, cur_reset_ptr);
++    tcg_wasm_out_op(s, OPC_I64_NE);
++    tcg_wasm_out_op_block(s, OPC_IF, BLOCK_NORET);
++    tcg_wasm_out_goto(s, TCG_REG_TMP, 3);
 +    tcg_wasm_out_op(s, OPC_END);
 +}
 +
- static void tcg_wasm_out_call(TCGContext *s, intptr_t func,
-                               const TCGHelperInfo *info)
- {
-@@ -1132,7 +1146,16 @@ static void tcg_wasm_out_call(TCGContext *s, intptr_t func,
-     tcg_wasm_out_op_const(s, OPC_I64_CONST, (uint64_t)s->code_ptr);
-     tcg_wasm_out_op_ldst(s, OPC_I64_STORE, 0, ofs);
- 
-+    /*
-+     * update the block index so that the possible rewinding will
-+     * skip this block
-+     */
-+    tcg_wasm_out_op_const(s, OPC_I64_CONST, cur_block_idx + 1);
-+    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, BLOCK_IDX);
-+    tcg_wasm_out_new_block(s);
-+
-     gen_call(s, info, func_idx);
-+    tcg_wasm_out_handle_unwinding(s);
- }
- 
- static void gen_func_type_qemu_ld(TCGContext *s, uint32_t oi)
-@@ -1204,6 +1227,14 @@ static void tcg_wasm_out_qemu_ld(TCGContext *s, TCGReg data_reg,
-         gen_func_type_qemu_ld(s, oi);
-     }
- 
-+    /*
-+     * update the block index so that the possible rewinding will
-+     * skip this block
-+     */
-+    tcg_wasm_out_op_const(s, OPC_I64_CONST, cur_block_idx + 1);
-+    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, BLOCK_IDX);
-+    tcg_wasm_out_new_block(s);
-+
-     /* call the target helper */
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(TCG_AREG0));
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(addr_reg));
-@@ -1212,6 +1243,7 @@ static void tcg_wasm_out_qemu_ld(TCGContext *s, TCGReg data_reg,
- 
-     tcg_wasm_out_op_idx(s, OPC_CALL, func_idx);
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(data_reg));
-+    tcg_wasm_out_handle_unwinding(s);
- }
- 
- static void *qemu_st_helper_ptr(uint32_t oi)
-@@ -1245,6 +1277,14 @@ static void tcg_wasm_out_qemu_st(TCGContext *s, TCGReg data_reg,
-         gen_func_type_qemu_st(s, oi);
-     }
- 
-+    /*
-+     * update the block index so that the possible rewinding will
-+     * skip this block
-+     */
-+    tcg_wasm_out_op_const(s, OPC_I64_CONST, cur_block_idx + 1);
-+    tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, BLOCK_IDX);
-+    tcg_wasm_out_new_block(s);
-+
-     /* call the target helper */
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(TCG_AREG0));
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, REG_IDX(addr_reg));
-@@ -1261,6 +1301,7 @@ static void tcg_wasm_out_qemu_st(TCGContext *s, TCGReg data_reg,
-     tcg_wasm_out_op_const(s, OPC_I64_CONST, (intptr_t)s->code_ptr);
- 
-     tcg_wasm_out_op_idx(s, OPC_CALL, func_idx);
-+    tcg_wasm_out_handle_unwinding(s);
- }
- 
  static void tcg_out_op_l(TCGContext *s, TCGOpcode op, TCGLabel *l0)
-@@ -2274,6 +2315,9 @@ static const uint8_t mod_1[] = {
-     0x60,                         /* 0: Type of "start" function */
-     0x01, PTR_TYPE,               /* arg: ctx pointer */
-     0x01, PTR_TYPE,               /* return: res */
-+    0x60,                         /* 1: Type of the asyncify helper */
-+    0x0,                          /* no argument */
-+    0x01, 0x7f,                   /* return: res (i32) */
- };
+ {
+     tcg_insn_unit_tci insn = 0;
+@@ -760,6 +841,35 @@ static void tcg_out_op_l(TCGContext *s, TCGOpcode op, TCGLabel *l0)
+     tcg_out32(s, insn);
+ }
  
- #define MOD_1_PH_TYPE_SECTION_SIZE_OFF 9
-@@ -2299,6 +2343,9 @@ static const uint8_t mod_2[] = {
-     0x02, 0x07,                               /* shared mem(64bit) */
-     0x00, 0x80, 0x80, 0x10,                   /* min: 0, max: 262144 pages */
- #endif
-+    0x06, 0x68, 0x65, 0x6c, 0x70, 0x65, 0x72, /* module: "helper" */
-+    0x01, 0x75,                               /* name: "u" */
-+    0x00, 0x01,                               /* func type 1 */
- };
++static void tcg_out_op_p(TCGContext *s, TCGOpcode op, void *p0)
++{
++    tcg_insn_unit_tci insn = 0;
++    intptr_t diff;
++
++    /* Special case for exit_tb: map null -> 0. */
++    if (p0 == NULL) {
++        diff = 0;
++    } else {
++        diff = p0 - (void *)(s->code_ptr + 4);
++        tcg_debug_assert(diff != 0);
++        if (diff != sextract32(diff, 0, 20)) {
++            tcg_raise_tb_overflow(s);
++        }
++    }
++    insn = deposit32(insn, 0, 8, op);
++    insn = deposit32(insn, 12, 20, diff);
++    tcg_out32(s, insn);
++}
++
++static void tcg_out_op_r(TCGContext *s, TCGOpcode op, TCGReg r0)
++{
++    tcg_insn_unit_tci insn = 0;
++
++    insn = deposit32(insn, 0, 8, op);
++    insn = deposit32(insn, 8, 4, r0);
++    tcg_out32(s, insn);
++}
++
+ static void tcg_out_op_ri(TCGContext *s, TCGOpcode op, TCGReg r0, int32_t i1)
+ {
+     tcg_insn_unit_tci insn = 0;
+@@ -1468,6 +1578,32 @@ static void tcg_out_br(TCGContext *s, TCGLabel *l)
+     tcg_wasm_out_br(s, l);
+ }
  
- #define MOD_2_PH_IMPORT_SECTION_SIZE_OFF 1
-@@ -2437,8 +2484,17 @@ static void tcg_out_tb_start(TCGContext *s)
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, REG_IDX(TCG_REG_CALL_STACK));
-     tcg_wasm_out_op(s, OPC_END);
- 
-+    ofs = tcg_wasm_out_get_ctx(s, CTX_OFFSET(do_init));
-+    tcg_wasm_out_op_ldst(s, OPC_I32_LOAD, 0, ofs);
-+    tcg_wasm_out_op_const(s, OPC_I32_CONST, 0);
-+    tcg_wasm_out_op(s, OPC_I32_NE);
-+    tcg_wasm_out_op_block(s, OPC_IF, BLOCK_NORET);
-     tcg_wasm_out_op_const(s, OPC_I64_CONST, 0);
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_SET, BLOCK_IDX);
-+    ofs = tcg_wasm_out_get_ctx(s, CTX_OFFSET(do_init));
-+    tcg_wasm_out_op_const(s, OPC_I32_CONST, 0);
-+    tcg_wasm_out_op_ldst(s, OPC_I32_STORE, 0, ofs);
-+    tcg_wasm_out_op(s, OPC_END);
- 
-     tcg_wasm_out_op_block(s, OPC_LOOP, BLOCK_NORET);
-     tcg_wasm_out_op_idx(s, OPC_GLOBAL_GET, BLOCK_IDX);
++static void tcg_out_exit_tb(TCGContext *s, uintptr_t arg)
++{
++    tcg_out_op_p(s, INDEX_op_exit_tb, (void *)arg);
++    tcg_wasm_out_exit_tb(s, arg);
++}
++
++static void tcg_out_goto_tb(TCGContext *s, int which)
++{
++    /* indirect jump method. */
++    tcg_out_op_p(s, INDEX_op_goto_tb, (void *)get_jmp_target_addr(s, which));
++    set_jmp_reset_offset(s, which);
++    tcg_wasm_out_goto_tb(s, which, (intptr_t)s->code_ptr);
++}
++
++static void tcg_out_goto_ptr(TCGContext *s, TCGReg a0)
++{
++    tcg_out_op_r(s, INDEX_op_goto_ptr, a0);
++    tcg_wasm_out_goto_ptr(s, a0);
++}
++
++void tb_target_set_jmp_target(const TranslationBlock *tb, int n,
++                              uintptr_t jmp_rx, uintptr_t jmp_rw)
++{
++    /* Always indirect, nothing to do */
++}
++
+ static void tcg_out_tb_start(TCGContext *s)
+ {
+     init_sub_buf();
 -- 
 2.43.0
 
