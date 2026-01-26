@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D234BC88E5A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C688EC88E58
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 07:14:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkGma-00061g-HP; Mon, 26 Jan 2026 02:13:08 -0500
+	id 1vkGmZ-0005yi-PX; Mon, 26 Jan 2026 02:13:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vkGeM-0002kw-Sf
+ id 1vkGeI-0002kU-Ip
  for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:05:05 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vkGeL-00046i-5D
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:04:38 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-81db1530173so2136075b3a.1
- for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 23:04:35 -0800 (PST)
+ id 1vkGeF-00044d-LW
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:04:33 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-823075fed75so2179036b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 23:04:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769411075; x=1770015875; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769411061; x=1770015861; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V2iLebfIJhQmyKZPxD/7vvE0TY7hMO11zANvgz7Zbqg=;
- b=JmemzOPjEZKlW/JDaC+SjnSpSwwma4vfo0PrAuStAPCAO6trB2l8Gh3NzZuvqnp7MK
- aBCtEHSLQaUSUQ4lCYn52pnv9GWRKrKKOJL2I1uZYgUAGpIzaONppek7ukUn7jvWEz+4
- ao5O1jZYxlRDD7Vw78qRmmlkmbW4qF8blwpPZlhogI+gGJswfKFqYsn/H3JvLKPFD8E6
- mO44JKWSpEpDIYTSG7d0IPZQhKtsUxWx/IKuftr/VuID/cjOVK72hCKoJ5WDinn1LcNt
- bZrS/KqIKmNXrjTKniJ42m0kgHsZM6xwwd7Kzaq0rUDn6QnLb9LDx8Awij5J4NuMSRRk
- gPgg==
+ bh=QiBLBmuJrU9Jg04Dyfz191OWwD91URVjxfllKljJsDk=;
+ b=Wdm9ASPCae7FvJSrkCKvAD+xiQnw9mvMphcPKZQAOh9hoiol4ElgsZnhwbQEhQOuAs
+ CIqLi4ZVSvr3ebFwePhjSLnim80v4LpmG0W1oD64/EhJXWVV084DQn13SNdkqK4gd4Yv
+ fT3i7/lRNAPVru6FNYsaK1izIoej86lA+dB8rtDUEG8MdP/kYRKFOQNAI0vKJRNCDXxi
+ QlAyQqBncu6rtvu47XUj7U0vnH/rbrdre6j2x2hApigWIxwfiFvBvbIP150gLUKZhdii
+ xByBxc9C6s+dN/8ZdTu64FkVwclIIDLyBMQoSB+46pC5TPAMGZX9LpUROhQHqMuTvEd6
+ 577w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769411075; x=1770015875;
+ d=1e100.net; s=20230601; t=1769411061; x=1770015861;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=V2iLebfIJhQmyKZPxD/7vvE0TY7hMO11zANvgz7Zbqg=;
- b=wGAJ5h+5PdxHw1cCP9XJHZXzy+9WWn8+N6C+dBHfUbHHhjbnyOENvtSdpjjHhldx/Z
- mFSE7+rQ2KBwZQZjaC2ypv50+l6zWNMVEHOTUWd+YbW9Qoeu68hdUvgVyPjzq2Y52WW6
- DIQRME0F3V4JNksCi8GaXu8l9pxtMcRmVCg6JXD22krASFYDaq1mG7k+pFt62xnYy6SC
- XppHaicmvrw1/gdkeEUMbZVSNA61IlTfxTopDmdswoGHtclwtULGth0TxDuBNL2iNX9J
- Ad9V/mSs7XeIIgLWULQnDNZgZ019BKYvsRN7tsYcmO7R7JvoAoElo47+/EtFWU9LG5Ge
- X07Q==
-X-Gm-Message-State: AOJu0YytoE77bqUCHah2CDneai650zrIOXe0qB2XrFgOwd/0UiQi4ge5
- sZlAkKlPoI/SD5eGqLogsEJWZ1oFBiQxXHfSAnCdIPuScXtC/LG4OwXOpVIGctKx
-X-Gm-Gg: AZuq6aIPISap0J44ic3wLywm1Wd8YyBo16bAOYsUo80yA9IjVMrQwWrAdi0iRWcIW+W
- qhlLNq4m2zVYgkJsOCBVD3QuPl3BtcGlrXPve7yg/Qp3j7SStDaTXEaLRXXh0SgFcPH+tNz6M/Y
- YAtytT9uGJwKOeIwKN9YvBQSo3AMisc1XN/4KyswH6z7hvgIZb+2yGzvd3MQY3ONlZTcC5t8UcT
- sWXg/0ZvnVSahIeac98loblniMWQTsM/6vPIxcfKSEVzagch226ol8M0m0XHopqWPbQbt49vN1k
- xWAYo678OXBo2ZC0gWxE6J9HTl4HIC6c+/Khxm6J1bHGnYtpsPM68k6+QZ87SdO3GxaLVCg28mA
- lhpfPR9q2xwiYrBUDYIc2znOvaJsSCSWGHDQuLkaDnGJHcogNBeph6rmbTXhOoLXITy7G4hosEt
- QcNJYELkM3T+Wc8JO3sv8T7/XoIZgp9fIQZjQ4j6I/1g==
-X-Received: by 2002:a05:6a00:1813:b0:81f:3cd5:2069 with SMTP id
- d2e1a72fcca58-8234119f8edmr3207365b3a.4.1769411074579; 
- Sun, 25 Jan 2026 23:04:34 -0800 (PST)
+ bh=QiBLBmuJrU9Jg04Dyfz191OWwD91URVjxfllKljJsDk=;
+ b=OpI9gZ87MfOSCwqBzitERC2kGLnh92tKMKS0WDk5TjD5xyG0yZ+EsyI4bOFOkzKjzZ
+ e5ce3QU6CfLBewZ4E3Km/gOjXrcKCRH65j03eSXZhrztXu4d815IptgVoSx7R3EtUi7t
+ 4kb5uWqYDLmAVIIlnDyioZJ0k20+I2xVSbOL4ZldBWc1/rUQzKcm4MwSVRy+XnymMYuu
+ O3FhU48GdS8DWtUeIi4tBr93BYtO1KAYv/3y9ay6fDjeeQvlbDRgEyWUVoUQ/GmxvM1D
+ YlfCqyX2iACxr21OOWVx1GhilyQ/cpyV1C2dq0ThK6rwFgCJ7azhhiHpEFuTejoKRg72
+ DcGg==
+X-Gm-Message-State: AOJu0Yysc5F9PGVJLOYiol/EVVprJ34a6SAL48hFjQTMdcP2tjy+NGoV
+ n/4tEwz+Vev5KlvDn5axm8+E6+/oVqHahCOVMI3Permp/siyLyNIKQrNiwq+eSmy
+X-Gm-Gg: AZuq6aK2XnAQ8pvCOi/nC+fPUrlZ7IiXNdFau+8Ihd94TB3ewdaOpHzCWWg745CYAst
+ UodKfUf0cFO03yQbUGci/eKRZdebchMocnSP4VP8fDi49YmoWdUAy6HI1bUZUXOFq9U5eHxEpsL
+ xDKtJmNr+RYWv5McUgSW9n5wFvP2OFE5nRbrfD7uGFArtEM4OJwlQRNc7iFYTN8REhBdvQRTqMp
+ JeUsi+si04ppWkFpvLb9lHmwi9Hffa8tPoRX+D3vm8gm2233rlpdIEwlrw3eh8V2X2TflpzZ4bz
+ MQXuQFLctyQlu3QuZNE2DHo/1WXnvqpPzzjeC5LqqcyqEGk8sr9ggqCYD6SPjuP5d+hBA+Cx7sh
+ WIBoayiF3LpivD6pkwBUknqQNoH7bZ/ij5eUt7ACRfv/5xxyOx4hcsmS7pN9WGjqhbFDObV+1pM
+ YOKqfDI9lCq5WipJ41i63Zbb0HO0OhDjjBy+wCO0xzfg==
+X-Received: by 2002:a05:6a00:22cf:b0:822:6834:9abc with SMTP id
+ d2e1a72fcca58-8234129c3c4mr2979648b3a.24.1769411061316; 
+ Sun, 25 Jan 2026 23:04:21 -0800 (PST)
 Received: from brahms.. (fp93c00990.tkyc601.ap.nuro.jp. [147.192.9.144])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-823187716ebsm8661487b3a.66.2026.01.25.23.04.30
+ d2e1a72fcca58-823187716ebsm8661487b3a.66.2026.01.25.23.04.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Jan 2026 23:04:34 -0800 (PST)
+ Sun, 25 Jan 2026 23:04:20 -0800 (PST)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -79,16 +79,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-arm@nongnu.org,
  qemu-riscv@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 06/33] tcg/wasm64: Add add/sub/mul instructions
-Date: Mon, 26 Jan 2026 07:03:19 +0000
-Message-ID: <96df2d2b5ca095dfbc280ee73bf8f82f5ae4c770.1769407033.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v4 03/33] tcg/wasm64: Add constraint definitions
+Date: Mon, 26 Jan 2026 07:03:16 +0000
+Message-ID: <e8e8ce20cf8ba879a690ad579d45fb26b5b6f517.1769407033.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1769407033.git.ktokunaga.mail@gmail.com>
 References: <cover.1769407033.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,96 +111,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The add, sub and mul operations are implemented using the corresponding
-instructions in Wasm. TCI instructions are also generated in the same way as
-the original TCI backend.
+The Wasm backend integrates a forked TCI so its constraints are defined to
+remain compatible with TCI.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- tcg/wasm64.c                | 12 ++++++++++++
- tcg/wasm64/tcg-target.c.inc | 39 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+)
+ tcg/wasm64/tcg-target-con-set.h | 19 +++++++++++++++++++
+ tcg/wasm64/tcg-target-con-str.h | 14 ++++++++++++++
+ tcg/wasm64/tcg-target.c.inc     | 13 +++++++++++++
+ 3 files changed, 46 insertions(+)
+ create mode 100644 tcg/wasm64/tcg-target-con-set.h
+ create mode 100644 tcg/wasm64/tcg-target-con-str.h
 
-diff --git a/tcg/wasm64.c b/tcg/wasm64.c
-index 9f3b1344d6..ba8a89d920 100644
---- a/tcg/wasm64.c
-+++ b/tcg/wasm64.c
-@@ -59,6 +59,18 @@ static uintptr_t tcg_qemu_tb_exec_tci(CPUArchState *env, const void *v_tb_ptr)
-             tci_args_rrr(insn, &r0, &r1, &r2);
-             regs[r0] = regs[r1] ^ regs[r2];
-             break;
-+        case INDEX_op_add:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            regs[r0] = regs[r1] + regs[r2];
-+            break;
-+        case INDEX_op_sub:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            regs[r0] = regs[r1] - regs[r2];
-+            break;
-+        case INDEX_op_mul:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            regs[r0] = regs[r1] * regs[r2];
-+            break;
-         default:
-             g_assert_not_reached();
-         }
+diff --git a/tcg/wasm64/tcg-target-con-set.h b/tcg/wasm64/tcg-target-con-set.h
+new file mode 100644
+index 0000000000..0dc41ebe33
+--- /dev/null
++++ b/tcg/wasm64/tcg-target-con-set.h
+@@ -0,0 +1,19 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Wasm target-specific constraint sets.
++ *
++ * Based on tci/tcg-target-con-set.h
++ *
++ * Copyright (c) 2021 Linaro
++ */
++
++/*
++ * C_On_Im(...) defines a constraint set with <n> outputs and <m> inputs.
++ * Each operand should be a sequence of constraint letters as defined by
++ * tcg-target-con-str.h; the constraint combination is inclusive or.
++ */
++C_O0_I1(r)
++C_O0_I2(r, r)
++C_O1_I1(r, r)
++C_O1_I2(r, r, r)
++C_O1_I4(r, r, r, r, r)
+diff --git a/tcg/wasm64/tcg-target-con-str.h b/tcg/wasm64/tcg-target-con-str.h
+new file mode 100644
+index 0000000000..21ddbcc01a
+--- /dev/null
++++ b/tcg/wasm64/tcg-target-con-str.h
+@@ -0,0 +1,14 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Define Wasm target-specific operand constraints.
++ *
++ * Based on tci/tcg-target-con-str.h
++ *
++ * Copyright (c) 2021 Linaro
++ */
++
++/*
++ * Define constraint letters for register sets:
++ * REGS(letter, register_mask)
++ */
++REGS('r', MAKE_64BIT_MASK(0, TCG_TARGET_NB_REGS))
 diff --git a/tcg/wasm64/tcg-target.c.inc b/tcg/wasm64/tcg-target.c.inc
-index a1757b4db7..d5cf324e7b 100644
+index 3affc17232..0b12c4ea03 100644
 --- a/tcg/wasm64/tcg-target.c.inc
 +++ b/tcg/wasm64/tcg-target.c.inc
-@@ -140,6 +140,9 @@ typedef enum {
-     OPC_GLOBAL_GET = 0x23,
-     OPC_GLOBAL_SET = 0x24,
- 
-+    OPC_I64_ADD = 0x7c,
-+    OPC_I64_SUB = 0x7d,
-+    OPC_I64_MUL = 0x7e,
-     OPC_I64_AND = 0x83,
-     OPC_I64_OR = 0x84,
-     OPC_I64_XOR = 0x85,
-@@ -265,6 +268,42 @@ static const TCGOutOpBinary outop_xor = {
-     .out_rrr = tgen_xor,
- };
- 
-+static void tgen_add(TCGContext *s, TCGType type,
-+                     TCGReg a0, TCGReg a1, TCGReg a2)
+@@ -75,3 +75,16 @@ static TCGReg tcg_target_call_oarg_reg(TCGCallReturnKind kind, int slot)
+     tcg_debug_assert(slot >= 0 && slot < 128 / TCG_TARGET_REG_BITS);
+     return TCG_REG_R0 + slot;
+ }
++
++static TCGConstraintSetIndex
++tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
 +{
-+    tcg_out_op_rrr(s, INDEX_op_add, a0, a1, a2);
-+    tcg_wasm_out_o1_i2(s, OPC_I64_ADD, a0, a1, a2);
++    return C_NotImplemented;
 +}
 +
-+static const TCGOutOpBinary outop_add = {
-+    .base.static_constraint = C_O1_I2(r, r, r),
-+    .out_rrr = tgen_add,
-+};
-+
-+static void tgen_sub(TCGContext *s, TCGType type,
-+                     TCGReg a0, TCGReg a1, TCGReg a2)
++/* Test if a constant matches the constraint. */
++static bool tcg_target_const_match(int64_t val, int ct,
++                                   TCGType type, TCGCond cond, int vece)
 +{
-+    tcg_out_op_rrr(s, INDEX_op_sub, a0, a1, a2);
-+    tcg_wasm_out_o1_i2(s, OPC_I64_SUB, a0, a1, a2);
++    return ct & TCG_CT_CONST;
 +}
-+
-+static const TCGOutOpSubtract outop_sub = {
-+    .base.static_constraint = C_O1_I2(r, r, r),
-+    .out_rrr = tgen_sub,
-+};
-+
-+static void tgen_mul(TCGContext *s, TCGType type,
-+                     TCGReg a0, TCGReg a1, TCGReg a2)
-+{
-+    tcg_out_op_rrr(s, INDEX_op_mul, a0, a1, a2);
-+    tcg_wasm_out_o1_i2(s, OPC_I64_MUL, a0, a1, a2);
-+}
-+
-+static const TCGOutOpBinary outop_mul = {
-+    .base.static_constraint = C_O1_I2(r, r, r),
-+    .out_rrr = tgen_mul,
-+};
-+
- static void tcg_out_tb_start(TCGContext *s)
- {
-     init_sub_buf();
 -- 
 2.43.0
 
