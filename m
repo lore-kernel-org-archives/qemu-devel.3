@@ -4,103 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26B3BD13C32
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 15:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5529D13C34
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 15:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkOTq-0007L2-VW; Mon, 26 Jan 2026 10:26:19 -0500
+	id 1vkOVx-0007yh-GP; Mon, 26 Jan 2026 10:28:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vkOTp-0007Kg-OM; Mon, 26 Jan 2026 10:26:17 -0500
-Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkOVt-0007yD-DA
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:28:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vkOTm-0006sv-Ek; Mon, 26 Jan 2026 10:26:17 -0500
-Received: from phl-compute-08.internal (phl-compute-08.internal [10.202.2.48])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 54D66140002B;
- Mon, 26 Jan 2026 10:26:11 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-08.internal (MEProxy); Mon, 26 Jan 2026 10:26:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
- t=1769441171; x=1769527571; bh=lBted6hgrYpjkGwRyfvCpEje8EFeybv4
- /h6AKDUJ2nk=; b=riUoj53a4uJbZRoFRSmoBUh1oRFvzEikkQ31gM92lZ24381z
- Jeq8uvnLXMZbj4HtqjHmZTPw0WLS/EmiOjeHmaxEziDErLy18TZTcZyuT1J4H/ZE
- liDW4+4NVy0mxURCXuBELsbiLR5P1DqrzTrUAmzEUW4QJeHTBiAEr2Yx3Mc20RIa
- d5/wCDsOzmsRvRXuRgHr10rWxUjpP1+mnn/9YPLa5KKx6yjpfGOmOi5cLQBE0sKx
- aNtxTgAapqrh2liussb33jkXXTfF7WVIQtRVjrIFAdBXea4+Tq+ZWBaqZErYPlE3
- 6My4BRc+dGesjKYLtesc74rKQOaodK0K29fqVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1769441171; x=
- 1769527571; bh=lBted6hgrYpjkGwRyfvCpEje8EFeybv4/h6AKDUJ2nk=; b=X
- JVhJarEa8pn9ZxisMf005N5V1Kj5+JqbX8U6yXFqXAvj1aASs4CiyCqQ2zdx0QD5
- 7kyVHjadkN1OOb285r/cfnpZms5oxX7Au5Ly+MQviU6p59ai7Rr8UrXXFXlxHBg7
- pFF8aC27i6iLXDCpSlwy18Ur7WnCftT/vUuxUEpnG/QDBFpjmgJqWl6hNnM6Xy8J
- PJn5b4TnQWle2CVXjFQHu+0xgyVa3LRo6ox9dxH1MhEWstWsw1Y7ugE3mySplU67
- HDn+WOER3Ul8c9c2BV2elPTx0MY0AlsRlPhMMOd5Iy11Kf0p1+QjItnRU+uF3NC4
- k3CrlGsDLPrjOOgebTuDw==
-X-ME-Sender: <xms:kod3aYLqzamc2zecRw7dXY2Ss6U5MrvfIlwLF7pzTbK-tB2S9mHsUg>
- <xme:kod3aSuzH6fZPjaB7OkFXczvfPor12b0hmljjxJS3jdHxxcnm0ZO0qZHXwS01qoMy
- Uex3syKdbzYz-WYkrISzBknDWCgE0CR0Y4w1HgNpNECHa6sEs41khFD>
-X-ME-Received: <xmr:kod3aVT5O_LCCasnfxpcjkvHx8B5GlrDv4iBjg7aztOLYLKROZeib1vYzmDZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduheektdefucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
- hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkuffhvfevofhfjgesthhqredtredt
- jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
- honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpeekkeekfedujefgleeguddtuefg
- hedvhfehhfdutdekffdujeelfeefkeegleejhfenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
- nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepqhgvmh
- huqdguvghvvghlqdgsohhunhgtvghsodgthhgrugepjhgrsghlohhnshhkihdrgiihiies
- nhhonhhgnhhurdhorhhgpdhrtghpthhtoheptghhrggusehjrggslhhonhhskhhirdighi
- iipdhrtghpthhtohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtohep
- qhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:kod3aYPWO2T3ePpBt0ZSQls3c0KvMpYrtQRKr_VJylZA9-vmLWvh0w>
- <xmx:kod3aaZVjhnXR2m12w7Enf9XiYb94afUIZvR9jHqRDEWKdu4Yn_ZVA>
- <xmx:kod3aSyvgDNQ3lEzU70_rrs3bj8QDVS3hfq6GXA52qs38WiM1ltw8A>
- <xmx:kod3aVIE6Uoj4e9G6oGhHgbJlOjJ1FqHqKKgVVgXzebw3s3xp09vAA>
- <xmx:k4d3aUyAzaYanrj87jEn7LfRYEREJ4xpUqP6CCPhCIA6kuz686WRmKXy>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 Jan 2026 10:26:10 -0500 (EST)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id df0ec4c4;
- Mon, 26 Jan 2026 15:26:09 +0000 (UTC)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 26 Jan 2026 10:26:09 -0500
-Message-Id: <DFYMJNMCJGVU.1VNVU1PXZZWQR@jablonski.xyz>
-Subject: Re: [PATCH v5 06/12] ati-vga: Create setup_2d_blt_dst helper
-From: "Chad Jablonski" <chad@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
- <chad@jablonski.xyz>
-Cc: <qemu-devel@nongnu.org>, <qemu-devel-bounces+chad=jablonski.xyz@nongnu.org>
-X-Mailer: aerc 0.21.0
-References: <20260116024258.1487173-1-chad@jablonski.xyz>
- <20260116024258.1487173-7-chad@jablonski.xyz>
- <e81ba5b9-acbe-5fb7-6fc0-c31e3c3dd601@eik.bme.hu>
-In-Reply-To: <e81ba5b9-acbe-5fb7-6fc0-c31e3c3dd601@eik.bme.hu>
-Received-SPF: pass client-ip=103.168.172.152; envelope-from=chad@jablonski.xyz;
- helo=fhigh-a1-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.499, PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkOVq-00070A-14
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:28:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769441301;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NECZZXVUiYuXNskmOEAwlBsTm/1VXEAWO3picQtdQgw=;
+ b=JCAz32vMLQVpR1kS48cgu2VPUlwC0TGjOs/lW6ZG2Ar6WsAqMsnfTk6wDte4NphTLB1m0i
+ N2pmmMDNDZa+NqU6sU06I/VGzDJQROc9siXyuIXQhq5K50PUUALMgfkGfUM3BlRiZlsDil
+ zMPUnePaNKNzpz8vSzQ1ddOq86Jc/TM=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-222-p2U48yUNODCl408CVcdH3w-1; Mon, 26 Jan 2026 10:28:19 -0500
+X-MC-Unique: p2U48yUNODCl408CVcdH3w-1
+X-Mimecast-MFC-AGG-ID: p2U48yUNODCl408CVcdH3w_1769441299
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-88a2ea47fa5so130330836d6.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 07:28:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1769441299; x=1770046099; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=NECZZXVUiYuXNskmOEAwlBsTm/1VXEAWO3picQtdQgw=;
+ b=mH6LuL0Qk5iR5SecEyQyn2BHJpczP0ZoJjrO2OUGDKgSaJVuTKuYpToyzYvPVDh8MU
+ aHbfJ6A2RMSWNYSIdZlqco836LwMruAESZTYtSv59j98irmlG4VtmD1PplhKv/BLjyF3
+ RYO3jVWGuweAAbsKTg3ULHWxQ05icegE76J3y72JcwAAqHKnjq4rSvMC8/SdFuxOpbHh
+ S4r/lh7Jd+1HcaxOtuPD7hoG0wFycLHCofL5qa3NN9uaTmsudOonJ02KvVrKE6Chn5+T
+ LyYCQT+NPDtzYkUOtZ2JQq8FlltLvfii7rak0rQ7ydLRfH1Bw3OijDnNorXk7fzJQTfK
+ XrFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769441299; x=1770046099;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NECZZXVUiYuXNskmOEAwlBsTm/1VXEAWO3picQtdQgw=;
+ b=FOAMvsW8MEWlbNRC35uChOj+qWioqFvyW7J28YZeIAT/uBAb9hhEkKicM5WLoOQEM6
+ 5ohmLpMzzXMmH+pYqlZKVmDA4oSY+0OwSq+YxljeNzgMhmTAuDEoBJDBNVjleUZDxnrK
+ SkkunSJev5+f3ewgCN183i+6xzByc4dIKq81YbM+AvbBkQAhCRiPxGnOV8NAggpcljkN
+ hiHFsEdtjUXO3WbYzrLTpkWZz3Um4v6/mpKHq+7o1xelhn6BrBQamEPQWsH42MNPmYYK
+ cOIZE3F8ih7M5dHtcTxrbD+hbdFpsdZCwMmiaHIoeqqlTNmuH7LjLPEm8aMwxObKZpSU
+ zo4Q==
+X-Gm-Message-State: AOJu0YyQLCuG46ZLy+ShqXx9sg+FZ9flrOn1ZGbDAO6JLBYPwTl0qyoC
+ OlUfb2dQMFtjA032Ecju6ggPmzpgSXS4hCazvAegZ7stkG9gMqK0/xF7H7igflaJ9xr0UxVs3lI
+ D+yKr4iRcXSiCsXvuuzzGhzJjo0U0JhDVLXJjaUStYwlhlkxq347Rnar1
+X-Gm-Gg: AZuq6aLB+ikozSzNnOPhwApoFukpPQLI6wYCyZFgqvIuARWVtrgFve6ii8QMGU5GBY5
+ c980gMxMdjPok2cB1a1cUfgMhpLxmu0Bu3F0ww+EgmdOI+PIJBMhd1kPHs/1+L0mUHkbBGB6Om2
+ IUNluGFaOl1jpRdLJgcNb8TwdIZkUvtayAp2wMSr56XAJ3XaYZoMfhDS9LYdfKzie+BKGlKP8Dz
+ d+PIo1M14b2keiKsSj4G+Ns+t22zsJQJjJp/YPsYQr85+3gcTURlhsM+1dbabHw7Mtp9kA+tgkx
+ 64ddTHj47ZZirMUjcmgt9HSIaGunjmuyvJ2zMg+yRIJfU9osIaNw33G3hrwIE+1zjlRhwxqhtXU
+ 74JI=
+X-Received: by 2002:a05:6214:258d:b0:88a:2d2c:3b4 with SMTP id
+ 6a1803df08f44-894b04bd85fmr72728756d6.29.1769441298671; 
+ Mon, 26 Jan 2026 07:28:18 -0800 (PST)
+X-Received: by 2002:a05:6214:258d:b0:88a:2d2c:3b4 with SMTP id
+ 6a1803df08f44-894b04bd85fmr72728036d6.29.1769441298010; 
+ Mon, 26 Jan 2026 07:28:18 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-894935d08c1sm111412676d6.5.2026.01.26.07.28.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Jan 2026 07:28:17 -0800 (PST)
+Date: Mon, 26 Jan 2026 10:28:16 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Lukas Straub <lukasstraub2@web.de>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2 5/8] migration-test: Add COLO migration unit test
+Message-ID: <aXeIEDrHRwtdKiPO@x1.local>
+References: <20260117-colo_unit_test_multifd-v2-0-ab521777fa51@web.de>
+ <20260117-colo_unit_test_multifd-v2-5-ab521777fa51@web.de>
+ <aW-5_BtdDDLw3ZJH@x1.local> <20260121203751.6bc9027d@penguin>
+ <20260125181836.3dd2d026@penguin>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260125181836.3dd2d026@penguin>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,73 +121,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->>
->> -static int ati_bpp_from_datatype(ATIVGAState *s)
->> +typedef struct {
->> +    QemuRect rect;
->> +    int bpp;
->> +    int stride;
->> +    bool top_to_bottom;
->> +    bool left_to_right;
->> +    uint8_t *bits;
->> +} ATIBltDst;
->
-> I'll need to look at this and further patches in more detail but I wonder=
-=20
-> if we need separate types for BltDst and BltSrc or could we use a single=
-=20
-> type for both maybe not using some fields for Src. But if that would not=
-=20
-> simplify things then these can be separate too.
->
+On Sun, Jan 25, 2026 at 06:18:36PM +0100, Lukas Straub wrote:
+> On Wed, 21 Jan 2026 20:37:51 +0100
+> Lukas Straub <lukasstraub2@web.de> wrote:
+> 
+> > On Tue, 20 Jan 2026 12:23:08 -0500
+> > Peter Xu <peterx@redhat.com> wrote:
+> > 
+> > > On Sat, Jan 17, 2026 at 03:09:12PM +0100, Lukas Straub wrote:  
+> > > > Add a COLO migration test for COLO migration and failover.
+> > > > 
+> > > > COLO does not support q35 machine at this time.
+> > > > 
+> > > > [...]
+> > > >  
+> > > > +int test_colo_common(MigrateCommon *args, bool failover_during_checkpoint,
+> > > > +                     bool primary_failover)
+> > > > +{
+> > > > +    QTestState *from, *to;
+> > > > +    void *data_hook = NULL;
+> > > > +
+> > > > +    /*
+> > > > +     * For the COLO test, both VMs will run in parallel. Thus both VMs want to
+> > > > +     * open the image read/write at the same time. Using read-only=on is not
+> > > > +     * possible here, because ide-hd does not support read-only backing image.
+> > > > +     *
+> > > > +     * So use -snapshot, where each qemu instance creates its own writable
+> > > > +     * snapshot internally while leaving the real image read-only.
+> > > > +     */
+> > > > +    args->start.opts_source = "-snapshot";
+> > > > +    args->start.opts_target = "-snapshot";
+> > > > +
+> > > > +    /*
+> > > > +     * COLO migration code logs many errors when the migration socket
+> > > > +     * is shut down, these are expected so we hide them here.
+> > > > +     */
+> > > > +    args->start.hide_stderr = true;
+> > > > +
+> > > > +    /*
+> > > > +     * COLO currently does not work with Q35 machine
+> > > > +     */
+> > > > +    args->start.force_pc_machine = true;
+> > > > +
+> > > > +    args->start.oob = true;    
+> > > 
+> > > Just curious: is OOB required in COLO for some reason?  I understand yank
+> > > you used below uses OOB, so the question is behind that, on what can be
+> > > blocked in main thread, and special in COLO.
+> 
+> There is a lot that can hang:
+> The netfilters all run on the main loop and use blocking write.
+> fiter-mirror on the primary side mirrors packets to the secondary and
+> can hang.
+> filter-redirect on the secondary side redirects packets to primary's
+> colo-compare and can hang.
+> The nbd client on the primary side that is connected to the nbd server
+> on the secondary side can hang. Especially during vm_stop() which fluses
+> all inflight block io with BQL held.
 
-I do think that we would end up with unused fields in some cases. To me
-this mapped well conceptually to the ROP3 operations. For example the
-fill operations won't use src at all. It's possible we would even end up
-with ATIBltBrush or similar in the future. But definitely open to
-changing it if you feel strongly after looking at it in more detail!
+None of them are used in this unit test, right?
 
->> +    ATIBltDst _dst; /* TEMP: avoid churn in future patches */
->> +    ATIBltDst *dst =3D &_dst;
->
-> These will be removed but names beginning with _ are reserved and should=
-=20
-> not be used so maybe this (and _src in next patch) should be dst_ or=20
-> something else? Can the churn be avoided by reorganising changes or movin=
-g=20
-> converting to pointer in a separate patch? This patch is quite long and=
-=20
-> mixes pointer conversion with other refactoring so separating those may=
-=20
-> help in review.
->
+I agree if OOB is needed in production we should also enable it in the unit
+tests.  Said that, would you please add a comment into the test case
+explaining this?  E.g. what can fail in reality, and why we still test OOB
+(because we want to get as close to production COLO use case as possible).
 
-Ah, yep, renaming the _dst and _src makes sense! As far as the churn, as I
-look at this again I think it's primarily because there's an inconsistency
-in how the register values are accessed and this is attempting to unify tha=
-t.
-The local variables become struct members (e.g. bpp becomes dst->bpp) and s=
-o
-do the direct register references (e.g. s->regs.dst_pitch becomes dst->stri=
-de).
-Whether dst is a pointer or a local struct doesn't change that.
+Thanks,
 
-I was thinking we could initialize the dst struct and then assign the local=
-s to
-those values to avoid churn (e.g. unsigned dst_x =3D dst->rect.x) and anyth=
-ing
-using those locals wouldn't need to be updated. But then the problem still
-remains with the direct register references.
+-- 
+Peter Xu
 
-Another thought is that we could first create local variables for each of t=
-hese,
-even those that are currently direct register references, and do the replac=
-ement
-in the function. Then in a separate patch assign the locals to the struct
-members. The locals could then either stick around indefinitely or be repla=
-ced
-themselves with direct references to the struct in another patch.
-
-Do you have any preference, or maybe even other ideas about which might be
-clearer?
 
