@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEFF6C88E78
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 08:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27FB3C88E75
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 09:02:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkIPo-0001Cu-CZ; Mon, 26 Jan 2026 03:57:44 -0500
+	id 1vkITs-0005A4-E0; Mon, 26 Jan 2026 04:01:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vkIPU-00015t-32
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 03:57:33 -0500
-Received: from 1.mo548.mail-out.ovh.net ([178.32.121.110])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vkITq-00059S-RD
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 04:01:54 -0500
+Received: from 7.mo548.mail-out.ovh.net ([46.105.33.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vkIPP-0001Lb-A9
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 03:57:23 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.52])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f02V047r2z5vq0;
- Mon, 26 Jan 2026 08:57:11 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vkITp-00026f-53
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 04:01:54 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.249.99])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4f02bJ6HPlz5vxJ;
+ Mon, 26 Jan 2026 09:01:48 +0000 (UTC)
 Received: from kaod.org (37.59.142.108) by DAG3EX1.mxp5.local (172.16.2.21)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Mon, 26 Jan
- 2026 09:57:10 +0100
+ 2026 10:01:48 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-108S0022dd1db31-3013-4108-8524-838468979c46,
+ (GARM-108S002be5c6730-d48b-4ed9-a3f7-4b3630df8515,
  329AED9B4B2025A2B6FD845E756CD38D93ED9099) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <00403858-d7c8-4d90-9c95-90395691a790@kaod.org>
-Date: Mon, 26 Jan 2026 09:57:09 +0100
+Message-ID: <588fa41c-a5ff-455d-b64d-b36b986ee781@kaod.org>
+Date: Mon, 26 Jan 2026 10:01:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 03/22] hw/misc: Add basic Aspeed PWM model
-To: Kane Chen <kane_chen@aspeedtech.com>, Peter Maydell
+Subject: Re: [PATCH v1 04/11] hw/arm/ast27x0: Add DRAM alias for SSP SDRAM
+ remap
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>
-References: <20260120051859.1920565-1-kane_chen@aspeedtech.com>
- <20260120051859.1920565-4-kane_chen@aspeedtech.com>
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
+ Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
+References: <20260120092939.2708302-1-jamin_lin@aspeedtech.com>
+ <20260120092939.2708302-5-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,27 +87,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260120051859.1920565-4-kane_chen@aspeedtech.com>
+In-Reply-To: <20260120092939.2708302-5-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [37.59.142.108]
-X-ClientProxiedBy: DAG1EX2.mxp5.local (172.16.2.2) To DAG3EX1.mxp5.local
+X-ClientProxiedBy: DAG3EX2.mxp5.local (172.16.2.22) To DAG3EX1.mxp5.local
  (172.16.2.21)
-X-Ovh-Tracer-GUID: 97c2d76f-e98d-48fe-bba6-512fb44dd95b
-X-Ovh-Tracer-Id: 3199526061266471858
+X-Ovh-Tracer-GUID: ed68ead4-5cfa-407e-9103-648a103153cd
+X-Ovh-Tracer-Id: 3277494629975952306
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGwQgrGb+K8l8I3IAIa3qQ2+KWHgjpHhlJI8jd0fRhLSy3MwOW1s51tViD/vKGBDTRvViTeD+wXWFIM0RNiq+beUyWSfLrkmmZwklJ9hDox/ujD4oRw8vvEyXpnQM5DmC0sRrN4IQYFf6H9U/bKEMTZx7kKWup/7KMt1CtTcbPQ56Lewy7IRUV0LFuOWeLu8WyA/sRa1b98OJmq+4V6TNcNeML2E6aFEL5ADub4f7hXQcm0Tgf0SxspDrvxLmgtqws0AItKupcYLb4ARhdwZXvECMihVjZ8RSTKOCu+AFh/wyTNUlyWHkzE/yK0JmkfoiNm+nFQKiIDnV0rwnFgQVQtI8hATTkFpe/PGslU+vxTbgYo8lw69Q1bVT3PzZoJ2M+RT8pikQvc/C77n8qOKN5uHpylH8MaMwYglYU3dnj9Fd7gndcZv24wTKh6jw3lELe6yAo79yVABCgmjIJNc5+QmeSayvE7B461GGSRNMVsOy8PGE6gdcDApVHHEZMMYe10Te3hpr7sU6aKdDSVIScHnAO399LTB8bsfhzZsEjI266vTCT4nlWZ0OGHj8TCueh+x0p5m4XiNaonnhdZeZVaPzWCibs57yd565w1BVqB/DBrLvX09gYdwR56mVMcJxHeTBR3EN2YkHf5RdjfDOY0K1qXqO78FuTj6ouxWPcDRg
-DKIM-Signature: a=rsa-sha256; bh=Y4GnQweZyYMWx3JTlTZm30VlxMVV1EZNcPsTpKXa1Qw=; 
+X-VR-SPAMCAUSE: dmFkZTEghy68Y7UW6crngxomV7a5R31xWN0Qx+2EkzR/SZPPIWRyMWkLLrQyhcKsUBdu44Y5sAAmWfJ0EP+l5k9+7aMF8s0Jzdl8wRsWqhqIL92ImT594oMtSsUYOg/SuB2u2znMONgv8ekSWXLzR/Ux1pbkNVIODPJP6l9XlrALIyrc6BpdsgYUBV5tE08o2Ojkblr1PCAKRzHnYO8HOl+jkRvRFSJ+C4Yiy2M8lXjDoSyQZ7Oxb51GVWObPebc0AmVRRuZa/0JATfX0C+G5jFcytaJaZ+u6IFFKtMCi83AHjWfQx6pZxHiw/n11ElH/nTuZHDC91KTfMAO/9/b2VjH3vKIBV0fTnGF8nboD7SPs+dgoAJFK/F19syW2l1CcdB32tiT+nXY3SCFqKyTuJG1sDsEQ7S5TY+l6IytN9/r2NA0eoM0RdUeLNtTzsNzu+6TYpNi+Bmp/56oVtkf19SZqyeyU5nQk8vgYPbuO8e/ZgZrU23/3MQCGTro4mJgn/kb6qKmhayfFVHvzjD05LkFX219RR/duiTX6lXmEqyLK75Ja2szqFBGJifNEyWQy7QJfqKVpNu3avF7eXj27W+5R61eRbV7us6Wb2YU7s9yGFCM0CQMZLobH2l4TNCaijh+YEDdnOSRegEv+pc+ls/mwO8rLNTxVplCoQ2LngVWVrc9sw
+DKIM-Signature: a=rsa-sha256; bh=zve9uKHY4vopNRZ0fAauE+5fSY5s/99aaqD1vAXJX/M=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1769417834; v=1;
- b=wJa3dneu48PpBw6qL1yZ75l4OL4mGzmrc4zglLysn5oGDop4dHv8ColfqonjeAEV/330gBlL
- AG6aF+vvGHEXvWb6EBkub92ufyIupjUpL6hUw9yoxubXgv6gERDSPxqWUkzwDMNnUYHopoR5ykp
- bKo8OSxL8ZfWMV7dj1368Wat84acR8nH9iQFt8i+7BGHAlAgiaxZxiPpLr5sm6kM0/gLJOp1XDM
- KLlfmrsDuKUYsLkaXy+De71Xuyi8yamoJlMKXpK1WyAvcleoQlrXg6dJ6eh2oGaypBguqJ8fUKm
- PYDmv9UjIWQugsOWQkI2JIIwFjwGLrFqrMUHIZ+UCd6rw==
-Received-SPF: pass client-ip=178.32.121.110; envelope-from=clg@kaod.org;
- helo=1.mo548.mail-out.ovh.net
+ t=1769418109; v=1;
+ b=Kp9jpDrovmqjEZHgsJpcF1V42PCyFcVgddUqjsl+PAYj5M6G8kKDkR4Ly5LmCP5y3dpM5/tb
+ 5HgMJaKJFkYCr/S2oR7Oh+3SzuEdmiMzKqQRMXbsoDf/z8Y5Qfl4f7z7xtyr8DXzh/qpFDisV0w
+ hu7RCNQgpxs1iC9lFrkK+++VMyheabfRfybBAAu9J5svWRILlCeBHplOdYERVqdlxjzKYm63p7t
+ ObVlhNMtLN8Ku15P8ZBDpUD6Qd6jga/2a+mL5/v/sKak3qd9UyxgRmqQ5O5GZudlMfLgUQvAAQy
+ 7YnpV+WUu8qTEem3vEEYuUbcrIIh1DaAU7TXpd9RGtFZQ==
+Received-SPF: pass client-ip=46.105.33.25; envelope-from=clg@kaod.org;
+ helo=7.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,7 +115,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,33 +131,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/20/26 06:18, Kane Chen via wrote:
-> From: Cédric Le Goater <clg@kaod.org>
+On 1/20/26 10:29, Jamin Lin via qemu development wrote:
+> This commit adds two MemoryRegion aliases to support PSP access to
+> SSP SDRAM through shared memory remapping, as defined by the default SCU
+> configuration.
 > 
-> Add an initial PWM model for Aspeed SoCs, including device state,
-> register definitions, and basic initialization as a sysbus device.
+> The SSP exposes two DRAM aliases:
+>    - remap1 maps PSP DRAM at 0x400000000 (32MB) to SSP SDRAM offset 0x2000000
+>    - remap2 maps PSP DRAM at 0x42c000000 (32MB) to SSP SDRAM offset 0x0
 > 
-> Signed-off-by: Cédric Le Goater <clg@kaod.org>
-> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> These regions correspond to the default SCU register values, which control
+> the mapping between PSP and coprocessor memory windows.
+> 
+> Set SSP CPUID 4 and bumps the SCU VMState version to 3.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   include/hw/arm/aspeed_soc.h  |   3 +-
->   include/hw/misc/aspeed_pwm.h |  31 +++++++++
->   hw/misc/aspeed_pwm.c         | 121 +++++++++++++++++++++++++++++++++++
->   hw/misc/meson.build          |   1 +
->   hw/misc/trace-events         |   4 ++
->   5 files changed, 159 insertions(+), 1 deletion(-)
->   create mode 100644 include/hw/misc/aspeed_pwm.h
->   create mode 100644 hw/misc/aspeed_pwm.c
-Kane,
+>   include/hw/misc/aspeed_scu.h |  5 +++++
+>   hw/arm/aspeed_ast27x0-fc.c   |  2 ++
+>   hw/arm/aspeed_ast27x0-ssp.c  |  6 ++++++
+>   hw/arm/aspeed_ast27x0.c      |  4 ++++
+>   hw/misc/aspeed_scu.c         | 38 ++++++++++++++++++++++++++++++++++--
+>   5 files changed, 53 insertions(+), 2 deletions(-)
+make check fails with :
 
-When you resend, could you please fix :
-
-   ERROR: New file 'include/hw/misc/aspeed_pwm.h' requires 'SPDX-License-Identifier'
-   ERROR: New file 'hw/misc/aspeed_pwm.c' requires 'SPDX-License-Identifier'
-
-
-ERRORs detected by ../scripts/checkpatch.pl should be fixed before sending.
-WARNING are OK.
+   Unexpected error in aspeed_scu_realize() at ../hw/misc/aspeed_scu.c:609:
+   qemu-system-aarch64: aspeed.scu: 'dram' link not set
 
 Thanks,
 
