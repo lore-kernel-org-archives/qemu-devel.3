@@ -4,113 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B5D9D13C0F
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 13:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA77D13C11
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 13:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkN4B-0002Vm-QA; Mon, 26 Jan 2026 08:55:43 -0500
+	id 1vkN6r-0004qE-G7; Mon, 26 Jan 2026 08:58:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1vkN3u-0002Ie-CG; Mon, 26 Jan 2026 08:55:29 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vkN6o-0004oz-9y
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 08:58:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1vkN3s-0004vg-IP; Mon, 26 Jan 2026 08:55:26 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60QCCmco004679;
- Mon, 26 Jan 2026 13:55:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=B9nbKM03l+YsBmkg6
- yzSH3HekNyWZvvRFMDmwlEZtkw=; b=CJFmzR+Egdpq6yVqiJu517pFeW/3MACMd
- nsOxT/G0PyxU9UoksIHHQoOsyoBizOG+MGLswnBG4bftVfPTiQX7TNC8QLgUANM9
- S711WmfUZqmnxaiGQrx/4bK5O4r2Ds6/N2Lt5F8C5pZtjbnGLcnFYtmYUwDoOVeM
- MfI9KcQZexgjQb2wBnEIC+GhAVVbQ7iu/IxiVML2t9C0pIQpX1BWYia0RUF1b+ek
- 9DvVvXMNnMCMIp4kBVLbu5lKWjamaxQ4muoAc2jFHc/8I8TMxjoudsVdWP/DMNp9
- T2N2eJ0VYXUKXHiaC28uBHG1MLl3jQHLokE6tuGtyEyM4lwoE/NGg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnrt87hj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 26 Jan 2026 13:55:22 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 60QDt7b0019493;
- Mon, 26 Jan 2026 13:55:22 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnrt87hf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 26 Jan 2026 13:55:22 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60QAlgUo031044;
- Mon, 26 Jan 2026 13:55:21 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bw8dscvxf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 26 Jan 2026 13:55:21 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60QDtJ9028181192
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 26 Jan 2026 13:55:19 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 615FF58055;
- Mon, 26 Jan 2026 13:55:19 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ED3EE58043;
- Mon, 26 Jan 2026 13:55:18 +0000 (GMT)
-Received: from gfwr532.rchland.ibm.com (unknown [9.10.239.133])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 26 Jan 2026 13:55:18 +0000 (GMT)
-From: Caleb Schlossin <calebs@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
- milesg@linux.ibm.com, chalapathi.v@linux.ibm.com,
- harshpb@linux.ibm.com, calebs@linux.ibm.com
-Subject: [PATCH v2 3/3] ppc/pnv: Add OCC FLAG registers
-Date: Mon, 26 Jan 2026 07:55:07 -0600
-Message-ID: <20260126135507.771552-4-calebs@linux.ibm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260126135507.771552-1-calebs@linux.ibm.com>
-References: <20260126135507.771552-1-calebs@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vkN6m-0005Gq-8q
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 08:58:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769435903;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1lP/MhcyBPFKND59IMN7fIUJ8EBi1OyFqDX8dUmTlKY=;
+ b=XZLUdchWdLEi8ZZCAnL0XmsJHS+7TfqLfp7aC4cr+CO3Lc0aC28JtVJOi2u42e8pGPrY93
+ VlmcDpCgtvvBp2fBhUXCzT9OSihynhc/GW9Y7SZ+psVJcgqKKkkzcanm2hnPzDR4OfMZ7z
+ 8gyhADvxhBJZM58NHfpR+wLpOaP4woY=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-50-QyK_ocOpMKudmDgF7PH13A-1; Mon, 26 Jan 2026 08:58:22 -0500
+X-MC-Unique: QyK_ocOpMKudmDgF7PH13A-1
+X-Mimecast-MFC-AGG-ID: QyK_ocOpMKudmDgF7PH13A_1769435901
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4325aa61c6bso3479954f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 05:58:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769435901; x=1770040701;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1lP/MhcyBPFKND59IMN7fIUJ8EBi1OyFqDX8dUmTlKY=;
+ b=AdP6fjHKrKjrgJdztEhWE2KKR9ZB0WqLxCMDrlYi9UC65fqPO8WaGs5l67JdcGFAiy
+ +GZGlrsYy/rzvGW1HKM73VtcIv8CS4uK+03f5jrHhKwRWLh4T6KlM0SXGzPbxc2fnX7O
+ FBFFBrqhdzIcwHul29QNHmvnxVDIDOq6d5bhszzi5at1DQsP4+SNOKOWiW/hqwwCJCiq
+ c4iKQ+HW0a/fJ/niZK3iMgTp/tokhcosp/YReAymmcZ53KgvUnbFXKA/aH2Y7UQdfaTM
+ 25sppR0QwH3o/Ertz9tDLBgEkiMDwVXP7Zwur8lAEqvrQ/LbAas5dj1EJ0F472AVShs6
+ oScQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUfHCS77CGH0NtwvqioZK00SlLv2lF8+kQs5AoGlf4Q5t6vp/yEIOQXGwIeqzh/EhXLSnabZ4xTINiA@nongnu.org
+X-Gm-Message-State: AOJu0YxZhBzSNiH+urp9llpFKguYuF7yFmzqrZv3n1SnLgIog4UyClSr
+ u7yhGlGzbyPLNYM6yKZ+tTgzOj9iHCo2+IrRrQdnQR0CYZxDA/J7bXZJAX+qHJILemeVXbdJMj2
+ OuOMF7J5Hd+O7hlEweCoXXffCBIRIevaV9MBTfEJoatREMXmy0VbaxSfQ
+X-Gm-Gg: AZuq6aKCMogS3Yso2FyJlPpIyxnlgjwwFF8F3+F6RUcEFJuR1kq0nYgVPd7HTrdgHy5
+ nutkycrNx5UpOUgHqKlMbOxK7RR1IOFR1zBq0pVy2Qyj2c582Vm8//UNDNRx2a4TEvZLZP3nsQ4
+ 6z/im1Rfp8iuk9x8QuujGYut75vJ1Cfgku26RshdpPkwSCSaw7hetpB5HUW58yk4fuq+AL3I9NQ
+ MIALVMCxEbwdADncypAYlxlv+pXUixiWPuPCKvQ4LlviOkhb5dc0xlYNrBawd58cYT2OHVUV4Qr
+ 1ssJXDT0DB2ePHBMZ0nCbrgBWjoCSvnbiNg4ulIW2Eu/q0Gvm7GtAp447vg0W/L51gJSjLn41SZ
+ MC6bgp5Cs8oiI9GbZmuEsk0xHzBhJOABZxxnHJYO/bUKNkvcUe6homILG7Q==
+X-Received: by 2002:a05:6000:22c9:b0:432:5bf9:cf15 with SMTP id
+ ffacd0b85a97d-435ca0d1430mr8796121f8f.5.1769435900632; 
+ Mon, 26 Jan 2026 05:58:20 -0800 (PST)
+X-Received: by 2002:a05:6000:22c9:b0:432:5bf9:cf15 with SMTP id
+ ffacd0b85a97d-435ca0d1430mr8796065f8f.5.1769435900118; 
+ Mon, 26 Jan 2026 05:58:20 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435b1c02cf6sm31618155f8f.7.2026.01.26.05.58.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Jan 2026 05:58:19 -0800 (PST)
+Message-ID: <8ebfb47a-4c21-4c8b-ae4d-d9d77aefe867@redhat.com>
+Date: Mon, 26 Jan 2026 14:58:16 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: smgEytLI3UeaBVTjnfNOdpuSxlU8ts9f
-X-Authority-Analysis: v=2.4 cv=Uptu9uwB c=1 sm=1 tr=0 ts=6977724a cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=C6aVSkDANSdmHkZ1WT0A:9
-X-Proofpoint-ORIG-GUID: H6UXT7KzmjhG-ovr7Xm1eotoSl0pOBtO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI2MDExNyBTYWx0ZWRfX8cZfBWEu6Nl3
- nJdngi4af50QC3h5kStS5SGh/DaxtbZwPO2UKv0/KzhW4llUd6hvkAsvXNWOyj5Ml+z0W6bank6
- zrXfEiclJt7Cyt7EZ+UssPuWSPR+7tHPIxjrcV1y9FJYU4Mjno4Q+WvBOjDLb8lzk/apXLlpBX6
- QtF+eZEnIPcOCINoNcKo202uCJ98No7lpYrH3qz9ki2gCHToKUCcCh3LJkOcNEDBjITclFOqfAA
- fff6sLBe8wBeeGJ48BPjy6eD3Bk1xCjI8LPoDkzmioAbxTtafocJhgLzoFkYOnn4ma9Fjf/QIoo
- gxzwUXylcCL815XsdiluCD/vPmILrm6pa01hmJExhx+1tpqHknGc3KjjzZZmWF4Qnlf0PQ9Zmt+
- yIwRILpDiZRQ6eAPYz54fvi5/0CcYHfhOFQk2Biv4MOxbhAIe7cyy9jjKCSd3+pbg56F2+e7dyx
- F87REZYsi7tY4gUM3Jw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-26_03,2026-01-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 clxscore=1015 lowpriorityscore=0
- phishscore=0 adultscore=0 impostorscore=0 bulkscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601260117
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=calebs@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 06/16] hw/arm/tegra241-cmdqv: Map VINTF Page0 into
+ guest
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, nicolinc@nvidia.com, nathanc@nvidia.com,
+ mochs@nvidia.com, jgg@nvidia.com, jonathan.cameron@huawei.com,
+ zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, kjaju@nvidia.com
+References: <20251210133737.78257-1-skolothumtho@nvidia.com>
+ <20251210133737.78257-7-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251210133737.78257-7-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,123 +116,137 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OCCFLG are scratch registers that can be shared with OCC firmware.
-Log reads and writes to the registers as a reminder when we run
-into more OCC code.
 
-Add RW, WO_CLEAR and WO_OR SCOM Type enums in pnv_occ.c
 
-Reviewed-by: Chalapathi V <chalapathi.v@linux.ibm.com
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
-Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
----
- hw/ppc/pnv_occ.c         | 55 +++++++++++++++++++++++++++++++++++++---
- include/hw/ppc/pnv_occ.h |  4 +++
- 2 files changed, 56 insertions(+), 3 deletions(-)
+On 12/10/25 2:37 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
+>
+> Tegra241 CMDQV assigns each VINTF a 128KB MMIO region split into two
+> 64 KB pages:
+>  - Page0: guest accessible control/status registers for all VCMDQs
+>  - Page1: configuration registers (queue GPA/size) that must be trapped
+>           by the VMM and translated before programming the HW queue.
+>
+> This patch implements the Page0 handling in QEMU. Using the vintf offset
+> returned by IOMMUFD during VIOMMU allocation, QEMU maps Page0 into
+> guest physical address space and exposes it via two guest MMIO windows:
+>  - 0x10000 :VCMDQ register
+>  - 0x30000 :VINTF register
 
-diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
-index 64cab3e9dc..81dd5cfd1b 100644
---- a/hw/ppc/pnv_occ.c
-+++ b/hw/ppc/pnv_occ.c
-@@ -195,6 +195,49 @@ static const TypeInfo pnv_occ_power8_type_info = {
- #define P9_OCB_OCI_OCCMISC_CLEAR        0x6081
- #define P9_OCB_OCI_OCCMISC_OR           0x6082
- 
-+/* OCC scratch registers for flag setting */
-+#define P9_OCCFLG0                      0x60ac
-+#define P9_OCCFLG7_OR                   0x60c3
-+
-+enum ScomType {
-+    SCOM_TYPE_RW          = 0,
-+    SCOM_TYPE_WO_CLEAR    = 1,
-+    SCOM_TYPE_WO_OR       = 2,
-+};
-+
-+static void rw_occ_flag_regs(PnvOCC *occ, uint32_t offset, bool read,
-+        uint64_t *val)
-+{
-+    int flag_num;
-+    int flag_type;
-+
-+    /*
-+     * Each OCCFLG register has SCOM0 - RW, SCOM1 - WO_CLEAR, SCOM2 - WO_OR
-+     * hence divide by 3 to get flag index and mod 3 to get SCOM type.
-+     */
-+    flag_num = (offset - P9_OCCFLG0) / 3;
-+    flag_type = (offset - P9_OCCFLG0) % 3;
-+
-+    if (read) {
-+        if (flag_type) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "OCC: Write only register: Ox%"
-+                      PRIx32 "\n", offset);
-+            return;
-+        }
-+        *val = occ->occflags[flag_num];
-+    } else {
-+        switch (flag_type) {
-+        case SCOM_TYPE_RW:
-+            occ->occflags[flag_num] = *val;
-+            break;
-+        case SCOM_TYPE_WO_CLEAR:
-+            occ->occflags[flag_num] &= ~(*val);
-+            break;
-+        case SCOM_TYPE_WO_OR:
-+            occ->occflags[flag_num] |= *val;
-+        }
-+    }
-+}
- 
- static uint64_t pnv_occ_power9_xscom_read(void *opaque, hwaddr addr,
-                                           unsigned size)
-@@ -207,8 +250,11 @@ static uint64_t pnv_occ_power9_xscom_read(void *opaque, hwaddr addr,
-     case P9_OCB_OCI_OCCMISC:
-         val = occ->occmisc;
-         break;
-+    case P9_OCCFLG0 ... P9_OCCFLG7_OR:
-+        rw_occ_flag_regs(occ, offset, 1, &val);
-+        break;
-     default:
--        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register: Ox%"
-+        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register read: Ox%"
-                       HWADDR_PRIx "\n", addr >> 3);
-     }
-     return val;
-@@ -229,9 +275,12 @@ static void pnv_occ_power9_xscom_write(void *opaque, hwaddr addr,
-         break;
-     case P9_OCB_OCI_OCCMISC:
-         pnv_occ_set_misc(occ, val);
--       break;
-+        break;
-+    case P9_OCCFLG0 ... P9_OCCFLG7_OR:
-+        rw_occ_flag_regs(occ, offset, 0, &val);
-+        break;
-     default:
--        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register: Ox%"
-+        qemu_log_mask(LOG_UNIMP, "OCC Unimplemented register write: Ox%"
-                       HWADDR_PRIx "\n", addr >> 3);
-     }
- }
-diff --git a/include/hw/ppc/pnv_occ.h b/include/hw/ppc/pnv_occ.h
-index 84bdf5004d..92a4dbf1a0 100644
---- a/include/hw/ppc/pnv_occ.h
-+++ b/include/hw/ppc/pnv_occ.h
-@@ -47,6 +47,10 @@ struct PnvOCC {
-     /* OCC Misc interrupt */
-     uint64_t occmisc;
- 
-+    /* OCC Flags */
-+#define NR_FLAG_REGS 8
-+    uint32_t occflags[NR_FLAG_REGS];
-+
-     qemu_irq psi_irq;
- 
-     /* OCCs operate on regions of HOMER memory */
--- 
-2.47.3
+I would recommend to have a drawing showing the mr container, the
+subregions, their offsets, and content/nature of each region
+
+Eric
+>
+> The mapping is lazily initialized on first read/write.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/tegra241-cmdqv.c | 60 +++++++++++++++++++++++++++++++++++++++++
+>  hw/arm/tegra241-cmdqv.h |  5 ++++
+>  2 files changed, 65 insertions(+)
+>
+> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+> index 899325877e..d8858322dc 100644
+> --- a/hw/arm/tegra241-cmdqv.c
+> +++ b/hw/arm/tegra241-cmdqv.c
+> @@ -13,14 +13,74 @@
+>  #include "smmuv3-accel.h"
+>  #include "tegra241-cmdqv.h"
+>  
+> +static bool tegra241_cmdqv_init_vcmdq_page0(Tegra241CMDQV *cmdqv, Error **errp)
+> +{
+> +    SMMUv3State *smmu = cmdqv->smmu;
+> +    SMMUv3AccelState *s_accel = smmu->s_accel;
+> +    IOMMUFDViommu *viommu;
+> +    char *name;
+> +
+> +    if (!s_accel) {
+> +        return true;
+> +    }
+> +
+> +    viommu = &s_accel->viommu;
+> +    if (!iommufd_backend_viommu_mmap(viommu->iommufd, viommu->viommu_id,
+> +                                     VCMDQ_REG_PAGE_SIZE,
+> +                                     cmdqv->cmdqv_data.out_vintf_mmap_offset,
+> +                                     &cmdqv->vcmdq_page0, errp)) {
+> +        cmdqv->vcmdq_page0 = NULL;
+> +        return false;
+> +    }
+> +
+> +    name = g_strdup_printf("%s vcmdq", memory_region_name(&cmdqv->mmio_cmdqv));
+> +    memory_region_init_ram_device_ptr(&cmdqv->mmio_vcmdq_page,
+> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
+> +                                      name, 0x10000, cmdqv->vcmdq_page0);
+> +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv, 0x10000,
+> +                                        &cmdqv->mmio_vcmdq_page, 1);
+> +    g_free(name);
+> +
+> +    name = g_strdup_printf("%s vintf", memory_region_name(&cmdqv->mmio_cmdqv));
+> +    memory_region_init_ram_device_ptr(&cmdqv->mmio_vintf_page,
+> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
+> +                                      name, 0x10000, cmdqv->vcmdq_page0);
+> +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv, 0x30000,
+> +                                        &cmdqv->mmio_vintf_page, 1);
+> +    g_free(name);
+> +
+> +    return true;
+> +}
+> +
+>  static uint64_t tegra241_cmdqv_read(void *opaque, hwaddr offset, unsigned size)
+>  {
+> +    Tegra241CMDQV *cmdqv = (Tegra241CMDQV *)opaque;
+> +    Error *local_err = NULL;
+> +
+> +    if (!cmdqv->vcmdq_page0) {
+> +        tegra241_cmdqv_init_vcmdq_page0(cmdqv, &local_err);
+> +        if (local_err) {
+> +            error_report_err(local_err);
+> +            local_err = NULL;
+> +        }
+> +    }
+> +
+>      return 0;
+>  }
+>  
+>  static void tegra241_cmdqv_write(void *opaque, hwaddr offset, uint64_t value,
+>                                   unsigned size)
+>  {
+> +    Tegra241CMDQV *cmdqv = (Tegra241CMDQV *)opaque;
+> +    Error *local_err = NULL;
+> +
+> +    if (!cmdqv->vcmdq_page0) {
+> +        tegra241_cmdqv_init_vcmdq_page0(cmdqv, &local_err);
+> +        if (local_err) {
+> +            error_report_err(local_err);
+> +            local_err = NULL;
+> +        }
+> +    }
+>  }
+>  
+>  static const MemoryRegionOps mmio_cmdqv_ops = {
+> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+> index 9bc72b24d9..ccdf0651be 100644
+> --- a/hw/arm/tegra241-cmdqv.h
+> +++ b/hw/arm/tegra241-cmdqv.h
+> @@ -19,8 +19,13 @@ typedef struct Tegra241CMDQV {
+>      SMMUv3State *smmu;
+>      MemoryRegion mmio_cmdqv;
+>      qemu_irq irq;
+> +    MemoryRegion mmio_vcmdq_page;
+> +    MemoryRegion mmio_vintf_page;
+> +    void *vcmdq_page0;
+>  } Tegra241CMDQV;
+>  
+> +#define VCMDQ_REG_PAGE_SIZE 0x10000
+> +
+>  #ifdef CONFIG_TEGRA241_CMDQV
+>  bool tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+>                                   uint32_t *out_viommu_id, Error **errp);
 
 
