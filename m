@@ -4,88 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DDECCF65CB
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 09:51:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 992B3CF65D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 10:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkJ9I-0001pN-2X; Mon, 26 Jan 2026 04:44:44 -0500
+	id 1vkJgG-0008P8-MX; Mon, 26 Jan 2026 05:18:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vkJ9F-0001lQ-En
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 04:44:41 -0500
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vkJ9D-000152-Px
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 04:44:40 -0500
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-c3e921afad1so1488567a12.1
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 01:44:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769420678; x=1770025478; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+a3OwfwQBO2otyKeHBN1LrQH4TMfKPwgsXvF1+xAS4A=;
- b=lNvnhVA/NQlQDR4wps7g7ScPrjQwDbnnXJkROWIEbCvSqGIVA1n61N35jQlumEn0tp
- YgV8SE8VSn2DFyUqco2prXf6j/9A0lck/AVVgMT+v12AuZBxSggnYQYgzK3q9+/Z/Zer
- El1WLMMw6gOZvgX2wk++ojhI2XsW5V6XCkcSmlhLbOg0UJ7/TNXeUSTxKuF6EUp52tPt
- mPTQKuvU7uV85gGafjLjcQQFLwXMY1BtVJ4gzzLUmQi+rJMqoYGSHxwCK9Td1NTm3DkW
- wfyOOMfKd5YBDtX33BEyzsDkzGvQ+yPxcU2NRQpyif9yZZU7eTSQJZJMy12lA6YLfdp/
- 904Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769420678; x=1770025478;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+a3OwfwQBO2otyKeHBN1LrQH4TMfKPwgsXvF1+xAS4A=;
- b=RegERLry+ISjBLMHUpxZkCpzVnB3Awc6I3Vlk3vIvNqfk1FhdRM+LXKVO3ZGuiqoAw
- prSqwqneABTfWOMS8zmYcP53u6rQP90eVru0nMWwrpwzogBR50kK0ONplef2a1xXqRpD
- LJN9nN4fROUzWmgG35H+WZBih2oLdmxCDyR6RI9rQgE1u3r+HABNUqBC04/lMsFpgaOL
- L6OGYme/CY+1dGl3Lv7AjASPLENfamZnc7ozZmda5aUuZxb3qK0v84ihYkdSXOs5hnTu
- 2JFbG6fB66EI7aTXHhrDRlCQmB4e4t/zM5Q/vu07SgQGbgu3dcLSNy0eh7chLP0b1z1d
- 6y2w==
-X-Gm-Message-State: AOJu0Yz18UIIi2ortzVTsx2kaP9/MY6nlPBjvt83lYlqKdvmqL57WDuC
- vBlMIeb6eS1rYWawvT+il7F2hH8iFWAyHyKsWGWrRqXmIQWG6Mai0MIq1SDT9CnY
-X-Gm-Gg: AZuq6aJLlO1G0ImlGHji1m8TQ9rkS11Q9IWXTJTUgpp5hQUOnrik8OhyiORoL9LCkb0
- Z8n+x+Z/onf6cy2cR4JAMOXg0x/DAz9JK72gnN5lKen7uwDFvVNcbE06+HY7SwqIsB7GpFaT6K6
- 8ZseqofW8dnlKAUffGcGVd7KgKtC9SXlfxyFAZmkhJ1dj0y8X+wgXIaNI+9hPV1YqbNKcSDvxNI
- ZIejBWvE/7mCtx7drroXjPq/owIjzgr3JZnCst7VDg9dfkuSZFpG5D0XN/yTEdWnuxlVY/a3Kwx
- GCh9qm349mqSYfMpYzkkV2NGmdg8vnyvqKyhGAwB3TnErhX7H6MH1Tn2O06zjnsevpVMOa70fhB
- ciLjrAoeO2CCd7e0oX/QfajlGvXOjzhg6/7eosTEJrFSw7vz9aWC/g6+NcGPwJ4yDWNtld3FRZD
- 2/g/vrBQ8KMGAixSw=
-X-Received: by 2002:a17:903:1a4d:b0:2a1:5f23:7ddf with SMTP id
- d9443c01a7336-2a8451f8876mr37342235ad.6.1769420677907; 
- Mon, 26 Jan 2026 01:44:37 -0800 (PST)
-Received: from localhost.localdomain ([180.87.170.15])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a802f978d2sm85605585ad.52.2026.01.26.01.44.35
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 26 Jan 2026 01:44:37 -0800 (PST)
-From: Zhang Chen <zhangckid@gmail.com>
-To: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [RESEND PATCH V3 2/3] iothread: Introduce a new flag to show
- iothreads attached status
-Date: Mon, 26 Jan 2026 17:44:21 +0800
-Message-ID: <20260126094422.23116-2-zhangckid@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20260126094422.23116-1-zhangckid@gmail.com>
-References: <20260126094422.23116-1-zhangckid@gmail.com>
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1vkJgF-0008Ne-F6
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 05:18:47 -0500
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1vkJgC-0007lu-2H
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 05:18:47 -0500
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:5c05:0:640:ff67:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 417CCC03D3;
+ Mon, 26 Jan 2026 13:18:37 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:98a::1:6] (unknown [2a02:6bf:8080:98a::1:6])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id aIdMPG4BQa60-I8EsAc6h; Mon, 26 Jan 2026 13:18:36 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1769422716;
+ bh=piGN+WlrQvX4SrBEsZv8BTtcRIxUdK1TIkzxDgt7uP8=;
+ h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
+ b=iR3qw6QY1+ifLSpj7uWP17fc6pV1VN2PYox7i3y5AamgK22Z/grvfUFuga0XGayuK
+ 7sPkiXS7Zpjf4ma0vAW1nd22l+b1QeXzBTX57ug+dg/MDBB+HMEzeGtMif+XZaEd/i
+ xgPTqo4KC3AIbM2oNwSNtBwnLp1NyhHCRnMsTRc0=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <38a0813d-329c-46e2-bd64-bd410d9ac16c@yandex-team.ru>
+Date: Mon, 26 Jan 2026 13:18:36 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] virtio/vhost: don't consider non-MAP_SHARED regions public
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
+References: <20251113085842.323745-1-d-tatianin@yandex-team.ru>
+ <88bf67fc-1a5d-464c-8e17-49cc4d988044@yandex-team.ru>
+Content-Language: en-US
+In-Reply-To: <88bf67fc-1a5d-464c-8e17-49cc4d988044@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=zhangckid@gmail.com; helo=mail-pg1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,58 +77,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU Need a flag to show current iothread attached status
-when hotplug multi iothreads. For example virtio-blk.
+Ping! :)
 
-Signed-off-by: Zhang Chen <zhangckid@gmail.com>
----
- include/system/iothread.h | 1 +
- iothread.c                | 5 +++++
- 2 files changed, 6 insertions(+)
-
-diff --git a/include/system/iothread.h b/include/system/iothread.h
-index e26d13c6c7..3d00474523 100644
---- a/include/system/iothread.h
-+++ b/include/system/iothread.h
-@@ -32,6 +32,7 @@ struct IOThread {
-     QemuSemaphore init_done_sem; /* is thread init done? */
-     bool stopping;              /* has iothread_stop() been called? */
-     bool running;               /* should iothread_run() continue? */
-+    bool attached;              /* Whether or not attached to device */
-     int thread_id;
- 
-     /* AioContext poll parameters */
-diff --git a/iothread.c b/iothread.c
-index caf68e0764..38e38fb44d 100644
---- a/iothread.c
-+++ b/iothread.c
-@@ -94,6 +94,7 @@ void iothread_stop(IOThread *iothread)
-         return;
-     }
-     iothread->stopping = true;
-+    iothread->attached = false;
-     aio_bh_schedule_oneshot(iothread->ctx, iothread_stop_bh, iothread);
-     qemu_thread_join(&iothread->thread);
- }
-@@ -199,6 +200,9 @@ static void iothread_init(EventLoopBase *base, Error **errp)
-      */
-     iothread_init_gcontext(iothread, thread_name);
- 
-+    /* Clear iothread attached flag for init gcontext */
-+    iothread->attached = false;
-+
-     iothread_set_aio_context_params(base, &local_error);
-     if (local_error) {
-         error_propagate(errp, local_error);
-@@ -336,6 +340,7 @@ char *iothread_get_id(IOThread *iothread)
- 
- AioContext *iothread_get_aio_context(IOThread *iothread)
- {
-+    iothread->attached = true;
-     return iothread->ctx;
- }
- 
--- 
-2.49.0
-
+On 11/25/25 3:32 PM, Daniil Tatianin wrote:
+> Ping :)
+>
+> On 11/13/25 11:58 AM, Daniil Tatianin wrote:
+>> Just having a file descriptor is not enough to consider a memory region
+>> public. If QEMU didn't map it as MAP_SHARED (in case of share=off), 
+>> guest
+>> writes to this region won't be visible to the vhost-user backend, thus
+>> causing it to read all zeroes or garbage. Make sure we don't pass such
+>> regions and include that to our definition of what a private region is.
+>>
+>> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+>> ---
+>>   hw/virtio/vhost.c | 10 ++++++----
+>>   1 file changed, 6 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>> index 266a11514a..eb098a25c5 100644
+>> --- a/hw/virtio/vhost.c
+>> +++ b/hw/virtio/vhost.c
+>> @@ -591,11 +591,13 @@ static bool vhost_section(struct vhost_dev 
+>> *dev, MemoryRegionSection *section)
+>>           /*
+>>            * Some backends (like vhost-user) can only handle memory 
+>> regions
+>>            * that have an fd (can be mapped into a different 
+>> process). Filter
+>> -         * the ones without an fd out, if requested.
+>> -         *
+>> -         * TODO: we might have to limit to MAP_SHARED as well.
+>> +         * the ones without an fd out, if requested. Also make sure 
+>> that
+>> +         * this region is mapped as shared so that the vhost backend 
+>> can
+>> +         * observe modifications to this region, otherwise we 
+>> consider it
+>> +         * private.
+>>            */
+>> -        if (memory_region_get_fd(section->mr) < 0 &&
+>> +        if ((memory_region_get_fd(section->mr) < 0 ||
+>> +            !qemu_ram_is_shared(section->mr->ram_block)) &&
+>> dev->vhost_ops->vhost_backend_no_private_memslots &&
+>> dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
+>>               trace_vhost_reject_section(mr->name, 2);
 
