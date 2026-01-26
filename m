@@ -4,57 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 022CBC88E7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17031D74EFF
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 09:23:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkIoA-00024W-Pp; Mon, 26 Jan 2026 04:22:54 -0500
+	id 1vkInq-0001sD-I5; Mon, 26 Jan 2026 04:22:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vkInx-0001xf-Ld
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 04:22:42 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vkInk-0001oe-CK
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 04:22:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vkInw-00060W-38
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 04:22:41 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vkIni-0005uH-J4
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 04:22:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769419359;
+ s=mimecast20190719; t=1769419346;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I8+gTPo+yv/FqpTy8nATRmAuAwhNf/xZdt8S5Dqeu0g=;
- b=i2HM94ddHv9U2FxF67C/8bXaQL4mpUrAUWktmp2DEiUzgdJxtWZepJBz2k4he+6y7h3YIi
- xK3yYNduVAobSpqHUDhXsqUPy+ttePu1yTMIRr5soFg5C7bhUuGpYjmKRmI9Bx4FSj07LO
- vGJysoj0y3VZvYFuBdUlBy3qmiRhLCc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=kFGSyUH8rotNFk+Zp/oHgCXJPYMdGYVHu4ViuZY5iY8=;
+ b=Ht7Rvxdpor6+9GzMV5YCp5KAzkgIwPJcC9TbQVH47o3c3o8/fJ3u1DS+S7YkcmEZSZh+wX
+ 3KmyJtwGc9o/qmuRufvslErlssdQtUzoGb0xic2ikwqKpfgVfnE7dkYsqRVS5Ixsxt612q
+ 55GOrHbll+fjGIUdz5MGFqDCe5GjDY8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-iSfoWPmpNfmeiDrJVAouzg-1; Mon,
- 26 Jan 2026 04:22:35 -0500
-X-MC-Unique: iSfoWPmpNfmeiDrJVAouzg-1
-X-Mimecast-MFC-AGG-ID: iSfoWPmpNfmeiDrJVAouzg_1769419354
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-284-E1p3p5WvNB6Co8weyAni6w-1; Mon,
+ 26 Jan 2026 04:22:21 -0500
+X-MC-Unique: E1p3p5WvNB6Co8weyAni6w-1
+X-Mimecast-MFC-AGG-ID: E1p3p5WvNB6Co8weyAni6w_1769419341
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7D4761955F2C; Mon, 26 Jan 2026 09:22:34 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D1F591955D9F; Mon, 26 Jan 2026 09:22:20 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.175])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BF4201956095; Mon, 26 Jan 2026 09:22:32 +0000 (UTC)
+ id 161241956053; Mon, 26 Jan 2026 09:22:18 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- John Levon <john.levon@nutanix.com>,
+Cc: Alex Williamson <alex@shazbot.org>, Jim Shu <jim.shu@sifive.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 7/7] vfio-user: update VFIOProxy flag constants to use the
- BIT() macro
-Date: Mon, 26 Jan 2026 10:22:12 +0100
-Message-ID: <20260126092212.503162-8-clg@redhat.com>
+Subject: [PULL 2/7] hw/vfio: cpr-iommufd: Fix wrong usage of
+ migrate_add_blocker_modes
+Date: Mon, 26 Jan 2026 10:22:07 +0100
+Message-ID: <20260126092212.503162-3-clg@redhat.com>
 In-Reply-To: <20260126092212.503162-1-clg@redhat.com>
 References: <20260126092212.503162-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -86,41 +84,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+From: Jim Shu <jim.shu@sifive.com>
 
-This should help avoid incorrect constant values being used in future. At
-the same time we can remove the gap left for BIT(1) which was originally
-intended for the VFIO_PROXY_NO_MMAP feature which was removed from later
-versions of the vfio-user series.
+The return value of API is 0 for success and negative error code for
+failure. We'll check if the return value equals to 0.
+Also, the MIG_MODE should be CPR_TRANSFER and CPR_EXEC instead
+of 2 same bits.
 
-Suggested-by: John Levon <john.levon@nutanix.com>
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20260121110055.2333711-3-mark.caveayland@nutanix.com
+The API usage is aligned with 'hw/vfio/cpr-legacy.c' after these 2
+changes.
+
+Fixes: 3ca0a0ab05c ("migration: Use bitset of MigMode instead of variable arguments")
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260121063418.2001326-1-jim.shu@sifive.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio-user/proxy.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/vfio/cpr-iommufd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/vfio-user/proxy.h b/hw/vfio-user/proxy.h
-index b09fd886f17f24abcf8d99e5520a39501c0486f1..7b97460cc504a408e8e4299fa84fd56a2d674aa0 100644
---- a/hw/vfio-user/proxy.h
-+++ b/hw/vfio-user/proxy.h
-@@ -91,10 +91,10 @@ typedef struct VFIOUserProxy {
- } VFIOUserProxy;
+diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
+index c244db88fbbb4ae5c5c876a610f9187edda904c9..6758c73b6b96a32170ced8b18aebf8212d9542cd 100644
+--- a/hw/vfio/cpr-iommufd.c
++++ b/hw/vfio/cpr-iommufd.c
+@@ -159,8 +159,8 @@ bool vfio_iommufd_cpr_register_iommufd(IOMMUFDBackend *be, Error **errp)
  
- /* VFIOProxy flags */
--#define VFIO_PROXY_CLIENT        0x1
--#define VFIO_PROXY_FORCE_QUEUED  0x4
--#define VFIO_PROXY_NO_POST       0x8
--#define VFIO_PROXY_USE_MULTI     0x10
-+#define VFIO_PROXY_CLIENT        BIT(0)
-+#define VFIO_PROXY_FORCE_QUEUED  BIT(1)
-+#define VFIO_PROXY_NO_POST       BIT(2)
-+#define VFIO_PROXY_USE_MULTI     BIT(3)
+     if (!vfio_cpr_supported(be, cpr_blocker)) {
+         return migrate_add_blocker_modes(cpr_blocker,
+-                    BIT(MIG_MODE_CPR_TRANSFER) | BIT(MIG_MODE_CPR_TRANSFER),
+-                    errp);
++                    BIT(MIG_MODE_CPR_TRANSFER) | BIT(MIG_MODE_CPR_EXEC),
++                    errp) == 0;
+     }
  
- /* coalescing high and low water marks for VFIOProxy num_outgoing */
- #define VFIO_USER_OUT_HIGH       1024
+     vmstate_register(NULL, -1, &iommufd_cpr_vmstate, be);
 -- 
 2.52.0
 
