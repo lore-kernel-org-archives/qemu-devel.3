@@ -4,104 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91FC1D19519
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 20:45:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9B82D19519
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 20:47:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkTS4-00029Q-PM; Mon, 26 Jan 2026 15:44:48 -0500
+	id 1vkTUE-0003gn-Uz; Mon, 26 Jan 2026 15:47:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkTS0-00027u-Pf
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 15:44:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkTRy-0001tk-9A
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 15:44:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769460281;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cZVAnHt9mHF48fKkDLpgRAT+I+jRACvGkHTaXgd+PTw=;
- b=S4t4e3DMApams1G/upI8XRu0TYZGvM1ISdbJdtJs4v/0m3IPKkr+BpaJ/6z4O3xAnQSzpG
- lbCo0WzNcPJ4Cok6S1M02WykmEtuc+o2X3LPchZimVU1VDXhArKgQ6vEjX2UUugVpKiDDe
- Gi00lE8cH+cIv5fvfz9On2jzpY1JOe0=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-16-qeOgpQerOjiwtW3K46b54w-1; Mon, 26 Jan 2026 15:44:39 -0500
-X-MC-Unique: qeOgpQerOjiwtW3K46b54w-1
-X-Mimecast-MFC-AGG-ID: qeOgpQerOjiwtW3K46b54w_1769460279
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-502a341e0e3so139599491cf.3
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 12:44:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vkTUC-0003f9-Ku
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 15:47:00 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vkTUA-0002NA-RW
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 15:47:00 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-47ff94b46afso42820435e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 12:46:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769460279; x=1770065079; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=cZVAnHt9mHF48fKkDLpgRAT+I+jRACvGkHTaXgd+PTw=;
- b=YFn5J5EeWtiKUzNdcL4rNECh/XVFjy1eotNG3neaqZxnJ2Itv4DCWYYskw4ocmy1Gu
- oRssk9zTr0tZHkbs59qt72WwpHIwWUqQdgzctqEcn0VcPHsaNFE6FgF2aegjA+ugGRdj
- aciLoZHlpYk6/IY/5ZE2DmZtoodNYv4b0cpynOlKvNPEjUGsgRpF3Kju98VqccG1fAJh
- jmEX3/t9mfT7d3mtl91H5VTx69p25hCTj/gJAVA0znVET2bKr7rMVKuE3rpktDVgjUOC
- 4/Oxt4spAgEezA4d3Hsvem1KvevGMC3vnPyOOTCMC7HSD8PPVIWKq7cxktPJcPpbihxu
- GXzg==
+ d=linaro.org; s=google; t=1769460417; x=1770065217; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=szmoeSCZB2oGAr3DsY/ioF4jCUhLS4lG/vyf1OmUU1s=;
+ b=UPF8T7/DrhpBhPlZgetTuJJzRkJirONv8we8Wm+cjxpcwPFJVhClntEm+8xdTiAXIp
+ 53RQUGWXvwYysjOp3/9xyBIynj6TFsY2Cq6KF8GVoIwHbnib1RGmFpTRh4ynsppaTAfA
+ jaOOnNHXKOUgwA5PMjD5vk24YUmYCBqjrzkmZSMqRNBgShCgSmcJfUZBF5+tZI60hSBf
+ HZsbTjWrpRp3aVbjRDIc4+tJkwaZvQfxz/pSQX+RBkZHYDPhSL/imvNhEHwlCf4RKxMO
+ zF+CntaeggjAiIphj2uh1IcRbOpTg1GG1nPmf7y7jRCLLg8nE4Qo+I2Cp3w8GQoFATU/
+ xSxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769460279; x=1770065079;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cZVAnHt9mHF48fKkDLpgRAT+I+jRACvGkHTaXgd+PTw=;
- b=R97xin7bkokOzB7FbaWy0oZAIeZ4qu3mz0XGOuvA1AK/qU+NampfLU1rLUd9b3qxl6
- SHPZb2BbrKcaZGgTFrHnc8NjJo++6I7EFTxvDHfNVLQnqFRmlnL9WEFen4m7OGgoOSBz
- q1ugJtCBvqruqHs9jgDfDx3L/+ZXLaVlmwN+fNSQqtSRvBBh17qUvF3+c4qdrM4i++HJ
- FHo3RyGoNFvN+zpWvDkRZR/iQZfbHAZqaUPjr8mYwHy2PjPncgnJEAEMa6QMqtk5q5a/
- WVILG/CwuNtHjp1AY2St5lnkm5s4GrbriOaM03vyXjfkQGT/JtqejUfxiT9wBkYH5K0E
- v8Cg==
-X-Gm-Message-State: AOJu0YzHzDGnylq4io3vr7Q4HyNcvijRDSsq36fCcQGWNis8p/oyiM0N
- zU4cH2xRAFjzWFcsGWMkPzFormuJk9jUyZNA+3fao+TKsbCsYcfjSELt1dC4UuDBFFC3d2usT5Y
- eex1fNkgS0ldZHOhk5qgN0JvWY/rx8ISfOcPePCckbYhZPTaUFHOMrrKI
-X-Gm-Gg: AZuq6aKEtV1FuvJbamVFoZ314ZkoFM0qLqheWZM+kO6JsWqqA/R8mbT7WfmT+F03TQY
- gVKrhNYaG/Q7yvL/v1t57CRIh9rdtdG/04PIpls3ZsiHRScV0B3+W9Pbf2VldAkHOUSxqktjryP
- euFuetr5VvcRsN83fHdqFSjrJp3NZjngJvsrbrSLVQm5+3zSd/LcobkoDNHI6Nv1/fswx6Da8ll
- 4Q7KGT2KP/XjzH3S12zxoVeuT57nbRBH7rUDbRZzBNJepIdZYbbns8TjLkki8PQqGcbejkxTuTF
- mciDFXJBO839kNw8q2plaiBPXX2TL0Q+q+FDJDchp5jpXRHMFYwIKWYbUrOMX9/LOb9PGT61R+N
- vLvQ=
-X-Received: by 2002:ac8:5707:0:b0:4ed:ba76:a008 with SMTP id
- d75a77b69052e-50314ccd5b4mr70419171cf.73.1769460279105; 
- Mon, 26 Jan 2026 12:44:39 -0800 (PST)
-X-Received: by 2002:ac8:5707:0:b0:4ed:ba76:a008 with SMTP id
- d75a77b69052e-50314ccd5b4mr70418871cf.73.1769460278659; 
- Mon, 26 Jan 2026 12:44:38 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-502f7f72352sm88591821cf.21.2026.01.26.12.44.37
+ d=1e100.net; s=20230601; t=1769460417; x=1770065217;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=szmoeSCZB2oGAr3DsY/ioF4jCUhLS4lG/vyf1OmUU1s=;
+ b=PZkncQ5rZjmbVUbtKDNSdOq/Mb8o+KHUzrn4mKBa5DX8pmyZIU2dRY7cDWpQ7g7psp
+ 5QDPw3yXp+tWD60b3lTYV44q3MH4hnY2/LG0GjDWuFsX401WQuD64j8gCDMF3jiv1i01
+ VMix9ELOrgIV7olu2fIsH3AEJafAHVm1LRTBTRbyQXybUFd833aBc8f6liC1T+PAvXhP
+ RWIukBWIBITq6QhDZoJo4EUgDm7200l66vWN6BwRFK6G8TTAQnlj6qPcM+cxX3WSVlzi
+ kpP+uQha2NmF9NHeyKuEwCLwbDr8W0YNG6xx8dSJY0Uy20cRrAALcfq3U0ceFaJYbgwh
+ R+Ng==
+X-Gm-Message-State: AOJu0YxFdWR3G4FfYekwHLMss8xNDOxbgtJFuNlAv7740tKB4DU0WpAw
+ 6qGGL92KEmEcGGtBiBPkKUTq790l90Fqi8Iny+zkkwhF4FNzfJ1G5X91QHMMc2GPkuE=
+X-Gm-Gg: AZuq6aJTzMFiSB0oDRAMg+SC+z22FONc63voHY1c8ZaLCc2ZyebYNWzwPczdu0e9W0e
+ 1gGXcJpUs9pqRJ0YA8mcKpjWOx2e5V9kTdT65BMUiS7xa1YYS65ILDXyGHopRDTdaxg58yTNjEZ
+ Hgn1Yi0BVIm1Z2eSU6/j6gbqQTK5jp8LNTM6nlLAg+p1sa0WcegejnaBrtgcrXmArhPmGugyWEp
+ yXzA7qepySrw4GKqnrgxVYBCTbbItA/MzjS4x3uMF71TntrTGKA8HFyzMxDe3uLm9r86+kNAnHc
+ Tn0q9Ugde0DFLw2k2GVWTBW9FiWvzAE9IpIQrOJmiLhL8+m8EfC3Uc2A3gcZUfZnO07ii4NV9dW
+ /MDAwxUPjcRXMawvmkP5TVXy+L+Egrxl1jKwVSyYRYKJS2JE34GX3qOspmbdPOarSoDNwdrt5sW
+ Tzksz/hI5qGq83
+X-Received: by 2002:a05:600c:a113:b0:479:1348:c63e with SMTP id
+ 5b1f17b1804b1-4805d96f4c5mr65277445e9.9.1769460416818; 
+ Mon, 26 Jan 2026 12:46:56 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48066bfb58esm12589965e9.8.2026.01.26.12.46.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 12:44:38 -0800 (PST)
-Date: Mon, 26 Jan 2026 15:44:36 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Prasad Pandit <ppandit@redhat.com>,
- Lukas Straub <lukasstraub2@web.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 05/10] migration/colo: Unwrap qemu_savevm_live_state()
-Message-ID: <aXfSNCVljE4XJ-e4@x1.local>
-References: <20260121223336.3381912-1-peterx@redhat.com>
- <20260121223336.3381912-6-peterx@redhat.com>
- <87cy30igmy.fsf@suse.de>
+ Mon, 26 Jan 2026 12:46:56 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 83F945F80B;
+ Mon, 26 Jan 2026 20:46:54 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Florian Hofhammer <florian.hofhammer@epfl.ch>
+Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,
+ richard.henderson@linaro.org,  laurent@vivier.eu,  imp@bsdimp.com,
+ berrange@redhat.com
+Subject: Re: [PATCH v3 2/5] plugins: add read-only property for registers
+In-Reply-To: <871pjcdt5q.fsf@draig.linaro.org> ("Alex =?utf-8?Q?Benn=C3=A9?=
+ =?utf-8?Q?e=22's?= message of "Mon, 26 Jan 2026 20:18:41 +0000")
+References: <ef60bfbb-cc12-4411-acc1-8c131726f22e@epfl.ch>
+ <8b36b6c1-83bd-462b-a346-f240dd17746d@epfl.ch>
+ <871pjcdt5q.fsf@draig.linaro.org>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Mon, 26 Jan 2026 20:46:54 +0000
+Message-ID: <87pl6wcda9.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87cy30igmy.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,77 +107,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 23, 2026 at 10:48:53AM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > It's only used in COLO path and only contains two calls.  Unwrap the
-> > function.  It paves way for further reduce special COLO paths on sync.
-> >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  migration/savevm.h | 1 -
-> >  migration/colo.c   | 3 ++-
-> >  migration/savevm.c | 7 -------
-> >  3 files changed, 2 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/migration/savevm.h b/migration/savevm.h
-> > index 5d815af742..528607f09e 100644
-> > --- a/migration/savevm.h
-> > +++ b/migration/savevm.h
-> > @@ -64,7 +64,6 @@ void qemu_savevm_send_postcopy_ram_discard(QEMUFile *f, const char *name,
-> >                                             uint64_t *start_list,
-> >                                             uint64_t *length_list);
-> >  void qemu_savevm_send_colo_enable(QEMUFile *f);
-> > -void qemu_savevm_live_state(QEMUFile *f);
-> >  int qemu_save_device_state(QEMUFile *f);
-> >  
-> >  int qemu_loadvm_state(QEMUFile *f, Error **errp);
-> > diff --git a/migration/colo.c b/migration/colo.c
-> > index db783f6fa7..e05736ecf0 100644
-> > --- a/migration/colo.c
-> > +++ b/migration/colo.c
-> > @@ -471,7 +471,8 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
-> >       * TODO: We may need a timeout mechanism to prevent COLO process
-> >       * to be blocked here.
-> >       */
-> > -    qemu_savevm_live_state(s->to_dst_file);
-> > +    qemu_savevm_state_complete_precopy(s->to_dst_file, true);
-> 
-> Could maybe drop this complete from the name eventually.
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-Maybe it's good to keep it?  As it describes it's in completion phase.  For
-instance, for iterable devices we invoke different hooks when it's
-completing (save_complete()) v.s. iterating (save_iterate()).
+> Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
+>
+>> Some registers should be marked as read-only from a plugin API
+>> perspective, as writing to them via qemu_plugin_write_register has no
+>> effect. This includes the program counter, and we expose this fact to
+>> the plugins with this patch.
+>>
+>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+>> ---
+>>  include/qemu/qemu-plugin.h |  2 ++
+>>  plugins/api.c              | 17 +++++++++++++++++
+>>  2 files changed, 19 insertions(+)
+>>
+>> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+>> index f976b62030..1f25fb2b40 100644
+>> --- a/include/qemu/qemu-plugin.h
+>> +++ b/include/qemu/qemu-plugin.h
+>> @@ -942,11 +942,13 @@ struct qemu_plugin_register;
+>>   *          writing value with qemu_plugin_write_register
+>>   * @name: register name
+>>   * @feature: optional feature descriptor, can be NULL
+>> + * @is_readonly: true if the register cannot be written via qemu_plugin=
+_write_register
+>>   */
+>>  typedef struct {
+>>      struct qemu_plugin_register *handle;
+>>      const char *name;
+>>      const char *feature;
+>> +    bool is_readonly;
+>>  } qemu_plugin_reg_descriptor;
+>>=20=20
+>>  /**
+>> diff --git a/plugins/api.c b/plugins/api.c
+>> index fc19bdb40b..de8c32db50 100644
+>> --- a/plugins/api.c
+>> +++ b/plugins/api.c
+>> @@ -403,6 +403,12 @@ bool qemu_plugin_bool_parse(const char *name, const=
+ char *value, bool *ret)
+>>   * ancillary data the plugin might find useful.
+>>   */
+>>=20=20
+>> +static const char pc_str[] =3D "pc"; // generic name for program counter
+>> +static const char eip_str[] =3D "eip"; // x86 specific name for program=
+ counter
+>> +static const char rip_str[] =3D "rip"; // x86_64 specific name for prog=
+ram counter
+>> +static const char pswa_str[] =3D "pswa"; // s390x specific name for pro=
+gram counter
+>> +static const char iaoq_str[] =3D "iaoq"; // HP/PA specific name for pro=
+gram counter
+>> +static const char rpc_str[] =3D "rpc"; // microblaze specific name for
+>> program counter
+>
+> It's ugly but I can't think of anything better as you say in the commit m=
+essage.
+>
+>>  static GArray *create_register_handles(GArray *gdbstub_regs)
+>>  {
+>>      GArray *find_data =3D g_array_new(true, true,
+>> @@ -417,9 +423,20 @@ static GArray *create_register_handles(GArray *gdbs=
+tub_regs)
+>>              continue;
+>>          }
+>>=20=20
+>> +        gint plugin_ro_bit =3D 0;
+>>          /* Create a record for the plugin */
+>>          desc.handle =3D GINT_TO_POINTER(grd->gdb_reg + 1);
+>>          desc.name =3D g_intern_string(grd->name);
+>
+> Lets just set desc.is_readonly to false here.
+>
+>> +        if (!strcmp(desc.name, pc_str)
+>> +            || !strcmp(desc.name, eip_str)
+>> +            || !strcmp(desc.name, rip_str)
+>> +            || !strcmp(desc.name, pswa_str)
+>> +            || !strcmp(desc.name, iaoq_str)
+>> +            || !strcmp(desc.name, rpc_str)
+>> +           ) {
+>> +            plugin_ro_bit =3D 1;
+>> +        }
+>> +        desc.is_readonly =3D plugin_ro_bit =3D=3D 1 ? true : false;
+>
+> And fold setting it to true into the if statement. I have a marginal
+> preference for g_strcmp0(desc.name, eip_str) =3D=3D 0 style tests.
 
-> 
-> > +    qemu_put_byte(s->to_dst_file, QEMU_VM_EOF);
-> >  
-> >      qemu_fflush(fb);
-> >  
-> > diff --git a/migration/savevm.c b/migration/savevm.c
-> > index f1cd8c913d..529cf310e0 100644
-> > --- a/migration/savevm.c
-> > +++ b/migration/savevm.c
-> > @@ -1854,13 +1854,6 @@ cleanup:
-> >      return ret;
-> >  }
-> >  
-> > -void qemu_savevm_live_state(QEMUFile *f)
-> > -{
-> > -    /* save QEMU_VM_SECTION_END section */
-> > -    qemu_savevm_state_complete_precopy(f, true);
-> > -    qemu_put_byte(f, QEMU_VM_EOF);
-> > -}
-> > -
-> >  /* Is a save state entry iterable (e.g. RAM)? */
-> >  static bool qemu_savevm_se_iterable(SaveStateEntry *se)
-> >  {
-> 
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+The option of course would be to skip the register all together. Do we
+have code which will have multiple vaddr's for the same TB where using
+the TB data wouldn't be sufficient?
 
-I took this. :)
+>
+>>          desc.feature =3D g_intern_string(grd->feature_name);
+>>          g_array_append_val(find_data, desc);
+>>      }
+>
+> Otherwise:
+>
+> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
--- 
-Peter Xu
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
