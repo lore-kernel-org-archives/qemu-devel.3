@@ -4,96 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 285BED1951A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50029D1951E
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 21:37:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkUG3-0003jV-Qy; Mon, 26 Jan 2026 16:36:27 -0500
+	id 1vkUG6-0003l1-J4; Mon, 26 Jan 2026 16:36:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkUG1-0003id-Sn
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 16:36:25 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkUG3-0003iq-7M
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 16:36:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkUG0-0003Lh-Dy
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 16:36:25 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkUG1-0003Lt-Eo
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 16:36:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769463383;
+ s=mimecast20190719; t=1769463384;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8rL0AQZMo/YY0quRtMt3oVsuGltDVpd+3XkWVPidUEU=;
- b=LUtfCWtAXh6reztDGfXy92RnMY1w4ooHx0jSo2jOEQEmTzVE0ksEJRQIX8qEUn8wvsnCka
- L6LjPvDbdrBlwl+fFuS9NaoGoCo3n4iTzs2LeqEicoNWZCNOSc/gdUt7SJ0RADKcVR+MIu
- Amrhclt4VrSXwfHU8pRumCz/TLnrE9I=
+ bh=etRNZB/RqPeas23lqicq1TZAYZsK5mKaexzj8oDSS3I=;
+ b=JH9+YXGamlgyFTDgF4EMkmoeilQT2ItVGyFvrozuDGmH/ZcS9DEQjnB2KkSQ8YAXMYpJ+i
+ kg9FZjPQ22XWDnIUqo56CCwJ2lw/doXbYJsdhjH5uKpcOZVh+Mg0+LzB1uulLFqwjbqs4G
+ GcAp8iDWKC0T1NkSZAhGT1GeVr/zufA=
 Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
  [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-xnaecXWgP8WovYzFhhvhJg-1; Mon, 26 Jan 2026 16:36:20 -0500
-X-MC-Unique: xnaecXWgP8WovYzFhhvhJg-1
-X-Mimecast-MFC-AGG-ID: xnaecXWgP8WovYzFhhvhJg_1769463380
+ us-mta-223-dc8OTwWVNvy5DBXyVBNw6A-1; Mon, 26 Jan 2026 16:36:22 -0500
+X-MC-Unique: dc8OTwWVNvy5DBXyVBNw6A-1
+X-Mimecast-MFC-AGG-ID: dc8OTwWVNvy5DBXyVBNw6A_1769463382
 Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5014d8b3ae0so131373951cf.1
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 13:36:20 -0800 (PST)
+ d75a77b69052e-5013c19b92dso145539301cf.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 13:36:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769463380; x=1770068180; darn=nongnu.org;
+ d=redhat.com; s=google; t=1769463381; x=1770068181; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8rL0AQZMo/YY0quRtMt3oVsuGltDVpd+3XkWVPidUEU=;
- b=ebBhY4IaVt67dpsckxvYd2ZsocfQ1DtOt4xkvjxVMxrhMLQpnJvckgzCKves47vbyO
- v/QBX3jeM0M3Zb+HqzFURoal3UiYEVMHMLE1XPp6FvcE5joLlpDIWuAZl4jqkn9gV+9r
- lw0m6Ne87a+KNjTG+uNpwsdwZOZ5t6HC8wKIn0oT9GLGx85B2n2U2LAuxtlfnB7xi576
- kQGXO4JCle6MNUh+6yBeTdV6xluArnWMbhH6lfrFEl3Z2eAYOfyfYfVMqop19ZgqG4R9
- hvA75GQjhNEGxAI8Bspa8ea7FunsHmr1pEZCLoiTYyVX+BkeF7T4up/j7qqIsPhEo5sE
- iflw==
+ bh=etRNZB/RqPeas23lqicq1TZAYZsK5mKaexzj8oDSS3I=;
+ b=r46td/hapYjrnFCmqG+3JmqwKsxfVK92zq1PVJq+8/f5fGS0VJuQTrrZ6aMMFob0bG
+ FBLFmPev/unN1oy0pK5CjHCMZH6TEPaku63j1otEUJMloHXNmZoQku27ecs6Y0hfCyT9
+ JQeQLPjXREJOfU5cvA3QNUOXExcQYIRtRiHSdYIOJOczZQ8LoJCBRcPQq+wREP04mkD6
+ t4X5Ob056iCeKmu/8kOdkY/BSillu3f8HUxR43JlfMs+dRcdrQ75Bo1jC8A8X0zfFzkf
+ 5TC/BzZCLxDaO1tEP0xS6AlUUdfEy6By5McOgiScqoLHcPgef/am50P1fzTLjhtcU1Ir
+ GEYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769463380; x=1770068180;
+ d=1e100.net; s=20230601; t=1769463381; x=1770068181;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=8rL0AQZMo/YY0quRtMt3oVsuGltDVpd+3XkWVPidUEU=;
- b=oHjBJgc6zLih+OnTFDwZbO4niN+ILuEDkojgK8MF/ygotF6C0PclXDHkSc9JszmAkr
- r1dTS5Hyx1GYuOtIUy/4xuckqva4IXu97XvFeLkLeYbUA/H0J8ILOjECI+imfx5fQO2T
- hU3i+UqNO0tGXNVZGA5zkyD03vJH82bzYDJfRS5Uim7Qa4VrdT9zngdYvmR19+oNnJLA
- Ct/I+0a27vd4mBpt3UuSnn1xeWg9MjlU3NBGhfAVPdeQicQTzRI3CycNKSUHKn8IMs4Z
- WsimApYqS/hKXwwT+E9nHxbRdjoDQ10uksKtTKrjYrs5zo+f2IqOKsIFMFWuP6xB14os
- IWwg==
-X-Gm-Message-State: AOJu0YwChj4N1eYMaS3bpgIYvUV4EUcjR5q/ev7k5OjvQqwuLXvyCRJP
- /rBfc93ZuQ4iHjjKSbFSGtvNgUZPed03SXZkUxtqQWFq8T2PnAK8g1hCVyYsyo5Xkme0pssT9+h
- c6VF559YDkmaDrkPgHbDoYOl4Ik2QFtyki6obp4YzFjR8wUJ1LlCoi7z8vVvkY1QAQDb9BtHvka
- zqr7/ZScabRaz1m+OhGrl7U/hVKjI617w0On5SWQ==
-X-Gm-Gg: AZuq6aIB+3R66mRODnANBtndg+Jva5Von2RsVI+KFM5NGOoAe7ycuwpLr7bV1q3iTP2
- faArQeAsCXi9UJ3YjPb1FfJzopqWm+GjGZEp3j9KU23h9jXJkODAisZ8jF5TgLOB+5BxwEf3V0M
- KDsPWJHe77NfWu19jYwP5MsEGpq6cOFEwrEX9M1EdkNWLewd3GblAS8VXWWcOXhTHTAxUtPvA87
- MowXZ3EKMBWOZ7oDiUs/Azgm2xBFRXLqYHI4oDUXo2nCt80tKY0A6gXChnGDRXrn6noHJek2z7o
- cn+8Amk1vOhUS+79+AOVKjA1cku1Z90tE2hzkhjvyPAJmYSSqQd/gJoXFWVomXeBvwAyp8RDX+s
- 0
-X-Received: by 2002:a05:622a:110b:b0:4ff:c295:3c3e with SMTP id
- d75a77b69052e-50314c22e67mr68533731cf.10.1769463379878; 
- Mon, 26 Jan 2026 13:36:19 -0800 (PST)
-X-Received: by 2002:a05:622a:110b:b0:4ff:c295:3c3e with SMTP id
- d75a77b69052e-50314c22e67mr68533341cf.10.1769463379382; 
- Mon, 26 Jan 2026 13:36:19 -0800 (PST)
+ bh=etRNZB/RqPeas23lqicq1TZAYZsK5mKaexzj8oDSS3I=;
+ b=OaafJV2Xt43Y5GUNGpWZLxkneJ0mWnpliVRTY4++SRs+ZbmN3kJcV/ovugEVtfGOSw
+ eIaLHkZyNNhwFyMtLNpWOvEVWW7YoKBoBvk7IKONWg8LLASV+GREHzQfaUudc+GL6mMm
+ bK9CFk832XAiJg6PD2pgO9OyhmlCQ4znCX4TmXbdzMI+DrCABTU/kJfbaPGyWEq3TSQ1
+ vKIT+U602h4W8/2khI6cskkV01VGE16YRst2GZt6d7X8FLc4jBKrbSBK4vC2EF9MX1wH
+ 11DpqSRMLDC12/bbK/ydHLIP5D1X+r4Pr+13NT7N+C8MHRUwkctQPt4ZPXqPlrH+7BTc
+ FUkQ==
+X-Gm-Message-State: AOJu0Ywp9GUr1TlORyQh9ypXX8C75gTSjlhEn4Gqpbhp2bkMQFE49rHE
+ QdRr9GHl4iokdN6xvwyzo/NoR9PgJnZSV+eZNrUCkgQsTuz3ahABL78INX4CXAMys1ySXhCVzGv
+ VxwGNrJgWvKyZahwLOspkuAhCaJksHXBMdferiwfMjGayAWiYBcfb5ei4U4uVHo7IE5sNiL6dRD
+ hti6zCTAY2IPQdUFMcItzK9Trzk7nAeMHYOoyvYg==
+X-Gm-Gg: AZuq6aJMJfysozluq3gHFdiFKgMlN3HaF6vd6q64fPw3rZFeajeb5Uc7TRMOFUYv4Fb
+ n54+N6OL9SitaqmnjsKN/BzuAc/fRjhRt3bifWS8ytN8J5utGdbsrFYp+IHltQOq2VwqlSJ28iz
+ fycEI+e76yfp0L4rnMyNPQUBcPEkwmEPaMYwSWIqaj6YftyonzWq6lE8bX5E0AHkOnPYLlg3J2/
+ 9dRF3HUpALwcuGbbys1wp9V0n0JA745TuP/7E1ietT55ntpDDyqLTdITbqVN2ocOerNY2fBJ8Ks
+ L4NWFolTmc4Dh5u3GKaC71oy6mA+pZVOslxmdD+ZakXHQMqdyl/FVIQwN8on4uukIrxxKuqIZZa
+ 8
+X-Received: by 2002:a05:622a:d4:b0:4f0:24e2:8de6 with SMTP id
+ d75a77b69052e-50314c9379dmr79323921cf.64.1769463381541; 
+ Mon, 26 Jan 2026 13:36:21 -0800 (PST)
+X-Received: by 2002:a05:622a:d4:b0:4f0:24e2:8de6 with SMTP id
+ d75a77b69052e-50314c9379dmr79323431cf.64.1769463380984; 
+ Mon, 26 Jan 2026 13:36:20 -0800 (PST)
 Received: from x1.com ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-502f7f9cd9esm89769281cf.33.2026.01.26.13.36.17
+ d75a77b69052e-502f7f9cd9esm89769281cf.33.2026.01.26.13.36.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 13:36:17 -0800 (PST)
+ Mon, 26 Jan 2026 13:36:20 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Prasad Pandit <ppandit@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 1/5] migration: Add a tracepoint for invoking migration
- notifiers
-Date: Mon, 26 Jan 2026 16:36:10 -0500
-Message-ID: <20260126213614.3815900-2-peterx@redhat.com>
+ Juraj Marcin <jmarcin@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: [PATCH v2 2/5] migration: Fix double notification of DONE/FAIL for
+ postcopy
+Date: Mon, 26 Jan 2026 16:36:11 -0500
+Message-ID: <20260126213614.3815900-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260126213614.3815900-1-peterx@redhat.com>
 References: <20260126213614.3815900-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -120,39 +123,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Migration notifiers will notify at any of three places: (1) SETUP
+phase, (2) migration completes, (3) migration fails.
+
+There's actually a special case for spice: one can refer to
+b82fc321bf ("Postcopy+spice: Pass spice migration data earlier").  It
+doesn't need another 4th event because in commit 9d9babf78d ("migration:
+MigrationEvent for notifiers") we merged it together with the DONE event.
+
+The merge makes some sense if we treat "switchover" of postcopy as "DONE",
+however that also means for postcopy we'll notify DONE twice..  The other
+one at the end of postcopy when migration_cleanup().
+
+In reality, the current code base will also notify FAILED for postcopy
+twice.  It's because an (maybe accidental) change in commit
+4af667f87c ("migration: notifier error checking").
+
+First of all, we still need that notification when switchover as stated in
+Dave's commit, however that's only needed for spice.  To fix it, introduce
+POSTCOPY_START event to differenciate it from DONE.  Use that instead in
+postcopy_start().  Then spice will need to capture this event too.
+
+Then we remove the extra FAILED notification in postcopy_start().
+
+If one wonder if other DONE users should also monitor POSTCOPY_START
+event.. We have two more DONE users:
+
+  - kvm_arm_gicv3_notifier
+  - cpr_exec_notifier
+
+Both of them do not need a notification for POSTCOPY_START, but only when
+migration completed.  Actually, both of them are used in CPR, which doesn't
+support postcopy.
+
+When at this, update the notifier transition graph in the comment, and move
+it from migration_add_notifier() to be closer to where the enum is defined.
+
+I didn't attach Fixes: because I am not aware of any real bug on such
+double reporting.  I'm wildly guessing the 2nd notify might be silently
+ignored in many cases.  However this is still worth fixing.
+
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Dr. David Alan Gilbert <dave@treblig.org>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.c  | 2 ++
- migration/trace-events | 1 +
- 2 files changed, 3 insertions(+)
+ include/migration/misc.h | 16 ++++++++++++----
+ migration/migration.c    |  3 +--
+ ui/spice-core.c          |  3 ++-
+ 3 files changed, 15 insertions(+), 7 deletions(-)
 
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index e26d418a6e..1cd6cfd7f7 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -59,10 +59,22 @@ void migration_shutdown(void);
+ bool migration_is_running(void);
+ bool migration_thread_is_self(void);
+ 
++/*
++ * Notifiers may receive events in any of the following orders:
++ *
++ *    - MIG_EVENT_PRECOPY_SETUP [-> MIG_EVENT_POSTCOPY_START]
++ *      -> MIG_EVENT_PRECOPY_DONE
++ *
++ *    - MIG_EVENT_PRECOPY_SETUP [-> MIG_EVENT_POSTCOPY_START]
++ *      -> MIG_EVENT_PRECOPY_FAILED
++ *
++ *    - MIG_EVENT_PRECOPY_FAILED
++ */
+ typedef enum MigrationEventType {
+     MIG_EVENT_PRECOPY_SETUP,
+     MIG_EVENT_PRECOPY_DONE,
+     MIG_EVENT_PRECOPY_FAILED,
++    MIG_EVENT_POSTCOPY_START,
+     MIG_EVENT_MAX
+ } MigrationEventType;
+ 
+@@ -81,10 +93,6 @@ typedef int (*MigrationNotifyFunc)(NotifierWithReturn *notify,
+ /*
+  * Register the notifier @notify to be called when a migration event occurs
+  * for MIG_MODE_NORMAL, as specified by the MigrationEvent passed to @func.
+- * Notifiers may receive events in any of the following orders:
+- *    - MIG_EVENT_PRECOPY_SETUP -> MIG_EVENT_PRECOPY_DONE
+- *    - MIG_EVENT_PRECOPY_SETUP -> MIG_EVENT_PRECOPY_FAILED
+- *    - MIG_EVENT_PRECOPY_FAILED
+  */
+ void migration_add_notifier(NotifierWithReturn *notify,
+                             MigrationNotifyFunc func);
 diff --git a/migration/migration.c b/migration/migration.c
-index b103a82fc0..341b9be80e 100644
+index 341b9be80e..bd24006c1a 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -1528,6 +1528,8 @@ int migration_call_notifiers(MigrationEventType type, Error **errp)
-     GSList *elem, *next;
-     int ret;
+@@ -2591,7 +2591,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+      * at the transition to postcopy and after the device state; in particular
+      * spice needs to trigger a transition now
+      */
+-    migration_call_notifiers(MIG_EVENT_PRECOPY_DONE, NULL);
++    migration_call_notifiers(MIG_EVENT_POSTCOPY_START, NULL);
  
-+    trace_migration_call_notifiers(type);
-+
-     e.type = type;
+     migration_downtime_end(ms);
  
-     for (elem = migration_state_notifiers[mode]; elem; elem = next) {
-diff --git a/migration/trace-events b/migration/trace-events
-index 91d7506634..90629f828f 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -198,6 +198,7 @@ process_incoming_migration_co_end(int ret) "ret=%d"
- process_incoming_migration_co_postcopy_end_main(void) ""
- postcopy_preempt_enabled(bool value) "%d"
- migration_precopy_complete(void) ""
-+migration_call_notifiers(int type) "type=%d"
+@@ -2640,7 +2640,6 @@ fail:
+         migrate_set_state(&ms->state, ms->state, MIGRATION_STATUS_FAILED);
+     }
+     migration_block_activate(NULL);
+-    migration_call_notifiers(MIG_EVENT_PRECOPY_FAILED, NULL);
+     bql_unlock();
+     return -1;
+ }
+diff --git a/ui/spice-core.c b/ui/spice-core.c
+index 8a6050f4ae..ce3c2954e3 100644
+--- a/ui/spice-core.c
++++ b/ui/spice-core.c
+@@ -585,7 +585,8 @@ static int migration_state_notifier(NotifierWithReturn *notifier,
  
- # migration-stats
- migration_transferred_bytes(uint64_t qemu_file, uint64_t multifd, uint64_t rdma) "qemu_file %" PRIu64 " multifd %" PRIu64 " RDMA %" PRIu64
+     if (e->type == MIG_EVENT_PRECOPY_SETUP) {
+         spice_server_migrate_start(spice_server);
+-    } else if (e->type == MIG_EVENT_PRECOPY_DONE) {
++    } else if (e->type == MIG_EVENT_PRECOPY_DONE ||
++               e->type == MIG_EVENT_POSTCOPY_START) {
+         spice_server_migrate_end(spice_server, true);
+         spice_have_target_host = false;
+     } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
 -- 
 2.50.1
 
