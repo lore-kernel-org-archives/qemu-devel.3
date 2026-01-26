@@ -4,151 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4364BC88E6D
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 07:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3A40C88E72
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 08:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkHSp-0000IZ-91; Mon, 26 Jan 2026 02:56:49 -0500
+	id 1vkHvr-0002Jl-GR; Mon, 26 Jan 2026 03:26:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1vkHSj-0000GH-OI
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:56:42 -0500
-Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1vkHvf-0002EJ-ME; Mon, 26 Jan 2026 03:26:36 -0500
+Received: from mail-swedencentralazon11023141.outbound.protection.outlook.com
+ ([52.101.83.141] helo=GVXPR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1vkHSh-000670-2S
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:56:41 -0500
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1vkHvd-0003Za-Bj; Mon, 26 Jan 2026 03:26:35 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BGncuDqA9TJ3Msg6/foO1wTRzUYD5hns1hZNFFTLBd+I6q/MXUInNI2fobwXRTCBtsbIcLUl9detOviC91nrzkEX2J5YjTWIT7eixEWjwdxV4fglLR9peCJ0w+/J1b/EEtMgeh4cCTJej68n4TH19vzqfWiIlKn2kS+9+CG9+Cqu5CuEMYMEXufcDRYQEJc8AJumCCmJUow0Qwr61LSAOEMXHZl8JzVkVvi9LapNRRhZdjjyeKFp3qzFgVPs/YCC/GvYORj6GVxSCEKz8fJ7oo0Kde9OsX0/LRtDPk7ATFoPy11JyMJkqE31mG4sLcRbBnLUafJGOfRmNCyZinYIPw==
+ b=yqrlS/wZMpMUO22AFaR6GD0t54wFsaPhrojJ8/lyfqi5qQeuSuXmTp5Ez7q79R6c8lvlzZBy9gCFnxLBCut9IeQf5vqg0KW8HxyZq2OH04r07yT6gZzfb0ggkkt//j4vcHnrH7pzHL8IVVAeVjxsgyRuwFMLBWjc5a2JhDCr6X9+GwO/BZP4/kbH95mBgd5VhlmlOfD8yESpqt2qv519eSF64sVAQx1iKMR3ft1TV9FP3K600waZbJ8N+ccAw018y51YR2O/bI1sGc76zD9Qp6WUP4LXrq4XpXl0gWs5ncfVE3uOs7Y4KHeAcHDbZBc9xG9/RBjmlqVDVZBPB4fbNg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=O3ZyFZP09O/uf62VrJ2UmuRHAxsWrWcAl3SCjA/RRr4=;
- b=A20nAy043dXJu2gVm6aEIbf1V80QWP6YyTdKqTCQpPeEmbnHrM8X3NsswzBVTOpfbiJd10qR0v3KzpkpxuGHMdtVMrGnHqLZ7m+bSvCKusMpzZh8+HJuIfUopQdIFpsflalOc5EjzdQdCxrWmnmOmNmanevzRvtqDt65IQ4BRZij3yPfYjZn/MEzKtNn8LnYgc0jnJT56kxVreby13gyJHJaWCHHjFu3yjBo2BHiD457+rvrU/y59XWJ1aGqab2kdoxZ1sJCXgy8jE+Jgl4nMPlov3XHDhVBwDSw3TByH29ML4vxqhlCQ4aLuYWZgmNiA1rH+BilJFoU97KMCkE6EA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=gourry.net smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ bh=PPjtV7jSBvKxVU7xG9iaSF/TVx3XcnrQSaWrR46g2CQ=;
+ b=BjyvcXohL5xKIkUrvE2TI1L8g30eaD+OMOMx2l8+8qZjFimjwH0/A50mWLrQejXqUQkNH1trwm552BiMVrIilJo8+/RDCMvAluGQMzsHkFcHyuZVSCewlkPi7XL4XCUZgterLtwwysDv+vT31b62NzwYbg/B6IWn7yCKic9ratmFIXNFYqia7zp/mCWd9n7sywT7+P/TGu8p3s2Ot4AcuXfP4+Av1tKorP1kBoFpDKi4f5yLdIMajWyhjV3KwOHi3AApZ6aOk+MPi7FlUSKgHEm7h6BWClDe5sqjoQASqp2a/0kxMhJS4XSzJ3hTOP80+7fQKWJBZnXD6tAUzbyv0A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=O3ZyFZP09O/uf62VrJ2UmuRHAxsWrWcAl3SCjA/RRr4=;
- b=1PjM7kwo0aVN4xSvftb1sTL/Mfj1xmc+HDNEVh9PIqVxpvOHo39sX7vDeq6hC0D7En+/69xBZSJuJ77oOcdq5dg8Az96y3yne544kNiZgc0WIFYEXsmABfVRaLUPT1t8QwFH9rQfvVwBjCAVkdV0mr7rnE1Ou9d/7UlXbAVeBUA=
-Received: from SJ0PR05CA0082.namprd05.prod.outlook.com (2603:10b6:a03:332::27)
- by SJ5PPFDF5E260D0.namprd12.prod.outlook.com
- (2603:10b6:a0f:fc02::9a6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.14; Mon, 26 Jan
- 2026 07:56:33 +0000
-Received: from BY1PEPF0001AE18.namprd04.prod.outlook.com
- (2603:10b6:a03:332:cafe::e8) by SJ0PR05CA0082.outlook.office365.com
- (2603:10b6:a03:332::27) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9564.7 via Frontend Transport; Mon,
- 26 Jan 2026 07:56:27 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BY1PEPF0001AE18.mail.protection.outlook.com (10.167.242.100) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9564.3 via Frontend Transport; Mon, 26 Jan 2026 07:56:32 +0000
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 26 Jan
- 2026 01:56:32 -0600
-Received: from [10.65.98.30] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
- Transport; Mon, 26 Jan 2026 01:56:30 -0600
-Message-ID: <eccd84c5-a2ce-46d1-b821-645e339ce69a@amd.com>
-Date: Mon, 26 Jan 2026 15:56:29 +0800
-MIME-Version: 1.0
+ bh=PPjtV7jSBvKxVU7xG9iaSF/TVx3XcnrQSaWrR46g2CQ=;
+ b=VllajCh2B7kbuPRoYdhq6xk+AEZ6fJ6Zf8NxLmKwcSolr+y97UJ9P1QY4jkX3mQKljIikinI2BNIkjz1nQ3+fSsfvBgO+Ic2CNtMxbVfT5RY9LGrgn5qFNxm3B2j/WJ0IHUq69RXu4DMpd4g7iVPpHoBc4ro4uZTPuYJdxjAX+7PnY4H9kv7olqB7wRA99nL1am4p4X5DH1l5LxGK+qU9tFi2SixS+lGAv9W1mU4fFNhRwKRbY1O8H+gOgc798xVHLoCO1CjhGv1DiJ3mF4zl7CTYIYQk2TMCmuVi03x21ZKZy+6+wHe/NX7d0uxdyLy0dGXnFeYVM+OTID7jkKP+A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by AS4PR08MB7503.eurprd08.prod.outlook.com (2603:10a6:20b:4e7::5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.11; Mon, 26 Jan
+ 2026 08:21:25 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%3]) with mapi id 15.20.9542.010; Mon, 26 Jan 2026
+ 08:21:25 +0000
+Message-ID: <a7ff0cfe-7798-4021-9a93-04456219e0f7@virtuozzo.com>
+Date: Mon, 26 Jan 2026 09:21:23 +0100
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/1] numa: add 'memmap-type' option for memory type
- configuration
-To: Gregory Price <gourry@gourry.net>
-CC: <qemu-devel@nongnu.org>, <david@redhat.com>, <imammedo@redhat.com>,
- <jonathan.cameron@huawei.com>, <apopple@nvidia.com>,
- <dan.j.williams@intel.com>, <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
-References: <20260123024312.1601732-1-FangSheng.Huang@amd.com>
- <20260123024312.1601732-2-FangSheng.Huang@amd.com>
- <aXOb7xOKNR62d7oy@gourry-fedora-PF4VCD3F>
-From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
-In-Reply-To: <aXOb7xOKNR62d7oy@gourry-fedora-PF4VCD3F>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH 0/3] fix potential data loss in QEMU (missed flush)
+To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+References: <20251229161740.758800-1-den@openvz.org>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20251229161740.758800-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
+X-ClientProxiedBy: VE1PR03CA0015.eurprd03.prod.outlook.com
+ (2603:10a6:802:a0::27) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
+MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY1PEPF0001AE18:EE_|SJ5PPFDF5E260D0:EE_
-X-MS-Office365-Filtering-Correlation-Id: a61deb15-bb00-4db1-a331-08de5cb06c03
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS4PR08MB7503:EE_
+X-MS-Office365-Filtering-Correlation-Id: 38ae3f4e-0ec7-4191-8e41-08de5cb3e599
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|376014|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?MXZ2bTNCNXF0YnJYYWlrb3U3TXhxVzRKL1ZGQ016WGM5Tk42OHJTMzJlc2Zv?=
- =?utf-8?B?Q3M1T2N3WXFJT0w5Qm5XajljT2FQYjBKQkh0VjBKTVdGTTZFbzEvM1RPNklD?=
- =?utf-8?B?eXJ6eXdlTE81ZmtoR0dXR2E0enQ2aFIwTkJOTFZvaVE4SlZGdnZzMEMraFVm?=
- =?utf-8?B?eDk1TzljUHB3OEVnQk5maFI3R3owN0tEOUdzeUs2ejZ5VlgrZTVpclJzdHph?=
- =?utf-8?B?RkxDMkF5YjMzbmRwci9yaG84SlA1OCtNRGsxQ0pHMzNMZ2xQRHFPdWJKcklC?=
- =?utf-8?B?WUxlTHdYRk13UjBrYmhRa2Fnd3B2QXVIS1Y3VDdyT2NyMENub1BRc2Urbk5L?=
- =?utf-8?B?NDRCRkpMVU82V2t3R3B0WmJOaTMxc2VYNFR3ZC9BYXlvc2RUZlExRFcySENQ?=
- =?utf-8?B?Y0ZjQXJUK2plSzdIT1VCTExLZGk2S05ROHBQLzZIWVVBNEo0V1NVdi9nYU16?=
- =?utf-8?B?cldOZVh5ZDVBWExwMExkSyt5bVJaeWhLaHY2Y0NxMWFDVWVvc2tIODR0RGJ4?=
- =?utf-8?B?N2R0dEdsMlZtaEhhVmlycmtsR2lYOVFGQ3VFeFpZelQ5cTVFYUVmTTk0LzIx?=
- =?utf-8?B?SzMrdVd3RUEwYzcrYXJpMkl6MjJSZXNqVUtLOTI3VzBJbmJFb3p6QmRpNWZ1?=
- =?utf-8?B?S1VNVmZMaU5OdUZuMGE5S20yVXBIWW5QazNHcU1vN2VnMlVZR2gyd3FHQ1d3?=
- =?utf-8?B?RmN0YXV0Yk5qUnFQdzRhWGdyVFJTam9VTUQvdUFhWjQrcjV6ZVR6M00yemdK?=
- =?utf-8?B?WDBWdDFMNElLS2lJR0hrSjNXaGJab0tocktQSmpqaElOdjhjUDFYQmNjNm5a?=
- =?utf-8?B?dDVVWDVVQldVakVqd1orZmswNXhDclR5d3Nhdld0ckRmZVpFemdtajdMTTZq?=
- =?utf-8?B?eDBMUzNTWUlEblVMbmpYNmQrNkZyZ0g1dStPbCswbVd5RGpVS3VyWi9NQm4x?=
- =?utf-8?B?ZXByY0RaMzIxZGJ1SGxGUTJDYXBlNCtkOEFjWjlhb1hvWi9mbHZEeDg0MTZs?=
- =?utf-8?B?TDl3aVRlMGtPUElOb2syclYxcnBxNFdlSVFwazMxRVNUTGtYSmprNlFFTmYv?=
- =?utf-8?B?OUltYW9UUHpZUzUyMzZFdE1DRGlMMDBJN1c0WHloeWxjS3piaWlwR2Z4Wkhn?=
- =?utf-8?B?b0xVcEs3bStjZlI3djFaRWZkWjhtU1BvbVN2MnN1RFBTZUkybFl3K3pnR0ZO?=
- =?utf-8?B?V00zZGpRWkg1UWN0b0p2TFFWc0YvMUQxTG5IdmY2a1IwYURRL1NGdHVSK3JD?=
- =?utf-8?B?YnIzb1lMdkYzUDM3UXYycXFyY3BQcHNCNk1yN01mOEdGUWJ1L0VJZ2Znb3Ux?=
- =?utf-8?B?NnJvVlZURkxDNGg3UEZaSytVRUs2VjVROS9tVElFT3h5amgzL0tXQjVBWndV?=
- =?utf-8?B?UDlJbkhiTTduYXlOUTAwTHd1YlowOHJqUTc4SHc5YjJsaFE0Q0s1UVVVcmIy?=
- =?utf-8?B?V0liU29YUmlxWVpBU2pnZ3J6ZXMwNGxYeU9UN3lYbVBIOENjSit2b1RCcXla?=
- =?utf-8?B?Y3FndVpJMk9uY1NJMDZ3dEwycUxBVENhK2NxVFhjQmlHLzdMMzVBVVhWU0c5?=
- =?utf-8?B?aXhEQm44UHFpVWl1VzFPL3diNUdRdnNtZlA3V0ZBOVljYWpmVlN3ZjBuNUtn?=
- =?utf-8?B?cFRIVXRxS09hc1VEaWN0bzZjZC9OK3VUZTJTcGV6QzhLSXhGVkI5UTRnRFV0?=
- =?utf-8?B?Z0ZwWEhlN3I2aU9qMUxMQTg4bTdsRDhZdkZiTWxrTVRFY0ZxdGhGbXhyTHFT?=
- =?utf-8?B?U055S0tiMVNQZlJGcGplbWtCK2hWQTNSbWtjS1J4emsyaW5BZkkxU0cxa0RG?=
- =?utf-8?B?RWNkQjhubkRaR2FodHlYVDM0cnp0UUhYTENDUWFWYmYzMVNlU09UWEl0RWF0?=
- =?utf-8?B?Nms5NkhTV1RxTjJmaXZRWXdyeVJ4MkYxYlExbVFFY3VxZzgrUHRzbVg4MWZa?=
- =?utf-8?B?Sk9mK0p6MFhIcFpjS0hnQnIxNXVPNUNKaUJtMzJLTURqNFloWjdWTENIb1VG?=
- =?utf-8?B?N3QwMWxjeGJMRmQvZmhvZEhuVFB5dWJDUmI0cWIxVkRXcmxZeG1pS1owSVp6?=
- =?utf-8?B?cnEzT0NaR2FZTkxGbzFXeitsT0VPYWFFMm1xSXY5TzVNbkkrSWF4QWdIajha?=
- =?utf-8?B?dTVVZTdNZ3RGRTNNblZ3UUJCKzNMYTNXK3M2MVZ2bHFyME1YcFozSElFbFFV?=
- =?utf-8?B?ZGo2SUpCNEF3MkNwSjJadUc0a0VlNUM3VndaL2NhTDhwZWFQMDVja3o4VjVy?=
- =?utf-8?B?alUrN0taMHRrQUU0SkMyYXRweW5BPT0=?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(376014)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jan 2026 07:56:32.8111 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a61deb15-bb00-4db1-a331-08de5cb06c03
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF0001AE18.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPFDF5E260D0
-Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
- envelope-from=FangSheng.Huang@amd.com;
- helo=CH1PR05CU001.outbound.protection.outlook.com
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NkJvYXFPekNrMVZPd3JzS2szNnZzbUJsNTNIcFpBc3FiWGttQm1RYjV3VG14?=
+ =?utf-8?B?NE5qbGpVeUZFc2RkVUlHUzNNemhZWkY3MlBQYzJZTGdFV0pYMXl0MDYwK0JQ?=
+ =?utf-8?B?cVh4SnpiK2V5My8ySXYxaGhwWXltbFhOcHV3WWZqRW1reHRLc0QrOTA1cHY0?=
+ =?utf-8?B?OHRrZjRaNEQxcE5FUzdsd0p2OVk3cTczTkdIMXNaMzJ6c3ZHQkU2cUswT3Va?=
+ =?utf-8?B?S25reVRsSmdzV3RVWDRvTFpJekl1cWdJc1VneXJhbmNlZTVTbS8yOWl4SWtV?=
+ =?utf-8?B?eGxZT0c0NThWb1pic3EyY201dDRYZ2o0clJZT1RNWFdmMXJBRXBVV09wZ3lY?=
+ =?utf-8?B?dXFvL09GNGxmRTlGbGtQWjVoaTNiNXF2Tk1KQkdaRGc0bVZPd2xhcU9DaDNn?=
+ =?utf-8?B?bmhBUkVsbzQyYTdkWWwyNTZFdVhORjBlZjh3WHdUaHVQTmU4Z2VaUmc0YWxB?=
+ =?utf-8?B?dkt3SkdCbEZya3hKakZ0Y3BVNUZ2YTh5MzRyRlJ0aWRUTDM2ZVpSdHVlNTFS?=
+ =?utf-8?B?WjErRWhOR3RaNTlBU0d1T1dSQ0xheVFCS3NGRE81d2EvOWdSRE1ReGE4U0pj?=
+ =?utf-8?B?SGdWbGJKRkNQK3hnMnk3UzZkaTYvd2FUU1BDZGVicHgwODI4WFRIMXNhMlJP?=
+ =?utf-8?B?d2dxajJTeDJZbnJpWTlJdnNGUmRrMHNoempnN0xYaWJnUUQ0ZXJqTW14Z1hh?=
+ =?utf-8?B?YVo2WjlzSDJFQi9Tc2YranVMdEs2bnZZanhYQ0lMcG0vbEt2Wk9HbVZQcGV5?=
+ =?utf-8?B?SGIzb0RNUUwxQ2NSS0ZoZVBCcHFqNmJoTDhveWV0b29HRmtCb0ZZRWd0Rmcx?=
+ =?utf-8?B?VXNNdnJPWkUyMG1iTnoyRlJ6S2RyZ2F4dUlzSStFMHU5d3JGR01UMWM0dmZ3?=
+ =?utf-8?B?Ulg3OS9HUWtiSU9SVU94R2dIYklSRjNsTnU4YVRoeFFtdG5XaXlibGhBVVM0?=
+ =?utf-8?B?eG0xRTJUMkwrd1luckxDZnd3WnBpTEUrc3RZaWgvWmxGNktjalJKOXhhTnhO?=
+ =?utf-8?B?TG5tTTlyaGk2aGIyeHhlMUVaTVhRM0xXK1R5VVJtRHY3UUF2YkR2cFkrUUlE?=
+ =?utf-8?B?bXRIZExWUysrVXA2MTduR25vWWRueWEyaURnMmpMZTQ1SEEvbTMxTmJGYW4v?=
+ =?utf-8?B?S2dZaFZQVUo3dCtOaEdNSnJiWEhheXpTamRvZW9nalhJNHltdi9ONDdPVmZ1?=
+ =?utf-8?B?Q1hSZWhXdldGV1hveFZBbVBidkFTc1NjL0VqN2tGVG5YN3JUUk1kVWFncmwx?=
+ =?utf-8?B?YXBPSU1yN2twYmd6KzQrMDIyc3ZjOSsvZ3ZmeWdtZEZXUHF0OFRPcW0yeklY?=
+ =?utf-8?B?WEZVZGpCd3UzSHlsY1hpeXc4QlFGc0pGNUE0VUplNSs3VE9td0JUV05rbUdw?=
+ =?utf-8?B?ZS9qdmZMMUFtNmpMUFZXd09QaGJpRVU5cjlBYUt3VmdDbnN2OVZiUDA2bGJD?=
+ =?utf-8?B?NjM4blBrSXlidi9zYWZhTm9HTVNhMGFSRjF5UmVpcnZnL0VGaFVLM2dKK1k0?=
+ =?utf-8?B?MVFvMU5hdlJlYWNndEZjbFMwUkptVmZJVllVUTNMN0NoWnNKbHdzcWRGQUxP?=
+ =?utf-8?B?aTVrQmVzWFJkVW1BeXR6ODJUaHNLS3NNSXNtM2pucG9ETEkzTFRNWkp3aEZV?=
+ =?utf-8?B?WmJaNkxsam9FNSt2a2ZZTEJKblF2T2g2bmlTdHI0SFA2Vkx5MlBoL2RBR2ww?=
+ =?utf-8?B?cXhIelhjUitiREYweitDRUVNVzAvem14dG1jNmp5ZE9jNGNyY2J0Y0tzWHQ1?=
+ =?utf-8?B?b1ZXWVJ1Y0RadDRXWSsyMWhWRlgzYmN5SzdBaDRuanlVTjg1M2htSzgyYlNU?=
+ =?utf-8?B?YzIzcnNYVXBtTi95dTk0SmNNTVF4NGhKN01qZ3RPaHh2K01icFZlRmFuYWRr?=
+ =?utf-8?B?bDlUcURFczhhOTZHYW55RElHbFMxNzJrM3E2UnV0ck5FVXJxdDIrMm5GeVZi?=
+ =?utf-8?B?MkROblFtZ29RNXNKSnVGWTBMTzhZanhHeHEzQWIySFI2MXlqcUx2ZStNb09M?=
+ =?utf-8?B?ckhZMy9jUURIWXprb0VacUZNWkNTN01Oc2QxNTQvSlgvTXRPL0hiSm16UXE1?=
+ =?utf-8?B?TFV5di8vTE41S213dHdXb3J5dDc4WXdXUkc0MnF2c2pBZDduTm9VcnlZZHZn?=
+ =?utf-8?Q?espI=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(7053199007); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?amJ3WnJhc01VbCt4TTlWRlhwZytwaGV5S1VyY1NhekN5RzRLeXQzN21PcE1Q?=
+ =?utf-8?B?VXkybC83MWVYdkFIME4yWlY1NDJSNWZjR2dZM2M3cFByVXZjajJZdTJDRlE0?=
+ =?utf-8?B?ZFJwQU41WEN4T2dVaHBFOTFRZHovU0RRNDlhSTdtVkg4WmtxZWc1TXJnN2RC?=
+ =?utf-8?B?eUlzS1NBWVgxTlVuVG1oMHpUNzNHTWdGZjVpS1dvUXo5WFBKMTd5c2s3Mlpo?=
+ =?utf-8?B?dVd3eHF6WkYxM2Ewa0h2cSt5YU52ZnRlTk80UllPY0NBN2RVUVRGbUV1M0FW?=
+ =?utf-8?B?OFJ4cDJ3c3hkTXNhRzZjeWNnZnIxYnR5SnRFV3hMWGNIQWt3dU5neUp3c3M2?=
+ =?utf-8?B?TU9RNmxFRFpqeHlHMUhGMVNzYmtza0VwQ3NxaXVRcVUyOCtUY0g2OFMxcEti?=
+ =?utf-8?B?RWE2UHRKb1E1dmd6Y29XUHF3S3BvVFZyUkNlemk1SGZPWFB1ZjN4RnY5dHpn?=
+ =?utf-8?B?bUpFamlTM1pVbUEyRmtxNCtMWGhvU1hXaFZoRTc0YmVReGlCWVRnTy9pOVlR?=
+ =?utf-8?B?MXJmTEdrbTdBeVNKRlgweU92YU1lcEdFeWxTc3BHOEtXeDJkQlk4WGdndUpH?=
+ =?utf-8?B?Rmxob2tVeXlDSEp1UkNmb2ZtakVxMlNWaUZyTGVHR1FVZTNkMVFSS2ZGRHRm?=
+ =?utf-8?B?SkhkN24wYjFoVmJOZDB5Wm8wQjlLQlNvbUQyMllDUzRxQ1BqYTVqRkxRSisr?=
+ =?utf-8?B?OEZyUENvR1B6U0NhZ1dFN3g1cVhXSXdxQjBIcjdTUzhWalZYQXBiSzluZ0du?=
+ =?utf-8?B?V3djNDdzeFNFQ2xlSlUvNVpFUFhwUkJpU0RHTHlLN2NXcEZWelFLc0hNNldx?=
+ =?utf-8?B?NG5HSkp1UHVmSzBveUJUZitIQU9LaThJK1YvVDBWSWFSdVp1RXIxOVZ4dm9n?=
+ =?utf-8?B?VnFFZy91aVNEaENLSHFmckRwQXN6clJ0SFphSjJUdGRuVHBFdlN6TEhyUTVX?=
+ =?utf-8?B?WHUrRXgvTWl6VkxFakM0Qkdndlo2RWNtOU1qZUxreTlIbVlMbURyZjRlMzZj?=
+ =?utf-8?B?allFZWhyTFJpLzNSRHg2Z0ZVbHFrRUllckNDR0owUlVRQnJMdnpFYnFpNndJ?=
+ =?utf-8?B?ajUvbFFmeGNmTHRRSjc1V2pIbmp2NGswZzNFcFRCVEpRWU5UYXhoYnlWUDYr?=
+ =?utf-8?B?NGhNYVhKMEhMZTJjZndwLzJqQnBOKzRNb21yTjNRSTZhREJKbDd6aXg2bllp?=
+ =?utf-8?B?U05nblROYXVOUXZ4amFPbzAvSnU1WjFqVXREMEQrVzM0WXJVREkxWUtKdDhv?=
+ =?utf-8?B?aTBxRVlGRzB6QjJxTjNNWURLVmc5K3ZEOTZpcWdWdU4zQVBlVGhnVTREdVZn?=
+ =?utf-8?B?UkQreEh3YmJLMHowcVgxdW5yN1NRSnZiV3Z4b2VQeFlONHhzUmsvTERMeWd4?=
+ =?utf-8?B?aUZ5TGFtNVpvYWo2SGFqWmJ2T1BWZVk3SFpBRzlMQXZCVGFKMWxvSndNNTVl?=
+ =?utf-8?B?TjFWTTdqK2tpbE00bjF4bm1Tc2hLcFJXZmgrem50U01PdkIrekZlSE0xNU5n?=
+ =?utf-8?B?Ni9BdW1aRElJTWRGVXpJeUVmVG9wdVMxQlNTdjRURmk3a2lNNFEvUnEvd1Rt?=
+ =?utf-8?B?VGRLQnZOV09VcTJlejRIYXQxTTV3a0wxZFFyL2JVbTZmLzFYaUFUakJXWGlK?=
+ =?utf-8?B?U1FqbXNiOWYwdVFDdmp6b0w4M1grWk9OWlg4Y1g0cXBmWGZ0SEZnN0xVL2ow?=
+ =?utf-8?B?aTl6Wlo3K0RvM0ErdnNHUTEyYzE2OEpuMStESC9KQzh3V09SZHhuRUNYcG5m?=
+ =?utf-8?B?ZytmSTZ6UEw0YWd0R3FEUGl5eGY3QTVzNVd2cldBa2xUQ3dxRnVYcTczbWZw?=
+ =?utf-8?B?dVR5UEVsMjVMdVg0SEtKQUZvN3ptbkVOK3ZkQnk3alRZQ0dpSWdEQmY1S1Q3?=
+ =?utf-8?B?RW9jeWkzUWxkREJEL2pMVFZadHIxYzZOS09ETDdzVmpKR2FzV3ExWUN0YlZp?=
+ =?utf-8?B?c2VZWnZkOHlFd0dHWFVOOWtDejZFR0VZZ0w0MXhHc2YxYmlNRFJOMnBSYzMw?=
+ =?utf-8?B?bEJCdnh4RThvV0xDTW03WlR5V3c5eTBtaXRZUUFOZ1N1bWFSY3RObFFwbEdK?=
+ =?utf-8?B?MFdlUnN6SFQ5WkxOdjRyMW9xUFJzcVRpMWdsT1prL1lCdGp2ektLNG5DYzM2?=
+ =?utf-8?B?TVBvSkZvRFEyaTUzRXQwQks2UUVzd0duT2xFdzg2Ym9CYUdoUXdDcWdSQ2l0?=
+ =?utf-8?B?dEowY2hhUVM1VjhCdVlja0Q3TlJObkd0L3RCS2Zac0FkUGgvQTBSczlKNXBB?=
+ =?utf-8?B?eDNxTHJEMUlGZzBwRlBTcUN1NFhLZUt0OWhuY3BvekFzNjd0RVFGZkhxaElk?=
+ =?utf-8?Q?u2uGT1gMa6lYTJKR2p?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 38ae3f4e-0ec7-4191-8e41-08de5cb3e599
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jan 2026 08:21:25.5769 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GDc48c5YR7tKePmh2aVbci5H0YBeGivBZkVB4/FfIubonJNcgzaSFX0S4ZHSDxCq/ThIwZZGVH/W8f3pPizwbg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS4PR08MB7503
+Received-SPF: pass client-ip=52.101.83.141; envelope-from=den@virtuozzo.com;
+ helo=GVXPR05CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -165,140 +183,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 1/24/2026 12:03 AM, Gregory Price wrote:
-> On Fri, Jan 23, 2026 at 10:43:12AM +0800, fanhuang wrote:
->> +bool e820_update_entry_type(uint64_t start, uint64_t length, uint32_t new_type)
->> +{
->> +    uint64_t end = start + length;
->> +    assert(!e820_done);
->> +
->> +    /* For E820_SOFT_RESERVED, validate range is within E820_RAM */
->> +    if (new_type == E820_SOFT_RESERVED) {
->> +        bool range_in_ram = false;
->> +
->> +        for (size_t j = 0; j < e820_entries; j++) {
->> +            uint64_t ram_start = le64_to_cpu(e820_table[j].address);
->> +            uint64_t ram_end = ram_start + le64_to_cpu(e820_table[j].length);
->> +            uint32_t ram_type = le32_to_cpu(e820_table[j].type);
->> +
->> +            if (ram_type == E820_RAM && ram_start <= start && ram_end >= end) {
->> +                range_in_ram = true;
->> +                break;
->> +            }
->> +        }
->> +        if (!range_in_ram) {
->> +            return false;
->> +        }
->> +    }
-> 
-> ------- nit --------
-> this can be shortened: (j == e820_entries) implies not found.
-> 
->      if (new_type == E820_SOFT_RESERVED) {
->          for (size_t j = 0; j < e820_entries; j++) {
->              uint64_t ram_start = le64_to_cpu(e820_table[j].address);
->              uint64_t ram_end = ram_start + le64_to_cpu(e820_table[j].length);
->              uint32_t ram_type = le32_to_cpu(e820_table[j].type);
-> 
->              if (ram_type == E820_RAM && ram_start <= start && ram_end >= end)
->                  break;
->          }
->          if j == e820_entries: /* Not found */
->              return false;
->      }
-> 
-> Haven't looked at the surrounding code, this seems like you might define
-> 
->     static bool e820_has_ram_region(start, end) { /* above code */ }
-> 
-> then the 820_update_entry_type lines can just be
-> 
->      if (new_type == E820_SOFT_RESERVED &&
->          !e820_has_ram_region(start, end))
->          return false;
-> 
-> only worth it if e820_has_ram_region() deduplicates other stuff.
-> -------------------
-> 
-> I don't see anything else immediately concerning and the above is more
-> of a nit than anything.
-> 
-> I haven't tested this, you might at least add the OS-facing results to
-> the changelog so someone can replicate your setup.
-> 
-> For example the early-boot print showing E820 and ACPI SRAT data.
-> 
->     [reasonable memdev definitions]
->     -numa node,nodeid=0,memdev=m0
->     -numa node,nodeid=1,memdev=m1,memmap-type=spm
->     -numa node,nodeid=2,memdev=m2,memmap-type=reserved
-> 
-> resulting in:
-> [    0.000000] BIOS-provided physical RAM map:
-> [    0.000000] BIOS-e820: [mem 0x0000000000000000-0x00000000afffffff] usable
-> [    0.000000] BIOS-e820: [mem 0x0000000100000000-0x000000c04fffffff] usable
-> [    0.000000] BIOS-e820: [mem 0x000000c050000000-0x000001004fffffff] soft reserved
-> [    0.000000] BIOS-e820: [mem 0x0000010050000000-0x000001006fffffff] reserved
-> 
-> [    0.003409] ACPI: SRAT: Node 0 PXM 0 [mem 0x00000000-0xafffffff]
-> [    0.003410] ACPI: SRAT: Node 0 PXM 0 [mem 0x100000000-0xc04fffffff]
-> [    0.003411] ACPI: SRAT: Node 1 PXM 1 [mem 0xc050000000-0x1004fffffff] hotplug
-> [    0.003411] ACPI: SRAT: Node 2 PXM 2 [mem 0x10050000000-0x1006fffffff] hotplug
-> 
->    (fake entries above)
->    (i don't actually know if RESERVED gets added to SRAT)
-> 
-> This would at least show the node-association and the types are correct.
-> 
-> Thanks,
-> ~Gregory
-
-Hi Gregory,
-
-Thanks for the review and feedback on v5!
-
-Regarding your suggestions:
-
-1. Simplifying the range_in_ram check:
-
-I've updated the code following your suggestion, with one adjustment -
-since the loop variable 'j' is declared with block scope in C99/C11, it
-needs to be declared outside the for loop to remain accessible after
-the loop exits:
-
-   if (new_type == E820_SOFT_RESERVED) {
-       size_t j;
-       for (j = 0; j < e820_entries; j++) {
-           uint64_t ram_start = le64_to_cpu(e820_table[j].address);
-           uint64_t ram_end = ram_start + le64_to_cpu(e820_table[j].length);
-           uint32_t ram_type = le32_to_cpu(e820_table[j].type);
-
-           if (ram_type == E820_RAM && ram_start <= start && ram_end >= end)
-               break;
-       }
-       if (j == e820_entries)  /* Not found */
-           return false;
-   }
-
-This saves a variable, though it slightly trades off readability.
-Would you prefer this approach, or do you think the original
-'range_in_ram' boolean makes the intent clearer? Happy to go either way.
-
-2. Extracting e820_has_ram_region() helper:
-
-I searched the codebase and found that the other places using E820_RAM
-(fw_cfg.c, tdx.c) are iterating to collect all RAM entries, rather than
-checking if a range falls within RAM. Since there's no other code that
-would benefit from this helper, I'll keep it inline for now. If similar
-logic is needed elsewhere in the future, we can refactor then.
-
-3. Adding OS-facing test results:
-
-Great suggestion! I've replied the E820 and SRAT output examples to the
-v5 cover letter, so reviewers can verify the expected behavior.
-
-Thanks,
-Jerry
+On 12/29/25 17:07, Denis V. Lunev wrote:
+> This series is a followup to my previous patch sent under
+> "qcow2: add very final sync on QCOW2 image closing". Could be considered
+> as v2.
+>
+> This series addresses two problems:
+> 1. bdrv_co_flush() at the end of bdrv_driver_pwritev() and
+>    bdrv_co_do_pwrite_zeroes() could be effectively no op. The problem is
+>    that bdrv_co_flush() is optimized internally this way to track real
+>    requests which were making changes in the image and without such
+>    requests from previous flush() do nothing. Requests are tracked using
+>    write_gen on BDS. This field should be incremented after write is
+>    completed but before flush is called.
+>
+>    This could be considered as potential data loss if caller relies on
+>    BDRV_REQ_FUA flag which means that such requests are really lands on
+>    the underlying device, which could not due to missed flush().
+>
+> 2. qcow2_update_header() must actually write header with BDRV_REQ_FUA
+>    flag as image processing on open relies on the fact that header is
+>    actual and it is not possible to reorder header modifications and
+>    image content modifications.
+>
+> Changes:
+>     * added patches 1 & 2
+>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> CC: Kevin Wolf <kwolf@redhat.com>
+> CC: Hanna Reitz <hreitz@redhat.com>
+>
+ping
 
