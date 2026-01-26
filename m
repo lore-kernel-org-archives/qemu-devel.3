@@ -4,64 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4383CCF65EC
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 12:28:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75050CF65FA
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 12:38:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkLh4-0003Qt-Ej; Mon, 26 Jan 2026 07:27:46 -0500
+	id 1vkLrH-0002d5-3X; Mon, 26 Jan 2026 07:38:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vkLh1-0002Y3-QF
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 07:27:43 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vkLr3-0000gT-IZ
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 07:38:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1vkLgz-0001xv-Bp
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 07:27:43 -0500
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4f07803R2tzJ46fK;
- Mon, 26 Jan 2026 20:26:56 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id B77FE40571;
- Mon, 26 Jan 2026 20:27:30 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 26 Jan
- 2026 12:27:29 +0000
-Date: Mon, 26 Jan 2026 12:27:28 +0000
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-CC: Jonathan Cameron via qemu development <qemu-devel@nongnu.org>, "Michael S
- Tsirkin" <mst@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
- Igor Mammedov
- <imammedo@redhat.com>, Cleber Rosa <crosa@redhat.com>, John Snow
- <jsnow@redhat.com>
-Subject: Re: [PATCH 06/13] scripts/qmp_helper: add support for a timeout logic
-Message-ID: <20260126122728.00001d76@huawei.com>
-In-Reply-To: <20260126122932.10a3d552@localhost>
-References: <cover.1768993993.git.mchehab+huawei@kernel.org>
- <2539e524dd467af51f8286bd1b201feaad06c81e.1768993993.git.mchehab+huawei@kernel.org>
- <20260121123927.00001daa@huawei.com> <aXD1Nb4MU2XYI0HL@foz.lan>
- <20260123161603.00006b0d@huawei.com>
- <20260126122330.515e5deb@localhost>
- <20260126122932.10a3d552@localhost>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vkLr1-0004co-Ms
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 07:38:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769431082;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=A5NLJ5UD5+dnMvS26Q1Yp6YYAXAb+3d9nW4A6QdHp54=;
+ b=C3/FSxfB5sI5JDWf5lqa9Mhm1YCQOhS3/RUgWj/6raUF9fpaTuQChVQ1Pr8/m+WBId+3kI
+ 1gqhyCDG1FodNoQyiztFB6/60RgWSKYVxC0sdxxAJ9FjR66t768oBAXVr9c5P9KHfCpYqN
+ QfkM69B5yoLna7kYbwrZTFhVOViWpi8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-85jpDyZ2MYGjWmErD9SJKg-1; Mon,
+ 26 Jan 2026 07:37:59 -0500
+X-MC-Unique: 85jpDyZ2MYGjWmErD9SJKg-1
+X-Mimecast-MFC-AGG-ID: 85jpDyZ2MYGjWmErD9SJKg_1769431078
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C23D31800370; Mon, 26 Jan 2026 12:37:58 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.34.28])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E07891958DC4; Mon, 26 Jan 2026 12:37:57 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id B14D318000A4; Mon, 26 Jan 2026 13:37:55 +0100 (CET)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Luigi Leonardi <leonardi@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Oliver Steffen <osteffen@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH v3 1/5] igvm: reorganize headers
+Date: Mon, 26 Jan 2026 13:37:51 +0100
+Message-ID: <20260126123755.357378-2-kraxel@redhat.com>
+In-Reply-To: <20260126123755.357378-1-kraxel@redhat.com>
+References: <20260126123755.357378-1-kraxel@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,93 +87,140 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 26 Jan 2026 12:29:32 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+Add a new igvm-internal.h header file.  Structs and declarations which
+depend on the igvm library header go into that file.
 
-> On Mon, 26 Jan 2026 12:23:30 +0100
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> (by way of Mauro Carvalho Chehab <mchehab+huawei@kernel.org>) wrote:
-> 
-> > On Fri, 23 Jan 2026 16:16:03 +0000
-> > Jonathan Cameron via qemu development <qemu-devel@nongnu.org> wrote:
-> >   
-> > > > >       
-> > > > > > +        for i in range(0, attempts):
-> > > > > > +            try:
-> > > > > > +                obj = self.qmp_monitor.cmd_obj(msg)
-> > > > > > +
-> > > > > > +                if obj and "return" in obj and not obj["return"]:
-> > > > > > +                    break
-> > > > > > +
-> > > > > > +            except Exception as e:                     # pylint: disable=W0718
-> > > > > > +                print(f"Command: {command}")
-> > > > > > +                print(f"Failed to inject error: {e}.")
-> > > > > > +                obj = None
-> > > > > > +
-> > > > > > +            if attempts > 1:
-> > > > > > +                print(f"Error inject attempt {i + 1}/{attempts} failed.")
-> > > > > > +
-> > > > > > +            if i + 1 < attempts:
-> > > > > > +                sleep(0.1)      
-> > > > 
-> > > > ... and here, we sleep for 0.1 seconds.
-> > > >     
-> > > > > 
-> > > > > Do we care about a sleep at the end?  Feels like a micro optimization that
-> > > > > isn't needed.      
-> > > > 
-> > > > This is not a micro-optimization. It is more to ensure that we won't
-> > > > respin it too fast.
-> > > > 
-> > > > What happens is that QMP interface asks the BIOS to send an async
-> > > > message to OSPM, cleaning an ack register. When the OSPM reads the
-> > > > error, it writes 1 to the ack register.
-> > > > 
-> > > > If we send messages too fast, the logic at ghes.c will detect that
-> > > > the ack didn't happen, imediately returning an errocr code.
-> > > > 
-> > > > On such case, we sleep for 100ms before trying again.    
-> > > I was suggesting the opposite.  Just sleep one more time at the end
-> > > before timing out.
-> > > So instead of
-> > > 	if i + 1 < attempts
-> > > 		sleep(0.1)
-> > > 
-> > > simply
-> > > 	sleep(0.1)  
-> > 
-> > If one writes an external loop calling fuzzy with different parameters,
-> > like:
-> > 
-> > 	for i in $(seq 1 360000); do
-> >             scripts/ghes_inject.py fuzzy -T proc-arm;
-> >             scripts/ghes_inject.py fuzzy -T firmware-error;
-> >         done
-> > 
-> > The extra unneeded would sleep waste 10 hours doing nothing.
+Also declare IgvmCfg in typedefs.h, so the type can be used without
+including igvm header files.
 
-True if it fails every time, which you were suggesting was very rare. 
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+---
+ include/qemu/typedefs.h        |  1 +
+ include/system/igvm-cfg.h      | 12 +-----------
+ include/system/igvm-internal.h | 26 ++++++++++++++++++++++++++
+ include/system/igvm.h          |  2 +-
+ backends/igvm-cfg.c            |  4 +++-
+ backends/igvm.c                |  2 ++
+ 6 files changed, 34 insertions(+), 13 deletions(-)
+ create mode 100644 include/system/igvm-internal.h
 
-Anyhow I really don't mind that much, just seemed like a tiny
-bit over engineered for a rare case. 
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 4a94af9665a5..416a8c9acead 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -55,6 +55,7 @@ typedef struct FWCfgState FWCfgState;
+ typedef struct HostMemoryBackend HostMemoryBackend;
+ typedef struct I2CBus I2CBus;
+ typedef struct I2SCodec I2SCodec;
++typedef struct IgvmCfg IgvmCfg;
+ typedef struct IOMMUMemoryRegion IOMMUMemoryRegion;
+ typedef struct ISABus ISABus;
+ typedef struct ISADevice ISADevice;
+diff --git a/include/system/igvm-cfg.h b/include/system/igvm-cfg.h
+index 944f23a814dd..6c07f3084082 100644
+--- a/include/system/igvm-cfg.h
++++ b/include/system/igvm-cfg.h
+@@ -12,19 +12,9 @@
+ #ifndef QEMU_IGVM_CFG_H
+ #define QEMU_IGVM_CFG_H
  
-> 
-> Btw, the same applies when using the -c parameter:
-> 
->              scripts/ghes_inject.py fuzzy -T proc-arm -c 360000
-> 
-> The goal here is to optimize in a way that we could one day have a
-> CI running lots of tests in a reasonable time to detect regressions
-> at QEMU + Linux Kernel + rasdaemon.
-> 
-> So, we don't want unneeded delays. We only need to sleep if a
-> retry attempt failed and it will be retrying again.
-> 
-> Regards,
-> 
++#include "qemu/typedefs.h"
+ #include "qom/object.h"
+ 
+-typedef struct IgvmCfg {
+-    ObjectClass parent_class;
+-
+-    /*
+-     * filename: Filename that specifies a file that contains the configuration
+-     *           of the guest in Independent Guest Virtual Machine (IGVM)
+-     *           format.
+-     */
+-    char *filename;
+-} IgvmCfg;
+-
+ typedef struct IgvmCfgClass {
+     ObjectClass parent_class;
+ 
+diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
+new file mode 100644
+index 000000000000..475a29bbf3d7
+--- /dev/null
++++ b/include/system/igvm-internal.h
+@@ -0,0 +1,26 @@
++/*
++ * QEMU IGVM private data structures
++ *
++ * Everything which depends on igvm library headers goes here.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QEMU_IGVM_INTERNAL_H
++#define QEMU_IGVM_INTERNAL_H
++
++#include "qemu/typedefs.h"
++#include "qom/object.h"
++
++struct IgvmCfg {
++    ObjectClass parent_class;
++
++    /*
++     * filename: Filename that specifies a file that contains the configuration
++     *           of the guest in Independent Guest Virtual Machine (IGVM)
++     *           format.
++     */
++    char *filename;
++};
++
++#endif
+diff --git a/include/system/igvm.h b/include/system/igvm.h
+index 48ce20604259..8355e54e95fc 100644
+--- a/include/system/igvm.h
++++ b/include/system/igvm.h
+@@ -12,8 +12,8 @@
+ #ifndef BACKENDS_IGVM_H
+ #define BACKENDS_IGVM_H
+ 
++#include "qemu/typedefs.h"
+ #include "system/confidential-guest-support.h"
+-#include "system/igvm-cfg.h"
+ #include "qapi/error.h"
+ 
+ int qigvm_process_file(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
+diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
+index d00acf351249..001c4dc93346 100644
+--- a/backends/igvm-cfg.c
++++ b/backends/igvm-cfg.c
+@@ -11,8 +11,10 @@
+ 
+ #include "qemu/osdep.h"
+ 
+-#include "system/igvm-cfg.h"
+ #include "system/igvm.h"
++#include "system/igvm-cfg.h"
++#include "system/igvm-internal.h"
++#include "system/reset.h"
+ #include "qom/object_interfaces.h"
+ 
+ static char *get_igvm(Object *obj, Error **errp)
+diff --git a/backends/igvm.c b/backends/igvm.c
+index 905bd8d98994..fbb8300b6d01 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -14,6 +14,8 @@
+ #include "qapi/error.h"
+ #include "qemu/target-info-qapi.h"
+ #include "system/igvm.h"
++#include "system/igvm-cfg.h"
++#include "system/igvm-internal.h"
+ #include "system/memory.h"
+ #include "system/address-spaces.h"
+ #include "hw/core/cpu.h"
+-- 
+2.52.0
 
 
