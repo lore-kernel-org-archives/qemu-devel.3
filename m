@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC3CD1950F
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:46:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE73D19502
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:46:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkQcx-0001TJ-PY; Mon, 26 Jan 2026 12:43:51 -0500
+	id 1vkQd9-0001f9-ND; Mon, 26 Jan 2026 12:44:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQce-0001J3-Ca
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:34 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1vkQcy-0001UC-Bd
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:52 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQcZ-0008Th-PY
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:31 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-47ee0291921so40893015e9.3
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:26 -0800 (PST)
+ id 1vkQcw-0000EN-A7
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:52 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-435903c4040so2927399f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769449405; x=1770054205; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769449429; x=1770054229; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DLzeXSL2t2tbTXzCZtblMBZrbAJVOypOntKEo8XJDH4=;
- b=jmRlJmKMp+42ey7w8C3UleibYyOnxZmlb7VO2sX7lvLPBQPciMOzk2Ksuft/GeSAgU
- /AALgom5Jo9aFjEy+id3Sp7Sc3HHUD9tu3rs5VlF7RD9uPjlLSzN2UfL7+0orQuniLFp
- 6n2NhnjYXrsza8QiJYnWubyJ93DcoVaLqqMTMzbbPhaYz0zbSmLDHuK5rxeCqLuqOLJo
- vlFEGzSPFVBXztdGRHAHTEBOeYqkZndyoRqloU/Y77RZoDDTLXMCflTMKNMAAZ3Dnyev
- +c9oHighWjuCy1UB7I4xIsQNSr2ATd2XUjoej+EwpJYtlxTwq5g6Blq6pBldfYL3OjmH
- tX4w==
+ bh=Rs6OZbCjNekEZyKGP1riYjsv7cAl0YSLCjdr3zwLJfM=;
+ b=SRZBOSfRUfHOwUjz2gGRdbjYqcCWwRXkk9gCzRbRUgrNIZ4waiX6WebLS4hlxeWAH9
+ /gfFluvLwX3k6bO2emN8Q9CyCHIfuFNNh+o/QTDh1GG1DRGS5TbSrmGAHTh7tGYqZFUv
+ nwNvZIAaDOcPt/WJFCVkPWyUzzsN4PjH3xg7gab/n3NgMzKzPj1HvY0ixxmI2P5GmYp7
+ Fhfb+zbtMtk0HqWT/bTTGaH4ngiiVelMQ8iM8luVThwCnxdq8K2vMpENI5HbnltugvUs
+ hQn60birWlh9BIrYHnznwfcWV6m5CU1aGRQdLt6HhnzlS//VexDkcrTYXYy1gjO+P+jY
+ 2lcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769449405; x=1770054205;
+ d=1e100.net; s=20230601; t=1769449429; x=1770054229;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=DLzeXSL2t2tbTXzCZtblMBZrbAJVOypOntKEo8XJDH4=;
- b=maUgLYlep4tme+6usiqW0lwCBbrWo6woQYKH3h9c43uAabb52OlQyBXvXP7r6xcKJv
- 2ib0nu3cZizAjZ0u2NhGp8hxLc5DTztPH9pinFCmZlCS1ozMTIvEuVvfBJFkKVoqY+OM
- pWa+eJfi6920h6BHGGaTAGp2Ca3xjvxESLpPAg4bdmKRDiFoIOE3gclQN2tizRlAj7zC
- iHcCRp5+uGKBeTcXc0EZwRGr5ahDFVNHYc76cFDed7auZk22UoCN4y07ZPXIj7sSU/pf
- wVR+2SUY6tafL6uuEqKWfsUsLB7T5TI0UuU8LAqdThxGKn9FfxqaZIucI2f/9S0CmZXF
- f2vA==
-X-Gm-Message-State: AOJu0YzSEm5VPO/CWdaFDifaz11zDR7QN5bSPd/1nMJX3I6LKjI/m/m6
- BF27y4d7Rjd+C/D/cTB4cjpfQr0f0cB9Asw5aSzQ2NmL7m5djf0BZbyqXWsbjL23
-X-Gm-Gg: AZuq6aJuBqf5DqrIV6tiWNu4HV0WWBYi5/9xKGo76MBx6rsnAuW60ZydVqrqCpzjllp
- FwFB90L96sET0sYgBSxZzYOimyM13fuphEyWKJ/tHbttcJygQ+Mkb+gmDRfAbHsEgBT8OJM9nkm
- DK7olnvObkiLANtIidccRJ+u1mKx84XkyilYRxl54i8moXuzAjFhkryxiOijVU9ggZjMSE9ACYL
- P9/UMg9sHU51rLwnaMZJ9089uyE5TVPkJ1W6G3OJcgBkfVzbozY+uLkjkV5WHassqi/zudQgQLb
- Ubs8djEmAuXpxI69FE1mjCG0cMKB3mEX9Ow8Icse3MhqRsWZHcGmfzJY7JGFEWlzoL5z/LZxydf
- Z2dnk5rLDbaYMYi6OQbWEtg5hr/a09RBGtE3qAAYQx0rICznjIXmTJKxAh2yLHwceBC5CzGqIxD
- DhGm0bIXMiAIsu+dW3gb+MGlJDMqWKSc0XdrW7AqeVDAyW4T1wFsOujA==
-X-Received: by 2002:a05:600c:3b9d:b0:47e:de23:dd6f with SMTP id
- 5b1f17b1804b1-4805ce42a6dmr88712645e9.12.1769449404881; 
- Mon, 26 Jan 2026 09:43:24 -0800 (PST)
+ bh=Rs6OZbCjNekEZyKGP1riYjsv7cAl0YSLCjdr3zwLJfM=;
+ b=AANaTUTM479Z7pSL799G6Dz1J8gRn7Vn+8F/Gxgq7Mrod44SdXhWqrMP/aBYNkEvz5
+ Vx/LCx+TFG9b3C8nDSWv0ScXsp4Imrp7B9cY+CJ0y4eG5EWR7paDdVBvQ9JnvN6ik3pU
+ 4WVcp7eJzOrqXiGcHiSuYFmSJGVDIKLJhjcyM9YialIA2uY1cEJJwahvQGb399B0y6Zi
+ tpkrb4QxSP5ew0DrqVbVZMeKfYDE8rotXNU6Yi9xZM1lQ+K1lHNzMiEqK4tDfqkpetEK
+ 4mNPIj4C1DCXpJ2EW2K9vimMywKUJwaETavb5zJOuhzSOayaJMLga4RPy6aoO4t2rPJ6
+ 8F6Q==
+X-Gm-Message-State: AOJu0YxoSxGo4K7SmghQ7xlV738QmvB2Knj7aW6TrodIy2B2UN4EwYEA
+ IP0yfaURJrDI1ekwj0XDX78AMHjqHpo2dDtsmld0g8WQP8xKppdiCIKcraokoFyb
+X-Gm-Gg: AZuq6aLi+GwZ+vlxD2ozEqF2MGgZU7uaUpJ+JDL9YUu7YAG5a5L/VrorOIeLkoFUNPm
+ 2My8pY0CdZ9wzqpN9aYJsY5PhIeL/RMZTUfcK39qAnsQXhHKlpIotEkp0xD44oED17kyXtUMgPj
+ FEfJkptCUhOFHdSaC2hE4au834O27KvZu3FEaAFRzp3UmQjdMi5wMpLOhBdsIW2JvSZM+/RP1fh
+ y3cmFoKN9YE1i7Ntfh9aunVuYx7R/uIok+1+geDQeZHVng0Tc9cFHarpjGzPB5mc8Fd8wuq2FJk
+ llc/g5QCJcIb+Sylwd3cIToGcqYzt63r9aBOr6nD/KkREIucIPhoCHphKLHOiKFcyguBXpW0nSd
+ JFhsgdElKQ81l0dX1wL6RRYuC7ONiAhkILU216Y74sn4pQFxKulcKsbYW2bahWDeP0tkeymWBuk
+ jQOcgeu9P4LXOkumqpw0tlgBhuxig0xqI9GVCf8FVMcfyp9aHi2E+hpQ==
+X-Received: by 2002:a05:6000:22c4:b0:430:f463:b6ae with SMTP id
+ ffacd0b85a97d-435ca1ae140mr9940306f8f.53.1769449428436; 
+ Mon, 26 Jan 2026 09:43:48 -0800 (PST)
 Received: from thinkpad-t470s.. (93-143-71-105.adsl.net.t-com.hr.
  [93.143.71.105]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.23
+ ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 09:43:24 -0800 (PST)
+ Mon, 26 Jan 2026 09:43:48 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Ruslan_Ruslichenko@epam.com, Alistair Francis <alistair@alistair23.me>,
- David Gibson <david@gibson.dropbear.id.au>
-Subject: [PATCH 01/27] system/device_tree: update qemu_fdt_getprop/_cell
-Date: Mon, 26 Jan 2026 18:42:47 +0100
-Message-ID: <20260126174313.1418150-2-ruslichenko.r@gmail.com>
+ Ruslan_Ruslichenko@epam.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 24/27] system/memory: add setters for MemoryRegion properties
+Date: Mon, 26 Jan 2026 18:43:10 +0100
+Message-ID: <20260126174313.1418150-25-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 References: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,229 +105,241 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Update 'qemu_fdt_getprop' and 'qemu_fdt_getprop_cell'
-to support property inheritence from parent node,
-in case 'inherit' argument is set.
+Currently, MemoryRegion properties such as addr, size,
+priority and container are read-only and don't have setters.
 
-Update 'qemu_fdt_getprop_cell' to allow accessing
-specific cells within multi-cell property array.
+This patch implements the missing setters function, so that
+properties can be modified dynamically.
 
-Introduced 'qemu_devtreedd_getparent' as it is needed
-by both internal and external users.
-
-This will be used by hardware device tree parsing logic.
+The changes allow MemoryRegions objects to be fully configured
+via properties, which enables them be created from a device
+tree description.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/arm/boot.c                |  8 ++++----
- hw/arm/raspi4b.c             |  8 ++++----
- hw/arm/vexpress.c            |  4 ++--
- hw/arm/xlnx-zcu102.c         |  3 ++-
- include/system/device_tree.h | 32 +++++++++++++++++++-------------
- system/device_tree.c         | 33 ++++++++++++++++++++++++---------
- 6 files changed, 55 insertions(+), 33 deletions(-)
+ system/memory.c | 166 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 161 insertions(+), 5 deletions(-)
 
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index c97d4c4e11..829b8ba12f 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -509,10 +509,10 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-         return 0;
-     }
+diff --git a/system/memory.c b/system/memory.c
+index 4bf00d82bc..a683af525a 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -55,6 +55,9 @@ static GHashTable *flat_views;
  
--    acells = qemu_fdt_getprop_cell(fdt, "/", "#address-cells",
--                                   NULL, &error_fatal);
--    scells = qemu_fdt_getprop_cell(fdt, "/", "#size-cells",
--                                   NULL, &error_fatal);
-+    acells = qemu_fdt_getprop_cell(fdt, "/", "#address-cells", 0,
-+                                   false, &error_fatal);
-+    scells = qemu_fdt_getprop_cell(fdt, "/", "#size-cells", 0,
-+                                   false, &error_fatal);
-     if (acells == 0 || scells == 0) {
-         fprintf(stderr, "dtb file invalid (#address-cells or #size-cells 0)\n");
-         goto fail;
-diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-index 3eeb8f447e..66eba5d667 100644
---- a/hw/arm/raspi4b.c
-+++ b/hw/arm/raspi4b.c
-@@ -42,10 +42,10 @@ static void raspi_add_memory_node(void *fdt, hwaddr mem_base, hwaddr mem_len)
-     uint32_t acells, scells;
-     char *nodename = g_strdup_printf("/memory@%" PRIx64, mem_base);
+ typedef struct AddrRange AddrRange;
  
--    acells = qemu_fdt_getprop_cell(fdt, "/", "#address-cells",
--                                   NULL, &error_fatal);
--    scells = qemu_fdt_getprop_cell(fdt, "/", "#size-cells",
--                                   NULL, &error_fatal);
-+    acells = qemu_fdt_getprop_cell(fdt, "/", "#address-cells", 0,
-+                                   false, &error_fatal);
-+    scells = qemu_fdt_getprop_cell(fdt, "/", "#size-cells", 0,
-+                                   false, &error_fatal);
-     /* validated by arm_load_dtb */
-     g_assert(acells && scells);
- 
-diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
-index cc6ae7d4c4..823e316f91 100644
---- a/hw/arm/vexpress.c
-+++ b/hw/arm/vexpress.c
-@@ -486,9 +486,9 @@ static void vexpress_modify_dtb(const struct arm_boot_info *info, void *fdt)
-     const VEDBoardInfo *daughterboard = (const VEDBoardInfo *)info;
- 
-     acells = qemu_fdt_getprop_cell(fdt, "/", "#address-cells",
--                                   NULL, &error_fatal);
-+                                   0, false, &error_fatal);
-     scells = qemu_fdt_getprop_cell(fdt, "/", "#size-cells",
--                                   NULL, &error_fatal);
-+                                   0, false, &error_fatal);
-     intc = find_int_controller(fdt);
-     if (!intc) {
-         /* Not fatal, we just won't provide virtio. This will
-diff --git a/hw/arm/xlnx-zcu102.c b/hw/arm/xlnx-zcu102.c
-index 3ba2736bab..8f67c8be48 100644
---- a/hw/arm/xlnx-zcu102.c
-+++ b/hw/arm/xlnx-zcu102.c
-@@ -88,7 +88,8 @@ static void zcu102_modify_dtb(const struct arm_boot_info *binfo, void *fdt)
-                                        &error_fatal);
- 
-         for (i = 0; node_path && node_path[i]; i++) {
--            r = qemu_fdt_getprop(fdt, node_path[i], "method", &prop_len, NULL);
-+            r = qemu_fdt_getprop(fdt, node_path[i], "method", &prop_len,
-+                                 false, NULL);
-             method_is_hvc = r && !strcmp("hvc", r);
- 
-             /* Allow HVC based firmware if EL2 is enabled.  */
-diff --git a/include/system/device_tree.h b/include/system/device_tree.h
-index 49d8482ed4..f34b8b7ef9 100644
---- a/include/system/device_tree.h
-+++ b/include/system/device_tree.h
-@@ -96,27 +96,28 @@ int qemu_fdt_setprop_phandle(void *fdt, const char *node_path,
-  * @node_path: node path
-  * @property: name of the property to find
-  * @lenp: fdt error if any or length of the property on success
-+ * @inherit: if not found in node, look for property in parent
-  * @errp: handle to an error object
-  *
-  * returns a pointer to the property on success and NULL on failure
-  */
- const void *qemu_fdt_getprop(void *fdt, const char *node_path,
-                              const char *property, int *lenp,
--                             Error **errp);
-+                             bool inherit, Error **errp);
- /**
-- * qemu_fdt_getprop_cell: retrieve the value of a given 4 byte property
-- * @fdt: pointer to the device tree blob
-- * @node_path: node path
-- * @property: name of the property to find
-- * @lenp: fdt error if any or -EINVAL if the property size is different from
-- *        4 bytes, or 4 (expected length of the property) upon success.
-- * @errp: handle to an error object
-- *
-- * returns the property value on success
-- */
-+* qemu_fdt_getprop_cell: retrieve the value of a given 4 byte property
-+* @fdt: pointer to the device tree blob
-+* @node_path: node path
-+* @property: name of the property to find
-+* @ofset: the index of 32bit cell to retrive
-+* @inherit: if not found in node, look for property in parent
-+* @errp: handle to an error object
-+*
-+* returns the property value on success
-+*/
- uint32_t qemu_fdt_getprop_cell(void *fdt, const char *node_path,
--                               const char *property, int *lenp,
--                               Error **errp);
-+                               const char *property, int offset,
-+                               bool inherit, Error **errp);
- uint32_t qemu_fdt_get_phandle(void *fdt, const char *path);
- uint32_t qemu_fdt_alloc_phandle(void *fdt);
- int qemu_fdt_nop_node(void *fdt, const char *node_path);
-@@ -193,6 +194,11 @@ int qemu_fdt_setprop_sized_cells_from_array(void *fdt,
-     })
- 
- 
-+int qemu_devtree_getparent(void *fdt, char *node_path,
-+                           const char *current);
++static void memory_region_update_container_subregions(MemoryRegion *subregion);
++static void memory_region_readd_subregion(MemoryRegion *mr);
 +
-+#define DT_PATH_LENGTH 1024
-+
- /**
-  * qemu_fdt_randomize_seeds:
-  * @fdt: device tree blob
-diff --git a/system/device_tree.c b/system/device_tree.c
-index 1ea1962984..41bde0ba5a 100644
---- a/system/device_tree.c
-+++ b/system/device_tree.c
-@@ -429,7 +429,8 @@ int qemu_fdt_setprop_string_array(void *fdt, const char *node_path,
+ /*
+  * Note that signed integers are needed for negative offsetting in aliases
+  * (large MemoryRegion::alias_offset).
+@@ -1251,6 +1254,73 @@ void memory_region_init(MemoryRegion *mr,
+     memory_region_do_init(mr, owner, name, size);
  }
  
- const void *qemu_fdt_getprop(void *fdt, const char *node_path,
--                             const char *property, int *lenp, Error **errp)
-+                             const char *property, int *lenp,
-+                             bool inherit, Error **errp)
- {
-     int len;
-     const void *r;
-@@ -439,31 +440,35 @@ const void *qemu_fdt_getprop(void *fdt, const char *node_path,
-     }
-     r = fdt_getprop(fdt, findnode_nofail(fdt, node_path), property, lenp);
-     if (!r) {
-+        char parent[DT_PATH_LENGTH];
-+        if (inherit && !qemu_devtree_getparent(fdt, parent, node_path)) {
-+            return qemu_fdt_getprop(fdt, parent, property, lenp, true, errp);
-+        }
-         error_setg(errp, "%s: Couldn't get %s/%s: %s", __func__,
-                   node_path, property, fdt_strerror(*lenp));
-+        return NULL;
-     }
-     return r;
- }
- 
- uint32_t qemu_fdt_getprop_cell(void *fdt, const char *node_path,
--                               const char *property, int *lenp, Error **errp)
-+                               const char *property, int offset,
-+                               bool inherit, Error **errp)
- {
-     int len;
-     const uint32_t *p;
- 
--    if (!lenp) {
--        lenp = &len;
--    }
--    p = qemu_fdt_getprop(fdt, node_path, property, lenp, errp);
-+    p = qemu_fdt_getprop(fdt, node_path, property, &len,
-+                                         inherit, errp);
-     if (!p) {
-         return 0;
--    } else if (*lenp != 4) {
-+    }
-+    if (len < (offset + 1) * 4) {
-         error_setg(errp, "%s: %s/%s not 4 bytes long (not a cell?)",
-                    __func__, node_path, property);
--        *lenp = -EINVAL;
-         return 0;
-     }
--    return be32_to_cpu(*p);
-+    return be32_to_cpu(p[offset]);
- }
- 
- uint32_t qemu_fdt_get_phandle(void *fdt, const char *path)
-@@ -633,6 +638,16 @@ out:
-     return ret;
- }
- 
-+int qemu_devtree_getparent(void *fdt, char *node_path, const char *current)
++static void memory_region_get_addr(Object *obj, Visitor *v, const char *name,
++                                   void *opaque, Error **errp)
 +{
-+    int offset = fdt_path_offset(fdt, current);
-+    int parent_offset = fdt_supernode_atdepth_offset(fdt, offset,
-+        fdt_node_depth(fdt, offset) - 1, NULL);
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    uint64_t value = mr->addr;
 +
-+    return parent_offset >= 0 ?
-+        fdt_get_path(fdt, parent_offset, node_path, DT_PATH_LENGTH) : 1;
++    visit_type_uint64(v, name, &value, errp);
 +}
 +
- void qmp_dumpdtb(const char *filename, Error **errp)
++static void memory_region_set_addr(Object *obj, Visitor *v, const char *name,
++                                   void *opaque, Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    Error *local_err = NULL;
++    uint64_t value;
++
++    visit_type_uint64(v, name, &value, &local_err);
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    memory_region_set_address(mr, value);
++}
++
++static void memory_region_set_container(Object *obj, Visitor *v,
++                                        const char *name, void *opaque,
++                                        Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    Error *local_err = NULL;
++    MemoryRegion *old_container = mr->container;
++    MemoryRegion *new_container = NULL;
++    char *path = NULL;
++
++    visit_type_str(v, name, &path, &local_err);
++
++    if (!local_err && strcmp(path, "") != 0) {
++        new_container = MEMORY_REGION(object_resolve_link(obj, name, path,
++                                      &local_err));
++        while (new_container->alias) {
++            new_container = new_container->alias;
++        }
++    }
++
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    object_ref(OBJECT(new_container));
++
++    memory_region_transaction_begin();
++    memory_region_ref(mr);
++    if (old_container) {
++        memory_region_del_subregion(old_container, mr);
++    }
++    mr->container = new_container;
++    if (new_container) {
++        memory_region_update_container_subregions(mr);
++    }
++    memory_region_unref(mr);
++    memory_region_transaction_commit();
++
++    object_unref(OBJECT(old_container));
++}
++
+ static void memory_region_get_container(Object *obj, Visitor *v,
+                                         const char *name, void *opaque,
+                                         Error **errp)
+@@ -1285,6 +1355,70 @@ static void memory_region_get_priority(Object *obj, Visitor *v,
+     visit_type_int32(v, name, &value, errp);
+ }
+ 
++static void memory_region_set_priority(Object *obj, Visitor *v,
++                                       const char *name, void *opaque,
++                                       Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    Error *local_err = NULL;
++    int32_t value;
++
++    visit_type_uint32(v, name, (uint32_t *)&value, &error_abort);
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    if (mr->priority != value) {
++        mr->priority = value;
++        memory_region_readd_subregion(mr);
++    }
++}
++
++static void memory_region_do_set_ram(MemoryRegion *mr)
++{
++    if (mr->addr) {
++        qemu_ram_free(mr->ram_block);
++    }
++    if (int128_eq(mr->size, int128_make64(0))) {
++        return;
++    }
++    if (mr->ram) {
++        mr->ram_block = qemu_ram_alloc(int128_get64(mr->size),
++                                       RAM_SHARED, mr, &error_abort);
++    }
++}
++
++static void memory_region_set_ram(Object *obj, Visitor *v, const char *name,
++                                  void *opaque, Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    Error *local_err = NULL;
++    uint8_t value;
++
++    visit_type_uint8(v, name, &value, &error_abort);
++    if (local_err) {
++        error_propagate(errp, local_err);
++        return;
++    }
++
++    mr->dirty_log_mask |= tcg_enabled() ? (1 << DIRTY_MEMORY_CODE) : 0;
++    /* FIXME: Sanitize error handling */
++    /* FIXME: Probably need all that transactions stuff */
++    if (mr->ram == value) {
++        return;
++    }
++
++    mr->ram = value;
++    mr->terminates = !!value; /*FIXME: Wrong */
++
++    if (int128_eq(int128_2_64(), mr->size)) {
++        return;
++    }
++
++    memory_region_do_set_ram(mr);
++}
++
+ static void memory_region_get_size(Object *obj, Visitor *v, const char *name,
+                                    void *opaque, Error **errp)
  {
-     ERRP_GUARD();
+@@ -1294,6 +1428,19 @@ static void memory_region_get_size(Object *obj, Visitor *v, const char *name,
+     visit_type_uint64(v, name, &value, errp);
+ }
+ 
++static void memory_region_set_object_size(Object *obj, Visitor *v,
++                                          const char *name, void *opaque,
++                                          Error **errp)
++{
++    MemoryRegion *mr = MEMORY_REGION(obj);
++    Error *local_err = NULL;
++    uint64_t size;
++
++    visit_type_uint64(v, name, &size, &local_err);
++
++    memory_region_set_size(mr, size);
++}
++
+ static void memory_region_initfn(Object *obj)
+ {
+     MemoryRegion *mr = MEMORY_REGION(obj);
+@@ -1309,19 +1456,25 @@ static void memory_region_initfn(Object *obj)
+     op = object_property_add(OBJECT(mr), "container",
+                              "link<" TYPE_MEMORY_REGION ">",
+                              memory_region_get_container,
+-                             NULL, /* memory_region_set_container */
++                             memory_region_set_container,
+                              NULL, NULL);
+     op->resolve = memory_region_resolve_container;
+ 
+-    object_property_add_uint64_ptr(OBJECT(mr), "addr",
+-                                   &mr->addr, OBJ_PROP_FLAG_READ);
++    object_property_add(OBJECT(mr), "addr", "uint64",
++                        memory_region_get_addr,
++                        memory_region_set_addr,
++                        NULL, NULL);
+     object_property_add(OBJECT(mr), "priority", "uint32",
+                         memory_region_get_priority,
+-                        NULL, /* memory_region_set_priority */
++                        memory_region_set_priority,
++                        NULL, NULL);
++    object_property_add(OBJECT(mr), "ram", "uint8",
++                        NULL, /* FIXME: Add getter */
++                        memory_region_set_ram,
+                         NULL, NULL);
+     object_property_add(OBJECT(mr), "size", "uint64",
+                         memory_region_get_size,
+-                        NULL, /* memory_region_set_size, */
++                        memory_region_set_object_size,
+                         NULL, NULL);
+ }
+ 
+@@ -2751,6 +2904,9 @@ void memory_region_set_size(MemoryRegion *mr, uint64_t size)
+     }
+     memory_region_transaction_begin();
+     mr->size = s;
++    if (mr->ram) {
++        memory_region_do_set_ram(mr);
++    }
+     memory_region_update_pending = true;
+     memory_region_transaction_commit();
+ }
 -- 
 2.43.0
 
