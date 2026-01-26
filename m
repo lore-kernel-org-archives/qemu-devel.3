@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37668D1950F
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 621ACD1950F
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:46:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkQdF-0001kw-Fn; Mon, 26 Jan 2026 12:44:09 -0500
+	id 1vkQd6-0001bL-70; Mon, 26 Jan 2026 12:44:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQcz-0001Ux-R1
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:54 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1vkQcv-0001Sv-Mp
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:50 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQcy-0000FP-3w
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:53 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-432d28870ddso2489891f8f.3
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:51 -0800 (PST)
+ id 1vkQcu-0000BM-4N
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:49 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-47f5c2283b6so36332915e9.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769449430; x=1770054230; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769449426; x=1770054226; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=y1/ePB9LfA6lgNwZNwykzC9p7sr9jarFSpmO192awuI=;
- b=jWQkI0GPYRAnUm/wX26ExOhLeemRTG3LtltfO+gLJrGOkHLFmdqK8vzZSlkhsyEMOv
- 3fNzBAdxXrROU2UB+jSy+maek7MTY6+xGaMBGgkagdpjJsh8SH2PPaPbTkEWAZSBPA5Z
- 8eGBhvFweFaV6ICRxXO2pTEAAAIXWLgg8EBqEUlIQp3ixSLBhO3jf2v7z3VGp+oUgM7E
- G5HW/Tqv0XIIElJFfoglT/1JWuggHy2PTY+stHJgjfLGLZmE+lh/PSqm0nDScrbDbywp
- NA8+IQYU06pg/kGzIZmnisuU1ayljmIImyoIBgifQlRbm3CRKygysVWsLlhnu8ZPfpv1
- kGuw==
+ bh=0HThoZ4BzoXW1z+LSYKEUiv5+qqmWVhCSi3lu7EloCo=;
+ b=ciG/geELFPSVC+YhrtsHNCbdcFw4XKBqBd1hGHw67vYpo7RbbubdB+GdOU0FKTP0RL
+ 8c0bnApAq+65K9iv+pVW6PY3xvikk5RJQeGl/T8tqxkygzQrSgufFgfxrg8qiOw9k9tK
+ G5wqUK1TSy5v1kM673oeEPq5fvewCL7YlnB1VZGxLhp6Fi1+ro1Xio0sMEilYoeTFe2g
+ egV0Kt5cvMyGSGjTTl01yYUjuzRT0HTskAyeNNgXKSF9ogVGT353DcGLiNmMYpT69qlK
+ jbCt9dAR/O5ljNR+i1QayEPzXvF+5QpLdkBc4d2bSDBASbY/9d0gMkgvftUvIJQmkG0x
+ UhDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769449430; x=1770054230;
+ d=1e100.net; s=20230601; t=1769449426; x=1770054226;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=y1/ePB9LfA6lgNwZNwykzC9p7sr9jarFSpmO192awuI=;
- b=dn3oxPKUJ6tVIe6r2eFsB5pGS9VlqDfkd81WtPSp+FC9eq2InOPmZC1gEvwPt/Ke4i
- aGildLu8zRheSqBfCPFthypDjhF4Irf0MrJ903fvF07lYyLCiw4gsiDGzMDuauazBeBC
- V0g+bEf2NtzWra6q9/IEU9w9o9hDxfKN8ABYTa2BEGDrdaoKSpAmWjXnC0VaZdwxy+up
- 2Fwu/AXZxyb5PA7rC8xNLeb9fseCbofOcmymdBjlewLYc1nAwYbCsRxey8zEfq+GkRJZ
- LwXv2PZEpBHrMzMm4k2GBjpmv+pAJ9aQyk4sirzfbiG+Tlo7Hgm5vwOzl5klf9fQI1eJ
- nI0w==
-X-Gm-Message-State: AOJu0YyepAFHjSZ8ymi4oFSuQztY8klvRTX3np7N5ytBTCi+fOSWV//j
- WdpJBCkYfUIZtuHEGJJW/3HEb7WBoDxA+JdK1u6l5dPwIFYxrE8FpKtLYZXHk1j9
-X-Gm-Gg: AZuq6aJkuUPKPoV85UtYlIfmn4hgPlk2jo3D36tDfNOVZhhARZGJoDhL64pJa24rvmM
- mTYSX+ICKSENowIgoEoZ1j4B8LvaLGIDfMXxb+udXfjGsbmdCx5jFkL6lnk3+9MZCU3l39iy1yq
- Mk4iOKQULFOxch74SjLc26lYgEMKe339Zb8EFijq2nnUFuxBAqxYZVGLyug1Z4HoWtIPfXk0sq5
- ld5O2tCN9mDaV4OCpIusZxVnU226CVvQskL9+ofSkF4cMDvGLBp4/L6fN0NoVVjHtyT3vUtJgGP
- 1l5IrO5vA3OBKEGJkdSkzWrs4QT5mvxuh11s5tefpHJGYU46ToHsFh/cHG9OK9YrtJBRAvv9iWI
- a5kG8EaZit0n1pC11TVtSmC6KKzfSbJ0tWlNlGtSGgWkypKEdiVYp06gIwPa3ctNnECMTdzL3Wq
- dyHgRGs4+NR6QjpsiT2EkjN3C/fNuI97lOjVqLbDvSg4l7uQKGFGg1931OnhKikp8T
-X-Received: by 2002:a05:6000:4210:b0:435:9770:9eb6 with SMTP id
- ffacd0b85a97d-435ca39bf86mr9553465f8f.53.1769449430388; 
- Mon, 26 Jan 2026 09:43:50 -0800 (PST)
+ bh=0HThoZ4BzoXW1z+LSYKEUiv5+qqmWVhCSi3lu7EloCo=;
+ b=W96G8YZF/vAJjqq5DoWdHklpyGzww5Urlk/QapuWAuYBd7VOATeSBcPsfczL+hU/wz
+ WC6imWp8t4Ee6ltcQptazYgdxOtW1n/ksVh3yoKHMwzG1KlYe3xFO2G+wdY5gwcMNV13
+ bbABoM0mYS1xjT+X8JqSDBqeIwPIZdUqV0tUrKwjUU558ta++BPmS3t9lUxz5tz6ZRaH
+ A1+fI4bCgqQasGO7ecmpXyULJpzLhOnAh3hHGRIyLqiNchqibftn6WzaxrDG++UTuy2i
+ xpN4mJg9HnLl1fWulu2/DFlKTUegA1a5OgSEmIPOASx8iMHMgaupLc12LhMyQuE7RH/S
+ DjFQ==
+X-Gm-Message-State: AOJu0Yw76I8sJIblOb864495oa7Pbrons3a/8/XLc5U5cbzFqV0nVw/O
+ I9ktiarxierjBYJc3HKdutEKpn01JsFUmCCCd80AjMxwD3BdDCO+EahUNIWVcZZQ
+X-Gm-Gg: AZuq6aKmrEUt0hUT7iWXOP/c+2cDTeP6eihC0aaNtr56ADweUCg/0eiCfqOlRyQJOhU
+ cY/THohyKH9aq4/ymgyv7PUrLYLQXyuSeIkPANTQXLSHv8lcL4lsFVLUIe7PCUQoHFhboCN2Wct
+ jh0368cEi7sv/kaT9iuwTCur6TAoyDFtPzSiUpEt+UOWdU93pyVDWQJ2Nsxy1LcPBX883XfBoz0
+ c9RBBTvpo2GJMDQ3bsuX3VxTzfUnTX8HDF2Q4qQ9tVfa8fEtZXH0sd2lxOVzIMZHyP0Gq1TTm28
+ hhEJgFQeWKk3EPTXWln/eOvi7gy2qctW9QklU7qWBGCGhP92Y55QYo8zkXr9tkQw8hbfVQD7cTa
+ YLPEyOIEpEoEDJ1HDjYfM1BbyLIzVNhKsFVj5CTdMfEQ/6g6nBFwPF0qPxidx4c7ZIHOG3V3EE6
+ p898o6sNZG9VtHiHIH8ad7Iippyyhsxnl8VxPX+ocYZwzCph9qtVg6jQ==
+X-Received: by 2002:a05:600c:3b93:b0:477:af8d:203a with SMTP id
+ 5b1f17b1804b1-4805d064549mr82656675e9.27.1769449426465; 
+ Mon, 26 Jan 2026 09:43:46 -0800 (PST)
 Received: from thinkpad-t470s.. (93-143-71-105.adsl.net.t-com.hr.
  [93.143.71.105]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.49
+ ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 09:43:50 -0800 (PST)
+ Mon, 26 Jan 2026 09:43:46 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  Ruslan_Ruslichenko@epam.com
-Subject: [PATCH 26/27] hw/core/fdt_generic_util: initialize serial devices
-Date: Mon, 26 Jan 2026 18:43:12 +0100
-Message-ID: <20260126174313.1418150-27-ruslichenko.r@gmail.com>
+Subject: [PATCH 22/27] target/arm/cpu: add fdt support for armv8-timer
+Date: Mon, 26 Jan 2026 18:43:08 +0100
+Message-ID: <20260126174313.1418150-23-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 References: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,109 +104,144 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-The patch adds proper handling and registration
-for serial devices instantiated via FDT.
-In specific, device's 'chardev' FDT properties
-are correctly set to their objects.
-
-Also devices with 'chardev' properties are
-connected to serial backends.
+Implement FDT compatibility, so that timer can initilize
+and wire irqs based on device tree information.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/fdt_generic_util.c | 44 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+ target/arm/cpu.c | 115 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 115 insertions(+)
 
-diff --git a/hw/core/fdt_generic_util.c b/hw/core/fdt_generic_util.c
-index 83ce5b3466..d183a44433 100644
---- a/hw/core/fdt_generic_util.c
-+++ b/hw/core/fdt_generic_util.c
-@@ -36,6 +36,7 @@
- #include "system/system.h"
- #include "system/reset.h"
- #include "qemu/cutils.h"
-+#include "chardev/char.h"
- #include "qemu/log.h"
- #include "qemu/config-file.h"
- #include "hw/core/boards.h"
-@@ -68,6 +69,7 @@
- #include <stdlib.h>
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 6e1cbf3d61..96696ed4f1 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -53,6 +53,8 @@
+ #include "target/arm/gtimer.h"
  
- static int fdt_generic_num_cpus;
-+static int fdt_serial_ports;
- 
- static int simple_bus_fdt_init(char *bus_node_path, FDTMachineInfo *fdti);
- 
-@@ -175,6 +177,8 @@ FDTMachineInfo *fdt_generic_create_machine(void *fdt, qemu_irq *cpu_irq)
- 
-     fdti->irq_base = cpu_irq;
- 
-+    fdt_serial_ports = 0;
+ #include "trace.h"
++#include "hw/core/fdt_generic_util.h"
 +
-     /* parse the device tree */
-     if (!qemu_devtree_get_root_node(fdt, node_path)) {
-         memory_region_transaction_begin();
-@@ -1096,6 +1100,8 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
-     props = qemu_devtree_get_props(fdti->fdt, node_path);
-     for (prop = props; prop->name; prop++) {
-         const char *propname = trim_vendor(prop->name);
-+        int len = prop->len;
-+        void *val = prop->value;
-         ObjectProperty *p = NULL;
  
-         p = object_property_find(OBJECT(dev), propname);
-@@ -1112,6 +1118,27 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
-             continue;
-         }
+ static void arm_cpu_set_pc(CPUState *cs, vaddr value)
+ {
+@@ -2446,3 +2448,116 @@ static void arm_cpu_register_types(void)
+ }
  
-+        /* Special case for chardevs. It's an ordered list of strings.  */
-+        if (!strcmp(propname, "chardev") && !strcmp(p->type, "str")) {
-+            const char *chardev = val;
-+            const char *chardevs_end = chardev + len;
+ type_init(arm_cpu_register_types)
 +
-+            assert(errp == NULL);
-+            while (chardev < chardevs_end) {
-+                object_property_set_str(OBJECT(dev), propname,
-+                                        (const char *)chardev, &errp);
-+                if (!errp) {
-+                    fprintf(stderr, "set property %s to %s\n", propname,
-+                                chardev);
-+                    break;
-+                }
-+                chardev += strlen(chardev) + 1;
-+                errp = NULL;
-+            }
-+            assert(errp == NULL);
++#ifndef CONFIG_USER_ONLY
++
++static Object *fdt_armv8_timer_get_intc(FDTMachineInfo *fdti, char *node_path)
++{
++    char intc_node_path[DT_PATH_LENGTH];
++    uint32_t intc_phandle;
++    Error *errp = NULL;
++    DeviceState *intc;
++
++    intc_phandle = qemu_fdt_getprop_cell(fdti->fdt, node_path,
++                                         "interrupt-parent",
++                                         0, true, &errp);
++
++    /* There must be an interrupt-parent */
++    if (errp ||
++        qemu_devtree_get_node_by_phandle(fdti->fdt,
++                                         intc_node_path, intc_phandle)) {
++        g_assert_not_reached();
++    }
++
++    while (!fdt_init_has_opaque(fdti, intc_node_path)) {
++        fdt_init_yield(fdti);
++    }
++
++    intc = DEVICE(fdt_init_get_opaque(fdti, intc_node_path));
++
++    while (!intc->realized) {
++        fdt_init_yield(fdti);
++    }
++
++    return OBJECT(intc);
++}
++
++static int armv8_timer_fdt_init(char *node_path, FDTMachineInfo *fdti,
++                                void *priv)
++{
++    Object *intc = fdt_armv8_timer_get_intc(fdti, node_path);
++    CPUState *cpu;
++    bool map_mode = false;
++    qemu_irq *sec_irqs = NULL;
++    qemu_irq *ns_irqs;
++    qemu_irq *v_irqs;
++    qemu_irq *h_irqs;
++    uint32_t first_cpu_idx;
++    uint32_t num_cpu;
++    bool has_sec_ext;
++    Error *err = NULL;
++
++    first_cpu_idx = object_property_get_uint(intc, "first-cpu-idx", &err);
++    if (!err) {
++        num_cpu = object_property_get_uint(intc, "num-cpu", &err);
++        assert(!err);
++        has_sec_ext = object_property_get_bool(intc, "has-security-extensions",
++                                               &err);
++        assert(!err);
++    } else {
++        /*
++         * Connect all CPUs with the ARM_FEATURE_GENERIC_TIMER set for
++         * backwards compatibility when the 'first-cpu-idx' property does not
++         * exist.
++         */
++        num_cpu = 0;
++        has_sec_ext = true;
++    }
++
++    if (has_sec_ext) {
++        sec_irqs = fdt_get_irq(fdti, node_path, 0, &map_mode);
++        ns_irqs = fdt_get_irq(fdti, node_path, 1, &map_mode);
++        v_irqs = fdt_get_irq(fdti, node_path, 2, &map_mode);
++        h_irqs = fdt_get_irq(fdti, node_path, 3, &map_mode);
++    } else {
++        ns_irqs = fdt_get_irq(fdti, node_path, 0, &map_mode);
++        v_irqs = fdt_get_irq(fdti, node_path, 1, &map_mode);
++        h_irqs = fdt_get_irq(fdti, node_path, 2, &map_mode);
++    }
++
++    assert(!map_mode); /* not supported for PPI */
++
++    for (cpu = first_cpu; cpu; cpu = CPU_NEXT(cpu)) {
++        ARMCPU *acpu = ARM_CPU(cpu);
++        bool is_gic_cpu;
++
++        if (!arm_feature(&acpu->env, ARM_FEATURE_GENERIC_TIMER)) {
 +            continue;
 +        }
 +
-         fdt_init_qdev_scalar_prop(OBJECT(dev), p, fdti, node_path, prop);
-     }
- 
-@@ -1119,6 +1146,23 @@ static int fdt_init_qdev(char *node_path, FDTMachineInfo *fdti, char *compat)
-         const char *short_name = qemu_devtree_get_node_name(fdti->fdt,
-                                                             node_path);
- 
-+        /* Connect chardev if we can */
-+        if (serial_hd(fdt_serial_ports)) {
-+            Chardev *value = (Chardev *) serial_hd(fdt_serial_ports);
-+            char *chardev;
++        is_gic_cpu = cpu->cpu_index >= first_cpu_idx &&
++                     cpu->cpu_index < (first_cpu_idx + num_cpu);
 +
-+            /* Check if the device already has a chardev.  */
-+            chardev = object_property_get_str(dev, "chardev", &errp);
-+            if (!errp && !strcmp(chardev, "")) {
-+                object_property_set_str(dev, "chardev", value->label, &errp);
-+                if (!errp) {
-+                    /* It worked, the device is a charecter device */
-+                    fdt_serial_ports++;
-+                }
++        if (!num_cpu || is_gic_cpu) {
++
++            assert(*ns_irqs);
++            assert(*v_irqs);
++            assert(*h_irqs);
++            qdev_connect_gpio_out(DEVICE(acpu), 0, *ns_irqs++);
++            qdev_connect_gpio_out(DEVICE(acpu), 1, *v_irqs++);
++            qdev_connect_gpio_out(DEVICE(acpu), 2, *h_irqs++);
++
++            if (has_sec_ext) {
++                assert(*sec_irqs);
++                qdev_connect_gpio_out(DEVICE(acpu), 3, *sec_irqs++);
 +            }
-+            errp = NULL;
 +        }
++    }
 +
-         /* Regular TYPE_DEVICE houskeeping */
-         DB_PRINT_NP(0, "Short naming node: %s\n", short_name);
-         (DEVICE(dev))->id = g_strdup(short_name);
++    return 0;
++}
++
++fdt_register_compatibility(armv8_timer_fdt_init,
++                           "compatible:arm,armv8-timer");
++
++#endif
 -- 
 2.43.0
 
