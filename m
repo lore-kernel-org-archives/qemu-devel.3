@@ -4,96 +4,211 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F7BECF65DB
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 12:00:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 925DCCF65DB
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 12:00:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkLFk-0007lN-G7; Mon, 26 Jan 2026 06:59:32 -0500
+	id 1vkLGd-0007xH-Oq; Mon, 26 Jan 2026 07:00:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vkLFi-0007ky-Vw
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 06:59:31 -0500
-Received: from mail-qk1-x72e.google.com ([2607:f8b0:4864:20::72e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vkLFh-0003NZ-7M
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 06:59:30 -0500
-Received: by mail-qk1-x72e.google.com with SMTP id
- af79cd13be357-8c52e25e644so474658285a.0
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 03:59:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1769428767; x=1770033567; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xgmEAmE6/Ad5Dj9XGSiR7Q4IXQ6Hi/VQOrGmTuJkqVM=;
- b=COgO59o+kRmUAPZnhOTYRgE88TFSXfBda0YQvS7CDrmnoO1II3UFoo9P/2xqN2Oy+o
- EmBFx+x9ckZWPAVhalfpe+Z+otJci47mgwStfqXsq1AEO3Y775VYFr4yuN+BGKW/Ehqu
- QRWaJs2TrA+aS0utHIJF5orjyp1vC94bEjat4jDDJnKVZItA4++ttOKAGarP29rLfEof
- IIfV7VGs1oTQcmW/myChH9hQFAyY/MIhO1/+4OtNlF/VQ8BSjuta6qXD7oXRo4s8wq5x
- Q9JUAuOoq/yZB+vcqfJcBpKL9ZheMQzGrCJxAVEkSAoHaHAo8QPg0D7BG1K+3t185L/E
- 7I8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769428767; x=1770033567;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xgmEAmE6/Ad5Dj9XGSiR7Q4IXQ6Hi/VQOrGmTuJkqVM=;
- b=HVhuCU3pwBkLwjCdI0dt10r417s0agLlhjvxVdThb/hhuvdza7CGUzyjVlwRlE0z1N
- xLRdtSVMEw9n+5Ib5XIgjOYcD/BIa0r9tTxRfx7BSc09HAXXJpyGjLkClYwwf4M3Lq2Z
- xgNPRV7Vc9zvel2oC1DIm/iodsahQ0C25lE3X2/wLHxOe8pnBt9lJqKL60yCit5LmxYO
- gK1kWhpTzOhGprvSVqvBtTvYqQqg01KTJpRsxgsw4uQzqTU5J9OVckGMVAcCbDuJkb9N
- Ml2Z3nMagTWiQjc6Z3jfUCko7wW9Rzxr6q22NkIwRYJvcfCHIY0z7pcCbAZcEkl7yCfn
- w82g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXmYnNWqw7m9bgFK889eUSmP94A1EwynM1EfWZnce0kZiqRXHS2QHgWy0f1oR46dplS7v21d/dG8byw@nongnu.org
-X-Gm-Message-State: AOJu0YwamOCN4ql/jQW6Rwp8Mx/SAQYjwN0ytIhD/WYdeP8Gz/YhxXkB
- ySAIKRi+tny8AxkTI2hINsgubdaQt3pwz8nSq7qmT7veeO7JRrd+4Hhtl555/X4shbA=
-X-Gm-Gg: AZuq6aLidk9SqfFW+LJhYUBofMoHbMra/hLgly+rTUWEpaSQ0UKHRYAe/WRbTZW3H5x
- adxQA1x30exLxbJLvsnvAWHxDLVH5fYhUmYEi5pPnanDEUGXOii/CnEBSA9OJ1L8NJMXDrGydnp
- 07sQq4l1kSCL4P643kfympbWHRJddxaghZ+pJ+Rtoay9CkBArlBJHjeNZd9z73QdgthUW6dsiaW
- hb+Rn+JrB1iX49SwE7BfdMvJucrJiTucPjwJJV2mDyYegy5DhDH207K3FQohdupHITL8URXTf3L
- NUk05XrrirLFPcrd8iCIkU8iZ07pNPj47fnUUeRjk+Sc5UEmtfBGZr/S71ENphm1RAeWCosfpiR
- ckCTSRJTLKTNseI58M/fBu26GsGlmL/a76UXFkjlYIgnUGAbZqTnGf2ohokUBN6WBQA6w3fKi2Q
- nuyrOU5aIpjX3KRFW+fXowsyq1zc/QVH+BjRSuUMXuxTkIM7ZF/Q==
-X-Received: by 2002:a05:620a:c45:b0:8b2:f26e:3220 with SMTP id
- af79cd13be357-8c6f95817d4mr503152185a.8.1769428767298; 
- Mon, 26 Jan 2026 03:59:27 -0800 (PST)
-Received: from [192.168.68.103] ([152.234.122.35])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c6e37124d6sm1051972385a.0.2026.01.26.03.59.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Jan 2026 03:59:26 -0800 (PST)
-Message-ID: <f72674c2-9828-4ee7-84d8-2eaac776de68@ventanamicro.com>
-Date: Mon, 26 Jan 2026 08:59:22 -0300
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1vkLFz-0007pK-2S; Mon, 26 Jan 2026 06:59:49 -0500
+Received: from mgamail.intel.com ([192.198.163.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1vkLFv-0003OO-Q1; Mon, 26 Jan 2026 06:59:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1769428784; x=1800964784;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=ukDyVVPDc29gGqR11gSDxihYIqdlSuGXqlVVFdc6H78=;
+ b=gcZT+1Ckflf+k1qGOhFtyaXng/X1zj+E6bMPGAcikjEoREjD5zJIUgCS
+ YJRBNVfpXCyZmnwb74fa9ZMAzJQ2aoDk9aH6TNZLBr6ZELq85GSpIBz80
+ qPdKFOA5rZCZvQZ+aPEHmmOyNrXuiwdn+3Xw28XkYMYRdkTZI/CuUHW6Y
+ s4fT1LYQo3o+5r7JLrJajS8s6ijF2NBWeSZa3pkeLPbAkxnnEhwclo2I0
+ sn5+zuHcx+SLmjdNDAO2y3xUTDMm9QOq5GpxlPwKoLWVSOB1fzgZfjfZV
+ NFqwchC8FYe/Wj56S+fMPusRlzK9PJk6oFObTIZkEgUid3vv7x4zXtZ3z A==;
+X-CSE-ConnectionGUID: mQvtpIPfRl65gv0fpH/RTA==
+X-CSE-MsgGUID: TNPGzYoGQOiNlF8WsSjdkw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11682"; a="81237790"
+X-IronPort-AV: E=Sophos;i="6.21,255,1763452800"; d="scan'208";a="81237790"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jan 2026 03:59:42 -0800
+X-CSE-ConnectionGUID: EwOoBFU+S/m2qCw5nw1feA==
+X-CSE-MsgGUID: +ZeNiMgPSVi2HgN8AWbX/A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,255,1763452800"; d="scan'208";a="212648794"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jan 2026 03:59:43 -0800
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Mon, 26 Jan 2026 03:59:41 -0800
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35 via Frontend Transport; Mon, 26 Jan 2026 03:59:41 -0800
+Received: from CH5PR02CU005.outbound.protection.outlook.com (40.107.200.25) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Mon, 26 Jan 2026 03:59:41 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iOC8iQSN31KB0hWkwCgrHinUR95hEOrNh12Rtu5UTVWIjwE2O00qCvNC8v15vbCV9vUQqPX1S/sCJGcQogV9rhrumIFW6L0bNTYl8AWiA2QuWTR1Hr52BqfwAYhiHTuM1m93Y2XczFX7M2JTQICEbPF5TAOC/8NlpQZfdNNAQHai4yQuts8YDJ4EKZHhRZbnPkjzAQZi5OTXrvqfVS/tnoEQspXk0get6O+OXKf5n40/UshfUIxFQvFsFnbfK8ppzka5ZieAhNMaPJv1LG4yWuzZNE4fKU/FEu94hxP/oolrOg1GZWcHic5rxkKEf58HUy6ch6dyzJbWZfoNQagUHg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fa4HV6oRXrrNQ2BI79j2PEJRzjJrajF2C3cths7FoJo=;
+ b=A9RmiHsFFKpePngnD5W46gzfNbQA3h2MW9/UMbadcsUp3aOCB4wFhCrW/W4InB0kTFRWY1XHVGsb3WME4XKcbyVHV8pIBdPw6tRM+/RJwzQ4FagIxkxMBp8jkvL2qfp+uarvcziYm2V8gNaXa96Uw4TEWOEJEZTw5fyhfJWFwlDEmBjEk9juyBn/mZ3Urp46ZDguFMnjAYUO6PmA1nB1jSOry7ZEFpnRLHHtVfGy2tDFkLtWLcwa9hGp+RiBwW+gcP+OjqfvHF0PeafcWZOUtM7fOfAFlAOVDgZN6EUvUWuePvXAzYcpNlO7utooQnmhTslZDx0ZTMwWS+j3n25WXw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SA1PR11MB8492.namprd11.prod.outlook.com (2603:10b6:806:3a3::7)
+ by DM3PPF6A4412A55.namprd11.prod.outlook.com (2603:10b6:f:fc00::f2a)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.16; Mon, 26 Jan
+ 2026 11:59:39 +0000
+Received: from SA1PR11MB8492.namprd11.prod.outlook.com
+ ([fe80::cedf:12a3:5d80:af1c]) by SA1PR11MB8492.namprd11.prod.outlook.com
+ ([fe80::cedf:12a3:5d80:af1c%7]) with mapi id 15.20.9542.010; Mon, 26 Jan 2026
+ 11:59:38 +0000
+Message-ID: <60669816-b9d6-432c-b1e8-2b146149a551@intel.com>
+Date: Mon, 26 Jan 2026 20:06:19 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/virt-acpi-build.c: Add TPM2 device node and ACPI
- table support
-To: Tuan Phan <tuan.phan@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Sunil V L <sunilvl@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-References: <20260120194033.4049570-1-tuan.phan@oss.qualcomm.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [PATCH v9 07/37] hw/pci/pci: Move pci_init_bus_master() after
+ adding device to bus
+To: Shameer Kolothum <skolothumtho@nvidia.com>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
+ <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
+ <clg@redhat.com>, <alex@shazbot.org>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+References: <20260126104342.253965-1-skolothumtho@nvidia.com>
+ <20260126104342.253965-8-skolothumtho@nvidia.com>
 Content-Language: en-US
-In-Reply-To: <20260120194033.4049570-1-tuan.phan@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Yi Liu <yi.l.liu@intel.com>
+In-Reply-To: <20260126104342.253965-8-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qk1-x72e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-ClientProxiedBy: TP0P295CA0034.TWNP295.PROD.OUTLOOK.COM
+ (2603:1096:910:4::19) To SA1PR11MB8492.namprd11.prod.outlook.com
+ (2603:10b6:806:3a3::7)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA1PR11MB8492:EE_|DM3PPF6A4412A55:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2e18c9b6-6922-4abc-29e6-08de5cd261b5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|42112799006|1800799024|7416014|376014|366016|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?YzdwT2JSZjNWdHNlUTlvWFhGKzhkbVNUWUw1d1dsT3Y2b0RqZEVLbXlYVm5z?=
+ =?utf-8?B?ZDhUOGU1Ujc5aitROWc2Q1lkbmZDd0ltZGdPUlNNTmFrTStub1FJeHdJY0g0?=
+ =?utf-8?B?ZExzTStkaEh3V3JSNy9GSFV3angvMEJPb0RIU0VEUGdTVktJcWpZejlONzBp?=
+ =?utf-8?B?WU0vSlNsMVc4eXlGbFV0dERqTXlWaGxpNlhMK21JYlhVYldUQ0hsbjNLb3VZ?=
+ =?utf-8?B?Y2VBQTc5T01jSUdLWFF6MHZQaVNTU0ZubXU0eTM2RkVUUjdzS1FNMUJKajBL?=
+ =?utf-8?B?dzd4ZHVJeVNrZS85NVM5enZQSE9TSXoybGlGU0VJVEJVOUVnVFIrenV3MjBq?=
+ =?utf-8?B?L2pHNWRpTHYyRzJtejhvaW1hVVcrV08xNi9YNzBpSHY4T2MxcExUL0Z6QXZm?=
+ =?utf-8?B?YytHL01OZGREWXFJL2ppdHdNZUZidHdWRndEenlIdy9YdVlEN3Mxa0ZrZmxx?=
+ =?utf-8?B?OVV4blpma3VjSkEzZXJzdXB2cUtEVHlLT3hheTI2YkFjZndqUm9DbTJEdlhD?=
+ =?utf-8?B?N3RhTkdwTm1reGhjekV2bUZyTVZ5SGN0aFpzZDBUNE01anI3ZHR3SFVMK0gw?=
+ =?utf-8?B?N3FLc0hLejRoYTF6T3dIaUNZVWRpNVZyVk1OOEJEZnlnRGJsa0Z2ZWpOdUlu?=
+ =?utf-8?B?aUlISWN6K0twQWREVWhjM2VJbEYxemt6U0I1L3QwWHhYWkJPRG9rTGNVRGpv?=
+ =?utf-8?B?VThlSEVSeUQvUW1wMUVBTWs1YU16ZlZCc3pnQzNsWFBaWmdWNTk0NU1TeVFQ?=
+ =?utf-8?B?d21kRWtBQXpsTmQ5dXg4dlpNWWJoWG1OZDJrZU84d0hiK3dFU0NQMnkzL2NC?=
+ =?utf-8?B?WTFoYUtaYVdQREtqWGFWZnlSS2Y4ZmpPcUxMN3Z3TEl5UDhvKzFWbm9WM3hH?=
+ =?utf-8?B?SEdEd0VjTW5rMEwyUTM1YUZIcHdlaDY2Rzh2a01HQm1zWDg5THZOcGdFMVpR?=
+ =?utf-8?B?YXVFYkJ4NGFTdkY2dngxZHMzbDhZeGhOQkhUVkE5ZWRqWDd6T2F6L0VueVZs?=
+ =?utf-8?B?UkhCQkhjbXhoTk5kN0M1RzJNbjB2WGU2VWZRR3ZFZi9NNGhYM0l3WC93NGJY?=
+ =?utf-8?B?TlF3bzVsWDI0VHFvY1pDRktMaDdjajU1RHBWUExsZG8rZllmcjBOQ2hHNFhS?=
+ =?utf-8?B?QUpxMWlFV3JUMDY2aVNOU0R3SkROcWFTaEk3RjBPdksxRTFEdzhrRGxpelpy?=
+ =?utf-8?B?dnBtUDJHSndqcmUyVXZWaWJrV0l3NjdlcnpIcldzR3pFbWhUQ1lVdXBOSTJM?=
+ =?utf-8?B?RUtXWTlpazNTWXh0alF2ZmdJOGdJMGhmUzFSdldtaFVlaVRoaGJHVkhtWHZp?=
+ =?utf-8?B?Q3dtbXVyaFZxZ2Q2RWx5d1I0emVSTmlMMnZ2ckFNUjdBS01VdFIyRDNtWVRW?=
+ =?utf-8?B?TDBWeGJLYnRSREt0OHUyYTVUSTE2T2JTN0dka1lZNUYrbmM4bEVUaWxhMm5Q?=
+ =?utf-8?B?M3NmcHBpQ3JPN1ptMmpqK1VrQmFieDFFSGxOaGxsUEh0ZythNzkwNnRwNEJB?=
+ =?utf-8?B?T3hEWWloOHVaR0JmbUpkdCtBZEMzOFYwcWtPRmhPV1RJelBrRTRjQlkxbSty?=
+ =?utf-8?B?a3dUV3Vsc3V3Y1pRZG1YTzYzZk1CU2NQR1NFL1NtMEp1ZDNDZlJMWFpCSEo5?=
+ =?utf-8?B?NGVxME1HQ0lNYTVDbEFQMWxwK004WjFWZG4vR0tUa1Y1d2VaMXFyem9HVkNC?=
+ =?utf-8?B?T2oxREkzTC9HWkd6eVJlSjR2UDNpUCs4dkF5SUExeFo4Z0UrZTVlSmV1MU5T?=
+ =?utf-8?B?a3R5T24zZ0JPN1lwamRDR1BYaVdWemVUNjZDMVhjTlVwMU9vRnN6Z0tjMExr?=
+ =?utf-8?B?emVTbDgxSXlqU2VIWXAyVkNiK2w3T3Y5dys0aDZtQTNQYjMwZ25kdUFtTmZ4?=
+ =?utf-8?B?R2d5NFhoWjI4S2NNdGhjdFVGbUx6a2JrdFVxVmpWRmpqb3MxVFdMNXIrZitl?=
+ =?utf-8?B?aVk0cHRGalN4dTE1WkEyaUo1WHhuTHRqcEtDMGlFaWZtRThkSzlPemZJUWZX?=
+ =?utf-8?B?RW1IazdvU2ZEVm4vaVBTWm5RQjB3MW8yaGlhMlgwTStROU1BTDYzSjN0STJW?=
+ =?utf-8?B?TTI1TVZYQUUzNUpBRjZNT3A5Rk5RdUM5UkI4UmtXOENGdm1HSnpWdmlRWlAw?=
+ =?utf-8?Q?X4Sk=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA1PR11MB8492.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(42112799006)(1800799024)(7416014)(376014)(366016)(7053199007);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MVZZQW9pbkdBN09NWGJ1cVlmb2xPTEM1OUpsTHVCaFdKTG9HUXFEellmUVJj?=
+ =?utf-8?B?STVPQnZXVnBMM1VodUZ3Wkw5aXhsNEk1UWptbTd0T28vM3dLUjcrT2xIMXdo?=
+ =?utf-8?B?U1VWNDRxK1g4MGVmdTdYZnE3ZkkrNWFXdEJpQXRuTGhnY3gxNGJWbEhPdVcr?=
+ =?utf-8?B?ZGljclN4Sjhqc0xlczJUbmovb1g1bWVzbGsxYkRxV1E0SXVxSWRUK3lyK0lm?=
+ =?utf-8?B?NHdYKytZUlM5eFJySzBmcmZpYjVyM1VqR0RiRzZuM0JXb2xpYUJXTkdCTzhS?=
+ =?utf-8?B?REEwMi92OVpJVlErUk9odGZyZE9JT2FSVUU2OUppRVNidi9uNXR5OWRkMFRE?=
+ =?utf-8?B?OVFERlZaT25pc2JxQ25QaVpEUC8vZFdwVEdQNFRqUFRMcEpYdkRjQUo4R0cx?=
+ =?utf-8?B?QS9RVmp0MUM4VkZqQWxrTjhnU3Q4UCt5N1ZEd2Q1blUzTDc1OTVEeDBkS0V0?=
+ =?utf-8?B?aTFWQ0cyNlF0MkhyVERHYWhUeXBrajBMakJCUVFBZTZOYUtUSyt0Z2VmeUw1?=
+ =?utf-8?B?Mi80YXltNW9NWHRXSlc3aktzRkJtblRZOWtYZEJsRzVLcHpac0VRckhZVFpx?=
+ =?utf-8?B?SmR2S2tmdFZaMUFwNGNHZU5WbjdCU0xQa3NVMkZmdmd0UTY4Rzk2cndPNEx1?=
+ =?utf-8?B?Yit6eEtpeHpIMjlqb0pmQ3RsS0hUWnlUWVd3c2pFTWYxS2R5bTlxM2ozOWJl?=
+ =?utf-8?B?b1c5eWgxT0FLOVlDWkd1NVpBM3BSb0RjKzE1N0sxTnVlQS9sNHlERWNVOGIy?=
+ =?utf-8?B?WEkvRmZERERaWVA2cVdiT1ZCVysvbkJKdFF1MDh0UXNxVXY5azBRSWtudWNP?=
+ =?utf-8?B?cWJmakZXVDIySGliOFlzZEIrTjFYSDRkRDRwOS9vSUZ5TFNhWXl0NHZ3V1RS?=
+ =?utf-8?B?U2NuUnUvUjhLMFBIVVBzY21zNTVpMVNQRG5sUWxpbTEwdTBnbHh0aUlia2hX?=
+ =?utf-8?B?QWdwcDJXWWVMK2xNVVBON1pjamlxM0psOTVvUGdGSE5NbVRGbmpFcEh1Znor?=
+ =?utf-8?B?d2FZdUFQYWhGWklUNE8zU01jcEx6WEozTHlTbmg5cFRKVFd4ckVpUW13aXFm?=
+ =?utf-8?B?MXVlVys0bzgvUlZ6ZW9XZi80Skh6c2ZtbTB3ei9xUG8wcXM1L2hXdjVJUkt1?=
+ =?utf-8?B?TEhsSWFBMHFoTEVpem1wVFhsc0wwVnpzdlBpeWxWeXhXS29JUlJFSXVhV3RD?=
+ =?utf-8?B?YzkvNjNlWkVjQXZoNHFQbVR5aDl6VzVRcUZxejVzK3E2aVM4UU12ZFp5RFhR?=
+ =?utf-8?B?VUxwRHZzb3hCdG85Z0JDbUsxRUJjRm0rQ2lUKzV4K0NMazZqbTFwTUFwREhW?=
+ =?utf-8?B?SWowTDVVZ3ZJOFF6Zzl2NjFZYmxxOEhHNldMMGFSZTBlVlhBOU1EbGNoNG5L?=
+ =?utf-8?B?L3Irdm5sNkEzU3pSN2ZzbG9XQWtZclBsTEZab2hLanhGTENOZEhUWFpoWWpY?=
+ =?utf-8?B?Vi9yNWplM0VmSWxVV21NKzNCM01NMks5N0xNN1dIN1E2VGtmUjI0amkxcDBh?=
+ =?utf-8?B?cHRNRU0rMkZDbFhZYWFSWHVhWFlqZU40aUpaangxVFpkY3llRDROQTEwQXh6?=
+ =?utf-8?B?bXI4Y3NXRk4wSTlMMzdsT0FuVzQvcnNMbzFMS0U2RHRybXk3cmZxZy95dWVE?=
+ =?utf-8?B?RjUzQnFLSHV0SFJsM0JNS1RqcTVrelNIN2tIc2twc3hVQzRBa2F4N2lremZr?=
+ =?utf-8?B?alZoR2pySFFzZC8rbUtEWEI5MGJtd2l6cTE4dWMrSm1hWlphYkxHQTBNVU56?=
+ =?utf-8?B?Qmpod2pPZUgzb0ZtVGxkbS9qOTVXazNsZStSSGFKcW4wbmlIVVBJeVVMUzBi?=
+ =?utf-8?B?c3pYQ3M0aHRnNFlBMk1ESEhqU3VKaHVnVVRMZFRramU5ZE10YUdSRWJBQklp?=
+ =?utf-8?B?SzBUcWtZZG10TTlsVzRENUpSK3dmbDhhSG9DTnV0KzNYd0RzMEFMMG0xbG5O?=
+ =?utf-8?B?UFpvU0loM3lFMDJQNTVXNFUrcUR5eEFjdCs0TkxadG1UNVU4NXBTRmRvdWNr?=
+ =?utf-8?B?WTJ3T3FSUUpkSklnajZsZjBMMTZENEdEdzlZZ1BFYkY2M0c0S2w4TW1CT2Qz?=
+ =?utf-8?B?SktreHRIM3Z5R2NZQ2JGVlNNVnpDUllQeUc2emFuRXdtSkNqN1lFYTNYQmNk?=
+ =?utf-8?B?STlrSTQ0SlNtSVF2VXpaTUN6S3lETk1UNTBQejlsMXA3dkFBMFExZUxPdjk5?=
+ =?utf-8?B?cWJ5by9yd3BxZTNHM2pMalRSL0FPV2pPbTlwNzJKaDlXSjdUNk5rWHdpNEJQ?=
+ =?utf-8?B?NndOVzliN2M5a0dobVloZGRXSHJnRXBSQ1Y2anJFQldQU1ptOEtxa1VRNk9i?=
+ =?utf-8?B?RXRaTWNxN2x2OU9IOFdQZk5LQUVNd3liZEZXWEtGNnZtY2VTTDVBZz09?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2e18c9b6-6922-4abc-29e6-08de5cd261b5
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR11MB8492.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jan 2026 11:59:38.9001 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2LcNiO4290lNZG8EfEkUymeA+z0bwEBHAL5A2qgDl193HcFkXEqUBWV+sARpELwnNJ0eKljZsw1a+fycjQQ8UA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PPF6A4412A55
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=yi.l.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,124 +224,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 1/20/2026 4:40 PM, Tuan Phan wrote:
-> This patch enables TPM2 support in the RISC-V virt machine ACPI builder.
+On 2026/1/26 18:43, Shameer Kolothum wrote:
+> During PCI hotplug, in do_pci_register_device(), pci_init_bus_master()
+> is called before storing the pci_dev pointer in bus->devices[devfn].
 > 
-> Signed-off-by: Tuan Phan <tuan.phan@oss.qualcomm.com>
+> This causes a problem if pci_init_bus_master() (via its
+> get_address_space() callback) attempts to retrieve the device using
+> pci_find_device(), since the PCI device is not yet visible on the bus.
+> 
+> Fix this by moving the pci_init_bus_master() call to after the device
+> has been added to bus->devices[devfn].
+> 
+> This prepares for a subsequent patch where the accel SMMUv3
+> get_address_space() callback retrieves the pci_dev to identify the
+> attached device type.
+> 
+> No functional change intended.
+> 
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Tested-by: Eric Auger <eric.auger@redhat.com>
+> Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 > ---
+>   hw/pci/pci.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
->   hw/riscv/virt-acpi-build.c | 59 ++++++++++++++++++++++++++++++++++++++
->   1 file changed, 59 insertions(+)
-> 
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index f1406cb683..b300492b2f 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -32,6 +32,7 @@
->   #include "hw/intc/riscv_aclint.h"
->   #include "hw/nvram/fw_cfg_acpi.h"
->   #include "hw/pci-host/gpex.h"
-> +#include "hw/core/platform-bus.h"
->   #include "hw/riscv/virt.h"
->   #include "hw/riscv/numa.h"
->   #include "hw/virtio/virtio-acpi.h"
-> @@ -39,6 +40,7 @@
->   #include "qapi/error.h"
->   #include "qemu/error-report.h"
->   #include "system/reset.h"
-> +#include "system/tpm.h"
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 8cbf5f5d70..229ea7cfb1 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -1381,9 +1381,6 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
+>       pci_dev->bus_master_as.max_bounce_buffer_size =
+>           pci_dev->max_bounce_buffer_size;
 >   
->   #define ACPI_BUILD_TABLE_SIZE             0x20000
->   #define ACPI_BUILD_INTC_ID(socket, index) ((socket << 24) | (index))
-> @@ -224,6 +226,44 @@ static void acpi_dsdt_add_iommu_sys(Aml *scope, const MemMapEntry *iommu_memmap,
->       aml_append(scope, dev);
+> -    if (phase_check(PHASE_MACHINE_READY)) {
+> -        pci_init_bus_master(pci_dev);
+> -    }
+>       pci_dev->irq_state = 0;
+>       pci_config_alloc(pci_dev);
+>   
+> @@ -1427,6 +1424,9 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
+>       pci_dev->config_write = config_write;
+>       bus->devices[devfn] = pci_dev;
+>       pci_dev->version_id = 2; /* Current pci device vmstate version */
+> +    if (phase_check(PHASE_MACHINE_READY)) {
+> +        pci_init_bus_master(pci_dev);
+> +    }
+>       return pci_dev;
 >   }
 >   
-> +#ifdef CONFIG_TPM
-> +static void acpi_dsdt_add_tpm(Aml *scope, RISCVVirtState *s)
-> +{
-> +    PlatformBusDevice *pbus = PLATFORM_BUS_DEVICE(s->platform_bus_dev);
-> +    hwaddr pbus_base = s->memmap[VIRT_PLATFORM_BUS].base;
-> +    SysBusDevice *sbdev = SYS_BUS_DEVICE(tpm_find());
-> +    MemoryRegion *sbdev_mr;
-> +    hwaddr tpm_base;
-> +
-> +    if (!sbdev) {
-> +        return;
-> +    }
-> +
-> +    tpm_base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
-> +    if (tpm_base == -1) {
-> +        error_report("Failed to get TPM MMIO address");
-> +        exit(1);
-> +    }
-> +
-> +    tpm_base += pbus_base;
-> +
-> +    sbdev_mr = sysbus_mmio_get_region(sbdev, 0);
-> +
-> +    Aml *dev = aml_device("TPM0");
-> +    aml_append(dev, aml_name_decl("_HID", aml_string("MSFT0101")));
-> +    aml_append(dev, aml_name_decl("_STR", aml_string("TPM 2.0 Device")));
-> +    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-> +
-> +    Aml *crs = aml_resource_template();
-> +    aml_append(crs,
-> +               aml_memory32_fixed(tpm_base,
-> +                                  (uint32_t)memory_region_size(sbdev_mr),
-> +                                  AML_READ_WRITE));
-> +    aml_append(dev, aml_name_decl("_CRS", crs));
-> +    aml_append(scope, dev);
-> +}
-> +#endif
-> +
->   /*
->    * Serial Port Console Redirection Table (SPCR)
->    * Rev: 1.10
-> @@ -479,6 +519,10 @@ static void build_dsdt(GArray *table_data,
->           acpi_dsdt_add_iommu_sys(scope, &memmap[VIRT_IOMMU_SYS], IOMMU_SYS_IRQ);
->       }
->   
-> +#ifdef CONFIG_TPM
-> +    acpi_dsdt_add_tpm(scope, s);
-> +#endif
-> +
->       if (socket_count == 1) {
->           virtio_acpi_dsdt_add(scope, memmap[VIRT_VIRTIO].base,
->                                memmap[VIRT_VIRTIO].size,
-> @@ -914,6 +958,16 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
->           }
->       }
->   
-> +#ifdef CONFIG_TPM
-> +    /* TPM info */
-> +    if (tpm_get_version(tpm_find()) == TPM_VERSION_2_0) {
-> +        acpi_add_table(table_offsets, tables_blob);
-> +        build_tpm2(tables_blob, tables->linker,
-> +                   tables->tcpalog, s->oem_id,
-> +                   s->oem_table_id);
-> +    }
-> +#endif
-> +
->       /* XSDT is pointed to by RSDP */
->       xsdt = tables_blob->len;
->       build_xsdt(tables_blob, tables->linker, table_offsets, s->oem_id,
-> @@ -1025,6 +1079,11 @@ void virt_acpi_setup(RISCVVirtState *s)
->                                                build_state, tables.rsdp,
->                                                ACPI_BUILD_RSDP_FILE);
->   
-> +#ifdef CONFIG_TPM
-> +    fw_cfg_add_file(s->fw_cfg, ACPI_BUILD_TPMLOG_FILE, tables.tcpalog->data,
-> +                    acpi_data_len(tables.tcpalog));
-> +#endif
-> +
->       qemu_register_reset(virt_acpi_build_reset, build_state);
->       virt_acpi_build_reset(build_state);
->       vmstate_register(NULL, 0, &vmstate_virt_acpi_build, build_state);
-
 
