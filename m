@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AC7CD19503
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 16:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DAC8D19503
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 16:56:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkPsU-0000eS-LG; Mon, 26 Jan 2026 11:55:50 -0500
+	id 1vkPs3-00005c-GS; Mon, 26 Jan 2026 11:55:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vkPsS-0000b5-BO
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 11:55:48 -0500
+ id 1vkPrx-0008UO-M9
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 11:55:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vkPsQ-0007SF-KG
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 11:55:48 -0500
+ id 1vkPrv-0007OA-IA
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 11:55:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769446546;
+ s=mimecast20190719; t=1769446514;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l457qV4i+POufgV6lrAfjlUcU2aOiTP2P7cDT3UPHb4=;
- b=A/qTuJObdJk+2uxur0MXgFrq2EaQhV4DdTMaUXEFrgQ7iE1eO4vWwn/PQSnsSUCla69V7C
- f6iw8Fyz1VDYtsq4eoqAQ1rHO78JwOTes3fxyt7FoyLrkoOF6EelpIGBz2WydVAoxsTPdI
- dPZOgAdx8X1umHHVnPeHHv10IJk21Dw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=2eAAsaHBYtALTqkTzcm/h6etegPdPAVcMUYbHzIGnfw=;
+ b=F4JuIVsAX9/teJdp23OZ4dZwlGUfP4jW+sw2do7rhUDWqFUzOYLPmyWeziXBHD9MLENs3S
+ uMtSnBmLbh9ElzuqPnpfaqxbGmkbBoUHw3Oc2ZJtYikZNlnlkWF+y3S8807pBhg59cNYaq
+ sePASckV+lnD8xnF/oG4es7s1Hf0p44=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-298-aASa5VGnM1upXcZYF5hXgA-1; Mon,
- 26 Jan 2026 11:55:42 -0500
-X-MC-Unique: aASa5VGnM1upXcZYF5hXgA-1
-X-Mimecast-MFC-AGG-ID: aASa5VGnM1upXcZYF5hXgA_1769446541
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-298-Yf3or49ROLSZn3w5ubUqpQ-1; Mon,
+ 26 Jan 2026 11:55:10 -0500
+X-MC-Unique: Yf3or49ROLSZn3w5ubUqpQ-1
+X-Mimecast-MFC-AGG-ID: Yf3or49ROLSZn3w5ubUqpQ_1769446509
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 401371944E45; Mon, 26 Jan 2026 16:55:41 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DDB5D180035D; Mon, 26 Jan 2026 16:55:08 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.45.224.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3CFF51801AC9; Mon, 26 Jan 2026 16:55:37 +0000 (UTC)
+ id 25D36180066A; Mon, 26 Jan 2026 16:55:03 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
  maz@kernel.org, oliver.upton@linux.dev, sebott@redhat.com,
  gshan@redhat.com, ddutile@redhat.com, peterx@redhat.com, philmd@linaro.org,
  pbonzini@redhat.com
-Subject: [PATCH v6 10/11] hw/arm/virt: Introduce framework to aggregate
- hidden-regs and safe-missing-regs
-Date: Mon, 26 Jan 2026 17:53:09 +0100
-Message-ID: <20260126165445.3033335-11-eric.auger@redhat.com>
+Subject: [PATCH v6 03/11] target/arm/cpu: Allow registers to be hidden
+Date: Mon, 26 Jan 2026 17:53:02 +0100
+Message-ID: <20260126165445.3033335-4-eric.auger@redhat.com>
 In-Reply-To: <20260126165445.3033335-1-eric.auger@redhat.com>
 References: <20260126165445.3033335-1-eric.auger@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
@@ -71,7 +71,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,202 +87,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently if a virt_machine_<n>_options() sets a TYPE_ARM_CPU
-x-mig-hidden-regs or x-mig-safe-missing-regs array property, another
-one cannot overwrite it or extend it. We end up with a core dump:
+More recent kernels sometimes expose new registers in an
+unconditionnal manner. This situation breaks backward migration
+as qemu notices there are more registers in the input stream
+than supported on the destination host. This leads to a
+"failed to load cpu:cpreg_vmstate_array_len" error.
 
-qemu-system-aarch64: can't apply global arm-cpu.x-mig-safe-missing-regs=0x603000000013c103, 0x603000000013c512, 0x603000000013c513: array size property x-mig-safe-missing-regs may not be set more than once
-Aborted (core dumped)
+A good example is the introduction of KVM_REG_ARM_VENDOR_HYP_BMAP_2
+pseudo FW register in v6.16 by commit C0000e58c74e (“KVM: arm64:
+Introduce KVM_REG_ARM_VENDOR_HYP_BMAP_2”). Trying to do backward
+migration from a host kernel that features the commit to a destination
+host that doesn't, fail with above error.
 
-In practice we would like an easy way to register regs that belong
-to either of those categories and allow aggregation of those.
+Currently QEMU is not using that feature so ignoring this latter
+is not a problem. An easy way to fix the migration issue is to teach
+qemu we don't care about that register and we can simply ignore it
+when syncing its state during migration.
 
-We introduce arm_virt_compat_register_safe_missing_reg() and
-arm_virt_compat_register_hidden_reg() which populate GLists of
-int64_t. After all virt_machine_<n>_options have been called and
-have registered their regs, the GList are converted into the
-associated array property value and the GlobalProperties are set.
+This patch introduces an array of such hidden registers. Soon it will
+be settable through an array property.
+
+If hidden, the register is moved out of the array of cpreg which is
+built in kvm_arm_init_cpreg_list(). That way their state won't be
+synced.
+
+To extend that functionality to TCG, do the same in add_cpreg_to_list()
+and count_cpreg().
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Sebastian Ott <sebott@redhat.com>
 
 ---
+v2 -> v3:
+- use kvm_regidx
 
-v5 -> v6:
-- move g_string_new after list length check
-- collected Sebastian's R-b
+v1 -> v2:
+- Move the property in a separate patch
+- improve the commit msg
+- change the trace point to just print info in
+  kvm_arm_init_cpreg_list()
+- improve comment in cpu.h (Connie)
 
-v5:
-- new patch
+target/arm/helper: Skip hidden registers
+
+In case a cpreg is hidden, skip it when initialing the cpreg
+list.
+
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
 ---
- include/hw/arm/virt.h | 23 ++++++++++++++
- hw/arm/virt.c         | 73 ++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 89 insertions(+), 7 deletions(-)
+ target/arm/cpu.h        | 20 ++++++++++++++++++++
+ target/arm/helper.c     | 12 +++++++++++-
+ target/arm/kvm.c        | 12 +++++++++++-
+ target/arm/trace-events |  2 ++
+ 4 files changed, 44 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 5907d41dbb2..d83e6f00068 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -41,6 +41,7 @@
- #include "system/kvm.h"
- #include "hw/intc/arm_gicv3_common.h"
- #include "qom/object.h"
-+#include "qobject/qlist.h"
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index e900ef7937b..e87f222e7be 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1045,6 +1045,15 @@ struct ArchCPU {
+     /* KVM steal time */
+     OnOffAuto kvm_steal_time;
  
- #define NUM_GICV2M_SPIS       64
- #define NUM_VIRTIO_TRANSPORTS 32
-@@ -131,6 +132,8 @@ struct VirtMachineClass {
-     bool no_tcg_lpa2;
-     bool no_ns_el2_virt_timer_irq;
-     bool no_nested_smmu;
-+    QList *safe_missing_regs;
-+    QList *hidden_regs;
++    /*
++     * Array of register indexes that need to be hidden to allow migration
++     * in certain cases, i.e. when a register is exposed in KVM or defined
++     * in TCG but not actually used in QEMU. Indexes are described in Linux
++     * Documentation/virt/kvm/api.rst for both KVM and TCG.
++     */
++    uint64_t *hidden_regs;
++    uint32_t nr_hidden_regs;
++
+     /* Uniprocessor system with MP extensions */
+     bool mp_is_up;
+ 
+@@ -1185,6 +1194,17 @@ struct ARMCPUClass {
+     ResettablePhases parent_phases;
  };
  
- struct VirtMachineState {
-@@ -216,4 +219,24 @@ static inline int virt_gicv3_redist_region_count(VirtMachineState *vms)
-             vms->highmem_redists) ? 2 : 1;
- }
- 
-+static inline void arm_virt_class_init(MachineClass *mc)
++static inline bool
++arm_cpu_hidden_reg(ARMCPU *cpu, uint64_t regidx)
 +{
-+    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
-+
-+    vmc->safe_missing_regs = qlist_new();
-+    vmc->hidden_regs = qlist_new();
-+}
-+
-+static inline void
-+arm_virt_compat_register_safe_missing_reg(VirtMachineClass *vmc, int64_t regidx)
-+{
-+    qlist_append_int(vmc->safe_missing_regs, regidx);
-+}
-+
-+static inline void
-+arm_virt_compat_register_hidden_reg(VirtMachineClass *vmc, int64_t regidx)
-+{
-+    qlist_append_int(vmc->hidden_regs, regidx);
-+}
-+
- #endif /* QEMU_ARM_VIRT_H */
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 03d5af18f26..a01dfb7fb79 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -93,6 +93,7 @@
- #include "hw/cxl/cxl.h"
- #include "hw/cxl/cxl_host.h"
- #include "qemu/guest-random.h"
-+#include "qobject/qnum.h"
- 
- static GlobalProperty arm_virt_compat_defaults[] = {
-     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
-@@ -100,15 +101,18 @@ static GlobalProperty arm_virt_compat_defaults[] = {
- static const size_t arm_virt_compat_defaults_len =
-     G_N_ELEMENTS(arm_virt_compat_defaults);
- 
-+/*
-+ * Array made of x-mig-safe-missing-regs and x-mig-hidden-regs global
-+ * properties. It is populated by arm_virt_aggregate_x_mig_props() that
-+ * aggregates registrations respectively made with:
-+ * - arm_virt_compat_register_safe_missing_reg() and
-+ * - arm_virt_compat_register_hidden_reg()
-+ */
-+static GlobalProperty aggregated_x_mig_array_props[2];
-+
- /* Register erronously exposed on 10.2 and earlier */
- #define DBGDTRTX 0x40200000200e0298
- 
--static GlobalProperty arm_virt_compat_10_2[] = {
--    { TYPE_ARM_CPU, "x-mig-safe-missing-regs", stringify(DBGDTRTX)},
--};
--static const size_t arm_virt_compat_10_2_len =
--    G_N_ELEMENTS(arm_virt_compat_10_2);
--
- /*
-  * This cannot be called from the virt_machine_class_init() because
-  * TYPE_VIRT_MACHINE is abstract and mc->compat_props g_ptr_array_new()
-@@ -120,14 +124,67 @@ static void arm_virt_compat_default_set(MachineClass *mc)
-                      arm_virt_compat_defaults_len);
- }
- 
-+static char *get_prop_value_from_reg_qlist(QList *l)
-+{
-+    size_t size = qlist_size(l);
-+    QListEntry *item;
-+    GString *s;
-+    int i = 0;
-+    QNum *qi;
-+
-+    if (!size) {
-+        return NULL;
-+    }
-+
-+    s = g_string_new("");
-+
-+    QLIST_FOREACH_ENTRY(l, item) {
-+        qi = qobject_to(QNum, qlist_entry_obj(item));
-+        int64_t regidx;
-+
-+        qnum_get_try_int(qi, &regidx);
-+        if (i++ > 0) {
-+            g_string_append(s, ", ");
++    for (int i = 0; i < cpu->nr_hidden_regs; i++) {
++        if (cpu->hidden_regs[i] == regidx) {
++            return true;
 +        }
-+        g_string_append_printf(s, "%" G_GINT64_FORMAT, regidx);
 +    }
-+    return g_string_free(s, false);
++    return false;
 +}
 +
-+static void arm_virt_aggregate_x_mig_props(MachineClass *mc)
-+{
-+    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
-+    const char *safe_missing_regs_prop_value =
-+                    get_prop_value_from_reg_qlist(vmc->safe_missing_regs);
-+    const char *hidden_regs_prop_value =
-+                    get_prop_value_from_reg_qlist(vmc->hidden_regs);
-+    int i = 0;
-+
-+    if (safe_missing_regs_prop_value) {
-+        aggregated_x_mig_array_props[i].driver = TYPE_ARM_CPU;
-+        aggregated_x_mig_array_props[i].property = "x-mig-safe-missing-regs";
-+        aggregated_x_mig_array_props[i++].value = safe_missing_regs_prop_value;
-+    }
-+
-+    if (hidden_regs_prop_value) {
-+        aggregated_x_mig_array_props[i].driver = TYPE_ARM_CPU;
-+        aggregated_x_mig_array_props[i].property = "x-mig-hidden-regs";
-+        aggregated_x_mig_array_props[i++].value = hidden_regs_prop_value;
-+    }
-+
-+    compat_props_add(mc->compat_props, aggregated_x_mig_array_props, i);
-+}
-+
- #define DEFINE_VIRT_MACHINE_IMPL(latest, ...) \
-     static void MACHINE_VER_SYM(class_init, virt, __VA_ARGS__)( \
-         ObjectClass *oc, \
-         const void *data) \
-     { \
-         MachineClass *mc = MACHINE_CLASS(oc); \
-+        arm_virt_class_init(mc); \
-         arm_virt_compat_default_set(mc); \
-         MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
-+        arm_virt_aggregate_x_mig_props(mc); \
-         mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " ARM Virtual Machine"; \
-         MACHINE_VER_DEPRECATION(__VA_ARGS__); \
-         if (latest) { \
-@@ -3559,9 +3616,11 @@ DEFINE_VIRT_MACHINE_AS_LATEST(11, 0)
+ /* Callback functions for the generic timer's timers. */
+ void arm_gt_ptimer_cb(void *opaque);
+ void arm_gt_vtimer_cb(void *opaque);
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index dce648b4824..8217517150b 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -235,9 +235,13 @@ static void add_cpreg_to_list(gpointer key, gpointer value, gpointer opaque)
+     ARMCPU *cpu = opaque;
+     uint32_t regidx = (uintptr_t)key;
+     const ARMCPRegInfo *ri = value;
++    uint64_t kvm_regidx = cpreg_to_kvm_id(regidx);
  
- static void virt_machine_10_2_options(MachineClass *mc)
++    if (arm_cpu_hidden_reg(cpu, kvm_regidx)) {
++        return;
++    }
+     if (!(ri->type & (ARM_CP_NO_RAW | ARM_CP_ALIAS))) {
+-        cpu->cpreg_indexes[cpu->cpreg_array_len] = cpreg_to_kvm_id(regidx);
++        cpu->cpreg_indexes[cpu->cpreg_array_len] = kvm_regidx;
+         /* The value array need not be initialized at this point */
+         cpu->cpreg_array_len++;
+     }
+@@ -247,6 +251,12 @@ static void count_cpreg(gpointer key, gpointer value, gpointer opaque)
  {
-+    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
+     ARMCPU *cpu = opaque;
+     const ARMCPRegInfo *ri = value;
++    uint32_t regidx = (uintptr_t)key;
++    uint64_t kvm_regidx = cpreg_to_kvm_id(regidx);
 +
-     virt_machine_11_0_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_10_2, hw_compat_10_2_len);
--    compat_props_add(mc->compat_props, arm_virt_compat_10_2, arm_virt_compat_10_2_len);
-+    arm_virt_compat_register_safe_missing_reg(vmc, DBGDTRTX);
- }
- DEFINE_VIRT_MACHINE(10, 2)
++    if (arm_cpu_hidden_reg(cpu, kvm_regidx)) {
++        return;
++    }
  
+     if (!(ri->type & (ARM_CP_NO_RAW | ARM_CP_ALIAS))) {
+         cpu->cpreg_array_len++;
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index c6f0d0fc4e1..7e0a3680748 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -789,7 +789,10 @@ static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
+     qsort(&rlp->reg, rlp->n, sizeof(rlp->reg[0]), compare_u64);
+ 
+     for (i = 0, arraylen = 0; i < rlp->n; i++) {
+-        if (!kvm_arm_reg_syncs_via_cpreg_list(rlp->reg[i])) {
++        uint64_t regidx = rlp->reg[i];
++
++        if (!kvm_arm_reg_syncs_via_cpreg_list(regidx) ||
++            arm_cpu_hidden_reg(cpu, regidx)) {
+             continue;
+         }
+         switch (rlp->reg[i] & KVM_REG_SIZE_MASK) {
+@@ -805,6 +808,8 @@ static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
+         arraylen++;
+     }
+ 
++    trace_kvm_arm_init_cpreg_list_arraylen(arraylen);
++
+     cpu->cpreg_indexes = g_renew(uint64_t, cpu->cpreg_indexes, arraylen);
+     cpu->cpreg_values = g_renew(uint64_t, cpu->cpreg_values, arraylen);
+     cpu->cpreg_vmstate_indexes = g_renew(uint64_t, cpu->cpreg_vmstate_indexes,
+@@ -816,9 +821,14 @@ static int kvm_arm_init_cpreg_list(ARMCPU *cpu)
+ 
+     for (i = 0, arraylen = 0; i < rlp->n; i++) {
+         uint64_t regidx = rlp->reg[i];
++
+         if (!kvm_arm_reg_syncs_via_cpreg_list(regidx)) {
+             continue;
+         }
++        if (arm_cpu_hidden_reg(cpu, regidx)) {
++            trace_kvm_arm_init_cpreg_list_skip_hidden_reg(rlp->reg[i]);
++            continue;
++        }
+         cpu->cpreg_indexes[arraylen] = regidx;
+         arraylen++;
+     }
+diff --git a/target/arm/trace-events b/target/arm/trace-events
+index 0a5ed3e69d5..20f4b4f2cd0 100644
+--- a/target/arm/trace-events
++++ b/target/arm/trace-events
+@@ -14,6 +14,8 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
+ # kvm.c
+ kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
+ kvm_arm_cpu_post_load_missing_reg(char *name) "Missing register in input stream: %s"
++kvm_arm_init_cpreg_list_arraylen(uint32_t arraylen) "arraylen=%d"
++kvm_arm_init_cpreg_list_skip_hidden_reg(uint64_t regidx) "hidden 0x%"PRIx64" is skipped"
+ 
+ # cpu.c
+ arm_cpu_reset(uint64_t mp_aff) "cpu %" PRIu64
 -- 
 2.52.0
 
