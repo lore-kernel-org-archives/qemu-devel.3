@@ -4,118 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 073CAD1951A
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 22:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BDAED1951F
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 22:01:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkUdD-0000Vb-EP; Mon, 26 Jan 2026 17:00:23 -0500
+	id 1vkUdn-0000dz-C8; Mon, 26 Jan 2026 17:00:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vkUd7-0000Tf-TX
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 17:00:18 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vkUd6-0000Pi-4p
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 17:00:17 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 1CDAC33781;
- Mon, 26 Jan 2026 22:00:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769464814; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PJAC+NLJXNbisLbtrYGoUOmbTTUYhQ8g9z9UhqSXk1A=;
- b=KCU+gu3hYWij8b56gF2rNmUfPuDAq1iDW8lI60DHw6/6lk0mEO8zHGnfm5jVGyBNEqSlm4
- FpDaiE8OMr5g9O4H+zEL8TK1I/Q4UwpIx6ernOvzPfgSexOejxpFpHDiJv9TsNsAF4bypa
- NaQX6fOB+HtJ+T1L5bkoMRTni5WaFrw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769464814;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PJAC+NLJXNbisLbtrYGoUOmbTTUYhQ8g9z9UhqSXk1A=;
- b=BIxl2kVrYBLdor25RNwbIWvgZyjPqS5rJ4jc/7/h672tMSPlxz6SHUTEDs5JrJI3yAwCO9
- kvBY5DnoS5ArmjAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=KCU+gu3h;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=BIxl2kVr
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769464814; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PJAC+NLJXNbisLbtrYGoUOmbTTUYhQ8g9z9UhqSXk1A=;
- b=KCU+gu3hYWij8b56gF2rNmUfPuDAq1iDW8lI60DHw6/6lk0mEO8zHGnfm5jVGyBNEqSlm4
- FpDaiE8OMr5g9O4H+zEL8TK1I/Q4UwpIx6ernOvzPfgSexOejxpFpHDiJv9TsNsAF4bypa
- NaQX6fOB+HtJ+T1L5bkoMRTni5WaFrw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769464814;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PJAC+NLJXNbisLbtrYGoUOmbTTUYhQ8g9z9UhqSXk1A=;
- b=BIxl2kVrYBLdor25RNwbIWvgZyjPqS5rJ4jc/7/h672tMSPlxz6SHUTEDs5JrJI3yAwCO9
- kvBY5DnoS5ArmjAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 819A9139E9;
- Mon, 26 Jan 2026 22:00:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cdueEO3jd2mjXQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 26 Jan 2026 22:00:13 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Prasad Pandit <ppandit@redhat.com>, Lukas Straub
- <lukasstraub2@web.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 04/10] migration/savevm: Remove SaveStateEntry.is_ram
-In-Reply-To: <aXfEMcFNL_YPjgzg@x1.local>
-References: <20260121223336.3381912-1-peterx@redhat.com>
- <20260121223336.3381912-5-peterx@redhat.com> <87fr7wigpt.fsf@suse.de>
- <aXfEMcFNL_YPjgzg@x1.local>
-Date: Mon, 26 Jan 2026 19:00:10 -0300
-Message-ID: <874io8ghlh.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1vkUdY-0000aD-JD; Mon, 26 Jan 2026 17:00:49 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1vkUdV-0000Rh-Rq; Mon, 26 Jan 2026 17:00:43 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60QAQrJV026370;
+ Mon, 26 Jan 2026 22:00:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=YcjPKo
+ Iyha4oGY6z9yjZIyNKomcEQ449bfxdgeXAskc=; b=XOYySv+8Rj17pX0AgT5aU1
+ DQPz0+SA8RwztINh70YcWsJx1VelP86QWdQEXBF+9dxQLnMlYYmPWzrJI6MRpM4X
+ R7tcY00Rvl8OasBpIuOPd2k+iKhJVUP50TYT5jj5AiBSfv1qJg08DqMi4OkUQkRg
+ BxzT0pvi8WJQ6j+/X9KRjrdiXAX6nHJUiXJWkTo4ogmT8YRUhnr2q6RM7dN9v5NU
+ YktIL0GdbVQakTgSdaWnF/epk+t+ySEpcEgAuVUsOdmweT+WN1edzP9juPhRJbrS
+ Dg0Xd5EWw19ULZ+ratnZUBMz94eTUlNpAyg+9Q/J0LqMmBLeVdIfRdmnFYL8mfpg
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvkgmh4kv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Jan 2026 22:00:34 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60QKbs8P006707;
+ Mon, 26 Jan 2026 22:00:34 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw8sy6c6u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Jan 2026 22:00:33 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60QM0Tsk60817870
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 26 Jan 2026 22:00:29 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7D84C20043;
+ Mon, 26 Jan 2026 22:00:29 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8543920040;
+ Mon, 26 Jan 2026 22:00:28 +0000 (GMT)
+Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.111.22.119])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Mon, 26 Jan 2026 22:00:28 +0000 (GMT)
+Date: Mon, 26 Jan 2026 23:00:26 +0100
+From: Halil Pasic <pasic@linux.ibm.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: mst@redhat.com, sgarzare@redhat.com, raphael@enfabrica.net,
+ qemu-devel@nongnu.org, yc-core@yandex-team.ru,
+ d-tatianin@yandex-team.ru, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>, Ilya Leoshkevich
+ <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>, Thomas Huth
+ <thuth@redhat.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, "open list:virtio-ccw"
+ <qemu-s390x@nongnu.org>, Halil Pasic <pasic@linux.ibm.com>
+Subject: Re: [PATCH v4 08/23] virtio: move common part of
+ _set_guest_notifier to generic code
+Message-ID: <20260126230026.2664d565.pasic@linux.ibm.com>
+In-Reply-To: <26198787-a1da-4858-8656-f5006d153d6e@yandex-team.ru>
+References: <20260119185228.203296-1-vsementsov@yandex-team.ru>
+ <20260119185228.203296-9-vsementsov@yandex-team.ru>
+ <20260124000624.1bd7c9c1.pasic@linux.ibm.com>
+ <26198787-a1da-4858-8656-f5006d153d6e@yandex-team.ru>
+Organization: IBM
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+]; FREEMAIL_ENVRCPT(0.00)[web.de];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- RCVD_COUNT_TWO(0.00)[2];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[nongnu.org,redhat.com,web.de];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Queue-Id: 1CDAC33781
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Gr1PO01C c=1 sm=1 tr=0 ts=6977e402 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=mkMtH7XpAAAA:8 a=6R7veym_AAAA:8 a=eAaatNw17JgYhb5s72wA:9 a=CjuIK1q_8ugA:10
+ a=WtO8poqlptoA:10 a=I9Slk6e--tAXHahELIuT:22 a=ILCOIF4F_8SzUMnO7jNM:22
+X-Proofpoint-GUID: Tyzt7He5sYxiQrQYW7lg_Orqq0EbdREj
+X-Proofpoint-ORIG-GUID: Tyzt7He5sYxiQrQYW7lg_Orqq0EbdREj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI2MDE4NiBTYWx0ZWRfX0/z7lwJKCSgO
+ KDCx597bmfyaSLCK0N6WC6Q9Js0kqkw0vMhCcNZm0vlcPt3OuoHXN8b81YR+v2RlIkQJeP4yT7W
+ 3oRji/0LdQedOOrvSDVe8pHKpUiBaUnux6bH8kWkROPwg8IsN4UiWpJ3IWGLxEqFYaNvXB+8soy
+ ZvHEP3CNXbXQJgkDnHBKH/L1K62NLavwBRwmmEInnS2gNyCAnTzjYITj2scVocCZAos7jUI/fxj
+ rf3fOIaDXJ6DlAqi80xBLe/QAAUl8CMWeQdaqce1zfzASuYv7UQqKsJ6iFJFTHyhbgow4d0AMAD
+ HyKDNyjKfCKGsdwA6l8XiSRKFJBMYoNat8JshD3ImQHLlWrnwPtfF6Tq0XWMUutnx+o1zUhikws
+ kQzCtl3vUtO2Pl4QcuhnWPkIfrB44aL6fFjtLqwbEc83JttAPxxV1fqUIGbVhXO0U2S8KtthiXr
+ Tv9YJZPWohOdIuSIIUw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-26_04,2026-01-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 malwarescore=0 adultscore=0 spamscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601260186
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=pasic@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,123 +133,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Mon, 26 Jan 2026 19:40:09 +0300
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> wrote:
 
-> On Fri, Jan 23, 2026 at 10:47:10AM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > It's neither accurate nor necessary.  Use a proper helper to detect if it's
->> > an iterable savevm state entry instead.
->> 
->> Could you explain what exactly is_ram was supposed to mean?
->
-> IIUC when introduced it was trying to capture the ram only, and that's also
-> why I said it's inaccurate, because ram is not the only thing that can
-> provide a save_setup() nowadays..
->
->> 
->> >
->> > Signed-off-by: Peter Xu <peterx@redhat.com>
->> > ---
->> >  migration/savevm.c | 15 ++++++++-------
->> >  1 file changed, 8 insertions(+), 7 deletions(-)
->> >
->> > diff --git a/migration/savevm.c b/migration/savevm.c
->> > index 61e873d90c..f1cd8c913d 100644
->> > --- a/migration/savevm.c
->> > +++ b/migration/savevm.c
->> > @@ -249,7 +249,6 @@ typedef struct SaveStateEntry {
->> >      const VMStateDescription *vmsd;
->> >      void *opaque;
->> >      CompatEntry *compat;
->> > -    int is_ram;
->> >  } SaveStateEntry;
->> >  
->> >  typedef struct SaveState {
->> > @@ -816,10 +815,6 @@ int register_savevm_live(const char *idstr,
->> >      se->ops = ops;
->> >      se->opaque = opaque;
->> >      se->vmsd = NULL;
->> > -    /* if this is a live_savem then set is_ram */
->> > -    if (ops->save_setup != NULL) {
->> > -        se->is_ram = 1;
->> > -    }
->> >  
->> >      pstrcat(se->idstr, sizeof(se->idstr), idstr);
->> >  
->> > @@ -1866,6 +1861,12 @@ void qemu_savevm_live_state(QEMUFile *f)
->> >      qemu_put_byte(f, QEMU_VM_EOF);
->> >  }
->> >  
->> > +/* Is a save state entry iterable (e.g. RAM)? */
->> > +static bool qemu_savevm_se_iterable(SaveStateEntry *se)
->> > +{
->> > +    return se->ops && se->ops->save_setup;
->> 
->> So it could be iterable and not have .save_live_iterate?
->> 
->> Also, what's the deal with slirp? AIUI, it would be considered is_ram?
->
-> I guess no. Either in term of when it's introduced, or in theory of how I
-> understand this piece of code should work.. Because savevm_slirp_state
-> doesn't provide save_setup().
->
+> >> +/**
+> >> + * virtio_queue_set_guest_notifier - set/unset queue or config guest
+> >> + *     notifier
+> >> + *
+> >> + * @vdev: the VirtIO device
+> >> + * @n: queue number, or VIRTIO_CONFIG_IRQ_IDX to set config notifer  
+> > 
+> > Semantically are mixing queue numbers and interrupt indexes here.  
+> 
+> That's preexisting logic in virtio_pci_set_guest_notifier_fd_handler().
+> 
+> But, you are right, that's doesn't answer the question, is it good to share
+> the logic with mmio and ccw.
+> 
+> Is config notifier only pci specific, or similar feature may appear in future
+> for mmio and/or ccw?
 
-Oops, I misread save_state vs. save_setup.
+AFAIR there is no  notifier for ccw. A possible explanation for
+that is, that AFAIK that config space notifications (device -> driver)
+are always classic I/O interrupts while queue indicators can be so called
+adapter I/O interrupts and irqfd is only available for adapter I/O
+interrupts. 
 
-> Note that this patch didn't really change the fact on how it works, even if
-> I _think_ this is broken..  I want to leave it for later, making sure this
-> patch (while doing the cleanup) doesn't introduce functional changes.
->
+If you like you can have a look at 
+"4.3.2.6 Setting Up Indicators" in
+https://docs.oasis-open.org/virtio/virtio/v1.3/csd01/virtio-v1.3-csd01.html#x1-1940003
 
-That's always fine.
+I see no reason why virtio_config_guest_notifier_read() based, i.e
+!irqfd virtio config notifier should not exist or would not work. And I
+guess it is needed for certain vhost things. But nevertheless, I can't
+find the place where a virtio-ccw config notifier is set up.
 
-> So I expect things to break if e.g. COLO is used with VFIO devices (that
-> supports migrations), where it also provides save_setup(), but actually
-> COLO will not properly sync VFIO states.  Likely nobody is using it anyway.
->
-> It's also the same to Xen's xen-save-devices-state QMP command.  It looks
-> to me Xen is playing some "split savevm" work here, however I don't know
-> whether it'll always workout these days when there're special devices that
-> provide save_setup().
->
+Eric, what is your opinion on this? My current thinking is that
+virtio-ccw not having a config notifier is basically a bug.
 
-Hm, ok. Let's leave it then.
-
->> 
->> > +}
->> > +
->> >  int qemu_save_device_state(QEMUFile *f)
->> >  {
->> >      Error *local_err = NULL;
->> > @@ -1876,7 +1877,7 @@ int qemu_save_device_state(QEMUFile *f)
->> >      QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->> >          int ret;
->> >  
->> > -        if (se->is_ram) {
->> > +        if (qemu_savevm_se_iterable(se)) {
->> 
->> Hmm, qemu_savevm_state_setup has:
->> 
->>     if (!se->ops || !se->ops->save_setup) {
->>             continue;
->>     }
->> 
->> therefore:
->> 
->>     if (!qemu_savevm_se_iterable(se)) {
->>             continue;
->>     }
->> 
->> Maybe it would be more practical to put these in a separate list already
->> while registering.
->
-> This is a question about performance, my gut feeling is looping over with
-> one queue would be fine for now, but even if not, it'll be further question
-> to ask after above (on correctness..).
->
-> So I plan to be focused on the cleanup part for now in this series..
->
-
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Regards,
+Halil
 
