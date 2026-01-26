@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB2FC88E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 07:30:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD485C88E5A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 07:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkGvi-0008NC-66; Mon, 26 Jan 2026 02:22:40 -0500
+	id 1vkGzC-0004Hf-71; Mon, 26 Jan 2026 02:26:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vkGgE-0003LP-PI
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:06:37 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1vkGeD-0002jr-Ib
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:05:05 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vkGg8-0004hx-3u
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:06:32 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-8230f8f27cfso1773075b3a.0
- for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 23:06:23 -0800 (PST)
+ id 1vkGe6-000441-PY
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:04:26 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-81f4c0e2b42so2062130b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 23:04:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769411182; x=1770015982; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769411052; x=1770015852; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=A2m1YYGNyq/Rz1FBTgbyAMMQAXZAUd22fOojccDF0Y8=;
- b=XYgj41gN2ZOhPFh/8Qs2BKn7z1Uwjg686Nf+pdM65cbtzKfG7Yoth2DfFUiR6WJOpF
- 9NPeUau+ggna95ae1E4aQY/hAxLMUMNFiLbPjJfNIz62JdG5NJSGczrgHDWKNegHd8w7
- RiFJ1QM6SsFJA7tR5MHXlOXrcCN0G5yNntPaDDds8li/w/Qz+l2fR4GdRypeYCsIClVv
- ZRSxMkRFK1cnyAGRiFEQHRkxorRyx7vGrgh5LYK05xJJqtPx4mMHHTMM4hjCEFhSvOqL
- 5NixUfBbGY6l0UUfTdaOMc29aN9P4VtBjpMQ5jgZzkhpqWIcl8AuWIF9ykme5vL6dm6N
- OG0A==
+ bh=T2xUEoYpnLX+y7kFhG9JXWkUeGWlapfsje21sWW5Bcs=;
+ b=bRzN3zRfCqYHxLRYzZXXwDivnHVZquUwbJqLtqyDhJtZidE2+6byVatS6BX0X8nVHp
+ 6RMLjAXw14g/CqM05/iUABa3xfYwkHxhIlPFYGC/hB5y85hpB1NEkU9OCbG0hzEjIlKZ
+ OacGPsMVi24SX8U3c99FWYeFubyr2XGNqHHPWnPL4Jlh1j9Y6QKmwtSSXahXbx/w1cI6
+ WGYDl1vAQHJLPhau6i8okQxpKpEqAyjjxS14T9l++UV+ii+lrPy2mZR+nw4QpsC5aK7l
+ u44ZC0DxiAW49pZ+25IV4Z9rVLMfzoeliNxDWQEFiAK/RCUqprh9CX0YzjxhPm9M4Q+P
+ 9adg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769411182; x=1770015982;
+ d=1e100.net; s=20230601; t=1769411052; x=1770015852;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=A2m1YYGNyq/Rz1FBTgbyAMMQAXZAUd22fOojccDF0Y8=;
- b=btBsXhdfJ2hRgfVWKx1V7G4uJaZNaQYhR18OKWjOaFB/XEH5QkyQbwJUVDhClYNW4f
- 1Bpdx5bhlEymheLcNm9+gPE4QYDnajlPtJi0zSXpfy8Xc2tkhpfM65JsPYvGjii7JSw5
- t2Bq5/Zp6Qv3iR/LP7Ht05yuiq3NsR8JfCR9+7Ig/j6uhGBYEiY5wbZiEeCAOnaN+q1g
- SQ0raTCagppHIhWBpiY1FJpzf28jFMVZjX7Nn/MQxoWrTv0Olq4iaPIuvQihXqrY+826
- rnycqFf5sDRaqTO4fJsIa24nkY0W48CQunwIeV30PeJlUhkOf3oDVeS5D+wh9Monp1j9
- Aohg==
-X-Gm-Message-State: AOJu0YzaXZJNmp/NcdQAh41ffl7qFYJOJ245WhLwUeqjOQ4h+ZFxnca5
- stHg8ovQwSjjSxTQqMWQs0osPWlq5q8HCkCkpUxIA444JmO422iv6qQjB1fT1mw9
-X-Gm-Gg: AZuq6aKN0kM3jWpnegcX+A+uBMRk4hanjvyY9KcDbfpp03RIXJ1bdLLnCIYr2XvtsTn
- Vk9KncuLAa7ykcdv2VpjuMicT79qDuPhUoTk/9II373jCWktWt/TbKQ41iHTHD24oeHiwtVFyHk
- BW5OlsWEsAJFZy7p9qnz7PcWZPG4wQIb7J/dEmKAvnW4l0jEJ8C8+jFtPQKYYW4WBpdDBjRWSFP
- vVIvcfnaWJ1ei32ww/U0oX3+VHIiMuVNgzYZkoHj7y93dXkl/d/mgTPbt8KeGR924YVSXWRLrzL
- 0LyBRhHwjL6ck1RBppZO7jAptm2DlpRzC/bYao63aimitqY14uHcdQDfIfximw30NQjKNtvElX+
- Z8AgNOS33qrJtdm9vL/V9HaWAmLRqaG1cXUrdMe1Sg/C2oF3qKGI2GAFVfFtmTMUqd1U12iJ9B/
- c/pHdy6WDviOuSXgOpqJBYTqrhilElG/Rs2hLuJEBy3g==
-X-Received: by 2002:a05:6a00:4b07:b0:822:30e:d15f with SMTP id
- d2e1a72fcca58-823411d7ee9mr3616085b3a.6.1769411182178; 
- Sun, 25 Jan 2026 23:06:22 -0800 (PST)
+ bh=T2xUEoYpnLX+y7kFhG9JXWkUeGWlapfsje21sWW5Bcs=;
+ b=ReAQwv1/NKceNdFnXkzUXfT64UdpVEdJmgTGEp0vIiIgAOe/zAPNcicxZmxi/n40p3
+ QNtlU/TXNfBwOdPKrWsjWbenUQFYMuHIYkY9qE9rKsLTNmzWB7e49zJDfeTQyqAXqjQz
+ Nyudp3eimXK9O/ZSBiDDVoWH3jvxiLgzj5JGiBfETShEe0M8TNbm+MAklmD6D0YKhNL9
+ r8dqLx3pa+EZH0WXP15fY6Dd0viFZEfuVclTUgj0A0NX4TyNmJRBkRNbNZ6z1mT1IqTD
+ c6Ei1P+YzyoPvnN1hbCwQ6ZACCu8L02M9taRmZJVLGdXUcA6yTD+U7CnV8bGP6p1l1cd
+ G97g==
+X-Gm-Message-State: AOJu0YzDpvEjEapG4QrsHkO11jiVP/q3mXJ3nQ7IrLS92207vYd/lbeN
+ WJPUVNysGz2quio8DzPYwXAgTDuqxfjCOgqSibywjYclH5wx5c6kTUTpn8ylbfg5
+X-Gm-Gg: AZuq6aItxYOOuBUMV1HevPtQGOnKh8we6hNMz20Xb8U7Lm4Uff1jRl5P6oJNUryHecP
+ 3D7HyIbjOuLZ2hj1PVMVeUf/MyNZXjQL0YsZ0WM991nvpdtD0SHQdDE+WaRL1NcACba1fky1hT2
+ jy0ncMozKpBCr76Xs+FRzckU7bpVlGI9zbNDtcPytOYLeMqm34THOcYF3lQW0vrAV3tBSSZP93e
+ 8GxqwVwB3ZfHzu89AGmYxGqTCWWHufADbxVekHMMSPrOwUL9rIROD92Qaf/GPqb+u7r2zGc/UvM
+ Xk0Pqa5HWa56X6tKyy0BpvfWVjKQ0GogO6f3Ase6gM6t8OKhso5P234xyyMbgwi0qj9OSKtK1St
+ yzHAvjVq0+TeT/1df/BbOPd/SYBKGTiAKqtuSAEF5eY1atjbZrh9kky1UwdgHNc898ZT8qLxhVw
+ /USyxKJSXPWwqw7ulugGYkA8oLG2xuaSAQWAwcOX0F5w==
+X-Received: by 2002:a05:6a00:12e2:b0:81e:8e66:38d8 with SMTP id
+ d2e1a72fcca58-823411dbc89mr3190318b3a.10.1769411052479; 
+ Sun, 25 Jan 2026 23:04:12 -0800 (PST)
 Received: from brahms.. (fp93c00990.tkyc601.ap.nuro.jp. [147.192.9.144])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-823187716ebsm8661487b3a.66.2026.01.25.23.06.18
+ d2e1a72fcca58-823187716ebsm8661487b3a.66.2026.01.25.23.04.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Jan 2026 23:06:21 -0800 (PST)
+ Sun, 25 Jan 2026 23:04:12 -0800 (PST)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -79,24 +79,23 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-arm@nongnu.org,
  qemu-riscv@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 30/33] meson.build: Propagate optimization flag for linking
- on Emscripten
-Date: Mon, 26 Jan 2026 07:03:43 +0000
-Message-ID: <f14e57f2c7fc03dd0f89fd058775aa6a2f0c025e.1769407033.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v4 01/33] tcg/wasm64: Add tcg-target.h
+Date: Mon, 26 Jan 2026 07:03:14 +0000
+Message-ID: <1061c734ff63e09ea0544ebecf09abfd6fc25b11.1769407033.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1769407033.git.ktokunaga.mail@gmail.com>
 References: <cover.1769407033.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,36 +111,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Emscripten uses the optimization flag at the link time to enable
-optimizations via Binaryen [1]. While meson.build currently recognizes the
--Doptimization option, it does not propagate it to the linking. This commit
-updates meson.build to propagate the optimization flag to the linking when
-targeting WebAssembly.
-
-[1] https://emscripten.org/docs/optimizing/Optimizing-Code.html#how-emscripten-optimizes
+Since WebAssembly instructions vary in size and can include single-byte
+instructions, TCG_TARGET_INSN_UNIT_SIZE is set to 1.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- meson.build | 6 ++++++
- 1 file changed, 6 insertions(+)
+ MAINTAINERS             |  5 ++++
+ tcg/wasm64/tcg-target.h | 61 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 66 insertions(+)
+ create mode 100644 tcg/wasm64/tcg-target.h
 
-diff --git a/meson.build b/meson.build
-index 82d9c94f4a..0bdc350f16 100644
---- a/meson.build
-+++ b/meson.build
-@@ -841,6 +841,12 @@ elif host_os == 'openbsd'
-     # Disable OpenBSD W^X if available
-     emulator_link_args = cc.get_supported_link_arguments('-Wl,-z,wxneeded')
-   endif
-+elif host_os == 'emscripten'
-+  # Emscripten uses the optimization flag also during the link time.
-+  # https://emscripten.org/docs/optimizing/Optimizing-Code.html#how-emscripten-optimizes
-+  if get_option('optimization') != 'plain'
-+    emulator_link_args += ['-O' + get_option('optimization')]
-+  endif
- endif
+V4:
+- Removed tcg-target-reg-bits.h as the 32bit support has been removed and
+  TCG_TARGET_REG_BITS is no longer needed.
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index c1e586c58f..470b15eeb7 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4107,6 +4107,11 @@ F: tcg/tci/
+ F: tcg/tci.c
+ F: disas/tci.c
  
- ###############################################
++WebAssembly TCG target
++M: Kohei Tokunaga <ktokunaga.mail@gmail.com>
++S: Maintained
++F: tcg/wasm64/
++
+ Block drivers
+ -------------
+ VMDK
+diff --git a/tcg/wasm64/tcg-target.h b/tcg/wasm64/tcg-target.h
+new file mode 100644
+index 0000000000..f00761d19f
+--- /dev/null
++++ b/tcg/wasm64/tcg-target.h
+@@ -0,0 +1,61 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Tiny Code Generator for QEMU
++ *
++ * Based on tci/tcg-target.h
++ *
++ * Copyright (c) 2009, 2011 Stefan Weil
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ */
++
++#ifndef TCG_TARGET_H
++#define TCG_TARGET_H
++
++#define TCG_TARGET_INSN_UNIT_SIZE 1
++#define MAX_CODE_GEN_BUFFER_SIZE  ((size_t)-1)
++
++/* Number of registers available. */
++#define TCG_TARGET_NB_REGS 16
++
++/* List of registers which are used by TCG. */
++typedef enum {
++    TCG_REG_R0 = 0,
++    TCG_REG_R1,
++    TCG_REG_R2,
++    TCG_REG_R3,
++    TCG_REG_R4,
++    TCG_REG_R5,
++    TCG_REG_R6,
++    TCG_REG_R7,
++    TCG_REG_R8,
++    TCG_REG_R9,
++    TCG_REG_R10,
++    TCG_REG_R11,
++    TCG_REG_R12,
++    TCG_REG_R13,
++    TCG_REG_R14,
++    TCG_REG_R15,
++
++    TCG_REG_TMP = TCG_REG_R13,
++    TCG_AREG0 = TCG_REG_R14,
++    TCG_REG_CALL_STACK = TCG_REG_R15,
++} TCGReg;
++
++#endif /* TCG_TARGET_H */
 -- 
 2.43.0
 
