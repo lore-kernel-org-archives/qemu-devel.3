@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 387C0D1950F
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:51:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E65D19502
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkQdA-0001fO-1V; Mon, 26 Jan 2026 12:44:04 -0500
+	id 1vkQd7-0001cQ-5j; Mon, 26 Jan 2026 12:44:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQcs-0001RG-Sr
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:48 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1vkQcf-0001Jd-EU
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:34 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQcq-00009a-SN
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:46 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-48039fdc8aeso25343765e9.3
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:44 -0800 (PST)
+ id 1vkQca-0008Tt-8E
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:32 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-4327555464cso3259024f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769449423; x=1770054223; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769449406; x=1770054206; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sJSsgywQO/rHQ4WoDlmS1OtrkxPJkG9kKCFHbCDdYFU=;
- b=JdicvjEeXkLTOLt80rTcO/X343dVA8IGjHa10nTKkwXsVT4aXiuNsfJ3cy8Uut7ajz
- po7GMT/00z2kmZxgdtTW+Mu60LoeJI8H4XISoEhBOEbLOGMg8IXmRIY4464jcMk9lN4F
- 7aW4C2j6+DxZRhhZg1hQp1EtP+O8rev1q51N/YUGLdJgNsS0PlCU3d4gSDTn59bkTj9D
- 7SHDef/TEt7OKragI5vKF6ZhokdzoolP43fHxe7St6jaTP+geFRPmyKX2U+4zM3yNA1K
- jsFXycoW+g141cl1GB1Ih7X8v3hDMBzSwrJnL0RUd27ZmRaffuIs6QM0RZcVyGbIAnwG
- TyRw==
+ bh=OpWtN94Xa+aWszMSoi6aLvSs25LMajBLRGooOPWDaj8=;
+ b=QyQK6smXyASpVKovj7huBqIoC3RxawqfVSanRv8SW/vG+G+3uMhXI59gBLcDicBXKe
+ DqBpZ+6hV/vM4jzfplHCNFZxr5BjymADpNEXN46dMDJEx7NDOPXVXVvDB2vKj4yQCLZy
+ qrZyZpA6isIhylL2mRE4ASUHFQZIN0A872xWcbTbf5+HIFHv8RQEFfIp89eyqqTQt9TP
+ 8vfLD6mkNXzSeg6R4UIBAEc0EOHm1G0DBLK5cpFZ4XJbtQkFszCKRtZ8jq9ql4JKrrQp
+ ykYP/I+b3iwfa/frhcOb5bzGDyCQraO0dNOriwCIVygwKW601/Ri6cWmQNbi6yP2cF+H
+ gWGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769449423; x=1770054223;
+ d=1e100.net; s=20230601; t=1769449406; x=1770054206;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sJSsgywQO/rHQ4WoDlmS1OtrkxPJkG9kKCFHbCDdYFU=;
- b=lDgKlJMSgHRrhv0Au6yvo9gMyBwL3f4IRVh2Yi3JKUHXR1CQT2eCkZdjSp1Zfg1T/t
- ux3VTms3Qsswk0MWVj1RxNb4WR53W0v8dHb8Epppu2U3BQQTPrZFSWhbt+qAM02Vpcih
- K8/H8iKva0ozPuwyewPN7wAOjHb0wev/buX3k9Q1HgoLHV6ycw/1QGVevFjdJgZnqaWe
- lPAkG2zjJIzCcrMT5wd0Q/+okldGa1t3WxW3wxv5rhiD90XI+jbMe3YzkW2esT3Nu9pf
- sc19+4nIgOE6GlLApyD8yQorXq25JQQOw6tsHozsi+No+4uNCBBhZh5pNQeIjjkwSh5w
- 5kkw==
-X-Gm-Message-State: AOJu0Yw1rOC7YQYIgtzU29pH1KZVm8wkajR2VzlY+ZjtDcmM1prmP/oL
- yE6GOToF90GkYrCarqVjDUBbhIa1KI+F/ERG/mCfNa47uSFS65tXn8pKV/wdqD78
-X-Gm-Gg: AZuq6aJQxTAACOVyAyK4bWm9L0xok4q6534FlMczfDiJ+ZPE+1rrY0wVx8fuxC2m2eW
- s+KPp99ABVnf51mjKLqPVoc0DGFxoP02qrFGg1w5kkTI64QNyyesNhXywB/NDvlQ3G+ErOuplgk
- bCD+pYptZgpm2KFQpvdXNWRJtEdHWGD4Sl2sSyh6mGtnL1razqu/WeD/U6mDkE+v9Rc31Cisyz2
- E1bsj5bjmri+ZeLO7+FXk3UB1OAyBcgnbIerxdBf0THQqMAqjnZ62Nhmi5nBr/y9r//tXtvdbxU
- mbcPAbum9UDiP6Tv4ZZmBFTJtGIpQCMMzHb0rBD4xO7Em12rD8PUijTXg+BHvn2O5qpaBlxc4zO
- j7O4JPG1xF9Gd+tqNv2k/rtG0NcP4ju1TGeDuSnmdoelD4Rfd4ulwnoSCT7eyFl+REztr2PaMH+
- tQxYUYHzf5ceRyJnS4b8BLGFzq8KxYz/qQR28ToR1debskT7gbCG6UPTEMWrRTv28S
-X-Received: by 2002:a05:600c:6217:b0:480:46c6:bf4b with SMTP id
- 5b1f17b1804b1-4805ce3f9d2mr80383655e9.5.1769449422934; 
- Mon, 26 Jan 2026 09:43:42 -0800 (PST)
+ bh=OpWtN94Xa+aWszMSoi6aLvSs25LMajBLRGooOPWDaj8=;
+ b=uOzQO8JQCsfZlzUOM+m9Rn98drjayfcI9/RWJGH2JHMaUpbCajsdf3y6jmekkZGMWw
+ NiLqAcnJTpXNOcQg2co4U++xZ/WOvZ54tTttF/se/hqvI876+iSCM74C6WptS644pvWt
+ 85XnKk8uI9C4392ZnjRbgmOT7Sh0xo7NPIx64ZYMZmvGvcerOjmEEKAU5iYFoEJMD/57
+ ccxjdM6oZY5Z5OPjn43rlb1JLLGDI/+E4oPo9tn6vYVbxRzIbbt4VkgorrBP2Xe+4I8Q
+ dqHs+CaYbMFV3++cpKr52D3lR5UjkBJlBhE2cxXB5nJZQFTkf0Ht1unwAtYL2C8HzY4a
+ tjNQ==
+X-Gm-Message-State: AOJu0Yzev/4lb3CtgtavMki+SdianKBl8FmlDCz5tQkCB+ifZDg/KD54
+ GgF/c/ZSKXtgI+E0+Ymw/ORu48O5o1CnkoeRzNltORyVJCt7tagMTkB4Tk7M/+lL
+X-Gm-Gg: AZuq6aK9qPaMRhi5Wf1O1WHHlTuXCZllJ+vics16KhZzkArAfEzzrQBE0iAVboFY7Nn
+ tQ5e8aqDB33JNn20+pMv9EJ+8B8y6Tq46bcD5LCeCb6PbjBJ/EIpc0F2Nt4uVhcKNfvOCf6jIRw
+ Rx62WqVbsAq1FvPC5mcOXsCZPLWlm5P2nrpkFNeQ6OnCnsybowVXIri5DmyR4FdpRmsVKtNDbN1
+ mpA170n8ss1ejXUWd8qKdZXjyVsQ5jQefx16SExXqJ/o8PK/clAQqT8nDdpYOTnwc1x8MyDqjuk
+ jN6AguosaTowsRN9vFa2pgS8Hub/A6qhlE2W5xZ2oYYBJ5Ri1aqFJghSQSHNzt7IkTyQW38zh+L
+ OzBlIYCmg790Kr7MugfRFrQrU8zcMpgnyDOzgh2RgBkSoAOhF1JPqe3VViUQq0B6184v2e8XGUU
+ wF1JQB9yqFcTJxcus8RP1Oj16m8T/UZQ9nOftDlUC46wX5v7RRetTtQg==
+X-Received: by 2002:a05:6000:2289:b0:430:c76b:fadd with SMTP id
+ ffacd0b85a97d-435ca16783bmr8977031f8f.28.1769449405904; 
+ Mon, 26 Jan 2026 09:43:25 -0800 (PST)
 Received: from thinkpad-t470s.. (93-143-71-105.adsl.net.t-com.hr.
  [93.143.71.105]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.41
+ ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 09:43:42 -0800 (PST)
+ Mon, 26 Jan 2026 09:43:25 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Ruslan_Ruslichenko@epam.com
-Subject: [PATCH 19/27] hw/arm: add generic ARM machine initialized by FDT
-Date: Mon, 26 Jan 2026 18:43:05 +0100
-Message-ID: <20260126174313.1418150-20-ruslichenko.r@gmail.com>
+ Ruslan_Ruslichenko@epam.com, Alistair Francis <alistair.francis@wdc.com>,
+ David Gibson <david@gibson.dropbear.id.au>
+Subject: [PATCH 02/27] system/device_tree: add few parsing and traversal
+ helpers
+Date: Mon, 26 Jan 2026 18:42:48 +0100
+Message-ID: <20260126174313.1418150-3-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 References: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,208 +106,302 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-This patch introduces new ARM machine model, which is
-fully instantiated from a Device Tree description.
-
-This model uses fdt_generic framework to dynamically
-construct system topology based on provided DTB, instead
-of standard machines which rely on hardcoded models in
-C files.
-
-This allows to contruct machines with custom memory maps,
-device structures without the need to modify and re-build
-QEMU sources each time.
+The patch adds few utility functions for parsing FDT nodes.
+The helpers are required for upcoming Hardware device tree
+feature.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/arm/arm_generic_fdt.c | 166 +++++++++++++++++++++++++++++++++++++++
- hw/arm/meson.build       |   2 +
- 2 files changed, 168 insertions(+)
- create mode 100644 hw/arm/arm_generic_fdt.c
+ include/system/device_tree.h |  30 ++++++
+ system/device_tree.c         | 203 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 233 insertions(+)
 
-diff --git a/hw/arm/arm_generic_fdt.c b/hw/arm/arm_generic_fdt.c
-new file mode 100644
-index 0000000000..d3912745c7
---- /dev/null
-+++ b/hw/arm/arm_generic_fdt.c
-@@ -0,0 +1,166 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Copyright (c) 2012 Xilinx. Inc
-+ * Copyright (c) 2012 Peter A.G. Crosthwaite (peter.crosthwaite@xilinx.com)
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License
-+ * as published by the Free Software Foundation; either version
-+ * 2 of the License, or (at your option) any later version.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
+diff --git a/include/system/device_tree.h b/include/system/device_tree.h
+index f34b8b7ef9..458dbb74b4 100644
+--- a/include/system/device_tree.h
++++ b/include/system/device_tree.h
+@@ -90,6 +90,13 @@ int qemu_fdt_setprop_string_array(void *fdt, const char *node_path,
+ int qemu_fdt_setprop_phandle(void *fdt, const char *node_path,
+                              const char *property,
+                              const char *target_node_path);
 +
-+#include "qemu/osdep.h"
-+#include "cpu.h"
-+#include "hw/core/boards.h"
-+#include "hw/core/loader.h"
-+#include "hw/core/hw-error.h"
-+#include "qapi/error.h"
-+#include "hw/block/flash.h"
-+#include "qemu/error-report.h"
-+#include "qemu/log.h"
-+#include "qemu/config-file.h"
-+#include "qemu/option.h"
-+#include "system/system.h"
-+#include "system/qtest.h"
-+#include "hw/arm/boot.h"
-+#include "hw/arm/machines-qom.h"
++uint64_t qemu_fdt_getprop_sized_cell(void *fdt, const char *node_path,
++                                     const char *property, int offset,
++                                     int size, Error **errp);
++const char *qemu_fdt_getprop_string(void *fdt, const char*node_path,
++                                    const char *property, int cell,
++                                    bool inherit, Error **errp);
+ /**
+  * qemu_fdt_getprop: retrieve the value of a given property
+  * @fdt: pointer to the device tree blob
+@@ -193,9 +200,32 @@ int qemu_fdt_setprop_sized_cells_from_array(void *fdt,
+                                                 qdt_tmp);                 \
+     })
+ 
++typedef struct QEMUDevtreeProp {
++    char *name;
++    int len;
++    void *value;
++} QEMUDevtreeProp;
 +
-+#include <libfdt.h>
-+#include "hw/core/fdt_generic_util.h"
++/* node queries */
 +
-+#define GENERAL_MACHINE_NAME "arm-generic-fdt"
++char *qemu_devtree_get_node_name(void *fdt, const char *node_path);
++int qemu_devtree_get_num_children(void *fdt, const char *node_path, int depth);
++char **qemu_devtree_get_children(void *fdt, const char *node_path, int depth);
++int qemu_devtree_num_props(void *fdt, const char *node_path);
++QEMUDevtreeProp *qemu_devtree_get_props(void *fdt, const char *node_path);
+ 
++/* node getters */
 +
-+#define QTEST_RUNNING (qtest_enabled() && qtest_driver())
++int qemu_devtree_get_node_by_name(void *fdt, char *node_path,
++                                  const char *cmpname);
++int qemu_devtree_get_node_by_phandle(void *fdt, char *node_path, int phandle);
+ int qemu_devtree_getparent(void *fdt, char *node_path,
+                            const char *current);
++int qemu_devtree_get_root_node(void *fdt, char *node_path);
 +
-+#define SMP_BOOT_ADDR 0xfffffff0
-+/* Meaningless, but keeps arm boot happy */
-+#define SMP_BOOTREG_ADDR 0xfffffffc
++/* misc */
 +
-+static struct arm_boot_info arm_generic_fdt_binfo = {};
-+
-+typedef struct {
-+    ram_addr_t ram_kernel_base;
-+    ram_addr_t ram_kernel_size;
-+} memory_info;
-+
-+static memory_info init_memory(void *fdt, ram_addr_t ram_size)
++int devtree_get_num_nodes(void *fdt);
+ 
+ #define DT_PATH_LENGTH 1024
+ 
+diff --git a/system/device_tree.c b/system/device_tree.c
+index 41bde0ba5a..7091a4928e 100644
+--- a/system/device_tree.c
++++ b/system/device_tree.c
+@@ -451,6 +451,50 @@ const void *qemu_fdt_getprop(void *fdt, const char *node_path,
+     return r;
+ }
+ 
++const char *qemu_fdt_getprop_string(void *fdt, const char*node_path,
++                                    const char *property, int cell,
++                                    bool inherit, Error **errp)
 +{
-+    FDTMachineInfo *fdti;
-+    char node_path[DT_PATH_LENGTH];
-+    MemoryRegion *mem_area;
-+    memory_info kernel_info;
-+    Error *errp = NULL;
++    int len;
++    const void *prop;
++    Error *err = NULL;
 +
-+    /* Find a memory node or add new one if needed */
-+    while (qemu_devtree_get_node_by_name(fdt, node_path, "memory")) {
-+        qemu_fdt_add_subnode(fdt, "/memory@0");
-+        qemu_fdt_setprop_cells(fdt, "/memory@0", "reg", 0, ram_size);
++    if (!errp) {
++        errp = &err;
 +    }
 +
-+    if (!qemu_fdt_getprop(fdt, "/memory", "compatible", NULL, 0, NULL)) {
-+        qemu_fdt_setprop_string(fdt, "/memory", "compatible",
-+                                "qemu:memory-region");
-+        qemu_fdt_setprop_cells(fdt, "/memory", "qemu,ram", 1);
++    prop = qemu_fdt_getprop(fdt, node_path, property, &len, inherit, errp);
++    if (*errp) {
++        return NULL;
++    }
++    while (cell) {
++        void *term = memchr(prop, '\0', len);
++        size_t diff;
++
++        if (!term) {
++            error_setg(errp, "%s: Couldn't get %s/%s: %s", __func__,
++                      node_path, property, fdt_strerror(len));
++            return NULL;
++        }
++        diff = term - prop + 1;
++        len -= diff;
++        assert(len >= 0);
++        prop += diff;
++        cell--;
 +    }
 +
-+    /* Instantiate peripherals from the FDT.  */
-+    fdti = fdt_generic_create_machine(fdt, NULL);
-+
-+    mem_area = MEMORY_REGION(object_resolve_path(node_path, NULL));
-+
-+    /*
-+     * Look for the optional kernel-base prop. If not found fallback to
-+     * start of memory.
-+     */
-+    kernel_info.ram_kernel_base = qemu_fdt_getprop_sized_cell(fdt, "/",
-+                                              "kernel-base", 0, 2, &errp);
-+    if (errp) {
-+        kernel_info.ram_kernel_base = object_property_get_int(OBJECT(mem_area),
-+                                                              "addr", NULL);
++    if (!len) {
++        return NULL;
 +    }
 +
-+    kernel_info.ram_kernel_size = object_property_get_int(OBJECT(mem_area),
-+                                                          "size", NULL);
-+
-+    if (kernel_info.ram_kernel_size == -1) {
-+        kernel_info.ram_kernel_size = ram_size;
++    if (!*(char *)prop) {
++        error_setg(errp, "%s: Couldn't get %s/%s: %s", __func__,
++                  node_path, property, fdt_strerror(len));
++        return NULL;
 +    }
-+
-+    fdt_init_destroy_fdti(fdti);
-+
-+    return kernel_info;
++    return prop;
 +}
 +
-+static void arm_generic_fdt_init(MachineState *machine)
+ uint32_t qemu_fdt_getprop_cell(void *fdt, const char *node_path,
+                                const char *property, int offset,
+                                bool inherit, Error **errp)
+@@ -471,6 +515,22 @@ uint32_t qemu_fdt_getprop_cell(void *fdt, const char *node_path,
+     return be32_to_cpu(p[offset]);
+ }
+ 
++uint64_t qemu_fdt_getprop_sized_cell(void *fdt, const char *node_path,
++                                     const char *property, int offset,
++                                     int size, Error **errp)
 +{
-+    void *fdt = NULL, *sw_fdt = NULL;
-+    int fdt_size, sw_fdt_size;
-+    const char *dtb_arg, *hw_dtb_arg;
-+    memory_info kernel_info;
-+
-+    dtb_arg = machine->dtb;
-+    hw_dtb_arg = machine->hw_dtb;
-+    if (!dtb_arg && !hw_dtb_arg) {
-+        if (!QTEST_RUNNING) {
-+            /*
-+             * Just return without error if running qtest, as we never have a
-+             * device tree
-+             */
-+            hw_error("DTB must be specified for %s machine model\n",
-+                     MACHINE_GET_CLASS(machine)->name);
-+        }
-+        return;
-+    }
-+
-+    /* Software dtb is always the -dtb arg */
-+    if (dtb_arg) {
-+        sw_fdt = load_device_tree(dtb_arg, &sw_fdt_size);
-+        if (!sw_fdt) {
-+            error_report("Error: Unable to load Device Tree %s", dtb_arg);
-+            exit(1);
++    uint64_t ret = 0;
++    for (; size; size--) {
++        ret <<= 32;
++        ret |= qemu_fdt_getprop_cell(fdt, node_path, property, offset++, false,
++                                     errp);
++        if (errp && *errp) {
++            return 0;
 +        }
 +    }
-+
-+    /* If the user provided a -hw-dtb, use it as the hw description.  */
-+    if (hw_dtb_arg) {
-+        fdt = load_device_tree(hw_dtb_arg, &fdt_size);
-+        if (!fdt) {
-+            error_report("Error: Unable to load Device Tree %s", hw_dtb_arg);
-+            exit(1);
-+        }
-+    } else if (sw_fdt) {
-+        fdt = sw_fdt;
-+        fdt_size = sw_fdt_size;
-+    }
-+
-+    kernel_info = init_memory(fdt, machine->ram_size);
-+
-+    arm_generic_fdt_binfo.ram_size = kernel_info.ram_kernel_size;
-+    arm_generic_fdt_binfo.kernel_filename = machine->kernel_filename;
-+    arm_generic_fdt_binfo.kernel_cmdline = machine->kernel_cmdline;
-+    arm_generic_fdt_binfo.initrd_filename = machine->initrd_filename;
-+    arm_generic_fdt_binfo.smp_loader_start = SMP_BOOT_ADDR;
-+    arm_generic_fdt_binfo.smp_bootreg_addr = SMP_BOOTREG_ADDR;
-+    arm_generic_fdt_binfo.board_id = 0xd32;
-+    arm_generic_fdt_binfo.loader_start = kernel_info.ram_kernel_base;
-+    arm_generic_fdt_binfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
-+
-+    if (machine->kernel_filename) {
-+        arm_load_kernel(ARM_CPU(first_cpu), machine, &arm_generic_fdt_binfo);
-+    }
-+
-+    return;
++    return ret;
 +}
 +
-+static void arm_generic_fdt_machine_init(MachineClass *mc)
+ uint32_t qemu_fdt_get_phandle(void *fdt, const char *path)
+ {
+     uint32_t r;
+@@ -638,6 +698,117 @@ out:
+     return ret;
+ }
+ 
++char *qemu_devtree_get_node_name(void *fdt, const char *node_path)
 +{
-+    mc->desc = "ARM device tree driven machine model";
-+    mc->init = arm_generic_fdt_init;
-+    mc->max_cpus = 64;
-+    mc->default_cpus = 64;
++    const char *ret = fdt_get_name(fdt, fdt_path_offset(fdt, node_path), NULL);
++    return ret ? strdup(ret) : NULL;
 +}
 +
-+DEFINE_MACHINE_ARM("arm-generic-fdt", arm_generic_fdt_machine_init)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index aeaf654790..e606630c86 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -1,4 +1,6 @@
- arm_ss = ss.source_set()
-+arm_ss.add(files('arm_generic_fdt.c'))
++int qemu_devtree_num_props(void *fdt, const char *node_path)
++{
++    int offset = fdt_path_offset(fdt, node_path);
++    int ret = 0;
 +
- arm_common_ss = ss.source_set()
- arm_common_ss.add(when: 'CONFIG_ARM_VIRT', if_true: files('virt.c'))
- arm_common_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
++    for (offset = fdt_first_property_offset(fdt, offset);
++            offset != -FDT_ERR_NOTFOUND;
++            offset = fdt_next_property_offset(fdt, offset)) {
++        ret++;
++    }
++    return ret;
++}
++
++QEMUDevtreeProp *qemu_devtree_get_props(void *fdt, const char *node_path)
++{
++    QEMUDevtreeProp *ret = g_new0(QEMUDevtreeProp,
++                                    qemu_devtree_num_props(fdt, node_path) + 1);
++    int offset = fdt_path_offset(fdt, node_path);
++    int i = 0;
++
++    for (offset = fdt_first_property_offset(fdt, offset);
++            offset != -FDT_ERR_NOTFOUND;
++            offset = fdt_next_property_offset(fdt, offset)) {
++        const char *propname;
++        const void *val = fdt_getprop_by_offset(fdt, offset, &propname,
++                                                    &ret[i].len);
++
++        ret[i].name = g_strdup(propname);
++        ret[i].value = g_memdup2(val, ret[i].len);
++        i++;
++    }
++    return ret;
++}
++
++static void qemu_devtree_children_info(void *fdt, const char *node_path,
++        int depth, int *num, char **returned_paths) {
++    int offset = fdt_path_offset(fdt, node_path);
++    int root_depth = fdt_node_depth(fdt, offset);
++    int cur_depth = root_depth;
++
++    if (num) {
++        *num = 0;
++    }
++    for (;;) {
++        offset = fdt_next_node(fdt, offset, &cur_depth);
++        if (cur_depth <= root_depth) {
++            break;
++        }
++        if (cur_depth <= root_depth + depth || depth == 0) {
++            if (returned_paths) {
++                returned_paths[*num] = g_malloc0(DT_PATH_LENGTH);
++                fdt_get_path(fdt, offset, returned_paths[*num], DT_PATH_LENGTH);
++            }
++            if (num) {
++                (*num)++;
++            }
++        }
++    }
++}
++
++char **qemu_devtree_get_children(void *fdt, const char *node_path, int depth)
++{
++    int num_children = qemu_devtree_get_num_children(fdt, node_path, depth);
++    char **ret = g_malloc0(sizeof(*ret) * num_children);
++
++    qemu_devtree_children_info(fdt, node_path, depth, &num_children, ret);
++    return ret;
++}
++
++int qemu_devtree_get_num_children(void *fdt, const char *node_path, int depth)
++{
++    int ret;
++
++    qemu_devtree_children_info(fdt, node_path, depth, &ret, NULL);
++    return ret;
++}
++
++int qemu_devtree_get_node_by_name(void *fdt, char *node_path,
++        const char *cmpname) {
++    int offset = 0;
++    char *name = NULL;
++
++    do {
++        char *at;
++
++        offset = fdt_next_node(fdt, offset, NULL);
++        name = (void *)fdt_get_name(fdt, offset, NULL);
++        if (!name) {
++            continue;
++        }
++        at = memchr(name, '@', strlen(name));
++        if (!strncmp(name, cmpname, at ? at - name : strlen(name))) {
++            break;
++        }
++    } while (offset > 0);
++    return offset > 0 ?
++        fdt_get_path(fdt, offset, node_path, DT_PATH_LENGTH) : 1;
++}
++
++int qemu_devtree_get_node_by_phandle(void *fdt, char *node_path, int phandle)
++{
++    return fdt_get_path(fdt, fdt_node_offset_by_phandle(fdt, phandle),
++                            node_path, DT_PATH_LENGTH);
++}
++
+ int qemu_devtree_getparent(void *fdt, char *node_path, const char *current)
+ {
+     int offset = fdt_path_offset(fdt, current);
+@@ -648,6 +819,38 @@ int qemu_devtree_getparent(void *fdt, char *node_path, const char *current)
+         fdt_get_path(fdt, parent_offset, node_path, DT_PATH_LENGTH) : 1;
+ }
+ 
++int qemu_devtree_get_root_node(void *fdt, char *node_path)
++{
++    return fdt_get_path(fdt, 0, node_path, DT_PATH_LENGTH);
++}
++
++static void devtree_scan(void *fdt, int *num_nodes)
++{
++    int depth = 0, offset = 0;
++
++    if (num_nodes) {
++        *num_nodes = 0;
++    }
++    for (;;) {
++        offset = fdt_next_node(fdt, offset, &depth);
++        if (num_nodes) {
++            (*num_nodes)++;
++        }
++        if (offset <= 0 || depth <= 0) {
++            break;
++        }
++    }
++}
++
++int devtree_get_num_nodes(void *fdt)
++{
++    int ret;
++
++    devtree_scan(fdt, &ret);
++    return ret;
++}
++
++
+ void qmp_dumpdtb(const char *filename, Error **errp)
+ {
+     ERRP_GUARD();
 -- 
 2.43.0
 
