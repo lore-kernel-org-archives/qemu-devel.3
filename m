@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94628C88E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 07:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D80C88E5A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 07:22:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkGtE-00058I-GN; Mon, 26 Jan 2026 02:20:00 -0500
+	id 1vkGug-00073i-VA; Mon, 26 Jan 2026 02:21:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vkGft-00034z-5J
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:06:21 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1vkGgR-0003Qc-MF
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:06:59 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1vkGfm-0004Pf-RY
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:06:10 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-29f2676bb21so42989245ad.0
- for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 23:05:42 -0800 (PST)
+ id 1vkGgL-0004le-5P
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 02:06:44 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-81e8b1bdf0cso2223815b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 25 Jan 2026 23:06:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769411142; x=1770015942; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769411191; x=1770015991; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=90E4mxgxD+julKzw6BxH6qVTPgf7G7qUtJs5JfsrDkI=;
- b=kb97XZrcUvyXMa1bchEShcEdKayWMoYRO+B0dO0Md6hFpmI1cVoK7JVznK/Ta+pnBJ
- rnxilbbHcRP/71eBqoaMThMEleSvHGNknmavVsJnoamcCl/Q3d1xOOxWVJNAnLckzwi4
- JqSzIuSeq3seatYNyIItZJgEaOepyzql1ckJXFjsHkDJ22kVpnr6yATcvKcPo70EINT4
- z2UTvoVium+4ePsF7XKXEPqBv52JH4U2d3befUhyCXR2ChzCDEJr/b3zjP0DpJzPE13i
- CCI1bJ4N74hhFm24NUJWl6Z501bDYS8SfGu+S5xEwIuN5fgwgkvA1wySoRJiabgCYVWg
- gBjA==
+ bh=Oj8vRqVMDeN0JON25L/5cGpcqDkG3XOVfGvUsHWl4zU=;
+ b=CaxY4BqOdyyH2UYsMdjAIDJ8U/9VZ7tAIvtbOSIBM1uNDCgHZxig9AHy1jwtf7jUwc
+ HbBz7MQDFe9+bYMxd2pZ69wmPU9vCTJUx1uRO6Xkv3L7F5qAUfvHFto7vWIyEqz8/Cal
+ KAcagYEaC0jcyxQDRac3o7yIVMCL2G7AoFQoXj8eN54Ii1N5DCA17gQx00VFqVK16BTw
+ rM8gqQu7GNcCWuVfGsX71Tre4K9K0OveehxkMh7XTyf3JigVA7ZLrk7TN2jWEqaG/6pW
+ /1zYknLhBessgi2+7xovFI+bXPeQVOTTQm22ZKRva4TPYtHfghW4TDVPh8XiPPF0BT7Q
+ LCeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769411142; x=1770015942;
+ d=1e100.net; s=20230601; t=1769411191; x=1770015991;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=90E4mxgxD+julKzw6BxH6qVTPgf7G7qUtJs5JfsrDkI=;
- b=cLnUCsit5z6UN+VYL7feBPwKDICtaM61+7GR5XRJpOpoSaEs/MZ6z6++AzFoa6toxq
- b7i4dIOzUjKvuK4Csq3RDU9d7GftpBhKSzdPtxWUGT267dWjErYXqGIEt2HS1k2xvNQw
- cKfCUUVDLnolGuOAxTnvm5ua5yBw+pdCeSMlVUlScATI0C1nO/2q2FWNMpKpiU50rGlz
- 9kM43KiSSXvcDcy0vZOwzhqwueUcsvLxTonkr2/H+d44gWBgwB3ZHUQzzSg9ktxvibnV
- EZeG2D4RxlnEFfq11mY03m7vuJxMHS92beUxS3SfR6HKZN73how9EUQUjYnHTc06KoG1
- JqHA==
-X-Gm-Message-State: AOJu0YwY0zntZgn1OCDkryonza8nz+SC69CNY35EJI4C4US/h5ntupuk
- 1PmV8NTvijf5DCLaJ//MUqz+f1Wb2c/T+MSBG8MtTJ3uC5yRGTGztfyifEQEYY5b
-X-Gm-Gg: AZuq6aIo8ArviPAYozzzU5sEEyWmbZXxsa2OA2PjgUbeY1Pv+B5zKo+WnA+r1llYhBK
- wzuBt9p680pUH98BOYTx29CZbrFKweMs/b80fOVqjMAeofLhpXkvGxagzokXRkaOIU/bJwsWVHq
- I1nrx9lq/pzHLtrmELxHuBFhdjVawDE947IQ4I/5U+Gx1KDc4QMKWAypBi34zIiwA5mZ8iyMtO8
- WD1wvaB1E1WwDfLUKVbw1/U6XdYsJu5Syy+vKZlEfIPKDeWrO+bkAYQj8GkBImKXHttAELOkKtO
- fQTpqqDad6DxUP75ldw48b3XX6hntaWkGPU5Ulq8vpMApu6YJna9/erDlLky5dnzgSImGztLKIb
- xeyKDk2QKg5o2+xgS0q5ShtNfPLmxvyn9lv4bPRsB3Ky3ObiIA0ZnR4XG/F0ewkEMf+/6lj9clZ
- b4+Pqhn17Qs/pit8zO4lp9FN/RbDFH910t+sJDrIqcUw==
-X-Received: by 2002:a17:903:2c03:b0:2a3:1b33:ae11 with SMTP id
- d9443c01a7336-2a84533f4efmr29797365ad.53.1769411141736; 
- Sun, 25 Jan 2026 23:05:41 -0800 (PST)
+ bh=Oj8vRqVMDeN0JON25L/5cGpcqDkG3XOVfGvUsHWl4zU=;
+ b=bFg6LyGHIPblwncyJ+nBmLXwJe1xYw5dAD4U7vs3hMCN/CTXIx08b6zO6Xs1FZ16Wy
+ xwjEl6f+Lc5xemO5UpdPixUrAOM6SmMRx/Wr9DMGdONB+uecftUvP9TvnhY10DGdI5Ct
+ cEomqIZzsSesiedSZOHeBR0TC3IiBWPebiTED74pD2LboEM5XXACIsiN7u9mRPiD+xrn
+ /6YnvFSl6HLXYUdVnQ+XarxmZ/5sVOYZvIoK5eW/qhwUpgmWfimL6hGsstAEcWxAL2mr
+ dgjZoQhmugVYaIhRFCDzMHN5IRqH7DBmZ3qpZ3E4MpPFJK+QyUTxK0vZijpFAIyHICoZ
+ sfXw==
+X-Gm-Message-State: AOJu0YytkPuQbuvoqsyzyUplxjXru/7l8+C4WLjIeLDuIcno3hygm+qN
+ 0bEbD/1RTLjIs0FSzA/b4PoCIPVR/OCCbyh54Pod5hRAAx0FYSRFFbcFA+isI0On
+X-Gm-Gg: AZuq6aLKHI9CMocU5t7KxZosqlRbphtsZtEkiccLqOVdOJxNLl2ZIEqWAmOukPu2N+b
+ 6pW1E2BAiiDBFP1J89/Da/DWWLYvcPbQ5LHZ4dOVwnLM/WgMB2So+ozUoo9y04aeJp/51k71bKn
+ 3bMwO/5CjzCYTBG7ANk2AvS1oNF7o69ROurYBimxgvr/+gkIoZd1upsklX+KuaOL/zmsixwJrkj
+ hnQcmS27e/wtJsyNbYY0zONhsSkcWauG4xjCji7UgTp0za91I412etLKl5zuk9OJ5M7RlTeCWM2
+ 1td8onJqhIdmI+4bDYWsyfp3IZ5mG+X+iSulAcSRbSAS53UvPAM9AZ2f6KCyAQZ/LBKHtKjCd7z
+ CGI9DTBLyTko5rqBLu4vrwgZ6/en+TCI6iP74S5lE4YDMknDC3jDT/iz/tJEVzh5wU+bvCHoRYO
+ KFLE0viJoWoN/F2bfkIzBG/qI/5XwedyEViHdAdloi8Q==
+X-Received: by 2002:a05:6a00:2e27:b0:81c:717b:9d29 with SMTP id
+ d2e1a72fcca58-823412bc9dbmr3045269b3a.51.1769411191033; 
+ Sun, 25 Jan 2026 23:06:31 -0800 (PST)
 Received: from brahms.. (fp93c00990.tkyc601.ap.nuro.jp. [147.192.9.144])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-823187716ebsm8661487b3a.66.2026.01.25.23.05.37
+ d2e1a72fcca58-823187716ebsm8661487b3a.66.2026.01.25.23.06.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Jan 2026 23:05:41 -0800 (PST)
+ Sun, 25 Jan 2026 23:06:30 -0800 (PST)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -79,16 +79,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-arm@nongnu.org,
  qemu-riscv@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 21/33] tcg/wasm64: Mark unimplemented instructions
-Date: Mon, 26 Jan 2026 07:03:34 +0000
-Message-ID: <3a8c9ff06ad2a45f1abb375993dfed60272530e4.1769407033.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v4 32/33] scripts: Add a script to run the wasm-compiled QEMU
+ on node.js
+Date: Mon, 26 Jan 2026 07:03:45 +0000
+Message-ID: <2af460d17a47ec69d691dfb876f834e4685f9d6d.1769407033.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1769407033.git.ktokunaga.mail@gmail.com>
 References: <cover.1769407033.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,144 +112,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds the C_NotImplemented constraint and provides stubs for the
-functions that aren't implemented in the Wasm backend.
+run-emscripten.mjs is a Node.js script to quickly test the Wasm-compiled
+QEMU. This runs directly from the terminal using the node command so the
+HTTP server or the browser isn't needed.
+
+Node.js 24 or newer is needed to run wasm64 binaries. Also note that QEMU's
+"quit" monitor command doesn't work as of now because of the Emscripten's
+atexit issue [1]. Send SIGINT or SIGTERM to the node process to exit QEMU.
+
+[1] https://github.com/emscripten-core/emscripten/issues/26040
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 ---
- tcg/wasm64/tcg-target.c.inc | 119 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 119 insertions(+)
+ scripts/run-emscripten.mjs | 66 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
+ create mode 100644 scripts/run-emscripten.mjs
 
-diff --git a/tcg/wasm64/tcg-target.c.inc b/tcg/wasm64/tcg-target.c.inc
-index d187dca970..bab69b00ca 100644
---- a/tcg/wasm64/tcg-target.c.inc
-+++ b/tcg/wasm64/tcg-target.c.inc
-@@ -1960,6 +1960,125 @@ static void tcg_out_mb(TCGContext *s, unsigned a0)
-     tcg_wasm_out8(s, 0x00);
- }
- 
-+static const TCGOutOpDeposit outop_deposit = {
-+    .base.static_constraint = C_NotImplemented,
-+};
+diff --git a/scripts/run-emscripten.mjs b/scripts/run-emscripten.mjs
+new file mode 100644
+index 0000000000..330e31cfe3
+--- /dev/null
++++ b/scripts/run-emscripten.mjs
+@@ -0,0 +1,66 @@
++#!/usr/bin/env node
 +
-+static const TCGOutOpExtract outop_extract = {
-+    .base.static_constraint = C_NotImplemented,
-+};
++import path from 'node:path';
++import { parseArgs } from "node:util";
 +
-+static const TCGOutOpExtract2 outop_extract2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
++function help() {
++  console.log(`Usage: run-emscripten.mjs [--preload FILE] [script.js] -- [arguments]
 +
-+static const TCGOutOpBinary outop_addco = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpAddSubCarry outop_addci = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_addcio = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpAddSubCarry outop_subbo = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpAddSubCarry outop_subbi = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpAddSubCarry outop_subbio = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpUnary outop_not = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_andc = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_eqv = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_nand = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_nor = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_orc = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpDivRem outop_divs2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpDivRem outop_divu2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpMul2 outop_muls2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_mulsh = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpMul2 outop_mulu2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_muluh = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBswap outop_bswap16 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBswap outop_bswap32 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpUnary outop_bswap64 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpQemuLdSt2 outop_qemu_ld2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpQemuLdSt2 outop_qemu_st2 = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static bool tcg_out_xchg(TCGContext *s, TCGType type, TCGReg r1, TCGReg r2)
-+{
-+    return false;
++Options:
++  --preload FILE: Load the package created by Emscripten's file_packager.py`);
 +}
 +
-+static void tcg_out_set_borrow(TCGContext *s)
-+{
-+    g_assert_not_reached();
++const { values, positionals } = parseArgs({
++  allowPositionals: true,
++  options: {
++    'preload': { type: 'string' },
++    'help': { type: 'boolean' },
++  },
++})
++if (values.help) {
++  help();
++  process.exit(0);
++}
++const preload = values.preload;
++const moduleFile = positionals[0];
++const moduleArgs = positionals.slice(1);
++if ((!moduleFile) || (!moduleFile.match(/.*\.m?js$/))) {
++  console.error("module JS file must be specified as the first argument");
++  help();
++  process.exit(1);
 +}
 +
-+static void tcg_out_set_carry(TCGContext *s)
-+{
-+    g_assert_not_reached();
-+}
++const targetModule = await import(path.resolve(moduleFile));
++let preloadModule;
++if (preload) preloadModule = await import(path.resolve(preload));
 +
- static void tcg_out_tb_start(TCGContext *s)
- {
-     init_sub_buf();
++var Module = {
++  preRun: [],
++  arguments: moduleArgs,
++  mainScriptUrlOrBlob: path.resolve(moduleFile),
++};
++Module["preRun"].push((Module) => {
++  const decoder = new TextDecoder('utf-8');
++  Module.TTY.default_tty_ops.put_char = (tty, val) => {
++    process.stdout.write(decoder.decode(new Uint8Array([val])));
++  }
++  Module.TTY.default_tty1_ops.put_char = (tty, val) => {
++    process.stderr.write(decoder.decode(new Uint8Array([val])));
++  }
++});
++if (preloadModule) preloadModule.default(Module);
++
++if (process.stdin.isTTY) {
++  process.stdin.setRawMode(true);
++}
++function restoreTTY() {
++  if (process.stdin.isTTY) {
++    process.stdin.setRawMode(false);
++  }
++  process.exit(0);
++}
++process.on('exit', restoreTTY);
++process.on('SIGINT', restoreTTY);
++process.on('SIGTERM', restoreTTY);
++
++await targetModule.default(Module);
 -- 
 2.43.0
 
