@@ -4,106 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF59D1951B
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 21:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBBCD1951B
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 21:15:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkTne-0002zc-L0; Mon, 26 Jan 2026 16:07:06 -0500
+	id 1vkTui-00084B-TL; Mon, 26 Jan 2026 16:14:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkTnc-0002yO-3Z
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 16:07:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkTnZ-0005My-2U
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 16:07:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769461618;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JyfUCMmjTrUwSJSasAEHFFmAZsNaeBTAIAqIrIVrCog=;
- b=XwgqQgaE5+uGiz3iQb8ZNtRVOny7Wnux8wPrTlV1JVe0VglNoMoCKOEqbHjZ4xSB8IGFRC
- NjDPgW3VjfXgdrUzI3UC9+McF3ByWnMJtwufyr8EjMqeui/UpytX9cBY9r4fps5jp3kvYm
- lSvq2ZXCOZfbIqiIxZHhVTMrIK41w4A=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-MjE0IqCuN0S1bhSzzZzr8g-1; Mon, 26 Jan 2026 16:06:56 -0500
-X-MC-Unique: MjE0IqCuN0S1bhSzzZzr8g-1
-X-Mimecast-MFC-AGG-ID: MjE0IqCuN0S1bhSzzZzr8g_1769461616
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-502a341e108so156179591cf.1
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 13:06:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <saadelhrj@gmail.com>)
+ id 1vkREU-0005Qg-Of
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 13:22:38 -0500
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <saadelhrj@gmail.com>)
+ id 1vkRES-0008A9-Ur
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 13:22:38 -0500
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-7cfe2a6bf81so1496862a34.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 10:22:36 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769451755; cv=none;
+ d=google.com; s=arc-20240605;
+ b=AZrvHvu9otAeZf1mh4f7Sp9WIiccLu9EvvYi31+mAyIHG2qlGxsV4OGeTe82Zu41Y0
+ 1SuKz5T/KUVtqV80euyV3B+0yOhJ1PRLQwnMmynjMUjB36YTDTKmnRaU/lErJis1prXI
+ Y8OmW2+Q2suScAtLFHZwzbS7AHtT2LKN4zR+70Solw7TieOM5Q9zXsjKpQtwtWNvX8TA
+ iIcTDGBA04KniPfwFaY145nNo1agTGnMsKR7kDQB1sIigy4iUiCEvvO0wNWKlBeVCoFY
+ pXo2mzPepC6TYWBB05ckNQo9fWyDidYOzh7YCvZ1OdBTvegHVzeu53CELkI361vFh4U+
+ BYGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=fswWPBsFWO3y9n1YM1dD4iY9Ks7jeVptAMymTmFkGvA=;
+ fh=QupwThb9dcnhQFUP01zwSoxj6/01QKrh9wZwl62qkPg=;
+ b=STTiPtHer9K2pW1ywSJUTAxiAQp/gZcAAuTtFeGFl3rkXo+0ZxpfHN9AKPMkuwvLmo
+ Ws/ilN+iB1PzZLLtm10N+Ct6fG2dxWYF8cMIuHjhxv0sizZE5BPxJRe1FofR+tmr7GLc
+ BWI9cBgx+kJ8xYCOULspRa//MqUGPIiMrWI39FpCn9lOoXvckLgy2CT2nupqzKdOYRhB
+ jhosbfDnWGXt9dTMTBm0DohJilqUpA/ia8+r0Hb3utgeOsqZDZaVFSccgvubD1Bg0wQL
+ k7nzBZXWNLwsZ7GiPQ5+yYqldTmnZRC3Jo30nF4/HeBq5yjAkbM7KUlSkvbOyAxZ8i14
+ Nr9A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769461616; x=1770066416; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=JyfUCMmjTrUwSJSasAEHFFmAZsNaeBTAIAqIrIVrCog=;
- b=o5JgKukp32nC+Itu03oTGq0otaBfEPVFE1OOnioskTxe1RxQsolydil+sj2AJ5zbRB
- OKsAV3HVbUrNEpxjyl5cPJRZbZrb/5GKbXCBmGbtNbiKtH0klHTyw4Jq3BMPRC9FCE9s
- rTDmwRYL+Cw62Djos4sLxsnfZ+6/Cego0X0YBq1ex9IFZDWyGUub818Vlmt5obhSetaO
- es1YvmDh4YPv+6X5QQIdnoVBuTrBpi2WCM9VA9adksCfOsBCOglY63xVcXQ3tvkjBifg
- w0IPrGhWLYgU7nT6F2ESxAmm3x6eEGbcMtAuilx5JenQdw5m0kdv+qzTspDkDRkOz9QV
- 3cJg==
+ d=gmail.com; s=20230601; t=1769451755; x=1770056555; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=fswWPBsFWO3y9n1YM1dD4iY9Ks7jeVptAMymTmFkGvA=;
+ b=AENrjtn9oRWuMvvrV3Vuk+p3wakHv3w56tQ0mldZXB2aCZMT+xo60JYl+cFOhhCbsD
+ dBjaDRPCXPCTdxITtzfKleu0TSW20CfGvPVl933hufrLuIgdHNFkpPHPIGBpG50HMJrh
+ uLhQsypRtrvy4J5IdvR5pVs9gkovtbJa57vFLuGLCwUs3mJ6rX2GDG3qg7Wl/saUqU/x
+ D602Scv1GYI5LaUwdd1DxW2WkMhSLEVW0gHxMlejIEE2pjn36HGGuMwURC3DuZhgIHBS
+ tSCFRqr4kVAEJzGwd+NTNDG3/PnqHQFJyJxVz0Y5s6BrLmzl+to1Z8sE11972qD7FRVE
+ etqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769461616; x=1770066416;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JyfUCMmjTrUwSJSasAEHFFmAZsNaeBTAIAqIrIVrCog=;
- b=PJ/6ghQXKayWGB4/XdhllVxfkWRwXD2r48iosw6T7l69fXlLkUXw7ArMeY9XlrBCC/
- ppEWuDpZ5h1oC167pGDu4VXEqqqp7RbSW11xnfDQCM5f3sRRhsjbn2KFrLR9itYYJXOV
- JWQasTrhXsNEhONWw3c/Yv4WqPSEp99h1oMrvYERaDRRhmogy/Un2d5+NK1h8ASPVUkd
- MSNFTGrIik790FbHueKI4qQ8Wrr74vxbKZOvDRxMma8TQlg4xEXnpQcxj36Oq2UeYUFr
- y/oWailEVlLbo5lf/cOYakXyORvJcEnGEEMA9dhefZJXEWVUzE8jF1Qj2PUOyKhIjCRT
- 96MQ==
-X-Gm-Message-State: AOJu0YylQvSo+nGXzQ6FhkUVnmIgQ4Y1zSZeGxikrK7RugaZiF3Prkpl
- Bh7RPP9polVwzjuNFZcmDUfuzzxmis5tdIj7QC9lyRTcRDErvqoCZWGizzlfKJbL8Z/buu7u2o6
- E3Kx4bmPJiTzBFflGHmcEJBaX3Sky05e2blKJBaZmIy9b+miRRNHYfs+C
-X-Gm-Gg: AZuq6aKHKAO+G3rOKwSufYx7TwnE0wWt4vmmSH3qfoWdwlsKyVLpDnyJcm4LkStxOE/
- XcTKboPAK4c4ecAX2pE7kWdS7RVwIwSitc4GN114oQnhOGKK9bF7nm5bdJUIoZpJaR/X/XSzUuQ
- i6ZGCJFo1gbRufw8GSFMK7wpMvOhWFW2aGvJINCihIr4mvNh+wHARXYx1O8kv+yc+3yRhPmkY6X
- CFe9IFQ5Drmx3Ymia1Om46UipEylRnQaA7joElnC4x2/9AgpldM9IDcepyLvLb9lT4D1Fp6qUO0
- PA8Ycm8CMMQS2x6iCQIWakKWeCRdYstadvM5oiSEZABUFWjKA8iuIqtqeJKijNnsSdmYbT81mTV
- BCWo=
-X-Received: by 2002:a05:622a:8e1c:b0:501:51e4:1ec3 with SMTP id
- d75a77b69052e-5031b25f946mr43798721cf.78.1769461616263; 
- Mon, 26 Jan 2026 13:06:56 -0800 (PST)
-X-Received: by 2002:a05:622a:8e1c:b0:501:51e4:1ec3 with SMTP id
- d75a77b69052e-5031b25f946mr43798451cf.78.1769461615822; 
- Mon, 26 Jan 2026 13:06:55 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c6e38700d6sm1014634385a.50.2026.01.26.13.06.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 13:06:55 -0800 (PST)
-Date: Mon, 26 Jan 2026 16:06:53 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Prasad Pandit <ppandit@redhat.com>,
- Lukas Straub <lukasstraub2@web.de>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 09/10] migration/colo: Move qemu_fflush() closer to its
- user for fb
-Message-ID: <aXfXbR2voiOjM4Pf@x1.local>
-References: <20260121223336.3381912-1-peterx@redhat.com>
- <20260121223336.3381912-10-peterx@redhat.com>
- <871pjgifm9.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1769451755; x=1770056555;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fswWPBsFWO3y9n1YM1dD4iY9Ks7jeVptAMymTmFkGvA=;
+ b=RD3+EsQZgyx0RqUfKDkjmLWN6VY37ZSY281DvXPcAUQfULDuWx2nqNbfHxKWaY7SjZ
+ JK3s6LE03FJ08Scx2HBlG3wC7GNxqUo7TXyGQfJj6B7pLUm4bORfqUaBht3xUh3fjHRO
+ x4FFLQbzp88EuFYiYMzayYwKRGpfkdfefa2uIp4jxvoWdMGo2amy1cLcmmQtAKs/4nAj
+ 6KMomonjhsyzTvbR1DigwUfAhxcP+dWeyyaEzAR4pJoQh+e33bdtcMc+4CNuzzNoa2k6
+ 6R0XCpdvULZyz1crFCm0SPN0Q+X/0TVQSUV4XFR6qb2U0waTR8wl4hYz41WXuXkHCjyP
+ uGxA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+eJ5nSeJaB7KHOVFlj5dnMTPqLJtcmkmlWcITP2LpJhHgb7mR+iJ/sIDcwr/yH0h8WiHeVF4g1o7r@nongnu.org
+X-Gm-Message-State: AOJu0YxkWOXeGL5TMSP1AE2IdiNyszWMwKKhI2o32aObBjXJApAJ+Fs9
+ yRZeekGheI8OF+kOi+pRI25NzVbr/24z8wpXn8rTeHPubptpVsXf7Haw5lJbXbD+R+8XBSRh/XO
+ Xu41T2gVJPgRekJgg7sD1viB1E0teBWs=
+X-Gm-Gg: AZuq6aKBSz9igZuLpdBzdjNqJ5s4FDKNqqIcwWUgp8faT61DRcFK1bdYcwj7YnlSBQc
+ IgTisRTOMqdvOIDlit9ywfQLC75RbWsuKaO1DxhGuKtTd5V6LqXrbDWBrW9Xq7RGOAW64ykRWeO
+ 3pKYnCSLLnDBKbG9OJtEIJyferRt6WW8LzvG/x2z5HW93c5qwC14gyKoHRaeWEQjlIqNldV5Csk
+ YwNP2B8VoMEfGVkaG7NPdDQyd0koxVLw42HtF5nKZ4DIJzodzfSWTU4BXfK/YzYEWiR1lnM
+X-Received: by 2002:a05:6830:270c:b0:7ca:c723:6f42 with SMTP id
+ 46e09a7af769-7d17021d855mr2179910a34.10.1769451755010; Mon, 26 Jan 2026
+ 10:22:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <871pjgifm9.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260126141820.719492-1-clg@redhat.com>
+ <CAFEAcA8xQmUa7DyR7+Nw255e_DW=uzZ-gQT5G6cd-uuWgQBaUg@mail.gmail.com>
+ <e8a6032d-cf06-46e5-a7d5-c2e9b8d248ef@redhat.com>
+In-Reply-To: <e8a6032d-cf06-46e5-a7d5-c2e9b8d248ef@redhat.com>
+From: Elhrj Saad <saadelhrj@gmail.com>
+Date: Mon, 26 Jan 2026 19:22:23 +0100
+X-Gm-Features: AZwV_QhI0Afqqax5fCh11L7zMDvn9tUSDcLBowLyYFTZkpaqhcQ8gA5Ws_4w0qM
+Message-ID: <CAEEWBQPci_=gDhJS8m7erJeYu7C4-eioD0ks=_WReFQiOVDNiw@mail.gmail.com>
+Subject: Re: [PATCH] hw/adc: Fix out-of-bounds write in Aspeed ADC model
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Joel Stanley <joel@jms.id.au>, Michael Tokarev <mjt@tls.msk.ru>
+Content-Type: multipart/alternative; boundary="0000000000004dfcc106494e971c"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=saadelhrj@gmail.com; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 26 Jan 2026 16:14:22 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -118,58 +122,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 23, 2026 at 11:10:54AM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > COLO caches all device states in a buffer channel `fb'.  Flush it right
-> > before pushing the buffer to make sure everything needed will be flushed,
-> > add a comment explaning it.
+--0000000000004dfcc106494e971c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello, gentlemen,
+
+Is there any possibility of making an exception and assigning a CVE for the
+issue ?? (It's my first ever found vulnerability :)
+
+Thank you in advance.
+
+
+On Mon, Jan 26, 2026 at 4:12=E2=80=AFPM C=C3=A9dric Le Goater <clg@redhat.c=
+om> wrote:
+
+> On 1/26/26 15:30, Peter Maydell wrote:
+> > On Mon, 26 Jan 2026 at 14:18, C=C3=A9dric Le Goater <clg@redhat.com> wr=
+ote:
+> >>
+> >> The 'regs' array has ASPEED_ADC_NR_REGS (52) elements, while the
+> >> memory region covers offsets 0x00-0xFC. The aspeed_adc_engine_write()
+> >> function has an out-of-bounds write vulnerability when accessing
+> >> unimplemented registers.
+> >>
+> >> Fix this by using 'return' instead of 'break' in the default case,
+> >> which prevents execution from reaching the s->regs[reg] assignment for
+> >> unimplemented registers.
+> >>
+> >> Reported-by: Elhrj Saad <saadelhrj@gmail.com>
+> >> Fixes: 5857974d5d11 ("hw/adc: Add basic Aspeed ADC model")
+> >> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
 > >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  migration/colo.c | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/migration/colo.c b/migration/colo.c
-> > index f92803dd29..e2307f1907 100644
-> > --- a/migration/colo.c
-> > +++ b/migration/colo.c
-> > @@ -472,8 +472,6 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
-> >      qemu_savevm_state_complete_precopy_iterable(s->to_dst_file, false);
-> >      qemu_put_byte(s->to_dst_file, QEMU_VM_EOF);
-> >  
-> > -    qemu_fflush(fb);
-> > -
-> >      /*
-> >       * We need the size of the VMstate data in Secondary side,
-> >       * With which we can decide how much data should be read.
-> > @@ -484,6 +482,8 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
-> >          goto out;
-> >      }
-> >  
-> > +    /* Flush to make sure everything lands bioc->data */
-> > +    qemu_fflush(fb);
-> >      qemu_put_buffer(s->to_dst_file, bioc->data, bioc->usage);
-> >      ret = qemu_fflush(s->to_dst_file);
-> 
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> 
-> Wait, aren't we wasting a memcpy here? Isn't this the same, but without
-> the copy of bioc->data to s->to_dst_file->buf:
-> 
-> qemu_fflush(fb);                                        // ensure bioc->data is populated
-> qemu_fflush(s->to_dst_file);                            // send buffered data from migration stream
-> qemu_put_buffer_async(s->to_dst_file, bioc->data, ...); // point s->to_dst_file->iov to bioc->data
-> qemu_fflush(s->to_dst_file);                            // send s->to_dst_file->iov contents
+> > Seems like a good candidate for Cc: qemu-stable@nongnu.org ?
+> Yes.
+>
+> Cc: qemu-stable@nongnu.org
+>
+> Thanks,
+>
+> C.
+>
+>
 
-Good point!  Same to postcopy..
+--=20
+*Saad ELHARAJ*
+Cybersecurity Specialist
+=F0=9F=93=9E +212 6 80 51 11 85
+=E2=9C=89=EF=B8=8F saadelhrj@gmail.com
+=F0=9F=94=97 LinkedIn <https://www.linkedin.com/in/saad-elharaj-1891371a0/>
 
-I quickly measured a small VM in postcopy path, async put can shrink the
-time needed (plus the flush) from 91us to 38us.  Not a huge difference, but
-I don't see why we don't do it either.  I'll test more and add those when I
-repost.
+--0000000000004dfcc106494e971c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Peter Xu
+<div dir=3D"ltr"><div>Hello, gentlemen,</div><div><br></div><div><div dir=
+=3D"auto">Is there any possibility of making an exception and assigning a C=
+VE for the issue ?? (It&#39;s my first ever found vulnerability :)</div><di=
+v dir=3D"auto"><br></div><div dir=3D"auto">Thank you in=C2=A0advance.</div>=
+<br></div></div><br><div class=3D"gmail_quote gmail_quote_container"><div d=
+ir=3D"ltr" class=3D"gmail_attr">On Mon, Jan 26, 2026 at 4:12=E2=80=AFPM C=
+=C3=A9dric Le Goater &lt;<a href=3D"mailto:clg@redhat.com">clg@redhat.com</=
+a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On=
+ 1/26/26 15:30, Peter Maydell wrote:<br>
+&gt; On Mon, 26 Jan 2026 at 14:18, C=C3=A9dric Le Goater &lt;<a href=3D"mai=
+lto:clg@redhat.com" target=3D"_blank">clg@redhat.com</a>&gt; wrote:<br>
+&gt;&gt;<br>
+&gt;&gt; The &#39;regs&#39; array has ASPEED_ADC_NR_REGS (52) elements, whi=
+le the<br>
+&gt;&gt; memory region covers offsets 0x00-0xFC. The aspeed_adc_engine_writ=
+e()<br>
+&gt;&gt; function has an out-of-bounds write vulnerability when accessing<b=
+r>
+&gt;&gt; unimplemented registers.<br>
+&gt;&gt;<br>
+&gt;&gt; Fix this by using &#39;return&#39; instead of &#39;break&#39; in t=
+he default case,<br>
+&gt;&gt; which prevents execution from reaching the s-&gt;regs[reg] assignm=
+ent for<br>
+&gt;&gt; unimplemented registers.<br>
+&gt;&gt;<br>
+&gt;&gt; Reported-by: Elhrj Saad &lt;<a href=3D"mailto:saadelhrj@gmail.com"=
+ target=3D"_blank">saadelhrj@gmail.com</a>&gt;<br>
+&gt;&gt; Fixes: 5857974d5d11 (&quot;hw/adc: Add basic Aspeed ADC model&quot=
+;)<br>
+&gt;&gt; Signed-off-by: C=C3=A9dric Le Goater &lt;<a href=3D"mailto:clg@red=
+hat.com" target=3D"_blank">clg@redhat.com</a>&gt;<br>
+&gt; <br>
+&gt; Seems like a good candidate for Cc: <a href=3D"mailto:qemu-stable@nong=
+nu.org" target=3D"_blank">qemu-stable@nongnu.org</a> ?<br>
+Yes.<br>
+<br>
+Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-stable=
+@nongnu.org</a><br>
+<br>
+Thanks,<br>
+<br>
+C.<br>
+<br>
+</blockquote></div><div><br clear=3D"all"></div><br><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
+iv dir=3D"ltr"><strong>Saad ELHARAJ</strong><br>
+Cybersecurity Specialist<br>
+=F0=9F=93=9E +212 6 80 51 11 85<br>
+=E2=9C=89=EF=B8=8F <a href=3D"mailto:saadelhrj@gmail.com" target=3D"_blank"=
+>saadelhrj@gmail.com</a><br>
+=F0=9F=94=97 <a rel=3D"noopener" href=3D"https://www.linkedin.com/in/saad-e=
+lharaj-1891371a0/" target=3D"_blank">LinkedIn</a> <br></div></div>
 
+--0000000000004dfcc106494e971c--
 
