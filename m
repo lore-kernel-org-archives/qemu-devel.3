@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 457CAD19511
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:49:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A77FD1950F
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:49:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkQd9-0001ei-07; Mon, 26 Jan 2026 12:44:03 -0500
+	id 1vkQcw-0001Rq-IG; Mon, 26 Jan 2026 12:43:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQcq-0001QD-S8
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:45 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1vkQcf-0001Je-Ej
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:34 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQcn-00008G-GU
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:43 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-42fbbc3df8fso2932245f8f.2
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:41 -0800 (PST)
+ id 1vkQcc-0008U3-DJ
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:33 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-430f3ef2d37so4213676f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769449420; x=1770054220; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769449407; x=1770054207; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Cksv2wEYfI04vz4eUGCQhWPSvdKN8I8JbTsxrif5bM0=;
- b=WsPlscQgisxWQBL8IdTosQN6+Avpb6SOSjRIg6a+eSV8T7DiEMD0Xpro89PjGok2zn
- jxZX+iiXfIpc07rHTAouXLj16O+3nwvu/zNbc7khGntnmaJ2+CMDBUIepq5cLFKW1jFX
- iOts2BZ+uH0zKT0Qd4PpwcpPz5mC/T2I/Xfwj/jKKH9OB1jyi+5aTMh1LOC7dKz/Ywnl
- EsG/RSk2zz1TOKc/JC7dYFkopanYMEYfXRCnjSBog9bTC5bu5GXVKYk7XCtiSW3RTNww
- HHC8kWamRw1KjqRXRQKyG/ct5PDiLOiXE59hFV3S1MiVAe4FdeNYB/kmYHZCRv0JITJ5
- kUig==
+ bh=sXP99FUoDu1z98GAyOTe9kejbBFJAL0eQ2bvmghE1tE=;
+ b=OCL2yfnpl32GOrvPijfGuzw5AC4OO+wvInHhRvPYGxaQh7iZMyf4SsracRrNGO8xK2
+ gWzRR/fRufhTO8UkzwXe1n0WTMC5A05slFw+Y8Yi8yMvwenCDLpCu3FZr6oATKcbor0G
+ HVSZmPLc4klNa5HjmIdWucz77mmJmYkDq381eFHNqPNYBmXWICCHzJMxNs0ecdAP6N4X
+ CvBy9hA4Acj1r1CvkkL9pHLhdJyC6jV/QIyXXKM/7elGI/mGkMEBGxS0TJbsDOGtvJ8W
+ KZyzfsYNjdhslxORbPczRYZ77P0090IOMcAhfCjqK+/t28ekd1FkuRagOh+A4vnXaEK9
+ oG+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769449420; x=1770054220;
+ d=1e100.net; s=20230601; t=1769449407; x=1770054207;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Cksv2wEYfI04vz4eUGCQhWPSvdKN8I8JbTsxrif5bM0=;
- b=PBuGSdJ4O8KLSWBKhSL2uGq7nH8d5245Ei2Imfd7LJz1jUI0a3eal+S3kViCzpG4U6
- qaqeoG4edt0wiXpTgL7t99dHOXOqPk0+kATZuUZH/B7E5IIomyZWzs0bJEQ9ST+D2I46
- XgRL29r2a1aRIW9xtXet0tmfJBjPkOdqVSt/PrRtHpxSGPfAWd8y/m9MBT2FzwosLKFj
- 62OtUulUfXO2VfW5EH4PlA1xMHw5oDCWFvsUGdSEGtzxGgyNrUpu/aVB8z8ekY6N+tT0
- N6DDAtmk4N/qleUeuGekRfATlzBA+0dY7NrRQ0urP799LYb/Ze4UL/vdI3sbvsnsN/o0
- /Ojw==
-X-Gm-Message-State: AOJu0Yw+Ma9y8BDc2YIjJOooH/WQ+CpC2kpgolaOg7Q9MNJrSeCd8ox6
- GJ9OLHvCXSshsmoZl7MJZTx7g4WPN2VgFV3vdZ2y8a9Qyhe40oUySa947Ts2VCPc
-X-Gm-Gg: AZuq6aIRqKYKR8xfwDt7QbE0LBM/iAzcnbTFVs57TF6EFYWMkempiTizS2e0u/AcwgA
- /wikdUqQQVbv7aB6eEunS8gLPrMj7Y1AsHDd/G3ALWUFcmPk2Va5gGjXXAGso30tM5dA0iH2dJr
- sLAc4QR1QkBKvZal6NR7ZXrcPOClwdreMsa57PS8j9Q0/gC6plCTpDE02Zm8bXOeYIV1D9vKsuY
- d2IP5DVoFgscY4Sj9Aj0xl+UVT0sYqoQP1ysGWfoL0SRl/awyMXUXOUB9vGCHmB0HaipZ17EzwQ
- v6DM4YltFVpqeQTKYtYxwaOBsoAfZQnF/wITb5FUCxffeJZAITvPYcutEULSJonGkwyQBoCs1Zx
- t4Y1ezkykuidjWL2ePmsMfdld0OEWuLZ0mfv62lePfjD72PmMW7ExPrT0OMQyysM3n0BLSWZHDe
- DefDlzqaVbeLxTlTWjXHjNTeD+nSNUetB0lZCIpNW/H6tsHz01qvom6w==
-X-Received: by 2002:a05:6000:2509:b0:432:5b81:498 with SMTP id
- ffacd0b85a97d-435ca148113mr8878158f8f.23.1769449419793; 
- Mon, 26 Jan 2026 09:43:39 -0800 (PST)
+ bh=sXP99FUoDu1z98GAyOTe9kejbBFJAL0eQ2bvmghE1tE=;
+ b=Cjc8LsicerWmVyzdDRkm3kzRMBrRTH7DUl+F6iqU6gXsdA2TRguI5RLEQSg7BUVGF0
+ d42hAm6apRcXoT9AkFO53sknfLTE993YJN8cFoJ3BPoBYEwZDTFcQbtx2GpZ/73WAZOQ
+ dGLf9bNcjFLd055V/K5KZk7NUDIAscmuQYGsKatsPKva6+eX+nBWJ+wcWbAl6/Fj8nwS
+ /VzrWLm8kOTdBQT7ZFR92Zt6ysCspRZv2sJQV4kBVdMWX6dnviOTIzABWWcjXiGTZ4W1
+ nh4XpClsngyfPJuKEQZzEf2bGOGH3GiqaHy0F7avIu8G7OyWlM528IA2r4MmU1qMptGB
+ aSqw==
+X-Gm-Message-State: AOJu0YyBn9YdQGDDLw0Gq7vpy+0UmS902c/ZuE+g7Gkpmap8eOinXx3M
+ 2tmT7SEpBF6c8VyeH3RqqLbaphg36jl6W79sO7ymqy93kIpsG94WlFDDL251KY5u
+X-Gm-Gg: AZuq6aIKoXfIBdZttnwgVjLm6YcQRDTlF0jn8dRlbPiq5qaqbZAd3nevhkcPSm4yFHQ
+ jqm9takLhrVAMFSb7WuUZUo/O7u020PU2O73y2HXoC+iq4oj8tyvOcM7XN91ifcE6pcE8u06bwV
+ HD6vFPtXaPxvYlfd4W94Bew8dlGfivk+FFd7JM1Sg67Sd/LbhcPNKnU70mW/y6LOfIJNzkzMeam
+ zuqBUbP3Je//VnU0I3lGXUGZZAypMw6b33KG66ZD72hTvc72SbEEDE7HGxKEK6t7z6BNP3fMcmN
+ ZAAer1Sk/H+9mrqkYfJBrnyF2bAxrWm3TyJJt3MmOcGNAPBUbTZJA1O6H+ZCw8r8jCCQxoxZq1y
+ oXKWuSF6q9urn1WbYUIZqWbe/GUKYdN86L68rv3dfoSBCrFpBvZPnJ7vRxn9oMMEFXR0H1kSy/I
+ gGfKC+ljKDFWIHxc2Iw3DvdyoysUlVQSMheDrwhk1nMCCzmJWtPQQTE3K46N5KoOez
+X-Received: by 2002:a5d:5849:0:b0:435:9950:edc with SMTP id
+ ffacd0b85a97d-435ca051d61mr7956562f8f.2.1769449407308; 
+ Mon, 26 Jan 2026 09:43:27 -0800 (PST)
 Received: from thinkpad-t470s.. (93-143-71-105.adsl.net.t-com.hr.
  [93.143.71.105]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.38
+ ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 09:43:39 -0800 (PST)
+ Mon, 26 Jan 2026 09:43:26 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  Ruslan_Ruslichenko@epam.com
-Subject: [PATCH 16/27] hw/core/fdt_generic_util: realize cpu clusters
-Date: Mon, 26 Jan 2026 18:43:02 +0100
-Message-ID: <20260126174313.1418150-17-ruslichenko.r@gmail.com>
+Subject: [PATCH 03/27] util/log: add log entry for fdt generic utils
+Date: Mon, 26 Jan 2026 18:42:49 +0100
+Message-ID: <20260126174313.1418150-4-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 References: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,44 +104,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Realize cpu clusters at the end of fdt machine creation
-process, as they need to be created after cpu's nodes
-are realized.
+Introduce dedicated log mask for hardware device
+tree processing, to selectively enable diagnostic
+for FDT-based machine creation.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/fdt_generic_util.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ include/qemu/log.h | 1 +
+ util/log.c         | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/hw/core/fdt_generic_util.c b/hw/core/fdt_generic_util.c
-index 2f49909a50..83ce5b3466 100644
---- a/hw/core/fdt_generic_util.c
-+++ b/hw/core/fdt_generic_util.c
-@@ -158,6 +158,16 @@ static void fdt_init_all_irqs(FDTMachineInfo *fdti)
-     }
- }
+diff --git a/include/qemu/log.h b/include/qemu/log.h
+index 7effba4da4..984879fbd3 100644
+--- a/include/qemu/log.h
++++ b/include/qemu/log.h
+@@ -38,6 +38,7 @@ bool qemu_log_separate(void);
+ #define CPU_LOG_TB_VPU     (1u << 21)
+ #define LOG_TB_OP_PLUGIN   (1u << 22)
+ #define LOG_INVALID_MEM    (1u << 23)
++#define LOG_FDT            (1u << 24)
  
-+static void fdt_init_cpu_clusters(FDTMachineInfo *fdti)
-+{
-+    FDTCPUCluster *cl = fdti->clusters;
-+
-+    while (cl) {
-+        qdev_realize(DEVICE(cl->cpu_cluster), NULL, &error_fatal);
-+        cl = cl->next;
-+    }
-+}
-+
- FDTMachineInfo *fdt_generic_create_machine(void *fdt, qemu_irq *cpu_irq)
- {
-     char node_path[DT_PATH_LENGTH];
-@@ -173,6 +183,7 @@ FDTMachineInfo *fdt_generic_create_machine(void *fdt, qemu_irq *cpu_irq)
-         while (qemu_co_enter_next(fdti->cq, NULL)) {
-             ;
-         }
-+        fdt_init_cpu_clusters(fdti);
-         fdt_init_all_irqs(fdti);
-         memory_region_transaction_commit();
-     } else {
+ /* Lock/unlock output. */
+ 
+diff --git a/util/log.c b/util/log.c
+index c44d66b5ce..c8310ddc58 100644
+--- a/util/log.c
++++ b/util/log.c
+@@ -523,6 +523,7 @@ const QEMULogItem qemu_log_items[] = {
+       "include VPU registers in the 'cpu' logging" },
+     { LOG_INVALID_MEM, "invalid_mem",
+       "log invalid memory accesses" },
++    { LOG_FDT, "fdt", "log Device Tree info." },
+     { 0, NULL, NULL },
+ };
+ 
 -- 
 2.43.0
 
