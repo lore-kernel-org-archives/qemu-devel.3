@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A14F5CF65E9
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 12:02:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DBA4CF65DB
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 12:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkLGr-0008Dj-51; Mon, 26 Jan 2026 07:00:41 -0500
+	id 1vkLId-00046y-QK; Mon, 26 Jan 2026 07:02:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1vkLGJ-0007x6-Oy; Mon, 26 Jan 2026 07:00:15 -0500
-Received: from mgamail.intel.com ([192.198.163.11])
+ id 1vkLIA-0003DK-Nv; Mon, 26 Jan 2026 07:02:08 -0500
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1vkLGB-0003QX-RT; Mon, 26 Jan 2026 07:00:07 -0500
+ id 1vkLI6-0003pu-2Y; Mon, 26 Jan 2026 07:02:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1769428800; x=1800964800;
+ t=1769428918; x=1800964918;
  h=message-id:date:subject:to:cc:references:from:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=Y+WFnPKJDXIZMp+xmXA3Btg2GrXdJGycHxzCbqfkpf0=;
- b=MFn6yRp4cWmxFH7S3762JA6S1CsWeh0i+MQBG/ZV0KmrfWkYnz5HBSgn
- l33STFkxG5AFGsedmHct2lhnrtLzt14Quwx3TblAqXffCd7QCl6izwEzo
- YLKow5Z7I071Pi5+t2hTyIwbPRj7k6QC3J7C2fbAbmhVs7+a4lz8+tnyc
- 5nfYVGPiEj1c2vxn7V9C04KHnii2eMQwmKommyJNGUPG80oe3h3MUQn8D
- HqA33T1n52Pm0YDsYPapoSjdw0vrk6CZJIkNwZ4C0BjTYE+NHkxz1qz4l
- foHC4MWOEnoOTFQn+PLz750nWvbMjLqcAGq6a59xqYcr0Twp/fRJtgCKu A==;
-X-CSE-ConnectionGUID: RzrjPKyERoGyrsSaYIRAng==
-X-CSE-MsgGUID: cxdUBPM0QNKmn0F84zsy1A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11682"; a="81237822"
-X-IronPort-AV: E=Sophos;i="6.21,255,1763452800"; d="scan'208";a="81237822"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Jan 2026 03:59:57 -0800
-X-CSE-ConnectionGUID: 1nBKHNMtSyqrteIf4WHtQg==
-X-CSE-MsgGUID: At25sEFmRRiuYWky8fyrKg==
+ bh=pY+bouT9+14iU3ymZ3zw4vClI+SAncCjRatyAhoBk5g=;
+ b=gEI4QABa9/0nDATlqdJw1piPbmzv0Oz1qAtHXhA/TobROL+qvW9+5pms
+ QGw6wxeNTrwdw6093E5zD+eeHL4dlh9QRHNyh9rsikmfnQ86osPXTJCYK
+ OCsmIDmOsuHC7LaRsjFOXhjr898eMVPIviG15Nn28jmYxmfuRk4sf3EZ1
+ fmXrYAg2q51PLzxNwCHgdhRhmzeZxZv7iv1rTHS1xKcfxJ2z6pAt9loVk
+ RQsr/zno90dufSqgt1Fz2pPTssq0erj+Ly/uu3HxmfY0GT4FzkZ4lom27
+ vvyqoqmTpKO0QKf1cr3GzEYw3jd4olG20NvzggByKkwXYTVRu8O4RBSq/ g==;
+X-CSE-ConnectionGUID: 7MrAahb3Tka3Y9eEnJRUwQ==
+X-CSE-MsgGUID: kYZ0k8nQQwWTwD5tgqf5tA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11682"; a="96066822"
+X-IronPort-AV: E=Sophos;i="6.21,255,1763452800"; d="scan'208";a="96066822"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jan 2026 04:01:55 -0800
+X-CSE-ConnectionGUID: 8QvMjUIlQ1G+Q8fl5Fvcpw==
+X-CSE-MsgGUID: k5fj/77IRsOglFs/ARFhRw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,255,1763452800"; d="scan'208";a="212648811"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Jan 2026 03:59:57 -0800
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Mon, 26 Jan 2026 03:59:56 -0800
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+X-IronPort-AV: E=Sophos;i="6.21,255,1763452800"; d="scan'208";a="212525630"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by fmviesa004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jan 2026 04:01:54 -0800
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
  ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35 via Frontend Transport; Mon, 26 Jan 2026 03:59:56 -0800
-Received: from CH5PR02CU005.outbound.protection.outlook.com (40.107.200.20) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ 15.2.2562.35; Mon, 26 Jan 2026 04:01:53 -0800
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Mon, 26 Jan 2026 03:59:56 -0800
+ 15.2.2562.35 via Frontend Transport; Mon, 26 Jan 2026 04:01:53 -0800
+Received: from CY3PR05CU001.outbound.protection.outlook.com (40.93.201.8) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Mon, 26 Jan 2026 04:01:22 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sgpM3gZH6DnuyAGl/qtftbKU0m2JCI10hP2YXa31aV8ZjHrWDblFAvK4Ce6irDGey6YVefSeI0Bwubq1YjHrsVZ/nSW5NAFDT5FyblywUypxt/F3elEaapfrj/m1bkCRGGkvCCJvpQemjKvFfRBOKrZ2arITdMrElbPZUy5t42v5Rhb/dW7G+dc6Uh14gNnTDNdvD7nuryZ/UTsHcMHNdLH9/NNLsp/4guS5jul20D1vP48lpvcUQt+vFt5Q0Yg9CLUexqEOnP0sJTNJpoWV3yRcGU87bZ0u7AoQpelXKP7Vz8iFcRKxtJl8WW4JUmBZwazWkWP3wTqVLly+6DA27A==
+ b=BgPSjKpe47jguQOrt7ChzLewpv47ivDb314lAd6+1dpPD38i1P1JNUSc+EUnOZFDIUOHeMHnVVMll/rrlbAywrfXmRK8ecCYNLmMQv528L36cUFUvvP4Wwz+3SGBbRZTIoTMcl19FKSD164vD4u3qIZR1hMad0fA3k4ZnNfwExy8S//XMRZ/6FIqzXHAQb2GPnBEcRO4sImtMN4AkO2tELoZPtYlSglNUbg0d1VvNk7TQoLhZ6MKbe3xlxBLZDDCkkWKVGE3CkMlmbyE9J+UnqvbBRAAisomNYkqvFEX04UVwkLssgrzfctmuyUvACaAt76RQ3Mg+V7jom4dkeKC0A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wWJVnkaVf7rnyUEz17Pq+CN4h2aISuVwYy7JFhc2CbQ=;
- b=yqFnDapF/zWbo7ezMrbpuNbCjl+nBWAJHSuN5Gf+fxo9hoZifCTjCsbW12pbYB6Of+zmQvsBXf4sdNJc96OO0fChxDfYmoDB6FS+CO8nuOj4lLXZyp8jP+R1vvuXG1y3CKgtr1v9Y5JILdueHMkvZF1J2OAiI1Rov9MmqdnEAZ+5BeXTH8+DxuJSIIY7Oez8sh+XeTN7JY2BXNeZ0RY2zfLDg3ZPwdWw+VZfBPwJ/sVeovCeNhf4xb+6DoTJhMP5eJQajk8lgBsKUGz7XvdBGHQoaFf71D8SE+U84fwtMoU5r3zVQB/hMRdsNk9Ig7OUy4+1dz4N1zJwX10iiyQ4Fw==
+ bh=mAs1wW/LeBwM/WaNIXua4Y1qXi8mEcxTGGzADTq+Bc8=;
+ b=h4ps/GsRZwkSI7JkdAeXPZXYYewfyT0oiMTM79ziRZW6jNG78JFt1K+Pv0l3lT7tK+f+GgrDsQLVurVZOqoVLYlwdTLHv1ZbgR0xr7smsvbhgT5uKGrIEYkGtgba3FdPFWwYAi7S6PuFgoE/TSSR6VgzGspZjZNnt/P/on8CbEybtQUWQJtnXxMZ9BNMtRa9nyC26dPIE4OCuftEPqwymGUIWotMkdymtYasp5xG7cyAl48GTHAdOCrF8j/VCOyO+tEBMQBWhTH8+1QZANFJGDz1q/UPsmtJoWYWc2PIDmJMKzddsLBiKG+x0xPjSguVwqhCl4X5nF8lrYUgXQslyw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -72,16 +72,17 @@ Received: from SA1PR11MB8492.namprd11.prod.outlook.com (2603:10b6:806:3a3::7)
  by DM3PPF6A4412A55.namprd11.prod.outlook.com (2603:10b6:f:fc00::f2a)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.16; Mon, 26 Jan
- 2026 11:59:54 +0000
+ 2026 12:00:58 +0000
 Received: from SA1PR11MB8492.namprd11.prod.outlook.com
  ([fe80::cedf:12a3:5d80:af1c]) by SA1PR11MB8492.namprd11.prod.outlook.com
  ([fe80::cedf:12a3:5d80:af1c%7]) with mapi id 15.20.9542.010; Mon, 26 Jan 2026
- 11:59:54 +0000
-Message-ID: <63b28d08-1b00-4d6d-9645-7dbc3592e847@intel.com>
-Date: Mon, 26 Jan 2026 20:06:32 +0800
+ 12:00:58 +0000
+Message-ID: <9a217f24-c44d-46da-b3e6-d954c49c23cf@intel.com>
+Date: Mon, 26 Jan 2026 20:06:42 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 08/37] hw/pci/pci: Add optional
- supports_address_space() callback
+Subject: Re: [PATCH v9 32/37] backends/iommufd: Retrieve PASID width from
+ iommufd_backend_get_device_info()
+Content-Language: en-US
 To: Shameer Kolothum <skolothumtho@nvidia.com>, <qemu-arm@nongnu.org>,
  <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
@@ -89,117 +90,115 @@ CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <clg@redhat.com>, <alex@shazbot.org>, <nathanc@nvidia.com>,
  <mochs@nvidia.com>, <smostafa@google.com>, <wangzhou1@hisilicon.com>,
  <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
+ <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
 References: <20260126104342.253965-1-skolothumtho@nvidia.com>
- <20260126104342.253965-9-skolothumtho@nvidia.com>
-Content-Language: en-US
+ <20260126104342.253965-33-skolothumtho@nvidia.com>
 From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20260126104342.253965-9-skolothumtho@nvidia.com>
+In-Reply-To: <20260126104342.253965-33-skolothumtho@nvidia.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TP0P295CA0034.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:910:4::19) To SA1PR11MB8492.namprd11.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: TP0P295CA0044.TWNP295.PROD.OUTLOOK.COM (2603:1096:910:4::6)
+ To SA1PR11MB8492.namprd11.prod.outlook.com
  (2603:10b6:806:3a3::7)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SA1PR11MB8492:EE_|DM3PPF6A4412A55:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7ce62d50-74a6-414f-f6dc-08de5cd26ae3
+X-MS-Office365-Filtering-Correlation-Id: 15625a05-8d01-44c6-29ec-08de5cd29115
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|42112799006|1800799024|7416014|376014|366016|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?eThJNmh2bTkxMjZNOGN2RFEyVTBWb1JnZnorcUFsVDBBNEVoOFh1WGdFYjM4?=
- =?utf-8?B?NlFudVhTVllpQUM2bnhXSFBPN3ZXSURpdnhOMjB2N2YxWFo1TDIxTWFxM2pT?=
- =?utf-8?B?TlJJYzVzaXgxdUVQM1RXNjFFSmJzNTRJNCtxK2VCekdadWlTUHJRR0Z6Qmx6?=
- =?utf-8?B?aXFiTWpQVTJ5VHVtaTBnckFwOHI1YzRaTHU0d1ZxZ280c0pOaWVBVVdrZC81?=
- =?utf-8?B?V2RjNEFlSXo5MmJsM3lXRjlNZGZhSUJ0L0ZSeVowcU03cmdxdjZUNmsvdDVS?=
- =?utf-8?B?eUtjUkNzdVRaUGgxRU1pR3VXWFpvTzZFRnFIbzlUQmVWNnljWWVCcWJhMGs2?=
- =?utf-8?B?SUhpbmc4RFJoK2xXMWdRM3FWTmtqRHBkRzd2Q0x1K29JWkhjeVgvNWNOM0l2?=
- =?utf-8?B?Z2p6YzZra25jUVpFZ3k0TklxbEdyekpCZjNCNjVFVDRpZFVHYWRHeTNyYzMy?=
- =?utf-8?B?VVpSWjI1a25wWjVCaUFjbmx5MFJub0YzZDZ4U3hnYTQ4WnJQY1pFeVREM2Rk?=
- =?utf-8?B?clFEcnFZN25ZZ1IxZDRiSnB0V20vaWNlWnQ4T0FwaUFhazBPWXVqckh5WHVM?=
- =?utf-8?B?R092UU1GaUwvQk4yd2JnS2NGZ3R3SlFqalFmQVp1eWEweWxIMEphcUZhWU9X?=
- =?utf-8?B?d2hOcmo5Q05CU0IrQWpJbkUyVXhlbDV2RksyeXhEYWdoU3dRTUljdERnMUJs?=
- =?utf-8?B?NGJwZmRtYkNQdzllcjFqK3VFL29POEVZVjd0UEs5YVlrMzdkY29hS0FaNVBl?=
- =?utf-8?B?SDIyczJIS1VqTUtuWmcyZkFoMUJ6NVZCSVQvR3RvZklFaXBjaUVDM3cxeGpn?=
- =?utf-8?B?QWltS1JOOUdCWFBsb0RaYkVkbWhpNytMdE9KYkkxV3hGUmxqY3RyY2NXR29m?=
- =?utf-8?B?Uk5VT1R5ZXRhMEI4eUk0a2tqejhiWEZqYnRFcHQyS3UzT3lzdzNqMmV0VUY4?=
- =?utf-8?B?Y0tERjh4RGNFODlrNjNCTkZIaXBia0M3REM0VDRSSy9Iek5NRXBHWnFSdkRZ?=
- =?utf-8?B?eW9KNFJlZXhNbzR5TFI4b3ZLV0Q4Q24yUkV3VE9GSEc5STVOZmNMNWpOZkkw?=
- =?utf-8?B?Vk52L1ljL1ZCdzlDQ3N1TnhkZEJKdStHSHdmVkM2bzVwSUZHR3hFZW1HR1lo?=
- =?utf-8?B?YkM0NmlDc0NtMkpHcDlmMlFBR2M1eHE3dVlaU3hvT1FYczVkdHpLTjBJYW1E?=
- =?utf-8?B?cUhuMXROMG1QSDYwdmxBOG1BdWpmYlJScHM1Q0FaL2swckRsT09ibnV1M2p1?=
- =?utf-8?B?RjNpNVJMUXFGZkJMMTdkTGpUc042RXBqVXZTQVhhTEhhSVQ0bjY5NEFvUndy?=
- =?utf-8?B?b1JXZ2hmc3VGWTQrYlZFcWZtWW1wOFN4NFY0dDJvWUFGUFJXaVhtT1RidFEy?=
- =?utf-8?B?dGpBQW56K3Y1bDVBdDltZlpDL01LZEp4YXg0QUdEVWpSYmZVU3doWXRQZWZZ?=
- =?utf-8?B?ZVhUbTJtS0tTTUJUSWtqa1grNVZJRW1DbDFkWGI3NUpGZ29VOFVxS2dlYVhS?=
- =?utf-8?B?NWZCZzUyV2U0TnZ3d1VjZ2dhc3BYYjJsbTlTMnFkTTI0RGI4c3FtWkFDZGo5?=
- =?utf-8?B?eVFzWDkxTmIxOWpMaUlCd3VicXBNOWFhc1llMWFPUG9VMzZBZVFDTk9zeld6?=
- =?utf-8?B?WmcyM0JVOGYrZDM3a24xMmNzWjYwdFJSNFVZK1IvcjZMWDdGOTQ5cnRUdGFx?=
- =?utf-8?B?cC8vNFFxNEpjaHNKaUZvY2VMMmphc1phS3ZaZUZ4ektHYTA3UDVIakVQMWhr?=
- =?utf-8?B?YnhlTUJ3YjEvcU1MUkRYYzh0TGxuWVhnRjVjbG5RL05SdjNod01sR1BiZUZy?=
- =?utf-8?B?KzRFMEh6TTVWQlRTZU54amZ0TXRhbUhUSDRIa2l5OW4yOCs2TmJoaDY1Tjg3?=
- =?utf-8?B?Y01EaTNTckZKdDRoUUU5SW0zOUVJR29XM1lNazduOU9vbXY2cDNGRjQwTmNj?=
- =?utf-8?B?OG1BMzBEWHo2WE54OWVjdGVSb3ZHYUg4bE8xOTdGNFBGYjlzYTJwL3kvTGNC?=
- =?utf-8?B?M0p2K0I4d0VkRG4wcUFQRjZMTWllWmY2MmozNDRlZG9nRkhOV2toU3ZtbnpJ?=
- =?utf-8?B?RHdXWE1neEd4clNXUXgxNXYzT2orK09WTTF3MkR2RDkyYW4vdTBOT3NvaVU2?=
- =?utf-8?Q?Gh7I=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?eHE1M3M2cEZRcmV1ODRKZEV3bjRUQ0tDZVVYTUhKRVdVRnpPQVNLTUovdlBp?=
+ =?utf-8?B?WWs3RGcxcnFVRTBVbmJqdlhlTFhFUFdOTC9yd2FLeWR4aFFIcXRSc3dtNU1k?=
+ =?utf-8?B?eXZNeDBRUEh4VE9XYkZNOTVWQnlHS2NjNUkyekJPamIwL1FWSDFET0dvbCta?=
+ =?utf-8?B?dXI3NHhGVjArM1VqN3g2cUlCcGN5WEdCZXNJc0hZQklObGN0N2k5RjRDS2po?=
+ =?utf-8?B?MDl2bU1uaU1naGtrT1JwTnVCVTVDZXFMQUIwWmtxckZFZkhIMlgxVG1NMGk4?=
+ =?utf-8?B?V0FzaVNIbytYKzJHZlhXd1NmWklEMWxTajVjNG9WbjBJSko2Zm95OXppRm9x?=
+ =?utf-8?B?R0hGVjFhOWxqRFNYL3R5VUt1c2xPUktjcXZENlk0bnE0YXc4Mi9kOVE4WmJs?=
+ =?utf-8?B?bC9JaEJleS9TNklNTjdQT3hxWHkrRUFFN21zUS9LNEhrMWlUTU1QNjZqbTl1?=
+ =?utf-8?B?Q2JGQmxKVFljb1BHVEZIYnVXQkZhc003a1E0NGk2OTJybWd0dzBEVHVDV1Ra?=
+ =?utf-8?B?KytIMnplejdwbXU4SDB1alhmcGplMHUvclJoOUNRa2lGYmswWWhyaFY4U0ho?=
+ =?utf-8?B?RGU0UEZHSklhR3ZUc29kWG5ZTHRuNEU3RTFxTnRHRncvK0o2eWZWdkNQK1ZN?=
+ =?utf-8?B?Vm9NT1RDdVRac3lTM2JaY1l4NFN1L0xobGwyZ1JmZ2RoN3BQamhxVmZjeGNV?=
+ =?utf-8?B?Y1ZJTWRLSVI5OXMwUG83Y0tjZHNaVkZRaDlHcWFNaHgvSVFpWUtqU1I4QUZl?=
+ =?utf-8?B?KzA2NVdhWTN1eWhHNzQzL2FHTXNyeGxFaFZEb3ZoWjVyMHNTRVh1bHhYdGwv?=
+ =?utf-8?B?cXVRY0o0YzJQNkFwRGI2Uno0YkNiWHF3SDlkMDIyMHRJdEtQVFQyL2d6QjEr?=
+ =?utf-8?B?dVZ3Rzl6M2FaZmlBaDUwaHNjVU5BTmRLYXVmVjNpanh4QkFMUWVuNTI0Ujkv?=
+ =?utf-8?B?VEtpN0hXd3lXaU1iWEtKaFkyd3RzTE5haHB2QXNqbEdVQ2dlRDBqdXN2UE1T?=
+ =?utf-8?B?bllmRHhHdlRrRWVoa3doY21hb2Iwc2ZZSHBSYjg0S1pzSCtJcGI1S1czUG5P?=
+ =?utf-8?B?ZENITDRiYkt0WEJ2d2lpaEpDZjZSRnJqdTJKRFJpcTZOWnJIaWFqQ0dGanlh?=
+ =?utf-8?B?cmZPaWRtbFlpMHNzQkpMQXF1V3NOb2JSWlhSR1I4eUZIczdPTFpTYjBMK2Iw?=
+ =?utf-8?B?bkxqb0gxTGMwVVQwdGlCV1g2bG9PSjNEbFpTNFQ5QkdseWx6ZE1Vc1QwcHNL?=
+ =?utf-8?B?MXlaUFpZOUtRVjVybDluYUpFY1h4aUhhTkM0aFJrbDFuSmc3N1JFeGhvTFVI?=
+ =?utf-8?B?eWRnTjg1UXY1alQ4NHlEeDJkZkdUa1NOMzNyVWozTTM1cVdPeXRxZ29TdEp0?=
+ =?utf-8?B?NjBPM0FkMEtpQXBYTHV4MkEvSzM3ZkN1QkdLSDVMV3oxbEV5dlV1aElnUjlK?=
+ =?utf-8?B?RnBCbVM5Tk0rbTB3ZmZQN1p1Y0VOT3JjbXdvSFNqRWliRmNCb1VKWmJ3ZkVK?=
+ =?utf-8?B?ZFZNL0hSVTRIT3hKM1pHRC9aaW9qUjRwN2lHbmEzb0RvUFdUblZRSjhvSEFG?=
+ =?utf-8?B?VHJERkdCb1pGYi8yeGpiRXVBVHEvQ2JvQU1SeEh3VmdjckpMbTJhZ0VCUm9q?=
+ =?utf-8?B?K1NnOFNvMFdSU0EzZ0RpN2I5V05jcjJMcTk2clpnT2RLK0paelczT2lYYzVm?=
+ =?utf-8?B?KzV0TnE4SkprVHpRRm82TXlESTFOazQxYWRhbnFWOUljZ3RzTzViTGZ2Vmcw?=
+ =?utf-8?B?ZjYvL25JRjZxN0E2RllTcFBveU1tdGcxSjZvQ0dhSy9PclBrQnM0RUtPcklY?=
+ =?utf-8?B?M0dCM2Y5a001QlU0Y2JmTE8vSmNPK2lKTStmeWc2N09IRWQvb1J2NDBJemRo?=
+ =?utf-8?B?LzZ1VkdYMlk2M08xamY4ckQ1VFhyT085M015K0hFWGViWWN5c1g2K0dVQm42?=
+ =?utf-8?B?ZlJmS1BFQXZOLytpdExsdThWb3dvd2NlblhUSWwrck1uWkVhRlVuM2EvVEIw?=
+ =?utf-8?B?V3oxSHFFZ29ZcDR2NEpKZ2tBc1dFZjZYRnE2WnREVFdLdjZXcTE1L1d3Tll3?=
+ =?utf-8?B?cG9PUGlHekw0R3J5SUtUZDk5a2kwL3VvcDF6eUhWNnVqL3JIQkdpUitrNm1P?=
+ =?utf-8?Q?ZUgc=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SA1PR11MB8492.namprd11.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(42112799006)(1800799024)(7416014)(376014)(366016)(7053199007);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VHg2eHBndU1jU0FwdnZHTWR6K1JZYTdRNU5pY21ORUZkSHJZZzFERUJrOUwz?=
- =?utf-8?B?djFnODRLdWVNR0NUUVNQRTlKdXpvTVplYk1pWHlER2VTNVJibGFNZTdlUGlm?=
- =?utf-8?B?YUkySXhqQ2k5YU95Q2FGWkMyRHBRMG1PejJHbjVtNVp4TWRidjlrWTlFOGcv?=
- =?utf-8?B?YW9QL1NZaFpiRnJHUU1SM2YxYzFLMG1PbkladlphOXpqNGV0aUpSRWt1WHNi?=
- =?utf-8?B?aHJXQXBrbHNGbDZRWUV6Z2Y1Y3UxQkdpMHB1Y2Y0MWFSSW9Zb1ozQnhEM2I0?=
- =?utf-8?B?elJ5VnUyVkZsVVAwYXdjMlZJNTRuMkpoMTY5NTdXYUJwektTcTZzY09PalVv?=
- =?utf-8?B?eGV5SkVlUkNRdDdsVUFGSEtGbmJlZnFzR1lMdWdlUkpVZkk3cGw2cThFTGts?=
- =?utf-8?B?d2pLZnpSYmhpM1IzVDR4T3E4K0prVXE4L1ArbWowU1Zha09TY2JCSmhlTG1l?=
- =?utf-8?B?ZVlKNVRSV1BVdFZITHcvdVlkS25WbnBROFcxKzJ2VEIzclhEWlFNRGxRQUti?=
- =?utf-8?B?Y1Zlc201MUpCc3BNeVRaVU50ZktOQ2I0THIzYlRvSFVJY0NLUmFwK2lDWjVP?=
- =?utf-8?B?eTN4N1NjSHZ2bEhPelBNU1RyWDFGL3JJV05mSi85Rmp2NDl0RDNmRDBLbVdx?=
- =?utf-8?B?ZVdqQkZzeEtCY2IxNjdhQTZwZEprSnd5Nk0rZXNaZExIRWtmaEs5Rytka01s?=
- =?utf-8?B?NVhpM0o5V1htY0VRdHFtaHBPWXpIVVpnMS9FVTM2NEdrVW1lZHNyb1ZEMGpV?=
- =?utf-8?B?bWdsZmgwYVRFSUN1M0RZR2hWOWpuUGRNNnp0MUZEYlAwZ05rZTE3WXh2ZFhj?=
- =?utf-8?B?RnpGTWIyVUpkSjdEMmNIcGFiazNoajY4N1o0aW81eTZ5dG0wUDJYS0pha2hJ?=
- =?utf-8?B?MGlIZHpTMEdrdU9aYkhMWEswUDFOZjdraU1NZWxqcEV5K3ZST3BudDdoVURO?=
- =?utf-8?B?WVV5RFlkbENvQktIV1U4R0cxdTJKSlFuTmpEMTVHdmtKalFUYTkwNmRvNDhY?=
- =?utf-8?B?azgxa0tNZW03cWtmenhSQ3VsbnVVN2ZLOG8zeEQyTFA3REduRVV1b25iNCtC?=
- =?utf-8?B?clo1UTMyZW9sQkFaKzNyYUZncENkUnd1OXI1bUszRjRNUGl1WDYwYUF2c2hS?=
- =?utf-8?B?bFJFVzN6UkNBbXRGUjdxUmtwWnhHSlVlb2dSOUYwU3YzQmdFSmxnMUJseWR3?=
- =?utf-8?B?eXdCV3hPSllvcUJIQ1lMbk5Zb05xMGRzUGZSelFkd1p5bHhuaVFDVHVKL3Np?=
- =?utf-8?B?MVdnMGk0RmI3RktubkpodWEyUXdNdXNrVVkzb2YrS3VMR1kwcW9ubzRQdUVT?=
- =?utf-8?B?a2RNOUZGd2trRE5nNUFldXQwVUdrUTZmcFdVZDNWNXQwWHFiTStrUWE2My9I?=
- =?utf-8?B?aHo0eGZ6bFBZSVlBbE9xeW1vZEVsM0laZ3RGK3FRZ054aGlzNEVHZ1J5WFRt?=
- =?utf-8?B?REJyTXJPTTl2UkMvQVpVTEFzaVVpZVBXYTJKdHh1MzM5M0dIUFhaRkgvT29h?=
- =?utf-8?B?SFhmOVdyTFgyVjJkd3FQOFdtT2UrUEwvRGI0UW9HaUNPbGNxRWdJR0ZXcE0y?=
- =?utf-8?B?alBMKzhHSWNlNWpid0ZLbEpxVlZ5OWVlak5YN1NtRTZvNHNVajdGOFR6TU12?=
- =?utf-8?B?S1gxdXoyMlp1SUhHZER4YVBmOXF0bzFWMldwVzluRG9SWXlTNFFDSWdFK0Fj?=
- =?utf-8?B?N1JxSjg5dWduYXZiTVgrTHI4NG9oakJCMHlrZ1E5c2hIdkRNSlpMbFVnd1Qv?=
- =?utf-8?B?cGxyZFlVTld1UFVuMWxQVCtkM3VCMGQvV3V5MEtQNWhwZWpoSU5JNDhHSG96?=
- =?utf-8?B?bDlKZjdzeFg2L3p1dk9BRFp0Zlg4bWZTWDMzb0wwbU9uMm5RL1RtZ25qSTQr?=
- =?utf-8?B?NFFlalJrYVJvTWEyVS9JZkg4cXNMS0dtMk5nWDBjVFBKbXl4RDU5c2FhUHJl?=
- =?utf-8?B?WERhMXIraGt2amo2bW1TSEN3d1pnL1hJcWpBZFR6TzhYM3IzTVNLMnNza2VL?=
- =?utf-8?B?U2xPTzg3ZGpOTllFblB2WWcxL2NPMmFaYTlaeEhtZVErNDdxSFJlam4zZmMz?=
- =?utf-8?B?NHkyMUVxT2hsdFk2dVJWR0pZYzRLbVdnSEZidE5ySGZFdWUrSzh0Rk1ubWR4?=
- =?utf-8?B?SDk0bFNsNy9xZFpiUEFES3pxd3FBZFlsZi9vNlhwSVM5WW92cXVweEh0eDBy?=
- =?utf-8?B?ODVwZVVhSy9DZFJrZlFlVWVQS1p0YzNHRzVlL3lVdWJGand3MDFZd3ZnTVhn?=
- =?utf-8?B?c0cwcStHOXBRdXpURDJibnc5bDlQWjB5Q3hkY09SM0VVU25FUWVIUzh6bitC?=
- =?utf-8?B?Z3dNcWpiZUh3SW5JRk8zQUxPS2t4RlFEaVZNR28rYjFWQU9NcUN3UT09?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7ce62d50-74a6-414f-f6dc-08de5cd26ae3
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZFRJdnV6d2NyQlM4amJheHBMNHFEaVpGb1M5elN0NFllU3JqQUpPV1V1b0pC?=
+ =?utf-8?B?UXlQdFlwTWdPY1hwaXJRQjBEZkt3cGludEhrU0w2a1I2d01qMVJuWC9FdVRu?=
+ =?utf-8?B?Q2VvSGZkZEJ5UTBNZWZwSjV0Z1dSNk5BN1Byd2xzeklxSHpNVDhITStmQUd0?=
+ =?utf-8?B?L2dPOE1HMFNRMi94bHZSeUU2YkRxOVRHei95VzQxTHh4NHNXTE81VWFsMEdy?=
+ =?utf-8?B?Uit3OFZRK2Vpc0hCbUlpT3pkN2VvUWtwK25WL1RMM2RGNzQ1MDFHOUtaMDdm?=
+ =?utf-8?B?THRTWlk3ajRmUFRoS3A5cTZrNkdDMnBqYjZpUzVLVGtuMkpRWW9GMmVkeGVq?=
+ =?utf-8?B?ZExHdUJJb1RjNmY2OExkQlRpL3p6bHNJZU04WG9ubFBQeFplNkpaUDZvcnkw?=
+ =?utf-8?B?amsrUGFDYXVjdUt6SmE3alpWbWFTNCtYRUQvWWpzR1pJYTk1SEp2aDdhU2V4?=
+ =?utf-8?B?eGRmQWdNZ3VkNjRoVDNkWWQ4ZDNnaVhXc3U2TzcyZS9COEJoUkVDT01Jak9s?=
+ =?utf-8?B?THJJYzRBNk1PRndQQnAyT1MrWVI1bURsMUxtMDQ0QkV6YndLSUI3U3hMYW1E?=
+ =?utf-8?B?Q3F3TWRtS2t4MDFOWXlUQ2s2WDJGc0lNSVlOUnpJa1RrOTBzTm95dkdUc1dx?=
+ =?utf-8?B?NHZnbko5THRZVWcyUnJZOVNWb3I0SDVNWXZDa2FZd25ZTERLakQvaHFTZThP?=
+ =?utf-8?B?RndsUzJTT2hRWGN6Y29OL1Jsck9BODdjdm5HSE9GSXNFNjNrdmdrWkRlV0l4?=
+ =?utf-8?B?WnVjOHJXODE1SFA2VHEwY3djUmhFQ0Q5VHcvcTRkdkw0YTJQRStOUkNNYUJT?=
+ =?utf-8?B?TEFsSjVkSldpeFBJUmllZGIrUUNTaWtuSDd6S09xeFVFa3NNUFdZRmM3alY3?=
+ =?utf-8?B?N2Z4Tmc2S0RGSmdMUVRsZ2xFY29mY1N6dElyNVV4U2pQU2pzb0ZpUzJEUFIr?=
+ =?utf-8?B?NEh2bGVZU2RvUTdqbVAxcHdTVUEzby84Z0NvZ3hjMGhiQnU3ZFJXMnJuUWtN?=
+ =?utf-8?B?ak9Cd1hnWmRtMDdnejg4V2xtR0hENEJtaWk3dzVhdXFla1NlRVIzYjZhWG9L?=
+ =?utf-8?B?NTdvYlJqUVRBdHl1ajZKU3JEc0Y3WWNYemJLc1hCbTkxTkl2czlpVWpmRWZm?=
+ =?utf-8?B?V1ByMnhrZDE4YnIrRW81akRrYkdEZGxKTEtVWUZFMXZmbEhQcFpVdjgzOHUz?=
+ =?utf-8?B?aWVrYUtQaHlFUmlsY2JyQXluKy9NRzJJNGh4U1h3SC9yMTBnMytJMWJ0ODhK?=
+ =?utf-8?B?aU9zVlUybzNWUlRZU3hUTk1CV0trRk52ZGsyTFlvQjRubFhYbWNKbXBVMktO?=
+ =?utf-8?B?VlJKUHVjQXRiSU84VTlzdXZvNEF4cmwzeVFCenVuVWNJM2tOVk9KTXFLc2t0?=
+ =?utf-8?B?NzZFWXZIeXlLZ1E0c0ZNbGJFNUhzeWxSMjJ1RkU4UGFpd3AvdTF3am1BWU9V?=
+ =?utf-8?B?TW1HanVCM2VNSnorZjZtTytzL05McFNMVGhVWHlIMnlFMlRwZHdySko1WkQ5?=
+ =?utf-8?B?ekNyblArejVKM3VydWVoSUZJS0lLZjc2Y2tNV0h5TDNTNXE3bGFoUG50MDRz?=
+ =?utf-8?B?Mjl0WGovY21TQUJ4NCszeTdBSFhmRnFwUGlYTjV0eWVMcVgrVXIzT3FRbHFI?=
+ =?utf-8?B?R0NLUjZ5YjFJb0orRjAvTWdtOFBTOTdkK2p5NmNBOEYrdUl4QkUvZC9qbkpD?=
+ =?utf-8?B?V0lidU8ycXdvRTg2b2syNGE0RDg0aGludGNrdHhhWnl4YUtJcm5mYnYxNy9n?=
+ =?utf-8?B?anQyQms0ZS9QNDlZS0xpUUlNMUIwWTEwSzVLZVBFLzBlQzNUM0g1ak5IM0pW?=
+ =?utf-8?B?azYzNkkzNUVDK0ZQUTQzS1hIME8vTk9pbU9tRHlUbFJUYWtyY1E5Vitkd1lr?=
+ =?utf-8?B?aFFVWjF4dzRmbk5jb3dMVVd5Nmc5QVo5L294STUvdVhUeXNVV3hvcmdidWZG?=
+ =?utf-8?B?VlRIbUZUbGVFLzl5MTZBUldsamNSOXJtQk1LTGFSak05Q2E5OHpQaEF2OXZO?=
+ =?utf-8?B?UWtNSGFBdmhzNjVtY21lRWFYc3V5d1hSUnlkcGlkc083L3l1S2k1dU0raHA1?=
+ =?utf-8?B?TkE3OXc2M3lIaURQeVpJYUkySkxrTXFrME4zSFE4SDRYMEN2Q21ENGdhN2RZ?=
+ =?utf-8?B?b1NqYXh5ZG1vOWMyWFF6T0VqcTJSTHFpbVNWTXRPVWVKdGkwM2dFelkzd1Y1?=
+ =?utf-8?B?dDZ5RHhmTWRjNEhaM3NLYVFvVEVEa3FvOFVjaXkyRkduK0xDTloraExwNXY0?=
+ =?utf-8?B?WDlVdEYrYzhPb1p6c3UwSFR3TlJrU1lEdlFIdU0xeXR5S0NCU21YaXZNQVhO?=
+ =?utf-8?B?RGhFWVlMMk9TalpiZDJTem5RdUE4d2Q5TmE0Vy9EeitsRS9KRHg2dz09?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 15625a05-8d01-44c6-29ec-08de5cd29115
 X-MS-Exchange-CrossTenant-AuthSource: SA1PR11MB8492.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jan 2026 11:59:54.3260 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jan 2026 12:00:58.3344 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QSMWDH35ULVbktQd/SJw0EzxLc8pRbIWRpwTy7KEhK6J4kDyx+GzpgiBvPdppHJWqff4uzLhdc//FaymwC7N6A==
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0DfzUTWzzdsfuMjjiShZV2rr73kLmNdYKF6nyNEENT4kMmLVGPeemmYDsF5DHFdhBLloITZHCg/ou6bDasa9hw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PPF6A4412A55
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=yi.l.liu@intel.com;
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=yi.l.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -225,101 +224,133 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/1/26 18:43, Shameer Kolothum wrote:
-> Introduce an optional supports_address_space() callback in PCIIOMMUOps to
-> allow a vIOMMU implementation to reject devices that should not be attached
-> to it.
+> Retrieve PASID width from iommufd_backend_get_device_info() and store it
+> in HostIOMMUDeviceCaps for later use.
 > 
-> Currently, get_address_space() is the first and mandatory callback into the
-> vIOMMU layer, which always returns an address space. For certain setups, such
-> as hardware accelerated vIOMMUs (e.g. ARM SMMUv3 with accel=on), attaching
-> emulated endpoint devices is undesirable as it may impact the behavior or
-> performance of VFIO passthrough devices, for example, by triggering
-> unnecessary invalidations on the host IOMMU.
-> 
-> The new callback allows a vIOMMU to check and reject unsupported devices
-> early during PCI device registration.
-> 
-> Cc: Michael S. Tsirkin <mst@redhat.com>
 > Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 > Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> Tested-by: Eric Auger <eric.auger@redhat.com>
 > Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Tested-by: Eric Auger <eric.auger@redhat.com>
 > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 > ---
->   hw/pci/pci.c         | 20 ++++++++++++++++++++
->   include/hw/pci/pci.h | 19 +++++++++++++++++++
->   2 files changed, 39 insertions(+)
+>   backends/iommufd.c                 | 6 +++++-
+>   hw/arm/smmuv3-accel.c              | 3 ++-
+>   hw/vfio/iommufd.c                  | 6 ++++--
+>   include/system/host_iommu_device.h | 3 +++
+>   include/system/iommufd.h           | 3 ++-
+>   5 files changed, 16 insertions(+), 5 deletions(-)
 
 Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 229ea7cfb1..101e745bd5 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -135,6 +135,21 @@ static void pci_set_master(PCIDevice *d, bool enable)
->       d->is_master = enable; /* cache the status */
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index e3a3c1480e..9b63d74083 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -389,7 +389,8 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
+>   
+>   bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>                                        uint32_t *type, void *data, uint32_t len,
+> -                                     uint64_t *caps, Error **errp)
+> +                                     uint64_t *caps, uint8_t *max_pasid_log2,
+> +                                     Error **errp)
+>   {
+>       struct iommu_hw_info info = {
+>           .size = sizeof(info),
+> @@ -408,6 +409,9 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>       g_assert(caps);
+>       *caps = info.out_capabilities;
+>   
+> +    if (max_pasid_log2) {
+> +        *max_pasid_log2 = info.out_max_pasid_log2;
+> +    }
+>       return true;
 >   }
 >   
-> +static bool
-> +pci_device_supports_iommu_address_space(PCIDevice *dev, Error **errp)
-> +{
-> +    PCIBus *bus;
-> +    PCIBus *iommu_bus;
-> +    int devfn;
-> +
-> +    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
-> +    if (iommu_bus && iommu_bus->iommu_ops->supports_address_space) {
-> +        return iommu_bus->iommu_ops->supports_address_space(bus,
-> +                                iommu_bus->iommu_opaque, devfn, errp);
-> +    }
-> +    return true;
-> +}
-> +
->   static void pci_init_bus_master(PCIDevice *pci_dev)
->   {
->       AddressSpace *dma_as = pci_device_iommu_address_space(pci_dev);
-> @@ -1424,6 +1439,11 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
->       pci_dev->config_write = config_write;
->       bus->devices[devfn] = pci_dev;
->       pci_dev->version_id = 2; /* Current pci device vmstate version */
-> +    if (!pci_device_supports_iommu_address_space(pci_dev, errp)) {
-> +        do_pci_unregister_device(pci_dev);
-> +        bus->devices[devfn] = NULL;
-> +        return NULL;
-> +    }
->       if (phase_check(PHASE_MACHINE_READY)) {
->           pci_init_bus_master(pci_dev);
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index ea420afeb7..342944da23 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -121,7 +121,8 @@ smmuv3_accel_hw_compatible(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+>       uint64_t caps;
+>   
+>       if (!iommufd_backend_get_device_info(idev->iommufd, idev->devid, &data_type,
+> -                                         &info, sizeof(info), &caps, errp)) {
+> +                                         &info, sizeof(info), &caps, NULL,
+> +                                         errp)) {
+>           return false;
 >       }
-> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> index 6fd8984c99..ddb0c98e9f 100644
-> --- a/include/hw/pci/pci.h
-> +++ b/include/hw/pci/pci.h
-> @@ -417,6 +417,25 @@ typedef struct IOMMUPRINotifier {
->    * framework for a set of devices on a PCI bus.
->    */
->   typedef struct PCIIOMMUOps {
-> +    /**
-> +     * @supports_address_space: Optional pre-check to determine whether a PCI
-> +     * device can be associated with an IOMMU. If this callback returns true,
-> +     * the IOMMU accepts the device association and get_address_space() can be
-> +     * called to obtain the address_space to be used.
-> +     *
-> +     * @bus: the #PCIBus being accessed.
-> +     *
-> +     * @opaque: the data passed to pci_setup_iommu().
-> +     *
-> +     * @devfn: device and function number.
-> +     *
-> +     * @errp: pass an Error out only when return false
-> +     *
-> +     * Returns: true if the device can be associated with an IOMMU, false
-> +     * otherwise with errp set.
-> +     */
-> +    bool (*supports_address_space)(PCIBus *bus, void *opaque, int devfn,
-> +                                   Error **errp);
->       /**
->        * @get_address_space: get the address space for a set of devices
->        * on a PCI bus.
+>   
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 2947e1b80f..131612eb83 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -398,7 +398,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>        */
+>       if (!iommufd_backend_get_device_info(vbasedev->iommufd, vbasedev->devid,
+>                                            &type, &caps, sizeof(caps), &hw_caps,
+> -                                         errp)) {
+> +                                         NULL, errp)) {
+>           return false;
+>       }
+>   
+> @@ -939,19 +939,21 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>       HostIOMMUDeviceCaps *caps = &hiod->caps;
+>       VendorCaps *vendor_caps = &caps->vendor_caps;
+>       enum iommu_hw_info_type type;
+> +    uint8_t max_pasid_log2;
+>       uint64_t hw_caps;
+>   
+>       hiod->agent = opaque;
+>   
+>       if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid, &type,
+>                                            vendor_caps, sizeof(*vendor_caps),
+> -                                         &hw_caps, errp)) {
+> +                                         &hw_caps, &max_pasid_log2, errp)) {
+>           return false;
+>       }
+>   
+>       hiod->name = g_strdup(vdev->name);
+>       caps->type = type;
+>       caps->hw_caps = hw_caps;
+> +    caps->max_pasid_log2 = max_pasid_log2;
+>   
+>       idev = HOST_IOMMU_DEVICE_IOMMUFD(hiod);
+>       idev->iommufd = vdev->iommufd;
+> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
+> index ab849a4a82..bfb2b60478 100644
+> --- a/include/system/host_iommu_device.h
+> +++ b/include/system/host_iommu_device.h
+> @@ -30,6 +30,8 @@ typedef union VendorCaps {
+>    * @hw_caps: host platform IOMMU capabilities (e.g. on IOMMUFD this represents
+>    *           the @out_capabilities value returned from IOMMU_GET_HW_INFO ioctl)
+>    *
+> + * @max_pasid_log2: width of PASIDs supported by host IOMMU device
+> + *
+>    * @vendor_caps: host platform IOMMU vendor specific capabilities (e.g. on
+>    *               IOMMUFD this represents a user-space buffer filled by kernel
+>    *               with host IOMMU @type specific hardware information data)
+> @@ -37,6 +39,7 @@ typedef union VendorCaps {
+>   typedef struct HostIOMMUDeviceCaps {
+>       uint32_t type;
+>       uint64_t hw_caps;
+> +    uint8_t max_pasid_log2;
+>       VendorCaps vendor_caps;
+>   } HostIOMMUDeviceCaps;
+>   #endif
+> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+> index 567dfb7b1d..80d72469a9 100644
+> --- a/include/system/iommufd.h
+> +++ b/include/system/iommufd.h
+> @@ -71,7 +71,8 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+>                                 hwaddr iova, uint64_t size);
+>   bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>                                        uint32_t *type, void *data, uint32_t len,
+> -                                     uint64_t *caps, Error **errp);
+> +                                     uint64_t *caps, uint8_t *max_pasid_log2,
+> +                                     Error **errp);
+>   bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+>                                   uint32_t pt_id, uint32_t flags,
+>                                   uint32_t data_type, uint32_t data_len,
 
