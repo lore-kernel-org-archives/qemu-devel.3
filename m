@@ -4,97 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7BFCD13C3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 15:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 318E3D13C3F
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 16:02:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkOyG-00020g-B5; Mon, 26 Jan 2026 10:57:44 -0500
+	id 1vkP2D-00034l-Bc; Mon, 26 Jan 2026 11:02:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vkOyE-0001tE-1C
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:57:42 -0500
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vkP0Y-0002Sz-56
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 11:00:17 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vkOy9-00048v-Ny
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:57:41 -0500
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-78c66bdf675so45359937b3.2
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 07:57:17 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769443036; cv=none;
- d=google.com; s=arc-20240605;
- b=KhXa77Lx7qTj+ekaB++/nrDc1nZhPc+KvpoULlCqmAlIcIuAMnuyzZ0/KcXJTdMPvQ
- rzvbzVvkUgJ7nuOnVET9/Lu6Tjeq9ftPBpYiCJrrrsdCIabS82eMQtjsrC304Y0WcMMj
- CQuf7M8r/MecRNpL6Z00x95uFcvXOPd8byGsXtezNuXGhCbDw+PZUnMFHFAmE9rTcJxp
- PckLxdPt18PnwxsxO6nAsE1Gbg7If3qt6M6cSM9DctLIihzn4HqysakiGZjxb9EoR+xY
- /0fOCN7OxH6N9D0CvLMJvZe04E9ahn1BTPuHw7c/4OQzV1LbTGLIE9thXyktCg/0IV4q
- H43A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=3TFTYGTUCnfBohj+5pRRLLDiJ6Trzudjzgoa1grlkIk=;
- fh=mzmOKlaajBrAUNwZw8b5pEPo1eDewy2Peyu7iKq8ZXQ=;
- b=i+2U0RMjnXQuKVA4iGODbOCMPd8rqPZp9jmi+PjI4KvkwNwRxbIPex4nVqVf5o695h
- He59xhSsw1atuD9nZ9DhTotKwH895oMW09+8WgIWzIWRIVWQ1flUyOZ6NY+BYQl+Db4o
- Fhjhp7gnFxBu3cQNjJ0/+/nDosR6tVF7odd9siXTxmLLxmSGX0oC5d1it5AA8VwYrYXa
- hbuHifkfm3OBiw7P3g2kWA4wzWJssgwIXHU2uKOPg4qEYAp5MorXPxD3XVv1F0+CESN6
- HQV6HxWMlURsuX62kVT8nIWLJEDlcj3nYbNnVz4sJEaDCVWxGQZ8lGdQOI+2brFdeIc5
- I9bQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vkOyX-0004Fs-5L
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 10:58:50 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-42fb5810d39so3008124f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 07:58:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769443036; x=1770047836; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1769443079; x=1770047879; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3TFTYGTUCnfBohj+5pRRLLDiJ6Trzudjzgoa1grlkIk=;
- b=qGLX8QVzRYiUAI8dGK2AMRKna/HKk9odGF9Jd763VZCGuCmgixOK+uRQPGwdVKVO9i
- gqtk19EjFXHUubf/Okq/qKOUVR6qx6NVx8cOobiHXt14Zx46I8qDBeKirkfYSacUYaNp
- kyBJzv4sIuZakdGWfvtB8pCgbnga2ZT/JYV7OgMkIe7ufKV1QrfdninC26C9DR2AK5KR
- 7RKavk32FckFAC1m4NMfSg6YU3x4zqIOUxmq1sU8ELpeQ0KnwWwnG+qZ+/pDQKge3znB
- Zje2Ej+tLEUPV/vdAsmtIuLHZo8tf5Wp11FL6k7EVgBsvk9F/Yr/AbizJEzVby+ZqhlI
- gouA==
+ bh=he9pvxHC3LHdWUTJt1INCC3GtwtjExEDtZavIVp+1QA=;
+ b=DzoRR/tiJcgUH9bQ0IQMde+wbm4B515Bia66nNbe3IpZgjWyXYoniiPIyg8KFqCo2h
+ VeRZTewHfyKT/w1KwG9hRWZ5lB3kQOPuetfo2J+b0dlnf8gsNZkldV4rYqjTXWIWdmpr
+ twNRjeSmRcpQsrWG0Fac2tpbxKOZNbEwnQOWFCYdKO16Y1p8+E2oulbCFcIYpmGFzvqF
+ +jAWpKTDNjBgBpnvFHkQtmt0obzNR3De+xXFYffGK0m7a/420Z/Ai3ReX8Q4M4DcVhVR
+ HIZL32uwywnP0RlRPOQV8hazII8uP5oX4WSK1TKxdRxcYpuZSs9Zn9UYZ9faswYBH6DB
+ Ry/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769443036; x=1770047836;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3TFTYGTUCnfBohj+5pRRLLDiJ6Trzudjzgoa1grlkIk=;
- b=tc53zkbLhiYmPTDILCmRL8TEJxA6KY7W4Yup1TnybYaO+Cy2Qw1VVJTiBfX2GP5V4D
- fPMEXmxWdfWWAhBqKfq/FK0pR9caEP1vND+H2+nZlx+C3roCgdiZXuwQrfZXWwQlyaBB
- rLe/cSp0Y6HrN0rMQLxPh/mk8gc8Pr0iTVPt1XgjYbEYU6CZcU+Oq3JMzdecISsCyaz5
- W1/UcAt4uviHxgzMhS5fkVe1/Bckp1Khks3AMXKIXRBSy0SDpEJupAayWYwGd5tUOCJa
- PwqdEB/YsOnOAhM1wcersEXWJ1bkM0fcy7ldLnrapBVYTUFX6lC2lTJJgXdSObRvc6c5
- aBxQ==
-X-Gm-Message-State: AOJu0YwlTVWZc8WHqWWCQ2mBawZqRKHuz0sJ8ioiNYh9DqdrUWUATrHp
- ez0PGj3qmfrQ4OZdaR0yzdGrH/Nt+KC9RUD9SE5UdtsRH58yTTCiypNcmnINS6fAvEMygEGml3R
- iDfzlNgK5upSf34xVYZNy82s7TE9J2bnG/uWIQbMTCw==
-X-Gm-Gg: AZuq6aKpqK9+31PGCAZEm87T7V0UBBgL+7b4jT5c2zxxEvd0tRmJILkKv40SEW7Zi1+
- w3Ac2pH8c8fN4UZk2sfzz9Dx6yZymdWkgLAMdeMgl86brAUhWo4Wruu8P7HnwdqtqvR1q+kOrZi
- QBL9lKH1cqGlsYyDBHo3yKPqmNtSYOrlPmSjbGyxOkEKYtxVwaonmoHpJsxLBj3lRUvIZEF6Cah
- J0GoxRopJgsdZJPkZCzuEngNQfvyJAgBQp78X8AuCBo500xggxzv6h9TF3/7oRMxuSdYg==
-X-Received: by 2002:a05:690c:e3ee:b0:792:7c92:4626 with SMTP id
- 00721157ae682-7945a9bcfa1mr38071007b3.51.1769443036567; Mon, 26 Jan 2026
- 07:57:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769443079; x=1770047879;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=he9pvxHC3LHdWUTJt1INCC3GtwtjExEDtZavIVp+1QA=;
+ b=caY+Q/dOixVti0+v4tEPtB/0EtrulESDUZQzOSLrkYh2/m6HfuZjyerCsGDFux92KP
+ HHaRtpKFMK1he0hwLOCBLbjdl9XMTVOxS8dgLAQBS0PFrJf6mbqzcLkSd/PcYOwNG+sQ
+ cMPvb/8MG9Z8YLGzp6W7DG9lxzJR+Ols1vCvLvuaq6d+0ot1gIZYJMhP0o2Yes/Hp4I1
+ 5m03kXyDzAY1RNJENpdoA8o+scUsVn1J0lJ3vbnrwJmV1W8J16ncv4nDQs6FzO+iGAeN
+ y2bgSxrKu+9pIB5kusBhYbaYVcn57isasqvZg2bn7ZA3CV46/f30Fd86iEP/fP8V8tXi
+ EuHQ==
+X-Gm-Message-State: AOJu0YzvcsrkRvk6RtXUWAphCKYdQHPoIQBtoXEe3uHaKaN/FPIeIWYd
+ M56WCPaceM89k5jd6j60tpmwvIX/9O877dYEkR1dqqtmqYk42kN3cFi/JyEd9wkct8o=
+X-Gm-Gg: AZuq6aLrftbQeeqvmrotIMC5ARlHCVdOZy34WPtsSUllK9jRnmCTg0sKGw9yiDTTPuk
+ zeawSZfMYAIpGle6UouPxJhFkOCApe8p0IduDJf73fjdXFl2DFuzmqDsAQWVExjrChSqG7qzA2y
+ wSSqoL26Q2FMzLwS82AfiRco/GIiSCrFVbICT5WebpHUh6EPLKC28TI0JJEOtbsUhRv43pgPyQa
+ 3BEEuixLrTOs/xmi9N0niZLtYssHLIm+rkV7ILFIseAhvpeQiczfst8f9Ll0Pd6g290LNqGR6yd
+ N6tCpwGrGZFarnmPyOGAX2NXGTuhaNAmbtUAFTxUvY+GI8kaTH+3jyLf8NcCkwRhd4m5knII9JX
+ jOIzKjEPbXbp0NJ9fPScPzav5TZyd9wA2AxzIyBssf0JIPpEYBlMRWzbNJJvMB/rQM5zLNaXclQ
+ GXTmmjNgdKbxmU
+X-Received: by 2002:a05:6000:22c9:b0:435:a7ac:660a with SMTP id
+ ffacd0b85a97d-435ca0d13d2mr6807871f8f.9.1769443078865; 
+ Mon, 26 Jan 2026 07:57:58 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435b1c02c91sm31149032f8f.9.2026.01.26.07.57.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Jan 2026 07:57:57 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1B8C05F8C4;
+ Mon, 26 Jan 2026 15:57:57 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Aleksandr Sergeev <sergeev0xef@gmail.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] linux-user/syscall.c: Prevent acquiring clone_lock
+ while fork()
+In-Reply-To: <20260126151612.2176451-1-sergeev0xef@gmail.com> (Aleksandr
+ Sergeev's message of "Mon, 26 Jan 2026 18:16:12 +0300")
+References: <20260126151612.2176451-1-sergeev0xef@gmail.com>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Mon, 26 Jan 2026 15:57:57 +0000
+Message-ID: <87a4y0e58a.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260118215945.46693-1-philmd@linaro.org>
-In-Reply-To: <20260118215945.46693-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 26 Jan 2026 15:57:03 +0000
-X-Gm-Features: AZwV_QgGONqiM5hKluAzXeGmPICJqmu7lLf-3aKE73sgb4xrgzeLRgmBbR1rekw
-Message-ID: <CAFEAcA_3-YuPdkgBE_PA5ik4rH7_KkKU1JEGpYf0mm5nS=Aq+g@mail.gmail.com>
-Subject: Re: [PATCH v5 0/2] accel/hvf: Sync CNTV_CTL_EL0 & CNTV_CVAL_EL0
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
- qemu-arm@nongnu.org, 
- Alexander Graf <agraf@csgraf.de>, Cameron Esfahani <dirty@apple.com>,
- Mads Ynddal <mads@ynddal.dk>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,25 +105,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 18 Jan 2026 at 21:59, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+Aleksandr Sergeev <sergeev0xef@gmail.com> writes:
+
+(Adding Paolo/Richard to Cc for exclusive discussion)
+
+> By the spec, fork() copies only the thread which executes it.
+> So it may happen, what while one thread is doing a fork,
+> another thread is holding `clone_lock` mutex
+> (e.g. doing a `fork()` or `exit()`).
+> So the child process is born with the mutex being held,
+> and there are nobody to release it.
 >
-> Since v4:
-> - Addressed Akihiko's comments
->  . Do not introduce hvf_arch_cpu_synchronize_[pre/post]exec() hooks
->  . Sync CNTV_CTL_EL0 & CNTV_CVAL_EL0 in hvf_[put/get]_registers()
+> As the thread executing do_syscall() is not considered running,
+> start_exclusive() does not protect us from the case.
+
+I see the logic of what you say as:
+
+    /* Write pending_cpus before reading other_cpu->running.  */
+    smp_mb();
+    running_cpus =3D 0;
+    CPU_FOREACH(other_cpu) {
+        if (qatomic_read(&other_cpu->running)) {
+            other_cpu->has_waiter =3D true;
+            running_cpus++;
+            qemu_cpu_kick(other_cpu);
+        }
+    }
+
+but...
+
 >
-> Philippe Mathieu-Daud=C3=A9 (2):
->   target/arm/hvf: Move hvf_sysreg_[read,write]_cp() functions around
->   target/arm/hvf: Sync CNTV_CTL_EL0 & CNTV_CVAL_EL0
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3226
+> Signed-off-by: Aleksandr Sergeev <sergeev0xef@gmail.com>
+> ---
+>  linux-user/main.c           |  2 ++
+>  linux-user/syscall.c        | 14 ++++++++++++++
+>  linux-user/user-internals.h |  2 ++
+>  3 files changed, 18 insertions(+)
 >
->  target/arm/hvf/hvf.c | 167 +++++++++++++++++++++++++------------------
->  1 file changed, 96 insertions(+), 71 deletions(-)
->
+> diff --git a/linux-user/main.c b/linux-user/main.c
+> index db751c07576..c49d1e91d22 100644
+> --- a/linux-user/main.c
+> +++ b/linux-user/main.c
+> @@ -145,6 +145,7 @@ unsigned long guest_stack_size =3D TARGET_DEFAULT_STA=
+CK_SIZE;
+>  void fork_start(void)
+>  {
+>      start_exclusive();
+> +    clone_fork_start();
+>      mmap_fork_start();
+>      cpu_list_lock();
+>      qemu_plugin_user_prefork_lock();
+> @@ -174,6 +175,7 @@ void fork_end(pid_t pid)
+>          cpu_list_unlock();
+>      }
+>      gdbserver_fork_end(thread_cpu, pid);
+> +    clone_fork_end(child);
+>      /*
+>       * qemu_init_cpu_list() reinitialized the child exclusive state, but=
+ we
+>       * also need to keep current_cpu consistent, so call end_exclusive()=
+ for
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index 3944004568f..e64e5db1139 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -6856,6 +6856,20 @@ static void *clone_func(void *arg)
+>      return NULL;
+>  }
+>=20=20
+> +void clone_fork_start(void)
+> +{
+> +    pthread_mutex_lock(&clone_lock);
+> +}
+> +
+> +void clone_fork_end(bool child)
+> +{
+> +    if (child) {
+> +        pthread_mutex_init(&clone_lock, NULL);
+> +    } else {
+> +        pthread_mutex_unlock(&clone_lock);
+> +    }
+> +}
+> +
+
+This looks like it should just be open-coded in the:
+
+  if (flags & CLONE_VM) {
+
+  }
+
+leg of do_fork()?
+
+Or maybe I'm missing the subtly of the race condition?
 
 
+>  /* do_fork() Must return host values and target errnos (unlike most
+>     do_*() functions). */
+>  static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong news=
+p,
+> diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
+> index 067c02bb93e..24d35998f07 100644
+> --- a/linux-user/user-internals.h
+> +++ b/linux-user/user-internals.h
+> @@ -69,6 +69,8 @@ abi_long get_errno(abi_long ret);
+>  const char *target_strerror(int err);
+>  int get_osversion(void);
+>  void init_qemu_uname_release(void);
+> +void clone_fork_start(void);
+> +void clone_fork_end(bool child);
+>  void fork_start(void);
+>  void fork_end(pid_t pid);
 
-Applied to target-arm.next, thanks.
-
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
