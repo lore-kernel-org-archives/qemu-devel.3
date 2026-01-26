@@ -4,138 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D86D19502
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 19:05:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2465D19502
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 19:12:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkRt7-0003ew-J2; Mon, 26 Jan 2026 14:04:37 -0500
+	id 1vkRzx-0006sK-E7; Mon, 26 Jan 2026 14:11:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vkRt6-0003en-Ow
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 14:04:36 -0500
-Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vkRt3-0007Dx-WB
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 14:04:36 -0500
-Received: by mail-pf1-x441.google.com with SMTP id
- d2e1a72fcca58-823081bb15fso2555386b3a.3
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 11:04:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769454272; x=1770059072; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=egUK6u22SaLwJjNs7oulkHQit78mz6kIW4KKWWkvBio=;
- b=x8a/ue89+0MuBXzTshCXmHyG7d9RlG/mc0p8RZVHuzXyZgwEIzYRmNiZofFboe2Ys/
- j5Ii78uDaELdHFyKKvA4yrVwKEPCnjXi2jQ7e2kEC9zhjw5hTNdsyydsDvwYau/4hc+0
- 3SoE62B7HapH6RHu1Z3AM/su7xSVWVZwNH1HdjbEA/yNzikjVJDI+QLrTyZKVmxu8U7l
- LYw1y1Q5AISGyHJMlr9A8Kb4EEiMNegIcywRruqyl5eJdC6L/Zy0E6/0ghylEEdbINwZ
- p0XqRmgN03MY+3Gg502peW/tXKgKPEMsqng2BfoEXZMN706bKKzzRVuWb5lwsSSsnFae
- kGvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769454272; x=1770059072;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=egUK6u22SaLwJjNs7oulkHQit78mz6kIW4KKWWkvBio=;
- b=n36cGr2npW20/ht/20Evet355+nEDtOi6j6oKiWDrQxlN0lgh1XF6azQ3PYGrGNCCB
- Kkxwiu7JmcTtO9oWQv9wycugRPJFP+GPkr/D1z5CIJGQr/e3VKKaBZIRh5g1hXIwxqJX
- 1bKz6FtpIM3Y+eatt/VWkZKzMYedpaUOxkPN7RCs48Ssa0/hwckEtgBqkB2pOWvAYLwf
- imc/eGPipbepEZPyHw/oq4p9CZ9GWTJ8AGJLZ+TnWtl3DMD2ShfCo3HlAnCp5Rb/Cd4a
- d87xPv5Nhvrr36N9SKrvZxbi+p6XZQm3nbsjnVhP6dMrbvh1b18l8SlB22y9/EyHiarV
- cIyA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUOe8YQLKv815eg+GdHCGaSCtEW3H/ij6yqnvAG5BMq+aMDW6Shw8zGS4ud79EkTFXEhHKJuREVQNET@nongnu.org
-X-Gm-Message-State: AOJu0Yy2mNNRskc4M5HDjhnPinApNaDlGeohr38pOiVqgqIXs6aWMVaG
- t0X0V7TTnoKEjjoWhYywf1hNlZLXs/+Mlxpo1sSesPWeZNXD8l9XCy+drUBo6df14Zg=
-X-Gm-Gg: AZuq6aKfGRaY/aw7v+F/dAI4FTFUYWysf/arRZPej/eVhelr2bz8DNxipVdkXI1ZjH7
- BfMiOmI/PBRHuNlS3e2LU+egzVDulV1Ex5quxJ29lH4xCXqDmqUZ28nD2oX5+/5twEszIFr5z4E
- jdkAsC8Etl0d1QFsJfZn23DSaouw8paDV5emFVTg08pIHj16zk8U/EbzrVYzKPbLNlaPH/7VPwP
- UTO4VwV+BVDtu/7IO7j7gAZkO1BZbPZQu8V3zTfs7bSqzhKV3Mtoz/ds3uKjkq0Pp4VpIZIdxfW
- SCS1FTExbd/T3CBXxKqk00VfAYYOwABOcgt5prozV8L6q3JahV4pUHODjlAEOyUrF0bSmFln5Vd
- CfeMoySPkFvMGIhjq2ChOkwFrKfN9m8ww8TwjVdN1Siy0NuDhkr6P3r9JbVqqJJ9MHjnQpqUHS5
- 2wetmfGsXqMrZfu+ZoTyC/eD5YGJm44h6VR9qJBOvfMSpaXajd4QgULpe8
-X-Received: by 2002:a05:6a00:22ce:b0:821:8230:235d with SMTP id
- d2e1a72fcca58-823412a8468mr4721391b3a.39.1769454272274; 
- Mon, 26 Jan 2026 11:04:32 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8231871f2c0sm9845862b3a.31.2026.01.26.11.04.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Jan 2026 11:04:31 -0800 (PST)
-Message-ID: <6dce5ad6-e88b-433c-8eef-98dbe72acbbd@linaro.org>
-Date: Mon, 26 Jan 2026 11:04:30 -0800
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vkRzq-0006ra-K0; Mon, 26 Jan 2026 14:11:35 -0500
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vkRzo-00008O-I6; Mon, 26 Jan 2026 14:11:34 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YjvtxENouXqu4ES4ot1j5grPlirVh9bumhc6erTlTyAISFE+97Irio6CLI0fpsg0e+KPq6OcRImJmKNe3uZdoo7QQYiq0fyx7bs6mffScevJVakS4cuk6oBFE1k3IO9QOlSlRZbaDbh5DXFj9P0Uo8Q97dPZvXQ3jhELkgbBs3vHhyaOzol6MQlMtF4GgzWdjbnwQzdefnpmgJfAshuXHV+4Ij/kFF/6tC3d7JlYVLti2oEgN9/Gt/ApwQhtceMDTQah6rJ7JExjo+P1uEuAS+E37malmu+joQzBGFgKbX/DdtPH8ni7CkyknxbJd+qDxgsFMN0NkIzIVWrt+5ccVQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jw6DxrE23AFuvOpOMnBSLLGd8penpgf+8rNtVxN8JwE=;
+ b=RpozVdcSyKzvg5R6V8/AYoiXpy2e6WJ5FAa1Kgly7emdU2XXu0kthLeaHunyqtKzjMUbWcFc5IXuN5M5qhFqWsrKWFyzYqPdLGqx7paB2g2phN+sOrcCx/lShIFasem5X1Em0bYfQcFiNhxAVXXWUjVJ7Oi7rUs8r3OuBZ2iD6IUsQTFT9hkcbnqrV42PgqClbvxEOyKCrY2WxLj5hhLwSNmNYjbYILppwBsHSTnwr30rPIxQeWuSnObBZmxf0a8CgtnMQD9dbjuM3DhYNNh59mJXqALr0Ivp1PYv37CJw+jHGls+BHIbbZ8ltMvq2sNge0M/pcOUNW0dbXhUUdcqw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jw6DxrE23AFuvOpOMnBSLLGd8penpgf+8rNtVxN8JwE=;
+ b=jwxVhqMs64IKE3AZOgOvMv82ppfehL4/xUT1HOunPmCI4XfeHHtIRc0P6xM948wgbXGYPE+Zypz2GhcpNErX+PTkfw404mfqOXnUSKOZXHMHnD5p41P5+mL8yLZB6CqFutUKJiBT87x7lQNMHj03CZD0yBvoq/8l2ndTaTl6bI80/nliMmnXl/E7fUi5/bZyZXdYifPAWFa9sKul6HR2CSoOt7yFP2n9a7d+8tW0ha2+qh2G8EDwEoV+yFwa+Tja4DLNiLj5duen5Q509bRpW2X3MDzgYqB7//kGf0LZimBot02dzLAlOLjOZIwyGjCzwnfaCjkwhWoI5XtIS5nldQ==
+Received: from BY1P220CA0003.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:59d::10)
+ by DS0PR12MB6655.namprd12.prod.outlook.com (2603:10b6:8:d0::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.14; Mon, 26 Jan
+ 2026 19:11:17 +0000
+Received: from CO1PEPF000044FD.namprd21.prod.outlook.com
+ (2603:10b6:a03:59d:cafe::5) by BY1P220CA0003.outlook.office365.com
+ (2603:10b6:a03:59d::10) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.16 via Frontend Transport; Mon,
+ 26 Jan 2026 19:11:24 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ CO1PEPF000044FD.mail.protection.outlook.com (10.167.241.203) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9587.0 via Frontend Transport; Mon, 26 Jan 2026 19:11:17 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 26 Jan
+ 2026 11:11:00 -0800
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Mon, 26 Jan 2026 11:10:59 -0800
+Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com
+ (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 26 Jan 2026 11:10:59 -0800
+Date: Mon, 26 Jan 2026 11:10:58 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Eric Auger <eric.auger@redhat.com>
+CC: Shameer Kolothum <skolothumtho@nvidia.com>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <jgg@nvidia.com>, <jonathan.cameron@huawei.com>,
+ <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
+Subject: Re: [RFC PATCH 07/16] hw/arm/tegra241-cmdqv: Add read emulation
+ support for registers
+Message-ID: <aXe8QgtdyBmXm5iS@Asurada-Nvidia>
+References: <20251210133737.78257-1-skolothumtho@nvidia.com>
+ <20251210133737.78257-8-skolothumtho@nvidia.com>
+ <d50e2921-38a0-412f-ac9d-1d0d81490590@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 32/33] scripts: Add a script to run the wasm-compiled
- QEMU on node.js
-Content-Language: en-US
-To: Kohei Tokunaga <ktokunaga.mail@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- WANG Xuerui <git@xen0n.name>, Aurelien Jarno <aurelien@aurel32.net>,
- Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, Stefan Weil <sw@weilnetz.de>,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <cover.1769407033.git.ktokunaga.mail@gmail.com>
- <2af460d17a47ec69d691dfb876f834e4685f9d6d.1769407033.git.ktokunaga.mail@gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <2af460d17a47ec69d691dfb876f834e4685f9d6d.1769407033.git.ktokunaga.mail@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x441.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <d50e2921-38a0-412f-ac9d-1d0d81490590@redhat.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000044FD:EE_|DS0PR12MB6655:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0b3d09ab-1d05-4829-2c8b-08de5d0eae86
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|82310400026|36860700013|376014|13003099007; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?cFuULaPF++RA/JTk7WsOLT9EHpl5dhb1plL+9WBnZku5Itepob3chFQpRLsp?=
+ =?us-ascii?Q?50miC7mZAKRxbt3qIIsQiTTZa16wl4iFwbPJQ/QB97mhAu3tLE01fjqh3H8b?=
+ =?us-ascii?Q?frnomnFJeBdzvdEOlDyQ2u9T4xWsYSAjd+9GLLQVK81RcgKfgj0BFAH715KI?=
+ =?us-ascii?Q?yPuPhsvQvohJLMvfrWW5z9gQimtS5MfhYqlMO1oGG4Cp4b+SJtR7DSxew8sV?=
+ =?us-ascii?Q?58NLNy+6HIq5lWWMeOvtzYc3WpTJpJgdKePdMdXolWQ0ZzQXZn+S7eKQTj9w?=
+ =?us-ascii?Q?EnI4LDgw4RyhRbi91e28+6QBq9G4ryG9TCqujfDvxdH1j8osqtswzYRIgz3N?=
+ =?us-ascii?Q?EQpXsdelFYSU9H967RlcdUo7AF+St4Ve5h/t3cWw8SPnP5/w6YfEV0G47fTv?=
+ =?us-ascii?Q?f7wLbLBWjOUPT6Fb0ELDdYBfc6VF4/bSrId0PJwtqAhzqhLmUS/9rihEbJuC?=
+ =?us-ascii?Q?Q9BKa/j87HLUG596OrhkC0/20xr4ZjjX2j4r8N2YFPup9PhmXhwrzSrSIs5f?=
+ =?us-ascii?Q?fkruFGiBGUxlVgX1FMnZ1XSYD+A4/UIiJNrDEN9ctpuzWikkh+vBeYFnC3CG?=
+ =?us-ascii?Q?89pRkda+VrbYm5Ijv70oPWwIR7hy8L34qh55a1+kI8Ed74yzIMHA4BwKC2ny?=
+ =?us-ascii?Q?0iFH3t3pZh7d6qWt38oR7Qx2/BPbQMlc/aj3jXjGINuT75OSkrSm7yjfqqVr?=
+ =?us-ascii?Q?TH/xjy/bsqMlPdlmDXGAC5FRV+NrTosDxcD8hryYm+VuTjw4ktyPRRz7g+OH?=
+ =?us-ascii?Q?CQN6VatfdojRZtlpKJ+oyIcKoOg8Ia3yxd5PN5RQlOIIrYR3L3HOkZcO1e+Z?=
+ =?us-ascii?Q?S80qO6OO5kcrpDShDJLR/etQNo6w1ORBWU93NHfJ7km6hs70C5J4X0yYqH7f?=
+ =?us-ascii?Q?Nv6lPi7rfrzmawiWm6FPR/5RC97TIiQnu8g+Kw4pJKS0pQ28UbP4hB0a8aUU?=
+ =?us-ascii?Q?VYRXn9jK/l7yBOihqanAlRQdKB00zbg3+r+rr6bTGsUQxOC2J50uXxnUOBiF?=
+ =?us-ascii?Q?QaubFG7vBDMLIbel/EhctKLMlFp08VVhLCWl6PJwRdPDpimpebjn9u+GySeG?=
+ =?us-ascii?Q?651bLU7yuFtMLUawgts4z+XZx3y+vj1YtO9aO/gEjO2QvcRA1Yq3i6XYnzuu?=
+ =?us-ascii?Q?oE2iVRlpOo466tB5EROaQZ2CaMy/jhlhvq+6HMoapl0ktoXYdf95y6lT47Zc?=
+ =?us-ascii?Q?Q5DVWNoQYtyNWxzQEfBQ3D8fslBU8dN8YIo20CMH0KIlA+SdYsW4TPXfTPtZ?=
+ =?us-ascii?Q?1CHjrhP3lec4HB/2mWoQMzTWKkl4fAHlEu+H3ovS8YF8Ngaw09eLP/DYn4Lt?=
+ =?us-ascii?Q?6ZoWBsciv2Qh5XoeeT9E02kQINZFbUMbixe9hhkZdrqpd0wq5quoi7zL926U?=
+ =?us-ascii?Q?8TYlalR5enaZ7Y74YJo6M+v+8rLDdLVyJRDWU7bXMckp/I6+efNtnQPXZJKc?=
+ =?us-ascii?Q?b4DtoZSTSQztU813WCDlvKI0EaCvkmw+pyiUsmNXK6vkieVkYttIA1lNb1vM?=
+ =?us-ascii?Q?y/ltCLXkXuJ+pw+xDhEc45XR7NShJGemFum9T5O8r9rSJL2HxkldYjWfwHGv?=
+ =?us-ascii?Q?LIzleiIMop28Lrng/0HW5CvZU/sKcg3HduQCKTpoGvMgoQh0zI/IqzWHjVSA?=
+ =?us-ascii?Q?SYIL4gZ18KTZkrWzNLDjrstrT/4THwzfSqF04cl78h2tU+IMDaK9vOE7LtyL?=
+ =?us-ascii?Q?T1j3KA=3D=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jan 2026 19:11:17.1585 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0b3d09ab-1d05-4829-2c8b-08de5d0eae86
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000044FD.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6655
+Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+ envelope-from=nicolinc@nvidia.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,46 +162,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Kohei,
+Hi Eric,
 
-On 1/25/26 11:03 PM, Kohei Tokunaga wrote:
-> run-emscripten.mjs is a Node.js script to quickly test the Wasm-compiled
-> QEMU. This runs directly from the terminal using the node command so the
-> HTTP server or the browser isn't needed.
-> 
-> Node.js 24 or newer is needed to run wasm64 binaries. Also note that QEMU's
-> "quit" monitor command doesn't work as of now because of the Emscripten's
-> atexit issue [1]. Send SIGINT or SIGTERM to the node process to exit QEMU.
-> 
-> [1] https://github.com/emscripten-core/emscripten/issues/26040
-> 
-> Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-> ---
->   scripts/run-emscripten.mjs | 66 ++++++++++++++++++++++++++++++++++++++
->   1 file changed, 66 insertions(+)
->   create mode 100644 scripts/run-emscripten.mjs
-> 
+On Mon, Jan 26, 2026 at 04:13:38PM +0100, Eric Auger wrote:
+> > +/* Note that offset aligns down to 0x10000 */
+> > +static uint64_t tegra241_cmdqv_read_vcmdq(Tegra241CMDQV *cmdqv, hwaddr offset,
+> > +                                          int index)
 
-I followed the instructions but could not get this running:
+> the offset is within the instance, right? Better to rename it
+> differently from the main offset
 
-$ /usr/share/emscripten/tools/file_packager.py qemu-system-aarch64.data 
---preload pack/ > load.js
-$ ~/node-v24.13.0-linux-x64/bin/node ./scripts/run-emscripten.mjs 
---preload ./load.js ./qemu-system-aarch64.js -- -nographic -m 512M -L pack
-file:///home/user/.work/qemu/scripts/run-emscripten.mjs:51
-if (preloadModule) preloadModule.default(Module);
-                                         ^
-TypeError: preloadModule.default is not a function
-     at file:///home/user/.work/qemu/scripts/run-emscripten.mjs:51:41
-Node.js v24.13.0
+In tegra241_cmdqv_read(), its offset is the register offset to the
+entire CMDQV. That can be A_VCMDQ0_CONS_INDX, A_VCMDQ1_CONS_INDX,
+until A_VCMDQ127_CONS_INDX.
 
-I don't mind having a nodejs, or python script with browser. The point 
-about using emrun was that it was easy to get something running, without 
-fiddling with those kind of details.
+Then, we align it down to 0x10000 (A_VCMDQ0_CONS_INDX) to pass it
+into this function, so this function can handle any VCMDQ via the
+A_VCMDQ0_* registers only, as "index" tells which VCMDQ instead.
 
-If you offer a python script that automate the creation of details and 
-spawn a server, it would be acceptable also.
+Perhaps we could rename this "offset" to "offset0", and elaborate
+this with a better function comments, e.g.:
+/*
+ * The caller striped away the VCMDQ index from its offset and passed that in
+ * via @offset0 so any VCMDQ can fit into A_VCMDQ0_CONS_INDX for simplicity.
+ *
+ * On the other hand, @index will tell which VCMDQ is being accessed here.
+ */
 
-Regards,
-Pierrick
+> > +{
+> > +    uint32_t *ptr = NULL;
+> > +    uint64_t off;
+> better initialize it?
+
+It's not used unless cmdqv->vcmdq_page0, so we should probably move
+it to the if statement instead.
+
+> > +
+> > +    /*
+> > +     * Each VCMDQ instance occupies a 128 byte region (0x80).
+> > +     * The hardware layout is:
+> > +     *   vcmdq_page0 + (index * 0x80) + (offset - 0x10000)
+> > +     */
+> > +    if (cmdqv->vcmdq_page0) {
+> > +        off = (0x80 * index) + (offset - 0x10000);
+> > +        ptr = (uint32_t *)(cmdqv->vcmdq_page0 + off);
+
+> I am confused because I understood page0 was mmapped so that the guest
+> could read it without VMM mediation?
+
+Yes. I pointed it out too. This should be cleaned away:
+https://lore.kernel.org/qemu-devel/aVLZv+nwUB7+ohuw@Asurada-Nvidia/
+
+So, only return the cached regval unless !cmdqv_page0:
+
+    if (!cmdqv->vcmdq_page0) {
+        return cmdqv->vcmdq_cons_indx[index];
+    }
+
+> > +    case A_VCMDQ0_CONS_INDX ... A_VCMDQ127_GERRORN:
+> > +        /*
+> > +         * Align offset down to 0x10000 while extracting the index:
+> this is a bit cryptic to me. Could you explain this in the commit msg
+> > +         *   VCMDQ0_CONS_INDX  (0x10000) => 0x10000, 0
+> > +         *   VCMDQ1_CONS_INDX  (0x10080) => 0x10000, 1
+> > +         *   VCMDQ2_CONS_INDX  (0x10100) => 0x10000, 2
+> > +         *   ...
+> > +         *   VCMDQ127_CONS_INDX (0x13f80) => 0x10000, 127
+> > +         */
+> > +        index = (offset - 0x10000) / 0x80;
+> > +        return tegra241_cmdqv_read_vcmdq(cmdqv, offset - 0x80 * index, index);
+
+As I mentioned above, it is to ease the tegra241_cmdqv_read_vcmdq()
+that only needs to handle A_VCMDQ0_* cases in the switch statement.
+
+Yes, let's add in the commit message.
+
+Thanks
+Nicolin
 
