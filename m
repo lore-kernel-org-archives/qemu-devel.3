@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 165CAD1950F
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E255D1950F
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 17:48:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkQco-0001PO-GY; Mon, 26 Jan 2026 12:43:42 -0500
+	id 1vkQdA-0001fr-HA; Mon, 26 Jan 2026 12:44:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQch-0001K3-TG
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:36 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1vkQd0-0001Vr-H2
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:54 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1vkQcf-0008UH-5m
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:34 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47edd6111b4so55278895e9.1
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:29 -0800 (PST)
+ id 1vkQcz-0000Gr-2j
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 12:43:54 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-42fb2314f52so2766756f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 09:43:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769449408; x=1770054208; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769449431; x=1770054231; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MEJ+cQW0XDvgt8fKdFK82Ac1+oKK3ySwvUaxyxGmSvw=;
- b=Cwl5DC09tNLdo2NzTslCeubd4bfJzL0utdd0OfGSmUkc2jo0JCsrsOyKrB6k/zeyFd
- WcfleRhMlt2MBJvgTY3cytEnSc2SSYVC5RcgFUkE3T8TKpvdzryPG5/ceug/zT8crWEg
- 1rXbWRwzqEZEzqCV4smcsWXfs1yFa+vmEnbr2n+Bj6sIsTdwT4FxzIWHCnV3sBH8LyZX
- lXNqEc82bEezfO4FSxGQ4XyzqbIHY0kLut3FJlOLKJarSvJvTqjRqjBH8p9ZKHG7Ww9d
- EKBdCAtjALiOPj1lEVQsVV/c5MSRcjowUjWHvEUufWukHlsZUfNIjk9snB35zLMTtMB3
- vjlg==
+ bh=wlscyxPY8xEICFQvh9NAzy5egnUtRHu9+/Su9mVanbI=;
+ b=TJpz6NMXyAjDxSjdJOZpFlTVhfmvHIFsagDsvI46hDPLvMceA/AZAaRAdQNqSTQeVL
+ 1MRcpUtznLUEuvwQcnceMhoV8jnLCeLEhKhCxf1TZbTqY/V9Xmc0KeBA4Owh73cW0+27
+ 4cZjzZQ6OHzUJjKKkR6lF0H1zOvqJ+458nz8KrMq/Z2vmoLD391sRNhUuS2DLsxwvAwj
+ CN9lj2hqYw0N0jpOxyemGcm7+5fnZEoVaOq8NEI2wzSBDE3wKrIqn2GYe70cGAboq/nY
+ 7CSVX3IC1G9WI23wMA/0G02xxfFc/otZMogNNbJ1ME2UzWuyvGx0oW9QgJZS/Kfik+kU
+ YI4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769449408; x=1770054208;
+ d=1e100.net; s=20230601; t=1769449431; x=1770054231;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MEJ+cQW0XDvgt8fKdFK82Ac1+oKK3ySwvUaxyxGmSvw=;
- b=hlqAgTIznClaH3EyrluOetJrzPhqjQ/FCwdIEMOUaBrerFbwlB0fgT7VbWNMd8+bN1
- 1uqdpvxuBiRrA5/t3HtE47c6MxAcW6bPsq2VQsb69k3X0ESN5LRK+ToBe8sFbjIQs85A
- 4uc0NLgSzTf5IxA2Gisu26mmN5vK/05XamTe+3IDUd9OY53kM/jJuDTL4DFaoTFp7Ne/
- hXbUuyVkerltS/wFrDCTl2+ssKzDey4l1QA8/rnf/HDGnwIliC0DiIi4P2QqEzH60LF6
- c0L/FE0gQd/C6wLI3HNNXvUyr4o/FKjql235uWWrxfIaLSlrWnebN0tv0NAw0n84KMKq
- MX/w==
-X-Gm-Message-State: AOJu0YzR7SPkizwawc6IULxwT4KXMXZgDOBshScGOcmPvIeSFLaqAJAQ
- TTHUTCUzC9dalaDivM44SQB/PMUhuzb9tqMutftavbuDXPfkhSyuZXSjJ4xJaxI8
-X-Gm-Gg: AZuq6aKpElCUInQ9R1BMnVWS/g5MnCFPbMXjq42APNj71qs2cT98QneOmxNHtH+zJ96
- aeb4I1EWrq6kScSAcFOAipXmdqPIUBOWT/UalGrGSzu7KWvS4uhKaIVad/S7/kg2dwyVz+t0iQl
- 3pHA3vEIMJt8gOUULXT1+rmV2euCn2A825gfPS7wGyXLqns+XA9Mfwp06PDMA7DvCOIA/WIOXLN
- FAR1pcvw3214n2zAaYhJ1kH2Sdh5i+XBCDEB+38eL14cQBCF7v1bB4PT3y7UEGwe7kiuUJzl4N4
- RgvoVoK2unrqlUz2VKQFbhImZ6YJwIkc4SKTi00kDD19fyaob2gAixK4KrLg7d9tiiYWt6TdOOY
- LyGbRVAc7vmZrJpnJUrvISiWnAX6gUHUZI1Iqa0QN3dcJ2tgDkiyPw9wcZKY3bvUdO/Cr9/ja05
- f8RBLsQhXhXtqyznci3iOVyLBk6d3+8k39OX2Zg7WVToMyyPBPWbMz/A==
-X-Received: by 2002:a05:600c:444c:b0:46e:35a0:3587 with SMTP id
- 5b1f17b1804b1-4805cf6762bmr88468335e9.27.1769449408239; 
- Mon, 26 Jan 2026 09:43:28 -0800 (PST)
+ bh=wlscyxPY8xEICFQvh9NAzy5egnUtRHu9+/Su9mVanbI=;
+ b=O0pOSCGxAcQoTVWmzFR27Bnroxg3EKv8gwVha8oZWdP2fZCKYSv/UpAUomA+sQVUSo
+ gJayZiOxlUygcQIH/y2e0A5jqXVdKsv9ikf5Fc01P/YeQHeotW0WrAS9ry7ACa1W6EaV
+ TdMq/S5MYv6XFUbddFU7H/VwZmQyul7JY34hkSxBzB1HgYqYdcHTrG3sfWuH1tgIpMGf
+ KRRE25+YCCkkN3IR5utypEnWtWoMh48j/YBCbmRuTfLPQNk5UfpmGgw8wVtyAamDw4eO
+ wkx4L0qKxRkp/SSACBIZEh+gdRZnR9tUWNaVHWEJdv55TuTG8xxJZ+eyDZnXNQHmVbq3
+ fl2g==
+X-Gm-Message-State: AOJu0Yxx00tHGgb5OmbsHQpSfXhhyyQfBPxGzO7riAqAwx8TnI7YhM+E
+ VzCH1WWmFFgW/s55eJplAjDNqhp41B0tUZ4HAeVRLa5LYY6QfglLVZCY3fm0xbz5
+X-Gm-Gg: AZuq6aJF3S6HJ2jdwBvP4QCED9lUYhHFfht9kinEsPyco1Qi9+hFe4r+SqRmo3UGd64
+ 4lgoSwbmEtOcMUHGpRgbTX7nWB6AGo6+AKX7U8F3Yf+fSoSdznCN478/6j2PCM8KZixXNX2/StV
+ D4N5Rz59nnOSlCZvsKow2eRupIVF5snm0qExhoZbyIXyxR7DTm0Kg4kwFTLtkBJagjKAdw7Zzhr
+ zjjxq9S6SDd6b8TwWUPrEDQbW4SeXNQ2frw9hTr2RWLR5WBbTVUWqhlFEoLGixjg7RUEX6PXXlD
+ /jZt0QKMH9+F9sBVomSluYCE3FlfC99CfLfofPBY9PXe5gpYHdfZITjkGuVcQeX21TU4FdGJC4D
+ ApTOACG3uE5SoluNN4NZM2OQgabjVDqaY0goUk6zPPl9lDnnB/M8FqwMtsSXS16FccjsRHl5Pi8
+ rFmvtxm+jiiXTXj/Ios3Tr/Y3vwAWx0ccAX6tnZTjky7HOF+4xhEfmZuc9Ap/k5R4x
+X-Received: by 2002:a5d:5850:0:b0:435:a258:76e with SMTP id
+ ffacd0b85a97d-435ca3a93d0mr8805063f8f.60.1769449431352; 
+ Mon, 26 Jan 2026 09:43:51 -0800 (PST)
 Received: from thinkpad-t470s.. (93-143-71-105.adsl.net.t-com.hr.
  [93.143.71.105]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.27
+ ffacd0b85a97d-435b1e71730sm34199603f8f.26.2026.01.26.09.43.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 09:43:27 -0800 (PST)
+ Mon, 26 Jan 2026 09:43:51 -0800 (PST)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, artem_mygaiev@epam.com,
  volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com,
  "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Ruslan_Ruslichenko@epam.com
-Subject: [PATCH 04/27] hw/core: introduce generic FDT device model registry
-Date: Mon, 26 Jan 2026 18:42:50 +0100
-Message-ID: <20260126174313.1418150-5-ruslichenko.r@gmail.com>
+ Ruslan_Ruslichenko@epam.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 27/27] system/memory: add QOM aliases for fdt support
+Date: Mon, 26 Jan 2026 18:43:13 +0100
+Message-ID: <20260126174313.1418150-28-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 References: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,256 +105,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-Introduce infrastructure to instantiate device models
-directly from the device tree.
+The patch registers FDT compatibility handlers and
+QOM aliases of memory subsystem, so that memory
+regions can be created from a device tree model.
 
-This includes the registry of known device models with
-associated init functions and key API methods to
-operate it.
+The alias 'qemu:system-memory' could be used to attach
+subregion to root address space.
 
-The MIT license of fdt_generic.c preserved as in original
-file from https://github.com/Xilinx/qemu.git repo.
-
-The license for fdt_generic.h derived from matching
-fdt_generic.c file.
+Also 'qemu-memory-region' types can be used to create
+new memory regions.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- hw/core/fdt_generic.c         | 139 ++++++++++++++++++++++++++++++++++
- include/hw/core/fdt_generic.h |  78 +++++++++++++++++++
- 2 files changed, 217 insertions(+)
- create mode 100644 hw/core/fdt_generic.c
- create mode 100644 include/hw/core/fdt_generic.h
+ system/memory.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/hw/core/fdt_generic.c b/hw/core/fdt_generic.c
-new file mode 100644
-index 0000000000..d3ab8f9132
---- /dev/null
-+++ b/hw/core/fdt_generic.c
-@@ -0,0 +1,139 @@
-+// SPDX-License-Identifier: MIT
-+/*
-+ * Tables of FDT device models and their init functions. Keyed by compatibility
-+ * strings, device instance names.
-+ *
-+ * Copyright (c) 2010 PetaLogix Qld Pty Ltd.
-+ * Copyright (c) 2010 Peter A. G. Crosthwaite <peter.crosthwaite@petalogix.com>.
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
+diff --git a/system/memory.c b/system/memory.c
+index 866c741973..867228922b 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -4077,3 +4077,27 @@ static void memory_register_types(void)
+ }
+ 
+ type_init(memory_register_types)
 +
-+#include "qemu/osdep.h"
-+#include "hw/core/fdt_generic.h"
-+#include "hw/core/qdev-properties.h"
-+#include "qemu/log.h"
-+
-+#ifndef FDT_GENERIC_ERR_DEBUG
-+#define FDT_GENERIC_ERR_DEBUG 0
-+#endif
-+#define DB_PRINT(lvl, ...) do { \
-+    if (FDT_GENERIC_ERR_DEBUG > (lvl)) { \
-+        qemu_log_mask(LOG_FDT, ": %s: ", __func__); \
-+        qemu_log_mask(LOG_FDT, ## __VA_ARGS__); \
-+    } \
-+} while (0)
-+
-+#define FDT_GENERIC_MAX_PATTERN_LEN 1024
-+
-+typedef struct TableListNode {
-+    struct TableListNode *next;
-+    char key[FDT_GENERIC_MAX_PATTERN_LEN];
-+    FDTInitFn fdt_init;
-+    void *opaque;
-+} TableListNode;
-+
-+/* add a node to the table specified by *head_p */
-+
-+static void add_to_table(
-+        FDTInitFn fdt_init,
-+        const char *key,
-+        void *opaque,
-+        TableListNode **head_p)
++static int sysmem_fdt_init(char *node_path, FDTMachineInfo *fdti,
++                           void *priv)
 +{
-+    TableListNode *nn = malloc(sizeof(*nn));
-+    nn->next = *head_p;
-+    strcpy(nn->key, key);
-+    nn->fdt_init = fdt_init;
-+    nn->opaque = opaque;
-+    *head_p = nn;
++    fdt_init_set_opaque(fdti, node_path, OBJECT(get_system_memory()));
++    return 0;
 +}
 +
-+/* FIXME: add return codes that differentiate between not found and error */
++fdt_register_compatibility(sysmem_fdt_init, "compatible:qemu:system-memory");
 +
-+/*
-+ * search a table for a key string and call the fdt init function if found.
-+ * Returns 0 if a match is found, 1 otherwise
-+ */
++static const TypeInfo fdt_qom_aliases[] = {
++    {   .name = "qemu-memory-region",       .parent = "memory-region"  },
++};
 +
-+static int fdt_init_search_table(
-+        char *node_path,
-+        FDTMachineInfo *fdti,
-+        const char *key, /* string to match */
-+        TableListNode **head) /* head of the list to search */
++static void fdt_memory_types(void)
 +{
-+    TableListNode *iter;
++    int i;
 +
-+    for (iter = *head; iter != NULL; iter = iter->next) {
-+        if (!strcmp(key, iter->key)) {
-+            if (iter->fdt_init) {
-+                return iter->fdt_init(node_path, fdti, iter->opaque);
-+            }
-+            return 0;
-+        }
-+    }
-+
-+    return 1;
-+}
-+
-+TableListNode *compat_list_head;
-+
-+void add_to_compat_table(FDTInitFn fdt_init, const char *compat, void *opaque)
-+{
-+    add_to_table(fdt_init, compat, opaque, &compat_list_head);
-+}
-+
-+int fdt_init_compat(char *node_path, FDTMachineInfo *fdti, const char *compat)
-+{
-+    return fdt_init_search_table(node_path, fdti, compat, &compat_list_head);
-+}
-+
-+TableListNode *inst_bind_list_head;
-+
-+void add_to_inst_bind_table(FDTInitFn fdt_init, const char *name, void *opaque)
-+{
-+    add_to_table(fdt_init, name, opaque, &inst_bind_list_head);
-+}
-+
-+int fdt_init_inst_bind(char *node_path, FDTMachineInfo *fdti,
-+        const char *name)
-+{
-+    return fdt_init_search_table(node_path, fdti, name, &inst_bind_list_head);
-+}
-+
-+static void dump_table(TableListNode *head)
-+{
-+    TableListNode *iter;
-+
-+    for (iter = head; iter != NULL; iter = iter->next) {
-+        printf("key : %s, opaque data %p\n", head->key, head->opaque);
++    for (i = 0; i < ARRAY_SIZE(fdt_qom_aliases); ++i) {
++        type_register_static(&fdt_qom_aliases[i]);
 +    }
 +}
 +
-+void dump_compat_table(void)
-+{
-+    printf("FDT COMPATIBILITY TABLE:\n");
-+    dump_table(compat_list_head);
-+}
-+
-+void dump_inst_bind_table(void)
-+{
-+    printf("FDT INSTANCE BINDING TABLE:\n");
-+    dump_table(inst_bind_list_head);
-+}
-diff --git a/include/hw/core/fdt_generic.h b/include/hw/core/fdt_generic.h
-new file mode 100644
-index 0000000000..614a234868
---- /dev/null
-+++ b/include/hw/core/fdt_generic.h
-@@ -0,0 +1,78 @@
-+// SPDX-License-Identifier: MIT
-+/*
-+ * Tables of FDT device models and their init functions. Keyed by compatibility
-+ * strings, device instance names.
-+ */
-+
-+#ifndef FDT_GENERIC_H
-+#define FDT_GENERIC_H
-+
-+#include "qemu/help-texts.h"
-+#include "system/device_tree.h"
-+
-+typedef struct FDTMachineInfo FDTMachineInfo;
-+
-+typedef int (*FDTInitFn)(char *, FDTMachineInfo *, void *);
-+
-+/* associate a FDTInitFn with a FDT compatibility */
-+
-+void add_to_compat_table(FDTInitFn, const char *, void *);
-+
-+/*
-+ * try and find a device model for a particular compatibility. If found,
-+ * the FDTInitFn associated with the compat will be called and 0 will
-+ * be returned. Returns non-zero on not found or error
-+ */
-+
-+int fdt_init_compat(char *, FDTMachineInfo *, const char *);
-+
-+/* same as above, but associates with a FDT node name (rather than compat) */
-+
-+void add_to_inst_bind_table(FDTInitFn, const char *, void *);
-+int fdt_init_inst_bind(char *, FDTMachineInfo *, const char *);
-+
-+void dump_compat_table(void);
-+void dump_inst_bind_table(void);
-+
-+/*
-+ * Called from FDTInitFn's to inform the framework that a dependency is
-+ * unresolved and the calling context needs to wait for another device to
-+ * instantiate first. The calling thread will suspend until a change in state
-+ * in the argument fdt machine is detected.
-+ */
-+
-+void fdt_init_yield(FDTMachineInfo *);
-+
-+/* set, check and get per device opaques. Keyed by fdt node_paths */
-+
-+void fdt_init_set_opaque(FDTMachineInfo *fdti, char *node_path, void *opaque);
-+int fdt_init_has_opaque(FDTMachineInfo *fdti, char *node_path);
-+void *fdt_init_get_opaque(FDTMachineInfo *fdti, char *node_path);
-+
-+/* statically register a FDTInitFn as being associate with a compatibility */
-+
-+#define fdt_register_compatibility_opaque(function, compat, n, opaque) \
-+static void __attribute__((constructor)) \
-+function ## n ## _register_imp(void) { \
-+    add_to_compat_table(function, compat, opaque); \
-+}
-+
-+#define fdt_register_compatibility_n(function, compat, n) \
-+fdt_register_compatibility_opaque(function, compat, n, NULL)
-+
-+#define fdt_register_compatibility(function, compat) \
-+fdt_register_compatibility_n(function, compat, 0)
-+
-+#define fdt_register_instance_opaque(function, inst, n, opaque) \
-+static void __attribute__((constructor)) \
-+function ## n ## _register_imp(void) { \
-+    add_to_inst_bind_table(function, inst, opaque); \
-+}
-+
-+#define fdt_register_instance_n(function, inst, n) \
-+fdt_register_instance_opaque(function, inst, n, NULL)
-+
-+#define fdt_register_instance(function, inst) \
-+fdt_register_instance_n(function, inst, 0)
-+
-+#endif /* FDT_GENERIC_H */
++type_init(fdt_memory_types)
 -- 
 2.43.0
 
