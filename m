@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3D94D25926
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 03:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C77FD25929
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 03:26:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkZgd-0004LL-L6; Mon, 26 Jan 2026 22:24:15 -0500
+	id 1vkZgQ-0004CS-5J; Mon, 26 Jan 2026 22:24:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vkZgb-0004KF-Tq; Mon, 26 Jan 2026 22:24:13 -0500
+ id 1vkZgO-0004BY-33; Mon, 26 Jan 2026 22:24:00 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vkZga-0003Z2-HJ; Mon, 26 Jan 2026 22:24:13 -0500
+ id 1vkZgL-0003Z2-W2; Mon, 26 Jan 2026 22:23:59 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 27 Jan
- 2026 11:23:50 +0800
+ 2026 11:23:49 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 27 Jan 2026 11:23:50 +0800
+ Transport; Tue, 27 Jan 2026 11:23:48 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,16 +32,14 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 6/7] tests/functional/arm/test_aspeed_ast1060: Update test
- aspeed-zephyr-project v03.04
-Date: Tue, 27 Jan 2026 11:23:42 +0800
-Message-ID: <20260127032348.2238527-7-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 0/7] Update functional tests for
+ AST2500/AST2600/AST103/AST1060
+Date: Tue, 27 Jan 2026 11:23:36 +0800
+Message-ID: <20260127032348.2238527-1-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260127032348.2238527-1-jamin_lin@aspeedtech.com>
-References: <20260127032348.2238527-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -67,49 +65,38 @@ From:  Jamin Lin via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- tests/functional/arm/test_aspeed_ast1060.py | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+v1:
+ - Remove AST2600 PCIe root device and RC_L support
+ - Drop RC_H root-bus remap and bus number properties
+ - Expand AST2600 RC_H PCIe MMIO window to 0x60000000¡V0x80000000
+ - Update functional tests for AST2500, AST2600, AST1060, and AST1030
+ - AST2500 tests are updated to use SDK v10.00, as network support is known
+  to be broken in v11.00.
 
-diff --git a/tests/functional/arm/test_aspeed_ast1060.py b/tests/functional/arm/test_aspeed_ast1060.py
-index 034efa5342..eccb4252d8 100644
---- a/tests/functional/arm/test_aspeed_ast1060.py
-+++ b/tests/functional/arm/test_aspeed_ast1060.py
-@@ -11,18 +11,18 @@
- 
- 
- class AST1060Machine(AspeedTest):
--    ASSET_ASPEED_AST1060_PROT_3_02 = Asset(
-+    ASSET_ASPEED_AST1060_PROT_3_04 = Asset(
-         ('https://github.com/AspeedTech-BMC'
--         '/aspeed-zephyr-project/releases/download/v03.02'
--         '/ast1060_prot_v03.02.tgz'),
--         'dd5f1adc935316ddd1906506a02e15567bd7290657b52320f1a225564cc175bd')
-+         '/aspeed-zephyr-project/releases/download/v03.04'
-+         '/ast1060_prot_v03.04.tgz'),
-+         'c0319df55f5b7a547efefc5a6ba374b881223d5fe1a776bfdd36f97fd1f31d50')
- 
--    def test_arm_ast1060_prot_3_02(self):
-+    def test_arm_ast1060_prot_3_04(self):
-         self.set_machine('ast1060-evb')
- 
-         kernel_name = "ast1060_prot/zephyr.bin"
-         kernel_file = self.archive_extract(
--            self.ASSET_ASPEED_AST1060_PROT_3_02, member=kernel_name)
-+            self.ASSET_ASPEED_AST1060_PROT_3_04, member=kernel_name)
- 
-         self.vm.set_console()
-         self.vm.add_args('-kernel', kernel_file, '-nographic')
-@@ -35,7 +35,7 @@ def test_arm_ast1060_otp_blockdev_device(self):
-         self.vm.set_machine("ast1060-evb")
- 
-         kernel_name = "ast1060_prot/zephyr.bin"
--        kernel_file = self.archive_extract(self.ASSET_ASPEED_AST1060_PROT_3_02,
-+        kernel_file = self.archive_extract(self.ASSET_ASPEED_AST1060_PROT_3_04,
-                                            member=kernel_name)
-         otp_img = self.generate_otpmem_image()
- 
+Jamin Lin (7):
+  tests/functional/arm/test_aspeed_ast2500: Update test ASPEED SDK
+    v10.00
+  hw/pci-host/aspeed_pcie: Drop AST2600 PCIe root device
+  hw/pci-host/aspeed_pcie: Drop AST2600 RC_H root-bus remap and bus-nr
+    property
+  hw/arm/aspeed_ast2600: Expand RC_H PCIe MMIO window to 0x60000000 -
+    0x80000000
+  tests/functional/arm/test_aspeed_ast2600_sdk: Update test ASPEED SDK
+    v11.00
+  tests/functional/arm/test_aspeed_ast1060: Update test
+    aspeed-zephyr-project v03.04
+  tests/functional/arm/test_aspeed_ast1030: Update test ASPEED Zephyr
+    SDK v03.05
+
+ include/hw/pci-host/aspeed_pcie.h             | 11 ---
+ hw/arm/aspeed_ast2600.c                       |  8 +-
+ hw/pci-host/aspeed_pcie.c                     | 76 +------------------
+ tests/functional/arm/test_aspeed_ast1030.py   | 12 +--
+ tests/functional/arm/test_aspeed_ast1060.py   | 14 ++--
+ tests/functional/arm/test_aspeed_ast2500.py   |  8 +-
+ .../functional/arm/test_aspeed_ast2600_sdk.py | 22 +++---
+ 7 files changed, 31 insertions(+), 120 deletions(-)
+
 -- 
 2.43.0
 
