@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D35A4D2594E
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 06:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 667EDD2594B
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 06:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkciM-00030X-PC; Tue, 27 Jan 2026 01:38:14 -0500
+	id 1vkchx-0002q5-6n; Tue, 27 Jan 2026 01:37:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vkciJ-0002xp-1O
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 01:38:11 -0500
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1vkchv-0002pw-KX
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 01:37:47 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vkciG-0006m5-BC
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 01:38:09 -0500
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-34ab8e0df53so4624541a91.3
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 22:38:07 -0800 (PST)
+ id 1vkchu-0006ih-93
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 01:37:47 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2a0c20ee83dso49461515ad.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 22:37:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1769495886; x=1770100686; darn=nongnu.org;
+ d=sifive.com; s=google; t=1769495865; x=1770100665; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/7RJutSKn1k65hDY8Ig9jUscMyGWjNCtLo7Y1bHL9Eo=;
- b=Ie3fO0bRVZYp9n5GXtVSo1XhVraP4SZNwavaAu0TlD+MKO8OMS6cxL66i0ZeAl7y8J
- /YM6o/GW4osA7DVwYs46t+kZflWlMrm6ZUDZ32vI8YhPocpoVm3ArM5QGNZAykuGIgPy
- 4LvhK4aXfauuydsFnlEA95CIDl5VZov2Kc9H8XMFYwKwPtKUEfteYAC6H50rwy0h210l
- q/xERHohC4ncWkzKdav+AcvqSO7d0qGn9peZdbqEdAoXWerBDzpx3bD0R7yRzf1ljrvd
- 0F54gCKymTLMHSZJtH1mtb/ADEAo6Cyae/6fey1FidWkFIQcIo9nxDfPE4idiTdD7bUh
- qeNw==
+ bh=0PAMSHiK5VxvAyBb7t1SnwzGu3eBjt9q5jInjPFmz0c=;
+ b=ZjTYRrlOa2AskOi9jbDjW5XhzgYmTD/d843Ktgkf+1xbwGlEZtM6WcEtrc/cW/g5Cg
+ qaKOua5WRoRVOt9TooVaDip+uVB9i1uytU1o0aC8arffjAcb1DOTujoj/mNeaMxDEQ/P
+ erHKXs2N+gROBuVwCxywWy1d1bJIWPF6+0vSMuc7TYceIV/KPsM7nca3c8RsAsnM1A02
+ CFF2JyoTzzMsH/Jl0nC8MpOQt1IfWeCpm8rIPKAXwCMw5a7oIo356aygEozEo3qFp0Ym
+ pT6CFebc2hfzmwPcLJ5PV0Tyivt3yfOvBFB47ZuetyzQaYODMNk+9DWpIV6DmZPMNNhG
+ TKBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769495886; x=1770100686;
+ d=1e100.net; s=20230601; t=1769495865; x=1770100665;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/7RJutSKn1k65hDY8Ig9jUscMyGWjNCtLo7Y1bHL9Eo=;
- b=cWrv2Tpiy2Pcpu//nU3P97pfZdHm0T/ub/cKLdS4DPM9HkdzvryNwAk0oD/xVQoa3E
- hLM8tNmFF/up7fD3azvn454c+Evci8BgAlwyPMw0Eflqaf4MXUaqDVuNTRzMDaFpKRLh
- vYb0XXILge32G9ITgezYRQ0uXLSxlaq+rrseaPL2jRaJdKuzmLAnsHcZM+2YEfR9zCJj
- niBLQhXnS+jiaVekboflNescAG6fuWTdgDc0Su94i0hPiX0+5VBDUXKZhnrSmb8qOgax
- ql4VSGKygEX/iHKI1amr0sFpL8ORy/Jf0KlUz7whqGD/WFpLAiPI38YZYTIS0Bsd3thS
- 22PA==
-X-Gm-Message-State: AOJu0YzXOOUFxWiTQ5t0Sj/DFCt5s53gAVQA0afZo9OjrsZzrP6n0ozP
- JpnDMkyqZ6eBCjoBXxOKQ6hzovPo0VCiazDlCL8/XOMm3y2rfa6jd0OYTBeJPUVKZCD6fFOIlxi
- 1kgO8QhfJDTei2TLjO1nsuMeHQuWX+Wlf1kQ+9gcWicHl52tFfaoGgxJD43cqnwu6Za+SbsJSo1
- RCj6vtJPL4llPWUMUmmX0R9g5Owy/OHj9ru8F8jm32ng==
-X-Gm-Gg: AZuq6aJ4ujGEExEdtj18X2xv8DJwDaNqETWfbxd4ZPeWsP0+4PA2PmiuXdSHmxOXfkP
- c+8DJ9tE87a7trgq2aGShMkrZVPrpY/zjTy2E5qEapykiKTgNLJJOcaJ2J/x/EmPMznJaqOpVF9
- XAVyc4hdnKNwacnwDHa8tnDbljj3d3dEfqBnKcLGG909vROjrbxuVLWoa0CQgGM0GtxbAtQzsOb
- iBfe0iTA6tImK5aQcAwKkVMJgLtljr2U6eNOJqk8LqUav0JHljA2EJqXEe8GZQSCdPT5frxO3R1
- XclhVFDANcSUeW0uAQ8QbvnV0LxfCssDl1vHNKSr5sPI6S/kbsxEdk46Uikx+EzhlZTAQupwDhN
- XMoPLOvz8NvwIhLuvVR82BnGgRANd5tQObbxTJSohKBrrR72KpJV+9+5SBGlvTkYnnmUdtOZgT4
- 0TE8wRcaNg8+8cqjiWWDj/CmePqCA5Z7ffkFl4MRC1mI2lH7wQtaE/kB9FjXxrHJSTvCw5g3hU6
- qhaeCNkGdEUTjA3vbncXjkBNg==
-X-Received: by 2002:a17:90b:3885:b0:33b:b020:597a with SMTP id
- 98e67ed59e1d1-353febd56camr906020a91.0.1769495886265; 
- Mon, 26 Jan 2026 22:38:06 -0800 (PST)
+ bh=0PAMSHiK5VxvAyBb7t1SnwzGu3eBjt9q5jInjPFmz0c=;
+ b=VmbDJnDXsjF4670hY11yXrxxb97ggJQDtsZJwME+7sj3krpZLfqr70xGjMQ4Wr6Itx
+ IQsxWGiX1lKHoAGH4golf1iJ30/MU8X18v/qeyoRdaKBah3ZKyCERA4u5hluyGAQwS6c
+ IK6jf2fQ0GkCpUa8cotU94TChSo6UOgYnr8lJUW1n25kc3bQT+zqSMVR2n25gcPO8b0p
+ X+u1+wUp7OQBSm0ppoLZiXaqRazOOkKB/Y2suGoTHiIiF4Aqa2oeqqxx8sCQ7OLimilx
+ 1LU7jq8XONN+OwymdgD+Ei7M477Ow3P3FpNH45KGEo1jsqvKH1Oi134KzubGCq/CQr+u
+ WkWw==
+X-Gm-Message-State: AOJu0YxBbxwNCaumWjWdt6+mEyIJYLC6lBN1UNxOPTiGhebRrMsblo8z
+ DuAuO3+RlGH8mpTpv8x6rRkn7MUsiQPn499TMrutGIqn8JjngPYXpJAa1TbwSFtzrCtXW4YJc5o
+ C6bP4QD2o8aLEQHhDDB7t5iFZeNTRJgtgNcAXF/o2FqqIIWBzkyPCXUZs1uxSESuuIunN0bjXyl
+ 5BTygl/+M+79o2uDHxysM4B/LWWEeDAEwOtua6wL+0Ow==
+X-Gm-Gg: AZuq6aIgArYo52HO8nH0lUY44sGrq3PYq4LYmAYRbfGPweUlr4j2wXGuQm4gm3e0oRn
+ SMIRlXJmkEzepGPmk1HDFTfq3p03jXo7lONtJLophyXbyZoZg4gIZGwWbc3Dfaqq2tiYH7dwTpi
+ dEixXMi/acZqXrrKyzIwdO1qBW3O95bh9//8+Bh2aqQq75xmgHi/tSUvTMrsRAtsd7RBkIH0dF6
+ /+KSuWoytD14FLNvZ6XeVG9/cGzTh+fD2We5eT1L+xHZVykTitsexGwdRWOuAmjjaA5wMgmoGRu
+ mrGiD7ca54nz0Ctcd3SkX63JxGt0b4YuOf/rfBDKl/0YPaam1XlA0FK+CsrgFuT3VM+twplQ+Dg
+ loyFfTup0jrjUUKTo8v2zeXsMTzCWhrvzn2l5ah9Q5ZlYmojJmXzkt2rPyUQsEjlxUUk3VLaY5t
+ cI9NWKXkPqG+W+820M28JRxMzk4wUAeNokQYkXPkQ9KOIg/g5rAj+KIrj2DmDGXyEr13bHgywO+
+ zsjWMbTjzxtxeo=
+X-Received: by 2002:a17:903:4b0c:b0:2a7:80bf:312e with SMTP id
+ d9443c01a7336-2a870dbbb84mr8282765ad.28.1769495864606; 
+ Mon, 26 Jan 2026 22:37:44 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-353f5f96293sm1414175a91.0.2026.01.26.22.38.03
+ 98e67ed59e1d1-353f5f96293sm1414175a91.0.2026.01.26.22.37.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 22:38:05 -0800 (PST)
+ Mon, 26 Jan 2026 22:37:44 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -79,17 +79,17 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, richard.henderson@linaro.org,
  Max Chou <max.chou@sifive.com>, Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v2 14/17] target/riscv: Add implied rules for Zvfofp4min
+Subject: [PATCH v2 06/17] target/riscv: Add implied rules for Zvfofp8min
  extension
-Date: Tue, 27 Jan 2026 14:37:20 +0800
-Message-ID: <20260127063723.442734-15-max.chou@sifive.com>
+Date: Tue, 27 Jan 2026 14:37:12 +0800
+Message-ID: <20260127063723.442734-7-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260127063723.442734-1-max.chou@sifive.com>
 References: <20260127063723.442734-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,24 +112,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add implied rules to enable the implied extensions of Zvfofp4min
+Add implied rules to enable the implied extensions of Zvfofp8min
 extension recursively.
 
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/cpu.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ target/riscv/cpu.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 7823508615..87827441d3 100644
+index d6ce51ef5e..36fddce5bf 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -2520,6 +2520,15 @@ static RISCVCPUImpliedExtsRule ZVFOFP8MIN_IMPLIED = {
+@@ -2507,6 +2507,15 @@ static RISCVCPUImpliedExtsRule ZVFHMIN_IMPLIED = {
      },
  };
  
-+static RISCVCPUImpliedExtsRule ZVFOFP4MIN_IMPLIED = {
-+    .ext = CPU_CFG_OFFSET(ext_zvfofp4min),
++static RISCVCPUImpliedExtsRule ZVFOFP8MIN_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvfofp8min),
 +    .implied_multi_exts = {
 +        CPU_CFG_OFFSET(ext_zve32f),
 +
@@ -140,20 +140,17 @@ index 7823508615..87827441d3 100644
  static RISCVCPUImpliedExtsRule ZVKN_IMPLIED = {
      .ext = CPU_CFG_OFFSET(ext_zvkn),
      .implied_multi_exts = {
-@@ -2648,9 +2657,10 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+@@ -2635,8 +2644,8 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
      &ZKS_IMPLIED, &ZVBB_IMPLIED, &ZVE32F_IMPLIED,
      &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED,
      &ZVE64X_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
--    &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVFOFP8MIN_IMPLIED,
--    &ZVKN_IMPLIED, &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
--    &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
-+    &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVFOFP4MIN_IMPLIED,
-+    &ZVFOFP8MIN_IMPLIED, &ZVKN_IMPLIED, &ZVKNC_IMPLIED,
-+    &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED, &ZVKS_IMPLIED,
-+    &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
+-    &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
+-    &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
++    &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVFOFP8MIN_IMPLIED,
++    &ZVKN_IMPLIED, &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
+     &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
      &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED, &SSCTR_IMPLIED,
      NULL
- };
 -- 
 2.52.0
 
