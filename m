@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23056C88E41
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 09:30:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4380C88E41
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 09:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkfOW-0003k1-Cn; Tue, 27 Jan 2026 04:29:56 -0500
+	id 1vkfPI-000439-T4; Tue, 27 Jan 2026 04:30:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vkfOU-0003hf-4N; Tue, 27 Jan 2026 04:29:54 -0500
+ id 1vkfOW-0003l2-Mf; Tue, 27 Jan 2026 04:29:56 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vkfOR-0004dA-HB; Tue, 27 Jan 2026 04:29:53 -0500
+ id 1vkfOV-0004dA-3i; Tue, 27 Jan 2026 04:29:56 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 27 Jan
- 2026 17:29:43 +0800
+ 2026 17:29:44 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 27 Jan 2026 17:29:43 +0800
+ Transport; Tue, 27 Jan 2026 17:29:44 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,11 +32,13 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 00/11] Add SSP/TSP power control and DRAM remap support for
- AST2700
-Date: Tue, 27 Jan 2026 17:29:29 +0800
-Message-ID: <20260127092943.3731635-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 01/11] hw/arm/ast27x0: Move DRAM and SDMC initialization
+ earlier to support memory aliasing
+Date: Tue, 27 Jan 2026 17:29:30 +0800
+Message-ID: <20260127092943.3731635-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260127092943.3731635-1-jamin_lin@aspeedtech.com>
+References: <20260127092943.3731635-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
@@ -65,51 +67,88 @@ From:  Jamin Lin via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series improves AST2700 platform support by aligning SSP/TSP
-power and reset behavior with hardware, and enabling DRAM remapping
-required for proper firmware boot flow.
+To support DRAM aliasing for coprocessors (SSP/TSP), this commit moves the
+initialization of the SDMC (SDRAM controller) and DRAM models earlier in
+the device realization order.
 
-v1:
-  1. The changes move DRAM/SDMC initialization earlier to support memory
-aliasing, add DRAM aliases for SSP/TSP SDRAM remap, and implement
-SSP/TSP reset, power-on, and remap controls via SCU registers.
-  2. With these updates, SSP and TSP can be booted via PSP and load their
-binaries from DRAM. Functional tests and documentation are updated
-accordingly.
+In the upcoming changes, the PSP will expose a portion of its DRAM as shared
+memory by creating a memory region alias at a specific offset. This alias is
+mapped into the coprocessor's SDRAM address space, allowing both PSP and the
+coprocessor (SSP/TSP) to access the same physical memory through their respective
+views — PSP via its DRAM, and the coprocessor via its SDRAM.
 
-v2:
-  Fix "make check" failure caused by both AST2700 and AST1700 realizing the same
-  TYPE_AST2700_SCU model.
+The remapping is configured through SCU registers and enables shared memory
+communication between PSP and the coprocessors.
 
-Jamin Lin (11):
-  hw/arm/ast27x0: Move DRAM and SDMC initialization earlier to support
-    memory aliasing
-  hw/arm/ast27x0: Start SSP in powered-off state to match hardware
-    behavior
-  hw/arm/ast27x0: Start TSP in powered-off state to match hardware
-    behavior
-  hw/arm/ast27x0: Add DRAM alias for SSP SDRAM remap
-  hw/arm/ast27x0: Add DRAM alias for TSP SDRAM remap
-  hw/misc/aspeed_scu: Implement SSP reset and power-on control via SCU
-    registers
-  hw/misc/aspeed_scu: Implement TSP reset and power-on control via SCU
-    registers
-  hw/misc/aspeed_scu: Add SCU support for SSP SDRAM remap
-  hw/misc/aspeed_scu: Add SCU support for TSP SDRAM remap
-  tests/functional/aarch64/test_aspeed_ast2700fc: Boot SSP/TSP via PSP
-    and load binaries from DRAM
-  docs: Add support vbootrom and update Manual boot for ast2700fc
+Therefore, the DRAM and SDMC devices must be realized before:
+  - the SCU, which configures the alias offset and size
+  - the coprocessors, which access the alias through their SDRAM window
 
- docs/system/arm/aspeed.rst                    |  37 ++-
- include/hw/misc/aspeed_scu.h                  |   6 +
- hw/arm/aspeed_ast27x0-fc.c                    |   4 +
- hw/arm/aspeed_ast27x0-ssp.c                   |  13 +
- hw/arm/aspeed_ast27x0-tsp.c                   |  10 +
- hw/arm/aspeed_ast27x0.c                       |  46 +--
- hw/misc/aspeed_scu.c                          | 268 +++++++++++++++++-
- .../aarch64/test_aspeed_ast2700fc.py          |  35 ++-
- 8 files changed, 378 insertions(+), 41 deletions(-)
+No functional change.
 
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/arm/aspeed_ast27x0.c | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index d17f446661..74a004adca 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -702,6 +702,26 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(DEVICE(&a->intc[0].orgates[0]), i));
+     }
+ 
++    /*
++     * SDMC - SDRAM Memory Controller
++     * The SDMC controller is unlocked at SPL stage.
++     * At present, only supports to emulate booting
++     * start from u-boot stage. Set SDMC controller
++     * unlocked by default. It is a temporarily solution.
++     */
++    object_property_set_bool(OBJECT(&s->sdmc), "unlocked", true,
++                                 &error_abort);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sdmc), 0,
++                    sc->memmap[ASPEED_DEV_SDMC]);
++
++    /* RAM */
++    if (!aspeed_soc_ast2700_dram_init(dev, errp)) {
++        return;
++    }
++
+     /* SRAM */
+     name = g_strdup_printf("aspeed.sram.%d", CPU(&a->cpu[0])->cpu_index);
+     if (!memory_region_init_ram(&s->sram, OBJECT(s), name, sc->sram_size,
+@@ -792,26 +812,6 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+                                                       ASPEED_DEV_EHCI1 + i));
+     }
+ 
+-    /*
+-     * SDMC - SDRAM Memory Controller
+-     * The SDMC controller is unlocked at SPL stage.
+-     * At present, only supports to emulate booting
+-     * start from u-boot stage. Set SDMC controller
+-     * unlocked by default. It is a temporarily solution.
+-     */
+-    object_property_set_bool(OBJECT(&s->sdmc), "unlocked", true,
+-                                 &error_abort);
+-    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdmc), errp)) {
+-        return;
+-    }
+-    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sdmc), 0,
+-                    sc->memmap[ASPEED_DEV_SDMC]);
+-
+-    /* RAM */
+-    if (!aspeed_soc_ast2700_dram_init(dev, errp)) {
+-        return;
+-    }
+-
+     /* Net */
+     for (i = 0; i < sc->macs_num; i++) {
+         object_property_set_bool(OBJECT(&s->ftgmac100[i]), "aspeed", true,
 -- 
 2.43.0
 
