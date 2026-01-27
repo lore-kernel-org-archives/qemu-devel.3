@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B555D25932
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 05:17:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D98D25932
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 05:17:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkbSK-00078S-4v; Tue, 27 Jan 2026 00:17:36 -0500
+	id 1vkbSD-00072o-0L; Tue, 27 Jan 2026 00:17:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vkbSD-00072r-6Q
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:29 -0500
+ id 1vkbSA-0006zd-T3
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vkbSB-0008Qm-Mj
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:28 -0500
+ id 1vkbS9-0008QN-AM
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769491047;
+ s=mimecast20190719; t=1769491044;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OnOtqZFQnQ7z67Y/wwL5FaGuBGKBCde67NUJiikFzaU=;
- b=chTyUbKBQFBYjapSH5z9KfQOu8vDe+T5y2MMUG4eLgncvYr+pU3wqSl3mHkzDNDDhDPzPj
- ggrLhHWbuVkH1KisVaroSl04zdKFqx8IJ8vqlMmt5VZOCt/ikw6P1VuhGQKPn2ilIwXry3
- MDt8sUYOnr8hfq1ow8rqvLUeT/hmyb4=
+ bh=r0oM0RRyjLelkT0G5RoaNy8SGcq/Mnkz7KKwnwr3WCA=;
+ b=et/y6KJu/aHqVWV0I+qVjbDkGCIuxh/ISKglEVriQ0l7prY+aCkJes6VF+ILdKSDgpVrLt
+ jB11evUnPv34bYvDMceVBN7mLFJPllvkyYdEMFzvRCg1OZrgxp+pyAX3JmRqe3WQNfv1vM
+ ykem0G/C3AsC2CZRFV21VlBCtQPhZBQ=
 Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
  [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-0CbqIU1KMo6NvkHHkxJ5Wg-1; Tue, 27 Jan 2026 00:17:25 -0500
-X-MC-Unique: 0CbqIU1KMo6NvkHHkxJ5Wg-1
-X-Mimecast-MFC-AGG-ID: 0CbqIU1KMo6NvkHHkxJ5Wg_1769491044
+ us-mta-616-Y5yn7r8JPMeE4330VwL3dw-1; Tue, 27 Jan 2026 00:17:22 -0500
+X-MC-Unique: Y5yn7r8JPMeE4330VwL3dw-1
+X-Mimecast-MFC-AGG-ID: Y5yn7r8JPMeE4330VwL3dw_1769491041
 Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-353049e6047so3890683a91.3
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 21:17:24 -0800 (PST)
+ 98e67ed59e1d1-34e70e2e363so4657493a91.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 21:17:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769491044; x=1770095844; darn=nongnu.org;
+ d=redhat.com; s=google; t=1769491041; x=1770095841; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OnOtqZFQnQ7z67Y/wwL5FaGuBGKBCde67NUJiikFzaU=;
- b=Ecj2RZCIm5zJHv6wvPeHD/IiKFzh1S1XKZ1krXIIXCYr4QrlWpTxHw2Ey3kke3ykF1
- r8bExHA8w54VCjPwcwWhsq84wA02qsGDkWd/AUKnBmNBkYc94iljTSamaoAfQqJX3Zwc
- CSfRxxjxUHpZtebQMuvCFU+9SQwDboQ8tLwg2ExY0gOSruArjpHiA6cH5HdrFaaNBZWm
- Lm3ZaY1D4DwqpHctYRLBMamLE/xM2OcxFE2fJvs21jPK8A/PueQ11shI3y+r9zQdOWaQ
- hkL6Dp+kLAs26aOiPVwa5KI/xvqBShUI7gfzKwlN9X4u6vkAKMWQR9uG1MPKjG+WH7PX
- CYBQ==
+ bh=r0oM0RRyjLelkT0G5RoaNy8SGcq/Mnkz7KKwnwr3WCA=;
+ b=IoXLwvHSZkKEUwvG4A7z9iJcWDdYgLdNyOd4tUpSjpj8TpbO7CD6HdPr0vnIiueOLo
+ nznmaq+SJSS7JDuNqErXdOyWJ/+j5ft7HNu7GUTNJ/6kfE+Cby6Zg5baaLipkYGur6Nh
+ V8xB3YNwbcUgd5ZGDo0bnyRcNt7r5KLMpCBAb+yVMBlfqCM4DQoJNPwS9d+lFQUhP2zq
+ B6iI6/OGXRTOcIlYotP8G2q0/vdyaM8rlBc8TN4ByO8m7yUfO9aaG8E9XA0sJ5lNnTWM
+ VctAppF5JtZkiAp57GaGsPwErK9PL+CqEiGobjtd6I8dDF4r8S4k7Z9iAe7NUKJId1bF
+ K8Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769491044; x=1770095844;
+ d=1e100.net; s=20230601; t=1769491041; x=1770095841;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=OnOtqZFQnQ7z67Y/wwL5FaGuBGKBCde67NUJiikFzaU=;
- b=ryy/hSwhDMhTjGB5+WGtMZogWHjbspthnkTJIO0TrYpjF5LugenyYwv976M3w9gtV1
- 2PKHLIzbY0Ei6qjuZK9swgz10F+R+n8PPh9QoQSUPLUhiw7j1yglSyfTdHEM7wNZbiYQ
- uXmpG+hULAaiEGiMYzDPbL7oYVMeDfGqolz8Y2ZlVhKnlbgvXvWnGtGlyg8qDhjEB6s8
- 7IvcATjYgH18FLWQmmYOrbhMG8Fgglf84IGZ3avpfs0qHzQCDl27BEm9GRvf88PeVA3a
- hH2Btpty6u1VMwUZNqLSWIPOlclU5/zvtDT2LiWuyWKc5OjhQvI/O7KVqD0xxdsJZGAD
- 7VXQ==
+ bh=r0oM0RRyjLelkT0G5RoaNy8SGcq/Mnkz7KKwnwr3WCA=;
+ b=fyZ9LHNTxVG6l2KH7/RigKv+uQtnR2LW3/LRRYXsdLBn3nJkqY3Yw9tKHgtu7kU/Rt
+ uzVJu9nLN5n8H+/pJ4aCkSY0FjXzscS/0WZaO/rVHyZ5V7Ip/4YotMjyssPM84q4MI15
+ hFxKFX0vekE822g/sHenTelXq2EYMPOzIalanXc1QxyJZae7KyWcH6PnqaHu5l5wamWS
+ +ByPEIbgSRTkTQicZTNvxyw/PIaQMhOGZc078q/pGfEsyL+R+BlslxYAWZ5zEbJ+SfP7
+ dQygql232Hwb2jArW71O+m2a2Dnx38OY4lOzlHJVOzXqZ2pvUkoLj/8dkcuRglhgD++7
+ s7qQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWyVtwnkP01eEKPiSBARnzNbsQjUWZrjhi2gEdVADKX6z6954nOQqMJDlZawpadyrrfEfqbci5zrjqH@nongnu.org
-X-Gm-Message-State: AOJu0YwMoyZNN+I9+dilqwDxXCoZH5D9k17W0mSoPY/ekBtgR6wkSfQl
- qxkW0m0CO4W9XN0kWQUbYSmUTCbdXN43tIoJfTQy68EPPag3BHitLpW6GZsVWhLC93XT8mXpg8X
- quKbjTGrkmLnGuZoG720wHqI6hl16y9L4EFfAvQqNplUtLwZc343+7LzS
-X-Gm-Gg: AZuq6aLqC+46cfN9Ni7PSf1QswfaEFgQ2brqeUA3aE9j+wb4tkzJeHLsDJsX9O66+zz
- KIeDFq/oZrac5/Jhq3QHHIGp205Uf/Xpeato5Yb36oPoOjvGElIQEeRRbEn2EoSOoahII31hnIQ
- nhYZd0X3Q7rp+GscrhskVvr3sIAcjoy4PvX0UhhMtC1NxUK2TzfZNLpCPUVpVIGkBlNfSX7T6aw
- yEPSLiH4zRYEQjPry46H/s2OCICZipECzAmenvAlYi/8HwKwGESSVRiiMK/C4jDiJ6SquhCgi81
- sVFTy43Y++/B9JHMPMomSGoEVjwnF/+Xge/FMfGNAhuwo/qRMCZQU9/CL8S/1VtG5xSkRu5ySiE
- eLd1RjqQSjteA/68r3+VOYJZuF/9fdVIbG1zQJ1zrZw==
-X-Received: by 2002:a17:90a:ee88:b0:353:3f04:1b78 with SMTP id
- 98e67ed59e1d1-353fecd096emr470467a91.4.1769491043806; 
- Mon, 26 Jan 2026 21:17:23 -0800 (PST)
-X-Received: by 2002:a17:90a:ee88:b0:353:3f04:1b78 with SMTP id
- 98e67ed59e1d1-353fecd096emr470454a91.4.1769491043445; 
- Mon, 26 Jan 2026 21:17:23 -0800 (PST)
+ AJvYcCUiq2N75Y9eU/7TNOWEv5DDNuOQsZSLvdS7c3zphYQbf4mozMTAgrGM7k7af3xK1Dz02opiY9soKjlk@nongnu.org
+X-Gm-Message-State: AOJu0Yy+ApNhwDzdXlYtTqhckaTWOT2gWGklhXoAKbXX7YNMTQ3EyFPj
+ TGeGzNtU3WhDr6bsziBsw45iWA8t6ooWM2Bf3GsYSH3ZcDhyLWJQIKoEWiILBqYfslDS3xEveh0
+ uqNH4cL9WsMGT7mACm4TnEfAwpYzQHCjPvzJ9h+Btp/tt7fFGc7I67/uc
+X-Gm-Gg: AZuq6aKlA8pqLJKSosS/lM2TIcNeubDMupm2lxwXrnOw3t8a+8RAEuytRvecUoByeUh
+ FHUVR8uipgf5xN8nuffl25JM9ZI/xXlYnGc+OKOvM6TSd2pwqupMO4zkzR/TN+9Qm0Sx7vH+MIK
+ XSp+iBQGdJ6xC2X8z+I4mcJ/Q1CIEaWz5cOBpyAlMm9+vYO1Wsf2XizX/On0Px9gIS/GryaGAoD
+ QNlox9foDJG1M/OfVVRNdiocNQ/TxCAXhYCthjqYrrzQiZmvS9MCNmprTYvnuf1PipeCKxkiJ0q
+ uhjWarMlrMuBxJfOYryE8trB1PzNOQ6OwKXP96bu8PfA/ya08dEuUsrw7ZPQ8bSNRSmpHK6EXEi
+ 2ZM65K6BS+/gtG6Q1iOvXu7EVYI5A79PufOB/tRoJ5A==
+X-Received: by 2002:a17:90b:3ccf:b0:353:356c:6821 with SMTP id
+ 98e67ed59e1d1-353fecd0906mr710448a91.8.1769491040983; 
+ Mon, 26 Jan 2026 21:17:20 -0800 (PST)
+X-Received: by 2002:a17:90b:3ccf:b0:353:356c:6821 with SMTP id
+ 98e67ed59e1d1-353fecd0906mr710436a91.8.1769491040627; 
+ Mon, 26 Jan 2026 21:17:20 -0800 (PST)
 Received: from rhel9-box.lan ([122.163.48.79])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-353f6230d5dsm1110925a91.17.2026.01.26.21.17.21
+ 98e67ed59e1d1-353f6230d5dsm1110925a91.17.2026.01.26.21.17.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 21:17:23 -0800 (PST)
+ Mon, 26 Jan 2026 21:17:20 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org,
  qemu-devel@nongnu.org
-Subject: [PATCH v3 16/33] i386/tdx: finalize TDX guest state upon reset
-Date: Tue, 27 Jan 2026 10:45:44 +0530
-Message-ID: <20260127051612.219475-17-anisinha@redhat.com>
+Subject: [PATCH v3 15/33] i386/tdx: refactor TDX firmware memory
+ initialization code into a new function
+Date: Tue, 27 Jan 2026 10:45:43 +0530
+Message-ID: <20260127051612.219475-16-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260127051612.219475-1-anisinha@redhat.com>
 References: <20260127051612.219475-1-anisinha@redhat.com>
@@ -122,143 +123,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the confidential virtual machine KVM file descriptor changes due to the
-guest reset, some TDX specific setup steps needs to be done again. This
-includes finalizing the inital guest launch state again. This change
-re-executes some parts of the TDX setup during the device reset phaze using a
-resettable interface. This finalizes the guest launch state again and locks
-it in. Machine done notifier which was previously used is no longer needed as
-the same code is now executed as a part of VM reset.
+A new helper function is introduced that refactors all firmware memory
+initialization code into a separate function. No functional change.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- target/i386/kvm/tdx.c        | 38 +++++++++++++++++++++++++++++++-----
- target/i386/kvm/tdx.h        |  1 +
- target/i386/kvm/trace-events |  3 +++
- 3 files changed, 37 insertions(+), 5 deletions(-)
+ target/i386/kvm/tdx.c | 73 ++++++++++++++++++++++++-------------------
+ 1 file changed, 40 insertions(+), 33 deletions(-)
 
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index fd8e3de969..37e91d95e1 100644
+index a3e81e1c0c..fd8e3de969 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -19,6 +19,7 @@
- #include "crypto/hash.h"
- #include "system/kvm_int.h"
- #include "system/runstate.h"
-+#include "system/reset.h"
- #include "system/system.h"
- #include "system/ramblock.h"
- #include "system/address-spaces.h"
-@@ -38,6 +39,7 @@
- #include "kvm_i386.h"
- #include "tdx.h"
- #include "tdx-quote-generator.h"
-+#include "trace.h"
- 
- #include "standard-headers/asm-x86/kvm_para.h"
- 
-@@ -389,9 +391,19 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
-     CONFIDENTIAL_GUEST_SUPPORT(tdx_guest)->ready = true;
+@@ -295,14 +295,51 @@ static void tdx_post_init_vcpus(void)
+     }
  }
  
--static Notifier tdx_machine_done_notify = {
--    .notify = tdx_finalize_vm,
--};
-+static void tdx_handle_reset(Object *obj, ResetType type)
-+{
-+    if (!runstate_is_running() && !phase_check(PHASE_MACHINE_READY)) {
-+        return;
-+    }
+-static void tdx_finalize_vm(Notifier *notifier, void *unused)
++static void tdx_init_fw_mem_region(void)
+ {
+     TdxFirmware *tdvf = &tdx_guest->tdvf;
+     TdxFirmwareEntry *entry;
+-    RAMBlock *ram_block;
+     Error *local_err = NULL;
+     int r;
+ 
++    for_each_tdx_fw_entry(tdvf, entry) {
++        struct kvm_tdx_init_mem_region region;
++        uint32_t flags;
 +
-+    if (!kvm_enable_hypercall(BIT_ULL(KVM_HC_MAP_GPA_RANGE))) {
-+        error_setg(&error_fatal, "KVM_HC_MAP_GPA_RANGE not enabled for guest");
-+    }
++        region = (struct kvm_tdx_init_mem_region) {
++            .source_addr = (uintptr_t)entry->mem_ptr,
++            .gpa = entry->address,
++            .nr_pages = entry->size >> 12,
++        };
 +
-+    tdx_finalize_vm(NULL, NULL);
-+    trace_tdx_handle_reset();
++        flags = entry->attributes & TDVF_SECTION_ATTRIBUTES_MR_EXTEND ?
++                KVM_TDX_MEASURE_MEMORY_REGION : 0;
++
++        do {
++            error_free(local_err);
++            local_err = NULL;
++            r = tdx_vcpu_ioctl(first_cpu, KVM_TDX_INIT_MEM_REGION, flags,
++                               &region, &local_err);
++        } while (r == -EAGAIN || r == -EINTR);
++        if (r < 0) {
++            error_report_err(local_err);
++            exit(1);
++        }
++
++        if (entry->type == TDVF_SECTION_TYPE_TD_HOB ||
++            entry->type == TDVF_SECTION_TYPE_TEMP_MEM) {
++            qemu_ram_munmap(-1, entry->mem_ptr, entry->size);
++            entry->mem_ptr = NULL;
++        }
++    }
 +}
++
++static void tdx_finalize_vm(Notifier *notifier, void *unused)
++{
++    TdxFirmware *tdvf = &tdx_guest->tdvf;
++    TdxFirmwareEntry *entry;
++    RAMBlock *ram_block;
++
+     tdx_init_ram_entries();
  
- /*
-  * Some CPUID bits change from fixed1 to configurable bits when TDX module
-@@ -738,8 +750,6 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-      */
-     kvm_readonly_mem_allowed = false;
+     for_each_tdx_fw_entry(tdvf, entry) {
+@@ -339,37 +376,7 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
+     tdvf_hob_create(tdx_guest, tdx_get_hob_entry(tdx_guest));
  
--    qemu_add_machine_init_done_notifier(&tdx_machine_done_notify);
+     tdx_post_init_vcpus();
 -
-     tdx_guest = tdx;
-     return 0;
- }
-@@ -1505,6 +1515,7 @@ OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
-                                    TDX_GUEST,
-                                    X86_CONFIDENTIAL_GUEST,
-                                    { TYPE_USER_CREATABLE },
-+                                   { TYPE_RESETTABLE_INTERFACE },
-                                    { NULL })
+-    for_each_tdx_fw_entry(tdvf, entry) {
+-        struct kvm_tdx_init_mem_region region;
+-        uint32_t flags;
+-
+-        region = (struct kvm_tdx_init_mem_region) {
+-            .source_addr = (uintptr_t)entry->mem_ptr,
+-            .gpa = entry->address,
+-            .nr_pages = entry->size >> 12,
+-        };
+-
+-        flags = entry->attributes & TDVF_SECTION_ATTRIBUTES_MR_EXTEND ?
+-                KVM_TDX_MEASURE_MEMORY_REGION : 0;
+-
+-        do {
+-            error_free(local_err);
+-            local_err = NULL;
+-            r = tdx_vcpu_ioctl(first_cpu, KVM_TDX_INIT_MEM_REGION, flags,
+-                               &region, &local_err);
+-        } while (r == -EAGAIN || r == -EINTR);
+-        if (r < 0) {
+-            error_report_err(local_err);
+-            exit(1);
+-        }
+-
+-        if (entry->type == TDVF_SECTION_TYPE_TD_HOB ||
+-            entry->type == TDVF_SECTION_TYPE_TEMP_MEM) {
+-            qemu_ram_munmap(-1, entry->mem_ptr, entry->size);
+-            entry->mem_ptr = NULL;
+-        }
+-    }
++    tdx_init_fw_mem_region();
  
- static void tdx_guest_init(Object *obj)
-@@ -1538,16 +1549,24 @@ static void tdx_guest_init(Object *obj)
- 
-     tdx->event_notify_vector = -1;
-     tdx->event_notify_apicid = -1;
-+    qemu_register_resettable(obj);
- }
- 
- static void tdx_guest_finalize(Object *obj)
- {
- }
- 
-+static ResettableState *tdx_reset_state(Object *obj)
-+{
-+    TdxGuest *tdx = TDX_GUEST(obj);
-+    return &tdx->reset_state;
-+}
-+
- static void tdx_guest_class_init(ObjectClass *oc, const void *data)
- {
-     ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
-     X86ConfidentialGuestClass *x86_klass = X86_CONFIDENTIAL_GUEST_CLASS(oc);
-+    ResettableClass *rc = RESETTABLE_CLASS(oc);
- 
-     klass->kvm_init = tdx_kvm_init;
-     klass->can_rebuild_guest_state = true;
-@@ -1555,4 +1574,13 @@ static void tdx_guest_class_init(ObjectClass *oc, const void *data)
-     x86_klass->cpu_instance_init = tdx_cpu_instance_init;
-     x86_klass->adjust_cpuid_features = tdx_adjust_cpuid_features;
-     x86_klass->check_features = tdx_check_features;
-+
-+    /*
-+     * the exit phase makes sure sev handles reset after all legacy resets
-+     * have taken place (in the hold phase) and IGVM has also properly
-+     * set up the boot state.
-+     */
-+    rc->phases.exit = tdx_handle_reset;
-+    rc->get_state = tdx_reset_state;
-+
- }
-diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-index 1c38faf983..264fbe530c 100644
---- a/target/i386/kvm/tdx.h
-+++ b/target/i386/kvm/tdx.h
-@@ -70,6 +70,7 @@ typedef struct TdxGuest {
- 
-     uint32_t event_notify_vector;
-     uint32_t event_notify_apicid;
-+    ResettableState reset_state;
- } TdxGuest;
- 
- #ifdef CONFIG_TDX
-diff --git a/target/i386/kvm/trace-events b/target/i386/kvm/trace-events
-index 2d213c9f9b..a386234571 100644
---- a/target/i386/kvm/trace-events
-+++ b/target/i386/kvm/trace-events
-@@ -14,3 +14,6 @@ kvm_xen_soft_reset(void) ""
- kvm_xen_set_shared_info(uint64_t gfn) "shared info at gfn 0x%" PRIx64
- kvm_xen_set_vcpu_attr(int cpu, int type, uint64_t gpa) "vcpu attr cpu %d type %d gpa 0x%" PRIx64
- kvm_xen_set_vcpu_callback(int cpu, int vector) "callback vcpu %d vector %d"
-+
-+# tdx.c
-+tdx_handle_reset(void) ""
+     /*
+      * TDVF image has been copied into private region above via
 -- 
 2.42.0
 
