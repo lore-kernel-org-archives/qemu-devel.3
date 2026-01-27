@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95625D2FED4
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDF3D2FED4
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:34:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknrw-0001yb-1n; Tue, 27 Jan 2026 13:32:53 -0500
+	id 1vknpH-0005NK-QI; Tue, 27 Jan 2026 13:30:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vknp4-0003aT-PY
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:29:54 -0500
-Received: from p-west2-cluster5-host1-snip4-4.eps.apple.com ([57.103.71.107]
- helo=outbound.mr.icloud.com)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vkno4-0001sC-OE
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vknp2-0003sV-Su
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:29:54 -0500
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPS id
- 784DB18000AD; Tue, 27 Jan 2026 18:29:50 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1769538592; x=1772130592;
- bh=MAqqeKbQwR4WEZPLy9SVkmdTt6Yfi3jNZF5s19r1Uoo=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=bx5F8uH15r1qssc44hZP1HpM4eo0JUChXH4jNPqLfCfqVMUti99SYS9AYTgsBJVNTEVXqC9ZyKOcc5QCoa/EcaSDj6rvUR0fWNj11F+hy26cd/MXOt0muEyh1CNO2cvN0L9jRTiwfaLXdPuF766/GE2WVEW9iSMvBpscSxikziK6pk1d+wTJgHwfeprfYjWchB9nC6v/BgW+tDAqbGGJECQ0sxkOfsURE3uczfc24R1+PinUsVyNBmIXQb89QvStLVOUFwtFbNOKRBCVBSZTu0JQY4Jj8pAMUqrh2udeuQ/OqPz3LSVFKrcTj4aSjLLIpMTmF3/numKwvWlme0ahMg==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPSA id
- EED1A180013E; Tue, 27 Jan 2026 18:29:45 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org,
-	mohamed@unpredictable.fr
-Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, qemu-arm@nongnu.org,
- Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vknny-0003Te-DR
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769538523;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sEd0Tmc1bxnYK9FQ4RrXvn5qI2xDS/nNhmG9phjTnHU=;
+ b=An0ENdcznDboI/Kx9azJZ5BNaq6r8gC14pYXct4FMmncspcFhhzC4nPGtEsXmdcjJPveyl
+ RuClEMZz/ZhK2wg/bSxxqhq3GKmLCiZMVdsQX1uadBhQibsnI0TOKdVO6t+HN3H6zyGrtc
+ e7/7ZKH6c+R9iqi4e2pnJf+PcH99nqc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-262-C_tpzxSXPs2G40KY9ViV6g-1; Tue,
+ 27 Jan 2026 13:28:36 -0500
+X-MC-Unique: C_tpzxSXPs2G40KY9ViV6g-1
+X-Mimecast-MFC-AGG-ID: C_tpzxSXPs2G40KY9ViV6g_1769538514
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 670BD1955D98; Tue, 27 Jan 2026 18:28:34 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.23])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 562AF30001A2; Tue, 27 Jan 2026 18:28:30 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>,
- Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v18 21/22] whpx: enable arm64 builds
-Date: Tue, 27 Jan 2026 19:28:01 +0100
-Message-ID: <20260127182805.73212-22-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260127182805.73212-1-mohamed@unpredictable.fr>
-References: <20260127182805.73212-1-mohamed@unpredictable.fr>
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>,
+ Laurent Vivier <laurent@vivier.eu>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:Xilinx ZynqMP and...)
+Subject: [PATCH 32/43] audio: replace int endianness with bool big_endian in
+ audsettings
+Date: Tue, 27 Jan 2026 22:24:59 +0400
+Message-ID: <20260127182516.289834-33-marcandre.lureau@redhat.com>
+In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDE1MCBTYWx0ZWRfX5I//y3Exorxx
- URmoT71gbWagpWttLCnxYVazr/SaZWE74Uvd3XyeiS0e2nfTd2DzUzrNWUUPVzJ/1iJDD401pQf
- v83JnC/FngAoAZnmC3h/SqKRC5dKyLk5vbGELaYBReWDz/G7fVuTDAKnF4Ey4Geb9sjtiivv60k
- ZKrNRRr4Zk1+ARvCG2UlnyVFymTGP1NbhDdT00dLAuECJf4ywiyrfw0DAuDSOXjExf7NmUsksV5
- IbnB4bOuWlgz1HWjg1JARwV8Ol7r19xjmaVGteSjESkpH105doFq4c1lAKU5ECh32JuB2/CgZV8
- TW+ERFye7p/Fq9Tji4HfSwZmcL+Z2DAW9dMO2hQUFmT8qzy55joMUF/sTK09wY=
-X-Proofpoint-GUID: TLJ1g47XktAIKJphqRngLfQ8kbau0N_Z
-X-Authority-Info-Out: v=2.4 cv=Jon8bc4C c=1 sm=1 tr=0 ts=6979041f
- cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=Ck9h3XeVBPDugYI9Na4A:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: TLJ1g47XktAIKJphqRngLfQ8kbau0N_Z
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-27_04,2026-01-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- bulkscore=0 clxscore=1030 suspectscore=0 spamscore=0 adultscore=0
- lowpriorityscore=0 mlxlogscore=955 mlxscore=0 malwarescore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601270150
-X-JNJ: AAAAAAAB6nbOkU6G1DzihKzwYLMgBFRXxreg2uxg4pS+6J9ChSaP8dWfE74sSZ2FuhAqYqg4IxR89bKKggy0K7hu+6yzmfGyFxMac3aN+McaVWe12ULgfkT8R8lI4xtDvNVktNgeSyWrF61+9v57RGFe4XRZZzza05nB8L6QDEtnxRtU7k8cjBAXceI/qy7c//qP38PQVsrJQwT03krb7jb+pUKERKRSNTBtTBxObtbKPvvGMr0ZS4Im2y+fsYtTTYXd8Iw2ExjMl8GCNWTQouBoBN1rtlm9WG3SGNgRbQXKn2Ky/rn+Ge2lz+5HnqasvRaX/x7k+7DTvfGImzkOPTTUlEAcRryv+J5RykKyFsYdj5KqR1BZbz14hVqRT2uiwKd/dmQlhRCutqz4yD+yue2JinuJHnLvz58oGX4LPExlqgdZRcz9uZKxZu68HXA0J1H7zAVG99BRARystMdcAxE4QthVEdxXyiU8/uU7KZ1IjgnWNPLsoEIHDhL3dw0axCCu/BPvQLqimlopvWGHWvygrnapp3XfsMR+SX3PLcD9cCroy3YnQT3whYpFCTHAcWUpP0fwwE9NiDdP2P8lLIDkwRCPykI0dP0eNXyzNWnZy2LOROGsTTktM/6BI7cHHAToO1I+HbLuDMjbKNhXxPxhA9PTSW1gDo3bgCy8LJ9l5E7BICFWbP/gR8C/vsJDJMsk1uMC0TisZ18HeYTtnm5WCw58htYhedhBEOVajb0QUEbj+CWJaHKhBqzb4cM5LLC1NqbN2sxvamQbtOKA8qCBdiV/eT/C8/cCJMNWVHBWbuOaIrl9tKDRyILOkBQqDH/pfpmK+KBMTlpMME+YxP0LWI2K6XJYLHkSWWRLf570rZqK+HJiHbRCJVGH1/IdyLOrIBBT5KCtUgX+RGVI3sUQho3mKDnh7mDq
-Received-SPF: pass client-ip=57.103.71.107;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,54 +96,870 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+The endianness field used an int to represent a boolean concept, with
+0 meaning little-endian and 1 meaning big-endian. This required runtime
+validation to reject invalid values and made the code less readable.
+
+Replace with a bool big_endian field that is self-documenting and
+type-safe. The compiler now enforces valid values, eliminating the
+need for the validation check in audio_validate_settings().
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- meson.build | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ audio/dsound_template.h  |  2 +-
+ include/qemu/audio.h     |  2 +-
+ audio/alsaaudio.c        |  8 ++++----
+ audio/audio-mixeng-be.c  | 21 ++++-----------------
+ audio/jackaudio.c        |  4 ++--
+ audio/ossaudio.c         | 22 +++++++++++-----------
+ audio/paaudio.c          | 22 +++++++++++-----------
+ audio/pwaudio.c          | 30 +++++++++++++++---------------
+ audio/sdlaudio.c         | 26 +++++++++++++-------------
+ audio/sndioaudio.c       |  2 +-
+ audio/spiceaudio.c       |  4 ++--
+ audio/wavaudio.c         |  2 +-
+ audio/wavcapture.c       |  2 +-
+ hw/audio/ac97.c          |  2 +-
+ hw/audio/adlib.c         |  2 +-
+ hw/audio/asc.c           |  2 +-
+ hw/audio/cs4231a.c       |  6 +++---
+ hw/audio/es1370.c        |  2 +-
+ hw/audio/gus.c           |  2 +-
+ hw/audio/lm4549.c        |  6 +++---
+ hw/audio/sb16.c          |  8 ++++----
+ hw/audio/via-ac97.c      |  2 +-
+ hw/audio/virtio-snd.c    |  2 +-
+ hw/audio/wm8750.c        |  4 ++--
+ hw/display/xlnx_dp.c     |  2 +-
+ hw/usb/dev-audio.c       |  2 +-
+ tests/audio/test-audio.c |  2 +-
+ ui/vnc.c                 |  2 +-
+ 28 files changed, 90 insertions(+), 103 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index a84f14258b..286afca4bb 100644
---- a/meson.build
-+++ b/meson.build
-@@ -300,7 +300,8 @@ accelerator_targets += { 'CONFIG_XEN': xen_targets }
+diff --git a/audio/dsound_template.h b/audio/dsound_template.h
+index af4019bcb34..f9761120875 100644
+--- a/audio/dsound_template.h
++++ b/audio/dsound_template.h
+@@ -244,7 +244,7 @@ static int dsound_init_out(HWVoiceOut *hw, struct audsettings *as)
+     }
  
- if cpu == 'aarch64'
-   accelerator_targets += {
--    'CONFIG_HVF': ['aarch64-softmmu']
-+    'CONFIG_HVF': ['aarch64-softmmu'],
-+    'CONFIG_WHPX': ['aarch64-softmmu']
-   }
- elif cpu == 'x86_64'
-   accelerator_targets += {
-@@ -856,13 +857,18 @@ if get_option('mshv').allowed() and host_os == 'linux'
- endif
+     ds->first_time = true;
+-    obt_as.endianness = 0;
++    obt_as.big_endian = false;
+     audio_pcm_init_info (&hw->info, &obt_as);
  
- if get_option('whpx').allowed() and host_os == 'windows'
--  if get_option('whpx').enabled() and host_machine.cpu() != 'x86_64'
--    error('WHPX requires 64-bit host')
--  elif cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
--       cc.has_header('winhvemulation.h', required: get_option('whpx'))
--    accelerators += 'CONFIG_WHPX'
-+  if cpu == 'i386'
-+    if get_option('whpx').enabled()
-+     error('WHPX requires 64-bit host')
-+    endif
-+   # Leave CONFIG_WHPX disabled
-+  else
-+    if cc.has_header('winhvplatform.h', required: get_option('whpx')) and \
-+      cc.has_header('winhvemulation.h', required: get_option('whpx'))
-+      accelerators += 'CONFIG_WHPX'
-+    endif
-   endif
--endif
-+ endif
+     if (bc.dwBufferBytes % hw->info.bytes_per_frame) {
+diff --git a/include/qemu/audio.h b/include/qemu/audio.h
+index a2fbc286eb1..94d81a2a2ec 100644
+--- a/include/qemu/audio.h
++++ b/include/qemu/audio.h
+@@ -38,7 +38,7 @@ typedef struct audsettings {
+     int freq;
+     int nchannels;
+     AudioFormat fmt;
+-    int endianness;
++    bool big_endian;
+ } audsettings;
  
- hvf = not_found
- if get_option('hvf').allowed()
+ typedef struct SWVoiceOut SWVoiceOut;
+diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
+index 3058af58e0b..a606ce0d4cd 100644
+--- a/audio/alsaaudio.c
++++ b/audio/alsaaudio.c
+@@ -666,7 +666,7 @@ static int alsa_init_out(HWVoiceOut *hw, struct audsettings *as)
+     struct audsettings obt_as;
+     Audiodev *dev = hw->s->dev;
+ 
+-    req.fmt = aud_to_alsafmt (as->fmt, as->endianness);
++    req.fmt = aud_to_alsafmt (as->fmt, as->big_endian);
+     req.freq = as->freq;
+     req.nchannels = as->nchannels;
+ 
+@@ -677,7 +677,7 @@ static int alsa_init_out(HWVoiceOut *hw, struct audsettings *as)
+     obt_as.freq = obt.freq;
+     obt_as.nchannels = obt.nchannels;
+     obt_as.fmt = obt.fmt;
+-    obt_as.endianness = obt.endianness;
++    obt_as.big_endian = obt.endianness;
+ 
+     audio_pcm_init_info (&hw->info, &obt_as);
+     hw->samples = obt.samples;
+@@ -752,7 +752,7 @@ static int alsa_init_in(HWVoiceIn *hw, struct audsettings *as)
+     struct audsettings obt_as;
+     Audiodev *dev = hw->s->dev;
+ 
+-    req.fmt = aud_to_alsafmt (as->fmt, as->endianness);
++    req.fmt = aud_to_alsafmt (as->fmt, as->big_endian);
+     req.freq = as->freq;
+     req.nchannels = as->nchannels;
+ 
+@@ -763,7 +763,7 @@ static int alsa_init_in(HWVoiceIn *hw, struct audsettings *as)
+     obt_as.freq = obt.freq;
+     obt_as.nchannels = obt.nchannels;
+     obt_as.fmt = obt.fmt;
+-    obt_as.endianness = obt.endianness;
++    obt_as.big_endian = obt.endianness;
+ 
+     audio_pcm_init_info (&hw->info, &obt_as);
+     hw->samples = obt.samples;
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index 146026d0b39..e11c586c827 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -135,19 +135,7 @@ static void audio_print_settings (const struct audsettings *as)
+         break;
+     }
+ 
+-    AUD_log (NULL, " endianness=");
+-    switch (as->endianness) {
+-    case 0:
+-        AUD_log (NULL, "little");
+-        break;
+-    case 1:
+-        AUD_log (NULL, "big");
+-        break;
+-    default:
+-        AUD_log (NULL, "invalid");
+-        break;
+-    }
+-    AUD_log (NULL, "\n");
++    AUD_log (NULL, " endianness=%s\n", as->big_endian ? "big" : "little");
+ }
+ 
+ static int audio_validate_settings (const struct audsettings *as)
+@@ -155,7 +143,6 @@ static int audio_validate_settings (const struct audsettings *as)
+     int invalid;
+ 
+     invalid = as->nchannels < 1;
+-    invalid |= as->endianness != 0 && as->endianness != 1;
+ 
+     switch (as->fmt) {
+     case AUDIO_FORMAT_S8:
+@@ -180,7 +167,7 @@ static int audio_pcm_info_eq (struct audio_pcm_info *info, const struct audsetti
+     return info->af == as->fmt
+         && info->freq == as->freq
+         && info->nchannels == as->nchannels
+-        && info->swap_endianness == (as->endianness != HOST_BIG_ENDIAN);
++        && info->swap_endianness == (as->big_endian != HOST_BIG_ENDIAN);
+ }
+ 
+ void audio_pcm_init_info (struct audio_pcm_info *info, const struct audsettings *as)
+@@ -190,7 +177,7 @@ void audio_pcm_init_info (struct audio_pcm_info *info, const struct audsettings
+     info->nchannels = as->nchannels;
+     info->bytes_per_frame = as->nchannels * audio_format_bits(as->fmt) / 8;
+     info->bytes_per_second = info->freq * info->bytes_per_frame;
+-    info->swap_endianness = (as->endianness != HOST_BIG_ENDIAN);
++    info->swap_endianness = (as->big_endian != HOST_BIG_ENDIAN);
+ }
+ 
+ void audio_pcm_info_clear_buf(struct audio_pcm_info *info, void *buf, int len)
+@@ -1797,7 +1784,7 @@ audsettings audiodev_to_audsettings(AudiodevPerDirectionOptions *pdo)
+         .freq = pdo->frequency,
+         .nchannels = pdo->channels,
+         .fmt = pdo->format,
+-        .endianness = HOST_BIG_ENDIAN,
++        .big_endian = HOST_BIG_ENDIAN,
+     };
+ }
+ 
+diff --git a/audio/jackaudio.c b/audio/jackaudio.c
+index 547672f6d36..58b9d2f04e2 100644
+--- a/audio/jackaudio.c
++++ b/audio/jackaudio.c
+@@ -531,7 +531,7 @@ static int qjack_init_out(HWVoiceOut *hw, struct audsettings *as)
+         .freq       = jo->c.freq,
+         .nchannels  = jo->c.nchannels,
+         .fmt        = AUDIO_FORMAT_F32,
+-        .endianness = 0
++        .big_endian = false
+     };
+     audio_pcm_init_info(&hw->info, &os);
+ 
+@@ -566,7 +566,7 @@ static int qjack_init_in(HWVoiceIn *hw, struct audsettings *as)
+         .freq       = ji->c.freq,
+         .nchannels  = ji->c.nchannels,
+         .fmt        = AUDIO_FORMAT_F32,
+-        .endianness = 0
++        .big_endian = false
+     };
+     audio_pcm_init_info(&hw->info, &is);
+ 
+diff --git a/audio/ossaudio.c b/audio/ossaudio.c
+index 8388f81343b..0f1c097a666 100644
+--- a/audio/ossaudio.c
++++ b/audio/ossaudio.c
+@@ -160,36 +160,36 @@ static int aud_to_ossfmt(AudioFormat fmt, bool big_endian)
+     }
+ }
+ 
+-static int oss_to_audfmt (int ossfmt, AudioFormat *fmt, int *endianness)
++static int oss_to_audfmt (int ossfmt, AudioFormat *fmt, bool *big_endian)
+ {
+     switch (ossfmt) {
+     case AFMT_S8:
+-        *endianness = 0;
++        *big_endian = false;
+         *fmt = AUDIO_FORMAT_S8;
+         break;
+ 
+     case AFMT_U8:
+-        *endianness = 0;
++        *big_endian = false;
+         *fmt = AUDIO_FORMAT_U8;
+         break;
+ 
+     case AFMT_S16_LE:
+-        *endianness = 0;
++        *big_endian = false;
+         *fmt = AUDIO_FORMAT_S16;
+         break;
+ 
+     case AFMT_U16_LE:
+-        *endianness = 0;
++        *big_endian = false;
+         *fmt = AUDIO_FORMAT_U16;
+         break;
+ 
+     case AFMT_S16_BE:
+-        *endianness = 1;
++        *big_endian = true;
+         *fmt = AUDIO_FORMAT_S16;
+         break;
+ 
+     case AFMT_U16_BE:
+-        *endianness = 1;
++        *big_endian = true;
+         *fmt = AUDIO_FORMAT_U16;
+         break;
+ 
+@@ -475,7 +475,7 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
+ 
+     oss->fd = -1;
+ 
+-    req.fmt = aud_to_ossfmt (as->fmt, as->endianness);
++    req.fmt = aud_to_ossfmt (as->fmt, as->big_endian);
+     req.freq = as->freq;
+     req.nchannels = as->nchannels;
+ 
+@@ -483,7 +483,7 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
+         return -1;
+     }
+ 
+-    err = oss_to_audfmt(obt.fmt, &obt_as.fmt, &obt_as.endianness);
++    err = oss_to_audfmt(obt.fmt, &obt_as.fmt, &obt_as.big_endian);
+     if (err) {
+         oss_anal_close (&fd);
+         return -1;
+@@ -601,14 +601,14 @@ static int oss_init_in(HWVoiceIn *hw, struct audsettings *as)
+ 
+     oss->fd = -1;
+ 
+-    req.fmt = aud_to_ossfmt (as->fmt, as->endianness);
++    req.fmt = aud_to_ossfmt (as->fmt, as->big_endian);
+     req.freq = as->freq;
+     req.nchannels = as->nchannels;
+     if (oss_open(1, &req, as, &obt, &fd, dev)) {
+         return -1;
+     }
+ 
+-    err = oss_to_audfmt(obt.fmt, &obt_as.fmt, &obt_as.endianness);
++    err = oss_to_audfmt(obt.fmt, &obt_as.fmt, &obt_as.big_endian);
+     if (err) {
+         oss_anal_close (&fd);
+         return -1;
+diff --git a/audio/paaudio.c b/audio/paaudio.c
+index bc6a8fa67b3..2a745ae38f9 100644
+--- a/audio/paaudio.c
++++ b/audio/paaudio.c
+@@ -352,28 +352,28 @@ static pa_sample_format_t audfmt_to_pa(AudioFormat afmt, bool big_endian)
+     return format;
+ }
+ 
+-static AudioFormat pa_to_audfmt (pa_sample_format_t fmt, int *endianness)
++static AudioFormat pa_to_audfmt (pa_sample_format_t fmt, bool *big_endian)
+ {
+     switch (fmt) {
+     case PA_SAMPLE_U8:
+         return AUDIO_FORMAT_U8;
+     case PA_SAMPLE_S16BE:
+-        *endianness = 1;
++        *big_endian = true;
+         return AUDIO_FORMAT_S16;
+     case PA_SAMPLE_S16LE:
+-        *endianness = 0;
++        *big_endian = false;
+         return AUDIO_FORMAT_S16;
+     case PA_SAMPLE_S32BE:
+-        *endianness = 1;
++        *big_endian = true;
+         return AUDIO_FORMAT_S32;
+     case PA_SAMPLE_S32LE:
+-        *endianness = 0;
++        *big_endian = false;
+         return AUDIO_FORMAT_S32;
+     case PA_SAMPLE_FLOAT32BE:
+-        *endianness = 1;
++        *big_endian = true;
+         return AUDIO_FORMAT_F32;
+     case PA_SAMPLE_FLOAT32LE:
+-        *endianness = 0;
++        *big_endian = false;
+         return AUDIO_FORMAT_F32;
+     default:
+         error_report("pulseaudio: Internal logic error: Bad pa_sample_format %d", fmt);
+@@ -531,7 +531,7 @@ static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as)
+     PAConnection *c = apa->conn;
+ 
+     pa->g = apa;
+-    ss.format = audfmt_to_pa (as->fmt, as->endianness);
++    ss.format = audfmt_to_pa (as->fmt, as->big_endian);
+     ss.channels = as->nchannels;
+     ss.rate = as->freq;
+ 
+@@ -541,7 +541,7 @@ static int qpa_init_out(HWVoiceOut *hw, struct audsettings *as)
+     ba.maxlength = -1;
+     ba.prebuf = -1;
+ 
+-    obt_as.fmt = pa_to_audfmt (ss.format, &obt_as.endianness);
++    obt_as.fmt = pa_to_audfmt (ss.format, &obt_as.big_endian);
+ 
+     pa->stream = qpa_simple_new (
+         c,
+@@ -582,7 +582,7 @@ static int qpa_init_in(HWVoiceIn *hw, struct audsettings *as)
+     PAConnection *c = apa->conn;
+ 
+     pa->g = apa;
+-    ss.format = audfmt_to_pa (as->fmt, as->endianness);
++    ss.format = audfmt_to_pa (as->fmt, as->big_endian);
+     ss.channels = as->nchannels;
+     ss.rate = as->freq;
+ 
+@@ -592,7 +592,7 @@ static int qpa_init_in(HWVoiceIn *hw, struct audsettings *as)
+     ba.minreq = -1;
+     ba.prebuf = -1;
+ 
+-    obt_as.fmt = pa_to_audfmt (ss.format, &obt_as.endianness);
++    obt_as.fmt = pa_to_audfmt (ss.format, &obt_as.big_endian);
+ 
+     pa->stream = qpa_simple_new (
+         c,
+diff --git a/audio/pwaudio.c b/audio/pwaudio.c
+index c30738c16ef..66ca1231541 100644
+--- a/audio/pwaudio.c
++++ b/audio/pwaudio.c
+@@ -365,7 +365,7 @@ audfmt_to_pw(AudioFormat fmt, bool big_endian)
+ }
+ 
+ static AudioFormat
+-pw_to_audfmt(enum spa_audio_format fmt, int *endianness,
++pw_to_audfmt(enum spa_audio_format fmt, bool *big_endian,
+              uint32_t *sample_size)
+ {
+     switch (fmt) {
+@@ -377,43 +377,43 @@ pw_to_audfmt(enum spa_audio_format fmt, int *endianness,
+         return AUDIO_FORMAT_U8;
+     case SPA_AUDIO_FORMAT_S16_BE:
+         *sample_size = 2;
+-        *endianness = 1;
++        *big_endian = true;
+         return AUDIO_FORMAT_S16;
+     case SPA_AUDIO_FORMAT_S16_LE:
+         *sample_size = 2;
+-        *endianness = 0;
++        *big_endian = false;
+         return AUDIO_FORMAT_S16;
+     case SPA_AUDIO_FORMAT_U16_BE:
+         *sample_size = 2;
+-        *endianness = 1;
++        *big_endian = true;
+         return AUDIO_FORMAT_U16;
+     case SPA_AUDIO_FORMAT_U16_LE:
+         *sample_size = 2;
+-        *endianness = 0;
++        *big_endian = false;
+         return AUDIO_FORMAT_U16;
+     case SPA_AUDIO_FORMAT_S32_BE:
+         *sample_size = 4;
+-        *endianness = 1;
++        *big_endian = true;
+         return AUDIO_FORMAT_S32;
+     case SPA_AUDIO_FORMAT_S32_LE:
+         *sample_size = 4;
+-        *endianness = 0;
++        *big_endian = false;
+         return AUDIO_FORMAT_S32;
+     case SPA_AUDIO_FORMAT_U32_BE:
+         *sample_size = 4;
+-        *endianness = 1;
++        *big_endian = true;
+         return AUDIO_FORMAT_U32;
+     case SPA_AUDIO_FORMAT_U32_LE:
+         *sample_size = 4;
+-        *endianness = 0;
++        *big_endian = false;
+         return AUDIO_FORMAT_U32;
+     case SPA_AUDIO_FORMAT_F32_BE:
+         *sample_size = 4;
+-        *endianness = 1;
++        *big_endian = true;
+         return AUDIO_FORMAT_F32;
+     case SPA_AUDIO_FORMAT_F32_LE:
+         *sample_size = 4;
+-        *endianness = 0;
++        *big_endian = false;
+         return AUDIO_FORMAT_F32;
+     default:
+         *sample_size = 1;
+@@ -534,13 +534,13 @@ qpw_init_out(HWVoiceOut *hw, struct audsettings *as)
+ 
+     pw_thread_loop_lock(c->thread_loop);
+ 
+-    v->info.format = audfmt_to_pw(as->fmt, as->endianness);
++    v->info.format = audfmt_to_pw(as->fmt, as->big_endian);
+     v->info.channels = as->nchannels;
+     qpw_set_position(as->nchannels, v->info.position);
+     v->info.rate = as->freq;
+ 
+     obt_as.fmt =
+-        pw_to_audfmt(v->info.format, &obt_as.endianness, &v->frame_size);
++        pw_to_audfmt(v->info.format, &obt_as.big_endian, &v->frame_size);
+     v->frame_size *= as->nchannels;
+ 
+     v->req = (uint64_t)AUDIO_MIXENG_BACKEND(c)->dev->timer_period * v->info.rate
+@@ -581,13 +581,13 @@ qpw_init_in(HWVoiceIn *hw, struct audsettings *as)
+ 
+     pw_thread_loop_lock(c->thread_loop);
+ 
+-    v->info.format = audfmt_to_pw(as->fmt, as->endianness);
++    v->info.format = audfmt_to_pw(as->fmt, as->big_endian);
+     v->info.channels = as->nchannels;
+     qpw_set_position(as->nchannels, v->info.position);
+     v->info.rate = as->freq;
+ 
+     obt_as.fmt =
+-        pw_to_audfmt(v->info.format, &obt_as.endianness, &v->frame_size);
++        pw_to_audfmt(v->info.format, &obt_as.big_endian, &v->frame_size);
+     v->frame_size *= as->nchannels;
+ 
+     /* call the function that creates a new stream for recording */
+diff --git a/audio/sdlaudio.c b/audio/sdlaudio.c
+index bb667ef9525..b404adbc1e9 100644
+--- a/audio/sdlaudio.c
++++ b/audio/sdlaudio.c
+@@ -107,56 +107,56 @@ static int aud_to_sdlfmt (AudioFormat fmt)
+     }
+ }
+ 
+-static int sdl_to_audfmt(int sdlfmt, AudioFormat *fmt, int *endianness)
++static int sdl_to_audfmt(int sdlfmt, AudioFormat *fmt, bool *big_endian)
+ {
+     switch (sdlfmt) {
+     case AUDIO_S8:
+-        *endianness = 0;
++        *big_endian = false;
+         *fmt = AUDIO_FORMAT_S8;
+         break;
+ 
+     case AUDIO_U8:
+-        *endianness = 0;
++        *big_endian = false;
+         *fmt = AUDIO_FORMAT_U8;
+         break;
+ 
+     case AUDIO_S16LSB:
+-        *endianness = 0;
++        *big_endian = false;
+         *fmt = AUDIO_FORMAT_S16;
+         break;
+ 
+     case AUDIO_U16LSB:
+-        *endianness = 0;
++        *big_endian = false;
+         *fmt = AUDIO_FORMAT_U16;
+         break;
+ 
+     case AUDIO_S16MSB:
+-        *endianness = 1;
++        *big_endian = true;
+         *fmt = AUDIO_FORMAT_S16;
+         break;
+ 
+     case AUDIO_U16MSB:
+-        *endianness = 1;
++        *big_endian = true;
+         *fmt = AUDIO_FORMAT_U16;
+         break;
+ 
+     case AUDIO_S32LSB:
+-        *endianness = 0;
++        *big_endian = false;
+         *fmt = AUDIO_FORMAT_S32;
+         break;
+ 
+     case AUDIO_S32MSB:
+-        *endianness = 1;
++        *big_endian = true;
+         *fmt = AUDIO_FORMAT_S32;
+         break;
+ 
+     case AUDIO_F32LSB:
+-        *endianness = 0;
++        *big_endian = false;
+         *fmt = AUDIO_FORMAT_F32;
+         break;
+ 
+     case AUDIO_F32MSB:
+-        *endianness = 1;
++        *big_endian = true;
+         *fmt = AUDIO_FORMAT_F32;
+         break;
+ 
+@@ -361,7 +361,7 @@ static int sdl_init_out(HWVoiceOut *hw, struct audsettings *as)
+         return -1;
+     }
+ 
+-    err = sdl_to_audfmt(obt.format, &obt_as.fmt, &obt_as.endianness);
++    err = sdl_to_audfmt(obt.format, &obt_as.fmt, &obt_as.big_endian);
+     if (err) {
+         sdl_close_out(sdl);
+         return -1;
+@@ -417,7 +417,7 @@ static int sdl_init_in(HWVoiceIn *hw, audsettings *as)
+         return -1;
+     }
+ 
+-    err = sdl_to_audfmt(obt.format, &obt_as.fmt, &obt_as.endianness);
++    err = sdl_to_audfmt(obt.format, &obt_as.fmt, &obt_as.big_endian);
+     if (err) {
+         sdl_close_in(sdl);
+         return -1;
+diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
+index be491895532..69fa9d8ba54 100644
+--- a/audio/sndioaudio.c
++++ b/audio/sndioaudio.c
+@@ -387,7 +387,7 @@ static int sndio_init(SndioVoice *self,
+     }
+ 
+     if (req.bits > 8) {
+-        req.le = as->endianness ? 0 : 1;
++        req.le = as->big_endian ? 0 : 1;
+     }
+ 
+     req.rate = as->freq;
+diff --git a/audio/spiceaudio.c b/audio/spiceaudio.c
+index 2547126994d..1b67fe2a540 100644
+--- a/audio/spiceaudio.c
++++ b/audio/spiceaudio.c
+@@ -106,7 +106,7 @@ static int line_out_init(HWVoiceOut *hw, struct audsettings *as)
+ #endif
+     settings.nchannels  = SPICE_INTERFACE_PLAYBACK_CHAN;
+     settings.fmt        = AUDIO_FORMAT_S16;
+-    settings.endianness = HOST_BIG_ENDIAN;
++    settings.big_endian = HOST_BIG_ENDIAN;
+ 
+     audio_pcm_init_info (&hw->info, &settings);
+     hw->samples = LINE_OUT_SAMPLES;
+@@ -222,7 +222,7 @@ static int line_in_init(HWVoiceIn *hw, struct audsettings *as)
+ #endif
+     settings.nchannels  = SPICE_INTERFACE_RECORD_CHAN;
+     settings.fmt        = AUDIO_FORMAT_S16;
+-    settings.endianness = HOST_BIG_ENDIAN;
++    settings.big_endian = HOST_BIG_ENDIAN;
+ 
+     audio_pcm_init_info (&hw->info, &settings);
+     hw->samples = LINE_IN_SAMPLES;
+diff --git a/audio/wavaudio.c b/audio/wavaudio.c
+index 5c614ed3b51..217fb9937f8 100644
+--- a/audio/wavaudio.c
++++ b/audio/wavaudio.c
+@@ -111,7 +111,7 @@ static int wav_init_out(HWVoiceOut *hw, struct audsettings *as)
+ 
+     hdr[34] = bits16 ? 0x10 : 0x08;
+ 
+-    wav_as.endianness = 0;
++    wav_as.big_endian = false;
+     audio_pcm_init_info (&hw->info, &wav_as);
+ 
+     hw->samples = 1024;
+diff --git a/audio/wavcapture.c b/audio/wavcapture.c
+index 69aa91e35f6..2dac9461710 100644
+--- a/audio/wavcapture.c
++++ b/audio/wavcapture.c
+@@ -137,7 +137,7 @@ int wav_start_capture(AudioBackend *state, CaptureState *s, const char *path,
+     as.freq = freq;
+     as.nchannels = 1 << stereo;
+     as.fmt = bits16 ? AUDIO_FORMAT_S16 : AUDIO_FORMAT_U8;
+-    as.endianness = 0;
++    as.big_endian = false;
+ 
+     ops.notify = wav_notify;
+     ops.capture = wav_capture;
+diff --git a/hw/audio/ac97.c b/hw/audio/ac97.c
+index 5d442b7e067..fd74c249949 100644
+--- a/hw/audio/ac97.c
++++ b/hw/audio/ac97.c
+@@ -313,7 +313,7 @@ static void open_voice(AC97LinkState *s, int index, int freq)
+     as.freq = freq;
+     as.nchannels = 2;
+     as.fmt = AUDIO_FORMAT_S16;
+-    as.endianness = 0;
++    as.big_endian = false;
+ 
+     if (freq > 0) {
+         s->invalid_freq[index] = 0;
+diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
+index ce17e21d5fd..52ee5cb6256 100644
+--- a/hw/audio/adlib.c
++++ b/hw/audio/adlib.c
+@@ -254,7 +254,7 @@ static void adlib_realizefn (DeviceState *dev, Error **errp)
+     as.freq = s->freq;
+     as.nchannels = SHIFT;
+     as.fmt = AUDIO_FORMAT_S16;
+-    as.endianness = HOST_BIG_ENDIAN;
++    as.big_endian = HOST_BIG_ENDIAN;
+ 
+     s->voice = audio_be_open_out(
+         s->audio_be,
+diff --git a/hw/audio/asc.c b/hw/audio/asc.c
+index 35c7b5750d6..ea59bdde7b8 100644
+--- a/hw/audio/asc.c
++++ b/hw/audio/asc.c
+@@ -648,7 +648,7 @@ static void asc_realize(DeviceState *dev, Error **errp)
+     as.freq = ASC_FREQ;
+     as.nchannels = 2;
+     as.fmt = AUDIO_FORMAT_U8;
+-    as.endianness = HOST_BIG_ENDIAN;
++    as.big_endian = HOST_BIG_ENDIAN;
+ 
+     s->voice = audio_be_open_out(s->audio_be, s->voice, "asc.out", s, asc_out_cb,
+                             &as);
+diff --git a/hw/audio/cs4231a.c b/hw/audio/cs4231a.c
+index e6cae9c988e..c589670e855 100644
+--- a/hw/audio/cs4231a.c
++++ b/hw/audio/cs4231a.c
+@@ -289,7 +289,7 @@ static void cs_reset_voices (CSState *s, uint32_t val)
+     }
+ 
+     as.nchannels = (val & (1 << 4)) ? 2 : 1;
+-    as.endianness = 0;
++    as.big_endian = false;
+     s->tab = NULL;
+ 
+     switch ((val >> 5) & ((s->dregs[MODE_And_ID] & MODE2) ? 7 : 3)) {
+@@ -305,12 +305,12 @@ static void cs_reset_voices (CSState *s, uint32_t val)
+         s->tab = ALawDecompressTable;
+     x_law:
+         as.fmt = AUDIO_FORMAT_S16;
+-        as.endianness = HOST_BIG_ENDIAN;
++        as.big_endian = HOST_BIG_ENDIAN;
+         s->shift = as.nchannels == 2;
+         break;
+ 
+     case 6:
+-        as.endianness = 1;
++        as.big_endian = true;
+         /* fall through */
+     case 2:
+         as.fmt = AUDIO_FORMAT_S16;
+diff --git a/hw/audio/es1370.c b/hw/audio/es1370.c
+index e1658393c6a..ca7ad16df49 100644
+--- a/hw/audio/es1370.c
++++ b/hw/audio/es1370.c
+@@ -407,7 +407,7 @@ static void es1370_update_voices (ES1370State *s, uint32_t ctl, uint32_t sctl)
+                 as.freq = new_freq;
+                 as.nchannels = 1 << (new_fmt & 1);
+                 as.fmt = (new_fmt & 2) ? AUDIO_FORMAT_S16 : AUDIO_FORMAT_U8;
+-                as.endianness = 0;
++                as.big_endian = false;
+ 
+                 if (i == ADC_CHANNEL) {
+                     s->adc_voice =
+diff --git a/hw/audio/gus.c b/hw/audio/gus.c
+index 5c2a34c09d2..196c4f72205 100644
+--- a/hw/audio/gus.c
++++ b/hw/audio/gus.c
+@@ -256,7 +256,7 @@ static void gus_realizefn (DeviceState *dev, Error **errp)
+     as.freq = s->freq;
+     as.nchannels = 2;
+     as.fmt = AUDIO_FORMAT_S16;
+-    as.endianness = HOST_BIG_ENDIAN;
++    as.big_endian = HOST_BIG_ENDIAN;
+ 
+     s->voice = audio_be_open_out(
+         s->audio_be,
+diff --git a/hw/audio/lm4549.c b/hw/audio/lm4549.c
+index 14e15a844ba..a891e975106 100644
+--- a/hw/audio/lm4549.c
++++ b/hw/audio/lm4549.c
+@@ -202,7 +202,7 @@ void lm4549_write(lm4549_state *s,
+         as.freq = value;
+         as.nchannels = 2;
+         as.fmt = AUDIO_FORMAT_S16;
+-        as.endianness = 0;
++        as.big_endian = false;
+ 
+         s->voice = audio_be_open_out(
+             s->audio_be,
+@@ -272,7 +272,7 @@ static int lm4549_post_load(void *opaque, int version_id)
+     as.freq = freq;
+     as.nchannels = 2;
+     as.fmt = AUDIO_FORMAT_S16;
+-    as.endianness = 0;
++    as.big_endian = false;
+ 
+     s->voice = audio_be_open_out(
+         s->audio_be,
+@@ -312,7 +312,7 @@ void lm4549_init(lm4549_state *s, lm4549_callback data_req_cb, void* opaque,
+     as.freq = 48000;
+     as.nchannels = 2;
+     as.fmt = AUDIO_FORMAT_S16;
+-    as.endianness = 0;
++    as.big_endian = false;
+ 
+     s->voice = audio_be_open_out(
+         s->audio_be,
+diff --git a/hw/audio/sb16.c b/hw/audio/sb16.c
+index c8fc7df8b44..1b5e452a29b 100644
+--- a/hw/audio/sb16.c
++++ b/hw/audio/sb16.c
+@@ -213,7 +213,7 @@ static void continue_dma8 (SB16State *s)
+         as.freq = s->freq;
+         as.nchannels = 1 << s->fmt_stereo;
+         as.fmt = s->fmt;
+-        as.endianness = 0;
++        as.big_endian = false;
+ 
+         s->voice = audio_be_open_out(
+             s->audio_be,
+@@ -376,7 +376,7 @@ static void dma_cmd (SB16State *s, uint8_t cmd, uint8_t d0, int dma_len)
+         as.freq = s->freq;
+         as.nchannels = 1 << s->fmt_stereo;
+         as.fmt = s->fmt;
+-        as.endianness = 0;
++        as.big_endian = false;
+ 
+         s->voice = audio_be_open_out(
+             s->audio_be,
+@@ -877,7 +877,7 @@ static void legacy_reset (SB16State *s)
+     as.freq = s->freq;
+     as.nchannels = 1;
+     as.fmt = AUDIO_FORMAT_U8;
+-    as.endianness = 0;
++    as.big_endian = false;
+ 
+     s->voice = audio_be_open_out(
+         s->audio_be,
+@@ -1300,7 +1300,7 @@ static int sb16_post_load (void *opaque, int version_id)
+             as.freq = s->freq;
+             as.nchannels = 1 << s->fmt_stereo;
+             as.fmt = s->fmt;
+-            as.endianness = 0;
++            as.big_endian = false;
+ 
+             s->voice = audio_be_open_out(
+                 s->audio_be,
+diff --git a/hw/audio/via-ac97.c b/hw/audio/via-ac97.c
+index 84d137b41a3..9d61283542a 100644
+--- a/hw/audio/via-ac97.c
++++ b/hw/audio/via-ac97.c
+@@ -237,7 +237,7 @@ static void open_voice_out(ViaAC97State *s)
+         .freq = CODEC_REG(s, AC97_PCM_Front_DAC_Rate),
+         .nchannels = s->aur.type & BIT(4) ? 2 : 1,
+         .fmt = s->aur.type & BIT(5) ? AUDIO_FORMAT_S16 : AUDIO_FORMAT_S8,
+-        .endianness = 0,
++        .big_endian = false,
+     };
+     s->vo = audio_be_open_out(s->audio_be, s->vo, "via-ac97.out", s, out_cb, &as);
+ }
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 89e24c0a8e0..8b949146468 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -378,7 +378,7 @@ static void virtio_snd_get_qemu_audsettings(audsettings *as,
+     as->nchannels = MIN(AUDIO_MAX_CHANNELS, params->channels);
+     as->fmt = virtio_snd_get_qemu_format(params->format);
+     as->freq = virtio_snd_get_qemu_freq(params->rate);
+-    as->endianness = 0; /* Conforming to VIRTIO 1.0: always little endian. */
++    as->big_endian = false; /* Conforming to VIRTIO 1.0: always little endian. */
+ }
+ 
+ /*
+diff --git a/hw/audio/wm8750.c b/hw/audio/wm8750.c
+index 2a286515b14..e2507b0269a 100644
+--- a/hw/audio/wm8750.c
++++ b/hw/audio/wm8750.c
+@@ -202,7 +202,7 @@ static void wm8750_set_format(WM8750State *s)
+         return;
+ 
+     /* Setup input */
+-    in_fmt.endianness = 0;
++    in_fmt.big_endian = false;
+     in_fmt.nchannels = 2;
+     in_fmt.freq = s->adc_hz;
+     in_fmt.fmt = AUDIO_FORMAT_S16;
+@@ -215,7 +215,7 @@ static void wm8750_set_format(WM8750State *s)
+                     CODEC ".input3", s, wm8750_audio_in_cb, &in_fmt);
+ 
+     /* Setup output */
+-    out_fmt.endianness = 0;
++    out_fmt.big_endian = false;
+     out_fmt.nchannels = 2;
+     out_fmt.freq = s->dac_hz;
+     out_fmt.fmt = AUDIO_FORMAT_S16;
+diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+index 9aa4709b411..7d037b46a35 100644
+--- a/hw/display/xlnx_dp.c
++++ b/hw/display/xlnx_dp.c
+@@ -1393,7 +1393,7 @@ static void xlnx_dp_realize(DeviceState *dev, Error **errp)
+     as.freq = 44100;
+     as.nchannels = 2;
+     as.fmt = AUDIO_FORMAT_S16;
+-    as.endianness = 0;
++    as.big_endian = false;
+ 
+     s->amixer_output_stream = audio_be_open_out(s->audio_be,
+                                            s->amixer_output_stream,
+diff --git a/hw/usb/dev-audio.c b/hw/usb/dev-audio.c
+index 7b758718c12..e18e0a1dfd6 100644
+--- a/hw/usb/dev-audio.c
++++ b/hw/usb/dev-audio.c
+@@ -975,7 +975,7 @@ static void usb_audio_reinit(USBDevice *dev, unsigned channels)
+     s->out.as.freq       = USBAUDIO_SAMPLE_RATE;
+     s->out.as.nchannels  = s->out.channels;
+     s->out.as.fmt        = AUDIO_FORMAT_S16;
+-    s->out.as.endianness = 0;
++    s->out.as.big_endian = false;
+     streambuf_init(&s->out.buf, s->buffer, s->out.channels);
+ 
+     s->out.voice = audio_be_open_out(s->audio_be, s->out.voice, TYPE_USB_AUDIO,
+diff --git a/tests/audio/test-audio.c b/tests/audio/test-audio.c
+index e403f11f093..98e77cf542b 100644
+--- a/tests/audio/test-audio.c
++++ b/tests/audio/test-audio.c
+@@ -49,7 +49,7 @@ static const struct audsettings default_test_settings = {
+     .freq = SAMPLE_RATE,
+     .nchannels = CHANNELS,
+     .fmt = AUDIO_FORMAT_S16,
+-    .endianness = 0,
++    .big_endian = false,
+ };
+ 
+ static void dummy_audio_callback(void *opaque, int avail)
+diff --git a/ui/vnc.c b/ui/vnc.c
+index d56fe2c180e..daf5b01d342 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3372,7 +3372,7 @@ static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
+     vs->as.freq = 44100;
+     vs->as.nchannels = 2;
+     vs->as.fmt = AUDIO_FORMAT_S16;
+-    vs->as.endianness = 0;
++    vs->as.big_endian = false;
+ 
+     qemu_mutex_init(&vs->output_mutex);
+     vs->bh = qemu_bh_new(vnc_jobs_bh, vs);
 -- 
-2.50.1 (Apple Git-155)
+2.52.0
 
 
