@@ -4,92 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C61D2FEDB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C2ED2FED9
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknrJ-0000j8-Bu; Tue, 27 Jan 2026 13:32:13 -0500
+	id 1vknqA-0007E7-CU; Tue, 27 Jan 2026 13:31:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vknoi-00027j-7S
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:29:38 -0500
-Received: from p-west2-cluster5-host12-snip4-1.eps.apple.com ([57.103.71.14]
- helo=outbound.mr.icloud.com)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vknoL-00021t-WA
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:29:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vknof-0003jh-Vu
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:29:31 -0500
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPS id
- 74CF618001F3; Tue, 27 Jan 2026 18:29:27 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1769538569; x=1772130569;
- bh=0JMxBdejtyNGNNsrlyDp+frLA+zrF8bgZozsFerjTiI=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Ai5a5bLjOrDtWDWidVBYXEp3RviT8T5i8viRFo++3hMRAdsAcDqoJBUJob+RXeHe0t060KjhZaDwoLkJ3OgpJHCP8WDniS+sBALeOz+W6xNdR059WVHOmqichYYZtHVLhJe0cnul2rNlgXTrWh6DkZlyAesC30dTFe36ihm52Fd2gj1lPQeVzNQhAa5OciNzyV2zVNC9paZmVQhuT4yzpRA3XbDSyVN5Ok/kd9A6wlSUZJ9ci4DWI99B0El4rl9QPRl70YT1XQu+A9bWLpKs2j7iBBUHNogHIRfQ4UNsIegBbrssqE9o/upzNDuzLVfA5K9lF/EmHnDidsvtoy137g==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPSA id
- EC16F1800253; Tue, 27 Jan 2026 18:29:22 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org,
-	mohamed@unpredictable.fr
-Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, qemu-arm@nongnu.org,
- Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>,
- Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v18 16/22] target/arm: cpu: mark WHPX as supporting PSCI 1.3
-Date: Tue, 27 Jan 2026 19:27:56 +0100
-Message-ID: <20260127182805.73212-17-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260127182805.73212-1-mohamed@unpredictable.fr>
-References: <20260127182805.73212-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vknoC-0003Xf-BQ
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:29:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769538539;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=b36zKFl1eTvXCE4LVYy6WoOs1hux1pYpscdduj5xdoc=;
+ b=bjlJ0IsjRMNOSlVMEtBcJLZdUEeDM5AAGN4i/AZGdeUGO6EtiidsXntRyf3uNHUTcRvJUE
+ YcVtM0rv+Na+sWeShFqr9WVrDnwUiF5y/zbSEQraHngQdAFGAnCwDv8h2qzTl8+jxXjXov
+ e3udeFnb69AHL2Pb5mJLa6eQHFwocSw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-122-jmOdHWxHN4mOww_Lm29A2w-1; Tue,
+ 27 Jan 2026 13:28:57 -0500
+X-MC-Unique: jmOdHWxHN4mOww_Lm29A2w-1
+X-Mimecast-MFC-AGG-ID: jmOdHWxHN4mOww_Lm29A2w_1769538536
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D247E19775AA; Tue, 27 Jan 2026 18:28:56 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.23])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8C3861955F66; Tue, 27 Jan 2026 18:28:55 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 36/43] audio: replace DEBUG_OUT with traces
+Date: Tue, 27 Jan 2026 22:25:03 +0400
+Message-ID: <20260127182516.289834-37-marcandre.lureau@redhat.com>
+In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDE1MCBTYWx0ZWRfXyfSKfQdRZ4rl
- wNik2mJyWDaBspjQXdERrSpbpRnnyjEl0zSkL2l+1HWUn79EbzlC196eWau+QD0WagYMDdlKwJy
- KfBjC96XhpSURB/vs/z9XPlEDwBGm+I8u07/J1zMKYzEH4xyWnyBR+9Z4k9EWBMpleJ33hyHmTZ
- heh4gschctH5N60SDf0x7UUF2pCf6ePjdhwEPBYMGV8eEa9jfunf/uPU6cwmq1k93Ia777zOin2
- mX7iUEsWVXVAWhbvVTNX3VOe9qfVjcFmsOEEK8fav2/DBvdSXWvN7K/YjfDtnMttRuC8tQwULTc
- inaZ13oBkNws6heHLbm
-X-Authority-Info-Out: v=2.4 cv=Ip4Tsb/g c=1 sm=1 tr=0 ts=69790408
- cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=KKAkSRfTAAAA:8 a=emIkxkYSJqCgyAM8kcYA:9 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: edtKmxvSa9X9PZ5F668JCCAxMvzE16Be
-X-Proofpoint-ORIG-GUID: edtKmxvSa9X9PZ5F668JCCAxMvzE16Be
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-27_04,2026-01-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- clxscore=1030 mlxlogscore=999 adultscore=0
- malwarescore=0 bulkscore=0
- mlxscore=0 phishscore=0 spamscore=0 classifier=spam authscore=0 adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2601270150
-X-JNJ: AAAAAAABWVYCEWy7fbN/QDJ/JhOQOcmKy0QedLKHq4pHCCousYj5p6drEqu5hMEDmbRCdwKh0aLuBdixw5MvZzUBfwAuZ1gEnacjrVScdl+IiGC1aRW2ib8wITxRdqQir9v9RadyFfk5h+eeshODTre/WWBjH/JD5TP2/p5sJVzdfoDQTP30UB3g8scQEEMmljwdZQb66JNFZl31/s4W+TkmtXDboodN09R9RxJlpR09lSfFXQ5AFM4lwmj69LdAbjJWlw+58MsuZnFDPiXffQLuU2iKrJ2eO6pcPnPtoX6uWzg65/KU1Ft9srk9foicGNF7VnOG/gpIOvShlE6d+K88J2YT6gU+aOgvUdbndqnPzSIiT1M/80qKJG4qPK/0WqqOsmO+DqTASFX7TcsPdNkgayRTlf7eRgnqCWqtVWzHKbguJZQviPPjWdU8PJ9aldREWzsOlBrA4eTqM0lowCFezEiGadmhXa565UzdsYcKMBTMH9mjnh4pttctc73XcYPspovkoqWSAfdM0HisAxHZ3tdmVk0Yn5o/nwRmCIRH93/Be320De1ZyuBpLkWsbzE5XJ5x7xhLPxLEn1WtN2b9gLNOi3fLRchGXw89Ap5Z42i6D3A11erFttS7BNoAmAF8l1hzksygHq1iLocT+bH/8WaiBhl50oBxRPTEmobxWbviZhF1Zkvh6tx8uL3DwQbifcAco1uXePlRUc6+Y7HL5ouE1yfeLOE9vrn/ptFldcFmitKgWDCavDPszChBtAxw2/arNKf+tGobxM4/ycTWVmFEuMrfd70vcAtZ6ql5eUAhouaXmR9TIZzayDrkKDet9t+zx+MF8vuU4550LLKmPR073oh6sCHgnpYfm7Yzb271qfur03lnUuxOokRE21PA9GAEWAHoCMQxCoC6eaYC05V8MFVTgcQUaRCiZYOwHkHdMmmGYvmepU2W3uR0JfORYJ7e0uF/sYTi2V4Wgg==
-Received-SPF: pass client-ip=57.103.71.14;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,40 +87,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hyper-V supports PSCI 1.3, and that implementation is exposed through
-WHPX.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/arm/cpu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ audio/audio-mixeng-be.c | 32 ++++++++------------------------
+ audio/trace-events      |  5 +++++
+ 2 files changed, 13 insertions(+), 24 deletions(-)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 6e1cbf3d61..7bfc3ecd2e 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -23,6 +23,7 @@
- #include "qemu/timer.h"
- #include "qemu/log.h"
- #include "exec/page-vary.h"
-+#include "system/whpx.h"
- #include "target/arm/idau.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
-@@ -1143,6 +1144,8 @@ static void arm_cpu_initfn(Object *obj)
-     if (tcg_enabled() || hvf_enabled()) {
-         /* TCG and HVF implement PSCI 1.1 */
-         cpu->psci_version = QEMU_PSCI_VERSION_1_1;
-+    } else if (whpx_enabled()) {
-+        cpu->psci_version = QEMU_PSCI_VERSION_1_3;
-     }
- }
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index c3234aafb1b..5303c08a285 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -29,8 +29,6 @@
+ #define AUDIO_CAP "audio"
+ #include "audio_int.h"
  
+-/* #define DEBUG_OUT */
+-
+ #define SW_NAME(sw) (sw)->name ? (sw)->name : "unknown"
+ 
+ const struct mixeng_volume nominal_volume = {
+@@ -568,9 +566,7 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
+     }
+ 
+     if (live == hw->mix_buf.size) {
+-#ifdef DEBUG_OUT
+-        dolog ("%s is full %zu\n", sw->name, live);
+-#endif
++        trace_audio_out_full(sw->name, live);
+         return 0;
+     }
+ 
+@@ -618,15 +614,8 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
+         sw->resample_buf.pos = 0;
+     }
+ 
+-#ifdef DEBUG_OUT
+-    dolog (
+-        "%s: write size %zu written %zu total mixed %zu\n",
+-        SW_NAME(sw),
+-        buf_len / sw->info.bytes_per_frame,
+-        total_in,
+-        sw->total_hw_samples_mixed
+-        );
+-#endif
++    trace_audio_sw_write(SW_NAME(sw), buf_len / sw->info.bytes_per_frame,
++                         total_in, sw->total_hw_samples_mixed);
+ 
+     return total_in * sw->info.bytes_per_frame;
+ }
+@@ -900,10 +889,8 @@ static size_t audio_get_free(SWVoiceOut *sw)
+ 
+     dead = sw->hw->mix_buf.size - live;
+ 
+-#ifdef DEBUG_OUT
+-    dolog("%s: get_free live %zu dead %zu frontend frames %u\n",
+-          SW_NAME(sw), live, dead, st_rate_frames_in(sw->rate, dead));
+-#endif
++    trace_audio_get_free(SW_NAME(sw), live, dead,
++                         st_rate_frames_in(sw->rate, dead));
+ 
+     return dead;
+ }
+@@ -1058,9 +1045,8 @@ static void audio_run_out(AudioMixengBackend *s)
+ 
+         if (hw->pending_disable && !nb_live) {
+             SWVoiceCap *sc;
+-#ifdef DEBUG_OUT
+-            dolog ("Disabling voice\n");
+-#endif
++
++            trace_audio_out_disable();
+             hw->enabled = false;
+             hw->pending_disable = false;
+             if (k->enable_out) {
+@@ -1089,9 +1075,7 @@ static void audio_run_out(AudioMixengBackend *s)
+             hw->mix_buf.pos = 0;
+         }
+ 
+-#ifdef DEBUG_OUT
+-        dolog("played=%zu\n", played);
+-#endif
++        trace_audio_out_played(played);
+ 
+         if (played) {
+             audio_capture_mix_and_clear (hw, prev_rpos, played);
+diff --git a/audio/trace-events b/audio/trace-events
+index 3f8ebf9c6cb..7a73d6eb84f 100644
+--- a/audio/trace-events
++++ b/audio/trace-events
+@@ -65,6 +65,11 @@ audio_capture_attach(const char *name, bool active) "capture %s active=%d"
+ audio_get_avail(const char *name, size_t live, uint32_t frontend_frames) "%s: get_avail live %zu frontend frames %u"
+ audio_run_poll(const char *msg, int64_t elapsed_us) "Elapsed since last %s: %" PRId64 " us"
+ audio_capture_free_sw(const char *name) "freeing %s"
++audio_out_full(const char *name, size_t live) "%s is full %zu"
++audio_sw_write(const char *name, size_t size, size_t written, size_t total_mixed) "%s: write size %zu written %zu total mixed %zu"
++audio_get_free(const char *name, size_t live, size_t dead, uint32_t frontend_frames) "%s: get_free live %zu dead %zu frontend frames %u"
++audio_out_disable(void) "Disabling voice"
++audio_out_played(size_t played) "played=%zu"
+ 
+ # audio_template.h
+ audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
 -- 
-2.50.1 (Apple Git-155)
+2.52.0
 
 
