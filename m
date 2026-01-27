@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F199CD25950
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 06:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E10F5D2594E
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 06:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkchn-0002mQ-6w; Tue, 27 Jan 2026 01:37:39 -0500
+	id 1vkciO-00032i-Kt; Tue, 27 Jan 2026 01:38:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vkchl-0002ls-Sd
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 01:37:37 -0500
-Received: from mail-pj1-x1041.google.com ([2607:f8b0:4864:20::1041])
+ id 1vkciK-0002zQ-Qt
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 01:38:12 -0500
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vkchk-0006gl-1j
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 01:37:37 -0500
-Received: by mail-pj1-x1041.google.com with SMTP id
- 98e67ed59e1d1-34be2be4b7cso2842013a91.3
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 22:37:35 -0800 (PST)
+ id 1vkciI-0006mT-LQ
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 01:38:12 -0500
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-352e2c59264so3627774a91.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 22:38:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1769495854; x=1770100654; darn=nongnu.org;
+ d=sifive.com; s=google; t=1769495889; x=1770100689; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QXeb82MfeyWHVGXBNCmWOgTZPBr/H/1jUT/Lwlynhzs=;
- b=RGCdXMFTuBj+TdgcSzZxw1qVkNcopUOQ2hIdkOjLfc0In9zo2U6sjEaIE6viltUrDV
- 4SEOvwHgvGB78bePUYFX1NSZkYy5tY1FVyLUPKo64/b7fWhPOPOxJWfRmZnwT8IuWgSt
- EqYViYijG2DGzCrj583Z51mS9NA8xDXSdhwM7uStl+KZ7o364JMTIDpzVQKQc2Io2G9s
- FN6SwaUzs3uthMUZmxwAAj/CnF14bKSeYCazBxbf8Ee/S/bZTXgzhK8dGcFDV+gdQD/0
- C5ecJF+c6/fq7G0c6yoWGvXdpa30RVE+hZaqaxazNsXi/CEmdxDkHaM/qhmfv0NIVriJ
- QYbw==
+ bh=JGcwg0GwnJbskM4hAjvfJZ7w7+5kGXiia0IIZ2hjvCE=;
+ b=bB28VKssvZ2vMoEgKKmu+3hSXHkHQfYE6R/k1a93XwCsmd5TfECSSAzZCseTp+FJMy
+ nWlhReqEIP3cygw2pqAz6wPwTxkZffBvnZ5CKs8jfBYsntXmruiEKK50c4BRomScpROj
+ kGrNHb+tzXh5T12JFEuwS8TM18FqJWrLK7jOp1EzTNUO/7Ve+iwUCbu0TG+J6iCzgVAf
+ kFhaNazUJlzbzILIJP3saTOH8AQJ9wd3DSbZ2mxxAlcRuO91HWxhzgb5aFjpiWUmP0Oj
+ J+hvvJ4yLGTPVay+74Aat1KxBjvhpjsxOQFXw1qYnMkGAzFhs/jh27MPsT5ZRlFr0KAa
+ jVuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769495854; x=1770100654;
+ d=1e100.net; s=20230601; t=1769495889; x=1770100689;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QXeb82MfeyWHVGXBNCmWOgTZPBr/H/1jUT/Lwlynhzs=;
- b=gZxO2+mLRiA5t7A4VkAxZL2+qgmtrhRnqhysdIsu1syDilGh9TbtpisIhkbQT/lACp
- lZDcom8Xp+U1fUzq23TPKWQdMN8J9wL6oE32gREc9jp7iAPTiLLOaGnPhj4MTSqfobzK
- uLv+NkNSCp28wBH5yro1e2+QQNibsAWrHqrJ/jWeQGapEJnvY6URvYjP+kgbQ1FVOB1G
- uP5TvXc9Vk8ueGf97aSkezZYqRGBoFq8Q/oEmTAJG2cIZQdV3q5/REbyrDyS6Et50Zjd
- 6jVHZLVvwekQQcB4bfGF50uuh+9zNGcXZNH9qkVCt9B8dMx0sOg1wqRyAaKYCZk4pM1p
- Rt8Q==
-X-Gm-Message-State: AOJu0YxBuNp3GwRKMtgLhzrKDRofQ0iMifq4iZzysrLqFKceagEH9wzE
- yzWzCKwEzZC8A4NiGdF+HfT/k4BpuTRI5NAEjmCZS2qdat0cK4ksj9FP1MFIEnyx9C6vG5q25mq
- 6MiE2r0SJZbSG6CQ+2MLKI5SEQXIxMVEZXH2TSv81jDG9/wqHelJQDbz2Cc2frvBsL3GB7sqntC
- Nm2l/axZgDbfhalhAeImGI2RWUwYfog2GGk7E0nDI0sw==
-X-Gm-Gg: AZuq6aLGKc8XkbsENEKIt1R003VA2qXaSyDbTnSOSTWevip8BRJ89p85Kob+jqHwyeO
- VgJr1+6QYgZNasdMC5EADGdTJ/TehM7QqUmjXfevrU30J+DwTIPegoLxSeFysFKIssdJkZOtoyh
- WsMGtYkUZCm7NVeGvTxj/aZHBWyxiS7xT5rSZOGB/0qJHAbGYKGmymIqdnyzFUFB4WBHnrsAKZB
- KlOdTVeP+e5yVDe7VufzPIZWsxgjNcm3t5ku5V61z6FvrbtsAuo6NFztyLbbvtDBcLpI/UKwaF5
- NELsSoT/unvcTCNj8c0Th/MauAcZO8+ctbU5xYv8fLhMeCG6DWtAkZiV7r+SfRHKwsvOET1T+Aj
- Bq486B9JzQ4mr8KTSpTMKLjqIoIL2/EmZY6jmf9bK/G8Ag/+YUey4huFYcRBVCBIdQFehKfzYfU
- DWE8s4imYRigDgU7Z87CIzSHt2GyJZLrQ39iUchfC5/Kqy0azWMaMXVHZNmMeT4rLMiU/5KIbMA
- 8tvt6vtcewd0O0=
-X-Received: by 2002:a17:90a:f950:b0:340:f05a:3ed3 with SMTP id
- 98e67ed59e1d1-353fed75832mr1176571a91.17.1769495854201; 
- Mon, 26 Jan 2026 22:37:34 -0800 (PST)
+ bh=JGcwg0GwnJbskM4hAjvfJZ7w7+5kGXiia0IIZ2hjvCE=;
+ b=bhWA1RFk5of33CZ0TCeZZ8hBx51gkbBGevadFGwE5J+L9dPAaA8UZ54B/0zRaeS7lV
+ EMkSll5NBywlQC6KGZ9/ndYXZb21eEdsjiJUXX9BTzsW/ju1AGEGV4opqmMaBJd5ALZJ
+ uS8u/7EgDyOzqmNPGi24eRYbv7cPaZw9N8vZNBHP5REbIc4M0Z4wFOMEFBG2M0vdRJrZ
+ lWflYu7vakft9dkSYi8l7/GEzYdGPRRDRtabMOJpT9Mdbr6Ek0BwIJtA9xcuk4lxjXfs
+ cyzxpBDb/mX7VoHHEVXUJKO0slz01XBSRiUP/+r84G377qVwTYW1thIb3kuOGpcp55kk
+ 62NA==
+X-Gm-Message-State: AOJu0YxC6i/yQ1+IFbqSs3P1SA5sFX7QGZaYzJjB13Sl5nkpdm/HPxEY
+ Nn2vO2PI1aunNx0JRmGkTITI4hU32pHHyqOm6vYfbkPssB8ThmxNoH8Io9BuvLrjGRx87ctK4kI
+ KtWzJ1a6obFokYeJ9jjzK6RpMsxELgHt7uJiyDHX+U8D7Gwlr2rMJUrqUW9mnEdy5TaTCqGOED0
+ B4VvCIavvRBMLTgjm3XfLSFfN9oYZKuCvVH6SH8Qu6Hw==
+X-Gm-Gg: AZuq6aJa+oJm+Nrdv5URGxozItvma6uXYM7jadEFetV3dmenLsghJa/4jzsv0EJ7uYP
+ FJmSa9HrWlEoi3jS6Q3Kp7byeOQJMbHPHey2vhYxGQrlVsngIg0s7Gx4/bm3Xu4APCVcjJn/xUn
+ 6T6pJODhfYo0jqLzL2ivQJ4doCSfFwJ0LT0Ol63HDmQme5c5Bf8IeZJUDODzOS8wpWCCy9UnMm1
+ WoYCDUWKVXCjiKUvEV+Y87MlhPAemCavmEPM66gx3yIWAk2qxH2fnhyazxd2b4qVhwglJ4EdKGr
+ ILfrXcHKivRfbAEVo2mLT9E3bIIcxwtMQlQ1tPffcOZztoThaBuPQNfhniDovdjdp7+pWksCOb6
+ Mv7RbyyXWHMQY3/yihj+pcACTMxZNKg0CKflyCRDbhYEeYJFof5FUEUC1ypBqq/oVT6XB2SlH3i
+ YrXpMdyOxGW+amRbk4Ls7pbrotrE60w9rRGgscmuJoNhrUNPeix3dLilKoBn0I7RhVSzK3ePTgu
+ 9reygBr2bQ6yJQ=
+X-Received: by 2002:a17:90b:528e:b0:349:2154:eef4 with SMTP id
+ 98e67ed59e1d1-353fecdcf8amr801119a91.5.1769495888865; 
+ Mon, 26 Jan 2026 22:38:08 -0800 (PST)
 Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
  [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-353f5f96293sm1414175a91.0.2026.01.26.22.37.32
+ 98e67ed59e1d1-353f5f96293sm1414175a91.0.2026.01.26.22.38.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 22:37:33 -0800 (PST)
+ Mon, 26 Jan 2026 22:38:08 -0800 (PST)
 From: Max Chou <max.chou@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -78,18 +78,18 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, richard.henderson@linaro.org,
- Max Chou <max.chou@sifive.com>
-Subject: [PATCH v2 02/17] fpu/softfloat: Refactor IEEE format NaN
- classification to share code
-Date: Tue, 27 Jan 2026 14:37:08 +0800
-Message-ID: <20260127063723.442734-3-max.chou@sifive.com>
+ Max Chou <max.chou@sifive.com>, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH v2 15/17] target/riscv: rvv: Add vfext.vf2 instruction for
+ Zvfofp4min extension
+Date: Tue, 27 Jan 2026 14:37:21 +0800
+Message-ID: <20260127063723.442734-16-max.chou@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260127063723.442734-1-max.chou@sifive.com>
 References: <20260127063723.442734-1-max.chou@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1041;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x1041.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=max.chou@sifive.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,247 +112,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The floatN_is_[quiet|signaling]_nan functions for IEEE formats
-(float16, bfloat16, float32, float64) contain duplicated logic that
-should be shared.
-This commit introduces internal helper functions:
-[float16|bfloat16|float32|float64]_is_snan_internal
-that determine if a NaN is signaling.
+The vfext.vf2 instruction converts a vector of OCP FP4 E2M1
+floating-point numbers to a vector of OFP FP8 E4M3 floating-points
+numbers.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Max Chou <max.chou@sifive.com>
 ---
- fpu/softfloat-specialize.c.inc | 152 +++++++++++++++++----------------
- 1 file changed, 78 insertions(+), 74 deletions(-)
+ target/riscv/helper.h                      |  3 ++
+ target/riscv/insn32.decode                 |  3 ++
+ target/riscv/insn_trans/trans_rvofp4.c.inc | 44 ++++++++++++++++++++++
+ target/riscv/translate.c                   |  1 +
+ target/riscv/vector_helper.c               | 33 ++++++++++++++++
+ 5 files changed, 84 insertions(+)
+ create mode 100644 target/riscv/insn_trans/trans_rvofp4.c.inc
 
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index ba4fa08b7b..ce7315c996 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -225,6 +225,22 @@ floatx80 floatx80_default_inf(bool zSign, float_status *status)
-     bool z = status->floatx80_behaviour & floatx80_default_inf_int_bit_is_zero;
-     return packFloatx80(zSign, 0x7fff, z ? 0 : (1ULL << 63));
- }
-+/*----------------------------------------------------------------------------
-+| Internal helper: Determine if float16 NaN is signaling.
-+*----------------------------------------------------------------------------*/
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 356c24d9fb..162303fb6c 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1259,6 +1259,9 @@ DEF_HELPER_5(vfncvt_f_f_q_ofp8e5m2, void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_5(vfncvt_sat_f_f_q_ofp8e4m3, void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_5(vfncvt_sat_f_f_q_ofp8e5m2, void, ptr, ptr, ptr, env, i32)
+ 
++/* OFP4 function */
++DEF_HELPER_5(vfext_vf2, void, ptr, ptr, ptr, env, i32)
 +
-+static bool float16_is_snan_internal(float16 a, float_status *status)
-+{
-+    if (!float16_is_any_nan(a)) {
-+        return false;
-+    }
-+    if (no_signaling_nans(status)) {
-+        return false;
-+    }
-+    uint16_t frac = float16_val(a) & 0x3FF;
-+    bool frac_msb = (frac >> 9) & 1;
-+    return frac_msb == snan_bit_is_one(status);
-+}
+ /* Vector crypto functions */
+ DEF_HELPER_6(vclmul_vv, void, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_6(vclmul_vx, void, ptr, ptr, tl, ptr, env, i32)
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index f2b413c7d4..c58223ebd8 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -754,6 +754,9 @@ vsext_vf2       010010 . ..... 00111 010 ..... 1010111 @r2_vm
+ vsext_vf4       010010 . ..... 00101 010 ..... 1010111 @r2_vm
+ vsext_vf8       010010 . ..... 00011 010 ..... 1010111 @r2_vm
  
- /*----------------------------------------------------------------------------
- | Returns 1 if the half-precision floating-point value `a' is a quiet
-@@ -233,17 +249,27 @@ floatx80 floatx80_default_inf(bool zSign, float_status *status)
- 
- bool float16_is_quiet_nan(float16 a_, float_status *status)
- {
--    if (no_signaling_nans(status)) {
--        return float16_is_any_nan(a_);
--    } else {
--        uint16_t a = float16_val(a_);
--        if (snan_bit_is_one(status)) {
--            return (((a >> 9) & 0x3F) == 0x3E) && (a & 0x1FF);
--        } else {
-+    if (!float16_is_any_nan(a_)) {
-+        return false;
-+    }
-+    return !float16_is_snan_internal(a_, status);
-+}
- 
--            return ((a >> 9) & 0x3F) == 0x3F;
--        }
-+/*----------------------------------------------------------------------------
-+| Internal helper: Determine if bfloat16 NaN is signaling.
-+*----------------------------------------------------------------------------*/
++# Zvfofp4min Extension
++vfext_vf2       010010 . ..... 10110 010 ..... 1010111 @r2_vm
 +
-+static bool bfloat16_is_snan_internal(bfloat16 a, float_status *status)
+ vsetvli         0 ........... ..... 111 ..... 1010111  @r2_zimm11
+ vsetivli        11 .......... ..... 111 ..... 1010111  @r2_zimm10
+ vsetvl          1000000 ..... ..... 111 ..... 1010111  @r
+diff --git a/target/riscv/insn_trans/trans_rvofp4.c.inc b/target/riscv/insn_trans/trans_rvofp4.c.inc
+new file mode 100644
+index 0000000000..91bf50834f
+--- /dev/null
++++ b/target/riscv/insn_trans/trans_rvofp4.c.inc
+@@ -0,0 +1,44 @@
++/*
++ * RISC-V translation routines for the OFP4 Standard Extensions.
++ *
++ * Copyright (C) 2025 SiFive, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++static bool vext_zvfofp4min_check(DisasContext *s, arg_rmr *a)
 +{
-+    if (!bfloat16_is_any_nan(a)) {
-+        return false;
-+    }
-+    if (no_signaling_nans(status)) {
-+        return false;
-     }
-+    uint16_t frac = a & 0x7F;
-+    bool frac_msb = (frac >> 6) & 1;
-+    return frac_msb == snan_bit_is_one(status);
- }
- 
- /*----------------------------------------------------------------------------
-@@ -253,16 +279,10 @@ bool float16_is_quiet_nan(float16 a_, float_status *status)
- 
- bool bfloat16_is_quiet_nan(bfloat16 a_, float_status *status)
- {
--    if (no_signaling_nans(status)) {
--        return bfloat16_is_any_nan(a_);
--    } else {
--        uint16_t a = a_;
--        if (snan_bit_is_one(status)) {
--            return (((a >> 6) & 0x1FF) == 0x1FE) && (a & 0x3F);
--        } else {
--            return ((a >> 6) & 0x1FF) == 0x1FF;
--        }
-+    if (!bfloat16_is_any_nan(a_)) {
-+        return false;
-     }
-+    return !bfloat16_is_snan_internal(a_, status);
- }
- 
- /*----------------------------------------------------------------------------
-@@ -272,16 +292,7 @@ bool bfloat16_is_quiet_nan(bfloat16 a_, float_status *status)
- 
- bool float16_is_signaling_nan(float16 a_, float_status *status)
- {
--    if (no_signaling_nans(status)) {
--        return 0;
--    } else {
--        uint16_t a = float16_val(a_);
--        if (snan_bit_is_one(status)) {
--            return ((a >> 9) & 0x3F) == 0x3F;
--        } else {
--            return (((a >> 9) & 0x3F) == 0x3E) && (a & 0x1FF);
--        }
--    }
-+    return float16_is_snan_internal(a_, status);
- }
- 
- /*----------------------------------------------------------------------------
-@@ -291,16 +302,24 @@ bool float16_is_signaling_nan(float16 a_, float_status *status)
- 
- bool bfloat16_is_signaling_nan(bfloat16 a_, float_status *status)
- {
-+    return bfloat16_is_snan_internal(a_, status);
++    return s->cfg_ptr->ext_zvfofp4min &&
++           (s->sew == MO_8) &&
++           vext_check_altfmt(s, -1) &&
++           (s->lmul >= -2) &&
++           require_rvv(s) &&
++           vext_check_isa_ill(s) &&
++           (a->rd != a->rs2) &&
++           require_align(a->rd, s->lmul) &&
++           require_align(a->rs2, s->lmul - 1) &&
++           require_vm(a->vm, a->rd) &&
++           require_noover(a->rd, s->lmul, a->rs2, s->lmul - 1);
 +}
 +
-+/*----------------------------------------------------------------------------
-+| Internal helper: Determine if float32 NaN is signaling.
-+*----------------------------------------------------------------------------*/
-+
-+static bool float32_is_snan_internal(float32 a, float_status *status)
++static bool trans_vfext_vf2(DisasContext *s, arg_rmr *a)
 +{
-+    if (!float32_is_any_nan(a)) {
-+        return false;
++    if (vext_zvfofp4min_check(s, a)) {
++        uint32_t data = 0;
++
++        data = FIELD_DP32(data, VDATA, VM, a->vm);
++        data = FIELD_DP32(data, VDATA, LMUL, s->lmul);
++        data = FIELD_DP32(data, VDATA, VTA, s->vta);
++        data = FIELD_DP32(data, VDATA, VMA, s->vma);
++        tcg_gen_gvec_3_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, 0),
++                           vreg_ofs(s, a->rs2), tcg_env,
++                           s->cfg_ptr->vlenb, s->cfg_ptr->vlenb, data,
++                           gen_helper_vfext_vf2);
++        tcg_gen_movi_tl(cpu_vstart, 0);
++        finalize_rvv_inst(s);
++
++        return true;
 +    }
-     if (no_signaling_nans(status)) {
--        return 0;
--    } else {
--        uint16_t a = a_;
--        if (snan_bit_is_one(status)) {
--            return ((a >> 6) & 0x1FF) == 0x1FF;
--        } else {
--            return (((a >> 6) & 0x1FF) == 0x1FE) && (a & 0x3F);
--        }
-+        return false;
-     }
-+    uint32_t frac = float32_val(a) & 0x7FFFFF;
-+    bool frac_msb = (frac >> 22) & 1;
-+    return frac_msb == snan_bit_is_one(status);
- }
- 
- /*----------------------------------------------------------------------------
-@@ -310,16 +329,10 @@ bool bfloat16_is_signaling_nan(bfloat16 a_, float_status *status)
- 
- bool float32_is_quiet_nan(float32 a_, float_status *status)
- {
--    if (no_signaling_nans(status)) {
--        return float32_is_any_nan(a_);
--    } else {
--        uint32_t a = float32_val(a_);
--        if (snan_bit_is_one(status)) {
--            return (((a >> 22) & 0x1FF) == 0x1FE) && (a & 0x003FFFFF);
--        } else {
--            return ((uint32_t)(a << 1) >= 0xFF800000);
--        }
-+    if (!float32_is_any_nan(a_)) {
-+        return false;
-     }
-+    return !float32_is_snan_internal(a_, status);
- }
- 
- /*----------------------------------------------------------------------------
-@@ -329,16 +342,24 @@ bool float32_is_quiet_nan(float32 a_, float_status *status)
- 
- bool float32_is_signaling_nan(float32 a_, float_status *status)
- {
-+    return float32_is_snan_internal(a_, status);
++    return false;
 +}
 +
-+/*----------------------------------------------------------------------------
-+| Internal helper: Determine if float64 NaN is signaling.
-+*----------------------------------------------------------------------------*/
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 137022d7fb..bf403785b5 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1220,6 +1220,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ #include "insn_trans/trans_svinval.c.inc"
+ #include "insn_trans/trans_rvbf16.c.inc"
+ #include "insn_trans/trans_rvofp8.c.inc"
++#include "insn_trans/trans_rvofp4.c.inc"
+ #include "decode-xthead.c.inc"
+ #include "decode-xmips.c.inc"
+ #include "insn_trans/trans_xthead.c.inc"
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 418212973d..a87728f130 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -5121,6 +5121,7 @@ RVVCALL(OPFVV1, vfncvt_sat_f_f_q_ofp8e5m2, QOP_UU_B, H1, H4,
+ GEN_VEXT_V_ENV(vfncvt_sat_f_f_q_ofp8e4m3, 1)
+ GEN_VEXT_V_ENV(vfncvt_sat_f_f_q_ofp8e5m2, 1)
+ 
++/* Zvfofp4min: vfext.vf2 - OFP4 E2M1 to OFP8 E4M3 conversion */
+ /*
+  * Vector Reduction Operations
+  */
+@@ -5920,3 +5921,35 @@ GEN_VEXT_INT_EXT(vsext_vf2_d, int64_t, int32_t, H8, H4)
+ GEN_VEXT_INT_EXT(vsext_vf4_w, int32_t, int8_t,  H4, H1)
+ GEN_VEXT_INT_EXT(vsext_vf4_d, int64_t, int16_t, H8, H2)
+ GEN_VEXT_INT_EXT(vsext_vf8_d, int64_t, int8_t,  H8, H1)
 +
-+static bool float64_is_snan_internal(float64 a, float_status *status)
++
++void HELPER(vfext_vf2)(void *vd, void *v0, void *vs2, CPURISCVState *env,
++                       uint32_t desc)
 +{
-+    if (!float64_is_any_nan(a)) {
-+        return false;
++    float_status fp_status = env->fp_status;
++    uint32_t vl = env->vl;
++    uint32_t vm = vext_vm(desc);
++    uint32_t esz = sizeof(uint8_t);
++    uint32_t total_elems = vext_get_total_elems(env, desc, esz);
++    uint32_t vta = vext_vta(desc);
++    uint32_t vma = vext_vma(desc);
++    uint32_t i;
++
++    VSTART_CHECK_EARLY_EXIT(env, vl);
++
++    for (i = env->vstart; i < vl; ++i) {
++        if (!vm && !vext_elem_mask(v0, i)) {
++            /* set masked-off elements to 1s */
++            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);
++            continue;
++        }
++
++        uint8_t input = *((uint8_t *)vs2 + H1((i % 2 ? i - 1 : i) / 2));
++        input = (i % 2) ? ((input >> 4) & 0xf) : (input & 0xf);
++        *((uint8_t *)vd + H1(i)) = float4_e2m1_to_float8_e4m3(input,
++                                                              &fp_status);
 +    }
-     if (no_signaling_nans(status)) {
--        return 0;
--    } else {
--        uint32_t a = float32_val(a_);
--        if (snan_bit_is_one(status)) {
--            return ((uint32_t)(a << 1) >= 0xFF800000);
--        } else {
--            return (((a >> 22) & 0x1FF) == 0x1FE) && (a & 0x003FFFFF);
--        }
-+        return false;
-     }
-+    uint64_t frac = float64_val(a) & 0xFFFFFFFFFFFFFULL;
-+    bool frac_msb = (frac >> 51) & 1;
-+    return frac_msb == snan_bit_is_one(status);
- }
- 
- /*----------------------------------------------------------------------------
-@@ -348,17 +369,10 @@ bool float32_is_signaling_nan(float32 a_, float_status *status)
- 
- bool float64_is_quiet_nan(float64 a_, float_status *status)
- {
--    if (no_signaling_nans(status)) {
--        return float64_is_any_nan(a_);
--    } else {
--        uint64_t a = float64_val(a_);
--        if (snan_bit_is_one(status)) {
--            return (((a >> 51) & 0xFFF) == 0xFFE)
--                && (a & 0x0007FFFFFFFFFFFFULL);
--        } else {
--            return ((a << 1) >= 0xFFF0000000000000ULL);
--        }
-+    if (!float64_is_any_nan(a_)) {
-+        return false;
-     }
-+    return !float64_is_snan_internal(a_, status);
- }
- 
- /*----------------------------------------------------------------------------
-@@ -368,17 +382,7 @@ bool float64_is_quiet_nan(float64 a_, float_status *status)
- 
- bool float64_is_signaling_nan(float64 a_, float_status *status)
- {
--    if (no_signaling_nans(status)) {
--        return 0;
--    } else {
--        uint64_t a = float64_val(a_);
--        if (snan_bit_is_one(status)) {
--            return ((a << 1) >= 0xFFF0000000000000ULL);
--        } else {
--            return (((a >> 51) & 0xFFF) == 0xFFE)
--                && (a & UINT64_C(0x0007FFFFFFFFFFFF));
--        }
--    }
-+    return float64_is_snan_internal(a_, status);
- }
- 
- /*----------------------------------------------------------------------------
++    env->vstart = 0;
++    /* set tail elements to 1s */
++    vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);
++}
 -- 
 2.52.0
 
