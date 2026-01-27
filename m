@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84DCBD19512
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 02:15:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C37ACF65E2
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 02:16:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkYbx-0002tc-O1; Mon, 26 Jan 2026 21:15:21 -0500
+	id 1vkYcX-00030c-9n; Mon, 26 Jan 2026 21:15:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vkYbw-0002tN-AS
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 21:15:20 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1vkYcV-00030F-R7
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 21:15:55 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vkYbu-0005bI-OK
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 21:15:20 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-c47ee987401so2023032a12.1
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 18:15:18 -0800 (PST)
+ id 1vkYcU-0005cp-E5
+ for qemu-devel@nongnu.org; Mon, 26 Jan 2026 21:15:55 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2a09757004cso47976485ad.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 18:15:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769480117; x=1770084917; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769480153; x=1770084953; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EldXCZjQ5uh6yhpCBwpCF7B++04C1iD/A9NUJJ6sJeI=;
- b=AuU0BJ9qDFHLdmAeUxsT7ABywaj2FJhDZod++dHqsmNOkQ15kXgC8nm24+VqADfsqH
- O0tIq+RFzs96yeD20t2yPYE/LciN56E4ipWYXMUGKH/v/krWwL/D8dKNCZd7h8ViQgYC
- H9mWPQZ3lpUb7Zxd/d2PDGQGWWqx6+vxAUQj1jEbdOzyUQn+a/AMQJRPmq0CZXd9R1GL
- O/DJBQIx/nhdz/ZL4J9yk7oObJc9WDDlOoCq/wyPx+Pckjqt+2+uEv9qicOxwhgEPd0V
- IVnuHIogS9vz8Jk+sGYRZs20wemVIo7uG+BLoozweRU+/vujEC43Do0XSvAJhzmI4xa7
- 8TTw==
+ bh=w229xaoDrAusU4bOiAXWvgNFWJFUGUS0vN44VVraYbE=;
+ b=IPZ3dXRAWUEgfGmqNflGM7yRnKzScRwgmq2ziu13P1PmmgQ4baOJZXaOnF64lacWw/
+ +djhNR0YdKgfd47vkvEms5E6Jr5Gk4TpezRQTuopiGkzFxNfJ/FcNtscmsGlIXR2YSZB
+ HwEyA5eJVvZzRmLNN388oOVkXpvz4XzDqM8sA5Z6wVIGdxwtaGSKSLvlj/CvJiE3D0OO
+ RwHRvzRyYD63FyM03BwqBDV0GVF1GRQPnN4KJTAwyanznfOJYJ0N9PZa77ei3Ef7X3bv
+ MQsYHtMeGzgO+rBbWa5xuTUTMxPM3L4HHgXkctl/Ogy6HskBgBSVIyxOMl5vlnYRyYXG
+ D2/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769480117; x=1770084917;
+ d=1e100.net; s=20230601; t=1769480153; x=1770084953;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=EldXCZjQ5uh6yhpCBwpCF7B++04C1iD/A9NUJJ6sJeI=;
- b=dvqoMTYq5TJO2NQugD/qJxvw/CFqivU4A9Aj5iUX6R4OQIu4cDbEG9lXXdlH4RHRjh
- kNLGhIHVgKyM95VeodoIQFJARM3lnZs2Ndf4rEv6r0PaXvHWJhHycPzGeYm6JqfaL6Vx
- 7FwN1qNV4v+OeTXyY1sAxqXraeNSoNu26ukH/UnqDoXvIb3P4GpcIrLA0Vy2HYR5ousY
- qfju/LnE1Rwv0J9NSckXiq74yqVo9yichtsjZ1kSFS73bMHrgXLo7GvDqKca24lp168p
- eevncvPik83POT3gnw7+SA0bm4U/ySB+E1q8NnBufjWtJeTOdRY557rmPGa8XzXGyBX5
- iUyQ==
+ bh=w229xaoDrAusU4bOiAXWvgNFWJFUGUS0vN44VVraYbE=;
+ b=f238Mx3iUZj6zuFIFbfYC2pGcUkOBd/ttVyKD7WcvAT8bBNaVZJrLSPISqt/vDpNc0
+ kWHuNfqOEdcbRoBwFdauBho0bBHVfE693aZgdMAfAO04Gx26VrFEzSkA+ABnAnFO3FYZ
+ FaIE0XxIHbXmomvTkgVwXXO4ZWQ46OWioFOEYIGPxGn+WjSV/XVwaITCmk0A8WSe9rRA
+ O97ocRN2sl/DVmwQC4lr2Jo+IwI7wmN2GYvLWugIp+iP3gLpEK6j2Jc7gdTId4PSf2aX
+ 1s5OfXkxUOfO0YH2pX+EvKhBqK8O29CeiR3oh0BA0D1Bce9BKa7/2T69RMN6PK81PhqP
+ xHiw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXP9ZCjcdB0C3JQKhAnzMMn/sxkrYrAym96KjQIKGYmqMegqoRvFztoKaGWI4Nl8FNzmYtyg7HMaBrI@nongnu.org
-X-Gm-Message-State: AOJu0YzXk/jpzJxjfKisV/Jvlml2xXcfbCb/LLIK2IFe9r45506T1X92
- JiId8ABFt3hNHdPlYINl1sVCfB8S9VQDgIRDVWV6MwBXFr0lZx+bTQXbmAZo4t6vRyU=
-X-Gm-Gg: AZuq6aL+JiKEcjyvn3kH3QSFDxvFjKz81pSfx8M5r9pXixO99ooTxhFvqj8VaLT2goT
- rN+AszQHpcgHBhe3Un85VqEQX2KWWLO3Sxv58LiQtF6xaERkkKcqbyx86CfyprAS+N6VGeclVTU
- x19w8XeZaLEtMa9fo/ArlZSxuAt9Ra8RLKO4Nl511ncp+gCsRpn6xgbBSpmJnBzNxna18nTy37A
- 4j+WVinnGMas5v0Cd9omkzpbgeg1/LtEya0aqXrB+6YnvG/TNtsgW9pwfQzofmMPOGcAiB7ZxFE
- u/8/bKv9bRfQUUSCOI75GjlGG4LZMKlMrqUvc+rWFM7m/sMz7/crdn85Pjd+8Ml+4VcCjuvduj3
- EWohVY1lbTH9hpRWO74h2tB7En98zN8F5PbF3NDIerLzf5XQmL6zAckO9bBTPptv8QrPo1OexKw
- WbIWVuKmGqGyshoXa7qM5K5rgHSPEvIg==
-X-Received: by 2002:a17:90b:3f45:b0:32e:72bd:6d5a with SMTP id
- 98e67ed59e1d1-353ffa2ed08mr99490a91.1.1769480116710; 
- Mon, 26 Jan 2026 18:15:16 -0800 (PST)
+ AJvYcCUXYmPcataqF2FLjJPCivtWXmGN+Vv+J/GhoV0v9sEOKcazTaMCHMYZLg9OPfqOSCHSyRrwPTlRLb3A@nongnu.org
+X-Gm-Message-State: AOJu0YwgF3lLpiV9Kh+CipnGE+jPGvXyuE9YudJTvNYqvS06sMivsy6Q
+ oickQeHn9XWVpHjL9HEGg4o32KzobpL5bwPSZ362cx4z1gkCqrmsRQ+aHWxnF6kCENQ=
+X-Gm-Gg: AZuq6aK0jnl5pJuSJaBHBLniNO0DMAo8ZSgz1cl3UYkC4LsBxQ+lWg9CV6RCWEYTIKC
+ RX2JpQwYLo16bemi2gWN5363DtBUciY5p/betg7LakM1fEtVx39XHtN7jXbmmXLv2U8DPv8atlN
+ TcREw6+0eBQDsnrQDkcG1UIT3W1SM9HXXimo6wGAbhGI7l2KxKFR11O+Hk8XALnBNc6rnHpVxVO
+ MeCQmXm34dbWpp0JI/b4X00LQEZXP7TTv53zEZ0/R8pdmOkljXR+ITUH6vJ44EpBpUm9WfFPdY3
+ r2C3RDwkJ4Rjmq8G0X+IJQM30RCDAclW4OQawI7xrQRgK5s4V7QFRqCOy/Alq13EH2u+hjw9Mro
+ hYrNCc4BjB0YWyHUSqdVo2513ZfTemXl06oiyp8F+U6iYQLMlx7oXMZ1wBXTnrhbaPXjM1dZlAO
+ AkO2pcM4vrJgDPvZb9hMFz7mBQMmeoJg==
+X-Received: by 2002:a17:903:2b0e:b0:2a7:95d1:3c0 with SMTP id
+ d9443c01a7336-2a870d6384fmr2439185ad.23.1769480152864; 
+ Mon, 26 Jan 2026 18:15:52 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-353f616f897sm703894a91.17.2026.01.26.18.15.14
+ d9443c01a7336-2a802f978c7sm100737985ad.65.2026.01.26.18.15.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Jan 2026 18:15:16 -0800 (PST)
-Message-ID: <19f0a47d-c560-4b52-a919-2c4e8b310cba@linaro.org>
-Date: Tue, 27 Jan 2026 13:15:11 +1100
+ Mon, 26 Jan 2026 18:15:52 -0800 (PST)
+Message-ID: <90520ad2-8256-4bc7-94e3-010455659394@linaro.org>
+Date: Tue, 27 Jan 2026 13:15:48 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: gitlab docker registries
@@ -78,14 +78,14 @@ Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel <qemu-devel@nongnu.org>
 References: <da1443a0-5bf8-4ec0-9910-fd06beb42552@linaro.org>
  <CAJSP0QWQEr8+dEGD7jkUQ--Oq+D2PKv_ArRB_ApiZM++xN9TCQ@mail.gmail.com>
  <c12f3294-1ef1-41fe-a453-1422063b991d@linaro.org>
- <87jyx4c51o.fsf@draig.linaro.org>
+ <87ecncc4sg.fsf@draig.linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <87jyx4c51o.fsf@draig.linaro.org>
+In-Reply-To: <87ecncc4sg.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,19 +108,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/27/26 10:44, Alex Bennée wrote:
-> it depends on:
+On 1/27/26 10:50, Alex Bennée wrote:
+> I think it was broken by 4203ea0247f (gitlab-ci: Add build tests for
+> wasm64) because we base the tests of the existence of dockerfiles and it
+> now generates multiple targets.
 > 
->      - wasm64-emsdk-cross-container
-> 
-> is that build failing?
+> Do we actually use the wasm32 stuff anymore? Maybe we can just rename it?
 
-https://gitlab.com/qemu-project/qemu/-/jobs/12870104569
-
-Passes.
-
-Is the container job pushing to the wrong tag perhaps?
-
+All of the wasm32 stuff is supposed to be gone.
 
 r~
 
