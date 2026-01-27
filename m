@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 707DCD2FED8
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D778D2FED4
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:27:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknmD-0005hj-Dy; Tue, 27 Jan 2026 13:26:57 -0500
+	id 1vknm7-0005UQ-Q5; Tue, 27 Jan 2026 13:26:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknln-00058r-TR
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:26:35 -0500
+ id 1vknlH-0004iY-TV
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:26:00 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknlm-0003By-Gj
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:26:31 -0500
+ id 1vknlF-00039L-4g
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:25:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769538389;
+ s=mimecast20190719; t=1769538356;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=09TL7tvh6lOv6CeNPlS0z5iL5YXibgmDP7u50Fd1/sY=;
- b=Nisuk0KRgaqufI5YsD2NQPxvd+6w7zov4eHzKyzSu7joX1DeaG/KQckBKRYRLfFq45ywyl
- KUJQOzTNwADNsS7qHHK9PANXRY3zy6/OqY/tCbcIJ3krcxROY+WbodvR0pulVl65Zo4Pmb
- iq1Y7bSs6dffymA1t1PoG9ohbfDz/X0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=/cZUKddlupLighI/o9Jsls2yq4HB9P8QKW//U1lf5uk=;
+ b=WnPBzovpwrlv5GpkCJiaf+3ByGsFgvVcNaxZBpwzKgcqyMajs94joCyZVw1wRP1W3S4y9S
+ m0GzpgXJwGR4rFldX1ERsl1KYiepd07xhaYa4jfVsqG3/TtqbxfeWD8p9/w9rGE4hRvAPN
+ SuUHGJUZaRg8XJYJPx9towPSOWZbazA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-iSSYoTZ4MPqDQUvvHyd8_Q-1; Tue,
- 27 Jan 2026 13:26:28 -0500
-X-MC-Unique: iSSYoTZ4MPqDQUvvHyd8_Q-1
-X-Mimecast-MFC-AGG-ID: iSSYoTZ4MPqDQUvvHyd8_Q_1769538387
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-vRUVh-PoNIOM3u638rdw8A-1; Tue,
+ 27 Jan 2026 13:25:53 -0500
+X-MC-Unique: vRUVh-PoNIOM3u638rdw8A-1
+X-Mimecast-MFC-AGG-ID: vRUVh-PoNIOM3u638rdw8A_1769538352
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB91319775A9; Tue, 27 Jan 2026 18:26:26 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D05A81944B10; Tue, 27 Jan 2026 18:25:51 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.23])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 76A491800665; Tue, 27 Jan 2026 18:26:24 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5D793195419A; Tue, 27 Jan 2026 18:25:49 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Alexandre Ratchov <alex@caoua.org>
-Subject: [PATCH 11/43] audio/sndio: convert to QOM lifecycle methods
-Date: Tue, 27 Jan 2026 22:24:38 +0400
-Message-ID: <20260127182516.289834-12-marcandre.lureau@redhat.com>
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
+Subject: [PATCH 05/43] audio/alsa: convert to QOM lifecycle methods
+Date: Tue, 27 Jan 2026 22:24:32 +0400
+Message-ID: <20260127182516.289834-6-marcandre.lureau@redhat.com>
 In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
 References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -90,65 +90,165 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Remove the legacy driver init/fini callbacks from the sndio audio backend.
+Migrate the ALSA audio backend from the legacy driver init/fini
+callbacks to proper QOM realize method.
 
-Both sndio_audio_init() and sndio_audio_fini() were no-ops that
-performed no real initialization or cleanup work. Access to the
-Audiodev is now through hw->s->dev instead of the drv_opaque pointer.
+The alsa_audio_init() function is replaced with audio_alsa_realize(),
+which performs the same ALSA option initialization before delegating
+to the parent class realize method. The empty alsa_audio_fini() is
+removed.
+
+The Audiodev pointer stored in ALSAVoiceOut and ALSAVoiceIn is removed
+as it can now be accessed through hw->s->dev.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/sndioaudio.c | 16 ++--------------
- 1 file changed, 2 insertions(+), 14 deletions(-)
+ audio/alsaaudio.c | 43 ++++++++++++++++++++-----------------------
+ 1 file changed, 20 insertions(+), 23 deletions(-)
 
-diff --git a/audio/sndioaudio.c b/audio/sndioaudio.c
-index 2fa519e3eab..4c2acbcbb4b 100644
---- a/audio/sndioaudio.c
-+++ b/audio/sndioaudio.c
-@@ -499,7 +499,7 @@ static int sndio_init_out(HWVoiceOut *hw, struct audsettings *as, void *opaque)
- {
-     SndioVoice *self = (SndioVoice *) hw;
+diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
+index e8541e1a2a3..42bfea2515d 100644
+--- a/audio/alsaaudio.c
++++ b/audio/alsaaudio.c
+@@ -40,19 +40,14 @@
+ #define TYPE_AUDIO_ALSA "audio-alsa"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioALSA, AUDIO_ALSA)
  
--    if (sndio_init(self, as, SIO_PLAY, opaque) == -1) {
-+    if (sndio_init(self, as, SIO_PLAY, hw->s->dev) == -1) {
-         return -1;
-     }
++static AudioBackendClass *audio_alsa_parent_class;
++
+ struct AudioALSA {
+     AudioMixengBackend parent;
+ };
  
-@@ -512,7 +512,7 @@ static int sndio_init_in(HWVoiceIn *hw, struct audsettings *as, void *opaque)
- {
-     SndioVoice *self = (SndioVoice *) hw;
+ static struct audio_driver alsa_audio_driver;
  
--    if (sndio_init(self, as, SIO_REC, opaque) == -1) {
-+    if (sndio_init(self, as, SIO_REC, hw->s->dev) == -1) {
-         return -1;
-     }
+-static void audio_alsa_class_init(ObjectClass *klass, const void *data)
+-{
+-    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
+-
+-    k->driver = &alsa_audio_driver;
+-}
+-
+ struct pollhlp {
+     snd_pcm_t *handle;
+     struct pollfd *pfds;
+@@ -65,14 +60,12 @@ typedef struct ALSAVoiceOut {
+     HWVoiceOut hw;
+     snd_pcm_t *handle;
+     struct pollhlp pollhlp;
+-    Audiodev *dev;
+ } ALSAVoiceOut;
  
-@@ -535,16 +535,6 @@ static void sndio_fini_in(HWVoiceIn *hw)
-     sndio_fini(self);
+ typedef struct ALSAVoiceIn {
+     HWVoiceIn hw;
+     snd_pcm_t *handle;
+     struct pollhlp pollhlp;
+-    Audiodev *dev;
+ } ALSAVoiceIn;
+ 
+ struct alsa_params_req {
+@@ -707,7 +700,7 @@ static int alsa_init_out(HWVoiceOut *hw, struct audsettings *as,
+     struct alsa_params_obt obt;
+     snd_pcm_t *handle;
+     struct audsettings obt_as;
+-    Audiodev *dev = drv_opaque;
++    Audiodev *dev = hw->s->dev;
+ 
+     req.fmt = aud_to_alsafmt (as->fmt, as->endianness);
+     req.freq = as->freq;
+@@ -727,7 +720,6 @@ static int alsa_init_out(HWVoiceOut *hw, struct audsettings *as,
+ 
+     alsa->pollhlp.s = hw->s;
+     alsa->handle = handle;
+-    alsa->dev = dev;
+     return 0;
  }
  
--static void *sndio_audio_init(Audiodev *dev, Error **errp)
--{
--    assert(dev->driver == AUDIODEV_DRIVER_SNDIO);
+@@ -766,7 +758,7 @@ static int alsa_voice_ctl (snd_pcm_t *handle, const char *typ, int ctl)
+ static void alsa_enable_out(HWVoiceOut *hw, bool enable)
+ {
+     ALSAVoiceOut *alsa = (ALSAVoiceOut *) hw;
+-    AudiodevAlsaPerDirectionOptions *apdo = alsa->dev->u.alsa.out;
++    AudiodevAlsaPerDirectionOptions *apdo = hw->s->dev->u.alsa.out;
+ 
+     if (enable) {
+         bool poll_mode = apdo->try_poll;
+@@ -794,7 +786,7 @@ static int alsa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+     struct alsa_params_obt obt;
+     snd_pcm_t *handle;
+     struct audsettings obt_as;
+-    Audiodev *dev = drv_opaque;
++    Audiodev *dev = hw->s->dev;
+ 
+     req.fmt = aud_to_alsafmt (as->fmt, as->endianness);
+     req.freq = as->freq;
+@@ -814,7 +806,6 @@ static int alsa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
+ 
+     alsa->pollhlp.s = hw->s;
+     alsa->handle = handle;
+-    alsa->dev = dev;
+     return 0;
+ }
+ 
+@@ -871,7 +862,7 @@ static size_t alsa_read(HWVoiceIn *hw, void *buf, size_t len)
+ static void alsa_enable_in(HWVoiceIn *hw, bool enable)
+ {
+     ALSAVoiceIn *alsa = (ALSAVoiceIn *) hw;
+-    AudiodevAlsaPerDirectionOptions *apdo = alsa->dev->u.alsa.in;
++    AudiodevAlsaPerDirectionOptions *apdo = hw->s->dev->u.alsa.in;
+ 
+     if (enable) {
+         bool poll_mode = apdo->try_poll;
+@@ -901,7 +892,8 @@ static void alsa_init_per_direction(AudiodevAlsaPerDirectionOptions *apdo)
+     }
+ }
+ 
+-static void *alsa_audio_init(Audiodev *dev, Error **errp)
++static bool
++audio_alsa_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
+ {
+     AudiodevAlsaOptions *aopts;
+     assert(dev->driver == AUDIODEV_DRIVER_ALSA);
+@@ -929,11 +921,7 @@ static void *alsa_audio_init(Audiodev *dev, Error **errp)
+         dev->u.alsa.in->buffer_length = 92880;
+     }
+ 
 -    return dev;
 -}
 -
--static void sndio_audio_fini(void *opaque)
+-static void alsa_audio_fini (void *opaque)
 -{
--}
--
- static struct audio_pcm_ops sndio_pcm_ops = {
-     .init_out        = sndio_init_out,
-     .fini_out        = sndio_fini_out,
-@@ -563,8 +553,6 @@ static struct audio_pcm_ops sndio_pcm_ops = {
++    return audio_alsa_parent_class->realize(abe, dev, errp);
+ }
  
- static struct audio_driver sndio_audio_driver = {
-     .name           = "sndio",
--    .init           = sndio_audio_init,
--    .fini           = sndio_audio_fini,
-     .pcm_ops        = &sndio_pcm_ops,
+ static struct audio_pcm_ops alsa_pcm_ops = {
+@@ -953,8 +941,6 @@ static struct audio_pcm_ops alsa_pcm_ops = {
+ 
+ static struct audio_driver alsa_audio_driver = {
+     .name           = "alsa",
+-    .init           = alsa_audio_init,
+-    .fini           = alsa_audio_fini,
+     .pcm_ops        = &alsa_pcm_ops,
      .max_voices_out = INT_MAX,
      .max_voices_in  = INT_MAX,
+@@ -962,6 +948,17 @@ static struct audio_driver alsa_audio_driver = {
+     .voice_size_in  = sizeof (ALSAVoiceIn)
+ };
+ 
++static void audio_alsa_class_init(ObjectClass *klass, const void *data)
++{
++    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
++    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
++
++    audio_alsa_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
++
++    b->realize = audio_alsa_realize;
++    k->driver = &alsa_audio_driver;
++}
++
+ static const TypeInfo audio_alsa_info = {
+     .name = TYPE_AUDIO_ALSA,
+     .parent = TYPE_AUDIO_MIXENG_BACKEND,
 -- 
 2.52.0
 
