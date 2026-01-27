@@ -4,74 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A12CD2F033
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 14:10:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D48E5D2F036
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 14:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkjh0-0007xo-1T; Tue, 27 Jan 2026 09:05:18 -0500
+	id 1vkjmF-00030t-RP; Tue, 27 Jan 2026 09:10:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1vkjgw-0007wc-KD
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:05:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vkjm8-0002tl-P5
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:10:38 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1vkjgu-0007NS-Gt
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:05:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769522710;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RhnzShHRyi4TuqfDez8LmHbT/EVu54Nc0/hZC7DJTzM=;
- b=W+tx2scFWDDC6JhXw2X7mabyF+kiYvkdZzDM0kYDz9fmtmFbQq9WwtbpF9PjhI5/J/XBYC
- cc5bEXw8w7Mesub4mztyf7D/h530kzVuaTt1/c6eNlEyFtZdazgotDZg60nrg0zGs+keYG
- J+/PlauwPBoWhIrxHBJuKDsl5+pSLY0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-511-ZeS_96mLNSqIsBSWF6L0Rg-1; Tue,
- 27 Jan 2026 09:03:55 -0500
-X-MC-Unique: ZeS_96mLNSqIsBSWF6L0Rg-1
-X-Mimecast-MFC-AGG-ID: ZeS_96mLNSqIsBSWF6L0Rg_1769522634
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F22A81956096; Tue, 27 Jan 2026 14:03:53 +0000 (UTC)
-Received: from fedora (unknown [10.43.3.182])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B5EA81800665; Tue, 27 Jan 2026 14:03:51 +0000 (UTC)
-From: Juraj Marcin <jmarcin@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH 3/4] migration: Convert VMSD early_setup into VMStateSavePhase
- enum
-Date: Tue, 27 Jan 2026 15:03:09 +0100
-Message-ID: <20260127140316.4187221-4-jmarcin@redhat.com>
-In-Reply-To: <20260127140316.4187221-1-jmarcin@redhat.com>
-References: <20260127140316.4187221-1-jmarcin@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vkjm4-00080c-PL
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:10:36 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 052E25969F3;
+ Tue, 27 Jan 2026 15:10:31 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id fMIS5rJ5D-mx; Tue, 27 Jan 2026 15:10:28 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id E8A915969F2; Tue, 27 Jan 2026 15:10:28 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E6A7B5969FA;
+ Tue, 27 Jan 2026 15:10:28 +0100 (CET)
+Date: Tue, 27 Jan 2026 15:10:28 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Peter Maydell <peter.maydell@linaro.org>
+cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 00/10] Implement memory_region_new_* functions
+In-Reply-To: <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
+Message-ID: <0118dc9b-d467-7f6b-92a8-4f42760ecb6c@eik.bme.hu>
+References: <cover.1769362313.git.balaton@eik.bme.hu>
+ <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,122 +69,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juraj Marcin <jmarcin@redhat.com>
+On Tue, 27 Jan 2026, Peter Maydell wrote:
+> On Sun, 25 Jan 2026 at 18:36, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>
+>> Our documentation says that memory regions are automatically freed
+>> when the owner dies and the reference counting to do this is also
+>> implemented. However this relies on the QOM free funtion that can only
+>> be set by creating objects with object_new but memory API only
+>> provides constructors that call object_initialize which clears the
+>> free function that prevents QOM to manage the memory region lifetime.
+>> Implement corresponding memory_region_new_* functions that do the same
+>> as the memory_region_init_* functions but create the memory region
+>> with object_new so the lifetime can be automatically managed by QOM as
+>> documented. The memory_region_init functions are kept because they are
+>> useful for memory regions embedded in other object or managed
+>> externally and not by QOM for some reason.
+>
+> If we have a problem with embedded MemoryRegions being leaked,
+> we need to fix that.
 
-This allows devices to specify when during migration their fields should
-be saved. For now there are two Save Phases defined.
+I have a problem with embedded memory regions (and embedded objects in 
+general) because:
 
-EARLY_START
+- they are making state structs unnecessarily crowded obscuring what 
+should really be there
+- leaving the fields to store these memory regions in the parent classes 
+and the QOM way of lifetime management unused
+- exposes internal object implementation to the outside
+which is against encapsulation and reuse of object oriented design.
 
-These devices are saved during qemu_savevm_state_setup(), and
-corresponds to migration SETUP state, same behavior as the former
-early_setup flag.
+Therefore, I consider embedded memory regions as a hack to solve leaks 
+because the intended and documented way of using reference counting to 
+manage the lifetime of these regions cannot be used due to missing API to 
+instantiate them in a way so it works. This series tries to resolve that 
+not add new principle or standard.
 
-COMPLETE
+> I'm very reluctant to create a whole new
+> set of APIs which handles MRs in a non-standard way (i.e.
+> "QOM object has a pointer to MR rather than embedding it")
 
-These devices are saved during migration completion or switch-over with
-qemu_savevm_state_complete_precopy_non_iterable(), this corresponds to
-the migration DEVICE state. This is the default phase if none is
-specified explicitly.
+But this is the standard and documented way if you read the life cycle 
+section of the memory docs and the embedded regions became more used 
+instead of resolving this problem in the way it was originaly intended. 
+The QOM subclass does not store a pointer to these as it's not needed, 
+they are managed by QOM so they are created and can be forgotten about 
+without littering the state struct with fields never used in the object 
+methods just to manage the memory that QOM could already manage. (The 
+parent sysbus or PCI class keeps a pointer when registering them as 
+regions and Object stores them as a child but that's already there and 
+needed for those classes not the subclass so we can avoid duplicating it 
+in the subclass.)
 
-This also allows introduction of other phases in the future, for example
-ITERATE_LIVE and POSTCOPY once support for iterative devices and
-postcopy is implemented in VMSD, and for the NETPASS phase implemented
-in this series.
+> and leaves the existing ones alone. QEMU already has way too
+> many situations where we have multiple different APIs that can
+> be used to do something and incomplete transitions from the
+> old one to the new one.
 
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
----
- hw/virtio/virtio-mem.c      |  2 +-
- include/migration/vmstate.h | 27 +++++++++++++++++++--------
- migration/savevm.c          |  4 ++--
- 3 files changed, 22 insertions(+), 11 deletions(-)
+This series does not convert everything but opens the way to do that and 
+simplify objects by only storing things in the state that are really 
+needed by the object and let QOM manage what it can. I'd really like to 
+avoid having a list of unused stuff in the state struct just because I 
+can't use something that works and documented just no API to actually use 
+it. Cf. sii3112 state after this series:
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index c1e2defb68..6d3e3746e5 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -1438,7 +1438,7 @@ static const VMStateDescription vmstate_virtio_mem_device_early = {
-     .name = "virtio-mem-device-early",
-     .minimum_version_id = 1,
-     .version_id = 1,
--    .early_setup = true,
-+    .phase = VMS_PHASE_EARLY_SETUP,
-     .post_load = virtio_mem_post_load_early,
-     .fields = (const VMStateField[]) {
-         VMSTATE_WITH_TMP(VirtIOMEM, VirtIOMEMMigSanityChecks,
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index ed9095a466..62d7e9fe38 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -186,18 +186,29 @@ struct VMStateField {
-     bool (*field_exists)(void *opaque, int version_id);
- };
- 
--struct VMStateDescription {
--    const char *name;
--    bool unmigratable;
-+typedef enum {
-     /*
--     * This VMSD describes something that should be sent during setup phase
--     * of migration. It plays similar role as save_setup() for explicitly
-+     * Specifies a VMSD of a device that should be migrated during the migration
-+     * completion phase (switch-over). (Default behavior, same behavior as
-+     * before the introduction of save phase.)
-+     */
-+    VMS_PHASE_COMPLETE = 0,
-+    /*
-+     * Specifies a VMSD of a device that should be saved during setup phase of
-+     * migration. It plays similar role as save_setup() for explicitly
-      * registered vmstate entries, so it can be seen as a way to describe
-      * save_setup() in VMSD structures.
--     *
-+     */
-+    VMS_PHASE_EARLY_SETUP,
-+} VMStateSavePhase;
-+
-+struct VMStateDescription {
-+    const char *name;
-+    bool unmigratable;
-+    /*
-      * Note that for now, a SaveStateEntry cannot have a VMSD and
-      * operations (e.g., save_setup()) set at the same time. Consequently,
--     * save_setup() and a VMSD with early_setup set to true are mutually
-+     * save_setup() and a VMSD with phase set to EARLY_SETUP are mutually
-      * exclusive. For this reason, also early_setup VMSDs are migrated in a
-      * QEMU_VM_SECTION_FULL section, while save_setup() data is migrated in
-      * a QEMU_VM_SECTION_START section.
-@@ -213,7 +224,7 @@ struct VMStateDescription {
-      *          <0 on error where -value is an error number from errno.h
-      */
- 
--    bool early_setup;
-+    VMStateSavePhase phase;
-     int version_id;
-     int minimum_version_id;
-     MigrationPriority priority;
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 1020094fc8..78eb1d6165 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1370,7 +1370,7 @@ int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
- 
-     trace_savevm_state_setup();
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
--        if (se->vmsd && se->vmsd->early_setup) {
-+        if (se->vmsd && se->vmsd->phase == VMS_PHASE_EARLY_SETUP) {
-             ret = vmstate_save(f, se, vmdesc, errp);
-             if (ret) {
-                 migrate_error_propagate(ms, error_copy(*errp));
-@@ -1672,7 +1672,7 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
-     cpu_synchronize_all_states();
- 
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
--        if (se->vmsd && se->vmsd->early_setup) {
-+        if (se->vmsd && se->vmsd->phase != VMS_PHASE_COMPLETE) {
-             /* Already saved during qemu_savevm_state_setup(). */
-             continue;
-         }
--- 
-2.52.0
+struct SiI3112PCIState {
+     PCIIDEState i;
 
+     SiI3112Regs regs[2];
+};
+
+vs. your standard:
+
+struct SiI3112PCIState {
+     PCIIDEState i;
+
+     MemoryRegion mmio;
+     MemoryRegion bar0;
+     MemoryRegion bar1;
+     MemoryRegion bar2;
+     MemoryRegion bar3;
+     MemoryRegion bar4;
+     SiI3112Regs regs[2];
+};
+
+First I thought we could use object_new then memory_region_init but it 
+turns out that does not work because memory_region_init calls 
+object_initialize which removes the free function installed by object_new 
+and since there's no other way to set it other than by calling object_new 
+a split init like in macOS (i.e. alloc+init) is also not possible so a new 
+set of memory_region_new functions seem to be the easiest way to use it as 
+intended and avoid changing every user of memory_region_init functions.
+
+As mentioned in the docs and cover letter both set of functions are useful 
+in different situations and they are otherwise the same so it would not 
+make the API much more complex as these are basically variants of one set 
+of functions only differing in dynamically allocating object or 
+initialising pre-allocated object that are not managed by QOM (which is 
+what the embedded objects do: take object out from QOM and let the 
+subclass manage it instead of using the infrastructure that's already 
+there for it). If you go the embedded way then the registering memory 
+regions as children should be removed and everything converted to use 
+embedded regions but I don't think that would be an improvement.
+
+Regards,
+BALATON Zoltan
 
