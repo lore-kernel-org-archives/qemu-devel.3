@@ -4,65 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7212BD2FEDE
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 20:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E19CD2FEDE
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 20:23:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkpWO-0007He-VE; Tue, 27 Jan 2026 15:18:45 -0500
+	id 1vkpa1-0002Zp-1y; Tue, 27 Jan 2026 15:22:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vkpWN-0007GW-Lg
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 15:18:43 -0500
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vkpZw-0002YM-QZ
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 15:22:24 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vkpWK-0003jD-UE
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 15:18:43 -0500
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 8F783807AC;
- Tue, 27 Jan 2026 23:18:34 +0300 (MSK)
-Received: from vsementsov-lin (unknown [2a02:6bf:8080:38::1:1c])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id XIol8x4AlOs0-NOfEYQ0w; Tue, 27 Jan 2026 23:18:34 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1769545114;
- bh=m3Wr9FXo2ADdCPC8OmHKgSeLJ8csabYNsGOVG/Arjkk=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=tZ7P24drlqPQJ5E/cCEWBjHVhsPAA7k2bdv8DxwVpkxsRIzGR2K8SY7z/AiAASTro
- cNLuOHhjZVmfCPaEauyeFheUMboB3pBddzr4NfRJq4EmmBw405VUaM95O6E5AZfJhu
- RfBS6KEg5d/DKb7NfNOn1F2rcByexVNDAKdqca6g=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: mst@redhat.com
-Cc: marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH] kvm: skip tsc synchronization on shutdown
-Date: Tue, 27 Jan 2026 23:18:31 +0300
-Message-ID: <20260127201831.179237-1-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vkpZu-0004rF-La
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 15:22:24 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D142E5969FA;
+ Tue, 27 Jan 2026 21:22:17 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id E-6mGHxVwq4l; Tue, 27 Jan 2026 21:22:15 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id C4EC55969F3; Tue, 27 Jan 2026 21:22:15 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C31785969F0;
+ Tue, 27 Jan 2026 21:22:15 +0100 (CET)
+Date: Tue, 27 Jan 2026 21:22:15 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Peter Xu <peterx@redhat.com>
+cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 00/10] Implement memory_region_new_* functions
+In-Reply-To: <aXkXWGho7lnJ-gwX@x1.local>
+Message-ID: <2fa59d39-5634-0b8c-27ee-9e9548a7f92a@eik.bme.hu>
+References: <cover.1769362313.git.balaton@eik.bme.hu>
+ <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
+ <0118dc9b-d467-7f6b-92a8-4f42760ecb6c@eik.bme.hu> <aXkXWGho7lnJ-gwX@x1.local>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -74,30 +69,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-That doesn't make real sense, but may take much time when
-there are a lot of vCPUs. Let's just skip it.
+On Tue, 27 Jan 2026, Peter Xu wrote:
+> On Tue, Jan 27, 2026 at 03:10:28PM +0100, BALATON Zoltan wrote:
+>> This series does not convert everything but opens the way to do that and
+>> simplify objects by only storing things in the state that are really needed
+>> by the object and let QOM manage what it can. I'd really like to avoid
+>> having a list of unused stuff in the state struct just because I can't use
+>> something that works and documented just no API to actually use it. Cf.
+>> sii3112 state after this series:
+>>
+>> struct SiI3112PCIState {
+>>     PCIIDEState i;
+>>
+>>     SiI3112Regs regs[2];
+>> };
+>>
+>> vs. your standard:
+>>
+>> struct SiI3112PCIState {
+>>     PCIIDEState i;
+>>
+>>     MemoryRegion mmio;
+>>     MemoryRegion bar0;
+>>     MemoryRegion bar1;
+>>     MemoryRegion bar2;
+>>     MemoryRegion bar3;
+>>     MemoryRegion bar4;
+>>     SiI3112Regs regs[2];
+>> };
+>
+> The latter solution is fine at least to me.
+>
+> I respect your preference on how it can be done, but IMHO it is subjective,
+> and I tend to agree with Peter that we should try to stick with one way of
+> solving problems, unless very necessary.
+>
+> In the last three patches the MRs do not look need dynamic deallocation to
+> me at all..  Introducing fully dynamic MR allocations only for those is an
+> overkill to me.  I'm not fully convinced we need to merge 600+ new LOCs for
+> new APIs just for them.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- hw/i386/kvm/clock.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+It's not a new API in the sense that it's the same as existing 
+memory_region_init functions just a variant of it to allow using QOM to 
+manage the lifetime of the memory region which the current API does not 
+allow. Also this series does not introduce this dynamic lifetime 
+management, it's already implemented and documented just there's currently 
+no way to use it. The actual change is much less, most of the lines are 
+just the documentation comments. If it's a problem to increase 
+documentation size I could make it much shorter not duplicating a separate 
+doc comment for these just mention in the corresponding memory_region_init 
+doc comment that there's also an analogous memory_region_new variant of 
+it. That also shows there's no new API just two ways of using the same 
+API.
 
-diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
-index aba6842a22..46efdbed14 100644
---- a/hw/i386/kvm/clock.c
-+++ b/hw/i386/kvm/clock.c
-@@ -207,7 +207,9 @@ static void kvmclock_vm_state_change(void *opaque, bool running,
- 
-         s->runstate_paused = runstate_check(RUN_STATE_PAUSED);
- 
--        kvm_synchronize_all_tsc();
-+        if (!runstate_check(RUN_STATE_SHUTDOWN)) {
-+            kvm_synchronize_all_tsc();
-+        }
- 
-         kvm_update_clock(s);
-         /*
--- 
-2.52.0
+> We have real but rare users of dynamically allocated MRs, currently AFAIU
 
+Since it's already implemented why not use it if it makes the object state 
+simpler? Adding additional fields that would already be managed by QOM 
+seems to be unnecessary duplication and complication to me so I'd like to 
+avoid that and keep the subclass simple.
+
+Regards,
+BALATON Zoltan
+
+> we're leaning towards having an object wrapping the MRs needed, when one
+> wants to provide a complete lifecycle for the MR so the memory backing the
+> MRs can be freed completely separately from the parent object.
+>
+> Thanks,
+>
+>
 
