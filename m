@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A916D2D8E3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D802CD2D8E4
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 10:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkfvW-0005za-DF; Tue, 27 Jan 2026 05:04:02 -0500
+	id 1vkfuv-0003hD-3q; Tue, 27 Jan 2026 05:03:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1vkfvS-0005mY-1x
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 05:03:58 -0500
+ id 1vkful-0003WD-R4
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 05:03:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1vkfvQ-0005EF-Ei
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 05:03:57 -0500
+ id 1vkfug-0005Ah-Mq
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 05:03:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769508235;
+ s=mimecast20190719; t=1769508190;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=78qEYGxPGWEZJXeutuZiOnK8kpP41OBXgXR3DQZ5n0c=;
- b=QzoxMRkoQvzxy1zBJFWIJ44v1NGDzr11AuGK2iAu8hwXSQkaN3LF3bLKoGHUElbIUUFreA
- 7A9JkhbOMNc9P7iA+aI4DM6fRNR7Yp0OnCKDz1c0jYooSFQYHrWtif17RcxsC64hG2du54
- SGILGauZfA5QIkUE5tYLPp+v5MrIeMk=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=8p/EwgBJHrgC+rdDH5Bz2ew9AKemHNoUO4GfNQsSUAY=;
+ b=BCE9PpNUuzZCvrhI4KWbrUeI0UC6fgL9eaoXGG/hcXZunvFAq02sDSmWls05IHZPbT6Nxy
+ PLuTme0KrKoiz6778JiQkmkzvHa+EzejCZanZPCUzWawyFlMXx8UZkxaQecbzLve3sDFra
+ nEidod4ia8/K7a1dtf4XIDyPOVgR1Ks=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-29-iPqbXcF-PBmbKc4lB7fTYg-1; Tue,
- 27 Jan 2026 05:03:42 -0500
-X-MC-Unique: iPqbXcF-PBmbKc4lB7fTYg-1
-X-Mimecast-MFC-AGG-ID: iPqbXcF-PBmbKc4lB7fTYg_1769508221
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-0DIk3nigPWuVlzc9mXlR9Q-1; Tue,
+ 27 Jan 2026 05:03:06 -0500
+X-MC-Unique: 0DIk3nigPWuVlzc9mXlR9Q-1
+X-Mimecast-MFC-AGG-ID: 0DIk3nigPWuVlzc9mXlR9Q_1769508184
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 14D521800365; Tue, 27 Jan 2026 10:03:41 +0000 (UTC)
+ id A6F7B18005B3; Tue, 27 Jan 2026 10:03:04 +0000 (UTC)
 Received: from osteffen-thinkpadx1carbongen12.rmtde.csb (unknown
  [10.44.34.174])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2BB4A180049F; Tue, 27 Jan 2026 10:03:34 +0000 (UTC)
+ id 542E6180066A; Tue, 27 Jan 2026 10:02:59 +0000 (UTC)
 From: Oliver Steffen <osteffen@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -60,11 +59,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Luigi Leonardi <leonardi@redhat.com>, Joerg Roedel <joerg.roedel@amd.com>,
  Oliver Steffen <osteffen@redhat.com>
-Subject: [PATCH v5 6/6] igvm: Fill MADT IGVM parameter field
-Date: Tue, 27 Jan 2026 11:02:57 +0100
-Message-ID: <20260127100257.1074104-7-osteffen@redhat.com>
-In-Reply-To: <20260127100257.1074104-1-osteffen@redhat.com>
-References: <20260127100257.1074104-1-osteffen@redhat.com>
+Subject: [PATCH v5 0/6] igvm: Supply MADT via IGVM parameter
+Date: Tue, 27 Jan 2026 11:02:51 +0100
+Message-ID: <20260127100257.1074104-1-osteffen@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
@@ -93,102 +91,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the new acpi_build_madt_standalone() function to fill the MADT
-parameter field.
+When launching using an IGVM file, supply a copy of the MADT (part of the ACPI
+tables) via an IGVM parameter (IGVM_VHY_MADT) to the guest, in addition to the
+regular fw_cfg mechanism.
 
-The IGVM parameter can be consumed by Coconut SVSM [1], instead of
-relying on the fw_cfg interface, which has caused problems before due to
-unexpected access [2,3]. Using IGVM parameters is the default way for
-Coconut SVSM across hypervisors; switching over would allow removing
-specialized code paths for QEMU in Coconut.
+The IGVM parameter can be consumed by Coconut SVSM [1], instead of relying on
+the fw_cfg interface, which has caused problems before due to unexpected access
+[2,3]. Using IGVM parameters is the default way for Coconut SVSM; switching
+over would allow removing specialized code paths for QEMU in Coconut.
 
 Coconut SVSM needs to know the SMP configuration, but does not look at
 any other ACPI data, nor does it interact with the PCI bus settings.
 Since the MADT is static and not linked with other ACPI tables, it can
 be supplied stand-alone like this.
 
-Generating the MADT twice (during ACPI table building and IGVM processing)
-seems acceptable, since there is no infrastructure to obtain the MADT
-out of the ACPI table memory area.
+Generating the MADT twice (IGVM processing and ACPI table building) seems
+acceptable, since there is no infrastructure to obtain the MADT out of the ACPI
+table memory area during IGVM processing.
 
-In any case OVMF, which runs after SVSM has already been initialized,
-will continue reading all ACPI tables via fw_cfg and provide fixed up
-ACPI data to the OS as before without any changes.
+In any case OVMF, which runs after SVSM has already been initialized, will
+continue reading all ACPI tables via fw_cfg and provide fixed up ACPI data to
+the OS as before.
+
+This series makes ACPI table building more generic by making the BIOS linker
+optional. This allows the MADT to be generated outside of the ACPI build
+context. A new function (acpi_build_madt_standalone()) is added for that. With
+that, the IGVM MADT parameter field can be filled with the MADT data during
+processing of the IGVM file.
 
 [1] https://github.com/coconut-svsm/svsm/pull/858
 [2] https://gitlab.com/qemu-project/qemu/-/issues/2882
 [3] https://github.com/coconut-svsm/svsm/issues/646
 
-Signed-off-by: Oliver Steffen <osteffen@redhat.com>
----
- backends/igvm.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+v5:
+- Rebase on latest IGVM rework series from Gerd
+- Make qigvm_find_parameter_entry() more generic and use everywhere possible;
+  It now takes the index as input, instead of the full parameter struct
+- Consistently use early returns when looking up parameter entries
+- Emit a warning message if no parameter area can be found for a given index
 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index f26eb633f8..1d8f807cf6 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -21,6 +21,7 @@
- #include "system/memory.h"
- #include "system/address-spaces.h"
- #include "hw/core/cpu.h"
-+#include "hw/i386/acpi-build.h"
- 
- #include "trace.h"
- 
-@@ -138,6 +139,8 @@ static int qigvm_directive_snp_id_block(QIgvm *ctx, const uint8_t *header_data,
- static int qigvm_initialization_guest_policy(QIgvm *ctx,
-                                        const uint8_t *header_data,
-                                        Error **errp);
-+static int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data,
-+                                Error **errp);
- 
- struct QIGVMHandler {
-     uint32_t type;
-@@ -166,6 +169,8 @@ static struct QIGVMHandler handlers[] = {
-       qigvm_directive_snp_id_block },
-     { IGVM_VHT_GUEST_POLICY, IGVM_HEADER_SECTION_INITIALIZATION,
-       qigvm_initialization_guest_policy },
-+    { IGVM_VHT_MADT, IGVM_HEADER_SECTION_DIRECTIVE,
-+      qigvm_directive_madt },
- };
- 
- static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
-@@ -779,6 +784,34 @@ static int qigvm_initialization_guest_policy(QIgvm *ctx,
-     return 0;
- }
- 
-+static int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data,
-+                                Error **errp)
-+{
-+    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
-+    QIgvmParameterData *param_entry;
-+    int result = 0;
-+
-+    /* Find the parameter area that should hold the MADT data */
-+    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
-+    if (param_entry == NULL) {
-+        return 0;
-+    }
-+
-+    GArray *madt = acpi_build_madt_standalone(ctx->machine_state);
-+
-+    if (madt->len <= param_entry->size) {
-+        memcpy(param_entry->data, madt->data, madt->len);
-+    } else {
-+        error_setg(
-+            errp,
-+            "IGVM: MADT size exceeds parameter area defined in IGVM file");
-+        result = -1;
-+    }
-+
-+    g_array_free(madt, true);
-+    return result;
-+}
-+
- static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
- {
-     int32_t header_count;
+v4:
+- Add ACPI table checksum calculation without BIOS linker, used
+  for the standalone MADT.
+- Don't pass ConfidentialGuestState into the IGVM backend anymore.
+  Not needed, since we already have the full MachineState there now.
+- Move the NULL check patch out into a new series (to be posted).
+- Address remaining cleanup comments.
+
+v3:
+- Pass the machine state into IGVM file processing context instead of MADT data
+- Generate MADT from inside the IGVM backend
+- Refactor: Extract common code for finding IGVM parameter from IGVM parameter handlers
+- Add NULL pointer check for igvm_get_buffer()
+
+v2:
+- Provide more context in the message of the main commit
+- Document the MADT parameter of IgvmCfgClass::process()
+- Document why no MADT data is provided the process call in sev.c
+
+Based-on: <20260126123755.357378-1-kraxel@redhat.com>
+Signed-off-by: Oliver Steffen <osteffen@redhat.com>
+
+Oliver Steffen (6):
+  hw/acpi: Make BIOS linker optional
+  hw/acpi: Add standalone function to build MADT
+  igvm: Add common function for finding parameter entries
+  igvm: Refactor qigvm_parameter_insert
+  igvm: Pass machine state to IGVM file processing
+  igvm: Fill MADT IGVM parameter field
+
+ backends/igvm-cfg.c       |   2 +-
+ backends/igvm.c           | 255 +++++++++++++++++++++++---------------
+ hw/acpi/aml-build.c       |  29 ++++-
+ hw/i386/acpi-build.c      |   9 ++
+ hw/i386/acpi-build.h      |   2 +
+ include/system/igvm-cfg.h |   3 +-
+ include/system/igvm.h     |   5 +-
+ target/i386/sev.c         |   3 +-
+ 8 files changed, 197 insertions(+), 111 deletions(-)
+
 -- 
 2.52.0
 
