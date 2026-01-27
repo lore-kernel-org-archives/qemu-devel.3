@@ -4,151 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9EADD2FEF8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D814CD2FEF5
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 22:29:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkrY2-0007Ky-Ap; Tue, 27 Jan 2026 17:28:34 -0500
+	id 1vkrXr-0006Xl-PJ; Tue, 27 Jan 2026 17:28:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vkrY0-0007Ak-FL
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 17:28:32 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vkrXW-0006KK-Da
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 17:28:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vkrXy-0005aU-Uq
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 17:28:32 -0500
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 60RHce9T1268740
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 22:28:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 56M4RJTNwaWLfXOvidzbXiuTfQC28ZRDs5LycEOoliM=; b=bA9kY0WgCGXq49Gi
- NtWNTFSk+6w25vuL4hLUG/S/QD3RgI3wF4cJFbjhzBWb2dAb4mYRr195IPUQWv2R
- AbGJTUkT2qZaQQrqjSNgP0GZKTjd06t9TX0/ZMFL+NufV6VflIImbXXyI38jBqLO
- pmXQmBmEONZvUiQ4ox/3c40zlXEKqFQ7+llIGOGPMjNPDXbAMhxsUhKgEgW+t4p9
- SQHQzijds3hy8VmLWaznUaJdPEDNXc4aSaGLPD8iR9gTo7ZCEH1Ejhbi6Dj6kByi
- hjtLlDwE+DAzjZqQrHuzwcWetw6zzOBajoPlbgfQQVXj5j4Vqm4J8lwDeiOR7rjP
- hw62XA==
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bxnyauhmy-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 22:28:27 +0000 (GMT)
-Received: by mail-yx1-f69.google.com with SMTP id
- 956f58d0204a3-6495ffdd360so6699038d50.3
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 14:28:27 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769552907; cv=none;
- d=google.com; s=arc-20240605;
- b=Ea/i1K+61CoD1a/f8puWUSdLs2oAvNKfIEWtjoEFHhXiwA98hsyCQaj8WKgWSUxRWf
- K0I1O4NuiJVJZnB7ETgJl1eOH3LV+nSSSU17kUbsz804uc/q2JpYWjfHLVRC6UBCHZRC
- QvH1qnP4vHJswAqXmcouDrvbuL4cr/2ph32QaBhcSFLwQevgacy1oCupruzPdTFqzHiJ
- 8oRhXrmjQEuaWK0eBgJXF4ikym+yc2imE3IG5PnONH6uGVCtm+YKpKhDNWrUzjMebbFi
- e3YdUnBdtyg3iwkiIC1ULs1h0Yqlj2DyzmSWfEhHQJWIkRDlu/9PITr8NiB9Fjc98eVl
- 72zw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=56M4RJTNwaWLfXOvidzbXiuTfQC28ZRDs5LycEOoliM=;
- fh=0puyW1gqCM3gJMeL2RqT18d7JwASe4xVZz/DHcd6Rqk=;
- b=GHBjnzebRPQCA8SQB7m9nSygxqpetacNQWwZUApYz/hVWhwlL4utMy2M35CUS8PZZS
- 9RR2he1FdJRNt00Z8McU+xholMbq/dJCrANQQFnc6pnJqA0gVYMm16r8b9Q567jaNq4g
- bNR65EcV1ZUu8cvxeiA/XKaz5tH4EETmiBsbEXOpKFQAERldxsms/abBNqlXIbRhk9a0
- 5RMEyVMAnUhGfNXGp3qm06gIXKe8li0O23utwBuOaIXHntWDq+kVphthohZ509C3cFPD
- kREP5eskgNR1JOn+VOag31KX0kyWf9mGRJVkYHwNr+6NbaiYyrNC5+2Xi1uN5l/NEV5H
- QWWA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vkrXU-0005Xm-1K
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 17:28:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769552878;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HdbFF6MHOhH8ItasimE02Fiaz9yy2PggHPkdLbRmELo=;
+ b=iz4O1KcGK0V5ry6tmz2FivPGPmgnMRO6ZPAC/1uriXp7y/P1CP610np39TRvhuEde3XqsN
+ KDePOQEDyuCRN/7oQT1PknF7sAw0aAjJRZPJgE6BsxTq1jzvjbKZ5axys4eymvNYuFyB4y
+ fmFpE3O8PwV0aniwgGvL+ynAkdJD7zE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-561-TAV2P6PcPx-xRJsSdPYRsA-1; Tue, 27 Jan 2026 17:27:56 -0500
+X-MC-Unique: TAV2P6PcPx-xRJsSdPYRsA-1
+X-Mimecast-MFC-AGG-ID: TAV2P6PcPx-xRJsSdPYRsA_1769552876
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4801d21c280so42115205e9.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 14:27:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1769552907; x=1770157707; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=56M4RJTNwaWLfXOvidzbXiuTfQC28ZRDs5LycEOoliM=;
- b=BCBDuB3LSZXum6PT9nBd86dUdtirjjRx+Pl5aGbayu1vBfe2xVssFZrvvqJVxgbl0A
- dVhqq6CTL232gwSRcJ6TKLTeDMmdwL8U8NCDoYWguVIQYwf5grEmKJfqtIBG6h+0oeqi
- vSQi4QD6xyoy8wPgwysksSMMqva4S/a2tvetHtZgFSTeBxputPQMRBSQX2tt6wXH7tbI
- kMwjh2epDf+oNfCTEe6c03b/T/dNVdzpkYGmiw1ruI8T1UhbULVJ6n63srV3mric9Sga
- pNGuZunCUtqCyL2TyTUzZDDlAYShCFqHaNXw+l/6bYGbmJQXxrh4cRN5AYaqqLB7AUGt
- W6iw==
+ d=redhat.com; s=google; t=1769552875; x=1770157675; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=HdbFF6MHOhH8ItasimE02Fiaz9yy2PggHPkdLbRmELo=;
+ b=Fjgst/+TXpo7MYDCCOv7YfJAIE19oxJchrD/MFtUAUsLaXepb2tpFFFuu+fA0VgiYv
+ t63L2dhQgh770Wp7fY7s93hjn1ZcewZpcqj1trXX5ZXXo78IynFHEv4BsmWRutCuTN+n
+ sMrqQVfmT50/rp/CufHQRqs9waJbDuBD4z9O6zTvANFUohzpB0UtP5G5NI+EhcKN4yCv
+ vqmhhzZXGsdsIoL3PgUVztPEsvlPpSVi+8DOrhtuU53mVEY8temSCL7uM7Ddtj+ZrsJ1
+ ha89+v5N2kd1L8DgluVXXn2OxGuNd0AEvyM+Q64/nrx0ZTRYQGtk9ECvXqus/SLtUbfP
+ 0qiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769552907; x=1770157707;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=56M4RJTNwaWLfXOvidzbXiuTfQC28ZRDs5LycEOoliM=;
- b=GtwW0eWdiM0CgUvk9i3deMuhmkZKPSAG3F0Srj3UBR/DB+HFJ3Plf/xK2ar2EopVtL
- RAMupkAZIO/9TvQu+8R6VXVzPHHmDyo46tMSR4Llv7WjKaERUJoHI7fY1/iR9DihTEtw
- LB4d3vcnPRv9FhkFq5s+gjfC0nJ9EOG7NFWjJvB+Stlsm/PrkIAk7hf59GdhdNNnToZJ
- RJk3FunJcNs7nsmzMtWNfvWmle2do7snBdkOQTnu2eF9zzChiuK9fEp34AYeYlMg3SmJ
- q/tJe7m7yKsNmE7iIDO00oGnSi+ObISdLc/OaBuFkCNwM6j4UOERKoHrJHEDmTKiP8p5
- ncgQ==
+ d=1e100.net; s=20230601; t=1769552875; x=1770157675;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HdbFF6MHOhH8ItasimE02Fiaz9yy2PggHPkdLbRmELo=;
+ b=MzGkis0E6ZGjVPizW7J2YniBs9iD+g61Pq0s88O8vpw6qbX1oNN/ysL/fFbqcZ8o4G
+ n/WOOuvlRgcoygeyGDTQbEhFaEqt2YSGPcTiI42ubIj2AmIbzN/287DXPtLQwi//q3LM
+ Eqk7lTFqNcKAwC1DXUonb4bNKpbg1wOFghKUEZcxGWr3qxaoyPIS8eayFCIZrKVd/4Bs
+ sBpHu+vMz/xmsSoQs2qbofOAZwAXdGVt/63JVFx4PvGxb/LrcJdggnnVoKlGN2x6OgkX
+ tOEjMvvgDvPQ3W1Qx4RWhkecwIvGAJJQNrCpSIUFt8afyBSug0vYsq9hBNBaUTaev6W2
+ wasQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQInP3WjKsvyvMuIGnple8ord5FmfXMIshiPYf27Q/AWuiR4NxzPxa870CshgSI8DghvGdC+Cy7+9b@nongnu.org
-X-Gm-Message-State: AOJu0YxRwerV/2qu6SZKR16nqk2eKEKeNDe7Lfd0UXbIJGVLctl8VF7U
- HQY8hTFMfb/XohYNpDCVkRcJS4qhQ5XO3OfkkdLaydqWTafTCE3n/hWjd/sVGy1NgrWdONE941m
- BqJRRJJ7iJ3PCxx44djTKFH0fWoTSYbt5q5ubqfN9DpcxmtGBVjZUakVkHlVlIPStKEcTWGBoTT
- 8DIH93pDkmgRn+r+LXwNUKqgfVqNIL65n7
-X-Gm-Gg: AZuq6aLgT5EuLToO+BihfAI2EVXsjnPdUzrdjf/SKykCH/hSG4CUOW2f6xafkrJny9q
- ym0AHOQednf95zjwRh5uoxD+Gz5wLYjBZxnuH/E8DQasgrN977frv8Vy3RbBBtNIAdalk7BqFwR
- 81YxV2F2RWZzRZ4u7Q7frUhjcp9PPzOwTG2vLpwpzhUVIDrrD1N1eRpe6SueiRSHdBf3g=
-X-Received: by 2002:a05:690e:408c:b0:649:58f1:6cdc with SMTP id
- 956f58d0204a3-6498fc54ed4mr2245104d50.66.1769552906715; 
- Tue, 27 Jan 2026 14:28:26 -0800 (PST)
-X-Received: by 2002:a05:690e:408c:b0:649:58f1:6cdc with SMTP id
- 956f58d0204a3-6498fc54ed4mr2245090d50.66.1769552906327; Tue, 27 Jan 2026
- 14:28:26 -0800 (PST)
+ AJvYcCUK7g/hoQwVmwzegP4YdzMoNkri/NFZntkElVAd3YIEHX03IRZ5+T3MCK1R5Sg445Y6340B7VZgvVEm@nongnu.org
+X-Gm-Message-State: AOJu0Yz4ukDCL70BHsIrvD+Ji2wtk0fHFQkva4GAscWz9AHq9Mm6BjSw
+ q4Osgf6nasBKMVTqzI5osGoOq5iyxPwFjmJKJ/oUf0Gh3XnyDu06Zb0yGCoi0h+ppVGPJhU1w9a
+ 5uBU/HHnrKqCcoll1iWTpvz+Zo8DhMYIHws/fRQBKDMD2rYzCJkolGr1H
+X-Gm-Gg: AZuq6aINdGHXZrCJe3LBLGEQWa4XapLx4z2XHcJh44tmdJsjujhKAa4yNllPtSTINZu
+ rhS9PJgGt3Pkfohb1nDfMhFbWZhERj3NKVAs57szmxe/syThBk1/pI0vkuK6HHy1evj4ZC4pZlb
+ Q5aEnADGxUMd6mPIDzf6lORAhqfXE0bN1UnouVI1q49CSyWw34h5zZnyhM+tTQyQ7K7CTC1tx/X
+ ZZOdmcLOiovgZBeFV7nfe9mvX7X43sNWOzG1/BZjqgHm1nSHt5U8ekESyqhqwhrwV8d1pa9xT+d
+ PZEO17k/97UX0oX5WB/ttITQzEovpMPa9nR2qx2smVurEOKqu/2lbBN/NPDYB5AJ9V7F6MIv2aX
+ RHydCkXHFLqUvockfM5IF4jxWt/0hp4B+sA==
+X-Received: by 2002:a05:600c:154e:b0:477:9a28:b09a with SMTP id
+ 5b1f17b1804b1-48069b8dfe3mr41404255e9.0.1769552875543; 
+ Tue, 27 Jan 2026 14:27:55 -0800 (PST)
+X-Received: by 2002:a05:600c:154e:b0:477:9a28:b09a with SMTP id
+ 5b1f17b1804b1-48069b8dfe3mr41404055e9.0.1769552875073; 
+ Tue, 27 Jan 2026 14:27:55 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-34-155.inter.net.il. [80.230.34.155])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e10e46cesm1971763f8f.7.2026.01.27.14.27.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Jan 2026 14:27:54 -0800 (PST)
+Date: Tue, 27 Jan 2026 17:27:52 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH 4/4] migration: Pass network packets received during
+ switchover to dest VM
+Message-ID: <20260127172333-mutt-send-email-mst@kernel.org>
+References: <20260127140316.4187221-1-jmarcin@redhat.com>
+ <20260127140316.4187221-5-jmarcin@redhat.com>
+ <aXjK01KuENw23xtV@redhat.com>
 MIME-Version: 1.0
-References: <20260126223439.46974-2-marco.liebel@oss.qualcomm.com>
- <CAATN3Np1mWNkd3sF8uh7p+PyM4gfe02CfdfJROUwmYpL3Snnew@mail.gmail.com>
-In-Reply-To: <CAATN3Np1mWNkd3sF8uh7p+PyM4gfe02CfdfJROUwmYpL3Snnew@mail.gmail.com>
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-Date: Tue, 27 Jan 2026 16:28:09 -0600
-X-Gm-Features: AZwV_QgAXd_vDRWZ6levTgCYcG3UmdCddNfTANaiXBBeZPT7uYfE5DyB8piltbg
-Message-ID: <CAEqNhNZjDNVFcgW-oKWhpXtYEStSnZEvGDazR35Qd6sHJH70OA@mail.gmail.com>
-Subject: Re: [PATCH] target/hexagon: Remove unused is_finite()
-To: Taylor Simpson <ltaylorsimpson@gmail.com>
-Cc: Marco Liebel <marco.liebel@oss.qualcomm.com>, qemu-devel@nongnu.org,
- matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: gbhewR2hMjege3U_SBLRMDHb0htXDRJD
-X-Authority-Analysis: v=2.4 cv=JZqxbEKV c=1 sm=1 tr=0 ts=69793c0b cx=c_pps
- a=J+5FMm3BkXb42VdG8aMU9w==:117 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
- a=biOOZfN7tpq30-K079IA:9 a=QEXdDO2ut3YA:10 a=Epx66wHExT0cjJnnR-oj:22
-X-Proofpoint-ORIG-GUID: gbhewR2hMjege3U_SBLRMDHb0htXDRJD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDE4MyBTYWx0ZWRfXyf2fF3ZI5keA
- QISrzzhHtHfo8BLqqjE74/ZvyDDJohleMvJxoBWJDVGrAiJDkCM1jEP6PwILyzfccHW/TrVHBSs
- VSHPTadOzLl3Oy5PbwsSKGjmoKfWKwsdAM/3wWpJpn5/BiIqdOe6AYRlQ3G3dhr8NNNn6DZlw5L
- k4qgoJzKyO0pjhiY7ljB0qi+T2tKFaIWFDT7Lb9Bm/0B/GxbOp94UkB9gdh+Qo2sl4Cv0UjiI7d
- EJOXnGbTPFCFQOqrxyWY9Ng1iRYZ9/fmigdLdEl8Pzgh8yTguJcz7S60vKl1A7RdDyllkm62O5W
- gSpxEbF4KG73K+7XJEbQPwyXRE3cZFjz7xQny0xWc5TqZgZfayTSMszJN7mx/g4Y+VJEnjfF5CQ
- I96JXHDUqXJlQOaHsoBd5U+nlf9HWfewUojnOGNLgiUHI7i03TczeJqMKNICxQFNpaBQu4lrqEW
- lgCUXmHb7w4jvMTOqPw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-27_04,2026-01-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 suspectscore=0 lowpriorityscore=0
- malwarescore=0 spamscore=0 adultscore=0 clxscore=1015 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601270183
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_LOW=-0.7,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aXjK01KuENw23xtV@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,23 +126,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 27, 2026 at 1:09=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gmai=
-l.com> wrote:
->
->
->
-> On Mon, Jan 26, 2026 at 3:35=E2=80=AFPM Marco Liebel <marco.liebel@oss.qu=
-alcomm.com> wrote:
->>
->> is_finite() is defined but never called anywhere in the codebase.
->>
->> Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
->> ---
->>  target/hexagon/fma_emu.h | 5 -----
->>  1 file changed, 5 deletions(-)
->
->
-> Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+On Tue, Jan 27, 2026 at 02:25:23PM +0000, Daniel P. Berrangé wrote:
+> On Tue, Jan 27, 2026 at 03:03:10PM +0100, Juraj Marcin wrote:
+> > From: Juraj Marcin <jmarcin@redhat.com>
+> > 
+> > During migration switchover both the source and the destination machines
+> > are paused (compute downtime). During this period network still routes
+> > network packets to the source machine, as this is the last place where
+> > the recipient MAC address has been seen. Once the destination side
+> > starts and sends network announcement, all subsequent frames are routed
+> > correctly. However, frames delivered to the source machine are never
+> > processed and lost. This causes also a network downtime with roughly the
+> > same duration as compute downtime.
+> > 
+> > This can cause problems not only for protocols that cannot handle packet
+> > loss, but can also introduce delays in protocols that can handle them.
+> > 
+> > To resolve this, this feature instantiates a network filter for each
+> > network backend present during migration setup on both migration sides.
+> > On the source side, this filter caches all packets received from the
+> > backend during switchover. Once the destination machine starts, all
+> > cached packets are sent through the migration channel and the respective
+> > filter object on the destination side injects them to the NIC attached
+> > to the backend.
+> 
+> If the dest QEMU has started, I presume this means that the ARP
+> announcement has been sent ?
 
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+For example, with virtio guest announcements, it's sent by the dest VM.
+
+Besides, arp "announcements" are not necessary to reprogram the network.
+
+But if you want to abolutely avoid reordering, you can wait
+until there's an attempt to transfer something, buffer that
+something, process everything from the source (pass it to the VM),
+then send whatever VM wants to send.
+
+Thinkably, qemu initiated packets can be handled the same way.
+
+
+
+>   IOW, the packets being forwarded
+> over the migration stream are guaranteed to be delivered "out
+> of order" wrt the sender.  Should be safe for TCP, but may have
+> an impact on other protocols. Though apps should be aware of
+> that risk in general, they may not frequently encounter it, and
+> it could still cause service disruption
+> 
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index f925e5541b..d637b22c80 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -520,6 +520,11 @@
+> >  #     each RAM page.  Requires a migration URI that supports seeking,
+> >  #     such as a file.  (since 9.0)
+> >  #
+> > +# @netpass: Collect packets received by network backedns after source
+> > +#     VM is paused and send them to the destination once it resumes.
+> > +#     This (almost) completely eliminates packet loss caused by
+> > +#     switchover.  (since 11.0)
+> 
+> Should mention they will be deliver "out of order" 
+> 
+> > +#
+> >  # Features:
+> >  #
+> >  # @unstable: Members @x-colo and @x-ignore-shared are experimental.
+> > @@ -536,7 +541,7 @@
+> >             { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
+> >             'validate-uuid', 'background-snapshot',
+> >             'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+> > -           'dirty-limit', 'mapped-ram'] }
+> > +           'dirty-limit', 'mapped-ram', 'netpass'] }
+> >  
+> >  ##
+> >  # @MigrationCapabilityStatus:
+> > -- 
+> > 2.52.0
+> > 
+> > 
+> 
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
