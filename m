@@ -4,96 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36B68D19523
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Jan 2026 23:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C91A5D1953D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 00:05:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkWLl-0005zi-GG; Mon, 26 Jan 2026 18:50:29 -0500
+	id 1vkWZy-0007Xg-RI; Mon, 26 Jan 2026 19:05:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vkWLk-0005zR-Da
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 18:50:28 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vkWLi-0001vg-LB
- for qemu-devel@nongnu.org; Mon, 26 Jan 2026 18:50:28 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47ee301a06aso58069175e9.0
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 15:50:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769471425; x=1770076225; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CEaUomKudLQ6HYYJjv1cFbMaycCRyA2FLEh+cnzxyD4=;
- b=oatuoXOYuJrV16m8zG7cdcbXubT+5WbBs9Bc0QT41ppIirkU+G+8YM9Z7k5ZvYZq6e
- 1D+kzgchBDKIxPbz6+3lQMT5V9W2FYVHMzCkTyKSuCGpEjlQmhuZM5pzg4C2tXK4310Z
- n1woxzmS5zG1Oo2px7jSXNuliQAP+K3wjjfllBCNf83DBw5TEeXZW0QnsyJnzB4LrAIK
- HBqwPBAKQGHaKn94+1k4uO/gV5aKRodp66aP0aDF6kvhVHn5XTd2/y+Xgw/OeVkfvm1s
- EFUTc3FyEymvjYFgPl4Xyw5Gjx/0oak/AxkvKrTph1stsIQtnHPL7cCz7uWAzccYT3Pa
- u34A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769471425; x=1770076225;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CEaUomKudLQ6HYYJjv1cFbMaycCRyA2FLEh+cnzxyD4=;
- b=meeGMr4R5ZooIDtD+I3EIhrsHr9WmMSwEA0OvfgalF0aVhbKhnQ07MP3l9zOMOvaY0
- l8pKjR93lxJJVLBWGEVsxmKhRBAfFS74/8tXfa38J4DvE/MHV1OIMbCfLOcKxiV9LMHu
- Bu5O675z9Z4FZESLYzIqQL8iynzMcyaLmHpzYnrQI6JlY/VTFAknkG8l5WMFxUyYdfVS
- gDDChbRcGvEKcuyjY430OmaQd90LPoUJ1GYEIXt482v9uOXfdn/jiQ/xu6/IMbTNHvdO
- Gk9GL1yty3nXtua1XHPiV/YtOiVsTUX28bAVE6BWRl84N/Y0DvX5WCwkR/pQe1Rn6wk0
- qeIg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUNEUK3WZKigxmM+WJ7ySLLk3TFLXVi53e1Nqf3VdT/TR2Y9QXYxV10Ni9+DVbA5z+lQ8dwjOkUSC4x@nongnu.org
-X-Gm-Message-State: AOJu0YzEguS35JYyT6IjvRumefDDraI5q/X7lJP1fDZ5BT9uHv4pdmMh
- IpeYxKc1U2cvWDLiiCUMB4yzsVLTtqKw6Sn5YE3Ds341JR2LRYw3yi/k1mwW8h4UY73lUm5v5Wp
- Q1XhstTs=
-X-Gm-Gg: AZuq6aI3l8GQTtDzU472dyqxodCWWU2BQ1xjko7exl/rBhPJ9tNcE/SPOWQHywwaiLH
- 1X3rpwrfcONjs6CQ9cVfSdM6WypniQbmMsG5vCd6yK9kb8IG5psRSEowfdJQuAy/5lz9sYF11Og
- kjxg+klhDPLdrjs6fc0AQ23BR2fqZp2z/J4y2Qyjn5O/ojVw58Ptsqn07QT8r5aJv6k2YGotgIM
- +Vh844GKN5Ce9ayHOmiq9DIobp07wwJf7pmPqUxQ0MvfG80w6eUK3cQGg4+zFT4WRtRiaQaYQbp
- UpFormb/eD5rOFHE3P8s37tZl8KhkPB5wag7HE74QgT01MBAnre0vHP3latLjkZOH/HDCtWdqEW
- CsdfvFXdN5dQKqqctQus1XZA+hT0YXnq1W1Z7hCalEotBS9VcU1mFSp+agG/ieSmYQZ06oJobtn
- oNoxMga8ow627U
-X-Received: by 2002:a05:600c:3ba5:b0:47a:9560:5944 with SMTP id
- 5b1f17b1804b1-4805d06c7aemr90200815e9.34.1769471424799; 
- Mon, 26 Jan 2026 15:50:24 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48066bf93cesm19516195e9.9.2026.01.26.15.50.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 15:50:24 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3A9DC5F80B;
- Mon, 26 Jan 2026 23:50:23 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: gitlab docker registries
-In-Reply-To: <c12f3294-1ef1-41fe-a453-1422063b991d@linaro.org> (Pierrick
- Bouvier's message of "Mon, 26 Jan 2026 14:12:56 -0800")
-References: <da1443a0-5bf8-4ec0-9910-fd06beb42552@linaro.org>
- <CAJSP0QWQEr8+dEGD7jkUQ--Oq+D2PKv_ArRB_ApiZM++xN9TCQ@mail.gmail.com>
- <c12f3294-1ef1-41fe-a453-1422063b991d@linaro.org>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Mon, 26 Jan 2026 23:50:23 +0000
-Message-ID: <87ecncc4sg.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vkWZq-0007Q0-7O; Mon, 26 Jan 2026 19:05:02 -0500
+Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vkWZo-00064w-BI; Mon, 26 Jan 2026 19:05:01 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=EtB/Q1ojzm7nUf4n73I8m1GdPJOBLMeBd2Soo5hUWvV5xDrZqlAwRAfznOFmqKeAV6qLkIMoSsRASeJsjvmVroGnsve4CeUCpOAkzMj2MJ9+e8iWrypJblvdwqSDdZHPfE0IqZLyIYEEpPlnotNpojkC4UNwcHlbYBNqqhSoRckNjtsZkF30ntAtVMd+RWwcLB5Wtlwp4RvhpxtFFrPFWqr5yiL0d4iZ+x1dJez37pnoz0msKE3xSQ7G1FxPWe5A08roYqOLDPPbhvxOkD5HV3umg4Rh9RQ9aSRL9MjvQWQuE+ye/UtlXsLa3AAx2IibdcUcso0tqDwV6YZQ2YPTqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=G/8NfJjB7xwvT7erKaP0DMJLg6C/Z8QWHeVNKIdwxhQ=;
+ b=rKVHBNQ1ui2jN+uEWg228dMI7UCWFK82/9lkMds8/1D+4UqZentSLfAMvdw8tYhAvPJX2wN/rXx7Ny6g73LzeD8hSrapFxrx0dLYRDP/XEmk9fg+yqKHlVBQk483G+X/muVLkp/J0X1u1OaFAwaMgHABvbaLj+KSjpqPqwuLUyc/vpZaVlxjKCD6ue+A26bNDWxn9zdwY4KDYDM0eP+OkVYgDmD+cS6dZgCpCbJ1/s7q3Yr5Pb6SB0omxkBUR5jHKEJB24DtBAclUG92qeFxchBpw6csQmQWoGDEqMgAHqcSdKBLLtXxTpMf7ORu6oZB1owBcTRHk3anDHpL22d4vw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=G/8NfJjB7xwvT7erKaP0DMJLg6C/Z8QWHeVNKIdwxhQ=;
+ b=YCXDcMjeNH4JmzLB7YMQtPOmmEN+UUl3DOo1eexs+iMJhiYG43s3rKEdGC+LcDPUoU2t9Glt900doWBSjPt4J1TmubmrQfd/FLyfg/K4O01jQ4z5V5R9a0EFOY8FeynzZccOSemAuqJEtm5P5ALi//TqgY0NfxOk8I05XagrlwWWQCyM959lgGz5hz0xHlwrWqbqcKeemjn/vWAjLrOAaAyqEy07ALyvttWWR8HxTBJ1GVW4vakdSR3cttI+RivqodqQNHewtmBmtFIKinP2bvOLMWCZ/M3dUvZxD2pXakEMfExNNBmAuWzEgYYLKm6IgEPH48rCU/IX402W4ckVqQ==
+Received: from SJ0PR03CA0278.namprd03.prod.outlook.com (2603:10b6:a03:39e::13)
+ by MW5PR12MB5624.namprd12.prod.outlook.com (2603:10b6:303:19d::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.15; Tue, 27 Jan
+ 2026 00:04:53 +0000
+Received: from SJ5PEPF000001F3.namprd05.prod.outlook.com
+ (2603:10b6:a03:39e:cafe::12) by SJ0PR03CA0278.outlook.office365.com
+ (2603:10b6:a03:39e::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9542.16 via Frontend Transport; Tue,
+ 27 Jan 2026 00:04:49 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SJ5PEPF000001F3.mail.protection.outlook.com (10.167.242.71) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9564.3 via Frontend Transport; Tue, 27 Jan 2026 00:04:53 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 26 Jan
+ 2026 16:04:34 -0800
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 26 Jan
+ 2026 16:04:34 -0800
+Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com (10.129.68.9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 26 Jan 2026 16:04:33 -0800
+Date: Mon, 26 Jan 2026 16:04:31 -0800
+To: Eric Auger <eric.auger@redhat.com>
+CC: Shameer Kolothum <skolothumtho@nvidia.com>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>, <nathanc@nvidia.com>,
+ <mochs@nvidia.com>, <jgg@nvidia.com>, <jonathan.cameron@huawei.com>,
+ <zhangfei.gao@linaro.org>, <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
+Subject: Re: [RFC PATCH 06/16] hw/arm/tegra241-cmdqv: Map VINTF Page0 into
+ guest
+Message-ID: <aXgBD/N+aOVNlcGb@Asurada-Nvidia>
+References: <20251210133737.78257-1-skolothumtho@nvidia.com>
+ <20251210133737.78257-7-skolothumtho@nvidia.com>
+ <58f0ca59-b08c-44cd-b469-f152271c14f6@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <58f0ca59-b08c-44cd-b469-f152271c14f6@redhat.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001F3:EE_|MW5PR12MB5624:EE_
+X-MS-Office365-Filtering-Correlation-Id: 54f052a2-cec8-43fa-ecdb-08de5d37b2b9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|82310400026|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?M+XULDAkgWk8fl0r8ndFNy2wzluEI7213Cs/RSSKZ0gEudxH7Yd/ZP7n21?=
+ =?iso-8859-1?Q?zx8OH9qihYu8XeDqM3bD7mgf2rubItN2Ule8z2FSiX/kqai3QyavaLk3xD?=
+ =?iso-8859-1?Q?edik4FzyZB+ZmbIbGPnNbOsEopIDvY2JGEmtCF65sF3tP1G3py/0grjZOu?=
+ =?iso-8859-1?Q?MBojRnyZUYzskL+5aAkCWow7fQRh0RBWg+gCZFrJD0HGYSjY5iGE/++9n9?=
+ =?iso-8859-1?Q?3bbGDVLZESC+0YcA6qWZRYsxJ/6zKt65TqLtZRKL5QXC00iSejXdBhymGW?=
+ =?iso-8859-1?Q?gw9/5mvaLoap9ybDxf7WWgthKmZRfVXogKtNVopGYk0cwCnsuaMzsl2KLr?=
+ =?iso-8859-1?Q?G0G8gCgu83yfC7d+rGUDFfL3Z2Qol8VtNkouZUK3JTO4pujtu9oUaFpZyW?=
+ =?iso-8859-1?Q?RKM+rdVf67NWHCdzquXOvQu6oeRerMA56V1Qp4tsrirnMvjXBCxAvtgEPQ?=
+ =?iso-8859-1?Q?+AKd9EtSgEPSSvaJxqBA2lcNHZlBGX4UxxkdX9p/gX/Jg7z3bmoCxNLzJv?=
+ =?iso-8859-1?Q?/M+t4HTq+LiQMqLHy03FIO56LHSMPhr2g56a/Y2CY/NgokSIveEzkrv6Q+?=
+ =?iso-8859-1?Q?lEwW8m9DcSeKzS6IfXjK0evtYPxs6hPvk7k0fMARpMsE/W+MwshDlF5TQQ?=
+ =?iso-8859-1?Q?UMMGWS8yQo+iafhdP+j/VRtLi0rclUOx94pyRK0IbEZAY1PYhK5F4FwXTE?=
+ =?iso-8859-1?Q?NXKrBrmsw5AhvZKBHiyRoaZinBRHQlTLWzCMWxabtpbV413w7wBPUOxkOF?=
+ =?iso-8859-1?Q?Hd/2tAcXzOIKIpmoIW8MdP0JDhx2Zd/S7cNxSFFjL46UJrPPrFjPR/+DKS?=
+ =?iso-8859-1?Q?F82CXmQ7vLJi72si6DBQXTfp65GS+P3LT8+yvfv+iurW9e7uU60+2BWHU8?=
+ =?iso-8859-1?Q?pJqJ2TLc4RbBPmVRFoAY+ewqQZ+ounjbhPCEc3hsoIlN4LQbnNfLCgkhf0?=
+ =?iso-8859-1?Q?Idfeqfprj5wR5DCClwy3FEvJ08k5sB6IX2CM/EN564VcleYRCTUtg37KYC?=
+ =?iso-8859-1?Q?S7UUuiQeoUMUPK7/wcGp990M8gZ2L6d5izZOzoij06KqZKeIGecpmgIiqe?=
+ =?iso-8859-1?Q?GiGgvtmyFbTQmx+ZVZ97Jbo6DZL/xCypIZsoP/PBSNxE527ysvpD9nZr0J?=
+ =?iso-8859-1?Q?qr9bgRfyYOZpmEqEtMuXGcYvKKTb+czBs/FuLJr4kWOI+djX7eDXuapH6L?=
+ =?iso-8859-1?Q?Inwp7tigIB8zrxOUHUPOJrriQrlUaBgb3ozVzzKqd8h/mpNJNo1yV4KU5F?=
+ =?iso-8859-1?Q?kierVBZw2rBGOWXs8H9NP2plI1x39GeE/rdzIhEHHThUok2lF5LYMYeQZc?=
+ =?iso-8859-1?Q?ipXruIJgxhfn/UoE1N7HSvf33PNQt9h34/k+keuBc15M5epL3txFYAd3yY?=
+ =?iso-8859-1?Q?qprNTqe7mUQXuFGsHhPyi4pb24W9Ws++HzuVWiavp4t0aobTMMoBmwS/0p?=
+ =?iso-8859-1?Q?5X6aObCytImiVKXdebAj8t2C/27uYh2CoRtKnXRK1QihXKApvvHOVpw5Eg?=
+ =?iso-8859-1?Q?l2X6dpzx34qXumr5t7Graz7GZG1+DZLPu2nzJthQia09qNzDSLLf+RI3aa?=
+ =?iso-8859-1?Q?0LDD7t3sD1lIJSb52O6Ey33wDNhprSEi8uiSvdkYZAmk+8dzSL5Bp5NjNP?=
+ =?iso-8859-1?Q?zgPGheeUj4GeULk4DQUbJMPGtXIakqa2+OspxvFPgWc9DTi/wAWTSzrVx1?=
+ =?iso-8859-1?Q?83qY2R6WuviazsiHfqHpihMSQRQZeFD1/yJZ4ahz9+Nn5zGdN0hBYyhBrx?=
+ =?iso-8859-1?Q?GrSg=3D=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(82310400026)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jan 2026 00:04:53.4890 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 54f052a2-cec8-43fa-ecdb-08de5d37b2b9
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001F3.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR12MB5624
+Received-SPF: permerror client-ip=2a01:111:f403:c10c::1;
+ envelope-from=nicolinc@nvidia.com;
+ helo=SA9PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FORGED_SPF_HELO=1, KHOP_HELO_FCRDNS=0.399,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,60 +159,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Nicolin Chen <nicolinc@nvidia.com>
+From:  Nicolin Chen via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On Mon, Jan 26, 2026 at 02:48:55PM +0100, Eric Auger wrote:
 
-> On 1/26/26 2:05 PM, Stefan Hajnoczi wrote:
->> On Mon, Jan 26, 2026 at 4:55=E2=80=AFPM Richard Henderson
->> <richard.henderson@linaro.org> wrote:
->>>
->>> Hiya,
->>>
->>> I noticed this today, wondering why the daily scheduled builds are fail=
-ing:
->>>
->>> https://gitlab.com/qemu-project/qemu/-/jobs/12868286187
->>>
->>> time=3D"2026-01-26T17:34:06Z" level=3Dfatal msg=3D"Error parsing image =
-name
->>> \"docker://registry.gitlab.com/qemu-project/qemu/qemu/emsdk-wasm-cross\=
-": reading manifest
->>> latest in registry.gitlab.com/qemu-project/qemu/qemu/emsdk-wasm-cross: =
-manifest unknown"
->>> make: *** [tests/docker/Makefile.include:54: docker-verify-emsdk-wasm-c=
-ross] Error 2
->>>
->>> I'm not really sure what the error message means. Do we need to push a =
-built version of
->>> emsdk-wasm-cross to gitlab, so that a manifest is present? Which doesn'=
-t make much sense,
->>> since the job is all about a weekly rebuild of the containers.
->>
->> I don't see that container image in the registry:
->> https://gitlab.com/qemu-project/qemu/container_registry?orderBy=3DUPDATE=
-D&sort=3Ddesc&search[]=3Dwasm
->> Only the emsdk-wasm32-cross and emsdk-wasm64-cross images are there.
->> Stefan
->>=20
->
-> I don't see where the job that is supposed to build containers weekly
-> is building them, it is just calling skopeo inspect (???).
->
-> It should depend on building and pushing associated image.
+> > +    name = g_strdup_printf("%s vcmdq", memory_region_name(&cmdqv->mmio_cmdqv));
+> > +    memory_region_init_ram_device_ptr(&cmdqv->mmio_vcmdq_page,
+> > +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
+> > +                                      name, 0x10000, cmdqv->vcmdq_page0);
+> > +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv, 0x10000,
+> > +                                        &cmdqv->mmio_vcmdq_page, 1);
+> > +    g_free(name);
+> > +
+> > +    name = g_strdup_printf("%s vintf", memory_region_name(&cmdqv->mmio_cmdqv));
+> > +    memory_region_init_ram_device_ptr(&cmdqv->mmio_vintf_page,
+> > +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
+> > +                                      name, 0x10000, cmdqv->vcmdq_page0);
 
-I think it was broken by 4203ea0247f (gitlab-ci: Add build tests for
-wasm64) because we base the tests of the existence of dockerfiles and it
-now generates multiple targets.
+> I don't get why we need/have 2 RAM devices pointing to the same @ptr
+> = cmdqv->vcmdq_page0. Is 0x10000 ~ VCMDQ_REG_PAGE_SIZE?
 
-Do we actually use the wasm32 stuff anymore? Maybe we can just rename it?
+The first one is for "vcmdq" and the second one is for "vintf".
+Explaining below...
 
->
-> https://gitlab.com/qemu-project/qemu/-/commit/8bec7b9874235e60f1417261812=
-1c60fdbd39302
+> The names of the MRs are quite confusing: If my understanding is correct
+> we have;
+> 
+> cmdqv->mmio_cmdqv (0x50000 sized) which as the container for the 2 subregions.
+> Then within that one we have 2 subregions, one at offset 0x10000 (mmio_vcmdq_page
+> ), one at offset 0x30000 (cmdqv->mmio_vintf_page).
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c?h=v6.19-rc7#n19
+It's defined in the kernel driver (yea, we should clarify in the
+QEMU code as well).
+
+So, the MMIO regions look like this:
+ 1st 64 KB page -- Global CMDQV registers
+ 2nd 64 KB page -- Global VCMDQ registers Page0 (mmap)
+ 3rd 64 KB page -- Global VCMDQ registers Page1 (trap)
+ 4th 64 KB page -- VINTF0 Logical VCMDQ registers Page0 (mmap)
+ 5th 64 KB page -- VINTF0 Logical VCMDQ registers Page1 (trap)
+
+In real hardware, there will be 6th 64KB and beyond, for VINTF1
+and others. But, we're omitting here in QEMU as only VINTF0 will
+be supported -- kernel only exposes one VINTF per VM as well.
+(Yes, we should clarify this too.)
+
+> I have difficulties to link that with the commit message
+> 
+> "Tegra241 CMDQV assigns each VINTF a 128KB MMIO region split into two
+> 64 KB pages:
+>  - Page0: guest accessible control/status registers for all VCMDQs
+>  - Page1:configuration registers  ../.."
+> Those 2 pages, are they part of  mmio_vcmdq_page?
+
+Not exactly. Both the global VCMDQ region and VINTF region have
+their own pages (at 0x10000 and 0x30000).
+
+Here, it duplicates the mapping to 0x10000 (Global VCMDQ page0)
+and 0x30000 (VINTF0 page0) for simplification, because we only
+support VINTF0 in this case.
+
+There is a little catch in this implementation. The real physical
+mapping between a global VCMDQ and a logical VCMDQ happens when
+QEMU calls HW_QUEUE ioctl. So, the mmap'd page0 doesn't have any
+real VCMDQ backing up the emulated VCMDQ. So, perhaps QEMU should
+trap the page0 and delay the memory_region_init_ram_device_ptr()
+until the HW_QUEUE ioctl is done?
+
+There might be also a corner case: when the kernel exposes two
+physical VCMDQs, but the guest OS only uses one, i.e. QEMU only
+allocates one HW_QUEUE for VCMDQ0 but doesn't allocate VCMDQ1.
+In such a case, the VTINF0 page0 should be able to control the
+logical VCMDQ0 only, while the global page0 should control both.
+
+We are getting away this corner case with any guest OS running
+Linux kernel because it only accesses VTINF pages. But likely we
+should do something about it..
+
+> Then you talk about 0x30000 :VINTF register I guess this is the second cmdqv->mmio_vintf_page
+> 
+> Well I am confused at this stage of the reading.
+> 
+> Also without any spec, this is difficult to understand. Is there any public doc?
+
+It seems that Red Hat can get the doc under NDA..
+
+Thanks
+Nicolin
 
