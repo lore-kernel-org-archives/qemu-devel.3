@@ -4,72 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DCD3D2FED4
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:31:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C758D2FED4
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknor-00023t-Cy; Tue, 27 Jan 2026 13:29:42 -0500
+	id 1vknp3-0003MJ-Nx; Tue, 27 Jan 2026 13:29:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknn4-0007sy-Ls
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:27:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vknnY-0000xk-Ai
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:23 -0500
+Received: from p-west2-cluster2-host8-snip4-10.eps.apple.com ([57.103.68.141]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknn2-0003J1-8I
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:27:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769538467;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tdqFkR++Mx8sP/ibIVMErSUZQuFIsPXgRhBYzMQnBnE=;
- b=LIAFYOS04hWv7Kl+kdIsaUPitjVSg5kjKPxEwjpqIWvMdsBXRj66953ipTBb1c1YgNkmvm
- RkQf6DKr7wgzJxNnFCzdkadKPTjqFL1jk8KBFO6F4KiOSy8DM9aBG+BxfrjDuk+ib3GnzZ
- GIvnSKv15vYV/B4RoSeI75bDAzrZGW8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-2YbPT5gZOaWq3CZb4x6RVA-1; Tue,
- 27 Jan 2026 13:27:46 -0500
-X-MC-Unique: 2YbPT5gZOaWq3CZb4x6RVA-1
-X-Mimecast-MFC-AGG-ID: 2YbPT5gZOaWq3CZb4x6RVA_1769538465
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 011411955D84; Tue, 27 Jan 2026 18:27:45 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.23])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4FE181956095; Tue, 27 Jan 2026 18:27:42 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 24/43] audio/oss: replace custom logging with report & trace
-Date: Tue, 27 Jan 2026 22:24:51 +0400
-Message-ID: <20260127182516.289834-25-marcandre.lureau@redhat.com>
-In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
-References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vknnV-0003Mj-0t
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:19 -0500
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPS id
+ 466401800094; Tue, 27 Jan 2026 18:28:13 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1769538495; x=1772130495;
+ bh=zf/zdLN9yaZ43NV2BmBps5JPK+mneoqfkvuEHlxn1dM=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
+ b=IpSlxUnH/+1i6CAeFAqsPQGvlDjYWU74sE72Q22wvJfzyNT80m4xgzprf+nEvTU3TFxmOv7E4fzNXDWPMcHqU6710qWoVJBsmQCPbDyPBJn7M0+s8ZiMXbP4tSojwPyCdg2vO6FKxpDcLw5T3dKRD2H8zX93i5RtXt8mYjHvNv0UdO5QQE6+mL1cu46JOEpqt2Ix/fXGfbs3XVq7cQjVVy9uqCnYZPVoa2ixtoCNJr6hmmW3nTrwgCNb60klpXRVovlisQf7E6dKJ4hG2n8p8JuolqjeDYQTf8jKCE8O2IehZg+iet5CXyEsn7hcBlKTU8ACbiumfkrJFEvz6X+j2Q==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPSA id
+ A3F6418001E6; Tue, 27 Jan 2026 18:28:08 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org,
+	mohamed@unpredictable.fr
+Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, qemu-arm@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH v18 00/22] WHPX support for Arm
+Date: Tue, 27 Jan 2026 19:27:40 +0100
+Message-ID: <20260127182805.73212-1-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDE1MCBTYWx0ZWRfXzfFco4lAvHgi
+ b73RdB/OTI3d190hpuPIh1Zo6IxiT2JvfdhibFB4Zo8D5XKALnx/uAyPZNr0dn+d/MfmWyTp7AO
+ IP/n/vILvpB3LG7VYlfdmXxmkcWA7o3iAvTKZZe4R+1lB68s8fZwXlmEiZtufl/oJEHpBaeCe3l
+ Rbkn82UCByp0mh2DF/Parvci+YxT3gu7jcoTo7ljOxAPGz8khA5qiMMAAA0RggyXEK7xjmDFPln
+ X3uZnZfdGJ3P7ULULf6y24difaCeWPY8GZ2w0Sl41w1RBsH5AmhPUvI4GOdR1MH/QonUtASJPIM
+ /rEbxz5nOzC+hfDbstasY4S2YlKNeKk4gs2KR5Ok2SvHOpT5/UeDSbBWzSKPog=
+X-Proofpoint-GUID: f7XP6md6KLdrZiDEHntHN8GeZK6l1PUj
+X-Authority-Info-Out: v=2.4 cv=R8kO2NRX c=1 sm=1 tr=0 ts=697903be
+ cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=mDV3o1hIAAAA:8
+ a=3sHXeTOdJn_U_PFnuNgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: f7XP6md6KLdrZiDEHntHN8GeZK6l1PUj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-27_04,2026-01-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ lowpriorityscore=0 mlxscore=0 malwarescore=0 clxscore=1030 mlxlogscore=999
+ suspectscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601270150
+X-JNJ: AAAAAAABC1fz1g9AdOBFSW+zcUVddVv9HKVU7kPJ6O2qU+85+LunS4lrgwqmoYSybAFpNu/i1qv4OqOxIYaViB4PsHoZjDVbNSqxnzDrK74bdRa63uTxxDboxyCgj5BMW0E/HRv+LUJAoneh7tigAzuqrPQUhnuNueIGPQGp67uJxmDdGM5mTKc4QEoQB5sMf3eqSVEdDZm6Vsk6tvJw595AaCyjDOAizxOfne2yTRvL7wevOHnJYVYx6XVC3gIDJshnsL5d5Mfr25jTtEUxsmXL1GE0JFo/Sm2zgD5hJ/HWDjlTV1TUarp10lp91R8XMYPREtknGxdD8AfD5E0jYFqprrvgk8WvX+rI8te285BXrdf6zrGM0UeDcmiYRlJrKVVsF/lzia3OVz7m7CtnxvBPVyUYiWIkgRkuKu7dwWh50xwebnA7S+9AR7sV6HcIflV6OYivExSRZbvWWt/PlhHbIG45LJE/BfYV2c2B6Ca1STN8YdHupwYu9J3R1wY2Eplhq8Bnljr5eN9E+OBZxD+RvAseS/5DQtzeXF1/yka2aAYb9EOVHHpXYWI6nS5gzq5NWQ8yn96rEWyoXrCraVDTip1q+lVjV1qD8ox63U9i9+l8L34C5DCFxmIp0lIZ4BuLK3D8DJOodHlTOr7zOI5tSrbvTMsy5IGlx7baCMjgxinScjtuLMJ1ZYFtqNNfHI7kTBiOJV3vtI6oiEpp3THHBAsScXKTggCusALWRB8j8wE/HR7xFbJpeVOe3HQsQdY/sWbKdANZFbD8EwEUS82P430K9L0Ffah00/ZB7FfAgmrIUBtAjHqht7PB4NprDVQ+7VNUdACXujkIr0DEN4fUPSYhl25PNOMtleumVwqIJWGdDWXZlVEWfNCnq2ppOp8dTfNOTocodX62uPyVJxdIPnQ2Ou2Qsg==
+Received-SPF: pass client-ip=57.103.68.141;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,441 +107,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this submission: whpx-v18)
 
-Replace the custom audio logging infrastructure with standard QEMU
-error reporting and tracing.
+Missing features:
+- VM save-restore: interrupt controller state notably
+- SVE register sync: I didn't have the time to test this on pre-release hardware with SVE2 support yet.
+So SVE2 is currently masked for VMs when running this.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- audio/ossaudio.c   | 176 ++++++++++++++++++++-------------------------
- audio/trace-events |   5 ++
- 2 files changed, 81 insertions(+), 100 deletions(-)
+Known bugs:
+- U-Boot still doesn't work (hangs when trying to parse firmware) but EDK2 does.
 
-diff --git a/audio/ossaudio.c b/audio/ossaudio.c
-index 95b7963ed0c..8388f81343b 100644
---- a/audio/ossaudio.c
-+++ b/audio/ossaudio.c
-@@ -31,11 +31,10 @@
- #include "qemu/host-utils.h"
- #include "qapi/error.h"
- #include "qemu/audio.h"
-+#include "qemu/error-report.h"
- #include "qom/object.h"
--#include "trace.h"
--
--#define AUDIO_CAP "oss"
- #include "audio_int.h"
-+#include "trace.h"
- 
- #define TYPE_AUDIO_OSS "audio-oss"
- OBJECT_DECLARE_SIMPLE_TYPE(AudioOss, AUDIO_OSS)
-@@ -76,43 +75,40 @@ struct oss_params {
-     int fragsize;
- };
- 
--static void G_GNUC_PRINTF (2, 3) oss_logerr (int err, const char *fmt, ...)
-+static void G_GNUC_PRINTF(2, 3) oss_logerr(int err, const char *fmt, ...)
- {
-     va_list ap;
- 
--    va_start (ap, fmt);
--    AUD_vlog (AUDIO_CAP, fmt, ap);
--    va_end (ap);
-+    error_printf("oss: ");
-+    va_start(ap, fmt);
-+    error_vprintf(fmt, ap);
-+    va_end(ap);
- 
--    AUD_log (AUDIO_CAP, "Reason: %s\n", strerror (err));
-+    error_printf(" Reason: %s\n", strerror(err));
- }
- 
--static void G_GNUC_PRINTF (3, 4) oss_logerr2 (
--    int err,
--    const char *typ,
--    const char *fmt,
--    ...
--    )
-+static void G_GNUC_PRINTF(3, 4) oss_logerr2(int err, const char *typ,
-+                                            const char *fmt, ...)
- {
-     va_list ap;
- 
--    AUD_log (AUDIO_CAP, "Could not initialize %s\n", typ);
-+    error_printf("oss: Could not initialize %s: ", typ);
- 
--    va_start (ap, fmt);
--    AUD_vlog (AUDIO_CAP, fmt, ap);
--    va_end (ap);
-+    va_start(ap, fmt);
-+    error_vprintf(fmt, ap);
-+    va_end(ap);
- 
--    AUD_log (AUDIO_CAP, "Reason: %s\n", strerror (err));
-+    error_printf(" Reason: %s\n", strerror(err));
- }
- 
--static void oss_anal_close (int *fdp)
-+static void oss_anal_close(int *fdp)
- {
-     int err;
- 
--    qemu_set_fd_handler (*fdp, NULL, NULL, NULL);
--    err = close (*fdp);
-+    qemu_set_fd_handler(*fdp, NULL, NULL, NULL);
-+    err = close(*fdp);
-     if (err) {
--        oss_logerr (errno, "Failed to close file(fd=%d)\n", *fdp);
-+        oss_logerr(errno, "Failed to close file(fd=%d)", *fdp);
-     }
-     *fdp = -1;
- }
-@@ -159,10 +155,7 @@ static int aud_to_ossfmt(AudioFormat fmt, bool big_endian)
-         return big_endian ? AFMT_U16_BE : AFMT_U16_LE;
- 
-     default:
--        dolog ("Internal logic error: Bad audio format %d\n", fmt);
--#ifdef DEBUG_AUDIO
--        abort ();
--#endif
-+        error_report("oss: Internal logic error: Bad audio format %d", fmt);
-         return AFMT_U8;
-     }
- }
-@@ -201,27 +194,13 @@ static int oss_to_audfmt (int ossfmt, AudioFormat *fmt, int *endianness)
-         break;
- 
-     default:
--        dolog ("Unrecognized audio format %d\n", ossfmt);
-+        error_report("oss: Unrecognized audio format %d", ossfmt);
-         return -1;
-     }
- 
-     return 0;
- }
- 
--#if defined DEBUG_MISMATCHES || defined DEBUG
--static void oss_dump_info (struct oss_params *req, struct oss_params *obt)
--{
--    dolog ("parameter | requested value | obtained value\n");
--    dolog ("format    |      %10d |     %10d\n", req->fmt, obt->fmt);
--    dolog ("channels  |      %10d |     %10d\n",
--           req->nchannels, obt->nchannels);
--    dolog ("frequency |      %10d |     %10d\n", req->freq, obt->freq);
--    dolog ("nfrags    |      %10d |     %10d\n", req->nfrags, obt->nfrags);
--    dolog ("fragsize  |      %10d |     %10d\n",
--           req->fragsize, obt->fragsize);
--}
--#endif
--
- #ifdef USE_DSP_POLICY
- static int oss_get_version (int fd, int *version, const char *typ)
- {
-@@ -240,7 +219,7 @@ static int oss_get_version (int fd, int *version, const char *typ)
-             return 0;
-         }
- #endif
--        oss_logerr2 (errno, typ, "Failed to get OSS version\n");
-+        oss_logerr2(errno, typ, "Failed to get OSS version");
-         return -1;
-     }
-     return 0;
-@@ -269,7 +248,7 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
- 
-     fd = open (dspname, oflags | O_NONBLOCK);
-     if (-1 == fd) {
--        oss_logerr2 (errno, typ, "Failed to open `%s'\n", dspname);
-+        oss_logerr2(errno, typ, "Failed to open '%s'", dspname);
-         return -1;
-     }
- 
-@@ -281,23 +260,23 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
-         qapi_AudiodevOssPerDirectionOptions_base(opdo), as, 23220);
- 
-     if (ioctl (fd, SNDCTL_DSP_SAMPLESIZE, &fmt)) {
--        oss_logerr2 (errno, typ, "Failed to set sample size %d\n", req->fmt);
-+        oss_logerr2(errno, typ, "Failed to set sample size %d", req->fmt);
-         goto err;
-     }
- 
-     if (ioctl (fd, SNDCTL_DSP_CHANNELS, &nchannels)) {
--        oss_logerr2 (errno, typ, "Failed to set number of channels %d\n",
--                     req->nchannels);
-+        oss_logerr2(errno, typ, "Failed to set number of channels %d",
-+                    req->nchannels);
-         goto err;
-     }
- 
-     if (ioctl (fd, SNDCTL_DSP_SPEED, &freq)) {
--        oss_logerr2 (errno, typ, "Failed to set frequency %d\n", req->freq);
-+        oss_logerr2(errno, typ, "Failed to set frequency %d", req->freq);
-         goto err;
-     }
- 
-     if (ioctl (fd, SNDCTL_DSP_NONBLOCK, NULL)) {
--        oss_logerr2 (errno, typ, "Failed to set non-blocking mode\n");
-+        oss_logerr2(errno, typ, "Failed to set non-blocking mode");
-         goto err;
-     }
- 
-@@ -311,9 +290,9 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
-             if (version >= 0x040000) {
-                 int policy2 = policy;
-                 if (ioctl(fd, SNDCTL_DSP_POLICY, &policy2)) {
--                    oss_logerr2 (errno, typ,
--                                 "Failed to set timing policy to %d\n",
--                                 policy);
-+                    oss_logerr2(errno, typ,
-+                                "Failed to set timing policy to %d",
-+                                policy);
-                     goto err;
-                 }
-                 setfragment = 0;
-@@ -325,20 +304,20 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
-     if (setfragment) {
-         int mmmmssss = (req->nfrags << 16) | ctz32 (req->fragsize);
-         if (ioctl (fd, SNDCTL_DSP_SETFRAGMENT, &mmmmssss)) {
--            oss_logerr2 (errno, typ, "Failed to set buffer length (%d, %d)\n",
--                         req->nfrags, req->fragsize);
-+            oss_logerr2(errno, typ, "Failed to set buffer length (%d, %d)",
-+                        req->nfrags, req->fragsize);
-             goto err;
-         }
-     }
- 
-     if (ioctl (fd, in ? SNDCTL_DSP_GETISPACE : SNDCTL_DSP_GETOSPACE, &abinfo)) {
--        oss_logerr2 (errno, typ, "Failed to get buffer length\n");
-+        oss_logerr2(errno, typ, "Failed to get buffer length");
-         goto err;
-     }
- 
-     if (!abinfo.fragstotal || !abinfo.fragsize) {
--        AUD_log (AUDIO_CAP, "Returned bogus buffer information(%d, %d) for %s\n",
--                 abinfo.fragstotal, abinfo.fragsize, typ);
-+        error_report("oss: Returned bogus buffer information(%d, %d) for %s",
-+                     abinfo.fragstotal, abinfo.fragsize, typ);
-         goto err;
-     }
- 
-@@ -349,20 +328,13 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
-     obt->fragsize = abinfo.fragsize;
-     *pfd = fd;
- 
--#ifdef DEBUG_MISMATCHES
--    if ((req->fmt != obt->fmt) ||
--        (req->nchannels != obt->nchannels) ||
--        (req->freq != obt->freq) ||
--        (req->fragsize != obt->fragsize) ||
--        (req->nfrags != obt->nfrags)) {
--        dolog ("Audio parameters mismatch\n");
--        oss_dump_info (req, obt);
--    }
--#endif
-+    trace_oss_out_params(
-+        req->fmt, obt->fmt,
-+        req->nchannels, obt->nchannels,
-+        req->freq, obt->freq,
-+        req->nfrags, obt->nfrags,
-+        req->fragsize, obt->fragsize);
- 
--#ifdef DEBUG
--    oss_dump_info (req, obt);
--#endif
-     return 0;
- 
-  err:
-@@ -378,7 +350,7 @@ static size_t oss_get_available_bytes(OSSVoiceOut *oss)
- 
-     err = ioctl(oss->fd, SNDCTL_DSP_GETOPTR, &cntinfo);
-     if (err < 0) {
--        oss_logerr(errno, "SNDCTL_DSP_GETOPTR failed\n");
-+        oss_logerr(errno, "SNDCTL_DSP_GETOPTR failed");
-         return 0;
-     }
- 
-@@ -459,8 +431,7 @@ static size_t oss_write(HWVoiceOut *hw, void *buf, size_t len)
-         bytes_written = write(oss->fd, pcm, len);
-         if (bytes_written < 0) {
-             if (errno != EAGAIN) {
--                oss_logerr(errno, "failed to write %zu bytes\n",
--                           len);
-+                oss_logerr(errno, "failed to write %zu bytes", len);
-             }
-             return pos;
-         }
-@@ -474,18 +445,18 @@ static size_t oss_write(HWVoiceOut *hw, void *buf, size_t len)
-     return pos;
- }
- 
--static void oss_fini_out (HWVoiceOut *hw)
-+static void oss_fini_out(HWVoiceOut *hw)
- {
-     int err;
--    OSSVoiceOut *oss = (OSSVoiceOut *) hw;
-+    OSSVoiceOut *oss = (OSSVoiceOut *)hw;
- 
--    ldebug ("oss_fini\n");
--    oss_anal_close (&oss->fd);
-+    trace_oss_fini_out();
-+    oss_anal_close(&oss->fd);
- 
-     if (oss->mmapped && hw->buf_emul) {
-         err = munmap(hw->buf_emul, hw->size_emul);
-         if (err) {
--            oss_logerr(errno, "Failed to unmap buffer %p, size %zu\n",
-+            oss_logerr(errno, "Failed to unmap buffer %p, size %zu",
-                        hw->buf_emul, hw->size_emul);
-         }
-         hw->buf_emul = NULL;
-@@ -526,8 +497,8 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
-     oss->fragsize = obt.fragsize;
- 
-     if (obt.nfrags * obt.fragsize % hw->info.bytes_per_frame) {
--        dolog ("warning: Misaligned DAC buffer, size %d, alignment %d\n",
--               obt.nfrags * obt.fragsize, hw->info.bytes_per_frame);
-+        warn_report("oss: Misaligned DAC buffer, size %d, alignment %d",
-+                    obt.nfrags * obt.fragsize, hw->info.bytes_per_frame);
-     }
- 
-     hw->samples = (obt.nfrags * obt.fragsize) / hw->info.bytes_per_frame;
-@@ -544,20 +515,16 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
-             0
-             );
-         if (hw->buf_emul == MAP_FAILED) {
--            oss_logerr(errno, "Failed to map %zu bytes of DAC\n",
--                       hw->size_emul);
-+            oss_logerr(errno, "Failed to map %zu bytes of DAC", hw->size_emul);
-             hw->buf_emul = NULL;
-         } else {
-             int trig = 0;
-             if (ioctl (fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
--                oss_logerr (errno, "SNDCTL_DSP_SETTRIGGER 0 failed\n");
-+                oss_logerr(errno, "SNDCTL_DSP_SETTRIGGER 0 failed");
-             } else {
-                 trig = PCM_ENABLE_OUTPUT;
--                if (ioctl (fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
--                    oss_logerr (
--                        errno,
--                        "SNDCTL_DSP_SETTRIGGER PCM_ENABLE_OUTPUT failed\n"
--                        );
-+                if (ioctl(fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
-+                    oss_logerr(errno, "SNDCTL_DSP_SETTRIGGER PCM_ENABLE_OUTPUT failed");
-                 } else {
-                     oss->mmapped = 1;
-                 }
-@@ -566,7 +533,7 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
-             if (!oss->mmapped) {
-                 err = munmap(hw->buf_emul, hw->size_emul);
-                 if (err) {
--                    oss_logerr(errno, "Failed to unmap buffer %p size %zu\n",
-+                    oss_logerr(errno, "Failed to unmap buffer %p size %zu",
-                                hw->buf_emul, hw->size_emul);
-                 }
-                 hw->buf_emul = NULL;
-@@ -582,13 +549,14 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
- static void oss_enable_out(HWVoiceOut *hw, bool enable)
- {
-     int trig;
--    OSSVoiceOut *oss = (OSSVoiceOut *) hw;
-+    OSSVoiceOut *oss = (OSSVoiceOut *)hw;
-     AudiodevOssPerDirectionOptions *opdo = oss->dev->u.oss.out;
- 
-+    trace_oss_enable_out(enable);
-+
-     if (enable) {
-         hw->poll_mode = opdo->try_poll;
- 
--        ldebug("enabling voice\n");
-         if (hw->poll_mode) {
-             oss_poll_out(hw);
-         }
-@@ -601,12 +569,12 @@ static void oss_enable_out(HWVoiceOut *hw, bool enable)
-         trig = PCM_ENABLE_OUTPUT;
-         if (ioctl(oss->fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
-             oss_logerr(errno,
--                       "SNDCTL_DSP_SETTRIGGER PCM_ENABLE_OUTPUT failed\n");
-+                       "SNDCTL_DSP_SETTRIGGER PCM_ENABLE_OUTPUT failed");
-             return;
-         }
-     } else {
-         if (hw->poll_mode) {
--            qemu_set_fd_handler (oss->fd, NULL, NULL, NULL);
-+            qemu_set_fd_handler(oss->fd, NULL, NULL, NULL);
-             hw->poll_mode = 0;
-         }
- 
-@@ -614,10 +582,9 @@ static void oss_enable_out(HWVoiceOut *hw, bool enable)
-             return;
-         }
- 
--        ldebug ("disabling voice\n");
-         trig = 0;
--        if (ioctl (oss->fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
--            oss_logerr (errno, "SNDCTL_DSP_SETTRIGGER 0 failed\n");
-+        if (ioctl(oss->fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
-+            oss_logerr(errno, "SNDCTL_DSP_SETTRIGGER 0 failed");
-             return;
-         }
-     }
-@@ -654,9 +621,16 @@ static int oss_init_in(HWVoiceIn *hw, struct audsettings *as)
-     oss->nfrags = obt.nfrags;
-     oss->fragsize = obt.fragsize;
- 
-+    trace_oss_in_params(
-+        req.fmt, obt.fmt,
-+        req.nchannels, obt.nchannels,
-+        req.freq, obt.freq,
-+        req.nfrags, obt.nfrags,
-+        req.fragsize, obt.fragsize);
-+
-     if (obt.nfrags * obt.fragsize % hw->info.bytes_per_frame) {
--        dolog ("warning: Misaligned ADC buffer, size %d, alignment %d\n",
--               obt.nfrags * obt.fragsize, hw->info.bytes_per_frame);
-+        warn_report("oss: Misaligned ADC buffer, size %d, alignment %d",
-+                    obt.nfrags * obt.fragsize, hw->info.bytes_per_frame);
-     }
- 
-     hw->samples = (obt.nfrags * obt.fragsize) / hw->info.bytes_per_frame;
-@@ -690,7 +664,7 @@ static size_t oss_read(HWVoiceIn *hw, void *buf, size_t len)
-             case EAGAIN:
-                 break;
-             default:
--                oss_logerr(errno, "Failed to read %zu bytes of audio (to %p)\n",
-+                oss_logerr(errno, "Failed to read %zu bytes of audio (to %p)",
-                            len, dst);
-                 break;
-             }
-@@ -706,9 +680,11 @@ static size_t oss_read(HWVoiceIn *hw, void *buf, size_t len)
- 
- static void oss_enable_in(HWVoiceIn *hw, bool enable)
- {
--    OSSVoiceIn *oss = (OSSVoiceIn *) hw;
-+    OSSVoiceIn *oss = (OSSVoiceIn *)hw;
-     AudiodevOssPerDirectionOptions *opdo = oss->dev->u.oss.out;
- 
-+    trace_oss_enable_in(enable);
-+
-     if (enable) {
-         hw->poll_mode = opdo->try_poll;
- 
-diff --git a/audio/trace-events b/audio/trace-events
-index 79744456cec..f33be2dd8e3 100644
---- a/audio/trace-events
-+++ b/audio/trace-events
-@@ -17,6 +17,11 @@ alsa_enable_in(bool enable) "enable=%d"
- 
- # ossaudio.c
- oss_version(int version) "OSS version = 0x%x"
-+oss_out_params(int req_fmt, int obt_fmt, int req_channels, int obt_channels, int req_freq, int obt_freq, int req_nfrags, int obt_nfrags, int req_fragsize, int obt_fragsize) "fmt=%d->%d, channels %d->%d, freq=%d->%d, nfrags=%d->%d, fragsize=%d->%d"
-+oss_in_params(int req_fmt, int obt_fmt, int req_channels, int obt_channels, int req_freq, int obt_freq, int req_nfrags, int obt_nfrags, int req_fragsize, int obt_fragsize) "fmt=%d->%d, channels %d->%d, freq=%d->%d, nfrags=%d->%d, fragsize=%d->%d"
-+oss_fini_out(void) ""
-+oss_enable_out(bool enable) "enable=%d"
-+oss_enable_in(bool enable) "enable=%d"
- 
- # dbusaudio.c
- dbus_audio_register(const char *s, const char *dir) "sender = %s, dir = %s"
+Note:
+
+"target/arm/kvm: add constants for new PSCI versions" taken from the mailing list.
+
+"accel/system: Introduce hwaccel_enabled() helper" taken from the mailing list, added here
+as part of this series to make it compilable as a whole.
+
+And another note:
+
+Seems that unlike HVF there isn't direct correspondence between WHv registers and the actual register layout,
+so didn't do changes there to a sysreg.inc.
+
+Updates for v18:
+- MSI-X config patch: remove workaround to keep existing ACPI tables, as even Ubuntu has hibernation support
+off in their stock kernel...
+- Fold patch "whpx: arm64: gicv3: add migration blocker" into "whpx: interrupt controller support"
+- address review for "whpx: interrupt controller support"
+
+Updates for v17:
+- Reworking the MSI-X configuration patches
+- Accordingly, its= retains the same behavior as before, so add a test case for GICv3 + GICv2m.
+- Squashing "whpx: arm64: check for physical address width after WHPX availability"
+with "whpx: arm64: clamp down IPA size"
+- Not worthwhile to have a separate GICv3 + GICv2m patch, squash it into the "rework MSI-X
+configuration" patch
+- Address review comment on "whpx: arm64: gicv3: add migration blocker"
+
+Updates since v16:
+- Address some last review comments
+- Rebase with the latest origin/staging
+
+Updates since v15:
+- Some last tiny changes addressed.
+
+Updates since v14:
+- Working around https://gcc.gnu.org/bugzilla/show_bug.cgi?id=87950
+
+It turns out that we can't avoid default: in case with an enum on GCC without warnings,
+although Clang allows that behavior.
+
+Updates since v13:
+- Addressing review comments from Akihiko Odaki
+- Squash GICv2 ACPI workaround patch and have it documented as a separate function
+- Rebase with current origin/staging
+
+Updates since v12:
+- Address review comments and make sure that checkpatch shows no errors, make test also ran
+- Tested the Windows x86_64 build too in addition to Windows arm64 and macOS arm64
+- Hopefully the last revision, should be ready to merge.
+
+Updates since v11:
+- Address review comments
+- Rebase up to latest staging
+- Switch to assuming Qemu 11.0 as the newest machine model
+
+Updates since v10:
+- Bring forward to latest Qemu
+- Fix a typo in the GICv3+GICv2m PR
+
+Updates since v9:
+- Adding partition reset on the reboot side of things...
+
+Updates since v8:
+- v9 and v8 were not submitted properly because of my MTA not behaving, sorry for that.
+- v10 introduces a new argument, -M msi=, to handle MSI-X configuration more granularly.
+- That surfaced what I think is a bug (?), with vms->its=1 on GICv2 configurations... or I did understand everything wrong.
+- Oopsie due to email provider ratelimiting.
+
+Updates since v7:
+- Oops, fixing bug in "hw/arm: virt: cleanly fail on attempt to use the platform vGIC together with ITS".
+Other commits are unchanged.
+
+Updates since v6:
+- Rebasing
+- Fixing a bug in the GICv3+GICv2m case for ACPI table generation
+- getting rid of the slots infrastructure for memory management
+- Place the docs commit right after the "cleanly fail on attempt to run GICv3+GICv2m on an unsupported config" one
+as that's what switches ITS to a tristate.
+- Fixing a build issue when getting rid of the arch-specific arm64 hvf-stub.
+
+Updates since v5:
+- Rebasing
+- Address review comments
+- Rework ITS enablement to a tristate
+- On x86: move away from deprecated APIs to get/set APIC state
+
+Updates since v4:
+- Taking into account review comments
+- Add migration blocker in the vGICv3 code due to missing interrupt controller save/restore
+- Debug register sync
+
+Updates since v3:
+- Disabling SVE on WHPX
+- Taking into account review comments incl:
+
+- fixing x86 support
+- reduce the amount of __x86_64__ checks in common code to the minimum (winhvemulation)
+which can be reduced even further down the road.
+- generalize get_physical_address_range into something common between hvf and whpx
+
+Updates since v2:
+- Fixed up a rebase screwup for whpx-internal.h
+- Fixed ID_AA64ISAR1_EL1 and ID_AA64ISAR2_EL1 feature probe for -cpu host
+- Switched to ID_AA64PFR1_EL1/ID_AA64DFR0_EL1 instead of their non-AA64 variant
+
+Updates since v1:
+- Shutdowns and reboots
+- MPIDR_EL1 register sync
+- Fixing GICD_TYPER_LPIS value
+- IPA size clamping
+- -cpu host now implemented
+
+Mohamed Mediouni (20):
+  qtest: hw/arm: virt: skip ACPI test for IORT with GICv2
+  hw: arm: virt: rework MSI-X configuration
+  tests: data: update AArch64 ACPI tables
+  qtest: hw/arm: virt: add new test case for GICv3 + GICv2m
+  docs: arm: update virt machine model description
+  whpx: Move around files before introducing AArch64 support
+  whpx: reshuffle common code
+  whpx: ifdef out winhvemulation on non-x86_64
+  whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS define
+  hw, target, accel: whpx: change apic_in_platform to kernel_irqchip
+  whpx: interrupt controller support
+  whpx: add arm64 support
+  whpx: change memory management logic
+  target/arm: cpu: mark WHPX as supporting PSCI 1.3
+  whpx: arm64: clamp down IPA size
+  hw/arm, accel/hvf, whpx: unify get_physical_address_range between WHPX
+    and HVF
+  whpx: arm64: implement -cpu host
+  target/arm: whpx: instantiate GIC early
+  whpx: enable arm64 builds
+  whpx: arm64: add partition-wide reset on the reboot path
+
+Philippe Mathieu-Daudé (1):
+  accel/system: Introduce hwaccel_enabled() helper
+
+Sebastian Ott (1):
+  target/arm/kvm: add constants for new PSCI versions
+
+ MAINTAINERS                                   |   6 +
+ accel/hvf/hvf-all.c                           |   7 +-
+ accel/meson.build                             |   1 +
+ accel/stubs/whpx-stub.c                       |   1 +
+ accel/whpx/meson.build                        |   7 +
+ {target/i386 => accel}/whpx/whpx-accel-ops.c  |   6 +-
+ accel/whpx/whpx-common.c                      | 536 ++++++++++
+ docs/system/arm/virt.rst                      |  13 +-
+ hw/arm/virt-acpi-build.c                      |  20 +-
+ hw/arm/virt.c                                 | 135 ++-
+ hw/i386/x86-cpu.c                             |   4 +-
+ hw/intc/arm_gicv3_common.c                    |   3 +
+ hw/intc/arm_gicv3_whpx.c                      | 237 +++++
+ hw/intc/meson.build                           |   1 +
+ include/hw/arm/virt.h                         |   5 +-
+ include/hw/core/boards.h                      |   3 +-
+ include/hw/intc/arm_gicv3_common.h            |   3 +
+ include/system/hvf_int.h                      |   4 +
+ include/system/hw_accel.h                     |  13 +
+ .../whpx => include/system}/whpx-accel-ops.h  |   4 +-
+ include/system/whpx-all.h                     |  20 +
+ include/system/whpx-common.h                  |  26 +
+ .../whpx => include/system}/whpx-internal.h   |  16 +-
+ include/system/whpx.h                         |   5 +-
+ meson.build                                   |  20 +-
+ target/arm/cpu.c                              |   3 +
+ target/arm/cpu64.c                            |  17 +-
+ target/arm/hvf-stub.c                         |  20 -
+ target/arm/hvf/hvf.c                          |   6 +-
+ target/arm/hvf_arm.h                          |   3 -
+ target/arm/kvm-consts.h                       |   2 +
+ target/arm/meson.build                        |   2 +-
+ target/arm/whpx/meson.build                   |   5 +
+ target/arm/whpx/whpx-all.c                    | 985 ++++++++++++++++++
+ target/arm/whpx/whpx-stub.c                   |  15 +
+ target/arm/whpx_arm.h                         |  17 +
+ target/i386/cpu-apic.c                        |   2 +-
+ target/i386/hvf/hvf.c                         |  11 +
+ target/i386/whpx/meson.build                  |   1 -
+ target/i386/whpx/whpx-all.c                   | 569 +---------
+ target/i386/whpx/whpx-apic.c                  |   2 +-
+ tests/data/acpi/aarch64/virt/APIC.msi_gicv2m  | Bin 0 -> 188 bytes
+ tests/data/acpi/aarch64/virt/IORT             | Bin 128 -> 84 bytes
+ tests/data/acpi/aarch64/virt/IORT.msi_gicv2m  | Bin 0 -> 172 bytes
+ tests/data/acpi/aarch64/virt/IORT.smmuv3-dev  | Bin 364 -> 260 bytes
+ .../data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 276 -> 192 bytes
+ tests/qtest/bios-tables-test.c                |  21 +
+ 47 files changed, 2140 insertions(+), 637 deletions(-)
+ create mode 100644 accel/whpx/meson.build
+ rename {target/i386 => accel}/whpx/whpx-accel-ops.c (96%)
+ create mode 100644 accel/whpx/whpx-common.c
+ create mode 100644 hw/intc/arm_gicv3_whpx.c
+ rename {target/i386/whpx => include/system}/whpx-accel-ops.h (92%)
+ create mode 100644 include/system/whpx-all.h
+ create mode 100644 include/system/whpx-common.h
+ rename {target/i386/whpx => include/system}/whpx-internal.h (95%)
+ delete mode 100644 target/arm/hvf-stub.c
+ create mode 100644 target/arm/whpx/meson.build
+ create mode 100644 target/arm/whpx/whpx-all.c
+ create mode 100644 target/arm/whpx/whpx-stub.c
+ create mode 100644 target/arm/whpx_arm.h
+ create mode 100644 tests/data/acpi/aarch64/virt/APIC.msi_gicv2m
+ create mode 100644 tests/data/acpi/aarch64/virt/IORT.msi_gicv2m
+
 -- 
-2.52.0
+2.50.1 (Apple Git-155)
 
 
