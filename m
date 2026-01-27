@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D778D2FED4
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91828D2FED4
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:27:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknm7-0005UQ-Q5; Tue, 27 Jan 2026 13:26:51 -0500
+	id 1vknmS-0006UA-A3; Tue, 27 Jan 2026 13:27:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknlH-0004iY-TV
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:26:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vknm2-0005Nr-EF
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:26:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknlF-00039L-4g
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:25:58 -0500
+ id 1vknm0-0003Cx-IT
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:26:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769538356;
+ s=mimecast20190719; t=1769538402;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/cZUKddlupLighI/o9Jsls2yq4HB9P8QKW//U1lf5uk=;
- b=WnPBzovpwrlv5GpkCJiaf+3ByGsFgvVcNaxZBpwzKgcqyMajs94joCyZVw1wRP1W3S4y9S
- m0GzpgXJwGR4rFldX1ERsl1KYiepd07xhaYa4jfVsqG3/TtqbxfeWD8p9/w9rGE4hRvAPN
- SuUHGJUZaRg8XJYJPx9towPSOWZbazA=
+ bh=Fs9pXiZt6pd+MQSmZMWOyuZI56C6GMSXThuXvAdIcFY=;
+ b=hM1geX0+Xb1Om8ybPUEnuKQ4qrYDdAwHwA/8syDpdvzu3uuuFIZeql6W/WT/f10xQMwDgC
+ rdN4nWhP9r6KMTnb7R+dYmjdxfoVelXxNWBvx/0x4YmVKk/bzXZWuvHPq1mMVHHzVbQDSR
+ nUOMPtxWjDJAoV1urbvFlDDUoNUpOEY=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-vRUVh-PoNIOM3u638rdw8A-1; Tue,
- 27 Jan 2026 13:25:53 -0500
-X-MC-Unique: vRUVh-PoNIOM3u638rdw8A-1
-X-Mimecast-MFC-AGG-ID: vRUVh-PoNIOM3u638rdw8A_1769538352
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-QdxnWZWvMUSKYT6F4gVXPg-1; Tue,
+ 27 Jan 2026 13:26:39 -0500
+X-MC-Unique: QdxnWZWvMUSKYT6F4gVXPg-1
+X-Mimecast-MFC-AGG-ID: QdxnWZWvMUSKYT6F4gVXPg_1769538398
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D05A81944B10; Tue, 27 Jan 2026 18:25:51 +0000 (UTC)
+ id 59DA91944EB7; Tue, 27 Jan 2026 18:26:38 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.23])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5D793195419A; Tue, 27 Jan 2026 18:25:49 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BEAB218001D5; Tue, 27 Jan 2026 18:26:36 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>
-Subject: [PATCH 05/43] audio/alsa: convert to QOM lifecycle methods
-Date: Tue, 27 Jan 2026 22:24:32 +0400
-Message-ID: <20260127182516.289834-6-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 13/43] audio/dsound: convert to QOM lifecycle methods
+Date: Tue, 27 Jan 2026 22:24:40 +0400
+Message-ID: <20260127182516.289834-14-marcandre.lureau@redhat.com>
 In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
 References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -70,7 +69,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,165 +89,321 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Migrate the ALSA audio backend from the legacy driver init/fini
-callbacks to proper QOM realize method.
+Migrate the DirectSound audio backend from the legacy driver init/fini
+callbacks to proper QOM realize and finalize methods.
 
-The alsa_audio_init() function is replaced with audio_alsa_realize(),
-which performs the same ALSA option initialization before delegating
-to the parent class realize method. The empty alsa_audio_fini() is
-removed.
+The dsound struct fields are now embedded directly in the AudioDsound
+QOM object instead of being allocated separately as drv_opaque. This
+allows accessing the backend state through proper QOM type casting
+with AUDIO_DSOUND() rather than casting drv_opaque pointers.
 
-The Audiodev pointer stored in ALSAVoiceOut and ALSAVoiceIn is removed
-as it can now be accessed through hw->s->dev.
+The DirectSound and DirectSoundCapture COM objects are now managed
+through the QOM lifecycle, with initialization in realize and cleanup
+in finalize.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/alsaaudio.c | 43 ++++++++++++++++++++-----------------------
- 1 file changed, 20 insertions(+), 23 deletions(-)
+ audio/dsound_template.h |  9 ++---
+ audio/dsoundaudio.c     | 87 +++++++++++++++++++----------------------
+ 2 files changed, 45 insertions(+), 51 deletions(-)
 
-diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
-index e8541e1a2a3..42bfea2515d 100644
---- a/audio/alsaaudio.c
-+++ b/audio/alsaaudio.c
-@@ -40,19 +40,14 @@
- #define TYPE_AUDIO_ALSA "audio-alsa"
- OBJECT_DECLARE_SIMPLE_TYPE(AudioALSA, AUDIO_ALSA)
+diff --git a/audio/dsound_template.h b/audio/dsound_template.h
+index 0678f2de38b..7979773eb86 100644
+--- a/audio/dsound_template.h
++++ b/audio/dsound_template.h
+@@ -72,7 +72,7 @@ static int glue (dsound_lock_, TYPE) (
+     DWORD *blen1p,
+     DWORD *blen2p,
+     int entire,
+-    dsound *s
++    AudioDsound *s
+     )
+ {
+     HRESULT hr;
+@@ -166,7 +166,7 @@ static int dsound_init_out(HWVoiceOut *hw, struct audsettings *as,
+ {
+     int err;
+     HRESULT hr;
+-    dsound *s = drv_opaque;
++    AudioDsound *s = AUDIO_DSOUND(hw->s);
+     WAVEFORMATEX wfx;
+     struct audsettings obt_as;
+ #ifdef DSBTYPE_IN
+@@ -174,13 +174,13 @@ static int dsound_init_out(HWVoiceOut *hw, struct audsettings *as,
+     DSoundVoiceIn *ds = (DSoundVoiceIn *) hw;
+     DSCBUFFERDESC bd;
+     DSCBCAPS bc;
+-    AudiodevPerDirectionOptions *pdo = s->dev->u.dsound.in;
++    AudiodevPerDirectionOptions *pdo = hw->s->dev->u.dsound.in;
+ #else
+     const char *typ = "DAC";
+     DSoundVoiceOut *ds = (DSoundVoiceOut *) hw;
+     DSBUFFERDESC bd;
+     DSBCAPS bc;
+-    AudiodevPerDirectionOptions *pdo = s->dev->u.dsound.out;
++    AudiodevPerDirectionOptions *pdo = hw->s->dev->u.dsound.out;
+ #endif
  
-+static AudioBackendClass *audio_alsa_parent_class;
+     if (!s->FIELD2) {
+@@ -256,7 +256,6 @@ static int dsound_init_out(HWVoiceOut *hw, struct audsettings *as,
+     }
+     hw->size_emul = bc.dwBufferBytes;
+     hw->samples = bc.dwBufferBytes / hw->info.bytes_per_frame;
+-    ds->s = s;
+ 
+ #ifdef DEBUG_DSOUND
+     dolog ("caps %ld, desc %ld\n",
+diff --git a/audio/dsoundaudio.c b/audio/dsoundaudio.c
+index 3de6a3dee9c..4ecf2ade003 100644
+--- a/audio/dsoundaudio.c
++++ b/audio/dsoundaudio.c
+@@ -45,40 +45,30 @@
+ #define TYPE_AUDIO_DSOUND "audio-dsound"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioDsound, AUDIO_DSOUND)
+ 
++static AudioBackendClass *audio_dsound_parent_class;
 +
- struct AudioALSA {
+ struct AudioDsound {
      AudioMixengBackend parent;
++
++    LPDIRECTSOUND dsound;
++    LPDIRECTSOUNDCAPTURE dsound_capture;
++    struct audsettings settings;
  };
  
- static struct audio_driver alsa_audio_driver;
+ static struct audio_driver dsound_audio_driver;
  
--static void audio_alsa_class_init(ObjectClass *klass, const void *data)
+-static void audio_dsound_class_init(ObjectClass *klass, const void *data)
 -{
 -    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
 -
--    k->driver = &alsa_audio_driver;
+-    k->driver = &dsound_audio_driver;
 -}
 -
- struct pollhlp {
-     snd_pcm_t *handle;
-     struct pollfd *pfds;
-@@ -65,14 +60,12 @@ typedef struct ALSAVoiceOut {
+ /* #define DEBUG_DSOUND */
+ 
+-typedef struct {
+-    LPDIRECTSOUND dsound;
+-    LPDIRECTSOUNDCAPTURE dsound_capture;
+-    struct audsettings settings;
+-    Audiodev *dev;
+-} dsound;
+-
+ typedef struct {
      HWVoiceOut hw;
-     snd_pcm_t *handle;
-     struct pollhlp pollhlp;
--    Audiodev *dev;
- } ALSAVoiceOut;
+     LPDIRECTSOUNDBUFFER dsound_buffer;
+     bool first_time;
+-    dsound *s;
+ } DSoundVoiceOut;
  
- typedef struct ALSAVoiceIn {
+ typedef struct {
      HWVoiceIn hw;
-     snd_pcm_t *handle;
-     struct pollhlp pollhlp;
--    Audiodev *dev;
- } ALSAVoiceIn;
+     LPDIRECTSOUNDCAPTUREBUFFER dsound_capture_buffer;
+     bool first_time;
+-    dsound *s;
+ } DSoundVoiceIn;
  
- struct alsa_params_req {
-@@ -707,7 +700,7 @@ static int alsa_init_out(HWVoiceOut *hw, struct audsettings *as,
-     struct alsa_params_obt obt;
-     snd_pcm_t *handle;
-     struct audsettings obt_as;
--    Audiodev *dev = drv_opaque;
-+    Audiodev *dev = hw->s->dev;
+ static const char *dserror(HRESULT hr)
+@@ -276,7 +266,7 @@ static void print_wave_format (WAVEFORMATEX *wfx)
+ }
+ #endif
  
-     req.fmt = aud_to_alsafmt (as->fmt, as->endianness);
-     req.freq = as->freq;
-@@ -727,7 +720,6 @@ static int alsa_init_out(HWVoiceOut *hw, struct audsettings *as,
+-static int dsound_restore_out (LPDIRECTSOUNDBUFFER dsb, dsound *s)
++static int dsound_restore_out (LPDIRECTSOUNDBUFFER dsb, AudioDsound *s)
+ {
+     HRESULT hr;
  
-     alsa->pollhlp.s = hw->s;
-     alsa->handle = handle;
--    alsa->dev = dev;
-     return 0;
+@@ -295,7 +285,7 @@ static int dsound_restore_out (LPDIRECTSOUNDBUFFER dsb, dsound *s)
+ #undef DSBTYPE_IN
+ 
+ static int dsound_get_status_out (LPDIRECTSOUNDBUFFER dsb, DWORD *statusp,
+-                                  dsound *s)
++                                  AudioDsound *s)
+ {
+     HRESULT hr;
+ 
+@@ -328,7 +318,7 @@ static int dsound_get_status_in (LPDIRECTSOUNDCAPTUREBUFFER dscb,
  }
  
-@@ -766,7 +758,7 @@ static int alsa_voice_ctl (snd_pcm_t *handle, const char *typ, int ctl)
- static void alsa_enable_out(HWVoiceOut *hw, bool enable)
+ static void dsound_clear_sample (HWVoiceOut *hw, LPDIRECTSOUNDBUFFER dsb,
+-                                 dsound *s)
++                                 AudioDsound *s)
  {
-     ALSAVoiceOut *alsa = (ALSAVoiceOut *) hw;
--    AudiodevAlsaPerDirectionOptions *apdo = alsa->dev->u.alsa.out;
-+    AudiodevAlsaPerDirectionOptions *apdo = hw->s->dev->u.alsa.out;
- 
-     if (enable) {
-         bool poll_mode = apdo->try_poll;
-@@ -794,7 +786,7 @@ static int alsa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
-     struct alsa_params_obt obt;
-     snd_pcm_t *handle;
-     struct audsettings obt_as;
--    Audiodev *dev = drv_opaque;
-+    Audiodev *dev = hw->s->dev;
- 
-     req.fmt = aud_to_alsafmt (as->fmt, as->endianness);
-     req.freq = as->freq;
-@@ -814,7 +806,6 @@ static int alsa_init_in(HWVoiceIn *hw, struct audsettings *as, void *drv_opaque)
- 
-     alsa->pollhlp.s = hw->s;
-     alsa->handle = handle;
--    alsa->dev = dev;
-     return 0;
- }
- 
-@@ -871,7 +862,7 @@ static size_t alsa_read(HWVoiceIn *hw, void *buf, size_t len)
- static void alsa_enable_in(HWVoiceIn *hw, bool enable)
+     int err;
+     LPVOID p1, p2;
+@@ -372,9 +362,9 @@ static void dsound_enable_out(HWVoiceOut *hw, bool enable)
  {
-     ALSAVoiceIn *alsa = (ALSAVoiceIn *) hw;
--    AudiodevAlsaPerDirectionOptions *apdo = alsa->dev->u.alsa.in;
-+    AudiodevAlsaPerDirectionOptions *apdo = hw->s->dev->u.alsa.in;
+     HRESULT hr;
+     DWORD status;
++    AudioDsound *s = AUDIO_DSOUND(hw->s);
+     DSoundVoiceOut *ds = (DSoundVoiceOut *) hw;
+     LPDIRECTSOUNDBUFFER dsb = ds->dsound_buffer;
+-    dsound *s = ds->s;
  
-     if (enable) {
-         bool poll_mode = apdo->try_poll;
-@@ -901,7 +892,8 @@ static void alsa_init_per_direction(AudiodevAlsaPerDirectionOptions *apdo)
-     }
- }
+     if (!dsb) {
+         dolog ("Attempt to control voice without a buffer\n");
+@@ -450,7 +440,7 @@ static void *dsound_get_buffer_out(HWVoiceOut *hw, size_t *size)
+     assert(req_size > 0);
  
--static void *alsa_audio_init(Audiodev *dev, Error **errp)
-+static bool
-+audio_alsa_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
- {
-     AudiodevAlsaOptions *aopts;
-     assert(dev->driver == AUDIODEV_DRIVER_ALSA);
-@@ -929,11 +921,7 @@ static void *alsa_audio_init(Audiodev *dev, Error **errp)
-         dev->u.alsa.in->buffer_length = 92880;
+     err = dsound_lock_out(dsb, &hw->info, hw->pos_emul, req_size, &ret, NULL,
+-                          &act_size, NULL, false, ds->s);
++                          &act_size, NULL, false, AUDIO_DSOUND(hw->s));
+     if (err) {
+         dolog("Failed to lock buffer\n");
+         *size = 0;
+@@ -553,7 +543,7 @@ static void *dsound_get_buffer_in(HWVoiceIn *hw, size_t *size)
      }
  
--    return dev;
--}
+     err = dsound_lock_in(dscb, &hw->info, hw->pos_emul, req_size, &ret, NULL,
+-                         &act_size, NULL, false, ds->s);
++                         &act_size, NULL, false, AUDIO_DSOUND(hw->s));
+     if (err) {
+         dolog("Failed to lock buffer\n");
+         *size = 0;
+@@ -577,13 +567,12 @@ static void dsound_put_buffer_in(HWVoiceIn *hw, void *buf, size_t len)
+     hw->pos_emul = (hw->pos_emul + len) % hw->size_emul;
+ }
+ 
+-static void dsound_audio_fini (void *opaque)
++static void audio_dsound_finalize(Object *obj)
+ {
++    AudioDsound *s = AUDIO_DSOUND(obj);
+     HRESULT hr;
+-    dsound *s = opaque;
+ 
+     if (!s->dsound) {
+-        g_free(s);
+         return;
+     }
+ 
+@@ -594,7 +583,6 @@ static void dsound_audio_fini (void *opaque)
+     s->dsound = NULL;
+ 
+     if (!s->dsound_capture) {
+-        g_free(s);
+         return;
+     }
+ 
+@@ -603,18 +591,21 @@ static void dsound_audio_fini (void *opaque)
+         dsound_logerr (hr, "Could not release DirectSoundCapture\n");
+     }
+     s->dsound_capture = NULL;
 -
--static void alsa_audio_fini (void *opaque)
--{
-+    return audio_alsa_parent_class->realize(abe, dev, errp);
+-    g_free(s);
  }
  
- static struct audio_pcm_ops alsa_pcm_ops = {
-@@ -953,8 +941,6 @@ static struct audio_pcm_ops alsa_pcm_ops = {
+-static void *dsound_audio_init(Audiodev *dev, Error **errp)
++static bool
++audio_dsound_realize(AudioBackend *abe, Audiodev *dev, Error **errp)
+ {
++    AudioDsound *s = AUDIO_DSOUND(abe);
+     HRESULT hr;
+-    dsound *s = g_new0(dsound, 1);
+     AudiodevDsoundOptions *dso;
  
- static struct audio_driver alsa_audio_driver = {
-     .name           = "alsa",
--    .init           = alsa_audio_init,
--    .fini           = alsa_audio_fini,
-     .pcm_ops        = &alsa_pcm_ops,
+     assert(dev->driver == AUDIODEV_DRIVER_DSOUND);
+-    s->dev = dev;
++
++    if (!audio_dsound_parent_class->realize(abe, dev, errp)) {
++        return false;
++    }
++
+     dso = &dev->u.dsound;
+ 
+     if (!dso->has_latency) {
+@@ -625,8 +616,7 @@ static void *dsound_audio_init(Audiodev *dev, Error **errp)
+     hr = CoInitialize (NULL);
+     if (FAILED (hr)) {
+         dserror_set(errp, hr, "Could not initialize COM");
+-        dsound_audio_fini(s);
+-        return NULL;
++        return false;
+     }
+ 
+     hr = CoCreateInstance (
+@@ -638,15 +628,13 @@ static void *dsound_audio_init(Audiodev *dev, Error **errp)
+         );
+     if (FAILED (hr)) {
+         dserror_set(errp, hr, "Could not create DirectSound instance");
+-        dsound_audio_fini(s);
+-        return NULL;
++        return false;
+     }
+ 
+     hr = IDirectSound_Initialize (s->dsound, NULL);
+     if (FAILED (hr)) {
+         dserror_set(errp, hr, "Could not initialize DirectSound");
+-        dsound_audio_fini(s);
+-        return NULL;
++        return false;
+     }
+ 
+     hr = CoCreateInstance (
+@@ -658,15 +646,13 @@ static void *dsound_audio_init(Audiodev *dev, Error **errp)
+         );
+     if (FAILED (hr)) {
+         dserror_set(errp, hr, "Could not create DirectSoundCapture instance");
+-        dsound_audio_fini(s);
+-        return NULL;
++        return false;
+     }
+ 
+     hr = IDirectSoundCapture_Initialize (s->dsound_capture, NULL);
+     if (FAILED(hr)) {
+         dserror_set(errp, hr, "Could not initialize DirectSoundCapture");
+-        dsound_audio_fini(s);
+-        return NULL;
++        return false;
+     }
+ 
+     hr = IDirectSound_SetCooperativeLevel (
+@@ -676,11 +662,10 @@ static void *dsound_audio_init(Audiodev *dev, Error **errp)
+     );
+     if (FAILED(hr)) {
+         dserror_set(errp, hr, "Could not set cooperative level");
+-        dsound_audio_fini(s);
+-        return NULL;
++        return false;
+     }
+ 
+-    return s;
++    return true;
+ }
+ 
+ static struct audio_pcm_ops dsound_pcm_ops = {
+@@ -702,8 +687,6 @@ static struct audio_pcm_ops dsound_pcm_ops = {
+ 
+ static struct audio_driver dsound_audio_driver = {
+     .name           = "dsound",
+-    .init           = dsound_audio_init,
+-    .fini           = dsound_audio_fini,
+     .pcm_ops        = &dsound_pcm_ops,
      .max_voices_out = INT_MAX,
-     .max_voices_in  = INT_MAX,
-@@ -962,6 +948,17 @@ static struct audio_driver alsa_audio_driver = {
-     .voice_size_in  = sizeof (ALSAVoiceIn)
+     .max_voices_in  = 1,
+@@ -711,11 +694,23 @@ static struct audio_driver dsound_audio_driver = {
+     .voice_size_in  = sizeof (DSoundVoiceIn)
  };
  
-+static void audio_alsa_class_init(ObjectClass *klass, const void *data)
++static void audio_dsound_class_init(ObjectClass *klass, const void *data)
 +{
 +    AudioBackendClass *b = AUDIO_BACKEND_CLASS(klass);
 +    AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_CLASS(klass);
 +
-+    audio_alsa_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
++    audio_dsound_parent_class = AUDIO_BACKEND_CLASS(object_class_get_parent(klass));
 +
-+    b->realize = audio_alsa_realize;
-+    k->driver = &alsa_audio_driver;
++    b->realize = audio_dsound_realize;
++    k->driver = &dsound_audio_driver;
 +}
 +
- static const TypeInfo audio_alsa_info = {
-     .name = TYPE_AUDIO_ALSA,
+ static const TypeInfo audio_dsound_info = {
+     .name = TYPE_AUDIO_DSOUND,
      .parent = TYPE_AUDIO_MIXENG_BACKEND,
+     .instance_size = sizeof(AudioDsound),
+     .class_init = audio_dsound_class_init,
++    .instance_finalize = audio_dsound_finalize,
+ };
+ 
+ static void register_audio_dsound(void)
 -- 
 2.52.0
 
