@@ -4,111 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D62ED25939
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 05:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B00AD25937
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 05:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkbT8-0000zL-Px; Tue, 27 Jan 2026 00:18:27 -0500
+	id 1vkbSi-0007va-Vo; Tue, 27 Jan 2026 00:18:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vkbT0-0000fX-QY
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:18:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vkbSa-0007TP-Cm
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vkbSz-0000Hn-9h
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:18:18 -0500
+ id 1vkbSZ-0000DG-1i
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769491096;
+ s=mimecast20190719; t=1769491070;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yFYMvKOUQKIGJ/bgL+z2/AhFQ5ODxClXmfogU8hnHt8=;
- b=VB1mvM89C/GbPWGkDmQ2aZuM9/a1yaCOrXgoe/kP0+JBIkrjxpzlgnva0SpX24SqN2ziAy
- /VslV242WA8aKUjhnGGI5SA1yYzHjbEiBlRQGgqa05yrLlEZ/OwT1vwRj4rZDIo3R93IKo
- 2WQ7honG8AIu/WFCfCcuudWH9l45fgI=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1g88IOaonMf2X9NU0RqGLSr/HucXkWAA/ZJSr/I4RfE=;
+ b=FJoDTzI/ahFhm7Ib7bIcR9foDhn2hVXn2X3jS0mJ6Uq8iRB2m30Oa2U//BLEomQfOV9icw
+ HlHn2/TyDKzSy5ZLLyPXFSF2oQo/qKiGi0nciRFj318J7uyfRZh0qTrF+ZtBRZn11+t7C+
+ ARn55Ri3ujgYEF2sCSqpqErlVubJIz0=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-179-DL-ZCg00OZiqed8CNUm-sw-1; Tue, 27 Jan 2026 00:18:12 -0500
-X-MC-Unique: DL-ZCg00OZiqed8CNUm-sw-1
-X-Mimecast-MFC-AGG-ID: DL-ZCg00OZiqed8CNUm-sw_1769491092
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-34c48a76e75so4683046a91.1
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 21:18:12 -0800 (PST)
+ us-mta-468-Nsv-h03JOLC7gzDZ_NYghg-1; Tue, 27 Jan 2026 00:17:48 -0500
+X-MC-Unique: Nsv-h03JOLC7gzDZ_NYghg-1
+X-Mimecast-MFC-AGG-ID: Nsv-h03JOLC7gzDZ_NYghg_1769491068
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2a0bb1192cbso42909495ad.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 21:17:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769491092; x=1770095892; darn=nongnu.org;
+ d=redhat.com; s=google; t=1769491067; x=1770095867; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yFYMvKOUQKIGJ/bgL+z2/AhFQ5ODxClXmfogU8hnHt8=;
- b=mJj6xz1ii9dKXqT7GCHCY65TVzL4Z2Au0BROR+R9v1zGTPFoIxfXbYDrDclh/zAFZ6
- ecMeq+iDjpzrISpVRbTkM8T9BmPrj6LIeepAncRgWmpltqHksSqSnCYIc32VBw5HGwaS
- VLccr2FDaOKDAojoju5YLcvxnCJ5now+0Rf7JYZ+9cv7KR29ngf+PJzqO7bvpH49WBV1
- pNYHNl4igV8MhfOSJ5O5G6I4H7VuFMmKc4CPHQ+Vj4yAp4v44eGMOfcHMgSkDN5NlBCq
- XK9RqILHx5yAM9rUJSpG1WlAZfbkZmSlMcNsEh5fA36O1PN6s05klaw2EOe5p0BlLpt0
- XvXg==
+ bh=1g88IOaonMf2X9NU0RqGLSr/HucXkWAA/ZJSr/I4RfE=;
+ b=ZpWCDt8O77akmlVRHmFKv9y1xJjtNBmILN+mbRO2M2oMQQR60H8DqCGTdIEoTwafcg
+ DEGjrrdsPObWYvuWGe2eP5b8VkYcUt7K9jWNMK4rNsTaUVoFxRWn7xMnwbG/NF3/UEs+
+ ZObStKFKuD/DeRIq1geDRkh0OGdKc/6YfiQfA2NEBT6r9e8ut9pNBId2zKVxesKeQ0T+
+ 5VIJIHduX2vgTLxDVbdVouR4JjEbzcXSUWi1m253DQoLOdOeP56rWUxkgWPpIImtw0a8
+ QiANVWtgEr8dovux99QnpIW6W2CRRdTXUXRDOXsTix5MDkXDdQwX9IAHHJ0fq/1YpnJG
+ u2dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769491092; x=1770095892;
+ d=1e100.net; s=20230601; t=1769491067; x=1770095867;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=yFYMvKOUQKIGJ/bgL+z2/AhFQ5ODxClXmfogU8hnHt8=;
- b=pzqtoJZE3A/OobTC+ChPq5IOuhxCH2Wry/hcoEIyzqMjJGNOVDZZjLBXfMefPjZdmS
- cFjvq0hyEgNdv/eZk9FCzGSHp7xUGAEXUF0n4IDZzDhfcJfqyvLvkZ/MxjjzEpybB8k/
- q7AoVsnfaRyISH7b3kkDOvPGh31rtCxKWxy0mB+FBF4wxfaP4Wmogr9Hg4hpLbIS02YZ
- imhCBy1tkDkyv4tRChZPlajhQDccrLBS+DjT1CJwA3foEUmfaB80gK9LeAbHoIB0/DFh
- +fTaLvnkG+q56NEHeD/MQrFlLDx3d+XYIDI32EOUYjayBB8XJp/XSkJm78mYUtC+UlUF
- pi6w==
+ bh=1g88IOaonMf2X9NU0RqGLSr/HucXkWAA/ZJSr/I4RfE=;
+ b=H0gXys+EERFO2btM6X9uK7WW47BSviA7wVdldxWQxIOfOx4D1e1o8LUmjxu3j2iFT4
+ NQjmBizLldf1PLzpjg2eYbXzM2+Q0tDDSA3NxOM/zoXq7cD5BDH4HzyJdnStyZUNXIOB
+ 3z4d0RaZkcmmsQ5dY0GS/zJske/BAiYS8oUt3PGey7hbX22G34Q6RGO9YEDNoFy1kQia
+ zTAc+//IfJcFojTa/4oRf6v+mnKL+oM9ONakUJQ49ex+0cj8YmWgi5Tj+iR/nfCziJEi
+ sWUzRgUxOnKwBph4v/FY8b5v8O1OTLRI04JQb9s0/3iSuI8uBOpk/KUf6x5U9oKHxw2/
+ BiZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUpbjheibhBrg1gPdX7QR1CEYUKOiD/6RsFsXa7iLbIhpHQsXpEhmyy4bLbU82xohf+pfPytxO2cAEX@nongnu.org
-X-Gm-Message-State: AOJu0Yy/WRYqb9Dlz5iSUc6bP8RZ2T3PSBfxauVsxB6oorSoJ2ORCaR2
- FcJJm2I+Shpe/83bhEj6f+BNUJkiScxXqA7DR9xL1kUHdVlB3DCPn/mzrRZSxBJhOdh/jVJd6ll
- Y/pShuyZ2aX+Lb1M0w68ebsrKJPWetYAZHSOWePTiSm8XoLWNBBjfd/ae
-X-Gm-Gg: AZuq6aIc2AXd05CIkqT9wF/3CqFtUh7ZGo27hC7EMQKts5yMhE+hfLiYNvBzB5KzCfe
- m5MZIk9+30/h804e4alrVPZ787LpM6D75GYTAua/Kb6CWRVyMbG3pF4P7ypV39/8NC0WuKzNz0m
- bi4co424g415Crr5ydPqSC5/tP/afCmpGhH6uosVTh8Fn9FFGm0Yw6lKMSumzS0qdvPZ5Pk3vQp
- LUlVVcYE9LrzHEmoS1h8YLaEcqN5Jh3OuXKFZjPtOL6AOdYjjb5BRKFA6EQAkLUxU5drLxCmSX1
- XdeVRK03cm0ytAzfCLwXd0NLKZLwDgm/ZnYGk8B4z+E/l72GoUgOkG/AABBMjM2IsO0sGLIojGZ
- VywrGojL45pOBnhmhJIINyh2XxiYVwEEMhKQQzWxTig==
-X-Received: by 2002:a17:90a:c2cb:b0:34a:b4a2:f0bf with SMTP id
- 98e67ed59e1d1-353fecdb3d5mr741019a91.16.1769491091783; 
- Mon, 26 Jan 2026 21:18:11 -0800 (PST)
-X-Received: by 2002:a17:90a:c2cb:b0:34a:b4a2:f0bf with SMTP id
- 98e67ed59e1d1-353fecdb3d5mr740991a91.16.1769491091411; 
- Mon, 26 Jan 2026 21:18:11 -0800 (PST)
+ AJvYcCUxAM8Vsl+lRrCpO4/kqcAgtO6m4KsaukjcmLf8rUrtpr2dxlm7xPyolGgkBjx2fEdbh7/8vjFJjxji@nongnu.org
+X-Gm-Message-State: AOJu0YxivdcO1Fll1Gz7rx8IAKAdluMa+S62u/jAgjQXNAorxn9YS4Ky
+ wOYO03Tr8VO+JwJGFbL+vpKd7SZEBu2Xrq/KujA1wERuM+/wG+OvIWRzjCb+TI9BB0buYaaz1VS
+ XqSuOYvseUPcY+mL3ziqkRq+JpnmyThtcaDAGzk6AKYARwgSNWfOR5pE3
+X-Gm-Gg: AZuq6aLhLRffXf/o3L/1fGYzDJfFcJdiGIP81tasdk+01VnW1ecDQ7JLn6DpTf8xqNG
+ 3yy5O9/isv6WSK3/34FIXEC+7dUHpNiMFUqi6On2Hwe0xCVJcPztDWzaIeFBcFcjq1qhSyy5R7N
+ gFHb4TwW85i2AmgTlJ6BXzPpQIM9QuhtmbpxIKVDgKE2/wl2RG767mElj2uHZP1hvdGA+laQLXH
+ 2nSUjhdBkCOEpAiyTAB8YyHv9TGJi6ipw6HstzPPeP5tFUdlhIAkh3NVbrDRrmKgx5d5V920XBM
+ hgTiQSAcVXT7Ge9os5VqAF96GAN7Q07LLfHkzJVUABCMreyPOTXdenhxVkBZ+wvi6wVP5wKN2Dz
+ nUan9ZYjHTv7wyAnm1qjf6tPGQ/F2lPIUDHTF8FUWiQ==
+X-Received: by 2002:a17:903:40cc:b0:2a0:f0e5:3f5c with SMTP id
+ d9443c01a7336-2a870dc6deemr5356975ad.34.1769491067517; 
+ Mon, 26 Jan 2026 21:17:47 -0800 (PST)
+X-Received: by 2002:a17:903:40cc:b0:2a0:f0e5:3f5c with SMTP id
+ d9443c01a7336-2a870dc6deemr5356795ad.34.1769491067129; 
+ Mon, 26 Jan 2026 21:17:47 -0800 (PST)
 Received: from rhel9-box.lan ([122.163.48.79])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-353f6230d5dsm1110925a91.17.2026.01.26.21.18.08
+ 98e67ed59e1d1-353f6230d5dsm1110925a91.17.2026.01.26.21.17.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 21:18:11 -0800 (PST)
+ Mon, 26 Jan 2026 21:17:46 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH v3 32/33] hw/machine: introduce machine specific option
- 'x-change-vmfd-on-reset'
-Date: Tue, 27 Jan 2026 10:46:00 +0530
-Message-ID: <20260127051612.219475-33-anisinha@redhat.com>
+Subject: [PATCH v3 24/33] kvm/i8254: add support for confidential guest reset
+Date: Tue, 27 Jan 2026 10:45:52 +0530
+Message-ID: <20260127051612.219475-25-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260127051612.219475-1-anisinha@redhat.com>
 References: <20260127051612.219475-1-anisinha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -126,115 +125,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A new machine specific option 'x-change-vmfd-on-reset' is introduced for
-debugging and testing only (hence the 'x-' prefix). This option when enabled
-will force KVM VM file descriptor to be changed upon guest reset like
-in the case of confidential guests. This can be used to exercize the code
-changes that are specific for confidential guests on non-confidential
-guests as well (except changes that require hardware support for
-confidential guests).
-A new functional test has been added in the next patch that uses this new
-parameter to test the VM file descriptor changes.
+A confidential guest reset involves closing the old virtual machine KVM file
+descriptor and opening a new one. Since its a new KVM fd, PIT needs to be
+reinitialized again. This is done with the help of a notifier which is invoked
+upon KVM vm file desciptor change during confidential guest reset process.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- hw/core/machine.c        | 22 ++++++++++++++++++++++
- include/hw/core/boards.h |  6 ++++++
- system/runstate.c        | 17 +++++++++--------
- 3 files changed, 37 insertions(+), 8 deletions(-)
+ hw/i386/kvm/i8254.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 6411e68856..95d7650db9 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -450,6 +450,21 @@ static void machine_set_dump_guest_core(Object *obj, bool value, Error **errp)
-     ms->dump_guest_core = value;
- }
- 
-+static bool machine_get_new_accel_vmfd_on_reset(Object *obj, Error **errp)
-+{
-+    MachineState *ms = MACHINE(obj);
+diff --git a/hw/i386/kvm/i8254.c b/hw/i386/kvm/i8254.c
+index 255047458a..a754de0c8d 100644
+--- a/hw/i386/kvm/i8254.c
++++ b/hw/i386/kvm/i8254.c
+@@ -52,6 +52,8 @@ struct KVMPITState {
+     LostTickPolicy lost_tick_policy;
+     bool vm_stopped;
+     int64_t kernel_clock_offset;
 +
-+    return ms->new_accel_vmfd_on_reset;
-+}
-+
-+static void machine_set_new_accel_vmfd_on_reset(Object *obj,
-+                                                bool value, Error **errp)
-+{
-+    MachineState *ms = MACHINE(obj);
-+
-+    ms->new_accel_vmfd_on_reset = value;
-+}
-+
- static bool machine_get_mem_merge(Object *obj, Error **errp)
- {
-     MachineState *ms = MACHINE(obj);
-@@ -1198,6 +1213,13 @@ static void machine_class_init(ObjectClass *oc, const void *data)
-     object_class_property_set_description(oc, "dump-guest-core",
-         "Include guest memory in a core dump");
- 
-+    object_class_property_add_bool(oc, "x-change-vmfd-on-reset",
-+        machine_get_new_accel_vmfd_on_reset,
-+        machine_set_new_accel_vmfd_on_reset);
-+    object_class_property_set_description(oc, "x-change-vmfd-on-reset",
-+        "Generate new accelerator fd on reset, "
-+        "to be used only for testing and debugging.");
-+
-     object_class_property_add_bool(oc, "mem-merge",
-         machine_get_mem_merge, machine_set_mem_merge);
-     object_class_property_set_description(oc, "mem-merge",
-diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-index 07f8938752..ee3cc9130e 100644
---- a/include/hw/core/boards.h
-+++ b/include/hw/core/boards.h
-@@ -447,6 +447,12 @@ struct MachineState {
-     struct NVDIMMState *nvdimms_state;
-     struct NumaState *numa_state;
-     bool acpi_spcr_enabled;
-+    /*
-+     * whether to change virtual machine accelerator file descriptor upon
-+     * reset or not. used only for debugging and testing purpose.
-+     * It should be set to false for all regular use.
-+     */
-+    bool new_accel_vmfd_on_reset;
++    NotifierWithReturn kvmpit_vmfd_change_notifier;
  };
  
- /*
-diff --git a/system/runstate.c b/system/runstate.c
-index d2ece27729..06036a9170 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -525,22 +525,23 @@ void qemu_system_reset(ShutdownCause reason)
-         type = RESET_TYPE_COLD;
+ struct KVMPITClass {
+@@ -203,6 +205,21 @@ static void kvm_pit_put(PITCommonState *pit)
      }
+ }
  
--    /*
--     * different accelerators implement how to close the old file handle of
--     * the accelerator descriptor and create a new one here. Resetting
--     * file handle is necessary to create a new confidential VM context post
--     * VM reset.
--     */
--    if (!cpus_are_resettable() && reason == SHUTDOWN_CAUSE_GUEST_RESET) {
-+    if (reason == SHUTDOWN_CAUSE_GUEST_RESET &&
-+        (current_machine->new_accel_vmfd_on_reset || !cpus_are_resettable())) {
-         if (ac->reset_vmfd) {
-             ret = ac->reset_vmfd(current_machine);
-             if (ret < 0) {
-                 error_report("unable to reset vmfd: %s(%d)",
-                              strerror(-ret), ret);
-                 vm_stop(RUN_STATE_INTERNAL_ERROR);
-+            } else if (current_machine->new_accel_vmfd_on_reset) {
-+                info_report("virtual machine accel file descriptor "
-+                            "has changed.");
-             }
-+        } else if (!cpus_are_resettable())  {
-+            error_report("accelerator does not support reset!");
-         } else {
--            error_report("accelerator does not support reset");
-+            error_report("accelerator does not support vmfd change reset, "
-+                         "proceeding with normal reset!");
-         }
-     }
++static int kvmpit_post_vmfd_change(NotifierWithReturn *notifier,
++                                   void *data, Error** errp)
++{
++    KVMPITState *s = container_of(notifier, KVMPITState,
++                                  kvmpit_vmfd_change_notifier);
++
++    /* we are not interested in pre vmfd change notification */
++    if (((VmfdChangeNotifier *)data)->pre) {
++        return 0;
++    }
++
++    do_pit_initialize(s, errp);
++    return 0;
++}
++
+ static void kvm_pit_set_gate(PITCommonState *s, PITChannelState *sc, int val)
+ {
+     kvm_pit_get(s);
+@@ -292,6 +309,9 @@ static void kvm_pit_realizefn(DeviceState *dev, Error **errp)
+ 
+     qemu_add_vm_change_state_handler(kvm_pit_vm_state_change, s);
+ 
++    s->kvmpit_vmfd_change_notifier.notify = kvmpit_post_vmfd_change;
++    kvm_vmfd_add_change_notifier(&s->kvmpit_vmfd_change_notifier);
++
+     kpc->parent_realize(dev, errp);
+ }
  
 -- 
 2.42.0
