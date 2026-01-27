@@ -4,105 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F4C1D2FED9
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73979D2FEDD
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:54:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkoCi-0004sK-MR; Tue, 27 Jan 2026 13:54:20 -0500
+	id 1vkoCi-0004rr-IC; Tue, 27 Jan 2026 13:54:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkoBg-00035S-4Z
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:53:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkoBm-0003DP-0u
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:53:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkoBe-0000k4-0H
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:53:15 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkoBj-0000kp-Eq
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:53:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769539993;
+ s=mimecast20190719; t=1769539996;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0OCGSzBZO7Qcay01osVXSmLFpVPre+Xa2F2P4gjiFVw=;
- b=QgzIL1JP50bJ44aFPYTg3C96H/2deAkcwirMcJfZvsW2z7Z/yxZXsH7Pn8XrZg5TWwSKzl
- +YaDDY8q1H2eU2Py9z12uBA7VnhMGwDxVbchncBbsrBxxwYILgAELbldnSYOQeZh5pJDsN
- FSsVEeeBMjoN8yhxeFJ5wyFYOiNC524=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=W1Qr5M0mON7SSJ+40/8rnC3mGubJewstthZcpwoPxcA=;
+ b=iPjndw2qmOCaZdzjnfst08o1zL6umov65JsjKUfloa8GkHjj2299Ga/+8xANfhsyPnT1ko
+ R8ZsFD7726TGTI5eGfFhnzidIZs9GolDKA9TCBW+oY1HmlZgIcLuIvv3mOsr604viBByQo
+ nuGcppGGe/SU4if9X4YL23fewTLPQIc=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-442-VsQ7tHHmO5yMzDOKJ2carA-1; Tue, 27 Jan 2026 13:53:10 -0500
-X-MC-Unique: VsQ7tHHmO5yMzDOKJ2carA-1
-X-Mimecast-MFC-AGG-ID: VsQ7tHHmO5yMzDOKJ2carA_1769539990
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-88a39993e5fso188562976d6.3
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 10:53:10 -0800 (PST)
+ us-mta-153-Qw2sFSLJOoKGITrQFuwSmA-1; Tue, 27 Jan 2026 13:53:15 -0500
+X-MC-Unique: Qw2sFSLJOoKGITrQFuwSmA-1
+X-Mimecast-MFC-AGG-ID: Qw2sFSLJOoKGITrQFuwSmA_1769539995
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-502a13e3e55so241636291cf.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 10:53:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769539990; x=1770144790; darn=nongnu.org;
+ d=redhat.com; s=google; t=1769539994; x=1770144794; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0OCGSzBZO7Qcay01osVXSmLFpVPre+Xa2F2P4gjiFVw=;
- b=a8YdqkoG5zDIubZz6VUsdhs1DaI91wB1TMJRlZUqvIrcjfh23rCghl1CUTsqXS2yDl
- G/O0XMdnGo34BLJoMkW8yNQFieDktZLuMeSbCQFgLjMh50+/1AOZxFZ+Xu/+9wbzevxS
- L84QrvveLU9cFDH0WWGPdXLNGnipWGdP8iv9St8xay9Is9dQuZ8qL5vsExTuDXa6/tvP
- QgkikA9vjefokax9BVWdfuTzqZ41bOLaAFTw4MCZDwVX3u6yw5MnfyrXAbQH/B8vvCQO
- uGfcc1IUpleXx+kjX+aNH71jjB0TWy7FROBKDPi56HH1kEJMuh42Tg7GH4rfqhO6zm2o
- 7Nww==
+ bh=W1Qr5M0mON7SSJ+40/8rnC3mGubJewstthZcpwoPxcA=;
+ b=S+dgGA4Z/0nqZM3eBEbVTdMZXnJ9IZjArSwgnvnbfL9iTsf+XlGMcUyxU5Yxf2A1IF
+ b4cE2god2BdZ0Fb3LVoxqHDzXhdB6jtoUQqkr4Zp5Bo9gQA0ojX3gxko5DdedzWLNZjK
+ RCilrVbwhHgqZ6digPtiiQ4gF7kuv/Vz+wqpHYWJLlO+tzoyf41olp4cEsFqFQlKDvsR
+ NIQ1Gvt4YTZMGWWMBdRQi8sM9QlQB16v3AGBpRbbYh00+REoSpf2fFId8UMesom++bSF
+ WqqT+XFEfeJMgpWAAoonRlHwfMjtK4z3hA6vi4wrFmPyiZrbS6swJ/kaq5eHJUhNqyUF
+ 3DSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769539990; x=1770144790;
+ d=1e100.net; s=20230601; t=1769539994; x=1770144794;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=0OCGSzBZO7Qcay01osVXSmLFpVPre+Xa2F2P4gjiFVw=;
- b=BjSDCGYRs7sGwJ19p/8yKZI14Q1WykZFkwaevzCl8H3mXIMpY+UGzmZfTBG7SzLjU9
- 3i+XkfLdFmzm66LLR0nduPCb64y16WH0aLIJUv5NDDMZ+ou81ICc5PZNYHwkIM8yT1Fm
- x47MrQRbIyTZmhqPLSHidx7RljO+iFgC3II4/xJPKhABcQRR/LZxgunecG0gM3s+VmXf
- rzMx+EoPGs2Nd9JpHuJm68iA5jvMyMckptDqkmV286L2jO/cwYn1CUBoK8km0gMWluBz
- V51FObhhg88EIqU9GYDb+VSlzr6DS6rSZ2SYD50pUXLVmdCJmbTKzgMTMjGYGEq/GYKy
- w+qA==
-X-Gm-Message-State: AOJu0Yz9JEAu87Y6dCqKtNRA7XevuO4imqb1/snAcJodEk3QnKSaJXER
- p+ogJyYSr32ckA3Qs/g2K3v53VBG9yrIi8920JfT1gp5menyHSzfs+l2lWLFUVBZd6fNOmz5RL1
- GLyW7jwjXlWxOqMPJr12Cx2Qs9jkKUkRb/lqVQCxeeu+eqUIl4FTM6mOZSjlyUQ1qOlevmwjuU2
- HACiUKvmS2ve+kdYdT8T8RGGvuEO7DxkW0tsXsvQ==
-X-Gm-Gg: AZuq6aIYy8xnqcmY1+wC/5Q4fv+7UGOSa31SbtBVncFOSlHjbIBYFpQx6I8Ci+6FuGG
- yXai+lmfQPIZOeQkvI3IYUENWPPm7fv3zJhIUpB7bJCOm7H8T9HophjZ2uQnYRDloTpJBTx3gRD
- 2CHGAzvJQi8cPsVskOfKUJeBmkSsk1MPaqUBRfDfj6pcFaq1mEXKs5PmENNUhO9rjn7p6ig8Xx0
- Es54ScMUc4UcKbopLoKzgKaXXGuRzS90C6fCzOVa+2+uwudJ8MSXWEwDupKJ3FQbFDWFk77LP2A
- bXmiIIsiXofxEvSec6IFNHQ5uo5JHSE3u2B/Fv4fJg3948XZc9gfPLYfQwx9hjVJBxUSDrTqxfW
- W
-X-Received: by 2002:a05:6214:224d:b0:894:6f12:5da with SMTP id
- 6a1803df08f44-894cc9786bcmr38388546d6.57.1769539989767; 
- Tue, 27 Jan 2026 10:53:09 -0800 (PST)
-X-Received: by 2002:a05:6214:224d:b0:894:6f12:5da with SMTP id
- 6a1803df08f44-894cc9786bcmr38388006d6.57.1769539989100; 
- Tue, 27 Jan 2026 10:53:09 -0800 (PST)
+ bh=W1Qr5M0mON7SSJ+40/8rnC3mGubJewstthZcpwoPxcA=;
+ b=DMtU3F3pCyntcdwPLjC9UP8rYwV9VbA8/P3mVmaZ/IWcNlelsVK9Ez3eG4suSO+/1w
+ VPov88GhdPDZhrzzKYDCOimamyERXkA8GL03rK71Y2wYzgpPz6QDHebAnVZ2nVi6+SSd
+ RQxM9S7Z3TjuPISfhvHo7yqbbebY4rTH2cQPJfCvVCVQp0WouNZICNMQ1fZeCh8Tzw1K
+ EVJAqZ9XT04xJoAb7IVDO2zC/itSkzn9d/+GiM4etbvGpqxaKdpxVSS5OuzZEhwdhZCP
+ NBJbWtF0k+ErojM2X+6xT59UNxVpLKmwTbK5ql/QBefF2E08nCZr8rKSz8sgqDjOOCTt
+ 7Rfg==
+X-Gm-Message-State: AOJu0YxrJaXmNJW5dG+EmUe/b9BX1KD+KdRo1ZkZtDKYFpyEdvxMNdbC
+ PZ1N4PckZeHt2LzceLwLnhoTRmFcusaJMkCRReCpjht1+EF3SXwRGH8uJ6ZTWcj5QIB1gdLo4tf
+ tDaflsRX/bnTczAnT4mD7Nbp3F0GXAxo+WeXWwXsV3YoX84Zsmdx4vUnrgtJEgBIH/3xaBemx8M
+ GpXsWuRm4Q+vbmgRVSQqgraqq3iPcJENUFrobTFQ==
+X-Gm-Gg: AZuq6aLhKni/wzUFLJ9Posr3RfsFk5OA2+C6sjxZH326qHuPC+hU/sToxA61Sy3DuWW
+ ApaGIxhZ8kWQgTvLD2VLQrroFn0/NSIgW5Ie8ikUvbADL1sJiic7NqAWgOJV5UqnDHmtLDmU9G4
+ 5p2a1HdELgJ4B897LWt64CJkXFVqSASiMemH8CB5BbJ4J3NCU0yPawDCqJlYNUxp3u7d9cJHaG5
+ k2pCaRWZkVKC1v/N0CmwsMj5z9OCEpXKu7E7qWjtFbItE+yhVmEErCFloVbzu6rLcv7+4OHYZ1Q
+ 4OgMDSpDKv9jkS5elEMDs9m+KfvgjbdRmNEAJAclq6f9Nk/N98lGeoSEt1KT+Q55bXxWZ0MyzvA
+ 2
+X-Received: by 2002:a05:622a:1b8c:b0:502:8fb9:530 with SMTP id
+ d75a77b69052e-5032fe1a2f8mr33579961cf.79.1769539994320; 
+ Tue, 27 Jan 2026 10:53:14 -0800 (PST)
+X-Received: by 2002:a05:622a:1b8c:b0:502:8fb9:530 with SMTP id
+ d75a77b69052e-5032fe1a2f8mr33579641cf.79.1769539993867; 
+ Tue, 27 Jan 2026 10:53:13 -0800 (PST)
 Received: from x1.com ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-894d3740e54sm2338466d6.35.2026.01.27.10.53.08
+ 6a1803df08f44-894d3740e54sm2338466d6.35.2026.01.27.10.53.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jan 2026 10:53:08 -0800 (PST)
+ Tue, 27 Jan 2026 10:53:13 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Lukas Straub <lukasstraub2@web.de>,
  Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 11/24] migration: Drop qemu_file_set_error() when save
- non-iterable fails
-Date: Tue, 27 Jan 2026 13:52:41 -0500
-Message-ID: <20260127185254.3954634-12-peterx@redhat.com>
+Subject: [PATCH v2 15/24] migration: Provide helper for save vm description
+Date: Tue, 27 Jan 2026 13:52:45 -0500
+Message-ID: <20260127185254.3954634-16-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260127185254.3954634-1-peterx@redhat.com>
 References: <20260127185254.3954634-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,28 +119,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All users of qemu_savevm_state_complete_precopy_non_iterable() process
-return values.  There's no need to set error on qemufile (which we likely
-should remove gradually across the tree).  Remove it for possible code
-dedup to happen later.
+Provide two smaller helpers to dump the vm desc.  Preparing to move it out
+and generalize device state dump.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/savevm.c | 1 -
- 1 file changed, 1 deletion(-)
+ migration/savevm.h |  1 +
+ migration/savevm.c | 35 +++++++++++++++++++++++------------
+ 2 files changed, 24 insertions(+), 12 deletions(-)
 
+diff --git a/migration/savevm.h b/migration/savevm.h
+index d0596d1d62..f957f851ef 100644
+--- a/migration/savevm.h
++++ b/migration/savevm.h
+@@ -50,6 +50,7 @@ void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
+ bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
+ void qemu_savevm_state_end(QEMUFile *f);
++void qemu_savevm_state_end_precopy(MigrationState *s, QEMUFile *f);
+ void qemu_savevm_send_ping(QEMUFile *f, uint32_t value);
+ void qemu_savevm_send_open_return_path(QEMUFile *f);
+ int qemu_savevm_send_packaged(QEMUFile *f, const uint8_t *buf, size_t len);
 diff --git a/migration/savevm.c b/migration/savevm.c
-index da9a60c73f..9d2109718a 100644
+index a787691352..41560b97a4 100644
 --- a/migration/savevm.c
 +++ b/migration/savevm.c
-@@ -1688,7 +1688,6 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
-         if (ret) {
-             migrate_error_propagate(ms, error_copy(local_err));
-             error_report_err(local_err);
--            qemu_file_set_error(f, ret);
-             return ret;
-         }
+@@ -1669,13 +1669,34 @@ ret_fail_abort_threads:
+     return -1;
+ }
  
++static void qemu_savevm_state_vm_desc(MigrationState *s, QEMUFile *f)
++{
++    JSONWriter *vmdesc = s->vmdesc;
++    int vmdesc_len;
++
++    if (vmdesc) {
++        json_writer_end_array(vmdesc);
++        json_writer_end_object(vmdesc);
++        vmdesc_len = strlen(json_writer_get(vmdesc));
++
++        qemu_put_byte(f, QEMU_VM_VMDESCRIPTION);
++        qemu_put_be32(f, vmdesc_len);
++        qemu_put_buffer(f, (uint8_t *)json_writer_get(vmdesc), vmdesc_len);
++    }
++}
++
++void qemu_savevm_state_end_precopy(MigrationState *s, QEMUFile *f)
++{
++    qemu_savevm_state_end(f);
++    qemu_savevm_state_vm_desc(s, f);
++}
++
+ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
+                                                     bool in_postcopy)
+ {
+     MigrationState *ms = migrate_get_current();
+     int64_t start_ts_each, end_ts_each;
+     JSONWriter *vmdesc = ms->vmdesc;
+-    int vmdesc_len;
+     SaveStateEntry *se;
+     Error *local_err = NULL;
+     int ret;
+@@ -1705,17 +1726,7 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
+ 
+     if (!in_postcopy) {
+         /* Postcopy stream will still be going */
+-        qemu_savevm_state_end(f);
+-
+-        if (vmdesc) {
+-            json_writer_end_array(vmdesc);
+-            json_writer_end_object(vmdesc);
+-            vmdesc_len = strlen(json_writer_get(vmdesc));
+-
+-            qemu_put_byte(f, QEMU_VM_VMDESCRIPTION);
+-            qemu_put_be32(f, vmdesc_len);
+-            qemu_put_buffer(f, (uint8_t *)json_writer_get(vmdesc), vmdesc_len);
+-        }
++        qemu_savevm_state_end_precopy(ms, f);
+     }
+ 
+     trace_vmstate_downtime_checkpoint("src-non-iterable-saved");
 -- 
 2.50.1
 
