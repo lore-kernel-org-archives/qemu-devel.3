@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33CAAD25939
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 05:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95D5AD25938
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 05:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkbS1-0006vc-AW; Tue, 27 Jan 2026 00:17:17 -0500
+	id 1vkbSi-0007uF-Re; Tue, 27 Jan 2026 00:18:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vkbRz-0006t5-Gg
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:15 -0500
+ id 1vkbSV-0007Mc-74
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:48 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vkbRx-0008NJ-Nh
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:14 -0500
+ id 1vkbST-0000Af-KB
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769491033;
+ s=mimecast20190719; t=1769491064;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vXSC3s03lHg3/fATZH9v66NS7KDKTjgOb+WvXAKQUM4=;
- b=ijgv0re5KFKTLUg2VErmfZOVXQWLBgrhOrCglGGyw7ZY8X6bFDHTgmj2urtw5tz9J4hhiT
- KjmvFEQMaHyXQ4gjkqRqmodSdJMn0T3anKlAI6hCTqzEn+leMLap5QsJSemo01FVTvgEVe
- k5so6l8BS5jCdh8nwE/Bx+JFVyvr2R4=
+ bh=sIxPRkcXYN+jvBabI3Le3pQDAeITVcKP3DhgLvFqdx4=;
+ b=H393JED/KYpFrVeZDGd5ug1llcw70M7URa9xcFyEASf4L/8vn3Z0lC2jc7wUBVtQG3yzYO
+ ggDExnmocYjkQBFhdIGb/TPZfp0PNTkC9C2Eax2CFQf20ZEaie3JByXUoOoYLg7hS4eUB1
+ 02o1qFoLt6x/jscssM+CtoeFiw4tnVE=
 Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
  [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-371-gzRjlQKpMUWAvIkhHKHpiw-1; Tue, 27 Jan 2026 00:17:11 -0500
-X-MC-Unique: gzRjlQKpMUWAvIkhHKHpiw-1
-X-Mimecast-MFC-AGG-ID: gzRjlQKpMUWAvIkhHKHpiw_1769491030
+ us-mta-665-1okVMy4CPvCno2vgGjQh1g-1; Tue, 27 Jan 2026 00:17:42 -0500
+X-MC-Unique: 1okVMy4CPvCno2vgGjQh1g-1
+X-Mimecast-MFC-AGG-ID: 1okVMy4CPvCno2vgGjQh1g_1769491061
 Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-34e5a9f0d6aso4699344a91.0
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 21:17:10 -0800 (PST)
+ 98e67ed59e1d1-352b6ad49ddso3497115a91.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 21:17:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769491030; x=1770095830; darn=nongnu.org;
+ d=redhat.com; s=google; t=1769491061; x=1770095861; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vXSC3s03lHg3/fATZH9v66NS7KDKTjgOb+WvXAKQUM4=;
- b=kXSXW1UNm6WFuiXvfof74xOjkhnI64PuyfqasabVc2ggPU8dxL2k0xrQXO3MASeBR/
- 2Ac1djvYA8pWHkW2HPKSw0pD9m91LJsv1NQgs02/KwpkdnMTtdKeEiPTZ1bXK0bdyLG4
- 0Ro40uSmx5ry/SWAWsCwC6H8fLEj2efP3WlnIID7jwtnBP8Tg4QWvFfYCRudjPB/bDwz
- pGSDM3QV5GBn1rUyUJ2wGbJ/dPsq1+OUAV9deKZhYxOfOBgFit2/ppsGDM/ShUH8dicu
- Mzku++rm6uWU267cDMhFO12wbdFzb8LpCZJ/liW1QyP4cDEcEEnb5z047e/BpNTUR+FP
- rBKQ==
+ bh=sIxPRkcXYN+jvBabI3Le3pQDAeITVcKP3DhgLvFqdx4=;
+ b=YtkbWPcIgmROkVSDwHtfsQs6SlVtt0YhHx7VDv1ipv2KT60kdCVcUEZIVlCu8aJtzX
+ AgVOYwAQ4TL49mDd7xUEJCaWwtmhSArXgLgl86+MMH/cvNHCFRl+uJAYc0vDjO3m788o
+ NLwAuPap8PEj9X61RvPWeH0hETaDEEbRNKbU9po2YfkTGuRqX71IDJ25g7bvGreo9W+S
+ pgakUcPUoSAJoEMOOjmfLBIaCLFv4FqmVzDjWWBxi6Wx/FkMuq269Azv79DG2SRa8FHk
+ mGByN7iS+TbSQ5jSX8JnT8zaUmbwMCK/s04iT+t6OERjlhJS2qNb6dHPLpsJEkyrgU7b
+ DnlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769491030; x=1770095830;
+ d=1e100.net; s=20230601; t=1769491061; x=1770095861;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vXSC3s03lHg3/fATZH9v66NS7KDKTjgOb+WvXAKQUM4=;
- b=SxufRi3DO75JR7hlizcR1N1BeijiiNNBsEUVZqUt7PiOz8mB5c3C6zrPoHiQWGyQ0P
- Nl2A99yWTppQMFOQUgchh8qtBO2lCA2uBSA2LT5xtyvA45GBAkX0NTL8zkiYLsmte/sE
- 0TqIoFMpHcyJFWmuqr+I0bkDUChzgkpp5zl+PAiZeuhXGGmTvBBiNkHQvvu+mvwLTush
- XLsVXLGDeY/Pzl/UsHm7clZ544rPgZJSOjaK+lt7sudhKDlmzUK05HWZ3MFXg+m+NkTf
- 2fh6uY/NRNcBgRK7Cae2Uq76Oc3525tN9yx0bH0xjqfksuTMZxi74O2eHpeXHf/Sm2ix
- 1cDA==
+ bh=sIxPRkcXYN+jvBabI3Le3pQDAeITVcKP3DhgLvFqdx4=;
+ b=rASxBYfq/RDT0gH2tBlHIO8gWrrVT8Wj5XqC6LlJAhMNFSGxp1FCdkbnvTAMs5uM4n
+ TXlSz0c9OO5GqnGbJgGS5qwQmvsi0QZnDAIZa/2OGJv5eQ7tfi4/sSHLQVwahbWBnVXC
+ xeErRxWSqEzqD4qfs6qSmaZ8RKtpgHhGgNB3QwrozdqoSPl+TT+OPBLrZPWssjQENtYt
+ Fl6fEGSbAaiZYLwzJOJW3Lq3akpnbArwS2RYneFyiXO7o32tDydDIoHtpl4TRJcAmzJh
+ m/NV9LQxHteEP1w41f5/ucBsM7PYl9F/99yYh65XFGzqU6SeUP14qkS+j0PE9OT+Tpq7
+ hRnQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWKcTrO8EDGusvxZlza8TNKN1bGFUhj1u+6zYjquWjOUagMzRTnEM+Ij1QjqyDzHPkVengHum6Uni2c@nongnu.org
-X-Gm-Message-State: AOJu0Ywf5yX5/4jIKz3BYNfbDhIeOcKlLQUz+OkPf/e9mfaY+lrQ7SpI
- mP6rnYhF7NmbH3eneT0RLPtkLJTOagQqI/vwJfkIDOpaU9JbbcClgtOZJ7kCQB94W5oI1q/xxxf
- 9beQYkzB7kLtPtS8EGme2qzTqGrPbYAHxequ/PnoPt4An3zw3+4VBtxr1M+31A0/0
-X-Gm-Gg: AZuq6aJNppZTpPpI3y7ULwVq7oC01eQRVwEkyqo08dtfQ4AYfGhIG3STyfiy/ZRh5Sp
- 6i/hpOerq/RHigDV5w48x9kIs97bJ2tJR9Iwi5hGeMkaUm/XJcrLK0qxrIDeAwCUq1I3/ro65EV
- kiUE9/2G+kxf5tsxaiOQTYpQyCMEbl8xT7yjJ3rOlQYg1nR7T75eRhcfpIppw+37teS0Ryielsr
- cFV+FcAq9/2MzLsUm9Z8lgN5R99So7HCwg5l4kCSRZhPjKM6FwSKtmtgQCahA34tD4TxUYc80tt
- sKIzz/FvKFflr5LzV7PP3cFWD1Od79WUpk4QXKJ2B/uixp1/1AnPUXerMjZfIkWUz2fLLVAg7f+
- j6J9QEFnBcZTSC8w4vDe0c3T+g2/bJ8PI4CEw5PZylA==
-X-Received: by 2002:a17:90b:28d0:b0:343:43bf:bcd7 with SMTP id
- 98e67ed59e1d1-353ffb41134mr476683a91.13.1769491029742; 
- Mon, 26 Jan 2026 21:17:09 -0800 (PST)
-X-Received: by 2002:a17:90b:28d0:b0:343:43bf:bcd7 with SMTP id
- 98e67ed59e1d1-353ffb41134mr476669a91.13.1769491029367; 
- Mon, 26 Jan 2026 21:17:09 -0800 (PST)
+ AJvYcCVK6w49trDVsHOGvLWsIt3N/5GbLbuTT4xsxE7oPaIFA2mmThodjddm+lzxhcKlPUz24nIC06P1hO2r@nongnu.org
+X-Gm-Message-State: AOJu0YypgFnz0Ei+AtO/MOvIv6VebiR+vJUCPMh1qvj+PN/tdTD/As9r
+ Zkm0nSEKWx1WsjAGQtuCWlwOk5hbv286WrvYNeoViLkqKpywyMSWZ+GKAVFl+77UTkBDEanko+s
+ vJW6MQDXCbScoj11lSStTYNFSqmKuqoIjjcFInW1Le+eu8uzk5qh06SKH
+X-Gm-Gg: AZuq6aL1tw+8zywkm+oQdx/qXai1ywdMER/mTCdvsfgYJrvhaSnqZUcrrPuKIs4ct1D
+ E/+InMjh8IxdU7d3ek/cNC3RodcFgz+6jNVud6fUpC16TWnthZNimnzyuwugqPONCKK48GO8ceK
+ NBZDoiPGcRyI/GpLmqP/EUduF0RLTJHDU7tc82on9efygnNr+pyYIOlTH2VgOMjzbZeK26iMAot
+ W8DBlGMn7f+ZORd8agxiESjM3P6TukpH+fKKFmcNL+vlHLI6TzdayfPwoL4U040ateXyS2++SWl
+ b8CyLV2UPX2GO1P5T7BeK42tPUe+Zn5n4YsFSy9QPQcSn24GmOxxLY2SlRiC/Y9jcVaTFFUyI1X
+ NMV314fzz4jFGvRz4ORsLC3lYU8J2k2sI/luFTZsr8w==
+X-Received: by 2002:a17:90a:d603:b0:341:abdc:8ea2 with SMTP id
+ 98e67ed59e1d1-353feda9712mr707852a91.37.1769491061121; 
+ Mon, 26 Jan 2026 21:17:41 -0800 (PST)
+X-Received: by 2002:a17:90a:d603:b0:341:abdc:8ea2 with SMTP id
+ 98e67ed59e1d1-353feda9712mr707831a91.37.1769491060735; 
+ Mon, 26 Jan 2026 21:17:40 -0800 (PST)
 Received: from rhel9-box.lan ([122.163.48.79])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-353f6230d5dsm1110925a91.17.2026.01.26.21.17.06
+ 98e67ed59e1d1-353f6230d5dsm1110925a91.17.2026.01.26.21.17.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 21:17:09 -0800 (PST)
+ Mon, 26 Jan 2026 21:17:40 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+To: Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH v3 11/33] hw/i386: refactor x86_bios_rom_init for reuse in
- confidential guest reset
-Date: Tue, 27 Jan 2026 10:45:39 +0530
-Message-ID: <20260127051612.219475-12-anisinha@redhat.com>
+Subject: [PATCH v3 22/33] hw/vfio: generate new file fd for pseudo device and
+ rebind existing descriptors
+Date: Tue, 27 Jan 2026 10:45:50 +0530
+Message-ID: <20260127051612.219475-23-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260127051612.219475-1-anisinha@redhat.com>
 References: <20260127051612.219475-1-anisinha@redhat.com>
@@ -126,115 +123,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For confidential guests, bios image must be reinitialized upon reset. This
-is because bios memory is encrypted and hence once the old confidential
-kvm context is destroyed, it cannot be decrypted. It needs to be reinitilized.
-In order to do that, this change refactors x86_bios_rom_init() code so that
-parts of it can be called during confidential guest reset.
+Normally the vfio pseudo device file descriptor lives for the life of the VM.
+However, when the kvm VM file descriptor changes, a new file descriptor
+for the pseudo device needs to be generated against the new kvm VM descriptor.
+Other existing vfio descriptors needs to be reattached to the new pseudo device
+descriptor. This change performs the above steps.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- hw/i386/x86-common.c  | 51 ++++++++++++++++++++++++++++++++-----------
- include/hw/i386/x86.h |  1 -
- 2 files changed, 38 insertions(+), 14 deletions(-)
+ hw/vfio/helpers.c | 86 +++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 83 insertions(+), 3 deletions(-)
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index c1c9224039..4469b4e152 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -1024,17 +1024,11 @@ void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
-     memory_region_set_readonly(isa_bios, read_only);
- }
- 
--void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
--                       MemoryRegion *rom_memory, bool isapc_ram_fw)
-+static int get_bios_size(X86MachineState *x86ms,
-+                         const char *bios_name, char *filename)
- {
--    const char *bios_name;
--    char *filename;
-     int bios_size;
--    ssize_t ret;
- 
--    /* BIOS load */
--    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
--    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-     if (filename) {
-         bios_size = get_image_size(filename, NULL);
-     } else {
-@@ -1044,6 +1038,21 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-         (bios_size % 65536) != 0) {
-         goto bios_error;
-     }
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index f68f8165d0..d467875b4b 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -110,12 +110,71 @@ bool vfio_get_info_dma_avail(struct vfio_iommu_type1_info *info,
+ #ifdef CONFIG_KVM
+ /*
+  * We have a single VFIO pseudo device per KVM VM.  Once created it lives
+- * for the life of the VM.  Closing the file descriptor only drops our
+- * reference to it and the device's reference to kvm.  Therefore once
+- * initialized, this file descriptor is only released on QEMU exit and
++ * for the life of the VM except when the vm file descriptor changes for
++ * confidential virtual machines. In that case, the old file descriptor is
++ * closed and a new file descriptor is recreated.  Closing the file descriptor
++ * only drops our reference to it and the device's reference to kvm.
++ * Therefore once initialized, this file descriptor is normally only released
++ * on QEMU exit (except for confidential VMs as stated above) and
+  * we'll re-use it should another vfio device be attached before then.
+  */
+ int vfio_kvm_device_fd = -1;
 +
-+    return bios_size;
++typedef struct KVMVfioFileFd {
++    int fd;
++    QLIST_ENTRY(KVMVfioFileFd) node;
++} KVMVfioFileFd;
 +
-+ bios_error:
-+    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
-+    exit(1);
++static QLIST_HEAD(, KVMVfioFileFd) kvm_vfio_file_fds =
++    QLIST_HEAD_INITIALIZER(kvm_vfio_file_fds);
++
++static int kvm_vfio_filefd_rebind(NotifierWithReturn *notifier, void *data,
++                                  Error **errp);
++static struct NotifierWithReturn kvm_vfio_vmfd_change_notifier = {
++    .notify = kvm_vfio_filefd_rebind,
++};
++
++static int kvm_vfio_filefd_rebind(NotifierWithReturn *notifier, void *data,
++                                  Error **errp)
++{
++    KVMVfioFileFd *file_fd;
++    int ret = 0;
++    struct kvm_device_attr attr = {
++        .group = KVM_DEV_VFIO_FILE,
++        .attr = KVM_DEV_VFIO_FILE_ADD,
++    };
++    struct kvm_create_device cd = {
++        .type = KVM_DEV_TYPE_VFIO,
++    };
++
++    /* we are not interested in pre vmfd change notification */
++    if (((VmfdChangeNotifier *)data)->pre) {
++        return 0;
++    }
++
++    if (kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd)) {
++        error_setg_errno(errp, errno, "Failed to create KVM VFIO device");
++        return -errno;
++    }
++
++    if (vfio_kvm_device_fd) {
++        close(vfio_kvm_device_fd);
++    }
++
++    vfio_kvm_device_fd = cd.fd;
++
++    QLIST_FOREACH(file_fd, &kvm_vfio_file_fds, node) {
++        attr.addr = (uint64_t)(unsigned long)&file_fd->fd;
++        if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
++            error_setg_errno(errp, errno,
++                             "Failed to add fd %d to KVM VFIO device",
++                             file_fd->fd);
++            ret = -errno;
++        }
++    }
++    return ret;
 +}
 +
-+static void load_bios_from_file(X86MachineState *x86ms, const char *bios_name,
-+                                char *filename, int bios_size,
-+                                bool isapc_ram_fw)
-+{
-+    ssize_t ret;
-+
-+    /* BIOS load */
-     if (machine_require_guest_memfd(MACHINE(x86ms))) {
-         memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
-                                            bios_size, &error_fatal);
-@@ -1072,7 +1081,26 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-             goto bios_error;
+ #endif
+ 
+ void vfio_kvm_device_close(void)
+@@ -137,6 +196,7 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
+         .attr = KVM_DEV_VFIO_FILE_ADD,
+         .addr = (uint64_t)(unsigned long)&fd,
+     };
++    KVMVfioFileFd *file_fd;
+ 
+     if (!kvm_enabled()) {
+         return 0;
+@@ -153,6 +213,11 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
          }
-     }
--    g_free(filename);
-+
-+    return;
-+
-+ bios_error:
-+    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
-+    exit(1);
-+}
-+
-+void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-+                       MemoryRegion *rom_memory, bool isapc_ram_fw)
-+{
-+    int bios_size;
-+    const char *bios_name;
-+    char *filename;
-+
-+    bios_name = MACHINE(x86ms)->firmware ?: default_firmware;
-+    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-+
-+    bios_size = get_bios_size(x86ms, bios_name, filename);
-+    load_bios_from_file(x86ms, bios_name, filename, bios_size, isapc_ram_fw);
  
-     if (!machine_require_guest_memfd(MACHINE(x86ms))) {
-         /* map the last 128KB of the BIOS in ISA space */
-@@ -1084,9 +1112,6 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-     memory_region_add_subregion(rom_memory,
-                                 (uint32_t)(-bios_size),
-                                 &x86ms->bios);
-+    g_free(filename);
-     return;
--
--bios_error:
--    fprintf(stderr, "qemu: could not load PC BIOS '%s'\n", bios_name);
--    exit(1);
+         vfio_kvm_device_fd = cd.fd;
++        /*
++         * If the vm file descriptor changes, add a notifier so that we can
++         * re-create the vfio_kvm_device_fd.
++         */
++        kvm_vmfd_add_change_notifier(&kvm_vfio_vmfd_change_notifier);
+     }
+ 
+     if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
+@@ -160,6 +225,11 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
+                          fd);
+         return -errno;
+     }
++
++    file_fd = g_malloc0(sizeof(*file_fd));
++    file_fd->fd = fd;
++    QLIST_INSERT_HEAD(&kvm_vfio_file_fds, file_fd, node);
++
+ #endif
+     return 0;
  }
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index 0dffba95f9..bfdf97640d 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -122,7 +122,6 @@ void x86_cpu_unplug_request_cb(HotplugHandler *hotplug_dev,
-                                DeviceState *dev, Error **errp);
- void x86_cpu_unplug_cb(HotplugHandler *hotplug_dev,
-                        DeviceState *dev, Error **errp);
--
- void x86_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *isa_memory,
-                        MemoryRegion *bios, bool read_only);
- void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+@@ -172,6 +242,7 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
+         .attr = KVM_DEV_VFIO_FILE_DEL,
+         .addr = (uint64_t)(unsigned long)&fd,
+     };
++    KVMVfioFileFd *file_fd;
+ 
+     if (vfio_kvm_device_fd < 0) {
+         error_setg(errp, "KVM VFIO device isn't created yet");
+@@ -183,6 +254,15 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
+                          "Failed to remove fd %d from KVM VFIO device", fd);
+         return -errno;
+     }
++
++    QLIST_FOREACH(file_fd, &kvm_vfio_file_fds, node) {
++        if (file_fd->fd == fd) {
++            QLIST_REMOVE(file_fd, node);
++            g_free(file_fd);
++            break;
++        }
++    }
++
+ #endif
+     return 0;
+ }
 -- 
 2.42.0
 
