@@ -4,75 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0353AD2FED4
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A840D2FED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknnX-0000nv-Ur; Tue, 27 Jan 2026 13:28:20 -0500
+	id 1vknp1-00031r-El; Tue, 27 Jan 2026 13:29:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknnK-0008Bc-CD
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vknnf-0001Q7-TQ
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:29 -0500
+Received: from p-west2-cluster5-host12-snip4-4.eps.apple.com ([57.103.71.17]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknnI-0003L2-Li
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769538484;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MqaEB3FeX5ZXTlaeRJLZyser7EAzSZP84ZhcqgvQ8JA=;
- b=ZihHLsOGR7R4++/a2pa/IwFVJ4ClI53UJMwMjUuUeYH79JU6Nzy0O+akOwFTmuePQpbgkO
- lsYcKsaeVmVci2qN966nQYZmmd5Cjj+Hk7G30KnRpmWoLFP3vvaCknzXgq5Bxszwu23vIw
- QqYl7zNt5G6l1pjVPjTzCWgnHhuzcQQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-j3nX336BP7mU4jyQ1gbbaQ-1; Tue,
- 27 Jan 2026 13:28:02 -0500
-X-MC-Unique: j3nX336BP7mU4jyQ1gbbaQ-1
-X-Mimecast-MFC-AGG-ID: j3nX336BP7mU4jyQ1gbbaQ_1769538481
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5770D1800357; Tue, 27 Jan 2026 18:28:01 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.23])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 536851958DC0; Tue, 27 Jan 2026 18:27:59 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vknnd-0003PD-Dk
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:27 -0500
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPS id
+ 7C82118000A0; Tue, 27 Jan 2026 18:28:22 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1769538504; x=1772130504;
+ bh=rqevPYI5PNmYfO37aWp6zQDTk/Z3PG7nW7DuJwvRyUM=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
+ b=HqKrL98rMh83K0fkJGFhcSoXQgOdGl4GiCOv65gQHwO3u4SytyE6hvS8EphVkPfb/9zeHp7WiI1YSQv+MY08FQPTapbJVJv40MToCZG/MyP3wXGU4WG8RWF5i+1KI5sq65nW6Nlb3xAW/ZiKphwhyshllN1G/Ys4SGSlIjbNqkBU/e1aHcnr0SPaERavYx77qSiY6iCvTi9GViabiYpfO8xLtnKChgG3++8sfYa0Z9nqvBSleqHqvop3FE7vxUrHYw00zjx4slNGMRh3jbAJYjZNZjaMfr38jNGzPFKsQ/zNY3KQpwXN6IOFehIgvWM0FN8UOwiwJx/W01xIVcbBvg==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPSA id
+ E2E561800104; Tue, 27 Jan 2026 18:28:17 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org,
+	mohamed@unpredictable.fr
+Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, qemu-arm@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <huth@tuxfamily.org>
-Subject: [PATCH 27/43] audio/sdl: replace custom logging with error_report
-Date: Tue, 27 Jan 2026 22:24:54 +0400
-Message-ID: <20260127182516.289834-28-marcandre.lureau@redhat.com>
-In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
-References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v18 02/22] accel/system: Introduce hwaccel_enabled() helper
+Date: Tue, 27 Jan 2026 19:27:42 +0100
+Message-ID: <20260127182805.73212-3-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260127182805.73212-1-mohamed@unpredictable.fr>
+References: <20260127182805.73212-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDE1MCBTYWx0ZWRfX24A50B1zyrNR
+ OMK0+ECQnD8m0cZIoII7ubD/gI0SAzOmrV5QX8pa0HrwINeFyaHBQhOGoiajqX/+5omewxRwGVb
+ sjcRVmsjLVURtOfZsB2XU5daiee/7MZNU3b+DP3fHqLNc56RIt2xgnBf9kD/qsa4DZYoyotBjRO
+ 5FzxmSSuI3kRazjaTSt30uXqaHtR6giFcTexlumERjEoB6qgWR14KV35/+XWuiiirukA79uXQlE
+ 5EBdug5ZIAf8Jq68lpP0uHn2iWGAYrlo1xb916TNfysVs1nXchOaYfocMjx56fIGg+sUg4hxwXn
+ EbAPr1FPMK/Hzj6w/chvrl+UJbj5+D73xJ8Xj1hUDLVGbvMFij6Ste8d/y8U7U=
+X-Proofpoint-ORIG-GUID: jlc5NKOWNwEFtfrhCD0ZzAd49ShdE8MN
+X-Proofpoint-GUID: jlc5NKOWNwEFtfrhCD0ZzAd49ShdE8MN
+X-Authority-Info-Out: v=2.4 cv=FPAWBuos c=1 sm=1 tr=0 ts=697903c7
+ cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=zYwLhoXY7WJC0OmO1EgA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-27_04,2026-01-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ phishscore=0 mlxscore=0 adultscore=0 malwarescore=0
+ mlxlogscore=999
+ spamscore=0 lowpriorityscore=0 clxscore=1030 bulkscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601270150
+X-JNJ: AAAAAAABpZ0dHkUgFxuAjnrz1TRRNKNJbVDYmK06wKHRM/+M3OeB09PrvfTQIHF2YO+0ygZm2PP3VY8PUDsF1ivQacyFMNbKvmxFeedpqob2a5SgUQqR2yY2GjSMCQJH70rhHeLMsyHug5ybWPpRaXlQtA8Ecc33XtIPJ8L1K2UhKOdDvoPnGAJkZKoQba+QzsEHEa7ga0H2eU+mWW00tq3328KPq71gtLKSsYmq0jttsG6arXYrrTlhrglVv6aXnkDgIGFjtKFjkE/oLjn24BBq1nSJcFY0L9F7xNR8bYAofroHO8QfcA++UbgERDHbWB2tgD206iI9aH06DuoYTJ8xkIokjx2LQgTPGBd2/qcDLFSzSH8IhiW9Yjlk9ZXpFpMVEIbgg0N8/exJVsqChwlInWGGKnWb9B92yWu13k2ICL6IirMjahdYOAQcRXq1uscwcAKMzDFYK63kxxsQnQ5TvuuzbE2tbbeBF5/ILrwD6MPNmazB05dxkSoaMaANEXpoNkk+rxRNEs+87AEmT8+OfhMjmKn3L+YV1vyefEGgQDZiuxD3JfSUPpUNRhJlvnc7tD3BrX6VtDl7b2CNcqxTnfllSBkXjKnSHM1I6JxhOjHNRsxzzI4GBCr7Ctg3UfVMnKoIzfQPQ3oc+/KYGh8UMavGbRQWaPtuym7WC67UcAMOUTRexSjnOX/VizntstpyLdM2uOddvrJyxUdJwwAPB3BTmPj7lXPobVJ6SSvqbpeGYZirbHVOkMBnSxVKRZXZa09FlGEq7r3t3yAOPT6qKx1u21HZuV2WNnxbfzaKaLtcDBqm/m5Lv+GFS6NyjBqcqC6UzQuHwdbOhFhVfnemlBUB3czM8Lu0civLBS66109+cWa1hwgaxCuhKJ5A6yQL+oGzNLT+eFRg5dD/xsDtU6VemKIbz5znmQDasmZEEI8gWYSRpvPTz/tAnRAUiMKVycPkjw==
+Received-SPF: pass client-ip=57.103.71.17;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,128 +110,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Replace the custom audio logging infrastructure (dolog macro and
-AUD_log/AUD_vlog) with standard QEMU error reporting (error_report,
-error_printf, error_vprintf).
+hwaccel_enabled() return whether any hardware accelerator
+is enabled.
 
-Note that we also dropped the abort() call in DEBUG_AUDIO, as it is not
-usually compiled with, doesn't help much, and can easily be added back
-when doing development as needed.
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- audio/sdlaudio.c | 31 ++++++++++++-------------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
+ include/system/hw_accel.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/audio/sdlaudio.c b/audio/sdlaudio.c
-index 4fb9abd66c3..bb667ef9525 100644
---- a/audio/sdlaudio.c
-+++ b/audio/sdlaudio.c
-@@ -26,6 +26,7 @@
- #include <SDL.h>
- #include <SDL_thread.h>
- #include "qemu/module.h"
-+#include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qemu/audio.h"
- #include "qom/object.h"
-@@ -38,7 +39,6 @@
- #endif
- #endif
+diff --git a/include/system/hw_accel.h b/include/system/hw_accel.h
+index 55497edc29..628a50e066 100644
+--- a/include/system/hw_accel.h
++++ b/include/system/hw_accel.h
+@@ -40,4 +40,17 @@ void cpu_synchronize_pre_loadvm(CPUState *cpu);
+ void cpu_synchronize_post_reset(CPUState *cpu);
+ void cpu_synchronize_post_init(CPUState *cpu);
  
--#define AUDIO_CAP "sdl"
- #include "audio_int.h"
- 
- #define TYPE_AUDIO_SDL "audio-sdl"
-@@ -67,15 +67,15 @@ typedef struct SDLVoiceIn {
-     SDL_AudioDeviceID devid;
- } SDLVoiceIn;
- 
--static void G_GNUC_PRINTF (1, 2) sdl_logerr (const char *fmt, ...)
-+static void G_GNUC_PRINTF (1, 2) sdl_logerr(const char *fmt, ...)
- {
-     va_list ap;
- 
--    va_start (ap, fmt);
--    AUD_vlog (AUDIO_CAP, fmt, ap);
--    va_end (ap);
-+    va_start(ap, fmt);
-+    error_vprintf(fmt, ap);
-+    va_end(ap);
- 
--    AUD_log (AUDIO_CAP, "Reason: %s\n", SDL_GetError ());
-+    error_printf("Reason: %s\n", SDL_GetError());
- }
- 
- static int aud_to_sdlfmt (AudioFormat fmt)
-@@ -102,10 +102,7 @@ static int aud_to_sdlfmt (AudioFormat fmt)
-         return AUDIO_F32LSB;
- 
-     default:
--        dolog ("Internal logic error: Bad audio format %d\n", fmt);
--#ifdef DEBUG_AUDIO
--        abort ();
--#endif
-+        error_report("sdl: internal logic error: bad audio format %d", fmt);
-         return AUDIO_U8;
-     }
- }
-@@ -164,7 +161,7 @@ static int sdl_to_audfmt(int sdlfmt, AudioFormat *fmt, int *endianness)
-         break;
- 
-     default:
--        dolog ("Unrecognized SDL audio format %d\n", sdlfmt);
-+        error_report("sdl: unrecognized audio format %d", sdlfmt);
-         return -1;
-     }
- 
-@@ -182,12 +179,12 @@ static SDL_AudioDeviceID sdl_open(SDL_AudioSpec *req, SDL_AudioSpec *obt,
-     /* Make sure potential threads created by SDL don't hog signals.  */
-     err = sigfillset (&new);
-     if (err) {
--        dolog ("sdl_open: sigfillset failed: %s\n", strerror (errno));
-+        error_report("sdl: sigfillset failed: %s", strerror (errno));
-         return 0;
-     }
-     err = pthread_sigmask (SIG_BLOCK, &new, &old);
-     if (err) {
--        dolog ("sdl_open: pthread_sigmask failed: %s\n", strerror (err));
-+        error_report("sdl: pthread_sigmask failed: %s", strerror (err));
-         return 0;
-     }
- #endif
-@@ -201,8 +198,8 @@ static SDL_AudioDeviceID sdl_open(SDL_AudioSpec *req, SDL_AudioSpec *obt,
- #ifndef _WIN32
-     err = pthread_sigmask (SIG_SETMASK, &old, NULL);
-     if (err) {
--        dolog ("sdl_open: pthread_sigmask (restore) failed: %s\n",
--               strerror (errno));
-+        error_report("sdl: pthread_sigmask (restore) failed: %s",
-+                     strerror (errno));
-         /* We have failed to restore original signal mask, all bets are off,
-            so exit the process */
-         exit (EXIT_FAILURE);
-@@ -233,8 +230,6 @@ static void sdl_callback_out(void *opaque, Uint8 *buf, int len)
- 
-     if (!sdl->exit) {
- 
--        /* dolog("callback_out: len=%d avail=%zu\n", len, hw->pending_emul); */
--
-         while (hw->pending_emul && len) {
-             size_t write_len, start;
- 
-@@ -283,8 +278,6 @@ static void sdl_callback_in(void *opaque, Uint8 *buf, int len)
-         return;
-     }
- 
--    /* dolog("callback_in: len=%d pending=%zu\n", len, hw->pending_emul); */
--
-     while (hw->pending_emul < hw->size_emul && len) {
-         size_t read_len = MIN(len, MIN(hw->size_emul - hw->pos_emul,
-                                        hw->size_emul - hw->pending_emul));
++/**
++ * hwaccel_enabled:
++ *
++ * Returns: %true if a hardware accelerator is enabled, %false otherwise.
++ */
++static inline bool hwaccel_enabled(void)
++{
++    return hvf_enabled()
++        || kvm_enabled()
++        || nvmm_enabled()
++        || whpx_enabled();
++}
++
+ #endif /* QEMU_HW_ACCEL_H */
 -- 
-2.52.0
+2.50.1 (Apple Git-155)
 
 
