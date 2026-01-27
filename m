@@ -4,96 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3AA9D2FED2
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 19:08:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13D8BD2FEDC
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 19:09:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkoPu-0004AJ-MI; Tue, 27 Jan 2026 14:08:00 -0500
+	id 1vkoQe-0004pa-8I; Tue, 27 Jan 2026 14:08:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vkoPm-000488-0l
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 14:07:50 -0500
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1vkoQb-0004nR-V6
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 14:08:41 -0500
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vkoPk-0003jl-EP
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 14:07:49 -0500
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-c56188aef06so2483599a12.2
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 11:07:46 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769540865; cv=none;
+ id 1vkoQW-0003pR-PI
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 14:08:41 -0500
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-34c27d14559so3640042a91.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 11:08:36 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769540915; cv=none;
  d=google.com; s=arc-20240605;
- b=V+wjHdHVFo0bSJIzDeFP71QiiTI6OsmW0rwXpGfH0tLcpS6+DhY2OdCtgThAgV5Fof
- t8bJ82xk70OzEnfLju1jwcGNK2cK123caYL1jdK8z7Fymjw4JU55i/SsIg4rogfd/kAh
- qBf2TIvwRdySldUojSjs6z/dcrOkFhXoHiuzdVicWqOSl9/YLmALnNV/P6mXhibe53mH
- mK/FvZDb0o4RhfhLfGDPV1zsaQztHsOADFQqRKGkhdpGv8B5xiUvB27sBhMoPN49/bMW
- bxFMWJ3deYck9rSzBUJJouhODRLZhZyNqOv3rK5THFynPb3DgFN7NVHojtNAJ6WnUnUr
- wUJw==
+ b=ABdRtrf0AHsPaxHr8I/Pyd84ADv0XtAhP4l2WL01wSBdFLP4f4J/GiINj0NKhflobR
+ KOV3yOLLwDIEEBaUGx/E9sPpindxgybQmOcyA/5FUBjo58gK165eYjbJq7+wUfNg/U6O
+ DN00BbbXM9eUdrahIt7FNzukAYjj/187sK2CnZ75QBO1AUR1RDmAmFnX2WdJfm4sDJ/X
+ UBXlFPuiymh08vfPrkxg0hbJF7SGyMxY7NCeWDKyg0F1vzgL7qu8ohlrcnL5CCv/RWbC
+ mxpR4x9GBG0O+sGo2LZbJ3gfHTeUN1zRpHwmGbhdzwKcHlLHFO7SQPyqpyLCWI9tRMb/
+ cjbg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=jRfcolwHbLqmzvd5zM6o+T5vfO89x1uMY/hPkgo++f4=;
- fh=HMorgUNBgejytIvOYdxrAsrIoD5WoaQ4S7Oaqtzu/uU=;
- b=R60cyd+mzF1N7LaLU2VkPX0Un2J55bv0sZsz3xKCT7sK2R2krgwmAS2WXf67M/bAus
- NlQ9BdueT4YykAb31ype1PyIO/vyggaRhKcaGDJ6xFPOn1nQcAT1J8RykovMzL1Sb02R
- eA6oewa2dDibxSNgYvmHy0Ghv779JmXiDuda0zQSUI15xy7Hf+EZDgMYfovzvNW/GDvC
- 3Zqydxqi1V80X1XnqtMVApKeu7EZgz8laC+rg1zhvG/QGRo3K1jAa3PGINfXNMc8miKs
- aHYEMLjcw9d/TMufHpO41QzSyVvdsv3HnzRhCzC1GTTmJnM9xj9bvemnxF95mWa9biuj
- L75g==; darn=nongnu.org
+ bh=c3nf8taFUs7gI3G0NvlsxRyzYIohsKqMY+o1mG1U9y8=;
+ fh=hdAlyzp8UpdPSI5O9FlJmNzUHmpgbsMZHSul8BBn2VY=;
+ b=jp7JHApZVdBC22UJzTCN5u+oY6pZhLhirtdloH7Dgp7sL6AnsNeuaVGbpMt++XVuln
+ bmKY3WPzQqU67WXs1/otxHAX1hm5FkaGA9OgMgB03gJifKuxPRogfgTsbQIioStD3xXX
+ RyfI7GohJ2rzOUeipye58yEjKpzW6z3bZsl0Hzt1W4SKoByl1v/agw9g9L3I2crv4gsk
+ B/7w6fRq17QE11NPh7T8gKfe5tdhx7Ecp4RhW7RSj8xqUy5AdV1enYbCQXUeFrNtffBR
+ H5A2W8YsO15TkmVKCmYwV5kk67TgbInPwqQudB79XyKSKKLe4fRdGzqEGpoxCTkSPBQX
+ qDPA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769540865; x=1770145665; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769540915; x=1770145715; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jRfcolwHbLqmzvd5zM6o+T5vfO89x1uMY/hPkgo++f4=;
- b=mniMATnJwG3HU+ppx1yz9zgmOB1sv1rKMT9Hhiur5bQO/qGa8v5FCLHLdj+021Ra1U
- 5l3WzaeIEPAqlCfn8CJskKBdxITm1WH7nQb7UcnP5utq6adpWm4ZlBMwgl1p5aYQGTzd
- qzIe5V6xT0Bjd8uuSLBJAtKUKnLfVSMzzkSp3ACWJKDoEskkOfh/MIwqTNZAz4/Q1kL8
- fiO2KUwBRcOfq/1EfHZxCkhogjs//vzqdFzRa1kaKBK0zdReTa2e1qfMSobzvQteCef8
- tZlb2xZ7u6LkNlzBvtlufJQpZr0nKb+00KIQBPZnsKZ0jvtzlZk9oN2hEKOGeqsh7d+U
- TOfw==
+ bh=c3nf8taFUs7gI3G0NvlsxRyzYIohsKqMY+o1mG1U9y8=;
+ b=lZNJnMn9DAE8mQQv8fe9x0vF8+K0c9Rr5uj1Kx4f14Pjm1BfQfG5YmEX4rzYfT2/R5
+ F2mPSM0lveNCFYg4u5LAggdoiqY58u+mkvq6+KZX8Rk5GOK/Rf/4jmTTwXW8MEPvOFv/
+ iEMXaeFCBGyABVG6gCWndoccd7S79jcqlC0MI5Vvd+Q7Ly/ilUG6PFlAOHdEve0c2qRQ
+ JAOthXWR/i5tOYpfYxarqy8/9Sz1cTmBRJeDda1EDJizBoaoAWVyuwEh+bpuUqiWT8fR
+ 7pS60sPuVktrhbd38VrqEe9YRwmU4GoME+ByVdH+/aooSI4lW1t1cE+pNc3tOBdxwHEm
+ OXLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769540865; x=1770145665;
+ d=1e100.net; s=20230601; t=1769540915; x=1770145715;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jRfcolwHbLqmzvd5zM6o+T5vfO89x1uMY/hPkgo++f4=;
- b=GgWnGm0MTf93OhPxe1LbahWt3Nj2ndZwUZ3wmAQiZNvilR8QJ9W5lSBPWJhC2qoR/O
- SDTFWQ6EBZEBbfDMZATTA6Chb5Bk+08knrvuV3QuZCbJihRmWPipvfM+ADObtA2YX0ac
- oyb+5j7HMSSrqssKv+ejfCRMELbF8MSUJZVNP1bGf1Ho41oo1iMLDSbMGJwiajtOAo/b
- PmIw35ja4wvh1jfwIgY4Rys3qt+5vuSat2PJXkmdSHyxfXEJ4zbQWCA1ql022y2sV+G2
- hcsKk/2pwx8itEQnnAf2hyyFOeSRxxU5MhC1EWuKJXTGLCEfU4sgwREm93+3mpv63xLN
- HapA==
-X-Gm-Message-State: AOJu0YxzOGhkUiFa2D65wshonRmpbsEl/V8xlCtoFdZ/fgnk0Qj4wblg
- M9Lq9l3g1a4LjA85kgfmK96VWR9IJPpLADmVXXtuOIwbAcz3IeHN9Po3xuzsU1ZyDeOs8qUe+bq
- VFDnJjjfrAniKE7RYgtPMpsk1xs+pcWWEAQ==
-X-Gm-Gg: AZuq6aKGbxQux0zeCKMX3dnURKAYICekceGK1Mnq0lnbkFDMcfQFq/+XCsFS3nB/+ni
- cL1mVaIExFIYfi+jZk9XdQ0A0HLSMxhOH1tD6ksT09xSscYWHjp1dGlYYkn8ZJNvFjZ/0uz25sa
- sAD5F6se2mKJcxnGI3OCyQIb9GyzPJANNyL9zFZoijgjjaCZLvcqNNVkTM0c7LxG5Xyipeem2i+
- bU6XQnm6+uD0PKsY2K3FvAgMYeyQanbYC6IbuJCxgRv4xiu5luVfswW810IvM1zErE0+UKBFXf8
- GVHsm/48qyf/ccYvoSSLg0MJ010=
-X-Received: by 2002:a17:90b:37ce:b0:353:42ba:13b7 with SMTP id
- 98e67ed59e1d1-353fecc6bc0mr2608084a91.8.1769540865417; Tue, 27 Jan 2026
- 11:07:45 -0800 (PST)
+ bh=c3nf8taFUs7gI3G0NvlsxRyzYIohsKqMY+o1mG1U9y8=;
+ b=PSjiE2kfItAWBCGnRN21ZHuzF2mIiDC7vAFAxws2FDHa/fLzCTCD4yBG6OVWWNAons
+ H7jvlNuUj4o9xHfvFsRiTBwL0yfcO+rBMekAiTKWRxKgeKX9Cp+KsyXNI2UhekGOcFo1
+ LXYTX2r33s0WL57e9j7Q9Y/jpbL41/ICeU4btWkmM9zZhxH8IJgeE1aICmKnN2Ldqo9I
+ pLCX+f7zVcx0nevW9Jcos/H9UawSBRIs0W91DbiT5FdSNOkCJzFjRAqDCaUpUS0x62UW
+ geVMXwzIH5T0kUzItkYeLTK9CB73XxPx+vQ4WddTzhF6YyXLXPK2eSakTA2deOW/QKXy
+ jdOA==
+X-Gm-Message-State: AOJu0YyXmUpIVbRnVNHWp8kXCJy5uwIKzXz9+QuzeGUXCMEBgflESQM1
+ ihgdbdn+AHFsfAwiROVQu+li/y0gCegBiRghv3Wljr/5nxcB7E5GxAe9CUkkKJHi8wuwQWJQvJe
+ 68JnclDge3+LikOeXIHQ/w8+F1YF6Bks=
+X-Gm-Gg: AZuq6aJJXVsHibAJK2zKha12X7AAd81J444Ykyl7BW/kPmCrCLjktLnIoe42W61OO2f
+ q2zvGqoB4G0DUVdHYe5vAAMEjTQ/camFYPLa8Va1AGtLmpchejIZEgSu+sbnNRF8nnsUDxIh6/M
+ YBFEw51NvQQdvM5m/2mUPVq59RQQ8WnzyPn23j0PFwTGJdk83DgXn1Tt/HYbEtKM6QEXHm1d2C2
+ dhNJm+RMkcTPtKvqeTV6ojZJyiMdI6mdfS1FEqQ3vYyLb8CcP1ESmsJDjbQIimfk2H1Oz76IuV6
+ rgYcduH7kjCOQzMvMqSLdArQkPM=
+X-Received: by 2002:a17:90b:2688:b0:32e:3829:a71c with SMTP id
+ 98e67ed59e1d1-353fecedb8cmr2452879a91.16.1769540915242; Tue, 27 Jan 2026
+ 11:08:35 -0800 (PST)
 MIME-Version: 1.0
-References: <20260122223423.1076448-1-marco.liebel@oss.qualcomm.com>
- <CAATN3NoZiPj5wfVm6+4MGEnrVX4sdZhnS4Wj7-_0SUe5u0wZ5w@mail.gmail.com>
- <CAJ+KCYO7YK7RSMz=LwT3H8vHK5Y5KJWa9oWb=ZweQ10DA4jpGQ@mail.gmail.com>
-In-Reply-To: <CAJ+KCYO7YK7RSMz=LwT3H8vHK5Y5KJWa9oWb=ZweQ10DA4jpGQ@mail.gmail.com>
+References: <20260126223439.46974-1-marco.liebel@oss.qualcomm.com>
+In-Reply-To: <20260126223439.46974-1-marco.liebel@oss.qualcomm.com>
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Tue, 27 Jan 2026 12:07:34 -0700
-X-Gm-Features: AZwV_QhsmlepTykhyUypECMuR_LIBWPYZ-c4XI0jaaLVwxrSpSorRtZEO-YZAUE
-Message-ID: <CAATN3Nqtq3ioP=9ch4=9jo0B3Q4tNrgkfrDm7sG0MLuFprC3pw@mail.gmail.com>
-Subject: Re: [PATCH] target/hexagon: Change DisasContext packet type
+Date: Tue, 27 Jan 2026 12:08:24 -0700
+X-Gm-Features: AZwV_Qgnonnp4bNA6KrRgKTIFwNByqw8VSVWv7Q_VCGWLBaCn96mMylyS4yppdM
+Message-ID: <CAATN3NoaG4T2iNy2twsHi=7LJDa9=kqkj=Z8fQ6BxJawJ_QUTg@mail.gmail.com>
+Subject: Re: [PATCH] target/hexagon: Remove unused EXT_IDX enum
 To: Marco Liebel <marco.liebel@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com, 
- sid.manning@oss.qualcomm.com, Brian Cain <brian.cain@oss.qualcomm.com>
-Content-Type: multipart/alternative; boundary="000000000000b2e633064963567c"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pg1-x529.google.com
+ sid.manning@oss.qualcomm.com, brian.cain@oss.qualcomm.com
+Content-Type: multipart/alternative; boundary="000000000000ab2b57064963598b"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,75 +114,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000b2e633064963567c
+--000000000000ab2b57064963598b
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 26, 2026 at 3:07=E2=80=AFPM Marco Liebel <marco.liebel@oss.qual=
+On Mon, Jan 26, 2026 at 3:34=E2=80=AFPM Marco Liebel <marco.liebel@oss.qual=
 comm.com>
 wrote:
 
-> On Sat, Jan 24, 2026 at 5:41=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gm=
-ail.com>
-> wrote:
+> The EXT_IDX_noext, EXT_IDX_mmvec, and XX_LAST_EXT_IDX enum
+> constants are defined but never referenced anywhere in the
+> codebase.
 >
->> This patch would be alot smaller if you kept pkt as-is and added a new
->> member
->> Packet packet;
->>
->
-> That would reduce the patch size, but it wouldn=E2=80=99t remove the risk=
- of a
-> dangling pointer
-> and would introduce an alias instead. Is there a specific reason we need
-> to keep the
-> pointer around?
+> Signed-off-by: Marco Liebel <marco.liebel@oss.qualcomm.com>
+> ---
+>  target/hexagon/decode.c | 8 --------
+>  1 file changed, 8 deletions(-)
 >
 
- There's a bunch of code throughout target/hexagon where a variable named
-"pkt" is a pointer to a packet.  If you really want to get rid of the
-pointer in DisasContext, do 2 things
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
-   1. Name the field in DisasContext something else, e.g., packet.
-   2. Don't eliminate the local "Packet *pkt" variables in various
-   functions, e.g., gen_end_tb.
-
-Then, it will be clear that "packet" is the actual struct and "pkt" is a
-pointer.
-
-Thanks,
-Taylor
-
---000000000000b2e633064963567c
+--000000000000ab2b57064963598b
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
 mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jan 26,=
- 2026 at 3:07=E2=80=AFPM Marco Liebel &lt;<a href=3D"mailto:marco.liebel@os=
+ 2026 at 3:34=E2=80=AFPM Marco Liebel &lt;<a href=3D"mailto:marco.liebel@os=
 s.qualcomm.com">marco.liebel@oss.qualcomm.com</a>&gt; wrote:<br></div><bloc=
 kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"l=
-tr"><div dir=3D"ltr"><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"g=
-mail_attr">On Sat, Jan 24, 2026 at 5:41=E2=80=AFPM Taylor Simpson &lt;<a hr=
-ef=3D"mailto:ltaylorsimpson@gmail.com" target=3D"_blank">ltaylorsimpson@gma=
-il.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
-:1ex"><div dir=3D"ltr"><div dir=3D"ltr">This patch would be alot smaller if=
- you kept pkt as-is and added a new member</div><div class=3D"gmail_quote">=
-<div>Packet packet;</div></div></div>
-</blockquote></div><br></div><div>That would reduce the patch size, but it =
-wouldn=E2=80=99t remove the risk of a dangling pointer<br>and would introdu=
-ce an alias instead. Is there a specific reason we need to keep the<br>poin=
-ter around?<br></div></div></div></blockquote><div><br></div><div>=C2=A0The=
-re&#39;s a bunch of code throughout target/hexagon where a variable named &=
-quot;pkt&quot; is a pointer to a packet.=C2=A0 If you really want to get ri=
-d of the pointer in DisasContext, do 2 things</div><div><ol><li>Name the fi=
-eld in DisasContext something else, e.g., packet.</li><li>Don&#39;t elimina=
-te the local &quot;Packet *pkt&quot; variables in various functions, e.g., =
-gen_end_tb.</li></ol><div>Then, it will be clear that &quot;packet&quot; is=
- the actual struct and &quot;pkt&quot; is a pointer.</div><div><br></div><d=
-iv>Thanks,</div><div>Taylor</div><div><br></div></div></div></div>
+1px solid rgb(204,204,204);padding-left:1ex">The EXT_IDX_noext, EXT_IDX_mmv=
+ec, and XX_LAST_EXT_IDX enum<br>
+constants are defined but never referenced anywhere in the<br>
+codebase.<br>
+<br>
+Signed-off-by: Marco Liebel &lt;<a href=3D"mailto:marco.liebel@oss.qualcomm=
+.com" target=3D"_blank">marco.liebel@oss.qualcomm.com</a>&gt;<br>
+---<br>
+=C2=A0target/hexagon/decode.c | 8 --------<br>
+=C2=A01 file changed, 8 deletions(-)<br></blockquote><div><br></div><div>Re=
+viewed-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson@gmail.com">l=
+taylorsimpson@gmail.com</a>&gt;=C2=A0</div></div></div>
 
---000000000000b2e633064963567c--
+--000000000000ab2b57064963598b--
 
