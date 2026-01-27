@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49949D2D8FD
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 11:09:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B1B3D2D8F9
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 11:10:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkgvi-0001Kh-P3; Tue, 27 Jan 2026 06:08:18 -0500
+	id 1vkgx6-0002DQ-SI; Tue, 27 Jan 2026 06:09:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vkgvf-0001Jn-Mt
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 06:08:16 -0500
+ id 1vkgwx-0002Bm-4S
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 06:09:35 -0500
 Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vkgvd-0006ao-UU
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 06:08:15 -0500
+ id 1vkgwv-0006in-5r
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 06:09:34 -0500
 Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-790884840baso51499457b3.0
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 03:08:13 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769512093; cv=none;
+ 00721157ae682-79427f739b0so56567377b3.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 03:09:32 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769512172; cv=none;
  d=google.com; s=arc-20240605;
- b=XZlCpy7OK6eeicgZnfvB+N6o1zvS1KJ08KWB1PapR/oDmop2MGG2Y/F+mD1gBEyqRn
- 8LRJBjpwxufDi9TLG/w1njGlMHYYUN4xck4P9uwRhEFvuENJjjCm+HDOiAmdfIbz6p1+
- J09xV1QJIrOzzKHOOIk9eB49y/PxzmylxQeXaMd3y/RU+aLmMZMIF8Kg2HE7PkpzR63U
- w4A0Sm6NZLNutG9JVc+5EjNiJvGAVXnPmmjDA5YaUYtFvIpyY8CvCV2k5VyMh+sB10+r
- xpGz0j9MVwh4dSbPB3t6UwDgj6IQ4hYHUrn6FTpgZn0lmLg2l/7ggJ4BktHMr/mYofO7
- QSIQ==
+ b=US1oAiW44R27oMZcl6duaGSPshsrO+po7NEPvkhdRMM2k7JDkkXGM+P82FcqHJf2Q5
+ jOcBHz4Evz4X/3pwlEUvWA9arvht/pqshgDWlAFsLcDXjX0kGthQBJ77HF11fo3ZZcMt
+ Rl6+w21VzQfm3hbJJhi5pHJBDAgWxTi9BS87I4f8VJ/Dc4XoWT94+RxyXh5V13VYfk3e
+ rb4mMVoCSFZG3eyItGsw+LYcckecW8ZRiGxV5P5/o7jalPg3gkeXcG2ES0Vhm/933Y6d
+ +UPO0y32Wz0bfWLlHrUj1yRqxZqPb2VioTJarVK7ya4DLLNQCAEzI9QJYtPqlAJ/RP4C
+ KGbw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=5eJNbDbH7i6gHxVBVKbxXmOUgEgn32aasXekgexxr50=;
+ bh=mQEb84e7JtMOm0oSuQqUamX2gk5Z99Avs5hmajUOejU=;
  fh=dXHoilmhhxY5vg21Ss6PZGFufhldebBfEzqm3qMG63M=;
- b=jkacFg4k+euirgNF1n4jEHzYyJiztx7nwoWxbjZTI9zPiRSqGLKo3FKF3kqYCGdtjn
- 3Egt/a11QtxHVWD2w9Ec/nDtCp5y3Xl9MmCbhVVuqYNnv5tYpY6QsGbSqS5ZQOucStan
- MdWx9wDBCjwTphkokrz/GkOHycmCE2zGqijNxnIolKOvNU1f5vFVtXJZuULLrTHyD3zQ
- 3ZRYQ1Oa/1NVcg/upruK4ZoznFI7w6SMhJ5a74IMJ7p441GjdDWgggPhlGcYv+fsHLka
- m3IZaGX0byRFkBul8fDQ5r3qW8pLRFFayUsaGT8TRtEadEyhc5/KBxKFpzuvPjwu7aEY
- d+Ow==; darn=nongnu.org
+ b=ZadVXttRz0tEeTV86XD3JqUtAP+zfXEp3fYJwHXHGAiav6yc16+8CF8Gn8ZL0B3gOJ
+ Lmxil+Cz0mbeKTaAYz/DJlnsKuVpzRVlqCAwo96d/2wpK9DQLWTswGYURD7SnhkLZ45f
+ stYK7RHVJSmm+xxungemkC9C+kFr69kI2gUwZknpi/o+ib0VjM8uIaLBu49vv1eh9E0m
+ zHuG7acgG9usQQMSyU41Ii2J9r5G9kDIjIYApI3YPDGw0eMKpWB+1y8Fp7fQuOzXMDqD
+ AOJz1QjQPrplVnfUjY7+0ahTR6n6J3MQzROniBTm/LD1klkCuxsBe6hF7vLXUQaocTLL
+ Bz9g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769512093; x=1770116893; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769512172; x=1770116972; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5eJNbDbH7i6gHxVBVKbxXmOUgEgn32aasXekgexxr50=;
- b=of58tUcHBf2FeheLH+N+9uZX1y/MwNFCxIXUI+Cwtm5Bu8xUnjuPPDJAR+Tft80Sji
- Uk44HPStnrptREsP7o+kp48dSYaXSAeu5yRrdaNZbgbaoQIJZLi68QaCtat1M6CqE5sQ
- DWCJyCEcxPkXntGVcOTQ32VvVsfupBjkTEhClJnLAzyKM2SJmEsOmzHmVwYvB+3goM7/
- y7u/Ez+UmRuXpd2XDchWPHfycnoyjZfdJc+znGs8hQR+ttLuQ2+DQTa46jLvM/uUmTpv
- +E1mXz/kdnyX+kdkfZA0kziLbK71K+4L+K6c2LazfAgBSqWxtFzLP/JbM3aZV1UljSiE
- 0eDg==
+ bh=mQEb84e7JtMOm0oSuQqUamX2gk5Z99Avs5hmajUOejU=;
+ b=LpWzcQy+mAuSj2ZczgeouVO+L6pNLdH3UC3bYzgbhfcXY4VdVWUSWxKYCH9d9JbD7J
+ LMHT1LFjp8mazUceTIZB107A8oC12eDvAzasZta2OWL95ZCsWRsdmSbFGkMj8rqtvG4U
+ aTmljYiqdMpwu967eZttv0m3BxGiHp3Ohe58SKvN04iCHyDvGv2wRzHNh1pTLliSu/8F
+ Soafey5+eGCWvTUSXf8v10d4iIi0h+dNTcM3ZeXtY9FMvz2EXfcK96F4tcdHjurDMA9L
+ Nh1TrrnHqbViahW9F8CtcVijFUGsqSX1bJPEAx87NkPZB+T9Xh0fpto+VEBX/M/wLECa
+ 6t1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769512093; x=1770116893;
+ d=1e100.net; s=20230601; t=1769512172; x=1770116972;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5eJNbDbH7i6gHxVBVKbxXmOUgEgn32aasXekgexxr50=;
- b=bPgAroWNfnw4rZjn9zy5LUeGuWgbs1lfRTvVJ1ulfOYz7kdWcG6MfLc9cIVcPPAZfE
- l97HxiEDinBztnemwT7jk3Ii/QhkVEnwPm5ssxOcHvRN6Xlv+xEPUn42Kxc0euTT7bVH
- 3V4DZrk/TxCL2PhaO6CNFGWyjFH6xbGEriPBxwO1g4BG2vFpAbtKPySHj8DS3JwGfprr
- kv/uBarFp1TzGAP86J0XWIzyNCXxSQV+ScKEoAeGh3mTnqxPW6ivPMGqov9L6hV2xhRx
- w9zrm7ZhLzpjTUNlndn5FfcO5DoX7lVn/wazAyLBmt2pGp1WicS82OW/0u4IB9Zghb6t
- iJdA==
-X-Gm-Message-State: AOJu0Yxx+xu34CiGsg+sqifUs+fNVVPGAzEHxBOKmzKZY5xHg/IP803U
- GwyO9yHsrYOEEK27NsJ6Z4NPKjZtuEFXeo+lwH8KDS5zNv3Z9aW5KYo50DehQ6K63JSyYjH47Pg
- asB84okUa1ZMG5FdwZi2ciW0CE8cZNp4FefbXQLIu2A==
-X-Gm-Gg: AZuq6aJMUS+h18/BcxfVBc5p5N9SMeOLL5WY5WteRTyNjCqDW3RXNSAW3tbMSpCGVXM
- wwCYPsEHuZS38NYmf70htTAMvPqnA56uBQC+ZCY/VSxEwJ7CQr0IWO0NGBraiDeVE5b4p6ZF3Un
- mTueo9ot+EZQSRA+TbAID5KPEL82Oo/IEoxYjebCHxeddnhqYaav7PedzPLrl3eDUnEWuOCWzdq
- u0Z4lfHIYhCnovxUBV82poYLYXz29+9daoQU0YvJ6SxjMbppSnrr0BJL9HvzMe4Ibt/3Q==
-X-Received: by 2002:a05:690c:c512:b0:794:2c3d:7952 with SMTP id
- 00721157ae682-7947aa17dd7mr9459697b3.3.1769512092654; Tue, 27 Jan 2026
- 03:08:12 -0800 (PST)
+ bh=mQEb84e7JtMOm0oSuQqUamX2gk5Z99Avs5hmajUOejU=;
+ b=nkVIGH1axCPLRQBjNJQIwrdlSgYOZv02RQJM+W8tRZZQ+5dPjFZJt4EaglVTgGy+yj
+ Tz/YFEnYOrB4s2Z9Ho7JVJBDWh08ocYVfKrcfEtttMG5aIhAx9cxwRQ0TN7BYLZGOxbR
+ sVnvfbxETZP7fNjBrpRPmaeM6Hz0IyGNsdh7D6XD7ig6WHRdATFmXyrdpUbl4xZaq29V
+ z/d0P3W7H90u4EjeHhuxTDnhXx/MKVrpHhKcuaCMMYZEdeGXTUOnMUjGKTNCbLA7L+cf
+ 3c7GmdvyX18LVnL5RJJFUSWvZ21vK2eFeS9Eglox6P2j10JEoiYCBHxeE4IruHGLoxCC
+ AxBQ==
+X-Gm-Message-State: AOJu0Ywvvhtyb3gyV10V03W2KkQ4cjiceXPi+mH3AyZAD83nRKi0nQBZ
+ H1LkUcv/CvEN3/HMipIQE6Uj2M1/rQZokn3okhvu5QddHLK6jrZRfUOyiaGowleFR7vXyR3HVBk
+ jbJQlp7JQr8p7h7YbCw9uJR397NuFO7PN4xziDeW+gw==
+X-Gm-Gg: AZuq6aIts+/7SGIY00Gny0d9aw1L0yf5vowEMch24aemn8jlOboPJwBH7eLj0FXK0US
+ cIRnCMUrHzKlY15WSTyTMNNJp71iZUlRAIZ0S3h6CZWhw5iRBbR32PA/8oeW5dFev9J7P0TOtDT
+ 2uii81EUROVX8P/odrWD1WLs6qZRHlEwPyg0AMCSDlN83CVkolNiBXUUoPcC9OP1fMQ1dMmlJp9
+ r9cVd6LZP+3klBtOKPAJxVyDlkUXN9zjA+ujr3W3oGXrrSIqeghp2NCjXo4fbVEughiPA==
+X-Received: by 2002:a05:690c:10d:b0:794:795d:4728 with SMTP id
+ 00721157ae682-7947aa04204mr8209797b3.23.1769512172088; Tue, 27 Jan 2026
+ 03:09:32 -0800 (PST)
 MIME-Version: 1.0
 References: <20260121134114.9781-1-mohamed@unpredictable.fr>
- <20260121134114.9781-12-mohamed@unpredictable.fr>
-In-Reply-To: <20260121134114.9781-12-mohamed@unpredictable.fr>
+In-Reply-To: <20260121134114.9781-1-mohamed@unpredictable.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 27 Jan 2026 11:08:01 +0000
-X-Gm-Features: AZwV_Qi0_LfpwjKOz7tFzgkomsBbNs8WuqXxxRgPZlzPkcSE6ohNE3TkiWlg0UU
-Message-ID: <CAFEAcA9P=3izrg-D9gEZ7spj8gJtan-GQzz_mes7P0OhLzekXA@mail.gmail.com>
-Subject: Re: [PATCH v17 11/21] whpx: interrupt controller support
+Date: Tue, 27 Jan 2026 11:09:20 +0000
+X-Gm-Features: AZwV_Qixd0EgnbcgMdIeEVoGMfqvDJPGAc-SR0Geb1PsZtMeX-KI7VhJfc9gmVs
+Message-ID: <CAFEAcA9qQB6Cthd5FrFTQRCVuiwAz7J+xBuuE=-vq7ThUpS8Lw@mail.gmail.com>
+Subject: Re: [PATCH v17 00/21] WHPX support for Arm
 To: Mohamed Mediouni <mohamed@unpredictable.fr>
 Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -127,67 +126,18 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Wed, 21 Jan 2026 at 13:41, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
 >
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->  MAINTAINERS                        |   1 +
->  hw/arm/virt.c                      |  10 ++
->  hw/intc/arm_gicv3_common.c         |   3 +
->  hw/intc/arm_gicv3_whpx.c           | 238 +++++++++++++++++++++++++++++
->  hw/intc/meson.build                |   1 +
->  include/hw/intc/arm_gicv3_common.h |   3 +
->  6 files changed, 256 insertions(+)
->  create mode 100644 hw/intc/arm_gicv3_whpx.c
+> Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this submission: whpx-v18)
+>
+> Missing features:
+> - VM save-restore: interrupt controller state notably
+> - SVE register sync: I didn't have the time to test this on pre-release hardware with SVE2 support yet.
+> So SVE2 is currently masked for VMs when running this.
+>
+> Known bugs:
+> - U-Boot still doesn't work (hangs when trying to parse firmware) but EDK2 does.
 
-> +static void whpx_gicv3_icc_reset(CPUARMState *env, const ARMCPRegInfo *ri)
-> +{
-> +    GICv3State *s;
-> +    GICv3CPUState *c;
-> +
-> +    c = env->gicv3state;
-> +    s = c->gic;
-> +
-> +    c->icc_pmr_el1 = 0;
-> +    /*
-> +     * Architecturally the reset value of the ICC_BPR registers
-> +     * is UNKNOWN. We set them all to 0 here; when the kernel
-> +     * uses these values to program the ICH_VMCR_EL2 fields that
-> +     * determine the guest-visible ICC_BPR register values, the
-> +     * hardware's "writing a value less than the minimum sets
-> +     * the field to the minimum value" behaviour will result in
-> +     * them effectively resetting to the correct minimum value
-> +     * for the host GIC.
-> +     */
-> +    c->icc_bpr[GICV3_G0] = 0;
-> +    c->icc_bpr[GICV3_G1] = 0;
-> +    c->icc_bpr[GICV3_G1NS] = 0;
-> +
-> +    c->icc_sre_el1 = 0x7;
-> +    memset(c->icc_apr, 0, sizeof(c->icc_apr));
-> +    memset(c->icc_igrpen, 0, sizeof(c->icc_igrpen));
-> +
-> +    if (s->migration_blocker) {
-> +        return;
-> +    }
-
-Looking a bit more closely at this, this is odd. Why the early
-return? This looks like it was copied from the KVM GICv3
-from prior to commit 59ad421d6. But in the KVM code before
-that commit, the reason for the early return is to avoid
-the "read the ICC_CTLR value from KVM" call that won't work
-(the migration blocker is for the "no KVM API to read/write
-GIC registers" case). And in the KVM code after that commit,
-we restructured the reset to not read the register in the
-reset function, so we don't need to test s->migration_blocker
-at all then.
-
-Probably you want to follow the pattern the newer KVM code
-uses, but either way, this early return doesn't make much
-sense for this whpx code as it stands, especially as the
-whpx code isn't currently setting s->migration_blocker...
-
-> +
-> +    c->icc_ctlr_el1[GICV3_S] = c->icc_ctlr_el1[GICV3_NS];
-> +}
+Hi; I left a couple of review comments, but overall I think this is
+very close to being ready to go in.
 
 thanks
 -- PMM
