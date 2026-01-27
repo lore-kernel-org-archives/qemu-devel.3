@@ -4,97 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A840D2FED2
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:30:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC821D2FED8
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknp1-00031r-El; Tue, 27 Jan 2026 13:29:51 -0500
+	id 1vknnS-0008SE-EU; Tue, 27 Jan 2026 13:28:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vknnf-0001Q7-TQ
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:29 -0500
-Received: from p-west2-cluster5-host12-snip4-4.eps.apple.com ([57.103.71.17]
- helo=outbound.mr.icloud.com)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vknmg-0006jF-Tr
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:27:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vknnd-0003PD-Dk
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:27 -0500
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPS id
- 7C82118000A0; Tue, 27 Jan 2026 18:28:22 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1769538504; x=1772130504;
- bh=rqevPYI5PNmYfO37aWp6zQDTk/Z3PG7nW7DuJwvRyUM=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=HqKrL98rMh83K0fkJGFhcSoXQgOdGl4GiCOv65gQHwO3u4SytyE6hvS8EphVkPfb/9zeHp7WiI1YSQv+MY08FQPTapbJVJv40MToCZG/MyP3wXGU4WG8RWF5i+1KI5sq65nW6Nlb3xAW/ZiKphwhyshllN1G/Ys4SGSlIjbNqkBU/e1aHcnr0SPaERavYx77qSiY6iCvTi9GViabiYpfO8xLtnKChgG3++8sfYa0Z9nqvBSleqHqvop3FE7vxUrHYw00zjx4slNGMRh3jbAJYjZNZjaMfr38jNGzPFKsQ/zNY3KQpwXN6IOFehIgvWM0FN8UOwiwJx/W01xIVcbBvg==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPSA id
- E2E561800104; Tue, 27 Jan 2026 18:28:17 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org,
-	mohamed@unpredictable.fr
-Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, qemu-arm@nongnu.org,
- Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vknme-0003GU-SI
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:27:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769538443;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=52OdNpdwwZ/rPIzESn/Hb+mrzd9AWUtPqG8Ws/yqOBY=;
+ b=HRDUr6klLGTLtcn5aMzuttwYU23Oa0ue681dbO97Uscaf5otadEAbuk6wYr0kq64Gi3ZIy
+ pOtzrG/7uYhyJDpLxyKgg8HP4dlUeVyVzO6YZ/+97Z1MIcNIRcxWaHOBizKdj47XI5NJDf
+ o22d3IebRFMGyZmvdygTwNJ+6U1Gkt0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-dhYoyCR2ONWyhTpYkT981w-1; Tue,
+ 27 Jan 2026 13:27:17 -0500
+X-MC-Unique: dhYoyCR2ONWyhTpYkT981w-1
+X-Mimecast-MFC-AGG-ID: dhYoyCR2ONWyhTpYkT981w_1769538436
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4327A18005AE; Tue, 27 Jan 2026 18:27:16 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.23])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D96F519560B2; Tue, 27 Jan 2026 18:27:14 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>,
- Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v18 02/22] accel/system: Introduce hwaccel_enabled() helper
-Date: Tue, 27 Jan 2026 19:27:42 +0100
-Message-ID: <20260127182805.73212-3-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260127182805.73212-1-mohamed@unpredictable.fr>
-References: <20260127182805.73212-1-mohamed@unpredictable.fr>
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PATCH 19/43] audio/coreaudio: replace custom logging with
+ error_report
+Date: Tue, 27 Jan 2026 22:24:46 +0400
+Message-ID: <20260127182516.289834-20-marcandre.lureau@redhat.com>
+In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDE1MCBTYWx0ZWRfX24A50B1zyrNR
- OMK0+ECQnD8m0cZIoII7ubD/gI0SAzOmrV5QX8pa0HrwINeFyaHBQhOGoiajqX/+5omewxRwGVb
- sjcRVmsjLVURtOfZsB2XU5daiee/7MZNU3b+DP3fHqLNc56RIt2xgnBf9kD/qsa4DZYoyotBjRO
- 5FzxmSSuI3kRazjaTSt30uXqaHtR6giFcTexlumERjEoB6qgWR14KV35/+XWuiiirukA79uXQlE
- 5EBdug5ZIAf8Jq68lpP0uHn2iWGAYrlo1xb916TNfysVs1nXchOaYfocMjx56fIGg+sUg4hxwXn
- EbAPr1FPMK/Hzj6w/chvrl+UJbj5+D73xJ8Xj1hUDLVGbvMFij6Ste8d/y8U7U=
-X-Proofpoint-ORIG-GUID: jlc5NKOWNwEFtfrhCD0ZzAd49ShdE8MN
-X-Proofpoint-GUID: jlc5NKOWNwEFtfrhCD0ZzAd49ShdE8MN
-X-Authority-Info-Out: v=2.4 cv=FPAWBuos c=1 sm=1 tr=0 ts=697903c7
- cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=zYwLhoXY7WJC0OmO1EgA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-27_04,2026-01-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- phishscore=0 mlxscore=0 adultscore=0 malwarescore=0
- mlxlogscore=999
- spamscore=0 lowpriorityscore=0 clxscore=1030 bulkscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601270150
-X-JNJ: AAAAAAABpZ0dHkUgFxuAjnrz1TRRNKNJbVDYmK06wKHRM/+M3OeB09PrvfTQIHF2YO+0ygZm2PP3VY8PUDsF1ivQacyFMNbKvmxFeedpqob2a5SgUQqR2yY2GjSMCQJH70rhHeLMsyHug5ybWPpRaXlQtA8Ecc33XtIPJ8L1K2UhKOdDvoPnGAJkZKoQba+QzsEHEa7ga0H2eU+mWW00tq3328KPq71gtLKSsYmq0jttsG6arXYrrTlhrglVv6aXnkDgIGFjtKFjkE/oLjn24BBq1nSJcFY0L9F7xNR8bYAofroHO8QfcA++UbgERDHbWB2tgD206iI9aH06DuoYTJ8xkIokjx2LQgTPGBd2/qcDLFSzSH8IhiW9Yjlk9ZXpFpMVEIbgg0N8/exJVsqChwlInWGGKnWb9B92yWu13k2ICL6IirMjahdYOAQcRXq1uscwcAKMzDFYK63kxxsQnQ5TvuuzbE2tbbeBF5/ILrwD6MPNmazB05dxkSoaMaANEXpoNkk+rxRNEs+87AEmT8+OfhMjmKn3L+YV1vyefEGgQDZiuxD3JfSUPpUNRhJlvnc7tD3BrX6VtDl7b2CNcqxTnfllSBkXjKnSHM1I6JxhOjHNRsxzzI4GBCr7Ctg3UfVMnKoIzfQPQ3oc+/KYGh8UMavGbRQWaPtuym7WC67UcAMOUTRexSjnOX/VizntstpyLdM2uOddvrJyxUdJwwAPB3BTmPj7lXPobVJ6SSvqbpeGYZirbHVOkMBnSxVKRZXZa09FlGEq7r3t3yAOPT6qKx1u21HZuV2WNnxbfzaKaLtcDBqm/m5Lv+GFS6NyjBqcqC6UzQuHwdbOhFhVfnemlBUB3czM8Lu0civLBS66109+cWa1hwgaxCuhKJ5A6yQL+oGzNLT+eFRg5dD/xsDtU6VemKIbz5znmQDasmZEEI8gWYSRpvPTz/tAnRAUiMKVycPkjw==
-Received-SPF: pass client-ip=57.103.71.17;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,42 +90,333 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-hwaccel_enabled() return whether any hardware accelerator
-is enabled.
+The CoreAudio backend uses its own logging infrastructure (AUD_log,
+AUD_vlog, dolog) and the AUDIO_CAP macro. This approach is inconsistent
+with the rest of QEMU and makes the output harder to filter and
+configure.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Replace the custom logging with standard QEMU error reporting:
+- Use error_report() / error_printf() for errors
+- Use warn_report() for non-fatal warnings (buffer frame size
+  adjustments)
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/system/hw_accel.h | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ audio/coreaudio.m | 124 ++++++++++++++++++++++------------------------
+ 1 file changed, 60 insertions(+), 64 deletions(-)
 
-diff --git a/include/system/hw_accel.h b/include/system/hw_accel.h
-index 55497edc29..628a50e066 100644
---- a/include/system/hw_accel.h
-+++ b/include/system/hw_accel.h
-@@ -40,4 +40,17 @@ void cpu_synchronize_pre_loadvm(CPUState *cpu);
- void cpu_synchronize_post_reset(CPUState *cpu);
- void cpu_synchronize_post_init(CPUState *cpu);
+diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+index af614144bd1..40d7986b1d7 100644
+--- a/audio/coreaudio.m
++++ b/audio/coreaudio.m
+@@ -28,10 +28,9 @@
  
-+/**
-+ * hwaccel_enabled:
-+ *
-+ * Returns: %true if a hardware accelerator is enabled, %false otherwise.
-+ */
-+static inline bool hwaccel_enabled(void)
-+{
-+    return hvf_enabled()
-+        || kvm_enabled()
-+        || nvmm_enabled()
-+        || whpx_enabled();
-+}
-+
- #endif /* QEMU_HW_ACCEL_H */
+ #include "qemu/main-loop.h"
+ #include "qemu/module.h"
++#include "qemu/error-report.h"
+ #include "qemu/audio.h"
+ #include "qom/object.h"
+-
+-#define AUDIO_CAP "coreaudio"
+ #include "audio_int.h"
+ 
+ #define TYPE_AUDIO_COREAUDIO "audio-coreaudio"
+@@ -157,7 +156,7 @@ static OSStatus coreaudio_get_isrunning(AudioDeviceID id, UInt32 *result)
+                                       result);
+ }
+ 
+-static void coreaudio_logstatus (OSStatus status)
++static void coreaudio_logstatus(OSStatus status)
+ {
+     const char *str = "BUG";
+ 
+@@ -207,70 +206,64 @@ static void coreaudio_logstatus (OSStatus status)
+         break;
+ 
+     default:
+-        AUD_log (AUDIO_CAP, "Reason: status code %" PRId32 "\n", (int32_t)status);
++        error_printf(" Reason: status code %" PRId32, (int32_t)status);
+         return;
+     }
+ 
+-    AUD_log (AUDIO_CAP, "Reason: %s\n", str);
++    error_printf(" Reason: %s", str);
+ }
+ 
+-static void G_GNUC_PRINTF (2, 3) coreaudio_logerr (
+-    OSStatus status,
+-    const char *fmt,
+-    ...
+-    )
++static void G_GNUC_PRINTF(2, 3) coreaudio_logerr(OSStatus status,
++                                                const char *fmt, ...)
+ {
+     va_list ap;
+ 
+-    va_start (ap, fmt);
+-    AUD_log (AUDIO_CAP, fmt, ap);
+-    va_end (ap);
+-
+-    coreaudio_logstatus (status);
++    error_printf("coreaudio: ");
++    va_start(ap, fmt);
++    error_vprintf(fmt, ap);
++    va_end(ap);
++    coreaudio_logstatus(status);
++    error_printf("\n");
+ }
+ 
+-static void G_GNUC_PRINTF (3, 4) coreaudio_logerr2 (
+-    OSStatus status,
+-    const char *typ,
+-    const char *fmt,
+-    ...
+-    )
++static void G_GNUC_PRINTF(3, 4) coreaudio_logerr2(OSStatus status,
++                                                  const char *typ,
++                                                  const char *fmt, ...)
+ {
+     va_list ap;
+ 
+-    AUD_log (AUDIO_CAP, "Could not initialize %s\n", typ);
+-
+-    va_start (ap, fmt);
+-    AUD_vlog (AUDIO_CAP, fmt, ap);
+-    va_end (ap);
+-
+-    coreaudio_logstatus (status);
++    error_printf("coreaudio: Could not initialize %s: ", typ);
++    va_start(ap, fmt);
++    error_vprintf(fmt, ap);
++    va_end(ap);
++    coreaudio_logstatus(status);
++    error_printf("\n");
+ }
+ 
+ #define coreaudio_playback_logerr(status, ...) \
+     coreaudio_logerr2(status, "playback", __VA_ARGS__)
+ 
+-static int coreaudio_buf_lock (coreaudioVoiceOut *core, const char *fn_name)
++static int coreaudio_buf_lock(coreaudioVoiceOut *core, const char *fn_name)
+ {
+     int err;
+ 
+-    err = pthread_mutex_lock (&core->buf_mutex);
++    err = pthread_mutex_lock(&core->buf_mutex);
+     if (err) {
+-        dolog ("Could not lock voice for %s\nReason: %s\n",
+-               fn_name, strerror (err));
++        error_report("coreaudio: Could not lock voice for %s: %s",
++                     fn_name, strerror(err));
+         return -1;
+     }
+     return 0;
+ }
+ 
+-static int coreaudio_buf_unlock (coreaudioVoiceOut *core, const char *fn_name)
++static int coreaudio_buf_unlock(coreaudioVoiceOut *core, const char *fn_name)
+ {
+     int err;
+ 
+-    err = pthread_mutex_unlock (&core->buf_mutex);
++    err = pthread_mutex_unlock(&core->buf_mutex);
+     if (err) {
+-        dolog ("Could not unlock voice for %s\nReason: %s\n",
+-               fn_name, strerror (err));
++        error_report("coreaudio: Could not unlock voice for %s: %s",
++                     fn_name, strerror(err));
+         return -1;
+     }
+     return 0;
+@@ -378,12 +371,13 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+ 
+     status = coreaudio_get_voice(&core->outputDeviceID);
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_playback_logerr (status,
+-                                   "Could not get default output Device\n");
++        coreaudio_playback_logerr(status,
++                                  "Could not get default output device");
+         return status;
+     }
+     if (core->outputDeviceID == kAudioDeviceUnknown) {
+-        dolog ("Could not initialize playback - Unknown Audiodevice\n");
++        error_report("coreaudio: Could not initialize playback: "
++                     "Unknown audio device");
+         return status;
+     }
+ 
+@@ -394,17 +388,19 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+         return 0;
+     }
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_playback_logerr (status,
+-                                    "Could not get device buffer frame range\n");
++        coreaudio_playback_logerr(status,
++                                  "Could not get device buffer frame range");
+         return status;
+     }
+ 
+     if (frameRange.mMinimum > core->frameSizeSetting) {
+         core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMinimum;
+-        dolog ("warning: Upsizing Buffer Frames to %f\n", frameRange.mMinimum);
++        warn_report("coreaudio: Upsizing buffer frames to %f",
++                    frameRange.mMinimum);
+     } else if (frameRange.mMaximum < core->frameSizeSetting) {
+         core->audioDevicePropertyBufferFrameSize = (UInt32) frameRange.mMaximum;
+-        dolog ("warning: Downsizing Buffer Frames to %f\n", frameRange.mMaximum);
++        warn_report("coreaudio: Downsizing buffer frames to %f",
++                    frameRange.mMaximum);
+     } else {
+         core->audioDevicePropertyBufferFrameSize = core->frameSizeSetting;
+     }
+@@ -416,9 +412,9 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+         return 0;
+     }
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_playback_logerr (status,
+-                                    "Could not set device buffer frame size %" PRIu32 "\n",
+-                                    (uint32_t)core->audioDevicePropertyBufferFrameSize);
++        coreaudio_playback_logerr(status,
++                                  "Could not set device buffer frame size %" PRIu32,
++                                  (uint32_t)core->audioDevicePropertyBufferFrameSize);
+         return status;
+     }
+ 
+@@ -429,8 +425,8 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+         return 0;
+     }
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_playback_logerr (status,
+-                                    "Could not get device buffer frame size\n");
++        coreaudio_playback_logerr(status,
++                                  "Could not get device buffer frame size");
+         return status;
+     }
+     core->hw.samples = core->bufferCount * core->audioDevicePropertyBufferFrameSize;
+@@ -442,9 +438,9 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+         return 0;
+     }
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_playback_logerr (status,
+-                                   "Could not set samplerate %lf\n",
+-                                   streamBasicDescription.mSampleRate);
++        coreaudio_playback_logerr(status,
++                                  "Could not set samplerate %lf",
++                                  streamBasicDescription.mSampleRate);
+         core->outputDeviceID = kAudioDeviceUnknown;
+         return status;
+     }
+@@ -468,7 +464,7 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
+         return 0;
+     }
+     if (status != kAudioHardwareNoError || core->ioprocid == NULL) {
+-        coreaudio_playback_logerr (status, "Could not set IOProc\n");
++        coreaudio_playback_logerr(status, "Could not set IOProc");
+         core->outputDeviceID = kAudioDeviceUnknown;
+         return status;
+     }
+@@ -486,13 +482,13 @@ static void fini_out_device(coreaudioVoiceOut *core)
+     if (status != kAudioHardwareBadObjectError) {
+         if (status != kAudioHardwareNoError) {
+             coreaudio_logerr(status,
+-                             "Could not determine whether Device is playing\n");
++                             "Could not determine whether device is playing");
+         }
+ 
+         if (isrunning) {
+             status = AudioDeviceStop(core->outputDeviceID, core->ioprocid);
+             if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
+-                coreaudio_logerr(status, "Could not stop playback\n");
++                coreaudio_logerr(status, "Could not stop playback");
+             }
+         }
+     }
+@@ -501,7 +497,7 @@ static void fini_out_device(coreaudioVoiceOut *core)
+     status = AudioDeviceDestroyIOProcID(core->outputDeviceID,
+                                         core->ioprocid);
+     if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
+-        coreaudio_logerr(status, "Could not remove IOProc\n");
++        coreaudio_logerr(status, "Could not remove IOProc");
+     }
+     core->outputDeviceID = kAudioDeviceUnknown;
+ }
+@@ -515,7 +511,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
+     if (status != kAudioHardwareNoError) {
+         if (status != kAudioHardwareBadObjectError) {
+             coreaudio_logerr(status,
+-                             "Could not determine whether Device is playing\n");
++                             "Could not determine whether device is playing");
+         }
+ 
+         return;
+@@ -526,7 +522,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
+         if (!isrunning) {
+             status = AudioDeviceStart(core->outputDeviceID, core->ioprocid);
+             if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
+-                coreaudio_logerr (status, "Could not resume playback\n");
++                coreaudio_logerr(status, "Could not resume playback");
+             }
+         }
+     } else {
+@@ -535,7 +531,7 @@ static void update_device_playback_state(coreaudioVoiceOut *core)
+             status = AudioDeviceStop(core->outputDeviceID,
+                                      core->ioprocid);
+             if (status != kAudioHardwareBadDeviceError && status != kAudioHardwareNoError) {
+-                coreaudio_logerr(status, "Could not pause playback\n");
++                coreaudio_logerr(status, "Could not pause playback");
+             }
+         }
+     }
+@@ -576,7 +572,7 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
+     /* create mutex */
+     err = pthread_mutex_init(&core->buf_mutex, NULL);
+     if (err) {
+-        dolog("Could not create mutex\nReason: %s\n", strerror (err));
++        error_report("coreaudio: Could not create mutex: %s", strerror(err));
+         return -1;
+     }
+ 
+@@ -594,8 +590,8 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
+                                             &voice_addr, handle_voice_change,
+                                             core);
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_playback_logerr (status,
+-                                   "Could not listen to voice property change\n");
++        coreaudio_playback_logerr(status,
++                                  "Could not listen to voice property change");
+         return -1;
+     }
+ 
+@@ -606,7 +602,7 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
+                                                    core);
+         if (status != kAudioHardwareNoError) {
+             coreaudio_playback_logerr(status,
+-                                      "Could not remove voice property change listener\n");
++                                      "Could not remove voice property change listener");
+         }
+ 
+         return -1;
+@@ -626,7 +622,7 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
+                                                handle_voice_change,
+                                                core);
+     if (status != kAudioHardwareNoError) {
+-        coreaudio_logerr(status, "Could not remove voice property change listener\n");
++        coreaudio_logerr(status, "Could not remove voice property change listener");
+     }
+ 
+     fini_out_device(core);
+@@ -634,7 +630,7 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
+     /* destroy mutex */
+     err = pthread_mutex_destroy(&core->buf_mutex);
+     if (err) {
+-        dolog("Could not destroy mutex\nReason: %s\n", strerror (err));
++        error_report("coreaudio: Could not destroy mutex: %s", strerror(err));
+     }
+ }
+ 
 -- 
-2.50.1 (Apple Git-155)
+2.52.0
 
 
