@@ -4,72 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0028AD2FEDC
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E8C3D2FEDA
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:37:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknrM-0001DY-5g; Tue, 27 Jan 2026 13:32:16 -0500
+	id 1vknrA-0008HH-9f; Tue, 27 Jan 2026 13:32:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknor-0002Dx-Hk
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:29:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vknoQ-00022r-16
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:29:25 -0500
+Received: from p-west2-cluster1-host3-snip4-1.eps.apple.com ([57.103.68.64]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknol-0003l8-8C
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:29:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769538571;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sfrZY2yrYbtBdm8NY08D0va2e2kNv/cD6NJjXP0WpTk=;
- b=aw5a+5OH79MWH2SK96ROxP0JRlENVGkx1m+dRcZ2e1idyTDggcaEEXtfmv44yDGsmr3Y44
- jC8Pklc4iT612W7rnzzF47uoNW6mIgfHvddY6btx+VbUMq7JlteD8RWMI9gLfJeRgvmaUs
- kO6tCZfvZoG92PLSziHyEgrwglQOfYA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-204--HEW5RWUOVGVnsmokwWG2A-1; Tue,
- 27 Jan 2026 13:29:29 -0500
-X-MC-Unique: -HEW5RWUOVGVnsmokwWG2A-1
-X-Mimecast-MFC-AGG-ID: -HEW5RWUOVGVnsmokwWG2A_1769538567
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EC1471977300; Tue, 27 Jan 2026 18:29:16 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.23])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5DEE71955F66; Tue, 27 Jan 2026 18:29:14 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 39/43] audio: rework invalid audsettings error
-Date: Tue, 27 Jan 2026 22:25:06 +0400
-Message-ID: <20260127182516.289834-40-marcandre.lureau@redhat.com>
-In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
-References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vknoL-0003Y2-Pe
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:29:12 -0500
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPS id
+ 4BEC818001C8; Tue, 27 Jan 2026 18:29:00 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1769538543; x=1772130543;
+ bh=mBFnX+1GWKubPDZlgEM1plJqBHQoJzuLiKUgkg0UYPU=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
+ b=g1eqUnOYdpXzQu9XU5irBv/JCJm+QDeVJbsLPIusCbLWhM6QNwe8wdxYpk1O+QJweFmb2NU538zbDg/PwvxL1OpF8g7IStcpcOPMClYKmxieNxj1YwaG+v5ZKyXYIFs9fOMn0bo1ehN7XuhH5N8fMI2v8jujPpNQrrhYKYQYJRvk/32Ect4UxudeWo0hDTUzUjwwcJwhaMcfvmVY3urtirv+O9KtDASOhMGo3yT+JEw0LzqxYYhk5rYJKFrBRBYtkV0ZRVrwROGphx8BlwsWI/937M4censChfKzuYKFKzNyns4zL1ziytrR7f9pxfigGkmy0lgQpz9WXK7SdR1Agg==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPSA id
+ 4343E1800243; Tue, 27 Jan 2026 18:28:54 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org,
+	mohamed@unpredictable.fr
+Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, qemu-arm@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v18 10/22] whpx: ifdef out winhvemulation on non-x86_64
+Date: Tue, 27 Jan 2026 19:27:50 +0100
+Message-ID: <20260127182805.73212-11-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260127182805.73212-1-mohamed@unpredictable.fr>
+References: <20260127182805.73212-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Authority-Info-Out: v=2.4 cv=Uu5u9uwB c=1 sm=1 tr=0 ts=697903ee
+ cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=VExx-Oqz_yhFp4n2Ql0A:9
+ a=0bXxn9q0MV6snEgNplNhOjQmxlI=:19 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: c_IOwPH681dqh3heLjUWcmMQsAl76s4B
+X-Proofpoint-ORIG-GUID: c_IOwPH681dqh3heLjUWcmMQsAl76s4B
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDE1MCBTYWx0ZWRfXyrJ0SJiMHvFm
+ KGbKzze4zjVzsxYSlhEuyrCOR0goETzzeZ74757lCcZX3vRsOcQI55kcgJmLmq95z0yaKdsiS+q
+ SrAX7V2bWjRuIM5xHKQ0Sv+iXDQrcW4I1O9PFI82EaKBkObfZ6dAsv2UDwQDC8xsg8yiEXcSaFS
+ wXn0MPu45c167JH8AGRT0darl4SnmdohTQ0tQEsW0B2o42IDHsie7JgnINPxvZU08L7pbHjIfP4
+ zTlMTeewNHKYtGvV+/rQTx2/kfGkfXS4vz5XvwfkK7WWHWD49D9OAGYogAPLWkg7/jRaqxHP7+k
+ ztDrwaqvOjpD+WVZjYwmbo+iHclrViekTbM4PUf6TskYDY9447qHmh9Vx/tkCo=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-27_04,2026-01-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1030
+ bulkscore=0 phishscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0
+ malwarescore=0 suspectscore=0 mlxlogscore=983 adultscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601270150
+X-JNJ: AAAAAAABtvzkqx6fXaizTSF+70wv5zSExgcgsPxSVD6ANBkOpY9K3HvfEYzZalb/sV9UWhdEimeiPFwLPUc0sTd0gtgcBezW6H6cwZ2HQsdnLOYMUOlJt1NviUWQFH84/8agMmoznDhdxgTuDcPFTBq3oC5Oc+mELylFtY8Ha1CZwSNlJ+apm05dA7tshRGKi7dh96x9CTKLs9E11/8nM/Y3OrRUStKk5908TaOZN5NnRnbROdn8oB+rnhzshi9rKDYEABQImXUWOOxi1HKscyv/SxTdhksSUE6NDU/nCKRmw60RLl6AvB2hn4Dh1dE3X+nn3QxVyDCVlyIP2EbdCvp/uHBEJwdPIF1/UYodZMrHwMHjIlRC2XRkBGHmiGWV5AZYBvnRVcLJ4us+EKXjGOi83hmowecvZhUUumdqEHgEYNOM+o4UWs39bhG39rqvS1oUUcXD8/U0pqWHxvTmXaLDjNn9CQPajxm5V7giuADADvfVGFa8TCX+JKQiFSUvAKoAsRE3tEAo3kOnI4fMoTWN+X7FoUgp0FTUK15tmn9x3OKpgpGPGD6dpLWBFzkV/7fYzomaDQFoIhbrGsrZN6rzTB/ZPg1L0/5YpJnnYGLUBSGfypmiRvkC0TVQ/NJQ+zXCxZHcJZOKf0k66qEMjDo3VA/t/c/lkGWf2PzhjsJdK9xxtntYZ3XPyU+tRZv9+/p0Cr2c7c7vFedBH8OAb9WeFxkSDBY4xXv6Xo1q1lTzWe763lUXyaoLclbBSRunPwv+AJ+Dd2sTA8MwWpfZDlH+NqyI1QXsKhsjiszDOpVR/4VOuHS6OccFvPqFiftQhThC5zk+JVeIl8dW9UHx16e50oZTMJMfZA+SNCl2iAA3PwZEr2tbJvsexVjYHCgB5WgmIM2M5mLU+eOJ7//Pm7ZTbpljOqL2+N6kJylFtiXEB+gJsYAdcUU=
+Received-SPF: pass client-ip=57.103.68.64;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,102 +110,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+winhvemulation is x86_64 only.
 
-Currently, when given invalid settings, QEMU will print to stderr:
+In the future, we might want to get rid of winhvemulation usage
+entirely.
 
-A bug was just triggered in audio_mixeng_backend_open_out
-Save all your work and restart without audio
-I am sorry
-Context:
-audio: frequency=44100 nchannels=0 fmt=S16 endianness=little
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Now it will use error_report() and simply report:
-audio: Invalid audio settings: frequency=44100 nchannels=0 fmt=s16 endian=little
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- audio/audio_template.h  |  5 +++--
- audio/audio-mixeng-be.c | 41 +++++++----------------------------------
- 2 files changed, 10 insertions(+), 36 deletions(-)
+ accel/whpx/whpx-common.c       | 14 ++++++++++++--
+ include/system/whpx-common.h   |  2 ++
+ include/system/whpx-internal.h |  7 ++++++-
+ 3 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index e884c8e9b1a..5711f4a26e1 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -513,8 +513,9 @@ static SW *glue(audio_mixeng_backend_open_, TYPE) (
-     trace_audio_open_in(name, as->freq, as->nchannels, as->fmt);
- #endif
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index 0a6068fdde..c58344cb61 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -37,7 +37,9 @@
+ bool whpx_allowed;
+ static bool whp_dispatch_initialized;
+ static HMODULE hWinHvPlatform;
++#ifdef HOST_X86_64
+ static HMODULE hWinHvEmulation;
++#endif
  
--    if (audio_bug(__func__, audio_validate_settings(as))) {
--        audio_print_settings (as);
-+    if (audio_validate_settings(as)) {
-+        g_autofree char *str = audsettings_to_string(as);
-+        error_report("audio: Invalid audio settings: %s", str);
-         goto fail;
-     }
+ struct whpx_state whpx_global;
+ struct WHPDispatch whp_dispatch;
+@@ -232,8 +234,10 @@ void whpx_destroy_vcpu(CPUState *cpu)
+     struct whpx_state *whpx = &whpx_global;
  
-diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
-index 5165768a531..e8fae2ab977 100644
---- a/audio/audio-mixeng-be.c
-+++ b/audio/audio-mixeng-be.c
-@@ -101,38 +101,11 @@ void AUD_log (const char *cap, const char *fmt, ...)
-     va_end (ap);
+     whp_dispatch.WHvDeleteVirtualProcessor(whpx->partition, cpu->cpu_index);
++#ifdef HOST_X86_64
+     AccelCPUState *vcpu = cpu->accel;
+     whp_dispatch.WHvEmulatorDestroyEmulator(vcpu->emulator);
++#endif
+     g_free(cpu->accel);
  }
  
--static void audio_print_settings (const struct audsettings *as)
-+static char *audsettings_to_string(const struct audsettings *as)
- {
--    dolog ("frequency=%d nchannels=%d fmt=", as->freq, as->nchannels);
+@@ -408,8 +412,12 @@ static bool load_whp_dispatch_fns(HMODULE *handle,
+         LIST_WINHVPLATFORM_FUNCTIONS(WHP_LOAD_FIELD)
+         break;
+     case WINHV_EMULATION_FNS_DEFAULT:
++#ifdef HOST_X86_64
+         WHP_LOAD_LIB(WINHV_EMULATION_DLL, hLib)
+         LIST_WINHVEMULATION_FUNCTIONS(WHP_LOAD_FIELD)
++#else
++        g_assert_not_reached();
++#endif
+         break;
+     case WINHV_PLATFORM_FNS_SUPPLEMENTAL:
+         WHP_LOAD_LIB(WINHV_PLATFORM_DLL, hLib)
+@@ -535,11 +543,11 @@ bool init_whp_dispatch(void)
+     if (!load_whp_dispatch_fns(&hWinHvPlatform, WINHV_PLATFORM_FNS_DEFAULT)) {
+         goto error;
+     }
 -
--    switch (as->fmt) {
--    case AUDIO_FORMAT_S8:
--        AUD_log (NULL, "S8");
--        break;
--    case AUDIO_FORMAT_U8:
--        AUD_log (NULL, "U8");
--        break;
--    case AUDIO_FORMAT_S16:
--        AUD_log (NULL, "S16");
--        break;
--    case AUDIO_FORMAT_U16:
--        AUD_log (NULL, "U16");
--        break;
--    case AUDIO_FORMAT_S32:
--        AUD_log (NULL, "S32");
--        break;
--    case AUDIO_FORMAT_U32:
--        AUD_log (NULL, "U32");
--        break;
--    case AUDIO_FORMAT_F32:
--        AUD_log (NULL, "F32");
--        break;
--    default:
--        AUD_log (NULL, "invalid(%d)", as->fmt);
--        break;
--    }
++#ifdef HOST_X86_64
+     if (!load_whp_dispatch_fns(&hWinHvEmulation, WINHV_EMULATION_FNS_DEFAULT)) {
+         goto error;
+     }
 -
--    AUD_log (NULL, " endianness=%s\n", as->big_endian ? "big" : "little");
-+    return g_strdup_printf("frequency=%d nchannels=%d fmt=%s endian=%s",
-+                           as->freq, as->nchannels, AudioFormat_str(as->fmt),
-+                           as->big_endian ? "big" : "little");
++#endif
+     assert(load_whp_dispatch_fns(&hWinHvPlatform,
+         WINHV_PLATFORM_FNS_SUPPLEMENTAL));
+     whp_dispatch_initialized = true;
+@@ -549,9 +557,11 @@ error:
+     if (hWinHvPlatform) {
+         FreeLibrary(hWinHvPlatform);
+     }
++#ifdef HOST_X86_64
+     if (hWinHvEmulation) {
+         FreeLibrary(hWinHvEmulation);
+     }
++#endif
+     return false;
  }
  
- static int audio_validate_settings (const struct audsettings *as)
-@@ -1607,9 +1580,9 @@ static CaptureVoiceOut *audio_mixeng_backend_add_capture(
-         return NULL;
-     }
+diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
+index e549c7539c..8f171d1397 100644
+--- a/include/system/whpx-common.h
++++ b/include/system/whpx-common.h
+@@ -3,7 +3,9 @@
+ #define SYSTEM_WHPX_COMMON_H
  
--    if (audio_validate_settings (as)) {
--        dolog ("Invalid settings were passed when trying to add capture\n");
--        audio_print_settings (as);
-+    if (audio_validate_settings(as)) {
-+        g_autofree char *str = audsettings_to_string(as);
-+        error_report("audio: Invalid audio settings when trying to add capture: %s", str);
-         return NULL;
-     }
+ struct AccelCPUState {
++#ifdef HOST_X86_64
+     WHV_EMULATOR_HANDLE emulator;
++#endif
+     bool window_registered;
+     bool interruptable;
+     bool ready_for_pic_interrupt;
+diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
+index 041fa958b4..609d0e1c08 100644
+--- a/include/system/whpx-internal.h
++++ b/include/system/whpx-internal.h
+@@ -4,8 +4,9 @@
+ 
+ #include <windows.h>
+ #include <winhvplatform.h>
++#ifdef HOST_X86_64
+ #include <winhvemulation.h>
+-
++#endif
+ #include "hw/i386/apic.h"
+ #include "exec/vaddr.h"
+ 
+@@ -101,12 +102,16 @@ void whpx_apic_get(APICCommonState *s);
+ 
+ /* Define function typedef */
+ LIST_WINHVPLATFORM_FUNCTIONS(WHP_DEFINE_TYPE)
++#ifdef HOST_X86_64
+ LIST_WINHVEMULATION_FUNCTIONS(WHP_DEFINE_TYPE)
++#endif
+ LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_DEFINE_TYPE)
+ 
+ struct WHPDispatch {
+     LIST_WINHVPLATFORM_FUNCTIONS(WHP_DECLARE_MEMBER)
++#ifdef HOST_X86_64
+     LIST_WINHVEMULATION_FUNCTIONS(WHP_DECLARE_MEMBER)
++#endif
+     LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_DECLARE_MEMBER)
+ };
  
 -- 
-2.52.0
+2.50.1 (Apple Git-155)
 
 
