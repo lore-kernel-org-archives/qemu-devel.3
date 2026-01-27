@@ -4,90 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0494D34094
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 15:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE6AD34093
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 15:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vklJD-000762-1F; Tue, 27 Jan 2026 10:48:51 -0500
+	id 1vklLj-0003Su-Bc; Tue, 27 Jan 2026 10:51:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vklIl-0006WQ-6t
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 10:48:26 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <kashif04x@gmail.com>)
+ id 1vklLg-0003PV-Dn
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 10:51:24 -0500
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vklIi-0004EF-IB
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 10:48:21 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-43284ed32a0so3510716f8f.3
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 07:48:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kashif04x@gmail.com>)
+ id 1vklLe-00059t-TY
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 10:51:24 -0500
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-59dd490be5fso7679586e87.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 07:51:22 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769529081; cv=none;
+ d=google.com; s=arc-20240605;
+ b=bsC1vEkUCpesb8AcZEuK0JiOhFcgT9UHjGZOoKprlPUMM/C/H29nDVmU1KpSxFS5w4
+ VimqmPlTlEQ/wJPuMb+cmfgfYdSTeo6+z2oWq0D/12TrqsFUT4i1waDVxXJUNa8q0unV
+ /c5p/W3c0J4OFwUyi3FpijnTItXY60yTlOXbTkGotT0dr1kUR5p1Es0xOeO+J9CWsBcI
+ 1Xxe+7k4BAirpYOBQ5v0FsFkXzv0xS/pnhW8YJHLyfPPa87RHMBr6SH9OVijdXPLyw2l
+ sIDA5zHuQOlmpeYSLFSQAbrrhfLcEGPruyOzZw2BiNwUE6mkF8LsBg3gbHnJWTXda0Nc
+ P3BQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=OcqaWwwudDyJIPu3p00T9wZ67uxDgMSf37ZKnUxqgjw=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=dsiietbyF/liMVKDI42IpH7mq7t6HrEcPaGz2V6zpLNGGqiYgP7dar0+JyxF1dK5Eu
+ 93WfLOH3qUpkcOMB1vzSJeAFkU/aTM2idgm6pe1YYDCzttDM4rHi1QHz4meQh8MnkSco
+ dyfP4AC0yS5MBr0hVDP7w3+q4sqdPTua5GZHPpTiiVqlTTjvyonEVjnQaUdzEsTfbbZ+
+ x6fCjqkCFJ9anFFkjGAwBMf0d+MFNU/2Th0kQ7JEFYRoj3NliRiuVOlWNbigbJ2ED+LV
+ BCkTsQ91jyIMYCvSFjUntiCSbYxG4AFbGq95VkilVjmXl3Zt9EDgPgTpXUxKFGxea6AV
+ g0fw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769528899; x=1770133699; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xj3uXJy0YX+vXnrU6szpxqRIKY0go5o7p8K2ACV/4tY=;
- b=yPf+qltwnc7jm+1KRWCFrl3JWld28UoDAExg4aA9AHwGwAseA1B39FwtiY8kbpkIOc
- S73zNux5hoPQRqj1LTiZA3JfDg1F3OHY0aMM3qULgjcUD7sB28lgWjNM4+zPV1hYWL5A
- Q75x0cpOAZYRi8vpJf5T5BsCFqC066w4Czo34dn+O9so9V6uCALYtUELmnlLd4dkIeI5
- GaWqNLoJCDXe15XhjUQvB5awEFax6LN8FhaQH4Yn8ip/UZODb6H9aU2iuYtNAX0miY/O
- ZJRyP0xBvk2MKp46b57L7FBuZhiPhV0kxoI8vC3iXNAdWc/N4zmAd3+sZB6pU6fg9WRk
- TN3Q==
+ d=gmail.com; s=20230601; t=1769529081; x=1770133881; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=OcqaWwwudDyJIPu3p00T9wZ67uxDgMSf37ZKnUxqgjw=;
+ b=JLfsPAmMFGBWC7LcsCOnjt/aT1Z3MYBWKcsn/lky4hmCb/LJq4zxT4bCjZtPG5YBMY
+ UBxhGM7Z9QG43WguF5KM/fKfPP9LuvciA69r3oZTHkyg0OFbrrhITguZIH1qIOMY4M+T
+ y7EQeDQ+9j7Bbu6/spJL1fnKIaaV+S77EZ87jits2nz9E+1SHxSnlorCDmKNlFsSraOV
+ XAf5WVXKSX36jrFwl8aWkM9Q0cZZFm/k1yVkPwpAakAecklb/HezvufPBNzhdMRV1N+9
+ hkkIi8YD2lB+gIZz7ilug7X9W10xgYOIRev4y11qurnz+l5qaAyNSEOjNNYPhM6AxJGN
+ sXrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769528899; x=1770133699;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xj3uXJy0YX+vXnrU6szpxqRIKY0go5o7p8K2ACV/4tY=;
- b=U0PXfYvr9/kzTIsu4ySwryXmFMtR6PP9hM2hMQdAKvH7gu1C/29/9vlDRjL8A/a3f4
- 2u5qoN6UYNAtPkKpk+qn8g3xiwWW2QZpX/o5bSzIxafFPQAOY0hoN1PNxjaxS6uOcIYh
- n+GzlhthQe5SXGu+B5gjVs8or8bnJZQrvgBuRhWJ9Heg8cEtcSbvP+mGu/gdTAm+B8N9
- 5WgQ6tef1ktK7K1P//3VrXek9ECyLqMjM6DDDaOs/0P3F6tRqpS/xl2Zkmd1pSFX5xI+
- FbqONXBr/gO7Xq8LOMUCrvrT84a/Hc8Dwt49+RvXnlJErVJhmpwdB+lKvXrYLj8faNZN
- lrkA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV2cne4lkiOutkJ0IM4+FDB+2KyyPy/Bcb4pKIpMFMFAAU15kpC+qSf/BhSMVASVvPF0tJNt0snhD2h@nongnu.org
-X-Gm-Message-State: AOJu0YxF1XYybEzdgnSpFzbcXV0iKPZ8cZMXujIX6WKB9mMQ5/ouvqBK
- wCAskPH201WjtMnrk4M0/YStkUdXiTC4oIUhPq6KmyAL8nrGgSIHjtOetgUY7euFZLa/quaS881
- g7bv4zGg=
-X-Gm-Gg: AZuq6aJcbU+97WmUjgzEjXvTbkrL2hRGJT3+fL+M3FzSTLR7s6GNHaInQjYlBUcB7ap
- KbZ7ACsy36V/LtGueK1ulQim/qntR0OipxJO+1waWjqby+0VFy1dBlOKbT1J3IrcFloEXDFRBiR
- PfGzn1okhRTgTT+/aDzl/foRn4OzhB32JChWbP0/1zi2h5ILZF/KN1AsVyKux/qK0yY+tRXelw8
- IgdV6zP8FfHGmb6HgBZaneq0FEEBPMkVnKjfO/KIyZYfkm5zggJxyw+U3r14/7NEGmQrVhsxt9k
- ySBlIkQu23LqKasfORKZJRuhMU/w64ahHZ2GKLeAjgbtxOYZ/9FzEe0sxeS+H6VXgjzn6HiWBFn
- ByP4pGuWmEbynRUwW9K63tnYaLhHuwKkWnSv9PafSVABq0kGJEuraZK2BdzXYAXeq5T2gsVe0aB
- GeX0e0aUsYv1lS/GFtvYl8ZpJjVwueFg==
-X-Received: by 2002:a05:6000:40cd:b0:435:91b8:e01b with SMTP id
- ffacd0b85a97d-435dd1cd103mr3258152f8f.45.1769528898892; 
- Tue, 27 Jan 2026 07:48:18 -0800 (PST)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1e71503sm43080090f8f.25.2026.01.27.07.48.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jan 2026 07:48:18 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [RFC PATCH 3/3] target/arm: Permit configurations with SME but not SVE
-Date: Tue, 27 Jan 2026 15:48:13 +0000
-Message-ID: <20260127154813.591744-4-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260127154813.591744-1-peter.maydell@linaro.org>
-References: <20260127154813.591744-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1769529081; x=1770133881;
+ h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OcqaWwwudDyJIPu3p00T9wZ67uxDgMSf37ZKnUxqgjw=;
+ b=FvKuEH0L+ST27YN3hbkmz55CoGK/4ieWnHV139Zt1yfCWsbpGVjIy6AdQkXWEkAirh
+ /JCAyFYSQHrSdEqgzG/40BtEw22TQFW73m3DfSsS87cIHNBbDGNqT6Yxzw1fPU8ezwgP
+ QYVOaddh4YLD0B8Rtj1aV+pG6+sPFAQxazM9+BOFQO/IZU59Vz8EL+CNelYlT/V/UP43
+ kf08QnjeDZuupBwfHY+oQZGAEUkZUfgpUabDjhDlXqBoHhSwp9fG0WGfF+xK6HUrWnfN
+ xmxwnzfU8vYb1IZAbfJGYd8dhMQJSkyD4gAsmY+LpvRadJQ8pNprFu4rsIKuvtUeA+lI
+ MzMQ==
+X-Gm-Message-State: AOJu0YyRxORUVBMBLBiNAa+Rp20KVVSasCN8NkjDILFVvatXpXe/quYf
+ 9JQFLnDnHJJSGwBAV29I6Hhju9DRiX4DUeN1NmS+RASvZ+RtaNWzd7wShk43n7aTRvL1ZGL+qTr
+ ueOcV3OUR1eIrOXrWMwCk21WWfy/L0Dd3H76Q
+X-Gm-Gg: AZuq6aLrzP7xD2vGQtJAtmRksm5uPFwyydeHd+sYAT2Y+w51Mxg0sjRj60E+mdmF7Xu
+ 9C8Ac4onGwL6GJqysGCro8LouLwomvmqoBa7OBPPvLrJ6iv5bQkemXPtwH5sEBOmq0HWFYApXU4
+ M118/Zw6P6AQDVXCc5VmTIU8mQeCoreFhAl7pNXY+z2i0kvFW2Dtt/CQk8AkrxUG3K1nCqJGrPA
+ bnOF4WG8eJ/6MI/gGX/YRjD51S5mK+lkTSoc1vQqMQdvQ6L0jEQCmom8SYKCQpoB0BsS8S8ThTw
+ cco0Lb4PZQenOgvbqr8wwSjCkKQ=
+X-Received: by 2002:a05:6512:3410:b0:59e:6f4:9c55 with SMTP id
+ 2adb3069b0e04-59e06f49e6bmr168140e87.3.1769529080411; Tue, 27 Jan 2026
+ 07:51:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+From: Mohd Kashif Khan <kashif04x@gmail.com>
+Date: Tue, 27 Jan 2026 21:21:09 +0530
+X-Gm-Features: AZwV_QgDYUWF66masG5G0LTItyfyO_ynLFXYtfOqq9Z6o3IKWbBEb1f-32lE-GI
+Message-ID: <CACSvEXav8Gn3DL4TFMCV4nMR2BFDHT4=1Yjhq77=Eb3DryPbkQ@mail.gmail.com>
+Subject: [RFC PATCH] rust: add CMSDK APB Watchdog device
+To: qemu-devel@nongnu.org
+Content-Type: multipart/mixed; boundary="0000000000004215b20649609893"
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=kashif04x@gmail.com; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,59 +108,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In commit f7767ca30179 ("target/arm: Disable SME if SVE is disabled")
-we added code that forces SME to be disabled if SVE is disabled.
-This was something we did in the run-up to a release to avoid an
-assertion failure in smcr_write() if the user disabled SVE on the
-'max' CPU without disabling SME also.
+--0000000000004215b20649609893
+Content-Type: multipart/alternative; boundary="0000000000004215b20649609891"
 
-Now that we have corrected the code so that it doesn't assert
-in an SME-without-SVE setup, we can let users select it.
+--0000000000004215b20649609891
+Content-Type: text/plain; charset="UTF-8"
 
-This effectively reverts f7767ca30179.
+Hello,
 
-Note that this now means that command lines like
-"-cpu max,sve=off" which used to turn off SME and SVE will
-now give you a CPU with SME but not SVE. This is permitted
-by our loose "max can always give you extra stuff" rules,
-but may be unexpected to users.
+This patch introduces a Rust implementation of the CMSDK APB Watchdog
+(originally hw/watchdog/cmsdk-apb-watchdog.c).
 
-In particular, gdb crashes when told about a CPU with only
-SME via the gdbstub register XML with this error:
+The implementation functions as a drop-in replacement that:
+1. Implements the ResettablePhasesImpl trait for hardware resets.
+2. Uses BqlCell for thread-safe register access.
+3. Maps the MMIO read/write logic to the Rust MemoryRegionOpsBuilder.
 
- (gdb) target remote :1234
- Remote debugging using :1234
- /build/gdb-1WjiBe/gdb-15.0.50.20240403/gdb/aarch64-tdep.c:3066: internal-error: aarch64_pseudo_register_type: bad register number 160
- A problem internal to GDB has been detected,
- further debugging may prove unreliable.
+I welcome any feedback on the implementation or the usage of the safe
+bindings.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/cpu.c | 10 ----------
- 1 file changed, 10 deletions(-)
+Signed-off-by: Mohd Kashif Khan <kashif04x@gmail.com>
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 6e1cbf3d61..1cb30076ad 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1571,16 +1571,6 @@ void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp)
-             return;
-         }
- 
--        /*
--         * FEAT_SME is not architecturally dependent on FEAT_SVE (unless
--         * FEAT_SME_FA64 is present). However our implementation currently
--         * assumes it, so if the user asked for sve=off then turn off SME also.
--         * (KVM doesn't currently support SME at all.)
--         */
--        if (cpu_isar_feature(aa64_sme, cpu) && !cpu_isar_feature(aa64_sve, cpu)) {
--            object_property_set_bool(OBJECT(cpu), "sme", false, &error_abort);
--        }
--
-         arm_cpu_sme_finalize(cpu, &local_err);
-         if (local_err != NULL) {
-             error_propagate(errp, local_err);
--- 
-2.43.0
+--0000000000004215b20649609891
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div dir=3D"ltr">Hello,<br><br>This patch introduces a Rus=
+t implementation of the CMSDK APB Watchdog<br>(originally hw/watchdog/cmsdk=
+-apb-watchdog.c).<br><br>The implementation functions as a drop-in replacem=
+ent that:<br>1. Implements the ResettablePhasesImpl trait for hardware rese=
+ts.<br>2. Uses BqlCell for thread-safe register access.<br>3. Maps the MMIO=
+ read/write logic to the Rust MemoryRegionOpsBuilder.<br><br>I welcome any =
+feedback on the implementation or the usage of the safe bindings.<br><br>Si=
+gned-off-by: Mohd Kashif Khan &lt;<a href=3D"mailto:kashif04x@gmail.com">ka=
+shif04x@gmail.com</a>&gt;</div></div>
+
+--0000000000004215b20649609891--
+
+--0000000000004215b20649609893
+Content-Type: application/octet-stream; 
+	name="0001-rust-add-CMSDK-APB-Watchdog-device.patch"
+Content-Disposition: attachment; 
+	filename="0001-rust-add-CMSDK-APB-Watchdog-device.patch"
+Content-Transfer-Encoding: base64
+Content-ID: <f_mkwrvjx30>
+X-Attachment-Id: f_mkwrvjx30
+
+RnJvbSBhZGVkYmIzYjg4YzZjYzA2YzlmYTE1YzZhZTdkZjZlNjEzMGJjZDgxIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBNb2hkIEthc2hpZiBLaGFuIDxrYXNoaWYwNHhAZ21haWwuY29t
+PgpEYXRlOiBUdWUsIDI3IEphbiAyMDI2IDIwOjU3OjQ0ICswNTMwClN1YmplY3Q6IFtSRkMgUEFU
+Q0hdIHJ1c3Q6IGFkZCBDTVNESyBBUEIgV2F0Y2hkb2cgZGV2aWNlCgpUaGlzIHBhdGNoIGludHJv
+ZHVjZXMgYSBSdXN0IGltcGxlbWVudGF0aW9uIG9mIHRoZSBDTVNESyBBUEIgV2F0Y2hkb2cKKG9y
+aWdpbmFsbHkgaHcvd2F0Y2hkb2cvY21zZGstYXBiLXdhdGNoZG9nLmMpLgoKVGhlIGltcGxlbWVu
+dGF0aW9uIGZ1bmN0aW9ucyBhcyBhIGRyb3AtaW4gcmVwbGFjZW1lbnQgdGhhdDoKMS4gSW1wbGVt
+ZW50cyB0aGUgUmVzZXR0YWJsZVBoYXNlc0ltcGwgdHJhaXQgZm9yIGhhcmR3YXJlIHJlc2V0cy4K
+Mi4gVXNlcyBCcWxDZWxsIGZvciB0aHJlYWQtc2FmZSByZWdpc3RlciBhY2Nlc3MuCjMuIE1hcHMg
+dGhlIE1NSU8gcmVhZC93cml0ZSBsb2dpYyB0byB0aGUgUnVzdCBNZW1vcnlSZWdpb25PcHNCdWls
+ZGVyLgoKU2lnbmVkLW9mZi1ieTogTW9oZCBLYXNoaWYgS2hhbiA8a2FzaGlmMDR4QGdtYWlsLmNv
+bT4KLS0tCiBydXN0L2h3L21lc29uLmJ1aWxkICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAg
+IDEgKwogLi4uL3dhdGNoZG9nL2Ntc2RrX2FwYl93YXRjaGRvZy9tZXNvbi5idWlsZCAgIHwgIDE5
+ICsrKwogLi4uL3dhdGNoZG9nL2Ntc2RrX2FwYl93YXRjaGRvZy9zcmMvZGV2aWNlLnJzIHwgMTEw
+ICsrKysrKysrKysrKysrKysrKwogMyBmaWxlcyBjaGFuZ2VkLCAxMzAgaW5zZXJ0aW9ucygrKQog
+Y3JlYXRlIG1vZGUgMTAwNjQ0IHJ1c3QvaHcvd2F0Y2hkb2cvY21zZGtfYXBiX3dhdGNoZG9nL21l
+c29uLmJ1aWxkCiBjcmVhdGUgbW9kZSAxMDA2NDQgcnVzdC9ody93YXRjaGRvZy9jbXNka19hcGJf
+d2F0Y2hkb2cvc3JjL2RldmljZS5ycwoKZGlmZiAtLWdpdCBhL3J1c3QvaHcvbWVzb24uYnVpbGQg
+Yi9ydXN0L2h3L21lc29uLmJ1aWxkCmluZGV4IDk3NDlkNGFkZmMuLmI3YzkxMmQ1YzkgMTAwNjQ0
+Ci0tLSBhL3J1c3QvaHcvbWVzb24uYnVpbGQKKysrIGIvcnVzdC9ody9tZXNvbi5idWlsZApAQCAt
+MSwyICsxLDMgQEAKIHN1YmRpcignY2hhcicpCiBzdWJkaXIoJ3RpbWVyJykKK3N1YmRpcignd2F0
+Y2hkb2cvY21zZGtfYXBiX3dhdGNoZG9nJykKXCBObyBuZXdsaW5lIGF0IGVuZCBvZiBmaWxlCmRp
+ZmYgLS1naXQgYS9ydXN0L2h3L3dhdGNoZG9nL2Ntc2RrX2FwYl93YXRjaGRvZy9tZXNvbi5idWls
+ZCBiL3J1c3QvaHcvd2F0Y2hkb2cvY21zZGtfYXBiX3dhdGNoZG9nL21lc29uLmJ1aWxkCm5ldyBm
+aWxlIG1vZGUgMTAwNjQ0CmluZGV4IDAwMDAwMDAwMDAuLjdhODZhNTM2MGEKLS0tIC9kZXYvbnVs
+bAorKysgYi9ydXN0L2h3L3dhdGNoZG9nL2Ntc2RrX2FwYl93YXRjaGRvZy9tZXNvbi5idWlsZApA
+QCAtMCwwICsxLDE5IEBACitfbGliX2Ntc2RrX2FwYl93YXRjaGRvZyA9IHN0YXRpY19saWJyYXJ5
+KAorICAnY21zZGtfYXBiX3dhdGNoZG9nJywKKyAgZmlsZXMoJ3NyYy9kZXZpY2UucnMnKSwKKyAg
+b3ZlcnJpZGVfb3B0aW9uczogWydydXN0X3N0ZD0yMDIxJywgJ2J1aWxkLnJ1c3Rfc3RkPTIwMjEn
+XSwKKyAgcnVzdF9hYmk6ICdydXN0JywKKyAgbGlua193aXRoOiBbCisgICAgX3V0aWxfcnMsCisg
+ICAgX2JxbF9ycywKKyAgICBfcW9tX3JzLAorICAgIF9zeXN0ZW1fcnMsCisgICAgX2h3Y29yZV9y
+cywKKyAgXSwKKyAgZGVwZW5kZW5jaWVzOiBbY29tbW9uX3JzXSwKKykKKworcnVzdF9kZXZpY2Vz
+X3NzLmFkZChkZWNsYXJlX2RlcGVuZGVuY3koCisgIGxpbmtfd2hvbGU6IFtfbGliX2Ntc2RrX2Fw
+Yl93YXRjaGRvZ10sCisgIHZhcmlhYmxlczogeydjcmF0ZSc6ICdjbXNka19hcGJfd2F0Y2hkb2cn
+fSwKKykpClwgTm8gbmV3bGluZSBhdCBlbmQgb2YgZmlsZQpkaWZmIC0tZ2l0IGEvcnVzdC9ody93
+YXRjaGRvZy9jbXNka19hcGJfd2F0Y2hkb2cvc3JjL2RldmljZS5ycyBiL3J1c3QvaHcvd2F0Y2hk
+b2cvY21zZGtfYXBiX3dhdGNoZG9nL3NyYy9kZXZpY2UucnMKbmV3IGZpbGUgbW9kZSAxMDA2NDQK
+aW5kZXggMDAwMDAwMDAwMC4uY2Q0ZGZjZTM2ZAotLS0gL2Rldi9udWxsCisrKyBiL3J1c3QvaHcv
+d2F0Y2hkb2cvY21zZGtfYXBiX3dhdGNoZG9nL3NyYy9kZXZpY2UucnMKQEAgLTAsMCArMSwxMTAg
+QEAKK3VzZSBzdGQ6OmZmaTo6Q1N0cjsKKwordXNlIGJxbDo6cHJlbHVkZTo6KjsKK3VzZSBjb21t
+b246OnByZWx1ZGU6Oio7IAordXNlIGh3Y29yZTo6cHJlbHVkZTo6KjsKK3VzZSBxb206OnByZWx1
+ZGU6Oio7Cit1c2Ugc3lzdGVtOjpwcmVsdWRlOjoqOworCisvLyAxLiBUeXBlIE5hbWUKK3B1YiBj
+b25zdCBUWVBFX0NNU0RLX0FQQl9XQVRDSERPRzogJkNTdHIgPSBjImNtc2RrLWFwYi13YXRjaGRv
+ZyI7CisKKy8vIDIuIFRoZSBTdHJ1Y3QKKyNbcmVwcihDKV0KKyNbZGVyaXZlKHFvbTo6T2JqZWN0
+LCBod2NvcmU6OkRldmljZSldCitwdWIgc3RydWN0IENtc2RrQXBiV2F0Y2hkb2cgeworICAgIHBh
+cmVudF9vYmo6IFBhcmVudEZpZWxkPFN5c0J1c0RldmljZT4sCisgICAgaW9tZW06IE1lbW9yeVJl
+Z2lvbiwKKyAgICBjb250cm9sOiBCcWxDZWxsPHUzMj4sCisgICAgbG9hZDogICAgQnFsQ2VsbDx1
+MzI+LAorICAgIHZhbHVlOiAgIEJxbENlbGw8dTMyPiwKKyAgICBsb2NrOiAgICBCcWxDZWxsPHUz
+Mj4sCit9CisKKy8vIDMuIExvZ2ljIEltcGxlbWVudGF0aW9uCitpbXBsIENtc2RrQXBiV2F0Y2hk
+b2cgeworICAgIGZuIHJlYWQoJnNlbGYsIG9mZnNldDogdTY0LCBfc2l6ZTogdTMyKSAtPiB1NjQg
+eworICAgICAgICBtYXRjaCBvZmZzZXQgeworICAgICAgICAgICAgMHgwID0+IHNlbGYubG9hZC5n
+ZXQoKSBhcyB1NjQsCisgICAgICAgICAgICAweDQgPT4gc2VsZi52YWx1ZS5nZXQoKSBhcyB1NjQs
+CisgICAgICAgICAgICAweDggPT4gc2VsZi5jb250cm9sLmdldCgpIGFzIHU2NCwKKyAgICAgICAg
+ICAgIDB4QzAwID0+IHNlbGYubG9jay5nZXQoKSBhcyB1NjQsCisgICAgICAgICAgICBfID0+IDAs
+CisgICAgICAgIH0KKyAgICB9CisKKyAgICBmbiB3cml0ZSgmc2VsZiwgb2Zmc2V0OiB1NjQsIHZh
+bHVlOiB1NjQsIF9zaXplOiB1MzIpIHsKKyAgICAgICAgaWYgc2VsZi5sb2NrLmdldCgpID09IDEg
+JiYgb2Zmc2V0ICE9IDB4QzAwIHsKKyAgICAgICAgICAgIHJldHVybjsKKyAgICAgICAgfQorCisg
+ICAgICAgIG1hdGNoIG9mZnNldCB7CisgICAgICAgICAgICAweDAgPT4gc2VsZi5sb2FkLnNldCh2
+YWx1ZSBhcyB1MzIpLAorICAgICAgICAgICAgMHg0ID0+IHt9LCAKKyAgICAgICAgICAgIDB4OCA9
+PiBzZWxmLmNvbnRyb2wuc2V0KHZhbHVlIGFzIHUzMiksCisgICAgICAgICAgICAweEMwMCA9PiB7
+CisgICAgICAgICAgICAgICAgaWYgdmFsdWUgPT0gMHgxQUNDRTU1MSB7CisgICAgICAgICAgICAg
+ICAgICAgIHNlbGYubG9jay5zZXQoMCk7CisgICAgICAgICAgICAgICAgfSBlbHNlIHsKKyAgICAg
+ICAgICAgICAgICAgICAgc2VsZi5sb2NrLnNldCgxKTsKKyAgICAgICAgICAgICAgICB9CisgICAg
+ICAgICAgICB9LAorICAgICAgICAgICAgXyA9PiB7fSwKKyAgICAgICAgfQorICAgIH0KKworICAg
+IGZuIHJlc2V0KCZzZWxmLCBfdHlwZTogUmVzZXRUeXBlKSB7CisgICAgICAgIHNlbGYuY29udHJv
+bC5zZXQoMCk7CisgICAgICAgIHNlbGYubG9hZC5zZXQoMCk7CisgICAgICAgIHNlbGYudmFsdWUu
+c2V0KDApOworICAgICAgICBzZWxmLmxvY2suc2V0KDApOworICAgIH0KKworICAgIHVuc2FmZSBm
+biBpbml0KG11dCB0aGlzOiBQYXJlbnRJbml0PFNlbGY+KSB7CisgICAgICAgIHN0YXRpYyBPUFM6
+IE1lbW9yeVJlZ2lvbk9wczxDbXNka0FwYldhdGNoZG9nPiA9IAorICAgICAgICAgICAgTWVtb3J5
+UmVnaW9uT3BzQnVpbGRlcjo6PENtc2RrQXBiV2F0Y2hkb2c+OjpuZXcoKQorICAgICAgICAgICAg
+ICAgIC5yZWFkKCZDbXNka0FwYldhdGNoZG9nOjpyZWFkKQorICAgICAgICAgICAgICAgIC53cml0
+ZSgmQ21zZGtBcGJXYXRjaGRvZzo6d3JpdGUpCisgICAgICAgICAgICAgICAgLmxpdHRsZV9lbmRp
+YW4oKQorICAgICAgICAgICAgICAgIC5pbXBsX3NpemVzKDQsIDQpCisgICAgICAgICAgICAgICAg
+LmJ1aWxkKCk7CisKKyAgICAgICAgTWVtb3J5UmVnaW9uOjppbml0X2lvKAorICAgICAgICAgICAg
+Jm11dCB1bmluaXRfZmllbGRfbXV0ISgqdGhpcywgaW9tZW0pLAorICAgICAgICAgICAgJk9QUywK
+KyAgICAgICAgICAgICJjbXNkay1hcGItd2F0Y2hkb2ciLAorICAgICAgICAgICAgMHgxMDAwLAor
+ICAgICAgICApOworICAgICAgICAKKyAgICAgICAgdW5pbml0X2ZpZWxkX211dCEoKnRoaXMsIGNv
+bnRyb2wpLndyaXRlKEJxbENlbGw6Om5ldygwKSk7CisgICAgICAgIHVuaW5pdF9maWVsZF9tdXQh
+KCp0aGlzLCBsb2FkKS53cml0ZShCcWxDZWxsOjpuZXcoMCkpOworICAgICAgICB1bmluaXRfZmll
+bGRfbXV0ISgqdGhpcywgdmFsdWUpLndyaXRlKEJxbENlbGw6Om5ldygwKSk7CisgICAgICAgIHVu
+aW5pdF9maWVsZF9tdXQhKCp0aGlzLCBsb2NrKS53cml0ZShCcWxDZWxsOjpuZXcoMCkpOworICAg
+IH0KKyAgICAKKyAgICBmbiBwb3N0X2luaXQoJnNlbGYpIHsKKyAgICAgICAgc2VsZi5pbml0X21t
+aW8oJnNlbGYuaW9tZW0pOworICAgIH0KK30KKworLy8gNC4gUmVnaXN0cmF0aW9uIEdsdWUKK3Fv
+bV9pc2EhKENtc2RrQXBiV2F0Y2hkb2c6IFN5c0J1c0RldmljZSwgRGV2aWNlU3RhdGUsIE9iamVj
+dCk7CisKK3Vuc2FmZSBpbXBsIE9iamVjdFR5cGUgZm9yIENtc2RrQXBiV2F0Y2hkb2cgeworICAg
+IHR5cGUgQ2xhc3MgPSA8U3lzQnVzRGV2aWNlIGFzIE9iamVjdFR5cGU+OjpDbGFzczsKKyAgICBj
+b25zdCBUWVBFX05BTUU6ICYnc3RhdGljIENTdHIgPSBUWVBFX0NNU0RLX0FQQl9XQVRDSERPRzsK
+K30KKworaW1wbCBPYmplY3RJbXBsIGZvciBDbXNka0FwYldhdGNoZG9nIHsKKyAgICB0eXBlIFBh
+cmVudFR5cGUgPSBTeXNCdXNEZXZpY2U7CisgICAgY29uc3QgSU5TVEFOQ0VfSU5JVDogT3B0aW9u
+PHVuc2FmZSBmbihQYXJlbnRJbml0PFNlbGY+KT4gPSBTb21lKFNlbGY6OmluaXQpOworICAgIGNv
+bnN0IElOU1RBTkNFX1BPU1RfSU5JVDogT3B0aW9uPGZuKCZTZWxmKT4gPSBTb21lKFNlbGY6OnBv
+c3RfaW5pdCk7CisgICAgY29uc3QgQ0xBU1NfSU5JVDogZm4oJm11dCBTZWxmOjpDbGFzcykgPSBT
+ZWxmOjpDbGFzczo6Y2xhc3NfaW5pdDo6PFNlbGY+OworfQorCitpbXBsIFJlc2V0dGFibGVQaGFz
+ZXNJbXBsIGZvciBDbXNka0FwYldhdGNoZG9nIHsKKyAgICBjb25zdCBIT0xEOiBPcHRpb248Zm4o
+JlNlbGYsIFJlc2V0VHlwZSk+ID0gU29tZShTZWxmOjpyZXNldCk7Cit9CisKK2ltcGwgRGV2aWNl
+SW1wbCBmb3IgQ21zZGtBcGJXYXRjaGRvZyB7fQoraW1wbCBTeXNCdXNEZXZpY2VJbXBsIGZvciBD
+bXNka0FwYldhdGNoZG9nIHt9ClwgTm8gbmV3bGluZSBhdCBlbmQgb2YgZmlsZQotLSAKMi40My4w
+Cgo=
+--0000000000004215b20649609893--
 
