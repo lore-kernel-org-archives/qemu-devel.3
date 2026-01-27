@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E761ED13C1B
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 09:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F93CC88E41
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 09:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkfPg-0005TX-PU; Tue, 27 Jan 2026 04:31:08 -0500
+	id 1vkfPT-0004N2-5u; Tue, 27 Jan 2026 04:30:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vkfPY-0004v7-Vx; Tue, 27 Jan 2026 04:31:03 -0500
+ id 1vkfOa-0003oP-Vo; Tue, 27 Jan 2026 04:30:02 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vkfPX-0005A1-40; Tue, 27 Jan 2026 04:31:00 -0500
+ id 1vkfOX-0004dA-Di; Tue, 27 Jan 2026 04:29:58 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 27 Jan
- 2026 17:29:47 +0800
+ 2026 17:29:44 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 27 Jan 2026 17:29:47 +0800
+ Transport; Tue, 27 Jan 2026 17:29:44 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 11/11] docs: Add support vbootrom and update Manual boot
- for ast2700fc
-Date: Tue, 27 Jan 2026 17:29:40 +0800
-Message-ID: <20260127092943.3731635-12-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 02/11] hw/arm/ast27x0: Start SSP in powered-off state to
+ match hardware behavior
+Date: Tue, 27 Jan 2026 17:29:31 +0800
+Message-ID: <20260127092943.3731635-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260127092943.3731635-1-jamin_lin@aspeedtech.com>
 References: <20260127092943.3731635-1-jamin_lin@aspeedtech.com>
@@ -67,82 +67,40 @@ From:  Jamin Lin via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+In the previous design, both the PSP and SSP were started together during
+SoC initialization. However, on real hardware, the SSP begins in a powered-off
+state. The typical boot sequence involves the PSP powering up first, loading
+the SSP firmware binary into shared memory via DRAM remap, and then releasing
+the SSP reset and enabling it through SCU control registers.
+
+To more accurately model this behavior in QEMU, this commit sets the
+"start-powered-off" property for the SSP's ARMv7M core. This change ensures
+the SSP remains off until explicitly enabled via the SCU, simulating the
+real-world flow where the PSP controls SSP boot through SCU interaction.
+
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- docs/system/arm/aspeed.rst | 37 +++++++++++++++++++++++++++++++++----
- 1 file changed, 33 insertions(+), 4 deletions(-)
+ hw/arm/aspeed_ast27x0-ssp.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index 97e14b7d33..e8d8a85ec4 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -391,6 +391,14 @@ Booting the ast2700fc machine
- AST2700 features four Cortex-A35 primary processors and two Cortex-M4 coprocessors.
- **ast2700-evb** machine focuses on emulating the four Cortex-A35 primary processors,
- **ast2700fc** machine extends **ast2700-evb** by adding support for the two Cortex-M4 coprocessors.
-+There are two methods to boot the ast2700fc machine.
-+
-+Manual boot using ``-device loader``:
-+
-+In this approach, users manually load firmware and assign entry points via QEMU loader devices.
-+By default, the PSP begins execution at address ``0x430000000``, the load address of the bl31
-+firmware. The SSP and TSP start in the powered-off state and must be explicitly enabled by the
-+PSP through writes to SCU registers.
+diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
+index cee937b37e..cba59ae11a 100644
+--- a/hw/arm/aspeed_ast27x0-ssp.c
++++ b/hw/arm/aspeed_ast27x0-ssp.c
+@@ -165,6 +165,13 @@ static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+     qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
+     object_property_set_link(OBJECT(&a->armv7m), "memory",
+                              OBJECT(s->memory), &error_abort);
++    /*
++     * The SSP starts in a powered-down state and can be powered up
++     * by setting the SSP Control Register through the SCU
++     * (System Control Unit)
++     */
++    object_property_set_bool(OBJECT(&a->armv7m), "start-powered-off", true,
++                             &error_abort);
+     sysbus_realize(SYS_BUS_DEVICE(&a->armv7m), &error_abort);
  
- Steps to boot the AST2700fc machine:
- 
-@@ -401,8 +409,8 @@ Steps to boot the AST2700fc machine:
-  * bl31.bin
-  * optee/tee-raw.bin
-  * image-bmc
-- * zephyr-aspeed-ssp.elf (for SSP firmware, CPU 5)
-- * zephyr-aspeed-tsp.elf (for TSP firmware, CPU 6)
-+ * zephyr-aspeed-ssp.bin (for SSP firmware, CPU 5)
-+ * zephyr-aspeed-tsp.bin (for TSP firmware, CPU 6)
- 
- 2. Execute the following command to start ``ast2700fc`` machine:
- 
-@@ -416,17 +424,38 @@ Steps to boot the AST2700fc machine:
-        -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
-        -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
-        -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
-+       -device loader,addr=0x42C000000,file=${IMGDIR}/zephyr-aspeed-ssp.bin,force-raw=on \
-+       -device loader,addr=0x42E000000,file=${IMGDIR}/zephyr-aspeed-tsp.bin,force-raw=on \
-        -device loader,cpu-num=0,addr=0x430000000 \
-        -device loader,cpu-num=1,addr=0x430000000 \
-        -device loader,cpu-num=2,addr=0x430000000 \
-        -device loader,cpu-num=3,addr=0x430000000 \
-        -drive file=${IMGDIR}/image-bmc,if=mtd,format=raw \
--       -device loader,file=${IMGDIR}/zephyr-aspeed-ssp.elf,cpu-num=4 \
--       -device loader,file=${IMGDIR}/zephyr-aspeed-tsp.elf,cpu-num=5 \
-        -serial pty -serial pty -serial pty \
-        -snapshot \
-        -S -nographic
- 
-+Boot using a virtual boot ROM (-bios):
-+
-+In this method, the virtual boot ROM (vbootrom) handles the full initialization sequence.
-+It starts the PSP, which then enables the SSP and TSP by programming the appropriate SCU
-+registers, following the hardware behavior.
-+
-+Execute the following command to start ``ast2700fc`` machine:
-+
-+.. code-block:: bash
-+
-+  IMGDIR=ast2700-default
-+
-+  $ qemu-system-aarch64 -M ast2700fc \
-+      -bios ast27x0_bootrom.bin \
-+      -drive file=${IMGDIR}/image-bmc,if=mtd,format=raw \
-+      -serial pty -serial pty -serial pty \
-+      -snapshot \
-+      -S -nographic
-+
-+Serial Console Redirection:
-+
- After launching QEMU, serial devices will be automatically redirected.
- Example output:
- 
+     /* SDRAM */
 -- 
 2.43.0
 
