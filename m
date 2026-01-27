@@ -4,151 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD20D2FEF4
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 22:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6176CD2FEFD
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 23:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkrbc-0005As-IP; Tue, 27 Jan 2026 17:32:16 -0500
+	id 1vkspy-0000Uk-4e; Tue, 27 Jan 2026 18:51:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vkrbO-00051s-Qc
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 17:32:11 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vkrbM-0006Yo-0Y
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 17:32:01 -0500
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 60RH25l81335293
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 22:31:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 93c9sWK/KkUUm2o40SfpWLg/a8epTVJpltQaMUeU8/E=; b=iVsD27iUEdj52yQe
- RPEFq36RA95aNx05bOgYbNEiHrQxLSyXPro15xTwvk5doZi+EnVVXP8nlPkHwK28
- ZR8fyTd2CcTS9SK6R/Lrom4MVtowKQ6+wqrQ4iFGRsO0En/E5NzLYId9ejn2PNZ9
- CnqJtEe/aW+KMFLQlZXyKsU27wVP6eq+5yoMg8IocpSph2y+jgbcwijndFhzN8AV
- YY0OJlU4tsTv+P0l8sicmuQg1qQH6ey7jc3o2XADVas8U7PJ69KFEhzrwdXkavLa
- Yc+8ho8P+bqIYhcA+W10q1eCsq1erVwJbM6lMfz196XQt3k4CrccXW1BwAGaC7H5
- mrxyYw==
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4by1dfryjy-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 22:31:58 +0000 (GMT)
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-79456b49895so5953857b3.0
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 14:31:58 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769553118; cv=none;
- d=google.com; s=arc-20240605;
- b=FgiTb7ve9ZDV/T25YIY4hmQKRwQliNvah3JcGu/qSedgW3MI+D/V+hJLmymyU+lajZ
- H1J1i9+QfA3B3c3F/S3NS9FMZcaBTiYLOeEYxn9qIMtFNFCOUt+snTxt8OUWfrhv6Y3b
- 8nLAszttWloR6K7dGjmYD+0MI/C+qj4k1UAc6VayxCIiUwebD1nYIh2N3/p8gjtvEWp2
- YU5BXSoroy4kPYLgpiYRz/ul+6khO4S65P89U0evIhh8sth12GTWoINdFn2ja60Ncuvb
- nRnGoLTw6/VEeZKsIH6xRkWHDkrOHvhr/o2yUjfNhyX/x9yAYEYg5f1vY1UNCr35pYyC
- A3XA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=93c9sWK/KkUUm2o40SfpWLg/a8epTVJpltQaMUeU8/E=;
- fh=NQp3XXUj57xQcYczVbvMj5YZLQEMlmZU+N/xz9MpQVg=;
- b=YTssW+ZdsOw32/Jfo0zMqdRJXdVbRqsmQx1ruE2+0vkIJiDif/UHFnUM1iE42xcN2t
- FH3+reDMAMFws2Gm5ucrukrSXBPhFv6+nJpi+XUXtAuLZQYnxbvVNaxrSkoGX8KqbLXz
- 8wG4U4CiSiEumul1+5SxjR+Vc6rUnu2rjQJ83jF1tNU4a6vFOeaash0pMaD1jK7p+7O1
- 8VHc2ikvUquNeClQSRxG76WTIeLxe586igWx/JbSE0xHMxLDbK8axASmR5+YnznXlaRU
- ByVfmRzQXeGeW64N/E2y8d7dXz1LodBshA7AgO45syFwG4zgpBT6RW+vYqYinDop4RbH
- C1BQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vkspw-0000US-Ae
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 18:51:08 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vkspu-0007Y8-CK
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 18:51:08 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43246af170aso222458f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 15:51:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1769553118; x=1770157918; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1769557864; x=1770162664; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=93c9sWK/KkUUm2o40SfpWLg/a8epTVJpltQaMUeU8/E=;
- b=hOBmoIX+W+u1cZl+n1fbrYWEjU0Jcyv9J7znp72pKkWpCN968fAiEaURm9CoIuGSij
- swoGOfbHynqasdP67iwmULbjaaw3BS5BSBxXo2IXAaDviMdeF3e3qkmnWbCanvX6L0Pu
- uvUHoQ7HCWDERlXYvnUzr77IuOyAF28VGi8SyzVZKIOgMId4hpYhACspGxor5XO9mO7s
- kJy3X+rhKEytoi1kVU1o29W/Li0yZ79Mhj6zHdTglMDOhoPipKpOrPYWasoa/Ro7KnBR
- szX0IUIAFci0et/LQPvf5O7prpPrs5b7/kfMOpH0idlHoms0hLbxOwwHqSdCDEZyKKVW
- grfA==
+ bh=Tzvf+JC46AVmQMcqvVrXMY2wwN0IyvSBHdRsns2W3Vc=;
+ b=GdlezwSvdBpZCA83dfOrjhzX6tX6cpZdxoYR6TaJVxeOnYm6olZhr1jJEksh+PQvsJ
+ s19mYw5VeSBfx8tXdFzqsQuPHtF5Yu0Jq6652ZTMyE8VsyG4a1cqouKOqiTP6h3/6RhC
+ 7LPJ1MHJjP76Zo3y5OYVQqbhW0Nrhu16L3FXxdkMejH+mVwVhOhSn7YUKfCwdtHuYeW+
+ U9zGrYlFLl7vwEV/UuFgr8Tg4TWFoo/+9nJXbSdsKkQvOz/Xhe6iRJnV3LOJTM3RP8k1
+ r8t24t5xhYHbvHic6t+W29VNwaOm6Z3zcItLvTkXw7vagU4Ac3UnQ5LGgKpsAywecPJV
+ IxMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769553118; x=1770157918;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=93c9sWK/KkUUm2o40SfpWLg/a8epTVJpltQaMUeU8/E=;
- b=ee13yUl8uf2kyYwKZrtNz+wVK9PPVsuXk7rZ7YaZMPQAeEo3xnOfDTZXuK0pjtoYN8
- llwMVv9NbAp/W//VuVDeVBreQKJKTuGv9m0Njdv76XEfsbOO3r9b6NRLqRzIYdDC5A7v
- bvgN1z5fr58ST2rgjbXxuJ45HDrJK8TxUxZp0ocWFZNCJMJLKMzzq2rjbPbUOtX2BxXa
- VPJf+FU3t0NXIS+xBGka49k5/w/b3I7nBhMsd70TsA0h72IS2VhjS1uRxG7CCdFw55U5
- OW3p8tdH5CUKCn/xEJ5mUtnQ1LPhBl1omN4ZSpgwYUe3Y29lnRJKbQGt+vCDk1gbusR3
- svdA==
+ d=1e100.net; s=20230601; t=1769557864; x=1770162664;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Tzvf+JC46AVmQMcqvVrXMY2wwN0IyvSBHdRsns2W3Vc=;
+ b=IzytDGRn2P3GyuAOBGsSv8+/ZwR03XfRjMzhVsI6Lg8MTnNYddHA9fS+zBGmJPxmyZ
+ IvcHc7b7TR6mYSV2bmfLveCZuOHJjlpI04e87sbxeI50+YoDZ+BCAuJuKc7LLwNK2I55
+ 5UcAd5LNsVKPkAM+HuTi2j8n/joRo5HtAnhHBhx2bUzHtrQAU7WNpINyqScpuDm1ESK4
+ /zWIN5/ykomFT1/3VZ82I08V2e6CRy0kOikK9uIPcek4b+uevMXJlrj4QaYBhsecoWir
+ FsX+HSKrEugGoBEWaBGubzOcRgBY7bwNREyqvmNSz0c2V6dEI1kDzNgHs4fPAf+P9YFF
+ qKPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXVTtxjTO2O9iDQHJ9CNvxzqX201O9fhZksrxI0FgxnsmlQPy9y1X8esRvtUFRn/U+GV365wrpKQriX@nongnu.org
-X-Gm-Message-State: AOJu0Yz8A2tnlYZkPtkOPNmn6gwBZlDeJqadwx3VdpM0tthQCaSoqmc2
- PU1IioGxJvxLF2jpJww7RL1Lx2H7XxPoBkNKC1vifqatvuBwa4ePSctHGODDJ4U/GDrlXbTd4FX
- NRTR9M44XKIYGDSqsdPM1Zqut5Mzm6Uy/wcMiRvNdJ1u1Xa/i66V/uhQ2xCxxhwvIndzDr9hEkn
- WXXcPs6sxcBYkIA8FK4wxhP5NYvAtVI9KFXeyXtQ+c
-X-Gm-Gg: AZuq6aIT/aFW1H1welH2x5vFPOjtaQ/tvMQvraEzBag140kwJYVhpGvzHUQ9ioQJlmz
- ca23v09ivWTL0v03/qfL/ON44VZS83Ctei7TIouB6i4o+Q3fBAR+tz/ruzG5PPtppkhEt7JnYO1
- T8wVEIKG7DNDDpFJ4sSIfcRtoYrtEnaeZpTBF+RePXn6hh4izMyMGQRg/EohUopEiHdJY=
-X-Received: by 2002:a05:690e:1408:b0:649:5bdd:cbc4 with SMTP id
- 956f58d0204a3-6498fb1f12emr2263628d50.41.1769553118189; 
- Tue, 27 Jan 2026 14:31:58 -0800 (PST)
-X-Received: by 2002:a05:690e:1408:b0:649:5bdd:cbc4 with SMTP id
- 956f58d0204a3-6498fb1f12emr2263622d50.41.1769553117828; Tue, 27 Jan 2026
- 14:31:57 -0800 (PST)
+ AJvYcCV/LIOjzoEGUWbU6AIuYWZ54Nr2RHoelGgY/ptIjYXTGv4lvncZnq3oIZS4shvZeQz6QcEfQiT8+OCK@nongnu.org
+X-Gm-Message-State: AOJu0YxOIIUQ/gKDqURw62eZIJCeL1Y0vbmhRLeJqEQ/aLkCl2289yl0
+ GFC0pqflhLnRDyLhcW3MNz15kHP6q/byEM0cxXfspxaqfTV/FG2+zESSoCDj9T+Br2HaxCpvsNC
+ 4mVTBtaI=
+X-Gm-Gg: AZuq6aJl8H8mQZlcpWPh4ZWDyzziHT8ngmpQcg2E/8KZDTAzk6H6yVE9fmsjdSYfDRj
+ daCBa+hXAP6VquZw071dr3tMwPjvYDSGmQmXiroJCgI9m9dlb8IOQ//uJAMW9boIU82ljWFH+bz
+ Tl7lDwJopg7wwmVMOHtY3IUTEE1L2O+T3DWfba0gnczRqTlUB5B8hlekkvXnPhJqqI0Nb0pCY10
+ WqdE4sWiAvBPUcFGgE6VaRXhpkgDOd5BbRh6NIhYj30ObMARWDT8NNjb4faGlUyc6v3Ge6D34Oh
+ ImlBQJ1NIq98FT986dbTvS4vBJtvTup85X3T2CHUMMs6LewKzJ2oZ5QZ5iTev4RaMUjSm4wBuy5
+ NnUx6JmdglOxrfs8uRpHNuv02MYaAFASnZrQAV1GdZ1PsmywS1wRmnu42cHltNXiKjEzr7sVSjf
+ 3qgMACHtufom/U1cJcPQ0QAw==
+X-Received: by 2002:a05:6000:1ac6:b0:435:9144:13fe with SMTP id
+ ffacd0b85a97d-435dd21d8f5mr4650380f8f.26.1769557863891; 
+ Tue, 27 Jan 2026 15:51:03 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e131ce70sm2428020f8f.27.2026.01.27.15.51.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Jan 2026 15:51:03 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 57D505F7DC;
+ Tue, 27 Jan 2026 23:51:01 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,  Stefan Hajnoczi
+ <stefanha@gmail.com>,  qemu-devel <qemu-devel@nongnu.org>
+Subject: Re: gitlab docker registries
+In-Reply-To: <4be05e70-323d-42c9-84fb-b66e5579a1ed@linaro.org> (Pierrick
+ Bouvier's message of "Tue, 27 Jan 2026 10:28:26 -0800")
+References: <da1443a0-5bf8-4ec0-9910-fd06beb42552@linaro.org>
+ <CAJSP0QWQEr8+dEGD7jkUQ--Oq+D2PKv_ArRB_ApiZM++xN9TCQ@mail.gmail.com>
+ <c12f3294-1ef1-41fe-a453-1422063b991d@linaro.org>
+ <87ecncc4sg.fsf@draig.linaro.org>
+ <90520ad2-8256-4bc7-94e3-010455659394@linaro.org>
+ <878qdjcslb.fsf@draig.linaro.org>
+ <7574812c-c200-49bf-8367-927c3cc7295b@linaro.org>
+ <87qzrac46p.fsf@draig.linaro.org>
+ <4be05e70-323d-42c9-84fb-b66e5579a1ed@linaro.org>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Tue, 27 Jan 2026 23:51:01 +0000
+Message-ID: <87ikcmbonu.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260122223423.1076448-1-marco.liebel@oss.qualcomm.com>
- <CAATN3NoZiPj5wfVm6+4MGEnrVX4sdZhnS4Wj7-_0SUe5u0wZ5w@mail.gmail.com>
- <CAJ+KCYO7YK7RSMz=LwT3H8vHK5Y5KJWa9oWb=ZweQ10DA4jpGQ@mail.gmail.com>
- <CAATN3Nqtq3ioP=9ch4=9jo0B3Q4tNrgkfrDm7sG0MLuFprC3pw@mail.gmail.com>
-In-Reply-To: <CAATN3Nqtq3ioP=9ch4=9jo0B3Q4tNrgkfrDm7sG0MLuFprC3pw@mail.gmail.com>
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-Date: Tue, 27 Jan 2026 16:31:42 -0600
-X-Gm-Features: AZwV_Qhtycct7ZB6HNQFRdA9_Ghj-ELtOvDMWu4yE8uHtCtsVAUXV_KfG1vX3ko
-Message-ID: <CAEqNhNY6K1ePn_yR+p_1VpbyKnzXhFCtNXSrxkTjBTkxMkXvhw@mail.gmail.com>
-Subject: Re: [PATCH] target/hexagon: Change DisasContext packet type
-To: Taylor Simpson <ltaylorsimpson@gmail.com>
-Cc: Marco Liebel <marco.liebel@oss.qualcomm.com>, qemu-devel@nongnu.org,
- matheus.bernardino@oss.qualcomm.com, sid.manning@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDE4MyBTYWx0ZWRfXwVMu+sI4jjKF
- y7d1JKtxh9AjZ5OPhASUKgxt/lQxkh9t1OdwcmMl/R5Ech2lvh8zg2scJdqqUSpjIRKzQ7aGtHv
- nxXfwSOT52s5s+k7P1eDVsIOtJqOm8VapPyREg21MTzZfF1RMypPNi4zqDWwX82cm8Sy5dCopHv
- syCuN54v1q5zxNLIAMS1oVh5bnCtgcvV5nxNMm7/pLwDZXNIFLk0QxnlBxnxwNM4FF0Tqf12qE7
- dQrCXhVhROom07VVSaF0ts9tD75m3FyNCVVPumtXlT+lcKlGWBZVXBj/mG++UjWw57J5jAovpmo
- qCGoc0gIxxfSL1g0McWV9XdRzm8XNpdJ2hXmc/Si5j1ILi5ku6S2bWV0IajlZ4WLg0VXe3TW2Xg
- m5r7I9b3f4SV8QgvXjP6C6WtHEY/TjEbxtapkhQ2P/UXEUZkeRdlNZbf/DQSf5JWSg+Z+Ar78+j
- mf2+faophOwaBiQx61Q==
-X-Proofpoint-GUID: QX6m-6poPZ1jedAWn-CWG--2yMPsiG8J
-X-Proofpoint-ORIG-GUID: QX6m-6poPZ1jedAWn-CWG--2yMPsiG8J
-X-Authority-Analysis: v=2.4 cv=YeuwJgRf c=1 sm=1 tr=0 ts=69793cde cx=c_pps
- a=72HoHk1woDtn7btP4rdmlg==:117 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
- a=o5uyStZ8BK62zvfJR_MA:9 a=QEXdDO2ut3YA:10 a=kA6IBgd4cpdPkAWqgNAz:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-27_04,2026-01-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 bulkscore=0 adultscore=0 priorityscore=1501
- suspectscore=0 phishscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601270183
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -165,49 +115,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 27, 2026 at 1:07=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gmai=
-l.com> wrote:
->
->
->
-> On Mon, Jan 26, 2026 at 3:07=E2=80=AFPM Marco Liebel <marco.liebel@oss.qu=
-alcomm.com> wrote:
->>
->> On Sat, Jan 24, 2026 at 5:41=E2=80=AFPM Taylor Simpson <ltaylorsimpson@g=
-mail.com> wrote:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+
+> On 1/27/26 10:15 AM, Alex Benn=C3=A9e wrote:
+>> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+>>=20
+>>> On 1/27/26 1:28 AM, Alex Benn=C3=A9e wrote:
+>>>> Richard Henderson <richard.henderson@linaro.org> writes:
+>>>>
+>>>>> On 1/27/26 10:50, Alex Benn=C3=A9e wrote:
+>>>>>> I think it was broken by 4203ea0247f (gitlab-ci: Add build tests for
+>>>>>> wasm64) because we base the tests of the existence of dockerfiles an=
+d it
+>>>>>> now generates multiple targets.
+>>>>>> Do we actually use the wasm32 stuff anymore? Maybe we can just
+>>>>>> rename it?
+>>>>>
+>>>>> All of the wasm32 stuff is supposed to be gone.
+>>>> I think 20260127092745.2978371-1-alex.bennee@linaro.org should fix
+>>>> it,
+>>>> but I need to re-read how to trigger the weekly build on my test branch
+>>>> to test it.
+>>>>
+>>>>>
+>>>>> r~
+>>>>
 >>>
->>> This patch would be alot smaller if you kept pkt as-is and added a new =
-member
->>> Packet packet;
+>>> What if docker-verify was depending on building the container locally
+>>> instead? It would allow to have a self-contained command, that works
+>>> the same in local, or in CI, without any yaml dependencies.
+>>>
+>>> With current approach, it's tricky to reproduce locally as it depends
+>>> on global gitlab registry, while we are just trying to see if images
+>>> is buildable from scratch or not.
+>> No - the point of verify was to check we where building in the
+>> registry.
 >>
+>
+> Hum, I'm not sure what "building in the registry" means. Containers
+> are always built locally then (optionally) pushed to a given registry.
+
+Yes - and this checks that the registry is up to date. We don't want to
+re-build every time if it can cache. This benefits the CI and the
+downstream users that pull the images.
+
+> If you want to test something useful, it has to be a build from
+> scratch (docker build --no-cache ...).
+>
+>> A lot of the Makefile.include stuff is legacy now (although its a useful
+>> wrapper for building tests locally) because gitlab invokes the
+>> containers directly. We used to do all sorts of dependency handling as
+>> well but the lcitool approach is a lot cleaner even if we don't get
+>> layered containers.
 >>
->> That would reduce the patch size, but it wouldn=E2=80=99t remove the ris=
-k of a dangling pointer
->> and would introduce an alias instead. Is there a specific reason we need=
- to keep the
->> pointer around?
 >
+> The commit message for 8bec7b9874 is:
+> ```
+> gitlab: add a weekly container building job
+> This will hopefully catch containers that break because of upstream
+> changes as well as keep the container cache fresh.
+> ```
 >
->  There's a bunch of code throughout target/hexagon where a variable named=
- "pkt" is a pointer to a packet.  If you really want to get rid of the poin=
-ter in DisasContext, do 2 things
->
-> Name the field in DisasContext something else, e.g., packet.
-> Don't eliminate the local "Packet *pkt" variables in various functions, e=
-.g., gen_end_tb.
->
-> Then, it will be clear that "packet" is the actual struct and "pkt" is a =
-pointer.
+> IMHO, a simple weekly job doing what we want is:
+> docker build --no-cache - < $dockerfile
 
-IMO the types should be enforced by the compiler such that no one
-could ever confuse the struct and pointers to it.
+The containers are built by the dependencies:
 
-Whereas having a "Packet *" that outlives the DisasContext or whose
-lifetime relative to the DC's is not always clear - that does set us
-up for confusion.
+  needs:
+    # core
+    - amd64-centos9-container
+    - amd64-fedora-container
+    # cross
+    - amd64-debian-cross-container
+    - amd64-debian-user-cross-container
+    - amd64-debian-legacy-cross-container
+    - arm64-debian-cross-container
+    - hexagon-cross-container
+    - loongarch-debian-cross-container
+    - mips64el-debian-cross-container
+    - ppc64el-debian-cross-container
+    - riscv64-debian-cross-container
+    - s390x-debian-cross-container
+    - tricore-debian-cross-container
+    - xtensa-debian-cross-container
+    - win64-fedora-cross-container
+    - wasm64-emsdk-cross-container
+    # containers
+    - amd64-alpine-container
+    - amd64-debian-container
+    - amd64-ubuntu2204-container
+    - amd64-opensuse-leap-container
+    - python-container
+    - amd64-fedora-rust-nightly-container
 
+> I don't see what is the relation with gitlab, lcitool or Makefile.
 >
-> Thanks,
-> Taylor
->
+> Maybe I miss some extra insights or goals that were not documented in
+> original commit, but it seems like the current implementation is not
+> aware of what it's supposed to do.
+
+We occasionally see failures due to upstream distro changes. By having a
+separate job we can see if it happens independent of testing staging
+trees.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
