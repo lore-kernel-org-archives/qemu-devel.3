@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B17ADCA6CBC
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 09:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D5E2CA6CB8
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 09:29:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkfMe-0001IW-Is; Tue, 27 Jan 2026 04:28:00 -0500
+	id 1vkfNQ-0001h6-CJ; Tue, 27 Jan 2026 04:28:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vkfMa-0001Gy-1K
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 04:27:56 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1vkfNF-0001ZV-2f
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 04:28:38 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vkfMY-0003nM-8U
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 04:27:55 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4801ea9bafdso22012825e9.3
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 01:27:53 -0800 (PST)
+ id 1vkfND-000438-Hr
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 04:28:36 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-47eddddcdcfso31494705e9.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 01:28:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769506072; x=1770110872; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ueH2hi86xgh4DGYghv/VIDKKub0Cf8eEMBLNW1erPEU=;
- b=K1SjTGxt1GHNCx+pQPX25vnDHckdBJkIIKfM/KaYf1ZVC5DfTHe7j718OO+56x4rGx
- +dVz4gf5Nuqvkr/Or46jqqI6dlyC6X8P2IfMltVibYw1KKr8VwCQxj1RRKgI1x8cCtJN
- V6v4kF5bp/cjuwurptDJwCFZXLtkUCuTTvpuGqaKGJ145H2ZVQHC/fzUrmrrC0eyaKCt
- ZeM0KV0/P4066/+NFuJ5MwIcbs+3NBwyKl1XZqlLUB0LTW9ZNIMIAWalCrFVZVa+gbQw
- 4LaC0CzVfAunruKIsZxi7J7WSOU/GWqC9r4P85zJIV9CXmVncwjaE2kD6OseQfA1WrGy
- tf+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769506072; x=1770110872;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1769506113; x=1770110913; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ueH2hi86xgh4DGYghv/VIDKKub0Cf8eEMBLNW1erPEU=;
- b=waZMUQmaoMvuXMirOzbBtPmKqiwqypwXFR65kj8wvhaM6qX1Qc+WKiilq4AjfARu6u
- FW56ir+QN0p2QKI96wYIsrj+vcPd8voiL0Nf3X/y+5aze7MgfYVcCF0xwse2wPWNPsJC
- O5lssP1aYB6H6qQCInOeNmpstHU40uHGPNTxCXhxSZkz++7MsUA1GRuZTEQpm+8ALAxt
- WpgysMzVEt4R8/ptmVnQzOPXwMyT4hsSfdexisG6jWv2IvOoYeAQRVZHMx0GiYMU1jvc
- rJSYIDUxJNd7hmEphkdBip392AHu8nM2zR4QpzHSH4yjGkPKKPpWkYPO5Hnr5SxDIcfV
- h96A==
-X-Gm-Message-State: AOJu0Yxu2JgIrhjnf8p66zAkCaPnIZSDQQMxR2D2LLJ/xQaSUWwgmCng
- Vh6fHWq99y5b8bcDRYtt0yXR0CU17c7w4q6M+r5gll9b4cuxhjdv33Yv9y0bzYhUh3Q=
-X-Gm-Gg: AZuq6aLIoKKe7o/UfgrQNsRLZg+qIUhnMW5wmO+56yHZpAIZzDc16PKXQ5vE/U1qQKe
- tInZ6nj1QE0HyzypQDX+hyW7sOSHN+rxptTbC0FR9MWX/QRbi4JPemoUVJ1wbmOnlulKH/9ms4u
- Fj5wnNS/vlXzyAEK2ODmSbfTV+aYwQi4dHzcPhOoLFXxOm8aIFt2Z59Z0g2YBumC9u6jTYYUM8i
- Ai/dcJFqteInOWdVx+qyhrPAWnuHhE0bIlcPIclJcjzchtgqax10v+Jc/4Yqj3XiMnh3f/uGKb+
- R1T83UK5VCQZUt0UhEG7Ej9gxOfYvi5c76gFVpG0HURENbgyU2bvtk5FwPaXyKaNEaVKou7ft4B
- YVEHwwZvSgKB22mLWvlNjHzLvnTvJsinQGqLQTl6SYtXYik4W2mvQfJTi0xZMrX8lfxMmD38dBF
- jXoQpqV81Y6R4=
-X-Received: by 2002:a05:600c:3e16:b0:47e:e8c2:905f with SMTP id
- 5b1f17b1804b1-48069bfada8mr12586695e9.8.1769506071818; 
- Tue, 27 Jan 2026 01:27:51 -0800 (PST)
+ bh=DUbuZFfL/MnqHFKlqXZB/ivTGI0IaYHmhP5WLKZzOac=;
+ b=nqo2yLGPfCViQMtgSSVncTkwsAfIzgJYeKv3cgzQjs8Nl+S2yfI/iemFnF/GJPfF5y
+ UDPIymHesGp2k9PW6kGdYHFRd4wtOvE4d1/IcAVoz1c7Jrcwo9mc9lX4FlVmcc2i07fg
+ OI/hqv6SUiA5QRAin0Qd6ksOe9xoWskmm+Jl/M7c2ZMM3/Sn6555qbArk10LW6thp6vW
+ 6i4dzxlo62BvpTp/ri5a6y0+klKaH49zTy5BKvcjXGOL/fquW5GcguKUpnzTYfxz/fOA
+ bu5infp6z+0fbU/HYR1Ne1PdsGvMZiivyigiT85caSeYmGqcCxaYsuec3i0ApnDBD/Pn
+ t6ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769506113; x=1770110913;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DUbuZFfL/MnqHFKlqXZB/ivTGI0IaYHmhP5WLKZzOac=;
+ b=Yyn803EqAV/LF6I7MDwNe9z9Amy+/MAX62essi/b7JnA2oQSF/d2HGrPWQGqwpBWL+
+ 44qKF+6g0g0/DXzDau4tPcAJrFwliRK3JHsIDxH3hCjGlhbJdDnQfb+E5y9aXrcU8dzL
+ 1iinz/erEliXX/KE1PeFYCz0ZdSiXEjXsinbUOgGe69dflfQWdf5Hx8oaNs2RUFu3VVd
+ UV5VGJvkKsy0GnFXsovTi/sWnGV4dkRbfhwia+iwV31Dlmvd8pOWAS90ta0nkiERVDcI
+ bJrDMCsDvU16pmuQeEY9+6YItWpWTVHjh0c07mER/ZeEyx3Ey6u/5dPGVOdYaZwQbROc
+ BAcw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWpwM/+MTotC8S7e4Iq2MyI845DBip4nzdNu3uD7v6CikEOaheilrf0pmEStOMXU7DrUFIKN0VrkChw@nongnu.org
+X-Gm-Message-State: AOJu0YwtrY/odcP1dADtxqbISmI4vHibMAJhc4NYFrHVTFS7SbOdiPmF
+ hXYtUfMXceHz5L37O+NUxLOfZls4uhkSuMQEx3UKviVTvL0t9mc3SpVRj5y0aCidKjU=
+X-Gm-Gg: AZuq6aJKoi36VCW0zYppgUuf+Ol/ttF6j8liXvFrwOtRte8mriDLWlRe0emT45zj2tm
+ c5YkEWzEYzn4zDbvyf/lVeWAsMs58Rn4/1S0EsWXk934kixRzSsISNod7+JUoxeFavUKpgq0Z7N
+ 0TITSQ6qZZYh9XabTuul6UOf5Rym+SHHcGc4n6xYhPd9KCxLEC3ZyXrbxQRA30OX69TLGDNj6wZ
+ CQEI3QTm8yCcDW2W6lhytAhJRomfhyFvV5oMqkZSbm8hJdejuK4p6oddysnLUZorWPAFSzm+qRj
+ 6UVXo0MJfsOEgJirBnou1BfDCYfN68L3hdKTX91C2p/1J5FAH4z+/4kQbCRwe3pgcz9p8WyA78Z
+ qd7A0M5xYUv9uxV5iq9icYoDTYen5Sj6qLTRdWRGBSpdXeFYMdD+gJ68y/AzdGvoicvBjh1biuL
+ uqko5UxyimRYY=
+X-Received: by 2002:a05:600c:1992:b0:47a:9560:5944 with SMTP id
+ 5b1f17b1804b1-48069c745cbmr12416655e9.34.1769506113500; 
+ Tue, 27 Jan 2026 01:28:33 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48066c034dfsm48937645e9.10.2026.01.27.01.27.50
+ 5b1f17b1804b1-4804dbaa3ecsm122074585e9.10.2026.01.27.01.28.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jan 2026 01:27:51 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E10135F811;
- Tue, 27 Jan 2026 09:27:49 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, peter.maydell@linaro.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [RFC PATCH] tests/docker: rename wasm cross container
-Date: Tue, 27 Jan 2026 09:27:45 +0000
-Message-ID: <20260127092745.2978371-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
+ Tue, 27 Jan 2026 01:28:32 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 24B0F5F811;
+ Tue, 27 Jan 2026 09:28:32 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Stefan Hajnoczi
+ <stefanha@gmail.com>,  qemu-devel <qemu-devel@nongnu.org>
+Subject: Re: gitlab docker registries
+In-Reply-To: <90520ad2-8256-4bc7-94e3-010455659394@linaro.org> (Richard
+ Henderson's message of "Tue, 27 Jan 2026 13:15:48 +1100")
+References: <da1443a0-5bf8-4ec0-9910-fd06beb42552@linaro.org>
+ <CAJSP0QWQEr8+dEGD7jkUQ--Oq+D2PKv_ArRB_ApiZM++xN9TCQ@mail.gmail.com>
+ <c12f3294-1ef1-41fe-a453-1422063b991d@linaro.org>
+ <87ecncc4sg.fsf@draig.linaro.org>
+ <90520ad2-8256-4bc7-94e3-010455659394@linaro.org>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Tue, 27 Jan 2026 09:28:32 +0000
+Message-ID: <878qdjcslb.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,34 +110,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now we are 64 bit only there is no need to keep the generic name. This
-also fixes a check failure in the weekly container build which was
-checking containers based on the expansion of DOCKER_IMAGES which is
-based of the dockerfile names.
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-Fixes: 4203ea0247f (gitlab-ci: Add build tests for wasm64)
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- .gitlab-ci.d/container-cross.yml                                | 2 +-
- .../{emsdk-wasm-cross.docker => emsdk-wasm64-cross.docker}      | 0
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename tests/docker/dockerfiles/{emsdk-wasm-cross.docker => emsdk-wasm64-cross.docker} (100%)
+> On 1/27/26 10:50, Alex Benn=C3=A9e wrote:
+>> I think it was broken by 4203ea0247f (gitlab-ci: Add build tests for
+>> wasm64) because we base the tests of the existence of dockerfiles and it
+>> now generates multiple targets.
+>> Do we actually use the wasm32 stuff anymore? Maybe we can just
+>> rename it?
+>
+> All of the wasm32 stuff is supposed to be gone.
 
-diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
-index d7ae57fb1f5..923044e9a12 100644
---- a/.gitlab-ci.d/container-cross.yml
-+++ b/.gitlab-ci.d/container-cross.yml
-@@ -78,4 +78,4 @@ wasm64-emsdk-cross-container:
-   extends: .container_job_template
-   variables:
-     NAME: emsdk-wasm64-cross
--    DOCKERFILE: emsdk-wasm-cross
-+    DOCKERFILE: emsdk-wasm64-cross
-diff --git a/tests/docker/dockerfiles/emsdk-wasm-cross.docker b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
-similarity index 100%
-rename from tests/docker/dockerfiles/emsdk-wasm-cross.docker
-rename to tests/docker/dockerfiles/emsdk-wasm64-cross.docker
--- 
-2.47.3
+I think 20260127092745.2978371-1-alex.bennee@linaro.org should fix it,
+but I need to re-read how to trigger the weekly build on my test branch
+to test it.
 
+>
+> r~
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
