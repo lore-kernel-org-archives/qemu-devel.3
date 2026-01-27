@@ -4,74 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE5C9D2FED2
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A8ED2FED4
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknsS-0002hf-Sq; Tue, 27 Jan 2026 13:33:26 -0500
+	id 1vkntH-0004Ya-GN; Tue, 27 Jan 2026 13:34:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknp0-00031V-Pn
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:29:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vknqo-00083e-9s
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:31:50 -0500
+Received: from p-west3-cluster2-host2-snip4-7.eps.apple.com ([57.103.74.120]
+ helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknoy-0003qo-Or
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:29:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769538587;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U3JsBPxka2f+y8prTonEEdvisKEji5FTWNaZtcfa+Ho=;
- b=dfGK6vdzWJAkUB84/+bbH8pZEabrnIpgibkZr6yVaAeBXyheNonPpvvwDc7ttzsbf9ExaW
- RxMRi6ikJaZOPkqUZZfhRcxVzfzc8+mzN+3aEj9bi8RNhXi40uHDihC3D826eXRRa2rf8M
- TdndAgPmaYiEY6COw0TVnAUMixnRPLI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-sGjhhH1vNGiHs_rVL7iOYg-1; Tue,
- 27 Jan 2026 13:29:44 -0500
-X-MC-Unique: sGjhhH1vNGiHs_rVL7iOYg-1
-X-Mimecast-MFC-AGG-ID: sGjhhH1vNGiHs_rVL7iOYg_1769538583
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4CD46189118F; Tue, 27 Jan 2026 18:29:28 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.23])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EAD7530002D6; Tue, 27 Jan 2026 18:29:26 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 41/43] audio: replace remaining dolog() and AUD_log
-Date: Tue, 27 Jan 2026 22:25:08 +0400
-Message-ID: <20260127182516.289834-42-marcandre.lureau@redhat.com>
-In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
-References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vknqk-0004Jm-Ks
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:31:40 -0500
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-100-percent-4 (Postfix) with ESMTPS id
+ 85ADE1800CE3; Tue, 27 Jan 2026 18:31:29 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1769538692; x=1772130692;
+ bh=sqyPOFWqsQ9KJywIJYuJ0LA9jE4orTdr3yqvYdonyjA=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=UrX7EymZqixpcHtu+oNoxP18u+1i402C9ycDRzDyoIyhIVoEindcQLEY5J4oC1XOs6ug4UA7XllgFfi0+I5n6qRsA7k/C0faih1XMGIyy6BF/PtByuu/LTymNA+MeOvicVP2AohaMIKCA51AX+3MKV7gNJtIRGr9ag4TblTbDjL8mO1GCC4zCMwqil8vQklVmWn8VlFFE6WjavjZLPz3I2jHtp5oM7DnhW6HXQDRoFxfISCulXUShQjvFB5OCAB65ojgdtnS8fX9ITm3BnhmKWG72NMvjlI5HMEayDWVOHXJv6hLsI7tAaEkGirSPmfeGI+nUlwDKw+fFW2o9bh1DQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.154.37])
+ by p00-icloudmta-asmtp-us-west-3a-100-percent-4 (Postfix) with ESMTPSA id
+ 6F09518000F0; Tue, 27 Jan 2026 18:31:25 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH v17 03/21] hw: arm: virt: rework MSI-X configuration
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260127102534-mutt-send-email-mst@kernel.org>
+Date: Tue, 27 Jan 2026 19:31:12 +0100
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>,
+ Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Ani Sinha <anisinha@redhat.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <54440B7F-B42B-4A3A-AD6A-4FE9916428E8@unpredictable.fr>
+References: <20260121134114.9781-1-mohamed@unpredictable.fr>
+ <20260121134114.9781-4-mohamed@unpredictable.fr>
+ <CAFEAcA-GL9UG5MN5tKDzLwQ04cBGa99cSau4=2BLTs0+GGSdJw@mail.gmail.com>
+ <51E78FA9-2C66-4E8E-947F-F009A8AEEDFD@unpredictable.fr>
+ <CAFEAcA_7o-dNFUgMo=UdYD_cf=dwbMCy6b+_2SRSxVbDmmAUmw@mail.gmail.com>
+ <9ECB5E0B-3BD3-47D3-9E6B-204A354CEA84@unpredictable.fr>
+ <CAFEAcA_g3VfRectVpUG-OnLh_AtsqpLt7YYrYXDSfiesS5EuKw@mail.gmail.com>
+ <20260127102534-mutt-send-email-mst@kernel.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-Proofpoint-GUID: 6FNgzovoOVBkwO1yoqxY_YLWS_HxW6qs
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDE1MSBTYWx0ZWRfX8U56HIT3B+SV
+ J9p/eSApcBSDMrr1voYAtdUjdeP7sTn7opK1D9g9ELcsXFkabJOQMCyG+xJL2dGIXKS5VU4SkVX
+ wwVTWSKEPe+9NHWo0wcOB5Eajw70Hj1/kgWnaEUXQTZ6RaOwet1CRJJs4Qwg6TKLtX5hrNIDask
+ YuqKPq73SDMDKgwe9cPdvixtNTekRsRpVxxScl4v513P2qyPNcdI0u/efDzatOO4m1wr2FzLQPv
+ 9HegQ8fVH2cPjwAYyr0FP8XNXYbhA+1hbhi8F0GvzavRjSNjGbdrNiNzl0GjUb4eG6PXPbhmbNO
+ SxCQoQDrgBb5OmCveyU
+X-Proofpoint-ORIG-GUID: 6FNgzovoOVBkwO1yoqxY_YLWS_HxW6qs
+X-Authority-Info-Out: v=2.4 cv=MtFfKmae c=1 sm=1 tr=0 ts=69790483
+ cx=c_apl:c_apl_out:c_pps a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
+ a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8
+ a=wKKgmu9azzEBwTzVMMoA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-27_04,2026-01-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ phishscore=0 malwarescore=0 clxscore=1030 bulkscore=0 spamscore=0
+ adultscore=0 mlxlogscore=999 suspectscore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2601270151
+X-JNJ: AAAAAAABhT9b3fB8IC0qypCPK64O3LC8B/5T+ttsLS9B71+/pmAmCFGgyoaYBNfDCC1DliBzHySO3zLMCJULY3kVPxiMMJZzBYENAJ8YbZtP+jSZydKE4aYw54hVzUL4aA6GQ2P3iRX9HbMzN0oFjG3cJfOK+jAoqYInPD3CPkG9C66krfljSjy1cSFl7SwzNQK6yXQo/0wmJPD8uPk/BQq6P7DJ3ohBswS25TXp+Gbo1xtSTV7yR6qeR5SBka+m9iFjdc2Hsus0mQqnT8Mwo1mmZWF+srv89oIrgTdZScrt84sqlYaB92mc3m2qfazFjmqjZ+zSb7ZpW0F8xDroIt3T7lx9VdrJGFeZUnzGGg+OueqmK1+XMSdA7AdhY8R3pqGPbCZhTzQCzW0PSFoMHjJyy/eBVhI+QJfoLJsnYZWh8JO9lWc10tYwU0i6wH2xVYnsWa/BNU9vW3IhzoT4svoj4P4xQ0Bdv8RCKMCk5Fdv7Vfo4k1NJABZOxKtbvg6WwWSwlE4rzUoFpXGPLwZU6aNu7Q8alAOhQdmW2TY1lyX/OVSGzmG8XmljDY9uAgz6gY1RtaQsqsyM7dRHM2jmKr3AZ/MUgYywFAfeys/7+xucLkUqfKqa5qQXii0zldmAA8wueVH4Ah6p+Nll6lqN6AgMsaPVWsvnWDujlJ7fHt8x8EOfzl+0luUhnNyyzhqnq3wXyAoodgpS9fyadPluCeyMcDs3UK6UjmGdM41LuBUw9hB7rNOsX0j6NletngVDDBrvcPfnWDEwI3ECyBJb/dT2IRrE7bM0a5/oobzDEN5Uuv55zP6hxOSnlkkBUhFuwFnJslas9BKxOSS4bp4rZYwB6jwY5vc6CywXVkEPT5ubMqLNcONXMfh92RWj6RfvDR2
+Received-SPF: pass client-ip=57.103.74.120;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,134 +110,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Use warn_report/error_report and trace instead.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- audio/audio_template.h  | 19 ++++++++-----------
- audio/audio-mixeng-be.c | 14 ++++++--------
- audio/trace-events      |  1 +
- 3 files changed, 15 insertions(+), 19 deletions(-)
+> On 27. Jan 2026, at 16:34, Michael S. Tsirkin <mst@redhat.com> wrote:
+>=20
+> On Tue, Jan 27, 2026 at 02:10:08PM +0000, Peter Maydell wrote:
+>> On Tue, 27 Jan 2026 at 13:40, Mohamed Mediouni =
+<mohamed@unpredictable.fr> wrote:
+>>>=20
+>>>=20
+>>>=20
+>>>> On 27. Jan 2026, at 13:54, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>>>>=20
+>>>> On Tue, 27 Jan 2026 at 12:46, Mohamed Mediouni =
+<mohamed@unpredictable.fr> wrote:
+>>>>>> On 27. Jan 2026, at 11:54, Peter Maydell =
+<peter.maydell@linaro.org> wrote:
+>>>>>>=20
+>>>>>> On Wed, 21 Jan 2026 at 13:41, Mohamed Mediouni =
+<mohamed@unpredictable.fr> wrote:
+>>>>>>> +/*
+>>>>>>> + * In the prior Qemu ACPI table handling, GICv2 configurations
+>>>>>>> + * had vms->its=3D1... That's broken.
+>>>>>>> + *
+>>>>>>> + * Match that assumption to match the existing ACPI tables that
+>>>>>>> + * have been shipping for quite a while.
+>>>>>>> + */
+>>>>>>> +static int is_gicv2_acpi_workaround_needed(VirtMachineState =
+*vms) {
+>>>>>>> +    return vms->gic_version =3D=3D 2;
+>>>>>>> +}
+>>>>>>=20
+>>>>>> We don't need to keep identical bug-for-bug ACPI tables like =
+that.
+>>>>>> If we were incorrectly reporting an ITS in a GICv2-only ACPI =
+table,
+>>>>>> that was a bug and we can fix it. (This might need adjusting of =
+the
+>>>>>> golden reference ACPI data in some of the bios-tables-tests if we
+>>>>>> were testing that, so it ought to go in its own patch.)
+>>>>>>=20
+>>>>> Hello,
+>>>>>=20
+>>>>> I=E2=80=99m a bit concerned about breaking hibernation in this =
+case=E2=80=A6
+>>>>>=20
+>>>>> My intent was keeping this behavior for now and then add a machine =
+model version dependent toggle in a follow-up patch.
+>>>>=20
+>>>> I'm not an ACPI table expert but my understanding is that it's
+>>>> OK to change the ACPI table contents without having to make
+>>>> those changes machine-version dependent. See e.g. commit =
+d6afe18b7242,
+>>>> which changed the ACPI tables for the its=3Doff case and did not
+>>>> make those changes machine-version specific.
+>>=20
+>>> That commit didn=E2=80=99t affect the default/regular config so it =
+wouldn't have been too problematic in practice.
+>>>=20
+>>> Have had countless issues with how brittle hibernation is* - and =
+more or less subtle ACPI table changes
+>>> tend to break it.
+>>=20
+>> I don't want to add back-compat handling for this to the virt
+>> board unless one of our ACPI table experts says that yes we
+>> do need to keep the ACPI table contents identical for older
+>> versioned machine types.
+>>=20
+>> thanks
+>> -- PMM
+>=20
+>=20
+> Generally what we have handles VM migration, not hybernation.  The =
+issue
+> with hybernation is guests might cache some data to speed up init. If
+> you want to go overboard you would have to never change anything at =
+all
+> in the firmware.  Whether they do it in any specific instance is hard =
+to
+> predict 100% but our approach generally is to try with a couple of
+> popular guests, and not to worry too much ahead of time otherwise.  =
+For
+> several reasons: one is most changes are harmless, another one there's
+> no special race here, if there's an issue you can trigger it
+> predictably, yet another one is hybernation is a rarely used feature.
+>=20
+> For the specific change, I'd guess just test and if fine - fix it =
+without a compat.
+>=20
+Hi,
 
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index 9dde36738bc..760aaf5f31f 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -47,21 +47,19 @@ static void glue(audio_init_nb_voices_, TYPE)(AudioMixengBackend *s,
-     if (glue(s->nb_hw_voices_, TYPE) > max_voices) {
-         if (!max_voices) {
- #ifdef DAC
--            dolog("Driver `%s' does not support " NAME "\n", k->name);
-+            warn_report("audio: Driver '%s' does not support " NAME, k->name);
- #endif
-         } else {
--            dolog("Driver `%s' does not support %d " NAME " voices, max %d\n",
--                   k->name,
--                   glue(s->nb_hw_voices_, TYPE),
--                   max_voices);
-+            warn_report("audio: Driver '%s' does not support %d " NAME " voices, max %d",
-+                        k->name, glue(s->nb_hw_voices_, TYPE), max_voices);
-         }
-         glue(s->nb_hw_voices_, TYPE) = max_voices;
-     }
- 
-     if (glue(s->nb_hw_voices_, TYPE) < min_voices) {
--        dolog("Bogus number of " NAME " voices %d, setting to %d\n",
--               glue(s->nb_hw_voices_, TYPE),
--               min_voices);
-+        warn_report("audio: Bogus number of " NAME " voices %d, setting to %d",
-+                    glue(s->nb_hw_voices_, TYPE),
-+                    min_voices);
-     }
- 
-     if (!voice_size && max_voices) {
-@@ -443,7 +441,7 @@ static SW *glue(audio_pcm_create_voice_pair_, TYPE)(
- 
-     hw = glue(audio_pcm_hw_add_, TYPE)(s, &hw_as);
-     if (!hw) {
--        dolog("Could not create a backend for voice `%s'\n", sw_name);
-+        error_report("audio: Could not create a backend for voice '%s'", sw_name);
-         goto err1;
-     }
- 
-@@ -537,8 +535,7 @@ static SW *glue(audio_mixeng_backend_open_, TYPE) (
-         HW *hw = sw->hw;
- 
-         if (!hw) {
--            dolog("Internal logic error: voice `%s' has no backend\n",
--                  SW_NAME(sw));
-+            audio_bug("Internal logic error: voice '%s' has no backend", SW_NAME(sw));
-             goto fail;
-         }
- 
-diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
-index 4988627279e..6799b7664b8 100644
---- a/audio/audio-mixeng-be.c
-+++ b/audio/audio-mixeng-be.c
-@@ -654,7 +654,7 @@ static size_t audio_mixeng_backend_write(AudioBackend *be, SWVoiceOut *sw,
-     hw = sw->hw;
- 
-     if (!hw->enabled) {
--        dolog("Writing to disabled voice %s\n", SW_NAME(sw));
-+        warn_report("audio: Writing to disabled voice %s", SW_NAME(sw));
-         return 0;
-     }
- 
-@@ -677,7 +677,7 @@ static size_t audio_mixeng_backend_read(AudioBackend *be,
-     hw = sw->hw;
- 
-     if (!hw->enabled) {
--        dolog("Reading from disabled voice %s\n", SW_NAME(sw));
-+        warn_report("audio: Reading from disabled voice %s", SW_NAME(sw));
-         return 0;
-     }
- 
-@@ -874,9 +874,8 @@ static void audio_capture_mix_and_clear(HWVoiceOut *hw, size_t rpos,
-                 sw->empty = sw->total_hw_samples_mixed == 0;
- 
-                 if (to_read - frames_in) {
--                    dolog("Could not mix %zu frames into a capture "
--                          "buffer, mixed %zu\n",
--                          to_read, frames_in);
-+                    audio_bug("Could not mix %zu frames into a capture "
-+                              "buffer, mixed %zu", to_read, frames_in);
-                     break;
-                 }
-                 n -= to_read;
-@@ -1561,7 +1560,7 @@ static CaptureVoiceOut *audio_mixeng_backend_add_capture(
-     }
- 
-     if (!audio_get_pdo_out(s->dev)->mixing_engine) {
--        dolog("Can't capture with mixeng disabled\n");
-+        error_report("audio: Can't capture with mixeng disabled");
-         return NULL;
-     }
- 
-@@ -1754,8 +1753,7 @@ size_t audio_rate_peek_bytes(RateCtl *rate, struct audio_pcm_info *info)
- void audio_rate_add_bytes(RateCtl *rate, size_t bytes_used)
- {
-     if (rate->peeked_frames < 0 || rate->peeked_frames > 65536) {
--        AUD_log(NULL, "Resetting rate control (%" PRId64 " frames)\n",
--                rate->peeked_frames);
-+        trace_audio_rate_reset(rate->peeked_frames);
-         audio_rate_start(rate);
-     }
- 
-diff --git a/audio/trace-events b/audio/trace-events
-index ed04792d508..222e73c7e88 100644
---- a/audio/trace-events
-+++ b/audio/trace-events
-@@ -70,6 +70,7 @@ audio_sw_write(const char *name, size_t size, size_t written, size_t total_mixed
- audio_get_free(const char *name, size_t live, size_t dead, uint32_t frontend_frames) "%s: get_free live %zu dead %zu frontend frames %u"
- audio_out_disable(void) "Disabling voice"
- audio_out_played(size_t played) "played=%zu"
-+audio_rate_reset(int64_t frames) "Resetting rate control (%" PRId64 " frames)"
- 
- # audio_template.h
- audio_open_out(const char *name, int freq, int nchannels, int fmt) "open %s, freq %d, nchannels %d, fmt %d"
--- 
-2.52.0
+It turns out that even the Ubuntu stock kernel of all things has =
+hibernation disabled on arm64.
+Had to install the linux-aws variant to test it and that testing =
+didn=E2=80=99t go too well without even making
+any Qemu changes between suspend and resume.
+
+So considering it as unimportant=E2=80=A6
+
+(And just sent a new rev with putting the new behaviour, had to tackle a =
+bug on the way)
+
+Thank you,
+-Mohamed
+> --=20
+> MST
+>=20
+>=20
 
 
