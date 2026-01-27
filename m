@@ -4,94 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11FEBD2FEDC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B4FD2FED9
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkoBv-0003Fg-OS; Tue, 27 Jan 2026 13:53:33 -0500
+	id 1vkoBa-0002z7-GZ; Tue, 27 Jan 2026 13:53:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkoBa-00030A-H8
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:53:11 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkoBT-0002nI-MC
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:53:04 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkoBY-0000hU-KX
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:53:10 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkoBR-0000fR-Fe
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:53:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769539988;
+ s=mimecast20190719; t=1769539980;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GZQB1J2GnKkcSVhSmw1xL9j3DRaUqmRPYIrFKnPzwZI=;
- b=hz/vAlWcyXTmd+UBxwE/mG2XXsM9hK/1IOf6l6smw9PMQJRC4g+ciaWz/pQMelY6uh8FNh
- usKUQQVodkj//TUAX7mLNAlDCKLLS87QO5ytc1g0TKoq0DHOjinePpSjbYunK0Hl544fQ2
- kFeDndXeQXqz1aZsGnT7i1IGTiGJBvU=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=bSQBUP82UfnEPifvcVzGz2pjO71OwIYPszGWXoN9Z1E=;
+ b=AlBVAWj5qnK4wRVRAmJgWl0rGMWpHNkkeXf79Ktp7agW2/LR0Pw9XLl4waBk6cON54QOPr
+ C2/gHaAlZi/ZGUfZWCeFAfA/KZdK0EiZxpvsVdfDil/0K5AzP5z+arXfcB4YyERLph/6RK
+ 4TCsMOKWyUPcKPb140XQJjOtBRGRNVY=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-209-8rXe7MI-OaCq3vjkVP77lQ-1; Tue, 27 Jan 2026 13:53:06 -0500
-X-MC-Unique: 8rXe7MI-OaCq3vjkVP77lQ-1
-X-Mimecast-MFC-AGG-ID: 8rXe7MI-OaCq3vjkVP77lQ_1769539986
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8c52af6855fso755497685a.1
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 10:53:06 -0800 (PST)
+ us-mta-307-STeewqkkMxmN3_xgdB1VYw-1; Tue, 27 Jan 2026 13:52:58 -0500
+X-MC-Unique: STeewqkkMxmN3_xgdB1VYw-1
+X-Mimecast-MFC-AGG-ID: STeewqkkMxmN3_xgdB1VYw_1769539978
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8947c4398c4so195643476d6.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 10:52:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769539986; x=1770144786; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GZQB1J2GnKkcSVhSmw1xL9j3DRaUqmRPYIrFKnPzwZI=;
- b=ob8vKC0R/Hn1+sSk27Kw6oik6y9+07cU1wMZcTHDk1jZ/vZRrl1TGEmuAuMDFvryfI
- g2D2lZoWlR0hL2BPIUtK7zO9iI9NBOKA3JLmUtmyXWtWW0QT//lZf8U7ax+1Y7ATTxW7
- a97e8sYqiIoVh6kkGnH65i5ahN/fmmhLDdYpGeQQrBRd/N3P1s+g85DaSjUas/ARerBI
- dAKYf1YmA91fJccag/l4ID8CIzOKT7CJK3QI/vpD3hhgCyxBatdMZu3AD1tjz4h0che4
- mto0++nMLS8q/iuzeHXMTkK8dSMot7qSNs0v8D9K2+79VSv6lOE+iDk68uOjBsbc/zeZ
- b5Ag==
+ d=redhat.com; s=google; t=1769539977; x=1770144777; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bSQBUP82UfnEPifvcVzGz2pjO71OwIYPszGWXoN9Z1E=;
+ b=LsQkX5RcZ+TW7FgN8OyKvqWNHjQKjC5yTgyojIXXCe5VmWTIhW/neHa7sjBF/oMXVn
+ cVToaklZPEFWpidOJyq52zOgpIvKUaXXmW8uzQyQDlXUHyvCH8HgaGrtPT3wYYRIIKAQ
+ 2t6kG/j5KLQSR01hTD7C0FmGwhm7lGly6iboaSXueLbekTSaZuorKSuAWJAE3llJ5go0
+ P1L8m1gcYSLH3wr6XyVSu9bzSYA+D0B1I/aQvyFPx4KuLdMEMr0TTwFtiDZG37P9gaFC
+ Pzf4q2QHE1lir/q5p3W7CQ0JYEaUlXhVxKxyODc/CWwztHkDXktRYH6cqaJDcTB0byVs
+ qgIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769539986; x=1770144786;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GZQB1J2GnKkcSVhSmw1xL9j3DRaUqmRPYIrFKnPzwZI=;
- b=bUEJ1cj+9c6fsX6xbmZuq35IEqApHRy3TKhAV83gBreo9naxUap7xKy7Ra3gGDFhje
- EpnOQsi12d5V/mGXW1kVbVL6wYJgH3N4cGLtqJ+zA+CpcMl1LjIvmJdHGHvw1rQkdOnh
- qeIX7IF9Yhol2KzQuNffYw3FHmDB2MIepyL/iDfqVnLBJ4tgtjsbs2lmrjwfeX+EFv7l
- juOTbX3kDXNMJW8Onpgt/9M1QOwNVp6MaUyLTUJLRbR2Qay1GMSEwUDAmuB+xN7B+TUr
- pAncPDygTh5d583L0Uqt5WFLcYy1T4N7THhWN42Z6JtJDRDg6D08a0xH4KohzEfUhPe5
- opJg==
-X-Gm-Message-State: AOJu0Yxj5YsXM3S56kbqSTQ4v5xxkjzLHZ43QwIQ2CA+UgV9AoVflK2R
- RZBfIb6nfE/WfDFeqXpTZ9sgSPItPlwx5sasgi4tYmwTaX/Os67uBTamOlEnR8q5i19x9NyvgDu
- Orw1KC5MR+WvZXBicseVLKjlrMiwIxGIY0iA4ufWA8GoixnQM1dAnf6CkT1eIPsq0MaolHIJSux
- k7eMazorhfFz6/OlY0LEs0EhoKJxsCH1bGXLKXNg==
-X-Gm-Gg: AZuq6aLDsLl/dR1EoQtVl8pwXIozsG9PJuI67ANzTupA+igSJs6wR4LDz+ljyfkgmX9
- GhMa8tPvhj8chayei1UaUgJQ+bwmdYR08ymcedNjBNBV2audofpc0h+OsX1sYcafboA67cFiXYl
- D1JE8EZtvYP8siO/tw+Djv+EH6LtRJz0HrwTi84Y5w7EQwuvk5IwBG59gnKxqrK2AAo/OqDcmgN
- ZOZ4llHIufaplFbRm5JNv5JlMHjHK/ADmJdBmGj8QMbdjb+R/y2G+hY/VfUxzquIGZaHDvSN/3o
- etqZmTNQ93Svvza541Ij1kNhXDGUDBgXolxn3vkmjHL0sWBfvexzmThDH6uEAcBZfLOUGoE81vq
- k
-X-Received: by 2002:a05:620a:1988:b0:8c6:b45b:9e2d with SMTP id
- af79cd13be357-8c70b873b49mr355903485a.26.1769539985828; 
- Tue, 27 Jan 2026 10:53:05 -0800 (PST)
-X-Received: by 2002:a05:620a:1988:b0:8c6:b45b:9e2d with SMTP id
- af79cd13be357-8c70b873b49mr355898285a.26.1769539985167; 
- Tue, 27 Jan 2026 10:53:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769539977; x=1770144777;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bSQBUP82UfnEPifvcVzGz2pjO71OwIYPszGWXoN9Z1E=;
+ b=V/Fe1exE0Eau7lnL7XEa/C+7rhQd9gJTf0kDcx7RzgDFe3kYwUN+0Jj0yJAz96JtlU
+ lGY/PU13xTEFcXCSSKfbX7p+eNdhhjrEeK29f+AMNv+UUSAp8NtpmHY1j6Ad6LjDkejc
+ ZJq9s4Z3EVxR6HDUXmSvrgokLq5pdazZuvtBdYgaK1B7MUzEWpsSADnLkxj5LMj2+TZO
+ I6abNdH9rc1XdCC62JoSkHfRfaalY4apmVMb/ed/SGMcPAGpmo5lfoIi5LWm22ekKJMk
+ VxcNWEpoyAZhdEC/s1S/8BQgAapVJTKi7x8fWLuVntNeXAAsPSwxqwNhakghqlvu9Cmi
+ x6Mg==
+X-Gm-Message-State: AOJu0YxlDDIlXG4TOwHd2FvguZtyXKEw1NyLaXqEh7RKnone0U2bgPxn
+ nomOij6sK1hzxQQ/h9C+k8wcTTa0Gw1elmp8fzUKT1htSA/qGNAX/qanN1WteBnFULaNQ4wZua5
+ ObhCdTysnrLjvuzpgPaCjROB9bYQrAEx9CzKgKZSaPKLzsfhnhDKyyPGXsjLtvry4pJgl/Wx4ny
+ j+8O46H17Yl1mj6qTiMUGSAIntFSglIOzxLvG18g==
+X-Gm-Gg: AZuq6aJc/x4M7KZVwITvxwrO10nmT5ie2Sb76V6bDfF4emjq56f74ni7Abkl/4AFcMk
+ pox/pqcDC5hC4hMCvGeY1G3bE7jytjfdQd5byIh6wB5KW9W7Q/wu+lM6jP73NVJW6/48PFq4EBA
+ SnA6lSm8z3AeDz0jceC8TdQsf50Skh4JOYBDvRGCQloUEaNMHwecLeN9DvjxJpj+1L2kL5RYd6b
+ 8oSdGohnGKvl6A+pwcuBNh5UUFnbKgqUfITL5FFBnYCl6jOgJUlJf+6y0quEP9hjvlD+T0enVt7
+ 37kVGhs2vhT13Y06vKT8axOrXlqFGeAB1IB6qt8EyeTbDFLg2S+vCXMwDGLrFQfTvy2SGVsMaSg
+ B
+X-Received: by 2002:ad4:5943:0:b0:890:7e6d:432d with SMTP id
+ 6a1803df08f44-894cc96d3fbmr37500406d6.67.1769539977097; 
+ Tue, 27 Jan 2026 10:52:57 -0800 (PST)
+X-Received: by 2002:ad4:5943:0:b0:890:7e6d:432d with SMTP id
+ 6a1803df08f44-894cc96d3fbmr37500076d6.67.1769539976446; 
+ Tue, 27 Jan 2026 10:52:56 -0800 (PST)
 Received: from x1.com ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-894d3740e54sm2338466d6.35.2026.01.27.10.53.04
+ 6a1803df08f44-894d3740e54sm2338466d6.35.2026.01.27.10.52.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jan 2026 10:53:04 -0800 (PST)
+ Tue, 27 Jan 2026 10:52:56 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Lukas Straub <lukasstraub2@web.de>,
  Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 07/24] colo: Forbid VM resume during checkpointing
-Date: Tue, 27 Jan 2026 13:52:37 -0500
-Message-ID: <20260127185254.3954634-8-peterx@redhat.com>
+Subject: [PATCH v2 00/24] migration: small cleanup series
+Date: Tue, 27 Jan 2026 13:52:30 -0500
+Message-ID: <20260127185254.3954634-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260127185254.3954634-1-peterx@redhat.com>
-References: <20260127185254.3954634-1-peterx@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
@@ -119,33 +116,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-COLO will stop the VM during each checkpoint on either PVM or SVM.
+CI: https://gitlab.com/peterx/qemu/-/pipelines/2289719627
 
-Accidentally resuming the VM during the window might be fatal because it
-may cause the RAM and devices state to misalign, corrupting the checkpoint.
+v1: https://lore.kernel.org/r/20260121223336.3381912-1-peterx@redhat.com
 
-Hence forbid VM resume during the process.
+This is the v2 of the small cleanup series.  It used to be only for COLO,
+but now for some other things too around dumping vmstates.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- monitor/qmp-cmds.c | 3 +++
- 1 file changed, 3 insertions(+)
+The small series growed a little bit, because I wanted to try Fabiano's
+request to deduplicate qemu_save_device_state() and precopy's similar
+version to dump non-iterable devices.
 
-diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
-index 1ca44fbd72..0c409c27dc 100644
---- a/monitor/qmp-cmds.c
-+++ b/monitor/qmp-cmds.c
-@@ -84,6 +84,9 @@ void qmp_cont(Error **errp)
-     } else if (runstate_check(RUN_STATE_FINISH_MIGRATE)) {
-         error_setg(errp, "Migration is not finalized yet");
-         return;
-+    } else if (runstate_check(RUN_STATE_COLO)) {
-+        error_setg(errp, "COLO checkpoint in progress");
-+        return;
-     }
- 
-     for (blk = blk_next(NULL); blk; blk = blk_next(blk)) {
+Changelog skipped, as too many things added.  Old patches should almost the
+same with R-bs collected, though.  I still touched up some small things,
+though (where I dropped the R-bs).
+
+This should pass the new COLO unit test too, I hope I didn't overlook
+something once more. Please anyone let me know if it fails.
+
+Comments welcomed, thanks.
+
+Peter Xu (24):
+  migration: Introduce qemu_savevm_send_* helpers
+  migration: Use qemu_savevm_send_header() in qemu_save_device_state()
+  migration: Remove one migration_in_colo_state() occurance
+  migration/savevm: Remove SaveStateEntry.is_ram
+  migration/colo: Unwrap qemu_savevm_live_state()
+  migration: Remove call to send switchover start event in colo/savevm
+  colo: Forbid VM resume during checkpointing
+  migration/colo: Use the RAM iterable helper directly
+  migration/colo: Document qemu_fflush(fb)
+  migration: Drop iterable_only in qemu_savevm_state_complete_precopy
+  migration: Drop qemu_file_set_error() when save non-iterable fails
+  migration/colo: Send device states without copying buffer
+  migration/postcopy: Send device states without copying buffer
+  migration: Introduce qemu_savevm_state_end()
+  migration: Provide helper for save vm description
+  migration: Split qemu_savevm_state_complete_precopy_non_iterable()
+  migration: qemu_savevm_state_complete_precopy() take MigrationState*
+  migration: Cleanup error propagates in qemu_savevm_state_setup()
+  migration: Refactor qemu_savevm_state_setup()
+  migration: Introduce qemu_savevm_state_active()
+  migration/bg-snapshot: Cleanup error paths
+  migration: Make qemu_savevm_state_non_iterable() take errp
+  migration: Simplify qemu_save_device_state()
+  migration/colo/xen: Use generic helpers in qemu_save_device_state()
+
+ migration/savevm.h    |  18 +--
+ migration/colo.c      |  16 ++-
+ migration/migration.c |  48 +++----
+ migration/savevm.c    | 312 ++++++++++++++++++++++--------------------
+ monitor/qmp-cmds.c    |   3 +
+ 5 files changed, 213 insertions(+), 184 deletions(-)
+
 -- 
 2.50.1
 
