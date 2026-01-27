@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93632D3409C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 16:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52CEAD3409C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 16:19:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vklkf-0004Rl-RS; Tue, 27 Jan 2026 11:17:13 -0500
+	id 1vklkI-000444-Ia; Tue, 27 Jan 2026 11:16:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vklju-0003ju-5j; Tue, 27 Jan 2026 11:16:26 -0500
+ id 1vkljb-0003Yl-Ad; Tue, 27 Jan 2026 11:16:12 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vkljs-0000qO-99; Tue, 27 Jan 2026 11:16:25 -0500
+ id 1vkljX-0000jy-Hc; Tue, 27 Jan 2026 11:16:07 -0500
 Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60R6vWAZ026737;
- Tue, 27 Jan 2026 16:16:22 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60R84DAm015187;
+ Tue, 27 Jan 2026 16:15:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Ikc7gr/1TvctqRb1A
- bu2usSH6QtlZ1QDD3Uc1w7K/Lw=; b=qaRoURP4cXXR6DQ05GqqUoO30TKSKLYEJ
- HQe04N/DN/psvqEhqmY2NtPWYVCdIfbOVuq8++sD31159uDLNZr3c2oIzhL+j2Nb
- EztIF84RkCKvR9wDpVwMyHXZj+CcOsmSTMvKnBeOjaqi+v3UOHOnREOyfp6owifj
- mJ1kfAQbRby/9YAoOd/4idzroVVXFr2NZ3/nQTt0YvrExewUB7DwvYugAbl5QzHg
- 0VYVHRDWLeeoMQl4M1By7duhuUSnCYQUpAbNorWHjtQVPzODoAJk2w2S8nqabd8I
- bdsPvZ7wvB/TOX5+CmoWYSijJt83kvAMyK8+38ZkyyNLlrv1jRyHw==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnt7pd0d-1
+ :mime-version:references:subject:to; s=pp1; bh=tYoHcrVKQlbXUv0+S
+ vce9bCCtTr9LoEegtEri++n/kc=; b=MSH0i+FMt+BMLzbhoJ0zh/lpXQp/YQUsE
+ cCmqafXGMTv0O/blkghmGR2AzfWkByrlT6+O9/FCVbQwu1y+wCfwUQTjdSYlQJXW
+ AMXxy419jHJWWgFc+h4ssIpY3WA7sChKa2z85PsfYZliBxuGRDbg94DQWXVXHYgH
+ dG+6G92I4ChhjOjNlqZR8L2fxWNnKY4pWK4jnOZ9iW/WLXVAmvdLKtpIQDtPNJw6
+ x7BiszHoiW5tc7zHtCu7IwWp63ZwxAF7Q5cygqsspgJ7M/g6/v1W/+AMEZ1d907k
+ P57B1EtXGG3e1oaieOYaeOUeoc+hMCES1t2Gyja0dOggbUSqr3SOQ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnt7pcxg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Jan 2026 16:16:22 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60RE0GJ9026319;
- Tue, 27 Jan 2026 16:16:21 GMT
+ Tue, 27 Jan 2026 16:15:57 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60RD0r0o006737;
+ Tue, 27 Jan 2026 16:15:56 GMT
 Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw9wk995j-1
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw8sy9e2n-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Jan 2026 16:16:21 +0000
+ Tue, 27 Jan 2026 16:15:55 +0000
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
  by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60RGGKLt28443282
+ 60RGFsIm18678372
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 27 Jan 2026 16:16:20 GMT
+ Tue, 27 Jan 2026 16:15:54 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EEA465805D;
- Tue, 27 Jan 2026 16:16:19 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 366E258064;
+ Tue, 27 Jan 2026 16:15:54 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C24D35805A;
- Tue, 27 Jan 2026 16:16:18 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 154305805D;
+ Tue, 27 Jan 2026 16:15:53 +0000 (GMT)
 Received: from t15.ibmuc.com (unknown [9.61.94.134])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 27 Jan 2026 16:16:18 +0000 (GMT)
+ Tue, 27 Jan 2026 16:15:52 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com,
  mst@redhat.com
 Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH v3 14/14] tests/qtest: Add s390x PCI boot test to cdrom-test.c
-Date: Tue, 27 Jan 2026 11:15:47 -0500
-Message-ID: <20260127161547.459443-15-jrossi@linux.ibm.com>
+Subject: [PATCH v3 01/14] pc-bios/s390-ccw: Fix misattributed function
+ prototypes
+Date: Tue, 27 Jan 2026 11:15:34 -0500
+Message-ID: <20260127161547.459443-2-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20260127161547.459443-1-jrossi@linux.ibm.com>
 References: <20260127161547.459443-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: phIZN-HiAODZ6HyPd4fNEkwd69-iTUeK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDEyOSBTYWx0ZWRfX3rMFskK811Dv
- vEoKGsMgwlprgEO3rUv0uL4hwws5LLqB3+C5ZzGhCDasmswzyhM8IU+khtDeJNOYCe1nFlcZNl3
- VltYikbMwvOsOpsIvj+FbRFZ3RByx+OMZb4KLRL7KXqu6T/WURKlme8kMe8ZeO5EfPT6r8BidMv
- iVukTRQZBDl8gqT2PAowCMfUAjsR0Y99DXVTj/zvXYyAhQYXPkTfdcPGFZukb3VeCSKpwXT0Bb3
- /pXDtJy4iib9qzAda58bouJjZShqu/j+uHFf6j1qbreDod9N3t6i0iDA5iUG/mxY6AJnh5yEwMC
- 4gqRRrgF2mpmDWY4ItPWp1L0RamPy73ORpSECHKG5xdROO1H43j/UX1WgD7NII1wBfPt+FW3Wwy
- lEXD94SN+306t7Ez1S0un8BZw/DtREKCLQeM6vdtWygW7BlPoYYMvxAcUB3Hu9jsmH3Fefwe6Ay
- Yl/ASszu70H4fdDQ9Ow==
-X-Authority-Analysis: v=2.4 cv=Zs3g6t7G c=1 sm=1 tr=0 ts=6978e4d6 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-GUID: 9GsRb2LrNw6wSuSULy8ezbShrq26pC2N
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDEyOSBTYWx0ZWRfXxcqh5zEQ+/EE
+ oI8v/yyWAA4iae0VUpAJ75IBYQGQQAXoBz8U3QaFmMBb54d6JHaUMIo49IYNbQZme3Vhajc1tn/
+ xocWvv0sA0BzMg6saXrktPiWuWns7RvmCLmmghIMGRi6RYMWBXYRZRxj8mS/DekEiOqgHmoqzrN
+ bm8kAd9FVkkUivGZrPQfh0h6hmzia+CAWhKHFaPiS8q1/ykOYoDn18jiiT6iK4GBcBSOuhc2Umu
+ xEoB4svPvFx1m2pBD/CUP/vRVEjFHrvyZImoIRijtMWNBSQakftSP00ifNOQXxV/DMYGpySFo8z
+ t3QPfieqZTpmI6yNzw9pMSxK4VsMwkUOsJLrqDCSRqbkOlv8zxxD4VfIz0Njq1wdirn6fLS6ZAv
+ M9ABROZQF5EdDQFgiNPzdTmE6YgXfiDs6zPg2yQUtbP/4fW9iJYVJKyF/Q3TKd6HLWesxNaZYaI
+ XvRmP06r6X46JldNk5Q==
+X-Authority-Analysis: v=2.4 cv=Zs3g6t7G c=1 sm=1 tr=0 ts=6978e4bd cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=nJdWAAiftWQBe2TG7ssA:9
-X-Proofpoint-ORIG-GUID: phIZN-HiAODZ6HyPd4fNEkwd69-iTUeK
+ a=HoESQQHAtyuLEXRXYhEA:9
+X-Proofpoint-ORIG-GUID: 9GsRb2LrNw6wSuSULy8ezbShrq26pC2N
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-27_03,2026-01-27_03,2025-10-01_01
@@ -120,33 +121,83 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Add a rudimentary test for s390x IPL to verify that a guest may boot using
-virtio-blk-pci device.
+The virtio-blkdev functions are incorrectly listed in s390-ccw.h as belonging to
+virtio.c.  Additionally, virtio_load_direct() has an unused subchan_id argument.
+
+Remove the unused argument and move the prototypes to virtio.h so that they are
+independent from the CCW bus.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- tests/qtest/cdrom-test.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ pc-bios/s390-ccw/bootmap.c       | 2 +-
+ pc-bios/s390-ccw/s390-ccw.h      | 4 ----
+ pc-bios/s390-ccw/virtio-blkdev.c | 2 +-
+ pc-bios/s390-ccw/virtio.h        | 7 +++++++
+ 4 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
-index 56e2d283a9..a65854d2bc 100644
---- a/tests/qtest/cdrom-test.c
-+++ b/tests/qtest/cdrom-test.c
-@@ -246,6 +246,13 @@ static void add_s390x_tests(void)
-                             "-drive if=none,id=d2,media=cdrom,file=",
-                             test_cdboot);
-     }
-+    if (qtest_has_device("virtio-blk-pci")) {
-+        qtest_add_data_func("cdrom/boot/pci-bus-with-bootindex",
-+                            "-device virtio-scsi -device virtio-serial "
-+                            "-device virtio-blk-pci,drive=d1,bootindex=1 "
-+                            "-drive if=none,id=d1,media=cdrom,file=",
-+                            test_cdboot);
-+    }
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 0f8baa0198..420ee32eff 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -662,7 +662,7 @@ static int zipl_load_segment(ComponentEntry *entry)
+                  */
+                 break;
+             }
+-            address = virtio_load_direct(cur_desc[0], cur_desc[1], 0,
++            address = virtio_load_direct(cur_desc[0], cur_desc[1],
+                                          (void *)address);
+             if (!address) {
+                 puts("zIPL load segment failed");
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index b1dc35cded..47ea66bd4d 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -67,11 +67,7 @@ void sclp_get_loadparm_ascii(char *loadparm);
+ int sclp_read(char *str, size_t count);
+ 
+ /* virtio.c */
+-unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
+-                                 unsigned long subchan_id, void *load_addr);
+ bool virtio_is_supported(SubChannelId schid);
+-int virtio_blk_setup_device(SubChannelId schid);
+-int virtio_read(unsigned long sector, void *load_addr);
+ 
+ /* bootmap.c */
+ void zipl_load(void);
+diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
+index 7b2d1e20f4..4b819dd80f 100644
+--- a/pc-bios/s390-ccw/virtio-blkdev.c
++++ b/pc-bios/s390-ccw/virtio-blkdev.c
+@@ -64,7 +64,7 @@ int virtio_read_many(unsigned long sector, void *load_addr, int sec_num)
  }
  
- int main(int argc, char **argv)
+ unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
+-                                 unsigned long subchan_id, void *load_addr)
++                                 void *load_addr)
+ {
+     u8 status;
+     int sec = rec_list1;
+diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+index 5c5e808a50..597bd42358 100644
+--- a/pc-bios/s390-ccw/virtio.h
++++ b/pc-bios/s390-ccw/virtio.h
+@@ -277,7 +277,14 @@ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd);
+ int virtio_reset(VDev *vdev);
+ int virtio_setup_ccw(VDev *vdev);
+ 
++/* virtio-net.c */
+ int virtio_net_init(void *mac_addr);
+ void virtio_net_deinit(void);
+ 
++/* virtio-blkdev.c */
++int virtio_blk_setup_device(SubChannelId schid);
++int virtio_read(unsigned long sector, void *load_addr);
++unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
++                                 void *load_addr);
++
+ #endif /* VIRTIO_H */
 -- 
 2.52.0
 
