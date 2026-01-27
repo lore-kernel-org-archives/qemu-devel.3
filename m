@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C2B1CA6C9D
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 08:46:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87C20CA6C9D
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 08:55:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkehU-000640-5c; Tue, 27 Jan 2026 03:45:28 -0500
+	id 1vkeqU-0002SR-Et; Tue, 27 Jan 2026 03:54:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vkehR-00061x-01
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 03:45:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vkeqT-0002S8-F0
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 03:54:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vkehO-00038u-46
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 03:45:24 -0500
+ id 1vkeqQ-0005Lc-K9
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 03:54:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769503510;
+ s=mimecast20190719; t=1769504081;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=8nZVq5C60OyjBjIgX/8zGTHHq0obTGLsoT+49US/5aA=;
- b=izz7CtjwIhcWDDFVuVoKhpmc2fnfNTb2sUTG0+wj2f8K5JknPigCBV994DENkFcJ3X7FYB
- 8zwa1Kuuv3/aB50XvlKHsxTmIn9xccwBaxxSyob0DnpdMs2ENKZy5N4kaj6hVCq934ytQU
- yoqIl8JlPkjU41Cr0OkbDvMpX728bzo=
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yi+vy04Mjl+mOABTmmcauRVHKYvnx9g3ARymGTswiCs=;
+ b=EcEp12Lzo9XNuC0Ws5B0l0HCItx6XUk70/kRW+KKx+l5xhEKEiMxxqUsqiqd4+6cYlQAWz
+ c56NyDHDpoKOBKamSDdylmxQ7DzEOrwXU7pJ/yjwpwI6uIFMbRmOUvn5ac+jvopfTyr6Tt
+ IeeXf4i/kdLc8mOQT6/wqmV9h5fjxv0=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-hD5EHANROQ-qoBP_gNrMJg-1; Tue,
- 27 Jan 2026 03:45:02 -0500
-X-MC-Unique: hD5EHANROQ-qoBP_gNrMJg-1
-X-Mimecast-MFC-AGG-ID: hD5EHANROQ-qoBP_gNrMJg_1769503501
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-65-v6YRo0CBNwmaaKBfpYlAMQ-1; Tue,
+ 27 Jan 2026 03:54:36 -0500
+X-MC-Unique: v6YRo0CBNwmaaKBfpYlAMQ-1
+X-Mimecast-MFC-AGG-ID: v6YRo0CBNwmaaKBfpYlAMQ_1769504075
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C5EEC18911AA; Tue, 27 Jan 2026 08:44:53 +0000 (UTC)
+ id 8F76D1955D92; Tue, 27 Jan 2026 08:54:34 +0000 (UTC)
 Received: from redhat.com (unknown [10.45.225.228])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 024F0180009E; Tue, 27 Jan 2026 08:44:47 +0000 (UTC)
-Date: Tue, 27 Jan 2026 08:44:43 +0000
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C85EA30001A2; Tue, 27 Jan 2026 08:54:28 +0000 (UTC)
+Date: Tue, 27 Jan 2026 08:54:24 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Elhrj Saad <saadelhrj@gmail.com>
-Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: Re: [PATCH] hw/adc: Fix out-of-bounds write in Aspeed ADC model
-Message-ID: <aXh6-6JGFDxuA4gZ@redhat.com>
-References: <20260126141820.719492-1-clg@redhat.com>
- <CAFEAcA8xQmUa7DyR7+Nw255e_DW=uzZ-gQT5G6cd-uuWgQBaUg@mail.gmail.com>
- <e8a6032d-cf06-46e5-a7d5-c2e9b8d248ef@redhat.com>
- <CAEEWBQPci_=gDhJS8m7erJeYu7C4-eioD0ks=_WReFQiOVDNiw@mail.gmail.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, pkrempa@redhat.com,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alberto Faria <afaria@redhat.com>, Hannes Reinecke <hare@suse.de>,
+ Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Qing Wang <qinwang@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH v2 4/5] scsi: save/load SCSI reservation state
+Message-ID: <aXh9QKV68zIrLdLs@redhat.com>
+References: <20260126194735.46167-1-stefanha@redhat.com>
+ <20260126194735.46167-5-stefanha@redhat.com>
+ <aXfHu-NsoFpBbXRL@redhat.com> <20260126221343.GA51466@fedora>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAEEWBQPci_=gDhJS8m7erJeYu7C4-eioD0ks=_WReFQiOVDNiw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260126221343.GA51466@fedora>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -93,21 +98,176 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jan 26, 2026 at 07:22:23PM +0100, Elhrj Saad wrote:
-> Hello, gentlemen,
+On Mon, Jan 26, 2026 at 05:13:43PM -0500, Stefan Hajnoczi wrote:
+> On Mon, Jan 26, 2026 at 07:59:55PM +0000, Daniel P. Berrangé wrote:
+> > On Mon, Jan 26, 2026 at 02:47:34PM -0500, Stefan Hajnoczi wrote:
+> > > Add a vmstate subsection to SCSIDiskState so that scsi-block devices can
+> > > transfer their reservation state during live migration. Upon loading the
+> > > subsection, the destination QEMU invokes the PERSISTENT RESERVE OUT
+> > > command's PREEMPT service action to atomically move the reservation from
+> > > the source I_T nexus to the destination I_T nexus. This results in
+> > > transparent live migration of SCSI reservations.
+> > > 
+> > > This approach is incomplete since SCSI reservations are cooperative and
+> > > other hosts could interfere. Neither the source QEMU nor the destination
+> > > QEMU are aware of changes made by other hosts. The assumption is that
+> > > reservation is not taken over by a third host without cooperation from
+> > > the source host.
+> > > 
+> > > I considered adding the vmstate subsection to SCSIDevice instead of
+> > > SCSIDiskState, since reservations are part of the SCSI Primary Commands
+> > > that other devices apart from disks could support. However, due to
+> > > fragility of migrating reservations, we will probably limit support to
+> > > scsi-block and maybe scsi-disk in the future. In the end, I think it
+> > > makes sense to place this within scsi-disk.c.
+> > > 
+> > > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > > ---
+> > >  include/hw/scsi/scsi.h |  1 +
+> > >  hw/core/machine.c      |  4 ++-
+> > >  hw/scsi/scsi-disk.c    | 81 ++++++++++++++++++++++++++++++++++++++++-
+> > >  hw/scsi/scsi-generic.c | 82 ++++++++++++++++++++++++++++++++++++++++++
+> > >  hw/scsi/trace-events   |  1 +
+> > >  5 files changed, 167 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
+> > > index c5ec58089b..a3e246dbd9 100644
+> > > --- a/include/hw/scsi/scsi.h
+> > > +++ b/include/hw/scsi/scsi.h
+> > > @@ -253,6 +253,7 @@ SCSIDevice *scsi_device_get(SCSIBus *bus, int channel, int target, int lun);
+> > >  
+> > >  /* scsi-generic.c. */
+> > >  extern const SCSIReqOps scsi_generic_req_ops;
+> > > +bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp);
+> > >  
+> > >  /* scsi-disk.c */
+> > >  #define SCSI_DISK_QUIRK_MODE_PAGE_APPLE_VENDOR             0
+> > > diff --git a/hw/core/machine.c b/hw/core/machine.c
+> > > index 6411e68856..16134f8ce5 100644
+> > > --- a/hw/core/machine.c
+> > > +++ b/hw/core/machine.c
+> > > @@ -38,7 +38,9 @@
+> > >  #include "hw/acpi/generic_event_device.h"
+> > >  #include "qemu/audio.h"
+> > >  
+> > > -GlobalProperty hw_compat_10_2[] = {};
+> > > +GlobalProperty hw_compat_10_2[] = {
+> > > +    { "scsi-block", "migrate-pr", "off" },
+> > > +};
+> > >  const size_t hw_compat_10_2_len = G_N_ELEMENTS(hw_compat_10_2);
+> > >  
+> > >  GlobalProperty hw_compat_10_1[] = {
+> > > diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+> > > index 76fe5f085b..8845ab1192 100644
+> > > --- a/hw/scsi/scsi-disk.c
+> > > +++ b/hw/scsi/scsi-disk.c
+> > > @@ -28,6 +28,7 @@
+> > >  #include "qemu/hw-version.h"
+> > >  #include "qemu/memalign.h"
+> > >  #include "hw/scsi/scsi.h"
+> > > +#include "migration/misc.h"
+> > >  #include "migration/qemu-file-types.h"
+> > >  #include "migration/vmstate.h"
+> > >  #include "hw/scsi/emulation.h"
+> > > @@ -122,6 +123,7 @@ struct SCSIDiskState {
+> > >       */
+> > >      uint16_t rotation_rate;
+> > >      bool migrate_emulated_scsi_request;
+> > > +    NotifierWithReturn migration_notifier;
+> > >  };
+> > >  
+> > >  static void scsi_free_request(SCSIRequest *req)
+> > > @@ -2737,6 +2739,25 @@ static SCSIRequest *scsi_new_request(SCSIDevice *d, uint32_t tag, uint32_t lun,
+> > >  }
+> > >  
+> > >  #ifdef __linux__
+> > > +/*
+> > > + * Preempt on the SCSI Persistent Reservation on the source when migration
+> > > + * fails because the destination may have already preempted and we need to get
+> > > + * the reservation back.
+> > > + */
+> > > +static int scsi_block_migration_notifier(NotifierWithReturn *notifier,
+> > > +                                         MigrationEvent *e, Error **errp)
+> > > +{
+> > > +    if (e->type == MIG_EVENT_PRECOPY_FAILED) {
+> > > +        SCSIDiskState *s =
+> > > +            container_of(notifier, SCSIDiskState, migration_notifier);
+> > > +        SCSIDevice *d = &s->qdev;
+> > > +
+> > > +        /* MIG_EVENT_PRECOPY_FAILED cannot fail, so ignore errors */
+> > > +        scsi_generic_pr_state_preempt(d, NULL);
+> > 
+> > I feel like we ought to 'warn_report'  any errors related to failing
+> > to acquire persistent reservations.
+> > 
+> > In the unlikely event an error occurs, whomever has to deal with
+> > the resulting support ticket will want to know something went wrong
+> > from the QEMU logs.
 > 
-> Is there any possibility of making an exception and assigning a CVE for the
-> issue ?? (It's my first ever found vulnerability :)
+> Good idea.
+> 
+> I'm also not sure how to best approach logging in general. Usually QEMU
+> does little logging when the VM is running, but it has become
+> increasingly difficult to get information out of QEMU via tracing or
+> monitor commands since nowadays QEMU might be running in a locked down
+> container. Debugging PR migration issues would be easiest if the trace
+> events introduced in this series were actually printfs to stderr, but
+> that's not traditionally how QEMU did things.
 
-Thank you for your contribution to improving the quality of QEMU. In many
-projects this would indeed qualify for assignment of a CVE, but as Peter
-mentions, this falls outside the scope of QEMU's security policy.
+I wouldn't overthink this - just pass a locall "Error *err" object
+instead of NULL, and then warn_report_err on the result. Just needs
+to be a marker in the that something has gone wrong, which we could
+not propagate to the mgmt app in the normal manner since we have no
+error path here.
 
-Assigning CVEs has quite a ripple effect on those consuming QEMU, due
-to it triggering many security response processes. As such we do not
-wish to issue CVEs for things that the project considers to merely be
-hardening bug fixes in an area of code that is not designed to be
-providing a security boundary.
+Debugging /anything/ in QEMU is easiest if the trace events were
+actually prints, but that thinking leads to us enabling tracing
+all the time, everywhere which is impractical
+
+At the same time it is common for apps to have some level of
+"always on" debugging collected and so we perhaps do have a
+general conceptual gap in QEMU.
+
+If we thinking of trace events as being equiv to "DEBUG" level
+log events, would it help if we could annotate a subset of
+trace events as "INFO" level and do something with them by
+default. eg perhaps we have an ring buffer tracing target that
+collects "INFO" events continuously and can be asked to dump
+out its state in error scenarios ?
+
+> > > @@ -3209,6 +3240,46 @@ static const Property scsi_hd_properties[] = {
+> > >      DEFINE_BLOCK_CHS_PROPERTIES(SCSIDiskState, qdev.conf),
+> > >  };
+> > >  
+> > > +#ifdef __linux__
+> > > +static bool scsi_disk_pr_state_post_load_errp(void *opaque, int version_id, Error **errp)
+> > > +{
+> > > +    SCSIDiskState *s = opaque;
+> > > +    SCSIDevice *dev = &s->qdev;
+> > > +
+> > > +    return scsi_generic_pr_state_preempt(dev, errp);
+> > > +}
+> > 
+> > What if there are multiple SCSI disks, and on the target host
+> > we successful acquire the reservation for the 1st, but fail
+> > the second ? Are we ignoring the failure of the second, or
+> > are we discarding the reservation of the 1st and failing
+> > migration ?   Should we warn_report here too ?
+> 
+> Each disk is its own scsi-block device.
+> scsi_disk_pr_state_post_load_errp() will be invoked for each such
+> device. If one of these calls fails, the migration will abort and the
+> errp here will reported.
+
+Oh right, the errp is fine as that will go up to libvirt and thus
+be recorded.
+
+> The rollback on the source host doesn't care which devices
+> succeeded/failed, it performs idempotent PREEMPT operations for all
+> devices so we're sure all reservations are back on the source host after
+> a failed migration.
+
+Ok
 
 With regards,
 Daniel
