@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2CE7C88E41
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 09:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D2FCD13C1B
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 09:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkfPW-0004mH-Up; Tue, 27 Jan 2026 04:30:59 -0500
+	id 1vkfPV-0004cB-VS; Tue, 27 Jan 2026 04:30:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vkfOi-0003w9-HL; Tue, 27 Jan 2026 04:30:11 -0500
+ id 1vkfPT-0004SJ-KH; Tue, 27 Jan 2026 04:30:56 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vkfOe-0004dA-Oz; Tue, 27 Jan 2026 04:30:07 -0500
+ id 1vkfPS-0005A1-3J; Tue, 27 Jan 2026 04:30:55 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 27 Jan
- 2026 17:29:44 +0800
+ 2026 17:29:46 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 27 Jan 2026 17:29:44 +0800
+ Transport; Tue, 27 Jan 2026 17:29:46 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v2 03/11] hw/arm/ast27x0: Start TSP in powered-off state to
- match hardware behavior
-Date: Tue, 27 Jan 2026 17:29:32 +0800
-Message-ID: <20260127092943.3731635-4-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 09/11] hw/misc/aspeed_scu: Add SCU support for TSP SDRAM
+ remap
+Date: Tue, 27 Jan 2026 17:29:38 +0800
+Message-ID: <20260127092943.3731635-10-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260127092943.3731635-1-jamin_lin@aspeedtech.com>
 References: <20260127092943.3731635-1-jamin_lin@aspeedtech.com>
@@ -67,40 +67,86 @@ From:  Jamin Lin via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the previous design, both the PSP and TSP were started together during
-SoC initialization. However, on real hardware, the TSP begins in a powered-off
-state. The typical boot sequence involves the PSP powering up first, loading
-the TSP firmware binary into shared memory via DRAM remap, and then releasing
-the TSP reset and enabling it through SCU control registers.
+This commit adds SCU register support for TSP SDRAM remap control and runtime
+activation. Unlike SSP, the TSP does not support configurable target address remapping
+through SCU registers. It only supports setting the PSP DRAM base and size, which
+are then aliased into the TSP-visible SDRAM window.
 
-To more accurately model this behavior in QEMU, this commit sets the
-"start-powered-off" property for the TSP's ARMv7M core. This change ensures
-the TSP remains off until explicitly enabled via the SCU, simulating the
-real-world flow where the PSP controls TSP boot through SCU interaction.
+coprocessor_sdram_remap[2]: maps PSP DRAM offset 0x42E000000 (size: 32MB) to TSP SDRAM
+      offset 0x0
+
+The SCU registers AST2700_SCU_TSP_CTRL_1 and
+AST2700_SCU_TSP_REMAP_SIZE_2 allow runtime reconfiguration of the DRAM base (alias offset)
+and mapping size.
+
+|------------------------------------------|         |----------------------------|
+|               PSP DRAM                   |         |        TSP SDRAM           |
+|------------------------------------------|         |----------------------------|
+| 0x42E0_0000_0 (SCU_168 << 4)             |         | 0x0000_0000                |
+|   remap base                             |------>  |  - fixed target addr       |
+|   size: 32MB    (SCU_194)                |         |                            |
+|------------------------------------------|         |----------------------------|
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed_ast27x0-tsp.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/misc/aspeed_scu.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
-index 9c11c016ca..46691080d1 100644
---- a/hw/arm/aspeed_ast27x0-tsp.c
-+++ b/hw/arm/aspeed_ast27x0-tsp.c
-@@ -165,6 +165,13 @@ static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
-     qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
-     object_property_set_link(OBJECT(&a->armv7m), "memory",
-                              OBJECT(s->memory), &error_abort);
-+    /*
-+     * The TSP starts in a powered-down state and can be powered up
-+     * by setting the TSP Control Register through the SCU
-+     * (System Control Unit)
-+     */
-+    object_property_set_bool(OBJECT(&a->armv7m), "start-powered-off", true,
-+                             &error_abort);
-     sysbus_realize(SYS_BUS_DEVICE(&a->armv7m), &error_abort);
+diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
+index 333fa964d3..a551063c03 100644
+--- a/hw/misc/aspeed_scu.c
++++ b/hw/misc/aspeed_scu.c
+@@ -159,6 +159,8 @@
+ #define AST2700_SSP_TSP_RST_RB          BIT(8)
+ #define AST2700_SSP_TSP_RST_HOLD_RB     BIT(9)
+ #define AST2700_SSP_TSP_RST_SRC_RB      BIT(10)
++#define AST2700_SCU_TSP_CTRL_1          TO_REG(0x168)
++#define AST2700_SCU_TSP_REMAP_SIZE_2    TO_REG(0x194)
+ #define AST2700_SCU_SYS_RST_CTRL_1      TO_REG(0x200)
+ #define AST2700_SCU_SYS_RST_CLR_1       TO_REG(0x204)
+ #define AST2700_SCU_SYS_RST_SSP         BIT(30)
+@@ -1088,6 +1090,23 @@ static void aspeed_ast2700_scu_write(void *opaque, hwaddr offset,
+         data &= 0x3fffffff;
+         memory_region_set_size(mr, data);
+         break;
++    case AST2700_SCU_TSP_CTRL_1:
++        mr = &s->dram_remap_alias[2];
++        if (s->tsp_cpuid < 0 || mr == NULL) {
++            return;
++        }
++        data &= 0x7fffffff;
++        memory_region_set_alias_offset(mr,
++                                       ((uint64_t) data << 4) & 0x3ffffffff);
++        break;
++    case AST2700_SCU_TSP_REMAP_SIZE_2:
++        mr = &s->dram_remap_alias[2];
++        if (s->tsp_cpuid < 0 || mr == NULL) {
++            return;
++        }
++        data &= 0x3fffffff;
++        memory_region_set_size(mr, data);
++        break;
+     case AST2700_SCU_SYS_RST_CTRL_1:
+         if (s->ssp_cpuid < 0) {
+             return;
+@@ -1165,6 +1184,8 @@ static const uint32_t ast2700_a0_resets[ASPEED_AST2700_SCU_NR_REGS] = {
+     [AST2700_SCU_SSP_REMAP_ADDR_2]  = 0x00000000,
+     [AST2700_SCU_SSP_REMAP_SIZE_2]  = 0x02000000,
+     [AST2700_SCU_TSP_CTRL_0]        = 0x000007FE,
++    [AST2700_SCU_TSP_CTRL_1]        = 0x42E00000,
++    [AST2700_SCU_TSP_REMAP_SIZE_2]  = 0x02000000,
+     [AST2700_SCU_SYS_RST_CTRL_1]    = 0xFFC37FDC,
+     [AST2700_SCU_SYS_RST_CTRL_2]    = 0x00001FFF,
+     [AST2700_SCU_HPLL_PARAM]        = 0x0000009f,
+@@ -1205,6 +1226,8 @@ static void aspeed_ast2700_scu_reset(DeviceState *dev)
  
-     /* SDRAM */
+     if (s->tsp_cpuid > 0) {
+         arm_set_cpu_off(s->tsp_cpuid);
++        memory_region_set_alias_offset(&s->dram_remap_alias[2], 0x2e000000);
++        memory_region_set_size(&s->dram_remap_alias[2], 32 * MiB);
+     }
+ }
+ 
 -- 
 2.43.0
 
