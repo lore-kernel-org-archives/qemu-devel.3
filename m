@@ -4,111 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B1B3D2D8F9
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 11:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3799BD2D8FE
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 11:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkgx6-0002DQ-SI; Tue, 27 Jan 2026 06:09:44 -0500
+	id 1vkh6C-0001C8-5E; Tue, 27 Jan 2026 06:19:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vkgwx-0002Bm-4S
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 06:09:35 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vkgwv-0006in-5r
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 06:09:34 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-79427f739b0so56567377b3.3
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 03:09:32 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769512172; cv=none;
- d=google.com; s=arc-20240605;
- b=US1oAiW44R27oMZcl6duaGSPshsrO+po7NEPvkhdRMM2k7JDkkXGM+P82FcqHJf2Q5
- jOcBHz4Evz4X/3pwlEUvWA9arvht/pqshgDWlAFsLcDXjX0kGthQBJ77HF11fo3ZZcMt
- Rl6+w21VzQfm3hbJJhi5pHJBDAgWxTi9BS87I4f8VJ/Dc4XoWT94+RxyXh5V13VYfk3e
- rb4mMVoCSFZG3eyItGsw+LYcckecW8ZRiGxV5P5/o7jalPg3gkeXcG2ES0Vhm/933Y6d
- +UPO0y32Wz0bfWLlHrUj1yRqxZqPb2VioTJarVK7ya4DLLNQCAEzI9QJYtPqlAJ/RP4C
- KGbw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=mQEb84e7JtMOm0oSuQqUamX2gk5Z99Avs5hmajUOejU=;
- fh=dXHoilmhhxY5vg21Ss6PZGFufhldebBfEzqm3qMG63M=;
- b=ZadVXttRz0tEeTV86XD3JqUtAP+zfXEp3fYJwHXHGAiav6yc16+8CF8Gn8ZL0B3gOJ
- Lmxil+Cz0mbeKTaAYz/DJlnsKuVpzRVlqCAwo96d/2wpK9DQLWTswGYURD7SnhkLZ45f
- stYK7RHVJSmm+xxungemkC9C+kFr69kI2gUwZknpi/o+ib0VjM8uIaLBu49vv1eh9E0m
- zHuG7acgG9usQQMSyU41Ii2J9r5G9kDIjIYApI3YPDGw0eMKpWB+1y8Fp7fQuOzXMDqD
- AOJz1QjQPrplVnfUjY7+0ahTR6n6J3MQzROniBTm/LD1klkCuxsBe6hF7vLXUQaocTLL
- Bz9g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769512172; x=1770116972; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mQEb84e7JtMOm0oSuQqUamX2gk5Z99Avs5hmajUOejU=;
- b=LpWzcQy+mAuSj2ZczgeouVO+L6pNLdH3UC3bYzgbhfcXY4VdVWUSWxKYCH9d9JbD7J
- LMHT1LFjp8mazUceTIZB107A8oC12eDvAzasZta2OWL95ZCsWRsdmSbFGkMj8rqtvG4U
- aTmljYiqdMpwu967eZttv0m3BxGiHp3Ohe58SKvN04iCHyDvGv2wRzHNh1pTLliSu/8F
- Soafey5+eGCWvTUSXf8v10d4iIi0h+dNTcM3ZeXtY9FMvz2EXfcK96F4tcdHjurDMA9L
- Nh1TrrnHqbViahW9F8CtcVijFUGsqSX1bJPEAx87NkPZB+T9Xh0fpto+VEBX/M/wLECa
- 6t1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769512172; x=1770116972;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mQEb84e7JtMOm0oSuQqUamX2gk5Z99Avs5hmajUOejU=;
- b=nkVIGH1axCPLRQBjNJQIwrdlSgYOZv02RQJM+W8tRZZQ+5dPjFZJt4EaglVTgGy+yj
- Tz/YFEnYOrB4s2Z9Ho7JVJBDWh08ocYVfKrcfEtttMG5aIhAx9cxwRQ0TN7BYLZGOxbR
- sVnvfbxETZP7fNjBrpRPmaeM6Hz0IyGNsdh7D6XD7ig6WHRdATFmXyrdpUbl4xZaq29V
- z/d0P3W7H90u4EjeHhuxTDnhXx/MKVrpHhKcuaCMMYZEdeGXTUOnMUjGKTNCbLA7L+cf
- 3c7GmdvyX18LVnL5RJJFUSWvZ21vK2eFeS9Eglox6P2j10JEoiYCBHxeE4IruHGLoxCC
- AxBQ==
-X-Gm-Message-State: AOJu0Ywvvhtyb3gyV10V03W2KkQ4cjiceXPi+mH3AyZAD83nRKi0nQBZ
- H1LkUcv/CvEN3/HMipIQE6Uj2M1/rQZokn3okhvu5QddHLK6jrZRfUOyiaGowleFR7vXyR3HVBk
- jbJQlp7JQr8p7h7YbCw9uJR397NuFO7PN4xziDeW+gw==
-X-Gm-Gg: AZuq6aIts+/7SGIY00Gny0d9aw1L0yf5vowEMch24aemn8jlOboPJwBH7eLj0FXK0US
- cIRnCMUrHzKlY15WSTyTMNNJp71iZUlRAIZ0S3h6CZWhw5iRBbR32PA/8oeW5dFev9J7P0TOtDT
- 2uii81EUROVX8P/odrWD1WLs6qZRHlEwPyg0AMCSDlN83CVkolNiBXUUoPcC9OP1fMQ1dMmlJp9
- r9cVd6LZP+3klBtOKPAJxVyDlkUXN9zjA+ujr3W3oGXrrSIqeghp2NCjXo4fbVEughiPA==
-X-Received: by 2002:a05:690c:10d:b0:794:795d:4728 with SMTP id
- 00721157ae682-7947aa04204mr8209797b3.23.1769512172088; Tue, 27 Jan 2026
- 03:09:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vkh67-0001AI-FI
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 06:19:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vkh66-0000x9-1s
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 06:19:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769512740;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nOjAJfProoCB2ZNiIiBQqNee8INRqMIJyl6k7o/1Yck=;
+ b=Xdp24Xz9Demm6OgQPitERgyjJ4W3qqdn0C0o02N1rV8tU0ivpxrcTT9oqu17emGieyuXcV
+ +uGfccDp7+uPhkKitYtCo63RxR4q//YaSuLda+xRPmXzVzpJzD+DBCuizmLjg8+90BbnTR
+ HZwbrqX8UpmZ5X2j1B1yjs/JEVJQu0s=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-OKvb0TYSNTCqXyALnCoBFA-1; Tue,
+ 27 Jan 2026 06:17:33 -0500
+X-MC-Unique: OKvb0TYSNTCqXyALnCoBFA-1
+X-Mimecast-MFC-AGG-ID: OKvb0TYSNTCqXyALnCoBFA_1769512652
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BBE8A1955D84; Tue, 27 Jan 2026 11:17:31 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.149])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C8FCE180009E; Tue, 27 Jan 2026 11:17:25 +0000 (UTC)
+Date: Tue, 27 Jan 2026 12:17:23 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>,
+ qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>,
+ Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ German Maglione <gmaglione@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alex Bennee <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: Modern HMP
+Message-ID: <aXiewxB60hasi49R@redhat.com>
+References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
+ <871pjigf6z.fsf_-_@pond.sub.org> <aXH1ECZ1Nchui9ED@redhat.com>
+ <87ikctg8a8.fsf@pond.sub.org> <aXIWLi656H8VbrPE@redhat.com>
+ <87ikctk5ss.fsf@suse.de> <aXJJkd8g0AGZ3EVv@redhat.com>
 MIME-Version: 1.0
-References: <20260121134114.9781-1-mohamed@unpredictable.fr>
-In-Reply-To: <20260121134114.9781-1-mohamed@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 27 Jan 2026 11:09:20 +0000
-X-Gm-Features: AZwV_Qixd0EgnbcgMdIeEVoGMfqvDJPGAc-SR0Geb1PsZtMeX-KI7VhJfc9gmVs
-Message-ID: <CAFEAcA9qQB6Cthd5FrFTQRCVuiwAz7J+xBuuE=-vq7ThUpS8Lw@mail.gmail.com>
-Subject: Re: [PATCH v17 00/21] WHPX support for Arm
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>, 
- Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-arm@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>, 
- Ani Sinha <anisinha@redhat.com>, Pedro Barbuda <pbarbuda@microsoft.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aXJJkd8g0AGZ3EVv@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,21 +100,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 21 Jan 2026 at 13:41, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->
-> Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this submission: whpx-v18)
->
-> Missing features:
-> - VM save-restore: interrupt controller state notably
-> - SVE register sync: I didn't have the time to test this on pre-release hardware with SVE2 support yet.
-> So SVE2 is currently masked for VMs when running this.
->
-> Known bugs:
-> - U-Boot still doesn't work (hangs when trying to parse firmware) but EDK2 does.
+Am 22.01.2026 um 17:00 hat Daniel P. Berrangé geschrieben:
+> > Does the new program becomes basically an external project unrelated to
+> > QEMU, that simply talks to QMP like libvirt does?
+> 
+> It could be a separate project under QEMU on github, or it could just be
+> binary in qemu.git. What matters is that it is out of the main QEMU process
+> eventually.
 
-Hi; I left a couple of review comments, but overall I think this is
-very close to being ready to go in.
+I think the basic requirement for any HMP replacement is that it just
+works, i.e. no manual setting up of sockets etc. like for qmp-shell.
 
-thanks
--- PMM
+If it's an external process, QEMU should just launch it automatically,
+and the user interface should still go through the usual chardevs so
+that the current backends still work and the default of '-monitor vc'
+can be retained.
+
+(Of course, once this plumbing has been done, it could be reused for
+qmp-shell to provide a nicer and more integrated option there, too.)
+
+This pretty much means that it has to be in the same project, or at
+least a subproject that is automatically downloaded when building QEMU.
+
+Kevin
+
 
