@@ -4,56 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D48E5D2F036
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 14:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A7BD2F036
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 14:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkjmF-00030t-RP; Tue, 27 Jan 2026 09:10:44 -0500
+	id 1vkjm1-0002n3-Ah; Tue, 27 Jan 2026 09:10:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vkjm8-0002tl-P5
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:10:38 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vkjm4-00080c-PL
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:10:36 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 052E25969F3;
- Tue, 27 Jan 2026 15:10:31 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id fMIS5rJ5D-mx; Tue, 27 Jan 2026 15:10:28 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E8A915969F2; Tue, 27 Jan 2026 15:10:28 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E6A7B5969FA;
- Tue, 27 Jan 2026 15:10:28 +0100 (CET)
-Date: Tue, 27 Jan 2026 15:10:28 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 00/10] Implement memory_region_new_* functions
-In-Reply-To: <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
-Message-ID: <0118dc9b-d467-7f6b-92a8-4f42760ecb6c@eik.bme.hu>
-References: <cover.1769362313.git.balaton@eik.bme.hu>
- <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vkjlv-0002lW-M7
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:10:23 -0500
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vkjlt-0007tz-Qe
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:10:23 -0500
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-78fc174ada4so45580137b3.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 06:10:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769523020; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ICTMCEf1fjU7T/M4rOdrP0MF7JOPI6Bwn3fMhagZoK2DPzVXsXX7MY9LiNKfeYATMX
+ GL5p5yDKXM4yfSB9uxVPd+UJUuWNe+OyWCuJ4MoP+wQoVey4KEfhKb6OnbaRkkjWMelj
+ f1YVSX/KI9FAgqszZUKUT8Ldlw0jePP142S9qfZiqL+iOVf9yFLz7ucL7DprnHCYeirK
+ s4dd5l/u2LZBpAKy1w4/UqpT3I1Jii9VekX/BlBThjd7teesqJ2S2E5y7K0QdynEYRd6
+ FTLnD57ZW5xMB7V3A6TBXM2NPbpIgK6+91vy11b48K/S2gPxUCRvhwk5UXkwrc1sL+da
+ 8eGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=rM8MuC1J7uOkpxHdH5HbN6VRKpCSDyEJgSbG700eyqk=;
+ fh=dXHoilmhhxY5vg21Ss6PZGFufhldebBfEzqm3qMG63M=;
+ b=RrAedb4sJVsgyYRrswBvL7HD1zMQlLAfWrSoYYRqVYfaIediqH3q2+yfyn1OZdxsu1
+ AvrVeK85RhMUzvbMm1OfJzx/MX7gvnDCmEM6b3dO/d9I/qJQ36qNKaknohmW/VEgYhYV
+ okkkeDugOS6vlFyMLmrpxvIR3tf6TtH9XoYcy1q72Gi9VH0tsHKMINz+s17XlBKe9MQe
+ P2KZRQNnwRapKI0Al7XkH//+E/JBIquLEfExuKh2uCxf83XOfTjTRnq8DOVn/WObwDp5
+ mchWlt2/pbuc7/x2OvRUb8U0+PJp85sgU2eocHK56mQdR8xQ+fQ8tm3AsS3z9LzwbLZ3
+ EVzA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769523020; x=1770127820; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rM8MuC1J7uOkpxHdH5HbN6VRKpCSDyEJgSbG700eyqk=;
+ b=q+v0/24HAJToWlINyF7/PalKzbMWA9lr2ofXF8PGPTkskgCbCfc8bfa0SsWZme10TJ
+ 60aFYG1/w9abY5QwUD2gHcWF2E0BRkRIRwLghpMqeI9ZMJr2Gd5Qv2pm29PNrraBNpNW
+ U4ihSpKYEazhR774xwDF8/9acDS7q414kT1XuKP1IOTu26wwQKdNVXWP/U4SnHVwkKoN
+ L1bfumm5bVYjwsBaFH6PYqUZmlaZQguB/Eq/gGwftew11oJwjSRNlKAvVjo3c90fSzRF
+ 4iNSP1sXgFy+DynUEv59T/ZD22J4d95XGCDY5sSG7f7hQppIVNuWwYlA08bde4LwLQ96
+ x42A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769523020; x=1770127820;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rM8MuC1J7uOkpxHdH5HbN6VRKpCSDyEJgSbG700eyqk=;
+ b=MFoUqLKTql1CSsRhFrmllHNGgfIOfrDkiwE5UQMopOFbaweDyiL3nMu05ZrxvtjFM6
+ xVkjDCljbddWaMXBz4Dj4S8i/Q27OSLhmC2LErEVLgTPy+6xCRYaW5UHo79Qih4XFrks
+ NcOX2pfcvHTGQyRMCEkki+rXP92mKrpyZDVgjsvSo8MEGvLK9CI8BJ1nA6DcOvWYLvRs
+ mtWDaphYatjUKHa3vLBIkzBnl3WpLyeTjh8+3VC1HalmJr2IAR/cML4i10NqfmpzHpdR
+ smvTZi1GNJAwFeA+8vl6IVigy5+T5DpMiW9cGQRvmh6Le+eYQuWZ/cuu3e1H3cKZd+bF
+ qfqA==
+X-Gm-Message-State: AOJu0Yz5Oq9W+aFAKI7iHmhlq8/SHQh3TTM5GIKK27YpUfgAW1ZvkF/k
+ BMP0ZOh7oEHCKFRxagWtLuvTp0EtVLyBmZOzcCnLj+I11JXKmN9j2XPGyy80gmJb3ohFsH0Rr0M
+ rKwiE8BzahP3SKTbIkt4TA/aAhlNL2edR6a1/xna4/Q==
+X-Gm-Gg: AZuq6aILgpw4XQBK038q8gWJwMSfKGYwPAmHFGdLSHLPrTEkAiQfbQXtaQ/pPbqbRqm
+ D4YhJEgm3oMY2WLD/fa4HmQG94CU3eqN6Oo4MYrsZD76mkIu1yIS57Oh1ATYe4nY3516xLlXycd
+ eZWMqOFBVJfflW5VhaAOWa7XCmfJtAnV63wX8amL1zSyVLMDJu05pBz5mfBMyd084DiTS6lFoVz
+ U23W3VClUyImjC9JexRn7tZV+IdUCSiu7y4xSs2DchXlbQxX0FNaHkm4rPNbSmm865FMA==
+X-Received: by 2002:a05:690c:680d:b0:786:5851:2b4 with SMTP id
+ 00721157ae682-7947ab2ef90mr11718287b3.27.1769523020186; Tue, 27 Jan 2026
+ 06:10:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260121134114.9781-1-mohamed@unpredictable.fr>
+ <20260121134114.9781-4-mohamed@unpredictable.fr>
+ <CAFEAcA-GL9UG5MN5tKDzLwQ04cBGa99cSau4=2BLTs0+GGSdJw@mail.gmail.com>
+ <51E78FA9-2C66-4E8E-947F-F009A8AEEDFD@unpredictable.fr>
+ <CAFEAcA_7o-dNFUgMo=UdYD_cf=dwbMCy6b+_2SRSxVbDmmAUmw@mail.gmail.com>
+ <9ECB5E0B-3BD3-47D3-9E6B-204A354CEA84@unpredictable.fr>
+In-Reply-To: <9ECB5E0B-3BD3-47D3-9E6B-204A354CEA84@unpredictable.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 27 Jan 2026 14:10:08 +0000
+X-Gm-Features: AZwV_Qh3uo6Gn-snLu6oxPFdGxKgQIhWXFNzo6S8v8uVCPgQF2I3zoklomP2uEs
+Message-ID: <CAFEAcA_g3VfRectVpUG-OnLh_AtsqpLt7YYrYXDSfiesS5EuKw@mail.gmail.com>
+Subject: Re: [PATCH v17 03/21] hw: arm: virt: rework MSI-X configuration
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>, 
+ Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-arm@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>, 
+ Ani Sinha <anisinha@redhat.com>, Pedro Barbuda <pbarbuda@microsoft.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,108 +131,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Jan 2026, Peter Maydell wrote:
-> On Sun, 25 Jan 2026 at 18:36, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>
->> Our documentation says that memory regions are automatically freed
->> when the owner dies and the reference counting to do this is also
->> implemented. However this relies on the QOM free funtion that can only
->> be set by creating objects with object_new but memory API only
->> provides constructors that call object_initialize which clears the
->> free function that prevents QOM to manage the memory region lifetime.
->> Implement corresponding memory_region_new_* functions that do the same
->> as the memory_region_init_* functions but create the memory region
->> with object_new so the lifetime can be automatically managed by QOM as
->> documented. The memory_region_init functions are kept because they are
->> useful for memory regions embedded in other object or managed
->> externally and not by QOM for some reason.
+On Tue, 27 Jan 2026 at 13:40, Mohamed Mediouni <mohamed@unpredictable.fr> w=
+rote:
 >
-> If we have a problem with embedded MemoryRegions being leaked,
-> we need to fix that.
+>
+>
+> > On 27. Jan 2026, at 13:54, Peter Maydell <peter.maydell@linaro.org> wro=
+te:
+> >
+> > On Tue, 27 Jan 2026 at 12:46, Mohamed Mediouni <mohamed@unpredictable.f=
+r> wrote:
+> >>> On 27. Jan 2026, at 11:54, Peter Maydell <peter.maydell@linaro.org> w=
+rote:
+> >>>
+> >>> On Wed, 21 Jan 2026 at 13:41, Mohamed Mediouni <mohamed@unpredictable=
+.fr> wrote:
+> >>>> +/*
+> >>>> + * In the prior Qemu ACPI table handling, GICv2 configurations
+> >>>> + * had vms->its=3D1... That's broken.
+> >>>> + *
+> >>>> + * Match that assumption to match the existing ACPI tables that
+> >>>> + * have been shipping for quite a while.
+> >>>> + */
+> >>>> +static int is_gicv2_acpi_workaround_needed(VirtMachineState *vms) {
+> >>>> +    return vms->gic_version =3D=3D 2;
+> >>>> +}
+> >>>
+> >>> We don't need to keep identical bug-for-bug ACPI tables like that.
+> >>> If we were incorrectly reporting an ITS in a GICv2-only ACPI table,
+> >>> that was a bug and we can fix it. (This might need adjusting of the
+> >>> golden reference ACPI data in some of the bios-tables-tests if we
+> >>> were testing that, so it ought to go in its own patch.)
+> >>>
+> >> Hello,
+> >>
+> >> I=E2=80=99m a bit concerned about breaking hibernation in this case=E2=
+=80=A6
+> >>
+> >> My intent was keeping this behavior for now and then add a machine mod=
+el version dependent toggle in a follow-up patch.
+> >
+> > I'm not an ACPI table expert but my understanding is that it's
+> > OK to change the ACPI table contents without having to make
+> > those changes machine-version dependent. See e.g. commit d6afe18b7242,
+> > which changed the ACPI tables for the its=3Doff case and did not
+> > make those changes machine-version specific.
 
-I have a problem with embedded memory regions (and embedded objects in 
-general) because:
+> That commit didn=E2=80=99t affect the default/regular config so it wouldn=
+'t have been too problematic in practice.
+>
+> Have had countless issues with how brittle hibernation is* - and more or =
+less subtle ACPI table changes
+> tend to break it.
 
-- they are making state structs unnecessarily crowded obscuring what 
-should really be there
-- leaving the fields to store these memory regions in the parent classes 
-and the QOM way of lifetime management unused
-- exposes internal object implementation to the outside
-which is against encapsulation and reuse of object oriented design.
+I don't want to add back-compat handling for this to the virt
+board unless one of our ACPI table experts says that yes we
+do need to keep the ACPI table contents identical for older
+versioned machine types.
 
-Therefore, I consider embedded memory regions as a hack to solve leaks 
-because the intended and documented way of using reference counting to 
-manage the lifetime of these regions cannot be used due to missing API to 
-instantiate them in a way so it works. This series tries to resolve that 
-not add new principle or standard.
-
-> I'm very reluctant to create a whole new
-> set of APIs which handles MRs in a non-standard way (i.e.
-> "QOM object has a pointer to MR rather than embedding it")
-
-But this is the standard and documented way if you read the life cycle 
-section of the memory docs and the embedded regions became more used 
-instead of resolving this problem in the way it was originaly intended. 
-The QOM subclass does not store a pointer to these as it's not needed, 
-they are managed by QOM so they are created and can be forgotten about 
-without littering the state struct with fields never used in the object 
-methods just to manage the memory that QOM could already manage. (The 
-parent sysbus or PCI class keeps a pointer when registering them as 
-regions and Object stores them as a child but that's already there and 
-needed for those classes not the subclass so we can avoid duplicating it 
-in the subclass.)
-
-> and leaves the existing ones alone. QEMU already has way too
-> many situations where we have multiple different APIs that can
-> be used to do something and incomplete transitions from the
-> old one to the new one.
-
-This series does not convert everything but opens the way to do that and 
-simplify objects by only storing things in the state that are really 
-needed by the object and let QOM manage what it can. I'd really like to 
-avoid having a list of unused stuff in the state struct just because I 
-can't use something that works and documented just no API to actually use 
-it. Cf. sii3112 state after this series:
-
-struct SiI3112PCIState {
-     PCIIDEState i;
-
-     SiI3112Regs regs[2];
-};
-
-vs. your standard:
-
-struct SiI3112PCIState {
-     PCIIDEState i;
-
-     MemoryRegion mmio;
-     MemoryRegion bar0;
-     MemoryRegion bar1;
-     MemoryRegion bar2;
-     MemoryRegion bar3;
-     MemoryRegion bar4;
-     SiI3112Regs regs[2];
-};
-
-First I thought we could use object_new then memory_region_init but it 
-turns out that does not work because memory_region_init calls 
-object_initialize which removes the free function installed by object_new 
-and since there's no other way to set it other than by calling object_new 
-a split init like in macOS (i.e. alloc+init) is also not possible so a new 
-set of memory_region_new functions seem to be the easiest way to use it as 
-intended and avoid changing every user of memory_region_init functions.
-
-As mentioned in the docs and cover letter both set of functions are useful 
-in different situations and they are otherwise the same so it would not 
-make the API much more complex as these are basically variants of one set 
-of functions only differing in dynamically allocating object or 
-initialising pre-allocated object that are not managed by QOM (which is 
-what the embedded objects do: take object out from QOM and let the 
-subclass manage it instead of using the infrastructure that's already 
-there for it). If you go the embedded way then the registering memory 
-regions as children should be removed and everything converted to use 
-embedded regions but I don't think that would be an improvement.
-
-Regards,
-BALATON Zoltan
+thanks
+-- PMM
 
