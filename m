@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B20FD2F033
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 14:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0EEED2F037
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 14:19:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkju3-0001Xq-C2; Tue, 27 Jan 2026 09:18:47 -0500
+	id 1vkjum-0002Fg-1u; Tue, 27 Jan 2026 09:19:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1vkjtv-0001Sk-DM
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:18:41 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1vkjuj-00023c-3N
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:19:29 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1vkjtt-00020x-N1
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:18:39 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-b8871718b05so678745566b.2
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 06:18:37 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769523516; cv=none;
+ id 1vkjug-00023J-6w
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:19:27 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-65819e75691so9982976a12.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 06:19:21 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769523559; cv=none;
  d=google.com; s=arc-20240605;
- b=ZURhTB4HP7EMBBHuYa07+OeruoYxJuA7/HQIuJ0sTf3s94mSPHkkvs1TnXkvSiMuIZ
- HVvWr8z3Vn0ea+cBGDFB+iMZDBKmfKSowC1ZmYFhfrtVQKv59shqOkMaJdqFqjV9DtFP
- fBSvX2TqewYSFnICdDLjJ7HeI3nLAw7g1z0s0ie6uwe33uAoxDxa+SlBiMSeQu9vGSgY
- fAl/rpPOF26P2S0sWUUERYpQ+I+yaNg7Y2oRHO5PeX+m7b3F4JsWZVcGxLOUo36FNyBt
- JRrX0q1lVlHCOviYelCKkUk3omAllg3s9iukfMpge3bLjbNdpMahfCEn1UWJ3laVZEup
- 0oOA==
+ b=HWNvTq9RhiuO6uQyyr+5tdLOTAkTragD2REdjG4dpz62hOq1PEr9D9EL18ET2i5sk1
+ 0BTcsawrdGxhqjk0PMTsWWSPfcR0lg+aY0O1Zvuvpn0egsan3Rtp+LM1PBpBPBsybcqv
+ yjMpHmLyV3GKOKqrmenJEAy4kwsgHWq6vJVyXWMAls7d3A0Tq3KxMqfja6EoXHjD1szE
+ Ix81qUSEOQpZQQ2zqGUwGLif1fGS2Wr29hKkVTSAa/9gLBacwxcGoCfRIWoNm9GRvJ8w
+ 7aL5c8AhG7mKyth0CtlBHHPY+qbupCKtKPQ0l5cn0nMvZmt9AaOPvQyo44GxHUUzDiLn
+ LxoA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=astb0ATKWa3zkLPDwlzFITzGjQ+BZMNm3q5zFXcYK3A=;
- fh=TlX13MN7QzZ4YLPnAeLblW9F9wv6NcsH/fw/Oct2prA=;
- b=CoYmbC9F409b6G8Q5iDfZb7bx7c4XamIo729z1ltcYIwZjnMelKvMybIjVxf8hKT8e
- JwLN2OkoJ2otN1qb5AYLEnQ94rqWWNvQ4id7B2LItrjbUnRF4gOHq9/2MRjSaOdIdpV2
- d4S+CJuowC2S564FWg1R0vWqrBJOBlpryscGO7BMgKfxpkVA+DvqT07l08nJKW6rmM6R
- V29JRfHpl69eVmyr0jPazylVr0Ml2RI9P//zuKh8kXR1K827tBbC2bzOqGEGLOW6ungs
- NRK8Nz+OR/87B7OfvY4O0DViKurAF0DUjPScTMBYScpK/ppNdWHzslLYqbnWPy9FHUrx
- vRsA==; darn=nongnu.org
+ bh=VKiuTkJYE06Lgz/n80ZUl4qT2rrzEkJRyX893wVmM2Y=;
+ fh=CV/dqRIWguRoJ/y/MVfZNp3Z59pc2N3jZK7l3YuHCIU=;
+ b=OgFAe7FD3v9DelGSLUISP3eHHYqaxzjPiPVr8+2SSnP1qB0LjdORRLkjjjKcrQceYN
+ B9eKPv/U9KLY2Iq0sbw78sRR0OOTVvJejM5eSQlvqF89c8avLtC/R2DBBHjiZlCVFLag
+ iNja15gK0nt14h7Q0zZA0VkJ8A27q4tmb9foGR3Upp1jR00WCEvj7xhDLhdV1Og+rf0/
+ Ja+vsppTjgzUAXu0mWyIhQYdkjLsS1IRsBUP2rgwt2dm70ZOpjhl6j07Ros6KkaBYSZz
+ 8Bx0ibYTFxN3euix33rml0g5xCw8mCEU2ALle3HjdOGbj9RJQ4a/s7KQdLmYOiw4u7C+
+ //bw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769523516; x=1770128316; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1769523559; x=1770128359; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=astb0ATKWa3zkLPDwlzFITzGjQ+BZMNm3q5zFXcYK3A=;
- b=Lc7FlVNVE5xP+RU3k/RxOTFLAf4nDgrkZ1/Uxp66+lnfMh+b0mRwKaBx3+TejeJtil
- eJsTmMPsQauIGkbpy6wmfTYHYPKag/CtZd2f6PHK89ueyDO0RLn399UO2TDhfJiTxGm7
- 0r/U4+9rkmIIxt9/lUtq1Kk72XZVChGZPHiwUmQSqqrt2OU+qRcoD4lroi0Tyox6Wtr/
- Zew2H3tzqaAUufLEcgaHXYb6l2+JrRpxYFJpQ/2DVixdz7rYzgEZUYEmwNkvT862899z
- EAvNbV33IQtT/+lysmEbkpAGB9peBUeVjnqG5+NleCVOS9aDuSUy1bym7RdwskdeLyi5
- PfuA==
+ bh=VKiuTkJYE06Lgz/n80ZUl4qT2rrzEkJRyX893wVmM2Y=;
+ b=Ae23VbXPtqodjL/kZ1w6BsMEMdV9iRTbn4dbNck0gcPL/Dzf7Ei0l1FWUJx9AtNVsv
+ +UdGc+nF0toWhibuY45B8dXrlhW4omFnG2uXZ6HsmBkYraxHdD/BzxtsWdMVWG5fcW7m
+ W4akyWWlfSaNfFy14ZmI7COPsVYM/GuQGZWY8xu1cgGdVR7lQ3SNXsWz1+kvC5AjQXJw
+ YARWz81x4EWGkWI8OLnR9EG4Wzvbz4mUNbhkDXZGkp6e89aY2wgns2qHjIGsdfHVhrDE
+ 2x6cG/F1ELifVaRsiToYknoZ4+w1FmLKMTMxJz+4oPO7/LJlS+S5/Sxce+1OWCCz+REA
+ /EtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769523516; x=1770128316;
+ d=1e100.net; s=20230601; t=1769523559; x=1770128359;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=astb0ATKWa3zkLPDwlzFITzGjQ+BZMNm3q5zFXcYK3A=;
- b=OXznthuP4/C+yZy7ABSFucROfycz2R1qTXh3enwnuGL1OnDJUoObTiTUGm7FOnjwRY
- yJpgCSk/Cm7caE/CsYjSWzmkc2G5tRLz6nXRGv4eGFvY2jxFuyRj9cF+XLqFTrASDHBf
- A9EUsZcx8Ev/d4JdWoBe53pSkq8A2Kr2GU7OxcNY/Yj5LSaLZdoFxEl36Fc087Rzpp0G
- KRFaQWolAbXdoPUi4/MroS/GjLwCnZP4qztyhIRqhQOOeYm3cljx4uc+xNq6lS9VaCOo
- sxSMRC/9z+YVZJw6s1FVXYAECo4SU0V4ic4YXNGEIZ91//4DJgQacqmk5sjTuq+++Ctr
- QPKw==
-X-Gm-Message-State: AOJu0Yzm8bs+t0qGCgks5qJv8fyJ2ySbzA/PKbDsYIF/wh21bAKGVoba
- bZ8sJkngpiNGvqchxsxPrkPu1pYlC2CKkz9K9P2nJ3FwyZf4W+JmXFl1716ZMYn8hK0eoDjwi42
- OHhr6YY66NM1NpKAcw23Fwngmof+OW9E=
-X-Gm-Gg: AZuq6aLXYhyU3KI98jVGZtu8XstvF1agTiJb/FyVDwv1rv/gxy4/mziBlicyx3SOO2b
- FMqy9+QEjNV2M535CuA7o3NAbrXSGiKq2TAdXahuGXROYGSEO5HLvKzQYivVmN70AkPwr5issxe
- 8WohD82sZtqU3efCwYs4QX+h7BQy5JNkTVYyLGvqkYLTvB1tQf6KyJc0btKqZmjWbJgEUin2IZ4
- 4uE/wQ7pnEuMGfebH84i7sP4JJ4YOqdzJONjDpcVzB1U14pV/6oKbnAgpZH35HGNyGzgQboS0Js
- ich+
-X-Received: by 2002:a17:907:97c7:b0:b80:3447:e0c0 with SMTP id
- a640c23a62f3a-b8dab4b7655mr149413566b.62.1769523515370; Tue, 27 Jan 2026
- 06:18:35 -0800 (PST)
+ bh=VKiuTkJYE06Lgz/n80ZUl4qT2rrzEkJRyX893wVmM2Y=;
+ b=mqyl1rRSwcNWFXOBjENVJ/bXEzn08WoC/l6jeQFH39VoeZ4UYXLHKK7iqBFrR0sPM8
+ KAn9Z/bdImpwxMoYjy6BYIzntrME+u4TjbAfvZVu8TI0XPzrT3p3W3M9eO9EJNicsf6B
+ qoWZVqrB6JHjv2seb9IVBvFSlkKYf+p20YpLI8V/H5Rnp7gwzFxwmT6o8HbfaKhvRfiD
+ cCBWph8bCuVCsisP1G+/V29MqKfHsowr2jtE6+qcG7Y0JjhfNQATfmTKHtPKP5dsdM4Q
+ e5cBOsSf5ZotSk40aguqlxx4dd97f2a5lAA03uycQvhKyOEIfcsvSP16dWFgreGJfFU8
+ mNkA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUJga/mSS3SstWaqwQeDkFnuMxAQMnHvXt1be0o6tdWKzim/J/xtww2UuNkzTsbQ8GO1Jgn916FJcXi@nongnu.org
+X-Gm-Message-State: AOJu0Ywep+6lfGV/eEZuCoozxA3OYeYnXoYTmMU5ZXgXvNa9E+5irrjX
+ ESaWNdQ47JwQ2u+WglAE5JHlY/Jn/3DNRMQ6J2qcgmqVS1kqBQPVJBqfb6aj02ZZTqNhwQceAzW
+ 0s/d7p5EcQSKBtZ+vNAoaacqGSwtmyMg=
+X-Gm-Gg: AZuq6aLxt1nTfsF0g4+SiRWDk9Eja0nt2Ygem4vjaNZceOjlSxf6g0DC6o7OFlFUAzT
+ kRyF/76S00vnbXvXrHURq2q7DFwgJ+276re2q3AkrFdoAjcOnU59mrpLOBWxPG5wKEdayTfJTXx
+ mKqybRUSoxehgHJtt7kslUBItBgEtto6mEi8DQdJbxe00B7eaVnVFNmeXhJey2Mw7H9P3CWNbMh
+ vXLq/3uq0ZG+KrHDVgsAv74IO5nMR5XTMbBf8n8jD22w9osLd0JqgfXsY34Sf+NyxKOBCO+HTj9
+ avye
+X-Received: by 2002:a05:6402:13cd:b0:64b:46ce:4706 with SMTP id
+ 4fb4d7f45d1cf-658a601598dmr1061746a12.1.1769523558946; Tue, 27 Jan 2026
+ 06:19:18 -0800 (PST)
 MIME-Version: 1.0
 References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
  <CAMxuvaz8hm1dc6XdsbK99Ng5sOBNxwWg_-UJdBhyptwgUYjcrw@mail.gmail.com>
@@ -93,19 +95,33 @@ References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
  <82f74c82-c572-4ab9-b527-11ea287056d1@linaro.org>
  <CAJ+F1CJtrv9YgDbiekVmDD2yT+6nUe39nLwLsKxvFOtMc1kUGA@mail.gmail.com>
  <CAJSP0QUCQ8LkHEPNPb75XZmo46xxvP3uA373fzAZTwn=bo_bdg@mail.gmail.com>
- <f7a90238-f33d-430d-acd2-d8cd9ec275fe@gmx.de>
-In-Reply-To: <f7a90238-f33d-430d-acd2-d8cd9ec275fe@gmx.de>
+ <CAGxU2F4K5mAhwKSLkCk+f17=1FA51WG_XEzhSr_hxNKJTAGi3Q@mail.gmail.com>
+In-Reply-To: <CAGxU2F4K5mAhwKSLkCk+f17=1FA51WG_XEzhSr_hxNKJTAGi3Q@mail.gmail.com>
 From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 27 Jan 2026 09:18:23 -0500
-X-Gm-Features: AZwV_QhpnIi52kW_E35ueiCFTD4Rtu9ioi1LBttKxHqun3onNigvzEdd4YENgi8
-Message-ID: <CAJSP0QVbvRxZXjbfoegu+NA=0hX3N9pSeG7Stx_jpqo1Mgwd0w@mail.gmail.com>
+Date: Tue, 27 Jan 2026 09:19:06 -0500
+X-Gm-Features: AZwV_Qjy-_kYacMG8ZkkvHrkO0IeQfXdaCNrJ3EiacBY_1YmYMCp9mRdGWf8M4M
+Message-ID: <CAJSP0QWw_nvDgMgtzi4jZjQ_q=qSRtpA2rN=_49wfOcRhC4jOQ@mail.gmail.com>
 Subject: Re: Call for GSoC internship project ideas
-To: Helge Deller <deller@gmx.de>
-Cc: qemu-devel <qemu-devel@nongnu.org>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>, 
+ Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>, 
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ German Maglione <gmaglione@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alex Bennee <alex.bennee@linaro.org>, John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=stefanha@gmail.com; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -128,123 +144,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 27, 2026 at 3:06=E2=80=AFAM Helge Deller <deller@gmx.de> wrote:
+On Tue, Jan 27, 2026 at 3:35=E2=80=AFAM Stefano Garzarella <sgarzare@redhat=
+.com> wrote:
 >
-> On 1/26/26 23:29, Stefan Hajnoczi wrote:
-> > On Fri, Jan 23, 2026 at 3:44=E2=80=AFAM Marc-Andr=C3=A9 Lureau
-> > <marcandre.lureau@gmail.com> wrote:
-> >>
-> >> Hi
-> >>
-> >> On Thu, Jan 22, 2026 at 7:46=E2=80=AFPM Pierrick Bouvier
-> >> <pierrick.bouvier@linaro.org> wrote:
-> >>>
-> >>> On 1/22/26 3:28 AM, Marc-Andr=C3=A9 Lureau wrote:
-> >>>> Hi
-> >>>>
-> >>>> On Thu, Jan 22, 2026 at 2:57=E2=80=AFPM Daniel P. Berrang=C3=A9 <ber=
-range@redhat.com> wrote:
-> >>>>>
-> >>>>> On Thu, Jan 22, 2026 at 10:54:42AM +0000, Peter Maydell wrote:
-> >>>>>> On Thu, 22 Jan 2026 at 10:40, Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com> wrote:
-> >>>>>>> Once we have written some scripts that can build gcc, binutils, l=
-inux,
-> >>>>>>> busybox we've opened the door to be able to support every machine=
- type
-> >>>>>>> on every target, provided there has been a gcc/binutils/linux por=
-t at
-> >>>>>>> some time (which covers practically everything). Adding new machi=
-nes
-> >>>>>>> becomes cheap then - just a matter of identifying the Linux Kconf=
-ig
-> >>>>>>> settings, and everything else stays the same. Adding new targets =
-means
-> >>>>>>> adding a new binutils build target, which should again we relativ=
-ely
-> >>>>>>> cheap, and also infrequent. This has potential to be massively mo=
-re
-> >>>>>>> sustainable than a reliance on distros, and should put us on a pa=
-thway
-> >>>>>>> that would let us cover almost everything we ship.
-> >>>>>>
-> >>>>>> Isn't that essentially reimplementing half of buildroot, or the
-> >>>>>> system image builder that Rob Landley uses to produce toybox
-> >>>>>> test images ?
-> >>>>>
-> >>>>> If we can use existing tools to achieve this, that's fine.
-> >>>>>
-> >>>>
-> >>>> Imho, both approaches are complementary. Building images from scratc=
-h,
-> >>>> like toybox, to cover esoteric minimal systems. And more complete an=
-d
-> >>>> common OSes with mkosi which allows you to have things like python,
-> >>>> mesa, networking, systemd, tpm tools, etc for testing.. We don't wan=
-t
-> >>>> to build that from scratch, do we?
-> >>>>
-> >>>
-> >>> I ran into this need recently, and simply used podman (or docker) for
-> >>> this purpose.
-> >>>
-> >>> $ podman build -t rootfs - < Dockerfile
-> >>> $ container=3D$(podman create rootfs)
-> >>> $ podman export -o /dev/stdout $container |
-> >>> /sbin/mke2fs -t ext4 -d - out.ext4 10g
-> >>> $ podman rm -f $container
-> >>>
-> >>> It allows to create image for any distro (used it for alpine and
-> >>> debian), as long as they publish a docker container. As well, it give=
-s
-> >>> flexibility to have a custom init, skipping a lengthy emulated boot w=
-ith
-> >>> a full system. As a bonus, it's quick to build, and does not require
-> >>> recompiling the world to get something.
-> >>>
-> >>> You can debug things too by running the container on your host machin=
-e,
-> >>> which is convenient.
-> >>>
-> >>
-> >> Very nice! I didn't realize you could export and reuse a container tha=
-t way.
-> >>
-> >> I wonder how this workflow can be extended and compare to mkosi
-> >> (beside the limitation to produce tar/fs image)
-> >>
-> >> For qemu VM testing, it would fit better along with our Dockerfile &
-> >> lcitool usage.
-> >>
-> >> I wish a tool would help to (cross) create & boot such (reproducible)
-> >> images & vm easily.
+> On Mon, 26 Jan 2026 at 23:29, Stefan Hajnoczi <stefanha@gmail.com> wrote:
 > >
 > > Hi Marc-Andr=C3=A9,
 > > I would like to submit QEMU's GSoC application in the next day or two.
 > > A minimum of 4 project ideas is mentioned in the latest guidelines
-> > from Google and we're currently at 3 ideas.
-> Stefan, I can provide another project, if needed.
-> I was struggling if I should make it a GSOC project, or just do it myself=
- when
-> I find time somewhen. My main concern why I did not yet brought it up yet=
-, is
-> that I think it's so specific that it will be hard to find a good candida=
-te.
-> It's about adding a new machine type to the hppa/parisc
-> architecture to allow running the historic "MPE" operating system [1].
-> I have prepared some wording for the project already, but am still waitin=
-g
-> for some feedback from some contacts I have.
-> So, if you need another project, I can provide one... :-)
+> > from Google and we're currently at 3 ideas. Do you want to update the
+> > project idea based on the feedback so we can add it to the list?
+> > https://wiki.qemu.org/Internships/ProjectIdeas/mkosiTestAssets
+>
+> Hi Stefan,
+> FYI we are going to submit 2 projects for SVSM and 1 for rust-vmm
+> (virtio-rtc device) soon.
 
-Thanks for sharing! We have reached 4 project ideas now with the
-addition of the virtio-rtc project.
-
-You are welcome to add the MPE project idea if you want to mentor it
-this summer. It's okay if you are still waiting on responses from
-people you are in touch with. Now that QEMU has at least 4 project
-ideas I can go ahead and submit the GSoC org application and you can
-still add your idea later.
+Great, I'm looking forward to adding them.
 
 Stefan
 
