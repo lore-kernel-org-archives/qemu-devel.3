@@ -4,91 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71AA9D2F029
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 13:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 781E9D2F011
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 13:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkiwI-0007Jr-RK; Tue, 27 Jan 2026 08:17:02 -0500
+	id 1vkj2u-0000w7-C5; Tue, 27 Jan 2026 08:23:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vkiwF-0007FG-GN
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 08:16:59 -0500
-Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vkiwB-0004cO-E2
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 08:16:58 -0500
-Received: by mail-pl1-x642.google.com with SMTP id
- d9443c01a7336-2a7a94c6d4fso26742795ad.0
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 05:16:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769519814; x=1770124614; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=O7WkHiVNJCD9TWHbxn4o1h9ogKNZelcybfMD61+3Zog=;
- b=QcJlRxDIXWrLF4Ly/tUfWFIIqXYF6wDiKziLg2INKIEEpEKt3Wdw6MHf3DT9Aa0KK1
- ABaDpslwE9HzA6RfoCZF8HmEH6SYAFxl8vab/g9IrA8albVz/apLIm1xFAKDKgg0XZQC
- MiqbU+7rm8QXSCVI1raIx9HUnhxGqVALVBAgOyOk2P7jA7s31LOB5rjcX0Sl+PddfLUH
- Ul3XOTS3ESbLzxF/HRZYWYtMvHgAc7wRC4cy/nJeYarFi2BeVds1k25Gda1BeR3e+lt5
- zfq+O9KC23NfSGhaChTfLH/Hf3DhdiG3YHXpeGxLGyfLhBJNq21nSpxcTkFjp4GiJKrm
- 3p4Q==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vkj2k-0000s2-Tu
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 08:23:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vkj2i-0005vx-5F
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 08:23:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769520218;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=inL7IgFEA5miArJVDHdrdgZLnWIEE2zg4a0hQzkzyfg=;
+ b=AE+4s1hYyYKZyTQX4sBwaZsM/92bryelEdqb/HOmx2ktluKGGDdNiRdHw4xv4081u2MbPJ
+ dsjSOJOrlKQwSO4rsw0RRp6uePirL1R5xQfhJBOMpuyaJGs2Hgd9ijyw2hPZ0aglVGQbHA
+ pLEI4cRxS4sewQBh/T55YayUmS2rkYk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-211-7TIgwm6HOP-ETbA57rphWw-1; Tue, 27 Jan 2026 08:23:37 -0500
+X-MC-Unique: 7TIgwm6HOP-ETbA57rphWw-1
+X-Mimecast-MFC-AGG-ID: 7TIgwm6HOP-ETbA57rphWw_1769520216
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4801e9e7159so45534905e9.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 05:23:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769519814; x=1770124614;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=O7WkHiVNJCD9TWHbxn4o1h9ogKNZelcybfMD61+3Zog=;
- b=D73E/JsVocDQuQIi+5O9cVhbD+EcLLRAmXMDboRmQ8CQ/pN4eqcM2nddsXJ7d3p5K0
- jiHLJdBqsX/qeIIUhMLYjBu5mKfniIQhMMM6G/WaI3DDD2k1iAuoDCcQ+LIcgvPoVcun
- EE0KJLmCn9XSRVl2rl7q6tf2gSXocedtdwG3JCDMEGqCNVAlo0fi/0fsmpkGowRttAza
- HCiUwKpox/zqSv1KA5xINn7Y/LdQ0hkNhBC+ls15di0OZXroOa8rDF9BVg1BbAuzdECh
- WMK9CcOWy5WTcmBbCkJ1VNewWCJINEzeHWsTXTMfBVQQRLS3ldqQOlNh217HHGBocJdY
- 5xIw==
-X-Gm-Message-State: AOJu0YwY7MUSpAPYhK3iI8cnYWCEjyuKLxZ7VTHMx2PHSUq03EygBNIg
- tUEDRnoWZ6ciZeyvGu1hNymIEi6xjACq8IWSMonQBrYN9YgDcdp6Bfwq7dgBGAxL088WWw==
-X-Gm-Gg: AZuq6aLIUGHF8yfL5olXSL67EbzUU0hX+gl3AluZ6p06+T6L47fd4UvvjiHO34LY7X/
- O0d62WM513GWxQQ1UzjBM60IyjxbLxpssHUWEaYOFoqvDAq7BlVbjpITD+Tf0mzdmW3ogYldzJx
- 3slt38kkH+u+BO31cL2JyZdDJEqZN6ChdNC3Q8gM+IHnLgIcmzgtl3XCoqsAfOua3mSlm3rvVrd
- DcbThewyysvgN249OHTKFujOH9W3v3gLnCL/jrGoGHNi0TaeuXrk1G7KMIWL8XGcyObEFMAxHCe
- h19D6MaBqgg5QUfce9LMa4KqwUQ++wyRyWiz+xGbboxdq2sTwAzjpYsszd4OuH+B3htocZ3l2j2
- tLUn4FxYK+mkw9Zj32x6ajunb42DE0D1qVjxioAaTLy7OZgXgsh4vVlVxD1G5Glw1LKDHLHkOT8
- fCSHSbQzeW/e1/vS7a+q/2ZSDOn3rk335yvl3ZmXh3BfEKne4ABR2EYB5C8bQ=
-X-Received: by 2002:a17:902:da2d:b0:2a1:3cd8:d2df with SMTP id
- d9443c01a7336-2a870e35032mr17078785ad.54.1769519813648; 
- Tue, 27 Jan 2026 05:16:53 -0800 (PST)
-Received: from ZEVORN-PC.bbrouter ([183.195.23.113])
+ d=1e100.net; s=20230601; t=1769520216; x=1770125016;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=inL7IgFEA5miArJVDHdrdgZLnWIEE2zg4a0hQzkzyfg=;
+ b=Zdfh3UUtlkEbmcsqnoFzhSjclWMVZSHN7MyCo4iOP+UVrfr/O6WlK7rDnfOHlGCE0G
+ T0CP9j5/YFEbb4BdA19hCfssHRFKENt2cEibc+2GPhm6P0woR2akx8jllhbiyStEC0Fo
+ xQZ4aABINw1ULh8oPF4S6grFceXhYJJs30NWbLmipqqIGZP5F6QUQspz0Fchk6UhixSc
+ sPmlmTGnG9w4fd/WtbHDRku8LHA57tgpthMzaikREoe3STakuKR+0kW+ORMs1ZnZi2W3
+ gfh2B1zmB8WyZR54rNqnLtWsAn9F/LyvuJ/wBIeAN8iTwaMDpW1MxQhwwpunSiX78WEt
+ hcfw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVHxiXVFS0vs+GPwOd3+EpzyeM+LZBpMET2/MWqSLcWoE+SVFb5Ccs6jroAyro9vMDh90/k85KdogOr@nongnu.org
+X-Gm-Message-State: AOJu0YxeTmRXAgUJBTHF5AOlg8omizBnd6Yr7EpjclWx2S8SbIMftqBZ
+ hOK07ROUTfVFC7b8EKMYuXDOTIbntxRbDmkCQgMNkJeoCnQx/ahvEdyBW97ahFFEY3D5vXZNWIH
+ X13QBaUIt6gyYPff7Jc6EJX9fpj81yoLupU6liaCfP9hJF+V4Zv/LaG5H
+X-Gm-Gg: AZuq6aJz1GavR1XRFyBXxzwBslNAmYGmaAA3Gbv6j4MuS/mNmZXxPaotYGXoTTCRTB4
+ 2D2Ay4SKgIIwvmHas9PRIJsUHxH6yhIxGa5big1d3fJG7NyHF9plXRUCqcDA4Xuxkkpbqe0TlDq
+ Tlgf7IlrocLvU4DgPtHrRoJGVSca2PdFGLOcj9S5KQHt2FjxlUKJpCFEco9Oz6xlBXUNfqGf8MW
+ 6RVd5w02k0EtnpV4fT6NjzG4isugmqBD8qcsVRxKVNl3eZpmbKhPeXZvOk1OXpcpMWhP1DSJZPY
+ AvPSpDRZSkihGuyyWFbMRggSvUo9AQaYdZcutmtMTo0Hv32yoT8xASeH93YxaSmimodMXUr8ZMv
+ 9u+O5nSnMRh6WygSK/OLTsS/zWrd+9A5ncfp10pkd52R5pi++B3RFZEDiIA==
+X-Received: by 2002:a05:600c:e40b:b0:479:3a86:dc1c with SMTP id
+ 5b1f17b1804b1-4806a5bef0fmr16471975e9.36.1769520215696; 
+ Tue, 27 Jan 2026 05:23:35 -0800 (PST)
+X-Received: by 2002:a05:600c:e40b:b0:479:3a86:dc1c with SMTP id
+ 5b1f17b1804b1-4806a5bef0fmr16471565e9.36.1769520215199; 
+ Tue, 27 Jan 2026 05:23:35 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a802fb03b4sm117164345ad.82.2026.01.27.05.16.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jan 2026 05:16:53 -0800 (PST)
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, wangjingwei@iscas.ac.cn,
- hust-os-kernel-patches@googlegroups.com,
- Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [RFC PATCH v3 7/7] target/riscv: add sdtrig trigger action=debug mode
-Date: Tue, 27 Jan 2026 21:15:51 +0800
-Message-ID: <0fa8cc505f0c9f863aecc71710f77c7af76d7586.1769517768.git.chao.liu.zevorn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <cover.1769517768.git.chao.liu.zevorn@gmail.com>
-References: <cover.1769517768.git.chao.liu.zevorn@gmail.com>
+ 5b1f17b1804b1-48066c428basm63499945e9.12.2026.01.27.05.23.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Jan 2026 05:23:34 -0800 (PST)
+Message-ID: <26e22c1c-09bc-4e6e-9859-bc8092b8ca7a@redhat.com>
+Date: Tue, 27 Jan 2026 14:23:33 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 06/16] hw/arm/tegra241-cmdqv: Map VINTF Page0 into
+ guest
+Content-Language: en-US
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, peter.maydell@linaro.org, nathanc@nvidia.com,
+ mochs@nvidia.com, jgg@nvidia.com, jonathan.cameron@huawei.com,
+ zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, kjaju@nvidia.com
+References: <20251210133737.78257-1-skolothumtho@nvidia.com>
+ <20251210133737.78257-7-skolothumtho@nvidia.com>
+ <58f0ca59-b08c-44cd-b469-f152271c14f6@redhat.com>
+ <aXgBD/N+aOVNlcGb@Asurada-Nvidia>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <aXgBD/N+aOVNlcGb@Asurada-Nvidia>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pl1-x642.google.com
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,145 +118,108 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RISC-V Debug Specification:
-https://github.com/riscv/riscv-debug-spec/releases/tag/1.0
+Hi Nicolin,
 
-Allow mcontrol/mcontrol6 action=1 when Sdext is enabled. When such a
-trigger hits, enter Debug Mode with cause=trigger and stop with
-EXCP_DEBUG.
+On 1/27/26 1:04 AM, Nicolin Chen wrote:
+> On Mon, Jan 26, 2026 at 02:48:55PM +0100, Eric Auger wrote:
+>
+>>> +    name = g_strdup_printf("%s vcmdq", memory_region_name(&cmdqv->mmio_cmdqv));
+>>> +    memory_region_init_ram_device_ptr(&cmdqv->mmio_vcmdq_page,
+>>> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
+>>> +                                      name, 0x10000, cmdqv->vcmdq_page0);
+>>> +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv, 0x10000,
+>>> +                                        &cmdqv->mmio_vcmdq_page, 1);
+>>> +    g_free(name);
+>>> +
+>>> +    name = g_strdup_printf("%s vintf", memory_region_name(&cmdqv->mmio_cmdqv));
+>>> +    memory_region_init_ram_device_ptr(&cmdqv->mmio_vintf_page,
+>>> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
+>>> +                                      name, 0x10000, cmdqv->vcmdq_page0);
+>> I don't get why we need/have 2 RAM devices pointing to the same @ptr
+>> = cmdqv->vcmdq_page0. Is 0x10000 ~ VCMDQ_REG_PAGE_SIZE?
+> The first one is for "vcmdq" and the second one is for "vintf".
+> Explaining below...
+>
+>> The names of the MRs are quite confusing: If my understanding is correct
+>> we have;
+>>
+>> cmdqv->mmio_cmdqv (0x50000 sized) which as the container for the 2 subregions.
+>> Then within that one we have 2 subregions, one at offset 0x10000 (mmio_vcmdq_page
+>> ), one at offset 0x30000 (cmdqv->mmio_vintf_page).
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c?h=v6.19-rc7#n19
+> It's defined in the kernel driver (yea, we should clarify in the
+> QEMU code as well).
+>
+> So, the MMIO regions look like this:
+>  1st 64 KB page -- Global CMDQV registers
+>  2nd 64 KB page -- Global VCMDQ registers Page0 (mmap)
+>  3rd 64 KB page -- Global VCMDQ registers Page1 (trap)
+>  4th 64 KB page -- VINTF0 Logical VCMDQ registers Page0 (mmap)
+>  5th 64 KB page -- VINTF0 Logical VCMDQ registers Page1 (trap)
 
-Also report inst-count triggers in tinfo and read their action field.
+This kind of layout representation is really helpful
+>
+> In real hardware, there will be 6th 64KB and beyond, for VINTF1
+> and others. But, we're omitting here in QEMU as only VINTF0 will
+> be supported -- kernel only exposes one VINTF per VM as well.
+> (Yes, we should clarify this too.)
+OK
+>
+>> I have difficulties to link that with the commit message
+>>
+>> "Tegra241 CMDQV assigns each VINTF a 128KB MMIO region split into two
+>> 64 KB pages:
+>>  - Page0: guest accessible control/status registers for all VCMDQs
+>>  - Page1:configuration registers  ../.."
+>> Those 2 pages, are they part of  mmio_vcmdq_page?
+> Not exactly. Both the global VCMDQ region and VINTF region have
+> their own pages (at 0x10000 and 0x30000).
+>
+> Here, it duplicates the mapping to 0x10000 (Global VCMDQ page0)
+> and 0x30000 (VINTF0 page0) for simplification, because we only
+> support VINTF0 in this case.
+so Global VCMDQ registers Page0 and VINTF0 Logical VCMDQ registers Page0
+are basically the same?
 
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
----
- target/riscv/debug.c | 53 ++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 51 insertions(+), 2 deletions(-)
+I would recommend to use cmdqv->mmio_vcmdq_page0 and
+cmdqv->mmio_vintf_page0 to avoid any misunderstanding
+>
+> There is a little catch in this implementation. The real physical
+> mapping between a global VCMDQ and a logical VCMDQ happens when
+> QEMU calls HW_QUEUE ioctl. So, the mmap'd page0 doesn't have any
+> real VCMDQ backing up the emulated VCMDQ. So, perhaps QEMU should
+> trap the page0 and delay the memory_region_init_ram_device_ptr()
+> until the HW_QUEUE ioctl is done?
+might be safer indeed.
+>
+> There might be also a corner case: when the kernel exposes two
+> physical VCMDQs, but the guest OS only uses one, i.e. QEMU only
+> allocates one HW_QUEUE for VCMDQ0 but doesn't allocate VCMDQ1.
+> In such a case, the VTINF0 page0 should be able to control the
+> logical VCMDQ0 only, while the global page0 should control both.
 
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 5877a60c50..4e30d42905 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -110,6 +110,8 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
-         action = (tdata1 & TYPE6_ACTION) >> 12;
-         break;
-     case TRIGGER_TYPE_INST_CNT:
-+        action = tdata1 & ITRIGGER_ACTION;
-+        break;
-     case TRIGGER_TYPE_INT:
-     case TRIGGER_TYPE_EXCP:
-     case TRIGGER_TYPE_EXT_SRC:
-@@ -280,6 +282,7 @@ static target_ulong textra_validate(CPURISCVState *env, target_ulong tdata3)
- 
- static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
- {
-+    CPUState *cs = env_cpu(env);
-     trigger_action_t action = get_trigger_action(env, trigger_index);
- 
-     switch (action) {
-@@ -289,6 +292,21 @@ static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
-         riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
-         break;
-     case DBG_ACTION_DBG_MODE:
-+        if (!env_archcpu(env)->cfg.ext_sdext) {
-+            qemu_log_mask(LOG_UNIMP,
-+                          "trigger action=debug mode requires Sdext\n");
-+            riscv_raise_exception(env, RISCV_EXCP_BREAKPOINT, 0);
-+        }
-+        riscv_cpu_enter_debug_mode(env, env->pc, DCSR_CAUSE_TRIGGER);
-+        /*
-+         * If this came from the Trigger Module's CPU breakpoint/watchpoint,
-+         * we're already returning via EXCP_DEBUG. Otherwise, stop now.
-+         */
-+        if (cs->exception_index != EXCP_DEBUG) {
-+            cs->exception_index = EXCP_DEBUG;
-+            cpu_loop_exit_restore(cs, GETPC());
-+        }
-+        break;
-     case DBG_ACTION_TRACE0:
-     case DBG_ACTION_TRACE1:
-     case DBG_ACTION_TRACE2:
-@@ -441,6 +459,7 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
- {
-     target_ulong val;
-     uint32_t size;
-+    uint32_t action;
- 
-     /* validate the generic part first */
-     val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH);
-@@ -448,11 +467,25 @@ static target_ulong type2_mcontrol_validate(CPURISCVState *env,
-     /* validate unimplemented (always zero) bits */
-     warn_always_zero_bit(ctrl, TYPE2_MATCH, "match");
-     warn_always_zero_bit(ctrl, TYPE2_CHAIN, "chain");
--    warn_always_zero_bit(ctrl, TYPE2_ACTION, "action");
-     warn_always_zero_bit(ctrl, TYPE2_TIMING, "timing");
-     warn_always_zero_bit(ctrl, TYPE2_SELECT, "select");
-     warn_always_zero_bit(ctrl, TYPE2_HIT, "hit");
- 
-+    action = (ctrl & TYPE2_ACTION) >> 12;
-+    if (action == DBG_ACTION_BP) {
-+        val |= ctrl & TYPE2_ACTION;
-+    } else if (action == DBG_ACTION_DBG_MODE) {
-+        if (env_archcpu(env)->cfg.ext_sdext) {
-+            val |= ctrl & TYPE2_ACTION;
-+        } else {
-+            qemu_log_mask(LOG_UNIMP,
-+                          "trigger action=debug mode requires Sdext\n");
-+        }
-+    } else {
-+        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
-+                      action);
-+    }
-+
-     /* validate size encoding */
-     size = type2_breakpoint_size(env, ctrl);
-     if (access_size[size] == -1) {
-@@ -569,6 +602,7 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
- {
-     target_ulong val;
-     uint32_t size;
-+    uint32_t action;
- 
-     /* validate the generic part first */
-     val = tdata1_validate(env, ctrl, TRIGGER_TYPE_AD_MATCH6);
-@@ -576,11 +610,25 @@ static target_ulong type6_mcontrol6_validate(CPURISCVState *env,
-     /* validate unimplemented (always zero) bits */
-     warn_always_zero_bit(ctrl, TYPE6_MATCH, "match");
-     warn_always_zero_bit(ctrl, TYPE6_CHAIN, "chain");
--    warn_always_zero_bit(ctrl, TYPE6_ACTION, "action");
-     warn_always_zero_bit(ctrl, TYPE6_TIMING, "timing");
-     warn_always_zero_bit(ctrl, TYPE6_SELECT, "select");
-     warn_always_zero_bit(ctrl, TYPE6_HIT, "hit");
- 
-+    action = (ctrl & TYPE6_ACTION) >> 12;
-+    if (action == DBG_ACTION_BP) {
-+        val |= ctrl & TYPE6_ACTION;
-+    } else if (action == DBG_ACTION_DBG_MODE) {
-+        if (env_archcpu(env)->cfg.ext_sdext) {
-+            val |= ctrl & TYPE6_ACTION;
-+        } else {
-+            qemu_log_mask(LOG_UNIMP,
-+                          "trigger action=debug mode requires Sdext\n");
-+        }
-+    } else {
-+        qemu_log_mask(LOG_UNIMP, "trigger action: %u is not supported\n",
-+                      action);
-+    }
-+
-     /* validate size encoding */
-     size = extract32(ctrl, 16, 4);
-     if (access_size[size] == -1) {
-@@ -919,6 +967,7 @@ target_ulong tinfo_csr_read(CPURISCVState *env)
- {
-     /* assume all triggers support the same types of triggers */
-     return BIT(TRIGGER_TYPE_AD_MATCH) |
-+           BIT(TRIGGER_TYPE_INST_CNT) |
-            BIT(TRIGGER_TYPE_AD_MATCH6);
- }
- 
--- 
-2.52.0
+you lost me. Need to look at the kernel or spec ;-)
+>
+> We are getting away this corner case with any guest OS running
+> Linux kernel because it only accesses VTINF pages. But likely we
+> should do something about it..
+>
+>> Then you talk about 0x30000 :VINTF register I guess this is the second cmdqv->mmio_vintf_page
+>>
+>> Well I am confused at this stage of the reading.
+>>
+>> Also without any spec, this is difficult to understand. Is there any public doc?
+> It seems that Red Hat can get the doc under NDA..
+OK thanks
+
+Eric
+>
+> Thanks
+> Nicolin
+>
 
 
