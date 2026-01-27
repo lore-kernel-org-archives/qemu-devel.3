@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5F9BD2F038
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 14:28:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 855FFD2F037
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 14:28:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkk2h-0006Hq-6L; Tue, 27 Jan 2026 09:27:43 -0500
+	id 1vkk2k-0006Le-1M; Tue, 27 Jan 2026 09:27:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vkk2R-0006An-Lz
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:27:28 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vkk2a-0006F5-57
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:27:37 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vkk2Q-0003bH-9N
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:27:27 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vkk2Y-0003c6-Pt
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:27:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769524045;
+ s=mimecast20190719; t=1769524054;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3gcl3Dbzs1jyEG1yBKpjfMi+5eNyPUahQKGJSe7GrLo=;
- b=IgKFfFMHA7oOSKQYnIRiVKXFYd0ITEnyACsj2KX79lWaSnj28bg92pDXKvTeAhj6hzhD51
- zFvZyySDnIhLGAph+Ojx4o2p3K7feNwYoiczd9n7VSIvYHhWBOAX6E6izBUyL6U5PfqZAX
- IB5yXJxHNwpiI06OPRbgEoRWG0EI9eY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=gAR9IbAftdJfano+amtO1DX4mP8FEzuj2Svzqo8C5Dg=;
+ b=bRHs0KxZOXMDjyCty0W/52XOCDj9dhzRCs5V7+5wN9n9H/HJPhE2p25br/Ul7XvcDItX1F
+ AQaq++Z99xsnbZ8crX87y9V8EkAmn2cY9dr94EKz3/0byLj7p+zC80wbAh5krfkI6Z/zWT
+ 0U3JCaCCCpv+LWoFcPty/YCcnSeEQkw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-bth3LGysNB-B1pruoLqPMw-1; Tue,
- 27 Jan 2026 09:27:22 -0500
-X-MC-Unique: bth3LGysNB-B1pruoLqPMw-1
-X-Mimecast-MFC-AGG-ID: bth3LGysNB-B1pruoLqPMw_1769524041
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-Q7p4MrH5PwK2cO2i8cCEXA-1; Tue,
+ 27 Jan 2026 09:27:30 -0500
+X-MC-Unique: Q7p4MrH5PwK2cO2i8cCEXA-1
+X-Mimecast-MFC-AGG-ID: Q7p4MrH5PwK2cO2i8cCEXA_1769524049
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3AB0C1800370; Tue, 27 Jan 2026 14:27:21 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 70C2C19775B2; Tue, 27 Jan 2026 14:27:29 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.209])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 926A818001D5; Tue, 27 Jan 2026 14:27:19 +0000 (UTC)
+ id CCCB6180049F; Tue, 27 Jan 2026 14:27:27 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 3/9] tests/functional/x86_64: Limit the memlock test to Linux
- hosts
-Date: Tue, 27 Jan 2026 15:27:04 +0100
-Message-ID: <20260127142710.131904-4-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 6/9] pc-bios/optionrom: Use 32-bit linker emulation for the
+ optionroms
+Date: Tue, 27 Jan 2026 15:27:07 +0100
+Message-ID: <20260127142710.131904-7-thuth@redhat.com>
 In-Reply-To: <20260127142710.131904-1-thuth@redhat.com>
 References: <20260127142710.131904-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -87,82 +86,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-The memlock test analyzes /proc/*/status files and expects the layout
-from Linux in there. However, these files also exist on NetBSD hosts
-with a completely different layout, causing this test to fail. Thus
-limit the test to Linux hosts now. We already have a decorator to
-skip a test if it is running on a certain host system, but in this
-case, we rather want to skip if we are not running on a specific
-host system, so introduce a new @skipUnlessOperatingSystem decorator
-for this job.
+Without this linker flag, the linking fails on NetBSD v10.1 with:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+ ld: i386 architecture of input file `multiboot.o' is incompatible with i386:x86-64 output
+ ld: i386 architecture of input file `multiboot_dma.o' is incompatible with i386:x86-64 output
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260121111140.99482-1-thuth@redhat.com>
+Message-ID: <20260121074819.29396-1-thuth@redhat.com>
 ---
- tests/functional/qemu_test/__init__.py   |  4 ++--
- tests/functional/qemu_test/decorators.py | 12 ++++++++++++
- tests/functional/x86_64/test_memlock.py  |  3 ++-
- 3 files changed, 16 insertions(+), 3 deletions(-)
+ pc-bios/optionrom/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 320193591b2..03e5c73d39d 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -15,8 +15,8 @@
- from .linuxkernel import LinuxKernelTest
- from .decorators import skipIfMissingCommands, skipIfNotMachine, \
-     skipFlakyTest, skipUntrustedTest, skipBigDataTest, skipSlowTest, \
--    skipIfMissingImports, skipIfOperatingSystem, skipLockedMemoryTest, \
--    skipIfMissingEnv
-+    skipIfMissingImports, skipIfOperatingSystem, skipUnlessOperatingSystem, \
-+    skipLockedMemoryTest, skipIfMissingEnv
- from .archive import archive_extract
- from .uncompress import uncompress
- from .gdb import GDB
-diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
-index 807418359ab..fcf236ecfdf 100644
---- a/tests/functional/qemu_test/decorators.py
-+++ b/tests/functional/qemu_test/decorators.py
-@@ -57,6 +57,18 @@ def skipIfOperatingSystem(*args):
-                   'running on an OS (%s) that is not able to run this test' %
-                   ", ".join(args))
+diff --git a/pc-bios/optionrom/Makefile b/pc-bios/optionrom/Makefile
+index 30d07026c79..e6674a76e73 100644
+--- a/pc-bios/optionrom/Makefile
++++ b/pc-bios/optionrom/Makefile
+@@ -36,7 +36,7 @@ config-cc.mak: Makefile
+ 	    $(call cc-option,-Wno-array-bounds)) 3> config-cc.mak
+ -include config-cc.mak
  
-+def skipUnlessOperatingSystem(*args):
-+    '''
-+    Decorator to skip execution of a test if the current host
-+    operating system does not match one of the allowed ones.
-+    Example:
-+
-+      @skipUnlessOperatingSystem("Linux", "Darwin")
-+    '''
-+    return skipUnless(platform.system() in args,
-+                  'not running on one of the required operating systems (%s)' %
-+                  ", ".join(args))
-+
- def skipIfNotMachine(*args):
-     '''
-     Decorator to skip execution of a test if the current
-diff --git a/tests/functional/x86_64/test_memlock.py b/tests/functional/x86_64/test_memlock.py
-index f970a2c3095..d88843ab5f9 100755
---- a/tests/functional/x86_64/test_memlock.py
-+++ b/tests/functional/x86_64/test_memlock.py
-@@ -14,12 +14,13 @@
- from typing import Dict
+-override LDFLAGS = -nostdlib -Wl,--build-id=none,-T,$(SRC_DIR)/flat.lds
++override LDFLAGS = -nostdlib -Wl,--build-id=none,-T,$(SRC_DIR)/flat.lds,-m,elf_i386
  
- from qemu_test import QemuSystemTest
--from qemu_test import skipLockedMemoryTest
-+from qemu_test import skipLockedMemoryTest, skipUnlessOperatingSystem
+ pvh.img: pvh.o pvh_main.o
  
- 
- STATUS_VALUE_PATTERN = re.compile(r'^(\w+):\s+(\d+) kB', re.MULTILINE)
- 
- 
-+@skipUnlessOperatingSystem('Linux')
- @skipLockedMemoryTest(2_097_152)  # 2GB
- class MemlockTest(QemuSystemTest):
-     """
 -- 
 2.52.0
 
