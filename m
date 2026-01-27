@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 934B2D25937
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 05:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F35FBD25932
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 05:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkbSg-0007jO-Sk; Tue, 27 Jan 2026 00:17:59 -0500
+	id 1vkbRm-0006jj-83; Tue, 27 Jan 2026 00:17:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vkbSc-0007eJ-Uf
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:55 -0500
+ id 1vkbRk-0006jE-Vt
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vkbSb-0000EJ-GR
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:54 -0500
+ id 1vkbRj-0008LB-Jz
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769491072;
+ s=mimecast20190719; t=1769491019;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5C6sP8bU1zvxuy85CHu7c4a3R3EcqLaWP1a8seyGArg=;
- b=NveRxP23Idl1lUvOxb/vwfpuvrN5y7SalcEGMCquZNaoFW0Sv1+7EgHRyLVrnhojrnASCW
- 7gHY3cEw1Wm+cw7076E91LUmbfisneh2AlruMkL+Ss5jtSNFYvnwtFzDZ0v/DdelXpJXKc
- RWB9ZbjjRieGBpw7d5Gzy+rodoktYzs=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=X/lBWdDVebfZe5D0jHJAAfOOk/PomlXvxepzVj2YvU4=;
+ b=J+YplIdTEVxHd75kkjbiBDaczLQRAeESdItZtB8irFqEN6ETGXEsSUo7oZomP8siaNSg50
+ jliv0F+4OTi0zluNikeER7u8ZGvvBPxhZLGP8n6iDxMx4eq+k2XVPJ9qFuiPK9x0rCqNxR
+ jwX4oODlXhF52GSg4c9ttNnBNGI/99s=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-153-v5ytG9K5MiewOoq2QYRnwA-1; Tue, 27 Jan 2026 00:17:50 -0500
-X-MC-Unique: v5ytG9K5MiewOoq2QYRnwA-1
-X-Mimecast-MFC-AGG-ID: v5ytG9K5MiewOoq2QYRnwA_1769491070
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-34cc8bf226cso5352438a91.3
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 21:17:50 -0800 (PST)
+ us-mta-139-mQjmpdKqNoCgCQjv62cUsA-1; Tue, 27 Jan 2026 00:16:56 -0500
+X-MC-Unique: mQjmpdKqNoCgCQjv62cUsA-1
+X-Mimecast-MFC-AGG-ID: mQjmpdKqNoCgCQjv62cUsA_1769491016
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-34c38781efcso4920705a91.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 21:16:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769491070; x=1770095870; darn=nongnu.org;
+ d=redhat.com; s=google; t=1769491016; x=1770095816; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5C6sP8bU1zvxuy85CHu7c4a3R3EcqLaWP1a8seyGArg=;
- b=E9LOKJLJkoTu2lID+iEM8RV94Tf4dAjWgMYWMfbUr8/2zndAWPdxfl8Lo3eaAOo8NF
- 4G4saEsuUtDS0qbeJWP+boyz2cUNV8zxfPmTO4iC7cmUQLrICld4kHUgkiLKRi3avBfp
- gZhHg89QQDHOrAG2ZwcFz0id89gT+hKPesvaubfX+Vngp24Zvz6L/9hFcFVBB4/mnYxj
- I8NdAcVpkKm4u/3y2u1FtZtl9FvbmCWgVs6vX7D8mpizAzQdHmHUTPuNv7Hb8xfRYlIZ
- 1JygxO8HAYTieQGIcGNcKAShNdO+VVS8PqkXr0+Q+KL4QiVusemkI19DPma2RiwhBDC+
- LVwQ==
+ bh=X/lBWdDVebfZe5D0jHJAAfOOk/PomlXvxepzVj2YvU4=;
+ b=qe4dY5G+CHFBYPPlHooyxeO9kv7pxtNgDZ9Hk+mhWCQ8P3jAxdZc4bgfhE2a1AhFQ+
+ GmGiLJkC17Ba3dgYdvG0fwERar8qx8hE41hAdTCUxOsOL3qi1h4ZPLnlbLI++JhBEjSK
+ lAXQjOzfFP9nPZgdzhRA21jBF6NDv88xWEkAHqDfVNK+6pF3yj4iWEOZSUQKvPCqqt8n
+ n0+x2Sc+JdmxNPwSGM7CsEnKYhATv7479aCAqT/2O9jnbeHiW/KRnkb/hvhFO55zU5Kn
+ F36c6sY9Mgl6j85Qd4o1iVHW1x99Tx2UajMYClawsuVtcvWSItJ/wObP2Ne1qUP37Kzr
+ 5p0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769491070; x=1770095870;
+ d=1e100.net; s=20230601; t=1769491016; x=1770095816;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5C6sP8bU1zvxuy85CHu7c4a3R3EcqLaWP1a8seyGArg=;
- b=ESzYONa6eosH2jEIhmKkNMVGZfnJLe5PnA8FbftYbRbCvwLJcAM6LEpyZ9uJk/0ICk
- Y3CMjJ37V8c15RjsbvB+taaMLQkgzEgjZNJsyJ4K4r+FKAuztZ9RJ2d2PI+JBHZLZk1n
- XUvYtCUMcd2o7hkNegMoULO4jrROoM3qCfvMsB+ACUKFGk8yaLC4gPeJG8qBsQe0AXml
- GOVbi2M+i9w//suxxrndfNvLrAfyUhrLpUO75E0JrRWqwJn2+IbVXxIfmoDXX0o4STct
- UB+4p08LE1X23MreCv1JQsKDvV9fm1h4WvwxY0Ze4Lj7Yuz2l+azAaSQjLbQW8Oh1zUT
- GeFQ==
+ bh=X/lBWdDVebfZe5D0jHJAAfOOk/PomlXvxepzVj2YvU4=;
+ b=CeOpuRJ1PgabeNhtr9G2zP8iqV+6L//Y3L4xAkOSwLREl9TeaDEEu4zZH+TibOJ/XQ
+ /9aF7un4o45rbPvCebbIv5g/QOMId1YI77Qouw9NIAKebp9Q7LtJkYOT0Huxbrxn4UOP
+ nD2cjlPYvv00RwK4SDDR2I6ZkMHCwd0MkOJlezukWiBb4oMN/e803e6SpdDt19AjmAW7
+ RMJP6OxgmR8bVhGIJfngXSzeGSGCVLAk7Q50W8VTgEqzMpaIpUvuIc5Uj/amemC74Wo/
+ CNki43aqjfJybOBdtTVnk1qSMk11/PKwim66lR3S/PX6sjmnBBHe2m6mnPN7Lgdn/TpB
+ BYuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvS+FSoXAoKeyj+2qFJa0HSsuWUBvYIKTZvtN6wnWeC2OwQaNSi46Q2sQ+lhO2w4P3VbvHjGwlyqG8@nongnu.org
-X-Gm-Message-State: AOJu0YztzpqBMx1//T5OSjgHsMnY+yFnwysaTR/DEHKV6Ig0YreQLKoT
- A77cOdF85ZzOSoeB8Fj8Zyh6cmbB8qEBQg8Nv8gFT8gXjkSy1j07t4MH5+/+cNUe0zqY+sjtRFs
- f/TFAIuiEkRwgOkbUzpBhyyrhfp/2k8qrK0Tb+JmvDHK310a8dBlbi3ce
-X-Gm-Gg: AZuq6aJ3ApPuMYUmVjX0O7jgNELKDXi38So47vv1+slyySy3KVTPcvjsoyahKa7YL2u
- IGT/9SG4z0m8kDe0fFts1FetXS20bFqbf4EHh9QCHly4LcM6Y1yo3S5pfrHXJFYwK13V2us2hQK
- 7+XeXl29POVH1YAChPU8Cky+KoaUI0qZNaY2WVVbBwUSYv68DXngbpHiMx8sRMySzFRGRRIjFiA
- 0SkW0ox7uFOQvsqapAQM/OZFgh4GLqBG7BkY1IK/9WjcO84Fds0pR2YVuiZrQ9MJMgN+eQhJTYU
- JGvzxDRKEO2cGS0kXqsUqegaJ+j9wA9LnFWBwQIZMsy3dLSOPZTw/d1yNiR2MfW48sUwp+iriAL
- Wxux0lJPmfu4kBaPqUPICyPyzbq1XLVoeSkm34kdOog==
-X-Received: by 2002:a17:90b:1e51:b0:32e:749d:fcb7 with SMTP id
- 98e67ed59e1d1-353fecdb174mr760701a91.13.1769491069756; 
- Mon, 26 Jan 2026 21:17:49 -0800 (PST)
-X-Received: by 2002:a17:90b:1e51:b0:32e:749d:fcb7 with SMTP id
- 98e67ed59e1d1-353fecdb174mr760679a91.13.1769491069377; 
- Mon, 26 Jan 2026 21:17:49 -0800 (PST)
+ AJvYcCVphh4Tvzh54egTWmqFMP6fvUra2uU0037OhfAqJ1bnUibsqSWXAvWM+7tZDUu5Gl3brsUZCX58BfcJ@nongnu.org
+X-Gm-Message-State: AOJu0YyC1j/azJ9560Qa1wxQf0b1/VOCSzobNhagid/iZAvJ/pecj0PA
+ jxcddgT8cSd4dT+0CSlwSkuX8keicw2dEUd09/B0DL38ITg4V6Bk/hzCy/ULci/xIgR3z5YuU3M
+ J88WprEVnYRDVVgqhFAK0oOK41yX9skkJeAdHqfrzlXt/VNHFfa5KI4Jl
+X-Gm-Gg: AZuq6aLVAFUEP1PqKv8bW+6Lo26qzEfEY8Bz+PdRnDidYFX6xtiwOUnZgcjpZffzRDk
+ tg8cXRZfEJvzQDSb0XjDTnJL2vV+eHVbJNprM7iKIhF26OB/OtoUyd4rVNuqGTfQ+ok707xtF0y
+ rcDCYg3QnIcw5IjT6w+0NXG8qhs0cMpeFP3MLHn3NUENmdO04GKGKxrft+ouUoxS4v83atWnzJl
+ bnTIc23D0bvkyBlvpsVPwpx1lhRoQX5jrblTMPnM/eSFmqLeDUXWZ2zhih09JTfJvQm2A5z9Iz7
+ wXElA30T6QvqqnsV2Re6PE+z5JSxZWOdxFStIzZowvQtqpCmEvBUdrvHVq4f61eUfMNvIbtI/Bq
+ O4+FkNMLL/mw1hadNCpOc0nWhHVVnXBwRVsgTxG8u/A==
+X-Received: by 2002:a17:90b:3901:b0:32d:f352:f764 with SMTP id
+ 98e67ed59e1d1-353fecd08edmr647579a91.2.1769491015901; 
+ Mon, 26 Jan 2026 21:16:55 -0800 (PST)
+X-Received: by 2002:a17:90b:3901:b0:32d:f352:f764 with SMTP id
+ 98e67ed59e1d1-353fecd08edmr647562a91.2.1769491015535; 
+ Mon, 26 Jan 2026 21:16:55 -0800 (PST)
 Received: from rhel9-box.lan ([122.163.48.79])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-353f6230d5dsm1110925a91.17.2026.01.26.21.17.47
+ 98e67ed59e1d1-353f6230d5dsm1110925a91.17.2026.01.26.21.16.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 21:17:49 -0800 (PST)
+ Mon, 26 Jan 2026 21:16:55 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH v3 25/33] hw/hyperv/vmbus: add support for confidential guest
- reset
-Date: Tue, 27 Jan 2026 10:45:53 +0530
-Message-ID: <20260127051612.219475-26-anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH v3 06/33] accel/kvm: mark guest state as unprotected after vm
+ file descriptor change
+Date: Tue, 27 Jan 2026 10:45:34 +0530
+Message-ID: <20260127051612.219475-7-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260127051612.219475-1-anisinha@redhat.com>
 References: <20260127051612.219475-1-anisinha@redhat.com>
@@ -122,87 +123,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On confidential guests when the KVM virtual machine file descriptor changes as
-a part of the reset process, event file descriptors needs to be reassociated
-with the new KVM VM file descriptor. This is achieved with the help of a
-callback handler that gets called when KVM VM file descriptor changes during
-the confidential guest reset process.
-
-This patch is untested on confidential guests and only exists for completeness.
+When the KVM VM file descriptor has changed and a new one created, the guest
+state is no longer in protected state. Mark it as such.
+The guest state becomes protected again when TDX and SEV-ES and SEV-SNP mark
+it as such.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- hw/hyperv/vmbus.c | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ accel/kvm/kvm-all.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-index c5bab5d245..ff1b6f805c 100644
---- a/hw/hyperv/vmbus.c
-+++ b/hw/hyperv/vmbus.c
-@@ -20,6 +20,7 @@
- #include "hw/hyperv/vmbus-bridge.h"
- #include "hw/core/sysbus.h"
- #include "exec/cpu-common.h"
-+#include "system/kvm.h"
- #include "exec/target_page.h"
- #include "trace.h"
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 46243cfcf2..834df61c31 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2650,6 +2650,9 @@ static int kvm_reset_vmfd(MachineState *ms)
  
-@@ -248,6 +249,12 @@ struct VMBus {
-      * interrupt page
-      */
-     EventNotifier notifier;
-+
-+    /*
-+     * Notifier to inform when vmfd is changed as a part of confidential guest
-+     * reset mechanism.
-+     */
-+    NotifierWithReturn vmbus_vmfd_change_notifier;
- };
+     s->vmfd = ret;
  
- static bool gpadl_full(VMBusGpadl *gpadl)
-@@ -2347,6 +2354,32 @@ static void vmbus_dev_unrealize(DeviceState *dev)
-     free_channels(vdev);
- }
++    /* guest state is now unprotected again */
++    kvm_state->guest_state_protected = false;
++
+     kvm_setup_dirty_ring(s);
  
-+/*
-+ * If the KVM fd changes because of VM reset in confidential guests,
-+ * reassociate event fd with the new KVM fd.
-+ */
-+static int vmbus_handle_vmfd_change(NotifierWithReturn *notifier,
-+                                    void *data, Error** errp)
-+{
-+    VMBus *vmbus = container_of(notifier, VMBus,
-+                                vmbus_vmfd_change_notifier);
-+    int ret = 0;
-+
-+    /* we are not interested in pre vmfd change notification */
-+    if (((VmfdChangeNotifier *)data)->pre) {
-+        return 0;
-+    }
-+
-+    ret = hyperv_set_event_flag_handler(VMBUS_EVENT_CONNECTION_ID,
-+                                            &vmbus->notifier);
-+    /* if we are only using userland event handler, it may already exist */
-+    if (ret != 0 && ret != -EEXIST) {
-+        error_setg(errp, "hyperv set event handler failed with %d", ret);
-+    }
-+
-+    return ret;
-+}
-+
- static const Property vmbus_dev_props[] = {
-     DEFINE_PROP_UUID("instanceid", VMBusDevice, instanceid),
- };
-@@ -2429,6 +2462,9 @@ static void vmbus_realize(BusState *bus, Error **errp)
-         goto clear_event_notifier;
-     }
- 
-+    vmbus->vmbus_vmfd_change_notifier.notify = vmbus_handle_vmfd_change;
-+    kvm_vmfd_add_change_notifier(&vmbus->vmbus_vmfd_change_notifier);
-+
-     return;
- 
- clear_event_notifier:
+     /* rebind memory to new vm fd */
 -- 
 2.42.0
 
