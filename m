@@ -4,110 +4,196 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21AD2D25939
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 05:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7527BD25948
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 06:08:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkbRy-0006sj-Ie; Tue, 27 Jan 2026 00:17:14 -0500
+	id 1vkcEa-0006h6-ST; Tue, 27 Jan 2026 01:07:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vkbRv-0006pX-TT
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vkcEZ-0006go-Ja
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 01:07:27 -0500
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vkbRu-0008Mo-AZ
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:17:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769491029;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YuzXnGtIe5+ocaB4DlBWBC8HhEPJq9yVKADc+BsREeM=;
- b=XEhG8HDPUAkIrsYm1ILC/nwTVQ/RsM+4CPP6OinWYz1ZIyi+bD2jmIjWR3dGjRixwZWUG7
- OzgVYO/WrxFgxk/NQoeEI06CghrakVIRd/91EQxS5pG81UqK74x+j+s9HSE6rSCT5Hdn9H
- sSUY/l3jRS7uBwWC5YaEUOVk8a2SOv0=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-B1_prFv6MFCiN5Cfup8-sw-1; Tue, 27 Jan 2026 00:17:07 -0500
-X-MC-Unique: B1_prFv6MFCiN5Cfup8-sw-1
-X-Mimecast-MFC-AGG-ID: B1_prFv6MFCiN5Cfup8-sw_1769491027
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-34ab8693a2cso708565a91.0
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 21:17:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769491026; x=1770095826; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YuzXnGtIe5+ocaB4DlBWBC8HhEPJq9yVKADc+BsREeM=;
- b=aouQumPuNJUsBRX01bSQHznDYfmb6LX7qMIUhGzg2s8M4bfhs6hPNT6KVX50O3KJAP
- dmdF0qV0Htd2i7hVKpeI6DNDL/rGKM1spIJeDWK5KrzrEdih2kDTZKNFTaZZQeQfw0Nr
- gpjvf8KHhq7OkN1hNuZn916fWp5WqBpLnByytqmz+Ie4zQHKvhgcu6y/R/LpbIMNR7P1
- aDpJhmfR20BM7nIgoGEndLtRSv029dMIqKL6Yitet8hCcTkLdhDbaR/xVQO/Y4RsKimg
- ApfDhnAjVCLtB/UI7wJNMJ0pU2Yf45LSmiyZBqJ+96Eb2fZVkfCVh72nEK8V2hhKYiqV
- yIdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769491027; x=1770095827;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YuzXnGtIe5+ocaB4DlBWBC8HhEPJq9yVKADc+BsREeM=;
- b=ApQAR9biO9t30xnEWwaEtjaoUl5vVOtAwz245PrhuY6lKimKQAt6FfhB8z9vJhqv1f
- kKtr66DkHd4Cz0SFnz+GRadfO3UTumtaR4mhE3zUYnDqOsd/C1EMvdre4GuGsws8V+m2
- Yz0SX8WVqXn5wt/k+oS2yPbfZCoTWvlhtd1SeLuUS2zC6sMBdiW7HjPl00LKKMwOnSr/
- nqM3MhmVy4uRUa8mvDsuPj0EYuYldN/1Y0/mpMkVDOUbYfEHEkPErQyWKa8vzWJCMVz6
- xAeWmXTTi0QRIRL37fH4c4zK+Jg0zo8mdIqF/BwWYrlk9MeoBFvGw//31Gesc5w7JIFa
- DeYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU7/dNtbmBQkcp5srBlE/x9SGZiE4siPKTf+2SrBml5x13vL8X4jq9M17w41R072FUZQozKdGNtcogQ@nongnu.org
-X-Gm-Message-State: AOJu0YyR5V++8ZnOuNTp+6M1dZzZgijiduF477goiX8AQm8i8Mh58M/9
- CjknqXIBmIXoMJJ9kgMvTsUKV4/Vu/x3kz9DhE4EANRc0XUMy8CAGxvDmcaZjXNpValSSYkZMsZ
- AQSmfN/R3ENT023meAI6PI/DKwPX1mWTyU7kgslgPrfmq99rHjMiocwvX
-X-Gm-Gg: AZuq6aIcpRYj/yR9hxci5tEFlemjgjA8zwSPentIxAp7KcTOrCVAbmqzCs0PjOaIAF8
- bcQ4RYV/Phlmkjr1LU4brqBAWYYSaKNvnjMKCv6KItKhNVSaZgzet5GDr+qjGsEwanXzxTuB5L4
- 8yKAl/TpXnNaXRphHRRZu64mLe08YAf8yigRAm12ccvGHTy8zWJ71OqvoCwQctyApdF0c93CTtC
- R6EC8ZAqIUnqJI6iJUJ4rmaWYv5YP6lw9wQVFjxJeElQ/pK9IFKvqUFdm7fjbWGtuR1KgkIzIll
- Wk1AavX6LXwwVw3fyCXjY7FG5i6QA0bOeGr03tdNfljSamTiQHx2+oz4yZmWbnNd3EZQP5G5W2t
- YLNOdJT2unscrcSJ4xqI3j0jKtLSZX5PRUhmAqhnJnQ==
-X-Received: by 2002:a17:90a:d603:b0:34a:b4a2:f0c8 with SMTP id
- 98e67ed59e1d1-353feda7c73mr651591a91.30.1769491026566; 
- Mon, 26 Jan 2026 21:17:06 -0800 (PST)
-X-Received: by 2002:a17:90a:d603:b0:34a:b4a2:f0c8 with SMTP id
- 98e67ed59e1d1-353feda7c73mr651570a91.30.1769491026174; 
- Mon, 26 Jan 2026 21:17:06 -0800 (PST)
-Received: from rhel9-box.lan ([122.163.48.79])
- by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-353f6230d5dsm1110925a91.17.2026.01.26.21.17.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 21:17:05 -0800 (PST)
-From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v3 10/33] kvm/i386: implement architecture support for kvm
- file descriptor change
-Date: Tue, 27 Jan 2026 10:45:38 +0530
-Message-ID: <20260127051612.219475-11-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20260127051612.219475-1-anisinha@redhat.com>
-References: <20260127051612.219475-1-anisinha@redhat.com>
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vkcEX-0000V2-5y
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 01:07:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1769494045; x=1801030045;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=mcHQVv3sU9/GirvenP+/Z3k6Jw1GYikKu0atTfptBYg=;
+ b=EhE+08a8yk0V3uxsRPJ0PFHmm7Q8nqD8iaYxhyaJaioxw8FF/br3iy5W
+ O11NMHMbp1Q9lsLVqBTQcGOmJzsy1ftP0qS7y3gpU/hMCS0yxd3RTl2Yr
+ gTw1VaJntZLhgkGVrpFPlZy6cqPbV0Ac8/mrQODWCYTeQy71YcFCndHsM
+ 95vU4P6sPX+Q4tWZ1o9Nfk18K+yzVOEjC1xddR9RRGFyg+I2NuHlk8+16
+ XshDTLVVMHwb0u134ZKE1ByFwyZ+Qd74+n3kZ16a5f3ZHYbkVD3pJHXeI
+ kxUXUN+fSOeSBd+StpTwzHXPH1dgF6d8uLqsYfwaH1+5Wyn8r6K0MpeLZ w==;
+X-CSE-ConnectionGUID: 5Ux0aYW2R1m+K96DTSfB+A==
+X-CSE-MsgGUID: 1zVlr+rjTMute9cSyQMXZA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11683"; a="88095777"
+X-IronPort-AV: E=Sophos;i="6.21,256,1763452800"; d="scan'208";a="88095777"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jan 2026 22:07:21 -0800
+X-CSE-ConnectionGUID: WCSyZFY7QRiYqZiyGUYEUQ==
+X-CSE-MsgGUID: HTpyPMnORFSIdAhdAiwJUg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,256,1763452800"; d="scan'208";a="207904313"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+ by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jan 2026 22:07:21 -0800
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Mon, 26 Jan 2026 22:07:20 -0800
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35 via Frontend Transport; Mon, 26 Jan 2026 22:07:20 -0800
+Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.8) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.35; Mon, 26 Jan 2026 22:07:20 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BNTsSh/eOd5EpgQIi2v5O7zmPgeuiOrk5jeWh1TrotEntHtqaPwM0ZgjsiYuT33IaNZ45DAfmVmgVw2mV6YY+q70ARZOKbkdHsE+2UWYnQEXFkxx52NfQH7upjF9O/qBZf1ZJbcvHQG8xKCsAqr1JGFSggeZpUnE43IgBM2rc+WXRUKCiVjKFblxnMkTa5z0+HK8NPpOqAG4G72odn22Lxt+xpru8MZGW9bI+qT0ClbeWeNWPVYqd8dTo+hIiv84IpUOGR4Af+Ztip0r34PhwMTn54t2Xpz+IK7PTYWNR9UPsdDBKFLbmZ9nQ5krf07PbSuYOGu9R3+4Y6M6c9/D4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nbaly8Dn9ktK7M6vjTooLCsLvNPPas1tQu6tco2Zr0A=;
+ b=cyBnojubqHz+3XeZCygWDvNzQvGf5+4YjOG21cV54T++IfTCMsuON+JDuJgmKW4uT4Yp6BQt6/6kPWGIZMX9VOt1pg9i3EbvxcC27z4qNKhjnbqnS80UFCkevwwQLEwW+ksDEBAaoQJN28M7E2ZO5HMADUM31RWdtObJi29FjthF+ItTPors3efeEmPhl2rozQXEVXCITFKwTlfi116lMkEQm8kMLo2fex29/PkqMTm3UOr0vMVHHWlw8NJF7NkVpqJJtP4x9QK/XPWgx24rjqKWuN/81QbJ/zopvqTsW2qCqz+6MpUVYjrNeWpwiwQn72YVbJHSxpXcpgKkbAN6Jw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA0PR11MB7185.namprd11.prod.outlook.com (2603:10b6:208:432::20)
+ by CY5PR11MB6318.namprd11.prod.outlook.com (2603:10b6:930:3e::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.15; Tue, 27 Jan
+ 2026 06:07:18 +0000
+Received: from IA0PR11MB7185.namprd11.prod.outlook.com
+ ([fe80::9f37:cb81:5463:300e]) by IA0PR11MB7185.namprd11.prod.outlook.com
+ ([fe80::9f37:cb81:5463:300e%5]) with mapi id 15.20.9564.006; Tue, 27 Jan 2026
+ 06:07:18 +0000
+From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: =?iso-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?iso-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>, Alex Williamson <alex@shazbot.org>,
+ =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>
+Subject: RE: [PATCH v4 2/8] virtio-gpu: Find hva for Guest's DMA addr
+ associated with a ram device
+Thread-Topic: [PATCH v4 2/8] virtio-gpu: Find hva for Guest's DMA addr
+ associated with a ram device
+Thread-Index: AQHcjDCeQw49HQKsGE+uYIqUk8vykLVfT2SAgAW++RA=
+Date: Tue, 27 Jan 2026 06:07:18 +0000
+Message-ID: <IA0PR11MB7185FE7AA93FDB21AE6F8D14F890A@IA0PR11MB7185.namprd11.prod.outlook.com>
+References: <20260123062042.568703-1-vivek.kasireddy@intel.com>
+ <20260123062042.568703-3-vivek.kasireddy@intel.com>
+ <0d57e3df-3ae6-496f-b621-8d979e2ab3f8@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <0d57e3df-3ae6-496f-b621-8d979e2ab3f8@rsg.ci.i.u-tokyo.ac.jp>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA0PR11MB7185:EE_|CY5PR11MB6318:EE_
+x-ms-office365-filtering-correlation-id: 1ab14b8b-a1e7-4e07-5735-08de5d6a5373
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700021;
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?ORmIgswmKru5wWNH3scbIO8iW8OT5HFistKw6ATj+jmTLY7m/0q1IEQaXi?=
+ =?iso-8859-1?Q?2EUZ2L1UMZxQgtP/NM/vDAKmd1KYcliTottD235jdllb9c0BVS6r6Nx1R0?=
+ =?iso-8859-1?Q?Sp26HmTOLo1xRzncY3SIauDvotIvIv/J1VuCLfvNsmDbaPYMtTSiySyiVw?=
+ =?iso-8859-1?Q?GO/UqgLvLjRMKcgfcU3ajc+KpLeO3DJZPClT5NxY45tx3KZOutbaXF7dvu?=
+ =?iso-8859-1?Q?HE8PvFU8I9kApZCKrTZ/XAJdXzEOt5ONxxxjfxpFFTZT5JSlfj0024OM63?=
+ =?iso-8859-1?Q?xGkbH6St6gbmyzaeZi5Rc/yH972qNgctldGLgv6es+YsZ9K3QX0DZ91bJh?=
+ =?iso-8859-1?Q?J8ZL8zmw6jyjDBkCqPS327+qYyQhM9ufjNZETk4QeHRsrLpOi1O9Nhj9lE?=
+ =?iso-8859-1?Q?FwpZLaRUeVKAUQva2ArWZzFBf9PVx86MK3Gf+E1Jb6P7dadNHhvi9qhhht?=
+ =?iso-8859-1?Q?LS/+NaTj6C6j3ppPReTX47Ih7eKZoHqGboI6UUsgrSd2gzvH+cPR2ePLIn?=
+ =?iso-8859-1?Q?vaadMjCZP0owzAm3SuH8J87bmb0neqPO+y8bL0p158sCdsQqoK+jj5CKfo?=
+ =?iso-8859-1?Q?M7T+BzTCtpABNvSJekPzG2bW/7pShiDJXSCDjcj8xU31p0XONNpOMEaX+Q?=
+ =?iso-8859-1?Q?2DVRiiMfdqAvo2BEfqfSw4E2AwEEyuRECfR6Kqaous5rR0qVXl9AHU02R+?=
+ =?iso-8859-1?Q?w0Cu6YdvYm/KZyPCILsK187n5Rky8hnQbQjAzu5TTw3Saz4/u6HustmcMN?=
+ =?iso-8859-1?Q?Es2bK3sLwSE3ISGxeHKfotbi3HDlrOSHBPECkuSzpNNiO4hSQGdZAO7q4w?=
+ =?iso-8859-1?Q?o0GJjZI1EVa+nF7SfKEUSlb1Cx52j/DKassKRJWo00/2kCm8hGt0k6OEct?=
+ =?iso-8859-1?Q?MflQ/V/IjGIxz4y+xWpPxNvFbBT6Gwo5DYEW62ZzuflXE3pyMl2dd294YK?=
+ =?iso-8859-1?Q?iJKsfCvh6F3bg+Vnn05VNYzNLjGSLy+q4Yq6uTYxrqBQssSsIIG7xREtXF?=
+ =?iso-8859-1?Q?j/JAsa5o1HUSNXAPcOg+k4yMw9le3OyRLDM+GZ7LuB9NxZtub5lSgfr6+q?=
+ =?iso-8859-1?Q?Y5ivfETY3qnJ5SN6y9cI0UD++8m7X13lHB0WnuyWiKemSUmCdvRzWeRLU8?=
+ =?iso-8859-1?Q?2+GHhwdDVXhJeFMMQsbVL0QNY6Bhm20RbrI//FpYzX3YsUqGqpgcQrY8RT?=
+ =?iso-8859-1?Q?HbT+QvmBHTJ9q9UWBTbiglhyxHUGqxdJ2Bg/ETrdH2sEi60qqJRr+sLUBl?=
+ =?iso-8859-1?Q?4dfP9EaZ2baQZimSHKXY7O/LRC3UCUV08gJDs4wbrNpO3nVyOcDJrTMAdO?=
+ =?iso-8859-1?Q?arY+PAcE/wxh/IuQwgq3WcK88bDAW1urJkOqMvQlm3irkRcKqznYM8y89p?=
+ =?iso-8859-1?Q?5ITaoC+86BsFahIBIkm4nx5DNKYlEL5Pjz4xY2HagqGMrRw4MW5pVqFRD3?=
+ =?iso-8859-1?Q?+vm+BlQIphlSi0iwwa6TxfiLTtU8M2oQDQc0esr5Y8Nkbae9jOBheVlgRG?=
+ =?iso-8859-1?Q?CZTptPWx5+K3kKBgtDaWKXezL3ZLXeN9ls4yzwsxdnRi7ltVd53/Yxpbcq?=
+ =?iso-8859-1?Q?8lMep9eq1Y+wrbRJyZqpF9wDPfawKfuKWSsg7B5JxGE8m9sDBlsVlZFcNG?=
+ =?iso-8859-1?Q?nINMAB3iheRoWpMlmwJ+XCegiqAjVzmtRZnSFoKEU/EVTyJXC7FHT/84AJ?=
+ =?iso-8859-1?Q?rxzsggPTnOkVXdQNwqM=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA0PR11MB7185.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?QyX90bBxKtTKahNHPsuFrS2sznyqrP/2oBgB6ntM/+nDn2mWktZ37iEueg?=
+ =?iso-8859-1?Q?fEUtgBRmnZDtUFYQRQ6vj1b2j8D2XctPzNCQ7DJjD0+hDMBUyICV0DS9Nn?=
+ =?iso-8859-1?Q?8tj+15vDQhyHuz3v/nYA1UwEt4IuTwCUahol/VwnbiSE7lbRAlCSgOT56L?=
+ =?iso-8859-1?Q?yplBGLgO4dp1DZJiqSteKR6+5RSILipYP1u/LCJ4mGxZBenS2iBI5XitYm?=
+ =?iso-8859-1?Q?GbW4DbR6sGxg9QT6SQDi6w6T8mlR+QYtWLGppc6StJciBn5v55LQIccniC?=
+ =?iso-8859-1?Q?S8Vus3z13co7f9Gmo0qvMkasKj51LMzAHiUrGeq2s5hGhE7LCehE84qecG?=
+ =?iso-8859-1?Q?/Hpn/jF98oax/Xkw2M3Bwx8wA9xt8eyffICh1aX4InlvxzvjEX/Cfvp8HP?=
+ =?iso-8859-1?Q?DD4iAWCbbYfX+xBlK5UorjHW4O+sA3ZxNuhBh6jnP9RWqpSbQI+JU3R2Pw?=
+ =?iso-8859-1?Q?fTT9cFN9Eaf7APr29jil0zR1pZ0uTzHPncU0WpuaWUdWnqRaugNbj/v2ET?=
+ =?iso-8859-1?Q?QQSZMFOP+ofoYpZf/yZEMufM2Lh0+XetRU3h79l9dOShqDiEM6F7Gg+zlq?=
+ =?iso-8859-1?Q?Ra841rGaUima2rP3ka4tzJAYyKfAZM+zmiNwxnHXbdsmo6yMy7YvQwnEB+?=
+ =?iso-8859-1?Q?67XMtp6HlpKGJnKS/Q58LA7Xf7G57S0xaWIyUJFclNYoNWFizkQ0lUU15g?=
+ =?iso-8859-1?Q?SRLChTcMwn7C44ACrgfd5HNKCcuIQJfXJ5Nj4Y/3f5Aef9B6QrYimNj3qX?=
+ =?iso-8859-1?Q?DpVvs+dmHMwg9uSjogA6UlLnf0cqY/9Bk01QB3L6uWm6M07ll1sKF+prG8?=
+ =?iso-8859-1?Q?p1KTVteCnH8WXm47yAI5B+YrAxOLCxtydBNh8RK4wrKIc/dzUrevRYRyrc?=
+ =?iso-8859-1?Q?YrRWfa9pGzfWRSs17s5bfvaVVCPCsbwgD0FfjEFxU7EppXy2rLPWNa6LET?=
+ =?iso-8859-1?Q?egxx9zye/M97GuziUeaYFBZTXfWKFbz4obEDj3K0BiGupHCSomyw/y5aAT?=
+ =?iso-8859-1?Q?T9OYUDpV9CK0wYASFaydGtKviTEu8leMV46TFkqcX/SvErw2jwjbQPGzW1?=
+ =?iso-8859-1?Q?539q+2YKtGlWTF/FOJG+r4q0VTQjsNs5/IHVIVg2YBg0CLDzYb+fPUOgUL?=
+ =?iso-8859-1?Q?5H8KmCoKvI2h9sHtwjfyF7URCQZNgI4lhIwhXA4UX9J9cb+MC/YsIt+enY?=
+ =?iso-8859-1?Q?+QFkQsuFaAzYeAqeupAvoZtPt9AlxEkcP31BGNM9BBY6PG9L9Hd1wDWfyD?=
+ =?iso-8859-1?Q?6fCQkGRwur/IsJHALlyaYHs2laEU2VHNYAJadwzwfw7ro20EJK/liws+zF?=
+ =?iso-8859-1?Q?1vEgS1uydDm1SPGWOqpIvgPTleRhg6xaNyNvxzYgUtTHh9Le4cZRG0FtOT?=
+ =?iso-8859-1?Q?EBs+jGzoZ5+Qyt5el6v2HHqp91Jh5wxA6Ipn518Sf9oLn4jTawW2Qn6ige?=
+ =?iso-8859-1?Q?kW7Gt9Ox1cmrfidUDHYLSFu+nBVx0vbESlgxZAM6IlC2Jjj5THRfW9vL5p?=
+ =?iso-8859-1?Q?1hcpEuAaV279HgKPLjAvSwOFM0Rr3B/ZSqikoHMwI6VnIQ0oNtiSEax/sH?=
+ =?iso-8859-1?Q?554wBtU/6jgrCxEYNeU1rayKfhm1Y/oyN+ds1qF0pDPP7t5fPVEfycARd/?=
+ =?iso-8859-1?Q?q5CW1hpHRIhQXngm6JqD23TIfk/6wpnG5BmYYTVnXmeS4uIhl/KATCFW59?=
+ =?iso-8859-1?Q?wdpQE033lKcYMpGkiunSxbFMDa1nfFvIFxlZNdJ571L1kTukS1/7FZ+K13?=
+ =?iso-8859-1?Q?ggLW1sAD9pjiFJHpeSu79XO2HGxaw12nZ1lfGf9KUK6RpvPdjGFbY/XqH5?=
+ =?iso-8859-1?Q?dwBZJD16/g=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA0PR11MB7185.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ab14b8b-a1e7-4e07-5735-08de5d6a5373
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Jan 2026 06:07:18.0931 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: flk5ouL34nwXVhXkC//Vbd2vwFe2gMAMrfPEmPyn2bmvfyy436BZ9XmA812muN4lZE5o6lnS3EwAlF57uIzsG5eLO8nP9XsEPtZU0NQg3X8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR11MB6318
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.10;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,170 +209,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the kvm file descriptor changes as a part of confidential guest reset,
-some architecture specific setups including SEV/SEV-SNP/TDX specific setups
-needs to be redone. These changes are implemented as a part of the
-kvm_arch_on_vmfd_change() callback which was introduced previously.
+Hi Akihiko,
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- target/i386/kvm/kvm.c        | 82 ++++++++++++++++++++++++++----------
- target/i386/kvm/trace-events |  1 +
- 2 files changed, 60 insertions(+), 23 deletions(-)
+> Subject: Re: [PATCH v4 2/8] virtio-gpu: Find hva for Guest's DMA addr
+> associated with a ram device
+>=20
+> On 2026/01/23 15:17, Vivek Kasireddy wrote:
+> > If the Guest provides a DMA address that is associated with a ram
+> > device (such as a PCI device region and not its system memory),
+> > then we can obtain the hva (host virtual address) by invoking
+> > address_space_translate() followed by memory_region_get_ram_ptr().
+> >
+> > This is because the ram device's address space is not accessible
+> > to virtio-gpu directly and hence dma_memory_map() cannot be used.
+>=20
+> This description is a bit confusing.
+I agree; the description does seem ambiguous.
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index e28ab18a14..e27ccff7a6 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3269,14 +3269,52 @@ static int kvm_vm_enable_energy_msrs(KVMState *s)
-     return 0;
- }
- 
-+static int xen_init_wrapper(MachineState *ms, KVMState *s);
-+
- int kvm_arch_on_vmfd_change(MachineState *ms, KVMState *s)
- {
--    abort();
-+    int ret;
-+
-+    ret = kvm_arch_init(ms, s);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
-+        X86MachineState *x86ms = X86_MACHINE(ms);
-+
-+        if (x86_machine_is_smm_enabled(x86ms)) {
-+            memory_listener_register(&smram_listener.listener,
-+                                     &smram_address_space);
-+        }
-+        kvm_set_max_apic_id(x86ms->apic_id_limit);
-+    }
-+
-+    trace_kvm_arch_on_vmfd_change();
-+    return 0;
-+}
-+
-+static int xen_init_wrapper(MachineState *ms, KVMState *s)
-+{
-+    int ret = 0;
-+#ifdef CONFIG_XEN_EMU
-+    if (!object_dynamic_cast(OBJECT(ms), TYPE_PC_MACHINE)) {
-+        error_report("kvm: Xen support only available in PC machine");
-+        return -ENOTSUP;
-+    }
-+    /* hyperv_enabled() doesn't work yet. */
-+    uint32_t msr = XEN_HYPERCALL_MSR;
-+    ret = kvm_xen_init(s, msr);
-+#else
-+    error_report("kvm: Xen support not enabled in qemu");
-+    return -ENOTSUP;
-+#endif
-+    return ret;
- }
- 
- bool kvm_arch_supports_vmfd_change(void)
- {
--    return false;
-+    return true;
- }
- 
- int kvm_arch_init(MachineState *ms, KVMState *s)
-@@ -3284,6 +3322,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     int ret;
-     struct utsname utsname;
-     Error *local_err = NULL;
-+    static bool first = true;
- 
-     /*
-      * Initialize confidential guest (SEV/TDX) context, if required
-@@ -3312,21 +3351,10 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     }
- 
-     if (s->xen_version) {
--#ifdef CONFIG_XEN_EMU
--        if (!object_dynamic_cast(OBJECT(ms), TYPE_PC_MACHINE)) {
--            error_report("kvm: Xen support only available in PC machine");
--            return -ENOTSUP;
--        }
--        /* hyperv_enabled() doesn't work yet. */
--        uint32_t msr = XEN_HYPERCALL_MSR;
--        ret = kvm_xen_init(s, msr);
-+        ret = xen_init_wrapper(ms, s);
-         if (ret < 0) {
-             return ret;
-         }
--#else
--        error_report("kvm: Xen support not enabled in qemu");
--        return -ENOTSUP;
--#endif
-     }
- 
-     ret = kvm_get_supported_msrs(s);
-@@ -3353,16 +3381,17 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         return ret;
-     }
- 
--    /* Tell fw_cfg to notify the BIOS to reserve the range. */
--    e820_add_entry(KVM_IDENTITY_BASE, 0x4000, E820_RESERVED);
--
-+    if (first) {
-+        /* Tell fw_cfg to notify the BIOS to reserve the range. */
-+        e820_add_entry(KVM_IDENTITY_BASE, 0x4000, E820_RESERVED);
-+    }
-     ret = kvm_vm_set_nr_mmu_pages(s);
-     if (ret < 0) {
-         return ret;
-     }
- 
-     if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE) &&
--        x86_machine_is_smm_enabled(X86_MACHINE(ms))) {
-+        x86_machine_is_smm_enabled(X86_MACHINE(ms)) && first) {
-         smram_machine_done.notify = register_smram_listener;
-         qemu_add_machine_init_done_notifier(&smram_machine_done);
-     }
-@@ -3409,15 +3438,22 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-                 return ret;
-             }
- 
--            ret = kvm_msr_energy_thread_init(s, ms);
--            if (ret < 0) {
--                error_report("kvm : error RAPL feature requirement not met");
--                return ret;
-+            if (first) {
-+                ret = kvm_msr_energy_thread_init(s, ms);
-+                if (ret < 0) {
-+                    error_report("kvm : "
-+                                 "error RAPL feature requirement not met");
-+                    return ret;
-+                }
-             }
-         }
-     }
- 
--    kvm_vmfd_add_change_notifier(&kvm_vmfd_change_notifier);
-+    if (first) {
-+        kvm_vmfd_add_change_notifier(&kvm_vmfd_change_notifier);
-+    }
-+
-+    first = false;
- 
-     return 0;
- }
-diff --git a/target/i386/kvm/trace-events b/target/i386/kvm/trace-events
-index 74a6234ff7..2d213c9f9b 100644
---- a/target/i386/kvm/trace-events
-+++ b/target/i386/kvm/trace-events
-@@ -6,6 +6,7 @@ kvm_x86_add_msi_route(int virq) "Adding route entry for virq %d"
- kvm_x86_remove_msi_route(int virq) "Removing route entry for virq %d"
- kvm_x86_update_msi_routes(int num) "Updated %d MSI routes"
- kvm_hc_map_gpa_range(uint64_t gpa, uint64_t size, uint64_t attributes, uint64_t flags) "gpa 0x%" PRIx64 " size 0x%" PRIx64 " attributes 0x%" PRIx64 " flags 0x%" PRIx64
-+kvm_arch_on_vmfd_change(void) ""
- 
- # xen-emu.c
- kvm_xen_hypercall(int cpu, uint8_t cpl, uint64_t input, uint64_t a0, uint64_t a1, uint64_t a2, uint64_t ret) "xen_hypercall: cpu %d cpl %d input %" PRIu64 " a0 0x%" PRIx64 " a1 0x%" PRIx64 " a2 0x%" PRIx64" ret 0x%" PRIx64
--- 
-2.42.0
+>=20
+> The first problem is with the phrase "the ram device's address space".
+> The address space we are dealing with is always
+> VIRTIO_DEVICE(g)->dma_as. More precisely it is a memory region, not
+> address space.
+>=20
+> The second problem is that it says the ram device's memory region is not
+> directly accessible. It is usually true, but here we are directly
+> accessing it anyway because the guest knows how to do so.
+Does this look better:
+   "virtio-gpu: Find hva for Guest's DMA addr associated with a ram device
+
+    If the Guest provides a DMA address that is associated with a ram
+    device (such as a PCI device region and not its system memory),
+    then we can obtain the hva (host virtual address) by invoking
+    address_space_translate() followed by memory_region_get_ram_ptr().
+
+    We cannot use dma_memory_map() in this case to get the hva because
+    it can only be used with addresses that are associated with the
+    system (or physical) memory region. Therefore, in order to handle
+    addresses associated with ram devices, we need to use the
+    address_space_translate() API to first identify the right memory
+    region and the appropriate offset within that region and then use
+    memory_region_get_ram_ptr() to get the hva. This approach also
+    works for addresses associated with the system memory region.
+
+    Note that, although we take an explicit reference on the memory
+    region, we would still rely on dma_memory_unmap() to drop that
+    reference when the dma mapping is eventually unmapped."
+
+Thanks,
+Vivek
+
+>=20
+> Regards,
+> Akihiko Odaki
+>=20
+> > Therefore, we first need to identify the memory region associated
+> > with the DMA address and add the offset to the pointer returned
+> > from memory_region_get_ram_ptr() to obtain the host address.
+> >
+> > Note that we take a reference on the memory region but we would
+> > still eventually call dma_memory_unmap() (to unref the mr).
+> >
+> > Cc: Marc-Andr=E9 Lureau <marcandre.lureau@redhat.com>
+> > Cc: Alex Benn=E9e <alex.bennee@linaro.org>
+> > Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> > Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> > Cc: Alex Williamson <alex@shazbot.org>
+> > Cc: C=E9dric Le Goater <clg@redhat.com>
+> > Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> > ---
+> >   hw/display/virtio-gpu.c | 21 ++++++++++++++++++---
+> >   1 file changed, 18 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> > index 3d58cebf4b..9930a21317 100644
+> > --- a/hw/display/virtio-gpu.c
+> > +++ b/hw/display/virtio-gpu.c
+> > @@ -798,6 +798,23 @@ static void
+> virtio_gpu_set_scanout_blob(VirtIOGPU *g,
+> >                                 &fb, res, &ss.r, &cmd->error);
+> >   }
+> >
+> > +static void *virtio_gpu_dma_memory_map(VirtIOGPU *g,
+> > +                                       struct virtio_gpu_ctrl_command =
+*cmd,
+> > +                                       uint64_t a, hwaddr *len)
+> > +{
+> > +    MemoryRegion *mr;
+> > +    hwaddr xlat;
+> > +
+> > +    mr =3D address_space_translate(VIRTIO_DEVICE(g)->dma_as, a, &xlat,
+> len,
+> > +                                 DMA_DIRECTION_TO_DEVICE,
+> > +                                 MEMTXATTRS_UNSPECIFIED);
+> > +    if (memory_region_is_ram(mr)) {
+> > +        memory_region_ref(mr);
+> > +        return memory_region_get_ram_ptr(mr) + xlat;
+> > +    }
+> > +    return NULL;
+> > +}
+> > +
+> >   int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
+> >                                     uint32_t nr_entries, uint32_t offse=
+t,
+> >                                     struct virtio_gpu_ctrl_command *cmd=
+,
+> > @@ -839,9 +856,7 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU
+> *g,
+> >
+> >           do {
+> >               len =3D l;
+> > -            map =3D dma_memory_map(VIRTIO_DEVICE(g)->dma_as, a, &len,
+> > -                                 DMA_DIRECTION_TO_DEVICE,
+> > -                                 MEMTXATTRS_UNSPECIFIED);
+> > +            map =3D virtio_gpu_dma_memory_map(g, cmd, a, &len);
+> >               if (!map) {
+> >                   qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map
+> MMIO memory for"
+> >                                 " element %d\n", __func__, e);
 
 
