@@ -4,77 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9129AD2FEDA
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 424F3D2FED8
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:36:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknq2-0006Mk-Kk; Tue, 27 Jan 2026 13:30:54 -0500
+	id 1vknpd-0005jt-5u; Tue, 27 Jan 2026 13:30:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknnq-0001mV-OG
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vknnq-0001mn-PS
  for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from p-west2-cluster5-host3-snip4-9.eps.apple.com ([57.103.71.92]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknnl-0003Qq-Bt
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769538511;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Nao6GR4PA+D5lNYLhp5P8F75FAU05Pi5/wDI5gnX4p8=;
- b=bpgv6fbMIij+5TrZSAeqA5ctx6TmPX4od5wyPs3hvq5zgAud2QlVBxiqsgtdSMfKTqs9WU
- fmmlKDFjXPFk1t9fDxxIMJbrOZBzKfDurHsWfpGhl+yYFqMzGZEDINvplpEpJpO3GDwSik
- hp5OiIYs+RcFZhWTyTPF8s3gzzjpFAA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-D_ikycIsPRuMpRdGJHRJhQ-1; Tue,
- 27 Jan 2026 13:28:27 -0500
-X-MC-Unique: D_ikycIsPRuMpRdGJHRJhQ-1
-X-Mimecast-MFC-AGG-ID: D_ikycIsPRuMpRdGJHRJhQ_1769538506
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3A79218002F2; Tue, 27 Jan 2026 18:28:26 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.23])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9C82218001D5; Tue, 27 Jan 2026 18:28:24 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vknnn-0003RC-D3
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:37 -0500
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPS id
+ 9E199180011A; Tue, 27 Jan 2026 18:28:31 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1769538513; x=1772130513;
+ bh=W7LHWANTGX0pVhuaZvLnuFqInzW7dqE8h8AbRnscw9A=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=HGHQA/N22YqnPKfY6ykjXC7KGAJfiqcCWhDxunyF3KIGsG12tU4ocbDSZrOjiXKHTIssmqvgpvl+HIgAAJU++x6utbq5+CRnzIBK6/cMJj69i2VIcX9IRPuQQ08dxyp0JJqtXlMepllJyBOY2UQJyBnidnA1h+naudEKQRnnHl8U5HlLH/vsmEovcnbwgCGbbRhmEifGV0SdSd6uLC3xgylldhXFCymL1s1YAIA+SCZDoiV9+u2HFu9MuH9mOrPMdNIeNHo1adjHz9A5sDWHEiDHmzbR3mGz6A/HCpPoiEKpzdKcvqj7PPU25fVaSog1icAdQ0NKoM/w7PhiuPFEKA==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPSA id
+ 247901800127; Tue, 27 Jan 2026 18:28:26 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org,
+	mohamed@unpredictable.fr
+Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, qemu-arm@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH 31/43] audio/mixeng: replace redundant pcm_info fields with
- AudioFormat
-Date: Tue, 27 Jan 2026 22:24:58 +0400
-Message-ID: <20260127182516.289834-32-marcandre.lureau@redhat.com>
-In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
-References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH v18 04/22] hw: arm: virt: rework MSI-X configuration
+Date: Tue, 27 Jan 2026 19:27:44 +0100
+Message-ID: <20260127182805.73212-5-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260127182805.73212-1-mohamed@unpredictable.fr>
+References: <20260127182805.73212-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Proofpoint-ORIG-GUID: u5NV0GV9FvmOVeFF2LQIw4QK53u0QnUa
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDE1MCBTYWx0ZWRfXzB3YcezwbAld
+ fRbMlJLDZXQ/BZ/f7fER/fT87glQVupDklF7uw5tDvkvLXDXbon/+6yqYAfVeTRwH6Ovg4osNms
+ HnpvFUvwsilvlSM+pkImt8XlNwn2DtBIP+akvm7pe9jd8BRJrFRQ649NdWTlJuSqfD1X+sdQS6A
+ IM7bhLNf6nt9RDlxx6GZuztNY3ZMKHhGnScvcWfrALffei20Ul67DX1dj9ek9tYYqDRAY6LY6kf
+ pQ/EV7bcNb3+e3c84pprXUWQ/lxNGGiWP8baQVvBg8IDYo3JOuAHoe/rzB/LAqjyOYvxEbIf+4T
+ dOSh3cdLXn0dxahjoUDTDwkjfCe48/D/xhaAsxNOeyoionf3upH2nQ+P3Z4MKE=
+X-Authority-Info-Out: v=2.4 cv=ZeUQ98VA c=1 sm=1 tr=0 ts=697903d0
+ cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VD-kO_21I_MDUkMFtFkA:9
+X-Proofpoint-GUID: u5NV0GV9FvmOVeFF2LQIw4QK53u0QnUa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-27_04,2026-01-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ spamscore=0 mlxlogscore=999 clxscore=1030 mlxscore=0 bulkscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601270150
+X-JNJ: AAAAAAAB4P70EILiCkv1yARKv4O7u8pA0DlY+j6rbVjdaoby5UpDwajoJeSsONRRnfath9Pu9UcoDe1P4SJorIA8/KKgxkhAWXKDJ+d74zyWRtYOvjSl6Uu92Kk6ih0B4KQJJjN6MHLXSj6sZSFsypc4Q0v+zv8awhGnk9DPQxAQcxyM5Fbc6ow3cvhYsrs901uuaOR10o8IOjj8CG1mguSanSbc9BSy02lgZp9WHkbnSTMx+GBak3//9TS94XinUY/z/lpNcuyxr4HRDvGbnEyGuHqqiZyHQrmgCOj1D32/gQaSrl9UGPeFXhn0ZrNDMBsc4XOyukd9khDvZzj45nKTv985sbiSVC854EQ3S+7I/DgUNHEYgUBza4ScgbnuDebZ4AMwZCc+YLz64upwdg7vR0LYmRC5iwcwf4QcLGc9WT0USGLUZ6+uiVB4nCIIudpB6jSJdD/A8GYOlMD6xVEb3fWcbS5elROyatLPb7oQzyBcB8BOhIBqE2wSF4lB/vLyz1w1Qd8CHAHn5crFizUOhc5laspJsIRV+zboXH7IJOR1aIXQK5+4pW7l5TPVw7piYUVn1y1X9z6bfxXaK4PjhrlifyfVgzrYfmx9fOWbN3JWkAgaBhKtP0sajH7yaW9hdLJUTO/eDKyJeY+m7gvtHa8ugUpws9fTLGzzrBFPuiOiUuv/kC1h+SwhXeCx4lzzsOhJAmXGoPX9EDUTUrHIdTgeifK6BxKFC2pgrr11QLfSk4pPb/VSEFiaJ9T5rXHO7sgOE4jNkfpjNq6pN/8V2yKmx5o2h0iPVIFI3XWuae3Ws8VIg2qxMWTjkcgA2u+wa803zzDEVjG4IMyFxEaQmlvWqACmfPQodcs12cmCnnOEPpR8TDbJvYz5tobNWEbf+Uqd8gmQp6PpbLNrsjd5RIzLiaw=
+Received-SPF: pass client-ip=57.103.71.92;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,495 +107,305 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Introduce a -M msi= argument to be able to control MSI-X support independently
+from ITS, as part of supporting GICv3 + GICv2m platforms.
 
-The audio_pcm_info structure stored three fields (bits, is_signed,
-is_float) that were always derived from the AudioFormat enum. This
-redundancy meant the same information was represented twice, with no
-type-level guarantee that they stayed in sync.
+Remove vms->its as it's no longer needed after that change.
 
-Replace these fields with a single AudioFormat field, and add helper
-functions to extract the derived properties when needed:
-- audio_format_bits()
-- audio_format_is_signed()
-- audio_format_is_float()
-
-This improves type safety by making AudioFormat the single source of
-truth, eliminating the possibility of inconsistent state between the
-format enum and its derived boolean/integer representations.
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- audio/audio_int.h       |   4 +-
- audio/audio_template.h  |  12 +--
- include/qemu/audio.h    |  49 +++++++++
- audio/audio-mixeng-be.c | 218 ++++++++++++----------------------------
- audio/dbusaudio.c       |  12 +--
- audio/coreaudio.m       |   2 +-
- 6 files changed, 126 insertions(+), 171 deletions(-)
+ hw/arm/virt-acpi-build.c |  20 ++++---
+ hw/arm/virt.c            | 112 ++++++++++++++++++++++++++++++++++++---
+ include/hw/arm/virt.h    |   5 +-
+ 3 files changed, 121 insertions(+), 16 deletions(-)
 
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index 5334c4baad2..dd5f2220d75 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -45,9 +45,7 @@ struct audio_callback {
- };
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 03b4342574..f87bf1bf2f 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -473,7 +473,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         nb_nodes = num_smmus + 1; /* RC and SMMUv3 */
+         rc_mapping_count = rc_smmu_idmaps_len;
  
- struct audio_pcm_info {
--    int bits;
--    bool is_signed;
--    bool is_float;
-+    AudioFormat af;
-     int freq;
-     int nchannels;
-     int bytes_per_frame;
-diff --git a/audio/audio_template.h b/audio/audio_template.h
-index 08d60422589..3da91a4782c 100644
---- a/audio/audio_template.h
-+++ b/audio/audio_template.h
-@@ -173,7 +173,7 @@ static int glue (audio_pcm_sw_init_, TYPE) (
-     sw->empty = true;
- #endif
- 
--    if (sw->info.is_float) {
-+    if (audio_format_is_float(hw->info.af)) {
- #ifdef DAC
-         sw->conv = mixeng_conv_float[sw->info.nchannels == 2]
-             [sw->info.swap_endianness];
-@@ -188,9 +188,9 @@ static int glue (audio_pcm_sw_init_, TYPE) (
-         sw->clip = mixeng_clip
- #endif
-             [sw->info.nchannels == 2]
--            [sw->info.is_signed]
-+            [audio_format_is_signed(hw->info.af)]
-             [sw->info.swap_endianness]
--            [audio_bits_to_index(sw->info.bits)];
-+            [audio_format_to_index(hw->info.af)];
-     }
- 
-     sw->name = g_strdup (name);
-@@ -300,7 +300,7 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
-         goto err1;
-     }
- 
--    if (hw->info.is_float) {
-+    if (audio_format_is_float(hw->info.af)) {
- #ifdef DAC
-         hw->clip = mixeng_clip_float[hw->info.nchannels == 2]
-             [hw->info.swap_endianness];
-@@ -315,9 +315,9 @@ static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioMixengBackend *s,
-         hw->conv = mixeng_conv
- #endif
-             [hw->info.nchannels == 2]
--            [hw->info.is_signed]
-+            [audio_format_is_signed(hw->info.af)]
-             [hw->info.swap_endianness]
--            [audio_bits_to_index(hw->info.bits)];
-+            [audio_format_to_index(hw->info.af)];
-     }
- 
-     glue(audio_pcm_hw_alloc_resources_, TYPE)(hw);
-diff --git a/include/qemu/audio.h b/include/qemu/audio.h
-index b6b6ee9b560..a2fbc286eb1 100644
---- a/include/qemu/audio.h
-+++ b/include/qemu/audio.h
-@@ -185,6 +185,55 @@ bool audio_be_set_dbus_server(AudioBackend *be,
- 
- const char *audio_application_name(void);
- 
-+static inline int audio_format_bits(AudioFormat fmt)
-+{
-+    switch (fmt) {
-+    case AUDIO_FORMAT_S8:
-+    case AUDIO_FORMAT_U8:
-+        return 8;
-+
-+    case AUDIO_FORMAT_S16:
-+    case AUDIO_FORMAT_U16:
-+        return 16;
-+
-+    case AUDIO_FORMAT_F32:
-+    case AUDIO_FORMAT_S32:
-+    case AUDIO_FORMAT_U32:
-+        return 32;
-+
-+    case AUDIO_FORMAT__MAX:
-+	break;
-+    }
-+
-+    g_assert_not_reached();
-+}
-+
-+static inline bool audio_format_is_float(AudioFormat fmt)
-+{
-+    return fmt == AUDIO_FORMAT_F32;
-+}
-+
-+static inline bool audio_format_is_signed(AudioFormat fmt)
-+{
-+    switch (fmt) {
-+    case AUDIO_FORMAT_S8:
-+    case AUDIO_FORMAT_S16:
-+    case AUDIO_FORMAT_S32:
-+    case AUDIO_FORMAT_F32:
-+        return true;
-+
-+    case AUDIO_FORMAT_U8:
-+    case AUDIO_FORMAT_U16:
-+    case AUDIO_FORMAT_U32:
-+        return false;
-+
-+    case AUDIO_FORMAT__MAX:
-+	break;
-+    }
-+
-+    g_assert_not_reached();
-+}
-+
- #define DEFINE_AUDIO_PROPERTIES(_s, _f)         \
-     DEFINE_PROP_AUDIODEV("audiodev", _s, _f)
- 
-diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
-index a0e542754e5..146026d0b39 100644
---- a/audio/audio-mixeng-be.c
-+++ b/audio/audio-mixeng-be.c
-@@ -62,23 +62,28 @@ int audio_bug (const char *funcname, int cond)
-     return cond;
- }
- 
--static inline int audio_bits_to_index (int bits)
-+/*
-+ * Convert audio format to mixeng_clip index. Used by audio_pcm_sw_init_ and
-+ * audio_mixeng_backend_add_capture()
-+ */
-+static int audio_format_to_index(AudioFormat af)
- {
--    switch (bits) {
--    case 8:
-+    switch (af) {
-+    case AUDIO_FORMAT_U8:
-+    case AUDIO_FORMAT_S8:
-         return 0;
--
--    case 16:
-+    case AUDIO_FORMAT_U16:
-+    case AUDIO_FORMAT_S16:
-         return 1;
--
--    case 32:
-+    case AUDIO_FORMAT_U32:
-+    case AUDIO_FORMAT_S32:
-         return 2;
--
--    default:
--        audio_bug ("bits_to_index", 1);
--        AUD_log (NULL, "invalid bits %d\n", bits);
--        return 0;
-+    case AUDIO_FORMAT_F32:
-+    case AUDIO_FORMAT__MAX:
-+        break;
-     }
-+
-+    g_assert_not_reached();
- }
- 
- void AUD_vlog (const char *cap, const char *fmt, va_list ap)
-@@ -172,141 +177,68 @@ static int audio_validate_settings (const struct audsettings *as)
- 
- static int audio_pcm_info_eq (struct audio_pcm_info *info, const struct audsettings *as)
- {
--    int bits = 8;
--    bool is_signed = false, is_float = false;
--
--    switch (as->fmt) {
--    case AUDIO_FORMAT_S8:
--        is_signed = true;
--        /* fall through */
--    case AUDIO_FORMAT_U8:
--        break;
--
--    case AUDIO_FORMAT_S16:
--        is_signed = true;
--        /* fall through */
--    case AUDIO_FORMAT_U16:
--        bits = 16;
--        break;
--
--    case AUDIO_FORMAT_F32:
--        is_float = true;
--        /* fall through */
--    case AUDIO_FORMAT_S32:
--        is_signed = true;
--        /* fall through */
--    case AUDIO_FORMAT_U32:
--        bits = 32;
--        break;
--
--    default:
--        abort();
--    }
--    return info->freq == as->freq
-+    return info->af == as->fmt
-+        && info->freq == as->freq
-         && info->nchannels == as->nchannels
--        && info->is_signed == is_signed
--        && info->is_float == is_float
--        && info->bits == bits
-         && info->swap_endianness == (as->endianness != HOST_BIG_ENDIAN);
- }
- 
- void audio_pcm_init_info (struct audio_pcm_info *info, const struct audsettings *as)
- {
--    int bits = 8, mul;
--    bool is_signed = false, is_float = false;
--
--    switch (as->fmt) {
--    case AUDIO_FORMAT_S8:
--        is_signed = true;
--        /* fall through */
--    case AUDIO_FORMAT_U8:
--        mul = 1;
--        break;
--
--    case AUDIO_FORMAT_S16:
--        is_signed = true;
--        /* fall through */
--    case AUDIO_FORMAT_U16:
--        bits = 16;
--        mul = 2;
--        break;
--
--    case AUDIO_FORMAT_F32:
--        is_float = true;
--        /* fall through */
--    case AUDIO_FORMAT_S32:
--        is_signed = true;
--        /* fall through */
--    case AUDIO_FORMAT_U32:
--        bits = 32;
--        mul = 4;
--        break;
--
--    default:
--        abort();
--    }
--
-+    info->af = as->fmt;
-     info->freq = as->freq;
--    info->bits = bits;
--    info->is_signed = is_signed;
--    info->is_float = is_float;
-     info->nchannels = as->nchannels;
--    info->bytes_per_frame = as->nchannels * mul;
-+    info->bytes_per_frame = as->nchannels * audio_format_bits(as->fmt) / 8;
-     info->bytes_per_second = info->freq * info->bytes_per_frame;
-     info->swap_endianness = (as->endianness != HOST_BIG_ENDIAN);
- }
- 
--void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len)
-+void audio_pcm_info_clear_buf(struct audio_pcm_info *info, void *buf, int len)
- {
-     if (!len) {
-         return;
-     }
- 
--    if (info->is_signed || info->is_float) {
--        memset(buf, 0x00, len * info->bytes_per_frame);
--    } else {
--        switch (info->bits) {
--        case 8:
--            memset(buf, 0x80, len * info->bytes_per_frame);
--            break;
--
--        case 16:
--            {
--                int i;
--                uint16_t *p = buf;
--                short s = INT16_MAX;
--
--                if (info->swap_endianness) {
--                    s = bswap16 (s);
--                }
--
--                for (i = 0; i < len * info->nchannels; i++) {
--                    p[i] = s;
--                }
--            }
--            break;
-+    switch (info->af) {
-+    case AUDIO_FORMAT_U8:
-+        memset(buf, 0x80, len * info->bytes_per_frame);
-+        break;
-+    case AUDIO_FORMAT_U16: {
-+        int i;
-+        uint16_t *p = buf;
-+        short s = INT16_MAX;
- 
--        case 32:
--            {
--                int i;
--                uint32_t *p = buf;
--                int32_t s = INT32_MAX;
-+        if (info->swap_endianness) {
-+            s = bswap16(s);
-+        }
- 
--                if (info->swap_endianness) {
--                    s = bswap32 (s);
--                }
-+        for (i = 0; i < len * info->nchannels; i++) {
-+            p[i] = s;
-+        }
-+        break;
-+    }
-+    case AUDIO_FORMAT_U32: {
-+        int i;
-+        uint32_t *p = buf;
-+        int32_t s = INT32_MAX;
- 
--                for (i = 0; i < len * info->nchannels; i++) {
--                    p[i] = s;
--                }
--            }
--            break;
-+        if (info->swap_endianness) {
-+            s = bswap32(s);
-+        }
- 
--        default:
--            AUD_log (NULL, "audio_pcm_info_clear_buf: invalid bits %d\n",
--                     info->bits);
--            break;
-+        for (i = 0; i < len * info->nchannels; i++) {
-+            p[i] = s;
+-        if (vms->its) {
++        if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+             /*
+              * Knowing the ID ranges from the RC to the SMMU, it's possible to
+              * determine the ID ranges from RC that go directly to ITS.
+@@ -484,7 +484,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             rc_mapping_count += rc_its_idmaps->len;
          }
-+        break;
-+    }
-+    case AUDIO_FORMAT_S8:
-+    case AUDIO_FORMAT_S16:
-+    case AUDIO_FORMAT_S32:
-+    case AUDIO_FORMAT_F32:
-+        memset(buf, 0x00, len * info->bytes_per_frame);
-+        break;
-+    case AUDIO_FORMAT__MAX:
-+        g_assert_not_reached();
-     }
- }
- 
-@@ -719,8 +651,8 @@ static size_t audio_pcm_sw_write(SWVoiceOut *sw, void *buf, size_t buf_len)
- #ifdef DEBUG_AUDIO
- static void audio_pcm_print_info (const char *cap, struct audio_pcm_info *info)
- {
--    dolog("%s: bits %d, sign %d, float %d, freq %d, nchan %d\n",
--          cap, info->bits, info->is_signed, info->is_float, info->freq,
-+    dolog("%s: %s, freq %d, nchan %d\n",
-+          cap, AudioFormat_str(info->af), info->freq,
-           info->nchannels);
- }
- #endif
-@@ -1759,15 +1691,15 @@ static CaptureVoiceOut *audio_mixeng_backend_add_capture(
- 
-         cap->buf = g_malloc0_n(hw->mix_buf.size, hw->info.bytes_per_frame);
- 
--        if (hw->info.is_float) {
-+        if (audio_format_is_float(hw->info.af)) {
-             hw->clip = mixeng_clip_float[hw->info.nchannels == 2]
-                 [hw->info.swap_endianness];
+     } else {
+-        if (vms->its) {
++        if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+             nb_nodes = 2; /* RC and ITS */
+             rc_mapping_count = 1; /* Direct map to ITS */
          } else {
-             hw->clip = mixeng_clip
-                 [hw->info.nchannels == 2]
--                [hw->info.is_signed]
-+                [audio_format_is_signed(hw->info.af)]
-                 [hw->info.swap_endianness]
--                [audio_bits_to_index(hw->info.bits)];
-+                [audio_format_to_index(hw->info.af)];
+@@ -499,7 +499,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
+     build_append_int_noprefix(table_data, 0, 4); /* Reserved */
+ 
+-    if (vms->its) {
++    if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+         /* Table 12 ITS Group Format */
+         build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* Type */
+         node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS Identifier */;
+@@ -518,7 +518,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         int smmu_mapping_count, offset_to_id_array;
+         int irq = sdev->irq;
+ 
+-        if (vms->its) {
++        if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+             smmu_mapping_count = 1; /* ITS Group node */
+             offset_to_id_array = SMMU_V3_ENTRY_SIZE; /* Just after the header */
+         } else {
+@@ -611,7 +611,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             }
          }
  
-         QLIST_INSERT_HEAD (&s->cap_head, cap, entries);
-@@ -1869,29 +1801,6 @@ audsettings audiodev_to_audsettings(AudiodevPerDirectionOptions *pdo)
-     };
- }
+-        if (vms->its) {
++        if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+             /*
+              * Map bypassed (don't go through the SMMU) RIDs (input) to
+              * ITS Group node directly: RC -> ITS.
+@@ -629,7 +629,9 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+          * SMMU: RC -> ITS.
+          * Output IORT node is the ITS Group node (the first node).
+          */
+-        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
++        if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
++            build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
++        }
+     }
  
--int audioformat_bytes_per_sample(AudioFormat fmt)
--{
--    switch (fmt) {
--    case AUDIO_FORMAT_U8:
--    case AUDIO_FORMAT_S8:
--        return 1;
--
--    case AUDIO_FORMAT_U16:
--    case AUDIO_FORMAT_S16:
--        return 2;
--
--    case AUDIO_FORMAT_U32:
--    case AUDIO_FORMAT_S32:
--    case AUDIO_FORMAT_F32:
--        return 4;
--
--    case AUDIO_FORMAT__MAX:
--        ;
--    }
--    abort();
--}
--
--
- /* frames = freq * usec / 1e6 */
- int audio_buffer_frames(AudiodevPerDirectionOptions *pdo,
-                         audsettings *as, int def_usecs)
-@@ -1914,8 +1823,7 @@ int audio_buffer_samples(AudiodevPerDirectionOptions *pdo,
- int audio_buffer_bytes(AudiodevPerDirectionOptions *pdo,
-                        audsettings *as, int def_usecs)
+     acpi_table_end(linker, &table);
+@@ -946,7 +948,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+                                           memmap[VIRT_HIGH_GIC_REDIST2].size);
+         }
+ 
+-        if (vms->its) {
++        if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+             /*
+              * ACPI spec, Revision 6.0 Errata A
+              * (original 6.0 definition has invalid Length)
+@@ -960,7 +962,9 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
+             build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
+         }
+-    } else {
++    }
++
++    if (vms->msi_controller == VIRT_MSI_CTRL_GICV2M) {
+         const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
+ 
+         /* 5.2.12.16 GIC MSI Frame Structure */
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 4badc1a734..3d7f02ce0e 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -737,7 +737,7 @@ static void create_its(VirtMachineState *vms)
  {
--    return audio_buffer_samples(pdo, as, def_usecs) *
--        audioformat_bytes_per_sample(as->fmt);
-+    return audio_buffer_samples(pdo, as, def_usecs) * audio_format_bits(as->fmt) / 8;
+     DeviceState *dev;
+ 
+-    assert(vms->its);
++    assert(vms->msi_controller == VIRT_MSI_CTRL_ITS);
+     if (!kvm_irqchip_in_kernel() && !vms->tcg_its) {
+         /*
+          * Do nothing if ITS is neither supported by the host nor emulated by
+@@ -957,9 +957,9 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+ 
+     fdt_add_gic_node(vms);
+ 
+-    if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
++    if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+         create_its(vms);
+-    } else if (vms->gic_version == VIRT_GIC_VERSION_2) {
++    } else if (vms->msi_controller == VIRT_MSI_CTRL_GICV2M) {
+         create_v2m(vms);
+     }
+ }
+@@ -2132,6 +2132,36 @@ static void finalize_gic_version(VirtMachineState *vms)
+                                                gics_supported, max_cpus);
  }
  
- void audio_rate_start(RateCtl *rate)
-diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
-index e284542b2dd..72d6194033b 100644
---- a/audio/dbusaudio.c
-+++ b/audio/dbusaudio.c
-@@ -147,9 +147,9 @@ dbus_init_out_listener(QemuDBusDisplay1AudioOutListener *listener,
-     qemu_dbus_display1_audio_out_listener_call_init(
-         listener,
-         (uintptr_t)hw,
--        hw->info.bits,
--        hw->info.is_signed,
--        hw->info.is_float,
-+        audio_format_bits(hw->info.af),
-+        audio_format_is_signed(hw->info.af),
-+        audio_format_is_float(hw->info.af),
-         hw->info.freq,
-         hw->info.nchannels,
-         hw->info.bytes_per_frame,
-@@ -273,9 +273,9 @@ dbus_init_in_listener(QemuDBusDisplay1AudioInListener *listener, HWVoiceIn *hw)
-     qemu_dbus_display1_audio_in_listener_call_init(
-         listener,
-         (uintptr_t)hw,
--        hw->info.bits,
--        hw->info.is_signed,
--        hw->info.is_float,
-+        audio_format_bits(hw->info.af),
-+        audio_format_is_signed(hw->info.af),
-+        audio_format_is_float(hw->info.af),
-         hw->info.freq,
-         hw->info.nchannels,
-         hw->info.bytes_per_frame,
-diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-index 40d7986b1d7..08bab353831 100644
---- a/audio/coreaudio.m
-+++ b/audio/coreaudio.m
-@@ -359,7 +359,7 @@ static OSStatus init_out_device(coreaudioVoiceOut *core)
-     AudioValueRange frameRange;
++static void finalize_msi_controller(VirtMachineState *vms)
++{
++    if (vms->msi_controller == VIRT_MSI_LEGACY_OPT_ITS_OFF) {
++        if (vms->gic_version == 2) {
++            vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
++        }
++        else {
++            vms->msi_controller = VIRT_MSI_CTRL_NONE;
++        }
++    }
++    if (vms->msi_controller == VIRT_MSI_CTRL_AUTO) {
++        if (vms->gic_version == VIRT_GIC_VERSION_2) {
++            vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
++        }
++        else {
++            vms->msi_controller = VIRT_MSI_CTRL_ITS;
++        }
++    }
++
++    if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
++        if (vms->gic_version == VIRT_GIC_VERSION_2) {
++            /* Older Qemu releases accepted this, but better to error. */
++            error_report("GICv2 + ITS is an invalid configuration.");
++            exit(1);
++        }
++    }
++
++    assert(vms->msi_controller != VIRT_MSI_CTRL_AUTO);
++}
++
+ /*
+  * virt_post_cpus_gic_realized() must be called after the CPUs and
+  * the GIC have both been realized.
+@@ -2251,6 +2281,7 @@ static void machvirt_init(MachineState *machine)
+      * KVM is not available yet
+      */
+     finalize_gic_version(vms);
++    finalize_msi_controller(vms);
  
-     AudioStreamBasicDescription streamBasicDescription = {
--        .mBitsPerChannel = core->hw.info.bits,
-+        .mBitsPerChannel = audio_format_bits(core->hw.info.af),
-         .mBytesPerFrame = core->hw.info.bytes_per_frame,
-         .mBytesPerPacket = core->hw.info.bytes_per_frame,
-         .mChannelsPerFrame = core->hw.info.nchannels,
+     if (vms->secure) {
+         /*
+@@ -2700,18 +2731,76 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
+     extended_memmap[VIRT_HIGH_PCIE_MMIO].size = size;
+ }
+ 
++static char *virt_get_msi(Object *obj, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++    const char *val;
++
++    switch (vms->msi_controller) {
++    case VIRT_MSI_CTRL_NONE:
++    case VIRT_MSI_LEGACY_OPT_ITS_OFF:
++        val = "off";
++        break;
++    case VIRT_MSI_CTRL_ITS:
++        val = "its";
++        break;
++    case VIRT_MSI_CTRL_GICV2M:
++        val = "gicv2m";
++        break;
++    case VIRT_MSI_CTRL_AUTO:
++        val = "auto";
++        break;
++    default:
++        g_assert_not_reached();
++    }
++    return g_strdup(val);
++}
++
++static void virt_set_msi(Object *obj, const char *value, Error **errp)
++{
++    ERRP_GUARD();
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    if (!strcmp(value, "auto")) {
++        vms->msi_controller = VIRT_MSI_CTRL_AUTO; /* Will be overriden later */
++    } else if (!strcmp(value, "its")) {
++        vms->msi_controller = VIRT_MSI_CTRL_ITS;
++    } else if (!strcmp(value, "gicv2m")) {
++        vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
++    } else if (!strcmp(value, "none")) {
++        vms->msi_controller = VIRT_MSI_CTRL_NONE;
++    } else {
++        error_setg(errp, "Invalid msi value");
++        error_append_hint(errp, "Valid values are auto, gicv2m, its, off\n");
++    }
++}
++
+ static bool virt_get_its(Object *obj, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+ 
+-    return vms->its;
++    switch (vms->msi_controller) {
++    case VIRT_MSI_CTRL_AUTO:
++    case VIRT_MSI_CTRL_ITS:
++        return true;
++    case VIRT_MSI_CTRL_NONE:
++    case VIRT_MSI_CTRL_GICV2M:
++    case VIRT_MSI_LEGACY_OPT_ITS_OFF:
++        return false;
++    default:
++        g_assert_not_reached();
++    }
+ }
+ 
+ static void virt_set_its(Object *obj, bool value, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+ 
+-    vms->its = value;
++    if (value) {
++        vms->msi_controller = VIRT_MSI_CTRL_ITS;
++    } else {
++        vms->msi_controller = VIRT_MSI_LEGACY_OPT_ITS_OFF;
++    }
+ }
+ 
+ static bool virt_get_dtb_randomness(Object *obj, Error **errp)
+@@ -3038,6 +3127,9 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+             db_start = base_memmap[VIRT_GIC_V2M].base;
+             db_end = db_start + base_memmap[VIRT_GIC_V2M].size - 1;
+             break;
++        case VIRT_MSI_CTRL_AUTO:
++        case VIRT_MSI_LEGACY_OPT_ITS_OFF:
++            g_assert_not_reached();
+         }
+         resv_prop_str = g_strdup_printf("0x%"PRIx64":0x%"PRIx64":%u",
+                                         db_start, db_end,
+@@ -3438,6 +3530,12 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+                                           "Set on/off to enable/disable "
+                                           "ITS instantiation");
+ 
++    object_class_property_add_str(oc, "msi", virt_get_msi,
++                                  virt_set_msi);
++    object_class_property_set_description(oc, "msi",
++                                          "Set MSI settings. "
++                                          "Valid values are auto/gicv2m/its/off");
++
+     object_class_property_add_bool(oc, "dtb-randomness",
+                                    virt_get_dtb_randomness,
+                                    virt_set_dtb_randomness);
+@@ -3493,8 +3591,8 @@ static void virt_instance_init(Object *obj)
+     vms->highmem_mmio = true;
+     vms->highmem_redists = true;
+ 
+-    /* Default allows ITS instantiation */
+-    vms->its = true;
++    /* Default allows ITS instantiation if available */
++    vms->msi_controller = VIRT_MSI_CTRL_AUTO;
+     /* Allow ITS emulation if the machine version supports it */
+     vms->tcg_its = !vmc->no_tcg_its;
+ 
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 5907d41dbb..d384355c4a 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -101,6 +101,10 @@ typedef enum VirtIOMMUType {
+ 
+ typedef enum VirtMSIControllerType {
+     VIRT_MSI_CTRL_NONE,
++    /* This value is overriden at runtime.*/
++    VIRT_MSI_CTRL_AUTO,
++    /* Legacy option: its=off provides a GICv2m when using GICv2 */
++    VIRT_MSI_LEGACY_OPT_ITS_OFF,
+     VIRT_MSI_CTRL_GICV2M,
+     VIRT_MSI_CTRL_ITS,
+ } VirtMSIControllerType;
+@@ -146,7 +150,6 @@ struct VirtMachineState {
+     bool highmem_ecam;
+     bool highmem_mmio;
+     bool highmem_redists;
+-    bool its;
+     bool tcg_its;
+     bool virt;
+     bool ras;
 -- 
-2.52.0
+2.50.1 (Apple Git-155)
 
 
