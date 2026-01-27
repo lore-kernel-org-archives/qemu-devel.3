@@ -4,44 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24841D2FEC7
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 17:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F53D2FEC7
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 17:40:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkn1p-000811-Af; Tue, 27 Jan 2026 12:39:01 -0500
+	id 1vkn2t-0000Fi-Eb; Tue, 27 Jan 2026 12:40:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vkn1n-000807-GG
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 12:38:59 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from
+ <BATV+dd65a790ea051458ed34+8192+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1vkn2o-0000EB-Fm
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 12:40:02 -0500
+Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vkn1l-0001vG-Em
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 12:38:59 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id BECE55969FA;
- Tue, 27 Jan 2026 18:38:51 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id XcFfARyCfOYS; Tue, 27 Jan 2026 18:38:49 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 588F25969F0; Tue, 27 Jan 2026 18:38:49 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH] rtl8139: Remove ineffective parameter
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20260127173849.588F25969F0@zero.eik.bme.hu>
-Date: Tue, 27 Jan 2026 18:38:49 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, HEXHASH_WORD=2.897,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <BATV+dd65a790ea051458ed34+8192+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1vkn2l-0001zV-HC
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 12:40:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=desiato.20200630; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=/gyT4s2+pUfQ1uO4aVkUzXIxOSOvcfWlZ4uJmtG1b94=; b=U8iOMEB+/8CsZuGOln9DIfdksu
+ JyAL0UrAdvQ1dtC7jol0oKyWDMY7N8YjVl3jV4zs1vMQuygbppOwjA5bOabbzAey/I/hZgxomWEyo
+ gTGZJDl+vXL/v7QfYVs+dDRHtbKa1syWViP35/2AYcPcbK+1BHrRWq9mpd16O8htzTfOKSrCuGd4F
+ pZ0kt3U3t7YF04a9d/0JeOU7zoMQamUrYR9fRKVtoTz7HiADVwGMG3qZ8bJMABEQmFnQMuSxo1a7s
+ if+cXOsLdRU2A27w3p01eojMAgrIkWGVpU9gFXNmRg5MzdthQREVWYHP3QZrE2nOI/oYXCmIoaWuM
+ bDnkIIHA==;
+Received: from [2001:8b0:10b::4] (helo=u09cd745991455d.ant.amazon.com)
+ by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+ id 1vkn2e-00000007KlN-1tUN; Tue, 27 Jan 2026 17:39:53 +0000
+Message-ID: <aa5e9335115b452870118b1c43c95ddb40e353af.camel@infradead.org>
+Subject: Re: [PATCH v3 27/33] kvm/xen_evtchn: add support for confidential
+ guest reset
+From: David Woodhouse <dwmw2@infradead.org>
+To: Ani Sinha <anisinha@redhat.com>, Paul Durrant <paul@xen.org>, "Michael
+ S. Tsirkin" <mst@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>,  Eduardo Habkost
+ <eduardo@habkost.net>
+Cc: kraxel@redhat.com, qemu-devel@nongnu.org
+Date: Tue, 27 Jan 2026 09:39:45 -0800
+In-Reply-To: <20260127051612.219475-28-anisinha@redhat.com>
+References: <20260127051612.219475-1-anisinha@redhat.com>
+ <20260127051612.219475-28-anisinha@redhat.com>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-gs4nTxv8LWoFixXdsf79"
+User-Agent: Evolution 3.52.3-0ubuntu1.1 
+MIME-Version: 1.0
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ desiato.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
+ envelope-from=BATV+dd65a790ea051458ed34+8192+infradead.org+dwmw2@desiato.srs.infradead.org;
+ helo=desiato.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -57,94 +81,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The do_interrupt parameter for rtl8139_do_receive was originally added
-in commit 6cadb320c7 to avoid generating interrupt when receiving in
-loopback mode. Later commit 5311fb805a changed this so that this
-parameter became ineffective and now this parameter is unused and
-always 1. If this turns out to be a problem maybe there's a better way
-to fix this so remove the do_interrupt parameter for now to simplify
-code.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- hw/net/rtl8139.c | 24 ++++++++----------------
- 1 file changed, 8 insertions(+), 16 deletions(-)
+--=-gs4nTxv8LWoFixXdsf79
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-index 9fd00574d2..2ad6338ebe 100644
---- a/hw/net/rtl8139.c
-+++ b/hw/net/rtl8139.c
-@@ -815,7 +815,8 @@ static bool rtl8139_can_receive(NetClientState *nc)
-     return avail == 0 || avail >= 1514 || (s->IntrMask & RxOverflow);
- }
- 
--static ssize_t rtl8139_do_receive(NetClientState *nc, const uint8_t *buf, size_t size_, int do_interrupt)
-+static ssize_t rtl8139_receive(NetClientState *nc,
-+                               const uint8_t *buf, size_t size_)
- {
-     RTL8139State *s = qemu_get_nic_opaque(nc);
-     PCIDevice *d = PCI_DEVICE(s);
-@@ -1173,20 +1174,11 @@ static ssize_t rtl8139_do_receive(NetClientState *nc, const uint8_t *buf, size_t
-     }
- 
-     s->IntrStatus |= RxOK;
--
--    if (do_interrupt)
--    {
--        rtl8139_update_irq(s);
--    }
-+    rtl8139_update_irq(s);
- 
-     return size_;
- }
- 
--static ssize_t rtl8139_receive(NetClientState *nc, const uint8_t *buf, size_t size)
--{
--    return rtl8139_do_receive(nc, buf, size, 1);
--}
--
- static void rtl8139_reset_rxring(RTL8139State *s, uint32_t bufferSize)
- {
-     s->RxBufferSize = bufferSize;
-@@ -1745,7 +1737,7 @@ static uint32_t rtl8139_RxConfig_read(RTL8139State *s)
- }
- 
- static void rtl8139_transfer_frame(RTL8139State *s, uint8_t *buf, int size,
--    int do_interrupt, const uint8_t *dot1q_buf)
-+                                   const uint8_t *dot1q_buf)
- {
-     struct iovec *iov = NULL;
-     struct iovec vlan_iov[3];
-@@ -1828,7 +1820,7 @@ static int rtl8139_transmit_one(RTL8139State *s, int descriptor)
-     s->TxStatus[descriptor] |= TxHostOwns;
-     s->TxStatus[descriptor] |= TxStatOK;
- 
--    rtl8139_transfer_frame(s, txbuffer, txsize, 0, NULL);
-+    rtl8139_transfer_frame(s, txbuffer, txsize, NULL);
- 
-     DPRINTF("+++ transmitted %d bytes from descriptor %d\n", txsize,
-         descriptor);
-@@ -2246,7 +2238,7 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
-                     DPRINTF("+++ C+ mode TSO transferring packet size "
-                         "%d\n", tso_send_size);
-                     rtl8139_transfer_frame(s, saved_buffer, tso_send_size,
--                        0, (uint8_t *) dot1q_buffer);
-+                                           (uint8_t *)dot1q_buffer);
- 
-                     /* add transferred count to TCP sequence number */
-                     stl_be_p(&p_tcp_hdr->th_seq,
-@@ -2323,8 +2315,8 @@ skip_offload:
- 
-         DPRINTF("+++ C+ mode transmitting %d bytes packet\n", saved_size);
- 
--        rtl8139_transfer_frame(s, saved_buffer, saved_size, 1,
--            (uint8_t *) dot1q_buffer);
-+        rtl8139_transfer_frame(s, saved_buffer, saved_size,
-+                               (uint8_t *)dot1q_buffer);
- 
-         /* restore card space if there was no recursion and reset offset */
-         if (!s->cplus_txbuffer)
--- 
-2.41.3
+T24gVHVlLCAyMDI2LTAxLTI3IGF0IDEwOjQ1ICswNTMwLCBBbmkgU2luaGEgd3JvdGU6Cj4gK8Kg
+wqDCoCB9IGVsc2Ugewo+ICvCoMKgwqDCoMKgwqDCoCBRTElTVF9GT1JFQUNIKGtwLCAma2VybmVs
+X3BvcnRfbGlzdCwgbm9kZSkgewo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlmIChrcC0+cG9y
+dCA9PSBwb3J0KSB7Cj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBRTElTVF9SRU1P
+VkUoa3AsIG5vZGUpOwo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZ19mcmVlKGtw
+KTsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB9Cj4gK8KgwqDCoMKgwqDCoMKgIH0KPiArwqDC
+oMKgwqDCoMKgwqAgUUxJU1RfRk9SRUFDSChlZiwgJmV2ZW50ZmRfbGlzdCwgbm9kZSkgewo+ICvC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlmIChlZi0+cG9ydCA9PSBwb3J0KSB7Cj4gK8KgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBRTElTVF9SRU1PVkUoZWYsIG5vZGUpOwo+ICvCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZ19mcmVlKGVmKTsKPiArwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCB9Cj4gK8KgwqDCoMKgwqDCoMKgIH0KPiDCoMKgwqDCoCB9Cj4gwqB9Cj4gwqAKCkRvIHRo
+b3NlIG5vdCBuZWVkIHRvIGJlIFFMSVNUX0ZPUkVBQ0hfU0FGRSA/IAoKPiBAQCAtNTY1LDYgKzY1
+NSw4IEBAIHN0YXRpYyBpbnQgYXNzaWduX2tlcm5lbF9wb3J0KHVpbnQxNl90IHR5cGUsIGV2dGNo
+bl9wb3J0X3QgcG9ydCwKPiDCoHsKPiDCoMKgwqDCoCBDUFVTdGF0ZSAqY3B1ID0gcWVtdV9nZXRf
+Y3B1KHZjcHVfaWQpOwo+IMKgwqDCoMKgIHN0cnVjdCBrdm1feGVuX2h2bV9hdHRyIGhhOwo+ICvC
+oMKgwqAgc3RydWN0IGtlcm5lbF9wb3J0cyAqa3AgPSBnX21hbGxvYzAoc2l6ZW9mKCprcCkpOwo+
+ICvCoMKgwqAgaW50IHJldDsKPiDCoAo+IMKgwqDCoMKgIGlmICghY3B1KSB7Cj4gwqDCoMKgwqDC
+oMKgwqDCoCByZXR1cm4gLUVOT0VOVDsKPiBAQCAtNTc4LDEyICs2NzAsMjEgQEAgc3RhdGljIGlu
+dCBhc3NpZ25fa2VybmVsX3BvcnQodWludDE2X3QgdHlwZSwgZXZ0Y2huX3BvcnRfdCBwb3J0LAo+
+IMKgwqDCoMKgIGhhLnUuZXZ0Y2huLmRlbGl2ZXIucG9ydC52Y3B1ID0ga3ZtX2FyY2hfdmNwdV9p
+ZChjcHUpOwo+IMKgwqDCoMKgIGhhLnUuZXZ0Y2huLmRlbGl2ZXIucG9ydC5wcmlvcml0eSA9IEtW
+TV9JUlFfUk9VVElOR19YRU5fRVZUQ0hOX1BSSU9fMkxFVkVMOwo+IMKgCj4gLcKgwqDCoCByZXR1
+cm4ga3ZtX3ZtX2lvY3RsKGt2bV9zdGF0ZSwgS1ZNX1hFTl9IVk1fU0VUX0FUVFIsICZoYSk7Cj4g
+K8KgwqDCoCByZXQgPSBrdm1fdm1faW9jdGwoa3ZtX3N0YXRlLCBLVk1fWEVOX0hWTV9TRVRfQVRU
+UiwgJmhhKTsKPiArwqDCoMKgIGlmIChyZXQgPT0gMCkgewo+ICvCoMKgwqDCoMKgwqDCoCBrcC0+
+dHlwZSA9IHR5cGU7Cj4gK8KgwqDCoMKgwqDCoMKgIGtwLT5wb3J0ID0gcG9ydDsKPiArwqDCoMKg
+wqDCoMKgwqAga3AtPnZjcHVfaWQgPSB2Y3B1X2lkOwo+ICvCoMKgwqDCoMKgwqDCoCBRTElTVF9J
+TlNFUlRfSEVBRCgma2VybmVsX3BvcnRfbGlzdCwga3AsIG5vZGUpOwo+ICvCoMKgwqAgfQo+ICvC
+oMKgwqAgcmV0dXJuIHJldDsKPiDCoH0KPiAKCkkgdGhpbmsgJ2twJyBsZWFrcyBpbiB0aGUgZXJy
+b3IgY2FzZSB0aGVyZT8gQW5kIHRoZSBuZXh0IG9uZSBpbgphc3NpZ25fa2VybmVsX2V2ZW50ZmQo
+KS4KCkkgZG9uJ3QgbXVjaCBsaWtlIGR1cGxpY2F0aW5nIHRoZSBjb2RlIHdoaWNoIHBlcmZvcm1z
+IHRoZSBpb2N0bHMuCkNvdWxkbid0IHlvdSBoYXZlIGEgaGVscGVyIGZ1bmN0aW9uIHdoaWNoIGRv
+ZXMgdGhhdCB3aGVuIGdpdmVuIGEKJ3N0cnVjdCBrZXJuZWxfcG9ydHMnLCB0aGVuIGludm9rZSAq
+dGhhdCogZnJvbSBib3RoIHBsYWNlcz8KCk9yIGV2ZW4gYmV0dGVyLCBtYWtlIHVzZSBvZiB0aGUg
+ZmFjdCB0aGF0IHdlICphbHJlYWR5KiBoYXZlIHRoZSBhYmlsaXR5CnRvIHJlcGxheSB0aGVzZSBm
+b3Igc2VyaWFsaXNhdGlvbi9kZXNlcmlhbGlzYXRpb24/CgpCdXQgYmFja2luZyB1cCBhIGxpdHRs
+ZSBtb3JlLi4uIGlmIHRoaXMgaXMgZm9yIHJlYm9vdGluZyBndWVzdHMsCnNob3VsZG4ndCB3ZSBi
+ZSB3aXBpbmcgdGhlIGV2ZW50IGNoYW5uZWwgc2V0dXAgY29tcGxldGVseSwgbGlrZSBhIHNvZnQK
+cmVzZXQ/IERvIHdlIHByZXNlcnZlIHRvIGRvICphbnkqIG9mIHRoaXM/IEFyZSB5b3Ugc3VyZSB5
+b3UgZG9uJ3Qgc2VlIGEKc29mdCByZXNldCB3aXBpbmcgaXQgYWxsIGF3YXksIGVpdGhlciBiZWZv
+cmUgb3IgYWZ0ZXIgdGhpcyBjb2RlIHJ1bnM/Cg==
 
+
+--=-gs4nTxv8LWoFixXdsf79
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCD9Aw
+ggSOMIIDdqADAgECAhAOmiw0ECVD4cWj5DqVrT9PMA0GCSqGSIb3DQEBCwUAMGUxCzAJBgNVBAYT
+AlVTMRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5jb20xJDAi
+BgNVBAMTG0RpZ2lDZXJ0IEFzc3VyZWQgSUQgUm9vdCBDQTAeFw0yNDAxMzAwMDAwMDBaFw0zMTEx
+MDkyMzU5NTlaMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYDVQQDExdWZXJv
+a2V5IFNlY3VyZSBFbWFpbCBHMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMjvgLKj
+jfhCFqxYyRiW8g3cNFAvltDbK5AzcOaR7yVzVGadr4YcCVxjKrEJOgi7WEOH8rUgCNB5cTD8N/Et
+GfZI+LGqSv0YtNa54T9D1AWJy08ZKkWvfGGIXN9UFAPMJ6OLLH/UUEgFa+7KlrEvMUupDFGnnR06
+aDJAwtycb8yXtILj+TvfhLFhafxroXrflspavejQkEiHjNjtHnwbZ+o43g0/yxjwnarGI3kgcak7
+nnI9/8Lqpq79tLHYwLajotwLiGTB71AGN5xK+tzB+D4eN9lXayrjcszgbOv2ZCgzExQUAIt98mre
+8EggKs9mwtEuKAhYBIP/0K6WsoMnQCcCAwEAAaOCAVwwggFYMBIGA1UdEwEB/wQIMAYBAf8CAQAw
+HQYDVR0OBBYEFIlICOogTndrhuWByNfhjWSEf/xwMB8GA1UdIwQYMBaAFEXroq/0ksuCMS1Ri6en
+IZ3zbcgPMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIweQYI
+KwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2VydC5jb20wQwYIKwYB
+BQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEFzc3VyZWRJRFJvb3RD
+QS5jcnQwRQYDVR0fBD4wPDA6oDigNoY0aHR0cDovL2NybDMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0
+QXNzdXJlZElEUm9vdENBLmNybDARBgNVHSAECjAIMAYGBFUdIAAwDQYJKoZIhvcNAQELBQADggEB
+ACiagCqvNVxOfSd0uYfJMiZsOEBXAKIR/kpqRp2YCfrP4Tz7fJogYN4fxNAw7iy/bPZcvpVCfe/H
+/CCcp3alXL0I8M/rnEnRlv8ItY4MEF+2T/MkdXI3u1vHy3ua8SxBM8eT9LBQokHZxGUX51cE0kwa
+uEOZ+PonVIOnMjuLp29kcNOVnzf8DGKiek+cT51FvGRjV6LbaxXOm2P47/aiaXrDD5O0RF5SiPo6
+xD1/ClkCETyyEAE5LRJlXtx288R598koyFcwCSXijeVcRvBB1cNOLEbg7RMSw1AGq14fNe2cH1HG
+W7xyduY/ydQt6gv5r21mDOQ5SaZSWC/ZRfLDuEYwggWbMIIEg6ADAgECAhAH5JEPagNRXYDiRPdl
+c1vgMA0GCSqGSIb3DQEBCwUAMEExCzAJBgNVBAYTAkFVMRAwDgYDVQQKEwdWZXJva2V5MSAwHgYD
+VQQDExdWZXJva2V5IFNlY3VyZSBFbWFpbCBHMjAeFw0yNDEyMzAwMDAwMDBaFw0yODAxMDQyMzU5
+NTlaMB4xHDAaBgNVBAMME2R3bXcyQGluZnJhZGVhZC5vcmcwggIiMA0GCSqGSIb3DQEBAQUAA4IC
+DwAwggIKAoICAQDali7HveR1thexYXx/W7oMk/3Wpyppl62zJ8+RmTQH4yZeYAS/SRV6zmfXlXaZ
+sNOE6emg8WXLRS6BA70liot+u0O0oPnIvnx+CsMH0PD4tCKSCsdp+XphIJ2zkC9S7/yHDYnqegqt
+w4smkqUqf0WX/ggH1Dckh0vHlpoS1OoxqUg+ocU6WCsnuz5q5rzFsHxhD1qGpgFdZEk2/c//ZvUN
+i12vPWipk8TcJwHw9zoZ/ZrVNybpMCC0THsJ/UEVyuyszPtNYeYZAhOJ41vav1RhZJzYan4a1gU0
+kKBPQklcpQEhq48woEu15isvwWh9/+5jjh0L+YNaN0I//nHSp6U9COUG9Z0cvnO8FM6PTqsnSbcc
+0j+GchwOHRC7aP2t5v2stVx3KbptaYEzi4MQHxm/0+HQpMEVLLUiizJqS4PWPU6zfQTOMZ9uLQRR
+ci+c5xhtMEBszlQDOvEQcyEG+hc++fH47K+MmZz21bFNfoBxLP6bjR6xtPXtREF5lLXxp+CJ6KKS
+blPKeVRg/UtyJHeFKAZXO8Zeco7TZUMVHmK0ZZ1EpnZbnAhKE19Z+FJrQPQrlR0gO3lBzuyPPArV
+hvWxjlO7S4DmaEhLzarWi/ze7EGwWSuI2eEa/8zU0INUsGI4ywe7vepQz7IqaAovAX0d+f1YjbmC
+VsAwjhLmveFjNwIDAQABo4IBsDCCAawwHwYDVR0jBBgwFoAUiUgI6iBOd2uG5YHI1+GNZIR//HAw
+HQYDVR0OBBYEFFxiGptwbOfWOtMk5loHw7uqWUOnMDAGA1UdEQQpMCeBE2R3bXcyQGluZnJhZGVh
+ZC5vcmeBEGRhdmlkQHdvb2Rob3Uuc2UwFAYDVR0gBA0wCzAJBgdngQwBBQEBMA4GA1UdDwEB/wQE
+AwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwewYDVR0fBHQwcjA3oDWgM4YxaHR0
+cDovL2NybDMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDA3oDWgM4YxaHR0
+cDovL2NybDQuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNybDB2BggrBgEFBQcB
+AQRqMGgwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBABggrBgEFBQcwAoY0
+aHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL1Zlcm9rZXlTZWN1cmVFbWFpbEcyLmNydDANBgkq
+hkiG9w0BAQsFAAOCAQEAQXc4FPiPLRnTDvmOABEzkIumojfZAe5SlnuQoeFUfi+LsWCKiB8Uextv
+iBAvboKhLuN6eG/NC6WOzOCppn4mkQxRkOdLNThwMHW0d19jrZFEKtEG/epZ/hw/DdScTuZ2m7im
+8ppItAT6GXD3aPhXkXnJpC/zTs85uNSQR64cEcBFjjoQDuSsTeJ5DAWf8EMyhMuD8pcbqx5kRvyt
+JPsWBQzv1Dsdv2LDPLNd/JUKhHSgr7nbUr4+aAP2PHTXGcEBh8lTeYea9p4d5k969pe0OHYMV5aL
+xERqTagmSetuIwolkAuBCzA9vulg8Y49Nz2zrpUGfKGOD0FMqenYxdJHgDCCBZswggSDoAMCAQIC
+EAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQELBQAwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoT
+B1Zlcm9rZXkxIDAeBgNVBAMTF1Zlcm9rZXkgU2VjdXJlIEVtYWlsIEcyMB4XDTI0MTIzMDAwMDAw
+MFoXDTI4MDEwNDIzNTk1OVowHjEcMBoGA1UEAwwTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJ
+KoZIhvcNAQEBBQADggIPADCCAgoCggIBANqWLse95HW2F7FhfH9bugyT/danKmmXrbMnz5GZNAfj
+Jl5gBL9JFXrOZ9eVdpmw04Tp6aDxZctFLoEDvSWKi367Q7Sg+ci+fH4KwwfQ8Pi0IpIKx2n5emEg
+nbOQL1Lv/IcNiep6Cq3DiyaSpSp/RZf+CAfUNySHS8eWmhLU6jGpSD6hxTpYKye7PmrmvMWwfGEP
+WoamAV1kSTb9z/9m9Q2LXa89aKmTxNwnAfD3Ohn9mtU3JukwILRMewn9QRXK7KzM+01h5hkCE4nj
+W9q/VGFknNhqfhrWBTSQoE9CSVylASGrjzCgS7XmKy/BaH3/7mOOHQv5g1o3Qj/+cdKnpT0I5Qb1
+nRy+c7wUzo9OqydJtxzSP4ZyHA4dELto/a3m/ay1XHcpum1pgTOLgxAfGb/T4dCkwRUstSKLMmpL
+g9Y9TrN9BM4xn24tBFFyL5znGG0wQGzOVAM68RBzIQb6Fz758fjsr4yZnPbVsU1+gHEs/puNHrG0
+9e1EQXmUtfGn4InoopJuU8p5VGD9S3Ikd4UoBlc7xl5yjtNlQxUeYrRlnUSmdlucCEoTX1n4UmtA
+9CuVHSA7eUHO7I88CtWG9bGOU7tLgOZoSEvNqtaL/N7sQbBZK4jZ4Rr/zNTQg1SwYjjLB7u96lDP
+sipoCi8BfR35/ViNuYJWwDCOEua94WM3AgMBAAGjggGwMIIBrDAfBgNVHSMEGDAWgBSJSAjqIE53
+a4blgcjX4Y1khH/8cDAdBgNVHQ4EFgQUXGIam3Bs59Y60yTmWgfDu6pZQ6cwMAYDVR0RBCkwJ4ET
+ZHdtdzJAaW5mcmFkZWFkLm9yZ4EQZGF2aWRAd29vZGhvdS5zZTAUBgNVHSAEDTALMAkGB2eBDAEF
+AQEwDgYDVR0PAQH/BAQDAgXgMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDBDB7BgNVHR8E
+dDByMDegNaAzhjFodHRwOi8vY3JsMy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMDegNaAzhjFodHRwOi8vY3JsNC5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVtYWlsRzIu
+Y3JsMHYGCCsGAQUFBwEBBGowaDAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AuZGlnaWNlcnQuY29t
+MEAGCCsGAQUFBzAChjRodHRwOi8vY2FjZXJ0cy5kaWdpY2VydC5jb20vVmVyb2tleVNlY3VyZUVt
+YWlsRzIuY3J0MA0GCSqGSIb3DQEBCwUAA4IBAQBBdzgU+I8tGdMO+Y4AETOQi6aiN9kB7lKWe5Ch
+4VR+L4uxYIqIHxR7G2+IEC9ugqEu43p4b80LpY7M4KmmfiaRDFGQ50s1OHAwdbR3X2OtkUQq0Qb9
+6ln+HD8N1JxO5nabuKbymki0BPoZcPdo+FeRecmkL/NOzzm41JBHrhwRwEWOOhAO5KxN4nkMBZ/w
+QzKEy4PylxurHmRG/K0k+xYFDO/UOx2/YsM8s138lQqEdKCvudtSvj5oA/Y8dNcZwQGHyVN5h5r2
+nh3mT3r2l7Q4dgxXlovERGpNqCZJ624jCiWQC4ELMD2+6WDxjj03PbOulQZ8oY4PQUyp6djF0keA
+MYIDuzCCA7cCAQEwVTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMX
+VmVyb2tleSBTZWN1cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJYIZIAWUDBAIBBQCg
+ggE3MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTI2MDEyNzE3Mzk0
+NVowLwYJKoZIhvcNAQkEMSIEIEIsgxo6eJqBb0u9MIxw7YppY5tqB4QAV6ZzgXfwNywgMGQGCSsG
+AQQBgjcQBDFXMFUwQTELMAkGA1UEBhMCQVUxEDAOBgNVBAoTB1Zlcm9rZXkxIDAeBgNVBAMTF1Zl
+cm9rZXkgU2VjdXJlIEVtYWlsIEcyAhAH5JEPagNRXYDiRPdlc1vgMGYGCyqGSIb3DQEJEAILMVeg
+VTBBMQswCQYDVQQGEwJBVTEQMA4GA1UEChMHVmVyb2tleTEgMB4GA1UEAxMXVmVyb2tleSBTZWN1
+cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAX66fJLFSp/X5
+hDz188h1h/6quCAJ8GNWt30QwJuPKD6+5lVLNDm/z7HWtn0va+N1MdXjoXDeEYNVJozx6CD5DBKm
+tA8HHZrbfVDqZva2XbzCXY20i8Ww8KsSXyPaxFMMbN1dln+7OG3TQ1Uqe9KC5WqWTZpyr2VXJGMw
+HFzLQp2gK9jVkcx4QpuJzrixX1iiUtmYIAOAJrKxmXje1jQduTjER067whgQoJiQ5wrgLJIxHszc
+NszwIOwPRzqrbXjwzkoUzVancmCRGtTYeLLUBEhyF1/S1pIeybJiL3L9yeVvpFXqEsjV4DNlsV3G
+e3ryVAkjGOxv98BmmEWn+WJvjukWTF9e6PBYBsd5W/IFzBoI270zvPEy83Bhiac8aX0+Oo2WELJV
+kx0WkvKT1NCMYHLyDs9ZVwMi3RU886HldoRfEDIxYt0JBI0i7WTpe243Y+CuXAPOQ+VyvAKErXe0
+xdx9JIJCF/HYVYuwilqr/yC7ssnB51FA3gifmGqVz/TeJLNnGKr2mFczcMIukzqOXhP9ddAR2kxh
+ial39Tw7TAMJNXWomZwp8vxGIKpxdORYuw/ZCy99n7K/T0xYfMMdk2auLxJ6f0ZDTNM6u3t4WizE
+de0MpxY5TRGuveV2w5hZdqKEiSlzsEg7jIikkvB1kKmCUOb8WUkvu1q3u6SfmP4AAAAAAAA=
+
+
+--=-gs4nTxv8LWoFixXdsf79--
 
