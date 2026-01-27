@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A241BD25932
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9A02D25937
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 05:17:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkbRS-0006fQ-Dc; Tue, 27 Jan 2026 00:16:42 -0500
+	id 1vkbRb-0006ht-RO; Tue, 27 Jan 2026 00:16:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vkbRR-0006fH-LD
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:16:41 -0500
+ id 1vkbRa-0006h3-7H
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:16:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vkbRP-0008Hs-LG
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:16:41 -0500
+ id 1vkbRY-0008JN-RH
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 00:16:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769490998;
+ s=mimecast20190719; t=1769491008;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=g+khot+OVhL5+e3tOQKUptJ6m/mk7Ksd4tDhst7pTHg=;
- b=bbRniVQZuq0ZR4EpvIbwWm3hB2rzbAlFwEkFetzfpdEnAgA4cBABgAugZJFN5L1odjSqCM
- 0CAaChgoHtIn9U7KvZzJgnmdFKyvURwhUL/clyvo0LMJ5x0xMZAlSYpptKEDNhE+24ythy
- EMGaw6xEPlc+aAhPeD0fpw96o6+fy6g=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/m58jsrTIZK0luSPJaSrEgjDGlXyqLhzlqk7ugFZnAI=;
+ b=ILMkzuDLNJUJ9e+RPDEqCuvmaVltaV3OZWkFYdN369BRdKzSqkidDtOCTS6SO2lKPIOyZG
+ nxF3CZYaSybi5qOHTJvpenSUkmmkL0TbvouKOJf91873MgL0sSPcLRUdBZg6aWm9S/RWSO
+ NaZuRGDL38Bw19WzP6TDvixoMzFwyGU=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-266-Qu4H9H4fN3WKoISIDzyWCA-1; Tue, 27 Jan 2026 00:16:36 -0500
-X-MC-Unique: Qu4H9H4fN3WKoISIDzyWCA-1
-X-Mimecast-MFC-AGG-ID: Qu4H9H4fN3WKoISIDzyWCA_1769490995
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-353049e6047so3890211a91.3
- for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 21:16:36 -0800 (PST)
+ us-mta-70-4C_0RT6bMU-8ABJbnDqsBg-1; Tue, 27 Jan 2026 00:16:45 -0500
+X-MC-Unique: 4C_0RT6bMU-8ABJbnDqsBg-1
+X-Mimecast-MFC-AGG-ID: 4C_0RT6bMU-8ABJbnDqsBg_1769491004
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-b6ce1b57b9cso2554370a12.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Jan 2026 21:16:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769490995; x=1770095795; darn=nongnu.org;
+ d=redhat.com; s=google; t=1769491004; x=1770095804; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g+khot+OVhL5+e3tOQKUptJ6m/mk7Ksd4tDhst7pTHg=;
- b=mdr0j4gmeUydHIpMIIPNGrqXJAmIN6yH/PFYZnFnr+alx6VsRUDNTFOCkH1IIg6/D3
- qN+KCbvjuS8J3a0r7LskuqGtinS5KlJ2FXt0dwgQR+wzr/M56b/7xbxxZr5ochnPmBan
- jWDGRvIb5rPfl8i6qIc986QEbakklQj/QZ6W1O1lkSgohtgaps/LgSmYHH1vizgN5vsK
- 0YtbXJ3rBcbYz0jYo6CvJ2DVpYAz+OqDd/Ftrv6vXkPmRa4hbwRptDbl7vWOPzwnxENX
- YhcPrdglBQWutcI8bNN6ACgvXeZJ/l6/4DYDnCYAxgFfiM9TnPC09oP8jXhiUqWmIata
- XdVw==
+ bh=/m58jsrTIZK0luSPJaSrEgjDGlXyqLhzlqk7ugFZnAI=;
+ b=rGg7dSx01shZj0N6ntVqQQcVhMlsbVR+pMRkjwS5xc4TbCdyxcjZbQzg5LxxyhtdHj
+ xOPtUuBjUl/D3V4VPopOwmYOraCVGeyoGuVXx38dG3R5gljgH5qsuLv/snaYh9YXFLCU
+ 0brH21ckTa6lFc7bctidcM0V6KUp85yOHV1YGOOeh9BMfTZa6UMLJ+ek/hGO7Thsb/B9
+ lDuoDd9xL8LXHG6ZEpDeZ+H7V4/ebXNazBIK60r2NB400z7orJfizYXuvMXCpfyfgqNh
+ y0NUJ5+NMFYbrUEl+TOmjXWqJYluelIWYuBSmv5sl81jVuBpTYgVTVWWEMTbbFDehzWo
+ xFPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769490995; x=1770095795;
+ d=1e100.net; s=20230601; t=1769491004; x=1770095804;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=g+khot+OVhL5+e3tOQKUptJ6m/mk7Ksd4tDhst7pTHg=;
- b=KJMJwrEeCRc7Va/RgVHYejW0NKZl+xsmfyh9Mkg3tIGifFZpodM2H4RllAueu/fiIe
- DuRIUL23uKn9cacQsqG9mNAS5rulp74vNvDHmf/Z22yUykHpJ8SMf7NLcD6+5SvVL/TG
- 5x9KFGffOqguSh27vqsM+KG4DgtGEOib7Is4Ce7U0kvDipKvSNhQ6g+5ftqTjJG6qN2o
- HCVhIB7PzaEsHZPWsoeCR1WLhcxJRZzYOXr42AS0ROJkLhg67aLnbb5sE0X7kGZW0lGe
- 1Ukjo31EPoiDXIGijXWRVZGQORwE0liYkUW9dqIZS/ANfBcZuPU/WzNwReJIBQNPwoj5
- VbZg==
+ bh=/m58jsrTIZK0luSPJaSrEgjDGlXyqLhzlqk7ugFZnAI=;
+ b=FVgrCQAAHBUAIMq1k2KpegxcmdQU47NxuGrWlnlLBONV1lxD4TjsH81UToqXDlJ3HS
+ ns2hvkDancrVglwtBf726JWkmB+VswOO7Q63xuClDBLJx1Af0HKJbYUg0xaEJOWJ0F7L
+ +QwmYW2eUU/OGUui7PziFa5D/FkRnwNChiPDLK87f3d1ScHQbY27pnKOlxWbMNCdpVOz
+ WXNikHDZwDQBSr729Ae94KuAvWogAp+6lWvqG51/gTCbCDlUk8egL4d4r9zeloEw+7l4
+ pe04WUL7ZR56j8CZJvxSHm4BZnqvKSFdEXKKL7Ki3hknyz6lVdOiB8r0pR7jiIjepPfj
+ W5SA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUx70ciyKIqd54LzB7HN9Dl4AosdKjmhM6xFlWu/fyBlwLyZ0HXIs9DNVLyttoRNrjYa1Riron4SiLW@nongnu.org
-X-Gm-Message-State: AOJu0Yxkyx5c0ZFll2fnMufgLjfx90cRtNEbgVMkMHf7lIKv2K3lwMyI
- NzFojC1w/86oBaXkESAuRxESfYGl6yA/7ZaOjnmhM2RS90ktRCMkktgnmReJaLPQgwMyWPFwG9Y
- 85RawDLpR7jO1EtHTPekAX5ZmWCZv5rPNz6bCg2Q58POWd59mXivi87fV
-X-Gm-Gg: AZuq6aJYNo7lQtAIyJo1rBaEz6BergOXBvBsspNN3XdKWjvFipmXuKqnZk3ygLNae2A
- lXY4YsOwi348QYd4RQlKUbMR2fB8PRg+ZLj8N3abtS+l0Ls9dX3ZyYiVYmfnW3KAzX416k5Enm6
- nG4zrJXUtYGrMT3sC4WZjdz+Qt4AR0JYNBuH5lCyYBMjaADoSZdzV0gtlNTeU7Xu5PSuxjnRZDR
- KBsGBG6tWZlA+TRTuANwMtyd7cCdxzjzSE4Pl5BIGXhHmaSemi2rdMhL0w7ru4n2xfdBc2BkIKX
- 2cmJHE6V9lc/q+njRDtWBdrfvRqOTin6eHS7vKVE+GoV5u9KQDhEnvbsnpkcJvASmSAf0av7Hqf
- PkqkGCZXV5oYo5ijiiJEln1+O4QCNlr86wipMTW5pwQ==
-X-Received: by 2002:a17:90b:5208:b0:341:c964:126c with SMTP id
- 98e67ed59e1d1-353fedae2a1mr663345a91.34.1769490995485; 
- Mon, 26 Jan 2026 21:16:35 -0800 (PST)
-X-Received: by 2002:a17:90b:5208:b0:341:c964:126c with SMTP id
- 98e67ed59e1d1-353fedae2a1mr663332a91.34.1769490995166; 
- Mon, 26 Jan 2026 21:16:35 -0800 (PST)
+ AJvYcCXHxJsvA+x5NRVKx2Te58TPag8SqoAw5JLfz8bA08nYRCU0XxjZAzpvxAcJ5yQS4iCUmRTMtD69UVJC@nongnu.org
+X-Gm-Message-State: AOJu0YzSKm19Qz0tsCQu6paPd/QZM1vgySJ2zQEnsikpbBMPvkDBqYCa
+ OUb2d2Qx97blBzq9gt12lv5lXgHiZeyqs6/iLEFXCqXaw/CYZUARyCkNGvQGjtfQYuUhc0+HOkQ
+ E8HqfvLQeoxcMU1e2ny6A3b6+0ZBjaVK4Lq6Y6xi2OuDDzJBB8CM9M+Fa
+X-Gm-Gg: AZuq6aIaeeSJDEQ7j5cXN3P6JKOwVpHQp4J/FSIYlgUgLhG+t7mbyae0rJ+uop0lLwB
+ OKklCQVY1k/21H/Y4yKiu3jYczdT7e/nmIqRDe98Aj1o7jamZSa3xScZ3k/BCwrH/NUXr9Cb2kx
+ kz4eWaIWEgOYqkub4x97fsz51YSd6MNJXzJLlhx41aHj50L/vCL8DUqEq+6XvsWuUgBy3B1fZRs
+ plG9g1uXc0E9uCcXvRZQEM0u0QHybwGWEVrnzDor2BcDfBUh+foZygCle/Mim+Rsz4+Vn1PwHNY
+ iVxMfXL9TWB97XhlTUlE9Qf6j7yWxUM9ZMYeycfKhHM8a0MYDAEaEhyxYN+2b/G+STzS6xE//A4
+ uYhWzdCcZV/xUgeQmp7p1dEl+Vgv00vWNqDGT2eFsPg==
+X-Received: by 2002:a05:6a21:62c3:b0:38e:9c27:72e8 with SMTP id
+ adf61e73a8af0-38ec6279239mr485150637.4.1769491004094; 
+ Mon, 26 Jan 2026 21:16:44 -0800 (PST)
+X-Received: by 2002:a05:6a21:62c3:b0:38e:9c27:72e8 with SMTP id
+ adf61e73a8af0-38ec6279239mr485136637.4.1769491003723; 
+ Mon, 26 Jan 2026 21:16:43 -0800 (PST)
 Received: from rhel9-box.lan ([122.163.48.79])
  by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-353f6230d5dsm1110925a91.17.2026.01.26.21.16.32
+ 98e67ed59e1d1-353f6230d5dsm1110925a91.17.2026.01.26.21.16.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Jan 2026 21:16:34 -0800 (PST)
+ Mon, 26 Jan 2026 21:16:43 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v3 01/33] i386/kvm: avoid installing duplicate msr entries in
- msr_handlers
-Date: Tue, 27 Jan 2026 10:45:29 +0530
-Message-ID: <20260127051612.219475-2-anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
+Subject: [PATCH v3 04/33] system/physmem: add helper to reattach existing
+ memory after KVM VM fd change
+Date: Tue, 27 Jan 2026 10:45:32 +0530
+Message-ID: <20260127051612.219475-5-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260127051612.219475-1-anisinha@redhat.com>
 References: <20260127051612.219475-1-anisinha@redhat.com>
@@ -123,64 +123,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-kvm_filter_msr() does not check if an msr entry is already present in the
-msr_handlers table and installs a new handler unconditionally. If the function
-is called again with the same MSR, it will result in duplicate entries in the
-table and multiple such calls will fill up the table needlessly. Fix that.
+After the guest KVM file descriptor has changed as a part of the process of
+confidential guest reset mechanism, existing memory needs to be reattached to
+the new file descriptor. This change adds a helper function ram_block_rebind()
+for this purpose. The next patch will make use of this function.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- target/i386/kvm/kvm.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ include/system/physmem.h |  1 +
+ system/physmem.c         | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 7b9b740a8e..3fdb2a3f62 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -6043,27 +6043,33 @@ static int kvm_install_msr_filters(KVMState *s)
- static int kvm_filter_msr(KVMState *s, uint32_t msr, QEMURDMSRHandler *rdmsr,
-                           QEMUWRMSRHandler *wrmsr)
- {
--    int i, ret;
-+    int i, ret = 0;
+diff --git a/include/system/physmem.h b/include/system/physmem.h
+index 7bb7d3e154..da91b77bd9 100644
+--- a/include/system/physmem.h
++++ b/include/system/physmem.h
+@@ -51,5 +51,6 @@ physical_memory_snapshot_and_clear_dirty(MemoryRegion *mr, hwaddr offset,
+ bool physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
+                                         ram_addr_t start,
+                                         ram_addr_t length);
++int ram_block_rebind(Error **errp);
  
-     for (i = 0; i < ARRAY_SIZE(msr_handlers); i++) {
--        if (!msr_handlers[i].msr) {
-+        if (msr_handlers[i].msr == msr) {
-+            break;
-+        } else if (!msr_handlers[i].msr) {
-             msr_handlers[i] = (KVMMSRHandlers) {
-                 .msr = msr,
-                 .rdmsr = rdmsr,
-                 .wrmsr = wrmsr,
-             };
-+            break;
-+        }
-+    }
- 
--            ret = kvm_install_msr_filters(s);
--            if (ret) {
--                msr_handlers[i] = (KVMMSRHandlers) { };
--                return ret;
--            }
-+    if (i == ARRAY_SIZE(msr_handlers)) {
-+        ret = -EINVAL;
-+        goto end;
-+    }
- 
--            return 0;
--        }
-+    ret = kvm_install_msr_filters(s);
-+    if (ret) {
-+        msr_handlers[i] = (KVMMSRHandlers) { };
-     }
- 
--    return -EINVAL;
-+ end:
-+    return ret;
+ #endif
+diff --git a/system/physmem.c b/system/physmem.c
+index 9a7aba9521..6755d85319 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2857,6 +2857,34 @@ found:
+     return block;
  }
  
- static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
++/*
++ * Creates new guest memfd for the ramblocks and closes the
++ * existing memfd.
++ */
++int ram_block_rebind(Error **errp)
++{
++    RAMBlock *block;
++
++    qemu_mutex_lock_ramlist();
++
++    RAMBLOCK_FOREACH(block) {
++        if (block->flags & RAM_GUEST_MEMFD) {
++            if (block->guest_memfd >= 0) {
++                close(block->guest_memfd);
++            }
++            block->guest_memfd = kvm_create_guest_memfd(block->max_length,
++                                                        0, errp);
++            if (block->guest_memfd < 0) {
++                qemu_mutex_unlock_ramlist();
++                return -1;
++            }
++
++        }
++    }
++    qemu_mutex_unlock_ramlist();
++    return 0;
++}
++
+ /*
+  * Finds the named RAMBlock
+  *
 -- 
 2.42.0
 
