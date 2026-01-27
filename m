@@ -4,133 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3088D2FEDB
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DCD3D2FED4
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:31:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknpC-0004Rz-7G; Tue, 27 Jan 2026 13:30:02 -0500
+	id 1vknor-00023t-Cy; Tue, 27 Jan 2026 13:29:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vknnl-0001YL-Is
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:36 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vknnh-0003QA-62
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:30 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-82361bcbd8fso920413b3a.0
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 10:28:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769538508; x=1770143308; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vguqAVHyuwIrEnmQnJJZkhK57X3O96Nx9cNl4BzWvMQ=;
- b=qTDM6HJ6L+PqkZnGYMxqPJeozJnsitEPA1SsIzh48lUORiJgjw/IJ1YO2jKByOfvEe
- HjU3qoOqiA7uLIFNX6QSwYTYGyeMXvowLCfumm6y+TympUgxOMn8AmwM7yPMDJH7h8Tv
- wjRrjSgXLvWv/bymM27M3//6pmjULqiDx0LlsdnjzJVb7/PLi8+wUgNuiT4ETWxs2P1T
- g5+PrEibfg/Jk2PE9FiffYPqUN6xBiR9DRT9C4dgN7FWjWyIkhagcjUdjrwRmoCa4ZFJ
- mBBZ3fOZdeWgYb0kVcL8pQIkHVRLARjOMQVrY7z0Rvcj6SIsHj5uJtBl1l1P5gtY2WOZ
- JiHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769538508; x=1770143308;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vguqAVHyuwIrEnmQnJJZkhK57X3O96Nx9cNl4BzWvMQ=;
- b=Wx+tc9b17EuQNJEND0f2OmZNqZ3tHiggPUYFT/6PfkaPPzTBQ6ITkX4a1tQFqfIUia
- KxuzsC+GEs5sBwCZXqds05IXI9MZtfo4mJbHXFgPdSBqtVeVYTY2q985qtY1d5sHEva5
- GuwvxV6NeZ+QH9CMPgseEZXhRwdAkGBWi5tZ2sAbWOO+JVMhyVdStUL2htv6kw+rbjY5
- lrQwIu11bEfBHSl2P4+pDkJB4UrSWyr0xnu5jFnKyhbajiinH8ZT7J0txXSkpwce0GQ6
- HuwLUjHmdfEcFgFgOj9kRj6CfK7qbPwrLjHTmCe9H3T+ttM667EKpi2uF0loQqYtifOZ
- MPyQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXztiq6Bd2Y58yFIe/XjGnbgWDUC5zVcpaIf/bcgzpKWMEJn7mLquFOyazYJf1ZNmYWqqNolu2FOVRJ@nongnu.org
-X-Gm-Message-State: AOJu0Yzp2onyYhzBcXL2JXmuPn1qF0is+idB+02u3RM/Mw6SBJOkWyRx
- uHuQQX5U07wnaDhZNv1KunXMJw0kRlSCArgjRAHLYgJlP82wMu8i78G404z7NgGAXZo=
-X-Gm-Gg: AZuq6aI3ZQ3zrm1KIALmavx4V2P0C6uFXf/JozVgnzvQH6tw22SqyqPhrUiBZx950qm
- tbV+fo5C58qr2LSG5reF3EjKRM0FgTARKSR1jdUV4c3ofPkk/NFubPEac+04kNGw6psXkZaH5zW
- 8zSjLncthnDEnqVKC8SEQodmz70emnooyvZGBnD3+lU+gx2vNDYxi8u29VOLHtL5aNck/BtKTOH
- eYDFsPb0SP+HhIOazjBDnlXWj4+xN9RwfCIeMRim1WF9KuCg2JDv5VeLpN2eYhtOyU+HSVMsNN4
- WE/5K0DqEhiFj+sBxTL4K+LkbS35Hnqe2cPL0xI1BU7UILoJA7AY03IEa7MUmQNY2SL8quKTsAZ
- TMTAhfoSet4wmHbsvgwVJVy1Xw30ZGXPDGSA4bmOvqKe9H4GdxK8wG34Z+nd9QaXqhseRpOOdJ2
- CJqEI/ZYSGvM23+8GM4aKCFohlRKVxWnDM9yo6XszE9hsD1xYCn/3Oe2Ek
-X-Received: by 2002:a05:6a00:240a:b0:821:7e53:5627 with SMTP id
- d2e1a72fcca58-8236928ed34mr2296852b3a.39.1769538507487; 
- Tue, 27 Jan 2026 10:28:27 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379b4c197sm258500b3a.20.2026.01.27.10.28.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Jan 2026 10:28:27 -0800 (PST)
-Message-ID: <4be05e70-323d-42c9-84fb-b66e5579a1ed@linaro.org>
-Date: Tue, 27 Jan 2026 10:28:26 -0800
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vknn4-0007sy-Ls
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:27:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vknn2-0003J1-8I
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:27:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769538467;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tdqFkR++Mx8sP/ibIVMErSUZQuFIsPXgRhBYzMQnBnE=;
+ b=LIAFYOS04hWv7Kl+kdIsaUPitjVSg5kjKPxEwjpqIWvMdsBXRj66953ipTBb1c1YgNkmvm
+ RkQf6DKr7wgzJxNnFCzdkadKPTjqFL1jk8KBFO6F4KiOSy8DM9aBG+BxfrjDuk+ib3GnzZ
+ GIvnSKv15vYV/B4RoSeI75bDAzrZGW8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-2YbPT5gZOaWq3CZb4x6RVA-1; Tue,
+ 27 Jan 2026 13:27:46 -0500
+X-MC-Unique: 2YbPT5gZOaWq3CZb4x6RVA-1
+X-Mimecast-MFC-AGG-ID: 2YbPT5gZOaWq3CZb4x6RVA_1769538465
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 011411955D84; Tue, 27 Jan 2026 18:27:45 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.23])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4FE181956095; Tue, 27 Jan 2026 18:27:42 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 24/43] audio/oss: replace custom logging with report & trace
+Date: Tue, 27 Jan 2026 22:24:51 +0400
+Message-ID: <20260127182516.289834-25-marcandre.lureau@redhat.com>
+In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: gitlab docker registries
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel <qemu-devel@nongnu.org>
-References: <da1443a0-5bf8-4ec0-9910-fd06beb42552@linaro.org>
- <CAJSP0QWQEr8+dEGD7jkUQ--Oq+D2PKv_ArRB_ApiZM++xN9TCQ@mail.gmail.com>
- <c12f3294-1ef1-41fe-a453-1422063b991d@linaro.org>
- <87ecncc4sg.fsf@draig.linaro.org>
- <90520ad2-8256-4bc7-94e3-010455659394@linaro.org>
- <878qdjcslb.fsf@draig.linaro.org>
- <7574812c-c200-49bf-8367-927c3cc7295b@linaro.org>
- <87qzrac46p.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <87qzrac46p.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,67 +87,441 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/27/26 10:15 AM, Alex Bennée wrote:
-> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
-> 
->> On 1/27/26 1:28 AM, Alex Bennée wrote:
->>> Richard Henderson <richard.henderson@linaro.org> writes:
->>>
->>>> On 1/27/26 10:50, Alex Bennée wrote:
->>>>> I think it was broken by 4203ea0247f (gitlab-ci: Add build tests for
->>>>> wasm64) because we base the tests of the existence of dockerfiles and it
->>>>> now generates multiple targets.
->>>>> Do we actually use the wasm32 stuff anymore? Maybe we can just
->>>>> rename it?
->>>>
->>>> All of the wasm32 stuff is supposed to be gone.
->>> I think 20260127092745.2978371-1-alex.bennee@linaro.org should fix
->>> it,
->>> but I need to re-read how to trigger the weekly build on my test branch
->>> to test it.
->>>
->>>>
->>>> r~
->>>
->>
->> What if docker-verify was depending on building the container locally
->> instead? It would allow to have a self-contained command, that works
->> the same in local, or in CI, without any yaml dependencies.
->>
->> With current approach, it's tricky to reproduce locally as it depends
->> on global gitlab registry, while we are just trying to see if images
->> is buildable from scratch or not.
-> 
-> No - the point of verify was to check we where building in the
-> registry.
->
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Hum, I'm not sure what "building in the registry" means. Containers are 
-always built locally then (optionally) pushed to a given registry.
+Replace the custom audio logging infrastructure with standard QEMU
+error reporting and tracing.
 
-If you want to test something useful, it has to be a build from scratch 
-(docker build --no-cache ...).
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ audio/ossaudio.c   | 176 ++++++++++++++++++++-------------------------
+ audio/trace-events |   5 ++
+ 2 files changed, 81 insertions(+), 100 deletions(-)
 
-> A lot of the Makefile.include stuff is legacy now (although its a useful
-> wrapper for building tests locally) because gitlab invokes the
-> containers directly. We used to do all sorts of dependency handling as
-> well but the lcitool approach is a lot cleaner even if we don't get
-> layered containers.
->
+diff --git a/audio/ossaudio.c b/audio/ossaudio.c
+index 95b7963ed0c..8388f81343b 100644
+--- a/audio/ossaudio.c
++++ b/audio/ossaudio.c
+@@ -31,11 +31,10 @@
+ #include "qemu/host-utils.h"
+ #include "qapi/error.h"
+ #include "qemu/audio.h"
++#include "qemu/error-report.h"
+ #include "qom/object.h"
+-#include "trace.h"
+-
+-#define AUDIO_CAP "oss"
+ #include "audio_int.h"
++#include "trace.h"
+ 
+ #define TYPE_AUDIO_OSS "audio-oss"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioOss, AUDIO_OSS)
+@@ -76,43 +75,40 @@ struct oss_params {
+     int fragsize;
+ };
+ 
+-static void G_GNUC_PRINTF (2, 3) oss_logerr (int err, const char *fmt, ...)
++static void G_GNUC_PRINTF(2, 3) oss_logerr(int err, const char *fmt, ...)
+ {
+     va_list ap;
+ 
+-    va_start (ap, fmt);
+-    AUD_vlog (AUDIO_CAP, fmt, ap);
+-    va_end (ap);
++    error_printf("oss: ");
++    va_start(ap, fmt);
++    error_vprintf(fmt, ap);
++    va_end(ap);
+ 
+-    AUD_log (AUDIO_CAP, "Reason: %s\n", strerror (err));
++    error_printf(" Reason: %s\n", strerror(err));
+ }
+ 
+-static void G_GNUC_PRINTF (3, 4) oss_logerr2 (
+-    int err,
+-    const char *typ,
+-    const char *fmt,
+-    ...
+-    )
++static void G_GNUC_PRINTF(3, 4) oss_logerr2(int err, const char *typ,
++                                            const char *fmt, ...)
+ {
+     va_list ap;
+ 
+-    AUD_log (AUDIO_CAP, "Could not initialize %s\n", typ);
++    error_printf("oss: Could not initialize %s: ", typ);
+ 
+-    va_start (ap, fmt);
+-    AUD_vlog (AUDIO_CAP, fmt, ap);
+-    va_end (ap);
++    va_start(ap, fmt);
++    error_vprintf(fmt, ap);
++    va_end(ap);
+ 
+-    AUD_log (AUDIO_CAP, "Reason: %s\n", strerror (err));
++    error_printf(" Reason: %s\n", strerror(err));
+ }
+ 
+-static void oss_anal_close (int *fdp)
++static void oss_anal_close(int *fdp)
+ {
+     int err;
+ 
+-    qemu_set_fd_handler (*fdp, NULL, NULL, NULL);
+-    err = close (*fdp);
++    qemu_set_fd_handler(*fdp, NULL, NULL, NULL);
++    err = close(*fdp);
+     if (err) {
+-        oss_logerr (errno, "Failed to close file(fd=%d)\n", *fdp);
++        oss_logerr(errno, "Failed to close file(fd=%d)", *fdp);
+     }
+     *fdp = -1;
+ }
+@@ -159,10 +155,7 @@ static int aud_to_ossfmt(AudioFormat fmt, bool big_endian)
+         return big_endian ? AFMT_U16_BE : AFMT_U16_LE;
+ 
+     default:
+-        dolog ("Internal logic error: Bad audio format %d\n", fmt);
+-#ifdef DEBUG_AUDIO
+-        abort ();
+-#endif
++        error_report("oss: Internal logic error: Bad audio format %d", fmt);
+         return AFMT_U8;
+     }
+ }
+@@ -201,27 +194,13 @@ static int oss_to_audfmt (int ossfmt, AudioFormat *fmt, int *endianness)
+         break;
+ 
+     default:
+-        dolog ("Unrecognized audio format %d\n", ossfmt);
++        error_report("oss: Unrecognized audio format %d", ossfmt);
+         return -1;
+     }
+ 
+     return 0;
+ }
+ 
+-#if defined DEBUG_MISMATCHES || defined DEBUG
+-static void oss_dump_info (struct oss_params *req, struct oss_params *obt)
+-{
+-    dolog ("parameter | requested value | obtained value\n");
+-    dolog ("format    |      %10d |     %10d\n", req->fmt, obt->fmt);
+-    dolog ("channels  |      %10d |     %10d\n",
+-           req->nchannels, obt->nchannels);
+-    dolog ("frequency |      %10d |     %10d\n", req->freq, obt->freq);
+-    dolog ("nfrags    |      %10d |     %10d\n", req->nfrags, obt->nfrags);
+-    dolog ("fragsize  |      %10d |     %10d\n",
+-           req->fragsize, obt->fragsize);
+-}
+-#endif
+-
+ #ifdef USE_DSP_POLICY
+ static int oss_get_version (int fd, int *version, const char *typ)
+ {
+@@ -240,7 +219,7 @@ static int oss_get_version (int fd, int *version, const char *typ)
+             return 0;
+         }
+ #endif
+-        oss_logerr2 (errno, typ, "Failed to get OSS version\n");
++        oss_logerr2(errno, typ, "Failed to get OSS version");
+         return -1;
+     }
+     return 0;
+@@ -269,7 +248,7 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
+ 
+     fd = open (dspname, oflags | O_NONBLOCK);
+     if (-1 == fd) {
+-        oss_logerr2 (errno, typ, "Failed to open `%s'\n", dspname);
++        oss_logerr2(errno, typ, "Failed to open '%s'", dspname);
+         return -1;
+     }
+ 
+@@ -281,23 +260,23 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
+         qapi_AudiodevOssPerDirectionOptions_base(opdo), as, 23220);
+ 
+     if (ioctl (fd, SNDCTL_DSP_SAMPLESIZE, &fmt)) {
+-        oss_logerr2 (errno, typ, "Failed to set sample size %d\n", req->fmt);
++        oss_logerr2(errno, typ, "Failed to set sample size %d", req->fmt);
+         goto err;
+     }
+ 
+     if (ioctl (fd, SNDCTL_DSP_CHANNELS, &nchannels)) {
+-        oss_logerr2 (errno, typ, "Failed to set number of channels %d\n",
+-                     req->nchannels);
++        oss_logerr2(errno, typ, "Failed to set number of channels %d",
++                    req->nchannels);
+         goto err;
+     }
+ 
+     if (ioctl (fd, SNDCTL_DSP_SPEED, &freq)) {
+-        oss_logerr2 (errno, typ, "Failed to set frequency %d\n", req->freq);
++        oss_logerr2(errno, typ, "Failed to set frequency %d", req->freq);
+         goto err;
+     }
+ 
+     if (ioctl (fd, SNDCTL_DSP_NONBLOCK, NULL)) {
+-        oss_logerr2 (errno, typ, "Failed to set non-blocking mode\n");
++        oss_logerr2(errno, typ, "Failed to set non-blocking mode");
+         goto err;
+     }
+ 
+@@ -311,9 +290,9 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
+             if (version >= 0x040000) {
+                 int policy2 = policy;
+                 if (ioctl(fd, SNDCTL_DSP_POLICY, &policy2)) {
+-                    oss_logerr2 (errno, typ,
+-                                 "Failed to set timing policy to %d\n",
+-                                 policy);
++                    oss_logerr2(errno, typ,
++                                "Failed to set timing policy to %d",
++                                policy);
+                     goto err;
+                 }
+                 setfragment = 0;
+@@ -325,20 +304,20 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
+     if (setfragment) {
+         int mmmmssss = (req->nfrags << 16) | ctz32 (req->fragsize);
+         if (ioctl (fd, SNDCTL_DSP_SETFRAGMENT, &mmmmssss)) {
+-            oss_logerr2 (errno, typ, "Failed to set buffer length (%d, %d)\n",
+-                         req->nfrags, req->fragsize);
++            oss_logerr2(errno, typ, "Failed to set buffer length (%d, %d)",
++                        req->nfrags, req->fragsize);
+             goto err;
+         }
+     }
+ 
+     if (ioctl (fd, in ? SNDCTL_DSP_GETISPACE : SNDCTL_DSP_GETOSPACE, &abinfo)) {
+-        oss_logerr2 (errno, typ, "Failed to get buffer length\n");
++        oss_logerr2(errno, typ, "Failed to get buffer length");
+         goto err;
+     }
+ 
+     if (!abinfo.fragstotal || !abinfo.fragsize) {
+-        AUD_log (AUDIO_CAP, "Returned bogus buffer information(%d, %d) for %s\n",
+-                 abinfo.fragstotal, abinfo.fragsize, typ);
++        error_report("oss: Returned bogus buffer information(%d, %d) for %s",
++                     abinfo.fragstotal, abinfo.fragsize, typ);
+         goto err;
+     }
+ 
+@@ -349,20 +328,13 @@ static int oss_open(int in, struct oss_params *req, audsettings *as,
+     obt->fragsize = abinfo.fragsize;
+     *pfd = fd;
+ 
+-#ifdef DEBUG_MISMATCHES
+-    if ((req->fmt != obt->fmt) ||
+-        (req->nchannels != obt->nchannels) ||
+-        (req->freq != obt->freq) ||
+-        (req->fragsize != obt->fragsize) ||
+-        (req->nfrags != obt->nfrags)) {
+-        dolog ("Audio parameters mismatch\n");
+-        oss_dump_info (req, obt);
+-    }
+-#endif
++    trace_oss_out_params(
++        req->fmt, obt->fmt,
++        req->nchannels, obt->nchannels,
++        req->freq, obt->freq,
++        req->nfrags, obt->nfrags,
++        req->fragsize, obt->fragsize);
+ 
+-#ifdef DEBUG
+-    oss_dump_info (req, obt);
+-#endif
+     return 0;
+ 
+  err:
+@@ -378,7 +350,7 @@ static size_t oss_get_available_bytes(OSSVoiceOut *oss)
+ 
+     err = ioctl(oss->fd, SNDCTL_DSP_GETOPTR, &cntinfo);
+     if (err < 0) {
+-        oss_logerr(errno, "SNDCTL_DSP_GETOPTR failed\n");
++        oss_logerr(errno, "SNDCTL_DSP_GETOPTR failed");
+         return 0;
+     }
+ 
+@@ -459,8 +431,7 @@ static size_t oss_write(HWVoiceOut *hw, void *buf, size_t len)
+         bytes_written = write(oss->fd, pcm, len);
+         if (bytes_written < 0) {
+             if (errno != EAGAIN) {
+-                oss_logerr(errno, "failed to write %zu bytes\n",
+-                           len);
++                oss_logerr(errno, "failed to write %zu bytes", len);
+             }
+             return pos;
+         }
+@@ -474,18 +445,18 @@ static size_t oss_write(HWVoiceOut *hw, void *buf, size_t len)
+     return pos;
+ }
+ 
+-static void oss_fini_out (HWVoiceOut *hw)
++static void oss_fini_out(HWVoiceOut *hw)
+ {
+     int err;
+-    OSSVoiceOut *oss = (OSSVoiceOut *) hw;
++    OSSVoiceOut *oss = (OSSVoiceOut *)hw;
+ 
+-    ldebug ("oss_fini\n");
+-    oss_anal_close (&oss->fd);
++    trace_oss_fini_out();
++    oss_anal_close(&oss->fd);
+ 
+     if (oss->mmapped && hw->buf_emul) {
+         err = munmap(hw->buf_emul, hw->size_emul);
+         if (err) {
+-            oss_logerr(errno, "Failed to unmap buffer %p, size %zu\n",
++            oss_logerr(errno, "Failed to unmap buffer %p, size %zu",
+                        hw->buf_emul, hw->size_emul);
+         }
+         hw->buf_emul = NULL;
+@@ -526,8 +497,8 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
+     oss->fragsize = obt.fragsize;
+ 
+     if (obt.nfrags * obt.fragsize % hw->info.bytes_per_frame) {
+-        dolog ("warning: Misaligned DAC buffer, size %d, alignment %d\n",
+-               obt.nfrags * obt.fragsize, hw->info.bytes_per_frame);
++        warn_report("oss: Misaligned DAC buffer, size %d, alignment %d",
++                    obt.nfrags * obt.fragsize, hw->info.bytes_per_frame);
+     }
+ 
+     hw->samples = (obt.nfrags * obt.fragsize) / hw->info.bytes_per_frame;
+@@ -544,20 +515,16 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
+             0
+             );
+         if (hw->buf_emul == MAP_FAILED) {
+-            oss_logerr(errno, "Failed to map %zu bytes of DAC\n",
+-                       hw->size_emul);
++            oss_logerr(errno, "Failed to map %zu bytes of DAC", hw->size_emul);
+             hw->buf_emul = NULL;
+         } else {
+             int trig = 0;
+             if (ioctl (fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
+-                oss_logerr (errno, "SNDCTL_DSP_SETTRIGGER 0 failed\n");
++                oss_logerr(errno, "SNDCTL_DSP_SETTRIGGER 0 failed");
+             } else {
+                 trig = PCM_ENABLE_OUTPUT;
+-                if (ioctl (fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
+-                    oss_logerr (
+-                        errno,
+-                        "SNDCTL_DSP_SETTRIGGER PCM_ENABLE_OUTPUT failed\n"
+-                        );
++                if (ioctl(fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
++                    oss_logerr(errno, "SNDCTL_DSP_SETTRIGGER PCM_ENABLE_OUTPUT failed");
+                 } else {
+                     oss->mmapped = 1;
+                 }
+@@ -566,7 +533,7 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
+             if (!oss->mmapped) {
+                 err = munmap(hw->buf_emul, hw->size_emul);
+                 if (err) {
+-                    oss_logerr(errno, "Failed to unmap buffer %p size %zu\n",
++                    oss_logerr(errno, "Failed to unmap buffer %p size %zu",
+                                hw->buf_emul, hw->size_emul);
+                 }
+                 hw->buf_emul = NULL;
+@@ -582,13 +549,14 @@ static int oss_init_out(HWVoiceOut *hw, struct audsettings *as)
+ static void oss_enable_out(HWVoiceOut *hw, bool enable)
+ {
+     int trig;
+-    OSSVoiceOut *oss = (OSSVoiceOut *) hw;
++    OSSVoiceOut *oss = (OSSVoiceOut *)hw;
+     AudiodevOssPerDirectionOptions *opdo = oss->dev->u.oss.out;
+ 
++    trace_oss_enable_out(enable);
++
+     if (enable) {
+         hw->poll_mode = opdo->try_poll;
+ 
+-        ldebug("enabling voice\n");
+         if (hw->poll_mode) {
+             oss_poll_out(hw);
+         }
+@@ -601,12 +569,12 @@ static void oss_enable_out(HWVoiceOut *hw, bool enable)
+         trig = PCM_ENABLE_OUTPUT;
+         if (ioctl(oss->fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
+             oss_logerr(errno,
+-                       "SNDCTL_DSP_SETTRIGGER PCM_ENABLE_OUTPUT failed\n");
++                       "SNDCTL_DSP_SETTRIGGER PCM_ENABLE_OUTPUT failed");
+             return;
+         }
+     } else {
+         if (hw->poll_mode) {
+-            qemu_set_fd_handler (oss->fd, NULL, NULL, NULL);
++            qemu_set_fd_handler(oss->fd, NULL, NULL, NULL);
+             hw->poll_mode = 0;
+         }
+ 
+@@ -614,10 +582,9 @@ static void oss_enable_out(HWVoiceOut *hw, bool enable)
+             return;
+         }
+ 
+-        ldebug ("disabling voice\n");
+         trig = 0;
+-        if (ioctl (oss->fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
+-            oss_logerr (errno, "SNDCTL_DSP_SETTRIGGER 0 failed\n");
++        if (ioctl(oss->fd, SNDCTL_DSP_SETTRIGGER, &trig) < 0) {
++            oss_logerr(errno, "SNDCTL_DSP_SETTRIGGER 0 failed");
+             return;
+         }
+     }
+@@ -654,9 +621,16 @@ static int oss_init_in(HWVoiceIn *hw, struct audsettings *as)
+     oss->nfrags = obt.nfrags;
+     oss->fragsize = obt.fragsize;
+ 
++    trace_oss_in_params(
++        req.fmt, obt.fmt,
++        req.nchannels, obt.nchannels,
++        req.freq, obt.freq,
++        req.nfrags, obt.nfrags,
++        req.fragsize, obt.fragsize);
++
+     if (obt.nfrags * obt.fragsize % hw->info.bytes_per_frame) {
+-        dolog ("warning: Misaligned ADC buffer, size %d, alignment %d\n",
+-               obt.nfrags * obt.fragsize, hw->info.bytes_per_frame);
++        warn_report("oss: Misaligned ADC buffer, size %d, alignment %d",
++                    obt.nfrags * obt.fragsize, hw->info.bytes_per_frame);
+     }
+ 
+     hw->samples = (obt.nfrags * obt.fragsize) / hw->info.bytes_per_frame;
+@@ -690,7 +664,7 @@ static size_t oss_read(HWVoiceIn *hw, void *buf, size_t len)
+             case EAGAIN:
+                 break;
+             default:
+-                oss_logerr(errno, "Failed to read %zu bytes of audio (to %p)\n",
++                oss_logerr(errno, "Failed to read %zu bytes of audio (to %p)",
+                            len, dst);
+                 break;
+             }
+@@ -706,9 +680,11 @@ static size_t oss_read(HWVoiceIn *hw, void *buf, size_t len)
+ 
+ static void oss_enable_in(HWVoiceIn *hw, bool enable)
+ {
+-    OSSVoiceIn *oss = (OSSVoiceIn *) hw;
++    OSSVoiceIn *oss = (OSSVoiceIn *)hw;
+     AudiodevOssPerDirectionOptions *opdo = oss->dev->u.oss.out;
+ 
++    trace_oss_enable_in(enable);
++
+     if (enable) {
+         hw->poll_mode = opdo->try_poll;
+ 
+diff --git a/audio/trace-events b/audio/trace-events
+index 79744456cec..f33be2dd8e3 100644
+--- a/audio/trace-events
++++ b/audio/trace-events
+@@ -17,6 +17,11 @@ alsa_enable_in(bool enable) "enable=%d"
+ 
+ # ossaudio.c
+ oss_version(int version) "OSS version = 0x%x"
++oss_out_params(int req_fmt, int obt_fmt, int req_channels, int obt_channels, int req_freq, int obt_freq, int req_nfrags, int obt_nfrags, int req_fragsize, int obt_fragsize) "fmt=%d->%d, channels %d->%d, freq=%d->%d, nfrags=%d->%d, fragsize=%d->%d"
++oss_in_params(int req_fmt, int obt_fmt, int req_channels, int obt_channels, int req_freq, int obt_freq, int req_nfrags, int obt_nfrags, int req_fragsize, int obt_fragsize) "fmt=%d->%d, channels %d->%d, freq=%d->%d, nfrags=%d->%d, fragsize=%d->%d"
++oss_fini_out(void) ""
++oss_enable_out(bool enable) "enable=%d"
++oss_enable_in(bool enable) "enable=%d"
+ 
+ # dbusaudio.c
+ dbus_audio_register(const char *s, const char *dir) "sender = %s, dir = %s"
+-- 
+2.52.0
 
-The commit message for 8bec7b9874 is:
-```
-gitlab: add a weekly container building job
-This will hopefully catch containers that break because of upstream 
-changes as well as keep the container cache fresh.
-```
-
-IMHO, a simple weekly job doing what we want is:
-docker build --no-cache - < $dockerfile
-
-I don't see what is the relation with gitlab, lcitool or Makefile.
-
-Maybe I miss some extra insights or goals that were not documented in 
-original commit, but it seems like the current implementation is not 
-aware of what it's supposed to do.
 
