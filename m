@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 780F6D2FEDC
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EA96D2FED9
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:56:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkoCq-0005rr-Cl; Tue, 27 Jan 2026 13:54:28 -0500
+	id 1vkoCt-0006Jf-1T; Tue, 27 Jan 2026 13:54:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkoBg-00035T-B9
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:53:19 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkoBp-0003FU-W8
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:53:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkoBe-0000kM-UM
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:53:16 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vkoBo-0000oN-9n
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:53:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769539994;
+ s=mimecast20190719; t=1769540003;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hq+OcBvU/nIAaBDI0fi5KDSmQjBUYY4pgykw1erxlUQ=;
- b=O2keZM4hmQ3uQlvUnzac3KHeEk37lCqX6hp9ZgftTOrIwj7OlClrS9bMxsoX8dueX9Wh7Q
- fg3Yu0TQwrPKkb/jMoZNz94pL9yxAERIwIQ08vAsZFgE3uSSTc7PtY+rR1WMxsDEsjlt5b
- 22+9mAD8lTaHRJoz7xPLlMaMBrGaYBo=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dvoXimTzM4tcN8+c8sY9pRd+AZdXMUmsetzDVAYThuY=;
+ b=JHh3Y90fozuxaXfeU6012ZGI5t0wPl/H8aMCn378dzvge9QW7ZUhMHuy2CxOrD0HSscSmz
+ BlwUHBZ+i5OUY6dm2jGSe6614RIqY2FZr9grmWqOZwAQ9m64VWQ7KD8XWBN5gv/3iHjRRJ
+ +1wSnVWc7X2PXB5HYWWRC0JHx3y/ZCY=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-107-3Au40x1tNe65cMURUhK6BQ-1; Tue, 27 Jan 2026 13:53:08 -0500
-X-MC-Unique: 3Au40x1tNe65cMURUhK6BQ-1
-X-Mimecast-MFC-AGG-ID: 3Au40x1tNe65cMURUhK6BQ_1769539987
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-5014c9ee70bso167953871cf.1
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 10:53:07 -0800 (PST)
+ us-mta-613--c_eT5TjMbay_vXuKv0XFg-1; Tue, 27 Jan 2026 13:53:16 -0500
+X-MC-Unique: -c_eT5TjMbay_vXuKv0XFg-1
+X-Mimecast-MFC-AGG-ID: -c_eT5TjMbay_vXuKv0XFg_1769539996
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-89482366332so231962196d6.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 10:53:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769539987; x=1770144787; darn=nongnu.org;
+ d=redhat.com; s=google; t=1769539996; x=1770144796; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hq+OcBvU/nIAaBDI0fi5KDSmQjBUYY4pgykw1erxlUQ=;
- b=d7K8N6p2c8msnBRdQiwQ6SvaNfU32i+Eahr8xufs13O1uat4qRQKVizhIRZWeo1lfW
- wUFgoPKfSGdw+IRB8t52NT5YrrhvNcTaB0zgbzF7dGJrKcUSnlbOGbqMMhL316xQSP0a
- D7m3SZeXx89g8oyMLSoDpcFSFEaXYA6kZvtxhpgtZrEKFhkA6rG9R7otQdFX+Z4RsWPh
- U3Rw8hnWNtEoyE+WkQ1iaCyPyTvqhzFbxiIsYYfTujhwmoFAR5UEVkcDjIGRpFwQT8y6
- eJKsu2lxUdwQcFGdyQVjtSadYObL0A0YNWow6eYb833hpjrEqRopcC4ZJjTqS+xirX0G
- uliw==
+ bh=dvoXimTzM4tcN8+c8sY9pRd+AZdXMUmsetzDVAYThuY=;
+ b=itZtSg+vMD2LPuxbPNLcDGn12TCxydyC4jB7f2WfFOR9LUm5qYYmF6jbcW2xDVtj2P
+ Wr98q0SQ9M7dMTA0vmjeCP/V9rw5NknXgqjlfzQv+fT7FDhFsNqrIYxgieCdOT83DkDt
+ Aq4bcuwZ2lNamaVFM95ndpi1DUGIvcfCEsxc2KzKJRS4wJ1Y7h3tl9VHXwtLtr31uxE0
+ fpYmqh1IGpbSZsGRFiMrN9y/xoJYLQjf2W0wCJItAirKUrxRSorXSxB9DcNWk6VsKe/w
+ aLG5xVSBEyBt+P7rMAqLQjJ67/em924OxtNIaZSGZa+3eCk5f77te3gTLuQE7SXeNlFo
+ Iwtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769539987; x=1770144787;
+ d=1e100.net; s=20230601; t=1769539996; x=1770144796;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hq+OcBvU/nIAaBDI0fi5KDSmQjBUYY4pgykw1erxlUQ=;
- b=biVSFKMSM8Q2OFeYv19PH2N9moad/K+66Oja1ywh+66osKP/sr0taDFk+P/XblhRwy
- Nf/fnlWz0biWxAKKfejieTnTgfPRF9Yi/yKoBMTsgtyIhQjz3T2k4F90Dzj0Brs8kjsY
- 8tLlYVXDjquGXvVCugFLIhn/TdDKk/pWtgBBrhStRauAE2p+Fu1ZV/Zj759EZGF3PcAw
- kXDNfUTLWD4uhTWVymvL6QW7wHDYx6hJ3SeSJda3Edgri4zVsAEZqyhUhIFihkr+JYzI
- TwcsOXnzC954/fbcHuOTnZrLH1kPzsnHhlZHC8eE90EGa+RW0ge7OFjwa/QE3ohfshoI
- G8XA==
-X-Gm-Message-State: AOJu0Yy/hyviGuNTfCoQkDvFbzBI/sfM27u4z1OCeVOJZS+EbXcV9l20
- iU8tCmp9x8O28py8aCHuuSaHI7Mj/xYahknwvq3FD+quIYr2aauD0+bcKqLE5PzQ8WkK72WUAKl
- rQpbcwTsMWY84rAhYB5F9EnjEeZJrJu2ALzQ8Rl24yIg8yabCCJDI1J/c8ogmCdScYehC0bvgZ5
- dbDMGJ5TcPz3Y/ZRW7KQz8D/o2VkP22X9MrgGE6w==
-X-Gm-Gg: AZuq6aKWdA+UJ02rl+Cf25050jjuIYRGp1P/bFsjZTVc4E4cEGxbng2PEYBbrhG+1h6
- 0SNgCGOLhYaFQ7E+bTBA/CiQvVaRnZi3JNLYGhGFAk4xmBoLLecp7TnOz4rmm6hGlh5yb4whEg4
- XpMvpsDn8oFBG6qacKT4J2XCB12/9lYJrFQ3yi9n2paj4QT8ThYKEnSiELKf3ZOPlqXSfedZHbd
- WZORbUQCCpY65O0XLhyzGWW2xl/ayaY/6QAmxBonDvWP+3aAufomFeETi16oUb+Qpj4V578tP9g
- o4J0XisecXo6HBsfEQh3NDzLelnUsg1FRzedOGmGhUlEPy4elBQlrZmiKQHBmH73+h4MSsRbrSU
- E
-X-Received: by 2002:a05:622a:190f:b0:4ee:2510:198a with SMTP id
- d75a77b69052e-5032f8fc0d2mr33352051cf.39.1769539986966; 
- Tue, 27 Jan 2026 10:53:06 -0800 (PST)
-X-Received: by 2002:a05:622a:190f:b0:4ee:2510:198a with SMTP id
- d75a77b69052e-5032f8fc0d2mr33351451cf.39.1769539986184; 
- Tue, 27 Jan 2026 10:53:06 -0800 (PST)
+ bh=dvoXimTzM4tcN8+c8sY9pRd+AZdXMUmsetzDVAYThuY=;
+ b=KdDVN14N9qp5MtVqIN1MDQB2ZUbpC/sZYv6DgWSpavUmX9BAhf3L2lpwj2DWh/gDQs
+ IS7FFR+ysdsFp5YCqnbSbszQFml2xS3A6SMyBN1gEshub5BS//h6yI2+zrXMkmB8MW3L
+ hmbmZbf7hCaXHiLEJ++YXBdjlmmOx2COkmOcuELvoE1hjxm+K19xmeVRVaCnAOVADyal
+ zyuW36PlRmY0F1Msi+B6FFEHbHFwMhlWwczkO86rGQyL16rHgH2qKqRFyfb7MfmenG/n
+ KvxdSwfkIoBNTJQhBipkHxn+Glf1yW+FUonJxvxb0Lhvy3eh8ZXiwPPFE61yGcNps1eB
+ BNHg==
+X-Gm-Message-State: AOJu0Yx5Ez/6wbraGfMuMjwuWT5qlO8ZYhLu3VVrAdUxhgn8QG6WqCkP
+ NiMIe+JozuRyhYbvqqEsfxykTPuCcYDlPvcNKdNQOB1DmHSTZ04Dr5JEFzlcIcv4HGUdb6P/g3o
+ gCYBJmB9cVl8eKDlc967Es1a447H2W4tD8Hl5ZjhwwqDCAtN86D1SySItK/WS6GIEPWx4k5CmvJ
+ bNvPqjZdz6Lkj/0yc2YkcbI3N/AyCXzef8W/DzqQ==
+X-Gm-Gg: AZuq6aLaXY1ni6q0OKYr91P0EBo+nUzoh7eFCgQpMhcQ0O9l2sNOzd0LdClCm/7BNDS
+ JmpV+y0Rrpcx8FDmEUtH2RUE3lEZ1PT6jnfHYQtRriEEDxMgxG+UMhuLNPsePrQD4s6mI0Ruq5l
+ qHv1Cinek8JnL1IeI2WDR1XPdetWFJprjzZ2q/hlyw/ifXj863whkcmEliaGceXLH8Vk3WOAaOR
+ 5OQ0/UDQteNRvIZfVkAZ0jhc1A9hgizC6x+cB6FmawZ3+o8OHGxbHUEIuuchJ+Vln7zdjOPL50c
+ ZG8EjqujIPGq8RIRtUPTHZpyosNly75+tUCZmt5vTSlq9eQjAVm1bxm9TCt+B1wyGHPOIpNVhKS
+ R
+X-Received: by 2002:a05:6214:76a:b0:87f:fbe1:2c2a with SMTP id
+ 6a1803df08f44-894cc7ff3femr39621646d6.26.1769539996131; 
+ Tue, 27 Jan 2026 10:53:16 -0800 (PST)
+X-Received: by 2002:a05:6214:76a:b0:87f:fbe1:2c2a with SMTP id
+ 6a1803df08f44-894cc7ff3femr39621326d6.26.1769539995647; 
+ Tue, 27 Jan 2026 10:53:15 -0800 (PST)
 Received: from x1.com ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-894d3740e54sm2338466d6.35.2026.01.27.10.53.05
+ 6a1803df08f44-894d3740e54sm2338466d6.35.2026.01.27.10.53.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jan 2026 10:53:05 -0800 (PST)
+ Tue, 27 Jan 2026 10:53:15 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Lukas Straub <lukasstraub2@web.de>,
  Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Juraj Marcin <jmarcin@redhat.com>
-Subject: [PATCH v2 08/24] migration/colo: Use the RAM iterable helper directly
-Date: Tue, 27 Jan 2026 13:52:38 -0500
-Message-ID: <20260127185254.3954634-9-peterx@redhat.com>
+Subject: [PATCH v2 17/24] migration: qemu_savevm_state_complete_precopy() take
+ MigrationState*
+Date: Tue, 27 Jan 2026 13:52:47 -0500
+Message-ID: <20260127185254.3954634-18-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260127185254.3954634-1-peterx@redhat.com>
 References: <20260127185254.3954634-1-peterx@redhat.com>
@@ -119,31 +120,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_savevm_state_complete_precopy() has a weird parameter called
-"iterable_only".  It's needed because COLO saves device states in advance.
+Make it pass in MigrationState* instead of s->to_dst_file, so as to drop
+the internal migrate_get_current().
 
-To make dropping that weird parameter easier, let COLO directly use the RAM
-iterator helper instead, which should make the code easier to read too.
-
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/colo.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ migration/savevm.h    | 2 +-
+ migration/migration.c | 2 +-
+ migration/savevm.c    | 7 ++++---
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/migration/colo.c b/migration/colo.c
-index c344943173..f92803dd29 100644
---- a/migration/colo.c
-+++ b/migration/colo.c
-@@ -469,7 +469,7 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
-      * TODO: We may need a timeout mechanism to prevent COLO process
-      * to be blocked here.
-      */
--    qemu_savevm_state_complete_precopy(s->to_dst_file, true);
-+    qemu_savevm_state_complete_precopy_iterable(s->to_dst_file, false);
-     qemu_put_byte(s->to_dst_file, QEMU_VM_EOF);
+diff --git a/migration/savevm.h b/migration/savevm.h
+index 57b96133d5..bded5e2a6c 100644
+--- a/migration/savevm.h
++++ b/migration/savevm.h
+@@ -42,7 +42,7 @@ void qemu_savevm_state_header(QEMUFile *f);
+ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
+ void qemu_savevm_state_cleanup(void);
+ void qemu_savevm_state_complete_postcopy(QEMUFile *f);
+-int qemu_savevm_state_complete_precopy(QEMUFile *f);
++int qemu_savevm_state_complete_precopy(MigrationState *s);
+ void qemu_savevm_state_pending_exact(uint64_t *must_precopy,
+                                      uint64_t *can_postcopy);
+ void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
+diff --git a/migration/migration.c b/migration/migration.c
+index c6e54d2a3f..b8c85496f8 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2752,7 +2752,7 @@ static int migration_completion_precopy(MigrationState *s)
+         goto out_unlock;
+     }
  
-     qemu_fflush(fb);
+-    ret = qemu_savevm_state_complete_precopy(s->to_dst_file);
++    ret = qemu_savevm_state_complete_precopy(s);
+ out_unlock:
+     bql_unlock();
+     return ret;
+diff --git a/migration/savevm.c b/migration/savevm.c
+index e1918d4f38..830d8e5988 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1728,8 +1728,9 @@ int qemu_savevm_state_non_iterable(QEMUFile *f)
+     return 0;
+ }
+ 
+-int qemu_savevm_state_complete_precopy(QEMUFile *f)
++int qemu_savevm_state_complete_precopy(MigrationState *s)
+ {
++    QEMUFile *f = s->to_dst_file;
+     int ret;
+ 
+     ret = qemu_savevm_state_complete_precopy_iterable(f, false);
+@@ -1742,7 +1743,7 @@ int qemu_savevm_state_complete_precopy(QEMUFile *f)
+         return ret;
+     }
+ 
+-    qemu_savevm_state_end_precopy(migrate_get_current(), f);
++    qemu_savevm_state_end_precopy(s, f);
+ 
+     return qemu_fflush(f);
+ }
+@@ -1841,7 +1842,7 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
+ 
+     ret = qemu_file_get_error(f);
+     if (ret == 0) {
+-        qemu_savevm_state_complete_precopy(f);
++        qemu_savevm_state_complete_precopy(ms);
+         ret = qemu_file_get_error(f);
+     }
+     if (ret != 0) {
 -- 
 2.50.1
 
