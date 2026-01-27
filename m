@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B02BDD2FED7
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87260D2FED7
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:26:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknlT-0004pa-1f; Tue, 27 Jan 2026 13:26:12 -0500
+	id 1vknlY-0004uJ-7D; Tue, 27 Jan 2026 13:26:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknl4-0004cK-UR
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:25:46 -0500
+ id 1vknl8-0004dP-MD
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:25:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vknl2-0002zb-75
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:25:45 -0500
+ id 1vknl6-00035U-OU
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:25:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769538343;
+ s=mimecast20190719; t=1769538348;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=24qpWigG2GNSCQleCjAMvy9qyjCTVpZdRudo8IJcojA=;
- b=Zx8VMqnkzOLc3SBs1FbDkFcxdoWaX/3MihxND3a0W0t55JNok5Ey4fc1i3EO/PvmV36vho
- vj0R7mPuEd+kuS4BxZ+7jjNtzxNwIN7P/Le49+fSYj6Y81AFwVP729GiAYhlhrwV6ccL3k
- b0vYTUElC0BPob1xpltBC25riJwsJd8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Jke7ivabbc+2yet1zoG3ZgVnhEvUNQkOHIhPsJWfMPU=;
+ b=WD5mKWzn7AaBam7XMl2mGPz+Si2abyn6FEn+pkNXrepAZ4PrfE29ikxOYq+ngQ0sDsBqeZ
+ SBNq9VjE8UH71kXSQvSGCp6W2fbIZFVGJjNT3wZElUHF54BFyI/6coXNmXyIw9wQ9pgb/r
+ la0T8rMIXYDej85tFZBaZfHAM9WgOHs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-4drjPHfIOx-VZpJRH4h2Gg-1; Tue,
- 27 Jan 2026 13:25:39 -0500
-X-MC-Unique: 4drjPHfIOx-VZpJRH4h2Gg-1
-X-Mimecast-MFC-AGG-ID: 4drjPHfIOx-VZpJRH4h2Gg_1769538339
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-WkPFKr2FNy6qgDveHKHefg-1; Tue,
+ 27 Jan 2026 13:25:46 -0500
+X-MC-Unique: WkPFKr2FNy6qgDveHKHefg-1
+X-Mimecast-MFC-AGG-ID: WkPFKr2FNy6qgDveHKHefg_1769538345
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 12FF718002C2; Tue, 27 Jan 2026 18:25:39 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A439119775E8; Tue, 27 Jan 2026 18:25:45 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.23])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A6AE51800665; Tue, 27 Jan 2026 18:25:37 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 97E4830001A2; Tue, 27 Jan 2026 18:25:43 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 03/43] audio/wav: convert to QOM lifecycle methods
-Date: Tue, 27 Jan 2026 22:24:30 +0400
-Message-ID: <20260127182516.289834-4-marcandre.lureau@redhat.com>
+Subject: [PATCH 04/43] audio/noaudio: convert to QOM lifecycle methods
+Date: Tue, 27 Jan 2026 22:24:31 +0400
+Message-ID: <20260127182516.289834-5-marcandre.lureau@redhat.com>
 In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
 References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -89,57 +89,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Remove the legacy driver init/fini callbacks from the WAV audio backend.
+Remove the legacy driver init/fini callbacks from the null audio backend.
 
-The wav_audio_init() just returned the Audiodev pointer and
-wav_audio_fini() only logged a debug message. Access to the Audiodev
-is now through hw->s->dev instead of the drv_opaque pointer.
+Both no_audio_init() and no_audio_fini() were no-ops that performed
+no real initialization or cleanup work.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/wavaudio.c | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+ audio/noaudio.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/audio/wavaudio.c b/audio/wavaudio.c
-index 50b0fb93936..2a7703831f3 100644
---- a/audio/wavaudio.c
-+++ b/audio/wavaudio.c
-@@ -89,7 +89,7 @@ static int wav_init_out(HWVoiceOut *hw, struct audsettings *as,
-         0x02, 0x00, 0x44, 0xac, 0x00, 0x00, 0x10, 0xb1, 0x02, 0x00, 0x04,
-         0x00, 0x10, 0x00, 0x64, 0x61, 0x74, 0x61, 0x00, 0x00, 0x00, 0x00
-     };
--    Audiodev *dev = drv_opaque;
-+    Audiodev *dev = hw->s->dev;
-     AudiodevWavOptions *wopts = &dev->u.wav;
-     struct audsettings wav_as = audiodev_to_audsettings(dev->u.wav.out);
-     const char *wav_path = wopts->path ?: "qemu.wav";
-@@ -200,17 +200,6 @@ static void wav_enable_out(HWVoiceOut *hw, bool enable)
+diff --git a/audio/noaudio.c b/audio/noaudio.c
+index fe649523e88..fd032ee6e09 100644
+--- a/audio/noaudio.c
++++ b/audio/noaudio.c
+@@ -119,16 +119,6 @@ static void no_enable_in(HWVoiceIn *hw, bool enable)
      }
  }
  
--static void *wav_audio_init(Audiodev *dev, Error **errp)
+-static void *no_audio_init(Audiodev *dev, Error **errp)
 -{
--    assert(dev->driver == AUDIODEV_DRIVER_WAV);
--    return dev;
+-    return &no_audio_init;
 -}
 -
--static void wav_audio_fini (void *opaque)
+-static void no_audio_fini (void *opaque)
 -{
--    ldebug ("wav_fini");
+-    (void) opaque;
 -}
 -
- static struct audio_pcm_ops wav_pcm_ops = {
-     .init_out = wav_init_out,
-     .fini_out = wav_fini_out,
-@@ -222,8 +211,6 @@ static struct audio_pcm_ops wav_pcm_ops = {
+ static struct audio_pcm_ops no_pcm_ops = {
+     .init_out = no_init_out,
+     .fini_out = no_fini_out,
+@@ -146,8 +136,6 @@ static struct audio_pcm_ops no_pcm_ops = {
  
- static struct audio_driver wav_audio_driver = {
-     .name           = "wav",
--    .init           = wav_audio_init,
--    .fini           = wav_audio_fini,
-     .pcm_ops        = &wav_pcm_ops,
-     .max_voices_out = 1,
-     .max_voices_in  = 0,
+ static struct audio_driver no_audio_driver = {
+     .name           = "none",
+-    .init           = no_audio_init,
+-    .fini           = no_audio_fini,
+     .pcm_ops        = &no_pcm_ops,
+     .max_voices_out = INT_MAX,
+     .max_voices_in  = INT_MAX,
 -- 
 2.52.0
 
