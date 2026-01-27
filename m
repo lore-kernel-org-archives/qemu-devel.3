@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439C8D2F038
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 14:27:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F37D2F03B
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 14:28:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkk2l-0006S7-S0; Tue, 27 Jan 2026 09:27:47 -0500
+	id 1vkk2X-0006CX-D9; Tue, 27 Jan 2026 09:27:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vkk2k-0006Mv-JX
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:27:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vkk2P-0006Af-Nm
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:27:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vkk2j-0003dC-12
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:27:46 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vkk2N-0003as-LE
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:27:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769524064;
+ s=mimecast20190719; t=1769524042;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ijMK7//j4F3l3eePMpDavIghEkHlTFmmAa9iX2aFYPU=;
- b=MDhOIu2IodrZXxqOOJOBRGK81k/NDJjtXxl/7OiAlWdj1IcZTqQLfnVKbSSz1hstLAm/13
- hBmvaTXq8V20E2lkpE0gsXr20MoZhQxUa9j3HZP59sQPVOjHn9V+DB23cQnlQXS/Ow8p4j
- rgY/f1+qsIjcoJTFDnoBGAuB+QtVeBY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=xd+J+kC6FF+J4mj4PN6QRazhOO2ZO0Utc1aEYak0KzA=;
+ b=XJ8kifZvkIf4zy8kHTQ20I332AOV2dC8bUFIgmY9jBaxx7MznD43d2AMdM+2IxWF2++pq+
+ jYN3qvxKfNBlcdCSjc8IfQ5Pxzps3OXvOybZBbbgWlMgNHwPergBmshE1TpNlQwQs/UNlD
+ EOmJuLxLePdKF2xCshu4EXvI1OqNsa0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-vu0IeHdOOV6okcGBwWqdCQ-1; Tue,
- 27 Jan 2026 09:27:37 -0500
-X-MC-Unique: vu0IeHdOOV6okcGBwWqdCQ-1
-X-Mimecast-MFC-AGG-ID: vu0IeHdOOV6okcGBwWqdCQ_1769524056
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-502-stAkxvQaOLWZFToyOTAkkQ-1; Tue,
+ 27 Jan 2026 09:27:20 -0500
+X-MC-Unique: stAkxvQaOLWZFToyOTAkkQ-1
+X-Mimecast-MFC-AGG-ID: stAkxvQaOLWZFToyOTAkkQ_1769524039
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE3D61800473; Tue, 27 Jan 2026 14:27:36 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EC1111956089; Tue, 27 Jan 2026 14:27:18 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.209])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 09479180066A; Tue, 27 Jan 2026 14:27:34 +0000 (UTC)
+ id 5883F180049F; Tue, 27 Jan 2026 14:27:17 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Aditya Gupta <adityag@linux.ibm.com>
-Subject: [PULL 9/9] tests/functional: Enforce sha256 as hashsum algorithm for
- all tests
-Date: Tue, 27 Jan 2026 15:27:10 +0100
-Message-ID: <20260127142710.131904-10-thuth@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [PULL 2/9] tests/functional/riscv64: Silence warnings from Pylint in
+ the boston test
+Date: Tue, 27 Jan 2026 15:27:03 +0100
+Message-ID: <20260127142710.131904-3-thuth@redhat.com>
 In-Reply-To: <20260127142710.131904-1-thuth@redhat.com>
 References: <20260127142710.131904-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,54 +87,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-The functional testing framework currently supports both, sha256
-and sha512 as hashsums for the assets. However, all but one test
-currently only use sha256, which should also be sufficient according
-to the current security standards. Having two algorithms around already
-caused some confusion (e.g. the clean_functional_cache.py script only
-supports sha256 right now), so standardize now on enforcing sha256
-before more tests use a mix of the two algorithms.
+Pylint complains:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+ tests/functional/riscv64/test_boston.py:1:0: C0114:
+  Missing module docstring (missing-module-docstring)
+ tests/functional/riscv64/test_boston.py:95:8: C0415:
+  Import outside toplevel (subprocess.run, subprocess.PIPE) (import-outside-toplevel)
+ tests/functional/riscv64/test_boston.py:112:17: W1510:
+  'subprocess.run' used without explicitly defining the value for 'check'. (subprocess-run-check)
+ tests/functional/riscv64/test_boston.py:95:8: W0611:
+  Unused PIPE imported from subprocess (unused-import)
+
+Rework the code a little bit to make the linter happy.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260121101957.82477-1-thuth@redhat.com>
+Message-ID: <20260116095615.269199-1-thuth@redhat.com>
 ---
- tests/functional/ppc64/test_fadump.py | 4 +---
- tests/functional/qemu_test/asset.py   | 4 +---
- 2 files changed, 2 insertions(+), 6 deletions(-)
+ tests/functional/riscv64/test_boston.py | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/tests/functional/ppc64/test_fadump.py b/tests/functional/ppc64/test_fadump.py
-index 2d6b8017e8f..bd9692f64c0 100755
---- a/tests/functional/ppc64/test_fadump.py
-+++ b/tests/functional/ppc64/test_fadump.py
-@@ -32,9 +32,7 @@ class QEMUFadump(LinuxKernelTest):
-     ASSET_VMLINUZ_KERNEL = Asset(
-         ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
-          'releases/39/Everything/ppc64le/os/ppc/ppc64/vmlinuz'),
--        ('81e5541d243b50c8f9568906c6918dda22239744d637bb9a7b22d23c3d661226'
--         '8d5302beb2ca5c06f93bdbc9736c414ef5120756c8bf496ff488ad07d116d67f')
--        )
-+         '6d77658130a7de1dd014ae14d7983c27f8ba1a61fa02e8d9064afdb8519e7e96')
+diff --git a/tests/functional/riscv64/test_boston.py b/tests/functional/riscv64/test_boston.py
+index 385de6a61df..2582df96f21 100755
+--- a/tests/functional/riscv64/test_boston.py
++++ b/tests/functional/riscv64/test_boston.py
+@@ -1,11 +1,14 @@
+ #!/usr/bin/env python3
+ #
+-# Boston board test for RISC-V P8700 processor by MIPS
+-#
+ # Copyright (c) 2025 MIPS
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ #
++"""
++Boston board test for RISC-V P8700 processor by MIPS
++"""
++
++from subprocess import run
  
-     ASSET_FEDORA_INITRD = Asset(
-         ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index bae40765ce4..45a2e01e2e6 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -57,10 +57,8 @@ def _check(self, cache_file):
-             return True
-         if len(self.hash) == 64:
-             hl = hashlib.sha256()
--        elif len(self.hash) == 128:
--            hl = hashlib.sha512()
-         else:
--            raise AssetError(self, "unknown hash type")
-+            raise AssetError(self, "unsupported hash type")
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import wait_for_console_pattern
+@@ -92,7 +95,6 @@ def test_boston_invalid_cpu_count(self):
+         """
+         Test that 65 CPUs is rejected as invalid (negative test case)
+         """
+-        from subprocess import run, PIPE
  
-         # Calculate the hash of the file:
-         with open(cache_file, 'rb') as file:
+         fw_payload_path = self.ASSET_FW_PAYLOAD.fetch()
+         rootfs_path = self.ASSET_ROOTFS.fetch()
+@@ -109,7 +111,8 @@ def test_boston_invalid_cpu_count(self):
+         ]
+ 
+         # Run QEMU and expect it to fail immediately.
+-        result = run(cmd, capture_output=True, text=True, timeout=5)
++        result = run(cmd, capture_output=True, text=True, timeout=5,
++                     check=False)
+ 
+         # Check that QEMU exited with error code 1
+         self.assertEqual(result.returncode, 1,
 -- 
 2.52.0
 
