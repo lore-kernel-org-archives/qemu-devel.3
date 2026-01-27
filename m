@@ -4,89 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E376BD2F000
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 11:44:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84964D2F004
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 11:50:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkhTI-0000sk-PX; Tue, 27 Jan 2026 06:43:00 -0500
+	id 1vkhah-0007u0-3T; Tue, 27 Jan 2026 06:50:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vkhTD-0000nG-Mt
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 06:42:55 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vkhTA-0003wg-R6
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 06:42:55 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4806bf03573so1151245e9.2
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 03:42:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769514168; x=1770118968; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dSnARtBEbX2liwc1Csqs0ObFVRiH7iXd+t4XThmrYOE=;
- b=jbn0Jq96J9se9a93Wt37NVImVhsqxBVs3z/zSAuWqEeKdi1f8NOap3QSJJ2tI8XUFT
- JNjekuLcG4pWqFeMvoEzJTDz0ZeApiO2JapCsIz0lnY62EcaYraw0nvRNqfXIvGhqPZh
- pQkDkvYHYJ8eieHLWF8Hu3W23hb9l2jFLCq6N2Ta/+G1kVGp7LmG9BKooppQ0ZRgEbmT
- gmKa1FuWvysT2ziaR+0dxPgM+LjOIjsotrjbJEXhPyhGXZJlGuddU/wHu2oUjSHB8zPs
- FTfrH344Zr0mXOyC3Mmph7SkK8ZeK0eC7OoNlAcl6R9N7h1Rzc7TkaHiXuwWsiQAiTOl
- 1wdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769514168; x=1770118968;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=dSnARtBEbX2liwc1Csqs0ObFVRiH7iXd+t4XThmrYOE=;
- b=p2ACSFdwGaOCZWB90WbPrtRcVx+8bfU5rZeIeo/gO903Bea7HNjFBrFBl3UGi4ZnF4
- tWPr3cZy/zqAMc3KmT5lZrugKx4TShlDpelrJ4MTZm16BIfBO4yA4yWvSTuYhr1J8KZS
- i8qgs/Vck5j58isIiI+7HmI+myLZBd5en3b2K/nORxijJfD1YoVZogU392MEsPJnzSYS
- xIFqHHDBCftjDSVwd+0NO6tFGBb8WL3E4/JT4VOK/MjtFbCa8YdgQ+PHVEfDbedaOgrc
- re5ixHSt1iP7yBXSYJIH0UGNMQ6mU9lA/RbuF5i2SYPQNMHTzjn1YKbgzEwmxenm95hW
- 2OrA==
-X-Gm-Message-State: AOJu0YxSmTsK3Z1YjakMHErQYHf8pfOp3L7R9+l//aUN2hUxerMEXkyT
- sTikpYPJqD9m2+Sn/ZsRsGtT/3pqVHuHOq50r9ek4lKFn+ThQWbmZ9toMZ6IyhkvMPM=
-X-Gm-Gg: AZuq6aKRoy7cI0Dm62eEAEh0mD5T0g88qhwVlJIWwkZC4ycJcSWmsaBGX4AVseOGluZ
- 5W+h5JxR5eMv271hMLBxXBhaTF5/tsU2/lWjAlIjJbuNQGps6A4VIOAnl47BS1t/NhB1rUfizHv
- Ic5NrZxwH+fq/qHlIvt+NCfW+vuMA782GbpmF58HnNd0fKIZYUUvk9CL6cJaWx6LdXO+zk5pXXM
- X5GKwJjvcqACT9LUVt2g1TiG5hO+phFMNLe54gBEE4QGAx+V5QLFxDW+Yt92lp75iW6RPUXofH6
- 13KCnnO0XtDfJFwRJVuSB/39Sf3BGsJkz8Vjh8jBoyx7f83BMhkH/bPqqexs3SMEPymQ5tD/STT
- xSzXBhenvZSRFzpb5IZoauS39din2JiAvndrlLj1cyJdJgMO/V8MxcttoNQkS+Xm9NG+rQ6Nd5T
- AvyyKw+wUDufg=
-X-Received: by 2002:a05:600c:524c:b0:477:b0b9:312a with SMTP id
- 5b1f17b1804b1-48069c2c45amr21202565e9.7.1769514167579; 
- Tue, 27 Jan 2026 03:42:47 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48066bfb58esm57236305e9.8.2026.01.27.03.42.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jan 2026 03:42:45 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 259065F93C;
- Tue, 27 Jan 2026 11:42:41 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Warner Losh <imp@bsdimp.com>
-Subject: [PULL 8/9] MAINTAINERS: be realistic about *-user
-Date: Tue, 27 Jan 2026 11:42:38 +0000
-Message-ID: <20260127114240.3009791-9-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260127114240.3009791-1-alex.bennee@linaro.org>
-References: <20260127114240.3009791-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vkhae-0007sL-I5; Tue, 27 Jan 2026 06:50:36 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vkhac-0004vR-7r; Tue, 27 Jan 2026 06:50:36 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E3EB0596A10;
+ Tue, 27 Jan 2026 12:50:31 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id Zqj9Z7RsK-of; Tue, 27 Jan 2026 12:50:29 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id D73045969F3; Tue, 27 Jan 2026 12:50:29 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D1DE95969F0;
+ Tue, 27 Jan 2026 12:50:29 +0100 (CET)
+Date: Tue, 27 Jan 2026 12:50:29 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Chad Jablonski <chad@jablonski.xyz>
+cc: qemu-devel@nongnu.org, qemu-devel-bounces+chad=jablonski.xyz@nongnu.org
+Subject: Re: [PATCH v5 06/12] ati-vga: Create setup_2d_blt_dst helper
+In-Reply-To: <DFZ07VSHIHN3.DQF2CGTUHQSM@jablonski.xyz>
+Message-ID: <515b3e0b-f46d-43fb-76db-53347cf22088@eik.bme.hu>
+References: <20260116024258.1487173-1-chad@jablonski.xyz>
+ <20260116024258.1487173-7-chad@jablonski.xyz>
+ <e81ba5b9-acbe-5fb7-6fc0-c31e3c3dd601@eik.bme.hu>
+ <DFYMJNMCJGVU.1VNVU1PXZZWQR@jablonski.xyz>
+ <0b2a14f1-d274-21b4-d5c5-4671ace85b2d@eik.bme.hu>
+ <DFZ07VSHIHN3.DQF2CGTUHQSM@jablonski.xyz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,74 +67,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Looking at the merges for the last year:
+On Mon, 26 Jan 2026, Chad Jablonski wrote:
+>> I don't feel strongly about it but I though it might be simpler to reuse
+>> the same type instead of adding a new struct for everything. I wonder if
+>> something like
+>>
+>> typedef {
+>>      QemuRect rect;
+>>      int bpp;
+>>      int stride;
+>>      uint8_t *bits;
+>> } ATIBltRect;
+>>
+>> ati_2d_do_blt(ATIBltRect src, ATIBltRect dst, bool top_to_bottom, bool left_to_right)
+>>
+>> or similar could work (even if you don't use src.rect.width/height) and be
+>> simpler or if you still have ATIVGAState as parameter to ati_2d_do_blt
+>> then you don't even need to pass the bools as those could be get from the
+>> device state which should not change during host data blits (or if they do
+>> real hardware may also change what it does).
+>>
+>> Or maybe ati_2d_do_blt really only needs a copy of the relevant registers
+>> (e.g. from dst_offset to dp_write_mask copied to an ATI2DCtx or similar
+>> struct) and work from that instead of ATIVGAState directly so the host
+>> data route can pass it's own copy with modified register contents and can
+>> update these without affecting the registers.
+>>
+>> But if this does not make sense to you and you think having separate
+>> structs are clearer I'm OK with that too, these could be modified later as
+>> well. I think I'll wait for the next version before going into the details
+>> of the end of the series as I don't expect to need any more major rewrite
+>> so it will probably already be close to be good enough and only need maybe
+>> one more revision but this next version may change some these patches so
+>> the next version may look a bit different from the current version.
+>>
+>
+> I see. That makes a lot of sense. And now that you mention the potential
+> ATI2DCtx solution I do like that it removes direct dependency on the registers
+> inside of the blit function. I wonder if we could go a step even further and
+> store the actual derived values in the struct instead of a copy of raw register
+> values. Something like:
+>
+> typedef struct {
+>  /* src */
+>  uint8_t *src_bits;
+>  int src_x, src_y;
+>  int src_stride;
+>
+>  /* dst */
+>  uint8_t *dst_bits;
+>  QemuRect dst_rect;
+>  int dst_stride;
+>  int bpp;
+>
+>  QemuRect scissor;
+>  uint32_t rop3;
+>  bool left_to_right;
+>  bool top_to_bottom;
+>  uint32_t frgd_clr;
+>  uint32_t bkgd_clr;
+> } ATI2DCtx;
 
-  $ git shortlog --merges --since "last year" *-user/ accel/tcg/user-exec* hw/core/cpu-user.c include/user/ scripts/qemu-binfmt-conf.sh scripts/update-syscalltbl.sh scripts/update-mips-syscall-args.sh tests/functional/arm/test_bflt.py tests/vm/*bsd
+That would work. For consistency I'd rather either go with dst_x dst_y 
+dst_w, etc. and likewise for scissor (which could be abbreviated sc) or 
+also use QemuRect src even if w and h are never used just so all usage 
+will be uniform and you don't have to remember why src is special.
 
-  Richard Henderson (4):
-        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
-        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
-        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
-        Merge tag 'pull-tcg-20251019' of https://gitlab.com/rth7680/qemu into staging
+> We would still need to pass VGACommonState in to access a few things (vram and
+> the palette) and use_pixman but we wouldn't need the full device at that point.
+> So the function signature would look like:
+>
+> static void ati_2d_do_blt(VGACommonState *vga, ATI2DCtx *ctx, bool use_pixman)
 
-  Stefan Hajnoczi (12):
-        Merge tag 'linux-user-fix-gupnp-pull-request' of https://github.com/hdeller/qemu-hppa into staging
-        Merge tag 'pull-10.0-testing-and-gdstub-updates-100225-1' of https://gitlab.com/stsquad/qemu into staging
-        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
-        Merge tag 'pull-loongarch-20250424' of https://github.com/gaosong715/qemu into staging
-        Merge tag 'pull-misc-2025-04-24' of https://repo.or.cz/qemu/armbru into staging
-        Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging
-        Merge tag 'hppa-fpe-fixup-pull-request' of https://github.com/hdeller/qemu-hppa into staging
-        Merge tag 'pull-target-arm-20250704' of https://gitlab.com/pm215/qemu into staging
-        Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging
-        Merge tag 'pull-10.1-rc0-maintainer-140725-1' of https://gitlab.com/stsquad/qemu into staging
-        Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging
-        Merge tag 'accel-20250715' of https://github.com/philmd/qemu into staging
+The use_pixman may need to be an int and mirror the x-pixman property and 
+used like the property now so we can control different operations 
+separately instead of just on or off for all.
 
-None of the pull requests have come through the maintainers and while
-there are a fair number of commits overall they have been mostly bug
-fixes, re-factoring clean-ups and the occasional new syscall/ioctl
-handling.
+> A blt ctx setup function could then fill this struct in the most common case (memory)
+> and the host_data flush could easily modify it without needing any of the register access
+> details.
+>
+> One downside of course is that if we discover we need to mutate registers
+> during the blit we will need to rethink this a bit. But so far it isn't looking
+> like that is necessary.
 
-We should reflect the current status so users don't have unrealistic
-expectations of how quickly things can get reviewed and merged.
+Maybe if any changes to regs are needed those can be done in whatever 
+calls ati_2d_do_blt so hopefully this won't be a problem. But we may need 
+to add more values to ctx in the future but that should be OK.
 
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Message-ID: <20260123145750.1200879-9-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 97d887a5c19..7d346cda1ff 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4017,7 +4017,7 @@ Usermode Emulation
- ------------------
- Overall usermode emulation
- M: Riku Voipio <riku.voipio@iki.fi>
--S: Maintained
-+S: Odd Fixes
- F: accel/tcg/user-exec*.c
- F: hw/core/cpu-user.c
- F: include/user/
-@@ -4026,7 +4026,7 @@ F: common-user/
- BSD user
- M: Warner Losh <imp@bsdimp.com>
- R: Kyle Evans <kevans@freebsd.org>
--S: Maintained
-+S: Odd Fixes
- F: bsd-user/
- F: configs/targets/*-bsd-user.mak
- F: tests/vm/*bsd
-@@ -4035,7 +4035,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-user bsd-user-rebase-3.1
- Linux user
- M: Laurent Vivier <laurent@vivier.eu>
- R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
--S: Maintained
-+S: Odd Fixes
- F: linux-user/
- F: configs/targets/*linux-user.mak
- F: scripts/qemu-binfmt-conf.sh
--- 
-2.47.3
-
+Regards,
+BALATON Zoltan
 
