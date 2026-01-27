@@ -4,126 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA97D2FEC0
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 17:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AA04D2FEC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 17:20:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkmdm-0000VU-TA; Tue, 27 Jan 2026 12:14:10 -0500
+	id 1vkmjS-0003uU-QT; Tue, 27 Jan 2026 12:20:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vkmdl-0000QA-DW
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 12:14:09 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vkmdk-0005Uf-2S
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 12:14:09 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-81f4f4d4822so3002513b3a.3
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 09:14:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769534046; x=1770138846; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uU4FuzG151MI6xDCEqqh/8dTyRsq2DxxnaRpBTO3dvI=;
- b=HwODrP44JDQhZeizn2OvFLFDRNbCahEw67ya+7ekK6Ttlkbv1w4vsJaESFaYlzC2Es
- cpBBEQJYqg2q6/IsP84bTrtXkOoc3ARJLprQrqbTDDLYlcEyuKJfnk6M7tPpFKcUeNiT
- SjEqKbVTA7cEj9EVb8EgjzD9XKpDhEVGRF8BVDXsLmLc73unranItUYKgZs7ZHr0lrDD
- dUX13ZSLcq4eMBv3WIeg+Kq3Em8Zn4x3EgJtVcVedJ4cn/PDEHA/ys6SfTmx9UwqKvWh
- obNNbyrB4L5ZdF/AQLnwzF/rlBHCrVvNJAmRH0z22iSh37m1tCIUgRKd25T8FALXQfNQ
- iEXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769534046; x=1770138846;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uU4FuzG151MI6xDCEqqh/8dTyRsq2DxxnaRpBTO3dvI=;
- b=KtQ1spKmF5EouoAMfR9doaq1V3lOS0J6l+pYGDuAS2H7oqszVf5JobBw6A8V+7+sWB
- 4tY8+A7ps6GRkLdIBQtViV+Vm4BMCE2Hs5Zb38zdVn6agnG5LoomA6NToXFf/6T4iYpF
- KJP55RcV+tXmyUBw40QToGqGAMXKgPeT03wZE0+IUQe+ofRJGExIgKCFLe2+e//aSyXa
- yWF+bV06Hbe1DwhdtGes5tHvNghs+fcNZeJ3UGVnVdVil5UwrjqPjIsu/jked40C1flD
- uN+HGeDdJlAbsm8XANA8UdOgy0UH9aq2Bfq8xlbSIBdTQV2qmvBrgkz3qZmcBLk2r/Ck
- I+lw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUwYCgbLk2ZZkoUo2BGrwL+IRftj3GTPr04ljip1SBuwHiI3K8uUCLkUwyblXEpTh/jER5z3aRyOuPk@nongnu.org
-X-Gm-Message-State: AOJu0YygurbiItD0pGNdH07tQrNvd3kPbLFDqmaLhdiJ4SSDXol1t7iN
- GgBB/JpBSzgg1FHe2ubXoMbayq3b9iBJLuJkkYC0+/9e+d8L3LHuEKc9kbZcn9WdBZM=
-X-Gm-Gg: AZuq6aIGmMRV6GK7iabyA6IJ9Io97jPCMyv3KKyTUZ6TXPJuIMV5isWOwrqNiJ1gNwL
- ugCN9RY+Klr0N+4lKsyiNnjCmMEytTIUjmtuAJIOTTrNPMdGgotorgeCfjSKWtSXLbqrVH/nbeu
- 0zPPbgUWqMdCSXQcBgR0RPBYmbnAmxcXxMXWHF5lLo/hJzVqB6Pg+VQDTI3vk6UUvHEtEy5a6de
- p6idoMUEqnwysogJZSGZ84C74ld+pvTRh4S4UiU7AxCFA2oTPJ+X5LxqA/r8lSgovWHrmqyW11A
- UEp4XijV28uv7yN2WBiYp48SREpvJegfMtNTYAONqUE4d7E7iG7IldCTWXf+w2uHBHDXFJ4Bfir
- 9nNZslo5mVjSVMWb3PnnQOaJ1BFJ3+dzCqje7FCDoRC0NXkufz/AGOE7sx8FYwqdwmth3r2txpu
- GZVkotFSXbJNXuL24+wY1A7iwruyU9IXt6eXOR/EvkhUl4A6LaarwX/3PNDWSnWpm11j4=
-X-Received: by 2002:a05:6a00:14c7:b0:81c:96b7:7fb6 with SMTP id
- d2e1a72fcca58-823692b2d94mr2177339b3a.35.1769534046504; 
- Tue, 27 Jan 2026 09:14:06 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379b6a5desm117516b3a.28.2026.01.27.09.14.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Jan 2026 09:14:06 -0800 (PST)
-Message-ID: <ca020f48-111c-422c-ac1f-6e81d425e138@linaro.org>
-Date: Tue, 27 Jan 2026 09:14:05 -0800
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vkmiz-0003oL-2P
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 12:19:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vkmiw-0006Uc-Co
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 12:19:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769534369;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=j4FcsCOzt9Go6iDGSGzfYJgnVOU/yOn7qx1h1JsfNZw=;
+ b=Y5yUwemKCcEu9CI/v1SVCFUUHTGgzX0a/ZGEQuAxvXGhG/bzXX8a+7Q2ixK+EzeK9Dpzkw
+ WBCzqlG9cASVyvr6q9z/U+prqueToz0OfjRE9p27gh5VuwnHjD9+bgkwMh6HO07V9vlHyG
+ u8oM0saZZwVE61acwrL1HujjA2+L07A=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-Q9x-8gf7NLqdeqsiJH7MsQ-1; Tue,
+ 27 Jan 2026 12:19:25 -0500
+X-MC-Unique: Q9x-8gf7NLqdeqsiJH7MsQ-1
+X-Mimecast-MFC-AGG-ID: Q9x-8gf7NLqdeqsiJH7MsQ_1769534364
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1F38B19775A3; Tue, 27 Jan 2026 17:19:24 +0000 (UTC)
+Received: from localhost (pixel-6a.str.redhat.com [10.33.192.205])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B473D195419A; Tue, 27 Jan 2026 17:19:22 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, gshan@redhat.com, ddutile@redhat.com,
+ peterx@redhat.com, philmd@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH v6 08/11] hw/arm/virt: Declare AArch32 DBGDTRTX as safe
+ to ignore in incoming stream
+In-Reply-To: <20260126165445.3033335-9-eric.auger@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20260126165445.3033335-1-eric.auger@redhat.com>
+ <20260126165445.3033335-9-eric.auger@redhat.com>
+User-Agent: Notmuch/0.39 (https://notmuchmail.org)
+Date: Tue, 27 Jan 2026 18:19:20 +0100
+Message-ID: <87wm13rn1j.fsf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] MAINTAINERS: add emulation.rst to ARM TCG CPUs
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-References: <20260127145928.3073826-1-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260127145928.3073826-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,15 +91,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/27/26 6:59 AM, Alex Bennée wrote:
-> This is updated as Arm architectural features are added so we should
-> catch changes to the docs as well.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
-> 
+On Mon, Jan 26 2026, Eric Auger <eric.auger@redhat.com> wrote:
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> With the new infrastructure in place it is now feasible to teach
+> qemu that it is safe to ignore a sysreg in the incoming migration
+> stream. So with the plan to revert commit 4f2b82f60431 ("target/arm:
+> Reinstate bogus AArch32 DBGDTRTX register for migration compat") from
+> qemu 11.0 onwards, let's add a compat in 10.2 machine options stating
+> that this reg is safe to ignore. from 11.0 onwards we will not need
+> that register anymore.
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>
+> ---
+>
+> v4 -> v5:
+> - rebased on top of latest machine types (Connie)
+>
+> v3 -> v4:
+> - add a comment related to DBGDTRTX (Connie)
+> ---
+>  hw/arm/virt.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index baa4e31aac1..03d5af18f26 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -100,6 +100,15 @@ static GlobalProperty arm_virt_compat_defaults[] = {
+>  static const size_t arm_virt_compat_defaults_len =
+>      G_N_ELEMENTS(arm_virt_compat_defaults);
+>  
+> +/* Register erronously exposed on 10.2 and earlier */
+> +#define DBGDTRTX 0x40200000200e0298
+> +
+> +static GlobalProperty arm_virt_compat_10_2[] = {
+> +    { TYPE_ARM_CPU, "x-mig-safe-missing-regs", stringify(DBGDTRTX)},
+> +};
+> +static const size_t arm_virt_compat_10_2_len =
+> +    G_N_ELEMENTS(arm_virt_compat_10_2);
+> +
+
+Not objecting, but we had a discussion recently regarding where compat
+values for arm cpus should live:
+https://lore.kernel.org/qemu-devel/20260120122108.131708-1-thuth@redhat.com/ ff.
+
+Could this become relevant for future other versioned machine types? I'd
+assume that they just would skip the bogus reg from the start, though.
+
+>  /*
+>   * This cannot be called from the virt_machine_class_init() because
+>   * TYPE_VIRT_MACHINE is abstract and mc->compat_props g_ptr_array_new()
+> @@ -3552,6 +3561,7 @@ static void virt_machine_10_2_options(MachineClass *mc)
+>  {
+>      virt_machine_11_0_options(mc);
+>      compat_props_add(mc->compat_props, hw_compat_10_2, hw_compat_10_2_len);
+> +    compat_props_add(mc->compat_props, arm_virt_compat_10_2, arm_virt_compat_10_2_len);
+>  }
+>  DEFINE_VIRT_MACHINE(10, 2)
+>  
+
 
