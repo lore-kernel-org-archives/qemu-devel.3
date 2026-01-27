@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B28D2F03E
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 14:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6383C88E41
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 15:00:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkkUD-0004YQ-0D; Tue, 27 Jan 2026 09:56:09 -0500
+	id 1vkkXf-0000oj-Jr; Tue, 27 Jan 2026 09:59:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vkkUB-0004Qo-1y
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:56:07 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1vkkXb-0000lu-5h
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:59:39 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vkkU7-0000v8-9g
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:56:06 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-4359a302794so3635553f8f.1
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 06:56:02 -0800 (PST)
+ id 1vkkXZ-0001kJ-OC
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 09:59:38 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48068127f00so6772485e9.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 06:59:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769525761; x=1770130561; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769525976; x=1770130776; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=yh8dbk8eN6lKAOTOaFVpUQyeavGmim79o3pvdOsCFfQ=;
- b=o/5TDyA01iCerKC11LDQMhiTuuAUOx14XJmJIdLhhBg1rMaoDvVCia0yVN/XLn4f+O
- sBqB828j6IlrKXV6caafCqRBPs2N9JxOpFwZkoPnMVd1g2PUR69+X0YA7XHERZ/Ex95t
- d6iM0cp27LfUdOlc+q6gYJcp10Nzhei0GGUxFiGEBvSPLFS1X9L1smVJ5Vk0F5TZmapb
- N5/7b7BV08JX9YhEaJ4JvAHbgwoM6GbtS6UsUlMuTqKf8nj9bETwArqA3pdwEQCXdFLx
- TSJZYqbcH6iRp4Sftl8yaqquTioJ8LbD9D8THCztmwTjylJmsEOvsRAzBwoUR7JRLQFR
- VCIQ==
+ bh=/AJa7mtnRy3yuybFAunlrxI/q1EMn1+CgkHnlOAuLTU=;
+ b=cgSbIbMNyJAqc26DXdxHjAgVcWctBlVzTyEJq5Q9KHDyZMXNZ61feYtyjE7Gy6jKLw
+ 4VOwbwOou2InsMkDnVg5maz1USJZhLOnJRqqNCoGpU6UEagG3CnneMLBtTFkixNayBzW
+ FKLzrT+UeJteVQ9cStEz5SED7f9C4ZtW2NHmPa8ECFTUFF9wYrm2wyGFd5B9NkUGxyav
+ xgpjw0QHJ9sp8jT4aaSFfOJovzBuhYa0rDqLVYj8b8PsTr+lVHcFrZ0WVgbb+9wHh+oY
+ ns1hggByxVN+3KjQQThzPBsOBiDAddNNNFd7qAl2wKmyM/N0pxJvPavOnQJecPRj0rBX
+ KeKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769525761; x=1770130561;
+ d=1e100.net; s=20230601; t=1769525976; x=1770130776;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yh8dbk8eN6lKAOTOaFVpUQyeavGmim79o3pvdOsCFfQ=;
- b=LFrkde/vo/kkspzECm3TPjLnnkVBBdxbItCoapcH8HYIPgVSdh2wYPUwgletG9oyV+
- TWOCfkzCXT3kbFw7TMNi5NOrjnZPRrM0/Mb0kFHNhZx/oNacNXmvZ4HhTRheK3oVac5G
- uojAUw1uDlQpDqyE1TdheClVXAbzdAOfzBaO31M0LTc7O4BagDZHS7KWKH+JQqyyfJl6
- mN/+zsZx4zIFWJasmdJ5YeNs+ZlPZOuOa8QfPmkZjoX0hvsx7kfft9S/AoM6PdhiodWT
- 07Ux5PJTVx4Vj1PUT1saNEKmgK+AlNU5Q6VCuJh+cTG6K1fICVguKFkRaX/JSLKvvJZ5
- 9mcA==
-X-Gm-Message-State: AOJu0YzwJPPk5Ynx5ovT8H/AN+rKrE6y/s3KdHgaYNHBWZh0GOwgPYon
- xPEQBYOqjJ+NMQuK+wXQHNfiB8GwCv5rzA1HZR4oYSZLY8oi9mC2sbKK4kxoa6byAVE=
-X-Gm-Gg: AZuq6aKMEvUxaXGzVwyeOM8AkTKdSolNQp7g9WJSgYSWIDSYR4Uc7xSJxUocnaSlFLe
- JhdrKdOoa3BfNuccSrdOyKIiTEWdFFEONRohvfWAIK/yMe0K0HOrJYmZz5b/tDStodesEpNdZzv
- kLzqoCNGfewspeT81JnsNExwgSC9ZgAvp3zYNrp2z/cM/ec2d9p5HJyl8nYPP0P2vy+aS34wqTY
- BXuFWzhIPMX5q0RO/dL7SM2QHpMhGoj6dAhy+7UVmKS4fY2a5Nnd8bzMnMG+Akf/2xMIJnJIneR
- H7Dt/bvkO3roqLe9rf0RtyJ9ymSTPQ0HNqpuqIRl8C3fOqB6FJsLs2KjvY2OTpjrsE8hHHuXCdj
- DHF9idyoAClOVYeOk+JL33+XrcZnEjm4XeCYERlnfuUi1+CCLX1PMMbOEmqSidpjkHAvZkr7Iy3
- Xay+Lys0nwe4Y=
-X-Received: by 2002:a05:6000:2088:b0:432:4c01:db00 with SMTP id
- ffacd0b85a97d-435dd06f676mr3083067f8f.27.1769525760753; 
- Tue, 27 Jan 2026 06:56:00 -0800 (PST)
+ bh=/AJa7mtnRy3yuybFAunlrxI/q1EMn1+CgkHnlOAuLTU=;
+ b=FEIJbqK9XQrzMS0lgR36zpAZrQbnjNMQhZ5H39W+MCY79Z516e+NCbJMhKqDZsBaAS
+ Sa+97+SlxwcDME1+eV4SE3DHE+A9uELA+v5XYUYoa/96vZ0YMSzmNGHgeqzKeNMPl9Qn
+ FnDfsc2YbeBzjiPQJuAkGSmJqwct3VgBOwKvhaZxo24gBb/YMz7RTGZI4OsYgU2j1WbK
+ rOk1JEZp5iuhStbmpvir/kKdW4CbbEle0Cw8TJs6G56Ib80/ccmGpRKGu9Qr0JJGgzjC
+ Vk8TgLoQtG22VWmcX8SDqYJIUj6L65xtMAPB6FpodyQXJTDgslwSGTVjzwb8Wu/y7zha
+ exZA==
+X-Gm-Message-State: AOJu0YwS44x/1085K8zv77Z7u8h6MNOKQtt/bXEO7oFGDz+o4L+LBa4b
+ 5kAKaRmjj41IJmsofUuq7sIdiKN+jxBOZyszWlZFzCwGGP8n/2czTzEIbhKvbrRZ3FlZBSB3FJ9
+ KwLil8fE=
+X-Gm-Gg: AZuq6aKmvO8cI+TPFcGrS2SJS96W6UF2j58T6NA1fSC/MH2KUku/+ZkoEk7lrzvsPQ4
+ oHPUAUlHI5ZlelDDlG8PonRQ33glqbevSICEJCR/555U6iJ9kvf/TnQ6jlJRQcuoT+szvC3Yv5b
+ w4zBPBkaCGrJ/LG2TGQsm8jj+YcwbZvUFa44DV3SbxF2cIcocM01eAdybW/ZjBPrZZ/99+nZz8P
+ y4OQM0VBOftdWzalUonunbmv+i7YXwd/ycfWCghNQOxxDUCT57gKyJNYnnACJ/SprJ8GdO7V6/i
+ bJQotuLtyDHXxNvsSd0ndQP8KPgoD1kAlrYZMWnV806TnW1srnbal2lHUWL/ab901QbL5kVAOjB
+ zNAkx6pXJXDTmhjTtAOE2vFwyIkCsWW1YaGb0XBma467aLnBioteDypl+yFVHJdnG/CSsImIOzL
+ iw186kqOWG3Ag=
+X-Received: by 2002:a05:600c:450b:b0:480:69b6:dfee with SMTP id
+ 5b1f17b1804b1-48069c21069mr26492365e9.15.1769525975972; 
+ Tue, 27 Jan 2026 06:59:35 -0800 (PST)
 Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435b1f744e2sm40806710f8f.31.2026.01.27.06.55.59
+ 5b1f17b1804b1-48066c10dbasm68796705e9.15.2026.01.27.06.59.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jan 2026 06:56:00 -0800 (PST)
+ Tue, 27 Jan 2026 06:59:35 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3D6D15F7DC;
- Tue, 27 Jan 2026 14:55:59 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 7068F5F7DC;
+ Tue, 27 Jan 2026 14:59:34 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2] docs/system: update FEAT_BBML[12] references
-Date: Tue, 27 Jan 2026 14:55:55 +0000
-Message-ID: <20260127145555.3070590-1-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [RFC PATCH] MAINTAINERS: add emulation.rst to ARM TCG CPUs
+Date: Tue, 27 Jan 2026 14:59:28 +0000
+Message-ID: <20260127145928.3073826-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,33 +101,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It looks like the features were renamed to include the levels at some
-point. To make it easier to match features up to the Arm ARM update to
-use the full name.
+This is updated as Arm architectural features are added so we should
+catch changes to the docs as well.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v2
-  - move level 1/2 into the () section
----
- docs/system/arm/emulation.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 3f30ea5a30e..e0d5f9886e1 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -26,7 +26,8 @@ the following architecture extensions:
- - FEAT_ASID16 (16 bit ASID)
- - FEAT_ASID2 (Concurrent use of two ASIDs)
- - FEAT_ATS1A (Address Translation operations that ignore stage 1 permissions)
--- FEAT_BBM at level 2 (Translation table break-before-make levels)
-+- FEAT_BBML1 (Translation table break-before-make level 1)
-+- FEAT_BBML2 (Translation table break-before-make level 2)
- - FEAT_BF16 (AArch64 BFloat16 instructions)
- - FEAT_BTI (Branch Target Identification)
- - FEAT_CCIDX (Extended cache index)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index dccdf478886..9b7ed4fccb1 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -213,6 +213,7 @@ F: hw/cpu/a*mpcore.c
+ F: include/hw/cpu/a*mpcore.h
+ F: docs/system/target-arm.rst
+ F: docs/system/arm/cpu-features.rst
++F: docs/system/arm/emulation.rst
+ F: gdb-xml/arm*.xml
+ F: gdb-xml/aarch64*.xml
+ 
 -- 
 2.47.3
 
