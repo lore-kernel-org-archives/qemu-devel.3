@@ -4,99 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E34DAD2FECD
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF72ED2FED4
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknbT-0005xv-0l; Tue, 27 Jan 2026 13:15:51 -0500
+	id 1vkne0-0006yi-MC; Tue, 27 Jan 2026 13:18:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vknbQ-0005xD-Hb
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:15:49 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1vkndy-0006yA-W3
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:18:27 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vknbO-0000U4-8n
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:15:48 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47fedb7c68dso61452105e9.2
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 10:15:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1vkndx-0000ss-2O
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:18:26 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b8860d6251bso641646566b.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 10:18:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769537903; cv=none;
+ d=google.com; s=arc-20240605;
+ b=MqQpaik4pHgTsA7OZXfvwy4sxzq/gAdOclk7vWwR2gEIAHd/JureCBD3tVpEoNQTqt
+ baKYtgYunpenQ6xRWR/iIQBJ6jSXVHS3cT+qat3zsE4HspXpUq9lSvLGfTESb2PiTeYU
+ PYu2AxUX556b9/o45PmcTnJNpUY/K8f+zr4y7cLqHLNxKpTIxitcWHyYQTDJ8vkCbVRH
+ gzLTucSWs+/e2zULBG7Nmdow4w5Zv6E49YfmnggtfxtlU2WxyvGsUqOJGzGdUgkHAlxh
+ esb60b/ScKfvt1phk4jCafH8Kf0uWALpyrWogCe71D+pMI7y/ayBwzGvGHmUPTj74Le3
+ LHbw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Y4TAlzdd7rvwsch6CulBm7lpt7hAKOxigoaihNeKqsI=;
+ fh=TqaWCibbDOf8M7FTsU5N1aPLjuWfvrMpXV9es2Ps8JI=;
+ b=L1RoJ/8tq2TR6nIbKMSlrOpvJYU9lHz4HbpvJ9bJQUaXVedVYp/Os3ARvE9VyCnc8w
+ vo1k1j/I8/ovSUHGNk0JBq9lawa75hkGj/vIuI40pgeP5K0RzSzurB+GW/JK+bSNGkyP
+ Iz9oS0vadBeR0GI3eJ6C9haMNg+v91qBigc/IKVO6BYDLuxi+QqASXuQD9ZSaXqyN9qZ
+ 8rW2VMkuYdzj5Se47aFNCdgf2WINc8OEhezrd2onQWpRVEVow+2Y08HAvq+W2jy4JqgC
+ N5Jnp5JMsa32JZomuhD11fTGc1cDYA0kCN4GVrOq4amL4G/wYUTaRhAj5PqjUzL3GToQ
+ 19hA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769537743; x=1770142543; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1769537903; x=1770142703; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PUqZ/DspZmmcEA3lwG/AtmN9Ylol1i8j/acLwdsXAj4=;
- b=gNs+ax0BXOIruVDmQ78Z5hEbvpuA7fZy32/t57p9BfkkfA6bbUUbBm8us/TRgVKyFy
- nUwIjY4oPeNKm9o18BIXL178AtplWb25rKCNyOHGmNUrVCM64K24v/uBa7PPemiftS4D
- QkGzfOyapDiC3+mUbLEeKaKEASf1HCfm/uBMhW08yM3/yckcfW35IFBco9+K5npSAHww
- SsAf/JWi9N6kgHbaGcdX60AteNJqPeQrou9hAYl3FResrXCn34LRWLIfOvh8poC28q8F
- Ro47GDqZIBwAP6QbENKekiyUhn663mRQ5DpY29PauWiWJ6Jnqp/96w2sv5dB3dexb8Wz
- 4uyw==
+ bh=Y4TAlzdd7rvwsch6CulBm7lpt7hAKOxigoaihNeKqsI=;
+ b=E+EHQBcyciUHxS37TXV4zz/YGzuwB0NbLhcw1LcDtmSPGgxYFPsHOpbBpXO/iAruK1
+ D2ekKicQJcq69GcIE8SreEvF3EH0QcTbLgcGPYkbu4F7qxPKZdqDAcbL/LejhOQEt92I
+ iRl/FLJGshAa6iZ3TkJLYQprnnWVKGp+eY0Phop/Btj6CxXL4MvITi3MJX8NddMop1hk
+ IRVXcuaz6O8ycb9LQ9AmNvK+y4zxhlO1PIP9tOGXb3hnrw6q5SNj92wopFrGFsvwEwjf
+ Dp6mBThHBgNdFDLzkysjzXg+RFZGTonVFgIPD1ZKuc862h7IHbKoZZQXAJ3Rm+GdHFmd
+ JtEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769537743; x=1770142543;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PUqZ/DspZmmcEA3lwG/AtmN9Ylol1i8j/acLwdsXAj4=;
- b=gcBsgiwLHd0TUg2nuqcfpqqPbte9e+nAkRaw0K7O79AAustQzN2AZwHZHiQeNd2wKv
- yXwZNQp7T4f3i9sWPTOaBgSRGyiXV1daqCu6xY9COmE6erkiAsg6KX2lZpTyd+8k4erG
- LrvJtIl44azyB7emtQ/YDIrp8rWMWAEpWbokpLZgIAeHaM5jU36DNNtlb7YGbOiRCAE0
- 9T6am46UkYgB/XMaJKawMWD1FzepXLgCWALsZzgYfCgbtGCTHJSIxdJ1pa3eGHq1dBJm
- ZxcBGNsoE/xd0hmwqcQzb8/nL5kM3yvkSKl/6ccAf3N92Ps1zRtnUY01+VJaXtoGVJS2
- /jzg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUE5eZNpFe1tcA9tQWgB8hMcmXAs8aEqzhpRBuBqQVfnAuBjt+NCrX3NJp2hCbCVF8LAd7uKb/JyYlU@nongnu.org
-X-Gm-Message-State: AOJu0Ywj0qb1Kquujfesy6PSIxWFP0S9WGWeIi54i+/3wdliMBDzhaFE
- rfS7f7RMsgSfyYRvpGME52lIyPGvhfy6Dwldv/Bq9I5MjTQFpLcxBbXwYC4PjyNuvsc=
-X-Gm-Gg: AZuq6aKqs7zeTfSy5CEsU9enesRwPWaHW49K1A45zLHNj4yZctyOgqdqDEyAiLCKBh+
- HdsVCN29TqOTsJQTpsRl54FXl8BZfLJiZQN9cBgmT3C1iHL8gthAltuI7fU1guh/FTYXvnXcsqS
- cuIkzFuTldFHbLPfF85Xo3J5DaUxMxgi9bvN5ofFepQUzY1sNER7nDuHXGD7uH805gktTmma4Am
- JP0IWeH+ovK2tdY2vy8/BUwVmFMpNFgZm85kJC9GKt2ayLPPApZGzFBPkxH/RPQne5awaE2BtUO
- /xi8+pB9I03Swf7ZTxc7LKzExskchn3zsj365tmOA7OzrNtWyl5K1aATRYX7dCYczy4uRMCJ30K
- aMEXnRicUM+HieJNV2rfgEMfWFkxfeFAauvvmLZFTJiEVrQFE79HN33oMIl1n84R3bfXPgVRQOE
- JbhYXXfCmlDmo=
-X-Received: by 2002:a05:600c:154e:b0:477:9a28:b09a with SMTP id
- 5b1f17b1804b1-48069b8dfe3mr33856665e9.0.1769537743542; 
- Tue, 27 Jan 2026 10:15:43 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4806ce56490sm7248155e9.12.2026.01.27.10.15.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jan 2026 10:15:42 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1706B5F7DC;
- Tue, 27 Jan 2026 18:15:42 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,  Stefan Hajnoczi
- <stefanha@gmail.com>,  qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: gitlab docker registries
-In-Reply-To: <7574812c-c200-49bf-8367-927c3cc7295b@linaro.org> (Pierrick
- Bouvier's message of "Tue, 27 Jan 2026 09:10:29 -0800")
-References: <da1443a0-5bf8-4ec0-9910-fd06beb42552@linaro.org>
- <CAJSP0QWQEr8+dEGD7jkUQ--Oq+D2PKv_ArRB_ApiZM++xN9TCQ@mail.gmail.com>
- <c12f3294-1ef1-41fe-a453-1422063b991d@linaro.org>
- <87ecncc4sg.fsf@draig.linaro.org>
- <90520ad2-8256-4bc7-94e3-010455659394@linaro.org>
- <878qdjcslb.fsf@draig.linaro.org>
- <7574812c-c200-49bf-8367-927c3cc7295b@linaro.org>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Tue, 27 Jan 2026 18:15:42 +0000
-Message-ID: <87qzrac46p.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1769537903; x=1770142703;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Y4TAlzdd7rvwsch6CulBm7lpt7hAKOxigoaihNeKqsI=;
+ b=Ff0xxn0G1Ndljkycf6pWk3gIFvwfz1IS5F7we75uv7VBTHAqwlZHl92n0BJSqFHkhM
+ hK+01nyDjgLetddj43YC7lqHeLiNkPmlzA6Qp1cwJQnIf9iE21LXVIrlaUNzDhKFrt+9
+ n+VuoLBu7GQd+JNslZuSjZyjwVI4mHjbCFsdDKRDVQ4ByY6uqBQYi35JjpshwZ+bdXLI
+ CGP2Jz567tOjxltaQIIiZYBsle346Fz4MSLIaa1jS/EmRWey2gtBbHcah62wJIbz7+VF
+ ReKD9Q6bDYhs7rNVZeofn3wZRwgLK7hkl5XKQGQnYnDHwnU9ILTKPNF2Jg9d5L77ODQF
+ DNlA==
+X-Gm-Message-State: AOJu0YxbGF1zx30lX5Jv97zzGVMCREvodiKMuJxGYleh3akfqrLxtsmG
+ z9tUDV8GghBaWbubu72Cs3mPvy7iJ3ALvOH6lPSdqG34YJuifoW6uA12kKtXY0t+WWpwWdNmIzu
+ QXx4+1xXjAP2zh3I5rVbRLA5okwYH/+8=
+X-Gm-Gg: AZuq6aKd5skBIStJJy1chsJiOcmCJ+edvrv4oBfzVE39hTco03kvOUba6wk7JBB1LIg
+ fKtj0YfQ9NnEQzyAOf8n+KzLboSIK498EXgv62K9o7wpWYSV0eEgEPKel7tjrnCuv0G1uvvpuSq
+ PiOo0NNDECh6vcGkdD3WyQ3crY4m9AoH2w2eExxCzGLdOYD7xoRp0ImNE2LUuaddtwJ0LFRa704
+ +W6GaZqT2BY8O/tz9raWSijKNuhQDXmWGjQNrShC1UNmxzN/D5tpAVd6FGoTRNLoILUCjkD
+X-Received: by 2002:a17:906:c116:b0:b88:73ea:a1d5 with SMTP id
+ a640c23a62f3a-b8dab45dfcamr202671166b.51.1769537902937; Tue, 27 Jan 2026
+ 10:18:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
+ <CAFEAcA9NEjaUBX19sdw9TRCKcKn8CQfvoVNZ+VaXOcNZ8kf24g@mail.gmail.com>
+In-Reply-To: <CAFEAcA9NEjaUBX19sdw9TRCKcKn8CQfvoVNZ+VaXOcNZ8kf24g@mail.gmail.com>
+From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+Date: Tue, 27 Jan 2026 19:18:10 +0100
+X-Gm-Features: AZwV_QhgsPS3k1UViGYc904zjHHQN9WcH2oc_E4-HDEBnl8NLgfggLHy5DbiCMI
+Message-ID: <CAN-aV1EjYwSRfV87YQdtfqU5CH8Bsssr3EvStPWL2_VFOs4N4w@mail.gmail.com>
+Subject: Re: [PATCH 00/27] hw/arm: Add generic FDT-based machine and
+ infrastructure
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, artem_mygaiev@epam.com, 
+ volodymyr_babchuk@epam.com, takahiro.nakata.wr@renesas.com, 
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, Ruslan_Ruslichenko@epam.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,51 +118,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
-
-> On 1/27/26 1:28 AM, Alex Benn=C3=A9e wrote:
->> Richard Henderson <richard.henderson@linaro.org> writes:
->>=20
->>> On 1/27/26 10:50, Alex Benn=C3=A9e wrote:
->>>> I think it was broken by 4203ea0247f (gitlab-ci: Add build tests for
->>>> wasm64) because we base the tests of the existence of dockerfiles and =
-it
->>>> now generates multiple targets.
->>>> Do we actually use the wasm32 stuff anymore? Maybe we can just
->>>> rename it?
->>>
->>> All of the wasm32 stuff is supposed to be gone.
->> I think 20260127092745.2978371-1-alex.bennee@linaro.org should fix
->> it,
->> but I need to re-read how to trigger the weekly build on my test branch
->> to test it.
->>=20
->>>
->>> r~
->>=20
+On Tue, Jan 27, 2026 at 11:03=E2=80=AFAM Peter Maydell <peter.maydell@linar=
+o.org> wrote:
 >
-> What if docker-verify was depending on building the container locally
-> instead? It would allow to have a self-contained command, that works
-> the same in local, or in CI, without any yaml dependencies.
+> On Mon, 26 Jan 2026 at 17:43, Ruslan Ruslichenko
+> <ruslichenko.r@gmail.com> wrote:
+> >
+> > From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+> >
+> > This patch series introduces new ARM machine model, arm-generic-fdt, an=
+d the underlying infrastructure required to instantiate a QEMU machine from=
+ a Device Tree.
 >
-> With current approach, it's tricky to reproduce locally as it depends
-> on global gitlab registry, while we are just trying to see if images
-> is buildable from scratch or not.
-
-No - the point of verify was to check we where building in the
-registry.
-
-A lot of the Makefile.include stuff is legacy now (although its a useful
-wrapper for building tests locally) because gitlab invokes the
-containers directly. We used to do all sorts of dependency handling as
-well but the lcitool approach is a lot cleaner even if we don't get
-layered containers.
-
+> I'm afraid this has been a feature that has been suggested from
+> time to time, but which I don't think is workable in general.
 >
-> The fact it's hard to guess how to test such a change exposes that
-> there is a problem to reproduce this, even for the original author.
+> Device tree files are designed to provide enough information to
+> the guest kernel to allow it to find non-probeable hardware. They
+> are not designed to provide enough information to QEMU to allow
+> it to create and wire up all the hardware present on the system.
+>
+> There are specific niches where it can be made to work -- I think
+> Xilinx have or had a setup where they were generating an FPGA
+> model and a device tree and a guest kernel all from the same
+> single data source, so they could put everything necessary into
+> the dtb, for example -- but I don't think it works in the
+> general case. As one simple example, the DTB doesn't generally
+> have any information about how the Secure world works in an Arm
+> system, because Linux doesn't care about the Secure world. It
+> also doesn't usually have information that the guest OS can
+> probe for itself at runtime.
+>
+> There has been periodic discussion of more flexible user-driven
+> board creation, but that has generally been with the idea of using
+> the QMP monitor to orchestrate creation and connection of device
+> models.
+>
+I agree that a guest Device Tree is insufficient for describing a
+complete QEMU machine model.
+However, we separate the guest configuration from the machine
+definition. The -hw-dtb option allows the user to provide a
+QEMU-specific system description.
+Those hw-dtb would not be passed to Linux Guest VM.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+The fact that this workflow has been successfully used in production
+by AMD/Xilinx demonstrates that FDT is a feasible format.
+
+In contrast, QMP usage may end up even more complex and less
+maintainable for the task of full system modeling.
+To my understanding, this would need to generate too long configs,
+which may eventually require some intermediate format by itself.
+
+I am proposing to use FDT as a serialization format to describe a
+machine configuration. Theoretically we can use other formats, like
+XML, but in my opinion FDT perfectly matches the requirements.
+
+BR,
+Ruslan Ruslichenko
+
+
+> thanks
+> -- PMM
 
