@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5A19D2D8E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 10:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE6C0D2D8DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 10:02:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkfrV-0001mD-TX; Tue, 27 Jan 2026 04:59:53 -0500
+	id 1vkfu7-000357-SQ; Tue, 27 Jan 2026 05:02:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1vkfrU-0001lh-8s
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 04:59:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vkfu5-00034h-9v
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 05:02:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <osteffen@redhat.com>)
- id 1vkfrS-0004Wi-AQ
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 04:59:52 -0500
+ id 1vkfu1-00057f-Kj
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 05:02:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769507987;
+ s=mimecast20190719; t=1769508148;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=BPWHHfJh7xbgl/6C4Tu0Z1jBwCiMaLIsMJ2m2VM8bjM=;
- b=X148VIw51WG/bewwci/1wlTeDIbZVs6v8udjdDlHC6Dm9OODaPs4RamzwK4b/NydOPlKWc
- 8ZZKrTTzHNziKocFuEJ/+5PNBOdOsa+F7ltprIU8G2q8UYeGjc0mF00AWnH+zgqlAmg69I
- HbNQovUHJrfnmssiZbCc2Iu8CNkbF90=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=8p/EwgBJHrgC+rdDH5Bz2ew9AKemHNoUO4GfNQsSUAY=;
+ b=G4Ad5AUq9Pi6S+LMHfXs8tmRFGxLvyXVEfThSdMGgWTiM9m5GIZsSXDqwYRNmyGfFGoG9L
+ Ql+f5D04AV7MSM9QExl/GMZ81gKb8NWzLqt6gEiMy+CgJ7+NuSM8Qz4TEpZFttVOlrqzsu
+ rpngcltjSdhRJif0xa4tfyB1eR9aDsY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-0HkW4zaOO6-JBfgv2QkmSw-1; Tue,
- 27 Jan 2026 04:59:45 -0500
-X-MC-Unique: 0HkW4zaOO6-JBfgv2QkmSw-1
-X-Mimecast-MFC-AGG-ID: 0HkW4zaOO6-JBfgv2QkmSw_1769507984
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-pMpvwHfDOCevPoToWAfAww-1; Tue,
+ 27 Jan 2026 05:02:23 -0500
+X-MC-Unique: pMpvwHfDOCevPoToWAfAww-1
+X-Mimecast-MFC-AGG-ID: pMpvwHfDOCevPoToWAfAww_1769508142
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC98B1800350; Tue, 27 Jan 2026 09:59:43 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C02E18005BE; Tue, 27 Jan 2026 10:02:22 +0000 (UTC)
 Received: from osteffen-thinkpadx1carbongen12.rmtde.csb (unknown
  [10.44.34.174])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 04E9C19560B2; Tue, 27 Jan 2026 09:59:37 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 159301956095; Tue, 27 Jan 2026 10:02:16 +0000 (UTC)
 From: Oliver Steffen <osteffen@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Luigi Leonardi <leonardi@redhat.com>, Joerg Roedel <joerg.roedel@amd.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, kvm@vger.kernel.org,
+ Luigi Leonardi <leonardi@redhat.com>, Joerg Roedel <joerg.roedel@amd.com>,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Oliver Steffen <osteffen@redhat.com>
 Subject: [PATCH v5 0/6] igvm: Supply MADT via IGVM parameter
-Date: Tue, 27 Jan 2026 10:59:30 +0100
-Message-ID: <20260127095936.1072464-1-osteffen@redhat.com>
+Date: Tue, 27 Jan 2026 11:02:09 +0100
+Message-ID: <20260127100215.1073575-1-osteffen@redhat.com>
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=osteffen@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=osteffen@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -125,6 +124,7 @@ processing of the IGVM file.
 [3] https://github.com/coconut-svsm/svsm/issues/646
 
 v5:
+- Rebase on latest IGVM rework series from Gerd
 - Make qigvm_find_parameter_entry() more generic and use everywhere possible;
   It now takes the index as input, instead of the full parameter struct
 - Consistently use early returns when looking up parameter entries
@@ -146,10 +146,10 @@ v3:
 
 v2:
 - Provide more context in the message of the main commit
-- Document the madt parameter of IgvmCfgClass::process()
+- Document the MADT parameter of IgvmCfgClass::process()
 - Document why no MADT data is provided the process call in sev.c
 
-Based-on: <20251118122133.1695767-1-kraxel@redhat.com>
+Based-on: <20260126123755.357378-1-kraxel@redhat.com>
 Signed-off-by: Oliver Steffen <osteffen@redhat.com>
 
 Oliver Steffen (6):
