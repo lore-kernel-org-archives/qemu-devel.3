@@ -4,108 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 781E9D2F011
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 13:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D55B5D2F02F
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 13:43:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkj2u-0000w7-C5; Tue, 27 Jan 2026 08:23:52 -0500
+	id 1vkjKk-0004iz-RA; Tue, 27 Jan 2026 08:42:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vkj2k-0000s2-Tu
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 08:23:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vkjJs-0004TN-Ix
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 08:41:25 -0500
+Received: from p-east2-cluster2-host10-snip4-10.eps.apple.com ([57.103.78.83]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vkj2i-0005vx-5F
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 08:23:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769520218;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=inL7IgFEA5miArJVDHdrdgZLnWIEE2zg4a0hQzkzyfg=;
- b=AE+4s1hYyYKZyTQX4sBwaZsM/92bryelEdqb/HOmx2ktluKGGDdNiRdHw4xv4081u2MbPJ
- dsjSOJOrlKQwSO4rsw0RRp6uePirL1R5xQfhJBOMpuyaJGs2Hgd9ijyw2hPZ0aglVGQbHA
- pLEI4cRxS4sewQBh/T55YayUmS2rkYk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-211-7TIgwm6HOP-ETbA57rphWw-1; Tue, 27 Jan 2026 08:23:37 -0500
-X-MC-Unique: 7TIgwm6HOP-ETbA57rphWw-1
-X-Mimecast-MFC-AGG-ID: 7TIgwm6HOP-ETbA57rphWw_1769520216
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4801e9e7159so45534905e9.1
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 05:23:36 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769520216; x=1770125016;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=inL7IgFEA5miArJVDHdrdgZLnWIEE2zg4a0hQzkzyfg=;
- b=Zdfh3UUtlkEbmcsqnoFzhSjclWMVZSHN7MyCo4iOP+UVrfr/O6WlK7rDnfOHlGCE0G
- T0CP9j5/YFEbb4BdA19hCfssHRFKENt2cEibc+2GPhm6P0woR2akx8jllhbiyStEC0Fo
- xQZ4aABINw1ULh8oPF4S6grFceXhYJJs30NWbLmipqqIGZP5F6QUQspz0Fchk6UhixSc
- sPmlmTGnG9w4fd/WtbHDRku8LHA57tgpthMzaikREoe3STakuKR+0kW+ORMs1ZnZi2W3
- gfh2B1zmB8WyZR54rNqnLtWsAn9F/LyvuJ/wBIeAN8iTwaMDpW1MxQhwwpunSiX78WEt
- hcfw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHxiXVFS0vs+GPwOd3+EpzyeM+LZBpMET2/MWqSLcWoE+SVFb5Ccs6jroAyro9vMDh90/k85KdogOr@nongnu.org
-X-Gm-Message-State: AOJu0YxeTmRXAgUJBTHF5AOlg8omizBnd6Yr7EpjclWx2S8SbIMftqBZ
- hOK07ROUTfVFC7b8EKMYuXDOTIbntxRbDmkCQgMNkJeoCnQx/ahvEdyBW97ahFFEY3D5vXZNWIH
- X13QBaUIt6gyYPff7Jc6EJX9fpj81yoLupU6liaCfP9hJF+V4Zv/LaG5H
-X-Gm-Gg: AZuq6aJz1GavR1XRFyBXxzwBslNAmYGmaAA3Gbv6j4MuS/mNmZXxPaotYGXoTTCRTB4
- 2D2Ay4SKgIIwvmHas9PRIJsUHxH6yhIxGa5big1d3fJG7NyHF9plXRUCqcDA4Xuxkkpbqe0TlDq
- Tlgf7IlrocLvU4DgPtHrRoJGVSca2PdFGLOcj9S5KQHt2FjxlUKJpCFEco9Oz6xlBXUNfqGf8MW
- 6RVd5w02k0EtnpV4fT6NjzG4isugmqBD8qcsVRxKVNl3eZpmbKhPeXZvOk1OXpcpMWhP1DSJZPY
- AvPSpDRZSkihGuyyWFbMRggSvUo9AQaYdZcutmtMTo0Hv32yoT8xASeH93YxaSmimodMXUr8ZMv
- 9u+O5nSnMRh6WygSK/OLTsS/zWrd+9A5ncfp10pkd52R5pi++B3RFZEDiIA==
-X-Received: by 2002:a05:600c:e40b:b0:479:3a86:dc1c with SMTP id
- 5b1f17b1804b1-4806a5bef0fmr16471975e9.36.1769520215696; 
- Tue, 27 Jan 2026 05:23:35 -0800 (PST)
-X-Received: by 2002:a05:600c:e40b:b0:479:3a86:dc1c with SMTP id
- 5b1f17b1804b1-4806a5bef0fmr16471565e9.36.1769520215199; 
- Tue, 27 Jan 2026 05:23:35 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48066c428basm63499945e9.12.2026.01.27.05.23.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Jan 2026 05:23:34 -0800 (PST)
-Message-ID: <26e22c1c-09bc-4e6e-9859-bc8092b8ca7a@redhat.com>
-Date: Tue, 27 Jan 2026 14:23:33 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 06/16] hw/arm/tegra241-cmdqv: Map VINTF Page0 into
- guest
-Content-Language: en-US
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, peter.maydell@linaro.org, nathanc@nvidia.com,
- mochs@nvidia.com, jgg@nvidia.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, kjaju@nvidia.com
-References: <20251210133737.78257-1-skolothumtho@nvidia.com>
- <20251210133737.78257-7-skolothumtho@nvidia.com>
- <58f0ca59-b08c-44cd-b469-f152271c14f6@redhat.com>
- <aXgBD/N+aOVNlcGb@Asurada-Nvidia>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <aXgBD/N+aOVNlcGb@Asurada-Nvidia>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vkjJp-0001S0-PJ
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 08:41:24 -0500
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-15 (Postfix) with ESMTPS id
+ 1A94518009CF; Tue, 27 Jan 2026 13:40:50 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1769521255; x=1772113255;
+ bh=txTB23e1hndnQCZw3z0ju6h6lBl40tZCf6hVvlftUAI=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=AW0l3LN5LVwVxuGKgBMU8rmGXFIJS1c9ph+25r2RLj9cru5OPTz9yQEwr7rV64yX3vmMoyeo4QWKuXWMdsrHIROFmtVkvfaUgHTeWZljXskwzsLqaUhg/Wuj8d9HVBUSZhXpxWXAaVvFK+udEoe7tnc5vslL3t64hHrcy5ywbAgqowGaJn0YN74EeVowOXHwYsF3Z9x4+1tL4tJdKM3uPa5U9a/0n3dLLTq+q82HBAUbRLkTnY4fhaZR9TRxfDT156e4tp8aYQWDQU16utNvu5CT5vRwLIiQ/MHxxWdYYCO0cm2bMySOCkVujzXvM3yntXSPrpUwtRYEH7SCVxKA6A==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-15 (Postfix) with ESMTPSA id
+ B503E18009DD; Tue, 27 Jan 2026 13:40:47 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH v17 03/21] hw: arm: virt: rework MSI-X configuration
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <CAFEAcA_7o-dNFUgMo=UdYD_cf=dwbMCy6b+_2SRSxVbDmmAUmw@mail.gmail.com>
+Date: Tue, 27 Jan 2026 14:40:35 +0100
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>,
+ Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Ani Sinha <anisinha@redhat.com>, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9ECB5E0B-3BD3-47D3-9E6B-204A354CEA84@unpredictable.fr>
+References: <20260121134114.9781-1-mohamed@unpredictable.fr>
+ <20260121134114.9781-4-mohamed@unpredictable.fr>
+ <CAFEAcA-GL9UG5MN5tKDzLwQ04cBGa99cSau4=2BLTs0+GGSdJw@mail.gmail.com>
+ <51E78FA9-2C66-4E8E-947F-F009A8AEEDFD@unpredictable.fr>
+ <CAFEAcA_7o-dNFUgMo=UdYD_cf=dwbMCy6b+_2SRSxVbDmmAUmw@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-Proofpoint-ORIG-GUID: 7Aj6NOjCykQ5o2js3AcTxbWFAtUWypde
+X-Proofpoint-GUID: 7Aj6NOjCykQ5o2js3AcTxbWFAtUWypde
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDExMiBTYWx0ZWRfX/vYcWmoOoxVK
+ XQuJldYhwrIpwp1L/u/CBqo5a2+MuFVkINt8B0C0tXeh9ArLSsEnpwKjKKw59+FuUQVO6AVOu6i
+ Pf6yjS6gs2l3HU7F6/gsvoM9+1q8qEGwX1gp781LEJ8fcKmd0FNGrxIB5jVYhkELJpClbZhuEx3
+ L85Gf+3D0iidizokTZYrU8w0wm5LTiCZte9GLjgrTzq4VV0Z4SfhCGptY9aQ1ylonn4HJwW60I/
+ PTb849IJkCqsddJ+7uKVE8V6LW4fwOgYtl87oaPG3dIapzAxduIeRHQr5x0osv+9mqUE2QTqFJJ
+ EFQOsuCLK8dWH4B/S2r3YtOesG8f5JFMseI9C1ZVu/uJIQpxuDurLdm4EUSYw4=
+X-Authority-Info-Out: v=2.4 cv=ZYoQ98VA c=1 sm=1 tr=0 ts=6978c065
+ cx=c_apl:c_apl_out:c_pps a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=k7SuDDSd2Ljkt1C7sC0A:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-27_03,2026-01-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ malwarescore=0 lowpriorityscore=0 mlxscore=0 suspectscore=0 clxscore=1030
+ bulkscore=0 mlxlogscore=999 adultscore=0 phishscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601270112
+X-JNJ: AAAAAAABJIRqpZ0eHs9H0Lq9VngA11k3wNOZImoNz/8ZCBR7EHni1T7oZkQH2duoidLhs/uJSH9/TH/mUHrE4W3tMPxxOu6JcVTxBoGUKHfA9eJnyAUSYttvIpzJOZT9gu0qeIgTAQEMQarsNB+wRJHD4PufyuPw449D/LybZ7MrAN9Q3jmlr4KFyXoktWYud+1jZHAQjBFSeacteGyT2djRRsjQqcvIzu52FMlOkCz8iDOtpf2vw6J3U0ctRTScXbQZaRqdx3p1VKjAi8OqXL5r6xzrEmYl7sEs/WCLOU+TUsellqYIIDeOnOJqdSCrZdz9tT4J9mgZbQqKaucCYix+9YiqaEIMwFVX9lUNgIrSicuk8QRlFNkGfgO+E16+BOeWb3/DgMcQJDnUcje3QAnucSmXQ8RtF5nV568SMK+BcLETlS5vYMfBkRRqT/6Dzqb8YDsv2ehU/yQxD4+FguDUtUTnm3MhHcLou4CeZS0VojKhcsnNUMbNTSwDVa3bNyVLNeMPCOQE185kQ0wbjSdDUQM807ydHWLSmj4LrmvCohYnixruCjp5fb8FkgUpPWIGm80QC4hYzv8Ir7pbX7BwSn0tsZ8Jjt63AOqf1Zd/xd8E3vj3MQiJeRoEqkNSdRLTaZTePqXMYBc2qsf80slInynNnmJpgnFvJH8dQlSKNk+a1KEEDmj0Sbxi5V58sbfbS8yupubQaiPqvevl45TLDOWECShZZyBEVpjDWciEc1IJQHChMOvL1dlcEUj6j1W0kG+GIPcy6/JTy3PJiooYajoU9DiPvmo9NC7ojq8kvMtbkn1d/OU28IL8p/2Ztinn4yOsnFwfykAxe4PozlOSyR6vYKPWaYIs2L3c4DUl4xTKHPb6u73H+1Cfze6rrA==
+Received-SPF: pass client-ip=57.103.78.83;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,108 +106,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nicolin,
 
-On 1/27/26 1:04 AM, Nicolin Chen wrote:
-> On Mon, Jan 26, 2026 at 02:48:55PM +0100, Eric Auger wrote:
->
->>> +    name = g_strdup_printf("%s vcmdq", memory_region_name(&cmdqv->mmio_cmdqv));
->>> +    memory_region_init_ram_device_ptr(&cmdqv->mmio_vcmdq_page,
->>> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
->>> +                                      name, 0x10000, cmdqv->vcmdq_page0);
->>> +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv, 0x10000,
->>> +                                        &cmdqv->mmio_vcmdq_page, 1);
->>> +    g_free(name);
->>> +
->>> +    name = g_strdup_printf("%s vintf", memory_region_name(&cmdqv->mmio_cmdqv));
->>> +    memory_region_init_ram_device_ptr(&cmdqv->mmio_vintf_page,
->>> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
->>> +                                      name, 0x10000, cmdqv->vcmdq_page0);
->> I don't get why we need/have 2 RAM devices pointing to the same @ptr
->> = cmdqv->vcmdq_page0. Is 0x10000 ~ VCMDQ_REG_PAGE_SIZE?
-> The first one is for "vcmdq" and the second one is for "vintf".
-> Explaining below...
->
->> The names of the MRs are quite confusing: If my understanding is correct
->> we have;
->>
->> cmdqv->mmio_cmdqv (0x50000 sized) which as the container for the 2 subregions.
->> Then within that one we have 2 subregions, one at offset 0x10000 (mmio_vcmdq_page
->> ), one at offset 0x30000 (cmdqv->mmio_vintf_page).
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c?h=v6.19-rc7#n19
-> It's defined in the kernel driver (yea, we should clarify in the
-> QEMU code as well).
->
-> So, the MMIO regions look like this:
->  1st 64 KB page -- Global CMDQV registers
->  2nd 64 KB page -- Global VCMDQ registers Page0 (mmap)
->  3rd 64 KB page -- Global VCMDQ registers Page1 (trap)
->  4th 64 KB page -- VINTF0 Logical VCMDQ registers Page0 (mmap)
->  5th 64 KB page -- VINTF0 Logical VCMDQ registers Page1 (trap)
 
-This kind of layout representation is really helpful
->
-> In real hardware, there will be 6th 64KB and beyond, for VINTF1
-> and others. But, we're omitting here in QEMU as only VINTF0 will
-> be supported -- kernel only exposes one VINTF per VM as well.
-> (Yes, we should clarify this too.)
-OK
->
->> I have difficulties to link that with the commit message
->>
->> "Tegra241 CMDQV assigns each VINTF a 128KB MMIO region split into two
->> 64 KB pages:
->>  - Page0: guest accessible control/status registers for all VCMDQs
->>  - Page1:configuration registers  ../.."
->> Those 2 pages, are they part of  mmio_vcmdq_page?
-> Not exactly. Both the global VCMDQ region and VINTF region have
-> their own pages (at 0x10000 and 0x30000).
->
-> Here, it duplicates the mapping to 0x10000 (Global VCMDQ page0)
-> and 0x30000 (VINTF0 page0) for simplification, because we only
-> support VINTF0 in this case.
-so Global VCMDQ registers Page0 and VINTF0 Logical VCMDQ registers Page0
-are basically the same?
+> On 27. Jan 2026, at 13:54, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> On Tue, 27 Jan 2026 at 12:46, Mohamed Mediouni =
+<mohamed@unpredictable.fr> wrote:
+>>> On 27. Jan 2026, at 11:54, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>>>=20
+>>> On Wed, 21 Jan 2026 at 13:41, Mohamed Mediouni =
+<mohamed@unpredictable.fr> wrote:
+>>>> +/*
+>>>> + * In the prior Qemu ACPI table handling, GICv2 configurations
+>>>> + * had vms->its=3D1... That's broken.
+>>>> + *
+>>>> + * Match that assumption to match the existing ACPI tables that
+>>>> + * have been shipping for quite a while.
+>>>> + */
+>>>> +static int is_gicv2_acpi_workaround_needed(VirtMachineState *vms) =
+{
+>>>> +    return vms->gic_version =3D=3D 2;
+>>>> +}
+>>>=20
+>>> We don't need to keep identical bug-for-bug ACPI tables like that.
+>>> If we were incorrectly reporting an ITS in a GICv2-only ACPI table,
+>>> that was a bug and we can fix it. (This might need adjusting of the
+>>> golden reference ACPI data in some of the bios-tables-tests if we
+>>> were testing that, so it ought to go in its own patch.)
+>>>=20
+>> Hello,
+>>=20
+>> I=E2=80=99m a bit concerned about breaking hibernation in this =
+case=E2=80=A6
+>>=20
+>> My intent was keeping this behavior for now and then add a machine =
+model version dependent toggle in a follow-up patch.
+>=20
+> I'm not an ACPI table expert but my understanding is that it's
+> OK to change the ACPI table contents without having to make
+> those changes machine-version dependent. See e.g. commit d6afe18b7242,
+> which changed the ACPI tables for the its=3Doff case and did not
+> make those changes machine-version specific.
+>=20
 
-I would recommend to use cmdqv->mmio_vcmdq_page0 and
-cmdqv->mmio_vintf_page0 to avoid any misunderstanding
->
-> There is a little catch in this implementation. The real physical
-> mapping between a global VCMDQ and a logical VCMDQ happens when
-> QEMU calls HW_QUEUE ioctl. So, the mmap'd page0 doesn't have any
-> real VCMDQ backing up the emulated VCMDQ. So, perhaps QEMU should
-> trap the page0 and delay the memory_region_init_ram_device_ptr()
-> until the HW_QUEUE ioctl is done?
-might be safer indeed.
->
-> There might be also a corner case: when the kernel exposes two
-> physical VCMDQs, but the guest OS only uses one, i.e. QEMU only
-> allocates one HW_QUEUE for VCMDQ0 but doesn't allocate VCMDQ1.
-> In such a case, the VTINF0 page0 should be able to control the
-> logical VCMDQ0 only, while the global page0 should control both.
+Hi,
 
-you lost me. Need to look at the kernel or spec ;-)
->
-> We are getting away this corner case with any guest OS running
-> Linux kernel because it only accesses VTINF pages. But likely we
-> should do something about it..
->
->> Then you talk about 0x30000 :VINTF register I guess this is the second cmdqv->mmio_vintf_page
->>
->> Well I am confused at this stage of the reading.
->>
->> Also without any spec, this is difficult to understand. Is there any public doc?
-> It seems that Red Hat can get the doc under NDA..
-OK thanks
+That commit didn=E2=80=99t affect the default/regular config so it =
+wouldn't have been too problematic in practice.
 
-Eric
->
-> Thanks
-> Nicolin
->
+Have had countless issues with how brittle hibernation is* - and more or =
+less subtle ACPI table changes
+tend to break it.=20
+
+* and Qemu doesn=E2=80=99t provide an FACS (nevermind one with an HW =
+signature) to force a clean reboot
+- which Windows ignores anyway
+
+>>>> +bool virt_is_its_enabled(VirtMachineState *vms)
+>=20
+>>> Why do we need these? The idea of finalize_msi_controller()
+>>> is that it fixes vms->msi_controller so that you can just
+>>> directly say vms->msi_controller =3D=3D VIRT_MSI_CTRL_ITS or
+>>> vms->msi_controller =3D=3D VIRT_MSI_CTRL_GICV2M rather than
+>>> having to have more complicated logic.
+>>>=20
+>> It=E2=80=99s because of object_class_property_add_str(oc, "msi", =
+virt_get_msi, virt_set_msi) (and the same applies for the its property), =
+is it safe to assume that virt_get_msi/virt_get_its will never be called =
+from that prior to finalize?
+>=20
+> The get and set property functions need to handle the
+> msi_controller field not having been finalized, but
+> they are only getting and setting it.
+>=20
+> thanks
+> -- PMM
+>=20
 
 
