@@ -4,92 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C758D2FED4
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:31:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43681D2FED2
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 18:32:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vknp3-0003MJ-Nx; Tue, 27 Jan 2026 13:29:53 -0500
+	id 1vknow-0002Sr-4K; Tue, 27 Jan 2026 13:29:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vknnY-0000xk-Ai
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:23 -0500
-Received: from p-west2-cluster2-host8-snip4-10.eps.apple.com ([57.103.68.141]
- helo=outbound.mr.icloud.com)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vknnI-0008AT-5v
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vknnV-0003Mj-0t
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:19 -0500
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPS id
- 466401800094; Tue, 27 Jan 2026 18:28:13 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1769538495; x=1772130495;
- bh=zf/zdLN9yaZ43NV2BmBps5JPK+mneoqfkvuEHlxn1dM=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=IpSlxUnH/+1i6CAeFAqsPQGvlDjYWU74sE72Q22wvJfzyNT80m4xgzprf+nEvTU3TFxmOv7E4fzNXDWPMcHqU6710qWoVJBsmQCPbDyPBJn7M0+s8ZiMXbP4tSojwPyCdg2vO6FKxpDcLw5T3dKRD2H8zX93i5RtXt8mYjHvNv0UdO5QQE6+mL1cu46JOEpqt2Ix/fXGfbs3XVq7cQjVVy9uqCnYZPVoa2ixtoCNJr6hmmW3nTrwgCNb60klpXRVovlisQf7E6dKJ4hG2n8p8JuolqjeDYQTf8jKCE8O2IehZg+iet5CXyEsn7hcBlKTU8ACbiumfkrJFEvz6X+j2Q==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPSA id
- A3F6418001E6; Tue, 27 Jan 2026 18:28:08 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org,
-	mohamed@unpredictable.fr
-Cc: Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, qemu-arm@nongnu.org,
- Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>,
- Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v18 00/22] WHPX support for Arm
-Date: Tue, 27 Jan 2026 19:27:40 +0100
-Message-ID: <20260127182805.73212-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1vknnF-0003KX-BA
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 13:28:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769538480;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kb0XUX8Hbw1CeUAvB+XxD3OCphYLf6Qpo+MzOpEtu6c=;
+ b=YZslk9ZJgPsx/UI5qyENFFQQ2qXft1a805OgpVynmxe6rI1LtofDPvp89C/d7cEMBCffQ4
+ K7oAcGO6GxxyREoOgOSK7J2duZJ37i3lub2j2+9DK+sc70CqbNwYQRmE2AWeJdPn9aMOMW
+ I7U8b/SBi1aLqMgmBm1/fjwlTODCQEY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-577-uHd0GKlmPEe_vP8CexXLpA-1; Tue,
+ 27 Jan 2026 13:27:56 -0500
+X-MC-Unique: uHd0GKlmPEe_vP8CexXLpA-1
+X-Mimecast-MFC-AGG-ID: uHd0GKlmPEe_vP8CexXLpA_1769538475
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE9E11955F2C; Tue, 27 Jan 2026 18:27:55 +0000 (UTC)
+Received: from localhost (unknown [10.45.242.23])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4E79319560B4; Tue, 27 Jan 2026 18:27:53 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 26/43] audio/pw: replace custom logging with error_report
+Date: Tue, 27 Jan 2026 22:24:53 +0400
+Message-ID: <20260127182516.289834-27-marcandre.lureau@redhat.com>
+In-Reply-To: <20260127182516.289834-1-marcandre.lureau@redhat.com>
+References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDE1MCBTYWx0ZWRfXzfFco4lAvHgi
- b73RdB/OTI3d190hpuPIh1Zo6IxiT2JvfdhibFB4Zo8D5XKALnx/uAyPZNr0dn+d/MfmWyTp7AO
- IP/n/vILvpB3LG7VYlfdmXxmkcWA7o3iAvTKZZe4R+1lB68s8fZwXlmEiZtufl/oJEHpBaeCe3l
- Rbkn82UCByp0mh2DF/Parvci+YxT3gu7jcoTo7ljOxAPGz8khA5qiMMAAA0RggyXEK7xjmDFPln
- X3uZnZfdGJ3P7ULULf6y24difaCeWPY8GZ2w0Sl41w1RBsH5AmhPUvI4GOdR1MH/QonUtASJPIM
- /rEbxz5nOzC+hfDbstasY4S2YlKNeKk4gs2KR5Ok2SvHOpT5/UeDSbBWzSKPog=
-X-Proofpoint-GUID: f7XP6md6KLdrZiDEHntHN8GeZK6l1PUj
-X-Authority-Info-Out: v=2.4 cv=R8kO2NRX c=1 sm=1 tr=0 ts=697903be
- cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=NEAV23lmAAAA:8 a=mDV3o1hIAAAA:8
- a=3sHXeTOdJn_U_PFnuNgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: f7XP6md6KLdrZiDEHntHN8GeZK6l1PUj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-27_04,2026-01-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- lowpriorityscore=0 mlxscore=0 malwarescore=0 clxscore=1030 mlxlogscore=999
- suspectscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601270150
-X-JNJ: AAAAAAABC1fz1g9AdOBFSW+zcUVddVv9HKVU7kPJ6O2qU+85+LunS4lrgwqmoYSybAFpNu/i1qv4OqOxIYaViB4PsHoZjDVbNSqxnzDrK74bdRa63uTxxDboxyCgj5BMW0E/HRv+LUJAoneh7tigAzuqrPQUhnuNueIGPQGp67uJxmDdGM5mTKc4QEoQB5sMf3eqSVEdDZm6Vsk6tvJw595AaCyjDOAizxOfne2yTRvL7wevOHnJYVYx6XVC3gIDJshnsL5d5Mfr25jTtEUxsmXL1GE0JFo/Sm2zgD5hJ/HWDjlTV1TUarp10lp91R8XMYPREtknGxdD8AfD5E0jYFqprrvgk8WvX+rI8te285BXrdf6zrGM0UeDcmiYRlJrKVVsF/lzia3OVz7m7CtnxvBPVyUYiWIkgRkuKu7dwWh50xwebnA7S+9AR7sV6HcIflV6OYivExSRZbvWWt/PlhHbIG45LJE/BfYV2c2B6Ca1STN8YdHupwYu9J3R1wY2Eplhq8Bnljr5eN9E+OBZxD+RvAseS/5DQtzeXF1/yka2aAYb9EOVHHpXYWI6nS5gzq5NWQ8yn96rEWyoXrCraVDTip1q+lVjV1qD8ox63U9i9+l8L34C5DCFxmIp0lIZ4BuLK3D8DJOodHlTOr7zOI5tSrbvTMsy5IGlx7baCMjgxinScjtuLMJ1ZYFtqNNfHI7kTBiOJV3vtI6oiEpp3THHBAsScXKTggCusALWRB8j8wE/HR7xFbJpeVOe3HQsQdY/sWbKdANZFbD8EwEUS82P430K9L0Ffah00/ZB7FfAgmrIUBtAjHqht7PB4NprDVQ+7VNUdACXujkIr0DEN4fUPSYhl25PNOMtleumVwqIJWGdDWXZlVEWfNCnq2ppOp8dTfNOTocodX62uPyVJxdIPnQ2Ou2Qsg==
-Received-SPF: pass client-ip=57.103.68.141;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,222 +87,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Link to branch: https://github.com/mediouni-m/qemu whpx (tag for this submission: whpx-v18)
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Missing features:
-- VM save-restore: interrupt controller state notably
-- SVE register sync: I didn't have the time to test this on pre-release hardware with SVE2 support yet.
-So SVE2 is currently masked for VMs when running this.
+Replace the custom audio logging infrastructure (dolog macro) with
+standard QEMU error reporting (error_report).
 
-Known bugs:
-- U-Boot still doesn't work (hangs when trying to parse firmware) but EDK2 does.
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ audio/pwaudio.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-Note:
-
-"target/arm/kvm: add constants for new PSCI versions" taken from the mailing list.
-
-"accel/system: Introduce hwaccel_enabled() helper" taken from the mailing list, added here
-as part of this series to make it compilable as a whole.
-
-And another note:
-
-Seems that unlike HVF there isn't direct correspondence between WHv registers and the actual register layout,
-so didn't do changes there to a sysreg.inc.
-
-Updates for v18:
-- MSI-X config patch: remove workaround to keep existing ACPI tables, as even Ubuntu has hibernation support
-off in their stock kernel...
-- Fold patch "whpx: arm64: gicv3: add migration blocker" into "whpx: interrupt controller support"
-- address review for "whpx: interrupt controller support"
-
-Updates for v17:
-- Reworking the MSI-X configuration patches
-- Accordingly, its= retains the same behavior as before, so add a test case for GICv3 + GICv2m.
-- Squashing "whpx: arm64: check for physical address width after WHPX availability"
-with "whpx: arm64: clamp down IPA size"
-- Not worthwhile to have a separate GICv3 + GICv2m patch, squash it into the "rework MSI-X
-configuration" patch
-- Address review comment on "whpx: arm64: gicv3: add migration blocker"
-
-Updates since v16:
-- Address some last review comments
-- Rebase with the latest origin/staging
-
-Updates since v15:
-- Some last tiny changes addressed.
-
-Updates since v14:
-- Working around https://gcc.gnu.org/bugzilla/show_bug.cgi?id=87950
-
-It turns out that we can't avoid default: in case with an enum on GCC without warnings,
-although Clang allows that behavior.
-
-Updates since v13:
-- Addressing review comments from Akihiko Odaki
-- Squash GICv2 ACPI workaround patch and have it documented as a separate function
-- Rebase with current origin/staging
-
-Updates since v12:
-- Address review comments and make sure that checkpatch shows no errors, make test also ran
-- Tested the Windows x86_64 build too in addition to Windows arm64 and macOS arm64
-- Hopefully the last revision, should be ready to merge.
-
-Updates since v11:
-- Address review comments
-- Rebase up to latest staging
-- Switch to assuming Qemu 11.0 as the newest machine model
-
-Updates since v10:
-- Bring forward to latest Qemu
-- Fix a typo in the GICv3+GICv2m PR
-
-Updates since v9:
-- Adding partition reset on the reboot side of things...
-
-Updates since v8:
-- v9 and v8 were not submitted properly because of my MTA not behaving, sorry for that.
-- v10 introduces a new argument, -M msi=, to handle MSI-X configuration more granularly.
-- That surfaced what I think is a bug (?), with vms->its=1 on GICv2 configurations... or I did understand everything wrong.
-- Oopsie due to email provider ratelimiting.
-
-Updates since v7:
-- Oops, fixing bug in "hw/arm: virt: cleanly fail on attempt to use the platform vGIC together with ITS".
-Other commits are unchanged.
-
-Updates since v6:
-- Rebasing
-- Fixing a bug in the GICv3+GICv2m case for ACPI table generation
-- getting rid of the slots infrastructure for memory management
-- Place the docs commit right after the "cleanly fail on attempt to run GICv3+GICv2m on an unsupported config" one
-as that's what switches ITS to a tristate.
-- Fixing a build issue when getting rid of the arch-specific arm64 hvf-stub.
-
-Updates since v5:
-- Rebasing
-- Address review comments
-- Rework ITS enablement to a tristate
-- On x86: move away from deprecated APIs to get/set APIC state
-
-Updates since v4:
-- Taking into account review comments
-- Add migration blocker in the vGICv3 code due to missing interrupt controller save/restore
-- Debug register sync
-
-Updates since v3:
-- Disabling SVE on WHPX
-- Taking into account review comments incl:
-
-- fixing x86 support
-- reduce the amount of __x86_64__ checks in common code to the minimum (winhvemulation)
-which can be reduced even further down the road.
-- generalize get_physical_address_range into something common between hvf and whpx
-
-Updates since v2:
-- Fixed up a rebase screwup for whpx-internal.h
-- Fixed ID_AA64ISAR1_EL1 and ID_AA64ISAR2_EL1 feature probe for -cpu host
-- Switched to ID_AA64PFR1_EL1/ID_AA64DFR0_EL1 instead of their non-AA64 variant
-
-Updates since v1:
-- Shutdowns and reboots
-- MPIDR_EL1 register sync
-- Fixing GICD_TYPER_LPIS value
-- IPA size clamping
-- -cpu host now implemented
-
-Mohamed Mediouni (20):
-  qtest: hw/arm: virt: skip ACPI test for IORT with GICv2
-  hw: arm: virt: rework MSI-X configuration
-  tests: data: update AArch64 ACPI tables
-  qtest: hw/arm: virt: add new test case for GICv3 + GICv2m
-  docs: arm: update virt machine model description
-  whpx: Move around files before introducing AArch64 support
-  whpx: reshuffle common code
-  whpx: ifdef out winhvemulation on non-x86_64
-  whpx: common: add WHPX_INTERCEPT_DEBUG_TRAPS define
-  hw, target, accel: whpx: change apic_in_platform to kernel_irqchip
-  whpx: interrupt controller support
-  whpx: add arm64 support
-  whpx: change memory management logic
-  target/arm: cpu: mark WHPX as supporting PSCI 1.3
-  whpx: arm64: clamp down IPA size
-  hw/arm, accel/hvf, whpx: unify get_physical_address_range between WHPX
-    and HVF
-  whpx: arm64: implement -cpu host
-  target/arm: whpx: instantiate GIC early
-  whpx: enable arm64 builds
-  whpx: arm64: add partition-wide reset on the reboot path
-
-Philippe Mathieu-Daudé (1):
-  accel/system: Introduce hwaccel_enabled() helper
-
-Sebastian Ott (1):
-  target/arm/kvm: add constants for new PSCI versions
-
- MAINTAINERS                                   |   6 +
- accel/hvf/hvf-all.c                           |   7 +-
- accel/meson.build                             |   1 +
- accel/stubs/whpx-stub.c                       |   1 +
- accel/whpx/meson.build                        |   7 +
- {target/i386 => accel}/whpx/whpx-accel-ops.c  |   6 +-
- accel/whpx/whpx-common.c                      | 536 ++++++++++
- docs/system/arm/virt.rst                      |  13 +-
- hw/arm/virt-acpi-build.c                      |  20 +-
- hw/arm/virt.c                                 | 135 ++-
- hw/i386/x86-cpu.c                             |   4 +-
- hw/intc/arm_gicv3_common.c                    |   3 +
- hw/intc/arm_gicv3_whpx.c                      | 237 +++++
- hw/intc/meson.build                           |   1 +
- include/hw/arm/virt.h                         |   5 +-
- include/hw/core/boards.h                      |   3 +-
- include/hw/intc/arm_gicv3_common.h            |   3 +
- include/system/hvf_int.h                      |   4 +
- include/system/hw_accel.h                     |  13 +
- .../whpx => include/system}/whpx-accel-ops.h  |   4 +-
- include/system/whpx-all.h                     |  20 +
- include/system/whpx-common.h                  |  26 +
- .../whpx => include/system}/whpx-internal.h   |  16 +-
- include/system/whpx.h                         |   5 +-
- meson.build                                   |  20 +-
- target/arm/cpu.c                              |   3 +
- target/arm/cpu64.c                            |  17 +-
- target/arm/hvf-stub.c                         |  20 -
- target/arm/hvf/hvf.c                          |   6 +-
- target/arm/hvf_arm.h                          |   3 -
- target/arm/kvm-consts.h                       |   2 +
- target/arm/meson.build                        |   2 +-
- target/arm/whpx/meson.build                   |   5 +
- target/arm/whpx/whpx-all.c                    | 985 ++++++++++++++++++
- target/arm/whpx/whpx-stub.c                   |  15 +
- target/arm/whpx_arm.h                         |  17 +
- target/i386/cpu-apic.c                        |   2 +-
- target/i386/hvf/hvf.c                         |  11 +
- target/i386/whpx/meson.build                  |   1 -
- target/i386/whpx/whpx-all.c                   | 569 +---------
- target/i386/whpx/whpx-apic.c                  |   2 +-
- tests/data/acpi/aarch64/virt/APIC.msi_gicv2m  | Bin 0 -> 188 bytes
- tests/data/acpi/aarch64/virt/IORT             | Bin 128 -> 84 bytes
- tests/data/acpi/aarch64/virt/IORT.msi_gicv2m  | Bin 0 -> 172 bytes
- tests/data/acpi/aarch64/virt/IORT.smmuv3-dev  | Bin 364 -> 260 bytes
- .../data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 276 -> 192 bytes
- tests/qtest/bios-tables-test.c                |  21 +
- 47 files changed, 2140 insertions(+), 637 deletions(-)
- create mode 100644 accel/whpx/meson.build
- rename {target/i386 => accel}/whpx/whpx-accel-ops.c (96%)
- create mode 100644 accel/whpx/whpx-common.c
- create mode 100644 hw/intc/arm_gicv3_whpx.c
- rename {target/i386/whpx => include/system}/whpx-accel-ops.h (92%)
- create mode 100644 include/system/whpx-all.h
- create mode 100644 include/system/whpx-common.h
- rename {target/i386/whpx => include/system}/whpx-internal.h (95%)
- delete mode 100644 target/arm/hvf-stub.c
- create mode 100644 target/arm/whpx/meson.build
- create mode 100644 target/arm/whpx/whpx-all.c
- create mode 100644 target/arm/whpx/whpx-stub.c
- create mode 100644 target/arm/whpx_arm.h
- create mode 100644 tests/data/acpi/aarch64/virt/APIC.msi_gicv2m
- create mode 100644 tests/data/acpi/aarch64/virt/IORT.msi_gicv2m
-
+diff --git a/audio/pwaudio.c b/audio/pwaudio.c
+index 39b2b8f0a0d..c30738c16ef 100644
+--- a/audio/pwaudio.c
++++ b/audio/pwaudio.c
+@@ -20,14 +20,13 @@
+ #include <spa/param/props.h>
+ 
+ #include <pipewire/pipewire.h>
++
++#include "audio_int.h"
+ #include "trace.h"
+ 
+-#define AUDIO_CAP "pipewire"
+ #define RINGBUFFER_SIZE    (1u << 22)
+ #define RINGBUFFER_MASK    (RINGBUFFER_SIZE - 1)
+ 
+-#include "audio_int.h"
+-
+ #define TYPE_AUDIO_PW "audio-pipewire"
+ OBJECT_DECLARE_SIMPLE_TYPE(AudioPw, AUDIO_PW)
+ 
+@@ -358,7 +357,7 @@ audfmt_to_pw(AudioFormat fmt, bool big_endian)
+         format = big_endian ? SPA_AUDIO_FORMAT_F32_BE : SPA_AUDIO_FORMAT_F32_LE;
+         break;
+     default:
+-        dolog("Internal logic error: Bad audio format %d\n", fmt);
++        error_report("pipewire: internal logic error: bad audio format %d", fmt);
+         format = SPA_AUDIO_FORMAT_U8;
+         break;
+     }
+@@ -418,7 +417,7 @@ pw_to_audfmt(enum spa_audio_format fmt, int *endianness,
+         return AUDIO_FORMAT_F32;
+     default:
+         *sample_size = 1;
+-        dolog("Internal logic error: Bad spa_audio_format %d\n", fmt);
++        error_report("pipewire: internal logic error: bad spa_audio_format %d", fmt);
+         return AUDIO_FORMAT_U8;
+     }
+ }
+@@ -518,7 +517,7 @@ qpw_set_position(uint32_t channels, uint32_t position[SPA_AUDIO_MAX_CHANNELS])
+         position[0] = SPA_AUDIO_CHANNEL_MONO;
+         break;
+     default:
+-        dolog("Internal error: unsupported channel count %d\n", channels);
++        error_report("pipewire: unsupported channel count %d", channels);
+     }
+ }
+ 
 -- 
-2.50.1 (Apple Git-155)
+2.52.0
 
 
