@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C77FD25929
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 03:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE6ED25929
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 03:26:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkZgQ-0004CS-5J; Mon, 26 Jan 2026 22:24:02 -0500
+	id 1vkZgW-0004Hp-Jo; Mon, 26 Jan 2026 22:24:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vkZgO-0004BY-33; Mon, 26 Jan 2026 22:24:00 -0500
+ id 1vkZgV-0004Gn-2m; Mon, 26 Jan 2026 22:24:07 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1vkZgL-0003Z2-W2; Mon, 26 Jan 2026 22:23:59 -0500
+ id 1vkZgT-0003Z2-Lp; Mon, 26 Jan 2026 22:24:06 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 27 Jan
  2026 11:23:49 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 27 Jan 2026 11:23:48 +0800
+ Transport; Tue, 27 Jan 2026 11:23:49 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,14 +32,16 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 0/7] Update functional tests for
- AST2500/AST2600/AST103/AST1060
-Date: Tue, 27 Jan 2026 11:23:36 +0800
-Message-ID: <20260127032348.2238527-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 3/7] hw/pci-host/aspeed_pcie: Drop AST2600 RC_H root-bus
+ remap and bus-nr property
+Date: Tue, 27 Jan 2026 11:23:39 +0800
+Message-ID: <20260127032348.2238527-4-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260127032348.2238527-1-jamin_lin@aspeedtech.com>
+References: <20260127032348.2238527-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -65,38 +67,110 @@ From:  Jamin Lin via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1:
- - Remove AST2600 PCIe root device and RC_L support
- - Drop RC_H root-bus remap and bus number properties
- - Expand AST2600 RC_H PCIe MMIO window to 0x60000000¡V0x80000000
- - Update functional tests for AST2500, AST2600, AST1060, and AST1030
- - AST2500 tests are updated to use SDK v10.00, as network support is known
-  to be broken in v11.00.
+The original AST2600 PCIe design supported both RC_L and RC_H, using root bus
+number 0 for RC_L and 0x80 for RC_H. In that model, the root port appeared as
+80:08.0 and QEMU carried a "bus-nr" property plus a config-space bus remap to
+translate bus 0x80 to bus 0x00 for PCI enumeration.
 
-Jamin Lin (7):
-  tests/functional/arm/test_aspeed_ast2500: Update test ASPEED SDK
-    v10.00
-  hw/pci-host/aspeed_pcie: Drop AST2600 PCIe root device
-  hw/pci-host/aspeed_pcie: Drop AST2600 RC_H root-bus remap and bus-nr
-    property
-  hw/arm/aspeed_ast2600: Expand RC_H PCIe MMIO window to 0x60000000 -
-    0x80000000
-  tests/functional/arm/test_aspeed_ast2600_sdk: Update test ASPEED SDK
-    v11.00
-  tests/functional/arm/test_aspeed_ast1060: Update test
-    aspeed-zephyr-project v03.04
-  tests/functional/arm/test_aspeed_ast1030: Update test ASPEED Zephyr
-    SDK v03.05
+Linux mainline has since dropped RC_L support and updated the RC_H root bus
+number to start at 0. The root port is now enumerated as 00:08.0, matching the
+default QEMU PCIe subsystem root bus numbering.
 
- include/hw/pci-host/aspeed_pcie.h             | 11 ---
- hw/arm/aspeed_ast2600.c                       |  8 +-
- hw/pci-host/aspeed_pcie.c                     | 76 +------------------
- tests/functional/arm/test_aspeed_ast1030.py   | 12 +--
- tests/functional/arm/test_aspeed_ast1060.py   | 14 ++--
- tests/functional/arm/test_aspeed_ast2500.py   |  8 +-
- .../functional/arm/test_aspeed_ast2600_sdk.py | 22 +++---
- 7 files changed, 31 insertions(+), 120 deletions(-)
+Remove the bus number setting and the AST2600 bus remap logic, and drop the
+corresponding "bus-nr"/rc_bus_nr fields and property plumbing. QEMU now relies
+on the default root bus 0 behavior.
 
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ include/hw/pci-host/aspeed_pcie.h |  2 --
+ hw/pci-host/aspeed_pcie.c         | 19 +------------------
+ 2 files changed, 1 insertion(+), 20 deletions(-)
+
+diff --git a/include/hw/pci-host/aspeed_pcie.h b/include/hw/pci-host/aspeed_pcie.h
+index fde5816ea3..143b356591 100644
+--- a/include/hw/pci-host/aspeed_pcie.h
++++ b/include/hw/pci-host/aspeed_pcie.h
+@@ -69,7 +69,6 @@ struct AspeedPCIERcState {
+     uint64_t dram_base;
+     uint32_t msi_addr;
+     uint32_t rp_addr;
+-    uint32_t bus_nr;
+     char name[16];
+     qemu_irq irq;
+ 
+@@ -102,7 +101,6 @@ struct AspeedPCIECfgClass {
+ 
+     uint32_t rc_msi_addr;
+     uint32_t rc_rp_addr;
+-    uint64_t rc_bus_nr;
+     uint64_t nr_regs;
+     bool rc_has_rd;
+ };
+diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
+index 4fdda95939..4f896f855c 100644
+--- a/hw/pci-host/aspeed_pcie.c
++++ b/hw/pci-host/aspeed_pcie.c
+@@ -268,7 +268,7 @@ static const char *aspeed_pcie_rc_root_bus_path(PCIHostState *host_bridge,
+     AspeedPCIECfgState *cfg =
+            container_of(rc, AspeedPCIECfgState, rc);
+ 
+-    snprintf(rc->name, sizeof(rc->name), "%04x:%02x", cfg->id, rc->bus_nr);
++    snprintf(rc->name, sizeof(rc->name), "%04x:00", cfg->id);
+ 
+     return rc->name;
+ }
+@@ -283,7 +283,6 @@ static void aspeed_pcie_rc_instance_init(Object *obj)
+ }
+ 
+ static const Property aspeed_pcie_rc_props[] = {
+-    DEFINE_PROP_UINT32("bus-nr", AspeedPCIERcState, bus_nr, 0),
+     DEFINE_PROP_UINT32("rp-addr", AspeedPCIERcState, rp_addr, 0),
+     DEFINE_PROP_UINT32("msi-addr", AspeedPCIERcState, msi_addr, 0),
+     DEFINE_PROP_UINT64("dram-base", AspeedPCIERcState, dram_base, 0),
+@@ -490,17 +489,6 @@ static void aspeed_pcie_cfg_readwrite(AspeedPCIECfgState *s,
+     offset = cfg_addr & 0xffc;
+ 
+     pci = PCI_HOST_BRIDGE(rc);
+-
+-    /*
+-     * On the AST2600, the RC_H bus number range from 0x80 to 0xFF, with the
+-     * root device and root port assigned to bus 0x80 instead of the standard
+-     * 0x00. To allow the PCI subsystem to correctly discover devices on the
+-     * root bus, bus 0x80 is remapped to 0x00.
+-     */
+-    if (bus == rc->bus_nr) {
+-        bus = 0;
+-    }
+-
+     pdev = pci_find_device(pci->bus, bus, devfn);
+     if (!pdev) {
+         s->regs[desc->rdata_reg] = ~0;
+@@ -650,9 +638,6 @@ static void aspeed_pcie_cfg_realize(DeviceState *dev, Error **errp)
+                           apc->nr_regs << 2);
+     sysbus_init_mmio(sbd, &s->mmio);
+ 
+-    object_property_set_int(OBJECT(&s->rc), "bus-nr",
+-                            apc->rc_bus_nr,
+-                            &error_abort);
+     object_property_set_int(OBJECT(&s->rc), "rp-addr",
+                             apc->rc_rp_addr,
+                             &error_abort);
+@@ -691,7 +676,6 @@ static void aspeed_pcie_cfg_class_init(ObjectClass *klass, const void *data)
+     apc->reg_map = &aspeed_regmap;
+     apc->nr_regs = 0x100 >> 2;
+     apc->rc_msi_addr = 0x1e77005C;
+-    apc->rc_bus_nr = 0x80;
+     apc->rc_rp_addr = PCI_DEVFN(8, 0);
+ }
+ 
+@@ -811,7 +795,6 @@ static void aspeed_2700_pcie_cfg_class_init(ObjectClass *klass,
+     apc->reg_map = &aspeed_2700_regmap;
+     apc->nr_regs = 0x100 >> 2;
+     apc->rc_msi_addr = 0x000000F0;
+-    apc->rc_bus_nr = 0;
+     apc->rc_rp_addr = PCI_DEVFN(0, 0);
+ }
+ 
 -- 
 2.43.0
 
