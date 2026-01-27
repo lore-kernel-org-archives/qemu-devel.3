@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDDCCD3409E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1789D340A1
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 16:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vklkH-00040U-HX; Tue, 27 Jan 2026 11:16:49 -0500
+	id 1vklkH-00041H-S6; Tue, 27 Jan 2026 11:16:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vkljb-0003Yn-Qf; Tue, 27 Jan 2026 11:16:12 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1vklja-0003YY-CL; Tue, 27 Jan 2026 11:16:08 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vkljY-0000kk-Lc; Tue, 27 Jan 2026 11:16:07 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60R819BP021671;
- Tue, 27 Jan 2026 16:16:03 GMT
+ id 1vkljX-0000kH-Hb; Tue, 27 Jan 2026 11:16:06 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60R6m8Un025155;
+ Tue, 27 Jan 2026 16:16:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=QgwY+s5/YPV70qhaR
- N7qDH1juH+0C1sYgP0UTCDerkQ=; b=ORuk7yOwjV73ys5xJO7S7S2DvciP/1Ntg
- HNbnXonGqc+x+Bcjvc4BKr3ihyvGb2qyCJPT1X2wJt7wCW/iHW9x/7Dz3Ps+6QD0
- Yz+RH8PGNjmSGVwGngbaqREIt7HtcjMdHaRbQW1dk2jOzvd6vqwlR0UMgKCfWvq1
- Qv/0u+pJPR81N6kMwNUmSnMJ4fGIQtPxDTOUoTFwq0ATXNBkDJQ3ftc1iqvjFpIL
- eW7yU2FhjRz3YvVPcet2HMzy5ajgPFknFLIDbuJik5pYUf4fwTQQSigBHjofoFSR
- dKlrhtLxDP/v/GWd0JyEr8Zx/PdsLJHWZBPhkCAOWJZPJ+ags1vIQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnk6xepc-1
+ :mime-version:references:subject:to; s=pp1; bh=Rf/LyNJCD2ilTQUbJ
+ RdaZXl8SGPKTZ2iPBiK+L4xuSY=; b=Aun0i1+1Bk042IFitJtToyLjlpbjyKFlZ
+ WAOY9fMXkRrA0NnjYP0UO+G5Si24WoJ8YEWKdd0GliriuH53jbAAZxpvYMG0jwYL
+ XW/O+RdTo4hkR8fiKfig6SZUTr38/71BUMaK0XRKuUqhW+2z2kkXToEiC2R+nDfI
+ GJjVXDvpDeMKAwR1r0odP2cF5X5LLam1ZQgaGm5v8Z4TWo0j6+F6kGMggvHeJOZc
+ LwMaAJizDQq30ULFt9KSPDYJ88Ewlb4bgIBWUf3uWXzAEVxxe0Pn5FLqrJUh/YEf
+ TlP9L8drMVweqz+Q35GhLBoz09AtaQPXaxf3yszQfeT/lyFuNOh5Q==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvkgmmv46-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Jan 2026 16:16:02 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60REPh6V023625;
- Tue, 27 Jan 2026 16:16:02 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bwamjs51k-1
+ Tue, 27 Jan 2026 16:16:00 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60RE3P2D019666;
+ Tue, 27 Jan 2026 16:15:59 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw9dn1b40-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Jan 2026 16:16:02 +0000
+ Tue, 27 Jan 2026 16:15:59 +0000
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60RGFfuw16581304
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60RGFwjR6816518
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 27 Jan 2026 16:15:41 GMT
+ Tue, 27 Jan 2026 16:15:58 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 50BDF5805A;
- Tue, 27 Jan 2026 16:16:00 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 53DF35805C;
+ Tue, 27 Jan 2026 16:15:58 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 32E7758054;
- Tue, 27 Jan 2026 16:15:59 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 371DE5805D;
+ Tue, 27 Jan 2026 16:15:57 +0000 (GMT)
 Received: from t15.ibmuc.com (unknown [9.61.94.134])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 27 Jan 2026 16:15:59 +0000 (GMT)
+ Tue, 27 Jan 2026 16:15:57 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com,
  mst@redhat.com
 Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH v3 04/14] pc-bios/s390-ccw: Store device type independent of
- sense data
-Date: Tue, 27 Jan 2026 11:15:37 -0500
-Message-ID: <20260127161547.459443-5-jrossi@linux.ibm.com>
+Subject: [PATCH v3 03/14] s390x: Remove duplicate definitions of IPL types
+Date: Tue, 27 Jan 2026 11:15:36 -0500
+Message-ID: <20260127161547.459443-4-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20260127161547.459443-1-jrossi@linux.ibm.com>
 References: <20260127161547.459443-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: BSigvPKW1JTQXtxY8W7ZFVE6AGelyRCb
-X-Proofpoint-ORIG-GUID: BSigvPKW1JTQXtxY8W7ZFVE6AGelyRCb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDEyOSBTYWx0ZWRfX99EcGWaP9Obj
- d4hvnIq9Q7TQWvWAa/FUPyMl6+f7a9MYkyGprh69ifwRyNox89ivL81FfCL7LtQ+ZilRoHR5h5x
- 68YTThfHdm1P5BEVdOVcFwRnIiVwZycsnZtRKQ6BkTrDEl6N8BhIda3vQWaL0hTIRUSO744+Qr7
- dRCXSbN02CBzNG3kJEAcWdKsGVWy1LgbccGSVWNNXE/Od/V/AtTm/9Ww6s9zNikq1vhiOGWUMxo
- i61xUafyJtAy9HiQl+veknoVQAFxuU4WZVDVTAi4AsYv8eKybi/YnJdxu9dkcwsRSpIIdATLPay
- rMA9AtX9p3AKmgeQjvN0KPJ4V1WuJlQDfVMrDrPGEhptWg1Xj4deltDMQ58EpagYGqFaqmW/Fb9
- FflbGXbWM7pjPKJvE3VitBsoLd8WZXqopieldEmcZVyWXqNcFMIuBTETJ3n4IEbBVWON/mHDBXC
- i35be4tCcR4ZdCvsrCg==
-X-Authority-Analysis: v=2.4 cv=AMiVTGgp c=1 sm=1 tr=0 ts=6978e4c3 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Authority-Analysis: v=2.4 cv=Gr1PO01C c=1 sm=1 tr=0 ts=6978e4c0 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=OLVzLx0gnTBhq6zLJUYA:9
+ a=zWWk5AeEZ3i7y8Hvs5sA:9
+X-Proofpoint-GUID: x7XPyjKGyAnbLxSoADre3vasK5qlU67o
+X-Proofpoint-ORIG-GUID: x7XPyjKGyAnbLxSoADre3vasK5qlU67o
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDEyOSBTYWx0ZWRfX/JHrAXOA8xnI
+ iUw9RKKLb/k6eY/AcqkEpKPLUj2zj8Umbs8FxBo4Z8tWQTJ4m+hUa1hqe3J0Fl50SWc/FbbHOCB
+ BEKlUnNCixHekDTwN9rm6uj43y6PrJt7zvb0XuwlkIKmG2p+yvGkcQ0s/BNg7v/eZbUmMoOBO25
+ qhh3lwNydRUKKL0ccJ34DNPpgq4/7aNvUwPN/+Q1kILbjJc9jxiUFQCFNgbiE/siH+crTziiIeq
+ uFi6X6efgsTN66Vhlv5pNq5JaHEwD1GjyEuNlDoM0TqiJTk+uH3ZvSy5RcmOQjQr9a3THh20iO2
+ myMfhn6NZ28AdrH7at9OT8f+gQBwH3iyiJsE/HF39ghcngYVShQizKf/sBnSKzHmDm0Qd5tuxVH
+ 5N+qz11lPjpdvcyk+uHaF6eS15bQrLjtln2GPkiD9NjVkue3iJUlxdR0zeV4/Mma8hn6LYXCIKv
+ WPCbeRiOfYG0hJvrx2g==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-27_03,2026-01-27_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 phishscore=0 bulkscore=0 suspectscore=0
- adultscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ priorityscore=1501 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 malwarescore=0 adultscore=0 spamscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
  definitions=main-2601270129
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -122,216 +121,126 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Store the device type (e.g. block) directly and an attribute of the VDev rather
-than assume all devices can be identified by accessing CCW specific sense data.
+Remove the duplicate definitions from hw/s390x/ipl.h and pc-bios/s390-ccw/iplb.h
+and add a shared definition.  The new definition is an enum to enforce default
+handling in switches.
 
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- pc-bios/s390-ccw/main.c          |  2 +-
- pc-bios/s390-ccw/virtio-blkdev.c | 39 +++++++++++++++++++-------------
- pc-bios/s390-ccw/virtio.c        | 11 ++++++---
- pc-bios/s390-ccw/virtio.h        |  1 +
- 4 files changed, 33 insertions(+), 20 deletions(-)
+ hw/s390x/ipl.h              |  5 -----
+ include/hw/s390x/ipl/qipl.h | 10 ++++++++++
+ pc-bios/s390-ccw/iplb.h     |  4 ----
+ pc-bios/s390-ccw/main.c     |  9 +++++++--
+ pc-bios/s390-ccw/virtio.h   |  1 +
+ 5 files changed, 18 insertions(+), 11 deletions(-)
 
+diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+index 086e57681c..c542d30ce2 100644
+--- a/hw/s390x/ipl.h
++++ b/hw/s390x/ipl.h
+@@ -103,11 +103,6 @@ QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
+ #define DIAG308_PV_STORE            9
+ #define DIAG308_PV_START            10
+ 
+-#define S390_IPL_TYPE_FCP 0x00
+-#define S390_IPL_TYPE_CCW 0x02
+-#define S390_IPL_TYPE_PV 0x05
+-#define S390_IPL_TYPE_QEMU_SCSI 0xff
+-
+ #define S390_IPLB_HEADER_LEN 8
+ #define S390_IPLB_MIN_PV_LEN 148
+ #define S390_IPLB_MIN_CCW_LEN 200
+diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+index 6824391111..6dc12dd859 100644
+--- a/include/hw/s390x/ipl/qipl.h
++++ b/include/hw/s390x/ipl/qipl.h
+@@ -20,6 +20,16 @@
+ #define LOADPARM_LEN    8
+ #define NO_LOADPARM "\0\0\0\0\0\0\0\0"
+ 
++enum S390IplType {
++    S390_IPL_TYPE_FCP = 0x00,
++    S390_IPL_TYPE_CCW = 0x02,
++    S390_IPL_TYPE_PV = 0x05,
++    S390_IPL_TYPE_QEMU_SCSI = 0xff
++};
++typedef enum S390IplType S390IplType;
++
++#define QEMU_DEFAULT_IPL S390_IPL_TYPE_CCW
++
+ /*
+  * The QEMU IPL Parameters will be stored at absolute address
+  * 204 (0xcc) which means it is 32-bit word aligned but not
+diff --git a/pc-bios/s390-ccw/iplb.h b/pc-bios/s390-ccw/iplb.h
+index 08f259ff31..926e8eed5d 100644
+--- a/pc-bios/s390-ccw/iplb.h
++++ b/pc-bios/s390-ccw/iplb.h
+@@ -23,10 +23,6 @@ extern QemuIplParameters qipl;
+ extern IplParameterBlock iplb __attribute__((__aligned__(PAGE_SIZE)));
+ extern bool have_iplb;
+ 
+-#define S390_IPL_TYPE_FCP 0x00
+-#define S390_IPL_TYPE_CCW 0x02
+-#define S390_IPL_TYPE_QEMU_SCSI 0xff
+-
+ static inline bool manage_iplb(IplParameterBlock *iplb, bool store)
+ {
+     register unsigned long addr asm("0") = (unsigned long) iplb;
 diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 0446d5de67..e7c3d9b2d6 100644
+index 76bf743900..0446d5de67 100644
 --- a/pc-bios/s390-ccw/main.c
 +++ b/pc-bios/s390-ccw/main.c
-@@ -250,7 +250,7 @@ static int virtio_setup(void)
-     vdev->is_cdrom = false;
-     int ret;
+@@ -162,11 +162,12 @@ static void menu_setup(void)
+         return;
+     }
  
--    switch (vdev->senseid.cu_model) {
-+    switch (vdev->dev_type) {
-     case VIRTIO_ID_NET:
-         puts("Network boot device detected");
-         return 0;
-diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
-index 019c2718b1..9cc40e9108 100644
---- a/pc-bios/s390-ccw/virtio-blkdev.c
-+++ b/pc-bios/s390-ccw/virtio-blkdev.c
-@@ -53,14 +53,14 @@ int virtio_read_many(unsigned long sector, void *load_addr, int sec_num)
+-    switch (iplb.pbt) {
++    switch (virtio_get_device()->ipl_type) {
+     case S390_IPL_TYPE_CCW:
+     case S390_IPL_TYPE_QEMU_SCSI:
+         menu_set_parms(qipl.qipl_flags & BOOT_MENU_FLAG_MASK,
+                        qipl.boot_menu_timeout);
++    default:
+         return;
+     }
+ }
+@@ -190,6 +191,7 @@ static void css_setup(void)
+ static void boot_setup(void)
  {
+     char lpmsg[] = "LOADPARM=[________]\n";
++    VDev *vdev = virtio_get_device();
+ 
+     if (have_iplb && memcmp(iplb.loadparm, NO_LOADPARM, LOADPARM_LEN) != 0) {
+         ebcdic_to_ascii((char *) iplb.loadparm, loadparm_str, LOADPARM_LEN);
+@@ -198,7 +200,10 @@ static void boot_setup(void)
+     }
+ 
+     if (have_iplb) {
++        vdev->ipl_type = iplb.pbt;
+         menu_setup();
++    } else {
++        vdev->ipl_type = QEMU_DEFAULT_IPL;
+     }
+ 
+     memcpy(lpmsg + 10, loadparm_str, 8);
+@@ -216,7 +221,7 @@ static bool find_boot_device(void)
      VDev *vdev = virtio_get_device();
+     bool found = false;
  
--    switch (vdev->senseid.cu_model) {
-+    switch (vdev->dev_type) {
-     case VIRTIO_ID_BLOCK:
-         return virtio_blk_read_many(vdev, sector, load_addr, sec_num);
-     case VIRTIO_ID_SCSI:
-         return virtio_scsi_read_many(vdev, sector, load_addr, sec_num);
-+    default:
-+        return -1;
-     }
--
--    return -1;
- }
- 
- unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
-@@ -119,7 +119,7 @@ void virtio_assume_iso9660(void)
- {
-     VDev *vdev = virtio_get_device();
- 
--    switch (vdev->senseid.cu_model) {
-+    switch (vdev->dev_type) {
-     case VIRTIO_ID_BLOCK:
-         vdev->guessed_disk_nature = VIRTIO_GDN_SCSI;
-         vdev->config.blk.blk_size = VIRTIO_ISO_BLOCK_SIZE;
-@@ -129,6 +129,8 @@ void virtio_assume_iso9660(void)
-     case VIRTIO_ID_SCSI:
-         vdev->scsi_block_size = VIRTIO_ISO_BLOCK_SIZE;
-         break;
-+    default:
-+        return;
-     }
- }
- 
-@@ -139,13 +141,15 @@ void virtio_assume_eckd(void)
-     vdev->guessed_disk_nature = VIRTIO_GDN_DASD;
-     vdev->blk_factor = 1;
-     vdev->config.blk.physical_block_exp = 0;
--    switch (vdev->senseid.cu_model) {
-+    switch (vdev->dev_type) {
-     case VIRTIO_ID_BLOCK:
-         vdev->config.blk.blk_size = VIRTIO_DASD_DEFAULT_BLOCK_SIZE;
-         break;
-     case VIRTIO_ID_SCSI:
-         vdev->config.blk.blk_size = vdev->scsi_block_size;
-         break;
-+    default:
-+        break;
-     }
-     vdev->config.blk.geometry.heads = 15;
-     vdev->config.blk.geometry.sectors =
-@@ -162,50 +166,52 @@ bool virtio_ipl_disk_is_valid(void)
-         return true;
-     }
- 
--    return (vdev->senseid.cu_model == VIRTIO_ID_BLOCK ||
--            vdev->senseid.cu_model == VIRTIO_ID_SCSI) &&
--           blksize >= 512 && blksize <= 4096;
-+    return (vdev->dev_type == VIRTIO_ID_BLOCK || vdev->dev_type == VIRTIO_ID_SCSI)
-+            && blksize >= 512 && blksize <= 4096;
- }
- 
- int virtio_get_block_size(void)
- {
-     VDev *vdev = virtio_get_device();
- 
--    switch (vdev->senseid.cu_model) {
-+    switch (vdev->dev_type) {
-     case VIRTIO_ID_BLOCK:
-         return vdev->config.blk.blk_size;
-     case VIRTIO_ID_SCSI:
-         return vdev->scsi_block_size;
-+    default:
-+        return 0;
-     }
--    return 0;
- }
- 
- uint8_t virtio_get_heads(void)
- {
-     VDev *vdev = virtio_get_device();
- 
--    switch (vdev->senseid.cu_model) {
-+    switch (vdev->dev_type) {
-     case VIRTIO_ID_BLOCK:
-         return vdev->config.blk.geometry.heads;
-     case VIRTIO_ID_SCSI:
-         return vdev->guessed_disk_nature == VIRTIO_GDN_DASD
-                ? vdev->config.blk.geometry.heads : 255;
-+    default:
-+        return 0;
-     }
--    return 0;
- }
- 
- uint8_t virtio_get_sectors(void)
- {
-     VDev *vdev = virtio_get_device();
- 
--    switch (vdev->senseid.cu_model) {
-+    switch (vdev->dev_type) {
-     case VIRTIO_ID_BLOCK:
-         return vdev->config.blk.geometry.sectors;
-     case VIRTIO_ID_SCSI:
-         return vdev->guessed_disk_nature == VIRTIO_GDN_DASD
-                ? vdev->config.blk.geometry.sectors : 63;
-+    default:
-+        return 0;
-     }
--    return 0;
- }
- 
- uint64_t virtio_get_blocks(void)
-@@ -213,13 +219,14 @@ uint64_t virtio_get_blocks(void)
-     VDev *vdev = virtio_get_device();
-     const uint64_t factor = virtio_get_block_size() / VIRTIO_SECTOR_SIZE;
- 
--    switch (vdev->senseid.cu_model) {
-+    switch (vdev->dev_type) {
-     case VIRTIO_ID_BLOCK:
-         return vdev->config.blk.capacity / factor;
-     case VIRTIO_ID_SCSI:
-         return vdev->scsi_last_block / factor;
-+    default:
-+        return 0;
-     }
--    return 0;
- }
- 
- int virtio_blk_setup_device(SubChannelId schid)
-diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-index f384a990dc..5dd407d5c9 100644
---- a/pc-bios/s390-ccw/virtio.c
-+++ b/pc-bios/s390-ccw/virtio.c
-@@ -41,7 +41,7 @@ VDev *virtio_get_device(void)
- 
- VirtioDevType virtio_get_device_type(void)
- {
--    return vdev.senseid.cu_model;
-+    return vdev.dev_type;
- }
- 
- /* virtio spec v1.0 para 4.3.3.2 */
-@@ -248,7 +248,7 @@ int virtio_setup_ccw(VDev *vdev)
-         return -EIO;
-     }
- 
--    switch (vdev->senseid.cu_model) {
-+    switch (vdev->dev_type) {
-     case VIRTIO_ID_NET:
-         vdev->nr_vqs = 2;
-         vdev->cmd_vr_idx = 0;
-@@ -346,12 +346,17 @@ bool virtio_is_supported(SubChannelId schid)
-                 true)) {
-         return false;
-     }
-+
-+    vdev.dev_type = vdev.senseid.cu_model;
-+
-     if (vdev.senseid.cu_type == 0x3832) {
--        switch (vdev.senseid.cu_model) {
-+        switch (vdev.dev_type) {
-         case VIRTIO_ID_BLOCK:
-         case VIRTIO_ID_SCSI:
-         case VIRTIO_ID_NET:
-             return true;
-+        default:
-+            return false;
-         }
-     }
-     return false;
+-    switch (iplb.pbt) {
++    switch (vdev->ipl_type) {
+     case S390_IPL_TYPE_CCW:
+         vdev->scsi_device_selected = false;
+         debug_print_int("device no. ", iplb.ccw.devno);
 diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-index 391d6ff2f7..39b507b221 100644
+index 06ba4e45ac..391d6ff2f7 100644
 --- a/pc-bios/s390-ccw/virtio.h
 +++ b/pc-bios/s390-ccw/virtio.h
-@@ -239,6 +239,7 @@ struct VDev {
+@@ -238,6 +238,7 @@ struct VDev {
+     VirtioGDN guessed_disk_nature;
      SubChannelId schid;
      SenseId senseid;
-     S390IplType ipl_type;
-+    VirtioDevType dev_type;
++    S390IplType ipl_type;
      union {
          VirtioBlkConfig blk;
          VirtioScsiConfig scsi;
