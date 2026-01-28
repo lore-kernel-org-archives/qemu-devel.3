@@ -4,88 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02B04D46BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 19:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DECDD46BF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 19:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlAzD-0000Ij-Pt; Wed, 28 Jan 2026 14:13:55 -0500
+	id 1vlBGH-0003Hx-FO; Wed, 28 Jan 2026 14:31:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <language.lawyer@gmail.com>)
- id 1vlAzC-0000Fa-8T
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 14:13:54 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <language.lawyer@gmail.com>)
- id 1vlAzA-0005AD-OC
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 14:13:54 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-47ee0291921so1447815e9.3
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 11:13:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769627630; x=1770232430; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=MqdCqhEF2C+OjUR4hjifp2dBRMOnlGPQaqoxSkmcJxQ=;
- b=ldjeYWx1GYICyqPURK34IFrmXK/Wx/+2mAGVpuQXAu3jjyn62szTHijXrFdKlc2MSY
- ygkYYP1YVCHEm8o262TOD/PixavSZ835uJD1wBe3YE9+ocMa4854BXhZCwsuWFeeOSJI
- UEnCZy0ipJmeAwjLv3TU8IAMkfIpoN2nOTF6LdWHQq0wh7pCEjfKZ72lzhalSLJFtgeQ
- XER7XdOADWPcyRvUDbEjdPvMJ5nGkYojTQuwawoKnADDqjD34z3J+fD4Olounkpxzr2G
- PW7I6aeENvA+MhZE4EvW5t6RT7IPsLTqh6xxjinvZgNvWIidwqrLUbLO01yzQyZsP3qF
- TE/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769627630; x=1770232430;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MqdCqhEF2C+OjUR4hjifp2dBRMOnlGPQaqoxSkmcJxQ=;
- b=PMDEJ4grsyEsopy48uoUv1PC+z8uwZsW60Er/0Go5OkDj5y+rDZvUgfcCDBpVoigjW
- t0doXw2t6bXHyni3rIj6uhlEWsghOQuAjN2VHt/xKCQjNExdx6tsWj3PbOHPdT/lp9PH
- 0o/+bY3w07juZrMl1BRAfPE3yJ5ZXemvz++cdVAfScknLIRL3Vd7g/myd/nGzxtdATHW
- vsc63OkyeIioUyffze9V35NGgM5/Qar5xgE4spwttr009P/FSLgNREIYe86/O1dS3jiB
- 4Wo/nTip5w0nPYQkMdeVoS2BqrL/5LFHDjpR5kUTGMtpqT52MJDgCJsDIgcoZGN0BqQE
- 4j/w==
-X-Gm-Message-State: AOJu0YzHX+wudw+fqCTxRV0XIpayJNZEWlUMSnIiijuBTfIySco1n77T
- vgKdRg/5DHqZWpXqLwQYaWfD3TR1C4LPshh7tu10MDVqkFEQtyhAq+t8hHqtTQ==
-X-Gm-Gg: AZuq6aIwN7qMs0EIh9zhxsFr2OJV3iMfXXAvZencxKdj/6RPKkVyNBSefcSb7KSlUnQ
- K7s8sZJxfVk4hsp4pKMvxmLpqQd267AK3861jCtql0IfA4uXO/aHa7ryDSZpdVHHPYvcynQ7m/Q
- yRfnz5pbrXkDdRiReik1bJYNWZ+OgnTPX3GRcPIFdhqs9XKe7N4PqbJnQLykyPOoADZkh8BLcmC
- DDEb7XHxDaGDEt9l6Vhp+S6RTAMpMb/3Oszem7ZyHnLz7QS9VWQQpITCx00tRPtGpLoW3JzGiRK
- fs1OSiORb4haOPoiSBMZ2flsNkaOYf8JbZLWAL6ViAN/sY9DJfufSbkK0YR8/e1Z+uAgo8XuvD+
- ysx1/x49zX0Tc5mQDNjSDBl6fbGCNpTFkN0URYw/l4M3yshRbAE011XThhFQENdvJhZKbQ9j6D+
- cizn2P4MFLhdF9YeCJMKI/6vCRCOSbcHef
-X-Received: by 2002:a05:600c:64ce:b0:45c:4470:271c with SMTP id
- 5b1f17b1804b1-48069c8c59dmr73075735e9.18.1769627630050; 
- Wed, 28 Jan 2026 11:13:50 -0800 (PST)
-Received: from [192.168.88.252] ([82.215.83.93])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e132356dsm9421405f8f.33.2026.01.28.11.13.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Jan 2026 11:13:49 -0800 (PST)
-Message-ID: <d3cd5506-1ba0-492a-9eee-51f814da6087@gmail.com>
-Date: Thu, 29 Jan 2026 00:13:45 +0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vlBG9-0003GP-VB
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 14:31:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vlBG7-0003Jn-BB
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 14:31:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769628676;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IvNiMEiXICHXlUvwTUyqZ8NffU8nSW5gnfz/Ck92Dgs=;
+ b=K4QfXO1R4zPvqLJEwseU/j8Qp3SO00i4V0jMO1n2i7agMLs6AD/+40TN3kJB4Q8DA2cJps
+ 1ryi7Ca228A5572fNRUJ4memMmpCaZCbfnvC+msSZAZ5MHwP3aP/Lg0cN0+nyksUYegIXi
+ 5PgjYeHNslZOu4l2LyV29223y8W3Us0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-PMYeZeiINrm4TeaJxkbezQ-1; Wed,
+ 28 Jan 2026 14:31:13 -0500
+X-MC-Unique: PMYeZeiINrm4TeaJxkbezQ-1
+X-Mimecast-MFC-AGG-ID: PMYeZeiINrm4TeaJxkbezQ_1769628673
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A144E1800451; Wed, 28 Jan 2026 19:31:12 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.98])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 18EA530002DA; Wed, 28 Jan 2026 19:31:11 +0000 (UTC)
+Date: Wed, 28 Jan 2026 11:13:04 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Hannes Reinecke <hare@suse.de>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Benjamin Marzinski <bmarzins@redhat.com>,
+ "open list:Block layer core" <qemu-block@nongnu.org>,
+ Kevin Wolf <kwolf@redhat.com>, Alberto Faria <afaria@redhat.com>,
+ qemu-devel <qemu-devel@nongnu.org>
+Subject: Re: Moving from qemu-pr-helper and libmpathpersist to <linux/pr.h>
+Message-ID: <20260128161304.GA120658@fedora>
+References: <20260127184743.GA77765@fedora>
+ <CABgObfZetG0O5oX+pHCAaPXwaPreWn2NSXuWpJUBdaqdL=a4-w@mail.gmail.com>
+ <20260128141838.GA111862@fedora>
+ <2fff54ca-00c4-4483-ac1d-2c47b0f8c683@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] virtfs: 9p: local: add default uid and gid options
-From: Andrey Erokhin <language.lawyer@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>
-References: <fe7665bc-5ff6-4f78-82b7-1bea853583e3@gmail.com>
-Content-Language: en-US
-In-Reply-To: <fe7665bc-5ff6-4f78-82b7-1bea853583e3@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=language.lawyer@gmail.com; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="5B3kprZB4XP9I/M2"
+Content-Disposition: inline
+In-Reply-To: <2fff54ca-00c4-4483-ac1d-2c47b0f8c683@suse.de>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,11 +91,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> I was trying to boot from a directory tree owned by an ordinary user,
-> and some daemons weren't happy about non-root ownership of some files
-> 
-> Example use:
-> -virtfs local,path=rootfs,mount_tag=root,security_model=mapped,uid=0,gid=0
-I personally switched from fuse-overlayfs to user namespaces+kernel overlay fs (for writeable overlay for rootfs) long time ago, so I do not need uid=0,gid=0, I'm being mapped to 0:0 in the user namespace.
-I wanted to publish this change to support users which can't use user namespaces, but yesterday I realized I could just run QEMU (with fuse-overlayfs) under fakeroot 🤦‍♂️
+
+--5B3kprZB4XP9I/M2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Jan 28, 2026 at 04:30:51PM +0100, Hannes Reinecke wrote:
+> On 1/28/26 15:18, Stefan Hajnoczi wrote:
+> > On Tue, Jan 27, 2026 at 08:45:39PM +0100, Paolo Bonzini wrote:
+> > > Il mar 27 gen 2026, 19:47 Stefan Hajnoczi <stefanha@redhat.com> ha sc=
+ritto:
+> > >=20
+> > > > Several of us have pondered a different approach that I will summar=
+ize
+> > > > here. The <linux/pr.h> ioctl interface provides an alternative to
+> > > > ioctl(SG_IO) without the CAP_SYS_RAWIO requirement. It supports both
+> > > > SCSI and NVMe. Since privileges are not required, there would be no=
+ need
+> > > > for the qemu-pr-helper daemon anymore.
+> > > >=20
+> > >=20
+> > > Yes, no problem with that. It's easy to extend QEMU with a new pr-man=
+ager
+> > > subclass that converts SCSI commands to PR ioctls.
+> >=20
+> > Yes. It will be possible to go further than that in the future:
+> >=20
+> > Alberto has been working on QEMU block layer API support for persistent
+> > reservations. When that becomes available, SCSI command parsing can
+> > happen entirely within hw/scsi/scsi-disk.c for scsi-block and scsi-disk.
+> > file-posix.c will then implement the new BlockDriver PR APIs via
+> > <linux/pr.h> ioctls and other block drivers can implement them in
+> > protocol-specific ways (e.g. iSCSI).
+> >=20
+> > > My suggestion is to implement <linux/pr.h> via upcalls from DM-Multip=
+ath
+> > > > to multipathd. That way applications like QEMU can consistently use
+> > > > <linux/pr.h> across block device types and no longer have to go thr=
+ough
+> > > > the privileged libmpathpersist interface.
+> > > >=20
+> > >=20
+> > > What do you have in mind for the upcall protocol? Does it need to be =
+done
+> > > with multipathd or can it be a separate daemon for privilege separati=
+on? I
+> > > am not sure if there is any channel between dm-mpath and multipathd t=
+hat
+> > > can be extended (I think it only uses uevent?); maybe it would make s=
+ense
+> > > to reuse qemu-pr-helper's protocol even.
+> >=20
+> > I don't have a strong opinion on the protocol. My thought was to do a
+> > traditional upcall with call_usermodehelper() with an execve argv/envp
+> > protocol. That way there is no need to register a file descriptor. The
+> > downside is that this approach is less efficient and more likely to fail
+> > when the host is under memory pressure, but PR operations are not that
+> > frequent.
+> >=20
+> gnaa. call_usermodehelper() is _evil_. It might be executed with any
+> arbitrary fs context, and you better hope the executable is present
+> there ...
+>=20
+> Maybe look at the handshake daemon. That's solving a very similar issue
+> which we had for TLS.
+
+Netlink is the most complex approach. I had a hard to understanding what
+was going from looking at drivers/nvme/host/ and net/handshake/. But if
+netlink is the way to do this, I'm sure it can be done.
+
+Stefan
+
+--5B3kprZB4XP9I/M2
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAml6NZAACgkQnKSrs4Gr
+c8iJzgf5Ab88QDLKfqZKS2Te7aG5U7CzMbfWqKXzlDtBQjv/AfautAWG38moaQBk
+s1PI4yQ1Cm2Z7O6oMvjoibW4PT0Vh3yynL9A2BdZK5kW+n9fnFNGAYnZB0dNIWoC
+tcwdEQwBYOoS2mK61MgtNMgfpufpSy+Lfe3E8L7x/SR312ecPfGq7pSbsFJRbjKY
+47zZRxFJCjTof+rU+623Eeo/nOt5YwQKqagF5PXKLR5a4mu9nXLXTvI3tBzh1DcR
+65rRBxlFBikApg2p/K8pvBepkwHhbQ1u7mB6IV0SFtCrbPpiQu2VGWsQldpOgXgh
+0X9I2TQjwSjQic+dm7OrXRXXssuWPg==
+=X5FA
+-----END PGP SIGNATURE-----
+
+--5B3kprZB4XP9I/M2--
+
 
