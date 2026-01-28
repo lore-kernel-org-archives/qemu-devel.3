@@ -4,114 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FEC5D3F069
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 14:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A31D5D3F06A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 14:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl6EK-0006wk-V1; Wed, 28 Jan 2026 09:09:12 -0500
+	id 1vl69b-0004tQ-D9; Wed, 28 Jan 2026 09:04:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vl6EJ-0006tz-A0
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 09:09:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1vkxH1-00050I-Ou; Tue, 27 Jan 2026 23:35:23 -0500
+Received: from mail-japaneastazolkn190120002.outbound.protection.outlook.com
+ ([2a01:111:f403:d405::2] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vl6EH-0000RL-A2
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 09:09:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769609346;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=53qmsgHHhhtIZYmTeNk3CEN0Qa6qi3oEsven3Efny7M=;
- b=Hr5AS6pinxIK9YzWvwb7ujFJxXP0uVgdkRrKVtp8rPz8qH6NKWoawNlOx+5f38YqpfLAac
- 9S9JxTQImI9zQaHE/SBqRP/Zw+7GJfTBI/btlwHRwEaJlu1oGjMjhuRV1zAqJFfueZxBXe
- fl4wRDvYKPlOnv4Ypz3C1YzySbDcpUQ=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-rb_IIGn_NUCVbMaPNbcfKQ-1; Wed, 28 Jan 2026 09:09:05 -0500
-X-MC-Unique: rb_IIGn_NUCVbMaPNbcfKQ-1
-X-Mimecast-MFC-AGG-ID: rb_IIGn_NUCVbMaPNbcfKQ_1769609344
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8c277fe676eso1940715685a.0
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 06:09:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769609344; x=1770214144; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=53qmsgHHhhtIZYmTeNk3CEN0Qa6qi3oEsven3Efny7M=;
- b=omb2GY7euUNG2R8e0w2YZeiNZYVm94nUTCq69TzLcrzfmJ4GciFxX+QuRBcF9i4TMn
- LOeDRnOmlCGr3VIDO7Lr3Vi0RZy9QYBCR4yMeIbv9t1yyTgQQJ6iH+l4c1AEUSgAFsEG
- xkRz5/aTKscrlkDyUmuq8Yj3UQRwWGm6AWc7USD7lUoN831jgBkH7b2zw1wwQD4Z//VH
- OWhaQP+rYbZGs9oPHaPPYqG/xs5VqfM0tQXK3iOfk5J1NpXw445poSuouniW8GmMr5qe
- mH98ZzEquXXlsL7SwPOz3D9V6Ug+nH+semKp5/oCguUOxxBEzNF/c0iZTNmL5uZbrPRA
- O13A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769609344; x=1770214144;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=53qmsgHHhhtIZYmTeNk3CEN0Qa6qi3oEsven3Efny7M=;
- b=AScL5JhX7rljOoVDX/uhn6BOj2uMdYR9rwAMhcQvpN2kMpTrAnCUdj7ZvwS6pM29QF
- torQW8dVxpSlh2GK49z+r65/NtiQFAymzPuuJrTF2af9y1eYHT3Rpi6CBJrPjEVCp0I8
- PdM6+Qm8qhX7PP31LhysAKbfCTlitk63+gkU9/19xtfwyb4Ew4Pz9727EzYVUC4WNO6I
- 9z9QMxAQHZTuG3E8hFJeXbI/Cn5HsSjIo66lm6VYLAGwM1AiX9RubMKx8WQXW9SfhALy
- 2X4m70Tx69sXmWNflYnms7StaMHZ+4ArScTWqsxlFPmb4ICUHqEaZwoAEk1NHRi3eS3z
- j9iA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVvQ+HPfBw68+Aywoc0OCLf9bt/dWrdgQYLWNPJc/YkB59fI5kV2SPCnX1UqhF4sqTz6aZJR9SfUXeL@nongnu.org
-X-Gm-Message-State: AOJu0Yy9SvDNDIEcEt7+If9PBguptROKn6nC/yg3DSZrEdob7gMiq0I5
- 37tdFHPPfGQ7HQ/qSlNYTmubJcYUn3Wv6EW6heVLlD/0LsGmIDyGrB40hvhPa33c06/gZnxM3Do
- L6U5G4QkU1Zx5OitEJsRH7fySkmhJOiuzqrVtHoz9Y/R8u7llPI8zxAuq
-X-Gm-Gg: AZuq6aKzb9e3SB45dikvAHlBow6MSC3CzgcGVmQPsFuFdbTLTl/pICicNX1NGRylFVW
- MQIRZUbALwcaIxEMDA+Fr4sHohxbxA0cRRTqNSsPQ3dJFM8SFs0bczeh6EHrm/VvP3cor15w4na
- loSk01sfQL8CSu7Gz1541gYwasfXiHFYkViA6d+HCJz1M3PjveivfMaevwJIrU1423OSLiDTTCK
- 0LW4r3m3XVk++2/fmbGEOwMEScGp4+pdPUgTd0fV0UUsya9xiDnGmiuvtbP7QX0dzV5vvhFLfG7
- hcoxvVt43flmrdFKeLG6Pa4qgn8Rl5APvqmcZ0yUqQA28FQr9jsuWJZB2QZahA6W65g2qCDJ6pq
- RyW8=
-X-Received: by 2002:a05:620a:4b48:b0:8c7:fdc:e86c with SMTP id
- af79cd13be357-8c70fdce9a8mr364366785a.11.1769609344416; 
- Wed, 28 Jan 2026 06:09:04 -0800 (PST)
-X-Received: by 2002:a05:620a:4b48:b0:8c7:fdc:e86c with SMTP id
- af79cd13be357-8c70fdce9a8mr364362985a.11.1769609343808; 
- Wed, 28 Jan 2026 06:09:03 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c711b95acbsm186136585a.12.2026.01.28.06.09.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jan 2026 06:09:03 -0800 (PST)
-Date: Wed, 28 Jan 2026 09:09:01 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhang Chen <zhangckid@gmail.com>,
- Hailiang Zhang <zhanghailiang@xfusion.com>,
- Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Juan Quintela <quintela@trasno.org>
-Subject: Re: [PATCH v3 04/10] multifd: Add COLO support
-Message-ID: <aXoYfad-i-au-xpM@x1.local>
-References: <20260125-colo_unit_test_multifd-v3-0-ae926ccd8eae@web.de>
- <20260125-colo_unit_test_multifd-v3-4-ae926ccd8eae@web.de>
- <87ms20h2ae.fsf@suse.de> <20260126203358.0f8dc224@penguin>
- <878qdkgin8.fsf@suse.de> <aXkh0Sy9WUqi_3Rr@x1.local>
- <87v7glgbrz.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
+ id 1vkxH0-0008Vx-3f; Tue, 27 Jan 2026 23:35:23 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Jj6GJz+vW8n6EaEGtpItg3XoVH7AGd6I/GkhS19M8/gYQ1lg1z1xeV4IPhJtT7ilIWRYHEGQAivedC1auKjMn0aIKkJPQ3UQms0OGa8X+sFfrRo+3IpS/Y8pivVQHTYR81Ty+h/MSUOa1uFfaM6QC4IO4kts6aSbxccSUx828sRxxc+ysLELO59+iZrIGN7Wu3KsgcTq8aVxv5Uk9tNOUCtAXU0KkExFX2EQuOXNfWwvI1ld/UhiI84WtZ2M5QLmP6T3d4IDHz+1WOYkTQIpz/YN6l24eJ5kmvlY2MNvpn7xLG+eesuzzr+QYOWXHaLoaIgVbVb1isc27esNGAzIIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RXnt2/xawsByAiSkACEJEYSAXo8wPI9yPVJQYpHQqPE=;
+ b=k+U9PfmEJc9zhFaHlr9LHtK5RKQyxHK7Ag8i8D5P1RtETy2D4g2cJYCw2G5XVM+BZg138n1FsfAEU9TiWhhcwbWFCp+6LPkAG20U/V0A3nmd9toMKMt3twLxxl6MFemPE9ic7km5fWVGF63SvrewNPy2Ap2P7OqJoSORQxNr7P5VLm8n+8CB2H3+J+PqLV9dy4DN8IjdZnq2iB95VodruYGjkiqWmBycq4/AdAhiyfzO62P910jdehVU+m2SDvp/23wO1bS56jRW6hp/szx07HCoemh6VfinKbZ2fvPCTNhb1c7mIwPgNCEnwxCzMLrbTeTavzDyyTHzJk7Iztme0A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RXnt2/xawsByAiSkACEJEYSAXo8wPI9yPVJQYpHQqPE=;
+ b=uK5gWrXcZJIFk4wRjYJEcVP+EByodarq1IjhrZo9bEs6CxUx83LL0Ijba2V5ooJPhROmsqEni5gX0xFcmUZ1uEXNh0Cw/n+2AEyaxCUEjQrxzTVizDujpdRWzjrOy71OE/QtoxvYRRFD9GDEYwhCspPPqppsrUUIv5CVV81WFK7hj/fup2Gp4tVnaBK/qcRVgHChjUM8r2FFAbzU87tpJGW7noABfjdygX2I5YWNS0/qAGOkt4Pj5oVrSvu7j1Dj2aCo+xsNVP/Oac/4hiT2vw2vNbpHG1UAs3R8YexM0sNkFU/xEf2tKAJqr9aIGbCpC7YUZhrhIxpP7Ad8STAPjg==
+Received: from KUZPR04MB9265.apcprd04.prod.outlook.com (2603:1096:d10:5a::6)
+ by SEZPR04MB6754.apcprd04.prod.outlook.com (2603:1096:101:eb::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.15; Wed, 28 Jan
+ 2026 04:35:14 +0000
+Received: from KUZPR04MB9265.apcprd04.prod.outlook.com
+ ([fe80::3c38:c065:daf4:cbfa]) by KUZPR04MB9265.apcprd04.prod.outlook.com
+ ([fe80::3c38:c065:daf4:cbfa%5]) with mapi id 15.20.9542.010; Wed, 28 Jan 2026
+ 04:35:14 +0000
+Message-ID: <KUZPR04MB92650E89128FEF4F0F07BE06F391A@KUZPR04MB9265.apcprd04.prod.outlook.com>
+Date: Wed, 28 Jan 2026 12:35:08 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] hw/riscv/virt: Move AIA initialisation to helper file
+To: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Michael Ellerman <mpe@oss.tenstorrent.com>,
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Nick Piggin <npiggin@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+References: <20260114012846.981884-1-joel@jms.id.au>
+ <20260114012846.981884-2-joel@jms.id.au>
+Content-Language: en-US
+From: "Nutty.Liu" <nutty.liu@hotmail.com>
+In-Reply-To: <20260114012846.981884-2-joel@jms.id.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR02CA0069.apcprd02.prod.outlook.com
+ (2603:1096:4:54::33) To KUZPR04MB9265.apcprd04.prod.outlook.com
+ (2603:1096:d10:5a::6)
+X-Microsoft-Original-Message-ID: <29a767f2-fd3a-4ae6-bd79-39f29528509f@hotmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87v7glgbrz.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KUZPR04MB9265:EE_|SEZPR04MB6754:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7fe6ce8d-9f3e-4657-b932-08de5e26a157
+X-MS-Exchange-SLBlob-MailProps: dx7TrgQSB6d5vbofsfC/jnGJ+j4hG4EC0YkT44eIXGUImgEeBGLb1R7tvYn4RQwIEs/eJsSh8ilUCUwe9AM1dn39RZYZj/j8CoSQ1T57jefaX842uiUOTopH8UpCNe9Rh8fMf6sf/a4W1+DRNyCdBNpiwm6hDSB/QIOh/TKp8yBGTcghyYvX8UFgkkeln6LlFHoGgPrXQomnREnzU1wmSOAD/6iHlPufen3EBEpm45g3EZeh5RsPIyDPDcCC0ED02hUDFVB7GQvJBiTfy2yqm8nYLSzouJlpJ4Z67rshQyTGmjRkY+UtDvKWzlG/oxOMqDcR1A/2IvZiL94goaaCG8QTmSpOA13VwyRnbF2Ypubg2UbiBbe1M0bxwdMejaRIYDV//WDcFP/4JEtSx5QP5OdRW/Yi/zMf7Dk2N7l53bbSLuozTPGo2vfLekutou3wQ0wzadPUGczd/auKGzrX/euzIR3QJ4I+smvVYsqUaMAstWGveTtoaxy8VCvTXbqHs1Le5lut/s+VRZwdytCDTrgE4mnxkmPVI/pnsUj0iWoDYZF0UugM3HvJrfOMO7kkI/4jwWlUXfUSDsWIRK3eQQr3GWDa16g9CxZ3feM1eIk8kXQR0gHOoIgVvz+WhZ15zAlFshU1PnKVibAFgd0XqY7bhQmX5f4WlxrSDe3RHfg/cg1NNV96Bc2somt12E/Xm4lmFZCcZdHzc4cXV1U641diBmqtX55YcOnzbFg1u/psbHvBcPBPxtvtn/YNhPgaTMGeIZYQ5YE=
+X-Microsoft-Antispam: BCL:0;
+ ARA:14566002|5072599009|6090799003|461199028|8060799015|19110799012|7042599007|23021999003|15080799012|440099028|3412199025|40105399003;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?end5T2tnUE1pVTk5dGN4aWw0VnNjT2JFc1pMOStGc2lxNjJCWkRIcVJaSVhm?=
+ =?utf-8?B?aU1jV1ZvN0lFYkthQzJMTWRIbXZVQlJYb0FiaWNHMmhteExzVDV4dFRkRnNw?=
+ =?utf-8?B?bS9jS0ljczRWQlhnSThMeUFwS0RUVkQyakNjTmZZbkIydlMrTjNCZGsvTjQ3?=
+ =?utf-8?B?WGk4UTJKdXMvMjlxN1c1WkpWU3diMmkySysvQXU3SDhNbi93Y0RYWkpQb2Va?=
+ =?utf-8?B?MzMwKzBDMHQ1dnRJQ004R0tFUjVOVXlFalFkTG82RCs2dkovQ0lFRjI5OXlJ?=
+ =?utf-8?B?NDhua2NibmxFWHprS0FiN2duelE4UmJONVYzbUFDU3QwT3FlaVBoT210VTFC?=
+ =?utf-8?B?S1ltNC9pd0VhZzRyQkpzVTBPT0JYb3UwVXZyOEtGT1c3TVBiUW9UMDZRSkRG?=
+ =?utf-8?B?SjJ1R2l0UGJxdDJKbCttaGNOdk1iZE9xcnBBNDNIbXFrK2pTcWlxcHp5TGFj?=
+ =?utf-8?B?b0wvMG53SVhBL05Md01HSzM4RmhHQ3d2RjhUR05idjB1Ync3MkxCL2xPYUZ2?=
+ =?utf-8?B?VmRZeWFJamx4N2NHUW1iS1lSbXp0d3h1RkhsUHBJYnpHc0puU3Y5QWRsZVI3?=
+ =?utf-8?B?TFJURkJVT1lZYTA4Rk1LamwvaThEWDczbXdYMm9kOTlXT2loVW5CZEpVcm9I?=
+ =?utf-8?B?aWtuOGUzcVNNTUhjaFZpK0RnVmM0YzlmNWNxbm15QVBMc2hWM1prR2ZKQ2VD?=
+ =?utf-8?B?a2lvQUdQSlNYdDFLaER2V1ZmaFNNR1BtNFdkNWo1NDRDTExBMlN2RjJUUGJH?=
+ =?utf-8?B?SXBQOW53OUk2NGlYL0FYNmErT2JZcmNORGdiSkZ0WVAzdXpkQWhJWjdlbG1B?=
+ =?utf-8?B?dmpoWjRxc1FrbncxeVdqalR5cThkMDQ2OUVqM0lMSFVXY1RsT095dDlhUXB4?=
+ =?utf-8?B?Tjd4aVNaekhyNlUvUTBlQUZYRU5jNFh5VHgrT2VzMmpSRFVzNmVJNW51L0Rl?=
+ =?utf-8?B?VDM2M0Rwalo5RmRlQ0x6LzF5Z3lHRUIvTkNGYjlWUjBXVGJROVFUbk1ZTWNy?=
+ =?utf-8?B?RzU1NGgrYlErbUpzSlNsVUtVVFpnT3dwTllwTE84U3FrU0RLVy9jOTNzQU1k?=
+ =?utf-8?B?N3RJd3dieHovZnpNOUJuNmEyQUJYSTZXcXJEOTFpYitWcTY1ZDhuSXFJUVV0?=
+ =?utf-8?B?VVc4b0ZSeUREWGZvamRlWVM3ZGtocU85TWhhYXFwM2JxK1ByL056bFIrSk80?=
+ =?utf-8?B?dkpXSlRadlloem9LZjFMS2haU2xDa1BFVVJLSkdQTmpZcGY3dVp3djE1QXF3?=
+ =?utf-8?B?WWQzQVVpMXFDZ0NoNERnK0pjVFJCMURoWUo0Ukhqa0lZd29ZKzZyM2p1Q0pL?=
+ =?utf-8?B?N0NsSGY0L09tbGgrdkNvelprRDVuVEVQbE5XZzZWaDdCT0VyM3ZJTTU1enNB?=
+ =?utf-8?B?MTZ6cytLRVBYMlRla0paOTRHTWNjQkJ2THJqSEFNc2xQc1YycTFYR1FZa2F6?=
+ =?utf-8?B?TmNCK1pGZWZCYTdTRzRrUGJuak8yVityNDVQSnBwTGZRRS9ydktyZTYzZEtE?=
+ =?utf-8?B?alkrNlhCYmVTb1NJdElqQzNwbW51TWRpa25ncFRLVjlQUG53RUJSZStHSGZi?=
+ =?utf-8?B?YmdDNXRSbGlVNlMxRXhyckM1dHZUbHN6UG54NGhqbWxXdnd6Tnh6MjhXNm9a?=
+ =?utf-8?B?MnpVaE1WV3ZwNE5TdjVIV1hyMzBTOEE9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dmFXQzdFVnRobWVpNVNiSUR6TEdocjlTekhLNEFxeStGckdvYWZvTkV0SlZT?=
+ =?utf-8?B?VEsrVTBjRjhEeVlMQWF2ZE9JUUUwRjRFeTNEMUpVcjE1U0FFV1dDRTJmVURI?=
+ =?utf-8?B?OEpMZ2IxTHYxRmIrZ2xSSVU1SENpMTdMTzdiUlZFK3FrN2ZaRllmRnc4Mk5G?=
+ =?utf-8?B?Rm1BSWljSEZ6SXY1M2J4c0pFT25EU2hhOTNWWHlKQWxOWkFVMUZuWU1JN1Zs?=
+ =?utf-8?B?ZG1VSkdvcFl1aVJnM3FueGR4bzk1dkM4MXFJVjJuR2tWTEpqV3FteElWSSty?=
+ =?utf-8?B?S0s0bmVSZElGTWFMUTRVTGRwQTVBcDFDcWpPa1A4bzRwby9aS2JKSXFEOG5q?=
+ =?utf-8?B?NG13N2lBZm9reUhGQ3dPakRNWHc0THJJR0hxN2htM05ZU0puQkNRZG5TSVhi?=
+ =?utf-8?B?RWg2RG50MVpUbGVPWmlCMDJLMGV3djJzb1B1R3BpMThkOUVqM3VzTTllYVpP?=
+ =?utf-8?B?bEllT0RHbGRzckpJQUFSM2tPc2Q5bTJLbVRGNXI1Z1RmblErTDdCajI4ZEFL?=
+ =?utf-8?B?TEZTZHhHaVowbWNuL25LYXZMVVBKZlFSZUxoYnNCSUxKTUZsNk5JUGNsUHFp?=
+ =?utf-8?B?MjhRWnV1V0lhbFk1NklVS2daNXhSR2VEa0tzaDBSVHBrUkdrUXU1NlBmRVFH?=
+ =?utf-8?B?UXUxWFcvblpLOWU0bU51ZWM5OXhZaHdXdGd5dW8wdW1pdDhGK3cweTEzTnN1?=
+ =?utf-8?B?VXdYY0lDNHVreWl4ZExxa1BpU2dxYnRqMWRueDFuRnNQM3dDUkFKQStFRStj?=
+ =?utf-8?B?U1B2RUF5RzlvY2F1d0pMVlE5OGJKWkQ1MitNTDQyMDdEclRaU2VpV3p0Y1R5?=
+ =?utf-8?B?T1NTL2lUUVQzczRJdk50Mm11UzZBZmM2N3lYOFh1SHY2UjNoVlVqM3k5Wk9y?=
+ =?utf-8?B?UE90WjJoaWR4UFNKOVF2QVVVUG5WaUNTL0JFbWtDMDZHNTBVbFdrYks5NUJB?=
+ =?utf-8?B?ZjFIZVp5SEdsbEp1TFZSTlYvRkNSbHgxOHVZNjBOOVBGaURlbS9PYXpqTHdt?=
+ =?utf-8?B?VU5GQWNyRUhOT3J6QXovVHVhQ1ErNVFURUdSTnkzQUg3LzUvT3NUUVA5NE5R?=
+ =?utf-8?B?MjVqTVhUbkZsYlRvT2NQa05BdXBtSFFhYTIxc2pqbjh4dWc2N3p3ODdHUWRJ?=
+ =?utf-8?B?YStnWEtvRmhyZHJhOEtOaFlZT0ZHaG1jdzZ4YTY1TXBTU01PY0czZFRPcS9I?=
+ =?utf-8?B?Y3Z2aXFCM29VY1VCRjVuQnlUMm9IcFptekpwa1JFaGtvajBPM3FDcE0rcmlu?=
+ =?utf-8?B?Nm9lYjhxNFFZZ2txTXdHZXNCVU9IZjBudmRxYmUyS3NSeXlqci9LZVlwYmNm?=
+ =?utf-8?B?Q1ZDeGdhRndzYm1Lanc4UThnN0tYMEhlYU9nNUg1VnRaMTZtOFpyU0V5RXJ6?=
+ =?utf-8?B?SWR1SGpOY0hZa2lVcDUxWUhwbDQ4LzAwakxmcnlveGMzZWE2T1kyaWpXM1Bj?=
+ =?utf-8?B?SjV6U0VxWVQ4Z0lFSU9iMmtoZjBLU3ZiZGtyMFdYZWhWdHJBMkpGcUVRSjFC?=
+ =?utf-8?B?Y0gyWDF5NnpkTTNxeFhZTjVNS3lnSUYydjRiTFdtS05XSEpLZ0hYbmdHZnMw?=
+ =?utf-8?B?SzNib3RRUWpwQlJBTUk2Q3Rjcm1OaDB0aENvTzlTYURNSnhpV29JNnZJVHg5?=
+ =?utf-8?B?L1dxakFyUEN2akxQUE1IV3liaENoaUpoMk5JeGYxKzVBNjliLzVrRWhCbHBr?=
+ =?utf-8?B?SldJR3laM0o3KzJ6OTkzenZTdEExeFZhVGhHMC9zbHdwcXBLa0hPbm1zMnVn?=
+ =?utf-8?B?NkExajcxazJicS9lejhGVjFjSTQzZTlGc3c2ZGRKM05NRWRBOUJXZFQyZ0E2?=
+ =?utf-8?B?L3h0SXBFK0FWRmN3c0hZRS9XcFZxTlJlOFg1T2Z2bytveVBabDBIbDBCbVRl?=
+ =?utf-8?Q?J6KRn6SuTmyHE?=
+X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-515b2.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7fe6ce8d-9f3e-4657-b932-08de5e26a157
+X-MS-Exchange-CrossTenant-AuthSource: KUZPR04MB9265.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jan 2026 04:35:14.4986 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR04MB6754
+Received-SPF: pass client-ip=2a01:111:f403:d405::2;
+ envelope-from=nutty.liu@hotmail.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 28 Jan 2026 09:04:16 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -126,57 +169,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 28, 2026 at 09:30:24AM -0300, Fabiano Rosas wrote:
-> >> >> > @@ -294,6 +294,14 @@ int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp)
-> >> >> >          p->zero[i] = offset;
-> >> >> >      }
-> >> >> >  
-> >> >> > +    if (migrate_colo()) {
-> >> >> > +        multifd_colo_prepare_recv(p);
-> >> >> > +        assert(p->block->colo_cache);
-> >> >> > +        p->host = p->block->colo_cache;  
-> >> >> 
-> >> >> Can't you just use p->block->colo_cache later? I don't see why p->host
-> >> >> needs to be set beforehand even in the non-colo case.
-> >> >
-> >> > We should not touch the guest ram directly while in colo state, since
-> >> > the incoming guest is running and we either want to receive and apply a
-> >> > whole checkpoint with all ram into colo cache and all device state,
-> >> > or if anything goes wrong during checkpointing, keep the currently
-> >> > running guest on the incoming side in pristine state.
-> >> >
-> >> 
-> >> I was asking about setting p->host at this specific point. I don't think
-> >> any of this fits the unfill function. However, I see those were
-> >> suggested by Peter so let's not go back and forth.
-> >
-> > Actually I don't know why p->host existed before this work; IIUC we could
-> > have always used p->block->host.  Maybe when Juan was developing this Juan
-> > kept COLO in mind; or maybe Juan wanted to avoid frequent p->block pointer
-> > reference.
-> >
-> 
-> Maybe p->block was being reset at some point and p->host was passed
-> being the point where the (whatever) lock was release. I checked and
-> today there's no such thing. The p->mutex seems to be there just to
-> protect against this in multifd_recv_sync_main:
-> 
-> WITH_QEMU_LOCK_GUARD(&p->mutex) {
->     if (multifd_recv_state->packet_num < p->packet_num) {
->         multifd_recv_state->packet_num = p->packet_num;
->     }
-> }
 
-It should be protected by various checks over migration_is_running().
+On 1/14/2026 9:28 AM, Joel Stanley wrote:
+> The AIA init will be used by any server class riscv machine. Separate it
+> out in order to share code with such systems.
+>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> ---
+> v2: add Daniel's r-b
+> ---
+>   hw/riscv/aia.h             | 58 +++++++++++++++++++++++++
+>   include/hw/riscv/virt.h    | 29 -------------
+>   hw/riscv/aia.c             | 88 ++++++++++++++++++++++++++++++++++++++
+>   hw/riscv/virt-acpi-build.c |  2 +
+>   hw/riscv/virt.c            | 85 ++++--------------------------------
+>   hw/riscv/meson.build       |  2 +-
+>   6 files changed, 158 insertions(+), 106 deletions(-)
+>   create mode 100644 hw/riscv/aia.h
+>   create mode 100644 hw/riscv/aia.c
+Reviewed-by: Nutty Liu<nutty.liu@hotmail.com>
 
-E.g., QMP device-add & device-del are forbidden so no new pc-dimm hotplug /
-removal allowed.  Similarly, virtio_mem_is_busy() would return true during
-migration too.
-
-We should definitely make sure ramblock will not be reset during the whole
-lifecycle of migration; I believe we're not ready for that..
-
--- 
-Peter Xu
-
+Thanks,
+Nutty
 
