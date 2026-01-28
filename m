@@ -4,92 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 717A6D46BE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 18:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3523FD46BE6
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 18:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlA4X-0007yH-CX; Wed, 28 Jan 2026 13:15:23 -0500
+	id 1vlACO-00031b-17; Wed, 28 Jan 2026 13:23:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlA47-0007sq-D7
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 13:14:58 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlA43-0002n3-H0
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 13:14:52 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4806dffc64cso971985e9.1
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 10:14:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769624090; x=1770228890; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DRcUh7PURIcQwzuyI23M4BSLo5kjaU/4yRKy2aKy23c=;
- b=CVNWK+NBzBzVu58wS+AJgHS1agaPVNnPQyOiI0CZaXPUPMKbL/RTbotFg13QL6PVYM
- tncWOm6apX83KkQsB1SNBcSbTZ7Z4zSBbGHZR863i6NmBGH+3dZBAEvSej+1kR2ADiUJ
- rRFQ2tUvd16LV+PGo0mRShOMgISKcZfAgqCHhQL2CvRyR+zRulsnSdIjOHk10SGd/Zlh
- H9RRTxyYsCcWPKy8cctgVNsfLO2vTIrGlPH5CBTtN6SvyzaL8DK1AfvGD1jXAnSNuzxX
- Wto5GyS+W4M2F6Z0fhglC5n+/+Kq9UmxNwyvBjZPvbRmo4AIxf9ClM0Nh6AdYxqOfc1k
- unGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769624090; x=1770228890;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DRcUh7PURIcQwzuyI23M4BSLo5kjaU/4yRKy2aKy23c=;
- b=uSPmVkdFFCS5Mt2UBvVJytQIaNHmmP8QrsqKwJda30/dwrIPrHjvNLyreA4kuUWbXe
- tkwllxBr2nQxfLfXp0zconP3CwNrCA/umTM9/o4d2S79MJZwTRQrw5Q5KMnrf3FEuHvp
- SKbmlftRCR05esIh+JzvOiig/Y/9+fQvZLPGydU5ssGQViBuXS5UEKJxNiCsAbLh2GNg
- c2QvKpQR+vZJfKCKvvJns+bxDxOHKcMiPESc/vxr79+I3Q24Hgu/j7K6tFjVRW3XsgUX
- VEwOXLq6RpCURx4YfDigYCG0yt1I3JdN7biQiliFrdLFSpi4yOLdrm+ITG1HcFVm3eAJ
- ijGQ==
-X-Gm-Message-State: AOJu0Yw+O+fQDMIEiQCWMzjfAA6LMhkYeNqcHb8xtRUAb5NG7nixe2Cl
- eZIyhtzF3CsrgGscTWT3j3I38kDpLupvL3REGDgkGjIwHaHs+W6WIfxIAKbxujzllCw=
-X-Gm-Gg: AZuq6aJ0hyvfDBTe0/1Q39RCoTrxSw2D+mo6N36UBo8rloZFyMZ8C/6/0ruAkGMldrB
- UguPYNvLh4ubgr+svSrZfTx55UHM6sLGdgwtKfN5BHSh7YrDnHy10sUfbI+noQwrnCtf1LKnHCw
- kVqJdUbIGyQP8nPF+sKhomN9FWV29l9QBKeREYOMwmUDKMI/0WZmAjQ4At5C6m5fQy6hsVWcgoD
- BVD4Ivdo+VatOuegJsd/wNBWv38XRKR35VVZyOfuzPSb8W8yRKc+dQwSY2CkVNQTyVB3fwTh3TM
- A+KB0BPQgjesn2V95wBrbdXk1yMl5ElOO81fsCkkKSb3Oigu+Z9iuKVs9dIhHgzIoCUOlGnbJQi
- BjH7Goko8Ik+wI6C0MMeS3+upldI/wNACOkOM1Ueaf2wIaO/1eS3qTOE0KzgGOo/UVQoXPU2KSU
- BERTLMo5sGJcLI2tjK0m0xMsfRU1FBhkmyrQiZSDCDepjrWnoTraCfzg==
-X-Received: by 2002:a05:600c:8208:b0:47d:92bb:2723 with SMTP id
- 5b1f17b1804b1-48069bfa957mr79894055e9.3.1769624089834; 
- Wed, 28 Jan 2026 10:14:49 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4806ce564f9sm82659925e9.14.2026.01.28.10.14.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Jan 2026 10:14:49 -0800 (PST)
-Message-ID: <2448d9d2-fe73-4099-8724-fac68d2533d0@linaro.org>
-Date: Wed, 28 Jan 2026 19:14:48 +0100
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1vlACG-0002z4-Pu; Wed, 28 Jan 2026 13:23:20 -0500
+Received: from fhigh-a3-smtp.messagingengine.com ([103.168.172.154])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1vlACE-0004qa-0w; Wed, 28 Jan 2026 13:23:20 -0500
+Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 85950140006F;
+ Wed, 28 Jan 2026 13:23:14 -0500 (EST)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-11.internal (MEProxy); Wed, 28 Jan 2026 13:23:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1769624594; x=
+ 1769710994; bh=ufq0w4YBkmVoE1OX91JenmuAQyaJcWUsrvgYAXBOyJk=; b=v
+ +Z6qyyPh4baFzaECtOf+mYEVu7n7Pf6PbsnAk4TEt69rQn/MwpNV5U2S8a8+IlD7
+ mFCm7N8cQ6WrxNHaWHJIFNPoZk9rkP7cNtts+kauZ9Ow1vHDd1603b17XLXpxB+u
+ LJePemsRAtSKOt1X0mHZnEnEjJdiatLd1H9O//xxCTfX9XQg7RKXzzexRaoxWu47
+ LeWhrXavOTszTauVgG15/V0DmfM/eFvBVb9Px4A+8K0q28GSiug3MH4mZ2N9XOtk
+ FM41XlV6W0w2FYIJCu+MeWBpcOAIQ008OHXQdS+imXylrH8siYIzrSM8Kuu5g1vM
+ VwMkWz5lzMaYfSfXIAh1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1769624594; x=1769710994; bh=ufq0w4YBkmVoE1OX91JenmuAQyaJcWUsrvg
+ YAXBOyJk=; b=GKWNZfWDok/RkK/BoHLUuYvkWljEzSELR3Vqfjo6rdSsAoKNue5
+ JPHRP/7Au0yFBFEpI+pHH6HudXblwU55JUNVBYQyBhgiMMc3EES7I5GQnRmW82Dg
+ ins+GJpbYf7p0/2yw9sy12z3bUD3RD92SOIxqy93VFfnuyj8HBTaIfhmnyoCTObK
+ 46ElaoDMvNSwe7CNqQrZ6+w1zDf9auxEvv+rrn8Yw3vyHaiJDb7Qo9lP7Zqsacr1
+ YrjNP29xnuccFGn8QOpzzc14gmZSAb0TOp7pM7oHlBo0Hx7Ik0OAD+pKiugJU0qR
+ fSMrUvBPfO9K0fvUKpx6oZJm7ddIZlcTovQ==
+X-ME-Sender: <xms:EFR6aVHH97GVoVQKzctI_FfPjykIulaEDLL0AZyHPxJA9-Xq1EB5UA>
+ <xme:EFR6aawW6ZPShwxJzsUpR0yqoOwa9FI8IvpK6Plr0yKe2MOkdfWm6xK-u7wx6Eg9H
+ vvoJzUCpwIR-DgNoDoPBU3DuCJNkgKxq-UQpEFfskKE2f_5j0L66xg>
+X-ME-Received: <xmr:EFR6aW6fENQVggRjJExZY-SI_tG30gaH5MWRSxaEMzua82qrxexFeyo1K1M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieegtddvucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushcu
+ lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
+ hrnhepjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffffjeev
+ necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtsh
+ esihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepudehpdhmohguvgepshhm
+ thhpohhuthdprhgtphhtthhopehphhhilhhmugeslhhinhgrrhhordhorhhgpdhrtghpth
+ htohepohgurghkihesrhhsghdrtghirdhirdhuqdhtohhkhihordgrtgdrjhhppdhrtghp
+ thhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehvih
+ hkthhorhdrphhruhhthigrnhhovhesphhhhihsthgvtghhrdgvughupdhrtghpthhtohep
+ rghlvgigsehshhgriigsohhtrdhorhhgpdhrtghpthhtoheptghlghesrhgvughhrghtrd
+ gtohhmpdhrtghpthhtoheprghrmhgsrhhusehrvgguhhgrthdrtghomhdprhgtphhtthho
+ pehmihgthhgrvghlrdhrohhthhesrghmugdrtghomhdprhgtphhtthhopehpsghonhiiih
+ hnihesrhgvughhrghtrdgtohhm
+X-ME-Proxy: <xmx:EFR6aXeFSu6qpNrWWFoEOpmNQErmBx6WT2bHrj8c63DknN-WTtZ79A>
+ <xmx:EFR6aVHIAsCOwZoQv-BvBkRoElVUvECUs9XQesuo0Arp82esECY0OA>
+ <xmx:EFR6af5vh92s3hqjoX-tq5qYl0mrN4xDRfoe_G-MF2a9rVqLRDfIbA>
+ <xmx:EFR6aQtrwpcXRdQbUWKLX5YpnnRmFy5O9fVMt8A2AWvfTA-HNAVDCg>
+ <xmx:ElR6aSe_zk_N_YbqXUuv_0dVFrXHdK3iPOaE8ZY7xv3nGpdww8pdOZ_J>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 28 Jan 2026 13:23:12 -0500 (EST)
+Date: Wed, 28 Jan 2026 10:23:11 -0800
+From: Klaus Jensen <its@irrelevant.dk>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
+ Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
+ Alex Williamson <alex@shazbot.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Keith Busch <kbusch@kernel.org>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+Subject: Re: [PATCH 5/5] hw/nvme: Fix bootindex suffix use-after-free
+Message-ID: <aXpUD4s7LrC9-AMa@AALNPWKJENSEN.aal.scsc.local>
+References: <20260125-nvme-v1-0-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
+ <20260125-nvme-v1-5-0658c31fade9@rsg.ci.i.u-tokyo.ac.jp>
+ <d74ef37a-b423-457a-b2c1-31989243b1a8@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] tests/functional: migrate sbsa_ref test images
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Radoslaw Biernacki <rad@semihalf.com>
-References: <20260128105839.3487840-1-alex.bennee@linaro.org>
- <20260128105839.3487840-3-alex.bennee@linaro.org>
- <CAFEAcA_sT6pGhXPpgaEqkJOVuAj3e1KMz_AP6-MZ6YP41YvoRQ@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA_sT6pGhXPpgaEqkJOVuAj3e1KMz_AP6-MZ6YP41YvoRQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="cfdbx87ZrHmYMy+c"
+Content-Disposition: inline
+In-Reply-To: <d74ef37a-b423-457a-b2c1-31989243b1a8@linaro.org>
+Received-SPF: pass client-ip=103.168.172.154; envelope-from=its@irrelevant.dk;
+ helo=fhigh-a3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,47 +122,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/1/26 17:25, Peter Maydell wrote:
-> On Wed, 28 Jan 2026 at 10:58, Alex Bennée <alex.bennee@linaro.org> wrote:
->>
->> As the builds in codelinaro.org are going away migrate the binaries to
->> share.linaro.org. As the hotlinks don't encode the filename we need to
->> explicitly tell uncompress how to handle the files.
->>
->> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
->> @@ -54,15 +54,11 @@ class Aarch64SbsarefMachine(QemuSystemTest):
->>
->>       timeout = 180
->>
->> -    ASSET_FLASH0 = Asset(
->> -        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/'
->> -         '20241122-189881/edk2/SBSA_FLASH0.fd.xz'),
->> -        '76eb89d42eebe324e4395329f47447cda9ac920aabcf99aca85424609c3384a5')
->> +    ASSET_FLASH0 = Asset('https://share.linaro.org/downloadFile?id=kyoMLGC9zXa4oA7',
->> +                         '76eb89d42eebe324e4395329f47447cda9ac920aabcf99aca85424609c3384a5')
->>
->> -    ASSET_FLASH1 = Asset(
->> -        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/'
->> -         '20241122-189881/edk2/SBSA_FLASH1.fd.xz'),
->> -        'f850f243bd8dbd49c51e061e0f79f1697546938f454aeb59ab7d93e5f0d412fc')
->> +    ASSET_FLASH1 = Asset('https://share.linaro.org/downloadFile?id=Dj1HRXnDnKtU6Nj',
->> +                         'f850f243bd8dbd49c51e061e0f79f1697546938f454aeb59ab7d93e5f0d412fc')
-> 
-> Is there really no way to have a human readable filename here? I know what
-> edk2/SBSA_FLASH1.fd.xz is; I have no idea what
-> f850f243bd8dbd49c51e061e0f79f1697546938f454aeb59ab7d93e5f0d412fc is
-> going to be.
 
-https://share.linaro.org/downloadFile?id=kyoMLGC9zXa4oA7&filename=edk2/SBSA_FLASH1.fd.xz 
-works for me.
+--cfdbx87ZrHmYMy+c
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> If we can't have useful filenames, can we have comments saying what
-> the filenames
-> would be if we could have them?
-> 
-> thanks
-> -- PMM
+On Jan 25 17:56, Philippe Mathieu-Daud=C3=A9 wrote:
+> On 25/1/26 07:42, Akihiko Odaki wrote:
+> > The bootindex suffix can be used as long as the property is alive.
+>=20
+> True, so:
+>=20
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>=20
+> But maybe it shouldn't (we should g_strdup it like other QOM fields).
+>=20
 
+Do you mean that device_add_bootindex_property() should g_strdup the
+suffix? And then free it in property_release_bootindex()? That would
+make sense to me.
+
+My grepping tells me that nvme-ns is the only device where the suffix is
+dynamic. In all other places it is a literal.
+
+--cfdbx87ZrHmYMy+c
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAml6VAwACgkQTeGvMW1P
+DemYGgf/aEHPJFOortkV25O4cUOZy2Li6Rz8R8iHweAnGqpWg1jUrcSceIOrXovM
+ZNu0v4szzJwgsMl/u5S2niPu6yWXOSkVC2J//P0eOpX7fsWbW2jgooHSMhejVkkj
+8HgWwC96sbSgQLIuGCX7+tZNCWEWKTafe8jjT6GDIdHrQlsq0+I3vFCDsJXrM8qX
+CNNOOMx/Qv66nO6sECf0ys5AEglievHHyZgekLpawrFnHXLWZpsZ0TKAbDAxbt8i
+e4X0FoxuX3umc41iTrXiqDvdHQxp73IkxbsS2GQRk+yIzheugl2mKWBGXhHh80zB
+pcgcHJzjTGkxi7uWW5l125krX+YEBw==
+=Xq6T
+-----END PGP SIGNATURE-----
+
+--cfdbx87ZrHmYMy+c--
 
