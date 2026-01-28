@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 764ADD3F080
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 15:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C90D3F080
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 15:36:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl7Yn-00012e-AA; Wed, 28 Jan 2026 10:34:25 -0500
+	id 1vl7al-000243-UF; Wed, 28 Jan 2026 10:36:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vl7Yl-00011f-4B
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:34:23 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vl7Yi-0005GL-1a
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:34:22 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-432755545fcso5247004f8f.1
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 07:34:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769614458; x=1770219258; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tU52u0g5gOLf8qhYxOMhNyjYcZahjvbpxGi+GqNfADU=;
- b=RT4lg4GHsKR5WsDCTDlvQ4NAapcrvVgK/+hhEZ6hUmLqwkgs5QjTrfgeJ+GnFn1hY2
- OkA0AbmK81Bttspw2xksbvz+QczO2mPvIXjmwssgr2wFg2F20kEIPh/39qQN2+gaAfZL
- R/NtaAcUFFZO/23r/qQ3QpaJJ6vprTrdvMz8DhoIgj7Fk9kkmolU1qRkFG0VhyPxld0U
- cgwTAskSu0sftsb/ZSos2I9ptWajCkHja/eT0bJADOulQiqgqOMa6RECSyUG6ugCsjNb
- Ivfrm19eaLM3zOGeAVH+tgye5liwhBp1xSi+XrC8SC6Mt1N2+H0TMWnImvdbc9oB81oa
- HZQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769614458; x=1770219258;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tU52u0g5gOLf8qhYxOMhNyjYcZahjvbpxGi+GqNfADU=;
- b=bGYj8U/FrH5meIlz1srx7Q24VOLQkCsMGJkxvHfhP7KUOHIxqtIYJrWnq2xoptKCJG
- WK+SxwDxenFRZ+fL/GrFQtAoeVrqwtvc8VM16uSyNnng145Olbfwo6ATYurH5BRPDNnA
- X0paPYJYBOK9yT/i4AXqLEUOet6G5oxSjUCK6Gyjc7+6KyefVw1SK9B77VsPfanvBdWW
- iKCYez+280CDJnVt9gv+I9AV5h8XpLlxpkOHnAat/V9dHy2C6wkuNFWqhmSer6s7MGqK
- GjByTML0DnK/NjFRWUkkwL6ViJXCmjaJCZKCYkFiHT9CXgOQHk2yZQmhiwIVyfCADcXB
- 5EdQ==
-X-Gm-Message-State: AOJu0Yzya6VpoM4Cl0BvFlk/2pUoKzHqhafi5D6+aEmpb3JaS/fbhJbp
- 7vcsUW3rJTwKRIGZueoQpfCIAY0BVjuOtUgGqx3s5VNKvI9MZmsC0wCfjO5nToysiFE=
-X-Gm-Gg: AZuq6aLKwog1BjIo7R45/oC4f9+7YlXDAWn8mdEwAteqUn0yv2ASklJhMIl05sTETFm
- 8C1xbUtlvZtKMB5Km2DE/iM3Eh90uIzZvVixjKE5gfgkngQvdDJMASwQM3BePd1/7nHh745a4xG
- jHwGMR1YCpwvHOdpWHPAJMZpr8SrQhL80QN4wJWfwdV1W4BzNGL+7YKGjJxJEQVGbJVyAjtQ9Cz
- GwTPGsNfGpr5XnWPe8PmqdG3m5btrajFMpMucPN+2R4hNI+vYT2o3cYLyDHt7jqEyaHV0At5ANC
- wOgjLF+FjFDQCozWWVFabHizNRzke8HlRwbhHZrC86xrFABiGiZDIUdJJydQ0cJMK8gzLmf6c7v
- vsYBrvUaVbi18EVo7W4AEFQ3cgRl/wDG7ucKp72RSjyFxPUi9ShH9wwAuqjcJj6V9NlFFr35irM
- ZMpG2zLUbaqZPiFgMnXhUI+g==
-X-Received: by 2002:a05:6000:26c7:b0:434:24e2:bed7 with SMTP id
- ffacd0b85a97d-435dd02c08amr8328010f8f.13.1769614457595; 
- Wed, 28 Jan 2026 07:34:17 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131cf4asm8165654f8f.28.2026.01.28.07.34.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jan 2026 07:34:16 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C00DF5F832;
- Wed, 28 Jan 2026 15:34:15 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org,  "Ilya Leoshkevich" <iii@linux.ibm.com>
-Subject: Re: [PATCH 0/2] gdbstub: re-do unlinking of unix socket before bind
-In-Reply-To: <20251225062919.685146-1-mjt@tls.msk.ru> (Michael Tokarev's
- message of "Thu, 25 Dec 2025 09:29:17 +0300")
-References: <20251225062919.685146-1-mjt@tls.msk.ru>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Wed, 28 Jan 2026 15:34:15 +0000
-Message-ID: <877bt1bvk8.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vl7aQ-00021O-El
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:36:09 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vl7aI-00079J-Lr
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:36:00 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 9A83A183A60;
+ Wed, 28 Jan 2026 18:35:22 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id F1FCD35788D;
+ Wed, 28 Jan 2026 18:35:54 +0300 (MSK)
+Message-ID: <49c18e2c-b771-40a7-b060-3af6e47fc013@tls.msk.ru>
+Date: Wed, 28 Jan 2026 18:35:54 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] gdbstub: re-do unlinking of unix socket before bind
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20251225062919.685146-1-mjt@tls.msk.ru>
+ <877bt1bvk8.fsf@draig.linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <877bt1bvk8.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,36 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael Tokarev <mjt@tls.msk.ru> writes:
+On 1/28/26 18:34, Alex Bennée wrote:
+> Michael Tokarev <mjt@tls.msk.ru> writes:
+> 
+>> Prior discussion is at
+>> https://lore.kernel.org/qemu-devel/ee091002-a552-49fe-ae5e-8916937dba15@tls.msk.ru/
+>>
+>> In short: when adding unlink() before bind() for unix socket
+>> in gdbstub/user.c, a previous patch introduced dependency of
+>> linux-user binaries on qemu-sockets.c, which is more problematic
+>> for usually-static binaries.  The monitor_get_fd stub which were
+>> also needed is another example why this might not be the right
+>> approach.
+>>
+>> This patchset reverts the previous commit (with fixes for current
+>> code), and adds just a single unlink() to the original code which
+>> handled unix sockets directly.
+> 
+> This isn't applying cleanly for me. Could you re-base please?
 
-> Prior discussion is at
-> https://lore.kernel.org/qemu-devel/ee091002-a552-49fe-ae5e-8916937dba15@t=
-ls.msk.ru/
->
-> In short: when adding unlink() before bind() for unix socket
-> in gdbstub/user.c, a previous patch introduced dependency of
-> linux-user binaries on qemu-sockets.c, which is more problematic
-> for usually-static binaries.  The monitor_get_fd stub which were
-> also needed is another example why this might not be the right
-> approach.
->
-> This patchset reverts the previous commit (with fixes for current
-> code), and adds just a single unlink() to the original code which
-> handled unix sockets directly.
+It isn't applying cleanly because this patchset has been applied
+to the master branch already -- a2b429b114e1812e0b3f222818a2755b6d87fb8a
+and e916f8b3b68bd9da45245927e2a428c3a0eaea54 .
 
-This isn't applying cleanly for me. Could you re-base please?
+HTH,
 
->
-> Michael Tokarev (2):
->   Revert "gdbstub: Try unlinking the unix socket before binding"
->   gdbstub: unlink the unix socket before bind()
->
->  gdbstub/user.c    | 30 +++++++++++++++++++++++++++---
->  stubs/meson.build |  2 --
->  util/meson.build  |  2 --
->  3 files changed, 27 insertions(+), 7 deletions(-)
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+/mjt
 
