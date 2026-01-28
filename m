@@ -4,92 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFB88D46BE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 17:28:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343B5D46BE4
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 17:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl9Ke-00060N-Ht; Wed, 28 Jan 2026 12:27:56 -0500
+	id 1vl9VL-0003Ab-Uu; Wed, 28 Jan 2026 12:38:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vl9Kd-0005zk-3b
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:27:55 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vl9Kb-0004Ei-KQ
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:27:54 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-42fb5810d39so72178f8f.2
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 09:27:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vl9VJ-00038s-2X
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:38:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vl9VE-0008Du-SK
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:38:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769621931;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QYkW7m5i0K1b67gDvBInQeElSUGMosuQrzE+xcqkE/k=;
+ b=UjYg1gGSaGfI2isKRA3stxqSdEWp4xm+ktIrpBRgAz4TD8oT2ROdv6YSoaDUu+vse8Mn9q
+ QlNYrWs8n3rsaAisHEyx+SfmfBB+Zs0lcVrXZK4z6u65u8lfB8trRzZSi/0g347oUvXPbv
+ 6dKmjmC0Gphj4En2MXbY/yHmUzG1nq4=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-35-A_2qILaoPi-QbfNXwVLwiA-1; Wed, 28 Jan 2026 12:38:49 -0500
+X-MC-Unique: A_2qILaoPi-QbfNXwVLwiA-1
+X-Mimecast-MFC-AGG-ID: A_2qILaoPi-QbfNXwVLwiA_1769621929
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8c6a289856eso331007885a.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 09:38:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769621272; x=1770226072; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ATwxkSN8E3CcYglenAu+Pimx9X7QbA0HWEDLtGKjkyg=;
- b=HpX7PCpPscM6zfpxvsWDnDrC/AX9gDA9G5thckieyGHzR+kzlCUSGvaMmw69EGyzRb
- lyKVVS/yXUkK51H72imNBAxLCvK5pSOoPeP+wZVk9/jbYwNgw6hFUdMHjLlJTQXKYlCW
- hQkNPYF4WpXLjndVPkwhHCYQcOFTHPASjROyIx+8GxcrItqQGlX0CdEUJLxaWousFaOB
- 6bekV2HErXMEGNeHP8OMwY4lzyRbsOBUzNFbbgYbaQkWKx2t+/Yln0mlUb19Z46XOhEL
- fDXKqATtohhmbzk2r+s1hcB1EvlJAbivK+3m0Z6cqEYxrS6JmBIJJS+6wxjyGplFm1Qg
- DQaQ==
+ d=redhat.com; s=google; t=1769621929; x=1770226729; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=QYkW7m5i0K1b67gDvBInQeElSUGMosuQrzE+xcqkE/k=;
+ b=DpSdiMnUptq521umFTpIXCGYj9R4UoHHa5+Cq8TxxRXy+YpYkDn2n2hlgrC7Dy+Cxi
+ DyMlKqTyWrjNL24Binkj//Cq15TloHqnxKsq3+weg3vMsbMm6BIgjs9fqRohqru+ifDI
+ PkERLmEmqiHJejUMwSKiKjyb0YaR45HpWRnF/fwAcEQoPo3pGBKVwHmEiPUAzLK9tFcS
+ HMc9NzLx7HDeMle+55gOAh41CIfeKg2BRz5u8UsIEBUU5TFtZZyprl/8hRGTiV2MQJIh
+ iZEireW4ztLG0TENHYNqegLRiAGaGA424lQhZIlw7BdOVeeg+aPngCxIx2gdL8FY0TBr
+ OmcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769621272; x=1770226072;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ATwxkSN8E3CcYglenAu+Pimx9X7QbA0HWEDLtGKjkyg=;
- b=bN/p+uX4Js7NHeMArHAHpz+4+Goymdm/19uAL2WPRIIcQBZU/MYZAzrptxeaCDLs+0
- Vqk5XeOo+J4LxQT1/5i/rHC+T4LNYqcUkkZ9v6Z80SGMoboBC2vISZ+mC7szpKzs1aJm
- pQiqL40iYaBsCSQ/Vvvc7L841pEPA8HLF6jT1BanxcrkzKuDBBvcIr3ff0MhqFYP5bBc
- gSPYR0KjcILXk4lP25fwKca2lvgBeKtdAu+mfuYkrsg3+UAMgRAA4M5JFcnLQH4XaVmB
- /Kun14exgTbo7mH7cx4nYR2Vg6K3eBkG9gb/ySssf1Et3Ii8J6pdCwo73kjZ5kIaqErW
- 8hCQ==
-X-Gm-Message-State: AOJu0YxCTKzK+yETOnsfKOFAx14mKtCptDu1y+kodvndDpqToRCsBMi1
- xVjm7aWXOGYugbv5d6XjeeXUvqW32PKqkaRIE6k5ag7pXHZHiOJfE+my7e8LFhW3FZY=
-X-Gm-Gg: AZuq6aL0o24LoYn9S4bPri6youSgFrWasGZU/U1oNel933d02IvUYtEog90OUhy0jHD
- gADlYpGfiVqChAj2DLZ3cDljcvLaqZ3eEIuo27ZdskQQXNl8I2wUd7ddtWRUdfIPaaXhrVS1TF7
- h6mNbDW3QjZZBP86ivXdl12HRsJtI/5gk0MvN7flSnqphN4nJJjoPdm5Mc+hsoS+W4RXE5YH42A
- lzRNzTnSJKTsg2Xgt/8LvA7or7FA4J8jEj7XytSNYesPCstIdzu84dK+No2zvDmLojDDLKRKV+d
- hJcQDQOjkce0wmqDlvnBDRvPErSTWipNmfBvOehQlQIKMQo3G2CMIluFc+tccoXa+kVfxEkb0On
- hTybfgBxbBP97VMIYedlVj6dNOGk7SMcCBrgyiW/FYpk5S0Z6Pu3mbZM4GCUea7k/3y4vDS5JQQ
- OTzTbG6UzLdyY=
-X-Received: by 2002:a5d:5f53:0:b0:431:266:d134 with SMTP id
- ffacd0b85a97d-435dd1cec11mr8744907f8f.53.1769621271924; 
- Wed, 28 Jan 2026 09:27:51 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131ce70sm8570612f8f.27.2026.01.28.09.27.51
+ d=1e100.net; s=20230601; t=1769621929; x=1770226729;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QYkW7m5i0K1b67gDvBInQeElSUGMosuQrzE+xcqkE/k=;
+ b=P1Wv7N5K19lzMnEdDZjlazrjzmpB2gc1Gyo81avEFAhZlHORx1m3FFOqNZK2NS2gUk
+ 2G15fwIFXkBRKzNIuIIRyjjNucOI49TAetJcK9jwuztixBZN/ATI3HSbGrS9umTv91h6
+ 9l+2NsAjPQo2RZu6DeaHYkSFbSS8ftC25Bw3R64kZ2yviiTTReipLoxZaUf5vSUemT1j
+ KVwSb1YdvBzV69+ZNslR97wlHiOt+XiRjy8CKrT3IGtUhaiBOqN/5zUYjLvaJ/FX7IcE
+ bbkMBinUJWo9AjSpejhu2Ib46Sa+7M6YUN+lOrRCmEvKbgoF37+d1bNfU1H34Qivl8US
+ 6CcA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVs/NrowF8okYMLVhwkg363ZlqSOW7wAA5qDeyXENCEI1phRvgQU7hSwtPYnLw0UJKFx7e2GRSp/6l4@nongnu.org
+X-Gm-Message-State: AOJu0YxiswftiHcEdCrgTRn11g7eSEDtz/kYdSpyG6MNkAaJmUKEp34w
+ AAZ/Hbjqjrpo9LBDd7Pj9fWl8PtK29kPH3/1j45IXQ+QP9Zjh9NRyo0AQ2zUmiu2sD0qIsia2O+
+ EG2x47cvYHjnK6vFY7+ImdcgUo3EY8mS8sUPFR5NchQbNXj5qs9/HOHvQ
+X-Gm-Gg: AZuq6aIxWKTIvBD+vjms7HTJgkhtwvARvxT1Jld3rVx/Ay9ePrmrwkq4wiTbHeGsReR
+ COajsHKT76emoLVEvJE1LIrR3Tu7MHln0RE58MyfJcLmgvLZORnG/3ELtazosdunucrWkbit1Qk
+ 7jQfcvtFU27wjZOk7Wal7Y3zBNYUdUjVE+23VVJBzK9TkmWjuQvxXVwh6OeXkmLP/CFbe8/IGOp
+ RMAWTMVhAS5PbhDcK5bjssoRjE/gGz4AVTcltvTpQBTANPRHhIQgAWnp9pXHkotHa+zhWlHx1j/
+ ZlD4M92tqnAF7s5FVNIfrvRVX8tP/yyto5/wTwj1RvqmZRbRkp/0f6NO7Nz3Fk0hnB/KUm1BOM1
+ S2Q8=
+X-Received: by 2002:a05:620a:1902:b0:8c7:1b49:bd5c with SMTP id
+ af79cd13be357-8c728b5d81bmr27335385a.37.1769621929184; 
+ Wed, 28 Jan 2026 09:38:49 -0800 (PST)
+X-Received: by 2002:a05:620a:1902:b0:8c7:1b49:bd5c with SMTP id
+ af79cd13be357-8c728b5d81bmr27330285a.37.1769621928568; 
+ Wed, 28 Jan 2026 09:38:48 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8c711d452eesm225758985a.38.2026.01.28.09.38.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jan 2026 09:27:51 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 59E825F895;
- Wed, 28 Jan 2026 17:27:50 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org,  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: Re: [PATCH 0/2] gdbstub: re-do unlinking of unix socket before bind
-In-Reply-To: <49c18e2c-b771-40a7-b060-3af6e47fc013@tls.msk.ru> (Michael
- Tokarev's message of "Wed, 28 Jan 2026 18:35:54 +0300")
-References: <20251225062919.685146-1-mjt@tls.msk.ru>
- <877bt1bvk8.fsf@draig.linaro.org>
- <49c18e2c-b771-40a7-b060-3af6e47fc013@tls.msk.ru>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Wed, 28 Jan 2026 17:27:50 +0000
-Message-ID: <87jyx1abqh.fsf@draig.linaro.org>
+ Wed, 28 Jan 2026 09:38:48 -0800 (PST)
+Date: Wed, 28 Jan 2026 12:38:47 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] vfio/migration: Send migration event before device state
+ transition
+Message-ID: <aXpJpwLvHTAXfpon@x1.local>
+References: <20260128105159.10282-1-avihaih@nvidia.com>
+ <36062a37-0af5-49fc-ac06-212096fb2c30@redhat.com>
+ <aXoiAsGCWRv1nwW-@x1.local>
+ <cb677add-ef2b-4ec6-9ba5-13aa2a50ec90@nvidia.com>
+ <aXo3mcseNxP9bJ15@x1.local>
+ <591f4e36-11a8-4310-a74a-6166698d7b23@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
+Content-Disposition: inline
+In-Reply-To: <591f4e36-11a8-4310-a74a-6166698d7b23@nvidia.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,40 +125,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael Tokarev <mjt@tls.msk.ru> writes:
+On Wed, Jan 28, 2026 at 07:13:43PM +0200, Avihai Horon wrote:
+> In our case we only use the PRE_COPY_P2P prepare event. The prepare events
+> for the other states are ignored.
+> For re-enabling the timeout mechanism we indeed use the "regular" (not
+> prepare) events.
+> 
+> However, this new event can be used by anyone for any purpose, so I didn't
+> want to limit it only for my use case.
 
-> On 1/28/26 18:34, Alex Benn=C3=A9e wrote:
->> Michael Tokarev <mjt@tls.msk.ru> writes:
->>=20
->>> Prior discussion is at
->>> https://lore.kernel.org/qemu-devel/ee091002-a552-49fe-ae5e-8916937dba15=
-@tls.msk.ru/
->>>
->>> In short: when adding unlink() before bind() for unix socket
->>> in gdbstub/user.c, a previous patch introduced dependency of
->>> linux-user binaries on qemu-sockets.c, which is more problematic
->>> for usually-static binaries.  The monitor_get_fd stub which were
->>> also needed is another example why this might not be the right
->>> approach.
->>>
->>> This patchset reverts the previous commit (with fixes for current
->>> code), and adds just a single unlink() to the original code which
->>> handled unix sockets directly.
->> This isn't applying cleanly for me. Could you re-base please?
->
-> It isn't applying cleanly because this patchset has been applied
-> to the master branch already -- a2b429b114e1812e0b3f222818a2755b6d87fb8a
-> and e916f8b3b68bd9da45245927e2a428c3a0eaea54 .
+I see your point.
 
-Ahh - I was confused as I had it on my list to get to. Sorry for the
-noise and thanks.
+Said that, in this specific case, my worry is nobody will consume the rest
+events, and then after a few years nobody can even tell why it ever
+existed. Then QEMU needs to emits some never-used events forever, worrying
+about breaking anyone, even if in reality they're always ignored.
 
->
-> HTH,
->
-> /mjt
+Personally I think it makes more sense to add one explicit message as you
+explicitly need.  Then, that message can be as generic as possible on its
+own.  But I'll leave that to you and VFIO maintainers to decide.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> 
+> > 
+> > I do not know VFIO state machine well, also not familiar with this specific
+> > problem.  So please treat them as pure questions. Anyway, it'll be always
+> > nice to attach some more information into the commit log IMHO.
+> 
+> Sure.
+> As I said earlier, I didn't want to tie this new event to my specific use
+> case, but rather wanted to describe the general problem it can solve.
+> But if that helps, I can add some more details in the commit message in next
+> version.
+
+That'll always be very helpful, thank you!
+
+-- 
+Peter Xu
+
 
