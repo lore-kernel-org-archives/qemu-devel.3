@@ -4,93 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF47D25B4C
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 12:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C89DD25B4C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 12:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl4Oo-0004Lo-6b; Wed, 28 Jan 2026 07:11:54 -0500
+	id 1vl4aI-0003KM-4Y; Wed, 28 Jan 2026 07:23:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vl4NA-00044p-IO
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 07:10:12 -0500
-Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vl4N6-0008Gc-C1
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 07:10:11 -0500
-Received: by mail-pf1-x444.google.com with SMTP id
- d2e1a72fcca58-81f39438187so3618719b3a.2
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 04:10:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1vl4aB-0003HH-Sh
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 07:23:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1vl4a8-00071s-SB
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 07:23:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769603015;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cLWx/9f0WAsk9TFlirxpWdj05gCveQcgY8wvrJ84pzk=;
+ b=ObiVLNAV5hhh9hZCx1QPRQhtxYLiU7ZOdv/odHsr6g1EBsvM5q/Si/aq0FgL7DcqREPFVf
+ RiCsTpK8BMwtS/P4Ov1FAnbNOXXRDiFhDfSxuDXcIwcS64f4HCR7Tyh1YXDRG4cbpVbbfg
+ do0zsx2qTdMLnz9aHOnaEEeO7Giq13k=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-17-7mAEgHVuPo-lK_1VEU75Tw-1; Wed, 28 Jan 2026 07:23:32 -0500
+X-MC-Unique: 7mAEgHVuPo-lK_1VEU75Tw-1
+X-Mimecast-MFC-AGG-ID: 7mAEgHVuPo-lK_1VEU75Tw_1769603011
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-47ee056e5cfso52342865e9.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 04:23:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769602204; x=1770207004; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kvO7CVRTZw8Sxag3xE+c7nd2KfrVcatVDAOhlnuMyOo=;
- b=Evwt+NRP2TWyy8UTIT4NWz6MOBXD2rbfZiSJD2TxoiFehTud0x6Pgve9NEQV8UWhGx
- hFYr6qU6Yk318K2XuSMGX1zuz5tH80BDYXyPlaKVOqmIuPpo++k70tln7zWJGdfbpUXB
- TW81TB6rPTthlzwNC7uNMhv7zzVAQ25hdjiNL5xruj4Y+U/2yHkcfJkktgGJmBub4nVr
- JIC6TeAfCTFXyil0v4G5yv3C27f5aLqqxcSp2Bf87p3YGlShuqyPoRyBcg26yO2n1B34
- Zk56nqo5ZoAJsvCsgJfXU2tNVJjE9TbkE9ex9Hrl5rY8Tmheee9HiW5okTaT4Iajicbr
- K0uA==
+ d=redhat.com; s=google; t=1769603011; x=1770207811; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=cLWx/9f0WAsk9TFlirxpWdj05gCveQcgY8wvrJ84pzk=;
+ b=GKbMUtJyqfssUBMnwtJVn3qrd2/Kf3kj9ozWVNb+U1tHmJhFRZqL5SPrQ+sdkpuvNt
+ eZabd++DhL+iOI+dzOjq3iqwZpXFbGv/6sRilLeymQSYgOBXPAuimaGgX1u2SbCuWRmY
+ VS2wFKJuaTvnXF2FaZXAxkue3shHd+G6fxjGq6dMNtCu5LKkDtDpCsak94IPcd0mk4hr
+ 1ZdR2GcG3IeV94D4n74yqNEkjTT1RNg5mb6K3UQfLPZFtPJtb24T/sXo5CLYiR98Ob7+
+ Ri8LQpuf/qkvtGOcgHb2LnXiBcXiBxbksPZGNdpv7Mxe+c7VlDjJXvu5n8NAADXC8NxN
+ eg4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769602204; x=1770207004;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kvO7CVRTZw8Sxag3xE+c7nd2KfrVcatVDAOhlnuMyOo=;
- b=W/fxYD+nQsNU99NQVjwD+xhSTiwAF74tzQcCF5UMd79Q0uj11l9suddUsg/hVMANhw
- TiQewW7PcHpARJFYCseg8yDWYDsOUX3Jxu3E+TCW35WdSIz1wk6pY44bJchrkbZsw23g
- Z1VwWDNZZsdwnUq4rWP6Gk+KLBCFXcMzhcAZYFfMKOKxip36tNZljFvIE0tn7zbw4Gqb
- jOSZBnIOO6v1Ch6E6cqobYENcsUGFJf9UGoGZKIY/rf9DDuHOEOkkQTl++QNptzjyANc
- HQQ0ro4Q0XxGKOU4bLckJuE3FWjW12R820qjwc+4a7+y0U+DKfLA9L9gH2jKDap5V+Qz
- 8Z3w==
-X-Gm-Message-State: AOJu0Yy4C/8gM2IxedRjIx15i70AiZ1bIVUBJXt9mrv/tnkYPT/XPao6
- +mlMbuL2U6UaLu1WAxfjrPS/oXmcyt4TlKLW/tFwjpIs4twLgtQ5I4/q
-X-Gm-Gg: AZuq6aJJ/E09DHUXAcznFFZG0CW0yzOUjdtnG9KMmLgwyoo4RYLWSysAwCcQsMrLPbx
- tdVxwZ7vZBDJ4HtbogfwLJ/MrubOq4b4MyD1hjRiuu/Yj1LdAcUZfn7G3nzK5lfIzwdsfkYQAN8
- t1xHFpmXY+w2ydlEe/plo/WnfgcovLDvr9P8Fv8xSlSFnYDrZAAjJbxe5xb0dt9HDB+vXcJt9+P
- GLC1yFUPS2va9cgCe8cBj14pkR2aF97fmgQ3d1+21BdYXqUXwbN/eg/6hhEF4tn4R0L44QcBvX5
- jB0zaE0IhX4VUS2HI2RCyQraZDq1jqUG7JMpB/KYTrLc3hdbHPLkbamSv+Y/VXDHM/PbEAjrasm
- 7NU2ani3FYOFw366MAA/ldLG55XBZlUhkScjLqChSzbNx+Q8Gy8vDuR6M80WaDd4MhU8HoTXxc4
- QyAwJyB+ad7Vs6pZ3eARnZzzlAQlQzF5MqEqe6OtVHZ0OgWIImqIz+cuFnxTk=
-X-Received: by 2002:a05:6a00:1398:b0:81f:3afe:2824 with SMTP id
- d2e1a72fcca58-823691845e8mr5006867b3a.24.1769602204034; 
- Wed, 28 Jan 2026 04:10:04 -0800 (PST)
-Received: from ZEVORN-PC.bbrouter ([183.195.22.224])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379c24083sm2503153b3a.55.2026.01.28.04.10.00
+ d=1e100.net; s=20230601; t=1769603011; x=1770207811;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cLWx/9f0WAsk9TFlirxpWdj05gCveQcgY8wvrJ84pzk=;
+ b=K0eRDxpJgMA3/vRNUGmI1q8e3LVgxLGk7RzEY30USQkZfv22jalp0kbCRRVM2NKPEc
+ zQvLTgXMR7ktw0r55jax1zbAcAOu6dTRx4haat0QMIw8UaoDQD/drTi5OxumZVdgRxm+
+ pCBDRy1GZd4Juw55KKs3lTUx3Aln0FG7yvSndiqu4SN7QZCNWuZTTTDXCoPTPT10SM0O
+ xj5KXZS5hRt9rgzKzkoFEANQ//SzSBoE0i4bP9aW/L70AiHrG4X2Psw1CVqOkFNOHNJ5
+ 6cQ3Dq04uXXqMNcbQeo7shsrrngg6dxS3JrQgkWcCEK9zkUK08ElRjcgZhd7BzC4Btji
+ YIow==
+X-Gm-Message-State: AOJu0YzfgJghdyYVCDrYxt6VfqGPP7fyRrOwCYpAOwdOGfKtlujXJ+6+
+ AtxgdVMr3nauKiD648m/lXjSqYL3BNca0il+U0P+rNl0enRI7AQWWf5KbMDSe8Thh0DYi13tUy7
+ 8aAm3+BNxFSy4rPZ9VejR6xiqS2m5rzhVemP3D18ZysUnnvy6pHq26Ltj
+X-Gm-Gg: AZuq6aITyhB/ICtAg03R36AINGrNeb6xGhOY1RFZp2uM8C4BCKxWKco4wRszHvJJN0b
+ 0rWN30ht2T7/qkgOfn/a550JcBu1p1ZqFdwtgV7BsDP8lBMsLzmBxXE0+y3lWC8tZ4bKyvd/C0v
+ hzyHRydnXhbboI/rcDMFjJ2GCTTrj6TfycMy1QYxhg9zFMLxWd57f1k079p5JnifzM9EbyJfJOk
+ w6nmuNqXvKDmFMQZ5o0R+W0PlpEnmjY/vxXn4wc7rkDB5u0JgZoTPQLI3TD7BELSZbD0y+xd+MK
+ UcT7FIHAkaSS+WUTKhdfgl2kmXbtu7p9Vga5L3xBCbx1Xf8oIRrbco4KV37LI/KkJg==
+X-Received: by 2002:a05:600c:154c:b0:475:de12:d3b5 with SMTP id
+ 5b1f17b1804b1-48069c6136fmr54579185e9.34.1769603010770; 
+ Wed, 28 Jan 2026 04:23:30 -0800 (PST)
+X-Received: by 2002:a05:600c:154c:b0:475:de12:d3b5 with SMTP id
+ 5b1f17b1804b1-48069c6136fmr54578785e9.34.1769603010295; 
+ Wed, 28 Jan 2026 04:23:30 -0800 (PST)
+Received: from fedora ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48066bfb59asm119169585e9.7.2026.01.28.04.23.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jan 2026 04:10:03 -0800 (PST)
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Tao Tang <tangtao1634@phytium.com.cn>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- hust-os-kernel-patches@googlegroups.com,
- Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [RFC PATCH v1 2/2] tests/qtest: Add RISC-V IOMMU bare-metal test
-Date: Wed, 28 Jan 2026 20:09:09 +0800
-Message-ID: <c31147ca6db874b32dcfea6ba4ad08f59ae356b1.1769600111.git.chao.liu.zevorn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <cover.1769600111.git.chao.liu.zevorn@gmail.com>
-References: <cover.1769600111.git.chao.liu.zevorn@gmail.com>
+ Wed, 28 Jan 2026 04:23:29 -0800 (PST)
+Date: Wed, 28 Jan 2026 13:23:27 +0100
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH 4/4] migration: Pass network packets received during
+ switchover to dest VM
+Message-ID: <g4ojj5bjy6rleaerjjz6xyolcpyarta3hm7qwza5knz64xsy64@xdpxpy7f5yck>
+References: <20260127140316.4187221-1-jmarcin@redhat.com>
+ <20260127140316.4187221-5-jmarcin@redhat.com>
+ <aXjK01KuENw23xtV@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pf1-x444.google.com
+In-Reply-To: <aXjK01KuENw23xtV@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,342 +124,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a qtest suite for the RISC-V IOMMU PCI device on the virt machine.
-The test exercises bare, S-stage, G-stage, and nested translation paths
-using iommu-testdev and the qos-riscv-iommu helpers.
+Hi Daniel,
 
-The test validates:
-- Device context (DC) configuration
-- SV39 page table walks for S-stage translation
-- SV39x4 page table walks for G-stage translation
-- Nested translation combining both stages
-- FCTL register constraints
+On 2026-01-27 14:25, Daniel P. Berrangé wrote:
+> On Tue, Jan 27, 2026 at 03:03:10PM +0100, Juraj Marcin wrote:
+> > From: Juraj Marcin <jmarcin@redhat.com>
+> > 
+> > During migration switchover both the source and the destination machines
+> > are paused (compute downtime). During this period network still routes
+> > network packets to the source machine, as this is the last place where
+> > the recipient MAC address has been seen. Once the destination side
+> > starts and sends network announcement, all subsequent frames are routed
+> > correctly. However, frames delivered to the source machine are never
+> > processed and lost. This causes also a network downtime with roughly the
+> > same duration as compute downtime.
+> > 
+> > This can cause problems not only for protocols that cannot handle packet
+> > loss, but can also introduce delays in protocols that can handle them.
+> > 
+> > To resolve this, this feature instantiates a network filter for each
+> > network backend present during migration setup on both migration sides.
+> > On the source side, this filter caches all packets received from the
+> > backend during switchover. Once the destination machine starts, all
+> > cached packets are sent through the migration channel and the respective
+> > filter object on the destination side injects them to the NIC attached
+> > to the backend.
+> 
+> If the dest QEMU has started, I presume this means that the ARP
+> announcement has been sent ?   IOW, the packets being forwarded
+> over the migration stream are guaranteed to be delivered "out
+> of order" wrt the sender.  Should be safe for TCP, but may have
+> an impact on other protocols. Though apps should be aware of
+> that risk in general, they may not frequently encounter it, and
+> it could still cause service disruption
 
-This provides regression coverage for the RISC-V IOMMU implementation
-without requiring a full guest OS boot.
+Yes, after ARP announcement from dest. Forwarded packets could get
+delivered out-of-order, although it would depend on the traffic rate, in
+my testing I encountered out-of-order packets only a couple of times. As
+is, this feature allows choosing between risk of packet loss or out of
+order delivery, both of which could also happen outside the migration
+scope.
 
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
----
- MAINTAINERS                    |   1 +
- tests/qtest/iommu-riscv-test.c | 279 +++++++++++++++++++++++++++++++++
- tests/qtest/meson.build        |   5 +-
- 3 files changed, 284 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/iommu-riscv-test.c
+I could also update it and defer the delivery of new packets on the
+destination until packets from the source side are processed as Michael
+suggested, that should prevent out of order delivery.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 894e05bd2c..c7400c83d2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -347,6 +347,7 @@ F: common-user/host/riscv*
- F: tests/functional/riscv32
- F: tests/functional/riscv64
- F: tests/tcg/riscv64/
-+F: tests/qtest/iommu-riscv-test.c
- 
- RISC-V XThead* extensions
- M: Christoph Muellner <christoph.muellner@vrull.eu>
-diff --git a/tests/qtest/iommu-riscv-test.c b/tests/qtest/iommu-riscv-test.c
-new file mode 100644
-index 0000000000..9438578e1e
---- /dev/null
-+++ b/tests/qtest/iommu-riscv-test.c
-@@ -0,0 +1,279 @@
-+/*
-+ * QTest testcase for RISC-V IOMMU with iommu-testdev
-+ *
-+ * This QTest file is used to test the RISC-V IOMMU with iommu-testdev so that
-+ * we can test RISC-V IOMMU without any guest kernel or firmware.
-+ *
-+ * Copyright (c) 2026 Chao Liu <chao.liu.zevorn@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "libqos/pci.h"
-+#include "libqos/generic-pcihost.h"
-+#include "hw/pci/pci_regs.h"
-+#include "hw/misc/iommu-testdev.h"
-+#include "hw/riscv/riscv-iommu-bits.h"
-+#include "libqos/qos-riscv-iommu.h"
-+#include "libqos/riscv-iommu.h"
-+
-+#define DMA_LEN           4
-+
-+/* RISC-V virt machine PCI configuration */
-+#define RISCV_GPEX_PIO_BASE        0x3000000
-+#define RISCV_BUS_PIO_LIMIT        0x10000
-+#define RISCV_BUS_MMIO_ALLOC_PTR   0x40000000
-+#define RISCV_BUS_MMIO_LIMIT       0x80000000
-+#define RISCV_ECAM_ALLOC_PTR       0x30000000
-+
-+typedef struct RiscvIommuTestState {
-+    QTestState *qts;
-+    QGenericPCIBus gbus;
-+    QPCIDevice *iommu_dev;
-+    QPCIDevice *testdev;
-+    QPCIBar testdev_bar;
-+    uint64_t iommu_base;
-+} RiscvIommuTestState;
-+
-+static void riscv_config_qpci_bus(QGenericPCIBus *qpci)
-+{
-+    qpci->gpex_pio_base = RISCV_GPEX_PIO_BASE;
-+    qpci->bus.pio_limit = RISCV_BUS_PIO_LIMIT;
-+    qpci->bus.mmio_alloc_ptr = RISCV_BUS_MMIO_ALLOC_PTR;
-+    qpci->bus.mmio_limit = RISCV_BUS_MMIO_LIMIT;
-+    qpci->ecam_alloc_ptr = RISCV_ECAM_ALLOC_PTR;
-+}
-+
-+static uint64_t riscv_iommu_expected_gpa(uint64_t iova)
-+{
-+    return QRIOMMU_SPACE_OFFS + QRIOMMU_L2_PTE_VAL + (iova & 0xfff);
-+}
-+
-+static void save_fn(QPCIDevice *dev, int devfn, void *data)
-+{
-+    QPCIDevice **pdev = (QPCIDevice **) data;
-+    uint16_t vendor = qpci_config_readw(dev, 0);
-+    uint16_t device = qpci_config_readw(dev, 2);
-+
-+    g_test_message("Found PCI device: vendor=0x%04x device=0x%04x devfn=0x%02x",
-+                   vendor, device, devfn);
-+
-+    if (!*pdev) {
-+        *pdev = dev;
-+    }
-+}
-+
-+static QPCIDevice *find_riscv_iommu_pci(QGenericPCIBus *gbus,
-+                                        uint64_t *iommu_base)
-+{
-+    QPCIDevice *iommu_dev = NULL;
-+    QPCIBar iommu_bar;
-+
-+    g_test_message("Searching for riscv-iommu-pci "
-+                   "(vendor=0x%04x, device=0x%04x)",
-+                   RISCV_IOMMU_PCI_VENDOR_ID, RISCV_IOMMU_PCI_DEVICE_ID);
-+
-+    qpci_device_foreach(&gbus->bus, RISCV_IOMMU_PCI_VENDOR_ID,
-+                        RISCV_IOMMU_PCI_DEVICE_ID, save_fn, &iommu_dev);
-+
-+    if (!iommu_dev) {
-+        g_test_message("riscv-iommu-pci device not found!");
-+        return NULL;
-+    }
-+
-+    g_test_message("Found riscv-iommu-pci at devfn=0x%02x", iommu_dev->devfn);
-+
-+    qpci_device_enable(iommu_dev);
-+    iommu_bar = qpci_iomap(iommu_dev, 0, NULL);
-+    g_assert_false(iommu_bar.is_io);
-+
-+    *iommu_base = iommu_bar.addr;
-+    g_test_message("RISC-V IOMMU MMIO base address: 0x%lx", *iommu_base);
-+
-+    return iommu_dev;
-+}
-+
-+static QPCIDevice *find_iommu_testdev(QGenericPCIBus *gbus, QPCIBar *bar)
-+{
-+    QPCIDevice *dev = NULL;
-+
-+    g_test_message("Searching for iommu-testdev (vendor=0x%04x, device=0x%04x)",
-+                   IOMMU_TESTDEV_VENDOR_ID, IOMMU_TESTDEV_DEVICE_ID);
-+
-+    qpci_device_foreach(&gbus->bus, IOMMU_TESTDEV_VENDOR_ID,
-+                        IOMMU_TESTDEV_DEVICE_ID, save_fn, &dev);
-+    g_assert(dev);
-+
-+    qpci_device_enable(dev);
-+    *bar = qpci_iomap(dev, 0, NULL);
-+    g_assert_false(bar->is_io);
-+
-+    return dev;
-+}
-+
-+static bool riscv_iommu_test_setup(RiscvIommuTestState *state)
-+{
-+    if (!qtest_has_machine("virt")) {
-+        g_test_skip("virt machine not available");
-+        return false;
-+    }
-+
-+    state->qts = qtest_init("-machine virt,acpi=off "
-+                            "-cpu max -smp 1 -m 512 -net none "
-+                            "-device riscv-iommu-pci "
-+                            "-device iommu-testdev");
-+
-+    qpci_init_generic(&state->gbus, state->qts, NULL, false);
-+    riscv_config_qpci_bus(&state->gbus);
-+
-+    state->iommu_dev = find_riscv_iommu_pci(&state->gbus, &state->iommu_base);
-+    g_assert(state->iommu_dev);
-+
-+    state->testdev = find_iommu_testdev(&state->gbus, &state->testdev_bar);
-+    g_assert(state->testdev);
-+
-+    return true;
-+}
-+
-+static void riscv_iommu_test_teardown(RiscvIommuTestState *state)
-+{
-+    qtest_quit(state->qts);
-+}
-+
-+static uint64_t riscv_iommu_check(QTestState *qts, uint64_t iommu_base,
-+                                  QRIOMMUTransMode mode)
-+{
-+    uint64_t cap;
-+    uint64_t ddtp;
-+    uint32_t cqcsr;
-+    uint32_t fqcsr;
-+    uint32_t pqcsr;
-+    uint32_t fctl;
-+    uint32_t fctl_mask;
-+    uint32_t fctl_desired;
-+    uint32_t igs;
-+
-+    cap = qtest_readq(qts, iommu_base + RISCV_IOMMU_REG_CAP);
-+    g_assert_cmpuint((uint32_t)(cap & RISCV_IOMMU_CAP_VERSION), ==,
-+                     RISCV_IOMMU_SPEC_DOT_VER);
-+
-+    fctl = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_FCTL);
-+    igs = (cap & RISCV_IOMMU_CAP_IGS) >> 28;
-+    g_assert_cmpuint(igs, <=, RISCV_IOMMU_CAP_IGS_BOTH);
-+
-+    fctl_mask = RISCV_IOMMU_FCTL_BE | RISCV_IOMMU_FCTL_WSI |
-+                RISCV_IOMMU_FCTL_GXL;
-+    fctl_desired = fctl & ~fctl_mask;
-+    if (igs == RISCV_IOMMU_CAP_IGS_WSI) {
-+        fctl_desired |= RISCV_IOMMU_FCTL_WSI;
-+    }
-+
-+    if ((fctl & fctl_mask) != (fctl_desired & fctl_mask)) {
-+        ddtp = qtest_readq(qts, iommu_base + RISCV_IOMMU_REG_DDTP);
-+        cqcsr = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_CQCSR);
-+        fqcsr = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_FQCSR);
-+        pqcsr = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_PQCSR);
-+
-+        g_assert_cmpuint((uint32_t)(ddtp & RISCV_IOMMU_DDTP_MODE), ==,
-+                         RISCV_IOMMU_DDTP_MODE_OFF);
-+        g_assert_cmpuint(cqcsr & RISCV_IOMMU_CQCSR_CQON, ==, 0);
-+        g_assert_cmpuint(fqcsr & RISCV_IOMMU_FQCSR_FQON, ==, 0);
-+        g_assert_cmpuint(pqcsr & RISCV_IOMMU_PQCSR_PQON, ==, 0);
-+
-+        qtest_writel(qts, iommu_base + RISCV_IOMMU_REG_FCTL, fctl_desired);
-+        fctl = qtest_readl(qts, iommu_base + RISCV_IOMMU_REG_FCTL);
-+    }
-+
-+    g_assert_cmpuint(fctl & fctl_mask, ==, fctl_desired & fctl_mask);
-+
-+    if (mode == QRIOMMU_TM_S_STAGE_ONLY || mode == QRIOMMU_TM_NESTED) {
-+        g_assert((cap & RISCV_IOMMU_CAP_SV39) != 0);
-+    }
-+    if (mode == QRIOMMU_TM_G_STAGE_ONLY || mode == QRIOMMU_TM_NESTED) {
-+        g_assert((cap & RISCV_IOMMU_CAP_SV39X4) != 0);
-+        g_assert_cmpuint(fctl & RISCV_IOMMU_FCTL_GXL, ==, 0);
-+    }
-+
-+    return cap;
-+}
-+
-+static void run_riscv_iommu_translation(const QRIOMMUTestConfig *cfg)
-+{
-+    RiscvIommuTestState state = { 0 };
-+
-+    if (!riscv_iommu_test_setup(&state)) {
-+        return;
-+    }
-+
-+    riscv_iommu_check(state.qts, state.iommu_base, cfg->trans_mode);
-+
-+    g_test_message("### RISC-V IOMMU translation mode=%d ###",
-+                   cfg->trans_mode);
-+    qriommu_run_translation_case(state.qts, state.testdev, state.testdev_bar,
-+                                 state.iommu_base, cfg);
-+    riscv_iommu_test_teardown(&state);
-+}
-+
-+static void test_riscv_iommu_bare(void)
-+{
-+    QRIOMMUTestConfig cfg = {
-+        .trans_mode = QRIOMMU_TM_BARE,
-+        .dma_gpa = QRIOMMU_IOVA,
-+        .dma_len = DMA_LEN,
-+        .expected_result = 0,
-+    };
-+
-+    run_riscv_iommu_translation(&cfg);
-+}
-+
-+static void test_riscv_iommu_s_stage_only(void)
-+{
-+    QRIOMMUTestConfig cfg = {
-+        .trans_mode = QRIOMMU_TM_S_STAGE_ONLY,
-+        .dma_gpa = riscv_iommu_expected_gpa(QRIOMMU_IOVA),
-+        .dma_len = DMA_LEN,
-+        .expected_result = 0,
-+    };
-+
-+    run_riscv_iommu_translation(&cfg);
-+}
-+
-+static void test_riscv_iommu_g_stage_only(void)
-+{
-+    QRIOMMUTestConfig cfg = {
-+        .trans_mode = QRIOMMU_TM_G_STAGE_ONLY,
-+        .dma_gpa = riscv_iommu_expected_gpa(QRIOMMU_IOVA),
-+        .dma_len = DMA_LEN,
-+        .expected_result = 0,
-+    };
-+
-+    run_riscv_iommu_translation(&cfg);
-+}
-+
-+static void test_riscv_iommu_nested(void)
-+{
-+    QRIOMMUTestConfig cfg = {
-+        .trans_mode = QRIOMMU_TM_NESTED,
-+        .dma_gpa = riscv_iommu_expected_gpa(QRIOMMU_IOVA),
-+        .dma_len = DMA_LEN,
-+        .expected_result = 0,
-+    };
-+
-+    run_riscv_iommu_translation(&cfg);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    qtest_add_func("/iommu-testdev/translation/bare",
-+                   test_riscv_iommu_bare);
-+    qtest_add_func("/iommu-testdev/translation/s-stage-only",
-+                   test_riscv_iommu_s_stage_only);
-+    qtest_add_func("/iommu-testdev/translation/g-stage-only",
-+                   test_riscv_iommu_g_stage_only);
-+    qtest_add_func("/iommu-testdev/translation/ns-nested",
-+                   test_riscv_iommu_nested);
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index a8b09d065f..eb45e0f97d 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -286,7 +286,10 @@ qtests_riscv32 = \
-   (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
- 
- qtests_riscv64 = ['riscv-csr-test'] + \
--  (unpack_edk2_blobs ? ['bios-tables-test'] : [])
-+  (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
-+  (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-+   config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-+   ['iommu-riscv-test'] : [])
- 
- qos_test_ss = ss.source_set()
- qos_test_ss.add(
--- 
-2.52.0
+> 
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index f925e5541b..d637b22c80 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -520,6 +520,11 @@
+> >  #     each RAM page.  Requires a migration URI that supports seeking,
+> >  #     such as a file.  (since 9.0)
+> >  #
+> > +# @netpass: Collect packets received by network backedns after source
+> > +#     VM is paused and send them to the destination once it resumes.
+> > +#     This (almost) completely eliminates packet loss caused by
+> > +#     switchover.  (since 11.0)
+> 
+> Should mention they will be deliver "out of order" 
+> 
+> > +#
+> >  # Features:
+> >  #
+> >  # @unstable: Members @x-colo and @x-ignore-shared are experimental.
+> > @@ -536,7 +541,7 @@
+> >             { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
+> >             'validate-uuid', 'background-snapshot',
+> >             'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+> > -           'dirty-limit', 'mapped-ram'] }
+> > +           'dirty-limit', 'mapped-ram', 'netpass'] }
+> >  
+> >  ##
+> >  # @MigrationCapabilityStatus:
+> > -- 
+> > 2.52.0
+> > 
+> > 
+> 
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> 
 
 
