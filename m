@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93BF9D35688
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 06:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BBA0D35688
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 06:55:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkzS2-0000S3-Tq; Wed, 28 Jan 2026 01:54:55 -0500
+	id 1vkzSx-0001aO-SA; Wed, 28 Jan 2026 01:55:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vkzS0-0000Nk-Kt
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 01:54:52 -0500
+ id 1vkzSk-0001QZ-Lh
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 01:55:40 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vkzRx-0001MR-Ew
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 01:54:52 -0500
+ id 1vkzSj-0001fL-4K
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 01:55:38 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60S6sSWX061834
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60S6tOaM062072
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 28 Jan 2026 15:54:32 +0900 (JST)
+ Wed, 28 Jan 2026 15:55:34 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=CvzpREihWbm6KHhTGY7qzCRWpkqLHoUfYqs2fl3LqP8=; 
+DKIM-Signature: a=rsa-sha256; bh=SwllNtgs6BbiLvza8xTqgE+CP2itt1pwOhIK9Jo/VMk=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1769583272; v=1;
- b=LIdYWFVHMKl1ln2eKUK+7z+HcmVnprjhSS8+TX22bcyqnIQU+ALUfo1dIVKTfYqM
- K3XqEBRns/oKosCcJ6KsTrZUEeGEid2l+kA5ic675BTGkseyaM8DlauvIxogvFmD
- bVYvPClNTe6Cr7uTkqPglsTxZ85+odIb9zYnCS5eKtxFSw+8VgbA9/VRszaxqbRb
- hWeZQ713Mwqydprf6TVBOj2P3/EDAUvOPfOd5FnNC8xfEhHJjHbSyONNmu+/4jBV
- AWn/X4127sLjdPwTqam/e58PU3kVuCb+cCFKM5fxB4GtljQ1uH1n2Mw4kyUfS++q
- flLZMpDxeLTYIEWcoLgScQ==
-Message-ID: <5df92815-c94d-45a1-9900-a88e78624253@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 28 Jan 2026 15:54:28 +0900
+ s=rs20250326; t=1769583334; v=1;
+ b=QodPgdA3lC4xfMi8lEk95J1yMSZefCOD6MUboiIHz9kQjSi3tIcLJi5oZOQDEaVs
+ NafSvW2iSKkTl/vpBL9c4F8ibaegYomWPlN4q1hHU7NBuNDJXS8YrQ4NcsIgIJ3J
+ 9/erDtj11ET7uOGIjuc0docwiuUwyK6rSxrIawznLdv9YQmTQQ35g+C6XHyuhFmi
+ qPBn6JMj0/uwquAe7DjTxS+KzsGex2g0aT+Mw4BA83pSFtHbM/OMzjZqZ0GYGQ1C
+ BvY6jACXSwXPjwtwnK9Os1XiWQaYajXZl62iovwomCYyQZZHyCA8mrZQkq5im3ok
+ m7cTIAjKUnP97pCjcdMwFg==
+Message-ID: <aa1f2a5c-058f-4735-a926-5624d4dca337@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 28 Jan 2026 15:55:24 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 31/43] audio/mixeng: replace redundant pcm_info fields
- with AudioFormat
+Subject: Re: [PATCH 43/43] audio: remove AudioMixengBackendClass.name
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>
 References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
- <20260127182516.289834-32-marcandre.lureau@redhat.com>
+ <20260127182516.289834-44-marcandre.lureau@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260127182516.289834-32-marcandre.lureau@redhat.com>
+In-Reply-To: <20260127182516.289834-44-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -77,23 +77,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/01/28 3:24, marcandre.lureau@redhat.com wrote:
+On 2026/01/28 3:25, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> The audio_pcm_info structure stored three fields (bits, is_signed,
-> is_float) that were always derived from the AudioFormat enum. This
-> redundancy meant the same information was represented twice, with no
-> type-level guarantee that they stayed in sync.
-> 
-> Replace these fields with a single AudioFormat field, and add helper
-> functions to extract the derived properties when needed:
-> - audio_format_bits()
-> - audio_format_is_signed()
-> - audio_format_is_float()
-> 
-> This improves type safety by making AudioFormat the single source of
-> truth, eliminating the possibility of inconsistent state between the
-> format enum and its derived boolean/integer representations.
+> Simply use the class name instead.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
