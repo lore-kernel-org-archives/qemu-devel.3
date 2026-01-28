@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF52D35677
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 05:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78861D35677
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 05:50:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkyQk-0001qz-Tg; Wed, 28 Jan 2026 00:49:30 -0500
+	id 1vkyRY-0004ky-L8; Wed, 28 Jan 2026 00:50:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vkyQd-0001ip-GM
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 00:49:23 -0500
-Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vkyRQ-0004Wl-Ez
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 00:50:14 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1vkyQb-0001uL-5G
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 00:49:23 -0500
-Received: by mail-pf1-x441.google.com with SMTP id
- d2e1a72fcca58-82318b640beso2748770b3a.0
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 21:49:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vkyRO-00029s-RH
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 00:50:12 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-29f30233d8aso43271945ad.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 21:50:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1769579359; x=1770184159; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=GIegsY9WB3wZJxqAXkbIfbfD+pYgPpNR8Y7msKf6HxU=;
- b=h8MuHN4GA3d4EmS+z7mElLUv8axrZ/evMs5j3eJlqm4TaerML8F/Dga6JJm3E/yEyp
- +A5Z5x3Z5n+34U1L3WME+76ARdylAzbwYkIqaVrlhkVuu/FHTP0OQrXoynCp5PcSsT/k
- RNp/oDIqtkSsi+m0zf+1UtpUqK1UKNTcIg4LDXeS7971iuZHe2GcXGHcoCDiik1RuW81
- RLr5ID6OdQ8TskXgTSrlOleb/7l0JK50HPTt83DZLRgeUl2F6X6IO4nT9vrojbjRHdhm
- aaOJv6PbhR0s3nIYgDmLXXJuhVp8TDJzFm0nobxhWyY0X3YlJuxsNsU8dDoKUkfSLGge
- OVow==
+ d=linaro.org; s=google; t=1769579409; x=1770184209; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mUrVo0AcbFsFAWEg7s2J+Pflj8KapV5/MPTPJ4i/QTM=;
+ b=aVUzwUbklZ/Bxw4PozUTVRr3GSFueO2qslR6vJiqTHRyGtb2V8Q2ei4J+9mTvhdBFd
+ kETuwZ0uBqbdxJMowVrVPoXSKqhX9YbscMRirjwzCqTvhMLZYjzzZUH9uMmVMwfF6zio
+ 0PTOCM+FoDAoIMlzIeIkgJItfRU4BfraPy4iUw6FSSjdLQkNxnhMwcx5nfIzo+ReincC
+ CtY3VV1oXl3lWNmNFM0x9q29TyOzScDT8NWKMtBW5H/HsyvBSTMu18P19UVdtOM43Sbk
+ I7iiPwrWbhBdx2eFvu1AMPtZE6WE9lByKHnrFJok4hui5w5Pjm8GcByb31+1sbYdqSUj
+ gk/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769579359; x=1770184159;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GIegsY9WB3wZJxqAXkbIfbfD+pYgPpNR8Y7msKf6HxU=;
- b=srUa0RZF/SNCKYKInpzERTiufrTrDJJoHxYSZxe+cLFmRvkWlkJZ6Jw9Cn/HIozKVN
- UTjThZ921fuXkxYQJ2Bie1dP15I0jUDl6DFgzEC+NIKE9gMBGYaN8qFmKYEwS3DWD/TB
- EEeEzwHnc0ZZuFbAdPOgKZNHBctww9M7MwQs4/ieDzrHK7zzS7Y56eDl9Dj8HNWo8Eqs
- VN5tdIEZvBnjKnPcccWv+FYf5OiQx9EkzFTbdpqylG26IU6yCw041vqiQO2zvmJk4U/f
- 0sPIstHkLplXWHxRDZnVVJRnwvRDY6F76/CKx+WjqfzxeMcIUD2AXUBg8T9E46yEEa0O
- cdTQ==
-X-Gm-Message-State: AOJu0YwsX1RAKEHKPrYXvzsq0eHvVareRF6YyisNpyKnO0IJ7N/BD4od
- xbLKw5RK8IImK1DaSep1cD3EEgfZYTN/JeQsIx/F8IAtV6LjtjiuSgKdJeRz7mFuMaY=
-X-Gm-Gg: AZuq6aJpFiXGUCEZqQCIGyKf3DztBr+W0ckK0K7cgGNLWCLZgRsusGU7L/3whlwwL4q
- 3z0GvwZqtSultaozk7v9VAE0v980oOrnycOwlYt/9ttWE+uPZ69YBCkEcUAa3ugwelonGuZXdsE
- 9+QQEJcsv+/5lFjMdEhxgGhpAGV3JIE9b7RyyRQWDzomtJHkLEPbxUWtjoPa/lAS4CVwL0vrsNr
- ms9g+aRSNy1MMiCbFAzRrp/77kZcFoFOKaQZqHfT/cBJUwuxusVmYUHwPOvCNTQKquZN13GnVL7
- d4qUb3XKkldr3L8ktYGjBrGF9pMJsfVfXDvsEEmtKa1xO1pH//m/ZYIrOXF7l4CwK6hhndln+CD
- gJhiFP+qTgaZzdiLO0r0P+SFexXVCK/ohxCkKylVPKZnGRw5wpQJbwoITWXqUKc0OjoM2d61SV6
- vEbLYi8StF+QN8UdsQK1pU99KeCxIfzRfsX5W0SBJhXcCNKzvAurzGGBaRFw==
-X-Received: by 2002:a05:6a21:6813:b0:38e:9ebe:525e with SMTP id
- adf61e73a8af0-38ec6410421mr3917620637.52.1769579358717; 
- Tue, 27 Jan 2026 21:49:18 -0800 (PST)
-Received: from sifive.com ([136.226.240.196]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c64276efbb7sm1046117a12.2.2026.01.27.21.49.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jan 2026 21:49:18 -0800 (PST)
-Date: Wed, 28 Jan 2026 13:49:13 +0800
-From: Max Chou <max.chou@sifive.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, 
- Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH v2 02/17] fpu/softfloat: Refactor IEEE format NaN
- classification to share code
-Message-ID: <aXmisH-enHafT9Xz@sifive.com>
-References: <20260127063723.442734-1-max.chou@sifive.com>
- <20260127063723.442734-3-max.chou@sifive.com>
- <7cc87797-4cfb-4195-9a9d-21ddd355aa54@linaro.org>
+ d=1e100.net; s=20230601; t=1769579409; x=1770184209;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mUrVo0AcbFsFAWEg7s2J+Pflj8KapV5/MPTPJ4i/QTM=;
+ b=cKBcF9S7NjcRl+omRv//wJRwZ9qg7ekbPPg6ZoazUWksTN+fUTBEYzsIdVE3ZZEKZr
+ AfLoT4XNxN8GSzwlfxz+oCAWuXWNbz5ujdt5PbFcBpemJJDNwnSvLe5gz02jOMKlzgnZ
+ u+B1wmii61b0WFDvUz2+CzcpL0nQTFS+esgVcFVPxXuoguY2V+sp9JmvG/GGGyh8bViU
+ GXtR3oIscn1pWm46LN3UaRmvJdMrQRd/Hzfqu/fP/MeKU2vph2pJKGfkx9EvkNvB80Sw
+ wlt/PTNVqntrzxF2j3LToRjf3gPlF6An1Z8KO6tX4lT5gOJNhEjjZV2WlJgjqdLLR2kE
+ 4niw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3WEBIm4NaOajFGI0EOjMFgnJlof18Nc4fIFvucAlbjHsQ6vg5O1hEG0TidKbN3fBobJieVvZy7e2G@nongnu.org
+X-Gm-Message-State: AOJu0YwPHwvk9Cn1hxdknd9ujDCSI957ByLgo3RXFBmF5AZlZ+EXTWZP
+ ttRbSuHLgGOeMNdSaLuh8kIIgj357JkePlTPesmGFXWj1NfunVOaMPn+/3dGM56U/eNb18oz7Rh
+ Wjw7k5UA=
+X-Gm-Gg: AZuq6aJWiXpWUNiGsg5G6B3Man2knonNqyStHN0qkjoiEvyQIV4NyNkdzmCr9VaHbnu
+ J8ZWrv7QiSaK0S4O9Kj8odAYQuUAdOSJ9Lr7gg3c0Kqb8zEiEvAuNfi8ox41TybldWlFisBWDAI
+ lRydoOyFgAlUxt8RaW64xI4K3i7Aokb4/6RbAdmv/MLlkAtuD1hE84n+RPSjKML9G393Pk82kKc
+ Nf3XbNovm3ofQ2ZbMLUPDabwbMxwrHy81sOW6nxder8MIyyU1d5D6kygBZKVtW4KzYJJ970XWOK
+ L9LUNm8yfuG7FENLfpFEcc5JVgvH/vopPXnVcT8EliJvzFGV1T2Vz8vlhclLS+WdO1foCpI80ka
+ cr6ottghEYJKI59TjGIUaytE5cBlDQVmEuVKyMx1gksTbA9YWYr/puLq1spPsbd92xONGW9laOa
+ RJsFF/0TMcqUh2+Nl0tz5isGeUWtuuYuJnDe05TWck
+X-Received: by 2002:a17:903:4b07:b0:2a0:993b:d72a with SMTP id
+ d9443c01a7336-2a870da13fcmr30490465ad.4.1769579409252; 
+ Tue, 27 Jan 2026 21:50:09 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a88b5d9a7bsm10564055ad.79.2026.01.27.21.50.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Jan 2026 21:50:08 -0800 (PST)
+Message-ID: <66027136-d91b-478c-becc-0aa41b40c445@linaro.org>
+Date: Wed, 28 Jan 2026 16:50:03 +1100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <7cc87797-4cfb-4195-9a9d-21ddd355aa54@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x441.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] target/s390x: Implement DIVIDE TO INTEGER
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
+Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260127153736.62730-1-iii@linux.ibm.com>
+ <20260127153736.62730-4-iii@linux.ibm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260127153736.62730-4-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,29 +107,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-01-28 12:34, Richard Henderson wrote:
-> 
-> I think the "internal" functions should already assume any_nan.
-> 
-> Otherwise you're double-testing it in the quiet_nan tests.
-> 
-> Perhaps the intent would be clearer by naming them <type>_nan_is_snan.
-> 
-> Perhaps clearer to merge the expressions:
-> 
->     return float16_is_any_nan(a) && !float16_nan_is_snan(a)
-> and
->     return float16_is_any_nan(a) && float16_nan_is_snan(a)
-> 
-> for the is_quiet_nan and is_signaling_nan functions respectively?
-> 
-> 
-> r~
+On 1/28/26 02:31, Ilya Leoshkevich wrote:
+> +        FloatParts128 a128, b128, *m128, m128_buf, n128, *q128, q128_buf,
+> +                      r128, *r128_precise;
+> +        int float_exception_flags = 0;
+> +        bool is_q128_smallish;
+> +        uint32_t r_flags;
+> +        int saved_flags;
+> +
+> +        /* Compute precise quotient */
+> +        parts_float_to_float_widen(&a128, a, status);
+> +        parts_float_to_float_widen(&b128, b, status);
+> +        q128_buf = a128;
+> +        q128 = parts_div(&q128_buf, &b128, status);
 
-Hi Richard,
+Why do you need FloatParts128?
+You can see an inexact result from float64 with just FloatParts64.
+C.f. soft_f64_div.
 
-I agree with your suggestions and I will update v3 for this part.
+> +
+> +        /* Final or partial case? */
+> +        is_q128_smallish = q128->exp < (fmt->frac_size + 1);
+> +
+> +        /*
+> +         * Final quotient is rounded using final-quotient-rounding method, and
+> +         * partial quotient is rounded toward zero.
+> +         *
+> +         * Rounding of partial quotient may be inexact. This is the whole point
+> +         * of distinguishing partial quotients, so ignore the exception.
+> +         */
+> +        n128 = *q128;
+> +        saved_flags = status->float_exception_flags;
+> +        parts_round_to_int(&n128,
+> +                           is_q128_smallish ? final_quotient_rounding_mode :
+> +                                              float_round_to_zero,
+> +                           0, status, &float128_params);
 
-Thanks,
-rnax
+float128_params is definitely wrong.  The rounding is supposed to be to the target format.
+
+> +        float_exception_flags = saved_flags;
+> +        parts_s390_precision_round_normal(&n128, fmt);
+
+parts_round_to_int_normal already takes a rounding mode and frac_size.
+It also returns whether or not the rounding was exact.
+This appears to be trying to reinvent the wheel.
+
+There's still "... the two integers closest to this precise quotient cannot be both be 
+represented exactly in the precision of the quotent ..." to contend with.  Is that your 
+"smallish" test?  If so, the comment could use some improvement.
+
+> +
+> +        /* Compute precise remainder */
+> +        m128_buf = b128;
+> +        m128 = parts_mul(&m128_buf, &n128, status);
+> +        m128->sign = !m128->sign;
+> +        status->float_exception_flags = 0;
+> +        r128_precise = parts_addsub(m128, &a128, status, false);
+
+Surely parts_muladd_scalbn (with scale 0).
+
+
+r~
 
