@@ -4,61 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72239D3F081
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 15:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE65CD3F081
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 15:48:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl7kn-0008Fm-GS; Wed, 28 Jan 2026 10:46:49 -0500
+	id 1vl7lt-0000rI-VP; Wed, 28 Jan 2026 10:47:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vl7kb-0008AR-4u
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:46:37 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vl7kX-0003kr-Ns
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:46:36 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C34915969F3;
- Wed, 28 Jan 2026 16:46:29 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 6l8yavbCFeT3; Wed, 28 Jan 2026 16:46:25 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id AB9BF5969F2; Wed, 28 Jan 2026 16:46:25 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A97305969F0;
- Wed, 28 Jan 2026 16:46:25 +0100 (CET)
-Date: Wed, 28 Jan 2026 16:46:25 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Peter Xu <peterx@redhat.com>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v2 00/10] Implement memory_region_new_* functions
-In-Reply-To: <CAFEAcA-8-jC-HJix5YFVbmg3sEuhcSMD8gKJxzAiz=GPy0sw9Q@mail.gmail.com>
-Message-ID: <b5721fa1-e613-889a-03de-77c46aa01da4@eik.bme.hu>
-References: <cover.1769362313.git.balaton@eik.bme.hu>
- <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
- <0118dc9b-d467-7f6b-92a8-4f42760ecb6c@eik.bme.hu> <aXkXWGho7lnJ-gwX@x1.local>
- <2fa59d39-5634-0b8c-27ee-9e9548a7f92a@eik.bme.hu>
- <562f0e5c-7ae8-4d95-9dd4-674447362ef7@rsg.ci.i.u-tokyo.ac.jp>
- <cfacf068-7663-6c7f-4908-928bb63e803c@eik.bme.hu>
- <CAFEAcA-8-jC-HJix5YFVbmg3sEuhcSMD8gKJxzAiz=GPy0sw9Q@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vl7ls-0000l7-1C
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:47:56 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vl7ln-0003ut-0M
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:47:55 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-8230d228372so3326284b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 07:47:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769615264; x=1770220064; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Y5HIVG56hPf4UJpvnRh172kVvsxsgH6nS/kkZ/0ZIBE=;
+ b=rEQEwYUNQ0DOmmi8MCQ41dMshsvDNvhMn3qMDM9j2nJtg5DrV85BqL+DIMad5c4O63
+ kOI7CNRuq6pP1kBQfaaiPU5c5eZjk5nYhl1bbTXWaRKQF2sgplU9IBvbeoARLtS48ZWQ
+ 6R0uoXNjknE3qCg+jC3hh6qSheAcAOD0tTcQZZO2H663psxR62pk1S2OsjoHDIGCYWwL
+ SBXElZ0DWDIYcEMoqQ4ziEnjXjb1ejWOQ8EQvZ4scLjezgmJH4cBZ8vORC5GAnyx2xHj
+ 9szI5Qc9ZVf2PD5SmDoO2vvO+mJmGlKp+BiB63kthtryMEmZyvq63ADr12uvnQPlNcOX
+ oyGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769615264; x=1770220064;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Y5HIVG56hPf4UJpvnRh172kVvsxsgH6nS/kkZ/0ZIBE=;
+ b=vdKE7TrS3/GNZ/q55dCWrTkNYO2X4YtSeaI7AGPpTOS7sLrgP8K9JBpyClQvBGVhds
+ 8MIvRZgrsXY8LUaKF89xhigDb7JWjDu6ooyKElAOsGjAu+KQa2/fGc0uP5n1W4FllgJL
+ 1ebgVaIxF4YNmJX0c5f1w8rXRBG33xykfXBM8ZKNquukXbdykhCj5z5XYWFnokYDOzjk
+ 5h+BIkzuDM2U2IQuQAZJ9n/d2eJq6rJPvSkPCj9r2cagLIXs7FhC3++lzs7NpHbGe6oE
+ qEuhoOKLJZN07llDkXCVsxzmwgsjxymfGVUJt5c0q4TnDJ7fi7HfMqFJ7G2Yx7wT747r
+ y4Ww==
+X-Gm-Message-State: AOJu0YyFJv8sB5ix8AQRcW4CtBDDKeiKsAgkTys4ZeUVyzIZqgx++YNq
+ 1PTVp2unT40872FPKLNagdk9nDIzI8CTRqi6d7maMP3BCXNZ2c5U7l5Wv0sqS0DnCxc=
+X-Gm-Gg: AZuq6aK5CcVM1y1ib6PpVe9zOfcu0dQrr+rUrNlMrvXZ4ryYIODmEZGYK1DuAdXlVBV
+ VleIVUKPPf1ruW9hLnSWytgmxAPqL/glEO/Cm15VZqpgTYILnsWGi5WBiT7Gj+uc/3XiLLH7kQt
+ RsuBN/lRIGdqQAX7/AWlEFBkjYTi6n8TSsdlwlmX6yPXdxddtNuGuNCJt9v7s4wwc4NiXUCKYyn
+ 0KAD0HsWAol6qrbIbpwyS9oHd+wpXXxNC3I/7yxbsSq9HAWWMJO+FnnrGoBkWV0nKcRqjidCvRM
+ c5rxwmRErRKYjcsVEZbzMgaXcqBQqVwk3ddTvVwuEwiCw+xR43O1hGe/8CNRFwQr8vYWvrdWmJo
+ UZe/+iIthWNsagJaGNJQUcVccnXGPbXBkj6Q0HlUSVb4Eo2g/6aGaKvDSYOldWYRCzWcUIo9gU1
+ EiN7Nwv0U31W0nWio1UgsklCYLOtqbEqv6GnwxdkoCheeZgNhtmB3Bt6j5nYFvkMvwRhE=
+X-Received: by 2002:a05:6a00:13a7:b0:81f:9907:e503 with SMTP id
+ d2e1a72fcca58-8236917bdfbmr5659404b3a.16.1769615263850; 
+ Wed, 28 Jan 2026 07:47:43 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82379c22672sm2890170b3a.51.2026.01.28.07.47.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Jan 2026 07:47:43 -0800 (PST)
+Message-ID: <cd43d8bb-3567-4907-ad44-bf435dc967f0@linaro.org>
+Date: Wed, 28 Jan 2026 07:47:44 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 03/11] plugins: use complete filename for defining
+ plugins sources
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ Michael Roth <michael.roth@amd.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20260124182921.531562-1-pierrick.bouvier@linaro.org>
+ <20260124182921.531562-4-pierrick.bouvier@linaro.org>
+ <87cy2uat5e.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <87cy2uat5e.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,117 +149,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 Jan 2026, Peter Maydell wrote:
-> On Wed, 28 Jan 2026 at 11:40, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->> OK I try to summarise the motivation again:
+On 1/28/26 3:11 AM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+> 
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   contrib/plugins/meson.build   | 10 +++++-----
+>>   tests/tcg/plugins/meson.build |  7 +++++--
+>>   2 files changed, 10 insertions(+), 7 deletions(-)
 >>
->> 1. Documentation in docs/devel/memory.rst says that memory regions'
->> lifecycle is managed by QOM and they are freed with their owner or when
->> nothing else uses them. This is also already implemented for a long time
->> as described but cannot be used because the only constructors available
->> kill this feature when calling object_initialize that clears the free
->> function added by object_new. (The life time management is implemented
->> through adding memory regions as children to the owner and unparenting
->> them on freeing the owner which decreases ref count of the memory region
->> and will free it when nothing else references it as far as I can tell.)
+>> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+>> index 6915ffa5fbc..3d2d7862e0c 100644
+>> --- a/contrib/plugins/meson.build
+>> +++ b/contrib/plugins/meson.build
+>> @@ -1,15 +1,15 @@
+>> -contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
+>> -                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger',
+>> -                   'traps', 'uftrace']
+>> +contrib_plugins = ['bbv.c', 'cache.c', 'cflow.c', 'drcov.c', 'execlog.c',
+>> +                   'hotblocks.c', 'hotpages.c', 'howvec.c', 'hwprofile.c',
+>> +                   'ips.c', 'stoptrigger.c', 'traps.c', 'uftrace.c']
+> 
+> Argh this keeps conflicting with other changes. Maybe we should make
+> this a dumb list:
+> 
+>    contrib_plugins = [ ]
+>    contrib_plugins += 'bbv.c'
+>    contrib_plugins += 'cache.c'
+> 
+> etc?
 >
-> If we have leaks because of our very common pattern of "embed
-> a MemoryRegion struct in the device state struct" then we must
-> fix those, because there's no way we're going to convert all
-> that existing code to a new set of APIs. But I was under the
-> impression we had already dealt with those, because MRs track
-> their owner's refcount, and don't have their own independent one ?
 
-I'm not sure if all those leaks are resolved as there were some patches 
-and discussion about this recently but I think that problem or the need to 
-use the owner's ref count to circumwent it instead of using the memory 
-region's own ref count may also come from that there's currently no way to 
-allocate memory regions that are ref counted and automatically freed as it 
-should work with QOM and the documentation implies. (Only the constuctor 
-is missing that is all this series adds, the mechanism is already there 
-and implemented.) There may still be a problem with circular references if 
-the memory region needs the owner so the owner can't be freed until the 
-memory region is also freed but the memory region is not freed until the 
-owner is freed but if both the owner and memory region used their own ref 
-count things may become a bit less confusing and could be easier to find a 
-way to break circular reference (e.g. by owner unparent child regions on 
-unrealize but isn't freed until memory regions unref owner in their free 
-method).
+Ok.
 
->> These are my motivation for this change. What is the motivation for using
->> embedded memory regions instead and against this change?
->
-> Simply that it's a consistent pattern we use in a lot of the codebase:
-> the device embeds a lot of the structs it uses, rather than allocating
-> memory for them and keeping pointers to that allocated memory. We
+>>   if host_os != 'windows'
+>>     # lockstep uses socket.h
+>> -  contrib_plugins += 'lockstep'
+>> +  contrib_plugins += 'lockstep.c'
+>>   endif
+>>   
+>>   t = []
+>>   if get_option('plugins')
+>>     foreach i : contrib_plugins
+>> -    t += shared_module(i, files(i + '.c'),
+>> +    t += shared_module(fs.stem(i), files(i),
+>>                          dependencies: plugins_deps)
+>>     endforeach
+>>   endif
+>> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+>> index d7823704616..303f97f9679 100644
+>> --- a/tests/tcg/plugins/meson.build
+>> +++ b/tests/tcg/plugins/meson.build
+>> @@ -1,7 +1,10 @@
+>> +test_plugins = ['bb.c', 'discons.c', 'empty.c', 'inline.c', 'insn.c', 'mem.c',
+>> +                'reset.c', 'syscall.c', 'patch.c']
+>> +
+>>   t = []
+>>   if get_option('plugins')
+>> -  foreach i : ['bb', 'discons', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
+>> -    t += shared_module(i, files(i + '.c'),
+>> +  foreach i : test_plugins
+>> +    t += shared_module(fs.stem(i), files(i),
+>>                          dependencies: plugins_deps)
+>>     endforeach
+>>   endif
+> 
 
-You mix in the issue of SoCs and complex devices using other devices in 
-which case the recommendation was to embed those in the parent device so 
-they don't have to be freed or kept track of by a pointer but won't be 
-leaked. This series does not mean to change that, it's only limited to 
-memory regions. (Although that problem may also stem from similar issue 
-with object_initialize_child not allowing creating reference counted 
-objects only initializing preallocated instances but that's not 
-something this series touches.)
-
-We can say that memory regions are like other embedded objects but they 
-are often used for sysbus and PCI devices only to be registered in the 
-parent device that already has pointers in their state to track these so 
-there's no need to keep track of them in the subclass if we can rely on 
-QOM freeing them when not needed any more and this is already implemented 
-and documented that way. So even if we keep embedding other child devices 
-into complex parent devices that I think does not directly apply to memory 
-regions and we could use what the documentation and implementation 
-already allows and says for memory regions at least.
-
-> still have also various older device models that use the previous
-> pattern of "allocate memory and have pointers" too, but most new
-> code doesn't do that. I think we should for preference write code
-> in one pattern, not two, and "embed structs" seems to be what
-> we have mostly settled on for new code.
->
-> There is an argument to be made that the pointer model would
-> fit better with a possible future world of "the user can wire
-> configurably wire up their own board model from devices", and
-> that it works better in a part-Rust-part-C world where the two
-> different languages don't have convenient access to the exact
-> size of structs defined in the other language. But that future
-> model is not something anybody has yet really fleshed out in any
-> detail, so it's still a bit speculative.
-
-You keep mentioning pointers but the point of ref counts and regisrering 
-memory region as child of an owner is to avoid needing a pointer or 
-embedding it in the subclass state as the relationship and lifecycle 
-management are then handled by QOM. If we don't use that we could remove 
-this from QOM and memory regions to simplify it but if it's already there 
-and makes the device state simpler I think we better use it.
-
-> I'm not actually opposed to the idea of making a design decision
-> that this struct-embedding is no longer what we want to do, and defining
-> that something else is our new best practice for how to write devices.
-> But I think we would need to start by reaching a consensus that that
-> *is* what we want to do, and documenting that "best practice" somewhere
-> in docs/devel/. Then we can examine proposed new APIs and all be
-> on the same page about the design patterns we want and it will
-> be clearer to reviewers whether the new APIs fit into those
-> patterns or not.
-
-I think we're in that discussion now in this thread. I don't propose to 
-change the struct-embedding for sub devices used in SoC or south bridge or 
-other complex devices but only propose to not embed memory regions that 
-are already documented as and handled by QOM and simply allocate them and 
-let QOM handle them so we only need to reference them in the devices state 
-unless they are needed for some reason by the device methods which is 
-rarely the case. So this is limited to memory regions and the series only 
-seems to add a lot of lines because of the extensive documentation 
-comments. The actual change is just factoring out actual memory region 
-init from memory_region_init functions then add a memory_region_new 
-variant that does object_new; do_init and keep the memory_region_init do 
-object_initializel do_init. Nothing else is changed, the way to manage and 
-free regions based on ref counting is already there this series just 
-enables them to be actually used becase currently despite what the docs 
-say memory regions are either leaked or must be embedded.
-
-Regards,
-BALATON Zoltan
 
