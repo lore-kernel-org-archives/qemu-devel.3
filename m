@@ -4,93 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59DBAD25B64
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 13:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C49BD25B6E
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 13:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl5Yu-0000Mb-Hi; Wed, 28 Jan 2026 08:26:24 -0500
+	id 1vl5tE-0003Ur-Cp; Wed, 28 Jan 2026 08:47:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastien.michelland@inria.fr>)
- id 1vl5Ys-0000Kj-Ee; Wed, 28 Jan 2026 08:26:22 -0500
-Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebastien.michelland@inria.fr>)
- id 1vl5Yp-0002Ae-TZ; Wed, 28 Jan 2026 08:26:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inria.fr; s=dc;
- h=date:from:to:cc:message-id:in-reply-to:references:
- subject:mime-version:content-transfer-encoding;
- bh=pjNEKOTw4utayRi0uxYr6wmBE4hKeSMSxSXP5CzWvvQ=;
- b=S/+uV4STl1Tm8lKO5PJFvpIcbSE6q7AZf+UjvTAna1boMKXN9vFPGGQE
- gfpPViU/X6Xx7RnJwN7ozddjxz8VNwzvDkjrrtsjLexfqW/X0tPzSiaJP
- OAt+hJuLRn9VLqBSMQagKT/NKVb8DNNKCORxDLwSx4FvcyWTV6LsA912n E=;
-X-CSE-ConnectionGUID: dslud/ONSeeMXp5onSRBuw==
-X-CSE-MsgGUID: pLZnMkaUSo+yaJwLCtd9Qg==
-Authentication-Results: mail2-relais-roc.national.inria.fr;
- dkim=none (message not signed) header.i=none;
- spf=Pass smtp.mailfrom=sebastien.michelland@inria.fr;
- spf=None smtp.helo=postmaster@zcs2-store8.inria.fr
-Received-SPF: Pass (mail2-relais-roc.national.inria.fr: domain of
- sebastien.michelland@inria.fr designates 128.93.142.6 as
- permitted sender) identity=mailfrom; client-ip=128.93.142.6;
- receiver=mail2-relais-roc.national.inria.fr;
- envelope-from="sebastien.michelland@inria.fr";
- x-sender="sebastien.michelland@inria.fr";
- x-conformance=spf_only; x-record-type="v=spf1";
- x-record-text="v=spf1 include:mailout.safebrands.com
- a:basic-mail.safebrands.com a:basic-mail01.safebrands.com
- a:basic-mail02.safebrands.com ip4:128.93.142.0/24
- ip4:192.134.164.0/24 ip4:128.93.162.160 ip4:128.93.162.3
- ip4:128.93.162.88 ip4:89.107.174.7 mx ~all"
-Received-SPF: None (mail2-relais-roc.national.inria.fr: no sender
- authenticity information available from domain of
- postmaster@zcs2-store8.inria.fr) identity=helo;
- client-ip=128.93.142.6;
- receiver=mail2-relais-roc.national.inria.fr;
- envelope-from="sebastien.michelland@inria.fr";
- x-sender="postmaster@zcs2-store8.inria.fr";
- x-conformance=spf_only
-X-ThreatScanner-Verdict: Negative
-X-IronPort-AV: E=Sophos;i="6.21,258,1763420400"; d="scan'208";a="260750798"
-X-MGA-submission: =?us-ascii?q?MDFaOtRUWEtmNN8YbU3Jiv069P2TNyiBojP9l8?=
- =?us-ascii?q?jdpeNABG8lviUA7Mr2bPS4Tn0xiMGC9UEe7+Jmuf/HAG4DeDXiTw5uWC?=
- =?us-ascii?q?bog4YUB7sqSIU0uFP6sAzEt9RE6Fpbmr7wKgkvIbFcce5ofPnynihwAf?=
- =?us-ascii?q?/4O6OI5V9sQ9d+VzKwya9yyA=3D=3D?=
-Received: from zcs2-store8.inria.fr ([128.93.142.6])
- by mail2-relais-roc.national.inria.fr with ESMTP; 28 Jan 2026 14:26:14 +0100
-Date: Wed, 28 Jan 2026 14:26:14 +0100 (CET)
-From: Sebastien Michelland <sebastien.michelland@inria.fr>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
- Jean-Michel Gorius <jean-michel.gorius@irisa.fr>
-Message-ID: <2132391437.15681684.1769606774227.JavaMail.zimbra@inria.fr>
-In-Reply-To: <81d962d8-52fb-4203-a3fc-f3980b8a93bb@ventanamicro.com>
-References: <20260126172246.2521444-1-sebastien.michelland@inria.fr>
- <81d962d8-52fb-4203-a3fc-f3980b8a93bb@ventanamicro.com>
-Subject: Re: [PATCH] target/riscv: fix vs*r.v missing SIGILL check
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vl5tC-0003TH-8O
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 08:47:22 -0500
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vl5tA-0001WO-Ij
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 08:47:22 -0500
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-78fba1a1b1eso14635677b3.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 05:47:19 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769608039; cv=none;
+ d=google.com; s=arc-20240605;
+ b=J77qeuEJ/UXDqkH3CXPbrOTZKxA61rQfN/rEzrPoHBXcsEHIWbl2EwCoqK5cYfgqxy
+ 5eODaWVtaaQKqXAH8L6L3rXB4e0sIinnR/d86PzoduZFQsr+yov38mYATi0JfRvpgU6N
+ KvRLRVqaCNC10RhEFCYwhDbw3KnB5EidHZnPir+rcyN+n6ZoPKpG+z/yFuLmnGppTHj8
+ 1YcJLH2RN/TacHkw/YNmgdgkQNEFTqUI9A7gzgB5j0ONvy0EIIJkJ5/gzbpkfbeLZHWh
+ aerlhLA8RssETYhzeZqBA91d1R/zYpEoACENAWmp4qi4oPgu9M7NHGDY0Q5Qefsf+Gaf
+ S9Sg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=XthBvk64XF7dOx5Ux0xttMlujNGM76qeuQlMDMyHws8=;
+ fh=vLO9KFfxIIkA8uYnLhuQfjfWDZsQ+vEXGoKtckzy40s=;
+ b=bT+wYE59qHzubIaW468bhYo4FLb0QmfQDYiwXOBVLQMF7mIv4BYQgBwoq3kOczUGMM
+ tWwgtVuwef8zmmZTDxvOGzwk92NnpSHPgaeKcC7IOAIMyqXgD9nR8frrq/OJ0ukwx1oI
+ pbCnvnfX7aHLTwlaipzvR/Bil4UIAWl9A7zImufhnWKAi7RQOpcW1xTe5/hlfmz3EVwH
+ FWk4DB1nwuifx1wUYHUIii0jV3Yp+sTn1cWQrZFkfSlxkBlPTDEFsWpBZ4vC3faZEGEU
+ 7JuV6+2q+8iSDoApj+K99Lsk+8LtNF83HzB7aYvx1X19nmkNIbSNYBBC8impq7KL6FR7
+ EwJA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769608039; x=1770212839; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=XthBvk64XF7dOx5Ux0xttMlujNGM76qeuQlMDMyHws8=;
+ b=oqpGsn1C4NQEgZYVXkxs6+TNQtPKtuIenOPTio3BiaLqKLhga1gmzmSHfygQrLbPk/
+ /AMJTt+dyJK9JnAPkjCG4UcWWuRuf8J93FGeFHF6ut6jTP9JwJp0Zfo3bUt8WFuwoJrw
+ 9YIizH8GNafTqr7/LSJ318+tsHyXBMtV068XQajQn/JMYniedaLTEeO0lilnSWtROTos
+ R5Ghq254IlAPy5u90fMh8b0rs1cp6IPGevmed5palPkCGjb8C+2HVMyyoPEOaQfKzAKR
+ mM3y/3wpCiiZIyh4vGAOsvpIooQlSono66utcNT2+GyWLmCASpXVjXEaEpTlwjv1sgi8
+ xB8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769608039; x=1770212839;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XthBvk64XF7dOx5Ux0xttMlujNGM76qeuQlMDMyHws8=;
+ b=QHkx+3Es7FULofhX2VsEVNPrVA67SNBvQeIiYjK5Ht6ZCQ+04gqmFQWEfnwkamFc8f
+ Awi8VylahYiGySfxB+F2VRu06cDdlILOIf07LY3GFZLUTAn5WhfsxRUEoRccZdnQF17J
+ I8KTUsyuVzc/5lffSYwtAWBv03YVNi7cwtUzw8BSPt/WsmJY+KHkV2ptCZv4QW3I46o1
+ TbjF2SQW5yWlnFMFfq/I9mYzFSuMUyJd9HBltseS7/ahhHRi5dzirB4bA7qNU9epLTnR
+ COSW5fBBJuviB2uv+ySpjEMsNRwra9FHjjUhx6gtBs8My/ncXbGafrtguCrWa4vq0Djq
+ 6QWQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWMOarY+5JQTNm+bPM6P7H1lxqnetVWQ4LXhnYVsBnVrnefxQT8u8rmAwpQTkopBpV9ElItKIAcYMCQ@nongnu.org
+X-Gm-Message-State: AOJu0Yz+gUZCSa/pYD3xMCSzSx7P9hEhXyPAmbfWyK7SixbDbTmILMU9
+ MkqWcWoTCm5vpn9dkWApYgTsy4Qd8dLIVK5ITFDDp9FeAuNZRpG/XBk3l1+TV+tfIqu8CuXYNff
+ MmQMDxZbA3zgpp+s3ZzwmDTmlg1Xt/+PCu1qVbceanA==
+X-Gm-Gg: AZuq6aLpqUaylMdKTfVF5jiuUc4Bc/s4R2yS+fegH3ElHbDgh/DJEab9/LFfbDpBbYn
+ ExwHTW7mfT8JYxF9x6uVNZXfYQWEgYCKjRXTrAkXNyA4JWvuyTxBEo2qxjHj4m/dkKFTg8gxern
+ G2aMwblmRxnJO9EpKohy9+1UkeMk6/IgjQz9AOYkV/mKQSOnYXDUqPfWZR8ZYHNPrUZZF/vvSta
+ 34axmKpp2nl9GOgsXHSOXHnqyuFjzypZq/s+TTy8AOtloxyfufD48CbPfhdZiTRW28JQ9JjeQQS
+ 0YVP
+X-Received: by 2002:a05:690c:ec8:b0:794:87bf:76ef with SMTP id
+ 00721157ae682-79487bf788emr10858577b3.7.1769608038928; Wed, 28 Jan 2026
+ 05:47:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [131.254.16.132]
-X-Mailer: Zimbra 10.1.13_GA_4837 (ZimbraWebClient - FF146
- (Linux)/10.1.14_GA_4838)
-Thread-Topic: target/riscv: fix vs*r.v missing SIGILL check
-Thread-Index: STpY8YtIHzdjUsJXQtVn2pPvNj2rLA==
-Received-SPF: pass client-ip=192.134.164.83;
- envelope-from=sebastien.michelland@inria.fr;
- helo=mail2-relais-roc.national.inria.fr
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <cover.1769362313.git.balaton@eik.bme.hu>
+ <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
+ <0118dc9b-d467-7f6b-92a8-4f42760ecb6c@eik.bme.hu> <aXkXWGho7lnJ-gwX@x1.local>
+ <2fa59d39-5634-0b8c-27ee-9e9548a7f92a@eik.bme.hu>
+ <562f0e5c-7ae8-4d95-9dd4-674447362ef7@rsg.ci.i.u-tokyo.ac.jp>
+ <cfacf068-7663-6c7f-4908-928bb63e803c@eik.bme.hu>
+In-Reply-To: <cfacf068-7663-6c7f-4908-928bb63e803c@eik.bme.hu>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 28 Jan 2026 13:47:07 +0000
+X-Gm-Features: AZwV_QhgEfh2dfyL6etJTtG7hFZRjmy3Z8n49ecubf-OHs76bZMeN8V0MpRg78E
+Message-ID: <CAFEAcA-8-jC-HJix5YFVbmg3sEuhcSMD8gKJxzAiz=GPy0sw9Q@mail.gmail.com>
+Subject: Re: [PATCH v2 00/10] Implement memory_region_new_* functions
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Peter Xu <peterx@redhat.com>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,110 +125,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 28 Jan 2026 at 11:40, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+> OK I try to summarise the motivation again:
+>
+> 1. Documentation in docs/devel/memory.rst says that memory regions'
+> lifecycle is managed by QOM and they are freed with their owner or when
+> nothing else uses them. This is also already implemented for a long time
+> as described but cannot be used because the only constructors available
+> kill this feature when calling object_initialize that clears the free
+> function added by object_new. (The life time management is implemented
+> through adding memory regions as children to the owner and unparenting
+> them on freeing the owner which decreases ref count of the memory region
+> and will free it when nothing else references it as far as I can tell.)
 
->> GEN_LDST_WHOLE_TRANS checks for require_rvv but it's always true, even w=
-ith
->> e.g. -cpu=3Drv32,v=3Dfalse.
->=20
-> hmmm that really shouldn't happen hehe I wonder if there's more bugs
-> lurking in the shadows somewhere (spoiler: always) ...
+If we have leaks because of our very common pattern of "embed
+a MemoryRegion struct in the device state struct" then we must
+fix those, because there's no way we're going to convert all
+that existing code to a new set of APIs. But I was under the
+impression we had already dealt with those, because MRs track
+their owner's refcount, and don't have their own independent one ?
 
-I did wonder about the semantics of require_rvv. I assumed originally that
-mstatus_vs would be equal to EXT_STATUS_DISABLED (thus require_rvv() =3D 0)=
- with
-v=3Dfalse in -cpu.
+> These are my motivation for this change. What is the motivation for using
+> embedded memory regions instead and against this change?
 
-The comment for vext_check_isa_ill says VILL is indeed intended to work as =
-an
-"RVV OK to use" check:
+Simply that it's a consistent pattern we use in a lot of the codebase:
+the device embeds a lot of the structs it uses, rather than allocating
+memory for them and keeping pointers to that allocated memory. We
+still have also various older device models that use the previous
+pattern of "allocate memory and have pointers" too, but most new
+code doesn't do that. I think we should for preference write code
+in one pattern, not two, and "embed structs" seems to be what
+we have mostly settled on for new code.
 
-/*
- * In cpu_get_tb_cpu_state(), set VILL if RVV was not present.
- * So RVV is also be checked in this function.
- */
-static bool vext_check_isa_ill(DisasContext *s)
-{
-    return !s->vill;
-}
+There is an argument to be made that the pointer model would
+fit better with a possible future world of "the user can wire
+configurably wire up their own board model from devices", and
+that it works better in a part-Rust-part-C world where the two
+different languages don't have convenient access to the exact
+size of structs defined in the other language. But that future
+model is not something anybody has yet really fleshed out in any
+detail, so it's still a bit speculative.
 
-But then I'm unclear why instructions do require_rvv(s) && vext_check_isa_i=
-ll(s)
-compared to just vext_check_isa_ill(s).
+I'm not actually opposed to the idea of making a design decision
+that this struct-embedding is no longer what we want to do, and defining
+that something else is our new best practice for how to write devices.
+But I think we would need to start by reaching a consensus that that
+*is* what we want to do, and documenting that "best practice" somewhere
+in docs/devel/. Then we can examine proposed new APIs and all be
+on the same page about the design patterns we want and it will
+be clearer to reviewers whether the new APIs fit into those
+patterns or not.
 
-riscv_get_tb_cpu_state sets VILL based on whether Zve32x (the minimal level=
- of
-RVV support) is enabled. Maybe the different levels of support are involved=
- and
--cpu=3Drv32,v=3Dfalse doesn't disable everything?
-
-AFAICT riscv_get_tb_cpu_state is also the one setting VS to EXT_STATUS_DIRT=
-Y
-instead of EXT_STATUS_DISABLED, in my case because I run into a CONFIG_USER=
-_ONLY
-check (target/riscv/tcg-cpu.c:154):
-
-#ifdef CONFIG_USER_ONLY
-    fs =3D EXT_STATUS_DIRTY;
-    vs =3D EXT_STATUS_DIRTY;
-#else
-    // non-trivial logic
-#endif
-
-That's about as much as I can decipher from a quick dive. If anyone knows h=
-ow
-these pieces are intended to work, that'd be helpful.
-
-(In the meantime, patch below should still be relevant.)
-
-S=E9bastien
-
->> Instead the illegal signal for all vector instructions
->> (except vset{i}vl{i}) is generated by vext_check_isa_ill, which checks t=
-he
->> context-dependent DisasContext->vill that conditionally makes vector
->> instructions illegal depending on the state of vl.
->>=20
->> Currently, vs*r.v runs even when RVV is disabled or when vl has not been=
- set.
->> Adding the missing vext_check_isa_ill brings it in line with all other v=
-ector
->> instructions, raising SIGILL in these situations.
->>=20
->> Signed-off-by: S=E9bastien Michelland <sebastien.michelland@inria.fr>
->> ---
->=20
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->=20
->=20
->> v[zs]ext_vf[248] is also suspiciously missing the check, but doesn't fai=
-l in
->> such an obvious manner. If it's also a bug then it might be worth fixing=
- at
->> the same time.
->>=20
->>   target/riscv/insn_trans/trans_rvv.c.inc | 1 +
->>   1 file changed, 1 insertion(+)
->>=20
->> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc
->> b/target/riscv/insn_trans/trans_rvv.c.inc
->> index 4df9a40b44..1e99c35988 100644
->> --- a/target/riscv/insn_trans/trans_rvv.c.inc
->> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
->> @@ -1235,6 +1235,7 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t=
- rs1,
->> uint32_t nf,
->>   static bool trans_##NAME(DisasContext *s, arg_##NAME * a)             =
-      \
->>   {                                                                     =
-      \
->>       if (require_rvv(s) &&                                             =
-      \
->> +        vext_check_isa_ill(s) &&                                       =
-     \
->>           QEMU_IS_ALIGNED(a->rd, ARG_NF)) {                             =
-      \
->>           return ldst_whole_trans(a->rd, a->rs1, ARG_NF, ctzl(sizeof(ETY=
-PE)), \
-> >                                   gen_helper_##NAME, s, IS_LOAD);      =
-       \
+thanks
+-- PMM
 
