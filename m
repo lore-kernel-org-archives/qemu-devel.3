@@ -4,72 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07863D35662
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 07:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0ABCD35687
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 07:44:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl0Ch-0003wt-PS; Wed, 28 Jan 2026 02:43:07 -0500
+	id 1vl0DA-0004DU-Vp; Wed, 28 Jan 2026 02:43:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <3160104094@zju.edu.cn>)
- id 1vl0Ce-0003vM-Qh
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 02:43:04 -0500
-Received: from zg8tmja2lje4os4yms4ymjma.icoremail.net ([206.189.21.223])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <3160104094@zju.edu.cn>) id 1vl0Ca-0004u2-TM
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 02:43:04 -0500
-Received: from zju.edu.cn (unknown [183.129.171.42])
- by mtasvr (Coremail) with SMTP id _____wA3xYT2vXlpdGNPAA--.2454S3;
- Wed, 28 Jan 2026 15:42:47 +0800 (CST)
-Received: from localhost.localdomain (unknown [183.129.171.42])
- by mail-app3 (Coremail) with SMTP id zS_KCgAnKGv1vXlp5c3vBQ--.64065S2;
- Wed, 28 Jan 2026 15:42:45 +0800 (CST)
-From: Panda Jiang <3160104094@zju.edu.cn>
-To: richard.henderson@linaro.org
-Cc: 3160104094@zju.edu.cn,
-	pbonzini@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2] accel/tcg: Ensure get_page_addr_code_hostp nulls output on
- failure
-Date: Wed, 28 Jan 2026 15:42:36 +0800
-Message-Id: <20260128074236.49624-1-3160104094@zju.edu.cn>
-X-Mailer: git-send-email 2.39.2 (Apple Git-143)
-In-Reply-To: <459ffb4e-c831-4694-83f3-32ea610f72a2@linaro.org>
-References: <459ffb4e-c831-4694-83f3-32ea610f72a2@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vl0D9-0004Bz-1y
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 02:43:35 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vl0D6-0005Nj-Lb
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 02:43:34 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-48068ed1eccso13780845e9.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 23:43:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769586210; x=1770191010; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=93oA18CGIBfMgKWNXx+7cw/sKNI9taxZw45WhVVxPIo=;
+ b=CLSRugKu1Jy4EY8kTNncEJPce5v0vKqzCoVLLV/AfHr6FFTa76m4eF8LEvwJ6I7aYH
+ s/2iE6kFi2BuZrSeFbjBBBGlQKXLtMMi8RxXcCwvzDAMQ9Lavxk2FCSAKTKqoMocjm66
+ aDQCTWTgpzSwOh8E7lmwB/WdaJ69WbRusWgWm2gIyW0z7XrJdnyZgP4axX94xz93gZ6V
+ ur1i1M3PJJxjA/c6AF+zOrZyp2v7K+ReIjxpy4BmJlNJgBuSE3ikDlMyYFogUgYdckHZ
+ HulWVHgCz4JBX/8LmAgnhmawzdYxJmRxAuOmXUHQDlKmbboN1tU/LkXahLNjsjBl/Ur2
+ Zh2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769586210; x=1770191010;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=93oA18CGIBfMgKWNXx+7cw/sKNI9taxZw45WhVVxPIo=;
+ b=IP1L7M0L4hmJT/o8FOMiJ+zJqyclTkVX8IceDxIqyf0E10I1YnjiANgMzOsrV1opdZ
+ nFyrVSHBQ3ndAuplMgq8bfZP28kC6pviPuPB9o7LZ2lw6VTO335WeRDDkjh9s3fL3VFa
+ Gr2bJ6VncEM/dRK+ixFcT0Wsk1Log6LoMtQq0bA9/smXQk4A7tausbgEWMeKjnbEXoR2
+ 7q7iGAouY8YPkIjBlPFzV3diddgyBQ1TIToKpyfpDya/22Roy0D/Irwug8qxDGf6TZl+
+ 6kCbtrlHSYLX1STUVW9GrN/Mfe11j8yksmSSqR/VEjD6Tr7j1r44+ZdLbc8Sr7/U7s74
+ EnbA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUlx1xXmp6Ebjry+VT9xbdn5R+XI8yqG3gja/ZZyuGOwsPtqRrH21ccBhAm8MBewU5loYwF2CVFIfDY@nongnu.org
+X-Gm-Message-State: AOJu0YzF2ljn2gK4gKwq0XPCKyN0prKEyFkWvS/8c/yVVAPxgZkEx1We
+ 1FlobpV7ePdapfU2jUy7f/v26RGkjCy6g47ASbnz8ecmYyMlbRZgHLPqT3ORKCyso5Q=
+X-Gm-Gg: AZuq6aJ4iABTtds6d/MHd/T8Cybc0pCdXV8Rq7vUV8YT1vr36WysOUW4WWur6hDw+aR
+ qG31qNvEplOo85K+4p1zuDN2WV1p+jX/HvsZ6WPNlG80AeSZPXMQIocT7eZGgg0rNu6LdVpCGMm
+ viCXpSWOk4eJuKjMS/+EZ+HrMlOqTFWj1qqpDJ1UN6xcmUlNCeh+tj592+CmQ5A0760DzuVDkFN
+ OEA++L7JnZVo5qq1bEsllRQekyIHQhO543uobFrn0RsbYjX77GeLYy9MyDBYcsIyBX1bQadyEpB
+ o887ewN9OxZiAUpc0DG/9y7tlKYEm+FV9Kw9UIBXWK8UM/8VTRAPA+5EZdbkGYSFXp9pvTy3VAl
+ s5WpSswZtTgt/wr9Ov29MwOLzpCRGFfCmv5TaRYKjG+WfEChLFiQNqVGqdI8PoM1Hpyma5Mp+VA
+ +7efAg3F/h/KzQ7mEB9U/Bug4=
+X-Received: by 2002:a05:600c:4e12:b0:480:6873:b2f6 with SMTP id
+ 5b1f17b1804b1-48069c557d0mr52539885e9.20.1769586210574; 
+ Tue, 27 Jan 2026 23:43:30 -0800 (PST)
+Received: from [192.168.69.210] ([88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4806d9800e7sm2930705e9.2.2026.01.27.23.43.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Jan 2026 23:43:30 -0800 (PST)
+Message-ID: <6e0ae94c-212b-4267-8f78-56353fab3a27@linaro.org>
+Date: Wed, 28 Jan 2026 08:43:27 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] accel/tcg: Fix uninitialized hostp in
+ get_page_addr_code_hostp
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: 3160104094@zju.edu.cn
+References: <20260128010715.347776-1-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260128010715.347776-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zS_KCgAnKGv1vXlp5c3vBQ--.64065S2
-X-CM-SenderInfo: qtrwiiiquqmko62m3hxhgxhubq/
-X-CM-DELIVERINFO: =?B?cnXFWQXKKxbFmtjJiESix3B1w3sL8hBMFUTpd3cX36+dE6DPAN7iCt/gLhxLJ5hnLg
- Kjdb2keJFfieWsS/AIcxKcp+f8SKah7Cx7RCdQdLDQXMtEeU9TqjNTKLwd/05fvCJg+4Hq
- fCqcr0kzqGxMr+gy/nQ+NlUreqKaTfCGU1ZYsmm5
-X-Coremail-Antispam: 1Uk129KBj93XoW7AFy8Xw1kArW5JF4kAF47Awc_yoW8WF13p3
- 9Igr4DKasrJw1Iyw1xJa1xu3WY9w45JFZrWw1rKws093Z3Xr1vqw4vkay29FZ7WrWrX3y3
- JF4avw47ZFWUA3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9lb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AK
- xVW0oVCq3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc804V
- CY07AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AK
- xVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48Icx
- kI7VAKI48JM4x0Y48IcxkI7VAKI48G6xCjnVAKz4kxMxAIw28IcxkI7VAKI48JMxC20s02
- 6xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_Jr
- I_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v2
- 6r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj4
- 0_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8
- JbIYCTnIWIevJa73UjIFyTuYvjxU2LIDUUUUU
-Received-SPF: pass client-ip=206.189.21.223;
- envelope-from=3160104094@zju.edu.cn;
- helo=zg8tmja2lje4os4yms4ymjma.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,48 +103,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In tb_gen_code(), get_page_addr_code_hostp() is called to get a host
-mapping for a guest PC. If the function fails (e.g., for an I/O region)
-and returns -1, it previously left its output pointer parameter
-('host_pc' in the caller) unmodified.
+On 28/1/26 02:07, Richard Henderson wrote:
 
-If the caller's variable was uninitialized, this leads to undefined
-behavior when it is later used, for example in setjmp_gen_code(). This
-was observed as a segmentation fault when running QEMU with the
-'-d in_asm' logging option when mmu translation fails.
+> Richard Henderson (2):
+>    accel/tcg: Don't pass NULL to get_page_addr_code_hostp
+>    accel/tcg: Fix uninitialized hostp in get_page_addr_code_hostp
 
-As suggested by Richard Henderson, fix this within get_page_addr_code_hostp()
-itself rather than in the caller. Ensure that in all failure paths where -1
-is returned, the output pointer is explicitly set to NULL.
-
-Signed-off-by: Panda Jiang <3160104094@zju.edu.cn>
----
-+ Changes in v2:
-+ - Moved the fix from the caller (tb_gen_code) to the callee
-+   (get_page_addr_code_hostp).
-+ - Set the output pointer to NULL on failure paths inside
-+   get_page_addr_code_hostp, as suggested.
-+ - Updated commit message to reflect the new approach.
-+
- accel/tcg/cputlb.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 6900a12682..6d7cfd2b5a 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1543,6 +1543,10 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
-     CPUTLBEntryFull *full;
-     void *p;
- 
-+    if (hostp) {
-+        *hostp = NULL;
-+    }
-+
-     (void)probe_access_internal(env_cpu(env), addr, 1, MMU_INST_FETCH,
-                                 cpu_mmu_index(env_cpu(env), true), false,
-                                 &p, &full, 0, false);
--- 
-2.39.2 (Apple Git-143)
+Series:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
