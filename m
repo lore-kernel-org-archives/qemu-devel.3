@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 118DBD46C0F
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 23:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C82D46C15
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 23:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlEnG-0008Rv-OG; Wed, 28 Jan 2026 18:17:50 -0500
+	id 1vlEnT-0000ER-GD; Wed, 28 Jan 2026 18:18:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vlEnE-0008On-DI
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:17:48 -0500
+ id 1vlEnS-0000Da-D5
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:18:02 -0500
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vlEnC-0001ih-LB
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:17:48 -0500
+ id 1vlEnQ-0001j1-RL
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:18:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1769642267; x=1801178267;
+ t=1769642281; x=1801178281;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Nqtv2gWxm8W+8gxjUvMBaqTGy6CDVIMjftYYH4JtDuY=;
- b=d0CV4sSUZYPbY/riGdGeIC9dyoYfZq7IZY/MG66H2KLf0YyCJtxt33mj
- RTtPj3cSxheTfkRtj9NGIx2LXxIjdSDMTztXk8uWdduFUXYs2TSdIw6xY
- umCgvZ8zUmgaupoO4XiK67k2Gx9GEOHyUWkVWlKcKDtzxh2U9Il9vmGjC
- 2EP7DAmyalqU183srK0BK52IxxPsFhtYkhXMliibdNzGusMxncqRlbwVD
- wVGcYHUSmv0QA1CScD6Y82pn7QSfNjlvInVCdEvB2qklKFaa3EKbprPdh
- Rpmgi8+JYBxFaY+P9v2JQobJGHgVPFoK4KzgqiVL/Y4251RClf4zghyj2 w==;
-X-CSE-ConnectionGUID: 1GUoY3oDRG6onMGB1NxD9w==
-X-CSE-MsgGUID: XRxigl+GTY+mKtcF+YgE7A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11685"; a="73462330"
-X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; d="scan'208";a="73462330"
+ bh=6+39BohlqHVgxOCjKzqyCTw+ClCJeAPxpVGdX6TNBB4=;
+ b=AujTmIFuu8DbyLPcbsg/4JjBaZO421ax9bClmeePQfjD9bO0c6uA3hgD
+ NJBYtdCMG+6IAi7pgGy9ItrGVvR5XbLVGHPsm0g+tUz3JxZMlNnVjcH54
+ g3L6VfStw0S+w6H2/tXe5x7ES3cHU+7CpWgVujMKfcA3fBfeIH5Mzi4Ih
+ myiT1OOqbr3ZX6YVlEPLtRNb/0SBVvm8HtSBqhb82W/DeL+sFOHk1sqlw
+ k9bSLqSJPyQt4V1wPabOBVdXR/B/Grg2zwXvJ4hHGiLB2A0gBbgmEm6Ko
+ s7id1Z9i7MPe2PCtgfehVI51rw9JXBFnXJdkP96qrpLYb2zj862ch7WOY w==;
+X-CSE-ConnectionGUID: dcUP9UnqQAiROYFvvC1i+A==
+X-CSE-MsgGUID: E++6xh7lTgKc+0N1WxorlQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11685"; a="73462354"
+X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; d="scan'208";a="73462354"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jan 2026 15:17:40 -0800
-X-CSE-ConnectionGUID: gD39TRv0RxC2vmW5Pk31AA==
-X-CSE-MsgGUID: U5A0iZnPTZ2eh10rtiNbUQ==
+ 28 Jan 2026 15:17:43 -0800
+X-CSE-ConnectionGUID: sh1uBdSpQ7ak5CJQl2wDHA==
+X-CSE-MsgGUID: 0sB7ehxMQbiQhy6+npxnnA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; d="scan'208";a="208001775"
+X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; d="scan'208";a="208001794"
 Received: from 9cc2c43eec6b.jf.intel.com ([10.54.77.43])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jan 2026 15:17:39 -0800
+ 28 Jan 2026 15:17:42 -0800
 From: Zide Chen <zide.chen@intel.com>
 To: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Zide Chen <zide.chen@intel.com>
-Subject: [PATCH V2 06/11] target/i386: Save/Restore DS based PEBS specfic MSRs
-Date: Wed, 28 Jan 2026 15:09:43 -0800
-Message-ID: <20260128231003.268981-7-zide.chen@intel.com>
+Subject: [PATCH V2 11/11] target/i386: Disable guest PEBS capability when not
+ enabled
+Date: Wed, 28 Jan 2026 15:09:48 -0800
+Message-ID: <20260128231003.268981-12-zide.chen@intel.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128231003.268981-1-zide.chen@intel.com>
 References: <20260128231003.268981-1-zide.chen@intel.com>
@@ -85,152 +86,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+When PMU is disabled, guest CPUID must not advertise Debug Store
+support.  Clear both CPUID.01H:EDX[21] (DS) and CPUID.01H:ECX[2]
+(DS64) in this case.
 
-DS-based PEBS introduces three MSRs: MSR_IA32_DS_AREA, MSR_PEBS_DATA_CFG,
-and MSR_IA32_PEBS_ENABLE. Save and restore these MSRs when legacy DS
-PEBS is enabled.
+Set IA32_MISC_ENABLE[12] (PEBS_UNAVAILABLE) when Debug Store is not
+exposed to the guest.
 
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Note: Do not infer that PEBS is unsupported from
+IA32_PERF_CAPABILITIES[11:8] (PEBS_FMT) being 0.  A value of 0 is a
+valid PEBS record format on some CPUs.
+
 Signed-off-by: Zide Chen <zide.chen@intel.com>
 ---
 V2:
-- No changes.
+- New patch.
 
- target/i386/cpu.h     |  9 +++++++++
- target/i386/kvm/kvm.c | 25 +++++++++++++++++++++++++
- target/i386/machine.c | 27 ++++++++++++++++++++++++++-
- 3 files changed, 60 insertions(+), 1 deletion(-)
+ target/i386/cpu.c | 6 ++++++
+ target/i386/cpu.h | 1 +
+ 2 files changed, 7 insertions(+)
 
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index ec6f49916de3..445361ab7a06 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -9180,6 +9180,10 @@ static void x86_cpu_reset_hold(Object *obj, ResetType type)
+         env->msr_ia32_misc_enable |= MSR_IA32_MISC_ENABLE_MWAIT;
+     }
+ 
++    if (!(env->features[FEAT_1_EDX] & CPUID_DTS)) {
++        env->msr_ia32_misc_enable |= MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL;
++    }
++
+     memset(env->dr, 0, sizeof(env->dr));
+     env->dr[6] = DR6_FIXED_1;
+     env->dr[7] = DR7_FIXED_1;
+@@ -9474,6 +9478,8 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+             env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
+         }
+ 
++        env->features[FEAT_1_ECX] &= ~CPUID_EXT_DTES64;
++        env->features[FEAT_1_EDX] &= ~CPUID_DTS;
+         env->features[FEAT_7_0_EDX] &= ~CPUID_7_0_EDX_ARCH_LBR;
+     }
+ 
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 812d53e22c41..3e2222e105bc 100644
+index 5ab107dfa29f..0fecf561173e 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -422,6 +422,7 @@ typedef enum X86Seg {
- #define MSR_IA32_PERF_CAPABILITIES      0x345
- #define PERF_CAP_LBR_FMT                0x3f
- #define PERF_CAP_FULL_WRITE             (1U << 13)
-+#define PERF_CAP_PEBS_BASELINE          (1U << 14)
- 
- #define MSR_IA32_TSX_CTRL		0x122
- #define MSR_IA32_TSCDEADLINE            0x6e0
-@@ -512,6 +513,11 @@ typedef enum X86Seg {
- #define MSR_CORE_PERF_GLOBAL_CTRL       0x38f
- #define MSR_CORE_PERF_GLOBAL_OVF_CTRL   0x390
- 
-+/* Legacy DS based PEBS MSRs */
-+#define MSR_IA32_PEBS_ENABLE            0x3f1
-+#define MSR_PEBS_DATA_CFG               0x3f2
-+#define MSR_IA32_DS_AREA                0x600
-+
- #define MSR_MC0_CTL                     0x400
- #define MSR_MC0_STATUS                  0x401
- #define MSR_MC0_ADDR                    0x402
-@@ -2089,6 +2095,9 @@ typedef struct CPUArchState {
-     uint64_t msr_fixed_ctr_ctrl;
-     uint64_t msr_global_ctrl;
-     uint64_t msr_global_status;
-+    uint64_t msr_ds_area;
-+    uint64_t msr_pebs_data_cfg;
-+    uint64_t msr_pebs_enable;
-     uint64_t msr_fixed_counters[MAX_FIXED_COUNTERS];
-     uint64_t msr_gp_counters[MAX_GP_COUNTERS];
-     uint64_t msr_gp_evtsel[MAX_GP_COUNTERS];
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index a2cf9b5df35d..a72e4d60dfa2 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -4143,6 +4143,15 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
-             }
- 
-+            if (env->features[FEAT_1_EDX] & CPUID_DTS) {
-+                kvm_msr_entry_add(cpu, MSR_IA32_DS_AREA, env->msr_ds_area);
-+            }
-+
-+            if (env->features[FEAT_PERF_CAPABILITIES] & PERF_CAP_PEBS_BASELINE) {
-+                kvm_msr_entry_add(cpu, MSR_IA32_PEBS_ENABLE, env->msr_pebs_enable);
-+                kvm_msr_entry_add(cpu, MSR_PEBS_DATA_CFG, env->msr_pebs_data_cfg);
-+            }
-+
-             /* Set the counter values.  */
-             for (i = 0; i < num_architectural_pmu_fixed_counters; i++) {
-                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR0 + i,
-@@ -4688,6 +4697,13 @@ static int kvm_get_msrs(X86CPU *cpu)
-             kvm_msr_entry_add(cpu, perf_cntr_base + i, 0);
-             kvm_msr_entry_add(cpu, MSR_P6_EVNTSEL0 + i, 0);
-         }
-+        if (env->features[FEAT_1_EDX] & CPUID_DTS) {
-+            kvm_msr_entry_add(cpu, MSR_IA32_DS_AREA, 0);
-+        }
-+        if (env->features[FEAT_PERF_CAPABILITIES] & PERF_CAP_PEBS_BASELINE) {
-+            kvm_msr_entry_add(cpu, MSR_IA32_PEBS_ENABLE, 0);
-+            kvm_msr_entry_add(cpu, MSR_PEBS_DATA_CFG, 0);
-+        }
-     }
- 
-     if (env->mcg_cap) {
-@@ -5013,6 +5029,15 @@ static int kvm_get_msrs(X86CPU *cpu)
-         case MSR_P6_EVNTSEL0 ... MSR_P6_EVNTSEL0 + MAX_GP_COUNTERS - 1:
-             env->msr_gp_evtsel[index - MSR_P6_EVNTSEL0] = msrs[i].data;
-             break;
-+        case MSR_IA32_DS_AREA:
-+            env->msr_ds_area = msrs[i].data;
-+            break;
-+        case MSR_PEBS_DATA_CFG:
-+            env->msr_pebs_data_cfg = msrs[i].data;
-+            break;
-+        case MSR_IA32_PEBS_ENABLE:
-+            env->msr_pebs_enable = msrs[i].data;
-+            break;
-         case HV_X64_MSR_HYPERCALL:
-             env->msr_hv_hypercall = msrs[i].data;
-             break;
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index 7d08a05835fc..7f45db1247b1 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -659,6 +659,27 @@ static const VMStateDescription vmstate_msr_ia32_feature_control = {
-     }
- };
- 
-+static bool ds_pebs_enabled(void *opaque)
-+{
-+    X86CPU *cpu = opaque;
-+    CPUX86State *env = &cpu->env;
-+
-+    return (env->msr_ds_area || env->msr_pebs_enable ||
-+            env->msr_pebs_data_cfg);
-+}
-+
-+static const VMStateDescription vmstate_msr_ds_pebs = {
-+    .name = "cpu/msr_ds_pebs",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = ds_pebs_enabled,
-+    .fields = (const VMStateField[]){
-+        VMSTATE_UINT64(env.msr_ds_area, X86CPU),
-+        VMSTATE_UINT64(env.msr_pebs_data_cfg, X86CPU),
-+        VMSTATE_UINT64(env.msr_pebs_enable, X86CPU),
-+        VMSTATE_END_OF_LIST()}
-+};
-+
- static bool pmu_enable_needed(void *opaque)
- {
-     X86CPU *cpu = opaque;
-@@ -697,7 +718,11 @@ static const VMStateDescription vmstate_msr_architectural_pmu = {
-         VMSTATE_UINT64_ARRAY(env.msr_gp_counters, X86CPU, MAX_GP_COUNTERS),
-         VMSTATE_UINT64_ARRAY(env.msr_gp_evtsel, X86CPU, MAX_GP_COUNTERS),
-         VMSTATE_END_OF_LIST()
--    }
-+    },
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_msr_ds_pebs,
-+        NULL,
-+    },
- };
- 
- static bool mpx_needed(void *opaque)
+@@ -483,6 +483,7 @@ typedef enum X86Seg {
+ /* Indicates good rep/movs microcode on some processors: */
+ #define MSR_IA32_MISC_ENABLE_FASTSTRING    (1ULL << 0)
+ #define MSR_IA32_MISC_ENABLE_BTS_UNAVAIL   (1ULL << 11)
++#define MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL  (1ULL << 12)
+ #define MSR_IA32_MISC_ENABLE_MWAIT      (1ULL << 18)
+ #define MSR_IA32_MISC_ENABLE_DEFAULT    (MSR_IA32_MISC_ENABLE_FASTSTRING     |\
+                                          MSR_IA32_MISC_ENABLE_BTS_UNAVAIL)
 -- 
 2.52.0
 
