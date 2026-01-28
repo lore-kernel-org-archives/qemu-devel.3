@@ -4,108 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0325FD3F07E
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 15:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DE7CD3F074
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 15:19:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl7E9-00013L-7g; Wed, 28 Jan 2026 10:13:05 -0500
+	id 1vl7Jg-0004DO-Ry; Wed, 28 Jan 2026 10:18:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vl7E6-00012T-9i
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:13:02 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vl7Je-0004BJ-K0
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:18:47 -0500
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vl7E4-0006t2-OA
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:13:02 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vl7Jd-0001Z1-1Y
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:18:46 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 6DE3B5BCCE;
- Wed, 28 Jan 2026 15:12:57 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 43E5E5BCEF;
+ Wed, 28 Jan 2026 15:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769613178; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769613519; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Fi7Cq1Yy/eyvdJG/M8ov3aIA8+IZ+clidO/GyAlYrpQ=;
- b=vPYXKydz9q5KG2oBDXNY57GN5npX/JEaHsgCvYnpI5jghQ/0lWHwnpNNHtOana2PwqfJj6
- nwPgzXJ5Ek+sXdXNNA4SsMcSIOR+ESP9IRhInMWnNJEeNWhwcOUndlGdKzsnBqDzJy5sW6
- atz9qb3qbmPojp0bJKUKB2HQuoNqS3M=
+ bh=48JAsfA6vxYTtDMSXqG258Z07SyH06wqbiVuZZIcvNY=;
+ b=Du73aOssPSlHzuhUO/2uA+BdXRSQ815yRVy4OAEhx+6fECInwxCX33S+emzU4jQ/gXF0+N
+ boi6z1DZdUJ0W+0aMGBAcDKqYimszzohiQ7Kc8MsUKcTA2d08FWS0/7xLHlhFdw4BC8eoY
+ nRSvzKJPOAhNiv7vvtc04u7tv589Jyc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769613178;
+ s=susede2_ed25519; t=1769613519;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Fi7Cq1Yy/eyvdJG/M8ov3aIA8+IZ+clidO/GyAlYrpQ=;
- b=2g7bAL5VT6Bt4MkBqPbTg5aKGCVKyOaOcuLjtkCyifuSz5DYIpDl/mniQMgPItPXvCIeB6
- AQg/997fCQzo7NAA==
+ bh=48JAsfA6vxYTtDMSXqG258Z07SyH06wqbiVuZZIcvNY=;
+ b=wch/FhjVYg9r9E7oKDYi1WAGn7CKuMwwLCHcV653tvPsn6Ps6AgDI2ueaA5Sh/+LRnnWRb
+ 3E36amY91p7OSGCQ==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=zsSILCy5;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=k87vhFf0
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769613177; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769613514; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Fi7Cq1Yy/eyvdJG/M8ov3aIA8+IZ+clidO/GyAlYrpQ=;
- b=zsSILCy5lOMP5Vp4sY+Q+WmRSVghjek/ZZsmxqR20iHz0kW8XXnwNHniq4g/VGvh4FAvnY
- QdZMiuWWdIfmJppwwJbIdg293PdFmzREYv3HDJAbk1KBNVUfIkkl7fc1qUoH+C33u8uWLz
- cFsohAtYSbrY5Is89xBMOut1ErQhOVM=
+ bh=48JAsfA6vxYTtDMSXqG258Z07SyH06wqbiVuZZIcvNY=;
+ b=T0WVUHIsnzOJpTLJNoY8CZhTZt28UoYBZT2B6yUYtauEZv3z/LOsYbYHcQi1kJG0rkjB67
+ Y3Z6B9Oa7M89XKRZaDB63WlSNjPml8x+g0PL9Rlmyq3hLkfYz2/pVPY+I62XqOP1x5O2+x
+ fV5oyRMnG81YYbpNCv01dAHkvqnH/Hk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769613177;
+ s=susede2_ed25519; t=1769613514;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Fi7Cq1Yy/eyvdJG/M8ov3aIA8+IZ+clidO/GyAlYrpQ=;
- b=k87vhFf0sMiOjGpSV5j6h6uTl3a3YGyryArnQ1J+jZYrzcvu5B5nR9LMo7Id3nwRFu+1CE
- svO2jMsH25HdRRCQ==
+ bh=48JAsfA6vxYTtDMSXqG258Z07SyH06wqbiVuZZIcvNY=;
+ b=/d9Xk108sWQhManitGe7rhmj/l5obI02l3uCbHgPVLVnF+C3v4VGCdaU8da47bQj1i6Rka
+ 5FK/Wer/Ti/y70AQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D7C143EA61;
- Wed, 28 Jan 2026 15:12:56 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 691743EA62;
+ Wed, 28 Jan 2026 15:18:32 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Pfb5JXgnemmrLAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 28 Jan 2026 15:12:56 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id rgKLOMgoemk9MgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 28 Jan 2026 15:18:32 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Lukas Straub <lukasstraub2@web.de>, Prasad Pandit
  <ppandit@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH v2 12/24] migration/colo: Send device states without
+Subject: Re: [PATCH v2 13/24] migration/postcopy: Send device states without
  copying buffer
-In-Reply-To: <20260127185254.3954634-13-peterx@redhat.com>
+In-Reply-To: <20260127185254.3954634-14-peterx@redhat.com>
 References: <20260127185254.3954634-1-peterx@redhat.com>
- <20260127185254.3954634-13-peterx@redhat.com>
-Date: Wed, 28 Jan 2026 12:12:54 -0300
-Message-ID: <87h5s5g495.fsf@suse.de>
+ <20260127185254.3954634-14-peterx@redhat.com>
+Date: Wed, 28 Jan 2026 12:18:25 -0300
+Message-ID: <87ecn9g3zy.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+]; FREEMAIL_ENVRCPT(0.00)[web.de];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- RCVD_COUNT_TWO(0.00)[2];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,web.de];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 6DE3B5BCCE
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ FREEMAIL_ENVRCPT(0.00)[web.de]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,web.de]; RCVD_TLS_ALL(0.00)[];
+ MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
  envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
@@ -131,29 +120,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> We can safely use the async version of put buffer here because the qemufile
-> will be flushed right away.
+> Put buffer can be async as long as the flush happens before the buffer will
+> be recycled / reused.  Do it for postcopy package data.  Quick measurement
+> shows a small VM the time to push / flush the package shrinks from 91us to
+> 38us.
 >
-> Suggested-by: Fabiano Rosas <farosas@suse.de>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  migration/colo.c | 3 ++-
+>  migration/savevm.c | 3 ++-
 >  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> diff --git a/migration/colo.c b/migration/colo.c
-> index 1b94e0f0ee..0b1a58cd8f 100644
-> --- a/migration/colo.c
-> +++ b/migration/colo.c
-> @@ -486,7 +486,8 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
->          goto out;
->      }
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 9d2109718a..d41e89228d 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -1136,7 +1136,8 @@ int qemu_savevm_send_packaged(QEMUFile *f, const uint8_t *buf, size_t len)
+>      trace_qemu_savevm_send_packaged();
+>      qemu_savevm_command_send(f, MIG_CMD_PACKAGED, 4, (uint8_t *)&tmp);
 >  
-> -    qemu_put_buffer(s->to_dst_file, bioc->data, bioc->usage);
-> +    /* We can use async put because flush happens right away */
-> +    qemu_put_buffer_async(s->to_dst_file, bioc->data, bioc->usage, false);
->      ret = qemu_fflush(s->to_dst_file);
->      if (ret < 0) {
->          goto out;
+> -    qemu_put_buffer(f, buf, len);
+> +    /* We can use async put because the qemufile will be flushed right away */
+> +    qemu_put_buffer_async(f, buf, len, false);
+>      qemu_fflush(f);
+>  
+>      return 0;
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
