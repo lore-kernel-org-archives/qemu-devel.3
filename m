@@ -4,105 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82D60D3F083
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 17:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13325D46BE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 17:28:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl9IS-0004ep-UA; Wed, 28 Jan 2026 12:25:41 -0500
+	id 1vl9Ke-00060G-0f; Wed, 28 Jan 2026 12:27:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vl9IB-0004Wy-Tx
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:25:25 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vl9IA-0003XU-B5
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:25:23 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4807068eacbso630235e9.2
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 09:25:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
+ id 1vl9Kb-0005zF-KM
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:27:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sbrivio@redhat.com>)
+ id 1vl9KZ-0004EQ-DN
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:27:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769621269;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LNeS6UTQF4oyrQQKSNHmPws9hKd+S9g4/N/4QB1BlGI=;
+ b=aPm9DWeybzMpiNgy+5+zRgWO6OmHoGyadZELpiS27gNda5gtdbM7hyqVkX8PM2vcs3cmXq
+ XyJ7aGv8cmRbU+I0nDSTbU3z+oGig/OkwjqRMSmfdfSwvxTssW42mBEbi4yUpOjkJxqFm1
+ nZ+dobFdCXnnHFeIAIvehUIzMEViNMk=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-350-8htZRVlvNNeVWIThSPaAUA-1; Wed, 28 Jan 2026 12:27:47 -0500
+X-MC-Unique: 8htZRVlvNNeVWIThSPaAUA-1
+X-Mimecast-MFC-AGG-ID: 8htZRVlvNNeVWIThSPaAUA_1769621266
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-480717a8ef9so527255e9.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 09:27:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769621121; x=1770225921; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1769621263; x=1770226063; darn=nongnu.org;
+ h=date:content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F8QqYCnKrjiz9+NWGKAi55+g6r0mx85LrFTQmqhVnAA=;
- b=uqrNb+d0KHrl9kvp4gbzWbaL2fQFCs0LpX9WZNhX6iW/XXtT8khFaQAWJsUDGXkeCz
- +FKzlnAXObtlgRcsbMjbFmlTsLSB4u5/LMhyqUSyyE8+IzqSiPm0hA987jwheQjG0UbB
- kNfcelijRdGgJfRdRtUKStmbCDblxLtfOhHN3G9xk/nmKO5S33FQUE9mdDVcX9bjOu/0
- WEJOeydHk3Cgkur6tJtG56jO1PWRylS4rXeAkq2oACVj4ziZlRzTOSWRa90QbqZMpZ/X
- QIbqY+xIJPyDiawjKd/tO3gRiU8ezzWAUyJOw2LHsDDPhIgc1OuAuQV94TmpFV+W/2w1
- WUAA==
+ bh=LNeS6UTQF4oyrQQKSNHmPws9hKd+S9g4/N/4QB1BlGI=;
+ b=ltHtzD1NbS7WIQzFKl0Btb2EC2khkPx5VQdqNTdrrtOg1JiNdl0C4P9KCS+RgfyFcw
+ NZ6LznDr5x90sizJdN123W3B5+2+jYHqaOFNzpGSsDbxK4GGQYFwxDL9tDKX7+UgyyI4
+ zBxYE8klSAFAyjY5Bp7Tf3m4ZBZ2VeHKMa6anuNNsZRQHG8ZVClyMmellVVunhk3twKc
+ 7OwsiFJVblZYbrH7rTL6ONC9D4bYct2RfihFawBLu9/o52a5c4Wo6KZMJbKD5+bFEMT4
+ V9toMt2vnHDnSs+EVjkNxqbpZxd7qPXNsM5SVN2oQfQcNSBebrN48Qu2NrnxNZ2jiwKJ
+ M9xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769621121; x=1770225921;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20230601; t=1769621263; x=1770226063;
+ h=date:content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F8QqYCnKrjiz9+NWGKAi55+g6r0mx85LrFTQmqhVnAA=;
- b=C4tb2K2m7/DLCQCIOx78M945g4hiK1jZeqmxCWIzoi6nFnOw8k5AgO+LwZNp7l9HXo
- iMbKchpB7WI/jDs6ksobo5eUUmqJYOdvctIzMYJrgjkI6poahZjeEHkHyq9oUWgBMECJ
- ajuEG1aV+5xIj/h9i9g76VzYst+KFcAwvVq+Fkma0TH4huYI10xwsx9gcXRY0MQI8rBs
- nBHFH+HDjoEt2glHy2mm79nzVqBZm6hcAhTzmBbTfyQdD/uJFg8ecB4iWJOvsG4dwCbu
- Vx7yU2+la9qCSXuEEAHbE0dUDWp3s0KyY7AKhBWDljuBAD3Z4lWYN/4XRf/E6D4+lEuO
- jgCQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXArrUx9r7Xp8vXlU4RrFMAygZWLdzDGDv3DkwYwdbkkV3zPehwAwSsWjSUwU+4ER8GMIASY3AKAx3b@nongnu.org
-X-Gm-Message-State: AOJu0YwyR/xuEDYS4/9jM5hU32gKbSVvp0MZjxN3N0jF5ZN+TNrAFM9g
- FCbw22+LV7DOi5rlK7oT8Ob/MwBQJxN2M8oHbMaPF64/bz2DZ7C3zK2uX5Bcf4m6zAI=
-X-Gm-Gg: AZuq6aJDaCFE7ocwcJoLYukK6k4JHPHnq0Ax8gmD1c49mWx35cswZ/4DgQfPhPI6O4R
- 504Uwr/MKRslajol1wqaeGpBbdJQ8GPxMNv3a2o4P3Xeg88u2TlpIcn7UoD4yjINqoMG7J7T/p+
- JXcQLffiTuX2G4uH02TgBdrPef3JdI0E7cuVULC2R3m067XXj0c4CBno5MpKdNWEwrz1Ji1k2/H
- n7fEmpaNbxoNuE5Yb/vFWUDtQbDFxSuq4ZgZ/vT9r/qKIpUumFTFtC15EoM/jet80Uiuhf97vlt
- 4tP1xm3e2vnS9lQRTRzkWqC3vmylhmL0q14Uo3H6G2JAjorqEtbsbcOR1Av3jgI5bTXAQctmUbW
- bAGd/njVPTYUZBg5fCxBY9aKZNuBb2ez+Vv4hddu9uV39CPGbT4r0zFOH/f+GWtqlmypo5hBbOi
- alrL5Niyb3ZZQ=
-X-Received: by 2002:a05:600c:1990:b0:47b:deb9:15fb with SMTP id
- 5b1f17b1804b1-48069c8a660mr81670055e9.33.1769621120821; 
- Wed, 28 Jan 2026 09:25:20 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48066bfb59asm133458855e9.7.2026.01.28.09.25.20
+ bh=LNeS6UTQF4oyrQQKSNHmPws9hKd+S9g4/N/4QB1BlGI=;
+ b=iqCP+5xy6YQByp5S1BlZdYZUGOe+TeVdF/s6ySZbobXFt2rDEHpoTA0pK7fQPrbJeS
+ /Q2S30ZknAicIo0+0Xss0JUWNtDEqSuOdwuXLttyk8d71t1iTxbe2aGVrqOPq5Q/VwXW
+ e1fTCS6PsVVjRkkn8eNHXlFLv3cYbJyyBzoZzQInMctzA6URsYjqQt0VJzwO30tX730S
+ l+07k9NGBkCw15yyy/PK+GtOeRAXZO5ivNv1dthrJ9gKWPW2ePjFpM5PlWPONxG1dT3o
+ pA50KqyGhC1N5YTt85jsktLkeNbVyRkUEikhDpvBPsOFTYvgkfVTcrTdpv23V2qKC26y
+ BADQ==
+X-Gm-Message-State: AOJu0YwRyALiABctZzccvx97+F4djOyBE/PywhixuP3JU2HtNz8AZADH
+ ijBwciy/nQYxKbkJ3OQ3nr/L8/3TmP3LxFBwn485tdvrxt3rh2fz/ZdIDu6jVZz5jeiPsMi1osJ
+ /CCHBewihJuUIbaNpwtLuua+s0d07ZLe88ZemEaTgWt+dQU6s6FvahGg7
+X-Gm-Gg: AZuq6aJabEMGkLAlp9SVEb3KMZrVY8xdRtFNgCbixSes3K9vuYBoQ08geyPon7a1Y5B
+ qAg1yO0xtxrS2qHgSZANFJGeBtPOAy8BsNfQsKYdD4yMlBEMYqspDRCbCkkIb3JpoMDKhJPXbsA
+ 7wVv21EjYwBKu9RlrMUBiVTljuP0/rLHFRmPKAsxNYS9E5M60DyvG8vzXchwavUN3QNKijpQhTv
+ ClLzTZDkgtTg75nduxSjFwP/2eLhz8w/yCAA0EVwgEHAEpXiLudA3WUnsU9m2EogYBFeGrG/HL5
+ 9lY5e865DI9BswBr48862EUqLeMc1DNVBQnmWpLF1C3yWAL+ZuPwToZfuDUfV6Qcp4FIwwyQbq5
+ WVQj2kU7ziTzto7FxqPnM5NdW/i7whGYJelMHbA==
+X-Received: by 2002:a05:600c:1d1d:b0:477:9e0c:f59 with SMTP id
+ 5b1f17b1804b1-48082891d58mr2820975e9.2.1769621262862; 
+ Wed, 28 Jan 2026 09:27:42 -0800 (PST)
+X-Received: by 2002:a05:600c:1d1d:b0:477:9e0c:f59 with SMTP id
+ 5b1f17b1804b1-48082891d58mr2820625e9.2.1769621262329; 
+ Wed, 28 Jan 2026 09:27:42 -0800 (PST)
+Received: from maya.myfinge.rs (ifcgrfdd.trafficplex.cloud. [176.103.220.4])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4806e2ea2b5sm4132465e9.19.2026.01.28.09.27.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jan 2026 09:25:20 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7205A5F895;
- Wed, 28 Jan 2026 17:25:19 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
- Mahmoud Mandour <ma.mandourr@gmail.com>,  Kostiantyn Kostiuk
- <kkostiuk@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Manos
- Pitsidianakis <manos.pitsidianakis@linaro.org>,  Gustavo Bueno Romero
- <gustavo.romero@linaro.org>,  Michael Roth <michael.roth@amd.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>
-Subject: Re: [PATCH v4 03/11] plugins: use complete filename for defining
- plugins sources
-In-Reply-To: <1daa47ef-c2b5-4fae-aec7-744c5411a7e0@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 28 Jan 2026 18:05:26
- +0100")
-References: <20260124182921.531562-1-pierrick.bouvier@linaro.org>
- <20260124182921.531562-4-pierrick.bouvier@linaro.org>
- <87cy2uat5e.fsf@draig.linaro.org>
- <1daa47ef-c2b5-4fae-aec7-744c5411a7e0@linaro.org>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Wed, 28 Jan 2026 17:25:19 +0000
-Message-ID: <87pl6tabuo.fsf@draig.linaro.org>
+ Wed, 28 Jan 2026 09:27:41 -0800 (PST)
+From: Stefano Brivio <sbrivio@redhat.com>
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>, Jason Wang
+ <jasowang@redhat.com>, Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>, Laurent Vivier <laurent@vivier.eu>, David
+ Gibson <david@gibson.dropbear.id.au>
+Subject: Re: [PATCH 0/4] migration: Pass network packets received during
+ switchover to dest VM
+Message-ID: <20260128182739.64f60eba@elisabeth>
+In-Reply-To: <4uwcjd7ov7ib6q5pelqle3bdouoctyoqteec5f222cjatwkqxf@3p2n5hgjuwzk>
+References: <20260127140316.4187221-1-jmarcin@redhat.com>
+ <20260127192108.216495da@elisabeth>
+ <4uwcjd7ov7ib6q5pelqle3bdouoctyoqteec5f222cjatwkqxf@3p2n5hgjuwzk>
+Organization: Red Hat
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.49; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Date: Wed, 28 Jan 2026 18:27:41 +0100 (CET)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sbrivio@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 0
+X-Spam_score: -0.1
+X-Spam_bar: /
+X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,48 +129,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+On Wed, 28 Jan 2026 14:06:11 +0100
+Juraj Marcin <jmarcin@redhat.com> wrote:
 
-> On 28/1/26 12:11, Alex Benn=C3=A9e wrote:
->> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
->>=20
->>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->>> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> ---
->>>   contrib/plugins/meson.build   | 10 +++++-----
->>>   tests/tcg/plugins/meson.build |  7 +++++--
->>>   2 files changed, 10 insertions(+), 7 deletions(-)
->>>
->>> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
->>> index 6915ffa5fbc..3d2d7862e0c 100644
->>> --- a/contrib/plugins/meson.build
->>> +++ b/contrib/plugins/meson.build
->>> @@ -1,15 +1,15 @@
->>> -contrib_plugins =3D ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hot=
-blocks',
->>> -                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrig=
-ger',
->>> -                   'traps', 'uftrace']
->>> +contrib_plugins =3D ['bbv.c', 'cache.c', 'cflow.c', 'drcov.c', 'execlo=
-g.c',
->>> +                   'hotblocks.c', 'hotpages.c', 'howvec.c', 'hwprofile=
-.c',
->>> +                   'ips.c', 'stoptrigger.c', 'traps.c', 'uftrace.c']
->> Argh this keeps conflicting with other changes. Maybe we should make
->> this a dumb list:
->>    contrib_plugins =3D [ ]
->>    contrib_plugins +=3D 'bbv.c'
->>    contrib_plugins +=3D 'cache.c'
->> etc?
->
-> This applies fine as of commit 9ad7f544c69, on what are you based?
+> Hi Stefano,
+> 
+> On 2026-01-27 19:21, Stefano Brivio wrote:
+> > [Cc'ing Laurent and David]
+> > 
+> > On Tue, 27 Jan 2026 15:03:06 +0100
+> > Juraj Marcin <jmarcin@redhat.com> wrote:
+> >   
+> > > During switchover there is a period during which both source and
+> > > destination side VMs are paused. During this period, all network packets
+> > > are still routed to the source side, but it will never process them.
+> > > Once the destination resumes, it is not aware of these packets and they
+> > > are lost. This can cause packet loss in unreliable protocols and
+> > > extended delays due to retransmission in reliable protocols.
+> > > 
+> > > This series resolves this problem by caching packets received once the
+> > > source VM pauses and then passing and injecting them on the destination
+> > > side. This feature is implemented in the last patch. The caching and
+> > > injecting is implemented using network filter interface and should work
+> > > with any backend with vhost=off, but only TAP network backend was
+> > > explicitly tested.  
+> > 
+> > I haven't had a chance to try this change with passt(1) yet (the
+> > backend can be enabled using "-net passt" or by starting it
+> > separately).
+> > 
+> > Given that passt implements migration on its own (in deeper detail in
+> > some sense, as TCP connections are preserved if IP addresses match), I
+> > wonder if it this might affect or break it somehow.
+> > 
+> > Did you perhaps have some thoughts about that already?  
+> 
+> I'm aware of passt migrating its state and passt-repair, but I also
+> haven't tested it as I couldn't get passt-repair to work.
 
-plugins/next ;-)
+Oops. Let me know if you're hitting any specific error I could look
+into.
 
-Pierrick is going to deal with the pain now in his first PR!
+I plan anyway to try out your changes but I might need a couple of days
+before I find the time.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> Does it also handle other protocols, or just preserves TCP connections?
+
+Layer-4-wise, we have an internal representation of UDP "flows"
+(observed flows of packets for which we preserve the same source port
+mapping, with timeouts) and we had a vague idea of migrating those as
+well, but it's debatable where there's any benefit from it.
+
+At Layer 2 and 3, we migrate IP and MAC addresses we observed from the
+guest:
+
+  https://passt.top/passt/tree/migrate.c?id=e3f70c05bad90368a1a89bf31a9015125232b9ae#n31
+
+so that we have ARP and NDP resolution, as well as any NAT
+mapping working right away as needed.
+
+For completeness, this is the TCP context we migrate instead:
+
+  https://passt.top/passt/tree/tcp_conn.h?id=e3f70c05bad90368a1a89bf31a9015125232b9ae#n108
+  https://passt.top/passt/tree/tcp_conn.h?id=e3f70c05bad90368a1a89bf31a9015125232b9ae#n154
+
+> The main focus of this feature are protocols that cannot handle packet
+> loss on their own in environments where IP address is preserved (and
+> thus also TCP connections).
+
+Well, strictly speaking, TCP handles packet loss, that's actually the
+main reason behind it. I guess this is to improve throughput and avoid
+latency spikes or retransmissions that could be avoided?
+
+> So, mainly tap/bridge, with the idea that
+> other network backends could also benefit from it. However, if it causes
+> problems with other backends, I could limit it just to tap.
+
+I couldn't quite figure out yet if it's beneficial, useless, or
+harmless for passt. With passt, what happens without your
+implementation is:
+
+1. guest pauses
+
+2. the source instance of passt starts migrating, meaning that sockets
+   are frozen one by one, their receiving and sending queues dumped
+
+3. pending queues are sent to the target instance of passt, which opens
+   sockets as refills queues as needed
+
+4. target guest resumes and will get any traffic that was received by
+   the source instance of passt between 1. and 2.
+
+Right now there's still a Linux kernel issue we observed (see also
+https://pad.passt.top/p/TcpRepairTodo, that's line 4 there) which might
+cause segments to be received (and acknowledged!) on sockets of the
+source instance of passt for a small time period *after* we freeze them
+with TCP_REPAIR (that is, TCP_REPAIR doesn't really freeze the queue).
+
+I'm currently working on a proper fix for that. Until then, point 2.
+above isn't entirely accurate (but it only happens if you hammer it
+with traffic generators, it's not really visible otherwise).
+
+With your implementation, I guess:
+
+1. guest pauses
+
+2. the source instance of passt starts migrating, meaning that sockets
+   are frozen one by one, their receiving and sending queues dumped
+
+2a. any data received by QEMU after 1. will be stored and forwarded to
+    the target later. But passt at this point prevents the guest from
+    getting any data, so there should be no data involved
+
+3. pending queues are sent to the target instance of passt, which opens
+   sockets as refills queues as needed
+
+3a. the target guest gets the data from 2a. As long as there's no data
+    (as I'm assuming), there should be no change. If there's data coming
+    in at this point, we risk that sequences don't match anymore? I'm not
+    sure
+
+4. target guest resumes and will *also* get any traffic that was received
+   by the source instance of passt between 1. and 2.
+
+So if my assumption from 2a. above holds, it should be useless, but
+harmless.
+
+Would your implementation help with the kernel glitch we're currently
+observing? I don't think so, because your implementation would only play
+a role between passt and QEMU, and we don't have issues there.
+
+Well, it would be good to try things out. Other than that, unless I'm
+missing something, your implementation should probably be skipped for
+passt for simplicity, and also to avoid negatively affecting downtime.
+
+Note that you can also use passt without "-net passt" (that's actually
+quite recent) but with a tap back-end. Migration is only supported with
+vhost-user enabled though, and as far as I understand your implementation
+is disabled in that case?
+
+-- 
+Stefano
+
 
