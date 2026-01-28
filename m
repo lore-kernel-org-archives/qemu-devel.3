@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2039CD46C0F
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 23:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30F1D46C0F
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 23:19:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlEnI-0008UJ-9L; Wed, 28 Jan 2026 18:17:52 -0500
+	id 1vlEnG-0008R6-8k; Wed, 28 Jan 2026 18:17:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vlEnG-0008RX-EV
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:17:50 -0500
+ id 1vlEnD-0008Mw-0W
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:17:47 -0500
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vlEnE-0001j1-Nh
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:17:50 -0500
+ id 1vlEnB-0001ir-7z
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:17:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1769642269; x=1801178269;
+ t=1769642265; x=1801178265;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=tFX4i3T29aS2SR3Yr9A5LhqF7R5HWjkcRb3UIujv1eE=;
- b=Z0wdHi1t1s/kCW0rV9cQSafy8l8eGsYKi17E2tKqP9sdDonLQfIxzO4s
- tNZTyUai6e2neys3U97qAFkaHtbKKD4UZ65K0JdRHgjHZi7IhRsKWH3W8
- vF5BuPR/mR0+9H7koGmhHSGuBEuYebebaywXc3ns2W9/LXoMv2+i0zvoy
- exCtM8t4KkdQ9XLrfhtf+toY8U8YLsHZgSWGUlu6xlgcA45E/q8LI3swP
- 4eddfPfYuwFIprdAaGII3wVYFiDeUWWB0hmEJ/XZ1fRv6suqT6AAwwBPf
- Z6Dyvn6jAVgRxzWUTm+POSZo75hzcgwUcyoIJmLyqBOIiteopb7/M+Q64 g==;
-X-CSE-ConnectionGUID: CGiKI/MmRBuqlZCEAh30Mw==
-X-CSE-MsgGUID: 6Cky4G2xRRa2d5rJujLAhQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11685"; a="73462339"
-X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; d="scan'208";a="73462339"
+ bh=HxDTwFKOJhQLc+r8or/GUZgVFaHsSGDANaOspCSeX0w=;
+ b=G9CmkXLxenbkyWLjylkxskpIO2a5Qn06DWvLPrDc8YEo1bEmm2usWRph
+ C4135P99W93ONjDJ7A8FAiuclJQXBIJaTlduXUmPKydOLKLu1qurkHROv
+ ILbD+W+X8MBhKKIXLQiYi82QT4kVMh1KBPUFFn8RWRyeDbq/mFWv+mfA8
+ me+lCaZeFacvKzK1HeprgpjegChIrMGL5cjaND40dSu3NED2Ob4eoPjeq
+ CymqSqaU8Ary7rwdnwjLYH9iidj6z5c8iyB92iS+1R+/wXLvryBLo4tLW
+ K10ZIcBBEijb4IHbglvogBAYHsU6bPLoev+fhbiTsYMkzfOnl4u+Y+DvP g==;
+X-CSE-ConnectionGUID: 7T71++fgQN+wHDCGWv2X8Q==
+X-CSE-MsgGUID: yA6HMWAqQfupbC6bsfxL3g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11685"; a="73462322"
+X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; d="scan'208";a="73462322"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jan 2026 15:17:41 -0800
-X-CSE-ConnectionGUID: eFMJHCByREqk9Vkmu5E7eA==
-X-CSE-MsgGUID: baSQ/vM4SuSE2jwU1xiMYg==
+ 28 Jan 2026 15:17:39 -0800
+X-CSE-ConnectionGUID: Hh8IxSJ1SCu0vF0FTVPKpA==
+X-CSE-MsgGUID: UoNBvUz8QoGKlSt0qHQIzQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; d="scan'208";a="208001782"
+X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; d="scan'208";a="208001769"
 Received: from 9cc2c43eec6b.jf.intel.com ([10.54.77.43])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jan 2026 15:17:41 -0800
+ 28 Jan 2026 15:17:38 -0800
 From: Zide Chen <zide.chen@intel.com>
 To: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Zide Chen <zide.chen@intel.com>
-Subject: [PATCH V2 08/11] target/i386: Clean up LBR format handling
-Date: Wed, 28 Jan 2026 15:09:45 -0800
-Message-ID: <20260128231003.268981-9-zide.chen@intel.com>
+Subject: [PATCH V2 04/11] target/i386: Support full-width writes for perf
+ counters
+Date: Wed, 28 Jan 2026 15:09:41 -0800
+Message-ID: <20260128231003.268981-5-zide.chen@intel.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128231003.268981-1-zide.chen@intel.com>
 References: <20260128231003.268981-1-zide.chen@intel.com>
@@ -85,100 +86,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the lbr-fmt property is masked with PERF_CAP_LBR_FMT in
-DEFINE_PROP_UINT64_CHECKMASK(), there is no need to explicitly validate
-user-requested lbr-fmt values.
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-The PMU feature is only supported when running under KVM, so initialize
-cpu->lbr_fmt in kvm_cpu_instance_init().  Use -1 as the default lbr-fmt,
-rather than initializing it with ~PERF_CAP_LBR_FMT, which is misleading
-as it suggests a semantic relationship that does not exist.
+If IA32_PERF_CAPABILITIES.FW_WRITE (bit 13) is set, each general-
+purpose counter IA32_PMCi (starting at 0xc1) is accompanied by a
+corresponding 64-bit alias MSR starting at 0x4c1 (IA32_A_PMC0).
 
-Rename requested_lbr_fmt to a more generic guest_fmt.  When lbr-fmt is
-not specified and cpu->migratable is false, the guest lbr_fmt value is
-not user-requested.
+The legacy IA32_PMCi MSRs are not full-width and their effective width
+is determined by CPUID.0AH:EAX[23:16].
 
+Since these MSRs are architectural aliases, when IA32_A_PMCi is
+supported it is safe to use it for save/restore instead of the legacy
+IA32_PMCi MSRs.
+
+Full-width write is a user-visible feature and can be disabled
+individually.
+
+Reduce MAX_GP_COUNTERS from 18 to 15 to avoid conflicts between the
+full-width MSR range and MSR_MCG_EXT_CTL.  Current CPUs support at most
+10 general-purpose counters, so 15 is sufficient for now and leaves room
+for future expansion.
+
+Bump minimum_version_id to avoid migration from older QEMU, as this may
+otherwise cause VMState overflow. This also requires bumping version_id,
+which prevents migration to older QEMU as well.
+
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Signed-off-by: Zide Chen <zide.chen@intel.com>
 ---
 V2:
-- New patch.
+- Slightly improve the commit message wording.
+- Update the comment for MSR_IA32_PMC0 definition.
 
- target/i386/cpu.c         | 18 ++++++------------
- target/i386/kvm/kvm-cpu.c |  2 ++
- 2 files changed, 8 insertions(+), 12 deletions(-)
+ target/i386/cpu.h     |  5 ++++-
+ target/i386/kvm/kvm.c | 19 +++++++++++++++++--
+ target/i386/machine.c |  4 ++--
+ 3 files changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index f2c83b4f259c..09180c718d58 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -9788,7 +9788,7 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-     X86CPUClass *xcc = X86_CPU_GET_CLASS(dev);
-     CPUX86State *env = &cpu->env;
-     Error *local_err = NULL;
--    unsigned requested_lbr_fmt;
-+    unsigned guest_fmt;
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index f6e9b274e2ff..812d53e22c41 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -421,6 +421,7 @@ typedef enum X86Seg {
  
-     if (!kvm_enabled())
-         cpu->enable_pmu = false;
-@@ -9828,11 +9828,7 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-      * Override env->features[FEAT_PERF_CAPABILITIES].LBR_FMT
-      * with user-provided setting.
-      */
--    if (cpu->lbr_fmt != ~PERF_CAP_LBR_FMT) {
--        if ((cpu->lbr_fmt & PERF_CAP_LBR_FMT) != cpu->lbr_fmt) {
--            error_setg(errp, "invalid lbr-fmt");
--            return;
--        }
-+    if (cpu->lbr_fmt != -1) {
-         env->features[FEAT_PERF_CAPABILITIES] &= ~PERF_CAP_LBR_FMT;
-         env->features[FEAT_PERF_CAPABILITIES] |= cpu->lbr_fmt;
-     }
-@@ -9841,9 +9837,8 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-      * vPMU LBR is supported when 1) KVM is enabled 2) Option pmu=on and
-      * 3)vPMU LBR format matches that of host setting.
-      */
--    requested_lbr_fmt =
--        env->features[FEAT_PERF_CAPABILITIES] & PERF_CAP_LBR_FMT;
--    if (requested_lbr_fmt && kvm_enabled()) {
-+    guest_fmt = env->features[FEAT_PERF_CAPABILITIES] & PERF_CAP_LBR_FMT;
-+    if (guest_fmt) {
-         uint64_t host_perf_cap =
-             x86_cpu_get_supported_feature_word(NULL, FEAT_PERF_CAPABILITIES);
-         unsigned host_lbr_fmt = host_perf_cap & PERF_CAP_LBR_FMT;
-@@ -9852,10 +9847,10 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-             error_setg(errp, "vPMU: LBR is unsupported without pmu=on");
-             return;
+ #define MSR_IA32_PERF_CAPABILITIES      0x345
+ #define PERF_CAP_LBR_FMT                0x3f
++#define PERF_CAP_FULL_WRITE             (1U << 13)
+ 
+ #define MSR_IA32_TSX_CTRL		0x122
+ #define MSR_IA32_TSCDEADLINE            0x6e0
+@@ -448,6 +449,8 @@ typedef enum X86Seg {
+ #define MSR_IA32_SGXLEPUBKEYHASH3       0x8f
+ 
+ #define MSR_P6_PERFCTR0                 0xc1
++/* Alias MSR range for full-width general-purpose performance counters */
++#define MSR_IA32_PMC0                   0x4c1
+ 
+ #define MSR_IA32_SMBASE                 0x9e
+ #define MSR_SMI_COUNT                   0x34
+@@ -1740,7 +1743,7 @@ typedef struct {
+ #endif
+ 
+ #define MAX_FIXED_COUNTERS 3
+-#define MAX_GP_COUNTERS    (MSR_IA32_PERF_STATUS - MSR_P6_EVNTSEL0)
++#define MAX_GP_COUNTERS    15
+ 
+ #define NB_OPMASK_REGS 8
+ 
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index e81fa46ed66c..530f50e4b218 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -4049,6 +4049,12 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
          }
--        if (requested_lbr_fmt != host_lbr_fmt) {
-+        if (guest_fmt != host_lbr_fmt) {
-             error_setg(errp, "vPMU: the lbr-fmt value (0x%x) does not match "
-                         "the host value (0x%x).",
--                        requested_lbr_fmt, host_lbr_fmt);
-+                        guest_fmt, host_lbr_fmt);
-             return;
-         }
-     }
-@@ -10279,7 +10274,6 @@ static void x86_cpu_initfn(Object *obj)
-     object_property_add_alias(obj, "sse4_2", obj, "sse4.2");
  
-     object_property_add_alias(obj, "hv-apicv", obj, "hv-avic");
--    cpu->lbr_fmt = ~PERF_CAP_LBR_FMT;
-     object_property_add_alias(obj, "lbr_fmt", obj, "lbr-fmt");
- 
-     if (xcc->model) {
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index 33a8c26bc27c..b4500ab69f82 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -231,6 +231,8 @@ static void kvm_cpu_instance_init(CPUState *cs)
-         kvm_cpu_max_instance_init(cpu);
-     }
- 
-+    cpu->lbr_fmt = -1;
+         if (has_architectural_pmu_version > 0) {
++            uint32_t perf_cntr_base = MSR_P6_PERFCTR0;
 +
-     kvm_cpu_xsave_init();
- }
++            if (env->features[FEAT_PERF_CAPABILITIES] & PERF_CAP_FULL_WRITE) {
++                perf_cntr_base = MSR_IA32_PMC0;
++            }
++
+             if (has_architectural_pmu_version > 1) {
+                 /* Stop the counter.  */
+                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+@@ -4061,7 +4067,7 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+                                   env->msr_fixed_counters[i]);
+             }
+             for (i = 0; i < num_architectural_pmu_gp_counters; i++) {
+-                kvm_msr_entry_add(cpu, MSR_P6_PERFCTR0 + i,
++                kvm_msr_entry_add(cpu, perf_cntr_base + i,
+                                   env->msr_gp_counters[i]);
+                 kvm_msr_entry_add(cpu, MSR_P6_EVNTSEL0 + i,
+                                   env->msr_gp_evtsel[i]);
+@@ -4582,6 +4588,12 @@ static int kvm_get_msrs(X86CPU *cpu)
+         kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
+     }
+     if (has_architectural_pmu_version > 0) {
++        uint32_t perf_cntr_base = MSR_P6_PERFCTR0;
++
++        if (env->features[FEAT_PERF_CAPABILITIES] & PERF_CAP_FULL_WRITE) {
++            perf_cntr_base = MSR_IA32_PMC0;
++        }
++
+         if (has_architectural_pmu_version > 1) {
+             kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
+             kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
+@@ -4591,7 +4603,7 @@ static int kvm_get_msrs(X86CPU *cpu)
+             kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR0 + i, 0);
+         }
+         for (i = 0; i < num_architectural_pmu_gp_counters; i++) {
+-            kvm_msr_entry_add(cpu, MSR_P6_PERFCTR0 + i, 0);
++            kvm_msr_entry_add(cpu, perf_cntr_base + i, 0);
+             kvm_msr_entry_add(cpu, MSR_P6_EVNTSEL0 + i, 0);
+         }
+     }
+@@ -4920,6 +4932,9 @@ static int kvm_get_msrs(X86CPU *cpu)
+         case MSR_P6_PERFCTR0 ... MSR_P6_PERFCTR0 + MAX_GP_COUNTERS - 1:
+             env->msr_gp_counters[index - MSR_P6_PERFCTR0] = msrs[i].data;
+             break;
++        case MSR_IA32_PMC0 ... MSR_IA32_PMC0 + MAX_GP_COUNTERS - 1:
++            env->msr_gp_counters[index - MSR_IA32_PMC0] = msrs[i].data;
++            break;
+         case MSR_P6_EVNTSEL0 ... MSR_P6_EVNTSEL0 + MAX_GP_COUNTERS - 1:
+             env->msr_gp_evtsel[index - MSR_P6_EVNTSEL0] = msrs[i].data;
+             break;
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index 1125c8a64ec5..7d08a05835fc 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -685,8 +685,8 @@ static bool pmu_enable_needed(void *opaque)
  
+ static const VMStateDescription vmstate_msr_architectural_pmu = {
+     .name = "cpu/msr_architectural_pmu",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
++    .version_id = 2,
++    .minimum_version_id = 2,
+     .needed = pmu_enable_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64(env.msr_fixed_ctr_ctrl, X86CPU),
 -- 
 2.52.0
 
