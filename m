@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2C7DD3F098
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 16:54:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 150D4D3F098
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 16:55:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl8oL-0001Qs-9X; Wed, 28 Jan 2026 11:54:34 -0500
+	id 1vl8om-00024y-VC; Wed, 28 Jan 2026 11:55:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1vl8o5-0001Jk-99
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 11:54:20 -0500
+ id 1vl8oh-0001o9-Ta
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 11:54:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1vl8o1-0000Yb-3q
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 11:54:15 -0500
+ id 1vl8og-0000c1-4a
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 11:54:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769619251;
+ s=mimecast20190719; t=1769619293;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gbr2vnlJEjuHieotch/k0zgCCu1LrL5W7T/wBpNbLpI=;
- b=hz2mBkA4Q5nOC+TsEDmlQkl+ad8iymwpOpOAvvPtr1Ja/Yc3hF+5X+5mAcGErzmvUuD2+x
- x/aRukcfilZPe0H1N8OHRFN1wHysx5URWzT2h5s1+XJPhViTUrXDx0zlJu1pj/cdBvaWCL
- YuCJj8ZA8AiOBRvXabmuwfxzD2ocSeo=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nNKtqZZX2SAP2nBC7CE5VsU2Xk12FaXrMgjZxQd/m0Y=;
+ b=KSAXb0LYeSM0oh9PzSh84NJ8bY/+VeeNgH8hye7qev2Wr8ahKG+B+7IVSycYDw5GLTI1fj
+ 2QoENdJdk/HZ6KzU2cDv2Ss9KkW2Hxo+xSmc9VikvGr4gMN6xkRJxUbr5tHmLQve9B6qPC
+ 640vg4RcN5B95ygikJksTTFIwMRzcGY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-99-OISdEZFJMUq5q1qrvD3Qdg-1; Wed, 28 Jan 2026 11:54:09 -0500
-X-MC-Unique: OISdEZFJMUq5q1qrvD3Qdg-1
-X-Mimecast-MFC-AGG-ID: OISdEZFJMUq5q1qrvD3Qdg_1769619248
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4801bceb317so521835e9.1
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 08:54:09 -0800 (PST)
+ us-mta-377-c6FIOXDCP1CaeUb31pxMbw-1; Wed, 28 Jan 2026 11:54:50 -0500
+X-MC-Unique: c6FIOXDCP1CaeUb31pxMbw-1
+X-Mimecast-MFC-AGG-ID: c6FIOXDCP1CaeUb31pxMbw_1769619289
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-47ee432070aso349635e9.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 08:54:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769619248; x=1770224048; darn=nongnu.org;
+ d=redhat.com; s=google; t=1769619289; x=1770224089; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=gbr2vnlJEjuHieotch/k0zgCCu1LrL5W7T/wBpNbLpI=;
- b=doueB/o+5nDBa4EmyQvWnLiDttFVY31h97qkZIKWcDmWrU649GMaji/UQkbautRbax
- ZrhYOI12sTKZYrmGiceGD66gS8FXTm8UJx/tZmAMpLhylnn7YGyOLC+vvCAo5wWMLqs3
- +AAVsnlbPVrvSTRN1R2p3ofgg9Px8AP+IIpnF0+GSnJ/2fFTj3Ax70aVzwuFEZTUUz7g
- Q/D9vF80WXkHGCKp0KF76wzAbis7dHLtye5jEdS63LGbvZzIU15zxhycQv8EYFHwVxWv
- pg9uRah8V/X0EDa6TwvRBqAohOi304F3o97gO4hyrLfGAwLndH1dYkJWXwxmXtw1FWcS
- 5K/g==
+ bh=nNKtqZZX2SAP2nBC7CE5VsU2Xk12FaXrMgjZxQd/m0Y=;
+ b=dy5IQMCsaMrIYsG9XDj/V0y2+/8cR5Ikiak01dh836q2XMPYFXDUFQ3VhkNwsVi+67
+ +jm5pJg1pm8gqhIEMOcLRBflp+LyPxb3XkniatEirwxrFhKj0+CUeaTJGp3xRM9Ocrfh
+ 6yhg6h3Vk7/dCaWg1KZryl2Tb9DzQvh8azgB9+4uZ8TVcglfYmmYYnp1eSege9u+CgD4
+ z2VYwdlycw2yIucrflBAefNnzblD6mZHbcgpNjTHoF6BZjgAOzEXCLWC7nypEBWXRGMW
+ spLw3HrOZNJCEArcK6SicpskuydS5Bnhcx5ZTjL5n4lxRpvw9IdVV9/6ONySToCKEWc2
+ UUdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769619248; x=1770224048;
+ d=1e100.net; s=20230601; t=1769619289; x=1770224089;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gbr2vnlJEjuHieotch/k0zgCCu1LrL5W7T/wBpNbLpI=;
- b=FXi9YSAUnr2WY/A++CEYC53auhxR8ejnmHzOu+k7ZdQ0KNiLWACMHC3oVIi8vgIIPS
- yJ/9Bb2VAh0K2b8p60dtKen6iU2JhGzBBqQNA7i1Ho6UT456FEnFhYY2ULYa61MtMg8y
- 2v43DdlxgpPhiVoT1q8nHMC1txuJ3TTrmo4Iw4xrz8glyuz+QtgMkLxGlGTVdP0Hsmmv
- lx9KMC9BhTyXgds/mBIykRNcVk8X2VGGzwE8uSuPMNPVGYFFE3EmflQIpuNSIoRe8Olg
- 6DvGKUUoF76B2fkVcHL8JRGHqa00mL07jhNi3RZJMViDzWUv/Y6MmwrPryHDSR0HlQwI
- 5cbw==
+ bh=nNKtqZZX2SAP2nBC7CE5VsU2Xk12FaXrMgjZxQd/m0Y=;
+ b=QfCak+QRiEUMq6te8AyjzFIi8wYPxpQtF5H4ID5ySwSTtWS5blA6aXorDAWGj+ZDEB
+ Jt0hJIbA58BDN/40YzpPlRiyxj3AG2vpjMnlyf+pR4UR9M1zkEN70+z3NPqYwtyiaYUt
+ CtLRji+hBB+ujFSTXqU5VMO9Mk0WYGWa+VrsZQDtYgv0KfTTXclbLxXah93akAkDXWxL
+ XpGNnQTROZYj6B0qkBiLIFL0rPoxaF6OWGdy62PM5ohQKEkZT6t6q2h4Cuyuk64YcAEt
+ Uj/diPUmOnZluoeTZ3ViidOjtiiBKJ9nC9xwRlamW46PgttUQwk2w3hqlueodnXtrtC2
+ wUgw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXVmIrgHIgudEBGB+6IIKjOULZHtZ2HyPYT791JAZooeBF9RGOTNHXegogCgnhfCfjN3boxDbCvbx/D@nongnu.org
-X-Gm-Message-State: AOJu0Yxs9yY0faXS/QE6J6ev8a8vyRQtU60N5l8Ud8y8uoftgkES6W9l
- xAkRuQhqLfoY8ePnDodkvf0bnG208rO6VIZ8Zpmq5I+e2wNOtxBDt4rKbRj1Jfvzw7zIRTBeKp9
- ieZ3qcVYgb9E/A6MddHbnHCjng0YXbQ7kC70COkkIQvYiikTpZmcByvzP
-X-Gm-Gg: AZuq6aKSwRih3FWWEEzsyzllypO4uv1753fp6xixR3P/MJx8BM9Yh7H7qsUoEu7aWNd
- Yp7s6TCT5wZSYlAeCGbj5hUXhoHZU0yudi1qAFeZqV2SwV+egJtcyDqbHxAzydczZco2A2KM7kc
- FfJp/fXQObDyQG3Oko8HI9GOSmtp9S6ZvXvTTGveNAq1NJkdyF3HUTrK60L+ftNPr/kSgOGifF2
- EH0ZAdDP8lrF5mbbIVpaNKTzDP8qGXCzU+MIC/9g2ycHwhwuqopF4ChGiEC8N6cNPMbOCc8xAdZ
- nlqt4H0/kGA/W6xwkkNSL75lhkWBFNOsl7an+souidJpKFe6exCUfTzqT+h6gCs8YjEEH3aazfY
- S+SxVOjyRnhiir5vDN8RKse2lU0UvEf1vR0s6z7IhhHzJ631t
-X-Received: by 2002:a05:600c:1da8:b0:47d:18b0:bb9a with SMTP id
- 5b1f17b1804b1-48069c8275bmr73098285e9.33.1769619248057; 
- Wed, 28 Jan 2026 08:54:08 -0800 (PST)
-X-Received: by 2002:a05:600c:1da8:b0:47d:18b0:bb9a with SMTP id
- 5b1f17b1804b1-48069c8275bmr73098085e9.33.1769619247627; 
- Wed, 28 Jan 2026 08:54:07 -0800 (PST)
+ AJvYcCUtDKsW9YO/RI4CFRhwNUe3Td7H1p7cK3IWPgAapY5lLeCYQSrB/cSGRQTC9aF3MAOCCfeAmei15TN4@nongnu.org
+X-Gm-Message-State: AOJu0Yz0bRUHARMIsHG5bNAzuKlY/wgEcqigS8gz+avHBMIG04N9BVuW
+ DkVqEdUIf3ffyBEiZfWE84vsM/vACOS9oGV256+BIMyfAToSIKnAHfaRaoMhgahygGZqUCq42o4
+ CTokNeaFfZdqhcKbxrH/qOTKboNyr8XvE8eYFugA5lvz+KGZ99eBFVQa6
+X-Gm-Gg: AZuq6aLCTpgEmhkf0a8jdcFLu2iCFDbHC1XwkE6ikKcXFoXwoKLhVA36ImHiObdR6ZR
+ 3wfzkiTi38EPqLwn9ffhq8UafTcCjd4d3glZfwLw+Hv1mJQqfc3BRdO6xedyTG3oeaQXlheIuhX
+ JsNdysMLXounK1+i57qP2wcAlJAMxtY9TJM1bjyawY64lhfZuWdmCvcg93qAxK5vug+wYUPRLVf
+ 4/aJ0DsgKWtUHUiPVEdf9PXMwUeHLjV19XT14LeNN2tk2KazPlPwK23w37NHcLMAYfnD83XXFan
+ wctuGDWTL02XKfOjQd8/VshEkxUcqjQaM8ZDClXgU+zBPvbj5VryHw1csWQseqQq8PGRXxkbt9v
+ dbI9OwRB16bdDe2rg9na9C0KanxXa+6QFg4s7lXRTjIiMBdIp
+X-Received: by 2002:a05:600c:8719:b0:480:1aae:676c with SMTP id
+ 5b1f17b1804b1-48069c78706mr75940575e9.18.1769619289183; 
+ Wed, 28 Jan 2026 08:54:49 -0800 (PST)
+X-Received: by 2002:a05:600c:8719:b0:480:1aae:676c with SMTP id
+ 5b1f17b1804b1-48069c78706mr75940345e9.18.1769619288792; 
+ Wed, 28 Jan 2026 08:54:48 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:e10:ef90:343a:68f:2e91:95c?
  ([2a01:e0a:e10:ef90:343a:68f:2e91:95c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4806e289c1fsm3999485e9.3.2026.01.28.08.54.06
+ ffacd0b85a97d-435e131ce93sm7992945f8f.24.2026.01.28.08.54.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Jan 2026 08:54:07 -0800 (PST)
-Message-ID: <87d543c4-42ca-4688-9522-914e23927ac4@redhat.com>
-Date: Wed, 28 Jan 2026 17:54:06 +0100
+ Wed, 28 Jan 2026 08:54:48 -0800 (PST)
+Message-ID: <9be64769-5d2f-42c5-b219-ce464f398774@redhat.com>
+Date: Wed, 28 Jan 2026 17:54:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/virtio: qmp: refactor the FEATURE_ENTRY() macro
+Subject: Re: [PATCH] qmp: Fix a typo for GSO over UDP features
 To: Paolo Abeni <pabeni@redhat.com>, qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>
-References: <745e4b9ff93b27b4464d039d2ca24a9020f2c32f.1760103753.git.pabeni@redhat.com>
+References: <20260128162428.2669768-1-lvivier@redhat.com>
+ <7727d378-db7e-464f-89a3-c5e10c605fb5@redhat.com>
 Content-Language: en-US
 From: Laurent Vivier <lvivier@redhat.com>
 Autocrypt: addr=lvivier@redhat.com; keydata=
@@ -139,19 +140,20 @@ Autocrypt: addr=lvivier@redhat.com; keydata=
  oDqSoLt5w9GoQQ6gDVP2ZjTWqwSRMLzNr37rJjZ1pt0DCMMTbiYIUcrhX8eveCJtY7NGWNyx
  FCRkhxRuGcpwPmRVDwOl39MB3iTsRighiMnijkbLXiKoJ5CDVvX5yicNqYJPKh5MFXN1bvsB
  kmYiStMRbrD0HoY1kx5/VozBtc70OU0EB8Wrv9hZD+Ofp0T3KOr1RUHvCZoLURfFhSQ=
-In-Reply-To: <745e4b9ff93b27b4464d039d2ca24a9020f2c32f.1760103753.git.pabeni@redhat.com>
+In-Reply-To: <7727d378-db7e-464f-89a3-c5e10c605fb5@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,23 +169,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/10/25 15:47, Paolo Abeni wrote:
-> The description of all the features entry starts with the feature name,
-> which is also an explicit argument of the FEATURE_ENTRY() macro.
+On 1/28/26 17:39, Paolo Abeni wrote:
 > 
-> Rework such macro to add the stringified name into the description
-> automatically, and update accordingly all the macro use cases.
 > 
-> This makes the code tidy and help avoiding related errors in future
-> usage of such macro.
+> On 1/28/26 5:24 PM, Laurent Vivier wrote:
+>> The description of VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM feature
+>> was missing the _CSUM.
+>>
+>> Fixes: a76f5b795cab ("qmp: update virtio features map to support extended features")
+>> Cc: pabeni@redhat.com
+>> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+>> ---
+>>   hw/virtio/virtio-qmp.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
+>> index 968299fda0c9..45ca40ca50f8 100644
+>> --- a/hw/virtio/virtio-qmp.c
+>> +++ b/hw/virtio/virtio-qmp.c
+>> @@ -329,7 +329,7 @@ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
+>>               "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
+>>               "UDP tunnel packets"),
+>>       FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, \
+>> -            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
+>> +            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM: Driver can receive GSO over "
+>>               "UDP tunnel packets requiring checksum offload for the outer "
+>>               "header"),
+>>       FEATURE_ENTRY(VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, \
 > 
-> Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-> ---
->   hw/virtio/virtio-qmp.c | 340 ++++++++++++++++++-----------------------
->   1 file changed, 145 insertions(+), 195 deletions(-)
+> LGTM, thanks!
+> 
+> Acked-by: Paolo Abeni <pabeni@redhat.com>
+> 
+> Side note, I lost track of this patch:
+> 
+> https://patchew.org/QEMU/745e4b9ff93b27b4464d039d2ca24a9020f2c32f.1760103753.git.pabeni@redhat.com/
+> 
+> which would address the above and prevent similar errors in the future.
+> AFAICS is sitting in patchew since 3m. Should I consider that one dropped?
 > 
 
-Reviewed-by: Laurent Vivier <lvivier@redhat.com>
+I agree, I was thinking at doing the same change.
+
+Thanks,
+Laurent
 
 
