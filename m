@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E1E3D35668
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E964D35671
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 03:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkwKr-0007UM-Dv; Tue, 27 Jan 2026 22:35:17 -0500
+	id 1vkwKg-0007Aw-Sk; Tue, 27 Jan 2026 22:35:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vkwKp-0007Rg-Kt
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 22:35:15 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1vkwKf-000773-N1
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 22:35:05 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vkwKn-0005E0-St
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 22:35:15 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-81dbc0a99d2so3202894b3a.1
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 19:35:13 -0800 (PST)
+ id 1vkwKd-0004pe-UF
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 22:35:05 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-81c72659e6bso5811879b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 19:35:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769571312; x=1770176112; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769571302; x=1770176102; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9qpaZSRAwTnr16Gw4yfV8KXLbrwvYAE9mZVYy8k2oI8=;
- b=ZzduZCrBCtxvzwPzU0keRwi4fY0J/lw5PXJL0pb2AuzGQOIxYnbgObO98YOe23PiQp
- Ac1xlGsE/Tx+Ev1jZoqmI4RPi4aTJ6LZTgyzTNV0Qeao5HqOO8l803tZke0cnqwOxy8+
- AwoEwZegULecAFNG/BLOJhYu04e+s9GywBFS/hM8IlILLIb34I0M4+2FPz9ERFCYfB4n
- Fxwbils5U21NBjQOID7JlqFKx44+JP9UA29iFQ42YUR7zfD/yHC0qmPrzSG8NwkFrYMH
- 4kHf/Si9oHdzhRIXDL+8AaWoFJIK3+1CcDnMka68wZ5v+HA5ZDTLqdOq4kxgQrOmRkxR
- K8Cw==
+ bh=aBxOR1YedQIo2DLEqnwB3McpT12voEdd2Iy57Dntw3M=;
+ b=rptfRSMcMi/jrUXjnl83Cl2JqSrSGpEH8/l1i23Yawjoyun5NSICi+WTpMn8qJq0Ia
+ O/6RM0tJIdlOjFR1f677izGNnrCYXSEHoPg8qKUmYIZL0RrIGAuYF7QV9T1QMbsk2tvT
+ 12oqFZlmtBGJktpVRjB2w4e8mXIHVST5JMVr2lQnLEba3IGPoMhDwI9yRn9YGEqMO0Ln
+ K+jXGk4BqE0h3TdEgZKBk9NZntr0Jc76xcHAf3Ki9JzNlzXf2PcKsBXYl1ueA8bZ0YLr
+ O112tgWVaGAHKqH3zIUvqPUcZX3joaApecwiX7/z5KIfdQ8dSe9sHOC7ZDyNxoMINq66
+ YHgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769571312; x=1770176112;
+ d=1e100.net; s=20230601; t=1769571302; x=1770176102;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9qpaZSRAwTnr16Gw4yfV8KXLbrwvYAE9mZVYy8k2oI8=;
- b=FaZPcl69ndYL1rCBN93RS3DWM6mm1ZLrTe++p1jHlYNMWB5qRtZBEAFCuD31gRdECj
- Hi4nEV4DGArG+Ebp8mEN6GzR60ItwHSd4DkF2i6sRRGa7v6x5i7rlonp16YSSYobUkxU
- B36dUzgLY0ry1Ok6s7l8Gxxr8KHJI9d3B3UxR+OaIYALrn35OVVjoWBmX5L61/MCbHX3
- KKrGNHLGVfkmF6vxQakmVmNfiKrg4/3nkD7fwkzPJkJlEPnRCctDOyJDdnkw2dbxVGT5
- 6O3cmfw+AiLCxMc0tx8kFCzovrQHFBBj+nI74Z1qJxUJYBlNc7FfxOTlTXcsXLXHq4H4
- PB9A==
+ bh=aBxOR1YedQIo2DLEqnwB3McpT12voEdd2Iy57Dntw3M=;
+ b=aFxjBWJn3ICG9Yhl0tB0wrfHHh8Lvqemx5B4iU01m085DiNpex5rKshwn+oR7pUNhH
+ PKbN9e76Ic4cOcILwkJztT70K/i4IIz45oLbvY3Mgl0TAeyoztpJgynAW7FA1M5hoTni
+ qOKvqR/xar/1pyg2V74FpkY/lgdn9F6WqnkchLCvhkoooCEyhQpAxD21JQMI0jyRIxbo
+ ZI1qVmZDkAp9+bXTY5i+12sCD3XJd1KqVOKruFQtQU6Mx6DeyQ2YnSWlkZ4C3ZfVgEgP
+ Lde5W5Eab9R4hOSeanRMWoKu7RT+su6QUKAZMZqfAqvR72RrBSoddnVAPls9h8riHxDm
+ Rchw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWGIQgrvarfdOlP3ScD3HMmXUnsDQGNad5ct3KcG9dAlM7iJ+Tw6VACE5f6BXYjAv9n51piORlf+KXE@nongnu.org
-X-Gm-Message-State: AOJu0YzusQ6Fu3UXhUXhZm940rJk2V7M97Lqel8/8dkUdQA0OE/pRRcb
- z/Lc+tjLLzXGZSTH9gW/A8NyoOb4sip2ZvOCZRvisQB8puUSqNMveMK/SnbYHzJd3eA=
-X-Gm-Gg: AZuq6aJe9V8Qh6uKnnzWnkQIdJlhPJH9IzK7tUegGtdmaK/wo4YXN7F6e6g/Re/eQcp
- LhesLiH6izIGQ0xl7/NxT0Q6HsknIB6+jQY5sVyFrXE9vaNgSqJRI1+U6TN/+9bhUBgBgH/Fa9Y
- mX8sqCU9MJGQm9/jAxpnIbSTuHuOTMcIy4h03N3EWgHqOkm5WRUCvd5UZrBAOqvqx11aM3fNTZz
- F2lsy2+wb9xjXUHfmcC5N+AIO2rO/7lWhAtVD22nByjETfozATnum4MmTeAN1tRePb76o1XS9P/
- UckqN7Izeas5gUEvJhczzqrV89l9sGo9j1Dgq5RGgAIjMzesOCkodqL2JbAYySu8CmO/J9v+71l
- u88p5LkNGjLICdukWU4MutM14G5EGN+BIHm9GFMZDg3US1RVbA2/z1M4avlcLcqNiiepQDDI3kY
- smfB/tgSkfQbGeanPSe3wBum3hI5CA8A==
-X-Received: by 2002:a05:6a00:2402:b0:81f:40e5:34be with SMTP id
- d2e1a72fcca58-823692cb695mr2845356b3a.46.1769571312351; 
- Tue, 27 Jan 2026 19:35:12 -0800 (PST)
+ AJvYcCU6/9fmQgPHCGtil9l+KCbtJBpT+t+mGWIEQIqdDy0QYKZtuBnFG+b+Uzb0QQzPnlgDLUZR0e0DbVmO@nongnu.org
+X-Gm-Message-State: AOJu0Yxg8UA2npqKEuQwf8niaIX5zQ65wzXdfGkeuzfX2yscyCJpMmYU
+ hWLaa+t7ViHBMvDPytcKQFMbAOGxEvkXrW7FCcXE1jGynrfEM3U7XXTLBPyPxm/1ExNkmtSIaM7
+ m8b5NP+Jtjg==
+X-Gm-Gg: AZuq6aLEiwpRsVBIlLc5J9j9Aw1xxo9F9DE7n+HauR4ZkrhYimNpY/b7k0WKrNRSYMm
+ SifItCPX7qlS51CQrfZfbLYYGIj90dWQLYpBcJ2bhiR97R7VufzFkFYQQ4iomvKl52XE2qCby34
+ CZUY415pLlZrTEC6F7l6JM+LIXH0Sllp2sJbZDbH4Dg0C94+z27QMdoriTCJlilTDJsLCHgfUqZ
+ v2smewPBFwwv2qByIMTS5BjDBvb9QeoelTCMRVoBm++9ygSS6ccnUWisqZv8q62LGuk1I0pe0hC
+ QpslWDIoOOgm9XkfRzNaMXbI3H7uodL0d9vH6CmCQwM89IpQoZzjDaJkjzlXMmSjbFE82oZneBN
+ 5JPCrKvaKewXeBtRFQ9x53igfST3MGBhcMiH3cAU04063aQnrChjLJlv9dkfJLVeDzMo8D/zAE4
+ xLDv9FLb7/iyr8vjipV7PfDgi2SGGNYQ==
+X-Received: by 2002:a05:6a21:4846:b0:38f:df47:87a0 with SMTP id
+ adf61e73a8af0-38fdf478a2emr759796637.61.1769571301704; 
+ Tue, 27 Jan 2026 19:35:01 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379c1fc6esm938945b3a.47.2026.01.27.19.35.10
+ 41be03b00d2f7-c642a42b3fcsm783732a12.20.2026.01.27.19.34.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Jan 2026 19:35:11 -0800 (PST)
-Message-ID: <e392e879-a194-4af5-b6b4-8efec9f7366f@linaro.org>
-Date: Wed, 28 Jan 2026 14:35:08 +1100
+ Tue, 27 Jan 2026 19:35:01 -0800 (PST)
+Message-ID: <717a0b26-f836-44d6-a2bb-289a72c4889b@linaro.org>
+Date: Wed, 28 Jan 2026 14:34:57 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/9] tests patches
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-References: <20260127142710.131904-1-thuth@redhat.com>
+Subject: Re: [PULL 0/9] updates for MAINTAINERS
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20260127114240.3009791-1-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260127142710.131904-1-thuth@redhat.com>
+In-Reply-To: <20260127114240.3009791-1-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,25 +105,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/28/26 01:27, Thomas Huth wrote:
->   Hi Richard!
-> 
+On 1/27/26 22:42, Alex Bennée wrote:
 > The following changes since commit f26976b9d30496d28bd4fd045f4300706e567a29:
 > 
 >    Merge tag 'pull-vfio-20260126' ofhttps://github.com/legoater/qemu into staging (2026-01-27 07:14:11 +1100)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/thuth/qemu.git tags/pull-request-2026-01-27
+>    https://gitlab.com/stsquad/qemu.git tags/pull-11.0-maintainer-updates-270126-1
 > 
-> for you to fetch changes up to 161ea5a63413dd5efc07205483c1070a6e859785:
+> for you to fetch changes up to 74be6f8bc918cdc532272efcb002b9146bfecc78:
 > 
->    tests/functional: Enforce sha256 as hashsum algorithm for all tests (2026-01-27 15:20:43 +0100)
+>    MAINTAINERS: add co-maintainer for TCG Plugins (2026-01-27 11:37:35 +0000)
 > 
 > ----------------------------------------------------------------
-> * gitlab: preserve base rules for container template
-> * Fix some issues to make QEMU compilable on non-mainstream distros again
-> * Enforce sha256 as hashsum algorithm for all functional tests
+> MAINTAINER updates
+> 
+>    - fix some malformed entries (names, lists, status)
+>    - drop Mads from HVF and Tracing reviews
+>    - add Pierrick for overall docs catcher
+>    - add Pierrick as a linux-user reviewer
+>    - add Pierrick as a co-maintainer for plugins
+>    - set linux-user to Odd Fixes
+>    - update core Arm to "Supported"
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
 
