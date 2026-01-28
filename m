@@ -4,99 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E48D46BF9
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 19:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47FA4D46BFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 20:05:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlBdn-0006FG-RO; Wed, 28 Jan 2026 14:55:55 -0500
+	id 1vlBkW-0000qZ-0J; Wed, 28 Jan 2026 15:02:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vlBdP-00063c-FY
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 14:55:29 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vlBkN-0000oe-2Z
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 15:02:40 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vlBdK-00023K-8d
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 14:55:23 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vlBkK-0004zB-RB
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 15:02:38 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id ECD2033D4C;
- Wed, 28 Jan 2026 19:55:20 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C80075BCD1;
+ Wed, 28 Jan 2026 20:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769630121; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769630553; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=nOv0BRzMNebvPaAa0fGZZ/V5lspOjz1ISD2qsxbb/tA=;
- b=w3E1bI+xlaGjxP6bZ07C8ciFXKQteMj2/6fTgfr/R6tex92Us2iPdRj24eWTJVxHtEaGjJ
- 7wmR87+M62HTsCorwNBP6Eatpi7eEt5hCZVEPddrFV2ioBy8NId/JIozSF7BzGMV2G/mLt
- p0vLz5djOmlW7N9rqXm9M6SQq7KvVEY=
+ bh=MACGkJeqBb/7DACv+Pw27/cTmbgXejHiNa64Y8sP1R8=;
+ b=0XNzM4yZWb6j0luuXWoGpKtaf3aef0bzhnDkwfW0QLOt7eiKYEnyJjCJ7E6zz6mdFzwSlI
+ oHMg3UjA6iw6jVpVTuoFC1r3+UQjyYfPmrfUM9n+gYpOIEazcNviG4mxoWvCKFAc+su4N0
+ QPx+jLbmK2H2//Yq2XZz0vZkNCpGDF8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769630121;
+ s=susede2_ed25519; t=1769630553;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=nOv0BRzMNebvPaAa0fGZZ/V5lspOjz1ISD2qsxbb/tA=;
- b=ygyYA7Jp/yFZSc94imHFgTX+TfBLfGOXq07JlpON8tn8VfNOBmYJUWqehCCtgYuMAPJtr/
- C4RJUEQJTeuEPxBA==
-Authentication-Results: smtp-out1.suse.de;
-	none
+ bh=MACGkJeqBb/7DACv+Pw27/cTmbgXejHiNa64Y8sP1R8=;
+ b=y7HTYlFFihbZ+ge8JIE7Pq4IkCEi1oOUvPxM532CbmFLwQdhTauEfr2d/lwpoqieZ6m2BK
+ 1ei7eFqkYx5T9cAA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=0XNzM4yZ;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=y7HTYlFF
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769630120; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769630553; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=nOv0BRzMNebvPaAa0fGZZ/V5lspOjz1ISD2qsxbb/tA=;
- b=k/uBOoKlSMIO/CR8Gxu//rnbzuJnSHgA/5AeZdO3Iw1+P28nVVq5YkyC03zApnxqX+wYQy
- r8mZvD/Bctmp9lqtwMBoFnc2/c7blVdkkMZ+TfbQPFMhBbHwW+i2hC5xHp0E3f861lGURS
- PY6UR++yOOY5XbzCKpxz2d8Mlrj6lWA=
+ bh=MACGkJeqBb/7DACv+Pw27/cTmbgXejHiNa64Y8sP1R8=;
+ b=0XNzM4yZWb6j0luuXWoGpKtaf3aef0bzhnDkwfW0QLOt7eiKYEnyJjCJ7E6zz6mdFzwSlI
+ oHMg3UjA6iw6jVpVTuoFC1r3+UQjyYfPmrfUM9n+gYpOIEazcNviG4mxoWvCKFAc+su4N0
+ QPx+jLbmK2H2//Yq2XZz0vZkNCpGDF8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769630120;
+ s=susede2_ed25519; t=1769630553;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=nOv0BRzMNebvPaAa0fGZZ/V5lspOjz1ISD2qsxbb/tA=;
- b=SrzI6KD2D9EJ1OBvBzdVLDjXnwQAdXbf291UPUHuIKsWF3tUTZ2mssO4F4qKGwhzxm5eRS
- Quo9CWJRTVWJcWBg==
+ bh=MACGkJeqBb/7DACv+Pw27/cTmbgXejHiNa64Y8sP1R8=;
+ b=y7HTYlFFihbZ+ge8JIE7Pq4IkCEi1oOUvPxM532CbmFLwQdhTauEfr2d/lwpoqieZ6m2BK
+ 1ei7eFqkYx5T9cAA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 637443EA61;
- Wed, 28 Jan 2026 19:55:20 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3E10B3EA61;
+ Wed, 28 Jan 2026 20:02:33 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 4aqZCahpemkUOgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 28 Jan 2026 19:55:20 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id G8GRAFlremk8QAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 28 Jan 2026 20:02:33 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Lukas Straub <lukasstraub2@web.de>, Prasad Pandit
- <ppandit@redhat.com>, Juraj Marcin <jmarcin@redhat.com>, David Woodhouse
- <dwmw2@infradead.org>, Paul Durrant <paul@xen.org>
-Subject: Re: [PATCH v2 23/24] migration: Simplify qemu_save_device_state()
-In-Reply-To: <20260127185254.3954634-24-peterx@redhat.com>
-References: <20260127185254.3954634-1-peterx@redhat.com>
- <20260127185254.3954634-24-peterx@redhat.com>
-Date: Wed, 28 Jan 2026 16:55:17 -0300
-Message-ID: <87ms1xecm2.fsf@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org, Laurent
+ Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Zhang
+ Chen <zhangckid@gmail.com>, Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Juan Quintela
+ <quintela@trasno.org>
+Subject: Re: [PATCH v3 04/10] multifd: Add COLO support
+In-Reply-To: <aXoYfad-i-au-xpM@x1.local>
+References: <20260125-colo_unit_test_multifd-v3-0-ae926ccd8eae@web.de>
+ <20260125-colo_unit_test_multifd-v3-4-ae926ccd8eae@web.de>
+ <87ms20h2ae.fsf@suse.de> <20260126203358.0f8dc224@penguin>
+ <878qdkgin8.fsf@suse.de> <aXkh0Sy9WUqi_3Rr@x1.local>
+ <87v7glgbrz.fsf@suse.de> <aXoYfad-i-au-xpM@x1.local>
+Date: Wed, 28 Jan 2026 17:02:30 -0300
+Message-ID: <87jyx1eca1.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FREEMAIL_ENVRCPT(0.00)[web.de];
- ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- MISSING_XM_UA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[8];
- MID_RHS_MATCH_FROM(0.00)[];
+ MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com,web.de];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FREEMAIL_CC(0.00)[web.de,nongnu.org,redhat.com,gmail.com,xfusion.com,fujitsu.com,treblig.org,trasno.org];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
  FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,web.de,infradead.org,xen.org];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:helo, infradead.org:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MID_RHS_MATCH_FROM(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCPT_COUNT_SEVEN(0.00)[11]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
+ imap1.dmz-prg2.suse.org:helo, suse.de:dkim, suse.de:mid]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: C80075BCD1
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -122,54 +139,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> This function is used by both COLO and Xen.  Simplify it with two changes:
+> On Wed, Jan 28, 2026 at 09:30:24AM -0300, Fabiano Rosas wrote:
+>> >> >> > @@ -294,6 +294,14 @@ int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp)
+>> >> >> >          p->zero[i] = offset;
+>> >> >> >      }
+>> >> >> >  
+>> >> >> > +    if (migrate_colo()) {
+>> >> >> > +        multifd_colo_prepare_recv(p);
+>> >> >> > +        assert(p->block->colo_cache);
+>> >> >> > +        p->host = p->block->colo_cache;  
+>> >> >> 
+>> >> >> Can't you just use p->block->colo_cache later? I don't see why p->host
+>> >> >> needs to be set beforehand even in the non-colo case.
+>> >> >
+>> >> > We should not touch the guest ram directly while in colo state, since
+>> >> > the incoming guest is running and we either want to receive and apply a
+>> >> > whole checkpoint with all ram into colo cache and all device state,
+>> >> > or if anything goes wrong during checkpointing, keep the currently
+>> >> > running guest on the incoming side in pristine state.
+>> >> >
+>> >> 
+>> >> I was asking about setting p->host at this specific point. I don't think
+>> >> any of this fits the unfill function. However, I see those were
+>> >> suggested by Peter so let's not go back and forth.
+>> >
+>> > Actually I don't know why p->host existed before this work; IIUC we could
+>> > have always used p->block->host.  Maybe when Juan was developing this Juan
+>> > kept COLO in mind; or maybe Juan wanted to avoid frequent p->block pointer
+>> > reference.
+>> >
+>> 
+>> Maybe p->block was being reset at some point and p->host was passed
+>> being the point where the (whatever) lock was release. I checked and
+>> today there's no such thing. The p->mutex seems to be there just to
+>> protect against this in multifd_recv_sync_main:
+>> 
+>> WITH_QEMU_LOCK_GUARD(&p->mutex) {
+>>     if (multifd_recv_state->packet_num < p->packet_num) {
+>>         multifd_recv_state->packet_num = p->packet_num;
+>>     }
+>> }
 >
-> - Remove checks on qemu_savevm_se_iterable(): this is not needed as
->   vmstate_save() also checks for "save_state() || vmsd" instead.  Here,
->   save_setup() (or say, iterable states) should be mutual exclusive to
->   "save_state() || vmsd" [*].
+> It should be protected by various checks over migration_is_running().
 >
-> - Remove migrate_error_propagate(): both of the users are not using live
->   migration framework, but raw vmstate operations.  Error propagation is
->   not needed for query-migrate persistence.
+> E.g., QMP device-add & device-del are forbidden so no new pc-dimm hotplug /
+> removal allowed.  Similarly, virtio_mem_is_busy() would return true during
+> migration too.
 >
+> We should definitely make sure ramblock will not be reset during the whole
+> lifecycle of migration; I believe we're not ready for that..
 
-s/not needed/only needed/
-
-I can fixup if no repost.
-
-> [*] One tricky user is VFIO, who provided _both_ save_state() and
-> save_setup().  However VFIO mustn't have been used in these paths or it
-> means both COLO and Xen have ignored VFIO data instead (that is,
-> qemu_savevm_se_iterable() will return true for VFIO). Hence, this change is
-> safe.
->
-> Cc: David Woodhouse <dwmw2@infradead.org>
-> Cc: Paul Durrant <paul@xen.org>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-
-> ---
->  migration/savevm.c | 5 -----
->  1 file changed, 5 deletions(-)
->
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 130b9764a7..b29272db3b 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -1897,13 +1897,8 @@ int qemu_save_device_state(QEMUFile *f)
->      QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
->          int ret;
->  
-> -        if (qemu_savevm_se_iterable(se)) {
-> -            continue;
-> -        }
->          ret = vmstate_save(f, se, NULL, &local_err);
->          if (ret) {
-> -            migrate_error_propagate(migrate_get_current(),
-> -                                    error_copy(local_err));
->              error_report_err(local_err);
->              return ret;
->          }
+The pointer reset, not the block. Anyway, it doesn't happen.
 
