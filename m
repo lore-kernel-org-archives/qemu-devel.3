@@ -4,110 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED9B3D3F094
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 16:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 080A3D3F098
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 16:49:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl8ah-0002Zg-VZ; Wed, 28 Jan 2026 11:40:31 -0500
+	id 1vl8iu-0006AU-K2; Wed, 28 Jan 2026 11:48:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1vl8aZ-0002WE-R3
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 11:40:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1vl8aX-0003TY-Bi
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 11:40:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769618415;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EOU6wKZC5NxdlAzC8hawq5J8MVpTFpREl0fOrUkvZAA=;
- b=bSOb0/JogduL7MOkPDf89+U+nW1sEeWuMkcAO6t7OZHQpRxUui69FsZ83J220nZdV1aLem
- XgQKeWjmctRSFXDiFbD+XbI4ywzar0nP5c8peD1ulDgWyLC+l9t72yhWuPAShN6WgW5sj1
- k1L6UUoWehkHydD68/4U5YiFBn4YnMk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-152-1R1oWAsNMRyD8fTUwIlRRA-1; Wed, 28 Jan 2026 11:39:06 -0500
-X-MC-Unique: 1R1oWAsNMRyD8fTUwIlRRA-1
-X-Mimecast-MFC-AGG-ID: 1R1oWAsNMRyD8fTUwIlRRA_1769618345
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4801e3aab32so132015e9.3
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 08:39:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vl8it-00069q-7j
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 11:48:55 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vl8ir-0007pE-Sx
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 11:48:55 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-42fb0fc5aa9so60909f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 08:48:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769618345; x=1770223145; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1769618932; x=1770223732; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EOU6wKZC5NxdlAzC8hawq5J8MVpTFpREl0fOrUkvZAA=;
- b=j1QVRPZj9zS/3YBWk8Up6RsucwWMNZbBwIysAxooDPC2sgxic51wGla9fXkwkOlMNf
- FdOyXKMWFja4/fEruOKh6KOC1WelqP/y+iGmWH2e/A8FNYib7UzcEQ+UXTY1bSFmG7OK
- OrguYR1ni1zquzcI9xrr/KfZsq6MzGg3tp61UphZC5qKWKToD5nud9KO7cxcloFApVzv
- sAnpxzQ2LTAmG1QzVS7I5bcoc2IqnIA3fqh3ca1PgX7oi05UKaaEVb1L2EHdlCPpbekZ
- +WaqqNwvzKaZmqi0DzeRirUkEcrsuUAhkGMTGRPQ8U4K1eE7YwsFzgjINsuAwkBteZmZ
- z2HA==
+ bh=z2XlviFpbv7AwfBuEmQBvm4nMPfXEBxAdawdRVCaPfs=;
+ b=Kp0vIgCvZPC2vxmfLzeZXwdRuzqo1ufj1NxPtl8fqPBttOk9szpLK0T+Wnk+ZxfIxJ
+ DNWCMmldy3uY8gh8BwFP2RwCWgl8KfsoKm1iMMZxpoplK1H36bblwevNbqaXZeXwl6Ez
+ //txwvdl+RA0MBOMZU5jjH6g8EBo0bdB5PclcTIMrbUsdq5Gea8PN3sh5/oIZP22wzwh
+ O3txY+0pnwRtwMjFraNUJMmB2aHe8gczydyFHesMFzc9S82OcnYDULBRTlQd5QNsnim6
+ WwIafjp/BnGcQbYbETa7SqRLlZ9Hr9rG/j9CC8nz2TXBdzQCue5UuABM8ZaMlF4prwY0
+ qRRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769618345; x=1770223145;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1769618932; x=1770223732;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=EOU6wKZC5NxdlAzC8hawq5J8MVpTFpREl0fOrUkvZAA=;
- b=MextR08XecpMGm23PMJ0brJhbXZA4bo85XesmbOf9chaFM0TAlr4l4lqww1CgeoF34
- S3GRN5Woc0YIqP+n+NE3sS5LGp5QcIa6TRQb8D7F8m81rBCKBXG/ckEP7oXTPp1PVg7A
- JGay4Wu9vJt6El6KGvQdE1hoRQTSE898DEVFphgZTxnTrLhp1N5eCfKege5q7mJ+KW7S
- inyrxlb9EvMEtfQjZwHpKBXts475n6g5xWoEkBYbN1/hHkWM1CYBQ4KRKEAZ77c/P0ri
- s+sfqqCsfXBAqouIX4leHF1Cy0pybamCpPTHZfAQbZrkad4GtZ4c7NPQdDRewBBQFZEJ
- eQ0A==
+ bh=z2XlviFpbv7AwfBuEmQBvm4nMPfXEBxAdawdRVCaPfs=;
+ b=cqC7sXKRI35r7R+dtMxnKNVjAXHuOERlbhzRhlQ70WRrhqhd0075wA2/NNwZial0Oo
+ /Fv2PhYVduOdZ5q3OD3BFlZhELbAJYIOcQnP3e84JU6ZJ2T/AV/pHsUbjbOjm+Ji0i6X
+ 5LnWBlWEIcK2mrOq10iDp/H/2EP3WscgSyy1qkKRbHpUPW6B4awmui0xczI0OGX3tIw4
+ gccGMq2VE9n4bnMAmpA3qGjOx3xn237D2y+JfUfCaCIeT+d/aD/sK8gKCrK0DBg+2BAT
+ hOh8r7gAmytzF23ZkZo/Pc5VX8T9Q699hjlFVTQkKIcew9Iai8+tat/hc1EhpljpZ7AI
+ L5OA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXIiCEJVJxd5RthjMfWRaigzvkMUQj7UGVHhN1S0KT4gL3+/10VUkNfwkF6GcBepWdu5bs/aYFbz2np@nongnu.org
-X-Gm-Message-State: AOJu0YwJY+UrmunoSUjn16bIRM0uiA2unb1Wu/mUJxkSqYf+ZBta87yj
- sBj8oTYpusg3XQcaO1TqxtSEwRdeso2kmPLcPmQbS/PK4j2gMsmAa+sY5YKhssgZMBNSbTeF1vs
- lMRfNLe1z9RBWQujaN1zFyXta43WTSdTJbRjtkKc56EIgDsWgQQbP1IEF
-X-Gm-Gg: AZuq6aIVfYYhYZ2UimkZckrmOjdrzSjCdpMEuqu5fPsraFEoHdnmqg/rlcsBQaA7eqY
- XVUN/Crkt0u3BYpqHGNBfSjue/i4uNWUj6LrBrL7f6PqB3ZgU89Zxwy6J1SzBkp8b/QX+oCOWLx
- c8KhrBEd7iRffVmbKLsAyXg921o+lRQ8ayzwT+yp2aBLIH42YOevZ6AdhwjEiKr9+N34DQiEVGO
- ReQIoQQ8SXxwR2qDugFkF8E8DW2hsZaDYzltP5ob+eq7HZ+h3ZsU703VOhbFFVFnTvQ0xIqjG1Y
- l0bTIW3Lz52DdnAgQYwn5tbeYsWkenYxXYTrDgezpf4Sg9haxH6MTnHyi7Uu0y/GgoPVXnJf/tf
- 3Nye3hPiKTbZb
-X-Received: by 2002:a05:600c:3b1a:b0:47e:e2ec:9947 with SMTP id
- 5b1f17b1804b1-48069c601bcmr66690405e9.33.1769618345065; 
- Wed, 28 Jan 2026 08:39:05 -0800 (PST)
-X-Received: by 2002:a05:600c:3b1a:b0:47e:e2ec:9947 with SMTP id
- 5b1f17b1804b1-48069c601bcmr66690185e9.33.1769618344611; 
- Wed, 28 Jan 2026 08:39:04 -0800 (PST)
-Received: from [192.168.88.32] ([212.105.153.56])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4806d255fc8sm6718215e9.0.2026.01.28.08.39.03
+ AJvYcCWTFjmxi32OVXktYP33+4R3p/ZgTdbQK6dq3KmlyDvY7O8jubZ2ybhF0sPvSkQjYhBJ7M9ThnoPNVLy@nongnu.org
+X-Gm-Message-State: AOJu0Yzq8U3K4xFxcieJwg1QRaAOCByxMq26K6p5ZrTXdrPGHQja8yWI
+ 7K8hIeaOBvZZGvxH+feHTEt7tnWv4Uhrh3bC71IaTSBR7CXi6hrdDwGtJumMKNy4fYE=
+X-Gm-Gg: AZuq6aKcsaSaj7Fz6t+deR4Q9+0m/xF3sJlx28fmeBXiO8ODTGYTqm21j4/MqbN+p9E
+ eNMZyuyQG6sceoaQuOg9AtEKytWc0ofzR7f4KBlYIDrRsNRmrPvpKjMtFDBgVXUyIZxe42Pe6GI
+ MdqlSsg+AH6YmvbEk+FW0/mT8lYgQYL1J+mDX5HXa9M+e8Mn9ALQhLmleA60sUD/2v0jfJb28S2
+ QY8Bqj0ZoKJgBtE7SI4SZy9AVaygdFPx3HIiNfc0iuGtZD40Nbztbbz0m8qywhH/MUE7QyOuv02
+ IWVdBCSpxBJHqlYNf7TuGzkCRLDBbgfKZgoPAk4jvgAxZPDmvRrp/RIsINPAxV2dQ3Sv4nh/DPK
+ nSr9nlO0XpA9ms7BgMIsALg2yL5bI/gGaQG+FpXjHVY+PUgLYxmHkEJyafhqMhhXz7g5Sg9YmAB
+ ua19vdveqfH0b47NihHt1OfKF00zZpjGtvY35PkR3j8wKxUhk8P2Qs2g==
+X-Received: by 2002:adf:f205:0:b0:435:e448:2ce5 with SMTP id
+ ffacd0b85a97d-435e4482d3bmr2876875f8f.48.1769618932138; 
+ Wed, 28 Jan 2026 08:48:52 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e1322eefsm8045049f8f.30.2026.01.28.08.48.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Jan 2026 08:39:04 -0800 (PST)
-Message-ID: <7727d378-db7e-464f-89a3-c5e10c605fb5@redhat.com>
-Date: Wed, 28 Jan 2026 17:39:03 +0100
+ Wed, 28 Jan 2026 08:48:51 -0800 (PST)
+Message-ID: <5374847b-dd0f-454f-aa1c-c386b62960d2@linaro.org>
+Date: Wed, 28 Jan 2026 17:48:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qmp: Fix a typo for GSO over UDP features
-To: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260128162428.2669768-1-lvivier@redhat.com>
+Subject: Re: [PATCH v2 1/3] accel/tcg: Send the CPUTLBEntryFull struct into
+ io_prepare()
 Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <20260128162428.2669768-1-lvivier@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- URIBL_SBL=1.623 autolearn=no autolearn_force=no
+To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Xu <peterx@redhat.com>
+References: <20260128152348.2095427-1-jim.shu@sifive.com>
+ <20260128152348.2095427-2-jim.shu@sifive.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260128152348.2095427-2-jim.shu@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,44 +109,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 1/28/26 5:24 PM, Laurent Vivier wrote:
-> The description of VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM feature
-> was missing the _CSUM.
+On 28/1/26 16:23, Jim Shu wrote:
+> To let io_prepare() function use the multiple members in
+> CPUTLBEntryFull struct, send the full struct instead of 'xlat_section'
+> member as the argument.
 > 
-> Fixes: a76f5b795cab ("qmp: update virtio features map to support extended features")
-> Cc: pabeni@redhat.com
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> It is the preliminary patch of next commit.
+> 
+> Signed-off-by: Jim Shu <jim.shu@sifive.com>
 > ---
->  hw/virtio/virtio-qmp.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-> index 968299fda0c9..45ca40ca50f8 100644
-> --- a/hw/virtio/virtio-qmp.c
-> +++ b/hw/virtio/virtio-qmp.c
-> @@ -329,7 +329,7 @@ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
->              "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
->              "UDP tunnel packets"),
->      FEATURE_ENTRY(VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM, \
-> -            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO: Driver can receive GSO over "
-> +            "VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO_CSUM: Driver can receive GSO over "
->              "UDP tunnel packets requiring checksum offload for the outer "
->              "header"),
->      FEATURE_ENTRY(VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO, \
+>   accel/tcg/cputlb.c | 14 +++++++-------
+>   1 file changed, 7 insertions(+), 7 deletions(-)
 
-LGTM, thanks!
-
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-
-Side note, I lost track of this patch:
-
-https://patchew.org/QEMU/745e4b9ff93b27b4464d039d2ca24a9020f2c32f.1760103753.git.pabeni@redhat.com/
-
-which would address the above and prevent similar errors in the future.
-AFAICS is sitting in patchew since 3m. Should I consider that one dropped?
-
-/P
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Mark Burton <mburton@qti.qualcomm.com>
 
