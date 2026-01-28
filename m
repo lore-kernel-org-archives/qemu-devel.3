@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EA21D35686
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73D22D35683
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 06:40:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkzD7-0004a3-NL; Wed, 28 Jan 2026 01:39:30 -0500
+	id 1vkzDI-0004gm-9F; Wed, 28 Jan 2026 01:39:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1vkzCz-0004Xh-4O
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 01:39:22 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1vkzD2-0004YL-0f
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 01:39:24 -0500
+Received: from mail-pg1-x543.google.com ([2607:f8b0:4864:20::543])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1vkzCw-0006VU-7j
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 01:39:20 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-82310b74496so3079917b3a.3
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 22:39:17 -0800 (PST)
+ id 1vkzD0-0006Vv-JH
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 01:39:23 -0500
+Received: by mail-pg1-x543.google.com with SMTP id
+ 41be03b00d2f7-c05d66dbab2so4364989a12.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 22:39:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1769582356; x=1770187156; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HkxLL4Tn69p33wJwaqGeXLDsLdUlfwXoi+NcqvjYhPE=;
- b=UGDG/mp8fXUAJl0WVtoCGha7iu84K8CLylzdn1GJccCCSf5A4JMsRBOmxjQKAx/Qib
- Q7sTpCFHGkWHliWp+kid7l1eRDc5fYPEIwSdGvr/yn3tDNTQ+zEmqz3rKr2PPY7+RyPq
- DyhuI09K7vozmbC9i/UAK0wvJnJyvL1RcFYX/2u6L5rbE6qlIR2Bu7AEmforYt2vH+X2
- 1AKR32bZts+Rk1uygLaiuY5dJnY42az3gOctwebtGJPyMXYuCa7YyXPqI4RjNa6ekX5k
- EHZa2oO6KhaZLFhCnuMf83g04KvluRWE8knc96sG5guyQ+lNxR66ej9QNh40RVPc9W/w
- 12zQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769582356; x=1770187156;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=sifive.com; s=google; t=1769582360; x=1770187160; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HkxLL4Tn69p33wJwaqGeXLDsLdUlfwXoi+NcqvjYhPE=;
- b=cL8JwQmkIaYD4P7JQw9lnZ7pC9shzEg3LBGnxKuCVsQDHU+JlRffr9pGsh2b6IR8cz
- UOJzdVfQOgc+n6w/oodAyvLbDNvU9w1JJP+7Sby9BuuFwAcnGt2K6iMAV2BCImHp3tsk
- 8mNu9G8ak1H+FH3tLjnhxGQvU3ppBHD4tthNsiKuC5eRdVScYp0nyUav54t/ohzvHZYy
- ULvnn8IWiSkCuOxwOcsF+Ke7V25vKw/hpqYtSUnmZvFrGAgSvpNKbBiK6TB+WyyrZ8Dq
- giCHS/76LG3DhdwY/Z8DtQfxyHPD3fotuicRSR14SJS9ZLsOKDLwnz5Y5Z7F5oQCYYlb
- bJWQ==
-X-Gm-Message-State: AOJu0YzhdUqSR/cpNp7wA8dJV0Srz2rwCFpUD49vrf4STop9k1Iby+QS
- VSzp62FC5k7KI/s9cMK7tdNH/ck0wqP6Jc+cWStFZd8QnQ4S6F9c2ZcnPHqMPrqrmORz2imEwsX
- /dFInitBh83h8CoWVoyfqdRnhbFOy5VzbodocKt6qAxJrGU75UMKyQvNuGMLcRzNWDbSuvh03DG
- IDWHsQViOl4A5ngUyGYai8aEPLd2aV/YOtF1tCSA==
-X-Gm-Gg: AZuq6aI7FZIuLQMrM4TzZs0EV/GNK6OPM8feV6+fem4EyPip299TqmBeml5aM79yIWd
- pG8D+UuqWHKL7XQyT7EEUJl0BsQmlRz6oC/XM1aZFvUCnSLzv8ATkS0LgKewcLS4HogsJN0LZMq
- CX3lIFs3Vn18OLZBof9YI8dZlST1p+nzKt1n8S4KVcluxj10AJ73JkexK/R7W6MR2aV5OfzzYUx
- 9FhE3eCNp9vsx3IhoPYQtLrBIQzS5Fmu4+ybap8dvgSpKmpMkzudn1xaGh5ll4Ti6DHL3zt7gnM
- ZDGPH8c411LR2fviJM0fpVMH33/OgW3p816KVuR95UWnmVjK8hLd68S2hpgdZLaxJtvvLE9Of5G
- WOZVkmFVJ82HRw6Lg4Qu3/DRLh/6IbjGAgMwVLJzHZdkfzGQmGjohzH4XqspLQGhC+kr7diGJF3
- FW1XybZn2tyzqK4vYM78GiwybggXEbeMPM
-X-Received: by 2002:a05:6a21:2d46:b0:35b:b97f:7bd2 with SMTP id
- adf61e73a8af0-38ec6289547mr3807252637.10.1769582355500; 
- Tue, 27 Jan 2026 22:39:15 -0800 (PST)
+ bh=Xlz7hyCztKb/ddjMOgK8ThA+NqW4yiGJ0YmFpHJkjZQ=;
+ b=lRSpWw3iC73gRPLGzLAceIWH7BVAg5aT/bmeRJdRUjeQ7U++c5cX1mziHK4f8duPQC
+ XjSBuyIvqj5ciJtWIk7QcHOLIPDy1I4A8FkNGCBK70rBYGHxBxCA3UV+oMT0Fe/xwdDt
+ 2rvCkNs8xKqxibJiukTNLw/q8Beg3pYVCB0tNZ4v74e1nKCKbW9Qsn3QRhMKlfbaRXw4
+ fyLQIpn5ryDaEcpJjquTMKTjvJwyIhbyqzJ+sBF00e3DKQ/nFWuU8BAp7+dV4ezJ9UWE
+ 1wUgI30ztz84pW8K/9sdofAKzwG/c6dGro5wOg7A+vVlUeV6mEDG8AO51vIkbkm/n0xK
+ K6eA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769582360; x=1770187160;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Xlz7hyCztKb/ddjMOgK8ThA+NqW4yiGJ0YmFpHJkjZQ=;
+ b=NLy8k/jLNlw3I6+qs2U3hW3A4MWxW4EC1+cJVtq+z64n4OHHiGGUgGj01xeQ+wB3MI
+ 2YYjEN6Wv9tKHKgIF8N6dTTGq/0xiN5vHsOSFTbl/5Rt7qIQCCp+Y/mn9+vUke6rnmn4
+ fcOk1HGCRouSh4XshMn4wffBrIBi80i5Giz21QVIEpeYUidpyqI/qI+b5pN5BBcXNUb7
+ iti2E4LvswPQbx8C5dEmNJm8uyTbLjr8YH5Ce8TmAdLihIfKM+OyCsyQC21tsyHw6Eyc
+ y0ciFl8r3GMwHQrmrYjxLdy/6Gf5IZ6by6OwgIkDRY6Sl6TYf+/uePEcGvxscSpg3lri
+ SF5w==
+X-Gm-Message-State: AOJu0YwTx6Emc5SShybxeF5O06xZja4OGi7HotdJlNsYef2H9+y+zXDB
+ kHblkRLo0rmHdhBGCLNjPl43CUNCmd1lqTwkK5s9kKMvWT0m9wExoS81XEpGIgs77xAYeawPQHi
+ Uh6yYZMcCAL6ccN8CAMS9oJVgWB0Ix48BwnbAKEpXuyjBwwHZlQKOEQcdaHe+eaEQRFZec4aJeM
+ 4MsXsKV/E7uBX5ALO9xbf+zdhZWAuB7f3VizYv/ga/
+X-Gm-Gg: AZuq6aLD2mlcvsolAbzCEmg/Rdae2QuSMMeH1LHAnRKRqFYDeyF1FWbb1CAWKLw7RRR
+ Npa9MEHLrNIJSh5iWkWHGXwQL3Try6ExR5AL8d7faDj0ruy91ER8Z92PTR6kalGzUTwydrErWE/
+ ICpF9VlJqfM+yfTNwaYya9p3qJVIG0jWD7BCF+1wzj6CFvevHR0jMn3s5oVXogw7/MMUj2iYXy9
+ n8NL5LhyIV5CEywy1EHf55pI8rye2Nl/LHZ4Du8yDJ+MC0in2sULf96k0L65fW4qyAOhzABvJqm
+ HVAIEdzjSKxs1qevxgJnYfwNxYONLN5LCMyhrnHf0lw9iJMnCqfGiL4NscSK94Ejq6lgD8+AYiQ
+ AdrhY/i7z3/lQCdi5O9HmpTI+ozE07OliANkUkYmQTKG60zWf9dthWXl8K5TON860IN77lJnMCE
+ wpy3NDE06sqzODiINV3zePx3Uy/5bOrjJA
+X-Received: by 2002:a05:6a20:918f:b0:34f:1623:2354 with SMTP id
+ adf61e73a8af0-38ec6421854mr4092640637.42.1769582360388; 
+ Tue, 27 Jan 2026 22:39:20 -0800 (PST)
 Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c642487f1f5sm1244736a12.0.2026.01.27.22.39.13
+ 41be03b00d2f7-c642487f1f5sm1244736a12.0.2026.01.27.22.39.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jan 2026 22:39:15 -0800 (PST)
+ Tue, 27 Jan 2026 22:39:20 -0800 (PST)
 From: Jim Shu <jim.shu@sifive.com>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
@@ -75,21 +76,24 @@ Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
  Peter Xu <peterx@redhat.com>, Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH 0/2] Fix iotlb_to_section() for different AddressSpace
-Date: Wed, 28 Jan 2026 14:39:05 +0800
-Message-ID: <20260128063907.2066100-1-jim.shu@sifive.com>
+Subject: [PATCH 2/2] system/physmem: Remove the assertion of page-aligned
+ section number
+Date: Wed, 28 Jan 2026 14:39:07 +0800
+Message-ID: <20260128063907.2066100-3-jim.shu@sifive.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260128063907.2066100-1-jim.shu@sifive.com>
+References: <20260128063907.2066100-1-jim.shu@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=jim.shu@sifive.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::543;
+ envelope-from=jim.shu@sifive.com; helo=mail-pg1-x543.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL=1.623 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,35 +109,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Current 'iotlb_to_section()' API only finds the sections from CPU's
-AddressSpace but not other AddressSpaces. However, If address space
-translation is over IOMMUMemoryRegion, like ARM MPC device, it could
-return section from other AddressSpaces, which will break
-'iotlb_to_section()'.
+The physical section number is no longer ORed into the IOTLB entries
+together with a page-aligned pointer, so it no longer needs to be
+page-aligned.
 
-To fix this bug, store complete MemoryRegionSection pointer in
-CPUTLBEntryFull, and we can directly use section pointer in it w/o need
-of 'iotlb_to_section()' API.
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+---
+ system/physmem.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-Besides ARM MPC device, the upcoming RISC-V wgChecker [1] and RISC-V IOPMP [2]
-devices also require this bugfix.
-
-[1] RISC-V WG:
-https://patchew.org/QEMU/20251021155548.584543-1-jim.shu@sifive.com/
-[2] RISC-V IOPMP:
-https://patchew.org/QEMU/20250312093735.1517740-1-ethan84@andestech.com/
-
-Jim Shu (2):
-  accel/tcg: Fix iotlb_to_section() for different AddressSpace
-  system/physmem: Remove the assertion of page-aligned section number
-
- accel/tcg/cputlb.c        | 32 +++++++++++++++-----------------
- include/accel/tcg/iommu.h | 15 ---------------
- include/exec/cputlb.h     |  2 +-
- include/hw/core/cpu.h     | 12 +++++++-----
- system/physmem.c          | 31 -------------------------------
- 5 files changed, 23 insertions(+), 69 deletions(-)
-
+diff --git a/system/physmem.c b/system/physmem.c
+index d17596a77fb..2fb0c25c93b 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1323,12 +1323,6 @@ static subpage_t *subpage_init(FlatView *fv, hwaddr base);
+ static uint16_t phys_section_add(PhysPageMap *map,
+                                  MemoryRegionSection *section)
+ {
+-    /* The physical section number is ORed with a page-aligned
+-     * pointer to produce the iotlb entries.  Thus it should
+-     * never overflow into the page-aligned value.
+-     */
+-    assert(map->sections_nb < TARGET_PAGE_SIZE);
+-
+     if (map->sections_nb == map->sections_nb_alloc) {
+         map->sections_nb_alloc = MAX(map->sections_nb_alloc * 2, 16);
+         map->sections = g_renew(MemoryRegionSection, map->sections,
 -- 
 2.43.0
 
