@@ -4,69 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7277FD35699
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 09:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CA23D3569B
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 10:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl2Ix-0002Y5-SL; Wed, 28 Jan 2026 04:57:44 -0500
+	id 1vl2RT-0008IY-4w; Wed, 28 Jan 2026 05:06:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vl2Im-0002WB-EN
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 04:57:32 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vl2Ih-0006i1-Ax
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 04:57:31 -0500
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxisJ43XlplHoNAA--.43955S3;
- Wed, 28 Jan 2026 17:57:12 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJAx38J03XlpCBU3AA--.40345S3;
- Wed, 28 Jan 2026 17:57:10 +0800 (CST)
-Subject: Re: [PATCH v2 0/7] Add LoongArch v1.1 instructions
-To: Jiajie Chen <c@jia.je>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, git@xen0n.name
-References: <20251119122822.1513788-1-c@jia.je>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <2cf66037-dfb5-b1f6-713d-b4f70245899f@loongson.cn>
-Date: Wed, 28 Jan 2026 17:58:05 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vl2RP-0008HD-Uo
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 05:06:28 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vl2RM-0008FX-Tx
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 05:06:27 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60SA5tQU017800
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 28 Jan 2026 19:06:17 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=MVeT2xIcyKvvgeNIc6OxzzTkqsODJl8q+V1kkxA3KPY=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1769594777; v=1;
+ b=bltkmtCpAmMq5hot/O5UbLVKdUzn+PWB+ig8Byg2I1AaTiWfYh1/5zIK38YobrtS
+ u4ENhnRyzsqWW+mW4i+7NascKb8rvnL7kFeoj86VpYKUjvXCyPe4XM0aPhpuasE2
+ WGZzoGvz6Zv/+roTCQzTPRYe/FyP95yFwyTNQACgBs5Zb3iQAtDrceas6EdKyiJV
+ gpLbdZP3Q5n/PqhzW6DmnwmQ0PlDJA1sEo/8Bj4OHJh7v/d0hKg1LCQ82tbIvPY6
+ m2W3iBuwk+x84nZJjfzpU6/m2Jsj8BIol9jrn2VOBs6aAPUivu1jCsaUoJirgtho
+ 2tbYDM+5L6RPifjFmh4NJQ==
+Message-ID: <562f0e5c-7ae8-4d95-9dd4-674447362ef7@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 28 Jan 2026 19:05:55 +0900
 MIME-Version: 1.0
-In-Reply-To: <20251119122822.1513788-1-c@jia.je>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/10] Implement memory_region_new_* functions
+To: BALATON Zoltan <balaton@eik.bme.hu>, Peter Xu <peterx@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <cover.1769362313.git.balaton@eik.bme.hu>
+ <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
+ <0118dc9b-d467-7f6b-92a8-4f42760ecb6c@eik.bme.hu> <aXkXWGho7lnJ-gwX@x1.local>
+ <2fa59d39-5634-0b8c-27ee-9e9548a7f92a@eik.bme.hu>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <2fa59d39-5634-0b8c-27ee-9e9548a7f92a@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJAx38J03XlpCBU3AA--.40345S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxAFWUKF1rGryDXFyDJryUXFc_yoWrCF48pF
- ZFkrs8Ka18JFW3uFs7Zw17AF1agF4xG3y8AFyft3sIywsIqryIqF1kW3s2qF97Cw4vgry2
- vF48Aw15ZFWDZacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8cz
- VUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.75,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL=1.623 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,135 +78,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/11/19 下午8:24, Jiajie Chen 写道:
-> Latest revision of LoongArch ISA is out at
-> https://www.loongson.cn/uploads/images/2023102309132647981.%E9%BE%99%E8%8A%AF%E6%9E%B6%E6%9E%84%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%E5%8D%B7%E4%B8%80_r1p10.pdf
-> (Chinese only). The revision includes the following updates:
->
-> - estimated fp reciporcal instructions: frecip -> frecipe, frsqrt ->
->    frsqrte
-> - 128-bit width store-conditional instruction: sc.q
-> - ll.w/d with acquire semantic: llacq.w/d, sc.w/d with release semantic:
->    screl.w/d
-> - compare and swap instructions: amcas[_db].b/w/h/d
-> - byte and word-wide amswap/add instructions: am{swap/add}[_db].{b/h}
-> - new definition for dbar hints
-> - clarify 32-bit division instruction hebavior
-> - clarify load ordering when accessing the same address
-> - introduce message signaled interrupt
-> - introduce hardware page table walker
->
-> The new revision is implemented in the Loongson 3A6000 processor.
->
-> This patch series implements all the new instructions. The v1 version
-> can be found at
-> https://patchew.org/QEMU/20231023153029.269211-2-c@jia.je/.
->
-> A simple testcase to test the new fp and sc.q instructions:
->
-> #include <assert.h>
-> #include <stdint.h>
-> #include <stdio.h>
-> #include <stdlib.h>
->
-> void test_fp() {
->    float a = 3.0;
->    float b;
->
->    asm volatile("frecip.s %0, %1" : "=f"(b) : "f"(a));
->    printf("frecip: %f\n", b);
->    asm volatile("frecipe.s %0, %1" : "=f"(b) : "f"(a));
->    printf("frecipe: %f\n", b);
->
->    asm volatile("frsqrt.s %0, %1" : "=f"(b) : "f"(a));
->    printf("frsqrt: %f\n", b);
->    asm volatile("frsqrte.s %0, %1" : "=f"(b) : "f"(a));
->    printf("frsqrte: %f\n", b);
-> }
->
-> uint64_t rand64() { return ((uint64_t)rand() << 32) | rand(); }
->
-> void test_sc_q() {
->    __int128 val = rand64();
->    val = (val << 64) | rand64();
->    __int128 *ptr = &val;
->    uint64_t add_lo = rand64();
->    uint64_t add_hi = rand64();
->    __int128 add = add_hi;
->    add = (add << 64) | add_lo;
->    __int128 expect = val + add;
->    int res = 0;
->
->    asm volatile("ll.d $t1, %1, 0\nld.d $t2, %1, 8\nadd.d $t1, $t1, %2\nadd.d "
->                 "$t2, $t2, %3\nsc.q $t1, $t2, %1\nmove %0, $t1"
->                 : "=r"(res), "+r"(ptr)
->                 : "r"(add_lo), "r"(add_hi)
->                 : "$t1", "$t2", "memory");
->    assert(res == 1);
->    assert(val == expect);
->
->    // change memory content to make sc fail
-Hi,
 
-Remove the following test. This testing method yields inconsistent results on physical machines.
-The precision issues in the handler function called by frecipe/frecip/frsqrt/frsqrte can be temporarily ignored, as with other architectures.
-Rebase the code to facilitate merging.
 
-For the series
-  Acked-by: Song Gao <gaosong@loongson.cn>
+On 2026/01/28 5:22, BALATON Zoltan wrote:
+> On Tue, 27 Jan 2026, Peter Xu wrote:
+>> On Tue, Jan 27, 2026 at 03:10:28PM +0100, BALATON Zoltan wrote:
+>>> This series does not convert everything but opens the way to do that and
+>>> simplify objects by only storing things in the state that are really 
+>>> needed
+>>> by the object and let QOM manage what it can. I'd really like to avoid
+>>> having a list of unused stuff in the state struct just because I 
+>>> can't use
+>>> something that works and documented just no API to actually use it. Cf.
+>>> sii3112 state after this series:
+>>>
+>>> struct SiI3112PCIState {
+>>>     PCIIDEState i;
+>>>
+>>>     SiI3112Regs regs[2];
+>>> };
+>>>
+>>> vs. your standard:
+>>>
+>>> struct SiI3112PCIState {
+>>>     PCIIDEState i;
+>>>
+>>>     MemoryRegion mmio;
+>>>     MemoryRegion bar0;
+>>>     MemoryRegion bar1;
+>>>     MemoryRegion bar2;
+>>>     MemoryRegion bar3;
+>>>     MemoryRegion bar4;
+>>>     SiI3112Regs regs[2];
+>>> };
+>>
+>> The latter solution is fine at least to me.
+>>
+>> I respect your preference on how it can be done, but IMHO it is 
+>> subjective,
+>> and I tend to agree with Peter that we should try to stick with one 
+>> way of
+>> solving problems, unless very necessary.
+>>
+>> In the last three patches the MRs do not look need dynamic 
+>> deallocation to
+>> me at all..  Introducing fully dynamic MR allocations only for those 
+>> is an
+>> overkill to me.  I'm not fully convinced we need to merge 600+ new 
+>> LOCs for
+>> new APIs just for them.
+> 
+> It's not a new API in the sense that it's the same as existing 
+> memory_region_init functions just a variant of it to allow using QOM to 
+> manage the lifetime of the memory region which the current API does not 
+> allow. Also this series does not introduce this dynamic lifetime 
+> management, it's already implemented and documented just there's 
+> currently no way to use it. The actual change is much less, most of the 
+> lines are just the documentation comments. If it's a problem to increase 
+> documentation size I could make it much shorter not duplicating a 
+> separate doc comment for these just mention in the corresponding 
+> memory_region_init doc comment that there's also an analogous 
+> memory_region_new variant of it. That also shows there's no new API just 
+> two ways of using the same API.
+> 
+>> We have real but rare users of dynamically allocated MRs, currently AFAIU
+> 
+> Since it's already implemented why not use it if it makes the object 
+> state simpler? Adding additional fields that would already be managed by 
+> QOM seems to be unnecessary duplication and complication to me so I'd 
+> like to avoid that and keep the subclass simple.
 
-Thanks.
-Song Gao
+I feel the discussion is going a wrong direction. This thread and the 
+cover letter talks different things as the motivation of this series; 
+The cover letter says the documentation mismatches with the 
+implementation and that is the motivation for this series. This thread 
+talks about duplicate memory management and extra fields, which is not 
+mentioned in the cover letter.
 
->    res = 1;
->    asm volatile("ll.d $t1, %1, 0\nld.d $t2, %1, 8\naddi.d $t1, $t1, 1\nst.d "
->                 "$t1, %1, 0\nsc.q $t1, $t2, %1\nmove %0, $t1"
->                 : "=r"(res), "+r"(ptr)
->                 :
->                 : "$t1", "$t2", "memory");
->    assert(res == 0);
->
->    res = 1;
->    asm volatile("ll.d $t1, %1, 0\nld.d $t2, %1, 8\naddi.d $t2, $t2, 1\nst.d "
->                 "$t2, %1, 8\nsc.q $t1, $t2, %1\nmove %0, $t1"
->                 : "=r"(res), "+r"(ptr)
->                 :
->                 : "$t1", "$t2", "memory");
->    assert(res == 0);
->
->    printf("SC.Q passed\n");
-> }
->
-> int main(int argc, char *argv[]) {
->    test_fp();
->    test_sc_q();
->    return 0;
-> }
->
-> Compile and test by:
->
-> loongarch64-linux-gnu-gcc test.c -o test -static && ./qemu-loongarch64 -cpu max test
->
-> Jiajie Chen (7):
->    target/loongarch: Require atomics to be aligned
->    target/loongarch: Add am{swap/add}[_db].{b/h}
->    target/loongarch: Add amcas[_db].{b/h/w/d}
->    target/loongarch: Add estimated reciprocal instructions
->    target/loongarch: Add llacq/screl instructions
->    target/loongarch: Add sc.q instructions
->    target/loongarch: Add LA v1.1 instructions to max cpu
->
->   target/loongarch/cpu.c                        |  11 +-
->   target/loongarch/cpu.h                        |   7 +
->   target/loongarch/disas.c                      |  33 ++++
->   target/loongarch/insns.decode                 |  34 ++++
->   .../tcg/insn_trans/trans_atomic.c.inc         | 145 ++++++++++++++++--
->   .../tcg/insn_trans/trans_farith.c.inc         |   4 +
->   .../tcg/insn_trans/trans_memory.c.inc         |  22 +++
->   .../loongarch/tcg/insn_trans/trans_vec.c.inc  |   8 +
->   target/loongarch/tcg/translate.c              |   6 +-
->   target/loongarch/translate.h                  |  30 ++--
->   10 files changed, 280 insertions(+), 20 deletions(-)
->
+Besides, the "extra fields" problem should have been already discussed 
+in [1] and I don't see a new argument here. So, in summary, for a 
+constructive discussion I think:
+- There should be a consistent goal of discussion or patch series
+   (documentation mismatch or extra fields) and
+- A new point needs to be made; reminding the points of past discussion
+   may be worthwhile but is insufficient.
 
+[1] 
+https://lore.kernel.org/qemu-devel/ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu/
+
+Regards,
+Akihiko Odaki
 
