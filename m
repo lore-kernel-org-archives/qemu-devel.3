@@ -4,109 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F9FED25B5A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 13:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59DBAD25B64
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 13:26:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl5SO-0002L2-7w; Wed, 28 Jan 2026 08:19:40 -0500
+	id 1vl5Yu-0000Mb-Hi; Wed, 28 Jan 2026 08:26:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vl5SL-0002Dy-BX; Wed, 28 Jan 2026 08:19:37 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <sebastien.michelland@inria.fr>)
+ id 1vl5Ys-0000Kj-Ee; Wed, 28 Jan 2026 08:26:22 -0500
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vl5SJ-0000Qx-LZ; Wed, 28 Jan 2026 08:19:37 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60S8qOP2005338;
- Wed, 28 Jan 2026 13:19:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=XInXHJ
- IJDJ2Zi4ut4KqWakb0CPk+GLLjd074RM7qkkw=; b=AC6d5Muz/kEkySzppBrmIO
- 3QvCEYgnqfz5aXFST5u2FW7DKX5YKa7bV7UfbQ4OgIBs01gv6dfn5x7jNNTNHiRg
- Bxf1OviGdlEt4PbGiIUOdc2g0ni/0r2GEYNkBJ0VqSwCYll1JfkcUJixWfeusz0V
- YPLMEpNPfNuVd3E65c+nda1IK0dlzKA5KNEgjdnOp28g/r/xwvbjPC4hrp1IdMns
- prqDlpgQmxpklQKqT16yo/4O1lVDbd6VOOxLm1dArQ1VSywO54pjtr27+0Qa6R1T
- qDMHqLigOjv6m90hI/ngfe/NdvdmPWFIpyozim4CD+tdOBnvSojPs+FWc7VW8cCw
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnr690v5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 28 Jan 2026 13:19:31 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60SDGm0e023641;
- Wed, 28 Jan 2026 13:19:30 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bwamjw95w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 28 Jan 2026 13:19:30 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60SDJSJd16122262
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 28 Jan 2026 13:19:28 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8940B20043;
- Wed, 28 Jan 2026 13:19:28 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3AFE920040;
- Wed, 28 Jan 2026 13:19:28 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.87.137.78])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 28 Jan 2026 13:19:28 +0000 (GMT)
-Message-ID: <17cd88ba-52b1-46c4-9280-977bd50ac060@linux.ibm.com>
-Date: Wed, 28 Jan 2026 14:19:27 +0100
+ (Exim 4.90_1) (envelope-from <sebastien.michelland@inria.fr>)
+ id 1vl5Yp-0002Ae-TZ; Wed, 28 Jan 2026 08:26:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inria.fr; s=dc;
+ h=date:from:to:cc:message-id:in-reply-to:references:
+ subject:mime-version:content-transfer-encoding;
+ bh=pjNEKOTw4utayRi0uxYr6wmBE4hKeSMSxSXP5CzWvvQ=;
+ b=S/+uV4STl1Tm8lKO5PJFvpIcbSE6q7AZf+UjvTAna1boMKXN9vFPGGQE
+ gfpPViU/X6Xx7RnJwN7ozddjxz8VNwzvDkjrrtsjLexfqW/X0tPzSiaJP
+ OAt+hJuLRn9VLqBSMQagKT/NKVb8DNNKCORxDLwSx4FvcyWTV6LsA912n E=;
+X-CSE-ConnectionGUID: dslud/ONSeeMXp5onSRBuw==
+X-CSE-MsgGUID: pLZnMkaUSo+yaJwLCtd9Qg==
+Authentication-Results: mail2-relais-roc.national.inria.fr;
+ dkim=none (message not signed) header.i=none;
+ spf=Pass smtp.mailfrom=sebastien.michelland@inria.fr;
+ spf=None smtp.helo=postmaster@zcs2-store8.inria.fr
+Received-SPF: Pass (mail2-relais-roc.national.inria.fr: domain of
+ sebastien.michelland@inria.fr designates 128.93.142.6 as
+ permitted sender) identity=mailfrom; client-ip=128.93.142.6;
+ receiver=mail2-relais-roc.national.inria.fr;
+ envelope-from="sebastien.michelland@inria.fr";
+ x-sender="sebastien.michelland@inria.fr";
+ x-conformance=spf_only; x-record-type="v=spf1";
+ x-record-text="v=spf1 include:mailout.safebrands.com
+ a:basic-mail.safebrands.com a:basic-mail01.safebrands.com
+ a:basic-mail02.safebrands.com ip4:128.93.142.0/24
+ ip4:192.134.164.0/24 ip4:128.93.162.160 ip4:128.93.162.3
+ ip4:128.93.162.88 ip4:89.107.174.7 mx ~all"
+Received-SPF: None (mail2-relais-roc.national.inria.fr: no sender
+ authenticity information available from domain of
+ postmaster@zcs2-store8.inria.fr) identity=helo;
+ client-ip=128.93.142.6;
+ receiver=mail2-relais-roc.national.inria.fr;
+ envelope-from="sebastien.michelland@inria.fr";
+ x-sender="postmaster@zcs2-store8.inria.fr";
+ x-conformance=spf_only
+X-ThreatScanner-Verdict: Negative
+X-IronPort-AV: E=Sophos;i="6.21,258,1763420400"; d="scan'208";a="260750798"
+X-MGA-submission: =?us-ascii?q?MDFaOtRUWEtmNN8YbU3Jiv069P2TNyiBojP9l8?=
+ =?us-ascii?q?jdpeNABG8lviUA7Mr2bPS4Tn0xiMGC9UEe7+Jmuf/HAG4DeDXiTw5uWC?=
+ =?us-ascii?q?bog4YUB7sqSIU0uFP6sAzEt9RE6Fpbmr7wKgkvIbFcce5ofPnynihwAf?=
+ =?us-ascii?q?/4O6OI5V9sQ9d+VzKwya9yyA=3D=3D?=
+Received: from zcs2-store8.inria.fr ([128.93.142.6])
+ by mail2-relais-roc.national.inria.fr with ESMTP; 28 Jan 2026 14:26:14 +0100
+Date: Wed, 28 Jan 2026 14:26:14 +0100 (CET)
+From: Sebastien Michelland <sebastien.michelland@inria.fr>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
+ Jean-Michel Gorius <jean-michel.gorius@irisa.fr>
+Message-ID: <2132391437.15681684.1769606774227.JavaMail.zimbra@inria.fr>
+In-Reply-To: <81d962d8-52fb-4203-a3fc-f3980b8a93bb@ventanamicro.com>
+References: <20260126172246.2521444-1-sebastien.michelland@inria.fr>
+ <81d962d8-52fb-4203-a3fc-f3980b8a93bb@ventanamicro.com>
+Subject: Re: [PATCH] target/riscv: fix vs*r.v missing SIGILL check
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] target/s390x: Implement DIVIDE TO INTEGER
-To: Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260127153736.62730-1-iii@linux.ibm.com>
- <20260127153736.62730-4-iii@linux.ibm.com>
- <66027136-d91b-478c-becc-0aa41b40c445@linaro.org>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <66027136-d91b-478c-becc-0aa41b40c445@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDEwOSBTYWx0ZWRfXyoXk18hsFITK
- aCj95Eie1eXjYRErOVX98ShdYptxL4kzQxN6duHuWjt5o3OuYG2G7q3KhA4E5rC6r+8PCf7/NSJ
- 73MpHrIHqdFiGe/AvKH/x9sXHCrRFPSWhxdQB8xR96i1h5QiJ0CsbNA4W67POK5n9wZN4POlAI8
- 2oJP/H6Ahu/8lNyDMvxC1WRypbuw0lG7Jbe/oqpda/sMXUapJWY90x0+zGbv1VTCekfxNVAsFNU
- uzKnRV/jos32kpvReuAM+B8RPHEz/vtoXOAx6QK8nySPePnOR1f4BcE7DtvJ/f86O0TPut4cEzM
- qEPKvFt9enPzTHCRKzieQfTuSjMkic89l0dvDWgV8HVhSkgEGVKTgTfJ3pQijVC+j3XtGs7XkL6
- XMD1iXkdHGdwW2TOWXohnIvnwbzgPUoBJN/wYocP8NlteDCllJo4NX01KJ/E34OQJlR8KGtrSEL
- 3llRWg+TcKWeqO0opMA==
-X-Proofpoint-GUID: KHADWYGko4rtaxVzM4OxaMjuO40wB2VC
-X-Proofpoint-ORIG-GUID: KHADWYGko4rtaxVzM4OxaMjuO40wB2VC
-X-Authority-Analysis: v=2.4 cv=X+Vf6WTe c=1 sm=1 tr=0 ts=697a0ce3 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=_1fSBCJRomgnOcfFcCgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-28_02,2026-01-28_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1015 spamscore=0 adultscore=0 malwarescore=0 bulkscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601280109
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [131.254.16.132]
+X-Mailer: Zimbra 10.1.13_GA_4837 (ZimbraWebClient - FF146
+ (Linux)/10.1.14_GA_4838)
+Thread-Topic: target/riscv: fix vs*r.v missing SIGILL check
+Thread-Index: STpY8YtIHzdjUsJXQtVn2pPvNj2rLA==
+Received-SPF: pass client-ip=192.134.164.83;
+ envelope-from=sebastien.michelland@inria.fr;
+ helo=mail2-relais-roc.national.inria.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -124,110 +106,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/28/26 06:50, Richard Henderson wrote:
-> On 1/28/26 02:31, Ilya Leoshkevich wrote:
->> +        FloatParts128 a128, b128, *m128, m128_buf, n128, *q128, 
->> q128_buf,
->> +                      r128, *r128_precise;
->> +        int float_exception_flags = 0;
->> +        bool is_q128_smallish;
->> +        uint32_t r_flags;
->> +        int saved_flags;
->> +
->> +        /* Compute precise quotient */
->> +        parts_float_to_float_widen(&a128, a, status);
->> +        parts_float_to_float_widen(&b128, b, status);
->> +        q128_buf = a128;
->> +        q128 = parts_div(&q128_buf, &b128, status);
->
-> Why do you need FloatParts128?
-> You can see an inexact result from float64 with just FloatParts64.
-> C.f. soft_f64_div.
 
+>> GEN_LDST_WHOLE_TRANS checks for require_rvv but it's always true, even w=
+ith
+>> e.g. -cpu=3Drv32,v=3Dfalse.
+>=20
+> hmmm that really shouldn't happen hehe I wonder if there's more bugs
+> lurking in the shadows somewhere (spoiler: always) ...
 
-I thought I needed this extra precision, but turns out that in reality I 
-needed it to mask an issue with parts_round_to_int() - see below.
+I did wonder about the semantics of require_rvv. I assumed originally that
+mstatus_vs would be equal to EXT_STATUS_DISABLED (thus require_rvv() =3D 0)=
+ with
+v=3Dfalse in -cpu.
 
+The comment for vext_check_isa_ill says VILL is indeed intended to work as =
+an
+"RVV OK to use" check:
 
->> +
->> +        /* Final or partial case? */
->> +        is_q128_smallish = q128->exp < (fmt->frac_size + 1);
->> +
->> +        /*
->> +         * Final quotient is rounded using final-quotient-rounding 
->> method, and
->> +         * partial quotient is rounded toward zero.
->> +         *
->> +         * Rounding of partial quotient may be inexact. This is the 
->> whole point
->> +         * of distinguishing partial quotients, so ignore the 
->> exception.
->> +         */
->> +        n128 = *q128;
->> +        saved_flags = status->float_exception_flags;
->> +        parts_round_to_int(&n128,
->> +                           is_q128_smallish ? 
->> final_quotient_rounding_mode :
->> + float_round_to_zero,
->> +                           0, status, &float128_params);
->
-> float128_params is definitely wrong.  The rounding is supposed to be 
-> to the target format.
+/*
+ * In cpu_get_tb_cpu_state(), set VILL if RVV was not present.
+ * So RVV is also be checked in this function.
+ */
+static bool vext_check_isa_ill(DisasContext *s)
+{
+    return !s->vill;
+}
 
+But then I'm unclear why instructions do require_rvv(s) && vext_check_isa_i=
+ll(s)
+compared to just vext_check_isa_ill(s).
 
-Hmm, yes, nothing in this code is about float128, that can't be right.
+riscv_get_tb_cpu_state sets VILL based on whether Zve32x (the minimal level=
+ of
+RVV support) is enabled. Maybe the different levels of support are involved=
+ and
+-cpu=3Drv32,v=3Dfalse doesn't disable everything?
 
+AFAICT riscv_get_tb_cpu_state is also the one setting VS to EXT_STATUS_DIRT=
+Y
+instead of EXT_STATUS_DISABLED, in my case because I run into a CONFIG_USER=
+_ONLY
+check (target/riscv/tcg-cpu.c:154):
 
-With some testcases I hit this condition in parts_round_to_int_normal():
+#ifdef CONFIG_USER_ONLY
+    fs =3D EXT_STATUS_DIRTY;
+    vs =3D EXT_STATUS_DIRTY;
+#else
+    // non-trivial logic
+#endif
 
-     if (a->exp >= frac_size) {
-         /* All integral */
-         return false;
-     }
+That's about as much as I can decipher from a quick dive. If anyone knows h=
+ow
+these pieces are intended to work, that'd be helpful.
 
-which makes it a no-op.
+(In the meantime, patch below should still be relevant.)
 
-I think the code assumes that FloatParts have just been unpacked and all 
-low fraction bits are zero, which is not the case for quotient here.
+S=E9bastien
 
->> +        float_exception_flags = saved_flags;
->> +        parts_s390_precision_round_normal(&n128, fmt);
->
-> parts_round_to_int_normal already takes a rounding mode and frac_size.
-> It also returns whether or not the rounding was exact.
-> This appears to be trying to reinvent the wheel.
-
-
-Apparently I use this to paper over the above issue, which is not great.
-
-I guess improving parts_round_to_int() to work with non-zero low 
-fraction bits would be better.
-
-What do you think?
-
-
-> There's still "... the two integers closest to this precise quotient 
-> cannot be both be represented exactly in the precision of the quotent 
-> ..." to contend with.  Is that your "smallish" test?  If so, the 
-> comment could use some improvement.
-
-
-Ok.
-
-
->> +
->> +        /* Compute precise remainder */
->> +        m128_buf = b128;
->> +        m128 = parts_mul(&m128_buf, &n128, status);
->> +        m128->sign = !m128->sign;
->> +        status->float_exception_flags = 0;
->> +        r128_precise = parts_addsub(m128, &a128, status, false);
->
-> Surely parts_muladd_scalbn (with scale 0).
-
-
-This works and is much shorter, thanks.
-
-
-> r~
+>> Instead the illegal signal for all vector instructions
+>> (except vset{i}vl{i}) is generated by vext_check_isa_ill, which checks t=
+he
+>> context-dependent DisasContext->vill that conditionally makes vector
+>> instructions illegal depending on the state of vl.
+>>=20
+>> Currently, vs*r.v runs even when RVV is disabled or when vl has not been=
+ set.
+>> Adding the missing vext_check_isa_ill brings it in line with all other v=
+ector
+>> instructions, raising SIGILL in these situations.
+>>=20
+>> Signed-off-by: S=E9bastien Michelland <sebastien.michelland@inria.fr>
+>> ---
+>=20
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>=20
+>=20
+>> v[zs]ext_vf[248] is also suspiciously missing the check, but doesn't fai=
+l in
+>> such an obvious manner. If it's also a bug then it might be worth fixing=
+ at
+>> the same time.
+>>=20
+>>   target/riscv/insn_trans/trans_rvv.c.inc | 1 +
+>>   1 file changed, 1 insertion(+)
+>>=20
+>> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc
+>> b/target/riscv/insn_trans/trans_rvv.c.inc
+>> index 4df9a40b44..1e99c35988 100644
+>> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+>> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+>> @@ -1235,6 +1235,7 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t=
+ rs1,
+>> uint32_t nf,
+>>   static bool trans_##NAME(DisasContext *s, arg_##NAME * a)             =
+      \
+>>   {                                                                     =
+      \
+>>       if (require_rvv(s) &&                                             =
+      \
+>> +        vext_check_isa_ill(s) &&                                       =
+     \
+>>           QEMU_IS_ALIGNED(a->rd, ARG_NF)) {                             =
+      \
+>>           return ldst_whole_trans(a->rd, a->rs1, ARG_NF, ctzl(sizeof(ETY=
+PE)), \
+> >                                   gen_helper_##NAME, s, IS_LOAD);      =
+       \
 
