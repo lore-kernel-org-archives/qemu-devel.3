@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE0BD35669
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 04:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 278BDD35672
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 04:36:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkxHF-00056g-5o; Tue, 27 Jan 2026 23:35:37 -0500
+	id 1vkxHa-0005GA-M7; Tue, 27 Jan 2026 23:35:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vkxHE-00056C-17
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:35:36 -0500
+ id 1vkxHY-0005Ed-Hb
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:35:56 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vkxHC-000060-FJ
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:35:35 -0500
+ id 1vkxHW-00008U-LU
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:35:56 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60S4Z3Ib003450
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60S4ZcDi003658
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 28 Jan 2026 13:35:32 +0900 (JST)
+ Wed, 28 Jan 2026 13:35:52 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=fRITPkiG90hCWnITNZ7D5fX/DZGg0OSBCcGYwQMGl0A=; 
+DKIM-Signature: a=rsa-sha256; bh=+WYu0YQaLXBNVHZDI+F++sreW68nDpaR5qAl81V52UU=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1769574932; v=1;
- b=wGCwLzyWIywtXB8OsPXQizi+yai2nZeQcscGp3mu41kTRYhf9bB776qI62ulyG3K
- BCqqjOsu3zyQRfbMoz0ODhRtiu/OLZSeBDMz3eIyYxiKsttt0fJlF8aHB/xJUCuH
- WuNzEN6iqBIIgDzhb6MeZeabeGn4AXAYmF6Cw0vMn7yStlKVjC6XgZqEu7xE2fjM
- PJZJTuuq0RO4BY4JlimA5U9e/HRDZYavNDmmaeOQhhKQqdagjKs79k/7itj+Xz3f
- dUjSKoijLmj6HBAko0IDud28c/4qgwXG634YBXWXCtwsMDFtqu2JvRmKwP6FKp8k
- z5FqjsunWjEnuLkhxbBjfQ==
-Message-ID: <4b3317ea-679d-42ac-8d51-0f5c0fad93a7@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 28 Jan 2026 13:35:02 +0900
+ s=rs20250326; t=1769574952; v=1;
+ b=P0qHugryPGsuZBxOI3zxTWWveLLBqgp+Efiih582rQNbBudX+jKgwVNMl4V3rxy+
+ feN2R+X9e5I4OaFdvaq4yhSUfGQsFF/0iEk9K3gulY4gMQ8oGDFUAzJ1dpQaYU4Q
+ rMLLPBoD5UvXrzNjyanvnMkkOfjIKeAuqPyaA2zDCh250Bgy21zs4qXJ21szL0mD
+ u5qUe7m0KJKua6VcdrLSDXM8KY3M0lVSJwk180hjU7FdILavudDXQ/kRyreC09n7
+ SIDWUw/24/l8oZatrUplUL6cC85qcnHyRRYGb8gG+2+1W/vlyWLboPugjFNSMXSa
+ s5faBAaqxjuGmukD1Db+ng==
+Message-ID: <372254fc-0733-457f-86e9-afd662984c7b@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 28 Jan 2026 13:35:37 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/37] audio: add QOM module-objects for each backend
+Subject: Re: [PATCH 24/37] audio: drop audio driver registration
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
  Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>
 References: <20260123074945.2563196-1-marcandre.lureau@redhat.com>
- <20260123074945.2563196-22-marcandre.lureau@redhat.com>
+ <20260123074945.2563196-25-marcandre.lureau@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260123074945.2563196-22-marcandre.lureau@redhat.com>
+In-Reply-To: <20260123074945.2563196-25-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -80,7 +80,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2026/01/23 16:49, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> This will allow to use QOM and the dynamic object module loading.
+> module_object_class_by_name() handles loading the module providing the
+> requested object.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
