@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE65CD3F081
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 15:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0105DD3F082
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 15:59:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl7lt-0000rI-VP; Wed, 28 Jan 2026 10:47:58 -0500
+	id 1vl7wC-0007Mx-NW; Wed, 28 Jan 2026 10:58:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vl7ls-0000l7-1C
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:47:56 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1vl7w8-0007Lg-C6
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:58:32 -0500
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vl7ln-0003ut-0M
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:47:55 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-8230d228372so3326284b3a.1
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 07:47:45 -0800 (PST)
+ id 1vl7w6-0006EF-GL
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:58:32 -0500
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-81df6a302b1so6060165b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 07:58:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769615264; x=1770220064; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769615909; x=1770220709; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Y5HIVG56hPf4UJpvnRh172kVvsxsgH6nS/kkZ/0ZIBE=;
- b=rEQEwYUNQ0DOmmi8MCQ41dMshsvDNvhMn3qMDM9j2nJtg5DrV85BqL+DIMad5c4O63
- kOI7CNRuq6pP1kBQfaaiPU5c5eZjk5nYhl1bbTXWaRKQF2sgplU9IBvbeoARLtS48ZWQ
- 6R0uoXNjknE3qCg+jC3hh6qSheAcAOD0tTcQZZO2H663psxR62pk1S2OsjoHDIGCYWwL
- SBXElZ0DWDIYcEMoqQ4ziEnjXjb1ejWOQ8EQvZ4scLjezgmJH4cBZ8vORC5GAnyx2xHj
- 9szI5Qc9ZVf2PD5SmDoO2vvO+mJmGlKp+BiB63kthtryMEmZyvq63ADr12uvnQPlNcOX
- oyGA==
+ bh=GhybA32u9o+IGQHaJ18S8Xl69d1olQn5ctkEPrtdHjo=;
+ b=OyE929yocbwli63+z2xYdBKOm19nbyW1v+vMsVasybtW7h/qlx8kcFtXCFErsD5Wj8
+ ALmWVSbYQ1SJ4WhqUniiaOQ7zVg2DKbFmRBTD6nPc+FTwxFyV59niVs+qXBJNAH9OBSa
+ 2ELC+473L1DTEI9z9d+miofuYfnpxYVfIkYDR57AGso61pI0SyowHJcW1C214UfJdOaE
+ Hb4cKGMb4W46/952YTbq+z0BJTNPIpeOr9GkWuF9SJqRW77c70ZsfSr7vtWS7GvrDAsV
+ p4WEq8aI3snVgaHJ29DhjUshXl9hPWJBtFrivj85zpY72/SsEpZFUaC8q7QcrsSCGgOo
+ +XdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769615264; x=1770220064;
+ d=1e100.net; s=20230601; t=1769615909; x=1770220709;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Y5HIVG56hPf4UJpvnRh172kVvsxsgH6nS/kkZ/0ZIBE=;
- b=vdKE7TrS3/GNZ/q55dCWrTkNYO2X4YtSeaI7AGPpTOS7sLrgP8K9JBpyClQvBGVhds
- 8MIvRZgrsXY8LUaKF89xhigDb7JWjDu6ooyKElAOsGjAu+KQa2/fGc0uP5n1W4FllgJL
- 1ebgVaIxF4YNmJX0c5f1w8rXRBG33xykfXBM8ZKNquukXbdykhCj5z5XYWFnokYDOzjk
- 5h+BIkzuDM2U2IQuQAZJ9n/d2eJq6rJPvSkPCj9r2cagLIXs7FhC3++lzs7NpHbGe6oE
- qEuhoOKLJZN07llDkXCVsxzmwgsjxymfGVUJt5c0q4TnDJ7fi7HfMqFJ7G2Yx7wT747r
- y4Ww==
-X-Gm-Message-State: AOJu0YyFJv8sB5ix8AQRcW4CtBDDKeiKsAgkTys4ZeUVyzIZqgx++YNq
- 1PTVp2unT40872FPKLNagdk9nDIzI8CTRqi6d7maMP3BCXNZ2c5U7l5Wv0sqS0DnCxc=
-X-Gm-Gg: AZuq6aK5CcVM1y1ib6PpVe9zOfcu0dQrr+rUrNlMrvXZ4ryYIODmEZGYK1DuAdXlVBV
- VleIVUKPPf1ruW9hLnSWytgmxAPqL/glEO/Cm15VZqpgTYILnsWGi5WBiT7Gj+uc/3XiLLH7kQt
- RsuBN/lRIGdqQAX7/AWlEFBkjYTi6n8TSsdlwlmX6yPXdxddtNuGuNCJt9v7s4wwc4NiXUCKYyn
- 0KAD0HsWAol6qrbIbpwyS9oHd+wpXXxNC3I/7yxbsSq9HAWWMJO+FnnrGoBkWV0nKcRqjidCvRM
- c5rxwmRErRKYjcsVEZbzMgaXcqBQqVwk3ddTvVwuEwiCw+xR43O1hGe/8CNRFwQr8vYWvrdWmJo
- UZe/+iIthWNsagJaGNJQUcVccnXGPbXBkj6Q0HlUSVb4Eo2g/6aGaKvDSYOldWYRCzWcUIo9gU1
- EiN7Nwv0U31W0nWio1UgsklCYLOtqbEqv6GnwxdkoCheeZgNhtmB3Bt6j5nYFvkMvwRhE=
-X-Received: by 2002:a05:6a00:13a7:b0:81f:9907:e503 with SMTP id
- d2e1a72fcca58-8236917bdfbmr5659404b3a.16.1769615263850; 
- Wed, 28 Jan 2026 07:47:43 -0800 (PST)
+ bh=GhybA32u9o+IGQHaJ18S8Xl69d1olQn5ctkEPrtdHjo=;
+ b=RuUqy7vwFDVXQlp4wSnyuq520nQn0vIc3owjuZcbmjvYeRknR4KxpyQsyAF/AKnsEo
+ f8+lvRvHwDKJEwIkIRwdcAQvcXdxHkTARDtk0qKDCY+1bH7E2dTlQb6mQSWp6pFRG4RF
+ Ag8GyiTpW9kd80olwr8iTjWY8Km3+S88N4RHzrtAVc8rFwlpPYtk7l5K6NDsm/+K39rn
+ JvPzA7ktF0sqYP067ecVGkA6BLeV3LQpAnflZS4WuaSbbHN0k5g3BPH9Wizgutx50N4e
+ x0DKQF6r/0vRiaXZc5IblYnfow+PBMoJOzUcoIG0pDwFogfur7bOaNlMO9fsGZvTZAtZ
+ 843Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyb9S8YLtLUffPX96bRNBhETvb+gSKEZshugN0F8x/CvGOsWVGaAOJ7x8K0Du2d+sYcLzHi4nu/mWV@nongnu.org
+X-Gm-Message-State: AOJu0YwGdWlE5ORzcN90oeMjEyO81ZxzYdGcJGr+Jcqda+JFiWoTHGfm
+ ZAgTPFfREaEGNBpreYXITNk8cdtI68/+0BrhC5XPRBopa9CoSVJpqumB+eWGIEqge3Y=
+X-Gm-Gg: AZuq6aLZUvbFQqK1ZQYSlbq95Ut+Op9lEgLXQcopwhXei/uqU78nveJkL7cZTSyQUv0
+ bBFXfMrhV8CMD0XnO/auuakxG+dinWzDv8SY4X2oROgazzSqCVvme0yRSxAKfwzfRthOwXN/pEn
+ hApsHKk+fEgYuyMMSvpIhHI7+9ecPdTg03gldAn79mZZiRFwkqWjE+cPTfnA+F2HlZo5FcKWzCe
+ JiGI2HF5gmP7EFC0B+e2ho/IYt4C9de5uivdCf+N1lU5Rg0oyDRuffkKrSRzqjRzYtgV1dCgG3b
+ jlPt5nRgcmWpQimNzoiFb4u9Hv/JzDKrmXzoXN71pIwd3dwsVnSVRvAvZuTBItw+Hrmj2l76qbu
+ 6a0BoOeJYf26bB0Wl/VuRlY6AI80PiKX8F0IbY1NpQBNYo7FhY3OMbWvCWUVf+rpE5GFKG0xS9x
+ TNQ/dpsIlZXguQ4FZvHSMo264sTc6DokYokCcxMDRNs94kzy3UrjC8v30d
+X-Received: by 2002:a05:6a00:1304:b0:81f:3fa0:8c38 with SMTP id
+ d2e1a72fcca58-8236918241amr5483374b3a.20.1769615908851; 
+ Wed, 28 Jan 2026 07:58:28 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379c22672sm2890170b3a.51.2026.01.28.07.47.43
+ d2e1a72fcca58-82379b6b2bdsm2987263b3a.30.2026.01.28.07.58.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Jan 2026 07:47:43 -0800 (PST)
-Message-ID: <cd43d8bb-3567-4907-ad44-bf435dc967f0@linaro.org>
-Date: Wed, 28 Jan 2026 07:47:44 -0800
+ Wed, 28 Jan 2026 07:58:28 -0800 (PST)
+Message-ID: <2c0d1fd2-3645-4c4d-a793-663812ce333b@linaro.org>
+Date: Wed, 28 Jan 2026 07:58:29 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/11] plugins: use complete filename for defining
- plugins sources
+Subject: Re: [PATCH 2/2] tests/functional: migrate sbsa_ref test images
 Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Gustavo Bueno Romero <gustavo.romero@linaro.org>,
- Michael Roth <michael.roth@amd.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20260124182921.531562-1-pierrick.bouvier@linaro.org>
- <20260124182921.531562-4-pierrick.bouvier@linaro.org>
- <87cy2uat5e.fsf@draig.linaro.org>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Radoslaw Biernacki <rad@semihalf.com>
+References: <20260128105839.3487840-1-alex.bennee@linaro.org>
+ <20260128105839.3487840-3-alex.bennee@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -122,18 +116,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <87cy2uat5e.fsf@draig.linaro.org>
+In-Reply-To: <20260128105839.3487840-3-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,72 +143,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/28/26 3:11 AM, Alex Bennée wrote:
-> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 1/28/26 2:58 AM, Alex Bennée wrote:
+> As the builds in codelinaro.org are going away migrate the binaries to
+> share.linaro.org. As the hotlinks don't encode the filename we need to
+> explicitly tell uncompress how to handle the files.
 > 
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   contrib/plugins/meson.build   | 10 +++++-----
->>   tests/tcg/plugins/meson.build |  7 +++++--
->>   2 files changed, 10 insertions(+), 7 deletions(-)
->>
->> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
->> index 6915ffa5fbc..3d2d7862e0c 100644
->> --- a/contrib/plugins/meson.build
->> +++ b/contrib/plugins/meson.build
->> @@ -1,15 +1,15 @@
->> -contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
->> -                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger',
->> -                   'traps', 'uftrace']
->> +contrib_plugins = ['bbv.c', 'cache.c', 'cflow.c', 'drcov.c', 'execlog.c',
->> +                   'hotblocks.c', 'hotpages.c', 'howvec.c', 'hwprofile.c',
->> +                   'ips.c', 'stoptrigger.c', 'traps.c', 'uftrace.c']
-> 
-> Argh this keeps conflicting with other changes. Maybe we should make
-> this a dumb list:
-> 
->    contrib_plugins = [ ]
->    contrib_plugins += 'bbv.c'
->    contrib_plugins += 'cache.c'
-> 
-> etc?
->
-
-Ok.
-
->>   if host_os != 'windows'
->>     # lockstep uses socket.h
->> -  contrib_plugins += 'lockstep'
->> +  contrib_plugins += 'lockstep.c'
->>   endif
->>   
->>   t = []
->>   if get_option('plugins')
->>     foreach i : contrib_plugins
->> -    t += shared_module(i, files(i + '.c'),
->> +    t += shared_module(fs.stem(i), files(i),
->>                          dependencies: plugins_deps)
->>     endforeach
->>   endif
->> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
->> index d7823704616..303f97f9679 100644
->> --- a/tests/tcg/plugins/meson.build
->> +++ b/tests/tcg/plugins/meson.build
->> @@ -1,7 +1,10 @@
->> +test_plugins = ['bb.c', 'discons.c', 'empty.c', 'inline.c', 'insn.c', 'mem.c',
->> +                'reset.c', 'syscall.c', 'patch.c']
->> +
->>   t = []
->>   if get_option('plugins')
->> -  foreach i : ['bb', 'discons', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
->> -    t += shared_module(i, files(i + '.c'),
->> +  foreach i : test_plugins
->> +    t += shared_module(fs.stem(i), files(i),
->>                          dependencies: plugins_deps)
->>     endforeach
->>   endif
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/functional/aarch64/test_sbsaref.py | 16 ++++++----------
+>   1 file changed, 6 insertions(+), 10 deletions(-)
 > 
 
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
