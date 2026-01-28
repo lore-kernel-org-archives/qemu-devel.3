@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D89A4D46BFB
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 20:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48260D46BFA
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 20:41:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlCKQ-0007kw-Jy; Wed, 28 Jan 2026 15:39:54 -0500
+	id 1vlCKi-00087P-CL; Wed, 28 Jan 2026 15:40:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
- id 1vlCKI-0007Xj-Ub
+ id 1vlCKL-0007bI-PZ
  for qemu-devel@nongnu.org; Wed, 28 Jan 2026 15:39:50 -0500
-Received: from mx0b-00190b01.pphosted.com ([67.231.157.127])
+Received: from mx0a-00190b01.pphosted.com ([67.231.149.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
- id 1vlCKG-00084R-UW
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 15:39:46 -0500
-Received: from pps.filterd (m0409411.ppops.net [127.0.0.1])
- by m0409411.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
- 60SHRWWO1128338; Wed, 28 Jan 2026 20:39:40 GMT
+ id 1vlCKH-00084W-78
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 15:39:49 -0500
+Received: from pps.filterd (m0409409.ppops.net [127.0.0.1])
+ by m0409409.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
+ 60SDMwsh3880427; Wed, 28 Jan 2026 20:39:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=jan2016.eng;
- bh=VpKSo7dvDuyWSbsFXQ3bXWOKmh2SUJJjQn/1dvaSXYw=; b=CMm6vy/sslXx
- 1McLpstjuUdzy0ZLEZYdAEGe9PZBGRa8cg8FxufbxsnhQOKGCNFnI3W46jLfalPd
- 4LfxSU/gF3u/LZmJrVV94rsR53CDnFEvXu6HKwoXkdhnzCbaUsa/OSWZKyc2xAg6
- RzQ2/qShF6OOInbg4MmYNLpA6wXSvwUZwXr2VpYfNbVRHhG3HrLrS09xge0/Tud+
- j80ADXY28RzVwO7TgmxZ6bi7iPSXrKqxlNq3BhpHBKVYHQ50k/tX0UWsipUkDn0l
- QdjZRnFEhEbjZmx764lG4TMtxHu9rTdmTepdjfnEzS1+DlZPQLQ897+L5Uv5Oh79
- FrkVX4LUFQ==
+ bh=aeZzkvmebewRfaih4/t4ihsdQNyBJJYUYDDfKylGW9w=; b=NvjanVxPAfeN
+ 6gydrksGB+zTkObywhAeqgAHE9Wnt+QHew7SyaDwRqkyWzNio/i6Svpzdogr5DM6
+ 1NKyDbIBp+0e7FTp1gszqN4lmlnnNqXZXyDLmQCp5Cx2AANIjfjpph+tY5ZlHx50
+ t11aD0Yn//bmn2ZsZzWV7sOouwX5Pa1lGM7I149hrVuWgTQb04t+xFqZKQr7ccUZ
+ OMxfHk36ffILz5t1m3lnSxOl8gIMRVKVmz498HSlHh7sqeIdtw/h+eh0dH2IIskj
+ lKWUlgOYrbCtMO8x8qflI2GLA93LYudURNrStMlqegkXJslLEVezglwvMxNYCaE3
+ dMEDPsEphQ==
 Received: from prod-mail-ppoint5 (prod-mail-ppoint5.akamai.com [184.51.33.60])
- by m0409411.ppops.net-00190b01. (PPS) with ESMTPS id 4bw8a6cv4c-1
+ by m0409409.ppops.net-00190b01. (PPS) with ESMTPS id 4by2u0y6ep-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Wed, 28 Jan 2026 20:39:40 +0000 (GMT)
 Received: from pps.filterd (prod-mail-ppoint5.akamai.com [127.0.0.1])
  by prod-mail-ppoint5.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
- 60SFYGux004167; Wed, 28 Jan 2026 12:39:39 -0800
+ 60SJlc8k013937; Wed, 28 Jan 2026 12:39:39 -0800
 Received: from prod-mail-relay02.akamai.com ([172.27.118.35])
- by prod-mail-ppoint5.akamai.com (PPS) with ESMTP id 4bvvxfyxx8-1;
+ by prod-mail-ppoint5.akamai.com (PPS) with ESMTP id 4bvvxfyxx9-1;
  Wed, 28 Jan 2026 12:39:39 -0800
 Received: from bos-lhvkhf.bos01.corp.akamai.com
  (bos-lhvkhf.bos01.corp.akamai.com [172.28.220.254])
- by prod-mail-relay02.akamai.com (Postfix) with ESMTP id 0A463A3;
+ by prod-mail-relay02.akamai.com (Postfix) with ESMTP id 0066D99;
  Wed, 28 Jan 2026 20:39:39 +0000 (UTC)
 From: Ben Chaney <bchaney@akamai.com>
-Date: Wed, 28 Jan 2026 15:39:31 -0500
-Subject: [PATCH v4 3/8] vhost: reset vhost devices for cpr
+Date: Wed, 28 Jan 2026 15:39:29 -0500
+Subject: [PATCH v4 1/8] migration: stop vm earlier for cpr
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260128-cpr-tap-v4-3-48e334d4216b@akamai.com>
+Message-Id: <20260128-cpr-tap-v4-1-48e334d4216b@akamai.com>
 References: <20260128-cpr-tap-v4-0-48e334d4216b@akamai.com>
 In-Reply-To: <20260128-cpr-tap-v4-0-48e334d4216b@akamai.com>
 To: qemu-devel@nongnu.org
@@ -70,11 +70,11 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Max Tottenham <mtottenh@akamai.com>, Ben Chaney <bchaney@akamai.com>,
  Steve Sistare <steven.sistare@oracle.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1769632778; l=5230;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769632778; l=4773;
  i=bchaney@akamai.com; s=20251203; h=from:subject:message-id;
- bh=fmXj30u3JtRIrwcd6PJUKYFgVyJebbXBSc5CMyYvc3U=;
- b=3yB+uiXhMIl2zcuNoDiOGDGvLml5IwnJWCBmmBhmCAev6E98liZEmkfvCHfMLsnvJ6iB6BP+C
- /pCdQp9n5uuD5rgMNc8WAzDFVGZrRANah9ZNgAb1DDDkEKjtfehUqk5
+ bh=1oAm0CghpeE3ORzzZ0ONoCUfr6xsC782SwLSqOwlPWY=;
+ b=n599jx+ep5dXg8teN4LS5FpiEZgZvIir5AHC0dIxJ+ySFb3/JXJ6PJ897w2d/9amFHEFTBxau
+ BlNvnMs5Kp7Dna31qKzZ4Frf6wPKDte0qHRUBtvzkSnNH4hwiVAmZTY
 X-Developer-Key: i=bchaney@akamai.com; a=ed25519;
  pk=6+w9cse5QEeVdy3tjqFxs/4rAaRdQ2/fkTxVFq+lWy4=
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -85,31 +85,31 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  mlxlogscore=999 suspectscore=0 mlxscore=0 bulkscore=0 malwarescore=0
  phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2601150000 definitions=main-2601280169
-X-Proofpoint-ORIG-GUID: IINWAyS4-QIbpb6hA0byL_lG1egR_BiE
-X-Proofpoint-GUID: IINWAyS4-QIbpb6hA0byL_lG1egR_BiE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDE3MCBTYWx0ZWRfXxTrp8UCofi5Q
- FfzFeOTZR+9FChmSz6hVIm6v85OsF7SWmreujV/8QDjyew67h5IRNmJCkBAMqrwYHODD1USw+B9
- stvNAWeuWwGHJTC5+grEOmkhnpzFMF+SJCFHl61AKaRKvxcHo6OQXGzwFOy0LSaFxjaV6YC2Q/M
- xPaEeI5vEMRCGL9byPHYFnu67oIDZ2ROHcBwidAUVh/S6Y7w2HQtF7VPTT7aL2yTo5DmtNvl8sy
- uKBw4AEEfX8AsQ5zhcY5xe2RzGAaNmT2qf0AHDt6q69YuPTmLL7U0dhSimCt5zHUjYemxtZkB/Y
- VwnlmzubHlxWH5woN/H+dTB6TKDQIeby1S22+MpOY7QtCHC7/6sg42zlbpTEHPlaaotaUbLIqEM
- vjtWC6aBWJKsk6RVsJ1/3/C7OjA7a6dvnu3nZRPCEI+1mRc/oCg4SrnqGfUiXRN1Ywg+Ny6wpdD
- 3Giz2/Az7ERVtPj+8tA==
-X-Authority-Analysis: v=2.4 cv=KcPfcAYD c=1 sm=1 tr=0 ts=697a740c cx=c_pps
+X-Authority-Analysis: v=2.4 cv=OOkqHCaB c=1 sm=1 tr=0 ts=697a740c cx=c_pps
  a=NpDlK6FjLPvvy7XAFEyJFw==:117 a=NpDlK6FjLPvvy7XAFEyJFw==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=yPCof4ZbAAAA:8 a=X7Ea-ya5AAAA:8 a=6lTwf2g7YyX0f-ifu7AA:9 a=QEXdDO2ut3YA:10
+ a=yPCof4ZbAAAA:8 a=X7Ea-ya5AAAA:8 a=N5d-UlcB8v2vpT89WNEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 8NAJ6BHxrsGwBj-6Kg3tMNEnBo0PnA_2
+X-Proofpoint-GUID: 8NAJ6BHxrsGwBj-6Kg3tMNEnBo0PnA_2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDE3MCBTYWx0ZWRfX1wkiyc1uZCel
+ Pgbrnnd1JZ6+YcxwEnhrKOULz4mCbWn+sUxYixhSkDLeg0P2mIOEpksxg6My23XWSpwifm2Q/Bv
+ rdtK9iOKZIXJGuoY53RYPTzibBLDvCMtCC6M9N94YZkz548HsF8N8zK/ILn6JNASJRHq6dmoZbv
+ ZthUXz5fdIhwHQauCIuspKlpzQzAf+iOChFdiFFhl495Y/P9hzx76zMXFlQRCqvvkHzXtqOyM1O
+ PsVSuUarRq/XYkMEWVOMsoaD9OG8XaUmPo/ZMcyYfPBxSjnfCOOnaR/zjhH9Ma98ERihcTuW0/2
+ gsRAHaYLFREn6HXMoTDw/aFNTI2EZz0ntABOTOCBnScklT7v2fly/ksOq3Q0LjzVn0ua1QrtTxG
+ eaD5XmVvOuHqgzfqKEwUlWPXw6XQQONdj7uiT5MSGdnUMpeWPki6VmSgOdF9SoDGsZ2Iuv/Eefc
+ I5bAWf30LJM2Inv5ZPA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-28_06,2026-01-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0
- impostorscore=0 adultscore=0
- phishscore=0 clxscore=1011 lowpriorityscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601280170
-Received-SPF: pass client-ip=67.231.157.127; envelope-from=bchaney@akamai.com;
- helo=mx0b-00190b01.pphosted.com
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1011 adultscore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 bulkscore=0 suspectscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601280170
+Received-SPF: pass client-ip=67.231.149.131; envelope-from=bchaney@akamai.com;
+ helo=mx0a-00190b01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -135,139 +135,127 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Steve Sistare <steven.sistare@oracle.com>
 
-When preserving a vhost fd using CPR, call VHOST_RESET_OWNER prior to CPR
-in old QEMU.  Otherwise, new QEMU will fail when it calls VHOST_SET_OWNER
-during vhost_dev_init.
+Stop the vm earlier for cpr, before cpr_save_state which causes new QEMU
+to proceed and initialize devices.  We must guarantee devices are stopped
+in old QEMU, and all source notifiers called, before they are initialized
+in new QEMU.
 
-Signed-off-by: Mark Kanda <mark.kanda@oracle.com>
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Signed-off-by: Ben Chaney <bchaney@akamai.com>
 ---
- hw/virtio/vhost-backend.c         |  6 ++++++
- hw/virtio/vhost.c                 | 32 ++++++++++++++++++++++++++++++++
- include/hw/virtio/vhost-backend.h |  1 +
- include/hw/virtio/vhost.h         |  1 +
- 4 files changed, 40 insertions(+)
+ migration/migration.c | 57 +++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 48 insertions(+), 9 deletions(-)
 
-diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-backend.c
-index 4367db0d95..1447d12963 100644
---- a/hw/virtio/vhost-backend.c
-+++ b/hw/virtio/vhost-backend.c
-@@ -261,6 +261,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
-     return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
+diff --git a/migration/migration.c b/migration/migration.c
+index 1bcde301f7..f36e59d9e8 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1654,6 +1654,7 @@ void migration_cancel(void)
+                           MIGRATION_STATUS_CANCELLED);
+         cpr_state_close();
+         migrate_hup_delete(s);
++        vm_resume(s->vm_old_state);
+     }
  }
  
-+static int vhost_kernel_reset_owner(struct vhost_dev *dev)
-+{
-+    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
-+}
-+
- static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
- {
-     assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
-@@ -385,6 +390,7 @@ const VhostOps kernel_ops = {
-         .vhost_get_features_ex = vhost_kernel_get_features,
-         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
-         .vhost_set_owner = vhost_kernel_set_owner,
-+        .vhost_reset_owner = vhost_kernel_reset_owner,
-         .vhost_get_vq_index = vhost_kernel_get_vq_index,
-         .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
-         .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 31e9704cdc..beec547e46 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -24,6 +24,7 @@
- #include "standard-headers/linux/vhost_types.h"
- #include "hw/virtio/virtio-bus.h"
- #include "hw/mem/memory-device.h"
-+#include "migration/misc.h"
- #include "migration/blocker.h"
- #include "migration/qemu-file-types.h"
- #include "system/dma.h"
-@@ -1549,6 +1550,32 @@ static int vhost_dev_get_features(struct vhost_dev *hdev,
-     return r;
- }
- 
-+static int vhost_cpr_notifier(NotifierWithReturn *notifier,
-+                              MigrationEvent *e, Error **errp)
-+{
-+    struct vhost_dev *dev;
-+    int r;
-+
-+    dev = container_of(notifier, struct vhost_dev, cpr_transfer_notifier);
-+
-+    if (dev->vhost_ops->backend_type != VHOST_BACKEND_TYPE_KERNEL) {
-+        return 0;
-+    }
-+
-+    if (e->type == MIG_EVENT_PRECOPY_SETUP) {
-+        r = dev->vhost_ops->vhost_reset_owner(dev);
-+        if (r < 0) {
-+            VHOST_OPS_DEBUG(r, "vhost_reset_owner failed");
-+        }
-+    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
-+        r = dev->vhost_ops->vhost_set_owner(dev);
-+        if (r < 0) {
-+            VHOST_OPS_DEBUG(r, "vhost_set_owner failed");
-+        }
-+    }
-+    return 0;
-+}
-+
- int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-                    VhostBackendType backend_type, uint32_t busyloop_timeout,
-                    Error **errp)
-@@ -1559,6 +1586,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
- 
-     hdev->vdev = NULL;
-     hdev->migration_blocker = NULL;
-+    hdev->cpr_transfer_notifier.notify = NULL;
- 
-     r = vhost_set_backend_type(hdev, backend_type);
-     assert(r >= 0);
-@@ -1659,6 +1687,9 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-     hdev->log_enabled = false;
-     hdev->started = false;
-     memory_listener_register(&hdev->memory_listener, &address_space_memory);
-+    migration_add_notifier_mode(&hdev->cpr_transfer_notifier,
-+                                vhost_cpr_notifier,
-+                                MIG_MODE_CPR_TRANSFER);
-     QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
+@@ -2212,6 +2213,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+     MigrationAddress *addr = NULL;
+     MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
+     MigrationChannel *cpr_channel = NULL;
++    bool stopped = false;
  
      /*
-@@ -1711,6 +1742,7 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
-         QLIST_REMOVE(hdev, entry);
+      * Having preliminary checks for uri and channel
+@@ -2264,6 +2266,46 @@ void qmp_migrate(const char *uri, bool has_channels,
+         return;
      }
-     migrate_del_blocker(&hdev->migration_blocker);
-+    migration_remove_notifier(&hdev->cpr_transfer_notifier);
-     g_free(hdev->mem);
-     g_free(hdev->mem_sections);
-     if (hdev->vhost_ops) {
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index ff94fa1734..18ce5ea9a0 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -196,6 +196,7 @@ typedef struct VhostOps {
-     vhost_get_features_op vhost_get_features;
-     vhost_set_backend_cap_op vhost_set_backend_cap;
-     vhost_set_owner_op vhost_set_owner;
-+    vhost_set_owner_op vhost_reset_owner;
-     vhost_reset_device_op vhost_reset_device;
-     vhost_get_vq_index_op vhost_get_vq_index;
-     vhost_set_vring_enable_op vhost_set_vring_enable;
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 08bbb4dfe9..5d11a97e43 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -133,6 +133,7 @@ struct vhost_dev {
-     QLIST_ENTRY(vhost_dev) logdev_entry;
-     QLIST_HEAD(, vhost_iommu) iommu_list;
-     IOMMUNotifier n;
-+    NotifierWithReturn cpr_transfer_notifier;
-     const VhostDevConfigOps *config_ops;
- };
  
++    /*
++     * CPR-transfer  ordering:
++     *
++     *   SOURCE                              TARGET
++     *   ------                              ------
++     *                                       cpr_state_load() blocks
++     *   |                                        |
++     *   |  1. migration_stop_vm()                |
++     *   |     VM stopped, devices quiesced       |
++     *   |                                        | Waiting for
++     *   |  2. notifiers (PRECOPY_SETUP)          | FDs from source
++     *   |     vhost_reset_owner() releases       |
++     *   |     device ownership                   |
++     *   |                                        |
++     *   |  3. cpr_state_save() ---- FDs -------> |
++     *   |                                        |
++     *   v                                        v
++     *   postmigrate                         Device init begins
++     *                                       - cpr_find_fd()
++     *                                       - vhost_dev_init()
++     *                                       - VHOST_SET_OWNER
++     *
++     * Step 3 is the synchronization/cut-over point. Target proceeds immediately
++     * upon receiving FDs, so steps 1-2 must complete otherwise:
++     * - Target's VHOST_SET_OWNER fails with -EBUSY (source still owns)
++     * - Race between source I/O and target device init
++     *
++     *  We stop the VM early (before FD transfer) to prevent this race.
++     *  Unlike regular migration, CPR-transfer passes memory via FD (memfd)
++     *  rather than copying RAM, so early VM stop should have minimal downtime.
++     */
++    if (migrate_mode_is_cpr(s)) {
++        int ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
++        if (ret < 0) {
++            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
++            goto out;
++        }
++        stopped = true;
++    }
++
+     if (!cpr_state_save(cpr_channel, &local_err)) {
+         goto out;
+     }
+@@ -2290,6 +2332,9 @@ out:
+     if (local_err) {
+         migration_connect_error_propagate(s, error_copy(local_err));
+         error_propagate(errp, local_err);
++        if (stopped) {
++            vm_resume(s->vm_old_state);
++        }
+     }
+ }
+ 
+@@ -2334,6 +2379,9 @@ static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
+         }
+         migration_connect_error_propagate(s, error_copy(local_err));
+         error_propagate(errp, local_err);
++        if (migrate_mode_is_cpr(s)) {
++            vm_resume(s->vm_old_state);
++        }
+         return;
+     }
+ }
+@@ -4017,7 +4065,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+     Error *local_err = NULL;
+     uint64_t rate_limit;
+     bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+-    int ret;
+ 
+     /*
+      * If there's a previous error, free it and prepare for another one.
+@@ -4088,14 +4135,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+         return;
+     }
+ 
+-    if (migrate_mode_is_cpr(s)) {
+-        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+-        if (ret < 0) {
+-            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+-            goto fail;
+-        }
+-    }
+-
+     /*
+      * Take a refcount to make sure the migration object won't get freed by
+      * the main thread already in migration_shutdown().
 
 -- 
 2.34.1
