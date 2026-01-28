@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C10FD35669
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E1E3D35668
 	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 03:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkwKU-0006pF-Lb; Tue, 27 Jan 2026 22:34:54 -0500
+	id 1vkwKr-0007UM-Dv; Tue, 27 Jan 2026 22:35:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vkwKT-0006np-Nq
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 22:34:53 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1vkwKp-0007Rg-Kt
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 22:35:15 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vkwKR-0004UR-Vs
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 22:34:53 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2a7786d7895so42744535ad.1
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 19:34:50 -0800 (PST)
+ id 1vkwKn-0005E0-St
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 22:35:15 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-81dbc0a99d2so3202894b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 19:35:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769571290; x=1770176090; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769571312; x=1770176112; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Nk95NSmFMoXIw2qnNtgBUK/Zvze2iPVz07fenpQRGik=;
- b=eviq/sy0Y236c92C9r8gD4D8e4eQW+d8YB9BcJmo5MZ1frGxjuFboNqRC+nwzgRNce
- mofjX+GXxqquZHtlM/qt2WAQ+/sKm4OoKbaNk/h8JIGrRWcc2vheJLyfLHm6432XQ9lM
- 79S2ztT+e6fTFtLjnZ0jwKXWihww9/aqy1pkDsWQ9T6jov3oHu2YslDLgSTFvUbm396q
- f6VyLK3m2hIcaAoCgPMHaxK2tXgciEhZUm1qbhUgzrkOwjGi6q11m7iZz2Gw2gqf1/VR
- T9I0hSgHeLPK7pLxnms/lNpS5KGJkbSn5vDypV0VVOUekApO4w5L2Npz3qJz9ef/aGKF
- Rj8A==
+ bh=9qpaZSRAwTnr16Gw4yfV8KXLbrwvYAE9mZVYy8k2oI8=;
+ b=ZzduZCrBCtxvzwPzU0keRwi4fY0J/lw5PXJL0pb2AuzGQOIxYnbgObO98YOe23PiQp
+ Ac1xlGsE/Tx+Ev1jZoqmI4RPi4aTJ6LZTgyzTNV0Qeao5HqOO8l803tZke0cnqwOxy8+
+ AwoEwZegULecAFNG/BLOJhYu04e+s9GywBFS/hM8IlILLIb34I0M4+2FPz9ERFCYfB4n
+ Fxwbils5U21NBjQOID7JlqFKx44+JP9UA29iFQ42YUR7zfD/yHC0qmPrzSG8NwkFrYMH
+ 4kHf/Si9oHdzhRIXDL+8AaWoFJIK3+1CcDnMka68wZ5v+HA5ZDTLqdOq4kxgQrOmRkxR
+ K8Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769571290; x=1770176090;
+ d=1e100.net; s=20230601; t=1769571312; x=1770176112;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Nk95NSmFMoXIw2qnNtgBUK/Zvze2iPVz07fenpQRGik=;
- b=DnADQ360Ro74icrjh8jkbYULI90uT40vTZ2NLY8XNvHIDqz+2DOglBIRiiuysnTGHf
- ZpzBUcoHW7fQOG+i0pH+t7Isshbkeyjdwt+GAaEWHe54TmBYHDdchEzq/k+tfvXGjokg
- odODOWMaa1Cs20xDXpv47TKIGiV68uvrOB9bsD/U8ShbUlidsxTfVhX4c4zGavzd2UHw
- LvD+FwS5YaTvZNkkdpOPyycex3eOuotA1GX1dLZwlo3SZxewx1i6sIwUTrNVUK3pw83v
- GZJIDa4RfcMmLPmXVTOHXzGhxF3P5ZYpiVh92FnpVbF51NwGp/53DD0ATc/PFEir+f40
- 7Qqw==
+ bh=9qpaZSRAwTnr16Gw4yfV8KXLbrwvYAE9mZVYy8k2oI8=;
+ b=FaZPcl69ndYL1rCBN93RS3DWM6mm1ZLrTe++p1jHlYNMWB5qRtZBEAFCuD31gRdECj
+ Hi4nEV4DGArG+Ebp8mEN6GzR60ItwHSd4DkF2i6sRRGa7v6x5i7rlonp16YSSYobUkxU
+ B36dUzgLY0ry1Ok6s7l8Gxxr8KHJI9d3B3UxR+OaIYALrn35OVVjoWBmX5L61/MCbHX3
+ KKrGNHLGVfkmF6vxQakmVmNfiKrg4/3nkD7fwkzPJkJlEPnRCctDOyJDdnkw2dbxVGT5
+ 6O3cmfw+AiLCxMc0tx8kFCzovrQHFBBj+nI74Z1qJxUJYBlNc7FfxOTlTXcsXLXHq4H4
+ PB9A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVwPKVGLz+YgT6i0pZfkiecGM+17rVRZXsNBKxO/PgeVhLoATGZJFxDym8oE+7OCBazP7TVa4YB1PI2@nongnu.org
-X-Gm-Message-State: AOJu0YzkOR0yhRPCfrH5KZyjR+vx/0zEEMC4s7/78HzKOorszUBc9AbN
- UNd05yhp+b3kFv98HfPsgUHv9ALDp2kFlQnFxJOqrz9cbSUUfhjD+KjaOnFQOrzxr9g=
-X-Gm-Gg: AZuq6aJLRuOmkQRB+ceiSX9R2oiaJnofmgq+WRzkovzTYlGNcLj5oqq5L4Z0KUO8i6H
- KcfmxESwEFpNY3pT8Uo70HbVl8/yKbJ1PauaD8z6VUVTiFw4/ax3qhrvwdiqzHMsWJ2Ts3nxGtT
- rNEwdVlJEIkNyHMm1fvjXRvO4GaW7Tkmjk5pG7w9cahVrg3vQJLlWsbBgpNFj/3PYi46+Lj+OOl
- doCzODM1x3/+wqh1ESjwFq/pMh85nwJU3tBo0DlFqWbNRbmayTOdQMItelqMdRbxuWKt+qQr6vd
- YE4zzwjfRif3VNXlYkMHsrA8iqPoecUjqbMrQijg2rDFob7cEuDPE0jhM/Ijoudaienf8HS0j2u
- PGtFixc1wcUDXUVfMvUKBvSJc1iuQCXCiekhxARyWoOhOpoBD202187b7FhIjmop/0YL49Dfs1U
- OXFS4L2EmyFwBtYMvskrg7jkE4nBKhng==
-X-Received: by 2002:a17:903:2ece:b0:29f:1738:348e with SMTP id
- d9443c01a7336-2a870d65001mr39496945ad.15.1769571289482; 
- Tue, 27 Jan 2026 19:34:49 -0800 (PST)
+ AJvYcCWGIQgrvarfdOlP3ScD3HMmXUnsDQGNad5ct3KcG9dAlM7iJ+Tw6VACE5f6BXYjAv9n51piORlf+KXE@nongnu.org
+X-Gm-Message-State: AOJu0YzusQ6Fu3UXhUXhZm940rJk2V7M97Lqel8/8dkUdQA0OE/pRRcb
+ z/Lc+tjLLzXGZSTH9gW/A8NyoOb4sip2ZvOCZRvisQB8puUSqNMveMK/SnbYHzJd3eA=
+X-Gm-Gg: AZuq6aJe9V8Qh6uKnnzWnkQIdJlhPJH9IzK7tUegGtdmaK/wo4YXN7F6e6g/Re/eQcp
+ LhesLiH6izIGQ0xl7/NxT0Q6HsknIB6+jQY5sVyFrXE9vaNgSqJRI1+U6TN/+9bhUBgBgH/Fa9Y
+ mX8sqCU9MJGQm9/jAxpnIbSTuHuOTMcIy4h03N3EWgHqOkm5WRUCvd5UZrBAOqvqx11aM3fNTZz
+ F2lsy2+wb9xjXUHfmcC5N+AIO2rO/7lWhAtVD22nByjETfozATnum4MmTeAN1tRePb76o1XS9P/
+ UckqN7Izeas5gUEvJhczzqrV89l9sGo9j1Dgq5RGgAIjMzesOCkodqL2JbAYySu8CmO/J9v+71l
+ u88p5LkNGjLICdukWU4MutM14G5EGN+BIHm9GFMZDg3US1RVbA2/z1M4avlcLcqNiiepQDDI3kY
+ smfB/tgSkfQbGeanPSe3wBum3hI5CA8A==
+X-Received: by 2002:a05:6a00:2402:b0:81f:40e5:34be with SMTP id
+ d2e1a72fcca58-823692cb695mr2845356b3a.46.1769571312351; 
+ Tue, 27 Jan 2026 19:35:12 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.201])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a88b6f4d04sm7375635ad.94.2026.01.27.19.34.47
+ d2e1a72fcca58-82379c1fc6esm938945b3a.47.2026.01.27.19.35.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Jan 2026 19:34:49 -0800 (PST)
-Message-ID: <cb65dfda-305e-4c2b-99be-a85c9acdf6c1@linaro.org>
-Date: Wed, 28 Jan 2026 14:34:44 +1100
+ Tue, 27 Jan 2026 19:35:11 -0800 (PST)
+Message-ID: <e392e879-a194-4af5-b6b4-8efec9f7366f@linaro.org>
+Date: Wed, 28 Jan 2026 14:35:08 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/13] Rust, i386 changes for 2026-01-27
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20260127093906.353741-1-pbonzini@redhat.com>
+Subject: Re: [PULL 0/9] tests patches
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+References: <20260127142710.131904-1-thuth@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260127093906.353741-1-pbonzini@redhat.com>
+In-Reply-To: <20260127142710.131904-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,24 +103,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/27/26 20:38, Paolo Bonzini wrote:
+On 1/28/26 01:27, Thomas Huth wrote:
+>   Hi Richard!
+> 
 > The following changes since commit f26976b9d30496d28bd4fd045f4300706e567a29:
 > 
 >    Merge tag 'pull-vfio-20260126' ofhttps://github.com/legoater/qemu into staging (2026-01-27 07:14:11 +1100)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/bonzini/qemu.git tags/for-upstream
+>    https://gitlab.com/thuth/qemu.git tags/pull-request-2026-01-27
 > 
-> for you to fetch changes up to df8dfc3b6080713c2dbd7ef37c2c85a78e502cd6:
+> for you to fetch changes up to 161ea5a63413dd5efc07205483c1070a6e859785:
 > 
->    rust/hpet: remove stale TODO comment (2026-01-27 10:37:11 +0100)
+>    tests/functional: Enforce sha256 as hashsum algorithm for all tests (2026-01-27 15:20:43 +0100)
 > 
 > ----------------------------------------------------------------
-> * rust: move binding generation to bindings/
-> * rust: fixes for Windows
-> * target/i386/tcg: fix a few instructions that do not support VEX.L=1
-> * target/i386/tcg: various cleanups
+> * gitlab: preserve base rules for container template
+> * Fix some issues to make QEMU compilable on non-mainstream distros again
+> * Enforce sha256 as hashsum algorithm for all functional tests
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
 
