@@ -4,103 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B3BCD25B7E
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 13:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FEC5D3F069
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 14:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl5vW-0005Iv-4C; Wed, 28 Jan 2026 08:49:50 -0500
+	id 1vl6EK-0006wk-V1; Wed, 28 Jan 2026 09:09:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1vl5vR-0005HU-EP
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 08:49:41 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vl6EJ-0006tz-A0
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 09:09:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1vl5vP-00027W-98
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 08:49:41 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vl6EH-0000RL-A2
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 09:09:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769608176;
+ s=mimecast20190719; t=1769609346;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bVcqnXiVv5ZuNoCGDH9ohds5DTgLVTm/6BRniTnonFc=;
- b=L+MzpMxuZXiVWfN7zz+J5pLdofbzcYs/jtL/7Effmy1HQnQKQVb7mmGklsse01Y6RVuZla
- EwkFMhefxECWMCDAIty9bXI9IFEvtISMTyOpJU4IEotmaWe4k7yxQIury8FHnPx4++TKS0
- GoPTCNmUWXvhLalGxqQhqk5wsGzh0us=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=53qmsgHHhhtIZYmTeNk3CEN0Qa6qi3oEsven3Efny7M=;
+ b=Hr5AS6pinxIK9YzWvwb7ujFJxXP0uVgdkRrKVtp8rPz8qH6NKWoawNlOx+5f38YqpfLAac
+ 9S9JxTQImI9zQaHE/SBqRP/Zw+7GJfTBI/btlwHRwEaJlu1oGjMjhuRV1zAqJFfueZxBXe
+ fl4wRDvYKPlOnv4Ypz3C1YzySbDcpUQ=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-164-YWGNz8P1PYOnhG76hrKXgA-1; Wed, 28 Jan 2026 08:49:35 -0500
-X-MC-Unique: YWGNz8P1PYOnhG76hrKXgA-1
-X-Mimecast-MFC-AGG-ID: YWGNz8P1PYOnhG76hrKXgA_1769608174
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-b8db7f340b3so185584066b.3
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 05:49:35 -0800 (PST)
+ us-mta-594-rb_IIGn_NUCVbMaPNbcfKQ-1; Wed, 28 Jan 2026 09:09:05 -0500
+X-MC-Unique: rb_IIGn_NUCVbMaPNbcfKQ-1
+X-Mimecast-MFC-AGG-ID: rb_IIGn_NUCVbMaPNbcfKQ_1769609344
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8c277fe676eso1940715685a.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 06:09:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769608174; x=1770212974; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=bVcqnXiVv5ZuNoCGDH9ohds5DTgLVTm/6BRniTnonFc=;
- b=hXG8Hk8ISden9842fAy3nuPR2s4NgrPODyty/B+uNIBNTegtpljWb0Ton89+V+XY0Y
- HxIa7Muj4Q8NLMwkZ9F/wWoxTFOajkVMGeO9Xrq4aUVma0Yo20SsD1mYv74QtiT0ndEH
- vml3PdJUCQmBklwSMCcA0oqmYQ2B+5/DTFPRNqCTvtyzQNovVpSijB2nNR9NLVL7wq8+
- IXS+KhJhoKOoDuXkwsduiTNgnR5sszmWiSfmsega4IlF/4jmNiNsBvtGbha6/Duz+BEF
- b2ST/yGuoeD4MfuMXTbzFSAwAXVrks23QI8dOe0/A/Tiq4wi8noqLVPPtsWQv4qunGZ5
- wgqA==
+ d=redhat.com; s=google; t=1769609344; x=1770214144; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=53qmsgHHhhtIZYmTeNk3CEN0Qa6qi3oEsven3Efny7M=;
+ b=omb2GY7euUNG2R8e0w2YZeiNZYVm94nUTCq69TzLcrzfmJ4GciFxX+QuRBcF9i4TMn
+ LOeDRnOmlCGr3VIDO7Lr3Vi0RZy9QYBCR4yMeIbv9t1yyTgQQJ6iH+l4c1AEUSgAFsEG
+ xkRz5/aTKscrlkDyUmuq8Yj3UQRwWGm6AWc7USD7lUoN831jgBkH7b2zw1wwQD4Z//VH
+ OWhaQP+rYbZGs9oPHaPPYqG/xs5VqfM0tQXK3iOfk5J1NpXw445poSuouniW8GmMr5qe
+ mH98ZzEquXXlsL7SwPOz3D9V6Ug+nH+semKp5/oCguUOxxBEzNF/c0iZTNmL5uZbrPRA
+ O13A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769608174; x=1770212974;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bVcqnXiVv5ZuNoCGDH9ohds5DTgLVTm/6BRniTnonFc=;
- b=kwVKX5KDyHY0l8mmaVJaKWxF5YoCo7yIQEYan2RtWtWpRqRTf1sB8l6R4Q7+eUgMn8
- 21zij9hpFJiqtc+RElYqvRiQti/0SImHZDtrYUSqVcS8GeFoDpGVvrK5VHIykm94YilS
- xphjsu8uaiTLjEnVJh6ehgHMjssqPP9YRLW5eodbvjl4dl/sHfmAY5F444EaPtHzUSvb
- gVew6KSg2bKP2Dwh9jxcTaDdsYgfoo7zJTK3my0lrKxf8aNE/jLaZlIyml4wmbUZZ5Zq
- JNbEBTkUyoA32vNHWuBKW/8VsoP200T6c0vr7da8cJPGZTJpVeK0uNYaYw/YiC659/YV
- VhmA==
-X-Gm-Message-State: AOJu0YzP7Z09wdy9aM1px+DDQMoIVqaTeKAWCb1xW5Y/frG8NWpht5mD
- p4Mcp+U8QhDRZiaYKGvcdvNs9/oiecJv8OH+3yw3UPUtxxJ5Cbiuqr1DlJjcodThwkxZXvgx543
- qG0Ez4QbERXcmxEAbcURyM6AbasYzQMr5bTihkPD/gknnBM38M5Rm9aqi
-X-Gm-Gg: AZuq6aJIPRgWiKsYrv3Um3TM54Fshcy4XAoDQgtM99XO49uDHaZexNYO+jy1slF1Wx5
- P8vB/leaQoETNqXNWMKfzCpmGzixvNmi+5jg3iAiojfaieXUts+OXWIDaTr84nI8E5+mFp+OYTN
- EH92en/shJSYCc1m3SM+I53M+wUtyZ3Gv8XKchljx6WlU524AZpi+eRsqnuJPaXHkNG70S49guk
- UN/ZGv5oLjUI3+iSaQ2ZRujpneEhM0Xql9l7DEqzQVEU8OTAmbxKFiryDMdn7qVbJ/u3zNZz0nU
- 2PnBzGqtwez5qFXS1CnJuKwLLPjRK1yVjuoj0jiigUtQ/EoMOWOAWyCnBy7MQjBiFw==
-X-Received: by 2002:a17:906:dc93:b0:b87:bb45:bd5a with SMTP id
- a640c23a62f3a-b8dab361923mr402808866b.27.1769608173915; 
- Wed, 28 Jan 2026 05:49:33 -0800 (PST)
-X-Received: by 2002:a17:906:dc93:b0:b87:bb45:bd5a with SMTP id
- a640c23a62f3a-b8dab361923mr402806466b.27.1769608173392; 
- Wed, 28 Jan 2026 05:49:33 -0800 (PST)
-Received: from fedora ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b8dbef86deesm129324166b.3.2026.01.28.05.49.32
+ d=1e100.net; s=20230601; t=1769609344; x=1770214144;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=53qmsgHHhhtIZYmTeNk3CEN0Qa6qi3oEsven3Efny7M=;
+ b=AScL5JhX7rljOoVDX/uhn6BOj2uMdYR9rwAMhcQvpN2kMpTrAnCUdj7ZvwS6pM29QF
+ torQW8dVxpSlh2GK49z+r65/NtiQFAymzPuuJrTF2af9y1eYHT3Rpi6CBJrPjEVCp0I8
+ PdM6+Qm8qhX7PP31LhysAKbfCTlitk63+gkU9/19xtfwyb4Ew4Pz9727EzYVUC4WNO6I
+ 9z9QMxAQHZTuG3E8hFJeXbI/Cn5HsSjIo66lm6VYLAGwM1AiX9RubMKx8WQXW9SfhALy
+ 2X4m70Tx69sXmWNflYnms7StaMHZ+4ArScTWqsxlFPmb4ICUHqEaZwoAEk1NHRi3eS3z
+ j9iA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVvQ+HPfBw68+Aywoc0OCLf9bt/dWrdgQYLWNPJc/YkB59fI5kV2SPCnX1UqhF4sqTz6aZJR9SfUXeL@nongnu.org
+X-Gm-Message-State: AOJu0Yy9SvDNDIEcEt7+If9PBguptROKn6nC/yg3DSZrEdob7gMiq0I5
+ 37tdFHPPfGQ7HQ/qSlNYTmubJcYUn3Wv6EW6heVLlD/0LsGmIDyGrB40hvhPa33c06/gZnxM3Do
+ L6U5G4QkU1Zx5OitEJsRH7fySkmhJOiuzqrVtHoz9Y/R8u7llPI8zxAuq
+X-Gm-Gg: AZuq6aKzb9e3SB45dikvAHlBow6MSC3CzgcGVmQPsFuFdbTLTl/pICicNX1NGRylFVW
+ MQIRZUbALwcaIxEMDA+Fr4sHohxbxA0cRRTqNSsPQ3dJFM8SFs0bczeh6EHrm/VvP3cor15w4na
+ loSk01sfQL8CSu7Gz1541gYwasfXiHFYkViA6d+HCJz1M3PjveivfMaevwJIrU1423OSLiDTTCK
+ 0LW4r3m3XVk++2/fmbGEOwMEScGp4+pdPUgTd0fV0UUsya9xiDnGmiuvtbP7QX0dzV5vvhFLfG7
+ hcoxvVt43flmrdFKeLG6Pa4qgn8Rl5APvqmcZ0yUqQA28FQr9jsuWJZB2QZahA6W65g2qCDJ6pq
+ RyW8=
+X-Received: by 2002:a05:620a:4b48:b0:8c7:fdc:e86c with SMTP id
+ af79cd13be357-8c70fdce9a8mr364366785a.11.1769609344416; 
+ Wed, 28 Jan 2026 06:09:04 -0800 (PST)
+X-Received: by 2002:a05:620a:4b48:b0:8c7:fdc:e86c with SMTP id
+ af79cd13be357-8c70fdce9a8mr364362985a.11.1769609343808; 
+ Wed, 28 Jan 2026 06:09:03 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8c711b95acbsm186136585a.12.2026.01.28.06.09.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jan 2026 05:49:32 -0800 (PST)
-Date: Wed, 28 Jan 2026 14:49:30 +0100
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Cindy Lu <lulu@redhat.com>, Zhang Chen <zhangckid@gmail.com>, 
- eperezma <eperezma@redhat.com>
-Subject: Re: [PATCH 4/4] migration: Pass network packets received during
- switchover to dest VM
-Message-ID: <fpo57gscqhtcpdomfrwadexd3ierhmax4dqflqzfsuazo2secu@2em7v5gw7vmr>
-References: <20260127140316.4187221-1-jmarcin@redhat.com>
- <20260127140316.4187221-5-jmarcin@redhat.com>
- <CACGkMEtO93AjdUMD7tGzyLH2Q-PVewxMgxxTgKBpnR-bTwOd9w@mail.gmail.com>
+ Wed, 28 Jan 2026 06:09:03 -0800 (PST)
+Date: Wed, 28 Jan 2026 09:09:01 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Lukas Straub <lukasstraub2@web.de>, qemu-devel@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhang Chen <zhangckid@gmail.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Markus Armbruster <armbru@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Juan Quintela <quintela@trasno.org>
+Subject: Re: [PATCH v3 04/10] multifd: Add COLO support
+Message-ID: <aXoYfad-i-au-xpM@x1.local>
+References: <20260125-colo_unit_test_multifd-v3-0-ae926ccd8eae@web.de>
+ <20260125-colo_unit_test_multifd-v3-4-ae926ccd8eae@web.de>
+ <87ms20h2ae.fsf@suse.de> <20260126203358.0f8dc224@penguin>
+ <878qdkgin8.fsf@suse.de> <aXkh0Sy9WUqi_3Rr@x1.local>
+ <87v7glgbrz.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACGkMEtO93AjdUMD7tGzyLH2Q-PVewxMgxxTgKBpnR-bTwOd9w@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+In-Reply-To: <87v7glgbrz.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -125,137 +126,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jason,
+On Wed, Jan 28, 2026 at 09:30:24AM -0300, Fabiano Rosas wrote:
+> >> >> > @@ -294,6 +294,14 @@ int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp)
+> >> >> >          p->zero[i] = offset;
+> >> >> >      }
+> >> >> >  
+> >> >> > +    if (migrate_colo()) {
+> >> >> > +        multifd_colo_prepare_recv(p);
+> >> >> > +        assert(p->block->colo_cache);
+> >> >> > +        p->host = p->block->colo_cache;  
+> >> >> 
+> >> >> Can't you just use p->block->colo_cache later? I don't see why p->host
+> >> >> needs to be set beforehand even in the non-colo case.
+> >> >
+> >> > We should not touch the guest ram directly while in colo state, since
+> >> > the incoming guest is running and we either want to receive and apply a
+> >> > whole checkpoint with all ram into colo cache and all device state,
+> >> > or if anything goes wrong during checkpointing, keep the currently
+> >> > running guest on the incoming side in pristine state.
+> >> >
+> >> 
+> >> I was asking about setting p->host at this specific point. I don't think
+> >> any of this fits the unfill function. However, I see those were
+> >> suggested by Peter so let's not go back and forth.
+> >
+> > Actually I don't know why p->host existed before this work; IIUC we could
+> > have always used p->block->host.  Maybe when Juan was developing this Juan
+> > kept COLO in mind; or maybe Juan wanted to avoid frequent p->block pointer
+> > reference.
+> >
+> 
+> Maybe p->block was being reset at some point and p->host was passed
+> being the point where the (whatever) lock was release. I checked and
+> today there's no such thing. The p->mutex seems to be there just to
+> protect against this in multifd_recv_sync_main:
+> 
+> WITH_QEMU_LOCK_GUARD(&p->mutex) {
+>     if (multifd_recv_state->packet_num < p->packet_num) {
+>         multifd_recv_state->packet_num = p->packet_num;
+>     }
+> }
 
-On 2026-01-28 10:55, Jason Wang wrote:
-> On Tue, Jan 27, 2026 at 10:04 PM Juraj Marcin <jmarcin@redhat.com> wrote:
-> >
-> > From: Juraj Marcin <jmarcin@redhat.com>
-> >
-> > During migration switchover both the source and the destination machines
-> > are paused (compute downtime). During this period network still routes
-> > network packets to the source machine, as this is the last place where
-> > the recipient MAC address has been seen. Once the destination side
-> > starts and sends network announcement, all subsequent frames are routed
-> > correctly. However, frames delivered to the source machine are never
-> > processed and lost. This causes also a network downtime with roughly the
-> > same duration as compute downtime.
-> >
-> > This can cause problems not only for protocols that cannot handle packet
-> > loss, but can also introduce delays in protocols that can handle them.
-> >
-> > To resolve this, this feature instantiates a network filter for each
-> > network backend present during migration setup on both migration sides.
-> > On the source side, this filter caches all packets received from the
-> > backend during switchover. Once the destination machine starts, all
-> > cached packets are sent through the migration channel and the respective
-> > filter object on the destination side injects them to the NIC attached
-> > to the backend.
-> >
-> > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-> > ---
-> >  include/migration/vmstate.h |   6 +
-> >  include/net/net.h           |   5 +
-> >  migration/meson.build       |   1 +
-> >  migration/migration.c       |  49 ++++++-
-> >  migration/migration.h       |   2 +
-> >  migration/netpass.c         | 246 ++++++++++++++++++++++++++++++++++++
-> >  migration/netpass.h         |  14 ++
-> >  migration/options.c         |  21 +++
-> >  migration/options.h         |   1 +
-> >  migration/savevm.c          |  37 ++++++
-> >  migration/savevm.h          |   2 +
-> >  migration/trace-events      |   9 ++
-> >  net/net.c                   |  11 ++
-> >  net/tap.c                   |  11 +-
-> >  qapi/migration.json         |   7 +-
-> >  15 files changed, 418 insertions(+), 4 deletions(-)
-> >  create mode 100644 migration/netpass.c
-> >  create mode 100644 migration/netpass.h
-> >
-> > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-> > index 62d7e9fe38..7987e6c85a 100644
-> > --- a/include/migration/vmstate.h
-> > +++ b/include/migration/vmstate.h
-> > @@ -200,6 +200,12 @@ typedef enum {
-> >       * save_setup() in VMSD structures.
-> >       */
-> >      VMS_PHASE_EARLY_SETUP,
-> > +    /*
-> > +     * Specifies a netpass VMSD, these devices are copied right after the
-> > +     * destination is started regardless of precopy/postcopy. Failure in this
-> > +     * phase does not fail the migration in case of precopy.
-> > +     */
-> > +    VMS_PHASE_NETPASS,
-> >  } VMStateSavePhase;
-> >
-> >  struct VMStateDescription {
-> > diff --git a/include/net/net.h b/include/net/net.h
-> > index 45bc86fc86..510908845b 100644
-> > --- a/include/net/net.h
-> > +++ b/include/net/net.h
-> > @@ -82,6 +82,7 @@ typedef void (NetAnnounce)(NetClientState *);
-> >  typedef bool (SetSteeringEBPF)(NetClientState *, int);
-> >  typedef bool (NetCheckPeerType)(NetClientState *, ObjectClass *, Error **);
-> >  typedef struct vhost_net *(GetVHostNet)(NetClientState *nc);
-> > +typedef void (NetpassEnabledNotify)(NetClientState *nc, void *opaque);
-> >
-> >  typedef struct NetClientInfo {
-> >      NetClientDriver type;
-> > @@ -130,6 +131,9 @@ struct NetClientState {
-> >      bool is_netdev;
-> >      bool do_not_pad; /* do not pad to the minimum ethernet frame length */
-> >      bool is_datapath;
-> > +    bool netpass_enabled;
-> > +    NetpassEnabledNotify *netpass_enabled_notify;
-> > +    void *netpass_enabled_notify_opaque;
-> >      QTAILQ_HEAD(, NetFilterState) filters;
-> >  };
-> >
-> 
-> Adding Cindy, Eugenio can Chen.
-> 
-> I think we can simple reuse the existing filters:
-> 
-> redirector: which can redirect traffic from the source to the
-> destination via chardev
-> buffer: which can hold the packets until the destination is released
-> 
-> And let the libvirt install/uninstall those filters at the correct time.
-> 
-> Which means:
-> 
-> On the source: there would be a redirector that can be enabled when vm
-> is paused, and it redirect the traffic to a socket/chardev
-> On the destination: there would be a redirector as well as the buffer,
-> redirector receives packets from the socket and send it to buffer,
-> buffer will hold those packets until VM in the destination is resumed.
-> 
-> The current filters need some tweaks (e.g letting filters (redirector)
-> work when VM is paused). The advantages of this are:
+It should be protected by various checks over migration_is_running().
 
-I tested the idea of filters for the forwarding using the existing
-filters first and it does work with mentioned tweaks, however this
-requires additional channel between chardevs attached to filters.
+E.g., QMP device-add & device-del are forbidden so no new pc-dimm hotplug /
+removal allowed.  Similarly, virtio_mem_is_busy() would return true during
+migration too.
 
-In my opinion it was better to reuse already existing migration channel,
-so there are no necessary changes in higher layers. Furthermore, by
-implementing this directly in QEMU, this feature can be used anywhere,
-even if libvirt is not used.
+We should definitely make sure ramblock will not be reset during the whole
+lifecycle of migration; I believe we're not ready for that..
 
-> 
-> 1) reuse the existing filters
-> 2) don't need to care about the vhost support on the source as vhost
-> is disabled, for vDPA we can reuse shadow virtqueue
-
-Can you elaborate more on vhost being disabled? IUUC QEMU net filters
-don't support vhost=on, including the redirector filter.
-
-> 3) for the destination we can install a redirector to packet socket to
-> let vhost works like socket -> redirector -> buffer -> redirector ->
-> packet socket.
-> 
-> Thanks
-> 
+-- 
+Peter Xu
 
 
