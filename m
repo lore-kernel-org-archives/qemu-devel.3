@@ -4,109 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 414F2D3F069
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 14:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F332AD3F06D
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 14:29:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl6XE-0004ss-BP; Wed, 28 Jan 2026 09:28:44 -0500
+	id 1vl6X8-0004nB-69; Wed, 28 Jan 2026 09:28:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vl6XC-0004rD-Q1
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 09:28:42 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vl6X6-0004lf-NQ
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 09:28:36 -0500
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vl6XB-0007fx-BG
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 09:28:42 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vl6X5-0007fK-7u
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 09:28:36 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id B34215BD01;
- Wed, 28 Jan 2026 14:28:34 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id ECF3A5BCFD
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 14:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769610514; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769610513; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xQ10usX/WHgd6v2RQR3XTf0e92BR4F6G56fYL0JcAak=;
- b=gvrqx3BM1Kfvs0jeo3udVwKm07Nhv+NNJ8ND70+rbEavAGCMIYjT7MEvhhZ5iBtu7KX+Ir
- MQLW9UsZoVtN4fZya3m3+48MZZHUkagPnsFW+iZSOslWD44yyGuC3ZtNr37Fw48PEA5mjg
- RhgaXFM3hOYDJp+APJy/uKyu9lxSWtA=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=vaxmxgeQdQ+jWP+wIY8fd26GIlef/k203+L/df2KZek=;
+ b=oiA7EUpcjsnZuduDQ+VQPyo0xEqJLcRDNGdZxN0ZZGHk59QwJVzzJADg+BZWPz2jwrn6bc
+ ZJ8FTv1baZvZ2XO3mVh6aOqr3avFRnLQcwKNgcfBIqm2jXOSrLM4u2/g8rGtjNMDGPitOl
+ rSjwxrugz6SCHZ34x4/xnM9dKT2qCN0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769610514;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ s=susede2_ed25519; t=1769610513;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xQ10usX/WHgd6v2RQR3XTf0e92BR4F6G56fYL0JcAak=;
- b=HtXSC8QsWWDsxyWVA+FguYtYv6f7XxAH1ncyyqYYCUrxuasg6rTKTgxJt6Lus9LFoknM3G
- lDEQbZDhZgLkEyBA==
+ content-transfer-encoding:content-transfer-encoding;
+ bh=vaxmxgeQdQ+jWP+wIY8fd26GIlef/k203+L/df2KZek=;
+ b=a9+HMSBkhRf/CY0MSubiSo0+7iFzi7EKae4NfPDQPWUJaL/SGc2cPEHmPpwuylRXirXsnf
+ ysR5SEv9Qex9iBDg==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=gvrqx3BM;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=HtXSC8Qs
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769610514; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1769610512; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xQ10usX/WHgd6v2RQR3XTf0e92BR4F6G56fYL0JcAak=;
- b=gvrqx3BM1Kfvs0jeo3udVwKm07Nhv+NNJ8ND70+rbEavAGCMIYjT7MEvhhZ5iBtu7KX+Ir
- MQLW9UsZoVtN4fZya3m3+48MZZHUkagPnsFW+iZSOslWD44yyGuC3ZtNr37Fw48PEA5mjg
- RhgaXFM3hOYDJp+APJy/uKyu9lxSWtA=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=vaxmxgeQdQ+jWP+wIY8fd26GIlef/k203+L/df2KZek=;
+ b=hyQ5OEYr9LwYKL+qJnaEcarnJ8OmlAdHNunwA3n9YjEgt1tUixqr9ZD7ZAJilc0Rph88Cl
+ eCoxpRVPCKBYCdbHuAHVCBwU5+b6tPAmTd9Lixd0R6ORnfNE1PbpSZMkKMapmdkqFIObkC
+ 2AAxLLmqYoDmhYrGQpuQcaKza1q2YVQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769610514;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ s=susede2_ed25519; t=1769610512;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
  mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xQ10usX/WHgd6v2RQR3XTf0e92BR4F6G56fYL0JcAak=;
- b=HtXSC8QsWWDsxyWVA+FguYtYv6f7XxAH1ncyyqYYCUrxuasg6rTKTgxJt6Lus9LFoknM3G
- lDEQbZDhZgLkEyBA==
+ content-transfer-encoding:content-transfer-encoding;
+ bh=vaxmxgeQdQ+jWP+wIY8fd26GIlef/k203+L/df2KZek=;
+ b=n3qlFPDtJYwJ5MOCeWscv2tBQrwhi4Lka6EPqe2hZ31RYyHjS2KRYcRvJKuLVdjPhHB2UW
+ yXwVmFCBBR6m7CAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 694E23EA61;
- Wed, 28 Jan 2026 14:28:33 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1E1573EA61
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 14:28:31 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id SCYJCxEdemlFfwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 28 Jan 2026 14:28:33 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id dy9DNA8demlFfwAAD6G6ig
+ (envelope-from <farosas@suse.de>)
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 14:28:31 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Subject: [PATCH 1/3] tests/functional/migration: Use socket_dir
-Date: Wed, 28 Jan 2026 11:28:27 -0300
-Message-ID: <20260128142829.25326-2-farosas@suse.de>
+Subject: [PATCH 0/3] tests/functional: Fix ppc64 issue with make -j
+Date: Wed, 28 Jan 2026 11:28:26 -0300
+Message-ID: <20260128142829.25326-1-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260128142829.25326-1-farosas@suse.de>
-References: <20260128142829.25326-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ RCPT_COUNT_ONE(0.00)[1]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ PREVIOUSLY_DELIVERED(0.00)[qemu-devel@nongnu.org];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: B34215BD01
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_NONE(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, imap1.dmz-prg2.suse.org:helo,
+ gitlab.com:url]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
  envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
@@ -130,39 +113,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use QemuBaseTest.socket_dir instead of calling tempfile directly so
-all tests have consistent directory prefixes.
+As reported in [1], running the ppc64 functional tests in parallel is
+currently broken due to one test importing another and causing
+unittest.main to instantiate the imported test twice. Fix by removing
+the dependency between tests.
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/functional/migration.py | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+1- https://lore.kernel.org/r/aXOGKb88Yho2jb_o@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/2289828999
 
-diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-index 2bfb1f7790..0aa873edba 100644
---- a/tests/functional/migration.py
-+++ b/tests/functional/migration.py
-@@ -11,7 +11,6 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
--import tempfile
- import time
- 
- from qemu_test import QemuSystemTest, which
-@@ -65,9 +64,8 @@ def migration_with_tcp_localhost(self):
-             self.do_migrate(dest_uri)
- 
-     def migration_with_unix(self):
--        with tempfile.TemporaryDirectory(prefix='socket_') as socket_path:
--            dest_uri = 'unix:%s/qemu-test.sock' % socket_path
--            self.do_migrate(dest_uri)
-+        dest_uri = 'unix:%s/migration.sock' % self.socket_dir().name
-+        self.do_migrate(dest_uri)
- 
-     def migration_with_exec(self):
-         if not which('ncat'):
+Fabiano Rosas (3):
+  tests/functional/migration: Use socket_dir
+  tests/functional/migration: Accept vm objects in do_migrate
+  tests/functional/ppc64: Remove custom migration routine
+
+ tests/functional/migration.py            | 31 ++++++++++++++----------
+ tests/functional/ppc64/test_migration.py | 11 ---------
+ tests/functional/ppc64/test_pseries.py   |  6 +++--
+ 3 files changed, 22 insertions(+), 26 deletions(-)
+
 -- 
 2.51.0
 
