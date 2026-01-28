@@ -4,91 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B3ED46BE0
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 17:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 554DAD46BE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 18:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl9ef-0001C0-0V; Wed, 28 Jan 2026 12:48:37 -0500
+	id 1vlA2y-0006uy-D6; Wed, 28 Jan 2026 13:13:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vl9eY-00019n-MM
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:48:31 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vlA2x-0006uB-7h
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 13:13:43 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vl9eW-0001iP-Sb
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:48:30 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-435903c4040so114661f8f.3
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 09:48:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vlA2v-0002hi-MZ
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 13:13:43 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-3540266d356so45982a91.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 10:13:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769622507; x=1770227307; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bj5ufOGr/9lEHh2xwuGdrDse0fcL/BvnanZmIrsO+rg=;
- b=Dy0km1IDq0O81ntQ3cLsE3wN648ht+iySK6Qj6sH6sXASYIlP277SxKAlbNfW0bDC2
- TU7e1PcTgyVPS4Br2DOUkJVA67SOd0tZ73IEs//IuwEhGGnvaSRZw04pA6XrusxFqYJK
- i4JuiJmkUr9LWV3pJYK3vJT+LDtANqKQq1tunPwDc90Jsd/mLGbtc2pD42wzKMAWhXuj
- FUSA+rxx4s6bhR/6lkCQYrfNvC8PFwTUnyqFbVDt5R4Rvxt+3/FZOXhH3DLapmW2Uzuh
- Epan2PweyZPgynCfv9/KkwkwYC6qzNwQOxBj/2xFyaurv4yAPZJqlubGP4tKh5XWXYcX
- dkbA==
+ d=linaro.org; s=google; t=1769624020; x=1770228820; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:subject:from:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=9H65GqOasZHtJ1PHcnmkFJKUeF8wOBvmcJB3jyV1ebA=;
+ b=L9lmSa/+vyd7MSa3/ru+M5SJiL3dal7i5/5jTrOvmCiyioWZM6kuxs0S4GOGBsh/j4
+ l3HOMsKZnVex434Zcv3YK1jGM3/wB/bjwBIM0+fCgOgjc4rouCyoSmS+m9bplg9yjNE/
+ 1lvsODRf6kVw7f7MURcehgvMfeSyakq8wKg56NspeBYc6Ks0R08cKgKjzNwbL+sIulFZ
+ g1XzYA8dFryPy/DeNmA6JVbN30U2VPcxUO5Vuv2pC7h3cUdN7dA2CmpAZS3auLlPNVTr
+ tLrk1GmXoFwIWI5rng8PHcaaSwNp0z/Z5uzDDnb4DbiUxQPXz6axyGpBy14g16YAPoEU
+ mITA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769622507; x=1770227307;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bj5ufOGr/9lEHh2xwuGdrDse0fcL/BvnanZmIrsO+rg=;
- b=XrtqQwrt79c7STrAjLHS3ajAsH5g5Suy/uxekarrpJeyurgZBsIO+SvubysRZMhZet
- cuTc5iUm10j10QvV9xOJLAeTF6jOCl6wNkxxrAGw+Xs5x33LEaXBFESBn2mDZGpCW37M
- e3JRPT4fwLtv3VTM78uXfs3QMTdH5r3uIgEq7LYwE9HRUT0fgZtZFw08gzETwFwgPssA
- vyD2/N3SLP9MSP5ytHgG2KRp3dZkC40DH3O6r/rcqUhRR7iT1XvOEmjDI8dnAAa389D/
- 9XqpsI60fBflpMQpzK4lQFvzklZmVd2nGTx2lx66VLPX6RTe9eG2vwVGPrljut4InPe7
- PwAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXT7UQdVxb/2d7vps94vG9Yhle4wQRT3QCJ5wJpVLC81hFFRc1yFv12v7fX0e3ym6UqkT5bjtY60/qI@nongnu.org
-X-Gm-Message-State: AOJu0Yx1+iV8ifUe5WBsOh4X4IpqKqSF3xS9MbXNye77CA+OK+59++Um
- dqOPwEBJ2CLgvRJAt2GlwdJWjGIQukZbgnTNxBcz3tpRRbykBjaYUMl0COnavWtRHAc=
-X-Gm-Gg: AZuq6aKZzQRDgdN0DaFBDkj3lCtAespXFfF/FF0nt066s3Ur4DWgr2RmR4khcWY6rgZ
- Tk5+k7UwJKE+H3CnTEqPCCne9qdfVhpGl8ZPid+btYHE2ViT0Ng80mxQnsUVk0i2iTpKwVJQ1+N
- XE1ZHBmQ2dJfMNASgyzWiYYqXYbdnFVrkKVZrTEq6VYSF2ZpMD3r6I0wsPnTFbHOqg56mcj1Ac0
- P9GeLtdt4iFBcTh+M6DwHFnQg/TY09EdwTP4B5I/d54ef8Fs/rS4Uhhj8WVLKJRuGGnuc7Yk40M
- oK8zqoMJ95fnU1v+6xCzPr5tOUjJ7fmTqv8R2lGJeX4r+UmvmHr5cJJ7dzQpKVP8K1kpPh8k2b0
- X13fcrC7OzJBGc+lrjHzsQk+QWjkBdblqAjLi+f7oXPdsiZ5FKtOkIDrsIxQbwSa339cc/tvOMq
- whi1JI7riGqR7V3i7fvIshdw==
-X-Received: by 2002:a05:6000:2081:b0:432:dfa8:e1b6 with SMTP id
- ffacd0b85a97d-435dd0b6a75mr9548688f8f.39.1769622506629; 
- Wed, 28 Jan 2026 09:48:26 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131cfd4sm8218361f8f.25.2026.01.28.09.48.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jan 2026 09:48:25 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E3D155F895;
- Wed, 28 Jan 2026 17:48:24 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,
- qemu-arm@nongnu.org,  artem_mygaiev@epam.com,
- volodymyr_babchuk@epam.com,  takahiro.nakata.wr@renesas.com,  "Edgar E .
- Iglesias" <edgar.iglesias@gmail.com>,  Ruslan_Ruslichenko@epam.com
-Subject: Re: [PATCH 00/27] hw/arm: Add generic FDT-based machine and
- infrastructure
-In-Reply-To: <CAN-aV1EjYwSRfV87YQdtfqU5CH8Bsssr3EvStPWL2_VFOs4N4w@mail.gmail.com>
- (Ruslan Ruslichenko's message of "Tue, 27 Jan 2026 19:18:10 +0100")
-References: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
- <CAFEAcA9NEjaUBX19sdw9TRCKcKn8CQfvoVNZ+VaXOcNZ8kf24g@mail.gmail.com>
- <CAN-aV1EjYwSRfV87YQdtfqU5CH8Bsssr3EvStPWL2_VFOs4N4w@mail.gmail.com>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Wed, 28 Jan 2026 17:48:24 +0000
-Message-ID: <87ecn9aas7.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1769624020; x=1770228820;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:subject:from:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9H65GqOasZHtJ1PHcnmkFJKUeF8wOBvmcJB3jyV1ebA=;
+ b=ma9v39dSEeTX89SbFSm6aiE9qISfwAsLl25lc7u8wLcYv78K/KXYvSraU6Zy+V4W3f
+ F6pZhYHpcRdaJxPMlJR6WPsGsr2Ldlk7m/rdMJNZKdoZ8k9U5EgWHMXZ7rBugOJlLVru
+ WIFXghYIjE+drtx1bLEUeTs/mhddXfkt50dIppPbXhCE1pM7540V+XrpShyy0/8Iu37y
+ QMSNyXlQTS4oK3a7U0TxSaTpVzLg2a3sq1Cfn8F5G9FvWfiarXVkL6vHRLIeWFI6aMLa
+ SHSHsybpi4W/4XATw4eU9TEBfU0CYgxY0n2weHB1ukaRq0b5vztBHtld8O+Q0exuiHzj
+ IZaA==
+X-Gm-Message-State: AOJu0YwDzod92+ZeWbTxLS9OiKheZRzXoQobeTUmEUVk69EFAEiVYmYr
+ 6cVYR4kpmoUVcqP6JsRLCBdg9B6WNZpmY+NF8X6pqPnNXOjtSbHFZdxhH3cVT7r3Hzo=
+X-Gm-Gg: AZuq6aKp5mEFOvFPtTe7AsTns8MJSuHw8to+LMpNDqRtbpYCViWOxm8/6Dms4erXfZN
+ 6lapu4aKSBvkoUATbr/vWRoHqhBsmo4qiKM7hNd4DikFyhJFZzkYa9l6H7Ivbra/0C+BhD9Z5DF
+ GcTHJxGSDDJhjgcFArhsT6aIF0cA7rODNQXMSSv9ckIL5Jms4d6LJuN5/WcDkFL20qDeBao1ClL
+ H5HVaydEgCuz06T9CoCdjklR6gQUGYDEEDwaDQIOpbn2oECmomYs5KCulbVJQzjvxql8/Q1sVLY
+ hZMd4obbk1E5HPJTJONywVA6rqNNED2VRFu/9ApKkaT7oELuRirZv+OeTKKPfecD35MXnuz9+lt
+ K/+S0I/5jm1EMpAg+W9+Z0jYOy7O5y34xC2VJWLAbKA9ETfWfiU9eR2SghMDfO689vG7lGaSuuE
+ nYl4eG09zrWSNh0ZUc+iHyjXQ6P5yE/e7U+86BSDfQXtDVHHZ0fvAA1jKg
+X-Received: by 2002:a17:90b:1dc1:b0:34c:2db6:57d5 with SMTP id
+ 98e67ed59e1d1-353febd9b18mr5162481a91.0.1769624019960; 
+ Wed, 28 Jan 2026 10:13:39 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-353f61e0230sm6220494a91.11.2026.01.28.10.13.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Jan 2026 10:13:39 -0800 (PST)
+Message-ID: <1d9b0101-a5a3-45e8-b647-dd23d3b7c274@linaro.org>
+Date: Wed, 28 Jan 2026 10:13:38 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+User-Agent: Mozilla Thunderbird
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v4 03/11] plugins: use complete filename for defining
+ plugins sources
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>,
+ Michael Roth <michael.roth@amd.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>
+References: <20260124182921.531562-1-pierrick.bouvier@linaro.org>
+ <20260124182921.531562-4-pierrick.bouvier@linaro.org>
+ <87cy2uat5e.fsf@draig.linaro.org>
+ <1daa47ef-c2b5-4fae-aec7-744c5411a7e0@linaro.org>
+ <87pl6tabuo.fsf@draig.linaro.org>
+Content-Language: en-US
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <87pl6tabuo.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,83 +151,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ruslan Ruslichenko <ruslichenko.r@gmail.com> writes:
-
-> On Tue, Jan 27, 2026 at 11:03=E2=80=AFAM Peter Maydell <peter.maydell@lin=
-aro.org> wrote:
+On 1/28/26 9:25 AM, Alex Bennée wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+> 
+>> On 28/1/26 12:11, Alex Bennée wrote:
+>>> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+>>>
+>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>> ---
+>>>>    contrib/plugins/meson.build   | 10 +++++-----
+>>>>    tests/tcg/plugins/meson.build |  7 +++++--
+>>>>    2 files changed, 10 insertions(+), 7 deletions(-)
+>>>>
+>>>> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+>>>> index 6915ffa5fbc..3d2d7862e0c 100644
+>>>> --- a/contrib/plugins/meson.build
+>>>> +++ b/contrib/plugins/meson.build
+>>>> @@ -1,15 +1,15 @@
+>>>> -contrib_plugins = ['bbv', 'cache', 'cflow', 'drcov', 'execlog', 'hotblocks',
+>>>> -                   'hotpages', 'howvec', 'hwprofile', 'ips', 'stoptrigger',
+>>>> -                   'traps', 'uftrace']
+>>>> +contrib_plugins = ['bbv.c', 'cache.c', 'cflow.c', 'drcov.c', 'execlog.c',
+>>>> +                   'hotblocks.c', 'hotpages.c', 'howvec.c', 'hwprofile.c',
+>>>> +                   'ips.c', 'stoptrigger.c', 'traps.c', 'uftrace.c']
+>>> Argh this keeps conflicting with other changes. Maybe we should make
+>>> this a dumb list:
+>>>     contrib_plugins = [ ]
+>>>     contrib_plugins += 'bbv.c'
+>>>     contrib_plugins += 'cache.c'
+>>> etc?
 >>
->> On Mon, 26 Jan 2026 at 17:43, Ruslan Ruslichenko
->> <ruslichenko.r@gmail.com> wrote:
->> >
->> > From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
->> >
->> > This patch series introduces new ARM machine model, arm-generic-fdt, a=
-nd the underlying infrastructure required to instantiate a QEMU machine fro=
-m a Device Tree.
->>
->> I'm afraid this has been a feature that has been suggested from
->> time to time, but which I don't think is workable in general.
->>
->> Device tree files are designed to provide enough information to
->> the guest kernel to allow it to find non-probeable hardware. They
->> are not designed to provide enough information to QEMU to allow
->> it to create and wire up all the hardware present on the system.
->>
->> There are specific niches where it can be made to work -- I think
->> Xilinx have or had a setup where they were generating an FPGA
->> model and a device tree and a guest kernel all from the same
->> single data source, so they could put everything necessary into
->> the dtb, for example -- but I don't think it works in the
->> general case. As one simple example, the DTB doesn't generally
->> have any information about how the Secure world works in an Arm
->> system, because Linux doesn't care about the Secure world. It
->> also doesn't usually have information that the guest OS can
->> probe for itself at runtime.
->>
->> There has been periodic discussion of more flexible user-driven
->> board creation, but that has generally been with the idea of using
->> the QMP monitor to orchestrate creation and connection of device
->> models.
->>
-> I agree that a guest Device Tree is insufficient for describing a
-> complete QEMU machine model.
-> However, we separate the guest configuration from the machine
-> definition. The -hw-dtb option allows the user to provide a
-> QEMU-specific system description.
-> Those hw-dtb would not be passed to Linux Guest VM.
->
-> The fact that this workflow has been successfully used in production
-> by AMD/Xilinx demonstrates that FDT is a feasible format.
+>> This applies fine as of commit 9ad7f544c69, on what are you based?
+> 
+> plugins/next ;-)
+> 
+> Pierrick is going to deal with the pain now in his first PR!
+> 
 
-Where are the extensions to the FDT used for hw-dtb documented? How does
-it deal with PCI devices and the Secure world?
+Enjoying the rebase process now :)
 
-> In contrast, QMP usage may end up even more complex and less
-> maintainable for the task of full system modeling.
-> To my understanding, this would need to generate too long configs,
-> which may eventually require some intermediate format by itself.
->
-> I am proposing to use FDT as a serialization format to describe a
-> machine configuration. Theoretically we can use other formats, like
-> XML, but in my opinion FDT perfectly matches the requirements.
+We agreed with Alex I won't do the array change to not delay further 
+series in flight, since this additional commit won't be reviewed and 
+need to be sent to the maili
 
-The QMP interface is self-documenting and introspectable and used for
-the management of QEMU including things like hotplug. It is also QOM
-aware so a natural fit for dealing with the underlying QOM machinery.
-
-Previous discussions have entertained the idea of making the parsing of
-hw-dtb an external script which would then translate into QMP commands
-to build up the machine.
-
->
-> BR,
-> Ruslan Ruslichenko
->
->
->> thanks
->> -- PMM
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
