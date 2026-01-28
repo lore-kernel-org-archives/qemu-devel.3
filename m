@@ -4,95 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6176CD2FEFD
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Jan 2026 23:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF576D35663
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 01:06:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkspy-0000Uk-4e; Tue, 27 Jan 2026 18:51:10 -0500
+	id 1vku0J-0003tv-SS; Tue, 27 Jan 2026 20:05:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vkspw-0000US-Ae
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 18:51:08 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vku0B-0003ky-Jj
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 20:05:47 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vkspu-0007Y8-CK
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 18:51:08 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43246af170aso222458f8f.0
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 15:51:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vku0A-0003fP-1F
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 20:05:47 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-34be2be4b7cso3403536a91.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 17:05:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769557864; x=1770162664; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Tzvf+JC46AVmQMcqvVrXMY2wwN0IyvSBHdRsns2W3Vc=;
- b=GdlezwSvdBpZCA83dfOrjhzX6tX6cpZdxoYR6TaJVxeOnYm6olZhr1jJEksh+PQvsJ
- s19mYw5VeSBfx8tXdFzqsQuPHtF5Yu0Jq6652ZTMyE8VsyG4a1cqouKOqiTP6h3/6RhC
- 7LPJ1MHJjP76Zo3y5OYVQqbhW0Nrhu16L3FXxdkMejH+mVwVhOhSn7YUKfCwdtHuYeW+
- U9zGrYlFLl7vwEV/UuFgr8Tg4TWFoo/+9nJXbSdsKkQvOz/Xhe6iRJnV3LOJTM3RP8k1
- r8t24t5xhYHbvHic6t+W29VNwaOm6Z3zcItLvTkXw7vagU4Ac3UnQ5LGgKpsAywecPJV
- IxMQ==
+ d=linaro.org; s=google; t=1769562344; x=1770167144; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tSTF0NQiQFsPZYRp1IMFEPI0U22hlOW6gIVvYY0wowA=;
+ b=QFwRLRsjQdaEkwxa0udyr01/WNGk0yM0lON7/3r8D/eB0rLz3RApWDMijlDEToNL+L
+ OU0GOaqsXeVMXHYd3fczBC6vdj0KCNmpA/qfdC+fcdS9kh75k7TiN81RQEwkr7rI85bI
+ fi3jM7x5Sp/3bN7JVY6N21dHC51pBqnSzwUwkQKDKrmkScUiPZAHtCoYM6Q09/5nrZIt
+ g3J/ezRBuLclMmgAigHpepnS5QenQ5GRerdK688QKI9rQX/ttrRKN9tvU3AvwBKqN8Ia
+ n6SxDQ0xik6cRw/YRoTwcyT6Q4wHexXnOxQujcqgWTjJYQYq3741+GZRu1VjJT4fL1or
+ Dzag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769557864; x=1770162664;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Tzvf+JC46AVmQMcqvVrXMY2wwN0IyvSBHdRsns2W3Vc=;
- b=IzytDGRn2P3GyuAOBGsSv8+/ZwR03XfRjMzhVsI6Lg8MTnNYddHA9fS+zBGmJPxmyZ
- IvcHc7b7TR6mYSV2bmfLveCZuOHJjlpI04e87sbxeI50+YoDZ+BCAuJuKc7LLwNK2I55
- 5UcAd5LNsVKPkAM+HuTi2j8n/joRo5HtAnhHBhx2bUzHtrQAU7WNpINyqScpuDm1ESK4
- /zWIN5/ykomFT1/3VZ82I08V2e6CRy0kOikK9uIPcek4b+uevMXJlrj4QaYBhsecoWir
- FsX+HSKrEugGoBEWaBGubzOcRgBY7bwNREyqvmNSz0c2V6dEI1kDzNgHs4fPAf+P9YFF
- qKPA==
+ d=1e100.net; s=20230601; t=1769562344; x=1770167144;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tSTF0NQiQFsPZYRp1IMFEPI0U22hlOW6gIVvYY0wowA=;
+ b=tw+/kf1cwYxrfLzL8sY10myZxzE1rmFXXfnSNATd2tFScEDpnNxQ0Z/KW6OWbOIxEF
+ 115HXRwcPK2EuyIeN8FM15I7SfJWp1Jpz5tMmOBIjnQFkXLIVZEvXFwmocGMviQu9x8a
+ njDy2WcF32Gfp3xFx0SZD9BsTfvHCe7H7or96f9XKJUceWO7N6srC5XBtiquXurtNwUx
+ Jk8jthfEvDp8X94F44creTw1zYQm0bFv29CeSjxnrSzCj2G7197pqfctuZOy4aXgUZtc
+ q+5YlBXnMssJbVkIw/QYSLlT0e7rBDPYERh8ctyzCm9A8oZXHYgktMqQiyFqKlAjMgoA
+ 8HLQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/LIOjzoEGUWbU6AIuYWZ54Nr2RHoelGgY/ptIjYXTGv4lvncZnq3oIZS4shvZeQz6QcEfQiT8+OCK@nongnu.org
-X-Gm-Message-State: AOJu0YxOIIUQ/gKDqURw62eZIJCeL1Y0vbmhRLeJqEQ/aLkCl2289yl0
- GFC0pqflhLnRDyLhcW3MNz15kHP6q/byEM0cxXfspxaqfTV/FG2+zESSoCDj9T+Br2HaxCpvsNC
- 4mVTBtaI=
-X-Gm-Gg: AZuq6aJl8H8mQZlcpWPh4ZWDyzziHT8ngmpQcg2E/8KZDTAzk6H6yVE9fmsjdSYfDRj
- daCBa+hXAP6VquZw071dr3tMwPjvYDSGmQmXiroJCgI9m9dlb8IOQ//uJAMW9boIU82ljWFH+bz
- Tl7lDwJopg7wwmVMOHtY3IUTEE1L2O+T3DWfba0gnczRqTlUB5B8hlekkvXnPhJqqI0Nb0pCY10
- WqdE4sWiAvBPUcFGgE6VaRXhpkgDOd5BbRh6NIhYj30ObMARWDT8NNjb4faGlUyc6v3Ge6D34Oh
- ImlBQJ1NIq98FT986dbTvS4vBJtvTup85X3T2CHUMMs6LewKzJ2oZ5QZ5iTev4RaMUjSm4wBuy5
- NnUx6JmdglOxrfs8uRpHNuv02MYaAFASnZrQAV1GdZ1PsmywS1wRmnu42cHltNXiKjEzr7sVSjf
- 3qgMACHtufom/U1cJcPQ0QAw==
-X-Received: by 2002:a05:6000:1ac6:b0:435:9144:13fe with SMTP id
- ffacd0b85a97d-435dd21d8f5mr4650380f8f.26.1769557863891; 
- Tue, 27 Jan 2026 15:51:03 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131ce70sm2428020f8f.27.2026.01.27.15.51.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Jan 2026 15:51:03 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 57D505F7DC;
- Tue, 27 Jan 2026 23:51:01 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,  Stefan Hajnoczi
- <stefanha@gmail.com>,  qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: gitlab docker registries
-In-Reply-To: <4be05e70-323d-42c9-84fb-b66e5579a1ed@linaro.org> (Pierrick
- Bouvier's message of "Tue, 27 Jan 2026 10:28:26 -0800")
-References: <da1443a0-5bf8-4ec0-9910-fd06beb42552@linaro.org>
- <CAJSP0QWQEr8+dEGD7jkUQ--Oq+D2PKv_ArRB_ApiZM++xN9TCQ@mail.gmail.com>
- <c12f3294-1ef1-41fe-a453-1422063b991d@linaro.org>
- <87ecncc4sg.fsf@draig.linaro.org>
- <90520ad2-8256-4bc7-94e3-010455659394@linaro.org>
- <878qdjcslb.fsf@draig.linaro.org>
- <7574812c-c200-49bf-8367-927c3cc7295b@linaro.org>
- <87qzrac46p.fsf@draig.linaro.org>
- <4be05e70-323d-42c9-84fb-b66e5579a1ed@linaro.org>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Tue, 27 Jan 2026 23:51:01 +0000
-Message-ID: <87ikcmbonu.fsf@draig.linaro.org>
+ AJvYcCV1+VkqWfGrQd+J+7oCH9h4ZDPv9q5MwjTT+gNBJ6WFyotcQGbPyRgQOkXen7IOWiEsTiax33neYFWN@nongnu.org
+X-Gm-Message-State: AOJu0Yz/La0a6NgVOmi8oIPxVoCTcAYcnICS5Mv6+zCN5kpJSmILHPCr
+ LEocsLCanDQhe7HBSewmUKQU4nfhpQEGUwhO84hTOe6TD9bT+Ktmtfmb2L9Ar2/IWQo=
+X-Gm-Gg: AZuq6aIqblcn14IElOTHVCiIuQC6nny19UEQIF+atYToUnpxZIsIG2XyHXhvMfzhLCc
+ 219Z8fiVAto4kitVncj5I8RHm1gt2I9YzJbl9KqCC6+Bd2WFL+9C6eE2h3D9ta5QvIBfTinPteB
+ T8bPWblSV8g/1a+n3PLRBfkBJwEGIAjOPD7v8W0j9+OW/vaNgOg8uef43fVNz4TS8fc92mPy1zP
+ dAB/blyouy9o8K5YIsPY44cgM0xj9448vDQSDHMhehFScQQYyrSC8vXkIUZGBesT7lMvfc9K2Fr
+ TPR16MVlt/8c2avoGALFILI+EEKSECEGFckUSQHDGvvC8jpjFJk3hiZIZOxCb166noDt82p01yN
+ w7Vb/5vo3ZFbbwegelZpkq7WqMZV2cnB/vA4pOf/fAHZmmc8R++kIcJTwzWCd0uMroVStbwUB1v
+ TyyV/CuE07SGBm94TXjUOry6CrU9Y5dw==
+X-Received: by 2002:a17:90b:3c42:b0:340:6f07:fefa with SMTP id
+ 98e67ed59e1d1-353fed74b0emr3175343a91.20.1769562343539; 
+ Tue, 27 Jan 2026 17:05:43 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3540f5e68cfsm330304a91.1.2026.01.27.17.05.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Jan 2026 17:05:43 -0800 (PST)
+Message-ID: <459ffb4e-c831-4694-83f3-32ea610f72a2@linaro.org>
+Date: Wed, 28 Jan 2026 12:05:37 +1100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/tcg: Fix uninitialized host_pc in tb_gen_code
+To: Panda Jiang <3160104094@zju.edu.cn>
+Cc: pbonzini@redhat.com, qemu-devel@nongnu.org
+References: <20260123091505.20025-1-3160104094@zju.edu.cn>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260123091505.20025-1-3160104094@zju.edu.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,110 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 1/23/26 20:15, Panda Jiang wrote:
+> In tb_gen_code(), the local variable 'host_pc' was declared without
+> an initial value.
+> 
+> If get_page_addr_code_hostp() fails to find a host mapping for the
+> guest PC (e.g., when translating from an I/O region), it returns -1
+> but may not update the value of 'host_pc'. The function then proceeds
+> with an uninitialized 'host_pc' variable.
+> 
+> This leads to undefined behavior when this uninitialized pointer is
+> later passed to setjmp_gen_code(). This was observed as a segmentation
+> fault (coredump) when running QEMU with the '-d in_asm' logging
+> option, which enables the code path that uses this variable.
+> 
+> Fix this by initializing 'host_pc' to NULL upon declaration. This
+> ensures it has a well-defined value in all code paths, preventing
+> the crash.
+> 
+> Signed-off-by: Panda Jiang <3160104094@zju.edu.cn>
+> ---
+>   accel/tcg/translate-all.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+> index fba4e9dc21..140f100cca 100644
+> --- a/accel/tcg/translate-all.c
+> +++ b/accel/tcg/translate-all.c
+> @@ -266,7 +266,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
+>       tcg_insn_unit *gen_code_buf;
+>       int gen_code_size, search_size, max_insns;
+>       int64_t ti;
+> -    void *host_pc;
+> +    void *host_pc = NULL;
+>   
+>       assert_memory_lock();
+>       qemu_thread_jit_write();
 
-> On 1/27/26 10:15 AM, Alex Benn=C3=A9e wrote:
->> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
->>=20
->>> On 1/27/26 1:28 AM, Alex Benn=C3=A9e wrote:
->>>> Richard Henderson <richard.henderson@linaro.org> writes:
->>>>
->>>>> On 1/27/26 10:50, Alex Benn=C3=A9e wrote:
->>>>>> I think it was broken by 4203ea0247f (gitlab-ci: Add build tests for
->>>>>> wasm64) because we base the tests of the existence of dockerfiles an=
-d it
->>>>>> now generates multiple targets.
->>>>>> Do we actually use the wasm32 stuff anymore? Maybe we can just
->>>>>> rename it?
->>>>>
->>>>> All of the wasm32 stuff is supposed to be gone.
->>>> I think 20260127092745.2978371-1-alex.bennee@linaro.org should fix
->>>> it,
->>>> but I need to re-read how to trigger the weekly build on my test branch
->>>> to test it.
->>>>
->>>>>
->>>>> r~
->>>>
->>>
->>> What if docker-verify was depending on building the container locally
->>> instead? It would allow to have a self-contained command, that works
->>> the same in local, or in CI, without any yaml dependencies.
->>>
->>> With current approach, it's tricky to reproduce locally as it depends
->>> on global gitlab registry, while we are just trying to see if images
->>> is buildable from scratch or not.
->> No - the point of verify was to check we where building in the
->> registry.
->>
->
-> Hum, I'm not sure what "building in the registry" means. Containers
-> are always built locally then (optionally) pushed to a given registry.
+The uninitialized variable already violates the contract in the documentation for 
+get_page_addr_code_hostp.  I prefer to fix this elsewhere.
 
-Yes - and this checks that the registry is up to date. We don't want to
-re-build every time if it can cache. This benefits the CI and the
-downstream users that pull the images.
+Thanks for the report.
 
-> If you want to test something useful, it has to be a build from
-> scratch (docker build --no-cache ...).
->
->> A lot of the Makefile.include stuff is legacy now (although its a useful
->> wrapper for building tests locally) because gitlab invokes the
->> containers directly. We used to do all sorts of dependency handling as
->> well but the lcitool approach is a lot cleaner even if we don't get
->> layered containers.
->>
->
-> The commit message for 8bec7b9874 is:
-> ```
-> gitlab: add a weekly container building job
-> This will hopefully catch containers that break because of upstream
-> changes as well as keep the container cache fresh.
-> ```
->
-> IMHO, a simple weekly job doing what we want is:
-> docker build --no-cache - < $dockerfile
-
-The containers are built by the dependencies:
-
-  needs:
-    # core
-    - amd64-centos9-container
-    - amd64-fedora-container
-    # cross
-    - amd64-debian-cross-container
-    - amd64-debian-user-cross-container
-    - amd64-debian-legacy-cross-container
-    - arm64-debian-cross-container
-    - hexagon-cross-container
-    - loongarch-debian-cross-container
-    - mips64el-debian-cross-container
-    - ppc64el-debian-cross-container
-    - riscv64-debian-cross-container
-    - s390x-debian-cross-container
-    - tricore-debian-cross-container
-    - xtensa-debian-cross-container
-    - win64-fedora-cross-container
-    - wasm64-emsdk-cross-container
-    # containers
-    - amd64-alpine-container
-    - amd64-debian-container
-    - amd64-ubuntu2204-container
-    - amd64-opensuse-leap-container
-    - python-container
-    - amd64-fedora-rust-nightly-container
-
-> I don't see what is the relation with gitlab, lcitool or Makefile.
->
-> Maybe I miss some extra insights or goals that were not documented in
-> original commit, but it seems like the current implementation is not
-> aware of what it's supposed to do.
-
-We occasionally see failures due to upstream distro changes. By having a
-separate job we can see if it happens independent of testing staging
-trees.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
