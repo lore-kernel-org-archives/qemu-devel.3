@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32327D46BFA
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 20:40:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F0F7D46BFB
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 20:40:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlCKh-0007zL-Ac; Wed, 28 Jan 2026 15:40:11 -0500
+	id 1vlCKQ-0007m9-WD; Wed, 28 Jan 2026 15:39:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
- id 1vlCKK-0007at-C9
+ id 1vlCKI-0007Xf-Ra
  for qemu-devel@nongnu.org; Wed, 28 Jan 2026 15:39:50 -0500
-Received: from mx0b-00190b01.pphosted.com ([2620:100:9005:57f::1])
+Received: from mx0a-00190b01.pphosted.com ([67.231.149.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
- id 1vlCKG-00084f-UX
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 15:39:48 -0500
-Received: from pps.filterd (m0050096.ppops.net [127.0.0.1])
- by m0050096.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
- 60SIs2g12689064; Wed, 28 Jan 2026 20:39:41 GMT
+ id 1vlCKG-00084b-Ua
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 15:39:46 -0500
+Received: from pps.filterd (m0409409.ppops.net [127.0.0.1])
+ by m0409409.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
+ 60SKOMP2615999; Wed, 28 Jan 2026 20:39:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=jan2016.eng;
- bh=69oowmfGBBkxto45rQliLKa5kUPav6LIeURmLosLpL4=; b=lrC6kS2ZHR9t
- rkpmePePKzSm95WAVJgOm9/rbJncemzoHU+c+AsGVhw+bBP4CNVQyjo7ZQ3+A9hY
- 7TWisVvmf6H5gITjcxLjRA6yjCQfettnvmbUOy095+/jgz2eK290Ku3GAA+jdknl
- kdNK3dDripK2spMPtYO7RFV+Yq9pd7MAanz5kKk2rYvDehz4COVJO+XMxlHS5XxB
- xvmTfrEYwTWH6JoBcDUeb7oQbSWtHSMcoXLSeSCjE9+fDHIF3j2RjVennyZTfvyL
- TDusvwTwTe0gVm8ffb86DUvlK2oVi6/Yp7PXYg1yfMH61/Qz98oJ9B5QjjDD58CL
- OV44EzRbcg==
-Received: from prod-mail-ppoint6 (prod-mail-ppoint6.akamai.com [184.51.33.61])
- by m0050096.ppops.net-00190b01. (PPS) with ESMTPS id 4bypguk8pt-1
+ bh=iDI9J/2kQZuf9g4MQ4HQ3luovEdJMVHjXyCsvqkM41I=; b=odoW25ii+AK6
+ G5Y0zu+NjXPHNl0cnYkUGWTYtitNwsAfWOjzRnMJzDWgcs7VVI6nco817aN+knya
+ KihR0/HU66106CKkMe4zc2YM6SeMplrKZ3ZyPErZAmN00Q3VQ4nqEcHAkJ9M2sqh
+ d9l3WwnzOPe52kwov+Jeq8JLdtO+wN8DpYkJJToWhGjFsMXK8ee/Sl/U4pRZAkTq
+ WIlUGgX64v4plndjYt/TubndSEtFpfAd5gCIHLcxl9z1y4sSoQeSGdJ+pCKdnCLU
+ dksrZmVeezXSe2hAyaLdtp+zGVq9t2xm/iK7BNFr5Z8pLFgzDydhIYfwhp+I9DT0
+ 15dTjRHI/A==
+Received: from prod-mail-ppoint1 (prod-mail-ppoint1.akamai.com [184.51.33.18])
+ by m0409409.ppops.net-00190b01. (PPS) with ESMTPS id 4by2u0y6eq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 28 Jan 2026 20:39:41 +0000 (GMT)
-Received: from pps.filterd (prod-mail-ppoint6.akamai.com [127.0.0.1])
- by prod-mail-ppoint6.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
- 60SIYCkX028880; Wed, 28 Jan 2026 15:39:40 -0500
+ Wed, 28 Jan 2026 20:39:40 +0000 (GMT)
+Received: from pps.filterd (prod-mail-ppoint1.akamai.com [127.0.0.1])
+ by prod-mail-ppoint1.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
+ 60SHaNpM027792; Wed, 28 Jan 2026 15:39:39 -0500
 Received: from prod-mail-relay02.akamai.com ([172.27.118.35])
- by prod-mail-ppoint6.akamai.com (PPS) with ESMTP id 4bvta3g7y4-1;
- Wed, 28 Jan 2026 15:39:40 -0500
+ by prod-mail-ppoint1.akamai.com (PPS) with ESMTP id 4bvta3rd2k-1;
+ Wed, 28 Jan 2026 15:39:39 -0500
 Received: from bos-lhvkhf.bos01.corp.akamai.com
  (bos-lhvkhf.bos01.corp.akamai.com [172.28.220.254])
- by prod-mail-relay02.akamai.com (Postfix) with ESMTP id 19F3FB3;
+ by prod-mail-relay02.akamai.com (Postfix) with ESMTP id 0D7B3A7;
  Wed, 28 Jan 2026 20:39:39 +0000 (UTC)
 From: Ben Chaney <bchaney@akamai.com>
-Date: Wed, 28 Jan 2026 15:39:35 -0500
-Subject: [PATCH v4 7/8] tap: postload fix for cpr
+Date: Wed, 28 Jan 2026 15:39:32 -0500
+Subject: [PATCH v4 4/8] cpr: delete all fds
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260128-cpr-tap-v4-7-48e334d4216b@akamai.com>
+Message-Id: <20260128-cpr-tap-v4-4-48e334d4216b@akamai.com>
 References: <20260128-cpr-tap-v4-0-48e334d4216b@akamai.com>
 In-Reply-To: <20260128-cpr-tap-v4-0-48e334d4216b@akamai.com>
 To: qemu-devel@nongnu.org
@@ -70,52 +70,55 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Max Tottenham <mtottenh@akamai.com>, Ben Chaney <bchaney@akamai.com>,
  Steve Sistare <steven.sistare@oracle.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1769632778; l=3307;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769632778; l=1519;
  i=bchaney@akamai.com; s=20251203; h=from:subject:message-id;
- bh=y3Xxt4dRCKG5jHG1T2Jwbz9e9N+8cAe17JOL6mau9ac=;
- b=xs2C1EDZtANvhWWwZN0TkQtY/feQ6x80qIQlJgXcpAo/ckR8Va0Y1ePgL3bLUmrzV03cZwDsO
- megkj0AbKksBmeR/FMcAgy9SJbpXWOiJCaUOEDdy+R2CNzAfdh2ZVFR
+ bh=Damz0E1eWx9seXrv9+FOKa0jx9R91HPkz/OMuj3AucM=;
+ b=x1cN8t23lCcrsd9ATgVEADXMH2Ex1PmIj57S03giHvMWvtxqK1wwGKQimEUHewMQzVgZhAadT
+ vA+xYoy2CnSDzrGPp53+wxvPmojCoGwboWGwtuDrJNE4/G+DbIomZ3Z
 X-Developer-Key: i=bchaney@akamai.com; a=ed25519;
  pk=6+w9cse5QEeVdy3tjqFxs/4rAaRdQ2/fkTxVFq+lWy4=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-28_06,2026-01-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- phishscore=0 spamscore=0
- mlxlogscore=999 bulkscore=0 malwarescore=0 mlxscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2601150000
- definitions=main-2601280169
-X-Proofpoint-GUID: hpNE29YmUXVp6nHI3lXGrEFtCqkL-oZJ
-X-Authority-Analysis: v=2.4 cv=bfVmkePB c=1 sm=1 tr=0 ts=697a740d cx=c_pps
- a=WPLAOKU3JHlOa4eSsQmUFQ==:117 a=WPLAOKU3JHlOa4eSsQmUFQ==:17
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ mlxlogscore=999
+ adultscore=0 malwarescore=0 spamscore=0 mlxscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2601150000 definitions=main-2601280169
+X-Authority-Analysis: v=2.4 cv=OOkqHCaB c=1 sm=1 tr=0 ts=697a740c cx=c_pps
+ a=StLZT/nZ0R8Xs+spdojYmg==:117 a=StLZT/nZ0R8Xs+spdojYmg==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=yPCof4ZbAAAA:8 a=X7Ea-ya5AAAA:8 a=h1OFwVCXqnWUJWdIchYA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: hpNE29YmUXVp6nHI3lXGrEFtCqkL-oZJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDE3MCBTYWx0ZWRfXyLbgko4ZpUKp
- lHm38TGmI/oYYtTLhGFykhPhsgkUujtkb6yT1nX9nuG4hxW73iJ4nC6FrgwGIBjlVZ3Vk8XHsA5
- NU9amzMvavnc9oTrcW9ER4J60Ha0SpC37EjCfQ64P6RXeOa/BIx5/ZB08+bB4corRHybTUb0fA2
- IvmzXzjfTrhn3nc6lWq6Qxxy/jXQzC+mFAHq98Wp7i2WnoUXSTtFUVMJC3ZqYO8xQbXj5sWAIiN
- IVg16Y3i17m8PtwA3ou9G2+r5wKBLl84Z68D5FrmNna2yUd2Yfk3XwY3bVPYXO1QsnRCvLtlKBd
- V597FCm5j/pWB8D0fLdzaGzHjxcrALpSjXE9xZ4FwXho0A/O58oRB/EraT3dQXiiPD4EQQyqCHh
- v5X9zHS5cjnpkfZjK/I2lL/OVcRvq0oqJlQt7STr8zDvcTNY09J/ZC237uCXtC4bNbYnWrQaFY8
- +e+B2r+99k3YA209rXw==
+ a=yPCof4ZbAAAA:8 a=X7Ea-ya5AAAA:8 a=n655hgSsutws6UkWyQYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 7uUafde4TSqvnZWBDiNjzX5zSAXAh5JW
+X-Proofpoint-GUID: 7uUafde4TSqvnZWBDiNjzX5zSAXAh5JW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDE3MCBTYWx0ZWRfX4Aq7WLolcLtz
+ Aqm5eN2L+7jrTss01Chy/RcqW/mpZoTtgsPkjKm+bqYDQYg1CHhlnhYC+6kH5y9Die+75uepG03
+ wPton7X0rXCvzmbmVfNYd6XjdbbGK0EngXGqKmRxZ0+XR2DySPcAtWb0fDsASZu+NOyesd9MvIb
+ zPWcMpZdtix0uFCHNZr8AthiVyorYgUkl4MmlYKHFo3OcVIQYa3KLFMATM0Pq6NXvXqfkYW4Kbx
+ BrIizCMlaCp0BoMFTLlBbhea6v//SbEcw/D52wtvs1Uiwt68ncjfhsN1jsVhqr4/PdFNS0sr7cY
+ HEgjw2BjUspehZPUtqzv09U+snYm+8xPKlk+dsCYtF1E9tvKlXvMjGuBIWhjGJxXtE3OMYy3dAP
+ FKUxXQfw4570FraynSEVvbHODZ8C3GLWrHG1mgZ+PbVNIE3t27Sw+cKsYDBelRds/CETlFQvLuH
+ Z0OnCcAXqduVy+bOpKg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-28_06,2026-01-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1015
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 suspectscore=0
- spamscore=0 malwarescore=0 bulkscore=0 phishscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601280170
-Received-SPF: pass client-ip=2620:100:9005:57f::1;
- envelope-from=bchaney@akamai.com; helo=mx0b-00190b01.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1015 adultscore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 bulkscore=0 suspectscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601280170
+Received-SPF: pass client-ip=67.231.149.131; envelope-from=bchaney@akamai.com;
+ helo=mx0a-00190b01.pphosted.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,110 +136,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Steve Sistare <steven.sistare@oracle.com>
 
-After cpr of a multi-queue NIC, if any queues are unused, then the
-corresponding tap is marked enabled in userland, but it is disabled in the
-kernel for the fd that was preserved.  One cannot call tap_disable() during
-postload, because that eventually calls IFF_DETACH_QUEUE, which fails
-because the queue is already detached.  Define tap_disable_postload to
-avoid IFF_DETACH_QUEUE.
+Add the cpr_delete_fd_all function to delete all fds associated with a
+device.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Signed-off-by: Ben Chaney <bchaney@akamai.com>
 ---
- hw/net/virtio-net.c | 20 ++++++++++++++++++++
- include/net/tap.h   |  1 +
- net/tap-win32.c     |  5 +++++
- net/tap.c           | 17 +++++++++++++++++
- 4 files changed, 43 insertions(+)
+ include/migration/cpr.h |  1 +
+ migration/cpr.c         | 13 +++++++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 317f1ad23b..bb7c8d9b78 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -765,6 +765,25 @@ static int peer_detach(VirtIONet *n, int index)
-     return tap_disable(nc->peer);
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 027cb98073..d585fadc5b 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -29,6 +29,7 @@ extern CprState cpr_state;
+ 
+ void cpr_save_fd(const char *name, int id, int fd);
+ void cpr_delete_fd(const char *name, int id);
++void cpr_delete_fd_all(const char *name);
+ int cpr_find_fd(const char *name, int id);
+ void cpr_resave_fd(const char *name, int id, int fd);
+ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+diff --git a/migration/cpr.c b/migration/cpr.c
+index adee2a919a..c0bf93a7ba 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -85,6 +85,19 @@ void cpr_delete_fd(const char *name, int id)
+     trace_cpr_delete_fd(name, id);
  }
  
-+/*
-+ * Set the disabled flag on unused queue pairs after vmstate load, without
-+ * calling IFF_DETACH_QUEUE, which fails because the queue is already detached.
-+ */
-+static void virtio_net_postload_queue_pairs(VirtIONet *n)
++void cpr_delete_fd_all(const char *name)
 +{
-+    int i;
-+    MigMode mode = migrate_mode();
++    CprFd *elem, *next_elem;
 +
-+    if (mode == MIG_MODE_CPR_TRANSFER) {
-+        for (i = n->curr_queue_pairs; i < n->max_queue_pairs; i++) {
-+            NetClientState *nc = qemu_get_subqueue(n->nic, i);
-+            if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_TAP) {
-+                tap_disable_postload(nc->peer);
-+            }
++    QLIST_FOREACH_SAFE(elem, &cpr_state.fds, next, next_elem) {
++        if (!strcmp(elem->name, name)) {
++            QLIST_REMOVE(elem, next);
++            g_free(elem->name);
++            g_free(elem);
 +        }
 +    }
 +}
 +
- static void virtio_net_set_queue_pairs(VirtIONet *n)
+ int cpr_find_fd(const char *name, int id)
  {
-     int i;
-@@ -3210,6 +3229,7 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
-      */
-     n->saved_guest_offloads = n->curr_guest_offloads;
- 
-+    virtio_net_postload_queue_pairs(n);
-     virtio_net_set_queue_pairs(n);
- 
-     /* Find the first multicast entry in the saved MAC filter */
-diff --git a/include/net/tap.h b/include/net/tap.h
-index 6f34f13eae..934131f551 100644
---- a/include/net/tap.h
-+++ b/include/net/tap.h
-@@ -30,6 +30,7 @@
- 
- int tap_enable(NetClientState *nc);
- int tap_disable(NetClientState *nc);
-+void tap_disable_postload(NetClientState *nc);
- 
- int tap_get_fd(NetClientState *nc);
- 
-diff --git a/net/tap-win32.c b/net/tap-win32.c
-index 38baf90e0b..efe81c54ee 100644
---- a/net/tap-win32.c
-+++ b/net/tap-win32.c
-@@ -766,3 +766,8 @@ int tap_disable(NetClientState *nc)
- {
-     abort();
- }
-+
-+void tap_disable_postload(NetClientState *nc)
-+{
-+    abort();
-+}
-diff --git a/net/tap.c b/net/tap.c
-index 8875498434..2961607cda 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -1121,3 +1121,20 @@ int tap_disable(NetClientState *nc)
-         return ret;
-     }
- }
-+
-+/*
-+ * On cpr restart, the tap is marked enabled in userland, but it might be
-+ * disabled in the kernel, and IFF_DETACH_QUEUE will fail because it is
-+ * already detached.  This function disables without calling IFF_DETACH_QUEUE.
-+ */
-+void tap_disable_postload(NetClientState *nc)
-+{
-+    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+
-+    if (!s->cpr || s->enabled == 0) {
-+        return;
-+    } else {
-+        s->enabled = false;
-+        tap_update_fd_handler(s);
-+    }
-+}
+     CprFd *elem = find_fd(&cpr_state.fds, name, id);
 
 -- 
 2.34.1
