@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB76D35669
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 04:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B502AD35672
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 04:40:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkxKL-0001cy-5l; Tue, 27 Jan 2026 23:38:49 -0500
+	id 1vkxLg-0006L4-QH; Tue, 27 Jan 2026 23:40:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vkxKH-0001Wj-Ey
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:38:45 -0500
+ id 1vkxLX-0006IJ-UN
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:40:05 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vkxKF-0000VV-Jt
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:38:45 -0500
+ id 1vkxLW-0000dV-8d
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:40:03 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60S4cbdo004827
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60S4dvMB005415
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 28 Jan 2026 13:38:41 +0900 (JST)
+ Wed, 28 Jan 2026 13:39:59 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=KOqzaOe88ZH0DEX5jhAhZcaKkarkyLpzUOEODTLHphY=; 
+DKIM-Signature: a=rsa-sha256; bh=czcMxMZez51FjRNVg0uT65NhI4YBUVTdMDBq2kSieso=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1769575121; v=1;
- b=YPMrahYVBeFPdobB3YEkjrDbMT95Fmdp7SozNCyP0XFp07t55Y/+1hRDspvi4HQo
- R7BdC06R2KoVYg5ISDuND/yLhsN/s6vComygQvxT8XOYCvY6WuduDxlm/ePASDna
- ipA/FTxcetCaO/q/u1vuMkldrA7b7oyLHS13xgnLntZQLUOi5p/mTMXzC5KbHqYs
- TvD+9ls0EJZ6Dz1xSVPnnNm42E7eiojp+pZ/27fMqm361bSmlNeVEaVWf9+2cbqa
- IJkkd5Roe1dS0kfQJ8eiYY6dO6cTQGQFXx+pvhMADIhtOBpPBCdnQdD9PXHwtvyA
- +WaMeRdgScGMiXANZW9BBQ==
-Message-ID: <4334eb24-86b4-4d35-9cf9-05a56f6df1aa@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 28 Jan 2026 13:38:37 +0900
+ s=rs20250326; t=1769575199; v=1;
+ b=QMZzhwAh5SThY3HiyXmo5ZXHsxlJNORd3EUB1yo44yN8RFxRB/L1Op4f6JcxEkPa
+ n3/yoRRwrgq1OZyHxaYDjf4vKiN6q9oceXjgZqPZLiL5I5J8IZcNazmMYvUAf9HG
+ dx2RTyvnDVuKiveSB2KI8Sq+slSq7/zoNMz39dtcdzltRlEPIDQp+XVPoPMqybAj
+ jPNL9ygwX4VRsv7NAyk10Rm28kjrjFijVgpWyt6SgkiDWWGtLpApvkNMvrKEfS94
+ oXuN27GfIo91UJ+7EYhHKXEsyv8EcuSB44qQVJL96PyfB83x59y50Mn0GB4DVBso
+ KErH7ufJgfEFgQlshHYUtw==
+Message-ID: <6b7c832d-4e39-460e-aeb1-ba697d1e8165@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 28 Jan 2026 13:39:57 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/43] audio: remove audio_driver
+Subject: Re: [PATCH 16/43] audio: move pcm_ops into AudioMixengBackendClass
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
  Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>
 References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
- <20260127182516.289834-16-marcandre.lureau@redhat.com>
+ <20260127182516.289834-17-marcandre.lureau@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260127182516.289834-16-marcandre.lureau@redhat.com>
+In-Reply-To: <20260127182516.289834-17-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -80,10 +80,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2026/01/28 3:24, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Move all fields from audio_driver directly into AudioMixengBackendClass,
-> eliminating an unnecessary extra struct. Drivers now set class
-> fields directly in class_init instead of creating a static audio_driver
-> instance.
+> Remove the separate audio_pcm_ops structure and move its function
+> pointers directly into AudioMixengBackendClass. This is a cleaner
+> QOM-style design where the PCM operations are part of the class
+> vtable rather than a separate indirection through hw->pcm_ops.
+> 
+> The HWVoiceOut and HWVoiceIn structures no longer need to store
+> a pcm_ops pointer, as the operations are now accessed through
+> the class with AUDIO_MIXENG_BACKEND_GET_CLASS().
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
