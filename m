@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2CDFD35673
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 05:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF52D35677
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 05:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vky49-0006vm-Lm; Wed, 28 Jan 2026 00:26:09 -0500
+	id 1vkyQk-0001qz-Tg; Wed, 28 Jan 2026 00:49:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vky48-0006vS-4W
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 00:26:08 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vkyQd-0001ip-GM
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 00:49:23 -0500
+Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vky46-0004dG-PV
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 00:26:07 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-81f4dfa82edso2804667b3a.0
- for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 21:26:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1vkyQb-0001uL-5G
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 00:49:23 -0500
+Received: by mail-pf1-x441.google.com with SMTP id
+ d2e1a72fcca58-82318b640beso2748770b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 21:49:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769577965; x=1770182765; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W/lqzKwylhBPG9LA3ESfZEUDUErvV3vSzInQMUXIUJo=;
- b=SdFmVg3L4gn/m4Q5Y53DOdjPWrJn90Z5Bh2ZKP+q5ckolWWEJZTzRmXoNgHNyStaQC
- ZpmkTBo4UU6b0jal2qK7hc4OdK+7T5BA+AX4YGl0KzpPHE5SN3lqFuqfgs6rEttdZ2Rk
- dIdoj8/V3cbNHnheUsKk1bA/zg4SFgGWJkyWq+kaSrlbeY18RMw8m4z3iWEvdECfs2Ma
- 1TRzGbOmrpAPdyfdaIxHclhW24RYDP0RjF2kvXONxJ+2MMCBmqGExL22+rSL+TNothQi
- TmVsjA0HdFoECSn2wBBjl9Rgrpz4T5KUZ+IfsiqhVAqklaeyTgx5PQvi16CDy5Irl/lv
- WDKg==
+ d=sifive.com; s=google; t=1769579359; x=1770184159; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=GIegsY9WB3wZJxqAXkbIfbfD+pYgPpNR8Y7msKf6HxU=;
+ b=h8MuHN4GA3d4EmS+z7mElLUv8axrZ/evMs5j3eJlqm4TaerML8F/Dga6JJm3E/yEyp
+ +A5Z5x3Z5n+34U1L3WME+76ARdylAzbwYkIqaVrlhkVuu/FHTP0OQrXoynCp5PcSsT/k
+ RNp/oDIqtkSsi+m0zf+1UtpUqK1UKNTcIg4LDXeS7971iuZHe2GcXGHcoCDiik1RuW81
+ RLr5ID6OdQ8TskXgTSrlOleb/7l0JK50HPTt83DZLRgeUl2F6X6IO4nT9vrojbjRHdhm
+ aaOJv6PbhR0s3nIYgDmLXXJuhVp8TDJzFm0nobxhWyY0X3YlJuxsNsU8dDoKUkfSLGge
+ OVow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769577965; x=1770182765;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W/lqzKwylhBPG9LA3ESfZEUDUErvV3vSzInQMUXIUJo=;
- b=vEQh61LcXcoORBc2QJjmfsA9o7ECWZhdrSMYkAV5iAJEVSwMtuwdZw4dHOQiefcj5+
- ilcJWffJSfq7dlCaOtyrlgWWLaD1NW+rDeZYEgC+oKOSkYhq90zw0AiUrX97kiz1PQiC
- nCcs8r8+z5RHDQmVXx2ZpuNZx1sW4pcTljei/ebSYjcvZyYEU5HEL6fv+TZlyotjSZBA
- 3fZL3QW11zdUEcMnfxtI/Sx3dolwlcilg90g7wrvKeuT5d+dbMRhK3vu6efqgVh4IHEv
- S4BCHLJjr++2ol5dbNNugEHrZowlxI12eBKbazdydoeOZqO97W3otswlRv1lEftUsAXI
- Jp+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVE7/GYfkeMyxeJSoE0iRifA18ohVKLTotIwtdKz+K2x31aIE2xf2XOLFxvBCm5KYrZKu6srf598Jrp@nongnu.org
-X-Gm-Message-State: AOJu0YwOmZKOhSKkxt2LrBA54zlWMGtt3WSYB/BXGJ56fmLMkuDDIi1a
- USmotvWqeV/DLjGH0G+jlS11veXaQa7XhHA3p63tmwg0r3CdhjgCZc1tjr4ifodqCv8=
-X-Gm-Gg: AZuq6aLTMcGb+PAaQIKYTMIaBE2J5VgqycgBzeedfZhTi1jb017zOnFtxAmJC3hGfsU
- O3tkoxtHKOsyN03NRbphaZlDLVx1ExW917ko4nFJXvowD8FnNX+z74bBxeK0JQGddksFzBVZjv6
- VJpK0aFixxv47rkRhecAxR4nEnE6gZjrGvkXkueZdPIdrn99IxiwxRw8IuiTER++WAbMJGASG8/
- m+srzRdgPeKpj6ChYI7hbw9DPUijc9mxlIwyNCgBKd1nU/zoY76y4TU5qlMXdELBu9LRKGfFBKi
- 8WeDh8z4Ng5SW8uHxGKUMjZHW2EjyvV+4JWuNAXKDt+EOMAaCXuFxfu1QTgWBaC0lWFCGWulO0L
- GJyC00CsvUC2I+Rxh85TzEGb7npCD+M8qGQJUA/SjZoM3bi+VDZJg5LwuKcRJTWEy9IebFpu6bh
- b0bAtNtbqrXzmwVVtBrt5MnyRPCfRoXw==
-X-Received: by 2002:a05:6a20:938e:b0:35d:e4b2:b381 with SMTP id
- adf61e73a8af0-38ec6249d07mr3369879637.16.1769577965012; 
- Tue, 27 Jan 2026 21:26:05 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c6432e27a17sm940066a12.5.2026.01.27.21.26.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Jan 2026 21:26:04 -0800 (PST)
-Message-ID: <52a1bf05-9dc0-433f-a13a-47e26d4bdeb1@linaro.org>
-Date: Wed, 28 Jan 2026 16:25:58 +1100
+ d=1e100.net; s=20230601; t=1769579359; x=1770184159;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GIegsY9WB3wZJxqAXkbIfbfD+pYgPpNR8Y7msKf6HxU=;
+ b=srUa0RZF/SNCKYKInpzERTiufrTrDJJoHxYSZxe+cLFmRvkWlkJZ6Jw9Cn/HIozKVN
+ UTjThZ921fuXkxYQJ2Bie1dP15I0jUDl6DFgzEC+NIKE9gMBGYaN8qFmKYEwS3DWD/TB
+ EEeEzwHnc0ZZuFbAdPOgKZNHBctww9M7MwQs4/ieDzrHK7zzS7Y56eDl9Dj8HNWo8Eqs
+ VN5tdIEZvBnjKnPcccWv+FYf5OiQx9EkzFTbdpqylG26IU6yCw041vqiQO2zvmJk4U/f
+ 0sPIstHkLplXWHxRDZnVVJRnwvRDY6F76/CKx+WjqfzxeMcIUD2AXUBg8T9E46yEEa0O
+ cdTQ==
+X-Gm-Message-State: AOJu0YwsX1RAKEHKPrYXvzsq0eHvVareRF6YyisNpyKnO0IJ7N/BD4od
+ xbLKw5RK8IImK1DaSep1cD3EEgfZYTN/JeQsIx/F8IAtV6LjtjiuSgKdJeRz7mFuMaY=
+X-Gm-Gg: AZuq6aJpFiXGUCEZqQCIGyKf3DztBr+W0ckK0K7cgGNLWCLZgRsusGU7L/3whlwwL4q
+ 3z0GvwZqtSultaozk7v9VAE0v980oOrnycOwlYt/9ttWE+uPZ69YBCkEcUAa3ugwelonGuZXdsE
+ 9+QQEJcsv+/5lFjMdEhxgGhpAGV3JIE9b7RyyRQWDzomtJHkLEPbxUWtjoPa/lAS4CVwL0vrsNr
+ ms9g+aRSNy1MMiCbFAzRrp/77kZcFoFOKaQZqHfT/cBJUwuxusVmYUHwPOvCNTQKquZN13GnVL7
+ d4qUb3XKkldr3L8ktYGjBrGF9pMJsfVfXDvsEEmtKa1xO1pH//m/ZYIrOXF7l4CwK6hhndln+CD
+ gJhiFP+qTgaZzdiLO0r0P+SFexXVCK/ohxCkKylVPKZnGRw5wpQJbwoITWXqUKc0OjoM2d61SV6
+ vEbLYi8StF+QN8UdsQK1pU99KeCxIfzRfsX5W0SBJhXcCNKzvAurzGGBaRFw==
+X-Received: by 2002:a05:6a21:6813:b0:38e:9ebe:525e with SMTP id
+ adf61e73a8af0-38ec6410421mr3917620637.52.1769579358717; 
+ Tue, 27 Jan 2026 21:49:18 -0800 (PST)
+Received: from sifive.com ([136.226.240.196]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c64276efbb7sm1046117a12.2.2026.01.27.21.49.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Jan 2026 21:49:18 -0800 (PST)
+Date: Wed, 28 Jan 2026 13:49:13 +0800
+From: Max Chou <max.chou@sifive.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v2 02/17] fpu/softfloat: Refactor IEEE format NaN
+ classification to share code
+Message-ID: <aXmisH-enHafT9Xz@sifive.com>
+References: <20260127063723.442734-1-max.chou@sifive.com>
+ <20260127063723.442734-3-max.chou@sifive.com>
+ <7cc87797-4cfb-4195-9a9d-21ddd355aa54@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] target/s390x: Extract s390_get_bfp_rounding_mode()
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
-Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260127153736.62730-1-iii@linux.ibm.com>
- <20260127153736.62730-3-iii@linux.ibm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260127153736.62730-3-iii@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7cc87797-4cfb-4195-9a9d-21ddd355aa54@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x441.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,18 +107,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/28/26 02:31, Ilya Leoshkevich wrote:
-> For DIVIDE TO INTEGER it will be helpful to pass final-quotient
-> rounding mode around explicitly rather than setting it in fpu_status
-> implicitly. To facilitate this, extract a function for converting the
-> mask to the rounding mode.
+On 2026-01-28 12:34, Richard Henderson wrote:
 > 
-> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
-> ---
->   target/s390x/tcg/fpu_helper.c | 62 +++++++++++++++++------------------
->   1 file changed, 31 insertions(+), 31 deletions(-)
+> I think the "internal" functions should already assume any_nan.
+> 
+> Otherwise you're double-testing it in the quiet_nan tests.
+> 
+> Perhaps the intent would be clearer by naming them <type>_nan_is_snan.
+> 
+> Perhaps clearer to merge the expressions:
+> 
+>     return float16_is_any_nan(a) && !float16_nan_is_snan(a)
+> and
+>     return float16_is_any_nan(a) && float16_nan_is_snan(a)
+> 
+> for the is_quiet_nan and is_signaling_nan functions respectively?
+> 
+> 
+> r~
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Hi Richard,
 
-r~
+I agree with your suggestions and I will update v3 for this part.
+
+Thanks,
+rnax
 
