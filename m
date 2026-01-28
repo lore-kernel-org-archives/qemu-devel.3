@@ -4,116 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E094D46BF7
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 19:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E52FD46BF8
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 19:37:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlBKU-0005ns-JG; Wed, 28 Jan 2026 14:35:54 -0500
+	id 1vlBM3-0008OF-5n; Wed, 28 Jan 2026 14:37:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vlBKI-0005a4-GY
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 14:35:44 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vlBKE-0004pp-Px
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 14:35:42 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id A0DB233D3B;
- Wed, 28 Jan 2026 19:35:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769628935; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vlBLt-00089t-SF
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 14:37:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vlBLr-00052h-Pf
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 14:37:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769629038;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Cvks/Y8JobLO7WKCWYLlZ3IGD/bXhTkFarrB++FDlSA=;
- b=vf8cxCCCDhYdHHy4SJ7E/7HUPnrDRHflCMrKr//zitsQ5LTLkmhX9FH6HphBd/Qs7EKVzm
- Xph8v7Zpt8pk4s7OXpHZzF8l9tNNNhzGZwgeTeb7167uxTA41r+nifcC7Wq8nI4vSStTlt
- KoVeO0DFWuWlu8GbDBZCSZDmiAwfqcw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769628935;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Cvks/Y8JobLO7WKCWYLlZ3IGD/bXhTkFarrB++FDlSA=;
- b=9c7MgJKApMG1LpQ7zmnKbFL0wORoOBv0wRkiXaMYP49ttjZ/AZU6LXcF28wiVQTqa7sunP
- gi3pkf3YMFe1JgDw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=vf8cxCCC;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=9c7MgJKA
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769628935; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Cvks/Y8JobLO7WKCWYLlZ3IGD/bXhTkFarrB++FDlSA=;
- b=vf8cxCCCDhYdHHy4SJ7E/7HUPnrDRHflCMrKr//zitsQ5LTLkmhX9FH6HphBd/Qs7EKVzm
- Xph8v7Zpt8pk4s7OXpHZzF8l9tNNNhzGZwgeTeb7167uxTA41r+nifcC7Wq8nI4vSStTlt
- KoVeO0DFWuWlu8GbDBZCSZDmiAwfqcw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769628935;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Cvks/Y8JobLO7WKCWYLlZ3IGD/bXhTkFarrB++FDlSA=;
- b=9c7MgJKApMG1LpQ7zmnKbFL0wORoOBv0wRkiXaMYP49ttjZ/AZU6LXcF28wiVQTqa7sunP
- gi3pkf3YMFe1JgDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 103603EA61;
- Wed, 28 Jan 2026 19:35:34 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id +5LoMAZlemnhJwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 28 Jan 2026 19:35:34 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Lukas Straub <lukasstraub2@web.de>, Prasad Pandit
- <ppandit@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH v2 19/24] migration: Refactor qemu_savevm_state_setup()
-In-Reply-To: <20260127185254.3954634-20-peterx@redhat.com>
-References: <20260127185254.3954634-1-peterx@redhat.com>
- <20260127185254.3954634-20-peterx@redhat.com>
-Date: Wed, 28 Jan 2026 16:35:32 -0300
-Message-ID: <87wm11ediz.fsf@suse.de>
+ bh=Y5hzHkdO8f5IBVK787jS+Vs60EEEKpakL54jXmFY2ug=;
+ b=G8+RbL+FZfIVbcotYSO8oRQ7NpPQ19hmtakIbjBQnrwSne+eJeRpYOAdc3EyWfh3f96Pnz
+ P2pU9HLObKgeSZoIMs3no5bdSEj99HGvKY+Gq2Ve7lJR20AakW0NSGIJFx+cXsP/m9BQuQ
+ r44ek/nQ5oDHeAJVxeITn3C4n1cPwRE=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-92-oRzeKiToPAa0OCgo3pyNFA-1; Wed, 28 Jan 2026 14:37:17 -0500
+X-MC-Unique: oRzeKiToPAa0OCgo3pyNFA-1
+X-Mimecast-MFC-AGG-ID: oRzeKiToPAa0OCgo3pyNFA_1769629037
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8946f1b8691so5449856d6.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 11:37:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1769629037; x=1770233837; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Y5hzHkdO8f5IBVK787jS+Vs60EEEKpakL54jXmFY2ug=;
+ b=YsxpfLplp8rPzQbFdZp91ZtEE8yHaLFgqaWXfdp82Y3wWux7NKI5tvAwKc1vWsQV0h
+ 8kNEgJY8bIrT4C3CyW5B2DI//8VsmDf6sBQH5VaZlPFZgexAmJSHEgVUGx9EL8EcFSsr
+ HTiu/vUMQYa9TuKfTNoEb2IfK+PRWKDRWZGD6ARAsnz+r7mXn6MX0MbhYtGBepRylzfy
+ /LLK1y4jc6NhvkG1zhr+7cKsYJbc72GvMP0m+6jE1u8BoT3nxujuixxRgnwUJdex6z5Q
+ If4gxVQYTHZF8Bt/pFcr9d3o5HGMy5ZUwJvRbowpGHcZwS4S8RuLaGl1+QwfIdxIC6tz
+ nWUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769629037; x=1770233837;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y5hzHkdO8f5IBVK787jS+Vs60EEEKpakL54jXmFY2ug=;
+ b=k3kzCTPd77JGrPRugSl3gVKY/NUdRT1VNcdWel02qJWccklil30nOTJPTTnLYhAe//
+ K2dd1vPgh4lPvDhA+yEDpoQV40QtVzgrBxEUVBErwiqb0s2AEZ6qiJ7O88rn2j22rfcR
+ 8Xx/MZoyW36mw5wMeihtbiutij+/0MLXSkDK9OJbY0z043vWt9Wt90fKU6NVczdJ6Zut
+ +EcuEkyj8TB9mhgXaWev4WXbkXZSSQ+oLL2eN7q8idhxCMX8nzqNmV+jYoA+taczI99D
+ nJBMq9Y/IqwzSw5VPWcoXqthK+vsv1WQpzyzO5HNbHPBnwnixMjf58nGQOxHP/Pn+QC0
+ sMLQ==
+X-Gm-Message-State: AOJu0YxNaMmKBOjVQvaL5pfW+bR1ig79lcKjSsMFavX8ZPUDwS/ORsW/
+ qMGxWN/anxSROc/h9EalgJkbnEwHzt9fGAKpbQ7aCJBUUWMPrvMezcl4jbKKWnVvHYxPZi746h0
+ LSQeT/SeLejMYvGCFoB6zJdMD+hogDgO/cewC1hBG+nuSbwEakz324sMI
+X-Gm-Gg: AZuq6aIL+eWPSvXICQ+raQAGb3z2N2EALv+3ligKAgi7vyl5rONBzaSIlssoDUnOEq+
+ dXcwiwWXDaXNcCTqWNEgSeSih9CnEVw3eYycyUjeKBsWfw47q4VvBWqWTRl4QomBjXxO5ZXJnz7
+ Jv5TFqxJ9o8CWbqYdUndEsWAp+Qma6vciXi/RvnEE5lPidHB3zM9IljLtqdjCwQ2u7KjDgNIiMe
+ YH36n12ZY/gZyjzWeo2KCe7SaViA0wzx8EjPZ1OFp0MEp/dMt8eCULawihiy/4lY4wPfvTXl557
+ OmHJrwPdNc9mbx8N7viOQk5l2HMWdJX9nGVn9vsGweQJq30WQXLVin2QGOsHziwRjgRMd0B4Qqe
+ HRz0=
+X-Received: by 2002:ac8:7d51:0:b0:4ec:ef62:8c81 with SMTP id
+ d75a77b69052e-5032fa0306amr87141441cf.47.1769629036926; 
+ Wed, 28 Jan 2026 11:37:16 -0800 (PST)
+X-Received: by 2002:ac8:7d51:0:b0:4ec:ef62:8c81 with SMTP id
+ d75a77b69052e-5032fa0306amr87141061cf.47.1769629036564; 
+ Wed, 28 Jan 2026 11:37:16 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50337ba39cbsm21898231cf.19.2026.01.28.11.37.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Jan 2026 11:37:16 -0800 (PST)
+Date: Wed, 28 Jan 2026 14:37:15 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Subject: Re: [PATCH 1/3] tests/functional/migration: Use socket_dir
+Message-ID: <aXplaxf8LF7CHvMk@x1.local>
+References: <20260128142829.25326-1-farosas@suse.de>
+ <20260128142829.25326-2-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+]; FREEMAIL_ENVRCPT(0.00)[web.de];
- FREEMAIL_CC(0.00)[redhat.com,web.de]; RCVD_TLS_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
- imap1.dmz-prg2.suse.org:helo, suse.de:dkim, suse.de:mid, suse.de:email]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: A0DB233D3B
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260128142829.25326-2-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,140 +119,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Wed, Jan 28, 2026 at 11:28:27AM -0300, Fabiano Rosas wrote:
+> Use QemuBaseTest.socket_dir instead of calling tempfile directly so
+> all tests have consistent directory prefixes.
+> 
+> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-> Split it into two smaller chunks:
->
->   - Dump of early_setup VMSDs
->   - Dump of save_setup() sections
->
-> They're mutual exclusive, hence we can run two loops and do them
-> sequentially.  This will cause migration thread to loop one more time, but
-> it should be fine when migration just started and only do it once.  It's
-> needed because we will need to reuse the early_vmsd helper later to
-> deduplicate code elsewhere.
->
-> QEMU almost sticks with qemu_savevm_state_XXX() to represent the dump of
-> vmstates's section XXX.
-> With that in mind, this patch renamed the original
-> qemu_savevm_state_setup() to qemu_savevm_state_do_setup() instead.
->
-> So after this patch:
->
->   - qemu_savevm_state_non_iterable_early() dumps early_vmsds only,
->   - qemu_savevm_state_setup() dumps save_setup() sections only,
->   - qemu_savevm_state_do_setup() does all things needed during setup
->     phase (including migration SETUP notifies)
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+-- 
+Peter Xu
 
-Not for this series, but I think we could try to standardize the naming
-in savevm.c a bit. Here's a list of functions from savevm.c plus the
-main function called by them. You'll see that there's room from
-improvement.
-
-Removing this "qemu" prefix and choosing when to put "state" in the name
-would already be a win.
-
-Also maybe making more clear what calls vmstate code and what deals with
-se->ops only.
-
----
-qemu_loadvm_state_setup                  { se->ops->load_setup }
-qemu_savevm_state_active                 { se->ops->is_active }
-qemu_savevm_state_blocked                { se->vmsd->unmigratable }
-qemu_savevm_state_cleanup                { se->ops->save_cleanup }
-qemu_savevm_state_guest_unplug_pending   { se->vmsd->dev_unplug_pending }
-qemu_savevm_state_iterate                { se->ops->save_live_iterate }
-qemu_savevm_state_non_iterable_early     { se->vmsd->early_setup; vmstate_save }
-qemu_savevm_state_pending_estimate       { se->ops->state_pending_estimate }
-qemu_savevm_state_pending_exact          { se->ops->state_pending_exact }
-qemu_savevm_state_postcopy_prepare       { se->ops->save_postcopy_prepare }
-qemu_savevm_state_prepare                { se->ops->save_prepare }
-qemu_savevm_state_resume_prepare         { se->ops->resume_prepare }
-loadvm_postcopy_handle_switchover_start  { se->ops->switchover_start }
-qemu_loadvm_load_state_buffer            { se->ops->load_state_buffer }
-qemu_loadvm_state_switchover_ack_needed  { se->ops->switchover_ack_needed }
-qemu_savevm_complete                     { se->ops->save_complete }
-qemu_savevm_complete_exists              { se->ops->save_complete }
-qemu_savevm_non_migratable_list          { se->vmsd->unmigratable }
-qemu_savevm_se_iterable                  { se->ops->save_setup }
-save_state_priority                      { se->vmsd->priority }
-vmstate_load                             { se->ops->load_state }
-vmstate_save_old_style                   { se->ops->save_state }
-
-loadvm_handle_cmd_packaged                  { qemu_loadvm_state_main }
-qemu_load_device_state                      { qemu_loadvm_state_main }
-qemu_savevm_maybe_send_switchover_start     { qemu_savevm_send_switchover_start }
-qemu_savevm_send_*                          { qemu_savevm_command_send }
-qemu_savevm_state_complete_postcopy         { qemu_savevm_complete }
-qemu_savevm_state_complete_precopy_iterable { qemu_savevm_complete }
-qemu_savevm_state_end_precopy               { qemu_savevm_state_end }
-qemu_savevm_state_header                    { qemu_savevm_send_header }
-
-qemu_savevm_state_do_setup              { qemu_savevm_state_non_iterable_early;
-                                          qemu_savevm_state_setup }
-
-qemu_loadvm_state                       { qemu_loadvm_state_header;
-                                          qemu_loadvm_state_setup;
-                                          qemu_loadvm_state_switchover_ack_needed;
-                                          qemu_loadvm_state_main;
-                                          qemu_loadvm_thread_pool_wait }
-
-qemu_loadvm_state_main                  { qemu_loadvm_section_start_full;
-                                          qemu_loadvm_section_part_end;
-                                          loadvm_process_command }
-
-qemu_savevm_state                       { qemu_savevm_state_header;
-                                          qemu_savevm_state_do_setup;
-                                          qemu_savevm_state_iterate;
-                                          qemu_savevm_state_complete_precopy;
-                                          qemu_savevm_state_cleanup }
-
-qemu_savevm_state_complete_precopy      { qemu_savevm_state_complete_precopy_iterable;
-                                          qemu_savevm_state_non_iterable;
-                                          qemu_savevm_state_end_precopy }
-
-qemu_save_device_state                  { qemu_savevm_state_non_iterable_early;
-                                          qemu_savevm_state_non_iterable;
-                                          qemu_savevm_state_end }
-
-loadvm_handle_recv_bitmap           { migrate_send_rp_recv_bitmap }
-loadvm_postcopy_handle_advise       { ram_postcopy_incoming_init }
-loadvm_postcopy_handle_listen       { postcopy_incoming_setup }
-loadvm_postcopy_handle_resume       { mis->postcopy_pause_sem_fault }
-loadvm_postcopy_handle_run          { loadvm_postcopy_handle_run_bh }
-loadvm_postcopy_handle_run_bh       { vm_start }
-loadvm_postcopy_ram_handle_discard  { postcopy_ram_prepare_discard }
-loadvm_process_command              { switch (cmd) }
-loadvm_process_enable_colo          { colo_init_ram_cache }
-qemu_loadvm_approve_switchover      { migrate_send_rp_switchover_ack }
-qemu_loadvm_load_thread             { data->function }
-qemu_loadvm_section_part_end        { vmstate_load }
-qemu_loadvm_section_start_full      { vmstate_load }
-qemu_loadvm_start_load_thread       { thread_pool_submit }
-qemu_loadvm_state_cleanup           { se->ops->load_cleanup }
-qemu_loadvm_state_header            { QEMU_VM_FILE_MAGIC }
-qemu_loadvm_thread_pool_create      { thread_pool_new }
-qemu_loadvm_thread_pool_destroy     { thread_pool_free }
-qemu_loadvm_thread_pool_wait        { thread_pool_wait }
-qemu_savevm_command_send            { QEMU_VM_COMMAND }
-qemu_savevm_send_colo_enable        { MIG_CMD_ENABLE_COLO }
-qemu_savevm_send_configuration      { vmstate_save_state(&vmstate_configuration) }
-qemu_savevm_send_header             { QEMU_VM_FILE_MAGIC }
-qemu_savevm_state_end               { QEMU_VM_EOF }
-qemu_savevm_state_non_iterable      { vmstate_save }
-qemu_savevm_state_setup             { se->ops->save_setup }
-qemu_savevm_state_vm_desc           { QEMU_VM_VMDESCRIPTION }
-register_savevm_live                { savevm_state_handler_insert }
-save_section_footer                 { QEMU_VM_SECTION_FOOTER }
-save_section_header                 { section_type }
-savevm_state_handler_insert         { QTAILQ_INSERT_TAIL }
-savevm_state_handler_remove         { QTAILQ_REMOVE }
-unregister_savevm                   { savevm_state_handler_remove }
-vmstate_register_with_alias_id      { savevm_state_handler_insert }
-vmstate_save                        { vmstate_save_old_style; vmstate_save_state }
-vmstate_unregister                  { savevm_state_handler_remove }
 
