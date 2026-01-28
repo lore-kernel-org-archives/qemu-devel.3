@@ -4,101 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2182FD35690
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 08:30:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43714D35691
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 08:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl0wM-0001uN-Mh; Wed, 28 Jan 2026 03:30:19 -0500
+	id 1vl0xJ-0002hm-GG; Wed, 28 Jan 2026 03:31:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vl0wK-0001sv-SY
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 03:30:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vl0x4-0002Uk-V9
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 03:31:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vl0wH-00083M-Jn
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 03:30:16 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vl0x3-0000y7-89
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 03:31:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769589011;
+ s=mimecast20190719; t=1769589060;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=PdPi3rftpuy5C0jWtjQg7dLxtU6m4Y4Nu8AMsPNTLwA=;
- b=cD5H02uTheHq4nBNU0BbhwgWbnoCh2oyPEswv6PVNc8L6XscIOLv/ZvErT97TaSSRXd+IW
- JMVsdsbcVWfxuLcq1/U0F3BLT39hxj3pqUpdU5DNwDrM7zuvohezXup4I3r21youpmCn/K
- odIwQhkKVgLPpYghyCJMMZ5znF55Ky0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XThkBxuD0RENE8Kq4u11ofOoltb/1k9hKWtMhzNg6o0=;
+ b=Wqf9A2h8t17LCLuZClC4IsoWRcXT/4BV37MqI9lqWIu91JT+iZqyTtjY+WVtaQdsmbrOeX
+ NS7E3bV4SyuGZqaLSNMToGTRg8QRjl+Bx8b1pjdO7nychaLAk9CX5YOw8Grb3/nBtZHgzw
+ wY/nkh4bPodJ2LAji2Xz/L/E2hW//Gs=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-ayNtuLAiOcKbiYxvr1cDnA-1; Wed, 28 Jan 2026 03:30:09 -0500
-X-MC-Unique: ayNtuLAiOcKbiYxvr1cDnA-1
-X-Mimecast-MFC-AGG-ID: ayNtuLAiOcKbiYxvr1cDnA_1769589008
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-48071615686so913135e9.1
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 00:30:09 -0800 (PST)
+ us-mta-428-1VS1siKsNbuqeAc05AKJFQ-1; Wed, 28 Jan 2026 03:30:57 -0500
+X-MC-Unique: 1VS1siKsNbuqeAc05AKJFQ-1
+X-Mimecast-MFC-AGG-ID: 1VS1siKsNbuqeAc05AKJFQ_1769589057
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-435a6c0c794so5037672f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 00:30:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769589008; x=1770193808; darn=nongnu.org;
+ d=redhat.com; s=google; t=1769589056; x=1770193856; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=PdPi3rftpuy5C0jWtjQg7dLxtU6m4Y4Nu8AMsPNTLwA=;
- b=RFHZuSwU3nI7lVJpSoXWirvPvPjPnGscHpWaCQj05yksIjXdII6hNs3ZVTCAvU9U8Q
- ub0QLtyGHsxfvZqaPujZ0qQ3TMKr0lZVhRtLv7+9dghjqnAtVV00K9mmAv+8dGWm7F2c
- lY+RiGNkZqjQxGBsBsK18V1G07C6YfITvKqrIVD+FUaLWEIa3JF4vy/Wo1tj//eNFoPA
- CLdS/q+KpFeNmw2zUXq8/jwfAOballJAS/q0gI5Ddi2RKJnsFmdHyXoBFtbvwenW8LqI
- yr7EHvUcpG1LfgiH1NYDXYBYHIDQR670pbfCxRUBP6cSGtfrwwsXHDgauI4hzBz+1QBl
- vwig==
+ bh=XThkBxuD0RENE8Kq4u11ofOoltb/1k9hKWtMhzNg6o0=;
+ b=Nh3IMmuHFungQ6/Q+ZSrxJCgj2p2/fQu/KSTWZbecTP/YYxibc1GpgS6nvNTDgkr8h
+ 6qfene6xsx7jguWZZGY71tidGU0rM3lxptOXH/m6ITAP53/d78g6HC7h95TPBFO/hQxH
+ NjOGyg5d40NpgOBkvupph1Vo1x4j47DG+dEbQgccW8+7OsP/AT2bc3tkAxs3ItB21i2/
+ ptCTt1S0cXpIe0McguydlzbIP0bDmwfWERPVuuvzopuBcFwgWgUPp8k2J+oR7sUUfyT3
+ b0sSRrFDLFPGxaBHEtF+8PzDUHyxxTpik9RvvvnUQsmRlVFMlaqwAglcfWIe5I4a1INv
+ rr7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769589008; x=1770193808;
+ d=1e100.net; s=20230601; t=1769589056; x=1770193856;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PdPi3rftpuy5C0jWtjQg7dLxtU6m4Y4Nu8AMsPNTLwA=;
- b=UBZYNoQ7SSFdCkGssOBnmPcHXKTvtQShOLn7/XIhl4p9edqKm5mFWhH2S9ocCIuhdr
- F9Ts5tTaQHWtFYR/B0lWV8sSFEucEkIj2TQE9tMhHLHgqRhelZT89YldxwU06uqL15no
- znhFXJ24HTxpHFMc1JqGWZ4AhZLY+5VRHVZ9FEVIvTTiM0zFknmMjmsrQJVoevKgoknx
- zDVG6U9xuXAv3UBDmRTNHihUOvv3ghdTA7THJNCib20iW8q/HQ2YSd0iQgF0qlYkxNKH
- akcvMEwVMu5FPlC2pnQs/KlCOUhcSFxPm11ZWYEpMjAN5Hqj82HylyNcW7eKB64Adkwd
- ClYw==
+ bh=XThkBxuD0RENE8Kq4u11ofOoltb/1k9hKWtMhzNg6o0=;
+ b=tLue1YLXIwzXz6d8u74+VMPnmhlg1+n77PK0a2MPJMMJMip80AePXJnu5Pn8KaQzXj
+ 9TDCSq5iecsErtg5WlbBGEip72up8ZNGMPpYllgpip0iDFaPjhqViaAFQCrk6phQ07s5
+ Sq+O5euAPsO5UNDZAUTM2taYlFb7F+dPny37Hft+75S7sFgeHmB1qYmTLx2YfrZR2Zht
+ XhIF8jWmSwLRPbrpfH/Jabou1RtLh9xspXmk41sJkrldyWTZA2WKpaH772Cb9Yf3tNJ0
+ rmdylOtTN4m0LN6RibGM3kYeNJZ+Tz3qxbWWW4odjDuw5psF/MMqg/JYxKl8FMPIJzAz
+ Hlpg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVYKbTtti6Ue9Wxy6FyRqn7s6i+tt5cjzJQM1ZJfKlUu96LMvPeyVMOnutpo/e0T8toc7BS08AoRyVA@nongnu.org
-X-Gm-Message-State: AOJu0Yzx6uDiqCSZSdUkfbleBFhK20uL1TRdTgoIiuEYfep/nL0gaTyb
- nRstJuPwImVzAlMPBl6n2x+DspIVRntS+WeYnArzMEXPPd3VLXkWofdHdNv890ddeEvRx/xcRD6
- v30XLvQYUgadpvO34siGtro6Z4UAnmAcApt9J2SzPr4yDkpoGdhqC+M/M
-X-Gm-Gg: AZuq6aJFIGG6Q5TtOQZrjOuLYrVdmBfgeH8i0wMhuWACiBMXsh3/Xof0H0vLLOnJ31b
- GnwkEjmy9b3lti+K0H1cpcDkb+9tKkSriRoc7bqWtxAS4mishHywOw5GkBKPtlrJ0i+nAnV+OXe
- hgVWA+No44BWx1AhN0EzC+aCXb/9ZVqRNds2DYQZH69IySUaQw0DcCu1GwHy/klTBlNB97VujXN
- 75D+SGtONLyE+hfmGRfjnD+YBQ6AZknziYORNW4u2cEAQtnCkQztR2X9IkYnEdXuO08Yz47Grl8
- FAmZUezsk7Bms6pCSi3O151W/Iwx3hhC7a3PwKKffETAuvC0wThrwEAaMQrkQJcLR4ElKVCiqly
- wxSxq3Gm7/7AaYbZqJXQIl4UmGkT2vuEACITKmccs3RmNGt7Q
-X-Received: by 2002:a05:600c:8b6b:b0:47e:e946:3a59 with SMTP id
- 5b1f17b1804b1-48069c92effmr54488345e9.34.1769589008371; 
- Wed, 28 Jan 2026 00:30:08 -0800 (PST)
-X-Received: by 2002:a05:600c:8b6b:b0:47e:e946:3a59 with SMTP id
- 5b1f17b1804b1-48069c92effmr54487945e9.34.1769589007901; 
- Wed, 28 Jan 2026 00:30:07 -0800 (PST)
+ AJvYcCX1iwB0Um1cj9rL+McuRUH01VJDac/OSiDoLjJrUGpSSudpXbIH3YtuSDnZ95ebFmszm4yRCKg7YL61@nongnu.org
+X-Gm-Message-State: AOJu0YwJyvkFpxYWS0aruBLwfspsjhKUX0cRzN8XO8hA4BAYOAlOC9Qw
+ Zgw8gLZ6rlWpUu6LnxpoOQ9QoAIy35eDgGeUXldE+2iHNn3rXmh6+POU9+m14rYPAglplmdWvHy
+ FEwvaj3tLoql5VtGqQMNJ+Vo8dzmJCe0um94m1EiSvyH19LkoKOCFZ8gVg/ndlCmR
+X-Gm-Gg: AZuq6aKIBspNjvl7pH8hNgzYqj1Hw2pUzd79EUWzMKpfGu7tJ3SBXaKCT0UebOMF2wV
+ 3TeIW2FBmX3wyI2jOJL9Y7dioW+7AHDuDKqUxpik8qz2G9MczzpcZzus5eN8DWPlgTNk4eThoMO
+ 2+vQxc8l2ZG7SN22BumBpDRJ53p+wz4t3ODRtveVQt8L+FyGOLEZ17RE2fvgJhtYALGrNaFRnS6
+ rLLmS5u10njkk6GqTveraVc6TvTnvsTT9n8eCql+LEYVmB3AhUESM+25Zekf8gR9xdeIGlCHvQb
+ fDqGbnPqza7ac4pH6xwX9Yvb3aZ5B0bsGoqlB9D9P3WmbmRHmI7h9jrzhgtwfMmsTlw6iA9mRIf
+ O6DDL5sb60F4WHfJMhu36OE3phIJ8bMwO8BPoi9lXOZGp1p8+
+X-Received: by 2002:a05:6000:2004:b0:434:2569:275d with SMTP id
+ ffacd0b85a97d-435dd0909e1mr6737993f8f.26.1769589056307; 
+ Wed, 28 Jan 2026 00:30:56 -0800 (PST)
+X-Received: by 2002:a05:6000:2004:b0:434:2569:275d with SMTP id
+ ffacd0b85a97d-435dd0909e1mr6737934f8f.26.1769589055848; 
+ Wed, 28 Jan 2026 00:30:55 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48066c40e04sm113577385e9.13.2026.01.28.00.30.07
+ ffacd0b85a97d-435e132303fsm4828346f8f.36.2026.01.28.00.30.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Jan 2026 00:30:07 -0800 (PST)
-Message-ID: <1bddcc61-9640-4d63-a972-ab16b0061611@redhat.com>
-Date: Wed, 28 Jan 2026 09:30:06 +0100
+ Wed, 28 Jan 2026 00:30:55 -0800 (PST)
+Message-ID: <a55ac27f-c117-4bb3-89e7-4a4f7f3d080c@redhat.com>
+Date: Wed, 28 Jan 2026 09:30:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 8/8] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
+Subject: Re: [PATCH v4 3/8] vfio: Document vfio_device_get_region_info()
 To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>
+Cc: Alex Williamson <alex@shazbot.org>
 References: <20260123062042.568703-1-vivek.kasireddy@intel.com>
- <20260123062042.568703-9-vivek.kasireddy@intel.com>
+ <20260123062042.568703-4-vivek.kasireddy@intel.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -144,17 +139,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260123062042.568703-9-vivek.kasireddy@intel.com>
+In-Reply-To: <20260123062042.568703-4-vivek.kasireddy@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -173,259 +168,45 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/23/26 07:17, Vivek Kasireddy wrote:
-> In addition to memfd, a blob resource can also have its backing
-> storage in a VFIO device region. Since, there is no effective way
-> to determine where the backing storage is located, we first try to
-> create a dmabuf assuming it is in memfd. If that fails, we try to
-> create a dmabuf assuming it is in VFIO device region.
+> Add documentation for vfio_device_get_region_info() and clarify the
+> expectations around its usage.
 > 
-> So, we first call virtio_gpu_create_udmabuf() to check if the blob's
-> backing storage is located in a memfd or not. If it is not, we call
-> vfio_create_dmabuf() which identifies the right VFIO device and
-> eventually invokes the vfio_device_create_dmabuf_fd() API to have
-> a dmabuf fd created.
-> 
-> Note that in virtio_gpu_remap_dmabuf(), we first try to test if
-> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
-> use the VFIO device fd directly to create the CPU mapping.
-> 
-> While at it, remove the unnecessary rcu_read_lock/rcu_read_unlock
-> from virtio_gpu_create_udmabuf() and also replace warn_report()
-> with qemu_log_mask().
-> 
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > Cc: Alex Williamson <alex@shazbot.org>
 > Cc: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 > ---
->   hw/display/Kconfig             |   5 ++
->   hw/display/virtio-gpu-dmabuf.c | 117 ++++++++++++++++++++++++++++++---
->   2 files changed, 113 insertions(+), 9 deletions(-)
+>   include/hw/vfio/vfio-device.h | 13 +++++++++++++
+>   1 file changed, 13 insertions(+)
 > 
-> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
-> index 1e95ab28ef..0d090f25f5 100644
-> --- a/hw/display/Kconfig
-> +++ b/hw/display/Kconfig
-> @@ -106,6 +106,11 @@ config VIRTIO_VGA
->       depends on VIRTIO_PCI
->       select VGA
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index 35a5ec6d92..828a31c006 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -275,6 +275,19 @@ bool vfio_device_get_host_iommu_quirk_bypass_ro(VFIODevice *vbasedev,
+>   int vfio_device_get_feature(VFIODevice *vbasedev,
+>                               struct vfio_device_feature *feature);
 >   
-> +config VIRTIO_GPU_VFIO_BLOB
-> +    bool
-> +    default y
-> +    depends on VFIO
-> +
->   config VHOST_USER_GPU
->       bool
->       default y
-> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
-> index c34d4c85bc..2dfe70d7eb 100644
-> --- a/hw/display/virtio-gpu-dmabuf.c
-> +++ b/hw/display/virtio-gpu-dmabuf.c
-> @@ -18,6 +18,7 @@
->   #include "ui/console.h"
->   #include "hw/virtio/virtio-gpu.h"
->   #include "hw/virtio/virtio-gpu-pixman.h"
-> +#include "hw/vfio/vfio-device.h"
->   #include "trace.h"
->   #include "system/ramblock.h"
->   #include "system/hostmem.h"
-> @@ -27,6 +28,38 @@
->   #include "standard-headers/linux/udmabuf.h"
->   #include "standard-headers/drm/drm_fourcc.h"
->   
-> +static void vfio_create_dmabuf(struct virtio_gpu_simple_resource *res)
+> +/**
+> + * Return the region info for a given region index. The region info includes
+> + * details such as size, offset, and capabilities. Note that the returned
+> + * info pointer is either a cached copy or newly allocated by
+> + * vfio_device_get_region_info(), so the caller is not expected to allocate
+> + * or free it.
+> + *
+> + * @vbasedev: #VFIODevice to use
+> + * @index: region index
+> + * @info: pointer to store the region info
+> + *
+> + * Returns 0 on success or a negative value on error.
+> + */
+>   int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+>                                   struct vfio_region_info **info);
+>   int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
 
-Could you please not use the 'vfio_' prefix ? Its confusing as there
-routines are part of the virtio component.
-
-
-> +{
-> +#if defined(VIRTIO_GPU_VFIO_BLOB)
-> +    VFIODevice *vbasedev;
-> +    RAMBlock *first_rb;
-> +    ram_addr_t offset;
-> +
-> +    first_rb = qemu_ram_block_from_host(res->iov[0].iov_base, false, &offset);
-> +    if (!first_rb) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: Could not find ramblock\n", __func__);
-
-Error handling is quite poor. Can't we have an 'Error *' parameter ?
-
-> +        return;
-> +    }
-> +
-> +    vbasedev = vfio_device_lookup(first_rb->mr);
-> +    if (!vbasedev) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: No VFIO device found to create dmabuf from\n",
-> +                      __func__);
-> +        return;
-> +    }
-
-vfio_dmabuf_mmap() does the same sequence of code to query the VFIODevice.
-May be a common helper would help.
-
-> +
-> +    res->dmabuf_fd = vfio_device_create_dmabuf_fd(vbasedev,
-> +                                                  res->iov, res->iov_cnt);
-> +    if (res->dmabuf_fd < 0) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: VFIO_DEVICE_FEATURE_DMA_BUF: %s\n",
-> +                      __func__, strerror(errno));
-> +    }
-> +#endif
-> +}
-> +
->   static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
->   {
->       struct udmabuf_create_list *list;
-> @@ -43,10 +76,7 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
->                        sizeof(struct udmabuf_create_item) * res->iov_cnt);
->   
->       for (i = 0; i < res->iov_cnt; i++) {
-> -        rcu_read_lock();
->           rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
-> -        rcu_read_unlock();
-> -
-
-The rcu un/lock removal needs some explanations. It deserves a separate patch
-I would say.
-
-
->           if (!rb || rb->fd < 0) {
->               g_free(list);
->               return;
-> @@ -62,17 +92,84 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
->   
->       res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
->       if (res->dmabuf_fd < 0) {
-> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
-> -                    strerror(errno));
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-
-Is it a guest error ?
-
-> +                      "%s: UDMABUF_CREATE_LIST: %s\n",
-> +                      __func__, strerror(errno));
->       }
->       g_free(list);
->   }
->   
-> +static void *vfio_dmabuf_mmap(struct virtio_gpu_simple_resource *res)
-
-please use a "virtio" prefix.
-
-> +{
-> +    struct vfio_region_info *info = NULL;
-> +    VFIODevice *vbasedev = NULL;
-> +    ram_addr_t offset, len = 0;
-> +    RAMBlock *first_rb, *rb;
-> +    void *map, *submap;
-> +    int i, ret = -1;
-> +
-> +    first_rb = qemu_ram_block_from_host(res->iov[0].iov_base, false, &offset);
-> +    if (!first_rb) {
-> +        return MAP_FAILED;
-> +    }
-> +#if defined(VIRTIO_GPU_VFIO_BLOB)
-> +    vbasedev = vfio_device_lookup(first_rb->mr);
-> +#endif
-> +    if (!vbasedev) {
-> +        return MAP_FAILED;
-> +    }
-> +
-> +    /*
-> +     * We first reserve a contiguous chunk of address space for the entire
-> +     * dmabuf, then replace it with smaller mappings that correspond to the
-> +     * individual segments of the dmabuf.
-> +     */
-> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, vbasedev->fd, 0);
-> +    if (map == MAP_FAILED) {
-> +        return map;
-> +    }
-> +
-> +    for (i = 0; i < res->iov_cnt; i++) {
-> +        rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
-> +        if (rb != first_rb) {
-> +            goto err;
-> +        }
-> +#if defined(VIRTIO_GPU_VFIO_BLOB)
-> +        ret = vfio_get_region_index_from_mr(rb->mr);
-> +        if (ret < 0) {
-> +            goto err;
-> +        }
-> +
-> +        ret = vfio_device_get_region_info(vbasedev, ret, &info);
-> +#endif
-> +        if (ret < 0 || !info) {
-> +            goto err;
-> +        }
-> +
-> +        submap = mmap(map + len, res->iov[i].iov_len, PROT_READ,
-> +                      MAP_SHARED | MAP_FIXED, vbasedev->fd,
-> +                      info->offset + offset);
-> +        if (submap == MAP_FAILED) {
-> +            goto err;
-> +        }
-> +
-> +        len += res->iov[i].iov_len;
-> +    }
-> +    return map;
-> +err:
-> +    munmap(map, res->blob_size);
-> +    return MAP_FAILED;
-> +}
-> +
->   static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
->   {
->       res->remapped = mmap(NULL, res->blob_size, PROT_READ,
->                            MAP_SHARED, res->dmabuf_fd, 0);
->       if (res->remapped == MAP_FAILED) {
-> +        res->remapped = vfio_dmabuf_mmap(res);
-> +        if (res->remapped != MAP_FAILED) {
-> +            return;
-> +        }
->           warn_report("%s: dmabuf mmap failed: %s", __func__,
->                       strerror(errno));
->           res->remapped = NULL;
-> @@ -139,8 +236,12 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
->       } else {
->           virtio_gpu_create_udmabuf(res);
->           if (res->dmabuf_fd < 0) {
-
-Why test dmabuf_fd ? Can virtio_gpu_init_dmabuf() be called mulmtiple times ?
-
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
-
-
-> -            return;
-> +            vfio_create_dmabuf(res);
-> +            if (res->dmabuf_fd < 0) {
-> +                return;
-> +            }
->           }
-> +
->           virtio_gpu_remap_dmabuf(res);
->           if (!res->remapped) {
->               return;
-> @@ -153,9 +254,7 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
->   
->   void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
->   {
-> -    if (res->remapped) {
-> -        virtio_gpu_destroy_dmabuf(res);
-> -    }
-> +    virtio_gpu_destroy_dmabuf(res);
->   }
->   
->   static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
 
 
