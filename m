@@ -4,112 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343B5D46BE4
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 17:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7B3ED46BE0
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 17:49:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl9VL-0003Ab-Uu; Wed, 28 Jan 2026 12:38:59 -0500
+	id 1vl9ef-0001C0-0V; Wed, 28 Jan 2026 12:48:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vl9VJ-00038s-2X
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:38:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vl9VE-0008Du-SK
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:38:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769621931;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QYkW7m5i0K1b67gDvBInQeElSUGMosuQrzE+xcqkE/k=;
- b=UjYg1gGSaGfI2isKRA3stxqSdEWp4xm+ktIrpBRgAz4TD8oT2ROdv6YSoaDUu+vse8Mn9q
- QlNYrWs8n3rsaAisHEyx+SfmfBB+Zs0lcVrXZK4z6u65u8lfB8trRzZSi/0g347oUvXPbv
- 6dKmjmC0Gphj4En2MXbY/yHmUzG1nq4=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-35-A_2qILaoPi-QbfNXwVLwiA-1; Wed, 28 Jan 2026 12:38:49 -0500
-X-MC-Unique: A_2qILaoPi-QbfNXwVLwiA-1
-X-Mimecast-MFC-AGG-ID: A_2qILaoPi-QbfNXwVLwiA_1769621929
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8c6a289856eso331007885a.0
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 09:38:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vl9eY-00019n-MM
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:48:31 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vl9eW-0001iP-Sb
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 12:48:30 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-435903c4040so114661f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 09:48:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769621929; x=1770226729; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=QYkW7m5i0K1b67gDvBInQeElSUGMosuQrzE+xcqkE/k=;
- b=DpSdiMnUptq521umFTpIXCGYj9R4UoHHa5+Cq8TxxRXy+YpYkDn2n2hlgrC7Dy+Cxi
- DyMlKqTyWrjNL24Binkj//Cq15TloHqnxKsq3+weg3vMsbMm6BIgjs9fqRohqru+ifDI
- PkERLmEmqiHJejUMwSKiKjyb0YaR45HpWRnF/fwAcEQoPo3pGBKVwHmEiPUAzLK9tFcS
- HMc9NzLx7HDeMle+55gOAh41CIfeKg2BRz5u8UsIEBUU5TFtZZyprl/8hRGTiV2MQJIh
- iZEireW4ztLG0TENHYNqegLRiAGaGA424lQhZIlw7BdOVeeg+aPngCxIx2gdL8FY0TBr
- OmcQ==
+ d=linaro.org; s=google; t=1769622507; x=1770227307; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bj5ufOGr/9lEHh2xwuGdrDse0fcL/BvnanZmIrsO+rg=;
+ b=Dy0km1IDq0O81ntQ3cLsE3wN648ht+iySK6Qj6sH6sXASYIlP277SxKAlbNfW0bDC2
+ TU7e1PcTgyVPS4Br2DOUkJVA67SOd0tZ73IEs//IuwEhGGnvaSRZw04pA6XrusxFqYJK
+ i4JuiJmkUr9LWV3pJYK3vJT+LDtANqKQq1tunPwDc90Jsd/mLGbtc2pD42wzKMAWhXuj
+ FUSA+rxx4s6bhR/6lkCQYrfNvC8PFwTUnyqFbVDt5R4Rvxt+3/FZOXhH3DLapmW2Uzuh
+ Epan2PweyZPgynCfv9/KkwkwYC6qzNwQOxBj/2xFyaurv4yAPZJqlubGP4tKh5XWXYcX
+ dkbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769621929; x=1770226729;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QYkW7m5i0K1b67gDvBInQeElSUGMosuQrzE+xcqkE/k=;
- b=P1Wv7N5K19lzMnEdDZjlazrjzmpB2gc1Gyo81avEFAhZlHORx1m3FFOqNZK2NS2gUk
- 2G15fwIFXkBRKzNIuIIRyjjNucOI49TAetJcK9jwuztixBZN/ATI3HSbGrS9umTv91h6
- 9l+2NsAjPQo2RZu6DeaHYkSFbSS8ftC25Bw3R64kZ2yviiTTReipLoxZaUf5vSUemT1j
- KVwSb1YdvBzV69+ZNslR97wlHiOt+XiRjy8CKrT3IGtUhaiBOqN/5zUYjLvaJ/FX7IcE
- bbkMBinUJWo9AjSpejhu2Ib46Sa+7M6YUN+lOrRCmEvKbgoF37+d1bNfU1H34Qivl8US
- 6CcA==
+ d=1e100.net; s=20230601; t=1769622507; x=1770227307;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bj5ufOGr/9lEHh2xwuGdrDse0fcL/BvnanZmIrsO+rg=;
+ b=XrtqQwrt79c7STrAjLHS3ajAsH5g5Suy/uxekarrpJeyurgZBsIO+SvubysRZMhZet
+ cuTc5iUm10j10QvV9xOJLAeTF6jOCl6wNkxxrAGw+Xs5x33LEaXBFESBn2mDZGpCW37M
+ e3JRPT4fwLtv3VTM78uXfs3QMTdH5r3uIgEq7LYwE9HRUT0fgZtZFw08gzETwFwgPssA
+ vyD2/N3SLP9MSP5ytHgG2KRp3dZkC40DH3O6r/rcqUhRR7iT1XvOEmjDI8dnAAa389D/
+ 9XqpsI60fBflpMQpzK4lQFvzklZmVd2nGTx2lx66VLPX6RTe9eG2vwVGPrljut4InPe7
+ PwAQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVs/NrowF8okYMLVhwkg363ZlqSOW7wAA5qDeyXENCEI1phRvgQU7hSwtPYnLw0UJKFx7e2GRSp/6l4@nongnu.org
-X-Gm-Message-State: AOJu0YxiswftiHcEdCrgTRn11g7eSEDtz/kYdSpyG6MNkAaJmUKEp34w
- AAZ/Hbjqjrpo9LBDd7Pj9fWl8PtK29kPH3/1j45IXQ+QP9Zjh9NRyo0AQ2zUmiu2sD0qIsia2O+
- EG2x47cvYHjnK6vFY7+ImdcgUo3EY8mS8sUPFR5NchQbNXj5qs9/HOHvQ
-X-Gm-Gg: AZuq6aIxWKTIvBD+vjms7HTJgkhtwvARvxT1Jld3rVx/Ay9ePrmrwkq4wiTbHeGsReR
- COajsHKT76emoLVEvJE1LIrR3Tu7MHln0RE58MyfJcLmgvLZORnG/3ELtazosdunucrWkbit1Qk
- 7jQfcvtFU27wjZOk7Wal7Y3zBNYUdUjVE+23VVJBzK9TkmWjuQvxXVwh6OeXkmLP/CFbe8/IGOp
- RMAWTMVhAS5PbhDcK5bjssoRjE/gGz4AVTcltvTpQBTANPRHhIQgAWnp9pXHkotHa+zhWlHx1j/
- ZlD4M92tqnAF7s5FVNIfrvRVX8tP/yyto5/wTwj1RvqmZRbRkp/0f6NO7Nz3Fk0hnB/KUm1BOM1
- S2Q8=
-X-Received: by 2002:a05:620a:1902:b0:8c7:1b49:bd5c with SMTP id
- af79cd13be357-8c728b5d81bmr27335385a.37.1769621929184; 
- Wed, 28 Jan 2026 09:38:49 -0800 (PST)
-X-Received: by 2002:a05:620a:1902:b0:8c7:1b49:bd5c with SMTP id
- af79cd13be357-8c728b5d81bmr27330285a.37.1769621928568; 
- Wed, 28 Jan 2026 09:38:48 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8c711d452eesm225758985a.38.2026.01.28.09.38.47
+ AJvYcCXT7UQdVxb/2d7vps94vG9Yhle4wQRT3QCJ5wJpVLC81hFFRc1yFv12v7fX0e3ym6UqkT5bjtY60/qI@nongnu.org
+X-Gm-Message-State: AOJu0Yx1+iV8ifUe5WBsOh4X4IpqKqSF3xS9MbXNye77CA+OK+59++Um
+ dqOPwEBJ2CLgvRJAt2GlwdJWjGIQukZbgnTNxBcz3tpRRbykBjaYUMl0COnavWtRHAc=
+X-Gm-Gg: AZuq6aKZzQRDgdN0DaFBDkj3lCtAespXFfF/FF0nt066s3Ur4DWgr2RmR4khcWY6rgZ
+ Tk5+k7UwJKE+H3CnTEqPCCne9qdfVhpGl8ZPid+btYHE2ViT0Ng80mxQnsUVk0i2iTpKwVJQ1+N
+ XE1ZHBmQ2dJfMNASgyzWiYYqXYbdnFVrkKVZrTEq6VYSF2ZpMD3r6I0wsPnTFbHOqg56mcj1Ac0
+ P9GeLtdt4iFBcTh+M6DwHFnQg/TY09EdwTP4B5I/d54ef8Fs/rS4Uhhj8WVLKJRuGGnuc7Yk40M
+ oK8zqoMJ95fnU1v+6xCzPr5tOUjJ7fmTqv8R2lGJeX4r+UmvmHr5cJJ7dzQpKVP8K1kpPh8k2b0
+ X13fcrC7OzJBGc+lrjHzsQk+QWjkBdblqAjLi+f7oXPdsiZ5FKtOkIDrsIxQbwSa339cc/tvOMq
+ whi1JI7riGqR7V3i7fvIshdw==
+X-Received: by 2002:a05:6000:2081:b0:432:dfa8:e1b6 with SMTP id
+ ffacd0b85a97d-435dd0b6a75mr9548688f8f.39.1769622506629; 
+ Wed, 28 Jan 2026 09:48:26 -0800 (PST)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e131cfd4sm8218361f8f.25.2026.01.28.09.48.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jan 2026 09:38:48 -0800 (PST)
-Date: Wed, 28 Jan 2026 12:38:47 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] vfio/migration: Send migration event before device state
- transition
-Message-ID: <aXpJpwLvHTAXfpon@x1.local>
-References: <20260128105159.10282-1-avihaih@nvidia.com>
- <36062a37-0af5-49fc-ac06-212096fb2c30@redhat.com>
- <aXoiAsGCWRv1nwW-@x1.local>
- <cb677add-ef2b-4ec6-9ba5-13aa2a50ec90@nvidia.com>
- <aXo3mcseNxP9bJ15@x1.local>
- <591f4e36-11a8-4310-a74a-6166698d7b23@nvidia.com>
+ Wed, 28 Jan 2026 09:48:25 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E3D155F895;
+ Wed, 28 Jan 2026 17:48:24 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org,  artem_mygaiev@epam.com,
+ volodymyr_babchuk@epam.com,  takahiro.nakata.wr@renesas.com,  "Edgar E .
+ Iglesias" <edgar.iglesias@gmail.com>,  Ruslan_Ruslichenko@epam.com
+Subject: Re: [PATCH 00/27] hw/arm: Add generic FDT-based machine and
+ infrastructure
+In-Reply-To: <CAN-aV1EjYwSRfV87YQdtfqU5CH8Bsssr3EvStPWL2_VFOs4N4w@mail.gmail.com>
+ (Ruslan Ruslichenko's message of "Tue, 27 Jan 2026 19:18:10 +0100")
+References: <20260126174313.1418150-1-ruslichenko.r@gmail.com>
+ <CAFEAcA9NEjaUBX19sdw9TRCKcKn8CQfvoVNZ+VaXOcNZ8kf24g@mail.gmail.com>
+ <CAN-aV1EjYwSRfV87YQdtfqU5CH8Bsssr3EvStPWL2_VFOs4N4w@mail.gmail.com>
+User-Agent: mu4e 1.14.0-pre1; emacs 30.1
+Date: Wed, 28 Jan 2026 17:48:24 +0000
+Message-ID: <87ecn9aas7.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <591f4e36-11a8-4310-a74a-6166698d7b23@nvidia.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,41 +111,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 28, 2026 at 07:13:43PM +0200, Avihai Horon wrote:
-> In our case we only use the PRE_COPY_P2P prepare event. The prepare events
-> for the other states are ignored.
-> For re-enabling the timeout mechanism we indeed use the "regular" (not
-> prepare) events.
-> 
-> However, this new event can be used by anyone for any purpose, so I didn't
-> want to limit it only for my use case.
+Ruslan Ruslichenko <ruslichenko.r@gmail.com> writes:
 
-I see your point.
+> On Tue, Jan 27, 2026 at 11:03=E2=80=AFAM Peter Maydell <peter.maydell@lin=
+aro.org> wrote:
+>>
+>> On Mon, 26 Jan 2026 at 17:43, Ruslan Ruslichenko
+>> <ruslichenko.r@gmail.com> wrote:
+>> >
+>> > From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
+>> >
+>> > This patch series introduces new ARM machine model, arm-generic-fdt, a=
+nd the underlying infrastructure required to instantiate a QEMU machine fro=
+m a Device Tree.
+>>
+>> I'm afraid this has been a feature that has been suggested from
+>> time to time, but which I don't think is workable in general.
+>>
+>> Device tree files are designed to provide enough information to
+>> the guest kernel to allow it to find non-probeable hardware. They
+>> are not designed to provide enough information to QEMU to allow
+>> it to create and wire up all the hardware present on the system.
+>>
+>> There are specific niches where it can be made to work -- I think
+>> Xilinx have or had a setup where they were generating an FPGA
+>> model and a device tree and a guest kernel all from the same
+>> single data source, so they could put everything necessary into
+>> the dtb, for example -- but I don't think it works in the
+>> general case. As one simple example, the DTB doesn't generally
+>> have any information about how the Secure world works in an Arm
+>> system, because Linux doesn't care about the Secure world. It
+>> also doesn't usually have information that the guest OS can
+>> probe for itself at runtime.
+>>
+>> There has been periodic discussion of more flexible user-driven
+>> board creation, but that has generally been with the idea of using
+>> the QMP monitor to orchestrate creation and connection of device
+>> models.
+>>
+> I agree that a guest Device Tree is insufficient for describing a
+> complete QEMU machine model.
+> However, we separate the guest configuration from the machine
+> definition. The -hw-dtb option allows the user to provide a
+> QEMU-specific system description.
+> Those hw-dtb would not be passed to Linux Guest VM.
+>
+> The fact that this workflow has been successfully used in production
+> by AMD/Xilinx demonstrates that FDT is a feasible format.
 
-Said that, in this specific case, my worry is nobody will consume the rest
-events, and then after a few years nobody can even tell why it ever
-existed. Then QEMU needs to emits some never-used events forever, worrying
-about breaking anyone, even if in reality they're always ignored.
+Where are the extensions to the FDT used for hw-dtb documented? How does
+it deal with PCI devices and the Secure world?
 
-Personally I think it makes more sense to add one explicit message as you
-explicitly need.  Then, that message can be as generic as possible on its
-own.  But I'll leave that to you and VFIO maintainers to decide.
+> In contrast, QMP usage may end up even more complex and less
+> maintainable for the task of full system modeling.
+> To my understanding, this would need to generate too long configs,
+> which may eventually require some intermediate format by itself.
+>
+> I am proposing to use FDT as a serialization format to describe a
+> machine configuration. Theoretically we can use other formats, like
+> XML, but in my opinion FDT perfectly matches the requirements.
 
-> 
-> > 
-> > I do not know VFIO state machine well, also not familiar with this specific
-> > problem.  So please treat them as pure questions. Anyway, it'll be always
-> > nice to attach some more information into the commit log IMHO.
-> 
-> Sure.
-> As I said earlier, I didn't want to tie this new event to my specific use
-> case, but rather wanted to describe the general problem it can solve.
-> But if that helps, I can add some more details in the commit message in next
-> version.
+The QMP interface is self-documenting and introspectable and used for
+the management of QEMU including things like hotplug. It is also QOM
+aware so a natural fit for dealing with the underlying QOM machinery.
 
-That'll always be very helpful, thank you!
+Previous discussions have entertained the idea of making the parsing of
+hw-dtb an external script which would then translate into QMP commands
+to build up the machine.
 
--- 
-Peter Xu
+>
+> BR,
+> Ruslan Ruslichenko
+>
+>
+>> thanks
+>> -- PMM
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
