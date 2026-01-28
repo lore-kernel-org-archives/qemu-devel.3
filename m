@@ -4,65 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CA23D3569B
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 10:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB690D35697
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 10:27:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl2RT-0008IY-4w; Wed, 28 Jan 2026 05:06:31 -0500
+	id 1vl2kb-0003VI-Hl; Wed, 28 Jan 2026 05:26:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vl2RP-0008HD-Uo
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 05:06:28 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <berto@igalia.com>)
+ id 1vl2kU-0003RY-5S; Wed, 28 Jan 2026 05:26:11 -0500
+Received: from fanzine2.igalia.com ([213.97.179.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vl2RM-0008FX-Tx
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 05:06:27 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60SA5tQU017800
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 28 Jan 2026 19:06:17 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=MVeT2xIcyKvvgeNIc6OxzzTkqsODJl8q+V1kkxA3KPY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1769594777; v=1;
- b=bltkmtCpAmMq5hot/O5UbLVKdUzn+PWB+ig8Byg2I1AaTiWfYh1/5zIK38YobrtS
- u4ENhnRyzsqWW+mW4i+7NascKb8rvnL7kFeoj86VpYKUjvXCyPe4XM0aPhpuasE2
- WGZzoGvz6Zv/+roTCQzTPRYe/FyP95yFwyTNQACgBs5Zb3iQAtDrceas6EdKyiJV
- gpLbdZP3Q5n/PqhzW6DmnwmQ0PlDJA1sEo/8Bj4OHJh7v/d0hKg1LCQ82tbIvPY6
- m2W3iBuwk+x84nZJjfzpU6/m2Jsj8BIol9jrn2VOBs6aAPUivu1jCsaUoJirgtho
- 2tbYDM+5L6RPifjFmh4NJQ==
-Message-ID: <562f0e5c-7ae8-4d95-9dd4-674447362ef7@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 28 Jan 2026 19:05:55 +0900
+ (Exim 4.90_1) (envelope-from <berto@igalia.com>)
+ id 1vl2kO-0007gq-J5; Wed, 28 Jan 2026 05:26:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; 
+ s=20170329;
+ h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+ Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=fOvoeItDOQvM/8NhsfwPwdakSAmQSq02eKgbrwaZfD0=; b=FyThLBdzScwKa2yMp5N0mRLqed
+ OTDq5y6pB1FQj15zrh7STi+Mc9T2Lf/y73Z/rc4pz2IENI6Sz41vl/SZnSINnkq4XHN1gjPHDLkqV
+ 3mqdNaemZzaNgOc7/toyB0E0WIrdlW9f8VdN6yiu89WEs8FWM1dgPeMOHhkRNyGeKfJa/wm518XsS
+ OOv71rIdvmV8Ef2PEQuVyZzDgxcvOdcCd1wr3PHfPS2s2S9rqY1p8mcTL+kmB1CYctvUAd6MGFNYe
+ EEFxsf9oQXEj2M/oAOEkoGuGA/Z6qfH0NDac8aFxsBAqwvRPLM6yHXK9cbPEXneDn7znjZOQUQALo
+ a/tBcqMQ==;
+Received: from ip40.wifi.igalia.com ([192.168.12.40] helo=zeus.local)
+ by fanzine2.igalia.com with esmtpsa 
+ (Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+ id 1vl2kF-00Api2-Og; Wed, 28 Jan 2026 11:25:55 +0100
+Received: from berto by zeus.local with local (Exim 4.98.2)
+ (envelope-from <berto@igalia.com>) id 1vl2kF-00000000wL2-2bdu;
+ Wed, 28 Jan 2026 11:25:55 +0100
+From: Alberto Garcia <berto@igalia.com>
+To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, John Snow <jsnow@redhat.com>
+Cc: Alberto Garcia <berto@igalia.com>, qemu-trivial@nongnu.org,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] hw/ide, scsi-disk: Fix typo on the rotation_rate documentation
+Date: Wed, 28 Jan 2026 11:25:46 +0100
+Message-ID: <20260128102548.224237-1-berto@igalia.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/10] Implement memory_region_new_* functions
-To: BALATON Zoltan <balaton@eik.bme.hu>, Peter Xu <peterx@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <cover.1769362313.git.balaton@eik.bme.hu>
- <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
- <0118dc9b-d467-7f6b-92a8-4f42760ecb6c@eik.bme.hu> <aXkXWGho7lnJ-gwX@x1.local>
- <2fa59d39-5634-0b8c-27ee-9e9548a7f92a@eik.bme.hu>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <2fa59d39-5634-0b8c-27ee-9e9548a7f92a@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=213.97.179.56; envelope-from=berto@igalia.com;
+ helo=fanzine2.igalia.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,94 +73,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Correct values according to the Medium Rotation Rate field from the
+Block Device Characteristics VPD page (B1h) of the SCSI specification.
 
+Signed-off-by: Alberto Garcia <berto@igalia.com>
+---
+ hw/scsi/scsi-disk.c      | 2 +-
+ include/hw/ide/ide-dev.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-On 2026/01/28 5:22, BALATON Zoltan wrote:
-> On Tue, 27 Jan 2026, Peter Xu wrote:
->> On Tue, Jan 27, 2026 at 03:10:28PM +0100, BALATON Zoltan wrote:
->>> This series does not convert everything but opens the way to do that and
->>> simplify objects by only storing things in the state that are really 
->>> needed
->>> by the object and let QOM manage what it can. I'd really like to avoid
->>> having a list of unused stuff in the state struct just because I 
->>> can't use
->>> something that works and documented just no API to actually use it. Cf.
->>> sii3112 state after this series:
->>>
->>> struct SiI3112PCIState {
->>>     PCIIDEState i;
->>>
->>>     SiI3112Regs regs[2];
->>> };
->>>
->>> vs. your standard:
->>>
->>> struct SiI3112PCIState {
->>>     PCIIDEState i;
->>>
->>>     MemoryRegion mmio;
->>>     MemoryRegion bar0;
->>>     MemoryRegion bar1;
->>>     MemoryRegion bar2;
->>>     MemoryRegion bar3;
->>>     MemoryRegion bar4;
->>>     SiI3112Regs regs[2];
->>> };
->>
->> The latter solution is fine at least to me.
->>
->> I respect your preference on how it can be done, but IMHO it is 
->> subjective,
->> and I tend to agree with Peter that we should try to stick with one 
->> way of
->> solving problems, unless very necessary.
->>
->> In the last three patches the MRs do not look need dynamic 
->> deallocation to
->> me at all..  Introducing fully dynamic MR allocations only for those 
->> is an
->> overkill to me.  I'm not fully convinced we need to merge 600+ new 
->> LOCs for
->> new APIs just for them.
-> 
-> It's not a new API in the sense that it's the same as existing 
-> memory_region_init functions just a variant of it to allow using QOM to 
-> manage the lifetime of the memory region which the current API does not 
-> allow. Also this series does not introduce this dynamic lifetime 
-> management, it's already implemented and documented just there's 
-> currently no way to use it. The actual change is much less, most of the 
-> lines are just the documentation comments. If it's a problem to increase 
-> documentation size I could make it much shorter not duplicating a 
-> separate doc comment for these just mention in the corresponding 
-> memory_region_init doc comment that there's also an analogous 
-> memory_region_new variant of it. That also shows there's no new API just 
-> two ways of using the same API.
-> 
->> We have real but rare users of dynamically allocated MRs, currently AFAIU
-> 
-> Since it's already implemented why not use it if it makes the object 
-> state simpler? Adding additional fields that would already be managed by 
-> QOM seems to be unnecessary duplication and complication to me so I'd 
-> like to avoid that and keep the subclass simple.
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 0f896c27f4..db7d04119e 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -117,7 +117,7 @@ struct SCSIDiskState {
+      * 0x0000        - rotation rate not reported
+      * 0x0001        - non-rotating medium (SSD)
+      * 0x0002-0x0400 - reserved
+-     * 0x0401-0xffe  - rotations per minute
++     * 0x0401-0xfffe - rotations per minute
+      * 0xffff        - reserved
+      */
+     uint16_t rotation_rate;
+diff --git a/include/hw/ide/ide-dev.h b/include/hw/ide/ide-dev.h
+index 617e8159c7..f5eaaf68e6 100644
+--- a/include/hw/ide/ide-dev.h
++++ b/include/hw/ide/ide-dev.h
+@@ -160,7 +160,7 @@ struct IDEDevice {
+      * 0x0000        - rotation rate not reported
+      * 0x0001        - non-rotating medium (SSD)
+      * 0x0002-0x0400 - reserved
+-     * 0x0401-0xffe  - rotations per minute
++     * 0x0401-0xfffe - rotations per minute
+      * 0xffff        - reserved
+      */
+     uint16_t rotation_rate;
+-- 
+2.47.3
 
-I feel the discussion is going a wrong direction. This thread and the 
-cover letter talks different things as the motivation of this series; 
-The cover letter says the documentation mismatches with the 
-implementation and that is the motivation for this series. This thread 
-talks about duplicate memory management and extra fields, which is not 
-mentioned in the cover letter.
-
-Besides, the "extra fields" problem should have been already discussed 
-in [1] and I don't see a new argument here. So, in summary, for a 
-constructive discussion I think:
-- There should be a consistent goal of discussion or patch series
-   (documentation mismatch or extra fields) and
-- A new point needs to be made; reminding the points of past discussion
-   may be worthwhile but is insufficient.
-
-[1] 
-https://lore.kernel.org/qemu-devel/ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu/
-
-Regards,
-Akihiko Odaki
 
