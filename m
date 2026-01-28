@@ -4,60 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38DFFD25B47
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 11:41:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D2FD25B4C
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 12:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl3up-0000yg-Q8; Wed, 28 Jan 2026 06:40:56 -0500
+	id 1vl4Nb-000497-Jg; Wed, 28 Jan 2026 07:10:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vl3uk-0000tm-E2
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 06:40:51 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vl3ue-0007YO-9c
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 06:40:48 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D2707596A10;
- Wed, 28 Jan 2026 12:40:39 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 2JfOGDtp-yEm; Wed, 28 Jan 2026 12:40:37 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 518495969F3; Wed, 28 Jan 2026 12:40:37 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4E8465969F0;
- Wed, 28 Jan 2026 12:40:37 +0100 (CET)
-Date: Wed, 28 Jan 2026 12:40:37 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v2 00/10] Implement memory_region_new_* functions
-In-Reply-To: <562f0e5c-7ae8-4d95-9dd4-674447362ef7@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <cfacf068-7663-6c7f-4908-928bb63e803c@eik.bme.hu>
-References: <cover.1769362313.git.balaton@eik.bme.hu>
- <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
- <0118dc9b-d467-7f6b-92a8-4f42760ecb6c@eik.bme.hu> <aXkXWGho7lnJ-gwX@x1.local>
- <2fa59d39-5634-0b8c-27ee-9e9548a7f92a@eik.bme.hu>
- <562f0e5c-7ae8-4d95-9dd4-674447362ef7@rsg.ci.i.u-tokyo.ac.jp>
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vl4N6-00043u-E2
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 07:10:10 -0500
+Received: from mail-pf1-x443.google.com ([2607:f8b0:4864:20::443])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vl4Mx-000846-Df
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 07:10:01 -0500
+Received: by mail-pf1-x443.google.com with SMTP id
+ d2e1a72fcca58-8230c2d3128so3016405b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 04:09:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1769602197; x=1770206997; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=XheKvpqmEdBu2/HaqYD+xRnaouuRf9AbJUOdyoQGXRM=;
+ b=P5cF2LZtdW0L6J1b2hW28VwSb65UwlF1NuuNCFsq/PRB6ae4MeICfhAulywBw3M8T9
+ +KsJAiuVqCHY2oAgHz9DDUTcDHxcpKSO4b6PeoJ81mQWHHiv2eOSBI1SAW73N42O2RHS
+ QN0civGpu9Z3G8VoV9haGQVs+19quwSHKF87R5qyDwa762GUU8GxulfCi7WphaqbWmPf
+ UbPaAxMQBxyKyZZL9ER4jTQ/id8iYZFMd4G5K5+3l0aqj+CPvSz/LoqIHXzf/QT3YNQe
+ S6kP6OG3hqX5QCcFdPuAO8B2/vr8XdM5hdXxukz6eTtCnPBYRkDfa/S0k26WSeox/fnw
+ swyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769602197; x=1770206997;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XheKvpqmEdBu2/HaqYD+xRnaouuRf9AbJUOdyoQGXRM=;
+ b=S1d1lVpqdv8gLR9j6jJOkk9kEzPQ8PjcZWgvAWTUE0bzo1w69hmOeXxjwWJJYc3wtb
+ eefS8VXaRNHRut2FgY2bdJ0gXty3crar80luG/HFm3eFvmXeku5+BILALiltMUvDC8+1
+ ekf56xjsTc8M1gpXqux0ej3gbp/jXAGl+GkkqWccDMKk4vjR5rZUVD/QhbH6zXn89v/0
+ hhqaKif9Y880wnPETMWg6LSvJsKLAv5S72ewF8VES00rIigOAjwT728YCz29zQ53klbP
+ ATYYfOFyciXweP3cbbnNZVfhcs4W20ces81pgCve+dw8n+iXnk56OgyVZkB/wJolcogK
+ PkOw==
+X-Gm-Message-State: AOJu0Yx/sxM2sQSwdqdQy89T9IEKzWAr4ON1ucSI8TPi/ZmdxlwJxnOT
+ rhd1kNLtDnLCq2GL9/Jwwb3j0opK3aDg6nTPz1sV6h1Q2m0RSGygeYvW
+X-Gm-Gg: AZuq6aJE+VKHbROu1iLKV/tUa+siVWT84TX73xnfYY3xmOwYZCfm3gHLjQM4dzFelVe
+ BA0Zanu7NCqv64IWio9+6xqyyPthO4JjUBGbX1fThV8n8UFHUiFvznib12pv5YHQ4e3+14jroTL
+ bu45LijP++UINEnS7ldo5QIu0AdD12Fj7SXPeqHsEpYL5oLkMvgVl8K0WADmPnWZVGjMLao57Wa
+ IV+rHmzkYrVbd2rGrib2tqRaE9wM7dBLSN3KOfQggVLC0NJ/QwfK3rwmXC93H/mCsclO2gjxo4C
+ QzDhgeELo2OUkKRG7VcjC8sRJVpHM/e2ouEYaKzzIQm0to9E3ORY08fSL2jZpcHg5TXH83dAiU5
+ Ce9E/72j7dtIo+YrjM3JLok8vQwk88gqilFNwUfsz6xf+3pBX/ThpNyqt7DkEHWbVQ0O2Dhenql
+ ilg0O/ACkn3g9Q1TFnz1uhqpbdxN0BG/hRUaezdWKAWrBmGCDlmkP526cAFGqDS0pERqahog==
+X-Received: by 2002:a05:6a00:a0e:b0:823:f96:63bb with SMTP id
+ d2e1a72fcca58-823692e6785mr5198207b3a.52.1769602196912; 
+ Wed, 28 Jan 2026 04:09:56 -0800 (PST)
+Received: from ZEVORN-PC.bbrouter ([183.195.22.224])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82379c24083sm2503153b3a.55.2026.01.28.04.09.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Jan 2026 04:09:56 -0800 (PST)
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Tao Tang <tangtao1634@phytium.com.cn>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ hust-os-kernel-patches@googlegroups.com,
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [RFC PATCH v1 0/2] tests/qtest: Add RISC-V IOMMU bare-metal test
+ using iommu-testdev
+Date: Wed, 28 Jan 2026 20:09:07 +0800
+Message-ID: <cover.1769600111.git.chao.liu.zevorn@gmail.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1854189089-1769600437=:26921"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::443;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pf1-x443.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,137 +104,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---3866299591-1854189089-1769600437=:26921
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+This patch series adds a bare-metal qtest for the RISC-V IOMMU using the
+iommu-testdev framework. The test exercises address translation paths
+without requiring a full guest OS boot.
 
-On Wed, 28 Jan 2026, Akihiko Odaki wrote:
-> On 2026/01/28 5:22, BALATON Zoltan wrote:
->> On Tue, 27 Jan 2026, Peter Xu wrote:
->>> On Tue, Jan 27, 2026 at 03:10:28PM +0100, BALATON Zoltan wrote:
->>>> This series does not convert everything but opens the way to do that and
->>>> simplify objects by only storing things in the state that are really 
->>>> needed
->>>> by the object and let QOM manage what it can. I'd really like to avoid
->>>> having a list of unused stuff in the state struct just because I can't 
->>>> use
->>>> something that works and documented just no API to actually use it. Cf.
->>>> sii3112 state after this series:
->>>> 
->>>> struct SiI3112PCIState {
->>>>     PCIIDEState i;
->>>> 
->>>>     SiI3112Regs regs[2];
->>>> };
->>>> 
->>>> vs. your standard:
->>>> 
->>>> struct SiI3112PCIState {
->>>>     PCIIDEState i;
->>>> 
->>>>     MemoryRegion mmio;
->>>>     MemoryRegion bar0;
->>>>     MemoryRegion bar1;
->>>>     MemoryRegion bar2;
->>>>     MemoryRegion bar3;
->>>>     MemoryRegion bar4;
->>>>     SiI3112Regs regs[2];
->>>> };
->>> 
->>> The latter solution is fine at least to me.
->>> 
->>> I respect your preference on how it can be done, but IMHO it is 
->>> subjective,
->>> and I tend to agree with Peter that we should try to stick with one way of
->>> solving problems, unless very necessary.
->>> 
->>> In the last three patches the MRs do not look need dynamic deallocation to
->>> me at all..  Introducing fully dynamic MR allocations only for those is an
->>> overkill to me.  I'm not fully convinced we need to merge 600+ new LOCs 
->>> for
->>> new APIs just for them.
->> 
->> It's not a new API in the sense that it's the same as existing 
->> memory_region_init functions just a variant of it to allow using QOM to 
->> manage the lifetime of the memory region which the current API does not 
->> allow. Also this series does not introduce this dynamic lifetime 
->> management, it's already implemented and documented just there's currently 
->> no way to use it. The actual change is much less, most of the lines are 
->> just the documentation comments. If it's a problem to increase 
->> documentation size I could make it much shorter not duplicating a separate 
->> doc comment for these just mention in the corresponding memory_region_init 
->> doc comment that there's also an analogous memory_region_new variant of it. 
->> That also shows there's no new API just two ways of using the same API.
->> 
->>> We have real but rare users of dynamically allocated MRs, currently AFAIU
->> 
->> Since it's already implemented why not use it if it makes the object state 
->> simpler? Adding additional fields that would already be managed by QOM 
->> seems to be unnecessary duplication and complication to me so I'd like to 
->> avoid that and keep the subclass simple.
->
-> I feel the discussion is going a wrong direction. This thread and the cover 
-> letter talks different things as the motivation of this series; The cover 
-> letter says the documentation mismatches with the implementation and that is 
-> the motivation for this series. This thread talks about duplicate memory 
-> management and extra fields, which is not mentioned in the cover letter.
->
-> Besides, the "extra fields" problem should have been already discussed in [1] 
-> and I don't see a new argument here. So, in summary, for a constructive 
-> discussion I think:
-> - There should be a consistent goal of discussion or patch series
->  (documentation mismatch or extra fields) and
-> - A new point needs to be made; reminding the points of past discussion
->  may be worthwhile but is insufficient.
->
-> [1] 
-> https://lore.kernel.org/qemu-devel/ceda4c28887c40e1c8eae3f561ee381ca98b0484.1761346145.git.balaton@eik.bme.hu/
+Motivation
+----------
 
-Adding some QOM people in case they have something to add.
+The existing RISC-V IOMMU qtest (riscv-iommu-test.c) focuses on PCI device
+enumeration and register-level validation:
+- PCI configuration space verification (vendor/device ID)
+- Register reset value checks
+- Queue initialization procedures (CQ/FQ/PQ)
 
-OK I try to summarise the motivation again:
+However, it does not test the actual address translation functionality.
+This new test fills that gap by using iommu-testdev to trigger DMA
+transactions and validate the IOMMU's translation logic.
 
-1. Documentation in docs/devel/memory.rst says that memory regions' 
-lifecycle is managed by QOM and they are freed with their owner or when 
-nothing else uses them. This is also already implemented for a long time 
-as described but cannot be used because the only constructors available 
-kill this feature when calling object_initialize that clears the free 
-function added by object_new. (The life time management is implemented 
-through adding memory regions as children to the owner and unparenting 
-them on freeing the owner which decreases ref count of the memory region 
-and will free it when nothing else references it as far as I can tell.)
+Comparison with Existing Test
+-----------------------------
 
-2. This also allows to keep subclasses' state simpler as demonstrated by 
-the last two patches by allowing QOM to manage memory regions as 
-originally intended (based on the documentation and implementation) and 
-not needing to embed memory regions not otherwise needed in the subclass 
-as they are already handled by super classes (e.g. registering as PCI 
-regions or sysbus mmio regions and their lifetime managed by QOM; this way 
-the subclass only contains what it has to add to the superclass and kept 
-simpler as expected in an object oriented design).
+| Feature               | riscv-iommu-test.c | iommu-riscv-test.c (new) |
+|-----------------------|--------------------|--------------------------|
+| PCI config            | Yes                | No                       |
+| Register reset        | Yes                | No                       |
+| Queue init            | Yes                | Yes (via helper)         |
+| Bare translation      | No                 | Yes                      |
+| S-stage (SV39)        | No                 | Yes                      |
+| G-stage (SV39x4)      | No                 | Yes                      |
+| Nested translation    | No                 | Yes                      |
+| DMA verification      | No                 | Yes                      |
+| Uses iommu-testdev    | No                 | Yes                      |
 
-So the motivation is to match documentation and allow using already 
-implemented memory region lifecycle management to make device models 
-simpler.
+The new test provides:
+- Device context (DC) configuration and validation
+- SV39 page table walks for S-stage translation
+- SV39x4 page table walks for G-stage translation
+- Nested translation combining both stages
+- FCTL register constraint validation
+- End-to-end DMA verification
 
-These are my motivation for this change. What is the motivation for using 
-embedded memory regions instead and against this change? If that is found 
-to be a better way then the lifecycle management as implementated and 
-documentated is likely no longer needed as it cannot and will not be used 
-with embedded memory regions that are initialsed with object_initialize 
-and thus could be removed. But I think that would lead to more complex 
-device models not using what QOM and QDev was meant to help with. (More 
-complex device models is a problem because they are harder to understand 
-and find bugs in them having additional things that disctract from actual 
-functionality of the subclass so I'd like to make them as simple as 
-possible only containing things that are related to the subclass. So 
-less QOM boilet plate, less additional static fields in the state is the 
-better.)
+Note: The current implementation only supports SV39/SV39x4. Support for
+SV48/SV48x4/SV57/SV57x4 can be added in future patches.
 
-Regards,
-BALATON Zoltan
---3866299591-1854189089-1769600437=:26921--
+Testing
+-------
+
+QTEST_QEMU_BINARY=./build/qemu-system-riscv64 \
+  ./build/tests/qtest/iommu-riscv-test --tap -k
+
+Question for Maintainers
+------------------------
+
+The existing riscv-iommu-test.c and the new iommu-riscv-test.c serve
+complementary purposes. Would it be beneficial to merge these two tests
+into a single source file for easier maintenance? This would consolidate
+all RISC-V IOMMU testing in one place while preserving both the
+register-level and translation-level test coverage.
+
+Thanks,
+Chao
+
+Chao Liu (2):
+  tests/qtest/libqos: Add RISC-V IOMMU helper library
+  tests/qtest: Add RISC-V IOMMU bare-metal test
+
+ MAINTAINERS                          |   2 +
+ tests/qtest/iommu-riscv-test.c       | 279 +++++++++++++++++++
+ tests/qtest/libqos/meson.build       |   2 +-
+ tests/qtest/libqos/qos-riscv-iommu.c | 400 +++++++++++++++++++++++++++
+ tests/qtest/libqos/qos-riscv-iommu.h | 172 ++++++++++++
+ tests/qtest/meson.build              |   5 +-
+ 6 files changed, 858 insertions(+), 2 deletions(-)
+ create mode 100644 tests/qtest/iommu-riscv-test.c
+ create mode 100644 tests/qtest/libqos/qos-riscv-iommu.c
+ create mode 100644 tests/qtest/libqos/qos-riscv-iommu.h
+
+--
+2.52.0
+
 
