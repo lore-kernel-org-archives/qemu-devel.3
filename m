@@ -4,113 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25FF0D3F08E
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 16:22:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E69D3F08E
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 16:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl8In-0004z1-AT; Wed, 28 Jan 2026 11:21:57 -0500
+	id 1vl8M2-0007RX-72; Wed, 28 Jan 2026 11:25:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vl8Im-0004yD-Ah
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 11:21:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vl8Ik-0006u7-22
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 11:21:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769617310;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cxs69YF4yswZ3kY2QAwJX6vhLJq2jXKF8qKWPL2mWAY=;
- b=SAonfGhU+Zdj+Deo2TIltSHmAz+ubTUJCv1FB3VmcCFQ9H+YYZpSX2xTz8eKkdrX94NPME
- wFMWKpc4cXAM1U+HFfgUzOwr5zJShDHKhLmRsqORFgUfDyioLWWK+KphV59ytq1jQvE4N4
- EJiK7Vp4xyPda1bog8v90WJZhz4c0Is=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-Ar5znS0qMQijlGURAS_CWg-1; Wed, 28 Jan 2026 11:21:48 -0500
-X-MC-Unique: Ar5znS0qMQijlGURAS_CWg-1
-X-Mimecast-MFC-AGG-ID: Ar5znS0qMQijlGURAS_CWg_1769617308
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-5014ca48a56so316289121cf.1
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 08:21:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vl8M0-0007Oa-EE
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 11:25:17 -0500
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vl8Ly-0007sq-Av
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 11:25:16 -0500
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-79478ec4cf1so22845617b3.3
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 08:25:13 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769617512; cv=none;
+ d=google.com; s=arc-20240605;
+ b=AghfrX+X1wK/1VmBtTGd5xuJe9Yqx6Npdc9Q+cJxeuBxJ0UNZSZLSYWC/61K7/gjIh
+ O8HjJjkyr8oA99tD3pgLV6Ko5wHRJkiNfrh4D/cmnXHTGA3djfTZh8/PSBIK7RsCQDkx
+ O+vDJYHImHCsoEmTSqoaHlcQlIaLzG4avB98q9olb6XMm9CPi93Jp5WkaesQ1ebi/f3G
+ iuUH5/4GkCgO7OKRAnU/BKd5DlJ4EHbFAc8wt34yBmTUyBTOlszgmyVd/8gtAnhNlEt2
+ 8qBHoLpNSvIOa18YGW0YTrLx8zkToOCumCf20CTszQuS2kNoVr50bxB1XdNwfryA+DxE
+ kWTA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=kNWW//Fcg/Ik+gcxV3m4+UymViexcY5IqHxCf4R+Ytc=;
+ fh=gWl+z12zAse6isZjSG61pfxc0nkk+bmqopTZHf+6P04=;
+ b=jlFydWl9jbsxTv2/UdAu5lplwno9sxcvCc/+nfC5uV2WzG8e+fxjpde5LF82r32X3E
+ 9bvsvaYsDyzKiOwbNZQy5vNvjMfePkDGZTDqRADOKG6c6mDfmUpbWqmRjazkVxRWohEB
+ GPK1IvWhqzfSIn69Px2Yt6RyBsf5jZxsRd2AzZ9OdAMQigp4nW0B2iIyrsGDTcwLnn4R
+ 8NbBE2f7r3doMxq4N4F2cRvgdKXqv7Fjv/GpZXa67r/uCkT4vGEGNX6/WRbFY55dnAGS
+ FElSXMjoSI7IkJNIYkQyciL132ny4SCaedwC3joizLm2NUncNi+AnqJoO7uvOV7y4ZhT
+ /Pww==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769617308; x=1770222108; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=cxs69YF4yswZ3kY2QAwJX6vhLJq2jXKF8qKWPL2mWAY=;
- b=gfyKXHgFy7Gg/1V/MPKrSL4+AJN8K1jdYQUbNVKchblMogXmygTdUSmfBq1Bv+5sxs
- EK9fVbhLGP8eXKlH61XnaU1m6lJS9RAB//Nl61W95hNs3/CCvHItquEek7zG5hDN1LpL
- YIEBBlajO9SgHDrDi4Q6Ka8t00PayNCmYctGqfuc7SxJJfc/g15YDFOG3eAOILRCKqUe
- 5ErpJn4D01p8FPhxnMy6L23iIaCOzjEmFZufDs3pgTt8XFDcAEZyvWXSW+cy/20w/Pvc
- L6POs7DUJDhCPJbdSMZOaka5/327J7/HO5iJrrNc9rmJM6ES4ym8dQQp0HvyzkGbmJMS
- Nmqw==
+ d=linaro.org; s=google; t=1769617512; x=1770222312; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kNWW//Fcg/Ik+gcxV3m4+UymViexcY5IqHxCf4R+Ytc=;
+ b=du8MjygBDRSyxaxbwwsIkq3RE7u9G/V7VqIiGe1XRfb+Bb7qmckjYsssenU3TA8eKM
+ hZiRTPgAi35+m8pcT5ZuLD36hC52Gv+flJAJ5apaiZ2xMuRd+7JdUuEM4jDyddulV2ot
+ CA4Z1i2nGv7fErGJSQX0Jxs9clJHIKdFyoZV8iWV0EiV/7qaDftldoj09rVvYdEMUPhV
+ WAH9QIbM81Z46JHebNldcJyOOJlgX1SgimjsOdI8QeDnbcEL7JKV/TBaRa1i68rsUAI/
+ L+bnNUFBof6mju5SsrqsK+Am1dnedNlLZbCoi7lgfZynvAq22H83QUncZOwcBS153Zkd
+ vb7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769617308; x=1770222108;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cxs69YF4yswZ3kY2QAwJX6vhLJq2jXKF8qKWPL2mWAY=;
- b=QsO85aKk7t0xoXUKC7FFvjyWCvgYX3pA6ecxrcdJautlUY3SLtn7GmgZhGMurb5PGf
- uqTrB1FEFA047xggsUBdSCbaH4pldGdB958K+Q4uA5gxWxVjltn7dCpkl/d5yHovg2mM
- x5h6j4kDHVtjbHoRwjifYL2RpFO7T38/z1QPwmS5jB3x1NW1uWsX6riaKzXtWyB4xLJV
- wGhej1X+p0KsmloCBJlT9tKp+g6rwHFcDB1veBovgprLm+tXjPl4gBOgTk7ThsacSIte
- SGLvVlX3PDhrb8NJOiClozSc2mhUw+3Xhl1LBLjSU9nMR72ZiHk/Sp/hK1TK2TPS7SF6
- TTdQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHYYbgobdSXSf9xcAG65qaB7886iHPLmL46DfvXZWn0CpqKJMwyNxSQyVJvqTRj86M6QsQLcQ2vnM5@nongnu.org
-X-Gm-Message-State: AOJu0YwOkdeU7O2J7YMTHJi3Qhj593gdWAEXjphaiSYpZT5kD6jQgI3h
- eeq9ZtTvFxq3ii+oLypw3Teo+PDpzexjF58F76lYWaf2Nfs0lFvL4tIV2jyEQUczh+FSCndqRAy
- w70SRv8rREN4htPwu1W9n1KV1CpkYz89ryQtayGZh+dCsKLKPxgsayyPp
-X-Gm-Gg: AZuq6aL1ZGI6ayVY1KCHLoJVAW9AzbAowxst7A0PFM0PCfKmo0Exflly5huB+ILoqia
- IP5MnCtrtckcythZKBRHRhJpi39lrBw7dTSdJpryJ9QpiI14ouOPh9xubGCXDVOWyULpCPsNIbG
- 46KUQrk8Tlj324bhcblkT4Z1o3h/QK/+/Jeox3FEM9yTs6swzcemriF1QJxasmOV5gxnDE+PULG
- OmMba85Gs3uP0B7gGKiT4B8BiAx1B+aooult2CHGeWsMbUPC+CAq34ZYHzTCXG85Qem4+8AziGS
- +juGMGPpIcRIXsZGyxdHNw7CcxTSWQNXyWKyG5EpO1UQEVP3vxZ811ZyQXjELOM59FKMBQyUxod
- MGx4=
-X-Received: by 2002:a05:622a:1451:b0:4f1:ac12:b01b with SMTP id
- d75a77b69052e-5032f8f1766mr78104341cf.38.1769617307949; 
- Wed, 28 Jan 2026 08:21:47 -0800 (PST)
-X-Received: by 2002:a05:622a:1451:b0:4f1:ac12:b01b with SMTP id
- d75a77b69052e-5032f8f1766mr78103791cf.38.1769617307281; 
- Wed, 28 Jan 2026 08:21:47 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-894d3740d73sm19848516d6.27.2026.01.28.08.21.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jan 2026 08:21:46 -0800 (PST)
-Date: Wed, 28 Jan 2026 11:21:45 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] vfio/migration: Send migration event before device state
- transition
-Message-ID: <aXo3mcseNxP9bJ15@x1.local>
-References: <20260128105159.10282-1-avihaih@nvidia.com>
- <36062a37-0af5-49fc-ac06-212096fb2c30@redhat.com>
- <aXoiAsGCWRv1nwW-@x1.local>
- <cb677add-ef2b-4ec6-9ba5-13aa2a50ec90@nvidia.com>
+ d=1e100.net; s=20230601; t=1769617512; x=1770222312;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kNWW//Fcg/Ik+gcxV3m4+UymViexcY5IqHxCf4R+Ytc=;
+ b=KZAkKxrj6xRAF7JRSZDONyYcmnO5pxSc93YuOoXse2vzs8YPKLGohb2XnFscrjrnBA
+ uhMMeEDEBg5+C67tlnr/3pCKzKYXCaaNwd945Q6JEvnljcr8aXLaQ6973V8IhEInPCL0
+ +obS5xGHBAXLETfyV9XRpDQbCdNQPKVEO+dVL3zh8B7kPXuQplIfIVoBHNPosXw7p8mP
+ l+9pjYOISbp8u6WIes88h9DQ1EtuBCFmoKb6WMO2lYFltjKGNHrOZ4aHt6KcianG/uVE
+ QAViW8IbEfxum+KVt5j9dcgNUld1SCytQdG1Xzvfs0K9YY7CIHSehM/nUhId9q7L29B8
+ 5PRQ==
+X-Gm-Message-State: AOJu0Yxil4gt7Qoxk89sFuRz03M9xjY66A2JQepG6OBGQlTYGac5XO5y
+ APphyDmlonOo+IOF2trEVtm3EgZUOxEzDabnaqH7+Q+X1uWY0Q8UTp8QVGCzmF2udUnem5A1+Hk
+ BhbhSwpW27Ud7zMu0jkMuRMALLOKFkoZPJWTtAmtHOw==
+X-Gm-Gg: AZuq6aIDzG3ALLQJ0pKL0UVDnIyDtRmRE210LTeFfYRxnbGvvgjqsv3Lkl9HKnSWtkJ
+ F18lvv9snY2TWZNU/b7JFSjyXKZKIOsOXEJDN1ksD96a0h+xHtXuEQZ+jrLtimPxo++Hx1O1pg1
+ 8nDpHvhofZTXzDNesJea2a2eSLmURWmey8jS8G0qNdbYbA4jShNFk6DyOrcxpNqPKcmM1k5WlZF
+ fKJqzyr/gZbOzKozAPYmBKiQuvHGrJDkLWEcy7LeevmxeJGfIfxPvolGO6LvwUncsrDnQ==
+X-Received: by 2002:a05:690c:a789:b0:785:fe77:ccce with SMTP id
+ 00721157ae682-7947ac01fe2mr37317007b3.44.1769617512100; Wed, 28 Jan 2026
+ 08:25:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cb677add-ef2b-4ec6-9ba5-13aa2a50ec90@nvidia.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260128105839.3487840-1-alex.bennee@linaro.org>
+ <20260128105839.3487840-3-alex.bennee@linaro.org>
+In-Reply-To: <20260128105839.3487840-3-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 28 Jan 2026 16:25:00 +0000
+X-Gm-Features: AZwV_Qj7SJxIJqr1FzwkHSVhyP-xonhXYQ2yVYk8RXvHb-_qxfJbukHXBwlNIh8
+Message-ID: <CAFEAcA_sT6pGhXPpgaEqkJOVuAj3e1KMz_AP6-MZ6YP41YvoRQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] tests/functional: migrate sbsa_ref test images
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
+ qemu-arm@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Radoslaw Biernacki <rad@semihalf.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,202 +118,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 28, 2026 at 05:32:26PM +0200, Avihai Horon wrote:
-> 
-> On 1/28/2026 4:49 PM, Peter Xu wrote:
-> > External email: Use caution opening links or attachments
-> > 
-> > 
-> > On Wed, Jan 28, 2026 at 12:03:46PM +0100, Cédric Le Goater wrote:
-> > > +Peter, + Fabiano
-> > Thanks, looks benign to me from migration POV. I have one question though,
-> > and not sure if I'm the only one wondering..
-> > 
-> > > On 1/28/26 11:51, Avihai Horon wrote:
-> > > > Currently, VFIO device migration event is sent after the device state
-> > > > transition has been completed. However, it may be useful to additionally
-> > > > send a "prepare" event before the state transition, to notify users that
-> > > > it's about to happen.
-> > > > 
-> > > > For example, in some cases with heavy resource utilization, stopping the
-> > > > VFIO device may take a long time. In time-sensitive scenarios, the
-> > > > management application that consumes the event may be notified about the
-> > > > state transition too late.
-> > Could there be more elaborations on the problem?
-> 
-> Of course.
-> 
-> >    For example:
-> > 
-> > (1) What would the mgmt do when receiving the notification?  What would go
-> >      wrong if the state notification will be very late?
-> 
-> In our case, upon receiving an event that the VFIO device is stopped (during
-> migration switchover), the mgmt app prevents timeout of RDMA connections to
-> the migrated VFIO device.
-> This is needed because RDMA connections may have very low timeout, even a
-> few tens of ms, which is far below the migration downtime we have.
+On Wed, 28 Jan 2026 at 10:58, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> As the builds in codelinaro.org are going away migrate the binaries to
+> share.linaro.org. As the hotlinks don't encode the filename we need to
+> explicitly tell uncompress how to handle the files.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Makes sense, thanks.
+> @@ -54,15 +54,11 @@ class Aarch64SbsarefMachine(QemuSystemTest):
+>
+>      timeout =3D 180
+>
+> -    ASSET_FLASH0 =3D Asset(
+> -        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-r=
+ef/'
+> -         '20241122-189881/edk2/SBSA_FLASH0.fd.xz'),
+> -        '76eb89d42eebe324e4395329f47447cda9ac920aabcf99aca85424609c3384a=
+5')
+> +    ASSET_FLASH0 =3D Asset('https://share.linaro.org/downloadFile?id=3Dk=
+yoMLGC9zXa4oA7',
+> +                         '76eb89d42eebe324e4395329f47447cda9ac920aabcf99=
+aca85424609c3384a5')
+>
+> -    ASSET_FLASH1 =3D Asset(
+> -        ('https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-r=
+ef/'
+> -         '20241122-189881/edk2/SBSA_FLASH1.fd.xz'),
+> -        'f850f243bd8dbd49c51e061e0f79f1697546938f454aeb59ab7d93e5f0d412f=
+c')
+> +    ASSET_FLASH1 =3D Asset('https://share.linaro.org/downloadFile?id=3DD=
+j1HRXnDnKtU6Nj',
+> +                         'f850f243bd8dbd49c51e061e0f79f1697546938f454aeb=
+59ab7d93e5f0d412fc')
 
-Could you be explicit on the "mgmt app"?  Is it libvirt, or something else?
+Is there really no way to have a human readable filename here? I know what
+edk2/SBSA_FLASH1.fd.xz is; I have no idea what
+f850f243bd8dbd49c51e061e0f79f1697546938f454aeb59ab7d93e5f0d412fc is
+going to be.
 
-When introducing a new API like this events, IMHO it would always be good
-to explicitly state the consumers.
+If we can't have useful filenames, can we have comments saying what
+the filenames
+would be if we could have them?
 
-> 
-> As I wrote in the commit message, if the VFIO device has a lot of resources
-> it may take long time (even a few hundreds of ms) to stop it and in that
-> case, by the time the event is sent (after the state transition), the RDMA
-> connection can already timeout.
-> This is an issue we actually experienced.
-> 
-> > 
-> > (2) Why would a prepare message help this situation?
-> 
-> Sending the event before the state transition will allow the mgmt app to act
-> on time, regardless of how long the VFIO state transition takes.
-
-It might also be good to state explicitly on what is the planned work to be
-done as "act on time".  Per my read until now it seems to be some mechanism
-that some "mgmt app" would do to mask the RDMA timeout mechanism to avoid
-RDMA retries and finally connection got torn down, but maybe I'm wrong.
-
-> 
-> > 
-> > (3) Doc below says, the prepare message does not imply the event will be
-> >      guaranteed to happen.  Would it confuse the mgmt?
-> 
-> The expectation is for the mgmt app to be robust and handle these kind of
-> scenarios.
-
-I wonder if there can be deterministic way of solving this problem rather
-than allowing false positive reports. E.g. attaching one explicit message
-to a 100% determined state transition that requires the rdma timeout
-mechanism to be turned off.
-
-It just seems still a bit weird to need a prepare event for every state
-transition, even for e.g. RUNNING and RESUME - when talking about a
-possible masking of rdma timeouts, it should really be the existing event
-that matters for those (after device got fully recovered, should the mgmt
-app re-enable timeout mechanisms).
-
-I do not know VFIO state machine well, also not familiar with this specific
-problem.  So please treat them as pure questions. Anyway, it'll be always
-nice to attach some more information into the commit log IMHO.
-
-Thanks,
-
-> 
-> Hope that clarifies the use case/need.
-> 
-> Thanks.
-> 
-> > 
-> > Thanks,
-> > 
-> > > > To overcome this issue, send an additional "prepare" migration event
-> > > > before the device state transition.
-> > > > 
-> > > > Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> > > > ---
-> > > >    qapi/vfio.json      | 33 +++++++++++++++++++++++++++++++++
-> > > >    hw/vfio/migration.c | 18 +++++++++++++-----
-> > > >    2 files changed, 46 insertions(+), 5 deletions(-)
-> > > > 
-> > > > diff --git a/qapi/vfio.json b/qapi/vfio.json
-> > > > index a1a9c5b673..de41211f1d 100644
-> > > > --- a/qapi/vfio.json
-> > > > +++ b/qapi/vfio.json
-> > > > @@ -66,3 +66,36 @@
-> > > >          'qom-path': 'str',
-> > > >          'device-state': 'QapiVfioMigrationState'
-> > > >      } }
-> > > > +
-> > > > +##
-> > > > +# @VFIO_MIGRATION_PREPARE:
-> > > > +#
-> > > > +# This event is emitted when a VFIO device migration state is about to
-> > > > +# be changed.  Note that even if this event is received for state X,
-> > > > +# the VFIO device may transition to a different state if the original
-> > > > +# state transition to X failed.
-> > > > +#
-> > > > +# @device-id: The device's id, if it has one.
-> > > > +#
-> > > > +# @qom-path: The device's QOM path.
-> > > > +#
-> > > > +# @device-state: The new device migration state that is about to be
-> > > > +#     changed.
-> > > > +#
-> > > > +# Since: 11.0
-> > > > +#
-> > > > +# .. qmp-example::
-> > > > +#
-> > > > +#     <- { "timestamp": { "seconds": 1713771323, "microseconds": 212268 },
-> > > > +#          "event": "VFIO_MIGRATION_PREPARE",
-> > > > +#          "data": {
-> > > > +#              "device-id": "vfio_dev1",
-> > > > +#              "qom-path": "/machine/peripheral/vfio_dev1",
-> > > > +#              "device-state": "stop" } }
-> > > > +##
-> > > > +{ 'event': 'VFIO_MIGRATION_PREPARE',
-> > > > +  'data': {
-> > > > +      'device-id': 'str',
-> > > > +      'qom-path': 'str',
-> > > > +      'device-state': 'QapiVfioMigrationState'
-> > > > +  } }
-> > > > diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> > > > index b4695030c7..9f887c148f 100644
-> > > > --- a/hw/vfio/migration.c
-> > > > +++ b/hw/vfio/migration.c
-> > > > @@ -90,9 +90,11 @@ mig_state_to_qapi_state(enum vfio_device_mig_state state)
-> > > >        }
-> > > >    }
-> > > > -static void vfio_migration_send_event(VFIODevice *vbasedev)
-> > > > +static void vfio_migration_send_event(VFIODevice *vbasedev,
-> > > > +                                      enum vfio_device_mig_state state,
-> > > > +                                      bool prep)
-> > > >    {
-> > > > -    VFIOMigration *migration = vbasedev->migration;
-> > > > +    QapiVfioMigrationState qapi_state;
-> > > >        DeviceState *dev = vbasedev->dev;
-> > > >        g_autofree char *qom_path = NULL;
-> > > >        Object *obj;
-> > > > @@ -105,9 +107,13 @@ static void vfio_migration_send_event(VFIODevice *vbasedev)
-> > > >        obj = vbasedev->ops->vfio_get_object(vbasedev);
-> > > >        g_assert(obj);
-> > > >        qom_path = object_get_canonical_path(obj);
-> > > > +    qapi_state = mig_state_to_qapi_state(state);
-> > > > -    qapi_event_send_vfio_migration(
-> > > > -        dev->id, qom_path, mig_state_to_qapi_state(migration->device_state));
-> > > > +    if (prep) {
-> > > > +        qapi_event_send_vfio_migration_prepare(dev->id, qom_path, qapi_state);
-> > > > +    } else {
-> > > > +        qapi_event_send_vfio_migration(dev->id, qom_path, qapi_state);
-> > > > +    }
-> > > >    }
-> > > >    static void vfio_migration_set_device_state(VFIODevice *vbasedev,
-> > > > @@ -119,7 +125,7 @@ static void vfio_migration_set_device_state(VFIODevice *vbasedev,
-> > > >                                              mig_state_to_str(state));
-> > > >        migration->device_state = state;
-> > > > -    vfio_migration_send_event(vbasedev);
-> > > > +    vfio_migration_send_event(vbasedev, state, false);
-> > > >    }
-> > > >    int vfio_migration_set_state(VFIODevice *vbasedev,
-> > > > @@ -146,6 +152,8 @@ int vfio_migration_set_state(VFIODevice *vbasedev,
-> > > >            return 0;
-> > > >        }
-> > > > +    vfio_migration_send_event(vbasedev, new_state, true);
-> > > > +
-> > > >        feature->argsz = sizeof(buf);
-> > > >        feature->flags =
-> > > >            VFIO_DEVICE_FEATURE_SET | VFIO_DEVICE_FEATURE_MIG_DEVICE_STATE;
-> > --
-> > Peter Xu
-> > 
-> 
-
--- 
-Peter Xu
-
+thanks
+-- PMM
 
