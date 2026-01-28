@@ -4,72 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9989D46C15
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 23:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0D9DD46C0F
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 23:46:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlEnH-0008TH-BX; Wed, 28 Jan 2026 18:17:51 -0500
+	id 1vlFDl-0003wD-L5; Wed, 28 Jan 2026 18:45:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vlEnE-0008PO-PU
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:17:48 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1vlEnD-0001ir-Al
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:17:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1769642267; x=1801178267;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=n4k/dBndX6PazD52gFOh8+8Xc/EV6fspDOZfLr8VGQk=;
- b=FY/Zj2kXo1ir93e/CPS2xHpjP/9VHu1DcxYpXF7S1iAkNK/cmKEnvagK
- XYdDy4O3RS+tSJH5VNpa/P8pKfg7bppmev2pyPY3xiM7DyBQ/7WLvEC4h
- xuMANoktjj8xjup27yYVzcItMHsoT+pVkISSlRGtFyU6w8UvFEAPfJJWZ
- qiYD5bYbyDnKIbtuercIFLJXKMaZYIm6ENLxVIHD8h8H99L36ujUL/TDu
- x0xiC9iAxc7TwXDzZmdkyfPqVx9JWccur9puDHDaOaRjING4Md92kED2S
- fLTuM2Ezi5S0PR13AcBHpY976Isr8Mg3JW13Z0Bu7ip9Vgb3VbCaLPilr g==;
-X-CSE-ConnectionGUID: 86zV6b3pTduK3xQHlZ2ldg==
-X-CSE-MsgGUID: cNImTeVgTxGF1CmGbtRx5A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11685"; a="73462335"
-X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; d="scan'208";a="73462335"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jan 2026 15:17:41 -0800
-X-CSE-ConnectionGUID: sjmY/ywyTQucpE4h6sBdAw==
-X-CSE-MsgGUID: s19KMWBaStm58hq2kDHykw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; d="scan'208";a="208001778"
-Received: from 9cc2c43eec6b.jf.intel.com ([10.54.77.43])
- by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jan 2026 15:17:40 -0800
-From: Zide Chen <zide.chen@intel.com>
-To: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Zide Chen <zide.chen@intel.com>
-Subject: [PATCH V2 07/11] target/i386: Make some PEBS features user-visible
-Date: Wed, 28 Jan 2026 15:09:44 -0800
-Message-ID: <20260128231003.268981-8-zide.chen@intel.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260128231003.268981-1-zide.chen@intel.com>
-References: <20260128231003.268981-1-zide.chen@intel.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vlFDj-0003uG-Ls
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:45:11 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vlFDh-0003TN-Ez
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:45:11 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2a07f8dd9cdso2070035ad.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 15:45:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769643907; x=1770248707; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=tbBBnoSakDeJ8pbz5bFCwaZZqQQR8SUKhGzH9AjnICU=;
+ b=GEp90okActSRTtcskmMjN7WiMvrVkfr3XNyb4ezuuVZcLqhMC12kAWwPv2Q73mD9+h
+ 3MgLOMZlrQ9pIuspj/C6z5yvLyxvFnXhZlRfyRty3ckIg5hO/GotNf5efGy4EeUTg8Rj
+ U2RLGW5gbmRzeUw2TiXCKLB+A3QqDEHO6g1b3F7Oh1cyFZ7X46JsKydTyz5pOw+ui2Ca
+ wqeJx9q133X9RrxncVdwMkqPeR89wbIqd45ARnIT4mtWRvgErePc3YUvVi+J++Cry+bw
+ 5mTMiCo8hRk/e16xkj4zRigjxPj4W/gJyz1uWTh+/bi4+tXsnYkZH43zMD3u0uKrguhj
+ RYeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769643907; x=1770248707;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tbBBnoSakDeJ8pbz5bFCwaZZqQQR8SUKhGzH9AjnICU=;
+ b=Orh2W4kaVKoxp3+ds/qyUDR7JGBtEBpvbCM589MHl6Th/zK4yyd8McaIzjMbo0uujn
+ ecqPFnVzIgu158+6yZFvhu+gzZkrzsF328OybftdZDM70STLvDOZK0jWlI/8hv7+xeux
+ +sFoV4QyJw6oJGhV/OugVWJS1XP+tNh6+rk2OLxcrVqTA3A8267YEphAlVeu5ff80tty
+ a0LrC6fWDeEKtKT60Q4eWpdpW8l3Kw/sAeNED/NROCNYO0qPwA3NDQiIfiBs7tVEO6Kx
+ y9gp3B0QfxnPO0WInyklerTGJVoLRkk65Eo0uz1DgNc1X0eNv3H7RYYks5HKnnfp1b1k
+ 4E2Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNVLzrDmtTUjW0A0lgCIpNOng5NlkgQdPI1OVfXJZ9JutYv6GYmxUQSEBxIFlMRrM38ZFzAzBdhw1y@nongnu.org
+X-Gm-Message-State: AOJu0YwBrOnN5JRisq93C9URp2tieGE7KbQp2Pd+yC0Qx1SC+dmmMgQ9
+ NbyyiKpNw6io+SlZKzOR2tRWkG/eFA8vNZeWmSCP+jcQf4Saq+VvtE+ZnEUvM4U80sc=
+X-Gm-Gg: AZuq6aJwNhMVhOaM7iizwmHma7QsreX1xepy2eDRBfDDbdTb5NL9RwAjPGaaSPfeXxQ
+ U8QmE2KaBKoV+eIZfZDcFr/5/mYVR7OImXc6GzPv/VsZ0ikx6pFfSvRaVGnD6ZzC3t7Ct3381io
+ zeLEp7uwRu38bYsCUZFFJFpfo3s6wJ9T8Vx6J2o5BawTPZn1BaA4REnPUfJhWokt+kG0zoYYQ9g
+ vn9sD7NzY/AVkDNJT3CW63LJvjpKn4630aLrdYPrk4O8waEq5m4G5EfJ9d/pd12XvMXd0ujjCvu
+ nMOREBxfp44P02XVrEZdzOOEJJEydsP7Kwi7YvQJMWOEsN9+xrY0f5BtvE+fdiVfFuj4YIiMk7Z
+ LNHrIARuHUAfmLdx6rGuVI6G+SD5RJTxhOtHG6M8Y7h6TlyeqqwnlZDWOPnMJM5Wzdo/T+Dr/6w
+ 7TPZT14z72Tz5crgE1ptd1PrOeCt6RMw==
+X-Received: by 2002:a17:903:40d1:b0:2a0:dabc:1388 with SMTP id
+ d9443c01a7336-2a870db46camr72309685ad.28.1769643907237; 
+ Wed, 28 Jan 2026 15:45:07 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a88b6e5c93sm31846835ad.88.2026.01.28.15.45.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Jan 2026 15:45:06 -0800 (PST)
+Message-ID: <716a2c68-9905-4f3f-84da-d07f50e9722c@linaro.org>
+Date: Thu, 29 Jan 2026 10:45:00 +1100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zide.chen@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] hvf/arm: expose FEAT_SME2 to guest if available
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+References: <20260115-sme2-hvf-v2-0-2eca481bd7ee@linaro.org>
+ <20260115-sme2-hvf-v2-2-2eca481bd7ee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260115-sme2-hvf-v2-2-2eca481bd7ee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,48 +108,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Populate selected PEBS feature names in FEAT_PERF_CAPABILITIES to make
-the corresponding bits user-visible CPU feature knobs, allowing them to
-be explicitly enabled or disabled via -cpu +/-<feature>.
+On 1/15/26 22:20, Manos Pitsidianakis wrote:
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index bf303813701972648fa6751ffe352ba074ca6442..8dd9eb46c783a799a53891a6ddad40b930e95eb4 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -329,9 +329,20 @@ void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
+>   {
+>       uint32_t vq_map = cpu->sme_vq.map;
+>       uint32_t vq_init = cpu->sme_vq.init;
+> -    uint32_t vq_supported = cpu->sme_vq.supported;
+> +    uint32_t vq_supported;
+>       uint32_t vq;
+>   
+> +    if (hvf_enabled()) {
+> +        if (hvf_arm_sme2_supported()) {
+> +            vq_supported = hvf_arm_sme2_get_svl();
+> +        } else {
+> +            assert(!cpu_isar_feature(aa64_sme, cpu));
+> +            vq_supported = 0;
+> +        }
+> +    } else {
+> +        vq_supported = cpu->sme_vq.supported;
+> +    }
 
-Once named, these bits become part of the guest CPU configuration
-contract.  If a VM is configured with such a feature enabled, migration
-to a destination that does not support the feature may fail, as the
-destination cannot honor the guest-visible CPU model.
+While this mirrors what we do for kvm and sve, I don't think this is sustainable.  I think 
+cpu->sme_vq should be initialized in hvf_arm_set_cpu_features_from_host.
 
-The PEBS_FMT bits are not exposed, as target/i386 currently does not
-support multi-bit CPU properties.
 
-Co-developed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Zide Chen <zide.chen@intel.com>
----
-V2:
-- Add the missing comma after "pebs-arch-reg".
-- Simplify the PEBS_FMT description in the commit message.
-
- target/i386/cpu.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index d3e9d3c40b0a..f2c83b4f259c 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1618,10 +1618,10 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-         .type = MSR_FEATURE_WORD,
-         .feat_names = {
-             NULL, NULL, NULL, NULL,
-+            NULL, NULL, "pebs-trap", "pebs-arch-reg",
-             NULL, NULL, NULL, NULL,
--            NULL, NULL, NULL, NULL,
--            NULL, "full-width-write", NULL, NULL,
--            NULL, NULL, NULL, NULL,
-+            NULL, "full-width-write", "pebs-baseline", NULL,
-+            NULL, "pebs-timing-info", NULL, NULL,
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
--- 
-2.52.0
-
+r~
 
