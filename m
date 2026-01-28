@@ -4,111 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7E5FD46C01
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 23:04:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EEBBD46C16
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 23:18:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlEZk-0004gH-Qn; Wed, 28 Jan 2026 18:03:52 -0500
+	id 1vlEnS-0000Dr-Uj; Wed, 28 Jan 2026 18:18:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vlEZi-0004fa-PI; Wed, 28 Jan 2026 18:03:50 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1vlEnR-0000Cl-Ku
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:18:01 -0500
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vlEZh-0005m6-2G; Wed, 28 Jan 2026 18:03:50 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60SLbE91024596;
- Wed, 28 Jan 2026 23:03:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=DQWv6y
- Xq+AWOeb+LQfTDO6ppWKtBayQQ9welBgel/hg=; b=oN1oPQfy8KUEK9kw0USADo
- 2foj8h/vNq2+gb6OqwSWqml15wQHcU1Exe5K36FdIRIjDAclO2fOgunqPPLFH9rw
- ba9Z3DfYAkv6YXVIqEFE0ew8XiK4BHYMw8Es6PpZN7wtwvMZqbxiF/mWFu8NMJUR
- p6pt2v7OBY8IRkWhhPfor1iQLFASGGlJS/7CFkUEt+8pOmG6tsQ4rmEliDkZ/+b+
- Wrqnsrx8xsWLeE/xkmn0dOMRlkUZdmrcCQeiCFxmGIJynLED0tPIELPPa+ctlq6c
- 0m2oyO6/Q/ah4Rnwy5qlqgIjPafLMhEeAed2NN/w9XdfgKmD1hrR66iE3vQq6VOA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnrtp0ym-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 28 Jan 2026 23:03:45 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60SKJCte023341;
- Wed, 28 Jan 2026 23:03:44 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bwamjy96r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 28 Jan 2026 23:03:44 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60SN3hUo18023140
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 28 Jan 2026 23:03:43 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6B32458087;
- Wed, 28 Jan 2026 23:03:43 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6DDDE58082;
- Wed, 28 Jan 2026 23:03:42 +0000 (GMT)
-Received: from [9.61.94.134] (unknown [9.61.94.134])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 28 Jan 2026 23:03:42 +0000 (GMT)
-Message-ID: <a18a2bd0-14f8-4c1e-b321-095746b3446f@linux.ibm.com>
-Date: Wed, 28 Jan 2026 18:03:41 -0500
+ (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
+ id 1vlEnP-0001ir-55
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 18:18:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1769642279; x=1801178279;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=lBhmgOoCeHBQeHkVFHU09ZVdbzQMPRSBW0jjTwRm2OU=;
+ b=MBV7VDzaaYuJFIBMLIJfrwa/O7Fs7nSr+exwCW2w+8SdPw+NQnNbEm/t
+ 1Py/7WzMkzEtJIPoxnxgte3kZbJDlFDEq5XCmIh/G/65rKvcfZ1pJk03N
+ ZchkpfA+hIjHRcbb327toAWErD4KQorQ5vuErmyBnnxXxatmJUTHtPNdl
+ eX1b5pvY0or+yRXbYl7ZmZbSenUuUT++ksZCRiRpGALVvGiDKp5kg3kNA
+ KxLVOC+Sej3SVP49OZRyfb3KJkm82Lbs6Cn0TnFokGdJAFbE7XXAZhmnI
+ hHn1WY1U/Ma2/gRl9wv79wgmoHW2CPQO6S6MstabS8Tuz7r8vQiau/bNE Q==;
+X-CSE-ConnectionGUID: Xc6TaxecSIKmgh3dmrV2Ig==
+X-CSE-MsgGUID: 81v+N9y5QOCbX3vMhsHK/Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11685"; a="73462350"
+X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; d="scan'208";a="73462350"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jan 2026 15:17:43 -0800
+X-CSE-ConnectionGUID: zpxgtPShSSOfhBkhCTjQ/Q==
+X-CSE-MsgGUID: CCQLBDU8TNeu5lOAgoME6A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; d="scan'208";a="208001791"
+Received: from 9cc2c43eec6b.jf.intel.com ([10.54.77.43])
+ by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jan 2026 15:17:42 -0800
+From: Zide Chen <zide.chen@intel.com>
+To: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, Zide Chen <zide.chen@intel.com>
+Subject: [PATCH V2 10/11] target/i386: Add pebs-fmt CPU option
+Date: Wed, 28 Jan 2026 15:09:47 -0800
+Message-ID: <20260128231003.268981-11-zide.chen@intel.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260128231003.268981-1-zide.chen@intel.com>
+References: <20260128231003.268981-1-zide.chen@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/14] pc-bios/s390-ccw: Add support for virtio-blk-pci
- IPL
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com,
- mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, zycai@linux.ibm.com
-References: <20260127161547.459443-1-jrossi@linux.ibm.com>
- <20260127161547.459443-12-jrossi@linux.ibm.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20260127161547.459443-12-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: zAar-yGJfh0v5ySwitZ8_Ct9mfEF886w
-X-Authority-Analysis: v=2.4 cv=Uptu9uwB c=1 sm=1 tr=0 ts=697a95d1 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=NmE1XoREQO4h88GRL6oA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: zAar-yGJfh0v5ySwitZ8_Ct9mfEF886w
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDE4OCBTYWx0ZWRfXyXjpfmmAaAww
- f6aY/D5c/nJvPlaul0KK2SMKGVMDcRnab6QSTEhtppSL1HdjxZVoPWp8Y8FfxI9eB5zNX1wRlEe
- z7/wNy0rDCGZZR1tQjjLs39C2dFg6gKeBowui/Tmg0HPhhnjUVbq4caiWElYxvwbP+JE3rkD8e4
- bV1z4FXSEoFL1NPSYx2P+bDu5Oyj8IKQlrVeUp20/i4BDh+boSn2OxTFa3L09GJt0fWWMjNNUlX
- 7GH5QYX1Xae1NT/YTiWv0kO61tqmzYrk13KfnymK2EsBpVcMCWfYCr1B8MGFNA/AtJeELS6zpeZ
- fec+6IvJpBXdnf8TXJd7B5JTCqRtWTydMQq0Lk3C/93ny8VPbOrbAD/AsBEPkLCzTow2lDHorh1
- gjdXItyVO2LA23EwDZIHPDyTGuhKSDmbrD2SYEJOsmFUX6hhCA7lmfGqiXMYpkqJ9Yl1c/B3Go5
- pSxeHnuawEwCd1t93Kw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-28_06,2026-01-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 clxscore=1015 lowpriorityscore=0
- phishscore=0 adultscore=0 impostorscore=0 bulkscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601280188
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zide.chen@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,38 +85,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I found the following mistake after posting...
-> +int virtio_pci_setup(VDev *vdev)
-> +{
-> +    VRing *vr;
-> +    int rc;
-> +    uint8_t status;
-> +    int i = 0;
-> +
-> +    vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
-> +    vdev->cmd_vr_idx = 0;
-> +
-> +    if (virtio_reset(vdev)) {
-> +        return -EIO;
-> +    }
-> +
-> +    status = VPCI_S_ACKNOWLEDGE;
-> +    if (virtio_pci_set_status(status)) {
-> +        puts("Virtio-pci device Failed to ACKNOWLEDGE");
-> +        return -EIO;
-> +    }
-> +
-> +    rc = virtio_pci_read_pci_cap_config();
-> +    if (rc) {
-> +        puts("Invalid virtio PCI capabilities");
-> +        return -EIO;
-> +    }
+Similar to lbr-fmt, target/i386 does not support multi-bit CPU
+properties, so the PEBS record format cannot be exposed as a
+user-visible CPU feature.
 
-Reading the capabilities configuration must be done before writing 
-status to the device.
+Add a pebs-fmt option to allow users to specify the PEBS format via the
+command line.  Since the PEBS state is part of the vmstate, this option
+is considered migratable.
 
-I have already fixed it for the next version.
+With this option, PEBS can be enabled when migratable=on.
 
-Regards,
-Jared Rossi
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+---
+V2: New patch
+
+ target/i386/cpu.c         | 11 ++++++++++-
+ target/i386/cpu.h         |  5 +++++
+ target/i386/kvm/kvm-cpu.c |  1 +
+ 3 files changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 54f04adb0b48..ec6f49916de3 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -9796,7 +9796,9 @@ static bool x86_cpu_apply_lbr_pebs_fmt(X86CPU *cpu, uint64_t host_perf_cap,
+         shift = PERF_CAP_LBR_FMT_SHIFT;
+         name = "lbr";
+     } else {
+-        return false;
++        mask = PERF_CAP_PEBS_FMT_MASK;
++        shift = PERF_CAP_PEBS_FMT_SHIFT;
++        name = "pebs";
+     }
+ 
+     if (user_req != -1) {
+@@ -9838,6 +9840,11 @@ static int x86_cpu_pmu_realize(X86CPU *cpu, Error **errp)
+         return -EINVAL;
+     }
+ 
++    if (!x86_cpu_apply_lbr_pebs_fmt(cpu, host_perf_cap,
++                                    cpu->pebs_fmt, false, errp)) {
++        return -EINVAL;
++    }
++
+     return 0;
+ }
+ 
+@@ -10307,6 +10314,7 @@ static void x86_cpu_initfn(Object *obj)
+ 
+     object_property_add_alias(obj, "hv-apicv", obj, "hv-avic");
+     object_property_add_alias(obj, "lbr_fmt", obj, "lbr-fmt");
++    object_property_add_alias(obj, "pebs_fmt", obj, "pebs-fmt");
+ 
+     if (xcc->model) {
+         x86_cpu_load_model(cpu, xcc->model);
+@@ -10478,6 +10486,7 @@ static const Property x86_cpu_properties[] = {
+     DEFINE_PROP_INT32("node-id", X86CPU, node_id, CPU_UNSET_NUMA_NODE_ID),
+     DEFINE_PROP_BOOL("pmu", X86CPU, enable_pmu, false),
+     DEFINE_PROP_UINT64_CHECKMASK("lbr-fmt", X86CPU, lbr_fmt, PERF_CAP_LBR_FMT_MASK),
++    DEFINE_PROP_UINT64_CHECKMASK("pebs-fmt", X86CPU, pebs_fmt, PERF_CAP_PEBS_FMT_MASK),
+ 
+     DEFINE_PROP_UINT32("hv-spinlocks", X86CPU, hyperv_spinlock_attempts,
+                        HYPERV_SPINLOCK_NEVER_NOTIFY),
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index aa3c24e0ba13..5ab107dfa29f 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -422,6 +422,8 @@ typedef enum X86Seg {
+ #define MSR_IA32_PERF_CAPABILITIES      0x345
+ #define PERF_CAP_LBR_FMT_MASK           0x3f
+ #define PERF_CAP_LBR_FMT_SHIFT          0x0
++#define PERF_CAP_PEBS_FMT_MASK          0xf
++#define PERF_CAP_PEBS_FMT_SHIFT         0x8
+ #define PERF_CAP_FULL_WRITE             (1U << 13)
+ #define PERF_CAP_PEBS_BASELINE          (1U << 14)
+ 
+@@ -2399,6 +2401,9 @@ struct ArchCPU {
+      */
+     uint64_t lbr_fmt;
+ 
++    /* PEBS_FMT bits in IA32_PERF_CAPABILITIES MSR. */
++    uint64_t pebs_fmt;
++
+     /* LMCE support can be enabled/disabled via cpu option 'lmce=on/off'. It is
+      * disabled by default to avoid breaking migration between QEMU with
+      * different LMCE configurations.
+diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
+index b4500ab69f82..7029629a9d09 100644
+--- a/target/i386/kvm/kvm-cpu.c
++++ b/target/i386/kvm/kvm-cpu.c
+@@ -232,6 +232,7 @@ static void kvm_cpu_instance_init(CPUState *cs)
+     }
+ 
+     cpu->lbr_fmt = -1;
++    cpu->pebs_fmt = -1;
+ 
+     kvm_cpu_xsave_init();
+ }
+-- 
+2.52.0
+
 
