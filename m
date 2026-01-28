@@ -4,233 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E110D35660
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 01:25:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3410D35660
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 01:35:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkuJN-0006I1-Ha; Tue, 27 Jan 2026 20:25:37 -0500
+	id 1vkuSD-00064E-Ka; Tue, 27 Jan 2026 20:34:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1vkuJK-0006Fy-MT
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 20:25:35 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1vkuJI-0001wh-Sr
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 20:25:34 -0500
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 60RNEYJo744707; Wed, 28 Jan 2026 01:25:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=jkBhiblsvUPtGlrHKhfSLmBVyyjlbA+dpoh3jf0ESFM=; b=
- FQg+QcFEvXQUnFeJffO5M+yhVZo+I5OjpoQbDE0p7Rbplooh+tsySUghPsq9nx7r
- IF3ctLL3T3xAfFI7g2sdADM4Q9ifoo2UoTV4XNZybx2ayYwINt23yhVofkYep3kQ
- h0nPG2JvHV/nx7vwrRTfS4K+SFH1CXM3KsFTBN/zNdA0U9mCnH5QR09qPS6N3AjN
- 0qJylpu11QF7xrkCMAGu2uS+idSKLTFNJmQcoXIeWZfktaxGxd9XfEa/mWfr7283
- tDUazg5B/9XtYHcBnOBfi0V0opijojGbHD19NoUnrTYLtxR0WIyzz/vsKoY2Xpzv
- RZC45HYrgqsDBv8kYPkvHA==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4by5t687tf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 28 Jan 2026 01:25:21 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 60S0UbN6010031; Wed, 28 Jan 2026 01:25:20 GMT
-Received: from ch1pr05cu001.outbound.protection.outlook.com
- (mail-northcentralusazon11010031.outbound.protection.outlook.com
- [52.101.193.31])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4bvmha8vts-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 28 Jan 2026 01:25:20 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=T0q3ygjrEkAsGUk9VA3AAFfTFw6oGE593EEF2DDHdjzXyYBcEJbbsKQtgKNWjy2p0LBfw9cLyi6BbJ9Fa6JLVabKftP1c3TMKB8EATE2iRvRxkj2q0f62kRZj4artHgDjoByf9UmOBmIU24Cl/hyjM06UV3IKLTpkngIal02OJRgxDms1/9JaJzI1aFPVrdpQHDNtRRLwmE/DmPXH+SxH6S2oRa25uUrR1QRW/Y7QPSU/ipmT46onAISklSC/4oHjln4gSJyLrCY3o2NOkn+F/Sk+wZ55AopwzcUXAAESsbqk5LkyAYufef4lGa+M73GTw2aEK7knlJ3Oz6gYKwBXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jkBhiblsvUPtGlrHKhfSLmBVyyjlbA+dpoh3jf0ESFM=;
- b=jbTdSkzEegB5wJSjpicVhnFFTvWvfLP4jjg0BzeWrXR4lPb57vuzSdP6QBcKfY5znlCI56l6r0AJOYUFYEGfTUfQduvRgUNCNYfXeiUK6XX4HRv7qgFM3SAtJD987Qb8EYzU0fYeg8DBSwOvUJ2w1sg1JCXAs9THvqAUB4AG65i/Ze/W9X4dJft3GjCud7oEF44AC7P0hcCrd6W6EJZx7qZ+NZv+E5cxwBtF8G6q9wev/le876Iw9kHiNX83SeyQY2j26u5wg6Ncv49kGEzF3uMal1L/No2he9QrPnrfzVq7Y1OHxd8e00CpWXZXVZataWq09k8aAYp86PxgN//0Ww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vkuRz-000620-B8
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 20:34:32 -0500
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vkuRx-0007sX-GC
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 20:34:31 -0500
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-2a79998d35aso40398085ad.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Jan 2026 17:34:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jkBhiblsvUPtGlrHKhfSLmBVyyjlbA+dpoh3jf0ESFM=;
- b=mCFEEBvDCqr55lIQPqkVqx0z4KylhkRo7/UogelxozN/IUDJY32m5oWpX6BHOADz7btdhmAS8lBgtZcSiQz49LujpnGbktszYuO5l0Q8OzlnZ5N5m69a24YYyknxSqVmycfE1V8solAV5MtMqphnDqTI7MsiXHGHX82prhUdGaU=
-Received: from BLAPR10MB5041.namprd10.prod.outlook.com (2603:10b6:208:30e::6)
- by DS7PR10MB7347.namprd10.prod.outlook.com (2603:10b6:8:eb::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.12; Wed, 28 Jan
- 2026 01:25:16 +0000
-Received: from BLAPR10MB5041.namprd10.prod.outlook.com
- ([fe80::2c19:641c:14b9:b1b4]) by BLAPR10MB5041.namprd10.prod.outlook.com
- ([fe80::2c19:641c:14b9:b1b4%4]) with mapi id 15.20.9542.009; Wed, 28 Jan 2026
- 01:25:16 +0000
-Message-ID: <804a631e-1690-489e-b2fb-5ddded3efaeb@oracle.com>
-Date: Tue, 27 Jan 2026 20:25:11 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH RESEND 2/5] vfio/iommufd: Add amd specific hardware
- info struct to vendor capability
-To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, vasant.hegde@amd.com, suravee.suthikulpanit@amd.com
-Cc: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
- marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net, yi.l.liu@intel.com,
- eric.auger@redhat.com, zhenzhong.duan@intel.com, cohuck@redhat.com,
- seanjc@google.com, iommu@lists.linux.dev, kevin.tian@intel.com,
- joro@8bytes.org
-References: <20251118101532.4315-1-sarunkod@amd.com>
- <20251118101532.4315-3-sarunkod@amd.com>
-Content-Language: en-US
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-In-Reply-To: <20251118101532.4315-3-sarunkod@amd.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PH7PR17CA0071.namprd17.prod.outlook.com
- (2603:10b6:510:325::28) To BLAPR10MB5041.namprd10.prod.outlook.com
- (2603:10b6:208:30e::6)
+ d=linaro.org; s=google; t=1769564068; x=1770168868; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xay8sXD9SIgbNMvf4vw0OcymSSRrLR0w4Xs1q3ENNoc=;
+ b=sBO3m4sapRRjnPdYvpZw01qhsIUITwCjH1goB9Zcp56E66yKcnayy3RVgiaQ5zg7Nc
+ Z1L6Fl8S2pCvG2IFHzsHS3e9oChlW3sP1ERyvV/ZzLngMDseZlN/8VI4Nt4UER3EEY6g
+ 3TFWmmxkYFlvZ9ryQDGHL4M0/zCNiALGDd1COcKH29Hi2xt3uuH1WdsRm+sV9WBZ7x94
+ 6jORV4Ys/kZd9NCG5MPlsNNKh3lZLJaQyjU3m+SzCCx4++zmyx0gEwue0d17R6bFePO9
+ xWIIYl7/IrqHaeZZvdtr+FRzhMKO9kYhRtx52wSlUrnarWdcCqJWYGf/rdUWvxP0QXPd
+ w33Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769564068; x=1770168868;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xay8sXD9SIgbNMvf4vw0OcymSSRrLR0w4Xs1q3ENNoc=;
+ b=tNy7XXpbs0KbpwhG4U8RGyz3DnLj5AZolEDuWeXsNI2dzxAVEmIzaBo9h+1FAxNx7l
+ cow9UVN1h/yq+mgh6x4xEMwDF1lCEcres0tYXBVnzVBldsxKUGiaJ7bVJ+bK1pQgk/kx
+ c7bVDCO6O02sWmrjSSsADole7gmEWTYb79WKPpaxNqgCgMVQ1WrHpRfUa0WT/rBhZdwq
+ Z4t/CJtqWO+2f0hHHkjg2vndE4HHpnPXGr1ojZmNVccuTYwFG58W6jPqIIr/raGmrWIz
+ QdZGxkZgm7cIFWmcMa/mU2D73WI9ClBSSPYJZWypI37NnCQbwU+Wyo0A+J6l6GGXNTdA
+ AaIw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXyeti997+V7cCVM/71LS6zg5olRZwcHcrQliOiTEMsgy3+CYqZlR5rv2BK/7PKVYGTiM7v/sTgxYkW@nongnu.org
+X-Gm-Message-State: AOJu0YyZNJA5VR6PGm5gyFcKMbvGMrzYPFbJKnM9MQPBy5iowUtTVfto
+ hsXb8F6AzIEBe+s6QY+W3JAADcIRG/Mf3s2oSEAZ5WqQDJDTiThbpsP1xpKmvycmuVQ=
+X-Gm-Gg: AZuq6aLmlx8HKH2E+KJsuqtLTl0r+2bOMVcpL3aaVh3p1E8rkz98tVbC16TslG4eLZ3
+ 63pIpvL3Qk85mnRtRKPQcCkak0vUH2tXJmtSlgas+0uCE8iHEu/IM7sBZ90zJSDlw6r4rXIr2YC
+ IgjYD5Huv2++08A2g9rAjPuGIR4p6BTbUdSZiTD2bHE0JD9V1xGl93FMSmR6aY5iznwwgctXO9L
+ sGzrmQBwyqV9WZTabpjvW/5gOPtFpYz2aV8ykjxszTqe459anyYuSSQozWWc2CZd5giZbLRUXM1
+ Gew867JreqLm6Z/pcFl5UvQY6uqtMQz27RdpROyTtSJzM6aB/vmEtOxJQo2JaeCI+fyhq1eKMgo
+ 1F4kxmgilTmwvlMsSZnp/xaq6rtWMYsb8pLku9TVu5/g/ZvOY9uLxlyrxO811+QTy9xUSmLOYbt
+ tzXfWPaRzMIL2JpgpDbGtt4gB5zCxi1w==
+X-Received: by 2002:a17:903:198d:b0:2a7:bd4e:db87 with SMTP id
+ d9443c01a7336-2a870dee111mr36586735ad.48.1769564067612; 
+ Tue, 27 Jan 2026 17:34:27 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a88b6e4ac8sm5394345ad.87.2026.01.27.17.34.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Jan 2026 17:34:26 -0800 (PST)
+Message-ID: <7cc87797-4cfb-4195-9a9d-21ddd355aa54@linaro.org>
+Date: Wed, 28 Jan 2026 12:34:19 +1100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BLAPR10MB5041:EE_|DS7PR10MB7347:EE_
-X-MS-Office365-Filtering-Correlation-Id: 74b3501d-887b-43eb-047f-08de5e0c1798
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|1800799024|366016|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?YkcrV1p4REZPT0RIQ0l5MFFwOFBnWEV1eW5ESlUzbXpLRWl0N3NGeWVkVmtl?=
- =?utf-8?B?QlArTmdJc3FCMUFUbTdrZEY0UVQweUp2VGlkUFNkdy9FZzBEMXUvWnRldDlU?=
- =?utf-8?B?cS9xQmp1azNneERka0src05IaDZvakFQUzU4aFovNFR3cTFacENFdFpBcWdS?=
- =?utf-8?B?KzE2YlhBMTd2SnhES0o5MTB2WVBxd2VwQ2F4MVNzWXhURDZFbXR3NGl4WUln?=
- =?utf-8?B?UG5HOGpqMHYxbnppRklRZzh3TXZNNDc2OU42WU1MQ215NDlCWWNEekRZSS80?=
- =?utf-8?B?RktVNFdvZ3dqSmthMzJvL1AyU1l1Z0p0M2pheldNTE5Md1pxck9tLzJhZWRH?=
- =?utf-8?B?TW1rZlRXdGdUS3hZSHNtaE45MkxHekZVbFNPdnNNbFBJRTN4WU40Y3lJVGNX?=
- =?utf-8?B?WVFzMDZNWnZiSzdLNmZuaXBpMDV5aGRtSiswTXc0ZnhuQ045UDdVTktNTXhD?=
- =?utf-8?B?QWVSSEFFaEp4YWVCOTdjN1RLY0Jjamc1ckpkZGt6TTA4eVk5V05EbmhzVUo1?=
- =?utf-8?B?YjJhdXJPUlBzeWVrZTZrdmRHVjhJcmthdUhyWnVaaGhkbHQ1dFlNKzE3VHJG?=
- =?utf-8?B?NVhjRDJqSTBlb2RFNXRMWmRrdUNiSy9zYnFmZWlpWHFIWlRIMU1vNHI2eWoy?=
- =?utf-8?B?UHJaWTlVZEQrcUZWL1huS044NGo5L1JxM1c2YWp4T2N3eVc3RGJ3cUl2SURs?=
- =?utf-8?B?c0p3QlVBZFpGN0lVUlRlREwxS1Z6a2N6b1RIQkhDWkJFaFJJMm1veHdJeEJW?=
- =?utf-8?B?elFrK1YxNTA5OEFCL0lEeHZiaExXMWdUUlUramRZTi92UG5UT2d5Zi9EZm04?=
- =?utf-8?B?OWtQUGhCV1pwOWVYZnNqcCt5TnpvWkYzYTlsZFJsYVRTK1ZrRncyRFBrOTdh?=
- =?utf-8?B?eEp5dkRpVUF4N0hGaE0wSHJ1MXI2WWFHbHVzNjMrTWN1Z25sLzJJWVRRdUtM?=
- =?utf-8?B?ckJCVEZPZ1dZVzR0SFZ6bHg3TlJpMU0xZkUxalpISXhBUVNBd1BJRTlCdU9U?=
- =?utf-8?B?N1B4V25oT0dHcHFHc0E5Q3o1dVEweG5CVGR5WTFUYU5qdEM5ZEdhUzdnR1Zt?=
- =?utf-8?B?YW12cjlUelovVDNDU3NLUGtDMGlpcEpMZzUwbnZQQ1ZEZktzN2hqVWgrV0Nl?=
- =?utf-8?B?QzRFUUFZaW1jTVB6b2tnYzJ0MmpRWjdzMGRsV2FsMTM0bktyNlpFZktsQUZW?=
- =?utf-8?B?QnM0cXp3MkdsZGNTQzE3cVdRcC80ckxtbHhtOVhzZzdpMkR4N1Jsd2RXaXVG?=
- =?utf-8?B?UUszRksxL1JqNWI4MnhtMVZzRm44U2owc3VzVGhtRDdoQ2c0cnd6VGFjVEYy?=
- =?utf-8?B?ckozZ0ZubitmUHAxdlZ5czlvaE5OdG5JWEZ3Uit2b1czTldQUmVPYVJHbG5O?=
- =?utf-8?B?dG9Hb1RyUThjQ0NFRlZnSnN6Z21kVGt6Zjd6YzNUUExaNEp1WGdqb3pYTjAw?=
- =?utf-8?B?d2J3U2xiNVpONDh0VHBaVlhWK1hFYWJVeHJYSU13bXh6MmJxR2VlVmdCUEVZ?=
- =?utf-8?B?MUNOTnk4cGZrNmhOMmhwNHl4ajR0VkZQVWVTNWVvZ1RUYVZvck1JZ3pWQStL?=
- =?utf-8?B?dWFJdmE0bEJmN0pRak54bVNSRWFaRnRKeUxNYkQwd0Fpb0xXVko5cDI2bVph?=
- =?utf-8?B?YlRqL3FqRUlQL1dlRW1wWDhjdG5ibiszK1RJeEg4TzVURmpQWSs2cGtmcnUx?=
- =?utf-8?B?NmxKMnJSU2dyYUtJR1REcS9IUkVEOFpJckZySHMzRXVKYlQ1empvRXFhL1lw?=
- =?utf-8?B?NFZtenQ3TVZRVjlhUWc2bXJnWDBYeHVwb0pHeEVEd0lKaHpZREpqWmZWYitt?=
- =?utf-8?B?Wk5VZWUwOEhBZWtxMm42eEZDbHpsdEp4NnZCVE42MGdRb3JCWHBCNHMrQVMx?=
- =?utf-8?B?RmVlZTJiOWtaZU5wbGJxK0svRW1YSDd6bHA2d1hqaHRRaVFoSHpldVU5Ujly?=
- =?utf-8?B?L0RGNlZEZU40dXdkZVdoSnRMWWRPTm5hKzRzWnUwNFhlTlpiOVlBbUdnNHJH?=
- =?utf-8?B?ZE1EdlRYZE5BZFI5cE9xczRxZDQ0QVJWbG5rZFFPUSt1SCtjZjNBZzE0VW9r?=
- =?utf-8?B?ZHN3STRGYjhYM0NReFJ0Rmcyd2Rld1cvUVFET3hNbE5KZHViS0xBbGZUbHBq?=
- =?utf-8?Q?Fr9Q=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BLAPR10MB5041.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q3EvVUJUamFRYmNCVVduMi9EMjEyLzFHUHY1RTdWWEt1M3Eyb0t2ZmtlVnBP?=
- =?utf-8?B?aGcrclRYVWs0Y1ByOUI4SlBKWTdVZEFnb29aTHY3RGUxYit6QUphWFpxM09X?=
- =?utf-8?B?cGZQcmx2RG9hbTBtSUZWWXNBbUk2OU1Qekcya2NISTNnVkg2Zlkyd0V2d2dY?=
- =?utf-8?B?YVk5K25YRlg1dHd4bFVSeWI0VG1UcDhvdXFUZWQ1ZDAxMUMvSGtWTS9QSzMy?=
- =?utf-8?B?MU4yNXVhNDdkRU1ENjZFU25BeGI0eDBEcFdBNE9QWlM4Z1ZpeDYvVG90WUJO?=
- =?utf-8?B?aW1rK2ZNZGVPN0svN1QyQXdMb2lOa1hDRGJFU3dvSlRmbEFxeWk0TVZtYW4x?=
- =?utf-8?B?U081OWxJa21XS3UxaURTVGFlOXVtby9xMUFDZFc1Skk5NDVGUG05VGIwQ09Y?=
- =?utf-8?B?SXBYNTVvZzVVbFhScWJpZ0d2UzB4N2pvRWx3elpwMzlMa2FBeDg4dXEvVW13?=
- =?utf-8?B?djBRRTV5T1pYalpDQ2F3Y1dFaklmV1pkSS8rRnVoSFNpRXhlb3FNTzhWQ1Fa?=
- =?utf-8?B?d2ViMURiZ3FjWC85aEdjM0h6US91SnV0cm9XZ3ZCVnlLcUdkK1FpZVVSMDhv?=
- =?utf-8?B?SDBMTU1mamVCWEFaYWdqcFpIRWx0NHVROXBacG5BTXFsZHlQSHNvNzg0U1FE?=
- =?utf-8?B?OTNPbWw1ejZWWXV2a3piMVNndllxSVJkUXdwNk54YmcrbXpjWTJIRzBWQ09o?=
- =?utf-8?B?bjdYMkpTQXEvRDFPd1R5QWZicWljSDhpcitjNy9LVkUzQXJKRGVCY2Jad0dN?=
- =?utf-8?B?d1dhOHE1TExNWWdxd0JoUUd0SDNxQ0lHNi9QWUlMVERBTTBkU3JZYndLT0c0?=
- =?utf-8?B?dWtvRUZVeWpJWll1TlhhRm8rRisrWjE5RHgwRkVuTGx6ckM5ckdsUGdYSG9v?=
- =?utf-8?B?SXowc09FUzI1ekhRRmtaTDBHdTdjNXgvM1M4TDFGYnp6V0wzZVFpbmJkWldH?=
- =?utf-8?B?K09vK01TZVBuanJtck1rRzlheGdUbC9zMHdaM0hrTDNPTEZ0dzJYdkpkTUs5?=
- =?utf-8?B?WG4renlDbDlSM2lvd1hiMkZCbUJpVlZYU0pNcFhJMld3R0ZHV2Z4dktKM1JT?=
- =?utf-8?B?M2NqcDZBUFlQQmYxVTNsN3NiYjVuVnpBckdBSFRpSVA2eWhMRWMyTXhTTnNW?=
- =?utf-8?B?SjRWNllyTVdpQ21mZkNvQnhXN0p1SHZYZW1hZUNBaGlLdnhYeVVUcWVEUVZP?=
- =?utf-8?B?SkhQaGZQdnFUNElHYkgyTkN0M1ZGR3NiNzJ4RTFIMnhuTlF0U24wWEI4K3Jo?=
- =?utf-8?B?NGtPclY0WGZVUlhtdHFuZXd3UEw0dkhDc3V4aXBxenhHYkpiR0dqQWF4QUJr?=
- =?utf-8?B?dGNwV3JvYjhRSHpiU1FNdFJHKzhCaGlRU29pVVp2cjN1Z2dLSlpTcTh0Nmpm?=
- =?utf-8?B?V2NPdFY5MXlodFZLajI0SG5KUE9aMURSZ1pLVTdGVm14RXZQcjVWS0Q4bDJv?=
- =?utf-8?B?b29SYUFuZFczQWFhTWV1L0ZJcU1zSGNndzhTY3h2d2o0R3lIbFBPUVZyNkZj?=
- =?utf-8?B?VnY1aGdnZmZOaldGdjhBWG5hRGNTM1lGVkdac3pXUk90UkV1TDFCWGg0eE5k?=
- =?utf-8?B?SmdTQjRsRERaQ3dsck1zdUFSd0ZrVzJncWhqbThuUlpEcE12VVNjazRCa25r?=
- =?utf-8?B?dXlXdkhkdCtwUEIwM1A3UFBQL2Nnc3krYjB4ZnZUbjVDSjdPTy96ZWE2akhz?=
- =?utf-8?B?a1dNcWNDNzJ6Mzk4VlVaNU40N0YxaHl3dzUyQWFUZGxXZ0tGUGlmaEhSU3dC?=
- =?utf-8?B?U3N3V1dSMUZ3MkxsdnZ4d2c2ZFVuMVBtL0R6QS8wOFlKY3QyUlBqYk5US0VW?=
- =?utf-8?B?djErY3ZlanB5R1FqR3ZYakZQRDMweGZBamZVZ25WN01PMW5QaEJrNDltNWtv?=
- =?utf-8?B?eEwzbEljZnNTYXg5cDkrYkpGY2dHYVY4MUxlR2dJSkZOUC9scmR1b1dDY2hY?=
- =?utf-8?B?dzJBVzJNN2xBcVd2VE5Vc3BiNzlEVlVvaHhOMCtwZTJSejQyRnZ5M2RMVWRU?=
- =?utf-8?B?MkJKbE4ySHp2djZJbXFnN1ZXMnYzS3RYb2c5akpncWdGZTRuTUVVMndiWlFk?=
- =?utf-8?B?WTBndnBYMUU5VXdwNnQvbHVWVG5CYVBRVll6bFlQZzEvVFJzMmdvNThIcHB5?=
- =?utf-8?B?YVlnMGVVdXB3enYvZ3JGQVVMSEFTNStOWlhMQzBXTkJPdmZNYXdsTjExZzYr?=
- =?utf-8?B?RFBGbEJNS1pGWnRSU2dwQXZzU2x3K0FBc0pjcWVyVHdEOVJCNDM1T254YmhD?=
- =?utf-8?B?dENXQXFaRnFnMGlIci91cUdNWGVxR2tEUnVTVFNXeEswaE5OU1VqL0U4alc2?=
- =?utf-8?B?WitmUDI2SnI3VmFSMlRZMnk2VldobTZHRUIvQmxFT0lNcmpPa1ZJdGJNbmts?=
- =?utf-8?Q?hbRPtWxs5Dz9sHk4=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Opex7frgcKJEKW7ARrIykQCz4s6RRRe9fLq0ktWyW1Uf0G17J+gA+5tGqcUg7CPpm4ChWxuRdVxgbKCLF/zKSPuhvqhWQ3iY/NU5++v6tIUlqEn0orfMkTd0kJQwfq9Qjr+kXGEBZQZz31thmfGgmgPhnwRgrZhVOFWSXZduiAoCKlEuiw1iKkbT008+FupLqlmu0Vyi93Iz4LMuAdhn90CxY2jvtJXvkf9mfG5ZQrKKFRBkoC7N6vBiLuhnoSfVkXoMD8QvhwKuwrZwnOfV7/P8hAgIxFMRcFtAUYd3P2s1uIpB4s2kOBvwelHNKyWHL/LvRUrrcL/gY6b0XNf6RN5oCyUFtALPKL7NNki3mgJHGTv3E3uKDfXD/nBongiUj6+fikrxAEGwewb1lfP/K3ygtLNEC3ZRbn0OuVoAdLWomLvVjeSbXSVGD87KmazWOZapjQo3wmcNR+byvhVo2fxNiIdh8f/cYcQaQnbl0ZczDtpyrX6+xvA+vshNcBv25NxWWevz63Q5mw0a6fyJUF4DzUw8x7zS+qhMzV6Viq81rJfEwaRkuUh4QwwZXBRW1vJsYxEPYSRXDfnOCj5x97YN4k0y5gZVO9/4996Oxjo=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 74b3501d-887b-43eb-047f-08de5e0c1798
-X-MS-Exchange-CrossTenant-AuthSource: BLAPR10MB5041.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jan 2026 01:25:16.3488 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: es/PLE0BGb1wsKdAjwV8ln0C9aeeyYRiKCkz4sVeGUL/v/gooeOpregFnhHH6ix7jrpe36oPWovYD/FkAOyeEVUH0W3CMzsvliH6VMh21+8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR10MB7347
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-27_05,2026-01-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- mlxlogscore=999
- bulkscore=0 mlxscore=0 spamscore=0 phishscore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2601150000 definitions=main-2601280009
-X-Proofpoint-ORIG-GUID: pBAVSCdn-Ya-CQVns43cHOe8QDDMY4ei
-X-Proofpoint-GUID: pBAVSCdn-Ya-CQVns43cHOe8QDDMY4ei
-X-Authority-Analysis: v=2.4 cv=IIcPywvG c=1 sm=1 tr=0 ts=69796581 cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=vUbySO9Y5rIA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=zd2uoN0lAAAA:8 a=UdYjARD8uERa6NymEwoA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDAwOSBTYWx0ZWRfX0j8QgKtkulWy
- iTu86iQlx4hwISwcAWAh4p/8cv0KCP0Dp+H59QBuN5GgR7ixBbjGQuRsGHgI3TcZV35jLBFglHM
- L6sf/zxmw0hvnPwbj9riuyKhNcNzSGgKoipwptRvqSKEd6uzrkW5xkY4NXOFYFq3mGmcrMnAk67
- YlM4XLuG67gW43ECjJOJ8cdbf5ITup6zdHadpjWlzK4x8hwshQnlgm3gK+bC774Gl+Ktf0ow82M
- LIx3FsGhtsEAUR42OBEvdvzgxQhH4JlGuS15cep4G4EWFXmrEzhh8AF1RSBlgUnHOOXF+ydLueE
- 3RbsU9dKLGJ+5ghIZv5u3DFEJ7KINE+eoDwIAKymjlVHje9epa3F5jyH+NjDCVd4D5msmU3jI9Y
- tQ6wwJtkO7SopzwJtEw0B3cr11UFbmgoQbPaBo1ddbpQBWKbyn6YIKYxHiNQgfMOioD2eU/s5LH
- 4xcqgv/biimzwTh7dwQ==
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/17] fpu/softfloat: Refactor IEEE format NaN
+ classification to share code
+To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20260127063723.442734-1-max.chou@sifive.com>
+ <20260127063723.442734-3-max.chou@sifive.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260127063723.442734-3-max.chou@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x644.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -246,29 +114,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-nit: Capitalize AMD on commit subject line?
-
-On 11/18/25 5:15 AM, Sairaj Kodilkar wrote:
-> Update the vendor capability structure to have `struct iommu_hw_info_amd`.
-> AMD vIOMMU can use this to determine hardware features supported by the
-> host IOMMU.
+On 1/27/26 17:37, Max Chou wrote:
+> The floatN_is_[quiet|signaling]_nan functions for IEEE formats
+> (float16, bfloat16, float32, float64) contain duplicated logic that
+> should be shared.
+> This commit introduces internal helper functions:
+> [float16|bfloat16|float32|float64]_is_snan_internal
+> that determine if a NaN is signaling.
 > 
-> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Max Chou <max.chou@sifive.com>
 > ---
->  include/system/host_iommu_device.h | 1 +
->  1 file changed, 1 insertion(+)
+>   fpu/softfloat-specialize.c.inc | 152 +++++++++++++++++----------------
+>   1 file changed, 78 insertions(+), 74 deletions(-)
 > 
-> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-> index ab849a4a82d5..cb1745b97a09 100644
-> --- a/include/system/host_iommu_device.h
-> +++ b/include/system/host_iommu_device.h
-> @@ -20,6 +20,7 @@
->  typedef union VendorCaps {
->      struct iommu_hw_info_vtd vtd;
->      struct iommu_hw_info_arm_smmuv3 smmuv3;
-> +    struct iommu_hw_info_amd amd;
->  } VendorCaps;
->  
->  /**
+> diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+> index ba4fa08b7b..ce7315c996 100644
+> --- a/fpu/softfloat-specialize.c.inc
+> +++ b/fpu/softfloat-specialize.c.inc
+> @@ -225,6 +225,22 @@ floatx80 floatx80_default_inf(bool zSign, float_status *status)
+>       bool z = status->floatx80_behaviour & floatx80_default_inf_int_bit_is_zero;
+>       return packFloatx80(zSign, 0x7fff, z ? 0 : (1ULL << 63));
+>   }
+> +/*----------------------------------------------------------------------------
+> +| Internal helper: Determine if float16 NaN is signaling.
+> +*----------------------------------------------------------------------------*/
+> +
+> +static bool float16_is_snan_internal(float16 a, float_status *status)
+> +{
+> +    if (!float16_is_any_nan(a)) {
+> +        return false;
+> +    }
+> +    if (no_signaling_nans(status)) {
+> +        return false;
+> +    }
+> +    uint16_t frac = float16_val(a) & 0x3FF;
+> +    bool frac_msb = (frac >> 9) & 1;
+> +    return frac_msb == snan_bit_is_one(status);
+> +}
 
+I think the "internal" functions should already assume any_nan.
+
+>   bool float16_is_quiet_nan(float16 a_, float_status *status)
+>   {
+> -    if (no_signaling_nans(status)) {
+> -        return float16_is_any_nan(a_);
+> -    } else {
+> -        uint16_t a = float16_val(a_);
+> -        if (snan_bit_is_one(status)) {
+> -            return (((a >> 9) & 0x3F) == 0x3E) && (a & 0x1FF);
+> -        } else {
+> +    if (!float16_is_any_nan(a_)) {
+> +        return false;
+> +    }
+> +    return !float16_is_snan_internal(a_, status);
+> +}
+
+Otherwise you're double-testing it in the quiet_nan tests.
+
+Perhaps the intent would be clearer by naming them <type>_nan_is_snan.
+
+Perhaps clearer to merge the expressions:
+
+     return float16_is_any_nan(a) && !float16_nan_is_snan(a)
+and
+     return float16_is_any_nan(a) && float16_nan_is_snan(a)
+
+for the is_quiet_nan and is_signaling_nan functions respectively?
+
+
+r~
 
