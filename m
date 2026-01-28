@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ADB0D35669
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 04:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9B5ED35672
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 04:37:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkxIa-0006Rf-JU; Tue, 27 Jan 2026 23:37:00 -0500
+	id 1vkxJ7-0006nJ-BD; Tue, 27 Jan 2026 23:37:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vkxIZ-0006RN-Hv
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:36:59 -0500
+ id 1vkxJ5-0006cA-78
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:37:31 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vkxIX-0000IG-WC
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:36:59 -0500
+ id 1vkxJ3-0000LE-K2
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:37:30 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60S4ahlQ004136
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60S4bOQg004384
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 28 Jan 2026 13:36:46 +0900 (JST)
+ Wed, 28 Jan 2026 13:37:27 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=8vilWAjaLIbp8RdySrqhAIsoNWEgiGowHiiSAaKrZBM=; 
+DKIM-Signature: a=rsa-sha256; bh=PKKG/RREdug3rJ/Uv8HrA2h8JDH82acX08uwzgSF6Cc=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1769575007; v=1;
- b=fmypT//DUZ43VXzc9MaRmeBlwIQ0+7ezzCyHyFOgrCCYDFSYIBd5XFDZsqBBMwaz
- wQPoVe63WT3HlKNwtpq3hyHBKBHhbP957Q9+B92ZLfR3uKo/2X7z5wSue4hyKRW3
- cOlBqyJmIN9GbUG7FdRoiVfydXEnnzrlG5pxFwGzV+p1iNR/buvfB6q084+W2F/D
- z6X2b4rT7pZZ8akfzkGGotvBJlU2aLwi82VNhFPZ+XInIMS504XKkuDSezXcVlQ1
- b5RP/bZy1ywUg1sqoWJG5P8H+Ywz2EBpk5rFZEZA2+jF9TR1kdZ44MaVr/ED9Zjv
- ui/j+6cVEwXEDswVxq2bSw==
-Message-ID: <4ac3b615-d603-4317-9265-07d8aae08795@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 28 Jan 2026 13:36:43 +0900
+ s=rs20250326; t=1769575047; v=1;
+ b=D5fOz8jaBhtbqkcB1Lv0pEEZo/EYtXPUHeR02OvULTp4uZcQtZF043+y/VQon1mQ
+ CtPdFAFlgUfXXD0A1/LDLrubtov9NhvXceLN3YuBt4PCILfaTdqy8s+AZKDOITzF
+ jaq+LfEkn0IEiEiDcdnaOY38zINzt4R9jM3lHkdZPfOWmnRGY+4mHwwY3IUWArTm
+ Teo/lRNCHWxLKmESAX2l+VGiCNprATcRhiNvpdyZmyaSCrbxtzNz++d61l2RrHsy
+ 24nz8VwOefi+x1lnY3eUcLb70aXNn7W7bXhpChBVEQgz8vh7MnWXuEIEypExhSS0
+ OlN9c+4CZVEtTJHXMMQVUQ==
+Message-ID: <414d2fa3-fac8-4d56-a454-6713b845ea98@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 28 Jan 2026 13:37:24 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/43] audio/coreaudio: convert to QOM lifecycle methods
+Subject: Re: [PATCH 14/43] audio: remove audio_driver init/fini/next
 To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Thomas Huth <huth@tuxfamily.org>, Alexandre Ratchov <alex@caoua.org>
 References: <20260127182516.289834-1-marcandre.lureau@redhat.com>
- <20260127182516.289834-13-marcandre.lureau@redhat.com>
+ <20260127182516.289834-15-marcandre.lureau@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260127182516.289834-13-marcandre.lureau@redhat.com>
+In-Reply-To: <20260127182516.289834-15-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -79,11 +80,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2026/01/28 3:24, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Remove the legacy driver init/fini callbacks from the CoreAudio backend.
-> 
-> Both coreaudio_audio_init() and coreaudio_audio_fini() were no-ops that
-> performed no real initialization or cleanup work. Access to the
-> Audiodev is now through hw->s->dev instead of the drv_opaque pointer.
+> They are no longer used after conversion to QOM.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
