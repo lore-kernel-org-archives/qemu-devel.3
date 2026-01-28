@@ -4,120 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 414C8D3F07A
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 15:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD5FDD3F07A
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 15:23:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vl7Nj-0007J7-D9; Wed, 28 Jan 2026 10:22:59 -0500
+	id 1vl7OS-00006r-2G; Wed, 28 Jan 2026 10:23:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vl7Nb-0007Ca-OF
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:22:52 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vl7Na-0003O2-5B
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 10:22:51 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id BF01E33BEC;
- Wed, 28 Jan 2026 15:22:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769613768; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vDt4EuaDfihqXHBeAIGd98bMgccKGmwTwJuAKqHivYI=;
- b=kNDGMVSwGplomkmW6sqQzP0Adhz9lEMwFz43I+2m6z9vRVXhH5ITMqyRaxhnOxnIZSZTML
- YO6w05hpU/R7lV+ojUi6RbZlsc4yStsyfVBBjiZzd9u9KQLcksRK/NqMcbW66FlqdhC7gB
- IH+jZG1k9gJw7f04DUf+OU3sjamDwno=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769613768;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vDt4EuaDfihqXHBeAIGd98bMgccKGmwTwJuAKqHivYI=;
- b=vajFMAhQfiT4ca0J7Ahdq6IIAh2Z2+Z+FLq8HbhMQHXzoLaGVEGOUYlhAJlK4080c/2waj
- 3BbBrDlBIaucrdCg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Nf9OdkBI;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=JhCFLflf
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1769613762; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vDt4EuaDfihqXHBeAIGd98bMgccKGmwTwJuAKqHivYI=;
- b=Nf9OdkBIgv9bq/jPxCRmP1Pm87+U6wYXj5g2DSO4gG5V+/PdKOUTgmcbLM6I/FCy9lg3PE
- TIvO8buzLH2JK0qOdIUHmOyr0l45gqjy+0HlbkLr3yVQ4ulIi2xvRrnuzMkwH7zCV0pC1f
- 3TPpmdaOB2/y7Oww6tsNd/ClgMSkXrk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1769613762;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vDt4EuaDfihqXHBeAIGd98bMgccKGmwTwJuAKqHivYI=;
- b=JhCFLflfHCRDpm54xA/QYza2niGbxJfMTpTrdG0u0dpDMrEd/tIZ8Yro/Tn/xV3mVtZpnC
- GHHvaKZTRhAB81Ag==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 355A43EA61;
- Wed, 28 Jan 2026 15:22:36 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id QODPObwpemluNgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 28 Jan 2026 15:22:36 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Lukas Straub <lukasstraub2@web.de>, Prasad Pandit
- <ppandit@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH v2 15/24] migration: Provide helper for save vm description
-In-Reply-To: <20260127185254.3954634-16-peterx@redhat.com>
-References: <20260127185254.3954634-1-peterx@redhat.com>
- <20260127185254.3954634-16-peterx@redhat.com>
-Date: Wed, 28 Jan 2026 12:22:34 -0300
-Message-ID: <878qdhg3t1.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vl7O7-0008Jf-0G; Wed, 28 Jan 2026 10:23:25 -0500
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vl7O3-0003RS-An; Wed, 28 Jan 2026 10:23:22 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwB3kqjgKXpp0UJ6Bg--.540S2;
+ Wed, 28 Jan 2026 23:23:12 +0800 (CST)
+Received: from [192.168.31.151] (unknown [113.246.118.162])
+ by mail (Coremail) with SMTP id AQAAfwCX8e7eKXppFV4XAA--.47091S2;
+ Wed, 28 Jan 2026 23:23:10 +0800 (CST)
+Message-ID: <d11e9d1e-a209-4142-a742-170fcecefbf7@phytium.com.cn>
+Date: Wed, 28 Jan 2026 23:23:09 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FREEMAIL_ENVRCPT(0.00)[web.de]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- ASN_FAIL(0.00)[7.9.0.0.4.6.0.0.0.5.1.0.0.1.0.0.4.0.1.0.1.8.2.b.0.4.e.d.7.0.a.2.asn6.rspamd.com:query
- timed out]; 
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FREEMAIL_CC(0.00)[redhat.com,web.de];
- DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_FIVE(0.00)[6];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email]
-X-Rspamd-Queue-Id: BF01E33BEC
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 1/2] tests/qtest/libqos: Add RISC-V IOMMU helper
+ library
+To: Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ hust-os-kernel-patches@googlegroups.com
+References: <cover.1769600111.git.chao.liu.zevorn@gmail.com>
+ <bf2b4f9cfe1484b0cde5540f518f74f9fc878c8d.1769600111.git.chao.liu.zevorn@gmail.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <bf2b4f9cfe1484b0cde5540f518f74f9fc878c8d.1769600111.git.chao.liu.zevorn@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwCX8e7eKXppFV4XAA--.47091S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAJBWl5G-QHbAAEsd
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvAXoWfGry7Zw43Cw1kCw45GF48JFb_yoW8Wry8Co
+ W3ur4S9a18Cw17ur4j9ryUXF17Xws2ya13Xr4UJr4SgF1IkFWrGay3tw1rWa1FgrWrKr9r
+ Xas7J3y8Jw48J3s5n29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
+ J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
+ UUUUUUU==
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,88 +78,482 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Hi Chao,
 
-> Provide two smaller helpers to dump the vm desc.  Preparing to move it out
-> and generalize device state dump.
+On 2026/1/28 20:09, Chao Liu wrote:
+> Introduce a libqos helper module for RISC-V IOMMU testing with
+> iommu-testdev. The helper provides routines to:
 >
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> - Build device contexts (DC) and 3-level page tables for SV39/SV39x4
+> - Program command queue (CQ), fault queue (FQ), and DDTP registers
+>    following the RISC-V IOMMU specification
+> - Execute DMA translations and verify results
+>
+> The current implementation supports SV39 for S-stage and SV39x4 for
+> G-stage translation. Support for SV48/SV48x4/SV57/SV57x4 can be added
+> in future patches.
+>
+> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 > ---
->  migration/savevm.h |  1 +
->  migration/savevm.c | 35 +++++++++++++++++++++++------------
->  2 files changed, 24 insertions(+), 12 deletions(-)
+>   MAINTAINERS                          |   1 +
+>   tests/qtest/libqos/meson.build       |   2 +-
+>   tests/qtest/libqos/qos-riscv-iommu.c | 400 +++++++++++++++++++++++++++
+>   tests/qtest/libqos/qos-riscv-iommu.h | 172 ++++++++++++
+>   4 files changed, 574 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/qtest/libqos/qos-riscv-iommu.c
+>   create mode 100644 tests/qtest/libqos/qos-riscv-iommu.h
 >
-> diff --git a/migration/savevm.h b/migration/savevm.h
-> index d0596d1d62..f957f851ef 100644
-> --- a/migration/savevm.h
-> +++ b/migration/savevm.h
-> @@ -50,6 +50,7 @@ void qemu_savevm_state_pending_estimate(uint64_t *must_precopy,
->  int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy);
->  bool qemu_savevm_state_postcopy_prepare(QEMUFile *f, Error **errp);
->  void qemu_savevm_state_end(QEMUFile *f);
-> +void qemu_savevm_state_end_precopy(MigrationState *s, QEMUFile *f);
->  void qemu_savevm_send_ping(QEMUFile *f, uint32_t value);
->  void qemu_savevm_send_open_return_path(QEMUFile *f);
->  int qemu_savevm_send_packaged(QEMUFile *f, const uint8_t *buf, size_t len);
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index a787691352..41560b97a4 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -1669,13 +1669,34 @@ ret_fail_abort_threads:
->      return -1;
->  }
->  
-> +static void qemu_savevm_state_vm_desc(MigrationState *s, QEMUFile *f)
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index dc31be033e..894e05bd2c 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3583,6 +3583,7 @@ M: Tao Tang <tangtao1634@phytium.com.cn>
+>   S: Maintained
+>   F: tests/qtest/libqos/qos-iommu*
+>   F: tests/qtest/libqos/qos-smmuv3*
+> +F: tests/qtest/libqos/qos-riscv-iommu*
+>   
+>   Device Fuzzing
+>   M: Alexander Bulekov <alxndr@bu.edu>
+> diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
+> index b4daec808f..4a69acad0d 100644
+> --- a/tests/qtest/libqos/meson.build
+> +++ b/tests/qtest/libqos/meson.build
+> @@ -71,7 +71,7 @@ if have_virtfs
+>   endif
+>   
+>   if config_all_devices.has_key('CONFIG_RISCV_IOMMU')
+> -  libqos_srcs += files('riscv-iommu.c')
+> +  libqos_srcs += files('riscv-iommu.c', 'qos-riscv-iommu.c')
+>   endif
+>   if config_all_devices.has_key('CONFIG_TPCI200')
+>     libqos_srcs += files('tpci200.c')
+> diff --git a/tests/qtest/libqos/qos-riscv-iommu.c b/tests/qtest/libqos/qos-riscv-iommu.c
+> new file mode 100644
+> index 0000000000..34ed3df84a
+> --- /dev/null
+> +++ b/tests/qtest/libqos/qos-riscv-iommu.c
+> @@ -0,0 +1,400 @@
+> +/*
+> + * QOS RISC-V IOMMU Module
+> + *
+> + * This module provides RISC-V IOMMU-specific helper functions for libqos tests,
+> + * encapsulating RISC-V IOMMU setup, and assertions.
+> + *
+> + * Copyright (c) 2026 Chao Liu <chao.liu.zevorn@gmail.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/bitops.h"
+> +#include "hw/riscv/riscv-iommu-bits.h"
+> +#include "tests/qtest/libqos/pci.h"
+> +#include "qos-iommu-testdev.h"
+> +#include "qos-riscv-iommu.h"
+> +
+> +/* Apply space offset to address */
+> +static inline uint64_t qriommu_apply_space_offs(uint64_t address)
 > +{
-> +    JSONWriter *vmdesc = s->vmdesc;
-> +    int vmdesc_len;
+> +    return address + QRIOMMU_SPACE_OFFS;
+> +}
+
+
+In the original SMMU/iommu-testdev work, I introduced a similar “base 
+offset” mainly to make room for future expansion where the same test 
+code needs to exercise multiple security domains (e.g., Arm Non-secure 
+vs Secure vs Realm), which in QEMU is reflected via distinct address 
+spaces / MemTxAttrs (the space field).
+
+I’m not very familiar with the RISC-V security model. In RISC-V, do you 
+foresee a comparable need to test multiple “security states” for DMA 
+transactions?
+
 > +
-> +    if (vmdesc) {
-> +        json_writer_end_array(vmdesc);
-> +        json_writer_end_object(vmdesc);
-> +        vmdesc_len = strlen(json_writer_get(vmdesc));
+> +static uint64_t qriommu_encode_pte(uint64_t pa, uint64_t attrs)
+> +{
+> +    return ((pa >> 12) << 10) | attrs;
+> +}
 > +
-> +        qemu_put_byte(f, QEMU_VM_VMDESCRIPTION);
-> +        qemu_put_be32(f, vmdesc_len);
-> +        qemu_put_buffer(f, (uint8_t *)json_writer_get(vmdesc), vmdesc_len);
+> +static void qriommu_wait_for_queue_active(QTestState *qts, uint64_t iommu_base,
+> +                                          uint32_t queue_csr, uint32_t on_bit)
+> +{
+> +    guint64 timeout_us = 2 * 1000 * 1000;
+> +    gint64 start_time = g_get_monotonic_time();
+> +    uint32_t reg;
+> +
+> +    for (;;) {
+> +        qtest_clock_step(qts, 100);
+> +
+> +        reg = qtest_readl(qts, iommu_base + queue_csr);
+> +        if (reg & on_bit) {
+> +            return;
+> +        }
+> +        g_assert(g_get_monotonic_time() - start_time <= timeout_us);
 > +    }
 > +}
 > +
-> +void qemu_savevm_state_end_precopy(MigrationState *s, QEMUFile *f)
+> +uint32_t qriommu_expected_dma_result(QRIOMMUTestContext *ctx)
 > +{
-> +    qemu_savevm_state_end(f);
-> +    qemu_savevm_state_vm_desc(s, f);
+> +    return ctx->config.expected_result;
 > +}
 > +
->  int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
->                                                      bool in_postcopy)
->  {
->      MigrationState *ms = migrate_get_current();
->      int64_t start_ts_each, end_ts_each;
->      JSONWriter *vmdesc = ms->vmdesc;
-> -    int vmdesc_len;
->      SaveStateEntry *se;
->      Error *local_err = NULL;
->      int ret;
-> @@ -1705,17 +1726,7 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
->  
->      if (!in_postcopy) {
->          /* Postcopy stream will still be going */
-> -        qemu_savevm_state_end(f);
-> -
-> -        if (vmdesc) {
-> -            json_writer_end_array(vmdesc);
-> -            json_writer_end_object(vmdesc);
-> -            vmdesc_len = strlen(json_writer_get(vmdesc));
-> -
-> -            qemu_put_byte(f, QEMU_VM_VMDESCRIPTION);
-> -            qemu_put_be32(f, vmdesc_len);
-> -            qemu_put_buffer(f, (uint8_t *)json_writer_get(vmdesc), vmdesc_len);
-> -        }
-> +        qemu_savevm_state_end_precopy(ms, f);
->      }
->  
->      trace_vmstate_downtime_checkpoint("src-non-iterable-saved");
+> +uint32_t qriommu_build_dma_attrs(void)
+> +{
+> +    /* RISC-V IOMMU uses standard AXI attributes */
+> +    return 0;
+> +}
+> +
+> +uint32_t qriommu_setup_and_enable_translation(QRIOMMUTestContext *ctx)
+> +{
+> +    uint32_t build_result;
+> +
+> +    /* Build page tables and RISC-V IOMMU structures first */
+> +    build_result = qriommu_build_translation(
+> +                       ctx->qts, ctx->config.trans_mode,
+> +                       ctx->device_id);
+> +    if (build_result != 0) {
+> +        g_test_message("Build failed: mode=%u device_id=%u status=0x%x",
+> +                       ctx->config.trans_mode, ctx->device_id, build_result);
+> +        ctx->trans_status = build_result;
+> +        return ctx->trans_status;
+> +    }
+> +
+> +    /* Program RISC-V IOMMU registers */
+> +    qriommu_program_regs(ctx->qts, ctx->iommu_base);
+> +
+> +    ctx->trans_status = 0;
+> +    return ctx->trans_status;
+> +}
+> +
+> +static bool qriommu_validate_test_result(QRIOMMUTestContext *ctx)
+> +{
+> +    uint32_t expected = qriommu_expected_dma_result(ctx);
+> +    g_test_message("-> Validating result: expected=0x%x actual=0x%x",
+> +                   expected, ctx->dma_result);
+> +    return (ctx->dma_result == expected);
+> +}
+> +
+> +static uint32_t qriommu_single_translation_setup(void *opaque)
+> +{
+> +    return qriommu_setup_and_enable_translation(opaque);
+> +}
+> +
+> +static uint32_t qriommu_single_translation_attrs(void *opaque)
+> +{
+> +    return qriommu_build_dma_attrs();
+> +}
+> +
+> +static bool qriommu_single_translation_validate(void *opaque)
+> +{
+> +    return qriommu_validate_test_result(opaque);
+> +}
+> +
+> +static void qriommu_single_translation_report(void *opaque,
+> +                                              uint32_t dma_result)
+> +{
+> +    QRIOMMUTestContext *ctx = opaque;
+> +
+> +    if (dma_result != 0) {
+> +        g_test_message("DMA failed: mode=%u result=0x%x",
+> +                       ctx->config.trans_mode, dma_result);
+> +    } else {
+> +        g_test_message("-> DMA succeeded: mode=%u",
+> +                       ctx->config.trans_mode);
+> +    }
+> +}
+> +
+> +void qriommu_run_translation_case(QTestState *qts, QPCIDevice *dev,
+> +                                  QPCIBar bar, uint64_t iommu_base,
+> +                                  const QRIOMMUTestConfig *cfg)
+> +{
+> +    QRIOMMUTestContext ctx = {
+> +        .qts = qts,
+> +        .dev = dev,
+> +        .bar = bar,
+> +        .iommu_base = iommu_base,
+> +        .config = *cfg,
+> +        .device_id = dev->devfn,
+> +    };
+> +
+> +    QOSIOMMUTestdevDmaCfg dma = {
+> +        .dev = dev,
+> +        .bar = bar,
+> +        .iova = QRIOMMU_IOVA,
+> +        .gpa = ctx.config.dma_gpa,
+> +        .len = ctx.config.dma_len,
+> +    };
+> +
+> +    qtest_memset(qts, cfg->dma_gpa, 0x00, cfg->dma_len);
+> +    qos_iommu_testdev_single_translation(&dma, &ctx,
+> +                                         qriommu_single_translation_setup,
+> +                                         qriommu_single_translation_attrs,
+> +                                         qriommu_single_translation_validate,
+> +                                         qriommu_single_translation_report,
+> +                                         &ctx.dma_result);
+> +
+> +    if (ctx.dma_result == 0 && ctx.config.expected_result == 0) {
+> +        g_autofree uint8_t *buf = NULL;
+> +
+> +        buf = g_malloc(ctx.config.dma_len);
+> +        qtest_memread(ctx.qts, ctx.config.dma_gpa, buf, ctx.config.dma_len);
+> +
+> +        for (int i = 0; i < ctx.config.dma_len; i++) {
+> +            uint8_t expected;
+> +
+> +            expected = (ITD_DMA_WRITE_VAL >> ((i % 4) * 8)) & 0xff;
+> +            g_assert_cmpuint(buf[i], ==, expected);
+> +        }
+> +    }
+> +}
+> +
+> +static uint32_t qriommu_get_table_index(uint64_t addr, int level)
+> +{
+> +    /* SV39: 39-bit virtual address, 3-level page table */
+> +    switch (level) {
+> +    case 0:
+> +        return (addr >> 30) & 0x1ff;   /* L0: bits [38:30] */
+> +    case 1:
+> +        return (addr >> 21) & 0x1ff;   /* L1: bits [29:21] */
+> +    case 2:
+> +        return (addr >> 12) & 0x1ff;   /* L2: bits [20:12] */
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +static uint64_t qriommu_get_table_addr(uint64_t base, int level, uint64_t iova)
+> +{
+> +    uint32_t index = qriommu_get_table_index(iova, level);
+> +    return (base & QRIOMMU_PTE_PPN_MASK) + (index * 8);
+> +}
+> +
+> +static void qriommu_map_leaf(QTestState *qts, uint64_t root_pa,
+> +                             uint64_t l0_pa, uint64_t l1_pa,
+> +                             uint64_t l0_pte_val, uint64_t l1_pte_val,
+> +                             uint64_t va, uint64_t pa, uint64_t leaf_attrs)
+> +{
+> +    uint64_t l0_addr = qriommu_get_table_addr(root_pa, 0, va);
+> +    uint64_t l1_addr = qriommu_get_table_addr(l0_pa, 1, va);
+> +    uint64_t l2_addr = qriommu_get_table_addr(l1_pa, 2, va);
+> +
+> +    qtest_writeq(qts, l0_addr, l0_pte_val);
+> +    qtest_writeq(qts, l1_addr, l1_pte_val);
+> +    qtest_writeq(qts, l2_addr, qriommu_encode_pte(pa, leaf_attrs));
+> +}
+> +
+> +static uint64_t qriommu_get_pte_attrs(QRIOMMUTransMode mode, bool is_leaf)
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+
+mode doesn't seem to be used?
+
+> +{
+> +    if (!is_leaf) {
+> +        return QRIOMMU_NON_LEAF_PTE_MASK;
+> +    }
+> +
+> +    /* For leaf PTE, set RWX permissions */
+> +    return QRIOMMU_LEAF_PTE_RW_MASK;
+> +}
+> +
+> ------------------------------<snip>------------------------------
+>
+>
+>
+> ------------------------------<snip>------------------------------
+> diff --git a/tests/qtest/libqos/qos-riscv-iommu.h b/tests/qtest/libqos/qos-riscv-iommu.h
+> new file mode 100644
+> index 0000000000..1f4efbf682
+> --- /dev/null
+> +++ b/tests/qtest/libqos/qos-riscv-iommu.h
+> @@ -0,0 +1,172 @@
+> +/*
+> + * QOS RISC-V IOMMU Module
+> + *
+> + * This module provides RISC-V IOMMU-specific helper functions for libqos tests,
+> + * encapsulating RISC-V IOMMU setup, and assertions.
+> + *
+> + * Copyright (c) 2026 Chao Liu <chao.liu.zevorn@gmail.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef QTEST_LIBQOS_RISCV_IOMMU_H
+> +#define QTEST_LIBQOS_RISCV_IOMMU_H
+> +
+> +#include "hw/misc/iommu-testdev.h"
+> +
+> +/* RISC-V IOMMU MMIO register base for virt machine */
+> +#define VIRT_RISCV_IOMMU_BASE      0x0000000003010000ull
+> +
+> +/* RISC-V IOMMU queue and table base addresses */
+> +#define QRIOMMU_CQ_BASE_ADDR       0x000000000e160000ull
+> +#define QRIOMMU_FQ_BASE_ADDR       0x000000000e170000ull
+> +
+> +/* RISC-V IOMMU queue sizing */
+> +#define QRIOMMU_QUEUE_ENTRIES  1024
+> +#define QRIOMMU_CQ_ENTRY_SIZE  16
+> +#define QRIOMMU_FQ_ENTRY_SIZE  32
+> +
+> +/*
+> + * Translation tables and descriptors for RISC-V IOMMU.
+> + * Similar to ARM SMMUv3, but using RISC-V IOMMU terminology:
+> + * - Device Context (DC) instead of STE
+> + * - First-stage context (FSC) for S-stage translation
+> + * - IOHGATP for G-stage translation
+> + *
+> + * Granule size: 4KB pages
+> + * Page table levels: 3 levels for SV39 (L0, L1, L2)
+> + * IOVA size: 39-bit virtual address space
+> + */
+> +#define QRIOMMU_IOVA                0x0000000080604567ull
+> +#define QRIOMMU_IOHGATP             0x0000000000010000ull
+> +#define QRIOMMU_DDT_BASE            0x0000000000014000ull
+> +#define QRIOMMU_DC_BASE             (QRIOMMU_DDT_BASE)
+> +
+> +#define QRIOMMU_L0_PTE_VAL          0x0000000000011000ull
+> +#define QRIOMMU_L1_PTE_VAL          0x0000000000012000ull
+> +#define QRIOMMU_L2_PTE_VAL          0x0000000000013000ull
+> +
+> +#define QRIOMMU_G_IOHGATP           0x0000000000020000ull
+> +#define QRIOMMU_G_L0_PTE_VAL        0x0000000000021000ull
+> +#define QRIOMMU_G_L1_PTE_VAL        0x0000000000022000ull
+> +
+> +/* RISC-V page table entry masks */
+> +#define QRIOMMU_PTE_V               0x0000000000000001ull
+> +#define QRIOMMU_PTE_R               0x0000000000000002ull
+> +#define QRIOMMU_PTE_W               0x0000000000000004ull
+> +#define QRIOMMU_PTE_X               0x0000000000000008ull
+> +#define QRIOMMU_PTE_U               0x0000000000000010ull
+> +#define QRIOMMU_PTE_G               0x0000000000000020ull
+> +#define QRIOMMU_PTE_A               0x0000000000000040ull
+> +#define QRIOMMU_PTE_D               0x0000000000000080ull
+
+
+I'm not entirely sure if there are similar definitions in the RISC-V 
+header files, but if there are, I think we should consider reusing those 
+definitions instead of redefining them.
+
+
+Besides the correctness of the RISC-V page-table construction may need 
+RISC-V experts to review closely.
+
+
+Thanks,
+
+Tao
+
+> +
+> +#define QRIOMMU_NON_LEAF_PTE_MASK   (QRIOMMU_PTE_V)
+> +#define QRIOMMU_LEAF_PTE_RW_MASK    (QRIOMMU_PTE_V | QRIOMMU_PTE_R | \
+> +                                     QRIOMMU_PTE_W | QRIOMMU_PTE_A | \
+> +                                     QRIOMMU_PTE_D)
+> +#define QRIOMMU_PTE_PPN_MASK        0x003ffffffffffc00ull
+> +
+> +/* Address-space base offset for test tables */
+> +#define QRIOMMU_SPACE_OFFS          0x0000000080000000ull
+> +
+> +typedef enum QRIOMMUTransMode {
+> +    QRIOMMU_TM_BARE         = 0,    /* No translation (pass-through) */
+> +    QRIOMMU_TM_S_STAGE_ONLY = 1,    /* First-stage only (S-stage) */
+> +    QRIOMMU_TM_G_STAGE_ONLY = 2,    /* Second-stage only (G-stage) */
+> +    QRIOMMU_TM_NESTED       = 3,    /* Nested translation (S + G) */
+> +} QRIOMMUTransMode;
+> +
+> +typedef struct QRIOMMUTestConfig {
+> +    QRIOMMUTransMode trans_mode;    /* Translation mode */
+> +    uint64_t dma_gpa;               /* GPA for readback validation */
+> +    uint32_t dma_len;               /* DMA length for testing */
+> +    uint32_t expected_result;       /* Expected DMA result */
+> +} QRIOMMUTestConfig;
+> +
+> +typedef struct QRIOMMUTestContext {
+> +    QTestState *qts;                /* QTest state handle */
+> +    QPCIDevice *dev;                /* PCI device handle */
+> +    QPCIBar bar;                    /* PCI BAR for MMIO access */
+> +    QRIOMMUTestConfig config;       /* Test configuration */
+> +    uint64_t iommu_base;            /* RISC-V IOMMU base address */
+> +    uint32_t trans_status;          /* Translation configuration status */
+> +    uint32_t dma_result;            /* DMA operation result */
+> +    uint32_t device_id;             /* Device ID for the test */
+> +} QRIOMMUTestContext;
+> +
+> +/*
+> + * qriommu_setup_and_enable_translation - Complete translation setup and enable
+> + *
+> + * @ctx: Test context containing configuration and device handles
+> + *
+> + * Returns: Translation status (0 = success, non-zero = error)
+> + *
+> + * This function performs the complete translation setup sequence:
+> + * 1. Builds all required RISC-V IOMMU structures (DC, page tables)
+> + * 2. Programs RISC-V IOMMU registers
+> + * 3. Returns configuration status
+> + */
+> +uint32_t qriommu_setup_and_enable_translation(QRIOMMUTestContext *ctx);
+> +
+> +/*
+> + * qriommu_build_translation - Build RISC-V IOMMU translation structures
+> + *
+> + * @qts: QTest state handle
+> + * @mode: Translation mode (BARE, S_STAGE_ONLY, G_STAGE_ONLY, NESTED)
+> + * @device_id: Device ID
+> + *
+> + * Returns: Build status (0 = success, non-zero = error)
+> + *
+> + * Constructs all necessary RISC-V IOMMU translation structures in guest memory:
+> + * - Device Context (DC) for the given device ID
+> + * - First-stage context (FSC) if S-stage translation is involved
+> + * - Complete page table hierarchy based on translation mode
+> + */
+> +uint32_t qriommu_build_translation(QTestState *qts, QRIOMMUTransMode mode,
+> +                                   uint32_t device_id);
+> +
+> +/*
+> + * qriommu_program_regs - Program all required RISC-V IOMMU registers
+> + *
+> + * @qts: QTest state handle
+> + * @iommu_base: RISC-V IOMMU base address
+> + *
+> + * Programs RISC-V IOMMU registers:
+> + * - Device Directory Table Pointer (DDTP)
+> + * - Command queue (base, head, tail)
+> + * - Fault queue (base, head, tail)
+> + * - Control and status registers
+> + */
+> +void qriommu_program_regs(QTestState *qts, uint64_t iommu_base);
+> +
+> +/*
+> + * qriommu_setup_translation_tables - Setup RISC-V IOMMU page table hierarchy
+> + *
+> + * @qts: QTest state handle
+> + * @iova: Input Virtual Address to translate
+> + * @mode: Translation mode
+> + *
+> + * This function builds the complete page table structure for translating
+> + * the given IOVA through the RISC-V IOMMU. The structure varies based on mode:
+> + *
+> + * - BARE: No translation (pass-through)
+> + * - S_STAGE_ONLY: Single S-stage walk (IOVA -> PA)
+> + * - G_STAGE_ONLY: Single G-stage walk (IPA -> PA)
+> + * - NESTED: S-stage walk (IOVA -> IPA) + G-stage walk (IPA -> PA)
+> + */
+> +void qriommu_setup_translation_tables(QTestState *qts,
+> +                                      uint64_t iova,
+> +                                      QRIOMMUTransMode mode);
+> +
+> +/* High-level test execution helpers */
+> +void qriommu_run_translation_case(QTestState *qts, QPCIDevice *dev,
+> +                                  QPCIBar bar, uint64_t iommu_base,
+> +                                  const QRIOMMUTestConfig *cfg);
+> +
+> +/* Calculate expected DMA result */
+> +uint32_t qriommu_expected_dma_result(QRIOMMUTestContext *ctx);
+> +
+> +/* Build DMA attributes for RISC-V IOMMU */
+> +uint32_t qriommu_build_dma_attrs(void);
+> +
+> +#endif /* QTEST_LIBQOS_RISCV_IOMMU_H */
+
+
 
