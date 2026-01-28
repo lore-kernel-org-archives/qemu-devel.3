@@ -4,60 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73FBBD35669
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 04:27:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 273A0D35669
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 04:31:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vkx8i-0004T1-Ns; Tue, 27 Jan 2026 23:26:49 -0500
+	id 1vkxD0-0001nQ-Vu; Tue, 27 Jan 2026 23:31:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vkx8g-0004Qw-PO
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:26:47 -0500
+ id 1vkxCw-0001kr-6D
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:31:10 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vkx8d-0003a1-Vn
- for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:26:46 -0500
+ id 1vkxCq-0007nL-Ad
+ for qemu-devel@nongnu.org; Tue, 27 Jan 2026 23:31:08 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60S4QUoA099666
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60S4Uf1A001206
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 28 Jan 2026 13:26:38 +0900 (JST)
+ Wed, 28 Jan 2026 13:30:56 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=1BQKfIXAQM11hnE2jNJkiP1THB7MYl3APrKbYylNd+c=; 
+DKIM-Signature: a=rsa-sha256; bh=t8jtmIKHhce1tBd4zdvRBX9x9by8EtUiMbFM/BLWxqY=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1769574398; v=1;
- b=CYl+9Ixulcw++GZ+D4mqqiT4leTO30dUm7JyQg0OQwA9/nahRzC3vOpGigT9DuQC
- rzYp9EOGv3eAhLrh64vjcPvIaeRS68sHrJ/DevFtHrLwT6YubBltyzR8hQy79jq9
- rKaL24qzq6zj009JQK8S/ooRQ7cjidZZABbz009BWtdPaFfrbc2GUyLeooej0Xe4
- 3tR2CqzVLEK0nUFf8s0QOGpKShVjk3ZUHzY7ONNtz26x1SwrKOBwNm4TiXyBIGcP
- on4Aa+fnqPsLHionAViB6xXSujLx61amVez2vn3dAGkDSVJ2b8eHAoyVTwsg8r6v
- kaZDvXL+MCdRqx8QVRT/yg==
-Message-ID: <2883c714-f03b-4381-920a-959a98380c23@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 28 Jan 2026 13:26:29 +0900
+ s=rs20250326; t=1769574657; v=1;
+ b=tXaUla+aIdG8jmAoEsAC1lPsFnFnjIbADIQMwTwAGqqm0VWZ3yZSppjWu2YTZ3iH
+ 2i1fShupY/nA3fsjaTQPW9TCGVviwkkecPIC5rxv52XK9LEV2xphAKLfCag4KQj9
+ vdf/QTMXvvaCxj/6u/+/rq7MxtTKKvuV2BO6SokjE1FO88eiIPwqKRPYqf6oBC17
+ 1h/u2j9WkfCKpbe7rnL+ik8i3qkwio8blCOqNvl+zHnjghTf2iLeA9iy8zFGLfI7
+ bSPjVd2jWafDd4znlRtYooFhL0cSsph/Gs8Cfy//VEM1UX9ngO1aF1gMTBZNeitd
+ IOD5f+2qcAGbFHaZxC3jow==
+Message-ID: <17790d75-c0f3-41b5-9bb5-a7b47aa29548@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 28 Jan 2026 13:30:41 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/8] virtio-gpu: Find hva for Guest's DMA addr
- associated with a ram device
-To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+Subject: Re: [PATCH] rutabaga: improve error handling, fix potential crash
+ during init
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20260123062042.568703-1-vivek.kasireddy@intel.com>
- <20260123062042.568703-3-vivek.kasireddy@intel.com>
- <0d57e3df-3ae6-496f-b621-8d979e2ab3f8@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185FE7AA93FDB21AE6F8D14F890A@IA0PR11MB7185.namprd11.prod.outlook.com>
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+References: <20260127122400.100384-1-marcandre.lureau@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <IA0PR11MB7185FE7AA93FDB21AE6F8D14F890A@IA0PR11MB7185.namprd11.prod.outlook.com>
+In-Reply-To: <20260127122400.100384-1-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -82,69 +76,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/01/27 15:07, Kasireddy, Vivek wrote:
-> Hi Akihiko,
+On 2026/01/27 21:24, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
->> Subject: Re: [PATCH v4 2/8] virtio-gpu: Find hva for Guest's DMA addr
->> associated with a ram device
->>
->> On 2026/01/23 15:17, Vivek Kasireddy wrote:
->>> If the Guest provides a DMA address that is associated with a ram
->>> device (such as a PCI device region and not its system memory),
->>> then we can obtain the hva (host virtual address) by invoking
->>> address_space_translate() followed by memory_region_get_ram_ptr().
->>>
->>> This is because the ram device's address space is not accessible
->>> to virtio-gpu directly and hence dma_memory_map() cannot be used.
->>
->> This description is a bit confusing.
-> I agree; the description does seem ambiguous.
+> When virtio_gpu_rutabaga_get_num_capsets() returns 0, virtio_init()
+> isn't called and the device later crashes during realize.
+> ==72545==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x556ad6f7ba9e bp 0x7ffe6958f810 sp 0x7ffe6958f7e0 T0)
+> ==72545==The signal is caused by a READ memory access.
+> ==72545==Hint: address points to the zero page.
+> #0 0x556ad6f7ba9e in virtio_memory_listener_commit ../hw/virtio/virtio.c:4034
+> #1 0x556ad6a24c96 in listener_add_address_space ../system/memory.c:3128
+> #2 0x556ad6a25d15 in memory_listener_register ../system/memory.c:3216
+> #3 0x556ad6f7bf11 in virtio_device_realize ../hw/virtio/virtio.c:4075
 > 
->>
->> The first problem is with the phrase "the ram device's address space".
->> The address space we are dealing with is always
->> VIRTIO_DEVICE(g)->dma_as. More precisely it is a memory region, not
->> address space.
->>
->> The second problem is that it says the ram device's memory region is not
->> directly accessible. It is usually true, but here we are directly
->> accessing it anyway because the guest knows how to do so.
-> Does this look better:
->     "virtio-gpu: Find hva for Guest's DMA addr associated with a ram device
+> Rework error handling of the function to set Error appropriately. 0
+> capset may be ok now.
 > 
->      If the Guest provides a DMA address that is associated with a ram
->      device (such as a PCI device region and not its system memory),
->      then we can obtain the hva (host virtual address) by invoking
->      address_space_translate() followed by memory_region_get_ram_ptr().
-> 
->      We cannot use dma_memory_map() in this case to get the hva because
->      it can only be used with addresses that are associated with the
->      system (or physical) memory region. Therefore, in order to handle
->      addresses associated with ram devices, we need to use the
->      address_space_translate() API to first identify the right memory
->      region and the appropriate offset within that region and then use
->      memory_region_get_ram_ptr() to get the hva. This approach also
->      works for addresses associated with the system memory region.
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Sorry but I don't think it's improved much. It still contains a phrase 
-not well-established ("system (or physical) memory region").
-
-The description of what the logic does is expanded, but it's not really 
-useful; it says the logic is to add the offset and the retrieved 
-pointer, but it's obvious if you read the code. So let's focus on "why" 
-the logic is added instead of what the logic does.
-
-Below is my analysis on "why":
-First, let's stick to the phrase "direct access"; its meaning is 
-established in include/system/memory.h.
-
-With the concept of "direct access", the underlying problem being solved 
-can be understood as follows: dma_memory_map() automatically determines 
-what is directly accessible, and VFIO devices are considered not 
-directly accessible because such accesses may be part of MMIO. But 
-virtio-gpu is not doing MMIO, which leads to a disagreement with the 
-function and virtio-gpu.
-
-Regards,
-Akihiko Odaki
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
