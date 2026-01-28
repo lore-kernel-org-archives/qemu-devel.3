@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C764FD46BFB
-	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 20:40:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D89A4D46BFB
+	for <qemu-devel@archiver.kernel.org>; Wed, 28 Jan 2026 20:40:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlCKj-0008Do-E6; Wed, 28 Jan 2026 15:40:13 -0500
+	id 1vlCKQ-0007kw-Jy; Wed, 28 Jan 2026 15:39:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
- id 1vlCKK-0007aq-5V
+ id 1vlCKI-0007Xj-Ub
  for qemu-devel@nongnu.org; Wed, 28 Jan 2026 15:39:50 -0500
 Received: from mx0b-00190b01.pphosted.com ([67.231.157.127])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
- id 1vlCKG-00084Q-UT
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 15:39:47 -0500
-Received: from pps.filterd (m0409410.ppops.net [127.0.0.1])
- by m0409410.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
- 60SHTiRw1207698; Wed, 28 Jan 2026 20:39:40 GMT
+ id 1vlCKG-00084R-UW
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 15:39:46 -0500
+Received: from pps.filterd (m0409411.ppops.net [127.0.0.1])
+ by m0409411.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
+ 60SHRWWO1128338; Wed, 28 Jan 2026 20:39:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=jan2016.eng;
- bh=M6BH2hIUeZbU+CB1JGWLEoI/4w6A4BvK63bGRzusxys=; b=pF2osIAcHYZb
- JcQ41JoX5fKPgP3h3bezDquM0vY4zKJ0Nw3EkK6Wr0/U6Gd9czZezA3wLMsRIJYI
- MOg1HcZlcPnXtsRmtG2KqaKR588IyRgASgzhnBsJzYnPQItdDANG92G9o11s48TY
- YfiIn+YL8hYIRfC/TdgHbLML8ULDipLK+wY/4r3QgM7EGpYaQ0tiZc/at143TNnw
- VTBRVCQ9C4yuiCo9P3fGHeCiXACvAF3n7eDxlCwR57UoSgF/uuPYUknkZFBx1u8j
- kor5KC1rZeM4oseB8Bs52siolpbY1ZCxz5TIKmYdHIuoO9EpywNOMrUK+e3D0R0M
- OSPAG1u0gg==
-Received: from prod-mail-ppoint1 (prod-mail-ppoint1.akamai.com [184.51.33.18])
- by m0409410.ppops.net-00190b01. (PPS) with ESMTPS id 4bw9v9uppq-1
+ bh=VpKSo7dvDuyWSbsFXQ3bXWOKmh2SUJJjQn/1dvaSXYw=; b=CMm6vy/sslXx
+ 1McLpstjuUdzy0ZLEZYdAEGe9PZBGRa8cg8FxufbxsnhQOKGCNFnI3W46jLfalPd
+ 4LfxSU/gF3u/LZmJrVV94rsR53CDnFEvXu6HKwoXkdhnzCbaUsa/OSWZKyc2xAg6
+ RzQ2/qShF6OOInbg4MmYNLpA6wXSvwUZwXr2VpYfNbVRHhG3HrLrS09xge0/Tud+
+ j80ADXY28RzVwO7TgmxZ6bi7iPSXrKqxlNq3BhpHBKVYHQ50k/tX0UWsipUkDn0l
+ QdjZRnFEhEbjZmx764lG4TMtxHu9rTdmTepdjfnEzS1+DlZPQLQ897+L5Uv5Oh79
+ FrkVX4LUFQ==
+Received: from prod-mail-ppoint5 (prod-mail-ppoint5.akamai.com [184.51.33.60])
+ by m0409411.ppops.net-00190b01. (PPS) with ESMTPS id 4bw8a6cv4c-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Wed, 28 Jan 2026 20:39:40 +0000 (GMT)
-Received: from pps.filterd (prod-mail-ppoint1.akamai.com [127.0.0.1])
- by prod-mail-ppoint1.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
- 60SJ3ZeR026882; Wed, 28 Jan 2026 15:39:39 -0500
+Received: from pps.filterd (prod-mail-ppoint5.akamai.com [127.0.0.1])
+ by prod-mail-ppoint5.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
+ 60SFYGux004167; Wed, 28 Jan 2026 12:39:39 -0800
 Received: from prod-mail-relay02.akamai.com ([172.27.118.35])
- by prod-mail-ppoint1.akamai.com (PPS) with ESMTP id 4bvta3rd2h-1;
- Wed, 28 Jan 2026 15:39:39 -0500
+ by prod-mail-ppoint5.akamai.com (PPS) with ESMTP id 4bvvxfyxx8-1;
+ Wed, 28 Jan 2026 12:39:39 -0800
 Received: from bos-lhvkhf.bos01.corp.akamai.com
  (bos-lhvkhf.bos01.corp.akamai.com [172.28.220.254])
- by prod-mail-relay02.akamai.com (Postfix) with ESMTP id 050819F;
+ by prod-mail-relay02.akamai.com (Postfix) with ESMTP id 0A463A3;
  Wed, 28 Jan 2026 20:39:39 +0000 (UTC)
 From: Ben Chaney <bchaney@akamai.com>
-Date: Wed, 28 Jan 2026 15:39:30 -0500
-Subject: [PATCH v4 2/8] migration: cpr setup notifier
+Date: Wed, 28 Jan 2026 15:39:31 -0500
+Subject: [PATCH v4 3/8] vhost: reset vhost devices for cpr
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260128-cpr-tap-v4-2-48e334d4216b@akamai.com>
+Message-Id: <20260128-cpr-tap-v4-3-48e334d4216b@akamai.com>
 References: <20260128-cpr-tap-v4-0-48e334d4216b@akamai.com>
 In-Reply-To: <20260128-cpr-tap-v4-0-48e334d4216b@akamai.com>
 To: qemu-devel@nongnu.org
@@ -70,55 +70,54 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Max Tottenham <mtottenh@akamai.com>, Ben Chaney <bchaney@akamai.com>,
  Steve Sistare <steven.sistare@oracle.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1769632778; l=1432;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769632778; l=5230;
  i=bchaney@akamai.com; s=20251203; h=from:subject:message-id;
- bh=TqfXrM/OLXJJheaXufHTgmdq25foyMIiKHT3li/H83w=;
- b=UXClXqc3GMw3lLo7z41lQNIgUKiYBymnynASjf1dU+wUjEqMecuhMsgIOoA15pgWn2g8YzwPk
- S/ywgTs1T+ABYbpDRJ6Kc/2miF3Ndvt49bCBtKqMUGhoeR+TAX7CtjE
+ bh=fmXj30u3JtRIrwcd6PJUKYFgVyJebbXBSc5CMyYvc3U=;
+ b=3yB+uiXhMIl2zcuNoDiOGDGvLml5IwnJWCBmmBhmCAev6E98liZEmkfvCHfMLsnvJ6iB6BP+C
+ /pCdQp9n5uuD5rgMNc8WAzDFVGZrRANah9ZNgAb1DDDkEKjtfehUqk5
 X-Developer-Key: i=bchaney@akamai.com; a=ed25519;
  pk=6+w9cse5QEeVdy3tjqFxs/4rAaRdQ2/fkTxVFq+lWy4=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-28_06,2026-01-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- mlxlogscore=999
- adultscore=0 malwarescore=0 spamscore=0 mlxscore=0 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ spamscore=0
+ mlxlogscore=999 suspectscore=0 mlxscore=0 bulkscore=0 malwarescore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2601150000 definitions=main-2601280169
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDE3MCBTYWx0ZWRfXwPao9aUxYFJt
- qKz6qiJn35f+EL00PmqV633ZEWu3RlO29iNdFFpPJQEvhUxViIMdoi6DQAOGrF2z7NsF3mYxlJA
- DItUIc/PoLDA7sOza6wS0+JYgdahqxGD1PZ91hHtKP7CfcQl5mKFeL+V5Snm0uA2k+2JnFtblis
- CUPBdMO3o+IRxDPS24qu4wjY87Ix5u2J6gL31YzyZOivr1SaMmBRiTSSJDrojQgFovLC9dp5c58
- 9hOiDTGDpkX7DY5IlyuCCXL8yPYTpQSKG0B9ZKqzPSJTnQVFY8Jo39gf4rd9vu/OzNIiwJ0VN+l
- nlwU8jUhJBM+s0mZ33/rLtqWK1n/m0QapDUcQS7Ixyua6lDwE/OFapJy+QOTxoUUdHQoxkLXjS1
- T9i9X3ffCTmFp0VkdNOumvqVbMIjvnWvrFKEIJcFo7rBQAHuUycXidkBHMG6eEQEMWmcl0W7Yeh
- CqtUc5A5eyAa6ALtMhA==
-X-Authority-Analysis: v=2.4 cv=TrbrRTXh c=1 sm=1 tr=0 ts=697a740c cx=c_pps
- a=StLZT/nZ0R8Xs+spdojYmg==:117 a=StLZT/nZ0R8Xs+spdojYmg==:17
+X-Proofpoint-ORIG-GUID: IINWAyS4-QIbpb6hA0byL_lG1egR_BiE
+X-Proofpoint-GUID: IINWAyS4-QIbpb6hA0byL_lG1egR_BiE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDE3MCBTYWx0ZWRfXxTrp8UCofi5Q
+ FfzFeOTZR+9FChmSz6hVIm6v85OsF7SWmreujV/8QDjyew67h5IRNmJCkBAMqrwYHODD1USw+B9
+ stvNAWeuWwGHJTC5+grEOmkhnpzFMF+SJCFHl61AKaRKvxcHo6OQXGzwFOy0LSaFxjaV6YC2Q/M
+ xPaEeI5vEMRCGL9byPHYFnu67oIDZ2ROHcBwidAUVh/S6Y7w2HQtF7VPTT7aL2yTo5DmtNvl8sy
+ uKBw4AEEfX8AsQ5zhcY5xe2RzGAaNmT2qf0AHDt6q69YuPTmLL7U0dhSimCt5zHUjYemxtZkB/Y
+ VwnlmzubHlxWH5woN/H+dTB6TKDQIeby1S22+MpOY7QtCHC7/6sg42zlbpTEHPlaaotaUbLIqEM
+ vjtWC6aBWJKsk6RVsJ1/3/C7OjA7a6dvnu3nZRPCEI+1mRc/oCg4SrnqGfUiXRN1Ywg+Ny6wpdD
+ 3Giz2/Az7ERVtPj+8tA==
+X-Authority-Analysis: v=2.4 cv=KcPfcAYD c=1 sm=1 tr=0 ts=697a740c cx=c_pps
+ a=NpDlK6FjLPvvy7XAFEyJFw==:117 a=NpDlK6FjLPvvy7XAFEyJFw==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=yPCof4ZbAAAA:8 a=X7Ea-ya5AAAA:8 a=9e0HOU0VQPgVKZhTx6MA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: SL2HvEf-R0cPZ7wVi1iNPtEhol0yVjCP
-X-Proofpoint-ORIG-GUID: SL2HvEf-R0cPZ7wVi1iNPtEhol0yVjCP
+ a=yPCof4ZbAAAA:8 a=X7Ea-ya5AAAA:8 a=6lTwf2g7YyX0f-ifu7AA:9 a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-28_06,2026-01-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 impostorscore=0
- spamscore=0 adultscore=0 suspectscore=0
- lowpriorityscore=0 malwarescore=0
- clxscore=1011 bulkscore=0 priorityscore=1501 phishscore=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0
+ impostorscore=0 adultscore=0
+ phishscore=0 clxscore=1011 lowpriorityscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601280170
 Received-SPF: pass client-ip=67.231.157.127; envelope-from=bchaney@akamai.com;
  helo=mx0b-00190b01.pphosted.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,46 +135,139 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Steve Sistare <steven.sistare@oracle.com>
 
-Call MIG_EVENT_PRECOPY_SETUP earlier, before CPR starts.  An early notifier
-is needed for resetting vhost devices, as explained in the next patch.
+When preserving a vhost fd using CPR, call VHOST_RESET_OWNER prior to CPR
+in old QEMU.  Otherwise, new QEMU will fail when it calls VHOST_SET_OWNER
+during vhost_dev_init.
 
+Signed-off-by: Mark Kanda <mark.kanda@oracle.com>
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Signed-off-by: Ben Chaney <bchaney@akamai.com>
 ---
- migration/migration.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ hw/virtio/vhost-backend.c         |  6 ++++++
+ hw/virtio/vhost.c                 | 32 ++++++++++++++++++++++++++++++++
+ include/hw/virtio/vhost-backend.h |  1 +
+ include/hw/virtio/vhost.h         |  1 +
+ 4 files changed, 40 insertions(+)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index f36e59d9e8..191a34f667 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -2306,7 +2306,14 @@ void qmp_migrate(const char *uri, bool has_channels,
-         stopped = true;
-     }
+diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-backend.c
+index 4367db0d95..1447d12963 100644
+--- a/hw/virtio/vhost-backend.c
++++ b/hw/virtio/vhost-backend.c
+@@ -261,6 +261,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
+     return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
+ }
  
-+    /* Notify before starting migration thread, and before starting cpr */
-+    if (!resume_requested &&
-+        migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
-+        goto out;
++static int vhost_kernel_reset_owner(struct vhost_dev *dev)
++{
++    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
++}
++
+ static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
+ {
+     assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
+@@ -385,6 +390,7 @@ const VhostOps kernel_ops = {
+         .vhost_get_features_ex = vhost_kernel_get_features,
+         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
+         .vhost_set_owner = vhost_kernel_set_owner,
++        .vhost_reset_owner = vhost_kernel_reset_owner,
+         .vhost_get_vq_index = vhost_kernel_get_vq_index,
+         .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
+         .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 31e9704cdc..beec547e46 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -24,6 +24,7 @@
+ #include "standard-headers/linux/vhost_types.h"
+ #include "hw/virtio/virtio-bus.h"
+ #include "hw/mem/memory-device.h"
++#include "migration/misc.h"
+ #include "migration/blocker.h"
+ #include "migration/qemu-file-types.h"
+ #include "system/dma.h"
+@@ -1549,6 +1550,32 @@ static int vhost_dev_get_features(struct vhost_dev *hdev,
+     return r;
+ }
+ 
++static int vhost_cpr_notifier(NotifierWithReturn *notifier,
++                              MigrationEvent *e, Error **errp)
++{
++    struct vhost_dev *dev;
++    int r;
++
++    dev = container_of(notifier, struct vhost_dev, cpr_transfer_notifier);
++
++    if (dev->vhost_ops->backend_type != VHOST_BACKEND_TYPE_KERNEL) {
++        return 0;
 +    }
 +
-     if (!cpr_state_save(cpr_channel, &local_err)) {
-+        migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
-         goto out;
-     }
++    if (e->type == MIG_EVENT_PRECOPY_SETUP) {
++        r = dev->vhost_ops->vhost_reset_owner(dev);
++        if (r < 0) {
++            VHOST_OPS_DEBUG(r, "vhost_reset_owner failed");
++        }
++    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
++        r = dev->vhost_ops->vhost_set_owner(dev);
++        if (r < 0) {
++            VHOST_OPS_DEBUG(r, "vhost_set_owner failed");
++        }
++    }
++    return 0;
++}
++
+ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+                    VhostBackendType backend_type, uint32_t busyloop_timeout,
+                    Error **errp)
+@@ -1559,6 +1586,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
  
-@@ -4097,11 +4104,6 @@ void migration_connect(MigrationState *s, Error *error_in)
-     } else {
-         /* This is a fresh new migration */
-         rate_limit = migrate_max_bandwidth();
--
--        /* Notify before starting migration thread */
--        if (migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
--            goto fail;
--        }
-     }
+     hdev->vdev = NULL;
+     hdev->migration_blocker = NULL;
++    hdev->cpr_transfer_notifier.notify = NULL;
  
-     migration_rate_set(rate_limit);
+     r = vhost_set_backend_type(hdev, backend_type);
+     assert(r >= 0);
+@@ -1659,6 +1687,9 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+     hdev->log_enabled = false;
+     hdev->started = false;
+     memory_listener_register(&hdev->memory_listener, &address_space_memory);
++    migration_add_notifier_mode(&hdev->cpr_transfer_notifier,
++                                vhost_cpr_notifier,
++                                MIG_MODE_CPR_TRANSFER);
+     QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
+ 
+     /*
+@@ -1711,6 +1742,7 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
+         QLIST_REMOVE(hdev, entry);
+     }
+     migrate_del_blocker(&hdev->migration_blocker);
++    migration_remove_notifier(&hdev->cpr_transfer_notifier);
+     g_free(hdev->mem);
+     g_free(hdev->mem_sections);
+     if (hdev->vhost_ops) {
+diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
+index ff94fa1734..18ce5ea9a0 100644
+--- a/include/hw/virtio/vhost-backend.h
++++ b/include/hw/virtio/vhost-backend.h
+@@ -196,6 +196,7 @@ typedef struct VhostOps {
+     vhost_get_features_op vhost_get_features;
+     vhost_set_backend_cap_op vhost_set_backend_cap;
+     vhost_set_owner_op vhost_set_owner;
++    vhost_set_owner_op vhost_reset_owner;
+     vhost_reset_device_op vhost_reset_device;
+     vhost_get_vq_index_op vhost_get_vq_index;
+     vhost_set_vring_enable_op vhost_set_vring_enable;
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 08bbb4dfe9..5d11a97e43 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -133,6 +133,7 @@ struct vhost_dev {
+     QLIST_ENTRY(vhost_dev) logdev_entry;
+     QLIST_HEAD(, vhost_iommu) iommu_list;
+     IOMMUNotifier n;
++    NotifierWithReturn cpr_transfer_notifier;
+     const VhostDevConfigOps *config_ops;
+ };
+ 
 
 -- 
 2.34.1
