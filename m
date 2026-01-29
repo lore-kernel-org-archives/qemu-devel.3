@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F81D73E80
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C42B4D73E86
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:38:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlVyM-0004V5-G9; Thu, 29 Jan 2026 12:38:26 -0500
+	id 1vlVyJ-0004LU-JV; Thu, 29 Jan 2026 12:38:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyI-0004LV-Vf
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:22 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1vlVyH-0004JW-Hd
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:21 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyG-0000dD-Ip
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:22 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-82311f4070cso888276b3a.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:20 -0800 (PST)
+ id 1vlVyF-0000d9-Qw
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:21 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-8220bd582ddso698785b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769708299; x=1770313099; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769708298; x=1770313098; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Adf4h3CDLT/aaxvTVJM3JKdsOLodwkUsTuO/3VBrEfU=;
- b=kEkR6x5En7eR5IZJWq+HEWnxecGSeTwIMn8l00lhKAbu9Qsl5Dw1yi0WmJIpuGXeCM
- muciUwmfW8rYhQC4epHRpsA0D3L2heu/m48vWMdn9ZDOdC35FSeP+7VPsKSLr6hVxBK2
- j3WcChtNmVxRfgXTPxBxJituCNAKw7+UJEhgxgxnAs4ms6E+CrgiEx+fIwAm4wEiNZYk
- f8XLz1MCSnQKqGhXLckwG232ILbFG4Y1XNFNlbUlR4LfiaVJnApj+D1Zo1hxyV2IdFFw
- QeNtcDK8hfREdjD3ndMO/tLKZJkIR4d/TY+gscs/TPvnira9R+W7lRr5gnrhbo8r3LW+
- 3/Sg==
+ bh=HD+mMe7KagiiFksQ7+VkRlV2MOxBw/OquAe1Do4OCiQ=;
+ b=Rgq1wnw7Cb4JC2fveo2ZERtwle9M1ZzzGGMaM+yDfR6L0Kn2kWLzuJMX5UrY/IbiXo
+ EI7t7Fs06QIvBk3TI+jmH3OyDfPyODqg/oD6FbFBxXBB9JHTnbI7zDtbnuDjJ0FqM+Av
+ 66LvjC0OB8f92NVI0UCfTu8GBrARToQBcA20umM7y6fxARD+MsvNHXqn7Vqzv7xSPRH8
+ zssi32/+Gibvf2eW6mKuIgdIr3CGJR0Z07mcPkW6VBp0iWp7l5p0HvSN/Az2BBCgY2Yj
+ f+/HyqjXQYEb+j0yVeS4UaqWbxRFvBfe/Z2y29nhDnDiuOvA7MCy0IEm3FhYubGXNUF3
+ y8Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769708299; x=1770313099;
+ d=1e100.net; s=20230601; t=1769708298; x=1770313098;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Adf4h3CDLT/aaxvTVJM3JKdsOLodwkUsTuO/3VBrEfU=;
- b=udfpx3nVZSFuG0BOigkzr5yAWebh/rBa7kukL0W68KjON6L6W+pO9Lc/T11J6X1nM8
- 6L//xXWnO0qg0d5fzUEM3mdTP7Vo/9S6Q/hc2TYN015C1BBsMXA5/68QQ9AgamR0GyiF
- 3RUvyNOa8tQA2VG/1HoqTZKk8IQcNnRO4Z5lRJUozfvbuiXU0RMIJCXhbeZwJimPN8jp
- M1bUIUUu7ejcoaS2ZayyF9btexERIUHn+bHafPUfyvmsi7S5taNHu0QuhD9wXsg431zy
- npRtLBpsu0Zcc2/AYIW5bEjWEEbWQgllRNa/asr9jFHjRyePbGt0IHna+64ez+apt9bK
- XDDw==
-X-Gm-Message-State: AOJu0YxiMhH6KVbfArQ6dXc1UyGbx2hU/5EM2MdnxdQvowqOTjMLV0Xk
- RvNyYktr1hoU+WezkXVtpMMzr5qZj6T7kzbwAwA2+NHIlwW36rcI5dCar9g1Lq17U2mJ5XS6q+F
- LBuZy
-X-Gm-Gg: AZuq6aK7NuaXQCS/fs0GDg7/Mvi5OzcEtaQSLIlOISdICdIvgFkNamVdkUHvKcOaPI/
- p9QC8tUjpat1+SxjZbNrH6nFY8oJHn+042YeNJer18C4sSmQi9BbfR3zViFdLE8MjbFz4pLLl0C
- GK2fup7qPocwYF/RoxQ8f439pJB9UeiG/TR/LZd8YqMx2TvS+oww3sNP5+ZCAmSoDNNkzzyOTlM
- lDk74wMtO8bW7tf3r5j9NW6FJNDNl211FuRwpHThQqCSvnURITDb/Nkj0zguBpELuU8bplZzYgx
- TvFcOKQwrYIUijel5F7E8Tty3JsgCob5RkzAK8LkJSURwDKSlz95a+p1sxWEGHrL3+lfUUROnQ/
- 6qA49SEvXHRzkvx1UpjihM/pFr4M0+PRyKIseb/q/jpnALJcte1I82PaCCWxFbPE9b6kre4An+i
- VHu484C7FS5A83vhU6BwtTO/4qi+wurl8iJImI4l6V6Wa1K3DUqvBIM6V0vhHhBYDX
-X-Received: by 2002:a05:6a00:3929:b0:821:7c07:ccb0 with SMTP id
- d2e1a72fcca58-8239208364amr3635522b3a.15.1769708298832; 
+ bh=HD+mMe7KagiiFksQ7+VkRlV2MOxBw/OquAe1Do4OCiQ=;
+ b=Xz1K+B+gohmAnvYWdcbl9M+LaoyDa+6WC8C5VBZgT1S16UgdPv2y7DFT4UBezzbnUg
+ 0EruP+k1T9prru0Qjg+ITZfxvbUfmTkVf+CSPhkixcxnnl8CRvHMKTvSJm0dJDepjPM6
+ GbHmhFD6N+MZiE76yJghxpN3qSPLb7l/CcPBEAlEDByD5tg0wp1CAZZKLs+JZjhSoCei
+ 5zIaqTcqkA2lJHgoQqf5kTIROcCkzB2qqJK4maspuqSAIsy3FURyKU35D2VHxB6yiSW9
+ FTUGmRFtVWRU0jeVfbml9+1AfpmwhfeaWitvoJi8ZQ/ZbiDYP/7ARt8VybjXWGawb5Q+
+ InBg==
+X-Gm-Message-State: AOJu0YzKvu2QMGkhzFM8gPWW12SkFr/ZAHwpJDzfiyE8eDobU5csrE+b
+ /sVuA6lRW6J7jgtOWFZmD3yh/iL7taERU/dF8L1vfWcnDRUlyYZHE9aUc5GpZDU0SLXrk/pnj9o
+ uh1LR
+X-Gm-Gg: AZuq6aJLE2N25s2Pw1hk7hf7LLxvuzdZG2HIr9oHxIGpo9eVOENx6Uql1HAru2mLJtu
+ eNF8t2y5aNVEqmB5aOUvfhmUjv2IBdQu2YJpHktMB99GJNHWs09h/tTgjWQ6PbwRPohmJOzjmH8
+ nDa5Dr+ga0lTjb62AwcWMHpD4CJIWr9e69moHjzpJ4J1S+f9w2Yha7AUzlES7rFp2SyxwGjtW8F
+ A9ADAUIkAqNoav1HmgbInHThb+Gvyv1BKpiK0E+3EyCjfZRGqtaSaKLNrPt81ZHeM0aP/MfR58k
+ DeikHfBWURopbHtdG4meYF86IGqcgCGnV6sx/s7+yYhoFneNnG6TwSwY5wwECM6/Ixi2XpQAO5n
+ ljyAoU7W+R4TQcqmeadTJ+Kbg88ivxZcgxZBzINE9KJYOvKEGVPZddP6m5iu1hpG2oH+aPYrljo
+ c7h7nR3hT6Frzv9MRlxBpQH9kgMBIErxL4OQUDaP/v1p5poiysSUsebq5qYgm0qy8i
+X-Received: by 2002:a05:6a21:3395:b0:35f:6e12:186f with SMTP id
+ adf61e73a8af0-38ec62de51bmr9492455637.23.1769708298128; 
  Thu, 29 Jan 2026 09:38:18 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.18
+ d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 09:38:18 -0800 (PST)
+ Thu, 29 Jan 2026 09:38:17 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alex Bradbury <asb@igalia.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 02/21] contrib/plugins/hotblocks: Fix off by one error in
- iteration of sorted blocks
-Date: Thu, 29 Jan 2026 09:37:48 -0800
-Message-ID: <20260129173811.138036-3-pierrick.bouvier@linaro.org>
+Subject: [PULL 01/21] contrib/plugins/hotblocks: Correctly free sorted counts
+ list
+Date: Thu, 29 Jan 2026 09:37:47 -0800
+Message-ID: <20260129173811.138036-2-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 References: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,36 +105,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alex Bradbury <asb@igalia.com>
 
-The logic to iterate over the hottest blocks will never reach the last
-item in the list, as it checks `it->next != NULL` before entering the
-loop. It's hard to trigger this off-by-one error with the default
-limit=20, but it is a bug and is problematic if that default is changed
-to something larger.
+g_list_free should be passed the head of the list.
 
 Signed-off-by: Alex Bradbury <asb@igalia.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/f1ba2e57c6126472c0c8310774009f2455efc370.1753857212.git.asb@igalia.com
+Link: https://lore.kernel.org/qemu-devel/cf5a00136738b981a12270b76572e8d502daf208.1753857212.git.asb@igalia.com
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/hotblocks.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ contrib/plugins/hotblocks.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index d3dd23ed9fa..cf4d6b8c363 100644
+index 98404b68852..d3dd23ed9fa 100644
 --- a/contrib/plugins/hotblocks.c
 +++ b/contrib/plugins/hotblocks.c
-@@ -82,10 +82,9 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     sorted_counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
+@@ -73,15 +73,16 @@ static void exec_count_free(gpointer key, gpointer value, gpointer user_data)
+ static void plugin_exit(qemu_plugin_id_t id, void *p)
+ {
+     g_autoptr(GString) report = g_string_new("collected ");
+-    GList *counts, *it;
++    GList *counts, *sorted_counts, *it;
+     int i;
  
-     if (sorted_counts) {
--        it = sorted_counts;
+     g_string_append_printf(report, "%d entries in the hash table\n",
+                            g_hash_table_size(hotblocks));
+     counts = g_hash_table_get_values(hotblocks);
+-    it = g_list_sort_with_data(counts, cmp_exec_count, NULL);
++    sorted_counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
+ 
+-    if (it) {
++    if (sorted_counts) {
++        it = sorted_counts;
          g_string_append_printf(report, "pc, tcount, icount, ecount\n");
  
--        for (i = 0; i < limit && it->next; i++, it = it->next) {
-+        for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
-             ExecCount *rec = (ExecCount *) it->data;
-             g_string_append_printf(
-                 report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
+         for (i = 0; i < limit && it->next; i++, it = it->next) {
+@@ -94,7 +95,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+                     qemu_plugin_scoreboard_u64(rec->exec_count)));
+         }
+ 
+-        g_list_free(it);
++        g_list_free(sorted_counts);
+     }
+ 
+     qemu_plugin_outs(report->str);
 -- 
 2.47.3
 
