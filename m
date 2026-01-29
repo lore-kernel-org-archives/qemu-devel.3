@@ -4,116 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A748BD46BF0
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 01:24:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85C97D46BED
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 01:32:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlGli-0004aT-IL; Wed, 28 Jan 2026 20:24:22 -0500
+	id 1vlGt2-0008R2-Qj; Wed, 28 Jan 2026 20:31:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@tenstorrent.com>)
- id 1vlGG0-00015R-6p
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 19:51:36 -0500
-Received: from mail-dl1-x1229.google.com ([2607:f8b0:4864:20::1229])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vlGsw-0008PK-Rv
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:31:50 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@tenstorrent.com>)
- id 1vlGFy-00071O-7Y
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 19:51:35 -0500
-Received: by mail-dl1-x1229.google.com with SMTP id
- a92af1059eb24-124b117776fso344919c88.0
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 16:51:33 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769647892; cv=none;
- d=google.com; s=arc-20240605;
- b=FfFHnMyI/uEGg+9KKT5VI959g2FiNuaNxaZRvcxErnenRET+SWIMzd4t+sUHFjLVNm
- sA/g94WanoeLAtIV9pKhWZ06eImpd7r/FUZ/E05QK31SA3fWsnnCtBr+TW4/uvVtPZjh
- Wc8Ov5rf6FPOt9MHT49Een4prYQsl3rFbk/2RlKufnp4Xbc1oZjh7uWiSIcDIK5+Lh+6
- 4+On226F4yV1T1Y7yqm2iLp0vnRWXs4uZeztRiMAL6f0w8K45Q0iKhxNTBVs/8T7n/Xm
- OghyQAdWd6fjRPxULsjZ9vvxSflEgZY6DNt88sYfH4iMb9VhvouBB8I7lg8adlEGaHlk
- vpUg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=17Q1GaW/5E9WlOZkRpTbCovRmVaNp0Avlcf01CcoLLQ=;
- fh=l8pmnT1N717o/p85ZHBHYCkM/ZZRsvcUXtmE2DlEtpQ=;
- b=E0HpVct34KMSOHF53A5RWGuXj00D5eXioBi92nxIxo9ZLmL49TOwsFlcrGfnkd2wXI
- UEjLZtadb6/QQUwBz4yFHHUTzFQFUWIjIrdvnhaLUdqA9nhC2oaDSM5sVmOpsg5eHPnS
- UoJJ4OOg3NaDgZUhNwT00NM7I8ekWASvYJ+j/KCcHROh5G0C5TR+v55/QE7quNCvccmC
- s7nu7+5a1dlR7yNDUBuZwXZ3FEY8qREqngKZDIiV22uW/SkVrkVwHNih7rN6fnuwF2Me
- AVikCogOEb3cyr8u8bG4qs2t4ZgyByzIK8NKLmCKgNhmCBHZhJcYkMDsCTkh/eBgwswt
- 7i8w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vlGsv-00037H-BK
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:31:50 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-8230c33f477so229552b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 17:31:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1769647892; x=1770252692; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1769650308; x=1770255108; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=17Q1GaW/5E9WlOZkRpTbCovRmVaNp0Avlcf01CcoLLQ=;
- b=AyhQnSrv1jbd4pMHsyzhXau9DrO3dfEeIcJ9UHwtOVjXURQ+hfp4WpMZCx3SBwOvs4
- ufY5aXYaqS6Y2U7cchP9opyDE/7bVBiJiTuGFsVVmMtcPYVfYrJBykmghsek05wTC3GH
- iGrfVvykvZq0QiwrLiToDfroW2TZMmKuRI+v9faNEjJeb4/08jhydDJF4c20sNFJ/l39
- QLpIyMigwvvd/nLdfgO3H5IwvRK9tvMAJylcsZMOObJJje3DyCAjQjZgFm9yMmvZBoRG
- udyL5cbnNrzl5rwSPuz+eA1iNuii/A53xl+8EM++ub9kNaCTj1vM68s9pwcE58gld0Ef
- EoQg==
+ bh=jiteZZFsxsucsTi2GA57zdKipHQ9ataVKeACzlSeVWI=;
+ b=zT1c8DyMPz9YMgsNLqzZuwYfcR4sMFxYhSZjGHahpwYxIZr4Wtz6b1/XorqvYpClNY
+ EWvRHtG4m93nG3pPOmKOX68f5quyHDw567k5Q57lyV1w1bj2Od4oxqgCdqB6JEC2FGOB
+ f8u5nuqZ2c2e/h4MPs7AALn80SSt6qDJpi4zUU/pgY6NfNyoPfyWyAmaVTSXZXothSCn
+ xHHqTRr/CbO9XLDggW54GAIB/pBACUDc5+aVEua02s+br1JZwpbBAvdBEyJsQX066UX6
+ cY2DLhb0uS9L2wAuYnVgzHqqmeRe3sYXOwHJy8IPkI+NRH9Z7htsA/knWQTvrZXK10Y+
+ I5kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769647892; x=1770252692;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1769650308; x=1770255108;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=17Q1GaW/5E9WlOZkRpTbCovRmVaNp0Avlcf01CcoLLQ=;
- b=BrkCOuy6BCCPpEvds9x8BNy+DpV6N93TDmdZRPWwU3meG15tPj6P1vohFDsy2xB/u/
- CqdXpkCXSoqGGnQ8qcN8EQ05hLe2fMgY8KN0dCkM8bxF3GyTW3sGaf6VeW/lDjjxR69D
- +jjnqjAMZv8IW5EfG5nMzDzdfAAqkTUaDcWq2g6QXhLt78BdNpLCQ3WbG8nl0+pZWVfp
- Mq/aK75cvE+NkDz9ODH8FdeDIhMuu0UKERPeQu7AZ7q0gNHn3OaNSIGhqvOBs7bm0Hjt
- fSjZdoF6ij+yebVeZ+RCikVzRKWkf/rrIuVK/Smyo69Ed3kXe5B+MLatOk72LcNWfhlV
- J/FA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUNmBMBHOHSyz45NtVhA1GMjQzRaih2arCEmEWkVqs4qUV0cz3feM16a3RWrY3e6BvPgtJYqK94i3FQ@nongnu.org
-X-Gm-Message-State: AOJu0YzYT9NtaHAwFERNsMWIQGIYUviAWMCXuVJs7Qp/WiUvINxwNKPs
- 9iRkXDhMIYVrwWBs/AAz2eJJb9/alrwa3Njka5oAq1o9YU8nk9W9pcwncrijZ9fDDrKryn/GbKh
- GJPLqpcHbh3QJ8qbgTb4k81g9GCYstrr3hFbOSEZSaw==
-X-Gm-Gg: AZuq6aKIakOlVxDGSE0rMaFndeKTT2l3lRi4x5qnrZipr69/+6XGWGLrs0UUsGuOuNx
- ODbOsKj+thDMvoPLWfBQ0JCvsQUJeNFGpg2lCuBcT8UrbSYnhVG3dcoKB+7YrM0Omck4R2OUR0O
- 1ulsQRRZq1vz2zGkuQlFtOxCVFLNc9r4HTBxQQ7eEx5iJ27/KcdV9HfdBrN6j4ToSTAkdjFYTrD
- 7QfFPMW98cDs1UIgigSz/vbwNNxCDUPBZV8r0zloHG2bpb9MNG0WPyaiQmyF8k1wyp8YeP9AARt
- hr4OQqA=
-X-Received: by 2002:a05:7022:458d:b0:11e:3e9:3e9e with SMTP id
- a92af1059eb24-124a00de475mr5686065c88.49.1769647891741; Wed, 28 Jan 2026
- 16:51:31 -0800 (PST)
+ bh=jiteZZFsxsucsTi2GA57zdKipHQ9ataVKeACzlSeVWI=;
+ b=hdHvT8hQ94QO47A9M8yseEbJ7HC6NLBbueNbuwjGJsodN2CRywPVbj1G9fLsXx/ykK
+ i96empbrp3fydNLwASMq7NKI17sWuUOWeSH+cbl/HXy4XerAXjwlxUkYdOTfqkACIJv/
+ Pv3Ge+wf8c6LGoEHLuwI3qO65ppMQfGhWSu5B3qNWdQFKNs6zJKxp4SQQFK1bThGAJMd
+ SbizZ2KYrA31Q3mfWG0mapIYNmoTJ7j7qkGnhdRvUABywdkFBvFY6hYlFspW0E1gZwQw
+ 8++GxrWoMx9X7LvBUVN3HRxrrgev60hiUMyOaoH83iV7DXmOifE+bJIDuWnVwi+BMtp1
+ bL5A==
+X-Gm-Message-State: AOJu0YwfbZuM0WUwDaUSA8RbuCQT11atsxHuYhGIqEAQmP4TfFOL682v
+ TyjDJ9QIcDKN9TtcP+n0drpFQcJGbtuGV1sWATAR+/hsGwoirc6BzQ31pnmQ5JFvCqBqVZ4X/OZ
+ 6vs6X
+X-Gm-Gg: AZuq6aK48gekj3cTJFgn6tXXJcnZnVMBQs7t8vXfEf+Euin35bJk0GIjZ2+rKAFyW+6
+ uXB6R/b55HdqVq6JKifpKeDs/U0LgADmwfekN0iKUa1CROepBy1jod1uRHUSGIKmpUaLUXHLLuS
+ +wKqieJAtjTXR1zN3eK5wb3Kh7FdpMjBJziaNuP72C9eautzArlVjNQePOhyV3KPDdZFvSEvjek
+ UOBtRQh5GjQ5S4QztIj6X6QKCIg53bTkrz44tEG7Ar0ZmrX1DxSylbN2jz0sDrq0f1ZvxDIb5Qf
+ I4W9Aj5mkBaKw0UtrwU1OdKR353yqFvfr5eb0IdFThJDqD0rxTGA/B5mAXVwqUoGVtCnT/Z4Nv1
+ 9XR/+zB9nrhgP1XFdWJ0brvbXt+HvVnB2kasFZZqI2q+nf/rT4Ai+vGnIf1FqRi0bvz9T/szYMz
+ QwZMgAihOVO6tW+Fx6NSUSTYMnwbTnS+a8hYoTz2x0tQ6cPKaLGpTd9ihn9m2dR3Wp7BcKQ4KZl
+ 8I=
+X-Received: by 2002:a05:6a21:648d:b0:38d:efca:1be3 with SMTP id
+ adf61e73a8af0-38ec640a0f0mr6961764637.37.1769650307651; 
+ Wed, 28 Jan 2026 17:31:47 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-353f61e0007sm6627143a91.12.2026.01.28.17.31.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 28 Jan 2026 17:31:47 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Alex Bradbury <asb@igalia.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 02/20] contrib/plugins/hotblocks: Fix off by one error in
+ iteration of sorted blocks
+Date: Wed, 28 Jan 2026 17:31:16 -0800
+Message-ID: <20260129013134.3956938-3-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260129013134.3956938-1-pierrick.bouvier@linaro.org>
+References: <20260129013134.3956938-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-References: <20260114012846.981884-1-joel@jms.id.au>
- <20260114012846.981884-3-joel@jms.id.au>
- <KUZPR04MB9265651CB41E7D2CD7CD30C8F391A@KUZPR04MB9265.apcprd04.prod.outlook.com>
-In-Reply-To: <KUZPR04MB9265651CB41E7D2CD7CD30C8F391A@KUZPR04MB9265.apcprd04.prod.outlook.com>
-From: Nicholas Piggin <npiggin@tenstorrent.com>
-Date: Thu, 29 Jan 2026 10:51:21 +1000
-X-Gm-Features: AZwV_QgJ8FzBV0DLicH2dQpU6fxxDQrwtg9mcN_hN9X8ron_iC0qL1_NWTKmjj0
-Message-ID: <CAO_bN7K7=FJS8FxNm3F-5KTTDEHfxkAnE=zfLs4dyaQoSnQ9sw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/riscv/aia: Provide number of irq sources
-To: "Nutty.Liu" <nutty.liu@hotmail.com>
-Cc: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Sunil V L <sunilvl@ventanamicro.com>, 
- qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Michael Ellerman <mpe@oss.tenstorrent.com>, 
- Joel Stanley <jms@oss.tenstorrent.com>,
- Nick Piggin <npiggin@oss.tenstorrent.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1229;
- envelope-from=npiggin@tenstorrent.com; helo=mail-dl1-x1229.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 28 Jan 2026 20:24:21 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -128,88 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 28, 2026 at 2:35=E2=80=AFPM Nutty.Liu <nutty.liu@hotmail.com> w=
-rote:
->
->
-> On 1/14/2026 9:28 AM, Joel Stanley wrote:
-> > Instead of hard coding the number of IRQ sources used by the APLIC pass
-> > it in as a parameter. This allows other machines to configure this as
-> > required.
-> >
-> > The maximum number of sources is 1023.
-> >
-> > Signed-off-by: Joel Stanley <joel@jms.id.au>
-> > ---
-> > v2: Add assert for the number of irq sources
-> > ---
-> >   hw/riscv/aia.h             |  1 +
-> >   include/hw/riscv/virt.h    |  1 +
-> >   hw/riscv/aia.c             |  8 ++++++--
-> >   hw/riscv/virt-acpi-build.c | 25 ++++++++++++++++---------
-> >   hw/riscv/virt.c            |  2 ++
-> >   5 files changed, 26 insertions(+), 11 deletions(-)
-> >
-> > diff --git a/hw/riscv/aia.h b/hw/riscv/aia.h
-> > index 50c48ea4d79c..a63a1ab293fe 100644
-> > --- a/hw/riscv/aia.h
-> > +++ b/hw/riscv/aia.h
-> > @@ -48,6 +48,7 @@
-> >   uint32_t imsic_num_bits(uint32_t count);
-> >
-> >   DeviceState *riscv_create_aia(bool msimode, int aia_guests,
-> > +                             uint16_t num_sources,
-> >                                const MemMapEntry *aplic_m,
-> >                                const MemMapEntry *aplic_s,
-> >                                const MemMapEntry *imsic_m,
-> > diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-> > index 25ec5c665780..fa7fe8d4f648 100644
-> > --- a/include/hw/riscv/virt.h
-> > +++ b/include/hw/riscv/virt.h
-> > @@ -64,6 +64,7 @@ struct RISCVVirtState {
-> >       struct GPEXHost *gpex_host;
-> >       OnOffAuto iommu_sys;
-> >       uint16_t pci_iommu_bdf;
-> > +    uint16_t num_sources;
-> >   };
-> >
-> >   enum {
-> > diff --git a/hw/riscv/aia.c b/hw/riscv/aia.c
-> > index 0a89d7b49b7b..a9130896fba2 100644
-> > --- a/hw/riscv/aia.c
-> > +++ b/hw/riscv/aia.c
-> > @@ -25,6 +25,7 @@ uint32_t imsic_num_bits(uint32_t count)
-> >   }
-> >
-> >   DeviceState *riscv_create_aia(bool msimode, int aia_guests,
-> > +                             uint16_t num_sources,
-> >                                const MemMapEntry *aplic_m,
-> >                                const MemMapEntry *aplic_s,
-> >                                const MemMapEntry *imsic_m,
-> > @@ -37,6 +38,9 @@ DeviceState *riscv_create_aia(bool msimode, int aia_g=
-uests,
-> >       DeviceState *aplic_s_dev =3D NULL;
-> >       DeviceState *aplic_m_dev =3D NULL;
-> >
-> > +    /* The RISC-V Advanced Interrupt Architecture, Chapter 1.2. Limits=
- */
-> > +    g_assert(num_sources <=3D 1023);
-> > +
-> How about the below check ?
->
->      g_assert(num_sources <=3D VIRT_IRQCHIP_NUM_SOURCES);
->
-> And modify VIRT_IRQCHIP_NUM_SOURCES in "aia.h" as below ?
->
->      #define VIRT_IRQCHIP_NUM_SOURCES 1023
+From: Alex Bradbury <asb@igalia.com>
 
-The names should probably be changed as new code is added. AFAIKS VIRT
-only comes
-from the riscv virt machine which was the first to use it. E.g., use
-something like
+The logic to iterate over the hottest blocks will never reach the last
+item in the list, as it checks `it->next != NULL` before entering the
+loop. It's hard to trigger this off-by-one error with the default
+limit=20, but it is a bug and is problematic if that default is changed
+to something larger.
 
-#define RISCV_APLIC_MAX_NR_SORUCES 1023
+Signed-off-by: Alex Bradbury <asb@igalia.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ contrib/plugins/hotblocks.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Thanks,
-Nick
+diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
+index d3dd23ed9fa..cf4d6b8c363 100644
+--- a/contrib/plugins/hotblocks.c
++++ b/contrib/plugins/hotblocks.c
+@@ -82,10 +82,9 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+     sorted_counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
+ 
+     if (sorted_counts) {
+-        it = sorted_counts;
+         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
+ 
+-        for (i = 0; i < limit && it->next; i++, it = it->next) {
++        for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
+             ExecCount *rec = (ExecCount *) it->data;
+             g_string_append_printf(
+                 report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
+-- 
+2.47.3
+
 
