@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CDFD6B084
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BAADD6B086
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:09:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUaE-0008QJ-Mj; Thu, 29 Jan 2026 11:09:27 -0500
+	id 1vlUaL-0008Uk-So; Thu, 29 Jan 2026 11:09:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUaB-0008Q6-FU
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:24 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1vlUaI-0008Rs-HN
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:30 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUa9-0006Sr-6H
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:23 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-4358fb60802so717429f8f.1
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:20 -0800 (PST)
+ id 1vlUaG-0006Y5-DG
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:30 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-42fbbc3df8fso931101f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769702959; x=1770307759; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=70QiH5LNvGrYzYQCRcyOnyTaR27zdflGq4/lYfVhjIo=;
- b=pb7ijeJrwdibaWp5rN6SwcmZVUthXOTDOLRWfkFtIbXH4vgo2vJYBL5YFBL6K2yoHT
- O7Np/mvxl0rNK4oUnXElkx1OQyfZidOxrDCY0XFs1YE8IBciQd0GNf6xtGOwNMiwxH4r
- wCBu3Tlrup7dFh7eLc/tnRXTYp+8zSIacbZEkm/b0SUd0v6y7BZNlTuvhK4U76tFa3/A
- aCncibGWWbM72ec9VuYzFIoiRdvKocLQ0do5hYwu5F9iohuSmnRsgLfhbYri7RAB6nMF
- dHcriO8erePPlhpQFN5k9TFbqIuJMofTGQKZTfW8VUPvlw+L7+dIp2wKfme2W2OpUe1+
- A80A==
+ d=linaro.org; s=google; t=1769702966; x=1770307766; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=vSfhDkCekIUYfdNzWRcVdLrx+XPd/qEmA3R+NEN9G0A=;
+ b=GGcqfDpTC+TtaYKKU1oTeU8QCe/xYvbEL9L38JjPINggM88urDhmBs9CfdHY5Z4JYs
+ ph1NOKT1SVZFU4DS8RRQ1EyRX+8/JTDIxwBre+1MTU2kUWjirMhHkDoqfp568QHQcMp6
+ VkjXP2ZX8fpcF84cz8pVcimYNnBMGcCv8g6WrgRePVJ+mAnjTtgQjuetnVIo/Ge3vWH5
+ PW12phSYcpE2TIr/A52h+GW175Ej1HTraRMtzFui3tnkEZf2XTElhNCLbU6KCjwWT/Ur
+ cSpjfxoaR+hZsu/gLQ79MUKLnymldzR8sUbJ2+NI9PDBNjWrk5xjxSdPzIa770VYOVbJ
+ TEYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769702959; x=1770307759;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=70QiH5LNvGrYzYQCRcyOnyTaR27zdflGq4/lYfVhjIo=;
- b=X8srzHL04Mv/2D2E8ZLcfiFQ6YWBR3cN+3rK7Qj7ijVL6o0Y4InBgvMeHjdEX1g7Dy
- SsyA8PVOB9jmB7+JCBuArjhEgCHTmjBPX9bA6bYlZiu0weqnHiamkbsgsJDbNo+qro8E
- Rw2pupUvYs/+h0cd5BM6N4MEYRCl2djdcIBueUwa7TEsC/F8XBt2HeGUpn7Z+lX+Rxfo
- 5pKiSFu7SNnq/oPza+r8hsAnRIAgI6/f7+6MzfAXZGLGHQVspbqHVudTK4DbXbpWANAw
- 18G4pZkmaML8KbkM6GK6/BhuaffHjL1EkM75oCW1c9LaK2DyBw3gm7BR56wU5V5oEV+k
- ON7w==
-X-Gm-Message-State: AOJu0YywhTvxJCn50/Tx1KVunOsv6wk3bypkUGYZu1fJo2/ML8uy9frD
- YNV1rEsmKwcaVW4bdOmWtyPXvqU4K0OfQTkICKnuSEMmhHK23x4LEpgXsPf81N7UW/+Clr70D9f
- sPkvAGYI=
-X-Gm-Gg: AZuq6aJuSwMAFMvWfrn700VlRu8duzhCVO2dyhtXLWk+zQJ/94vxmCLaZpHjY7ya8/W
- xo0WVAI1zQc7AZeW1nmlZqzcGNWotmXSbzsDbAAEnFDXMsWtJapKcZabKgYwPsC8PFk/iq8TGrX
- NBa0mriNj6DMmB1ThxdL083pSB6PYNroZydvbcsSy23t+4bEH8Vt8/sx7Cbpk3r8OhtUHcTq3fV
- tiU7DlfgGNvFPc6IHr6VaLhntSTyjRiHvNPEJX1RCL1+prbXue9jKY+PWQujei60TyPsz/9gdDm
- 9yzVc9cT0CGcITeMUCU+IXJ9MLbQQKdyNofAkpt1Sch1dE+DLLczbmdKKhSLgXImbvb9j8dthJ8
- MJ/7ewYER4588Ko4nrY02Dei4tRu44TEV94UIk7znrgM5v/o2t1FfeajS0ldtJ75Q9+tdEP4mDM
- iLlel0kevUcpceDNhWWVWQJ08279xIPw==
-X-Received: by 2002:a05:6000:288b:b0:435:b674:c9b1 with SMTP id
- ffacd0b85a97d-435ea09cd57mr5569205f8f.11.1769702959109; 
- Thu, 29 Jan 2026 08:09:19 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769702966; x=1770307766;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=vSfhDkCekIUYfdNzWRcVdLrx+XPd/qEmA3R+NEN9G0A=;
+ b=g//5n27ooPLgXay4akk2jzq4enDqa+v/W2y/8BtMedV070nksCPOoUK7vi558rA1k9
+ 1J1KUfstVU/ZRDyaFLXapNw6HeI90PVj6gz7DGjb8rUxUxCR5QjIf/kB01c3pS3Jh9me
+ Sw8mjKjuVg6fJ6xSb++0snoq2qsMIp60NgPD8aWM/nqTAEdGzA6Bm2/AzLVeyps44cwR
+ ol8MPuOlJ5UqOojGAnFedIm7lN4sDqzv3MmTwPtZeX3CmuO6OI//pzn97xeItQIMLpxc
+ iY04hVv+EGDZOBqbN3oA4RSrqRT+MxhhPGejJgQT6ZqCZzEo+W7VB8ewtnFalwQffyhR
+ /2JQ==
+X-Gm-Message-State: AOJu0YwKxAtug7s1O8+q4SttGXEHlaVYOxbs6xi2dgNBdF3JmvHWXr26
+ aE6siyvlT+omjBbIysLysWui7OUZzGwqG4Cc4INeWRSBzJneJxhLB7JAW0h+jpxkkRzglO9+joU
+ H/J5H5PA=
+X-Gm-Gg: AZuq6aI95/4faJnRKCLVsajgdLhLBbixSX8v0HH6KvGcBaIsx2prhT9RS2wuVwaQUp1
+ tzOF4F4YDoCl3jxJ3Ft5UWUMx8LSd6g/1jPeVJ7+TsmTQPJ+GwbsTj0Vc2ZQlSBUMHEduOe7bdJ
+ vPZZkUxyPoFiCTo0ynhtse0Yo+dHzr8rwZurafjzwnBrk0KvJgaX32sTl6RwCjngjUO9+WkyOD+
+ /PEqbwdN4whGNFP9TSruPRikdZrN6JFsCmKmZ9WXjlJuTKiR3BLNhyLbgfVyda83qORQSMPHvsS
+ guhtlojR80c5mFbrNE6hjfxhh+yDwr1rAa2xShqiF1pGpfkV/cg/Zr8ZjTNoxpUsdNLiLenXVxM
+ YHtSuLoSxDh/F9ExC8sjMAyT75kZhwbQWt3z22HCvXwlsYBkYuuBOiexPJs4N9HMwjU9Xj6CXHB
+ Tw+VlfXMaOY0B274Zj3KTDr250I5331g==
+X-Received: by 2002:a5d:64c7:0:b0:432:5c34:fb22 with SMTP id
+ ffacd0b85a97d-435f3a7bee5mr169962f8f.22.1769702965784; 
+ Thu, 29 Jan 2026 08:09:25 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.18
+ ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 08:09:18 -0800 (PST)
+ Thu, 29 Jan 2026 08:09:24 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/43] target-arm queue
-Date: Thu, 29 Jan 2026 16:08:34 +0000
-Message-ID: <20260129160917.1415092-1-peter.maydell@linaro.org>
+Subject: [PULL 05/43] hw/arm/smmuv3-accel: Introduce smmuv3 accel device
+Date: Thu, 29 Jan 2026 16:08:39 +0000
+Message-ID: <20260129160917.1415092-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260129160917.1415092-1-peter.maydell@linaro.org>
+References: <20260129160917.1415092-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,135 +100,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; the bulk of this arm pullreq is Shameer's SMMUv3 acceleration
-series; there are a few other minor items in here also.
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-thanks
--- PMM
+Set up dedicated PCIIOMMUOps for the accel SMMUv3, since it will need
+different callback handling in upcoming patches. This also adds a
+CONFIG_ARM_SMMUV3_ACCEL build option so the feature can be disabled
+at compile time. Because we now include CONFIG_DEVICES in the header to
+check for ARM_SMMUV3_ACCEL, the meson file entry for smmuv3.c needs to
+be changed to arm_ss.add.
 
-The following changes since commit 65fb9de4888f9bf32bc4f60c880da3dff04c4fd9:
+The “accel” property isn’t user visible yet and it will be introduced in
+a later patch once all the supporting pieces are ready.
 
-  Merge tag 'pr-build_fix-20260128' of https://gitlab.com/pbo-linaro/qemu into staging (2026-01-29 13:29:33 +1100)
-
-are available in the Git repository at:
-
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260129
-
-for you to fetch changes up to 5252c077467a5570bf3b6b6278d206c46f51f9b8:
-
-  arm: add DCZID_EL0 to idregs array (2026-01-29 13:45:39 +0000)
-
-----------------------------------------------------------------
-target-arm queue:
- * Support SMMUv3 acceleration
- * A few other minor cleanups and fixes
-
-----------------------------------------------------------------
-Alex Bennée (2):
-      MAINTAINERS: add emulation.rst to ARM TCG CPUs
-      docs/system: update FEAT_BBML[12] references
-
-Cornelia Huck (2):
-      arm: add {get,set}_dczid_bs helpers
-      arm: add DCZID_EL0 to idregs array
-
-Eric Auger (2):
-      hw/pci-host/gpex: Allow to generate preserve boot config DSM #5
-      hw/arm/virt-acpi-build: Add IORT RMR regions to handle MSI nested binding
-
-Nicolin Chen (4):
-      backends/iommufd: Introduce iommufd_backend_alloc_viommu
-      backends/iommufd: Introduce iommufd_backend_alloc_vdev
-      hw/arm/smmuv3-accel: Add set/unset_iommu_device callback
-      hw/arm/smmuv3-accel: Add nested vSTE install/uninstall support
-
-Philippe Mathieu-Daudé (2):
-      target/arm/hvf: Move hvf_sysreg_[read, write]_cp() functions around
-      target/arm/hvf: Sync CNTV_CTL_EL0 & CNTV_CVAL_EL0
-
-Shameer Kolothum (31):
-      hw/arm/smmu-common: Factor out common helper functions and export
-      hw/arm/smmu-common: Make iommu ops part of SMMUState
-      hw/arm/smmuv3-accel: Introduce smmuv3 accel device
-      hw/arm/smmuv3-accel: Initialize shared system address space
-      hw/pci/pci: Move pci_init_bus_master() after adding device to bus
-      hw/pci/pci: Add optional supports_address_space() callback
-      hw/pci-bridge/pci_expander_bridge: Move TYPE_PXB_PCIE_DEV to header
-      hw/arm/smmuv3-accel: Restrict accelerated SMMUv3 to vfio-pci endpoints with iommufd
-      hw/arm/smmuv3: Implement get_viommu_cap() callback
-      hw/arm/smmuv3: propagate smmuv3_cmdq_consume() errors to caller
-      hw/arm/smmuv3-accel: Install SMMUv3 GBPA based hwpt
-      hw/pci/pci: Introduce a callback to retrieve the MSI doorbell GPA directly
-      hw/arm/smmuv3-accel: Implement get_msi_direct_gpa callback
-      hw/arm/virt: Set msi-gpa property
-      hw/arm/smmuv3-accel: Add support to issue invalidation cmd to host
-      hw/arm/smmuv3: Initialize ID registers early during realize()
-      hw/arm/smmuv3-accel: Get host SMMUv3 hw info and validate
-      hw/arm/virt: Set PCI preserve_config for accel SMMUv3
-      tests/qtest/bios-tables-test: Prepare for IORT revison upgrade
-      tests/qtest/bios-tables-test: Update IORT blobs after revision upgrade
-      hw/arm/smmuv3: Block migration when accel is enabled
-      hw/arm/smmuv3: Add accel property for SMMUv3 device
-      hw/arm/smmuv3-accel: Add a property to specify RIL support
-      hw/arm/smmuv3-accel: Add support for ATS
-      hw/arm/smmuv3-accel: Add property to specify OAS bits
-      backends/iommufd: Retrieve PASID width from iommufd_backend_get_device_info()
-      backends/iommufd: Add get_pasid_info() callback
-      hw/pci: Add helper to insert PCIe extended capability at a fixed offset
-      hw/pci: Factor out common PASID capability initialization
-      hw/vfio/pci: Synthesize PASID capability for vfio-pci devices
-      hw/arm/smmuv3-accel: Make SubstreamID support configurable
-
- MAINTAINERS                                     |   1 +
- backends/iommufd.c                              |  76 ++-
- backends/trace-events                           |   2 +
- docs/system/arm/emulation.rst                   |   3 +-
- hw/arm/Kconfig                                  |   5 +
- hw/arm/meson.build                              |   3 +-
- hw/arm/smmu-common.c                            |  51 +-
- hw/arm/smmuv3-accel.c                           | 768 ++++++++++++++++++++++++
- hw/arm/smmuv3-accel.h                           |  88 +++
- hw/arm/smmuv3-internal.h                        |   1 +
- hw/arm/smmuv3.c                                 | 227 +++++--
- hw/arm/trace-events                             |   6 +
- hw/arm/virt-acpi-build.c                        | 131 +++-
- hw/arm/virt.c                                   |  39 +-
- hw/pci-bridge/pci_expander_bridge.c             |   1 -
- hw/pci-host/gpex-acpi.c                         |  29 +-
- hw/pci/pci.c                                    |  43 +-
- hw/pci/pcie.c                                   |  88 ++-
- hw/vfio/iommufd.c                               |   6 +-
- hw/vfio/pci.c                                   |  75 +++
- hw/vfio/pci.h                                   |   1 +
- hw/vfio/trace-events                            |   1 +
- include/hw/arm/smmu-common.h                    |   7 +
- include/hw/arm/smmuv3-common.h                  |  27 +-
- include/hw/arm/smmuv3.h                         |  10 +
- include/hw/arm/virt.h                           |   1 +
- include/hw/core/iommu.h                         |   1 +
- include/hw/pci-host/gpex.h                      |   1 +
- include/hw/pci/pci.h                            |  36 ++
- include/hw/pci/pci_bridge.h                     |   1 +
- include/hw/pci/pcie.h                           |   4 +
- include/system/host_iommu_device.h              |  20 +
- include/system/iommufd.h                        |  29 +-
- target/arm/cpu-sysregs.h.inc                    |   1 +
- target/arm/cpu.c                                |   2 +-
- target/arm/cpu.h                                |  14 +-
- target/arm/cpu64.c                              |   4 +-
- target/arm/helper.c                             |   5 +-
- target/arm/hvf/hvf.c                            | 167 +++---
- target/arm/kvm.c                                |  18 +-
- target/arm/tcg/cpu64.c                          |  22 +-
- target/arm/tcg/helper-a64.c                     |   2 +-
- target/arm/tcg/mte_helper.c                     |   4 +-
- target/arm/tcg/translate-a64.c                  |   2 +-
- target/arm/tcg/translate.h                      |   2 +-
- tests/data/acpi/aarch64/virt/IORT               | Bin 128 -> 128 bytes
- tests/data/acpi/aarch64/virt/IORT.its_off       | Bin 172 -> 172 bytes
- tests/data/acpi/aarch64/virt/IORT.smmuv3-dev    | Bin 364 -> 364 bytes
- tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 276 -> 276 bytes
- 49 files changed, 1829 insertions(+), 196 deletions(-)
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Message-id: 20260126104342.253965-6-skolothumtho@nvidia.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/arm/Kconfig          |  5 ++++
+ hw/arm/meson.build      |  3 ++-
+ hw/arm/smmuv3-accel.c   | 59 +++++++++++++++++++++++++++++++++++++++++
+ hw/arm/smmuv3-accel.h   | 27 +++++++++++++++++++
+ hw/arm/smmuv3.c         |  5 ++++
+ include/hw/arm/smmuv3.h |  3 +++
+ 6 files changed, 101 insertions(+), 1 deletion(-)
  create mode 100644 hw/arm/smmuv3-accel.c
  create mode 100644 hw/arm/smmuv3-accel.h
+
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 97d747e206..c66c452737 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -626,8 +626,13 @@ config FSL_IMX8MP_EVK
+     depends on TCG
+     select FSL_IMX8MP
+ 
++config ARM_SMMUV3_ACCEL
++    bool
++    depends on ARM_SMMUV3
++
+ config ARM_SMMUV3
+     bool
++    select ARM_SMMUV3_ACCEL if IOMMUFD
+ 
+ config FSL_IMX6UL
+     bool
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index aeaf654790..c250487e64 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -84,7 +84,8 @@ arm_common_ss.add(when: 'CONFIG_ARMSSE', if_true: files('armsse.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX7', if_true: files('fsl-imx7.c', 'mcimx7d-sabre.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP', if_true: files('fsl-imx8mp.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
+-arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
++arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
++arm_ss.add(when: 'CONFIG_ARM_SMMUV3_ACCEL', if_true: files('smmuv3-accel.c'))
+ arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
+ arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
+ arm_common_ss.add(when: 'CONFIG_XEN', if_true: files(
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+new file mode 100644
+index 0000000000..99ef0db8c4
+--- /dev/null
++++ b/hw/arm/smmuv3-accel.c
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (c) 2025 Huawei Technologies R & D (UK) Ltd
++ * Copyright (C) 2025 NVIDIA
++ * Written by Nicolin Chen, Shameer Kolothum
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "hw/arm/smmuv3.h"
++#include "smmuv3-accel.h"
++
++static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
++                                               PCIBus *bus, int devfn)
++{
++    SMMUDevice *sdev = sbus->pbdev[devfn];
++    SMMUv3AccelDevice *accel_dev;
++
++    if (sdev) {
++        return container_of(sdev, SMMUv3AccelDevice, sdev);
++    }
++
++    accel_dev = g_new0(SMMUv3AccelDevice, 1);
++    sdev = &accel_dev->sdev;
++
++    sbus->pbdev[devfn] = sdev;
++    smmu_init_sdev(bs, sdev, bus, devfn);
++    return accel_dev;
++}
++
++/*
++ * Find or add an address space for the given PCI device.
++ *
++ * If a device matching @bus and @devfn already exists, return its
++ * corresponding address space. Otherwise, create a new device entry
++ * and initialize address space for it.
++ */
++static AddressSpace *smmuv3_accel_find_add_as(PCIBus *bus, void *opaque,
++                                              int devfn)
++{
++    SMMUState *bs = opaque;
++    SMMUPciBus *sbus = smmu_get_sbus(bs, bus);
++    SMMUv3AccelDevice *accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
++    SMMUDevice *sdev = &accel_dev->sdev;
++
++    return &sdev->as;
++}
++
++static const PCIIOMMUOps smmuv3_accel_ops = {
++    .get_address_space = smmuv3_accel_find_add_as,
++};
++
++void smmuv3_accel_init(SMMUv3State *s)
++{
++    SMMUState *bs = ARM_SMMU(s);
++
++    bs->iommu_ops = &smmuv3_accel_ops;
++}
+diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+new file mode 100644
+index 0000000000..0dc6b00d35
+--- /dev/null
++++ b/hw/arm/smmuv3-accel.h
+@@ -0,0 +1,27 @@
++/*
++ * Copyright (c) 2025 Huawei Technologies R & D (UK) Ltd
++ * Copyright (C) 2025 NVIDIA
++ * Written by Nicolin Chen, Shameer Kolothum
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_ARM_SMMUV3_ACCEL_H
++#define HW_ARM_SMMUV3_ACCEL_H
++
++#include "hw/arm/smmu-common.h"
++#include CONFIG_DEVICES
++
++typedef struct SMMUv3AccelDevice {
++    SMMUDevice sdev;
++} SMMUv3AccelDevice;
++
++#ifdef CONFIG_ARM_SMMUV3_ACCEL
++void smmuv3_accel_init(SMMUv3State *s);
++#else
++static inline void smmuv3_accel_init(SMMUv3State *s)
++{
++}
++#endif
++
++#endif /* HW_ARM_SMMUV3_ACCEL_H */
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 985dfb345f..95d44f81ed 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -32,6 +32,7 @@
+ #include "qapi/error.h"
+ 
+ #include "hw/arm/smmuv3.h"
++#include "smmuv3-accel.h"
+ #include "smmuv3-internal.h"
+ #include "smmu-internal.h"
+ 
+@@ -1882,6 +1883,10 @@ static void smmu_realize(DeviceState *d, Error **errp)
+     SysBusDevice *dev = SYS_BUS_DEVICE(d);
+     Error *local_err = NULL;
+ 
++    if (s->accel) {
++        smmuv3_accel_init(s);
++    }
++
+     c->parent_realize(d, &local_err);
+     if (local_err) {
+         error_propagate(errp, local_err);
+diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+index d183a62766..bb7076286b 100644
+--- a/include/hw/arm/smmuv3.h
++++ b/include/hw/arm/smmuv3.h
+@@ -63,6 +63,9 @@ struct SMMUv3State {
+     qemu_irq     irq[4];
+     QemuMutex mutex;
+     char *stage;
++
++    /* SMMU has HW accelerator support for nested S1 + s2 */
++    bool accel;
+ };
+ 
+ typedef enum {
+-- 
+2.43.0
+
 
