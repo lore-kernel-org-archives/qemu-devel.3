@@ -4,71 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD99CD3566C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 04:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DCD3D3566B
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 04:54:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlJqp-0007Iw-59; Wed, 28 Jan 2026 23:41:51 -0500
+	id 1vlK2B-0003hU-P3; Wed, 28 Jan 2026 23:53:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vlJqm-0007IJ-Rw
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 23:41:48 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vlJqj-00072M-6S
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 23:41:48 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 60T4fK48055822
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 29 Jan 2026 13:41:24 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=t3j0eiGV5x6ywaL1YK9WRi6zqr7P+og3hUoZcxC3RkU=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1769661684; v=1;
- b=eWchkKOn9Y4UTvZ3qccregH3iRw1RLc1X6evk07aHp3MYmi63ygk18BqJ4WH9hOA
- k3Rg+T/FFDc39tY2I5wh6zeQu6pEoPstW+PfB2aKqspXUZ3aFVDFH35A1YIPMiCv
- pz3jMSSXMjLKt3bVrT3SiOEuQVmV0ElA1K7PcUYJoBGF75jCChWXaP7WJRX4xaL/
- 0fza5lCbB0iSIMnJ8MUskpn1xobbfFzNkwq5Jp9hhW7t9WnNXKYlJkgx9zBIS2Yw
- qWhfkQwzvfZzYrY8/5LGXGnlTnYdG/9EsC7o07g/3bZ6dV9vWN8k909rwEBnLdJT
- E0YxZYmlkWTPsOqHCzXJBA==
-Message-ID: <d83ac948-afb4-4128-9e23-44aa8a8e31c4@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 29 Jan 2026 13:41:20 +0900
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vlK29-0003fY-Kg
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 23:53:33 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vlK27-0000yp-Re
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 23:53:33 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-81f47610542so297540b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 20:53:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769662409; x=1770267209; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gx7tYBRfvu3PySLv+vIrVtqIdZH4y8RMyV5WV5qVltg=;
+ b=oh9AGjvwJ1EwHrROOP7mgDHmxIKRmN9Mr//ZSc7kOkbyjvm+uYnp3UJzzY0pMTUxoV
+ +G/2JA/Y9Zh/tqeh4zAtkm/lNbm50bl3yOdrg6Bl4KEYtSlVya5z0wKskSVCDEIvSSCs
+ Y/PIiw4MsbDuf5XzyB3p2yzF39iAf0E69hbBkBhdfNdvzfqW/adRPlRsm+PPHWYEr48L
+ SRlWVwq5JLbMk4Yz8s/zWB/VyHd8LRxIDYqCGR5/FW597zT0QP05BhMLSFQSyC1FOqXD
+ TmhPgQXNURDX0drIjiazZX2Eur4D/Iv1HyPoa1CiPrws80RfOVB06teMXwZxJ8thWL9W
+ r/hA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769662409; x=1770267209;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gx7tYBRfvu3PySLv+vIrVtqIdZH4y8RMyV5WV5qVltg=;
+ b=NJLM1QlFdrHJekkmP3v+8bI+79jVFUzaAkJkvwGdWnVgufAbFeudSGveEmh9X7Opn8
+ qDOjWqv8lOsVmONZLAq2AnL4CRK9gCuY00Uv1IveciaHK+p19YaKlAmuXZOfAQ4LaA0R
+ hFwKUpo2oftACZPY9/E9CV87LJjJykvS+tSvmYP1Jg07lbntnIPrl3A32NwdtehUsutq
+ eRUFk72Wl7srQbBQ9/UrgZH3GKx0lCFNMIihKURYdbhWgCvQonnuwtgeUlN/ILxSLbDR
+ Li9yjZrGf5vNXyualiwFSFWlKDuyX5FDSUg7bH623ebvFhiTdfqEFsc8RDGjFbyPpxwr
+ 8UuQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWlpd+LiKQRmb7RC/F1djSoGS2t8zQ8ZzE+kE27Ydz0EkjQTwzxthigVg3sEqOxccsOglPEanfnOB6n@nongnu.org
+X-Gm-Message-State: AOJu0Yw1Sc4hGqF0G4pgQd9m6wAh1MG2pi/7GsaXM4xjTOjgzt1fjeye
+ YfkBUfqP4MkJA+Win+jZTqZdJIT/5NjrxKidOxKHt8q/a7GumHC5yjpY1O+ZBt2wLGw=
+X-Gm-Gg: AZuq6aIbyE/puppNRm9HyDN+uRS9vg8WAhYJpLDhY8Q+FVmXEs09KK3FyQiFYcZoXvc
+ jDP5WiwY297wJxXh8cKDG54eS9HWQT+5FQW1sO8DvZTlrwS3kC3IQk+K+795YCCXPy4y4nzxUoM
+ LGyj5DoV3/OokKluvNHV0y/gWYe6ZVtB662oL5lCd5Cz9blO3U129u4wiKt39M5aCpuUW2ysorg
+ l3Whf/WG2PPNcvRgztuf8q2xoRQb8XZnAq+d82rqanMsskd7n7Wm+thzXalRYCPHty2YwH9W79M
+ rSol/9qu9a2eON3BlFBRz8AQreqZT4V00EFt6ch+7f7wp2c3qQTl5rdigrbIjp6duuqJ0/i36rE
+ pbNV1UYfyiIWs1DTF5HJvogHpDXbWuVjsEMA0hcrnzTmhMAnW5dx5juhYoCaM84lhcxlESOiRQc
+ 0abdqIU8x2FyAn3p2YbH313GbU+4y1aw==
+X-Received: by 2002:a05:6a00:1c83:b0:81f:4e60:1c6f with SMTP id
+ d2e1a72fcca58-823692f366bmr7636867b3a.64.1769662409193; 
+ Wed, 28 Jan 2026 20:53:29 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.201])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82379b65068sm4435181b3a.27.2026.01.28.20.53.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Jan 2026 20:53:28 -0800 (PST)
+Message-ID: <c073b0b7-08aa-404e-9a22-6678e36af040@linaro.org>
+Date: Thu, 29 Jan 2026 15:53:24 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/10] Implement memory_region_new_* functions
-To: BALATON Zoltan <balaton@eik.bme.hu>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <cover.1769362313.git.balaton@eik.bme.hu>
- <CAFEAcA_jS3hef=dhxZ5s7MReSW4ir+jMUGwu+RjD_JP7ZRrRXQ@mail.gmail.com>
- <0118dc9b-d467-7f6b-92a8-4f42760ecb6c@eik.bme.hu> <aXkXWGho7lnJ-gwX@x1.local>
- <2fa59d39-5634-0b8c-27ee-9e9548a7f92a@eik.bme.hu>
- <562f0e5c-7ae8-4d95-9dd4-674447362ef7@rsg.ci.i.u-tokyo.ac.jp>
- <cfacf068-7663-6c7f-4908-928bb63e803c@eik.bme.hu>
- <CAFEAcA-8-jC-HJix5YFVbmg3sEuhcSMD8gKJxzAiz=GPy0sw9Q@mail.gmail.com>
- <b5721fa1-e613-889a-03de-77c46aa01da4@eik.bme.hu>
+Subject: Re: [PULL 0/1] Build fix with --enable-modules
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+References: <20260129013658.3961469-1-pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <b5721fa1-e613-889a-03de-77c46aa01da4@eik.bme.hu>
+In-Reply-To: <20260129013658.3961469-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,142 +103,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/01/29 0:46, BALATON Zoltan wrote:
-> On Wed, 28 Jan 2026, Peter Maydell wrote:
->> On Wed, 28 Jan 2026 at 11:40, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>> OK I try to summarise the motivation again:
->>>
->>> 1. Documentation in docs/devel/memory.rst says that memory regions'
->>> lifecycle is managed by QOM and they are freed with their owner or when
->>> nothing else uses them. This is also already implemented for a long time
->>> as described but cannot be used because the only constructors available
->>> kill this feature when calling object_initialize that clears the free
->>> function added by object_new. (The life time management is implemented
->>> through adding memory regions as children to the owner and unparenting
->>> them on freeing the owner which decreases ref count of the memory region
->>> and will free it when nothing else references it as far as I can tell.)
->>
->> If we have leaks because of our very common pattern of "embed
->> a MemoryRegion struct in the device state struct" then we must
->> fix those, because there's no way we're going to convert all
->> that existing code to a new set of APIs. But I was under the
->> impression we had already dealt with those, because MRs track
->> their owner's refcount, and don't have their own independent one ?
+On 1/29/26 12:36, Pierrick Bouvier wrote:
+> The following changes since commit 9ad7f544c696d73ce377bbad83f3cf8b4dd8dcac:
 > 
-> I'm not sure if all those leaks are resolved as there were some patches 
-> and discussion about this recently but I think that problem or the need 
-> to use the owner's ref count to circumwent it instead of using the 
-> memory region's own ref count may also come from that there's currently 
-> no way to allocate memory regions that are ref counted and automatically 
-> freed as it should work with QOM and the documentation implies. (Only 
-> the constuctor is missing that is all this series adds, the mechanism is 
-> already there and implemented.) There may still be a problem with 
-> circular references if the memory region needs the owner so the owner 
-> can't be freed until the memory region is also freed but the memory 
-> region is not freed until the owner is freed but if both the owner and 
-> memory region used their own ref count things may become a bit less 
-> confusing and could be easier to find a way to break circular reference 
-> (e.g. by owner unparent child regions on unrealize but isn't freed until 
-> memory regions unref owner in their free method).
+>    Merge tag 'pull-request-2026-01-27' ofhttps://gitlab.com/thuth/qemu into staging (2026-01-28 10:04:17 +1100)
 > 
->>> These are my motivation for this change. What is the motivation for 
->>> using
->>> embedded memory regions instead and against this change?
->>
->> Simply that it's a consistent pattern we use in a lot of the codebase:
->> the device embeds a lot of the structs it uses, rather than allocating
->> memory for them and keeping pointers to that allocated memory. We
+> are available in the Git repository at:
 > 
-> You mix in the issue of SoCs and complex devices using other devices in 
-> which case the recommendation was to embed those in the parent device so 
-> they don't have to be freed or kept track of by a pointer but won't be 
-> leaked. This series does not mean to change that, it's only limited to 
-> memory regions. (Although that problem may also stem from similar issue 
-> with object_initialize_child not allowing creating reference counted 
-> objects only initializing preallocated instances but that's not 
-> something this series touches.)
+>    https://gitlab.com/pbo-linaro/qemu tags/pr-build_fix-20260128
 > 
-> We can say that memory regions are like other embedded objects but they 
-> are often used for sysbus and PCI devices only to be registered in the 
-> parent device that already has pointers in their state to track these so 
-> there's no need to keep track of them in the subclass if we can rely on 
-> QOM freeing them when not needed any more and this is already 
-> implemented and documented that way. So even if we keep embedding other 
-> child devices into complex parent devices that I think does not directly 
-> apply to memory regions and we could use what the documentation and 
-> implementation already allows and says for memory regions at least.
+> for you to fetch changes up to 8eff45dfe93b34b1a027bd22fd8dffe6424f480d:
 > 
->> still have also various older device models that use the previous
->> pattern of "allocate memory and have pointers" too, but most new
->> code doesn't do that. I think we should for preference write code
->> in one pattern, not two, and "embed structs" seems to be what
->> we have mostly settled on for new code.
->>
->> There is an argument to be made that the pointer model would
->> fit better with a possible future world of "the user can wire
->> configurably wire up their own board model from devices", and
->> that it works better in a part-Rust-part-C world where the two
->> different languages don't have convenient access to the exact
->> size of structs defined in the other language. But that future
->> model is not something anybody has yet really fleshed out in any
->> detail, so it's still a bit speculative.
+>    meson: fix build of qemu-system-microblaze with --enable-modules (2026-01-28 17:35:52 -0800)
 > 
-> You keep mentioning pointers but the point of ref counts and regisrering 
-> memory region as child of an owner is to avoid needing a pointer or 
-> embedding it in the subclass state as the relationship and lifecycle 
-> management are then handled by QOM. If we don't use that we could remove 
-> this from QOM and memory regions to simplify it but if it's already 
-> there and makes the device state simpler I think we better use it.
-> 
->> I'm not actually opposed to the idea of making a design decision
->> that this struct-embedding is no longer what we want to do, and defining
->> that something else is our new best practice for how to write devices.
->> But I think we would need to start by reaching a consensus that that
->> *is* what we want to do, and documenting that "best practice" somewhere
->> in docs/devel/. Then we can examine proposed new APIs and all be
->> on the same page about the design patterns we want and it will
->> be clearer to reviewers whether the new APIs fit into those
->> patterns or not.
-> 
-> I think we're in that discussion now in this thread. I don't propose to 
-> change the struct-embedding for sub devices used in SoC or south bridge 
-> or other complex devices but only propose to not embed memory regions 
-> that are already documented as and handled by QOM and simply allocate 
-> them and let QOM handle them so we only need to reference them in the 
-> devices state unless they are needed for some reason by the device 
-> methods which is rarely the case. So this is limited to memory regions 
-> and the series only seems to add a lot of lines because of the extensive 
-> documentation comments. The actual change is just factoring out actual 
-> memory region init from memory_region_init functions then add a 
-> memory_region_new variant that does object_new; do_init and keep the 
-> memory_region_init do object_initializel do_init. Nothing else is 
-> changed, the way to manage and free regions based on ref counting is 
-> already there this series just enables them to be actually used becase 
-> currently despite what the docs say memory regions are either leaked or 
-> must be embedded.
+> ----------------------------------------------------------------
+> Fix build with --enable-modules
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.0 as appropriate.
 
-I actually think deprecating struct-embedding for all QOM objects is a 
-good idea.
-
-The problem initially stated in this thread is that embedding requires 
-having extra field, but people see the benefit is too small. There is no 
-real logic involved in having such fields so it does not reduce code 
-complexity much; it saves some lines and that's it.
-
-However, I see another problem in struct embedding; it breaks 
-object_ref(). When embedding, the child object effectively takes the 
-reference to the storage of the parent object, but this reference is not 
-counted, so use-after-free can happen if someone takes a reference to 
-the child object with object_ref(). That is why the wrapper of 
-object_ref() in rust/qom/src/qom.rs needs to be marked unsafe. Memory 
-regions workaround this with memory_region_ref(), but it's not perfect 
-since it relies on object_ref() in the end.
-
-For this reason I think object_initialize(), object_initialize_child(), 
-and the like are better to be noted as deprecated in
-include/qom/object.h. Then memory_region_init() can be deprecated 
-referring to them.
-
-Regards,
-Akihiko Odaki
+r~
 
