@@ -4,73 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42974D61011
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 13:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ADB4D61011
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 13:34:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlS8D-0007sa-Ls; Thu, 29 Jan 2026 08:32:21 -0500
+	id 1vlSAG-0002bT-IX; Thu, 29 Jan 2026 08:34:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vlS7S-0007bO-I3
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 08:31:49 -0500
-Received: from k62.kb8c70eb.use4.send.mailgun.net ([204.220.184.62])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlS9g-0000Xm-Me
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 08:33:53 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vlS7N-0002GH-IT
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 08:31:34 -0500
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- f1223ecced80858bbad775d175c50b6e91ebe3fce9827e5e39109b33fe32f804 with SMTP id
- 697b6126590331631227dfd0; Thu, 29 Jan 2026 13:31:18 GMT
-X-Mailgun-Sending-Ip: 204.220.184.62
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1769693477;
- bh=8NqHF/w1c3OfHxDB1XcmG7aRHsFMNXz3lqfpDHHHZlo=;
- h=X-Mailgun-Dkim:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
- References:MIME-Version:Content-Type:Content-Transfer-Encoding:
- From:Reply-to:Subject:Date:Message-id:To:Cc:Mime-version:
- Content-type:Content-transfer-encoding:In-reply-to:References;
- b=Ay4MvJ/hYAqvyTgJeSrX9qF+vZBJMtOXswlMre/XCq98arX80/7enwijUCPlgtlsD
- lm/SCjIQHtCg1sr8Fo7j/8Q+jus/RYmq9d1hzxrVP80YlC8amFTUVsH6dSobOd2HmI
- Foj06vM0BF/axMS8F0PT6AmP6OEAd4KF9F0clu8hSBOXR0ENRGm0ZqqovbxCYlL060
- HzsBgnT8DKjqni9qnq0TCK4O0VsOkSDvGD+B0rjLKGgeaoHiZPH8vBdwAKR0Tu8Yk6
- 7GJMsFY0GzH8X4n0jDlNWbqOJhJvF1vLLxyz2kHIZzeibM77jjSOgOoWHuIKZ0mP5b
- cuaA7uzx6eM0w==
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlS9c-0002kS-PC
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 08:33:52 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-48069a48629so10486855e9.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 05:33:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769693626; x=1770298426; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hq4FdROzQMT1FITLEs5mQOhgWXAvATG5cfWFccAK6cg=;
+ b=O4ae0lXKJ1j5U5751NPYDHBRfOKLKcF42Kc6ex4wJEz5x/KwsoRJ0voMrSzoiJnQ6J
+ L0aLN2DPyzLx0PA0a8Hv8/St/hW3lkDffxkrGO+ljeJ96AMO3gxRiwR1vxTYTxk7rr9s
+ oPZ1sladZoGFX/zwpkuxahllRrhq89VTp4FAE/WMCVkvnNqxgTocvlztZsh1eYMDagsM
+ USNegCWuiS9/0Lc7f3KP2334mtet8dFbLi+MqLIZmPs+AZEQK48rbpKXAwaFFUzNKMuP
+ dh56tQfXIhUBP2wJMubDN1/wrbP/bTOf49oayDA4bL0HkX0Ys2JgWdJqDzY5z3w3Qj+w
+ umRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769693626; x=1770298426;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Hq4FdROzQMT1FITLEs5mQOhgWXAvATG5cfWFccAK6cg=;
+ b=JiLxpy7te+VF0iDZG0TgPdgBQMMERSwVDBHPjUQhvAm94H7AEaqpWozLux/jwgMgP3
+ nqSoPPDyoTa2vQTBfTPhaguNNearOD5KpL7YKOxlph5A67B/p1DWIh1S+GLN5Vi0ZuS+
+ nCz+hugAHNyE+mHzF7D5lcfJwoVpr+XfG/SBfXkqsmcKyK+kvFvGkTpWuM4mpj5il7jQ
+ 5ppdVfJsHTKfZzmdyexoRaLz7DPe+FaMzyTUEqe1hUufqovRLF0x00VU6PoiPpFiLZR0
+ EHJtJVspBXKzJuWV4qWQZdNmkiO0Q+kA30oz7eKUS6/rkWsQ0VagJLMlRhV8nLHNgYwC
+ 1Hlw==
+X-Gm-Message-State: AOJu0Yw0cPKKhDWvv7SBuSVdg/ngfUQ2qv0a2nZcffKJJuI3IW5Z31/b
+ 2mNHzUVxFu2So3+l0vZKiYm6gVA7NtId/1kZNm+Dgyd4mZ+4/VeQzN0I0PGWkzSA+XFrxm8eRH3
+ 7UuUsz0E=
+X-Gm-Gg: AZuq6aLYkyGlQyKzXOOhfk8LaUdGFHKGbwRwVIDKE4MsYT/u2WBFm8rLYpB3HLm8BiM
+ 5PuJzuHbsdRe3gGByaeNB3/BrNXu9N1Oqdq/XiEdWgH3J5iDsSHwXQwQl4n2/MpYUslEGdtolYe
+ uQA3kJzET1LWlbWNrDJDSLyGF2qM9vi07KDrJQ8EJTNAtqYMQOPRMgdBfR5shNI7DDATCVGVMcT
+ AydCc7SsgWK8fGAVLJNNgXssmK+vEyB5eHukw3wEMZLQ++hxR+HlwJ2ByRVgATLIhS0QEBeL+eE
+ UNVb2jVvgEt74uT/GMVoti/U7jtFs5w/ebHYbxebhEwwNN2IXKgDxg5U/X7HRWOHZxjE2OpKJBs
+ rffUQt5G+cU/bF6HPuqeCVSZnHutd2StuzVXWvncaFpMSpl6ciM0AqT1amwi1uI2jYvzJ0J2YVb
+ 8xb5y3gLEHl154+3fnHIpIvqSUorkJ5EujiZKDTqqOzPoXazo9sNNLiY2KN6E5
+X-Received: by 2002:a05:600c:4f06:b0:475:da1a:5418 with SMTP id
+ 5b1f17b1804b1-48069c0fdfemr119806935e9.1.1769693625867; 
+ Thu, 29 Jan 2026 05:33:45 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4806cdd78d3sm133908465e9.1.2026.01.29.05.33.44
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 29 Jan 2026 05:33:45 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Yodel Eldar <yodel.eldar@yodel.dev>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>
-Subject: [PATCH v4 2/3] tests/functional/x86_64: Add vhost-user-bridge test
-Date: Thu, 29 Jan 2026 07:30:48 -0600
-Message-ID: <20260129133049.119829-3-yodel.eldar@yodel.dev>
-In-Reply-To: <20260129133049.119829-1-yodel.eldar@yodel.dev>
-References: <20260129133049.119829-1-yodel.eldar@yodel.dev>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: [PATCH v4 9/9] monitor: Remove 'monitor/hmp-target.h' header
+Date: Thu, 29 Jan 2026 14:32:41 +0100
+Message-ID: <20260129133241.35990-10-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260129133241.35990-1-philmd@linaro.org>
+References: <20260129133241.35990-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=204.220.184.62;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=k62.kb8c70eb.use4.send.mailgun.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,218 +101,332 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a functional test of vhost-user-bridge and enter it into
-MAINTAINERS under the vhost section.
+The "monitor/hmp-target.h" header doesn't contain any
+target-specific declarations anymore. Merge it with
+"monitor/hmp.h", its target-agnostic counterpart.
 
-The test runs vhost-user-bridge as a subprocess, then launches a guest
-with four backends: a unix domain socket for vhost-user, a UDP socket, a
-user-mode net, and a hubport to hub the UDP and user backends; only the
-vhost-user backend is exposed, the rest are deviceless. This
-configuration mimics the testing setup described in the initial commit
-of vhost-user-bridge in 3595e2eb0a23.
-
-The test creates a scratch file containing a hardcoded UUID on the host
-and exposes it to the the guest via the tftp parameter of the user
-netdev. After the guest invokes tftp to request the file, the test
-verifies the transfer by hashsum.
-
-Similarly, the test creates a file with another hardcoded UUID in the
-guest. A call to check_http_download() serves the file to the host via
-http, whereupon a check of the file hashsum occurs on the host.
-
-Lastly, add the test to the thorough tests suite in meson.build.
-
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Suggested-by: Marc-André Lureau <marcandre.lureau@gmail.com>
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Suggested-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 ---
- MAINTAINERS                                   |   1 +
- tests/functional/x86_64/meson.build           |   1 +
- .../x86_64/test_vhost_user_bridge.py          | 147 ++++++++++++++++++
- 3 files changed, 149 insertions(+)
- create mode 100755 tests/functional/x86_64/test_vhost_user_bridge.py
+ MAINTAINERS                   |  2 +-
+ include/monitor/hmp-target.h  | 46 -----------------------------------
+ include/monitor/hmp.h         | 17 +++++++++++++
+ hw/i386/sgx-stub.c            |  1 -
+ hw/i386/sgx.c                 |  1 -
+ monitor/hmp-cmds.c            |  1 -
+ monitor/hmp-target.c          |  1 -
+ monitor/hmp.c                 |  1 -
+ stubs/target-monitor-defs.c   |  2 +-
+ target/i386/cpu-apic.c        |  1 -
+ target/i386/monitor.c         |  1 -
+ target/i386/sev-system-stub.c |  1 -
+ target/i386/sev.c             |  1 -
+ target/m68k/monitor.c         |  1 -
+ target/ppc/ppc-qmp-cmds.c     |  1 -
+ target/riscv/monitor.c        |  1 -
+ target/riscv/riscv-qmp-cmds.c |  1 -
+ target/sh4/monitor.c          |  1 -
+ target/sparc/monitor.c        |  1 -
+ target/xtensa/monitor.c       |  1 -
+ 20 files changed, 19 insertions(+), 64 deletions(-)
+ delete mode 100644 include/monitor/hmp-target.h
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index dccdf47888..234b076397 100644
+index dccdf478886..f19b1362cda 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2395,6 +2395,7 @@ F: subprojects/libvhost-user/
- F: block/export/vhost-user*
- F: util/vhost-user-server.c
- F: net/vhost*
-+F: tests/functional/x86_64/test_vhost_user_bridge.py
+@@ -3385,7 +3385,7 @@ F: monitor/monitor.c
+ F: monitor/hmp*
+ F: hmp.h
+ F: hmp-commands*.hx
+-F: include/monitor/hmp-target.h
++F: include/monitor/hmp.h
+ F: tests/qtest/test-hmp.c
+ F: include/qemu/qemu-print.h
+ F: util/qemu-print.c
+diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+deleted file mode 100644
+index 788bc9e330a..00000000000
+--- a/include/monitor/hmp-target.h
++++ /dev/null
+@@ -1,46 +0,0 @@
+-/*
+- * QEMU monitor
+- *
+- * Copyright (c) 2003-2004 Fabrice Bellard
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-
+-#ifndef MONITOR_HMP_TARGET_H
+-#define MONITOR_HMP_TARGET_H
+-
+-typedef struct MonitorDef MonitorDef;
+-
+-struct MonitorDef {
+-    const char *name;
+-    int offset;
+-    uint64_t (*get_value)(Monitor *mon, const struct MonitorDef *md, int val);
+-    int type;
+-};
+-
+-#define MD_TULONG 0
+-#define MD_U32    1
+-
+-const MonitorDef *target_monitor_defs(void);
+-int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
+-
+-CPUArchState *mon_get_cpu_env(Monitor *mon);
+-CPUState *mon_get_cpu(Monitor *mon);
+-
+-#endif /* MONITOR_HMP_TARGET_H */
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index e222bea60cd..83889ab8ed2 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -17,6 +17,23 @@
+ #include "qemu/readline.h"
+ #include "qapi/qapi-types-common.h"
  
- vhost-shadow-virtqueue
- R: Eugenio Pérez <eperezma@redhat.com>
-diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
-index f78eec5e6c..beab4f304b 100644
---- a/tests/functional/x86_64/meson.build
-+++ b/tests/functional/x86_64/meson.build
-@@ -34,6 +34,7 @@ tests_x86_64_system_thorough = [
-   'reverse_debug',
-   'tuxrun',
-   'vfio_user_client',
-+  'vhost_user_bridge',
-   'virtio_balloon',
-   'virtio_gpu',
- ]
-diff --git a/tests/functional/x86_64/test_vhost_user_bridge.py b/tests/functional/x86_64/test_vhost_user_bridge.py
-new file mode 100755
-index 0000000000..c36c625420
---- /dev/null
-+++ b/tests/functional/x86_64/test_vhost_user_bridge.py
-@@ -0,0 +1,147 @@
-+#!/usr/bin/env python3
-+#
-+# Copyright (c) 2025 Software Freedom Conservancy, Inc.
-+#
-+# Author: Yodel Eldar <yodel.eldar@yodel.dev>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+"""
-+Test vhost-user-bridge (vubr) functionality:
++typedef struct MonitorDef {
++    const char *name;
++    int offset;
++    uint64_t (*get_value)(Monitor *mon, const struct MonitorDef *md, int val);
++    int type;
++} MonitorDef;
 +
-+    1) Run vhost-user-bridge on the host.
-+    2) Launch a guest VM:
-+        a) Instantiate a unix domain socket to the vubr-created path
-+        b) Instantiate a vhost-user backend on top of that socket
-+        c) Map a virtio-net-pci device to the vhost-user backend
-+        d) Instantiate a UDP socket backend
-+        e) Instantiate a user-mode net backend
-+            i) Forward an ephemeral port to port 8080 in-guest with hostfwd=
-+            ii) Expose a generated scratch file to the guest with tftp=
-+        f) Hub the UDP and user-mode backends.
-+    3) Invoke tftp in the guest to download exported scratch file from the host.
-+    4) Serve a file to the host via http server in the guest.
-+"""
++#define MD_TULONG 0
++#define MD_U32    1
 +
-+import os
-+import shutil
-+import subprocess
-+from qemu_test import Asset, LinuxKernelTest, which
-+from qemu_test import exec_command_and_wait_for_pattern
-+from qemu_test import is_readable_executable_file
-+from qemu_test import wait_for_console_pattern
-+from qemu_test.ports import Ports
++const MonitorDef *target_monitor_defs(void);
 +
-+class VhostUserBridge(LinuxKernelTest):
++int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
 +
-+    ASSET_KERNEL_INITRAMFS = Asset(
-+        "https://github.com/yodel/vhost-user-bridge-test/raw/refs/heads/main/bzImage",
-+        "8860d7aa59434f483542cdf25b42eacae0d4d4aa7ec923af9589d1ad4703d42b")
++CPUArchState *mon_get_cpu_env(Monitor *mon);
++CPUState *mon_get_cpu(Monitor *mon);
 +
-+    HOST_UUID = "ba4c2e39-627f-487d-ae3b-93cc5d783eb8"
-+    HOST_UUID_HSUM = \
-+        "d2932e34bf6c17b33e7325140b691e27c191d9ac4dfa550f68c09506facb09b9"
-+
-+    GUEST_UUID = "143d2b21-fdf0-4c5e-a9ef-f35ebbac8945"
-+    GUEST_UUID_HSUM = \
-+        "14b64203f5cf2afe520f8be0fdfe630aafc1e85d1301f55a0d1681e68881f3a2"
-+
-+    def configure_vm(self, ud_socket_path, lport, rport, hostfwd_port, tftpdir):
-+        self.require_accelerator("kvm")
-+        self.require_netdev("vhost-user")
-+        self.require_netdev("socket")
-+        self.require_netdev("hubport")
-+        self.require_netdev("user")
-+        self.require_device("virtio-net-pci")
-+        self.set_machine("q35")
-+        self.vm.add_args(
-+            "-cpu",      "host",
-+            "-accel",    "kvm",
-+            "-append",   "printk.time=0 console=ttyS0",
-+            "-smp",      "2",
-+            "-m",        "128M",
-+            "-object",   "memory-backend-memfd,id=mem0,"
-+                         "size=128M,share=on,prealloc=on",
-+            "-numa",     "node,memdev=mem0",
-+            "-chardev", f"socket,id=char0,path={ud_socket_path}",
-+            "-netdev",   "vhost-user,id=vhost0,chardev=char0,vhostforce=on",
-+            "-device",   "virtio-net-pci,netdev=vhost0",
-+            "-netdev",  f"socket,id=udp0,udp=localhost:{lport},"
-+                        f"localaddr=localhost:{rport}",
-+            "-netdev",   "hubport,id=hub0,hubid=0,netdev=udp0",
-+            "-netdev",  f"user,id=user0,tftp={tftpdir},"
-+                        f"hostfwd=tcp:127.0.0.1:{hostfwd_port}-:8080",
-+            "-netdev",   "hubport,id=hub1,hubid=0,netdev=user0"
-+        )
-+
-+    def assemble_vubr_args(self, vubr_path, ud_socket_path, lport, rport):
-+        vubr_args = []
-+
-+        if (stdbuf_path := which("stdbuf")) is None:
-+            self.log.info("Could not find stdbuf: vhost-user-bridge "
-+                          "log lines may appear out of order")
-+        else:
-+            vubr_args += [stdbuf_path, "-o0", "-e0"]
-+
-+        vubr_args += [vubr_path, "-u", f"{ud_socket_path}",
-+                      "-l", f"127.0.0.1:{lport}", "-r", f"127.0.0.1:{rport}"]
-+
-+        return vubr_args
-+
-+    def test_vhost_user_bridge(self):
-+        prompt = "~ # "
-+        host_uuid_filename = "vubr-test-uuid.txt"
-+        guest_uuid_path = "/tmp/uuid.txt"
-+        kernel_path = self.ASSET_KERNEL_INITRAMFS.fetch()
-+
-+        vubr_path = self.build_file("contrib", "vhost-user-bridge",
-+                                    "vhost-user-bridge")
-+        if not is_readable_executable_file(vubr_path):
-+            self.skipTest("Could not find a readable and executable "
-+                          "vhost-user-bridge")
-+
-+        vubr_log_path = self.log_file("vhost-user-bridge.log")
-+        self.log.info("For the vhost-user-bridge application log,"
-+                     f" see: {vubr_log_path}")
-+
-+        sock_dir = self.socket_dir()
-+        ud_socket_path = os.path.join(sock_dir.name, "vubr-test.sock")
-+
-+        tftpdir = self.scratch_file("tftp")
-+        shutil.rmtree(tftpdir, ignore_errors=True)
-+        os.mkdir(tftpdir)
-+        host_uuid_path = self.scratch_file("tftp", host_uuid_filename)
-+        with open(host_uuid_path, "w", encoding="utf-8") as host_uuid_file:
-+            host_uuid_file.write(self.HOST_UUID)
-+
-+        with Ports() as ports:
-+            # pylint: disable=unbalanced-tuple-unpacking
-+            lport, rport, hostfwd_port = ports.find_free_ports(3)
-+
-+            self.configure_vm(ud_socket_path, lport, rport, hostfwd_port,
-+                              tftpdir)
-+
-+            vubr_args = self.assemble_vubr_args(vubr_path, ud_socket_path,
-+                                                lport, rport)
-+
-+            with open(vubr_log_path, "w", encoding="utf-8") as vubr_log, \
-+                 subprocess.Popen(vubr_args, stdin=subprocess.DEVNULL,
-+                                  stdout=vubr_log,
-+                                  stderr=subprocess.STDOUT) as vubr_proc:
-+                self.launch_kernel(kernel_path, wait_for=prompt)
-+
-+                exec_command_and_wait_for_pattern(self,
-+                    f"tftp -g -r {host_uuid_filename} 10.0.2.2 ; "
-+                    f"sha256sum {host_uuid_filename}", self.HOST_UUID_HSUM)
-+                wait_for_console_pattern(self, prompt)
-+
-+                exec_command_and_wait_for_pattern(self,
-+                    f"echo -n '{self.GUEST_UUID}' > {guest_uuid_path}", prompt)
-+                self.check_http_download(guest_uuid_path, self.GUEST_UUID_HSUM)
-+                wait_for_console_pattern(self, prompt)
-+
-+                self.vm.shutdown()
-+                vubr_proc.terminate()
-+                vubr_proc.wait()
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+ bool hmp_handle_error(Monitor *mon, Error *err);
+ void hmp_help_cmd(Monitor *mon, const char *name);
+ strList *hmp_split_at_comma(const char *str);
+diff --git a/hw/i386/sgx-stub.c b/hw/i386/sgx-stub.c
+index 1dd8d9afbfa..6e82773a86d 100644
+--- a/hw/i386/sgx-stub.c
++++ b/hw/i386/sgx-stub.c
+@@ -1,7 +1,6 @@
+ #include "qemu/osdep.h"
+ #include "monitor/monitor.h"
+ #include "monitor/hmp.h"
+-#include "monitor/hmp-target.h"
+ #include "hw/i386/pc.h"
+ #include "hw/i386/sgx-epc.h"
+ #include "qapi/qapi-commands-misc-i386.h"
+diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
+index 5e792e8e6e9..7e4c509f5a4 100644
+--- a/hw/i386/sgx.c
++++ b/hw/i386/sgx.c
+@@ -17,7 +17,6 @@
+ #include "monitor/qdev.h"
+ #include "monitor/monitor.h"
+ #include "monitor/hmp.h"
+-#include "monitor/hmp-target.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "qapi/qapi-commands-misc-i386.h"
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index bad034937a9..a85c5243a40 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -22,7 +22,6 @@
+ #include "monitor/hmp.h"
+ #include "qemu/help_option.h"
+ #include "monitor/hmp.h"
+-#include "monitor/hmp-target.h"
+ #include "monitor/monitor-internal.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-control.h"
+diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+index a3306b69c93..2574c5d8b4b 100644
+--- a/monitor/hmp-target.c
++++ b/monitor/hmp-target.c
+@@ -27,7 +27,6 @@
+ #include "monitor/qdev.h"
+ #include "net/slirp.h"
+ #include "system/device_tree.h"
+-#include "monitor/hmp-target.h"
+ #include "monitor/hmp.h"
+ #include "block/block-hmp-cmds.h"
+ #include "qapi/qapi-commands-control.h"
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 36e58c54670..2d9f870df26 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -27,7 +27,6 @@
+ #include "hw/core/qdev.h"
+ #include "monitor-internal.h"
+ #include "monitor/hmp.h"
+-#include "monitor/hmp-target.h"
+ #include "qobject/qdict.h"
+ #include "qobject/qnum.h"
+ #include "qemu/bswap.h"
+diff --git a/stubs/target-monitor-defs.c b/stubs/target-monitor-defs.c
+index 35a0a342772..0dd4cdb34f6 100644
+--- a/stubs/target-monitor-defs.c
++++ b/stubs/target-monitor-defs.c
+@@ -1,5 +1,5 @@
+ #include "qemu/osdep.h"
+-#include "monitor/hmp-target.h"
++#include "monitor/hmp.h"
+ 
+ const MonitorDef *target_monitor_defs(void)
+ {
+diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
+index f7ad7b51394..3b73a04597f 100644
+--- a/target/i386/cpu-apic.c
++++ b/target/i386/cpu-apic.c
+@@ -11,7 +11,6 @@
+ #include "qapi/error.h"
+ #include "monitor/monitor.h"
+ #include "monitor/hmp.h"
+-#include "monitor/hmp-target.h"
+ #include "system/hw_accel.h"
+ #include "system/kvm.h"
+ #include "system/xen.h"
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index 427f1990399..1d04978c43b 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -25,7 +25,6 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp-target.h"
+ #include "monitor/hmp.h"
+ #include "qobject/qdict.h"
+ #include "qapi/error.h"
+diff --git a/target/i386/sev-system-stub.c b/target/i386/sev-system-stub.c
+index fb84aee94d2..f799a338d60 100644
+--- a/target/i386/sev-system-stub.c
++++ b/target/i386/sev-system-stub.c
+@@ -14,7 +14,6 @@
+ #include "qemu/osdep.h"
+ #include "monitor/monitor.h"
+ #include "monitor/hmp.h"
+-#include "monitor/hmp-target.h"
+ #include "qapi/error.h"
+ #include "sev.h"
+ 
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index fef9f441c61..946aecd0408 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -37,7 +37,6 @@
+ #include "qom/object.h"
+ #include "monitor/monitor.h"
+ #include "monitor/hmp.h"
+-#include "monitor/hmp-target.h"
+ #include "qapi/qapi-commands-misc-i386.h"
+ #include "confidential-guest.h"
+ #include "hw/i386/pc.h"
+diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
+index 1bb5012da91..c148926d827 100644
+--- a/target/m68k/monitor.c
++++ b/target/m68k/monitor.c
+@@ -8,7 +8,6 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "monitor/hmp.h"
+-#include "monitor/hmp-target.h"
+ #include "monitor/monitor.h"
+ 
+ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+diff --git a/target/ppc/ppc-qmp-cmds.c b/target/ppc/ppc-qmp-cmds.c
+index 07938abb15f..08314e3c1cd 100644
+--- a/target/ppc/ppc-qmp-cmds.c
++++ b/target/ppc/ppc-qmp-cmds.c
+@@ -26,7 +26,6 @@
+ #include "cpu.h"
+ #include "monitor/monitor.h"
+ #include "qemu/ctype.h"
+-#include "monitor/hmp-target.h"
+ #include "monitor/hmp.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-machine.h"
+diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
+index 478fd392ac6..bc176dd8771 100644
+--- a/target/riscv/monitor.c
++++ b/target/riscv/monitor.c
+@@ -23,7 +23,6 @@
+ #include "cpu_bits.h"
+ #include "monitor/monitor.h"
+ #include "monitor/hmp.h"
+-#include "monitor/hmp-target.h"
+ #include "system/memory.h"
+ 
+ #ifdef TARGET_RISCV64
+diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.c
+index d5e9bec0f86..79232d34005 100644
+--- a/target/riscv/riscv-qmp-cmds.c
++++ b/target/riscv/riscv-qmp-cmds.c
+@@ -34,7 +34,6 @@
+ #include "qemu/ctype.h"
+ #include "qemu/qemu-print.h"
+ #include "monitor/hmp.h"
+-#include "monitor/hmp-target.h"
+ #include "system/kvm.h"
+ #include "system/tcg.h"
+ #include "cpu-qom.h"
+diff --git a/target/sh4/monitor.c b/target/sh4/monitor.c
+index 2da6a5426eb..50324d3600c 100644
+--- a/target/sh4/monitor.c
++++ b/target/sh4/monitor.c
+@@ -24,7 +24,6 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp-target.h"
+ #include "monitor/hmp.h"
+ 
+ static void print_tlb(Monitor *mon, int idx, tlb_t *tlb)
+diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
+index 378967f8164..83257a18717 100644
+--- a/target/sparc/monitor.c
++++ b/target/sparc/monitor.c
+@@ -24,7 +24,6 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp-target.h"
+ #include "monitor/hmp.h"
+ 
+ 
+diff --git a/target/xtensa/monitor.c b/target/xtensa/monitor.c
+index fbf60d55530..2af84934f83 100644
+--- a/target/xtensa/monitor.c
++++ b/target/xtensa/monitor.c
+@@ -24,7 +24,6 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp-target.h"
+ #include "monitor/hmp.h"
+ 
+ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
 -- 
 2.52.0
 
