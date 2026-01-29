@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C38D8D73E8C
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 21:34:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F05D73E83
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 21:34:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlZcs-0001Wk-Cp; Thu, 29 Jan 2026 16:32:30 -0500
+	id 1vlZcv-0001bj-Kg; Thu, 29 Jan 2026 16:32:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vlZcq-0001UQ-4F
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:32:28 -0500
+ id 1vlZcs-0001Wt-Mx
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:32:30 -0500
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vlZcm-00014l-9e
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:32:27 -0500
+ id 1vlZcr-0001A7-36
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:32:30 -0500
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 8A5338080A;
- Fri, 30 Jan 2026 00:32:20 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id C3F5D80825;
+ Fri, 30 Jan 2026 00:32:27 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:b74::1:d])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id IWrbZO5AAOs0-wtJ4Q0zB; Fri, 30 Jan 2026 00:32:20 +0300
+ ESMTPSA id IWrbZO5AAOs0-kRxMHty8; Fri, 30 Jan 2026 00:32:27 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1769722340;
- bh=zhpdYUDyWvsRyH497N4ml/LPytT4o+SDimaUItc8UBA=;
+ s=default; t=1769722347;
+ bh=tJU74EzZ7JQor/gV3yKFw+7CycBwudsDBROnC+1h/Os=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=syJuwqKqYu/SBmGsB2crk/ibhvn0U4r8BrUq45RXfvGYUnU9sow5D8+eK87iJdh6I
- PxNOvCNPQBJ2ii50wmyF1MIKjoZNWeSd/gyg+0uBrYh9Oba9yeN53k2SBPAEchVfRF
- IX8Dg+xF9bxm4B8q8JxWFwiZH2ULSvoOjdnTC2so=
+ b=sb5GNQOLsKat7qk3cFFkkJ/SLrtMVhWjGtz+pE9WIM9+1QleASsfm3BbsFYBYgJTq
+ x8bo8sFxQYuEkIMXhw/04zM0mJqQi3U3LCZl5k+RhnuU9m1rPbpvGNnzCahUWPU/SQ
+ 1alG+jNMY+oLNvvEFUv/Xmswo3V26uQfJDzNXLLs=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: jasowang@redhat.com
 Cc: qemu-devel@nongnu.org, bchaney@akamai.com, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru, davydov-max@yandex-team.ru,
- vsementsov@yandex-team.ru, Ilya Maximets <i.maximets@ovn.org>
-Subject: [PATCH v2 01/12] net/af-xdp: fix type overflow
-Date: Fri, 30 Jan 2026 00:32:03 +0300
-Message-ID: <20260129213215.1405459-2-vsementsov@yandex-team.ru>
+ vsementsov@yandex-team.ru
+Subject: [PATCH v2 12/12] net/tap: net_init_tap(): relax QEMU hubs check
+Date: Fri, 30 Jan 2026 00:32:14 +0300
+Message-ID: <20260129213215.1405459-13-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
 References: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
@@ -75,79 +75,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In for-loop in net_init_af_xdp, we do nc->queue_index = i,
-where is is int64_t for 0 to queues-1, and nc->queue_index is
-unsigned int.
-
-Also in parse_socket_fds, g_strv_length() returns guint which
-is equivalent to unsigned int.
-
-Let's simply use unsigned int type for queues, and update
-the check appropriately.
+queues may be set to 1, as well as fds may contain only one fd.
+No reason to block such cases. Let's check exactly number of queues.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- net/af-xdp.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ net/tap.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/net/af-xdp.c b/net/af-xdp.c
-index 14f302ea21..bb7a7d8e33 100644
---- a/net/af-xdp.c
-+++ b/net/af-xdp.c
-@@ -442,14 +442,14 @@ static NetClientInfo net_af_xdp_info = {
- };
+diff --git a/net/tap.c b/net/tap.c
+index c6bea0dcab..288cfedd81 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -870,13 +870,6 @@ int net_init_tap(const Netdev *netdev, const char *name,
+     assert(netdev->type == NET_CLIENT_DRIVER_TAP);
+     tap = &netdev->u.tap;
  
- static int *parse_socket_fds(const char *sock_fds_str,
--                             int64_t n_expected, Error **errp)
-+                             unsigned n_expected, Error **errp)
- {
-     gchar **substrings = g_strsplit(sock_fds_str, ":", -1);
--    int64_t i, n_sock_fds = g_strv_length(substrings);
-+    unsigned i, n_sock_fds = g_strv_length(substrings);
-     int *sock_fds = NULL;
- 
-     if (n_sock_fds != n_expected) {
--        error_setg(errp, "expected %"PRIi64" socket fds, got %"PRIi64,
-+        error_setg(errp, "expected %u socket fds, got %u",
-                    n_expected, n_sock_fds);
-         goto exit;
-     }
-@@ -484,7 +484,7 @@ int net_init_af_xdp(const Netdev *netdev,
-     unsigned int ifindex;
-     uint32_t prog_id = 0;
-     g_autofree int *sock_fds = NULL;
--    int64_t i, queues;
-+    unsigned i, queues;
-     Error *err = NULL;
-     AFXDPState *s;
-     bool inhibit;
-@@ -496,13 +496,14 @@ int net_init_af_xdp(const Netdev *netdev,
+-    /* QEMU hubs do not support multiqueue tap, in this case peer is set.
+-     * For -netdev, peer is always NULL. */
+-    if (peer && (tap->has_queues || tap->fds || tap->vhostfds)) {
+-        error_setg(errp, "Multiqueue tap cannot be used with hubs");
+-        return -1;
+-    }
+-
+     if (tap->has_vhost && !tap->vhost && (tap->vhostfds || tap->vhostfd)) {
+         error_setg(errp, "vhostfd(s)= is not valid without vhost");
+         return -1;
+@@ -900,6 +893,15 @@ int net_init_tap(const Netdev *netdev, const char *name,
          return -1;
      }
  
--    queues = opts->has_queues ? opts->queues : 1;
--    if (queues < 1) {
-+    if (opts->has_queues && (opts->queues < 0 || opts->queues > UINT_MAX)) {
-         error_setg(errp, "invalid number of queues (%" PRIi64 ") for '%s'",
--                   queues, opts->ifname);
-+                   opts->queues, opts->ifname);
-         return -1;
-     }
- 
-+    queues = opts->has_queues ? opts->queues : 1;
++    /*
++     * QEMU hubs do not support multiqueue tap, in this case peer is set.
++     * For -netdev, peer is always NULL.
++     */
++    if (peer && queues > 1) {
++        error_setg(errp, "Multiqueue tap cannot be used with hubs");
++        goto fail;
++    }
 +
-     inhibit = opts->has_inhibit && opts->inhibit;
-     if (inhibit && !opts->sock_fds && !opts->map_path) {
-         error_setg(errp, "'inhibit=on' requires 'sock-fds' or 'map-path'");
-@@ -537,7 +538,7 @@ int net_init_af_xdp(const Netdev *netdev,
- 
-     for (i = 0; i < queues; i++) {
-         nc = qemu_new_net_client(&net_af_xdp_info, peer, "af-xdp", name);
--        qemu_set_info_str(nc, "af-xdp%"PRIi64" to %s", i, opts->ifname);
-+        qemu_set_info_str(nc, "af-xdp%u to %s", i, opts->ifname);
-         nc->queue_index = i;
- 
-         if (!nc0) {
+     if (!tap_parse_vhost_fds(tap, &vhost_fds, queues, errp)) {
+         goto fail;
+     }
 -- 
 2.52.0
 
