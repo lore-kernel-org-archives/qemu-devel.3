@@ -4,97 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C5FDD61018
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 14:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C3D8D6101C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 14:27:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlSy7-0006YE-TK; Thu, 29 Jan 2026 09:25:59 -0500
+	id 1vlSz6-0006zH-QD; Thu, 29 Jan 2026 09:27:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vlSy7-0006Y5-66
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 09:25:59 -0500
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vlSy2-0000aX-Po
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 09:25:58 -0500
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-4801d7c72a5so8086645e9.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 06:25:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vlSz5-0006u1-CA
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 09:26:59 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vlSz3-0000eb-OG
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 09:26:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769696817;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=1aoUT7LXqCzW9ig1uZ0ybsDhTmWsYY4vy996VwEdEHY=;
+ b=XSO2QvCKfeGIiKO7mT10eH1C0HT2PetxwyS7zyDG/S228NZAXkPBcNPTnUAESEtKyK3hp3
+ CsvKPopL6P+sDqEXnPzMiwDdJgZh8UHQACI8TfYLuhj7k6dVoVdUMq9s5fAIxqYrsBCvG9
+ r/m+7ti5fqgKq4NkPDu76ADHWdbbMvY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-616--vujY66-OxaPRgiTn5tshQ-1; Thu, 29 Jan 2026 09:26:53 -0500
+X-MC-Unique: -vujY66-OxaPRgiTn5tshQ-1
+X-Mimecast-MFC-AGG-ID: -vujY66-OxaPRgiTn5tshQ_1769696812
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-430f5dcd4cdso758286f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 06:26:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769696753; x=1770301553; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n7jnQfCSnSYMjfClHlZhNPaVnBLTtEV2GmdtaRmWt6Q=;
- b=PzlGefxZg/D1q4hAZyuz4qntyuYkbp+2Uxt5wjKGiWzeP6O4PS6VIV9GrSYPaCbFqO
- u8AJN/CURJfLg4kubSKt/BLhDYHT87L5aVm81x+sYU4kREohm6TpcWyth1xS0LE2CUSw
- Nq0dMhorrPuDdTQ8FSnVDPgcJRepMfhFmmdSlS2nBX9kzEwgczpFU1NB0xBgH6XiK56E
- W9dNdzHC25n28sR6Lpbx26v8HhYbj2FkQFNBKIt1F0xxA7y1ANQVL08atWHFBETy33An
- 3h869SMkxp3YvAnBQMQR6ClPCozb6DlVBjiGYQ8IGfD19iS6eMm/fZE/drffww4mrx41
- FcWg==
+ d=redhat.com; s=google; t=1769696812; x=1770301612; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=1aoUT7LXqCzW9ig1uZ0ybsDhTmWsYY4vy996VwEdEHY=;
+ b=q4KRcath65foZaWf8OVMmRtTQQepF1J7N02udxYtxw0xPMChwkkA36HVRzyWRg4m1V
+ 5dzPXUTfwVyy149u446jLzbk9UqVz71MqvUSQ0COlQagQOWxBB1xF47Mmt1gLW2tNrKq
+ oB7OQZXc6ljIJ7ztLjigBczw0ZeTA4+WG+BNtZDUCNPWOLvHWgB+rUNLHpr+bHRXZM2W
+ CQtaxGlqRI4GY0NM6WitUJL/jo6lIckfO2NJTWTzuD7h+mFYssf5VAbeUhOD4HLM7CRk
+ 1yY4rxY3NxBKVV4YVh9C60RV3L2Gz202ll3n5PQ6vQ5FdnBY56wjxNaBd1Bo2jNR1GZG
+ 4lTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769696753; x=1770301553;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n7jnQfCSnSYMjfClHlZhNPaVnBLTtEV2GmdtaRmWt6Q=;
- b=WRoK13YhPiHg5ZP3/YN1N+Ao+ibJYPu+OErXHI/Tsn1jFkUhrU8pQZxVTpEoMuGsm0
- sTOBBW09ljtbkhVUPD3eoBV/JLoEf3wjv5/1XNa0SJlgUpyFZf1FhF7s6MJOjP6GIicJ
- ZK6bNA5MLIH2m6wHRb8yNbchXO7G3c8s7s2vfWtWZLDwERIZtwT41BYkZvnSRvnOExtr
- eMDJwQNmo75Zp9gq0IBiGPQjPr8q3ysSHkO8tRgi4B0vAinlRob8zKtcPIATFu0JoNtC
- S4G3nceZQCUcrJiw6Plv4CI+ECS23bii5V2htWVFoF13642XhkMYvGnQ+icerUamWnz8
- VOzQ==
+ d=1e100.net; s=20230601; t=1769696812; x=1770301612;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1aoUT7LXqCzW9ig1uZ0ybsDhTmWsYY4vy996VwEdEHY=;
+ b=mCrcMZ3Qk6QAMkgyhILnXND88sfMTZaRobDe67j/6/kLnXSOIKpUeqBdjLQMaML/0q
+ QwT+2cZhpkQEOFCcm2lBXW8RPnkVfDwb0zj4HHWNKO2PzkG3ABauHjcGkgu5JYRzAPzA
+ nZzxSjW34WcG1aUPnELuwhqcCjwYlyHtQC4DTDHF4hJM5OP5zW2ruxnQZ44vZMDDGZub
+ wCMfjLdQlJLPvSRvrf12PHtjaDzoQNyXi4V5JEvTIiS2C7USv3vVWm9o0hQ3NaNNXfm3
+ wAvqPpXnNblaKi7g2cfJ6K1xILmW6nSRMkiyLmkncoxKl3FBr+OiDGgKJ7SNU0GGy/t0
+ xn5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUW2J+cVmo4PxhvpGyeza/+m8byMWG3TIlggFbkk63LQIAcghnYrMJfFDIohY9ixrE+K8uPoiLfnoIJ@nongnu.org
-X-Gm-Message-State: AOJu0YxSc96XJctEI/dBCr0OQoiqGvdAWssZKGe8Jw6ShHDAEwEZ43Nn
- YstjGNDecMHSstVp978UzVOZ31D7T23afl0YxNIBA32FesJDOpBHmVkGHosTrK7wIQbgfmex9Oa
- vX+gaJ3y83A==
-X-Gm-Gg: AZuq6aLyMkt+/djQl8Je9eR7+tpsmuNHLZOYEaTsz72vXgLHaA1hcgTYCj1qGcPwtdN
- Sq2wHnKHtuann+z/NXo5qF+JL6NjxhV6mdXKe12H55HXKh8RsG4t4SQmgObj/FA6/T7oLNJ9dtc
- GxsC2o21mlbLFJCkGlsoTcWg/Q2JtChClp3hk0wOC1XmuYZeX0abr5K+Gt7TXW0TKmz+Hmj8zjJ
- Nw4IU2p5AgYm/8Kq6j0lNjoIychJADiD6v3jRdfi9j835xUUWsRgNdf6EzpAQeUyQcp2lKg1eO3
- Ym1+2fyyDXwTSMbEpVyGrvGNi6q5efPBmbIQHabgkHbjewyi22X+kPd9jTlf3pQeJR9L/JrISfl
- E/8/DH72zbdo2YOsxisStEgs/nEgi9Ktfq9YK0G2lRWQUVM714QNwd0Zt1qYx403Qq+jL2rygpo
- F9+nGdHFnEl7NIASj/6128VA==
-X-Received: by 2002:a05:600c:4689:b0:475:dd9a:f791 with SMTP id
- 5b1f17b1804b1-48069c98051mr92622895e9.28.1769696752765; 
- Thu, 29 Jan 2026 06:25:52 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-481a5d55d3asm3669015e9.6.2026.01.29.06.25.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 06:25:51 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CC5545F878;
- Thu, 29 Jan 2026 14:25:50 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH v2 1/6] target/arm: Account for SME in
- aarch64_sve_narrow_vq() assertion
-In-Reply-To: <20260129113455.1283266-2-peter.maydell@linaro.org> (Peter
- Maydell's message of "Thu, 29 Jan 2026 11:34:50 +0000")
-References: <20260129113455.1283266-1-peter.maydell@linaro.org>
- <20260129113455.1283266-2-peter.maydell@linaro.org>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Thu, 29 Jan 2026 14:25:50 +0000
-Message-ID: <87tsw48pht.fsf@draig.linaro.org>
+ AJvYcCWCtkmOvyHSkgcaUp/JcUrN0RcfNbFDwabJRYJKnn06Qwi8iXDcC0WWPdTmrzpcMi7n/9D2hwkhVZpD@nongnu.org
+X-Gm-Message-State: AOJu0Yz1ImtilUTebgjCofGkuqgwfhZ4X3qUvZCwiWeQ7bQ4QoRDC6nJ
+ 58TcE+SRuYxHXyDWucS+DRrVDfEFwkeC8MXg53K4oOcAktCQbknlUUP/6ciETFSQi8RudrEyiyC
+ ql3TgyxeczBrOg2GrUEpb3sL71II0gHlTqwxm6PStNFGUNyGKyfqGMD8e
+X-Gm-Gg: AZuq6aJ/ICk/7UIu+sPZmQeXoEz/VnfeaEfqLjK5yly4mCVzi6sl7ho2aB72AjTpskJ
+ 0m/Nl5U4cxg/uP8qc5aMVwT+YGLSCBIqfJdS43vC3eatKGZE3QMyqU8jxzQmH5rIgsDVsAdpCsX
+ C054NoG0fHnoTD1V2q29BYUnfj1AB3BHWbOPXk8Ad+FYdb6QSWGhG7gP3N57G7sxyEJuGegzr65
+ SQadjbhua0G6/HkSH1ZUmbea2hGSRcgZsqa4DYV3lVb8p0BdYR9uq96+KCyYheRQIp5S7KM6VEr
+ IUHB/uyLfYAi5NKSM1HqDTo7pJ/tu+66veqwXnzF0B3E/YnX3uLzDAdf5862m2WljkDhc6B5SLK
+ tBh7eB4c=
+X-Received: by 2002:a05:6000:1843:b0:435:a673:bca5 with SMTP id
+ ffacd0b85a97d-435dd1bda5dmr13141161f8f.42.1769696812255; 
+ Thu, 29 Jan 2026 06:26:52 -0800 (PST)
+X-Received: by 2002:a05:6000:1843:b0:435:a673:bca5 with SMTP id
+ ffacd0b85a97d-435dd1bda5dmr13141112f8f.42.1769696811769; 
+ Thu, 29 Jan 2026 06:26:51 -0800 (PST)
+Received: from [192.168.0.9] ([47.64.113.220])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e131cefdsm14859874f8f.23.2026.01.29.06.26.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Jan 2026 06:26:51 -0800 (PST)
+Message-ID: <e694cacf-8156-4ba7-9a64-8f6fa06a48d0@redhat.com>
+Date: Thu, 29 Jan 2026 15:26:50 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x344.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/14] pc-bios/s390-ccw: Introduce CLP Architecture
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, zycai@linux.ibm.com
+References: <20260127161547.459443-1-jrossi@linux.ibm.com>
+ <20260127161547.459443-8-jrossi@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260127161547.459443-8-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,21 +167,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On 27/01/2026 17.15, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> Call Logical Processor (CLP) Architecture is used for managing PCI functions on
+> s390x. Define and include the structures and routines needed to interact with
+> PCI devices during IPL.
+> 
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+>   pc-bios/s390-ccw/Makefile |  2 +-
+>   pc-bios/s390-ccw/clp.c    | 96 +++++++++++++++++++++++++++++++++++++++
+>   pc-bios/s390-ccw/clp.h    | 24 ++++++++++
+>   3 files changed, 121 insertions(+), 1 deletion(-)
+>   create mode 100644 pc-bios/s390-ccw/clp.c
+>   create mode 100644 pc-bios/s390-ccw/clp.h
+> 
+> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+> index 259cff09db..9c29548f84 100644
+> --- a/pc-bios/s390-ccw/Makefile
+> +++ b/pc-bios/s390-ccw/Makefile
+> @@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+>   
+>   OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
+>   	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
+> -	  virtio-ccw.o
+> +	  virtio-ccw.o clp.o
+>   
+>   SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+>   
+> diff --git a/pc-bios/s390-ccw/clp.c b/pc-bios/s390-ccw/clp.c
+> new file mode 100644
+> index 0000000000..2a14bb9b73
+> --- /dev/null
+> +++ b/pc-bios/s390-ccw/clp.c
+> @@ -0,0 +1,96 @@
+> +/*
+> + * Call Logical Processor (CLP) architecture
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "clp.h"
+> +#include <stdio.h>
+> +#include <string.h>
+> +
+> +int clp_pci(void *data)
+> +{
+> +    struct { uint8_t _[2048]; } *req = data;
+> +    int cc = 3;
+> +
+> +    asm volatile (
+> +        "     .insn   rrf,0xb9a00000,0,%[req],0,2\n"
+> +        "     ipm     %[cc]\n"
+> +        "     srl     %[cc],28\n"
+> +        : [cc] "+d" (cc), "+m" (*req)
+> +        : [req] "a" (req)
+> +        : "cc");
+> +    return cc;
+> +}
 
-> In aarch64_sve_narrow_vq() we assert that the new VQ is within
-> the maximum supported range for the CPU. We forgot to update
-> this to account for SME, which might have a different maximum.
->
-> Update the assert to permit any VQ which is valid for either
-> SVE or SME.
->
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Since this instruction is not part of the public Principles of Operation, 
+I'd appreciate if someone from IBM could review this patch.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+ From my side, I can only provide:
+Acked-by: Thomas Huth <thuth@redhat.com>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
