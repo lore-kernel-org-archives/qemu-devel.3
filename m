@@ -4,110 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D37ED73E87
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 23:28:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 403EED73EA7
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 23:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlbQr-0005ar-A5; Thu, 29 Jan 2026 18:28:13 -0500
+	id 1vlbSA-0006c6-K7; Thu, 29 Jan 2026 18:29:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vlbQn-0005Zm-Jx; Thu, 29 Jan 2026 18:28:09 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vlbQl-0007jh-Ey; Thu, 29 Jan 2026 18:28:08 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TF3Jnl012162;
- Thu, 29 Jan 2026 23:28:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=quMs9A
- bM7vYiWTpKZytB/mliZ3Wslhx+dt1J+r0V9is=; b=ka0qHadmKVw7whx//kC2YA
- MCpa+io1jHbhoa/dketSiTszgsakOZm8vok+j85oQnIN3SEJj/Hr29nDllBJWP88
- PFj0GWGdKDkkgCgN5UBdZKWhQI3gtZGyZsCo/a0chBLHJ/gxaVmQcNXRK/hu0hqr
- O4tYXx1D6yrqsza/8lOMfFuAuByjxvh1+9PWbO0vivV825Lzz0q0iyVvaZWcqLq/
- 1vRnBQEialDb+MbqYI8f6a8ycwgHuwZ1TnD1YFOqj2J6C3QJkKhCFF0TxYpUNJjk
- f64WooLXmUN7U/mQneRNbvBDf608JmsB45rG9G2m7r0jVGjK/7wZsh2PkK99wRMg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnr6ge7f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Jan 2026 23:28:03 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60TKWdEY018394;
- Thu, 29 Jan 2026 23:28:02 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bwb423uuy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Jan 2026 23:28:02 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60TNS1E534538178
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 Jan 2026 23:28:01 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 58D1658056;
- Thu, 29 Jan 2026 23:28:01 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0B0B758052;
- Thu, 29 Jan 2026 23:28:01 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 29 Jan 2026 23:28:00 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlbS9-0006aa-Ao
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 18:29:33 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlbS7-0007qF-KX
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 18:29:32 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-481188b7760so9492085e9.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 15:29:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769729369; x=1770334169; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Y354yoYAYkBybuOQv3USi7eqSN6jn8tk7Mw6/eJsjzY=;
+ b=bwH5em1dY7oWdP09jqz/KQFuHKYLaWc7akLpX11Z5kexxIL/eXcV4HMSnuBP09Ztax
+ qfFEc37m7Kv97wvqeiJsl12eMfb6WlYwhVGSFsVtjCXLeXGSFW2s+icbLKoCrVt1ZV4p
+ beQGD6VElgs7OskaqoiiwSTBRkmHdtibdyG0wKUKqmIMr8Ojjfjudir2g028IbI8iqsu
+ LBhhPl5Fx+/ZWzvDpcOCsj5+JfcsnuCF9xvjKFswKSSB5Yc9r0pP/7SNu9i+lwIMzjuv
+ pLOwkep5DS3mCt6jpAFbCur6njay+EHZ0xnMxFBPlDmnrPZ8JuW2IIi4M1i20Of8qE6x
+ D1+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769729369; x=1770334169;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Y354yoYAYkBybuOQv3USi7eqSN6jn8tk7Mw6/eJsjzY=;
+ b=eacXgtHxHDrt6o1eTNQwefTqr98Z2Ruf0qTI73Hb9QjYD+6CgeoXP0fqz8RX6v2O/l
+ SqlBx2XdFv+ytxxLDf/t5mJAtuFDoouYBW/MYIn1r36GaHtNOpzH6zIaLNfAnWqrUbdu
+ LOS4q+/ia0YT4VSv/LP3v7ue9EPNFnu2Eu/SqgUKSHVf/jUdhWM65JrV6ksKul7PeKVq
+ HYZP9HHUFXVF39SxHK9X3ZGJfLoGN3QYaNwn/PRIT7fNW/3bCjopZD5M/L1rnsuldhcA
+ sLOb38BBziVNuxPbi7CMHZqxLfw2WX/O4AD+kGIW4DuPRnqv9GXibt5cbiiAqawVWROb
+ Xe/g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdFimO7Qf2FGWrcyRuOg3wb3DG4TwMHDgjK+1bN9eIW5z0XtkIm8AUriO1+zq4kUmSBdR4sEGC7mgs@nongnu.org
+X-Gm-Message-State: AOJu0YzVegsjE8dBiesXHS5e7MWzfo8qJO6rWKM/OtKPtvPQq9zX3Apm
+ fjndaVr94hdjBfte7HqM8cxMxjF48+fXs21kj6ySuoYjYcudF99+2yJVbRouh894hxI=
+X-Gm-Gg: AZuq6aK8CquQHl+m1IUYe1Pg3QlDcbYXD/81cug32Jss11viHevyW3aFMlKx2d3iP/4
+ W/HTa6iHImz1Jc1AhyR3qXf9EfD8n7tghCXw4/gIMmqVRu4QwiIyFkj2Msb51WY5iiKeueQxtcv
+ amul6XlBbfEM2UwQa9oMdyOP9qWvXib5iyWWgaXGRKNlskIZkZMJK1Oxr+RHU0YG2F1ohwm1qmZ
+ 667XefyvSMfNm7ihnL/uEgteMOUsdY9fn+evfTUPvxrrMSlvAPFP4Wc8w4DxBrI2Mabk3KilMdu
+ rwcxvfr/gb/cnLCRgkBm+4GQDHT8/1+DarINdDGxv6tAhpL38lU/Ms4c+NnbxZ2iE1pyzCeb/Kl
+ uvpQ2YI+qlTgTL9zDuYNy5+DLGStA/fCp8zf90VC+NZ5BwKO7mFABDpgUWQnc5Ke15I/SmfKjoC
+ WYSwoR/6VqggtR54ylhpnF8V3Ryd2Rxs1FfEX+Tc0/xXxpTUhxCspHKw==
+X-Received: by 2002:a05:600c:a00d:b0:477:89d5:fdb2 with SMTP id
+ 5b1f17b1804b1-482db465e44mr8021125e9.14.1769729369314; 
+ Thu, 29 Jan 2026 15:29:29 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-482dbc75e13sm5409295e9.1.2026.01.29.15.29.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Jan 2026 15:29:28 -0800 (PST)
+Message-ID: <7a99451d-adfa-4d1a-8c74-4072607d9714@linaro.org>
+Date: Fri, 30 Jan 2026 00:29:27 +0100
 MIME-Version: 1.0
-Date: Fri, 30 Jan 2026 00:28:00 +0100
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>
-Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 4/5] target/s390x: Implement DIVIDE TO INTEGER
-In-Reply-To: <20260129190902.196262-5-iii@linux.ibm.com>
-References: <20260129190902.196262-1-iii@linux.ibm.com>
- <20260129190902.196262-5-iii@linux.ibm.com>
-Message-ID: <3ffcd87fad77fa09811ae8ea8dbac25f@linux.ibm.com>
-X-Sender: iii@linux.ibm.com
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDE3MiBTYWx0ZWRfX0CFJRa2T7Ri4
- +2In4Cu944GOpNdb7vu764bsnOSVeUS2Zx8bE+yWoiLkcd+6LyOqG/JNGrwoI9KNicb0QHAfbE/
- KziblEcUECNl6xcvRq63AWJSDSZI1+iCzW55v3FZJduxD6WwqLPMjTI9+S+D0yTg2CPVMheXsI0
- tNKF4/kpcmGOk9YaZTBVAnDfoQ+qRbp/X+bVKrmH0CqQiaF30xgPfEmMvPjqS4XUEAgjHPWGMio
- Af7A7J7riK7bDYdr83J6+AAZCKMJ00jxxKqd6HXbcWYHxcyV2+Owt5r3KUbTJUVUk5szt7E/66C
- yll1fD0P6Fju8kxkgmaOeMBb8M3bdE1AxyBAhb7YkxS4e/qehoiucxbGZguHEk+2M40cTM4fqlx
- T3H91y/hF28klxbSb7Th7OGyH55cWzlokZK6SZYT2Z/0Y6VB6qtxwYcWz+CQGVE9UPSXqKjkX23
- ZwIJtPMy8VWfFk7y3pg==
-X-Proofpoint-GUID: lMH_64qh0SZ_BjGpxLvAZ-WAKz1Imcoo
-X-Proofpoint-ORIG-GUID: lMH_64qh0SZ_BjGpxLvAZ-WAKz1Imcoo
-X-Authority-Analysis: v=2.4 cv=X+Vf6WTe c=1 sm=1 tr=0 ts=697bed03 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=jwhYoYNhkcTQYmz5Q34A:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-29_03,2026-01-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1015 spamscore=0 adultscore=0 malwarescore=0 bulkscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601290172
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] memory: Remove
+ memory_region_init_rom_device_nomigrate()
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki
+ <odaki@rsg.ci.i.u-tokyo.ac.jp>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>
+References: <cover.1769703287.git.balaton@eik.bme.hu>
+ <87d6eafa7c7f7f62de0e82dd5c70cd0d0a4f59b8.1769703287.git.balaton@eik.bme.hu>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87d6eafa7c7f7f62de0e82dd5c70cd0d0a4f59b8.1769703287.git.balaton@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,52 +107,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-01-29 19:57, Ilya Leoshkevich wrote:
-> DIVIDE TO INTEGER computes floating point remainder and is used by
-> LuaJIT, so add it to QEMU.
+On 29/1/26 17:20, BALATON Zoltan wrote:
+> This function is never used, remove it.
 > 
-> Put the main logic into fpu/, because it is way more convenient to
-> operate on FloatParts than to convert floats back-and-forth.
-> 
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->  fpu/softfloat.c                  | 144 +++++++++++++++++++++++++++++++
->  include/fpu/softfloat.h          |  11 +++
->  target/s390x/helper.h            |   1 +
->  target/s390x/tcg/fpu_helper.c    |  56 ++++++++++++
->  target/s390x/tcg/insn-data.h.inc |   5 +-
->  target/s390x/tcg/translate.c     |  26 ++++++
->  6 files changed, 242 insertions(+), 1 deletion(-)
+>   docs/devel/memory.rst                         |  1 -
+>   include/system/memory.h                       | 27 ------------
+>   .../memory-region-housekeeping.cocci          |  8 ----
+>   system/memory.c                               | 41 ++++++-------------
+>   4 files changed, 13 insertions(+), 64 deletions(-)
 
-I've taken a fresh look and I think I can improve one small thing.
-I will change this alongside other feedback (if any) in v4.
 
-[...]
+> -bool memory_region_init_rom_device_nomigrate(MemoryRegion *mr,
+> -                                             Object *owner,
+> -                                             const MemoryRegionOps *ops,
+> -                                             void *opaque,
+> -                                             const char *name,
+> -                                             uint64_t size,
+> -                                             Error **errp)
+> -{
+> -    Error *err = NULL;
+> -    assert(ops);
+> -    memory_region_init(mr, owner, name, size);
+> -    mr->ops = ops;
+> -    mr->opaque = opaque;
+> -    mr->terminates = true;
+> -    mr->rom_device = true;
+> -    mr->destructor = memory_region_destructor_ram;
+> -    mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
+> -    if (err) {
+> -        mr->size = int128_zero();
+> -        object_unparent(OBJECT(mr));
+> -        error_propagate(errp, err);
+> -        return false;
+> -    }
+> -    return true;
+> -}
+> -
+>   void memory_region_init_iommu(void *_iommu_mr,
+>                                 size_t instance_size,
+>                                 const char *mrtypename,
+> @@ -3802,9 +3776,20 @@ bool memory_region_init_rom_device(MemoryRegion *mr,
+>                                      Error **errp)
+>   {
+>       DeviceState *owner_dev;
+> +    Error *err = NULL;
+>   
+> -    if (!memory_region_init_rom_device_nomigrate(mr, owner, ops, opaque,
+> -                                                 name, size, errp)) {
+> +    assert(ops);
+> +    memory_region_init(mr, owner, name, size);
+> +    mr->ops = ops;
+> +    mr->opaque = opaque;
+> +    mr->terminates = true;
+> +    mr->rom_device = true;
+> +    mr->destructor = memory_region_destructor_ram;
+> +    mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
+> +    if (err) {
+> +        mr->size = int128_zero();
+> +        object_unparent(OBJECT(mr));
+> +        error_propagate(errp, err);
+>           return false;
+>       }
+>       /* This will assert if owner is neither NULL nor a DeviceState.
 
-> +
-> +        /*
-> +         * Final quotient is rounded using final-quotient-rounding 
-> method, and
-> +         * partial quotient is rounded toward zero.
-> +         *
-> +         * Rounding of partial quotient may be inexact. This is the 
-> whole point
-> +         * of distinguishing partial quotients, so ignore the 
-> exception.
-> +         */
-> +        *n = *q;
-> +        saved_flags = status->float_exception_flags;
-> +        parts_round_to_int(n,
-> +                           is_q_smallish ? 
-> final_quotient_rounding_mode :
-> +                                           float_round_to_zero,
-> +                           0, status, fmt);
-> +        float_exception_flags = saved_flags;
+The code is actually inlined, not removed. With that clarified:
 
-saved_flags can probably be eliminated; I can assign directly to 
-float_exception_flags.
-I think I can also use parts_round_to_int_normal(), because all the 
-other cases are taken care of above.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-[...]
 
