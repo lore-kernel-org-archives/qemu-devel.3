@@ -4,93 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1EFBD73E87
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 21:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FC59D73E87
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 21:47:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlZoV-0005ra-61; Thu, 29 Jan 2026 16:44:31 -0500
+	id 1vlZr2-0006qB-SO; Thu, 29 Jan 2026 16:47:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlZoU-0005rB-D9
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:44:30 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlZoS-0002kJ-Ig
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:44:30 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47ee07570deso12324135e9.1
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 13:44:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769723066; x=1770327866; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mqLeK4m2H6qJ3W011XKVt8raqkPS9kqFZ/660tF2y8U=;
- b=tLW+FtXZ/kxS/i+1YlpZmCYY6GuwT76P/XLZ8ER8JZWFI7H4hQU7tXUYCk0o1hetD7
- mCABzrIQs3COmW2YTIYQFIPRrMhVA1KXbK3svkL3QsKW5ZekNZZPyElmlOOvU6bGV+uY
- jmyxgqsnYWMjMS3q0TM+c8zzevLcYG1foiG12prj+/w1+AwAXeM9J7IXqn+rJMZIac73
- +/k6/ZBaq0N2V9CobY6XSDJaT75ZIr4vx4PBikyhnHy+Wz4/++sb4DpVS+KgUnZA2jmv
- Z+8hGybHT7g+QnEWbEX/stY+AuiEZj8Jmx0QLP8QNa8/4Ocs9wP1JSTdF4o37NKj1jNM
- HqwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769723066; x=1770327866;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mqLeK4m2H6qJ3W011XKVt8raqkPS9kqFZ/660tF2y8U=;
- b=nurnmAftXal0/7z+UONutWIzfvwyqhkvvPhyjRGqZdufrnJN7f2g4ARns2Sa0uFd71
- MIiBr+JDgX7/ZSGT+zv/kSs4y4mEfhs27VVWqcy8tBPje4twK5YoNL8BlKciEg+z/HNv
- X+AziLUO5vpbqWaKovB2BOGO2krhAcTEOXOXCEMC1zVGXeoow1GixpcIy25FiTrT1K8o
- BttKk++meP93Gnq69i2yZO1M/iw+Te78YOHkenvhYm1iqPu41JT2GW3smthccjhR+h7F
- f3fUi08HjOhpXhiObCUL5UgB0/H9kJk0cBC0i+i08SXaP9Gy+ITQvBIAV1JaIMX7NGQA
- 2egQ==
-X-Gm-Message-State: AOJu0Yzpx1XnTx2O5/JCJ0ykEmAGVVq/BnUdwJZ4LdK/Ni9jWcqU36yB
- Q8zIIdX5SnrAzFA0B3e4TKYlXUcHAOjs2VH9cRDMiJ0Z5aag3pswju+Q3KI4QgISSWs=
-X-Gm-Gg: AZuq6aIwg77F/gkoM7qeRtcGJocBboQcDmsxaNtpZwcfKm7fmUnmy0oxDZKwFtsvrQB
- 6sFNlWRQEosIZ9oe0rizDVQVSQraaNhtp3c2vvOPWpM4TTmW5Mq28fYJ4Co0gdjmx7eM50bqjB2
- FtPz+el38NdEKJgkK41mXZ/ZbICnkYOMqo/FzACKnRh7qGVivUVE2dbL3vH+Kml3/ytPXEHEkVp
- jUd+SzUFYiHYU2ifHUn2jY0wi69DJhKuWK4P2217LsGoOSL/vJ0rwS9jpJWXMRY4BUrHkivFMb5
- FKRala3oQEQ//lLmIgMvGBvfUWovxDGTf2GQJcccdeqiNJVRQhKceomecJW92U8BRkUwUBaYAGZ
- NcJCsAZsxpnOIsViQbXICdBV009Ky2mjld2QCLdfBFJp5Vc1OIS9Usembnh93MXUTgOWGMtcocG
- WJgZ68BbSotisI56q6DWH4w9DgGOv1cNRUd3RnUmytJlJiSTwTT03OfUQ9PiJBXj/r
-X-Received: by 2002:a05:600c:a00e:b0:477:63db:c718 with SMTP id
- 5b1f17b1804b1-482db4bda8dmr7130165e9.16.1769723066282; 
- Thu, 29 Jan 2026 13:44:26 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-482daf1c6bfsm4609325e9.15.2026.01.29.13.44.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Jan 2026 13:44:25 -0800 (PST)
-Message-ID: <0954062c-c032-42be-ad0d-df2559360963@linaro.org>
-Date: Thu, 29 Jan 2026 22:44:24 +0100
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vlZqg-0006nC-6j; Thu, 29 Jan 2026 16:46:57 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vlZqb-00038w-Nq; Thu, 29 Jan 2026 16:46:45 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TEppom011231;
+ Thu, 29 Jan 2026 21:46:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=C2eGLk
+ vSPk1gxsHMmSqMUS3hktSE6ZpKLyPj83RGXMU=; b=KoxspoDDb0T4pZTzmUE4TV
+ GdKMtXLOM9uGjiIDDiZc8ZYWZ3ubjVFoDJhDdVqwT12zTjOJbL9Df9DvHIKEyiUL
+ SkiP2O+JXyLzf1rOfn0158qIgCreoNJO5qojjC0yfTDNvffCXzUKri0FcXzb3yLq
+ lPG/gSSihFYQQkAFDTiGmCgyXWWmpKqsBVBTDnjJ3Zyu7gJdcUr2EcI7WOq4UalX
+ GOKRoXwOuhWncy9EjzZAkjuRzJETPGUJPbvzdSa7iKBC813VcyU8HOPn+8Vt5Erf
+ 8IQmB32BG6PrRXU0ihlPtrBlyV4wYNr632gaDve2KHlbTQhMHEQIZceorgayteYw
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvmgg8dqb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Jan 2026 21:46:33 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60TJYwur023341;
+ Thu, 29 Jan 2026 21:46:32 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bwamk3ngq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Jan 2026 21:46:32 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60TLkVx014811654
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 29 Jan 2026 21:46:31 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8352158055;
+ Thu, 29 Jan 2026 21:46:31 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 542585804B;
+ Thu, 29 Jan 2026 21:46:30 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.53.37]) by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 29 Jan 2026 21:46:30 +0000 (GMT)
+Message-ID: <1c899641213407613647adcc10ce1d5b10f3fce9.camel@linux.ibm.com>
+Subject: Re: [PATCH v3 06/14] include/hw/s390x: Move CLP definitions for
+ easier BIOS access
+From: Eric Farman <farman@linux.ibm.com>
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
+ zycai@linux.ibm.com
+Date: Thu, 29 Jan 2026 16:46:29 -0500
+In-Reply-To: <20260127161547.459443-7-jrossi@linux.ibm.com>
+References: <20260127161547.459443-1-jrossi@linux.ibm.com>
+ <20260127161547.459443-7-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ui/kbd-state.h: Make the header C++ compatible
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, Roman Kiryanov <rkir@google.com>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- mjt@tls.msk.ru, whollins@google.com, jansene@google.com,
- jpcottin@google.com, Eric Blake <eblake@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20260129190444.225306-1-rkir@google.com>
- <10b26b57-bcd6-4853-9e2b-b8410b404806@linaro.org>
- <CAOGAQeqsvEDMy4EURsWNAmRF1ZmSfmj0+s3LzxSEw7JZVeCdTw@mail.gmail.com>
- <CAFEAcA8E5RZ1ZRy2dETG_X20dJPq-E=uK9=wvM8oUn897gj2Yw@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA8E5RZ1ZRy2dETG_X20dJPq-E=uK9=wvM8oUn897gj2Yw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Z4vh3XRA c=1 sm=1 tr=0 ts=697bd539 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=1LVPMEDt2vtEygA9br4A:9
+ a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: B-HwyIv_WnFCp_stCKqR5GzsiHjQQxAq
+X-Proofpoint-ORIG-GUID: B-HwyIv_WnFCp_stCKqR5GzsiHjQQxAq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDE1OSBTYWx0ZWRfX72PLZRWJiaHc
+ fpecTHqYpihzGXIJ41u65pK2iRnwRSAMEI96t2vZTdTatB5G7TpHyJbC0E4P7QY5x2iT/J0EKn0
+ MgBwh1Ro8OobUa+A1Mh7lyOZC+WOlVfWoaBVhkjx6FnWnh1FTP8kDSrwXFWGQw+ZL5YKhLuEPBc
+ Wl9bry/E5TdQrzDj7sRR3/2PSIJMQdRf/DhwJlHK1r3AJPXQjKtVe2PVUC71aItfeaWbqSktw3H
+ 8F55YiapukOaesJ32R7NP77hzoxsvIgfuv7H51lmn/k2YR9OlYZOpzwQzTNu9mljgTvVJt82Fqe
+ zNrJuYIPZ3HRwYA+WHxDzzcTnbZLaJ880Qo1wmp3x7dZqe+cTij6GyOf3cqP374iTcHGpqriaRK
+ GCf7FWe270FdwwCWBLHw+faSk4thE9ocSwyareYfYkCj/gkP3isSwf7/YtNYGK0EXToMa03EbJu
+ XwwMp8y/DiyZbv9Myfw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-29_03,2026-01-29_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 phishscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601290159
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,128 +123,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On Tue, 2026-01-27 at 11:15 -0500, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+>=20
+> Move the s390-pci-clp definitions into the "ipl" sub-directory, which is =
+visible
+> to the s390-bios.  This allows the bios to reuse the architected definiti=
+ons and
+> prevents code duplication.
+>=20
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+>  hw/s390x/s390-pci-vfio.c                  | 2 +-
+>  include/hw/s390x/{ =3D> ipl}/s390-pci-clp.h | 0
+>  include/hw/s390x/s390-pci-bus.h           | 2 +-
+>  3 files changed, 2 insertions(+), 2 deletions(-)
+>  rename include/hw/s390x/{ =3D> ipl}/s390-pci-clp.h (100%)
 
-(+Paolo / Eric)
-
-On 29/1/26 21:31, Peter Maydell wrote:
-> On Thu, 29 Jan 2026 at 20:26, Roman Kiryanov <rkir@google.com> wrote:
->>
->> Hi Philippe, thank you for looking into my patch.
->>
->> On Thu, Jan 29, 2026 at 11:23 AM Philippe Mathieu-Daudé
->> <philmd@linaro.org> wrote:
->>>
->>> On 29/1/26 20:04, Roman Kiryanov wrote:
->>>> This patch fixes the C++ compilation error:
->>>>
->>>> ISO C++ forbids forward references to 'enum' types
->>>>
->>>> -typedef enum QKbdModifier QKbdModifier;
->>>> -
->>>> -enum QKbdModifier {
->>>> +typedef enum QKbdModifier {
->>>> -};
->>>> +} QKbdModifier;
->>>
->>> Yes but:
->>>
->>> $ git grep -E 'typedef enum.*;'
->>> include/hw/misc/auxbus.h:32:typedef enum AUXCommand AUXCommand;
->>
->> I also grepped through the QEMU source code and saw other examples. I
->> limited this patch to ui/kbd-state.h because it is the specific header
->> causing C++ compilation errors in our project. I hesitated to touch
->> the others to keep the diff minimal and avoid changes in files we
->> aren't currently using.
->>
->> Currently, QEMU has a mix of incompatible and compatible (e.g.
->> block/block-common.h, BlockZoneOp) enum definitions. I think,
->> everything outside the include/ directory should be implementation
->> details.
->>
->> How would you prefer I proceed?
->>
->> 1) Keep this patch focused: Limit the change to kbd-state.h to fix the
->> active build breakage.
->> 2) Fix public headers: I can send a v2 that fixes this pattern for all
->> files in include/.
->> 3) Tree-wide cleanup: I can attempt to fix every instance found by
->> grep, though this touches private headers as well.
-> 
-> There is also option 4:
-> 
-> 4) Don't change this, because QEMU is not a C++ project
-> and it's not a goal for our headers to be compilable
-> with C++, with some minor exceptions.
-> 
-> What are we trying to achieve here, and why does it benefit
-> us as an upstream project ?
-> 
-> cf previous email thread from 2024
-> https://lore.kernel.org/qemu-devel/ZnqPpqfBxlk9tEdX@redhat.com/
-> about "drip-feeding" of this kind of patch with no clear take
-> on what the end state is or how much churn it's going to induce.
-
-I clearly know QEMU is not a C++ project. Now I don't see why we should
-be reluctant to have headers being usable by a C++ compiler, as long as
-it doesn't make our project worst to maintain.
-
-See for example non-invasive commit 7246c4cc470 ("exec: don't use void*
-in pointer arithmetic in headers"):
-
--- >8 --
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-@@ -2767 +2767 @@ struct MemoryRegionCache {
--    void *ptr;
-+    uint8_t *ptr;
----
-
-or commit 17c7df806b3 ("exec: avoid using C++ keywords in function
-parameters"):
-
--- >8 --
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-@@ -928 +928 @@ struct MemoryListener {
--                      int old, int new);
-+                      int old_val, int new_val);
-@@ -947 +947 @@ struct MemoryListener {
--                     int old, int new);
-+                     int old_val, int new_val);
----
-
-
-In this particular case, I always have been confused about what would be
-the size of forward-declared enums. The C99 standard chapter §6.7.2.2
-point 4 mentions:
-
-   Each enumerated type shall be compatible with char, a signed
-   integer type, or an unsigned integer type. The choice of type
-   is implementation-defined, but shall be capable of representing
-   the values of all the members of the enumeration.
-
-When compiling this file with -Werror=pedantic we get:
-
-In file included from ../../ui/kbd-state.c:10:
-include/ui/kbd-state.h:12:14: error: ISO C forbids forward references to 
-'enum' types [-Werror,-Wpedantic]
-    12 | typedef enum QKbdModifier QKbdModifier;
-       |              ^
-
-So arguably this could be fixed for C.
-
-
-On another perspective, having more contributors should keep our project
-healthy, and would potentially bring us more reviewers (maintainers?).
-
-
-If we don't object to take such patches, my only request is to have a
-CI job for non-C++ developers to not breaking the headers over time.
-
-
-My 2 cents :)
-
-Regards,
-
-Phil.
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
