@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 286ADD61017
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45895D61018
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 13:43:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlSAA-0001oX-3A; Thu, 29 Jan 2026 08:34:22 -0500
+	id 1vlSAF-0002Xy-Uh; Thu, 29 Jan 2026 08:34:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlS98-0000G9-3Z
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 08:33:22 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlS9O-0000SE-Pl
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 08:33:53 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlS94-0002co-5k
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 08:33:17 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-432755545fcso752772f8f.1
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 05:33:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlS9L-0002dk-Oe
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 08:33:34 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4801c2fae63so7779905e9.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 05:33:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769693591; x=1770298391; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769693598; x=1770298398; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=apOZMf0tEn3rJJPrSfMcVgYQ3RZZMtDVtwPqX5t6dIc=;
- b=zcJ6YLxipDwzdZdCtToJ6GlOD3UcLF9huU0jCo1X+nBh9JRK77nzDFtDKWSENANhgv
- ZG2MUiieMLE1nUzcXpr5s10TjSKIhEE6j8/OUVxIz9mG+i8KIoaYJcbffpHSImWoyzPD
- +joDBCBx9dEo2TwOnKQxDxxudGHnB0Q5QyncTj5pMIEwVJOVf76coZ2SIk79HIKqVmd/
- 5rFWQI5M3KYb+W4G94y7MTm0sEp3ut3hskOwgh9RDvgwCnjjEnhoalKMkP93Pv/k8yjB
- kesNx+WXvfRKF2oLSLM2uqO+Foe3tUzV1VMaztHMncn59SrV98ESX/g5n10zO2NsECOQ
- K/LA==
+ bh=D7onpzEg5oFF81Cr9JNPbzUwDH4GaGSfQFJXvSw5++8=;
+ b=Y+G/iD/bmz2BkxzqEfcnZDCYBZzlKWez+FJaogfoPWjlKZMKTv++o1u/qUCAU2gLG1
+ JjP+YS+vTRrDGe6HKDdjS6ZWT7HcYF9mRrTHUs6u1ahgE2WGZPemiuN3rrODk9Bpo8OK
+ 5GLm+4+B6rAIBjkVz9feEtGt1DJ8pFa+3rQ8ft8cWJoOML8KIPknwv5/q2LiSfibMapV
+ 4PXNLVPrC/ev7D2zuvWHUzIMV03crAG32lnsG16ILc6ICx6AU9YpzFZxyAXN0WvgKbt0
+ K9CyugGZr5KYhQN6RzvyjvBj2LH5XesjRHsT8Ybxspxik9qqGNr50ZMyCabT2LWMMk7E
+ MfsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769693591; x=1770298391;
+ d=1e100.net; s=20230601; t=1769693598; x=1770298398;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=apOZMf0tEn3rJJPrSfMcVgYQ3RZZMtDVtwPqX5t6dIc=;
- b=w4cV/C6yHauKYqRFgoEeHKoYN36p0nHpdlGyAI4tHQWprFJ5opsK/PrkpVqjlwool1
- leqba5EYaUQAtR49lmciuAV4bQFyrQueudzNEJjBh3y5i6TSNY+0CuVMOND3Q59Bhjrn
- t6IvG4OJhFTddoSeL7+kHg6rvTCHIGlE0/F9fC07xSk24ZuWzsoZZldgmrHfu4ab4ZbX
- BM3Lf07VfKCR98+qzFKY1tm2QFOSMRnlOihy3+VPADiPNZJEh0olgaMmlS4nIyW7Km7x
- npcKlXK1cJQB0OiMJMGfFX/Pq7xnc0LBdrT1hAWbBppdzL7sopWhuWkjFGkzIYOkOAki
- WVNA==
-X-Gm-Message-State: AOJu0YwhYNxxKWky9jB3fq1BlJt7aG1Hy8N3BCEItUrhNKTjGY0HqbCN
- XuOYLwLaG0QE21GTpvjkjfTtkwHdurDBCaT7flNXGYz5S7nrJmXSHdnttQuju+e+BYkeH2XUV2T
- XkYFTEWg=
-X-Gm-Gg: AZuq6aIOf8AzPcVd0kxv5lVU0BjSxHX9Xw8y2aaZiqEaoGGlN6UaKsfwZjM1k4csGCT
- xzktzxhwG4x8CyhvkvaS++L/Wt5BpclZmc3K35Fk0g+amdMEzY3tWktiSG79qQwKZwvmDXphI0C
- Y8rBK4sKEBcfD/I27cg8fxCNpAU9/W9oqHgly3xd8oN5nm5eb1wxZzkNVqd6qxWddw3G2zfUemT
- ZBbINBG2ch3Pbw5yH+SBbkyyF0Fk/jvh29myuMP0zEo7fV3XwruEMlb7imVFDjdd4xj3Bxb1038
- WOH0Pfvf6t9ZC8yKNZxZp0mF4h3Xle4vStjoUZzJcRVZ2dBk2b5n+oD3h6FETjNJgKJyLlP8vOU
- UIImWMFKbLC1ipqoXZj4Cv7YmNAJi7s85737/vgbwDQDuv6gcXH2SfsIRikpqPBbdZ9/N+jqtuB
- svu19xhfO4n63R09/6zS+u1dA9899SVZ5ciUJ3tna8slHyVGbBu8lM+DFi/1av
-X-Received: by 2002:a05:6000:2401:b0:435:97b2:a9b with SMTP id
- ffacd0b85a97d-435dd1c0cb9mr12196567f8f.37.1769693591265; 
- Thu, 29 Jan 2026 05:33:11 -0800 (PST)
+ bh=D7onpzEg5oFF81Cr9JNPbzUwDH4GaGSfQFJXvSw5++8=;
+ b=O49i1qnzN/pcVq4RG2bzqBnIrqJo+9sPmwmtjZXiO/awKwCw9m7iVnflk0FVf4u5ip
+ DEbw/IFJrc2SIRO0g2qz1/Ox9PLpSJnzILDjDnMPz7sGgokoQs/cpoLv3zyRLJVW4lGF
+ 2uNYZSbXI+2b09bQ06pFlMNMrrVq+AvGWAlYoVkUHK4mTyztP+3xUWSxs8OTasS3oX6I
+ GmWbSmoERYTKJAy6+0bzyVK1TiHMO7spk3f0MxT9Zsi/PuPEpSS0a2jQfQSrO9Wim42u
+ I04SVSiao8K9/AFqii3lnV5vUrzWkxBZTYuRtZv9I9KkhYYPdFili0vcn6gP6ETG33AX
+ QUBQ==
+X-Gm-Message-State: AOJu0YxPsBJuZ8k2kgrrPVtGB7lnIuRYpy0TykUlfUG600r0qYJxV3DZ
+ 3UqiXlOHVA7U5gHIawAq/Ro7d+tQRUKGm07OLK59g7oqcLMP5yHFuynNGioosP5XPREcRHmdLZY
+ 6z3G8AR4=
+X-Gm-Gg: AZuq6aIynXXXdL6o3cOIhPxSSiueEm9OQCbOQJcENtqvbY+/OPX9Pz4tyw6KyDIFqry
+ 8769+QIMtYXqYyCGRExCsJB1vQtftEv+8uhz7RE/dWuwUtdxPb5CxIzsM7sDs8crgEc6azdHeqC
+ Q20pbU9OSxH+A+J80jftiSCcvbi5bMp+msPJQQYTj6LaG7DeANt9uBOW9T4DR37XdBtUrlczgmh
+ CaB9l9fw5pXdaS/9uzqVi0qVOnHbjuYIQ66ACFOqcGKT6JAIP6S7zmybuMLzOAAsq1XjNPZ8MFi
+ 1Plhx/0qQ7duiblCQGTtqQhfarPzINXDv9MrnI/wNLVrM8tbi6jrLEHOpgB73O981XYpqkLJv6j
+ HAq1ISuKNNuUpRj4kVVoVGYYi166OlJ2Hyf2hV7wuFvz2iF1nBkShbfLQZhgYiScFArWiJrlPOX
+ 0XTzopOJKBwg9CeH9Ky7hc+uHvB0rgNPBfaNVrgys9tvikg9A2viwu610BTSNF
+X-Received: by 2002:a05:600c:154c:b0:475:de12:d3b5 with SMTP id
+ 5b1f17b1804b1-48069c6136fmr94888945e9.34.1769693598162; 
+ Thu, 29 Jan 2026 05:33:18 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e1322f40sm14195715f8f.34.2026.01.29.05.33.10
+ 5b1f17b1804b1-481a5cc4b99sm5046355e9.0.2026.01.29.05.33.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 29 Jan 2026 05:33:10 -0800 (PST)
+ Thu, 29 Jan 2026 05:33:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-riscv@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
  "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH v4 4/9] monitor: Reduce target-specific methods
-Date: Thu, 29 Jan 2026 14:32:36 +0100
-Message-ID: <20260129133241.35990-5-philmd@linaro.org>
+Subject: [PATCH v4 5/9] monitor: Have MonitorDef::get_value() return an
+ unsigned type
+Date: Thu, 29 Jan 2026 14:32:37 +0100
+Message-ID: <20260129133241.35990-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260129133241.35990-1-philmd@linaro.org>
 References: <20260129133241.35990-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,161 +102,296 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following methods don't use target-specific code anymore:
-- hmp_compare_cmd()
-- monitor_register_hmp()
-- monitor_register_hmp_info_hrt()
-Move them to hmp.c which is target-agnostic, being built once.
+All implementations of the get_value() handler return an
+unsigned type:
+
+- target/i386/monitor.c
+
+  monitor_get_pc() -> target_ulong eip;
+
+- target/ppc/ppc-qmp-cmds.c
+
+  monitor_get_ccr() -> uint64_t ppc_get_cr(const CPUPPCState *env);
+
+  monitor_get_xer() -> target_ulong cpu_read_xer(const CPUPPCState *env);
+
+  monitor_get_decr() -> target_ulong cpu_ppc_load_decr(CPUPPCState *env);
+
+  monitor_get_tbu() -> uint32_t cpu_ppc_load_tbu(CPUPPCState *env);
+
+  monitor_get_tbl() -> uint64_t cpu_ppc_load_tbl(CPUPPCState *env);
+
+- target/sparc/monitor.c
+
+  monitor_get_psr() -> target_ulong cpu_get_psr(CPUSPARCState *env1);
+
+  monitor_get_reg() -> target_ulong *regwptr;
+
+Convert the MonitorDef::get_value() handler to return unsigned.
+
+Rename the MD_I32/MD_TLONG definitions mechanically doing:
+
+ $ sed -i -e s/MD_I32/MD_U32/g $(git grep -lw MD_I32)
+ $ sed -i -e s/MD_TLONG/MD_TULONG/g $(git grep -lw MD_TLONG)
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 ---
- monitor/hmp-target.c | 57 --------------------------------------------
- monitor/hmp.c        | 55 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 55 insertions(+), 57 deletions(-)
+ include/monitor/hmp-target.h |  7 ++---
+ monitor/hmp-target.c         | 12 ++++----
+ target/i386/monitor.c        |  8 ++---
+ target/m68k/monitor.c        | 60 ++++++++++++++++++------------------
+ target/ppc/ppc-qmp-cmds.c    | 25 +++++++--------
+ target/sparc/monitor.c       | 10 +++---
+ 6 files changed, 59 insertions(+), 63 deletions(-)
 
+diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+index 5167d17d41d..6d6653aee6e 100644
+--- a/include/monitor/hmp-target.h
++++ b/include/monitor/hmp-target.h
+@@ -32,14 +32,13 @@ typedef struct MonitorDef MonitorDef;
+ struct MonitorDef {
+     const char *name;
+     int offset;
+-    target_long (*get_value)(Monitor *mon, const struct MonitorDef *md,
+-                             int val);
++    uint64_t (*get_value)(Monitor *mon, const struct MonitorDef *md, int val);
+     int type;
+ };
+ #endif
+ 
+-#define MD_TLONG 0
+-#define MD_I32   1
++#define MD_TULONG 0
++#define MD_U32    1
+ 
+ const MonitorDef *target_monitor_defs(void);
+ int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
 diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
-index 59c60d13b52..420969bd6eb 100644
+index 420969bd6eb..1600666ee92 100644
 --- a/monitor/hmp-target.c
 +++ b/monitor/hmp-target.c
-@@ -33,8 +33,6 @@
- #include "qapi/qapi-commands-control.h"
- #include "qapi/qapi-commands-misc.h"
- #include "qapi/qapi-commands-machine.h"
--#include "qapi/error.h"
--#include "qemu/cutils.h"
+@@ -67,7 +67,6 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+ {
+     const MonitorDef *md = target_monitor_defs();
+     CPUState *cs = mon_get_cpu(mon);
+-    void *ptr;
+     uint64_t tmp = 0;
+     int ret;
  
- #if defined(TARGET_S390X)
- #include "hw/s390x/storage-keys.h"
-@@ -44,29 +42,6 @@
- /* Make devices configuration available for use in hmp-commands*.hx templates */
- #include CONFIG_DEVICES
+@@ -81,13 +80,14 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+                 *pval = md->get_value(mon, md, md->offset);
+             } else {
+                 CPUArchState *env = mon_get_cpu_env(mon);
+-                ptr = (uint8_t *)env + md->offset;
++                void *ptr = (uint8_t *)env + md->offset;
++
+                 switch(md->type) {
+-                case MD_I32:
+-                    *pval = *(int32_t *)ptr;
++                case MD_U32:
++                    *pval = *(uint32_t *)ptr;
+                     break;
+-                case MD_TLONG:
+-                    *pval = *(target_long *)ptr;
++                case MD_TULONG:
++                    *pval = *(target_ulong *)ptr;
+                     break;
+                 default:
+                     *pval = 0;
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index 99b32cb7b0f..427f1990399 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -593,8 +593,8 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+     }
+ }
  
--/**
-- * Is @name in the '|' separated list of names @list?
-- */
--int hmp_compare_cmd(const char *name, const char *list)
--{
--    const char *p, *pstart;
--    int len;
--    len = strlen(name);
--    p = list;
--    for (;;) {
--        pstart = p;
--        p = qemu_strchrnul(p, '|');
--        if ((p - pstart) == len && !memcmp(pstart, name, len)) {
--            return 1;
--        }
--        if (*p == '\0') {
--            break;
--        }
--        p++;
--    }
--    return 0;
--}
--
- /* Please update hmp-commands.hx when adding or changing commands */
- static HMPCommand hmp_info_cmds[] = {
- #include "hmp-commands-info.h"
-@@ -147,35 +122,3 @@ static void __attribute__((__constructor__)) sortcmdlist(void)
-           sizeof(*hmp_info_cmds),
-           compare_mon_cmd);
+-static target_long monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
+-                                  int val)
++static uint64_t monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
++                               int val)
+ {
+     CPUArchState *env = mon_get_cpu_env(mon);
+     return env->eip + env->segs[R_CS].base;
+@@ -602,9 +602,9 @@ static target_long monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
+ 
+ const MonitorDef monitor_defs[] = {
+ #define SEG(name, seg) \
+-    { name, offsetof(CPUX86State, segs[seg].selector), NULL, MD_I32 },\
++    { name, offsetof(CPUX86State, segs[seg].selector), NULL, MD_U32 },\
+     { name ".base", offsetof(CPUX86State, segs[seg].base) },\
+-    { name ".limit", offsetof(CPUX86State, segs[seg].limit), NULL, MD_I32 },
++    { name ".limit", offsetof(CPUX86State, segs[seg].limit), NULL, MD_U32 },
+ 
+     { "eax", offsetof(CPUX86State, regs[0]) },
+     { "ecx", offsetof(CPUX86State, regs[1]) },
+diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
+index 6d101c75df0..1bb5012da91 100644
+--- a/target/m68k/monitor.c
++++ b/target/m68k/monitor.c
+@@ -24,36 +24,36 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
  }
+ 
+ static const MonitorDef monitor_defs[] = {
+-    { "d0", offsetof(CPUM68KState, dregs[0]), NULL, MD_I32 },
+-    { "d1", offsetof(CPUM68KState, dregs[1]), NULL, MD_I32 },
+-    { "d2", offsetof(CPUM68KState, dregs[2]), NULL, MD_I32 },
+-    { "d3", offsetof(CPUM68KState, dregs[3]), NULL, MD_I32 },
+-    { "d4", offsetof(CPUM68KState, dregs[4]), NULL, MD_I32 },
+-    { "d5", offsetof(CPUM68KState, dregs[5]), NULL, MD_I32 },
+-    { "d6", offsetof(CPUM68KState, dregs[6]), NULL, MD_I32 },
+-    { "d7", offsetof(CPUM68KState, dregs[7]), NULL, MD_I32 },
+-    { "a0", offsetof(CPUM68KState, aregs[0]), NULL, MD_I32 },
+-    { "a1", offsetof(CPUM68KState, aregs[1]), NULL, MD_I32 },
+-    { "a2", offsetof(CPUM68KState, aregs[2]), NULL, MD_I32 },
+-    { "a3", offsetof(CPUM68KState, aregs[3]), NULL, MD_I32 },
+-    { "a4", offsetof(CPUM68KState, aregs[4]), NULL, MD_I32 },
+-    { "a5", offsetof(CPUM68KState, aregs[5]), NULL, MD_I32 },
+-    { "a6", offsetof(CPUM68KState, aregs[6]), NULL, MD_I32 },
+-    { "a7", offsetof(CPUM68KState, aregs[7]), NULL, MD_I32 },
+-    { "pc", offsetof(CPUM68KState, pc), NULL, MD_I32 },
+-    { "sr", offsetof(CPUM68KState, sr), NULL, MD_I32 },
+-    { "ssp", offsetof(CPUM68KState, sp[0]), NULL, MD_I32 },
+-    { "usp", offsetof(CPUM68KState, sp[1]), NULL, MD_I32 },
+-    { "isp", offsetof(CPUM68KState, sp[2]), NULL, MD_I32 },
+-    { "sfc", offsetof(CPUM68KState, sfc), NULL, MD_I32 },
+-    { "dfc", offsetof(CPUM68KState, dfc), NULL, MD_I32 },
+-    { "urp", offsetof(CPUM68KState, mmu.urp), NULL, MD_I32 },
+-    { "srp", offsetof(CPUM68KState, mmu.srp), NULL, MD_I32 },
+-    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]), NULL, MD_I32 },
+-    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]), NULL, MD_I32 },
+-    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]), NULL, MD_I32 },
+-    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]), NULL, MD_I32 },
+-    { "mmusr", offsetof(CPUM68KState, mmu.mmusr), NULL, MD_I32 },
++    { "d0", offsetof(CPUM68KState, dregs[0]), NULL, MD_U32 },
++    { "d1", offsetof(CPUM68KState, dregs[1]), NULL, MD_U32 },
++    { "d2", offsetof(CPUM68KState, dregs[2]), NULL, MD_U32 },
++    { "d3", offsetof(CPUM68KState, dregs[3]), NULL, MD_U32 },
++    { "d4", offsetof(CPUM68KState, dregs[4]), NULL, MD_U32 },
++    { "d5", offsetof(CPUM68KState, dregs[5]), NULL, MD_U32 },
++    { "d6", offsetof(CPUM68KState, dregs[6]), NULL, MD_U32 },
++    { "d7", offsetof(CPUM68KState, dregs[7]), NULL, MD_U32 },
++    { "a0", offsetof(CPUM68KState, aregs[0]), NULL, MD_U32 },
++    { "a1", offsetof(CPUM68KState, aregs[1]), NULL, MD_U32 },
++    { "a2", offsetof(CPUM68KState, aregs[2]), NULL, MD_U32 },
++    { "a3", offsetof(CPUM68KState, aregs[3]), NULL, MD_U32 },
++    { "a4", offsetof(CPUM68KState, aregs[4]), NULL, MD_U32 },
++    { "a5", offsetof(CPUM68KState, aregs[5]), NULL, MD_U32 },
++    { "a6", offsetof(CPUM68KState, aregs[6]), NULL, MD_U32 },
++    { "a7", offsetof(CPUM68KState, aregs[7]), NULL, MD_U32 },
++    { "pc", offsetof(CPUM68KState, pc), NULL, MD_U32 },
++    { "sr", offsetof(CPUM68KState, sr), NULL, MD_U32 },
++    { "ssp", offsetof(CPUM68KState, sp[0]), NULL, MD_U32 },
++    { "usp", offsetof(CPUM68KState, sp[1]), NULL, MD_U32 },
++    { "isp", offsetof(CPUM68KState, sp[2]), NULL, MD_U32 },
++    { "sfc", offsetof(CPUM68KState, sfc), NULL, MD_U32 },
++    { "dfc", offsetof(CPUM68KState, dfc), NULL, MD_U32 },
++    { "urp", offsetof(CPUM68KState, mmu.urp), NULL, MD_U32 },
++    { "srp", offsetof(CPUM68KState, mmu.srp), NULL, MD_U32 },
++    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]), NULL, MD_U32 },
++    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]), NULL, MD_U32 },
++    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]), NULL, MD_U32 },
++    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]), NULL, MD_U32 },
++    { "mmusr", offsetof(CPUM68KState, mmu.mmusr), NULL, MD_U32 },
+     { NULL },
+ };
+ 
+diff --git a/target/ppc/ppc-qmp-cmds.c b/target/ppc/ppc-qmp-cmds.c
+index 7022564604f..07938abb15f 100644
+--- a/target/ppc/ppc-qmp-cmds.c
++++ b/target/ppc/ppc-qmp-cmds.c
+@@ -33,26 +33,23 @@
+ #include "cpu-models.h"
+ #include "cpu-qom.h"
+ 
+-static target_long monitor_get_ccr(Monitor *mon, const struct MonitorDef *md,
+-                                   int val)
++static uint64_t monitor_get_ccr(Monitor *mon, const struct MonitorDef *md,
++                               int val)
+ {
+     CPUArchState *env = mon_get_cpu_env(mon);
+-    unsigned int u;
+ 
+-    u = ppc_get_cr(env);
 -
--void monitor_register_hmp(const char *name, bool info,
--                          void (*cmd)(Monitor *mon, const QDict *qdict))
--{
--    HMPCommand *table = hmp_cmds_for_target(info);
--
--    while (table->name != NULL) {
--        if (strcmp(table->name, name) == 0) {
--            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
--            table->cmd = cmd;
--            return;
--        }
--        table++;
--    }
--    g_assert_not_reached();
--}
--
--void monitor_register_hmp_info_hrt(const char *name,
--                                   HumanReadableText *(*handler)(Error **errp))
--{
--    HMPCommand *table = hmp_cmds_for_target(true);
--
--    while (table->name != NULL) {
--        if (strcmp(table->name, name) == 0) {
--            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
--            table->cmd_info_hrt = handler;
--            return;
--        }
--        table++;
--    }
--    g_assert_not_reached();
--}
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 17e5756986f..0a5bbf82197 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -1497,3 +1497,58 @@ void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
-                              monitor_event, NULL, &mon->common, NULL, true);
-     monitor_list_append(&mon->common);
+-    return u;
++    return ppc_get_cr(env);
  }
-+
-+/**
-+ * Is @name in the '|' separated list of names @list?
-+ */
-+int hmp_compare_cmd(const char *name, const char *list)
-+{
-+    const char *p, *pstart;
-+    int len;
-+    len = strlen(name);
-+    p = list;
-+    for (;;) {
-+        pstart = p;
-+        p = qemu_strchrnul(p, '|');
-+        if ((p - pstart) == len && !memcmp(pstart, name, len)) {
-+            return 1;
-+        }
-+        if (*p == '\0') {
-+            break;
-+        }
-+        p++;
-+    }
-+    return 0;
-+}
-+
-+void monitor_register_hmp(const char *name, bool info,
-+                          void (*cmd)(Monitor *mon, const QDict *qdict))
-+{
-+    HMPCommand *table = hmp_cmds_for_target(info);
-+
-+    while (table->name != NULL) {
-+        if (strcmp(table->name, name) == 0) {
-+            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
-+            table->cmd = cmd;
-+            return;
-+        }
-+        table++;
-+    }
-+    g_assert_not_reached();
-+}
-+
-+void monitor_register_hmp_info_hrt(const char *name,
-+                                   HumanReadableText *(*handler)(Error **errp))
-+{
-+    HMPCommand *table = hmp_cmds_for_target(true);
-+
-+    while (table->name != NULL) {
-+        if (strcmp(table->name, name) == 0) {
-+            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
-+            table->cmd_info_hrt = handler;
-+            return;
-+        }
-+        table++;
-+    }
-+    g_assert_not_reached();
-+}
+ 
+-static target_long monitor_get_xer(Monitor *mon, const struct MonitorDef *md,
+-                                   int val)
++static uint64_t monitor_get_xer(Monitor *mon, const struct MonitorDef *md,
++                                int val)
+ {
+     CPUArchState *env = mon_get_cpu_env(mon);
+     return cpu_read_xer(env);
+ }
+ 
+-static target_long monitor_get_decr(Monitor *mon, const struct MonitorDef *md,
+-                                    int val)
++static uint64_t monitor_get_decr(Monitor *mon, const struct MonitorDef *md,
++                                 int val)
+ {
+     CPUArchState *env = mon_get_cpu_env(mon);
+     if (!env->tb_env) {
+@@ -61,8 +58,8 @@ static target_long monitor_get_decr(Monitor *mon, const struct MonitorDef *md,
+     return cpu_ppc_load_decr(env);
+ }
+ 
+-static target_long monitor_get_tbu(Monitor *mon, const struct MonitorDef *md,
+-                                   int val)
++static uint64_t monitor_get_tbu(Monitor *mon, const struct MonitorDef *md,
++                                int val)
+ {
+     CPUArchState *env = mon_get_cpu_env(mon);
+     if (!env->tb_env) {
+@@ -71,8 +68,8 @@ static target_long monitor_get_tbu(Monitor *mon, const struct MonitorDef *md,
+     return cpu_ppc_load_tbu(env);
+ }
+ 
+-static target_long monitor_get_tbl(Monitor *mon, const struct MonitorDef *md,
+-                                   int val)
++static uint64_t monitor_get_tbl(Monitor *mon, const struct MonitorDef *md,
++                                int val)
+ {
+     CPUArchState *env = mon_get_cpu_env(mon);
+     if (!env->tb_env) {
+diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
+index 73f15aa272d..378967f8164 100644
+--- a/target/sparc/monitor.c
++++ b/target/sparc/monitor.c
+@@ -40,8 +40,8 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+ }
+ 
+ #ifndef TARGET_SPARC64
+-static target_long monitor_get_psr(Monitor *mon, const struct MonitorDef *md,
+-                                   int val)
++static uint64_t monitor_get_psr(Monitor *mon, const struct MonitorDef *md,
++                                int val)
+ {
+     CPUArchState *env = mon_get_cpu_env(mon);
+ 
+@@ -49,8 +49,8 @@ static target_long monitor_get_psr(Monitor *mon, const struct MonitorDef *md,
+ }
+ #endif
+ 
+-static target_long monitor_get_reg(Monitor *mon, const struct MonitorDef *md,
+-                                   int val)
++static uint64_t monitor_get_reg(Monitor *mon, const struct MonitorDef *md,
++                                int val)
+ {
+     CPUArchState *env = mon_get_cpu_env(mon);
+     return env->regwptr[val];
+@@ -154,7 +154,7 @@ const MonitorDef monitor_defs[] = {
+     { "otherwin", offsetof(CPUSPARCState, otherwin) },
+     { "wstate", offsetof(CPUSPARCState, wstate) },
+     { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
+-    { "fprs", offsetof(CPUSPARCState, fprs), NULL, MD_I32 },
++    { "fprs", offsetof(CPUSPARCState, fprs), NULL, MD_U32 },
+ #endif
+     { NULL },
+ };
 -- 
 2.52.0
 
