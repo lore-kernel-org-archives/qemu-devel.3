@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A913D73E81
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91FE5D73E81
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:40:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlVyK-0004R8-VA; Thu, 29 Jan 2026 12:38:24 -0500
+	id 1vlVyY-0004xw-Mj; Thu, 29 Jan 2026 12:38:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyJ-0004La-2S
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:23 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1vlVyX-0004v9-7T
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:37 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyH-0000dG-9V
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:22 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-82311f4070cso888285b3a.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:20 -0800 (PST)
+ id 1vlVyV-0000hM-Is
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:36 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-82311f4070cso888459b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769708300; x=1770313100; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769708314; x=1770313114; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZFfpq1J2RUXikSVjEKqIoQu5VVhghr8XYjp2Owizq7o=;
- b=CHC71q+RShKtSU2T18/N7Jpg460GbbdYtCXpdaVna5tmcQ4+MvNVpP+SbSMiYrHWIO
- 0RTSZ4+iUP4CQ17UzN9/mypBLLugPEo1x+/kq/ywvs5BZZhiyhKLtchTQMTLh35b2YTJ
- v6qcmmefhBx9Ak2hXivNs6xpsEQwExybiEBiPOin+aCYWVxfuS6oe3N+0HqxPOkn9ZP6
- VjtSzQ6dhRLJgAOVtCn4GS2PxQiw1kCMlJgEUmKdlucErwdAVM1g6myLyyYG4f+RZdYL
- CByUvFVfwu+ZknmpOIjxpta0jIsn4IAsd5K+eHOoNss5gj6fHxzDYPRFdFuf0K2vK/MQ
- uGeA==
+ bh=5/5IKoHT64XA1F7ETwTeOkylihtCoRO0y3JBUjlvUeg=;
+ b=huefIt3qmn10tPnZ/sXHgUfiRTjYm8SLlcMqeK3DALSJ17VWFrN+a7wO/r5xICdG12
+ 3unHBYii82GgfNzsApyBzKUA9UGSeWk2Uxh+5t04VIAQzxqu5bpQU41YUVeJQ+KosSg0
+ jmWQ2EHs4VNB5yrZ1ieKPSxLCk4mHOaFvyUV8bA7E4OwPPYu25yo3TWYYp9MTi75qP82
+ 6KiiEcspxCzTwqzx2C0x73bZokGWhDElgMzAAtF24eENXBenrRFCR73saVKLdajQznNF
+ 1nIymteHrIh2Pn6697ez5Aa+Q/cqYg8sQFygeZ+8pRF56dIgwCWb6gFAvkJCEvs0v0ht
+ EK1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769708300; x=1770313100;
+ d=1e100.net; s=20230601; t=1769708314; x=1770313114;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZFfpq1J2RUXikSVjEKqIoQu5VVhghr8XYjp2Owizq7o=;
- b=HbXEJhAy3wKUKtwJezSbJa6P8ogoPvfprSzu0ixsm5kVvxAasVDStpgony6diHD0i1
- DWkpTEELc0DY8mwAxzrPqYeHDVKTAKw21/YN1U1NzevB6CCOINBmdbQtVOlomKtp4Crc
- 8V7pJf27K+/VxnxdEsWXAvhWLSUHPlfsdbn10hS6/5EIJ/S++5p3z7miscw5+fjrb77a
- lNT3FC6RvsBr7ux/bPImkUz6svLY4OnQsKOgWjueI4YQo/uN5yjRnflZo+D2nmdxw702
- RmrrKUgee3Q/VTWv0RuxoMB/WkrbneuPk9ZOI8luEsn2+SgQlyIr4Ib1Z9t4CJqzINmt
- nwcw==
-X-Gm-Message-State: AOJu0YyoJo1kirw7meqWUlNkVm/jvGKm97hZxEc/gXvxuSLTf0TC4AX/
- Eg1fm94SZRiQyzk2srBA8WRtj5ZQqoYoEMZvWn+ObQ1vOlCqWKLxBJXiKR89zAzDudW0Cu0uATz
- 8TKhs
-X-Gm-Gg: AZuq6aJFo0eJ6zJTIH4uPU9/0DNCUIZb/d2FKCRAV0mKmCGHhf45b9NpLxENhbF+Biv
- MvUvfuG3k585AZPCgAbo0sw8w9pB1qi99uw76uN6x+fvrEJeyu+8+AQjjd97YMWjbFJEXbF0Cnq
- 9EJ+65LYfzEPGm8WX1wVxAImxkKzLFZn9kYHyBUUZPJtwLbt/C/RqJNVa31XDzgyPIIWTjQlxtX
- Oeuw6au4jHXFwurMQq/tjW5EH8smCbuNI2IubWOBQzF3KYM+X0MlfStJos1moGZMezzdn6rSlMc
- HmRb0KYyxPKLlDFeXAO7PU53Z04K+5LACQnZaeagH5PGHfo0qzMb0QTYUCCTmMRUimfUuMeiRFV
- C0O3XTb3QQ3KwsJCEllnMrMWpf99HlXjVGD4UiaGL3o6L4iA7fab72jyiNAkgeesWgMYLGNiONh
- pVI2HDvBQVXeWkaEI8ivA4yfx+n6nEvcjXv/KPg/H1sHeBPdpCI/mcd6LAVsJGG9Qy
-X-Received: by 2002:a05:6a00:a209:b0:81e:4a9e:f809 with SMTP id
- d2e1a72fcca58-8239201d9d9mr2944656b3a.2.1769708299571; 
- Thu, 29 Jan 2026 09:38:19 -0800 (PST)
+ bh=5/5IKoHT64XA1F7ETwTeOkylihtCoRO0y3JBUjlvUeg=;
+ b=mo6eJKSJld1/NpAYhcOrK13GWlNfYRbyL7o4qOQhRSklAH9JoZXuuCIsyAw2nBYsjR
+ 8zY0/jRj5fFgca3a4JytWgY9eXwz77t3eV/LDZeV4Yl72X7d3/UR81Q5eU8ualBb+61X
+ 4iYVNEKhUQ1+4d84Rny5g2305PvqgVc2XiwtbN0VISh6id5EYhJ1zxFLlQtgb7ZQc+mc
+ E/hMzOvnGtir6OvXYgpZH7db1hSL0Uv5EFgsZpKh8lsDAJ5yfOJwojcDsADn5xmVpEEq
+ 856tUhAW858OHVxjXlT0uLkTMDgKZVH5cwMSQGbq8XWhS0+bu7+1WMgu84erKJgjaOvf
+ 4opg==
+X-Gm-Message-State: AOJu0Yz2S3yOcY41L7WiOBWXUw1IcHrdc1dhWzAV+4TgwHNTcZ6CNsT/
+ wdL5IoVQDCiJTjEW0ow/Xtg/PaZ5bZ/DK9krabiWEosj9ikBYBy4068IfRywmQ09JwmSorYF7BC
+ dy0RN
+X-Gm-Gg: AZuq6aLORJo8qqbP7qs+LMEIjSRVO/VtCJP7SRlzisX902rxo2Wvp9mFyOgT3bOyLiw
+ oZyLaqOTptNkfI2lPRLqp2JOqytwiDAiTyqgcr2JvTwv6IpNNFqKtS2Z9276DSHRs2rsNdFFd2a
+ ng77yPBZO55RTtZeyrNYdmJLbXsR68THC4C8ILaf4c2YuKQ54OeZE3RmcJh0eiG9p3hWhlWmpLm
+ KwEc6BzHXgjHRd5B5fSWG3kS3qxAOLEFbKeQEYGqqHCeXef76BPkXTFnrFVVkIbXBJg9/3Ym1OI
+ 70rAKJW96ZDmLVIpVeN1T2bs9lUJ++tSlrXwGtGuIJes/KlfMxXcx8msu42L335K4Q1fAmVHC/p
+ NDT487BPRAd9VenAKNXyQPc8KZgTKVf1N0q62S0ykw3hFeP5O0LvIX95hSBfdd214HHrPI7psi5
+ RwYSCxBBpQ8FKXJ8zUfOZ/Vh03vZa4+FmgR+4we15q53RQZjGe47hmtSJ+xzcs76fL
+X-Received: by 2002:a05:6a00:1f03:b0:821:8ead:3706 with SMTP id
+ d2e1a72fcca58-8239201d8edmr3586819b3a.4.1769708314012; 
+ Thu, 29 Jan 2026 09:38:34 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.19
+ d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 09:38:19 -0800 (PST)
+ Thu, 29 Jan 2026 09:38:33 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alex Bradbury <asb@igalia.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 03/21] contrib/plugins/hotblocks: Print uint64_t with PRIu64
- rather than PRId64
-Date: Thu, 29 Jan 2026 09:37:49 -0800
-Message-ID: <20260129173811.138036-4-pierrick.bouvier@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 21/21] plugins: reduce source conflicts in plugins list
+Date: Thu, 29 Jan 2026 09:38:07 -0800
+Message-ID: <20260129173811.138036-22-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 References: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,33 +102,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bradbury <asb@igalia.com>
-
-qemu_plugin_u64_sum returns a uint64_t, so PRIu64 is the correct format
-specifier.
-
-Signed-off-by: Alex Bradbury <asb@igalia.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/5d26c9d99ee87ac4a4034ff64e3d8881253eedf3.1753857212.git.asb@igalia.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/87cy2uat5e.fsf@draig.linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/hotblocks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/plugins/meson.build   | 19 ++++++++++++++++---
+ tests/tcg/plugins/meson.build | 13 +++++++++++--
+ 2 files changed, 27 insertions(+), 5 deletions(-)
 
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index cf4d6b8c363..40d8dae1cd3 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -87,7 +87,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-         for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
-             ExecCount *rec = (ExecCount *) it->data;
-             g_string_append_printf(
--                report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
-+                report, "0x%016"PRIx64", %d, %ld, %"PRIu64"\n",
-                 rec->start_addr, rec->trans_count,
-                 rec->insns,
-                 qemu_plugin_u64_sum(
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+index 53d52c97967..099319e7a17 100644
+--- a/contrib/plugins/meson.build
++++ b/contrib/plugins/meson.build
+@@ -1,6 +1,19 @@
+-contrib_plugins = ['bbv.c', 'cache.c', 'cflow.c', 'drcov.c', 'execlog.c',
+-                   'hotblocks.c', 'hotpages.c', 'howvec.c', 'hwprofile.c',
+-                   'ips.c', 'stoptrigger.c', 'traps.c', 'uftrace.c']
++contrib_plugins = [
++'bbv.c',
++'cache.c',
++'cflow.c',
++'drcov.c',
++'execlog.c',
++'hotblocks.c',
++'hotpages.c',
++'howvec.c',
++'hwprofile.c',
++'ips.c',
++'stoptrigger.c',
++'traps.c',
++'uftrace.c',
++]
++
+ if host_os != 'windows'
+   # lockstep uses socket.h
+   contrib_plugins += 'lockstep.c'
+diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+index 303f97f9679..c5e49753fd9 100644
+--- a/tests/tcg/plugins/meson.build
++++ b/tests/tcg/plugins/meson.build
+@@ -1,5 +1,14 @@
+-test_plugins = ['bb.c', 'discons.c', 'empty.c', 'inline.c', 'insn.c', 'mem.c',
+-                'reset.c', 'syscall.c', 'patch.c']
++test_plugins = [
++'bb.c',
++'discons.c',
++'empty.c',
++'inline.c',
++'insn.c',
++'mem.c',
++'patch.c',
++'reset.c',
++'syscall.c',
++]
+ 
+ t = []
+ if get_option('plugins')
 -- 
 2.47.3
 
