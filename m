@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F05D73E83
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 21:34:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A22D73E83
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 21:34:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlZcv-0001bj-Kg; Thu, 29 Jan 2026 16:32:33 -0500
+	id 1vlZcv-0001al-BL; Thu, 29 Jan 2026 16:32:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vlZcs-0001Wt-Mx
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:32:30 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1vlZcr-0001WG-RR
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:32:29 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vlZcr-0001A7-36
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:32:30 -0500
+ id 1vlZcp-00019i-TV
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:32:29 -0500
 Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id C3F5D80825;
- Fri, 30 Jan 2026 00:32:27 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 9EFE3807FD;
+ Fri, 30 Jan 2026 00:32:26 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:b74::1:d])
  by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id IWrbZO5AAOs0-kRxMHty8; Fri, 30 Jan 2026 00:32:27 +0300
+ ESMTPSA id IWrbZO5AAOs0-cnwvJqE7; Fri, 30 Jan 2026 00:32:26 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1769722347;
- bh=tJU74EzZ7JQor/gV3yKFw+7CycBwudsDBROnC+1h/Os=;
+ s=default; t=1769722346;
+ bh=VtllQW53ryr07rgYCDGB3FJIE1NurDpeRlphqUaCZeM=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=sb5GNQOLsKat7qk3cFFkkJ/SLrtMVhWjGtz+pE9WIM9+1QleASsfm3BbsFYBYgJTq
- x8bo8sFxQYuEkIMXhw/04zM0mJqQi3U3LCZl5k+RhnuU9m1rPbpvGNnzCahUWPU/SQ
- 1alG+jNMY+oLNvvEFUv/Xmswo3V26uQfJDzNXLLs=
+ b=s4APoV2VgIPhyI4J+0Cr/WOVdjLki7SGxVX7hZBMWzh71AFlj+FDR/i+rVk98JXE/
+ oD34YqmztbFItNH15l07icLn8IsUGEh6oays61wk5HOJS6A6ij+d+FURVR25BjeCQJ
+ aSeAB1uJonyjaKec2P4myT/AkT4tJbv7CH3wCfeI=
 Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -45,22 +44,23 @@ To: jasowang@redhat.com
 Cc: qemu-devel@nongnu.org, bchaney@akamai.com, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru, davydov-max@yandex-team.ru,
  vsementsov@yandex-team.ru
-Subject: [PATCH v2 12/12] net/tap: net_init_tap(): relax QEMU hubs check
-Date: Fri, 30 Jan 2026 00:32:14 +0300
-Message-ID: <20260129213215.1405459-13-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 10/12] net/tap: fix vhostfds/vhostfd parameters API
+Date: Fri, 30 Jan 2026 00:32:12 +0300
+Message-ID: <20260129213215.1405459-11-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
 References: <20260129213215.1405459-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,48 +75,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-queues may be set to 1, as well as fds may contain only one fd.
-No reason to block such cases. Let's check exactly number of queues.
+There is a bug in the interface: we don't allow vhostfds argument
+together with queues. But we allow vhostfd, and try use it for all
+queues of multiqueue TAP.
+
+Let's relax the restriction. We already check that number of vhost fds
+match queues (or number of fds). So, no matter do vhost fds come from
+vhostfds or vhostfd argument. Let's use correct vhost fds for multiqueue
+TAP.
+
+To achieve this we move vhost fds parsing to separate function and call
+it earlier in net_init_tap(). Then we have vhost fds available (and
+already checked) for all further cases.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- net/tap.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ net/tap.c | 62 ++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 29 insertions(+), 33 deletions(-)
 
 diff --git a/net/tap.c b/net/tap.c
-index c6bea0dcab..288cfedd81 100644
+index dbbbe3c500..b0b5e0b0fc 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -870,13 +870,6 @@ int net_init_tap(const Netdev *netdev, const char *name,
-     assert(netdev->type == NET_CLIENT_DRIVER_TAP);
-     tap = &netdev->u.tap;
+@@ -838,11 +838,31 @@ static int tap_parse_fds_and_queues(const NetdevTapOptions *tap, int **fds,
+     return queues;
+ }
  
--    /* QEMU hubs do not support multiqueue tap, in this case peer is set.
--     * For -netdev, peer is always NULL. */
--    if (peer && (tap->has_queues || tap->fds || tap->vhostfds)) {
--        error_setg(errp, "Multiqueue tap cannot be used with hubs");
++static bool tap_parse_vhost_fds(const NetdevTapOptions *tap, int **vhost_fds,
++                                unsigned queues, Error **errp)
++{
++    if (!(tap->vhostfd || tap->vhostfds)) {
++        *vhost_fds = NULL;
++        return true;
++    }
++
++    if (net_parse_fds(tap->fd ?: tap->fds, vhost_fds, queues, errp) < 0) {
++        return false;
++    }
++
++    if (!unblock_fds(*vhost_fds, queues, errp)) {
++        net_free_fds(*vhost_fds, queues);
++        return false;
++    }
++
++    return true;
++}
++
+ int net_init_tap(const Netdev *netdev, const char *name,
+                  NetClientState *peer, Error **errp)
+ {
+     const NetdevTapOptions *tap;
+-    int fd = -1, vhostfd = -1, vnet_hdr = 0, i = 0, queues;
++    int fd = -1, vnet_hdr = 0, i = 0, queues;
+     /* for the no-fd, no-helper case */
+     char ifname[128];
+     int *fds = NULL, *vhost_fds = NULL;
+@@ -875,30 +895,13 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         return -1;
+     }
+ 
+-    if (tap->vhostfds && !tap->fds) {
+-        error_setg(errp, "vhostfds= is invalid if fds= wasn't specified");
 -        return -1;
 -    }
 -
-     if (tap->has_vhost && !tap->vhost && (tap->vhostfds || tap->vhostfd)) {
-         error_setg(errp, "vhostfd(s)= is not valid without vhost");
-         return -1;
-@@ -900,6 +893,15 @@ int net_init_tap(const Netdev *netdev, const char *name,
+-    if (tap->vhostfd && tap->fds) {
+-        error_setg(errp, "vhostfd= is invalid with fds=");
+-        return -1;
+-    }
+-
+     queues = tap_parse_fds_and_queues(tap, &fds, errp);
+     if (queues < 0) {
          return -1;
      }
  
-+    /*
-+     * QEMU hubs do not support multiqueue tap, in this case peer is set.
-+     * For -netdev, peer is always NULL.
-+     */
-+    if (peer && queues > 1) {
-+        error_setg(errp, "Multiqueue tap cannot be used with hubs");
+-    if (tap->vhostfd) {
+-        vhostfd = monitor_fd_param(monitor_cur(), tap->vhostfd, errp);
+-        if (vhostfd == -1) {
+-            goto fail;
+-        }
+-
+-        if (!qemu_set_blocking(vhostfd, false, errp)) {
+-            goto fail;
+-        }
++    if (!tap_parse_vhost_fds(tap, &vhost_fds, queues, errp)) {
 +        goto fail;
-+    }
-+
-     if (!tap_parse_vhost_fds(tap, &vhost_fds, queues, errp)) {
-         goto fail;
      }
+ 
+     if (tap->fd) {
+@@ -909,20 +912,12 @@ int net_init_tap(const Netdev *netdev, const char *name,
+ 
+         if (!net_init_tap_one(tap, peer, name, NULL,
+                               NULL, NULL,
+-                              vhostfd, vnet_hdr, fds[0], errp)) {
++                              vhost_fds ? vhost_fds[0] : -1,
++                              vnet_hdr, fds[0], errp)) {
+             goto fail;
+         }
+     } else if (tap->fds) {
+-        if (tap->vhostfds && net_parse_fds(tap->vhostfds, &vhost_fds,
+-                                           queues, errp) < 0) {
+-            goto fail;
+-        }
+-
+         for (i = 0; i < queues; i++) {
+-            if (vhost_fds && !qemu_set_blocking(vhost_fds[i], false, errp)) {
+-                goto fail;
+-            }
+-
+             if (i == 0) {
+                 vnet_hdr = tap_probe_vnet_hdr(fds[i], errp);
+                 if (vnet_hdr < 0) {
+@@ -948,7 +943,8 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         }
+ 
+         if (!net_init_tap_one(tap, peer, name, ifname,
+-                              NULL, NULL, vhostfd,
++                              NULL, NULL,
++                              vhost_fds ? vhost_fds[0] : -1,
+                               vnet_hdr, fds[0], errp)) {
+             goto fail;
+         }
+@@ -981,7 +977,8 @@ int net_init_tap(const Netdev *netdev, const char *name,
+             if (!net_init_tap_one(tap, peer, name, ifname,
+                                   i >= 1 ? NULL : script,
+                                   i >= 1 ? NULL : downscript,
+-                                  vhostfd, vnet_hdr, fd, errp)) {
++                                  vhost_fds ? vhost_fds[i] : -1,
++                                  vnet_hdr, fd, errp)) {
+                 goto fail;
+             }
+         }
+@@ -991,7 +988,6 @@ int net_init_tap(const Netdev *netdev, const char *name,
+ 
+ fail:
+     close(fd);
+-    close(vhostfd);
+     net_free_fds(fds, queues);
+     net_free_fds(vhost_fds, queues);
+     return -1;
 -- 
 2.52.0
 
