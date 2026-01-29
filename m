@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6440D6B084
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:11:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F22AD6B086
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUav-00010Y-DH; Thu, 29 Jan 2026 11:10:09 -0500
+	id 1vlUb5-0001cT-Sy; Thu, 29 Jan 2026 11:10:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUag-0000KF-0Y
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:55 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1vlUap-0000bH-LP
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:05 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUad-0006gv-4P
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:53 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43246af170aso797052f8f.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:49 -0800 (PST)
+ id 1vlUam-0006nH-0P
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:02 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4806dffc64cso9063125e9.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769702989; x=1770307789; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769702998; x=1770307798; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=CDGtUlFBjW+MvjyohX5qDrWSkViGIe1RMZVwu2N7z9g=;
- b=XovYe2VbJZRhgykXFoRHtbKW8TJZajqEXA7OfIXHMcsR05mi3ERi/VBNYcRFhRTpv2
- jAhYI07Fn/OHViA23tZ8moBp/mkNlB7sPqGQJvRpPv8X+0xuVVGlVTaWJ0xcXNSyL+qn
- 5BT5DUIqYqqOqx4H9Z5w6ro5IwpneU1u60mu4hxsgNyW7j+p4Ei3xQ+yJHAQS7Tss5GQ
- K/CzuQJOn1g6YjaeHt5jeYyFrW+tYkYagE9wA8sYhQGKotNs0FVlKLoJ/wtSlsI2M35o
- HiNqUQam2R3i/ItAhM6onvbUqRv11wFWinlxX/WsMzNUB5UiiVvHfnRVXeT4zvnSrlYB
- zK7w==
+ :reply-to; bh=u3uV6GSWr+BEGrx5YGtZDjy8LLlQ8HkEC6LhLpQIb3I=;
+ b=onP+s88xHsCmQ8HOso8d9j4hpl1eKYEvZUPfKoQ/Z3Fw4hJDdhi823cwml35l8zgso
+ LJnXo7NhdEpkKSuESSKShAZUvI/Yuj3G85qg2oQL3HX6dCTApFqEA2IId3To0/AEJvrJ
+ mlsJifApNVxey67Den87VrZyIp4ibjg7tudNZbNN8jb8LhCBHmrhiwR5iCHM72r3pLsY
+ FAfBtPOKRYqlgF2RAR+VLKiWx85EzMrkppyCTJkoIX2kuwSSEKXcTMSlMBJ9vTIZYSNV
+ rL0KjQZ+HJuXQ+GJTMTihl7U44Nqq9QlYoLL1j7dOkvzH7KzKrRpwAqKJgZEzCYoXdzo
+ bbbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769702989; x=1770307789;
+ d=1e100.net; s=20230601; t=1769702998; x=1770307798;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=CDGtUlFBjW+MvjyohX5qDrWSkViGIe1RMZVwu2N7z9g=;
- b=JzjCvljeMIZ2c0WrWl+TREGei9cy/LpHO1M76UqgxM2hFEVzOVW0Qa79xXqrVTkHq7
- FJdH5qbIr+gdClGIFRzIP2+apBfRTghC4XT0Jt1wB53UKqF1cSsgOJnBWHQZT1nPBuCd
- v26PRIu0yxTglF0AtOht+Ygsp5c/j49m/YIs1EFrJxLdu/RtzhVSZf5zW36+qdyTozY3
- QV3Yp6LnkGxw+2dWPziF+iErFuXac0+3iAJ6ep634LZgftK3EUWdivQIVcGabHDwTQwN
- /APo9RYvUWdz9/Fi59eBAiuxqVVeP7DKQ8M/YnikhLkKB5u9ldISEs41Xp+D1eCCcSua
- fUTQ==
-X-Gm-Message-State: AOJu0Yz4RMh17Jo46vWI7ahq9nhbKrWHYksQKYDQaS5xMMyu9fwUfYea
- b2ih1qQMhgA4wIObq7mRB5FkT5cePwDgJVEmtG48TFjrWpXqPksMUr4okZkPjNv7PogfylYY22U
- 8vmHiCx8=
-X-Gm-Gg: AZuq6aJZN0FJnZWtNe6l/Y31lWIP+A8kOBOFzpRnjlXK7zi8rfEZrQulXXKcctg3r3f
- pL55Co0aaScSmCbJa8MVcxNmtoRg3vb6HeTqX4ZRL/Jw0BK5zlz/9FhNrn2O3rhO9xZNA3U5mxt
- Mt3NGHNwGI1gYE5rTV1t7f1Bm2CGNYMGw4Vk+9jfOGY5mOPfOkpjF01F2bi6ZAhNZClL5xLaMBP
- VB9FQMkRyjzipgc0mUZ0qzcfxeQC6xFQqtpbqkLVmWe5Z0mZ4hx5VRc9lG8HEQF3dvohMpCbWUn
- NSfpkxXVEI353To7WD/clHzy8jtEtJvvN+1NgQywSeCQYRWoYLoK6SeGXPRfKM3grmH8Hc80WWV
- GeWrpnY5m5BE1dV/+50thg5LYhxugDOYYub3MjizQ2WDsaZpFEKwankvPTeptJSubIzAzDATuCx
- iZy+4r2NrU+h3ms4AR3XaM5sHPGYpXkA==
-X-Received: by 2002:a05:6000:1ace:b0:435:a135:777d with SMTP id
- ffacd0b85a97d-435ea09c3bamr4822319f8f.9.1769702988576; 
- Thu, 29 Jan 2026 08:09:48 -0800 (PST)
+ bh=u3uV6GSWr+BEGrx5YGtZDjy8LLlQ8HkEC6LhLpQIb3I=;
+ b=eJZer+o9Av5JC4M/TDJw4GooiO0KSV7JX2PSm7e3u8pQKBV/w9NVOftI5lbm7V4Zm7
+ XQpla5NEN7aWDy5+hCgAfqOnqUdQR5gtOZ0MR/VqO8GkCdEoMjz5XRVPLej1Y65BLIV2
+ 72+Y06Tf90ecE+k4UNyegkfqQhOM7oz0Nk4kPI4Fb6QeNa8/uichttCi4YmjTs8/69fu
+ Z8ktWByy67XWobD5jxGxBMzJt+fm3UyJGLByBhCTB8OUtFcI0nM4z+/MbtfhIvXxRDFL
+ eiI8NCQvm9r1bVZogI9u9k0ZXcNPFLWgVkBn1iyPL4O+Qca4X6q71E3psjF1iW+IkxCZ
+ bCAg==
+X-Gm-Message-State: AOJu0Yyb+yT057qnuebN3lhEJJzzJNlrW+fQ27QVL4E7Wpn/k8ZGatuW
+ lRWGw8sQbWv6HKQiKVvBJe3slevjIwzK8plszxxvx6b4jadRAHA7CYkd8R/olkHLGvbq1ufckQ1
+ 2Vqfue2U=
+X-Gm-Gg: AZuq6aKNYwS2lnoMjlwsfL8QTmL7kUpTcpTw4Y7IfzHCVDQ71Fn4QyqrIFRTpi7eChc
+ zlU/tbEonNaTU/gXGRBJT10QJ7anWWSvCbA2e8NJSN9A4vaZBqiYebzqo4mhgrh0RX+cd3ALjGF
+ PQvndwbYRZCOQSJm/+LIJB2OYUyHdNsSES1cAI+zEp6gFUaX0ims6MAaRUPXMQY8I3/13GyAEeZ
+ 9WElDr84botcc8gc6ag349WQ7Kru6/w7vdk/drf0f17itEoS2+wkf4aQr10oS65I/ETrCehX+/r
+ QIGIDemS5AlQpkK1nmuIz8pJ/VDjoHYgZeyY2S7gn+xccQ5ICFBMGMdlPNeTE4lA87gc6H0UoiY
+ aUz57q6/V8zzFvrpmZ2Ob+2ep5n8xzvXzhF1JAvFsewq8/4qzi1L1KAxz8wjIZYkw/FnR0mXc+n
+ A3Fs3os1zGIbe8sNoWRNxwoVZjOew/5g==
+X-Received: by 2002:a05:600c:8208:b0:47d:92bb:2723 with SMTP id
+ 5b1f17b1804b1-48069bfa957mr118140905e9.3.1769702998389; 
+ Thu, 29 Jan 2026 08:09:58 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.47
+ ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 08:09:47 -0800 (PST)
+ Thu, 29 Jan 2026 08:09:57 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/43] tests/qtest/bios-tables-test: Prepare for IORT revison
- upgrade
-Date: Thu, 29 Jan 2026 16:08:58 +0000
-Message-ID: <20260129160917.1415092-25-peter.maydell@linaro.org>
+Subject: [PULL 33/43] backends/iommufd: Add get_pasid_info() callback
+Date: Thu, 29 Jan 2026 16:09:07 +0000
+Message-ID: <20260129160917.1415092-34-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260129160917.1415092-1-peter.maydell@linaro.org>
 References: <20260129160917.1415092-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,33 +101,95 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Subsequent patch will upgrade IORT revision to 5 to add support
-for IORT RMR nodes.
+The get_pasid_info callback retrieves PASID capability information
+when the HostIOMMUDevice backend supports it. Currently, only the
+Linux IOMMUFD backend provides this information.
 
-Add the affected IORT blobs to allowed-diff list for bios-table
-tests.
+This will be used by a subsequent patch to synthesize a PASID
+capability for vfio-pci devices behind a vIOMMU that supports PASID.
 
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Tested-by: Eric Auger <eric.auger@redhat.com>
 Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-id: 20260126104342.253965-25-skolothumtho@nvidia.com
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Message-id: 20260126104342.253965-34-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ backends/iommufd.c                 | 17 +++++++++++++++++
+ include/system/host_iommu_device.h | 17 +++++++++++++++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..3279638ad0 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,5 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/aarch64/virt/IORT",
-+"tests/data/acpi/aarch64/virt/IORT.its_off",
-+"tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy",
-+"tests/data/acpi/aarch64/virt/IORT.smmuv3-dev",
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 9b63d74083..13822df82f 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -539,11 +539,28 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+     }
+ }
+ 
++static bool hiod_iommufd_get_pasid_info(HostIOMMUDevice *hiod,
++                                        PasidInfo *pasid_info)
++{
++    HostIOMMUDeviceCaps *caps = &hiod->caps;
++
++    if (!caps->max_pasid_log2) {
++        return false;
++    }
++
++    g_assert(pasid_info);
++    pasid_info->exec_perm = (caps->hw_caps & IOMMU_HW_CAP_PCI_PASID_EXEC);
++    pasid_info->priv_mod = (caps->hw_caps & IOMMU_HW_CAP_PCI_PASID_PRIV);
++    pasid_info->max_pasid_log2 = caps->max_pasid_log2;
++    return true;
++}
++
+ static void hiod_iommufd_class_init(ObjectClass *oc, const void *data)
+ {
+     HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
+ 
+     hioc->get_cap = hiod_iommufd_get_cap;
++    hioc->get_pasid_info = hiod_iommufd_get_pasid_info;
+ };
+ 
+ static const TypeInfo types[] = {
+diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
+index bfb2b60478..f000301583 100644
+--- a/include/system/host_iommu_device.h
++++ b/include/system/host_iommu_device.h
+@@ -59,6 +59,12 @@ struct HostIOMMUDevice {
+ #endif
+ };
+ 
++typedef struct PasidInfo {
++    bool exec_perm;
++    bool priv_mod;
++    uint8_t max_pasid_log2;
++} PasidInfo;
++
+ /**
+  * struct HostIOMMUDeviceClass - The base class for all host IOMMU devices.
+  *
+@@ -116,6 +122,17 @@ struct HostIOMMUDeviceClass {
+      * @hiod: handle to the host IOMMU device
+      */
+     uint64_t (*get_page_size_mask)(HostIOMMUDevice *hiod);
++    /**
++     * @get_pasid_info: Return the PASID information associated with the
++     * @hiod Host IOMMU device.
++     *
++     * @hiod: handle to the host IOMMU device
++     *
++     * @pasid_info: If success, returns the PASID related information.
++     *
++     * Returns: true on success, false on failure.
++     */
++    bool (*get_pasid_info)(HostIOMMUDevice *hiod, PasidInfo *pasid_info);
+ };
+ 
+ /*
 -- 
 2.43.0
 
