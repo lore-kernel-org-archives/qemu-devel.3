@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE2D5D46C16
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 01:40:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C37D46BF0
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 01:40:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlGtK-0000De-Tc; Wed, 28 Jan 2026 20:32:14 -0500
+	id 1vlGtK-0000DU-Dg; Wed, 28 Jan 2026 20:32:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlGtA-0008V9-KD
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:32:05 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1vlGt8-0008Tr-Ja
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:32:04 -0500
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlGt7-0003AZ-D4
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:32:03 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-3530f597ea3so158544a91.1
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 17:32:01 -0800 (PST)
+ id 1vlGt6-00039k-Ci
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:32:01 -0500
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-353576abcfeso168012a91.0
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 17:31:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769650320; x=1770255120; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769650318; x=1770255118; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dE7UdsopvEMPmtvJtt13JOTPWrtqnTLsVWWFeGGWs60=;
- b=dUGiXkdv0BXkQIIUBbPuRhKpK9yWFWv+uu2XqWmfsjCqhfY1x5cuVnIrA4p+3a8RDW
- 4Yv7ZSuiv6aHisLApsx8yunlnqYTOWX3fiorx7HFMdbg28t7jqVXZkRv1cJw3MeK39Es
- N8wjImBPNNN9ZqiURWdJxTxhthox6ZPozq83TlKYG0GpALOFRhlHmKoXgplqmdS0CaC8
- OzEx6l1IMOYFfN9GD7sY5EPtGzFjCVD0DX3OJ+TgVq0fmdaQ9s9lX+qr+rFacpiJHGQ1
- hEART/BYoqPu+XS2jjUIwhvoDuNyi0+T8PHWBhvibgL6VETEXODH1TMgnpAcfD5NipzK
- WLiw==
+ bh=ErhJH+3L5kKgEL+bTAwKvHuiXtyYAOljdjanr4eRKa0=;
+ b=DdOpzC8kc1XXjOEqoMkr0Mx7UnlsGcBhALfqGFwlUxw+JdLYPT8ptX0wDLg28GcQE7
+ EuxELYyhU90hnvF/ZQtMjEYEojQaC1k2oZe+kg2oDHrr69rfqxB7dMUZaKJXaQHLE/A/
+ 6soKglU4N8/HXQGAj1w32vb+YgN0rG1eBkyR5F7NgDtZ5u9frb48hi1l9DheXr2sOUBP
+ w2iT4S62Mwkr54Zok/iYglykTom9Ozx/w3RuBPVqOA0ih2HIwcfIKptjW0F4rOOkfRfg
+ LSJnmIQyBW3JUIc/V2G/DnTBl7kfuqP9Hc94DDyxMy6OBR9jSoOaYmGt06aBEPJmAz+V
+ 8GEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769650320; x=1770255120;
+ d=1e100.net; s=20230601; t=1769650318; x=1770255118;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dE7UdsopvEMPmtvJtt13JOTPWrtqnTLsVWWFeGGWs60=;
- b=iDwPD+edcTuFNW+3kN0zjhnvlnhgv7V4CMY56SAgo+OFytSlnNHBzBPJNVmwsVd5WQ
- 4FUgBhcG2cd9nCNPTivJMywEc5DYDe2jLqQpwrZH2eFDQy6LaTZo+7dRxQdE+oG115Ze
- py0Ci7MxeWkcrFAqSl9ClvnxMDMxKQkbNaiBZqclLCCmavbeQmfLclDIEC0/VGn9iLbt
- ByiKB9A3Nw4ovn8Ih/1p04PexgQpxMTzjuUItdovPHfpJ3dmSTL8OGptOLQBDTlLPVGr
- m0lOQWxzM9DyAWhR/quxEtRDrmAbRz+KGQoQ52JdU/15J7CMBoReAFZ0E+VCv/bZHPGH
- zbOQ==
-X-Gm-Message-State: AOJu0YxnWFX+OhEV/kZDSFNBKzoa05yVP4kZ5msaByJG+oDuH+vgfBH5
- 27k+NI7E2Y8IZICnSDTMa46qtDLQJG60Kr8pKMwhtVSGMkEv+rKgL4EbSjZMVALLSno6tZTLJjK
- 3mcmb
-X-Gm-Gg: AZuq6aLg5CAS2o7K/uQ5oNW7QM97toy6Iaw7B67kgDGG5E/PUYXrWF3Bhg5HSgC5d9P
- 9XDiMoo/AxfOU4t5zcYeE9tzO9SMMKtoQeR6V0liCOwdpvgyMyUTonNb/LNGOKyMlSlXC5jk4IQ
- 9mxWmneIPuojuXAh44u45zGRCLPNuw8M7X0aurMNFzTUMUVnD9A1vwWmYPA07MBGkzVm4cIlxrt
- eS2hkPvQaP3dhxgUPD31Xir6GUipcez568hnUOghyORi+3P6nZPomWiGkRz08g7QHZentbxxxFo
- CNKpGaWSDE+RoFX0zmdNAXIskZTiM1UTcimC9CwmZHm6URBhr3VKO7cZyKmTDPv/UoqB4K381GC
- j1E6l6pkAm23stgd+6r3XNuVMNUXtWoIu0jEB7Dq6YIJ2kUDMRYq1kFWCofYZjpdpqHzLK8Zi4q
- +GHgFnncHfC/TE2MFR1Ohcs1gKoTOb/3ae5T8FI6aof2h+e0HSm+QXs+NP5R7QkoDf
-X-Received: by 2002:a17:90b:5627:b0:34f:63b7:a1f5 with SMTP id
- 98e67ed59e1d1-353fed6e348mr5681954a91.21.1769650319991; 
- Wed, 28 Jan 2026 17:31:59 -0800 (PST)
+ bh=ErhJH+3L5kKgEL+bTAwKvHuiXtyYAOljdjanr4eRKa0=;
+ b=IV0FzOBkwIx4WJq7kQQzVEysJ9VNg7OwHfMX+xgm+edJE19caMkefmWmEIyFR7laqP
+ XrRuLLw3WNYxCrK2kBrscR8BAnHQVaT8itxUdOAspxW2/2glnlIBuClmjO+x31z9W/kK
+ 5I5Dvdjj9pTVhW/4XX4RQsBZ9Rq5vAYBEuEv+7Skhw3P8Hdf+L9HsNXWr2sOauMjHKoM
+ umv30OO3YZZucyv46z6peEcAe/a4vb4b73A83USgNwjPQ7xQTxBfH7j+qqGmY717ogNM
+ PwgvZl4uvqdNc29h3Zps+v7idz8oWaG60cfHiX80WHmNcALm1cGxiH5OhKkTlXOCIH0a
+ Zvpw==
+X-Gm-Message-State: AOJu0Yya5dLuylD9I1vIx1u+LujHSMAtMnMmVD+3idiUg+J1e3WtCucT
+ Jpbf1iKmsSO4vDnW5bgdQAipUX9XrLr0DIaro+aS8pk7BIULpkIdswd3vtu/3OEAqyUcdTTGma4
+ RcBL4
+X-Gm-Gg: AZuq6aJ20CgJzMjvC43wRM/U3c3h6mooJ/27u5h5WPunCBkQDEUbPorWDgxphv+dyxf
+ uOxdpYmfeJUzT2OPTwHOAInN0ziENQadxW4X/g224JVYdkKnrjxzxP19nR/2zMIb5kolg+MJVA9
+ /hjBxjBaoXNfmeXcinWr+CROPEBHleUp0eWq0OeDA0BSEFISlD+ZF6lhjmDHy2bNf5HY4McMOTU
+ IjOU/eUkeQ0udyxboJmqN3qsukRv1PnEVWgINPSU2q1PKR4W5EkiNc+OATq9+4MLrc1e54q2CA/
+ 9547m8wFKDeBeU28KFl0Nv8vnLrSuFpEmwgnamDvMQa14qMZgNJP2ngOIcF8BIUu+OCv+VGvR9+
+ 8s6p9M1n07UgOnk/tbuYTx3myxPSxoyzwV0Nz+jEzdC2dfqn7EZ/6RDDS7W+wAs48vqyV1RbkJP
+ uGh5YX8OKMsICdhpwJsXb2F38PIXLLGpeNkNUBitCgrr7wJYocf9zaxsUBQKI/Ry+X
+X-Received: by 2002:a17:90b:2d83:b0:34a:a1c1:90a0 with SMTP id
+ 98e67ed59e1d1-353fed87a85mr5797860a91.28.1769650318245; 
+ Wed, 28 Jan 2026 17:31:58 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-353f61e0007sm6627143a91.12.2026.01.28.17.31.59
+ 98e67ed59e1d1-353f61e0007sm6627143a91.12.2026.01.28.17.31.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jan 2026 17:31:59 -0800 (PST)
+ Wed, 28 Jan 2026 17:31:57 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL 18/20] meson: update C++ standard to C++23
-Date: Wed, 28 Jan 2026 17:31:32 -0800
-Message-ID: <20260129013134.3956938-19-pierrick.bouvier@linaro.org>
+Subject: [PULL 16/20] meson: enable cpp (optionally) for plugins
+Date: Wed, 28 Jan 2026 17:31:30 -0800
+Message-ID: <20260129013134.3956938-17-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260129013134.3956938-1-pierrick.bouvier@linaro.org>
 References: <20260129013134.3956938-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,27 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-C++ is evolving faster than C, so it's useful to enable new standards,
-especially for standard library.
-Update to most recent standard available in our build environments.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ meson.build | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/meson.build b/meson.build
-index aa35b8273c9..395f4d56193 100644
+index 32bbd30bb9f..aa35b8273c9 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1,5 +1,5 @@
- project('qemu', ['c'], meson_version: '>=1.5.0',
--        default_options: ['warning_level=1', 'c_std=gnu11', 'cpp_std=gnu++11', 'b_colorout=auto',
-+        default_options: ['warning_level=1', 'c_std=gnu11', 'cpp_std=gnu++23', 'b_colorout=auto',
-                           'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true',
-                           'rust_std=2021', 'build.rust_std=2021'],
-         version: files('VERSION'))
+@@ -77,7 +77,8 @@ python = import('python').find_installation()
+ 
+ cc = meson.get_compiler('c')
+ all_languages = ['c']
+-if host_os == 'windows' and add_languages('cpp', required: false, native: false)
++enable_cpp = host_os == 'windows' or get_option('plugins')
++if enable_cpp and add_languages('cpp', required: false, native: false)
+   all_languages += ['cpp']
+   cxx = meson.get_compiler('cpp')
+ endif
 -- 
 2.47.3
 
