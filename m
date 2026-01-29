@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E284ED46C16
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 01:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBC8BD46C16
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 01:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlGtG-00008Z-VF; Wed, 28 Jan 2026 20:32:10 -0500
+	id 1vlGy8-0005cN-4H; Wed, 28 Jan 2026 20:37:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlGt3-0008Rb-LF
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:31:58 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1vlGy4-0005aL-2c
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:37:08 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlGt0-00038V-S0
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:31:56 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-c6541e35fc0so220281a12.3
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 17:31:54 -0800 (PST)
+ id 1vlGy2-0003u4-95
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:37:07 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2a7bceb6cd0so2900345ad.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 17:37:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769650313; x=1770255113; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rrBMb4pzsR09kFtei/WUANIUl/9qDP19I1CZ/cFKqvE=;
- b=ZeszBksTqWrWtBFrfnyCmsxukM0ei6lE5S+70X6i8e36emgTeMvV+nAEIlvjKDiWlf
- yFzUwvagMYqW5rD98TqE4eTvKjVBtDJoz/eSRAumYHr4FBRZLozEql+NqqOlx05Rtd6N
- tqBul3znYkHAUu4CX89hUb62raSsNa9Buw7RYp+dR3/5c7kjUA+sYnLiSuTWYrUdkW0X
- I3W4N0ynWaRSd8dUjdffBc9wscMKOvD8PlkvrQJ+UIMOBenQjNuEHvBbbYOwe1ksNCBW
- t41EDb/2ekltahTiwKsIn7YzSyzh/eeCuHm6T8V+va5UQv493//0jex1YE2eGNUB9fGU
- +2BA==
+ d=linaro.org; s=google; t=1769650624; x=1770255424; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dWYbdPtZTYbk5J2bnVj6Hm0Lv7DaVkGptES4Eu0gJbU=;
+ b=cG5WpER+EleJ1clGpJ0ZnhuR0VUWUGpLGRKJikXvmjTjKbn0ApLATF7bj1PfEppnrF
+ Dkg2s1PYEIpbaxMOs4AHaJh1qPOESuFdi9wCpf73b5KaxLTaUjz5ihrCfp43qmdB7jKr
+ yxtNq2hr5FusYP4OmZ2ug8mUt6f3g7KOL3u/2IfMCrHerMcRuG/ivApbb3g7ybGh7T6S
+ f3fgejLBoVyNyPkQRuZwurwTHhIfNuPEWj35bSUp1QAabaTcQlewwyuVtGijuP8Tofbz
+ HQxUNqswMJ9pbrODXZ8/j+s+g+EheXIs8GoZz4r6//9SIgPzmIXYJKFakIIBRB6pS+2F
+ LVVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769650313; x=1770255113;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rrBMb4pzsR09kFtei/WUANIUl/9qDP19I1CZ/cFKqvE=;
- b=GYcy8PKtFX9Li3lHCsF+nEcnAUSr4zZqw2uAXjiEfwtzT8+Uv305Uta1QJZ6J7+lVE
- Blp+qHEK6fE3W/MC2xPMrGz3jwbaBs3AMMguwsD5GZyibYoLhkkQspKrT1XgcEr0YaTC
- RWnIDGPWdrrRAEgYRLn46FNTTBPjaHaHRv9vNAADj9C/V/peFgfV3Ltn829y2Zh3bdGq
- eVSR6iFWZryaNq5z6hC4WNajcZqpM3KUyE7vrkAI8tAKTKgDMPDTPbjW58g+WC4aVXPg
- B9h/chehq6QWlPaDAaldxcOoqfpiWgiPLt86+8b7kTTyvTihlNdDeFfc18bdL+hZ46a6
- EJPA==
-X-Gm-Message-State: AOJu0Yzmm+Ux2YKYlGvU704/rhHYydQmwlIKKfpCT/PwuG8dDHcYy5wy
- VMRkpXhUgDLcj0vc2hi6L0OHR1sgZUMnaFzEMRuhaJgmz5+nDIX1m/CZRbpE5tYXE6VIJ1ODNcn
- VDFxS
-X-Gm-Gg: AZuq6aJUYCSuiOfPKWv3MWh7VV/Ko5iYkFE/WfcqYL0E8uB3HtR0VJg9+HGMADlEhds
- CFWovhjIc5VLhPzuejk5Z4hhEiGKhPJMkgXX223ZW31IZ8iEhtJN4QbTW1WR29Zbx+Q4rMkGvkI
- lP7ws1cD+9+f7f+Mib7cQ01PF+3eTKJWQtW6v7Fl3DUy/PkYYWko2Rccd0dTcAJEzcbsSpTR/Uw
- 2TCz8XODVSYMKtx0sp/52h/RL25TeXPRqCFB9xNSOumF0doSuXsOonHG9Qf+Wu36NdPhiWf6ror
- kPgUEbsZS8eIGkMq0bdGUSfS5SN6GoneSuOfTVeOO1gzESfmsrbLrofWqy1fRwwavqxwqsVqBX7
- o/I72SBeVGbr86aPipofEms+LlQtvlOJhX5I25LzZEbjm213piEl8vAQFZbjU3jXTibTu9oMZMu
- NLynnIBqrISLAHtV9uEY0t5ZZjUcSBsZji/72dlGO8QNwAclft3JhkTqBRgjVFmMHR
-X-Received: by 2002:a17:90b:3c11:b0:32b:65e6:ec48 with SMTP id
- 98e67ed59e1d1-353feccd236mr6318619a91.8.1769650312956; 
- Wed, 28 Jan 2026 17:31:52 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769650624; x=1770255424;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dWYbdPtZTYbk5J2bnVj6Hm0Lv7DaVkGptES4Eu0gJbU=;
+ b=FH1SmW7MvWX4kwbe7Wa/wBPV+beBoLF7A+y0It8Rh2BCOmdIFMS6ozDSBVhCUqdpwp
+ G7e/bRFDsFivbMgDecR5KYmWIGVGdtY5oKtg3ALPgNYlCq+dTol4eDsJUkR0v95GXSlf
+ 15Mz59pKziI+u52/2bOeG0IYgyvUxl3C7EByQ2xhVDMDH3/rB0s3091NT30rNhyo9KOd
+ PEP/h1zZRa/WcmbHU2DHLjwRYGo4QIyQf89cSp3NeNjTyLWdPkCtY2kyKf29PmEpNqzs
+ hPSQ8Y4MVHY7IeBngeG3/aCfTtvF9bhjnRv1RRc4EcjhygAmYi5pvCYMDfAE7xfl+NiS
+ mIHQ==
+X-Gm-Message-State: AOJu0Yxzuw3zRKZMCculV5C7iPA30yllcYg61eG1IN6uJs8ubgt2kaas
+ 7+kRyfe1mWYEY+QCOz3Sf2SQ7vKUeGjY11jZp4axdsCAf2RjvSNAUjFRYFYvT/ueIiOCkVBUfFc
+ DZ4f5
+X-Gm-Gg: AZuq6aIOEeGeDdyF1qohFHaOrWPDY8eWbZ2/XL3AKL2uVlRddZK2cUnv06mwmhRQRNK
+ xNPSec+9IMksuWM8KyXw0ZXDG2Mk1uu7wk6aKwnceikiQBCZNREuss/e4u0G6p1K4OIVZuVxqYo
+ 1AkIyUfXHT0cPzEbBPNKsejRrPue3ACpFPomrJsYmitf0NUOprzrym79x/A2Ld0fIUn4lZiYOrP
+ rfwfPqkotGVUcMr2h6C1mKybTtZOH2YHvXvmrYGPxPV7Jj/95+2VhFMcqcivCxf2cVAvf9eM4u+
+ AE8BxIOhqT5iv6QUdOMep4o3uw5CwmGKaoKU0Utrko+bn1THyNCqnLBf96btfcrfEnnxjT15o9q
+ QKefuZNqsqvfnH+2Arupmswcsag1eclehJLL0PJ8cm7yr3c3k+ISAZxq5S6ZblG0SP1jgfYbtpp
+ vfLAUr7Sn7mYgzbL9ap5YXPbCDvbiP0gTe9JXeiFWdNFK0pW6ND+R1Pp37J0hIjber
+X-Received: by 2002:a17:902:cec6:b0:2a7:af02:2fb9 with SMTP id
+ d9443c01a7336-2a870dbbfe2mr68240535ad.36.1769650624311; 
+ Wed, 28 Jan 2026 17:37:04 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-353f61e0007sm6627143a91.12.2026.01.28.17.31.52
+ d9443c01a7336-2a88b4173a2sm34889095ad.30.2026.01.28.17.37.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jan 2026 17:31:52 -0800 (PST)
+ Wed, 28 Jan 2026 17:37:03 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL 09/20] plugins: move win32_linker.c file to plugins directory
-Date: Wed, 28 Jan 2026 17:31:23 -0800
-Message-ID: <20260129013134.3956938-10-pierrick.bouvier@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 0/1] Build fix with --enable-modules
+Date: Wed, 28 Jan 2026 17:36:57 -0800
+Message-ID: <20260129013658.3961469-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260129013134.3956938-1-pierrick.bouvier@linaro.org>
-References: <20260129013134.3956938-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,47 +98,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- {contrib/plugins => plugins}/win32_linker.c | 0
- contrib/plugins/meson.build                 | 2 +-
- tests/tcg/plugins/meson.build               | 2 +-
- 3 files changed, 2 insertions(+), 2 deletions(-)
- rename {contrib/plugins => plugins}/win32_linker.c (100%)
+The following changes since commit 9ad7f544c696d73ce377bbad83f3cf8b4dd8dcac:
 
-diff --git a/contrib/plugins/win32_linker.c b/plugins/win32_linker.c
-similarity index 100%
-rename from contrib/plugins/win32_linker.c
-rename to plugins/win32_linker.c
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-index eb944b5159a..6f72b2ce0c9 100644
---- a/contrib/plugins/meson.build
-+++ b/contrib/plugins/meson.build
-@@ -10,7 +10,7 @@ t = []
- if get_option('plugins')
-   foreach i : contrib_plugins
-     if host_os == 'windows'
--      t += shared_module(i, files(i + '.c') + 'win32_linker.c',
-+      t += shared_module(i, files(i + '.c') + '../../plugins/win32_linker.c',
-                         include_directories: '../../include/qemu',
-                         link_depends: [win32_qemu_plugin_api_lib],
-                         link_args: win32_qemu_plugin_api_link_flags,
-diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-index 561584159eb..a6e78438510 100644
---- a/tests/tcg/plugins/meson.build
-+++ b/tests/tcg/plugins/meson.build
-@@ -2,7 +2,7 @@ t = []
- if get_option('plugins')
-   foreach i : ['bb', 'discons', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
-     if host_os == 'windows'
--      t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
-+      t += shared_module(i, files(i + '.c') + '../../../plugins/win32_linker.c',
-                         include_directories: '../../../include/qemu',
-                         link_depends: [win32_qemu_plugin_api_lib],
-                         link_args: win32_qemu_plugin_api_link_flags,
--- 
-2.47.3
+  Merge tag 'pull-request-2026-01-27' of https://gitlab.com/thuth/qemu into staging (2026-01-28 10:04:17 +1100)
 
+are available in the Git repository at:
+
+  https://gitlab.com/pbo-linaro/qemu tags/pr-build_fix-20260128
+
+for you to fetch changes up to 8eff45dfe93b34b1a027bd22fd8dffe6424f480d:
+
+  meson: fix build of qemu-system-microblaze with --enable-modules (2026-01-28 17:35:52 -0800)
+
+----------------------------------------------------------------
+Fix build with --enable-modules
+
+----------------------------------------------------------------
+Pierrick Bouvier (1):
+      meson: fix build of qemu-system-microblaze with --enable-modules
+
+ meson.build | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
