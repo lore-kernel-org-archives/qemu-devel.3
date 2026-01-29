@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BAE7D6B088
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DCEDD6B084
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:11:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUax-0001Dn-Lr; Thu, 29 Jan 2026 11:10:11 -0500
+	id 1vlUaw-00017a-HY; Thu, 29 Jan 2026 11:10:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUal-0000UW-MZ
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:01 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1vlUat-0000p5-Lg
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:07 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUah-0006k0-Oz
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:58 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4806cc07ce7so10485195e9.1
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:55 -0800 (PST)
+ id 1vlUar-00074g-P9
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:07 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-42fbc305552so1139943f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:10:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769702994; x=1770307794; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769703004; x=1770307804; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rUUn70ACpFYfs/QMQvOGgsBMv/EAn6IBhP2oNBQRff0=;
- b=sVykaeiCsihP/ChS7pJmT8n6EIjOy/4X8NxqUhXMWnEGWEmkR6qkr4tWH6lDF4k4y2
- qUQLTTGeURzRg8XGyGaw6y1ESXJbXWOeyHoKHFiOAvJYakMfUPd8869F0oSt6FvEONLU
- BtM5yBkxSacBeY+ZVctfg0R2B/DxlHPWfZf0yjPYeh0vB5pq6tbTyOhpBxU4tzvlQpC6
- DNf7tL129MDzjFETc4QtK/OJrdvqstjTX2v97dOeipc9OGTckPEHRg2HvA0/hDfnOnDl
- ePMLm0ib4D4retEqASniYKd7AM//qwd261cxiCn137yVmNKfv0onAqKN6ZcSPG+SvqDX
- kfLg==
+ :reply-to; bh=iDghPW5CxBXO9mC8DhlYzxtsMzpsZXCT4re3Q+rFilk=;
+ b=rjSc977exSI85yvG6YiLTsfVHaOB0Lcl08lYehocANIP/oi4ZS5vrXwIUG/DQzSepV
+ rKflxrWbPEiYGreoBdncw4IjLFdOhO8SewnQ/D8Iwok8aGbX74NgaOg1OfwQm+1Hw7pK
+ fiN8D3xJl8AIl1UlzY4eiaiiolqYlV6NcIoCTLDYsVT8ag7eI8lrwCfX3vjsY5LVDAlF
+ S6y5oYezrwddCQvW5+i9x/Pfcf5lxw7R7TNH41eC9UZFJXhdIBXFfVcIO437+7YVmKxM
+ dEcCgdYNPt4ESNMcvy419VAl1h633HrIqKWOz5SSvsUASlbdy2C5sbqcFZj2Jyzn/aOY
+ MEoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769702994; x=1770307794;
+ d=1e100.net; s=20230601; t=1769703004; x=1770307804;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=rUUn70ACpFYfs/QMQvOGgsBMv/EAn6IBhP2oNBQRff0=;
- b=wBOGb0DBGfpWtd3mga8kDxJY+hzoq8qBOYvOn0BDU8I27W2juZ3zADOMEvFqtgMcR7
- ra3WfS1wbIHmClVJxFyf3jG4TCgWYkDhK7k8LbM2xglcIytm5cFcMa5aNZnIv9FGkqos
- uBK1o36TxEqPiiN7g3Z+n02SKPXPjjvW0O0yezurMQ4EeOYBXQ/QdHsjL1GoHa2pkQQ7
- zGk3p1FHsQ2JI9QBMe5oRddvmVaXZ9Go8K4ZIRJdVCygcfSoIP9gxwzBtNRBEBrpJ8Vw
- rdoKbGfDLr0T6fEIBBAGPXkWMjKZefz0aEq7kzR8yvXDiY5HuuSslCMhvPuQZSWjCTpP
- hkLA==
-X-Gm-Message-State: AOJu0Yy+GXCi4fb6Ra2earWHEMSCE3ZPQsBQSXXhprpNKrhI0aoGgBF2
- 1fucJW3SOzjngQcuIZZiMOQcUdafctwcna3jJHblvZDGIHkzTc+spClw7avycRN/ZKUUrFOTcC8
- fX8quQx4=
-X-Gm-Gg: AZuq6aIA1Ke0RV7oYfE2M+56lW7loFwwk711ZCOIJ75gLn7+7gaty2dHC9pK926AlP7
- bflkGWojdJN+BoR+gljeq9S0AeuLv6xqRIXO12LRlXtUV+0OcRuLsL881ZEy0HTZDhXAChSQ7KY
- n2VjH0+/8FAQ4kha9yF/cytQCedQJTybqM1DHLMbvI6QZll+ws4OR2peCCwuIfVvOeuwPzKTcmy
- bPvWLX3WIhZC7oiNSgMSUzGrPoEC4f9WrbSr/y/MK6q8bWtL3bdMpQydE+j6r3wHUdGZFhEbgBw
- fOzLpPX4gdzCPBBOfGBbYlY3shn43eJTZXbKhe/qLUu3tP4ZPEfVe6CQD9e/jz2u/Y0DzGtzZ73
- wGiLTf0FQHoyIo6TlatMUn4B08yb57Fsu4Ou8t5+q6B3aAsLF7x3HszA4qfIcx05EFFW058oaKv
- Z3kStNcnAkPu6Rnoxb2B1lUowUh8GUOg==
-X-Received: by 2002:a05:600c:450b:b0:477:9cdb:e32e with SMTP id
- 5b1f17b1804b1-48069c206c8mr113310115e9.9.1769702993930; 
- Thu, 29 Jan 2026 08:09:53 -0800 (PST)
+ bh=iDghPW5CxBXO9mC8DhlYzxtsMzpsZXCT4re3Q+rFilk=;
+ b=hpIEFWREkBMbdWj/N56VKGq6ZrkDOYpUdGXFibtIRp+qumNLsF3I7rURHNflPiMMeK
+ I+eVZTVyS380NW+nOts9cctoMinD9TuxnL6TYTr5T+05PsOkbetNFuwmawZzKFXPPgU+
+ dK3qb10yRjrDlQ9NzxTbjCnE95YRNgV52+B+KHLZKx/wu81nx1O+dpBG/WKldsCqb77M
+ FGPwZYiNVoKQiU2klifWj8EATMx5d0PG60I5lb4dkrc11cIVH3D2nCYfRpybslNKvkw2
+ 0kTckleE8hgmj4RcnWxwwsJS5oxJav8C6AyF5/CNuPWAyvxQ/vXW+THKhFjKE3wLrnP4
+ 6JbQ==
+X-Gm-Message-State: AOJu0Yxg9gb7jPAykAPj62SkoSQkhrX/p0I0GqphhAvjgEZ4t8kMbbZs
+ zZVDKOPG0BEfLvT8MKTxUAGXApUHaIPkjXdjlX+R/+Fka8jNeccX+SZgrj7N5j8i0stNKZCI7+J
+ wf9kfetM=
+X-Gm-Gg: AZuq6aLwCd+o31eRYzjW+ROhpTj1qvu9key91SbsNchzkV8LzkpUq15YSW5cUSOTjlV
+ z1eqNASJTKrBZiwYnBFTFEGUn6eI6ME4H+yfbldE82Dk2xptWOogPWuOo5bBuoNUYsB0AH2LUi1
+ mdwAqxqmhl4Asa9LZKF6lIbpGDtxoA4GwlX8B68fiOV6NDxMQAXAnCFu94vTB+SbzPNcCmR4lzg
+ D+iYeTe8IQEFta3pneI6RSLWUkCWsDsuWiwUypvP+JeKqJRH3kzTb/6WT/rulXD3QebZyrB/cjW
+ V4JtaDFeXJgGDjyUN0wHUDQvI+CeoHu4OcL1Bivfv+GHmmzN1dVGFAHtbyplFJLxTggQmMC4QSp
+ nYFjOU9MuDKSjvsP71XSLMWerDhyPnytxsh/Bc1JXcwUmnLZYhnrKkuEzfdot0aBj6GD+slgzFn
+ ZsLLUyTkWa+CcnE9hxXG99pacWUxKopzuV9xBggO/d
+X-Received: by 2002:a05:6000:310c:b0:435:9770:9ec8 with SMTP id
+ ffacd0b85a97d-435f3aa9ec7mr154863f8f.32.1769703004022; 
+ Thu, 29 Jan 2026 08:10:04 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.52
+ ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.10.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 08:09:53 -0800 (PST)
+ Thu, 29 Jan 2026 08:10:03 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/43] hw/arm/smmuv3-accel: Add a property to specify RIL
- support
-Date: Thu, 29 Jan 2026 16:09:03 +0000
-Message-ID: <20260129160917.1415092-30-peter.maydell@linaro.org>
+Subject: [PULL 38/43] target/arm/hvf: Move hvf_sysreg_[read,
+ write]_cp() functions around
+Date: Thu, 29 Jan 2026 16:09:12 +0000
+Message-ID: <20260129160917.1415092-39-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260129160917.1415092-1-peter.maydell@linaro.org>
 References: <20260129160917.1415092-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,135 +101,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Currently QEMU SMMUv3 has RIL support by default. But if accelerated mode
-is enabled, RIL has to be compatible with host SMMUv3 support.
+Next commit will use these functions prototype earlier. Rather
+than forward-declaring them, move them around.
 
-Add a property so that the user can specify this.
-
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-id: 20260126104342.253965-30-skolothumtho@nvidia.com
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-id: 20260118215945.46693-2-philmd@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmuv3-accel.c   | 14 ++++++++++++--
- hw/arm/smmuv3-accel.h   |  4 ++++
- hw/arm/smmuv3.c         |  9 +++++++++
- include/hw/arm/smmuv3.h |  1 +
- 4 files changed, 26 insertions(+), 2 deletions(-)
+ target/arm/hvf/hvf.c | 142 +++++++++++++++++++++----------------------
+ 1 file changed, 71 insertions(+), 71 deletions(-)
 
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index 33011962e3..df82f1e32a 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -68,8 +68,8 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
-         return false;
-     }
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index e4c0d936f1..fcb7fa3b30 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -423,6 +423,77 @@ static const hv_sys_reg_t hvf_sreg_list[] = {
  
--    /* QEMU SMMUv3 supports Range Invalidation by default */
--    if (FIELD_EX32(info->idr[3], IDR3, RIL) !=
-+    /* User can disable QEMU SMMUv3 Range Invalidation support */
-+    if (FIELD_EX32(info->idr[3], IDR3, RIL) <
-                 FIELD_EX32(s->idr[3], IDR3, RIL)) {
-         error_setg(errp, "Host SMMUv3 doesn't support Range Invalidation");
-         return false;
-@@ -646,6 +646,16 @@ static const PCIIOMMUOps smmuv3_accel_ops = {
-     .get_msi_direct_gpa = smmuv3_accel_get_msi_gpa,
- };
+ #undef DEF_SYSREG
  
-+void smmuv3_accel_idr_override(SMMUv3State *s)
++static uint32_t hvf_reg2cp_reg(uint32_t reg)
 +{
-+    if (!s->accel) {
-+        return;
-+    }
-+
-+    /* By default QEMU SMMUv3 has RIL. Update IDR3 if user has disabled it */
-+    s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, s->ril);
++    return ENCODE_AA64_CP_REG((reg >> SYSREG_OP0_SHIFT) & SYSREG_OP0_MASK,
++                              (reg >> SYSREG_OP1_SHIFT) & SYSREG_OP1_MASK,
++                              (reg >> SYSREG_CRN_SHIFT) & SYSREG_CRN_MASK,
++                              (reg >> SYSREG_CRM_SHIFT) & SYSREG_CRM_MASK,
++                              (reg >> SYSREG_OP2_SHIFT) & SYSREG_OP2_MASK);
 +}
 +
- /* Based on SMUUv3 GPBA.ABORT configuration, attach a corresponding HWPT */
- bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp)
- {
-diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-index 41b37e3122..a8a64802ec 100644
---- a/hw/arm/smmuv3-accel.h
-+++ b/hw/arm/smmuv3-accel.h
-@@ -49,6 +49,7 @@ bool smmuv3_accel_install_ste_range(SMMUv3State *s, SMMUSIDRange *range,
- bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp);
- bool smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
-                                 Error **errp);
-+void smmuv3_accel_idr_override(SMMUv3State *s);
- void smmuv3_accel_reset(SMMUv3State *s);
- #else
- static inline void smmuv3_accel_init(SMMUv3State *s)
-@@ -76,6 +77,9 @@ smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
- {
-     return true;
- }
-+static inline void smmuv3_accel_idr_override(SMMUv3State *s)
++static bool hvf_sysreg_read_cp(CPUState *cpu, const char *cpname,
++                               uint32_t reg, uint64_t *val)
 +{
-+}
- static inline void smmuv3_accel_reset(SMMUv3State *s)
- {
- }
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 8ca1d4ad35..cb619f19df 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -305,6 +305,7 @@ static void smmuv3_init_id_regs(SMMUv3State *s)
-     s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN16K, 1);
-     s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN64K, 1);
-     s->aidr = 0x1;
-+    smmuv3_accel_idr_override(s);
- }
- 
- static void smmuv3_reset(SMMUv3State *s)
-@@ -1926,6 +1927,10 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
- #endif
- 
-     if (!s->accel) {
-+        if (!s->ril) {
-+            error_setg(errp, "ril can only be disabled if accel=on");
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    CPUARMState *env = &arm_cpu->env;
++    const ARMCPRegInfo *ri;
++
++    ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
++    if (ri) {
++        if (!cp_access_ok(1, ri, true)) {
 +            return false;
 +        }
-         return true;
-     }
- 
-@@ -2059,6 +2064,8 @@ static const Property smmuv3_properties[] = {
-     DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
-     /* GPA of MSI doorbell, for SMMUv3 accel use. */
-     DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
-+    /* RIL can be turned off for accel cases */
-+    DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
- };
- 
- static void smmuv3_instance_init(Object *obj)
-@@ -2084,6 +2091,8 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
-     object_class_property_set_description(klass, "accel",
-         "Enable SMMUv3 accelerator support. Allows host SMMUv3 to be "
-         "configured in nested mode for vfio-pci dev assignment");
-+    object_class_property_set_description(klass, "ril",
-+        "Disable range invalidation support (for accel=on)");
++        if (ri->accessfn) {
++            if (ri->accessfn(env, ri, true) != CP_ACCESS_OK) {
++                return false;
++            }
++        }
++        if (ri->type & ARM_CP_CONST) {
++            *val = ri->resetvalue;
++        } else if (ri->readfn) {
++            *val = ri->readfn(env, ri);
++        } else {
++            *val = raw_read(env, ri);
++        }
++        trace_hvf_emu_reginfo_read(cpname, ri->name, *val);
++        return true;
++    }
++
++    return false;
++}
++
++static bool hvf_sysreg_write_cp(CPUState *cpu, const char *cpname,
++                                uint32_t reg, uint64_t val)
++{
++    ARMCPU *arm_cpu = ARM_CPU(cpu);
++    CPUARMState *env = &arm_cpu->env;
++    const ARMCPRegInfo *ri;
++
++    ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
++
++    if (ri) {
++        if (!cp_access_ok(1, ri, false)) {
++            return false;
++        }
++        if (ri->accessfn) {
++            if (ri->accessfn(env, ri, false) != CP_ACCESS_OK) {
++                return false;
++            }
++        }
++        if (ri->writefn) {
++            ri->writefn(env, ri, val);
++        } else {
++            raw_write(env, ri, val);
++        }
++
++        trace_hvf_emu_reginfo_write(cpname, ri->name, val);
++        return true;
++    }
++
++    return false;
++}
++
+ int hvf_arch_get_registers(CPUState *cpu)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+@@ -1161,46 +1232,6 @@ static bool is_id_sysreg(uint32_t reg)
+            SYSREG_CRM(reg) < 8;
  }
  
- static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
-diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-index 9c39acd5ca..533a2182e8 100644
---- a/include/hw/arm/smmuv3.h
-+++ b/include/hw/arm/smmuv3.h
-@@ -69,6 +69,7 @@ struct SMMUv3State {
-     struct SMMUv3AccelState *s_accel;
-     uint64_t msi_gpa;
-     Error *migration_blocker;
-+    bool ril;
- };
+-static uint32_t hvf_reg2cp_reg(uint32_t reg)
+-{
+-    return ENCODE_AA64_CP_REG((reg >> SYSREG_OP0_SHIFT) & SYSREG_OP0_MASK,
+-                              (reg >> SYSREG_OP1_SHIFT) & SYSREG_OP1_MASK,
+-                              (reg >> SYSREG_CRN_SHIFT) & SYSREG_CRN_MASK,
+-                              (reg >> SYSREG_CRM_SHIFT) & SYSREG_CRM_MASK,
+-                              (reg >> SYSREG_OP2_SHIFT) & SYSREG_OP2_MASK);
+-}
+-
+-static bool hvf_sysreg_read_cp(CPUState *cpu, const char *cpname,
+-                               uint32_t reg, uint64_t *val)
+-{
+-    ARMCPU *arm_cpu = ARM_CPU(cpu);
+-    CPUARMState *env = &arm_cpu->env;
+-    const ARMCPRegInfo *ri;
+-
+-    ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
+-    if (ri) {
+-        if (!cp_access_ok(1, ri, true)) {
+-            return false;
+-        }
+-        if (ri->accessfn) {
+-            if (ri->accessfn(env, ri, true) != CP_ACCESS_OK) {
+-                return false;
+-            }
+-        }
+-        if (ri->type & ARM_CP_CONST) {
+-            *val = ri->resetvalue;
+-        } else if (ri->readfn) {
+-            *val = ri->readfn(env, ri);
+-        } else {
+-            *val = raw_read(env, ri);
+-        }
+-        trace_hvf_emu_reginfo_read(cpname, ri->name, *val);
+-        return true;
+-    }
+-
+-    return false;
+-}
+-
+ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
+@@ -1454,37 +1485,6 @@ static void pmswinc_write(CPUARMState *env, uint64_t value)
+     }
+ }
  
- typedef enum {
+-static bool hvf_sysreg_write_cp(CPUState *cpu, const char *cpname,
+-                                uint32_t reg, uint64_t val)
+-{
+-    ARMCPU *arm_cpu = ARM_CPU(cpu);
+-    CPUARMState *env = &arm_cpu->env;
+-    const ARMCPRegInfo *ri;
+-
+-    ri = get_arm_cp_reginfo(arm_cpu->cp_regs, hvf_reg2cp_reg(reg));
+-
+-    if (ri) {
+-        if (!cp_access_ok(1, ri, false)) {
+-            return false;
+-        }
+-        if (ri->accessfn) {
+-            if (ri->accessfn(env, ri, false) != CP_ACCESS_OK) {
+-                return false;
+-            }
+-        }
+-        if (ri->writefn) {
+-            ri->writefn(env, ri, val);
+-        } else {
+-            raw_write(env, ri, val);
+-        }
+-
+-        trace_hvf_emu_reginfo_write(cpname, ri->name, val);
+-        return true;
+-    }
+-
+-    return false;
+-}
+-
+ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
+ {
+     ARMCPU *arm_cpu = ARM_CPU(cpu);
 -- 
 2.43.0
 
