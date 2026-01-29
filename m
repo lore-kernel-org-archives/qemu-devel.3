@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F22AD6B086
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E78ED6B084
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:11:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUb5-0001cT-Sy; Thu, 29 Jan 2026 11:10:20 -0500
+	id 1vlUbB-0001pa-B4; Thu, 29 Jan 2026 11:10:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUap-0000bH-LP
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:05 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1vlUay-0001Kn-Ux
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:13 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUam-0006nH-0P
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:02 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4806dffc64cso9063125e9.1
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:59 -0800 (PST)
+ id 1vlUax-00076n-02
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:12 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-47f5c2283b6so9409185e9.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:10:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769702998; x=1770307798; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769703009; x=1770307809; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=u3uV6GSWr+BEGrx5YGtZDjy8LLlQ8HkEC6LhLpQIb3I=;
- b=onP+s88xHsCmQ8HOso8d9j4hpl1eKYEvZUPfKoQ/Z3Fw4hJDdhi823cwml35l8zgso
- LJnXo7NhdEpkKSuESSKShAZUvI/Yuj3G85qg2oQL3HX6dCTApFqEA2IId3To0/AEJvrJ
- mlsJifApNVxey67Den87VrZyIp4ibjg7tudNZbNN8jb8LhCBHmrhiwR5iCHM72r3pLsY
- FAfBtPOKRYqlgF2RAR+VLKiWx85EzMrkppyCTJkoIX2kuwSSEKXcTMSlMBJ9vTIZYSNV
- rL0KjQZ+HJuXQ+GJTMTihl7U44Nqq9QlYoLL1j7dOkvzH7KzKrRpwAqKJgZEzCYoXdzo
- bbbg==
+ :reply-to; bh=IlsBtCnmhIZFl3u2JK0/ew3XW8UoDsMuJkmGhR98BWo=;
+ b=eHJexbK+3Oaqaa3rfAfTsSTLZnxAt3gjUxcUDhlM1xBuuiWzMsZ51AuKjOrVOndw3k
+ m4mMcLiBYQhZ/IIA1NQUh5joctXJxJVJRn/v4ckQ7AlqSw7qS51mo4HhXI8dJqpPrbnP
+ C9SlUrXdmxv/tzwSzp/tJVWamB7BPa5WDCCe8M0igOQGR0VwBphOblqx1s6ajseyi6R3
+ CKMTa9SV90vMCGSegMUpk3lNoPf77p2k9d4+wSBM7LiOoX815cf/aNSpMVpLTULVWgq2
+ R/6VoPSPj5ocdo1EQF7y3PMUQkdkGznFzJt1vOb1Qm5ZRB+HaNrQ2Q26LudeQetpNl1E
+ Ihqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769702998; x=1770307798;
+ d=1e100.net; s=20230601; t=1769703009; x=1770307809;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=u3uV6GSWr+BEGrx5YGtZDjy8LLlQ8HkEC6LhLpQIb3I=;
- b=eJZer+o9Av5JC4M/TDJw4GooiO0KSV7JX2PSm7e3u8pQKBV/w9NVOftI5lbm7V4Zm7
- XQpla5NEN7aWDy5+hCgAfqOnqUdQR5gtOZ0MR/VqO8GkCdEoMjz5XRVPLej1Y65BLIV2
- 72+Y06Tf90ecE+k4UNyegkfqQhOM7oz0Nk4kPI4Fb6QeNa8/uichttCi4YmjTs8/69fu
- Z8ktWByy67XWobD5jxGxBMzJt+fm3UyJGLByBhCTB8OUtFcI0nM4z+/MbtfhIvXxRDFL
- eiI8NCQvm9r1bVZogI9u9k0ZXcNPFLWgVkBn1iyPL4O+Qca4X6q71E3psjF1iW+IkxCZ
- bCAg==
-X-Gm-Message-State: AOJu0Yyb+yT057qnuebN3lhEJJzzJNlrW+fQ27QVL4E7Wpn/k8ZGatuW
- lRWGw8sQbWv6HKQiKVvBJe3slevjIwzK8plszxxvx6b4jadRAHA7CYkd8R/olkHLGvbq1ufckQ1
- 2Vqfue2U=
-X-Gm-Gg: AZuq6aKNYwS2lnoMjlwsfL8QTmL7kUpTcpTw4Y7IfzHCVDQ71Fn4QyqrIFRTpi7eChc
- zlU/tbEonNaTU/gXGRBJT10QJ7anWWSvCbA2e8NJSN9A4vaZBqiYebzqo4mhgrh0RX+cd3ALjGF
- PQvndwbYRZCOQSJm/+LIJB2OYUyHdNsSES1cAI+zEp6gFUaX0ims6MAaRUPXMQY8I3/13GyAEeZ
- 9WElDr84botcc8gc6ag349WQ7Kru6/w7vdk/drf0f17itEoS2+wkf4aQr10oS65I/ETrCehX+/r
- QIGIDemS5AlQpkK1nmuIz8pJ/VDjoHYgZeyY2S7gn+xccQ5ICFBMGMdlPNeTE4lA87gc6H0UoiY
- aUz57q6/V8zzFvrpmZ2Ob+2ep5n8xzvXzhF1JAvFsewq8/4qzi1L1KAxz8wjIZYkw/FnR0mXc+n
- A3Fs3os1zGIbe8sNoWRNxwoVZjOew/5g==
-X-Received: by 2002:a05:600c:8208:b0:47d:92bb:2723 with SMTP id
- 5b1f17b1804b1-48069bfa957mr118140905e9.3.1769702998389; 
- Thu, 29 Jan 2026 08:09:58 -0800 (PST)
+ bh=IlsBtCnmhIZFl3u2JK0/ew3XW8UoDsMuJkmGhR98BWo=;
+ b=URM3AVMrKGiSj6wvv+k2IaIXLyaKV/9IGXVKx5dCrlF8mx7BKDYArd+K1DcsMSQqAq
+ YPan4Ktp+9kFehZuhpHN0yQucGSbeMrfvI5bXYOt4fCwg5pPih1t6ptfKP1WIjhO+oso
+ 0lhIkt1WsARcxGlc399X2LFZ2h1F2cYLMw8AKsL6gu2H9WUVi9Wd3oxodB4VBdPEw+1Z
+ rplfKFKt+XFrqxeoVqyRpd4aGgc8sBvfZbqsxF1iME4ESA3gUVoCL97pWlSW0xpdtQzS
+ pfuTSwfJKLdQIMGZXXKMAX2ibqrJ5Gtf4UNB0DOp1q7awSRVK1+G6+R4wQ5ZORRY9Fto
+ DxWg==
+X-Gm-Message-State: AOJu0Yx+f32kPsXBTkROLexbJ3w38ojS1qB0dkT5cXz1dzK8L1xfO3OU
+ nOAAJaXYWuaoGfrc5Z/q+jLkljjuk+/55jUjPURNXuj8tRTKm4zG1no2jieFgAeEAfT0NJlzxBf
+ 6gF9Ro78=
+X-Gm-Gg: AZuq6aKZNDCPd6jfvb1qNJNLh3uKfYIzL+BCcZA5s5ukDsqxYv6Wwp4l1vkxwYnB1r4
+ 9m2OYdERpwf3nDuTYFHLoq5SYnc27ei1d083OGHMGPo/78i6lEhT8Ax0Wa743DQ2OtHzbz+Da/5
+ oxcctjx7pD5l3zn2t91/gu8znvhwVe2iqOoX5bKBMNIo0SvCA7t2UFvcIqxActCCDvPC30gzg+5
+ 6T58jO8AM1SVhdiVA3aIVH+Qsl+pfTb8QgYhehjqmObgyJLWVY+UxmWQLiD1+DAT1g0tEy8bnW1
+ qbmLoDyil6XIyGDzj+a2TWEpsn+qC40JSrwySGWb7AsVgV8IQtFt4zhqjeCaIKqIKtecRlBxjhY
+ liHvc0x26HFc8XdEZKtEPonCRSMB+58lVvJ3M/7cSmifl4LVDwtlgbIoCR1NknTPDNKBNHY0hhh
+ RfMFzBWp7rgtDpmbcCaYlKGjcnkHrCYw==
+X-Received: by 2002:a05:600c:e40b:b0:47a:9560:ec28 with SMTP id
+ 5b1f17b1804b1-4806a5bef7bmr114557085e9.13.1769703009487; 
+ Thu, 29 Jan 2026 08:10:09 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.57
+ ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.10.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 08:09:57 -0800 (PST)
+ Thu, 29 Jan 2026 08:10:08 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/43] backends/iommufd: Add get_pasid_info() callback
-Date: Thu, 29 Jan 2026 16:09:07 +0000
-Message-ID: <20260129160917.1415092-34-peter.maydell@linaro.org>
+Subject: [PULL 43/43] arm: add DCZID_EL0 to idregs array
+Date: Thu, 29 Jan 2026 16:09:17 +0000
+Message-ID: <20260129160917.1415092-44-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260129160917.1415092-1-peter.maydell@linaro.org>
 References: <20260129160917.1415092-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,97 +99,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Cornelia Huck <cohuck@redhat.com>
 
-The get_pasid_info callback retrieves PASID capability information
-when the HostIOMMUDevice backend supports it. Currently, only the
-Linux IOMMUFD backend provides this information.
+Continue moving ID registers to the idregs array, so that we
+eventually can switch to an autogenerated cpu-sysregs.h.inc.
 
-This will be used by a subsequent patch to synthesize a PASID
-capability for vfio-pci devices behind a vIOMMU that supports PASID.
+This requires a bit of care, since we still have to handle the EL
+specific part (DCZID_EL0.DZP). The value previously saved in
+cpu->dcz_blocksize is now kept in DCZID_EL.BS (transparent to
+callers using the wrappers.)
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Message-id: 20260126104342.253965-34-skolothumtho@nvidia.com
+KVM currently does not support DCZID_EL0 via ONE_REG, assert that
+we're not trying to do anything with it until it does.
+
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Message-id: 20260105154119.59853-3-cohuck@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- backends/iommufd.c                 | 17 +++++++++++++++++
- include/system/host_iommu_device.h | 17 +++++++++++++++++
- 2 files changed, 34 insertions(+)
+ target/arm/cpu-sysregs.h.inc | 1 +
+ target/arm/cpu.h             | 8 ++++----
+ target/arm/helper.c          | 4 +++-
+ target/arm/tcg/translate.h   | 2 +-
+ 4 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 9b63d74083..13822df82f 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -539,11 +539,28 @@ static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
-     }
+diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+index 2ba49d8478..3d1ed40f04 100644
+--- a/target/arm/cpu-sysregs.h.inc
++++ b/target/arm/cpu-sysregs.h.inc
+@@ -40,3 +40,4 @@ DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
+ DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
+ DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
+ DEF(CTR_EL0, 3, 3, 0, 0, 1)
++DEF(DCZID_EL0, 3, 3, 0, 0, 7)
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 019f4e6147..21fee5e840 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1112,8 +1112,6 @@ struct ArchCPU {
+     bool prop_pauth_qarma5;
+     bool prop_lpa2;
+ 
+-    /* DCZ blocksize, in log_2(words), ie low 4 bits of DCZID_EL0 */
+-    uint8_t dcz_blocksize;
+     /* GM blocksize, in log_2(words), ie low 4 bits of GMID_EL0 */
+     uint8_t gm_blocksize;
+ 
+@@ -1181,12 +1179,14 @@ struct ARMCPUClass {
+ 
+ static inline uint8_t get_dczid_bs(ARMCPU *cpu)
+ {
+-    return cpu->dcz_blocksize;
++    return extract64(cpu->isar.idregs[DCZID_EL0_IDX], 0, 4);
  }
  
-+static bool hiod_iommufd_get_pasid_info(HostIOMMUDevice *hiod,
-+                                        PasidInfo *pasid_info)
-+{
-+    HostIOMMUDeviceCaps *caps = &hiod->caps;
-+
-+    if (!caps->max_pasid_log2) {
-+        return false;
-+    }
-+
-+    g_assert(pasid_info);
-+    pasid_info->exec_perm = (caps->hw_caps & IOMMU_HW_CAP_PCI_PASID_EXEC);
-+    pasid_info->priv_mod = (caps->hw_caps & IOMMU_HW_CAP_PCI_PASID_PRIV);
-+    pasid_info->max_pasid_log2 = caps->max_pasid_log2;
-+    return true;
-+}
-+
- static void hiod_iommufd_class_init(ObjectClass *oc, const void *data)
+ static inline void set_dczid_bs(ARMCPU *cpu, uint8_t bs)
  {
-     HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
+-    cpu->dcz_blocksize = bs;
++    /* keep dzp unchanged */
++    cpu->isar.idregs[DCZID_EL0_IDX] =
++        deposit64(cpu->isar.idregs[DCZID_EL0_IDX], 0, 4, bs);
+ }
  
-     hioc->get_cap = hiod_iommufd_get_cap;
-+    hioc->get_pasid_info = hiod_iommufd_get_pasid_info;
- };
+ /* Callback functions for the generic timer's timers. */
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 4acaee407d..e86ceb130c 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -3314,12 +3314,14 @@ static uint64_t aa64_dczid_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     ARMCPU *cpu = env_archcpu(env);
+     int dzp_bit = 1 << 4;
  
- static const TypeInfo types[] = {
-diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-index bfb2b60478..f000301583 100644
---- a/include/system/host_iommu_device.h
-+++ b/include/system/host_iommu_device.h
-@@ -59,6 +59,12 @@ struct HostIOMMUDevice {
- #endif
- };
- 
-+typedef struct PasidInfo {
-+    bool exec_perm;
-+    bool priv_mod;
-+    uint8_t max_pasid_log2;
-+} PasidInfo;
++    assert(!kvm_enabled());
 +
- /**
-  * struct HostIOMMUDeviceClass - The base class for all host IOMMU devices.
-  *
-@@ -116,6 +122,17 @@ struct HostIOMMUDeviceClass {
-      * @hiod: handle to the host IOMMU device
-      */
-     uint64_t (*get_page_size_mask)(HostIOMMUDevice *hiod);
-+    /**
-+     * @get_pasid_info: Return the PASID information associated with the
-+     * @hiod Host IOMMU device.
-+     *
-+     * @hiod: handle to the host IOMMU device
-+     *
-+     * @pasid_info: If success, returns the PASID related information.
-+     *
-+     * Returns: true on success, false on failure.
-+     */
-+    bool (*get_pasid_info)(HostIOMMUDevice *hiod, PasidInfo *pasid_info);
- };
+     /* DZP indicates whether DC ZVA access is allowed */
+     if (aa64_zva_access(env, NULL, false) == CP_ACCESS_OK) {
+         dzp_bit = 0;
+     }
  
- /*
+-    return cpu->dcz_blocksize | dzp_bit;
++    return cpu->isar.idregs[DCZID_EL0_IDX] | dzp_bit;
+ }
+ 
+ static CPAccessResult sp_el0_access(CPUARMState *env, const ARMCPRegInfo *ri,
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index b62104b4ae..1e30d7c77c 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -193,7 +193,7 @@ typedef struct DisasContext {
+      *  < 0, set by the current instruction.
+      */
+     int8_t btype;
+-    /* A copy of cpu->dcz_blocksize. */
++    /* A copy of DCZID_EL0.BS. */
+     uint8_t dcz_blocksize;
+     /* A copy of cpu->gm_blocksize. */
+     uint8_t gm_blocksize;
 -- 
 2.43.0
 
