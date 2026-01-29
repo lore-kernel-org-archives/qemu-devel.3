@@ -4,47 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 358B9D358CF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56C6DD358D0
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 07:07:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlM7H-0000N1-PP; Thu, 29 Jan 2026 02:06:59 -0500
+	id 1vlM7e-0000fs-Oi; Thu, 29 Jan 2026 02:07:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vlM7C-0000Hm-CB
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 02:06:54 -0500
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vlM7d-0000eU-7X
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 02:07:21 -0500
 Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vlM77-0001LP-9W
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 02:06:52 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.198])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f1qv66RpCz5vsf;
- Thu, 29 Jan 2026 07:06:42 +0000 (UTC)
-Received: from kaod.org (37.59.142.110) by DAG3EX1.mxp5.local (172.16.2.21)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vlM7b-0001NV-Om
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 02:07:20 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.54.221])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4f1qvn69xtz5wwN;
+ Thu, 29 Jan 2026 07:07:17 +0000 (UTC)
+Received: from kaod.org (37.59.142.113) by DAG3EX1.mxp5.local (172.16.2.21)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Thu, 29 Jan
- 2026 08:06:42 +0100
+ 2026 08:07:17 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-110S00454ce5fc0-e23c-4988-9851-4e0417ae6c8d,
+ (GARM-113S0075610bff7-a14d-49e8-88aa-e0b79bdc241e,
  2C6FA5329B41B2F3C96DA03D509BFF70E1BB15D6) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <c8046224-ebfa-43fd-b8cb-525af4ebee82@kaod.org>
-Date: Thu, 29 Jan 2026 08:06:41 +0100
+Message-ID: <55aabd19-096f-4e68-b8e8-fe2fc41e0160@kaod.org>
+Date: Thu, 29 Jan 2026 08:07:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/7] hw/pci-host/aspeed_pcie: Drop AST2600 RC_H
- root-bus remap and bus-nr property
+Subject: Re: [PATCH v1 0/7] Update functional tests for
+ AST2500/AST2600/AST103/AST1060
 To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
  Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
+CC: <troy_lee@aspeedtech.com>, <kane_chen@aspeedtech.com>
 References: <20260127032348.2238527-1-jamin_lin@aspeedtech.com>
- <20260127032348.2238527-4-jamin_lin@aspeedtech.com>
- <a31bf0d7-6143-439b-b347-3d1cce81be9d@kaod.org>
- <TYPPR06MB8206EB053D7CCF7DC44749C8FC9EA@TYPPR06MB8206.apcprd06.prod.outlook.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -89,25 +86,25 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <TYPPR06MB8206EB053D7CCF7DC44749C8FC9EA@TYPPR06MB8206.apcprd06.prod.outlook.com>
+In-Reply-To: <20260127032348.2238527-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.110]
-X-ClientProxiedBy: DAG6EX2.mxp5.local (172.16.2.52) To DAG3EX1.mxp5.local
+X-Originating-IP: [37.59.142.113]
+X-ClientProxiedBy: DAG4EX2.mxp5.local (172.16.2.32) To DAG3EX1.mxp5.local
  (172.16.2.21)
-X-Ovh-Tracer-GUID: 49ca0530-5e4f-4dba-a4a0-4c0b79a9d81a
-X-Ovh-Tracer-Id: 504966108883159986
+X-Ovh-Tracer-GUID: 71597086-9469-4f6b-93d4-8d8c8fecce90
+X-Ovh-Tracer-Id: 514817733647895474
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGr3gB7XfQqAaIee9gJ+xR7QlhM0Q8BC+N3x4/UcPF++eXJYHqUfuTIx2IK0x5R86Fg8XV0WtxH6617HdryIDkLEOlC9uvzL03Fxkt7zIrzuzDkzKQvaZ2AuvJdzbGuQ91Jk3VUB1+5CIdAL4S/RWT8XhlYCs6IuFFr8G2okvFeqDA+1hLc4Mhfyx/BKTdGoKJkQIifhvL5knbBZaGzsNESOgnkX3dtm43n9BBfem00QLcRkD2jkc2YdXMrZCAJ6PSoTI0khf5OQmziApbvmIxy8jnwcQxtYHwAXbGS2o0pdPE0Pc/bneivd4vn3i8zux51QL6RQmMgL2mNbW68VLgVsvR3wznWbjYKWIPGSsQEvvv2Uc7f1zxLAqa35TJDgFCy2e31pLDdYguyJE6uuIgBPtEU2r/qjbcDPpJThNUa9Bwthn5HGXwphkD8dTTaHplT3FouxXCiN/3vTwJl4mtEoyzMgQ7Ii3CeBjB4VSqhclp3KPqim6EDbpTdvj5wSoboQPkUt/KJ/8Dh9SuYzyzaIHrcYVnlOkjEMl4vvTbZ1ttuCx/lpEQpNCJOqCy8xNPEITe5Um3LNY8lMwR3E0xLi8+yB/otC9lHI4VQMhIFE3A/8cSJH51OnX9CdPxgE9mhRcbtVUN6uVuL4pOCnMJ2I32btLsIrhHN/C1TMEoKjQ
-DKIM-Signature: a=rsa-sha256; bh=J6ngfsp1zngPIGZUFgb++6u/neu6w2Zeq3zVjk8yj4A=; 
+X-VR-SPAMCAUSE: dmFkZTE2v/k5vr16UozbC5mIbV4RIA/aV1qShFoQUKiyA8sHRixri2YdFtk6UWiDgP6ZSLCmjykR4JUMOp945J+WS6Z4xSJrQOpuW9aAwd1Dwvgtd7M4fGDKH2W03I8yLKxlBb2Q4JC7LV4gLGQJHbbypVv0xjMIZR3jQfBDQQqIG4ioxP4LgnpeNPolPXQsWI7NSw1pOqTyjdhxXbsGCkBDnWXGqp0mZvwX7dRkyPw8LB+unmAMvYyhX/91bC7eg7Q7/Nw76qJ1FKo12wC55WGbbi4qE9/4CZZobpousRRDYS4M78qRTlSZeVFY+JlhZOAwpcSEmIyUk3K/UIWiz2LGRhxRGexYzDchHBuHJB0av4qDKHSG8xaa2NNOval9GWMQ4NR7XvQZqn4n1OpVIaMmUu2/pROUeTs7KfLp8UAzbgPEbaw1MlaWLXHL+TEJmwXc4J1ptaVQsiYJuNknewUhSmhlYpG8QnWURoLJpjkUBE7W8Q11FgGY3M13d6fUHMP+FcpgPwU0mStFzLil/GQ3F/pzYwnrRN4WJDXLBSrGY9svC/h0BVzk5KM4rPjHsW5u+b+P7RzgvxVFiOu+w00FL327xHZJqjAtCgcqeys1OB1hZiSaJtjzzGoDDU1X9pE568JtVAWdKoOcUrAJiAHYlMzTDnJHhdtrtb/O9FagI3m2Jw
+DKIM-Signature: a=rsa-sha256; bh=S4h9KUSK0Nro/qumFru+J1nrjAy0vFOdHZeZYk12+pM=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1769670404; v=1;
- b=PgdNyItHQi1eOJ7yG3vGq5XDh4Z4SN1SdCG2Y49RV8ntXUQI3HYloK40n9VUnE3E3+7MxadY
- Ra9RWxhnsHukrUU4koZTq0rX+fEoS773cQT1CEpI2INRQjnm937u7oqnuU7RNYq/S5K611oKNT8
- Qj9jTSJsMHJkZf60TurQwPg9mU1VLHgg506Yq6Ee/VH3usB3vgISLlmE/OIjHrIHfFbcM9/4ux1
- S+XdzzPACxhCcgMXPD9bZKptNiy3gW2TyCYJecJsN6gKS3dVbQGIG2d2rFHWsSL/bpSHg/59B8M
- vOHsQtrjHlb+2eslOcHXigDlFn5d7XalhRCFmxk0DzCgQ==
+ t=1769670438; v=1;
+ b=DFjsb1IHdswyxLJEb1HDyTqawXNsfwp9eB3kO0w2UQtFkJTdxONZrWjN0lsPoSzr4zHPsS8E
+ 0BvOd7MnKh8H9ME6LUREJwNY1LMKnK8JtGDJNPlivBf7ykOC8d80vTiKM7vbHF4Q2xG9AdJqJPM
+ lQ2HJL9Up11+cmvMscRR579kuIsfr2lM6Pat0rY6UWBLv9zTsRBMx4TCVT8+8i7JKytQ7AV4f0q
+ G5ycsbCh7iRZCy8+EKeOtN6DpYUo4IF8H940GiU2ByeiP95/3LXxoF4bwHSj4J+8ymTDwzyReWU
+ Lv4d9ufZBIWQ6PJA2ZTwKTGhQaRgtxvGMC7zqTfKwVGjw==
 Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
  helo=smtpout1.mo529.mail-out.ovh.net
 X-Spam_score_int: -20
@@ -117,7 +114,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,37 +130,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/29/26 03:10, Jamin Lin wrote:
-> Hi Cédric
+On 1/27/26 04:23, Jamin Lin via qemu development wrote:
+> v1:
+>   - Remove AST2600 PCIe root device and RC_L support
+>   - Drop RC_H root-bus remap and bus number properties
+>   - Expand AST2600 RC_H PCIe MMIO window to 0x60000000�V0x80000000
+>   - Update functional tests for AST2500, AST2600, AST1060, and AST1030
+>   - AST2500 tests are updated to use SDK v10.00, as network support is known
+>    to be broken in v11.00.
 > 
->> Subject: Re: [PATCH v1 3/7] hw/pci-host/aspeed_pcie: Drop AST2600 RC_H
->> root-bus remap and bus-nr property
->>
->> On 1/27/26 04:23, Jamin Lin via qemu development wrote:
->>> The original AST2600 PCIe design supported both RC_L and RC_H, using
->>> root bus number 0 for RC_L and 0x80 for RC_H. In that model, the root
->>> port appeared as
->>> 80:08.0 and QEMU carried a "bus-nr" property plus a config-space bus
->>> remap to translate bus 0x80 to bus 0x00 for PCI enumeration.
->>>
->>> Linux mainline has since dropped RC_L support and updated the RC_H
->>> root bus
->>
->> Was PCI support for the Aspeed SoC merged in mainline  ?
->>
+> Jamin Lin (7):
+>    tests/functional/arm/test_aspeed_ast2500: Update test ASPEED SDK
+>      v10.00
+>    hw/pci-host/aspeed_pcie: Drop AST2600 PCIe root device
+>    hw/pci-host/aspeed_pcie: Drop AST2600 RC_H root-bus remap and bus-nr
+>      property
+>    hw/arm/aspeed_ast2600: Expand RC_H PCIe MMIO window to 0x60000000 -
+>      0x80000000
+>    tests/functional/arm/test_aspeed_ast2600_sdk: Update test ASPEED SDK
+>      v11.00
+>    tests/functional/arm/test_aspeed_ast1060: Update test
+>      aspeed-zephyr-project v03.04
+>    tests/functional/arm/test_aspeed_ast1030: Update test ASPEED Zephyr
+>      SDK v03.05
 > 
-> The ASPEED PCIe RC driver has been applied to the PCIe subtree in the next branch.
-> Please refer to the following links for details.
-> The change will be merged into the Linux mainline soon.
+>   include/hw/pci-host/aspeed_pcie.h             | 11 ---
+>   hw/arm/aspeed_ast2600.c                       |  8 +-
+>   hw/pci-host/aspeed_pcie.c                     | 76 +------------------
+>   tests/functional/arm/test_aspeed_ast1030.py   | 12 +--
+>   tests/functional/arm/test_aspeed_ast1060.py   | 14 ++--
+>   tests/functional/arm/test_aspeed_ast2500.py   |  8 +-
+>   .../functional/arm/test_aspeed_ast2600_sdk.py | 22 +++---
+>   7 files changed, 31 insertions(+), 120 deletions(-)
 > 
-> https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git/log/?h=next
-> https://lore.kernel.org/linux-pci/20251216-upstream_pcie_rc-v7-0-4aeb0f53c4ce@aspeedtech.com/T/#eb13673b4787528d636afa40791ae43d38bd1152a
-> https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git/commit/?h=next&id=51aa64d4c19f0f00fd50cafd37cc2328675053ab
-Great ! nice work.
+
+For the series,
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
-
-
 
