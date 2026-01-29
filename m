@@ -4,113 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8BA1D358FD
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 11:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC767D6100B
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 11:36:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlPuz-00054J-SE; Thu, 29 Jan 2026 06:10:34 -0500
+	id 1vlQJ9-0002Qv-Tt; Thu, 29 Jan 2026 06:35:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vlPul-0004uC-CD
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 06:10:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vlPuj-0001mU-Kd
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 06:10:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769685017;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YIQVwOXDCHDhYmBr10vNY+a4rvqiuUdxtT1SruNRqfY=;
- b=NdOFp6lERUV1iYz+bepQrYDNZwfhOUVjUh7JyWtd3Q9eqfnSdqXjHt7GqpdTFbCxon9ue4
- HbYvBT2GqThNTT9amh0L9ruK/sc54gHgbwH3vSeeVKX+c42PDPYgTQYnkTuIsbYbQQRZhd
- TncrJwPK5IuVggJoocfmY+pexLBk+zs=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-5EDkjd0KOwmj7wUcfOLkiw-1; Thu, 29 Jan 2026 06:10:13 -0500
-X-MC-Unique: 5EDkjd0KOwmj7wUcfOLkiw-1
-X-Mimecast-MFC-AGG-ID: 5EDkjd0KOwmj7wUcfOLkiw_1769685012
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4325b182e3cso580520f8f.2
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 03:10:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vlQIn-0002Cg-T5
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 06:35:12 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vlQIj-0007sq-ME
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 06:35:09 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4801eb2c0a5so8205255e9.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 03:35:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769685012; x=1770289812; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=YIQVwOXDCHDhYmBr10vNY+a4rvqiuUdxtT1SruNRqfY=;
- b=M+hfSRIZjO7sGuttiH010ibRifdpOYQyF34f06xdioVh1w+iZCaYHP6XLNQQRPhUYr
- qJBEc6L4cFHloBWeuHrY0xGF7YBykMelezPP2eUST34QsyueLg14JDuqfl2YdKOg4cQS
- sXQL0qHl5w793/C+SCKH+2By/2nxwZE/AQsnQJ46kDiLee8A4iERZjm53x8gBvkqslMb
- 99pDpbnI6ZKnN3LPe8Rsx6vtaSa36cFsqiPgAEdR2XEQwSdPZ/V7hd60wy5HdJOt+Vz3
- KfPjGJ3E1oEKLwaNxSxEAYFfTYmxMJji3j3QTobxeIisBYZUovPyipHvjaJNFFwYp9j8
- X3Mw==
+ d=linaro.org; s=google; t=1769686503; x=1770291303; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mEeefLwyevAwvJbV1EeJJSkxsmhi2vz8LE44h+RFunE=;
+ b=twBwvllTCvqT8H6u+7bRq2mU936RWtG0FfBInH106yHsgl8PXz0uZ5ZrNo6RW+neqP
+ YIeTii+Joevj5nxT/+DeojAIwQx4tc08vj1/BCLvQru8VdcNvAkMvKmZLsVilK1M9hHw
+ idpGoWBVaNR+wH67kXPVmD5E/bYhKzAGuqG4U4TfSDoGowpJK+i2ceOV2RwHXSi2LZyh
+ rUo9Fl9nOASUOE5NwZBZXWdB8U4GHTsPw84MW8HAu4CqKLu2/7OgOhTlK2V0Hh7yfCum
+ D2zVpw+eHOU8xvix4UQPBYPVmVCxlhypZ9Wr1c+oEO6oT20CkxZkYadMUz2F1igTFcK/
+ ncag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769685012; x=1770289812;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YIQVwOXDCHDhYmBr10vNY+a4rvqiuUdxtT1SruNRqfY=;
- b=r69eAw6Bev/wHMQ6dc4ANW+IMYCjz4EHkGd5+ER1mHKBmHCDgZ5PKD8FgJjsAe1DqG
- lYX9e03amIzekKQCsLhiUdujFQzKe01YSAdnaJnBKtgfck6YXkO/lXv8AxWTF2pH2Ed9
- bBCzGSa6o1TpV3hsFapy6v2U+DD5FJPVyZgSvVqmTcRVmVQHYDhtc3d8dq09SFh2Vp7N
- CTJhQNXZXKMpQzAIHEfL6yk9PnDyFU2I2LoFPkaLatXhSH4pJ6p533GiH0W6yfq302+N
- xDI6CqbsgmflPrMZrFatg1nJasIYGLWlo8sHt/VV3f7T7BpnUyp5tHTSnGKrEV6+G3Zr
- aHZA==
-X-Gm-Message-State: AOJu0Yz0VcfZ//pUkr0/BQshQmNRngKZp8pyBQStHSuWErwsRwMu0A8t
- ao+/L1NDFwsddx+nM/PLxngBaeQJSrg5BFOOy7mo8Q4FWOGFVgTF2y4dd4+C+sn9mQipDRNwVQb
- 0WmxoocuvCzakqSbcWMJjkeq2nZ+wHYIcCTHBIfEYrbTWTFpRrcZUkuKw
-X-Gm-Gg: AZuq6aKlOKuykTz8IK/ZwMWvb3QUoYLz9sMGpJw6WsAkBla+KNXTSdIsscdqkXb1wt0
- 9UjII3ATHRXwWGdPDgJrB3fFDify92CA2MFIhBDW9DiElG87yQj5vyVdA1fTzce1uPBmikeAp5t
- 06VsRygoppptfLXB7xOXaYo97qaX9TIXUTaFn+uV+ClnaEoRwxZ0Hor8HLoOGCw5zImK8yaz2H+
- i9UW7d5AmHcXO8fFMNBWEVTpIay66Xr9Nkz9bV58TZg1xwBKrXS8m9YoWKbIb1FSuYY1ftNfYaJ
- flo3q9ap/oZ4rEDJRYBWR1sVPckVXEGAhzuTMJA28A2m+5w78JGeRPiV7RZhhsGngedDXJ7tZv1
- LlS26InEHE2KUaQ==
-X-Received: by 2002:a05:600c:e40b:b0:479:3a86:dc1c with SMTP id
- 5b1f17b1804b1-4806a5bef0fmr83006775e9.36.1769685012023; 
- Thu, 29 Jan 2026 03:10:12 -0800 (PST)
-X-Received: by 2002:a05:600c:e40b:b0:479:3a86:dc1c with SMTP id
- 5b1f17b1804b1-4806a5bef0fmr83006315e9.36.1769685011546; 
- Thu, 29 Jan 2026 03:10:11 -0800 (PST)
-Received: from leonardi-redhat ([176.206.38.57])
+ d=1e100.net; s=20230601; t=1769686503; x=1770291303;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=mEeefLwyevAwvJbV1EeJJSkxsmhi2vz8LE44h+RFunE=;
+ b=cM9WH1zh1406Jty/PUg2NEDyFsHtODC6hAMj1iwcP7C07K84S9VwGO0jgEVjEkFW7+
+ Bj3+dUABHdzaXb0+PQI8wamYCP1GWddZch4+b7B8OtlslVJoSUrrnrQvk1hpdWV8tZBy
+ FSHZC//a1hvVrwcEgkMngZA1mNTx4JE6hQ+tB80ISGI8yCQxsY5MM4a3uYv0wxuI/RzE
+ gYZoMoYIZsH24OfFA+zhd3MGt8fe1VhfbJLWUK7YnnFLUFYYn06keyf1+sIPC+dKUdeR
+ ZDvbTjF5nv7ZsMqGebbiC6n9b3ibmRF++YQbFIUPNoZIP3ihrD1yz6zzD9BnCVqSMKTo
+ dZaQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU8iFa5AkfZhf5a/ShRZfNcr9BhAXszVUSaQQ8EpcJsy0T5Nw48Vub7vo5kJRPoVY3QwFZIujg9BGbi@nongnu.org
+X-Gm-Message-State: AOJu0Ywwz1Du64srNFVAcAlfnma3enu315QRoglwsBJEJdS0ifWJMhA/
+ 26kAd3IX60YQQZ8D5SKNPgjrt0OYreYld/ZzvATv8+KKelBUrTIfj9uNj2ZzRfneFzo=
+X-Gm-Gg: AZuq6aLyMycLh3Xz1Y+qnsJH4e15aORK/S2z1Aicw7JqlWFmSvSKdXm5vnr2n7SaKgb
+ UsY/6vQODjMtwewEDntf2txK5r52O6f9FKivQEBD0HZVZAY3v47XL7n3B/c3AFTfcweWrBqgkIe
+ F9Jn83GJrFhHQRqeVW2y3kDbyzqh+7RQhJMw6aafOUSGP26gHj24Qrsx8jxRTaz+lJCekFFTsy2
+ VNlhv5oEzS9cwTo7vQDHl53UDNpSfRxWeMFoxkbieQwQNYxDkm4qZabfX2Xdy0juQP0wP+VZRKS
+ 0sFaPrwqrCLaWAaGzGyfyy+iGhGoZ5N36v3MQ0uYHCnceBU1/VWGTHs3kRwZrVq9+GG0NPa/WRJ
+ ce9BBU47bpxtgimJ++41zbhR1DG+luyd2nQP9qBmbKU3mn2sLgwuVPPkVZ9wc16QMd5wZf7cgii
+ oI7SE+GwLubeEpLbCbxKmodiNyE0muhg==
+X-Received: by 2002:a05:600c:3e85:b0:477:a54a:acba with SMTP id
+ 5b1f17b1804b1-48069c557a6mr125563085e9.17.1769686502857; 
+ Thu, 29 Jan 2026 03:35:02 -0800 (PST)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10e4762sm13396916f8f.6.2026.01.29.03.10.10
+ 5b1f17b1804b1-48066c42895sm196311075e9.14.2026.01.29.03.35.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 03:10:11 -0800 (PST)
-Date: Thu, 29 Jan 2026 12:10:08 +0100
-From: Luigi Leonardi <leonardi@redhat.com>
-To: Oliver Steffen <osteffen@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org,
- "Michael S. Tsirkin" <mst@redhat.com>, Joerg Roedel <joerg.roedel@amd.com>
-Subject: Re: [PATCH v5 4/6] igvm: Refactor qigvm_parameter_insert
-Message-ID: <aXtAAzNeJxr9usOo@leonardi-redhat>
-References: <20260127100257.1074104-1-osteffen@redhat.com>
- <20260127100257.1074104-5-osteffen@redhat.com>
+ Thu, 29 Jan 2026 03:35:01 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH v2 4/6] target/arm: Handle SME-without-SVE on change of EL
+Date: Thu, 29 Jan 2026 11:34:53 +0000
+Message-ID: <20260129113455.1283266-5-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260129113455.1283266-1-peter.maydell@linaro.org>
+References: <20260129113455.1283266-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260127100257.1074104-5-osteffen@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,84 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 27, 2026 at 11:02:55AM +0100, Oliver Steffen wrote:
->Use qigvm_find_param_entry() also in qigvm_parameter_insert().
->This changes behavior: Processing now stops after the first parameter
->entry found. That is OK, because we expect only one matching entry
->anyway.
->
->Signed-off-by: Oliver Steffen <osteffen@redhat.com>
->---
-> backends/igvm.c | 50 ++++++++++++++++++++++++-------------------------
-> 1 file changed, 25 insertions(+), 25 deletions(-)
->
->diff --git a/backends/igvm.c b/backends/igvm.c
->index 213c9d337e..0a0092fb55 100644
->--- a/backends/igvm.c
->+++ b/backends/igvm.c
->@@ -513,31 +513,31 @@ static int qigvm_directive_parameter_insert(QIgvm *ctx,
->         return 0;
->     }
->
->-    QTAILQ_FOREACH(param_entry, &ctx->parameter_data, next)
->-    {
->-        if (param_entry->index == param->parameter_area_index) {
->-            region = qigvm_prepare_memory(ctx, param->gpa, param_entry->size,
->-                                          ctx->current_header_index, errp);
->-            if (!region) {
->-                return -1;
->-            }
->-            memcpy(region, param_entry->data, param_entry->size);
->-            g_free(param_entry->data);
->-            param_entry->data = NULL;
->-
->-            /*
->-             * If a confidential guest support object is provided then use it to
->-             * set the guest state.
->-             */
->-            if (ctx->cgs) {
->-                result = ctx->cgsc->set_guest_state(param->gpa, region,
->-                                                    param_entry->size,
->-                                                    CGS_PAGE_TYPE_UNMEASURED, 0,
->-                                                    errp);
->-                if (result < 0) {
->-                    return -1;
->-                }
->-            }
->+    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
->+    if (param_entry == NULL) {
->+        return 0;
->+    }
->+
->+    region = qigvm_prepare_memory(ctx, param->gpa, param_entry->size,
->+                                    ctx->current_header_index, errp);
->+    if (!region) {
->+        return -1;
->+    }
->+    memcpy(region, param_entry->data, param_entry->size);
->+    g_free(param_entry->data);
->+    param_entry->data = NULL;
->+
->+    /*
->+     * If a confidential guest support object is provided then use it to
->+     * set the guest state.
->+     */
->+    if (ctx->cgs) {
->+        result = ctx->cgsc->set_guest_state(param->gpa, region,
->+                                            param_entry->size,
->+                                            CGS_PAGE_TYPE_UNMEASURED, 0,
->+                                            errp);
->+        if (result < 0) {
->+            return -1;
->         }
->     }
->     return 0;
->-- 
->2.52.0
->
+aarch64_sve_change_el() currently assumes that SME implies
+SVE, and will return without doing anything if SVE is not
+implemented, skipping a possible requirement to change
+the vector register state because the SME vector length
+has changed. Update it to handle SME also.
 
-LGTM
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 732c3a9eba..655ce73ee1 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -10127,8 +10127,8 @@ void aarch64_sve_change_el(CPUARMState *env, int old_el,
+     int old_len, new_len;
+     bool old_a64, new_a64, sm;
+ 
+-    /* Nothing to do if no SVE.  */
+-    if (!cpu_isar_feature(aa64_sve, cpu)) {
++    /* Nothing to do if no SVE or SME.  */
++    if (!cpu_isar_feature(aa64_sve, cpu) && !cpu_isar_feature(aa64_sme, cpu)) {
+         return;
+     }
+ 
+-- 
+2.43.0
 
 
