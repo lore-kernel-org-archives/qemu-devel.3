@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148D4D46C01
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 02:57:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 040A8D46C1E
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 03:45:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlICs-000538-Ve; Wed, 28 Jan 2026 21:56:31 -0500
+	id 1vlIxH-0007cG-RA; Wed, 28 Jan 2026 22:44:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlICq-00051x-Nl
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 21:56:28 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1vlIxE-0007bt-KM
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 22:44:24 -0500
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlICo-0001Wq-RS
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 21:56:28 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2a7bceb6cd0so3266385ad.1
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 18:56:26 -0800 (PST)
+ id 1vlIxC-0005RH-Dk
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 22:44:23 -0500
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-35334ea1f98so201196a91.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 19:44:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769655385; x=1770260185; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GGYkGU1gPhAMfIV+E4TcuEFffIH7PFNQivskZlWyVo8=;
- b=JD3wiZYtoteVYx9o88lY6ywXa4wEs83sJKyExo1gRX3KTRtAwB9wMqQmAg6iqY0j95
- DlH/25O3tbNAHsKfEE2iJ3x1V5/VFq8fn694/Q/bBVsOInEJL9Oi3x4a8HOnYnGDVlm6
- sajUkLnTcH57CMUL+1mQiUUyy5sGDJViN6d5Tm/JwvjlnztA2/AE2J/YxaoeeRZeZeF5
- GzHsNGBrEbC4l2TSfTm+IRjWymwDGFYHFArEnvxe0Ncw4P3RQhi4QHBN0+lapwGj3vIH
- 28/csdHqNOaWANZ+rwF9Avf6akFnXJvkTTql7rxYuiIiagUjgMaEdD+K5eI2mRbfZFJq
- ui0A==
+ d=linaro.org; s=google; t=1769658260; x=1770263060; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=NkhP4wNEJTfMWe4N9q3961mEt+qkZNj3LN6Y3Hfx31Q=;
+ b=FF1Tu1Mp8iFkOWeFvldi/renFlZvJ/5nxdF2F2TX4aXVwBXmFx3JbkzyeUpKdz+v4+
+ OUx6UAZN28GGEbvS+kBJfb2ml1RXeJMKo5RNRc0FQ2LcNrFZMfzsey7O263Hq9MYOCok
+ vsKjg8yp2OlcsefO5xtE8vBOLBi+cXHUbaxv11ye8eIerQNSBP+dENQu8pkGE98UtM0q
+ ALGrr2dFKraoyDSkI9hF6wrT/uMuQqtor+sbqF9hDyGjXpv0UtRfSb0+ht1H2Apky+mM
+ CYeCFsdgtaf9y5kpEIP9hjc2v4oR+zpRCxoKq7XP1RWx1aFTheUmESUff6CKTBbhRBqQ
+ DTdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769655385; x=1770260185;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GGYkGU1gPhAMfIV+E4TcuEFffIH7PFNQivskZlWyVo8=;
- b=ZJjUKtu6sWAZAu2zzKFV+4z4NYLyf0O1DqXBjQQsnVerwhZo/lVOjY5p9R7S2Xqviy
- wS2YoNARHRkxnfH964GKFG2wV1hYA6XzkdhkYtF4iMOO3ehIh+BrMFjpz4BwbLVzZj/2
- bCyFMc96WAg1fHCPayGyluhr9gle2YzN2SW1vuucoWGO8UdOEr5bUeM0QQqoNMIryhF/
- T9kmcGQphOOvmIKVAfj91rTTUnx/8TmRTTN4UhggHP7CPFeHOlVh4RmYK66EvkvngLHf
- S7F/81XD94G3lpGPU5+NOqllAjlmuYKFBQbVGyH8+8P/5AT/taaiMi3A+gQgJtlj+hjZ
- IoNw==
+ d=1e100.net; s=20230601; t=1769658260; x=1770263060;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NkhP4wNEJTfMWe4N9q3961mEt+qkZNj3LN6Y3Hfx31Q=;
+ b=M1ILpt9NIizsdRrmAgJQQZp3AeSsAiGknbIc9flZMKIRsh3Tz6YAGI0UWguvbzNMfJ
+ UP1mskBzjXf7bB1bBVPI7DL1a5D9RcsIbHIDezwN3tFwVZHsrrFBDOe2aYQcxoyhSeRp
+ PNifFkIGP1gVeVz4nXiObNlv1BDF0NgUT5iGhfkLMpgKXAQqgJ48VQQMbvQmkXvsAOwv
+ 7hm9jxkXw5AnDn8ecq5xcn0vWySV8fDePwAXHS5nuc4pAAPNl5LPv+JlZQ5oCVgWkB7P
+ NaxckbJIgJEn7f0bBbQ3vjCee54YJGoP9ESD11DCV/FfvzHMHI7K+OWiQpOW4u4c4D4M
+ YM6g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWOucu9djCjcrDPU6ni0EN7whbeL6cpn7/K3tzieqUkRww3q6iZpwo9fiZPTWLvIi0HlehCLKOvYpOp@nongnu.org
-X-Gm-Message-State: AOJu0YwRH69WpdLIPFZLWO2WvuGpAWqo0cmeLnYU2Gl4JRughZi3oY54
- Wtczg/GBQ0rGi+8gHond436jSDzJcZMseLbBKIuKP9S+Hk74bL6wohcy1m+IFzIoDIM=
-X-Gm-Gg: AZuq6aLfZYoe0eKjb/6DlSIYngtU85/tONAF/d/YW+Rq7O68L3rwIe+4R6A60CM3IzS
- u+uM1AKe+AbcgkuXlHeyCg1nvUZz5dryeVKXNPCYQ8Ob5DcULsSLtFBrNkQ1QQ5wOLiqjp4htGk
- M4sqPEfjtWHkX/dOR63oUwzd/4mnxk7EAJnTm72O8f5IHVIsxWVmZvx8Ba3Ic2pY/gAzqwb1CSd
- MMfRG2SmZoBFNxx8bHS4Z3QSAo/QMl3yjnlDNsz1SykVvZaP2hlK74F5KB57wUWsh+9aJx6+Jnw
- r1Xib43oz04GeHq1k3U9XNoZunLkmt2ge55Bumgfa/HKrsfkpETSTSUQ93sxOrkreZS4xK9FP53
- aWY0HnoWLpR61dYXw8VsdOjyPSkFnM6Z+EYj6avlZlCNGxDPOBNXQfjUHo1OiDNG9fbJ2vUAduA
- SSwmPgut4DyQX7cnGP3wiksdpBKTWey6O7nNKYBEjDs7uP+SxXr1h1zp0G
-X-Received: by 2002:a17:903:37d0:b0:29f:2f40:76c4 with SMTP id
- d9443c01a7336-2a870dbc9femr70238125ad.34.1769655384897; 
- Wed, 28 Jan 2026 18:56:24 -0800 (PST)
+ AJvYcCVC/J9ND3UgySPWxT5fOraGgLVOUynezIjvYuj7+lTEbgFv7vDWaw4QWiR8pV/pQlQd9AI+vU1/IkkG@nongnu.org
+X-Gm-Message-State: AOJu0YxvH/xcsYJNe/RlgTsbixle73cS5DA6kTF7UB96h/qADO1EcB1f
+ XBJlgzQp6TjCba4766WKBaxV6HcjWvGVVRna6zbB5RT07a3rLL0v+ebIUuQNasFKRaw=
+X-Gm-Gg: AZuq6aI3t1FueeER0iHjVJZQyNSDF+ODkeJURTbcNyQBaXoveZPoWNWejXb+Bf/aRWE
+ jOBlwJmap0wg6xX4J4W5eu8Q8pGRuryJbApg2HMGCEwlUnJToTun6gktMF1BzBYv4EcRp5Ir1Hd
+ 4Zyl1p33BL+1fMddI9ZUq8kdGRzb/2j+YcSMhuWkxwfanIEsuxZXSa/Sp+66pnQHxE7MEsWO7Lp
+ O4KV8obYJwnQULdzPqRQnxRuvhqkExrsTgB2xKxoIPpR8Le6rdGilsHVr0Dxt56/Qg2axj5A6jh
+ 0gRbbSWuqvzdoaJ/RT8XCz33hPeW/kHjgvFw7sJVc0PoEWj9gFibWMjtq5kxxgwQ8F1NmDsFkB/
+ vlX+UrMQ4sjSRXK8cr3NwZAyu6WB8KZ7hiMIH/zNoYwy0fmkzsOhnOhx0klZA80Eh9dnIe6q4k4
+ GKCfULhhdE9z5gACU9xBs1O/HQGAxsIVOA8a9rnNXAUL+ous07yv4nJj4j
+X-Received: by 2002:a17:90b:3b8c:b0:33f:f22c:8602 with SMTP id
+ 98e67ed59e1d1-353fed88e82mr6547849a91.26.1769658260421; 
+ Wed, 28 Jan 2026 19:44:20 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379bfd8desm3858903b3a.33.2026.01.28.18.56.24
+ 98e67ed59e1d1-353f61292bdsm6865282a91.6.2026.01.28.19.44.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Jan 2026 18:56:24 -0800 (PST)
-Message-ID: <e85a01a2-faf3-406e-a260-ce8a832ed9cb@linaro.org>
-Date: Wed, 28 Jan 2026 18:56:24 -0800
+ Wed, 28 Jan 2026 19:44:20 -0800 (PST)
+Message-ID: <b030fad3-3cef-4e59-98bb-6305f2f2323e@linaro.org>
+Date: Wed, 28 Jan 2026 19:44:19 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 06/20] linux-user: add plugin API to filter syscalls
-Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Ziyang Zhang <functioner@sjtu.edu.cn>, Mingyuan Xia <xiamy@ultrarisc.com>
 References: <20260129013134.3956938-1-pierrick.bouvier@linaro.org>
  <20260129013134.3956938-7-pierrick.bouvier@linaro.org>
  <a44ba710-25ca-44c2-bcdb-db917efaaaeb@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ <e85a01a2-faf3-406e-a260-ce8a832ed9cb@linaro.org>
+Content-Language: en-US
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -113,11 +114,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <a44ba710-25ca-44c2-bcdb-db917efaaaeb@linaro.org>
+In-Reply-To: <e85a01a2-faf3-406e-a260-ce8a832ed9cb@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,69 +141,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/28/26 6:28 PM, Richard Henderson wrote:
-> On 1/29/26 12:31, Pierrick Bouvier wrote:
->> --- a/include/user/syscall-trace.h
->> +++ b/include/user/syscall-trace.h
->> @@ -39,5 +39,22 @@ static inline void record_syscall_return(CPUState *cpu, int num, abi_long ret)
->>        gdb_syscall_return(cpu, num);
->>    }
->>    
->> +static bool send_through_syscall_filters(CPUState *cpu, int num,
->> +                                         abi_long arg1, abi_long arg2,
->> +                                         abi_long arg3, abi_long arg4,
->> +                                         abi_long arg5, abi_long arg6,
->> +                                         abi_long arg7, abi_long arg8,
->> +                                         abi_long *sysret)
->> +{
->> +    uint64_t sysret64 = 0;
->> +    bool filtered = qemu_plugin_vcpu_syscall_filter(cpu, num, arg1, arg2,
->> +                                                    arg3, arg4, arg5, arg6,
->> +                                                    arg7, arg8, &sysret64);
->> +    if (filtered) {
->> +        *sysret = sysret64;
->> +    }
->> +    return filtered;
->> +}
+On 1/28/26 6:56 PM, Pierrick Bouvier wrote:
+> On 1/28/26 6:28 PM, Richard Henderson wrote:
+>> On 1/29/26 12:31, Pierrick Bouvier wrote:
+>>> --- a/include/user/syscall-trace.h
+>>> +++ b/include/user/syscall-trace.h
+>>> @@ -39,5 +39,22 @@ static inline void record_syscall_return(CPUState *cpu, int num, abi_long ret)
+>>>         gdb_syscall_return(cpu, num);
+>>>     }
+>>>     
+>>> +static bool send_through_syscall_filters(CPUState *cpu, int num,
+>>> +                                         abi_long arg1, abi_long arg2,
+>>> +                                         abi_long arg3, abi_long arg4,
+>>> +                                         abi_long arg5, abi_long arg6,
+>>> +                                         abi_long arg7, abi_long arg8,
+>>> +                                         abi_long *sysret)
+>>> +{
+>>> +    uint64_t sysret64 = 0;
+>>> +    bool filtered = qemu_plugin_vcpu_syscall_filter(cpu, num, arg1, arg2,
+>>> +                                                    arg3, arg4, arg5, arg6,
+>>> +                                                    arg7, arg8, &sysret64);
+>>> +    if (filtered) {
+>>> +        *sysret = sysret64;
+>>> +    }
+>>> +    return filtered;
+>>> +}
+>>
+>> FreeBSD build failure:
+>>
+>> https://gitlab.com/qemu-project/qemu/-/jobs/12906481914
+>>
+>> In file included from ../bsd-user/freebsd/os-syscall.c:34:
+>> /tmp/cirrus-ci-build/include/user/syscall-trace.h:42:13: error: unused function
+>> 'send_through_syscall_filters' [-Werror,-Wunused-function]
+>>       42 | static bool send_through_syscall_filters(CPUState *cpu, int num,
+>>          |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> 1 error generated.
+>>
+>> Why is this in the header anyway?  If it really *should* be shared with FreeBSD, then it
+>> could just as well live somewhere in plugins/.  If it really is linux-specific, then it
+>> could just as well live in linux-user/syscall.c.
+>>
+>>
+>> r~
 > 
-> FreeBSD build failure:
+> Sorry, it fell through the cracks.
 > 
-> https://gitlab.com/qemu-project/qemu/-/jobs/12906481914
+> FreeBSD has no werror by default, and the pipeline I ran doesn't add
+> explicitly add --enable-werror. Warning is there though:
+> https://github.com/pbo-linaro/qemu/actions/runs/21461090659/job/61813517774
+> I'll make sure to build with werror enabled for next runs.
 > 
-> In file included from ../bsd-user/freebsd/os-syscall.c:34:
-> /tmp/cirrus-ci-build/include/user/syscall-trace.h:42:13: error: unused function
-> 'send_through_syscall_filters' [-Werror,-Wunused-function]
->      42 | static bool send_through_syscall_filters(CPUState *cpu, int num,
->         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> 1 error generated.
+> This function was added in this header, next to
+> record_syscall_start/end, which is not used by BSD neither. It doesn't
+> raise a warning because they are static inline. The original dev added
+> it where it made sense.
 > 
-> Why is this in the header anyway?  If it really *should* be shared with FreeBSD, then it
-> could just as well live somewhere in plugins/.  If it really is linux-specific, then it
-> could just as well live in linux-user/syscall.c.
+> Current series only has BSD implementation, but original
+
+only has *Linux* implementation
+
+> qemu_plugin_vcpu_syscall supports only Linux too.
+> It could be implemented though, but not sure someone will spend time on
+> that for BSD.
 > 
+> If that's ok for you, I can move the function to linux-user/syscall.c
+> and remove the header. How about that?
 > 
-> r~
+> Regards,
+> Pierrick
 
-Sorry, it fell through the cracks.
-
-FreeBSD has no werror by default, and the pipeline I ran doesn't add 
-explicitly add --enable-werror. Warning is there though:
-https://github.com/pbo-linaro/qemu/actions/runs/21461090659/job/61813517774
-I'll make sure to build with werror enabled for next runs.
-
-This function was added in this header, next to 
-record_syscall_start/end, which is not used by BSD neither. It doesn't 
-raise a warning because they are static inline. The original dev added 
-it where it made sense.
-
-Current series only has BSD implementation, but original 
-qemu_plugin_vcpu_syscall supports only Linux too.
-It could be implemented though, but not sure someone will spend time on 
-that for BSD.
-
-If that's ok for you, I can move the function to linux-user/syscall.c 
-and remove the header. How about that?
-
-Regards,
-Pierrick
 
