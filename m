@@ -4,114 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC4DD73E83
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 20:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10299D73E84
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 20:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlYYn-0007pR-K2; Thu, 29 Jan 2026 15:24:13 -0500
+	id 1vlYaF-0000kC-OR; Thu, 29 Jan 2026 15:25:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1vlYYm-0007oG-Gd; Thu, 29 Jan 2026 15:24:12 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1vlYYk-0003ne-PL; Thu, 29 Jan 2026 15:24:12 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TEKD2t029482;
- Thu, 29 Jan 2026 20:24:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=UyU3dK
- ++UdeaDqtT/avPfpuBrHvDA1Uz2a9KrZYelj0=; b=Lv98KukWn3Oax+UkwLmdY9
- mkEpzymvF9FohspfZfLvPmsv0oJpAF5s19nWAOb9q6I3+0ohptMnvhRbA143kQMK
- 6G6iyhByj5TspTv0xfH2YIlCo2QL4mwcbLdLqLD4koRdkTpfA83qp+r/jtMY5Gpo
- DodnNNvheBlFjBVLVYqTEpNn4P61Jbbf7KP0jnlJK3VBEsBvfCM8bhmqfWf9qgJZ
- ubV4SqXQsleSI5FCUFtV8pvBWrXJ4+e2y06jpj+fvC3ErVMxS2RnVk3brqOFLPco
- FdSByt4HL2iyUjz5Rw0FcrBOQRzLGiRYGHGeGC5nyQGoF2EKX3yTpmbesqfHczFg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnt82seu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Jan 2026 20:24:06 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60TJV2k2026805;
- Thu, 29 Jan 2026 20:24:05 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw9wkkg3w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Jan 2026 20:24:05 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60TKO4ZE37880410
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 Jan 2026 20:24:04 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6AC2A58050;
- Thu, 29 Jan 2026 20:24:04 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E1FB158045;
- Thu, 29 Jan 2026 20:24:02 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Thu, 29 Jan 2026 20:24:02 +0000 (GMT)
-Message-ID: <3e782672-84a4-41fe-ae4a-d0a7766f09b6@linux.ibm.com>
-Date: Thu, 29 Jan 2026 15:24:02 -0500
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1vlYaE-0000jI-Ab
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 15:25:42 -0500
+Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1vlYaB-000429-5R
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 15:25:41 -0500
+Received: by mail-qt1-x830.google.com with SMTP id
+ d75a77b69052e-50299648ae9so78911cf.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 12:25:37 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769718336; cv=none;
+ d=google.com; s=arc-20240605;
+ b=c6iJ5vtyeNutuEH45mRPJjYTLtbZQOl7/NFKhrPsixT9y5h4xnIUd9fcBt/SyB1LWz
+ MIZaQdzGZm72B76kDC9UHV+1EhbSc9erYG7ohwVvca9v5Dnx7PA5j/fPmvwtYFa7W9bE
+ W2FhLre6DaEOyVjLrBNSBO0oigDh9NHWCgzVCT8JyYs3sNPDSOOin3x1cNU5HGvcXtUT
+ XizRZBbYGAnpe1g3Ttrz49uTNtuUaxLAul1R61zEelszfsUhXEVZ5zgnFEGHqlTagjtc
+ 7u8kNBPbKKuuBlf21VcYfjIfePM4e04wp0B/P0EsI/aEOdI39CmY5wr72SAOoolE4E+x
+ n7hA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=XaAX1Yb8zbQEMHVP5QpIe9q+E5mhzU+A1GDWS720LYE=;
+ fh=naDeSlug0dht5e2IztAOeyInAg/DQ32waWeI+qwA7o8=;
+ b=RM9qa8M2k2c4yWYk4mj5arX3uEgH/jdcH6K+REVVxXlpVOUYYlQVEoJvYSK8ILvgCE
+ caDcxnWlp56iu0OaKPbc4yLEk8wQbdm/50AhDVSzPYWmTSuPaEo+z9NTbTJCNNbKzxq6
+ 0l2zyThr67Pw77kTXUxd8T/K8btg0GXLTDQ0L79CPY3VWs0FVJbEi93wmEPh1ceN2wK3
+ 3x9x1d+vJtj2eyr7UuJbS22xlWByKYAmf724yIR/IXGMTU7jrtuFF/XIqQyYg4yM1jUF
+ V7eJ9IvcezakN/yF6Rsfez0auadpJq/yxUi3/jc10oiWCGDeAKaFLaEoQmOl9DG75Nuw
+ DR8w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1769718336; x=1770323136; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XaAX1Yb8zbQEMHVP5QpIe9q+E5mhzU+A1GDWS720LYE=;
+ b=tr7XU8ZndMmKHqsWHVDJqp5+fd6Rsf9Te1L4iekOhSele4cJCDnaZN5NgABQm0W/TQ
+ kDv/rC92IIKw5iYzCZz6TK+DRLYARZzir/aVBRVDM/zoHzSkvSnAr64yO2G2Vb4X6+Nt
+ UWakUzgFtRDClOMVTJ7lsWZib5Ih2tIwB3+WjZcZMwiT4w4Jia9Ppz0miDTGiFGg8K6h
+ OXFUTODVp7dA9W8XVH1I6mrHReZ1/ZHRcAqHy7TMOrAfmOrVoF3q2GVcapZaBMOmluVf
+ TsH/CYQY6WQr+3lXraRaemoH+O5llWVzvh+jCQ+i+smsz3gIPGM4ClXHELu8nyE4nb9c
+ n4Pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769718336; x=1770323136;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XaAX1Yb8zbQEMHVP5QpIe9q+E5mhzU+A1GDWS720LYE=;
+ b=q6AsheQjwzo80X82u5R6i8lL+N8KnG0oGgCdzH/lL1vhhomUT137IKXBy7xdQ+jeYU
+ SoP+IMaJtHUSv9yLn98B571SAYvenXjztxUF6xvV24zXSal1rVXYEaled0t8vcVlEos9
+ SLz2Y+ttIN1dLNRYyOBMPDWwMJHSia4O58ydxCWSwb2w+EMcJNNo5nu7uPQ5sXEn+LUD
+ r7UyWNCjFoD/tEcmcCHFr3Szu7ptkyrxE3rtaKgJCWbDwnJECm44ApPSv4fQ6obJ/4cg
+ 395+qfkiRH1+tDGeCrnHUiFh49kFTkC2hKcvfrLnLxS1jc6aDzsOd59StWDEeHfKaPNq
+ 1XSA==
+X-Gm-Message-State: AOJu0YwISx1lcJKvD42cfktswMlYwFrYIsFh1VWhaA8Mw1duchSVZdz2
+ 9KEmUR7bY69RU89dhwgExi3LSHdmVn3q+o56jmEBlhs3If6yYAqRRRRGSXQXNaW/fQl6/R+eIjK
+ RwO4c+9s+RI98OD519WgnYDqTl7aht66q9h2QPcdG
+X-Gm-Gg: AZuq6aIskMfgN1TDdS/BoxGe+mCTDD5gWCCaSLBkonUHs6GwN18O7I2SITr1HtMTDZG
+ fnmgtFWak+oMC0b0+Y1Y0d+TpLnwhqEZvPuUVQ23hjmWs7P1EzKVzDMQHr9qS8fT8eiRztUMhzG
+ BtySiWKdYImq4AO2SSI7WifUrlp5PNxvqq54H3cAFHvcPxv3OSALI3bhFly0482d8OhPbIquR/w
+ wdDaWyR9AVx93Q1+fx5cVU3Abj2PrMmEarp7yP+IJKIcTunrcFBne6q+kxC/DxFMh3Jx3b4NQam
+ Ncpntkb6yZmENRerQ3g9jkzMIg==
+X-Received: by 2002:a05:622a:1a85:b0:501:197d:32af with SMTP id
+ d75a77b69052e-505d282fe19mr965751cf.0.1769718336027; Thu, 29 Jan 2026
+ 12:25:36 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 19/29] pc-bios/s390-ccw: Add signature verification for
- secure IPL in audit mode
-To: Zhuoying Cai <zycai@linux.ibm.com>, thuth@redhat.com, berrange@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, jrossi@linux.ibm.com,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org, brueckner@linux.ibm.com
-Cc: jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, alifm@linux.ibm.com
-References: <20251208213247.702569-1-zycai@linux.ibm.com>
- <20251208213247.702569-20-zycai@linux.ibm.com>
- <48169821-01a4-4e9f-b301-94d430afe8af@linux.ibm.com>
- <c8331857-02a8-4b22-8587-3834cb1a2e4d@linux.ibm.com>
-Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <c8331857-02a8-4b22-8587-3834cb1a2e4d@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: doI3C_chOHQGSOdef0yi6aZYEi02vmfw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDE0NiBTYWx0ZWRfX+Fr/oKfi4pdf
- hXYnY05olepFLuZ1bv0ZNSw0qlFMx0GaDfvl4sce5v5DZtPAFNicqK6Thfy43hRgCdxwp/VOmWa
- 2kZ0ZfGZ9ILLyKAltmMZaJHzNvlWwh1D8Mtkd4EniHRiHPuqAEqf12I+zgbgy26YCAUpqruJWLE
- Du/2keHHYdqPNxneg0rws8klgHAgjUPBVPJt4pzUX/Jx4TguV2umIsK4PMShnscGaWB/ZartaNK
- zC7eZtf5NO/RsyhtNkCumkj8X1sfrVEJB7fdWteLvQxAwjO/ZVxenrr2hql3vvzz3mYec7krd0/
- NzwcdSjPQ1b39iC9Or/6FWZSz0sM8ulmlDmaryXfdLZFqRMCplx0LnG7YdwaiPcKpPxA2rPwB9c
- ZOEXL0lsv2sfVGkL1D9m2grAiEwpVJ3VduUYIHsJCpR17hF39A9WTUwHkvjTzkm4LPNoC5Q9DnE
- Qp2vSEqxVhR8Kil37Gw==
-X-Authority-Analysis: v=2.4 cv=Zs3g6t7G c=1 sm=1 tr=0 ts=697bc1e7 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jVsSQdv-zovq_dpEqAsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: doI3C_chOHQGSOdef0yi6aZYEi02vmfw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-29_03,2026-01-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 adultscore=0 phishscore=0 suspectscore=0
- bulkscore=0 impostorscore=0 priorityscore=1501 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601290146
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260129190444.225306-1-rkir@google.com>
+ <10b26b57-bcd6-4853-9e2b-b8410b404806@linaro.org>
+In-Reply-To: <10b26b57-bcd6-4853-9e2b-b8410b404806@linaro.org>
+From: Roman Kiryanov <rkir@google.com>
+Date: Thu, 29 Jan 2026 12:25:24 -0800
+X-Gm-Features: AZwV_QgRxZxdikd13069HVFh9AeSLCghWFUHRfyeIVoOCXlRMgqgPjKT1RhApEo
+Message-ID: <CAOGAQeqsvEDMy4EURsWNAmRF1ZmSfmj0+s3LzxSEw7JZVeCdTw@mail.gmail.com>
+Subject: Re: [PATCH] ui/kbd-state.h: Make the header C++ compatible
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ mjt@tls.msk.ru, 
+ whollins@google.com, jansene@google.com, jpcottin@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
+ envelope-from=rkir@google.com; helo=mail-qt1-x830.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,64 +117,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/29/26 14:19, Zhuoying Cai wrote:
->>> +    /*
->>> +     * Store indices of cert entry that have already used for signature
->>> +     * verification to prevent allocating the same certificate multiple times.
->>> +     * cert_table index (cert_table_idx):
->>> +     *          index of certificate from qemu cert store used for verification
->>> +     * cert_table value (cert_entry_idx):
->>> +     *          index of cert entry in cert list that contains the certificate
->>> +     */
->>> +    int cert_table[MAX_CERTIFICATES] = { [0 ... MAX_CERTIFICATES - 1] = -1};
->> If you agree with the suggestion below for verify_signature to adjust
->> the returned index, then the cert_table can be used a bit differently:
->>
->> Make this an array of booleans.  Use the index returned by
->> verify_signature.  Value true means that the cert has already been added
->> to the IplSignatureCertificateList.  False means it has yet to be added
->> to the list.
->>
-> If verify_signature adjusted the returned index, I don’t quite see why
-> cert_table should become a boolean array. We still need to track the
-> certificate index in IplSignatureCertificateList, since that index is
-> used later as the IPL-Signature-Certificate Index (SCI) in
-> IplDeviceComponentList. That’s what cert_table currently provides.
-> 
-> With a boolean array, that index information would be lost. Am I missing
-> something?
+Hi Philippe, thank you for looking into my patch.
 
-Ah, I see.  This is to keep track of which cert store index corresponds
-to the entry in the IplSignatureCertificateList.  I thought it was to
-**only** keep track of which cert was already retrieved from the store,
-so my suggestion was off.  Thanks for clearing that up.
+On Thu, Jan 29, 2026 at 11:23=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> On 29/1/26 20:04, Roman Kiryanov wrote:
+> > This patch fixes the C++ compilation error:
+> >
+> > ISO C++ forbids forward references to 'enum' types
+> >
+> > -typedef enum QKbdModifier QKbdModifier;
+> > -
+> > -enum QKbdModifier {
+> > +typedef enum QKbdModifier {
+> > -};
+> > +} QKbdModifier;
+>
+> Yes but:
+>
+> $ git grep -E 'typedef enum.*;'
+> include/hw/misc/auxbus.h:32:typedef enum AUXCommand AUXCommand;
 
-I might've been confused by the comment.  What about:
+I also grepped through the QEMU source code and saw other examples. I
+limited this patch to ui/kbd-state.h because it is the specific header
+causing C++ compilation errors in our project. I hesitated to touch
+the others to keep the diff minimal and avoid changes in files we
+aren't currently using.
 
-```
-/*
- * Keep track of which certificate store indices correspond to the
- * certificate data entries within the IplSignatureCertificateList to
- * prevent allocating space for the same certificate multiple times.
- *
- * The array index corresponds to the certificate's cert-store index.
- *
- * The array value corresponds to the certificate's entry within the
- * IplSignatureCertificateList (with a value of -1 denoting no entry
- * exists for the certificate).
- */
-```
+Currently, QEMU has a mix of incompatible and compatible (e.g.
+block/block-common.h, BlockZoneOp) enum definitions. I think,
+everything outside the include/ directory should be implementation
+details.
 
-It's just a more verbose explanation of what you already have, but the
-main point is to correlate where the index value comes from and which
-data structure the array assists.
+How would you prefer I proceed?
 
-If you take the suggestion to rename the IplSignatureCertificateList
-variable from certs to cert_list, then I would also suggest renaming
-cert_table to something like cert_list_table so it will read a little
-more clearly when viewed next to cert_list.
+1) Keep this patch focused: Limit the change to kbd-state.h to fix the
+active build breakage.
+2) Fix public headers: I can send a v2 that fixes this pattern for all
+files in include/.
+3) Tree-wide cleanup: I can attempt to fix every instance found by
+grep, though this touches private headers as well.
 
--- 
-Regards,
-  Collin
+> 2/ add a CI job to ensure no more are added
+
+Regarding CI: Since our project consumes QEMU headers in a C++
+environment, we are effectively serving as a test case for this. We
+are happy to continue submitting patches as we encounter these
+compatibility issues.
 
