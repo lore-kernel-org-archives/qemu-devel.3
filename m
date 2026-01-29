@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57CD8D6101A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 15:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55AC1D6101A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 15:24:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlTqE-0005qX-US; Thu, 29 Jan 2026 10:21:54 -0500
+	id 1vlTs1-0007yB-Hm; Thu, 29 Jan 2026 10:23:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlTqD-0005gs-LN
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 10:21:53 -0500
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ id 1vlTrz-0007xK-QI
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 10:23:43 -0500
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlTqB-0005LA-MD
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 10:21:53 -0500
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-79274e0e56bso11506587b3.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 07:21:50 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769700110; cv=none;
+ id 1vlTry-0005bw-5B
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 10:23:43 -0500
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-79496f0ea57so6064967b3.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 07:23:41 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769700221; cv=none;
  d=google.com; s=arc-20240605;
- b=BhxXh8iPgF5khks9bNfYBtpwAsYFMlDgq+zVsYUwq+pS2YrAOoboo6YKRzCFD1xqyx
- eh3w5q2ywa3Zn7ahg3amGKd/nr7vmg6ym/rGPNkno0RBDM7AE9NMP9dC5bvajFOEQbUz
- afTmPlQJV5WDQh4EO2I1+ZLHCBtsmbnHhg0Am/I5ecB3lGTy8zIkta2jH3tCDoQP1YsX
- PgWWgIMDq+oZ3pXgbxjc/CSMhbe714fUDQau6B5NEbre7882vqevs1/t40fymyKe7vLG
- QgG+j6PXoWyNT7njJJZj9Bu1LyEVG0EZQ9pUm4RgerWRLh+5ywR7am1U/QyGwI4eqZGl
- QAAw==
+ b=Mdk8dSRcmEDZer3XPIeYPfBxvodnsXfoSdRG7jibTea2LiQu4vzzrpmbJQxUjoePtF
+ d5btRqwn2S4S9vYScVe0qq6+cKnejb2zos85DDbvwx4Y1ngzLhE9J1JQ7Q/Z2vJ+eGcW
+ 2N+XZH2kM1p1pwxOP0unRhpaToBa/G+VJNv/ZNZeklI8zh3v5V0wUquMOxGbaOkUlfMn
+ tXV+1d1keQKwREq6t16DeJBVNiCkh+z7+vioUu3HRiD8TcvH1Uf7F/5NfSzSoDMzbU4l
+ 4QTZqx87AuBnReHoR8cUD2rfz4byxCtnkqoKlXCfhnSBLKJ0C3rGOl1Q/lcstg2PKdtP
+ 1Ndw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=j1eDuwiY+cHZoCJie36KvZ2wMGIKytbIGIatLMMs61A=;
+ bh=HGsBBVoPwOoSO4+vUaMv95px2FvM22R0jza8OCwLrdg=;
  fh=us4lPT8YSvMw3WPWVr1x1zbLMIgA1kHH4DqlCTpJeag=;
- b=in2XVfgw3adYb6karOvY6pOvp2sUc5fgTpvZaJP6zzINlWJoHo/1zgQ8OP/3+ZESY6
- HQ0aHV44G4Ed9EIZHO/9UAZUVKtG8Hs9FuI8BnDXMfosGktfn79Bu0CHXfZZZ/1qHTRQ
- wQhFw0c5zNp522ubpHZ/RcsAyb8Be4k6m8d26dz6Y/4JjEn6pTkaEheItgg9GzmpMgYL
- 19gRxYTdBTtHeOkfM3H8PXQeVi257iBd/lq58I2nzh5neaeQ+iS5K0y1Ez9I9WbbJJFu
- WXqQfxYr7F5aEOw2lZDMxj+5txKr20rYTFgZQRm1h1/3hGgsEtIxFvttQcW2aBXLPDza
- Y6oA==; darn=nongnu.org
+ b=NHS0mHalKswPTTvOTnSOebyFRnecSDvtnj4wbgsxahawIop/TOiCQ0ClGWjjsL1mBZ
+ tjydbrLuvwOVxIWKqCZXWz/2zow6C68AyZOAA0HAg0DPKgHtr0ZTF73eMs9jDPrFL0jk
+ 306ZbiunfXnNOJV2KCbEbab5eCjYxZ++doB0Nheb7TnsFfqTUhh0ReOCppqFMhlFpTw6
+ 2RPn1UVy6X1pOeIAex5xqMJLszcTLp0W2CThmUsIywUqLTKhL+yzYul1HAS1gRhiIiWi
+ TV9ThCyv7fga2NYnbfwEaqxRryfyMXzgaM6M9CJp4X60XMCjKTaV9rXW6rVUTgOOjAO/
+ s9Pw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769700110; x=1770304910; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769700221; x=1770305021; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=j1eDuwiY+cHZoCJie36KvZ2wMGIKytbIGIatLMMs61A=;
- b=vK7FPavIH66udpD0qfNBr8gpILjyM6SJppRrr3M0WuMSvyMNpzd3lB4qEldSLWnNZ9
- 2gXYuZrzryZvWtfcbau6V5VSiAtXS4hykbDpH6sVH+mjjCj110r+Pgqj7GmwFb8jDHAm
- HgqRzV0lIH/1hftyeXrnaLtC2qO1Kx/ZqVdXHq/HntOYQQXnrXSl9HxLBIhXhenHSgrT
- y1d3doRJJyqTNAOFQOSK7QEMuUwXCEEHNEiGmdX0F7OBou8tVbyyqap82lzu60vP4AvG
- gRuAZj1M5qS19r8NasDJ8m51DXLwggTG8Hi2QbTOL/cv66MDurXWhBPgulBYiuThnMqa
- Pbtw==
+ bh=HGsBBVoPwOoSO4+vUaMv95px2FvM22R0jza8OCwLrdg=;
+ b=WE748xu7TclcfDfKrOpdFOuXFHUCHmpt1NVKFzIH2uJFPi2m4uVGGayZdPK7JhIvb5
+ XNQx911Ny4jNTq0bnnI5R/8QA505FN4eHk787X/kjKv9SfEZLIMlxnIzHfxGpOWAYy8g
+ z+NMR8A/lu+20jvJnMCZuHIm9mgGghk5oODjSyUMzg/edNP/CQaGGqxwPL9b6icr5/WP
+ UsBlcktrPsIE/4cjHlNinyhI6R25olgzD8MNoE7T4feCSGpRXblUjl6TkRohNgD3Vwaf
+ st+8Jkmwmwr/7KzLnHSm514alweQ6fwYo8xXDFmEx1GQldYsGnhEow1oK/qsjr9pBmsm
+ sRHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769700110; x=1770304910;
+ d=1e100.net; s=20230601; t=1769700221; x=1770305021;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j1eDuwiY+cHZoCJie36KvZ2wMGIKytbIGIatLMMs61A=;
- b=CPPNOFzzFq/iGa+mFRPbcaIhfysCzRxBHaDZAShVIUEKYtl3IrRSRzh7EZBHwlNlOE
- 4/Py7LaBbnR0AAZt6pTMiogGqozvC4yEQpNP9moFKMG0PH0PbGqMeON9atgXT8fC/tXl
- W82p+8xUV86SLcnw0cHL/+WnDrH+B57BDbdrDRdZ43pjdMS9BJ+urBilZfmZNa4HyWaK
- AvHdvLPFyOz4XjdpETlvIFrecrNELpZWff808KGp/GlO9XIw/zLD/0NJ8QrAbtld6NAe
- S1V2hENwO8s71BQvuIUzctwmL8gAuQFpjg+N35B+cs7k4oncgCLwAzChxEmexoJs6wNw
- Vmmw==
-X-Gm-Message-State: AOJu0Yx2Ct7L+LC89L53ViS8GDglkaDOIVKCpdbxkGl7gI8CFyBNt/Rb
- ojh/aPA/7qdNbZlKGSvrfdAGmn5sB/BDjGbgv3S2cZ/vONEzLqKRydgnsZW1GXJ836Yx7b+yqT+
- D7wRXhsaz7MC1VqNRue7D2FocITPWMIZkLb2G+HFBgQ==
-X-Gm-Gg: AZuq6aLgAveSHhroiQBpDKsJkmAua9N2YxCCcDAV1eG/STZzCYVxVKzKNJCrffxratR
- iHKrh/+h+th4DI2IeMDjuI5i4yBKW/m97UUQMp1QS8KX5XRzizzDjUmr1HfYtQtRXQFf69Rqr9w
- TfAZEG7AogP5aL4+wAA72sJaRLpLdP7LsOhkKJEYIdY0PxiideW6ThX8yJq8OOFX5+L9AOLRXFL
- /lJuYp6aBsYdFtuLfJj22FyNpZ5QyVCcL/5/knf8ByKFOt8CUqC/bSdUey4ggFX4i61KQ==
-X-Received: by 2002:a05:690c:5a8f:b0:78f:f3c6:f303 with SMTP id
- 00721157ae682-7947abfacbemr60791727b3.38.1769700109790; Thu, 29 Jan 2026
- 07:21:49 -0800 (PST)
+ bh=HGsBBVoPwOoSO4+vUaMv95px2FvM22R0jza8OCwLrdg=;
+ b=BSafKMmDeMkGRg+5DY/sdIKAiCat1x/QfDLAtkVMFxvMvWwa3Dr6vxR6RpZum5Dq88
+ trqw/k9oFm+uCZsObY/EIezfgYUF5sb6jMtlY2p55NdnxWJfX+inUwRB5muFDb0uGZoU
+ HCrErJWjhC8etsytl5iMkbBMNzg3xHiW251q2vbJkiDH8hYIto5/3TIncgjQaOzVsXSR
+ HkO5nJKHUEKhMNcMfCdXn66bzbDw25MnmYII0vytHaxwK+y/QH44bjKJTUYg87tIaoLD
+ BLNNG9szCW6PJaMMmpztkV5+kfzOqj3FxLlGE3zwACMQ0vlQqjuOUm+hDq+8k6G16FLP
+ oO0g==
+X-Gm-Message-State: AOJu0Yw1VBit7lWc7UZNj5VCaB7xMFAFzAkNr0VFl9BZdcVrhwYCgI35
+ BCXKYeRz15+bYIEQkQXR+o17TqVxcw/bdpjC8fC9lIwrupN4JKMGyoXFOVr7Hjb8pV+wHwaNoRG
+ q7i4yHR4Np3C56ltXvRmp1Vu7bZQ+PKxLJS96ffj9Iw==
+X-Gm-Gg: AZuq6aIwxoUiqcgmCF1rqh/JRT0AcbfgY63luwh45oDUvydt4M4QZLZ3sH2cQu/SKib
+ o92z6ZiwLjC0W5xqk0YG9RjQSnporRe/NSVjaDfKgln00+edEtybJ3trbGukModa0umcCvr3FRA
+ MfuyYXcceYbgy1XfuP1pP069Zvwz+VjIBRocoQs/HhiSQB209PXd0ix6DZUUhsC+tbWFInWBPJR
+ ZUto7UB1JPrtjxnocN4sTeQejmk7Qldxq1/yAqee32UY2RuZt9YAOtDaZMuqLt9mwFpKA==
+X-Received: by 2002:a05:690c:5609:b0:793:d0b5:9bcb with SMTP id
+ 00721157ae682-7947ab4127emr53311227b3.24.1769700220783; Thu, 29 Jan 2026
+ 07:23:40 -0800 (PST)
 MIME-Version: 1.0
 References: <20260127182805.73212-1-mohamed@unpredictable.fr>
- <20260127182805.73212-5-mohamed@unpredictable.fr>
-In-Reply-To: <20260127182805.73212-5-mohamed@unpredictable.fr>
+ <20260127182805.73212-8-mohamed@unpredictable.fr>
+In-Reply-To: <20260127182805.73212-8-mohamed@unpredictable.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 29 Jan 2026 15:21:38 +0000
-X-Gm-Features: AZwV_QggdnzhttS9zZiOT9KoXIES71kSnnMARfxHtRAtqtvjn9paXqdGGz9cSZw
-Message-ID: <CAFEAcA-BD0q2Eno+uo=pCDnnV6zEt2wWeoi8JujHZuaj0KzKCA@mail.gmail.com>
-Subject: Re: [PATCH v18 04/22] hw: arm: virt: rework MSI-X configuration
+Date: Thu, 29 Jan 2026 15:23:29 +0000
+X-Gm-Features: AZwV_Qi6JHi-PlV0zbQOn9dWM1cACeq9E9hSqMK1cT3rLe52xaq93XWs8ti5UQk
+Message-ID: <CAFEAcA-AFji3sUmFV7+vj+UVj7asVdPJpnPt01zS07CkncYD-w@mail.gmail.com>
+Subject: Re: [PATCH v18 07/22] docs: arm: update virt machine model description
 To: Mohamed Mediouni <mohamed@unpredictable.fr>
 Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
  "Michael S. Tsirkin" <mst@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
@@ -104,15 +104,15 @@ Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Eduardo Habkost <eduardo@habkost.net>, 
  Phil Dennis-Jordan <phil@philjordan.eu>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URIBL_SBL=1.623 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,162 +130,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 27 Jan 2026 at 18:28, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
 >
-> Introduce a -M msi= argument to be able to control MSI-X support independently
-> from ITS, as part of supporting GICv3 + GICv2m platforms.
+> Update the documentation to match current QEMU.
 >
-> Remove vms->its as it's no longer needed after that change.
+> Remove the mention of pre-2.7 machine models as those aren't provided
+> anymore.
 >
 > Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->  hw/arm/virt-acpi-build.c |  20 ++++---
->  hw/arm/virt.c            | 112 ++++++++++++++++++++++++++++++++++++---
->  include/hw/arm/virt.h    |   5 +-
->  3 files changed, 121 insertions(+), 16 deletions(-)
+>  docs/system/arm/virt.rst | 13 ++++++++-----
+>  1 file changed, 8 insertions(+), 5 deletions(-)
 >
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 03b4342574..f87bf1bf2f 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-
-You'll find the SMMUv3 acceleration changes produce some minor
-conflicts in this file that you'll need to sort out.
-
-The rest below here is minor stuff.
-
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 4badc1a734..3d7f02ce0e 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -737,7 +737,7 @@ static void create_its(VirtMachineState *vms)
->  {
->      DeviceState *dev;
+> diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
+> index e5570773ba..3799d2237e 100644
+> --- a/docs/system/arm/virt.rst
+> +++ b/docs/system/arm/virt.rst
+> @@ -41,9 +41,10 @@ The virt board supports:
+>  - User-creatable SMMUv3 devices (see below for example)
+>  - hotpluggable DIMMs
+>  - hotpluggable NVDIMMs
+> -- An MSI controller (GICv2M or ITS). GICv2M is selected by default along
+> -  with GICv2. ITS is selected by default with GICv3 (>= virt-2.7). Note
+> -  that ITS is not modeled in TCG mode.
+> +- An MSI controller (GICv2m or ITS).
+> +  - When using GICv3, ITS is selected by default when available on the platform.
+> +  - If using GICv2, a GICv2m is provided by default instead.
+> +  - When ITS is not available on a GICv3 platform, a GICv2m is provided by default.
+>  - 32 virtio-mmio transport devices
+>  - running guests using the KVM accelerator on aarch64 hardware
+>  - large amounts of RAM (at least 255GB, and more if using highmem)
+> @@ -167,9 +168,11 @@ gic-version
+>      with TCG this is currently ``3`` if ``virtualization`` is ``off`` and
+>      ``4`` if ``virtualization`` is ``on``, but this may change in future)
 >
-> -    assert(vms->its);
-> +    assert(vms->msi_controller == VIRT_MSI_CTRL_ITS);
+> +msi
+> +  Set ``auto``/``gicv2m``/``its``/``none`` to control MSI controller configuration. The default is ``auto``.
 
-I think we colud now simply drop this assert, given the simplicity
-of the calling logic.
+We can be a bit more verbose than this. Compare
 
->      if (!kvm_irqchip_in_kernel() && !vms->tcg_its) {
->          /*
->           * Do nothing if ITS is neither supported by the host nor emulated by
-> @@ -957,9 +957,9 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
->
->      fdt_add_gic_node(vms);
->
-> -    if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
-> +    if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
->          create_its(vms);
-> -    } else if (vms->gic_version == VIRT_GIC_VERSION_2) {
-> +    } else if (vms->msi_controller == VIRT_MSI_CTRL_GICV2M) {
->          create_v2m(vms);
->      }
->  }
-> @@ -2132,6 +2132,36 @@ static void finalize_gic_version(VirtMachineState *vms)
->                                                 gics_supported, max_cpus);
->  }
->
-> +static void finalize_msi_controller(VirtMachineState *vms)
-> +{
-> +    if (vms->msi_controller == VIRT_MSI_LEGACY_OPT_ITS_OFF) {
-> +        if (vms->gic_version == 2) {
-> +            vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
-> +        }
-> +        else {
-> +            vms->msi_controller = VIRT_MSI_CTRL_NONE;
-> +        }
-
-This needs commentary to explain why it is doing what it's
-doing.
-
-> +    }
-> +    if (vms->msi_controller == VIRT_MSI_CTRL_AUTO) {
-> +        if (vms->gic_version == VIRT_GIC_VERSION_2) {
-> +            vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
-> +        }
-> +        else {
-> +            vms->msi_controller = VIRT_MSI_CTRL_ITS;
-> +        }
-> +    }
-
-> +
-> +    if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
-> +        if (vms->gic_version == VIRT_GIC_VERSION_2) {
-> +            /* Older Qemu releases accepted this, but better to error. */
-
-"QEMU" is all-caps.
-
-Also, do you mean "older QEMU releases accepted the command line,
-and we now error"? Generally we shouldn't do that. If you mean
-"the old legacy its= option permits this, but the new msi= one
-diagnoses it as an error", the comment could be clearer.
-
-> +            error_report("GICv2 + ITS is an invalid configuration.");
-> +            exit(1);
-> +        }
-> +    }
-> +
-> +    assert(vms->msi_controller != VIRT_MSI_CTRL_AUTO);
-> +}
-> +
-
-> +static char *virt_get_msi(Object *obj, Error **errp)
-> +{
-> +    VirtMachineState *vms = VIRT_MACHINE(obj);
-> +    const char *val;
-> +
-> +    switch (vms->msi_controller) {
-> +    case VIRT_MSI_CTRL_NONE:
-> +    case VIRT_MSI_LEGACY_OPT_ITS_OFF:
-> +        val = "off";
-> +        break;
-> +    case VIRT_MSI_CTRL_ITS:
-> +        val = "its";
-> +        break;
-> +    case VIRT_MSI_CTRL_GICV2M:
-> +        val = "gicv2m";
-> +        break;
-> +    case VIRT_MSI_CTRL_AUTO:
-> +        val = "auto";
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +    return g_strdup(val);
-> +}
-> +
-> +static void virt_set_msi(Object *obj, const char *value, Error **errp)
-> +{
-> +    ERRP_GUARD();
-> +    VirtMachineState *vms = VIRT_MACHINE(obj);
-> +
-> +    if (!strcmp(value, "auto")) {
-> +        vms->msi_controller = VIRT_MSI_CTRL_AUTO; /* Will be overriden later */
-> +    } else if (!strcmp(value, "its")) {
-> +        vms->msi_controller = VIRT_MSI_CTRL_ITS;
-> +    } else if (!strcmp(value, "gicv2m")) {
-> +        vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
-> +    } else if (!strcmp(value, "none")) {
-
-Everywhere else seems to use "off" for the fourth value of
-this option (so auto, its, gicv2m, off), but here we have "none".
-
-> +        vms->msi_controller = VIRT_MSI_CTRL_NONE;
-> +    } else {
-> +        error_setg(errp, "Invalid msi value");
-> +        error_append_hint(errp, "Valid values are auto, gicv2m, its, off\n");
-> +    }
-> +}
-
-
-> +    object_class_property_add_str(oc, "msi", virt_get_msi,
-> +                                  virt_set_msi);
-> +    object_class_property_set_description(oc, "msi",
-> +                                          "Set MSI settings. "
-> +                                          "Valid values are auto/gicv2m/its/off");
-
-We use '/' for 'on/off' but list all the values like
-"Valid values are 2, 3, 4, host and max" for a set of strings.
+https://patchew.org/QEMU/20260120180339.1416328-1-peter.maydell@linaro.org/20260120180339.1416328-5-peter.maydell@linaro.org/
 
 thanks
 -- PMM
