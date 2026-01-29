@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA75D73E80
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 19:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA170D73E86
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 19:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlXcv-0004sW-Ay; Thu, 29 Jan 2026 14:24:25 -0500
+	id 1vlXc4-0003GA-G1; Thu, 29 Jan 2026 14:23:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlXbe-0001sm-45
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 14:23:07 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlXbc-0006kD-GF
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 14:23:05 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-43590777e22so870694f8f.3
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 11:23:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769714583; x=1770319383; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jxfgOU2BHzboeEpj6xJ7ECXYHfXAzoBbGLHdcfcnleY=;
- b=aW7uSzIkCPQOGJcASOdvk5EaBwGViGIvvPHbomKmAQ6PNmhOAx4BJoL9dRzQ3ndUkQ
- z88uoGG/RN3iaohEf1ORt5YGQ83LRk43y1b125xeyOFRgP5Qkzdf3N0kieMXNdmzit5j
- cY3FPrlz60Aha1fLBr1OueRvHb3sr/pam79RfBTaKQINz0AE7HstXqGaV6OH8oID5uo7
- RlwV2FJytuBUSeTw4+0dmCoBoBxchtvDBoO05ZUlrs94KG4kkRzpeb/0LkNJjYNbjtT/
- ur7qzhMJR4whK3DkIE6Ij1lKGb74xTPU2JqmOjf3ge6S5+pxv2eXUiLFqX+pRwoadB0a
- z5Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769714583; x=1770319383;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jxfgOU2BHzboeEpj6xJ7ECXYHfXAzoBbGLHdcfcnleY=;
- b=pjE93/i77Bf/iSgFjdsyVxIiRvkRNRYO9gxRlVHlMgJeQEYSDy8ZQfTNgBLePb0HcK
- ID06+BlcmRa04rEBnHk/ax+7N4S4RvQmYTfu3UppDrr89fpGwTwaTrMZD2BYu1nDqndM
- jEpgCP1IOFKYRYI/jyPqvj0UEj4OFBYMFYNoDhhQSVNesEmpg5XtFEFLI6AWutJpggjC
- 6MLzGKN0/bX936Z+e/NjCV0ZM/lEBFD8FQZY/nChEx2H7OrENe1dzWx4zyIY3im90/K7
- NZ6Lypu8ho6F1PiVCmAn8q0C0uWki6QCpP1KtOu0Abk6yUsexMWKYBV/r99D7WpKOZaq
- YuMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVifY94hdLGHsEKG4usV8YuKXXHhA45TJ3UcllOLLN5GsywAL4+6wjwTywiyFroobrWiZv1hHEd/soA@nongnu.org
-X-Gm-Message-State: AOJu0YxJ9xG1tHyzUeoWvECJ8TWgOwo4CjneA+3p0D0BrmsT/0BL0pQI
- s8PEIOYQdk1eDybnqqtDjpZai5l7BjK4vD/y97VyKCDt7m3iYLrDInBTf5qksbQHvZE=
-X-Gm-Gg: AZuq6aJpGxmveuE5q0tr/IoZ2bn5N1CWj8BRpM5ryznyP8FgTKIeWBa5QH8WVRD/Dqx
- 1uKPANQOxKzjAumk/3uMEZTLXcAbVjNp9BCsvKtHdBC/6k5PBMohjtQk6VHHzxGzHMiByg1wUzI
- 4oXNKj5kvE4GrkbEO7jjgehqRPCNYFHe/jbRGoedemggR6AFYpJ5TMLolsQ3+0XB+shWZsJGKeK
- pyVZwa4zNxsoxCXUcRC0qlBdlbPJ1t+uOY8bI6sibC75H4BDqp+UBryNoHyGVs5AKEiRkRBRASq
- fK9B0cYIt3t548dfJsNa1d9/73VyqskBpgI6Yd0k5/0GutuauBpd2vcSNJMqnX1hEHFyPmuHxcj
- 2oyrJckptSfi33dB43yCJJULhxbz7jwZ1sSOcQMMCIOo3XTxMZ7AEQOuIwEgPEpHH0K/IHq0ob8
- 961NaODd9DR7cvlQp8VvjyX0+Erdo1iCfgrvtTdZwvKKYJgSML75gZmg==
-X-Received: by 2002:a5d:5e01:0:b0:435:b068:d3be with SMTP id
- ffacd0b85a97d-435f3aa90cemr961767f8f.41.1769714582844; 
- Thu, 29 Jan 2026 11:23:02 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131ce64sm16777749f8f.26.2026.01.29.11.23.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Jan 2026 11:23:01 -0800 (PST)
-Message-ID: <10b26b57-bcd6-4853-9e2b-b8410b404806@linaro.org>
-Date: Thu, 29 Jan 2026 20:23:00 +0100
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vlXa2-0006gt-Td
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 14:21:29 -0500
+Received: from ci-2002l-snip4-1.eps.apple.com ([57.103.88.242]
+ helo=outbound.ci.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vlXZy-00069w-6h
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 14:21:25 -0500
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-2 (Postfix) with ESMTPS id
+ A24AA180200F; Thu, 29 Jan 2026 19:21:06 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1769714469; x=1772306469;
+ bh=UUJb39yVv7QixYIjzYIfzno5hqH3z9zRrMYraeKJgEA=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=cycuhqXm/UVkRhj2s+k+Jv+DoV6/eoO3R/sVQticUfMz9G+xqrIdMxES7fksZ+YIiTDYK4U1j1ZlxpjFSyMNjJzz3tCekDnGcc15M2tE614jeZCUk4rmtDebHMgSqBvt3rRlEMbxxVEvguP7GxbidMt+Fs8Rf1eVH1FU/090TqnADi84Curn1A94cLVf8dT7cu3fuYEFeA1wM4zfuubPzclYOSb0EU/bdln96XiR8Z+yhqWJ2FfMQhZALpvqkmdEnuF0RuUgMk+i2rdBuitll1GxJLnvaw28mBI4qGZKf3YjD4h5y9BJhi0G+wPcejiIX7u5RDace09azqiq80mvQA==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-100-percent-2 (Postfix) with ESMTPSA id
+ 820DF1801889; Thu, 29 Jan 2026 19:21:03 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+To: qemu-devel@nongnu.org,
+	mohamed@unpredictable.fr
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Cameron Esfahani <dirty@apple.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-arm@nongnu.org, Alexander Graf <agraf@csgraf.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v19 17/22] whpx: arm64: clamp down IPA size
+Date: Thu, 29 Jan 2026 20:20:02 +0100
+Message-ID: <20260129192009.14707-18-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260129192009.14707-1-mohamed@unpredictable.fr>
+References: <20260129192009.14707-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ui/kbd-state.h: Make the header C++ compatible
-Content-Language: en-US
-To: Roman Kiryanov <rkir@google.com>, qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: mjt@tls.msk.ru, whollins@google.com, jansene@google.com,
- jpcottin@google.com
-References: <20260129190444.225306-1-rkir@google.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260129190444.225306-1-rkir@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDEzOCBTYWx0ZWRfX+r4lbw/o89jh
+ FHEb/vDFkchrSw3DhE1tOra2g9lm+M68w3Igt3Il7O/LIP8vOk8DlZIZCAOmlKuxL83yIt7PbYN
+ nOKCktGzXCi3C6k5ZMGc3qSL1Jfp4Niht5oUGJSzr8Ll80DYZMeFCPDH9oR3kJajGJiGgXiXjkv
+ SyQfKKtNMxaL6Wn6UH4M7N7kzQHnzJsPAr0tvPh/Zia7Nhcv7shTmX0trYc91LrDnpVGQFGBzwv
+ JmjOjKQuNUHSRKeDj+8b18u9IaRxIGlCWwIOLPIMvPRQNzbG7n3bMRGNa5+2vaJnzdOyNgL8ODZ
+ ctw479IMhi7qZtl8GSd2DcxgDj2JKYasKOkYaJ0/lWmzqbH5z1qYvEho/xePf0=
+X-Authority-Info-Out: v=2.4 cv=HYMZjyE8 c=1 sm=1 tr=0 ts=697bb324
+ cx=c_apl:c_apl_out:c_pps a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=KKAkSRfTAAAA:8 a=wAo57kR77d7e8uaIccUA:9 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: Ew1AxWMUT4BU4iysGymNfWR8b90vYqtv
+X-Proofpoint-ORIG-GUID: Ew1AxWMUT4BU4iysGymNfWR8b90vYqtv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-29_02,2026-01-29_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ spamscore=0 adultscore=0 mlxlogscore=999 mlxscore=0 clxscore=1030
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601290138
+X-JNJ: AAAAAAAB3fMXxk5cxmOPPbjwuYCJ+EAbBS8uhdo0VBeS+OmW7vR3t7UKyu4pgswEhPIU1Ei8cQ+G33WkPIWLvxqSB0ntkdsVhxbE9BznKHihrkZgcpJa3i4HRqGzgds/DnxcGopccqe4yHeSHbbOqlGQ3TA1OilEdumenNbh4ls8RBsBK6Vi0XRfFh+GBb7XeF1GcIx/PZqTvn/BgHjCnOn3jQfgInkW2DvPUm0XQ7XIWyUL0zNhBp/M8athXDml/yXJbdYlFFtaxNqWOvulKRlVhJp4WdiGrtT3PvwL0OSZjYyWw80bQjUQs2vZzZf0Px3xYCyuvgYanJZc2709tWpCyIYleD15Jc7WJOVMdqkiDd+srLLqYMCyAWYGKolwXGaCMrqP/+MfbxmtAFwo1APj+DAaJTRHP3WqlPLy9CF/kdsOWNoA1R7R5DNO/m16i7rAF8h0FJ4zuFZr6gBXGXtBJRoNXtwuYGKKUaN5BOD+1tAqD0Jt8EO3smbJKL+ejf9VKkhuxh9Qk8TPNhAH9a5KI0y64XIEKFPR0PmOOA1QWQ2QYmPPFf/6En3X0wDxAdjReBxjnjy3AkZltO4t39wX86hlaVv3CAW70shoxD8wkhojG2Ga8mfL06bqlkRMhNcBH6+jQamBBsxycLJ/KR0CIahQ/M5QKGDv9rcNurBOc6vdNskCxUAtGGNe9I4e4wgcT/G34WG+ciUj5Aco7pNvnk9GueOkpB0teqk0TBlqPZ8W3BLTI0FYFj3faN5IpwVzNBi2C8cTJvTXu8KFubJyNJPwI6DoZWJB9fEQcjuQN8EfGjsDqMdjmbrA6UrOtjrPwFsOs40iRyQ0JaBTMj92SmXWwzY=
+Received-SPF: pass client-ip=57.103.88.242;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,80 +103,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Code taken from HVF and adapted for WHPX use. Note that WHPX doesn't
+have a default vs maximum IPA distinction.
 
-On 29/1/26 20:04, Roman Kiryanov wrote:
-> This patch fixes the C++ compilation error:
-> 
-> ISO C++ forbids forward references to 'enum' types
-> 
-> Signed-off-by: Will Hollins <whollins@google.com>
-> Signed-off-by: Roman Kiryanov <rkir@google.com>
-> ---
->   include/ui/kbd-state.h | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/include/ui/kbd-state.h b/include/ui/kbd-state.h
-> index 1f37b932eb..3522ebe51b 100644
-> --- a/include/ui/kbd-state.h
-> +++ b/include/ui/kbd-state.h
-> @@ -9,9 +9,7 @@
->   
->   #include "qapi/qapi-types-ui.h"
->   
-> -typedef enum QKbdModifier QKbdModifier;
-> -
-> -enum QKbdModifier {
-> +typedef enum QKbdModifier {
->       QKBD_MOD_NONE = 0,
->   
->       QKBD_MOD_SHIFT,
-> @@ -23,7 +21,7 @@ enum QKbdModifier {
->       QKBD_MOD_CAPSLOCK,
->   
->       QKBD_MOD__MAX
-> -};
-> +} QKbdModifier;
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Yes but:
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ hw/arm/virt.c               | 32 ++++++++++++++++++++++++++
+ include/hw/core/boards.h    |  1 +
+ target/arm/whpx/meson.build |  2 ++
+ target/arm/whpx/whpx-all.c  | 45 +++++++++++++++++++++++++++++++++++++
+ target/arm/whpx/whpx-stub.c | 15 +++++++++++++
+ target/arm/whpx_arm.h       | 16 +++++++++++++
+ 6 files changed, 111 insertions(+)
+ create mode 100644 target/arm/whpx/whpx-stub.c
+ create mode 100644 target/arm/whpx_arm.h
 
-$ git grep -E 'typedef enum.*;'
-hw/core/loader.c:1691:typedef enum HexRecord HexRecord;
-hw/display/xlnx_dp.c:259:typedef enum DPGraphicFmt DPGraphicFmt;
-hw/display/xlnx_dp.c:260:typedef enum DPVideoFmt DPVideoFmt;
-hw/dma/xlnx_dpdma.c:156:typedef enum DPDMABurstType DPDMABurstType;
-hw/dma/xlnx_dpdma.c:157:typedef enum DPDMAMode DPDMAMode;
-hw/riscv/riscv-iommu.h:28:typedef enum riscv_iommu_igs_modes 
-riscv_iommu_igs_mode;
-include/hw/misc/auxbus.h:32:typedef enum AUXCommand AUXCommand;
-include/hw/misc/auxbus.h:33:typedef enum AUXReply AUXReply;
-include/hw/pci/pci_device.h:52:typedef enum PCIReqIDType PCIReqIDType;
-include/hw/ssi/ssi.h:19:typedef enum SSICSMode SSICSMode;
-include/hw/xen/interface/io/xenbus.h:51:typedef enum xenbus_state 
-XenbusState;
-include/io/channel.h:41:typedef enum QIOChannelFeature QIOChannelFeature;
-include/io/channel.h:54:typedef enum QIOChannelShutdown QIOChannelShutdown;
-include/system/replay.h:29:typedef enum ReplayClockKind ReplayClockKind;
-include/system/replay.h:44:typedef enum ReplayCheckpoint ReplayCheckpoint;
-include/ui/clipboard.h:23:typedef enum QemuClipboardType QemuClipboardType;
-include/ui/clipboard.h:24:typedef enum QemuClipboardNotifyType 
-QemuClipboardNotifyType;
-include/ui/clipboard.h:25:typedef enum QemuClipboardSelection 
-QemuClipboardSelection;
-include/ui/kbd-state.h:12:typedef enum QKbdModifier QKbdModifier;
-pc-bios/s390-ccw/virtio.h:31:typedef enum VirtioDevType VirtioDevType;
-pc-bios/s390-ccw/virtio.h:182:typedef enum guessed_disk_nature_type 
-VirtioGDN;
-qapi/opts-visitor.c:63:typedef enum ListMode ListMode;
-qapi/string-output-visitor.c:53:typedef enum ListMode ListMode;
-target/s390x/gen-features.c:1175:           "typedef enum {\n");
-tests/qtest/libqos/qgraph_internal.h:30:typedef enum QOSEdgeType 
-QOSEdgeType;
-tests/qtest/libqos/qgraph_internal.h:31:typedef enum QOSNodeType 
-QOSNodeType;
-tests/unit/check-qom-proplist.c:43:typedef enum DummyAnimal DummyAnimal;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index a4dc6201bf..ed1692d8be 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -72,6 +72,7 @@
+ #include "hw/core/irq.h"
+ #include "kvm_arm.h"
+ #include "hvf_arm.h"
++#include "whpx_arm.h"
+ #include "hw/firmware/smbios.h"
+ #include "qapi/visitor.h"
+ #include "qapi/qapi-visit-common.h"
+@@ -3363,6 +3364,36 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
+     return fixed_ipa ? 0 : requested_pa_size;
+ }
+ 
++static int virt_whpx_get_physical_address_range(MachineState *ms)
++{
++    VirtMachineState *vms = VIRT_MACHINE(ms);
++
++    int max_ipa_size = whpx_arm_get_ipa_bit_size();
++
++    /* We freeze the memory map to compute the highest gpa */
++    virt_set_memmap(vms, max_ipa_size);
++
++    int requested_ipa_size = 64 - clz64(vms->highest_gpa);
++
++    /*
++     * If we're <= the default IPA size just use the default.
++     * If we're above the default but below the maximum, round up to
++     * the maximum. whpx_arm_get_max_ipa_bit_size() conveniently only
++     * returns values that are valid ARM PARange values.
++     */
++    if (requested_ipa_size <= max_ipa_size) {
++        requested_ipa_size = max_ipa_size;
++    } else {
++        error_report("-m and ,maxmem option values "
++                     "require an IPA range (%d bits) larger than "
++                     "the one supported by the host (%d bits)",
++                     requested_ipa_size, max_ipa_size);
++        return -1;
++    }
++
++    return requested_ipa_size;
++}
++
+ static int virt_hvf_get_physical_address_range(MachineState *ms)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(ms);
+@@ -3462,6 +3493,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     mc->get_default_cpu_node_id = virt_get_default_cpu_node_id;
+     mc->kvm_type = virt_kvm_type;
+     mc->hvf_get_physical_address_range = virt_hvf_get_physical_address_range;
++    mc->whpx_get_physical_address_range = virt_whpx_get_physical_address_range;
+     assert(!mc->get_hotplug_handler);
+     mc->get_hotplug_handler = virt_machine_get_hotplug_handler;
+     hc->pre_plug = virt_machine_device_pre_plug_cb;
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index 07f8938752..0b2aefb126 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -278,6 +278,7 @@ struct MachineClass {
+     void (*wakeup)(MachineState *state);
+     int (*kvm_type)(MachineState *machine, const char *arg);
+     int (*hvf_get_physical_address_range)(MachineState *machine);
++    int (*whpx_get_physical_address_range)(MachineState *machine);
+ 
+     BlockInterfaceType block_default_type;
+     int units_per_default_bus;
+diff --git a/target/arm/whpx/meson.build b/target/arm/whpx/meson.build
+index 1de2ef0283..3df632c9d3 100644
+--- a/target/arm/whpx/meson.build
++++ b/target/arm/whpx/meson.build
+@@ -1,3 +1,5 @@
+ arm_system_ss.add(when: 'CONFIG_WHPX', if_true: files(
+   'whpx-all.c',
+ ))
++
++arm_common_system_ss.add(when: 'CONFIG_WHPX', if_false: files('whpx-stub.c'))
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 192d7ec7a8..850f6ec81f 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -35,6 +35,7 @@
+ #include "system/whpx-accel-ops.h"
+ #include "system/whpx-all.h"
+ #include "system/whpx-common.h"
++#include "whpx_arm.h"
+ #include "hw/arm/bsa.h"
+ #include "arm-powerctl.h"
+ 
+@@ -633,6 +634,40 @@ static void whpx_cpu_update_state(void *opaque, bool running, RunState state)
+ {
+ }
+ 
++uint32_t whpx_arm_get_ipa_bit_size(void)
++{
++    WHV_CAPABILITY whpx_cap;
++    UINT32 whpx_cap_size;
++    HRESULT hr;
++    hr = whp_dispatch.WHvGetCapability(
++        WHvCapabilityCodePhysicalAddressWidth, &whpx_cap,
++        sizeof(whpx_cap), &whpx_cap_size);
++    if (FAILED(hr)) {
++        error_report("WHPX: failed to get supported "
++             "physical address width, hr=%08lx", hr);
++    }
++
++    /*
++     * We clamp any IPA size we want to back the VM with to a valid PARange
++     * value so the guest doesn't try and map memory outside of the valid range.
++     * This logic just clamps the passed in IPA bit size to the first valid
++     * PARange value <= to it.
++     */
++    return round_down_to_parange_bit_size(whpx_cap.PhysicalAddressWidth);
++}
++
++static void clamp_id_aa64mmfr0_parange_to_ipa_size(ARMISARegisters *isar)
++{
++    uint32_t ipa_size = whpx_arm_get_ipa_bit_size();
++    uint64_t id_aa64mmfr0;
++
++    /* Clamp down the PARange to the IPA size the kernel supports. */
++    uint8_t index = round_down_to_parange_index(ipa_size);
++    id_aa64mmfr0 = GET_IDREG(isar, ID_AA64MMFR0);
++    id_aa64mmfr0 = (id_aa64mmfr0 & ~R_ID_AA64MMFR0_PARANGE_MASK) | index;
++    SET_IDREG(isar, ID_AA64MMFR0, id_aa64mmfr0);
++}
++
+ int whpx_init_vcpu(CPUState *cpu)
+ {
+     HRESULT hr;
+@@ -706,6 +741,7 @@ int whpx_init_vcpu(CPUState *cpu)
+     val.Reg64 = deposit64(arm_cpu->mp_affinity, 31, 1, 1 /* RES1 */);
+     whpx_set_reg(cpu, WHvArm64RegisterMpidrEl1, val);
+ 
++    clamp_id_aa64mmfr0_parange_to_ipa_size(&arm_cpu->isar);
+     return 0;
+ }
+ 
+@@ -722,6 +758,8 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     UINT32 whpx_cap_size;
+     WHV_PARTITION_PROPERTY prop;
+     WHV_CAPABILITY_FEATURES features;
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    int pa_range = 0;
+ 
+     whpx = &whpx_global;
+     /* on arm64 Windows Hypervisor Platform, vGICv3 always used */
+@@ -732,6 +770,13 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         goto error;
+     }
+ 
++    if (mc->whpx_get_physical_address_range) {
++        pa_range = mc->whpx_get_physical_address_range(ms);
++        if (pa_range < 0) {
++            return -EINVAL;
++        }
++    }
++
+     whpx->mem_quota = ms->ram_size;
+ 
+     hr = whp_dispatch.WHvGetCapability(
+diff --git a/target/arm/whpx/whpx-stub.c b/target/arm/whpx/whpx-stub.c
+new file mode 100644
+index 0000000000..32e434a5f6
+--- /dev/null
++++ b/target/arm/whpx/whpx-stub.c
+@@ -0,0 +1,15 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * WHPX stubs for ARM
++ *
++ *  Copyright (c) 2025 Mohamed Mediouni
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "whpx_arm.h"
++
++uint32_t whpx_arm_get_ipa_bit_size(void)
++{
++    g_assert_not_reached();
++}
+diff --git a/target/arm/whpx_arm.h b/target/arm/whpx_arm.h
+new file mode 100644
+index 0000000000..de7406b66f
+--- /dev/null
++++ b/target/arm/whpx_arm.h
+@@ -0,0 +1,16 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * WHPX support -- ARM specifics
++ *
++ * Copyright (c) 2025 Mohamed Mediouni
++ *
++ */
++
++#ifndef QEMU_WHPX_ARM_H
++#define QEMU_WHPX_ARM_H
++
++#include "target/arm/cpu-qom.h"
++
++uint32_t whpx_arm_get_ipa_bit_size(void);
++
++#endif
+-- 
+2.50.1 (Apple Git-155)
 
-If we want QEMU headers to be C++ compilable, we should
-1/ fix all enum forward declarations and
-2/ add a CI job to ensure no more are added
 
