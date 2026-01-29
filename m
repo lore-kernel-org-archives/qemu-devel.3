@@ -4,53 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ED8FD6B087
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD20D6B07A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUky-0004zi-Nq; Thu, 29 Jan 2026 11:20:33 -0500
+	id 1vlUqN-0000tZ-Mk; Thu, 29 Jan 2026 11:26:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vlUkr-0004uc-CY
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:20:25 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vlUqL-0000rH-AK
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:26:05 -0500
+Received: from p-west2-cluster6-host4-snip4-10.eps.apple.com ([57.103.70.23]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vlUkm-0000ee-PD
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:20:24 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8DC805969F0;
- Thu, 29 Jan 2026 17:20:18 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id dg_F6dMlAJcJ; Thu, 29 Jan 2026 17:20:16 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 775D7596EC6; Thu, 29 Jan 2026 17:20:16 +0100 (CET)
-Message-ID: <cdfdebe662128ef4193c9609d75ccc1db7393b41.1769703287.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1769703287.git.balaton@eik.bme.hu>
-References: <cover.1769703287.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 4/4] memory: Remove memory_region_init_ram_nomigrate()
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vlUqH-0001Ym-1W
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:26:04 -0500
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPS id
+ AC2F21802865; Thu, 29 Jan 2026 16:25:56 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1769703958; x=1772295958;
+ bh=u7JR/QEHfBc0afNOBZpHjuOgKsOQYt/dW6wfv1v0bBU=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=O9R0TUpkyVPEpO11VvqGmhHk5SwINbJmGqGvipHPldJ+wloAffnLmu8kpseLWZAurswLyWdgWPYrA1TPP7Gvj/Q46gdLuPlkjHUecEGU4RnRdxKExliYv6XSdTEz+VvohAJ8aQIYyrahIplMhwlWbvvdQb/Nt57QKumJZm0TCrgTcASH4sy1wSBUMMcTfBMqhVSTWMd2XKjK6X4l48Mok1swNFZVmMhtoDnQX2t6Z5vZqs/AEKV/Iw9ZOusY+a+8bgSa044EJ4oUVI+hhvzi72CzBTlU5WyezXxCsDsfh9NHxVmfuIjateUZaiY01sQ8xk5PiJZU5JKZWurFHLkiLg==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-11 (Postfix) with ESMTPSA id
+ 2616C1800104; Thu, 29 Jan 2026 16:25:51 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Subject: Re: [PATCH v18 20/22] target/arm: whpx: instantiate GIC early
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <CAFEAcA9TwmftmcnxbWMoeAfuV6LD9pPv1hVXiAOr56UKUD+z+A@mail.gmail.com>
+Date: Thu, 29 Jan 2026 17:25:40 +0100
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, qemu-arm@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>,
+ =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Thu, 29 Jan 2026 17:20:16 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Alexander Graf <agraf@csgraf.de>, Eduardo Habkost <eduardo@habkost.net>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <87D4EF8E-4F4C-42B2-947F-FCF474C4B4BD@unpredictable.fr>
+References: <20260127182805.73212-1-mohamed@unpredictable.fr>
+ <20260127182805.73212-21-mohamed@unpredictable.fr>
+ <CAFEAcA9TwmftmcnxbWMoeAfuV6LD9pPv1hVXiAOr56UKUD+z+A@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-Authority-Info-Out: v=2.4 cv=GJkF0+NK c=1 sm=1 tr=0 ts=697b8a16
+ cx=c_apl:c_apl_out:c_pps a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=nuPN9-Hf8ev9G2Z7EDEA:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDExNSBTYWx0ZWRfX606TjfPenkpm
+ /0d5Y/7U08J3pX2Mwl+nr8xpveCJNTacPQUrGoVpd8dftHR26UZgSoaLkWwJVkqKB+0BVPgnmtd
+ 94E6S1NB/BRCpKq7V2MCKBixYmZLviPq7MpBOqw2b+IAWUPFme07Qbtg0uzPuQo02/hGM1B/h8Z
+ gAbBVs2iC6Kt+6QNXBrBI+Ps30B8ICcwL8y47cQYl1IVNXdit0hLbjnPfk1df1ZlAycDdHS/rSf
+ v/DT5Sksv6T3pDyu2ODdJH7lT3ijdkgRjpiQvDjaQyd9u6AQsWYZLBD5dAf4NsL8v5lK0iu5IOQ
+ u+kQlJIFbAKSiIwOfaYxWXPb2smBu4/fphaj+eys4Gel1K8kueATlRNeRkJsto=
+X-Proofpoint-GUID: 0lzokR_w8rWbuivC2niLBbjucmGFeQqU
+X-Proofpoint-ORIG-GUID: 0lzokR_w8rWbuivC2niLBbjucmGFeQqU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-29_02,2026-01-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ adultscore=0 phishscore=0 suspectscore=0 malwarescore=0 mlxlogscore=841
+ bulkscore=0 mlxscore=0 clxscore=1030 lowpriorityscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601290115
+X-JNJ: AAAAAAAB5ydCaMsz0wwLZdQI515UjmpKLlSEOqAdvrOpVivlGpB7INi4V32WZLpOUVxU4SSulFFMm9I9Gtb8+OW/66whKMlO0OiW2HFXM3OXBbtaYfWd7WF1tWH27rW0nzbfbsUVirW0b1B6FS2PzxPyZCh/hAYX2MwroNtBeQeYVlxyiZjtACdDrq7EJniNb/OTfDBW8NpmQKQdVnTn5/QVt3TwpTygguckp1mGysdei2DLadGfWubc3FynkRNdpQ/YOSXUSwDuZrqmUfTh6/bQm17Z8lieDluWAcD0gUBRcOzVkGCXOQ8eioNahQmXIaNbilNdTht2YoEzMJoYI1BD7bkxKpCb1TEQ0A1iNmuEbL8dTYhq4dJPXD/shkjF+076ul2xB5d116GtK0Rj058sUgSqgdBSWCkF/1OJimOF+C094qtpg9aWd6IxqJ5BvhMMm0XhS40rWy7PYVqjrEdQnGF8ILWSQLCx+bdi0gPksONfc3yUOsZcC/Vtyt8h9vpe2iphVZtlrA6mFLBkkCuQOjlErzM2zEiKK7bRYvFtjqN/LWfYkr07PhjD2+ZKNTvpcVSxz1OQONjqXayAz8M+buDP5HoRyC03Km0OBBjYM2tGABlR7hHMz1h0aDdAjq/ILEcA6XHiuPWhl0WoNk6QpaE+1k6sIgRKvqfO529CwlqSTGLkriU/pJ68hlisfvLFleYBaZyeiX5ZkOIIm6HpLEeikTIDPlS6DLQYLAfQKsHsJcKEDpvGjCpbLJANBkWb1ZHgKDvqXw+rcFAxeQ1Xf7hGlEYT02nQxGsD2teOdHihZ8wWIdU+xQNc5XW/1ag7rbqJxmxqXZjy3axu3+3NLQj2rLPw4R+SgSfuViHvYuUJOA+fyOhch5eSZuDTQyZ24g6tZSgZLVc8sA/x9Bm16j0=
+Received-SPF: pass client-ip=57.103.70.23;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,268 +112,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is rarely needed and those cases can use
-memory_region_init_ram_flags_nomigrate() instead which is now the only
-_nomigrate variant left. (Some of these may better be converted to use
-memory_region_init_ram() but I don't know so left them as they are.)
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- docs/devel/memory.rst                         |  8 +++----
- hw/display/tcx.c                              |  5 ++--
- hw/display/vga.c                              |  4 ++--
- hw/sparc/sun4m.c                              | 15 +++++++-----
- hw/sparc64/sun4u.c                            |  9 ++++----
- hw/xtensa/xtfpga.c                            |  4 ++--
- include/system/memory.h                       | 23 -------------------
- .../memory-region-housekeeping.cocci          | 18 +--------------
- system/memory.c                               | 13 ++---------
- 9 files changed, 27 insertions(+), 72 deletions(-)
 
-diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
-index 0bb5acab21..9083b18f08 100644
---- a/docs/devel/memory.rst
-+++ b/docs/devel/memory.rst
-@@ -110,11 +110,9 @@ migrated:
- 
- For most devices and boards this is the correct thing. If you
- have a special case where you need to manage the migration of
--the backing memory yourself, you can call the functions:
--
--- memory_region_init_ram_nomigrate()
--
--which only initialize the MemoryRegion and leave handling
-+the backing memory yourself, you can call the function
-+memory_region_init_ram_flags_nomigrate()
-+which only initializes the MemoryRegion and leaves handling
- migration to the caller.
- 
- The functions:
-diff --git a/hw/display/tcx.c b/hw/display/tcx.c
-index 16114b9bb8..0ff73f823a 100644
---- a/hw/display/tcx.c
-+++ b/hw/display/tcx.c
-@@ -815,8 +815,9 @@ static void tcx_realizefn(DeviceState *dev, Error **errp)
-     uint8_t *vram_base;
-     char *fcode_filename;
- 
--    memory_region_init_ram_nomigrate(&s->vram_mem, OBJECT(s), "tcx.vram",
--                           s->vram_size * (1 + 4 + 4), &error_fatal);
-+    memory_region_init_ram_flags_nomigrate(&s->vram_mem, OBJECT(s), "tcx.vram",
-+                                           s->vram_size * (1 + 4 + 4), 0,
-+                                           &error_fatal);
-     vmstate_register_ram_global(&s->vram_mem);
-     memory_region_set_log(&s->vram_mem, true, DIRTY_MEMORY_VGA);
-     vram_base = memory_region_get_ram_ptr(&s->vram_mem);
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 59a65cbbff..ee7d97b5c2 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -2235,8 +2235,8 @@ bool vga_common_init(VGACommonState *s, Object *obj, Error **errp)
-         return false;
-     }
- 
--    memory_region_init_ram_nomigrate(&s->vram, obj, "vga.vram", s->vram_size,
--                                     &local_err);
-+    memory_region_init_ram_flags_nomigrate(&s->vram, obj, "vga.vram",
-+                                           s->vram_size, 0, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-         return false;
-diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-index 0c0d658d30..66a21ae86c 100644
---- a/hw/sparc/sun4m.c
-+++ b/hw/sparc/sun4m.c
-@@ -587,8 +587,10 @@ static void idreg_realize(DeviceState *ds, Error **errp)
-     IDRegState *s = MACIO_ID_REGISTER(ds);
-     SysBusDevice *dev = SYS_BUS_DEVICE(ds);
- 
--    if (!memory_region_init_ram_nomigrate(&s->mem, OBJECT(ds), "sun4m.idreg",
--                                          sizeof(idreg_data), errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(&s->mem, OBJECT(ds),
-+                                                "sun4m.idreg",
-+                                                sizeof(idreg_data),
-+                                                0, errp)) {
-         return;
-     }
- 
-@@ -638,8 +640,8 @@ static void afx_realize(DeviceState *ds, Error **errp)
-     AFXState *s = TCX_AFX(ds);
-     SysBusDevice *dev = SYS_BUS_DEVICE(ds);
- 
--    if (!memory_region_init_ram_nomigrate(&s->mem, OBJECT(ds), "sun4m.afx",
--                                          4, errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(&s->mem, OBJECT(ds),
-+                                                "sun4m.afx", 4, 0, errp)) {
-         return;
-     }
- 
-@@ -719,8 +721,9 @@ static void prom_realize(DeviceState *ds, Error **errp)
-     PROMState *s = OPENPROM(ds);
-     SysBusDevice *dev = SYS_BUS_DEVICE(ds);
- 
--    if (!memory_region_init_ram_nomigrate(&s->prom, OBJECT(ds), "sun4m.prom",
--                                          PROM_SIZE_MAX, errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(&s->prom, OBJECT(ds),
-+                                                "sun4m.prom", PROM_SIZE_MAX, 0,
-+                                                errp)) {
-         return;
-     }
- 
-diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
-index 5d7787fc1a..0da0eef74c 100644
---- a/hw/sparc64/sun4u.c
-+++ b/hw/sparc64/sun4u.c
-@@ -455,8 +455,9 @@ static void prom_realize(DeviceState *ds, Error **errp)
-     PROMState *s = OPENPROM(ds);
-     SysBusDevice *dev = SYS_BUS_DEVICE(ds);
- 
--    if (!memory_region_init_ram_nomigrate(&s->prom, OBJECT(ds), "sun4u.prom",
--                                          PROM_SIZE_MAX, errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(&s->prom, OBJECT(ds),
-+                                                "sun4u.prom", PROM_SIZE_MAX, 0,
-+                                                errp)) {
-         return;
-     }
- 
-@@ -498,8 +499,8 @@ static void ram_realize(DeviceState *dev, Error **errp)
-     RamDevice *d = SUN4U_RAM(dev);
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
- 
--    memory_region_init_ram_nomigrate(&d->ram, OBJECT(d), "sun4u.ram", d->size,
--                           &error_fatal);
-+    memory_region_init_ram_flags_nomigrate(&d->ram, OBJECT(d), "sun4u.ram",
-+                                           d->size, 0, &error_fatal);
-     vmstate_register_ram_global(&d->ram);
-     sysbus_init_mmio(sbd, &d->ram);
- }
-diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-index d427d68e50..b025cc53a8 100644
---- a/hw/xtensa/xtfpga.c
-+++ b/hw/xtensa/xtfpga.c
-@@ -163,8 +163,8 @@ static void xtfpga_net_init(MemoryRegion *address_space,
-             sysbus_mmio_get_region(s, 1));
- 
-     ram = g_malloc(sizeof(*ram));
--    memory_region_init_ram_nomigrate(ram, OBJECT(s), "open_eth.ram", 16 * KiB,
--                           &error_fatal);
-+    memory_region_init_ram_flags_nomigrate(ram, OBJECT(s), "open_eth.ram",
-+                                           16 * KiB, 0, &error_fatal);
-     vmstate_register_ram_global(ram);
-     memory_region_add_subregion(address_space, buffers, ram);
- }
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 7117699b10..d4793a08a7 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -1374,29 +1374,6 @@ void memory_region_init_io(MemoryRegion *mr,
-                            const char *name,
-                            uint64_t size);
- 
--/**
-- * memory_region_init_ram_nomigrate:  Initialize RAM memory region.  Accesses
-- *                                    into the region will modify memory
-- *                                    directly.
-- *
-- * @mr: the #MemoryRegion to be initialized.
-- * @owner: the object that tracks the region's reference count
-- * @name: Region name, becomes part of RAMBlock name used in migration stream
-- *        must be unique within any device
-- * @size: size of the region.
-- * @errp: pointer to Error*, to store an error if it happens.
-- *
-- * Note that this function does not do anything to cause the data in the
-- * RAM memory region to be migrated; that is the responsibility of the caller.
-- *
-- * Return: true on success, else false setting @errp with error.
-- */
--bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
--                                      Object *owner,
--                                      const char *name,
--                                      uint64_t size,
--                                      Error **errp);
--
- /**
-  * memory_region_init_ram_flags_nomigrate:  Initialize RAM memory region.
-  *                                          Accesses into the region will
-diff --git a/scripts/coccinelle/memory-region-housekeeping.cocci b/scripts/coccinelle/memory-region-housekeeping.cocci
-index 8ec9a06c18..40a8f7beb1 100644
---- a/scripts/coccinelle/memory-region-housekeeping.cocci
-+++ b/scripts/coccinelle/memory-region-housekeeping.cocci
-@@ -26,15 +26,9 @@ symbol true;
- expression E1, E2, E3, E4, E5;
- position p;
- @@
--(
-   memory_region_init_ram@p(E1, E2, E3, E4, E5);
-   ...
-   memory_region_set_readonly(E1, true);
--|
--  memory_region_init_ram_nomigrate@p(E1, E2, E3, E4, E5);
--  ...
--  memory_region_set_readonly(E1, true);
--)
- @script:python@
- p << possible_memory_region_init_rom.p;
- @@
-@@ -52,7 +46,7 @@ expression ALIAS, E5, E6, E7, E8;
- -  memory_region_set_readonly(ALIAS, true);
- 
- 
--// Replace by-hand memory_region_init_ram_nomigrate/vmstate_register_ram
-+// Replace by-hand memory_region_init_ram/vmstate_register_ram
- // code sequences with use of the new memory_region_init_ram function.
- // Similarly for the _rom and _rom_device functions.
- // We don't try to replace sequences with a non-NULL owner, because
-@@ -64,16 +58,6 @@ expression NAME;
- expression SIZE;
- expression ERRP;
- @@
---memory_region_init_ram_nomigrate(MR, NULL, NAME, SIZE, ERRP);
--+memory_region_init_ram(MR, NULL, NAME, SIZE, ERRP);
-- ...
---vmstate_register_ram_global(MR);
--@@
--expression MR;
--expression NAME;
--expression SIZE;
--expression ERRP;
--@@
- expression MR;
- expression OPS;
- expression OPAQUE;
-diff --git a/system/memory.c b/system/memory.c
-index b2b00ba7b4..921e96554b 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1572,16 +1572,6 @@ void memory_region_init_io(MemoryRegion *mr,
-     mr->terminates = true;
- }
- 
--bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
--                                      Object *owner,
--                                      const char *name,
--                                      uint64_t size,
--                                      Error **errp)
--{
--    return memory_region_init_ram_flags_nomigrate(mr, owner, name,
--                                                  size, 0, errp);
--}
--
- bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
-                                             Object *owner,
-                                             const char *name,
-@@ -3690,7 +3680,8 @@ bool memory_region_init_ram(MemoryRegion *mr,
- {
-     DeviceState *owner_dev;
- 
--    if (!memory_region_init_ram_nomigrate(mr, owner, name, size, errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name,
-+                                                size, 0, errp)) {
-         return false;
-     }
-     /* This will assert if owner is neither NULL nor a DeviceState.
--- 
-2.41.3
+> On 29. Jan 2026, at 16:31, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> So what happens if the user asked for a GICv2 ?
+>=20
+Hi,
 
+If the user asked for a GICv2 then they=E2=80=99re going to get an error =
+in
+finalize_gic_version_do (in hw/arm/virt.c), with it being enforced =
+there.
+
+> Can we have a comment to explain the ordering requirement
+> mentioned in the commit message that is forcing this to be
+> here rather than in the GIC code ?
+Will add in the next revision.=
 
