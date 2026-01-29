@@ -4,112 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0033D73E80
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 18:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5416ED73E83
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 18:53:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlWhJ-0006P4-JI; Thu, 29 Jan 2026 13:24:53 -0500
+	id 1vlX8B-0003Mo-3d; Thu, 29 Jan 2026 13:52:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vlWh4-0006NV-QX; Thu, 29 Jan 2026 13:24:42 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vlWh1-0001hr-2e; Thu, 29 Jan 2026 13:24:37 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TEuLvl012093;
- Thu, 29 Jan 2026 18:24:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=rkjH2D
- h3QNP5SwyBnKPgM8uFrP/jSxPOcr1fke2asdk=; b=iqHyQ6vw7SS84egJ5qisNJ
- PAepGRVirGzhNDRudv9YERseYtF+Kqf60q+yeLp+lpQLaXb/jakMILnvC/nGn23N
- PSLS1HmqqWiyJ+pwAaSvFXeDdUboY0plYF+uS0r1hiWwvevKDz2xUm/6mfql8SWo
- xIFASw2/RSZ9gE2y/Ci7xfCUL9vAhd0+x4SM1Pnl04DnuHS9vzvMsmZcZQCw0Zdr
- KwdoffV747+1WvSK0rM/z/iCCZG8UflkNFlUknxTvHYGShJ5gxzPq2F9mc2xSJ/l
- EWKq1czkpal7FCNZ4h+YuVgef3hSaofV9aQu2RRQ9gd7lRQHQ3/syezf+++OgyNQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnr6fbrv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Jan 2026 18:24:29 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60TGk6Mh026333;
- Thu, 29 Jan 2026 18:24:28 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw9wkk092-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Jan 2026 18:24:28 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60TIOSce60359152
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 Jan 2026 18:24:28 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 13D7158052;
- Thu, 29 Jan 2026 18:24:28 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7EB5C58050;
- Thu, 29 Jan 2026 18:24:27 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 29 Jan 2026 18:24:27 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vlX89-0003Me-Hh
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 13:52:37 -0500
+Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vlX87-0007ch-TR
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 13:52:37 -0500
+Received: by mail-pl1-x641.google.com with SMTP id
+ d9443c01a7336-2a12ebe4b74so15136785ad.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 10:52:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769712754; x=1770317554; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=k9xokgEHTGXuLThA41QrC5+LZbGrmdLtOgUubz7/vYI=;
+ b=e9t7AR5ej325O0qWgEMev0DD36N4xWjHzwXqWhGo2QTcQBpE1k5NZiYiHDPSyj5rj9
+ R4fde3ROm12QLZx7NCfqXFN/+X8MpqGWYSmIW1nkOnnBjCKqMoTpLaYIGYiqkbFnBKyk
+ UgKz/yzdx0RT1dF3CQsfDkPEhfznpAUYfFT35yd5ZZuITe27kMTX4eKOg+2hdNInoC1b
+ Hx2b8QkKbAWQFY/zg4obpULg2H3Bk9bKJFZVmjQLHSU3gQwyEu5EK2l0OyePiNbT8RiU
+ x58YIG3qbJf9IDAJYYlPSy6B2hOLDRyu5+B0bDc7+CH5YjMekU+FGYXGF3aiK/28nmMG
+ auZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769712754; x=1770317554;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=k9xokgEHTGXuLThA41QrC5+LZbGrmdLtOgUubz7/vYI=;
+ b=J3Kuzu0MEIL1k7FiMF83LfwSlA5Jlvt2906xLJ8XqhRt8vBmqNGPicZiqeVTVeIMx4
+ 2g8ebWpQ12zvGpQhF5uWNzfiL5B2rOSpXN1aKuv/rW27aI++o0Vl42UDQ+hfGt7QlHiH
+ PL9kiY5OYN89rj1yFpWs25dTk7rQxIWj05+nRuI3rISy6pkMHwc/Z8l7UleITgiRlMhv
+ UPOS6+FwfHkBWCJkEXGYJElIxDJmupHm09sOQAiJ1D6HlFdINATP0vVuN1Gw3ksdCaTL
+ j4RzorJ2JOv+ECK8EQmuUCJYODToiAsFyMlMigUAm1svlIyiO254o7Ha6bv5ckzupY2S
+ eLSQ==
+X-Gm-Message-State: AOJu0YzNSeJjloxQ6hj7CD9Hd+uRH+GX4wFneXwuflLM3MpXTpEZGiDk
+ sdBspofGBQafFuXUWDJmHVwI/gMDveUrVwW1Mh6BAV9tW681bcIDFFLtJC9MHyR5vZk=
+X-Gm-Gg: AZuq6aLsA/wotrGy0w7f5yElJI9z1+uivTpA07E+tqgD9jJNXFyPrz3PMnWaC7vx7+m
+ o3uUFeFOKEPYTpG/WR4YGwcEMymMHAECo4e3jzLHyyilZMzDFEqC1cJpWmBP2GmIG73N9SoEad9
+ 2DNZ2gO488v90wE3KIhadxwAALCqsPEAUqAXqt12TGc4+57dk+/ouHhCX5MjgX0OTSc8oTG6Xmt
+ tT90m2DA5LC0Xs6W9Ay9f8nhqPdoDVW7RoqRPycALPEIIXl5kzD9UsJuiPIEaBhAlJFOQy2J9GS
+ AK4v6A3Af4WYkaE+NhdehFsaMEli+p6y1KBgW7x7AgqbnX2CW8UiXjmBOsUx52b07kNsyC4Y4Iy
+ nkDBkY4YNKnj5r4nmogVhxxKg6Aj1frTzCQ5/kujQXZg0gFpWqMT6PPamn8GXYaoWyoXDoRIXHG
+ JHojboFt/ddR0egjN5ZuwPejKQrgeBlfBVoa4ltHR/kuFgtu0fWytDnVqDz7L77cK56NE=
+X-Received: by 2002:a17:90b:3dcb:b0:340:bde5:c9e8 with SMTP id
+ 98e67ed59e1d1-3543b39c9b4mr385349a91.22.1769712754068; 
+ Thu, 29 Jan 2026 10:52:34 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3540f3f0872sm5874149a91.16.2026.01.29.10.52.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Jan 2026 10:52:33 -0800 (PST)
+Message-ID: <a25e4042-0df8-4e46-9e74-3b4c55f90778@linaro.org>
+Date: Thu, 29 Jan 2026 10:52:32 -0800
 MIME-Version: 1.0
-Date: Thu, 29 Jan 2026 19:24:27 +0100
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@kernel.org>,
- qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 3/4] target/s390x: Implement DIVIDE TO INTEGER
-In-Reply-To: <e4e159f1-63f9-4486-9dcc-710675018fb1@linaro.org>
-References: <20260127153736.62730-1-iii@linux.ibm.com>
- <20260127153736.62730-4-iii@linux.ibm.com>
- <66027136-d91b-478c-becc-0aa41b40c445@linaro.org>
- <17cd88ba-52b1-46c4-9280-977bd50ac060@linux.ibm.com>
- <e4e159f1-63f9-4486-9dcc-710675018fb1@linaro.org>
-Message-ID: <ac9e64f4dcf1184b1e647da8c5fbaeac@linux.ibm.com>
-X-Sender: iii@linux.ibm.com
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDEzMCBTYWx0ZWRfX4c2Bm9yji6/4
- cef0b7MoNTIxirCXBG+a6Fe/vxTWnbMA+VTvmfg7IlT+0ZyI3XqSjfqdDRErRaBImzii3jo2o93
- zzNTCFVOXPH2jheiPCOmocbH21GDhgOOldsvcwsVN4hmYK2aZsWz5Kbne5eB11GBkhCCOE6Dofh
- 6HZW0824QQ4rm2tkyAL4PNJuvCS6h0Qp0yp3+vcgfPiVFmI5deJtqifAptBVGkIXWNhC9NjEUqj
- mbESluok2gQENeGBk4+nnZERxVuOAs+H6AL1fCBq7TxRmsoGumCXOUb1Uio7gyorgvuMjgS/DGd
- 5PNtXJE4v/mTl9g/Vg3mQsfevs4rWHvtCbwXWGN27dn5BwJtFyNC5hnyUSWg8cS7i3u89BtUVfL
- WvSKQkzOmIDsGC/aVbQ5l/lW4u7gbje9WwmkwZeuaEDwIJh8D77oRuobBafnah28c1my8yYnuHg
- Yh7p+gTx1x2Ns2JgoBQ==
-X-Proofpoint-GUID: 4Wa8x-SnJWSJw0HqpyHO2SupaTFScHPU
-X-Proofpoint-ORIG-GUID: 4Wa8x-SnJWSJw0HqpyHO2SupaTFScHPU
-X-Authority-Analysis: v=2.4 cv=X+Vf6WTe c=1 sm=1 tr=0 ts=697ba5dd cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=DWnexSkmKnlDbcgnN4sA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-29_02,2026-01-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 impostorscore=0 lowpriorityscore=0
- clxscore=1015 spamscore=0 adultscore=0 malwarescore=0 bulkscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
- definitions=main-2601290130
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/data/acpi: disassemble-aml: rename and change
+ interpreter line
+Content-Language: en-US
+To: "Michael S. Tsirkin" <mst@redhat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+References: <20260129164004.222-1-mohamed@unpredictable.fr>
+ <20260129125744-mutt-send-email-mst@kernel.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260129125744-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x641.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,68 +140,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-01-28 21:38, Richard Henderson wrote:
-> On 1/29/26 00:19, Ilya Leoshkevich wrote:
->> With some testcases I hit this condition in 
->> parts_round_to_int_normal():
->> 
->>      if (a->exp >= frac_size) {
->>          /* All integral */
->>          return false;
->>      }
->> 
->> which makes it a no-op.
->> 
->> I think the code assumes that FloatParts have just been unpacked and 
->> all low fraction bits are zero, which is not the case for quotient 
->> here.
->> 
->>>> +        float_exception_flags = saved_flags;
->>>> +        parts_s390_precision_round_normal(&n128, fmt);
->>> 
->>> parts_round_to_int_normal already takes a rounding mode and 
->>> frac_size.
->>> It also returns whether or not the rounding was exact.
->>> This appears to be trying to reinvent the wheel.
->> 
->> 
->> Apparently I use this to paper over the above issue, which is not 
->> great.
->> 
->> I guess improving parts_round_to_int() to work with non-zero low 
->> fraction bits would be better.
->> 
->> What do you think?
+On 1/29/26 9:58 AM, Michael S. Tsirkin wrote:
+> On Thu, Jan 29, 2026 at 05:40:04PM +0100, Mohamed Mediouni wrote:
+>> /usr/bin/bash isn't guaranteed to be present. Switch
+>> to /usr/bin/env bash.
+>>
+>> Rename disassemle to disassemble in the same commit.
+>>
+>> Adapt the correponding message in rebuild-expected-aml.
+>>
+>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > 
-> Yes indeed.  I think (a->exp >= N) should be sufficient?
+> /bin/bash then - that's in the posix standard I think.
+>
 
-Seems like this does not work for really large quotients, because we 
-still need to trim the fraction bits.
-So I'm currently evaluating the following, which looks promising so far:
+Using /usr/bin/env bash is a pretty "standard" and good practice.
+https://stackoverflow.com/questions/21612980/why-is-usr-bin-env-bash-superior-to-bin-bash
 
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -1118,11 +1118,6 @@ static bool 
-partsN(round_to_int_normal)(FloatPartsN *a, FloatRoundMode rmode,
-          return true;
-      }
-
--    if (a->exp >= frac_size) {
--        /* All integral */
--        return false;
--    }
--
-      if (N > 64 && a->exp < N - 64) {
-          /*
-           * Rounding is not in the low word -- shift lsb to bit 2,
-@@ -1133,7 +1128,7 @@ static bool 
-partsN(round_to_int_normal)(FloatPartsN *a, FloatRoundMode rmode,
-          frac_lsb = 1 << 2;
-      } else {
-          shift_adj = 0;
--        frac_lsb = DECOMPOSED_IMPLICIT_BIT >> (a->exp & 63);
-+        frac_lsb = DECOMPOSED_IMPLICIT_BIT >> MIN(a->exp, frac_size);
-      }
-
-> r~
+Regards,
+Pierrick
 
