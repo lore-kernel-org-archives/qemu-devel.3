@@ -4,69 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F11E9D46C16
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 02:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148D4D46C01
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 02:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlI0y-0007ih-8E; Wed, 28 Jan 2026 21:44:12 -0500
+	id 1vlICs-000538-Ve; Wed, 28 Jan 2026 21:56:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1vlI0s-0007hK-Pv
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 21:44:06 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1vlI0o-0005Ez-Rw
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 21:44:05 -0500
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8BxHMNiyXppgcYNAA--.44791S3;
- Thu, 29 Jan 2026 10:43:46 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJBxSeBeyXppyqc4AA--.43323S3;
- Thu, 29 Jan 2026 10:43:45 +0800 (CST)
-Subject: Re: [PATCH v2 6/7] target/loongarch: Add sc.q instructions
-To: Jiajie Chen <c@jia.je>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, git@xen0n.name, wangliupu@loongson.cn
-References: <20251119122822.1513788-1-c@jia.je>
- <20251119123101.1542976-4-c@jia.je> <20251119123101.1542976-6-c@jia.je>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <f6b40286-2973-ab86-0ff6-e09ec3f02f75@loongson.cn>
-Date: Thu, 29 Jan 2026 10:44:50 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vlICq-00051x-Nl
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 21:56:28 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vlICo-0001Wq-RS
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 21:56:28 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2a7bceb6cd0so3266385ad.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 18:56:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769655385; x=1770260185; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GGYkGU1gPhAMfIV+E4TcuEFffIH7PFNQivskZlWyVo8=;
+ b=JD3wiZYtoteVYx9o88lY6ywXa4wEs83sJKyExo1gRX3KTRtAwB9wMqQmAg6iqY0j95
+ DlH/25O3tbNAHsKfEE2iJ3x1V5/VFq8fn694/Q/bBVsOInEJL9Oi3x4a8HOnYnGDVlm6
+ sajUkLnTcH57CMUL+1mQiUUyy5sGDJViN6d5Tm/JwvjlnztA2/AE2J/YxaoeeRZeZeF5
+ GzHsNGBrEbC4l2TSfTm+IRjWymwDGFYHFArEnvxe0Ncw4P3RQhi4QHBN0+lapwGj3vIH
+ 28/csdHqNOaWANZ+rwF9Avf6akFnXJvkTTql7rxYuiIiagUjgMaEdD+K5eI2mRbfZFJq
+ ui0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769655385; x=1770260185;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GGYkGU1gPhAMfIV+E4TcuEFffIH7PFNQivskZlWyVo8=;
+ b=ZJjUKtu6sWAZAu2zzKFV+4z4NYLyf0O1DqXBjQQsnVerwhZo/lVOjY5p9R7S2Xqviy
+ wS2YoNARHRkxnfH964GKFG2wV1hYA6XzkdhkYtF4iMOO3ehIh+BrMFjpz4BwbLVzZj/2
+ bCyFMc96WAg1fHCPayGyluhr9gle2YzN2SW1vuucoWGO8UdOEr5bUeM0QQqoNMIryhF/
+ T9kmcGQphOOvmIKVAfj91rTTUnx/8TmRTTN4UhggHP7CPFeHOlVh4RmYK66EvkvngLHf
+ S7F/81XD94G3lpGPU5+NOqllAjlmuYKFBQbVGyH8+8P/5AT/taaiMi3A+gQgJtlj+hjZ
+ IoNw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWOucu9djCjcrDPU6ni0EN7whbeL6cpn7/K3tzieqUkRww3q6iZpwo9fiZPTWLvIi0HlehCLKOvYpOp@nongnu.org
+X-Gm-Message-State: AOJu0YwRH69WpdLIPFZLWO2WvuGpAWqo0cmeLnYU2Gl4JRughZi3oY54
+ Wtczg/GBQ0rGi+8gHond436jSDzJcZMseLbBKIuKP9S+Hk74bL6wohcy1m+IFzIoDIM=
+X-Gm-Gg: AZuq6aLfZYoe0eKjb/6DlSIYngtU85/tONAF/d/YW+Rq7O68L3rwIe+4R6A60CM3IzS
+ u+uM1AKe+AbcgkuXlHeyCg1nvUZz5dryeVKXNPCYQ8Ob5DcULsSLtFBrNkQ1QQ5wOLiqjp4htGk
+ M4sqPEfjtWHkX/dOR63oUwzd/4mnxk7EAJnTm72O8f5IHVIsxWVmZvx8Ba3Ic2pY/gAzqwb1CSd
+ MMfRG2SmZoBFNxx8bHS4Z3QSAo/QMl3yjnlDNsz1SykVvZaP2hlK74F5KB57wUWsh+9aJx6+Jnw
+ r1Xib43oz04GeHq1k3U9XNoZunLkmt2ge55Bumgfa/HKrsfkpETSTSUQ93sxOrkreZS4xK9FP53
+ aWY0HnoWLpR61dYXw8VsdOjyPSkFnM6Z+EYj6avlZlCNGxDPOBNXQfjUHo1OiDNG9fbJ2vUAduA
+ SSwmPgut4DyQX7cnGP3wiksdpBKTWey6O7nNKYBEjDs7uP+SxXr1h1zp0G
+X-Received: by 2002:a17:903:37d0:b0:29f:2f40:76c4 with SMTP id
+ d9443c01a7336-2a870dbc9femr70238125ad.34.1769655384897; 
+ Wed, 28 Jan 2026 18:56:24 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82379bfd8desm3858903b3a.33.2026.01.28.18.56.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 28 Jan 2026 18:56:24 -0800 (PST)
+Message-ID: <e85a01a2-faf3-406e-a260-ce8a832ed9cb@linaro.org>
+Date: Wed, 28 Jan 2026 18:56:24 -0800
 MIME-Version: 1.0
-In-Reply-To: <20251119123101.1542976-6-c@jia.je>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 06/20] linux-user: add plugin API to filter syscalls
 Content-Language: en-US
-X-CM-TRANSID: qMiowJBxSeBeyXppyqc4AA--.43323S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3ur1kGr1DWFykWw43Aw4rtFc_yoWDZr1xpr
- 1jkry7WrWUJrZ3A3s7KayY9r1DZr4xC3y29wnIkrWvkF4UJFnrXF1kK39I9F4UZa1DZrW0
- vFs3urWqgFW5JagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-e5UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-1.585, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Ziyang Zhang <functioner@sjtu.edu.cn>, Mingyuan Xia <xiamy@ultrarisc.com>
+References: <20260129013134.3956938-1-pierrick.bouvier@linaro.org>
+ <20260129013134.3956938-7-pierrick.bouvier@linaro.org>
+ <a44ba710-25ca-44c2-bcdb-db917efaaaeb@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <a44ba710-25ca-44c2-bcdb-db917efaaaeb@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,278 +140,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CC wangliupu for sc.q reviwe
-ÔÚ 2025/11/19 ÏÂÎç8:30, Jiajie Chen Ð´µÀ:
-> Add the sc.q instruction in LoongArch v1.1, guarded by CPUCFG2.SCQ. It
-> is implemented by reading 128bit data (llval + llval_high) in ll.d when
-> aligned to 16B boundary, and cmpxchg 128bit in sc.q. If ld.d
-> matches the higher part of the 128bit, its data is taken from
-> llval_high.
->
-> Expected assembly sequence:
->
-> ll.d lo, base, 0
-> ld.d hi, base, 8
-> sc.q lo, hi, base
->
-> Signed-off-by: Jiajie Chen <c@jia.je>
-> ---
->   target/loongarch/cpu.h                        |  3 +
->   target/loongarch/disas.c                      |  1 +
->   target/loongarch/insns.decode                 |  1 +
->   .../tcg/insn_trans/trans_atomic.c.inc         | 82 +++++++++++++++++++
->   .../tcg/insn_trans/trans_memory.c.inc         | 22 +++++
->   target/loongarch/tcg/translate.c              |  6 +-
->   target/loongarch/translate.h                  |  1 +
->   7 files changed, 115 insertions(+), 1 deletion(-)
->
-> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-> index 5cab02ad6f..0a89c06b01 100644
-> --- a/target/loongarch/cpu.h
-> +++ b/target/loongarch/cpu.h
-> @@ -142,6 +142,7 @@ FIELD(CPUCFG2, FRECIPE, 25, 1)
->   FIELD(CPUCFG2, LAM_BH, 27, 1)
->   FIELD(CPUCFG2, LAMCAS, 28, 1)
->   FIELD(CPUCFG2, LLACQ_SCREL, 29, 1)
-> +FIELD(CPUCFG2, SCQ, 30, 1)
->   
->   /* cpucfg[3] bits */
->   FIELD(CPUCFG3, CCDMA, 0, 1)
-> @@ -377,6 +378,8 @@ typedef struct CPUArchState {
->       uint32_t fcsr0_mask;
->       uint64_t lladdr; /* LL virtual address compared against SC */
->       uint64_t llval;
-> +    uint64_t llval_high; /* For 128-bit atomic SC.Q */
-> +    uint64_t llbit_scq; /* Potential LL.D+LD.D+SC.Q sequence in effect */
->   #endif
->   #ifndef CONFIG_USER_ONLY
->   #ifdef CONFIG_TCG
-> diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
-> index 3164fade9b..3249ab7ac6 100644
-> --- a/target/loongarch/disas.c
-> +++ b/target/loongarch/disas.c
-> @@ -584,6 +584,7 @@ INSN(fldx_s,       frr)
->   INSN(fldx_d,       frr)
->   INSN(fstx_s,       frr)
->   INSN(fstx_d,       frr)
-> +INSN(sc_q,         rrr)
->   INSN(llacq_w,      rr_i)
->   INSN(screl_w,      rr_i)
->   INSN(llacq_d,      rr_i)
-> diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
-> index 7898f5f719..3089d42044 100644
-> --- a/target/loongarch/insns.decode
-> +++ b/target/loongarch/insns.decode
-> @@ -262,6 +262,7 @@ ll_w            0010 0000 .............. ..... .....     @rr_i14s2
->   sc_w            0010 0001 .............. ..... .....     @rr_i14s2
->   ll_d            0010 0010 .............. ..... .....     @rr_i14s2
->   sc_d            0010 0011 .............. ..... .....     @rr_i14s2
-> +sc_q            0011 10000101 01110 ..... ..... .....    @rrr
->   llacq_w         0011 10000101 01111 00000 ..... .....    @rr_i0
->   screl_w         0011 10000101 01111 00001 ..... .....    @rr_i0
->   llacq_d         0011 10000101 01111 00010 ..... .....    @rr_i0
-> diff --git a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-> index c9a6dcfdeb..565daa7219 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-> @@ -6,14 +6,48 @@
->   static bool gen_ll(DisasContext *ctx, arg_rr_i *a, MemOp mop, bool acq)
->   {
->       TCGv t1 = tcg_temp_new();
-> +    TCGv t2 = tcg_temp_new();
->       TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
->       TCGv t0 = make_address_i(ctx, src1, a->imm);
-> +    TCGv_i128 t16 = tcg_temp_new_i128();
-> +    TCGv mask = tcg_constant_tl(0xf);
-> +    TCGv one = tcg_constant_tl(1);
-> +    TCGv zero = tcg_constant_tl(0);
-> +    TCGLabel *l1 = gen_new_label();
-> +    TCGLabel *done = gen_new_label();
-> +
-> +    if (avail_SCQ(ctx) && mop == MO_TEUQ) {
-> +        /*
-> +         * The LL.D+LD.D may be paired with SC.Q,
-> +         * load 128-bit if aligned: (t0 & 0xf) == 0
-> +         */
-> +        tcg_gen_and_tl(t1, t0, mask);
-> +        tcg_gen_brcond_tl(TCG_COND_EQ, t1, zero, l1);
-> +        /* fallthrough if not aligned to 16B */
-> +    }
->   
->       tcg_gen_qemu_ld_i64(t1, t0, ctx->mem_idx, mop | MO_ALIGN);
->       tcg_gen_st_tl(t0, tcg_env, offsetof(CPULoongArchState, lladdr));
->       tcg_gen_st_tl(t1, tcg_env, offsetof(CPULoongArchState, llval));
->       gen_set_gpr(a->rd, t1, EXT_NONE);
->   
-> +    if (avail_SCQ(ctx) && mop == MO_TEUQ) {
-> +        tcg_gen_br(done);
-> +
-> +        gen_set_label(l1);
-> +
-> +        /* Load 16B data and save into llval/llval_high */
-> +        tcg_gen_qemu_ld_i128(t16, t0, ctx->mem_idx, MO_128 | MO_ALIGN);
-> +        tcg_gen_st_tl(t0, tcg_env, offsetof(CPULoongArchState, lladdr));
-> +        tcg_gen_extr_i128_i64(t1, t2, t16);
-> +        tcg_gen_st_tl(t1, tcg_env, offsetof(CPULoongArchState, llval));
-> +        tcg_gen_st_tl(t2, tcg_env, offsetof(CPULoongArchState, llval_high));
-> +        tcg_gen_st_tl(one, tcg_env, offsetof(CPULoongArchState, llbit_scq));
-> +        gen_set_gpr(a->rd, t1, EXT_NONE);
-> +
-> +        gen_set_label(done);
-> +    }
-> +
->       if (acq) {
->           tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
->       }
-> @@ -28,6 +62,7 @@ static bool gen_sc(DisasContext *ctx, arg_rr_i *a, MemOp mop, bool rel)
->       TCGv src2 = gpr_src(ctx, a->rd, EXT_NONE);
->       TCGv t0 = tcg_temp_new();
->       TCGv val = tcg_temp_new();
-> +    TCGv zero = tcg_constant_tl(0);
->   
->       TCGLabel *l1 = gen_new_label();
->       TCGLabel *done = gen_new_label();
-> @@ -37,6 +72,11 @@ static bool gen_sc(DisasContext *ctx, arg_rr_i *a, MemOp mop, bool rel)
->       if (rel) {
->           tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
->       }
-> +
-> +    if (avail_SCQ(ctx)) {
-> +        tcg_gen_st_tl(zero, tcg_env, offsetof(CPULoongArchState, llbit_scq));
-> +    }
-> +
->       tcg_gen_brcond_tl(TCG_COND_EQ, t0, cpu_lladdr, l1);
->       tcg_gen_movi_tl(dest, 0);
->       tcg_gen_br(done);
-> @@ -53,6 +93,47 @@ static bool gen_sc(DisasContext *ctx, arg_rr_i *a, MemOp mop, bool rel)
->       return true;
->   }
->   
-> +static bool gen_sc_q(DisasContext *ctx, arg_rrr *a, MemOp mop)
-> +{
-> +    TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
-> +    TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
-> +    TCGv src2 = gpr_src(ctx, a->rd, EXT_NONE);
-> +    TCGv src3 = gpr_src(ctx, a->rk, EXT_NONE);
-> +    TCGv_i128 t16 = tcg_temp_new_i128();
-> +    TCGv_i128 c16 = tcg_temp_new_i128();
-> +    TCGv t1 = tcg_temp_new();
-> +    TCGv t2 = tcg_temp_new();
-> +    TCGv zero = tcg_constant_tl(0);
-> +
-> +    TCGLabel *l1 = gen_new_label();
-> +    TCGLabel *done = gen_new_label();
-> +
-> +    tcg_gen_st_tl(zero, tcg_env, offsetof(CPULoongArchState, llbit_scq));
-> +    tcg_gen_brcond_tl(TCG_COND_EQ, src1, cpu_lladdr, l1);
-> +    tcg_gen_movi_tl(dest, 0);
-> +    tcg_gen_br(done);
-> +
-> +    gen_set_label(l1);
-> +    tcg_gen_concat_i64_i128(t16, src2, src3);
-> +    tcg_gen_concat_i64_i128(c16, cpu_llval,
-> +                            cpu_llval_high);
-> +
-> +    /* generate cmpxchg */
-> +    tcg_gen_atomic_cmpxchg_i128(t16, cpu_lladdr, c16,
-> +                              t16, ctx->mem_idx, mop | MO_ALIGN);
-> +
-> +    /* check if success */
-> +    tcg_gen_extr_i128_i64(t1, t2, t16);
-> +    tcg_gen_xor_i64(t1, t1, cpu_llval);
-> +    tcg_gen_xor_i64(t2, t2, cpu_llval_high);
-> +    tcg_gen_or_i64(t1, t1, t2);
-> +    tcg_gen_setcondi_i64(TCG_COND_EQ, dest, t1, 0);
-> +    gen_set_label(done);
-> +    gen_set_gpr(a->rd, dest, EXT_NONE);
-> +
-> +    return true;
-> +}
-> +
->   static bool gen_cas(DisasContext *ctx, arg_rrr *a,
->                       void (*func)(TCGv, TCGv, TCGv, TCGv, TCGArg, MemOp),
->                       MemOp mop)
-> @@ -98,6 +179,7 @@ TRANS(ll_w, ALL, gen_ll, MO_TESL, false)
->   TRANS(sc_w, ALL, gen_sc, MO_TESL, false)
->   TRANS(ll_d, 64, gen_ll, MO_TEUQ, false)
->   TRANS(sc_d, 64, gen_sc, MO_TEUQ, false)
-> +TRANS(sc_q, 64, gen_sc_q, MO_128)
->   TRANS(llacq_w, LLACQ_SCREL, gen_ll, MO_TESL, true)
->   TRANS(screl_w, LLACQ_SCREL, gen_sc, MO_TESL, true)
->   TRANS(llacq_d, LLACQ_SCREL_64, gen_ll, MO_TEUQ, true)
-> diff --git a/target/loongarch/tcg/insn_trans/trans_memory.c.inc b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-> index 42f4e74012..8b3c1b037c 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_memory.c.inc
-> @@ -7,11 +7,33 @@ static bool gen_load(DisasContext *ctx, arg_rr_i *a, MemOp mop)
->   {
->       TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
->       TCGv addr = gpr_src(ctx, a->rj, EXT_NONE);
-> +    TCGv t1 = tcg_temp_new();
-> +    TCGv mask = tcg_constant_tl(0x8);
-> +    TCGv zero = tcg_constant_tl(0);
-> +    TCGLabel *done = gen_new_label();
-> +    TCGLabel *l1 = gen_new_label();
->   
->       addr = make_address_i(ctx, addr, a->imm);
->   
-> +    if (avail_SCQ(ctx) && mop == MO_TEUQ) {
-> +        /*
-> +         * The LL.D+LD.D may be paired with SC.Q,
-> +         * use llval_high if llbit_scq && (addr == lladdr ^ 0x8)
-> +         */
-> +        tcg_gen_brcond_tl(TCG_COND_EQ, cpu_llbit_scq, zero, l1);
-> +        tcg_gen_xor_tl(t1, addr, mask);
-> +        tcg_gen_brcond_tl(TCG_COND_NE, cpu_lladdr, t1, l1);
-> +        gen_set_gpr(a->rd, cpu_llval_high, EXT_NONE);
-> +        tcg_gen_br(done);
-> +        gen_set_label(l1);
-> +    }
-> +
->       tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, mop);
->       gen_set_gpr(a->rd, dest, EXT_NONE);
-> +
-> +    if (avail_SCQ(ctx) && mop == MO_TEUQ) {
-> +        gen_set_label(done);
-> +    }
->       return true;
->   }
->   
-> diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
-> index 055f6fb604..2023f892be 100644
-> --- a/target/loongarch/tcg/translate.c
-> +++ b/target/loongarch/tcg/translate.c
-> @@ -24,7 +24,7 @@
->   
->   /* Global register indices */
->   TCGv cpu_gpr[32], cpu_pc;
-> -static TCGv cpu_lladdr, cpu_llval;
-> +static TCGv cpu_lladdr, cpu_llval, cpu_llval_high, cpu_llbit_scq;
->   
->   #define HELPER_H "helper.h"
->   #include "exec/helper-info.c.inc"
-> @@ -360,6 +360,10 @@ void loongarch_translate_init(void)
->                       offsetof(CPULoongArchState, lladdr), "lladdr");
->       cpu_llval = tcg_global_mem_new(tcg_env,
->                       offsetof(CPULoongArchState, llval), "llval");
-> +    cpu_llval_high = tcg_global_mem_new(tcg_env,
-> +                    offsetof(CPULoongArchState, llval_high), "llval_high");
-> +    cpu_llbit_scq = tcg_global_mem_new(tcg_env,
-> +                    offsetof(CPULoongArchState, llbit_scq), "llbit_scq");
->   
->   #ifndef CONFIG_USER_ONLY
->       loongarch_csr_translate_init();
-> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
-> index 76bceedf98..ba1c89e57b 100644
-> --- a/target/loongarch/translate.h
-> +++ b/target/loongarch/translate.h
-> @@ -30,6 +30,7 @@
->   #define avail_LAMCAS(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAMCAS))
->   #define avail_LSX(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSX))
->   #define avail_LASX(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LASX))
-> +#define avail_SCQ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, SCQ))
->   #define avail_IOCSR(C)  (FIELD_EX32((C)->cpucfg1, CPUCFG1, IOCSR))
->   #define avail_CRC(C)    (FIELD_EX32((C)->cpucfg1, CPUCFG1, CRC))
->   
+On 1/28/26 6:28 PM, Richard Henderson wrote:
+> On 1/29/26 12:31, Pierrick Bouvier wrote:
+>> --- a/include/user/syscall-trace.h
+>> +++ b/include/user/syscall-trace.h
+>> @@ -39,5 +39,22 @@ static inline void record_syscall_return(CPUState *cpu, int num, abi_long ret)
+>>        gdb_syscall_return(cpu, num);
+>>    }
+>>    
+>> +static bool send_through_syscall_filters(CPUState *cpu, int num,
+>> +                                         abi_long arg1, abi_long arg2,
+>> +                                         abi_long arg3, abi_long arg4,
+>> +                                         abi_long arg5, abi_long arg6,
+>> +                                         abi_long arg7, abi_long arg8,
+>> +                                         abi_long *sysret)
+>> +{
+>> +    uint64_t sysret64 = 0;
+>> +    bool filtered = qemu_plugin_vcpu_syscall_filter(cpu, num, arg1, arg2,
+>> +                                                    arg3, arg4, arg5, arg6,
+>> +                                                    arg7, arg8, &sysret64);
+>> +    if (filtered) {
+>> +        *sysret = sysret64;
+>> +    }
+>> +    return filtered;
+>> +}
+> 
+> FreeBSD build failure:
+> 
+> https://gitlab.com/qemu-project/qemu/-/jobs/12906481914
+> 
+> In file included from ../bsd-user/freebsd/os-syscall.c:34:
+> /tmp/cirrus-ci-build/include/user/syscall-trace.h:42:13: error: unused function
+> 'send_through_syscall_filters' [-Werror,-Wunused-function]
+>      42 | static bool send_through_syscall_filters(CPUState *cpu, int num,
+>         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 1 error generated.
+> 
+> Why is this in the header anyway?  If it really *should* be shared with FreeBSD, then it
+> could just as well live somewhere in plugins/.  If it really is linux-specific, then it
+> could just as well live in linux-user/syscall.c.
+> 
+> 
+> r~
 
+Sorry, it fell through the cracks.
+
+FreeBSD has no werror by default, and the pipeline I ran doesn't add 
+explicitly add --enable-werror. Warning is there though:
+https://github.com/pbo-linaro/qemu/actions/runs/21461090659/job/61813517774
+I'll make sure to build with werror enabled for next runs.
+
+This function was added in this header, next to 
+record_syscall_start/end, which is not used by BSD neither. It doesn't 
+raise a warning because they are static inline. The original dev added 
+it where it made sense.
+
+Current series only has BSD implementation, but original 
+qemu_plugin_vcpu_syscall supports only Linux too.
+It could be implemented though, but not sure someone will spend time on 
+that for BSD.
+
+If that's ok for you, I can move the function to linux-user/syscall.c 
+and remove the header. How about that?
+
+Regards,
+Pierrick
 
