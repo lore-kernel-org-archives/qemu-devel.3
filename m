@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC3F1D46C16
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 01:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCE63D46BF0
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 01:41:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlGy9-0005g8-0p; Wed, 28 Jan 2026 20:37:13 -0500
+	id 1vlGtI-0000AE-2X; Wed, 28 Jan 2026 20:32:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlGy5-0005aP-0N
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:37:09 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1vlGt6-0008Sj-KY
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:32:04 -0500
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlGy2-0003u8-BN
- for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:37:08 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-29efd139227so2688945ad.1
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 17:37:06 -0800 (PST)
+ id 1vlGt3-000397-E8
+ for qemu-devel@nongnu.org; Wed, 28 Jan 2026 20:32:00 -0500
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-bc274b8b15bso246848a12.1
+ for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 17:31:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769650625; x=1770255425; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769650316; x=1770255116; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rlNKtUy4USsxxNT1+cEEs4UoNHKdUf8Af8k1ySB//Nc=;
- b=LxIdCnPZOj/3Fo8ePM1aixQ8B1aFE17W6N8ZD43qSXakY0oWdRm60sMdmH4twhZmNV
- cXlXWpkj44C+q2D7J3ab1n8u4mBwJnnIN9LXccUKXJ1MeeEikF/Xzc5wTZ1j/YN1mQy4
- vC5k5NdI1KMJHRcGKfwKaI+DclPJYU7lEvg0tipxh5AqbODlXHfnrV2MChmrKBkFbHA1
- 25Xnnhfm46z/GgCMK5KwIzT/Y/GmdVGRS/IbUYnxjVsHNw5iuLUzlRbxzoTxYRw7t/cs
- gsVpz0NC7z2K4Wx1jXgG8fy7QBNzTHsIoaUW1yu/C2Vc+n4pg14tDpMYH5SF6Xq2W5dF
- sohQ==
+ bh=yGgLGlFAGuY8onq4gi0buc3E93WA2jrqRIHzedx5bAc=;
+ b=AV9hH9kUMpXAxD/2wp6Mh9VPTkuRiZui+Sbr4JLE35wvpJjT4b/NGhIvB3L/kvmiS8
+ 2lLI3/BoaRd2N9iEr2y6b6tiUbM5sHXGwGuh1Fvq02uuP1agrVg0GaoE8976YWC45pSi
+ 2NM5JcnIxMSZE4j4McM8iMnHWJU0K6y72yQUvc/8ShE2iKhYWtAb4ZsunvihuHNKvw9y
+ 8IHOXBX/OcwAKcBfGA4TBQBOh/gUZdUKhSx+JZBHw9W7jOn1DxdUBDTFsBWxQ9AqEFFr
+ 9xt/m/1kPwqDR6JeG3D/uTIn+SzB3xi060oDf+etMC9EK4/yETzpaCNtC/3WGnw8BYrU
+ bP8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769650625; x=1770255425;
+ d=1e100.net; s=20230601; t=1769650316; x=1770255116;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rlNKtUy4USsxxNT1+cEEs4UoNHKdUf8Af8k1ySB//Nc=;
- b=fNr/PiSo9OuEmvBQ5LmSnl6pMqyOhSYUV4XV1q3WxQKBMkA6VOMkfGp/BlKjKd+zt4
- 5qnSUStA89E1NxJV1If8c48PBthAWsj7eF0bnBhpRJWJd2+Zhon46uIHIaH2YSji+eEw
- L7uPw/i/h95p4CUJyR/Xf0QTvhK0/43rGZzj6NwaZbhY/y+Fobf/uzm2rZa2Nn7oqOMI
- 8/Wgo0abYsVP6jw3BTbsHiO6jL5+1Lk/4mtcRoi211VP6HHRya8oF+arKtNnCRjyhK1l
- shVXpamqQekynGDk0BRzdFIWQ8ZcYkPkREP6jNhwoo0EIrcS+EzDa00Crhxlj9lEnjKI
- RSWQ==
-X-Gm-Message-State: AOJu0Ywk+dk3DB6Y3EkTJHFkEsIN2jYHJlxVAl5yPoVMgJvADIgOPTPj
- Zt2GqOlDodpo8vg4k1t9czyuC8GPpBvVFzgHpKQ3EK/buaEFchH9yrLCObUxMZYG7tkDSKvAvE9
- Hhxwj
-X-Gm-Gg: AZuq6aJDXKWo54hxCCMUl4z7QESsW0YRM+9dwLqMoZzvw88tuLy3BNvhZST15tdLBXF
- vxQs6V6g3J8hYwY2Pfd2Xaqo7KYEYWh1dVZ5v4FDJcALaZsyVJp4nMeps6xmif7w1YP45bnuIIu
- 77heB3UyNp096emVqMFPqeCV6rrez1mmLwmI6CqKtYFgKVSi1qOdGM6nmRrfxOwA6vhZALXtP5U
- 7SKBp+WAuUrLQpcAbKs2xX0ty+NvXjql545x8FxPUG1tqA+B7BUKzPS0kBcLPlp5D/LCqE06j69
- Q3MlKLbXQ0ZjsJH/CZuFr07ne2A2XeXg5LroaarnT495XFic8SgQBYkiL7hKNpm05CmRjNx84CM
- iwRbAQMYQHzazt/ugwGrGNBax/0nnNQO3JnOhOQec8caUDmvjt/IgM6ZlwqQE/aKoCFtNx7WY+1
- tWgnMz4Smah8PPByp3TeEJ4Xeuc4m8AQOEaNHaM79xusuhcXZeVhGff2mCFVTIITyX
-X-Received: by 2002:a17:903:1a2b:b0:295:9cb5:ae07 with SMTP id
- d9443c01a7336-2a870e34aaemr69292435ad.38.1769650624964; 
- Wed, 28 Jan 2026 17:37:04 -0800 (PST)
+ bh=yGgLGlFAGuY8onq4gi0buc3E93WA2jrqRIHzedx5bAc=;
+ b=ZMi8Gld7BKa97Rkx8RpI43KPjbhoxRUnRTtAzdIODUkNamtm9MpGMmXuPfr/voZhHF
+ AbcNSuBLsdL+6Th2Mc5don0i22HC4dg9liMR/ZAbANeuIaXSI6vFouiaD+PtdGthEghO
+ Y2mkkB3dOFFHEOCTFFz0hd5uyEhacN5gyJQUM12B3ubXV0JgeRAU0I3SkCoL0yIjSX8z
+ gxYiqenFpw55CeRaGi87B/PFulYKM++XQm20W16lKcMvytl3uHAp+qHxjCjWs/JywDui
+ reLtAOqH+ywGTrYyudIrdzw/dq1q3YIH1UKX0meT+ZA75EiB+QIdaSIwq7ti7zk7ZVyq
+ N8/w==
+X-Gm-Message-State: AOJu0Yyfr7XzaBLYrre0j2eGaNzKqVsjWVzDi27X+ND1zBHyD2IUVF09
+ DdMRSNbfu1WdccK7jlDXVPW/eNdvtdEqLFTTKV0tZpvDvsxd9r1D+ukvCP0ME6u3wbJNRgNj4Ca
+ sRT8v
+X-Gm-Gg: AZuq6aKyl925zg2dhazPK6uGol5hD1d2o3vTdpOBni1ZtYj3cZ2+FB51BXjnEEYvh3w
+ O/MN91i6DMkBzehSDj7lPHZHP/1S7HNiZKELTFX4IZQjbFMfF0LtotZHWZUhpu8SysEmGTTHAey
+ ecWAlAD7NAyEeDuYbUSQAoAPFoN3tf9Hu6LdaSadyLdzBg48ZwuTgunmBuACGUG+npswHrCix87
+ n7vYWwtPXfXpxAYIihsm5AaUrV86mhdBRN+7qBkvNpfRx0X2inu8Do+gOAF4CiHWWcLATXp9c8t
+ HKR2vreIjSQK8k6nDDZutN2YQUcMHKEFMvxXKoQMUgw3lQq0m3/ovlRpz8+7/A+bnzd+eRDg/kq
+ qUWVuT/eaLffsHXgsEAqqHL1kwjxis3UkosUAurP4l5cACsmJCDXZjRiFDnT1mvS6q51HjhbepP
+ 4gmchTI8+OJDall5vkvsf4k8T9COmOeOyFcYCI/BiVDNOon/LX+x+XxBtgHxI8zQ3t
+X-Received: by 2002:a17:90b:560f:b0:347:5ddd:b2d1 with SMTP id
+ 98e67ed59e1d1-353feda7677mr6623842a91.27.1769650315803; 
+ Wed, 28 Jan 2026 17:31:55 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a88b4173a2sm34889095ad.30.2026.01.28.17.37.04
+ 98e67ed59e1d1-353f61e0007sm6627143a91.12.2026.01.28.17.31.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 28 Jan 2026 17:37:04 -0800 (PST)
+ Wed, 28 Jan 2026 17:31:55 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 1/1] meson: fix build of qemu-system-microblaze with
- --enable-modules
-Date: Wed, 28 Jan 2026 17:36:58 -0800
-Message-ID: <20260129013658.3961469-2-pierrick.bouvier@linaro.org>
+Subject: [PULL 13/20] tests/tcg/plugins/mem.c: remove dependency on qemu
+ headers
+Date: Wed, 28 Jan 2026 17:31:27 -0800
+Message-ID: <20260129013134.3956938-14-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260129013658.3961469-1-pierrick.bouvier@linaro.org>
-References: <20260129013658.3961469-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260129013134.3956938-1-pierrick.bouvier@linaro.org>
+References: <20260129013134.3956938-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,45 +104,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A previous commit wrongly skipped including the generated modinfo in
-case hw_arch dictionary ends up being empty.
-Fix that by adding an empty source set in dictionary in this case.
+This plugin uses endianness conversion primitives from QEMU headers. As
+next commit will strongly isolate plugins code from those headers, those
+primitives can't be used anymore.
 
+glib.h provides such primitives:
+https://docs.gtk.org/glib/conversion-macros.html#byte-order-conversion
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3280
-Fixes: e8efe5ff4 (meson: Do not try to build module for empty per-target hw/ directory)
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ tests/tcg/plugins/mem.c | 59 ++++++++++++++++-------------------------
+ 1 file changed, 23 insertions(+), 36 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 668f1aa919c..cc0dfed0667 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3958,10 +3958,6 @@ if enable_modules
-     if target.endswith('-softmmu')
-       config_target = config_target_mak[target]
-       arch = config_target['TARGET_NAME'] == 'sparc64' ? 'sparc64' : config_target['TARGET_BASE_ARCH']
--      if not hw_arch.has_key(arch)
--        continue
--      endif
--
-       config_devices_mak = target + '-config-devices.mak'
-       modinfo_src = custom_target('modinfo-' + target + '.c',
-                                   output: 'modinfo-' + target + '.c',
-@@ -3971,6 +3967,11 @@ if enable_modules
+diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
+index 9649bce99ca..7d64e7018f2 100644
+--- a/tests/tcg/plugins/mem.c
++++ b/tests/tcg/plugins/mem.c
+@@ -12,16 +12,7 @@
+ #include <stdio.h>
+ #include <glib.h>
  
-       modinfo_lib = static_library('modinfo-' + target + '.c', modinfo_src)
-       modinfo_dep = declare_dependency(link_with: modinfo_lib)
-+
-+      if not hw_arch.has_key(arch)
-+        hw_arch += {arch: ss.source_set()}
-+      endif
-+
-       hw_arch[arch].add(modinfo_dep)
-     endif
-   endforeach
+-/*
+- * plugins should not include anything from QEMU aside from the
+- * API header. However as this is a test plugin to exercise the
+- * internals of QEMU and we want to avoid needless code duplication we
+- * do so here. bswap.h is pretty self-contained although it needs a
+- * few things provided by compiler.h.
+- */
+-#include <compiler.h>
+ #include <stdbool.h>
+-#include <bswap.h>
+ #include <qemu-plugin.h>
+ 
+ QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+@@ -152,56 +143,52 @@ static void update_region_info(uint64_t region, uint64_t offset,
+         ri->reads++;
+     }
+ 
++    void *ri_data = &ri->data[offset];
+     switch (value.type) {
+     case QEMU_PLUGIN_MEM_VALUE_U8:
++    {
++        uint8_t val = value.data.u8;
++        uint8_t *p = ri_data;
+         if (is_store) {
+-            ri->data[offset] = value.data.u8;
+-        } else if (ri->data[offset] != value.data.u8) {
+-            unseen_data = true;
++            *p = val;
++        } else {
++            unseen_data = *p != val;
+         }
+         break;
++    }
+     case QEMU_PLUGIN_MEM_VALUE_U16:
+     {
+-        uint16_t *p = (uint16_t *) &ri->data[offset];
++        uint16_t val = be ? GUINT16_FROM_BE(value.data.u16) :
++                            GUINT16_FROM_LE(value.data.u16);
++        uint16_t *p = ri_data;
+         if (is_store) {
+-            if (be) {
+-                stw_be_p(p, value.data.u16);
+-            } else {
+-                stw_le_p(p, value.data.u16);
+-            }
++            *p = val;
+         } else {
+-            uint16_t val = be ? lduw_be_p(p) : lduw_le_p(p);
+-            unseen_data = val != value.data.u16;
++            unseen_data = *p != val;
+         }
+         break;
+     }
+     case QEMU_PLUGIN_MEM_VALUE_U32:
+     {
+-        uint32_t *p = (uint32_t *) &ri->data[offset];
++        uint32_t val = be ? GUINT32_FROM_BE(value.data.u32) :
++                            GUINT32_FROM_LE(value.data.u32);
++        uint32_t *p = ri_data;
+         if (is_store) {
+-            if (be) {
+-                stl_be_p(p, value.data.u32);
+-            } else {
+-                stl_le_p(p, value.data.u32);
+-            }
++            *p = val;
+         } else {
+-            uint32_t val = be ? ldl_be_p(p) : ldl_le_p(p);
+-            unseen_data = val != value.data.u32;
++            unseen_data = *p != val;
+         }
+         break;
+     }
+     case QEMU_PLUGIN_MEM_VALUE_U64:
+     {
+-        uint64_t *p = (uint64_t *) &ri->data[offset];
++        uint64_t val = be ? GUINT64_FROM_BE(value.data.u64) :
++                            GUINT64_FROM_LE(value.data.u64);
++        uint64_t *p = ri_data;
+         if (is_store) {
+-            if (be) {
+-                stq_be_p(p, value.data.u64);
+-            } else {
+-                stq_le_p(p, value.data.u64);
+-            }
++            *p = val;
+         } else {
+-            uint64_t val = be ? ldq_be_p(p) : ldq_le_p(p);
+-            unseen_data = val != value.data.u64;
++            unseen_data = *p != val;
+         }
+         break;
+     }
 -- 
 2.47.3
 
