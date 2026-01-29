@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C081D6B084
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 208E6D6B086
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUab-0000AG-Lk; Thu, 29 Jan 2026 11:09:49 -0500
+	id 1vlUaK-0008Sj-Mu; Thu, 29 Jan 2026 11:09:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUaM-0008VX-8Q
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:34 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1vlUaE-0008QY-NY
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:27 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUaK-0006Zn-K1
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:34 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-432d256c2e6so1100886f8f.3
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:31 -0800 (PST)
+ id 1vlUaB-0006UR-SE
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:25 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-480142406b3so8835355e9.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769702971; x=1770307771; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769702962; x=1770307762; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Z13uXKrf8/Vg9Np7XNzNgTT9vT/RUmS7H/xdYMAPddE=;
- b=PWl2V6KYHUPKM74wuIOKAD6p53VuZ725qRifmGOICHAV/krcL1ruW+FLUmfDRU6BND
- /qGNRKfD4/7vsrEIcS5g+u7+C2S5yavCujHUvS1v/KWC2GvfLgxMQtxxyvVbb66xDen1
- CjB2FhRuo1hZKlEPisDdGxqJnoQVfFofXjk5+MLlsejhxwHuiPCgvhe7STNiukRuj21Y
- C7yVl8wzD7h2pVkalFWvqZc8BfT1kphUrTMQWgAkpxvsCGjU1QGI9khxVlgjBN52Lxlt
- Q8iNFX53YS/0+OTNfl1Nw94v+/IFv9b+OXuTGFiB3Ux4Ylj5FX4KosSua7Ezob+aIhcF
- t0WQ==
+ :reply-to; bh=T0N0B5cWcZZOhJc+vK4KHyIYqbyF+U6ChwUVIRwX2tA=;
+ b=aTPB5D10lIdQ/H9E8ir4KQO26Y4c+K27ieq65BWmaBnsWHoebxUYz+VXEayXoLjO0q
+ JARhnHNtFZtWlP6MjoXOILDOnw2VWshxoybxZCHU6lU4ohKN7mdobZ1NxZ8V5/7NbWjn
+ JwwLQMvgr4v3d9KV92BJgkKSFvOKZGPebIFzqnJOjDORJsybHdC6t0u77mO+H9zLStPv
+ QQQVxogHkvZJIlq4HvqminxM4xuzEay/T19HrrhxZ7tfZ1SrxuKsZJ17SFHoTXVBHimD
+ DcdGSQMrpVRT6YyBWdNWN7EA0aVBIvMNIIixIJcerS8UC29WxMlO/kKn3xLCIsDWB8aT
+ B+vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769702971; x=1770307771;
+ d=1e100.net; s=20230601; t=1769702962; x=1770307762;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Z13uXKrf8/Vg9Np7XNzNgTT9vT/RUmS7H/xdYMAPddE=;
- b=fzD8lGF1zqlU6bIx/kdOeQZwHk+tgAYrb/DvtE39kAcmAukXao/0W8c/rd6F/KOUKQ
- PMLWrhMev5PMESRryh33AwwvW+7eMM1ZRODH4WV7gjoW2R31dFZXKdHGyE8PfPXXzc5a
- eE9EJJ9+rmXS+4v/GVew02MdYjUPs5mN6j7TidbfSVt6Ws31e2chfialHAFtU/3x9Ub5
- jXMkFea50CgW7TPVk/5zbL8M9RxLe8wJn2DlA7VASYiQ4VF7cg5P4tYRR0jajo13jq7J
- oitzjQJT2MKo1gvCRSidA2Asiuia6GaD1Y4VlaOdZpQPMFb3Z4Uu8HhKSAgfURnSj8Ip
- wc+Q==
-X-Gm-Message-State: AOJu0YzfU5IXHAwx3bADtRhsXIeFY+pnMtVU65Tv/UkeT9TbYkzJPmJ3
- dmFbQjw2eClXtl1DfaAuTOajL56pfOc8FKpFwsAI/kE7PdCKr28p/YGpRPCP2/Y207dsKX5RK63
- TSscDUag=
-X-Gm-Gg: AZuq6aLIHjkMPZO6IhVcayd/b/tSlDZd2DOPO+5e+JdmrgzyX4TEvC2frddMi3ShKg8
- BtugszDhY0yUw7bKaM6aQJj9LNfoLW9cVAxunh2Gcpr7nUlhRbMiWKvUrflK2DgZ/5U/RsV+6hT
- 6VEgvwMnjj+5kch/5aOHL/Uq5CiQU40Zlnj8DkL6IE0Pz4v5We708gNZckpO4+3cnxcKp9EqPD8
- AbCvLgsA+7tJP6Fg2EphbQwXxHFVspQGjcPmF5PaKR1tAEFM++Zgr8anFaL6k7PKGL4RIMWCzHT
- yUtKXj8+Sz9vwSmJ0aXr0QteYDJfA1sqJMaqopep8sjKsoiJWSAjGkUBuAhNYEwfG7y+BBC2RqJ
- 3evwXzfGvoBGAVPivXYBuzMYZtoqMw6LYdh8daRN9aVPRM673F+BHID0w/P1zYvuTJ5rWy0tzfM
- YlpKv8OCTfeGv5pX2TcMedYQ5ethhvXw==
-X-Received: by 2002:a5d:5f84:0:b0:434:24fe:b25f with SMTP id
- ffacd0b85a97d-435f3ab212bmr142176f8f.37.1769702970622; 
- Thu, 29 Jan 2026 08:09:30 -0800 (PST)
+ bh=T0N0B5cWcZZOhJc+vK4KHyIYqbyF+U6ChwUVIRwX2tA=;
+ b=r8SdvwixmY8U8t99dWLGrAIwL8XYrMdbJVCcv7vFP7MK4qMg/gW7UzM1QmBCjmWBwZ
+ E1+5iTmXMRcEPR68iAILU8h+1x/7/5eYK4hF5U5kL7zAo/OQ5JPFBLjmGxx1Kgrld85M
+ Vc+PdmhzgI7PIVKXRqJn7enGkvW9+APJRcoSwq8RJDpnSy+DfecQZAAsC5V5sz4ALHOm
+ nf67k7IfT0eIE8H/0Eevipo9xC51gp7HyTnS50RC85kwhlJCpCLQ8FowTfcfeve11FmZ
+ cpLH2RSxUIU3obVnsr/8LAVmxEtNh1qgjNauRK1x36wqSEmUT6eHPON8qEFAIyD11Cq+
+ FtoQ==
+X-Gm-Message-State: AOJu0Yy6IrRoWVFwS/y4bxh/23iUWx5hNaZuUoEWGAuD67jz0zsr8PRo
+ amk5pj2plGYGPQVH5ByoaMSr070SgSvPlaIfmJ5nNtSwqoSbHjm7Wtv9FYmVCo3k1DgRAnlXnXi
+ NRKPwCoc=
+X-Gm-Gg: AZuq6aKGf8bGvZxzuy62Q5gNecpDa1g+71nrUczMJK8rJe6nyp3JW7vOSxUg4NehtaJ
+ frZ18QIbWwv2cM+1GpCfkMfkhta7TP1FKjp/U05FHn4JlQcRNBOnpSGfw71n6f3A942PXM1JcPa
+ gGzHOZ+vontOaUTdfE/phxgSVv80gwzWxI8E9vk+FAQOj5ozV5OzYyt7GGM8gooWPDkntjIov+q
+ WvaSuEGqGqRjNFIKm0cXpIMBAFnjbJ564Vs0B/v/1yptWLNUw5ebOhUmV2/N9XbT2dHBer5TQCw
+ 4KaPpdjygYaZN7ihXnBam5eQBGBPiaA53PKdztRUtzaK3UOpLjzch0TDrVJQLHDINYJ+s+yIbVa
+ xM/YdUXDjNQqR0TYbjkAHJaw+t5LiBviqxVmCqMHw+AC215NKRHpGt2cHOFRfFpRxPaM2mefmTA
+ 35wQTuHbp6Vqik6/M3KcX+Q3R3ovJAFVSvUJIZuJop
+X-Received: by 2002:a05:6000:1a8d:b0:431:1ae:a3be with SMTP id
+ ffacd0b85a97d-435f3a6f7fbmr156796f8f.3.1769702962318; 
+ Thu, 29 Jan 2026 08:09:22 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.29
+ ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 08:09:29 -0800 (PST)
+ Thu, 29 Jan 2026 08:09:20 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/43] hw/pci-bridge/pci_expander_bridge: Move
- TYPE_PXB_PCIE_DEV to header
-Date: Thu, 29 Jan 2026 16:08:43 +0000
-Message-ID: <20260129160917.1415092-10-peter.maydell@linaro.org>
+Subject: [PULL 02/43] backends/iommufd: Introduce iommufd_backend_alloc_vdev
+Date: Thu, 29 Jan 2026 16:08:36 +0000
+Message-ID: <20260129160917.1415092-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260129160917.1415092-1-peter.maydell@linaro.org>
 References: <20260129160917.1415092-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,49 +99,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-Move the TYPE_PXB_PCIE_DEV definition to header so that it can be
-referenced by other code in subsequent patch.
+Add a helper to allocate an iommufd device's virtual device (in the user
+space) per a viommu instance.
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+While at it, introduce a struct IOMMUFDVdev for later use by vendor
+IOMMU implementations.
+
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+Tested-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Message-id: 20260126104342.253965-10-skolothumtho@nvidia.com
+Message-id: 20260126104342.253965-3-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/pci-bridge/pci_expander_bridge.c | 1 -
- include/hw/pci/pci_bridge.h         | 1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ backends/iommufd.c       | 27 +++++++++++++++++++++++++++
+ backends/trace-events    |  1 +
+ include/system/iommufd.h | 12 ++++++++++++
+ 3 files changed, 40 insertions(+)
 
-diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-index 08d40aa2ea..b6e2eb7969 100644
---- a/hw/pci-bridge/pci_expander_bridge.c
-+++ b/hw/pci-bridge/pci_expander_bridge.c
-@@ -48,7 +48,6 @@ struct PXBBus {
-     char bus_path[8];
- };
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index c65dc41d71..e3a3c1480e 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -473,6 +473,33 @@ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+     return true;
+ }
  
--#define TYPE_PXB_PCIE_DEV "pxb-pcie"
- OBJECT_DECLARE_SIMPLE_TYPE(PXBPCIEDev, PXB_PCIE_DEV)
++bool iommufd_backend_alloc_vdev(IOMMUFDBackend *be, uint32_t dev_id,
++                                uint32_t viommu_id, uint64_t virt_id,
++                                uint32_t *out_vdev_id, Error **errp)
++{
++    int ret;
++    struct iommu_vdevice_alloc alloc_vdev = {
++        .size = sizeof(alloc_vdev),
++        .viommu_id = viommu_id,
++        .dev_id = dev_id,
++        .virt_id = virt_id,
++    };
++
++    ret = ioctl(be->fd, IOMMU_VDEVICE_ALLOC, &alloc_vdev);
++
++    trace_iommufd_backend_alloc_vdev(be->fd, dev_id, viommu_id, virt_id,
++                                     alloc_vdev.out_vdevice_id, ret);
++
++    if (ret) {
++        error_setg_errno(errp, errno, "IOMMU_VDEVICE_ALLOC failed");
++        return false;
++    }
++
++    g_assert(out_vdev_id);
++    *out_vdev_id = alloc_vdev.out_vdevice_id;
++    return true;
++}
++
+ bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
+                                            uint32_t hwpt_id, Error **errp)
+ {
+diff --git a/backends/trace-events b/backends/trace-events
+index 1ae94c4290..14a7ecf5aa 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -22,3 +22,4 @@ iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) "
+ iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+ iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
+ iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32_t hwpt_id, uint32_t viommu_id, int ret) " iommufd=%d type=%u dev_id=%u hwpt_id=%u viommu_id=%u (%d)"
++iommufd_backend_alloc_vdev(int iommufd, uint32_t dev_id, uint32_t viommu_id, uint64_t virt_id, uint32_t vdev_id, int ret) " iommufd=%d dev_id=%u viommu_id=%u virt_id=0x%"PRIx64" vdev_id=%u (%d)"
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index bc4acd1e8b..567dfb7b1d 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -48,6 +48,14 @@ typedef struct IOMMUFDViommu {
+     uint32_t viommu_id;  /* virtual IOMMU ID of allocated object */
+ } IOMMUFDViommu;
  
- static GList *pxb_dev_list;
-diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
-index a055fd8d32..b61360b900 100644
---- a/include/hw/pci/pci_bridge.h
-+++ b/include/hw/pci/pci_bridge.h
-@@ -106,6 +106,7 @@ typedef struct PXBPCIEDev {
++/*
++ * Virtual device object for a physical device bind to a vIOMMU.
++ */
++typedef struct IOMMUFDVdev {
++    uint32_t vdevice_id; /* object handle for vDevice */
++    uint32_t virt_id;  /* virtual device ID */
++} IOMMUFDVdev;
++
+ bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp);
+ void iommufd_backend_disconnect(IOMMUFDBackend *be);
  
- #define TYPE_PXB_PCIE_BUS "pxb-pcie-bus"
- #define TYPE_PXB_CXL_BUS "pxb-cxl-bus"
-+#define TYPE_PXB_PCIE_DEV "pxb-pcie"
- #define TYPE_PXB_DEV "pxb"
- OBJECT_DECLARE_SIMPLE_TYPE(PXBDev, PXB_DEV)
+@@ -73,6 +81,10 @@ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+                                   uint32_t viommu_type, uint32_t hwpt_id,
+                                   uint32_t *out_hwpt, Error **errp);
  
++bool iommufd_backend_alloc_vdev(IOMMUFDBackend *be, uint32_t dev_id,
++                                uint32_t viommu_id, uint64_t virt_id,
++                                uint32_t *out_vdev_id, Error **errp);
++
+ bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
+                                         bool start, Error **errp);
+ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
 -- 
 2.43.0
 
