@@ -4,116 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C29D6B07A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 15:31:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2934BD6B06C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 15:37:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlTzc-0003PE-ON; Thu, 29 Jan 2026 10:31:36 -0500
+	id 1vlU54-0005aU-02; Thu, 29 Jan 2026 10:37:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlTzZ-0003Fa-8M
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 10:31:33 -0500
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlTzX-0006fR-ON
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 10:31:33 -0500
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-79456d5ebf9so11708987b3.2
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 07:31:31 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769700690; cv=none;
- d=google.com; s=arc-20240605;
- b=eIEAYeC0LUPl2lVnz8T9iBeZb8+/Fdyu7xSMpIbR96UfOHL6YAD1EpSzhhrtiAEZHR
- LPoGEVxtpKc4w+ypFrBP/7RkDha5RFUh1fHKmvKMRhMaRd4PomqWT3F3/hn8he/1tK0g
- zvIDTTQ2mEL0o/pSK2Yr8DS3zcL+8tCzYyopsIThdkNXWPEm76+QmECUIDwreB6AMF6C
- dJegv0c7aSH2Jvo8Cw0mXAfPfXNArMrsybOA1738VilvJfzAmRyvB97Q5IMHL+9wvWeX
- BME+F4aec5YrALSgK/d6OEsJmRVIBWz17TeRAIbNzyT+N9FuTIWjccJ7zH9/JC7bK1Qs
- inzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=e75Fsiedu5+aeIo3TbRJepvWQBvQru25HrO6tbDPk6o=;
- fh=Y0v7H7/KoiIv4wajEUo/XxWAh9oE52uzHxT0mnCejkM=;
- b=S8r94rfI/IrJQo5btkwF3i66AhjBYHzOdslpKwYyzfFdzdkWMDFv0tYYQ70pBHw+wO
- hHt8uG5Geac1gsFRa4SIz/GICQ7WMgneGb87pJfMI2nFDWQZALySUe6kGHSQdWWHjKNd
- 7Ej7NjO0d/Ci1/VkEqRNt6jf2N872N8Yqs5rxIkfwnqzJ47fQ3oHlo7iGAtBJzIaKyfc
- Zz3FEDGf7bzamlZ1ybYBvyyPgdbjmqD2DvPWQTRzefR/HQdzZp/OZnjxk11SjmKrYeYT
- KEhswxy/go88L5sGl5NsCfZgTNntArDWKLiGa1UC9Gi72r4iv7rjg5W75+m8cQalGhjm
- u23g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769700690; x=1770305490; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=e75Fsiedu5+aeIo3TbRJepvWQBvQru25HrO6tbDPk6o=;
- b=gzMrI1uqlcOEt7hu+dl+eQoJ6mSOmKs3iETjCWMICLxtDrtEyn5JbFo97HEw4riZC2
- gByK8oHuUg0zeeZhR8tRIMK3+PwzJOJyRK6tABmdFCUDqnR6y1Sz8H+BeQKj4OgRCiOG
- 8rGwKgzFcN9LOmG3ugDfM9TH90qRB4cZCUJXROnr3kZUm+0dHhMryan7EzrxxAyHNOzv
- hh0jPr/SkGkT6J8B7heFNm71fZ1e4nJ2pM+3BllK4WX70y9NCPX82U/IQkdUHV3hILVo
- peNtnGGdjlaEWVp6ffaU6XyrnP2XCczWm3IX3HKeWjXz+PBrF07p51XiVvmE73a3pI2l
- hVIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769700690; x=1770305490;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=e75Fsiedu5+aeIo3TbRJepvWQBvQru25HrO6tbDPk6o=;
- b=nV8ZpV+vbpEFTRW+cUt5bmTv69h12A54jU8TPU+El2vB2LusQOPqhqpJWvWinBCuhs
- UJz6o5nqQwQLazA36XVX8QAntppve2eBWxegxrIq4rDa4Aw6A/lrEAmEjPTsMUgP7c0V
- 8ofdc8dsPceML27b8G/8ccR60EgM4J4evg/3J4ort/tbI7Ru9n8cF4wyUaNOvszK6NG7
- xjx1o9gTJsV+AxsFeXaBtl7dINmjCWUOOchIU3aTFUqnZkt7quB4k4uyE0mhr4lDJMdf
- wuWcvYce4aXmCz2IUPG0q2qRZ5Mk+Rovvw7kU4MeSy5PHz/M3SlgYPMT52GSm9kR2pTe
- +xlw==
-X-Gm-Message-State: AOJu0Yx9XQzuswqiNh1Y8HHF6wagS9PyrbIaWAvk1nQSfp3DMWSthaHF
- kxlnvnWOPu5Z9j2LaZInlOP+0fTBweTY3ZwQHr3JFSagpHyPk4pc3Mi7PeF1k2sLrbEjPsz+7R3
- CGzzpikPVIy/AMqGvsaMGXa9M4akB+UFISka2nJhU3A==
-X-Gm-Gg: AZuq6aLzxEG+K48h7j15WQz3DAS2H7FZdoeZB9noIpsdFHNiCWxcSNBt233iRRiTuzc
- 9jXXFIfkOuYz07t24/c2xTDk6YzJHmPcRyiUboc9sh+i+Uk/M1ZPcQ2nPKGEXfhpMgZQc+vOJDi
- LtozvXoLgTecnKhFk/kHEFmZBMpkBQPZDfe6xDm1KUEQ6B1xOGrKRtTCx5MKiavsAF47w32vIU4
- YbmsROz+OUbUBn6nicUcosSPu8sOT3+fuWoJcTSN+aC1kZr11kRIha1xj9gc/oxRmkOiw==
-X-Received: by 2002:a05:690c:dd4:b0:788:1b67:d741 with SMTP id
- 00721157ae682-7949de8253emr83267b3.3.1769700690290; Thu, 29 Jan 2026 07:31:30
- -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1vlU52-0005aF-Gy; Thu, 29 Jan 2026 10:37:12 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1vlU51-0007Ww-1t; Thu, 29 Jan 2026 10:37:12 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TEuLWU012093;
+ Thu, 29 Jan 2026 15:37:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=1FZQj6
+ Snv8y89E/htyKO+rZn/L5b2Phu0P/IFthMdaU=; b=OOz5LatOn4mirutUVgDbdS
+ MpDQw6GlRxLXLMKHtTke6TsLUh8Zr0hkc5+jcsCd3NJqUisVu/7wXm5KN/x1OSBJ
+ WUg7k7U1aDGiGooFIQEoZm/47gnmgfasmFsKvz0UBt9mB+hU7cvVAa8ScbXeNKLb
+ MlPiftvSjw3aQc4HeptE1DAPHLZtdfSIX9dlE5y6PznXNaEpQK6wFU3/jXA9ZZp7
+ hF5vpagoB14dc1V8jNjzsY56M9vZ83g6EOYwbZnKw7f2ZpS6hwlbSPBX/MR/fdv1
+ Kh7A4s83EloexHaAGkhQDK5wqU7jaU+ZPT5JGWSsc3hjeOYxTWMouCxZvPJHCBBA
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnr6egqd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Jan 2026 15:37:08 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60TBci1R031024;
+ Thu, 29 Jan 2026 15:37:07 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bw8dstbfc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Jan 2026 15:37:07 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60TFb6wt29295136
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 29 Jan 2026 15:37:06 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 292765805D;
+ Thu, 29 Jan 2026 15:37:06 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2BCEF5805C;
+ Thu, 29 Jan 2026 15:37:05 +0000 (GMT)
+Received: from [9.61.177.101] (unknown [9.61.177.101])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 29 Jan 2026 15:37:05 +0000 (GMT)
+Message-ID: <eb30e0ed-3750-4ca1-b1da-503ba7614400@linux.ibm.com>
+Date: Thu, 29 Jan 2026 10:37:04 -0500
 MIME-Version: 1.0
-References: <20260127182805.73212-1-mohamed@unpredictable.fr>
- <20260127182805.73212-21-mohamed@unpredictable.fr>
-In-Reply-To: <20260127182805.73212-21-mohamed@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 29 Jan 2026 15:31:18 +0000
-X-Gm-Features: AZwV_Qg1WATCwSufdmPxyH5WetHRcpWhB31D8z4FidksJvzSyQsOxMu86osm3x4
-Message-ID: <CAFEAcA9TwmftmcnxbWMoeAfuV6LD9pPv1hVXiAOr56UKUD+z+A@mail.gmail.com>
-Subject: Re: [PATCH v18 20/22] target/arm: whpx: instantiate GIC early
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- qemu-arm@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Shannon Zhao <shannon.zhaosl@gmail.com>, Igor Mammedov <imammedo@redhat.com>, 
- Cameron Esfahani <dirty@apple.com>, Alexander Graf <agraf@csgraf.de>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/14] pc-bios/s390-ccw: Introduce CLP Architecture
+To: Thomas Huth <thuth@redhat.com>, jrossi@linux.ibm.com,
+ qemu-devel@nongnu.org, qemu-s390x@nongnu.org, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ zycai@linux.ibm.com
+References: <20260127161547.459443-1-jrossi@linux.ibm.com>
+ <20260127161547.459443-8-jrossi@linux.ibm.com>
+ <e694cacf-8156-4ba7-9a64-8f6fa06a48d0@redhat.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <e694cacf-8156-4ba7-9a64-8f6fa06a48d0@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDEwNiBTYWx0ZWRfXxAH6IsredNy2
+ OdonOfYm7Hts1xPzJM1QnhZIAR4iSVl5sFQ9EAqQ9KEtDD+R3jH6Yt4MVKWeGPW+Ruxq0PrkaK5
+ kPHkItygu7wN8ek3pwqW/2pZJFrILf+CrXJBfv7HMapw/NiuRa4MbzNNFDuMbBxAst3rsn35Q/c
+ 9YIVgn1b4LJswMmSNtdOkaNhBagYn7MLKYL3AGIUIyPFXm+Q8/uv5CKJuSKPYmuMma7DltaPto7
+ 4GK+0mpjJZnqN6j9uS4p93U1+Ms0HRhgGBrn60SRNyrsq8rV8iFcTaUjYrrJY42bWztZUeaS2aR
+ 3peak8h1WeyQbWr8XQiVY/lOYmXz0DNU2lzsmNawrQfQ8yM9RLPrKJaBPr0MH3pjR4Kx3ElhA01
+ y5xou5PMsO744NyJcsFxevOGVwAFtRYpdJCtA92VFrVsokB1pm5QXHxjRfog/k0n9WL/QRq48ob
+ svUp4mwSLXS7ZzGGLvQ==
+X-Proofpoint-GUID: muCyQ4fS2ux06PnSM5Oc2mkM5DcthSJ6
+X-Proofpoint-ORIG-GUID: muCyQ4fS2ux06PnSM5Oc2mkM5DcthSJ6
+X-Authority-Analysis: v=2.4 cv=X+Vf6WTe c=1 sm=1 tr=0 ts=697b7ea4 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RStlCdrDjo8yFNkQr78A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-29_02,2026-01-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ clxscore=1015 spamscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601290106
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,63 +124,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Jan 2026 at 18:29, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->
-> While figuring out a better spot for it, put it in whpx_accel_init.
->
-> Needs to be done before WHvSetupPartition.
->
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->  target/arm/whpx/whpx-all.c | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
->
-> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-> index c88c67a9e2..55773555b7 100644
-> --- a/target/arm/whpx/whpx-all.c
-> +++ b/target/arm/whpx/whpx-all.c
-> @@ -939,6 +939,29 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
->
->      memset(&prop, 0, sizeof(prop));
->
-> +    WHV_ARM64_IC_PARAMETERS ic_params = {
-> +        .EmulationMode = WHvArm64IcEmulationModeGicV3,
-> +        .GicV3Parameters = {
-> +            .GicdBaseAddress = 0x08000000,
-> +            .GitsTranslaterBaseAddress = 0x08080000,
-> +            .GicLpiIntIdBits = 0,
-> +            .GicPpiPerformanceMonitorsInterrupt = VIRTUAL_PMU_IRQ,
-> +            .GicPpiOverflowInterruptFromCntv = ARCH_TIMER_VIRT_IRQ
-> +        }
-> +    };
-> +    prop.Arm64IcParameters = ic_params;
-> +
-> +    hr = whp_dispatch.WHvSetPartitionProperty(
-> +            whpx->partition,
-> +            WHvPartitionPropertyCodeArm64IcParameters,
-> +            &prop,
-> +            sizeof(prop));
-> +    if (FAILED(hr)) {
-> +        error_report("WHPX: Failed to enable GICv3 interrupt controller, hr=%08lx", hr);
-> +        ret = -EINVAL;
-> +        goto error;
-> +    }
 
-So what happens if the user asked for a GICv2 ?
+> Since this instruction is not part of the public Principles of Operation, I'd appreciate if someone from IBM could review this patch.
+> 
 
-Can we have a comment to explain the ordering requirement
-mentioned in the commit message that is forcing this to be
-here rather than in the GIC code ?
+ACK, will get to this in the next couple of days if someone else (e.g. Eric or Farhan) doesn't beat me to it.
 
-> +
->      hr = whp_dispatch.WHvSetupPartition(whpx->partition);
->      if (FAILED(hr)) {
->          error_report("WHPX: Failed to setup partition, hr=%08lx", hr);
-> --
-> 2.50.1 (Apple Git-155)
+Thanks,
+Matt
 
--- PMM
 
