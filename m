@@ -4,110 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FC59D73E87
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 21:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD81D73E9B
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 21:48:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlZr2-0006qB-SO; Thu, 29 Jan 2026 16:47:08 -0500
+	id 1vlZsC-0007LX-TZ; Thu, 29 Jan 2026 16:48:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vlZqg-0006nC-6j; Thu, 29 Jan 2026 16:46:57 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vlZqb-00038w-Nq; Thu, 29 Jan 2026 16:46:45 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TEppom011231;
- Thu, 29 Jan 2026 21:46:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=C2eGLk
- vSPk1gxsHMmSqMUS3hktSE6ZpKLyPj83RGXMU=; b=KoxspoDDb0T4pZTzmUE4TV
- GdKMtXLOM9uGjiIDDiZc8ZYWZ3ubjVFoDJhDdVqwT12zTjOJbL9Df9DvHIKEyiUL
- SkiP2O+JXyLzf1rOfn0158qIgCreoNJO5qojjC0yfTDNvffCXzUKri0FcXzb3yLq
- lPG/gSSihFYQQkAFDTiGmCgyXWWmpKqsBVBTDnjJ3Zyu7gJdcUr2EcI7WOq4UalX
- GOKRoXwOuhWncy9EjzZAkjuRzJETPGUJPbvzdSa7iKBC813VcyU8HOPn+8Vt5Erf
- 8IQmB32BG6PrRXU0ihlPtrBlyV4wYNr632gaDve2KHlbTQhMHEQIZceorgayteYw
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvmgg8dqb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Jan 2026 21:46:33 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60TJYwur023341;
- Thu, 29 Jan 2026 21:46:32 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bwamk3ngq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Jan 2026 21:46:32 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60TLkVx014811654
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 Jan 2026 21:46:31 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8352158055;
- Thu, 29 Jan 2026 21:46:31 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 542585804B;
- Thu, 29 Jan 2026 21:46:30 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.53.37]) by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 29 Jan 2026 21:46:30 +0000 (GMT)
-Message-ID: <1c899641213407613647adcc10ce1d5b10f3fce9.camel@linux.ibm.com>
-Subject: Re: [PATCH v3 06/14] include/hw/s390x: Move CLP definitions for
- easier BIOS access
-From: Eric Farman <farman@linux.ibm.com>
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- thuth@redhat.com, mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
- zycai@linux.ibm.com
-Date: Thu, 29 Jan 2026 16:46:29 -0500
-In-Reply-To: <20260127161547.459443-7-jrossi@linux.ibm.com>
-References: <20260127161547.459443-1-jrossi@linux.ibm.com>
- <20260127161547.459443-7-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlZs9-0007LA-5v
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:48:17 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlZs7-0003IZ-EI
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 16:48:16 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-47ee76e8656so19190665e9.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 13:48:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769723293; x=1770328093; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9EZJ6r0VHu2VUp5MaIaefPn7K+hso6nEbxbi1XKc+/E=;
+ b=hHCM6Kp5nI3W/sPIokFhYrWMEl8zWfMtNNqDnInS59ebDqLMXgMuTIJYkrft8SUoJe
+ meFAwJngrdAshhWfc+3sXjpgpryBOcMziM+D/Pmz220Efx8EsTNUOgYacB8lYf3V5vSf
+ 0Y/Iog92RZDiVuWND3Wkz2WD90oXON096IoUspofoRGWf0R4WGjnyOnJtcqJVyqPeCyh
+ XNGMwadCtJjOQKAm3GcgBmfSFklxSvGQRoDK9uJDH5wMimbzmYOMVCavjDWE8n25E7+D
+ LQ58RbrsinIaQsi9uhBoH90lHEk4cLvPr7rSUse5uvCf+izkieCbg61eq8tmOUfLllIp
+ A8Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769723293; x=1770328093;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9EZJ6r0VHu2VUp5MaIaefPn7K+hso6nEbxbi1XKc+/E=;
+ b=xFJL9dj88cGilJN++y1Y2gzNoTee0+fzMNf3LT+nGRdwJKlFIGhpKw1dsQ+bVlqkKi
+ U5pjMD3C0b3JrfCSu8jLlVf/zodxCYcwciLP8A+QimGSqA1N5J+DxYEmaC0IWGDGU9Bc
+ 5jJlaOtzzFkx7mMcGqV4VTuyAX+b2gCkuBru/OkOmWN+Mx7OLLiB4jLq6PoPMB8GKEfv
+ mM01Hf8QKcS8AkeAPjjTAJkik6J2jyV7YMWhkdwdHp4pIWP+wrSLfIAG0cxuaAfQ4VVm
+ Sx8mLbEI01TIBgfO1Vv9IBX58pjYmgW3kL7r85EJ66FFPR+NhitseMHPqEkQ9152iYeK
+ edng==
+X-Gm-Message-State: AOJu0YxsWp1oyCEN6Fg8HTjq2yhVTCD43MPoMTKG433UWoCywYi6mmtj
+ rApQ19Kv5UCbD2Ptaz1gmQHHYN3C/UEnqu/58/4kkt5w3JwqGGS7kdQeIIeIxXzqfGM=
+X-Gm-Gg: AZuq6aIIzZUHZaJrZecsxZaM4oCJPbXZFw6ICB82VwFpN6P9Ic0HS2dL8Pc9dCmYBPH
+ Qmj40V3aYMMek8Fm6Gw8ycZeaBed4q4gE93agMtJjFmE8jsZkV3YuagyNT5iyP58005Pb5Ir3yr
+ B+Ve8SxbdU93tCTVmJC67BTOmC/mv1ZIDrjaMpoahVegKue/drbBjA3Mw2A7f7cnEOPczW477nA
+ ivNa2wUKWiadF2InIsxtBcHup7GPW8ATFVEtOTKl604wYHeq/MCo04vYBYDmmX5gur/TeS8/Xj2
+ 3G1mBp0yRI4wZnnGGRPhi2j7rSR+f+OGrFydGLLy4qiu1QkIPWHKdT/LFez/4z9ui3gvtQofe74
+ QfWy8UsE4EH9CVZl7ZFE3O+gVxez/Vk3R0sIgTUszhFuYLxTJ+ocVNMscKWyJNX1ba6Zq8cMQ2W
+ 7+fsvXID4O7M9IDWv1S8bV50SSGD+LszgzQ231gic46laDpu9ZriW6joJYbBJCjlQy
+X-Received: by 2002:a05:6000:2913:b0:435:dbb8:c5a6 with SMTP id
+ ffacd0b85a97d-435f3a62f05mr1429672f8f.12.1769723292775; 
+ Thu, 29 Jan 2026 13:48:12 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e131cf16sm18161383f8f.22.2026.01.29.13.48.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Jan 2026 13:48:12 -0800 (PST)
+Message-ID: <c7a77c16-2b43-40a7-bae6-1e6a579a99d2@linaro.org>
+Date: Thu, 29 Jan 2026 22:48:11 +0100
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Z4vh3XRA c=1 sm=1 tr=0 ts=697bd539 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=1LVPMEDt2vtEygA9br4A:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: B-HwyIv_WnFCp_stCKqR5GzsiHjQQxAq
-X-Proofpoint-ORIG-GUID: B-HwyIv_WnFCp_stCKqR5GzsiHjQQxAq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDE1OSBTYWx0ZWRfX72PLZRWJiaHc
- fpecTHqYpihzGXIJ41u65pK2iRnwRSAMEI96t2vZTdTatB5G7TpHyJbC0E4P7QY5x2iT/J0EKn0
- MgBwh1Ro8OobUa+A1Mh7lyOZC+WOlVfWoaBVhkjx6FnWnh1FTP8kDSrwXFWGQw+ZL5YKhLuEPBc
- Wl9bry/E5TdQrzDj7sRR3/2PSIJMQdRf/DhwJlHK1r3AJPXQjKtVe2PVUC71aItfeaWbqSktw3H
- 8F55YiapukOaesJ32R7NP77hzoxsvIgfuv7H51lmn/k2YR9OlYZOpzwQzTNu9mljgTvVJt82Fqe
- zNrJuYIPZ3HRwYA+WHxDzzcTnbZLaJ880Qo1wmp3x7dZqe+cTij6GyOf3cqP374iTcHGpqriaRK
- GCf7FWe270FdwwCWBLHw+faSk4thE9ocSwyareYfYkCj/gkP3isSwf7/YtNYGK0EXToMa03EbJu
- XwwMp8y/DiyZbv9Myfw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-29_03,2026-01-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 phishscore=0 priorityscore=1501 bulkscore=0
- adultscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2601150000 definitions=main-2601290159
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/data/acpi: disassemble-aml: rename and change
+ interpreter line
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+References: <20260129164004.222-1-mohamed@unpredictable.fr>
+ <20260129125744-mutt-send-email-mst@kernel.org>
+ <a25e4042-0df8-4e46-9e74-3b4c55f90778@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <a25e4042-0df8-4e46-9e74-3b4c55f90778@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,23 +106,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-01-27 at 11:15 -0500, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
->=20
-> Move the s390-pci-clp definitions into the "ipl" sub-directory, which is =
-visible
-> to the s390-bios.  This allows the bios to reuse the architected definiti=
-ons and
-> prevents code duplication.
->=20
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->  hw/s390x/s390-pci-vfio.c                  | 2 +-
->  include/hw/s390x/{ =3D> ipl}/s390-pci-clp.h | 0
->  include/hw/s390x/s390-pci-bus.h           | 2 +-
->  3 files changed, 2 insertions(+), 2 deletions(-)
->  rename include/hw/s390x/{ =3D> ipl}/s390-pci-clp.h (100%)
+On 29/1/26 19:52, Pierrick Bouvier wrote:
+> On 1/29/26 9:58 AM, Michael S. Tsirkin wrote:
+>> On Thu, Jan 29, 2026 at 05:40:04PM +0100, Mohamed Mediouni wrote:
+>>> /usr/bin/bash isn't guaranteed to be present. Switch
+>>> to /usr/bin/env bash.
+>>>
+>>> Rename disassemle to disassemble in the same commit.
+>>>
+>>> Adapt the correponding message in rebuild-expected-aml.
+>>>
+>>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>>
+>> /bin/bash then - that's in the posix standard I think.
+>>
+> 
+> Using /usr/bin/env bash is a pretty "standard" and good practice.
+> https://stackoverflow.com/questions/21612980/why-is-usr-bin-env-bash- 
+> superior-to-bin-bash
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+On Darwin/macOS:
+
+$ which bash
+/opt/homebrew/bin/bash
+
+WRT QEMU source tree:
+
+$ git grep -E '#!.?/bin/bash' | wc -l
+       43
+$ git grep -E '#!.?/usr/bin/env bash' | wc -l
+      242
+
 
