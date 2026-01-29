@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F2E2D73E84
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 19:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36083D73E84
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 19:09:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlXOG-0003He-7o; Thu, 29 Jan 2026 14:09:17 -0500
+	id 1vlXOK-0003I0-Lj; Thu, 29 Jan 2026 14:09:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vlXOE-0003HC-Cb; Thu, 29 Jan 2026 14:09:14 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1vlXOD-0003G6-R1; Thu, 29 Jan 2026 14:09:13 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vlXOC-0003Ai-C4; Thu, 29 Jan 2026 14:09:14 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TF43NY024642;
+ id 1vlXOC-0003Aj-6T; Thu, 29 Jan 2026 14:09:13 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TEq0DI012136;
  Thu, 29 Jan 2026 19:09:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pp1; bh=UYqidjxEPXGL2ppNz4uzhvp+dyo7
- WcJTtHAgqIMvINw=; b=NF4bcMxmeWbzLnAG8bRjuNXa0TNVLiCrp4OwClcUtqOo
- acqMho3q7v/0iY2HLUvDtAjyRWSCYm+9VpCInUiAjZV9jcOn7JGOuPOKALyYpLjZ
- oNY96p9hVWhZ4LlWMNTW4FsWSzB1Kq0Eec1j2flWs3GvkIqDSStrnGhKAumI8nhu
- /HzNOpvL0OtnJXVG6p8M0CWrXPGKw79gYJdoadBt03/dfwgk1LpYXQPuY5t/f0m5
- sxeNV1oBGMHama3jl/hs8Ab70oWrQClGYSfgjZ3qMdCEFLIibA0MYsWOwxJ1UiX4
- u6v77PQ8Js63vg3NEutQOaWVxsYEBn4viLo+UHHjBQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnrttbge-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=vqDXri
+ juYD9KEX3PYVErMrFONPQQKLMeoFaQW/jTcxE=; b=ANAxTxkoYYFI+0Hb1B2ZSH
+ lYzj8Ll+PqM4pGf3bUiU2/WhD5h5IFXaMjoTGcLmYFrG1XCRdSDcILk5oFz2El1x
+ X+zUgQ3GJm4hNc57KVoPztd17ybxwU9btJRIZq8w/WDuiU67BJ+RWHtVQMvPBeNj
+ 0ocuOwLUDl5WpYw5ry/EomcdLsp121MPUsaqCBe5WRFlwHcVrtBFFjqXFidyBamy
+ OSISIwJVk++KmpW/lbg5eIjK3ulrNwdrdjD+ESGXzpkQ34gHVHNrwPxHT35so+oo
+ 3NUIhaqoKT3Egzrlu2KdFIG2sT45jZ4F2aFbwr/suYEJl52owVP0UGiveG/ayhJQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnr6fjw6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Jan 2026 19:09:07 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60TGHT70031037;
- Thu, 29 Jan 2026 19:09:06 GMT
+ Thu, 29 Jan 2026 19:09:08 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60TGRSB9026340;
+ Thu, 29 Jan 2026 19:09:07 GMT
 Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bw8dsuaum-1
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw9wkk6uv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 29 Jan 2026 19:09:06 +0000
+ Thu, 29 Jan 2026 19:09:07 +0000
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
  by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 60TJ95kV41877838
+ 60TJ95Dc36176130
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
  Thu, 29 Jan 2026 19:09:05 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EEBA22004B;
- Thu, 29 Jan 2026 19:09:04 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8EC492004D;
+ Thu, 29 Jan 2026 19:09:05 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 852D920040;
- Thu, 29 Jan 2026 19:09:04 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 11DE820040;
+ Thu, 29 Jan 2026 19:09:05 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.87.137.8])
  by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
  Thu, 29 Jan 2026 19:09:04 +0000 (GMT)
@@ -61,41 +62,44 @@ From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v3 0/5] target/s390x: Implement DIVIDE TO INTEGER
-Date: Thu, 29 Jan 2026 19:57:20 +0100
-Message-ID: <20260129190902.196262-1-iii@linux.ibm.com>
+ qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v3 1/5] target/s390x: Dump Floating-Point-Control Register
+Date: Thu, 29 Jan 2026 19:57:21 +0100
+Message-ID: <20260129190902.196262-2-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260129190902.196262-1-iii@linux.ibm.com>
+References: <20260129190902.196262-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: BgngIIsLR926kXBox9lEXov1dXRzv1Io
-X-Authority-Analysis: v=2.4 cv=Uptu9uwB c=1 sm=1 tr=0 ts=697bb053 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDEzNCBTYWx0ZWRfX1GseVeKjdpkQ
+ +Y9xqBmYgFhhtVfjRgBd126XXvhgDMNI2ZVQxRPbG/2DwvBKJk5JCBeZiUwiHHvF9h535hmthKj
+ yMd70PlduQ/hxia2BX/liBkymU/zKCT3Nlta8ONnKS4CU8n1IVGMS0mbxj5IHncB93sbvQ2rynj
+ rdHsmpOJ7WsCOxKo2Oo4KYiXybbxc0X9qiFlrKrxHteYuKrH9+V6Paua7gvGccW6mETWfCb7lrc
+ 9GFuWyEVB0K6oUh5T8Jr9DsO8XEWxxBYRUZ9+YbQyadKgO1skSKgHmBAGvu8ihsxpk3uwp49xnP
+ kS0l2iwwN5TxmtBRRD4ft2W2cYa2RTjyHGzsPCzVf579hrrIx4fuooC1riRGcZQZCeZ/QjZdHAU
+ TPC3UDrlf2QXVnlpOAye2KcThx7NLW/VWjGnF+K4TqAXI6IpxPekqczbVD+2C9I0tDzfkRcyelG
+ EZNMmtfIFuoJOEzZdzQ==
+X-Proofpoint-GUID: FZEt0Bt-zbFF2YAJDO_DPSeqhIBJuYK8
+X-Proofpoint-ORIG-GUID: FZEt0Bt-zbFF2YAJDO_DPSeqhIBJuYK8
+X-Authority-Analysis: v=2.4 cv=X+Vf6WTe c=1 sm=1 tr=0 ts=697bb054 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=NEAV23lmAAAA:8 a=D0ifgjCuRPeBIYmd6-IA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: BgngIIsLR926kXBox9lEXov1dXRzv1Io
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDEzNCBTYWx0ZWRfXxu9xJRR5+/Hz
- kN/xzS6cefkyicuPLm6sIYnnr40ejofk1wrGQXuBeG+Nhb7aGNaQBzdM7AlbMi93b5payPw984p
- nYdhHVICLUzceBJH0ZVNlA4pOYRp0GYNxpoay0FyUUJCkAWUOMkv+gPhanZDXzlaIdk2r00piz+
- 4RsQE/VYbIEhoWsfjPG5HinHhFOTGLcerh4stSZtVRL19VqQnFJUWhZCxvEzdfCgI4F4hFfMDp+
- PkiG6HZqfQsUxC3Zan0/LfuwzMqKPL219G68q3+UpO9g0Z5ys/RoQicvuIMPE95zqmObkzDnIjx
- +Mh+q0Qm4JAdt8Bjy4w7JfQbi4l1SJBkpdMgipEcC2bOiUu1o5d/ng5T+lTLZ+9ZC4JTlf0qdLg
- kh7swe8GAJe5kYrzH78eWnQLLOFOxzL/u1SXD5fcMcjYoUoiiPHNW0RkIM9pG7veGo2Xwix2usJ
- 1EXsE+1pI7Ul46h5pvw==
+ a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=WEarJFB7UarLcg5xSFgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-29_02,2026-01-29_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 clxscore=1015 lowpriorityscore=0
- phishscore=0 adultscore=0 impostorscore=0 bulkscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ priorityscore=1501 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ clxscore=1015 spamscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
  definitions=main-2601290134
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -119,65 +123,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2: https://lore.kernel.org/qemu-devel/20260127153736.62730-1-iii@linux.ibm.com/
-v2 -> v3: Use FloatParts64 (Richard).
-          Improve "smallish" comment (Richard).
-          Use parts_muladd_scalbn (Richard).
-          Get rid of manual precision rounding (Richard).
-          New patch: parts_round_to_int_normal() improvement.
-          New 64-bit testcase for a fuzzer finding on one of the
-          intermediate versions. I have to admit I did not put down and
-          then forgot what exactly it was about, but it must be
-          interesting, so I decided to keep it.
+Knowing the value of this register is very useful for debugging
+floating-point code.
 
-v1: https://lore.kernel.org/qemu-devel/20260121222116.713325-1-iii@linux.ibm.com/
-v1 -> v2: Move the implementatation to fpu/ and rewrite using
-          FloatParts (Richard). I can't say I particularly like the way
-          it looks, but at least most macros are gone and it survives
-          fuzzing.
-          Explain why we need -O0 for the test (Alex).
-          New patch: s390_get_bfp_rounding_mode().
-          Add a few comments with calculation examples to the test.
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ target/s390x/cpu-dump.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Hi,
-
-This series implements DIVIDE TO INTEGER instruction, which is
-required to run LuaJIT.
-
-Patch 1 is a debugging helper, patch 2 is a small refactoring, patch 3
-is an improvement for an FPU rounding helper, patch 4 is the
-implementation.
-
-Since the instruction is quite complex, I've extensively tested it
-using a libFuzzer-based harness [1] that compares emulation with native
-execution at ~15k exec/s. The tests (patch 5) use data generated
-this way.
-
-Best regards,
-Ilya
-
-[1] https://github.com/iii-i/qemu/commits/iii/wip/fuzz-tcg-v1/
-
-Ilya Leoshkevich (5):
-  target/s390x: Dump Floating-Point-Control Register
-  target/s390x: Extract s390_get_bfp_rounding_mode()
-  fpu: Restrict parts_round_to_int_normal to target precision
-  target/s390x: Implement DIVIDE TO INTEGER
-  tests/tcg/s390x: Test DIVIDE TO INTEGER
-
- fpu/softfloat-parts.c.inc           |   7 +-
- fpu/softfloat.c                     | 144 +++++++++++++++
- include/fpu/softfloat.h             |  11 ++
- target/s390x/cpu-dump.c             |   1 +
- target/s390x/helper.h               |   1 +
- target/s390x/tcg/fpu_helper.c       | 118 +++++++++----
- target/s390x/tcg/insn-data.h.inc    |   5 +-
- target/s390x/tcg/translate.c        |  26 +++
- tests/tcg/s390x/Makefile.target     |   5 +
- tests/tcg/s390x/divide-to-integer.c | 265 ++++++++++++++++++++++++++++
- 10 files changed, 545 insertions(+), 38 deletions(-)
- create mode 100644 tests/tcg/s390x/divide-to-integer.c
-
+diff --git a/target/s390x/cpu-dump.c b/target/s390x/cpu-dump.c
+index 869d3a4ad54..5b852928031 100644
+--- a/target/s390x/cpu-dump.c
++++ b/target/s390x/cpu-dump.c
+@@ -63,6 +63,7 @@ void s390_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+                              (i % 4) == 3 ? '\n' : ' ');
+             }
+         }
++        qemu_fprintf(f, "FPC=%08" PRIx32 "\n", env->fpc);
+     }
+ 
+ #ifndef CONFIG_USER_ONLY
 -- 
 2.52.0
 
