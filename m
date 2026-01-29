@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC4F2D73E80
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC8FFD73E81
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlVyV-0004tI-7K; Thu, 29 Jan 2026 12:38:35 -0500
+	id 1vlVya-0004zW-FL; Thu, 29 Jan 2026 12:38:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyT-0004rX-D3
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:33 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1vlVyW-0004ul-Mc
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:36 -0500
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyR-0000gG-LD
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:33 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-8230c33f477so618450b3a.2
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:31 -0800 (PST)
+ id 1vlVyU-0000h6-SV
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:36 -0500
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-bc274b8b15bso749220a12.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769708310; x=1770313110; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769708313; x=1770313113; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=v5uxG/Q2SM3Aouk+ewwF3GM6TTHW2fcEuokwAO/vUYM=;
- b=COUJekAy5TfQAwThLw/6bSpuKYNYOsbocJcpp0FPfZbwGHVlShFPESkJOD3IxikHB3
- VesF5fxvpiN7XN2l0M2FiQ/i88qkdp0eY05ynjIKR2UEqJGr9E60uSqEhUgyedctbPys
- qig5vjtf5zIi2rHybHunXzRjebA9TPxGdcLXuDlCKs5l/SBpcCN/ij9/mpPLkE/EsQ7p
- 4xFuQeZtL0vSpK3Rcud93DeGesk5PogrjO4Yb/xhQk+YXNwkPBpOe7lfMIr/e+npgE67
- 4PfUNqyr0oOnSeIY4HJFVtHmRi2XvO0p2BBc3viHbNFL7OVb8M/XqTeX+5oAsNbd+wKe
- q9xA==
+ bh=EW/LvKJOHjch2/WO8HxnWJSGnTjzN/LRcA4NPCUYnkE=;
+ b=bSPhYoR737VwwA8eECR56E6JPKXpxTD3T4LuXWepCMlQqKlw8SJYTle2VLUVLK4/qq
+ UW28eViK30uzS8N5KYNmk80oy9Z+BcHaVhFsNO1ZtoJODnjLDPki+OVxecSPUMSNUTGM
+ +kC22Mu8abaNqSfUbtmVtW02Td7Q+3MF7c4mZd+FGAZk56XIXmwzc5lWSU9rP9KINREh
+ 2vonDEdJH9OMdaAiODEe1YQA3FFD4KEAIUgx0N3QWmlOkFCSo29HL+sCz0BxSdEJUn4n
+ lecHXKvaOttW/hkAFSQiwHelQHRrPJ28e/SLbQUfWJucZ2H44g6xxnadc5TI4frNX/l8
+ jEuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769708310; x=1770313110;
+ d=1e100.net; s=20230601; t=1769708313; x=1770313113;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=v5uxG/Q2SM3Aouk+ewwF3GM6TTHW2fcEuokwAO/vUYM=;
- b=b8OL0VoF2vJ6augO+4789ghQHHfXdASAswz6daIHjb+xV7cmAOSADQ4642Outh0KcK
- sSCtD8xf9EsttwmFggNSyI9Go6M0AZ7xPGXpD2ZsqKIpYaqD6sb1rqk2LtjXkwJPvbBU
- 8Ae0+6e3ELM5WIGyr2eIs/uDjr9tEAP6eOAnGmWPCjFgjJH7qfFiI+FI1TDTZpIDpX8a
- sgClr6o/1kwJ0qZdTiZIU/iYK1Nc/SlEZ+l8R5SUkqhvg8Vk5dV5sqnz9urxjZPv/PhL
- 47hgHBXrkzj5QaBtd6QZayyvWuX+scH7j0wvTvcMuLAMtsZlizgwARbF8EXzdon1MNzi
- 3ZMg==
-X-Gm-Message-State: AOJu0Yxm4rFLromcR2ArnMDUO79KSTgTpvybFNnTcZkdgTypFNlCYcoX
- qlr15LkCVhcdSMY8MZBYHMwvaxV065VCLSYuYvD3yyQWbTH9QPtFb5kMP5YQOTVgSrdUYItEqWp
- QnpWQ
-X-Gm-Gg: AZuq6aJNb+NgmYmKYxyea5zXkxVPmiSx6bxmub/l/I+kDXU43+tm2L+AZvLyIWsvImy
- 4QgT7mWk4Za3kSjkB4MKUyuqrV/9Vo8T/7mMUjmBSGyQ2Zpz04flkqNy9vVkPAZ03HopDDnMyen
- 1tWMToUiioK5Xm3jMJ3CCI4rEEcPPqO29XRIGrx4E1hA1KAmIaLXVjxG1bnC3e+tPDl7OtuZSH7
- V+SFFh1WJb9fGyDyhi6TmULe7vJ4lPdPwY8VsIPbu8GGHSotm8CAR72Xu1wRVbtr9KFjNVsQxcM
- sjecjXS/bXDbHyWcSgGg9bMXevtebEvPeRxfhJd2bDw+1aUYqq6bYZ1UeCbGKvK+M5I/CvNY9cl
- jF2Q2fjxUWhpIbKyAFX20IRQkwUZ0Ce712GdW6qk9ehUZzIzUZcBwCV7yQW8LG4fYNOxfjQeVbv
- xOMb4LVEuJ3yfZSsR0F3n3dJ/pU6Mr14MTG/aV9oZnv4pCJyq5FUTPWU0psajSjEjL
-X-Received: by 2002:a05:6a00:7607:b0:821:8569:7f19 with SMTP id
- d2e1a72fcca58-823692ee7bemr7265995b3a.59.1769708310300; 
- Thu, 29 Jan 2026 09:38:30 -0800 (PST)
+ bh=EW/LvKJOHjch2/WO8HxnWJSGnTjzN/LRcA4NPCUYnkE=;
+ b=v9aR8VhwVLdQp7kEAU8oxcrBw9SwnJxqs9ypclvG8zYhnKJGKgHYxHzhTvAPuuiD9n
+ +luG3cZq7RsreEdgwm+YEmRYMcd552ZH2mQkSSLHguI6lXSixn4b6gcydOo7KTU04DD+
+ O8SfYKsX63IvI7xcLaXgZu4G8Y5grlQMBGaapAjVmec0l5urvqYVjzD1vIIPWAuN4cnA
+ 4IGvuMd03rLmUK2EkEFvMp5ymAgvbWqiyfB3HyFUc+WALLEf1ISmOwR/9eeQ/Sztsmm0
+ mtNq+a3MbYRFtmvG4ei5Wjf6ldi76F76UgB8a87CeMbdY9I4wS9O5s84OVGyXVni+5jr
+ z+Sw==
+X-Gm-Message-State: AOJu0Yw8gWvcGYKpywtBASiklW03IEJTjQX5q+Mwnvsxtw6zZSR4UExa
+ IhOBLdzbTqAF7Ok+hHdj0Fv9a+0IVfoXJmmDkevkH7u8p6TECtvT7jwGZ05wwhP2Ra8ns6id3Mn
+ HI8kl
+X-Gm-Gg: AZuq6aJaQsfFPVwonLGPMszznxkjc6Aq4NBNVCsvYB470ls2OlFGR40HOsN5vxpVPd7
+ FYw6rRb1vNK6PkoMJcTXNCt0TLT8MF5pz1vw2pJ+B0+tLcBDdj3unD06QamHB6LSC4nSVVr745C
+ EiRym36jY6jpACmK8+Z3PCYQZOJrXfXz8M/poCisQYB08fnFtPqlXROwcF8McXmWiYg+qi6tyfD
+ juVtz3BN/eRAUagf3v9MusBKVEXQtg8r5kSiy/kk/pecdpBySs7WBj1qMJVNUIINPbUMpxa5L7o
+ n0920bHowUzo4RsP5SedfR9Ux34anUtk1K/dYYiE4LPdXWrRD1gk6MvGkmuqKxlRh9T3X+xhR12
+ 0zT/zYOMBJurUsP+jOAgxKzZfw7BkShdYA800g2yi0kr1Evf4t6E79RjqPafZPlxNOTmX8aqcaG
+ UJKL7ezZkx4EXQde6jJUR3nkcCSEyJAwyh740JSz/x6xcuNBB79FfmxRLGKIfPW744
+X-Received: by 2002:a17:90b:56ce:b0:341:ae23:85fd with SMTP id
+ 98e67ed59e1d1-3543b315807mr218091a91.11.1769708313392; 
+ Thu, 29 Jan 2026 09:38:33 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.29
+ d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 09:38:29 -0800 (PST)
+ Thu, 29 Jan 2026 09:38:33 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL 16/21] meson: fix supported compiler arguments in other
- languages than C
-Date: Thu, 29 Jan 2026 09:38:02 -0800
-Message-ID: <20260129173811.138036-17-pierrick.bouvier@linaro.org>
+Subject: [PULL 20/21] contrib/plugins: add empty cpp plugin
+Date: Thu, 29 Jan 2026 09:38:06 -0800
+Message-ID: <20260129173811.138036-21-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 References: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,62 +103,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_common_flags are only checked for c compiler, even though they
-are applied to c++ and objc. This is a problem when C compiler is gcc,
-and C++ compiler is clang, creating a possible mismatch.
-
-One concrete example is option -fzero-call-used-regs=used-gpr with
-ubuntu2204 container, which is supported by gcc, but not by clang, thus
-leading to a failure when compiling a C++ TCG plugin.
+This plugin makes sure we can compile in C++ while including qemu-plugin
+header. It includes all C++ standard headers, up to C++23 standard,
+minus the ones that are missing in the oldest environments we need to
+build for.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260124182921.531562-8-pierrick.bouvier@linaro.org
+Link: https://lore.kernel.org/qemu-devel/20260124182921.531562-12-pierrick.bouvier@linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ contrib/plugins/cpp.cpp     | 119 ++++++++++++++++++++++++++++++++++++
+ contrib/plugins/meson.build |   4 ++
+ 2 files changed, 123 insertions(+)
+ create mode 100644 contrib/plugins/cpp.cpp
 
-diff --git a/meson.build b/meson.build
-index 23252afc7d0..ad8550d9e97 100644
---- a/meson.build
-+++ b/meson.build
-@@ -682,10 +682,7 @@ if cc.compiles('extern struct { void (*cb)(void); } s; void f(void) { s.cb(); }'
-     hardening_flags += '-fzero-call-used-regs=used-gpr'
- endif
- 
--qemu_common_flags += cc.get_supported_arguments(hardening_flags)
--
--add_global_arguments(qemu_common_flags, native: false, language: all_languages)
--add_global_link_arguments(qemu_ldflags, native: false, language: all_languages)
-+qemu_common_flags += hardening_flags
- 
- # Collect warning flags we want to set, sorted alphabetically
- warn_flags = [
-@@ -744,15 +741,19 @@ if 'cpp' in all_languages
-   qemu_cxxflags = ['-D__STDC_LIMIT_MACROS', '-D__STDC_CONSTANT_MACROS', '-D__STDC_FORMAT_MACROS'] + qemu_cflags
- endif
- 
--add_project_arguments(qemu_cflags, native: false, language: 'c')
--add_project_arguments(cc.get_supported_arguments(warn_flags), native: false, language: 'c')
-+add_project_arguments(cc.get_supported_arguments(qemu_common_flags + qemu_cflags + warn_flags),
-+                      native: false, language: 'c')
-+add_global_link_arguments(qemu_ldflags, native: false, language: all_languages)
+diff --git a/contrib/plugins/cpp.cpp b/contrib/plugins/cpp.cpp
+new file mode 100644
+index 00000000000..1ff54896d97
+--- /dev/null
++++ b/contrib/plugins/cpp.cpp
+@@ -0,0 +1,119 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This C++ plugin ensures we don't have regression when compiling C++.
++ */
 +
- if 'cpp' in all_languages
--  add_project_arguments(qemu_cxxflags, native: false, language: 'cpp')
-+  add_project_arguments(cxx.get_supported_arguments(qemu_common_flags + qemu_cxxflags),
-+                        native: false, language: 'cpp')
-   add_project_arguments(cxx.get_supported_arguments(warn_flags), native: false, language: 'cpp')
++#include <qemu-plugin.h>
++
++/* https://en.cppreference.com/w/cpp/headers.html */
++#include <algorithm>
++#include <any>
++#include <array>
++#include <atomic>
++#include <barrier>
++#include <bit>
++#include <bitset>
++#include <cassert>
++#include <cctype>
++#include <cerrno>
++#include <cfenv>
++#include <cfloat>
++#include <charconv>
++#include <chrono>
++#include <cinttypes>
++#include <climits>
++#include <clocale>
++#include <cmath>
++#include <codecvt>
++#include <compare>
++#include <complex>
++#include <concepts>
++#include <condition_variable>
++#include <coroutine>
++#include <csetjmp>
++#include <csignal>
++#include <cstdarg>
++#include <cstddef>
++#include <cstdint>
++#include <cstdio>
++#include <cstdlib>
++#include <cstring>
++#include <ctime>
++#include <cuchar>
++#include <cwchar>
++#include <cwctype>
++#include <deque>
++#include <exception>
++#include <execution>
++#include <filesystem>
++#include <forward_list>
++#include <fstream>
++#include <functional>
++#include <future>
++#include <initializer_list>
++#include <iomanip>
++#include <ios>
++#include <iosfwd>
++#include <iostream>
++#include <istream>
++#include <iterator>
++#include <latch>
++#include <limits>
++#include <list>
++#include <locale>
++#include <map>
++#include <memory>
++#include <memory_resource>
++#include <mutex>
++#include <new>
++#include <numbers>
++#include <numeric>
++#include <optional>
++#include <ostream>
++#include <queue>
++#include <random>
++#include <ranges>
++#include <ratio>
++#include <regex>
++#include <scoped_allocator>
++#include <semaphore>
++#include <set>
++#include <shared_mutex>
++#include <source_location>
++#include <span>
++#include <sstream>
++#include <stack>
++#include <stdexcept>
++#include <stop_token>
++#include <streambuf>
++#include <string>
++#include <string_view>
++#include <syncstream>
++#include <system_error>
++#include <thread>
++#include <tuple>
++#include <typeindex>
++#include <typeinfo>
++#include <type_traits>
++#include <unordered_map>
++#include <unordered_set>
++#include <utility>
++#include <valarray>
++#include <variant>
++#include <vector>
++#include <version>
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
++
++static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
++{
++}
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
++                                           const qemu_info_t *info,
++                                           int argc, char **argv)
++{
++    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
++    return 0;
++}
+diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+index 3d2d7862e0c..53d52c97967 100644
+--- a/contrib/plugins/meson.build
++++ b/contrib/plugins/meson.build
+@@ -6,6 +6,10 @@ if host_os != 'windows'
+   contrib_plugins += 'lockstep.c'
  endif
- if 'objc' in all_languages
-   # Note sanitizer flags are not applied to Objective-C sources!
--  add_project_arguments(objc.get_supported_arguments(warn_flags), native: false, language: 'objc')
-+  add_project_arguments(objc.get_supported_arguments(qemu_common_flags + warn_flags),
-+                        native: false, language: 'objc')
- endif
- if host_os == 'linux'
-   add_project_arguments('-isystem', meson.current_source_dir() / 'linux-headers',
+ 
++if 'cpp' in all_languages
++  contrib_plugins += 'cpp.cpp'
++endif
++
+ t = []
+ if get_option('plugins')
+   foreach i : contrib_plugins
 -- 
 2.47.3
 
