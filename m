@@ -4,92 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29D63D73E87
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 22:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E930ED73E87
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 22:55:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlads-00081N-Rw; Thu, 29 Jan 2026 17:37:36 -0500
+	id 1vlauK-0003oF-Lv; Thu, 29 Jan 2026 17:54:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vladf-0007vl-7E
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 17:37:23 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vladc-0006uB-JC
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 17:37:23 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43284ed32a0so823099f8f.3
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 14:37:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1769726238; x=1770331038; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=knX8WBky18FYrZOaxcj/QfAiOS28/HQkTdx1yFPFne0=;
- b=BTkOFYJlKE4KEa/QgMmiK9okUbXwWRnbmUaSB+3uHxJOu4nyEVbrp//tA6U2VgbhOl
- yVvnMf6jvY6bwW+7K/6i1oott1PSWDbbqhk22SxVf+78ydhtig30UcLqsJTEp7EaTlua
- rcGIxN5cG8aA7iURfxHqhI6nR8KAYNUkFaBN1b2Uhm4N1cKeTfGDj2hZ1iU9xnFId/hi
- G4KTyvqhIqIEhi9CHPvpm4hRfz1Y/t+Dj4V/RDgrIC9NFM/ckHY4BVNsG/76tYu0pXEr
- gR9s+PfS3BQNzF3JG6hsPl/BNzL0MSUNwubRz22JKyuMtQYTszFiCWtpg9qRC2SjCYeB
- ZUGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769726238; x=1770331038;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=knX8WBky18FYrZOaxcj/QfAiOS28/HQkTdx1yFPFne0=;
- b=AJtcvFgRoh6nBJog4i/jikKVGZBubTJlqPN114/rs4WtbkZe4XCRcl/rg0osLUc80z
- z6tzfB9/4VoiIiDjOcSiJZiQ5pMTTLQuTTvxw6NYAiZqgJGlztL5U0otwtE+BItlifJK
- 0BP43ZdF7+6jfgm8la1gsUo3duiBNJ4e01Gk3s8gxbfsW8mRrInbeGUBRlVyYhmKUuHS
- 3JwjYIcQmWOofYhACvMqVA3neJD1GaC1glhndfhLvGXmGFsN2lnCq+rxnfDpajko4Etn
- Sluerp6yUVPnmo/JZNdfZM6vviOV02BCRTN+0POVgtt0PmBRJv3/SvnBaragaMU+Zetc
- 3gIg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUrdds7dxyqoHW0ifrYwgNPHJbZN/sBYc0ys+EEOfH0PSjNgEiF2wg5/6Zug3NJBLRnL7JYYBESn3bF@nongnu.org
-X-Gm-Message-State: AOJu0YywcKCjFUQ+KACc3+8QdRmGpV49Xx4ZPjsOJPnIKrT23eLKV3xG
- yDgRDEwhSzffvW0Vi7TmcKa2p0Yhdhoe5aCDqhkKDmlKjYFbKj4+4MB7
-X-Gm-Gg: AZuq6aIo2Smp89jTY9KWfF0jU4k25seDgFiTZo6HkQX2CXX2so1V+MtO57c/3VXBhCB
- FZWZeJ+MMPu1ReQb4XFnkbuXm48Lvkq4tNHwhSoIBbLAh1G/Kcbd6lHgdpN+DWGDEegdIxE/Vi0
- IewcrOghjLlRY/0nEdIV71F/mMT1jOB/3RmdeLfHv9B+GAFaeaXqWtaKUJfWvmpkqIZDvK9cCe5
- 3r+fuOYHj+8yC7kupoFXDPpr6fI4swELe3AEJvq97rRlAsqC3pIhwlp54iqobH2YVh5pMzWyTIi
- zww5XD223WrUVxtxu7drqWPnwmFiMw1eTMyuHrmB+TWiPeoVT6aKL2YMNzr9tHXtBezZMUvpQmI
- v/uXgc5Dl+I+dmLzV5gA/wlNb8jn0kEG2xXoLJvG2zjEDaTwaRagsCZJJy1f/b02z/LbrR499pO
- JupM0h7J5mt4/CsMV0A95Ro1EpiPw6eJAN47RMpOPqtDaMX6ZR9h2OAd/pI9gnANllPH7N1H3zY
- x7gx21c0TS2q/pBRjOp7APYMoqQ3zEAGzA=
-X-Received: by 2002:a05:6000:2910:b0:432:ca6c:7b03 with SMTP id
- ffacd0b85a97d-435f3a88011mr1583745f8f.26.1769726238078; 
- Thu, 29 Jan 2026 14:37:18 -0800 (PST)
-Received: from ehlo.thunderbird.net
- (dynamic-2a02-3100-2fc2-2300-f91d-651c-a220-693b.310.pool.telefonica.de.
- [2a02:3100:2fc2:2300:f91d:651c:a220:693b])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e1354114sm18634842f8f.42.2026.01.29.14.37.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Jan 2026 14:37:17 -0800 (PST)
-Date: Thu, 29 Jan 2026 22:37:16 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Ani Sinha <anisinha@redhat.com>
-CC: kraxel@redhat.com, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v3_28/33=5D_ppc/openpic=3A_create_a_new_op?=
- =?US-ASCII?Q?enpic_device_and_reattach_mem_region_on_coco_reset?=
-In-Reply-To: <20260127051612.219475-29-anisinha@redhat.com>
-References: <20260127051612.219475-1-anisinha@redhat.com>
- <20260127051612.219475-29-anisinha@redhat.com>
-Message-ID: <D5C8D3F1-713B-4C13-A90D-0EFC65DDB065@gmail.com>
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vlauF-0003hm-Nt; Thu, 29 Jan 2026 17:54:31 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vlauE-0001RZ-2O; Thu, 29 Jan 2026 17:54:31 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TEPYEL022812;
+ Thu, 29 Jan 2026 22:54:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=+LbFa3
+ d6uPQerJugAAIhVuStUwJwRW9Ak6bnaC5NYPo=; b=GmZYwPX/7FLGv3xMxfQHt4
+ 5RkCWzRvOiHJ5jgxF25pIOexwG9utL79mYE2Du24FYTgZBcev6ckOfM9rLDjUorX
+ OVpiYPri31AwHU7G+Qw5abRhi9S/fYSDLFOpL7eQM6+CP5e6JQHzLo8xdKyS3trD
+ SfFi9Qgdp5o1Ni/p4coOU9CjDW5YzDYbxdmV/C1o81G+l9C9KxQdGyZCUGdQNX73
+ Y9LuJgoZv6Fz8Vt6dh02TU59LheLUEXeS7Po6eJ6YVVVsUi7DmNNoiV/cY/Kaze1
+ OubXC764Q3HqGyB/PN77Df6yAivnzokc45O29j+PzzSFpqO3w1j34biugwUL586Q
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvkgn0nfw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Jan 2026 22:54:28 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60TJV2GY026805;
+ Thu, 29 Jan 2026 22:54:27 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4bw9wkkxy1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Jan 2026 22:54:27 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60TMsQBv30475000
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 29 Jan 2026 22:54:26 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1A7D458052;
+ Thu, 29 Jan 2026 22:54:26 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 62FB758056;
+ Thu, 29 Jan 2026 22:54:25 +0000 (GMT)
+Received: from [9.61.243.220] (unknown [9.61.243.220])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 29 Jan 2026 22:54:25 +0000 (GMT)
+Message-ID: <2494fe74-23bb-429c-b750-4fa674a67712@linux.ibm.com>
+Date: Thu, 29 Jan 2026 14:54:24 -0800
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/14] pc-bios/s390-ccw: Introduce CLP Architecture
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ zycai@linux.ibm.com
+References: <20260127161547.459443-1-jrossi@linux.ibm.com>
+ <20260127161547.459443-8-jrossi@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20260127161547.459443-8-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Gr1PO01C c=1 sm=1 tr=0 ts=697be524 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=0cF1dDw_mijGlTfD0moA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: d36h3kiQaxwOSnqFl-2wfbNwVlwHqD2r
+X-Proofpoint-ORIG-GUID: d36h3kiQaxwOSnqFl-2wfbNwVlwHqD2r
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDE2NyBTYWx0ZWRfX7RrawalqWfjh
+ QHbJEX2eXpIBhliAou1165fuJGo5km9Qb8+btRELmom+pvi54SqB0QP3+mR302jBuDmA3WWPc3Y
+ bUx3YN7io4S2LjKekrCIvns3XN/z3FXNpun0a1jKW0uzHIoW5FxozIGhOSEkvQ5r8Bj3+9yZ5cF
+ 46XXcgEgVq2rVU7kLwX4vacAwrIFOd/zHofVztg70kw2H2ryb3Yjk7qe6kP/XB6QeRZykn/np00
+ KZiHTB7guhCiU6kGi+u3GxcT0u7qTMqJ+L5pW3ti7nV4caXc+7/4c5bjFHhoQIzrgEN8YuOhMTZ
+ sqaMJhvK6Cx5phNJonhexzibI49aoEaKjh/66F0cgPT7ZvgzlDb2mO/tbWQmt5dzmDZW1uh9+3y
+ 3WT/4UWdHdSXMgLOeK4WDjW0KdvUVriJoyaVgILz7Rqbp5BCIb7w+e7KNG+G4zs7sboj10dE3Z1
+ UfGcxVr29q3NV6MwpBA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-29_03,2026-01-29_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 malwarescore=0 adultscore=0 spamscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601290167
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,187 +124,82 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-
-Am 27=2E Januar 2026 05:15:56 UTC schrieb Ani Sinha <anisinha@redhat=2Ecom=
->:
->For confidential guests during the reset process, the old KVM VM file
->descriptor is closed and a new one is created=2E When a new file descript=
-or is
->created, a new openpic device needs to be created against this new KVM VM=
- file
->descriptor as well=2E Additionally, existing memory region needs to be re=
-attached
->to this new openpic device and proper CPU attributes set associating new =
-file
->descriptor=2E This change makes this happen with the help of a callback h=
-andler
->that gets called when the KVM VM file descriptor changes as a part of the
->confidential guest reset process=2E
+On 1/27/2026 8:15 AM, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
 >
->Signed-off-by: Ani Sinha <anisinha@redhat=2Ecom>
->---
-> hw/intc/openpic_kvm=2Ec | 112 +++++++++++++++++++++++++++++++++---------
-> 1 file changed, 88 insertions(+), 24 deletions(-)
+> Call Logical Processor (CLP) Architecture is used for managing PCI functions on
+> s390x. Define and include the structures and routines needed to interact with
+> PCI devices during IPL.
 >
->diff --git a/hw/intc/openpic_kvm=2Ec b/hw/intc/openpic_kvm=2Ec
->index fbf0bdbe07=2E=2Eb099da20eb 100644
->--- a/hw/intc/openpic_kvm=2Ec
->+++ b/hw/intc/openpic_kvm=2Ec
->@@ -49,6 +49,7 @@ struct KVMOpenPICState {
->     uint32_t fd;
->     uint32_t model;
->     hwaddr mapped;
->+    NotifierWithReturn vmfd_change_notifier;
-> };
->=20
-> static void kvm_openpic_set_irq(void *opaque, int n_IRQ, int level)
->@@ -114,6 +115,88 @@ static const MemoryRegionOps kvm_openpic_mem_ops =3D=
- {
->     },
-> };
->=20
->+static int kvm_openpic_setup(KVMOpenPICState *opp, Error **errp)
->+{
->+    int kvm_openpic_model;
->+    struct kvm_create_device cd =3D {0};
->+    KVMState *s =3D kvm_state;
->+    int ret;
->+
->+    switch (opp->model) {
->+    case OPENPIC_MODEL_FSL_MPIC_20:
->+        kvm_openpic_model =3D KVM_DEV_TYPE_FSL_MPIC_20;
->+        break;
->+
->+    case OPENPIC_MODEL_FSL_MPIC_42:
->+        kvm_openpic_model =3D KVM_DEV_TYPE_FSL_MPIC_42;
->+        break;
->+
->+    default:
->+        error_setg(errp, "Unsupported OpenPIC model %" PRIu32, opp->mode=
-l);
->+        return -1;
->+    }
->+
->+    cd=2Etype =3D kvm_openpic_model;
->+    ret =3D kvm_vm_ioctl(s, KVM_CREATE_DEVICE, &cd);
->+    if (ret < 0) {
->+        error_setg(errp, "Can't create device %d: %s",
->+                   cd=2Etype, strerror(errno));
->+        return -1;
->+    }
->+    opp->fd =3D cd=2Efd;
->+
->+    return 0;
->+}
->+
->+static int kvm_openpic_handle_vmfd_change(NotifierWithReturn *notifier,
->+                                          void *data, Error **errp)
->+{
->+    KVMOpenPICState *opp =3D container_of(notifier, KVMOpenPICState,
->+                                        vmfd_change_notifier);
->+    uint64_t reg_base;
->+    struct kvm_device_attr attr;
->+    CPUState *cs;
->+    int ret;
->+
->+    /* we are not interested in pre vmfd change notification */
->+    if (((VmfdChangeNotifier *)data)->pre) {
->+        return 0;
->+    }
->+
->+    /* close the old descriptor */
->+    close(opp->fd);
->+
->+    if (kvm_openpic_setup(opp, errp) < 0) {
->+        return -1;
->+    }
->+
->+    if (!opp->mapped) {
->+        return 0;
->+    }
->+
->+    reg_base =3D opp->mapped;
->+    attr=2Egroup =3D KVM_DEV_MPIC_GRP_MISC;
->+    attr=2Eattr =3D KVM_DEV_MPIC_BASE_ADDR;
->+    attr=2Eaddr =3D (uint64_t)(unsigned long)&reg_base;
->+
->+    ret =3D ioctl(opp->fd, KVM_SET_DEVICE_ATTR, &attr);
->+    if (ret < 0) {
->+        error_setg(errp, "%s: %s %" PRIx64, __func__,
->+                   strerror(errno), reg_base);
->+        return -1;
->+    }
->+
->+    CPU_FOREACH(cs) {
->+        ret =3D kvm_vcpu_enable_cap(cs, KVM_CAP_IRQ_MPIC, 0, opp->fd,
->+                                   kvm_arch_vcpu_id(cs));
->+        if (ret < 0) {
->+            return ret;
->+        }
->+    }
->+
->+    return 0;
->+}
->+
-> static void kvm_openpic_region_add(MemoryListener *listener,
->                                    MemoryRegionSection *section)
-> {
->@@ -197,36 +280,14 @@ static void kvm_openpic_realize(DeviceState *dev, E=
-rror **errp)
->     SysBusDevice *d =3D SYS_BUS_DEVICE(dev);
->     KVMOpenPICState *opp =3D KVM_OPENPIC(dev);
->     KVMState *s =3D kvm_state;
->-    int kvm_openpic_model;
->-    struct kvm_create_device cd =3D {0};
->-    int ret, i;
->+    int i;
->=20
->     if (!kvm_check_extension(s, KVM_CAP_DEVICE_CTRL)) {
->         error_setg(errp, "Kernel is lacking Device Control API");
->         return;
->     }
->=20
->-    switch (opp->model) {
->-    case OPENPIC_MODEL_FSL_MPIC_20:
->-        kvm_openpic_model =3D KVM_DEV_TYPE_FSL_MPIC_20;
->-        break;
->-
->-    case OPENPIC_MODEL_FSL_MPIC_42:
->-        kvm_openpic_model =3D KVM_DEV_TYPE_FSL_MPIC_42;
->-        break;
->-
->-    default:
->-        error_setg(errp, "Unsupported OpenPIC model %" PRIu32, opp->mode=
-l);
->-        return;
->-    }
->-
->-    cd=2Etype =3D kvm_openpic_model;
->-    ret =3D kvm_vm_ioctl(s, KVM_CREATE_DEVICE, &cd);
->-    if (ret < 0) {
->-        error_setg_errno(errp, errno, "Can't create device %d", cd=2Etyp=
-e);
->-        return;
->-    }
->-    opp->fd =3D cd=2Efd;
->+    kvm_openpic_setup(opp, errp);
->=20
->     sysbus_init_mmio(d, &opp->mem);
->     qdev_init_gpio_in(dev, kvm_openpic_set_irq, OPENPIC_MAX_IRQ);
->@@ -235,6 +296,9 @@ static void kvm_openpic_realize(DeviceState *dev, Err=
-or **errp)
->     opp->mem_listener=2Eregion_del =3D kvm_openpic_region_del;
->     opp->mem_listener=2Ename =3D "openpic-kvm";
->     memory_listener_register(&opp->mem_listener, &address_space_memory);
->+    opp->vmfd_change_notifier=2Enotify =3D
->+        kvm_openpic_handle_vmfd_change;
->+    kvm_vmfd_add_change_notifier(&opp->vmfd_change_notifier);
->=20
->     /* indicate pic capabilities */
->     msi_nonbroken =3D true;
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+>   pc-bios/s390-ccw/Makefile |  2 +-
+>   pc-bios/s390-ccw/clp.c    | 96 +++++++++++++++++++++++++++++++++++++++
+>   pc-bios/s390-ccw/clp.h    | 24 ++++++++++
+>   3 files changed, 121 insertions(+), 1 deletion(-)
+>   create mode 100644 pc-bios/s390-ccw/clp.c
+>   create mode 100644 pc-bios/s390-ccw/clp.h
+>
+> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+> index 259cff09db..9c29548f84 100644
+> --- a/pc-bios/s390-ccw/Makefile
+> +++ b/pc-bios/s390-ccw/Makefile
+> @@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+>   
+>   OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
+>   	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
+> -	  virtio-ccw.o
+> +	  virtio-ccw.o clp.o
+>   
+>   SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+>   
+> diff --git a/pc-bios/s390-ccw/clp.c b/pc-bios/s390-ccw/clp.c
+> new file mode 100644
+> index 0000000000..2a14bb9b73
+> --- /dev/null
+> +++ b/pc-bios/s390-ccw/clp.c
+> @@ -0,0 +1,96 @@
+> +/*
+> + * Call Logical Processor (CLP) architecture
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "clp.h"
+> +#include <stdio.h>
+> +#include <string.h>
+> +
+> +int clp_pci(void *data)
+> +{
+> +    struct { uint8_t _[2048]; } *req = data;
 
-Code seems structurally comprehensible to me, so:
+The architecture specifies that size of the request + response block 
+size can be maximum of 8192 bytes. If I understand correctly I think 
+QEMU (similar to kernel) uses CLP_BLK_SIZE when calculating the 
+CLP_FH_LIST_NR_ENTRIES, so it assumes that the request + response block 
+is 4096. So we can return more than 2048 bytes here and overflow.
 
-Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+I think we should use at least CLP_BLK_SIZE here instead of 2048 or set 
+this to the maximum possible value of 8192.
 
+Thanks
+
+Farhan
+
+> +    int cc = 3;
+> +
+> +    asm volatile (
+> +        "     .insn   rrf,0xb9a00000,0,%[req],0,2\n"
+> +        "     ipm     %[cc]\n"
+> +        "     srl     %[cc],28\n"
+> +        : [cc] "+d" (cc), "+m" (*req)
+> +        : [req] "a" (req)
+> +        : "cc");
+> +    return cc;
+> +}
+> +
+>
 
