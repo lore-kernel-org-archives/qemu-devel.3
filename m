@@ -4,77 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B466D358D6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0490D358D6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:41:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlV4E-0007yE-CK; Thu, 29 Jan 2026 11:40:26 -0500
+	id 1vlV4h-0008T4-FC; Thu, 29 Jan 2026 11:40:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vlV46-0007xP-94
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:40:19 -0500
-Received: from p-west1-cluster1-host8-snip4-5.eps.apple.com ([57.103.64.38]
- helo=outbound.pv.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vlV41-00056B-Ps
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:40:16 -0500
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-13 (Postfix) with ESMTPS id
- 314EB18001C2; Thu, 29 Jan 2026 16:40:09 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1769704811; x=1772296811;
- bh=+qvT7gB+SXrQ2xpwOJMPzvbLeotxZkOd8s8m9SD1ihY=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=UAYkNghFndsYw5PNiTP8WyfZoM/IM1p+rwM0+WyHsQc28FzIiUyqAe2tAMdQkKimXTrE1vB+elrPWA1V7zdCNjl53HfLkFVvIah40R7cwQ3aPaQ/1L9vLUdS0v0sy1htnw/cx6GG3BAgK1cUwZ9N3cJ31DcjnUEu78MX5K/47zDtv78ddvFWlx2uRvrmVZGiETS1Fsg8Qzr3mUgW/WCq3OTlnYRix569Dvd9SmP2V72ugXriFNOzQVDsDBY9Xi7x1MAPcS1veFLBoAFPBp4SKBukvjzq3vsX+8lpWwZPIYacqZ3YY4PDpCLG+xGZ9Ag+0ixBSCl+THKSMADKIn16/g==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-13 (Postfix) with ESMTPSA id
- 9ADEE1800B41; Thu, 29 Jan 2026 16:40:07 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlV4d-0008NE-1x
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:40:53 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlV4b-00059l-9u
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:40:50 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-42fbc305882so843064f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:40:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769704847; x=1770309647; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XbQjc8ZYqWORXyizHA7cHB2eAOXerMSR4t/7ALRc1wY=;
+ b=swJR7z31Y9k8iHy7moermWFzaVrkxUf4Nlvds42E4b+JmWcUo0l7kpxTHfBoeFHLAm
+ TA+qChGpEeY7gBf+mMRBT2cqYQ0Tbnv1JhlhIbBCC8jeYqc/1y9ose7wSYbNKHJDds2w
+ DRn8vbsjovIFjsI7DqC9kL68IYUGm+4n4CKzb/ia0ujojLqbdgLNOtBFjtxX/PRi0GM9
+ Ec4QqY+25M511rlp6G2lsn+Zbb0XiylO11z1PY0RCpgXsMQ1O1q3qXGezBmzPxfkKzT7
+ P884+MVC6g8cwzi3/Q00WhRMNJ33tmdKBZ60myjKv2ZXQcWZ+RTs/u66OpHWw+pgflJ1
+ sM0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769704847; x=1770309647;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XbQjc8ZYqWORXyizHA7cHB2eAOXerMSR4t/7ALRc1wY=;
+ b=vgCtcb0qDsdJziaYMFhVnoWKxUBcKP27KHkTl3jj7MeOVuS0Fs3+slfcK+VPjDYCnh
+ MUJFN5Yh25n7KNFZAxXrMTSF4XJihcfvlfXLi2GgAXtC121F+s1OfdFAMAkESuF1wdcl
+ /cV7mdeGEzNfVkRJwLi5sroCYgVrzXGlcSD1oi8ExaODd9+mxRWozE9Q/qYOlpkKfC4/
+ oZUyQQicKHlB++sUZNUNlrrnfc8yww+MpmzOtj7r7f/vfIb0hU7anylc0bf5Up4sMN1b
+ GCnv8+PRWQgPXAysfwGo6juWi+FE6ZLG+sObIUNs54DIMddOneeTWYKVCRl/KYkYH3rm
+ YfZQ==
+X-Gm-Message-State: AOJu0Ywi2CwBAgm8Y7yppb60num0tqV8TZTZbR0d6ExsMfeKrxUTxQSd
+ g9mAJsYzZj8Jo4UaoaUwf3zOnqSDvdD83k//wajp4FU2h0iKa4sRaeH5DKadZrXxKlLoqBE6Qjo
+ Yw36KTAE=
+X-Gm-Gg: AZuq6aKPv39rla87ifAvW/U/FH81xayJtEpfqKT9RdcV9qQDUb3fy+J5J5PqSjpyYQa
+ L4vSXOq6YSrKJU8Z8HGn8mKovwm3WHxFpRuRgOQrLE9oWNbv3XL0GelauadouNXNUJCFoTY/26G
+ MkN0tDx/3diahOkKh6GkmGzY7IQ2RwNx59bzTf3BHhRi1XXIgGc/RndeqxIBZ807dalCu3AwIgf
+ I69vZdqkQZA1fp2Ghe4LPEs647pNeDIEuUnV+MtJf1MvD5GGusLMleLAZfzLpPR2JHkiRqNqbXV
+ NGdoKRYLEXmnf/2NxHTC6RuohKwXR3vYrcdMkQQf+5IIl24kfAmly2Rx3Ue1Psm3Wr6PgQn+EGO
+ NcBFp1Ke5p0pZP1MRU8T80F7z5va6H5N+G715uehZPRqFtSibV0egzKbs788hSESFm74rvu6quT
+ KeXPalWruHrX+fwzhsjpvquXK7z56AqiHqzdSXD9PA6tYAamrclbd91kVoigP2Wl7CFHeyGgQ=
+X-Received: by 2002:a05:6000:1885:b0:431:53:1f49 with SMTP id
+ ffacd0b85a97d-435f3aab0b0mr309463f8f.41.1769704847451; 
+ Thu, 29 Jan 2026 08:40:47 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e132303fsm15886456f8f.36.2026.01.29.08.40.46
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 29 Jan 2026 08:40:46 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH] tests/data/acpi: disassemble-aml: rename and change
- interpreter line
-Date: Thu, 29 Jan 2026 17:40:04 +0100
-Message-ID: <20260129164004.222-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org
+Subject: [PATCH v5 1/9] target/i386: Include missing 'svm.h' header in 'sev.h'
+Date: Thu, 29 Jan 2026 17:40:30 +0100
+Message-ID: <20260129164039.58472-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260129164039.58472-1-philmd@linaro.org>
+References: <20260129164039.58472-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDExNiBTYWx0ZWRfX5Q2g7V1Pn9//
- 8iRQ1faqu8L37vIkPohGu7HvCPRxinoy20DC80O88vbUVSTmY1BJGiQ2vk916KyBxV1V7PTvqvi
- dryAuUPo4FGPJNCGDqiFtTmfEdw8by2a4Ww3anhMhrprUeqxyvpbnYRly+Ghm2J+5TPmnDo9xI4
- 1HSy3GpIh1IzNcwoGPAs69K36eyIvyFZ5eJY7XPK61laDzgpxxT8ZqkH+QrfYrUnkUVG53n7xfs
- Ftvo9BWsM/tiU9sJzQKDvFyeQigbQXUF8WcRN7Zkd+xB9N/C6iMsO3Yvyc1NO71ilw0/LF3+RJi
- EJm9vMjaJ9S+5ft0JG0/frrCJjNj8j/u6j0JlbGFRMBYgEFuAFQ8QYvAxu4+c8=
-X-Proofpoint-GUID: SxIx2cx9wlHXgDNyeFJTYJgtP7EBlICM
-X-Authority-Info-Out: v=2.4 cv=R8kO2NRX c=1 sm=1 tr=0 ts=697b8d6a
- cx=c_apl:c_apl_out:c_pps a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=zjuBxnCyfwlsZT70hpQA:9
-X-Proofpoint-ORIG-GUID: SxIx2cx9wlHXgDNyeFJTYJgtP7EBlICM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-29_02,2026-01-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- lowpriorityscore=0 mlxscore=0 malwarescore=0 clxscore=1030 mlxlogscore=999
- suspectscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601290116
-X-JNJ: AAAAAAABZUznHii2GEzjWyZzQDM2GAjtSwO3qyTU4GW6ju6co+TQHWMZhqNQT67DI5loLoRKwFEClE37iEvIb6VwZb9aEMCaRqEOBIvBd3p2s0DE32CM6egyH/5PYy+/zPmE8p0SUySOSajAP2NzN3zTh1O2P5GS/uPo+Dn+eSP6zDKFTNq2zBpkWrY9mvGTqqbw56yf6QjIUww5XnchvF0AAOVPduJ6/LPuqB/zRbeSh/xPi1KRz8D15fFQKPbAQ+Qq1mioOL6S7dmF/fbQNYxnMU6gbDVmwSxXWtL9FIXllaDYc09c7Ufu2njXGToNK3UxXd1viB16cCfxiNQUzfCE8UYQJMlnuxrzUz9JdeOC/HETJ1POrjOY9mHS79rj0rFZbN17GGSJtST+67K2vmElwqFGppaEPt4nJsxFg3AD0IEJoq1ieeYmw2Bh7oZ2tRcq8KRwUPY6c1XBKc8cfCQdrtV1+PC8dloDcTLAYeXEI4gv5HDWTsdFVvpsS9c5D/7Ea+G2Zy+s5saxwjJ43AEXrJA97s3HIQYr6/SwNRA9mhpXrNR38KWhPC8e/VvRKQ2zPG0suoft685pawyqG3gjsyGS1L9Mz4F6MquhvTDJSg==
-Received-SPF: pass client-ip=57.103.64.38;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,52 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-/usr/bin/bash isn't guaranteed to be present. Switch
-to /usr/bin/env bash.
+"target/i386/sev.h" uses the vmcb_seg structure type, which
+is defined in "target/i386/svm.h". Current builds succeed
+because the files including "target/i386/sev.h" also include
+"monitor/hmp-target.h", itself including "cpu.h" and finally
+"target/i386/svm.h".
 
-Rename disassemle to disassemble in the same commit.
+Include the latter, otherwise removing "cpu.h" from
+"monitor/hmp-target.h" triggers:
 
-Adapt the correponding message in rebuild-expected-aml.
+  ../target/i386/sev.h:62:21: error: field has incomplete type 'struct vmcb_seg'
+     62 |     struct vmcb_seg es;
+        |                     ^
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- tests/data/acpi/disassemle-aml.sh       | 4 ++--
- tests/data/acpi/rebuild-expected-aml.sh | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ target/i386/sev.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tests/data/acpi/disassemle-aml.sh b/tests/data/acpi/disassemle-aml.sh
-index 89561d233d..62e1991ace 100755
---- a/tests/data/acpi/disassemle-aml.sh
-+++ b/tests/data/acpi/disassemle-aml.sh
-@@ -1,4 +1,4 @@
--#!/usr/bin/bash
-+#!/usr/bin/env bash
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index 9db1a802f6b..4358df40e48 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -14,6 +14,8 @@
+ #ifndef I386_SEV_H
+ #define I386_SEV_H
  
- outdir=
- while getopts "o:" arg; do
-@@ -7,7 +7,7 @@ while getopts "o:" arg; do
-         outdir=$OPTARG
-         ;;
-     \? )
--        echo "Usage: ./tests/data/acpi/disassemle-aml.sh [-o <output-directory>]"
-+        echo "Usage: ./tests/data/acpi/disassemble-aml.sh [-o <output-directory>]"
-         exit 1
-         ;;
- 
-diff --git a/tests/data/acpi/rebuild-expected-aml.sh b/tests/data/acpi/rebuild-expected-aml.sh
-index cbf9ffe0dd..af45cf3007 100755
---- a/tests/data/acpi/rebuild-expected-aml.sh
-+++ b/tests/data/acpi/rebuild-expected-aml.sh
-@@ -57,7 +57,7 @@ old_allowed_dif=`grep -v -e 'List of comma-separated changed AML files to ignore
- echo '/* List of comma-separated changed AML files to ignore */' > ${SRC_PATH}/tests/qtest/bios-tables-test-allowed-diff.h
- 
- echo "The files were rebuilt and can be added to git."
--echo "You can use ${SRC_PATH}/tests/data/acpi/disassemle-aml.sh to disassemble them to ASL."
-+echo "You can use ${SRC_PATH}/tests/data/acpi/disassemble-aml.sh to disassemble them to ASL."
- 
- if [ -z "$old_allowed_dif" ]; then
-     echo "Note! Please do not commit expected files with source changes"
++#include "target/i386/svm.h"
++
+ #ifndef CONFIG_USER_ONLY
+ #include CONFIG_DEVICES /* CONFIG_SEV */
+ #endif
 -- 
-2.50.1 (Apple Git-155)
+2.52.0
 
 
