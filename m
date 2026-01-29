@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C49DFD73E87
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:38:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A2ED73E80
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlVyJ-0004M4-9i; Thu, 29 Jan 2026 12:38:23 -0500
+	id 1vlVyN-0004Wz-J8; Thu, 29 Jan 2026 12:38:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyH-0004JY-MT
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:21 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1vlVyK-0004Py-L9
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:24 -0500
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyF-0000d6-CV
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:21 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-81e821c3d4eso1094085b3a.3
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:18 -0800 (PST)
+ id 1vlVyI-0000dj-TY
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:24 -0500
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-34ccbf37205so586490a91.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769708297; x=1770313097; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=I1T0IHkT1j7CAh04oAglc0N/G/BUP4Rx8GN1KL6/VAo=;
- b=mghmAmyS5vwEwmJXl5+eMKCP2ngxOFaVXZwo/2UPHLb5vINI/6SdJQmpKEuDQQxF14
- dXz+LL8F77dGIIY1ahrkW+tEq1TJQ1+OhXt2+XecTlqjp7uY00S0lY0EF3N4mBUHy/30
- 6aqEvjrsQ3/L8xvVG4El8oLpEW2R/xmPsTUr9VUz4oMC+jYgB8t8o9EcUpkziHiQUvKs
- zq7nR0D43oMK1Fw5HJ46DZp+IXlDGBdgxl9MwzDfEetxz4HJLZm4qcwDbFtWffKqbKBn
- QKrBPIkaqT9Rmq1VYo3Ezl65NCv5kFTwyHeAgmwCZqHT7WSfZDNp2Qmjl4ESr7ailNG7
- Jdsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769708297; x=1770313097;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1769708301; x=1770313101; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I1T0IHkT1j7CAh04oAglc0N/G/BUP4Rx8GN1KL6/VAo=;
- b=kly9giBXa9Usd7fo9rD0mEnCG4Mtvt8H0MMfK5nxbf+NQkoG56uauxyBWVJdzKqF3W
- z7JikYMEzwVFmrfE+qxAfqqMOcLS+q9GC70B9ZcFXOKxDopSOIrzdG9zyJzaFWYfLod7
- 1pmGKKpaMlpmyM9BbtSavCKHGTlzaJ05kScQo7aCfYCX8SglcSAGaNWFptEGlcdZRCMV
- C230JDoPej+5G3Xgh8UpanAfkObBGLagjmXrC3qb9kAgzxsiIIdtyKJzxArlsMbMLH/P
- 5uj9XA5B7MofZk6pxn+ZfgCR2S9328XNNdJqcPX2GskTJSofxwiGeK90o66cbiNoR9a4
- fcTQ==
-X-Gm-Message-State: AOJu0YzNnPm0vqfWmUsXt/St5DiINBAppKherjF9f2L+Lij0GxRZUsNw
- w8c2XyCKuycm8Vr+VmTimfqkhfCL2Uu7EPL+LVh9UboGVKYvxyfs9xx7d29PPBpqbSIZP8moNST
- ugexW
-X-Gm-Gg: AZuq6aIRS4AfCm5Vrg3aqIU5Qpc2Jnj/t6WU9ou6/iqsei2pgT3IpGZoXf3KHOTMbUV
- Gmi4HjMCdeV3CXy7uSzNwgO1B3KEBJgLZJmXDGiorZtOyoCzY5XtY0vH4pS4jsIzbK84BGcwVC9
- Q35Q5fElN9Q48dy7N+c0s1LUzAStRXXT+omR8hjwGi8vRgBAMsQaiLWu8liehjRSw+1NPzvyDjG
- FmLiAC1nDIWtH+9ahDWccyUJizfJjSYa0bFbP/QSTGKJkkzhkDfF255Oti1tj699lioOXwflg6v
- BUHD3I717gnNzzR9ek/aXV2wrzPsXY2GbETWwLBUfSB1AWlUJM9j+GeY1L1VcwYwvatv7WS2FiG
- dvFKhP+siQtzq2qBRCefkFdP1GPUvOqNbdEoNgiz276TJvIrHoRoIN3VQTWj7mbY+SXS/r1zip0
- wKHv7Teemsw0dCLPHfMwigNM+RiSdPq+5HbnzijN+X9GloT9ZvrTMI71XQnmXGAgBIdLs99+KX3
- eI=
-X-Received: by 2002:a05:6a00:1898:b0:823:d58:c4ab with SMTP id
- d2e1a72fcca58-82369165b1amr8486825b3a.2.1769708297291; 
- Thu, 29 Jan 2026 09:38:17 -0800 (PST)
+ bh=72yLhNJuTU543aChFcgG+P6Xk9XLsSmbf2NcxT4jbhk=;
+ b=UjswphfsLdr1iVBJKl/zSGmGCfhnhJNWxBFsxNysK6SQsjnB+7l0HZKGv72zVNYqKq
+ j4j/qTNx7CrvTH7CrHWw1xoayR6902PzI8RzKQfgkIOXJ56/79+dcpozcgcSlf4mUFaP
+ ME6TQYFKSwq5LAouwv0aRtTpafz8+92eqQKs+p/QFrYdjsZE7wpZ6ICpJCodzhvh6GpZ
+ peeaHMjHXbodh9tRNLsojsEXMb8YqRNE8LTQrVHhVrd+bC+npLgr/1FPVm1KsK+3xusp
+ vvSgnAZdsUJ2QnnvX8JMRsH4zpJXaPvNOYqz5XWntillGIEH0YEszdm+xNIcaDREurld
+ u7IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769708301; x=1770313101;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=72yLhNJuTU543aChFcgG+P6Xk9XLsSmbf2NcxT4jbhk=;
+ b=mL56mpu5ZbniVaO/g7yvR9Qc/vGWnv3ZoVW2ou4/CzRwme2YVXECI3N/RuaLmF7TPQ
+ zx5YJ0gDx/j14oZThJTVTGyN1xg+tT5p4yKFAqW5pfcY+GcTAKl3pN/Zz1umtRr1qPft
+ O7LNqGT5UMWlkUhoClMWzpe+slEl6snQK0ypCWu4b0Zn4eZ0XjZWKEKhFPYBcHMoPYsm
+ wTXNJlJLH2NizRbz/riiwYZVO5jYYucWcwVXbT8Qs8UpWgpOcXMbGhy7q9jn6XOVwmay
+ fsbQ7ShlIG0wBoYqzJMfkUCpxUcnX6NWv48pkzarEW3YChNT1rOzmaDtPaBFG40ybNXO
+ aOow==
+X-Gm-Message-State: AOJu0YwGMziyfWyZUFTVGzb9HVsN6NZEI/N9eVIKIyT+m2hgDS2AKqso
+ OfbRBajHCdgl6V2W5raWkXzazHp+Gec4WxBNtdoPtpAMBs7VWevcR+MWXSLN19p+KQnb+1U1AHr
+ T+eug
+X-Gm-Gg: AZuq6aLoJWZ31i5E1skLmdJYcYZd9FKrC1FJv3xLVt+B0XNWp0Xor41CIIB5pFIpKbI
+ xkdyHwZnHwD8awFQPA4CKelwL445hwLIKMch4Jsk8Bwn0K/05fkv4CdP8dvbF2Rn8ieYW5hpcjN
+ 1K/Mkio4txTsTmTiX4KYS30Mf3sdy7My3Wofx58ypIDOsdIcZvfUGGVBiFVaT0p9BdT9hgT8Yux
+ QaVDH91PteVg0ojguJcv7WMkvohfbPL54Cxfg4xpz02MfdAKK0Fvzyk6tHfkR5h9PucoPeWolAt
+ yRFC3B32K7U1uReGFZHjjbRM3pkpRVc1UYbZEBUtTzg9pBAYdk8uS9tkzZ9CElLX32ypbKlbGW4
+ QzWU0qJvEj6PkK2CfjypNsQkbP/KPaL7HdYYJrX3+1SIfspNRIpUqV68AZRKFE2sPeXfi+R3+2g
+ U9ub5Zoivq5k6BI/9rgz2SfUci4D2PTzNSBOMCKAZTYlzodjZ8X6WCkAxcqEosDmKfJRssZhEEZ
+ EE=
+X-Received: by 2002:a17:90a:e7c7:b0:34e:5516:6655 with SMTP id
+ 98e67ed59e1d1-3543b3097b4mr206930a91.9.1769708301260; 
+ Thu, 29 Jan 2026 09:38:21 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.16
+ d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 09:38:16 -0800 (PST)
+ Thu, 29 Jan 2026 09:38:20 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 00/21] Plugins patches for 2026-01-29
-Date: Thu, 29 Jan 2026 09:37:46 -0800
-Message-ID: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
+Cc: Alex Bradbury <asb@igalia.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 05/21] contrib/plugins/hotblocks: Allow limit to be set as a
+ command line argument
+Date: Thu, 29 Jan 2026 09:37:51 -0800
+Message-ID: <20260129173811.138036-6-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
+References: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,85 +103,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 65fb9de4888f9bf32bc4f60c880da3dff04c4fd9:
+From: Alex Bradbury <asb@igalia.com>
 
-  Merge tag 'pr-build_fix-20260128' of https://gitlab.com/pbo-linaro/qemu into staging (2026-01-29 13:29:33 +1100)
+Also add documentation for this argument. This allows the default of 20
+to be overridden, and is helpful for using the hotblocks plugin for
+analysis scripts that require collecting data on a larger number of
+blocks (e.g. setting limit=0 to dump information on all blocks).
 
-are available in the Git repository at:
+Signed-off-by: Alex Bradbury <asb@igalia.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/58281d6e54bcad1802e8d3dc8d8501d54c2a971e.1753857212.git.asb@igalia.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ docs/about/emulation.rst    |  2 ++
+ contrib/plugins/hotblocks.c | 10 +++++++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-  https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260129
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index 543efc4d7dc..e8793b0f9ce 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -473,6 +473,8 @@ Behaviour can be tweaked with the following arguments:
+     - Description
+   * - inline=true|false
+     - Use faster inline addition of a single counter.
++  * - limit=N
++    - The number of blocks to be printed. (Default: N = 20, use 0 for no limit).
+ 
+ Hot Pages
+ .........
+diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
+index 40d8dae1cd3..8ecf0339974 100644
+--- a/contrib/plugins/hotblocks.c
++++ b/contrib/plugins/hotblocks.c
+@@ -84,7 +84,8 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+     if (sorted_counts) {
+         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
+ 
+-        for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
++        for (i = 0, it = sorted_counts; (limit == 0 || i < limit) && it;
++             i++, it = it->next) {
+             ExecCount *rec = (ExecCount *) it->data;
+             g_string_append_printf(
+                 report, "0x%016"PRIx64", %d, %ld, %"PRIu64"\n",
+@@ -170,6 +171,13 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+                 fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
+                 return -1;
+             }
++        } else if (g_strcmp0(tokens[0], "limit") == 0) {
++            char *endptr = NULL;
++            limit = g_ascii_strtoull(tokens[1], &endptr, 10);
++            if (endptr == tokens[1] || *endptr != '\0') {
++                fprintf(stderr, "unsigned integer parsing failed: %s\n", opt);
++                return -1;
++            }
+         } else {
+             fprintf(stderr, "option parsing failed: %s\n", opt);
+             return -1;
+-- 
+2.47.3
 
-for you to fetch changes up to bed25f00d306bbbcc85d068b6469fc00aeecbd11:
-
-  plugins: reduce source conflicts in plugins list (2026-01-29 09:34:14 -0800)
-
-----------------------------------------------------------------
-Changes:
-- contrib/plugins/hotblocks: Minor bug fixes and add limit argument (Alex Bradbury <asb@igalia.com>)
-- linux-user: introduce syscall-filter plugin API (Ziyang Zhang <functioner@sjtu.edu.cn>)
-- plugins: return bool from register r/w API (Florian Hofhammer <florian.hofhammer@fhofhammer.de>)
-- plugins: enable C++ plugins (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
-- plugins: reduce source conflicts in plugins list (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
-
-----------------------------------------------------------------
-Alex Bradbury (5):
-      contrib/plugins/hotblocks: Correctly free sorted counts list
-      contrib/plugins/hotblocks: Fix off by one error in iteration of sorted blocks
-      contrib/plugins/hotblocks: Print uint64_t with PRIu64 rather than PRId64
-      docs/about/emulation: Add documentation for hotblocks plugin arguments
-      contrib/plugins/hotblocks: Allow limit to be set as a command line argument
-
-Florian Hofhammer (1):
-      plugins: return bool from register r/w API
-
-Pierrick Bouvier (13):
-      linux-user: move user/syscall-trace.h to linux-user/syscall.c
-      plugins: move win32_linker.c file to plugins directory
-      plugins: factorize plugin dependencies and library details
-      plugins: use complete filename for defining plugins sources
-      plugins: define plugin API symbols as extern "C" when compiling in C++
-      tests/tcg/plugins/mem.c: remove dependency on qemu headers
-      plugins: move qemu-plugin.h to include/plugins/
-      meson: fix supported compiler arguments in other languages than C
-      meson: enable cpp (optionally) for plugins
-      qga/vss-win32: fix clang warning with C++20
-      meson: update C++ standard to C++23
-      contrib/plugins: add empty cpp plugin
-      plugins: reduce source conflicts in plugins list
-
-Ziyang Zhang (2):
-      linux-user: add plugin API to filter syscalls
-      tcg tests: add a test to verify the syscall filter plugin API
-
- docs/about/emulation.rst                         |  12 +++
- docs/devel/tcg-plugins.rst                       |   4 +-
- meson.build                                      |  26 ++---
- include/{qemu => plugins}/qemu-plugin.h          |  62 +++++++++---
- include/qemu/plugin-event.h                      |   1 +
- include/qemu/plugin.h                            |  35 +++++--
- include/user/syscall-trace.h                     |  43 --------
- bsd-user/freebsd/os-syscall.c                    |   1 -
- contrib/plugins/execlog.c                        |  14 +--
- contrib/plugins/hotblocks.c                      |  20 ++--
- contrib/plugins/uftrace.c                        |   8 +-
- linux-user/syscall.c                             |  44 ++++++++-
- plugins/api.c                                    |  36 ++++---
- plugins/core.c                                   |  39 +++++++-
- {contrib/plugins => plugins}/win32_linker.c      |   0
- tests/tcg/multiarch/test-plugin-syscall-filter.c |  39 ++++++++
- tests/tcg/plugins/insn.c                         |   4 +-
- tests/tcg/plugins/mem.c                          |  59 +++++------
- tests/tcg/plugins/syscall.c                      |  19 ++++
- contrib/plugins/cpp.cpp                          | 119 +++++++++++++++++++++++
- contrib/plugins/meson.build                      |  38 +++++---
- plugins/meson.build                              |  17 +++-
- qga/vss-win32/requester.cpp                      |   6 +-
- tests/tcg/multiarch/Makefile.target              |   7 +-
- tests/tcg/plugins/meson.build                    |  27 ++---
- 25 files changed, 497 insertions(+), 183 deletions(-)
- rename include/{qemu => plugins}/qemu-plugin.h (95%)
- delete mode 100644 include/user/syscall-trace.h
- rename {contrib/plugins => plugins}/win32_linker.c (100%)
- create mode 100644 tests/tcg/multiarch/test-plugin-syscall-filter.c
- create mode 100644 contrib/plugins/cpp.cpp
 
