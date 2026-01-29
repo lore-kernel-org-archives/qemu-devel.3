@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C7A1D6B086
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:14:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCBC9D6B084
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:14:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUb1-0001Sp-GK; Thu, 29 Jan 2026 11:10:15 -0500
+	id 1vlUb1-0001TC-IO; Thu, 29 Jan 2026 11:10:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUaj-0000Tl-GV
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:01 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1vlUau-0000xF-Me
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:08 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUae-0006hB-AE
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:55 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-4327555464cso973906f8f.1
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:51 -0800 (PST)
+ id 1vlUas-00075F-Vi
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:10:08 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-42fb2314f52so733451f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:10:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769702991; x=1770307791; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769703005; x=1770307805; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=FyC+DgpopVeoLVyZLyXpQzH/bbdr6d5+zK8/TX4p6T4=;
- b=kUQwT02L3A/sPldVtmREHBqKJiSV87FZ2RyjZbKh02DG21lmlJkFijYHr7KKEKl+vP
- SdClqpQ/FOb1k+eE0fS0FokJEFT0fgVBICy3hGiUVsiKV70VDtGpJ0QNxgE4TYt80d+S
- Kj0PPrxfob9lbRvh9zkZYhn1AfU5HpSlvdCH2x85Yh0kj6uKFyLQ6b+gxN42Owg/dEjD
- ZgsSXh9mi3kK0mK12C8hgtv5QjdK+Wjh9e06PH4f4cXAZg4vh7ssssZWU1vTW5NXIZRZ
- KlGYK3jKibmqgXBful4pf2YBoerWzTRbE9K087EZX0rP+fY+TLZS5yFFGm3wlIfTkeE3
- ZQvg==
+ :reply-to; bh=VWa2vbvC4oNt+Jo6t0zGuSn96CV4yI+L2pkpAeUn8YY=;
+ b=gKVW7aRHjq2x2X+cjjX+2tP4aIVruoGl7CCfwptp+lycEFV+OcnHB+smewLF58Aa9T
+ Rhnf7KtsRzHHxacUgtTZJac4uv0Cp+Epz5M66bqDg4avdXDaAwaHzqmnXgtxoS5JbZ9I
+ tuuetnHKJmPPikNc1I1xbB0QkHqsHeFUrC4DkqzDEVu/+7qepFe93Zz1viD57iaZAZms
+ NffyHdy5nYe20zgyDG0Ch6BQk8a3eRYstcIRsGq+RrmJeNVF5r4nevy6tC7F/Y+FKG5a
+ t9Ey51Iyq8svX6hxqSwNZ/7qgokj8qfm6nCduxAlYqKp2wgvyfVRX6S0YxCsBw6ZqhpW
+ q6FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769702991; x=1770307791;
+ d=1e100.net; s=20230601; t=1769703005; x=1770307805;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=FyC+DgpopVeoLVyZLyXpQzH/bbdr6d5+zK8/TX4p6T4=;
- b=PCzcdZITrfWbyWZXJhX5F31SMTVfQilEwKyEI9BklI0v/q2B8hgYucf4Q4U03PAwnq
- i6P6R4owZsrchl4B4Qmhp+RQ9UwxTGaceyinXTxn/0vfQVEUXgmMubdVo8gOfSXJuo1k
- nrgNTDHiJUdZxnwrnciUs+Lnt14F3ylrqSbASm+ffZ1sakzcfxCLDbRnLHC71XQJCwvj
- U/adRGbUvI2fe1LXvSjHONZ2qZsHF/M7HyD5kQ90zbLFjHuhaTCjBNz0qXljNP+KxkfG
- enNqWuNuIizcd1/a19VHMKx2B+vEQoU7OP4hAkkZHXm7LTXxBWLMrwyHw+4NX/rh6cD4
- iTpg==
-X-Gm-Message-State: AOJu0YyuByWnbc8xdwpjtE3l+VaV0RscACJFDwt8R3/mMOXm9nW865ds
- LFvejL0vm29ewe7+L/We3H8+IXdHKrrJFuJhuOyp0T4hzp1FRpOzq1v926QGlQuFF6YeGvakw7U
- Cqj0IM74=
-X-Gm-Gg: AZuq6aLo2UsDKBIKeFR0tAvk0GM1AXgFiEn2cgIoqBd64+7nSNTPEUknYeeMdf2K7F6
- wzP/aN8Aj2R7GuOnA8PbBIdom3BfU10dCs5X46uRcs/E2pxocEk/JYNeHYQtPFB93ssUCphkHSv
- zwL1pu6YHlw+la8yIyAsDaWgRdDdHjtzI/0q4I4ol9VOYKfHSeBMNP3ik/huCNYbhBKwnZMIXNB
- U7aZSz27VzFhp2leMtZjsaPgAU7+Z1gQEr8WH6T+vvX1Fj1CB6LzhVEtJzlmsPd/alcvVtuOM7O
- huyKD9vJNLzgYllFOBRYP3S0Pyz+cvFP9ewW8VLP+QCY1wPAiD9wY8266hbZMsiwFrtCkjaf2fb
- 0FgwKjd9IR/XlDJ8YsJ6tKFBtbUX/gT3ICzUqtODkz54QSDSb2+i2EQh0ap6fmt2eQOKfgL0zvF
- ekaFT1LJUzy/Z+k62pz8DSkV3whvwWLw==
-X-Received: by 2002:a05:6000:2383:b0:432:5bf9:cf2e with SMTP id
- ffacd0b85a97d-435f3a6bab1mr180058f8f.13.1769702990702; 
- Thu, 29 Jan 2026 08:09:50 -0800 (PST)
+ bh=VWa2vbvC4oNt+Jo6t0zGuSn96CV4yI+L2pkpAeUn8YY=;
+ b=SxWZjCbIwA4373ELepcKmMoX528cdBEl0lZXQvY81m+M/jkKalMqxfCJum5NOSKN18
+ AFUA7mqhzAc981SNT5zxBHXQfKQJi6UeU0ipb5p9PWA7ntNzGOsPKGMZleGb60QewRtp
+ XZ4me/cezi/n3DYpvDw4O5vSg7cAD4ePObOaTO1SUEPwo74HmMBp/b2M8cEbFOKTrfMI
+ sPU7HcYdPoO3t20s//Ylb1W9yJ3rSZzmy9GsYC0a30mbhmdfGHoO07tOQ5BqLCrTLCnU
+ gBoJnwRsa0/iUw0o/ACo1cngu6/A/eLrnpolS5eobNEH0qB/6my5D1BR3yTcuwtNk65I
+ dKEw==
+X-Gm-Message-State: AOJu0Yx59ciXrYi4qS0EGNdnavDrj7ax5pCb5rSlL3tzwOgiHQaAc21m
+ lCdZly0SKN+iv4lRcg+DhMEcVY5zncJRHOOVWkWdSx/s52boZevBNBcKuRDnu/BgtXPxoy1Y6Mp
+ nEn+AFvA=
+X-Gm-Gg: AZuq6aJPqrmB42j0/4xA23JnYujFaKO43yK1hRNZXla3mn08P1A4hv3hlJ86CwLiyVY
+ qKP8WQ6dZTZHzb3xBEY6OOGLkXBUkVMOX5teea/VIRCln5qBoe+XKDJ1hXz8wrVf0uE+CMy3xBQ
+ 07NVf+Qxf3aAOk68PkSXAEvR0YGirufphwQHbB8S00cWFJvEbGNTiIyIiEnitBKcvg7BZf/YCS/
+ bO3sYjacfiFfhuuD2Tn/AFHK17mPEKmZVCZRaIL7kdN8/JBGnE7HvDij2ppEmc+SNC4hZ9ixKzt
+ 0cki0J/CopfQelBHhMJMTkXzztGw0WwmKZXdo5HELaCiSQINq3uRUDyN5CvUaO834s9frymfnW2
+ maxno5MrKpqm1QK9AviDZhFQZn6Z9jKNNAQqModYX4AvQLnOf26mv9sQ/stDHR14SjlpKNcI7Hm
+ 0PH9BA6uoh9HFAOcgsFL2XjmjuAiITuA==
+X-Received: by 2002:a05:6000:3103:b0:435:dbbe:1130 with SMTP id
+ ffacd0b85a97d-435f3a6ca95mr206198f8f.11.1769703005251; 
+ Thu, 29 Jan 2026 08:10:05 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.49
+ ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.10.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 08:09:49 -0800 (PST)
+ Thu, 29 Jan 2026 08:10:04 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 26/43] tests/qtest/bios-tables-test: Update IORT blobs after
- revision upgrade
-Date: Thu, 29 Jan 2026 16:09:00 +0000
-Message-ID: <20260129160917.1415092-27-peter.maydell@linaro.org>
+Subject: [PULL 39/43] target/arm/hvf: Sync CNTV_CTL_EL0 & CNTV_CVAL_EL0
+Date: Thu, 29 Jan 2026 16:09:13 +0000
+Message-ID: <20260129160917.1415092-40-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260129160917.1415092-1-peter.maydell@linaro.org>
 References: <20260129160917.1415092-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,100 +100,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Update the reference IORT blobs after revision upgrade for RMR node
-support. This affects the aarch64 'virt' IORT tests.
+Keep CNTV_CTL_EL0 and CNTV_CVAL_EL0 synchronized with the
+host hardware accelerator.
 
-IORT diff is the same for all the tests:
-
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20230628 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/IORT, Mon Oct 20 14:42:41 2025
-+ * Disassembly of /tmp/aml-B4ZRE3, Mon Oct 20 14:42:41 2025
-  *
-  * ACPI Data Table [IORT]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue (in hex)
-  */
-
- [000h 0000 004h]                   Signature : "IORT"    [IO Remapping Table]
- [004h 0004 004h]                Table Length : 00000080
--[008h 0008 001h]                    Revision : 03
--[009h 0009 001h]                    Checksum : B3
-+[008h 0008 001h]                    Revision : 05
-+[009h 0009 001h]                    Checksum : B1
- [00Ah 0010 006h]                      Oem ID : "BOCHS "
- [010h 0016 008h]                Oem Table ID : "BXPC    "
- [018h 0024 004h]                Oem Revision : 00000001
- [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
- [020h 0032 004h]       Asl Compiler Revision : 00000001
- ...
-
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-id: 20260126104342.253965-27-skolothumtho@nvidia.com
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-id: 20260118215945.46693-3-philmd@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/data/acpi/aarch64/virt/IORT               | Bin 128 -> 128 bytes
- tests/data/acpi/aarch64/virt/IORT.its_off       | Bin 172 -> 172 bytes
- tests/data/acpi/aarch64/virt/IORT.smmuv3-dev    | Bin 364 -> 364 bytes
- tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 276 -> 276 bytes
- tests/qtest/bios-tables-test-allowed-diff.h     |   4 ----
- 5 files changed, 4 deletions(-)
+ target/arm/hvf/hvf.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/tests/data/acpi/aarch64/virt/IORT b/tests/data/acpi/aarch64/virt/IORT
-index 7efd0ce8a6b3928efa7e1373f688ab4c5f50543b..a234aae4c2d04668d34313836d32ca20e19c0880 100644
-GIT binary patch
-delta 18
-ZcmZo*Y+&T_^bZPYU|?Wi-8hk}3;-#Q1d;#%
-
-delta 18
-ZcmZo*Y+&T_^bZPYU|?Wi-aL`33;-#O1d;#%
-
-diff --git a/tests/data/acpi/aarch64/virt/IORT.its_off b/tests/data/acpi/aarch64/virt/IORT.its_off
-index c10da4e61dd00e7eb062558a2735d49ca0b20620..0cf52b52f671637bf4dbc9e0fc80c3c73d0b01d3 100644
-GIT binary patch
-delta 18
-ZcmZ3(xQ3C-(?2L=4FdxM>(q%{ivTdM1ttIh
-
-delta 18
-ZcmZ3(xQ3C-(?2L=4FdxM^Yn>aivTdK1ttIh
-
-diff --git a/tests/data/acpi/aarch64/virt/IORT.smmuv3-dev b/tests/data/acpi/aarch64/virt/IORT.smmuv3-dev
-index 67be268f62afbf2d9459540984da5e9340afdaaa..43a15fe2bf6cc650ffcbceff86919ea892928c0e 100644
-GIT binary patch
-delta 19
-acmaFE^oEJc(?2LAhmnDS^~6T5Bt`%|fCYU3
-
-delta 19
-acmaFE^oEJc(?2LAhmnDS`P4?PBt`%|eg%C1
-
-diff --git a/tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy b/tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy
-index 41981a449fc306b80cccd87ddec3c593a8d72c07..5779d0e225a62b9cd70bebbacb7fd1e519c9e3c4 100644
-GIT binary patch
-delta 19
-acmbQjG=+)F(?2Lggpq-P)oUXc7b5^FiUXej
-
-delta 19
-acmbQjG=+)F(?2Lggpq-P*=Hjc7b5^Fhy$Mh
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 3279638ad0..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,5 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/IORT",
--"tests/data/acpi/aarch64/virt/IORT.its_off",
--"tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy",
--"tests/data/acpi/aarch64/virt/IORT.smmuv3-dev",
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index fcb7fa3b30..9ce720793d 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -200,6 +200,9 @@ void hvf_arm_init_debug(void)
+ #define SYSREG_PMCEID0_EL0    SYSREG(3, 3, 9, 12, 6)
+ #define SYSREG_PMCEID1_EL0    SYSREG(3, 3, 9, 12, 7)
+ #define SYSREG_PMCCNTR_EL0    SYSREG(3, 3, 9, 13, 0)
++
++#define SYSREG_CNTV_CTL_EL0   SYSREG(3, 3, 14, 3, 1)
++#define SYSREG_CNTV_CVAL_EL0  SYSREG(3, 3, 14, 3, 2)
+ #define SYSREG_PMCCFILTR_EL0  SYSREG(3, 3, 14, 15, 7)
+ 
+ #define SYSREG_ICC_AP0R0_EL1     SYSREG(3, 0, 12, 8, 4)
+@@ -502,6 +505,7 @@ int hvf_arch_get_registers(CPUState *cpu)
+     uint64_t val;
+     hv_simd_fp_uchar16_t fpval;
+     int i, n;
++    bool b;
+ 
+     for (i = 0; i < ARRAY_SIZE(hvf_reg_match); i++) {
+         ret = hv_vcpu_get_reg(cpu->accel->fd, hvf_reg_match[i].reg, &val);
+@@ -631,6 +635,16 @@ int hvf_arch_get_registers(CPUState *cpu)
+ 
+     aarch64_restore_sp(env, arm_current_el(env));
+ 
++    ret = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CVAL_EL0, &val);
++    assert_hvf_ok(ret);
++    b = hvf_sysreg_write_cp(cpu, "VTimer", SYSREG_CNTV_CVAL_EL0, val);
++    assert(b);
++
++    ret = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CTL_EL0, &val);
++    assert_hvf_ok(ret);
++    b = hvf_sysreg_write_cp(cpu, "VTimer", SYSREG_CNTV_CTL_EL0, val);
++    assert(b);
++
+     return 0;
+ }
+ 
+@@ -642,6 +656,7 @@ int hvf_arch_put_registers(CPUState *cpu)
+     uint64_t val;
+     hv_simd_fp_uchar16_t fpval;
+     int i, n;
++    bool b;
+ 
+     for (i = 0; i < ARRAY_SIZE(hvf_reg_match); i++) {
+         val = *(uint64_t *)((void *)env + hvf_reg_match[i].offset);
+@@ -756,6 +771,16 @@ int hvf_arch_put_registers(CPUState *cpu)
+     ret = hv_vcpu_set_vtimer_offset(cpu->accel->fd, hvf_state->vtimer_offset);
+     assert_hvf_ok(ret);
+ 
++    b = hvf_sysreg_read_cp(cpu, "VTimer", SYSREG_CNTV_CVAL_EL0, &val);
++    assert(b);
++    ret = hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CVAL_EL0, val);
++    assert_hvf_ok(ret);
++
++    b = hvf_sysreg_read_cp(cpu, "VTimer", SYSREG_CNTV_CTL_EL0, &val);
++    assert(b);
++    ret = hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CTL_EL0, val);
++    assert_hvf_ok(ret);
++
+     return 0;
+ }
+ 
 -- 
 2.43.0
 
