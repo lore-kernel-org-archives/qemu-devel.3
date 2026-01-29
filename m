@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8708CD3F09D
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6593BD3F09D
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:03:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlVHP-0000eB-9H; Thu, 29 Jan 2026 11:54:03 -0500
+	id 1vlVQU-0006Cg-EI; Thu, 29 Jan 2026 12:03:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vlVHN-0000dC-Ef
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:54:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vlVQO-00066L-C7
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:03:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vlVHL-0007yH-0d
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:54:01 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vlVQL-0001X5-6h
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:03:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769705637;
+ s=mimecast20190719; t=1769706192;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UVWfUPLG4iHfbq14wI3hLHni87VXLqU3kNMP/cEhgfc=;
- b=iLhDJ1h2PRq93R+9tUDafIl7BRIxcMRaw5NBd1mRTzjRXsoBu1uz7OFXJn+PWhTNr/eyBO
- LHzy8hjbKCf24A9azrKRcBN8UonZW6KPDbcsUVTwF+59+2pADtdPSmZhwi941akghbeFwM
- Z15dflEQiqIOsRmWg5oYj1jUJrQA5gw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FM1t8QIf1xoegnbU5dHkCQRqpeOUcRUVTQonxz9ohNs=;
+ b=hBnwbr1H8wqP/lhvwBF011YEJbSctqmzgkwhsu8s51Grj1ya4jbH+Ket/iyoblHU9NM2CD
+ jrfo2l+QaTrK7zV/+MbfXuUXhWQ8TfEw6sW0GGuaNd59gjeeM5tp/+udGac/bNXNHSKsJo
+ mUHQUg2Pnf9cN7Y4lTIOHEt4ESfFbQQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-99-MxDVFQAYOUKF3XJ5RMjo_Q-1; Thu, 29 Jan 2026 11:53:55 -0500
-X-MC-Unique: MxDVFQAYOUKF3XJ5RMjo_Q-1
-X-Mimecast-MFC-AGG-ID: MxDVFQAYOUKF3XJ5RMjo_Q_1769705634
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-430f57cd2caso1160949f8f.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:53:55 -0800 (PST)
+ us-mta-354-ZJjkl57TNOeIdn1SVg9Cpg-1; Thu, 29 Jan 2026 12:03:11 -0500
+X-MC-Unique: ZJjkl57TNOeIdn1SVg9Cpg-1
+X-Mimecast-MFC-AGG-ID: ZJjkl57TNOeIdn1SVg9Cpg_1769706190
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4806b12ad3fso8802055e9.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:03:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769705634; x=1770310434; darn=nongnu.org;
+ d=redhat.com; s=google; t=1769706189; x=1770310989; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=UVWfUPLG4iHfbq14wI3hLHni87VXLqU3kNMP/cEhgfc=;
- b=rrh//MPq6my1qdjXuLmPtTXT1DUEXGjYSr0scba4i59VCczomVWkZtbWMwKeROnnAq
- jtRHHVrspCNecfdKPPsY0ZTVV4zqHdcK7xEjYxLKRQSspNRKkF1CWMu/E1VwizboEmfJ
- ORUx7pf0Rb2QZlisfFct5/UId3Rd4WjQrB21NDDXw+LaK8n9LG5l5PTi1+AnfxiKj+qp
- VkD4QDUUg7KmyPUBtdnBqnvLx/ljn1MCTJEDj7TsNYYxzW6QNf11pbA+n+vm/afZkQm5
- 5pAtdO28tynHdGPzq1OYLaF7TAHEOVBur8fyY765OlF84Y/fMeMPaqeqRDSWfd2flsKw
- Tm1g==
+ bh=FM1t8QIf1xoegnbU5dHkCQRqpeOUcRUVTQonxz9ohNs=;
+ b=lyUFlVbZuMPhKMCRorzXSZKYrvs+Y1vJCAvrwYAZtfbTcy45noSMoKPCcaCdRbryjx
+ PPc921s6yDf4gBa36n3cJvLoz7KFAHVF+m/12ZVTRuh7uBfIj9W0PkHvesnY8/pNFgtj
+ 8rtzDecFW0SRhcKw+6u3TaA2DUkniD+ZvPJZlyYYk7baMthYM8RYA8mG8obPCFtiFagn
+ fztYVr+jq0bKhSCeVjHpmCZVuclov1M9vhfpI1Vg5pJyxuHrRf/1pNiCqrEJmUuGBXti
+ u5JDIGrhQI6mjSIq3tiujpHEMhOGX79ekbC5YA/Q2ltm28+JtU/NJ0Ks5miFqXdTyN6C
+ T0cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769705634; x=1770310434;
+ d=1e100.net; s=20230601; t=1769706189; x=1770310989;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UVWfUPLG4iHfbq14wI3hLHni87VXLqU3kNMP/cEhgfc=;
- b=I+vPO5YFeQ4zwhCj7PHO8vY3iTEU5PnE4gNiN8892Dt9Kq2tLB4oHSdigzfyMn8VlL
- kNm/deTxZedSyjKLILqsCccy2pOjxAekvoBeFp6waQDpiThcah5Le6EgEaoTgpu2BilT
- oV7vFw3plVwcAIQOf+x8UV9yDqqfDykJjPuCE6PEEZaJAvIJEAY2oWTNKqfUccibOygm
- NyvPBDwkeGpyt67fzL470o0OA3CHexSY7tsfM4BLn3EEcsTbeRfCusEMIN8J7ZLWDwit
- HmMLV4NEptu4l0fdJBAtGyBxxiA/kf8dfyK7gBQq044Nd5h2tFc2zg4mmQeLyCeDWq4I
- eA2A==
+ bh=FM1t8QIf1xoegnbU5dHkCQRqpeOUcRUVTQonxz9ohNs=;
+ b=pXCXWiO/lH9ztHcsL9s1QvA0XSDAs6QB6xYVS6Ib4T0s64xUYaXNSYLyeHxfnEkvKS
+ mdVJdSBfMg24yLaUnsn2ErG6CwdT/F0zyAGRo6C8kuMuGxCRU2XAnKMlQDyG2esWTGT+
+ zXo3YBpTtG+DpMW3N+kM1Jdf2XVijTiZBV7vP2UueaLXonj4cBAgVqBl11sFyVFGPaIN
+ S0RCJa0ZifcZxOlLRAP8KqrGE4WEVs2avHIsE6DYFQQmG0ILN1Bk6KhG2my21ZvWox5W
+ JDogI9XtP5BX0H06O/HtHf1hTfLEtlwEBOQk4+haFHvm4Z5CUPxghzYhJg/PI/tT9mtD
+ DoYA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1mNyPb6UVpoM2fmuV5WnpVqsM4eUyxoZc6QlQKp+GbvpniudsRxs6YC0Lnks55o+WR5h/3TeFrPqm@nongnu.org
-X-Gm-Message-State: AOJu0YzqDZruVDwU3gpl4m9qtm1tA3xCzXuIt6ciFzrcgksQBR08Y+iK
- kC00UGmHEFsCHfST9Na0mgP3fXXfoIr90o2e2yR83rs9VtJlqvyxJayJMt1nrGDoBCvfyDUVCsb
- t/fUHVwtYGkGdv0qZMieGj5/zvxiHoB+w5OLPVvP5jtNqDxR4yDGDCqaU
-X-Gm-Gg: AZuq6aI67oOhVk7l2XSmquvItIDHVbFZmvgdnVZ0eGj7ZYTnDooOzbh09N53PwtX3G4
- Be2s9Gt7RyH2mnaGNILkHpJ+7yuAya4gYOYeUs15YwQdtaNUbmDcU1ZJPZgSxp18ty8bwITzZu2
- NmaF5LT97Z6UvOIAqmc5jPgkwuf5o5pVARHTCsVAQS2Xo9CXL/OKA6IJpu4XABbxO1dhnXlxChT
- w9kHu4+1KqC58BtMtJveQ5s/uTnxtdMKLbBjAJQEt1jfmNSMH/c2tx1Dc2ineN72uDYxhRRWx1E
- vxFHYzy+ypGNVaeEQUlqKbUOTbC2are2vvcgpvAJunsTiNXCmK7Eqwys9uYO9i1Zi3UadHxPMmx
- TulBhdu8=
-X-Received: by 2002:a05:600c:c16b:b0:47d:264e:b35a with SMTP id
- 5b1f17b1804b1-48069c1a85bmr107516115e9.13.1769705634296; 
- Thu, 29 Jan 2026 08:53:54 -0800 (PST)
-X-Received: by 2002:a05:600c:c16b:b0:47d:264e:b35a with SMTP id
- 5b1f17b1804b1-48069c1a85bmr107515875e9.13.1769705633929; 
- Thu, 29 Jan 2026 08:53:53 -0800 (PST)
+ AJvYcCXy6idSev5UrIw0so3Rv+ibC67lft0UcIEUlrvUWrrt4dAdSkxSczn1qIFdMkyzNDpOwXSKOgsPs7DM@nongnu.org
+X-Gm-Message-State: AOJu0YxmLGuR9DQNfmOE4flJsoJ9crvNdZInPpTnj9KXgbE6i3hjwWen
+ 306IYAxIrf/IKY4tWviCGa3LqR+1IR+HLAesXhdxtRo03VJd05Qj3NFhJY/FmGJtoBmO89TZbTM
+ EYvpAaNogY96qKXwy3qktZIZb18i23FQuYBQq+sFsVXqJxNJ9WewA+UUK
+X-Gm-Gg: AZuq6aJr74r85aDf3ejkaAslmshGP17MwameSYC4azBN/e3M9F/UiI4uIwXX+7QHHSx
+ wd1CP/9AoHe+41gnSwf/o9vIve3EEvlNQF1kqtoFGJqQwxc1VyGr/BabLK4E3np8gAonWREf8jY
+ 5BQK9ERG0tQ8PLnX0H3kXIpQbUmoC00sJgETGzOFgPCu416W/AbNtx1DlRJio6ODByyJdat3NEQ
+ YyYNHjePZpT4sRZ1qwN5WKRdzV+W4k8rM6jzwzfB6BmgCCcHuhIcK9O/pHEIvf3F7amLKD9itiH
+ 0JMoQLqR9FM0bxnZg9uZhvy5BecT4B543z332sbnXZXjEcCtH8hw9YDDOSoC3IESQwupnJ2GqJm
+ qK3VUe/g=
+X-Received: by 2002:a05:600c:35d1:b0:480:68ed:1e70 with SMTP id
+ 5b1f17b1804b1-48069c6355emr163642895e9.35.1769706189646; 
+ Thu, 29 Jan 2026 09:03:09 -0800 (PST)
+X-Received: by 2002:a05:600c:35d1:b0:480:68ed:1e70 with SMTP id
+ 5b1f17b1804b1-48069c6355emr163642395e9.35.1769706189255; 
+ Thu, 29 Jan 2026 09:03:09 -0800 (PST)
 Received: from [192.168.0.9] ([47.64.113.220])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131cfd4sm14985513f8f.25.2026.01.29.08.53.52
+ 5b1f17b1804b1-4806ce564f9sm150365555e9.14.2026.01.29.09.03.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Jan 2026 08:53:53 -0800 (PST)
-Message-ID: <662393de-bb4f-4b82-b67b-feba94b24ee6@redhat.com>
-Date: Thu, 29 Jan 2026 17:53:51 +0100
+ Thu, 29 Jan 2026 09:03:08 -0800 (PST)
+Message-ID: <7fb919fe-10b3-4c0f-a71d-65367fbf5772@redhat.com>
+Date: Thu, 29 Jan 2026 18:03:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/14] pc-bios/s390-ccw: Introduce virtio-pci functions
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, zycai@linux.ibm.com
-References: <20260127161547.459443-1-jrossi@linux.ibm.com>
- <20260127161547.459443-11-jrossi@linux.ibm.com>
+Subject: Re: tests/functional: PPC test failures
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Cc: qemu-ppc <qemu-ppc@nongnu.org>, Reinoud Zandijk <reinoud@netbsd.org>,
+ Ryo ONODERA <ryoon@netbsd.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <5100b77e-eb58-4651-bb43-13ccc6b531ce@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -139,19 +139,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260127161547.459443-11-jrossi@linux.ibm.com>
+In-Reply-To: <5100b77e-eb58-4651-bb43-13ccc6b531ce@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,37 +167,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/01/2026 17.15, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
+On 29/01/2026 17.39, Philippe Mathieu-Daudé wrote:
+> Hi,
 > 
-> Define common functionality for interacting with virtio-pci devices.
+> PPC AmigaOne and 40P tests are failing:
 > 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
-...
-> +/* virtio spec v1.3 section 4.1.2.1 */
-> +void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
-> +{
-> +    switch (device_id) {
-> +    case 0x1001:
+>   40/306 qemu:func-thorough+func-ppc-thorough+thorough / func-ppc-40p 
+>                        ERROR             6.02s   exit status 1
+> qemu_test.asset.AssetError: https://archive.netbsd.org/pub/NetBSD-archive/ 
+> NetBSD-7.1.2/iso/NetBSD-7.1.2-prep.iso: Download retries exceeded
 
-When using modern-only mode for a virtio-block device ("-device 
-virtio-blk-pci,disable-legacy=on,..."), the virtio-block device should come 
-up with a different device ID, I think it's 0x1042 ... shouldn't this get 
-added here, too?
+Looks like netbsd has got a "botcatcher" in place now, so you cannot 
+download this from a script anymore :-( Unless someone finds a different 
+location for dowloading this asset, we might need to disable the test.
 
-> +/*
-> + * Wrappers to byte swap common data sizes then write
-> + */
-> +int vpci_write_byte(uint64_t offset, uint8_t pcias, uint8_t data)
-> +{
-> +    return pci_write(virtio_get_device()->pci_fh, offset, pcias, (uint64_t) data, 1);
-> +}
+> 274/306 qemu:func-thorough+func-ppc-thorough+thorough / func-ppc-amiga 
+>                       ERROR             0.36s   exit status 1
+> -----------------------------------------------------
+> tests/functional/ppc/test_amiga.AmigaOneMachine.test_ppc_amigaone/base.log
+> 2026-01-29 14:34:05,923 - DEBUG: qemu-test.archive_extract Extract / 
+> root/.cache/qemu/ 
+> download/8ff39330ba47d4f64de4ee8fd6809e9c010a9ef17fe51e95c3c1d53437cb481f 
+> format=zipsub_dir=None member=None
+> 2026-01-29 14:34:05,924 - INFO: qemu-test.fetch Downloading https:// 
+> www.hyperion-entertainment.com/index.php/downloads? 
+> view=download&format=raw&file=25 to /root/.cache/qemu/ 
+> download/8ff39330ba47d4f64de4ee8fd6809e9c010a9ef17fe51e95c3c1d53437cb481f...
 
-I'm a little bit torn ... would it be nicer to have a "VDev *vdev" as a 
-parameter for these functions, so we don't have this hidden state via 
-virtio_get_device() here? ... OTOH, that makes the calling functions a 
-little bit more clunky ... does anybody else got an opinion on this?
+That one still seems to be working at a quick glance ... maybe it was just a 
+temporary hickup?
 
   Thomas
 
