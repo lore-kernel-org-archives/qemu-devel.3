@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC45D73E81
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:40:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EA3D73E81
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlVyO-0004Xj-2y; Thu, 29 Jan 2026 12:38:28 -0500
+	id 1vlVyY-0004x7-7Q; Thu, 29 Jan 2026 12:38:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyM-0004Ub-0Y
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:26 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1vlVyU-0004t9-Ty
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:34 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyK-0000e6-4T
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:25 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-c626bd75628so431512a12.3
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:23 -0800 (PST)
+ id 1vlVyT-0000ga-85
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:34 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-29efd139227so8032345ad.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769708302; x=1770313102; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769708312; x=1770313112; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lkr6OhmguPw2oxi7sD8m2/kHKNvzaRIhXU0XNXX+ZdA=;
- b=iIy4ty7RPnDZImnVusUFpWL8UWcAXgkpjTX2vJ9DNo6lL2Stxyqy59RQJEH7vBArZL
- 3oTXk6wV7sXrrWZqcu/GnNAoPz6ng4RYu+ksj7zKVbj+NSudbgrhFmlklzDRdUfDK7sP
- A185lOVofpyLBn1Pv1F3hD38Ixn8o3i4IzYC8yR96HIZD8way3sqhsf2A4DWwSzjAGTR
- iwH2teK0ASkzmtLgmiRXdsCUmBQaevYf9SLc3UI9Hl0X2Pns7/KAA2D938Ctor4f0GpB
- 7pPZcVvbdhlikwuHZgggcwnG5poDGrNSG4Lst4JSIqSL7xh++5Eon35zpSViENufsZRs
- NFOw==
+ bh=9iHm/DUI7LqRSDNNFCJrzlVWDCQyVlRHzHTsKps5Fks=;
+ b=NcGs+uR09uOKCEk/M0jGteg6GrZDqXf86RPvA/iMxFaWNveVJXzvtmJ24ZUR9oHeJg
+ DlBRzCI8+HFhtXP1mDO63QI5iLoWqUoRf2OEqlh+KEFF4kPwcXqQOEmTCmbWpYdw+bf5
+ lpTbi1rn8dB7nmuX3m8UDnRjtdKCWLkg5cevNkb0tDGjP/WblKiFOfTb6pp53EtqInt+
+ 7rEfv76fTahKoMZpZYiHpf4XuljolJIAsz+TviyaDaep+AvwYdSrBLKVXrmIqjDSWdqs
+ UUAzZaA4QsSEYsXYY1p7/giE0WJDYKY+cC1jaceJQ4qlrAWP+RhbrCDkWby4C6hVP37n
+ qLsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769708302; x=1770313102;
+ d=1e100.net; s=20230601; t=1769708312; x=1770313112;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=lkr6OhmguPw2oxi7sD8m2/kHKNvzaRIhXU0XNXX+ZdA=;
- b=lRMww2zqAX+kSDuUb5TXIypN4hnzqv0CIS3WQFnjD5z5g2lPAIGjXRPdVF4uXypOew
- ZPuEaMykzKeJWlNTxejsflIq5Gi/bkrI00Qkw8jFGTqluOmknCUqXcUtkyfi++OhrzSY
- kK81h7YW9WLf39sSBGQRLYic5LclWfXpgAI31B4jNnmU+M5eWBUDiWEhSptS+QqAVDvr
- 0U9Ap3EfDJs8XPqWHShpZBofBHzzSFE1hFKU4oPBR+RnLVnOvSzi971vtRucbrW06ri3
- aHtJ2ZaVJmrSdOD6cyZG4MBdWLFVECY0SAAQIjJlfD8EFtaErplM5NB/42c2uXBbTFeb
- e3PQ==
-X-Gm-Message-State: AOJu0Yzz4NCaoX0M+/+c/gg/MrMBZLe9O2NHJc/6VeJN6M+sgwXhRc0W
- pFC047gn1FXx99XwZvpD0Mc24IfKMxmd/Wal6DZazRayJXgOVu6tlMJ0ESBTJuCSkSROz2rg3B3
- 2EQFu
-X-Gm-Gg: AZuq6aLKaQ6xfSsbs6IfCfXBaKF6A1HtGKGirpN3ISpPVSQZSUd9jmxXQ35ZZM6uC/8
- fZlzNAmqu+88XmgFU+TD55C+K1M8Ss9YFE/1pBxUwZGyJeR/6m/XGLLz9lUjMeokC0uAFaC+9pL
- MOpr1OR+1IyjxW+E1LWiUaIvHS+OoeFJ8uZCU/1pnHybSvD+SFH3lfNiNYyZjD62XehVab9gFsz
- 6PosVzKj6EyegdWXEYfJqk8k0bxW7sISl8UyFVW22/ceiSypjUGcsJPIwU+ctqUlrJlzBiXMfs8
- OJv1zQT25E2pdkDrSxBKyMRMIYH6r4xTbhEmesp+TWFX78NZLVQBTbtOU+YRG7lsxElthObsNrA
- mWrChHrtc+hy2hlGgP3EgaljXU+sddrE/s+uuT9GEEDsuef1qphVR2Fm7s0QRl8F/glADe4wrKq
- geVSUYuMhqcZF8kwF3lHCw57nRqqQxiuT3JPfZZdqR1TZUMm5jlZImfMt8bxNE9jxz
-X-Received: by 2002:a17:90b:5587:b0:34c:7182:cf9d with SMTP id
- 98e67ed59e1d1-3543b3d64f2mr202462a91.25.1769708302268; 
- Thu, 29 Jan 2026 09:38:22 -0800 (PST)
+ bh=9iHm/DUI7LqRSDNNFCJrzlVWDCQyVlRHzHTsKps5Fks=;
+ b=MxEw7wayE3vZIQHxyNGbowOfK0XT5lS9nIn+lh/hJGHNnSAffzYUMnpZm4caWlMhnB
+ 9hBdKWhuKn3Qz2oCabsM8doV60Irojz9zN/hxxy8zpa3VjHlV8eSi4jF5A0tXBHiG4hS
+ wruvLbwjR0pHGIjSM0iQxODfcV1tUlwcqi+3zOsIZ4eLPyA576gTiFBnH2aUq/ShLLRl
+ haJHMPdMK/t0atfQFTH/epW8/pmwzZDXsMdzOGnrMqj1tlXz7Pdi5Nc2ioYE0fUEOCQ2
+ xj+gN1E5Uz7wjmXksZ2ssZ1gXKxD39WbbsM+2z7u8hO8z3Ue0oZOzj/4OSpDxpxAA/cY
+ ydog==
+X-Gm-Message-State: AOJu0YzTrQvyuPz2rptp/xL6t9tLqNLJ+TKgCRJq0zN1KPgJE5jHMzs2
+ k5I0gJydw2NlT4uVgkM+3T5Op/eLLBcJK2LEDJEYsnut2Xi5dT9DKQE1kCPvOTRzzdXwJjYI/7X
+ t/1wW
+X-Gm-Gg: AZuq6aIox3tORMJgfDqevq/8+HziuWm1LDuWejKtY3ODkrRb2yRk57NPOXee1Io7u+4
+ Hx7slCx3f0XOh2xf65bZpCSkNwQPKhcqHFlcnOk5ysXi2B5OV5gENEaxfz+Fqh5Kl+cJ8Tmo3PP
+ RJrT9I8s28pkFpAX+V7UbwV0oBGeo5W3NmYD7kxZQ6ViIVC9AWmIR3aXbXlqW0mYJtfUIXom5XT
+ HCfYS5ypjqAbF64AJtrnd8hGNUUOHHsj5shw/MQMCKgYwao6iGT612N2kEsPd0QUlF7Cndb/vtO
+ CRGfALa/VpbErJWwJrVi8JPiaWiDTN50N+jflBiPNoKlYA7TutngrHdXP1uvCCUtFomsAtbxrQQ
+ ac/0uQVMpqrQnzLFX3jwE+mxoKk0Xy3XH1wmySpX/pkdj8ke6meu+t5mTYpxzdto7PF9/5t6InF
+ JT3gcyC3pQZQCJPF6gwrSNF5dpP0DlStUm16XYxFAn5d6Wtn6x2ISPSc+8BJHIA9Fs
+X-Received: by 2002:a17:902:f690:b0:2a0:e94e:5df6 with SMTP id
+ d9443c01a7336-2a8d81818c8mr998345ad.50.1769708311793; 
+ Thu, 29 Jan 2026 09:38:31 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.21
+ d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 09:38:21 -0800 (PST)
+ Thu, 29 Jan 2026 09:38:31 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 06/21] linux-user: move user/syscall-trace.h to
- linux-user/syscall.c
-Date: Thu, 29 Jan 2026 09:37:52 -0800
-Message-ID: <20260129173811.138036-7-pierrick.bouvier@linaro.org>
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PULL 18/21] qga/vss-win32: fix clang warning with C++20
+Date: Thu, 29 Jan 2026 09:38:04 -0800
+Message-ID: <20260129173811.138036-19-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 References: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,125 +101,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For now, only linux-user supports plugin syscall API, so restrict the
-scope of these functions to linux-user/syscall.c
+C++20 deprecated such constructs.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260129013134.3956938-7-pierrick.bouvier@linaro.org
+../qga/vss-win32/requester.cpp:380:32: error: bitwise operation between different enumeration types ('_VSS_SNAPSHOT_CONTEXT' and '_VSS_VOLUME_SNAPSHOT_ATTRIBUTES') is deprecated [-Werror,-Wdeprecated-enum-enum-conversion]
+  380 |     ctx = VSS_CTX_APP_ROLLBACK | VSS_VOLSNAP_ATTR_TRANSPORTABLE |
+
+This is a false positive, since VSS_CTX_APP_ROLLBACK is not a value
+defined in _VSS_VOLUME_SNAPSHOT_ATTRIBUTES enum.
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260124182921.531562-10-pierrick.bouvier@linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/user/syscall-trace.h  | 43 -----------------------------------
- bsd-user/freebsd/os-syscall.c |  1 -
- linux-user/syscall.c          | 20 +++++++++++++++-
- 3 files changed, 19 insertions(+), 45 deletions(-)
- delete mode 100644 include/user/syscall-trace.h
+ qga/vss-win32/requester.cpp | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/user/syscall-trace.h b/include/user/syscall-trace.h
-deleted file mode 100644
-index 9bd7ca19c84..00000000000
---- a/include/user/syscall-trace.h
-+++ /dev/null
-@@ -1,43 +0,0 @@
--/*
-- * Common System Call Tracing Wrappers for *-user
-- *
-- * Copyright (c) 2019 Linaro
-- * Written by Alex Bennée <alex.bennee@linaro.org>
-- *
-- * SPDX-License-Identifier: GPL-2.0-or-later
-- */
--
--#ifndef SYSCALL_TRACE_H
--#define SYSCALL_TRACE_H
--
--#include "user/abitypes.h"
--#include "gdbstub/user.h"
--#include "qemu/plugin.h"
--#include "trace/trace-root.h"
--
--/*
-- * These helpers just provide a common place for the various
-- * subsystems that want to track syscalls to put their hooks in. We
-- * could potentially unify the -strace code here as well.
-- */
--
--static inline void record_syscall_start(CPUState *cpu, int num,
--                                        abi_long arg1, abi_long arg2,
--                                        abi_long arg3, abi_long arg4,
--                                        abi_long arg5, abi_long arg6,
--                                        abi_long arg7, abi_long arg8)
--{
--    qemu_plugin_vcpu_syscall(cpu, num,
--                             arg1, arg2, arg3, arg4,
--                             arg5, arg6, arg7, arg8);
--    gdb_syscall_entry(cpu, num);
--}
--
--static inline void record_syscall_return(CPUState *cpu, int num, abi_long ret)
--{
--    qemu_plugin_vcpu_syscall_ret(cpu, num, ret);
--    gdb_syscall_return(cpu, num);
--}
--
--
--#endif /* SYSCALL_TRACE_H */
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index ca2f6fdb66e..4c1191b8f47 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -31,7 +31,6 @@
- 
- #include "qemu.h"
- #include "signal-common.h"
--#include "user/syscall-trace.h"
- 
- /* BSD independent syscall shims */
- #include "bsd-file.h"
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 3944004568f..b4b551ad148 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -132,6 +132,7 @@
- #include "uname.h"
- 
- #include "qemu.h"
-+#include "gdbstub/user.h"
- #include "user-internals.h"
- #include "strace.h"
- #include "signal-common.h"
-@@ -142,7 +143,6 @@
- #include "user/signal.h"
- #include "qemu/guest-random.h"
- #include "qemu/selfmap.h"
--#include "user/syscall-trace.h"
- #include "special-errno.h"
- #include "qapi/error.h"
- #include "fd-trans.h"
-@@ -14334,6 +14334,24 @@ static bool sys_dispatch(CPUState *cpu, TaskState *ts)
-     return true;
- }
- 
-+static void record_syscall_start(CPUState *cpu, int num,
-+                                 abi_long arg1, abi_long arg2,
-+                                 abi_long arg3, abi_long arg4,
-+                                 abi_long arg5, abi_long arg6,
-+                                 abi_long arg7, abi_long arg8)
-+{
-+    qemu_plugin_vcpu_syscall(cpu, num,
-+                             arg1, arg2, arg3, arg4,
-+                             arg5, arg6, arg7, arg8);
-+    gdb_syscall_entry(cpu, num);
-+}
-+
-+static void record_syscall_return(CPUState *cpu, int num, abi_long ret)
-+{
-+    qemu_plugin_vcpu_syscall_ret(cpu, num, ret);
-+    gdb_syscall_return(cpu, num);
-+}
-+
- abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
-                     abi_long arg2, abi_long arg3, abi_long arg4,
-                     abi_long arg5, abi_long arg6, abi_long arg7,
+diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
+index 5615955b6f3..74489fcd0ae 100644
+--- a/qga/vss-win32/requester.cpp
++++ b/qga/vss-win32/requester.cpp
+@@ -377,8 +377,10 @@ void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
+      * To prevent the final commit (which requires to write to snapshots),
+      * ATTR_NO_AUTORECOVERY and ATTR_TRANSPORTABLE are specified here.
+      */
+-    ctx = VSS_CTX_APP_ROLLBACK | VSS_VOLSNAP_ATTR_TRANSPORTABLE |
+-        VSS_VOLSNAP_ATTR_NO_AUTORECOVERY | VSS_VOLSNAP_ATTR_TXF_RECOVERY;
++    ctx = VSS_CTX_APP_ROLLBACK;
++    ctx |= VSS_VOLSNAP_ATTR_TRANSPORTABLE |
++           VSS_VOLSNAP_ATTR_NO_AUTORECOVERY |
++           VSS_VOLSNAP_ATTR_TXF_RECOVERY;
+     hr = vss_ctx.pVssbc->SetContext(ctx);
+     if (hr == (HRESULT)VSS_E_UNSUPPORTED_CONTEXT) {
+         /* Non-server version of Windows doesn't support ATTR_TRANSPORTABLE */
 -- 
 2.47.3
 
