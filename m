@@ -4,155 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85BAED6101A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 14:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56CD9D6101C
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 14:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlSfK-00010o-BZ; Thu, 29 Jan 2026 09:06:34 -0500
+	id 1vlSqw-0001xC-Kv; Thu, 29 Jan 2026 09:18:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vlSfH-000109-4j
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 09:06:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vlSfF-0004G9-5T
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 09:06:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769695586;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jMFUCVWRFIIkI6kAu1KSIwG61wj0aof6ueOK0gLXJGU=;
- b=L5Ja+e0z5AbfcnK2e+wupOHO8evUBOehxRgO8HQVb/4W1COKvc5MOoRDWXnMLwBX6Lfk9I
- YEdAeGgwQ9ntQboDd/l9YGpqInRwcjJiHkhPdAE8inr9iBUYJ/9jfYtTYSdNxqyMgrxw0X
- EXdXouEvW6IgE+osumtT9D0wKNsearU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-DgAntBZGMbuustXc6DHx1A-1; Thu, 29 Jan 2026 09:06:25 -0500
-X-MC-Unique: DgAntBZGMbuustXc6DHx1A-1
-X-Mimecast-MFC-AGG-ID: DgAntBZGMbuustXc6DHx1A_1769695584
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4806865a01bso7228715e9.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 06:06:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1vlSqu-0001vO-J5
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 09:18:32 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1vlSqr-0007x6-VT
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 09:18:32 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-b79f8f7ea43so169674266b.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 06:18:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769696307; cv=none;
+ d=google.com; s=arc-20240605;
+ b=g1V9O1N8LKhsFmE15v0bpnk0y2gKBKM5idpgDZV2MSHHf204WATD4MvnUr2h7roLe+
+ 2RSXLImFQjR01Bc9Z/eGyjg8JDiaVg4cDVyZp1IA35bq0XC1DfnozMO9/3zceQMX5+HU
+ XFzqx2SLiA7oMrxb76kvhrNqofgGeLwm7V8WswNjUQS3aMMluDqPb+5q7dqNXFQ3ot/w
+ DLl9oeZtdIIcvMpnlOrHBZmsusyRWFLRDudqYKH11XOY6FDEPCDZcy3Yh1DaiajhErKA
+ yqX5/E97s4xip1avxugreKJtbvCO0daCHp4J8tAj+D78Ow0twRQ+Z4Lbkwz0bj0Pr9pX
+ xnOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=UEKVTrz8YDzYQ5uy4I6bYgzbq3mb2bYtUnu63D5lJFw=;
+ fh=x5HMi2bFcpW5plFmeTH1wxKaF74BkwSYZQXa5+amB5c=;
+ b=WsjaxqVGq4XlTJ0JVN61GssI0Zua1dIEGRLP0PVUO3Aek0bpGz9AQFuKwIpZ7E9yR5
+ xXhtWMAfxarExQ3HUcQO5dq0P5Nb83E0op7QgKq3DiG6Ry0kfSS5mZESTUVV9+pXJ5RS
+ 7/O6hiabFeBvThlcO0tV40RUgmeBh+A8rE91DNROjw1Sl3P7R+jnEUymuHcoQ7W4Q/S+
+ gJxTX8ogPsABHO02gZ39pR+NvZ/8JKFKwOoIDiJXVKzDOKMSXQYDyP74O3WaaJYmvIUr
+ xafR2CYIsLFRRP5uqxdH5FRd7dJ5c8Gu/0Y0izF8Vf0u6AiVmswOeb44CgwgkoywR2kI
+ 7Dug==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1769695584; x=1770300384; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=jMFUCVWRFIIkI6kAu1KSIwG61wj0aof6ueOK0gLXJGU=;
- b=WLNMik8Xiw6hE/9axHRia1inHM+yhCNFJWWLR3aRstVqVWc5J6wvNZZW0fkuEw8/Dc
- PSuDh2v4vZ9gkE5BNzLzCu6xrBaClmnM+F8I3CiWDhHl/QwrbdRsYsgybVlcv4aB5VVz
- ewzaoTV0Pxvr9Ze5G3x16BsniDvm5FNOEZNj63K3hNEix9ILZnjFy3XFptQYQsZOAqBf
- H5S4ZWRHx3L39oIxyo7ZClCGP7u7gzsdFFAMZxE4cnSLOYfBZvReUv2XCF1GqvVB2ujB
- 8S18QO/8cAwie+BaXl80m9aKKddRHd0G7FUTk39Sb1Fjy5VS9xesjYxCcu2wY4AW6Sag
- rxlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769695584; x=1770300384;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1769696307; x=1770301107; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jMFUCVWRFIIkI6kAu1KSIwG61wj0aof6ueOK0gLXJGU=;
- b=AdXR76V8qdnoH9ME305PW5+8YJIL5xzkzjBd3UuGwBT9RLNEVedrEndzt/7TB3krzE
- ChsTm2ACiupDbMcyD6PlGephFtE3AC6Op12akwl5aI7VDMs0QOhxp7eMevVTqot0AOhf
- B2681WvVvhwnxflaD3UPP2GU915Y4EzEruZ45jiGL6PPNNKbPcGsZw0v5bKnaNjVq7we
- s2jpWL+/Fm5MUo6B+rHNHw53yW3fw6xuYgsCnY0gv2Q2i9vjgtHoB+t23SMaEHonCCLR
- IiCK20QyR9i9ZMJlQCk+HrH92Wy7V8YrAkc4JkP7/lVC0yw20ppm3cTzeSVbu+pu7H1J
- 6Fyw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXcv/8OthKTuk25HZBQSwMCm7DPnWHmbvwoL0J9D92mmBkkLQidNy0QdMiDt59KADHkQpjC+dh1XCS6@nongnu.org
-X-Gm-Message-State: AOJu0Yy+rtzdgQS28/v2dmp/tixvaqN2q5gz/QucFUNnd6a1qUUGEdDg
- lnHDlAG8oEqMiQtMAiAABPuwWS99SqeXCYyBwBo2K0Hd3vZaisfTeBH+0wy+t2X+aBQHeMAtAEn
- KepMFXWrfD9NzjIHNSK+OF1dlg/FW4QO1WLcgcN+5wyQeEk+oaDJELtKw
-X-Gm-Gg: AZuq6aIbv3IyYohTPv+YB31hwixetOwcwsRZZ1qPYoChBkc3XUB0ccIphE6zN5YN6P2
- 1rfTUDPN5XKlgbMGZK5/RXiBhBFsKCCIPNqiSYA/BMfr4d8sHwOKchOomyf+cG29Z+C4na4N39B
- 5T3rVTTP7+JMqelI47daO9whQR2/sYGYqXib10SzuoGp71f+GqbBkcmA4U0YnTUUT+Zi+6UXjP7
- aZbp1FjMY39RDPybvZ8bDPTpYmkInvxzMJijD9aV1NUKG47+O0XLQJu2phP3tGBqOTtG+k03crZ
- L/CJFhne/sJKzNcV1hGHUX6e3otI1YYZbmfNs94/iR6oR5BFGzcfsH170ZKVUSzzEALuEjCcRbx
- 26lrM44k=
-X-Received: by 2002:a05:600c:46d5:b0:47d:264e:b435 with SMTP id
- 5b1f17b1804b1-48069c489c9mr112359835e9.22.1769695584027; 
- Thu, 29 Jan 2026 06:06:24 -0800 (PST)
-X-Received: by 2002:a05:600c:46d5:b0:47d:264e:b435 with SMTP id
- 5b1f17b1804b1-48069c489c9mr112359395e9.22.1769695583558; 
- Thu, 29 Jan 2026 06:06:23 -0800 (PST)
-Received: from [192.168.0.9] ([47.64.113.220])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48066be77b5sm189985895e9.2.2026.01.29.06.06.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Jan 2026 06:06:23 -0800 (PST)
-Message-ID: <8df67edb-9f6a-4f31-894e-3c17bf15e249@redhat.com>
-Date: Thu, 29 Jan 2026 15:06:21 +0100
+ bh=UEKVTrz8YDzYQ5uy4I6bYgzbq3mb2bYtUnu63D5lJFw=;
+ b=mQduS01ZNp647QEIY8GCVL38yJ7O4GiTw3WtS4Rrb7iFgzJezj+57W7G4g8Nq2cAEZ
+ ex5/V5WK8CeNwvDaJXICWMgljUGA5nrtSCpwB1eDfs4Z4EfCfoK29mHF0PQHpboUhOcw
+ FVOhm6BME9enUtFG+e3vUTAVp5xw+YzPTpA1+wlctRh9T7KSur0iSESUzsIImPJe+IjC
+ Pz2G4cyi2BvOABYzmayNkuBgkA2A7lNUoULcKIRdHMcsC3WikRzve5mVkSFS+SuQP1Ui
+ jslqVznmTH6IExKtLa5Dpf/Kyq8T3fKgo/V4sJ74YYZBie9/M5wvL0pXCcbEzQ5SG1ab
+ VfEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769696307; x=1770301107;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UEKVTrz8YDzYQ5uy4I6bYgzbq3mb2bYtUnu63D5lJFw=;
+ b=NBEjYJ6/VgKcXNFfQf1raJZsVlCe/8Z+XbJ0Knt38B8h6vIdXgQXrM8rAT1vV/jYy+
+ 1/obfhwv0Necjzp8/NJW5oKoPdJ97rEFUE857vNZb9iPKS22qEkd4DtrJYprrdUOGhzg
+ xE5ieK5J6TRNLZsOecrB4UiV0cqEuQSSw7jXNB6fTmRrfpLLTlmCeW/zNqieV+F5ThTA
+ QCEqlw84cBQk6v+A+qzfWdSn6e8+VZnuqwSKuvXBXUfpOFE1mOlomnLx+N8gCATu9olI
+ VUmezWqKe+UsfVmXl+Y7MOSla+G0MEs1T3FAhq+ZGT1TT8NCC5I5/N+yLL9JiMPmubcP
+ Aovw==
+X-Gm-Message-State: AOJu0Yyw3ijCkQLMiD+B3Y/uy5dK/0Da+TXoCDPG9ZkOnmC1mVSYBKYa
+ m897Wfjm0DaJNwQBOgL+fv3S4TTA5kX1pp3VhGwq5YSL1BSeXb2Y3H4dqNkkaLEJiwbIlYN2F4f
+ Uf/DgzbpGGBIAhIbEXCGw3LIRabSlIqQ=
+X-Gm-Gg: AZuq6aKsudmUsyrOf6u6auBVW//Rp5s0jkKwf7nGNj+uSZfLf3DuluPZSa9vhNN4BVi
+ fLHTCLDGDHFNODlSgLCcG3+MuNba1rhjfwKYvWkxEq+gQfbJwfsEgxFmOxCXwOoxXA7CSvxV2Bt
+ /A1Md3cDZ1OAo+T7Nd4/HrBF6hnkvjU+ufoWfMePc+xWkWhoFXiUWfmTMsUKuTSxh5ZxCqvC2A+
+ 6kPV75YjWb9i+IYSu7N/hQ25yyXF+IYzcSLGnzt3aT/EGNVJJoukisEHTa4flhY1sC+Fg==
+X-Received: by 2002:a17:907:e10d:b0:b8d:bf4d:7463 with SMTP id
+ a640c23a62f3a-b8dbf4d7744mr381360466b.31.1769696307330; Thu, 29 Jan 2026
+ 06:18:27 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/14] pc-bios/s390-ccw: Split virtio-ccw and generic
- virtio
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, zycai@linux.ibm.com
-References: <20260127161547.459443-1-jrossi@linux.ibm.com>
- <20260127161547.459443-6-jrossi@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260127161547.459443-6-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ <h4uue2ekbnlh26rylj4ilsqzyxdrfzrq7czleysrkbowlgp4q2@wtbm7zi4kev5>
+In-Reply-To: <h4uue2ekbnlh26rylj4ilsqzyxdrfzrq7czleysrkbowlgp4q2@wtbm7zi4kev5>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Thu, 29 Jan 2026 09:18:15 -0500
+X-Gm-Features: AZwV_QhexZCjxjmezZkXhv3H1W9i2wH_EGc7JcvsAPFpTbcdb_piPNOES6YaEUo
+Message-ID: <CAJSP0QXu+fmKuOKLw=OXL0GqTQS58pM_-REtnnOCiSaZJp9=LQ@mail.gmail.com>
+Subject: Re: COCONUT-SVSM project ideas for GSoC 2026
+To: =?UTF-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>, 
+ Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Matias Ezequiel Vara Larsen <mvaralar@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ German Maglione <gmaglione@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, danpb@redhat.com, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Alex Bennee <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,100 +127,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/01/2026 17.15, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> Separate the CCW specific virtio routines and create generic wrappers for easier
-> reuse of existing virtio functions with non-CCW devices.
-> 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
-...
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index e7c3d9b2d6..2ffce743bd 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -71,6 +71,7 @@ static int is_dev_possibly_bootable(int dev_no, int sch_no)
->       bool is_virtio;
->       Schib schib;
->       int r;
-> +    VDev *vdev = virtio_get_device();
->   
->       blk_schid.sch_no = sch_no;
->       r = stsch_err(blk_schid, &schib);
-> @@ -91,7 +92,8 @@ static int is_dev_possibly_bootable(int dev_no, int sch_no)
->        * Note: we always have to run virtio_is_supported() here to make
->        * sure that the vdev.senseid data gets pre-initialized correctly
->        */
-> -    is_virtio = virtio_is_supported(blk_schid);
-> +    vdev->schid = blk_schid;
-> +    is_virtio = virtio_is_supported(vdev);
->   
->       /* No specific devno given, just return whether the device is possibly bootable */
->       if (dev_no < 0) {
-> @@ -255,10 +257,10 @@ static int virtio_setup(void)
->           puts("Network boot device detected");
->           return 0;
->       case VIRTIO_ID_BLOCK:
-> -        ret = virtio_blk_setup_device(blk_schid);
-> +        ret = virtio_blk_setup_device();
->           break;
->       case VIRTIO_ID_SCSI:
-> -        ret = virtio_scsi_setup_device(blk_schid);
-> +        ret = virtio_scsi_setup_device();
->           break;
+On Thu, Jan 29, 2026 at 5:46=E2=80=AFAM J=C3=B6rg R=C3=B6del <joro@8bytes.o=
+rg> wrote:
+>
+> Hi Stefan,
+>
+> Thanks a lot for running this and allowing the COCONUT-SVSM project to su=
+bmit
+> ideas under the QEMU/KVM umbrella!
+>
 
-In virtio_setup(), there is already a "VDev *vdev = virtio_get_device()" at 
-the beginning of the function. virtio_blk_setup_device() and 
-virtio_scsi_setup_device() are doing this again. So while you're at it, may 
-I suggest to turn that vdev pointer into a parameter of these functions now, 
-so that you now pass a vdev instead of a blk_schid to those functions? That 
-way we can get rid of the additional virtio_get_device() in 
-virtio_blk_setup_device() and virtio_scsi_setup_device().
+Welcome!
 
-Apart from that nit, the patch looks fine to me.
+> After some discussions in the community we came up with these two project=
+ ideas:
+>
+> =3D=3D=3D Observability Support for COCONUT-SVSM =3D=3D=3D
+>
+> '''Summary:''' Implement Support for COCONUT-SVSM Observability within th=
+e TEE
+>
+> COCONUT-SVSM is a Secure Virtual machine Service Module that runs at a
+> privileged level within a Confidential Virtual Machine (CVM) to provide t=
+rusted
+> services, such as a virtual TPM, to the guest operating system, independe=
+nt of
+> the host hypervisor.
+>
+> The goal of the project is to implement support for observability of
+> COCONUT-SVSM from the guest OS. When finished the guest OS has a way to
+> fetch runtime metrics and data from the COCONUT-SVSM running within the s=
+ame
+> TEE. Runtime data includes the log buffer, services logs, memory usage, a=
+nd
+> possible future extensions.
+>
+> The project consists of several parts:
+>
+> 1. Design an experimental SVSM observability protocol for exchanging metr=
+ics
+>    and data between COCONUT-SVSM and the Linux kernel. This protocol will=
+ be an
+>    extension of the SVSM protocol specification.
 
-  Thanks,
-   Thomas
+Interns have 12 weeks for the project. Usually this does not leave
+enough time for the intern to propose a design and reach consensus
+with the community. Keep in mind they may not have much background in
+COCONUT-SVSM, so it will be challenging for them to come up with a
+design.
 
+I think the mentors should provide the extension to the SVSM protocol
+specification. That way the intern can start the coding period by
+diving straight into the implementation and there is no risk that the
+project is held up because the community does not like the design.
 
-...
-> diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
-> index 9cc40e9108..e14bcf0382 100644
-> --- a/pc-bios/s390-ccw/virtio-blkdev.c
-> +++ b/pc-bios/s390-ccw/virtio-blkdev.c
-> @@ -12,6 +12,7 @@
->   #include "s390-ccw.h"
->   #include "virtio.h"
->   #include "virtio-scsi.h"
-> +#include "virtio-ccw.h"
->   
->   #define VIRTIO_BLK_F_GEOMETRY   (1 << 4)
->   #define VIRTIO_BLK_F_BLK_SIZE   (1 << 6)
-> @@ -229,15 +230,19 @@ uint64_t virtio_get_blocks(void)
->       }
->   }
->   
-> -int virtio_blk_setup_device(SubChannelId schid)
-> +int virtio_blk_setup_device(void)
->   {
->       VDev *vdev = virtio_get_device();
->   
->       vdev->guest_features[0] = VIRTIO_BLK_F_GEOMETRY | VIRTIO_BLK_F_BLK_SIZE;
-> -    vdev->schid = schid;
-> -    virtio_setup_ccw(vdev);
->   
->       puts("Using virtio-blk.");
->   
-> -    return 0;
-> +    switch (vdev->ipl_type) {
-> +    case S390_IPL_TYPE_QEMU_SCSI:
-> +    case S390_IPL_TYPE_CCW:
-> +        return virtio_ccw_setup(vdev);
-> +    default:
-> +        return 1;
-> +    }
->   }
-...
+> 2. Implement a handler for the protocol within COCONUT-SVSM following the=
+ other
+>    protocols COCONUT-SVSM already implements.
+> 3. Implement a Linux device driver which uses this protocol to get
+>    observability data from COCONUT-SVSM and make it accessible to Linux u=
+ser-mode
+>    via a device file.
+> 4. Implement a Linux user-space utility to fetch and save the observabili=
+ty
+>    data using the device driver.
 
+2, 3, and 4 together are a significant amount of work. I think it
+would help to provide more details on what the interfaces look like.
+Sketch out the command-line interface for the Linux user-space
+utility, a Linux chardev (ioctl?) or sysfs interface that you would
+like to see, etc. These details should probably go in the development
+plan linked below on the COCONUT-SVSM website.
+
+>
+> '''Links:'''
+>
+> * COCONUT-SVSM Repository: https://github.com/coconut-svsm/svsm/
+> * Development plan: https://coconut-svsm.github.io/svsm/developer/DEVELOP=
+MENT-PLAN/#observability
+> * SVSM protocol specification: https://docs.amd.com/v/u/en-US/58019
+>
+> '''Details:'''
+> Skill level: Intermediate
+> Language: Rust and C
+> Mentors: Stefano Garzarella <sgarzare@redhat.com>, Gerd Hoffmann <kraxel@=
+redhat.com>, Joerg Roedel <joerg.roedel@amd.com>
+
+Nice project idea. It's large but incremental, so even if the intern
+doesn't complete everything, it will be possible to merge the finished
+parts.
+
+>
+> --->8---
+>
+> =3D=3D=3D Support X86 Process Context Identifiers (PCID) in COCONUT-SVSM =
+=3D=3D=3D
+>
+> COCONUT-SVSM is a Secure Virtual machine Service Module that runs at a
+> privileged level within a Confidential Virtual Machine (CVM) to provide t=
+rusted
+> services, such as a virtual TPM, to the guest operating system, independe=
+nt of
+> the host hypervisor.
+>
+> The goal of the project is to enhance the COCONUT-SVSM kernel to make use=
+ of
+> the PCID feature on X86 to reduce the number of runtime TLB misses. The w=
+ork
+> consists of several steps:
+>
+> 1. Implement generic CPUID feature enumeration support by building a code
+>    generator which automatically creates a Rust crate from the data provi=
+ded by
+>    the X86-CPUID project. Use that generated crate in COCONUT-SVSM for
+>    detecting the PCID feature and clean up all the open coded CPUID check=
+s.
+> 2. Design and implement a PCID assignment strategy for tasks and threads =
+in the
+>    COCONUT kernel.
+> 3. Apply the PCIDs in the COCONUT page-tables and adapt the TLB flushing =
+code
+>    to take PCIDs into account.
+>
+> '''Links:'''
+> * AMD64 APM 2 (PCIDs, Section 5.5.1.): https://docs.amd.com/v/u/en-US/245=
+93_3.43
+> * X86 cpuid project: https://x86-cpuid.org/
+> * COCONUT-SVSM: https://github.com/coconut-svsm/svsm/
+>
+> '''Details:'''
+> * Skill level: Intermediate
+> * Languages: Rust
+> * Mentors: Joerg Roedel <joerg.roedel@amd.com>, Luigi Leonardi <leonardi@=
+redhat.com>
+
+I have added this one to the wiki. Thank you!
+
+https://wiki.qemu.org/Google_Summer_of_Code_2026#Support_X86_Process_Contex=
+t_Identifiers_(PCID)_in_COCONUT-SVSM
+
+Stefan
 
