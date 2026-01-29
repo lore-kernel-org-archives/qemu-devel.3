@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96D1AD6101A
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 14:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54652D6101A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 14:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlTSX-0005YI-QL; Thu, 29 Jan 2026 09:57:25 -0500
+	id 1vlTUL-0006OY-Eq; Thu, 29 Jan 2026 09:59:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vlTSW-0005Y2-Ak
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 09:57:24 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1vlTUK-0006OP-Ec
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 09:59:16 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vlTSU-00086X-TT
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 09:57:24 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-47edd9024b1so9094135e9.3
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 06:57:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
+ id 1vlTUI-0008Rf-KP
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 09:59:16 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-81dab89f286so544643b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 06:59:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769698641; x=1770303441; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1769698753; x=1770303553; darn=nongnu.org;
+ h=content-transfer-encoding:subject:from:to:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BXcITGy9w0W3fyqFhyVbdgg7cvIr1bgdc45oKr7ecw0=;
- b=rh4TFy62SOxCRsSKgTIhNLby3TMTg7vKE9UDWLJbrEU2NOW6eMVy2E47Poh0Uk5Zq0
- m27zoPeVR6PguQfgduObjiSca+iYGW0dfHVP4+560/0djn7B/NPhao1XimTU4g8oDfLe
- /Lfqznh9IVZSJ0IleRDwWpHGup7lNtceG2k5tLyw/e2Bf9ODxrZrYqhpdlCey7KPtGLm
- 3YcYtQWcXosb5hANPUc54IKfMhzfXd1AD6AlWWr0TGQaDqWz4Aznj6E7YhAddSDf3kcF
- xq4N1sNt07nm4R35FOXEn+eT4B641/B7q8XVB8WAq76aybdR3Oy1iCkYcoM8uKW5k/lz
- DrOg==
+ bh=yivPCZj7fslW/z8Bc/1Iycw3YFsb6mN5KgOeLh+mWhU=;
+ b=CWOvdeii2i+VJF52ILSGDNF1aJA5hf3KhkXxqOObEnfVMyBz7sdPHOkyVUNtZ5/1uS
+ 2TX/9bc5UDLPR52Wim39GCZZ7EUHsUwo3q7ZARxqYlknC8V/XDxMAJ7K7cqc2OmJY0Cl
+ ALvoEGiysg9sLlc8Kntaj3zlK0JWlIaURUXIzgQAoC2Rrt3fnGaJxex3KL7Kt37ZVIrp
+ WfSdTSQYM87pu3+jUb4e8hk2bW5yqzDu+Klmm66SzWlhF9edAWPkI3BFdGQja6lk0o8V
+ RTTU5/B3fnpvuZXEza6IM/dr7z5wOfhwOCwRqb/CbpGFJ0/bO0sbnJG0kHDlaVBaYju2
+ MU2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769698641; x=1770303441;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BXcITGy9w0W3fyqFhyVbdgg7cvIr1bgdc45oKr7ecw0=;
- b=w1R9S9SBEYIfC4GsHLsygWM4LbYsUXJGaA0/Jwx8gz3xyavN05Duazx2Y41wDP7G/U
- xKurpOMkQbjK3/XOK+sl2/Q+R1bYaHf0OWTH6kGqutsSVnbB/cDB0NGxfRvG/VZFoeJv
- bjCKjOkky77wk5ibV6I4ybOmN7aMDts4Ptay2+CFHEfBoyAssaiDJL/xREumbwugFKgz
- qRavU+kJ2d8rzkGTmBCIQYdF5jshmnoRVAjYRlPvyiwcU3VFrek7Ht5NBWpxcNsKAkFr
- dFug+2xDaRbijBHTiiwbgyrBFSMr6O505t7AGh8JFQOHQVhPZHG5hfO4V7Eq3suCuVU/
- SI+Q==
+ d=1e100.net; s=20230601; t=1769698753; x=1770303553;
+ h=content-transfer-encoding:subject:from:to:content-language
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yivPCZj7fslW/z8Bc/1Iycw3YFsb6mN5KgOeLh+mWhU=;
+ b=JUY0mJHaGwRs+jsaq/pgoQj+Bf5mCr0ByVwqXAfwf/UYEFupwBI+ZBMUsRzcCk3Muh
+ TR9TSkBWN4nY95++4kqvR9x+QM5jQpkqlM/FOVd4YRwHe++KRSo5IWav4jf+KJI74Dz2
+ EYHHq967xtkm300omYjJ4YseSiZPOxXwnsFnvVwt7uYcxL9RBvy1U70h+J16N4oBpzP/
+ BTe5S53UqsPjcMCAjzNYGhjSgnXZidIDwNtyz3N+FkhLk52d04IqmI0WUs6gYtHhdqTr
+ b/mdtzMG7O2SlLxLkKysdc6CVePx9EvxVoz6uBz9hNzPPDB9rVGNjFFmNA6PqaY/MjLc
+ sDpA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV5UmUrfmMc0eWXGV6ILsfw0z5QBkOOH5K4ZKCQ2QW8speCf/kS6XE5RWT2tp8PV3rp6PHWOAQtCFv1@nongnu.org
-X-Gm-Message-State: AOJu0YxxmVzK5uZ6xaoBtCkiKoyB5QeZ4lTCrJA98AeaY7soyusgPl3+
- KeE0l55SEtC6h8x0kjgIgFe/0B8v2Khp5P1c22gNS2Fep/n1ltA3HPnbLxKdNfmb+/I=
-X-Gm-Gg: AZuq6aJGOuUXBU1AVJUD0P+3sxphR5p9SU1ErpRRP6BWK9f8pK6pnZBpGLBQocJJBfS
- emnaJKFvSKFsBBvNHcCp4tB+abAMR9gVO8OrBaabe+G9fg/PNsFVyF4B/9SeXTZjgQvhlYcUBoT
- 98DVNH9wLqOJIEodhvCecHvc7t//sWJbX+go+L20tzvFXPIBZCeFHt/2wujharjjrozKtmn4fgJ
- 3fg3TXfxwPA5BlRnWWmvDYlXvxKK9cmeifOxxaQcULURqfLEAmHALTRnKrUX6192wwp9+dIs6rY
- Jz1HGYn2q/7PjNQB3hMBK02HyHFAOjqItBgSoxHjzjJiFV4f0iFGGSlU9nqf3hmrQcfa5tzn4Im
- uT83K8fbNG45lZuPeZmbyG4iLAuxcDfdM1yotFtCdcy5MCkM3+L4q11eThk9EFsz0HW/NAPgdmP
- o9nq50TjsXllE=
-X-Received: by 2002:a05:600c:6092:b0:47d:586e:2fea with SMTP id
- 5b1f17b1804b1-48069c3a7abmr113593505e9.15.1769698641399; 
- Thu, 29 Jan 2026 06:57:21 -0800 (PST)
-Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4806ce4c515sm132828375e9.11.2026.01.29.06.57.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 06:57:20 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BED8C5F878;
- Thu, 29 Jan 2026 14:57:19 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH v2 4/6] target/arm: Handle SME-without-SVE on change of EL
-In-Reply-To: <20260129113455.1283266-5-peter.maydell@linaro.org> (Peter
- Maydell's message of "Thu, 29 Jan 2026 11:34:53 +0000")
-References: <20260129113455.1283266-1-peter.maydell@linaro.org>
- <20260129113455.1283266-5-peter.maydell@linaro.org>
-User-Agent: mu4e 1.14.0-pre1; emacs 30.1
-Date: Thu, 29 Jan 2026 14:57:19 +0000
-Message-ID: <87cy2s8o1c.fsf@draig.linaro.org>
+ AJvYcCXvi+mOff25vLXiOQOBju2+id2sjHUTzbvNXl+H2vZgX/Li1+THTO4+UvxfV4+cGyi7OCCENLypuCYy@nongnu.org
+X-Gm-Message-State: AOJu0Yz7YPZF2NR2CmQlEsTGCUTF+7Khzh0nwq30Gr4nMp3l7krZ+uPZ
+ 6oZKvM/OVn827mv8BmGcwQnuc8otCLlXn+aZ9auXmFAids+WFUs58ODH
+X-Gm-Gg: AZuq6aIYUbWIsnKtGZbvPwESRouZDxMEtIKUXalwP+050uJ8N/cIEfx7iaGNMUORN5R
+ GJ+VtLoTv05WmDlIs28xNTcnVpoEm8INH44xFAgcTwlqZoetn/NJgIcWH942brQals7xnWPBwB2
+ cUzojyRpFR6P5sV3HX1iRZPwkaGNvtvSPCFXRKgUXrdgki7Bb/lWK7qyPKzuELOR8/StuvMujpI
+ 3OO5U8LKiWGpUBh518Y6r7Eui9d4fGIQMHBu0Ao/0X1cvamGCbow3dfpXB4Zwy0xtxTUrKce0yr
+ lr+ZQVe2RXBtduBQJUlho2wj8DmLp3jaEWSFQAcR3hIu3/YaBwtEDy5OGr3zRWJr+hqNExv3khS
+ tfp+12BxhVRugW/198BNt9tFz67KrB5JNEQWlg2j1SNa/U0xC8jStXNk56RsWRX1kF9ZVE9hhBL
+ F0daf6JB0J18iG2mGnJmCg0YZlj4Qc5ONu+ObOYbShXAeeovWbqcVtjR6dBA==
+X-Received: by 2002:a05:6a00:14d3:b0:821:7307:44cf with SMTP id
+ d2e1a72fcca58-8236916f853mr8245258b3a.15.1769698752719; 
+ Thu, 29 Jan 2026 06:59:12 -0800 (PST)
+Received: from ?IPV6:240d:1a:3b6:8b00:7e35:5def:769a:b72f?
+ ([240d:1a:3b6:8b00:7e35:5def:769a:b72f])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82379c22459sm5567860b3a.48.2026.01.29.06.59.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Jan 2026 06:59:12 -0800 (PST)
+Message-ID: <c63c7a2e-0a68-48d4-872f-706cc7d2bb2f@gmail.com>
+Date: Thu, 29 Jan 2026 23:59:10 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: alex.bennee@linaro.org, qemu-devel@nongnu.org
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Subject: Re: [PATCH 1/2] tests/docker: rename wasm cross container
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,20 +101,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Hi Alex,
 
-> aarch64_sve_change_el() currently assumes that SME implies
-> SVE, and will return without doing anything if SVE is not
-> implemented, skipping a possible requirement to change
-> the vector register state because the SME vector length
-> has changed. Update it to handle SME also.
->
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Thank you for fixing this.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+ > Now we are 64 bit only there is no need to keep the generic name. This
+ > also fixes a check failure in the weekly container build which was
+ > checking containers based on the expansion of DOCKER_IMAGES which is
+ > based of the dockerfile names.
+ >
+ > Remove the DOCKERFILE bits that were added to handle multiple
+ > containers from the same dockerfile.
+ >
+ > Fixes: 4203ea0247f (gitlab-ci: Add build tests for wasm64)
+ > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ > Message-ID: <20260127092745.2978371-1-alex.bennee@linaro.org>
+ > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+ >
+ > ---
+ > v2
+ >   - also revert the DOCKERFILE bits that are no longer needed.
+ > ---
+ >  .gitlab-ci.d/container-cross.yml   | 1 -
+ >  .gitlab-ci.d/container-template.yml  | 4 +---
+ >  .../{emsdk-wasm-cross.docker => emsdk-wasm64-cross.docker}    | 0
+ >  3 files changed, 1 insertion(+), 4 deletions(-)
+ >  rename tests/docker/dockerfiles/{emsdk-wasm-cross.docker => 
+emsdk-wasm64-cross.docker} (100%)
+ >
+ > diff --git a/.gitlab-ci.d/container-cross.yml 
+b/.gitlab-ci.d/container-cross.yml
+ > index d7ae57fb1f5..2a0cea6ce1a 100644
+ > --- a/.gitlab-ci.d/container-cross.yml
+ > +++ b/.gitlab-ci.d/container-cross.yml
+ > @@ -78,4 +78,3 @@ wasm64-emsdk-cross-container:
+ >    extends: .container_job_template
+ >    variables:
+ >      NAME: emsdk-wasm64-cross
+ > -    DOCKERFILE: emsdk-wasm-cross
+ > diff --git a/.gitlab-ci.d/container-template.yml 
+b/.gitlab-ci.d/container-template.yml
+ > index 6eaa2f804df..8c7311cca57 100644
+ > --- a/.gitlab-ci.d/container-template.yml
+ > +++ b/.gitlab-ci.d/container-template.yml
+ > @@ -10,14 +10,12 @@
+ >      - export 
+COMMON_TAG="$CI_REGISTRY/qemu-project/qemu/qemu/$NAME:latest"
+ >      - docker login $CI_REGISTRY -u "$CI_REGISTRY_USER" -p 
+"$CI_REGISTRY_PASSWORD"
+ >      - until docker info; do sleep 1; done
+ > -    - export DOCKERFILE_NAME=${DOCKERFILE:-$NAME}
+ >    script:
+ >      - echo "TAG:$TAG"
+ >      - echo "COMMON_TAG:$COMMON_TAG"
+ >      - docker build --tag "$TAG" --cache-from "$TAG" --cache-from 
+"$COMMON_TAG"
+ >        --build-arg BUILDKIT_INLINE_CACHE=1
+ > -      $BUILD_ARGS
+ > -      -f "tests/docker/dockerfiles/$DOCKERFILE_NAME.docker" "."
+ > +      -f "tests/docker/dockerfiles/$NAME.docker" "."
+ >      - docker push "$TAG"
+ >    after_script:
+ >      - docker logout
+ > diff --git a/tests/docker/dockerfiles/emsdk-wasm-cross.docker 
+b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+ > similarity index 100%
+ > rename from tests/docker/dockerfiles/emsdk-wasm-cross.docker
+ > rename to tests/docker/dockerfiles/emsdk-wasm64-cross.docker
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Reviewed-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+
+Regards,
+Kohei Tokunaga
+
 
