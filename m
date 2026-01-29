@@ -4,94 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D90D3F083
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 05:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC1B2D3F083
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 05:46:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlKPN-00026J-M5; Thu, 29 Jan 2026 00:17:35 -0500
+	id 1vlKqd-0000xz-28; Thu, 29 Jan 2026 00:45:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vlKPI-00023n-U5
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 00:17:29 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vlKPH-0001AZ-Fz
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 00:17:28 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-81df6a302b1so561546b3a.2
- for <qemu-devel@nongnu.org>; Wed, 28 Jan 2026 21:17:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769663845; x=1770268645; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FNfG2LP1692K1/7xvJf2rr0RAnUEpXzl7j0sPbrOFl0=;
- b=ZMTXlnE1m9q/2gwTCjBpu4awAJEO+OjPoNQedBEyjSuaKIWclDoULh00/HxI13EUBM
- s4/EiDN8rMYK3qgc/psjJ7nqu+tTTXbNddi6yxOSblHRRvH0R3DDKRJESCuVELL4wyts
- 6k8y5YuKQqfPZthC1p9S+mabw1uiaTnCfhQ2BinqcDX28DkpWwHeOapO7mUO74Aags2e
- KvCjioWsxoTZSnUjiAZKhSJRi2h4DpUezCINluljcYylR8+FutTzDCrNOWy53ltRQz2b
- yydXc7HQTJWKzSlfU0tF30nXeqANbJW+d8ZrMfX7uF4t0JircaVpOZgA4TFxnOnz/ANF
- wneg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769663845; x=1770268645;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FNfG2LP1692K1/7xvJf2rr0RAnUEpXzl7j0sPbrOFl0=;
- b=aVd2tyXq638r6yE2ymr/v2nCTGCbxCvQrvvklYapvuZGltwT4KKdzPp8v1OKCNoeYA
- qfttxbGPkZNZH5FKvpmQErOxO1xGep0VYIiS9iM972t1rJKHf6mo6ByK7orxXE2vQeb2
- 4sCcgcod/xSr0FXfzA6eIpMplfLT6A9Ta/Xoyf2rrSFBvHyE9l1VNhKmmF6RScBNt7G2
- Y2O9UgMu3ZmwfAHRkjZJCB5e4Lj2keU554Czc0W6VqChHyiq0SwWz6tvtNzCt12q2qcT
- bFnwt4pYy8/wpnUzdIQGHCG/3fQtbCoKPCW+iW78yb3Mpma+aZptN6E4Bpyh6w8OmxtL
- wkqg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXkpMe7lrA8h82x/DHCcisW3msRKE6ldP2hG6U0UkHvxqH2SIg45wzXpgrDLyqC18SQqD7ZFKQczxwF@nongnu.org
-X-Gm-Message-State: AOJu0YzV6554YmwU7mt29WcHzRKJbea+/IatrOv3A5I6xamydztcArC+
- 6b3LqG8Cly99zVo2VhX43Zoh0LoViVYpK6zMv4O3IdYL2/TN49CEEWP+sAS/XqVZoyg=
-X-Gm-Gg: AZuq6aKBtGY0Fuo0Qn2IppZi27qJ5bYVdLdJWldkiv6s31Uz0ccGxDPDkdncuaNeNpZ
- gFhe3YDWlfB4ynecWvwfgCquiReTRIvgq8TfLtCwqATkJhpBA0yeSzmhOehNNUiw+itGSqKixIa
- Y++Zi0mmqvfpMb18pQP6CEn+lS0U5WcPEnDshHqAjkQCub7m5NCFPYWGSmKs5UcV717nOds9uEU
- JByYmAVsEsufkv2UBKkZBke25Cax1ExPJO9pxqxj3L+KPMIswMTnbvy7KZeVOP0AJ2cJRMKNNw3
- TFT6FegXaUPkdxCDdLjGpFRzs0lNkLcyBWYvsl0O9DNYEKJ0CyogFK1PtDVmjKTzdwWfe6blloa
- HjoBv+jBwojJ0OcwU47jWb0GSDHOPvB3Dau0GIYTtw2gBJAtPsFSomwPXq1B/KLUGBg2dQjZZwa
- bTccwbQgm96pa+Pbir1pF9ZG46ABrszw==
-X-Received: by 2002:a05:6a00:1898:b0:81a:7be3:9e6a with SMTP id
- d2e1a72fcca58-82369160fbfmr7401009b3a.7.1769663845313; 
- Wed, 28 Jan 2026 21:17:25 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.201])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379c53f6bsm4542781b3a.63.2026.01.28.21.17.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 Jan 2026 21:17:24 -0800 (PST)
-Message-ID: <295bb922-9825-4e40-aaf2-24685d06ae3c@linaro.org>
-Date: Thu, 29 Jan 2026 16:17:19 +1100
+ (Exim 4.90_1) (envelope-from <3160104094@zju.edu.cn>)
+ id 1vlKqX-0000sx-9M
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 00:45:38 -0500
+Received: from zg8tmja5ljk3lje4mi4ymjia.icoremail.net ([209.97.182.222])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <3160104094@zju.edu.cn>) id 1vlKqT-0000nK-7Q
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 00:45:36 -0500
+Received: from zju.edu.cn (unknown [183.129.171.42])
+ by mtasvr (Coremail) with SMTP id _____wDXN4Tw83pp4wFWAA--.2352S3;
+ Thu, 29 Jan 2026 13:45:21 +0800 (CST)
+Received: from [10.138.104.34] (unknown [183.129.171.42])
+ by mail-app4 (Coremail) with SMTP id zi_KCgAHnoPt83pp2bwTBQ--.64280S2;
+ Thu, 29 Jan 2026 13:45:18 +0800 (CST)
+Message-ID: <95b6af6a-0b0a-4d57-a4d5-61eb04c52f56@zju.edu.cn>
+Date: Thu, 29 Jan 2026 13:45:17 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 06/20] linux-user: add plugin API to filter syscalls
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Ziyang Zhang <functioner@sjtu.edu.cn>, Mingyuan Xia <xiamy@ultrarisc.com>
-References: <20260129013134.3956938-1-pierrick.bouvier@linaro.org>
- <20260129013134.3956938-7-pierrick.bouvier@linaro.org>
- <a44ba710-25ca-44c2-bcdb-db917efaaaeb@linaro.org>
- <e85a01a2-faf3-406e-a260-ce8a832ed9cb@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <e85a01a2-faf3-406e-a260-ce8a832ed9cb@linaro.org>
+Subject: Re: [PATCH v2] accel/tcg: Ensure get_page_addr_code_hostp nulls
+ output on failure
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: richard.henderson@linaro.org, pbonzini@redhat.com, qemu-devel@nongnu.org
+References: <459ffb4e-c831-4694-83f3-32ea610f72a2@linaro.org>
+ <20260128074236.49624-1-3160104094@zju.edu.cn>
+ <CAPMQPEK1oF9K86_dnO9bEOMn8UDtZK0GBZZkB0zxYa0+-2WPjQ@mail.gmail.com>
+From: Panda Jiang <3160104094@zju.edu.cn>
+In-Reply-To: <CAPMQPEK1oF9K86_dnO9bEOMn8UDtZK0GBZZkB0zxYa0+-2WPjQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: zi_KCgAHnoPt83pp2bwTBQ--.64280S2
+X-CM-SenderInfo: qtrwiiiquqmko62m3hxhgxhubq/
+X-CM-DELIVERINFO: =?B?bXpTWgXKKxbFmtjJiESix3B1w3sL8hBMFUTpd3cX36+dE6DPAN7iCt/gLhxLJ5hnLg
+ KjddaAGmgCcG583U2FN/vVJGTbRSpUPAf8qUSzERP8fFeutLZ0NNZBDlWMpKJguVDKSrYn
+ /KflY5lqagoj7gZm052XguWHTWSWDw9kjeBztpJ5
+X-Coremail-Antispam: 1Uk129KBj93XoW7uFWUXry5Wr13WF4Uuw4ftFc_yoW8tr18pr
+ Z3KF4qkF9rX34Iyw1Iqw4xu3WY9w43JFW7W34Fqan8CrnxXrn2qw4qkF4j9Fn7WrW8X3y2
+ yF4aqw47ZF4UA3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AK
+ xVW0oVCq3wAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc804V
+ CY07AIYIkI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AK
+ xVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcV
+ AKI48JMxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzWlkUUUU
+ U
+Received-SPF: pass client-ip=209.97.182.222;
+ envelope-from=3160104094@zju.edu.cn;
+ helo=zg8tmja5ljk3lje4mi4ymjia.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,11 +87,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/29/26 13:56, Pierrick Bouvier wrote:
-> If that's ok for you, I can move the function to linux-user/syscall.c and remove the 
-> header. How about that?
+On 1/29/26 1:03 AM, Philippe Mathieu-Daudé wrote:
+> On Wed, 28 Jan 2026 at 08:43, Panda Jiang <3160104094@zju.edu.cn> wrote:
+>>
+>> In tb_gen_code(), get_page_addr_code_hostp() is called to get a host
+>> mapping for a guest PC. If the function fails (e.g., for an I/O region)
+>> and returns -1, it previously left its output pointer parameter
+>> ('host_pc' in the caller) unmodified.
+>>
+>> If the caller's variable was uninitialized, this leads to undefined
+>> behavior when it is later used, for example in setjmp_gen_code(). This
+>> was observed as a segmentation fault when running QEMU with the
+>> '-d in_asm' logging option when mmu translation fails.
+>>
+>> As suggested by Richard Henderson, fix this within get_page_addr_code_hostp()
+>> itself rather than in the caller. Ensure that in all failure paths where -1
+>> is returned, the output pointer is explicitly set to NULL.
+>>
+>> Signed-off-by: Panda Jiang <3160104094@zju.edu.cn>
+>> ---
+>> + Changes in v2:
+>> + - Moved the fix from the caller (tb_gen_code) to the callee
+>> +   (get_page_addr_code_hostp).
+>> + - Set the output pointer to NULL on failure paths inside
+>> +   get_page_addr_code_hostp, as suggested.
+>> + - Updated commit message to reflect the new approach.
+> 
+> See Richard's elsewhere fix:
+> https://lore.kernel.org/qemu-devel/20260128010715.347776-3-richard.henderson@linaro.org/
+> 
+>>   accel/tcg/cputlb.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+>> index 6900a12682..6d7cfd2b5a 100644
+>> --- a/accel/tcg/cputlb.c
+>> +++ b/accel/tcg/cputlb.c
+>> @@ -1543,6 +1543,10 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
+>>       CPUTLBEntryFull *full;
+>>       void *p;
+>>
+>> +    if (hostp) {
+>> +        *hostp = NULL;
+>> +    }
+>> +
+>>       (void)probe_access_internal(env_cpu(env), addr, 1, MMU_INST_FETCH,
+>>                                   cpu_mmu_index(env_cpu(env), true), false,
+>>                                   &p, &full, 0, false);
+>> --
+>> 2.39.2 (Apple Git-143)
+>>
+>>
 
-Sounds good.
+Hi Philippe,
 
-r~
+Got it. Thank you for pointing this out and providing the link. I wasn't 
+aware that this was already fixed.
+
+Apologies for the noise.
+
+Thanks again,
+Panda Jiang
+
 
