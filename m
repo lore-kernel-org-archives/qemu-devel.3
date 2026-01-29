@@ -4,117 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB95AD61017
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 13:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 286ADD61017
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 13:43:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlSHS-0008Of-Np; Thu, 29 Jan 2026 08:41:59 -0500
+	id 1vlSAA-0001oX-3A; Thu, 29 Jan 2026 08:34:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlSHE-0008Lk-T2
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 08:41:43 -0500
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlS98-0000G9-3Z
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 08:33:22 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlSHC-0005bC-Je
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 08:41:40 -0500
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-79430ef54c3so9311737b3.2
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 05:41:38 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769694097; cv=none;
- d=google.com; s=arc-20240605;
- b=EtqO/EeDUaWxAkuQmE3Ry+KZAMUsIiUeJBPAuHxDDOB2v4o+si1a4iqvGPtFXiGsiM
- 55BPNSmqR0sAENFEX500Xg5DgtTxftOzjfRqI/1IRsEFFQaDYjembFoq84mYISuIHE9z
- yVPl08UhseyrZjHlOkVK2vmPOVFdmWZu1HwY1ju0newnR0hgM30DwUZ7ggrUQaxD1CyU
- pUdcYEGQNueWUQ7Hdlp3lwkGRiCC4QBVFM1GW7BYwxI1SweNqcDJHYSOg3H/eHWGVb7e
- tlROGT02OYgRAD1Goab2jSrCX4naMH5JxW/SanSpiZSqXg1in7+1iiBYqLqY2/D3qk+E
- DL6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=cwyLYqO384PsM59QyIlQBNjYFKFwiiWXYOM1AFGJlzE=;
- fh=us4lPT8YSvMw3WPWVr1x1zbLMIgA1kHH4DqlCTpJeag=;
- b=cAqDT+rzy2g1VjK1vZ53ndgqNSHrFLfAqiEEn77ToHUurwlEmiZx/Qq5hA1/+/uNH8
- OVbXC/u5JjBFl110dyBK+0j3VS3YmWPPWJYQi8buFmKf3dzUqDWMyak5iSXfYLAmcL5j
- P22mFvWCXVB5q9WEa6P5Hez+ZO0QwytHQFAUMMqZIk6KwVrtZQR2Ikq3aW1T5Qo/SrhI
- CjHrkyki0HmNmQ87eMBGSK4LnLcUeOdSIKGTbFpA3rlch6Xm7/DAx/2iVIcUP8yCnmxV
- 5iRf/2XArAFNSNs+4gkH1qYTuvv0JnyBXC9e8PTbY/V0tqhkvQl71YDPU5Ja58YXyr9W
- TVBw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlS94-0002co-5k
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 08:33:17 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-432755545fcso752772f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 05:33:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769694097; x=1770298897; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=cwyLYqO384PsM59QyIlQBNjYFKFwiiWXYOM1AFGJlzE=;
- b=pYSqQAyrL/RyEXWSh9GQvFk/V6ThoN5vUr34YYf7J37uLqOVsCODGfU99/LaQsGdXw
- pHj0BfENB+5svwqwg24Mz3GUETDWdTMGnxGCx7FDA8T+d6yFW3n0NUZRmOtcNhwqUAWy
- 1QhhKLRsDF7y3IBwQrId7YXGIkCFi4jXvmvFuHWX5HFUxHF9VJnRd8O0V48IilM0bvcc
- Wf/45MPflG5ltW8CRk269Y2VW3/Fu7KqEYenu2N9NaJPlW07QPoQ/E0gwAa6YeL1jzTb
- 5hxWuWlY5y++MEZfrkJwfCiFoLI947bccAhsw4W6vfhl4stHYve0Hf5BvIOG5H3Of0lu
- WLEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769694097; x=1770298897;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1769693591; x=1770298391; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cwyLYqO384PsM59QyIlQBNjYFKFwiiWXYOM1AFGJlzE=;
- b=DfkKrn5D5y7nRTXghfBGj3EImIBniY17rm4z1HZ8SPKyq6nlWB+2/8SCu0NzomZNcK
- spx70xxyoDwMQt/dmpmgHplm3yG6u6O9DM0+FIJQ8tDhzj3sVfZv0MwQTGLgWCvTavg5
- viHsL9IinLZoQlT37On+MEjxaK1BCUZZ+ObVFXZhlHs3fAZcyhUMuiWKggmgBBJPxDC9
- DOdCxMAMQhqMLWIQPta1PZ7CHE9JTp/Iw6eul87bCQNiLbfnmnbm5pnnzp0VZOQdX0nq
- 6rHKonP98PCxC6Zc29IKdrvl8GfZM5mdpyDjIfZntzxV0wv1+M/jYpV+oMCnftFvTIeU
- NJiA==
-X-Gm-Message-State: AOJu0YycZWNVdWdmLU2E50VbqJcP6FuSw1VSVv4+ROD12nxKua2JBcnG
- oyhr00lQFNco/ZdOmlGIJ1mn9RloEwPO3kPDq8P6XPXQGxCOlhkKdIw2OA8a2/JXupoz9UHu6cG
- XVicAUSrhdBixjpt96y7L1NX6+QmYDaMQ4jDWnzGd3A==
-X-Gm-Gg: AZuq6aJvrWmh8wjKf3Decw5CZH0Z4TbZ1NRX4uZNLW0h7QN8nv3mLN/8gmPV22qFXJV
- sEMH3fri1T2vA4SGT6bqQnWkIC8sStBa2M/+6/ylxnNv0TPvr9Z3+8hshV7t/K0m5+2chYB+V4a
- SzdIas879UcSTEcT3y+eD7pmWmB4qoNkXLbSerrKyY72mS1cXEU43WDz0coltUaVDDEyLMFeE9O
- orRyV8awKVvJI7oxVqvALmJUAlhJwOfpQ8dkpeUztHaoLlFUriiTDgsfr/WLCgahtpXqT3JIvsL
- A3of
-X-Received: by 2002:a05:690c:2904:b0:794:9317:bad2 with SMTP id
- 00721157ae682-7949317c25dmr13631087b3.56.1769694097379; Thu, 29 Jan 2026
- 05:41:37 -0800 (PST)
+ bh=apOZMf0tEn3rJJPrSfMcVgYQ3RZZMtDVtwPqX5t6dIc=;
+ b=zcJ6YLxipDwzdZdCtToJ6GlOD3UcLF9huU0jCo1X+nBh9JRK77nzDFtDKWSENANhgv
+ ZG2MUiieMLE1nUzcXpr5s10TjSKIhEE6j8/OUVxIz9mG+i8KIoaYJcbffpHSImWoyzPD
+ +joDBCBx9dEo2TwOnKQxDxxudGHnB0Q5QyncTj5pMIEwVJOVf76coZ2SIk79HIKqVmd/
+ 5rFWQI5M3KYb+W4G94y7MTm0sEp3ut3hskOwgh9RDvgwCnjjEnhoalKMkP93Pv/k8yjB
+ kesNx+WXvfRKF2oLSLM2uqO+Foe3tUzV1VMaztHMncn59SrV98ESX/g5n10zO2NsECOQ
+ K/LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769693591; x=1770298391;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=apOZMf0tEn3rJJPrSfMcVgYQ3RZZMtDVtwPqX5t6dIc=;
+ b=w4cV/C6yHauKYqRFgoEeHKoYN36p0nHpdlGyAI4tHQWprFJ5opsK/PrkpVqjlwool1
+ leqba5EYaUQAtR49lmciuAV4bQFyrQueudzNEJjBh3y5i6TSNY+0CuVMOND3Q59Bhjrn
+ t6IvG4OJhFTddoSeL7+kHg6rvTCHIGlE0/F9fC07xSk24ZuWzsoZZldgmrHfu4ab4ZbX
+ BM3Lf07VfKCR98+qzFKY1tm2QFOSMRnlOihy3+VPADiPNZJEh0olgaMmlS4nIyW7Km7x
+ npcKlXK1cJQB0OiMJMGfFX/Pq7xnc0LBdrT1hAWbBppdzL7sopWhuWkjFGkzIYOkOAki
+ WVNA==
+X-Gm-Message-State: AOJu0YwhYNxxKWky9jB3fq1BlJt7aG1Hy8N3BCEItUrhNKTjGY0HqbCN
+ XuOYLwLaG0QE21GTpvjkjfTtkwHdurDBCaT7flNXGYz5S7nrJmXSHdnttQuju+e+BYkeH2XUV2T
+ XkYFTEWg=
+X-Gm-Gg: AZuq6aIOf8AzPcVd0kxv5lVU0BjSxHX9Xw8y2aaZiqEaoGGlN6UaKsfwZjM1k4csGCT
+ xzktzxhwG4x8CyhvkvaS++L/Wt5BpclZmc3K35Fk0g+amdMEzY3tWktiSG79qQwKZwvmDXphI0C
+ Y8rBK4sKEBcfD/I27cg8fxCNpAU9/W9oqHgly3xd8oN5nm5eb1wxZzkNVqd6qxWddw3G2zfUemT
+ ZBbINBG2ch3Pbw5yH+SBbkyyF0Fk/jvh29myuMP0zEo7fV3XwruEMlb7imVFDjdd4xj3Bxb1038
+ WOH0Pfvf6t9ZC8yKNZxZp0mF4h3Xle4vStjoUZzJcRVZ2dBk2b5n+oD3h6FETjNJgKJyLlP8vOU
+ UIImWMFKbLC1ipqoXZj4Cv7YmNAJi7s85737/vgbwDQDuv6gcXH2SfsIRikpqPBbdZ9/N+jqtuB
+ svu19xhfO4n63R09/6zS+u1dA9899SVZ5ciUJ3tna8slHyVGbBu8lM+DFi/1av
+X-Received: by 2002:a05:6000:2401:b0:435:97b2:a9b with SMTP id
+ ffacd0b85a97d-435dd1c0cb9mr12196567f8f.37.1769693591265; 
+ Thu, 29 Jan 2026 05:33:11 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e1322f40sm14195715f8f.34.2026.01.29.05.33.10
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 29 Jan 2026 05:33:10 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: [PATCH v4 4/9] monitor: Reduce target-specific methods
+Date: Thu, 29 Jan 2026 14:32:36 +0100
+Message-ID: <20260129133241.35990-5-philmd@linaro.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260129133241.35990-1-philmd@linaro.org>
+References: <20260129133241.35990-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20260127182805.73212-1-mohamed@unpredictable.fr>
- <20260127182805.73212-6-mohamed@unpredictable.fr>
- <CAFEAcA9qtLv1wOKkEmtNO5UsGTAM0x7YD+y8Fsu8hCQRAD_o5A@mail.gmail.com>
-In-Reply-To: <CAFEAcA9qtLv1wOKkEmtNO5UsGTAM0x7YD+y8Fsu8hCQRAD_o5A@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 29 Jan 2026 13:41:24 +0000
-X-Gm-Features: AZwV_QjiaSc4bQvvEHjcRpY3vBoosppBqZv5nrEesKh4Q49SBnntHhtw_EfBkXE
-Message-ID: <CAFEAcA-3akyfdwprPe8Fr_P-BOUAauxJqAETEj_+NN-XeBD3BQ@mail.gmail.com>
-Subject: Re: [PATCH v18 05/22] tests: data: update AArch64 ACPI tables
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- qemu-arm@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Shannon Zhao <shannon.zhaosl@gmail.com>, Igor Mammedov <imammedo@redhat.com>, 
- Cameron Esfahani <dirty@apple.com>, Alexander Graf <agraf@csgraf.de>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Phil Dennis-Jordan <phil@philjordan.eu>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,39 +101,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Jan 2026 at 13:36, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Tue, 27 Jan 2026 at 18:28, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
-> >
-> > After the previous commit introducing GICv3 + GICv2m configurations,
-> > update the AArch64 ACPI tables for the GICv2 case.
-> >
-> > Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> > ---
-> >  tests/data/acpi/aarch64/virt/IORT               | Bin 128 -> 84 bytes
-> >  tests/data/acpi/aarch64/virt/IORT.smmuv3-dev    | Bin 364 -> 260 bytes
-> >  tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 276 -> 192 bytes
-> >  tests/qtest/bios-tables-test-allowed-diff.h     |   3 ---
-> >  4 files changed, 3 deletions(-)
->
-> The process documented in tests/qtest/bios-tables-test.c says
-> that this commit is supposed to have the diff of the disassembled
-> table data in the commit message, so that human reviewers can
-> confirm that the changes are as expected. (If you git log
-> tests/data/acpi you can see how this looks.)
->
-> Can you provide the ASL diff, please? (If this is going to be the
-> only fix needed to this version of the series, which I hope it
-> will be, then I can update the commit message as I apply the
-> series, so you don't need to respin, just reply with the updated
-> commit message with the diff in it.)
+The following methods don't use target-specific code anymore:
+- hmp_compare_cmd()
+- monitor_register_hmp()
+- monitor_register_hmp_info_hrt()
+Move them to hmp.c which is target-agnostic, being built once.
 
-...ah, it looks like unfortunately this is going to conflict
-with the smmuv3 acceleration series I already have queued,
-because that series also updates these ACPI blobs. So I think
-the best thing is if I get that out in a target-arm pullreq
-and then you can rebase on top of that.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+---
+ monitor/hmp-target.c | 57 --------------------------------------------
+ monitor/hmp.c        | 55 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+), 57 deletions(-)
 
-thanks
--- PMM
+diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+index 59c60d13b52..420969bd6eb 100644
+--- a/monitor/hmp-target.c
++++ b/monitor/hmp-target.c
+@@ -33,8 +33,6 @@
+ #include "qapi/qapi-commands-control.h"
+ #include "qapi/qapi-commands-misc.h"
+ #include "qapi/qapi-commands-machine.h"
+-#include "qapi/error.h"
+-#include "qemu/cutils.h"
+ 
+ #if defined(TARGET_S390X)
+ #include "hw/s390x/storage-keys.h"
+@@ -44,29 +42,6 @@
+ /* Make devices configuration available for use in hmp-commands*.hx templates */
+ #include CONFIG_DEVICES
+ 
+-/**
+- * Is @name in the '|' separated list of names @list?
+- */
+-int hmp_compare_cmd(const char *name, const char *list)
+-{
+-    const char *p, *pstart;
+-    int len;
+-    len = strlen(name);
+-    p = list;
+-    for (;;) {
+-        pstart = p;
+-        p = qemu_strchrnul(p, '|');
+-        if ((p - pstart) == len && !memcmp(pstart, name, len)) {
+-            return 1;
+-        }
+-        if (*p == '\0') {
+-            break;
+-        }
+-        p++;
+-    }
+-    return 0;
+-}
+-
+ /* Please update hmp-commands.hx when adding or changing commands */
+ static HMPCommand hmp_info_cmds[] = {
+ #include "hmp-commands-info.h"
+@@ -147,35 +122,3 @@ static void __attribute__((__constructor__)) sortcmdlist(void)
+           sizeof(*hmp_info_cmds),
+           compare_mon_cmd);
+ }
+-
+-void monitor_register_hmp(const char *name, bool info,
+-                          void (*cmd)(Monitor *mon, const QDict *qdict))
+-{
+-    HMPCommand *table = hmp_cmds_for_target(info);
+-
+-    while (table->name != NULL) {
+-        if (strcmp(table->name, name) == 0) {
+-            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
+-            table->cmd = cmd;
+-            return;
+-        }
+-        table++;
+-    }
+-    g_assert_not_reached();
+-}
+-
+-void monitor_register_hmp_info_hrt(const char *name,
+-                                   HumanReadableText *(*handler)(Error **errp))
+-{
+-    HMPCommand *table = hmp_cmds_for_target(true);
+-
+-    while (table->name != NULL) {
+-        if (strcmp(table->name, name) == 0) {
+-            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
+-            table->cmd_info_hrt = handler;
+-            return;
+-        }
+-        table++;
+-    }
+-    g_assert_not_reached();
+-}
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 17e5756986f..0a5bbf82197 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -1497,3 +1497,58 @@ void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+                              monitor_event, NULL, &mon->common, NULL, true);
+     monitor_list_append(&mon->common);
+ }
++
++/**
++ * Is @name in the '|' separated list of names @list?
++ */
++int hmp_compare_cmd(const char *name, const char *list)
++{
++    const char *p, *pstart;
++    int len;
++    len = strlen(name);
++    p = list;
++    for (;;) {
++        pstart = p;
++        p = qemu_strchrnul(p, '|');
++        if ((p - pstart) == len && !memcmp(pstart, name, len)) {
++            return 1;
++        }
++        if (*p == '\0') {
++            break;
++        }
++        p++;
++    }
++    return 0;
++}
++
++void monitor_register_hmp(const char *name, bool info,
++                          void (*cmd)(Monitor *mon, const QDict *qdict))
++{
++    HMPCommand *table = hmp_cmds_for_target(info);
++
++    while (table->name != NULL) {
++        if (strcmp(table->name, name) == 0) {
++            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
++            table->cmd = cmd;
++            return;
++        }
++        table++;
++    }
++    g_assert_not_reached();
++}
++
++void monitor_register_hmp_info_hrt(const char *name,
++                                   HumanReadableText *(*handler)(Error **errp))
++{
++    HMPCommand *table = hmp_cmds_for_target(true);
++
++    while (table->name != NULL) {
++        if (strcmp(table->name, name) == 0) {
++            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
++            table->cmd_info_hrt = handler;
++            return;
++        }
++        table++;
++    }
++    g_assert_not_reached();
++}
+-- 
+2.52.0
+
 
