@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB51D73E85
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:38:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C49DFD73E87
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:38:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlVyR-0004nF-Nh; Thu, 29 Jan 2026 12:38:31 -0500
+	id 1vlVyJ-0004M4-9i; Thu, 29 Jan 2026 12:38:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyN-0004XI-RG
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:27 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1vlVyH-0004JY-MT
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:21 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vlVyL-0000eg-G3
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:27 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-8230c2d3128so723709b3a.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:25 -0800 (PST)
+ id 1vlVyF-0000d6-CV
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:21 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-81e821c3d4eso1094085b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769708304; x=1770313104; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jsztMEzgZHZfrQRWYcQj4QjAMuO/MHTF7LJ1DZnGjY4=;
- b=lOtQiemX53Kg1b/00ZpCtTdBPBp1rcvT2fw0WweXqK45Bi1BxmkLMvJk2ZVQo3r0VT
- ByuhY+PMwjGX1YlXracPemnxYa0OszmJPqJaLklyrripJ4qmRzQGCHwQnHc/BJzGFVcq
- Joi6WazX5+nf128N5q9k2G1FvwV9lYZMfZo0emEaqUghd31IRmgNTxtMWxZPWnj24Qqn
- ajk+S2RK0bJdUKteaVvNb2yQYFX5LGBvaG8cVkjvKqtkPYoVMM0JFWf2FDfqQXYJ8uDr
- G8IPtN9rIIDsiJpZedAffg5g2Yn35VpaA77hhCTkjQav7qi9cU2Jxmp1ndF9x1rUe0cJ
- DuMw==
+ d=linaro.org; s=google; t=1769708297; x=1770313097; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=I1T0IHkT1j7CAh04oAglc0N/G/BUP4Rx8GN1KL6/VAo=;
+ b=mghmAmyS5vwEwmJXl5+eMKCP2ngxOFaVXZwo/2UPHLb5vINI/6SdJQmpKEuDQQxF14
+ dXz+LL8F77dGIIY1ahrkW+tEq1TJQ1+OhXt2+XecTlqjp7uY00S0lY0EF3N4mBUHy/30
+ 6aqEvjrsQ3/L8xvVG4El8oLpEW2R/xmPsTUr9VUz4oMC+jYgB8t8o9EcUpkziHiQUvKs
+ zq7nR0D43oMK1Fw5HJ46DZp+IXlDGBdgxl9MwzDfEetxz4HJLZm4qcwDbFtWffKqbKBn
+ QKrBPIkaqT9Rmq1VYo3Ezl65NCv5kFTwyHeAgmwCZqHT7WSfZDNp2Qmjl4ESr7ailNG7
+ Jdsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769708304; x=1770313104;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jsztMEzgZHZfrQRWYcQj4QjAMuO/MHTF7LJ1DZnGjY4=;
- b=NjtrAxCj22jehvkJFLZQ5azNt/v0iMP+50Buzx+efSIj7jsKG8PJIBZWjoZNUgCkHX
- aa02s/eHmtcntNT1OGeBB0CxQxTGTAYhfINJ/X2T58eG57rcmQ8S7OB0ymbgNLB6izdn
- sFbZh2KReJrIAAI0YFSr8CV/lhwVkioqt3q6Jj9p4/j8IPYMA/RosmZUmsdGZ8XTOFJ/
- Z1ixfE1VG7mb7SM+u4+aUhZ5/P6WHNOhPRCSEilt9+bnHYHuG+ORzB4Z/Q51DmLZBYkt
- 7zy5Z+TyukiuBKDrzsizhNvgmVP9fDSswbAcZoV60G+tt/f2SopSR0u4bPKUKw2eQ4Ze
- z8og==
-X-Gm-Message-State: AOJu0YzpvwKgIJ5PWm6oGIgpOnK91FyU3onsA4hOViwQTqJW3V7Cgfs3
- O1jDq8ru0Njb63zbb4E1tRItdiic6Azclvdqguz6lYA8y4gKjXi0ElyH47fWIaNtXX1Torr/nOB
- VApi0
-X-Gm-Gg: AZuq6aINpq6NiwxrCcBrvQ7vAgNgAgo+PIoQSWQUVcOu8+EQrqxSlQIe3DUp2ScGSM9
- mKlgsx8Nen2TIo8rN+lIS7A2SBR9D5KVgKEhIHrieroRt9m7geOWMCX7zLy+9TPok3+LyXkoyhA
- aOQnGGEeZsvISfDzylEyATfQfkuWpBaiQuNjIvSA+l8VtJiSXMoG9YPa7J69aiSU48R7jTvA3rw
- yWptriHG96wUuDvfSPvWgfXePmY4cYY5nhoZiQTaYTDsH67aof8GrLHLymY+FKAFRVdd+4cG510
- ezNTLezajWW3jgsFXxceyd/A4HUtVPeL25uje2bKzF1X/Ow6grcU7Iphbl2SP0Hyefamz+zykfY
- A73rW4btinV/wdOCprhckXhSczskkjuD+Rggu97sMtpsKZ37lv+okjQ17uyjk/6NfGrYhmUbNVq
- dO39bSyZmeRiecDl3KleC+452rhtA6zSCKKNPJP2jaDE4oTF8YR/qSspgSWmdOu+3P
-X-Received: by 2002:a05:6a20:a106:b0:38e:9b5d:dc2c with SMTP id
- adf61e73a8af0-38ec62dddf8mr9506633637.17.1769708303918; 
- Thu, 29 Jan 2026 09:38:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1769708297; x=1770313097;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I1T0IHkT1j7CAh04oAglc0N/G/BUP4Rx8GN1KL6/VAo=;
+ b=kly9giBXa9Usd7fo9rD0mEnCG4Mtvt8H0MMfK5nxbf+NQkoG56uauxyBWVJdzKqF3W
+ z7JikYMEzwVFmrfE+qxAfqqMOcLS+q9GC70B9ZcFXOKxDopSOIrzdG9zyJzaFWYfLod7
+ 1pmGKKpaMlpmyM9BbtSavCKHGTlzaJ05kScQo7aCfYCX8SglcSAGaNWFptEGlcdZRCMV
+ C230JDoPej+5G3Xgh8UpanAfkObBGLagjmXrC3qb9kAgzxsiIIdtyKJzxArlsMbMLH/P
+ 5uj9XA5B7MofZk6pxn+ZfgCR2S9328XNNdJqcPX2GskTJSofxwiGeK90o66cbiNoR9a4
+ fcTQ==
+X-Gm-Message-State: AOJu0YzNnPm0vqfWmUsXt/St5DiINBAppKherjF9f2L+Lij0GxRZUsNw
+ w8c2XyCKuycm8Vr+VmTimfqkhfCL2Uu7EPL+LVh9UboGVKYvxyfs9xx7d29PPBpqbSIZP8moNST
+ ugexW
+X-Gm-Gg: AZuq6aIRS4AfCm5Vrg3aqIU5Qpc2Jnj/t6WU9ou6/iqsei2pgT3IpGZoXf3KHOTMbUV
+ Gmi4HjMCdeV3CXy7uSzNwgO1B3KEBJgLZJmXDGiorZtOyoCzY5XtY0vH4pS4jsIzbK84BGcwVC9
+ Q35Q5fElN9Q48dy7N+c0s1LUzAStRXXT+omR8hjwGi8vRgBAMsQaiLWu8liehjRSw+1NPzvyDjG
+ FmLiAC1nDIWtH+9ahDWccyUJizfJjSYa0bFbP/QSTGKJkkzhkDfF255Oti1tj699lioOXwflg6v
+ BUHD3I717gnNzzR9ek/aXV2wrzPsXY2GbETWwLBUfSB1AWlUJM9j+GeY1L1VcwYwvatv7WS2FiG
+ dvFKhP+siQtzq2qBRCefkFdP1GPUvOqNbdEoNgiz276TJvIrHoRoIN3VQTWj7mbY+SXS/r1zip0
+ wKHv7Teemsw0dCLPHfMwigNM+RiSdPq+5HbnzijN+X9GloT9ZvrTMI71XQnmXGAgBIdLs99+KX3
+ eI=
+X-Received: by 2002:a05:6a00:1898:b0:823:d58:c4ab with SMTP id
+ d2e1a72fcca58-82369165b1amr8486825b3a.2.1769708297291; 
+ Thu, 29 Jan 2026 09:38:17 -0800 (PST)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.23
+ d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 09:38:23 -0800 (PST)
+ Thu, 29 Jan 2026 09:38:16 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ziyang Zhang <functioner@sjtu.edu.cn>, Mingyuan Xia <xiamy@ultrarisc.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 08/21] tcg tests: add a test to verify the syscall filter
- plugin API
-Date: Thu, 29 Jan 2026 09:37:54 -0800
-Message-ID: <20260129173811.138036-9-pierrick.bouvier@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 00/21] Plugins patches for 2026-01-29
+Date: Thu, 29 Jan 2026 09:37:46 -0800
+Message-ID: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
-References: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,128 +99,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
+The following changes since commit 65fb9de4888f9bf32bc4f60c880da3dff04c4fd9:
 
-Register a syscall filter callback in tests/tcg/plugins/sycall.c,
-returns a specific value for a magic system call number, and check
-it in tests/tcg/multiarch/test-plugin-syscall-filter.c.
+  Merge tag 'pr-build_fix-20260128' of https://gitlab.com/pbo-linaro/qemu into staging (2026-01-29 13:29:33 +1100)
 
-Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
-Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-[Pierrick - Changed syscall number to 4096 to make it work with mips32]
-[Pierrick - Skip test when compiling without plugins enabled]
-Link: https://lore.kernel.org/qemu-devel/20251214144620.179282-3-functioner@sjtu.edu.cn
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- .../multiarch/test-plugin-syscall-filter.c    | 39 +++++++++++++++++++
- tests/tcg/plugins/syscall.c                   | 19 +++++++++
- tests/tcg/multiarch/Makefile.target           |  7 +++-
- 3 files changed, 64 insertions(+), 1 deletion(-)
+are available in the Git repository at:
+
+  https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260129
+
+for you to fetch changes up to bed25f00d306bbbcc85d068b6469fc00aeecbd11:
+
+  plugins: reduce source conflicts in plugins list (2026-01-29 09:34:14 -0800)
+
+----------------------------------------------------------------
+Changes:
+- contrib/plugins/hotblocks: Minor bug fixes and add limit argument (Alex Bradbury <asb@igalia.com>)
+- linux-user: introduce syscall-filter plugin API (Ziyang Zhang <functioner@sjtu.edu.cn>)
+- plugins: return bool from register r/w API (Florian Hofhammer <florian.hofhammer@fhofhammer.de>)
+- plugins: enable C++ plugins (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
+- plugins: reduce source conflicts in plugins list (Pierrick Bouvier <pierrick.bouvier@linaro.org>)
+
+----------------------------------------------------------------
+Alex Bradbury (5):
+      contrib/plugins/hotblocks: Correctly free sorted counts list
+      contrib/plugins/hotblocks: Fix off by one error in iteration of sorted blocks
+      contrib/plugins/hotblocks: Print uint64_t with PRIu64 rather than PRId64
+      docs/about/emulation: Add documentation for hotblocks plugin arguments
+      contrib/plugins/hotblocks: Allow limit to be set as a command line argument
+
+Florian Hofhammer (1):
+      plugins: return bool from register r/w API
+
+Pierrick Bouvier (13):
+      linux-user: move user/syscall-trace.h to linux-user/syscall.c
+      plugins: move win32_linker.c file to plugins directory
+      plugins: factorize plugin dependencies and library details
+      plugins: use complete filename for defining plugins sources
+      plugins: define plugin API symbols as extern "C" when compiling in C++
+      tests/tcg/plugins/mem.c: remove dependency on qemu headers
+      plugins: move qemu-plugin.h to include/plugins/
+      meson: fix supported compiler arguments in other languages than C
+      meson: enable cpp (optionally) for plugins
+      qga/vss-win32: fix clang warning with C++20
+      meson: update C++ standard to C++23
+      contrib/plugins: add empty cpp plugin
+      plugins: reduce source conflicts in plugins list
+
+Ziyang Zhang (2):
+      linux-user: add plugin API to filter syscalls
+      tcg tests: add a test to verify the syscall filter plugin API
+
+ docs/about/emulation.rst                         |  12 +++
+ docs/devel/tcg-plugins.rst                       |   4 +-
+ meson.build                                      |  26 ++---
+ include/{qemu => plugins}/qemu-plugin.h          |  62 +++++++++---
+ include/qemu/plugin-event.h                      |   1 +
+ include/qemu/plugin.h                            |  35 +++++--
+ include/user/syscall-trace.h                     |  43 --------
+ bsd-user/freebsd/os-syscall.c                    |   1 -
+ contrib/plugins/execlog.c                        |  14 +--
+ contrib/plugins/hotblocks.c                      |  20 ++--
+ contrib/plugins/uftrace.c                        |   8 +-
+ linux-user/syscall.c                             |  44 ++++++++-
+ plugins/api.c                                    |  36 ++++---
+ plugins/core.c                                   |  39 +++++++-
+ {contrib/plugins => plugins}/win32_linker.c      |   0
+ tests/tcg/multiarch/test-plugin-syscall-filter.c |  39 ++++++++
+ tests/tcg/plugins/insn.c                         |   4 +-
+ tests/tcg/plugins/mem.c                          |  59 +++++------
+ tests/tcg/plugins/syscall.c                      |  19 ++++
+ contrib/plugins/cpp.cpp                          | 119 +++++++++++++++++++++++
+ contrib/plugins/meson.build                      |  38 +++++---
+ plugins/meson.build                              |  17 +++-
+ qga/vss-win32/requester.cpp                      |   6 +-
+ tests/tcg/multiarch/Makefile.target              |   7 +-
+ tests/tcg/plugins/meson.build                    |  27 ++---
+ 25 files changed, 497 insertions(+), 183 deletions(-)
+ rename include/{qemu => plugins}/qemu-plugin.h (95%)
+ delete mode 100644 include/user/syscall-trace.h
+ rename {contrib/plugins => plugins}/win32_linker.c (100%)
  create mode 100644 tests/tcg/multiarch/test-plugin-syscall-filter.c
-
-diff --git a/tests/tcg/multiarch/test-plugin-syscall-filter.c b/tests/tcg/multiarch/test-plugin-syscall-filter.c
-new file mode 100644
-index 00000000000..951e338a7c9
---- /dev/null
-+++ b/tests/tcg/multiarch/test-plugin-syscall-filter.c
-@@ -0,0 +1,39 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This test attempts to execute a magic syscall. The syscall test plugin
-+ * should intercept this and return an expected value.
-+ */
-+
-+#include <stdint.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <unistd.h>
-+
-+int main(int argc, char *argv[])
-+{
-+#ifdef SKIP
-+    return EXIT_SUCCESS;
-+#endif
-+    /*
-+     * We cannot use a very large magic syscall number, because on some ISAs,
-+     * QEMU will treat it as an illegal instruction and trigger a critical
-+     * exception. For instance, on arm32, the syscall number cannot exceed
-+     * ARM_NR_BASE (0xf0000), as can be seen in
-+     * "linux-user/arm/cpu_loop.c:cpu_loop".
-+     * As well, some arch expect a minimum, like 4000 for mips 32 bits.
-+     *
-+     * Therefore, we pick 4096 because, as of now, no ISA in Linux uses this
-+     * number. This is just a test case; replace this number as needed in the
-+     * future.
-+     *
-+     * The corresponding syscall filter is implemented in
-+     * "tests/tcg/plugins/syscall.c".
-+     */
-+    long ret = syscall(4096, 0x66CCFF);
-+    if (ret != 0xFFCC66) {
-+        fprintf(stderr, "Error: unexpected syscall return value %ld\n", ret);
-+        return EXIT_FAILURE;
-+    }
-+    return EXIT_SUCCESS;
-+}
-diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
-index 42801f5c863..5658f830879 100644
---- a/tests/tcg/plugins/syscall.c
-+++ b/tests/tcg/plugins/syscall.c
-@@ -170,6 +170,24 @@ static void vcpu_syscall_ret(qemu_plugin_id_t id, unsigned int vcpu_idx,
-     }
- }
- 
-+static bool vcpu_syscall_filter(qemu_plugin_id_t id, unsigned int vcpu_index,
-+                                int64_t num, uint64_t a1, uint64_t a2,
-+                                uint64_t a3, uint64_t a4, uint64_t a5,
-+                                uint64_t a6, uint64_t a7, uint64_t a8,
-+                                uint64_t *sysret)
-+{
-+    /* Special syscall to test the filter functionality. */
-+    if (num == 4096 && a1 == 0x66CCFF) {
-+        *sysret = 0xFFCC66;
-+
-+        if (!statistics) {
-+            qemu_plugin_outs("magic syscall filtered, set magic return\n");
-+        }
-+        return true;
-+    }
-+    return false;
-+}
-+
- static void print_entry(gpointer val, gpointer user_data)
- {
-     SyscallStats *entry = (SyscallStats *) val;
-@@ -255,6 +273,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
- 
-     qemu_plugin_register_vcpu_syscall_cb(id, vcpu_syscall);
-     qemu_plugin_register_vcpu_syscall_ret_cb(id, vcpu_syscall_ret);
-+    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter);
-     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-     return 0;
- }
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index f5b4d2b8138..07d0b27bdd3 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -202,8 +202,13 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
- 	CHECK_PLUGIN_OUTPUT_COMMAND= \
- 	$(SRC_PATH)/tests/tcg/multiarch/check-plugin-output.sh \
- 	$(QEMU) $<
-+run-plugin-test-plugin-syscall-filter-with-libsyscall.so:
- 
--EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so
-+EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so \
-+			  run-plugin-test-plugin-syscall-filter-with-libsyscall.so
-+else
-+# test-plugin-syscall-filter needs syscall plugin to succeed
-+test-plugin-syscall-filter: CFLAGS+=-DSKIP
- endif
- 
- # Update TESTS
--- 
-2.47.3
-
+ create mode 100644 contrib/plugins/cpp.cpp
 
