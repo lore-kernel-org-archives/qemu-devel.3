@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4257CD6B076
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 15:29:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C29D6B07A
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 15:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlTxK-0000md-4T; Thu, 29 Jan 2026 10:29:14 -0500
+	id 1vlTzc-0003PE-ON; Thu, 29 Jan 2026 10:31:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlTxI-0000lt-Oh
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 10:29:12 -0500
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ id 1vlTzZ-0003Fa-8M
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 10:31:33 -0500
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlTxH-0006JY-8W
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 10:29:12 -0500
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-794265fb73bso11256887b3.1
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 07:29:10 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769700550; cv=none;
+ id 1vlTzX-0006fR-ON
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 10:31:33 -0500
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-79456d5ebf9so11708987b3.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 07:31:31 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769700690; cv=none;
  d=google.com; s=arc-20240605;
- b=iMKF2y4lykTEEtal8cCh+WpXHSETKiT2umWjsT/ROJwTKd2UnZkWMuop638zWXMPNt
- +w991Xq2eFGJGr0HYwSlTywQWrc0luDJ/K/fX6uVu5M24O3f/seqeXzVXvHgbmV4FW7L
- eDLPWlZ3i2uKtfrwdWJUJeIX0sFwxpy9yvboyMB7/swX5Lysps4cFZRnRa9DhhE9GxEe
- b2moUtMN8eRHlK7xKuRtnSvG6zGJP9SJRhUteak0VuKfypfmXjNJ9cxnJSFUxCe9TCXi
- 6plNKvLl3CoOjk9HFrGnbDLXFUudSQrcA+0hILx1VrMHC/dNO4SgXYDiG4Ls2zIEXFDY
- Dl2Q==
+ b=eIEAYeC0LUPl2lVnz8T9iBeZb8+/Fdyu7xSMpIbR96UfOHL6YAD1EpSzhhrtiAEZHR
+ LPoGEVxtpKc4w+ypFrBP/7RkDha5RFUh1fHKmvKMRhMaRd4PomqWT3F3/hn8he/1tK0g
+ zvIDTTQ2mEL0o/pSK2Yr8DS3zcL+8tCzYyopsIThdkNXWPEm76+QmECUIDwreB6AMF6C
+ dJegv0c7aSH2Jvo8Cw0mXAfPfXNArMrsybOA1738VilvJfzAmRyvB97Q5IMHL+9wvWeX
+ BME+F4aec5YrALSgK/d6OEsJmRVIBWz17TeRAIbNzyT+N9FuTIWjccJ7zH9/JC7bK1Qs
+ inzQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=ZBA5Zu9U5fRJlrNmY/yMVMhQUF0W+nyt4RfDpHFCs7A=;
- fh=us4lPT8YSvMw3WPWVr1x1zbLMIgA1kHH4DqlCTpJeag=;
- b=NRYAICX3pj+NueF3QnJFbrgqiZbnjy+GuPt5Ay9J8lzKtXsTyQ58RnCG5ZXt/3uKHq
- Em3KFubtXGjZrp0u86wXN03S24AVJb+YpoafAM8IvnfVEO/Phz/4kckKFBJW3ibttIxR
- JUnxhq0A9K4Gnx1Icb+PccePTlvjGTYeMYsdauTALaTrZrNElhSL0BEfHKHTeFyAJwcP
- gx62ZwaQVWhUu+o2tlQraEFyIWE2Yah3DzFPIUhQTVWb/sgE7ZJSmqbRD7Wu0AvhMFRO
- kXRhfSgBpKwb/IBDScK5cW4UmOjzg6q1thgIHFlGd3L81nToX/scjr+Rdg/lOHiywDwC
- +fbw==; darn=nongnu.org
+ bh=e75Fsiedu5+aeIo3TbRJepvWQBvQru25HrO6tbDPk6o=;
+ fh=Y0v7H7/KoiIv4wajEUo/XxWAh9oE52uzHxT0mnCejkM=;
+ b=S8r94rfI/IrJQo5btkwF3i66AhjBYHzOdslpKwYyzfFdzdkWMDFv0tYYQ70pBHw+wO
+ hHt8uG5Geac1gsFRa4SIz/GICQ7WMgneGb87pJfMI2nFDWQZALySUe6kGHSQdWWHjKNd
+ 7Ej7NjO0d/Ci1/VkEqRNt6jf2N872N8Yqs5rxIkfwnqzJ47fQ3oHlo7iGAtBJzIaKyfc
+ Zz3FEDGf7bzamlZ1ybYBvyyPgdbjmqD2DvPWQTRzefR/HQdzZp/OZnjxk11SjmKrYeYT
+ KEhswxy/go88L5sGl5NsCfZgTNntArDWKLiGa1UC9Gi72r4iv7rjg5W75+m8cQalGhjm
+ u23g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769700550; x=1770305350; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769700690; x=1770305490; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ZBA5Zu9U5fRJlrNmY/yMVMhQUF0W+nyt4RfDpHFCs7A=;
- b=igjMDoYIbz7Hb7WkY9QC69pyJ4DirzmKFQStIi0Ri1WS6FIYeDax81+7VfUfsLpsey
- elXw9XFDYNQ7im1nHyfSDr+h/jj0GmDxw45GQCrykAt4ioB3TSYoaCa2ksj9eBvS5fUI
- 8gWQqX7qRU6Ck8d2/iHzB0CVCxKBwPHZ5eOLWhx5P4T7MIweOm2lyy4p5DUmoxqntLoo
- lRljcxJ+fLinKuWk+JCGc4C+sHincrei1pAiimoUKi6VlUfWLZqqB1xIcj+IDwMGWhI0
- ZHKF+8r55VIxrZb002xRhRc7mvctlZQdqefu2pTA9z7HO2EVvzDpqs2YBqO42JTQdDqm
- OXQA==
+ bh=e75Fsiedu5+aeIo3TbRJepvWQBvQru25HrO6tbDPk6o=;
+ b=gzMrI1uqlcOEt7hu+dl+eQoJ6mSOmKs3iETjCWMICLxtDrtEyn5JbFo97HEw4riZC2
+ gByK8oHuUg0zeeZhR8tRIMK3+PwzJOJyRK6tABmdFCUDqnR6y1Sz8H+BeQKj4OgRCiOG
+ 8rGwKgzFcN9LOmG3ugDfM9TH90qRB4cZCUJXROnr3kZUm+0dHhMryan7EzrxxAyHNOzv
+ hh0jPr/SkGkT6J8B7heFNm71fZ1e4nJ2pM+3BllK4WX70y9NCPX82U/IQkdUHV3hILVo
+ peNtnGGdjlaEWVp6ffaU6XyrnP2XCczWm3IX3HKeWjXz+PBrF07p51XiVvmE73a3pI2l
+ hVIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769700550; x=1770305350;
+ d=1e100.net; s=20230601; t=1769700690; x=1770305490;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZBA5Zu9U5fRJlrNmY/yMVMhQUF0W+nyt4RfDpHFCs7A=;
- b=oHqKt90ieddi9O6tEiaGlForKM2CchJTpXzmqLk1nCmeCl11ZCy3nJhZQAVDFz9ynm
- Te6y+E8lmnWAKkuPCGiqznywl22WIUeI7YiDjNI9pVraFErMEuzJSEx876Nsk2ZhLguR
- qa7IJZcBApW7warPD+9HYAYkqebV4AHvac3qxKC0XhdV1NHi8/Tn1Es/OBgOb9psIXpW
- QpbfB7seUgniUxz5WkGgqQiQGj03mnN6ss1e9f5OaCJEIMWFccvDjiFMr3rsIrWo81wA
- 4FiB5xXpy/vHad1Q73iwkFxxT7avK9N0Gi67vySQYrOdvCZpVXCNWbFwv2lBWgTJrw9/
- LJWQ==
-X-Gm-Message-State: AOJu0Yw+JGuhpaM/d58YYft2NF7SLm5m3Tq7o8TjU6/3dCRSUE9PZMaS
- IdPAgtzcP7wrtKdYiOgohAadgVqQRWW4iHBhTrXLz6JOwAjRzZjtbwwD63ZdVO4r9PB/ykbqifN
- jlL1b3LJJjFeJUnkWBgR0DhhW59LzxPK/DFasqbn5Sg==
-X-Gm-Gg: AZuq6aJ+0LCf3cIVPX3NhwPfoLNy5xuC4pbLVkcBLsFPmNuytIB5kZo4ls+F/4eWSIl
- vogNLdFKTmSibDLUXX9a8M252by7c/rrtzwj8gFAEM1WngiCt/j5FSuVeEkh/voMOTJvhMRoi0f
- 0290TYsFyxgtDi6QRF6zMRWB/UrSA/GUfHzQTH/e2i0T3qwoKZKhM03+g1ECwI3QOMko7Q2vPSp
- q8uT3pUUMX2bnyUcvcI5/HjCJ8GvGvrP+yKEOlOAa83Jki4+KXFVimRcrXf4/rkcuBTIgGNTZmC
- tsl4
-X-Received: by 2002:a05:690c:e3ee:b0:794:6fed:9596 with SMTP id
- 00721157ae682-7947ac00e59mr73402977b3.39.1769700549808; Thu, 29 Jan 2026
- 07:29:09 -0800 (PST)
+ bh=e75Fsiedu5+aeIo3TbRJepvWQBvQru25HrO6tbDPk6o=;
+ b=nV8ZpV+vbpEFTRW+cUt5bmTv69h12A54jU8TPU+El2vB2LusQOPqhqpJWvWinBCuhs
+ UJz6o5nqQwQLazA36XVX8QAntppve2eBWxegxrIq4rDa4Aw6A/lrEAmEjPTsMUgP7c0V
+ 8ofdc8dsPceML27b8G/8ccR60EgM4J4evg/3J4ort/tbI7Ru9n8cF4wyUaNOvszK6NG7
+ xjx1o9gTJsV+AxsFeXaBtl7dINmjCWUOOchIU3aTFUqnZkt7quB4k4uyE0mhr4lDJMdf
+ wuWcvYce4aXmCz2IUPG0q2qRZ5Mk+Rovvw7kU4MeSy5PHz/M3SlgYPMT52GSm9kR2pTe
+ +xlw==
+X-Gm-Message-State: AOJu0Yx9XQzuswqiNh1Y8HHF6wagS9PyrbIaWAvk1nQSfp3DMWSthaHF
+ kxlnvnWOPu5Z9j2LaZInlOP+0fTBweTY3ZwQHr3JFSagpHyPk4pc3Mi7PeF1k2sLrbEjPsz+7R3
+ CGzzpikPVIy/AMqGvsaMGXa9M4akB+UFISka2nJhU3A==
+X-Gm-Gg: AZuq6aLzxEG+K48h7j15WQz3DAS2H7FZdoeZB9noIpsdFHNiCWxcSNBt233iRRiTuzc
+ 9jXXFIfkOuYz07t24/c2xTDk6YzJHmPcRyiUboc9sh+i+Uk/M1ZPcQ2nPKGEXfhpMgZQc+vOJDi
+ LtozvXoLgTecnKhFk/kHEFmZBMpkBQPZDfe6xDm1KUEQ6B1xOGrKRtTCx5MKiavsAF47w32vIU4
+ YbmsROz+OUbUBn6nicUcosSPu8sOT3+fuWoJcTSN+aC1kZr11kRIha1xj9gc/oxRmkOiw==
+X-Received: by 2002:a05:690c:dd4:b0:788:1b67:d741 with SMTP id
+ 00721157ae682-7949de8253emr83267b3.3.1769700690290; Thu, 29 Jan 2026 07:31:30
+ -0800 (PST)
 MIME-Version: 1.0
 References: <20260127182805.73212-1-mohamed@unpredictable.fr>
- <20260127182805.73212-14-mohamed@unpredictable.fr>
-In-Reply-To: <20260127182805.73212-14-mohamed@unpredictable.fr>
+ <20260127182805.73212-21-mohamed@unpredictable.fr>
+In-Reply-To: <20260127182805.73212-21-mohamed@unpredictable.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 29 Jan 2026 15:28:58 +0000
-X-Gm-Features: AZwV_QiK43RPHfA6TW6CJMG6ld34ywvsRw2H7j_blG9KQWHBXtk6j-uDJe-_3Uc
-Message-ID: <CAFEAcA_+o2BRGPjk=++2pkZpN62yPKRhy4sx+7kSvXcee5ofqg@mail.gmail.com>
-Subject: Re: [PATCH v18 13/22] whpx: interrupt controller support
+Date: Thu, 29 Jan 2026 15:31:18 +0000
+X-Gm-Features: AZwV_Qg1WATCwSufdmPxyH5WetHRcpWhB31D8z4FidksJvzSyQsOxMu86osm3x4
+Message-ID: <CAFEAcA9TwmftmcnxbWMoeAfuV6LD9pPv1hVXiAOr56UKUD+z+A@mail.gmail.com>
+Subject: Re: [PATCH v18 20/22] target/arm: whpx: instantiate GIC early
 To: Mohamed Mediouni <mohamed@unpredictable.fr>
 Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
  "Michael S. Tsirkin" <mst@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
@@ -103,10 +102,11 @@ Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Shannon Zhao <shannon.zhaosl@gmail.com>, Igor Mammedov <imammedo@redhat.com>, 
  Cameron Esfahani <dirty@apple.com>, Alexander Graf <agraf@csgraf.de>,
  Eduardo Habkost <eduardo@habkost.net>, 
- Phil Dennis-Jordan <phil@philjordan.eu>
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -131,30 +131,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 27 Jan 2026 at 18:29, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
 >
+> While figuring out a better spot for it, put it in whpx_accel_init.
+>
+> Needs to be done before WHvSetupPartition.
+>
 > Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-
-
-
-> @@ -2143,6 +2146,9 @@ static void finalize_msi_controller(VirtMachineState *vms)
->          }
->      }
->      if (vms->msi_controller == VIRT_MSI_CTRL_AUTO) {
-> +        if (whpx_enabled() && whpx_irqchip_in_kernel()) {
-> +            vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+>  target/arm/whpx/whpx-all.c | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
+>
+> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+> index c88c67a9e2..55773555b7 100644
+> --- a/target/arm/whpx/whpx-all.c
+> +++ b/target/arm/whpx/whpx-all.c
+> @@ -939,6 +939,29 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+>
+>      memset(&prop, 0, sizeof(prop));
+>
+> +    WHV_ARM64_IC_PARAMETERS ic_params = {
+> +        .EmulationMode = WHvArm64IcEmulationModeGicV3,
+> +        .GicV3Parameters = {
+> +            .GicdBaseAddress = 0x08000000,
+> +            .GitsTranslaterBaseAddress = 0x08080000,
+> +            .GicLpiIntIdBits = 0,
+> +            .GicPpiPerformanceMonitorsInterrupt = VIRTUAL_PMU_IRQ,
+> +            .GicPpiOverflowInterruptFromCntv = ARCH_TIMER_VIRT_IRQ
 > +        }
+> +    };
+> +    prop.Arm64IcParameters = ic_params;
+> +
+> +    hr = whp_dispatch.WHvSetPartitionProperty(
+> +            whpx->partition,
+> +            WHvPartitionPropertyCodeArm64IcParameters,
+> +            &prop,
+> +            sizeof(prop));
+> +    if (FAILED(hr)) {
+> +        error_report("WHPX: Failed to enable GICv3 interrupt controller, hr=%08lx", hr);
+> +        ret = -EINVAL;
+> +        goto error;
+> +    }
 
-This looks like it ought to be an "else if" or some other
-construct so we don't fall through into the logic below --
-if we've decided we definitely want a GICV2M we can stop
-making decisions about how to set vms->msi_controller.
+So what happens if the user asked for a GICv2 ?
 
->          if (vms->gic_version == VIRT_GIC_VERSION_2) {
->              vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
->          }
+Can we have a comment to explain the ordering requirement
+mentioned in the commit message that is forcing this to be
+here rather than in the GIC code ?
 
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> +
+>      hr = whp_dispatch.WHvSetupPartition(whpx->partition);
+>      if (FAILED(hr)) {
+>          error_report("WHPX: Failed to setup partition, hr=%08lx", hr);
+> --
+> 2.50.1 (Apple Git-155)
 
-thanks
 -- PMM
 
