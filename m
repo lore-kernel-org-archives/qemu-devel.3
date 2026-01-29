@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 069E1D358D6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6CD8D3F09D
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlV5S-0001ge-6H; Thu, 29 Jan 2026 11:41:42 -0500
+	id 1vlV54-0000rL-6X; Thu, 29 Jan 2026 11:41:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlV5P-0001WD-OA
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:41:40 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlV50-0000pC-Fa
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:41:14 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlV5M-0005Ls-Ow
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:41:39 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-47ee3a63300so12115135e9.2
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:41:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vlV4w-0005DA-CL
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:41:13 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-430f3ef2d37so1021124f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:41:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769704895; x=1770309695; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769704868; x=1770309668; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TGK+LI5OV6mWFPj78RfCGcDXkjf/Lbx4vCU4mtQCOqM=;
- b=bwKlAAa+QM9rravqGs4+d5OkPEI8/H6fqdbrXMLpgLRTWbasC/OnZ14UIHP4HJcW/W
- UfWjksDL4qw0IgFGOR+niOvX0NJ6XJxpv7VgdZHgqk2H2cLS072DEu1hYsmZCHWJlfek
- QFdC0czGANCHEWNFRBfywWakhPL43lo7MyN/rcMIp29GxzqEbd0P1ieI5TVCCKIQuG6f
- mpHm0dpM4f7NWtFJl6XRYJVFeT3uLDdGbLmgZtbkG20xu8rGIvC+F/AfxikXyLbbKvqq
- 6o6bqtLolHZ7g5aKJYvXoA8H0UuDoE7qDcqLNpVcy9m0i44K5Y5a6tvAGN1pULriJYTK
- +N/A==
+ bh=apOZMf0tEn3rJJPrSfMcVgYQ3RZZMtDVtwPqX5t6dIc=;
+ b=nSTtIq5mI2EdcNH4EX/maPJ6OlioUUB7Z1Xq8uUOhZZw4lGMKzkOHYhy7sO3zDZhLG
+ zoZfPKLC497RO5g2qbdO7Rr6emgQhw038YnA9DUUX+C7qsvKLrhoSon6QsrnmPDz8ZN3
+ jGWWawK8CjYKoeb2f964D143MzAF6trorMRIPfE//lVH6atYvlbp/WxXS2JsB0cwBXGm
+ CXggFqdFqtYpvB40j0tazKoX3WfvnyyESil5CM4ew82uAfzWBP7cTxrP/5SussPBa/VX
+ edCUk9rr8Rqb6MR21EEwODZWMlCvTmhHtdDMG+/VljwDYtIU3X4ywEQ4Jy1Hlnv+e/gd
+ uRvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769704895; x=1770309695;
+ d=1e100.net; s=20230601; t=1769704868; x=1770309668;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TGK+LI5OV6mWFPj78RfCGcDXkjf/Lbx4vCU4mtQCOqM=;
- b=ZnH8fsPwjEa+jqc0XNkqgIDUflW2owi+46rKjXJk8E3+r2NMIIGGIEDBsobLVfbZxg
- gE2BShAXZkX2fsJj8BgRWfZM35GbdJRWVWKLoCN6/QlQZDfrwrQnGRMs/liSyIimV6mW
- uMW4lKb2ra77xRA+UTuNL6UHhhXjG4rdVMgHkJBgl53rg26fBxGh9xtb/F0FeXfo3xMK
- Ml3BPwJC75R6DY0SMllgeJnhxU3EOS5Tb6ZNzC1G2c4wmWOxcZzXZDtvohadtkGGUlOk
- jESCCFJdExbIRVA1B/KhGdqhH75jNyEz8KDIr82ylDrfcQdKIX1bJ9SehGwMxiWxuhu/
- VI8Q==
-X-Gm-Message-State: AOJu0YwbkTxWzWa4aT/BcVh65QhDm2HN9+dg3Qx9x4kt7m4z9OF/bxEm
- Wve9d5I5CWXi48jZ5WeBXiSQn25N2P/eqUN1M2O+PUiu/tMDDfqN0UXTH0iT5mvPBJ6qPhQpq/i
- hiDHTqps=
-X-Gm-Gg: AZuq6aLE3SyHgerRfxpS6RzcITJwTsOyB+OHDoaLUUCIPfzJf66mU/ZOcJAbgL0eNjI
- sdM3lzITIQ7nJxUBHrQfob91R9ZwwSwYmNpPcRTLtRNdla7+kPfNqOVKYpLD+qosLEIW7o10aeJ
- vr1I0Li/AgPJmqZ9fYKkXvtv1Fm/TMG5P8/UbwHyNyylQNbQLff4qXtMeF00ksXNUkYakC47ZAQ
- LVXrmBZTeaIcO7B8sXlURyWXaisIToZhAx0423PdshEchVEaMbmQso6lhPJRcRrK/htOr6JvWGF
- ywoRUTgjf9xCXAqecN8+wxOfVJzzCkt9TBQZNFmktZydXtIYELSHgWTgKRYqGKsMvVcUtBKIccW
- yG3PhdiGo22ule/bTjKBL2YM3NBWPANV8eCoxZmp6sy6JjFEMtQBl+7uS5q7fsPDysiokLAO2ss
- BF8E9miOnZyEffkelQBs7EtjGGhPDlwg9FoKOShJLIfmDOkAC8jXNjVOCjzGqA
-X-Received: by 2002:a05:600c:6989:b0:477:6374:6347 with SMTP id
- 5b1f17b1804b1-48069c5a2bcmr127602175e9.22.1769704894952; 
- Thu, 29 Jan 2026 08:41:34 -0800 (PST)
+ bh=apOZMf0tEn3rJJPrSfMcVgYQ3RZZMtDVtwPqX5t6dIc=;
+ b=cdT+Mqtf1On1dCbKvKwaXHk3miCKWR1D2GBBlj0fx1l8BUgoHGReAVa0kJI9rYr6hB
+ pBd6k5mBje3Zeb0lMov0X8/yaOvnVKpxMVOLmsZYVzMCFoOVLdK6kjoo619+oi3wpig7
+ KKrbyfjgouZKNdWvFItg+R01Gzcx1Xaw6jLtDol5uuQ2+heUzuP5fhDFxNlzEPLzWYjf
+ nduxxS2qe6XApu3iDzbFwTUb4+Fo4MSjSRzGsZsRWb1sgcXLTDVq7NHN+QKHfbjVXrse
+ OFpEv6vK9qsEHPicnmQjnOjNZIxFtW/6vVD72Kc0HWU0WYbdx7zfLSBqcVX7LQqJCla8
+ y/ng==
+X-Gm-Message-State: AOJu0YyGJUBLpaYnkZeRWaAeS7IjYGyO4sFAd1c2fi4s9nILqJTabQqs
+ ZXeJ1Z8LeQYIHUXL8upOsRjNXNrD51WEMdZaficR1CXBcVxxWx7ImjukuzcZ9ALUK2ITBj0BN+K
+ pduugSV0=
+X-Gm-Gg: AZuq6aID1coWJNKwMgYuXbkRoOLSfngX7HDsFb2+BbjGQ9qbTA8OdL4SwRyA6kJu+YM
+ SHUXUT4VxTCdbF5On42+ODa92k/UOuq6VNCWx5R5yro8T4nSgZvYieS9MIG3zEpaYMejNBKT5LS
+ JsAwZUpYsx6lFdTTfKXm6xF/LSJoVT+6OSN5KdqojFn7ZMyWJDelc8KhBtxAAsgxeprV+hZ/8MQ
+ +AHEUL4TTSJAjKnBCgFR4uHIv/QJ9cdAdzCNiSJVwS8sB/lOqljGjQUJmGRgLa0qkBDJ7zoLBCV
+ UCmqtcmpLmJ4MxN2JVQWJVuG5RYM5n1DlLQFc2LUoYLlAWCfowRj4fM6HDhjUxwgWQevsjjJMMf
+ LYfymG99Ezngg5bvbPmoMhQD7/xQW/XHUr0jCJIE+QkKQgHB0JyO2C+AMD6XWOrlWAbxz3YE0Mu
+ O3yrJaPjCsZZmKnzDL1ijHDpfPg3/oNa6nOmEkVfVHK8feS2cQvd/kSn6W/jpqDXGBov/y0IQ=
+X-Received: by 2002:a05:6000:3112:b0:435:db9b:5882 with SMTP id
+ ffacd0b85a97d-435f3a62eefmr264688f8f.6.1769704867997; 
+ Thu, 29 Jan 2026 08:41:07 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e131ce58sm15512664f8f.20.2026.01.29.08.41.34
+ ffacd0b85a97d-435e10edfe7sm15267011f8f.14.2026.01.29.08.41.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 29 Jan 2026 08:41:34 -0800 (PST)
+ Thu, 29 Jan 2026 08:41:07 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-riscv@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org
-Subject: [PATCH v5 8/9] monitor: Reduce target-specific methods further
-Date: Thu, 29 Jan 2026 17:40:37 +0100
-Message-ID: <20260129164039.58472-9-philmd@linaro.org>
+Subject: [PATCH v5 4/9] monitor: Reduce target-specific methods
+Date: Thu, 29 Jan 2026 17:40:33 +0100
+Message-ID: <20260129164039.58472-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260129164039.58472-1-philmd@linaro.org>
 References: <20260129164039.58472-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,171 +101,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-get_monitor_def() doesn't use any target-specific declaration
-anymore, move it to hmp.c to compile it once.
+The following methods don't use target-specific code anymore:
+- hmp_compare_cmd()
+- monitor_register_hmp()
+- monitor_register_hmp_info_hrt()
+Move them to hmp.c which is target-agnostic, being built once.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 ---
- monitor/monitor-internal.h |  1 -
- monitor/hmp-target.c       | 49 -----------------------------------
- monitor/hmp.c              | 52 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 52 insertions(+), 50 deletions(-)
+ monitor/hmp-target.c | 57 --------------------------------------------
+ monitor/hmp.c        | 55 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+), 57 deletions(-)
 
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index 8dc88963630..3ecd394ecf6 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -181,7 +181,6 @@ void monitor_data_destroy_qmp(MonitorQMP *mon);
- void coroutine_fn monitor_qmp_dispatcher_co(void *data);
- void qmp_dispatcher_co_wake(void);
- 
--int get_monitor_def(Monitor *mon, uint64_t *pval, const char *name);
- void handle_hmp_command(MonitorHMP *mon, const char *cmdline);
- int hmp_compare_cmd(const char *name, const char *list);
- 
 diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
-index 4472c122108..a3306b69c93 100644
+index 59c60d13b52..420969bd6eb 100644
 --- a/monitor/hmp-target.c
 +++ b/monitor/hmp-target.c
-@@ -23,7 +23,6 @@
-  */
+@@ -33,8 +33,6 @@
+ #include "qapi/qapi-commands-control.h"
+ #include "qapi/qapi-commands-misc.h"
+ #include "qapi/qapi-commands-machine.h"
+-#include "qapi/error.h"
+-#include "qemu/cutils.h"
  
- #include "qemu/osdep.h"
--#include "qemu/bswap.h"
- #include "monitor-internal.h"
- #include "monitor/qdev.h"
- #include "net/slirp.h"
-@@ -60,54 +59,6 @@ HMPCommand *hmp_cmds_for_target(bool info_command)
-     return info_command ? hmp_info_cmds : hmp_cmds;
- }
+ #if defined(TARGET_S390X)
+ #include "hw/s390x/storage-keys.h"
+@@ -44,29 +42,6 @@
+ /* Make devices configuration available for use in hmp-commands*.hx templates */
+ #include CONFIG_DEVICES
  
--/*
-- * Set @pval to the value in the register identified by @name.
-- * return 0 if OK, -1 if not found
+-/**
+- * Is @name in the '|' separated list of names @list?
 - */
--int get_monitor_def(Monitor *mon, uint64_t *pval, const char *name)
+-int hmp_compare_cmd(const char *name, const char *list)
 -{
--    const unsigned length = target_long_bits() / 8;
--    const MonitorDef *md = target_monitor_defs();
--    CPUState *cs = mon_get_cpu(mon);
--    uint64_t tmp = 0;
--    int ret;
--
--    if (cs == NULL || md == NULL) {
--        return -1;
--    }
--
--    for(; md->name != NULL; md++) {
--        if (hmp_compare_cmd(name, md->name)) {
--            if (md->get_value) {
--                *pval = md->get_value(mon, md, md->offset);
--            } else {
--                CPUArchState *env = mon_get_cpu_env(mon);
--                void *ptr = (uint8_t *)env + md->offset;
--
--                switch(md->type) {
--                case MD_U32:
--                    *pval = *(uint32_t *)ptr;
--                    break;
--                case MD_TULONG:
--                    *pval = ldn_he_p(ptr, length);
--                    break;
--                default:
--                    *pval = 0;
--                    break;
--                }
--            }
--            return 0;
+-    const char *p, *pstart;
+-    int len;
+-    len = strlen(name);
+-    p = list;
+-    for (;;) {
+-        pstart = p;
+-        p = qemu_strchrnul(p, '|');
+-        if ((p - pstart) == len && !memcmp(pstart, name, len)) {
+-            return 1;
 -        }
+-        if (*p == '\0') {
+-            break;
+-        }
+-        p++;
 -    }
--
--    ret = target_get_monitor_def(cs, name, &tmp);
--    if (!ret) {
--        *pval = ldn_he_p(&tmp, length);
--    }
--
--    return ret;
+-    return 0;
 -}
 -
- static int
- compare_mon_cmd(const void *a, const void *b)
- {
+ /* Please update hmp-commands.hx when adding or changing commands */
+ static HMPCommand hmp_info_cmds[] = {
+ #include "hmp-commands-info.h"
+@@ -147,35 +122,3 @@ static void __attribute__((__constructor__)) sortcmdlist(void)
+           sizeof(*hmp_info_cmds),
+           compare_mon_cmd);
+ }
+-
+-void monitor_register_hmp(const char *name, bool info,
+-                          void (*cmd)(Monitor *mon, const QDict *qdict))
+-{
+-    HMPCommand *table = hmp_cmds_for_target(info);
+-
+-    while (table->name != NULL) {
+-        if (strcmp(table->name, name) == 0) {
+-            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
+-            table->cmd = cmd;
+-            return;
+-        }
+-        table++;
+-    }
+-    g_assert_not_reached();
+-}
+-
+-void monitor_register_hmp_info_hrt(const char *name,
+-                                   HumanReadableText *(*handler)(Error **errp))
+-{
+-    HMPCommand *table = hmp_cmds_for_target(true);
+-
+-    while (table->name != NULL) {
+-        if (strcmp(table->name, name) == 0) {
+-            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
+-            table->cmd_info_hrt = handler;
+-            return;
+-        }
+-        table++;
+-    }
+-    g_assert_not_reached();
+-}
 diff --git a/monitor/hmp.c b/monitor/hmp.c
-index eee8b7e964e..bd6a097dda0 100644
+index 17e5756986f..0a5bbf82197 100644
 --- a/monitor/hmp.c
 +++ b/monitor/hmp.c
-@@ -27,8 +27,10 @@
- #include "hw/core/qdev.h"
- #include "monitor-internal.h"
- #include "monitor/hmp.h"
-+#include "monitor/hmp-target.h"
- #include "qobject/qdict.h"
- #include "qobject/qnum.h"
-+#include "qemu/bswap.h"
- #include "qemu/config-file.h"
- #include "qemu/ctype.h"
- #include "qemu/cutils.h"
-@@ -311,6 +313,8 @@ void hmp_help_cmd(Monitor *mon, const char *name)
- static const char *pch;
- static sigjmp_buf expr_env;
- 
-+static int get_monitor_def(Monitor *mon, uint64_t *pval, const char *name);
-+
- static G_NORETURN G_GNUC_PRINTF(2, 3)
- void expr_error(Monitor *mon, const char *fmt, ...)
- {
-@@ -1552,3 +1556,51 @@ void monitor_register_hmp_info_hrt(const char *name,
-     }
-     g_assert_not_reached();
+@@ -1497,3 +1497,58 @@ void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+                              monitor_event, NULL, &mon->common, NULL, true);
+     monitor_list_append(&mon->common);
  }
 +
-+/*
-+ * Set @pval to the value in the register identified by @name.
-+ * return 0 if OK, -1 if not found
++/**
++ * Is @name in the '|' separated list of names @list?
 + */
-+static int get_monitor_def(Monitor *mon, uint64_t *pval, const char *name)
++int hmp_compare_cmd(const char *name, const char *list)
 +{
-+    const unsigned length = target_long_bits() / 8;
-+    const MonitorDef *md = target_monitor_defs();
-+    CPUState *cs = mon_get_cpu(mon);
-+    uint64_t tmp = 0;
-+    int ret;
-+
-+    if (cs == NULL || md == NULL) {
-+        return -1;
-+    }
-+
-+    for (; md->name != NULL; md++) {
-+        if (hmp_compare_cmd(name, md->name)) {
-+            if (md->get_value) {
-+                *pval = md->get_value(mon, md, md->offset);
-+            } else {
-+                CPUArchState *env = mon_get_cpu_env(mon);
-+                void *ptr = (uint8_t *)env + md->offset;
-+
-+                switch (md->type) {
-+                case MD_U32:
-+                    *pval = *(uint32_t *)ptr;
-+                    break;
-+                case MD_TULONG:
-+                    *pval = ldn_he_p(ptr, length);
-+                    break;
-+                default:
-+                    *pval = 0;
-+                    break;
-+                }
-+            }
-+            return 0;
++    const char *p, *pstart;
++    int len;
++    len = strlen(name);
++    p = list;
++    for (;;) {
++        pstart = p;
++        p = qemu_strchrnul(p, '|');
++        if ((p - pstart) == len && !memcmp(pstart, name, len)) {
++            return 1;
 +        }
++        if (*p == '\0') {
++            break;
++        }
++        p++;
 +    }
++    return 0;
++}
 +
-+    ret = target_get_monitor_def(cs, name, &tmp);
-+    if (!ret) {
-+        *pval = ldn_he_p(&tmp, length);
++void monitor_register_hmp(const char *name, bool info,
++                          void (*cmd)(Monitor *mon, const QDict *qdict))
++{
++    HMPCommand *table = hmp_cmds_for_target(info);
++
++    while (table->name != NULL) {
++        if (strcmp(table->name, name) == 0) {
++            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
++            table->cmd = cmd;
++            return;
++        }
++        table++;
 +    }
++    g_assert_not_reached();
++}
 +
-+    return ret;
++void monitor_register_hmp_info_hrt(const char *name,
++                                   HumanReadableText *(*handler)(Error **errp))
++{
++    HMPCommand *table = hmp_cmds_for_target(true);
++
++    while (table->name != NULL) {
++        if (strcmp(table->name, name) == 0) {
++            g_assert(table->cmd == NULL && table->cmd_info_hrt == NULL);
++            table->cmd_info_hrt = handler;
++            return;
++        }
++        table++;
++    }
++    g_assert_not_reached();
 +}
 -- 
 2.52.0
