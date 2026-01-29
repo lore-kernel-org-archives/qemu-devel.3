@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD62D6B087
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AB34D6B086
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUaI-0008Rw-OJ; Thu, 29 Jan 2026 11:09:30 -0500
+	id 1vlUav-0000x0-0M; Thu, 29 Jan 2026 11:10:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUaG-0008Qs-KY
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:28 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1vlUaV-000096-S8
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:44 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUaE-0006XY-Gn
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:27 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-42fb4eeb482so894641f8f.0
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:25 -0800 (PST)
+ id 1vlUaU-0006dA-4n
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:43 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-435a11957f6so972533f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769702965; x=1770307765; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769702980; x=1770307780; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=L9xXgSAQQ0ho77YnxVcq3hL9FgFenk/Ub66527/ohzQ=;
- b=C2EU9eRwQy+7Q7+UmYE9Ih/TqCfYZvEtdZXDkHLHJKygP3R9wOxlbmSKCEjdBH5byO
- 71MgqXAojYaYjQdvGtgoFBXpcoYupO7sD7SwiDYl2GRqEBuTdZfWRvS73ypBRZXPiFvM
- ORuygTXBEeCJZQm4zsc0avE99ZIkgbz6zxMcxSBk5uMBQOu5d13jCknlw2DRVlEdVwdu
- VX5qpzrNgn0TJI1o7z4Nt9XhIpZX6U1MBZ68umPJLjqoDUAOP22JEncaKCCljh1siU/4
- 021YFKMsm9U2wSDxgDQIjag/szTakwfZRpvPtn9epV555qhiAPIoDaxb9PD59HClccfc
- AdwQ==
+ :reply-to; bh=g7u4vFyrJCbAlZ8RKPYksrp2vL/fqFoBrZQZKiBf15A=;
+ b=veu4X71E374WXEvR1FyrvPyjKNZUT45/dMAZGGqic7TakcPdIOMZobzDr2Sr3HW79f
+ 5aeGCy4yvZYwX9g01OOdBTCr26EYzyNBd9/EJ0zZyd6N1/DX15euUIInPbuzcXYD8AxB
+ 8VbgmTcE0KTOlXUYTlVGkKICat5+EwkiPxVM4WdH4avlUHvQQW0VrUnGJrcoLLl+6hTa
+ 4lTuV9n3nKUeVAmm8kyQD1nbfxjcW+4xzo69cQkHMfYN9nKwarg7NC5dLlj0M+ZBzOU0
+ 474L+uQWFEnKBEU25auH8c2XkDFI1HhJWkqbPyvYHUbzyZ3UaqvC2s9MF09Zq+r6gHtA
+ A7nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769702965; x=1770307765;
+ d=1e100.net; s=20230601; t=1769702980; x=1770307780;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=L9xXgSAQQ0ho77YnxVcq3hL9FgFenk/Ub66527/ohzQ=;
- b=tNFIkmb1YXjpbjSC/BjN5R+QdEgJKpAEJQ9qj+P2QRzvA5+oEwiEywuPtR99OFa9dV
- nzSjKrxhEzchcOTUU3aZsbtR9NUDki18UytwvDbFw5v2zxEq1eVnTicMdILWZDzN3rt3
- +gUdpHC7L9fbYoH9Li0yo0NKjSqJ2KgReHIybDlWVvB408SICM818Nf/LVV4AqNqDsW1
- RbdMVcds7MD2QJkKJqhMJc2Y1c1P82v7P+H2E/PY9EuELUX0MQHZC1D4MMlhCPckYWTk
- 3bzp6V2QLd/4vWSKZBQteUG5jiSM48yuwhg7lB+QcH1nYNI5URaS+rqIJzSpjDLCFuDo
- W39Q==
-X-Gm-Message-State: AOJu0YxKE8WLbR3OxBZ7yIaec0aJyyBoP0Cls7pBnUtnJPIWxu1jwHTC
- tWuE2NglnE3GUJWX8LSkzvgz1dBo6qn5cVHgdZQcm1f1XA2SMMWAzh7EhtDG+LIxDnKwu+ATqHw
- VjN6gM0Y=
-X-Gm-Gg: AZuq6aKHgd8GUyEHlxQr9qsQKe6VdA8hqLUWT5qZ76lms3UL4ZHcnP/LxKrLm00sl5z
- oC59j+COdJ7itH/YgefTPaV86GbPOfAS/lcOsczfuoQC5qMM5QS0eeI4cEj38X0jr3kjdNeSv49
- wb1XNcEpJOGd70HZ0XKgV3yHTkfazNrolDVGNmnpzyFWcMRwGNSiq4zNLlpZJ5K2n63Z1iqxTvK
- lI6atgWDuSGgGdv2BK97lj47he1cZ0oJG69HacK8PObejnTLNLUl5ju2vv/kmxtpU+MC0PuFBtb
- gca1orl9BYSpnTVMobvoYSKu7JOh2BcQwH/ZqS2oJ4gih08QXZPHAQozzvaDuXdJLew10Ll1lcB
- j3xCh8EC/qrQtcdB7vVWjXak6I4g8vD56utIX2AgEilGYEUrquQ/RYLGFf4EJ85E7VkT7fHRFZ0
- b5kTZ+IYjq1ZHM7bu16hJAlHWfpDZYjw==
-X-Received: by 2002:a05:6000:26cd:b0:430:f7c9:94c3 with SMTP id
- ffacd0b85a97d-435f3a864dcmr188130f8f.25.1769702964597; 
- Thu, 29 Jan 2026 08:09:24 -0800 (PST)
+ bh=g7u4vFyrJCbAlZ8RKPYksrp2vL/fqFoBrZQZKiBf15A=;
+ b=ShivfiklzsNoxFyqh/OOgimAGmcAO7gi3g72eXlnDVQAMOit088o+IAH0mInJrtAjp
+ zynqzeOhzGc1LgYnsn5TfaxgAFCIiXlv6kZgpFgvam8ND0tk1MjShrGC/JL7gfvHMHff
+ rEzAxcF7xlA5cq90Hs2LNCuJOw5ki3EEqjhY4Ck0r2A9kkD+6/VRXUGX1RGQNvJlLfHr
+ +AnuLKa/3lXDWFQbzv5VKV5BQaPcHQ7NuySKTSkKZG1quB/at7EIMUUf09XUMA8V14zR
+ 1hUfuaW3AJYXdNBrxjynq3ha9cG7thxNz1P5Kl1Up2TCuO/uoSfrJYp6Pt1S2BrIE35F
+ MlZw==
+X-Gm-Message-State: AOJu0YwfFN7Tgarg/H6vMY3X4SLvH5NjRn5na9UlZRto+SspvPToueLJ
+ ORDbfT+LCRC1dwdjEo6bBv5/Z7GFhZP9z4WC1CUII+9Yd1sWVOO8K+JVQ7F7hV5oOWNp4PdogLo
+ 3sJgbQmE=
+X-Gm-Gg: AZuq6aK1jPJWr+ChFNL8QRxDmnHsCCwOY5ODV5Bp3tR9Gri0bSeShL5v9AaARvF8h9i
+ hCjyR414GPJj6s2VKOzYdq9bt4UsSmhPCc0Q8FrUPq6UnpTvc7CNqUsYjDYZl6Mf7PwL2gyOfYo
+ eCkDtdyoXs4vzb1QHt9YKGAhKRzC3uqQ+XaIndmOZgqy/I/R8AKiEFvamjxNKsohh+E7yK4q3W1
+ jVOdHhiY6UNgyID4dAaL1AnHlm6XajVXUy+FrH9WybhFqNH61gGzq1XEvBpUISKpGqHFCjUZZI/
+ t/GPdBeePH7uupHBSZeWBVxnyYX406A7BpLYizMpjrSwBNnkLJhk/sF0qCduybGoar3c8Jxaq/0
+ pm1VHX0uAM73U7G0ET5iT1d/ybwWxPEq9/j2WB3HNNQNO50aCH/L/yI9z4f+cxrRd2izRPlv4Ib
+ MZX7Kv3mZpqc1F/7szxLtZIjo1xEhBaw==
+X-Received: by 2002:a5d:5e01:0:b0:435:95c9:687a with SMTP id
+ ffacd0b85a97d-435f3a6b95fmr178387f8f.4.1769702980220; 
+ Thu, 29 Jan 2026 08:09:40 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.23
+ ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 08:09:23 -0800 (PST)
+ Thu, 29 Jan 2026 08:09:39 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/43] hw/arm/smmu-common: Make iommu ops part of SMMUState
-Date: Thu, 29 Jan 2026 16:08:38 +0000
-Message-ID: <20260129160917.1415092-5-peter.maydell@linaro.org>
+Subject: [PULL 17/43] hw/arm/smmuv3-accel: Implement get_msi_direct_gpa
+ callback
+Date: Thu, 29 Jan 2026 16:08:51 +0000
+Message-ID: <20260129160917.1415092-18-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260129160917.1415092-1-peter.maydell@linaro.org>
 References: <20260129160917.1415092-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,61 +102,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Make iommu ops part of SMMUState and set to the current default smmu_ops.
-No functional change intended. This will allow SMMUv3 accel implementation
-to set a different iommu ops later.
+Accelerated SMMUv3 instances rely on the physical SMMUv3 for nested
+translation (guest Stage-1, host Stage-2). In this mode, the guest Stage-1
+tables are programmed directly into hardware, and QEMU must not attempt to
+walk them for translation, as doing so is not reliably safe. For vfio-pci
+endpoints behind such a vSMMU, the only translation QEMU needs to perform
+is for the MSI doorbell used during KVM MSI setup.
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Implement the callback so that kvm_arch_fixup_msi_route() can retrieve the
+MSI doorbell GPA directly, instead of attempting a software walk of the
+guest translation tables.
+
+Also introduce an SMMUv3 device property to carry the MSI doorbell GPA.
+This property will be set by the virt machine in a subsequent patch.
+
 Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 Tested-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-id: 20260126104342.253965-5-skolothumtho@nvidia.com
+Message-id: 20260126104342.253965-18-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmu-common.c         | 7 +++++--
- include/hw/arm/smmu-common.h | 1 +
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ hw/arm/smmuv3-accel.c   | 10 ++++++++++
+ hw/arm/smmuv3.c         |  2 ++
+ include/hw/arm/smmuv3.h |  1 +
+ 3 files changed, 13 insertions(+)
 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 1492d7dd95..58c4452b1f 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -959,6 +959,9 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
-                            "smmu-secure-memory-view");
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index c125974d12..c6ee123cdf 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -393,6 +393,15 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
      }
+ }
  
-+    if (!s->iommu_ops) {
-+        s->iommu_ops = &smmu_ops;
-+    }
-     /*
-      * We only allow default PCIe Root Complex(pcie.0) or pxb-pcie based extra
-      * root complexes to be associated with SMMU.
-@@ -978,9 +981,9 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
-         }
- 
-         if (s->smmu_per_bus) {
--            pci_setup_iommu_per_bus(pci_bus, &smmu_ops, s);
-+            pci_setup_iommu_per_bus(pci_bus, s->iommu_ops, s);
-         } else {
--            pci_setup_iommu(pci_bus, &smmu_ops, s);
-+            pci_setup_iommu(pci_bus, s->iommu_ops, s);
-         }
-         return;
-     }
-diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-index f5060cf36f..7b975abc25 100644
---- a/include/hw/arm/smmu-common.h
-+++ b/include/hw/arm/smmu-common.h
-@@ -166,6 +166,7 @@ struct SMMUState {
-     AddressSpace memory_as;
-     MemoryRegion *secure_memory;
-     AddressSpace secure_memory_as;
-+    const PCIIOMMUOps *iommu_ops;
++static uint64_t smmuv3_accel_get_msi_gpa(PCIBus *bus, void *opaque, int devfn)
++{
++    SMMUState *bs = opaque;
++    SMMUv3State *s = ARM_SMMUV3(bs);
++
++    g_assert(s->msi_gpa);
++    return s->msi_gpa;
++}
++
+ /*
+  * Only allow PCIe bridges, pxb-pcie roots, and GPEX roots so vfio-pci
+  * endpoints can sit downstream. Accelerated SMMUv3 requires a vfio-pci
+@@ -497,6 +506,7 @@ static const PCIIOMMUOps smmuv3_accel_ops = {
+     .get_viommu_flags = smmuv3_accel_get_viommu_flags,
+     .set_iommu_device = smmuv3_accel_set_iommu_device,
+     .unset_iommu_device = smmuv3_accel_unset_iommu_device,
++    .get_msi_direct_gpa = smmuv3_accel_get_msi_gpa,
  };
  
- struct SMMUBaseClass {
+ /* Based on SMUUv3 GPBA.ABORT configuration, attach a corresponding HWPT */
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 7a32afd800..6ed9914b1e 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -1998,6 +1998,8 @@ static const Property smmuv3_properties[] = {
+      * Defaults to stage 1
+      */
+     DEFINE_PROP_STRING("stage", SMMUv3State, stage),
++    /* GPA of MSI doorbell, for SMMUv3 accel use. */
++    DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
+ };
+ 
+ static void smmuv3_instance_init(Object *obj)
+diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+index e54ece2d38..5616a8a2be 100644
+--- a/include/hw/arm/smmuv3.h
++++ b/include/hw/arm/smmuv3.h
+@@ -67,6 +67,7 @@ struct SMMUv3State {
+     /* SMMU has HW accelerator support for nested S1 + s2 */
+     bool accel;
+     struct SMMUv3AccelState *s_accel;
++    uint64_t msi_gpa;
+ };
+ 
+ typedef enum {
 -- 
 2.43.0
 
