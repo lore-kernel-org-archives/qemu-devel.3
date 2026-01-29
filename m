@@ -4,66 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BEA0D358F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 10:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6650D358F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 10:57:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlPXs-0007z0-O7; Thu, 29 Jan 2026 05:46:40 -0500
+	id 1vlPhL-0002fh-4c; Thu, 29 Jan 2026 05:56:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joro@8bytes.org>) id 1vlPXn-0007wq-Kd
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 05:46:37 -0500
-Received: from mail.8bytes.org ([2a01:238:42d9:3f00:e505:6202:4f0c:f051])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <joro@8bytes.org>) id 1vlPXj-0004TU-Bi
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 05:46:34 -0500
-Received: from 8bytes.org (p4ffe051a.dip0.t-ipconnect.de [79.254.5.26])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by mail.8bytes.org (Postfix) with ESMTPSA id 64E6C1C0A37;
- Thu, 29 Jan 2026 11:46:25 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
- s=default; t=1769683585;
- bh=j5JwmiDsttfzg19wCJAsVxjUAiPWxASKMp4aK2rACgg=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=lHUWIZmGbkJdGY95uAJNREsTcSd1VTFZuKTx1drhJYbhKzzspYZxOWvoi/R4Tdjm3
- LGrqb3p0JEkufGXBTP5rm2tBm9RD/EvwOd6adbioszBz0Uo00Kb0YQqNRYuAC+5l2l
- 1uNi2X8hFrLJm8HK7XGQle12gALM6HHP8DHDi9ieQIh54ib+WjDyo/Tz/SS+poUbOG
- IKef6TbsgsTk9cThlj0rrLfAWuUoWNUKxJdeAaH6qHwBmocgFF6s33v4w0n44frv85
- 04MGS270dLrYLq/sYar+E0QooNSHZeX5cWg+Xp0tGvMUVGgWUTSGqWkHtE38NMmm5Y
- kz8bjgfFxOQsA==
-Date: Thu, 29 Jan 2026 11:46:24 +0100
-From: =?utf-8?B?SsO2cmcgUsO2ZGVs?= <joro@8bytes.org>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>, 
- Helge Deller <deller@gmx.de>, Oliver Steffen <osteffen@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
- Matias Ezequiel Vara Larsen <mvaralar@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, German Maglione <gmaglione@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, danpb@redhat.com, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alex Bennee <alex.bennee@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: COCONUT-SVSM project ideas for GSoC 2026
-Message-ID: <h4uue2ekbnlh26rylj4ilsqzyxdrfzrq7czleysrkbowlgp4q2@wtbm7zi4kev5>
-References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vlPhD-0002eG-3S
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 05:56:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vlPhB-00062X-Ao
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 05:56:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1769684169;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=GyG1kNjcqsGraylXJFdgdm3t7P94JlTm4N2OFdBAmGs=;
+ b=EZGGb21LvMTnkyqkNM3U/PX7AOw3BgdNksNIRgMa+67DR+elU6Vl1ruGSxGDQwnq9t6xPn
+ jtimQIdsXWk1jHtTVeZhmpZDVL8sDj6LdHjLfRco4+gTZaw1KKMU/4LHhusNzbXmzkgrcj
+ Kym6sGs8/KCF15aga46nFPMgwiIMIZM=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-690-n45M2ZaaOLSv0atgaib8yQ-1; Thu, 29 Jan 2026 05:56:07 -0500
+X-MC-Unique: n45M2ZaaOLSv0atgaib8yQ-1
+X-Mimecast-MFC-AGG-ID: n45M2ZaaOLSv0atgaib8yQ_1769684167
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-430fcb6b2ebso497588f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 02:56:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1769684166; x=1770288966; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=GyG1kNjcqsGraylXJFdgdm3t7P94JlTm4N2OFdBAmGs=;
+ b=qrayNhEri0xilMgbUWWBUUy3BTgReDHT0f07M8Rztgmcza1Rj1NdvG1TnsteLbxaAf
+ bRDieB/iw76Q2Cz3von6pZ0UkPSnRsguAkEj0Ix62kHJAaBGkv4YdO7K//X3KPLp4jYn
+ /Onfq7+yCzyf/xkXuxqnJAjOUZPO4rxNZ4PRXaDR0CXnOzjbnoGQMp5B3z6Vkq2A1t61
+ 4dT6MnlUbwVzT/X2eKxj60xjnNbW/XzJefRrVHuvAqUFoEQQArMgpqplm3p4eZr1ymqw
+ QCMOiJv8J+cDcns5FgqFPMGSo/Y/VH7QGiscNn1IxHkNItgW3NkmnE3pCP7dr7RAyjLk
+ BZKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769684166; x=1770288966;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GyG1kNjcqsGraylXJFdgdm3t7P94JlTm4N2OFdBAmGs=;
+ b=toP4Ek8tWuNgHCYQVcrT2wL152WYm63yURgiTPkzKqPMNewt/TIsz7F9/09Bz6n00A
+ OFD9AKd1b+73838JicTOtfJPYZUAd7M+OJyhhw4GymSd5LToamzLFfuS/KW1v8Asi6a5
+ iEoTeO1K5sLXy0dykVhjwzvmdYsbaXTQTtWpUGgQK2gm2EXhKXjg62VWtHaSz84ACAC6
+ Abr1/hs4fDowGHH51ttN2Ua6w3ptkr37JZdxC927N1+JM1Jp35jWiZpo4b3CImDzpMKO
+ JC7cSN9N98C1EtS/Im7bqB0eadMYqsUbtowWTwPJc7jAljK7fgKi5DMm9ZwZDqf2Xgkh
+ b16A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWonKrMajjVWEZCNt9d52+L8medSPVDkZL9az/avQtBxneij6Mxpc4CarNdPcbWpIvtc0GDL6FjA9OZ@nongnu.org
+X-Gm-Message-State: AOJu0YwPOf08QrfHvwvfyrQLB9X3by89qRDmyY5EW8Swj6mx4cVWw9/A
+ RqqWFBoor2zu8EMyAr29QovGXfKT15TPT5GLxXY5IMDJh1+9XZXCJJ38ap/4oFrfWhK6tM9R9EB
+ TP1LXucF+OGc9AQisGkVC6864Eittm0YfcZ/1aIiZFTQynKJtlaF+7Nbw
+X-Gm-Gg: AZuq6aLBRkGG5j2626VCm+pq3olv8DIciIWaMFcqSz3FiGcZw3Ubl/odWgZ7evHEl+d
+ gnBuw6P0daFUymZ177XMT3JD3LeTt4DHDf6bdsjxAwU5chNZ2SCirxtvBExQYuVhOSBnx9Tisyc
+ WTbn0jfG4fUUjkpA06uW02H9tab1xoZdC6ksTpPAPwVjsVH8ekLmX0eyo7kqo2e/Avh4qGt+zmH
+ tlV5e4+CK+4+e0NWF7VdOrmDeS24wdYqx5NK4jpQTjjepwx5+8uyiCxtu3ybcHtdC0TxFaJAizy
+ 8SIUyI1ijjP4t/6jsnO5KYIjSSCAKaCHb1r4ojIC/+okyq32s6j2xd1ShaxwJF26XuqA/lkQ144
+ SVXS/HaY=
+X-Received: by 2002:a05:6000:1843:b0:435:dbbb:7f4f with SMTP id
+ ffacd0b85a97d-435dd073743mr11072870f8f.21.1769684166660; 
+ Thu, 29 Jan 2026 02:56:06 -0800 (PST)
+X-Received: by 2002:a05:6000:1843:b0:435:dbbb:7f4f with SMTP id
+ ffacd0b85a97d-435dd073743mr11072845f8f.21.1769684166197; 
+ Thu, 29 Jan 2026 02:56:06 -0800 (PST)
+Received: from [192.168.0.9] ([47.64.113.220])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-435e131cfd4sm13139630f8f.25.2026.01.29.02.56.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 Jan 2026 02:56:05 -0800 (PST)
+Message-ID: <1196b698-4e96-4352-87fc-52c465db6b02@redhat.com>
+Date: Thu, 29 Jan 2026 11:56:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
-Received-SPF: pass client-ip=2a01:238:42d9:3f00:e505:6202:4f0c:f051;
- envelope-from=joro@8bytes.org; helo=mail.8bytes.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/14] s390x: Remove duplicate definitions of IPL types
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, zycai@linux.ibm.com
+References: <20260127161547.459443-1-jrossi@linux.ibm.com>
+ <20260127161547.459443-4-jrossi@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260127161547.459443-4-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,87 +167,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Stefan,
+On 27/01/2026 17.15, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> Remove the duplicate definitions from hw/s390x/ipl.h and pc-bios/s390-ccw/iplb.h
+> and add a shared definition.  The new definition is an enum to enforce default
+> handling in switches.
+> 
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+> ---
+>   hw/s390x/ipl.h              |  5 -----
+>   include/hw/s390x/ipl/qipl.h | 10 ++++++++++
+>   pc-bios/s390-ccw/iplb.h     |  4 ----
+>   pc-bios/s390-ccw/main.c     |  9 +++++++--
+>   pc-bios/s390-ccw/virtio.h   |  1 +
+>   5 files changed, 18 insertions(+), 11 deletions(-)
+...
+> @@ -198,7 +200,10 @@ static void boot_setup(void)
+>       }
+>   
+>       if (have_iplb) {
+> +        vdev->ipl_type = iplb.pbt;
+>           menu_setup();
+> +    } else {
+> +        vdev->ipl_type = QEMU_DEFAULT_IPL;
+>       }
 
-Thanks a lot for running this and allowing the COCONUT-SVSM project to submit
-ideas under the QEMU/KVM umbrella!
+Could you maybe add a sentence about that new DEFAULT_IPL setting to the 
+patch description? I assume this is some prep work for some of the following 
+patches? In that case, please mention it. Otherwise this looks unnecessary 
+when just looking at the context of this single patch.
 
-After some discussions in the community we came up with these two project ideas:
+  Thanks,
+   Thomas
 
-=== Observability Support for COCONUT-SVSM ===
-
-'''Summary:''' Implement Support for COCONUT-SVSM Observability within the TEE
-
-COCONUT-SVSM is a Secure Virtual machine Service Module that runs at a
-privileged level within a Confidential Virtual Machine (CVM) to provide trusted
-services, such as a virtual TPM, to the guest operating system, independent of
-the host hypervisor.
-
-The goal of the project is to implement support for observability of
-COCONUT-SVSM from the guest OS. When finished the guest OS has a way to
-fetch runtime metrics and data from the COCONUT-SVSM running within the same
-TEE. Runtime data includes the log buffer, services logs, memory usage, and
-possible future extensions.
-
-The project consists of several parts:
-
-1. Design an experimental SVSM observability protocol for exchanging metrics
-   and data between COCONUT-SVSM and the Linux kernel. This protocol will be an
-   extension of the SVSM protocol specification.
-2. Implement a handler for the protocol within COCONUT-SVSM following the other
-   protocols COCONUT-SVSM already implements.
-3. Implement a Linux device driver which uses this protocol to get
-   observability data from COCONUT-SVSM and make it accessible to Linux user-mode
-   via a device file.
-4. Implement a Linux user-space utility to fetch and save the observability
-   data using the device driver.
-
-'''Links:'''
-
-* COCONUT-SVSM Repository: https://github.com/coconut-svsm/svsm/
-* Development plan: https://coconut-svsm.github.io/svsm/developer/DEVELOPMENT-PLAN/#observability
-* SVSM protocol specification: https://docs.amd.com/v/u/en-US/58019
-
-'''Details:'''
-Skill level: Intermediate
-Language: Rust and C
-Mentors: Stefano Garzarella <sgarzare@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Joerg Roedel <joerg.roedel@amd.com>
-
---->8---
-
-=== Support X86 Process Context Identifiers (PCID) in COCONUT-SVSM ===
-
-COCONUT-SVSM is a Secure Virtual machine Service Module that runs at a
-privileged level within a Confidential Virtual Machine (CVM) to provide trusted
-services, such as a virtual TPM, to the guest operating system, independent of
-the host hypervisor.
-
-The goal of the project is to enhance the COCONUT-SVSM kernel to make use of
-the PCID feature on X86 to reduce the number of runtime TLB misses. The work
-consists of several steps:
-
-1. Implement generic CPUID feature enumeration support by building a code
-   generator which automatically creates a Rust crate from the data provided by
-   the X86-CPUID project. Use that generated crate in COCONUT-SVSM for
-   detecting the PCID feature and clean up all the open coded CPUID checks.
-2. Design and implement a PCID assignment strategy for tasks and threads in the
-   COCONUT kernel.
-3. Apply the PCIDs in the COCONUT page-tables and adapt the TLB flushing code
-   to take PCIDs into account.
-
-'''Links:'''
-* AMD64 APM 2 (PCIDs, Section 5.5.1.): https://docs.amd.com/v/u/en-US/24593_3.43 
-* X86 cpuid project: https://x86-cpuid.org/
-* COCONUT-SVSM: https://github.com/coconut-svsm/svsm/
-
-'''Details:'''
-* Skill level: Intermediate
-* Languages: Rust
-* Mentors: Joerg Roedel <joerg.roedel@amd.com>, Luigi Leonardi <leonardi@redhat.com>
-
---->8---
-
-Thanks,
-
-	Joerg
 
