@@ -4,58 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44BBBD358D6
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:21:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB98ED73E81
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 17:38:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlVhF-0007rd-FF; Thu, 29 Jan 2026 12:20:45 -0500
+	id 1vlVyN-0004WJ-3n; Thu, 29 Jan 2026 12:38:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vlVhC-0007rL-RF
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:20:42 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vlVh9-00053T-UB
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:20:42 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 5B51B596A0B;
- Thu, 29 Jan 2026 18:20:32 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id K70y4U-mQAgP; Thu, 29 Jan 2026 18:20:30 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 49DB45969F2; Thu, 29 Jan 2026 18:20:30 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 47A3F5969F0;
- Thu, 29 Jan 2026 18:20:30 +0100 (CET)
-Date: Thu, 29 Jan 2026 18:20:30 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 2/4] hw/display/{cg3.tcx}: Do not use
- memory_region_init_rom_nomigrate()
-In-Reply-To: <CAFEAcA9+sKLXmzXz98rfnEqVBE4WwVcFsMqiXSx6KfK1=PDfKA@mail.gmail.com>
-Message-ID: <31362eca-9cd5-8b6b-a3a1-4ddb8dc3e762@eik.bme.hu>
-References: <cover.1769703287.git.balaton@eik.bme.hu>
- <b530cf54609b853c6b34306fd4aa3ce2f8087d05.1769703287.git.balaton@eik.bme.hu>
- <CAFEAcA9+sKLXmzXz98rfnEqVBE4WwVcFsMqiXSx6KfK1=PDfKA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vlVyK-0004Nx-7o
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:24 -0500
+Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vlVyH-0000dO-Qr
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 12:38:23 -0500
+Received: by mail-pf1-x444.google.com with SMTP id
+ d2e1a72fcca58-81f39438187so667162b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 09:38:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1769708300; x=1770313100; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Rl24eVwM8VDKwNGbTY8imqXSq1p2xBTKgWYXW2mu/sQ=;
+ b=NPcFm+RuGH+m8Oy90l3sr/6bUq8bqsv5HjbzHB0Am+ohj2t/z8EGhV62n8D23Iyw+l
+ Kz20r3/WM05ZI8cepddiIi4tfpLp3Q+ojMmhN+o4hgDnQjV/9x0UgugX+4Jgb1+xr0LU
+ +DO7zZOVL153jJbQLTCUG2YSRUiLrzNeIYxxNfjWnny4XOq1W9yg0nIWdLQfTaWiTRXU
+ oZ/OFqihaMbSJlu4Jk88UijpkUhJhMVfHS4M7UluNihcP8x0o11USDq0ahzwgFhAqhaG
+ JZ1XhyRwm2V5gJUhSYkEVVWXwAsjVYbA1/Qirmrv7K0yLCVX//LFJzqJkdI6qcKt5SLY
+ KJrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1769708300; x=1770313100;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Rl24eVwM8VDKwNGbTY8imqXSq1p2xBTKgWYXW2mu/sQ=;
+ b=W6NzNAhF88hNkT02y/PINnUmkMCUJuk6sfVZFFbNSrUlM7TBzKfBK+l0hq/RnGD0PC
+ N6cdXBfoIR9yzXQlPcGIX6XgnZTOO0i2/YYJFLU3Rvi9Q/fz3GY+NZMMm1TyTKItLoHF
+ 50fapJEtYFb30sUgMyCdNZfxF3jtcVuqIWGQ8DkxNLVCqQVd5fGZfx7lkB3JRdFYeJzn
+ /V90cxQgt2gU3T9Unmk7siQkCxlfOHZ0U+Iepq4wQpHRipDqmi0v88psQvLUqcPsnORj
+ ztQLNKS29glhxCpczCm28V6XQW5SYrSYGHyLwlHLLPoudFJNqOzmWJEofbUr1gt/+GxQ
+ 6Myw==
+X-Gm-Message-State: AOJu0YxslM6yhFktNkA/lsMJ8823HKYRJUGCSD8B7h6O9E6GuSUYwcpX
+ GFhlQlrzYDIPM3VGHcW/3ksRLVaV2qxBCuv3R9ejmeSe/8mEnROIpE9/ThTXrXNOBnJweWI1hr4
+ 7MEe4jXY=
+X-Gm-Gg: AZuq6aIWdPxM3b1Ot+AUe6vVnYjDioWHMok8xaiCr0DFOJluc+UgxCo94S8t7aB97/i
+ si6pfzZYa30a4N7PA8qLY86BFrdoC18fMku1rmlTR39CN1JigwvEUe0n/4ofznFnJQNYNwBXAwg
+ gfzsnitG/HwC46rEehb4t9G4/2ruTBspB9+/fgk9p/OE0Ggu0aHXoKtbjwEh3bERC14fkp+jzAH
+ C/28iuTyMsHJ1u6yPU1URTdKZaxfTg+JLLGyOa24/Q/SVv267k694bcriTwFtR7lmo/6Xa4EEoB
+ 5N+DYfwVKFHCLUIvi7wTcrVXvVwbeXen7Lqk4eWzsNBHwqhajNK0JSuWnzXH4cYQYIEuy/1//e3
+ 3jcSImicYKJKGUIe6t0LaeWwLBNLBWOm7M3w5tM3ujp1UsNofgD3JVRQfWf8w6ztH1ujWx3XM3J
+ fn9/2rxBHbuHc0S3nocm/nqW6iaY+OlBh8cuxty6dMM0o/atpdWQx++HrrAzl7s9hI
+X-Received: by 2002:a05:6a00:1992:b0:81f:3a05:8a7a with SMTP id
+ d2e1a72fcca58-8236918218emr9167557b3a.19.1769708300284; 
+ Thu, 29 Jan 2026 09:38:20 -0800 (PST)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82379b222f1sm6706246b3a.7.2026.01.29.09.38.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 Jan 2026 09:38:19 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Alex Bradbury <asb@igalia.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 04/21] docs/about/emulation: Add documentation for hotblocks
+ plugin arguments
+Date: Thu, 29 Jan 2026 09:37:50 -0800
+Message-ID: <20260129173811.138036-5-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
+References: <20260129173811.138036-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x444.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,67 +102,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Jan 2026, Peter Maydell wrote:
-> On Thu, 29 Jan 2026 at 16:21, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>
->> Nothing else does this, convert to regular memory_region_init_rom().
->
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>  hw/display/cg3.c | 5 ++---
->>  hw/display/tcx.c | 5 ++---
->>  2 files changed, 4 insertions(+), 6 deletions(-)
->>
->> diff --git a/hw/display/cg3.c b/hw/display/cg3.c
->> index 568d6048a6..61bdb0552e 100644
->> --- a/hw/display/cg3.c
->> +++ b/hw/display/cg3.c
->> @@ -282,8 +282,8 @@ static void cg3_initfn(Object *obj)
->>      SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
->>      CG3State *s = CG3(obj);
->>
->> -    memory_region_init_rom_nomigrate(&s->rom, obj, "cg3.prom",
->> -                                     FCODE_MAX_ROM_SIZE, &error_fatal);
->> +    memory_region_init_rom(&s->rom, obj, "cg3.prom", FCODE_MAX_ROM_SIZE,
->> +                           &error_fatal);
->>      sysbus_init_mmio(sbd, &s->rom);
->>
->>      memory_region_init_io(&s->reg, obj, &cg3_reg_ops, s, "cg3.reg",
->> @@ -299,7 +299,6 @@ static void cg3_realizefn(DeviceState *dev, Error **errp)
->>      char *fcode_filename;
->>
->>      /* FCode ROM */
->> -    vmstate_register_ram_global(&s->rom);
->>      fcode_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, CG3_ROM_FILE);
->>      if (fcode_filename) {
->>          ret = load_image_mr(fcode_filename, &s->rom);
->
-> This is a migration compatibility break, because the
-> memory_region_init_rom() function registers the MR
-> for migration via vmstate_register_ram(), which picks
-> an ID string for the memory that includes the path
-> of the device, whereas vmstate_register_ram_global()
-> picks an ID string for the memory that does not include
-> the path of any device. It is this difference that is the
-> reason why they're still using the _nomigrate functions.
+From: Alex Bradbury <asb@igalia.com>
 
-I thought it might be the case but wasn't sure. How was this handled in 
-all other machines where they were converted to not use _nomigrate? Only 
-some Sun machines still seem to use this and this may be a good 
-opportunity to bring them inline with all other machines.
+Currently just 'inline'.
 
-> I think it's reasonable to accept a compat break for the purposes
-> of cleaning up the codebase, because these are used on sparc machine
-> types and we don't version those, but the commit message needs to
-> note that this is a compat break.
+Signed-off-by: Alex Bradbury <asb@igalia.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/35128cc5a86a0c18418f9d3150fb8771c54ef7d8.1753857212.git.asb@igalia.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ docs/about/emulation.rst | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-If we accept that then the other memory_region_init_ram_nomigrate usages 
-in Sun machines could also be converted. If Mark is not open to that I'm 
-inclined to convert these two rom_nomigrate usages to 
-memory_region_init_ram_flags_nomigrate + memory_region_set_readonly 
-instead but get rid of these other _nomigrate variants anyhow. Let me know 
-which way you prefer.
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index 4a7d1f41780..543efc4d7dc 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -463,6 +463,16 @@ Example::
+   0x000000004002b0, 1, 4, 66087
+   ...
+ 
++Behaviour can be tweaked with the following arguments:
++
++.. list-table:: Hot Blocks plugin arguments
++  :widths: 20 80
++  :header-rows: 1
++
++  * - Option
++    - Description
++  * - inline=true|false
++    - Use faster inline addition of a single counter.
+ 
+ Hot Pages
+ .........
+-- 
+2.47.3
 
-Regards,
-BALATON Zoltan
 
