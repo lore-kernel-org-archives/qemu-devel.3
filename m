@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D9E2D358F1
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 10:27:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CCC9D358F1
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 10:27:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlP5W-0004El-KB; Thu, 29 Jan 2026 05:17:22 -0500
+	id 1vlPC5-00087R-F4; Thu, 29 Jan 2026 05:24:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vlP5R-0004Bu-H3
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 05:17:17 -0500
+ id 1vlPC1-00087A-FS
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 05:24:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vlP5P-0005tB-M3
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 05:17:17 -0500
+ id 1vlPBz-0008KU-AU
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 05:24:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1769681833;
+ s=mimecast20190719; t=1769682242;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sYEmg3LvTBmPuKe0W3PpoOqpLHQf8aCkTDSuccqSycQ=;
- b=JF/JDzHs2PYjsVgOK19LdTzcAxvehKor3G9fAVYi+v9qzI0vAU2Ej0mUomrcu9n4wDrwM/
- p2xf0n4WwplFoIevUHJlLFZThc4HB1he1XrMYfrwD46N2v4KKPnC7FrAiwdm0UAgFfT22j
- y3uRJCFPNHILOkR/+xN6pRAtwwJiy74=
+ bh=o6BCgQ9RaennusT58hZUOY/v+T+ILD2ha1SdxShoZ4g=;
+ b=IgHPImAGiKCpWDxsXPJ1HkUf8qYPwRi+UQjXCxilobbDUoxCLWWg0qTIcArhEBP/SZmMtk
+ MD0cpGdJzvcRadPfdDvA4ny2al1pLCBEfCjIqujk+4dIxoABId37eyOHG4QXPGITU2jbsB
+ 9CLYQW+smmICstTVoaoA3v9vD8Mi+iw=
 Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
  [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-329-65Q-BdK4OMqnQbK3ugqJ4A-1; Thu, 29 Jan 2026 05:17:12 -0500
-X-MC-Unique: 65Q-BdK4OMqnQbK3ugqJ4A-1
-X-Mimecast-MFC-AGG-ID: 65Q-BdK4OMqnQbK3ugqJ4A_1769681831
+ us-mta-601-T3d1DEZaNd2Ks8tA8KC_kg-1; Thu, 29 Jan 2026 05:24:01 -0500
+X-MC-Unique: T3d1DEZaNd2Ks8tA8KC_kg-1
+X-Mimecast-MFC-AGG-ID: T3d1DEZaNd2Ks8tA8KC_kg_1769682240
 Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4325b81081aso1492630f8f.3
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 02:17:11 -0800 (PST)
+ ffacd0b85a97d-42fb1c2c403so609606f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 02:24:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769681831; x=1770286631;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1769682240; x=1770287040;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sYEmg3LvTBmPuKe0W3PpoOqpLHQf8aCkTDSuccqSycQ=;
- b=HxVc1J4biqFbyD4mNXJjGwQB63Rgugno1H2mSokDPM5+6JEs736DyyDWPMkkIX7Iy8
- mjlBiMOpj7ZrLpoVin6ztbYdrRuU1c2nNUyvve7TQ5mTHlQIiSX64TMfIfJhtR24YSjN
- IF6LvNwFbM/y1PQKC8GzIntHhy//udbit3ALRazoYVj+9WQdaRkO6ODH9WZd6sgoZ08p
- 7oBGP6QvOgCSayeYb5deeQB3xHYQ/iVlNOYSNVw/Zbtr7mwj8+M/JDYKV2PQLIBPQ+hE
- Ru+kXvk+aZGJ8i3pqjkZRpz1rI1qtKxLkj5cujA5AnRhleKbQejeMFtGtFGqC7Kvqu9l
- sT1g==
+ bh=o6BCgQ9RaennusT58hZUOY/v+T+ILD2ha1SdxShoZ4g=;
+ b=U0sy02MvHaSr3fOtU0sRGaUUn0G31a56EI0vHQohWEej8N3JnQT8wwLVjrVQtDo8wM
+ xnr2vbU5OLCOpJh2lEPHVbPb5Hqt06FbM7I3qlV7bq/xFPFrJ1uw+TFUqy1gEPFb8xch
+ VC1A3XGMGeSVqNBWIn6Ux7vuzstft7Wnjku8jiXA+qM/4AbsUou9YxZC53yV5CbqDF0c
+ RSQ2BTD8wXhV6B10/3uSDFPu6AHNRI4992wIQjZU7fMfnmyvs36eKGcSnENsHNXJzK7G
+ sE0AiWhdywMsj2+d/lXrPE6AJvur3eDDFSkID/6DZhdNxa30nj+SewQKRP4a/fRO/iOh
+ VqbQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5PtT1PsExiiLHgE1Pb39kZQ6sFaSOMiaT2i9js+CKlEHxdrh5MeZvr2nr4pZgMsJ2KOXkzrAKX89P@nongnu.org
-X-Gm-Message-State: AOJu0Yym3hmEKVBuXQCUxixwCQVmPy9kXvL+fHBNZ/sXM99irlzJyQzC
- UYC3tk/nhQwJGxd6mpMDZjGvuACdHlXOkqHicAfMx1xU6p5+EN3NlbDwUXD3xrTNnuwyYJZ/7gt
- +/5K2JMM1npmytx0Uf7JP8XibUpX2ORLZLEZTRY7N5+7ETxUMXoV+AKKU
-X-Gm-Gg: AZuq6aJ5Yuqi2nL2RssI5lIihgo8HdcSbAbxLV3Kxf2B5LuSQKYoqtegEokxTfnMvGr
- WL9wuZruBRRcPd1KQNT9s7kG7xSl3i3kxjc72O7GJbTGxonMvd+Ki9im6/lLVAqsM2amPNNxSzJ
- vNu3DnSLsWQVZzKb1POFvdz/tIHSqzF/UcyjIGCfU2mCK8nTwW8nWUZRWRZkBCsvJnzIWkLuz84
- /d2YsB1UJVh5dNQTTDcNz53dkkV9RY6nuKcNzUKwpDM7FwxpEi0A0zuxo6wd2AqAIK91Po07kTL
- 7MAc3wkuySYP4ZlUqvr0cGMpcdUAcLHIsMgxOjqbrGMd9nmGEtTW/BLtC1H9aK36eOwc9dSxiFO
- o6sPjHzHARoinMw+4LjGdPNxsQejwCADhI61lD09+hiEtb5DXMi0/OlvXag==
-X-Received: by 2002:a05:6000:3110:b0:430:fd0f:2910 with SMTP id
- ffacd0b85a97d-435dd0841e0mr13416192f8f.26.1769681830704; 
- Thu, 29 Jan 2026 02:17:10 -0800 (PST)
-X-Received: by 2002:a05:6000:3110:b0:430:fd0f:2910 with SMTP id
- ffacd0b85a97d-435dd0841e0mr13416144f8f.26.1769681830266; 
- Thu, 29 Jan 2026 02:17:10 -0800 (PST)
+ AJvYcCVPUtjZKTw0Xi5QwMeIK6IJSXUQxf4r9lq45iP62Sx2UaK8v47Q2d/nJKpyxjR4jacitRkEnIWSVTly@nongnu.org
+X-Gm-Message-State: AOJu0YzQQGBj0FGgoR3vWzG9/Ienr7mCl/uQjxOfuTEjlu31O/urie5x
+ tYMvKmYAHAKjkQ7FFsxoe0RZ2CT9PcW2COlMQ2IBd/Lza7oBpEJDsWQP5k20jwQ+Mn8jgnAimA4
+ i0rNI+8WrWySiwRBrv1NzDAltFKJJOAcGeh+rKsP+DE3MOuiNs+ZEeopZ
+X-Gm-Gg: AZuq6aIV01cUIT9zVxO/D0HwuLdqI2urjG9NbX37XHufXk83w5dEByP36V4QitPXfON
+ Vp64kUtwNPw1zR14+QqNFR3OQbJGfdFipDZOBHcJ3Ltuy0KIDLY5ZYKvjqPdJz7VbCe147INbDe
+ TFxoT4mkXZ5FwYf06jqH8mrXHEs67zPtYEZTgTM5DTmRhhtoC6SNLnDrv4S5nq0eQojOD4hP8iX
+ Mt42/YMsP2M4NZ/QNwSGFgoTGii2hfhEcXIjeisTRv+U3ySHMcAS+zydVsKNDmhsSyvRoq955z4
+ EB88KWbldH7mDlG47thLd3copFCFXoRpbKf2IeDYabkNQNnOf7H3Ugq0ycuwzM+PBvQAtfSv2RU
+ 6U8FMmDv0bQt1c8DCr51bVq68te228eJst2AFaztRBDRIYqsq2TfX0MMV/A==
+X-Received: by 2002:a05:6000:401e:b0:42f:b3b9:874d with SMTP id
+ ffacd0b85a97d-435dd0b0443mr10955750f8f.37.1769682239914; 
+ Thu, 29 Jan 2026 02:23:59 -0800 (PST)
+X-Received: by 2002:a05:6000:401e:b0:42f:b3b9:874d with SMTP id
+ ffacd0b85a97d-435dd0b0443mr10955721f8f.37.1769682239439; 
+ Thu, 29 Jan 2026 02:23:59 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm14532300f8f.13.2026.01.29.02.17.08
+ ffacd0b85a97d-435e10e490esm13152766f8f.9.2026.01.29.02.23.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 Jan 2026 02:17:09 -0800 (PST)
-Message-ID: <ee57ec0e-e1e5-4bb7-99b4-f61b68147b64@redhat.com>
-Date: Thu, 29 Jan 2026 11:17:07 +0100
+ Thu, 29 Jan 2026 02:23:58 -0800 (PST)
+Message-ID: <e81c78de-f175-42b2-a19a-e1a9df6f3752@redhat.com>
+Date: Thu, 29 Jan 2026 11:23:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 03/11] target/arm/cpu: Allow registers to be hidden
+Subject: Re: [PATCH v6 00/11] Mitigation of "failed to load
+ cpu:cpreg_vmstate_array_len" migration failures
 Content-Language: en-US
-To: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- maz@kernel.org, oliver.upton@linux.dev, sebott@redhat.com, gshan@redhat.com,
- ddutile@redhat.com, peterx@redhat.com, philmd@linaro.org, pbonzini@redhat.com
+To: Sebastian Ott <sebott@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, Cornelia Huck <cohuck@redhat.com>, maz@kernel.org,
+ oliver.upton@linux.dev, gshan@redhat.com, ddutile@redhat.com,
+ peterx@redhat.com, philmd@linaro.org, pbonzini@redhat.com
 References: <20260126165445.3033335-1-eric.auger@redhat.com>
- <20260126165445.3033335-4-eric.auger@redhat.com> <87zf5zrnh4.fsf@redhat.com>
+ <02feaa00-2188-8265-4a65-63fe40270093@redhat.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <87zf5zrnh4.fsf@redhat.com>
+In-Reply-To: <02feaa00-2188-8265-4a65-63fe40270093@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124;
@@ -101,7 +103,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,70 +122,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 1/27/26 6:09 PM, Cornelia Huck wrote:
-> On Mon, Jan 26 2026, Eric Auger <eric.auger@redhat.com> wrote:
+On 1/27/26 5:52 PM, Sebastian Ott wrote:
+> On Mon, 26 Jan 2026, Eric Auger wrote:
 >
->> More recent kernels sometimes expose new registers in an
->> unconditionnal manner. This situation breaks backward migration
->> as qemu notices there are more registers in the input stream
->> than supported on the destination host. This leads to a
->> "failed to load cpu:cpreg_vmstate_array_len" error.
+>> When migrating ARM guests accross same machines with different host
+>> kernels we are likely to encounter failures such as:
 >>
->> A good example is the introduction of KVM_REG_ARM_VENDOR_HYP_BMAP_2
->> pseudo FW register in v6.16 by commit C0000e58c74e (“KVM: arm64:
->> Introduce KVM_REG_ARM_VENDOR_HYP_BMAP_2”). Trying to do backward
->> migration from a host kernel that features the commit to a destination
->> host that doesn't, fail with above error.
+>> "failed to load cpu:cpreg_vmstate_array_len"
 >>
->> Currently QEMU is not using that feature so ignoring this latter
->> is not a problem. An easy way to fix the migration issue is to teach
->> qemu we don't care about that register and we can simply ignore it
->> when syncing its state during migration.
+>> This is due to the fact KVM exposes a different number of registers
+>> to qemu on source and destination. When trying to migrate a bigger
+>> register set to a smaller one, qemu cannot save the CPU state.
 >>
->> This patch introduces an array of such hidden registers. Soon it will
->> be settable through an array property.
+>> For example, recently we faced such kind of situations with:
+>> - unconditionnal exposure of KVM_REG_ARM_VENDOR_HYP_BMAP_2 FW pseudo
+>>  register from v6.16 onwards. Causes backward migration failure.
+>> - removal of unconditionnal exposure of TCR2_EL1, PIRE0_EL1, PIR_EL1
+>>  from v6.13 onwards. Causes forward migration failure.
 >>
->> If hidden, the register is moved out of the array of cpreg which is
->> built in kvm_arm_init_cpreg_list(). That way their state won't be
->> synced.
+>> This situation is really problematic for distributions which want to
+>> guarantee forward and backward migration of a given machine type
+>> between different releases.
 >>
->> To extend that functionality to TCG, do the same in add_cpreg_to_list()
->> and count_cpreg().
+>> While the series mainly targets KVM acceleration, this problem
+>> also exists with TCG. For instance some registers may be exposed
+>> while they shouldn't. Then it is tricky to fix that situation
+>> without breaking forward migration. An example was provided by
+>> Peter: 4f2b82f60 ("target/arm: Reinstate bogus AArch32 DBGDTRTX
+>> register for migration compat).
 >>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Reviewed-by: Sebastian Ott <sebott@redhat.com>
+>> This series introduces 2 CPU array properties that list
+>> - the CPU registers to hide from the exposes sysregs (aims
+>>  at removing registers from the destination)
+>> - The CPU registers that may not exist but which can be found
+>>  in the incoming migration stream (aims at ignoring extra
+>>  registers in the incoming state)
 >>
->> ---
->> v2 -> v3:
->> - use kvm_regidx
+>> An example is given to illustrate how those props
+>> could be used to apply compats for machine types supposed to "see" the
+>> same register set accross various host kernels.
 >>
->> v1 -> v2:
->> - Move the property in a separate patch
->> - improve the commit msg
->> - change the trace point to just print info in
->>   kvm_arm_init_cpreg_list()
->> - improve comment in cpu.h (Connie)
+>> Mitigation of DBGDTRTX issue would be achieved by setting
+>> x-mig-safe-missing-regs=0x40200000200e0298 which matches
+>> AArch32 DBGDTRTX register index.
 >>
->> target/arm/helper: Skip hidden registers
+>> The first patch improves the tracing so that we can quickly detect
+>> which registers do not match between the incoming stream and the
+>> exposed sysregs
 >>
->> In case a cpreg is hidden, skip it when initialing the cpreg
->> list.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-> This looks a bit weird, probably due to patch folding... but I'm happy
-> to have my R-b apply to the whole patch :)
+>
+> I gave these a spin - works as advertised, no issues found.
+> Tested-by: Sebastian Ott <sebott@redhat.com> 
 
-Oh yes I missed that. Nevertheless it is below the --- so I guess it is
-not that much an issue
+Thanks!
 
 Eric
->
->> ---
->>  target/arm/cpu.h        | 20 ++++++++++++++++++++
->>  target/arm/helper.c     | 12 +++++++++++-
->>  target/arm/kvm.c        | 12 +++++++++++-
->>  target/arm/trace-events |  2 ++
->>  4 files changed, 44 insertions(+), 2 deletions(-)
 
 
