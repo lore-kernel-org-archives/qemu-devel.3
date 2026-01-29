@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 208E6D6B086
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E12D6B087
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 16:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlUaK-0008Sj-Mu; Thu, 29 Jan 2026 11:09:32 -0500
+	id 1vlUaL-0008Ug-S9; Thu, 29 Jan 2026 11:09:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUaE-0008QY-NY
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:27 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1vlUaJ-0008SR-MP
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:31 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vlUaB-0006UR-SE
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:25 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-480142406b3so8835355e9.1
- for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:23 -0800 (PST)
+ id 1vlUaG-0006YI-HL
+ for qemu-devel@nongnu.org; Thu, 29 Jan 2026 11:09:31 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-4327555464cso973485f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 29 Jan 2026 08:09:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1769702962; x=1770307762; darn=nongnu.org;
+ d=linaro.org; s=google; t=1769702967; x=1770307767; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=T0N0B5cWcZZOhJc+vK4KHyIYqbyF+U6ChwUVIRwX2tA=;
- b=aTPB5D10lIdQ/H9E8ir4KQO26Y4c+K27ieq65BWmaBnsWHoebxUYz+VXEayXoLjO0q
- JARhnHNtFZtWlP6MjoXOILDOnw2VWshxoybxZCHU6lU4ohKN7mdobZ1NxZ8V5/7NbWjn
- JwwLQMvgr4v3d9KV92BJgkKSFvOKZGPebIFzqnJOjDORJsybHdC6t0u77mO+H9zLStPv
- QQQVxogHkvZJIlq4HvqminxM4xuzEay/T19HrrhxZ7tfZ1SrxuKsZJ17SFHoTXVBHimD
- DcdGSQMrpVRT6YyBWdNWN7EA0aVBIvMNIIixIJcerS8UC29WxMlO/kKn3xLCIsDWB8aT
- B+vQ==
+ :reply-to; bh=8pC6F/zj3QNaYDR/bID0RLslNcwqHXMeuqDP6SLHYeY=;
+ b=zhpaf4xYqNleBOSx2gHy58TCVvoGJfsA3mM6MbDV/wWQX9T1VSpf45MaHe1FrAd3Tb
+ M6mnkNGA4ptwCalHa+hcKCbXBvTSBKpJ0FRqOIt0zyYzDI9F+bVJf38cogKUDYF/Cpze
+ OxOvS0oAmhM7M9Q1tXOh7CkHRNf461JZrjSkLxILVuljDPopNywKrueEcWNu01Zk6hjs
+ UsM2VjU7wwunXe++F9WHUNL6sHgf2/wZ4SlZlVUehqoFAd1XVxKpxurRMV3hYqX4u0ID
+ tBPqKLFZcjCmwTFptN6X475wTPj8qIF9UmT9a+1LeCgUtJ7WdYICzGOOi4weL8qct+4M
+ oO+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1769702962; x=1770307762;
+ d=1e100.net; s=20230601; t=1769702967; x=1770307767;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=T0N0B5cWcZZOhJc+vK4KHyIYqbyF+U6ChwUVIRwX2tA=;
- b=r8SdvwixmY8U8t99dWLGrAIwL8XYrMdbJVCcv7vFP7MK4qMg/gW7UzM1QmBCjmWBwZ
- E1+5iTmXMRcEPR68iAILU8h+1x/7/5eYK4hF5U5kL7zAo/OQ5JPFBLjmGxx1Kgrld85M
- Vc+PdmhzgI7PIVKXRqJn7enGkvW9+APJRcoSwq8RJDpnSy+DfecQZAAsC5V5sz4ALHOm
- nf67k7IfT0eIE8H/0Eevipo9xC51gp7HyTnS50RC85kwhlJCpCLQ8FowTfcfeve11FmZ
- cpLH2RSxUIU3obVnsr/8LAVmxEtNh1qgjNauRK1x36wqSEmUT6eHPON8qEFAIyD11Cq+
- FtoQ==
-X-Gm-Message-State: AOJu0Yy6IrRoWVFwS/y4bxh/23iUWx5hNaZuUoEWGAuD67jz0zsr8PRo
- amk5pj2plGYGPQVH5ByoaMSr070SgSvPlaIfmJ5nNtSwqoSbHjm7Wtv9FYmVCo3k1DgRAnlXnXi
- NRKPwCoc=
-X-Gm-Gg: AZuq6aKGf8bGvZxzuy62Q5gNecpDa1g+71nrUczMJK8rJe6nyp3JW7vOSxUg4NehtaJ
- frZ18QIbWwv2cM+1GpCfkMfkhta7TP1FKjp/U05FHn4JlQcRNBOnpSGfw71n6f3A942PXM1JcPa
- gGzHOZ+vontOaUTdfE/phxgSVv80gwzWxI8E9vk+FAQOj5ozV5OzYyt7GGM8gooWPDkntjIov+q
- WvaSuEGqGqRjNFIKm0cXpIMBAFnjbJ564Vs0B/v/1yptWLNUw5ebOhUmV2/N9XbT2dHBer5TQCw
- 4KaPpdjygYaZN7ihXnBam5eQBGBPiaA53PKdztRUtzaK3UOpLjzch0TDrVJQLHDINYJ+s+yIbVa
- xM/YdUXDjNQqR0TYbjkAHJaw+t5LiBviqxVmCqMHw+AC215NKRHpGt2cHOFRfFpRxPaM2mefmTA
- 35wQTuHbp6Vqik6/M3KcX+Q3R3ovJAFVSvUJIZuJop
-X-Received: by 2002:a05:6000:1a8d:b0:431:1ae:a3be with SMTP id
- ffacd0b85a97d-435f3a6f7fbmr156796f8f.3.1769702962318; 
- Thu, 29 Jan 2026 08:09:22 -0800 (PST)
+ bh=8pC6F/zj3QNaYDR/bID0RLslNcwqHXMeuqDP6SLHYeY=;
+ b=S2ZjZI73ai1NGtIkuwvRcBhWRYZt6KmJov8C8sf5A3rwcD9YGl2AGWUNvEsNTAURxV
+ +peogkn1sZOZXTDbSiFo271GXyJlhCIxc4wzuLOqZZLpQm4eEMSRxJAXoAvoroug0Sno
+ czMYHet2pUqDbBAapbJPrW6kj/+YR+ShLKfStw/PbdhIzc2xiPrMDSMMt/oXLHXPIBdB
+ Cyi0SUU+ihybv+pSgsjc5F97EOQHee8auV95qIzOgPLFP3bV8DLr6jQiqBJUMKQXsvLo
+ Y9OadzsRmfXuH4hyZuG5C6ZQ+yZcaI1cUiOTx3t1mknh7qOFFmZ+HiBGTjLC3vXJX42u
+ bqaQ==
+X-Gm-Message-State: AOJu0Yzzyn+Dta5l3+cHmPhmxkGOVdzStga5rT5wjYWqJKYFDjTOspxF
+ JQEZyqM3czsf0V7yynT61j7zvci3LMSMV/Lw9aEzUJNSORJxF0nvQEpEUk85Dc6SHAllfNConNL
+ O/ZPIRps=
+X-Gm-Gg: AZuq6aLnA3kU3bbjan5xhZ67Oi+0MH+M5auBaqrPebMZaA2ec23Ah0TJNe3h8g1orUk
+ fHJDGT9aXIDtNpImqOabF2mG5mIYwbkGAqK5hipT4NQ5vmtJetep6pIvj29sji6urzN+jaDN9gG
+ bhEUwkBkZtNlqrNLk6e7Hk1f8N8BSdD8v3bQDSKA/4pQbPvbetxmRx47Z7HO3xU+Nj48rCHKqn3
+ YsWAh6OKQqe8RkzYt9VRhldOMx6ihM40PkcvUTDhfTDaAeYdY+RTut7U31r6j/b3ubS3LHCSLG6
+ MeffGG8LA5Fnf+WZPnGABD+hLxgHw87AjswBRqrfWFs54vW2NR+BtSjMCIlS2oU7UpdKdshy/P1
+ Wi6ew+3qAkbZrvSzhTEVUxKgSkv912ZCtKZWhi3HAy+zdK7wMgcB7dh10HpGeoDrub/GPmlfeHn
+ 8+SKVfI1Pb0jHNd6vFhhCbUCYP2O4o1Q==
+X-Received: by 2002:a5d:5f54:0:b0:431:3a5:d9ae with SMTP id
+ ffacd0b85a97d-435f3a6cc94mr184486f8f.4.1769702967096; 
+ Thu, 29 Jan 2026 08:09:27 -0800 (PST)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.20
+ ffacd0b85a97d-435e10edf62sm16762185f8f.13.2026.01.29.08.09.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 Jan 2026 08:09:20 -0800 (PST)
+ Thu, 29 Jan 2026 08:09:26 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/43] backends/iommufd: Introduce iommufd_backend_alloc_vdev
-Date: Thu, 29 Jan 2026 16:08:36 +0000
-Message-ID: <20260129160917.1415092-3-peter.maydell@linaro.org>
+Subject: [PULL 06/43] hw/arm/smmuv3-accel: Initialize shared system address
+ space
+Date: Thu, 29 Jan 2026 16:08:40 +0000
+Message-ID: <20260129160917.1415092-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260129160917.1415092-1-peter.maydell@linaro.org>
 References: <20260129160917.1415092-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,107 +100,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Add a helper to allocate an iommufd device's virtual device (in the user
-space) per a viommu instance.
+To support accelerated SMMUv3 instances, introduce a shared system-wide
+AddressSpace (shared_as_sysmem) that aliases the global system memory.
+This shared AddressSpace will be used in a subsequent patch for all
+vfio-pci devices behind all accelerated SMMUv3 instances within a VM.
 
-While at it, introduce a struct IOMMUFDVdev for later use by vendor
-IOMMU implementations.
+Sharing a single system AddressSpace ensures that all devices behind
+accelerated SMMUv3s use the same system address space pointer. This
+allows VFIO/iommufd to reuse a single IOAS ID in iommufd_cdev_attach(),
+enabling the Stage-2 page tables to be shared within the VM rather than
+duplicated for each SMMUv3 instance.
 
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 Tested-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Message-id: 20260126104342.253965-3-skolothumtho@nvidia.com
+Message-id: 20260126104342.253965-7-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- backends/iommufd.c       | 27 +++++++++++++++++++++++++++
- backends/trace-events    |  1 +
- include/system/iommufd.h | 12 ++++++++++++
- 3 files changed, 40 insertions(+)
+ hw/arm/smmuv3-accel.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index c65dc41d71..e3a3c1480e 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -473,6 +473,33 @@ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
-     return true;
- }
- 
-+bool iommufd_backend_alloc_vdev(IOMMUFDBackend *be, uint32_t dev_id,
-+                                uint32_t viommu_id, uint64_t virt_id,
-+                                uint32_t *out_vdev_id, Error **errp)
-+{
-+    int ret;
-+    struct iommu_vdevice_alloc alloc_vdev = {
-+        .size = sizeof(alloc_vdev),
-+        .viommu_id = viommu_id,
-+        .dev_id = dev_id,
-+        .virt_id = virt_id,
-+    };
-+
-+    ret = ioctl(be->fd, IOMMU_VDEVICE_ALLOC, &alloc_vdev);
-+
-+    trace_iommufd_backend_alloc_vdev(be->fd, dev_id, viommu_id, virt_id,
-+                                     alloc_vdev.out_vdevice_id, ret);
-+
-+    if (ret) {
-+        error_setg_errno(errp, errno, "IOMMU_VDEVICE_ALLOC failed");
-+        return false;
-+    }
-+
-+    g_assert(out_vdev_id);
-+    *out_vdev_id = alloc_vdev.out_vdevice_id;
-+    return true;
-+}
-+
- bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-                                            uint32_t hwpt_id, Error **errp)
- {
-diff --git a/backends/trace-events b/backends/trace-events
-index 1ae94c4290..14a7ecf5aa 100644
---- a/backends/trace-events
-+++ b/backends/trace-events
-@@ -22,3 +22,4 @@ iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) "
- iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
- iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
- iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32_t hwpt_id, uint32_t viommu_id, int ret) " iommufd=%d type=%u dev_id=%u hwpt_id=%u viommu_id=%u (%d)"
-+iommufd_backend_alloc_vdev(int iommufd, uint32_t dev_id, uint32_t viommu_id, uint64_t virt_id, uint32_t vdev_id, int ret) " iommufd=%d dev_id=%u viommu_id=%u virt_id=0x%"PRIx64" vdev_id=%u (%d)"
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index bc4acd1e8b..567dfb7b1d 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -48,6 +48,14 @@ typedef struct IOMMUFDViommu {
-     uint32_t viommu_id;  /* virtual IOMMU ID of allocated object */
- } IOMMUFDViommu;
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index 99ef0db8c4..b2eded743e 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -11,6 +11,14 @@
+ #include "hw/arm/smmuv3.h"
+ #include "smmuv3-accel.h"
  
 +/*
-+ * Virtual device object for a physical device bind to a vIOMMU.
++ * The root region aliases the global system memory, and shared_as_sysmem
++ * provides a shared Address Space referencing it. This Address Space is used
++ * by all vfio-pci devices behind all accelerated SMMUv3 instances within a VM.
 + */
-+typedef struct IOMMUFDVdev {
-+    uint32_t vdevice_id; /* object handle for vDevice */
-+    uint32_t virt_id;  /* virtual device ID */
-+} IOMMUFDVdev;
++static MemoryRegion root, sysmem;
++static AddressSpace *shared_as_sysmem;
 +
- bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp);
- void iommufd_backend_disconnect(IOMMUFDBackend *be);
+ static SMMUv3AccelDevice *smmuv3_accel_get_dev(SMMUState *bs, SMMUPciBus *sbus,
+                                                PCIBus *bus, int devfn)
+ {
+@@ -51,9 +59,27 @@ static const PCIIOMMUOps smmuv3_accel_ops = {
+     .get_address_space = smmuv3_accel_find_add_as,
+ };
  
-@@ -73,6 +81,10 @@ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
-                                   uint32_t viommu_type, uint32_t hwpt_id,
-                                   uint32_t *out_hwpt, Error **errp);
- 
-+bool iommufd_backend_alloc_vdev(IOMMUFDBackend *be, uint32_t dev_id,
-+                                uint32_t viommu_id, uint64_t virt_id,
-+                                uint32_t *out_vdev_id, Error **errp);
++static void smmuv3_accel_as_init(SMMUv3State *s)
++{
 +
- bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
-                                         bool start, Error **errp);
- bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
++    if (shared_as_sysmem) {
++        return;
++    }
++
++    memory_region_init(&root, OBJECT(s), "root", UINT64_MAX);
++    memory_region_init_alias(&sysmem, OBJECT(s), "smmuv3-accel-sysmem",
++                             get_system_memory(), 0,
++                             memory_region_size(get_system_memory()));
++    memory_region_add_subregion(&root, 0, &sysmem);
++
++    shared_as_sysmem = g_new0(AddressSpace, 1);
++    address_space_init(shared_as_sysmem, &root, "smmuv3-accel-as-sysmem");
++}
++
+ void smmuv3_accel_init(SMMUv3State *s)
+ {
+     SMMUState *bs = ARM_SMMU(s);
+ 
+     bs->iommu_ops = &smmuv3_accel_ops;
++    smmuv3_accel_as_init(s);
+ }
 -- 
 2.43.0
 
