@@ -4,61 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B62D73E84
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 19:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F2E2D73E84
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 Jan 2026 19:09:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vlXNm-0002qR-DT; Thu, 29 Jan 2026 14:08:46 -0500
+	id 1vlXOG-0003He-7o; Thu, 29 Jan 2026 14:09:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vlXNl-0002pN-8N
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 14:08:45 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1vlXOE-0003HC-Cb; Thu, 29 Jan 2026 14:09:14 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vlXNj-00037q-4n
- for qemu-devel@nongnu.org; Thu, 29 Jan 2026 14:08:45 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B9144596A29;
- Thu, 29 Jan 2026 20:08:38 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id FQ-2Z4fDhbUk; Thu, 29 Jan 2026 20:08:36 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A7E2E596A0B; Thu, 29 Jan 2026 20:08:36 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A5CDA5969F2;
- Thu, 29 Jan 2026 20:08:36 +0100 (CET)
-Date: Thu, 29 Jan 2026 20:08:36 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH 2/4] hw/display/{cg3.tcx}: Do not use
- memory_region_init_rom_nomigrate()
-In-Reply-To: <CAFEAcA9htbxy0fHZAvdX6Rneina-r_a1ajN3w3FHUL=hykcyug@mail.gmail.com>
-Message-ID: <69ca374e-960f-89a7-0f74-b42977a51d3e@eik.bme.hu>
-References: <cover.1769703287.git.balaton@eik.bme.hu>
- <b530cf54609b853c6b34306fd4aa3ce2f8087d05.1769703287.git.balaton@eik.bme.hu>
- <CAFEAcA9+sKLXmzXz98rfnEqVBE4WwVcFsMqiXSx6KfK1=PDfKA@mail.gmail.com>
- <31362eca-9cd5-8b6b-a3a1-4ddb8dc3e762@eik.bme.hu>
- <CAFEAcA9htbxy0fHZAvdX6Rneina-r_a1ajN3w3FHUL=hykcyug@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1vlXOC-0003Ai-C4; Thu, 29 Jan 2026 14:09:14 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 60TF43NY024642;
+ Thu, 29 Jan 2026 19:09:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=UYqidjxEPXGL2ppNz4uzhvp+dyo7
+ WcJTtHAgqIMvINw=; b=NF4bcMxmeWbzLnAG8bRjuNXa0TNVLiCrp4OwClcUtqOo
+ acqMho3q7v/0iY2HLUvDtAjyRWSCYm+9VpCInUiAjZV9jcOn7JGOuPOKALyYpLjZ
+ oNY96p9hVWhZ4LlWMNTW4FsWSzB1Kq0Eec1j2flWs3GvkIqDSStrnGhKAumI8nhu
+ /HzNOpvL0OtnJXVG6p8M0CWrXPGKw79gYJdoadBt03/dfwgk1LpYXQPuY5t/f0m5
+ sxeNV1oBGMHama3jl/hs8Ab70oWrQClGYSfgjZ3qMdCEFLIibA0MYsWOwxJ1UiX4
+ u6v77PQ8Js63vg3NEutQOaWVxsYEBn4viLo+UHHjBQ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4bvnrttbge-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Jan 2026 19:09:07 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 60TGHT70031037;
+ Thu, 29 Jan 2026 19:09:06 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4bw8dsuaum-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Jan 2026 19:09:06 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 60TJ95kV41877838
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 29 Jan 2026 19:09:05 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EEBA22004B;
+ Thu, 29 Jan 2026 19:09:04 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 852D920040;
+ Thu, 29 Jan 2026 19:09:04 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.87.137.8])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 29 Jan 2026 19:09:04 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: David Hildenbrand <david@kernel.org>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v3 0/5] target/s390x: Implement DIVIDE TO INTEGER
+Date: Thu, 29 Jan 2026 19:57:20 +0100
+Message-ID: <20260129190902.196262-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: BgngIIsLR926kXBox9lEXov1dXRzv1Io
+X-Authority-Analysis: v=2.4 cv=Uptu9uwB c=1 sm=1 tr=0 ts=697bb053 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=NEAV23lmAAAA:8 a=D0ifgjCuRPeBIYmd6-IA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: BgngIIsLR926kXBox9lEXov1dXRzv1Io
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDEzNCBTYWx0ZWRfXxu9xJRR5+/Hz
+ kN/xzS6cefkyicuPLm6sIYnnr40ejofk1wrGQXuBeG+Nhb7aGNaQBzdM7AlbMi93b5payPw984p
+ nYdhHVICLUzceBJH0ZVNlA4pOYRp0GYNxpoay0FyUUJCkAWUOMkv+gPhanZDXzlaIdk2r00piz+
+ 4RsQE/VYbIEhoWsfjPG5HinHhFOTGLcerh4stSZtVRL19VqQnFJUWhZCxvEzdfCgI4F4hFfMDp+
+ PkiG6HZqfQsUxC3Zan0/LfuwzMqKPL219G68q3+UpO9g0Z5ys/RoQicvuIMPE95zqmObkzDnIjx
+ +Mh+q0Qm4JAdt8Bjy4w7JfQbi4l1SJBkpdMgipEcC2bOiUu1o5d/ng5T+lTLZ+9ZC4JTlf0qdLg
+ kh7swe8GAJe5kYrzH78eWnQLLOFOxzL/u1SXD5fcMcjYoUoiiPHNW0RkIM9pG7veGo2Xwix2usJ
+ 1EXsE+1pI7Ul46h5pvw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-29_02,2026-01-29_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 priorityscore=1501 clxscore=1015 lowpriorityscore=0
+ phishscore=0 adultscore=0 impostorscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2601150000
+ definitions=main-2601290134
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,63 +119,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Jan 2026, Peter Maydell wrote:
-> On Thu, 29 Jan 2026 at 17:20, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->> On Thu, 29 Jan 2026, Peter Maydell wrote:
->>> On Thu, 29 Jan 2026 at 16:21, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>> This is a migration compatibility break, because the
->>> memory_region_init_rom() function registers the MR
->>> for migration via vmstate_register_ram(), which picks
->>> an ID string for the memory that includes the path
->>> of the device, whereas vmstate_register_ram_global()
->>> picks an ID string for the memory that does not include
->>> the path of any device. It is this difference that is the
->>> reason why they're still using the _nomigrate functions.
->>
->> I thought it might be the case but wasn't sure. How was this handled in
->> all other machines where they were converted to not use _nomigrate? Only
->> some Sun machines still seem to use this and this may be a good
->> opportunity to bring them inline with all other machines.
->
-> If I remember correctly, we converted all the machines where
-> we were happy at the time to have a compat break. The remainder
-> are not only Sun machines -- you can see in your patch 4 that xtensa
-> and vga are also affected.
+v2: https://lore.kernel.org/qemu-devel/20260127153736.62730-1-iii@linux.ibm.com/
+v2 -> v3: Use FloatParts64 (Richard).
+          Improve "smallish" comment (Richard).
+          Use parts_muladd_scalbn (Richard).
+          Get rid of manual precision rounding (Richard).
+          New patch: parts_round_to_int_normal() improvement.
+          New 64-bit testcase for a fuzzer finding on one of the
+          intermediate versions. I have to admit I did not put down and
+          then forgot what exactly it was about, but it must be
+          interesting, so I decided to keep it.
 
-Well, almost all of the usages are because of the Sun machines and those 
-could be easily converted accepting one time migration break. The VGA one 
-seems to be because of isa cards which may not have been QOM'ified so 
-could not be converted before but maybe could be now but I haven't checked 
-and I have no idea about xtensa but if only those few are left that's much 
-better. There's one more _nomigrate in hw/m68k/next-cube.c which seems to 
-be some shared memory region (not sure why it can't be migrated) and the 
-one in backends/hostmem-ram.c which may be the only real place that needs 
-this. But those could be taken care of later, converting the Sun machines 
-would only leave 2 or 3 usages.
+v1: https://lore.kernel.org/qemu-devel/20260121222116.713325-1-iii@linux.ibm.com/
+v1 -> v2: Move the implementatation to fpu/ and rewrite using
+          FloatParts (Richard). I can't say I particularly like the way
+          it looks, but at least most macros are gone and it survives
+          fuzzing.
+          Explain why we need -O0 for the test (Alex).
+          New patch: s390_get_bfp_rounding_mode().
+          Add a few comments with calculation examples to the test.
 
->>> I think it's reasonable to accept a compat break for the purposes
->>> of cleaning up the codebase, because these are used on sparc machine
->>> types and we don't version those, but the commit message needs to
->>> note that this is a compat break.
->>
->> If we accept that then the other memory_region_init_ram_nomigrate usages
->> in Sun machines could also be converted. If Mark is not open to that I'm
->> inclined to convert these two rom_nomigrate usages to
->> memory_region_init_ram_flags_nomigrate + memory_region_set_readonly
->> instead
->
-> My preference would be to convert all these Sun devices. I think
-> we're a bit more clear these days that migration compat matters
-> for versioned machine types but can be (cleanly) broken for
-> non-versioned machine types: back then it was a bit less of a
-> well-defined rule.
+Hi,
 
-I agree but wait for the maintainer's opinion (and maybe some more review 
-on other patches) before doing a v2. (Mark may have some reason like old 
-savevm files he may use for testing and does not want to redo them or 
-similar to want to keep this but if that's the only reason for using this 
-old stuff it might be time to refresh those testing images.)
+This series implements DIVIDE TO INTEGER instruction, which is
+required to run LuaJIT.
 
-Regards,
-BALATON Zoltan
+Patch 1 is a debugging helper, patch 2 is a small refactoring, patch 3
+is an improvement for an FPU rounding helper, patch 4 is the
+implementation.
+
+Since the instruction is quite complex, I've extensively tested it
+using a libFuzzer-based harness [1] that compares emulation with native
+execution at ~15k exec/s. The tests (patch 5) use data generated
+this way.
+
+Best regards,
+Ilya
+
+[1] https://github.com/iii-i/qemu/commits/iii/wip/fuzz-tcg-v1/
+
+Ilya Leoshkevich (5):
+  target/s390x: Dump Floating-Point-Control Register
+  target/s390x: Extract s390_get_bfp_rounding_mode()
+  fpu: Restrict parts_round_to_int_normal to target precision
+  target/s390x: Implement DIVIDE TO INTEGER
+  tests/tcg/s390x: Test DIVIDE TO INTEGER
+
+ fpu/softfloat-parts.c.inc           |   7 +-
+ fpu/softfloat.c                     | 144 +++++++++++++++
+ include/fpu/softfloat.h             |  11 ++
+ target/s390x/cpu-dump.c             |   1 +
+ target/s390x/helper.h               |   1 +
+ target/s390x/tcg/fpu_helper.c       | 118 +++++++++----
+ target/s390x/tcg/insn-data.h.inc    |   5 +-
+ target/s390x/tcg/translate.c        |  26 +++
+ tests/tcg/s390x/Makefile.target     |   5 +
+ tests/tcg/s390x/divide-to-integer.c | 265 ++++++++++++++++++++++++++++
+ 10 files changed, 545 insertions(+), 38 deletions(-)
+ create mode 100644 tests/tcg/s390x/divide-to-integer.c
+
+-- 
+2.52.0
+
 
